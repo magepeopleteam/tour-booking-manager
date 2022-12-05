@@ -1,0 +1,158 @@
+/*****************content & Title*********************************/
+.ttbm_default__title {margin: 0;padding: 0;}
+div.ttbm_default_widget {display: block;font-size: var(--fs);color: var(--default-color);position: relative;margin: 0 0 var(--default-mp) 0;}
+div > div.ttbm_default_widget:last-child {margin: 0;}
+div.ttbm_default_widget .ttbm_widget_title {padding: var(--default-mp-xs) var(--default-mp);text-align: center;margin: 0;background-color: var(--theme-color);color: var(--theme-alternate-color);}
+.ttbm_widget_content {padding: var(--default-mp-xs);}
+div.ttbm_default_widget .ttbm_widget_content {background-color: var(--content_bg);border: 1px solid #DDD;}
+div.ttbm_default_widget .ttbm_widget_content a {margin: 0 0 7px 0;}
+div.ttbm_default_widget .ttbm_title_style_3,
+div.ttbm_default_widget .ttbm_title_style_2 {padding: 0 0 var(--default-mp-xs) 0;}
+div.ttbm_default_widget .ttbm_title_style_2 ~ .ttbm_widget_content,
+div.ttbm_default_widget .ttbm_title_style_3 ~ .ttbm_widget_content {border: none;background-color: transparent;padding: 7px 0;}
+div.ttbm_default_widget .ttbm_title_style_3 {border-bottom: 2px solid var(--theme-color_77);}
+div.ttbm_default_widget .ttbm_title_style_2{border: 1px solid #ededed;background-color: #f5f5f5;padding: 3px 10px;font-weight: bold;}
+/*****************List*********************************/
+.ttbm_widget_content ul li:not(.mp_wp_editor li) {width: 100%;}
+.ttbm_widget_content ul li i,
+.ttbm_widget_content ul li span {margin: 0 var(--default-mp-xs) 0 0;font-size: 70%;}
+.ttbm_widget_content ul li:not(.mp_wp_editor li) {padding: 5px !important;border-bottom: 1px dashed #DDD;position: relative;font-size: var(--fs);display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;}
+.ttbm_widget_content ul li a:not(.mp_wp_editor li a) {display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;}
+/*************************************************/
+div.ttbm_registration_area {position: relative;margin: 0 0 var(--default-mp) 0;background-color: var(--content_bg);}
+/***/
+div.ttbm_booking_panel form{padding: 10px;}
+div.ttbm_booking_panel .ttbm_widget_content {padding: 0;border: none;}
+div.ttbm_booking_panel table tbody tr:nth-of-type(even) {background-color: #FFF;}
+div.ttbm_booking_panel table tbody tr:nth-of-type(even) td {padding: 1px;}
+div.ttbm_booking_panel table thead th,
+div.ttbm_booking_panel table td:last-child {text-align: center;padding: 5px;}
+div.ttbm_booking_panel table thead th:first-child{text-align: left;padding: 5px 5px 5px 10px;}
+div.ttbm_booking_panel table td:last-child > div {display: inline-block;min-width: 100px;}
+div.ttbm_booking_panel table th {background-color: #fff;text-align: left;padding: 5px 5px 5px 10px;}
+div.ttbm_booking_panel table thead th {background-color: #fff;}
+div.ttbm_booking_panel table td {background-color: #fff;}
+/*************************************************/
+div.ttbm_date_time_select {margin: 0 0 var(--default-mp) 0;border-bottom: 1px solid #f2f2f2;}
+div.ttbm_select_date_area {padding: var(--default-mp-xs);background-color: var(--theme-color);width: 100%;}
+div.ttbm_date_time_select label span {color: var(--theme-alternate-color);white-space: nowrap;}
+div.ttbm_date_time_select label {min-width: 120px;margin: 0 var(--default-mp-xs) 0 0;}
+div.availability_section div.ttbm_date_time_select {-webkit-flex-direction: column;flex-direction: column;}
+/************************************************/
+button.ttbm_hotel_open_room_list {background-color: #0071C2;color: #FFF;padding: 10px 20px;}
+div.daterangepicker select.monthselect,
+div.daterangepicker select.yearselect {display: inline-block !important;}
+div.daterangepicker .calendar-table table {border: none;box-shadow: none;}
+div.daterangepicker .drp-calendar {max-width: 100%;}
+div.drp-calendar .calendar-table .table-condensed thead {color: #FFF;background-color: var(--theme-color);}
+div.drp-calendar .calendar-table .table-condensed thead th {border-color: var(--theme-color);}
+div.drp-calendar .calendar-table .table-condensed tbody {background-color: #FFF;}
+div.daterangepicker {border: none;background-color: var(--theme-color);}
+div.daterangepicker .drp-calendar .calendar-table {padding: 0 !important;border: none !important;background-color: var(--theme-color);border-radius: 0;}
+div.daterangepicker th.month {font-size: 22px;}
+div.daterangepicker .calendar-table .prev span,
+div.daterangepicker .calendar-table .next span {border-width: 0 4px 4px 0;padding: 5px;border-color: #FFF;}
+div.daterangepicker .calendar-table .prev span:hover,
+div.daterangepicker .calendar-table .next span:hover {border-color: var(--button-bg);}
+div.daterangepicker th.available:hover {background-color: transparent;}
+div.daterangepicker .calendar-table td,
+div.daterangepicker .calendar-table th {font-size: 16px;border-radius: 0;width: 40px;height: 40px;padding: 0;}
+/**************particular date***********************************/
+div.particular_date_area {
+	background: #FFF;
+	box-shadow: 0 2px 6px rgb(0 0 0 / 20%);
+	border-radius: 5px;
+	margin-bottom: 26px;
+	padding: 15px;
+	transition: max-height .3s ease-out;
+}
+div.particular_date_area:nth-child(odd){background-color: #D7EEFF;}
+div.particular_date_area:nth-child(even){background-color: #CDF5F6;}
+div.particular_date_item {
+	position: relative;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-justify-content: space-between;
+	justify-content: space-between;
+	-webkit-align-items: center;
+	align-items: center;
+	font-size: 14px;
+}
+div.particular_date_area .mp_tour_ticket_form {margin: var(--default-mp-xs)  0 0 0;}
+div.ttbm_hotel_area {margin: 0 0 var(--default-mp) 0;}
+div.ttbm_hotel_item {
+	border: 1px solid #C6C6C6;
+	border-radius: 2px;
+	padding: 16px;margin: 16px 0;
+	background-color: #FFF;
+}
+div.ttbm_hotel_details_item {
+	display: -webkit-flex;display: flex;
+	position: relative;
+}
+div.ttbm_hotel_details_item .bg_image_area {
+	-ms-flex: 0 0 auto;
+	flex: 0 0 auto;
+	width: 200px;
+}
+div.ttbm_hotel_list_details {
+	-ms-flex: 1 1 auto;
+	flex: 1 1 auto;
+	margin-left: 16px;
+	width: calc(100% - 216px);
+}
+div.hotel_list_top_left h4 {color: #0071C2;font-weight: 700;}
+div.hotel_rating span {color: #FEBB02;padding: 3px;font-size: 12px;}
+div.hotel_list_top_area {display: -webkit-flex;display: flex;-webkit-justify-content: space-between;justify-content: space-between;}
+div.hotel_list_top_left ul li {	padding: 5px 10px 5px 0;	line-height: 18px;}
+div.hotel_list_top_left ul li a {color: #0071C2;
+	line-height: 18px;
+	text-decoration: underline !important;
+	font-weight: 600;}
+div.hotel_list_top_right_right {
+	align-items: center;
+	background: #003580;
+	border-radius: 5.8181818182px 5.8181818182px 5.8181818182px 0;
+	color: #FFF;
+	display: -ms-flexbox;
+	display: flex;
+	height: 32px;
+	justify-content: center;
+	min-width: 32px;
+	vertical-align: baseline;
+	width: 32px;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 24px;
+	margin-left: 10px;
+}
+div.hotel_list_top_right_left h6 {
+	color: #262626;
+	font-size: 16px;
+	line-height: 24px;
+	font-weight: 500;
+}
+div.hotel_list_top_right_left span {
+	margin-top: -4px;
+	font-size: 12px;
+	line-height: 18px;
+	font-weight: 400;
+}
+div.hotel_list_middle_left {
+	border-left: 2px solid #E6E6E6;
+	padding: 0 10px;
+	margin: 10px 0 0 0;
+}
+span.load_more_text{cursor: pointer;color: var(--theme-color_cc);}
+@media only screen and (max-width: 700px) {
+	div.ttbm_hotel_details_item,
+	div.ttbm_select_date_area {-webkit-flex-direction: column;flex-direction: column;}
+	div.ttbm_date_time_select label span {margin: 0 0 var(--default-mp-xs) 0;}
+	div.ttbm_date_time_select label {margin: var(--default-mp-xs) 0;-webkit-flex-wrap: wrap;flex-wrap: wrap;}
+	div.ttbm_hotel_list_details{width: 100%;margin: 20px 0 0 0;}
+}
+@media only screen and (max-width: 600px) {
+	div.ttbm_booking_panel table td:last-child > div {min-width: auto;}
+}

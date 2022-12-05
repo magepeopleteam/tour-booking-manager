@@ -1,0 +1,1926 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Tour Booking Manager For Woocommerce\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-01-28 04:46+0000\n"
+"PO-Revision-Date: 2022-09-07 10:00+0600\n"
+"Last-Translator: \n"
+"Language-Team: English (United States)\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3.1\n"
+"X-Loco-Version: 2.5.8; wp-5.9\n"
+"X-Domain: tour-booking-manager\n"
+
+#: inc/TTBM_Shortcodes.php:199
+msgid " - Tour Available"
+msgstr "- Visite disponible"
+
+#: admin/TTBM_Settings.php:45
+msgid " Activities"
+msgstr "Activités"
+
+#: admin/TTBM_Settings.php:143
+msgid " Age Range"
+msgstr "Tranche d'âge"
+
+#: admin/TTBM_Settings.php:119
+msgid " Approx Time/Day Duration"
+msgstr "Durée approximative de l'heure/de la journée"
+
+#: admin/TTBM_Admin.php:52
+msgid " Category"
+msgstr "Catégorie"
+
+#: admin/TTBM_Settings.php:442
+msgid " Contact Email"
+msgstr "Courriel de contact"
+
+#: admin/TTBM_Settings.php:434
+msgid " Contact Phone"
+msgstr "Téléphone de contact"
+
+#: admin/TTBM_Settings.php:425
+msgid " Contact Section Text"
+msgstr "Texte de la section de contact"
+
+#: admin/TTBM_Settings.php:36
+msgid " Day wise Details"
+msgstr "Détails du jour"
+
+#: admin/TTBM_Settings.php:1411
+msgid " Day wise Details Content"
+msgstr "Contenu des détails par jour"
+
+#: admin/TTBM_Settings.php:1409
+msgid " Day wise Details image"
+msgstr "image de détails par jour"
+
+#: admin/TTBM_Settings.php:1407
+msgid " Day wise Details Title"
+msgstr "Day sage Détails Titre"
+
+#: admin/TTBM_Settings.php:49
+msgid " Display settings"
+msgstr "Paramètres d'affichage"
+
+#: admin/TTBM_Settings.php:181
+msgid " Duration"
+msgstr "Durée"
+
+#: admin/TTBM_Settings.php:1001
+msgid " Extra Service Price Configuration :"
+msgstr "Configuration du prix du service supplémentaire :"
+
+#: admin/TTBM_Settings.php:42
+msgid " F.A.Q"
+msgstr "FAQ"
+
+#: admin/TTBM_Settings.php:1403
+msgid " F.A.Q Details Content"
+msgstr "Contenu des détails de la F.A.Q"
+
+#: admin/TTBM_Settings.php:1401
+msgid " F.A.Q Details image"
+msgstr "Image des détails de la F.A.Q."
+
+#: admin/TTBM_Settings.php:1399
+msgid " F.A.Q Title"
+msgstr "Titre de la FAQ"
+
+#: admin/TTBM_Admin.php:309
+msgid " Feature Image"
+msgstr "image de présentation"
+
+#: admin/TTBM_Admin.php:310 admin/TTBM_Admin.php:311 admin/TTBM_Admin.php:312
+msgid " featured image"
+msgstr "image en vedette"
+
+#: admin/TTBM_Settings.php:39
+msgid " Features"
+msgstr "Fonctionnalités"
+
+#: admin/TTBM_Settings.php:247 admin/TTBM_Settings.php:271
+msgid " Gallery"
+msgstr "Galerie"
+
+#: admin/TTBM_Settings.php:21
+msgid " Information Settings : "
+msgstr "Paramètres d'informations :"
+
+#: admin/TTBM_Admin.php:297
+msgid " Item:"
+msgstr "Article :"
+
+#: admin/TTBM_Admin.php:295 admin/TTBM_Admin.php:296
+msgid " List"
+msgstr "Liste"
+
+#: admin/TTBM_Admin.php:67 admin/TTBM_Admin.php:103 admin/TTBM_Admin.php:315
+#: admin/TTBM_Admin.php:317
+msgid " list"
+msgstr "liste"
+
+#: admin/TTBM_Admin.php:68 admin/TTBM_Admin.php:104 admin/TTBM_Admin.php:316
+msgid " list navigation"
+msgstr "navigation dans la liste"
+
+#: admin/TTBM_Settings.php:127
+msgid " Location Name"
+msgstr "Nom de l'emplacement"
+
+#: admin/TTBM_Settings.php:135
+msgid " Max People Allow"
+msgstr "Nombre maximum de personnes autorisées"
+
+#: admin/TTBM_Admin.php:55 admin/TTBM_Admin.php:91
+msgid " Name"
+msgstr "Nom"
+
+#: admin/TTBM_Admin.php:307
+msgid " Not found"
+msgstr "Non trouvé"
+
+#: admin/TTBM_Admin.php:308
+msgid " Not found in Trash"
+msgstr "Non trouvé dans la corbeille"
+
+#: admin/TTBM_Settings.php:904
+msgid " Price Configuration :"
+msgstr "Configuration du prix :"
+
+#: admin/TTBM_Settings.php:33
+msgid " Pricing"
+msgstr "Tarification"
+
+#: admin/TTBM_Settings.php:198
+msgid " Registration End Date"
+msgstr "Date de fin d'enregistrement"
+
+#: lib/classes/class-ttbm.php:72
+msgid " Settings"
+msgstr "Paramètres"
+
+#: admin/TTBM_Settings.php:95
+msgid " Short Description"
+msgstr "Brève description"
+
+#: admin/TTBM_Settings.php:207
+msgid " Start Date"
+msgstr "Date de début"
+
+#: admin/TTBM_Settings.php:103
+msgid " Start Place"
+msgstr "Lieu de départ"
+
+#: admin/TTBM_Settings.php:111
+msgid " Start Price"
+msgstr "Prix de départ"
+
+#: admin/TTBM_Settings.php:216
+msgid " Start Time"
+msgstr "Heure de début"
+
+#: admin/TTBM_Settings.php:471 admin/TTBM_Settings.php:508
+msgid " Tax"
+msgstr "Impôt"
+
+#: admin/TTBM_Settings.php:494
+msgid " Tax Class"
+msgstr "Classe fiscale"
+
+#: admin/TTBM_Settings.php:481
+msgid " Tax Status"
+msgstr "Statut fiscal"
+
+#: admin/TTBM_Settings.php:573
+msgid " Template"
+msgstr "Modèle"
+
+#: inc/TTBM_Filter_Pagination.php:525
+msgid " Trips match your search criteria"
+msgstr "Les voyages correspondent à vos critères de recherche"
+
+#: admin/TTBM_Settings.php:189
+msgid " Type"
+msgstr "Tapez"
+
+#: admin/TTBM_Admin.php:60 admin/TTBM_Admin.php:96
+msgid " with commas"
+msgstr "avec des virgules"
+
+#: support/elementor/widget/tour-list.php:155
+msgid "10"
+msgstr "10"
+
+#: admin/TTBM_Settings.php:185
+msgid "3"
+msgstr "3"
+
+#: admin/TTBM_Settings.php:123
+msgid "5 Hour"
+msgstr "5 Heure"
+
+#: admin/TTBM_Settings.php:139
+msgid "50"
+msgstr "50"
+
+#: admin/TTBM_Settings.php:115
+msgid "5000"
+msgstr "5000"
+
+#: admin/TTBM_Admin.php:54 admin/TTBM_Admin.php:90
+msgid ":"
+msgstr ":"
+
+#: admin/TTBM_Settings.php:21
+msgid "<span class=\"dashicons dashicons-info\"></span>"
+msgstr "<span class=\"dashicons dashicons-info\"></span>"
+
+#: admin/TTBM_Welcome.php:13
+msgid "<span style=\"color:green\">Dummy Import</span>"
+msgstr "<span style=\"color:green\">Importation factice</span>"
+
+#: admin/TTBM_Welcome.php:12
+msgid "<span style=\"color:green\">Welcome</span>"
+msgstr "<span style=\"color:green\">Bienvenue</span>"
+
+#: admin/TTBM_Status.php:12
+msgid "<span style=\"color:yellow\">Status</span>"
+msgstr "<span style=\"color:yellow\">Statut</span>"
+
+#. Description of the plugin
+msgid "A Complete Tour & Travel Solution for WordPress by MagePeople."
+msgstr "Une visite complète"
+
+#: admin/TTBM_Settings.php:918 admin/TTBM_Settings.php:1011
+msgid "Action"
+msgstr "Action"
+
+#: admin/TTBM_Settings.php:796
+msgid "Activities"
+msgstr "Activités"
+
+#: templates/layout/activity.php:10
+msgid "Activities "
+msgstr "Activités"
+
+#: admin/TTBM_Admin.php:229
+msgid "Activities Icon"
+msgstr "Icône Activités"
+
+#: admin/TTBM_Settings.php:1317
+msgid "Activity ?"
+msgstr "Activité ?"
+
+#: admin/TTBM_Settings.php:1074
+msgid "Add Extra New Service"
+msgstr "Ajouter un nouveau service supplémentaire"
+
+#: select_icon_popup/Select_Icon_Popup.php:27 select_icon_popup/Select_Icon_Popup.php:30
+msgid "Add Icon"
+msgstr "Ajouter une icône"
+
+#: admin/TTBM_Settings.php:1462
+msgid "Add Image"
+msgstr "Ajouter une image"
+
+#: admin/TTBM_Settings.php:814
+msgid "add new Activities  "
+msgstr "ajouter de nouvelles activités"
+
+#: admin/TTBM_Settings.php:843
+msgid "Add New Day Wise Details"
+msgstr "Ajouter de nouveaux détails sur Day Wise"
+
+#: admin/TTBM_Settings.php:775
+msgid "Add New F.A.Q"
+msgstr "Ajouter une nouvelle FAQ"
+
+#: admin/TTBM_Settings.php:618 admin/TTBM_Settings.php:729
+msgid "Add New Feature"
+msgstr "Ajouter une nouvelle fonctionnalité"
+
+#: admin/TTBM_Settings.php:300
+msgid "Add New Place"
+msgstr "Ajouter un nouveau lieu"
+
+#: admin/TTBM_Settings.php:990
+msgid "Add New Ticket Type"
+msgstr "Ajouter un nouveau type de billet"
+
+#: inc/TTBM_Details_Layout.php:106
+msgid "Age Range : "
+msgstr "Tranche d'âge :"
+
+#: inc/TTBM_Filter_Pagination.php:358
+msgid "All Activity"
+msgstr "Toutes les activités"
+
+#: inc/TTBM_Filter_Pagination.php:111
+msgid "All Category"
+msgstr "Toutes les catégories"
+
+#: inc/TTBM_Filter_Pagination.php:236
+msgid "All Country"
+msgstr "Tous les pays"
+
+#: inc/TTBM_Filter_Pagination.php:269
+msgid "All Duration"
+msgstr "Toute la durée"
+
+#: inc/ttbm_functions.php:754
+msgid "All Hotel"
+msgstr "Tous les hôtels"
+
+#: select_icon_popup/Select_Icon_Popup.php:63
+msgid "All Icon"
+msgstr "Toutes les icônes"
+
+#: inc/TTBM_Filter_Pagination.php:183
+msgid "All Location"
+msgstr "Tous les emplacements"
+
+#: inc/TTBM_Filter_Pagination.php:431
+msgid "All Month"
+msgstr "Tout le mois"
+
+#: inc/TTBM_Filter_Pagination.php:147
+msgid "All Organizer"
+msgstr "Tous les organisateurs"
+
+#: support/elementor/widget/tour-list.php:231
+msgid "Assending"
+msgstr "Assemblage"
+
+#: admin/TTBM_Settings_Global.php:188 inc/ttbm_functions.php:723
+msgid "Available"
+msgstr "Disponible"
+
+#: inc/TTBM_Details_Layout.php:186
+msgid "Available  "
+msgstr "Disponible"
+
+#: admin/TTBM_Settings_Global.php:216 templates/single/extra_service_list_heading.php:3
+msgid "Available Extra Service List"
+msgstr "Liste des services supplémentaires disponibles"
+
+#: inc/TTBM_Booking.php:53 inc/TTBM_Ajax.php:162
+msgid "Available Extra Service List "
+msgstr "Liste des services supplémentaires disponibles"
+
+#: templates/single/hotel_list.php:10 templates/layout/hotel_list.php:10
+msgid "Available Hotel "
+msgstr "Hôtel disponible"
+
+#: admin/TTBM_Settings.php:913 admin/TTBM_Settings.php:1009
+msgid "Available Qty"
+msgstr "Quantité disponible"
+
+#: inc/TTBM_Ajax.php:111
+msgid "Available Room List "
+msgstr "Liste des chambres disponibles"
+
+#: admin/TTBM_Settings_Global.php:307 templates/single/ticket_list_heading.php:3
+msgid "Available Ticket List"
+msgstr "Liste des billets disponibles"
+
+#: inc/TTBM_Booking.php:34 inc/TTBM_Ajax.php:47
+msgid "Available Ticket List "
+msgstr "Liste des billets disponibles"
+
+#: support/elementor/widget/tour-list.php:335 support/elementor/widget/tour-list.php:456
+#: support/elementor/widget/tour-list.php:588
+msgid "Background Color"
+msgstr "Couleur d'arrière-plan"
+
+#: admin/TTBM_Settings_Global.php:202 inc/TTBM_Booking.php:78 inc/TTBM_Booking.php:81
+#: inc/TTBM_Booking.php:90 inc/TTBM_Ajax.php:233 inc/TTBM_Ajax.php:236
+msgid "Book Now"
+msgstr "Réservez maintenant"
+
+#: support/elementor/widget/tour-list.php:300 support/elementor/widget/tour-list.php:421
+#: support/elementor/widget/tour-list.php:553
+msgid "Border Radius"
+msgstr "Rayon de bordure"
+
+#: support/elementor/widget/tour-list.php:285
+msgid "Box"
+msgstr "Boîte"
+
+#: admin/TTBM_Settings_Global.php:400
+msgid "Button Background Color"
+msgstr "Couleur d'arrière-plan des boutons"
+
+#: admin/TTBM_Settings_Global.php:386
+msgid "Button Font Size "
+msgstr "Taille de la police des boutons"
+
+#: admin/TTBM_Settings_Global.php:393
+msgid "Button Text Color"
+msgstr "Couleur du texte des boutons"
+
+#: admin/TTBM_Settings.php:1322
+msgid "By default Activities type is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, le type d'activités est activé, mais vous pouvez le désactiver en désactivant cette "
+"option."
+
+#: admin/TTBM_Settings.php:1182
+msgid "By default Day Wise Details is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, Day Wise Details est activé, mais vous pouvez le désactiver en activant cette option."
+
+#: admin/TTBM_Settings.php:1152
+msgid "By default Description is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, la description est activée, mais vous pouvez la désactiver en activant cette option"
+
+#: admin/TTBM_Settings.php:1342
+msgid "By default Display Get a Questions is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, l'affichage des questions est activé, mais vous pouvez le désactiver en désactivant "
+"cette option."
+
+#: admin/TTBM_Settings.php:1332
+msgid "By default Display hotels is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, l'affichage des hôtels est activé, mais vous pouvez le désactiver en désactivant "
+"cette option."
+
+#: admin/TTBM_Settings.php:1362
+msgid "By default Display Top tour Summary is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, l'affichage du résumé de la tournée supérieure est activé, mais vous pouvez le "
+"désactiver en désactivant cette option."
+
+#: admin/TTBM_Settings.php:1352
+msgid "By default Display Why choose us is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, l'affichage Pourquoi nous choisir est activé, mais vous pouvez le désactiver en "
+"désactivant cette option."
+
+#: admin/TTBM_Settings.php:1272
+msgid "By default Duration is ON but you can keep it off by switching this option"
+msgstr "Par défaut, la durée est activée, mais vous pouvez la désactiver en activant cette option"
+
+#: admin/TTBM_Settings.php:1192
+msgid "By default F.A.G is ON but you can keep it off by switching this option"
+msgstr "Par défaut, F.A.G est activé, mais vous pouvez le désactiver en activant cette option."
+
+#: admin/TTBM_Settings.php:1172
+msgid "By default HipHop Place is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, Hip Hop Place est activé, mais vous pouvez le désactiver en activant cette option."
+
+#: admin/TTBM_Settings.php:1252
+msgid "By default Location Details is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, les détails de l'emplacement sont activés, mais vous pouvez les désactiver en "
+"activant cette option."
+
+#: admin/TTBM_Settings.php:1262
+msgid "By default Map is ON but you can keep it off by switching this option"
+msgstr "Par défaut, la carte est activée, mais vous pouvez la désactiver en activant cette option."
+
+#: admin/TTBM_Settings.php:1282
+msgid "By default Max People is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, Max People est activé, mais vous pouvez le désactiver en activant cette option."
+
+#: admin/TTBM_Settings.php:1292
+msgid "By default Min Age is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, l'âge minimum est activé, mais vous pouvez le désactiver en activant cette option"
+
+#: admin/TTBM_Settings.php:1232
+msgid "By default Price Exclude is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, l'exclusion de prix est activée, mais vous pouvez la désactiver en activant cette "
+"option."
+
+#: admin/TTBM_Settings.php:1222
+msgid "By default Price Include Service is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, le service inclus dans le prix est activé, mais vous pouvez le désactiver en "
+"désactivant cette option."
+
+#: admin/TTBM_Settings.php:1202
+msgid "By default Price Start is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, Price Start est activé, mais vous pouvez le désactiver en activant cette option."
+
+#: admin/TTBM_Settings.php:1162
+msgid "By default Registration is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, l'enregistrement est activé, mais vous pouvez le désactiver en activant cette option"
+
+#: admin/TTBM_Settings.php:1312
+msgid "By default Related Tour type is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, le type de visite associée est activé, mais vous pouvez le désactiver en activant "
+"cette option"
+
+#: admin/TTBM_Settings.php:1212
+msgid "By default Seat Info is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, les informations de siège sont activées, mais vous pouvez les désactiver en activant "
+"cette option."
+
+#: admin/TTBM_Settings.php:1132
+msgid "By default Section title is style one"
+msgstr "Par défaut, le titre de la section est de style un"
+
+#: admin/TTBM_Settings.php:1375
+msgid "By default Short Details is style one"
+msgstr "Par défaut, les détails courts sont de style un"
+
+#: admin/TTBM_Settings.php:1385
+msgid "By default Sidebar Widget is Off but you can keep it ON by switching this option"
+msgstr ""
+"Par défaut, le widget de la barre latérale est désactivé, mais vous pouvez le conserver en "
+"activant cette option."
+
+#: admin/TTBM_Settings.php:1142
+msgid "By default slider is ON but you can keep it off by switching this option"
+msgstr "Par défaut, le curseur est activé, mais vous pouvez le désactiver en activant cette option"
+
+#: admin/TTBM_Settings.php:1242
+msgid "By default Start Location Details is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, les détails de l'emplacement de départ sont activés, mais vous pouvez les désactiver "
+"en activant cette option."
+
+#: admin/TTBM_Settings.php:1302
+msgid "By default Tour type is ON but you can keep it off by switching this option"
+msgstr ""
+"Par défaut, le type de visite est activé, mais vous pouvez le désactiver en activant cette option"
+
+#: admin/TTBM_Settings.php:874
+msgid "By default Type is General"
+msgstr "Par défaut, le type est général"
+
+#: support/elementor/widget/tour-list.php:51
+msgid "Category"
+msgstr "Catégorie"
+
+#: templates/layout/registration.php:19
+msgid "Check  Availability"
+msgstr "Vérifier la disponibilité"
+
+#: admin/TTBM_Settings_Global.php:286
+msgid "Choice Your Hotel"
+msgstr "Choisissez votre hôtel"
+
+#: admin/TTBM_Admin.php:62 admin/TTBM_Admin.php:98
+msgid "Choose from the most used"
+msgstr "Choisissez parmi les plus utilisés"
+
+#: admin/TTBM_Settings.php:810 admin/TTBM_Settings.php:815 admin/TTBM_Settings.php:1102
+msgid "click here"
+msgstr "cliquez ici"
+
+#: admin/TTBM_Settings.php:128
+msgid "Click Here "
+msgstr "Cliquez ici"
+
+#: support/elementor/widget/tour-list.php:84
+msgid "Country"
+msgstr "Pays"
+
+#: admin/TTBM_Admin.php:258
+msgid "Country "
+msgstr "Pays"
+
+#: admin/TTBM_Settings_Global.php:138 inc/TTBM_Woocommerce.php:200
+#: support/elementor/widget/tour-list.php:362
+msgid "Date"
+msgstr "Date"
+
+#: admin/TTBM_Settings.php:172 admin/TTBM_Settings.php:232
+msgid "Date Confguration"
+msgstr "Configuration de la date"
+
+#: inc/TTBM_Filter_Pagination.php:276 inc/TTBM_Filter_Pagination.php:312
+msgid "Day Tour"
+msgstr "excursion d'une journée"
+
+#: admin/TTBM_Settings.php:1177
+msgid "Day wise Details ?"
+msgstr "Détails par jour ?"
+
+#: admin/TTBM_Settings.php:830
+msgid "Day Wise Details Settings"
+msgstr "Paramètres de détails Day Wise"
+
+#: inc/TTBM_Filter_Pagination.php:278 inc/TTBM_Filter_Pagination.php:314
+msgid "Days Tour"
+msgstr "Jours de visite"
+
+#: admin/TTBM_Settings_Global.php:337
+msgid "Default Font Size"
+msgstr "Taille de police par défaut"
+
+#: admin/TTBM_Settings.php:914
+msgid "Default Qty"
+msgstr "Quantité par défaut"
+
+#: admin/TTBM_Settings_Global.php:330
+msgid "Default Text Color"
+msgstr "Couleur du texte par défaut"
+
+#: support/elementor/widget/tour-list.php:686
+msgid "Description"
+msgstr "La description"
+
+#: admin/TTBM_Settings.php:1147
+msgid "Description ?"
+msgstr "La description ?"
+
+#: support/elementor/widget/tour-list.php:232
+msgid "Dessending"
+msgstr " Descending     "
+
+#: admin/TTBM_Settings.php:1120
+msgid "Details page settings"
+msgstr "Paramètres de la page de détails"
+
+#: admin/TTBM_Settings_Global.php:35
+msgid "Disable Block/Gutenberg Editor"
+msgstr "Désactiver l'éditeur de bloc/Gutenberg"
+
+#: admin/TTBM_Settings.php:952 admin/TTBM_Settings.php:981 admin/TTBM_Settings.php:1038
+#: admin/TTBM_Settings.php:1065
+msgid "Dropdown List"
+msgstr "Liste déroulante"
+
+#: admin/TTBM_Welcome.php:13
+msgid "Dummy Import"
+msgstr "Importation factice"
+
+#: inc/TTBM_Details_Layout.php:88
+msgid "Duration : "
+msgstr "Durée :"
+
+#: admin/TTBM_Settings.php:1267
+msgid "Duration ?"
+msgstr "Durée ?"
+
+#: inc/TTBM_Booking.php:133
+msgid "Duration:"
+msgstr "Durée :"
+
+#: admin/TTBM_Welcome.php:40
+msgid "Dymmy Import"
+msgstr "Importation Dymy"
+
+#: admin/TTBM_Settings.php:144
+msgid "Enter the Age Range allow on this tour"
+msgstr "Entrez la tranche d'âge autorisée pour cette visite"
+
+#: admin/TTBM_Settings.php:136
+msgid "Enter the maximum people allow on this tour"
+msgstr "Entrez le nombre maximum de personnes autorisées pour cette visite"
+
+#: admin/TTBM_Settings_Global.php:266
+msgid "Enter the text which you want to display as Activities title."
+msgstr "Saisissez le texte que vous souhaitez afficher comme titre des activités."
+
+#: admin/TTBM_Settings_Global.php:217
+msgid "Enter the text which you want to display as Available Extra Service List."
+msgstr ""
+"Entrez le texte que vous souhaitez afficher en tant que liste de services supplémentaires "
+"disponibles."
+
+#: admin/TTBM_Settings_Global.php:308
+msgid "Enter the text which you want to display as Available Ticket List."
+msgstr "Entrez le texte que vous souhaitez afficher comme liste de billets disponibles."
+
+#: admin/TTBM_Settings_Global.php:189
+msgid "Enter the text which you want to display as Available."
+msgstr "Saisissez le texte que vous souhaitez afficher comme Disponible."
+
+#: admin/TTBM_Settings_Global.php:203
+msgid "Enter the text which you want to display as Book Now."
+msgstr "Saisissez le texte que vous souhaitez afficher comme Réserver maintenant."
+
+#: admin/TTBM_Settings_Global.php:287
+msgid "Enter the text which you want to display as Choice Your Hotel title."
+msgstr "Saisissez le texte que vous souhaitez afficher comme titre Choisissez votre hôtel."
+
+#: admin/TTBM_Settings_Global.php:139
+msgid "Enter the text which you want to display as Date."
+msgstr "Saisissez le texte que vous souhaitez afficher comme date."
+
+#: admin/TTBM_Settings_Global.php:224
+msgid "Enter the text which you want to display as F.A.Q."
+msgstr "Saisissez le texte que vous souhaitez afficher en tant que F.A.Q."
+
+#: admin/TTBM_Settings_Global.php:301
+msgid "Enter the text which you want to display as Get a Question? title."
+msgstr "Saisissez le texte que vous souhaitez afficher sous Obtenir une question ? "
+
+#: admin/TTBM_Settings_Global.php:273
+msgid "Enter the text which you want to display as Location Map title."
+msgstr "Saisissez le texte que vous souhaitez afficher comme titre de la carte de localisation."
+
+#: admin/TTBM_Settings_Global.php:132
+msgid "Enter the text which you want to display as Location."
+msgstr "Saisissez le texte que vous souhaitez afficher comme emplacement."
+
+#: admin/TTBM_Settings_Global.php:245
+msgid "Enter the text which you want to display as Price Start From."
+msgstr "Saisissez le texte que vous souhaitez afficher en tant que Prix à partir de."
+
+#: admin/TTBM_Settings_Global.php:210
+msgid "Enter the text which you want to display as Schedule Details."
+msgstr "Saisissez le texte que vous souhaitez afficher en tant que détails de l'horaire."
+
+#: admin/TTBM_Settings_Global.php:252
+msgid "Enter the text which you want to display as Seats."
+msgstr "Saisissez le texte que vous souhaitez afficher en tant que Sièges."
+
+#: admin/TTBM_Settings_Global.php:231
+msgid "Enter the text which you want to display as Service Exclude."
+msgstr "Entrez le texte que vous souhaitez afficher en tant que service exclu."
+
+#: admin/TTBM_Settings_Global.php:238
+msgid "Enter the text which you want to display as Service Included in the Price."
+msgstr "Entrez le texte que vous souhaitez afficher comme Service inclus dans le prix."
+
+#: admin/TTBM_Settings_Global.php:168
+msgid "Enter the text which you want to display as Service Name."
+msgstr "Saisissez le texte que vous souhaitez afficher comme nom de service."
+
+#: admin/TTBM_Settings_Global.php:182
+msgid "Enter the text which you want to display as Service Price."
+msgstr "Saisissez le texte que vous souhaitez afficher comme prix du service."
+
+#: admin/TTBM_Settings_Global.php:175
+msgid "Enter the text which you want to display as Service Qty."
+msgstr "Saisissez le texte que vous souhaitez afficher en tant que Qté de service."
+
+#: admin/TTBM_Settings_Global.php:125
+msgid "Enter the text which you want to display as Sorry, Not Available."
+msgstr "Saisissez le texte que vous souhaitez afficher comme Désolé, non disponible."
+
+#: admin/TTBM_Settings_Global.php:196
+msgid "Enter the text which you want to display as Sorry, The Tour Already Started or Finished."
+msgstr ""
+"Entrez le texte que vous souhaitez afficher comme Désolé, La visite a déjà commencé ou Terminé."
+
+#: admin/TTBM_Settings_Global.php:146
+msgid "Enter the text which you want to display as Ticket Name."
+msgstr "Saisissez le texte que vous souhaitez afficher comme nom du ticket."
+
+#: admin/TTBM_Settings_Global.php:160
+msgid "Enter the text which you want to display as Ticket Price."
+msgstr "Saisissez le texte que vous souhaitez afficher comme prix du billet."
+
+#: admin/TTBM_Settings_Global.php:153
+msgid "Enter the text which you want to display as Ticket Qty."
+msgstr "Entrez le texte que vous souhaitez afficher en tant que Qté de tickets."
+
+#: admin/TTBM_Settings_Global.php:259
+msgid "Enter the text which you want to display as Total Seats."
+msgstr "Entrez le texte que vous souhaitez afficher comme nombre total de sièges."
+
+#: admin/TTBM_Settings_Global.php:294
+msgid "Enter the text which you want to display as Why Book With Us? title."
+msgstr "Entrez le texte que vous souhaitez afficher sous Pourquoi réserver avec nous ? "
+
+#: admin/TTBM_Settings_Global.php:280
+msgid "Enter the text which you want to display as You may like Tour title."
+msgstr "Saisissez le texte que vous souhaitez afficher comme Titre de la visite."
+
+#: admin/TTBM_Settings.php:147
+msgid "Ex: 5 - 50 Years"
+msgstr "Ex : 5 - 50 ans"
+
+#: support/elementor/widget/tour-list.php:247
+msgid "Expired"
+msgstr "Expiré"
+
+#: templates/layout/list_bottom.php:12
+msgid "Explore "
+msgstr "Explorer"
+
+#: admin/TTBM_Settings.php:455
+msgid "Extras"
+msgstr "Suppléments"
+
+#: admin/TTBM_Settings_Global.php:223
+msgid "F.A.Q"
+msgstr "FAQ"
+
+#: templates/single/faq.php:10 templates/layout/faq.php:10
+msgid "F.A.Q "
+msgstr "FAQ"
+
+#: admin/TTBM_Settings.php:1187
+msgid "F.A.Q ?"
+msgstr "FAQ ?"
+
+#: admin/TTBM_Settings.php:762
+msgid "F.A.Q Settings"
+msgstr "Paramètres FAQ"
+
+#: admin/TTBM_Admin.php:215
+msgid "Feature Icon"
+msgstr "Icône de fonction"
+
+#: admin/TTBM_Admin.php:143
+msgid "Features List"
+msgstr "Liste des fonctionnalités"
+
+#: inc/TTBM_Filter_Pagination.php:374
+msgid "Filter By Activity"
+msgstr "Filtrer par activité"
+
+#: inc/TTBM_Filter_Pagination.php:61
+msgid "Filters"
+msgstr "Filtres"
+
+#: inc/TTBM_Filter_Pagination.php:126
+msgid "Filters By Category"
+msgstr "Filtres par catégorie"
+
+#: inc/TTBM_Filter_Pagination.php:251
+msgid "Filters By Country"
+msgstr "Filtres par pays"
+
+#: inc/TTBM_Filter_Pagination.php:295
+msgid "Filters By Duration"
+msgstr "Filtres par durée"
+
+#: inc/TTBM_Filter_Pagination.php:330
+msgid "Filters By Feature"
+msgstr "Filtres par fonctionnalité"
+
+#: inc/TTBM_Filter_Pagination.php:207
+msgid "Filters By Location"
+msgstr "Filtres par emplacement"
+
+#: inc/TTBM_Filter_Pagination.php:452
+msgid "Filters By Month"
+msgstr "Filtres par mois"
+
+#: inc/TTBM_Filter_Pagination.php:162
+msgid "Filters By Organizer"
+msgstr "Filtres par organisateur"
+
+#: inc/TTBM_Filter_Pagination.php:90
+msgid "Filters By Tour Name"
+msgstr "Filtres par nom de circuit"
+
+#: inc/TTBM_Filter_Pagination.php:32
+msgid "Find Tours"
+msgstr "Rechercher des circuits"
+
+#: inc/ttbm_functions.php:328
+msgid "Fixed Dates"
+msgstr "Dates fixes"
+
+#: admin/TTBM_Settings_Global.php:344
+msgid "Font Size h1 Title"
+msgstr "Taille de la police h1 Titre"
+
+#: admin/TTBM_Settings_Global.php:351
+msgid "Font Size h2 Title"
+msgstr "Taille de la police h2 Titre"
+
+#: admin/TTBM_Settings_Global.php:358
+msgid "Font Size h3 Title"
+msgstr "Taille de la police h3 Titre"
+
+#: admin/TTBM_Settings_Global.php:365
+msgid "Font Size h4 Title"
+msgstr "Taille de la police h4 Titre"
+
+#: admin/TTBM_Settings_Global.php:372
+msgid "Font Size h5 Title"
+msgstr "Taille de la police h5 Titre"
+
+#: admin/TTBM_Settings_Global.php:379
+msgid "Font Size h6 Title"
+msgstr "Taille de la police h6 Titre"
+
+#: templates/layout/list_price.php:12
+msgid "From"
+msgstr "De"
+
+#: admin/TTBM_Admin.php:243
+msgid "Full Address "
+msgstr "adresse complète"
+
+#: admin/TTBM_Settings.php:257
+msgid "Gallery Images "
+msgstr "Images de la galerie"
+
+#: admin/TTBM_Settings.php:75 admin/TTBM_Settings.php:157
+msgid "General Info"
+msgstr "Informations générales"
+
+#: admin/TTBM_Settings_Global.php:16
+msgid "General Settings"
+msgstr "Paramètres généraux"
+
+#: inc/TTBM_Function.php:240 inc/ttbm_functions.php:921
+msgid "General Tour"
+msgstr "Visite générale"
+
+#: admin/TTBM_Settings_Global.php:300
+msgid "Get a Question?"
+msgstr "Vous avez une question ?"
+
+#: templates/single/get_a_question.php:13 templates/layout/get_a_question.php:13
+msgid "Get a Question? "
+msgstr "Vous avez une question ?"
+
+#: admin/TTBM_Settings.php:1337
+msgid "Get a Questions ?"
+msgstr "Vous avez des questions ?"
+
+#: admin/TTBM_Settings_Global.php:62
+msgid "Google MAP API"
+msgstr "API Google MAP"
+
+#: inc/TTBM_Filter_Pagination.php:504
+msgid "GoTO Next Page"
+msgstr "Aller à la page suivante"
+
+#: inc/TTBM_Filter_Pagination.php:485
+msgid "GoTO Previous Page"
+msgstr "Aller à la page précédente"
+
+#: support/elementor/widget/tour-list.php:99
+msgid "Grid"
+msgstr "Grille"
+
+#: inc/TTBM_Filter_Pagination.php:528
+msgid "Grid view"
+msgstr "Vue Grille"
+
+#: admin/TTBM_Settings.php:707
+msgid "Here"
+msgstr "Ici"
+
+#: admin/TTBM_Settings_Global.php:265
+msgid "Highlights"
+msgstr "Faits saillants"
+
+#: templates/single/highlights_text.php:10
+msgid "Highlights "
+msgstr "Faits saillants"
+
+#: admin/TTBM_Settings.php:1167
+msgid "HipHop Place ?"
+msgstr "Lieu hip-hop ?"
+
+#: inc/ttbm_functions.php:919
+msgid "HipHop/City Tour"
+msgstr "HipHop/visite de la ville"
+
+#: admin/TTBM_Admin.php:330 inc/ttbm_functions.php:917
+msgid "Hotel"
+msgstr "Hôtel"
+
+#: admin/TTBM_Settings.php:613
+msgid "Hotel Availabe Service/Features"
+msgstr "Service disponible/fonctionnalités de l'hôtel"
+
+#: inc/TTBM_Function.php:241
+msgid "Hotel Base Tour"
+msgstr "visite de la base de l'hôtel"
+
+#: admin/TTBM_Settings.php:1086
+msgid "Hotel Configuration :"
+msgstr "Configuration de l'hôtel :"
+
+#: admin/TTBM_Settings.php:684
+msgid "Hotel Information"
+msgstr "Informations sur l'hôtel"
+
+#: inc/TTBM_Woocommerce.php:104 inc/TTBM_Woocommerce.php:215
+msgid "Hotel Name"
+msgstr "Nom de l'hôtel"
+
+#: admin/TTBM_Settings.php:634
+msgid "Hotel Room Details"
+msgstr "Détails de la chambre d'hôtel"
+
+#: admin/TTBM_Settings.php:1327
+msgid "Hotels ?"
+msgstr "Hôtels ?"
+
+#. URI of the plugin
+msgid "http://mage-people.com"
+msgstr "http://mage-people.com"
+
+#. Author URI of the plugin
+msgid "http://www.mage-people.com/"
+msgstr "http://www.mage-people.com/"
+
+#: admin/TTBM_Settings_Global.php:70
+msgid "If you want to change the to travel label in the dashboard menu you can change here"
+msgstr "If you want to change the to travel label in the dashboard menu you can change here"
+
+#: admin/TTBM_Settings_Global.php:95 admin/TTBM_Settings_Global.php:109
+msgid "If you want to change the travel category label in the dashboard menu you can change here"
+msgstr "If you want to change the travel category label in the dashboard menu you can change here"
+
+#: admin/TTBM_Settings_Global.php:86
+msgid ""
+"If you want to change the travel icon in the dashboard menu you can change from here, Dashboard "
+"icon only support dashicon, So please go to <a href=https://developer.wordpress.org/resource/"
+"dashicons/#calendar-alt target=_blank>Dash Icon</a> and copy your icon code and paste here"
+msgstr ""
+"If you want to change the travel icon in the dashboard menu you can change from here, Dashboard "
+"icon only support dashicon, So please go to <a href=https://developer.wordpress.org/resource/"
+"dashicons/#calendar-alt target=_blank>Dash Icon</a> and copy your icon code and paste here"
+
+#: admin/TTBM_Settings_Global.php:36
+msgid "If you want to disable WordPress new Block/Gutenberg editor for Tour please select Yes"
+msgstr "If you want to disable WordPress new Block/Gutenberg editor for Tour please select Yes"
+
+#: admin/TTBM_Settings.php:949 admin/TTBM_Settings.php:980 admin/TTBM_Settings.php:1035
+#: admin/TTBM_Settings.php:1064
+msgid "Input Box"
+msgstr "Boîte de saisie"
+
+#: admin/TTBM_Settings.php:84
+msgid "Inventory Manage"
+msgstr "Gestion de l'inventaire"
+
+#: admin/TTBM_Settings_Global.php:407
+msgid "Label Font Size "
+msgstr "Taille de la police de l'étiquette"
+
+#: support/elementor/widget/tour-list.php:100
+msgid "List"
+msgstr "Liste"
+
+#: support/elementor/widget/tour-list.php:95
+msgid "List Style"
+msgstr "Style de liste"
+
+#: admin/TTBM_Settings.php:525 admin/TTBM_Settings.php:549
+msgid "List Thumbnail"
+msgstr "Liste des miniatures"
+
+#: inc/TTBM_Filter_Pagination.php:531
+msgid "LIst view"
+msgstr "Liste vue"
+
+#: inc/TTBM_Filter_Pagination.php:475
+msgid "Load More"
+msgstr "Charger plus"
+
+#: admin/TTBM_Settings_Global.php:131 admin/TTBM_Admin.php:123 inc/TTBM_Details_Layout.php:131
+#: inc/TTBM_Woocommerce.php:196 support/elementor/widget/tour-list.php:494
+msgid "Location"
+msgstr "Emplacement"
+
+#: admin/TTBM_Settings.php:1247
+msgid "Location Details ?"
+msgstr "Détails de l'emplacement ?"
+
+#: admin/TTBM_Admin.php:272
+msgid "Location Image "
+msgstr "Image de l'emplacement"
+
+#: admin/TTBM_Settings_Global.php:272 inc/TTBM_Details_Layout.php:146
+msgid "Location Map"
+msgstr "Carte de localisation"
+
+#: support/elementor/widget/tour-list.php:73
+msgid "Location/City"
+msgstr "lieu/ville"
+
+#. Author of the plugin
+msgid "MagePeople Team"
+msgstr "Équipe MagePeople"
+
+#: admin/TTBM_Settings.php:1257
+msgid "Map ?"
+msgstr "Carte ?"
+
+#: support/elementor/widget/tour-list.php:324 support/elementor/widget/tour-list.php:445
+#: support/elementor/widget/tour-list.php:577
+msgid "Margin"
+msgstr "Marge"
+
+#: inc/TTBM_Details_Layout.php:97
+msgid "Max People : "
+msgstr "personnes max :"
+
+#: admin/TTBM_Settings.php:1277
+msgid "Max People ?"
+msgstr "Max personnes ?"
+
+#: admin/TTBM_Settings.php:1287
+msgid "Min Age?"
+msgstr "Âge minimum ?"
+
+#: support/elementor/widget/tour-list.php:167 support/elementor/widget/tour-list.php:264
+#: support/elementor/widget/tour-list.php:374 support/elementor/widget/tour-list.php:506
+#: support/elementor/widget/tour-list.php:640 support/elementor/widget/tour-list.php:698
+#: support/elementor/widget/tour-list.php:746 support/elementor/widget/tour-list.php:781
+#: support/elementor/widget/tour-list.php:843
+msgid "No"
+msgstr "Non"
+
+#: inc/TTBM_Filter_Pagination.php:542
+msgid "No Match Result Found!"
+msgstr "Aucun résultat de correspondance trouvé !"
+
+#: support/elementor/widget/tour-list.php:153
+msgid "No of Item Show"
+msgstr "Nombre d'éléments affichés"
+
+#: admin/TTBM_Settings.php:489
+msgid "None"
+msgstr "Aucun"
+
+#: admin/TTBM_Admin.php:65 admin/TTBM_Admin.php:101
+msgid "Not Found"
+msgstr "Non trouvé"
+
+#: inc/TTBM_Filter_Pagination.php:546
+msgid "of"
+msgstr "de"
+
+#: support/elementor/widget/tour-list.php:62
+msgid "Organizer"
+msgstr "Organisateur"
+
+#: support/elementor/widget/tour-list.php:313 support/elementor/widget/tour-list.php:434
+#: support/elementor/widget/tour-list.php:566 support/elementor/widget/tour-list.php:653
+#: support/elementor/widget/tour-list.php:711 support/elementor/widget/tour-list.php:794
+#: support/elementor/widget/tour-list.php:856
+msgid "Padding"
+msgstr "Rembourrage"
+
+#: support/elementor/widget/tour-list.php:162
+msgid "Pagination"
+msgstr "Pagination"
+
+#: templates/layout/list_max_people.php:13
+msgid "People"
+msgstr "Personnes"
+
+#: admin/TTBM_Settings.php:315
+msgid "Place"
+msgstr "Lieu"
+
+#: admin/TTBM_Settings.php:308
+msgid "Place Name"
+msgstr "Nom de lieu"
+
+#: admin/TTBM_Admin.php:338
+msgid "Places"
+msgstr "Lieux"
+
+#: admin/TTBM_Settings.php:286 admin/TTBM_Settings.php:295
+msgid "Places You’ll See"
+msgstr "Lieux que vous verrez"
+
+#: admin/TTBM_Settings.php:326
+msgid "Places You’ll See "
+msgstr "Lieux que vous verrez"
+
+#: templates/single/hiphop_place.php:11 templates/layout/hiphop_place.php:11
+msgid "Places You’ll See : "
+msgstr "Lieux que vous verrez :"
+
+#: admin/TTBM_Settings.php:614
+msgid "Please add all the service/features are available in this hotel"
+msgstr "Veuillez ajouter tous les services/fonctionnalités disponibles dans cet hôtel"
+
+#: admin/TTBM_Settings.php:351
+msgid "Please add Why Book With Us texts"
+msgstr "Veuillez ajouter les textes Pourquoi réserver avec nous"
+
+#: admin/TTBM_Settings.php:443
+msgid "Please Enter contact phone email"
+msgstr "Veuillez saisir l'adresse e-mail du téléphone de contact"
+
+#: admin/TTBM_Settings.php:435
+msgid "Please Enter contact phone no"
+msgstr "Veuillez saisir le numéro de téléphone du contact"
+
+#: admin/TTBM_Settings.php:426
+msgid "Please Enter Contact Section Text"
+msgstr "Veuillez entrer le texte de la section de contact"
+
+#: admin/TTBM_Settings.php:296
+msgid "Please Enter Please select the places for this hiphop tour"
+msgstr "Veuillez entrer Veuillez sélectionner les lieux pour cette tournée hiphop"
+
+#: admin/TTBM_Settings.php:120
+msgid "Please Enter the Approx Time Duration"
+msgstr "Veuillez saisir la durée approximative"
+
+#: admin/TTBM_Settings.php:182
+msgid "Please Enter the Duration in Days"
+msgstr "Veuillez saisir la durée en jours"
+
+#: admin/TTBM_Settings_Global.php:102
+msgid ""
+"Please enter the slug name you want for travel category. Remember after change this slug you "
+"need to flush permalink, Just go to Settings->Permalink hit the Save Settings button"
+msgstr ""
+"Please Select Feature below that is included or excluded to this tour and You can add new "
+"feature from  "
+
+#: admin/TTBM_Settings_Global.php:116
+msgid ""
+"Please enter the slug name you want for travel organizer. Remember after change this slug you "
+"need to flush permalink, Just go to Settings->Permalink hit the Save Settings button"
+msgstr ""
+"Please enter the slug name you want for travel organizer. Remember after change this slug you "
+"need to flush permalink, Just go to Settings->Permalink hit the Save Settings button"
+
+#: admin/TTBM_Settings_Global.php:78
+msgid ""
+"Please enter the slug name you want. Remember after change this slug you need to flush "
+"permalink, Just go to Settings->Permalink hit the Save Settings button"
+msgstr ""
+"Please enter the slug name you want. Remember after change this slug you need to flush "
+"permalink, Just go to Settings->Permalink hit the Save Settings button"
+
+#: admin/TTBM_Settings.php:104
+msgid "Please Enter the start Place where tour will be Stated"
+msgstr "Veuillez saisir le lieu de départ où la visite sera indiquée"
+
+#: admin/TTBM_Settings.php:112
+msgid "Please Enter the start price, This will show in the travel list view"
+msgstr "Veuillez entrer le prix de départ, cela s'affichera dans la vue de la liste des voyages"
+
+#: admin/TTBM_Settings_Global.php:63
+msgid "Please Enter your workable google map api key"
+msgstr "Veuillez entrer votre clé d'api Google Map utilisable"
+
+#: admin/TTBM_Settings.php:979
+msgid "Please Select"
+msgstr "Veuillez sélectionner"
+
+#: inc/ttbm_functions.php:300
+msgid "Please Select a Country"
+msgstr "Veuillez sélectionner un pays"
+
+#: inc/ttbm_functions.php:28
+msgid "Please Select a Location"
+msgstr "Veuillez sélectionner un emplacement"
+
+#: admin/TTBM_Admin.php:230
+msgid "Please select a suitable icon for this Activities"
+msgstr "Veuillez sélectionner une icône appropriée pour cette activité"
+
+#: admin/TTBM_Admin.php:216
+msgid "Please select a suitable icon for this feature"
+msgstr "Veuillez sélectionner une icône appropriée pour cette fonctionnalité"
+
+#: admin/TTBM_Settings.php:574
+msgid "Please Select a Template"
+msgstr "Veuillez sélectionner un modèle"
+
+#: admin/TTBM_Settings.php:706
+msgid ""
+"Please Select Feature below that is included or excluded to this tour and You can add new "
+"feature from  "
+msgstr ""
+"Please Select Feature below that is included or excluded to this tour and You can add new "
+"feature from  "
+
+#: admin/TTBM_Admin.php:259
+msgid "Please Select Location Country"
+msgstr "Veuillez sélectionner le pays de l'emplacement"
+
+#: admin/TTBM_Settings.php:128
+msgid "Please Select Location Name. To add new Location "
+msgstr "Veuillez sélectionner le nom de l'emplacement. "
+
+#: super_slider/MP_Super_Slider.php:52
+msgid "Please Select Slider Indicator Type Default Icon"
+msgstr "Veuillez sélectionner l'icône par défaut du type d'indicateur de curseur"
+
+#: super_slider/MP_Super_Slider.php:87
+msgid "Please Select Slider Popup Indicator Image ON or Off? Default ON"
+msgstr "Veuillez sélectionner l'image de l'indicateur contextuel du curseur activé ou désactivé ? "
+
+#: super_slider/MP_Super_Slider.php:74
+msgid "Please Select Slider Showcase Position Default Right"
+msgstr "Veuillez sélectionner la position par défaut de la vitrine du curseur à droite"
+
+#: super_slider/MP_Super_Slider.php:63
+msgid "Please Select Slider Showcase Visible or Not? Default ON"
+msgstr "Veuillez sélectionner Slider Showcase visible ou non ? "
+
+#: super_slider/MP_Super_Slider.php:41
+msgid "Please Select Slider Type Default Slider"
+msgstr "Veuillez sélectionner le type de curseur Curseur par défaut"
+
+#: admin/TTBM_Settings.php:495
+msgid "Please Select Tax Class"
+msgstr "Veuillez sélectionner la classe de taxe"
+
+#: admin/TTBM_Settings.php:482
+msgid "Please Select Tax Status"
+msgstr "Veuillez sélectionner le statut fiscal"
+
+#: admin/TTBM_Settings.php:199
+msgid "Please Select the Registration End Date"
+msgstr "Veuillez sélectionner la date de fin d'enregistrement"
+
+#: admin/TTBM_Settings.php:208
+msgid "Please Select the Start Date"
+msgstr "Veuillez sélectionner la date de début"
+
+#: admin/TTBM_Settings.php:217
+msgid "Please Select the Start Time"
+msgstr "Veuillez sélectionner l'heure de début"
+
+#: admin/TTBM_Settings.php:190
+msgid "Please Select the Type"
+msgstr "Veuillez sélectionner le type"
+
+#: admin/TTBM_Settings.php:1063
+msgid "Please Select Type"
+msgstr "Veuillez sélectionner le type"
+
+#: admin/TTBM_Settings_Global.php:47
+msgid "Please Select when and which order status Seat Will be Booked/Reduced"
+msgstr "Veuillez sélectionner quand et quel statut de commande Le siège sera réservé/réduit"
+
+#: admin/TTBM_Settings.php:85
+msgid ""
+"Please select Yes if you want to manage travel inventory or if your travel capacity is unlimited "
+"select No"
+msgstr ""
+"Please select Yes if you want to manage travel inventory or if your travel capacity is unlimited "
+"select No"
+
+#: admin/TTBM_Admin.php:244
+msgid "Please Type Location Full Address"
+msgstr "Veuillez saisir l'adresse complète de l'emplacement"
+
+#: admin/TTBM_Settings.php:96
+msgid "Please Type Tour Short description . Maximum 30 words will display"
+msgstr "Veuillez saisir une brève description de la visite. "
+
+#: admin/TTBM_Settings.php:536
+msgid "Please upload image for list"
+msgstr "Veuillez télécharger une image pour la liste"
+
+#: admin/TTBM_Settings.php:258
+msgid "Please upload images for gallery"
+msgstr "Veuillez télécharger des images pour la galerie"
+
+#: inc/ttbm_functions.php:815 inc/ttbm_functions.php:833 inc/ttbm_functions.php:859
+#: inc/ttbm_functions.php:877
+msgid "Please wait!..."
+msgstr "Veuillez patienter !..."
+
+#: support/elementor/widget/tour-list.php:768
+msgid "Price"
+msgstr "Prix"
+
+#: admin/TTBM_Settings.php:1227
+msgid "Price Exclude Service ?"
+msgstr "Prix excluant le service ?"
+
+#: admin/TTBM_Settings.php:713
+msgid "Price Excluded Feature"
+msgstr "Caractéristique hors prix"
+
+#: inc/TTBM_Details_Layout.php:79
+msgid "Price From : "
+msgstr "The Price :"
+
+#: admin/TTBM_Settings.php:1217
+msgid "Price Include Service ?"
+msgstr "Le prix comprend le service ?"
+
+#: admin/TTBM_Settings.php:712
+msgid "Price Included Feature"
+msgstr "fonction de prix inclus"
+
+#: admin/TTBM_Settings.php:1197
+msgid "Price Start ?"
+msgstr "Début du prix ?"
+
+#: admin/TTBM_Settings_Global.php:244 inc/TTBM_Details_Layout.php:163
+msgid "Price Start From"
+msgstr "Prix à partir de"
+
+#: admin/TTBM_Settings.php:917 admin/TTBM_Settings.php:1010
+msgid "Qty Box Type"
+msgstr "Type de boîte Qté"
+
+#: inc/TTBM_Booking.php:67 inc/TTBM_Ajax.php:224
+msgid "Quantity : "
+msgstr "Quantité :"
+
+#: admin/TTBM_Settings.php:1157
+msgid "Registration ?"
+msgstr "Enregistrement ?"
+
+#: admin/TTBM_Settings.php:1307
+msgid "Related Tour ?"
+msgstr "Visite connexe ?"
+
+#: admin/TTBM_Settings.php:377
+msgid "Related_tour"
+msgstr "tournée_associée"
+
+#: admin/TTBM_Settings.php:1068
+msgid "Remove"
+msgstr "Supprimer"
+
+#: select_icon_popup/Select_Icon_Popup.php:34
+msgid "Remove Icon"
+msgstr "Supprimer l'icône"
+
+#: admin/TTBM_Settings.php:915
+msgid "Reserve Qty"
+msgstr "Qté de réserve"
+
+#: inc/TTBM_Booking.php:235 inc/TTBM_Woocommerce.php:99 inc/TTBM_Woocommerce.php:209
+#: inc/TTBM_Ajax.php:116
+msgid "Room Name"
+msgstr "Nom de la pièce"
+
+#: inc/TTBM_Booking.php:237 inc/TTBM_Woocommerce.php:101 inc/TTBM_Woocommerce.php:211
+#: inc/TTBM_Ajax.php:118
+msgid "Room Price"
+msgstr "Prix de la chambre"
+
+#: inc/TTBM_Booking.php:236 inc/TTBM_Woocommerce.php:100 inc/TTBM_Woocommerce.php:210
+#: inc/TTBM_Ajax.php:117
+msgid "Room Qty"
+msgstr "Quantité par pièce"
+
+#: admin/TTBM_Settings_Global.php:209
+msgid "Schedule Details"
+msgstr "Détails de l'horaire"
+
+#: templates/single/day_wise_details.php:10 templates/layout/day_wise_details.php:10
+msgid "Schedule Details "
+msgstr "Détails de l'horaire"
+
+#: inc/TTBM_Filter_Pagination.php:80
+msgid "Search ...."
+msgstr "Rechercher ...."
+
+#: admin/TTBM_Settings_Global.php:46
+msgid "Seat Booked Status"
+msgstr "Statut du siège réservé"
+
+#: admin/TTBM_Settings.php:1207
+msgid "Seat Info ?"
+msgstr "Informations sur le siège ?"
+
+#: admin/TTBM_Settings_Global.php:251 inc/TTBM_Details_Layout.php:179
+msgid "Seats"
+msgstr "Sièges"
+
+#: admin/TTBM_Settings_Global.php:421
+msgid "Section Background color"
+msgstr "Couleur d'arrière-plan de la section"
+
+#: admin/TTBM_Settings.php:1124
+msgid "Section Title Style ?"
+msgstr "Style de titre de section ?"
+
+#: admin/TTBM_Settings.php:627
+msgid "Select a Feature"
+msgstr "Sélectionner une fonction"
+
+#: admin/TTBM_Settings.php:809
+msgid "Select Activities that you want to include in this tour . To add new Activities  "
+msgstr ""
+"Sélectionnez les activités que vous souhaitez inclure dans cette visite. Pour ajouter de "
+"nouvelles activités"
+
+#: admin/TTBM_Settings_Global.php:422
+msgid "Select Background  Color."
+msgstr "Sélectionner la couleur d'arrière-plan."
+
+#: admin/TTBM_Settings_Global.php:401
+msgid "Select Button Background  Color."
+msgstr "Sélectionner la couleur d'arrière-plan du bouton."
+
+#: admin/TTBM_Settings_Global.php:394
+msgid "Select Button Text  Color."
+msgstr "Sélectionnez la couleur du texte du bouton."
+
+#: admin/TTBM_Settings_Global.php:331
+msgid "Select Default Text  Color."
+msgstr "Sélectionnez la couleur de texte par défaut."
+
+#: admin/TTBM_Settings_Global.php:324
+msgid ""
+"Select Default Theme Alternate  Color that means, if background theme color then it will be text "
+"color."
+msgstr ""
+"Select Default Theme Alternate  Color that means, if background theme color then it will be text "
+"color."
+
+#: admin/TTBM_Settings_Global.php:317
+msgid "Select Default Theme Color"
+msgstr "Sélectionner la couleur du thème par défaut"
+
+#: admin/TTBM_Settings.php:1100
+msgid ""
+"Select Hotel name that you want to include in this tour , Tour ticket price works based on hotel "
+"price configuration . To add new hotel  "
+msgstr ""
+"Sélectionnez le nom de l'hôtel que vous souhaitez inclure dans cette visite, le prix du billet "
+"de visite fonctionne en fonction de la configuration du prix de l'hôtel. Pour ajouter un nouvel "
+"hôtel"
+
+#: inc/TTBM_Ajax.php:251 inc/ttbm_functions.php:749
+msgid "Select Hotel:"
+msgstr "Sélectionner un hôtel :"
+
+#: select_icon_popup/Select_Icon_Popup.php:59
+msgid "Select Icon"
+msgstr "Sélectionner l'icône"
+
+#: admin/TTBM_Settings_Global.php:415
+msgid "Select Warning  Color."
+msgstr "Sélectionner la couleur d'avertissement."
+
+#: admin/TTBM_Settings_Global.php:230
+msgid "Service Exclude"
+msgstr "Service Exclure"
+
+#: admin/TTBM_Settings.php:1006
+msgid "Service Icon"
+msgstr "Icône d'entretien"
+
+#: admin/TTBM_Settings_Global.php:237
+msgid "Service Include"
+msgstr "Service inclus"
+
+#: admin/TTBM_Settings_Global.php:167 admin/TTBM_Settings.php:1007 inc/TTBM_Booking.php:190
+#: inc/TTBM_Woocommerce.php:113 inc/TTBM_Woocommerce.php:234 inc/TTBM_Ajax.php:167
+msgid "Service Name"
+msgstr "Nom du service"
+
+#: admin/TTBM_Settings_Global.php:181 admin/TTBM_Settings.php:1008 inc/TTBM_Booking.php:191
+#: inc/TTBM_Woocommerce.php:115 inc/TTBM_Woocommerce.php:238 inc/TTBM_Ajax.php:168
+msgid "Service Price"
+msgstr "Prix des services"
+
+#: admin/TTBM_Settings_Global.php:174 inc/TTBM_Booking.php:192 inc/TTBM_Woocommerce.php:114
+#: inc/TTBM_Woocommerce.php:236 inc/TTBM_Ajax.php:169
+msgid "Service Qty"
+msgstr "Quantité de service"
+
+#: admin/TTBM_Settings.php:488
+msgid "Shipping only"
+msgstr "Expédition uniquement"
+
+#: support/elementor/widget/tour-list.php:369
+msgid "Show Date"
+msgstr "Afficher la date"
+
+#: support/elementor/widget/tour-list.php:501
+msgid "Show Location"
+msgstr "Afficher l'emplacement"
+
+#: support/elementor/widget/tour-list.php:776
+msgid "Show Price"
+msgstr "Afficher le prix"
+
+#: support/elementor/widget/tour-list.php:741
+msgid "Show Read More"
+msgstr "Afficher la suite"
+
+#: support/elementor/widget/tour-list.php:259
+msgid "Show Thumbnail"
+msgstr "Afficher la vignette"
+
+#: support/elementor/widget/tour-list.php:838
+msgid "Show Time"
+msgstr "Afficher l'heure"
+
+#: support/elementor/widget/tour-list.php:635 support/elementor/widget/tour-list.php:693
+msgid "Show Title"
+msgstr "Afficher le titre"
+
+#: inc/TTBM_Filter_Pagination.php:544
+msgid "Showing"
+msgstr "Affichage"
+
+#: admin/TTBM_Settings.php:1380
+msgid "Sidebar widget ?"
+msgstr "Widget de la barre latérale ?"
+
+#: admin/TTBM_Settings.php:1137
+msgid "Slider ?"
+msgstr "Curseur ?"
+
+#: super_slider/MP_Super_Slider.php:51
+msgid "Slider Indicator Type"
+msgstr "Type d'indicateur de curseur"
+
+#: super_slider/MP_Super_Slider.php:86
+msgid "Slider Popup Image Indicator"
+msgstr "Indicateur d'image contextuelle du curseur"
+
+#: super_slider/MP_Super_Slider.php:73
+msgid "Slider Showcase Position"
+msgstr "Position de la vitrine du curseur"
+
+#: super_slider/MP_Super_Slider.php:62
+msgid "Slider Showcase Visible?"
+msgstr "Vitrine de curseurs visible ?"
+
+#: super_slider/MP_Super_Slider.php:40
+msgid "Slider Type"
+msgstr "Type de curseur"
+
+#: admin/TTBM_Settings_Global.php:124 inc/ttbm_functions.php:427
+msgid "Sorry, Not Available"
+msgstr "Désolé, non disponible"
+
+#: admin/TTBM_Settings_Global.php:195
+msgid "Sorry, The Tour Already Started or Finished"
+msgstr "Désolé, la visite a déjà commencé ou est terminée"
+
+#: support/elementor/widget/tour-list.php:227
+msgid "Sort"
+msgstr "Trier"
+
+#: inc/TTBM_Filter_Pagination.php:400
+msgid "Specials"
+msgstr "Promotions"
+
+#: admin/TTBM_Settings.php:1237
+msgid "Start Location ?"
+msgstr "Emplacement de départ ?"
+
+#: inc/TTBM_Details_Layout.php:116
+msgid "Start Location: "
+msgstr "Emplacement de départ :"
+
+#: admin/TTBM_Status.php:12 support/elementor/widget/tour-list.php:242
+msgid "Status"
+msgstr "Statut"
+
+#: admin/TTBM_Settings.php:1128
+msgid "Style One"
+msgstr "Style un"
+
+#: admin/TTBM_Settings_Global.php:24
+msgid "Style Settings"
+msgstr "Paramètres de style"
+
+#: admin/TTBM_Settings.php:1130
+msgid "Style Three"
+msgstr "Style Trois"
+
+#: admin/TTBM_Settings.php:1129
+msgid "Style Two"
+msgstr "Style 2"
+
+#: super_slider/MP_Super_Slider.php:28
+msgid "Super Slider Settings"
+msgstr "Paramètres du super curseur"
+
+#: admin/TTBM_Settings.php:487
+msgid "Taxable"
+msgstr "Imposable"
+
+#: admin/TTBM_Settings.php:416 admin/TTBM_Settings.php:564 admin/TTBM_Settings.php:589
+#: admin/TTBM_Settings.php:604
+msgid "Template"
+msgstr "Modèle"
+
+#: support/elementor/widget/tour-list.php:467 support/elementor/widget/tour-list.php:599
+#: support/elementor/widget/tour-list.php:672 support/elementor/widget/tour-list.php:730
+#: support/elementor/widget/tour-list.php:813 support/elementor/widget/tour-list.php:875
+msgid "Text Color"
+msgstr "Couleur du texte"
+
+#: admin/TTBM_Settings_Global.php:323
+msgid "Theme Alternate Color"
+msgstr "Couleur alternative du thème"
+
+#: admin/TTBM_Settings_Global.php:316
+msgid "Theme Color"
+msgstr "Couleur du thème"
+
+#: admin/TTBM_Settings.php:535
+msgid "Thumbmnail "
+msgstr "Vignette"
+
+#: admin/TTBM_Settings.php:910
+msgid "Ticket Icon"
+msgstr "Icône de billet"
+
+#: admin/TTBM_Settings_Global.php:145 admin/TTBM_Settings.php:911 inc/TTBM_Booking.php:142
+#: inc/TTBM_Woocommerce.php:99 inc/TTBM_Woocommerce.php:209 inc/TTBM_Ajax.php:52
+msgid "Ticket Name"
+msgstr "Nom du billet"
+
+#: admin/TTBM_Settings_Global.php:159 admin/TTBM_Settings.php:912 inc/TTBM_Booking.php:143
+#: inc/TTBM_Woocommerce.php:101 inc/TTBM_Woocommerce.php:211 inc/TTBM_Ajax.php:53
+msgid "Ticket Price"
+msgstr "Prix du billet"
+
+#: admin/TTBM_Settings_Global.php:152 inc/TTBM_Booking.php:144 inc/TTBM_Woocommerce.php:100
+#: inc/TTBM_Woocommerce.php:210 inc/TTBM_Ajax.php:54
+msgid "Ticket Qty"
+msgstr "Quantité de tickets"
+
+#: support/elementor/widget/tour-list.php:830
+msgid "Time"
+msgstr "Heure"
+
+#: support/elementor/widget/tour-list.php:628
+msgid "Title"
+msgstr "Titre"
+
+#: admin/TTBM_Settings.php:1357
+msgid "Top tour Summary ?"
+msgstr "Résumé de la tournée supérieure ?"
+
+#: admin/TTBM_Settings.php:1367
+msgid "Top tour Summary Style ?"
+msgstr "Top Tour Sommaire Style ?"
+
+#: inc/TTBM_Booking.php:68 inc/TTBM_Ajax.php:225
+msgid "Total : "
+msgstr "Total :"
+
+#: admin/TTBM_Settings_Global.php:258
+msgid "Total Seats"
+msgstr "Nombre total de sièges"
+
+#: inc/TTBM_Details_Layout.php:184
+msgid "Total Seats : "
+msgstr "Nombre total de sièges :"
+
+#: admin/TTBM_Settings.php:20
+msgid "Tour & Travel"
+msgstr "Tournée"
+
+#: admin/TTBM_Admin.php:359
+msgid "Tour Booking Details Page Sidebar"
+msgstr "Barre latérale de la page de détails"
+
+#. Name of the plugin
+msgid "Tour Booking Manager For Woocommerce"
+msgstr "Tour Booking Manager For Woocommerce"
+
+#: support/elementor/widget/tour-list.php:25 support/elementor/widget/tour-list.php:41
+msgid "Tour List"
+msgstr "Liste des tournées"
+
+#: admin/TTBM_Settings.php:866
+msgid "Tour Type"
+msgstr "Type de visite"
+
+#: admin/TTBM_Settings.php:1297
+msgid "Tour Type ?"
+msgstr "Type de visite ?"
+
+#: admin/TTBM_Settings_Global.php:20
+msgid "Translation Settings"
+msgstr "Paramètres de traduction"
+
+#: admin/TTBM_Settings_Global.php:94
+msgid "Travel category Label"
+msgstr "Libellé de catégorie de voyage"
+
+#: admin/TTBM_Settings_Global.php:101
+msgid "Travel Category Slug"
+msgstr "Catégorie de voyage slug"
+
+#: admin/TTBM_Settings_Global.php:85
+msgid "Travel Icon"
+msgstr "Icône de voyage"
+
+#: admin/TTBM_Settings_Global.php:69
+msgid "Travel Label"
+msgstr "Étiquette de voyage"
+
+#: admin/TTBM_Settings_Global.php:108
+msgid "Travel Organizer Label"
+msgstr "Travel Organizer Label"
+
+#: admin/TTBM_Settings_Global.php:115
+msgid "Travel Organizer Slug"
+msgstr "Travel Organizer Slug"
+
+#: admin/TTBM_Settings_Global.php:77
+msgid "Travel Slug"
+msgstr "Travel Slug"
+
+#: admin/TTBM_Settings_Global.php:338
+msgid "Type Default Font Size(in PX Unit)."
+msgstr "Type Default Font Size(in PX Unit)."
+
+#: admin/TTBM_Settings_Global.php:387
+msgid "Type Font Size Button(in PX Unit)."
+msgstr "Type Font Size Button(in PX Unit)."
+
+#: admin/TTBM_Settings_Global.php:352
+msgid "Type Font Size h2 Title(in PX Unit)."
+msgstr "Type Font Size h2 Title(in PX Unit)."
+
+#: admin/TTBM_Settings_Global.php:359
+msgid "Type Font Size h3 Title(in PX Unit)."
+msgstr "Type Font Size h3 Title(in PX Unit)."
+
+#: admin/TTBM_Settings_Global.php:366
+msgid "Type Font Size h4 Title(in PX Unit)."
+msgstr "Type Font Size h4 Title(in PX Unit)."
+
+#: admin/TTBM_Settings_Global.php:373
+msgid "Type Font Size h5 Title(in PX Unit)."
+msgstr "Type Font Size h5 Title(in PX Unit)."
+
+#: admin/TTBM_Settings_Global.php:380
+msgid "Type Font Size h6 Title(in PX Unit)."
+msgstr "Type Font Size h6 Title(in PX Unit)."
+
+#: admin/TTBM_Settings_Global.php:408
+msgid "Type Font Size Label(in PX Unit)."
+msgstr "étiquette de taille de police de type (en unité PX)."
+
+#: admin/TTBM_Settings_Global.php:345
+msgid "Type Font Size Main Title(in PX Unit)."
+msgstr "Type Font Size Main Title(in PX Unit)."
+
+#: support/elementor/widget/tour-list.php:246
+msgid "Upcoming"
+msgstr "À venir"
+
+#: admin/TTBM_Settings_Global.php:414
+msgid "warning Color"
+msgstr "couleur d'avertissement"
+
+#: admin/TTBM_Welcome.php:12 admin/TTBM_Welcome.php:21
+msgid "Welcome"
+msgstr "Bienvenue"
+
+#: templates/single/exclude_service.php:10 templates/layout/exclude_service.php:10
+msgid "What's Excluded"
+msgstr "Ce qui est exclu"
+
+#: templates/single/include_feature.php:10 templates/layout/include_feature.php:11
+msgid "What's Included"
+msgstr "Ce qui est inclus"
+
+#: admin/TTBM_Settings_Global.php:293 admin/TTBM_Settings.php:341 admin/TTBM_Settings.php:350
+msgid "Why Book With Us?"
+msgstr "Pourquoi réserver avec nous ?"
+
+#: admin/TTBM_Settings.php:362 templates/single/why_choose_us.php:10
+#: templates/layout/why_choose_us.php:10
+msgid "Why Book With Us? "
+msgstr "Pourquoi réserver avec nous ?"
+
+#: admin/TTBM_Settings.php:1347
+msgid "Why Choose Us ?"
+msgstr "Pourquoi nous choisir ?"
+
+#: admin/TTBM_Admin.php:361
+msgid "Widgets in this area will be shown on tour booking details page sidebar."
+msgstr "Widgets in this area will be shown on tour booking details page sidebar."
+
+#: admin/TTBM_Settings.php:1372
+msgid "With circular Icon Background"
+msgstr "Avec fond d'icône circulaire"
+
+#: admin/TTBM_Settings.php:1373
+msgid "With square Icon Background"
+msgstr "Avec fond d'icône carré"
+
+#: admin/TTBM_Settings.php:1371
+msgid "Without Icon Background"
+msgstr "Sans fond d'icône"
+
+#: support/elementor/widget/tour-list.php:166 support/elementor/widget/tour-list.php:263
+#: support/elementor/widget/tour-list.php:373 support/elementor/widget/tour-list.php:505
+#: support/elementor/widget/tour-list.php:639 support/elementor/widget/tour-list.php:697
+#: support/elementor/widget/tour-list.php:745 support/elementor/widget/tour-list.php:780
+#: support/elementor/widget/tour-list.php:842
+msgid "Yes"
+msgstr "Oui"
+
+#: admin/TTBM_Settings_Global.php:279
+msgid "You may like Tour"
+msgstr "Vous aimerez peut-être la tournée"
+
+#: templates/single/related_tour.php:10 templates/layout/related_tour.php:10
+msgid "You may like Tour "
+msgstr "Vous aimerez peut-être la tournée"

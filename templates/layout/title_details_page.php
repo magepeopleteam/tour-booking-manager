@@ -1,0 +1,1 @@
+<?php	if ( ! defined( 'ABSPATH' ) ) {		exit;	}	$tour_id = $tour_id ?? get_the_id();?><div class="ttbm_default__title">	<h1><?php echo get_the_title( $tour_id ); ?></h1></div>

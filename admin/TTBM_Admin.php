@@ -56,7 +56,6 @@
 				flush_rewrite_rules();
 			}
 			private function load_ttbm_admin() {
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Dummy_Import.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/MAGE_Setting_API.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Settings_Global.php';
 				require_once TTBM_PLUGIN_DIR . '/lib/classes/class-form-fields-generator.php';
@@ -78,6 +77,7 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Save.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_LIcense.php';
 				require_once TTBM_PLUGIN_DIR . '/select_icon_popup/Select_Icon_Popup.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Dummy_Import.php';
 			}
 			public function ttbm_taxonomy() {
 				$tour_label     = TTBM_Function::get_name();

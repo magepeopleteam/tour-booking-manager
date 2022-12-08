@@ -16,7 +16,7 @@
 			public function add_tab() {
 				?>
 				<li data-tabs-target="#ttbm_settings_place_you_see">
-					<span class="dashicons dashicons-location"></span><?php esc_html_e( ' Places You\'ll See', 'tour-booking-manager' ); ?>
+					<span class="fas fa-map-marker-alt"></span><?php esc_html_e( ' Places You\'ll See', 'tour-booking-manager' ); ?>
 				</li>
 				<?php
 			}

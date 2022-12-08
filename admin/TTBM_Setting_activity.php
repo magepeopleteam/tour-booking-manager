@@ -16,7 +16,7 @@
 			public function add_tab() {
 				?>
 				<li data-tabs-target="#ttbm_settings_activies">
-					<span class="dashicons dashicons-nametag"></span><?php esc_html_e( ' Activities', 'tour-booking-manager' ); ?>
+					<span class="fas fa-clipboard-list"></span><?php esc_html_e( ' Activities', 'tour-booking-manager' ); ?>
 				</li>
 				<?php
 			}

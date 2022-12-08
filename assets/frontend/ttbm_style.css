@@ -62,7 +62,7 @@ div.small_box > * {text-align: center;}
 /**************************************************/
 .ttbm_wraper button.ttbm_book_now {font-size: var(--font-size-h4);margin: 0 var(--default-mp-xs) 0 0;}
 /*****************/
-span.ttbm_warning { display: block;border: 1px solid #E67C30;text-align: center;padding: 5px; color: var(--warning_color); font-size: var(--fs);}
+
 /**********************/
 div.bg_image_area .group_item {
 	display: -webkit-flex;display: flex;

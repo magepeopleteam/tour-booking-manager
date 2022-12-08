@@ -13,7 +13,7 @@
 			public function add_tab() {
 				?>
 				<li data-tabs-target="#ttbm_settings_pricing">
-					<span class="dashicons dashicons-money-alt"></span><?php esc_html_e( ' Pricing', 'tour-booking-manager' ); ?>
+					<span class="fas fa-hand-holding-usd"></span><?php esc_html_e( ' Pricing', 'tour-booking-manager' ); ?>
 				</li>
 				<?php
 				do_action( 'ttbm_meta_box_tab_after_pricing' );

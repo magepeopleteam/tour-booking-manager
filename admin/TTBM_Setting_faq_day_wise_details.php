@@ -15,10 +15,10 @@
 			public function add_tab() {
 				?>
 				<li data-tabs-target="#ttbm_settings_day_wise_details">
-					<span class="dashicons dashicons-list-view"></span><?php esc_html_e( ' Day wise Details', 'tour-booking-manager' ); ?>
+					<span class="fas fa-th-list"></span><?php esc_html_e( ' Day wise Details', 'tour-booking-manager' ); ?>
 				</li>
 				<li data-tabs-target="#ttbm_settings_faq">
-					<span class="dashicons dashicons-editor-help"></span><?php esc_html_e( ' F.A.Q', 'tour-booking-manager' ); ?>
+					<span class="fas fa-question-circle"></span><?php esc_html_e( ' F.A.Q', 'tour-booking-manager' ); ?>
 				</li>
 				<?php
 			}

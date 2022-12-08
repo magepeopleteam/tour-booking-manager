@@ -9,7 +9,7 @@
 			}
 			public function hotel_settings_meta() {
 				$ttbm_label = TTBM_Function::get_name();
-				add_meta_box( 'ttbm_add_meta_box', '<span class="dashicons dashicons-info"></span>' . $ttbm_label . esc_html__( ' Hotel Settings : ', 'tour-booking-manager' ) . get_the_title( get_the_id() ), array( $this, 'hotel_settings' ), 'ttbm_hotel', 'normal', 'high' );
+				add_meta_box( 'ttbm_add_meta_box', '<span class="fas fa-hotel"></span>' . $ttbm_label . esc_html__( ' Hotel Settings : ', 'tour-booking-manager' ) . get_the_title( get_the_id() ), array( $this, 'hotel_settings' ), 'ttbm_hotel', 'normal', 'high' );
 			}
 			public function hotel_settings() {
 				$hotel_id    = get_the_id();
@@ -19,13 +19,13 @@
 					<div class="mpTabs leftTabs">
 						<ul class="tabLists">
 							<li data-tabs-target="#ttbm_general_info">
-								<span class="dashicons dashicons-admin-settings"></span><?php esc_html_e( 'General Info', 'tour-booking-manager' ); ?>
+								<span class="fas fa-cog"></span><?php esc_html_e( 'General Info', 'tour-booking-manager' ); ?>
 							</li>
 							<li data-tabs-target="#ttbm_settings_pricing">
-								<span class="dashicons dashicons-money-alt"></span><?php esc_html_e( ' Pricing', 'tour-booking-manager' ); ?>
+								<span class="fas fa-money-bill"></span><?php esc_html_e( ' Pricing', 'tour-booking-manager' ); ?>
 							</li>
 							<li data-tabs-target="#ttbm_settings_feature">
-								<span class="dashicons dashicons-plugins-checked"></span><?php esc_html_e( ' Features', 'tour-booking-manager' ); ?>
+								<span class="fas fa-tasks"></span><?php esc_html_e( ' Features', 'tour-booking-manager' ); ?>
 							</li>
 						</ul>
 						<div class="tabsContent tab-content">

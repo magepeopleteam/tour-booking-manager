@@ -39,11 +39,11 @@
 						$upcoming_date = TTBM_Function::get_post_info( $post_id, 'ttbm_upcoming_date' );
 						if ( $upcoming_date ) {
 							?>
-							<span class="ttbm_success"><?php echo esc_html( TTBM_Function::datetime_format( $upcoming_date, 'date-text' ) ); ?></span>
+							<span class="textSuccess"><?php echo esc_html( TTBM_Function::datetime_format( $upcoming_date, 'date-text' ) ); ?></span>
 							<?php
 						} else {
 							?>
-							<span class="ttbm_warning"><?php esc_html_e( 'Expired !', 'tour-booking-manager' ); ?></span>
+							<span class="textWarning"><?php esc_html_e( 'Expired !', 'tour-booking-manager' ); ?></span>
 							<?php
 						}
 						break;

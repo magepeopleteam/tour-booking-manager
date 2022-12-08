@@ -477,21 +477,22 @@
 				if ( $params['month-filter'] == 'yes' ) {
 					$url_month    = $_GET['month_filter'] ?? '';
 					$first_date   = date( 'Y-m-01' );
-					$current_date = current_time( 'y-m-d' );
+					$current_date = current_time( 'Y-m-d' );
 					$month        = date( 'n', strtotime( $current_date ) );
 					$selected     = $url_month == $month ? 'selected' : '';
+					$date_format=TTBM_Function::get_general_settings( 'ttbm_date_format_short', 'M , Y' );
 					?>
 					<label data-placeholder>
 						<select class="formControl" name="month_filter">
 							<option selected value=""><?php esc_html_e( 'All Month', 'tour-booking-manager' ); ?></option>
-							<option value="<?php echo esc_attr( $month ); ?>" <?php echo esc_attr( $selected ); ?>><?php echo current_time( 'M , Y' ); ?></option>
+							<option value="<?php echo esc_attr( $month ); ?>" <?php echo esc_attr( $selected ); ?>><?php echo date_i18n( $date_format ,strtotime( $current_date )); ?></option>
 							<?php
 								for ( $i = 1; $i < 12; $i ++ ) {
 									$first_date = date( 'y-m-d', strtotime( "+1 month", strtotime( $first_date ) ) );
 									$month      = date( 'n', strtotime( $first_date ) );
 									$selected   = $url_month == $month ? 'selected' : '';
 									?>
-									<option value="<?php echo esc_attr( $month ); ?>" <?php echo esc_attr( $selected ); ?>><?php echo date_i18n( 'M , Y', strtotime( $first_date ) ); ?></option>
+									<option value="<?php echo esc_attr( $month ); ?>" <?php echo esc_attr( $selected ); ?>><?php echo date_i18n( $date_format, strtotime( $first_date ) ); ?></option>
 									<?php
 								}
 							?>

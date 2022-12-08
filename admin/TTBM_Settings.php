@@ -16,7 +16,7 @@
 			//************************//
 			public function ttbm_settings_meta() {
 				$ttbm_label = TTBM_Function::get_name();
-				add_meta_box( 'ttbm_add_meta_box', '<span class="dashicons dashicons-info"></span>' . $ttbm_label . esc_html__( ' Information Settings : ', 'tour-booking-manager' ) . get_the_title( get_the_id() ), array( $this, 'ttbm_settings' ), 'ttbm_tour', 'normal', 'high' );
+				add_meta_box( 'ttbm_add_meta_box', '<span class="fas fa-cogs"></span>' . $ttbm_label . esc_html__( ' Information Settings : ', 'tour-booking-manager' ) . get_the_title( get_the_id() ), array( $this, 'ttbm_settings' ), 'ttbm_tour', 'normal', 'high' );
 			}
 			//******************************//
 			public function ttbm_settings() {
@@ -27,25 +27,25 @@
 					<div class="mpTabs leftTabs">
 						<ul class="tabLists">
 							<li data-tabs-target="#ttbm_general_info">
-								<span class="dashicons dashicons-admin-settings"></span><?php esc_html_e( 'General Info', 'tour-booking-manager' ); ?>
+								<span class="fas fa-tools"></span><?php esc_html_e( 'General Info', 'tour-booking-manager' ); ?>
 							</li>
 							<?php do_action( 'ttbm_meta_box_tab_name', $tour_id ); ?>
 							<?php do_action( 'add_ttbm_settings_tab_name' ); ?>
 							<li data-tabs-target="#ttbm_settings_gallery">
-								<span class="dashicons dashicons-images-alt"></span><?php esc_html_e( 'Gallery ', 'tour-booking-manager' ); ?>
+								<span class="fas fa-images"></span><?php esc_html_e( 'Gallery ', 'tour-booking-manager' ); ?>
 							</li>
 							<li data-tabs-target="#ttbm_settings_extras">
-								<span class="dashicons dashicons-text-page"></span><?php esc_html_e( 'Extras ', 'tour-booking-manager' ); ?>
+								<span class="fas fa-file-alt"></span><?php esc_html_e( 'Extras ', 'tour-booking-manager' ); ?>
 							</li>
 							<li data-tabs-target="#ttbm_settings_related_tour">
-								<span class="dashicons dashicons-location-alt"></span><?php echo esc_html__( 'Related ', 'tour-booking-manager' ) . $ttbm_label; ?>
+								<span class="fas fa-map-marked-alt"></span><?php echo esc_html__( 'Related ', 'tour-booking-manager' ) . $ttbm_label; ?>
 							</li>
 							<li data-tabs-target="#ttbm_display_settings">
-								<span class="dashicons dashicons-index-card"></span><?php esc_html_e( ' Display settings', 'tour-booking-manager' ); ?>
+								<span class="fas fa-chalkboard"></span><?php esc_html_e( ' Display settings', 'tour-booking-manager' ); ?>
 							</li>
 							<?php if ( is_plugin_active( 'mage-partial-payment-pro/mage_partial_pro.php' ) ) : ?>
 								<li data-tabs-target="#_mep_pp_deposits_type">
-									<span class="dashicons dashicons-index-card"></span>&nbsp;&nbsp;<?php esc_html_e( 'Partial Payment', 'bus-ticket-booking-with-seat-reservation' ); ?>
+									<span class="far fa-money-bill-alt"></span>&nbsp;&nbsp;<?php esc_html_e( 'Partial Payment', 'bus-ticket-booking-with-seat-reservation' ); ?>
 								</li>
 							<?php endif; ?>
 						</ul>
@@ -739,7 +739,7 @@
 				];
 				$ttbm_date_config_boxs_args = [
 					'meta_box_id'    => 'ttbm_travel_date_config_meta_boxes',
-					'meta_box_title' => '<span class="dashicons dashicons-calendar-alt"></span>' . __( 'Date Configuration', 'tour-booking-manager' ),
+					'meta_box_title' => '<span class="far fa-calendar-plus"></span>' . __( 'Date Configuration', 'tour-booking-manager' ),
 					'screen'         => [ TTBM_Function::get_cpt_name() ],
 					'context'        => 'normal',
 					'priority'       => 'high',
@@ -788,7 +788,7 @@
 				];
 				$ttbm_tax_meta_boxs_args = [
 					'meta_box_id'    => 'ttbm_tax_meta_boxes',
-					'meta_box_title' => '<span class="dashicons dashicons-text-page"></span> ' . __( ' Tax', 'tour-booking-manager' ),
+					'meta_box_title' => '<span class="fas fa-money-bill-wave"></span> ' . __( ' Tax', 'tour-booking-manager' ),
 					'screen'         => [ TTBM_Function::get_cpt_name() ],
 					'context'        => 'normal',
 					'priority'       => 'low',

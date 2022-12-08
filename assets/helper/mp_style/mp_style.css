@@ -8,7 +8,8 @@ body.noScroll {overflow: hidden;}
 /******/
 .mpStyle {font-size: var(--fs);font-weight: var(--fw);color: var(--default-color);line-height: 1.6;}
 .mpStyle, .mpStyle [data-collapse].mActive {display: block;}
-.mpStyle table [data-collapse].mActive {display: table-cell;}
+.mpStyle table th[data-collapse].mActive ,
+.mpStyle table td[data-collapse].mActive {display: table-cell;}
 .mpStyle p:not(.mp_wp_editor p) {margin: 0;padding: 0;line-height: 1.5;font-size: var(--fs);}
 .mpStyle a:not(.mp_wp_editor a) {color: #0E6BB7;text-decoration: none;}
 .mpStyle a:hover {opacity: 0.5;}
@@ -153,16 +154,22 @@ div[class*="dLoader"], div[class*="simpleSpinner"],
 .mpStyle button {position: relative;font-size: var(--button-fs);font-weight: var(--fw-medium);line-height: 1; cursor: pointer;overflow: visible;border: none;-webkit-appearance: button;text-transform: capitalize;}
 .mpStyle button[disabled] {cursor: not-allowed;opacity: 0.8;background-color: #DDD;}
 .mpStyle Button:hover, .mpStyle Button:focus {text-decoration: none;opacity: 0.8;background-color: #000;color: #FFF;}
+.mpStyle Button:hover span, .mpStyle Button:focus span{color: #FFF;}
 /***/
 .mpStyle [class*="dButton"] { padding: 0 var(--default-mp); min-width: var(--button-width); height: auto; min-height: var(--button-height);color: var(--button-color);background-color: var(--button-bg);}
 .mpStyle [class*="dButton"] span {margin: 0 var(--default-mp-xs) 0 0;}
 .mpStyle .dButton, .mpStyle [class*="_dButton"] {color: var(--button-color);background-color: var(--button-bg);}
+.mpStyle .dButton span, .mpStyle [class*="_dButton"] span {color: var(--button-color);}
 /***/
 .mpStyle .themeButton, .mpStyle [class*="_themeButton"] {background-color: var(--theme-color);color: var(--theme-alternate-color);padding: var(--default-mp-xs) var(--default-mp);border: 2px solid var(--theme-color);}
+.mpStyle .themeButton span, .mpStyle [class*="_themeButton"] span{color: var(--theme-alternate-color);}
 .mpStyle .themeButton:hover, .mpStyle [class*="_themeButton"]:hover {background-color: #000;color: var(--theme-alternate-color);border-color: #000;}
+.mpStyle .themeButton:hover span, .mpStyle [class*="_themeButton"]:hover span{color: var(--theme-alternate-color);}
 /****/
 .mpStyle .warningButton, .mpStyle [class*="_warningButton"] {background-color: var(--warning_color);color: var(--theme-alternate-color);padding: var(--default-mp-xs) var(--default-mp);border: 2px solid var(--warning_color);}
+.mpStyle .warningButton span, .mpStyle [class*="_warningButton"] span{color: var(--theme-alternate-color);}
 .mpStyle .warningButton:hover, .mpStyle [class*="_warningButton"]:hover {background-color: var(--info-bg);color: var(--warning_color);}
+.mpStyle .warningButton:hover span, .mpStyle [class*="_warningButton"]:hover span{color: var(--warning_color);}
 /*********/
 .mpStyle [class*="Button_xs"] {min-width: auto;min-height: var(--button-height-xs); padding: 7px var(--default-mp-xs);font-size: var(--fs);}
 
@@ -734,9 +741,11 @@ ul.mage_list li {padding: var(--default-mp-xs) 0;}
 .mpStyle .tabsContent {position: relative;overflow: hidden;width: 100%;padding: var(--default-mp);}
 .tabsContent [data-tabs] {display: none;}
 /************Panel section**************************/
-.mpStyle .mpPanel {position: relative;border: 1px solid var(--border_color);border-radius: var(--default-border-radious);}
-.mpStyle .mpPanelHeader {padding: 10px var(--default-mp);background-color: #555;color: #FFF;}
-.mpStyle .mpPanelBody {padding: var(--default-mp);background-color: var(--sidebar-bg);overflow-x: auto;}
+div.mpStyle .mpPanel {position: relative;border: 1px solid var(--border_color);border-radius: var(--default-border-radious);}
+div.mpStyle .mpPanelHeader {padding: 10px var(--default-mp);background-color: #555;color: #FFF;}
+div.mpStyle .mpPanelHeader .panelTitle,
+div.mpStyle .mpPanelHeader .panelTitle span{color: #FFF;}
+div.mpStyle .mpPanelBody {padding: var(--default-mp);background-color: var(--sidebar-bg);overflow-x: auto;}
 /************Faq section**************************/
 [class*='faqItem'] {
 	margin: var(--default-mp) 0 0 0;

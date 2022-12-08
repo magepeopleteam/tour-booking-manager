@@ -24,6 +24,11 @@
 #ttbm_add_meta_box .postbox-header h2 span {margin: 0 7px 0 0;}
 #ttbm_add_meta_box .wp-editor-wrap {width: 100%;}
 #ttbm_add_meta_box .ppof-settings .collapsible .content > div {display: inline-block;min-width: 150px;}
+/**************************/
+#ttbm_add_meta_box .mp_event_remove_move { display: -webkit-flex; display: flex;}
+#ttbm_add_meta_box .mp_event_remove_move > * { -webkit-flex: 1; flex: 1;}
+#ttbm_add_meta_box .mp_event_remove_move button { color: #6B003E;}
+#ttbm_add_meta_box .mp_ticket_type_table { width: 100%; overflow: auto; padding: 0 0 15px 0;}
 /************Custom Pick Plugin**************************/
 .pickPluginInputItem:first-child { border-top: 1px dashed #0C5460;}
 .pickPluginInputItem {padding: 10px 0;border-bottom: 1px dashed #0C5460;}
@@ -32,18 +37,12 @@
 .mpStyle .pickPluginInputItem select { min-width: 150px;}
 .mpStyle .pickPluginInputItem textarea { padding: 10px;}
 .mpStyle .select2-search__field { min-width: 320px;}
-/**************************/
-#ttbm_add_meta_box .mp_event_remove_move { display: -webkit-flex; display: flex;}
-#ttbm_add_meta_box .mp_event_remove_move > * { -webkit-flex: 1; flex: 1;}
-#ttbm_add_meta_box .mp_event_remove_move button { color: #6B003E;}
-#ttbm_add_meta_box .mp_ticket_type_table { width: 100%; overflow: auto; padding: 0 0 15px 0;}
+
 /**************************/
 .inside .sec { display: block; font-size: 15px; font-weight: normal; margin: 0;}
 .sec label { font-size: 16px; font-weight: bold;}
-#mep_uid { width: 65px;}
 .inside .sec input { border: 1px solid #DDD; padding: 5px; width: 100%; color: #000;}
 .inside .sec label { font-weight: normal;}
-table.atendee-info { display: block; overflow: hidden; width: 100%;}
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
 #map { height: 250px;}
@@ -59,22 +58,26 @@ table.atendee-info { display: block; overflow: hidden; width: 100%;}
 .pac-controls label { font-size: 13px; font-weight: 300;}
 #pac-input { background-color: #FFF; font-size: 15px; font-weight: 300; margin-left: 12px; padding: 0 11px 0 13px; text-overflow: ellipsis; width: 400px;}
 #pac-input:focus { border-color: #4D90FE;}
-a.button.remove-faq-row { overflow: hidden; display: inline-block;}
+
 .tab-content.active.tab-content-ttbm_list_template_meta_box table tr th,
 .tab-content.active.tab-content-ttbm_list_template_meta_box table tr td { display: block; overflow: hidden; width: 100%;}
 .tab-content.active.tab-content-ttbm_list_template_meta_box table tr td select { width: 100%;}
 .ttbm_tour_page_ttbm_welcome_page .notice { display: none;}
 #wp-mep_event_cc_email_text-media-buttons button { width: auto !important;}
+/************************************/
+#ttbm_status_page table th{text-align: left;}
+/************************************/
+span.textWarning {  color: var(--warning_color); font-size: var(--fs);font-weight: var(--fw-bold);}
+span.textSuccess{ color: var(--success-color); font-size: var(--fs);}
 /****************mp_event_all_meta_in_tab********************/
-iframe#gmap_canvas { width: 100%; height: 300px;}
-/*************/
 .ttbm_settings_panel .metabox-holder table { border-collapse: collapse;}
 .ttbm_settings_panel .metabox-holder table td,
 .ttbm_settings_panel .metabox-holder table th { padding: 12px;}
 .ttbm_settings_panel .metabox-holder table tr:nth-child(even) { background-color: #0CB32612;}
 .ttbm_settings_panel .metabox-holder table tr:nth-child(odd) { background-color: #FFF;}
-#ttbm_add_meta_box .mpStyle [data-tabs-target].active { background-color: #49AC2F !important;}
-#ttbm_add_meta_box .mpStyle [data-tabs-target] { color: #FFF !important; transition: 0.2s;}
+#ttbm_add_meta_box .mpStyle [data-tabs-target].active { background-color: #49AC2F;}
+#ttbm_add_meta_box .mpStyle [data-tabs-target] { color: #FFF; transition: 0.2s;}
+#ttbm_add_meta_box .mpStyle [data-tabs-target] span{ color: #FFF;}
 #ttbm_add_meta_box .mpStyle [data-tabs-target]:hover { background-color: #49AC2F !important; transition: 0.2s;}
 #ttbm_add_meta_box .mpStyle .tabLists { background-color: #161B37 !important;}
 #ttbm_add_meta_box .mpStyle .tabLists { font-size: 14px;}
@@ -99,9 +102,7 @@ iframe#gmap_canvas { width: 100%; height: 300px;}
 #ttbm_add_meta_box .mpStyle [class*="_bgColor_1"]:hover {background: #239108;border-color: #239108;transition: 0.2s;}
 #ttbm_add_meta_box .mpStyle .roundSwitch { min-width: 60px;}
 #ttbm_add_meta_box .mpStyle button.mp_input_add_icon_button { min-width: inherit;}
-.ttbm_success {color: green; font-weight: bold;}
-.ttbm_warning {color: #E6B14E;font-weight: bold;}
-.ttbm_error {color: red;font-weight: bold;}
+
 #mep_disable_ticket_time {margin: 0 10px 0 0;}
 /************/
 div.ttbm_settings table {table-layout: auto;border-collapse: collapse;border: 1px solid #F5F5F5;}
@@ -109,11 +110,11 @@ div.ttbm_settings table tr:nth-child(even) {background-color: #0CB32612;}
 div.ttbm_settings table tr:nth-child(odd) {background-color: #FFF;}
 div.ttbm_settings table th,
 div.ttbm_settings table td {border: 0;}
-div.ttbm_settings table th {min-width: 130px; font-size: 14px;}
 div.ttbm_settings table tbody th {text-align: left;font-size: var(--fs);}
 div.ttbm_settings table tbody thead th {text-align: center;}
-div.ttbm_settings .formControl {min-width: 100px;box-shadow: none;padding: 5px var(--default-mp-xs);max-width: 300px;}
-div.ttbm_settings .formControl.date_type, div.ttbm_settings .formControl[type="date"] {padding: 5px 5px 5px 40px;max-width: 300px;font-size: 16px;}
+div.ttbm_settings .formControl {min-width: 80px;box-shadow: none;padding: 5px var(--default-mp-xs);max-width: 300px;}
+div.ttbm_settings .formControl.date_type,
+div.ttbm_settings .formControl[type="date"] {padding: 5px 5px 5px 40px;max-width: 300px;font-size: 16px;min-width: 200px;}
 div.ttbm_settings span.dropdown-wrapper {margin: 0 !important;}
 div.ttbm_settings p.ttbm_description {display: block;font-weight: normal;font-size: var(--fs_small) !important;color: #666;}
 div.ttbm_settings p.ttbm_description span {margin: 0 5px 0 0;}
@@ -121,17 +122,14 @@ div.ttbm_settings .mpPopup .popupMainArea {width: 100%;}
 /****************select_2 custom css******************/
 div.mpStyle span.selection,
 div.mpStyle span.select2-container.select2,
-div.mpStyle span.select2-container span.select2-selection { margin: 0; min-height: var(--button-height); min-width: 300px;}
+div.mpStyle span.select2-container span.select2-selection { margin: 0; min-height: var(--button-height); min-width:auto;max-width: 300px;width: 100% !important;}
 div.mpStyle span.selection {overflow: hidden; max-width: 100%;}
 div.mpStyle span.select2-container span.select2-selection__rendered { display: -webkit-flex;display: flex; -webkit-align-items: center;align-items: center; height: 100%;}
 div.mpStyle span.select2-container .select2-selection__arrow { top: 2px; height: 37px;}
 /*css added by ariful*/
-#ttbm_add_meta_box .tabsContent [data-tabs="#ttbm_general_info"] .max_30_pc { max-width: 30%; width: 100%;}
-#ttbm_add_meta_box .tabsContent [data-tabs="#ttbm_general_info"] .p_5 { padding: 5px;}
-#ttbm_add_meta_box .tabsContent [data-tabs="#ttbm_general_info"] .min_100_pc { min-width: 100%;}
-#ttbm_add_meta_box .tabsContent [data-tabs="#ttbm_general_info"] .align_right { text-align: right;}
+
 #ttbm_add_meta_box .tabsContent .ttbm_pro_badge { color: #FFF; background-color: #DB2020; width: max-content; border-radius: 5px; padding: 2px 5px; font-size: 14px; display: inline-block;}
-.ttbm_settings h6.p_5 {max-width: 260px; width: 100%}
+
 a#ttbm_basic_license_settings-tab { display: none;}
 /***************************************/
 div.ttbm_welcome_page { margin: 20px 20px 20px 0;}

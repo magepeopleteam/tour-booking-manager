@@ -5,15 +5,15 @@
 	if ( ! class_exists( 'TTBM_Layout' ) ) {
 		class TTBM_Layout {
 			public function __construct() {
-				add_action( 'ttbm_hidden_item_table', array( $this, 'hidden_item_table' ), 10, 1 );
+				add_action( 'ttbm_hidden_item_table', array( $this, 'hidden_item_table' ), 10, 2 );
 			}
 			/****************************/
-			public function hidden_item_table( $hook_name ) {
+			public function hidden_item_table( $hook_name,$data=array() ) {
 				?>
 				<div class="mp_hidden_content">
 					<table>
 						<tbody class="mp_hidden_item">
-						<?php do_action( $hook_name ); ?>
+						<?php do_action( $hook_name,$data ); ?>
 						</tbody>
 					</table>
 				</div>
@@ -89,6 +89,14 @@
 					</button>
 				<?php }
 			}
+			public static function ttbm_add_button( $button_text, $class = 'ttbm_add_item', $button_class = '_themeButton_xs_mt_xs', $icon_class = 'fas fa-plus-square' ) {
+				?>
+				<button class="<?php echo esc_attr( $button_class . ' ' . $class ); ?>" type="button">
+					<span class="<?php echo esc_attr( $icon_class ); ?>"></span>
+					<span class="ml_xs"><?php echo esc_html( $button_text ); ?></span>
+				</button>
+				<?php
+			}
 			public static function add_new_button( $button_text, $class = 'mp_add_item', $button_class = '_themeButton_xs_mt_xs', $icon_class = 'fas fa-plus-square' ) {
 				?>
 				<button class="<?php echo esc_attr( $button_class . ' ' . $class ); ?>" type="button">
@@ -101,8 +109,8 @@
 				?>
 				<div class="allCenter">
 					<div class="buttonGroup max_100">
-						<button class="_warningButton_xs mp_item_remove" type="button"><span class="dashicons dashicons-trash mp_zero"></span></button>
-						<div class="_mpBtn_themeButton_xs mp_sortable_button" type=""><span class="dashicons dashicons-move mp_zero"></span></div>
+						<button class="_warningButton_xs mp_item_remove" type="button"><span class="fas fa-trash-alt mp_zero"></span></button>
+						<div class="_mpBtn_themeButton_xs mp_sortable_button" type=""><span class="fas fa-expand-arrows-alt mp_zero"></span></div>
 					</div>
 				</div>
 				<?php

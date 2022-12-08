@@ -26,7 +26,7 @@
 							  }
 						  ?>
 			                </span>
-						<span class="dashicons dashicons-no-alt remove_input_icon <?php echo esc_html( $value ? 'active' : '' ); ?> " title="<?php esc_html_e( 'Remove Icon', 'tour-booking-manager' ); ?>"></span>
+						<span class="far fa-trash-alt remove_input_icon <?php echo esc_html( $value ? 'active' : '' ); ?> " title="<?php esc_html_e( 'Remove Icon', 'tour-booking-manager' ); ?>"></span>
 					</button>
 				</div>
 				<?php
@@ -37,7 +37,7 @@
 					$GLOBALS['call_Input_value_icon_choose_popup'] = true;
 					?>
 					<div class="add_icon_list_popup">
-						<span class="dashicons dashicons-no-alt popupClose"></span>
+						<span class="far fa-trash-alt popupClose"></span>
 						<?php
 							$icons = $this->all_icon_array();
 							if ( is_array( $icons ) && sizeof( $icons ) > 0 ) {

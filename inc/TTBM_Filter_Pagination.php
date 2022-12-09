@@ -203,15 +203,13 @@
 					$locations = TTBM_Function::get_taxonomy( 'ttbm_tour_location' );
 					if ( sizeof( $locations ) > 0 ) {
 						$url      = $_GET['location_filter'] ?? '';
-						$current  = $url ? get_term_by( 'id', $url, 'ttbm_tour_location' )->term_id : '';
-						$selected = $url && $current == $url ? 'selected' : '';
 						?>
 						<label data-placeholder>
 							<select class="formControl" name="location_filter">
 								<option selected value=""><?php esc_html_e( 'All Location', 'tour-booking-manager' ); ?></option>
 								<?php foreach ( $locations as $location ) { ?>
 									<?php $name = get_term_meta( $location->term_id, 'ttbm_country_location' ); ?>
-									<option value="<?php echo esc_attr( $location->term_id ); ?>" <?php echo esc_attr( $selected ); ?>>
+									<option value="<?php echo esc_attr( $location->term_id ); ?>" <?php echo esc_attr( $url && $location->term_id  == $url ? 'selected' : '' ); ?>>
 										<?php echo esc_html( $location->name ); ?>
 										<?php
 											if ( is_array( $name ) && sizeof( $name ) > 0 ) {

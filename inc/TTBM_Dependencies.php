@@ -40,7 +40,7 @@
 				wp_enqueue_script( 'jquery-ui-core' );
 				wp_enqueue_script( 'jquery-ui-datepicker' );
 				wp_localize_script( 'jquery', 'ttbm_ajax', array( 'ttbm_ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-				wp_enqueue_style( 'mp_font_awesome', '//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css', array(), '5.15.3' );
+				wp_enqueue_style( 'ttbm_font_awesome', '//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css', array(), '5.15.4' );
 				wp_enqueue_style( 'ttbm-jquery-ui-style', TTBM_PLUGIN_URL . '/assets/helper/css/jquery-ui.css' );
 				wp_enqueue_style( 'ttbm_mp_style', TTBM_PLUGIN_URL . '/assets/helper/mp_style/mp_style.css', array(), time() );
 				wp_enqueue_script( 'ttbm_mp_script', TTBM_PLUGIN_URL . '/assets/helper/mp_style/mp_script.js', array( 'jquery' ), time(), true );

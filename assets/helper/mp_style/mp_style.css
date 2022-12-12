@@ -308,7 +308,7 @@ div.mpStyle .mp_hidden_content,
 .mpStyle [class*="mar_txs_b"] {margin: var(--default-mp-xs) 0 var(--default-mp) 0;}
 .mpStyle [class*="marXsT"] {margin-top: var(--default-mp-xs);}
 .mpStyle .mtb, .mpStyle [class*="_mtb"] {margin: var(--default-mp) 0;}
-.mpStyle .mtb_xs, .mpStyle [class*="_mtb_xs"] {margin: var(--default-mp-xs) 0;}
+.mpStyle .mtb_xs, .mpStyle [class*="_mtb_xs"] {margin: var(--default-mp-xs) 0 !important;}
 /***************/
 div.mpStyle .mp_zero {margin: 0;padding: 0;}
 /***************/

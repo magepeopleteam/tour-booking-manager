@@ -295,18 +295,18 @@
 				return $format == 'D M d , yy' ? 'D M  j, Y' : $date_format;
 			}
 			//*************Price*********************************//
-			public static function get_tour_start_price( $tour_id ,$start_date=''): string {
+			public static function get_tour_start_price( $tour_id, $start_date = '' ): string {
 				$start_price  = self::get_post_info( $tour_id, 'ttbm_travel_start_price' );
 				$ticket_list  = self::get_ticket_type( $tour_id );
 				$ticket_price = [];
-				$start_date=$start_date?: TTBM_Function::get_date( $tour_id )[0];
+				$start_date   = $start_date ?: TTBM_Function::get_date( $tour_id )[0];
 				if ( ! $start_price && sizeof( $ticket_list ) > 0 ) {
 					foreach ( $ticket_list as $ticket ) {
-						$ticket_name=$ticket['ticket_type_name'];
-						$price = $ticket['ticket_type_price'];
-						$price = array_key_exists( 'sale_price', $ticket ) && $ticket['sale_price'] ? $ticket['sale_price'] : $price;
-						$price = apply_filters( 'ttbm_filter_ticket_price', $price, $tour_id, $start_date, $ticket_name );
-						$price = apply_filters( 'ttbm_price_by_name_filter', $price, $tour_id, 1,$start_date );
+						$ticket_name    = $ticket['ticket_type_name'];
+						$price          = $ticket['ticket_type_price'];
+						$price          = array_key_exists( 'sale_price', $ticket ) && $ticket['sale_price'] ? $ticket['sale_price'] : $price;
+						$price          = apply_filters( 'ttbm_filter_ticket_price', $price, $tour_id, $start_date, $ticket_name );
+						$price          = apply_filters( 'ttbm_price_by_name_filter', $price, $tour_id, 1, $start_date );
 						$ticket_price[] = $price;
 					}
 					$start_price = min( $ticket_price );
@@ -335,7 +335,7 @@
 							$price = $ticket_type['ticket_type_price'];
 							$price = array_key_exists( 'sale_price', $ticket_type ) && $ticket_type['sale_price'] ? $ticket_type['sale_price'] : $price;
 							$price = apply_filters( 'ttbm_filter_ticket_price', $price, $tour_id, $start_date, $ticket_name );
-							$price = apply_filters( 'ttbm_price_by_name_filter', $price, $tour_id, $qty,$start_date );
+							$price = apply_filters( 'ttbm_price_by_name_filter', $price, $tour_id, $qty, $start_date );
 						}
 					}
 				}
@@ -497,7 +497,7 @@
 			}
 			public static function get_total_sold( $tour_id, $tour_date = '', $type = '', $hotel_id = '' ): int {
 				$tour_date  = $tour_date ?: TTBM_Function::get_post_info( $tour_id, 'ttbm_upcoming_date' );
-				$type=add_filter('ttbm_type_filter',$type,$tour_id);
+				$type       = add_filter( 'ttbm_type_filter', $type, $tour_id );
 				$sold_query = TTBM_Query::query_all_sold( $tour_id, $tour_date, '', $hotel_id );
 				return $sold_query->post_count;
 			}
@@ -907,7 +907,7 @@
 								}
 
 								function onCloseForDatePicker(dateString, data) {
-									let tour_date = data.selectedYear + '-' + (parseInt(data.selectedMonth)+1) + '-' + data.selectedDay;
+									let tour_date = data.selectedYear + '-' + (parseInt(data.selectedMonth) + 1) + '-' + data.selectedDay;
 									jQuery('input[type="hidden"][name="ttbm_date"]').val(tour_date).trigger('change');
 								}
 							});

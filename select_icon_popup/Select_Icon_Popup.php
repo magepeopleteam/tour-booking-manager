@@ -26,7 +26,7 @@
 							  }
 						  ?>
 			                </span>
-						<span class="far fa-trash-alt remove_input_icon <?php echo esc_html( $value ? 'active' : '' ); ?> " title="<?php esc_html_e( 'Remove Icon', 'tour-booking-manager' ); ?>"></span>
+						<span class="fas fa-times remove_input_icon <?php echo esc_html( $value ? 'active' : '' ); ?> " title="<?php esc_html_e( 'Remove Icon', 'tour-booking-manager' ); ?>"></span>
 					</button>
 				</div>
 				<?php

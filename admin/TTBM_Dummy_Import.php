@@ -7,7 +7,6 @@
 			public function __construct() {
 				$this->dummy_import();
 			}
-
 			private function dummy_import() {
 				$ttbm_dummy_post = get_option( 'ttbm_dummy_already_inserted' );
 				$all_post        = TTBM_Query::query_post_type( 'ttbm_tour' );
@@ -55,7 +54,6 @@
 					update_option( 'ttbm_dummy_already_inserted', 'yes' );
 				}
 			}
-
 			public function dummy_data(): array {
 				return [
 					'taxonomy'    => [
@@ -141,6 +139,7 @@
 							0 => [
 								'name'      => 'The Mentalist Tickets: Las Vegas',
 								'post_data' => [
+									'ttbm_list_thumbnail'            => '100',
 									//General_settings
 									'ttbm_travel_duration'           => 2,
 									'ttbm_travel_duration_type'      => 'day',
@@ -263,6 +262,8 @@
 										1 => 'Hiking',
 										2 => 'Snow & Ice',
 									],
+									//gallery_settings
+									'ttbm_gallery_images'=>[120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300],
 									//extras_settings
 									'ttbm_display_get_question'      => 'on',
 									'ttbm_contact_email'             => 'example.gmail.com',
@@ -274,7 +275,7 @@
 									'ttbm_section_title_style'       => 'style_1',
 									'ttbm_ticketing_system'          => 'availability_section',
 									'ttbm_display_seat_details'      => 'on',
-									'ttbm_display_sidebar'           => 'on',
+									'ttbm_display_sidebar'           => 'off',
 									'ttbm_display_tour_type'         => 'on',
 									'ttbm_display_hotels'            => 'on',
 									'ttbm_display_duration'          => 'on',
@@ -283,6 +284,7 @@
 							1 => [
 								'name'      => 'Highlights of Naples and the Amalfi Coast',
 								'post_data' => [
+									'ttbm_list_thumbnail'            => '100',
 									//General_settings
 									'ttbm_travel_duration'           => 1,
 									'ttbm_travel_duration_type'      => 'day',
@@ -406,6 +408,8 @@
 										1 => 'Hiking',
 										2 => 'Rural',
 									],
+									//gallery_settings
+									'ttbm_gallery_images'=>[120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300],
 									//extras_settings
 									'ttbm_display_get_question'      => 'on',
 									'ttbm_contact_email'             => 'example.gmail.com',
@@ -417,7 +421,7 @@
 									'ttbm_section_title_style'       => 'ttbm_title_style_2',
 									'ttbm_ticketing_system'          => 'availability_section',
 									'ttbm_display_seat_details'      => 'on',
-									'ttbm_display_sidebar'           => 'on',
+									'ttbm_display_sidebar'           => 'off',
 									'ttbm_display_tour_type'         => 'on',
 									'ttbm_display_hotels'            => 'on',
 									'ttbm_display_duration'          => 'on',
@@ -426,6 +430,7 @@
 							2 => [
 								'name'      => 'Deep-Sea Exploration on a Shampan',
 								'post_data' => [
+									'ttbm_list_thumbnail'            => '100',
 									//General_settings
 									'ttbm_travel_duration'            => 1,
 									'ttbm_travel_duration_type'       => 'day',
@@ -550,6 +555,8 @@
 										1 => 'Hiking',
 										2 => 'Rural',
 									],
+									//gallery_settings
+									'ttbm_gallery_images'=>[120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300],
 									//extras_settings
 									'ttbm_display_get_question'       => 'on',
 									'ttbm_contact_email'              => 'example.gmail.com',
@@ -561,7 +568,7 @@
 									'ttbm_section_title_style'        => 'ttbm_title_style_3',
 									'ttbm_ticketing_system'           => 'regular_ticket',
 									'ttbm_display_seat_details'       => 'on',
-									'ttbm_display_sidebar'            => 'on',
+									'ttbm_display_sidebar'            => 'off',
 									'ttbm_display_tour_type'          => 'on',
 									'ttbm_display_hotels'             => 'on',
 									'ttbm_display_duration'           => 'on',
@@ -570,6 +577,7 @@
 							3 => [
 								'name'      => 'Beach Hopping at Inani, Himchari, Patuartek',
 								'post_data' => [
+									'ttbm_list_thumbnail'            => '100',
 									//General_settings
 									'ttbm_travel_duration'            => 2,
 									'ttbm_travel_duration_type'       => 'day',
@@ -694,6 +702,8 @@
 										1 => 'Hiking',
 										2 => 'Rural',
 									],
+									//gallery_settings
+									'ttbm_gallery_images'=>[120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300],
 									//extras_settings
 									'ttbm_display_get_question'       => 'on',
 									'ttbm_contact_email'              => 'example.gmail.com',
@@ -705,7 +715,7 @@
 									'ttbm_section_title_style'        => 'ttbm_title_style_3',
 									'ttbm_ticketing_system'           => 'regular_ticket',
 									'ttbm_display_seat_details'       => 'on',
-									'ttbm_display_sidebar'            => 'on',
+									'ttbm_display_sidebar'            => 'off',
 									'ttbm_display_tour_type'          => 'on',
 									'ttbm_display_hotels'             => 'on',
 									'ttbm_display_duration'           => 'on',
@@ -714,6 +724,7 @@
 							4 => [
 								'name'      => 'Boga Lake : A Relaxing Gateway Tour',
 								'post_data' => [
+									'ttbm_list_thumbnail'            => '100',
 									//General_settings
 									'ttbm_travel_duration'            => 4,
 									'ttbm_travel_duration_type'       => 'day',
@@ -837,6 +848,8 @@
 										0 => 'Hiking',
 										1 => 'Rural',
 									],
+									//gallery_settings
+									'ttbm_gallery_images'=>[120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300],
 									//extras_settings
 									'ttbm_display_get_question'       => 'on',
 									'ttbm_contact_email'              => 'example.gmail.com',
@@ -848,7 +861,7 @@
 									'ttbm_section_title_style'        => 'ttbm_title_style_3',
 									'ttbm_ticketing_system'           => 'regular_ticket',
 									'ttbm_display_seat_details'       => 'on',
-									'ttbm_display_sidebar'            => 'on',
+									'ttbm_display_sidebar'            => 'off',
 									'ttbm_display_tour_type'          => 'on',
 									'ttbm_display_hotels'             => 'on',
 									'ttbm_display_duration'           => 'on',

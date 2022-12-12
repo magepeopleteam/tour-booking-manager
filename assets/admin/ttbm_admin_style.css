@@ -189,10 +189,6 @@ div.unlimited_section {background-color: #F2F2F2;margin: 15px 0 0 0;padding: 50p
 }
 /******************************/
 /*General CSS*/
-.welcome-tabs p { font-size: 15px;}
-.welcome-tabs h1, .welcome-tabs h2 { font-size: 30px;}
-.welcome-tabs h3, .welcome-tabs h4 { font-size: 25px;}
-.welcome-tabs h5, .welcome-tabs h6 { font-size: 20px;}
 .welcome-tabs .float-right { float: right;}
 .welcome-tabs .float-left { float: right;}
 .welcome-tabs .float-none { float: right;}
@@ -231,17 +227,10 @@ div.unlimited_section {background-color: #F2F2F2;margin: 15px 0 0 0;padding: 50p
 }
 .welcome-tabs .tab-content.active { display: block;}
 .welcome-tabs .next-prev {
-	width: 100%;
-	margin: 0 auto;
-	padding: 0;
+	display: -webkit-flex;display: flex;-webkit-justify-content: space-between;justify-content: space-between;
 }
-.welcome-tabs .next-prev .prev { display: none; width: auto; transition: all ease 1s;border: 1px solid #555;float: left;}
-.welcome-tabs .next-prev .next {border: 1px solid #555;float: right;
-	display: inline-block;
-	width: auto;
-	text-align: right;
-	transition: all ease 1s;
-}
+.welcome-tabs .next-prev .prev { display: none;  transition: all ease .25s;border: 1px solid #555;}
+.welcome-tabs .next-prev .next {border: 1px solid #555;transition: all ease .25s;}
 .welcome-tabs .next-prev span { padding: 15px 20px; display: block; cursor: pointer;font-size: 18px;}
 .welcome-tabs .next-prev .next:hover, .welcome-tabs .next-prev .prev:hover { background: #444; color: #FFF;}
 .welcome-tabs .submit-wrap { padding: 10px 0; text-align: center;}
@@ -273,7 +262,7 @@ div.unlimited_section {background-color: #F2F2F2;margin: 15px 0 0 0;padding: 50p
 	.welcome-tabs .setting-field .setting-field .field-input { margin-left: 0; }
 }
 .welcome-tabs .pro-feature { background: #FFD87F; padding: 0 5px;}
-#ttbm_quick_setup {padding: 50px;max-width: 850px;background-color: #FFF;margin: 100px auto;border-radius: 5px;}
+
 td.woo_btn_td {text-align: right;}
 .button.setup_save_finish,
 td.woo_btn_td .button {
@@ -290,7 +279,7 @@ td.woo_btn_td .button {
 .setup_save_finish_area {
 	display: flex;display: -webkit-flex;-webkit-justify-content: center;justify-content: center;
 }
-table.wc_status_table td {vertical-align: middle;font-size: 16px;min-width: 150px;}
+table.wc_status_table td {vertical-align: middle;font-size: 16px;min-width: 150px;border: none;}
 table.wc_status_table td.woo_btn_td span {font-size: 20px; color: #10DD10;}
 /*3rd Party*/
 .welcome-tabs .field-input .CodeMirror { background: #F1F1F1;}

@@ -34,19 +34,19 @@
 				$mep_settings_tab   = array();
 				$mep_settings_tab[] = array(
 					'id'       => 'start',
-					'title'    => '<i class="far fa-thumbs-up"></i>' . esc_html__( 'Welcome', 'tour-booking-manager' ),
+					'title'    => '<i class="far fa-thumbs-up mR_xs"></i>' . esc_html__( 'Welcome', 'tour-booking-manager' ),
 					'priority' => 1,
 					'active'   => true,
 				);
 				$mep_settings_tab[] = array(
 					'id'       => 'general',
-					'title'    => '<i class="fas fa-list-ul"></i>' . esc_html__( 'General', 'tour-booking-manager' ),
+					'title'    => '<i class="fas fa-list-ul mR_xs"></i>' . esc_html__( 'General', 'tour-booking-manager' ),
 					'priority' => 2,
 					'active'   => false,
 				);
 				$mep_settings_tab[] = array(
 					'id'       => 'done',
-					'title'    => '<i class="fas fa-pencil-alt"></i>' . esc_html__( 'Done', 'tour-booking-manager' ),
+					'title'    => '<i class="fas fa-pencil-alt mR_xs"></i>' . esc_html__( 'Done', 'tour-booking-manager' ),
 					'priority' => 4,
 					'active'   => false,
 				);
@@ -122,39 +122,39 @@
 					wp_redirect( admin_url( 'edit.php?post_type=ttbm_tour&page=ttbm_welcome_page' ) );
 				}
 				?>
-				<div id="ttbm_quick_setup" class="wrap">
-					<div id="icon-tools" class="icon32"><br></div>
-					<h2></h2>
-					<form method="post" action="">
-						<input type="hidden" name="qa_hidden" value="Y">
-						<div class="welcome-tabs">
-							<ul class="tab-navs">
+				<div class="mpStyle">
+					<div id="ttbm_quick_setup" class="dLayout">
+						<form method="post" action="">
+							<div class="welcome-tabs">
+								<ul class="tab-navs">
+									<?php
+										foreach ( $mep_settings_tab as $tab ) {
+											$id     = $tab['id'];
+											$title  = $tab['title'];
+											$active = $tab['active'];
+											$hidden = $tab['hidden'] ?? false;
+											?>
+											<li class="tab-nav <?php echo $active ? 'active' : ''; ?> <?php echo $hidden ? 'hidden' : ''; ?> " data-id="<?php echo esc_html( $id ); ?>"><?php echo $title; ?></li>
+										<?php } ?>
+								</ul>
 								<?php
 									foreach ( $mep_settings_tab as $tab ) {
 										$id     = $tab['id'];
-										$title  = $tab['title'];
 										$active = $tab['active'];
-										$hidden = $tab['hidden'] ?? false;
 										?>
-										<li class="tab-nav <?php echo $active ? 'active' : ''; ?> <?php echo $hidden ? 'hidden' : ''; ?> " data-id="<?php echo esc_html( $id ); ?>"><?php echo $title; ?></li>
+										<div class="tab-content <?php echo $active ? 'active' : ''; ?>" id="<?php echo esc_html( $id ); ?>">
+											<?php do_action( 'ttbm_quick_setup_content_' . $id ); ?>
+											<?php do_action( 'ttbm_quick_setup_content_after', $tab ); ?>
+										</div>
 									<?php } ?>
-							</ul>
-							<?php
-								foreach ( $mep_settings_tab as $tab ) {
-									$id     = $tab['id'];
-									$active = $tab['active'];
-									?>
-									<div class="tab-content <?php echo $active ? 'active' : ''; ?>" id="<?php echo esc_html( $id ); ?>">
-										<?php do_action( 'ttbm_quick_setup_content_' . $id ); ?>
-										<?php do_action( 'ttbm_quick_setup_content_after', $tab ); ?>
-									</div>
-								<?php } ?>
-							<div class="next-prev">
-								<div class="prev"><span>&longleftarrow;<?php esc_html_e( 'Previous', 'tour-booking-manager' ); ?></span></div>
-								<div class="next"><span><?php esc_html_e( 'Next', 'tour-booking-manager' ); ?>&longrightarrow;</span></div>
+								<div class="next-prev">
+									<div class="prev"><span>&longleftarrow;<?php esc_html_e( 'Previous', 'tour-booking-manager' ); ?></span></div>
+									<div></div>
+									<div class="next"><span><?php esc_html_e( 'Next', 'tour-booking-manager' ); ?>&longrightarrow;</span></div>
+								</div>
 							</div>
-						</div>
-					</form>
+						</form>
+					</div>
 				</div>
 				<?php
 			}
@@ -162,10 +162,10 @@
 				$status = TTBM_Woocommerce_Plugin::check_woocommerce();
 				?>
 				<h2><?php esc_html_e( 'Tour Booking Manager For Woocommerce Plugin', 'tour-booking-manager' ); ?></h2>
-				<p><?php esc_html_e( 'Thanks for choosing Tour Booking Manager Plugin for WooCommerce for your site, Please go step by step and choose some options to get started.', 'tour-booking-manager' ); ?></p>
+				<p class="mtb_xs"><?php esc_html_e( 'Thanks for choosing Tour Booking Manager Plugin for WooCommerce for your site, Please go step by step and choose some options to get started.', 'tour-booking-manager' ); ?></p>
 				<table class="wc_status_table widefat" id="status">
 					<tr>
-						<td data-export-label="WC Version">
+						<td>
 							<?php if ( $status == 1 ) {
 								esc_html_e( 'Woocommerce already installed and activated', 'tour-booking-manager' );
 							} elseif ( $status == 0 ) {
@@ -174,7 +174,6 @@
 								esc_html_e( 'Woocommerce already install , please activate it', 'tour-booking-manager' );
 							} ?>
 						</td>
-						<td class="help"><span class="woocommerce-help-tip"></span></td>
 						<td class="woo_btn_td">
 							<?php if ( $status == 1 ) { ?>
 								<span class="fas fa-check-circle"></span>
@@ -195,7 +194,7 @@
 				?>
 				<div class="section">
 					<h2><?php esc_html_e( 'General settings', 'tour-booking-manager' ); ?></h2>
-					<p class="description section-description"><?php echo __( 'Choose some general option.', 'tour-booking-manager' ); ?></p>
+					<p class="mtb_xs"><?php echo __( 'Choose some general option.', 'tour-booking-manager' ); ?></p>
 					<table class="wc_status_table widefat" id="status">
 						<tr>
 							<td><?php esc_html_e( 'Travel Label:', 'tour-booking-manager' ); ?></td>
@@ -219,7 +218,7 @@
 				?>
 				<div class="section">
 					<h2><?php esc_html_e( 'Finalize Setup', 'tour-booking-manager' ); ?></h2>
-					<p class="description section-description"><?php esc_html_e( 'You are about to Finish & Save Tour Booking Manager For Woocommerce Plugin setup process', 'tour-booking-manager' ); ?></p>
+					<p class="mtb_xs"><?php esc_html_e( 'You are about to Finish & Save Tour Booking Manager For Woocommerce Plugin setup process', 'tour-booking-manager' ); ?></p>
 					<div class="setup_save_finish_area">
 						<button type="submit" name="finish_quick_setup" class="button setup_save_finish"><?php esc_html_e( 'Finish & Save', 'tour-booking-manager' ); ?></button>
 					</div>

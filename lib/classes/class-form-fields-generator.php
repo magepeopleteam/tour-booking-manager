@@ -8322,7 +8322,7 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
 								    '<button type="button" class="mp_input_add_icon_button dButton_xs">' +
 								    '<input type="hidden" name="<?php echo esc_attr($field_name); ?>['+now+']['+element.item_id+']" placeholder="" value=""/>' +
 								    '<span class="" data-empty-text="<?php esc_html_e( 'Add Icon', 'tour-booking-manager' ); ?>"><?php esc_html_e( 'Add Icon', 'tour-booking-manager' );?></span>' +
-								    '<span class="dashicons dashicons-no-alt remove_input_icon " title="<?php esc_html_e( 'Remove Icon', 'tour-booking-manager' ); ?>"></span>' +
+								    '<span class="fas fa-times remove_input_icon " title="<?php esc_html_e( 'Remove Icon', 'tour-booking-manager' ); ?>"></span>' +
 								    '</button>' +
 								    '</div>';
                             }else if(type == 'number'){

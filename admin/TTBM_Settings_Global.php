@@ -82,9 +82,9 @@
 						array(
 							'name'    => 'ttbm_date_format',
 							'label'   => esc_html__( 'Date Picker Format', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'If you want to change Date Picker Format, please select format. Default  is yy-mm-dd.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'If you want to change Date Picker Format, please select format. Default  is D d M , yy.', 'tour-booking-manager' ),
 							'type'    => 'select',
-							'default' => 'yy-mm-dd',
+							'default' => 'D d M , yy',
 							'options' => array(
 								'yy-mm-dd' => $current_date,
 								'yy/mm/dd' => date_i18n('Y/m/d',strtotime($current_date)),

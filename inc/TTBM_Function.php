@@ -280,7 +280,7 @@
 				return false;
 			}
 			public static function date_format(): string {
-				$format      = self::get_general_settings( 'ttbm_date_format', 'yy-mm-dd' );
+				$format      = self::get_general_settings( 'ttbm_date_format', 'D d M , yy' );
 				$date_format = 'Y-m-d';
 				$date_format = $format == 'yy/mm/dd' ? 'Y/m/d' : $date_format;
 				$date_format = $format == 'yy-dd-mm' ? 'Y-d-m' : $date_format;

@@ -5,8 +5,8 @@
 	if ( ! class_exists( 'TTBM_Dependencies' ) ) {
 		class TTBM_Dependencies {
 			public function __construct() {
-				add_action( 'init', array( $this, 'ttbm_language_load' ) );
-				$this->load_ttbm();
+				add_action( 'init', array( $this, 'language_load' ) );
+				$this->load_file();
 				add_action( 'wp_enqueue_scripts', array( $this, 'ttbm_frontend_script' ), 90 );
 				add_action( 'admin_enqueue_scripts', array( $this, 'ttbm_admin_script' ), 90 );
 				add_action( 'admin_head', array( $this, 'ttbm_js_constant' ), 5 );
@@ -15,11 +15,11 @@
 				add_action( 'admin_head', array( $this, 'apply_custom_css' ), 90 );
 				add_action( 'ttbm_registration_enqueue', array( $this, 'registration_enqueue' ), 90 );
 			}
-			public function ttbm_language_load() {
+			public function language_load() {
 				$plugin_dir = basename( dirname( __DIR__ ) ) . "/languages/";
 				load_plugin_textdomain( 'tour-booking-manager', false, $plugin_dir );
 			}
-			private function load_ttbm() {
+			private function load_file() {
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Function.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Layout.php';
 				require_once TTBM_PLUGIN_DIR . '/support/elementor/elementor-support.php';

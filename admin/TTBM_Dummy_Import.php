@@ -272,7 +272,7 @@
 									'ttbm_display_tour_guide'        => 'on',
 									//Related tour_settings
 									//Display_settings
-									'ttbm_section_title_style'       => 'style_1',
+									'ttbm_section_title_style'       => 'ttbm_title_style_2',
 									'ttbm_ticketing_system'          => 'availability_section',
 									'ttbm_display_seat_details'      => 'on',
 									'ttbm_display_sidebar'           => 'off',

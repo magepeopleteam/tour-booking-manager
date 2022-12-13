@@ -9,9 +9,9 @@ div.ttbm_default_widget .ttbm_widget_content a {margin: 0 0 7px 0;}
 div.ttbm_default_widget .ttbm_title_style_3,
 div.ttbm_default_widget .ttbm_title_style_2 {padding: 0 0 var(--default-mp-xs) 0;}
 div.ttbm_default_widget .ttbm_title_style_2 ~ .ttbm_widget_content,
-div.ttbm_default_widget .ttbm_title_style_3 ~ .ttbm_widget_content {border: none;background-color: transparent;padding: 7px 0;}
+div.ttbm_default_widget .ttbm_title_style_3 ~ .ttbm_widget_content {border: none;background-color: transparent;padding: var(--default-mp-xs) 0;}
 div.ttbm_default_widget .ttbm_title_style_3 {border-bottom: 2px solid var(--theme-color_77);}
-div.ttbm_default_widget .ttbm_title_style_2{border: 1px solid #ededed;background-color: #f5f5f5;padding: 3px 10px;font-weight: bold;}
+div.ttbm_default_widget .ttbm_title_style_2{border: 1px solid #ededed;background-color: #f5f5f5;padding: 3px var(--default-mp-xs);font-weight: bold;}
 /*****************List*********************************/
 .ttbm_widget_content ul li:not(.mp_wp_editor li) {width: 100%;}
 .ttbm_widget_content ul li i,

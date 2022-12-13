@@ -142,8 +142,8 @@ div.day_wise_details_item:before {
 div.day_wise_details_item:last-child {padding-bottom: 0;border: none;}
 div.day_wise_details_item img {width: initial;}
 /*************F.A.Q*************************************/
-div.ttbm_faq_item {margin: 0 0 var(--default-mp) 0;}
-div.ttbm_faq_item .ttbm_faq_title {background-color: #FFF;border: 1px solid #DDD;border-radius: 5px;font-weight: normal;}
+div.ttbm_faq_item {margin: 0 0 var(--default-mp-xs) 0;}
+div.ttbm_faq_item .ttbm_faq_title {background-color: #FFF;border: 1px solid #DDD;border-radius: 5px;font-weight: normal;text-transform: none;}
 div.ttbm_faq_item .ttbm_faq_title.active {border-color: var(--theme-color);border-radius: 5px 5px 0 0;background-color: var(--theme-color);color: var(--theme-alternate-color); }
 div.ttbm_faq_item .ttbm_faq_title span {padding: 10px;}
 div.ttbm_faq_content {background-color: #FFF;padding: var(--default-mp);border: 1px solid var(--theme-color);border-radius: 0 0 5px 5px;overflow: hidden;}

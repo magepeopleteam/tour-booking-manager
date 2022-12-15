@@ -1,34 +1,19 @@
 @charset "utf-8";
-/**************************/
-.mpStyle,
-.mpStyle table,
-.mpStyle table td,
-.mpStyle table thead th,
-.mpStyle label,
-.mpStyle p,
-.mpStyle span,
-.mpStyle ul li,
-.mpStyle h1,
-.mpStyle h2,
-.mpStyle h3,
-.mpStyle h4,
-.mpStyle h5,
-.mpStyle h6 {color: initial;}
 /***********************************/
-#ttbm_add_meta_box {margin: 15px 0;}
-#ttbm_add_meta_box .inside,
-#ttbm_list_thumbnail_meta_boxes .form-section,
-#ttbm_add_meta_box .form-section {margin: 0;padding: 0;}
-#ttbm_add_meta_box .postbox-header { background-color: #161B37;}
-#ttbm_add_meta_box .postbox-header h2 {color: #FFF;font-size: 18px;-webkit-justify-content: flex-start;justify-content: flex-start;}
-#ttbm_add_meta_box .postbox-header h2 span {margin: 0 7px 0 0;}
-#ttbm_add_meta_box .wp-editor-wrap {width: 100%;}
-#ttbm_add_meta_box .ppof-settings .collapsible .content > div {display: inline-block;min-width: 150px;}
-/**************************/
-#ttbm_add_meta_box .mp_event_remove_move { display: -webkit-flex; display: flex;}
-#ttbm_add_meta_box .mp_event_remove_move > * { -webkit-flex: 1; flex: 1;}
-#ttbm_add_meta_box .mp_event_remove_move button { color: #6B003E;}
-#ttbm_add_meta_box .mp_ticket_type_table { width: 100%; overflow: auto; padding: 0 0 15px 0;}
+div.ttbm_settings table {table-layout: auto;border-collapse: collapse;border: 1px solid #F5F5F5;}
+div.ttbm_settings table tr:nth-child(even) {background-color: #0CB32612;}
+div.ttbm_settings table tr:nth-child(odd) {background-color: #FFF;}
+div.ttbm_settings table th,
+div.ttbm_settings table td {border: 0;}
+div.ttbm_settings table tbody th {text-align: left;font-size: var(--fs);}
+div.ttbm_settings table tbody thead th {text-align: center;}
+div.ttbm_settings .formControl {min-width: 80px;box-shadow: none;padding: 5px var(--default-mp-xs);max-width: 300px;}
+div.ttbm_settings .formControl.date_type,
+div.ttbm_settings .formControl[type="date"] {padding: 5px 5px 5px 40px;max-width: 300px;font-size: 16px;min-width: 200px;}
+div.ttbm_settings span.dropdown-wrapper {margin: 0 !important;}
+div.ttbm_settings p.ttbm_description {display: block;font-weight: normal;font-size: var(--fs_small) !important;color: #666;}
+div.ttbm_settings p.ttbm_description span {margin: 0 5px 0 0;}
+div.ttbm_settings .mpPopup .popupMainArea {width: 100%;}
 /************Custom Pick Plugin**************************/
 .pickPluginInputItem:first-child { border-top: 1px dashed #0C5460;}
 .pickPluginInputItem {padding: 10px 0;border-bottom: 1px dashed #0C5460;}
@@ -37,7 +22,6 @@
 .mpStyle .pickPluginInputItem select { min-width: 150px;}
 .mpStyle .pickPluginInputItem textarea { padding: 10px;}
 .mpStyle .select2-search__field { min-width: 320px;}
-
 /**************************/
 .inside .sec { display: block; font-size: 15px; font-weight: normal; margin: 0;}
 .sec label { font-size: 16px; font-weight: bold;}
@@ -58,78 +42,26 @@
 .pac-controls label { font-size: 13px; font-weight: 300;}
 #pac-input { background-color: #FFF; font-size: 15px; font-weight: 300; margin-left: 12px; padding: 0 11px 0 13px; text-overflow: ellipsis; width: 400px;}
 #pac-input:focus { border-color: #4D90FE;}
-
 .tab-content.active.tab-content-ttbm_list_template_meta_box table tr th,
 .tab-content.active.tab-content-ttbm_list_template_meta_box table tr td { display: block; overflow: hidden; width: 100%;}
 .tab-content.active.tab-content-ttbm_list_template_meta_box table tr td select { width: 100%;}
 .ttbm_tour_page_ttbm_welcome_page .notice { display: none;}
 #wp-mep_event_cc_email_text-media-buttons button { width: auto !important;}
 /************************************/
-#ttbm_status_page table th{text-align: left;}
+#ttbm_status_page table th {text-align: left;}
 /************************************/
-span.textWarning {  color: var(--warning_color); font-size: var(--fs);font-weight: var(--fw-bold);}
-span.textSuccess{ color: var(--success-color); font-size: var(--fs);}
-/****************mp_event_all_meta_in_tab********************/
-.ttbm_settings_panel .metabox-holder table { border-collapse: collapse;}
-.ttbm_settings_panel .metabox-holder table td,
-.ttbm_settings_panel .metabox-holder table th { padding: 12px;}
-.ttbm_settings_panel .metabox-holder table tr:nth-child(even) { background-color: #0CB32612;}
-.ttbm_settings_panel .metabox-holder table tr:nth-child(odd) { background-color: #FFF;}
-#ttbm_add_meta_box .mpStyle [data-tabs-target].active { background-color: #49AC2F;}
-#ttbm_add_meta_box .mpStyle [data-tabs-target] { color: #FFF; transition: 0.2s;}
-#ttbm_add_meta_box .mpStyle [data-tabs-target] span{ color: #FFF;}
-#ttbm_add_meta_box .mpStyle [data-tabs-target]:hover { background-color: #49AC2F !important; transition: 0.2s;}
-#ttbm_add_meta_box .mpStyle .tabLists { background-color: #161B37 !important;}
-#ttbm_add_meta_box .mpStyle .tabLists { font-size: 14px;}
-#ttbm_add_meta_box .mpStyle .ppof-button { background: #49AC2F; border-color: #49AC2F; transition: 0.2s; padding: 5px 12px;}
-#ttbm_add_meta_box .mpStyle .ppof-button:hover { background: #239108; border-color: #239108; transition: 0.2s;}
-#ttbm_add_meta_box .mpStyle .ppof-button.clear { background: #E33E3E; border-color: #E33E3E;}
-#ttbm_add_meta_box .mpStyle .ppof-button.clear:hover { background: #BD2525; border-color: #BD2525;}
-#ttbm_add_meta_box .mpStyle .field-text-multi-wrapper .field-list .item span.button {
-	background: #49AC2F; border-color: #49AC2F;color: #FFF;
-	transition: 0.2s; padding: 5px 12px; margin-left: 3px; min-width: 40px; text-align: center;
-}
-#ttbm_add_meta_box .mpStyle .field-text-multi-wrapper .field-list .item span.button:hover {background: #239108;border-color: #239108; transition: 0.2s;}
-#ttbm_add_meta_box .mpStyle .field-text-multi-wrapper .field-list .item:nth-child(even) { background-color: #0CB32612;}
-#ttbm_add_meta_box .mpStyle .field-text-multi-wrapper .field-list .item:nth-child(odd) {background-color: #FFF;}
-#ttbm_add_meta_box .mpStyle .field-text-multi-wrapper .field-list .item {padding: 10px;}
-#ttbm_add_meta_box .ppof-metabox .form-wrapper.full-width .tab-content:not(.section) {overflow: auto;}
-#ttbm_add_meta_box .mpStyle .dButton,
-#ttbm_add_meta_box .mpStyle .bgColor_1,
-#ttbm_add_meta_box .mpStyle [class*="_bgColor_1"] {background: #49AC2F;border-color: #49AC2F;transition: 0.2s;padding: 5px 12px;}
-#ttbm_add_meta_box .mpStyle .dButton:hover,
-#ttbm_add_meta_box .mpStyle .bgColor_1:hover,
-#ttbm_add_meta_box .mpStyle [class*="_bgColor_1"]:hover {background: #239108;border-color: #239108;transition: 0.2s;}
-#ttbm_add_meta_box .mpStyle .roundSwitch { min-width: 60px;}
-#ttbm_add_meta_box .mpStyle button.mp_input_add_icon_button { min-width: inherit;}
-
+span.textWarning { color: var(--warning_color); font-size: var(--fs);font-weight: var(--fw-bold);}
+span.textSuccess { color: var(--success-color); font-size: var(--fs);}
+/***************/
 #mep_disable_ticket_time {margin: 0 10px 0 0;}
-/************/
-div.ttbm_settings table {table-layout: auto;border-collapse: collapse;border: 1px solid #F5F5F5;}
-div.ttbm_settings table tr:nth-child(even) {background-color: #0CB32612;}
-div.ttbm_settings table tr:nth-child(odd) {background-color: #FFF;}
-div.ttbm_settings table th,
-div.ttbm_settings table td {border: 0;}
-div.ttbm_settings table tbody th {text-align: left;font-size: var(--fs);}
-div.ttbm_settings table tbody thead th {text-align: center;}
-div.ttbm_settings .formControl {min-width: 80px;box-shadow: none;padding: 5px var(--default-mp-xs);max-width: 300px;}
-div.ttbm_settings .formControl.date_type,
-div.ttbm_settings .formControl[type="date"] {padding: 5px 5px 5px 40px;max-width: 300px;font-size: 16px;min-width: 200px;}
-div.ttbm_settings span.dropdown-wrapper {margin: 0 !important;}
-div.ttbm_settings p.ttbm_description {display: block;font-weight: normal;font-size: var(--fs_small) !important;color: #666;}
-div.ttbm_settings p.ttbm_description span {margin: 0 5px 0 0;}
-div.ttbm_settings .mpPopup .popupMainArea {width: 100%;}
 /****************select_2 custom css******************/
 div.mpStyle span.selection,
 div.mpStyle span.select2-container.select2,
-div.mpStyle span.select2-container span.select2-selection { margin: 0; min-height: var(--button-height); min-width:auto;max-width: 300px;width: 100% !important;}
+div.mpStyle span.select2-container span.select2-selection { margin: 0; min-height: var(--button-height); min-width: auto;max-width: 300px;width: 100% !important;}
 div.mpStyle span.selection {overflow: hidden; max-width: 100%;}
 div.mpStyle span.select2-container span.select2-selection__rendered { display: -webkit-flex;display: flex; -webkit-align-items: center;align-items: center; height: 100%;}
 div.mpStyle span.select2-container .select2-selection__arrow { top: 2px; height: 37px;}
 /*css added by ariful*/
-
-#ttbm_add_meta_box .tabsContent .ttbm_pro_badge { color: #FFF; background-color: #DB2020; width: max-content; border-radius: 5px; padding: 2px 5px; font-size: 14px; display: inline-block;}
-
 a#ttbm_basic_license_settings-tab { display: none;}
 /***************************************/
 div.ttbm_welcome_page { margin: 20px 20px 20px 0;}
@@ -229,7 +161,7 @@ div.unlimited_section {background-color: #F2F2F2;margin: 15px 0 0 0;padding: 50p
 .welcome-tabs .next-prev {
 	display: -webkit-flex;display: flex;-webkit-justify-content: space-between;justify-content: space-between;
 }
-.welcome-tabs .next-prev .prev { display: none;  transition: all ease .25s;border: 1px solid #555;}
+.welcome-tabs .next-prev .prev { display: none; transition: all ease .25s;border: 1px solid #555;}
 .welcome-tabs .next-prev .next {border: 1px solid #555;transition: all ease .25s;}
 .welcome-tabs .next-prev span { padding: 15px 20px; display: block; cursor: pointer;font-size: 18px;}
 .welcome-tabs .next-prev .next:hover, .welcome-tabs .next-prev .prev:hover { background: #444; color: #FFF;}
@@ -262,7 +194,6 @@ div.unlimited_section {background-color: #F2F2F2;margin: 15px 0 0 0;padding: 50p
 	.welcome-tabs .setting-field .setting-field .field-input { margin-left: 0; }
 }
 .welcome-tabs .pro-feature { background: #FFD87F; padding: 0 5px;}
-
 td.woo_btn_td {text-align: right;}
 .button.setup_save_finish,
 td.woo_btn_td .button {
@@ -287,11 +218,12 @@ table.wc_status_table td.woo_btn_td span {font-size: 20px; color: #10DD10;}
 .welcome-tabs .addon-list .thumb-wrap img { width: 100%;}
 .welcome-tabs .addon-list .addon-title { margin: 10px 0; font-size: 17px;}
 .welcome-tabs .addon-list .addon-link a { text-decoration: none;}
-#ttbm_quick_setup {padding: 50px;max-width: 1000px;;margin: 100px auto;background-color: #fff;}
-#ttbm_quick_setup .quick_tab_area h5{	padding: 10px 20px;	margin: 0 30px;	border: 1px solid var(--border_color);	border-radius: var(--default-border-radious);position: relative;}
-#ttbm_quick_setup .quick_tab_area h5::after{content: "";	width: 60px;	height: 2px;	top: 40%;	right: 0;	position: absolute;	transform: translate(100%, 50%);border-bottom: 2px dashed #DDD;}
-#ttbm_quick_setup .quick_tab_area h5:last-child::after{width: 0;}
-#ttbm_quick_setup .quick_tab_area h5.active{background: #2271B1;color: #FFF;border-bottom: 5px solid #000;}
-#ttbm_quick_setup .quick_tab_area h5.active span{color: #FFF;}
-#ttbm_quick_setup .quick_tab_area h5.disabled{cursor: not-allowed;opacity: 0.5;background-color: #f7e2e287;}
+/************************************************/
+#ttbm_quick_setup {padding: 50px;max-width: 1000px;;margin: 100px auto;background-color: #FFF;}
+#ttbm_quick_setup .quick_tab_area h5 { padding: 10px 20px; margin: 0 30px; border: 1px solid var(--border_color); border-radius: var(--default-border-radious);position: relative;}
+#ttbm_quick_setup .quick_tab_area h5::after {content: ""; width: 60px; height: 2px; top: 40%; right: 0; position: absolute; transform: translate(100%, 50%);border-bottom: 2px dashed #DDD;}
+#ttbm_quick_setup .quick_tab_area h5:last-child::after {width: 0;}
+#ttbm_quick_setup .quick_tab_area h5.active {background: #2271B1;color: #FFF;border-bottom: 5px solid #000;}
+#ttbm_quick_setup .quick_tab_area h5.active span {color: #FFF;}
+#ttbm_quick_setup .quick_tab_area h5.disabled {cursor: not-allowed;opacity: 0.5;background-color: #F7E2E287;}
 /************************************************/

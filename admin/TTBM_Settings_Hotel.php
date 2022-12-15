@@ -9,7 +9,7 @@
 			}
 			public function hotel_settings_meta() {
 				$ttbm_label = TTBM_Function::get_name();
-				add_meta_box( 'ttbm_add_meta_box', '<span class="fas fa-hotel"></span>' . $ttbm_label . esc_html__( ' Hotel Settings : ', 'tour-booking-manager' ) . get_the_title( get_the_id() ), array( $this, 'hotel_settings' ), 'ttbm_hotel', 'normal', 'high' );
+				add_meta_box( 'mp_meta_box_panel', '<span class="fas fa-hotel"></span>' . $ttbm_label . esc_html__( ' Hotel Settings : ', 'tour-booking-manager' ) . get_the_title( get_the_id() ), array( $this, 'hotel_settings' ), 'ttbm_hotel', 'normal', 'high' );
 			}
 			public function hotel_settings() {
 				$hotel_id    = get_the_id();

@@ -5,7 +5,7 @@
 	if ( ! class_exists( 'TTBM_Settings' ) ) {
 		class TTBM_Settings {
 			public function __construct() {
-				add_action( 'add_meta_boxes', [ $this, 'ttbm_settings_meta' ] );
+				add_action( 'add_meta_boxes', [ $this, 'settings_meta' ] );
 				add_action( 'admin_init', [ $this, 'tour_settings_meta_box' ], 10 );
 				//********Location************//
 				add_action( 'wp_ajax_load_ttbm_location_form', [ $this, 'load_ttbm_location_form' ] );
@@ -14,12 +14,12 @@
 				add_action( 'wp_ajax_nopriv_ttbm_reload_location_list', [ $this, 'ttbm_reload_location_list' ] );
 			}
 			//************************//
-			public function ttbm_settings_meta() {
-				$ttbm_label = TTBM_Function::get_name();
-				add_meta_box( 'ttbm_add_meta_box', '<span class="fas fa-cogs"></span>' . $ttbm_label . esc_html__( ' Information Settings : ', 'tour-booking-manager' ) . get_the_title( get_the_id() ), array( $this, 'ttbm_settings' ), 'ttbm_tour', 'normal', 'high' );
+			public function settings_meta() {
+				$label = TTBM_Function::get_name();
+				add_meta_box( 'mp_meta_box_panel', '<span class="fas fa-cogs"></span>' . $label . esc_html__( ' Information Settings : ', 'tour-booking-manager' ) . get_the_title( get_the_id() ), array( $this, 'settings' ), 'ttbm_tour', 'normal', 'high' );
 			}
 			//******************************//
-			public function ttbm_settings() {
+			public function settings() {
 				$tour_id    = get_the_id();
 				$ttbm_label = TTBM_Function::get_name();
 				?>
@@ -1063,7 +1063,7 @@
 				$sidebar_checked      = TTBM_Function::get_post_info( $tour_id, 'ttbm_display_sidebar', 'off' ) == 'off' ? '' : 'checked';
 				$duration_checked     = TTBM_Function::get_post_info( $tour_id, 'ttbm_display_duration', 'on' ) == 'off' ? '' : 'checked';
 				?>
-				<div class="ttbm_settings_panel tabsItem" data-tabs="#ttbm_display_settings">
+				<div class="mp_settings_panel tabsItem" data-tabs="#ttbm_display_settings">
 					<h5><?php esc_html_e( 'Details page settings', 'tour-booking-manager' ); ?></h5>
 					<table>
 						<tbody>

@@ -19,11 +19,11 @@
 			public function settings_page() {
 				$plugin_data=get_plugin_data( __FILE__ );
 				?>
-				<div class="ttbm_settings_panel_header">
+				<div class="mp_settings_panel_header">
 					<?php echo $plugin_data['Name']; ?>
 					<small><?php echo $plugin_data['Version']; ?></small>
 				</div>
-				<div class="ttbm_settings_panel">
+				<div class="mp_settings_panel">
 					<?php $this->settings_api->show_navigation(); ?>
 					<?php $this->settings_api->show_forms(); ?>
 				</div>

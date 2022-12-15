@@ -69,7 +69,7 @@ div.viator_top_section .ttbm_booking_panel form,
 .mpStyle [class*='noShadow'] { -webkit-box-shadow: none; -moz-box-shadow: none; -o-box-shadow: none; box-shadow: none;}
 /**********Font Size & Font weight****************************/
 .mpStyle label,
-.mpStyle h1, .mpStyle h2, .mpStyle h3, .mpStyle h4, .mpStyle h5, .mpStyle h6 { margin: 0;padding: 0;line-height: 1.25;color: inherit;}
+.mpStyle h1, .mpStyle h2, .mpStyle h3, .mpStyle h4, .mpStyle h5, .mpStyle h6 { margin: 0;padding: 0;line-height: 1.25;}
 .mpStyle strong {font-weight: var(--fw-bold);}
 .mpStyle .extraBold {font-weight: 900;}
 .mpStyle h1 {font-size: var(--font-size-h1);font-weight: var(--fw-bold);}
@@ -78,7 +78,7 @@ div.viator_top_section .ttbm_booking_panel form,
 .mpStyle h4 {font-size: var(--font-size-h4);font-weight: var(--fw-medium);}
 .mpStyle h5 {font-size: var(--font-size-h5);font-weight: var(--fw-medium);}
 .mpStyle h6 {font-size: var(--font-size-h6);font-weight: var(--fw-medium);}
-.mpStyle label {font-size: var(--font-size-label);color: var(--default-color);}
+.mpStyle label {font-size: var(--font-size-label);font-weight: var(--fw-medium);}
 /***************Flex Section***********************/
 .mpStyle [class*="_equalChild"], .mpStyle .equalChild, .mpStyle .flexEqual, .mpStyle [class*="listEqual"],
 .mpStyle .groupContent,

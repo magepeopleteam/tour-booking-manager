@@ -13,7 +13,6 @@
 		$time          = TTBM_Function::get_time( $tour_id, $date );
 		$time          = is_array( $time ) ? $time[0]['time'] : $time;
 		$date          = $time ? $date . ' ' . $time : $date;
-		$date          = $time ? $date . ' ' . $time : $date;
 		$date=$time?date( 'Y-m-d H:i', strtotime( $date) ):date( 'Y-m-d', strtotime( $date) );
 		$date_format   = $date_format??TTBM_Function::date_format();
 		?>

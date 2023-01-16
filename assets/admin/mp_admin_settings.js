@@ -4,11 +4,6 @@ function load_sortable_datepicker(parent, item) {
 			handle: jQuery(this).find('.mp_sortable_button')
 		});
 		parent.find(".date_type").removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind().datepicker({
-			monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-			monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-			dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-			dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-			dayNamesMin: ["S", "M", "T", "W", "T", "F", "S", "S"],
 			dateFormat: ttbm_date_format
 		});
 	});
@@ -19,11 +14,6 @@ function load_sortable_datepicker(parent, item) {
 	"use strict";
 	$(document).ready(function () {
 		$(".mpStyle .date_type").datepicker({
-			monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-			monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-			dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-			dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-			dayNamesMin: ["S", "M", "T", "W", "T", "F", "S", "S"],
 			dateFormat: ttbm_date_format
 		});
 		$('.ttbm_select2').select2({});

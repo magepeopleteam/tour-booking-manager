@@ -28,7 +28,7 @@
 											do_action( 'add_super_slider_only', $images );
 										}
 									?>
-									<?php echo $day_text; ?>
+									<?php echo do_shortcode($day_text); ?>
 									<?php //echo mep_esc_html( $day_text ); ?>
 								</div>
 							</div>

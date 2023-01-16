@@ -37,7 +37,7 @@
 					$GLOBALS['call_Input_value_icon_choose_popup'] = true;
 					?>
 					<div class="add_icon_list_popup">
-						<span class="far fa-trash-alt popupClose"></span>
+						<span class="fas fa-times popupClose"></span>
 						<?php
 							$icons = $this->all_icon_array();
 							if ( is_array( $icons ) && sizeof( $icons ) > 0 ) {

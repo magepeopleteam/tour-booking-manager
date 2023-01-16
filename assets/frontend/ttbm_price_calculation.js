@@ -131,11 +131,6 @@ function ttbm_multi_attendee_form(parentTr, qty) {
 				for (let i = formLength; i < qty; i++) {
 					target_tr.find('td').append(form_copy).find('.ttbm_attendee_form_item:last-child').slideDown(250).promise().done(function (){
 						jQuery(this).find(".date_type").datepicker({
-							monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-							monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-							dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-							dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-							dayNamesMin: ["S", "M", "T", "W", "T", "F", "S", "S"],
 							dateFormat: ttbm_date_format
 						});
 					});
@@ -154,11 +149,6 @@ function ttbm_single_attendee_form(parent, totalQty) {
 			let form_copy = parent.find('[data-form-type]').html();
 			parent.find('.ttbm_attendee_form_area').append(form_copy).promise().done(function (){
 				jQuery(this).find(".date_type").datepicker({
-					monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-					monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-					dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-					dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-					dayNamesMin: ["S", "M", "T", "W", "T", "F", "S", "S"],
 					dateFormat: ttbm_date_format
 				});
 			});

@@ -1,4 +1,3 @@
-
 //*******owlCarousel***********//
 (function ($) {
 	"use strict";

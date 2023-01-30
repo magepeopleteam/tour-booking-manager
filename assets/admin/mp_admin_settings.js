@@ -4,7 +4,12 @@ function load_sortable_datepicker(parent, item) {
 			handle: jQuery(this).find('.mp_sortable_button')
 		});
 		parent.find(".date_type").removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind().datepicker({
-			dateFormat: ttbm_date_format
+			dateFormat: ttbm_date_format,
+			autoSize: true,
+			onSelect: function (dateString, data) {
+				let date = data.selectedYear + '-' + (parseInt(data.selectedMonth) + 1) + '-' + data.selectedDay;
+				jQuery(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
+			}
 		});
 	});
 	return true;
@@ -14,7 +19,12 @@ function load_sortable_datepicker(parent, item) {
 	"use strict";
 	$(document).ready(function () {
 		$(".mpStyle .date_type").datepicker({
-			dateFormat: ttbm_date_format
+			dateFormat: ttbm_date_format,
+			autoSize: true,
+			onSelect: function (dateString, data) {
+				let date = data.selectedYear + '-' + (parseInt(data.selectedMonth) + 1) + '-' + data.selectedDay;
+				$(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
+			}
 		});
 		$('.ttbm_select2').select2({});
 		$('.field-select2-wrapper select').select2({});

@@ -296,7 +296,7 @@ function content_text_change(currentTarget) {
 	});
 	$(document).on('click', '.groupRadioBox [data-group-radio]', function () {
 		let parent = $(this).closest('.groupRadioBox');
-		let $this=$(this);
+		let $this = $(this);
 		let value = $this.data('group-radio');
 		parent.find('[data-group-radio]').each(function () {
 			$(this).removeClass('active');

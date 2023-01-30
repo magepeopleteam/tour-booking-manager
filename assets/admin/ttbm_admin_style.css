@@ -57,7 +57,7 @@ span.textSuccess { color: var(--success-color); font-size: var(--fs);}
 /****************select_2 custom css******************/
 div.mpStyle span.selection,
 div.mpStyle span.select2-container.select2,
-div.mpStyle span.select2-container span.select2-selection { margin: 0; min-height: var(--button-height); min-width: auto;max-width: 300px;width: 100% !important;}
+div.mpStyle span.select2-container span.select2-selection { margin: 0; min-height: var(--button-height); min-width: auto;width: 100% !important;}
 div.mpStyle span.selection {overflow: hidden; max-width: 100%;}
 div.mpStyle span.select2-container span.select2-selection__rendered { display: -webkit-flex;display: flex; -webkit-align-items: center;align-items: center; height: 100%;}
 div.mpStyle span.select2-container .select2-selection__arrow { top: 2px; height: 37px;}

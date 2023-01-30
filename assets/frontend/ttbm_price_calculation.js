@@ -131,7 +131,12 @@ function ttbm_multi_attendee_form(parentTr, qty) {
 				for (let i = formLength; i < qty; i++) {
 					target_tr.find('td').append(form_copy).find('.ttbm_attendee_form_item:last-child').slideDown(250).promise().done(function (){
 						jQuery(this).find(".date_type").datepicker({
-							dateFormat: ttbm_date_format
+							dateFormat: ttbm_date_format,
+							autoSize: true,
+							onSelect: function (dateString, data) {
+								let date = data.selectedYear + '-' + (parseInt(data.selectedMonth) + 1) + '-' + data.selectedDay;
+								jQuery(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
+							}
 						});
 					});
 				}
@@ -149,7 +154,12 @@ function ttbm_single_attendee_form(parent, totalQty) {
 			let form_copy = parent.find('[data-form-type]').html();
 			parent.find('.ttbm_attendee_form_area').append(form_copy).promise().done(function (){
 				jQuery(this).find(".date_type").datepicker({
-					dateFormat: ttbm_date_format
+					dateFormat: ttbm_date_format,
+					autoSize: true,
+					onSelect: function (dateString, data) {
+						let date = data.selectedYear + '-' + (parseInt(data.selectedMonth) + 1) + '-' + data.selectedDay;
+						jQuery(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
+					}
 				});
 			});
 		}

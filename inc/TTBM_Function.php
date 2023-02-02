@@ -173,6 +173,7 @@
 			public static function date_separate_period( $start_date, $end_date, $repeat ): DatePeriod {
 				$repeat    = $repeat ?: 1;
 				$_interval = "P" . $repeat . "D";
+				$end_date  = date( 'Y-m-d', strtotime( $end_date . ' +1 day' ) );
 				return new DatePeriod( new DateTime( $start_date ), new DateInterval( $_interval ), new DateTime( $end_date ) );
 			}
 			public static function reduce_stop_sale_hours( $date ): string {

@@ -340,6 +340,7 @@
 					/***************/
 					$this->save_feature_data( $post_id );
 					/*********************************/
+					do_action('ttbm_hotel_settings_save',$post_id);
 				}
 			}
 			public function save_hotel_price( $post_id ) {

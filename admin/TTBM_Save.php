@@ -6,6 +6,7 @@
 		class TTBM_Save {
 			public function __construct() {
 				add_action( 'save_post', array( $this, 'save_ttbm_settings' ), 99, 1 );
+				add_action( 'save_post', array( $this, 'save_hotel' ), 99, 1 );
 				/************add New location save********************/
 				add_action( 'wp_ajax_ttbm_new_location_save', [ $this, 'ttbm_new_location_save' ] );
 				add_action( 'wp_ajax_nopriv_ttbm_new_location_save', [ $this, 'ttbm_new_location_save' ] );
@@ -39,8 +40,6 @@
 				do_action( 'wcpp_partial_settings_saved', $tour_id );
 				do_action( 'ttbm_settings_save', $tour_id );
 				TTBM_Function::update_upcoming_date_month( $tour_id, true );
-				/*****************/
-				$this->save_hotel($tour_id);
 			}
 			public function save_general_info( $tour_id ) {
 				if ( get_post_type( $tour_id ) == TTBM_Function::get_cpt_name() ) {
@@ -120,12 +119,12 @@
 					$ticket_price    = TTBM_Function::get_submit_info( 'ticket_type_price', array() );
 					$sale_price      = TTBM_Function::get_submit_info( 'ticket_type_sale_price', array() );
 					$qty             = TTBM_Function::get_submit_info( 'ticket_type_qty', array() );
-					$qty = apply_filters( 'ttbm_ticket_type_qty', $qty,$tour_id );
+					$qty             = apply_filters( 'ttbm_ticket_type_qty', $qty, $tour_id );
 					$default_qty     = TTBM_Function::get_submit_info( 'ticket_type_default_qty', array() );
 					$rsv             = TTBM_Function::get_submit_info( 'ticket_type_resv_qty', array() );
-					$rsv = apply_filters( 'ttbm_ticket_type_resv_qty', $rsv,$tour_id );
+					$rsv             = apply_filters( 'ttbm_ticket_type_resv_qty', $rsv, $tour_id );
 					$qty_type        = TTBM_Function::get_submit_info( 'ticket_type_qty_type', array() );
-					$description        = TTBM_Function::get_submit_info( 'ticket_type_description', array() );
+					$description     = TTBM_Function::get_submit_info( 'ticket_type_description', array() );
 					$count           = count( $names );
 					for ( $i = 0; $i < $count; $i ++ ) {
 						if ( $names[ $i ] && $ticket_price[ $i ] >= 0 && $qty[ $i ] > 0 ) {
@@ -137,27 +136,27 @@
 							$new_ticket_type[ $i ]['ticket_type_default_qty'] = $default_qty[ $i ] ?? 0;
 							$new_ticket_type[ $i ]['ticket_type_resv_qty']    = $rsv[ $i ] ?? 0;
 							$new_ticket_type[ $i ]['ticket_type_qty_type']    = $qty_type[ $i ] ?? 'inputbox';
-							$new_ticket_type[ $i ]['ticket_type_description']    = $description[ $i ] ?? '';
+							$new_ticket_type[ $i ]['ticket_type_description'] = $description[ $i ] ?? '';
 						}
 					}
 					$ticket_type_list = apply_filters( 'ttbm_ticket_type_arr_save', $new_ticket_type );
 					update_post_meta( $tour_id, 'ttbm_ticket_type', $ticket_type_list );
 					//*********Extra service price**************//
-					$new_extra_service = array();
-					$extra_icon        = TTBM_Function::get_submit_info( 'service_icon', array() );
-					$extra_names       = TTBM_Function::get_submit_info( 'service_name', array() );
-					$extra_price       = TTBM_Function::get_submit_info( 'service_price', array() );
-					$extra_qty         = TTBM_Function::get_submit_info( 'service_qty', array() );
-					$extra_qty_type    = TTBM_Function::get_submit_info( 'service_qty_type', array() );
-					$extra_service_description    = TTBM_Function::get_submit_info( 'extra_service_description', array() );
-					$extra_count       = count( $extra_names );
+					$new_extra_service         = array();
+					$extra_icon                = TTBM_Function::get_submit_info( 'service_icon', array() );
+					$extra_names               = TTBM_Function::get_submit_info( 'service_name', array() );
+					$extra_price               = TTBM_Function::get_submit_info( 'service_price', array() );
+					$extra_qty                 = TTBM_Function::get_submit_info( 'service_qty', array() );
+					$extra_qty_type            = TTBM_Function::get_submit_info( 'service_qty_type', array() );
+					$extra_service_description = TTBM_Function::get_submit_info( 'extra_service_description', array() );
+					$extra_count               = count( $extra_names );
 					for ( $i = 0; $i < $extra_count; $i ++ ) {
 						if ( $extra_names[ $i ] && $extra_price[ $i ] >= 0 && $extra_qty[ $i ] > 0 ) {
-							$new_extra_service[ $i ]['service_icon']     = $extra_icon[ $i ] ?? '';
-							$new_extra_service[ $i ]['service_name']     = $extra_names[ $i ];
-							$new_extra_service[ $i ]['service_price']    = $extra_price[ $i ];
-							$new_extra_service[ $i ]['service_qty']      = $extra_qty[ $i ];
-							$new_extra_service[ $i ]['service_qty_type'] = $extra_qty_type[ $i ] ?? 'inputbox';
+							$new_extra_service[ $i ]['service_icon']              = $extra_icon[ $i ] ?? '';
+							$new_extra_service[ $i ]['service_name']              = $extra_names[ $i ];
+							$new_extra_service[ $i ]['service_price']             = $extra_price[ $i ];
+							$new_extra_service[ $i ]['service_qty']               = $extra_qty[ $i ];
+							$new_extra_service[ $i ]['service_qty_type']          = $extra_qty_type[ $i ] ?? 'inputbox';
 							$new_extra_service[ $i ]['extra_service_description'] = $extra_service_description[ $i ] ?? '';
 						}
 					}
@@ -167,10 +166,10 @@
 			}
 			public function save_features( $tour_id ) {
 				if ( get_post_type( $tour_id ) == TTBM_Function::get_cpt_name() ) {
-					$this->save_feature_data($tour_id);
+					$this->save_feature_data( $tour_id );
 				}
 			}
-			public function save_feature_data($tour_id){
+			public function save_feature_data( $tour_id ) {
 				$include_service = TTBM_Function::get_submit_info( 'ttbm_display_include_service' ) ? 'on' : 'off';
 				$exclude_service = TTBM_Function::get_submit_info( 'ttbm_display_exclude_service' ) ? 'on' : 'off';
 				update_post_meta( $tour_id, 'ttbm_display_include_service', $include_service );
@@ -306,12 +305,12 @@
 			public function save_details_display( $tour_id ) {
 				if ( get_post_type( $tour_id ) == TTBM_Function::get_cpt_name() ) {
 					$content_title_style = TTBM_Function::get_submit_info( 'ttbm_section_title_style' ) ?: 'style_1';
-					$ticketing_system = TTBM_Function::get_submit_info( 'ttbm_ticketing_system', 'availability_section' );
-					$seat_info        = TTBM_Function::get_submit_info( 'ttbm_display_seat_details' ) ? 'on' : 'off';
-					$sidebar          = TTBM_Function::get_submit_info( 'ttbm_display_sidebar' ) ? 'on' : 'off';
-					$tour_type        = TTBM_Function::get_submit_info( 'ttbm_display_tour_type' ) ? 'on' : 'off';
-					$hotels           = TTBM_Function::get_submit_info( 'ttbm_display_hotels' ) ? 'on' : 'off';
-					$duration         = TTBM_Function::get_submit_info( 'ttbm_display_duration' ) ? 'on' : 'off';
+					$ticketing_system    = TTBM_Function::get_submit_info( 'ttbm_ticketing_system', 'availability_section' );
+					$seat_info           = TTBM_Function::get_submit_info( 'ttbm_display_seat_details' ) ? 'on' : 'off';
+					$sidebar             = TTBM_Function::get_submit_info( 'ttbm_display_sidebar' ) ? 'on' : 'off';
+					$tour_type           = TTBM_Function::get_submit_info( 'ttbm_display_tour_type' ) ? 'on' : 'off';
+					$hotels              = TTBM_Function::get_submit_info( 'ttbm_display_hotels' ) ? 'on' : 'off';
+					$duration            = TTBM_Function::get_submit_info( 'ttbm_display_duration' ) ? 'on' : 'off';
 					update_post_meta( $tour_id, 'ttbm_section_title_style', $content_title_style );
 					update_post_meta( $tour_id, 'ttbm_ticketing_system', $ticketing_system );
 					update_post_meta( $tour_id, 'ttbm_display_seat_details', $seat_info );
@@ -322,26 +321,28 @@
 				}
 			}
 			/************************/
-			public function save_hotel($post_id){
+			public function save_hotel( $post_id ) {
+				if ( ! isset( $_POST['ttbm_hotel_type_nonce'] ) || ! wp_verify_nonce( $_POST['ttbm_hotel_type_nonce'], 'ttbm_hotel_type_nonce' ) && defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE && ! current_user_can( 'edit_post', $post_id ) ) {
+					return;
+				}
 				if ( get_post_type( $post_id ) == 'ttbm_hotel' ) {
 					$ttbm_display_location = TTBM_Function::get_submit_info( 'ttbm_display_hotel_location' ) ? 'on' : 'off';
 					$ttbm_location_name    = TTBM_Function::get_submit_info( 'ttbm_hotel_location' );
 					update_post_meta( $post_id, 'ttbm_display_hotel_location', $ttbm_display_location );
 					update_post_meta( $post_id, 'ttbm_hotel_location', $ttbm_location_name );
 					/***************/
-					$ttbm_display_distance = TTBM_Function::get_submit_info( 'ttbm_display_hotel_distance' ) ? 'on' : 'off';
-					$ttbm_hotel_distance_des    = TTBM_Function::get_submit_info( 'ttbm_hotel_distance_des' );
+					$ttbm_display_distance   = TTBM_Function::get_submit_info( 'ttbm_display_hotel_distance' ) ? 'on' : 'off';
+					$ttbm_hotel_distance_des = TTBM_Function::get_submit_info( 'ttbm_hotel_distance_des' );
 					update_post_meta( $post_id, 'ttbm_display_hotel_distance', $ttbm_display_distance );
 					update_post_meta( $post_id, 'ttbm_hotel_distance_des', $ttbm_hotel_distance_des );
 					/***************/
-					$this->save_hotel_price($post_id);
+					$this->save_hotel_price( $post_id );
 					/***************/
-					$this->save_feature_data($post_id);
+					$this->save_feature_data( $post_id );
 					/*********************************/
-
 				}
 			}
-			public function save_hotel_price($post_id){
+			public function save_hotel_price( $post_id ) {
 				$advance_option = TTBM_Function::get_submit_info( 'ttbm_display_advance' ) ? 'on' : 'off';
 				update_post_meta( $post_id, 'ttbm_display_advance', $advance_option );
 				/************************/
@@ -352,24 +353,24 @@
 				$ticket_price    = TTBM_Function::get_submit_info( 'ttbm_hotel_room_price', array() );
 				$sale_price      = TTBM_Function::get_submit_info( 'sale_price', array() );
 				$qty             = TTBM_Function::get_submit_info( 'ttbm_hotel_room_qty', array() );
-				$adult_qty     = TTBM_Function::get_submit_info( 'ttbm_hotel_room_capacity_adult', array() );
-				$child_qty     = TTBM_Function::get_submit_info( 'ttbm_hotel_room_capacity_child', array() );
+				$adult_qty       = TTBM_Function::get_submit_info( 'ttbm_hotel_room_capacity_adult', array() );
+				$child_qty       = TTBM_Function::get_submit_info( 'ttbm_hotel_room_capacity_child', array() );
 				$rsv             = TTBM_Function::get_submit_info( 'room_reserve_qty', array() );
 				$qty_type        = TTBM_Function::get_submit_info( 'room_qty_type', array() );
-				$description        = TTBM_Function::get_submit_info( 'room_description', array() );
+				$description     = TTBM_Function::get_submit_info( 'room_description', array() );
 				$count           = count( $names );
 				for ( $i = 0; $i < $count; $i ++ ) {
 					if ( $names[ $i ] && $ticket_price[ $i ] >= 0 && $qty[ $i ] > 0 ) {
-						$new_ticket_type[ $i ]['room_type_icon']        = $icon[ $i ] ?? '';
-						$new_ticket_type[ $i ]['ttbm_hotel_room_name']        = $names[ $i ];
-						$new_ticket_type[ $i ]['ttbm_hotel_room_price']       = $ticket_price[ $i ];
-						$new_ticket_type[ $i ]['sale_price']              = $sale_price[ $i ];
-						$new_ticket_type[ $i ]['ttbm_hotel_room_qty']         = $qty[ $i ];
+						$new_ticket_type[ $i ]['room_type_icon']                 = $icon[ $i ] ?? '';
+						$new_ticket_type[ $i ]['ttbm_hotel_room_name']           = $names[ $i ];
+						$new_ticket_type[ $i ]['ttbm_hotel_room_price']          = $ticket_price[ $i ];
+						$new_ticket_type[ $i ]['sale_price']                     = $sale_price[ $i ];
+						$new_ticket_type[ $i ]['ttbm_hotel_room_qty']            = $qty[ $i ];
 						$new_ticket_type[ $i ]['ttbm_hotel_room_capacity_adult'] = $adult_qty[ $i ] ?? 0;
 						$new_ticket_type[ $i ]['ttbm_hotel_room_capacity_child'] = $child_qty[ $i ] ?? 0;
-						$new_ticket_type[ $i ]['room_reserve_qty']    = $rsv[ $i ] ?? 0;
-						$new_ticket_type[ $i ]['room_qty_type']    = $qty_type[ $i ] ?? 'inputbox';
-						$new_ticket_type[ $i ]['room_description']    = $description[ $i ] ?? '';
+						$new_ticket_type[ $i ]['room_reserve_qty']               = $rsv[ $i ] ?? 0;
+						$new_ticket_type[ $i ]['room_qty_type']                  = $qty_type[ $i ] ?? 'inputbox';
+						$new_ticket_type[ $i ]['room_description']               = $description[ $i ] ?? '';
 					}
 				}
 				$ticket_type_list = apply_filters( 'ttbm_hotel_type_arr_save', $new_ticket_type );

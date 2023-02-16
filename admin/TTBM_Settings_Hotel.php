@@ -30,6 +30,7 @@
 						</ul>
 						<div class="tabsContent tab-content">
 							<?php
+								wp_nonce_field( 'ttbm_hotel_type_nonce', 'ttbm_hotel_type_nonce' );
 								//echo get_current_screen();
 								$this->general_info( $hotel_id );
 								do_action('add_ttbm_settings_feature_content',$hotel_id);

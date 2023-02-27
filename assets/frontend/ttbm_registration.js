@@ -189,4 +189,7 @@ function get_ttbm_ticket(current, date = '') {
 		parent.find('.ttbm_hotel_area').slideToggle(250);
 		loadBgImage();
 	});
+	$(document).on('click', '.ttbm_go_particular_booking', function () {
+		pageScrollTo($('#particular_item_area'));
+	});
 }(jQuery));

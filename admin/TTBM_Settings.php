@@ -965,7 +965,7 @@
 						$active_tour_guide = TTBM_Function::get_general_settings( 'ttbm_active_guide', 'no' );
 						if ( $active_tour_guide == 'yes' ) {
 							$all_guides    = TTBM_Query::query_post_type( 'ttbm_guide' );
-							$display_guide = TTBM_Function::get_post_info( $tour_id, 'ttbm_display_get_question', 'off' );
+							$display_guide = TTBM_Function::get_post_info( $tour_id, 'ttbm_display_tour_guide', 'off' );
 							$active_guide  = $display_guide == 'off' ? '' : 'mActive';
 							$checked_guide = $display_guide == 'off' ? '' : 'checked';
 							$guides        = TTBM_Function::get_post_info( $tour_id, 'ttbm_tour_guide', array() );

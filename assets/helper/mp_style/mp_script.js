@@ -65,7 +65,7 @@ function placeholderLoaderRemove(target) {
 
 function pageScrollTo(target) {
 	jQuery('html, body').animate({
-		scrollTop: target.offset().top -= 100
+		scrollTop: target.offset().top -= 200
 	}, 1000);
 }
 

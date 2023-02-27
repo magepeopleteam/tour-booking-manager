@@ -2,6 +2,7 @@
 	if ( ! defined( 'ABSPATH' ) ) {
 		die;
 	}
+
 	$tour_id                   = $tour_id ?? get_the_id();
 	$ttbm_display_registration = $ttbm_display_registration ?? TTBM_Function::get_post_info( $tour_id, 'ttbm_display_registration', 'on' );
 	if ( $ttbm_display_registration != 'off' ) {

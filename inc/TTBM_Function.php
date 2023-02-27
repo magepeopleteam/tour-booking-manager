@@ -93,6 +93,7 @@
 						}
 					}
 				} else if ( $travel_type == 'repeated' ) {
+					$now_date         = strtotime( current_time( 'Y-m-d' ) );
 					$start_date    = TTBM_Function::get_post_info( $tour_id, 'ttbm_travel_repeated_start_date' );
 					$start_date    = $start_date ? date( 'Y-m-d', strtotime( $start_date ) ) : '';
 					$end_date      = TTBM_Function::get_post_info( $tour_id, 'ttbm_travel_repeated_end_date' );
@@ -118,7 +119,7 @@
 						$all_dates = self::date_separate_period( $start_date, $end_date, $interval );
 						foreach ( $all_dates as $date ) {
 							$date = $date->format( 'Y-m-d' );
-							if ( $expire || $now <= strtotime( $date ) ) {
+							if ( $expire || $now_date <= strtotime( $date ) ) {
 								$day = strtolower( date( 'D', strtotime( $date ) ) );
 								if ( ! in_array( $day, $off_days ) && ! in_array( $date, $off_dates ) ) {
 									$current_date = self::get_date_by_time_check( $tour_id, $date, $expire );

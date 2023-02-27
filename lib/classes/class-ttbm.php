@@ -307,26 +307,23 @@
 					'data-default-color' => [],
 					'data-price'         => [],
 				],
-				'p'        => [ 'class' => [] ],
-				'img'      => [ 'class' => [], 'id' => [], 'src' => [], 'alt' => [], ],
-				'fieldset' => [
-					'class' => []
-				],
-				'label'    => [
-					'for'   => [],
-					'class' => []
-				],
+				'p'        => [ 'class' => [],'style'=>[] ],
+				'img'      => [ 'class' => [], 'id' => [], 'src' => [], 'alt' => [], 'style'=>[]],
+				'fieldset' => ['class' => [],'style'=>[]	],
+				'label'    => [ 'for'   => [], 'class' => [],'style'=>[] ],
 				'select'   => [
 					'class'      => [],
 					'name'       => [],
 					'id'         => [],
 					'data-price' => [],
+					'style'=>[],
 				],
 				'option'   => [
 					'class'    => [],
 					'value'    => [],
 					'id'       => [],
 					'selected' => [],
+					'style'=>[],
 				],
 				'textarea' => [
 					'class' => [],
@@ -334,56 +331,57 @@
 					'id'    => [],
 					'cols'  => [],
 					'name'  => [],
+					'style'=>[]
 				],
-				'h2'       => [ 'class' => [], 'id' => [], ],
-				'a'        => [ 'class' => [], 'id' => [], 'href' => [], ],
+				'h2'       => [ 'class' => [], 'id' => [], 'style'=>[]],
+				'a'        => [ 'class' => [], 'id' => [], 'href' => [], 'style'=>[]],
 				'div'      => [
-					'class'                 => [],
+					'class'                 => [],'style'=>[],
 					'id'                    => [],
 					'data-ticket-type-name' => [],
 				],
 				'span'     => [
-					'class' => [],
+					'class' => [],'style'=>[],
 					'id'    => [],
 					'data'  => [],
 				],
 				'i'        => [
-					'class' => [],
+					'class' => [],'style'=>[],
 					'id'    => [],
 					'data'  => [],
 				],
 				'table'    => [
-					'class' => [],
+					'class' => [],'style'=>[],
 					'id'    => [],
 					'data'  => [],
 				],
 				'tr'       => [
-					'class' => [],
+					'class' => [],'style'=>[],
 					'id'    => [],
 					'data'  => [],
 				],
 				'td'       => [
-					'class' => [],
+					'class' => [],'style'=>[],
 					'id'    => [],
 					'data'  => [],
 				],
 				'thead'    => [
-					'class' => [],
+					'class' => [],'style'=>[],
 					'id'    => [],
 					'data'  => [],
 				],
 				'tbody'    => [
-					'class' => [],
+					'class' => [],'style'=>[],
 					'id'    => [],
 					'data'  => [],
 				],
 				'th'       => [
-					'class' => [],
+					'class' => [],'style'=>[],
 					'id'    => [],
 					'data'  => [],
 				],
 				'svg'      => [
-					'class'   => [],
+					'class'   => [],'style'=>[],
 					'id'      => [],
 					'width'   => [],
 					'height'  => [],
@@ -391,10 +389,10 @@
 					'xmlns'   => [],
 				],
 				'g'        => [
-					'fill' => [],
+					'fill' => [],'style'=>[],
 				],
 				'path'     => [
-					'd' => [],
+					'd' => [],'style'=>[],
 				],
 				'br'       => array(),
 				'em'       => array(),

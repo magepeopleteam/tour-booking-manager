@@ -7,10 +7,12 @@
 			public function __construct() {
 				add_action( 'init', array( $this, 'language_load' ) );
 				$this->load_file();
-				add_action( 'wp_enqueue_scripts', array( $this, 'ttbm_frontend_script' ), 90 );
-				add_action( 'admin_enqueue_scripts', array( $this, 'ttbm_admin_script' ), 90 );
-				add_action( 'admin_head', array( $this, 'ttbm_js_constant' ), 5 );
-				add_action( 'wp_head', array( $this, 'ttbm_js_constant' ), 5 );
+				add_action( 'wp_enqueue_scripts', array( $this, 'common_script' ), 10 );
+				add_action( 'wp_enqueue_scripts', array( $this, 'frontend_script' ), 90 );
+				add_action( 'admin_enqueue_scripts', array( $this, 'common_script' ), 10 );
+				add_action( 'admin_enqueue_scripts', array( $this, 'admin_script' ), 90 );
+				add_action( 'admin_head', array( $this, 'js_constant' ), 5 );
+				add_action( 'wp_head', array( $this, 'js_constant' ), 5 );
 				add_action( 'wp_head', array( $this, 'apply_custom_css' ), 90 );
 				add_action( 'admin_head', array( $this, 'apply_custom_css' ), 90 );
 				add_action( 'ttbm_registration_enqueue', array( $this, 'registration_enqueue' ), 90 );
@@ -35,7 +37,7 @@
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
 				require_once TTBM_PLUGIN_DIR . '/super_slider/MP_Super_Slider.php';
 			}
-			public function ttbm_common_script() {
+			public function common_script() {
 				wp_enqueue_script( 'jquery' );
 				wp_enqueue_script( 'jquery-ui-core' );
 				wp_enqueue_script( 'jquery-ui-datepicker' );
@@ -46,8 +48,7 @@
 				wp_enqueue_script( 'mp_plugin_global', TTBM_PLUGIN_URL . '/assets/helper/mp_style/mp_script.js', array( 'jquery' ), time(), true );
 				do_action( 'ttbm_common_script' );
 			}
-			public function ttbm_frontend_script() {
-				$this->ttbm_common_script();
+			public function frontend_script() {
 				wp_enqueue_script( 'jquery-ui-accordion' );
 				wp_enqueue_style( 'ttbm_owl_style', TTBM_PLUGIN_URL . '/assets/owl/owl.carousel.min.css' );
 				wp_enqueue_style( 'ttbm_owl_style_default', TTBM_PLUGIN_URL . '/assets/owl/owl.theme.default.min.css' );
@@ -59,8 +60,7 @@
 				do_action( 'ttbm_registration_enqueue' );
 				do_action( 'ttbm_frontend_script' );
 			}
-			public function ttbm_admin_script() {
-				$this->ttbm_common_script();
+			public function admin_script() {
 				wp_enqueue_editor();
 				//admin script
 				wp_enqueue_script( 'jquery-ui-sortable' );
@@ -89,7 +89,7 @@
 				wp_enqueue_script( 'ttbm_price_calculation', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_price_calculation.js', array( 'jquery' ), time(), true );
 				do_action( 'add_ttbm_registration_enqueue' );
 			}
-			public function ttbm_js_constant() {
+			public function js_constant() {
 				?>
 				<script type="text/javascript">
 							let ttbm_ajax_url = "<?php echo admin_url( 'admin-ajax.php' ); ?>";

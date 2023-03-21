@@ -11,8 +11,7 @@
 		</div>
 		<?php
 	}
-	$travel_type = TTBM_Function::get_travel_type( $tour_id );
-	if ( $upcoming_date && $tour_type == 'general' && $travel_type == 'fixed' ) {
+	if ( $upcoming_date && $tour_type == 'general' ) {
 		$available_seat = TTBM_Function::get_total_available( $tour_id );
 		if ( $available_seat < 1 ) {
 			$any_date_available = TTBM_Function::get_any_date_seat_available( $tour_id );

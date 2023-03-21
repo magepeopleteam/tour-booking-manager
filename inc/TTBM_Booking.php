@@ -7,6 +7,8 @@
 			public function __construct() {
 				add_action( 'wp_ajax_get_ttbm_ticket', array( $this, 'get_ttbm_ticket' ) );
 				add_action( 'wp_ajax_nopriv_get_ttbm_ticket', array( $this, 'get_ttbm_ticket' ) );
+				add_action( 'wp_ajax_get_ttbm_sold_ticket', array( $this, 'get_ttbm_sold_ticket' ) );
+				add_action( 'wp_ajax_nopriv_get_ttbm_sold_ticket', array( $this, 'get_ttbm_sold_ticket' ) );
 				add_action( 'wp_ajax_get_ttbm_hotel_room_list', array( $this, 'get_ttbm_hotel_room_list' ) );
 				add_action( 'wp_ajax_nopriv_get_ttbm_hotel_room_list', array( $this, 'get_ttbm_hotel_room_list' ) );
 				add_action( 'ttbm_booking_panel', array( $this, 'booking_panel' ), 10, 4 );
@@ -20,6 +22,16 @@
 				$date_format = $time ? 'Y-m-d H:i' : 'Y-m-d';
 				$date        = $date ? date( $date_format, strtotime( $date ) ) : $date;
 				do_action( 'ttbm_booking_panel', $tour_id, $date, $hotel_id );
+				die();
+			}
+			public function get_ttbm_sold_ticket() {
+				$tour_id     = $_REQUEST['tour_id'] ?? '';
+				$date        = $_REQUEST['tour_date'] ?? '';
+				$date        = str_replace( '/', '-', $date );
+				$time        = TTBM_Function::get_time( $tour_id, date( 'Y-m-d', strtotime( $date ) ) );
+				$date_format = $time ? 'Y-m-d H:i' : 'Y-m-d';
+				$date        = $date ? date( $date_format, strtotime( $date ) ) : $date;
+				echo TTBM_Function::get_total_available( $tour_id,$date );
 				die();
 			}
 			public function get_ttbm_hotel_room_list() {

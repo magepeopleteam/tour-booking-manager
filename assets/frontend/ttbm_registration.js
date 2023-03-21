@@ -16,7 +16,6 @@ function get_ttbm_ticket(current, date = '') {
 			"action": "get_ttbm_ticket",
 			"tour_id": tour_id,
 			"tour_date": tour_date,
-			"tour_time": tour_time,
 		},
 		beforeSend: function () {
 			if (jQuery('.mp_tour_ticket_form').length > 0) {
@@ -32,15 +31,34 @@ function get_ttbm_ticket(current, date = '') {
 				});
 				placeholderLoaderRemove(parent);
 				simpleSpinnerRemove(parent);
-				//dLoaderRemove(parent);
+				get_ttbm_sold_ticket(parent, tour_id, tour_date);
 			});
+		}
+	});
+}
+
+function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
+	let target = jQuery('.ttbm_available_seat_area');
+	jQuery.ajax({
+		type: 'POST',
+		url: ttbm_ajax_url,
+		data: {
+			"action": "get_ttbm_sold_ticket",
+			"tour_id": tour_id,
+			"tour_date": tour_date,
+		},
+		beforeSend: function () {
+			dLoader_xs(target);
+		},
+		success: function (data) {
+			target.find('.ttbm_available_seat').html(data);
+			dLoaderRemove(target);
 		}
 	});
 }
 
 (function ($) {
 	"use strict";
-
 	$(document).on('change', '.ttbm_registration_area [name="ttbm_date"]', function () {
 		let parent = $(this).closest('.ttbm_registration_area');
 		let time_slot = parent.find('.ttbm_select_time_area');
@@ -147,8 +165,8 @@ function get_ttbm_ticket(current, date = '') {
 		let tour_id = current.find('[name="ttbm_id"]').val();
 		let hotel_id = current.find('[name="ttbm_hotel_id"]').val();
 		let date_range = $('[name="ttbm_hotel_date_range"]').val();
-		if( $('[name="ttbm_hotel_date_range"]').length>1){
-			date_range=$(this).closest('.particular_date_area').find('[name="ttbm_hotel_date_range"]').val();
+		if ($('[name="ttbm_hotel_date_range"]').length > 1) {
+			date_range = $(this).closest('.particular_date_area').find('[name="ttbm_hotel_date_range"]').val();
 		}
 		let target = current.find('.ttbm_booking_panel');
 		let target_form = target.find('.mp_tour_ticket_form');
@@ -185,7 +203,7 @@ function get_ttbm_ticket(current, date = '') {
 		}
 	});
 	$(document).on('click', '.get_particular_hotel', function () {
-		let parent=$(this).closest('.particular_date_area');
+		let parent = $(this).closest('.particular_date_area');
 		parent.find('.ttbm_hotel_area').slideToggle(250);
 		loadBgImage();
 	});

@@ -160,9 +160,9 @@
 				}
 			}
 			//****************************************/
-			public function organizer_filter( $params, $organizers = array()) {
+			public function organizer_filter( $params, $organizers = array() ) {
 				if ( $params['organizer-filter'] == 'yes' ) {
-					$organizers = sizeof( $organizers ) > 0  ?$organizers: TTBM_Function::get_taxonomy( 'ttbm_tour_org' );
+					$organizers = sizeof( $organizers ) > 0 ? $organizers : TTBM_Function::get_taxonomy( 'ttbm_tour_org' );
 					if ( sizeof( $organizers ) > 0 ) {
 						$url      = $_GET['organizer_filter'] ?? '';
 						$current  = $url ? get_term_by( 'id', $url, 'ttbm_tour_org' )->term_id : '';
@@ -202,14 +202,14 @@
 				if ( $params['location-filter'] == 'yes' ) {
 					$locations = TTBM_Function::get_taxonomy( 'ttbm_tour_location' );
 					if ( sizeof( $locations ) > 0 ) {
-						$url      = $_GET['location_filter'] ?? '';
+						$url = $_GET['location_filter'] ?? '';
 						?>
 						<label data-placeholder>
 							<select class="formControl" name="location_filter">
 								<option selected value=""><?php esc_html_e( 'All Location', 'tour-booking-manager' ); ?></option>
 								<?php foreach ( $locations as $location ) { ?>
 									<?php $name = get_term_meta( $location->term_id, 'ttbm_country_location' ); ?>
-									<option value="<?php echo esc_attr( $location->term_id ); ?>" <?php echo esc_attr( $url && $location->term_id  == $url ? 'selected' : '' ); ?>>
+									<option value="<?php echo esc_attr( $location->term_id ); ?>" <?php echo esc_attr( $url && $location->term_id == $url ? 'selected' : '' ); ?>>
 										<?php echo esc_html( $location->name ); ?>
 										<?php
 											if ( is_array( $name ) && sizeof( $name ) > 0 ) {
@@ -366,7 +366,7 @@
 				if ( $params['feature-filter'] == 'yes' ) {
 					$features = TTBM_Function::get_taxonomy( 'ttbm_tour_features_list' );
 					if ( sizeof( $features ) > 0 ) {
-                        $url = $_GET['feature_filter'] ?? '';
+						$url = $_GET['feature_filter'] ?? '';
 						?>
 						<h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#feature_filter_multiple" data-placeholder>
 							<?php esc_html_e( 'Filters By Feature', 'tour-booking-manager' ); ?>
@@ -396,14 +396,14 @@
 				if ( $params['activity-filter'] == 'yes' ) {
 					$activities = TTBM_Function::get_taxonomy( 'ttbm_tour_activities' );
 					if ( sizeof( $activities ) > 0 ) {
-                        $url_activity     = $_GET['activity_filter'] ?? '';
-                        $current_activity = $url_activity ? get_term_by( 'id', $url_activity, 'ttbm_tour_activities' )->term_id : '';
+						$url_activity     = $_GET['activity_filter'] ?? '';
+						$current_activity = $url_activity ? get_term_by( 'id', $url_activity, 'ttbm_tour_activities' )->term_id : '';
 						?>
 						<label data-placeholder>
 							<select class="formControl" name="activity_filter">
 								<option selected value=""><?php esc_html_e( 'All Activity', 'tour-booking-manager' ); ?></option>
 								<?php foreach ( $activities as $activity ) { ?>
-                                    <?php $selected = $current_activity == $activity->term_id ? 'selected' : ''; ?>
+									<?php $selected = $current_activity == $activity->term_id ? 'selected' : ''; ?>
 									<option value="<?php echo esc_attr( $activity->term_id ); ?>" <?php echo esc_attr( $selected ); ?>><?php echo esc_html( $activity->name ); ?></option>
 								<?php } ?>
 							</select>
@@ -478,12 +478,12 @@
 					$current_date = current_time( 'Y-m-d' );
 					$month        = date( 'n', strtotime( $current_date ) );
 					$selected     = $url_month == $month ? 'selected' : '';
-					$date_format=TTBM_Function::get_general_settings( 'ttbm_date_format_short', 'M , Y' );
+					$date_format  = TTBM_Function::get_general_settings( 'ttbm_date_format_short', 'M , Y' );
 					?>
 					<label data-placeholder>
 						<select class="formControl" name="month_filter">
 							<option selected value=""><?php esc_html_e( 'All Month', 'tour-booking-manager' ); ?></option>
-							<option value="<?php echo esc_attr( $month ); ?>" <?php echo esc_attr( $selected ); ?>><?php echo date_i18n( $date_format ,strtotime( $current_date )); ?></option>
+							<option value="<?php echo esc_attr( $month ); ?>" <?php echo esc_attr( $selected ); ?>><?php echo date_i18n( $date_format, strtotime( $current_date ) ); ?></option>
 							<?php
 								for ( $i = 1; $i < 12; $i ++ ) {
 									$first_date = date( 'y-m-d', strtotime( "+1 month", strtotime( $first_date ) ) );

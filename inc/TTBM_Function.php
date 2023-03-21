@@ -93,7 +93,7 @@
 						}
 					}
 				} else if ( $travel_type == 'repeated' ) {
-					$now_date         = strtotime( current_time( 'Y-m-d' ) );
+					$now_date      = strtotime( current_time( 'Y-m-d' ) );
 					$start_date    = TTBM_Function::get_post_info( $tour_id, 'ttbm_travel_repeated_start_date' );
 					$start_date    = $start_date ? date( 'Y-m-d', strtotime( $start_date ) ) : '';
 					$end_date      = TTBM_Function::get_post_info( $tour_id, 'ttbm_travel_repeated_end_date' );
@@ -513,6 +513,26 @@
 				$sold      = self::get_total_sold( $tour_id, $tour_date );
 				$available = $total - ( $reserve + $sold );
 				return max( 0, $available );
+			}
+			public static function get_any_date_seat_available( $tour_id ) {
+				$total     = self::get_total_seat( $tour_id );
+				$reserve   = self::get_total_reserve( $tour_id );
+				$all_dates = TTBM_Function::get_date( $tour_id );
+				if ( sizeof( $all_dates ) > 0 ) {
+					foreach ( $all_dates as $date ) {
+						$time_slots=TTBM_Function::get_time( $tour_id, $date );
+						$slot_length=is_array( $time_slots ) && sizeof( $time_slots ) > 0 ?sizeof( $time_slots ):1;
+						$date_total=$total*$slot_length;
+						$date_reserve=$reserve*$slot_length;
+						$sold      = self::get_total_sold( $tour_id, $date );
+						$available = $date_total - ( $date_reserve + $sold );
+						$available = max( 0, $available );
+						if ( $available > 0 ) {
+							return $available;
+						}
+					}
+				}
+				return 0;
 			}
 			//*********************************//
 			public static function get_ticket_type( $tour_id ) {

@@ -1,7 +1,14 @@
 //*******owlCarousel***********//
 (function ($) {
 	"use strict";
-	$("#ttbm_related_tour .owl-carousel").owlCarousel({
+	let target_related_tour=$("#ttbm_related_tour .owl-carousel");
+	let trt_num=target_related_tour.data('show');
+	let trt_num_600=Math.min(trt_num-2,2)
+	trt_num_600=Math.max(trt_num_600,1)
+	let trt_num_800=Math.min(trt_num-1,3)
+	trt_num_800=Math.max(trt_num_800,1)
+
+	target_related_tour.owlCarousel({
 		loop: true,
 		margin: 10,
 		nav: true,
@@ -10,13 +17,13 @@
 				items: 1
 			},
 			600: {
-				items: 2
+				items: trt_num_600
 			},
 			800: {
-				items: 3
+				items: trt_num_800
 			},
 			1000: {
-				items: 4
+				items: trt_num
 			}
 		}
 	});

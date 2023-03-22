@@ -180,7 +180,7 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 .popover-content:hover,
 #place_you_see span.abTopRight:hover ~ .popover-content {display: block;}
 #place_you_see span.abTopRight {margin: 0;}
-#ttbm_related_tour div.filter_item:not(.grid_4) {margin: 0;}
+#ttbm_related_tour div.filter_item:not([class*='grid_']) {margin: 0;}
 #place_you_see .filter_item {box-shadow: none !important;padding: 0 !important;border-radius: 0 !important;}
 /**************Responsive***********************************/
 @media only screen and (max-width: 1100px) {

@@ -12,6 +12,7 @@
 				add_shortcode( 'ttbm-search-result', array( $this, 'search_result' ) );
 				add_shortcode( 'ttbm-hotel-list', array( $this, 'hotel_list' ) );
 				add_shortcode( 'ttbm-registration', array( $this, 'registration' ) );
+				add_shortcode( 'ttbm-related', array( $this, 'related' ) );
 			}
 			public function static_filter( $attribute ) {
 				$defaults = $this->default_attribute();
@@ -136,11 +137,26 @@
 				$defaults = array( 'ttbm_id' => '' );
 				$params   = shortcode_atts( $defaults, $attribute );
 				ob_start();
-				$tour_id = $params['ttbm_id'];
+				$tour_id = $params['ttbm_id']??get_the_id();
 				if ( $tour_id ) {
 					?>
 					<div class="mpStyle">
 						<?php include( TTBM_Function::template_path( 'ticket/registration.php' ) ); ?>
+					</div>
+					<?php
+				}
+				return ob_get_clean();
+			}
+			public function related( $attribute ) {
+				$defaults = array( 'ttbm_id' => '','show'=>4 );
+				$params   = shortcode_atts( $defaults, $attribute );
+				ob_start();
+				$tour_id = $params['ttbm_id']??get_the_id();
+				$num_of_tour = $params['show'];
+				if ( $tour_id ) {
+					?>
+					<div class="mpStyle">
+						<?php include( TTBM_Function::template_path( 'layout/related_tour.php' ) );?>
 					</div>
 					<?php
 				}

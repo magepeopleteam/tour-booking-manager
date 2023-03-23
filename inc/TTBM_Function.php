@@ -5,7 +5,12 @@
 	if ( ! class_exists( 'TTBM_Function' ) ) {
 		class TTBM_Function {
 			public function __construct() {
-				add_action( 'ttbm_date_picker_js', array( $this, 'date_picker_js' ), 10, 2 );
+				add_action('ttbm_date_picker_js', array( $this, 'date_picker_js' ), 10, 2 );
+				add_filter('wp_mail_content_type', array( $this,'ttbm_set_email_content_type'));
+			}
+			
+			public function ttbm_set_email_content_type() {
+				return "text/html";
 			}
 			public static function get_post_info( $tour_id, $key, $default = '' ) {
 				$data = get_post_meta( $tour_id, $key, true ) ?: $default;

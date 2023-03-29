@@ -20,9 +20,9 @@
 					<table class="mp_tour_ticket_type">
 						<thead>
 						<tr>
-							<th class="textL"><?php echo esc_html( TTBM_Function::ticket_name_text() ); ?></th>
-							<th><?php echo esc_html( TTBM_Function::ticket_price_text() ); ?></th>
-							<th><?php echo esc_html( TTBM_Function::ticket_qty_text() ); ?></th>
+							<th class="textL"><?php echo TTBM_Function::data_sanitize( TTBM_Function::ticket_name_text() ); ?></th>
+							<th><?php echo TTBM_Function::data_sanitize( TTBM_Function::ticket_price_text() ); ?></th>
+							<th><?php echo TTBM_Function::data_sanitize( TTBM_Function::ticket_qty_text() ); ?></th>
 						</tr>
 						</thead>
 						<tbody>
@@ -49,7 +49,7 @@
 									<?php if ( $ticket_type_icon ) { ?>
 										<span class="<?php echo esc_attr( $ticket_type_icon ); ?>"></span>
 									<?php } ?>
-									<?php echo mep_esc_html( $ticket_name ); ?>
+									<?php echo TTBM_Function::esc_html( $ticket_name ); ?>
 									<?php
 										if ( $description ) {
 											$word_count = str_word_count( $description );
@@ -80,7 +80,7 @@
 									<?php if ( $regular_price ) { ?>
 										<span class="strikeLine"><?php echo TTBM_Function::ttbm_wc_price( $tour_id, $regular_price ); ?></span>
 									<?php } ?>
-									<span><?php echo mep_esc_html( $ticket_price ); ?></span>
+									<span><?php echo TTBM_Function::esc_html( $ticket_price ); ?></span>
 								</td>
 								<td><?php TTBM_Layout::qty_input( $ticket_name, $available, $ticket_qty_type, $default_qty, $min_qty, $max_qty, $ticket_price_raw, 'ticket_qty[]' ); ?></td>
 							</tr>

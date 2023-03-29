@@ -35,7 +35,7 @@
 		?>
 		<div class="allCenter ttbm_date_time_select">
 			<div class="allCenter ttbm_select_date_area">
-				<label class="col_6 mR" data-placeholder>
+				<label class="max_400" data-placeholder>
 					<span class="date_time_label"><?php esc_html_e( 'Select Date Range : ', 'tour-booking-manager' ); ?></span>
 					<input type="text" name="ttbm_hotel_date_range" class="formControl textCenter" value="" placeholder="<?php echo esc_html__( 'Checkin - Checkout', 'tour-booking-manager' ); ?>"/>
 				</label>

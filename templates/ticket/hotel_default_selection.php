@@ -6,13 +6,11 @@
 	$travel_type = $travel_type ?? TTBM_Function::get_travel_type( $tour_id );
 	$tour_type   = $tour_type ?? TTBM_Function::get_tour_type( $tour_id );
 	$all_dates   = $all_dates ?? TTBM_Function::get_date( $tour_id );
-	//echo '<pre>';print_r($all_dates);echo '</pre>';
 	if ( sizeof( $all_dates ) > 0 && $tour_type == 'hotel' ) {
 		$ttbm_hotels = TTBM_Function::get_hotel_list( $tour_id );
 		if ( sizeof( $ttbm_hotels ) > 0 ) {
-			//include( TTBM_Function::template_path( 'ticket/date_selection.php' ) );
 			?>
-			<div class="ttbm_hotel_area <?php echo esc_attr($travel_type == 'fixed' ?'':'dNone'); ?>">
+			<div class="ttbm_hotel_area <?php echo esc_attr( $travel_type == 'fixed' ? '' : 'dNone' ); ?>">
 				<?php foreach ( $ttbm_hotels as $hotel_id ) { ?>
 					<div class="ttbm_registration_area">
 						<div class="ttbm_hotel_item fdColumn">
@@ -68,25 +66,21 @@
 												<?php } ?>
 										</div>
 									</div>
-									<div class="hotel_list_middle_area justifyBetween">
-										<div class="hotel_list_middle_left">
-											<?php
-												$ttbm_hotel_des = get_post_field( 'post_content', $tour_id );
-												//$ttbm_hotel_des = TTBM_Function::get_post_info( $hotel_id, 'ttbm_hotel_short_des' );
-												if ( $ttbm_hotel_des ) {
-													?>
-													<div class="mp_wp_editor">
-														<?php echo mep_esc_html( $ttbm_hotel_des ); ?>
-													</div>
-												<?php } ?>
-										</div>
-										<div class="hotel_list_middle_right fdColumn textRight">
-											<h4><?php echo wc_price( TTBM_Function::get_hotel_room_min_price( $hotel_id ) ); ?></h4>
-											<button class="fRight mt_xs  ttbm_hotel_open_room_list" type="button">
-												<?php esc_html_e( 'See availability', 'tour-booking-manager' ); ?>
-												<span class="fas fa-angle-right ml"></span>
-											</button>
-										</div>
+									<h4 class="textTheme"><?php echo wc_price( TTBM_Function::get_hotel_room_min_price( $hotel_id ) ); ?></h4>
+									<?php
+										$ttbm_hotel_des = get_post_field( 'post_content', $tour_id );
+										if ( $ttbm_hotel_des ) {
+											?>
+											<div class="mp_wp_editor hotel_list_middle_left">
+												<?php echo TTBM_Function::esc_html( $ttbm_hotel_des ); ?>
+											</div>
+										<?php } ?>
+									<div class="hotel_list_middle_right justifyBetween ">
+										<div></div>
+										<button class="fRight mt_xs  ttbm_hotel_open_room_list" type="button">
+											<?php esc_html_e( 'See availability', 'tour-booking-manager' ); ?>
+											<span class="fas fa-angle-right ml"></span>
+										</button>
 									</div>
 								</div>
 							</div>

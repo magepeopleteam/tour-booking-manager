@@ -3,9 +3,9 @@ Contributors: magepeopleteam, aamahin
 Plugin link: https://mage-people.com/
 Tags: tour-booking, tour-operator, travel, travel-booking, travel-agency
 Requires at least: 4.4.0
-Tested up to: 5.9
+Tested up to: 6.1
 Requires PHP: 7.0
-Stable tag: 1.3.6
+Stable tag: 1.4.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -33,7 +33,7 @@ WP Tour and Travel booking Plugin is a best tour booking plugin that will bring 
 ➡ View Registered Guest Info from WooCommerce Order Details.
 ➡ Works with Any Standards Compliant WordPress Theme.
 ➡ WooCommerce Support, You can Sale product and Event Separately. There is no mixing with Event with the WooCommerce Products.
-👉  [View Live Demo](https://tour.mage-people.com/)
+👉  [View Live PRO Version Demo](https://tour.mage-people.com/)
 
 ###  [Pro Version](https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/) Plugin Features 
 ➡ Download PDF tickets for Tour attendee.
@@ -291,3 +291,39 @@ PHP error fixed
 *
 PHP error fixed
 - 13 Sep 2022*
+
+= 1.4.3 =
+*
+PHP error fixed
+- 13 Dec 2022*
+
+= 1.4.5 =
+*
+Bug Fixed
+- 03 Feb 2023*
+
+
+= 1.4.6 =
+*
+Hotel Saving issue fixed
+Review & Ratings issue solved
+Category & Organizer Page Tour List issue fixed.
+Bug Fixed
+- 16 Feb 2023*
+
+
+= 1.4.7 =
+Bug Fixed
+- 10 March 2023*
+
+
+= 1.4.8 =
+Releted Tour Shortcode added
+Repeated Inventory Issue fixed
+Bug Fixed
+- 22 March 2023*
+
+
+= 1.4.9 =
+Email Text Format issue fixed
+- 23 March 2023*

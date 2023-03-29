@@ -208,7 +208,7 @@
 				?>
 				<div class="mpStyle">
 					<?php do_action( 'ttbm_before_cart_item_display', $cart_item, $ttbm_id ); ?>
-					<div class="dLayout_xs">
+					<div class="dLayout_xs bgTransparent">
 						<ul class="cart_list">
 							<?php if ( ! empty( $location ) ) { ?>
 								<li>

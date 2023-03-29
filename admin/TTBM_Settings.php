@@ -803,40 +803,6 @@
 				if ( get_option( 'woocommerce_calc_taxes' ) == 'yes' ) {
 					new TtbmAddMetaBox( $ttbm_tax_meta_boxs_args );
 				}
-				$ttbm_list_thumbnail       = [
-					'page_nav' => __( 'List Thumbnail', 'tour-booking-manager' ),
-					'priority' => 10,
-					'sections' => [
-						'section_2' => [
-							'title'       => __( '', 'tour-booking-manager' ),
-							'description' => __( '', 'tour-booking-manager' ),
-							'options'     => [
-								[
-									'id'          => 'ttbm_list_thumbnail',
-									'title'       => __( 'Thumbmnail ', 'tour-booking-manager' ),
-									'details'     => __( 'Please upload image for list', 'tour-booking-manager' ),
-									'placeholder' => 'https://via.placeholder.com/1000x500',
-									'type'        => 'media',
-								]
-							]
-						],
-					],
-				];
-				$ttbm_list_thumb_meta_args = [
-					'meta_box_id'    => 'ttbm_list_thumbnail_meta_boxes',
-					'meta_box_title' => __( 'List Thumbnail', 'tour-booking-manager' ),
-					'screen'         => [ TTBM_Function::get_cpt_name() ],
-					'context'        => 'side', // 'normal', 'side', and 'advanced'
-					'priority'       => 'low', // 'high', 'low'
-					'callback_args'  => [],
-					'nav_position'   => 'none', // right, top, left, none
-					'item_name'      => "MagePeople",
-					'item_version'   => "2.0",
-					'panels'         => [
-						'ttbm_list_thumb_meta_box' => $ttbm_list_thumbnail
-					],
-				];
-				new TtbmAddMetaBox( $ttbm_list_thumb_meta_args );
 				$ttbm_list_template           = [
 					'page_nav' => __( 'Template', 'tour-booking-manager' ),
 					'priority' => 10,

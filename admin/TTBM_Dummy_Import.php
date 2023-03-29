@@ -139,7 +139,6 @@
 							0 => [
 								'name'      => 'The Mentalist Tickets: Las Vegas',
 								'post_data' => [
-									'ttbm_list_thumbnail'            => '100',
 									//General_settings
 									'ttbm_travel_duration'           => 2,
 									'ttbm_travel_duration_type'      => 'day',
@@ -284,7 +283,6 @@
 							1 => [
 								'name'      => 'Highlights of Naples and the Amalfi Coast',
 								'post_data' => [
-									'ttbm_list_thumbnail'            => '100',
 									//General_settings
 									'ttbm_travel_duration'           => 1,
 									'ttbm_travel_duration_type'      => 'day',
@@ -430,7 +428,6 @@
 							2 => [
 								'name'      => 'Deep-Sea Exploration on a Shampan',
 								'post_data' => [
-									'ttbm_list_thumbnail'            => '100',
 									//General_settings
 									'ttbm_travel_duration'            => 1,
 									'ttbm_travel_duration_type'       => 'day',
@@ -577,7 +574,6 @@
 							3 => [
 								'name'      => 'Beach Hopping at Inani, Himchari, Patuartek',
 								'post_data' => [
-									'ttbm_list_thumbnail'            => '100',
 									//General_settings
 									'ttbm_travel_duration'            => 2,
 									'ttbm_travel_duration_type'       => 'day',
@@ -724,7 +720,6 @@
 							4 => [
 								'name'      => 'Boga Lake : A Relaxing Gateway Tour',
 								'post_data' => [
-									'ttbm_list_thumbnail'            => '100',
 									//General_settings
 									'ttbm_travel_duration'            => 4,
 									'ttbm_travel_duration_type'       => 'day',

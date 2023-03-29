@@ -40,7 +40,7 @@
 											?>
 											<span class="circleIcon_xs abTopRight fas fa-question-circle"></span>
 											<div class="popover-content">
-												<p><?php echo mep_esc_html( $description ) ?></p>
+												<p><?php echo TTBM_Function::esc_html( $description ) ?></p>
 											</div>
 										<?php } ?>
 								</div>

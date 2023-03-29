@@ -32,9 +32,9 @@
 									$more_message = implode( " ", array_slice( explode( " ", $des ), 16, $word_count ) );
 									?>
 									<div class="ttbm_description mp_wp_editor" data-placeholder>
-										<?php echo mep_esc_html( $message ); ?>
+										<?php echo TTBM_Function::esc_html( $message ); ?>
 										<?php if ( $word_count > 16 ) { ?>
-											<span data-collapse='#<?php echo esc_attr( $guide_id ); ?>'><?php echo mep_esc_html( $more_message ); ?></span>
+											<span data-collapse='#<?php echo esc_attr( $guide_id ); ?>'><?php echo TTBM_Function::esc_html( $more_message ); ?></span>
 											<span class="load_more_text" data-collapse-target="#<?php echo esc_attr( $guide_id ); ?>">	<?php esc_html_e( 'view more ', 'tour-booking-manager' ); ?></span>
 										<?php } ?>
 									</div>

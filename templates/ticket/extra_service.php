@@ -46,7 +46,7 @@
 								<?php if ( $service_icon ) { ?>
 									<span class="<?php echo esc_attr( $service_icon ); ?>"></span>
 								<?php } ?>
-								<?php echo mep_esc_html( $service_name ); ?>
+								<?php echo TTBM_Function::esc_html( $service_name ); ?>
 								<?php
 									if ( $description ) {
 										$word_count = str_word_count( $description );
@@ -73,7 +73,7 @@
 									}
 								?>
 							</th>
-							<td class="text-center"><?php echo mep_esc_html( $service_price ); ?></td>
+							<td class="text-center"><?php echo TTBM_Function::esc_html( $service_price ); ?></td>
 							<td><?php TTBM_Layout::qty_input( $service_name, $available, $input_type, $default_qty, $min_qty, $max_qty, $service_price_raw, 'service_qty[]' ); ?></td>
 						</tr>
 						<tr>

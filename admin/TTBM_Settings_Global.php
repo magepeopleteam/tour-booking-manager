@@ -4,7 +4,7 @@
 	} // Cannot access pages directly.
 	if ( ! class_exists( 'TTBM_Settings_Global' ) ) {
 		class TTBM_Settings_Global {
-			protected  $settings_api;
+			protected $settings_api;
 			public function __construct() {
 				$this->settings_api = new MAGE_Setting_API;
 				add_action( 'admin_menu', array( $this, 'global_settings_menu' ) );
@@ -14,10 +14,10 @@
 			}
 			public function global_settings_menu() {
 				$event_label = TTBM_Function::get_name();
-				add_submenu_page( 'edit.php?post_type=ttbm_tour', $event_label.esc_html__(  ' Settings', 'tour-booking-manager' ), $event_label.esc_html__(  ' Settings', 'tour-booking-manager' ), 'manage_options', 'ttbm_settings_page', array( $this, 'settings_page' ) );
+				add_submenu_page( 'edit.php?post_type=ttbm_tour', $event_label . esc_html__( ' Settings', 'tour-booking-manager' ), $event_label . esc_html__( ' Settings', 'tour-booking-manager' ), 'manage_options', 'ttbm_settings_page', array( $this, 'settings_page' ) );
 			}
 			public function settings_page() {
-				$plugin_data=get_plugin_data( __FILE__ );
+				$plugin_data = get_plugin_data( __FILE__ );
 				?>
 				<div class="mp_settings_panel_header">
 					<?php echo $plugin_data['Name']; ?>
@@ -60,12 +60,11 @@
 						'id'    => 'ttbm_custom_css',
 						'title' => __( 'Custom CSS', 'tour-booking-manager' )
 					)
-					
 				);
 				return array_merge( $default_sec, $sections );
 			}
 			public function settings_sec_fields( $default_fields ): array {
-				$current_date=current_time( 'Y-m-d' );
+				$current_date    = current_time( 'Y-m-d' );
 				$settings_fields = array(
 					'ttbm_basic_gen_settings'         => apply_filters( 'ttbm_basic_gen_settings_arr', array(
 						array(
@@ -86,18 +85,18 @@
 							'type'    => 'select',
 							'default' => 'D d M , yy',
 							'options' => array(
-								'yy-mm-dd' => $current_date,
-								'yy/mm/dd' => date_i18n('Y/m/d',strtotime($current_date)),
-								'yy-dd-mm' => date_i18n('Y-d-m',strtotime($current_date)),
-								'yy/dd/mm' => date_i18n('Y/d/m',strtotime($current_date)),
-								'dd-mm-yy'  => date_i18n('d-m-Y',strtotime($current_date)),
-								'dd/mm/yy'  => date_i18n('d/m/Y',strtotime($current_date)),
-								'mm-dd-yy'  => date_i18n('m-d-Y',strtotime($current_date)),
-								'mm/dd/yy'  => date_i18n('m/d/Y',strtotime($current_date)),
-								'd M , yy'  => date_i18n('j M , Y',strtotime($current_date)),
-								'D d M , yy'  => date_i18n('D j M , Y',strtotime($current_date)),
-								'M d , yy'  => date_i18n('M  j, Y',strtotime($current_date)),
-								'D M d , yy'  => date_i18n('D M  j, Y',strtotime($current_date)),
+								'yy-mm-dd'   => $current_date,
+								'yy/mm/dd'   => date_i18n( 'Y/m/d', strtotime( $current_date ) ),
+								'yy-dd-mm'   => date_i18n( 'Y-d-m', strtotime( $current_date ) ),
+								'yy/dd/mm'   => date_i18n( 'Y/d/m', strtotime( $current_date ) ),
+								'dd-mm-yy'   => date_i18n( 'd-m-Y', strtotime( $current_date ) ),
+								'dd/mm/yy'   => date_i18n( 'd/m/Y', strtotime( $current_date ) ),
+								'mm-dd-yy'   => date_i18n( 'm-d-Y', strtotime( $current_date ) ),
+								'mm/dd/yy'   => date_i18n( 'm/d/Y', strtotime( $current_date ) ),
+								'd M , yy'   => date_i18n( 'j M , Y', strtotime( $current_date ) ),
+								'D d M , yy' => date_i18n( 'D j M , Y', strtotime( $current_date ) ),
+								'M d , yy'   => date_i18n( 'M  j, Y', strtotime( $current_date ) ),
+								'D M d , yy' => date_i18n( 'D M  j, Y', strtotime( $current_date ) ),
 							)
 						),
 						array(
@@ -107,22 +106,21 @@
 							'type'    => 'select',
 							'default' => 'M , Y',
 							'options' => array(
-								'M , Y' => date_i18n('M , Y',strtotime($current_date)),
-								'M , y' => date_i18n('M , y',strtotime($current_date)),
-								'M - Y' => date_i18n('M - Y',strtotime($current_date)),
-								'M - y' => date_i18n('M - y',strtotime($current_date)),
-								'F , Y' => date_i18n('F , Y',strtotime($current_date)),
-								'F , y' => date_i18n('F , y',strtotime($current_date)),
-								'F - Y' => date_i18n('F - y',strtotime($current_date)),
-								'F - y' => date_i18n('F - y',strtotime($current_date)),
-								'm - Y'  => date_i18n('m - Y',strtotime($current_date)),
-								'm - y'  => date_i18n('m - y',strtotime($current_date)),
-								'm , Y'  => date_i18n('m , Y',strtotime($current_date)),
-								'm , y'  => date_i18n('m , y',strtotime($current_date)),
-								'F'  => date_i18n('F',strtotime($current_date)),
-								'm'  => date_i18n('m',strtotime($current_date)),
-								'M'  => date_i18n('M',strtotime($current_date)),
-
+								'M , Y' => date_i18n( 'M , Y', strtotime( $current_date ) ),
+								'M , y' => date_i18n( 'M , y', strtotime( $current_date ) ),
+								'M - Y' => date_i18n( 'M - Y', strtotime( $current_date ) ),
+								'M - y' => date_i18n( 'M - y', strtotime( $current_date ) ),
+								'F , Y' => date_i18n( 'F , Y', strtotime( $current_date ) ),
+								'F , y' => date_i18n( 'F , y', strtotime( $current_date ) ),
+								'F - Y' => date_i18n( 'F - y', strtotime( $current_date ) ),
+								'F - y' => date_i18n( 'F - y', strtotime( $current_date ) ),
+								'm - Y' => date_i18n( 'm - Y', strtotime( $current_date ) ),
+								'm - y' => date_i18n( 'm - y', strtotime( $current_date ) ),
+								'm , Y' => date_i18n( 'm , Y', strtotime( $current_date ) ),
+								'm , y' => date_i18n( 'm , y', strtotime( $current_date ) ),
+								'F'     => date_i18n( 'F', strtotime( $current_date ) ),
+								'm'     => date_i18n( 'm', strtotime( $current_date ) ),
+								'M'     => date_i18n( 'M', strtotime( $current_date ) ),
 							)
 						),
 						array(
@@ -137,8 +135,8 @@
 							'options' => array(
 								'on-hold'    => esc_html__( 'On Hold', 'tour-booking-manager' ),
 								'pending'    => esc_html__( 'Pending', 'tour-booking-manager' ),
-								'processing'    => esc_html__( 'Processing', 'tour-booking-manager' ),
-								'completed'    => esc_html__( 'Completed', 'tour-booking-manager' ),
+								'processing' => esc_html__( 'Processing', 'tour-booking-manager' ),
+								'completed'  => esc_html__( 'Completed', 'tour-booking-manager' ),
 							)
 						),
 						array(
@@ -151,14 +149,14 @@
 						array(
 							'name'    => 'ttbm_travel_slug',
 							'label'   => esc_html__( 'Travel Slug', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Please enter the slug name you want. Remember, after changing this slug; you need to flush permalink; go to', 'tour-booking-manager' ). '<strong>'.esc_html__( 'Settings-> Permalinks', 'tour-booking-manager' ).'</strong> '.esc_html__( 'hit the Save Settings button.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Please enter the slug name you want. Remember, after changing this slug; you need to flush permalink; go to', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Settings-> Permalinks', 'tour-booking-manager' ) . '</strong> ' . esc_html__( 'hit the Save Settings button.', 'tour-booking-manager' ),
 							'type'    => 'text',
 							'default' => 'travel'
 						),
 						array(
 							'name'    => 'ttbm_travel_icon',
 							'label'   => esc_html__( 'Travel Icon', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'If you want to change the travel icon in the dashboard menu, you can change it from here, and the Dashboard icon only supports the Dashicons, So please go to ', 'tour-booking-manager' ).'<a href=https://developer.wordpress.org/resource/dashicons/#calendar-alt target=_blank>'.esc_html__( 'Dashicons Library.', 'tour-booking-manager' ).'</a>'. esc_html__( 'and copy your icon code and paste it here.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'If you want to change the travel icon in the dashboard menu, you can change it from here, and the Dashboard icon only supports the Dashicons, So please go to ', 'tour-booking-manager' ) . '<a href=https://developer.wordpress.org/resource/dashicons/#calendar-alt target=_blank>' . esc_html__( 'Dashicons Library.', 'tour-booking-manager' ) . '</a>' . esc_html__( 'and copy your icon code and paste it here.', 'tour-booking-manager' ),
 							'type'    => 'text',
 							'default' => 'dashicons-admin-site-alt2'
 						),
@@ -172,7 +170,7 @@
 						array(
 							'name'    => 'ttbm_travel_cat_slug',
 							'label'   => esc_html__( 'Travel Category Slug', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Please enter the slug name you want for travel category. Remember after change this slug you need to flush permalink, Just go to', 'tour-booking-manager' ). '<strong>'.esc_html__( 'Settings-> Permalinks', 'tour-booking-manager' ).'</strong> '.esc_html__( 'hit the Save Settings button.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Please enter the slug name you want for travel category. Remember after change this slug you need to flush permalink, Just go to', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Settings-> Permalinks', 'tour-booking-manager' ) . '</strong> ' . esc_html__( 'hit the Save Settings button.', 'tour-booking-manager' ),
 							'type'    => 'text',
 							'default' => 'travel-category'
 						),
@@ -186,14 +184,14 @@
 						array(
 							'name'    => 'ttbm_travel_org_slug',
 							'label'   => esc_html__( 'Travel Organizer Slug', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Please enter the slug name you want for the travel organizer. Remember, after changing this slug, you need to flush the permalinks. Just go to', 'tour-booking-manager' ). '<strong>'.esc_html__( 'Settings-> Permalinks', 'tour-booking-manager' ).'</strong> '.esc_html__( 'hit the Save Settings button.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Please enter the slug name you want for the travel organizer. Remember, after changing this slug, you need to flush the permalinks. Just go to', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Settings-> Permalinks', 'tour-booking-manager' ) . '</strong> ' . esc_html__( 'hit the Save Settings button.', 'tour-booking-manager' ),
 							'type'    => 'text',
 							'default' => 'travel-organizer'
 						),
 						array(
 							'name'    => 'ttbm_expire',
 							'label'   => esc_html__( 'Expired Tour both Visibility', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'If you want to visible expired tours, please select ', 'tour-booking-manager' ).'<strong>'. esc_html__( 'Yes', 'tour-booking-manager' ).'</strong>'. esc_html__( 'or to make it hidden, select', 'tour-booking-manager' ).'<strong>'. esc_html__( 'No', 'tour-booking-manager' ).'</strong>'. esc_html__( '. Default is', 'tour-booking-manager' ).'<strong>'. esc_html__( 'No', 'tour-booking-manager' ).'</strong>',
+							'desc'    => esc_html__( 'If you want to visible expired tours, please select ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Yes', 'tour-booking-manager' ) . '</strong>' . esc_html__( 'or to make it hidden, select', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'No', 'tour-booking-manager' ) . '</strong>' . esc_html__( '. Default is', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'No', 'tour-booking-manager' ) . '</strong>',
 							'type'    => 'select',
 							'default' => 'no',
 							'options' => array(
@@ -225,168 +223,168 @@
 						array(
 							'name'    => 'ttbm_no_seat_availabe',
 							'label'   => esc_html__( 'Sorry, Not Available', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Sorry, Not Available.</strong>', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Sorry, Not Available.', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
-							'default' => ''
+							'default' =>  esc_html__( 'Sorry, Not Available', 'tour-booking-manager' ),
 						),
 						array(
 							'name'    => 'ttbm_string_location',
 							'label'   => esc_html__( 'Location', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Location</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Location', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
-							'default' => ''
+							'default' => esc_html__( 'Location', 'tour-booking-manager' ),
 						),
 						array(
 							'name'    => 'ttbm_string_date',
 							'label'   => esc_html__( 'Date', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Date</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Date', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_ticket_name',
 							'label'   => esc_html__( 'Ticket Name', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Ticket Name</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of:', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Ticket Name', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_ticket_qty',
 							'label'   => esc_html__( 'Ticket Qty', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Ticket Qty</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Ticket Qty', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_ticket_price',
 							'label'   => esc_html__( 'Ticket Price', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Ticket Price</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of:', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Ticket Price', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_service_name',
 							'label'   => esc_html__( 'Service Name', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Service Name</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Service Name', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_service_qty',
 							'label'   => esc_html__( 'Service Qty', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Service Qty</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Service Qty', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_service_price',
 							'label'   => esc_html__( 'Service Price', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Service Price</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Service Price', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_already_started',
 							'label'   => esc_html__( 'Sorry, The Tour Already Started or Finished', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Sorry, The Tour Already Started or Finished</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Sorry, The Tour Already Started or Finished', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_book_now',
 							'label'   => esc_html__( 'Book Now', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Book Now</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Book Now', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_schedule_details',
 							'label'   => esc_html__( 'Schedule Details', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Schedule Details</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Schedule Details', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_available_service_list',
 							'label'   => esc_html__( 'Available Extra Service List', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Available Extra Service List</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Available Extra Service List', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_faq',
 							'label'   => esc_html__( 'F.A.Q', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>F.A.Q.</strong>', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of:', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'F.A.Q', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_exclude_price_list',
 							'label'   => esc_html__( "What's Excluded", 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Service Exclude</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Service Exclude', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ""
 						),
 						array(
 							'name'    => 'ttbm_string_include_price_list',
 							'label'   => esc_html__( "What's Included", 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Service Included</strong> in the Price.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Service Included', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ""
 						),
 						array(
 							'name'    => 'ttbm_string_total_seats',
 							'label'   => esc_html__( 'Total Seats', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Total Seats</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Total Seats', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_activities',
 							'label'   => esc_html__( 'Activities', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Activities</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Activities', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_tour_location',
 							'label'   => esc_html__( 'Location Map', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Location Map</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Location Map', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_related_tour',
 							'label'   => esc_html__( 'You may like Tour', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>You may like Tour</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'You may like Tour', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_choice_hotel',
 							'label'   => esc_html__( 'Choice Your Hotel', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Choice Your Hotel</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Choice Your Hotel', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_why_with_us',
 							'label'   => esc_html__( 'Why Book With Us?', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Why Book With Us?</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Why Book With Us?', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_get_question',
 							'label'   => esc_html__( 'Get a Question?', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Get a Question?</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Get a Question?', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
 						array(
 							'name'    => 'ttbm_string_availabe_ticket_list',
 							'label'   => esc_html__( 'Available Ticket List', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'Enter the translated text of: <strong>Available Ticket List</strong>.', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Enter the translated text of: ', 'tour-booking-manager' ) . '<strong>' . esc_html__( 'Available Ticket List', 'tour-booking-manager' ) . '</stong>',
 							'type'    => 'text',
 							'default' => ''
 						),
@@ -514,8 +512,8 @@
 							'type'  => 'textarea',
 						)
 					),
-					'ttbm_basic_license_settings'  => apply_filters( 'ttbm_basic_license_settings_arr', array() ),
-					'ttbm_license'                 => array()
+					'ttbm_basic_license_settings'     => apply_filters( 'ttbm_basic_license_settings_arr', array() ),
+					'ttbm_license'                    => array()
 				);
 				return array_merge( $default_fields, $settings_fields );
 			}

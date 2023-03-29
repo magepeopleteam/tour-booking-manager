@@ -5,10 +5,9 @@
 	if ( ! class_exists( 'TTBM_Function' ) ) {
 		class TTBM_Function {
 			public function __construct() {
-				add_action('ttbm_date_picker_js', array( $this, 'date_picker_js' ), 10, 2 );
-				add_filter('wp_mail_content_type', array( $this,'ttbm_set_email_content_type'));
+				add_action( 'ttbm_date_picker_js', array( $this, 'date_picker_js' ), 10, 2 );
+				add_filter( 'wp_mail_content_type', array( $this, 'ttbm_set_email_content_type' ) );
 			}
-			
 			public function ttbm_set_email_content_type() {
 				return "text/html";
 			}
@@ -306,8 +305,11 @@
 				$start_price  = self::get_post_info( $tour_id, 'ttbm_travel_start_price' );
 				$ticket_list  = self::get_ticket_type( $tour_id );
 				$ticket_price = [];
-				$start_date   = $start_date ?: TTBM_Function::get_date( $tour_id )[0];
 				if ( ! $start_price && sizeof( $ticket_list ) > 0 ) {
+					if ( ! $start_date ) {
+						$all_dates  = TTBM_Function::get_date( $tour_id );
+						$start_date = sizeof( $all_dates ) > 0 ? current( $all_dates ) : $start_date;
+					}
 					foreach ( $ticket_list as $ticket ) {
 						$ticket_name    = $ticket['ticket_type_name'];
 						$price          = $ticket['ticket_type_price'];
@@ -436,7 +438,7 @@
 							// $return_price = round( $line_price, $num_of_decimal);
 							$return_price = round( $line_price - $remove_taxes_total, $num_of_decimal );
 							/**
-							 * The woocommerce_adjust_non_base_location_prices filter can stop base taxes being taken off when dealing with out of base locations.
+							 * The woocommerce_adjust_non_base_location_prices filter can stop base taxes being taken off when dealing without of base locations.
 							 * e.g. If a product costs 10 including tax, all users will pay 10 regardless of location and taxes.
 							 * This feature is experimental @since 2.4.7 and may change in the future. Use at your risk.
 							 */
@@ -525,13 +527,13 @@
 				$all_dates = TTBM_Function::get_date( $tour_id );
 				if ( sizeof( $all_dates ) > 0 ) {
 					foreach ( $all_dates as $date ) {
-						$time_slots=TTBM_Function::get_time( $tour_id, $date );
-						$slot_length=is_array( $time_slots ) && sizeof( $time_slots ) > 0 ?sizeof( $time_slots ):1;
-						$date_total=$total*$slot_length;
-						$date_reserve=$reserve*$slot_length;
-						$sold      = self::get_total_sold( $tour_id, $date );
-						$available = $date_total - ( $date_reserve + $sold );
-						$available = max( 0, $available );
+						$time_slots   = TTBM_Function::get_time( $tour_id, $date );
+						$slot_length  = is_array( $time_slots ) && sizeof( $time_slots ) > 0 ? sizeof( $time_slots ) : 1;
+						$date_total   = $total * $slot_length;
+						$date_reserve = $reserve * $slot_length;
+						$sold         = self::get_total_sold( $tour_id, $date );
+						$available    = $date_total - ( $date_reserve + $sold );
+						$available    = max( 0, $available );
 						if ( $available > 0 ) {
 							return $available;
 						}
@@ -835,7 +837,7 @@
 			}
 			public static function translation_settings( $key, $default = '' ) {
 				$options = get_option( 'ttbm_basic_translation_settings' );
-				echo mep_esc_html( self::get_ttbm_settings( $options, $key, $default ) );
+				echo TTBM_Function::data_sanitize( self::get_ttbm_settings( $options, $key, $default ) );
 			}
 			//***************************//
 			public static function get_map_api() {
@@ -940,6 +942,123 @@
 							});
 				</script>
 				<?php
+			}
+			//************************//
+			public static function esc_html( $string ): string {
+				$allow_attr = array(
+					'input'    => [
+						'type'               => [],
+						'class'              => [],
+						'id'                 => [],
+						'name'               => [],
+						'value'              => [],
+						'size'               => [],
+						'placeholder'        => [],
+						'min'                => [],
+						'max'                => [],
+						'checked'            => [],
+						'required'           => [],
+						'disabled'           => [],
+						'readonly'           => [],
+						'step'               => [],
+						'data-default-color' => [],
+						'data-price'         => [],
+					],
+					'p'        => [ 'class' => [] ],
+					'img'      => [ 'class' => [], 'id' => [], 'src' => [], 'alt' => [], ],
+					'fieldset' => [
+						'class' => []
+					],
+					'label'    => [
+						'for'   => [],
+						'class' => []
+					],
+					'select'   => [
+						'class'      => [],
+						'name'       => [],
+						'id'         => [],
+						'data-price' => [],
+					],
+					'option'   => [
+						'class'    => [],
+						'value'    => [],
+						'id'       => [],
+						'selected' => [],
+					],
+					'textarea' => [
+						'class' => [],
+						'rows'  => [],
+						'id'    => [],
+						'cols'  => [],
+						'name'  => [],
+					],
+					'h2'       => [ 'class' => [], 'id' => [], ],
+					'a'        => [ 'class' => [], 'id' => [], 'href' => [], ],
+					'div'      => [
+						'class'                 => [],
+						'id'                    => [],
+						'data-ticket-type-name' => [],
+					],
+					'span'     => [
+						'class'             => [],
+						'id'                => [],
+						'data'              => [],
+						'data-input-change' => [],
+					],
+					'i'        => [
+						'class' => [],
+						'id'    => [],
+						'data'  => [],
+					],
+					'table'    => [
+						'class' => [],
+						'id'    => [],
+						'data'  => [],
+					],
+					'tr'       => [
+						'class' => [],
+						'id'    => [],
+						'data'  => [],
+					],
+					'td'       => [
+						'class' => [],
+						'id'    => [],
+						'data'  => [],
+					],
+					'thead'    => [
+						'class' => [],
+						'id'    => [],
+						'data'  => [],
+					],
+					'tbody'    => [
+						'class' => [],
+						'id'    => [],
+						'data'  => [],
+					],
+					'th'       => [
+						'class' => [],
+						'id'    => [],
+						'data'  => [],
+					],
+					'svg'      => [
+						'class'   => [],
+						'id'      => [],
+						'width'   => [],
+						'height'  => [],
+						'viewBox' => [],
+						'xmlns'   => [],
+					],
+					'g'        => [
+						'fill' => [],
+					],
+					'path'     => [
+						'd' => [],
+					],
+					'br'       => array(),
+					'em'       => array(),
+					'strong'   => array(),
+				);
+				return wp_kses( $string, $allow_attr );
 			}
 		}
 		new TTBM_Function();

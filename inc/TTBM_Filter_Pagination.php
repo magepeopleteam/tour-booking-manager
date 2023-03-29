@@ -37,7 +37,7 @@
 				$filter = $params['search-filter'];
 				if ( $filter == 'yes' ) {
 					?>
-					<div class="ttbm_filter ttbm_top_filter flexEqual">
+					<div class="ttbm_filter ttbm_top_filter flexWrap justifyCenter">
 						<?php $this->type_filter( $params ); ?>
 						<?php $this->category_filter( $params ); ?>
 						<?php $this->organizer_filter( $params ); ?>

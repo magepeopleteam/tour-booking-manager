@@ -93,10 +93,12 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
 				success: function (data) {
 					target.html(data).promise().done(function () {
 						ttbm_price_calculation(target);
+						get_ttbm_sold_ticket(parent, tour_id, tour_date);
 					});
 				}
 			});
 		} else {
+			get_ttbm_sold_ticket(parent, tour_id, tour_date);
 			if (target.is(':visible')) {
 				target.slideUp('fast');
 			} else {

@@ -929,6 +929,8 @@ div.woocommerce .cart_product_item {
 	padding: var(--default-mp-xs);
 	border-radius: 5px;
 }
+div.woocommerce td.product-name{font-size: var(--font-size-h5);font-weight: 500;color: var(--theme-color);}
+div.woocommerce td.product-name dl.variation{display: -webkit-flex;display: flex;-webkit-flex-direction: column;flex-direction: column;color: var(--default-color);}
 /***************Color section***********************/
 div.mpStyle .error {background-color: red;color: #FFF;}
 div.mpStyle .mDisabled {cursor: not-allowed;opacity: 0.8;background-color: #F2F2F2;color: #777;}

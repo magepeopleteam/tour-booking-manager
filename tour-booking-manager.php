@@ -3,7 +3,7 @@
 	 * Plugin Name: Tour Booking Manager For Woocommerce
 	 * Plugin URI: http://mage-people.com
 	 * Description: A Complete Tour and Travel Solution for WordPress by MagePeople.
-	 * Version: 1.4.9
+	 * Version: 1.5.0
 	 * Author: MagePeople Team
 	 * Author URI: http://www.mage-people.com/
 	 * Text Domain: tour-booking-manager
@@ -15,9 +15,7 @@
 		die;
 	} // Cannot access pages directly.
 	if ( ! class_exists( 'TTBM_Woocommerce_Plugin' ) ) {
-
-        
-        class TTBM_Woocommerce_Plugin {
+		class TTBM_Woocommerce_Plugin {
 			public function __construct() {
 				$this->load_ttbm_plugin();
 			}

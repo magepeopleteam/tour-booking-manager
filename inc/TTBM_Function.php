@@ -837,7 +837,7 @@
 			}
 			public static function translation_settings( $key, $default = '' ) {
 				$options = get_option( 'ttbm_basic_translation_settings' );
-				echo TTBM_Function::data_sanitize( self::get_ttbm_settings( $options, $key, $default ) );
+				echo  self::get_ttbm_settings( $options, $key, $default );
 			}
 			//***************************//
 			public static function get_map_api() {

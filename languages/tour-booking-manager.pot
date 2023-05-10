@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tour Booking Manager For Woocommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-29 06:00+0000\n"
+"POT-Creation-Date: 2023-04-24 04:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -242,10 +242,6 @@ msgstr ""
 
 #: admin/TTBM_Admin.php:129
 msgid ":"
-msgstr ""
-
-#: admin/TTBM_Dummy.php:11
-msgid "<span style=\"color:green\">Dummy Import</span>"
 msgstr ""
 
 #: admin/TTBM_Welcome.php:11
@@ -809,10 +805,6 @@ msgstr ""
 msgid "Dropdown List"
 msgstr ""
 
-#: admin/TTBM_Dummy.php:11 admin/TTBM_Dummy.php:19
-msgid "Dummy Import"
-msgstr ""
-
 #: inc/TTBM_Woocommerce.php:107
 msgid "Duration "
 msgstr ""
@@ -988,7 +980,7 @@ msgstr ""
 msgid "Finish & Save"
 msgstr ""
 
-#: inc/TTBM_Function.php:578
+#: inc/TTBM_Function.php:579
 msgid "Fixed Dates"
 msgstr ""
 
@@ -1080,7 +1072,7 @@ msgstr ""
 msgid "General settings"
 msgstr ""
 
-#: inc/TTBM_Function.php:559
+#: inc/TTBM_Function.php:560
 msgid "General Tour"
 msgstr ""
 
@@ -1133,7 +1125,7 @@ msgstr ""
 msgid "Hotel"
 msgstr ""
 
-#: inc/TTBM_Function.php:560
+#: inc/TTBM_Function.php:561
 msgid "Hotel Base Tour"
 msgstr ""
 
@@ -1405,7 +1397,7 @@ msgstr ""
 msgid "Monday Ticket Time"
 msgstr ""
 
-#: inc/TTBM_Function.php:851 inc/TTBM_Function.php:860
+#: inc/TTBM_Function.php:852 inc/TTBM_Function.php:861
 msgid "Name"
 msgstr ""
 
@@ -1553,7 +1545,7 @@ msgstr ""
 msgid "Parent "
 msgstr ""
 
-#: inc/TTBM_Function.php:579
+#: inc/TTBM_Function.php:580
 msgid "Particular Dates"
 msgstr ""
 
@@ -1712,7 +1704,7 @@ msgstr ""
 msgid "Please Select a Country"
 msgstr ""
 
-#: inc/TTBM_Function.php:605
+#: inc/TTBM_Function.php:606
 msgid "Please Select a Location"
 msgstr ""
 
@@ -1887,7 +1879,7 @@ msgstr ""
 msgid "Previous"
 msgstr ""
 
-#: inc/TTBM_Function.php:854 inc/TTBM_Function.php:863
+#: inc/TTBM_Function.php:855 inc/TTBM_Function.php:864
 #: support/elementor/widget/tour-list.php:768
 msgid "Price"
 msgstr ""
@@ -1914,7 +1906,7 @@ msgstr ""
 msgid "Processing"
 msgstr ""
 
-#: inc/TTBM_Function.php:857 inc/TTBM_Function.php:866
+#: inc/TTBM_Function.php:858 inc/TTBM_Function.php:867
 msgid "Qty"
 msgstr ""
 
@@ -1953,7 +1945,7 @@ msgstr ""
 msgid "Remove Icon"
 msgstr ""
 
-#: inc/TTBM_Function.php:580
+#: inc/TTBM_Function.php:581
 msgid "Repeated Dates"
 msgstr ""
 

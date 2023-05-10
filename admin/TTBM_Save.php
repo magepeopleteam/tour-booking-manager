@@ -255,7 +255,7 @@
 				if ( get_post_type( $tour_id ) == TTBM_Function::get_cpt_name() ) {
 					$display_activities = TTBM_Function::get_submit_info( 'ttbm_display_activities' ) ? 'on' : 'off';
 					update_post_meta( $tour_id, 'ttbm_display_activities', $display_activities );
-					$activities = TTBM_Function::get_submit_info( 'ttbm_tour_activities' );
+					$activities = TTBM_Function::get_submit_info( 'ttbm_tour_activities' ,array());
 					update_post_meta( $tour_id, 'ttbm_tour_activities', $activities );
 				}
 			}

@@ -450,21 +450,21 @@
 											'args'    => '',
 											'default' => 'option_1',
 											'item_id' => 'ttbm_particular_start_time',
-											'name'    => __( 'Check in Time', 'tour-booking-manager' ),
+											'name'    => esc_html__( 'Check in Time', 'tour-booking-manager' ),
 										),
 										array(
 											'type'    => 'date',
 											'args'    => '',
 											'default' => 'option_1',
 											'item_id' => 'ttbm_particular_end_date',
-											'name'    => __( 'Check out Date', 'tour-booking-manager' ),
+											'name'    => esc_html__( 'Check out Date', 'tour-booking-manager' ),
 										)
 									),
 								),
 								[
 									'id'          => 'ttbm_travel_repeated_start_date',
-									'title'       => __( ' First Tour Date of Recurring Tour', 'tour-booking-manager' ),
-									'details'     => __( 'Please Select the First Tour Date of Recurring Tour span', 'tour-booking-manager' ),
+									'title'       => esc_html__( ' First Tour Date of Recurring Tour', 'tour-booking-manager' ),
+									'details'     => esc_html__( 'Please Select the First Tour Date of Recurring Tour span', 'tour-booking-manager' ),
 									'date_format' => 'yy-mm-dd',
 									'placeholder' => 'yy-mm-dd',
 									'default'     => '', // today date
@@ -472,8 +472,8 @@
 								],
 								[
 									'id'          => 'ttbm_travel_repeated_end_date',
-									'title'       => __( ' Last Tour Date of Recurring Tour', 'tour-booking-manager' ),
-									'details'     => __( 'Please Select the Last Tour Date of Recurring Tour span', 'tour-booking-manager' ),
+									'title'       => esc_html__( ' Last Tour Date of Recurring Tour', 'tour-booking-manager' ),
+									'details'     => esc_html__( 'Please Select the Last Tour Date of Recurring Tour span', 'tour-booking-manager' ),
 									'date_format' => 'yy-mm-dd',
 									'placeholder' => 'yy-mm-dd',
 									'default'     => '', // today date
@@ -481,11 +481,11 @@
 								],
 								array(
 									'id'          => 'ttbm_travel_repeated_after',
-									'title'       => __( ' Repeated After', 'tour-booking-manager' ),
-									'details'     => __( 'Please Enter the Duration of Repeat', 'tour-booking-manager' ),
+									'title'       => esc_html__( ' Repeated After', 'tour-booking-manager' ),
+									'details'     => esc_html__( 'Please Enter the Duration of Repeat', 'tour-booking-manager' ),
 									'type'        => 'text',
 									'default'     => '',
-									'placeholder' => __( '3', 'tour-booking-manager' ),
+									'placeholder' => esc_html__( '3', 'tour-booking-manager' ),
 								),
 								array(
 									'id'      => 'mep_disable_ticket_time',
@@ -494,242 +494,242 @@
 									'type'    => 'checkbox',
 									'default' => '',
 									'args'    => array(
-										'yes' => __( 'Yes', 'tour-booking-manager' )
+										'yes' => esc_html__( 'Yes', 'tour-booking-manager' )
 									),
 								),
 								array(
 									'id'          => 'mep_ticket_times_global',
-									'title'       => __( 'Default Times', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
-									'details'     => __( 'Please Enter Add Ticket Times', 'tour-booking-manager' ),
+									'title'       => esc_html__( 'Default Times', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
+									'details'     => esc_html__( 'Please Enter Add Ticket Times', 'tour-booking-manager' ),
 									'collapsible' => true,
 									'type'        => 'repeatable',
 									'title_field' => 'mep_ticket_time_name',
-									'btn_text'    => 'Add New Time Default/Global Time',
+									'btn_text'    => esc_html__( 'Add New Time for Default/Global', 'tour-booking-manager' ),
 									'fields'      => array(
 										array(
 											'type'    => 'text',
 											'args'    => '',
 											'default' => '',
 											'item_id' => 'mep_ticket_time_name',
-											'name'    => 'Time Slot Label',
+											'name'    => esc_html__( 'Time Slot Label', 'tour-booking-manager' ),
 										),
 										array(
 											'type'    => 'time',
 											'args'    => '',
 											'default' => 'option_1',
 											'item_id' => 'mep_ticket_time',
-											'name'    => 'Time',
+											'name'    => esc_html__( 'Time', 'tour-booking-manager' ),
 										)
 									),
 								),
 								array(
 									'id'          => 'mep_ticket_times_sat',
-									'title'       => __( 'Saturday Ticket Time', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
-									'details'     => __( 'Please Enter Add Ticket Times', 'tour-booking-manager' ),
+									'title'       => esc_html__( 'Saturday Ticket Time', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
+									'details'     => esc_html__( 'Please Enter Add Ticket Times', 'tour-booking-manager' ),
 									'collapsible' => true,
 									'type'        => 'repeatable',
 									'title_field' => 'mep_ticket_time_name',
-									'btn_text'    => 'Add New Time Fro Saturday',
+									'btn_text'    => esc_html__( 'Add New Time for Saturday', 'tour-booking-manager' ),
 									'fields'      => array(
 										array(
 											'type'    => 'text',
 											'args'    => '',
 											'default' => '',
 											'item_id' => 'mep_ticket_time_name',
-											'name'    => 'Time Slot Label',
+											'name'    =>esc_html__( 'Time Slot Label', 'tour-booking-manager' ),
 										),
 										array(
 											'type'    => 'time',
 											'args'    => '',
 											'default' => 'option_1',
 											'item_id' => 'mep_ticket_time',
-											'name'    => 'Time',
+											'name'    => esc_html__( 'Time', 'tour-booking-manager' ),
 										),
 									),
 								),
 								array(
 									'id'          => 'mep_ticket_times_sun',
-									'title'       => __( 'Sunday Ticket Time', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
-									'details'     => __( 'Please Enter Add Ticket Times', 'tour-booking-manager' ),
+									'title'       => esc_html__( 'Sunday Ticket Time', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
+									'details'     => esc_html__( 'Please Enter Add Ticket Times', 'tour-booking-manager' ),
 									'collapsible' => true,
 									'type'        => 'repeatable',
 									'title_field' => 'mep_ticket_time_name',
-									'btn_text'    => 'Add New Time Fro Sunday',
+									'btn_text'    => esc_html__( 'Add New Time for Sunday', 'tour-booking-manager' ),
 									'fields'      => array(
 										array(
 											'type'    => 'text',
 											'args'    => '',
 											'default' => '',
 											'item_id' => 'mep_ticket_time_name',
-											'name'    => 'Time Slot Label',
+											'name'    => esc_html__( 'Time Slot Label', 'tour-booking-manager' ),
 										),
 										array(
 											'type'    => 'time',
 											'args'    => '',
 											'default' => 'option_1',
 											'item_id' => 'mep_ticket_time',
-											'name'    => 'Time',
+											'name'    => esc_html__( 'Time', 'tour-booking-manager' ),
 										)
 									),
 								),
 								array(
 									'id'          => 'mep_ticket_times_mon',
-									'title'       => __( 'Monday Ticket Time', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
-									'details'     => __( 'Please Enter Add Ticket Times', 'tour-booking-manager' ),
+									'title'       => esc_html__( 'Monday Ticket Time', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
+									'details'     => esc_html__( 'Please Enter Add Ticket Times', 'tour-booking-manager' ),
 									'collapsible' => true,
 									'type'        => 'repeatable',
 									'title_field' => 'mep_ticket_time_name',
-									'btn_text'    => 'Add New Time For Monday',
+									'btn_text'    =>esc_html__( 'Add New Time for Monday', 'tour-booking-manager' ),
 									'fields'      => array(
 										array(
 											'type'    => 'text',
 											'args'    => '',
 											'default' => '',
 											'item_id' => 'mep_ticket_time_name',
-											'name'    => 'Time Slot Label',
+											'name'    =>esc_html__( 'Time Slot Label', 'tour-booking-manager' ),
 										),
 										array(
 											'type'    => 'time',
 											'args'    => '',
 											'default' => 'option_1',
 											'item_id' => 'mep_ticket_time',
-											'name'    => 'Time',
+											'name'    =>esc_html__( 'Time', 'tour-booking-manager' ),
 										)
 									),
 								),
 								array(
 									'id'          => 'mep_ticket_times_tue',
-									'title'       => __( 'Tuesday Ticket Time', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
-									'details'     => __( 'Please Enter Add Ticket Times', 'tour-booking-manager' ),
+									'title'       => esc_html__( 'Tuesday Ticket Time', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
+									'details'     => esc_html__( 'Please Enter Add Ticket Times', 'tour-booking-manager' ),
 									'collapsible' => true,
 									'type'        => 'repeatable',
 									'title_field' => 'mep_ticket_time_name',
-									'btn_text'    => 'Add New Time For Tuesday',
+									'btn_text'    =>esc_html__( 'Add New Time for Tuesday', 'tour-booking-manager' ),
 									'fields'      => array(
 										array(
 											'type'    => 'text',
 											'args'    => '',
 											'default' => '',
 											'item_id' => 'mep_ticket_time_name',
-											'name'    => 'Time Slot Label',
+											'name'    =>esc_html__( 'Time Slot Label', 'tour-booking-manager' ),
 										),
 										array(
 											'type'    => 'time',
 											'default' => 'option_1',
 											'args'    => '',
 											'item_id' => 'mep_ticket_time',
-											'name'    => 'Time',
+											'name'    => esc_html__( 'Time', 'tour-booking-manager' ),
 										)
 									),
 								),
 								array(
 									'id'          => 'mep_ticket_times_wed',
-									'title'       => __( 'Wednesday Ticket Time', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
-									'details'     => __( 'Please Enter Add Ticket Times', 'tour-booking-manager' ),
+									'title'       => esc_html__( 'Wednesday Ticket Time', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
+									'details'     => esc_html__( 'Please Enter Add Ticket Times', 'tour-booking-manager' ),
 									'collapsible' => true,
 									'type'        => 'repeatable',
 									'title_field' => 'mep_ticket_time_name',
-									'btn_text'    => 'Add New Time For Wednesday',
+									'btn_text'    =>  esc_html__( 'Add New Time for Wednesday', 'tour-booking-manager' ),
 									'fields'      => array(
 										array(
 											'type'    => 'text',
 											'args'    => '',
 											'default' => '',
 											'item_id' => 'mep_ticket_time_name',
-											'name'    => 'Time Slot Label',
+											'name'    => esc_html__( 'Time Slot Label', 'tour-booking-manager' ),
 										),
 										array(
 											'type'    => 'time',
 											'default' => 'option_1',
 											'args'    => '',
 											'item_id' => 'mep_ticket_time',
-											'name'    => 'Time',
+											'name'    =>esc_html__( 'Time', 'tour-booking-manager' ),
 										)
 									),
 								),
 								array(
 									'id'          => 'mep_ticket_times_thu',
-									'title'       => __( 'Thursday Ticket Time', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
-									'details'     => __( 'Please Enter Add Ticket Times', 'tour-booking-manager' ),
+									'title'       => esc_html__( 'Thursday Ticket Time', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
+									'details'     => esc_html__( 'Please Enter Add Ticket Times', 'tour-booking-manager' ),
 									'collapsible' => true,
 									'type'        => 'repeatable',
 									'title_field' => 'mep_ticket_time_name',
-									'btn_text'    => 'Add New Time For Thursday',
+									'btn_text'    => esc_html__( 'Add New Time for Thursday', 'tour-booking-manager' ),
 									'fields'      => array(
 										array(
 											'type'    => 'text',
 											'args'    => '',
 											'default' => '',
 											'item_id' => 'mep_ticket_time_name',
-											'name'    => 'Time Slot Label',
+											'name'    =>esc_html__( 'Time Slot Label', 'tour-booking-manager' ),
 										),
 										array(
 											'type'    => 'time',
 											'default' => 'option_1',
 											'args'    => '',
 											'item_id' => 'mep_ticket_time',
-											'name'    => 'Time',
+											'name'    =>esc_html__( 'Time', 'tour-booking-manager' ),
 										)
 									),
 								),
 								array(
 									'id'          => 'mep_ticket_times_fri',
-									'title'       => __( 'Friday Ticket Time', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
-									'details'     => __( 'Please Enter Add Ticket Times', 'tour-booking-manager' ),
+									'title'       => esc_html__( 'Friday Ticket Time', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
+									'details'     => esc_html__( 'Please Enter Add Ticket Times', 'tour-booking-manager' ),
 									'collapsible' => true,
 									'type'        => 'repeatable',
 									'title_field' => 'mep_ticket_time_name',
-									'btn_text'    => 'Add New Time for Friday',
+									'btn_text'    => esc_html__( 'Add New Time for Friday', 'tour-booking-manager' ),
 									'fields'      => array(
 										array(
 											'type'    => 'text',
 											'args'    => '',
 											'default' => '',
 											'item_id' => 'mep_ticket_time_name',
-											'name'    => 'Time Slot Label',
+											'name'    => esc_html__( 'Time Slot Label', 'tour-booking-manager' ),
 										),
 										array(
 											'type'    => 'time',
 											'default' => '',
 											'args'    => '',
 											'item_id' => 'mep_ticket_time',
-											'name'    => 'Time',
+											'name'    => esc_html__( 'Time', 'tour-booking-manager' ),
 										)
 									),
 								),
 								array(
 									'id'       => 'mep_ticket_offdays',
-									'title'    => __( 'Ticket Offdays', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
-									'details'  => __( 'Please select the offday days. Ticket will be not available on the selected days', 'tour-booking-manager' ),
+									'title'    => esc_html__( 'Ticket Offdays', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
+									'details'  => esc_html__( 'Please select the offday days. Ticket will be not available on the selected days', 'tour-booking-manager' ),
 									'type'     => 'select2',
 									'class'    => 'ttbm_select2',
 									'default'  => '',
 									'multiple' => true,
 									'args'     => array(
-										'sun' => __( 'Sunday', 'tour-booking-manager' ),
-										'mon' => __( 'Monday', 'tour-booking-manager' ),
-										'tue' => __( 'Tuesday', 'tour-booking-manager' ),
-										'wed' => __( 'Wednesday', 'tour-booking-manager' ),
-										'thu' => __( 'Thursday', 'tour-booking-manager' ),
-										'fri' => __( 'Friday', 'tour-booking-manager' ),
-										'sat' => __( 'Saturday', 'tour-booking-manager' ),
+										'sun' => esc_html__( 'Sunday', 'tour-booking-manager' ),
+										'mon' => esc_html__( 'Monday', 'tour-booking-manager' ),
+										'tue' => esc_html__( 'Tuesday', 'tour-booking-manager' ),
+										'wed' => esc_html__( 'Wednesday', 'tour-booking-manager' ),
+										'thu' => esc_html__( 'Thursday', 'tour-booking-manager' ),
+										'fri' => esc_html__( 'Friday', 'tour-booking-manager' ),
+										'sat' => esc_html__( 'Saturday', 'tour-booking-manager' ),
 									),
 								),
 								array(
 									'id'          => 'mep_ticket_off_dates',
-									'title'       => __( 'Ticket Off Dates List', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
-									'details'     => __( 'If you want to off selling ticket on particular dates please select them', 'tour-booking-manager' ),
+									'title'       => esc_html__( 'Ticket Off Dates List', 'tour-booking-manager' ) . TTBM_Layout::pro_text(),
+									'details'     => esc_html__( 'If you want to off selling ticket on particular dates please select them', 'tour-booking-manager' ),
 									'collapsible' => true,
 									'type'        => 'repeatable',
 									'title_field' => 'mep_ticket_off_date',
-									'btn_text'    => 'Add New Off Date',
+									'btn_text'    =>esc_html__( 'Add New Off Date', 'tour-booking-manager' ),
 									'fields'      => array(
 										array(
 											'type'    => 'date',
 											'default' => 'option_1',
 											'args'    => '',
 											'item_id' => 'mep_ticket_off_date',
-											'name'    => 'OffDate',
+											'name'    =>esc_html__( 'Off Date', 'tour-booking-manager' ),
 										)
 									),
 								)
@@ -739,7 +739,7 @@
 				];
 				$ttbm_date_config_boxs_args = [
 					'meta_box_id'    => 'ttbm_travel_date_config_meta_boxes',
-					'meta_box_title' => '<span class="far fa-calendar-plus"></span>' . __( 'Date Configuration', 'tour-booking-manager' ),
+					'meta_box_title' => '<span class="far fa-calendar-plus"></span>' . esc_html__( 'Date Configuration', 'tour-booking-manager' ),
 					'screen'         => [ TTBM_Function::get_cpt_name() ],
 					'context'        => 'normal',
 					'priority'       => 'high',
@@ -753,30 +753,30 @@
 				];
 				new TtbmAddMetaBox( $ttbm_date_config_boxs_args );
 				$ttbm_tax_meta_boxs      = [
-					'page_nav' => $tour_label . __( ' Tax', 'tour-booking-manager' ),
+					'page_nav' => $tour_label . esc_html__( ' Tax', 'tour-booking-manager' ),
 					'priority' => 10,
 					'sections' => [
 						'section_2' => [
-							'title'       => __( '', 'tour-booking-manager' ),
-							'description' => __( '', 'tour-booking-manager' ),
+							'title'       => esc_html__( '', 'tour-booking-manager' ),
+							'description' => esc_html__( '', 'tour-booking-manager' ),
 							'options'     => [
 								[
 									'id'      => '_tax_status',
-									'title'   => $tour_label . __( ' Tax Status', 'tour-booking-manager' ),
-									'details' => __( 'Please Select Tax Status', 'tour-booking-manager' ),
+									'title'   => $tour_label . esc_html__( ' Tax Status', 'tour-booking-manager' ),
+									'details' => esc_html__( 'Please Select Tax Status', 'tour-booking-manager' ),
 									'type'    => 'select',
 									'class'   => 'omg',
 									'default' => 'taxable',
 									'args'    => [
-										'taxable'  => __( 'Taxable', 'tour-booking-manager' ),
-										'shipping' => __( 'Shipping only', 'tour-booking-manager' ),
-										'none'     => __( 'None', 'tour-booking-manager' )
+										'taxable'  => esc_html__( 'Taxable', 'tour-booking-manager' ),
+										'shipping' => esc_html__( 'Shipping only', 'tour-booking-manager' ),
+										'none'     => esc_html__( 'None', 'tour-booking-manager' )
 									]
 								],
 								[
 									'id'      => '_tax_class',
-									'title'   => $tour_label . __( ' Tax Class', 'tour-booking-manager' ),
-									'details' => __( 'Please Select Tax Class', 'tour-booking-manager' ),
+									'title'   => $tour_label . esc_html__( ' Tax Class', 'tour-booking-manager' ),
+									'details' => esc_html__( 'Please Select Tax Class', 'tour-booking-manager' ),
 									'type'    => 'select',
 									'class'   => 'omg',
 									'default' => 'none',
@@ -788,7 +788,7 @@
 				];
 				$ttbm_tax_meta_boxs_args = [
 					'meta_box_id'    => 'ttbm_tax_meta_boxes',
-					'meta_box_title' => '<span class="fas fa-money-bill-wave"></span> ' . __( ' Tax', 'tour-booking-manager' ),
+					'meta_box_title' => '<span class="fas fa-money-bill-wave"></span> ' . esc_html__( ' Tax', 'tour-booking-manager' ),
 					'screen'         => [ TTBM_Function::get_cpt_name() ],
 					'context'        => 'normal',
 					'priority'       => 'low',
@@ -808,13 +808,13 @@
 					'priority' => 10,
 					'sections' => [
 						'section_2' => [
-							'title'       => __( '', 'tour-booking-manager' ),
-							'description' => __( '', 'tour-booking-manager' ),
+							'title'       => esc_html__( '', 'tour-booking-manager' ),
+							'description' => esc_html__( '', 'tour-booking-manager' ),
 							'options'     => [
 								[
 									'id'      => 'ttbm_theme_file',
-									'title'   => __( ' Template', 'tour-booking-manager' ),
-									'details' => __( 'Please Select a Template', 'tour-booking-manager' ),
+									'title'   => esc_html__( ' Template', 'tour-booking-manager' ),
+									'details' => esc_html__( 'Please Select a Template', 'tour-booking-manager' ),
 									'type'    => 'select',
 									'class'   => 'omg',
 									'default' => 'fixed',

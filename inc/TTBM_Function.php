@@ -300,6 +300,15 @@
 				$date_format = $format == 'M d , yy' ? 'M  j, Y' : $date_format;
 				return $format == 'D M d , yy' ? 'D M  j, Y' : $date_format;
 			}
+			public static function check_time_exit_date($date){
+				if($date) {
+					$parse_date = date_parse($date);
+					if(($parse_date['hour'] && $parse_date['hour']>0) || ($parse_date['minute'] && $parse_date['minute']>0) || ($parse_date['second'] && $parse_date['second']>0)){
+						return true;
+					}
+				}
+				return false;
+			}
 			//*************Price*********************************//
 			public static function get_tour_start_price($tour_id, $start_date = ''): string {
 				$start_price = self::get_post_info($tour_id, 'ttbm_travel_start_price');

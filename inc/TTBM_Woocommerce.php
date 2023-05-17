@@ -95,7 +95,7 @@ if (!class_exists('TTBM_Woocommerce')) {
                 $date_text = TTBM_Function::get_name() . ' ' . esc_html__('Date', 'tour-booking-manager');
                 $location_text = TTBM_Function::get_name() . ' ' . esc_html__('Location', 'tour-booking-manager');
                 $item->add_meta_data($date_text, $start_date);
-                if (!empty($location)) {
+                if (!empty($location) && TTBM_Function::get_post_info( $ttbm_id, 'ttbm_display_location', 'on' ) != 'off' ) {
                     $item->add_meta_data($location_text, $location);
                 }
                 //echo '<pre>';print_r($ticket_type);echo '</pre>';die();
@@ -209,7 +209,7 @@ if (!class_exists('TTBM_Woocommerce')) {
                 <?php do_action('ttbm_before_cart_item_display', $cart_item, $ttbm_id); ?>
                 <div class="dLayout_xs bgTransparent marXsT">
                     <ul class="cart_list">
-                        <?php if (!empty($location)) { ?>
+                        <?php if (!empty($location) && TTBM_Function::get_post_info( $ttbm_id, 'ttbm_display_location', 'on' ) != 'off' ) { ?>
                             <li>
                                 <span class="fas fa-map-marker-alt"></span>&nbsp;
                                 <h6><?php echo esc_html($tour_name . ' ' . TTBM_Function::get_translation_settings('ttbm_string_location', esc_html__('Location', 'tour-booking-manager'))); ?> :&nbsp;</h6>

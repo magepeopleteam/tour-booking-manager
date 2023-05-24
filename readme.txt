@@ -3,9 +3,9 @@ Contributors: magepeopleteam, aamahin
 Plugin link: https://mage-people.com/
 Tags: tour-booking, tour-operator, travel, travel-booking, travel-agency
 Requires at least: 4.4.0
-Tested up to: 6.1
+Tested up to: 6.2
 Requires PHP: 7.0
-Stable tag: 1.4.5
+Stable tag: 1.5.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -327,3 +327,18 @@ Bug Fixed
 = 1.4.9 =
 Email Text Format issue fixed
 - 23 March 2023*
+
+
+= 1.5.0 =
+Bug Fixed
+- 29 March 2023*
+
+
+= 1.5.1 =
+Bug Fixed
+- 11 May 2023*
+
+
+= 1.5.2 =
+Bug Fixed
+- 17 May 2023*

@@ -12,7 +12,7 @@
 				<?php
 					foreach ( $day_details as $key => $day ) {
 						$day_title  = array_key_exists( 'ttbm_day_title', $day ) ? html_entity_decode( $day['ttbm_day_title'] ) : '';
-						$day_text   = array_key_exists( 'ttbm_day_title', $day ) ? html_entity_decode( $day['ttbm_day_content'] ) : '';
+						$day_text   = array_key_exists( 'ttbm_day_content', $day ) ? html_entity_decode( $day['ttbm_day_content'] ) : '';
 						$day_images = array_key_exists( 'ttbm_day_image', $day ) ? html_entity_decode( $day['ttbm_day_image'] ) : '';
 						$images     = explode( ',', $day_images );
 						?>

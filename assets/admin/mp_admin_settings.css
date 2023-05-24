@@ -3,6 +3,8 @@
 div.mp_multi_image { display: -webkit-flex; display: flex; -webkit-flex-wrap: wrap; flex-wrap: wrap; margin: 15px 0 0 0;}
 div.mp_single_image_item,
 div.mp_multi_image_item { position: relative; width: 25%; padding: var(--default-mp-xs);min-width: 150px;}
+div.mp_single_image_item img,
+div.mp_multi_image_item img{width:100%;}
 span.mp_remove_single_image,
 div.mpStyle span.mp_remove_multi_image { cursor: pointer; position: absolute; top: 0; right: 0; background-color: var(--danger-color);margin: 0;}
 /********Global settings******************/

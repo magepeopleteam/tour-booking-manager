@@ -288,10 +288,6 @@
 					update_post_meta( $tour_id, 'ttbm_contact_email', $email );
 					update_post_meta( $tour_id, 'ttbm_contact_phone', $phone );
 					update_post_meta( $tour_id, 'ttbm_contact_text', $des );
-					$ttbm_display_tour_guide = TTBM_Function::get_submit_info( 'ttbm_display_tour_guide' ) ? 'on' : 'off';
-					update_post_meta( $tour_id, 'ttbm_display_tour_guide', $ttbm_display_tour_guide );
-					$ttbm_tour_guide = TTBM_Function::get_submit_info( 'ttbm_tour_guide', array() );
-					update_post_meta( $tour_id, 'ttbm_tour_guide', $ttbm_tour_guide );
 				}
 			}
 			public function save_related_tour( $tour_id ) {

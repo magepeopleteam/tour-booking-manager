@@ -69,10 +69,10 @@ div.viator_top_section .ttbm_booking_panel form,
 .mpStyle [class*='noShadow'] { -webkit-box-shadow: none; -moz-box-shadow: none; -o-box-shadow: none; box-shadow: none;}
 /**********Font Size & Font weight****************************/
 .mpStyle label,
-.mpStyle h1, .mpStyle h2, .mpStyle h3, .mpStyle h4, .mpStyle h5, .mpStyle h6 { margin: 0;padding: 0;line-height: 1.25;}
+div.mpStyle h1, .mpStyle h2, .mpStyle h3, .mpStyle h4, .mpStyle h5, .mpStyle h6 { margin: 0;padding: 0;line-height: 1.25;}
 .mpStyle strong {font-weight: var(--fw-bold);}
 .mpStyle .extraBold {font-weight: 900;}
-.mpStyle h1 {font-size: var(--font-size-h1);font-weight: var(--fw-bold);}
+div.mpStyle h1 {font-size: var(--font-size-h1);font-weight: var(--fw-bold);}
 .mpStyle h2 {font-size: var(--font-size-h2);font-weight: var(--fw-bold);}
 .mpStyle h3 {font-size: var(--font-size-h3);font-weight: var(--fw-bold);}
 .mpStyle h4 {font-size: var(--font-size-h4);font-weight: var(--fw-medium);}
@@ -648,7 +648,7 @@ div.mpStyle .customRadioLabel input[type="radio"] ~ .formControl,
 	}
 div.groupContent > * {border-left: 1px solid var(--border_color);margin: 0;}
 div.groupContent > *:first-child {border: none;}
-div.groupContent .formControl {
+div.mpStyle div.groupContent .formControl {
 	text-align: center;border: none;
 	background-color: var(--default-bg);
 	height: 100%;

@@ -29,7 +29,7 @@
 		let time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 		$.ajax({
 			type: 'POST',
-			url: ttbm_ajax_url,
+			url: mp_ajax_url,
 			data: {"action": "get_ttbm_add_faq_content", "id": time},
 			beforeSend: function () {
 				dLoader(parent);
@@ -53,7 +53,7 @@
 		let time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 		$.ajax({
 			type: 'POST',
-			url: ttbm_ajax_url,
+			url: mp_ajax_url,
 			data: {"action": "get_ttbm_add_day_wise_details", "id": time},
 			beforeSend: function () {
 				dLoader(parent);
@@ -74,7 +74,7 @@
 		let target = $(this).closest('.ttbm_settings_general').find('.ttbm_location_form_area');
 		$.ajax({
 			type: 'POST',
-			url: ttbm_ajax_url,
+			url: mp_ajax_url,
 			data: {
 				"action": "load_ttbm_location_form"
 			},
@@ -118,7 +118,7 @@
 		if (name && image) {
 			$.ajax({
 				type: 'POST',
-				url: ttbm_ajax_url,
+				url: mp_ajax_url,
 				data: {
 					"action": "ttbm_new_location_save",
 					"name": name,
@@ -158,7 +158,7 @@
 		let parent = $('.ttbm_location_select_area');
 		$.ajax({
 			type: 'POST',
-			url: ttbm_ajax_url,
+			url: mp_ajax_url,
 			data: {
 				"action": "ttbm_reload_location_list",
 				"ttbm_id": ttbm_id
@@ -183,7 +183,7 @@
 		let target = $(this).closest('.ttbm_settings_feature').find('.ttbm_feature_form_area');
 		$.ajax({
 			type: 'POST',
-			url: ttbm_ajax_url,
+			url: mp_ajax_url,
 			data: {
 				"action": "load_ttbm_feature_form"
 			},
@@ -225,7 +225,7 @@
 		if (feature_name && feature_icon) {
 			$.ajax({
 				type: 'POST',
-				url: ttbm_ajax_url,
+				url: mp_ajax_url,
 				data: {
 					"action": "ttbm_new_feature_save",
 					"feature_name": feature_name,
@@ -261,7 +261,7 @@
 		let parent = $('.ttbm_features_table');
 		$.ajax({
 			type: 'POST',
-			url: ttbm_ajax_url,
+			url: mp_ajax_url,
 			data: {
 				"action": "ttbm_reload_feature_list",
 				"ttbm_id": ttbm_id
@@ -284,7 +284,7 @@
 		let target = $(this).closest('.ttbm_settings_activities').find('.ttbm_activity_form_area');
 		$.ajax({
 			type: 'POST',
-			url: ttbm_ajax_url,
+			url: mp_ajax_url,
 			data: {
 				"action": "load_ttbm_activity_form"
 			},
@@ -326,7 +326,7 @@
 		if (activity_name && activity_icon) {
 			$.ajax({
 				type: 'POST',
-				url: ttbm_ajax_url,
+				url: mp_ajax_url,
 				data: {
 					"action": "ttbm_new_activity_save",
 					"activity_name": activity_name,
@@ -362,7 +362,7 @@
 		let parent = $('.ttbm_activities_table');
 		$.ajax({
 			type: 'POST',
-			url: ttbm_ajax_url,
+			url: mp_ajax_url,
 			data: {
 				"action": "ttbm_reload_activity_list",
 				"ttbm_id": ttbm_id
@@ -387,7 +387,7 @@
 		let target = $(this).closest('.ttbm_settings_place_you_see').find('.ttbm_place_you_see_form_area');
 		$.ajax({
 			type: 'POST',
-			url: ttbm_ajax_url,
+			url: mp_ajax_url,
 			data: {
 				"action": "load_ttbm_place_you_see_form"
 			},
@@ -429,7 +429,7 @@
 		if (place_name && place_image) {
 			$.ajax({
 				type: 'POST',
-				url: ttbm_ajax_url,
+				url: mp_ajax_url,
 				data: {
 					"action": "ttbm_new_place_save",
 					"place_name": place_name,
@@ -465,7 +465,7 @@
 		let parent = $('.ttbm_place_you_see_table');
 		$.ajax({
 			type: 'POST',
-			url: ttbm_ajax_url,
+			url: mp_ajax_url,
 			data: {
 				"action": "ttbm_reload_place_you_see_list",
 				"ttbm_id": ttbm_id

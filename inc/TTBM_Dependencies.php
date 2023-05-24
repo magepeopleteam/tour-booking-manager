@@ -92,14 +92,15 @@
 			public function js_constant() {
 				?>
 				<script type="text/javascript">
-							let ttbm_ajax_url = "<?php echo admin_url( 'admin-ajax.php' ); ?>";
-							let ttbm_currency_symbol = "<?php echo get_woocommerce_currency_symbol(); ?>";
-							let ttbm_currency_position = "<?php echo get_option( 'woocommerce_currency_pos' ); ?>";
-							let ttbm_currency_decimal = "<?php echo wc_get_price_decimal_separator(); ?>";
-							let ttbm_currency_thousands_separator = "<?php echo wc_get_price_thousand_separator(); ?>";
-							let ttbm_num_of_decimal = "<?php echo get_option( 'woocommerce_price_num_decimals', 2 ); ?>";
-							let ttbm_empty_image_url = "<?php echo esc_attr( TTBM_PLUGIN_URL . '/assets/helper/images/no_image.png' ); ?>";
 							let ttbm_date_format = "<?php echo esc_attr( TTBM_Function::get_general_settings( 'ttbm_date_format', 'D d M , yy' ) ); ?>";
+							let mp_ajax_url = "<?php echo admin_url( 'admin-ajax.php' ); ?>";
+							let mp_currency_symbol = "<?php echo get_woocommerce_currency_symbol(); ?>";
+							let mp_currency_position = "<?php echo get_option( 'woocommerce_currency_pos' ); ?>";
+							let mp_currency_decimal = "<?php echo wc_get_price_decimal_separator(); ?>";
+							let mp_currency_thousands_separator = "<?php echo wc_get_price_thousand_separator(); ?>";
+							let mp_num_of_decimal = parseInt(<?php echo get_option( 'woocommerce_price_num_decimals', 2 ); ?>);
+							let mp_empty_image_url = "<?php echo esc_attr( TTBM_PLUGIN_URL . '/assets/helper/images/no_image.png' ); ?>";
+							let mp_date_format = "<?php echo esc_attr( TTBM_Function::get_general_settings( 'date_format', 'D d M , yy' ) ); ?>";
 				</script>
 				<?php
 			}

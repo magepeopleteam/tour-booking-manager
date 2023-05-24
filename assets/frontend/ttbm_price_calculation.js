@@ -2,7 +2,7 @@ function ttbm_price_calculation(parent) {
 	let total = mpTourTotalPrice(parent);
 	let qty = mp_tour_ticket_qty(parent);
 	parent.find(' #ttbm_total_price').val(total);
-	parent.find(' .tour_price').html(mp_tour_price_format(total));
+	parent.find(' .tour_price').html(mp_price_format(total));
 	parent.find('.tour_qty').html(qty);
 	// Partial Payment Job
 	ttbm_partial_payment_job(parent, total);
@@ -12,7 +12,6 @@ function mpTourTotalPrice(parent) {
 	let currentTarget = parent.find('.formControl[data-price]');
 	let total = 0;
 	let totalQty = 0;
-	let decimal_num = parseInt(ttbm_num_of_decimal);
 	currentTarget.each(function () {
 		let unitPrice = parseFloat(jQuery(this).attr('data-price'));
 		let qty = parseInt(jQuery(this).val());
@@ -30,27 +29,8 @@ function mpTourTotalPrice(parent) {
 	if (totalQty > 0) {
 		currentTarget.removeClass('error');
 	}
-	total = total.toFixed(decimal_num);
-	let total_part = total.toString().split(".");
-	total_part[0] = total_part[0].replace(/\B(?=(\d{3})+(?!\d))/g, ttbm_currency_thousands_separator);
-	total = total_part.join(ttbm_currency_decimal);
 	return total;
 }
-
-function mp_tour_price_format(price) {
-	let price_text = '';
-	if (ttbm_currency_position === 'right') {
-		price_text = price + ttbm_currency_symbol;
-	} else if (ttbm_currency_position === 'right_space') {
-		price_text = price + '&nbsp;' + ttbm_currency_symbol;
-	} else if (ttbm_currency_position === 'left') {
-		price_text = ttbm_currency_symbol + price;
-	} else {
-		price_text = ttbm_currency_symbol + '&nbsp;' + price;
-	}
-	return price_text;
-}
-
 function mpTourTicketQtyValidation(target, value) {
 	let extraParents = target.closest('.mp_tour_ticket_extra');
 	if (extraParents.length > 0) {
@@ -178,7 +158,7 @@ function ttbm_partial_payment_job(parent, total) {
 	if (deposit_type === 'percent') {
 		let percent = parseFloat(parent.find('[name="payment_plan"]').data('percent'));
 		payment = total * percent / 100;
-		parent.find('.payment_amount').html(mp_tour_price_format(payment));
+		parent.find('.payment_amount').html(mp_price_format(payment));
 	}
 	if (deposit_type === 'minimum_amount') {
 		parent.find('.mep-pp-payment-terms .mep-pp-user-amountinput').attr('max', total);

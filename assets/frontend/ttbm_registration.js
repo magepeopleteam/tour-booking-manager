@@ -11,7 +11,7 @@ function get_ttbm_ticket(current, date = '') {
 	let target = jQuery('.ttbm_booking_panel');
 	jQuery.ajax({
 		type: 'POST',
-		url: ttbm_ajax_url,
+		url: mp_ajax_url,
 		data: {
 			"action": "get_ttbm_ticket",
 			"tour_id": tour_id,
@@ -41,7 +41,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
 	let target = jQuery('.ttbm_available_seat_area');
 	jQuery.ajax({
 		type: 'POST',
-		url: ttbm_ajax_url,
+		url: mp_ajax_url,
 		data: {
 			"action": "get_ttbm_sold_ticket",
 			"tour_id": tour_id,
@@ -80,7 +80,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
 			$('#particular_item_area').find('.ttbm_booking_panel').slideUp('fast');
 			jQuery.ajax({
 				type: 'POST',
-				url: ttbm_ajax_url,
+				url: mp_ajax_url,
 				data: {
 					"action": "get_ttbm_ticket",
 					"tour_id": tour_id,
@@ -177,7 +177,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
 				$('.ttbm_hotel_area').find('.ttbm_booking_panel').slideUp('fast');
 				jQuery.ajax({
 					type: 'POST',
-					url: ttbm_ajax_url,
+					url: mp_ajax_url,
 					data: {
 						"action": "get_ttbm_hotel_room_list",
 						"tour_id": tour_id,

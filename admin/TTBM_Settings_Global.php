@@ -207,17 +207,6 @@
 							'default'     => '0',
 							'placeholder' => '15'
 						),
-						array(
-							'name'    => 'ttbm_active_guide',
-							'label'   => esc_html__( 'Enable Tour guide', 'tour-booking-manager' ),
-							'desc'    => esc_html__( 'If you want to Active Tour guide for Tour, please select Yes.', 'tour-booking-manager' ),
-							'type'    => 'select',
-							'default' => 'no',
-							'options' => array(
-								'yes' => esc_html__( 'Yes', 'tour-booking-manager' ),
-								'no'  => esc_html__( 'No', 'tour-booking-manager' )
-							)
-						),
 					) ),
 					'ttbm_basic_translation_settings' => apply_filters( 'ttbm_basic_translation_settings_arr', array(
 						array(

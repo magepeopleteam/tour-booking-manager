@@ -67,6 +67,7 @@
                 require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
                 require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Status.php';
                 require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Settings.php';
+                require_once TTBM_PLUGIN_DIR . '/admin/settings/TTBM_Setting_guide.php';
                 require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Settings_Hotel.php';
                 require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Settings_Hotel_Price.php';
                 require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Setting_pricing.php';
@@ -320,7 +321,6 @@
                 $tour_label = TTBM_Function::get_name();
                 $tour_slug = TTBM_Function::get_slug();
                 $tour_icon = TTBM_Function::get_icon();
-                $active_tour_guide = TTBM_Function::get_general_settings('ttbm_active_guide', 'no');
                 $labels = [
                     'name' => $tour_label,
                     'singular_name' => $tour_label,
@@ -375,16 +375,14 @@
                     'capability_type' => 'post',
                 ];
                 register_post_type('ttbm_places', $args);
-                if ($active_tour_guide == 'yes') {
-                    $args = [
-                        'public' => true,
-                        'label' => esc_html__('Guide Information', 'tour-booking-manager'),
-                        'supports' => ['title', 'thumbnail', 'editor'],
-                        'show_in_menu' => 'edit.php?post_type=ttbm_tour',
-                        'capability_type' => 'post',
-                    ];
-                    register_post_type('ttbm_guide', $args);
-                }
+                $args = [
+                    'public' => true,
+                    'label' => esc_html__('Guide Information', 'tour-booking-manager'),
+                    'supports' => ['title', 'thumbnail', 'editor'],
+                    'show_in_menu' => 'edit.php?post_type=ttbm_tour',
+                    'capability_type' => 'post',
+                ];
+                register_post_type('ttbm_guide', $args);
             }
             public function disable_gutenberg($current_status, $post_type) {
                 $user_status = TTBM_Function::get_general_settings('ttbm_disable_block_editor', 'yes');

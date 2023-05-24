@@ -1,85 +1,93 @@
+function mp_price_format(price) {
+	price = price.toFixed(mp_num_of_decimal);
+	let total_part = price.toString().split(".");
+	total_part[0] = total_part[0].replace(/\B(?=(\d{3})+(?!\d))/g, mp_currency_thousands_separator);
+	price = total_part.join(mp_currency_decimal);
+	let price_text = '';
+	if (mp_currency_position === 'right') {
+		price_text = price + mp_currency_symbol;
+	} else
+		if (mp_currency_position === 'right_space') {
+			price_text = price + '&nbsp;' + mp_currency_symbol;
+		} else
+			if (mp_currency_position === 'left') {
+				price_text = mp_currency_symbol + price;
+			} else {
+				price_text = mp_currency_symbol + '&nbsp;' + price;
+			}
+	return price_text;
+}
 //loader
 function dLoader(target) {
 	if (target.find('div[class*="dLoader"]').length < 1) {
 		target.addClass('pRelative').append('<div class="dLoader"><span class="fas fa-spinner fa-pulse"></span></div>');
 	}
 }
-
 function dLoader_xs(target) {
 	if (target.find('div[class*="dLoader"]').length < 1) {
 		target.addClass('pRelative').append('<div class="dLoader_xs"><span class="fas fa-spinner fa-pulse"></span></div>');
 	}
 }
-
 function simpleSpinner(target) {
 	if (target.find('div[class*="simpleSpinner"]').length < 1) {
 		target.append('<div class="simpleSpinner"><span class="fas fa-spinner fa-pulse"></span></div>');
 	}
 }
-
 function simpleSpinnerRemove(target = jQuery('body')) {
 	target.removeClass('noScroll');
 	target.removeClass('pRelative').find('div[class*="simpleSpinner"]').remove();
 }
-
 function dLoaderBody() {
 	let body = jQuery('body');
 	if (body.find('div[class*="dLoader"]').length < 1) {
 		body.addClass('noScroll').append('<div class="dLoader pFixed"><span class="fas fa-spinner fa-pulse"></span></div>');
 	}
 }
-
 function dLoaderBody_xs() {
 	let body = jQuery('body');
 	if (body.find('div[class*="dLoader"]').length < 1) {
 		body.addClass('noScroll').append('<div class="dLoader_xs pFixed"><span class="fas fa-spinner fa-pulse"></span></div>');
 	}
 }
-
 function dLoader_circle(target) {
 	if (target.find('div[class*="dLoader"]').length < 1) {
 		target.addClass('pRelative').append('<div class="dLoader border_spin_loader"><span class="circle"></span></div>');
 	}
 }
-
 function dLoader_xs_circle(target) {
 	if (target.find('div[class*="dLoader"]').length < 1) {
 		target.addClass('pRelative').append('<div class="dLoader_xs border_spin_loader"><span class="circle"></span></div>');
 	}
 }
-
 function dLoaderRemove(target = jQuery('body')) {
 	target.removeClass('noScroll');
 	target.removeClass('pRelative').find('div[class*="dLoader"]').remove();
 }
-
 function placeholderLoader(target) {
 	target.addClass('placeholderLoader');
 }
-
 function placeholderLoaderRemove(target) {
 	target.each(function () {
 		target.removeClass('placeholderLoader');
 	})
 }
-
 function pageScrollTo(target) {
 	jQuery('html, body').animate({
 		scrollTop: target.offset().top -= 200
 	}, 1000);
 }
-
 //==========Load Bg Image=================//
 function loadBgImage() {
 	jQuery('body').find('[data-bg-image]:visible').each(function () {
 		let target = jQuery(this);
-		let height = target.outerWidth() * 2 / 3;
-		if (target.css('background-image') === 'none') {
-			target.css({"min-height": height});
+		let width = target.outerWidth();
+		let height = target.outerHeight();
+		if (target.css('background-image') === 'none' || width === 0 || height === 0) {
 			let bg_url = target.data('bg-image');
 			if (!bg_url || bg_url.width === 0 || bg_url.width === 'undefined') {
-				bg_url = ttbm_empty_image_url;
+				bg_url = mp_empty_image_url;
 			}
+			mp_resize_bg_image_area(target, bg_url);
 			target.css('background-image', 'url("' + bg_url + '")').promise().done(function () {
 				dLoaderRemove(jQuery(this));
 			});
@@ -87,7 +95,16 @@ function loadBgImage() {
 	});
 	return true;
 }
-
+function mp_resize_bg_image_area(target, bg_url) {
+	let tmpImg = new Image();
+	tmpImg.src = bg_url;
+	jQuery(tmpImg).one('load', function () {
+		let imgWidth = tmpImg.width;
+		let imgHeight = tmpImg.height;
+		let height = target.outerWidth() * imgHeight / imgWidth;
+		target.css({"min-height": height});
+	});
+}
 (function ($) {
 	let bg_image_load = false;
 	$(document).ready(function () {
@@ -117,7 +134,6 @@ function loadBgImage() {
 			target.css({"min-height": height, "height": height});
 		});
 	});
-
 	function load_initial() {
 		if (!bg_image_load) {
 			if (loadBgImage()) {
@@ -127,7 +143,6 @@ function loadBgImage() {
 		}
 	}
 }(jQuery));
-
 //==========Change icon and text=================//
 function content_icon_change(currentTarget) {
 	let openIcon = currentTarget.data('open-icon');
@@ -136,7 +151,6 @@ function content_icon_change(currentTarget) {
 		currentTarget.find('[data-icon]').toggleClass(closeIcon).toggleClass(openIcon);
 	}
 }
-
 function content_text_change(currentTarget) {
 	let openText = currentTarget.data('open-text');
 	let closeText = currentTarget.data('close-text');
@@ -149,7 +163,6 @@ function content_text_change(currentTarget) {
 		}
 	}
 }
-
 (function ($) {
 	"use strict";
 	$(document).on('click', '[data-icon-change]', function () {
@@ -233,12 +246,10 @@ function content_text_change(currentTarget) {
 			}
 		});
 	});
-
 	function target_close(close_id, target_id) {
 		$('body').find('[data-close="' + close_id + '"]:not([data-collapse="' + target_id + '"])').slideUp(250);
 		return true;
 	}
-
 	function target_collapse(target, $this) {
 		if ($this.is('[type="radio"]')) {
 			target.slideDown(250);
@@ -247,7 +258,6 @@ function content_text_change(currentTarget) {
 		}
 		return true;
 	}
-
 	function collapse_close_inside(currentTarget) {
 		let parent_target_close = currentTarget.data('collapse-close-inside');
 		if (parent_target_close) {
@@ -325,7 +335,6 @@ function content_text_change(currentTarget) {
 		return true;
 	});
 }(jQuery));
-
 //==========pagination==========//
 function ttbm_pagination_page_management(parent, pagination_page, total_item) {
 	let per_page_item = parseInt(parent.find('input[name="pagination_per_page"]').val());
@@ -366,7 +375,6 @@ function ttbm_pagination_page_management(parent, pagination_page, total_item) {
 	}
 	return true;
 }
-
 (function ($) {
 	"use strict";
 	$(document).on('click', '.pagination_area .page_prev', function (e) {

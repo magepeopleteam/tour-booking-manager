@@ -2,7 +2,8 @@
 	if ( ! defined( 'ABSPATH' ) ) {
 		die;
 	}
-	$tour_id        = $tour_id ?? get_the_id();
+	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
+	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
 	$tour_date      = $tour_date ?? current( TTBM_Function::get_date( $tour_id ) );
 	$ticket_lists   = TTBM_Function::get_post_info( $tour_id, 'ttbm_ticket_type', array() );
 	$available_seat = TTBM_Function::get_total_available( $tour_id, $tour_date );
@@ -32,7 +33,7 @@
 							$price            = TTBM_Function::get_price_by_name( $ticket_name, $tour_id, '', '', $tour_date );
 							$regular_price    = TTBM_Function::check_discount_price_exit( $tour_id, $ticket_name, '', '', $tour_date );
 							$ticket_price     = TTBM_Function::ttbm_wc_price( $tour_id, $price );
-							$ticket_price_raw = TTBM_Function::price_convert_raw( $ticket_price );
+							$ticket_price_raw = MP_Global_Function::price_convert_raw( $ticket_price );
 							$ticket_qty       = array_key_exists( 'ticket_type_qty', $ticket ) && $ticket['ticket_type_qty'] > 0 ? $ticket['ticket_type_qty'] : 0;
 							$reserve          = array_key_exists( 'ticket_type_resv_qty', $ticket ) && $ticket['ticket_type_resv_qty'] > 0 ? $ticket['ticket_type_resv_qty'] : 0;
 							$ticket_qty_type  = array_key_exists( 'ticket_type_qty_type', $ticket ) ? $ticket['ticket_type_qty_type'] : 'inputbox';

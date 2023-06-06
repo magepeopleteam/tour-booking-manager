@@ -40,7 +40,7 @@
 				<?php
 			}
 			public function activities( $tour_id ) {
-				$activities      = TTBM_Function::get_taxonomy( 'ttbm_tour_activities' );
+				$activities      = MP_Global_Function::get_taxonomy( 'ttbm_tour_activities' );
 				$tour_activities = TTBM_Function::get_post_info( $tour_id, 'ttbm_tour_activities', [] );
 				?>
 				<div class="ttbm_activities_table">

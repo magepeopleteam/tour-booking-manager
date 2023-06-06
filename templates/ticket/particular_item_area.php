@@ -2,7 +2,8 @@
 	if ( ! defined( 'ABSPATH' ) ) {
 		die;
 	}
-	$tour_id                   = $tour_id ?? get_the_id();
+	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
+	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
 	$travel_type               = $travel_type ?? TTBM_Function::get_travel_type( $tour_id );
 	$tour_type                 = $tour_type ?? TTBM_Function::get_tour_type( $tour_id );
 	$ttbm_display_registration = $ttbm_display_registration ?? TTBM_Function::get_post_info( $tour_id, 'ttbm_display_registration', 'on' );
@@ -76,7 +77,7 @@
 									}
 								?>
 								<h4><?php echo wc_price( TTBM_Function::get_tour_start_price( $tour_id ) ); ?></h4>
-								<button type="button" class="get_particular_hotel">
+								<button type="button" class="dButton_xs get_particular_hotel">
 									<?php esc_html_e( 'Confirm Dates', 'tour-booking-manager' ); ?>
 								</button>
 							</div>

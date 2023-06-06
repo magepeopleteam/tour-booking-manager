@@ -2,7 +2,8 @@
 	if (!defined('ABSPATH')) {
 		die;
 	}
-	$tour_id = $tour_id ?? get_the_id();
+	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
+	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
 	$upcoming_date = TTBM_Function::get_post_info($tour_id, 'ttbm_upcoming_date');
 	$tour_type = TTBM_Function::get_tour_type($tour_id);
 	if (!$upcoming_date && $tour_type == 'general') { ?>

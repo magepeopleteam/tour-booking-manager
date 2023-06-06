@@ -2,7 +2,8 @@
 	if ( ! defined( 'ABSPATH' ) ) {
 		die;
 	}
-	$tour_id        = $tour_id ?? get_the_id();
+	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
+	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
 	$tour_date      = $tour_date ?? current( TTBM_Function::get_date( $tour_id ) );
 	$extra_services = TTBM_Function::get_post_info( $tour_id, 'ttbm_extra_service_data', array() );
 	if ( sizeof( $extra_services ) > 0 ) {
@@ -29,7 +30,7 @@
 						$service_name      = array_key_exists( 'service_name', $service ) ? $service['service_name'] : '';
 						$service_price     = array_key_exists( 'service_price', $service ) ? $service['service_price'] : 0;
 						$service_price     = TTBM_Function::ttbm_wc_price( $tour_id, $service_price );
-						$service_price_raw = TTBM_Function::price_convert_raw( $service_price );
+						$service_price_raw = MP_Global_Function::price_convert_raw( $service_price );
 						$service_qty       = array_key_exists( 'service_qty', $service ) ? $service['service_qty'] : 0;
 						$reserve           = apply_filters( 'ttbm_service_reserve_qty', 0 );
 						$input_type        = array_key_exists( 'service_qty_type', $service ) ? $service['service_qty_type'] : 'inputbox';

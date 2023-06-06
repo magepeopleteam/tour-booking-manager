@@ -57,7 +57,6 @@
                                 $this->general_info($tour_id);
                                 do_action('ttbm_meta_box_tab_content', $tour_id);
                                 do_action('add_ttbm_settings_tab_content', $tour_id);
-                                $this->gallery_settings($tour_id);
                                 $this->extras_settings($tour_id);
                                 $this->related_tour_settings($tour_id);
                                 $this->details_page_settings($tour_id);
@@ -843,38 +842,6 @@
                 ];
                 new TtbmAddMetaBox($ttbm_list_template_meta_args);
             }
-            //********* Gallery settings*************//
-            public function gallery_settings($tour_id) {
-                $display = TTBM_Function::get_post_info($tour_id, 'ttbm_display_slider', 'on');
-                $active = $display == 'off' ? '' : 'mActive';
-                $checked = $display == 'off' ? '' : 'checked';
-                $image_ids = TTBM_Function::get_post_info($tour_id, 'ttbm_gallery_images', array());
-                ?>
-                <div class="tabsItem ttbm_settings_gallery" data-tabs="#ttbm_settings_gallery">
-                    <h5 class="dFlex">
-                        <span class="mR"><?php esc_html_e('On/Off Slider', 'tour-booking-manager'); ?></span>
-                        <?php TTBM_Layout::switch_button('ttbm_display_slider', $checked); ?>
-                    </h5>
-                    <?php self::des_p('ttbm_display_slider'); ?>
-                    <div class="divider"></div>
-                    <div data-collapse="#ttbm_display_slider" class="<?php echo esc_attr($active); ?>">
-                        <table class="layoutFixed">
-                            <tbody>
-                            <tr>
-                                <th><?php esc_html_e('Gallery Images ', 'tour-booking-manager'); ?></th>
-                                <td colspan="3">
-                                    <?php TTBM_Layout::add_multi_image('ttbm_gallery_images', $image_ids); ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4"><?php self::des_p('ttbm_gallery_images'); ?></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <?php
-            }
             //********* extras settings*************//
             public function extras_settings($tour_id) {
                 $contact_text = TTBM_Function::get_contact_text($tour_id);
@@ -1126,6 +1093,9 @@
                     'ttbm_display_hotel_rating' => esc_html__('Please Select Hotel rating ', 'tour-booking-manager'),
                     'ttbm_display_tour_guide' => esc_html__('You can keep off tour guide information by switching this option', 'tour-booking-manager'),
                     'ttbm_tour_guide' => esc_html__('To add tour guide information, simply select an option from the list below.', 'tour-booking-manager'),
+                    'ttbm_guide_style' => esc_html__('To change tour guide style, please select style.', 'tour-booking-manager'),
+                    'ttbm_guide_image_style' => esc_html__('To change tour guide image, please select style.', 'tour-booking-manager'),
+                    'ttbm_guide_description_style' => esc_html__('To change tour guide description style, please select style.', 'tour-booking-manager'),
                     //''          => esc_html__( '', 'tour-booking-manager' ),
                 );
                 $des = apply_filters('ttbm_filter_description_array', $des);

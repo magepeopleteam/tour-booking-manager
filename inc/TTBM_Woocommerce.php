@@ -55,7 +55,7 @@ if (!class_exists('TTBM_Woocommerce')) {
         public function cart_item_thumbnail($thumbnail, $cart_item) {
             $ttbm_id = array_key_exists('ttbm_id', $cart_item) ? $cart_item['ttbm_id'] : 0;
             if (get_post_type($ttbm_id) == TTBM_Function::get_cpt_name()) {
-                $thumbnail = '<div class="bg_image_area" data-href="' . get_the_permalink($ttbm_id) . '"><div data-bg-image="' . TTBM_Function::get_image_url($ttbm_id) . '"></div></div>';
+                $thumbnail = '<div class="bg_image_area" data-href="' . get_the_permalink($ttbm_id) . '"><div data-bg-image="' . MP_Global_Function::get_image_url($ttbm_id) . '"></div></div>';
             }
             return $thumbnail;
         }

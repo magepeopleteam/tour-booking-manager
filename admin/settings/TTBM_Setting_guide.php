@@ -15,6 +15,9 @@
                 $active_guide = $display_guide == 'off' ? '' : 'mActive';
                 $checked_guide = $display_guide == 'off' ? '' : 'checked';
                 $guides = TTBM_Function::get_post_info($tour_id, 'ttbm_tour_guide', array());
+                $ttbm_guide_style = TTBM_Function::get_post_info($tour_id, 'ttbm_guide_style', 'carousel');
+                $ttbm_guide_image_style = TTBM_Function::get_post_info($tour_id, 'ttbm_guide_image_style', 'squire');
+                $ttbm_guide_description_style = TTBM_Function::get_post_info($tour_id, 'ttbm_guide_description_style', 'full');
                 ?>
                 <div class="tabsItem" data-tabs="#ttbm_settings_guide">
                     <h5 class="dFlex">
@@ -49,6 +52,48 @@
                             <tr>
                                 <td colspan="4"><?php TTBM_Settings::des_p('ttbm_tour_guide'); ?></td>
                             </tr>
+                            <tr>
+	                            <th><?php esc_html_e('Guide Style', 'tour-booking-manager'); ?></th>
+	                            <td colspan="3">
+		                            <label>
+			                            <select name="ttbm_guide_style" class='formControl'>
+				                            <option value="all" <?php echo esc_attr($ttbm_guide_style=='all'? 'selected' : '') ; ?>><?php esc_html_e('All Visible', 'tour-booking-manager'); ?></option>
+				                            <option value="carousel" <?php echo esc_attr($ttbm_guide_style=='carousel'? 'selected' : '') ; ?>><?php esc_html_e('Carousel', 'tour-booking-manager'); ?></option>
+			                            </select>
+		                            </label>
+	                            </td>
+                            </tr>
+                            <tr>
+	                            <td colspan="4"><?php TTBM_Settings::des_p('ttbm_guide_style'); ?></td>
+                            </tr>
+                            <tr>
+                                <th><?php esc_html_e('Guide Image Style', 'tour-booking-manager'); ?></th>
+                                <td colspan="3">
+                                    <label>
+                                        <select name="ttbm_guide_image_style" class='formControl'>
+                                            <option value="circle" <?php echo esc_attr($ttbm_guide_image_style=='circle'? 'selected' : '') ; ?>><?php esc_html_e('Circle', 'tour-booking-manager'); ?></option>
+                                            <option value="squire" <?php echo esc_attr($ttbm_guide_image_style=='squire'? 'selected' : '') ; ?>><?php esc_html_e('Squire', 'tour-booking-manager'); ?></option>
+                                        </select>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"><?php TTBM_Settings::des_p('ttbm_guide_image_style'); ?></td>
+                            </tr>
+                            <tr>
+	                            <th><?php esc_html_e('Guide Description Style', 'tour-booking-manager'); ?></th>
+	                            <td colspan="3">
+		                            <label>
+			                            <select name="ttbm_guide_description_style" class='formControl'>
+				                            <option value="short" <?php echo esc_attr($ttbm_guide_description_style=='short'? 'selected' : '') ; ?>><?php esc_html_e('Short', 'tour-booking-manager'); ?></option>
+				                            <option value="full" <?php echo esc_attr($ttbm_guide_description_style=='full'? 'selected' : '') ; ?>><?php esc_html_e('Full', 'tour-booking-manager'); ?></option>
+			                            </select>
+		                            </label>
+	                            </td>
+                            </tr>
+                            <tr>
+	                            <td colspan="4"><?php TTBM_Settings::des_p('ttbm_guide_description_style'); ?></td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -61,6 +106,12 @@
                     update_post_meta( $tour_id, 'ttbm_display_tour_guide', $ttbm_display_tour_guide );
                     $ttbm_tour_guide = TTBM_Function::get_submit_info( 'ttbm_tour_guide', array() );
                     update_post_meta( $tour_id, 'ttbm_tour_guide', $ttbm_tour_guide );
+                    $ttbm_guide_style = TTBM_Function::get_submit_info( 'ttbm_guide_style', 'carousel' );
+                    update_post_meta( $tour_id, 'ttbm_guide_style', $ttbm_guide_style );
+                    $ttbm_guide_image_style = TTBM_Function::get_submit_info( 'ttbm_guide_image_style', 'squire' );
+                    update_post_meta( $tour_id, 'ttbm_guide_image_style', $ttbm_guide_image_style );
+                    $ttbm_guide_description_style = TTBM_Function::get_submit_info( 'ttbm_guide_description_style', 'full' );
+                    update_post_meta( $tour_id, 'ttbm_guide_description_style', $ttbm_guide_description_style );
                 }
             }
         }

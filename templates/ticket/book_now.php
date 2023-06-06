@@ -2,7 +2,8 @@
 	if ( ! defined( 'ABSPATH' ) ) {
 		die;
 	}
-	$tour_id         = $tour_id ?? get_the_id();
+	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
+	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
 	$ttbm_product_id = TTBM_Function::get_post_info( $tour_id, 'link_wc_product' );
 	if ( ! empty( $ttbm_product_id ) ) {
 		$seat_infos = TTBM_Function::get_post_info( $tour_id, 'ttbma_seat_plan', array());

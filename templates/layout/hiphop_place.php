@@ -2,13 +2,13 @@
 	if ( ! defined( 'ABSPATH' ) ) {
 		die;
 	} // Cannot access pages directly.
-	$tour_id   = $tour_id ?? get_the_id();
-	$places    = TTBM_Function::get_hiphop_place( $tour_id );
+	$ttbm_post_id   = $ttbm_post_id ?? get_the_id();
+	$places    = TTBM_Function::get_hiphop_place( $ttbm_post_id );
 	$all_place = new WP_Query( array(
 		'post_type'   => 'ttbm_places',
 		'post_status' => 'publish'
 	) );
-	if ( $all_place->post_count > 0 && sizeof( $places ) > 0 && TTBM_Function::get_post_info( $tour_id, 'ttbm_display_hiphop', 'on' ) != 'off' ) {
+	if ( $all_place->post_count > 0 && sizeof( $places ) > 0 && TTBM_Function::get_post_info( $ttbm_post_id, 'ttbm_display_hiphop', 'on' ) != 'off' ) {
 		?>
 		<div class="ttbm_default_widget" id="place_you_see">
 			<?php do_action( 'ttbm_section_title', 'ttbm_string_hiphop_heading', esc_html__( 'Places You’ll See : ', 'tour-booking-manager' ) ); ?>
@@ -27,7 +27,7 @@
 						$place_name = $_places['ttbm_place_label'];
 						$place_id   = $_places['ttbm_city_place_id'];
 						if ( $place_id ) {
-							$thumbnail = TTBM_Function::get_image_url( $place_id );
+							$thumbnail = MP_Global_Function::get_image_url( $place_id );
 							?>
 							<div class="filter_item <?php if ( sizeof( $places ) < 4 ) {
 								echo "grid_3";
@@ -54,7 +54,7 @@
 			</div>
 		</div>
 		<?php
-		do_action( 'ttbm_hiphop_place_map', $tour_id );
+		do_action( 'ttbm_hiphop_place_map', $ttbm_post_id );
 	}
 ?>
 

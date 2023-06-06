@@ -2,11 +2,11 @@
 /********Image upload******************/
 div.mp_multi_image { display: -webkit-flex; display: flex; -webkit-flex-wrap: wrap; flex-wrap: wrap; margin: 15px 0 0 0;}
 div.mp_single_image_item,
-div.mp_multi_image_item { position: relative; width: 25%; padding: var(--default-mp-xs);min-width: 150px;}
+div.mp_multi_image_item { position: relative; width: 25%; padding: var(--dMP_xs);min-width: 150px;}
 div.mp_single_image_item img,
 div.mp_multi_image_item img{width:100%;}
 span.mp_remove_single_image,
-div.mpStyle span.mp_remove_multi_image { cursor: pointer; position: absolute; top: 0; right: 0; background-color: var(--danger-color);margin: 0;}
+div.mpStyle span.mp_remove_multi_image { cursor: pointer; position: absolute; top: 0; right: 0; background-color: var(--color_danger);margin: 0;}
 /********Global settings******************/
 div.mp_settings_panel {overflow: hidden;position: relative;display: -webkit-flex;display: flex; line-height: 1.4;}
 .mp_settings_panel_header { background: #161B37;padding: 30px 20px 30px 20px;color: #FFF;font-size: 20px;margin-top: 30px;}
@@ -36,16 +36,16 @@ div.mp_settings_panel {overflow: hidden;position: relative;display: -webkit-flex
 .mp_settings_panel table tr:nth-child(even) {background-color: #F2F2F2;}
 .mp_settings_panel p.submit {text-align: right; margin: 20px 0 0 0; padding: 0;}
 div.mpStyle .description,
-.mp_settings_panel .description {display: block;font-weight: normal;font-size: var(--fs_small) !important;color: #666;margin: var(--default-mp-xs) 0 0 0;}
+.mp_settings_panel .description {display: block;font-weight: normal;font-size: var(--fs_small) !important;color: #666;margin: var(--dMP_xs) 0 0 0;}
 div.mpStyle .description span,
-.mp_settings_panel .description span {margin: 0 var(--default-mp-xs) 0 0;}
+.mp_settings_panel .description span {margin: 0 var(--dMP_xs) 0 0;}
 .mp_settings_panel .description strong {color: #000;}
 .mp_settings_panel p.submit input {font-size: 16px;padding: 5px 30px;border-radius: 0;background: #49AC2F;border-color: #49AC2F;transition: 0.2s;}
 .mp_settings_panel p.submit input:hover {background: #239108;border-color: #239108;transition: 0.2s;}
 .mp_settings_panel #setting-error-tgmpa {order: 0;width: 100%}
 .mp_settings_panel .notice {display: none;}
 div.mp_settings_panel .formControl {max-width: 320px;}
-.mp_settings_panel table thead th {background-color: var(--section-bg);}
+.mp_settings_panel table thead th {background-color: var(--color_light);}
 .mp_settings_panel .select2-container {max-width: 320px;}
 .mp_settings_panel .selection {width: 100%;}
 .mp_settings_panel .metabox-holder table { border-collapse: collapse;}

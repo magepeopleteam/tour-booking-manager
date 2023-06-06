@@ -9,7 +9,10 @@
 		echo get_the_password_form(); // WPCS: XSS ok.
 	} else {
 		do_action( 'woocommerce_before_single_product' );
-		$tour_id                   = get_the_id();
+        $ttbm_post_id=get_the_id();
+        $tour_id=TTBM_Function::post_id_multi_language($ttbm_post_id);
+        echo $tour_id.'/';
+       echo '<pre>';print_r($ttbm_post_id);echo '</pre>';
 		$template_name = TTBM_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
 		$all_dates                 = TTBM_Function::get_date( $tour_id );
 		$travel_type               = TTBM_Function::get_travel_type( $tour_id );

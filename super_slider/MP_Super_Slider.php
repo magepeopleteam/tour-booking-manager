@@ -187,7 +187,7 @@
 				}
 			}
 			public function post_thumbnail( $image_id = '' ) {
-				$thumbnail = TTBM_Function::get_image_url( '', $image_id );
+				$thumbnail = MP_Global_Function::get_image_url( '', $image_id );
 				if ( $thumbnail ) {
 					?>
 					<div class="superSlider">
@@ -203,7 +203,7 @@
 						<?php
 							$count = 1;
 							foreach ( $image_ids as $id ) {
-								$image_url = TTBM_Function::get_image_url( '', $id );
+								$image_url = MP_Global_Function::get_image_url( '', $id );
 								?>
 								<div class="sliderItem" data-slide-index="<?php echo esc_html( $count ); ?>" data-target-popup="superSlider" data-placeholder>
 									<div data-bg-image="<?php echo esc_html( $image_url ); ?>"></div>
@@ -243,7 +243,7 @@
 			public function slider_showcase_style_1( $image_ids ) {
 				$count = 1;
 				foreach ( $image_ids as $id ) {
-					$image_url = TTBM_Function::get_image_url( '', $id );
+					$image_url = MP_Global_Function::get_image_url( '', $id );
 					if ( $count < 4 ) {
 						?>
 						<div class="sliderShowcaseItem" data-slide-target="<?php echo esc_html( $count ); ?>" data-placeholder>
@@ -269,7 +269,7 @@
 			public function slider_showcase_style_2( $image_ids ) {
 				$count = 1;
 				foreach ( $image_ids as $id ) {
-					$image_url = TTBM_Function::get_image_url( '', $id );
+					$image_url = MP_Global_Function::get_image_url( '', $id );
 					if ( $count > 1 && $count < 5 ) {
 						?>
 						<div class="sliderShowcaseItem" data-target-popup="superSlider" data-slide-index="<?php echo esc_html( $count ); ?>" data-placeholder>
@@ -287,7 +287,7 @@
 						<?php
 							$count = 1;
 							foreach ( $image_ids as $id ) {
-								$image_url = TTBM_Function::get_image_url( '', $id, array( 150, 100 ) );
+								$image_url = MP_Global_Function::get_image_url( '', $id, array( 150, 100 ) );
 								?>
 								<div class="slideIndicatorItem" data-slide-target="<?php echo esc_html( $count ); ?>">
 									<div data-bg-image="<?php echo esc_html( $image_url ); ?>"></div>

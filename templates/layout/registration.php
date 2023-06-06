@@ -2,7 +2,8 @@
 	if ( ! defined( 'ABSPATH' ) ) {
 		die;
 	}
-	$tour_id = $tour_id ?? get_the_id();
+	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
+	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
 	if ( TTBM_Function::get_post_info( $tour_id, 'ttbm_display_registration', 'on' ) != 'off' ) {
 		$all_dates = TTBM_Function::get_date( $tour_id );
 		if ( sizeof( $all_dates ) > 0 ) {

@@ -6,15 +6,13 @@ function mp_price_format(price) {
 	let price_text = '';
 	if (mp_currency_position === 'right') {
 		price_text = price + mp_currency_symbol;
-	} else
-		if (mp_currency_position === 'right_space') {
-			price_text = price + '&nbsp;' + mp_currency_symbol;
-		} else
-			if (mp_currency_position === 'left') {
-				price_text = mp_currency_symbol + price;
-			} else {
-				price_text = mp_currency_symbol + '&nbsp;' + price;
-			}
+	} else if (mp_currency_position === 'right_space') {
+		price_text = price + '&nbsp;' + mp_currency_symbol;
+	} else if (mp_currency_position === 'left') {
+		price_text = mp_currency_symbol + price;
+	} else {
+		price_text = mp_currency_symbol + '&nbsp;' + price;
+	}
 	return price_text;
 }
 //loader
@@ -80,30 +78,19 @@ function pageScrollTo(target) {
 function loadBgImage() {
 	jQuery('body').find('[data-bg-image]:visible').each(function () {
 		let target = jQuery(this);
-		let width = target.outerWidth();
-		let height = target.outerHeight();
-		if (target.css('background-image') === 'none' || width === 0 || height === 0) {
+		let height = target.outerWidth() * 2 / 3;
+		if (target.css('background-image') === 'none') {
+			target.css({"min-height": height});
 			let bg_url = target.data('bg-image');
 			if (!bg_url || bg_url.width === 0 || bg_url.width === 'undefined') {
 				bg_url = mp_empty_image_url;
 			}
-			mp_resize_bg_image_area(target, bg_url);
 			target.css('background-image', 'url("' + bg_url + '")').promise().done(function () {
 				dLoaderRemove(jQuery(this));
 			});
 		}
 	});
 	return true;
-}
-function mp_resize_bg_image_area(target, bg_url) {
-	let tmpImg = new Image();
-	tmpImg.src = bg_url;
-	jQuery(tmpImg).one('load', function () {
-		let imgWidth = tmpImg.width;
-		let imgHeight = tmpImg.height;
-		let height = target.outerWidth() * imgHeight / imgWidth;
-		target.css({"min-height": height});
-	});
 }
 (function ($) {
 	let bg_image_load = false;
@@ -130,7 +117,10 @@ function mp_resize_bg_image_area(target, bg_url) {
 	$(window).on('load , resize', function () {
 		$('body').find('[data-bg-image]:visible').each(function () {
 			let target = $(this);
-			let height = target.outerWidth() * 2 / 3;
+			let height = target.outerWidth();
+			if (!target.hasClass('circle')) {
+				height = height * 2 / 3;
+			}
 			target.css({"min-height": height, "height": height});
 		});
 	});

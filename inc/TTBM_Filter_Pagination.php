@@ -124,7 +124,7 @@
 			//****************************************/
 			public function category_filter( $params, $categories = '' ) {
 				if ( $params['category-filter'] == 'yes' ) {
-					$categories = is_array( $categories ) ? $categories : TTBM_Function::get_taxonomy( 'ttbm_tour_cat' );
+					$categories = is_array( $categories ) ? $categories : MP_Global_Function::get_taxonomy( 'ttbm_tour_cat' );
 					if ( is_array( $categories ) && sizeof( $categories ) > 0 ) {
 						$url      = $_GET['category_filter'] ?? '';
 						$current  = $url ? get_term_by( 'id', $url, 'ttbm_tour_cat' )->term_id : '';
@@ -144,7 +144,7 @@
 			}
 			public function category_filter_left( $params ) {
 				if ( $params['category-filter'] == 'yes' ) {
-					$categories = TTBM_Function::get_taxonomy( 'ttbm_tour_cat' );
+					$categories = MP_Global_Function::get_taxonomy( 'ttbm_tour_cat' );
 					if ( sizeof( $categories ) > 0 ) {
 						?>
 						<h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#ttbm_category_filter_left" data-placeholder>
@@ -162,7 +162,7 @@
 			//****************************************/
 			public function organizer_filter( $params, $organizers = array() ) {
 				if ( $params['organizer-filter'] == 'yes' ) {
-					$organizers = sizeof( $organizers ) > 0 ? $organizers : TTBM_Function::get_taxonomy( 'ttbm_tour_org' );
+					$organizers = sizeof( $organizers ) > 0 ? $organizers : MP_Global_Function::get_taxonomy( 'ttbm_tour_org' );
 					if ( sizeof( $organizers ) > 0 ) {
 						$url      = $_GET['organizer_filter'] ?? '';
 						$current  = $url ? get_term_by( 'id', $url, 'ttbm_tour_org' )->term_id : '';
@@ -182,7 +182,7 @@
 			}
 			public function organizer_filter_left( $params ) {
 				if ( $params['organizer-filter'] == 'yes' ) {
-					$organizers = TTBM_Function::get_taxonomy( 'ttbm_tour_org' );
+					$organizers = MP_Global_Function::get_taxonomy( 'ttbm_tour_org' );
 					if ( sizeof( $organizers ) > 0 ) {
 						?>
 						<h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#ttbm_organizer_filter_left" data-placeholder>
@@ -200,7 +200,7 @@
 			//****************************************/
 			public function location_filter( $params ) {
 				if ( $params['location-filter'] == 'yes' ) {
-					$locations = TTBM_Function::get_taxonomy( 'ttbm_tour_location' );
+					$locations = MP_Global_Function::get_taxonomy( 'ttbm_tour_location' );
 					if ( sizeof( $locations ) > 0 ) {
 						$url = $_GET['location_filter'] ?? '';
 						?>
@@ -226,7 +226,7 @@
 			}
 			public function location_filter_multiple( $params ) {
 				if ( $params['location-filter'] == 'yes' ) {
-					$locations = TTBM_Function::get_taxonomy( 'ttbm_tour_location' );
+					$locations = MP_Global_Function::get_taxonomy( 'ttbm_tour_location' );
 					if ( sizeof( $locations ) > 0 ) {
 						$url_location     = $_GET['location_filter'] ?? '';
 						$current_location = $url_location ? get_term_by( 'id', $url_location, 'ttbm_tour_location' )->term_id : '';
@@ -364,7 +364,7 @@
 			//****************************************/
 			public function feature_filter_multiple( $params ) {
 				if ( $params['feature-filter'] == 'yes' ) {
-					$features = TTBM_Function::get_taxonomy( 'ttbm_tour_features_list' );
+					$features = MP_Global_Function::get_taxonomy( 'ttbm_tour_features_list' );
 					if ( sizeof( $features ) > 0 ) {
 						$url = $_GET['feature_filter'] ?? '';
 						?>
@@ -394,7 +394,7 @@
 			//****************************************/
 			public function activity_filter( $params ) {
 				if ( $params['activity-filter'] == 'yes' ) {
-					$activities = TTBM_Function::get_taxonomy( 'ttbm_tour_activities' );
+					$activities = MP_Global_Function::get_taxonomy( 'ttbm_tour_activities' );
 					if ( sizeof( $activities ) > 0 ) {
 						$url_activity     = $_GET['activity_filter'] ?? '';
 						$current_activity = $url_activity ? get_term_by( 'id', $url_activity, 'ttbm_tour_activities' )->term_id : '';
@@ -414,7 +414,7 @@
 			}
 			public function activity_filter_multiple( $params ) {
 				if ( $params['activity-filter'] == 'yes' ) {
-					$activities = TTBM_Function::get_taxonomy( 'ttbm_tour_activities' );
+					$activities = MP_Global_Function::get_taxonomy( 'ttbm_tour_activities' );
 					if ( sizeof( $activities ) > 0 ) {
 						$url_activity     = $_GET['activity_filter'] ?? '';
 						$current_activity = $url_activity ? get_term_by( 'id', $url_activity, 'ttbm_tour_activities' )->term_id : '';
@@ -445,7 +445,7 @@
 			//****************************************/
 			public function tag_filter_multiple( $params ) {
 				if ( $params['tag-filter'] == 'yes' ) {
-					$tags = TTBM_Function::get_taxonomy( 'ttbm_tour_tag' );
+					$tags = MP_Global_Function::get_taxonomy( 'ttbm_tour_tag' );
 					if ( sizeof( $tags ) > 0 ) {
 						?>
 						<h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#tag_filter_multiple" data-placeholder>

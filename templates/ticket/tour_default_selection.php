@@ -2,7 +2,8 @@
 	if ( ! defined( 'ABSPATH' ) ) {
 		die;
 	}
-	$tour_id       = $tour_id ?? get_the_id();
+	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
+	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
 	$all_dates     = $all_dates ?? TTBM_Function::get_date( $tour_id );
 	$travel_type   = $travel_type ?? TTBM_Function::get_travel_type( $tour_id );
 	$tour_type     = $tour_type ?? TTBM_Function::get_tour_type( $tour_id );

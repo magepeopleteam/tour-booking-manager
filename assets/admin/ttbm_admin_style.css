@@ -7,7 +7,7 @@ div.ttbm_settings table th,
 div.ttbm_settings table td {border: 0;}
 div.ttbm_settings table tbody th {text-align: left;font-size: var(--fs);}
 div.ttbm_settings table tbody thead th {text-align: center;}
-div.ttbm_settings .formControl {min-width: 80px;box-shadow: none;padding: 5px var(--default-mp-xs);max-width: 300px;}
+div.ttbm_settings .formControl {min-width: 80px;box-shadow: none;padding: 5px var(--dMP_xs);max-width: 300px;}
 div.ttbm_settings .formControl.date_type,
 div.ttbm_settings .formControl[type="date"] {padding: 5px 5px 5px 40px;max-width: 300px;font-size: 16px;min-width: 200px;}
 div.ttbm_settings span.dropdown-wrapper {margin: 0 !important;}
@@ -50,17 +50,11 @@ div.ttbm_settings .mpPopup .popupMainArea {width: 100%;}
 /************************************/
 #ttbm_status_page table th {text-align: left;}
 /************************************/
-span.textWarning { color: var(--warning_color); font-size: var(--fs);font-weight: var(--fw-bold);}
-span.textSuccess { color: var(--success-color); font-size: var(--fs);}
+span.textWarning { color: var(--color_warning); font-size: var(--fs);font-weight: var(--fw-bold);}
+span.textSuccess { color: var(--color_success); font-size: var(--fs);}
 /***************/
 #mep_disable_ticket_time {margin: 0 10px 0 0;}
-/****************select_2 custom css******************/
-div.mpStyle span.selection,
-div.mpStyle span.select2-container.select2,
-div.mpStyle span.select2-container span.select2-selection { margin: 0; min-height: var(--button-height); min-width: auto;width: 100% !important;}
-div.mpStyle span.selection {overflow: hidden; max-width: 100%;}
-div.mpStyle span.select2-container span.select2-selection__rendered { display: -webkit-flex;display: flex; -webkit-align-items: center;align-items: center; height: 100%;}
-div.mpStyle span.select2-container .select2-selection__arrow { top: 2px; height: 37px;}
+
 /*css added by ariful*/
 a#ttbm_basic_license_settings-tab { display: none;}
 /***************************************/
@@ -220,7 +214,7 @@ table.wc_status_table td.woo_btn_td span {font-size: 20px; color: #10DD10;}
 .welcome-tabs .addon-list .addon-link a { text-decoration: none;}
 /************************************************/
 #ttbm_quick_setup {padding: 50px;max-width: 1000px;;margin: 100px auto;background-color: #FFF;}
-#ttbm_quick_setup .quick_tab_area h5 { padding: 10px 20px; margin: 0 30px; border: 1px solid var(--border_color); border-radius: var(--default-border-radious);position: relative;}
+#ttbm_quick_setup .quick_tab_area h5 { padding: 10px 20px; margin: 0 30px; border: 1px solid var(--color_border); border-radius: var(--dBR);position: relative;}
 #ttbm_quick_setup .quick_tab_area h5::after {content: ""; width: 60px; height: 2px; top: 40%; right: 0; position: absolute; transform: translate(100%, 50%);border-bottom: 2px dashed #DDD;}
 #ttbm_quick_setup .quick_tab_area h5:last-child::after {width: 0;}
 #ttbm_quick_setup .quick_tab_area h5.active {background: #2271B1;color: #FFF;border-bottom: 5px solid #000;}

@@ -7,15 +7,13 @@
 			public function __construct() {
 				add_action( 'init', array( $this, 'language_load' ) );
 				$this->load_file();
-				add_action( 'wp_enqueue_scripts', array( $this, 'common_script' ), 10 );
 				add_action( 'wp_enqueue_scripts', array( $this, 'frontend_script' ), 90 );
-				add_action( 'admin_enqueue_scripts', array( $this, 'common_script' ), 10 );
 				add_action( 'admin_enqueue_scripts', array( $this, 'admin_script' ), 90 );
+				add_action( 'ttbm_registration_enqueue', array( $this, 'registration_enqueue' ), 90 );
 				add_action( 'admin_head', array( $this, 'js_constant' ), 5 );
 				add_action( 'wp_head', array( $this, 'js_constant' ), 5 );
 				add_action( 'wp_head', array( $this, 'apply_custom_css' ), 90 );
 				add_action( 'admin_head', array( $this, 'apply_custom_css' ), 90 );
-				add_action( 'ttbm_registration_enqueue', array( $this, 'registration_enqueue' ), 90 );
 			}
 			public function language_load() {
 				$plugin_dir = basename( dirname( __DIR__ ) ) . "/languages/";
@@ -37,43 +35,46 @@
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
 				require_once TTBM_PLUGIN_DIR . '/super_slider/MP_Super_Slider.php';
 			}
-			public function common_script() {
-				wp_enqueue_script( 'jquery' );
-				wp_enqueue_script( 'jquery-ui-core' );
-				wp_enqueue_script( 'jquery-ui-datepicker' );
-				wp_localize_script( 'jquery', 'ttbm_ajax', array( 'ttbm_ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-				wp_enqueue_style( 'mp_font_awesome', '//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css', array(), '5.15.4' );
-				wp_enqueue_style( 'mp_jquery_ui', TTBM_PLUGIN_URL . '/assets/helper/css/jquery-ui.css' );
-				wp_enqueue_style( 'mp_plugin_global', TTBM_PLUGIN_URL . '/assets/helper/mp_style/mp_style.css', array(), time() );
-				wp_enqueue_script( 'mp_plugin_global', TTBM_PLUGIN_URL . '/assets/helper/mp_style/mp_script.js', array( 'jquery' ), time(), true );
+			public function global_enqueue() {
+                wp_enqueue_script( 'jquery' );
+                wp_enqueue_script( 'jquery-ui-core' );
+                wp_enqueue_script( 'jquery-ui-datepicker' );
+                wp_localize_script( 'jquery', 'ttbm_ajax', array( 'ttbm_ajax' => admin_url( 'admin-ajax.php' ) ) );
+                wp_enqueue_style( 'mp_jquery_ui', TTBM_PLUGIN_URL . '/assets/helper/jquery-ui.min.css', array(), '1.13.2' );
+                wp_enqueue_style( 'mp_font_awesome', '//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css', array(), '5.15.4' );
+                wp_enqueue_style( 'mp_select_2', TTBM_PLUGIN_URL . '/assets/helper/select_2/select2.min.css', array(), '4.0.13' );
+                wp_enqueue_script( 'mp_select_2', TTBM_PLUGIN_URL . '/assets/helper/select_2/select2.min.js', array(), '4.0.13');
+                wp_enqueue_style( 'mp_owl_carousel', TTBM_PLUGIN_URL . '/assets/helper/owl_carousel/owl.carousel.min.css', array(), '2.3.4' );
+                wp_enqueue_script( 'mp_owl_carousel', TTBM_PLUGIN_URL . '/assets/helper/owl_carousel/owl.carousel.min.js', array(), '2.3.4');
+                wp_enqueue_style( 'mp_plugin_global', TTBM_PLUGIN_URL . '/assets/helper/mp_style/mp_style.css', array(), time() );
+                wp_enqueue_script( 'mp_plugin_global', TTBM_PLUGIN_URL . '/assets/helper/mp_style/mp_script.js', array( 'jquery' ), time(), true );
 				do_action( 'ttbm_common_script' );
 			}
 			public function frontend_script() {
+                $this->global_enqueue();
 				wp_enqueue_script( 'jquery-ui-accordion' );
-				wp_enqueue_style( 'ttbm_owl_style', TTBM_PLUGIN_URL . '/assets/owl/owl.carousel.min.css' );
-				wp_enqueue_style( 'ttbm_owl_style_default', TTBM_PLUGIN_URL . '/assets/owl/owl.theme.default.min.css' );
-				wp_enqueue_script( 'ttbm_owl_script', TTBM_PLUGIN_URL . '/assets/owl/owl.carousel.min.js', array( 'jquery' ), '', true );
 				wp_enqueue_style( 'ttbm_filter_pagination_style', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.css', array(), time() );
 				wp_enqueue_script( 'ttbm_filter_pagination_script', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.js', array( 'jquery' ), time(), true );
 				wp_enqueue_style( 'ttbm_style', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_style.css', array(), time() );
 				wp_enqueue_script( 'ttbm_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_script.js', array( 'jquery' ), time(), true );
-				do_action( 'ttbm_registration_enqueue' );
+				$this->registration_enqueue();
 				do_action( 'ttbm_frontend_script' );
 			}
 			public function admin_script() {
-				wp_enqueue_editor();
-				//admin script
-				wp_enqueue_script( 'jquery-ui-sortable' );
-				wp_enqueue_style( 'wp-color-picker' );
-				wp_enqueue_script( 'wp-color-picker' );
+                $this->global_enqueue();
+                wp_enqueue_editor();
+                //admin script
+                wp_enqueue_script( 'jquery-ui-sortable' );
+                wp_enqueue_style( 'wp-color-picker' );
+                wp_enqueue_script( 'wp-color-picker' );
+                wp_enqueue_style( 'wp-codemirror' );
+                wp_enqueue_script( 'wp-codemirror' );
+                //********//
 				wp_enqueue_script( 'magepeople-options-framework', TTBM_PLUGIN_URL . '/assets/helper/js/mage-options-framework.js', array( 'jquery' ), null );
 				wp_localize_script( 'PickpluginsOptionsFramework', 'PickpluginsOptionsFramework_ajax', array( 'PickpluginsOptionsFramework_ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-				wp_enqueue_script( 'select2.min', TTBM_PLUGIN_URL . '/assets/helper/js/select2.min.js', array( 'jquery' ) );
-				wp_enqueue_script( 'codemirror', TTBM_PLUGIN_URL . '/assets/helper/js/codemirror.min.js', array( 'jquery' ), null );
 				wp_enqueue_script( 'form-field-dependency', TTBM_PLUGIN_URL . '/assets/helper/js/form-field-dependency.js', array( 'jquery' ), null );
 				wp_enqueue_style( 'mage-options-framework', TTBM_PLUGIN_URL . '/assets/helper/css/mage-options-framework.css' );
-				wp_enqueue_style( 'select2.min', TTBM_PLUGIN_URL . '/assets/helper/css/select2.min.css' );
-				wp_enqueue_style( 'codemirror', TTBM_PLUGIN_URL . '/assets/helper/css/codemirror.css' );
+
 				// custom
 				wp_enqueue_script( 'mp_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/mp_admin_settings.js', array( 'jquery' ), time(), true );
 				wp_enqueue_style( 'mp_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/mp_admin_settings.css', array(), time() );

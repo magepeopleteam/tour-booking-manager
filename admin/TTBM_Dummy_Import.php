@@ -15,7 +15,7 @@
                     foreach ($dummy_data as $type => $dummy) {
                         if ($type == 'taxonomy') {
                             foreach ($dummy as $taxonomy => $dummy_taxonomy) {
-                                $check_taxonomy = TTBM_Function::get_taxonomy($taxonomy);
+                                $check_taxonomy = MP_Global_Function::get_taxonomy($taxonomy);
                                 if (is_string($check_taxonomy) || sizeof($check_taxonomy) == 0) {
                                     foreach ($dummy_taxonomy as $taxonomy_data) {
                                         $query = wp_insert_term($taxonomy_data['name'], $taxonomy);

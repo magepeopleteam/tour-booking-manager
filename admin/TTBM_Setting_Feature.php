@@ -34,7 +34,7 @@
 				<?php
 			}
 			public function feature( $tour_id ) {
-				$features        = TTBM_Function::get_taxonomy( 'ttbm_tour_features_list' );
+				$features        = MP_Global_Function::get_taxonomy( 'ttbm_tour_features_list' );
 				$include_display = TTBM_Function::get_post_info( $tour_id, 'ttbm_display_include_service', 'on' );
 				$include_active  = $include_display == 'off' ? '' : 'mActive';
 				$exclude_display = TTBM_Function::get_post_info( $tour_id, 'ttbm_display_exclude_service', 'on' );
@@ -80,7 +80,7 @@
 				}
 			}
 			public function feature_list( $tour_id, $feature_name ) {
-				$all_features = TTBM_Function::get_taxonomy( 'ttbm_tour_features_list' );
+				$all_features = MP_Global_Function::get_taxonomy( 'ttbm_tour_features_list' );
 				$features     = TTBM_Function::get_feature_list( $tour_id, $feature_name );
 				$feature_ids  = TTBM_Function::feature_array_to_string( $features );
 				if ( sizeof( $all_features ) > 0 ) {

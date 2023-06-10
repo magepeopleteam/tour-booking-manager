@@ -96,7 +96,6 @@
 	$(document).on('click', '.ttbm_new_location_save,.ttbm_new_location_save_close', function () {
 		ttbm_new_location_save($(this));
 	});
-
 	function ttbm_new_location_save($this) {
 		let parent = $this.closest('.popupMainArea');
 		parent.find('.ttbm_success_info').slideUp('fast');
@@ -152,7 +151,6 @@
 		}
 		return false;
 	}
-
 	function ttbm_reload_location() {
 		let ttbm_id = $('[name="post_id"]').val();
 		let parent = $('.ttbm_location_select_area');
@@ -177,7 +175,6 @@
 			}
 		});
 	}
-
 	//*******Feature**************//
 	$(document).on('click', '.ttbm_settings_feature [data-target-popup]', function () {
 		let target = $(this).closest('.ttbm_settings_feature').find('.ttbm_feature_form_area');
@@ -205,7 +202,6 @@
 	$(document).on('click', '.ttbm_new_feature_save,.ttbm_new_feature_save_close', function () {
 		ttbm_new_feature_save($(this));
 	});
-
 	function ttbm_new_feature_save($this) {
 		let parent = $this.closest('.popupMainArea');
 		parent.find('.ttbm_success_info').slideUp('fast');
@@ -255,7 +251,6 @@
 		}
 		return false;
 	}
-
 	function ttbm_reload_feature_list() {
 		let ttbm_id = $('[name="post_id"]').val();
 		let parent = $('.ttbm_features_table');
@@ -278,7 +273,6 @@
 			}
 		});
 	}
-
 	//*******Activity**************//
 	$(document).on('click', '.ttbm_settings_activities [data-target-popup]', function () {
 		let target = $(this).closest('.ttbm_settings_activities').find('.ttbm_activity_form_area');
@@ -306,7 +300,6 @@
 	$(document).on('click', '.ttbm_new_activity_save,.ttbm_new_activity_save_close', function () {
 		ttbm_new_activity_save($(this));
 	});
-
 	function ttbm_new_activity_save($this) {
 		let parent = $this.closest('.popupMainArea');
 		parent.find('.ttbm_success_info').slideUp('fast');
@@ -356,7 +349,6 @@
 		}
 		return false;
 	}
-
 	function ttbm_reload_activity_list() {
 		let ttbm_id = $('[name="post_id"]').val();
 		let parent = $('.ttbm_activities_table');
@@ -381,7 +373,6 @@
 			}
 		});
 	}
-
 	//*****Place you see****************//
 	$(document).on('click', '.ttbm_settings_place_you_see [data-target-popup]', function () {
 		let target = $(this).closest('.ttbm_settings_place_you_see').find('.ttbm_place_you_see_form_area');
@@ -409,7 +400,6 @@
 	$(document).on('click', '.ttbm_new_place_you_see_save,.ttbm_new_place_you_see_save_close', function () {
 		ttbm_new_place_save($(this));
 	});
-
 	function ttbm_new_place_save($this) {
 		let parent = $this.closest('.popupMainArea');
 		parent.find('.ttbm_success_info').slideUp('fast');
@@ -459,7 +449,6 @@
 		}
 		return false;
 	}
-
 	function ttbm_reload_place_you_see() {
 		let ttbm_id = $('[name="post_id"]').val();
 		let parent = $('.ttbm_place_you_see_table');
@@ -492,7 +481,6 @@
 	$(document).on('change', '#ttbm_travel_type', function () {
 		ttbm_travel_type_change();
 	});
-
 	function ttbm_travel_type_change() {
 		let ticket_type = $('#ttbm_travel_type').val();
 		let fixed = {
@@ -531,7 +519,6 @@
 			ttbm_travel_type(repeated, particular, fixed)
 		}
 	}
-
 	function ttbm_travel_type(visible, hidden_1, hidden_2) {
 		for (let id in hidden_1) {
 			$(hidden_1[id]).slideUp('fast');
@@ -618,3 +605,56 @@ jQuery(document).ready(function ($) {
 		}
 	})
 });
+//==========search tour list page=================//
+(function ($) {
+	"use strict";
+	$(document).on('change', '#ttbm_list_page [name="ttbm_filter_type"]', function () {
+		let parent = $(this).closest('#ttbm_list_page');
+		let value=$(this).val();
+		parent.find('[name="'+value+'"]').trigger('change');
+	});
+	$(document).on('change', '#ttbm_list_page [name="ttbm_id"]', function () {
+		let parent = $(this).closest('#ttbm_list_page');
+		let post_id = parseInt($(this).val());
+		parent.find('tr[data-post_id]').each(function () {
+			if (post_id > 0) {
+				if (parseInt($(this).data('post_id')) === post_id) {
+					$(this).addClass('mp_search_on').removeClass('mp_search_off');
+				} else {
+					$(this).addClass('mp_search_off').removeClass('mp_search_on');
+				}
+			} else {
+				$(this).addClass('mp_search_on').removeClass('mp_search_off');
+			}
+		});
+	});
+	$(document).on('change', '#ttbm_list_page [name="ttbm_list_category_filter"]', function () {
+		let parent = $(this).closest('#ttbm_list_page');
+		filter_ttbm_list(parent, $(this), 'category');
+	});
+	$(document).on('change', '#ttbm_list_page [name="ttbm_list_organizer_filter"]', function () {
+		let parent = $(this).closest('#ttbm_list_page');
+		filter_ttbm_list(parent, $(this), 'organizer');
+	});
+	$(document).on('change', '#ttbm_list_page [name="ttbm_list_location_filter"]', function () {
+		let parent = $(this).closest('#ttbm_list_page');
+		filter_ttbm_list(parent, $(this), 'location');
+	});
+	function filter_ttbm_list(parent, current, data) {
+		let current_value = current.val();
+		parent.find('tr[data-' + data + ']').each(function () {
+			if (current_value) {
+				let value = $(this).data(data).toString();
+				value = value.split(",");
+				let active = (value.indexOf(current_value) !== -1) ? 1 : 0;
+				if (active > 0) {
+					$(this).addClass('mp_search_on').removeClass('mp_search_off');
+				} else {
+					$(this).addClass('mp_search_off').removeClass('mp_search_on');
+				}
+			} else {
+				$(this).addClass('mp_search_on').removeClass('mp_search_off');
+			}
+		});
+	}
+}(jQuery));

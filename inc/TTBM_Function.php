@@ -818,6 +818,16 @@
 				}
 				return $id;
 			}
+			public static function get_taxonomy_string($tour_id, $taxonomy) {
+				$infos = get_the_terms($tour_id, $taxonomy);
+				$id = '';
+				if (is_array($infos) && sizeof($infos) > 0) {
+					foreach ($infos as $info) {
+						$id = $id ? $id . ' , ' . $info->name : $info->name;
+					}
+				}
+				return $id;
+			}
 			//************************//
 			public static function all_tax_list(): array {
 				global $wpdb;

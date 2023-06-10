@@ -26,12 +26,14 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_CPT.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Taxonomy.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Hidden_Product.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin_Tour_List.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Welcome.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Status.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Settings.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/TTBM_Gallery_Settings.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/TTBM_Setting_guide.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/TTBM_Setting_activity.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Settings_Hotel.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Settings_Hotel_Price.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Setting_pricing.php';
@@ -39,7 +41,6 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Setting_place_you_see.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Setting_faq_day_wise_details.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Setting_why_book_with_us.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Setting_activity.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Save.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_LIcense.php';
 				require_once TTBM_PLUGIN_DIR . '/select_icon_popup/Select_Icon_Popup.php';

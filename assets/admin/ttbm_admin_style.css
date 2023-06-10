@@ -221,3 +221,16 @@ table.wc_status_table td.woo_btn_td span {font-size: 20px; color: #10DD10;}
 #ttbm_quick_setup .quick_tab_area h5.active span {color: #FFF;}
 #ttbm_quick_setup .quick_tab_area h5.disabled {cursor: not-allowed;opacity: 0.5;background-color: #F7E2E287;}
 /************************************************/
+label.ttbm_id_select{height: 100%;}
+/*******************Tour list page*****************************/
+#ttbm_list_page table tr>:first-child {border-radius: var(--dBR) 0 0 var(--dBR);}
+#ttbm_list_page table tr>:last-child {border-radius: 0 var(--dBR) var(--dBR) 0;}
+#ttbm_list_page table tbody tr:nth-of-type(even){background-color:rgba(92, 88, 165, 0.05); }
+#ttbm_list_page table tbody tr:nth-of-type(odd) td{border: none;}
+/*#ttbm_list table th,*/
+/*#ttbm_list table td{border:none;}*/
+#ttbm_list_page table th{vertical-align: middle;}
+/****************/
+.mpStyle .mp_search_on{display: block;}
+.mpStyle tr.mp_search_on{display: table-row;}
+.mpStyle .mp_search_off{display: none;}

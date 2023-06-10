@@ -163,20 +163,20 @@
 				}
 			}
 			public static function tour_list_in_select() {
-				$tour_label = TTBM_Function::get_name();
+				$label = TTBM_Function::get_name();
 				?>
 				<label class="min_400 ttbm_id_select">
 					<select name="ttbm_id" class="formControl ttbm_select2" id="all_tour_list" required>
-						<option value="0"><?php echo esc_html__( 'Select', 'tour-booking-manager' ) . ' ' . esc_html( $tour_label ); ?></option>
+						<option value="0"><?php echo esc_html__( 'Select', 'tour-booking-manager' ) . ' ' . esc_html( $label ); ?></option>
 						<?php
-							$loop  = TTBM_Query::query_post_type( 'ttbm_tour' );
-							$tours = $loop->posts;
-							foreach ( $tours as $tour ) {
-								$recurring = TTBM_Function::recurring_check( $tour->ID );
-								$tour_type = TTBM_Function::get_tour_type( $tour->ID );
+							$post_query = TTBM_Query::query_post_type( TTBM_Function::get_cpt_name() );
+							$all_posts = $post_query->posts;
+							foreach ( $all_posts as $post ) {
+								$recurring = TTBM_Function::recurring_check( $post->ID );
+								$tour_type = TTBM_Function::get_tour_type( $post->ID );
 								?>
-								<option value="<?php echo $tour->ID; ?>" data-recurring="<?php echo esc_attr( $recurring ? 'yes' : '' ); ?>">
-									<?php echo get_the_title( $tour->ID ); ?>
+								<option value="<?php echo $post->ID; ?>" data-recurring="<?php echo esc_attr( $recurring ? 'yes' : '' ); ?>">
+									<?php echo get_the_title( $post->ID ); ?>
 									<?php esc_html_e( $recurring ? '- Multi date' : '' ); ?>
 									<?php esc_html_e( $tour_type == 'hotel' ? '- Hotel' : '' ); ?>
 								</option>

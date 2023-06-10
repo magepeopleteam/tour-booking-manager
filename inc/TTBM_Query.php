@@ -6,10 +6,11 @@ if (!class_exists('TTBM_Query')) {
     class TTBM_Query {
         public function __construct() {
         }
-        public static function query_post_type($post_type): WP_Query {
+        public static function query_post_type($post_type,$show = - 1, $page = 1): WP_Query {
             $args = array(
                 'post_type' => $post_type,
-                'posts_per_page' => -1,
+                'posts_per_page' =>$show,
+                'paged'          => $page,
             );
             return new WP_Query($args);
         }

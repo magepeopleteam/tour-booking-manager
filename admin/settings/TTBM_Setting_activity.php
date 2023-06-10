@@ -12,6 +12,8 @@
 				add_action( 'wp_ajax_nopriv_load_ttbm_activity_form', [ $this, 'load_ttbm_activity_form' ] );
 				add_action( 'wp_ajax_ttbm_reload_activity_list', [ $this, 'ttbm_reload_activity_list' ] );
 				add_action( 'wp_ajax_nopriv_ttbm_reload_activity_list', [ $this, 'ttbm_reload_activity_list' ] );
+                //******************//
+                add_action('ttbm_settings_save', [$this, 'save_activities']);
 			}
 			public function add_tab() {
 				?>
@@ -134,6 +136,17 @@
 				$this->activities( $ttbm_id );
 				die();
 			}
+
+            public function save_activities($tour_id) {
+                if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
+                    $display_activities = TTBM_Function::get_submit_info('ttbm_display_activities') ? 'on' : 'off';
+                    update_post_meta($tour_id, 'ttbm_display_activities', $display_activities);
+                    $activities = TTBM_Function::get_submit_info('ttbm_tour_activities', array());
+                    update_post_meta($tour_id, 'ttbm_tour_activities', $activities);
+                }
+            }
+
+
 		}
 		new TTBM_Setting_activity();
 	}

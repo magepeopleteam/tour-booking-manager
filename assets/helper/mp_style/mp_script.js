@@ -74,6 +74,10 @@ function pageScrollTo(target) {
 		scrollTop: target.offset().top -= 200
 	}, 1000);
 }
+//===========================//
+function mp_alert($this, attr = 'alert') {
+	alert($this.data(attr));
+}
 //==========Load Bg Image=================//
 function loadBgImage() {
 	jQuery('body').find('[data-bg-image]:visible').each(function () {

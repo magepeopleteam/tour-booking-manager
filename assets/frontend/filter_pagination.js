@@ -25,7 +25,6 @@
 			placeholderLoaderRemove(all_item);
 		});
 	});
-
 	//************************************//
 	function search_filter_initial(parent) {
 		parent.find('.all_filter_item').slideDown('fast');
@@ -36,7 +35,6 @@
 		});
 		parent.find('.search_result_empty').slideUp('fast');
 	}
-
 	function search_filter_exit(parent, result) {
 		if (result > 0) {
 			parent.find('.all_filter_item').slideDown('fast');
@@ -46,7 +44,6 @@
 			parent.find('.search_result_empty').slideDown('fast');
 		}
 	}
-
 	function filter_item_config(target, active) {
 		let result = 0;
 		if (active === 2) {
@@ -57,23 +54,8 @@
 		}
 		return result;
 	}
-
 	let ttbm_filter_item = {
-		title_filter: 'data-title',
-		type_filter: 'data-type',
-		category_filter: 'data-category',
-		organizer_filter: 'data-organizer',
-		location_filter: 'data-location',
-		location_filter_multiple: 'data-location',
-		country_filter: 'data-country',
-		duration_filter: 'data-duration',
-		duration_filter_multiple: 'data-duration',
-		feature_filter_multiple: 'data-feature',
-		tag_filter_multiple: 'data-tag',
-		activity_filter: 'data-activity',
-		activity_filter_multiple: 'data-activity',
-		month_filter: 'data-month',
-		date_range_filter: 'data-date',
+		title_filter: 'data-title', type_filter: 'data-type', category_filter: 'data-category', organizer_filter: 'data-organizer', location_filter: 'data-location', location_filter_multiple: 'data-location', country_filter: 'data-country', duration_filter: 'data-duration', duration_filter_multiple: 'data-duration', feature_filter_multiple: 'data-feature', tag_filter_multiple: 'data-tag', activity_filter: 'data-activity', activity_filter_multiple: 'data-activity', month_filter: 'data-month', date_range_filter: 'data-date',
 	};
 	//************Filter*************//
 	$(document).on('change', '.ttbm_filter .formControl', function (e) {
@@ -81,7 +63,6 @@
 		let parent = $(this).closest('.ttbm_filter_area');
 		list_filter(parent);
 	});
-
 	function list_filter(parent) {
 		let result = 0;
 		if (filter_value_exit(parent)) {
@@ -96,7 +77,6 @@
 			search_filter_initial(parent);
 		}
 	}
-
 	function get_item_result(parent, item) {
 		let active = 3;
 		active = active > 0 ? Math.min(active, filter_text(parent, item, 'title_filter', active)) : active;
@@ -115,7 +95,6 @@
 		active = active > 0 ? Math.min(active, filter_single_in_multi(parent, item, 'month_filter', active)) : active;
 		return filter_item_config(item, active);
 	}
-
 	//*********************//
 	function filter_value_exit(parent) {
 		for (let name in ttbm_filter_item) {
@@ -126,7 +105,6 @@
 		}
 		return false;
 	}
-
 	function filter_text(parent, item, name, active) {
 		let filter_values = parent.find('[name="' + name + '"]').val();
 		if (filter_values) {
@@ -135,7 +113,6 @@
 		}
 		return active;
 	}
-
 	function filter_single_in_multi(parent, item, name, active) {
 		let filter_values = parent.find('[name="' + name + '"]').val();
 		if (filter_values) {
@@ -145,7 +122,6 @@
 		}
 		return active;
 	}
-
 	function filter_multi_in_single(parent, item, name, active) {
 		let filter_values = parent.find('[name="' + name + '"]').val();
 		if (filter_values) {
@@ -155,7 +131,6 @@
 		}
 		return active;
 	}
-
 	function filter_multi_in_multi(parent, item, name, active) {
 		let filter_values = parent.find('[name="' + name + '"]').val();
 		if (filter_values) {
@@ -172,7 +147,6 @@
 		}
 		return active;
 	}
-
 	//************Pagination*************//
 	$(document).on('click', '.ttbm_filter_area .pagination_area [data-pagination]', function (e) {
 		e.preventDefault();
@@ -185,7 +159,6 @@
 			loadBgImage();
 		});
 	});
-
 	$(document).on('click', '.ttbm_filter_area .pagination_area .pagination_load_more', function () {
 		let pagination_page = parseInt($(this).attr('data-load-more'));
 		let parent = $(this).closest('.ttbm_filter_area');
@@ -203,7 +176,6 @@
 			loadBgImage();
 		});
 	});
-
 	function lode_more_init(parent) {
 		let item_class = get_item_class(parent);
 		if (parent.find(item_class + ':hidden').length === 0) {
@@ -212,7 +184,6 @@
 			parent.find('[data-load-more]').removeAttr('disabled');
 		}
 	}
-
 	function load_more_scroll(parent, pagination_page) {
 		let per_page_item = parseInt(parent.find('input[name="pagination_per_page"]').val());
 		let start_item = pagination_page > 0 ? pagination_page * per_page_item : 0;
@@ -220,13 +191,11 @@
 		let target = parent.find(item_class + ':nth-child(' + (start_item + 1) + ')');
 		pageScrollTo(target);
 	}
-
 	function load_pagination_initial_item() {
 		$('.ttbm_filter_area').each(function () {
 			list_filter($(this))
 		});
 	}
-
 	function load_pagination(parent, pagination_page) {
 		let all_item = parent.find('.all_filter_item');
 		let per_page_item = parseInt(parent.find('input[name="pagination_per_page"]').val());
@@ -260,7 +229,6 @@
 			});
 		});
 	}
-
 	function pagination_management(parent, pagination_page) {
 		let pagination_type = parent.find('input[name="pagination_style"]').val();
 		let per_page_item = parseInt(parent.find('input[name="pagination_per_page"]').val());
@@ -274,11 +242,10 @@
 				lode_more_init(parent);
 			} else {
 				let total_item = parent.find(get_item_class(parent)).length;
-				ttbm_pagination_page_management(parent, pagination_page,total_item);
+				ttbm_pagination_page_management(parent, pagination_page, total_item);
 			}
 		}
 	}
-
 	function get_item_class(parent, items = '.filter_item') {
 		if (parent.find('.filter_item.search_on').length > 0 || parent.find('.filter_item.search_of').length > 0) {
 			items = '.filter_item.search_on';
@@ -286,7 +253,6 @@
 		}
 		return items;
 	}
-
 	function filter_qty_palace(parent, item_class) {
 		parent.find('.qty_count').html($(parent).find(item_class + ':visible').length);
 		parent.find('.total_filter_qty').html($(parent).find(item_class).length);

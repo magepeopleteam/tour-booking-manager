@@ -6,26 +6,15 @@
 		class TTBM_Admin_Tour_List {
 			public function __construct() {
 				add_action('admin_menu', array($this, 'tour_list_menu'), 1);
+				//===//
+				add_action('wp_ajax_ttbm_trash_post', array($this, 'ttbm_trash_post'));
+				add_action('wp_ajax_nopriv_ttbm_trash_post', array($this, 'ttbm_trash_post'));
 			}
 			public function tour_list_menu() {
 				$label = TTBM_Function::get_name();
 				add_submenu_page('edit.php?post_type=ttbm_tour', $label . ' ' . esc_html__('List', 'tour-booking-manager'), $label . ' ' . esc_html__('List', 'tour-booking-manager'), 'manage_options', 'ttbm_list', array($this, 'ttbm_list'));
 			}
 			public function ttbm_list() {
-				$post_query = TTBM_Query::query_post_type(TTBM_Function::get_cpt_name());
-				$all_posts = $post_query->posts;
-				?>
-				<div class="wrap">
-					<div class="mpStyle">
-						<?php //$this->filter_selection(); ?>
-						<div id="ttbm_list_page">
-							<?php $this->tour_result(); ?>
-						</div>
-					</div>
-				</div>
-				<?php
-			}
-			public function tour_result() {
 				$page = isset($_REQUEST['page']) ? TTBM_Function::data_sanitize($_REQUEST['page']) : 1;
 				$post_query = TTBM_Query::query_post_type(TTBM_Function::get_cpt_name());
 				$label = TTBM_Function::get_name();
@@ -33,78 +22,79 @@
 				$organizers = MP_Global_Function::get_taxonomy('ttbm_tour_org');
 				$locations = MP_Global_Function::get_taxonomy('ttbm_tour_location');
 				?>
-				<div class="_dLayout_pRelative placeholder_area">
-					<div class="_mb_dFlex_justifyBetween_alignCenter" data-placeholder>
-						<button class="_successButton" type="button" data-href="<?php echo esc_url(admin_url('post-new.php?post_type=' . TTBM_Function::get_cpt_name())); ?>" title="<?php esc_attr_e('Add New', 'tour-booking-manager'); ?>">
-							<span class="fas fa-plus _mR_xs"></span><?php echo esc_html__('Add New ', 'tour-booking-manager') . ' ' . $label; ?>
-						</button>
-						<div class="col_6 _allCenter">
-							<div class="groupContent bgWhite">
-								<label class="min_200">
-									<select class="formControl bgTheme" name="ttbm_filter_type" data-collapse-target>
-										<option value="ttbm_id" data-option-target="#ttbm_list_id" selected><?php echo esc_html($label); ?></option>
+				<div class="wrap">
+					<div class="mpStyle">
+						<div class="_dLayout_pRelative placeholder_area" id="ttbm_list_page">
+							<div class="_mb_dFlex_justifyBetween_alignCenter" data-placeholder>
+								<button class="_successButton" type="button" data-href="<?php echo esc_url(admin_url('post-new.php?post_type=' . TTBM_Function::get_cpt_name())); ?>" title="<?php esc_attr_e('Add New', 'tour-booking-manager'); ?>">
+									<span class="fas fa-plus _mR_xs"></span><?php echo esc_html__('Add New ', 'tour-booking-manager') . ' ' . $label; ?>
+								</button>
+								<div class="col_4 _allCenter">
+									<div class="groupContent bgWhite">
+										<label class="min_150">
+											<select class="formControl bgTheme" name="ttbm_filter_type" data-collapse-target>
+												<option value="ttbm_id" data-option-target="#ttbm_list_id" selected><?php echo esc_html($label); ?></option>
+												<?php if (is_array($categories) && sizeof($categories) > 0) { ?>
+													<option value="ttbm_list_category_filter" data-option-target="#ttbm_list_category_filter"><?php esc_html_e('Filter By Category ', 'tour-booking-manager'); ?></option>
+												<?php } ?>
+												<?php if (is_array($organizers) && sizeof($organizers) > 0) { ?>
+													<option value="ttbm_list_organizer_filter" data-option-target="#ttbm_list_organizer_filter"><?php esc_html_e('Filter By  Organizer ', 'tour-booking-manager'); ?></option>
+												<?php } ?>
+												<?php if (is_array($locations) && sizeof($locations) > 0) { ?>
+													<option value="ttbm_list_location_filter" data-option-target="#ttbm_list_location_filter"><?php esc_html_e('Filter By  Location ', 'tour-booking-manager'); ?></option>
+												<?php } ?>
+											</select>
+										</label>
+										<div data-collapse="#ttbm_list_id" class="mActive">
+											<?php TTBM_Layout::tour_list_in_select(); ?>
+										</div>
 										<?php if (is_array($categories) && sizeof($categories) > 0) { ?>
-											<option value="ttbm_list_category_filter" data-option-target="#ttbm_list_category_filter"><?php esc_html_e('Filter By Category ', 'tour-booking-manager'); ?></option>
+											<div class="min_300" data-collapse="#ttbm_list_category_filter">
+												<label data-placeholder="">
+													<select class="formControl" name="ttbm_list_category_filter">
+														<option selected value=""><?php esc_html_e('All Category', 'tour-booking-manager'); ?></option>
+														<?php foreach ($categories as $category) { ?>
+															<option value="<?php echo esc_attr($category->term_id); ?>"><?php echo esc_html($category->name); ?></option>
+														<?php } ?>
+													</select>
+												</label>
+											</div>
 										<?php } ?>
 										<?php if (is_array($organizers) && sizeof($organizers) > 0) { ?>
-											<option value="ttbm_list_organizer_filter" data-option-target="#ttbm_list_organizer_filter"><?php esc_html_e('Filter By  Organizer ', 'tour-booking-manager'); ?></option>
+											<div class="min_300" data-collapse="#ttbm_list_organizer_filter">
+												<label data-placeholder>
+													<select class="formControl" name="ttbm_list_organizer_filter">
+														<option selected value=""><?php esc_html_e('All Organizer', 'tour-booking-manager'); ?></option>
+														<?php foreach ($organizers as $organizer) { ?>
+															<option value="<?php echo esc_attr($organizer->term_id); ?>"><?php echo esc_html($organizer->name); ?></option>
+														<?php } ?>
+													</select>
+												</label>
+											</div>
 										<?php } ?>
-										<?php if (is_array($locations) && sizeof($locations) > 0) { ?>
-											<option value="ttbm_list_location_filter" data-option-target="#ttbm_list_location_filter"><?php esc_html_e('Filter By  Location ', 'tour-booking-manager'); ?></option>
+										<?php if (is_array($organizers) && sizeof($organizers) > 0) { ?>
+											<div class="min_300" data-collapse="#ttbm_list_location_filter">
+												<label data-placeholder>
+													<select class="formControl" name="ttbm_list_location_filter">
+														<option selected value=""><?php esc_html_e('All Location', 'tour-booking-manager'); ?></option>
+														<?php foreach ($locations as $location) { ?>
+															<option value="<?php echo esc_attr($location->term_id); ?>"><?php echo esc_html($location->name); ?></option>
+														<?php } ?>
+													</select>
+												</label>
+											</div>
 										<?php } ?>
-									</select>
-								</label>
-								<div data-collapse="#ttbm_list_id" class="mActive">
-									<?php TTBM_Layout::tour_list_in_select(); ?>
+									</div>
 								</div>
-								<?php if (is_array($categories) && sizeof($categories) > 0) { ?>
-									<div class="min_300" data-collapse="#ttbm_list_category_filter">
-										<label data-placeholder>
-											<select class="formControl" name="ttbm_list_category_filter">
-												<option selected value=""><?php esc_html_e('All Category', 'tour-booking-manager'); ?></option>
-												<?php foreach ($categories as $category) { ?>
-													<option value="<?php echo esc_attr($category->term_id); ?>"><?php echo esc_html($category->name); ?></option>
-												<?php } ?>
-											</select>
-										</label>
-									</div>
-								<?php } ?>
-								<?php if (is_array($organizers) && sizeof($organizers) > 0) { ?>
-									<div class="min_300" data-collapse="#ttbm_list_organizer_filter">
-										<label data-placeholder>
-											<select class="formControl" name="ttbm_list_organizer_filter">
-												<option selected value=""><?php esc_html_e('All Organizer', 'tour-booking-manager'); ?></option>
-												<?php foreach ($organizers as $organizer) { ?>
-													<option value="<?php echo esc_attr($organizer->term_id); ?>"><?php echo esc_html($organizer->name); ?></option>
-												<?php } ?>
-											</select>
-										</label>
-									</div>
-								<?php } ?>
-								<?php if (is_array($organizers) && sizeof($organizers) > 0) { ?>
-									<div class="min_300" data-collapse="#ttbm_list_location_filter">
-										<label data-placeholder>
-											<select class="formControl" name="ttbm_list_location_filter">
-												<option selected value=""><?php esc_html_e('All Location', 'tour-booking-manager'); ?></option>
-												<?php foreach ($locations as $location) { ?>
-													<option value="<?php echo esc_attr($location->term_id); ?>"><?php echo esc_html($location->name); ?></option>
-												<?php } ?>
-											</select>
-										</label>
-									</div>
-								<?php } ?>
+								<h6 class="mpBtn">
+									<?php esc_html_e('Total Found :', 'tour-booking-manager'); ?>&nbsp;
+									<strong class="textTheme"><?php echo esc_html($post_query->found_posts); ?></strong>
+								</h6>
+<!--								<label class="groupContent bgWhite textDefault"><span class="padding_xs">--><?php //echo $label . ' ' . esc_html__('Per Page', 'tour-booking-manager'); ?><!--</span> <input type="number" min="1" class="formControl _max_100_textCenter" name="post_per_page" value="20"/></label>-->
 							</div>
+							<?php $this->tour_table($post_query, $page); ?>
 						</div>
-						<h6 class="mpBtn">
-							<?php esc_html_e('Total Found :', 'tour-booking-manager'); ?>&nbsp;
-							<strong class="textTheme"><?php echo esc_html($post_query->found_posts); ?></strong>
-						</h6>
-						<label class="groupContent bgWhite textDefault">
-							<span class="padding_xs"><?php echo $label . ' ' . esc_html__('Per Page', 'tour-booking-manager'); ?></span>
-							<input type="number" min="1" class="formControl _max_100_textCenter" name="post_per_page" value="20"/>
-						</label>
 					</div>
-					<?php $this->tour_table($post_query, $page); ?>
 				</div>
 				<?php
 			}
@@ -129,8 +119,7 @@
 							<th class="bgTheme"><?php esc_html_e('Upcoming Date', 'tour-booking-manager'); ?></th>
 							<th class="bgTheme"><?php esc_attr_e('End Date', 'tour-booking-manager'); ?></th>
 							<th class="bgTheme">
-								<?php esc_attr_e('Ticket Overview', 'tour-booking-manager'); ?><br/>
-								<small>
+								<?php esc_attr_e('Ticket Overview', 'tour-booking-manager'); ?><br/> <small>
 									<?php esc_attr_e('Total', 'tour-booking-manager'); ?> -
 									<?php esc_attr_e('Sold', 'tour-booking-manager'); ?> -
 									<?php esc_attr_e('Reserve', 'tour-booking-manager'); ?> =
@@ -159,7 +148,9 @@
 								?>
 								<tr data-post_id="<?php echo esc_attr($post_id); ?>" data-category="<?php echo esc_attr($category); ?>" data-organizer="<?php echo esc_attr($organizer); ?>" data-location="<?php echo esc_attr($location); ?>">
 									<td><?php echo esc_html($count); ?></td>
-									<th class="textLeft"><a href="<?php echo get_the_permalink($post_id); ?>"><?php echo get_the_title($post_id); ?></a></th>
+									<th class="textLeft">
+										<a href="<?php echo get_the_permalink($post_id); ?>"><?php echo get_the_title($post_id); ?></a>
+									</th>
 									<td><?php echo esc_attr(TTBM_Function::get_taxonomy_string($post_id, 'ttbm_tour_cat')); ?></td>
 									<td><?php echo esc_attr(TTBM_Function::get_taxonomy_string($post_id, 'ttbm_tour_org')); ?></td>
 									<td><?php echo TTBM_Function::get_full_location($post_id); ?></td>
@@ -177,17 +168,17 @@
 											<button class="_mpBtn_xs_textSuccess" type="button" title="<?php esc_attr_e('Edit Details.', 'tour-booking-manager'); ?>" data-href="<?php echo esc_url(admin_url('post.php?post=' . $post_id . '&action=edit')); ?>">
 												<span class="fas fa-edit mp_zero"></span>
 											</button>
-											<button class="_mpBtn_xs_textTheme" type="button" data-collapse-target="ttbm_expand_<?php echo esc_attr($post_id); ?>" title="<?php esc_attr_e('Open Details.', 'tour-booking-manager'); ?>" data-open-icon="fa-eye" data-close-icon="fa-eye-slash">
-												<span data-icon class="fas fa-eye mp_zero"></span>
-											</button>
-											<button class="_mpBtn_xs_textDanger" id="ttbm_delete_travel" type="button" data-post-id="<?php echo esc_attr($post_id); ?>" title="<?php echo esc_attr__('Remove ', 'tour-booking-manager') . ' : ' . esc_attr($label); ?>">
+											<?php do_action('add_ttbm_list_action_button', $post_id); ?>
+											<button class="_mpBtn_xs_textDanger ttbm_trash_post" type="button" data-alert="<?php echo esc_attr__('Are you sure ? To trash : ', 'tour-booking-manager').' '.get_the_title($post_id); ?>" data-post-id="<?php echo esc_attr($post_id); ?>" title="<?php echo esc_attr__('Trash ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>">
 												<span class="fas fa-trash-alt mp_zero"></span>
 											</button>
 										</div>
 									</td>
 								</tr>
 								<tr data-post_id="<?php echo esc_attr($post_id); ?>" data-category="<?php echo esc_attr($category); ?>" data-organizer="<?php echo esc_attr($organizer); ?>" data-location="<?php echo esc_attr($location); ?>">
-									<td colspan="9"></td>
+									<td colspan="9">
+										<?php do_action('add_ttbm_list_action_details', $post_id); ?>
+									</td>
 								</tr>
 								<?php
 								$count++;
@@ -195,12 +186,24 @@
 						?>
 						</tbody>
 					</table>
-					<input type="hidden" name="mp_total_guest" value="<?php echo esc_attr($total_post); ?>"/>
 				<?php } else { ?>
 					<p style="text-align: center;"><?php esc_html_e('No Record Found.', 'tour-booking-manager'); ?></p>
 					<?php
 				}
 				//echo '<pre>'; print_r( $all_orders ); echo '</pre>';
+			}
+			public function ttbm_trash_post(){
+				$post_id = isset($_REQUEST['post_id']) ? TTBM_Function::data_sanitize($_REQUEST['post_id']) : '';
+				if ($post_id > 0) {
+					$args = array('post_type' => array('ttbm_tour'), 'posts_per_page' => -1, 'p' => $post_id, 'post_status' => 'publish');
+					$loop = new WP_Query($args);
+					if($loop->found_posts) {
+						$current_post = get_post($post_id, 'ARRAY_A');
+						$current_post['post_status'] = 'trash';
+						wp_update_post($current_post);
+					}
+				}
+				die();
 			}
 		}
 		new TTBM_Admin_Tour_List();

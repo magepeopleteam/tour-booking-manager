@@ -28,18 +28,13 @@
 		let dt = new Date();
 		let time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 		$.ajax({
-			type: 'POST',
-			url: mp_ajax_url,
-			data: {"action": "get_ttbm_add_faq_content", "id": time},
-			beforeSend: function () {
+			type: 'POST', url: mp_ajax_url, data: {"action": "get_ttbm_add_faq_content", "id": time}, beforeSend: function () {
 				dLoader(parent);
-			},
-			success: function (data) {
+			}, success: function (data) {
 				$this.before(data);
 				tinymce.execCommand('mceAddEditor', true, time);
 				dLoaderRemove(parent);
-			},
-			error: function (response) {
+			}, error: function (response) {
 				console.log(response);
 			}
 		});
@@ -52,18 +47,13 @@
 		let dt = new Date();
 		let time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 		$.ajax({
-			type: 'POST',
-			url: mp_ajax_url,
-			data: {"action": "get_ttbm_add_day_wise_details", "id": time},
-			beforeSend: function () {
+			type: 'POST', url: mp_ajax_url, data: {"action": "get_ttbm_add_day_wise_details", "id": time}, beforeSend: function () {
 				dLoader(parent);
-			},
-			success: function (data) {
+			}, success: function (data) {
 				$this.before(data);
 				tinymce.execCommand('mceAddEditor', true, time);
 				dLoaderRemove(parent);
-			},
-			error: function (response) {
+			}, error: function (response) {
 				console.log(response);
 			}
 		});
@@ -73,15 +63,11 @@
 	$(document).on('click', '.ttbm_settings_general [data-target-popup]', function () {
 		let target = $(this).closest('.ttbm_settings_general').find('.ttbm_location_form_area');
 		$.ajax({
-			type: 'POST',
-			url: mp_ajax_url,
-			data: {
+			type: 'POST', url: mp_ajax_url, data: {
 				"action": "load_ttbm_location_form"
-			},
-			beforeSend: function () {
+			}, beforeSend: function () {
 				simpleSpinner(target);
-			},
-			success: function (data) {
+			}, success: function (data) {
 				target.html(data).slideDown('fast').promise().done(function () {
 					simpleSpinnerRemove(target);
 				});
@@ -116,20 +102,11 @@
 		}
 		if (name && image) {
 			$.ajax({
-				type: 'POST',
-				url: mp_ajax_url,
-				data: {
-					"action": "ttbm_new_location_save",
-					"name": name,
-					"description": description,
-					"address": address,
-					"country": country,
-					"image": image
-				},
-				beforeSend: function () {
+				type: 'POST', url: mp_ajax_url, data: {
+					"action": "ttbm_new_location_save", "name": name, "description": description, "address": address, "country": country, "image": image
+				}, beforeSend: function () {
 					dLoader(parent);
-				},
-				success: function () {
+				}, success: function () {
 					parent.find('[name="ttbm_new_location_name"]').val('');
 					parent.find('[name="ttbm_location_description"]').val('');
 					parent.find('[name="ttbm_location_address"]').val('');
@@ -143,8 +120,7 @@
 						$this.closest('.popupMainArea').find('.popupClose').trigger('click');
 					}
 					return true;
-				},
-				error: function (response) {
+				}, error: function (response) {
 					console.log(response);
 				}
 			});
@@ -155,22 +131,16 @@
 		let ttbm_id = $('[name="post_id"]').val();
 		let parent = $('.ttbm_location_select_area');
 		$.ajax({
-			type: 'POST',
-			url: mp_ajax_url,
-			data: {
-				"action": "ttbm_reload_location_list",
-				"ttbm_id": ttbm_id
-			},
-			beforeSend: function () {
+			type: 'POST', url: mp_ajax_url, data: {
+				"action": "ttbm_reload_location_list", "ttbm_id": ttbm_id
+			}, beforeSend: function () {
 				dLoader(parent);
-			},
-			success: function (data) {
+			}, success: function (data) {
 				parent.empty().append(data).promise().done(function () {
 					parent.find('.ttbm_select2').select2({});
 				});
 				return true;
-			},
-			error: function (response) {
+			}, error: function (response) {
 				console.log(response);
 			}
 		});
@@ -179,15 +149,11 @@
 	$(document).on('click', '.ttbm_settings_feature [data-target-popup]', function () {
 		let target = $(this).closest('.ttbm_settings_feature').find('.ttbm_feature_form_area');
 		$.ajax({
-			type: 'POST',
-			url: mp_ajax_url,
-			data: {
+			type: 'POST', url: mp_ajax_url, data: {
 				"action": "load_ttbm_feature_form"
-			},
-			beforeSend: function () {
+			}, beforeSend: function () {
 				simpleSpinner(target);
-			},
-			success: function (data) {
+			}, success: function (data) {
 				target.html(data).slideDown('fast').promise().done(function () {
 					simpleSpinnerRemove(target);
 				});
@@ -220,18 +186,11 @@
 		}
 		if (feature_name && feature_icon) {
 			$.ajax({
-				type: 'POST',
-				url: mp_ajax_url,
-				data: {
-					"action": "ttbm_new_feature_save",
-					"feature_name": feature_name,
-					"feature_description": feature_description,
-					"feature_icon": feature_icon
-				},
-				beforeSend: function () {
+				type: 'POST', url: mp_ajax_url, data: {
+					"action": "ttbm_new_feature_save", "feature_name": feature_name, "feature_description": feature_description, "feature_icon": feature_icon
+				}, beforeSend: function () {
 					dLoader(parent);
-				},
-				success: function () {
+				}, success: function () {
 					parent.find('[name="ttbm_feature_name"]').val('');
 					parent.find('[name="ttbm_feature_description"]').val('');
 					parent.find('[name="ttbm_feature_icon"]').val('');
@@ -243,8 +202,7 @@
 						$this.closest('.popupMainArea').find('.popupClose').trigger('click');
 					}
 					return true;
-				},
-				error: function (response) {
+				}, error: function (response) {
 					console.log(response);
 				}
 			});
@@ -255,20 +213,14 @@
 		let ttbm_id = $('[name="post_id"]').val();
 		let parent = $('.ttbm_features_table');
 		$.ajax({
-			type: 'POST',
-			url: mp_ajax_url,
-			data: {
-				"action": "ttbm_reload_feature_list",
-				"ttbm_id": ttbm_id
-			},
-			beforeSend: function () {
+			type: 'POST', url: mp_ajax_url, data: {
+				"action": "ttbm_reload_feature_list", "ttbm_id": ttbm_id
+			}, beforeSend: function () {
 				dLoader(parent);
-			},
-			success: function (data) {
+			}, success: function (data) {
 				parent.empty().append(data);
 				return true;
-			},
-			error: function (response) {
+			}, error: function (response) {
 				console.log(response);
 			}
 		});
@@ -277,15 +229,11 @@
 	$(document).on('click', '.ttbm_settings_activities [data-target-popup]', function () {
 		let target = $(this).closest('.ttbm_settings_activities').find('.ttbm_activity_form_area');
 		$.ajax({
-			type: 'POST',
-			url: mp_ajax_url,
-			data: {
+			type: 'POST', url: mp_ajax_url, data: {
 				"action": "load_ttbm_activity_form"
-			},
-			beforeSend: function () {
+			}, beforeSend: function () {
 				simpleSpinner(target);
-			},
-			success: function (data) {
+			}, success: function (data) {
 				target.html(data).slideDown('fast').promise().done(function () {
 					simpleSpinnerRemove(target);
 				});
@@ -318,18 +266,11 @@
 		}
 		if (activity_name && activity_icon) {
 			$.ajax({
-				type: 'POST',
-				url: mp_ajax_url,
-				data: {
-					"action": "ttbm_new_activity_save",
-					"activity_name": activity_name,
-					"activity_description": activity_description,
-					"activity_icon": activity_icon
-				},
-				beforeSend: function () {
+				type: 'POST', url: mp_ajax_url, data: {
+					"action": "ttbm_new_activity_save", "activity_name": activity_name, "activity_description": activity_description, "activity_icon": activity_icon
+				}, beforeSend: function () {
 					dLoader(parent);
-				},
-				success: function () {
+				}, success: function () {
 					parent.find('[name="ttbm_activity_name"]').val('');
 					parent.find('[name="ttbm_activity_description"]').val('');
 					parent.find('[name="ttbm_activity_icon"]').val('');
@@ -341,8 +282,7 @@
 						$this.closest('.popupMainArea').find('.popupClose').trigger('click');
 					}
 					return true;
-				},
-				error: function (response) {
+				}, error: function (response) {
 					console.log(response);
 				}
 			});
@@ -353,22 +293,16 @@
 		let ttbm_id = $('[name="post_id"]').val();
 		let parent = $('.ttbm_activities_table');
 		$.ajax({
-			type: 'POST',
-			url: mp_ajax_url,
-			data: {
-				"action": "ttbm_reload_activity_list",
-				"ttbm_id": ttbm_id
-			},
-			beforeSend: function () {
+			type: 'POST', url: mp_ajax_url, data: {
+				"action": "ttbm_reload_activity_list", "ttbm_id": ttbm_id
+			}, beforeSend: function () {
 				dLoader(parent);
-			},
-			success: function (data) {
+			}, success: function (data) {
 				parent.empty().append(data).promise().done(function () {
 					parent.find('.ttbm_select2').select2({});
 				});
 				return true;
-			},
-			error: function (response) {
+			}, error: function (response) {
 				console.log(response);
 			}
 		});
@@ -377,17 +311,13 @@
 	$(document).on('click', '.ttbm_settings_place_you_see [data-target-popup]', function () {
 		let target = $(this).closest('.ttbm_settings_place_you_see').find('.ttbm_place_you_see_form_area');
 		$.ajax({
-			type: 'POST',
-			url: mp_ajax_url,
-			data: {
+			type: 'POST', url: mp_ajax_url, data: {
 				"action": "load_ttbm_place_you_see_form"
-			},
-			beforeSend: function () {
-				simpleSpinner(target);
-			},
-			success: function (data) {
+			}, beforeSend: function () {
+				dLoader(target);
+			}, success: function (data) {
 				target.html(data).slideDown('fast').promise().done(function () {
-					simpleSpinnerRemove(target);
+					dLoaderRemove(target);
 				});
 			}
 		});
@@ -418,18 +348,11 @@
 		}
 		if (place_name && place_image) {
 			$.ajax({
-				type: 'POST',
-				url: mp_ajax_url,
-				data: {
-					"action": "ttbm_new_place_save",
-					"place_name": place_name,
-					"place_description": place_description,
-					"place_image": place_image
-				},
-				beforeSend: function () {
+				type: 'POST', url: mp_ajax_url, data: {
+					"action": "ttbm_new_place_save", "place_name": place_name, "place_description": place_description, "place_image": place_image
+				}, beforeSend: function () {
 					dLoader(parent);
-				},
-				success: function () {
+				}, success: function () {
 					parent.find('[name="ttbm_place_name"]').val('');
 					parent.find('[name="ttbm_place_description"]').val('');
 					parent.find('[name="ttbm_place_image"]').val('');
@@ -441,8 +364,7 @@
 						$this.closest('.popupMainArea').find('.popupClose').trigger('click');
 					}
 					return true;
-				},
-				error: function (response) {
+				}, error: function (response) {
 					console.log(response);
 				}
 			});
@@ -453,20 +375,14 @@
 		let ttbm_id = $('[name="post_id"]').val();
 		let parent = $('.ttbm_place_you_see_table');
 		$.ajax({
-			type: 'POST',
-			url: mp_ajax_url,
-			data: {
-				"action": "ttbm_reload_place_you_see_list",
-				"ttbm_id": ttbm_id
-			},
-			beforeSend: function () {
+			type: 'POST', url: mp_ajax_url, data: {
+				"action": "ttbm_reload_place_you_see_list", "ttbm_id": ttbm_id
+			}, beforeSend: function () {
 				dLoader(parent);
-			},
-			success: function (data) {
+			}, success: function (data) {
 				parent.empty().append(data);
 				return true;
-			},
-			error: function (response) {
+			}, error: function (response) {
 				console.log(response);
 			}
 		});
@@ -484,30 +400,13 @@
 	function ttbm_travel_type_change() {
 		let ticket_type = $('#ttbm_travel_type').val();
 		let fixed = {
-			0: '#mage_row_ttbm_travel_reg_end_date',
-			1: '#mage_row_ttbm_travel_start_date',
-			2: '#mage_row_ttbm_travel_start_date_time',
-			3: '#mage_row_ttbm_travel_end_date'
+			0: '#mage_row_ttbm_travel_reg_end_date', 1: '#mage_row_ttbm_travel_start_date', 2: '#mage_row_ttbm_travel_start_date_time', 3: '#mage_row_ttbm_travel_end_date'
 		};
 		let particular = {
 			0: '#mage_row_ttbm_particular_dates'
 		};
 		let repeated = {
-			0: '#mage_row_ttbm_travel_repeated_after',
-			1: '#mage_row_mep_disable_ticket_time',
-			2: '#mage_row_mep_ticket_times_global',
-			3: '#mage_row_mep_ticket_times_sat',
-			4: '#mage_row_mep_ticket_times_sun',
-			5: '#mage_row_mep_ticket_times_mon',
-			6: '#mage_row_mep_ticket_times_tue',
-			7: '#mage_row_mep_ticket_times_wed',
-			8: '#mage_row_mep_ticket_times_thu',
-			9: '#mage_row_mep_ticket_times_fri',
-			10: '#mage_row_mep_ticket_offdays',
-			11: '#mage_row_mep_ticket_off_dates',
-			12: '#mage_row_ttbm_travel_repeated_start_date',
-			13: '#mage_row_ttbm_travel_repeated_end_date',
-			14: '.ttbm_special_on_dates_setting',
+			0: '#mage_row_ttbm_travel_repeated_after', 1: '#mage_row_mep_disable_ticket_time', 2: '#mage_row_mep_ticket_times_global', 3: '#mage_row_mep_ticket_times_sat', 4: '#mage_row_mep_ticket_times_sun', 5: '#mage_row_mep_ticket_times_mon', 6: '#mage_row_mep_ticket_times_tue', 7: '#mage_row_mep_ticket_times_wed', 8: '#mage_row_mep_ticket_times_thu', 9: '#mage_row_mep_ticket_times_fri', 10: '#mage_row_mep_ticket_offdays', 11: '#mage_row_mep_ticket_off_dates', 12: '#mage_row_ttbm_travel_repeated_start_date', 13: '#mage_row_ttbm_travel_repeated_end_date', 14: '.ttbm_special_on_dates_setting',
 		};
 		if (ticket_type === 'fixed') {
 			ttbm_travel_type(fixed, particular, repeated)
@@ -610,23 +509,12 @@ jQuery(document).ready(function ($) {
 	"use strict";
 	$(document).on('change', '#ttbm_list_page [name="ttbm_filter_type"]', function () {
 		let parent = $(this).closest('#ttbm_list_page');
-		let value=$(this).val();
-		parent.find('[name="'+value+'"]').trigger('change');
+		let value = $(this).val();
+		parent.find('[name="' + value + '"]').trigger('change');
 	});
 	$(document).on('change', '#ttbm_list_page [name="ttbm_id"]', function () {
 		let parent = $(this).closest('#ttbm_list_page');
-		let post_id = parseInt($(this).val());
-		parent.find('tr[data-post_id]').each(function () {
-			if (post_id > 0) {
-				if (parseInt($(this).data('post_id')) === post_id) {
-					$(this).addClass('mp_search_on').removeClass('mp_search_off');
-				} else {
-					$(this).addClass('mp_search_off').removeClass('mp_search_on');
-				}
-			} else {
-				$(this).addClass('mp_search_on').removeClass('mp_search_off');
-			}
-		});
+		filter_ttbm_list(parent, $(this), 'post_id');
 	});
 	$(document).on('change', '#ttbm_list_page [name="ttbm_list_category_filter"]', function () {
 		let parent = $(this).closest('#ttbm_list_page');
@@ -657,4 +545,25 @@ jQuery(document).ready(function ($) {
 			}
 		});
 	}
+	$(document).on('click', '#ttbm_list_page .ttbm_trash_post', function () {
+		let alert_text = $(this).data('alert');
+		if (confirm(alert_text + '\n\n 1. Ok : To Remove . \n 2. Cancel : To Cancel .')) {
+			let target=$(this).closest('#ttbm_list_page');
+			let post_id=$(this).data('post-id');
+			$.ajax({
+				type: 'POST', url: mp_ajax_url, data: {
+					"action": "ttbm_trash_post",
+					"post_id": post_id
+				}, beforeSend: function () {
+					dLoader(target);
+				}, success: function (data) {
+					//alert(data);
+					dLoaderRemove(target);
+					window.location.reload();
+				}
+			});
+			return true;
+		}
+		return false;
+	});
 }(jQuery));

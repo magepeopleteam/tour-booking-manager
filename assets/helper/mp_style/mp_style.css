@@ -553,7 +553,6 @@ div.mpStyle .formControl {
 	width: 100%;height: auto;min-width: auto;max-width: inherit;min-height: 34px;
 	border: 1px solid var(--color_border) !important;padding: var(--dMP_xs);
 	font-size: var(--fs);color: var(--d_color) !important;background-color: #FFF !important;
-	-webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, .1) inset;box-shadow: 0 4px 8px rgba(0, 0, 0, .1) inset;
 }
 .mpStyle .formControl:focus {
 	outline: 0;background-color: #FFF;border-color: #80BDFF;
@@ -605,10 +604,7 @@ div.mpStyle textarea.formControl {height: auto;}
 .mpStyle ul.mp_input_select_list li:last-child {border-bottom: none;}
 .mpStyle ul.mp_input_select_list li:hover {background-color: #777;color: #FFF;}
 /*****Form inline*******/
-.mpStyle .inputInline {
-	padding: var(--dMP);
-	margin: var(--dMP) 0 0 0;
-}
+.mpStyle .inputInline { padding: var(--dMP); margin: var(--dMP) 0 0 0;}
 .mpStyle .inputInline .inputList {max-width: calc(20% - 10px);width: 100%;margin: 0 5px;}
 /********Form Horizontal**************/
 .mpStyle .inputHorizontal .mageForm {max-width: 500px;width: 100%;}
@@ -687,13 +683,8 @@ div.mpStyle .customRadioLabel input[type="radio"] ~ .formControl,
 }
 div.groupContent > * {border-left: 1px solid var(--color_border);margin: 0;}
 div.groupContent > *:first-child {border: none;}
-div.mpStyle div.groupContent .formControl {
-	text-align: center;border: none;
-	background-color: var(--color_white);
-	height: 100%;
-	border-radius: 0 !important;
-	padding: 0;
-}
+div.mpStyle div.groupContent .formControl {	text-align: center;border: none;	background-color: var(--color_white);	height: 100%;	border-radius: 0 !important;	padding: 0;}
+div.mpStyle div.groupContent select.formControl { text-align: left;border: none !important; padding: var(--dMP_xs) 35px var(--dMP_xs) var(--dMP_xs);}
 .mpStyle .groupContent textarea.formControl {text-align: left;}
 .mpStyle .groupContent input[type="radio"] {}
 .mpStyle .groupContent input[type="radio"]::after {
@@ -712,7 +703,7 @@ div.mpStyle div.groupContent .formControl {
 .mpStyle .groupContent input[type="radio"] ~ input:focus {-webkit-box-shadow: none;box-shadow: none;}
 .mpStyle .addonGroupContent {min-width: 30px;cursor: pointer;background-color: #FFF;color: var(--color_theme_88);}
 .mpStyle .addonGroupContent:hover {background-color: #555;color: #F2F2F2;}
-.mpStyle .groupContent .select2-container--default .select2-selection--single{border:none;border-radius: 0;}
+.mpStyle .groupContent .select2-container--default .select2-selection--single {border: none;border-radius: 0;}
 /*****/
 .mpStyle .qtyIncDec {max-width: 100px;}
 /**********Responsive*********/

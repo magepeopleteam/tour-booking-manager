@@ -26,7 +26,7 @@
 					<div class="mpStyle">
 						<div class="_dLayout_pRelative placeholder_area" id="ttbm_list_page">
 							<div class="_mb_dFlex_justifyBetween_alignCenter" data-placeholder>
-								<button class="_successButton" type="button" data-href="<?php echo esc_url(admin_url('post-new.php?post_type=' . TTBM_Function::get_cpt_name())); ?>" title="<?php esc_attr_e('Add New', 'tour-booking-manager'); ?>">
+								<button class="_navy_blueButton" type="button" data-href="<?php echo esc_url(admin_url('post-new.php?post_type=' . TTBM_Function::get_cpt_name())); ?>" title="<?php esc_attr_e('Add New', 'tour-booking-manager'); ?>">
 									<span class="fas fa-plus _mR_xs"></span><?php echo esc_html__('Add New ', 'tour-booking-manager') . ' ' . $label; ?>
 								</button>
 								<div class="col_4 _allCenter">
@@ -108,30 +108,32 @@
 					$post_per_page = $_REQUEST['post_per_page'] ?? 20;
 					$post_per_page = $post_per_page > 0 ? $post_per_page : 20;
 					?>
-					<table data-placeholder>
+					<table class="layoutFixed" data-placeholder>
 						<thead>
 						<tr>
-							<th class="bgTheme"><?php esc_html_e('SL.', 'tour-booking-manager'); ?></th>
-							<th class="bgTheme"><?php esc_html_e('Title', 'tour-booking-manager'); ?></th>
-							<th class="bgTheme"><?php esc_html_e('Category', 'tour-booking-manager'); ?></th>
-							<th class="bgTheme"><?php esc_html_e('Organizer', 'tour-booking-manager'); ?></th>
-							<th class="bgTheme"><?php esc_html_e('Location', 'tour-booking-manager'); ?></th>
-							<th class="bgTheme"><?php esc_html_e('Upcoming Date', 'tour-booking-manager'); ?></th>
-							<th class="bgTheme"><?php esc_attr_e('End Date', 'tour-booking-manager'); ?></th>
-							<th class="bgTheme">
-								<?php esc_attr_e('Ticket Overview', 'tour-booking-manager'); ?><br/> <small>
+							<th class="_w_50"><?php esc_html_e('SL.', 'tour-booking-manager'); ?></th>
+							<th colspan="3"><?php esc_html_e('Title', 'tour-booking-manager'); ?></th>
+							<th colspan="3"><?php esc_html_e('Admin Note', 'tour-booking-manager'); ?></th>
+							<th><?php esc_html_e('Category', 'tour-booking-manager'); ?></th>
+							<th><?php esc_html_e('Organizer', 'tour-booking-manager'); ?></th>
+							<th><?php esc_html_e('Location', 'tour-booking-manager'); ?></th>
+							<th><?php esc_html_e('Upcoming Date', 'tour-booking-manager'); ?></th>
+							<th><?php esc_attr_e('End Date', 'tour-booking-manager'); ?></th>
+							<th colspan="2">
+								<?php esc_attr_e('Ticket Overview', 'tour-booking-manager'); ?><br/> 
+                                <small>
 									<?php esc_attr_e('Total', 'tour-booking-manager'); ?> -
 									<?php esc_attr_e('Sold', 'tour-booking-manager'); ?> -
 									<?php esc_attr_e('Reserve', 'tour-booking-manager'); ?> =
 									<?php esc_attr_e('Available', 'tour-booking-manager'); ?>
 								</small>
 							</th>
-							<th class="bgTheme"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
+							<th class="_w_150"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
 						</tr>
 						</thead>
 						<tbody>
 						<tr>
-							<td colspan="9"></td>
+							<td colspan="15"></td>
 						</tr>
 						<?php
 							$count = $active_page * $post_per_page + 1;
@@ -145,12 +147,14 @@
 								$category = TTBM_Function::get_taxonomy_id_string($post_id, 'ttbm_tour_cat');
 								$organizer = TTBM_Function::get_taxonomy_id_string($post_id, 'ttbm_tour_org');
 								$location = TTBM_Function::get_taxonomy_id_string($post_id, 'ttbm_tour_location');
+								$admin_note=TTBM_Function::get_post_info($post_id, 'ttbm_admin_note');
 								?>
-								<tr data-post_id="<?php echo esc_attr($post_id); ?>" data-category="<?php echo esc_attr($category); ?>" data-organizer="<?php echo esc_attr($organizer); ?>" data-location="<?php echo esc_attr($location); ?>">
-									<td><?php echo esc_html($count); ?></td>
-									<th class="textLeft">
+								<tr data-upcoming_date="<?php echo esc_attr($upcoming_date); ?>" data-post_id="<?php echo esc_attr($post_id); ?>" data-category="<?php echo esc_attr($category); ?>" data-organizer="<?php echo esc_attr($organizer); ?>" data-location="<?php echo esc_attr($location); ?>">
+									<th><?php echo esc_html($count); ?></th>
+									<th class="textLeft" colspan="3">
 										<a href="<?php echo get_the_permalink($post_id); ?>"><?php echo get_the_title($post_id); ?></a>
 									</th>
+									<td colspan="3"><?php MP_Custom_Layout::load_more_text($admin_note,100); ?></td>
 									<td><?php echo esc_attr(TTBM_Function::get_taxonomy_string($post_id, 'ttbm_tour_cat')); ?></td>
 									<td><?php echo esc_attr(TTBM_Function::get_taxonomy_string($post_id, 'ttbm_tour_org')); ?></td>
 									<td><?php echo TTBM_Function::get_full_location($post_id); ?></td>
@@ -162,7 +166,7 @@
 										<?php } ?>
 									</td>
 									<td><?php echo TTBM_Function::datetime_format(TTBM_Function::get_reg_end_date($post_id), 'date-text'); ?></td>
-									<td><?php echo esc_html($total), ' - ' . esc_html($sold) . ' - ' . esc_html($reserve); ?> = <span class="textSuccess"><?php echo esc_html($total - ($reserve + $sold)); ?></span></td>
+									<td colspan="2"><?php echo esc_html($total), ' - ' . esc_html($sold) . ' - ' . esc_html($reserve); ?> = <span class="textSuccess"><?php echo esc_html($total - ($reserve + $sold)); ?></span></td>
 									<td>
 										<div class="buttonGroup">
 											<button class="_mpBtn_xs_textSuccess" type="button" title="<?php esc_attr_e('Edit Details.', 'tour-booking-manager'); ?>" data-href="<?php echo esc_url(admin_url('post.php?post=' . $post_id . '&action=edit')); ?>">
@@ -176,7 +180,7 @@
 									</td>
 								</tr>
 								<tr data-post_id="<?php echo esc_attr($post_id); ?>" data-category="<?php echo esc_attr($category); ?>" data-organizer="<?php echo esc_attr($organizer); ?>" data-location="<?php echo esc_attr($location); ?>">
-									<td colspan="9">
+									<td colspan="15">
 										<?php do_action('add_ttbm_list_action_details', $post_id); ?>
 									</td>
 								</tr>

@@ -23,11 +23,11 @@ msgstr "- ট্যুর পাওয়া যায়"
 msgid " : "
 msgstr ":"
 
-#: admin/TTBM_Setting_activity.php:19
+#: admin/TTBM_Settings_activity.php:19
 msgid " Activities"
 msgstr "কার্যক্রম"
 
-#: admin/TTBM_Setting_activity.php:32
+#: admin/TTBM_Settings_activity.php:32
 msgid " Activities Settings"
 msgstr ""
 "\n"
@@ -47,19 +47,19 @@ msgstr "সময় পরীক্ষা"
 msgid " Check out Date"
 msgstr "তারিখ চেক আউট"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:18
+#: admin/TTBM_Settings_faq_day_wise_details.php:18
 msgid " Day wise Details"
 msgstr "দিন অনুযায়ী বিস্তারিত"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:111
+#: admin/TTBM_Settings_faq_day_wise_details.php:111
 msgid " Day wise Details Content"
 msgstr "দিন অনুযায়ী বিস্তারিত বিষয়বস্তু"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:109
+#: admin/TTBM_Settings_faq_day_wise_details.php:109
 msgid " Day wise Details image"
 msgstr "দিন অনুযায়ী বিস্তারিত ইমেজ"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:107
+#: admin/TTBM_Settings_faq_day_wise_details.php:107
 msgid " Day wise Details Title"
 msgstr "দিন অনুযায়ী বিস্তারিত শিরোনাম"
 
@@ -67,23 +67,23 @@ msgstr "দিন অনুযায়ী বিস্তারিত শির
 msgid " Display settings"
 msgstr "প্রদর্শন সেটিং"
 
-#: admin/TTBM_Setting_pricing.php:176
+#: admin/TTBM_Settings_pricing.php:176
 msgid " Extra Service Price Configuration :"
 msgstr "অতিরিক্ত পরিষেবা মূল্য কনফিগারেশন:"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:21
+#: admin/TTBM_Settings_faq_day_wise_details.php:21
 msgid " F.A.Q"
 msgstr "জিজ্ঞাসা"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:103
+#: admin/TTBM_Settings_faq_day_wise_details.php:103
 msgid " F.A.Q Details Content"
 msgstr "জিজ্ঞাসা বিস্তারিত বিষয়বস্তু"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:101
+#: admin/TTBM_Settings_faq_day_wise_details.php:101
 msgid " F.A.Q Details image"
 msgstr "জিজ্ঞাসা বিশদ চিত্র"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:99
+#: admin/TTBM_Settings_faq_day_wise_details.php:99
 msgid " F.A.Q Title"
 msgstr "জিজ্ঞাসা শিরোনাম"
 
@@ -96,7 +96,7 @@ msgstr "ফিচার ইমেজ"
 msgid " featured image"
 msgstr "বৈশিষ্ট্যযুক্ত ইমেজ"
 
-#: admin/TTBM_Setting_Feature.php:19
+#: admin/TTBM_Settings_Feature.php:19
 msgid " Features"
 msgstr "বৈশিষ্ট্য"
 
@@ -141,18 +141,18 @@ msgstr "পাওয়া যায়নি"
 msgid " Not found in Trash"
 msgstr "ট্র্যাশে পাওয়া যায়নি"
 
-#: admin/TTBM_Setting_place_you_see.php:19
+#: admin/TTBM_Settings_place_you_see.php:19
 #| msgid "Places You’ll See"
 msgid " Places You'll See"
 msgstr "আপনি যে স্থানগুলি দেখতে পাবেন"
 
-#: admin/TTBM_Setting_pricing.php:73
+#: admin/TTBM_Settings_pricing.php:73
 msgid " Price Configuration :"
 msgstr ""
 "\n"
 "মূল্য কনফিগারেশন:"
 
-#: admin/TTBM_Setting_pricing.php:16
+#: admin/TTBM_Settings_pricing.php:16
 msgid " Pricing"
 msgstr ""
 "\n"
@@ -167,8 +167,8 @@ msgid " Repeated After"
 msgstr "পরে পুনরাবৃত্তি"
 
 #: admin/TTBM_Settings.php:1100 admin/TTBM_Settings_Global.php:17
-#: admin/TTBM_Settings_Global.php:17 admin/TTBM_Setting_place_you_see.php:31
-#: admin/TTBM_Setting_why_book_with_us.php:26
+#: admin/TTBM_Settings_Global.php:17 admin/TTBM_Settings_place_you_see.php:31
+#: admin/TTBM_Settings_why_book_with_us.php:26
 msgid " Settings"
 msgstr ""
 "\n"
@@ -198,7 +198,7 @@ msgstr "ট্রিপগুলি আপনার অনুসন্ধান�
 msgid " Type"
 msgstr "টাইপ"
 
-#: admin/TTBM_Setting_why_book_with_us.php:14
+#: admin/TTBM_Settings_why_book_with_us.php:14
 msgid " Why Book With Us ?"
 msgstr "আমাদের সাথে বই কেন ?"
 
@@ -273,9 +273,9 @@ msgid "A Complete Tour & Travel Solution for WordPress by MagePeople."
 msgstr ""
 "MagePeople দ্বারা ওয়ার্ডপ্রেসের জন্য একটি সম্পূর্ণ ভ্রমণ এবং ভ্রমণ সমাধান।"
 
-#: admin/TTBM_Setting_place_you_see.php:64 admin/TTBM_Setting_pricing.php:89
-#: admin/TTBM_Setting_pricing.php:187
-#: admin/TTBM_Setting_why_book_with_us.php:52
+#: admin/TTBM_Settings_place_you_see.php:64 admin/TTBM_Settings_pricing.php:89
+#: admin/TTBM_Settings_pricing.php:187
+#: admin/TTBM_Settings_why_book_with_us.php:52
 msgid "Action"
 msgstr ""
 "\n"
@@ -285,7 +285,7 @@ msgstr ""
 msgid "Active Now"
 msgstr "এখন সক্রিয়"
 
-#: admin/TTBM_Settings_Global.php:310 admin/TTBM_Setting_activity.php:51
+#: admin/TTBM_Settings_Global.php:310 admin/TTBM_Settings_activity.php:51
 msgid "Activities"
 msgstr ""
 "\n"
@@ -305,33 +305,33 @@ msgstr "কার্যকলাপ আইকন"
 msgid "Activities Type"
 msgstr "কার্যক্রমের ধরন"
 
-#: admin/TTBM_Setting_activity.php:116
+#: admin/TTBM_Settings_activity.php:116
 msgid "Activity Description : "
 msgstr "কার্যকলাপ বর্ণনা :"
 
-#: admin/TTBM_Setting_activity.php:122
+#: admin/TTBM_Settings_activity.php:122
 msgid "Activity Icon : "
 msgstr ""
 "\n"
 "কার্যকলাপ আইকন:"
 
-#: admin/TTBM_Setting_activity.php:127
+#: admin/TTBM_Settings_activity.php:127
 msgid "Activity icon is required!"
 msgstr "কার্যকলাপ আইকন প্রয়োজন!"
 
-#: admin/TTBM_Setting_activity.php:86
+#: admin/TTBM_Settings_activity.php:86
 msgid "Activity is added successfully."
 msgstr "কার্যকলাপ সফলভাবে যোগ করা হয়েছে."
 
-#: admin/TTBM_Setting_activity.php:106
+#: admin/TTBM_Settings_activity.php:106
 msgid "Activity Name : "
 msgstr "কার্যকলাপের নাম"
 
-#: admin/TTBM_Setting_activity.php:111
+#: admin/TTBM_Settings_activity.php:111
 msgid "Activity name is required!"
 msgstr "কার্যকলাপ নাম প্রয়োজন!"
 
-#: admin/TTBM_Setting_pricing.php:201
+#: admin/TTBM_Settings_pricing.php:201
 msgid "Add Extra New Service"
 msgstr "অতিরিক্ত নতুন পরিষেবা যোগ করুন"
 
@@ -348,26 +348,26 @@ msgstr "ছবি যোগ কর"
 msgid "Add New "
 msgstr "নতুন যোগ করুন"
 
-#: admin/TTBM_Setting_activity.php:83
+#: admin/TTBM_Settings_activity.php:83
 #| msgid "add new Activities  "
 msgid "Add New Activity"
 msgstr "নতুন কার্যকলাপ যোগ করুন"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:52
+#: admin/TTBM_Settings_faq_day_wise_details.php:52
 msgid "Add New Day Wise Details"
 msgstr "নতুন দিন ভিত্তিক বিবরণ যোগ করুন"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:85
+#: admin/TTBM_Settings_faq_day_wise_details.php:85
 msgid "Add New F.A.Q"
 msgstr "নতুন F.A.Q যোগ করুন"
 
-#: admin/TTBM_Settings.php:925 admin/TTBM_Setting_Feature.php:108
+#: admin/TTBM_Settings.php:925 admin/TTBM_Settings_Feature.php:108
 msgid "Add New Feature"
 msgstr ""
 "\n"
 "নতুন বৈশিষ্ট্য যোগ করুন"
 
-#: admin/TTBM_Setting_why_book_with_us.php:67
+#: admin/TTBM_Settings_why_book_with_us.php:67
 msgid "Add New Item"
 msgstr "নতুন আইটেম যোগ করুন"
 
@@ -383,16 +383,16 @@ msgstr ""
 "\n"
 "নতুন বিশেষ তারিখ ও সময় যোগ করুন"
 
-#: admin/TTBM_Setting_place_you_see.php:80
-#: admin/TTBM_Setting_place_you_see.php:139
+#: admin/TTBM_Settings_place_you_see.php:80
+#: admin/TTBM_Settings_place_you_see.php:139
 msgid "Add New Place"
 msgstr "নতুন স্থান যোগ করুন"
 
-#: admin/TTBM_Setting_pricing.php:103
+#: admin/TTBM_Settings_pricing.php:103
 msgid "Add New Ticket Type"
 msgstr "নতুন টিকিটের ধরন যোগ করুন"
 
-#: admin/TTBM_Setting_pricing.php:58
+#: admin/TTBM_Settings_pricing.php:58
 msgid "Add To Cart Form Shortcode : "
 msgstr ""
 "\n"
@@ -490,7 +490,7 @@ msgstr ""
 "\n"
 "উপলব্ধ হোটেল"
 
-#: admin/TTBM_Setting_pricing.php:84 admin/TTBM_Setting_pricing.php:185
+#: admin/TTBM_Settings_pricing.php:84 admin/TTBM_Settings_pricing.php:185
 msgid "Available Qty"
 msgstr ""
 "\n"
@@ -731,7 +731,7 @@ msgstr ""
 "ডিফল্টভাবে ট্যুর টাইপ চালু থাকে তবে আপনি এই বিকল্পটি স্যুইচ করে এটি বন্ধ "
 "রাখতে পারেন"
 
-#: admin/TTBM_Setting_pricing.php:45
+#: admin/TTBM_Settings_pricing.php:45
 msgid "By default Type is General"
 msgstr ""
 "\n"
@@ -806,7 +806,7 @@ msgstr "সর্বাধিক ব্যবহৃত থেকে চয়ন
 msgid "Choose some general option."
 msgstr "কিছু সাধারণ বিকল্প চয়ন করুন."
 
-#: admin/TTBM_Setting_pricing.php:266
+#: admin/TTBM_Settings_pricing.php:266
 msgid "click here"
 msgstr "এখানে ক্লিক করুন"
 
@@ -842,11 +842,11 @@ msgstr ""
 "\n"
 "দেশ"
 
-#: admin/TTBM_Setting_activity.php:53 admin/TTBM_Setting_activity.php:67
+#: admin/TTBM_Settings_activity.php:53 admin/TTBM_Settings_activity.php:67
 msgid "Create New Activity"
 msgstr "নতুন কার্যকলাপ তৈরি করুন"
 
-#: admin/TTBM_Setting_Feature.php:29
+#: admin/TTBM_Settings_Feature.php:29
 msgid "Create New Feature"
 msgstr "নতুন বৈশিষ্ট্য তৈরি করুন"
 
@@ -856,8 +856,8 @@ msgstr ""
 "\n"
 "নতুন অবস্থান তৈরি করুন"
 
-#: admin/TTBM_Setting_place_you_see.php:55
-#: admin/TTBM_Setting_place_you_see.php:82
+#: admin/TTBM_Settings_place_you_see.php:55
+#: admin/TTBM_Settings_place_you_see.php:82
 msgid "Create New Place"
 msgstr "নতুন অবস্থান তৈরি করুন"
 
@@ -905,7 +905,7 @@ msgstr ""
 "\n"
 "ডে ট্যুর"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:37
+#: admin/TTBM_Settings_faq_day_wise_details.php:37
 msgid "Day Wise Details Settings"
 msgstr ""
 "\n"
@@ -935,7 +935,7 @@ msgstr ""
 "\n"
 "ডিফল্ট ফন্ট সাইজ"
 
-#: admin/TTBM_Setting_pricing.php:85
+#: admin/TTBM_Settings_pricing.php:85
 msgid "Default Qty"
 msgstr "ডিফল্ট পরিমাণ"
 
@@ -986,7 +986,7 @@ msgstr ""
 msgid "Done"
 msgstr "সম্পন্ন"
 
-#: admin/TTBM_Setting_pricing.php:162 admin/TTBM_Setting_pricing.php:237
+#: admin/TTBM_Settings_pricing.php:162 admin/TTBM_Settings_pricing.php:237
 msgid "Dropdown List"
 msgstr "ড্রপডাউন তালিকা"
 
@@ -1180,13 +1180,13 @@ msgstr "জিজ্ঞাসা"
 msgid "F.A.Q "
 msgstr "জিজ্ঞাসা"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:70
+#: admin/TTBM_Settings_faq_day_wise_details.php:70
 msgid "F.A.Q Settings"
 msgstr ""
 "\n"
 "F.A.Q সেটিংস"
 
-#: admin/TTBM_Setting_Feature.php:138
+#: admin/TTBM_Settings_Feature.php:138
 msgid "Feature Description : "
 msgstr ""
 "\n"
@@ -1196,29 +1196,29 @@ msgstr ""
 msgid "Feature Icon"
 msgstr "বৈশিষ্ট্য আইকন"
 
-#: admin/TTBM_Setting_Feature.php:144
+#: admin/TTBM_Settings_Feature.php:144
 msgid "Feature Icon : "
 msgstr ""
 "\n"
 "বৈশিষ্ট্য আইকন:"
 
-#: admin/TTBM_Setting_Feature.php:149
+#: admin/TTBM_Settings_Feature.php:149
 msgid "Feature icon is required!"
 msgstr "বৈশিষ্ট্য আইকন প্রয়োজন!"
 
-#: admin/TTBM_Setting_Feature.php:109
+#: admin/TTBM_Settings_Feature.php:109
 msgid "Feature is added successfully."
 msgstr ""
 "\n"
 "বৈশিষ্ট্য সফলভাবে যোগ করা হয়েছে."
 
-#: admin/TTBM_Setting_Feature.php:128
+#: admin/TTBM_Settings_Feature.php:128
 msgid "Feature Name : "
 msgstr ""
 "\n"
 "বৈশিষ্ট্যের নাম:"
 
-#: admin/TTBM_Setting_Feature.php:133
+#: admin/TTBM_Settings_Feature.php:133
 msgid "Feature name is required!"
 msgstr ""
 "\n"
@@ -1421,11 +1421,11 @@ msgstr ""
 "\n"
 "একটি প্রশ্ন পান?"
 
-#: admin/TTBM_Setting_pricing.php:293
+#: admin/TTBM_Settings_pricing.php:293
 msgid "Get your Group pricing addon now"
 msgstr "এখনই আপনার গ্রুপ প্রাইসিং অ্যাডন পান"
 
-#: admin/TTBM_Setting_pricing.php:280
+#: admin/TTBM_Settings_pricing.php:280
 msgid "Get your Seasonal price addon now"
 msgstr ""
 "\n"
@@ -1456,7 +1456,7 @@ msgstr ""
 "\n"
 "গ্রিড ভিউ"
 
-#: admin/TTBM_Setting_pricing.php:292
+#: admin/TTBM_Settings_pricing.php:292
 msgid "Group price allow different pricing during buying based on quantity ."
 msgstr ""
 "গ্রুপ মূল্য পরিমাণের উপর ভিত্তি করে কেনার সময় বিভিন্ন মূল্যের অনুমতি দেয়।"
@@ -1480,7 +1480,7 @@ msgstr "হোটেল উপলব্ধ পরিষেবা/বৈশিষ
 msgid "Hotel Base Tour"
 msgstr "হোটেল বেস ট্যুর"
 
-#: admin/TTBM_Setting_pricing.php:254
+#: admin/TTBM_Settings_pricing.php:254
 msgid "Hotel Configuration :"
 msgstr "হোটেল কনফিগারেশন:"
 
@@ -1633,7 +1633,7 @@ msgstr ""
 "\n"
 "ছবি"
 
-#: admin/TTBM_Setting_pricing.php:161 admin/TTBM_Setting_pricing.php:236
+#: admin/TTBM_Settings_pricing.php:161 admin/TTBM_Settings_pricing.php:236
 msgid "Input Box"
 msgstr "নিবেশ বাক্স"
 
@@ -1659,7 +1659,7 @@ msgstr ""
 "করার পরে আপনাকে পারমালিঙ্কগুলি ফ্লাশ করতে হবে। শুধু Settings->Permalinks-এ "
 "যান সেভ সেটিংস বোতামে চাপ দিন"
 
-#: admin/TTBM_Setting_why_book_with_us.php:51
+#: admin/TTBM_Settings_why_book_with_us.php:51
 msgid "Item List."
 msgstr ""
 "\n"
@@ -1916,7 +1916,7 @@ msgstr ""
 "\n"
 "চালু/বন্ধ হোটেল"
 
-#: admin/TTBM_Setting_pricing.php:30
+#: admin/TTBM_Settings_pricing.php:30
 msgid "On/Off Registration"
 msgstr ""
 "\n"
@@ -1990,40 +1990,40 @@ msgstr "বিচারাধীন"
 msgid "People"
 msgstr "মানুষ"
 
-#: admin/TTBM_Setting_place_you_see.php:63
+#: admin/TTBM_Settings_place_you_see.php:63
 msgid "Place"
 msgstr " স্থান"
 
-#: admin/TTBM_Setting_place_you_see.php:172
+#: admin/TTBM_Settings_place_you_see.php:172
 msgid "Place Description : "
 msgstr "স্থান বর্ণনা:"
 
-#: admin/TTBM_Setting_place_you_see.php:178
+#: admin/TTBM_Settings_place_you_see.php:178
 msgid "Place Image : "
 msgstr "স্থান চিত্র:"
 
-#: admin/TTBM_Setting_place_you_see.php:183
+#: admin/TTBM_Settings_place_you_see.php:183
 msgid "Place image is required!"
 msgstr ""
 "\n"
 "স্থান ইমেজ প্রয়োজন!"
 
-#: admin/TTBM_Setting_place_you_see.php:142
+#: admin/TTBM_Settings_place_you_see.php:142
 msgid "Place is added successfully."
 msgstr ""
 "\n"
 "স্থান সফলভাবে যোগ করা হয়েছে."
 
-#: admin/TTBM_Setting_place_you_see.php:62
+#: admin/TTBM_Settings_place_you_see.php:62
 #| msgid "Place Name"
 msgid "Place Label"
 msgstr "স্থানের নাম"
 
-#: admin/TTBM_Setting_place_you_see.php:162
+#: admin/TTBM_Settings_place_you_see.php:162
 msgid "Place Name : "
 msgstr "স্থানের নাম :"
 
-#: admin/TTBM_Setting_place_you_see.php:167
+#: admin/TTBM_Settings_place_you_see.php:167
 msgid "Place name is required!"
 msgstr ""
 "\n"
@@ -2035,7 +2035,7 @@ msgstr ""
 "\n"
 " স্থান"
 
-#: admin/TTBM_Setting_place_you_see.php:52
+#: admin/TTBM_Settings_place_you_see.php:52
 #| msgid "Places You’ll See "
 msgid "Places You'll See :"
 msgstr "আপনি যে স্থানগুলি দেখতে পাবেন:"
@@ -2166,7 +2166,7 @@ msgstr ""
 msgid "Please Select "
 msgstr "অনুগ্রহ করে নির্বাচন করুন"
 
-#: admin/TTBM_Setting_activity.php:58
+#: admin/TTBM_Settings_activity.php:58
 msgid "Please Select a Activities "
 msgstr "একটি কার্যকলাপ নির্বাচন করুন"
 
@@ -2180,7 +2180,7 @@ msgstr ""
 "\n"
 "একটি অবস্থান নির্বাচন করুন"
 
-#: admin/TTBM_Setting_place_you_see.php:116
+#: admin/TTBM_Settings_place_you_see.php:116
 msgid "Please Select a Place"
 msgstr "একটি স্থান নির্বাচন করুন"
 
@@ -2210,7 +2210,7 @@ msgstr ""
 "রয়েছে এবং নতুন বৈশিষ্ট্য তৈরি করতে, ভ্রমণ-> বৈশিষ্ট্য তালিকায় যান; অথবা "
 "নতুন ফিচার বাটন তৈরি করতে ক্লিক করুন।"
 
-#: admin/TTBM_Setting_pricing.php:255
+#: admin/TTBM_Settings_pricing.php:255
 #| msgid "Please Select Type"
 msgid "Please Select Hotel"
 msgstr "অনুগ্রহ করে প্রকার নির্বাচন করুন"
@@ -2410,7 +2410,7 @@ msgstr ""
 "\n"
 "দাম"
 
-#: admin/TTBM_Setting_Feature.php:57
+#: admin/TTBM_Settings_Feature.php:57
 msgid "Price Excluded Feature"
 msgstr "মূল্য বাদ বৈশিষ্ট্য"
 
@@ -2420,7 +2420,7 @@ msgstr ""
 "\n"
 "দাম শুরু :"
 
-#: admin/TTBM_Setting_Feature.php:50
+#: admin/TTBM_Settings_Feature.php:50
 msgid "Price Included Feature"
 msgstr "মূল্য অন্তর্ভুক্ত বৈশিষ্ট্য"
 
@@ -2434,7 +2434,7 @@ msgstr ""
 "\n"
 "পরিমাণ"
 
-#: admin/TTBM_Setting_pricing.php:88 admin/TTBM_Setting_pricing.php:186
+#: admin/TTBM_Settings_pricing.php:88 admin/TTBM_Settings_pricing.php:186
 msgid "Qty Box Type"
 msgstr ""
 "\n"
@@ -2456,7 +2456,7 @@ msgstr ""
 "\n"
 "রেজি. শেষ তারিখ"
 
-#: admin/TTBM_Setting_pricing.php:82
+#: admin/TTBM_Settings_pricing.php:82
 msgid "Regular Price"
 msgstr "নিয়মিত দাম"
 
@@ -2478,7 +2478,7 @@ msgstr ""
 msgid "Repeated Dates"
 msgstr "বারবার তারিখ"
 
-#: admin/TTBM_Setting_pricing.php:86
+#: admin/TTBM_Settings_pricing.php:86
 msgid "Reserve Qty"
 msgstr ""
 "\n"
@@ -2494,7 +2494,7 @@ msgstr ""
 "\n"
 "রুমের নাম"
 
-#: admin/TTBM_Setting_pricing.php:83
+#: admin/TTBM_Settings_pricing.php:83
 msgid "Sale Price"
 msgstr "বিক্রয় মূল্য"
 
@@ -2506,13 +2506,13 @@ msgstr "শনিবার"
 msgid "Saturday Ticket Time"
 msgstr "শনিবার টিকিটের সময়"
 
-#: admin/TTBM_Settings.php:311 admin/TTBM_Setting_activity.php:95
-#: admin/TTBM_Setting_Feature.php:117 admin/TTBM_Setting_place_you_see.php:151
+#: admin/TTBM_Settings.php:311 admin/TTBM_Settings_activity.php:95
+#: admin/TTBM_Settings_Feature.php:117 admin/TTBM_Settings_place_you_see.php:151
 msgid "Save"
 msgstr "সংরক্ষণ"
 
-#: admin/TTBM_Settings.php:312 admin/TTBM_Setting_activity.php:96
-#: admin/TTBM_Setting_Feature.php:118 admin/TTBM_Setting_place_you_see.php:152
+#: admin/TTBM_Settings.php:312 admin/TTBM_Settings_activity.php:96
+#: admin/TTBM_Settings_Feature.php:118 admin/TTBM_Settings_place_you_see.php:152
 msgid "Save & Close"
 msgstr "সংরক্ষণ করুন এবং বন্ধ করুন"
 
@@ -2536,7 +2536,7 @@ msgstr "অনুসন্ধান করুন"
 msgid "Search ...."
 msgstr "অনুসন্ধান..."
 
-#: admin/TTBM_Setting_pricing.php:279
+#: admin/TTBM_Settings_pricing.php:279
 msgid ""
 "Seasonal pricing addon allow different pricing  based on  date range, time "
 "slot etc..  "
@@ -2629,7 +2629,7 @@ msgstr ""
 msgid "Select Default Theme Color"
 msgstr "ডিফল্ট থিমের রঙ নির্বাচন করুন"
 
-#: admin/TTBM_Setting_pricing.php:265
+#: admin/TTBM_Settings_pricing.php:265
 msgid ""
 "Select Hotel name that you want to include in this tour , Tour ticket price "
 "works based on hotel price configuration . To add new hotel  "
@@ -2646,15 +2646,15 @@ msgstr "আইকন নির্বাচন করুন"
 msgid "Select Warning  Color."
 msgstr "সতর্কতা রঙ নির্বাচন করুন।"
 
-#: admin/TTBM_Setting_pricing.php:182
+#: admin/TTBM_Settings_pricing.php:182
 msgid "Service Icon"
 msgstr "পরিষেবা আইকন"
 
-#: admin/TTBM_Settings_Global.php:233 admin/TTBM_Setting_pricing.php:183
+#: admin/TTBM_Settings_Global.php:233 admin/TTBM_Settings_pricing.php:183
 msgid "Service Name"
 msgstr "কাজের নাম"
 
-#: admin/TTBM_Settings_Global.php:247 admin/TTBM_Setting_pricing.php:184
+#: admin/TTBM_Settings_Global.php:247 admin/TTBM_Settings_pricing.php:184
 msgid "Service Price"
 msgstr "পরিষেবা মূল্য"
 
@@ -2890,7 +2890,7 @@ msgstr "বৃহস্পতিবার টিকিটের সময়"
 msgid "Ticket Collapse System"
 msgstr "টিকিট সঙ্কুচিত সিস্টেম"
 
-#: admin/TTBM_Setting_pricing.php:80
+#: admin/TTBM_Settings_pricing.php:80
 msgid "Ticket Icon"
 msgstr "টিকিট আইকন"
 
@@ -2900,7 +2900,7 @@ msgstr ""
 "\n"
 "টিকিটের তালিকা"
 
-#: admin/TTBM_Settings_Global.php:212 admin/TTBM_Setting_pricing.php:81
+#: admin/TTBM_Settings_Global.php:212 admin/TTBM_Settings_pricing.php:81
 msgid "Ticket Name"
 msgstr "টিকিটের নাম"
 
@@ -3015,7 +3015,7 @@ msgstr ""
 msgid "Tour Start Price"
 msgstr "মূল্য শুরু"
 
-#: admin/TTBM_Setting_pricing.php:38
+#: admin/TTBM_Settings_pricing.php:38
 msgid "Tour Type"
 msgstr ""
 "\n"
@@ -3188,7 +3188,7 @@ msgid "What's Included"
 msgstr "কি অন্তর্ভুক্ত"
 
 #: admin/TTBM_Settings_Global.php:338
-#: admin/TTBM_Setting_why_book_with_us.php:44
+#: admin/TTBM_Settings_why_book_with_us.php:44
 msgid "Why Book With Us?"
 msgstr "কেন আমাদের সাথে যোগদান?"
 

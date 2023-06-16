@@ -25,11 +25,11 @@ msgstr "- Tour verfügbar"
 msgid " : "
 msgstr ""
 
-#: admin/TTBM_Setting_activity.php:19
+#: admin/TTBM_Settings_activity.php:19
 msgid " Activities"
 msgstr "Aktivitäten"
 
-#: admin/TTBM_Setting_activity.php:32
+#: admin/TTBM_Settings_activity.php:32
 msgid " Activities Settings"
 msgstr ""
 
@@ -45,19 +45,19 @@ msgstr ""
 msgid " Check out Date"
 msgstr ""
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:18
+#: admin/TTBM_Settings_faq_day_wise_details.php:18
 msgid " Day wise Details"
 msgstr "Tagesweise Details"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:111
+#: admin/TTBM_Settings_faq_day_wise_details.php:111
 msgid " Day wise Details Content"
 msgstr "Tagesweise Details Inhalt"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:109
+#: admin/TTBM_Settings_faq_day_wise_details.php:109
 msgid " Day wise Details image"
 msgstr "Tagweises Detailbild"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:107
+#: admin/TTBM_Settings_faq_day_wise_details.php:107
 msgid " Day wise Details Title"
 msgstr "Tagweise Details Titel"
 
@@ -65,23 +65,23 @@ msgstr "Tagweise Details Titel"
 msgid " Display settings"
 msgstr "Anzeigeeinstellungen"
 
-#: admin/TTBM_Setting_pricing.php:205
+#: admin/TTBM_Settings_pricing.php:205
 msgid " Extra Service Price Configuration :"
 msgstr "Konfiguration des Extra-Servicepreises:"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:21
+#: admin/TTBM_Settings_faq_day_wise_details.php:21
 msgid " F.A.Q"
 msgstr "Häufig gestellte Fragen"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:103
+#: admin/TTBM_Settings_faq_day_wise_details.php:103
 msgid " F.A.Q Details Content"
 msgstr "F.A.Q Details Inhalt"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:101
+#: admin/TTBM_Settings_faq_day_wise_details.php:101
 msgid " F.A.Q Details image"
 msgstr "F.A.Q-Detailbild"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:99
+#: admin/TTBM_Settings_faq_day_wise_details.php:99
 msgid " F.A.Q Title"
 msgstr "FAQ-Titel"
 
@@ -94,7 +94,7 @@ msgstr "Merkmalsbild"
 msgid " featured image"
 msgstr "gekennzeichnetes Bild"
 
-#: admin/TTBM_Settings_Hotel.php:28 admin/TTBM_Setting_Feature.php:20
+#: admin/TTBM_Settings_Hotel.php:28 admin/TTBM_Settings_Feature.php:20
 msgid " Features"
 msgstr "Merkmale"
 
@@ -143,17 +143,17 @@ msgstr "Nicht gefunden"
 msgid " Not found in Trash"
 msgstr "Nicht im Papierkorb gefunden"
 
-#: admin/TTBM_Setting_place_you_see.php:19
+#: admin/TTBM_Settings_place_you_see.php:19
 #, fuzzy
 #| msgid "Places You’ll See"
 msgid " Places You'll See"
 msgstr "Orte, die Sie sehen werden"
 
-#: admin/TTBM_Settings_Hotel_Price.php:21 admin/TTBM_Setting_pricing.php:77
+#: admin/TTBM_Settings_Hotel_Price.php:21 admin/TTBM_Settings_pricing.php:77
 msgid " Price Configuration :"
 msgstr "Preiskonfiguration :"
 
-#: admin/TTBM_Settings_Hotel.php:25 admin/TTBM_Setting_pricing.php:16
+#: admin/TTBM_Settings_Hotel.php:25 admin/TTBM_Settings_pricing.php:16
 msgid " Pricing"
 msgstr "Preise"
 
@@ -166,8 +166,8 @@ msgid " Repeated After"
 msgstr ""
 
 #: admin/TTBM_Settings.php:991 admin/TTBM_Settings_Global.php:17
-#: admin/TTBM_Settings_Global.php:17 admin/TTBM_Setting_place_you_see.php:31
-#: admin/TTBM_Setting_why_book_with_us.php:26
+#: admin/TTBM_Settings_Global.php:17 admin/TTBM_Settings_place_you_see.php:31
+#: admin/TTBM_Settings_why_book_with_us.php:26
 msgid " Settings"
 msgstr "Einstellungen"
 
@@ -195,7 +195,7 @@ msgstr "Reisen entsprechen Ihren Suchkriterien"
 msgid " Type"
 msgstr "Typ"
 
-#: admin/TTBM_Setting_why_book_with_us.php:14
+#: admin/TTBM_Settings_why_book_with_us.php:14
 msgid " Why Book With Us ?"
 msgstr ""
 
@@ -262,9 +262,9 @@ msgid "A Complete Tour and Travel Solution for WordPress by MagePeople."
 msgstr "Eine komplette Tour"
 
 #: admin/TTBM_Settings_Hotel_Price.php:52
-#: admin/TTBM_Setting_place_you_see.php:64 admin/TTBM_Setting_pricing.php:108
-#: admin/TTBM_Setting_pricing.php:218
-#: admin/TTBM_Setting_why_book_with_us.php:52
+#: admin/TTBM_Settings_place_you_see.php:64 admin/TTBM_Settings_pricing.php:108
+#: admin/TTBM_Settings_pricing.php:218
+#: admin/TTBM_Settings_why_book_with_us.php:52
 msgid "Action"
 msgstr "Aktion"
 
@@ -273,7 +273,7 @@ msgid "Active Now"
 msgstr ""
 
 #: admin/TTBM_Settings_Global.php:344 admin/TTBM_Settings_Global.php:345
-#: admin/TTBM_Setting_activity.php:51
+#: admin/TTBM_Settings_activity.php:51
 msgid "Activities"
 msgstr "Aktivitäten"
 
@@ -289,27 +289,27 @@ msgstr "Aktivitätssymbol"
 msgid "Activities Type"
 msgstr ""
 
-#: admin/TTBM_Setting_activity.php:116
+#: admin/TTBM_Settings_activity.php:116
 msgid "Activity Description : "
 msgstr ""
 
-#: admin/TTBM_Setting_activity.php:122
+#: admin/TTBM_Settings_activity.php:122
 msgid "Activity Icon : "
 msgstr ""
 
-#: admin/TTBM_Setting_activity.php:127
+#: admin/TTBM_Settings_activity.php:127
 msgid "Activity icon is required!"
 msgstr ""
 
-#: admin/TTBM_Setting_activity.php:86
+#: admin/TTBM_Settings_activity.php:86
 msgid "Activity is added successfully."
 msgstr ""
 
-#: admin/TTBM_Setting_activity.php:106
+#: admin/TTBM_Settings_activity.php:106
 msgid "Activity Name : "
 msgstr ""
 
-#: admin/TTBM_Setting_activity.php:111
+#: admin/TTBM_Settings_activity.php:111
 msgid "Activity name is required!"
 msgstr ""
 
@@ -317,7 +317,7 @@ msgstr ""
 msgid "Add a list of tour activities for this tour."
 msgstr ""
 
-#: admin/TTBM_Setting_pricing.php:232
+#: admin/TTBM_Settings_pricing.php:232
 msgid "Add Extra New Service"
 msgstr "Zusätzlichen neuen Dienst hinzufügen"
 
@@ -334,25 +334,25 @@ msgstr "Bild hinzufügen"
 msgid "Add New "
 msgstr ""
 
-#: admin/TTBM_Setting_activity.php:83
+#: admin/TTBM_Settings_activity.php:83
 #, fuzzy
 #| msgid "add new Activities  "
 msgid "Add New Activity"
 msgstr "Neue Aktivitäten hinzufügen"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:52
+#: admin/TTBM_Settings_faq_day_wise_details.php:52
 msgid "Add New Day Wise Details"
 msgstr "Neue Day Wise-Details hinzufügen"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:85
+#: admin/TTBM_Settings_faq_day_wise_details.php:85
 msgid "Add New F.A.Q"
 msgstr "Neue F.A.Q. hinzufügen"
 
-#: admin/TTBM_Setting_Feature.php:109
+#: admin/TTBM_Settings_Feature.php:109
 msgid "Add New Feature"
 msgstr "Neue Funktion hinzufügen"
 
-#: admin/TTBM_Setting_why_book_with_us.php:67
+#: admin/TTBM_Settings_why_book_with_us.php:67
 msgid "Add New Item"
 msgstr ""
 
@@ -364,8 +364,8 @@ msgstr ""
 msgid "Add New Particular Date & Time"
 msgstr ""
 
-#: admin/TTBM_Setting_place_you_see.php:80
-#: admin/TTBM_Setting_place_you_see.php:139
+#: admin/TTBM_Settings_place_you_see.php:80
+#: admin/TTBM_Settings_place_you_see.php:139
 msgid "Add New Place"
 msgstr "Neuen Ort hinzufügen"
 
@@ -373,11 +373,11 @@ msgstr "Neuen Ort hinzufügen"
 msgid "Add New Room"
 msgstr ""
 
-#: admin/TTBM_Setting_pricing.php:122
+#: admin/TTBM_Settings_pricing.php:122
 msgid "Add New Ticket Type"
 msgstr "Neuen Tickettyp hinzufügen"
 
-#: admin/TTBM_Setting_pricing.php:58
+#: admin/TTBM_Settings_pricing.php:58
 msgid "Add To Cart Form Shortcode : "
 msgstr ""
 
@@ -473,7 +473,7 @@ msgstr "Verfügbare Zusatzdienstliste"
 msgid "Available Hotel "
 msgstr "Verfügbares Hotel"
 
-#: admin/TTBM_Settings_Hotel_Price.php:41 admin/TTBM_Setting_pricing.php:216
+#: admin/TTBM_Settings_Hotel_Price.php:41 admin/TTBM_Settings_pricing.php:216
 msgid "Available Qty"
 msgstr "Verfügbare Menge"
 
@@ -636,7 +636,7 @@ msgid ""
 "availability, you can choose the system that best suits your needs."
 msgstr ""
 
-#: admin/TTBM_Setting_pricing.php:99
+#: admin/TTBM_Settings_pricing.php:99
 msgid "Capacity"
 msgstr ""
 
@@ -697,7 +697,7 @@ msgstr "Wählen Sie aus den am häufigsten verwendeten aus"
 msgid "Choose some general option."
 msgstr ""
 
-#: admin/TTBM_Setting_pricing.php:305
+#: admin/TTBM_Settings_pricing.php:305
 msgid "click here"
 msgstr "hier klicken"
 
@@ -730,11 +730,11 @@ msgstr "Land"
 msgid "Country "
 msgstr "Land"
 
-#: admin/TTBM_Setting_activity.php:53 admin/TTBM_Setting_activity.php:67
+#: admin/TTBM_Settings_activity.php:53 admin/TTBM_Settings_activity.php:67
 msgid "Create New Activity"
 msgstr ""
 
-#: admin/TTBM_Setting_Feature.php:30
+#: admin/TTBM_Settings_Feature.php:30
 msgid "Create New Feature"
 msgstr ""
 
@@ -742,8 +742,8 @@ msgstr ""
 msgid "Create New Location"
 msgstr ""
 
-#: admin/TTBM_Setting_place_you_see.php:55
-#: admin/TTBM_Setting_place_you_see.php:82
+#: admin/TTBM_Settings_place_you_see.php:55
+#: admin/TTBM_Settings_place_you_see.php:82
 msgid "Create New Place"
 msgstr ""
 
@@ -791,7 +791,7 @@ msgstr ""
 msgid "Day Tour"
 msgstr "Tagestour"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:37
+#: admin/TTBM_Settings_faq_day_wise_details.php:37
 msgid "Day Wise Details Settings"
 msgstr "Day Wise Detaileinstellungen"
 
@@ -811,7 +811,7 @@ msgstr "Tagestour"
 msgid "Default Font Size"
 msgstr "Standardschriftgröße"
 
-#: admin/TTBM_Setting_pricing.php:101
+#: admin/TTBM_Settings_pricing.php:101
 msgid "Default Qty"
 msgstr "Standardmenge"
 
@@ -853,8 +853,8 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
-#: admin/TTBM_Settings_Hotel_Price.php:136 admin/TTBM_Setting_pricing.php:190
-#: admin/TTBM_Setting_pricing.php:276
+#: admin/TTBM_Settings_Hotel_Price.php:136 admin/TTBM_Settings_pricing.php:190
+#: admin/TTBM_Settings_pricing.php:276
 msgid "Dropdown List"
 msgstr "Dropdown-Liste"
 
@@ -941,11 +941,11 @@ msgstr "FAQ"
 msgid "F.A.Q "
 msgstr "FAQ"
 
-#: admin/TTBM_Setting_faq_day_wise_details.php:70
+#: admin/TTBM_Settings_faq_day_wise_details.php:70
 msgid "F.A.Q Settings"
 msgstr "F.A.Q-Einstellungen"
 
-#: admin/TTBM_Setting_Feature.php:139
+#: admin/TTBM_Settings_Feature.php:139
 msgid "Feature Description : "
 msgstr ""
 
@@ -953,23 +953,23 @@ msgstr ""
 msgid "Feature Icon"
 msgstr "Funktionssymbol"
 
-#: admin/TTBM_Setting_Feature.php:145
+#: admin/TTBM_Settings_Feature.php:145
 msgid "Feature Icon : "
 msgstr ""
 
-#: admin/TTBM_Setting_Feature.php:150
+#: admin/TTBM_Settings_Feature.php:150
 msgid "Feature icon is required!"
 msgstr ""
 
-#: admin/TTBM_Setting_Feature.php:110
+#: admin/TTBM_Settings_Feature.php:110
 msgid "Feature is added successfully."
 msgstr ""
 
-#: admin/TTBM_Setting_Feature.php:129
+#: admin/TTBM_Settings_Feature.php:129
 msgid "Feature Name : "
 msgstr ""
 
-#: admin/TTBM_Setting_Feature.php:134
+#: admin/TTBM_Settings_Feature.php:134
 msgid "Feature name is required!"
 msgstr ""
 
@@ -1139,11 +1139,11 @@ msgstr "Allgemeine Tour"
 msgid "Get a Question?"
 msgstr "Haben Sie eine Frage?"
 
-#: admin/TTBM_Setting_pricing.php:332
+#: admin/TTBM_Settings_pricing.php:332
 msgid "Get your Group pricing addon now"
 msgstr ""
 
-#: admin/TTBM_Setting_pricing.php:319
+#: admin/TTBM_Settings_pricing.php:319
 msgid "Get your Seasonal price addon now"
 msgstr ""
 
@@ -1169,7 +1169,7 @@ msgstr "Gitter"
 msgid "Grid view"
 msgstr "Rasteransicht"
 
-#: admin/TTBM_Setting_pricing.php:331
+#: admin/TTBM_Settings_pricing.php:331
 msgid "Group price allow different pricing during buying based on quantity ."
 msgstr ""
 
@@ -1190,7 +1190,7 @@ msgstr "Hotel"
 msgid "Hotel Base Tour"
 msgstr "Tour zur Hotelbasis"
 
-#: admin/TTBM_Setting_pricing.php:293
+#: admin/TTBM_Settings_pricing.php:293
 msgid "Hotel Configuration :"
 msgstr "Hotelkonfiguration :"
 
@@ -1322,8 +1322,8 @@ msgstr ""
 msgid "Images"
 msgstr ""
 
-#: admin/TTBM_Settings_Hotel_Price.php:135 admin/TTBM_Setting_pricing.php:189
-#: admin/TTBM_Setting_pricing.php:275
+#: admin/TTBM_Settings_Hotel_Price.php:135 admin/TTBM_Settings_pricing.php:189
+#: admin/TTBM_Settings_pricing.php:275
 msgid "Input Box"
 msgstr "Eingabefeld"
 
@@ -1346,7 +1346,7 @@ msgid ""
 "the Save Settings button"
 msgstr ""
 
-#: admin/TTBM_Setting_why_book_with_us.php:51
+#: admin/TTBM_Settings_why_book_with_us.php:51
 msgid "Item List."
 msgstr ""
 
@@ -1574,7 +1574,7 @@ msgstr ""
 msgid "On/Off Hotels"
 msgstr ""
 
-#: admin/TTBM_Setting_pricing.php:30
+#: admin/TTBM_Settings_pricing.php:30
 msgid "On/Off Registration"
 msgstr ""
 
@@ -1636,37 +1636,37 @@ msgstr ""
 msgid "People"
 msgstr "Menschen"
 
-#: admin/TTBM_Setting_place_you_see.php:63
+#: admin/TTBM_Settings_place_you_see.php:63
 msgid "Place"
 msgstr "Ort"
 
-#: admin/TTBM_Setting_place_you_see.php:172
+#: admin/TTBM_Settings_place_you_see.php:172
 msgid "Place Description : "
 msgstr ""
 
-#: admin/TTBM_Setting_place_you_see.php:178
+#: admin/TTBM_Settings_place_you_see.php:178
 msgid "Place Image : "
 msgstr ""
 
-#: admin/TTBM_Setting_place_you_see.php:183
+#: admin/TTBM_Settings_place_you_see.php:183
 msgid "Place image is required!"
 msgstr ""
 
-#: admin/TTBM_Setting_place_you_see.php:142
+#: admin/TTBM_Settings_place_you_see.php:142
 msgid "Place is added successfully."
 msgstr ""
 
-#: admin/TTBM_Setting_place_you_see.php:62
+#: admin/TTBM_Settings_place_you_see.php:62
 #, fuzzy
 #| msgid "Place Name"
 msgid "Place Label"
 msgstr "Ortsname"
 
-#: admin/TTBM_Setting_place_you_see.php:162
+#: admin/TTBM_Settings_place_you_see.php:162
 msgid "Place Name : "
 msgstr ""
 
-#: admin/TTBM_Setting_place_you_see.php:167
+#: admin/TTBM_Settings_place_you_see.php:167
 msgid "Place name is required!"
 msgstr ""
 
@@ -1674,7 +1674,7 @@ msgstr ""
 msgid "Places"
 msgstr "Orte"
 
-#: admin/TTBM_Setting_place_you_see.php:52
+#: admin/TTBM_Settings_place_you_see.php:52
 #, fuzzy
 #| msgid "Places You’ll See "
 msgid "Places You'll See :"
@@ -1783,7 +1783,7 @@ msgstr ""
 msgid "Please Select "
 msgstr "Bitte auswählen"
 
-#: admin/TTBM_Setting_activity.php:58
+#: admin/TTBM_Settings_activity.php:58
 msgid "Please Select a Activities "
 msgstr ""
 
@@ -1795,7 +1795,7 @@ msgstr "Bitte wählen Sie ein Land aus"
 msgid "Please Select a Location"
 msgstr "Bitte wählen Sie einen Ort aus"
 
-#: admin/TTBM_Setting_place_you_see.php:116
+#: admin/TTBM_Settings_place_you_see.php:116
 msgid "Please Select a Place"
 msgstr ""
 
@@ -1823,7 +1823,7 @@ msgstr ""
 msgid "Please Select Guide"
 msgstr ""
 
-#: admin/TTBM_Setting_pricing.php:294
+#: admin/TTBM_Settings_pricing.php:294
 #, fuzzy
 #| msgid "Please Select Type"
 msgid "Please Select Hotel"
@@ -1982,7 +1982,7 @@ msgstr ""
 msgid "Price"
 msgstr "Preis"
 
-#: admin/TTBM_Setting_Feature.php:58
+#: admin/TTBM_Settings_Feature.php:58
 msgid "Price Excluded Feature"
 msgstr "Preis ausgeschlossene Funktion"
 
@@ -1990,7 +1990,7 @@ msgstr "Preis ausgeschlossene Funktion"
 msgid "Price From : "
 msgstr "The Price :"
 
-#: admin/TTBM_Setting_Feature.php:51
+#: admin/TTBM_Settings_Feature.php:51
 msgid "Price Included Feature"
 msgstr "Im Preis enthaltene Funktion"
 
@@ -2008,8 +2008,8 @@ msgstr ""
 msgid "Qty"
 msgstr ""
 
-#: admin/TTBM_Settings_Hotel_Price.php:51 admin/TTBM_Setting_pricing.php:107
-#: admin/TTBM_Setting_pricing.php:217
+#: admin/TTBM_Settings_Hotel_Price.php:51 admin/TTBM_Settings_pricing.php:107
+#: admin/TTBM_Settings_pricing.php:217
 msgid "Qty Box Type"
 msgstr "Mengenboxtyp"
 
@@ -2027,7 +2027,7 @@ msgstr ""
 msgid "Reg. End Date"
 msgstr ""
 
-#: admin/TTBM_Settings_Hotel_Price.php:37 admin/TTBM_Setting_pricing.php:95
+#: admin/TTBM_Settings_Hotel_Price.php:37 admin/TTBM_Settings_pricing.php:95
 msgid "Regular Price"
 msgstr ""
 
@@ -2049,7 +2049,7 @@ msgstr "Symbol entfernen"
 msgid "Repeated Dates"
 msgstr ""
 
-#: admin/TTBM_Settings_Hotel_Price.php:43 admin/TTBM_Setting_pricing.php:104
+#: admin/TTBM_Settings_Hotel_Price.php:43 admin/TTBM_Settings_pricing.php:104
 msgid "Reserve Qty"
 msgstr "Reservemenge"
 
@@ -2066,7 +2066,7 @@ msgstr ""
 msgid "Room Name"
 msgstr "Raumname"
 
-#: admin/TTBM_Settings_Hotel_Price.php:39 admin/TTBM_Setting_pricing.php:97
+#: admin/TTBM_Settings_Hotel_Price.php:39 admin/TTBM_Settings_pricing.php:97
 msgid "Sale Price"
 msgstr ""
 
@@ -2078,13 +2078,13 @@ msgstr ""
 msgid "Saturday Ticket Time"
 msgstr ""
 
-#: admin/TTBM_Settings.php:316 admin/TTBM_Setting_activity.php:95
-#: admin/TTBM_Setting_Feature.php:118 admin/TTBM_Setting_place_you_see.php:151
+#: admin/TTBM_Settings.php:316 admin/TTBM_Settings_activity.php:95
+#: admin/TTBM_Settings_Feature.php:118 admin/TTBM_Settings_place_you_see.php:151
 msgid "Save"
 msgstr ""
 
-#: admin/TTBM_Settings.php:317 admin/TTBM_Setting_activity.php:96
-#: admin/TTBM_Setting_Feature.php:119 admin/TTBM_Setting_place_you_see.php:152
+#: admin/TTBM_Settings.php:317 admin/TTBM_Settings_activity.php:96
+#: admin/TTBM_Settings_Feature.php:119 admin/TTBM_Settings_place_you_see.php:152
 msgid "Save & Close"
 msgstr ""
 
@@ -2104,7 +2104,7 @@ msgstr ""
 msgid "Search ...."
 msgstr "Suche ...."
 
-#: admin/TTBM_Setting_pricing.php:318
+#: admin/TTBM_Settings_pricing.php:318
 msgid ""
 "Seasonal pricing addon allow different pricing  based on  date range, time "
 "slot etc..  "
@@ -2180,7 +2180,7 @@ msgstr ""
 msgid "Select Default Theme Color"
 msgstr "Wählen Sie die Standarddesignfarbe"
 
-#: admin/TTBM_Setting_pricing.php:304
+#: admin/TTBM_Settings_pricing.php:304
 msgid ""
 "Select Hotel name that you want to include in this tour , Tour ticket price "
 "works based on hotel price configuration . To add new hotel  "
@@ -2205,7 +2205,7 @@ msgstr "Warnfarbe auswählen."
 msgid "Service Exclude"
 msgstr "Dienst ausschließen"
 
-#: admin/TTBM_Setting_pricing.php:212
+#: admin/TTBM_Settings_pricing.php:212
 msgid "Service Icon"
 msgstr "Dienstsymbol"
 
@@ -2216,12 +2216,12 @@ msgid "Service Included"
 msgstr "Dienst enthalten"
 
 #: admin/TTBM_Settings_Global.php:267 admin/TTBM_Settings_Global.php:268
-#: admin/TTBM_Setting_pricing.php:213
+#: admin/TTBM_Settings_pricing.php:213
 msgid "Service Name"
 msgstr "Dienstname"
 
 #: admin/TTBM_Settings_Global.php:281 admin/TTBM_Settings_Global.php:282
-#: admin/TTBM_Setting_pricing.php:215
+#: admin/TTBM_Settings_pricing.php:215
 msgid "Service Price"
 msgstr "Servicepreis"
 
@@ -2249,17 +2249,17 @@ msgid "Short Date  Format"
 msgstr ""
 
 #: admin/TTBM_Settings.php:251 admin/TTBM_Settings.php:917
-#: admin/TTBM_Settings_Hotel_Price.php:35 admin/TTBM_Setting_pricing.php:93
+#: admin/TTBM_Settings_Hotel_Price.php:35 admin/TTBM_Settings_pricing.php:93
 #, fuzzy
 #| msgid " Short Description"
 msgid "Short Description"
 msgstr "Kurzbeschreibung"
 
-#: admin/TTBM_Setting_pricing.php:214
+#: admin/TTBM_Settings_pricing.php:214
 msgid "Short description"
 msgstr ""
 
-#: admin/TTBM_Settings_Hotel_Price.php:24 admin/TTBM_Setting_pricing.php:80
+#: admin/TTBM_Settings_Hotel_Price.php:24 admin/TTBM_Settings_pricing.php:80
 msgid "Show advance columns"
 msgstr ""
 
@@ -2493,7 +2493,7 @@ msgstr ""
 msgid "Ticket Collapse System"
 msgstr ""
 
-#: admin/TTBM_Setting_pricing.php:90
+#: admin/TTBM_Settings_pricing.php:90
 msgid "Ticket Icon"
 msgstr "Ticket-Symbol"
 
@@ -2502,7 +2502,7 @@ msgid "Ticket List "
 msgstr ""
 
 #: admin/TTBM_Settings_Global.php:246 admin/TTBM_Settings_Global.php:247
-#: admin/TTBM_Setting_pricing.php:91
+#: admin/TTBM_Settings_pricing.php:91
 msgid "Ticket Name"
 msgstr "Ticketname"
 
@@ -2607,7 +2607,7 @@ msgstr ""
 msgid "Tour Start Price"
 msgstr ""
 
-#: admin/TTBM_Setting_pricing.php:38
+#: admin/TTBM_Settings_pricing.php:38
 msgid "Tour Type"
 msgstr "Tourtyp"
 
@@ -2766,7 +2766,7 @@ msgid "What's Included"
 msgstr "Was ist enthalten"
 
 #: admin/TTBM_Settings_Global.php:372 admin/TTBM_Settings_Global.php:373
-#: admin/TTBM_Setting_why_book_with_us.php:44
+#: admin/TTBM_Settings_why_book_with_us.php:44
 msgid "Why Book With Us?"
 msgstr "Warum bei uns buchen?"
 

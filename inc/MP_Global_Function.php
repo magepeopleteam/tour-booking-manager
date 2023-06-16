@@ -216,13 +216,13 @@ if (!class_exists('MP_Global_Function')) {
         }
         public static function week_day(): array {
             return [
-                'monday' => esc_html__('Monday', 'mptbm_plugin'),
-                'tuesday' => esc_html__('Tuesday', 'mptbm_plugin'),
-                'wednesday' => esc_html__('Wednesday', 'mptbm_plugin'),
-                'thursday' => esc_html__('Thursday', 'mptbm_plugin'),
-                'friday' => esc_html__('Friday', 'mptbm_plugin'),
-                'saturday' => esc_html__('Saturday', 'mptbm_plugin'),
-                'sunday' => esc_html__('Sunday', 'mptbm_plugin'),
+                'monday' => esc_html__('Monday', 'tour-booking-manager'),
+                'tuesday' => esc_html__('Tuesday', 'tour-booking-manager'),
+                'wednesday' => esc_html__('Wednesday', 'tour-booking-manager'),
+                'thursday' => esc_html__('Thursday', 'tour-booking-manager'),
+                'friday' => esc_html__('Friday', 'tour-booking-manager'),
+                'saturday' => esc_html__('Saturday', 'tour-booking-manager'),
+                'sunday' => esc_html__('Sunday', 'tour-booking-manager'),
             ];
         }
         public static function get_faq($post_id) {

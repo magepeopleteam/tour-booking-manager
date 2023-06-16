@@ -88,7 +88,7 @@ if (!class_exists('TTBM_Woocommerce')) {
                 $extra_service = $values['ttbm_extra_service_info'] ?: [];
                 $user_info = $values['ttbm_user_info'] ?: [];
                 $date = $values['ttbm_date'] ?: '';
-                $time_slot = TTBM_Function::check_time($ttbm_id, $date);
+                $time_slot = MP_Global_Function::check_time_exit_date($date);
                 $data_format = $time_slot ? 'date-time-text' : 'date-text';
                 $start_date = TTBM_Function::datetime_format($date, $data_format);
                 $location = TTBM_Function::get_location($ttbm_id);
@@ -200,7 +200,7 @@ if (!class_exists('TTBM_Woocommerce')) {
             $tour_name = TTBM_Function::get_name();
             $location = TTBM_Function::get_location($ttbm_id);
             $date = $cart_item['ttbm_date'];
-            $time_slot = TTBM_Function::check_time($ttbm_id, $date);
+            $time_slot = MP_Global_Function::check_time_exit_date($date);
             $data_format = $time_slot ? 'date-time-text' : 'date-text';
             $date = TTBM_Function::datetime_format($date, $data_format);
             $hotel_info = $cart_item['ttbm_hotel_info'] ?: array();

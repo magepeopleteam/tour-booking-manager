@@ -17,7 +17,7 @@
 				$theme_color     = TTBM_Function::get_style_settings( 'ttbm_theme_color', '#ef3326' );
 				$alternate_color = TTBM_Function::get_style_settings( 'ttbm_theme_alternate_color', '#fff' );
 				$warning_color   = TTBM_Function::get_style_settings( 'ttbm_warning_color', '#E67C30' );
-				$default_fs   = TTBM_Function::get_style_settings( 'ttbm_default_font_size', '14' ) . 'px';
+				$default_fs   = TTBM_Function::get_style_settings( 'ttbm_default_font_size', '13' ) . 'px';
 				$fs_h1        = TTBM_Function::get_style_settings( 'ttbm_font_size_h1', '35' ) . 'px';
 				$fs_h2        = TTBM_Function::get_style_settings( 'ttbm_font_size_h2', '30' ) . 'px';
 				$fs_h3        = TTBM_Function::get_style_settings( 'ttbm_font_size_h3', '25' ) . 'px';
@@ -100,6 +100,7 @@
 						--color_3: #FAFCFE;
 						--color_4: #6148BA;
 						--color_5: #BCB;
+						--color_6: #3A4AE7;
 						}
 					@media only screen and (max-width: 1100px) {
 						:root {

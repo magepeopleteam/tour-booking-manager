@@ -2,7 +2,7 @@
 	if ( ! defined( 'ABSPATH' ) ) {
 		die;
 	} // Cannot access pages directly.
-	if ( ! class_exists( 'TTBM_Settings_Global' ) ) {
+	if ( ! class_exists('TTBM_Settings_Global') ) {
 		class TTBM_Settings_Global {
 			protected $settings_api;
 			public function __construct() {

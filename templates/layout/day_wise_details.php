@@ -25,7 +25,7 @@
 								<div class="day_wise_details_item_details mp_wp_editor">
 									<?php
 										if ( $day_images && sizeof( $images ) > 0 ) {
-											do_action( 'add_super_slider_only', $images );
+											do_action( 'add_mp_custom_slider_only', $images );
 										}
 									?>
 									<?php echo do_shortcode($day_text); ?>

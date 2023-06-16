@@ -17,12 +17,13 @@
 				flush_rewrite_rules();
 			}
 			private function load_ttbm_admin() {
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Dummy_Import.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/MAGE_Setting_API.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Settings_Global.php';
 				require_once TTBM_PLUGIN_DIR . '/lib/classes/class-form-fields-generator.php';
 				require_once TTBM_PLUGIN_DIR . '/lib/classes/class-meta-box.php';
 				require_once TTBM_PLUGIN_DIR . '/lib/classes/class-taxonomy-edit.php';
+				//**************//
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_LIcense.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Dummy_Import.php';
+
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_CPT.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Taxonomy.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Hidden_Product.php';
@@ -30,31 +31,34 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Welcome.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Status.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Settings.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/settings/TTBM_Gallery_Settings.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/settings/TTBM_Setting_guide.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/settings/TTBM_Setting_activity.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Settings_Hotel.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Settings_Hotel_Price.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Setting_pricing.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Setting_Feature.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Setting_place_you_see.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Setting_faq_day_wise_details.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Setting_why_book_with_us.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Save.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_LIcense.php';
+				//**********//
 				require_once TTBM_PLUGIN_DIR . '/select_icon_popup/Select_Icon_Popup.php';
+				//**********//
+                require_once TTBM_PLUGIN_DIR . '/admin/settings/global/MAGE_Setting_API.php';
+                require_once TTBM_PLUGIN_DIR . '/admin/settings/global/TTBM_Settings_Global.php';
+				//**********//
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_General.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_pricing.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Gallery.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Feature.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_guide.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_activity.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_place_you_see.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_faq_day_wise_details.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Related.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Extras.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_why_book_with_us.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Admin_Note.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Display.php';
+				//**********//
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_General.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_Price.php';
+				//**********//
 			}
 			public function ttbm_widgets_init() {
-				register_sidebar([
-					'name' => esc_html__('Tour Booking Details Page Sidebar', 'tour-booking-manager'),
-					'id' => 'ttbm_details_sidebar',
-					'description' => esc_html__('Widgets in this area will be shown on tour booking details page sidebar.', 'tour-booking-manager'),
-					'before_widget' => '<div id="%1$s" class="ttbm_default_widget ttbm_sidebar_widget %2$s">',
-					'after_widget' => '</div>',
-					'before_title' => '<h4 class="ttbm_title_style_3">',
-					'after_title' => '</h4>',
-				]);
+				register_sidebar(['name' => esc_html__('Tour Booking Details Page Sidebar', 'tour-booking-manager'), 'id' => 'ttbm_details_sidebar', 'description' => esc_html__('Widgets in this area will be shown on tour booking details page sidebar.', 'tour-booking-manager'), 'before_widget' => '<div id="%1$s" class="ttbm_default_widget ttbm_sidebar_widget %2$s">', 'after_widget' => '</div>', 'before_title' => '<h4 class="ttbm_title_style_3">', 'after_title' => '</h4>',]);
 			}
 			//************Disable Gutenberg************************//
 			public function disable_gutenberg($current_status, $post_type) {
@@ -78,21 +82,7 @@
 				$current_user = wp_get_current_user();
 				$new_post_author = $current_user->ID;
 				if (isset($post) && $post != null) {
-					$args = array(
-						'comment_status' => $post->comment_status,
-						'ping_status' => $post->ping_status,
-						'post_author' => $new_post_author,
-						'post_content' => $post->post_content,
-						'post_excerpt' => $post->post_excerpt,
-						'post_name' => $post->post_name,
-						'post_parent' => $post->post_parent,
-						'post_password' => $post->post_password,
-						'post_status' => 'draft',
-						'post_title' => $post->post_title,
-						'post_type' => $post->post_type,
-						'to_ping' => $post->to_ping,
-						'menu_order' => $post->menu_order
-					);
+					$args = array('comment_status' => $post->comment_status, 'ping_status' => $post->ping_status, 'post_author' => $new_post_author, 'post_content' => $post->post_content, 'post_excerpt' => $post->post_excerpt, 'post_name' => $post->post_name, 'post_parent' => $post->post_parent, 'post_password' => $post->post_password, 'post_status' => 'draft', 'post_title' => $post->post_title, 'post_type' => $post->post_type, 'to_ping' => $post->to_ping, 'menu_order' => $post->menu_order);
 					$new_post_id = wp_insert_post($args);
 					$taxonomies = get_object_taxonomies($post->post_type); // returns array of taxonomy names for post type, ex array("category", "post_tag");
 					foreach ($taxonomies as $taxonomy) {
@@ -113,19 +103,12 @@
 						$sql_query .= implode(" UNION ALL ", $sql_query_sel);
 						$wpdb->query($sql_query);
 						$table_name = $wpdb->prefix . 'postmeta';
-						$bi = $wpdb->insert($table_name, array(
-							'post_id' => $new_post_id,
-							'meta_key' => 'total_booking',
-							'meta_value' => 0
-						), array(
-							'%d',
-							'%s',
-							'%d'
-						));
+						$bi = $wpdb->insert($table_name, array('post_id' => $new_post_id, 'meta_key' => 'total_booking', 'meta_value' => 0), array('%d', '%s', '%d'));
 					}
 					wp_redirect(admin_url('post.php?action=edit&post=' . $new_post_id));
 					exit;
-				} else {
+				}
+				else {
 					wp_die('Post creation failed, could not find original post: ' . $post_id);
 				}
 			}

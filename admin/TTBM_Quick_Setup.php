@@ -59,7 +59,7 @@
 				if ( isset( $_POST['active_woo_btn'] ) ) {
 					?>
 					<script>
-								  defaultLoaderBody();
+						dLoaderBody();
 					</script>
 					<?php
 					activate_plugin( 'woocommerce/woocommerce.php' );

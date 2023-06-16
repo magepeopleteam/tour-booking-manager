@@ -223,13 +223,12 @@ table.wc_status_table td.woo_btn_td span {font-size: 20px; color: #10DD10;}
 /************************************************/
 label.ttbm_id_select{height: 100%;}
 /*******************Tour list page*****************************/
-#ttbm_list_page table tr>:first-child {border-radius: var(--dBR) 0 0 var(--dBR);}
-#ttbm_list_page table tr>:last-child {border-radius: 0 var(--dBR) var(--dBR) 0;}
-#ttbm_list_page table tbody tr:nth-of-type(even){background-color:rgba(92, 88, 165, 0.05); }
-/*#ttbm_list_page table tbody tr:nth-of-type(odd) td{border: none;}*/
-/*#ttbm_list table th,*/
-/*#ttbm_list table td{border:none;}*/
-#ttbm_list_page table th{vertical-align: middle;}
+#ttbm_list_page table tbody tr:nth-of-type(odd) td,
+#ttbm_list_page table tbody tr:nth-of-type(even) th:first-child{background-color: var(--color_light);}
+#ttbm_list_page table tbody th a{color: var(--color_6);}
+#ttbm_list_page table thead th {background-color: var(--color_6);color:var(--color_theme_alter);}
+#ttbm_list_page table thead th{vertical-align: middle;}
+#ttbm_list_page table tbody td{vertical-align: top;}
 /****************/
 .mpStyle .mp_search_on{display: block;}
 .mpStyle tr.mp_search_on{display: table-row;}

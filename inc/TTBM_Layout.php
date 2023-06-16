@@ -22,26 +22,13 @@
 			/*****************************/
 			public static function switch_button($name, $checked = '') {
 				?>
-				<label class="roundSwitchLabel"> <input type="checkbox" name="<?php echo esc_attr($name); ?>" <?php echo esc_attr($checked); ?>> <span class="roundSwitch" data-collapse-target="#<?php echo esc_attr($name); ?>"></span> </label>
+				<label class="roundSwitchLabel">
+                    <input type="checkbox" name="<?php echo esc_attr($name); ?>" <?php echo esc_attr($checked); ?>>
+                    <span class="roundSwitch" data-collapse-target="#<?php echo esc_attr($name); ?>"></span>
+                </label>
 				<?php
 			}
-			public static function popup_button($target_popup_id, $text) {
-				?>
-				<button type="button" class="_dButton_bgBlue" data-target-popup="<?php echo esc_attr($target_popup_id); ?>">
-					<span class="fas fa-plus-square"></span>
-					<?php echo esc_html($text); ?>
-				</button>
-				<?php
-			}
-			public static function popup_button_xs($target_popup_id, $text) {
-				?>
-				<button type="button" class="_dButton_xs_bgBlue" data-target-popup="<?php echo esc_attr($target_popup_id); ?>">
-					<span class="fas fa-plus-square"></span>
-					<?php echo esc_html($text); ?>
-				</button>
-				<?php
-			}
-			public static function single_image_button($name) {
+				public static function single_image_button($name) {
 				?>
 				<div class="mp_add_single_image">
 					<input type="hidden" name="<?php echo esc_attr($name); ?>"/>

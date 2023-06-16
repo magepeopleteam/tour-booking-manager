@@ -1,13 +1,22 @@
 <?php
-    if (!defined('ABSPATH')) {
+	if (!defined('ABSPATH')) {
         die;
     } // Cannot access pages directly.
-    if (!class_exists('TTBM_Setting_guide')) {
-        class TTBM_Setting_guide {
+    if (!class_exists('TTBM_Settings_guide')) {
+        class TTBM_Settings_guide {
             public function __construct() {
+	            add_action('add_ttbm_settings_tab_name',[$this,'add_tab'],90);
                 add_action('add_ttbm_settings_tab_content', [$this, 'guide_setting']);
                 add_action('ttbm_settings_save', [$this, 'save_guide']);
             }
+	        public function add_tab(){
+		        $ttbm_label = TTBM_Function::get_name();
+		        ?>
+				<li data-tabs-target="#ttbm_settings_guide">
+					<span class="fas fa-hiking"></span><?php echo $ttbm_label.'  '.esc_html__('Guide ', 'tour-booking-manager'); ?>
+				</li>
+		        <?php
+	        }
             public function guide_setting($tour_id){
                 $ttbm_label = TTBM_Function::get_name();
                 $all_guides = TTBM_Query::query_post_type('ttbm_guide');
@@ -21,8 +30,8 @@
                 ?>
                 <div class="tabsItem" data-tabs="#ttbm_settings_guide">
                     <h5 class="dFlex">
-                        <span class="mR"><?php echo esc_html__('On/Off', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html__('On/Off Tour Guide', 'tour-booking-manager'); ?></span>
-                        <?php TTBM_Layout::switch_button('ttbm_display_tour_guide', $checked_guide); ?>
+                        <span class="mR"><?php echo esc_html__('On/Off', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html__('Guide', 'tour-booking-manager'); ?></span>
+                        <?php MP_Custom_Layout::switch_button('ttbm_display_tour_guide', $checked_guide); ?>
                     </h5>
                     <?php TTBM_Settings::des_p('ttbm_display_tour_guide'); ?>
                     <div class="divider"></div>
@@ -115,5 +124,5 @@
                 }
             }
         }
-        new TTBM_Setting_guide();
+        new TTBM_Settings_guide();
     }

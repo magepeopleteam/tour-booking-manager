@@ -181,16 +181,6 @@ function ttbm_partial_payment_job(parent, total) {
 		let value = parseInt(target.val());
 		mpTourTicketQtyValidation(target, value);
 	});
-	$(document).on("click", ".ttbm_registration_area .decQty ,.ttbm_registration_area .incQty", function () {
-		let current = $(this);
-		let target = current.closest('.qtyIncDec').find('input');
-		let currentValue = parseInt(target.val());
-		let value = current.hasClass('incQty') ? (currentValue + 1) : ((currentValue - 1) > 0 ? (currentValue - 1) : 0);
-		//mpTourTicketQtyValidation(target, value);
-		// target.val(value).trigger('change');
-		target.val(value).trigger('change').trigger('input');
-		//target.trigger('change');
-	});
 	$(document).on("click", ".ttbm_book_now[type='button']", function () {
 		if (mp_tour_ticket_qty($(this).closest('.ttbm_registration_area')) > 0) {
 			$(this).closest('.ttbm_book_now_area').find('.ttbm_add_to_cart').trigger('click');

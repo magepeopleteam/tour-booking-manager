@@ -11,6 +11,7 @@ if (!class_exists('TTBM_Query')) {
                 'post_type' => $post_type,
                 'posts_per_page' =>$show,
                 'paged'          => $page,
+                'post_status' => 'publish'
             );
             return new WP_Query($args);
         }

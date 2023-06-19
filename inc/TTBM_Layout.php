@@ -23,12 +23,12 @@
 			public static function switch_button($name, $checked = '') {
 				?>
 				<label class="roundSwitchLabel">
-                    <input type="checkbox" name="<?php echo esc_attr($name); ?>" <?php echo esc_attr($checked); ?>>
-                    <span class="roundSwitch" data-collapse-target="#<?php echo esc_attr($name); ?>"></span>
-                </label>
+					<input type="checkbox" name="<?php echo esc_attr($name); ?>" <?php echo esc_attr($checked); ?>>
+					<span class="roundSwitch" data-collapse-target="#<?php echo esc_attr($name); ?>"></span>
+				</label>
 				<?php
 			}
-				public static function single_image_button($name) {
+			public static function single_image_button($name) {
 				?>
 				<div class="mp_add_single_image">
 					<input type="hidden" name="<?php echo esc_attr($name); ?>"/>
@@ -58,7 +58,7 @@
 							}
 						?>
 					</div>
-					<?php TTBM_Layout::add_new_button(esc_html__('Add Image', 'tour-booking-manager'), 'add_multi_image', '_dButton_bgColor_1'); ?>
+					<?php MP_Custom_Layout::add_new_button(esc_html__('Add Image', 'tour-booking-manager'), 'add_multi_image', '_dButton_bgColor_1'); ?>
 				</div>
 				<?php
 			}
@@ -107,18 +107,18 @@
 								?>
 								<div class="groupContent qtyIncDec" data-ticket-type-name="<?php echo esc_html($data_ticket_name); ?>">
 									<div class="decQty addonGroupContent"><span class="fas fa-minus"></span></div>
-									<label> <input type="text"
-									               class="formControl inputIncDec"
-									               data-price="<?php echo esc_attr($ticket_price_raw); ?>"
-									               name="<?php echo esc_attr($input_name); ?>"
-									               value="<?php echo esc_attr(max(0, $default_qty)); ?>"
-									               min="<?php echo esc_attr($min_qty); ?>"
-									               max="<?php echo esc_attr($max_qty > 0 ? $max_qty : $available_seat); ?>"
-										/> </label>
+									<label><input type="text"
+											class="formControl inputIncDec"
+											data-price="<?php echo esc_attr($ticket_price_raw); ?>"
+											name="<?php echo esc_attr($input_name); ?>"
+											value="<?php echo esc_attr(max(0, $default_qty)); ?>"
+											min="<?php echo esc_attr($min_qty); ?>"
+											max="<?php echo esc_attr($max_qty > 0 ? $max_qty : $available_seat); ?>"
+										/></label>
 									<div class="incQty addonGroupContent"><span class="fas fa-plus"></span></div>
 								</div>
 							<?php } elseif ($ticket_qty_type == 'dropdown') { ?>
-								<label data-ticket-type-name="<?php echo esc_html($data_ticket_name); ?>"> <select
+								<label data-ticket-type-name="<?php echo esc_html($data_ticket_name); ?>"><select
 										name="<?php echo esc_attr($input_name); ?>"
 										data-price="<?php echo esc_html($ticket_price_raw); ?>"
 										class="formControl"
@@ -129,7 +129,7 @@
 												?>
 												<option value="<?php echo esc_html($i); ?>"> <?php echo esc_html($i); ?> </option>
 											<?php } ?>
-									</select> </label>
+									</select></label>
 							<?php } ?>
 					</div>
 				<?php } else { ?>
@@ -142,7 +142,7 @@
 			public static function tour_list_in_select() {
 				$label = TTBM_Function::get_name();
 				?>
-				<label class="min_400 ttbm_id_select"> <select name="ttbm_id" class="formControl ttbm_select2" id="all_tour_list" required>
+				<label class="min_400 ttbm_id_select"><select name="ttbm_id" class="formControl ttbm_select2" id="all_tour_list" required>
 						<option value="" selected><?php echo esc_html__('Select', 'tour-booking-manager') . ' ' . esc_html($label); ?></option>
 						<?php
 							$post_query = TTBM_Query::query_post_type(TTBM_Function::get_cpt_name());
@@ -164,7 +164,7 @@
 							}
 							wp_reset_postdata();
 						?>
-					</select> </label>
+					</select></label>
 				<?php
 			}
 			/****************************/

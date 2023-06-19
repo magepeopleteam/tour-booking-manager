@@ -66,7 +66,7 @@
 								?>
 								</tbody>
 							</table>
-							<?php TTBM_Layout::add_new_button(esc_html__('Add New Item', 'tour-booking-manager')); ?>
+							<?php MP_Custom_Layout::add_new_button(esc_html__('Add New Item', 'tour-booking-manager')); ?>
 						</td>
 					</tr>
 					</tbody>
@@ -88,7 +88,7 @@
 							<input class="formControl mp_name_validation" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
 						</label>
 					</td>
-					<td><?php TTBM_Layout::move_remove_button(); ?></td>
+					<td><?php MP_Custom_Layout::move_remove_button(); ?></td>
 				</tr>
 				<?php
 			}

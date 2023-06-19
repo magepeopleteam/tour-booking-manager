@@ -118,7 +118,7 @@
 								</tbody>
 							</table>
 						</div>
-						<?php TTBM_Layout::add_new_button(esc_html__('Add New Ticket Type', 'tour-booking-manager')); ?>
+						<?php MP_Custom_Layout::add_new_button(esc_html__('Add New Ticket Type', 'tour-booking-manager')); ?>
 						<?php do_action('add_mp_hidden_table', 'ttbm_price_item'); ?>
 					</div>
 					<?php do_action('ttbm_tour_pricing_inner', $tour_id); ?>
@@ -189,7 +189,7 @@
 							</select>
 						</label>
 					</td>
-					<td><?php TTBM_Layout::move_remove_button(); ?></td>
+					<td><?php MP_Custom_Layout::move_remove_button(); ?></td>
 				</tr>
 				<?php
 			}
@@ -225,7 +225,7 @@
 							</tbody>
 						</table>
 					</div>
-					<?php TTBM_Layout::add_new_button(esc_html__('Add Extra New Service', 'tour-booking-manager')); ?>
+					<?php MP_Custom_Layout::add_new_button(esc_html__('Add Extra New Service', 'tour-booking-manager')); ?>
 					<?php do_action('add_mp_hidden_table', 'ttbm_extra_service_item'); ?>
 				</div>
 				<?php
@@ -273,7 +273,7 @@
 							</select>
 						</label>
 					</td>
-					<td><?php TTBM_Layout::move_remove_button(); ?></td>
+					<td><?php MP_Custom_Layout::move_remove_button(); ?></td>
 				</tr>
 				<?php
 			}

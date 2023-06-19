@@ -62,7 +62,7 @@
 								</tbody>
 							</table>
 						</div>
-						<?php TTBM_Layout::add_new_button(esc_html__('Add New Room', 'tour-booking-manager')); ?>
+						<?php MP_Custom_Layout::add_new_button(esc_html__('Add New Room', 'tour-booking-manager')); ?>
 						<?php do_action('add_mp_hidden_table', 'ttbm_room_item'); ?>
 					</div>
 				</div>
@@ -136,7 +136,7 @@
 							</select>
 						</label>
 					</td>
-					<td><?php TTBM_Layout::move_remove_button(); ?></td>
+					<td><?php MP_Custom_Layout::move_remove_button(); ?></td>
 				</tr>
 				<?php
 			}

@@ -92,9 +92,7 @@
 				if (sizeof($all_features) > 0) {
 					?>
 					<div class="groupCheckBox">
-						<label class="dNone">
-							<input type="text" name="<?php echo esc_attr($feature_name); ?>" value="<?php echo esc_attr($feature_ids); ?>"/>
-						</label>
+						<input type="hidden" name="<?php echo esc_attr($feature_name); ?>" value="<?php echo esc_attr($feature_ids); ?>"/>
 						<?php foreach ($all_features as $feature_list) { ?>
 							<?php $icon = get_term_meta($feature_list->term_id, 'ttbm_feature_icon', true) ? get_term_meta($feature_list->term_id, 'ttbm_feature_icon', true) : 'fas fa-forward'; ?>
 							<label class="customCheckboxLabel">

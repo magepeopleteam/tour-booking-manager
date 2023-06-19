@@ -479,13 +479,7 @@ div.bg_image_area:hover [data-bg-image],
 .mpStyle .abLeftRightBottom_inside,
 .mpStyle [class*="_abLeftRightBottom_inside"] {position: absolute;left: 0;right: 0;top: inherit;bottom: 0;z-index: 111;padding: var(--dMP_xs);}
 /****************/
-.mpStyle .title_on_border {
-	line-height: 1;height: 40px;position: absolute;top: -20px;left: 30px;
-	color: var(--color_theme);
-	padding: 0 var(--dMP);
-	border-radius: var(--dBR);
-}
-/****************/
+.mpStyle .title_on_border { line-height: 1;height: 40px;position: absolute;top: -20px;left: 30px; color: var(--color_theme); padding: 0 var(--dMP); border-radius: var(--dBR); background-color: var(--color_white);}
 /**************Default************************/
 .mpStyle .dLayout, .mpStyle [class*="_dLayout"] {
 	padding: var(--dMP);margin-bottom: var(--dMP);
@@ -534,27 +528,12 @@ div[class*='mage_info'] p {margin: 10px 0 0 0;}
 @media only screen and (min-width: 10px) {
 	.mpStyle img:not(.mp_wp_editor img) {width: 100%;height: auto;max-width: 100%;}
 	/*******Click slider***************/
-	.mpStyle [class*='clickSlide'] {
-		background-color: var(--color_white);
-		padding: var(--dMP);
-	}
-	.mpStyle [class*='slideItem'] {
-		display: none;
-	}
-	.mpStyle [class*='slideItem'].active {
-		display: block;
-	}
-	.mpStyle [class*='slideItem'] img {
-		width: 100%;
-	}
-	.mpStyle [class*='slideIndicator'] {
-		margin: var(--dMP) 0 0 0;
-	}
-	.mpStyle [class*='slideIndicatorItem'] {
-		border: 3px solid var(--color_border);
-		margin: 0 5px;
-		background-color: var(--color_border);
-	}
+	.mpStyle [class*='clickSlide'] { background-color: var(--color_white); padding: var(--dMP); }
+	.mpStyle [class*='slideItem'] { display: none; }
+	.mpStyle [class*='slideItem'].active { display: block; }
+	.mpStyle [class*='slideItem'] img { width: 100%; }
+	.mpStyle [class*='slideIndicator'] { margin: var(--dMP) 0 0 0; }
+	.mpStyle [class*='slideIndicatorItem'] { border: 3px solid var(--color_border); margin: 0 5px; background-color: var(--color_border); }
 	.mpStyle [class*='slideIndicatorItem'].active {
 		border-color: var(--color_active);
 		background-color: var(--color_active)
@@ -1022,7 +1001,7 @@ div.mpStyle .customRadioLabel input[type="radio"] ~ .formControl,
 }
 div.groupContent > * {border-left: 1px solid var(--color_border);margin: 0;}
 div.groupContent > *:first-child {border: none;}
-div.mpStyle div.groupContent .formControl {	text-align: center;border: none;	background-color: var(--color_white);	height: 100%;	border-radius: 0 !important;	padding: 0;}
+div.mpStyle div.groupContent .formControl { text-align: center;border: none; background-color: var(--color_white); height: 100%; border-radius: 0 !important; padding: 0;}
 div.mpStyle div.groupContent select.formControl { text-align: left;border: none !important; padding: var(--dMP_xs) 35px var(--dMP_xs) var(--dMP_xs);}
 .mpStyle .groupContent textarea.formControl {text-align: left;}
 .mpStyle .groupContent input[type="radio"] {}

@@ -238,9 +238,7 @@
 						<div class="divider"></div>
 						<div class="mActive" data-collapse="#ttbm_location_filter_multiple" data-placeholder>
 							<div class="groupCheckBox">
-								<label class="dNone">
-									<input type="text" class="formControl" name="location_filter_multiple" value="<?php echo esc_attr( $current_location ); ?>"/>
-								</label>
+								<input type="hidden" name="location_filter_multiple" value="<?php echo esc_attr( $current_location ); ?>"/>
 								<?php foreach ( $locations as $location ) { ?>
 									<?php $checked = $current_location == $location->term_id ? 'checked' : ''; ?>
 									<label class="customCheckboxLabel">
@@ -333,9 +331,7 @@
 						<div class="divider"></div>
 						<div class="mActive" data-collapse="#ttbm_duration_filter_multiple" data-placeholder>
 							<div class="groupCheckBox">
-								<label class="dNone">
-									<input type="text" class="formControl" name="duration_filter_multiple" value="<?php echo esc_attr( $url ); ?>"/>
-								</label>
+								<input type="hidden"  name="duration_filter_multiple" value="<?php echo esc_attr( $url ); ?>"/>
 								<?php foreach ( $durations as $duration ) { ?>
 									<?php if ( $duration > 0 ) { ?>
 										<?php $checked = $url == $duration ? 'checked' : ''; ?>
@@ -375,9 +371,7 @@
 						<div class="divider"></div>
 						<div class="mActive" data-collapse="#feature_filter_multiple" data-placeholder>
 							<div class="groupCheckBox">
-								<label class="dNone">
-									<input type="text" class="formControl" name="feature_filter_multiple" value="<?php echo esc_attr( $url ); ?>"/>
-								</label>
+								<input type="hidden"  name="feature_filter_multiple" value="<?php echo esc_attr( $url ); ?>"/>
 								<?php foreach ( $features as $feature ) { ?>
 									<?php $icon = get_term_meta( $feature->term_id, 'ttbm_feature_icon', true ) ? get_term_meta( $feature->term_id, 'ttbm_feature_icon', true ) : 'fas fa-forward'; ?>
 									<label class="customCheckboxLabel">
@@ -426,9 +420,7 @@
 						<div class="divider"></div>
 						<div class="mActive" data-collapse="#activity_filter_multiple" data-placeholder>
 							<div class="groupCheckBox">
-								<label class="dNone">
-									<input type="text" class="formControl" name="activity_filter_multiple" value="<?php echo esc_attr( $current_activity ); ?>"/>
-								</label>
+								<input type="hidden" name="activity_filter_multiple" value="<?php echo esc_attr( $current_activity ); ?>"/>
 								<?php foreach ( $activities as $activity ) { ?>
 									<?php $checked = $current_activity == $activity->term_id ? 'checked' : ''; ?>
 									<label class="customCheckboxLabel">
@@ -455,9 +447,7 @@
 						<div class="divider"></div>
 						<div class="mActive" data-collapse="#tag_filter_multiple" data-placeholder>
 							<div class="groupCheckBox">
-								<label class="dNone">
-									<input type="text" class="formControl" name="tag_filter_multiple" value=""/>
-								</label>
+								<input type="hidden" name="tag_filter_multiple" value=""/>
 								<?php foreach ( $tags as $tag ) { ?>
 									<label class="customCheckboxLabel">
 										<input type="checkbox" class="formControl" data-checked="<?php echo esc_attr( $tag->term_id ); ?>"/>

@@ -82,7 +82,7 @@
 										</tbody>
 									</table>
 									<?php
-									TTBM_Layout::add_new_button(esc_html__('Add New Place', 'tour-booking-manager'));
+									MP_Custom_Layout::add_new_button(esc_html__('Add New Place', 'tour-booking-manager'));
 								}
 								else {
                                     MP_Custom_Layout::popup_button('add_new_place_you_see_popup', esc_html__('Create New Place', 'tour-booking-manager'));
@@ -132,7 +132,7 @@
 							</select>
 						</label>
 					</td>
-					<td><?php TTBM_Layout::move_remove_button(); ?></td>
+					<td><?php MP_Custom_Layout::move_remove_button(); ?></td>
 				</tr>
 				<?php
 			}

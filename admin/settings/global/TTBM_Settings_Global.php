@@ -13,15 +13,16 @@
 				add_filter( 'ttbm_settings_sec_fields', array( $this, 'settings_sec_fields' ), 10 );
 			}
 			public function global_settings_menu() {
-				$event_label = TTBM_Function::get_name();
-				add_submenu_page( 'edit.php?post_type=ttbm_tour', $event_label . esc_html__( ' Settings', 'tour-booking-manager' ), $event_label . esc_html__( ' Settings', 'tour-booking-manager' ), 'manage_options', 'ttbm_settings_page', array( $this, 'settings_page' ) );
+				$label = TTBM_Function::get_name();
+				add_submenu_page( 'edit.php?post_type=ttbm_tour', $label . esc_html__( ' Settings', 'tour-booking-manager' ), $label . esc_html__( ' Settings', 'tour-booking-manager' ), 'manage_options', 'ttbm_settings_page', array( $this, 'settings_page' ) );
 			}
 			public function settings_page() {
-				$plugin_data = get_plugin_data( __FILE__ );
+				$label = TTBM_Function::get_name();
 				?>
 				<div class="mp_settings_panel_header">
-					<?php echo $plugin_data['Name']; ?>
-					<small><?php echo $plugin_data['Version']; ?></small>
+					<h3>
+						<?php echo esc_html($label . esc_html__(' Global Settings', 'tour-booking-manager')); ?>
+					</h3>
 				</div>
 				<div class="mp_settings_panel">
 					<?php $this->settings_api->show_navigation(); ?>

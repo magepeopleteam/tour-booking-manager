@@ -27,7 +27,7 @@
 				if ( ! defined( 'TTBM_PLUGIN_URL' ) ) {
 					define( 'TTBM_PLUGIN_URL', plugins_url() . '/' . plugin_basename( dirname( __FILE__ ) ) );
 				}
-                require_once TTBM_PLUGIN_DIR . '/inc/MP_Global_Function.php';
+				$this->load_global_file();
 				if ( self::check_woocommerce()==1 ) {
 					add_action( 'activated_plugin', array( $this, 'activation_redirect' ), 90, 1 );
 					register_activation_hook( __FILE__, array( $this, 'on_activation_page_create' ) );
@@ -38,6 +38,13 @@
 					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
 					add_action( 'activated_plugin', array( $this, 'activation_redirect_setup' ), 90, 1 );
 				}
+			}
+			public function load_global_file() {
+				require_once TTBM_PLUGIN_DIR . '/inc/global/MP_Global_Function.php';
+				//require_once TTBM_PLUGIN_DIR . '/inc/global/MP_Global_Style.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/global/MP_Custom_Layout.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/global/MP_Custom_Slider.php';
+				//require_once TTBM_PLUGIN_DIR . '/inc/global/MP_Select_Icon_image.php';
 			}
 			public function appsero_init_tracker_ttbm() {
 				if ( ! class_exists( 'Appsero\Client' ) ) {

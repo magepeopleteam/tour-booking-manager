@@ -3,13 +3,8 @@ function load_sortable_datepicker(parent, item) {
 		parent.find('.mp_sortable_area').sortable({
 			handle: jQuery(this).find('.mp_sortable_button')
 		});
-		parent.find(".date_type").removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind().datepicker({
-			dateFormat: ttbm_date_format,
-			autoSize: true,
-			onSelect: function (dateString, data) {
-				let date = data.selectedYear + '-' + (parseInt(data.selectedMonth) + 1) + '-' + data.selectedDay;
-				jQuery(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
-			}
+		parent.find(".date_type").removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind().promise().done(function (){
+			mp_load_date_picker(parent);
 		});
 	});
 	return true;
@@ -18,14 +13,6 @@ function load_sortable_datepicker(parent, item) {
 (function ($) {
 	"use strict";
 	$(document).ready(function () {
-		$(".mpStyle .date_type").datepicker({
-			dateFormat: ttbm_date_format,
-			autoSize: true,
-			onSelect: function (dateString, data) {
-				let date = data.selectedYear + '-' + (parseInt(data.selectedMonth) + 1) + '-' + data.selectedDay;
-				$(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
-			}
-		});
 		$('.ttbm_select2').select2({});
 		$('.field-select2-wrapper select').select2({});
 		$("ul.select2-selection__rendered").sortable({

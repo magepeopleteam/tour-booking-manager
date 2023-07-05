@@ -28,7 +28,7 @@
 				$pagination = $params['pagination'];
 				$search = $params['sidebar-filter'];
 				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
-				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity']);
+				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'],$params['sort_by']);
 				ob_start();
 				?>
 				<div class="mpStyle ttbm_wraper placeholderLoader ttbm_filter_area">
@@ -65,7 +65,7 @@
 				$search = $params['search-filter'];
 				$show = $params['show'];
 				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
-				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity']);
+				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'],$params['sort_by']);
 				ob_start();
 				?>
 				<div class="mpStyle ttbm_wraper placeholderLoader ttbm_filter_area">
@@ -164,7 +164,7 @@
 				return ob_get_clean();
 			}
 			//***************************//
-			public function default_attribute($style = 'grid', $show = 9, $search_filter = 'yes', $sidebar_filter = 'no', $feature_filter = 'no', $tag_filter = 'no', $month_filter = 'yes', $tour_type = ''): array {
+			public function default_attribute($style = 'grid', $show = 9, $search_filter = 'yes', $sidebar_filter = 'no', $feature_filter = 'no', $tag_filter = 'no', $month_filter = 'yes', $tour_type = '',$sort_by=''): array {
 				return array(
 					"style" => $style,
 					"show" => $show,
@@ -172,6 +172,7 @@
 					"city" => "",
 					"country" => "",
 					'sort' => 'ASC',
+					'sort_by' => $sort_by,
 					'status' => '',
 					"pagination-style" => "load_more",
 					"column" => 3,

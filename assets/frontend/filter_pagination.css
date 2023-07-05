@@ -2,26 +2,22 @@
 div.ttbm_filter.leftSidebar,
 div.filter_top_bar,
 div.search_result_empty,
-div.filter_item {-webkit-box-shadow: 0 8px 12px rgb(51 65 80 / 6%), 0 14px 44px rgb(51 65 80 / 11%);box-shadow: 0 8px 12px rgb(51 65 80 / 6%), 0 14px 44px rgb(51 65 80 / 11%);}
+div.filter_item {
+	-webkit-box-shadow: 0 8px 12px rgb(51 65 80 / 6%), 0 14px 44px rgb(51 65 80 / 11%);
+	box-shadow: 0 8px 12px rgb(51 65 80 / 6%), 0 14px 44px rgb(51 65 80 / 11%);
+}
 /**********Top Static Filter*****************************/
 div.ttbm_top_filter {margin: 0 0 var(--dMP) 0;}
 div.ttbm_top_filter .dButton,
 div.ttbm_top_filter label {margin: var(--dMP) var(--dMP) 0 0;font-weight: var(--fw-bold);}
 div.ttbm_top_filter > :last-child {margin: var(--dMP) 0 0 0;}
-div.ttbm_top_filter .formControl {
-	background-color: var(--color_theme_aa);
-	border-color: var(--color_theme);
-	border-radius: 0;min-width: 200px;
-	color: var(--color_theme_alter);
-	font-weight: var(--fw-medium);
-}
-div.ttbm_top_filter .formControl:focus{background-color: var(--color_theme_cc);}
+div.ttbm_top_filter .formControl { border-radius: 0;min-width: 200px; font-weight: var(--fw-medium);}
+div.ttbm_top_filter .formControl:focus {background-color: var(--color_theme_cc);}
 div.ttbm_top_filter .formControl::placeholder {color: var(--color_theme_alter);}
 div.ttbm_top_filter.ttbm_filter .formControl {background-color: #FFF;color: inherit;border: 1px solid var(--color_border);}
 /*************Left Filter section**************************/
 div.left_filter {display: -webkit-flex;display: flex;}
 div.ttbm_filter.leftSidebar {width: 100%;display: block;background-color: #FFF;padding: var(--dMP);margin: 0 0 var(--dMP) 0;}
-
 /***************************************/
 div.search_result_empty {
 	display: none;font-weight: var(--fw-medium); font-size: var(--fs_h3); color: var(--color_warning);text-align: center;

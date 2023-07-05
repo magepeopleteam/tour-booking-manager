@@ -15,8 +15,9 @@ if (!class_exists('TTBM_Query')) {
             );
             return new WP_Query($args);
         }
-        public static function ttbm_query($show, $sort = '', $cat = '', $org = '', $city = '', $country = '', $status = '', $tour_type = '', $activity = ''): WP_Query {
+        public static function ttbm_query($show, $sort = '', $cat = '', $org = '', $city = '', $country = '', $status = '', $tour_type = '', $activity = '',$sort_by=''): WP_Query {
             TTBM_Function::update_all_upcoming_date_month();
+			$sort_by=$sort_by?:'meta_value';
             if (get_query_var('paged')) {
                 $paged = get_query_var('paged');
             } elseif (get_query_var('page')) {
@@ -73,7 +74,7 @@ if (!class_exists('TTBM_Query')) {
                 'paged' => $paged,
                 'posts_per_page' => $show,
                 'order' => $sort,
-                'orderby' => 'meta_value',
+                'orderby' => $sort_by,
                 'meta_key' => 'ttbm_upcoming_date',
                 'meta_query' => array(
                    // 'relation' => 'AND',

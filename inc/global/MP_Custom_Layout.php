@@ -2,7 +2,7 @@
 	if (!defined('ABSPATH')) {
 		die;
 	} // Cannot access pages directly.
-	if (!class_exists('MP_Custom_Layout')) {
+	if (!class_exists( 'MP_Custom_Layout' )) {
 		class MP_Custom_Layout {
 			public function __construct() {
 				add_action('add_mp_hidden_table', array($this, 'hidden_table'), 10, 2);

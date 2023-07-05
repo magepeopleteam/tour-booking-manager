@@ -21,6 +21,7 @@ if (!class_exists('TTBM_Woocommerce')) {
         public function add_cart_item_data($cart_item_data, $product_id) {
             $linked_ttbm_id = TTBM_Function::get_post_info($product_id, 'link_ttbm_id', $product_id);
             $product_id = is_string(get_post_status($linked_ttbm_id)) ? $linked_ttbm_id : $product_id;
+	        $product_id=TTBM_Function::post_id_multi_language($product_id);
             if (get_post_type($product_id) == TTBM_Function::get_cpt_name()) {
                 $total_price = $this->get_cart_total_price($product_id);
                 $hotel_info = self::cart_hotel_info();
@@ -42,6 +43,7 @@ if (!class_exists('TTBM_Woocommerce')) {
         public function before_calculate_totals($cart_object) {
             foreach ($cart_object->cart_contents as $value) {
                 $ttbm_id = array_key_exists('ttbm_id', $value) ? $value['ttbm_id'] : 0;
+	            $ttbm_id=TTBM_Function::post_id_multi_language($ttbm_id);
                 if (get_post_type($ttbm_id) == TTBM_Function::get_cpt_name()) {
                     $total_price = $value['ttbm_tp'];
                     $value['data']->set_price($total_price);
@@ -54,6 +56,7 @@ if (!class_exists('TTBM_Woocommerce')) {
         }
         public function cart_item_thumbnail($thumbnail, $cart_item) {
             $ttbm_id = array_key_exists('ttbm_id', $cart_item) ? $cart_item['ttbm_id'] : 0;
+	        $ttbm_id=TTBM_Function::post_id_multi_language($ttbm_id);
             if (get_post_type($ttbm_id) == TTBM_Function::get_cpt_name()) {
                 $thumbnail = '<div class="bg_image_area" data-href="' . get_the_permalink($ttbm_id) . '"><div data-bg-image="' . MP_Global_Function::get_image_url($ttbm_id) . '"></div></div>';
             }
@@ -62,6 +65,7 @@ if (!class_exists('TTBM_Woocommerce')) {
         public function get_item_data($item_data, $cart_item) {
             ob_start();
             $ttbm_id = array_key_exists('ttbm_id', $cart_item) ? $cart_item['ttbm_id'] : 0;
+	        $ttbm_id=TTBM_Function::post_id_multi_language($ttbm_id);
             if (get_post_type($ttbm_id) == TTBM_Function::get_cpt_name()) {
                 $this->show_cart_item($cart_item, $ttbm_id);
                 do_action('ttbm_show_cart_item', $cart_item, $ttbm_id);
@@ -75,6 +79,7 @@ if (!class_exists('TTBM_Woocommerce')) {
             $items = $woocommerce->cart->get_cart();
             foreach ($items as $values) {
                 $ttbm_id = array_key_exists('ttbm_id', $values) ? $values['ttbm_id'] : 0;
+	            $ttbm_id=TTBM_Function::post_id_multi_language($ttbm_id);
                 if (get_post_type($ttbm_id) == TTBM_Function::get_cpt_name()) {
                     do_action('ttbm_validate_cart_item', $values, $ttbm_id);
                 }
@@ -82,14 +87,15 @@ if (!class_exists('TTBM_Woocommerce')) {
         }
         public function checkout_create_order_line_item($item, $cart_item_key, $values) {
             $ttbm_id = array_key_exists('ttbm_id', $values) ? $values['ttbm_id'] : 0;
+	        $ttbm_id=TTBM_Function::post_id_multi_language($ttbm_id);
+	        //echo '<pre>';print_r($values);echo '</pre>';die();
             if (get_post_type($ttbm_id) == TTBM_Function::get_cpt_name()) {
                 $hotel_info = $values['ttbm_hotel_info'] ?: [];
                 $ticket_type = $values['ttbm_ticket_info'] ?: [];
                 $extra_service = $values['ttbm_extra_service_info'] ?: [];
                 $user_info = $values['ttbm_user_info'] ?: [];
                 $date = $values['ttbm_date'] ?: '';
-                $time_slot = MP_Global_Function::check_time_exit_date($date);
-                $data_format = $time_slot ? 'date-time-text' : 'date-text';
+                $data_format = MP_Global_Function::check_time_exit_date($date) ? 'date-time-text' : 'date-text';
                 $start_date = TTBM_Function::datetime_format($date, $data_format);
                 $location = TTBM_Function::get_location($ttbm_id);
                 $date_text = TTBM_Function::get_name() . ' ' . esc_html__('Date', 'tour-booking-manager');
@@ -144,6 +150,7 @@ if (!class_exists('TTBM_Woocommerce')) {
                     //$item_id = current( array_keys( $order->get_items() ) );
                     foreach ($order->get_items() as $item_id => $item) {
                         $ttbm_id = TTBM_Query::get_order_meta($item_id, '_ttbm_id');
+	                    $ttbm_id=TTBM_Function::post_id_multi_language($ttbm_id);
                         if (get_post_type($ttbm_id) == TTBM_Function::get_cpt_name()) {
                             $ticket = self::get_order_item_meta($item_id, '_ttbm_ticket_info');
                             $ticket_info = $ticket ? TTBM_Function::data_sanitize($ticket) : [];
@@ -165,6 +172,7 @@ if (!class_exists('TTBM_Woocommerce')) {
             $order_status = $order->get_status();
             foreach ($order->get_items() as $item_id => $item_values) {
                 $tour_id = TTBM_Query::get_order_meta($item_id, '_ttbm_id');
+	            $tour_id=TTBM_Function::post_id_multi_language($tour_id);
                 if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
                     if ($order->has_status('processing')) {
                         do_action('ttbm_wc_order_status_change', $order_status, $tour_id, $order_id);
@@ -200,8 +208,7 @@ if (!class_exists('TTBM_Woocommerce')) {
             $tour_name = TTBM_Function::get_name();
             $location = TTBM_Function::get_location($ttbm_id);
             $date = $cart_item['ttbm_date'];
-            $time_slot = MP_Global_Function::check_time_exit_date($date);
-            $data_format = $time_slot ? 'date-time-text' : 'date-text';
+            $data_format = MP_Global_Function::check_time_exit_date($date) ? 'date-time-text' : 'date-text';
             $date = TTBM_Function::datetime_format($date, $data_format);
             $hotel_info = $cart_item['ttbm_hotel_info'] ?: array();
             ?>

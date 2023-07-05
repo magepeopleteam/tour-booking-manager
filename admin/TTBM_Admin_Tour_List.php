@@ -32,7 +32,7 @@
 								<div class="col_4 _allCenter">
 									<div class="groupContent bgWhite">
 										<label class="min_150">
-											<select class="formControl bgTheme" name="ttbm_filter_type" data-collapse-target>
+											<select class="formControl" name="ttbm_filter_type" data-collapse-target>
 												<option value="ttbm_id" data-option-target="#ttbm_list_id" selected><?php echo esc_html($label); ?></option>
 												<?php if (is_array($categories) && sizeof($categories) > 0) { ?>
 													<option value="ttbm_list_category_filter" data-option-target="#ttbm_list_category_filter"><?php esc_html_e('Filter By Category ', 'tour-booking-manager'); ?></option>
@@ -128,7 +128,7 @@
 									<?php esc_attr_e('Available', 'tour-booking-manager'); ?>
 								</small>
 							</th>
-							<th class="_w_150"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
+							<th class="_w_125"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
 						</tr>
 						</thead>
 						<tbody>

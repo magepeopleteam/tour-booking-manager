@@ -74,9 +74,13 @@ function pageScrollTo(target) {
 		scrollTop: target.offset().top -= 150
 	}, 1000);
 }
-function mp_load_date_picker() {
-	jQuery(".mpStyle .date_type").datepicker({
-		dateFormat: mp_date_format, autoSize: true, onSelect: function (dateString, data) {
+function mp_load_date_picker(parent=jQuery('.mpStyle')) {
+	parent.find(".date_type").datepicker({
+		dateFormat: ttbm_date_format,
+		autoSize: true,
+		changeMonth: true,
+		changeYear: true,
+		onSelect: function (dateString, data) {
 			let date = data.selectedYear + '-' + ('0' + (parseInt(data.selectedMonth) + 1)).slice(-2) + '-' + data.selectedDay;
 			jQuery(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
 		}
@@ -163,9 +167,12 @@ function content_icon_change(currentTarget) {
 }
 function content_text_change(currentTarget) {
 	let openText = currentTarget.data('open-text');
+	openText = openText ? openText.toString() : '';
 	let closeText = currentTarget.data('close-text');
+	closeText = closeText ? closeText : '';
 	if (openText || closeText) {
 		let text = currentTarget.find('[data-text]').html();
+		text = text ? text.toString() : ''
 		if (text !== openText) {
 			currentTarget.find('[data-text]').html(openText);
 		} else {

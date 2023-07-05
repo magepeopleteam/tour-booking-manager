@@ -18,7 +18,7 @@
 					include( TTBM_Function::template_path( 'layout/carousel_indicator.php' ) );
 				}
 			?>
-			<div class="ttbm_widget_content marZero <?php if ( sizeof( $places ) > 3 ) { ?> owl-theme owl-carousel <?php } else {
+			<div class="ttbm_widget_content _mZero <?php if ( sizeof( $places ) > 3 ) { ?> owl-theme owl-carousel <?php } else {
 				echo "flexWrap grid";
 			} ?>">
 				<?php

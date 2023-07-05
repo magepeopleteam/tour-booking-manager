@@ -110,15 +110,11 @@ function ttbm_multi_attendee_form(parentTr, qty) {
 				let form_copy = jQuery('[data-form-type]').html();
 				for (let i = formLength; i < qty; i++) {
 					target_tr.find('td').append(form_copy).find('.ttbm_attendee_form_item:last-child').slideDown(250).promise().done(function (){
-						jQuery(this).find(".date_type").datepicker({
-							dateFormat: ttbm_date_format,
-							autoSize: true,
-							onSelect: function (dateString, data) {
-								let date = data.selectedYear + '-' + (parseInt(data.selectedMonth) + 1) + '-' + data.selectedDay;
-								jQuery(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
-							}
+						target_tr.find(".date_type").removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind().promise().done(function (){
+							mp_load_date_picker(target_tr);
 						});
 					});
+
 				}
 			}
 		}
@@ -133,13 +129,8 @@ function ttbm_single_attendee_form(parent, totalQty) {
 		if (target_form.length === 0) {
 			let form_copy = parent.find('[data-form-type]').html();
 			parent.find('.ttbm_attendee_form_area').append(form_copy).promise().done(function (){
-				jQuery(this).find(".date_type").datepicker({
-					dateFormat: ttbm_date_format,
-					autoSize: true,
-					onSelect: function (dateString, data) {
-						let date = data.selectedYear + '-' + (parseInt(data.selectedMonth) + 1) + '-' + data.selectedDay;
-						jQuery(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
-					}
+				parent.find('.ttbm_attendee_form_area').find(".date_type").removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind().promise().done(function (){
+					mp_load_date_picker(parent.find('.ttbm_attendee_form_area'));
 				});
 			});
 		}

@@ -20,7 +20,6 @@
 				load_plugin_textdomain( 'tour-booking-manager', false, $plugin_dir );
 			}
 			private function load_file() {
-				require_once TTBM_PLUGIN_DIR . '/inc/MP_Custom_Layout.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Function.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Layout.php';
 				require_once TTBM_PLUGIN_DIR . '/support/elementor/elementor-support.php';
@@ -32,7 +31,6 @@
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Tour_List.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Style.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Details_Layout.php';
-				require_once TTBM_PLUGIN_DIR . '/inc/MP_Custom_Slider.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Booking.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
 			}

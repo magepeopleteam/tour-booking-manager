@@ -948,6 +948,8 @@
 							minDate: new Date(<?php echo $start_year; ?>, <?php echo $start_month; ?>, <?php echo $start_day; ?>),
 							maxDate: new Date(<?php echo $end_year; ?>, <?php echo $end_month; ?>, <?php echo $end_day; ?>),
 							autoSize: true,
+							changeMonth: true,
+							changeYear: true,
 							beforeShowDay: WorkingDates,
 							onSelect: onCloseForDatePicker
 						});

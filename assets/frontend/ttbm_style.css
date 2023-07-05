@@ -13,7 +13,23 @@ div.ttbm_container {width: 100%;max-width: var(--dContainer_Width);margin: 0 aut
 .ttbm_wraper table th,
 .ttbm_wraper table td {padding: 5px 5px 5px 15px;vertical-align: middle;border: 1px dotted #DDD;}
 div.ttbm_faq_item .ttbm_faq_title {-webkit-transition: 350ms ease-in-out;transition: 350ms ease-in-out;}
-
+/**********Shadow content****************************/
+div.viator_top_section .ttbm_booking_panel form,
+#ttbm_related_tour div.filter_item,
+.shadow_one {
+	background-color: var(--color_white);padding: var(--dMP);
+	-webkit-box-shadow: 0 5px 10px rgba(0, 44, 102, 0.2);
+	-moz-box-shadow: 0 5px 10px rgba(0, 44, 102, 0.2);
+	-o-box-shadow: 0 5px 10px rgba(0, 44, 102, 0.2);
+	box-shadow: 0 5px 10px rgba(0, 44, 102, 0.2);
+}
+.shadow_two, [class*='_shadow_two'] {
+	background-color: var(--color_white);padding: var(--dMP);border-radius: 9px;
+	-webkit-box-shadow: 0 1px 2px rgb(3 54 63 / 40%), 0 -1px 2px rgb(3 54 63 / 4%);
+	-moz-box-shadow: 0 1px 2px rgb(3 54 63 / 40%), 0 -1px 2px rgb(3 54 63 / 4%);
+	-o-box-shadow: 0 1px 2px rgb(3 54 63 / 40%), 0 -1px 2px rgb(3 54 63 / 4%);
+	box-shadow: 0 1px 2px rgb(3 54 63 / 40%), 0 -1px 2px rgb(3 54 63 / 4%);
+}
 /*****************Details page*********************************/
 div.ttbm_details_page {display: block;position: relative;}
 div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-webkit-flex-wrap: wrap;flex-wrap: wrap;-webkit-justify-content: space-between;justify-content: space-between;}

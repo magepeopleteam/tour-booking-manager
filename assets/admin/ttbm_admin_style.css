@@ -228,7 +228,8 @@ label.ttbm_id_select{height: 100%;}
 #ttbm_list_page table tbody tr:nth-of-type(odd) td{padding: 0;}
 #ttbm_list_page table tbody th a{color: var(--d_color);}
 #ttbm_list_page table thead th {background-color: var(--color_6);color:var(--color_theme_alter);}
-#ttbm_list_page table thead th{vertical-align: middle;}
+#ttbm_list_page table table thead th {background-color: var(--color_theme_alter);color:var(--color_6);}
+
 #ttbm_list_page table tbody td{vertical-align: top;}
 #ttbm_list_page table th,
 #ttbm_list_page table td{border-color: #F7EFEF;}

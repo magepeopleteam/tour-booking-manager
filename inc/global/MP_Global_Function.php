@@ -2,7 +2,7 @@
 if (!defined('ABSPATH')) {
     die;
 } // Cannot access pages directly.
-if (!class_exists('MP_Global_Function')) {
+if (!class_exists( 'MP_Global_Function' )) {
     class MP_Global_Function {
         public function __construct() {
             add_action('mp_load_date_picker_js', [$this, 'date_picker_js'], 10, 2);
@@ -29,6 +29,8 @@ if (!class_exists('MP_Global_Function')) {
                         minDate: new Date(<?php echo esc_attr($start_year); ?>, <?php echo esc_attr($start_month); ?>, <?php echo esc_attr($start_day); ?>),
                         maxDate: new Date(<?php echo esc_attr($end_year); ?>, <?php echo esc_attr($end_month); ?>, <?php echo esc_attr($end_day); ?>),
                         autoSize: true,
+	                    changeMonth: true,
+	                    changeYear: true,
                         beforeShowDay: WorkingDates,
                         onSelect: function (dateString, data) {
                             let date = data.selectedYear + '-' + ('0' + (parseInt(data.selectedMonth) + 1)).slice(-2) + '-' + data.selectedDay;

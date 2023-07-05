@@ -17,6 +17,8 @@
 		$tour_type                 = TTBM_Function::get_tour_type( $tour_id );
 		$ttbm_display_registration = TTBM_Function::get_post_info( $tour_id, 'ttbm_display_registration', 'on' );
 		$start_price = TTBM_Function::get_tour_start_price( $tour_id );
+		$total_seat     = TTBM_Function::get_total_seat( $tour_id );
+		$available_seat = TTBM_Function::get_total_available( $tour_id );
 		TTBM_Function::update_upcoming_date_month($tour_id,true,$all_dates);
 		include_once( TTBM_Function::details_template_path() );
 	}

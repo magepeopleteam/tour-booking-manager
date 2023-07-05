@@ -17,7 +17,7 @@
 						include(TTBM_Function::template_path('layout/carousel_indicator.php'));
 					}
 				?>
-				<div class="ttbm_widget_content marZero <?php if (sizeof($guides) > 1 && $ttbm_guide_style=='carousel') { ?> owl-theme owl-carousel <?php } ?>">
+				<div class="ttbm_widget_content _mZero <?php if (sizeof($guides) > 1 && $ttbm_guide_style=='carousel') { ?> owl-theme owl-carousel <?php } ?>">
 					<?php foreach ($guides as $guide_id) { ?>
 						<div class="">
 							<div class="bg_image_area mb" data-placeholder>

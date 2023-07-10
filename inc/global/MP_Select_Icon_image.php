@@ -20,14 +20,14 @@
                 <div class="mp_add_icon_area">
                     <button type="button" class="mp_add_icon dButton_xs ">
                         <input type="hidden" name="<?php echo esc_html($name); ?>" placeholder="" value="<?php echo esc_html($value); ?>"/>
-                        <span class="<?php echo esc_html($value); ?>" data-empty-text="<?php esc_html_e('Add Icon', 'mptbm_plugin'); ?>">
+                        <span class="<?php echo esc_html($value); ?>" data-empty-text="<?php esc_html_e('Add Icon', 'tour-booking-manager'); ?>">
 			                    <?php
 				                    if (!$value) {
-					                    esc_html_e('Add Icon', 'mptbm_plugin');
+					                    esc_html_e('Add Icon', 'tour-booking-manager');
 				                    }
 			                    ?>
 			                </span>
-                        <span class="fas fa-times remove_input_icon <?php echo esc_html($value ? 'active' : ''); ?> " title="<?php esc_html_e('Remove Icon', 'mptbm_plugin'); ?>"></span>
+                        <span class="fas fa-times remove_input_icon <?php echo esc_html($value ? 'active' : ''); ?> " title="<?php esc_html_e('Remove Icon', 'tour-booking-manager'); ?>"></span>
                     </button>
                 </div>
 				<?php
@@ -40,7 +40,7 @@
                     <div class="mp_add_icon_popup mpPopup mpStyle" data-popup="#mp_add_icon_popup">
                         <div class="popupMainArea fullWidth">
                             <div class="popupHeader">
-                                <h2><?php esc_html_e('Select Icon', 'mptbm_plugin'); ?></h2>
+                                <h2><?php esc_html_e('Select Icon', 'tour-booking-manager'); ?></h2>
                                 <span class="fas fa-times popupClose"></span>
                             </div>
                             <div class="popupBody">
@@ -54,7 +54,7 @@
 										?>
                                         <div class="dFlex">
                                             <ul class="popupIconMenu">
-                                                <li class="active" data-icon-menu="all_item"><?php esc_html_e('All Icon', 'mptbm_plugin'); ?>&nbsp;(<strong><?php echo esc_html($total_icon); ?></strong>)</li>
+                                                <li class="active" data-icon-menu="all_item"><?php esc_html_e('All Icon', 'tour-booking-manager'); ?>&nbsp;(<strong><?php echo esc_html($total_icon); ?></strong>)</li>
 												<?php
 													foreach ($icons as $key => $icon) {
 														?>
@@ -108,7 +108,7 @@
                         </div>
 					<?php } ?>
                     <button type="button" class="_dButton_xs_bgColor_1_fullWidth <?php echo esc_attr($image_id ? 'dNone' : ''); ?>">
-                        <span class="fas fa-images mR_xs"></span><?php esc_html_e('Image', 'mptbm_plugin'); ?>
+                        <span class="fas fa-images mR_xs"></span><?php esc_html_e('Image', 'tour-booking-manager'); ?>
                     </button>
                 </div>
 				<?php
@@ -134,7 +134,7 @@
 						?>
                     </div>
                     <button type="button" class="_dButton_bgColor_1 add_multi_image">
-                        <span class="fas fa-images mR_xs"></span><?php esc_html_e('Image', 'mptbm_plugin'); ?>
+                        <span class="fas fa-images mR_xs"></span><?php esc_html_e('Image', 'tour-booking-manager'); ?>
                     </button>
                 </div>
 				<?php
@@ -152,16 +152,16 @@
                         <div class="allCenter">
                             <span class="<?php echo esc_attr($icon); ?>" data-add-icon></span>
                         </div>
-                        <span class="fas fa-times mp_remove_icon mp_icon_remove" title="<?php esc_html_e('Remove Icon', 'mptbm_plugin'); ?>"></span>
+                        <span class="fas fa-times mp_remove_icon mp_icon_remove" title="<?php esc_html_e('Remove Icon', 'tour-booking-manager'); ?>"></span>
                     </div>
                     <div class="mp_image_item <?php echo esc_attr($image_class); ?>">
                         <img class="" src="<?php echo esc_attr(MP_Global_Function::get_image_url('', $image, 'medium')); ?>" alt="">
-                        <span class="fas fa-times mp_remove_icon mp_image_remove" title="<?php esc_html_e('Remove Image', 'mptbm_plugin'); ?>"></span>
+                        <span class="fas fa-times mp_remove_icon mp_image_remove" title="<?php esc_html_e('Remove Image', 'tour-booking-manager'); ?>"></span>
                     </div>
                     <div class="mp_add_icon_image_button_area <?php echo esc_attr($button_active_class); ?>">
                         <div class="flexEqual">
-                            <button class="_mpBtn_xs mp_image_add" type="button"><span class="fas fa-images"></span><?php esc_html_e('Image', 'mptbm_plugin'); ?></button>
-                            <button class="_mpBtn_xs mp_icon_add" type="button" data-target-popup="#mp_add_icon_popup"><span class="fas fa-plus"></span><?php esc_html_e('Icon', 'mptbm_plugin'); ?></button>
+                            <button class="_mpBtn_xs mp_image_add" type="button"><span class="fas fa-images"></span><?php esc_html_e('Image', 'tour-booking-manager'); ?></button>
+                            <button class="_mpBtn_xs mp_icon_add" type="button" data-target-popup="#mp_add_icon_popup"><span class="fas fa-plus"></span><?php esc_html_e('Icon', 'tour-booking-manager'); ?></button>
                         </div>
                     </div>
                 </div>

@@ -28,14 +28,15 @@
 					define( 'TTBM_PLUGIN_URL', plugins_url() . '/' . plugin_basename( dirname( __FILE__ ) ) );
 				}
 				$this->load_global_file();
-				if ( self::check_woocommerce()==1 ) {
+				if (MP_Global_Function::check_woocommerce() == 1) {
 					add_action( 'activated_plugin', array( $this, 'activation_redirect' ), 90, 1 );
-					register_activation_hook( __FILE__, array( $this, 'on_activation_page_create' ) );
+					self::on_activation_page_create();
 					$this->appsero_init_tracker_ttbm();
 					require_once TTBM_PLUGIN_DIR . '/lib/classes/class-ttbm.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Dependencies.php';
 				} else {
 					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
+					add_action('admin_notices', [$this, 'woocommerce_not_active']);
 					add_action( 'activated_plugin', array( $this, 'activation_redirect_setup' ), 90, 1 );
 				}
 			}
@@ -63,8 +64,8 @@
 					exit( wp_redirect( admin_url( 'admin.php?post_type=ttbm_tour&page=ttbm_quick_setup' ) ) );
 				}
 			}
-			public function on_activation_page_create() {
-				if ( ! $this->get_page_by_slug( 'find' ) ) {
+			public static function on_activation_page_create() {
+				if ( ! MP_Global_Function::get_page_by_slug( 'find' ) ) {
 					$ttbm_search_page = array(
 						'post_type'    => 'page',
 						'post_name'    => 'find',
@@ -90,26 +91,9 @@
 					update_option( 'ttbm_repeated_field_update', 'completed' );
 				}
 			}
-			public function get_page_by_slug( $slug ) {
-				if ( $pages = get_pages() ) {
-					foreach ( $pages as $page ) {
-						if ( $slug === $page->post_name ) {
-							return $page;
-						}
-					}
-				}
-				return false;
-			}
-			public static function check_woocommerce(): int {
-				include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-				$plugin_dir = ABSPATH . 'wp-content/plugins/woocommerce';
-				if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-					return 1;
-				} elseif ( is_dir( $plugin_dir ) ) {
-					return 2;
-				} else {
-					return 0;
-				}
+			public function woocommerce_not_active() {
+				$wc_install_url = get_admin_url() . 'plugin-install.php?s=woocommerce&tab=search&type=term';
+				printf('<div class="error" style="background:red; color:#fff;"><p>%s</p></div>', __('You Must Install WooCommerce Plugin before activating Tour Booking Manager, Because It is dependent on Woocommerce Plugin. <a class="btn button" href=' . $wc_install_url . '>Click Here to Install</a>'));
 			}
 
 		}

@@ -36,8 +36,8 @@ if (!class_exists('TTBM_Woocommerce')) {
                 $cart_item_data = apply_filters('ttbm_add_cart_item', $cart_item_data, $product_id);
             }
             $cart_item_data['ttbm_id'] = $product_id;
-            //echo '<pre>';print_r($cart_item_data['ttbm_user_info'] );echo '</pre>';
-            //echo '<pre>';print_r($cart_item_data);echo '</pre>';die();
+            //echo '<pre>';print_r($_POST );echo '</pre>';
+           // echo '<pre>';print_r($cart_item_data);echo '</pre>';die();
             return $cart_item_data;
         }
         public function before_calculate_totals($cart_object) {

@@ -51,7 +51,8 @@
 								foreach ($all_images as $image) {
 									?>
 									<div class="mp_multi_image_item" data-image-id="<?php esc_attr_e($image); ?>">
-										<span class="fas fa-times circleIcon_xs mp_remove_multi_image"></span> <img src="<?php echo MP_Global_Function::get_image_url('', $image, 'medium'); ?>" alt="<?php esc_attr_e($image); ?>"/>
+										<span class="fas fa-times circleIcon_xs mp_remove_multi_image"></span>
+										<img src="<?php echo MP_Global_Function::get_image_url('', $image, 'medium'); ?>" alt="<?php esc_attr_e($image); ?>"/>
 									</div>
 									<?php
 								}
@@ -75,14 +76,16 @@
 			public static function ttbm_add_button($button_text, $class = 'ttbm_add_item', $button_class = '_themeButton_xs_mt_xs', $icon_class = 'fas fa-plus-square') {
 				?>
 				<button class="<?php echo esc_attr($button_class . ' ' . $class); ?>" type="button">
-					<span class="<?php echo esc_attr($icon_class); ?>"></span> <span class="ml_xs"><?php echo esc_html($button_text); ?></span>
+					<span class="<?php echo esc_attr($icon_class); ?>"></span>
+					<span class="ml_xs"><?php echo esc_html($button_text); ?></span>
 				</button>
 				<?php
 			}
 			public static function add_new_button($button_text, $class = 'mp_add_item', $button_class = '_themeButton_xs_mt_xs', $icon_class = 'fas fa-plus-square') {
 				?>
 				<button class="<?php echo esc_attr($button_class . ' ' . $class); ?>" type="button">
-					<span class="<?php echo esc_attr($icon_class); ?>"></span> <span class="ml_xs"><?php echo esc_html($button_text); ?></span>
+					<span class="<?php echo esc_attr($icon_class); ?>"></span>
+					<span class="ml_xs"><?php echo esc_html($button_text); ?></span>
 				</button>
 				<?php
 			}
@@ -90,8 +93,12 @@
 				?>
 				<div class="allCenter">
 					<div class="buttonGroup max_100">
-						<button class="_warningButton_xs mp_item_remove" type="button"><span class="fas fa-trash-alt mp_zero"></span></button>
-						<div class="_mpBtn_themeButton_xs mp_sortable_button" type=""><span class="fas fa-expand-arrows-alt mp_zero"></span></div>
+						<button class="_warningButton_xs mp_item_remove" type="button">
+							<span class="fas fa-trash-alt mp_zero"></span>
+						</button>
+						<div class="_mpBtn_themeButton_xs mp_sortable_button" type="">
+							<span class="fas fa-expand-arrows-alt mp_zero"></span>
+						</div>
 					</div>
 				</div>
 				<?php
@@ -106,33 +113,38 @@
 							if ($ticket_qty_type == 'inputbox') {
 								?>
 								<div class="groupContent qtyIncDec" data-ticket-type-name="<?php echo esc_html($data_ticket_name); ?>">
-									<div class="decQty addonGroupContent"><span class="fas fa-minus"></span></div>
-									<label><input type="text"
+									<div class="decQty addonGroupContent">
+										<span class="fas fa-minus"></span>
+									</div>
+									<label>
+										<input type="text"
 											class="formControl inputIncDec"
 											data-price="<?php echo esc_attr($ticket_price_raw); ?>"
 											name="<?php echo esc_attr($input_name); ?>"
 											value="<?php echo esc_attr(max(0, $default_qty)); ?>"
 											min="<?php echo esc_attr($min_qty); ?>"
 											max="<?php echo esc_attr($max_qty > 0 ? $max_qty : $available_seat); ?>"
-										/></label>
-									<div class="incQty addonGroupContent"><span class="fas fa-plus"></span></div>
+										/>
+									</label>
+									<div class="incQty addonGroupContent">
+										<span class="fas fa-plus"></span>
+									</div>
 								</div>
 							<?php } elseif ($ticket_qty_type == 'dropdown') { ?>
-								<label data-ticket-type-name="<?php echo esc_html($data_ticket_name); ?>"><select
-										name="<?php echo esc_attr($input_name); ?>"
-										data-price="<?php echo esc_html($ticket_price_raw); ?>"
-										class="formControl"
-									>
+								<label data-ticket-type-name="<?php echo esc_html($data_ticket_name); ?>">
+									<select name="<?php echo esc_attr($input_name); ?>" data-price="<?php echo esc_html($ticket_price_raw); ?>" class="formControl">
 										<?php
 											$max_total = $max_qty > 0 ? $max_qty : $available_seat;
 											for ($i = $min_qty; $i <= $max_total; $i++) {
 												?>
 												<option value="<?php echo esc_html($i); ?>"> <?php echo esc_html($i); ?> </option>
 											<?php } ?>
-									</select></label>
+									</select>
+								</label>
 							<?php } ?>
 					</div>
 				<?php } else { ?>
+					<input type="hidden" name="<?php echo esc_attr($input_name); ?>"/>
 					<span class='textWarning'>
 						<?php TTBM_Function::translation_settings('ttbm_no_seat_availabe', esc_html__('Sorry, Not Available', 'tour-booking-manager')); ?>
 					</span>
@@ -142,7 +154,8 @@
 			public static function tour_list_in_select() {
 				$label = TTBM_Function::get_name();
 				?>
-				<label class="min_400 ttbm_id_select"><select name="ttbm_id" class="formControl ttbm_select2" id="all_tour_list" required>
+				<label class="min_400 ttbm_id_select">
+					<select name="ttbm_id" class="formControl ttbm_select2" id="all_tour_list" required>
 						<option value="" selected><?php echo esc_html__('Select', 'tour-booking-manager') . ' ' . esc_html($label); ?></option>
 						<?php
 							$post_query = TTBM_Query::query_post_type(TTBM_Function::get_cpt_name());
@@ -164,7 +177,8 @@
 							}
 							wp_reset_postdata();
 						?>
-					</select></label>
+					</select>
+				</label>
 				<?php
 			}
 			/****************************/
@@ -172,7 +186,8 @@
 				ob_start();
 				if (!class_exists('TTBM_Woocommerce_Plugin_Pro')) {
 					?>
-					&nbsp;<h6 class="ttbm_pro_badge">Pro</h6>
+					&nbsp;
+					<h6 class="ttbm_pro_badge">Pro</h6>
 					<?php
 				}
 				return ob_get_clean();

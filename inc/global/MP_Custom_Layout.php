@@ -31,7 +31,7 @@
 							if ($params['pagination-style'] == 'load_more') {
 								?>
 								<button type="button" class="_dButton_min_200 pagination_load_more" data-load-more="0">
-									<?php esc_html_e('Load More', 'mptbm_plugin'); ?>
+									<?php esc_html_e('Load More', 'tour-booking-manager'); ?>
 								</button>
 								<?php
 							} else {
@@ -40,7 +40,7 @@
 								?>
 								<div class="buttonGroup">
 									<?php if ($total_page > 2) { ?>
-										<button class="dButton_xs page_prev" type="button" title="<?php esc_html_e('GoTO Previous Page', 'mptbm_plugin'); ?>" disabled>
+										<button class="dButton_xs page_prev" type="button" title="<?php esc_html_e('GoTO Previous Page', 'tour-booking-manager'); ?>" disabled>
 											<span class="fas fa-chevron-left mp_zero"></span>
 										</button>
 									<?php } ?>
@@ -62,7 +62,7 @@
 									<?php } ?>
 									
 									<?php if ($total_page > 2) { ?>
-										<button class="dButton_xs page_next" type="button" title="<?php esc_html_e('GoTO Next Page', 'mptbm_plugin'); ?>">
+										<button class="dButton_xs page_next" type="button" title="<?php esc_html_e('GoTO Next Page', 'tour-booking-manager'); ?>">
 											<span class="fas fa-chevron-right mp_zero"></span>
 										</button>
 									<?php } ?>
@@ -102,8 +102,8 @@
 			public static function add_new_button($button_text, $class = 'mp_add_item', $button_class = '_themeButton_xs_mT_xs', $icon_class = 'fas fa-plus-square') {
 				?>
 				<button class="<?php echo esc_attr($button_class . ' ' . $class); ?>" type="button">
-					<span class="<?php echo esc_attr($icon_class); ?>"></span>
-					<span class="mL_xs"><?php echo MP_Global_Function::esc_html($button_text); ?></span>
+					<span class="<?php echo esc_attr($icon_class); ?> mR_xs"></span>
+					<?php echo MP_Global_Function::esc_html($button_text); ?>
 				</button>
 				<?php
 			}
@@ -137,8 +137,8 @@
 					<div class="mp_load_more_text_area">
 						<span data-read-close><?php echo esc_html(substr($text, 0, $length)); ?> ....</span>
 						<span data-read-open class="dNone"><?php echo esc_html($text); ?></span>
-						<div data-read data-open-text="<?php esc_attr_e('Load More', 'mptbm_plugin'); ?>" data-close-text="<?php esc_attr_e('Less More', 'mptbm_plugin'); ?>">
-							<span data-text><?php esc_html_e('Load More', 'mptbm_plugin'); ?></span>
+						<div data-read data-open-text="<?php esc_attr_e('Load More', 'tour-booking-manager'); ?>" data-close-text="<?php esc_attr_e('Less More', 'tour-booking-manager'); ?>">
+							<span data-text><?php esc_html_e('Load More', 'tour-booking-manager'); ?></span>
 						</div>
 					</div>
 					<?php

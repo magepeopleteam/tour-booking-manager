@@ -230,16 +230,16 @@ if (!class_exists('TTBM_Query')) {
                 'value' => 'on-hold',
                 'compare' => '='
             ) : '';
-            $processing_status_filter = array(
+            $processing_status_filter =in_array('processing', $seat_booked_status) ?  array(
                 'key' => 'ttbm_order_status',
                 'value' => 'processing',
                 'compare' => '='
-            );
-            $completed_status_filter = array(
+            ):'';
+            $completed_status_filter = in_array('completed', $seat_booked_status) ? array(
                 'key' => 'ttbm_order_status',
                 'value' => 'completed',
                 'compare' => '='
-            );
+            ):'';
             $args = array(
                 'post_type' => 'ttbm_service_booking',
                 'posts_per_page' => -1,

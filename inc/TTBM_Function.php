@@ -529,8 +529,8 @@
 			}
 			public static function get_total_sold($tour_id, $tour_date = '', $type = '', $hotel_id = ''): int {
 				$tour_date = $tour_date ?: TTBM_Function::get_post_info($tour_id, 'ttbm_upcoming_date');
-				$type = add_filter('ttbm_type_filter', $type, $tour_id);
-				$sold_query = TTBM_Query::query_all_sold($tour_id, $tour_date, '', $hotel_id);
+				$type = apply_filters('ttbm_type_filter', $type, $tour_id);
+				$sold_query = TTBM_Query::query_all_sold($tour_id, $tour_date, $type, $hotel_id);
 				return $sold_query->post_count;
 			}
 			public static function get_total_service_sold($tour_id, $tour_date, $type = ''): int {

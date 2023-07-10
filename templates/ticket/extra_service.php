@@ -1,19 +1,19 @@
 <?php
-	if ( ! defined( 'ABSPATH' ) ) {
+	if (!defined('ABSPATH')) {
 		die;
 	}
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
-	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
-	$tour_date      = $tour_date ?? current( TTBM_Function::get_date( $tour_id ) );
-	$extra_services = TTBM_Function::get_post_info( $tour_id, 'ttbm_extra_service_data', array() );
-	if ( sizeof( $extra_services ) > 0 ) {
+	$tour_id = $tour_id ?? TTBM_Function::post_id_multi_language($ttbm_post_id);
+	$tour_date = $tour_date ?? current(TTBM_Function::get_date($tour_id));
+	$extra_services = TTBM_Function::get_post_info($tour_id, 'ttbm_extra_service_data', array());
+	if (sizeof($extra_services) > 0) {
 		?>
 		<div class="ttbm_default_widget ttbm_extra_service_area">
-			<?php do_action( 'ttbm_before_extra_service_list_table', $tour_id ); ?>
+			<?php do_action('ttbm_before_extra_service_list_table', $tour_id); ?>
 			<?php
-				$option_name   = 'ttbm_string_available_service_list';
-				$default_title = esc_html__( 'Available Extra Service List ', 'tour-booking-manager' );
-				include( TTBM_Function::template_path( 'layout/title_section.php' ) );
+				$option_name = 'ttbm_string_available_service_list';
+				$default_title = esc_html__('Available Extra Service List ', 'tour-booking-manager');
+				include(TTBM_Function::template_path('layout/title_section.php'));
 			?>
 			<div class="ttbm_widget_content" data-placeholder>
 				<table class="mp_tour_ticket_extra">
@@ -25,67 +25,43 @@
 					</tr>
 					</thead>
 					<tbody>
-					<?php foreach ( $extra_services as $service ) { ?>
-						<?php
-						$service_name      = array_key_exists( 'service_name', $service ) ? $service['service_name'] : '';
-						$service_price     = array_key_exists( 'service_price', $service ) ? $service['service_price'] : 0;
-						$service_price     = TTBM_Function::ttbm_wc_price( $tour_id, $service_price );
-						$service_price_raw = MP_Global_Function::price_convert_raw( $service_price );
-						$service_qty       = array_key_exists( 'service_qty', $service ) ? $service['service_qty'] : 0;
-						$reserve           = apply_filters( 'ttbm_service_reserve_qty', 0 );
-						$input_type        = array_key_exists( 'service_qty_type', $service ) ? $service['service_qty_type'] : 'inputbox';
-						$default_qty       = apply_filters( 'ttbm_service_type_default_qty', 0 );
-						$min_qty           = apply_filters( 'ttbm_service_type_min_qty', 0 );
-						$max_qty           = apply_filters( 'ttbm_service_type_max_qty', 0 );
-						$sold_type         = TTBM_Function::get_total_service_sold( $tour_id, $tour_date, $service_name );
-						$available         = $service_qty - ( $sold_type + $reserve );
-						$service_icon      = array_key_exists( 'service_icon', $service ) ? $service['service_icon'] : '';
-						$description = array_key_exists( 'extra_service_description', $service ) ? $service['extra_service_description'] :'';
-						?>
-						<tr>
-							<th>
-								<?php if ( $service_icon ) { ?>
-									<span class="<?php echo esc_attr( $service_icon ); ?>"></span>
-								<?php } ?>
-								<?php echo TTBM_Function::esc_html( $service_name ); ?>
-								<?php
-									if ( $description ) {
-										$word_count = str_word_count( $description );
-										if ( $word_count > 16 ) {
-											$message      = implode( " ", array_slice( explode( " ", $description ), 0, 16 ) );
-											$more_message = implode( " ", array_slice( explode( " ", $description ), 16, $word_count ) );
-											$name_text    = preg_replace( "/[{}()<>+ ]/", '_', $service_name ) . '_' . $tour_id;
-											?>
-											<p style="margin-top: 5px;">
-												<small>
-													<?php echo esc_html( $message ); ?>
-													<span data-collapse='#<?php echo esc_attr( $name_text ); ?>'><?php echo esc_html( $more_message ); ?></span>
-													<span class="load_more_text" data-collapse-target="#<?php echo esc_attr( $name_text ); ?>">
-															<?php esc_html_e( 'view more ', 'tour-booking-manager' ); ?>
-														</span>
-												</small>
-											</p>
-											<?php
-										} else {
-											?>
-											<p style="margin-top: 5px;"><small><?php echo esc_html( $description ); ?></small></p>
-											<?php
-										}
-									}
-								?>
-							</th>
-							<td class="text-center"><?php echo TTBM_Function::esc_html( $service_price ); ?></td>
-							<td><?php TTBM_Layout::qty_input( $service_name, $available, $input_type, $default_qty, $min_qty, $max_qty, $service_price_raw, 'service_qty[]' ); ?></td>
-						</tr>
-						<tr>
-							<td colspan=3>
-								<input type="hidden" name='tour_id[]' value='<?php echo esc_html( $tour_id ); ?>'>
-								<input type="hidden" name='service_name[]' value='<?php echo esc_html( $service_name ); ?>'>
-								<input type="hidden" name='service_max_qty[]' value='<?php echo esc_html( $max_qty ); ?>'>
-								<?php do_action( 'ttbm_after_service_type_item', $tour_id, $service ); ?>
-							</td>
-						</tr>
-					<?php } ?>
+					<?php
+						foreach ($extra_services as $service) {
+							$service_name = array_key_exists('service_name', $service) ? $service['service_name'] : '';
+							$service_price = array_key_exists('service_price', $service) ? $service['service_price'] : 0;
+							$service_price = TTBM_Function::ttbm_wc_price($tour_id, $service_price);
+							$service_price_raw = MP_Global_Function::price_convert_raw($service_price);
+							$service_qty = array_key_exists('service_qty', $service) ? $service['service_qty'] : 0;
+							$reserve = apply_filters('ttbm_service_reserve_qty', 0);
+							$input_type = array_key_exists('service_qty_type', $service) ? $service['service_qty_type'] : 'inputbox';
+							$default_qty = apply_filters('ttbm_service_type_default_qty', 0);
+							$min_qty = apply_filters('ttbm_service_type_min_qty', 0);
+							$max_qty = apply_filters('ttbm_service_type_max_qty', 0);
+							$sold_type = TTBM_Function::get_total_service_sold($tour_id, $tour_date, $service_name);
+							$available = $service_qty - ($sold_type + $reserve);
+							$service_icon = array_key_exists('service_icon', $service) ? $service['service_icon'] : '';
+							$description = array_key_exists('extra_service_description', $service) ? $service['extra_service_description'] : '';
+							?>
+							<tr>
+								<th>
+									<?php if ($service_icon) { ?>
+										<span class="<?php echo esc_attr($service_icon); ?>"></span>
+									<?php } ?>
+									<?php echo TTBM_Function::esc_html($service_name); ?>
+									<div class="mT_xs"><?php MP_Custom_Layout::load_more_text($description, 100); ?></div>
+								</th>
+								<td class="text-center"><?php echo TTBM_Function::esc_html($service_price); ?></td>
+								<td><?php TTBM_Layout::qty_input($service_name, $available, $input_type, $default_qty, $min_qty, $max_qty, $service_price_raw, 'service_qty[]'); ?></td>
+							</tr>
+							<tr>
+								<td colspan=3>
+									<input type="hidden" name='tour_id[]' value='<?php echo esc_html($tour_id); ?>'>
+									<input type="hidden" name='service_name[]' value='<?php echo esc_html($service_name); ?>'>
+									<input type="hidden" name='service_max_qty[]' value='<?php echo esc_html($max_qty); ?>'>
+									<?php do_action('ttbm_after_service_type_item', $tour_id, $service); ?>
+								</td>
+							</tr>
+						<?php } ?>
 					</tbody>
 				</table>
 			</div>

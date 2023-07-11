@@ -20,7 +20,7 @@
 				load_plugin_textdomain( 'tour-booking-manager', false, $plugin_dir );
 			}
 			private function load_file() {
-				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Function.php';
+				
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Layout.php';
 				require_once TTBM_PLUGIN_DIR . '/support/elementor/elementor-support.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin.php';

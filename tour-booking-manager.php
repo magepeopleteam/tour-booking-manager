@@ -42,6 +42,7 @@
 			}
 			public function load_global_file() {
 				require_once TTBM_PLUGIN_DIR . '/inc/global/MP_Global_Function.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Function.php';
 				//require_once TTBM_PLUGIN_DIR . '/inc/global/MP_Global_Style.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/global/MP_Custom_Layout.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/global/MP_Custom_Slider.php';

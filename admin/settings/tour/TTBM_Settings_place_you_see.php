@@ -26,7 +26,7 @@
 			}
 			public function place_you_see_settings($tour_id) {
 				$ttbm_label = TTBM_Function::get_name();
-				$display = TTBM_Function::get_post_info($tour_id, 'ttbm_display_hiphop', 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_hiphop', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
@@ -44,7 +44,7 @@
 				<?php
 			}
 			public function place_you_see($tour_id) {
-				$hiphop_places = TTBM_Function::get_post_info($tour_id, 'ttbm_hiphop_places', array());
+				$hiphop_places = MP_Global_Function::get_post_info($tour_id, 'ttbm_hiphop_places', array());
 				$all_places = TTBM_Query::query_post_type('ttbm_places');
 				$places = $all_places->posts;
 				?>

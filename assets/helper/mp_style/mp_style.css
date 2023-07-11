@@ -228,7 +228,6 @@ div.filter_item,
 .mpStyle .br_50, .mpStyle [class*="_br_50"] {-webkit-border-radius: 50px;border-radius: 50px;}
 .mpStyle .mp_remove_icon,
 .mpStyle [class*="circle"] {-webkit-border-radius: 50%;border-radius: 50%;}
-
 /********Helper Class***********/
 .mpStyle .divider, .mpStyle [class*="_divider"], .mpStyle hr {margin: var(--dMP_xs) 0;line-height: 1;border-color: var(--color_border);display: block;height: 1px;background-color: var(--color_border);width: 100%;}
 .mpStyle .separatorRight, .mpStyle [class*="_separatorRight"] > * {border-right: 2px solid var(--color_border);}
@@ -542,7 +541,6 @@ div[class*="simpleSpinner"] {
 		.mpStyle .hidden_xs { display: none; }
 	}
 }
-
 /******************************************************************** Menu section ************************************************/
 @media only screen and (min-width: 10px) {
 	nav.mpStyle {background-color: var(--color_4);}

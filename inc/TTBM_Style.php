@@ -13,22 +13,22 @@
 				add_action( 'admin_head', array( $this, 'ttbm_style' ), 100 );
 			}
 			public function ttbm_style() {
-				$default_color   = TTBM_Function::get_style_settings( 'ttbm_default_text_color', '#000' );
-				$theme_color     = TTBM_Function::get_style_settings( 'ttbm_theme_color', '#ef3326' );
-				$alternate_color = TTBM_Function::get_style_settings( 'ttbm_theme_alternate_color', '#fff' );
-				$warning_color   = TTBM_Function::get_style_settings( 'ttbm_warning_color', '#E67C30' );
-				$default_fs   = TTBM_Function::get_style_settings( 'ttbm_default_font_size', '13' ) . 'px';
-				$fs_h1        = TTBM_Function::get_style_settings( 'ttbm_font_size_h1', '35' ) . 'px';
-				$fs_h2        = TTBM_Function::get_style_settings( 'ttbm_font_size_h2', '30' ) . 'px';
-				$fs_h3        = TTBM_Function::get_style_settings( 'ttbm_font_size_h3', '25' ) . 'px';
-				$fs_h4        = TTBM_Function::get_style_settings( 'ttbm_font_size_h4', '22' ) . 'px';
-				$fs_h5        = TTBM_Function::get_style_settings( 'ttbm_font_size_h5', '18' ) . 'px';
-				$fs_h6        = TTBM_Function::get_style_settings( 'ttbm_font_size_h6', '16' ) . 'px';
-				$fs_label     = TTBM_Function::get_style_settings( 'ttbm_font_size_label', '16' ) . 'px';
-				$button_fs    = TTBM_Function::get_style_settings( 'ttbm_font_size_button', '16' ) . 'px';
-				$button_color = TTBM_Function::get_style_settings( 'ttbm_button_color', $alternate_color );
-				$button_bg    = TTBM_Function::get_style_settings( 'ttbm_button_bg', '#ea8125' );
-				$section_bg   = TTBM_Function::get_style_settings( 'ttbm_section_bg', '#FAFCFE' );
+				$default_color   = MP_Global_Function::get_settings('ttbm_basic_style_settings','ttbm_default_text_color', '#000' );
+				$theme_color     = MP_Global_Function::get_settings('ttbm_basic_style_settings','ttbm_theme_color', '#ef3326' );
+				$alternate_color = MP_Global_Function::get_settings('ttbm_basic_style_settings','ttbm_theme_alternate_color', '#fff' );
+				$warning_color   = MP_Global_Function::get_settings('ttbm_basic_style_settings','ttbm_warning_color', '#E67C30' );
+				$default_fs   = MP_Global_Function::get_settings('ttbm_basic_style_settings','ttbm_default_font_size', '13' ) . 'px';
+				$fs_h1        = MP_Global_Function::get_settings('ttbm_basic_style_settings','ttbm_font_size_h1', '35' ) . 'px';
+				$fs_h2        = MP_Global_Function::get_settings('ttbm_basic_style_settings','ttbm_font_size_h2', '30' ) . 'px';
+				$fs_h3        = MP_Global_Function::get_settings('ttbm_basic_style_settings','ttbm_font_size_h3', '25' ) . 'px';
+				$fs_h4        = MP_Global_Function::get_settings('ttbm_basic_style_settings','ttbm_font_size_h4', '22' ) . 'px';
+				$fs_h5        = MP_Global_Function::get_settings('ttbm_basic_style_settings','ttbm_font_size_h5', '18' ) . 'px';
+				$fs_h6        = MP_Global_Function::get_settings('ttbm_basic_style_settings','ttbm_font_size_h6', '16' ) . 'px';
+				$fs_label     = MP_Global_Function::get_settings('ttbm_basic_style_settings','ttbm_font_size_label', '16' ) . 'px';
+				$button_fs    = MP_Global_Function::get_settings('ttbm_basic_style_settings','ttbm_font_size_button', '16' ) . 'px';
+				$button_color = MP_Global_Function::get_settings('ttbm_basic_style_settings','ttbm_button_color', $alternate_color );
+				$button_bg    = MP_Global_Function::get_settings('ttbm_basic_style_settings','ttbm_button_bg', '#ea8125' );
+				$section_bg   = MP_Global_Function::get_settings('ttbm_basic_style_settings','ttbm_section_bg', '#FAFCFE' );
 				?>
 				<style>
 					:root {

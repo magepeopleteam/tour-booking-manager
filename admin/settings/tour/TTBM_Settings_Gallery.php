@@ -17,10 +17,10 @@
 				<?php
 			}
 			public function gallery_settings($tour_id) {
-				$display = TTBM_Function::get_post_info($tour_id, 'ttbm_display_slider', 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_slider', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
-				$image_ids = TTBM_Function::get_post_info($tour_id, 'ttbm_gallery_images', array());
+				$image_ids = MP_Global_Function::get_post_info($tour_id, 'ttbm_gallery_images', array());
 				?>
 				<div class="tabsItem ttbm_settings_gallery" data-tabs="#ttbm_settings_gallery">
 					<h5 class="dFlex">

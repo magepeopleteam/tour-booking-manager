@@ -3,11 +3,11 @@
 		die;
 	}
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
-	$guides = TTBM_Function::get_post_info($ttbm_post_id, 'ttbm_tour_guide', array());
-	if (sizeof($guides) > 0 && TTBM_Function::get_post_info($ttbm_post_id, 'ttbm_display_tour_guide', 'off') != 'off') {
-		$ttbm_guide_style = TTBM_Function::get_post_info($ttbm_post_id, 'ttbm_guide_style', 'carousel');
-		$ttbm_guide_image_style = TTBM_Function::get_post_info($ttbm_post_id, 'ttbm_guide_image_style', 'squire');
-		$ttbm_guide_description_style = TTBM_Function::get_post_info($ttbm_post_id, 'ttbm_guide_description_style', 'full');
+	$guides = MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_tour_guide', array());
+	if (sizeof($guides) > 0 && MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_display_tour_guide', 'off') != 'off') {
+		$ttbm_guide_style = MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_guide_style', 'carousel');
+		$ttbm_guide_image_style = MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_guide_image_style', 'squire');
+		$ttbm_guide_description_style = MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_guide_description_style', 'full');
 		?>
 		<div class='mpStyle ttbm_wraper ttbm_tour_guide' <?php if (sizeof($guides) > 1 && $ttbm_guide_style=='carousel') { ?>  id="ttbm_tour_guide"<?php } ?>>
 			<div class='ttbm_default_widget'>

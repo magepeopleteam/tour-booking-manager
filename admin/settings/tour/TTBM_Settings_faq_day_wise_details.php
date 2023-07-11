@@ -29,7 +29,7 @@
 			}
 			//********Day wise Details**************//
 			public function ttbm_settings_day_wise_details($tour_id) {
-				$display = TTBM_Function::get_post_info($tour_id, 'ttbm_display_schedule', 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_schedule', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
@@ -42,7 +42,7 @@
 					<div class="divider"></div>
 					<div data-collapse="#ttbm_display_schedule" class="<?php echo esc_attr($active); ?>">
 						<?php
-							$day_details = TTBM_Function::get_post_info($tour_id, 'ttbm_daywise_details', array());
+							$day_details = MP_Global_Function::get_post_info($tour_id, 'ttbm_daywise_details', array());
 							if (sizeof($day_details) > 0) {
 								foreach ($day_details as $day_detail) {
 									$id = 'ttbm_day_content_' . uniqid();
@@ -62,7 +62,7 @@
 			}
 			//*************F.A.Q******************//
 			public function ttbm_settings_faq($tour_id) {
-				$display = TTBM_Function::get_post_info($tour_id, 'ttbm_display_faq', 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_faq', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
@@ -75,7 +75,7 @@
 					<div class="divider"></div>
 					<div data-collapse="#ttbm_display_faq" class="<?php echo esc_attr($active); ?>">
 						<?php
-							$faqs = TTBM_Function::get_post_info($tour_id, 'mep_event_faq', []);
+							$faqs = MP_Global_Function::get_post_info($tour_id, 'mep_event_faq', []);
 							if (sizeof($faqs) > 0) {
 								foreach ($faqs as $faq) {
 									$id = 'ttbm_faq_content_' . uniqid();

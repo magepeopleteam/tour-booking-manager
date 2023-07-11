@@ -41,9 +41,9 @@
 			}
 			public function feature($tour_id) {
 				$features = MP_Global_Function::get_taxonomy('ttbm_tour_features_list');
-				$include_display = TTBM_Function::get_post_info($tour_id, 'ttbm_display_include_service', 'on');
+				$include_display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_include_service', 'on');
 				$include_active = $include_display == 'off' ? '' : 'mActive';
-				$exclude_display = TTBM_Function::get_post_info($tour_id, 'ttbm_display_exclude_service', 'on');
+				$exclude_display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_exclude_service', 'on');
 				$exclude_active = $exclude_display == 'off' ? '' : 'mActive';
 				$in_checked = $include_display == 'off' ? '' : 'checked';
 				$ex_checked = $exclude_display == 'off' ? '' : 'checked';

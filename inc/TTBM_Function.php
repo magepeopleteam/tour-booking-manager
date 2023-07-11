@@ -100,7 +100,7 @@
                 $travel_type = TTBM_Function::get_travel_type($tour_id);
                 $now = strtotime(current_time('Y-m-d H:i:s'));
                 if ($travel_type == 'particular') {
-                    $particular_dates = TTBM_Function::get_post_info($tour_id, 'ttbm_particular_dates', array());
+                    $particular_dates = MP_Global_Function::get_post_info($tour_id, 'ttbm_particular_dates', array());
                     if (sizeof($particular_dates) > 0) {
                         foreach ($particular_dates as $date) {
                             $time = $date['ttbm_particular_start_time'] ?: '23.59.59';
@@ -112,12 +112,12 @@
                     }
                 } else if ($travel_type == 'repeated') {
                     $now_date = strtotime(current_time('Y-m-d'));
-                    $start_date = TTBM_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_date');
+                    $start_date = MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_date');
                     $start_date = $start_date ? date('Y-m-d', strtotime($start_date)) : '';
-                    $end_date = TTBM_Function::get_post_info($tour_id, 'ttbm_travel_repeated_end_date');
+                    $end_date = MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_end_date');
                     $end_date = $end_date ? date('Y-m-d', strtotime($end_date)) : '';
-                    $off_days = TTBM_Function::get_post_info($tour_id, 'mep_ticket_offdays', array());
-                    $all_off_dates = TTBM_Function::get_post_info($tour_id, 'mep_ticket_off_dates', array());
+                    $off_days = MP_Global_Function::get_post_info($tour_id, 'mep_ticket_offdays', array());
+                    $all_off_dates = MP_Global_Function::get_post_info($tour_id, 'mep_ticket_off_dates', array());
                     $off_dates = array();
                     foreach ($all_off_dates as $off_date) {
                         $off_dates[] = $off_date['mep_ticket_off_date'];
@@ -133,7 +133,7 @@
                             }
                         }
                     } else {
-                        $interval = TTBM_Function::get_post_info($tour_id, 'ttbm_travel_repeated_after', 1);
+                        $interval = MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_after', 1);
                         $all_dates = self::date_separate_period($start_date, $end_date, $interval);
                         foreach ($all_dates as $date) {
                             $date = $date->format('Y-m-d');
@@ -163,7 +163,7 @@
                             $tour_date['now'] = $now;
                             $tour_date['fulldate'] = $full_date;
                             $tour_date['end_date'] = $end_date;
-                            $tour_date['checkout_date'] = TTBM_Function::get_post_info($tour_id, 'ttbm_travel_end_date');
+                            $tour_date['checkout_date'] = MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_date');
                         }
                     }
                 }
@@ -528,7 +528,7 @@
 				return apply_filters('ttbm_get_total_reserve_filter', $reserve, $tour_id);
 			}
 			public static function get_total_sold($tour_id, $tour_date = '', $type = '', $hotel_id = ''): int {
-				$tour_date = $tour_date ?: TTBM_Function::get_post_info($tour_id, 'ttbm_upcoming_date');
+				$tour_date = $tour_date ?: MP_Global_Function::get_post_info($tour_id, 'ttbm_upcoming_date');
 				$type = apply_filters('ttbm_type_filter', $type, $tour_id);
 				$sold_query = TTBM_Query::query_all_sold($tour_id, $tour_date, $type, $hotel_id);
 				return $sold_query->post_count;

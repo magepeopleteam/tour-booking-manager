@@ -10,8 +10,8 @@
 				add_action('ttbm_hotel_settings_save', array($this, 'save_hotel_price'), 10, 1);
 			}
 			public function price_content($hotel_id) {
-				$room_lists = TTBM_Function::get_post_info($hotel_id, 'ttbm_room_details', array());
-				$display = TTBM_Function::get_post_info($hotel_id, 'ttbm_display_advance', 'off');
+				$room_lists = MP_Global_Function::get_post_info($hotel_id, 'ttbm_room_details', array());
+				$display = MP_Global_Function::get_post_info($hotel_id, 'ttbm_display_advance', 'off');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
@@ -70,7 +70,7 @@
 			}
 			public function room_item($field = array()) {
 				$tour_id = get_the_id();
-				$display = TTBM_Function::get_post_info($tour_id, 'ttbm_display_advance', 'off');
+				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_advance', 'off');
 				$active = $display == 'off' ? '' : 'mActive';
 				$field = $field ?: array();
 				$icon = array_key_exists('room_type_icon', $field) ? $field['room_type_icon'] : '';
@@ -145,7 +145,7 @@
 					$advance_option = TTBM_Function::get_submit_info('ttbm_display_advance') ? 'on' : 'off';
 					update_post_meta($post_id, 'ttbm_display_advance', $advance_option);
 					/************************/
-					$old_ticket_type = TTBM_Function::get_post_info($post_id, 'ttbm_room_details', array());
+					$old_ticket_type = MP_Global_Function::get_post_info($post_id, 'ttbm_room_details', array());
 					$new_ticket_type = array();
 					$icon = TTBM_Function::get_submit_info('room_type_icon', array());
 					$names = TTBM_Function::get_submit_info('ttbm_hotel_room_name', array());

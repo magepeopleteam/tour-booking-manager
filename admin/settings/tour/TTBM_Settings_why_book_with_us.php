@@ -18,7 +18,7 @@
 			}
 			public function why_chose_us_settings($tour_id) {
 				$ttbm_label = TTBM_Function::get_name();
-				$display = TTBM_Function::get_post_info($tour_id, 'ttbm_display_why_choose_us', 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_why_choose_us', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>

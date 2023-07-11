@@ -28,7 +28,7 @@
 												<?php echo get_the_title( $hotel_id ); ?>
 												<div class="dFlex hotel_rating">
 													<?php
-														$ttbm_hotel_rating = TTBM_Function::get_post_info( $hotel_id, 'ttbm_hotel_rating' );
+														$ttbm_hotel_rating = MP_Global_Function::get_post_info( $hotel_id, 'ttbm_hotel_rating' );
 														if ( $ttbm_hotel_rating > 0 ) {
 															for ( $i = 0; $i < $ttbm_hotel_rating; $i ++ ) {
 																?>
@@ -41,13 +41,13 @@
 											</h4>
 											<ul class="flexWrap">
 												<?php
-													$hotel_location = TTBM_Function::get_post_info( $hotel_id, 'ttbm_hotel_location' );
+													$hotel_location = MP_Global_Function::get_post_info( $hotel_id, 'ttbm_hotel_location' );
 													if ( $hotel_location ) {
 														?>
 														<li><a href="#"><?php echo esc_html( $hotel_location ); ?></a></li>
 													<?php } ?>
 												<?php
-													$hotel_distance_text = TTBM_Function::get_post_info( $hotel_id, 'ttbm_hotel_distance_des' );
+													$hotel_distance_text = MP_Global_Function::get_post_info( $hotel_id, 'ttbm_hotel_distance_des' );
 													if ( $hotel_distance_text ) {
 														?>
 														<li><?php echo esc_html( $hotel_distance_text ); ?></li>
@@ -59,7 +59,7 @@
 												<h6><?php esc_html_e( 'Hotel score', 'tour-booking-manager' ); ?></h6>
 											</div>
 											<?php
-												$ttbm_hotel_rating = TTBM_Function::get_post_info( $hotel_id, 'ttbm_hotel_rating' );
+												$ttbm_hotel_rating = MP_Global_Function::get_post_info( $hotel_id, 'ttbm_hotel_rating' );
 												if ( $ttbm_hotel_rating > 0 ) { ?>
 													<div class="hotel_list_top_right_right">
 														<?php echo esc_html( $ttbm_hotel_rating ); ?>

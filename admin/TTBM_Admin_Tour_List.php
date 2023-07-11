@@ -140,14 +140,14 @@
 							foreach ($all_posts as $post) {
 								$post_id = $post->ID;
 								TTBM_Function::update_upcoming_date_month($post_id);
-								$upcoming_date = TTBM_Function::get_post_info($post_id, 'ttbm_upcoming_date');
+								$upcoming_date = MP_Global_Function::get_post_info($post_id, 'ttbm_upcoming_date');
 								$total = TTBM_Function::get_total_seat($post_id);
 								$reserve = TTBM_Function::get_total_reserve($post_id);
 								$sold = TTBM_Function::get_total_sold($post_id, $upcoming_date);
 								$category = TTBM_Function::get_taxonomy_id_string($post_id, 'ttbm_tour_cat');
 								$organizer = TTBM_Function::get_taxonomy_id_string($post_id, 'ttbm_tour_org');
 								$location = TTBM_Function::get_taxonomy_id_string($post_id, 'ttbm_tour_location');
-								$admin_note=TTBM_Function::get_post_info($post_id, 'ttbm_admin_note');
+								$admin_note=MP_Global_Function::get_post_info($post_id, 'ttbm_admin_note');
 								?>
 								<tr data-upcoming_date="<?php echo esc_attr($upcoming_date); ?>" data-post_id="<?php echo esc_attr($post_id); ?>" data-category="<?php echo esc_attr($category); ?>" data-organizer="<?php echo esc_attr($organizer); ?>" data-location="<?php echo esc_attr($location); ?>">
 									<th><?php echo esc_html($count); ?></th>

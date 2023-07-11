@@ -8,7 +8,7 @@
 	$tour_type     = $tour_type ?? TTBM_Function::get_tour_type( $tour_id );
 	$all_dates     = $all_dates ?? TTBM_Function::get_date( $tour_id );
 	$date_format   = TTBM_Function::date_format();
-	$check_ability = TTBM_Function::get_post_info( $tour_id, 'ttbm_ticketing_system', 'availability_section' );
+	$check_ability = MP_Global_Function::get_post_info( $tour_id, 'ttbm_ticketing_system', 'availability_section' );
 	if ( sizeof( $all_dates ) > 0 && $travel_type == 'fixed' ) {
 		$start_date = $all_dates['date'];
 		$end_date   = $all_dates['checkout_date'];

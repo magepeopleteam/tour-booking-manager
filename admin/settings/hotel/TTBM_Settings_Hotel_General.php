@@ -25,7 +25,7 @@
 			}
 			public function location($tour_id) {
 				$display_name = 'ttbm_display_hotel_location';
-				$display = TTBM_Function::get_post_info($tour_id, $display_name, 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
 				<tr>
@@ -44,9 +44,9 @@
 			}
 			public function distance_description($tour_id) {
 				$display_name = 'ttbm_display_hotel_distance';
-				$display = TTBM_Function::get_post_info($tour_id, $display_name, 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
 				$value_name = 'ttbm_hotel_distance_des';
-				$value = TTBM_Function::get_post_info($tour_id, $value_name);
+				$value = MP_Global_Function::get_post_info($tour_id, $value_name);
 				$placeholder = esc_html__('EX. 1.9 km from centre', 'tour-booking-manager');
 				$checked = $display == 'off' ? '' : 'checked';
 				$active = $display == 'off' ? '' : 'mActive';
@@ -67,10 +67,10 @@
 			}
 			public function rating($tour_id) {
 				$display_name = 'ttbm_display_hotel_rating';
-				$display = TTBM_Function::get_post_info($tour_id, $display_name, 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
 				$checked = $display == 'off' ? '' : 'checked';
 				$active = $display == 'off' ? '' : 'mActive';
-				$rating = TTBM_Function::get_post_info($tour_id, 'ttbm_hotel_rating');
+				$rating = MP_Global_Function::get_post_info($tour_id, 'ttbm_hotel_rating');
 				?>
 				<tr>
 					<th colspan="3">

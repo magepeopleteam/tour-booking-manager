@@ -4,7 +4,7 @@
 	}
 	$ttbm_post_id     = $ttbm_post_id ?? get_the_id();
 	$day_details = TTBM_Function::get_day_wise_details( $ttbm_post_id );
-	if ( sizeof( $day_details ) > 0 && TTBM_Function::get_post_info( $ttbm_post_id, 'ttbm_display_schedule', 'on' ) != 'off' ) {
+	if ( sizeof( $day_details ) > 0 && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_schedule', 'on' ) != 'off' ) {
 		?>
 		<div class='ttbm_default_widget'>
 			<?php do_action( 'ttbm_section_title', 'ttbm_string_schedule_details', esc_html__( 'Schedule Details ', 'tour-booking-manager' ) ); ?>

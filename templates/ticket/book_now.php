@@ -4,10 +4,10 @@
 	}
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
 	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
-	$ttbm_product_id = TTBM_Function::get_post_info( $tour_id, 'link_wc_product' );
+	$ttbm_product_id = MP_Global_Function::get_post_info( $tour_id, 'link_wc_product' );
 	if ( ! empty( $ttbm_product_id ) ) {
-		$seat_infos = TTBM_Function::get_post_info( $tour_id, 'ttbma_seat_plan', array());
-		$display = TTBM_Function::get_post_info( $tour_id, 'ttbma_display_seat_plan', 'off' );
+		$seat_infos = MP_Global_Function::get_post_info( $tour_id, 'ttbma_seat_plan', array());
+		$display = MP_Global_Function::get_post_info( $tour_id, 'ttbma_display_seat_plan', 'off' );
 		$seat_plan  = class_exists('TTBMA_Seat_Plan') && $display == 'on' && sizeof($seat_infos)>0? 'dNone' : '';
 		$button_type=apply_filters('ttbm_book_now_button_type','button',$tour_id);
 		?>

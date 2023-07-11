@@ -17,10 +17,10 @@
 				<?php
 			}
 			public function admin_note_settings($tour_id) {
-				$display = TTBM_Function::get_post_info($tour_id, 'ttbm_display_admin_note', 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_admin_note', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
-				$admin_note = TTBM_Function::get_post_info($tour_id, 'ttbm_admin_note');
+				$admin_note = MP_Global_Function::get_post_info($tour_id, 'ttbm_admin_note');
 				$admin_note       = $admin_note ? html_entity_decode( $admin_note ) : '';
 				?>
 				<div class="tabsItem ttbm_settings_admin_note" data-tabs="#ttbm_settings_admin_note">

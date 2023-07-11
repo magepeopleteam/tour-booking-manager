@@ -22,7 +22,7 @@
 			public function pricing_tab_content($tour_id) {
 				$all_types = TTBM_Function::tour_type();
 				$ttbm_type = TTBM_Function::get_tour_type($tour_id);
-				$display = TTBM_Function::get_post_info($tour_id, 'ttbm_display_registration', 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_registration', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
@@ -63,11 +63,11 @@
 				<?php
 			}
 			public function ttbm_ticket_config($tour_id) {
-				$ticket_type = TTBM_Function::get_post_info($tour_id, 'ttbm_ticket_type', array());
+				$ticket_type = MP_Global_Function::get_post_info($tour_id, 'ttbm_ticket_type', array());
 				$tour_label = TTBM_Function::get_name();
 				$ttbm_type = TTBM_Function::get_tour_type($tour_id);
 				$type_class = $ttbm_type == 'general' ? '' : 'dNone';
-				$display = TTBM_Function::get_post_info($tour_id, 'ttbm_display_advance', 'off');
+				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_advance', 'off');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
@@ -127,7 +127,7 @@
 			}
 			public function pricing_item($field = array()) {
 				$tour_id = get_the_id();
-				$display = TTBM_Function::get_post_info($tour_id, 'ttbm_display_advance', 'off');
+				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_advance', 'off');
 				$active = $display == 'off' ? '' : 'mActive';
 				$field = $field ?: array();
 				$icon = array_key_exists('ticket_type_icon', $field) ? $field['ticket_type_icon'] : '';
@@ -195,7 +195,7 @@
 			}
 			public function ttbm_extra_service_config($post_id) {
 				$tour_label = TTBM_Function::get_name();
-				$ttbm_extra_service_data = TTBM_Function::get_post_info($post_id, 'ttbm_extra_service_data', array());
+				$ttbm_extra_service_data = MP_Global_Function::get_post_info($post_id, 'ttbm_extra_service_data', array());
 				wp_nonce_field('ttbm_extra_service_data_nonce', 'ttbm_extra_service_data_nonce');
 				?>
 				<div class="_mT_dLayout_xs mp_settings_area">
@@ -238,7 +238,7 @@
 				$service_price = array_key_exists('service_price', $field) ? $field['service_price'] : '';
 				$service_qty = array_key_exists('service_qty', $field) ? $field['service_qty'] : '';
 				$input_type = array_key_exists('service_qty_type', $field) ? $field['service_qty_type'] : 'inputbox';
-				$display = TTBM_Function::get_post_info($tour_id, 'ttbm_display_extra_advance', 'off');
+				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_extra_advance', 'off');
 				$active = $display == 'off' ? '' : 'mActive';
 				$description = array_key_exists('extra_service_description', $field) ? $field['extra_service_description'] : '';
 				?>
@@ -349,10 +349,10 @@
 						update_post_meta($tour_id, 'ttbm_travel_reg_end_date', $after_day);
 					}
 					elseif ($ttbm_travel_type == 'repeated') {
-						update_post_meta($tour_id, 'ttbm_travel_reg_end_date', TTBM_Function::get_post_info($tour_id, 'ttbm_travel_end_date'));
+						update_post_meta($tour_id, 'ttbm_travel_reg_end_date', MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_date'));
 					}
 					else {
-						update_post_meta($tour_id, 'ttbm_travel_reg_end_date', TTBM_Function::get_post_info($tour_id, 'ttbm_travel_reg_end_date'));
+						update_post_meta($tour_id, 'ttbm_travel_reg_end_date', MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_reg_end_date'));
 					}
 					//*************Regular ticket***********************//
 					$new_ticket_type = array();

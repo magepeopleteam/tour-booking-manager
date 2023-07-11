@@ -26,7 +26,7 @@
 			}
 			public function ttbm_settings_activities($tour_id) {
 				$ttbm_label = TTBM_Function::get_name();
-				$display = TTBM_Function::get_post_info($tour_id, 'ttbm_display_activities', 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_activities', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
@@ -45,7 +45,7 @@
 			}
 			public function activities($tour_id) {
 				$activities = MP_Global_Function::get_taxonomy('ttbm_tour_activities');
-				$tour_activities = TTBM_Function::get_post_info($tour_id, 'ttbm_tour_activities', []);
+				$tour_activities = MP_Global_Function::get_post_info($tour_id, 'ttbm_tour_activities', []);
 				?>
 				<div class="ttbm_activities_table">
 					<table>

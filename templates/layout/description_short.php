@@ -3,7 +3,7 @@
 		die;
 	} // Cannot access pages directly.
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
-	$description = TTBM_Function::get_post_info( $ttbm_post_id, 'ttbm_short_description' );
+	$description = MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_short_description' );
 	$description = $description ?: get_post_field( 'post_content', $ttbm_post_id );
 	if ( $description ) {
 		?>

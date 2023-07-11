@@ -7,10 +7,10 @@
 	$all_dates     = $all_dates ?? TTBM_Function::get_date( $tour_id );
 	$travel_type   = $travel_type ?? TTBM_Function::get_travel_type( $tour_id );
 	$tour_type     = $tour_type ?? TTBM_Function::get_tour_type( $tour_id );
-	$template_name = $template_name ?? TTBM_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
+	$template_name = $template_name ?? MP_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
 	if ( sizeof( $all_dates ) > 0 && $tour_type == 'general' && $travel_type != 'particular' ) {
 		$date          = current( $all_dates );
-		$check_ability = TTBM_Function::get_post_info( $tour_id, 'ttbm_ticketing_system', 'availability_section' );
+		$check_ability = MP_Global_Function::get_post_info( $tour_id, 'ttbm_ticketing_system', 'availability_section' );
 		$time          = TTBM_Function::get_time( $tour_id, $date );
 		$time          = is_array( $time ) ? $time[0]['time'] : $time;
 		$date          = $time ? $date . ' ' . $time : $date;
@@ -31,7 +31,7 @@
 								<input type="text" id="ttbm_select_date" name="" class="formControl date_type" value="<?php echo esc_attr__( date_i18n( $date_format, strtotime( $all_dates[0] ) ) ); ?>"/>
 							</label>
 							<?php
-								$template_name = TTBM_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
+								$template_name = MP_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
 								if ( $template_name != 'viator.php' && $check_ability == 'availability_section' ) {
 									TTBM_Layout::availability_button( $tour_id );
 								}

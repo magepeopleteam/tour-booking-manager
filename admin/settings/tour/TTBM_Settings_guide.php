@@ -20,13 +20,13 @@
             public function guide_setting($tour_id){
                 $ttbm_label = TTBM_Function::get_name();
                 $all_guides = TTBM_Query::query_post_type('ttbm_guide');
-                $display_guide = TTBM_Function::get_post_info($tour_id, 'ttbm_display_tour_guide', 'off');
+                $display_guide = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_tour_guide', 'off');
                 $active_guide = $display_guide == 'off' ? '' : 'mActive';
                 $checked_guide = $display_guide == 'off' ? '' : 'checked';
-                $guides = TTBM_Function::get_post_info($tour_id, 'ttbm_tour_guide', array());
-                $ttbm_guide_style = TTBM_Function::get_post_info($tour_id, 'ttbm_guide_style', 'carousel');
-                $ttbm_guide_image_style = TTBM_Function::get_post_info($tour_id, 'ttbm_guide_image_style', 'squire');
-                $ttbm_guide_description_style = TTBM_Function::get_post_info($tour_id, 'ttbm_guide_description_style', 'full');
+                $guides = MP_Global_Function::get_post_info($tour_id, 'ttbm_tour_guide', array());
+                $ttbm_guide_style = MP_Global_Function::get_post_info($tour_id, 'ttbm_guide_style', 'carousel');
+                $ttbm_guide_image_style = MP_Global_Function::get_post_info($tour_id, 'ttbm_guide_image_style', 'squire');
+                $ttbm_guide_description_style = MP_Global_Function::get_post_info($tour_id, 'ttbm_guide_description_style', 'full');
                 ?>
                 <div class="tabsItem" data-tabs="#ttbm_settings_guide">
                     <h5 class="dFlex">

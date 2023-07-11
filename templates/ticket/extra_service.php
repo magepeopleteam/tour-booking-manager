@@ -5,7 +5,7 @@
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
 	$tour_id = $tour_id ?? TTBM_Function::post_id_multi_language($ttbm_post_id);
 	$tour_date = $tour_date ?? current(TTBM_Function::get_date($tour_id));
-	$extra_services = TTBM_Function::get_post_info($tour_id, 'ttbm_extra_service_data', array());
+	$extra_services = MP_Global_Function::get_post_info($tour_id, 'ttbm_extra_service_data', array());
 	if (sizeof($extra_services) > 0) {
 		?>
 		<div class="ttbm_default_widget ttbm_extra_service_area">

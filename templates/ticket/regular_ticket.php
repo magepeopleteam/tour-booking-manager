@@ -5,7 +5,7 @@
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
 	$tour_id = $tour_id ?? TTBM_Function::post_id_multi_language($ttbm_post_id);
 	$tour_date = $tour_date ?? current(TTBM_Function::get_date($tour_id));
-	$ticket_lists = TTBM_Function::get_post_info($tour_id, 'ttbm_ticket_type', array());
+	$ticket_lists = MP_Global_Function::get_post_info($tour_id, 'ttbm_ticket_type', array());
 	$available_seat = TTBM_Function::get_total_available($tour_id, $tour_date);
 	if ($available_seat > 0 && sizeof($ticket_lists) > 0) {
 		do_action('ttbm_before_ticket_type_area', $tour_id, $tour_date);

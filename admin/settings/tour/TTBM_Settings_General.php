@@ -38,11 +38,11 @@
 			}
 			public function duration($tour_id) {
 				$value_name = 'ttbm_travel_duration';
-				$value = TTBM_Function::get_post_info($tour_id, $value_name);
-				$duration_type = TTBM_Function::get_post_info($tour_id, 'ttbm_travel_duration_type', 'day');
+				$value = MP_Global_Function::get_post_info($tour_id, $value_name);
+				$duration_type = MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_type', 'day');
 				$placeholder = esc_html__('Ex: 3', 'tour-booking-manager');
 				$display_name = 'ttbm_display_duration_night';
-				$display = TTBM_Function::get_post_info($tour_id, $display_name, 'off');
+				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'off');
 				$checked = $display == 'off' ? '' : 'checked';
 				$active = $display == 'off' ? '' : 'mActive';
 				?>
@@ -76,7 +76,7 @@
 					<td colspan="2">
 						<div class="<?php echo esc_attr($active); ?>" data-collapse="#<?php echo esc_attr($display_name); ?>">
 							<label>
-								<input class="formControl" name="ttbm_travel_duration_night" value="<?php echo TTBM_Function::get_post_info($tour_id, 'ttbm_travel_duration_night'); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+								<input class="formControl" name="ttbm_travel_duration_night" value="<?php echo MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_night'); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
 							</label>
 						</div>
 					</td>
@@ -85,9 +85,9 @@
 			}
 			public function start_price($tour_id) {
 				$display_name = 'ttbm_display_price_start';
-				$display = TTBM_Function::get_post_info($tour_id, $display_name, 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
 				$value_name = 'ttbm_travel_start_price';
-				$value = TTBM_Function::get_post_info($tour_id, $value_name);
+				$value = MP_Global_Function::get_post_info($tour_id, $value_name);
 				$placeholder = esc_html__('Type Start Price', 'tour-booking-manager');
 				$checked = $display == 'off' ? '' : 'checked';
 				$active = $display == 'off' ? '' : 'mActive';
@@ -108,9 +108,9 @@
 			}
 			public function max_people($tour_id) {
 				$display_name = 'ttbm_display_max_people';
-				$display = TTBM_Function::get_post_info($tour_id, $display_name, 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
 				$value_name = 'ttbm_travel_max_people_allow';
-				$value = TTBM_Function::get_post_info($tour_id, $value_name);
+				$value = MP_Global_Function::get_post_info($tour_id, $value_name);
 				$placeholder = esc_html__('50', 'tour-booking-manager');
 				$checked = $display == 'off' ? '' : 'checked';
 				$active = $display == 'off' ? '' : 'mActive';
@@ -131,9 +131,9 @@
 			}
 			public function age_range($tour_id) {
 				$display_name = 'ttbm_display_min_age';
-				$display = TTBM_Function::get_post_info($tour_id, $display_name, 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
 				$value_name = 'ttbm_travel_min_age';
-				$value = TTBM_Function::get_post_info($tour_id, $value_name);
+				$value = MP_Global_Function::get_post_info($tour_id, $value_name);
 				$placeholder = esc_html__('Ex: 5 - 50 Years', 'tour-booking-manager');
 				$checked = $display == 'off' ? '' : 'checked';
 				$active = $display == 'off' ? '' : 'mActive';
@@ -155,9 +155,9 @@
 			}
 			public function start_place($tour_id) {
 				$display_name = 'ttbm_display_start_location';
-				$display = TTBM_Function::get_post_info($tour_id, $display_name, 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
 				$value_name = 'ttbm_travel_start_place';
-				$value = TTBM_Function::get_post_info($tour_id, $value_name);
+				$value = MP_Global_Function::get_post_info($tour_id, $value_name);
 				$placeholder = esc_html__('Type Start Place...', 'tour-booking-manager');
 				$checked = $display == 'off' ? '' : 'checked';
 				$active = $display == 'off' ? '' : 'mActive';
@@ -178,9 +178,9 @@
 			}
 			public function full_location($tour_id) {
 				$display_name = 'ttbm_display_map';
-				$display = TTBM_Function::get_post_info($tour_id, $display_name, 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
 				$value_name = 'ttbm_full_location_name';
-				$value = TTBM_Function::get_post_info($tour_id, $value_name);
+				$value = MP_Global_Function::get_post_info($tour_id, $value_name);
 				$placeholder = esc_html__('Please type Full address location...', 'tour-booking-manager');
 				$checked = $display == 'off' ? '' : 'checked';
 				$active = $display == 'off' ? '' : 'mActive';
@@ -201,9 +201,9 @@
 			}
 			public function short_des($tour_id) {
 				$display_name = 'ttbm_display_description';
-				$display = TTBM_Function::get_post_info($tour_id, $display_name, 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
 				$value_name = 'ttbm_short_description';
-				$value = TTBM_Function::get_post_info($tour_id, $value_name);
+				$value = MP_Global_Function::get_post_info($tour_id, $value_name);
 				$placeholder = esc_html__('Please Type Short Description...', 'tour-booking-manager');
 				$checked = $display == 'off' ? '' : 'checked';
 				$active = $display == 'off' ? '' : 'mActive';
@@ -226,7 +226,7 @@
 			//************************//
 			public function location($tour_id) {
 				$display_name = 'ttbm_display_location';
-				$display = TTBM_Function::get_post_info($tour_id, $display_name, 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
 				<tr>
@@ -249,7 +249,7 @@
 				} else {
 					$location_key = 'ttbm_hotel_location';
 				}
-				$value = TTBM_Function::get_post_info($tour_id, $location_key, array());
+				$value = MP_Global_Function::get_post_info($tour_id, $location_key, array());
 				$all_location = TTBM_Function::get_all_location();
 				?>
 				<label>

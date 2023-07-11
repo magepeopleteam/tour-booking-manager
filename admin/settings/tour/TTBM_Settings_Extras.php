@@ -20,7 +20,7 @@
 				$contact_text = TTBM_Function::get_contact_text($tour_id);
 				$contact_phone = TTBM_Function::get_contact_phone($tour_id);
 				$contact_email = TTBM_Function::get_contact_email($tour_id);
-				$display_gaq = TTBM_Function::get_post_info($tour_id, 'ttbm_display_get_question', 'on');
+				$display_gaq = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_get_question', 'on');
 				$active_gaq = $display_gaq == 'off' ? '' : 'mActive';
 				$checked_gaq = $display_gaq == 'off' ? '' : 'checked';
 				?>

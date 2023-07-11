@@ -19,7 +19,7 @@
 			}
 			public function related_tour_settings($tour_id) {
 				$ttbm_label = TTBM_Function::get_name();
-				$display = TTBM_Function::get_post_info($tour_id, 'ttbm_display_related', 'on');
+				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_related', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$related_tours = TTBM_Function::get_related_tour($tour_id);
 				$all_tours = TTBM_Query::query_post_type('ttbm_tour');

@@ -17,17 +17,17 @@
 				<?php
 			}
 			public function display_settings($tour_id) {
-				$seat_details_checked = TTBM_Function::get_post_info($tour_id, 'ttbm_display_seat_details', 'on') == 'off' ? '' : 'checked';
-				$tour_type_checked = TTBM_Function::get_post_info($tour_id, 'ttbm_display_tour_type', 'on') == 'off' ? '' : 'checked';
-				$hotel_checked = TTBM_Function::get_post_info($tour_id, 'ttbm_display_hotels', 'on') == 'off' ? '' : 'checked';
-				$sidebar_checked = TTBM_Function::get_post_info($tour_id, 'ttbm_display_sidebar', 'off') == 'off' ? '' : 'checked';
-				$duration_checked = TTBM_Function::get_post_info($tour_id, 'ttbm_display_duration', 'on') == 'off' ? '' : 'checked';
+				$seat_details_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_seat_details', 'on') == 'off' ? '' : 'checked';
+				$tour_type_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_tour_type', 'on') == 'off' ? '' : 'checked';
+				$hotel_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_hotels', 'on') == 'off' ? '' : 'checked';
+				$sidebar_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_sidebar', 'off') == 'off' ? '' : 'checked';
+				$duration_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_duration', 'on') == 'off' ? '' : 'checked';
 				?>
 				<div class="mp_settings_panel tabsItem" data-tabs="#ttbm_display_settings">
 					<h5><?php esc_html_e('Details page settings', 'tour-booking-manager'); ?></h5>
 					<table>
 						<tbody>
-						<?php $content_title_style = TTBM_Function::get_post_info($tour_id, 'ttbm_section_title_style') ?: 'ttbm_title_style_2'; ?>
+						<?php $content_title_style = MP_Global_Function::get_post_info($tour_id, 'ttbm_section_title_style') ?: 'ttbm_title_style_2'; ?>
 						<tr>
 							<th><?php esc_html_e('Section Title Style?', 'tour-booking-manager'); ?></th>
 							<td>
@@ -43,7 +43,7 @@
 						<tr>
 							<td colspan="2"><?php TTBM_Settings::des_p('ttbm_section_title_style'); ?></td>
 						</tr>
-						<?php $ticketing_system = TTBM_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'availability_section'); ?>
+						<?php $ticketing_system = MP_Global_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'availability_section'); ?>
 						<tr>
 							<th><?php esc_html_e('Ticket Purchase Settings', 'tour-booking-manager'); ?></th>
 							<td>

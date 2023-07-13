@@ -134,7 +134,7 @@
                         }
                     } else {
                         $interval = MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_after', 1);
-                        $all_dates = self::date_separate_period($start_date, $end_date, $interval);
+                        $all_dates = MP_Global_Function::date_separate_period($start_date, $end_date, $interval);
                         foreach ($all_dates as $date) {
                             $date = $date->format('Y-m-d');
                             if ($expire || $now_date <= strtotime($date)) {
@@ -189,12 +189,6 @@
                 }
                 return $tour_date;
             }
-			public static function date_separate_period($start_date, $end_date, $repeat): DatePeriod {
-				$repeat = $repeat ?: 1;
-				$_interval = "P" . $repeat . "D";
-				$end_date = date('Y-m-d', strtotime($end_date . ' +1 day'));
-				return new DatePeriod(new DateTime($start_date), new DateInterval($_interval), new DateTime($end_date));
-			}
 			public static function reduce_stop_sale_hours($date): string {
 				$stop_hours = (int)self::get_general_settings('ttbm_ticket_expire_time') * 60 * 60;
 				return date('Y-m-d H:i:s', strtotime($date) - $stop_hours);

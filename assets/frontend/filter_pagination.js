@@ -55,7 +55,21 @@
 		return result;
 	}
 	let ttbm_filter_item = {
-		title_filter: 'data-title', type_filter: 'data-type', category_filter: 'data-category', organizer_filter: 'data-organizer', location_filter: 'data-location', location_filter_multiple: 'data-location', country_filter: 'data-country', duration_filter: 'data-duration', duration_filter_multiple: 'data-duration', feature_filter_multiple: 'data-feature', tag_filter_multiple: 'data-tag', activity_filter: 'data-activity', activity_filter_multiple: 'data-activity', month_filter: 'data-month', date_range_filter: 'data-date',
+		title_filter: 'data-title',
+		type_filter: 'data-type',
+		category_filter: 'data-category',
+		organizer_filter: 'data-organizer',
+		location_filter: 'data-location',
+		location_filter_multiple: 'data-location',
+		country_filter: 'data-country',
+		duration_filter: 'data-duration',
+		duration_filter_multiple: 'data-duration',
+		feature_filter_multiple: 'data-feature',
+		tag_filter_multiple: 'data-tag',
+		activity_filter: 'data-activity',
+		activity_filter_multiple: 'data-activity',
+		month_filter: 'data-month',
+		date_range_filter: 'data-date',
 	};
 	//************Filter*************//
 	$(document).on('change', '.ttbm_filter .formControl', function (e) {

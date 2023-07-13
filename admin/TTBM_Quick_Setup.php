@@ -111,6 +111,7 @@
 					];
 					$new_general_settings_data = is_array($general_settings_data) ? array_replace($general_settings_data, $update_general_settings_arr) : $update_general_settings_arr;
 					update_option('ttbm_basic_gen_settings', $new_general_settings_data);
+					update_option( 'ttbm_quick_setup_done','yes');
 					wp_redirect(admin_url('edit.php?post_type=ttbm_tour'));
 				}
 				?>

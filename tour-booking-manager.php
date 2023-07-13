@@ -57,12 +57,14 @@
 				$client->insights()->init();
 			}
 			public function activation_redirect($plugin) {
-				if ($plugin == plugin_basename(__FILE__)) {
+				$ttbm_quick_setup_done = get_option('ttbm_quick_setup_done');
+				if ($plugin == plugin_basename(__FILE__) && $ttbm_quick_setup_done != 'yes') {
 					exit(wp_redirect(admin_url('edit.php?post_type=ttbm_tour&page=ttbm_quick_setup')));
 				}
 			}
 			public function activation_redirect_setup($plugin) {
-				if ($plugin == plugin_basename(__FILE__)) {
+				$ttbm_quick_setup_done = get_option('ttbm_quick_setup_done');
+				if ($plugin == plugin_basename(__FILE__) && $ttbm_quick_setup_done != 'yes') {
 					exit(wp_redirect(admin_url('admin.php?post_type=ttbm_tour&page=ttbm_quick_setup')));
 				}
 			}

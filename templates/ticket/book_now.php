@@ -24,10 +24,10 @@
 			<?php } ?>
 			<button class="dButton ttbm_book_now <?php echo esc_attr($seat_plan); ?>" type="<?php echo esc_attr($button_type); ?>">
 				<span class="fas fa-cart-plus"></span>
-				<?php TTBM_Function::translation_settings( 'ttbm_string_book_now', esc_html__( 'Book Now', 'tour-booking-manager' ) ); ?>
+				<?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?>
 			</button>
 			<button type="submit" name="add-to-cart" value="<?php echo esc_attr( $ttbm_product_id ); ?>" class="dNone ttbm_add_to_cart">
-				<?php TTBM_Function::translation_settings( 'ttbm_string_book_now', esc_html__( 'Book Now', 'tour-booking-manager' ) ); ?>
+				<?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?>
 			</button>
 		</div>
 	<?php } ?>

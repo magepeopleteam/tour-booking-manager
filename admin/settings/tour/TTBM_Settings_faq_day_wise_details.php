@@ -56,7 +56,7 @@
 				<?php
 			}
 			public function get_ttbm_add_day_wise_details() {
-				$id = TTBM_Function::data_sanitize($_POST['id']);
+				$id = MP_Global_Function::data_sanitize($_POST['id']);
 				$this->ttbm_repeated_item($id, 'ttbm_daywise_details');
 				die();
 			}
@@ -89,7 +89,7 @@
 				<?php
 			}
 			public function get_ttbm_add_faq_content() {
-				$id = TTBM_Function::data_sanitize($_POST['id']);
+				$id = MP_Global_Function::data_sanitize($_POST['id']);
 				$this->ttbm_repeated_item($id, 'mep_event_faq');
 				die();
 			}
@@ -145,8 +145,8 @@
 				$content_name = $array['content_name'];
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
 					$new_data = array();
-					$title = TTBM_Function::get_submit_info($title_name, array());
-					$images = TTBM_Function::get_submit_info($image_name, array());
+					$title = MP_Global_Function::get_submit_info($title_name, array());
+					$images = MP_Global_Function::get_submit_info($image_name, array());
 					$content = $_POST[$content_name] ?? array();
 					$count = count($title);
 					if ($count > 0) {
@@ -164,11 +164,11 @@
 					}
 					update_post_meta($tour_id, $meta_key, $new_data);
 					if ($meta_key == 'ttbm_daywise_details') {
-						$schedule = TTBM_Function::get_submit_info('ttbm_display_schedule') ? 'on' : 'off';
+						$schedule = MP_Global_Function::get_submit_info('ttbm_display_schedule') ? 'on' : 'off';
 						update_post_meta($tour_id, 'ttbm_display_schedule', $schedule);
 					}
 					if ($meta_key == 'mep_event_faq') {
-						$faq = TTBM_Function::get_submit_info('ttbm_display_faq') ? 'on' : 'off';
+						$faq = MP_Global_Function::get_submit_info('ttbm_display_faq') ? 'on' : 'off';
 						update_post_meta($tour_id, 'ttbm_display_faq', $faq);
 					}
 				}

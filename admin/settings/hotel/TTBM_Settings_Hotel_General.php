@@ -97,13 +97,13 @@
 			}
 			public function save_hotel_general_settings($post_id) {
 				if (get_post_type($post_id) == 'ttbm_hotel') {
-					$ttbm_display_location = TTBM_Function::get_submit_info('ttbm_display_hotel_location') ? 'on' : 'off';
-					$ttbm_location_name = TTBM_Function::get_submit_info('ttbm_hotel_location');
+					$ttbm_display_location = MP_Global_Function::get_submit_info('ttbm_display_hotel_location') ? 'on' : 'off';
+					$ttbm_location_name = MP_Global_Function::get_submit_info('ttbm_hotel_location');
 					update_post_meta($post_id, 'ttbm_display_hotel_location', $ttbm_display_location);
 					update_post_meta($post_id, 'ttbm_hotel_location', $ttbm_location_name);
 					/***************/
-					$ttbm_display_distance = TTBM_Function::get_submit_info('ttbm_display_hotel_distance') ? 'on' : 'off';
-					$ttbm_hotel_distance_des = TTBM_Function::get_submit_info('ttbm_hotel_distance_des');
+					$ttbm_display_distance = MP_Global_Function::get_submit_info('ttbm_display_hotel_distance') ? 'on' : 'off';
+					$ttbm_hotel_distance_des = MP_Global_Function::get_submit_info('ttbm_hotel_distance_des');
 					update_post_meta($post_id, 'ttbm_display_hotel_distance', $ttbm_display_distance);
 					update_post_meta($post_id, 'ttbm_hotel_distance_des', $ttbm_hotel_distance_des);
 				}

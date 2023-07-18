@@ -52,9 +52,9 @@
 			}
 			public function save_admin_note($post_id) {
 				if (get_post_type($post_id) == TTBM_Function::get_cpt_name()) {
-					$display_note = TTBM_Function::get_submit_info('ttbm_display_admin_note') ? 'on' : 'off';
+					$display_note = MP_Global_Function::get_submit_info('ttbm_display_admin_note') ? 'on' : 'off';
 					update_post_meta($post_id, 'ttbm_display_admin_note', $display_note);
-					$note=TTBM_Function::get_submit_info('ttbm_admin_note');
+					$note=MP_Global_Function::get_submit_info('ttbm_admin_note');
 					update_post_meta($post_id, 'ttbm_admin_note', $note);
 				}
 			}

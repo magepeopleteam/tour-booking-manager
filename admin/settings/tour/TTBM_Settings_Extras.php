@@ -17,9 +17,9 @@
 				<?php
 			}
 			public function extras_settings($tour_id) {
-				$contact_text = TTBM_Function::get_contact_text($tour_id);
-				$contact_phone = TTBM_Function::get_contact_phone($tour_id);
-				$contact_email = TTBM_Function::get_contact_email($tour_id);
+				$contact_text = MP_Global_Function::get_post_info($tour_id, 'ttbm_contact_text');
+				$contact_phone = MP_Global_Function::get_post_info($tour_id, 'ttbm_contact_phone');
+				$contact_email = MP_Global_Function::get_post_info($tour_id, 'ttbm_contact_email');
 				$display_gaq = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_get_question', 'on');
 				$active_gaq = $display_gaq == 'off' ? '' : 'mActive';
 				$checked_gaq = $display_gaq == 'off' ? '' : 'checked';
@@ -75,11 +75,11 @@
 			}
 			public function save_extras($tour_id) {
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
-					$get_question = TTBM_Function::get_submit_info('ttbm_display_get_question') ? 'on' : 'off';
+					$get_question = MP_Global_Function::get_submit_info('ttbm_display_get_question') ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_get_question', $get_question);
-					$email = TTBM_Function::get_submit_info('ttbm_contact_email');
-					$phone = TTBM_Function::get_submit_info('ttbm_contact_phone');
-					$des = TTBM_Function::get_submit_info('ttbm_contact_text');
+					$email = MP_Global_Function::get_submit_info('ttbm_contact_email');
+					$phone = MP_Global_Function::get_submit_info('ttbm_contact_phone');
+					$des = MP_Global_Function::get_submit_info('ttbm_contact_text');
 					update_post_meta($tour_id, 'ttbm_contact_email', $email);
 					update_post_meta($tour_id, 'ttbm_contact_phone', $phone);
 					update_post_meta($tour_id, 'ttbm_contact_text', $des);

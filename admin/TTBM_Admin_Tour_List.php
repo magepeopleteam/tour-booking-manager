@@ -15,8 +15,8 @@
 				add_submenu_page('edit.php?post_type=ttbm_tour', $label . ' ' . esc_html__('List', 'tour-booking-manager'), $label . ' ' . esc_html__('List', 'tour-booking-manager'), 'manage_options', 'ttbm_list', array($this, 'ttbm_list'));
 			}
 			public function ttbm_list() {
-				$page = isset($_REQUEST['page']) ? TTBM_Function::data_sanitize($_REQUEST['page']) : 1;
-				$post_query = TTBM_Query::query_post_type(TTBM_Function::get_cpt_name());
+				$page = isset($_REQUEST['page']) ? MP_Global_Function::data_sanitize($_REQUEST['page']) : 1;
+				$post_query = MP_Global_Function::query_post_type(TTBM_Function::get_cpt_name());
 				$label = TTBM_Function::get_name();
 				$categories = MP_Global_Function::get_taxonomy('ttbm_tour_cat');
 				$organizers = MP_Global_Function::get_taxonomy('ttbm_tour_org');
@@ -197,7 +197,7 @@
 				//echo '<pre>'; print_r( $all_orders ); echo '</pre>';
 			}
 			public function ttbm_trash_post(){
-				$post_id = isset($_REQUEST['post_id']) ? TTBM_Function::data_sanitize($_REQUEST['post_id']) : '';
+				$post_id = isset($_REQUEST['post_id']) ? MP_Global_Function::data_sanitize($_REQUEST['post_id']) : '';
 				if ($post_id > 0) {
 					$args = array('post_type' => array('ttbm_tour'), 'posts_per_page' => -1, 'p' => $post_id, 'post_status' => 'publish');
 					$loop = new WP_Query($args);

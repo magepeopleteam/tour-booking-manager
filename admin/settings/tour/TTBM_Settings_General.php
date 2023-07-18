@@ -335,7 +335,7 @@
 				die();
 			}
 			public function ttbm_reload_location_list() {
-				$ttbm_id = TTBM_Function::data_sanitize($_POST['ttbm_id']);
+				$ttbm_id = MP_Global_Function::data_sanitize($_POST['ttbm_id']);
 				self::location_select($ttbm_id);
 				die();
 			}
@@ -343,58 +343,58 @@
 			public function save_general_settings($tour_id) {
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
 					/***************/
-					$ttbm_travel_duration = TTBM_Function::get_submit_info('ttbm_travel_duration');
-					$ttbm_travel_duration_type = TTBM_Function::get_submit_info('ttbm_travel_duration_type', 'day');
+					$ttbm_travel_duration = MP_Global_Function::get_submit_info('ttbm_travel_duration');
+					$ttbm_travel_duration_type = MP_Global_Function::get_submit_info('ttbm_travel_duration_type', 'day');
 					update_post_meta($tour_id, 'ttbm_travel_duration', $ttbm_travel_duration);
 					update_post_meta($tour_id, 'ttbm_travel_duration_type', $ttbm_travel_duration_type);
-					$ttbm_display_duration = TTBM_Function::get_submit_info('ttbm_display_duration_night') ? 'on' : 'off';
-					$ttbm_travel_duration_night = TTBM_Function::get_submit_info('ttbm_travel_duration_night');
+					$ttbm_display_duration = MP_Global_Function::get_submit_info('ttbm_display_duration_night') ? 'on' : 'off';
+					$ttbm_travel_duration_night = MP_Global_Function::get_submit_info('ttbm_travel_duration_night');
 					update_post_meta($tour_id, 'ttbm_travel_duration_night', $ttbm_travel_duration_night);
 					update_post_meta($tour_id, 'ttbm_display_duration_night', $ttbm_display_duration);
 					/***************/
-					$ttbm_display_price_start = TTBM_Function::get_submit_info('ttbm_display_price_start') ? 'on' : 'off';
-					$ttbm_travel_start_price = TTBM_Function::get_submit_info('ttbm_travel_start_price');
+					$ttbm_display_price_start = MP_Global_Function::get_submit_info('ttbm_display_price_start') ? 'on' : 'off';
+					$ttbm_travel_start_price = MP_Global_Function::get_submit_info('ttbm_travel_start_price');
 					update_post_meta($tour_id, 'ttbm_display_price_start', $ttbm_display_price_start);
 					update_post_meta($tour_id, 'ttbm_travel_start_price', $ttbm_travel_start_price);
 					/***************/
-					$ttbm_display_max_people = TTBM_Function::get_submit_info('ttbm_display_max_people') ? 'on' : 'off';
-					$ttbm_travel_max_people_allow = TTBM_Function::get_submit_info('ttbm_travel_max_people_allow');
+					$ttbm_display_max_people = MP_Global_Function::get_submit_info('ttbm_display_max_people') ? 'on' : 'off';
+					$ttbm_travel_max_people_allow = MP_Global_Function::get_submit_info('ttbm_travel_max_people_allow');
 					update_post_meta($tour_id, 'ttbm_display_max_people', $ttbm_display_max_people);
 					update_post_meta($tour_id, 'ttbm_travel_max_people_allow', $ttbm_travel_max_people_allow);
 					/***************/
-					$ttbm_display_min_age = TTBM_Function::get_submit_info('ttbm_display_min_age') ? 'on' : 'off';
-					$ttbm_travel_min_age = TTBM_Function::get_submit_info('ttbm_travel_min_age');
+					$ttbm_display_min_age = MP_Global_Function::get_submit_info('ttbm_display_min_age') ? 'on' : 'off';
+					$ttbm_travel_min_age = MP_Global_Function::get_submit_info('ttbm_travel_min_age');
 					update_post_meta($tour_id, 'ttbm_display_min_age', $ttbm_display_min_age);
 					update_post_meta($tour_id, 'ttbm_travel_min_age', $ttbm_travel_min_age);
 					/***************/
-					$visible_start_location = TTBM_Function::get_submit_info('ttbm_display_start_location') ? 'on' : 'off';
-					$start_location = TTBM_Function::get_submit_info('ttbm_travel_start_place');
+					$visible_start_location = MP_Global_Function::get_submit_info('ttbm_display_start_location') ? 'on' : 'off';
+					$start_location = MP_Global_Function::get_submit_info('ttbm_travel_start_place');
 					update_post_meta($tour_id, 'ttbm_display_start_location', $visible_start_location);
 					update_post_meta($tour_id, 'ttbm_travel_start_place', $start_location);
 					/***************/
-					$ttbm_display_location = TTBM_Function::get_submit_info('ttbm_display_location') ? 'on' : 'off';
-					$ttbm_location_name = TTBM_Function::get_submit_info('ttbm_location_name');
+					$ttbm_display_location = MP_Global_Function::get_submit_info('ttbm_display_location') ? 'on' : 'off';
+					$ttbm_location_name = MP_Global_Function::get_submit_info('ttbm_location_name');
 					update_post_meta($tour_id, 'ttbm_display_location', $ttbm_display_location);
 					update_post_meta($tour_id, 'ttbm_location_name', $ttbm_location_name);
 					/***************/
-					$ttbm_display_map = TTBM_Function::get_submit_info('ttbm_display_map') ? 'on' : 'off';
-					$ttbm_full_location_name = TTBM_Function::get_submit_info('ttbm_full_location_name');
+					$ttbm_display_map = MP_Global_Function::get_submit_info('ttbm_display_map') ? 'on' : 'off';
+					$ttbm_full_location_name = MP_Global_Function::get_submit_info('ttbm_full_location_name');
 					update_post_meta($tour_id, 'ttbm_display_map', $ttbm_display_map);
 					update_post_meta($tour_id, 'ttbm_full_location_name', $ttbm_full_location_name);
 					/***************/
-					$visible_description = TTBM_Function::get_submit_info('ttbm_display_description') ? 'on' : 'off';
-					$description = TTBM_Function::get_submit_info('ttbm_short_description');
+					$visible_description = MP_Global_Function::get_submit_info('ttbm_display_description') ? 'on' : 'off';
+					$description = MP_Global_Function::get_submit_info('ttbm_short_description');
 					update_post_meta($tour_id, 'ttbm_display_description', $visible_description);
 					update_post_meta($tour_id, 'ttbm_short_description', $description);
 					/***************/
 				}
 			}
 			public function ttbm_new_location_save() {
-				$name = TTBM_Function::data_sanitize($_POST['name']);
-				$description = TTBM_Function::data_sanitize($_POST['description']);
-				$address = TTBM_Function::data_sanitize($_POST['address']);
-				$country = TTBM_Function::data_sanitize($_POST['country']);
-				$image = TTBM_Function::data_sanitize($_POST['image']);
+				$name = MP_Global_Function::data_sanitize($_POST['name']);
+				$description = MP_Global_Function::data_sanitize($_POST['description']);
+				$address = MP_Global_Function::data_sanitize($_POST['address']);
+				$country = MP_Global_Function::data_sanitize($_POST['country']);
+				$image = MP_Global_Function::data_sanitize($_POST['image']);
 				$query = wp_insert_term($name,   // the term
 					'ttbm_tour_location', // the taxonomy
 					array('description' => $description));

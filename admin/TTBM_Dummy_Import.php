@@ -9,7 +9,7 @@
             }
             private function dummy_import() {
                 $ttbm_dummy_post = get_option('ttbm_dummy_already_inserted');
-                $all_post = TTBM_Query::query_post_type('ttbm_tour');
+                $all_post = MP_Global_Function::query_post_type(TTBM_Function::get_cpt_name());
                 if ($all_post->post_count == 0 && $ttbm_dummy_post != 'yes') {
                     $dummy_data = $this->dummy_data();
                     foreach ($dummy_data as $type => $dummy) {
@@ -32,7 +32,7 @@
                         }
                         if ($type == 'custom_post') {
                             foreach ($dummy as $custom_post => $dummy_post) {
-                                $post = TTBM_Query::query_post_type($custom_post);
+                                $post = MP_Global_Function::query_post_type($custom_post);
                                 if ($post->post_count == 0) {
                                     foreach ($dummy_post as $dummy_data) {
                                         $title = $dummy_data['name'];

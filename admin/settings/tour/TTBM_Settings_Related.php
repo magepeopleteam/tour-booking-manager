@@ -21,8 +21,8 @@
 				$ttbm_label = TTBM_Function::get_name();
 				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_related', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
-				$related_tours = TTBM_Function::get_related_tour($tour_id);
-				$all_tours = TTBM_Query::query_post_type('ttbm_tour');
+				$related_tours = MP_Global_Function::get_post_info($tour_id, 'ttbm_related_tour', array());
+				$all_tours = MP_Global_Function::query_post_type(TTBM_Function::get_cpt_name());
 				$tours = $all_tours->posts;
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
@@ -63,9 +63,9 @@
 			}
 			public function save_related_tour($tour_id) {
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
-					$related = TTBM_Function::get_submit_info('ttbm_display_related') ? 'on' : 'off';
+					$related = MP_Global_Function::get_submit_info('ttbm_display_related') ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_related', $related);
-					$related_tours = TTBM_Function::get_submit_info('ttbm_related_tour', array());
+					$related_tours = MP_Global_Function::get_submit_info('ttbm_related_tour', array());
 					update_post_meta($tour_id, 'ttbm_related_tour', $related_tours);
 				}
 			}

@@ -142,21 +142,21 @@
 			}
 			public function save_hotel_price($post_id) {
 				if (get_post_type($post_id) == 'ttbm_hotel') {
-					$advance_option = TTBM_Function::get_submit_info('ttbm_display_advance') ? 'on' : 'off';
+					$advance_option = MP_Global_Function::get_submit_info('ttbm_display_advance') ? 'on' : 'off';
 					update_post_meta($post_id, 'ttbm_display_advance', $advance_option);
 					/************************/
 					$old_ticket_type = MP_Global_Function::get_post_info($post_id, 'ttbm_room_details', array());
 					$new_ticket_type = array();
-					$icon = TTBM_Function::get_submit_info('room_type_icon', array());
-					$names = TTBM_Function::get_submit_info('ttbm_hotel_room_name', array());
-					$ticket_price = TTBM_Function::get_submit_info('ttbm_hotel_room_price', array());
-					$sale_price = TTBM_Function::get_submit_info('sale_price', array());
-					$qty = TTBM_Function::get_submit_info('ttbm_hotel_room_qty', array());
-					$adult_qty = TTBM_Function::get_submit_info('ttbm_hotel_room_capacity_adult', array());
-					$child_qty = TTBM_Function::get_submit_info('ttbm_hotel_room_capacity_child', array());
-					$rsv = TTBM_Function::get_submit_info('room_reserve_qty', array());
-					$qty_type = TTBM_Function::get_submit_info('room_qty_type', array());
-					$description = TTBM_Function::get_submit_info('room_description', array());
+					$icon = MP_Global_Function::get_submit_info('room_type_icon', array());
+					$names = MP_Global_Function::get_submit_info('ttbm_hotel_room_name', array());
+					$ticket_price = MP_Global_Function::get_submit_info('ttbm_hotel_room_price', array());
+					$sale_price = MP_Global_Function::get_submit_info('sale_price', array());
+					$qty = MP_Global_Function::get_submit_info('ttbm_hotel_room_qty', array());
+					$adult_qty = MP_Global_Function::get_submit_info('ttbm_hotel_room_capacity_adult', array());
+					$child_qty = MP_Global_Function::get_submit_info('ttbm_hotel_room_capacity_child', array());
+					$rsv = MP_Global_Function::get_submit_info('room_reserve_qty', array());
+					$qty_type = MP_Global_Function::get_submit_info('room_qty_type', array());
+					$description = MP_Global_Function::get_submit_info('room_description', array());
 					$count = count($names);
 					for ($i = 0; $i < $count; $i++) {
 						if ($names[$i] && $ticket_price[$i] >= 0 && $qty[$i] > 0) {

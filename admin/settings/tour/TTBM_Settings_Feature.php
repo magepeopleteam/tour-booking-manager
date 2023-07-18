@@ -154,7 +154,7 @@
 				die();
 			}
 			public function ttbm_reload_feature_list() {
-				$ttbm_id = TTBM_Function::data_sanitize($_POST['ttbm_id']);
+				$ttbm_id = MP_Global_Function::data_sanitize($_POST['ttbm_id']);
 				$this->feature($ttbm_id);
 				die();
 			}
@@ -165,22 +165,22 @@
 				}
 			}
 			public function save_feature_data($tour_id) {
-				$include_service = TTBM_Function::get_submit_info('ttbm_display_include_service') ? 'on' : 'off';
-				$exclude_service = TTBM_Function::get_submit_info('ttbm_display_exclude_service') ? 'on' : 'off';
+				$include_service = MP_Global_Function::get_submit_info('ttbm_display_include_service') ? 'on' : 'off';
+				$exclude_service = MP_Global_Function::get_submit_info('ttbm_display_exclude_service') ? 'on' : 'off';
 				update_post_meta($tour_id, 'ttbm_display_include_service', $include_service);
 				update_post_meta($tour_id, 'ttbm_display_exclude_service', $exclude_service);
-				$include = TTBM_Function::get_submit_info('ttbm_service_included_in_price', array());
+				$include = MP_Global_Function::get_submit_info('ttbm_service_included_in_price', array());
 				$new_include = TTBM_Function::feature_id_to_array($include);
 				update_post_meta($tour_id, 'ttbm_service_included_in_price', $new_include);
-				$exclude = TTBM_Function::get_submit_info('ttbm_service_excluded_in_price', array());
+				$exclude = MP_Global_Function::get_submit_info('ttbm_service_excluded_in_price', array());
 				$new_exclude = TTBM_Function::feature_id_to_array($exclude);
 				update_post_meta($tour_id, 'ttbm_service_excluded_in_price', $new_exclude);
 			}
 			/************************/
 			public function ttbm_new_feature_save() {
-				$feature_name = TTBM_Function::data_sanitize($_POST['feature_name']);
-				$feature_description = TTBM_Function::data_sanitize($_POST['feature_description']);
-				$feature_icon = TTBM_Function::data_sanitize($_POST['feature_icon']);
+				$feature_name = MP_Global_Function::data_sanitize($_POST['feature_name']);
+				$feature_description = MP_Global_Function::data_sanitize($_POST['feature_description']);
+				$feature_icon = MP_Global_Function::data_sanitize($_POST['feature_icon']);
 				$query = wp_insert_term($feature_name,   // the term
 					'ttbm_tour_features_list', // the taxonomy
 					array('description' => $feature_description));

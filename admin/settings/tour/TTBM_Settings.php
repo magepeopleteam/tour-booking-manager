@@ -251,7 +251,7 @@
 				];
 				$ttbm_date_config_boxs_args = ['meta_box_id' => 'ttbm_travel_date_config_meta_boxes', 'meta_box_title' => '<span class="far fa-calendar-plus"></span>' . __('Date Configuration', 'tour-booking-manager'), 'screen' => [TTBM_Function::get_cpt_name()], 'context' => 'normal', 'priority' => 'high', 'callback_args' => [], 'nav_position' => 'none', 'item_name' => "MagePeople", 'item_version' => "2.0", 'panels' => ['ttbm_date_config_meta_boxs' => $ttbm_date_info_boxs]];
 				new TtbmAddMetaBox($ttbm_date_config_boxs_args);
-				$ttbm_tax_meta_boxs = ['page_nav' => $tour_label . __(' Tax', 'tour-booking-manager'), 'priority' => 10, 'sections' => ['section_2' => ['title' => __('', 'tour-booking-manager'), 'description' => __('', 'tour-booking-manager'), 'options' => [['id' => '_tax_status', 'title' => $tour_label . __(' Tax Status', 'tour-booking-manager'), 'details' => __('Please Select Tax Status', 'tour-booking-manager'), 'type' => 'select', 'class' => 'omg', 'default' => 'taxable', 'args' => ['taxable' => __('Taxable', 'tour-booking-manager'), 'shipping' => __('Shipping only', 'tour-booking-manager'), 'none' => __('None', 'tour-booking-manager')]], ['id' => '_tax_class', 'title' => $tour_label . __(' Tax Class', 'tour-booking-manager'), 'details' => __('Please Select Tax Class', 'tour-booking-manager'), 'type' => 'select', 'class' => 'omg', 'default' => 'none', 'args' => TTBM_Function::all_tax_list()],]],],];
+				$ttbm_tax_meta_boxs = ['page_nav' => $tour_label . __(' Tax', 'tour-booking-manager'), 'priority' => 10, 'sections' => ['section_2' => ['title' => __('', 'tour-booking-manager'), 'description' => __('', 'tour-booking-manager'), 'options' => [['id' => '_tax_status', 'title' => $tour_label . __(' Tax Status', 'tour-booking-manager'), 'details' => __('Please Select Tax Status', 'tour-booking-manager'), 'type' => 'select', 'class' => 'omg', 'default' => 'taxable', 'args' => ['taxable' => __('Taxable', 'tour-booking-manager'), 'shipping' => __('Shipping only', 'tour-booking-manager'), 'none' => __('None', 'tour-booking-manager')]], ['id' => '_tax_class', 'title' => $tour_label . __(' Tax Class', 'tour-booking-manager'), 'details' => __('Please Select Tax Class', 'tour-booking-manager'), 'type' => 'select', 'class' => 'omg', 'default' => 'none', 'args' => MP_Global_Function::all_tax_list()],]],],];
 				$ttbm_tax_meta_boxs_args = [
 					'meta_box_id' => 'ttbm_tax_meta_boxes',
 					'meta_box_title' => '<span class="fas fa-money-bill-wave"></span> ' . __(' Tax', 'tour-booking-manager'),
@@ -388,9 +388,9 @@
 			}
 			public function save_map($tour_id) {
 				if (get_post_type($tour_id) == 'ttbm_places') {
-					$address = TTBM_Function::get_submit_info('ttbm_place_address');
-					$lat = TTBM_Function::get_submit_info('ttbm_place_lat');
-					$lon = TTBM_Function::get_submit_info('ttbm_place_lon');
+					$address = MP_Global_Function::get_submit_info('ttbm_place_address');
+					$lat = MP_Global_Function::get_submit_info('ttbm_place_lat');
+					$lon = MP_Global_Function::get_submit_info('ttbm_place_lon');
 					update_post_meta($tour_id, 'ttbm_place_address', $address);
 					update_post_meta($tour_id, 'ttbm_place_lat', $lat);
 					update_post_meta($tour_id, 'ttbm_place_lon', $lon);

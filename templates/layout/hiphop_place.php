@@ -3,7 +3,7 @@
 		die;
 	} // Cannot access pages directly.
 	$ttbm_post_id   = $ttbm_post_id ?? get_the_id();
-	$places    = TTBM_Function::get_hiphop_place( $ttbm_post_id );
+	$places    = MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_hiphop_places', array());
 	$all_place = new WP_Query( array(
 		'post_type'   => 'ttbm_places',
 		'post_status' => 'publish'
@@ -40,7 +40,7 @@
 											?>
 											<span class="circleIcon_xs abTopRight fas fa-question-circle"></span>
 											<div class="popover-content">
-												<p><?php echo TTBM_Function::esc_html( $description ) ?></p>
+												<p><?php echo MP_Global_Function::esc_html( $description ) ?></p>
 											</div>
 										<?php } ?>
 								</div>

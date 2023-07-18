@@ -101,13 +101,13 @@
 			}
 			public function save_display($tour_id) {
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
-					$content_title_style = TTBM_Function::get_submit_info('ttbm_section_title_style') ?: 'style_1';
-					$ticketing_system = TTBM_Function::get_submit_info('ttbm_ticketing_system', 'availability_section');
-					$seat_info = TTBM_Function::get_submit_info('ttbm_display_seat_details') ? 'on' : 'off';
-					$sidebar = TTBM_Function::get_submit_info('ttbm_display_sidebar') ? 'on' : 'off';
-					$tour_type = TTBM_Function::get_submit_info('ttbm_display_tour_type') ? 'on' : 'off';
-					$hotels = TTBM_Function::get_submit_info('ttbm_display_hotels') ? 'on' : 'off';
-					$duration = TTBM_Function::get_submit_info('ttbm_display_duration') ? 'on' : 'off';
+					$content_title_style = MP_Global_Function::get_submit_info('ttbm_section_title_style') ?: 'style_1';
+					$ticketing_system = MP_Global_Function::get_submit_info('ttbm_ticketing_system', 'availability_section');
+					$seat_info = MP_Global_Function::get_submit_info('ttbm_display_seat_details') ? 'on' : 'off';
+					$sidebar = MP_Global_Function::get_submit_info('ttbm_display_sidebar') ? 'on' : 'off';
+					$tour_type = MP_Global_Function::get_submit_info('ttbm_display_tour_type') ? 'on' : 'off';
+					$hotels = MP_Global_Function::get_submit_info('ttbm_display_hotels') ? 'on' : 'off';
+					$duration = MP_Global_Function::get_submit_info('ttbm_display_duration') ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_section_title_style', $content_title_style);
 					update_post_meta($tour_id, 'ttbm_ticketing_system', $ticketing_system);
 					update_post_meta($tour_id, 'ttbm_display_seat_details', $seat_info);

@@ -1,23 +1,20 @@
 <?php
-	if ( ! defined( 'ABSPATH' ) ) {
+	if (!defined('ABSPATH')) {
 		die;
 	} // Cannot access pages directly.
-	if ( ! class_exists( 'TTBM_Quick_Setup' ) ) {
+	if (!class_exists('TTBM_Quick_Setup')) {
 		class TTBM_Quick_Setup {
 			public function __construct() {
-				if ( ! class_exists( 'TTBM_Dependencies' ) ) {
-					add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_scripts' ), 10, 1 );
+				if (!class_exists('TTBM_Dependencies')) {
+					add_action('admin_enqueue_scripts', array($this, 'add_admin_scripts'), 10, 1);
 				}
-				add_action( 'admin_menu', array( $this, 'quick_setup_menu' ) );
-				//add_action( 'ttbm_quick_setup_content_start', array( $this, 'setup_welcome_content' ) );
-				//add_action( 'ttbm_quick_setup_content_general', array( $this, 'setup_general_content' ) );
-				//add_action( 'ttbm_quick_setup_content_done', array( $this, 'setup_content_done' ) );
+				add_action('admin_menu', array($this, 'quick_setup_menu'));
 			}
 			public function add_admin_scripts() {
 				wp_enqueue_style('mp_plugin_global', TTBM_PLUGIN_URL . '/assets/helper/mp_style/mp_style.css', array(), time());
 				wp_enqueue_script('mp_plugin_global', TTBM_PLUGIN_URL . '/assets/helper/mp_style/mp_script.js', array('jquery'), time(), true);
-				wp_enqueue_script( 'mp_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/mp_admin_settings.js', array( 'jquery' ), time(), true );
-				wp_enqueue_style( 'mp_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/mp_admin_settings.css', array(), time() );
+				wp_enqueue_script('mp_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/mp_admin_settings.js', array('jquery'), time(), true);
+				wp_enqueue_style('mp_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/mp_admin_settings.css', array(), time());
 				wp_enqueue_style('mp_font_awesome', '//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css', array(), '5.15.4');
 			}
 			public function quick_setup_menu() {
@@ -32,6 +29,7 @@
 				}
 			}
 			public function quick_setup() {
+				$status = MP_Global_Function::check_woocommerce();
 				if (isset($_POST['active_woo_btn'])) {
 					?>
 					<script>
@@ -52,7 +50,6 @@
 								window.location.href = ttbm_admin_location;
 							});
 						}(jQuery));
-					
 					</script>
 					<?php
 				}
@@ -97,7 +94,6 @@
 								window.location.href = ttbm_admin_location;
 							});
 						}(jQuery));
-					
 					</script>
 					<?php
 				}
@@ -111,7 +107,7 @@
 					];
 					$new_general_settings_data = is_array($general_settings_data) ? array_replace($general_settings_data, $update_general_settings_arr) : $update_general_settings_arr;
 					update_option('ttbm_basic_gen_settings', $new_general_settings_data);
-					update_option( 'ttbm_quick_setup_done','yes');
+					update_option('ttbm_quick_setup_done', 'yes');
 					wp_redirect(admin_url('edit.php?post_type=ttbm_tour'));
 				}
 				?>
@@ -149,15 +145,17 @@
 										$this->setup_content_done();
 									?>
 								</div>
-								<div class="justifyBetween">
-									<button type="button" class="mpBtn nextTab_prev">
-										<span>&longleftarrow;<?php esc_html_e('Previous', 'tour-booking-manager'); ?></span>
-									</button>
-									<div></div>
-									<button type="button" class="themeButton nextTab_next">
-										<span><?php esc_html_e('Next', 'tour-booking-manager'); ?>&longrightarrow;</span>
-									</button>
-								</div>
+								<?php if ($status == 1) { ?>
+									<div class="justifyBetween">
+										<button type="button" class="mpBtn nextTab_prev">
+											<span>&longleftarrow;<?php esc_html_e('Previous', 'tour-booking-manager'); ?></span>
+										</button>
+										<div></div>
+										<button type="button" class="themeButton nextTab_next">
+											<span><?php esc_html_e('Next', 'tour-booking-manager'); ?>&longrightarrow;</span>
+										</button>
+									</div>
+								<?php } ?>
 							</div>
 						</form>
 					</div>

@@ -40,7 +40,7 @@
 				<?php
 			}
 			public static function add_multi_image($name, $images) {
-				$images = is_array($images) ? TTBM_Function::array_to_string($images) : $images;
+				$images = is_array($images) ? MP_Global_Function::array_to_string($images) : $images;
 				?>
 				<div class="mp_multi_image_area">
 					<input type="hidden" class="mp_multi_image_value" name="<?php echo esc_attr($name); ?>" value="<?php esc_attr_e($images); ?>"/>
@@ -146,7 +146,7 @@
 				<?php } else { ?>
 					<input type="hidden" name="<?php echo esc_attr($input_name); ?>"/>
 					<span class='textWarning'>
-						<?php TTBM_Function::translation_settings('ttbm_no_seat_availabe', esc_html__('Sorry, Not Available', 'tour-booking-manager')); ?>
+						<?php  esc_html_e('Sorry, Not Available', 'tour-booking-manager'); ?>
 					</span>
 					<?php
 				}
@@ -158,7 +158,7 @@
 					<select name="ttbm_id" class="formControl ttbm_select2" id="all_tour_list" required>
 						<option value="" selected><?php echo esc_html__('Select', 'tour-booking-manager') . ' ' . esc_html($label); ?></option>
 						<?php
-							$post_query = TTBM_Query::query_post_type(TTBM_Function::get_cpt_name());
+							$post_query = MP_Global_Function::query_post_type(TTBM_Function::get_cpt_name());
 							$all_posts = $post_query->posts;
 							foreach ($all_posts as $post) {
 								$ttbm_post_id = $post->ID;

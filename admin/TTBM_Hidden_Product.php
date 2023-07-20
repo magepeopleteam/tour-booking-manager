@@ -91,8 +91,8 @@ if (!class_exists('TTBM_Hidden_Product')) {
                 set_post_thumbnail($product_id, get_post_thumbnail_id($post_id));
                 wp_publish_post($product_id);
                 $product_type = 'yes';
-                $_tax_status = TTBM_Function::submit_sanitize('_tax_status', 'none');
-                $_tax_class = TTBM_Function::submit_sanitize('_tax_class');
+                $_tax_status = MP_Global_Function::get_submit_info('_tax_status', 'none');
+                $_tax_class = MP_Global_Function::get_submit_info('_tax_class');
                 update_post_meta($product_id, '_tax_status', $_tax_status);
                 update_post_meta($product_id, '_tax_class', $_tax_class);
                 update_post_meta($product_id, '_stock_status', 'instock');
@@ -160,7 +160,7 @@ if (!class_exists('TTBM_Hidden_Product')) {
         }
         public function get_all_hidden_product_id() {
             $product_id = [];
-            $query = TTBM_Query::query_post_type(TTBM_Function::get_cpt_name());
+            $query = MP_Global_Function::query_post_type(TTBM_Function::get_cpt_name());
             foreach ($query->posts as $result) {
                 $post_id = $result->ID;
                 $product_id[] = MP_Global_Function::get_post_info($post_id, 'link_wc_product');

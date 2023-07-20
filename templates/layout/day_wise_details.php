@@ -3,7 +3,7 @@
 		die;
 	}
 	$ttbm_post_id     = $ttbm_post_id ?? get_the_id();
-	$day_details = TTBM_Function::get_day_wise_details( $ttbm_post_id );
+	$day_details = MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_daywise_details', array());
 	if ( sizeof( $day_details ) > 0 && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_schedule', 'on' ) != 'off' ) {
 		?>
 		<div class='ttbm_default_widget'>

@@ -73,7 +73,7 @@
 										if ( $ttbm_hotel_des ) {
 											?>
 											<div class="mp_wp_editor hotel_list_middle_left">
-												<?php echo TTBM_Function::esc_html( $ttbm_hotel_des ); ?>
+												<?php echo MP_Global_Function::esc_html( $ttbm_hotel_des ); ?>
 											</div>
 										<?php } ?>
 									<div class="hotel_list_middle_right justifyBetween ">

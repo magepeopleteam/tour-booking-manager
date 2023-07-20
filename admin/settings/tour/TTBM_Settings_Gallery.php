@@ -49,9 +49,9 @@
 			}
 			public function save_gallery($tour_id) {
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
-					$slider = TTBM_Function::get_submit_info('ttbm_display_slider') ? 'on' : 'off';
+					$slider = MP_Global_Function::get_submit_info('ttbm_display_slider') ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_slider', $slider);
-					$images = TTBM_Function::get_submit_info('ttbm_gallery_images', array());
+					$images = MP_Global_Function::get_submit_info('ttbm_gallery_images', array());
 					$all_images = explode(',', $images);
 					update_post_meta($tour_id, 'ttbm_gallery_images', $all_images);
 				}

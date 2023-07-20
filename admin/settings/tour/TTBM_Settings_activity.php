@@ -134,22 +134,22 @@
 				die();
 			}
 			public function ttbm_reload_activity_list() {
-				$ttbm_id = TTBM_Function::data_sanitize($_POST['ttbm_id']);
+				$ttbm_id = MP_Global_Function::data_sanitize($_POST['ttbm_id']);
 				$this->activities($ttbm_id);
 				die();
 			}
 			public function save_activities($tour_id) {
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
-					$display_activities = TTBM_Function::get_submit_info('ttbm_display_activities') ? 'on' : 'off';
+					$display_activities = MP_Global_Function::get_submit_info('ttbm_display_activities') ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_activities', $display_activities);
-					$activities = TTBM_Function::get_submit_info('ttbm_tour_activities', array());
+					$activities = MP_Global_Function::get_submit_info('ttbm_tour_activities', array());
 					update_post_meta($tour_id, 'ttbm_tour_activities', $activities);
 				}
 			}
 			public function ttbm_new_activity_save() {
-				$name = TTBM_Function::data_sanitize($_POST['activity_name']);
-				$description = TTBM_Function::data_sanitize($_POST['activity_description']);
-				$icon = TTBM_Function::data_sanitize($_POST['activity_icon']);
+				$name = MP_Global_Function::data_sanitize($_POST['activity_name']);
+				$description = MP_Global_Function::data_sanitize($_POST['activity_description']);
+				$icon = MP_Global_Function::data_sanitize($_POST['activity_icon']);
 				$query = wp_insert_term($name,   // the term
 					'ttbm_tour_activities', // the taxonomy
 					array('description' => $description));

@@ -36,7 +36,7 @@
 				<?php
 			}
 			public function why_chose_us($tour_id) {
-				$why_chooses = TTBM_Function::get_why_choose_us($tour_id);
+				$why_chooses = MP_Global_Function::get_post_info($tour_id, 'ttbm_why_choose_us_texts', array());
 				?>
 				<table class="layoutFixed">
 					<tbody>
@@ -95,9 +95,9 @@
 			public function save_why_chose_us($tour_id) {
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
 					$why_chose_us_info = array();
-					$why_choose_display = TTBM_Function::get_submit_info('ttbm_display_why_choose_us') ? 'on' : 'off';
+					$why_choose_display = MP_Global_Function::get_submit_info('ttbm_display_why_choose_us') ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_why_choose_us', $why_choose_display);
-					$why_chose_infos = TTBM_Function::get_submit_info('ttbm_why_choose_us_texts', array());
+					$why_chose_infos = MP_Global_Function::get_submit_info('ttbm_why_choose_us_texts', array());
 					if (sizeof($why_chose_infos) > 0) {
 						foreach ($why_chose_infos as $why_chose) {
 							if ($why_chose) {

@@ -62,7 +62,7 @@ div.ttbm_location_list div.filter_item {padding: 0;}
 .hip_hop_hotel_theme .ttbm_booking_panel table tr:nth-of-type(odd) td:last-child {width: 160px;padding: 5px;}
 /*********Group Content*******/
 .ttbm_wraper table label {max-width: 100px;}
-.ttbm_wraper table label select.formControl{text-align: center;}
+.ttbm_wraper table label select.formControl {text-align: center;}
 /*****************/
 div.item_section {margin: var(--dMP_xs_negative) var(--dMP_xs_negative) var(--dMP) var(--dMP_xs_negative);}
 div.item_section .ttbm_short_list_more {cursor: pointer;color: var(--color_theme);margin: 0 var(--dMP_xs) 0 0;font-weight: bold;}
@@ -78,7 +78,6 @@ div.small_box > * {text-align: center;}
 /**************************************************/
 .ttbm_wraper button.ttbm_book_now {font-size: var(--fs_h4);margin: 0 var(--dMP_xs) 0 0;}
 /*****************/
-
 /**********************/
 div.bg_image_area .group_item {
 	display: -webkit-flex;display: flex;
@@ -198,7 +197,7 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 #place_you_see span.abTopRight {margin: 0;}
 #ttbm_related_tour div.filter_item:not([class*='grid_']) {margin: 0;}
 #place_you_see .filter_item {box-shadow: none !important;padding: 0 !important;border-radius: 0 !important;}
-.ttbm_tour_guide [data-bg-image].circle{max-width: 100%;border:2px solid var(--color_theme);margin: var(--dMP_xs) auto;width: 170px;}
+.ttbm_tour_guide [data-bg-image].circle {max-width: 100%;border: 2px solid var(--color_theme);margin: var(--dMP_xs) auto;width: 170px;}
 /**************Responsive***********************************/
 @media only screen and (max-width: 1100px) {
 	.ttbm_content__left {width: calc(100% - 316px);}
@@ -231,7 +230,7 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 	div.small_box {width: calc(100% - var(--dMP_xs));}
 	.section_item {width: 100%;}
 	div.small_box {width: calc(50% - var(--dMP));}
-	div.ttbm_top_filter label{width: 100%; margin-right: 0;}
+	div.ttbm_top_filter label {width: 100%; margin-right: 0;}
 }
 @media only screen and (max-width: 320px) {
 	div.small_box {width: calc(100% - var(--dMP));}

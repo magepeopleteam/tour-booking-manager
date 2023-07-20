@@ -10,7 +10,7 @@
 		<div class="ttbm_description mp_wp_editor" data-placeholder>
 			<div>
 				<?php echo do_shortcode($description); ?>
-				<?php //echo TTBM_Function::esc_html( $description ); ?>
+				<?php //echo MP_Global_Function::esc_html( $description ); ?>
 			</div>
 		</div>
 		<?php } ?>

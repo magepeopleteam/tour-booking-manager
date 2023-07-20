@@ -45,7 +45,7 @@
 			}
 			public function place_you_see($tour_id) {
 				$hiphop_places = MP_Global_Function::get_post_info($tour_id, 'ttbm_hiphop_places', array());
-				$all_places = TTBM_Query::query_post_type('ttbm_places');
+				$all_places = MP_Global_Function::query_post_type('ttbm_places');
 				$places = $all_places->posts;
 				?>
 				<div class="ttbm_place_you_see_table">
@@ -191,17 +191,17 @@
 				die();
 			}
 			public function ttbm_reload_place_you_see_list() {
-				$ttbm_id = TTBM_Function::data_sanitize($_POST['ttbm_id']);
+				$ttbm_id = MP_Global_Function::data_sanitize($_POST['ttbm_id']);
 				$this->place_you_see($ttbm_id);
 				die();
 			}
 			public function save_place_you_see($tour_id) {
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
 					$place_info = array();
-					$hiphop = TTBM_Function::get_submit_info('ttbm_display_hiphop') ? 'on' : 'off';
+					$hiphop = MP_Global_Function::get_submit_info('ttbm_display_hiphop') ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_hiphop', $hiphop);
-					$place_labels = TTBM_Function::get_submit_info('ttbm_place_label', array());
-					$place_ids = TTBM_Function::get_submit_info('ttbm_city_place_id', array());
+					$place_labels = MP_Global_Function::get_submit_info('ttbm_place_label', array());
+					$place_ids = MP_Global_Function::get_submit_info('ttbm_city_place_id', array());
 					if (sizeof($place_ids) > 0) {
 						foreach ($place_ids as $key => $place_id) {
 							if ($place_id && $place_id > 0) {
@@ -215,9 +215,9 @@
 				}
 			}
 			public function ttbm_new_place_save() {
-				$place_name = TTBM_Function::data_sanitize($_POST['place_name']);
-				$place_description = TTBM_Function::data_sanitize($_POST['place_description']);
-				$place_image = TTBM_Function::data_sanitize($_POST['place_image']);
+				$place_name = MP_Global_Function::data_sanitize($_POST['place_name']);
+				$place_description = MP_Global_Function::data_sanitize($_POST['place_description']);
+				$place_image = MP_Global_Function::data_sanitize($_POST['place_image']);
 				$args = array('post_title' => $place_name, 'post_content' => $place_description, 'post_status' => 'publish', 'post_type' => 'ttbm_places');
 				$query = wp_insert_post($args);
 				if ($query) {

@@ -37,7 +37,7 @@
 				}
 				else {
 					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
-					add_action('admin_notices', [$this, 'woocommerce_not_active']);
+					//add_action('admin_notices', [$this, 'woocommerce_not_active']);
 					add_action('activated_plugin', array($this, 'activation_redirect_setup'), 90, 1);
 				}
 			}

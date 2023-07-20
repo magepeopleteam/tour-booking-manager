@@ -37,8 +37,7 @@
 				return self::data_sanitize($data);
 			}
 			public static function get_submit_info($key, $default = '') {
-				$data = $_POST[$key] ?? $default;
-				$data = stripslashes(strip_tags($data));
+				$data = $_POST[$key]??$default;
 				return self::data_sanitize($data);
 			}
 			public static function data_sanitize($data) {

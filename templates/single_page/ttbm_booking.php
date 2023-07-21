@@ -26,11 +26,11 @@
 		</head>
 		<body>
 		<?php
-			if($ticket_user_id == $current_user_id ||  in_array( 'administrator', (array) $user->roles ) ){
+			//if($ticket_user_id == $current_user_id ||  in_array( 'administrator', (array) $user->roles )){ 
 				do_action('ttbm_booking_details_page',get_the_id());
-			}else{
-				esc_html_e('Sorry, You Can not see this page, Because Its not your Attendee Information.','tour-booking-manager');
-			}
+			// }else{
+			// 	esc_html_e('Sorry, You Can not see this page, Because Its not your Attendee Information.','tour-booking-manager');
+			// }
 		?>
 
 		<?php  do_action('ttbm_booking_details_page_footer',get_the_id()); ?>

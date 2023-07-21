@@ -2,9 +2,16 @@
     if (!defined('ABSPATH')) {
         die;
     } // Cannot access pages directly.
+
     if (!class_exists('TTBM_Dummy_Import')) {
+
+        require_once ABSPATH . 'wp-admin/includes/media.php';
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+        require_once ABSPATH . 'wp-admin/includes/image.php';
+
         class TTBM_Dummy_Import {
             public function __construct() {
+                //update_option('ttbm_dummy_already_inserted','no');
                 $this->dummy_import();
             }
             private function dummy_import() {
@@ -36,14 +43,25 @@
                                 if ($post->post_count == 0) {
                                     foreach ($dummy_post as $dummy_data) {
                                         $title = $dummy_data['name'];
+                                        $content = $dummy_data['content'];
                                         $post_id = wp_insert_post([
                                             'post_title' => $title,
+                                            'post_content' => $content,
                                             'post_status' => 'publish',
                                             'post_type' => $custom_post
                                         ]);
                                         if (array_key_exists('post_data', $dummy_data)) {
                                             foreach ($dummy_data['post_data'] as $meta_key => $data) {
-                                                update_post_meta($post_id, $meta_key, $data);
+                                                if ($meta_key == 'feature_image') {
+
+                                                    $url = $data;
+                                                    $desc = "The Demo Dummy Image of the event";
+                                                    $image = media_sideload_image($url, $post_id, $desc, 'id');
+                                                    set_post_thumbnail($post_id, $image);
+    
+                                                } else {
+                                                    update_post_meta($post_id, $meta_key, $data);
+                                                }
                                             }
                                         }
                                     }
@@ -138,8 +156,15 @@
                         'ttbm_tour' => [
                             0 => [
                                 'name' => 'The Mentalist Tickets: Las Vegas',
+                                'content' => '
+
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    
+                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
+                                ',
                                 'post_data' => [
                                     //General_settings
+                                    'feature_image' => 'https://img.freepik.com/free-photo/blue-villa-beautiful-sea-hotel_1203-5316.jpg',
                                     'ttbm_travel_duration' => 2,
                                     'ttbm_travel_duration_type' => 'day',
                                     'ttbm_display_duration_night' => 'on',
@@ -282,8 +307,15 @@
                             ],
                             1 => [
                                 'name' => 'Highlights of Naples and the Amalfi Coast',
+                                'content' => '
+
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    
+                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
+                                ',
                                 'post_data' => [
                                     //General_settings
+                                    'feature_image' => 'https://img.freepik.com/free-photo/beautiful-mountains-ratchaprapha-dam-khao-sok-national-park-surat-thani-province-thailand_335224-851.jpg',
                                     'ttbm_travel_duration' => 1,
                                     'ttbm_travel_duration_type' => 'day',
                                     'ttbm_display_duration_night' => 'on',
@@ -427,8 +459,15 @@
                             ],
                             2 => [
                                 'name' => 'Deep-Sea Exploration on a Shampan',
+                                'content' => '
+
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    
+                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
+                                ',
                                 'post_data' => [
                                     //General_settings
+                                    'feature_image' => 'https://img.freepik.com/free-photo/photographer-taking-picture-ocean-coast_657883-287.jpg',
                                     'ttbm_travel_duration' => 1,
                                     'ttbm_travel_duration_type' => 'day',
                                     'ttbm_display_duration_night' => 'on',
@@ -573,8 +612,15 @@
                             ],
                             3 => [
                                 'name' => 'Beach Hopping at Inani, Himchari, Patuartek',
+                                'content' => '
+
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    
+                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
+                                ',
                                 'post_data' => [
                                     //General_settings
+                                    'feature_image' => 'https://img.freepik.com/free-photo/pileh-blue-lagoon-phi-phi-island-thailand_231208-1487.jpg',
                                     'ttbm_travel_duration' => 2,
                                     'ttbm_travel_duration_type' => 'day',
                                     'ttbm_display_duration_night' => 'on',
@@ -719,8 +765,15 @@
                             ],
                             4 => [
                                 'name' => 'Boga Lake : A Relaxing Gateway Tour',
+                                'content' => '
+
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    
+                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
+                                ',
                                 'post_data' => [
                                     //General_settings
+                                    'feature_image' => 'https://img.freepik.com/free-photo/godafoss-waterfall-sunset-winter-iceland-guy-red-jacket-looks-godafoss-waterfall_335224-673.jpg',
                                     'ttbm_travel_duration' => 4,
                                     'ttbm_travel_duration_type' => 'day',
                                     'ttbm_display_duration_night' => 'on',

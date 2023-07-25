@@ -223,7 +223,7 @@ if (!class_exists('TTBM_Woocommerce')) {
                         <?php if (!empty($location) && MP_Global_Function::get_post_info( $ttbm_id, 'ttbm_display_location', 'on' ) != 'off' ) { ?>
                             <li>
                                 <span class="fas fa-map-marker-alt"></span>&nbsp;
-                                <h6><?php echo esc_html($tour_name . ' ' . TTBM_Function::get_translation_settings('ttbm_string_location', esc_html__('Location', 'tour-booking-manager'))); ?> :&nbsp;</h6>
+                                <h6><?php echo esc_html($tour_name . ' ' . esc_html__('Location', 'tour-booking-manager')); ?> :&nbsp;</h6>
                                 <span><?php echo esc_html($location); ?></span>
                             </li>
                         <?php } ?>
@@ -251,7 +251,7 @@ if (!class_exists('TTBM_Woocommerce')) {
                         <?php } else { ?>
                             <li>
                                 <span class="far fa-calendar-alt"></span>&nbsp;&nbsp;
-                                <h6><?php echo esc_html($tour_name . ' ' . TTBM_Function::get_translation_settings('ttbm_string_date', esc_html__('Date', 'tour-booking-manager'))); ?> :&nbsp;</h6>
+                                <h6><?php echo esc_html($tour_name . ' ' . esc_html__('Date', 'tour-booking-manager')); ?> :&nbsp;</h6>
                                 <span><?php echo esc_html($date); ?></span>
                             </li>
                         <?php } ?>

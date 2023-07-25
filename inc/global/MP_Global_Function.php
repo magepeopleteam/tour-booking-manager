@@ -37,7 +37,7 @@
 				return self::data_sanitize($data);
 			}
 			public static function get_submit_info($key, $default = '') {
-				return self::data_sanitize($_POST[$key] ?? $default);
+return self::data_sanitize($_POST[$key] ?? $default);
 			}
 			public static function data_sanitize($data) {
 				$data = maybe_unserialize($data);

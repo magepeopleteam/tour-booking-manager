@@ -8,56 +8,39 @@
 		require_once ABSPATH . 'wp-admin/includes/image.php';
 		class TTBM_Dummy_Import {
 			public function __construct() {
-				//update_option('ttbm_dummy_already_inserted','no');
-				$this->dummy_import();
+				//update_option('ttbm_dummy_already_inserted','no');exit;
+				add_action('admin_init', array($this, 'dummy_import'), 99);
 			}
-			private function dummy_import() {
-				$ttbm_dummy_post = get_option('ttbm_dummy_already_inserted');
-				$all_post = MP_Global_Function::query_post_type(TTBM_Function::get_cpt_name());
-				if ($all_post->post_count == 0 && $ttbm_dummy_post != 'yes') {
-					$dummy_data = $this->dummy_data();
-					foreach ($dummy_data as $type => $dummy) {
-						if ($type == 'taxonomy') {
-							foreach ($dummy as $taxonomy => $dummy_taxonomy) {
-								$check_taxonomy = MP_Global_Function::get_taxonomy($taxonomy);
-								if (is_string($check_taxonomy) || sizeof($check_taxonomy) == 0) {
+			public static function check_plugin($plugin_dir_name, $plugin_file): int {
+				include_once ABSPATH . 'wp-admin/includes/plugin.php';
+				$plugin_dir = ABSPATH . 'wp-content/plugins/' . $plugin_dir_name;
+				if (is_plugin_active($plugin_dir_name . '/' . $plugin_file)) {
+					return 1;
+				}
+				elseif (is_dir($plugin_dir)) {
+					return 2;
+				}
+				else {
+					return 0;
+				}
+			}
+			public function dummy_import() {
+				$dummy_post_inserted = get_option('ttbm_dummy_already_inserted', 'no');
+				$count_existing_event = wp_count_posts('ttbm_tour')->publish;
+				$plugin_active = self::check_plugin('tour-booking-manager', 'tour-booking-manager.php');
+				if ($count_existing_event == 0 && $plugin_active == 1 && $dummy_post_inserted != 'yes') {
+					$dummy_taxonomies = $this->dummy_taxonomy();
+					if (array_key_exists('taxonomy', $dummy_taxonomies)) {
+						foreach ($dummy_taxonomies['taxonomy'] as $taxonomy => $dummy_taxonomy) {
+							if (taxonomy_exists($taxonomy)) {
+								$check_terms = get_terms(array('taxonomy' => $taxonomy, 'hide_empty' => false));
+								if (is_string($check_terms) || sizeof($check_terms) == 0) {
 									foreach ($dummy_taxonomy as $taxonomy_data) {
-										$query = wp_insert_term($taxonomy_data['name'], $taxonomy);
-										if ($taxonomy == 'ttbm_tour_location') {
-											if (is_array($query) && $query['term_id'] != '') {
-												$term_id = $query['term_id'];
-												update_term_meta($term_id, 'ttbm_country_location', $taxonomy_data['country']);
-											}
-										}
-									}
-								}
-								//echo '<pre>'; print_r( $query); echo '</pre>';
-							}
-						}
-						if ($type == 'custom_post') {
-							foreach ($dummy as $custom_post => $dummy_post) {
-								$post = MP_Global_Function::query_post_type($custom_post);
-								if ($post->post_count == 0) {
-									foreach ($dummy_post as $dummy_data) {
-										$title = $dummy_data['name'];
-										$content = $dummy_data['content'];
-										$post_id = wp_insert_post([
-											'post_title' => $title,
-											'post_content' => $content,
-											'post_status' => 'publish',
-											'post_type' => $custom_post
-										]);
-										if (array_key_exists('post_data', $dummy_data)) {
-											foreach ($dummy_data['post_data'] as $meta_key => $data) {
-												if ($meta_key == 'feature_image') {
-													$url = $data;
-													$desc = "The Demo Dummy Image of the event";
-													$image = media_sideload_image($url, $post_id, $desc, 'id');
-													set_post_thumbnail($post_id, $image);
-												}
-												else {
-													update_post_meta($post_id, $meta_key, $data);
-												}
+										unset($term);
+										$term = wp_insert_term($taxonomy_data['name'], $taxonomy);
+										if (array_key_exists('tax_data', $taxonomy_data)) {
+											foreach ($taxonomy_data['tax_data'] as $meta_key => $data) {
+												update_term_meta($term['term_id'], $meta_key, $data);
 											}
 										}
 									}
@@ -65,10 +48,79 @@
 							}
 						}
 					}
+					$dummy_cpt = $this->dummy_cpt();
+					if (array_key_exists('custom_post', $dummy_cpt)) {
+						$dummy_images = self::dummy_images();
+						foreach ($dummy_cpt['custom_post'] as $custom_post => $dummy_post) {
+							unset($args);
+							$args = array(
+								'post_type' => $custom_post,
+								'posts_per_page' => -1,
+							);
+							unset($post);
+							$post = new WP_Query($args);
+							if ($post->post_count == 0) {
+								foreach ($dummy_post as $dummy_data) {
+									$args = array();
+									if (isset($dummy_data['name'])) {
+										$args['post_title'] = $dummy_data['name'];
+									}
+									if (isset($dummy_data['content'])) {
+										$args['post_content'] = $dummy_data['content'];
+									}
+									$args['post_status'] = 'publish';
+									$args['post_type'] = $custom_post;
+									$post_id = wp_insert_post($args);
+									if (array_key_exists('taxonomy_terms', $dummy_data) && count($dummy_data['taxonomy_terms'])) {
+										foreach ($dummy_data['taxonomy_terms'] as $taxonomy_term) {
+											wp_set_object_terms($post_id, $taxonomy_term['terms'], $taxonomy_term['taxonomy_name'], true);
+										}
+									}
+									if (array_key_exists('post_data', $dummy_data)) {
+										foreach ($dummy_data['post_data'] as $meta_key => $data) {
+											if ($meta_key == 'ttbm_gallery_images') {
+												if (is_array($data)) {
+													$thumnail_ids = array();
+													foreach ($data as $url_index) {
+														if (isset($dummy_images[$url_index])) {
+															$thumnail_ids[] = $dummy_images[$url_index];
+														}
+													}
+													update_post_meta($post_id, 'ttbm_gallery_images', $thumnail_ids);
+												}
+												else {
+													update_post_meta($post_id, 'ttbm_gallery_images', array(isset($dummy_images[$data]) ? $dummy_images[$data] : ''));
+												}
+											}
+											else {
+												update_post_meta($post_id, $meta_key, $data);
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					//$this->craete_pages();
 					update_option('ttbm_dummy_already_inserted', 'yes');
 				}
 			}
-			public function dummy_data(): array {
+			public static function dummy_images() {
+				$urls = array(
+					'https://img.freepik.com/free-photo/blue-villa-beautiful-sea-hotel_1203-5316.jpg',
+					'https://img.freepik.com/free-photo/beautiful-mountains-ratchaprapha-dam-khao-sok-national-park-surat-thani-province-thailand_335224-851.jpg',
+					'https://img.freepik.com/free-photo/photographer-taking-picture-ocean-coast_657883-287.jpg',
+					'https://img.freepik.com/free-photo/pileh-blue-lagoon-phi-phi-island-thailand_231208-1487.jpg',
+					'https://img.freepik.com/free-photo/godafoss-waterfall-sunset-winter-iceland-guy-red-jacket-looks-godafoss-waterfall_335224-673.jpg',
+				);
+				unset($image_ids);
+				$image_ids = array();
+				foreach ($urls as $url) {
+					$image_ids[] = media_sideload_image($url, '0', $url, 'id');
+				}
+				return $image_ids;
+			}
+			public function dummy_taxonomy(): array {
 				return [
 					'taxonomy' => [
 						'ttbm_tour_cat' => [
@@ -119,6 +171,10 @@
 							4 => ['name' => 'Snow & Ice']
 						],
 					],
+				];
+			}
+			public function dummy_cpt(): array {
+				return [
 					'custom_post' => [
 						'ttbm_places' => [
 							0 => ['name' => 'Bogura'],
@@ -160,7 +216,6 @@
                                 ',
 								'post_data' => [
 									//General_settings
-									'feature_image' => 'https://img.freepik.com/free-photo/blue-villa-beautiful-sea-hotel_1203-5316.jpg',
 									'ttbm_travel_duration' => 2,
 									'ttbm_travel_duration_type' => 'day',
 									'ttbm_display_duration_night' => 'on',
@@ -283,7 +338,7 @@
 										2 => 'Snow & Ice',
 									],
 									//gallery_settings
-									'ttbm_gallery_images' => [120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300],
+									'ttbm_gallery_images' => array(0, 1, 2, 3, 4),
 									//extras_settings
 									'ttbm_display_get_question' => 'on',
 									'ttbm_contact_email' => 'example.gmail.com',
@@ -310,8 +365,6 @@
                                     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
                                 ',
 								'post_data' => [
-									//General_settings
-									'feature_image' => 'https://img.freepik.com/free-photo/beautiful-mountains-ratchaprapha-dam-khao-sok-national-park-surat-thani-province-thailand_335224-851.jpg',
 									'ttbm_travel_duration' => 1,
 									'ttbm_travel_duration_type' => 'day',
 									'ttbm_display_duration_night' => 'on',
@@ -435,7 +488,7 @@
 										2 => 'Rural',
 									],
 									//gallery_settings
-									'ttbm_gallery_images' => [120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300],
+									'ttbm_gallery_images' => array(4, 3, 2, 1, 0),
 									//extras_settings
 									'ttbm_display_get_question' => 'on',
 									'ttbm_contact_email' => 'example.gmail.com',
@@ -463,7 +516,6 @@
                                 ',
 								'post_data' => [
 									//General_settings
-									'feature_image' => 'https://img.freepik.com/free-photo/photographer-taking-picture-ocean-coast_657883-287.jpg',
 									'ttbm_travel_duration' => 1,
 									'ttbm_travel_duration_type' => 'day',
 									'ttbm_display_duration_night' => 'on',
@@ -588,7 +640,7 @@
 										2 => 'Rural',
 									],
 									//gallery_settings
-									'ttbm_gallery_images' => [120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300],
+									'ttbm_gallery_images' => array(3, 4, 2, 1, 0),
 									//extras_settings
 									'ttbm_display_get_question' => 'on',
 									'ttbm_contact_email' => 'example.gmail.com',
@@ -616,7 +668,13 @@
                                 ',
 								'post_data' => [
 									//General_settings
-									'feature_image' => 'https://img.freepik.com/free-photo/pileh-blue-lagoon-phi-phi-island-thailand_231208-1487.jpg',
+									'feature_image' => array(
+										'https://img.freepik.com/free-photo/blue-villa-beautiful-sea-hotel_1203-5316.jpg',
+										'https://img.freepik.com/free-photo/pileh-blue-lagoon-phi-phi-island-thailand_231208-1487.jpg',
+										'https://img.freepik.com/free-photo/beautiful-mountains-ratchaprapha-dam-khao-sok-national-park-surat-thani-province-thailand_335224-851.jpg',
+										'https://img.freepik.com/free-photo/photographer-taking-picture-ocean-coast_657883-287.jpg',
+										'https://img.freepik.com/free-photo/godafoss-waterfall-sunset-winter-iceland-guy-red-jacket-looks-godafoss-waterfall_335224-673.jpg',
+									),
 									'ttbm_travel_duration' => 2,
 									'ttbm_travel_duration_type' => 'day',
 									'ttbm_display_duration_night' => 'on',
@@ -741,7 +799,7 @@
 										2 => 'Rural',
 									],
 									//gallery_settings
-									'ttbm_gallery_images' => [120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300],
+									'ttbm_gallery_images' => array(1, 2, 3, 4, 0),
 									//extras_settings
 									'ttbm_display_get_question' => 'on',
 									'ttbm_contact_email' => 'example.gmail.com',
@@ -761,11 +819,21 @@
 							],
 							4 => [
 								'name' => 'Boga Lake : A Relaxing Gateway Tour',
-								'content' => 'orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur. ',
+								'content' => '
+
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    
+                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
+                                ',
 								'post_data' => [
 									//General_settings
-									'feature_image' => 'https://img.freepik.com/free-photo/godafoss-waterfall-sunset-winter-iceland-guy-red-jacket-looks-godafoss-waterfall_335224-673.jpg',
+									'feature_image' => array(
+										'https://img.freepik.com/free-photo/godafoss-waterfall-sunset-winter-iceland-guy-red-jacket-looks-godafoss-waterfall_335224-673.jpg',
+										'https://img.freepik.com/free-photo/photographer-taking-picture-ocean-coast_657883-287.jpg',
+										'https://img.freepik.com/free-photo/blue-villa-beautiful-sea-hotel_1203-5316.jpg',
+										'https://img.freepik.com/free-photo/pileh-blue-lagoon-phi-phi-island-thailand_231208-1487.jpg',
+										'https://img.freepik.com/free-photo/beautiful-mountains-ratchaprapha-dam-khao-sok-national-park-surat-thani-province-thailand_335224-851.jpg',
+									),
 									'ttbm_travel_duration' => 4,
 									'ttbm_travel_duration_type' => 'day',
 									'ttbm_display_duration_night' => 'on',
@@ -889,7 +957,7 @@
 										1 => 'Rural',
 									],
 									//gallery_settings
-									'ttbm_gallery_images' => [120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300],
+									'ttbm_gallery_images' => array(2, 0, 3, 4, 1),
 									//extras_settings
 									'ttbm_display_get_question' => 'on',
 									'ttbm_contact_email' => 'example.gmail.com',

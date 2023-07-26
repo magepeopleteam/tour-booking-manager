@@ -1044,4 +1044,6 @@
                 ];
             }
         }
+
+        new TTBM_Dummy_Import();
     }

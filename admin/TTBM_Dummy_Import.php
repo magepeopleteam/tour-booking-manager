@@ -397,7 +397,7 @@
                                         2 => 'Snow & Ice',
                                     ],
                                     //gallery_settings
-                                    'ttbm_gallery_images' => array(0,1,2,3,4),
+                                    'ttbm_gallery_images' => array(0,1,2,3,4), 
                                     
                                     //extras_settings
                                     'ttbm_display_get_question' => 'on',

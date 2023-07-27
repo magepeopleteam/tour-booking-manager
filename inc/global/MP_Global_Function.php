@@ -37,8 +37,7 @@
 				return self::data_sanitize($data);
 			}
 			public static function get_submit_info($key, $default = '') {
-				$data = $_POST[$key]??$default;
-				return self::data_sanitize($data);
+				return self::data_sanitize($_POST[$key] ?? $default);
 			}
 			public static function data_sanitize($data) {
 				$data = maybe_unserialize($data);
@@ -48,7 +47,7 @@
 						$data = self::data_sanitize($data);
 					}
 					else {
-						$data = sanitize_text_field($data);
+						$data = sanitize_text_field(stripslashes(strip_tags($data)));
 					}
 				}
 				elseif (is_array($data)) {
@@ -57,7 +56,7 @@
 							$value = self::data_sanitize($value);
 						}
 						else {
-							$value = sanitize_text_field($value);
+							$value = sanitize_text_field(stripslashes(strip_tags($value)));
 						}
 					}
 				}
@@ -462,4 +461,3 @@
 		}
 		new MP_Global_Function();
 	}
-

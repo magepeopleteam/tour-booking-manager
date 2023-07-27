@@ -1,4 +1,5 @@
 /*****************content & Title*********************************/
+.site-content .ast-container { display: block; }
 .ttbm_default__title {margin:0;padding:0 0 var( --dMP) 0;}
 div.ttbm_default_widget {display: block;font-size: var(--fs);color: var(--d_color);position: relative;margin: 0 0 var(--dMP) 0;}
 div > div.ttbm_default_widget:last-child {margin: 0;}

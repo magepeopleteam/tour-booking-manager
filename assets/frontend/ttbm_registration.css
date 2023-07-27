@@ -1,5 +1,5 @@
 /*****************content & Title*********************************/
-.ttbm_default__title {margin: 0;padding: 0;}
+.ttbm_default__title {margin:0;padding:0 0 var( --dMP) 0;}
 div.ttbm_default_widget {display: block;font-size: var(--fs);color: var(--d_color);position: relative;margin: 0 0 var(--dMP) 0;}
 div > div.ttbm_default_widget:last-child {margin: 0;}
 div.ttbm_default_widget .ttbm_widget_title {padding: var(--dMP_xs) var(--dMP);text-align: center;margin: 0;background-color: var(--color_theme);color: var(--color_theme_alter);}

@@ -188,6 +188,9 @@ https://www.youtube.com/watch?v=ZQ99Z3kOMws
 ](https://mage-people.com/product/booking-and-rental-manager-for-woocommerce-pro/)
 [WordPress Service Booking & Scheduling Plugin Pro
 ](https://wordpress.org/plugins/service-booking-manager/)
+[WordPress Event Manager and Tickets Selling Plugin
+](https://mage-people.com/product/mage-woo-event-booking-manager-pro/)
+
 
 
 

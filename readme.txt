@@ -3,24 +3,24 @@ Contributors: magepeopleteam, aamahin
 Plugin link: https://mage-people.com/
 Tags: tour-booking, tour-operator, travel, travel-booking, travel-agency
 Requires at least: 4.4.0
-Tested up to: 6.2
+Tested up to: 6.3
 Requires PHP: 7.0
-Stable tag: 1.5.2
+Stable tag: 1.5.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-WP Tour and Travel booking Plugin is a best tour booking plugin For WooCommerce with Hip-Hop City Tour,Resort & Hotel Booking function  is a free for tour and travel booking WordPress plugin that will work with WooCommerce to create travel and tour packages for tour operators and travel agencies. It is a complete Travel and Tour management system and includes plenty of useful features. You can create your travel booking website using WP Travel Engine in less than 5 minutes.
+WP Tour and Travel booking Plugin is the best tour booking plugin For WooCommerce with Hip-Hop City Tour, Resort & Hotel Booking function  is a free tour and travel booking WordPress plugin that will work with WooCommerce to create travel and tour packages for tour operators and travel agencies. It is a complete Travel and Tour management system and includes plenty of useful features. You can create your travel booking website using WP Travel Engine in less than 5 minutes.
 
 == Description ==
 
-WP Tour and Travel booking Plugin is a best tour booking plugin that will bring functionality to create travel and tour packages for tour operators and travel agencies. It is a complete travel management system and includes plenty of useful features. You can create your travel booking website using Tour Booking Manager Plugin in less than 5 minutes..
+WP Tour and Travel booking Plugin is the best tour booking plugin that will bring functionality to create travel and tour packages for tour operators and travel agencies. It is a complete travel management system and includes plenty of useful features. You can create your travel booking website using Tour Booking Manager Plugin in less than 5 minutes..
 
 = Key Features and Highlights = 
 
 
 ###  Free Version Plugin Features:
 
-➡ Support All Payment Method available in WooCommerce.
+➡ Support All Payment Methods available in WooCommerce.
 ➡ Cross Browser Support – (Chrome, Firefox, Safari, Opera, Etc.)
 ➡ Responsive and SEO Friendly.  
 ➡ Multilingual Translation Support
@@ -28,18 +28,18 @@ WP Tour and Travel booking Plugin is a best tour booking plugin that will bring 
 ➡ Tour Name &  Description
 ➡ Manage Ticket Type, Quantity, Prices, Category & Organizer. 
 ➡ Extra Service with Price & Quantity Management.
-➡ Show Location Using Google Map.
+➡ Show Location Using Google Maps.
 ➡ Option of Adding Start Date, End Date& Time. 
 ➡ View Registered Guest Info from WooCommerce Order Details.
 ➡ Works with Any Standards Compliant WordPress Theme.
-➡ WooCommerce Support, You can Sale product and Event Separately. There is no mixing with Event with the WooCommerce Products.
+➡ WooCommerce Support, You can Sale products and Event Separately. There is no mixing with Event with the WooCommerce Products.
 👉  [View Live PRO Version Demo](https://tour.mage-people.com/)
 
 ###  [Pro Version](https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/) Plugin Features 
-➡ Download PDF tickets for Tour attendee.
+➡ Download PDF tickets for Tour attendees.
 ➡ Custom Registration Form for Attendees.
 ➡ Automatic Email Conformation Message and Pdf Tickets Mailing Features
-➡ Export Attendee List as CSV Format. 
+➡ Export Attendee List in CSV Format. 
 ➡ Particular Dates Recurrings Tours. 
 ➡ Repeated Dates Recurrings Tours. 
 ➡ [Buy WooCommerce Tour and Travel Booking Manager Pro](https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/) 
@@ -54,66 +54,66 @@ WP Tour and Travel booking Plugin is a best tour booking plugin that will bring 
 
 ### Tour List view 
 
-To Show the Tour list Style you need to use shortcode below. example 👉 [List Style Demo ](https://tour.mage-people.com/modern-list/) 👈:
+To Show the Tour list Style you need to use the shortcode below. example 👉 [List Style Demo ](https://tour.mage-people.com/modern-list/) 👈:
 `
 [travel-list style='list']
 `
 
 ### Tour Grid view 
 
-To Show the Tour grid Style you need to use shortcode below. example 👉 [Grid Style Demo ](https://tour.mage-people.com/travel-grid-view/) 👈:
+To Show the Tour grid Style you need to use the shortcode below. example 👉 [Grid Style Demo ](https://tour.mage-people.com/travel-grid-view/) 👈:
 `
 [travel-list style='grid']
 `
 
 ### Tour Grid view style Lotus
 
-To Show the Tour grid Style lotus you need to use shortcode below. example 👉 [Grid lotus Style Demo ](https://tour.mage-people.com/lotus-grid-style/) 👈:
+To Show the Tour grid Style lotus you need to use the shortcode below. example 👉 [Grid lotus Style Demo ](https://tour.mage-people.com/lotus-grid-style/) 👈:
 `
 [travel-list style='lotus' column=3]
 `
 
 ### Tour Grid view style Flora
 
-To Show the Tour grid Style Flora you need to use shortcode below. example 👉 [Grid Flora Style Demo ](https://tour.mage-people.com/flora-grid-style/) 👈:
+To Show the Tour grid Style Flora you need to use the shortcode below. example 👉 [Grid Flora Style Demo ](https://tour.mage-people.com/flora-grid-style/) 👈:
 `
 [travel-list style='flora' column=3 show='15' pagination='yes']
 `
 
 ### Tour Grid view style Blossom
 
-To Show the Tour grid Style Blossom you need to use shortcode below. example 👉 [Grid Blossom Style Demo ](https://tour.mage-people.com/blossom-grid/) 👈:
+To Show the Tour grid Style Blossom you need to use the shortcode below. example 👉 [Grid Blossom Style Demo ](https://tour.mage-people.com/blossom-grid/) 👈:
 `
 [travel-list style='blossom' show='9' column=3 pagination='yes']
 `
 
 ### Tour Grid view style Orchid
 
-To Show the Tour grid Style Orchid you need to use shortcode below. example 👉 [Grid Orchid Style Demo ](https://tour.mage-people.com/orchid-grid-style/) 👈:
+To Show the Tour grid Style Orchid you need to use the shortcode below. example 👉 [Grid Orchid Style Demo ](https://tour.mage-people.com/orchid-grid-style/) 👈:
 `
 [travel-list style='orchid' column=3 pagination='yes' show=12]
 `
 
 ### Tour Location grid view
-To Show the Tour location grid view you need to use shortcode below. example 👉 [Tour Location list Demo ](https://tour.mage-people.com/travel-location-list-display-shortcode/) 👈:
+To Show the Tour location grid view you need to use the shortcode below. example 👉 [Tour Location list Demo ](https://tour.mage-people.com/travel-location-list-display-shortcode/) 👈:
 `
 [travel-location-list column=4 show=4]
 `
 
 ### Tour Search form
-To Show Tour search form you need to use shortcode below. example 👉 [Tour search form Demo ](https://tour.mage-people.com/tour-search-form/) 👈:
+To Show Tour search form you need to use the shortcode below. example 👉 [Tour search form Demo ](https://tour.mage-people.com/tour-search-form/) 👈:
 `
 [ttbm-top-search]
 `
 
 ### Tour list without sidebar filter
-To Show Tour list without sidebar filter you need to use shortcode below. example 👉 [Tour list without sidebar Demo ](https://tour.mage-people.com/tour-list-grid-without-filter/) 👈:
+To Show the Tour list without a sidebar filter you need to use the shortcode below. example 👉 [Tour list without sidebar Demo ](https://tour.mage-people.com/tour-list-grid-without-filter/) 👈:
 `
 [travel-list style='grid' show='9' column=3 pagination='yes' sidebar-filter='no']
 `
 
 ### Tour list with top filter
-To Show Tour list top filter you need to use shortcode below. example 👉 [Tour list without sidebar Demo ](https://tour.mage-people.com/tour-list-with-top-filter/) 👈:
+To Show the Tour list top filter you need to use the shortcode below. example 👉 [Tour list without sidebar Demo ](https://tour.mage-people.com/tour-list-with-top-filter/) 👈:
 `
 [ttbm-top-filter style='list']
 `
@@ -121,7 +121,7 @@ To Show Tour list top filter you need to use shortcode below. example 👉 [Tour
 
 
 ### Expire Tour list Only
-To Show Expire Tour list only, we  use shortcode below. example 👉 [Expire Tour list Only Demo ](https://tour.mage-people.com/expire-tour-list/) 👈:
+To Show Expire Tour list only, we  use the shortcode below. example 👉 [Expire Tour list Only Demo ](https://tour.mage-people.com/expire-tour-list/) 👈:
 `
 [travel-list style='list' status='expired']
 `
@@ -138,14 +138,14 @@ Tour Details page demo with [Viator template](https://tour.mage-people.com/tour-
 
 
 = PAYMENT GATEWAYS =
-Our Plugin Works with WooCommerce. so all payment method will work that work with WooCommerce and this very good Advantange of this plugin
+Our Plugin Works with WooCommerce. so all payment methods will work that work with WooCommerce and this very good advantage of this plugin
 
 
 = Support and Suggestions =
 If you need any further assistance or support, do contact us at this [support form](https://mage-people.com/submit-ticket/). We are very open to your suggestions. So do feel free to tell us if there is anything we can do to improve the plugin. 
 
 = Theme Compatibility =
-It will compatible with any theme that works with WooCommerce. 
+It will be compatible with any theme that works with WooCommerce. 
 
 
 
@@ -163,7 +163,7 @@ https://www.youtube.com/watch?v=ZQ99Z3kOMws
 1. Navigate to the 'Add New' in the plugins dashboard
 2. Navigate to the 'Upload' area
 3. Select tour-booking-manager.zip from your computer
-4. Click 'Install Now'
+4. Click 'Install Now
 5. Activate the plugin in the Plugin dashboard
 
 = Using FTP =
@@ -178,14 +178,21 @@ https://www.youtube.com/watch?v=ZQ99Z3kOMws
 
 **CHECKOUT OUR OTHER PRODUCTS**
 
-**CHECKOUR OUR OTHER PLUGINS** 
+**CHECK OUT OUR OTHER PLUGINS** 
 [Bus Booking Manager](https://wordpress.org/plugins/bus-booking-manager/)
 [Bus Ticket Booking with Seat Reservation](https://wordpress.org/plugins/bus-ticket-booking-with-seat-reservation/)
-[Woocommerce Events Manager](https://wordpress.org/plugins/mage-eventpress/)
+[Tour & Travel Manager For Woocommerce](https://wordpress.org/plugins/tour-booking-manager/)
+[Advanced – Deposit & Partial Payment for WooCommerce
+](https://wordpress.org/plugins/advanced-partial-payment-or-deposit-for-woocommerce/)
+[Booking and Rental Manager Pro for WordPress
+](https://mage-people.com/product/booking-and-rental-manager-for-woocommerce-pro/)
+[WordPress Service Booking & Scheduling Plugin Pro
+](https://wordpress.org/plugins/service-booking-manager/)
+
 
 
 ## Privacy Policy
-Tour Booking Manager For Woocommerce uses [Appsero](https://appsero.com) SDK to collect some telemetry data upon user's confirmation. This helps us to troubleshoot problems faster & make product improvements.
+Tour Booking Manager For Woocommerce uses [Appsero](https://appsero.com) SDK to collect some telemetry data upon the user's confirmation. This helps us to troubleshoot problems faster & make product improvements.
 
 Appsero SDK **does not gather any data by default.** The SDK only starts gathering basic telemetry data **when a user allows it via the admin notice**. We collect the data to ensure a great user experience for all our users.
 
@@ -342,3 +349,40 @@ Bug Fixed
 = 1.5.2 =
 Bug Fixed
 - 17 May 2023*
+
+
+= 1.5.3 =
+Tour List Menu Added
+Qucik Setup Improved
+Available Seat Issue fixed
+Admin Note Feature Added
+Design issue fixed
+Code Optimized
+New Hooks added
+Bug Fixed
+- 12 July 2023*
+
+= 1.5.4 =
+Releted Tour Same Image and URL issue fixed
+Multi Language Support added (WPML & Polylang)
+Code Optimized
+New Hooks added
+Bug Fixed
+- 13 July 2023*
+
+= 1.5.5 =
+Astra Theme issue fixed
+Quick Setup Fixing
+Code Optimized
+New Hooks added
+Bug Fixed
+- 27 July 2023*
+
+
+= 1.5.6 =
+Astra Theme issue fixed
+Quick Setup Fixing
+Code Optimized
+New Hooks added
+Bug Fixed
+- 09 Aug 2023*

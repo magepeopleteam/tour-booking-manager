@@ -22,7 +22,7 @@
 						esc_html_e( 'Hours ', 'tour-booking-manager' );
 					}
 				}
-				if ( $duration && $duration < 2 ) {
+				else if ( $duration && $duration <= 1 ) {
 					echo esc_html( $duration ) . ' ';
 					if ( $duration_type == 'day' ) {
 						esc_html_e( 'Day ', 'tour-booking-manager' );

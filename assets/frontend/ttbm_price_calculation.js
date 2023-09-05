@@ -172,7 +172,8 @@ function ttbm_partial_payment_job(parent, total) {
 		let value = parseInt(target.val());
 		mpTourTicketQtyValidation(target, value);
 	});
-	$(document).on("click", ".ttbm_book_now[type='button']", function () {
+	$(document).on("click", ".ttbm_book_now", function (e) { 
+		e.preventDefault();
 		if (mp_tour_ticket_qty($(this).closest('.ttbm_registration_area')) > 0) {
 			$(this).closest('.ttbm_book_now_area').find('.ttbm_add_to_cart').trigger('click');
 		} else {

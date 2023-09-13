@@ -1,6 +1,6 @@
 <?php
 	/**
-	 * Plugin Name: Tour Booking Manager For Woocommerce
+	 * Plugin Name: Travel Booking Plugin For WooCommerce | Tour & Hotel Booking Plugin - wptravelly
 	 * Plugin URI: http://mage-people.com
 	 * Description: A Complete Tour and Travel Solution for WordPress by MagePeople.
 	 * Version: 1.5.6

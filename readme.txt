@@ -1,4 +1,4 @@
-=== Travel Booking Plugin For WooCommerce | Tour Plugin - wptravelly ===
+=== Travel Booking Plugin For WooCommerce | Tour & Hotel Booking Plugin - wptravelly ===
 Contributors: magepeopleteam, aamahin
 Plugin link: https://mage-people.com/
 Tags: tour-booking, tour-operator, travel, travel-booking, travel-agency

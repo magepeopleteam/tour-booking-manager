@@ -123,7 +123,7 @@ div.ttbm_viator_theme div.small_box {width: 100%;
 }
 div.ttbm_viator_theme .item_icon {margin: 0 var(--dMP_xs) 0 0;font-size: var(--fs_h5);}
 div.viator_top_section .ttbm_booking_panel {
-	position: absolute;top: 100%;left: var(--dMP_negetive);right: var(--dMP_negetive);
+	position:initial;top: 100%;left: var(--dMP_negetive);right: var(--dMP_negetive);z-index:1;
 	padding: var(--dMP_xs);z-index: 11;background-color: #F5F5F5;
 }
 div.viator_top_section .ttbm_booking_panel h3 {font-size: var(--fs_h5);}
@@ -225,6 +225,7 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 	div.ttbm_viator_theme .viator_top_section .ttbm_content__right,
 	div.ttbm_viator_theme .ttbm_content__right {margin: var(--dMP) 0 0 0;}
 	div.viator_top_section .ttbm_booking_panel {position: relative;left: inherit;right: inherit;}
+	div.viator_top_section .ttbm_booking_panel {position: initial;left: inherit;right: inherit;}
 }
 @media only screen and (max-width: 600px) {
 	div.small_box {width: calc(100% - var(--dMP_xs));}

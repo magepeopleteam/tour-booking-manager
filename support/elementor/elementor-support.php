@@ -1,8 +1,8 @@
 <?php
 
-namespace MEPPlugin;
+namespace TTBMPlugin;
 
-class MEPPluginElementor {
+class TTBMPluginElementor {
 	
 	private static $_instance = null;
 	
@@ -40,7 +40,7 @@ class MEPPluginElementor {
 		$this->include_widgets_files();
 		
 		// Register Widgets					
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\MEPEventListWidget() );		
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\TTBMTourListWidget() );		
 	}
 	
 	public function __construct() {
@@ -55,4 +55,4 @@ class MEPPluginElementor {
 
 
 // Instantiate Plugin Class
-MEPPluginElementor::instance();
+TTBMPluginElementor::instance();

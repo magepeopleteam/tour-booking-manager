@@ -20,7 +20,7 @@
 							foreach ($loop->posts as $tour) {
 								$ttbm_post_id = $tour->ID;
 								$tour_id = TTBM_Function::post_id_multi_language($ttbm_post_id);
-								// if ($ttbm_post_id == $tour_id) {
+								//if ($ttbm_post_id == $tour_id) {
 									$active_class = $count < $per_page ? $grid_class : $grid_class . ' dNone';
 									$count++;
 									?>

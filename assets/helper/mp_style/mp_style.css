@@ -926,7 +926,7 @@ div[class*="simpleSpinner"] {
 	.mpStyle .formControl:-webkit-autofill:active { -webkit-transition: color 9999s ease-out, background-color 9999s ease-out; transition: color 9999s ease-out, background-color 9999s ease-out; -webkit-transition-delay: 9999s; transition-delay: 9999s; }
 	div.mpStyle form { margin: 0; padding: 0; line-height: 1.25; }
 	.mpStyle label { position: relative; }
-	.mpStyle label span:not(.woocommerce-Price-currencySymbol) { margin: 0 var(--dMP_xs) 0 0; white-space: nowrap}
+	.mpStyle label span:not(.woocommerce-Price-currencySymbol) { margin: 0 var(--dMP_xs) 0 0; word-wrap: break-word; white-space: normal;}
 	/***************************/
 	.mpStyle .formControl::placeholder { color: #0005; }
 	.mpStyle .formControl:disabled { background-color: #DDD5; color: #FFF; }

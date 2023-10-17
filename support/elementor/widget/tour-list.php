@@ -1,5 +1,5 @@
 <?php
-namespace MEPPlugin\Widgets;
+namespace TTBMPlugin\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * @since 1.1.0
  */
 
-class MEPEventListWidget extends Widget_Base {
+class TTBMTourListWidget extends Widget_Base {
 
 	public function get_name() {
 		return 'ttbm-tour-list-widget';

@@ -41,9 +41,9 @@
 				wp_enqueue_style('mp_jquery_ui', TTBM_PLUGIN_URL . '/assets/helper/jquery-ui.min.css', array(), '1.13.2');
 				wp_enqueue_style('mp_font_awesome', '//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css', array(), '5.15.4');
 				wp_enqueue_style('mp_select_2', TTBM_PLUGIN_URL . '/assets/helper/select_2/select2.min.css', array(), '4.0.13');
-				wp_enqueue_script('mp_select_2', TTBM_PLUGIN_URL . '/assets/helper/select_2/select2.min.js', array(), '4.0.13');
+				wp_enqueue_script('mp_select_2', TTBM_PLUGIN_URL . '/assets/helper/select_2/select2.min.js', array(), '4.0.13',true);
 				wp_enqueue_style('mp_owl_carousel', TTBM_PLUGIN_URL . '/assets/helper/owl_carousel/owl.carousel.min.css', array(), '2.3.4');
-				wp_enqueue_script('mp_owl_carousel', TTBM_PLUGIN_URL . '/assets/helper/owl_carousel/owl.carousel.min.js', array(), '2.3.4');
+				wp_enqueue_script('mp_owl_carousel', TTBM_PLUGIN_URL . '/assets/helper/owl_carousel/owl.carousel.min.js', array(), '2.3.4',true);
 				wp_enqueue_style('mp_plugin_global', TTBM_PLUGIN_URL . '/assets/helper/mp_style/mp_style.css', array(), time());
 				wp_enqueue_script('mp_plugin_global', TTBM_PLUGIN_URL . '/assets/helper/mp_style/mp_script.js', array('jquery'), time(), true);
 				do_action('ttbm_common_script');

@@ -1,0 +1,16 @@
+{
+  "//": [
+    "This package.json file created for using npm library to compile sass.",
+    "Author: Shahadat Hossain",
+    "Email:raselsha@gmail.com"
+  ],
+  "name": "mage-people-plugin-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "start": "sass --watch sass/main.scss assets/admin/mp_main_settings.css"
+  },
+  "author": "mage-people",
+  "license": "ISC"
+}

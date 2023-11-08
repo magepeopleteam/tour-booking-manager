@@ -1,0 +1,17 @@
+#{$main-selector}{
+.nav{
+    list-style: none;
+  }
+  .nav-item{
+    background-color: $color-white;
+    border-radius: $border-radius;
+    margin:$spacing 0;
+    padding:calc($spacing * 1.1) calc($spacing*2);
+    cursor: pointer;
+    transition: background-color $time;
+  }
+  .nav-item:hover, .nav-item.active{
+    background-color: $color-primary;
+    color: $color-white;
+  }
+}

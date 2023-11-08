@@ -1,0 +1,42 @@
+$main-selector:'#mp_meta_box_panel';
+
+:root{
+    --color-primary:#03A9F4;
+    --color-sky:#7AD6FF;
+    --color-sky-light:#EFFAFF;
+    --color-secondary:#2B363F;
+    --color-dark:#a4a4a4;
+    --color-gray:#e0e0e0;
+    --color-light:#f7f7f7;
+    --color-white:#ffffff;
+    --color-black:#000000;
+
+    // ==========fonts=============
+    --font-text:ubuntu;
+    --font-heading:ubuntu;
+    --font-bold:ubuntuBold;
+    --font-size:12px;
+    // ==========spacing =======
+    --spacing:.5rem;
+    --flow-space: 1.5rem;
+    --radius:.25rem;
+    --time:.5s;
+}
+// ------------color--------
+$color-primary:var(--color-primary);
+$color-secondary:var(--color-secondary);
+$color-sky:var(--color-sky);
+$color-sky-light:var(--color-sky-light);
+$color-dark:var(--color-dark);
+$color-gray:var(--color-gray);
+$color-light:var(--color-light);
+$color-white:var(--color-white);
+$color-black:var(--color-black);
+//-------------utility-------
+$border-radius:var(--radius);
+$spacing: var(--spacing);
+$time: var(--time);
+
+//============form============
+$input-width:12rem;
+$input-height:1.8rem;

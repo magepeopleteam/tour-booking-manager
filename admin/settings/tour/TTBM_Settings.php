@@ -19,9 +19,9 @@
 				$tour_id = get_the_id();
 				?>
 				<div class="mpStyle ttbm_settings">
-					<div class="mpTabs leftTabs">
+					<div class="mpTabs leftTabs ">
 						<ul class="tabLists">
-							<li data-tabs-target="#ttbm_general_info">
+							<li class="nav-item" data-tabs-target="#ttbm_general_info">
 								<span class="fas fa-tools"></span><?php esc_html_e('General Info', 'tour-booking-manager'); ?>
 							</li>
 							<?php do_action('ttbm_meta_box_tab_name', $tour_id); ?>

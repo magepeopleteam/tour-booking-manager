@@ -27,8 +27,8 @@
 							<?php do_action('ttbm_meta_box_tab_name', $tour_id); ?>
 							<?php do_action('add_ttbm_settings_tab_name'); ?>
 							<?php if (is_plugin_active('mage-partial-payment-pro/mage_partial_pro.php')) : ?>
-								<li data-tabs-target="#_mep_pp_deposits_type">
-									<span class="far fa-money-bill-alt"></span>&nbsp;&nbsp;<?php esc_html_e('Partial Payment', 'tour-booking-manager'); ?>
+								<li class="nav-item" data-tabs-target="#_mep_pp_deposits_type">
+									<i class="far fa-money-bill-alt"></i>&nbsp;&nbsp;<?php esc_html_e('Partial Payment', 'tour-booking-manager'); ?>
 								</li>
 							<?php endif; ?>
 						</ul>

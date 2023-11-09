@@ -26,5 +26,9 @@
       min-width:inherit;
       max-width:inherit;
     }
+    div.mpStyle [data-tabs-target]{
+      color: $color-secondary;
+      
+    }
   }
 

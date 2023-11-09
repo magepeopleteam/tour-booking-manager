@@ -7002,6 +7002,9 @@ readers do not read off random characters that represent icons */
     min-width: inherit;
     max-width: inherit;
   }
+  div.mpStyle [data-tabs-target] {
+    color: var(--mpl-secondary);
+  }
 }
 
 /*# sourceMappingURL=mp_main_settings.css.map */

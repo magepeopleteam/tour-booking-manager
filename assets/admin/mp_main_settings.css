@@ -6593,7 +6593,7 @@ readers do not read off random characters that represent icons */
   border-radius: 0.25rem;
   margin: 0;
   margin-bottom: 0.5rem;
-  padding: 0.55rem 1rem;
+  padding: 0.7rem 1rem;
   cursor: pointer;
   transition: background-color 0.5s;
 }
@@ -6685,7 +6685,7 @@ readers do not read off random characters that represent icons */
 #mp_meta_box_panel .w-80 {
   width: 80%;
 }
-#mp_meta_box_panel .w-80 {
+#mp_meta_box_panel .w-90 {
   width: 90%;
 }
 #mp_meta_box_panel .w-100 {
@@ -6989,14 +6989,18 @@ readers do not read off random characters that represent icons */
   color: var(--mpl-white);
 }
 
-@media only screen and (min-width: 10px) {
+@media only screen and (min-width: 0px) {
   #mp_meta_box_panel .tabLists {
-    border-right: 0px solid var(--color_border);
+    border-right: 0px solid var(--mpl-light);
   }
-}
-@media only screen and (min-width: 10px) {
   .leftTabs [data-tabs-target] {
-    border-bottom: 0px solid var(--color_border);
+    border-bottom: 0px solid var(--mpl-light);
+  }
+  .leftTabs > .tabLists {
+    -webkit-flex-flow: column;
+    flex-flow: column;
+    min-width: inherit;
+    max-width: inherit;
   }
 }
 

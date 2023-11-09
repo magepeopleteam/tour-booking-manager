@@ -19,8 +19,8 @@
 				$tour_id = get_the_id();
 				?>
 				<div class="mpStyle ttbm_settings bg-sky-light">
-					<div class="mpTabs leftTabs ">
-						<ul class="tabLists nav p-1">
+					<div class="mpTabs leftTabs d-flex justify-content-between">
+						<ul class="tabLists nav p-1 sidebar w-20">
 							<li class="nav-item" data-tabs-target="#ttbm_general_info">
 								<i class="fas fa-tools"></i><?php esc_html_e('General Info', 'tour-booking-manager'); ?>
 							</li>
@@ -32,7 +32,7 @@
 								</li>
 							<?php endif; ?>
 						</ul>
-						<div class="tabsContent tab-content m-0">
+						<div class="tabsContent tab-content mt-0 w-80 p-0 p-1">
 							<?php
 								do_action('add_ttbm_settings_tab_content', $tour_id);
 								do_action('ttbm_meta_box_tab_content', $tour_id);

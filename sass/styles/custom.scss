@@ -11,14 +11,20 @@
     }
     
 } 
-@media only screen and (min-width: 10px) {
+@media only screen and (min-width:0px) {
     #mp_meta_box_panel .tabLists {
-      border-right: 0px solid var(--color_border);
+      border-right: 0px solid $color-light;
+    }
+
+    .leftTabs [data-tabs-target] {
+      border-bottom: 0px solid $color-light;
+    }
+
+    .leftTabs > .tabLists {
+      -webkit-flex-flow: column;
+      flex-flow: column;
+      min-width:inherit;
+      max-width:inherit;
     }
   }
 
-  @media only screen and (min-width: 10px) {
-    .leftTabs [data-tabs-target] {
-      border-bottom: 0px solid var(--color_border);
-    }
-  }

@@ -8,7 +8,8 @@
   "description": "This package.json file created for using npm library to compile sass.",
   "main": "index.html",
   "scripts": {
-    "start": "sass --watch sass/main.scss assets/admin/mp_main_settings.css"
+    "start": "sass --watch sass/main.scss assets/admin/mp_main_settings.css",
+    "build": "sass --watch --style compressed sass/main.scss assets/admin/mp_main_settings.css"
   },
   "author": "mage-people",
   "license": "ISC"

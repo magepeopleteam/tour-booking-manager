@@ -11,8 +11,8 @@
 			}
 			public function add_tab() {
 				?>
-				<li data-tabs-target="#ttbm_settings_why_chose_us">
-					<span class="fas fa-info-circle"></span><?php esc_html_e(' Why Book With Us ?', 'tour-booking-manager'); ?>
+				<li class="nav-item" data-tabs-target="#ttbm_settings_why_chose_us">
+					<i class="fas fa-info-circle"></i> <?php esc_html_e('Why Book With Us ?', 'tour-booking-manager'); ?>
 				</li>
 				<?php
 			}

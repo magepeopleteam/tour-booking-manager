@@ -11,8 +11,8 @@
 			}
 			public function add_tab() {
 				?>
-				<li data-tabs-target="#ttbm_settings_gallery">
-					<span class="fas fa-images"></span><?php esc_html_e('Gallery ', 'tour-booking-manager'); ?>
+				<li class="nav-item" data-tabs-target="#ttbm_settings_gallery">
+					<i class="fas fa-images"></i><?php esc_html_e('Gallery ', 'tour-booking-manager'); ?>
 				</li>
 				<?php
 			}

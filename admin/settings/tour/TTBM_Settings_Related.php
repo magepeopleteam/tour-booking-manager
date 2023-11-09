@@ -12,8 +12,8 @@
 			public function add_tab() {
 				$ttbm_label = TTBM_Function::get_name();
 				?>
-				<li data-tabs-target="#ttbm_settings_related_tour">
-					<span class="fas fa-map-marked-alt"></span><?php echo esc_html__('Related ', 'tour-booking-manager') . $ttbm_label; ?>
+				<li class="nav-item" data-tabs-target="#ttbm_settings_related_tour">
+					<i class="fas fa-map-marked-alt"></i><?php echo esc_html__('Related ', 'tour-booking-manager') . $ttbm_label; ?>
 				</li>
 				<?php
 			}

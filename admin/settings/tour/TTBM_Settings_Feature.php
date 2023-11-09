@@ -22,8 +22,8 @@
 			}
 			public function add_tab() {
 				?>
-				<li data-tabs-target="#ttbm_settings_feature">
-					<span class="fas fa-clipboard-list"></span><?php esc_html_e(' Features', 'tour-booking-manager'); ?>
+				<li class="nav-item" data-tabs-target="#ttbm_settings_feature">
+					<i class="fas fa-clipboard-list"></i><?php esc_html_e(' Features', 'tour-booking-manager'); ?>
 				</li>
 				<?php
 			}

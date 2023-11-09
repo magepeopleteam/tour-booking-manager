@@ -19,8 +19,8 @@
 			public function general_settings($tour_id) {
 				?>
 				<div class="tabsItem ttbm_settings_general" data-tabs="#ttbm_general_info">
-					<h5><?php esc_html_e('General Information Settings', 'tour-booking-manager'); ?></h5>
-					<div class="divider"></div>
+					<h2 class="h4 px-0 text-primary my-1"><?php esc_html_e('General Information Settings', 'tour-booking-manager'); ?></h2>
+					<hr>
 					<table class="layoutFixed">
 						<tbody>
 						<?php $this->duration($tour_id); ?>

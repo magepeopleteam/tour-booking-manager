@@ -12,8 +12,8 @@
 	        public function add_tab(){
 		        $ttbm_label = TTBM_Function::get_name();
 		        ?>
-				<li data-tabs-target="#ttbm_settings_guide">
-					<span class="fas fa-hiking"></span><?php echo $ttbm_label.'  '.esc_html__('Guide ', 'tour-booking-manager'); ?>
+				<li class="nav-item" data-tabs-target="#ttbm_settings_guide">
+					<i class="fas fa-hiking"></i><?php echo $ttbm_label.'  '.esc_html__('Guide ', 'tour-booking-manager'); ?>
 				</li>
 		        <?php
 	        }

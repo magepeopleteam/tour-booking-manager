@@ -11,8 +11,8 @@
 			}
 			public function add_tab() {
 				?>
-				<li data-tabs-target="#ttbm_settings_admin_note">
-					<span class="fas fa-edit"></span><?php esc_html_e( ' Admin Note', 'tour-booking-manager' ); ?>
+				<li class="nav-item" data-tabs-target="#ttbm_settings_admin_note">
+					<i class="fas fa-edit"></i><?php esc_html_e( ' Admin Note', 'tour-booking-manager' ); ?>
 				</li>
 				<?php
 			}

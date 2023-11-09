@@ -9,7 +9,16 @@
             
         }
     }
-    .inside{
-        background-color: $color-sky-light;
-    }
+    
 } 
+@media only screen and (min-width: 10px) {
+    #mp_meta_box_panel .tabLists {
+      border-right: 0px solid var(--color_border);
+    }
+  }
+
+  @media only screen and (min-width: 10px) {
+    .leftTabs [data-tabs-target] {
+      border-bottom: 0px solid var(--color_border);
+    }
+  }

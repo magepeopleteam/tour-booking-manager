@@ -15,11 +15,11 @@
 			}
 			public function add_tab() {
 				?>
-				<li data-tabs-target="#ttbm_settings_day_wise_details">
-					<span class="fas fa-th-list"></span><?php esc_html_e(' Day wise Details', 'tour-booking-manager'); ?>
+				<li class="nav-item" data-tabs-target="#ttbm_settings_day_wise_details">
+					<i class="fas fa-th-list"></i><?php esc_html_e(' Day wise Details', 'tour-booking-manager'); ?>
 				</li>
-				<li data-tabs-target="#ttbm_settings_faq">
-					<span class="fas fa-question-circle"></span><?php esc_html_e(' F.A.Q', 'tour-booking-manager'); ?>
+				<li class="nav-item" data-tabs-target="#ttbm_settings_faq">
+					<i class="fas fa-question-circle"></i><?php esc_html_e(' F.A.Q', 'tour-booking-manager'); ?>
 				</li>
 				<?php
 			}

@@ -76,7 +76,7 @@
 				wp_enqueue_script('mp_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/mp_admin_settings.js', array('jquery'), time(), true);
 				wp_enqueue_style('mp_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/mp_admin_settings.css', array(), time());
 				wp_enqueue_script('ttbm_admin_script', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_script.js', array('jquery'), time(), true);
-				//wp_enqueue_style('ttbm_admin_style', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_style.css', array(), time());
+				wp_enqueue_style('ttbm_admin_style', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_style.css', array(), time());
 				wp_enqueue_style('mp_main_settings', TTBM_PLUGIN_URL . '/assets/admin/mp_main_settings.css', array(), time());
 				do_action('ttbm_admin_script');
 			}

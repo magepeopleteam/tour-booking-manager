@@ -12,7 +12,7 @@
 			public function add_tab() {
 				?>
 				<li class="nav-item" data-tabs-target="#ttbm_settings_admin_note">
-					<i class="fas fa-edit"></i><?php esc_html_e( ' Admin Note', 'tour-booking-manager' ); ?>
+					<i class="fas fa-edit"></i><?php esc_html_e( 'Admin Note', 'tour-booking-manager' ); ?>
 				</li>
 				<?php
 			}
@@ -24,6 +24,8 @@
 				$admin_note       = $admin_note ? html_entity_decode( $admin_note ) : '';
 				?>
 				<div class="tabsItem ttbm_settings_admin_note" data-tabs="#ttbm_settings_admin_note">
+					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Admin Note Settings', 'tour-booking-manager'); ?></h2>
+					<hr>
 					<h5 class="dFlex">
 						<span class="mR"><?php esc_html_e('On/Off Admin Note', 'tour-booking-manager'); ?></span>
 						<?php MP_Custom_Layout::switch_button('ttbm_display_admin_note', $checked); ?>

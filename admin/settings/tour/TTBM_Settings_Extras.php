@@ -25,6 +25,8 @@
 				$checked_gaq = $display_gaq == 'off' ? '' : 'checked';
 				?>
 				<div class="tabsItem ttbm_settings_extras" data-tabs="#ttbm_settings_extras">
+					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Extras Settings', 'tour-booking-manager'); ?></h2>
+					<hr>
 					<h5 class="dFlex">
 						<span class="mR"><?php esc_html_e('On/Off Get a Questions', 'tour-booking-manager'); ?></span>
 						<?php MP_Custom_Layout::switch_button('ttbm_display_get_question', $checked_gaq); ?>

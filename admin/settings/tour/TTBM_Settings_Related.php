@@ -27,6 +27,8 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
 				<div class="tabsItem" data-tabs="#ttbm_settings_related_tour">
+					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Related'.$ttbm_label.'Settings', 'tour-booking-manager'); ?></h2>
+                    <hr>
 					<h5 class="dFlex">
 						<span class="mR"><?php echo esc_html__('Related ', 'tour-booking-manager') . $ttbm_label . esc_html__(' Settings', 'tour-booking-manager') ?></span>
 						<?php MP_Custom_Layout::switch_button('ttbm_display_related', $checked); ?>

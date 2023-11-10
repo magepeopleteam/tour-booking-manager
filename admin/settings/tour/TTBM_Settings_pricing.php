@@ -27,6 +27,8 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
 				<div class="tabsItem ttbm_settings_pricing" data-tabs="#ttbm_settings_pricing">
+					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Pricing Settings', 'tour-booking-manager'); ?></h2>
+                    <hr>
 					<h5 class="dFlex">
 						<span class="mR"><?php esc_html_e('On/Off Registration', 'tour-booking-manager'); ?></span>
 						<?php MP_Custom_Layout::switch_button('ttbm_display_registration', $checked); ?>

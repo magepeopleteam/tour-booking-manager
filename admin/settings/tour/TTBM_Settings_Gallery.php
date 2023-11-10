@@ -22,7 +22,10 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				$image_ids = MP_Global_Function::get_post_info($tour_id, 'ttbm_gallery_images', array());
 				?>
+				
 				<div class="tabsItem ttbm_settings_gallery" data-tabs="#ttbm_settings_gallery">
+					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Gallery Settings', 'tour-booking-manager'); ?></h2>
+					<hr>
 					<h5 class="dFlex">
 						<span class="mR"><?php esc_html_e('On/Off Slider', 'tour-booking-manager'); ?></span>
 						<?php MP_Custom_Layout::switch_button('ttbm_display_slider', $checked); ?>

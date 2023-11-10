@@ -30,6 +30,8 @@
 			public function ttbm_settings_feature($tour_id) {
 				?>
 				<div class="tabsItem ttbm_settings_feature" data-tabs="#ttbm_settings_feature">
+					<h2 class="h4 px-0 text-primary"><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></h2>
+					<hr>
 					<div class="mtb ttbm_features_table">
 						<?php $this->feature($tour_id); ?>
 					</div>

@@ -6130,7 +6130,6 @@ readers do not read off random characters that represent icons */
   /* Remove padding on lists */
   /* Media elements defaults */
   /* Reset font styling */
-  /* Reset default styling for buttons */
   /* Prevent sub and sup elements from affecting the line height */
   /* Normalize outline to ensure A11y */
   /* Disable animations and transitions for users that prefer reduced motion */
@@ -6191,14 +6190,6 @@ readers do not read off random characters that represent icons */
 #mp_meta_box_panel select,
 #mp_meta_box_panel table {
   font: inherit;
-}
-#mp_meta_box_panel button {
-  appearance: none;
-  background-color: transparent;
-  border: 0;
-  color: inherit;
-  padding: 0;
-  text-align: inherit;
 }
 #mp_meta_box_panel sub,
 #mp_meta_box_panel sup {
@@ -6846,6 +6837,47 @@ readers do not read off random characters that represent icons */
 #mp_meta_box_panel input[type]:disabled {
   background: var(--mpl-gray);
 }
+#mp_meta_box_panel .tool-tips {
+  color: var(--mpl-gray);
+  position: relative;
+  padding-left: 0.25rem;
+}
+#mp_meta_box_panel .tool-tips span {
+  font-family: ubuntu;
+  font-size: 9.6px;
+  visibility: hidden;
+  background-color: var(--mpl-black);
+  opacity: 0.8;
+  color: var(--mpl-white);
+  text-align: center;
+  border-radius: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  width: max-content;
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%);
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+#mp_meta_box_panel .tool-tips span:after {
+  content: " ";
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  transform: translate(-50%);
+  border: 5px solid var(--mpl-black);
+  border-color: var(--mpl-black) transparent transparent transparent;
+}
+#mp_meta_box_panel .tool-tips:hover {
+  color: var(--mpl-primary);
+}
+#mp_meta_box_panel .tool-tips:hover span {
+  visibility: visible;
+}
+#mp_meta_box_panel label {
+  font-size: 0.9rem;
+}
 #mp_meta_box_panel .switch {
   position: relative;
   display: inline-block;
@@ -6966,17 +6998,11 @@ readers do not read off random characters that represent icons */
   width: 100%;
   margin: 0 auto;
 }
-#mp_meta_box_panel .tool-tips {
-  color: var(--mpl-gray);
-}
-#mp_meta_box_panel label {
-  font-size: 0.9rem;
-}
 #mp_meta_box_panel .component {
   background-color: var(--mpl-white);
   border-radius: 0.25rem;
-  padding: calc(var(--spacing) * 3);
-  margin-bottom: calc(var(--spacing) * 3);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 #mp_meta_box_panel .postbox-header {

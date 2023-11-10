@@ -23,6 +23,8 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
 				<div class="tabsItem mp_settings_area ttbm_settings_why_chose_us" data-tabs="#ttbm_settings_why_chose_us">
+					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Why Book With Us?', 'tour-booking-manager'); ?></h2>
+                    <hr>
 					<h5 class="dFlex">
 						<span class="mR"><?php esc_html_e('Why Chose Us' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?></span>
 						<?php MP_Custom_Layout::switch_button('ttbm_display_why_choose_us', $checked); ?>

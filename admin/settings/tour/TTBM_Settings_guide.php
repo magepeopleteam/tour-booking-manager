@@ -29,6 +29,8 @@
                 $ttbm_guide_description_style = MP_Global_Function::get_post_info($tour_id, 'ttbm_guide_description_style', 'full');
                 ?>
                 <div class="tabsItem" data-tabs="#ttbm_settings_guide">
+                    <h2 class="h4 px-0 text-primary"><?php esc_html_e('Guide Settings', 'tour-booking-manager'); ?></h2>
+                    <hr>
                     <h5 class="dFlex">
                         <span class="mR"><?php echo esc_html__('On/Off', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html__('Guide', 'tour-booking-manager'); ?></span>
                         <?php MP_Custom_Layout::switch_button('ttbm_display_tour_guide', $checked_guide); ?>

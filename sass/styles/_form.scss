@@ -19,6 +19,49 @@ select,input[type],input[type=date],input[type=time] {
   input[type]:disabled {
     background: $color-gray;
   }
+// =====================tool tips============================
+  .tool-tips{
+    color: $color-gray;
+    position: relative;
+    padding-left: calc($spacing - 0.25rem);
+    span{
+      font-family: $font-text;
+      font-size: calc($font-size*.8);
+      visibility: hidden;
+      background-color: $color-black;
+      opacity: .8;
+      color: $color-white;
+      text-align: center;
+      border-radius: $border-radius;
+      padding:$spacing calc($spacing*1.5);
+      width: max-content;
+      bottom: 100%;
+      left:50%;
+      transform: translate(-50%);
+      /* Position the tooltip */
+      position: absolute;
+      z-index: 1;
+      &:after{
+        content: " ";
+        position: absolute;
+        top: 100%; /* At the bottom of the tooltip */
+        left: 50%;
+        transform: translate(-50%);
+        border: 5px solid $color-black;
+        border-color: $color-black transparent transparent transparent;
+      }
+    }
+    &:hover{
+      color: $color-primary;
+      span{
+        visibility: visible;
+      }
+    }
+  }
+  
+  label{
+    font-size: 0.9rem;
+  }
 // ===========toggle switch button==========
 .switch {
     position: relative;

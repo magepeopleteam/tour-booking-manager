@@ -84,19 +84,11 @@
 }
 // ==================
 
-.tool-tips{
-  color: $color-gray;
-}
-
-label{
-  font-size: 0.9rem;
-}
-
 .component{
   background-color: $color-white;
   border-radius: $border-radius;
-  padding: calc(var(--spacing)*3);
-  margin-bottom: calc(var(--spacing)*3);
+  padding: calc($spacing*3);
+  margin-bottom: calc($spacing*3);
 }
 
 }

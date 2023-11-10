@@ -30,7 +30,10 @@
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
+				
 				<div class="tabsItem mp_settings_area ttbm_settings_activities" data-tabs="#ttbm_settings_activies">
+					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Activity Settings', 'tour-booking-manager'); ?></h2>
+					<hr>
 					<h5 class="dFlex">
 						<?php MP_Custom_Layout::switch_button('ttbm_display_activities', $checked); ?>
 						<?php esc_html_e($ttbm_label . ' Activities Settings', 'tour-booking-manager'); ?>

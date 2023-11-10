@@ -16,10 +16,10 @@
 			public function add_tab() {
 				?>
 				<li class="nav-item" data-tabs-target="#ttbm_settings_day_wise_details">
-					<i class="fas fa-th-list"></i><?php esc_html_e(' Day wise Details', 'tour-booking-manager'); ?>
+					<i class="fas fa-th-list"></i><?php esc_html_e('Day wise Details', 'tour-booking-manager'); ?>
 				</li>
 				<li class="nav-item" data-tabs-target="#ttbm_settings_faq">
-					<i class="fas fa-question-circle"></i><?php esc_html_e(' F.A.Q', 'tour-booking-manager'); ?>
+					<i class="fas fa-question-circle"></i><?php esc_html_e('F.A.Q', 'tour-booking-manager'); ?>
 				</li>
 				<?php
 			}
@@ -34,6 +34,8 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
 				<div class="tabsItem ttbm_settings_day_wise_details" data-tabs="#ttbm_settings_day_wise_details">
+					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Day wise Details', 'tour-booking-manager'); ?></h2>
+					<hr>
 					<h5 class="dFlex">
 						<span class="mR"><?php esc_html_e('Day Wise Details Settings', 'tour-booking-manager'); ?></span>
 						<?php MP_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
@@ -67,6 +69,8 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
 				<div class="tabsItem" data-tabs="#ttbm_settings_faq">
+					<h2 class="h4 px-0 text-primary"><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></h2>
+					<hr>
 					<h5 class="dFlex">
 						<span class="mR"><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></span>
 						<?php MP_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>

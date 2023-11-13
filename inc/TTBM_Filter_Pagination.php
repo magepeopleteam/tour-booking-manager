@@ -172,7 +172,7 @@
 							<select class="formControl" name="organizer_filter">
 								<option selected value=""><?php esc_html_e( 'All Organizer', 'tour-booking-manager' ); ?></option>
 								<?php foreach ( $organizers as $organizer ) { ?>
-									<option value="<?php echo esc_attr( $organizer->term_id ); ?>" <?php echo esc_attr( $selected ); ?>><?php echo esc_html( $organizer->name ); ?></option>
+									<option value="<?php echo esc_attr( $organizer->term_id ); ?>" <?php echo esc_attr($url && $current == $organizer->term_id ? 'selected' : ''); ?>><?php echo esc_html( $organizer->name ); ?></option>
 								<?php } ?>
 							</select>
 						</label>
@@ -255,7 +255,7 @@
 			//****************************************/
 			public function country_filter( $params, $countries = '' ) {
 				if ( $params['country-filter'] == 'yes' ) {
-					$countries = $countries ?? TTBM_Function::get_all_country();
+					$countries = is_array($countries) ? $countries : TTBM_Function::get_all_country();
 					if ( sizeof( $countries ) > 0 ) {
 						$url = $_GET['country_filter'] ?? '';
 						?>

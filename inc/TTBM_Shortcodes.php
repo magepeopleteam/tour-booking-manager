@@ -27,7 +27,7 @@
 				$show = $params['show'];
 				$pagination = $params['pagination'];
 				$search = $params['sidebar-filter'];
-				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
+				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show; //echo "<pre>"; print_r(array($attribute,$params)); echo "</pre>";
 				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'],$params['sort_by']);
 				ob_start();
 				?>
@@ -184,7 +184,7 @@
 					'sidebar-filter' => $sidebar_filter,
 					'title-filter' => 'no',
 					'category-filter' => 'no',
-					'organizer-filter' => 'no',
+					'organizer-filter' => 'yes',
 					'location-filter' => 'yes',
 					'country-filter' => 'no',
 					'activity-filter' => 'yes',

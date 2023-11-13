@@ -84,7 +84,7 @@
 						$city_filter,
 						$country_filter,
 						$tour_type_filter,
-						// $activity_filter
+						$activity_filter
 					),
 					'tax_query' => array(
 						$cat_filter,

@@ -512,7 +512,7 @@
 						}
 					}
 				}
-				return $country;
+				return array_unique($country);
 			}
 			//*******************************//
 			public static function get_hotel_list($tour_id) {

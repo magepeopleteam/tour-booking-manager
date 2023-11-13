@@ -24,9 +24,9 @@
 						$this->duration_with_night($tour_id);
 						$this->starting_price_with_max_people($tour_id);
 						$this->age_range_with_starting_place($tour_id);
-						// $this->location($tour_id);
-						// $this->full_location($tour_id);
-						// $this->short_des($tour_id);
+						$this->location($tour_id);
+						$this->full_location($tour_id);
+						$this->short_des($tour_id);
 					?>
 					</tbody></table>
 				</div>
@@ -156,18 +156,15 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				$active = $display == 'off' ? '' : 'mActive';
 				?>
-				<tr>
-					<th colspan="3"><?php esc_html_e('Full Location for Map ', 'tour-booking-manager'); ?></th>
-					<td><?php MP_Custom_Layout::switch_button($display_name, $checked); ?></td>
-					<td colspan="3">
-						<label data-collapse="#<?php echo esc_attr($display_name); ?>" class="<?php echo esc_attr($active); ?>">
-							<textarea class="formControl" name="<?php echo esc_attr($value_name); ?>" rows="4" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
-						</label>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="7"><?php TTBM_Settings::des_p('full_location'); ?></td>
-				</tr>
+				<section class="component d-flex justify-content-between align-items-center mb-2">
+					<div class="w-100 d-flex justify-content-between align-items-center">
+						<label class=""><?php esc_html_e('Full Location for Map ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('full_location'); ?></i></label>
+						<div class="d-flex justify-content-between align-items-center">
+							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+							<textarea data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" cols="90" rows="2" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
+						</div>
+					</div>
+				</section>
 				<?php
 			}
 			public function short_des($tour_id) {
@@ -179,38 +176,41 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				$active = $display == 'off' ? '' : 'mActive';
 				?>
-				<tr>
-					<th colspan="3"><?php esc_html_e('Short Description', 'tour-booking-manager'); ?></th>
-					<td><?php MP_Custom_Layout::switch_button($display_name, $checked); ?></td>
-					<td colspan="3">
-						<label data-collapse="#<?php echo esc_attr($display_name); ?>" class="<?php echo esc_attr($active); ?>">
-							<textarea class="formControl" name="<?php echo esc_attr($value_name); ?>" rows="4" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
-						</label>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="7"><?php TTBM_Settings::des_p('short_des'); ?></td>
-				</tr>
+
+				<section class="component d-flex justify-content-between align-items-center mb-2">
+					<div class="w-100 d-flex justify-content-between align-items-center">
+						<label class=""><?php esc_html_e('Short Description', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('short_des'); ?></i></label>
+					</div>
+					<div class="d-flex justify-content-between align-items-center">
+						<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+						<textarea data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" cols="90" rows="2" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
+					</div>
+                </section>
 				<?php
 			}
 			
-			//************************//
+			//*************location setup***********//
 			public function location($tour_id) {
 				$display_name = 'ttbm_display_location';
 				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
 				$checked = $display == 'off' ? '' : 'checked';
+
 				?>
-				<tr>
-					<th colspan="3">
-						<?php esc_html_e('Tour Location', 'tour-booking-manager'); ?>
-						<?php MP_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__('Create New Location', 'tour-booking-manager')); ?>
-					</th>
-					<td><?php MP_Custom_Layout::switch_button($display_name, $checked); ?></td>
-					<td colspan="3" class="ttbm_location_select_area"><?php self::location_select($tour_id); ?></td>
-				</tr>
-				<tr>
-					<td colspan="7"><?php TTBM_Settings::des_p('location'); ?></td>
-				</tr>
+				<section class="component d-flex justify-content-between align-items-center mb-2">
+					<div class="w-50 d-flex justify-content-between align-items-center">
+						<label for=""><?php esc_html_e('Tour Location', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('location'); ?></i></label>
+						<div class=" d-flex justify-content-between align-items-center">
+							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+							<?php self::location_select($tour_id); ?>
+						</div>
+					</div>
+					<div class="w-50 ms-5 d-flex justify-content-between align-items-center">
+						<label for=""><?php echo esc_html__('Create New Location', 'tour-booking-manager') ?> <i class="fas fa-question-circle tool-tips"></i></label>
+						<div class=" d-flex justify-content-between align-items-center">
+							<?php MP_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__('Create New Location', 'tour-booking-manager')); ?>
+						</div>
+					</div>
+				</section>
 				<?php
 				self::add_new_location_popup();
 			}
@@ -223,13 +223,11 @@
 				$value = MP_Global_Function::get_post_info($tour_id, $location_key, array());
 				$all_location = TTBM_Function::get_all_location();
 				?>
-				<label>
-					<select class="formControl ttbm_select2" name="<?php echo esc_attr($location_key); ?>">
-						<?php foreach ($all_location as $key => $location) { ?>
-							<option value="<?php echo esc_attr($key); ?>" <?php echo esc_attr($key == $value ? 'selected' : ''); ?>><?php echo esc_html($location); ?></option>
-						<?php } ?>
-					</select>
-				</label>
+				<select class="rounded ms-2 " name="<?php echo esc_attr($location_key); ?>">
+					<?php foreach ($all_location as $key => $location) { ?>
+						<option value="<?php echo esc_attr($key); ?>" <?php echo esc_attr($key == $value ? 'selected' : ''); ?>><?php echo esc_html($location); ?></option>
+					<?php } ?>
+				</select>
 				<?php
 			}
 			public static function add_new_location_popup() {

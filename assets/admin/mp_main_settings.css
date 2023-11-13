@@ -6604,16 +6604,16 @@ readers do not read off random characters that represent icons */
 #mp_meta_box_panel .rounded {
   border-radius: 0.25rem;
 }
-#mp_meta_box_panel .round-top {
+#mp_meta_box_panel .rounded-top {
   border-radius: 0.25rem 0.25rem 0 0;
 }
-#mp_meta_box_panel .round-bottom {
+#mp_meta_box_panel .rounded-bottom {
   border-radius: 0 0 0.25rem 0.25rem;
 }
-#mp_meta_box_panel .round-left {
+#mp_meta_box_panel .rounded-left {
   border-radius: 0.25rem 0 0 0.25rem;
 }
-#mp_meta_box_panel .round-right {
+#mp_meta_box_panel .rounded-right {
   border-radius: 0 0.25rem 0.25rem 0;
 }
 #mp_meta_box_panel .w-0 {

@@ -8,16 +8,16 @@ hr,.hr{
   .rounded{
     border-radius: $border-radius;
   }
-  .round-top{
+  .rounded-top{
     border-radius: $border-radius $border-radius 0 0;
   }
-  .round-bottom{
+  .rounded-bottom{
     border-radius: 0 0 $border-radius $border-radius;
   }
-  .round-left{
+  .rounded-left{
     border-radius:$border-radius 0 0 $border-radius;
   }
-  .round-right{
+  .rounded-right{
     border-radius: 0 $border-radius $border-radius 0;
   }
   .w-0{

@@ -370,7 +370,8 @@
 				<?php
 			}
 			public static function des_p($key) {
-				echo self::des_array($key);
+				
+				echo '<span>'.self::des_array($key).'</span>';
 			}
 			//********************//
 			public function save_settings($tour_id) {

@@ -17,24 +17,28 @@
 				add_action('wp_ajax_nopriv_ttbm_new_location_save', [$this, 'ttbm_new_location_save']);
 			}
 			public function general_settings($tour_id) {
-				echo '<div class="tabsItem ttbm_settings_general contentTab" data-tabs="#ttbm_general_info">';
-					echo '<table class="layoutFixed"><tbody>';
-						$this->duration($tour_id);
-						$this->start_price($tour_id);
-						$this->max_people($tour_id);
+				?>
+				<div class="tabsItem ttbm_settings_general contentTab" data-tabs="#ttbm_general_info">;
+					<table class="layoutFixed"><tbody>
+					<?php
+						$this->duration_with_night($tour_id);
+						$this->starting_price_with_max_people($tour_id);
 						$this->age_range($tour_id);
-						$this->start_place($tour_id);
-						$this->location($tour_id);
-						$this->full_location($tour_id);
-						$this->short_des($tour_id);
-					echo '</tbody></table>';
-				echo '</div>';
+						 $this->start_place($tour_id);
+						// $this->location($tour_id);
+						// $this->full_location($tour_id);
+						// $this->short_des($tour_id);
+					?>
+					</tbody></table>
+				</div>
+			<?php
 			}
-			public function duration($tour_id) {
+			public function duration_with_night($tour_id) {
 				$value_name = 'ttbm_travel_duration';
 				$value = MP_Global_Function::get_post_info($tour_id, $value_name);
 				$duration_type = MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_type', 'day');
 				$placeholder = esc_html__('Ex: 3', 'tour-booking-manager');
+				// ===========night field===============
 				$display_name = 'ttbm_display_duration_night';
 				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'off');
 				$checked = ($display == 'off') ? '' : 'checked';
@@ -46,7 +50,7 @@
 					<div class="w-50 d-flex justify-content-between align-items-center">
 						<label for=""><?php esc_html_e('Tour Duration', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('duration'); ?></span></i></label>
 						<div class=" d-flex justify-content-between">
-							<input class="small rounded text-center" min="0" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+							<input type="number" class="small rounded text-center" min="0" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
 							<select class="rounded ms-2" name="ttbm_travel_duration_type">
 								<option value="day" <?php echo esc_attr($duration_type == 'day' ? 'selected' : ''); ?>><?php esc_html_e('Days', 'tour-booking-manager'); ?></option>
 								<option value="hour" <?php echo esc_attr($duration_type == 'hour' ? 'selected' : ''); ?>><?php esc_html_e('Hours', 'tour-booking-manager'); ?></option>
@@ -58,15 +62,15 @@
 						<label for=""><?php esc_html_e('Stay Night', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
 						<div class=" d-flex justify-content-between align-items-center">
 							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
-							<div class="<?php echo esc_attr($active); ?>" data-collapse="#<?php echo esc_attr($display_name); ?>">
-								<input min="0" class="ms-2 rounded" name="ttbm_travel_duration_night" value="<?php echo MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_night'); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
-							</div>
+							
+							<input data-collapse="#<?php echo esc_attr($display_name); ?>" type="number" min="0" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="ttbm_travel_duration_night" value="<?php echo MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_night'); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+							
 						</div>
 					</div>
 				</section>
 				<?php
 			}
-			public function start_price($tour_id) {
+			public function starting_price_with_max_people($tour_id) {
 				$display_name = 'ttbm_display_price_start';
 				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
 				$value_name = 'ttbm_travel_start_price';
@@ -74,56 +78,37 @@
 				$placeholder = esc_html__('Type Start Price', 'tour-booking-manager');
 				$checked = $display == 'off' ? '' : 'checked';
 				$active = $display == 'off' ? '' : 'mActive';
+				// ==============max people field ==================
+				$max_people_status_field_name = 'ttbm_display_max_people';
+				$max_people_field_status = MP_Global_Function::get_post_info($tour_id, $max_people_status_field_name, 'on');
+				$max_people_field_name = 'ttbm_travel_max_people_allow';
+				$max_people_field_value = MP_Global_Function::get_post_info($tour_id, $max_people_field_name);
+				$max_people_placeholder = esc_html__('50', 'tour-booking-manager');
+				$max_people_status_checked = ($max_people_field_status == 'off') ? '' : 'checked';
+				$max_people_status_active = ($max_people_field_status == 'off') ? '' : 'mActive';
 				?>
 				
 				<section class="component d-flex justify-content-between mb-2">
 					<div class="w-50 d-flex justify-content-between align-items-center">
-						<label for=""><?php esc_html_e('Tour Start Price', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('start_price'); ?></span></i></label>
+						<label for=""><?php esc_html_e('Tour Start Price', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('start_price'); ?></i></label>
 						<div class=" d-flex justify-content-between align-items-center">
 							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
-							<label data-collapse="#<?php echo esc_attr($display_name); ?>" class="<?php echo esc_attr($active); ?>">
-								<input class="ms-2 rounded" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
-							</label>
+							<input type="number" min="0" data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
 						</div>
 					</div>
 					<div class="w-50 ms-5 d-flex justify-content-between align-items-center">
-						<label for="">Max People Allow <i class="fas fa-question-circle tool-tips"></i></label>
+						<label for=""><?php esc_html_e('Max People Allow', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('max_people'); ?></i></label>
 						<div class=" d-flex justify-content-between align-items-center">
-							<label class="switch">
-								<input type="checkbox">
-								<span class="slider"></span>
-							</label>
-							<input type="number" class="ms-2 rounded" disabled="">
+							<?php MP_Custom_Layout::switch_button($max_people_status_field_name, $max_people_status_checked); ?>
+							
+							<input type="number" min="0" data-collapse="#<?php echo esc_attr($max_people_status_field_name); ?>" class="ms-2 rounded <?php echo esc_attr($max_people_status_active); ?>" name="<?php echo esc_attr($max_people_field_name); ?>" value="<?php echo esc_attr($max_people_field_value); ?>" placeholder="<?php echo esc_attr($max_people_placeholder); ?>"/>
 						</div>
 					</div>
 				</section>
 
-				
 			<?php
 			}
-			public function max_people($tour_id) {
-				$display_name = 'ttbm_display_max_people';
-				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
-				$value_name = 'ttbm_travel_max_people_allow';
-				$value = MP_Global_Function::get_post_info($tour_id, $value_name);
-				$placeholder = esc_html__('50', 'tour-booking-manager');
-				$checked = $display == 'off' ? '' : 'checked';
-				$active = $display == 'off' ? '' : 'mActive';
-				?>
-				<tr>
-					<th colspan="3"><?php esc_html_e('Max People Allow', 'tour-booking-manager'); ?></th>
-					<td><?php MP_Custom_Layout::switch_button($display_name, $checked); ?></td>
-					<td colspan="3">
-						<label data-collapse="#<?php echo esc_attr($display_name); ?>" class="<?php echo esc_attr($active); ?>">
-							<input class="formControl" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
-						</label>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="7"><?php TTBM_Settings::des_p('max_people'); ?></td>
-				</tr>
-				<?php
-			}
+			
 			public function age_range($tour_id) {
 				$display_name = 'ttbm_display_min_age';
 				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');

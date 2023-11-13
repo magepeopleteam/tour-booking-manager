@@ -74,11 +74,11 @@
 				echo ob_get_clean();
 			}
 			/*****************************/
-			public static function switch_button($name, $checked = '') {
+			public static function switch_button($field_name, $checked = '') {
 				?>
-				<label class="roundSwitchLabel">
-					<input type="checkbox" name="<?php echo esc_attr($name); ?>" <?php echo esc_attr($checked); ?>>
-					<span class="roundSwitch" data-collapse-target="#<?php echo esc_attr($name); ?>"></span>
+				<label class="switch">
+					<input type="checkbox" name="<?php echo esc_attr($field_name); ?>" <?php echo esc_attr($checked); ?>>
+					<span class="slider" data-collapse-target="#<?php echo esc_attr($field_name); ?>"></span>
 				</label>
 				<?php
 			}

@@ -7050,6 +7050,8 @@ readers do not read off random characters that represent icons */
 }
 #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table {
   border-collapse: separate;
+  border-spacing: 0 1.5rem;
+  border: 0px solid;
 }
 #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th, #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td {
   background-color: var(--mpl-white);
@@ -7058,6 +7060,16 @@ readers do not read off random characters that represent icons */
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   width: 50%;
+}
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td {
+  text-align: right;
+}
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td label {
+  display: block;
+  text-align: right;
+}
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input.select2-search__field {
+  border: 0;
 }
 
 div > .ppof-metabox {

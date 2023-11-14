@@ -224,9 +224,9 @@
 				$all_location = TTBM_Function::get_all_location();
 				?>
 				<select class="rounded ms-2 " name="<?php echo esc_attr($location_key); ?>">
-					<?php foreach ($all_location as $key => $location) { ?>
+					<?php foreach ($all_location as $key => $location) : ?>
 						<option value="<?php echo esc_attr($key); ?>" <?php echo esc_attr($key == $value ? 'selected' : ''); ?>><?php echo esc_html($location); ?></option>
-					<?php } ?>
+					<?php endforeach; ?>
 				</select>
 				<?php
 			}

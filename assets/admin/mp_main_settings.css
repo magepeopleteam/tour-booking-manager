@@ -7032,5 +7032,44 @@ readers do not read off random characters that represent icons */
     color: var(--mpl-secondary);
   }
 }
+.ppof-settings .form-wrapper {
+  margin-left: 250px;
+  background: transparent;
+}
+
+#mp_meta_box_panel h1 {
+  font-size: 1.625rem;
+  line-height: 1.4;
+  color: var(--mpl-primary);
+  font-weight: 500;
+  padding: 8px 0;
+}
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs .description {
+  margin: 0;
+  padding: 0;
+}
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table {
+  border-collapse: separate;
+}
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th, #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td {
+  background-color: var(--mpl-white);
+  background-color: var(--mpl-white);
+  border-radius: 0.25rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  width: 50%;
+}
+
+div > .ppof-metabox {
+  background: transparent;
+}
+
+.mpStyle .ppof-button {
+  border-radius: 0.25rem;
+  background-color: var(--mpl-sky);
+  border: 0px solid transparent;
+  padding: 0.5rem 1rem;
+  box-shadow: none;
+}
 
 /*# sourceMappingURL=mp_main_settings.css.map */

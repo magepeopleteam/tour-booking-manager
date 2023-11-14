@@ -51,7 +51,7 @@
 					'priority' => 10,
 					'sections' => [
 						'section_2' => [
-							'title' => esc_html__('title', 'tour-booking-manager'),
+							'title' => esc_html__('Date Configuration', 'tour-booking-manager'),
 							'description' => esc_html__('', 'tour-booking-manager'),
 							'options' => apply_filters('ttbm_date_info_boxs_meta_box', [
 								[

@@ -9,6 +9,7 @@
             
         }
     }
+
     
 } 
 @media only screen and (min-width:0px) {
@@ -30,5 +31,53 @@
       color: $color-secondary;
       
     }
-  }
+}
 
+// =============date config style customization=============
+.ppof-settings{
+  .form-wrapper {
+    margin-left: 250px;
+    background: transparent;
+    
+  }
+}
+#{$main-selector}{
+  h1{
+    font-size: 1.625rem;
+    line-height: 1.4;
+    color:$color-primary;
+    font-weight: 500;
+    padding: 8px 0;
+  }
+  .tab-content-ttbm_date_config_meta_boxs{
+    .description{
+      margin: 0;
+      padding:0;
+    }
+    table {
+      border-collapse: separate; 
+    }
+    table.form-table tr th,table.form-table tr td{
+      background-color: $color-white;
+      background-color: $color-white;
+      border-radius: $border-radius;
+      padding: calc($spacing*3);
+      margin-bottom: calc($spacing*3);
+      width:50%
+    }
+
+  }
+  
+}
+
+div > .ppof-metabox {
+  background: transparent;
+}
+
+.mpStyle .ppof-button{
+  border-radius: $border-radius;
+  background-color: $color-sky;
+  border: 0px solid transparent;
+  padding: $spacing ($spacing*2);
+  box-shadow: none;
+}

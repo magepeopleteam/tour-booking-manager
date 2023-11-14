@@ -98,10 +98,10 @@
 				<?php
 			}
 			/*****************************/
-			public static function add_new_button($button_text, $class = 'mp_add_item', $button_class = '_themeButton_xs_mT_xs', $icon_class = 'fas fa-plus-square') {
+			public static function add_new_button($button_text, $class = 'mp_add_item', $button_class = 'bg-primary text-white p-2 rounded', $icon_class = 'fas fa-plus-square pe-1') {
 				?>
 				<button class="<?php echo esc_attr($button_class . ' ' . $class); ?>" type="button">
-					<span class="<?php echo esc_attr($icon_class); ?> mR_xs"></span>
+					<i class="<?php echo esc_attr($icon_class); ?> mR_xs"></i>
 					<?php echo MP_Global_Function::esc_html($button_text); ?>
 				</button>
 				<?php

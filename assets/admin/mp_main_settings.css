@@ -7044,16 +7044,17 @@ readers do not read off random characters that represent icons */
   font-weight: 500;
   padding: 8px 0;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs .description {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs .description, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs .description {
   margin: 0;
   padding: 0;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table {
   border-collapse: separate;
   border-spacing: 0 1.5rem;
   border: 0px solid;
+  margin: 0;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th, #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th, #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td {
   background-color: var(--mpl-white);
   background-color: var(--mpl-white);
   border-radius: 0.25rem;
@@ -7061,14 +7062,14 @@ readers do not read off random characters that represent icons */
   margin-bottom: 1.5rem;
   width: 50%;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td {
   text-align: right;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td label {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td label, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td label {
   display: block;
   text-align: right;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input.select2-search__field {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input.select2-search__field, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input.select2-search__field {
   border: 0;
 }
 

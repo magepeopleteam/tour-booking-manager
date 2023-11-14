@@ -49,7 +49,7 @@
     font-weight: 500;
     padding: 8px 0;
   }
-  .tab-content-ttbm_date_config_meta_boxs{
+  .tab-content-ttbm_date_config_meta_boxs,.tab-content-ttbm_tax_meta_boxs{
     .description{
       margin: 0;
       padding:0;
@@ -58,6 +58,7 @@
       border-collapse: separate; 
       border-spacing:0 calc($spacing*3);
       border: 0px solid;
+      margin: 0;
     }
     table.form-table tr th,table.form-table tr td{
       background-color: $color-white;

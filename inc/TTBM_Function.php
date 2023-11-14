@@ -394,10 +394,6 @@
 				$sold_query = TTBM_Query::query_all_sold($tour_id, $tour_date, $type, $hotel_id);
 				return $sold_query->post_count;
 			}
-			public static function get_total_service_sold($tour_id, $tour_date, $type = ''): int {
-				$sold_query = TTBM_Query::query_all_service_sold($tour_id, $tour_date, $type);
-				return $sold_query->post_count;
-			}
 			public static function get_total_available($tour_id, $tour_date = '') {
 				$total = self::get_total_seat($tour_id);
 				$reserve = self::get_total_reserve($tour_id);

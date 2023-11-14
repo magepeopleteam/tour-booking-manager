@@ -37,7 +37,7 @@
 							$default_qty = apply_filters('ttbm_service_type_default_qty', 0);
 							$min_qty = apply_filters('ttbm_service_type_min_qty', 0);
 							$max_qty = apply_filters('ttbm_service_type_max_qty', 0);
-							$sold_type = TTBM_Function::get_total_service_sold($tour_id, $tour_date, $service_name);
+							$sold_type = TTBM_Query::query_all_service_sold($tour_id, $tour_date, $service_name);
 							$available = $service_qty - ($sold_type + $reserve);
 							$service_icon = array_key_exists('service_icon', $service) ? $service['service_icon'] : '';
 							$description = array_key_exists('extra_service_description', $service) ? $service['extra_service_description'] : '';

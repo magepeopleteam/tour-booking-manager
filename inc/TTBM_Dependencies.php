@@ -14,6 +14,7 @@
 				add_action('wp_head', array($this, 'js_constant'), 5);
 				add_action('wp_head', array($this, 'apply_custom_css'), 90);
 				add_action('admin_head', array($this, 'apply_custom_css'), 90);
+				add_action('admin_init', array($this, 'ttbm_upgrade'));
 			}
 			public function language_load() {
 				$plugin_dir = basename(dirname(__DIR__)) . "/languages/";
@@ -112,6 +113,24 @@
 				</style>
 				<?php
 				echo ob_get_clean();
+			}
+			public function ttbm_upgrade() {
+				if (get_option('ttbm_upgrade_order_meta') != 'completed') {
+					$ex_services = MP_Global_Function::get_all_post_id('ttbm_service_booking', -1, 1, 'any');
+					if (sizeof($ex_services) > 0) {
+						$all_service=[];
+						foreach ($ex_services as $ex_service_id) {
+							$order_id=MP_Global_Function::get_post_info($ex_service_id, 'ttbm_order_id');
+							$ex_name=MP_Global_Function::get_post_info($ex_service_id, 'ttbm_service_name');
+							if(array_key_exists($order_id,$all_service) && in_array($ex_name,$all_service[$order_id])){
+								wp_delete_post($ex_service_id);
+							}else{
+								$all_service[$order_id][]=$ex_name;
+							}
+						}
+					}
+					update_option('ttbm_upgrade_order_meta', 'completed');
+				}
 			}
 		}
 		new TTBM_Dependencies();

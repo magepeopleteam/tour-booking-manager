@@ -59,7 +59,9 @@
 							}
 						?>
 					</div>
-					<?php MP_Custom_Layout::add_new_button(esc_html__('Add Image', 'tour-booking-manager'), 'add_multi_image', '_dButton_bgColor_1'); ?>
+					<div class="d-flex justify-content-start py-2">
+						<?php MP_Custom_Layout::add_new_button(esc_html__('Add Image', 'tour-booking-manager'), 'add_multi_image', 'bg-primary text-white p-2 rounded'); ?>
+					</div>
 				</div>
 				<?php
 			}

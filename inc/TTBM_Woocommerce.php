@@ -384,21 +384,18 @@ if (!class_exists('TTBM_Woocommerce')) {
             $user_id = $order_meta['_customer_user'][0] ?? '';
             $zdata = [];
             if (sizeof($service_info) > 0) {
-                foreach ($service_info as $_ticket) {
-                    $qty = $_ticket['service_qty'];
-                    for ($key = 1; $key <= $qty; $key++) {
-                        $zdata[$key]['ttbm_service_name'] = $_ticket['service_name'];
-                        $zdata[$key]['ttbm_service_price'] = $_ticket['service_price'];
-                        $zdata[$key]['ttbm_service_total_price'] = ($_ticket['service_price'] * $_ticket['service_qty']);
-                        $zdata[$key]['ttbm_date'] = $_ticket['ttbm_date'];
-                        $zdata[$key]['ttbm_service_qty'] = $_ticket['service_qty'];
-                        $zdata[$key]['ttbm_id'] = $ttbm_id;
-                        $zdata[$key]['ttbm_order_id'] = $order_id;
-                        $zdata[$key]['ttbm_order_status'] = $order_status;
-                        $zdata[$key]['ttbm_payment_method'] = $payment_method;
-                        $zdata[$key]['ttbm_user_id'] = $user_id;
-                        self::add_cpt_data('ttbm_service_booking', '#' . $order_id . $zdata[$key]['ttbm_service_name'], $zdata[$key]);
-                    }
+                foreach ($service_info as $key=>$_ticket) {
+	                $zdata[$key]['ttbm_service_name'] = $_ticket['service_name'];
+	                $zdata[$key]['ttbm_service_price'] = $_ticket['service_price'];
+	                $zdata[$key]['ttbm_service_total_price'] = ($_ticket['service_price'] * $_ticket['service_qty']);
+	                $zdata[$key]['ttbm_date'] = $_ticket['ttbm_date'];
+	                $zdata[$key]['ttbm_service_qty'] = $_ticket['service_qty'];
+	                $zdata[$key]['ttbm_id'] = $ttbm_id;
+	                $zdata[$key]['ttbm_order_id'] = $order_id;
+	                $zdata[$key]['ttbm_order_status'] = $order_status;
+	                $zdata[$key]['ttbm_payment_method'] = $payment_method;
+	                $zdata[$key]['ttbm_user_id'] = $user_id;
+	                self::add_cpt_data('ttbm_service_booking', '#' . $order_id . $zdata[$key]['ttbm_service_name'], $zdata[$key]);
                 }
             }
             return $zdata;

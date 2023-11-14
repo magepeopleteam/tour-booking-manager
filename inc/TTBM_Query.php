@@ -148,49 +148,24 @@
 					'value' => $hotel_id,
 					'compare' => '='
 				) : '';
-				$pending_status_filter = in_array('pending', $seat_booked_status) ? array(
-					'key' => 'ttbm_order_status',
-					'value' => 'pending',
-					'compare' => '='
-				) : '';
-				$on_hold_status_filter = in_array('on-hold', $seat_booked_status) ? array(
-					'key' => 'ttbm_order_status',
-					'value' => 'on-hold',
-					'compare' => '='
-				) : '';
-				$processing_status_filter = in_array('processing', $seat_booked_status) ? array(
-					'key' => 'ttbm_order_status',
-					'value' => 'processing',
-					'compare' => '='
-				) : '';
-				$completed_status_filter = in_array('completed', $seat_booked_status) ? array(
-					'key' => 'ttbm_order_status',
-					'value' => 'completed',
-					'compare' => '='
-				) : '';
 				$args = array(
 					'post_type' => 'ttbm_booking',
 					'posts_per_page' => -1,
 					'meta_query' => array(
 						'relation' => 'AND',
 						array(
-							'relation' => 'AND',
-							array(
-								'key' => 'ttbm_id',
-								'value' => $tour_id,
-								'compare' => '='
-							),
-							$type_filter,
-							$hotel_filter,
-							$date_filter
+							'key' => 'ttbm_id',
+							'value' => $tour_id,
+							'compare' => '='
 						),
 						array(
-							'relation' => 'OR',
-							$pending_status_filter,
-							$on_hold_status_filter,
-							$processing_status_filter,
-							$completed_status_filter
-						)
+							'key' => 'ttbm_order_status',
+							'value' => $seat_booked_status,
+							'compare' => 'IN'
+						),
+						$type_filter,
+						$hotel_filter,
+						$date_filter
 					)
 				);
 				return new WP_Query($args);
@@ -208,51 +183,37 @@
 					'value' => $tour_date,
 					'compare' => 'LIKE'
 				) : '';
-				$pending_status_filter = in_array('pending', $seat_booked_status) ? array(
-					'key' => 'ttbm_order_status',
-					'value' => 'pending',
-					'compare' => '='
-				) : '';
-				$on_hold_status_filter = in_array('on-hold', $seat_booked_status) ? array(
-					'key' => 'ttbm_order_status',
-					'value' => 'on-hold',
-					'compare' => '='
-				) : '';
-				$processing_status_filter = in_array('processing', $seat_booked_status) ? array(
-					'key' => 'ttbm_order_status',
-					'value' => 'processing',
-					'compare' => '='
-				) : '';
-				$completed_status_filter = in_array('completed', $seat_booked_status) ? array(
-					'key' => 'ttbm_order_status',
-					'value' => 'completed',
-					'compare' => '='
-				) : '';
 				$args = array(
 					'post_type' => 'ttbm_service_booking',
 					'posts_per_page' => -1,
 					'meta_query' => array(
 						'relation' => 'AND',
 						array(
-							'relation' => 'AND',
-							array(
-								'key' => 'ttbm_id',
-								'value' => $tour_id,
-								'compare' => '='
-							),
-							$type_filter,
-							$date_filter
+							'key' => 'ttbm_id',
+							'value' => $tour_id,
+							'compare' => '='
 						),
 						array(
-							'relation' => 'OR',
-							$pending_status_filter,
-							$on_hold_status_filter,
-							$processing_status_filter,
-							$completed_status_filter
-						)
+							'key' => 'ttbm_order_status',
+							'value' => $seat_booked_status,
+							'compare' => 'IN'
+						),
+						$type_filter,
+						$date_filter
 					)
 				);
-				return new WP_Query($args);
+				$ex_service_infos= new WP_Query($args);
+				$total_qty=0;
+				if ($ex_service_infos->post_count > 0) {
+					$ex_service_info = $ex_service_infos->posts;
+					foreach ($ex_service_info as $ex_service) {
+						$service_id = $ex_service->ID;
+						$qty = MP_Global_Function::get_post_info($service_id, 'ttbm_service_qty');
+						$total_qty+=$qty;
+					}
+				}
+				wp_reset_query();
+				return $total_qty;
 			}
 		}
 		new TTBM_Query();

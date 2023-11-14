@@ -170,7 +170,7 @@
 				);
 				return new WP_Query($args);
 			}
-			public static function query_all_service_sold($tour_id, $tour_date, $type = ''): WP_Query {
+			public static function query_all_service_sold($tour_id, $tour_date, $type = ''){
 				$_seat_booked_status = TTBM_Function::get_general_settings('ttbm_set_book_status', array('processing', 'completed'));
 				$seat_booked_status = !empty($_seat_booked_status) ? $_seat_booked_status : [];
 				$type_filter = !empty($type) ? array(
@@ -208,12 +208,12 @@
 					$ex_service_info = $ex_service_infos->posts;
 					foreach ($ex_service_info as $ex_service) {
 						$service_id = $ex_service->ID;
-						$qty = MP_Global_Function::get_post_info($service_id, 'ttbm_service_qty');
+						$qty = MP_Global_Function::get_post_info($service_id, 'ttbm_service_qty',0);
 						$total_qty+=$qty;
 					}
 				}
 				wp_reset_query();
-				return $total_qty;
+				return max(0,$total_qty);
 			}
 		}
 		new TTBM_Query();

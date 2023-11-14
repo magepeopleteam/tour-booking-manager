@@ -7069,8 +7069,14 @@ readers do not read off random characters that represent icons */
   display: block;
   text-align: right;
 }
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input {
+  border-radius: 0.25rem;
+}
 #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input.select2-search__field, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input.select2-search__field {
   border: 0;
+}
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input#mep_disable_ticket_time, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input#mep_disable_ticket_time {
+  margin-right: 0.5rem;
 }
 
 div > .ppof-metabox {

@@ -74,8 +74,14 @@
         display: block;
         text-align: right;
       }
+      input{
+        border-radius:$border-radius;
+      }
       input.select2-search__field{
         border: 0;
+      }
+      input#mep_disable_ticket_time{
+        margin-right: $spacing;
       }
     }
   }

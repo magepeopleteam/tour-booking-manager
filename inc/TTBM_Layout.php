@@ -52,7 +52,7 @@
 									?>
 									<div class="mp_multi_image_item" data-image-id="<?php esc_attr_e($image); ?>">
 										<span class="fas fa-times circleIcon_xs mp_remove_multi_image"></span>
-										<img src="<?php echo MP_Global_Function::get_image_url('', $image, 'medium'); ?>" alt="<?php esc_attr_e($image); ?>"/>
+										<img class="w-100" src="<?php echo MP_Global_Function::get_image_url('', $image, 'medium'); ?>" alt="<?php esc_attr_e($image); ?>"/>
 									</div>
 									<?php
 								}
@@ -60,7 +60,7 @@
 						?>
 					</div>
 					<div class="d-flex justify-content-start py-2">
-						<?php MP_Custom_Layout::add_new_button(esc_html__('Add Image', 'tour-booking-manager'), 'add_multi_image', 'bg-primary text-white p-2 rounded'); ?>
+						<?php MP_Custom_Layout::add_new_button(esc_html__('Add Image', 'tour-booking-manager'), 'add_multi_image', 'bg-primary text-white py-1 px-2 rounded'); ?>
 					</div>
 				</div>
 				<?php

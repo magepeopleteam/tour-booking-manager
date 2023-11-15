@@ -84,8 +84,8 @@
 			}
 			public static function popup_button($target_popup_id, $text) {
 				?>
-				<button type="button" class="_dButton_bgBlue" data-target-popup="<?php echo esc_attr($target_popup_id); ?>">
-					<span class="fas fa-plus-square"></span>
+				<button type="button" class="bg-primary p-1 my-1 text-white rounded" data-target-popup="<?php echo esc_attr($target_popup_id); ?>">
+					<i class="fas fa-plus-square pe-1"></i>
 					<?php echo esc_html($text); ?>
 				</button>
 				<?php

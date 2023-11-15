@@ -35,12 +35,16 @@
 				?>
 				<div class="tabsItem ttbm_settings_day_wise_details" data-tabs="#ttbm_settings_day_wise_details">
 					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Day wise Details', 'tour-booking-manager'); ?></h2>
-					<hr>
-					<h5 class="dFlex">
-						<span class="mR"><?php esc_html_e('Day Wise Details Settings', 'tour-booking-manager'); ?></span>
-						<?php MP_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
-					</h5>
-					<?php TTBM_Settings::des_p('ttbm_display_schedule'); ?>
+					
+					<section class="component d-flex justify-content-between align-items-center mb-2">
+                        <div class="w-100 d-flex justify-content-between align-items-center">
+                            <label for=""><?php esc_html_e('Day Wise Details Settings', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_schedule'); ?></i></label>
+                            <div class=" d-flex justify-content-between">
+								<?php MP_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
+                            </div>    
+                        </div>
+                    </section>
+					
 					<div class="divider"></div>
 					<div data-collapse="#ttbm_display_schedule" class="<?php echo esc_attr($active); ?>">
 						<?php
@@ -52,7 +56,7 @@
 								}
 							}
 						?>
-						<?php MP_Custom_Layout::add_new_button(esc_html__('Add New Day Wise Details', 'tour-booking-manager'), 'ttbm_add_day_wise_details', '_dButton_bgBlue'); ?>
+						<?php MP_Custom_Layout::add_new_button(esc_html__('Add New Day Wise Details', 'tour-booking-manager'), 'ttbm_add_day_wise_details', 'bg-primary p-1 text-white my-1 rounded'); ?>
 					</div>
 				</div>
 				<?php

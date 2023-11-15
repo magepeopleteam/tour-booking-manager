@@ -116,6 +116,24 @@ div > .ppof-metabox {
   div.mp_multi_image_item {
     width: calc(25% - 7px);
   }
+  .mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::before {
+    background: $color-sky;
+  }
+  .mpStyle .customCheckboxLabel {
+    cursor: pointer;
+    font-weight: $font-weight-normal;
+  }
+  .mpStyle .customCheckbox::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 20px;
+    width: 20px;
+    background-color: $color-white;
+    border: 1px solid $color-primary;
+    border-radius: 2px;
+  }
 }
 .mpStyle img:not(.mp_wp_editor img) {
   width: 100%;

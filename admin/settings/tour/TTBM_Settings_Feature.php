@@ -89,8 +89,8 @@
 						<input type="hidden" name="<?php echo esc_attr($feature_name); ?>" value="<?php echo esc_attr($feature_ids); ?>"/>
 						<?php foreach ($all_features as $feature_list) { ?>
 							<?php $icon = get_term_meta($feature_list->term_id, 'ttbm_feature_icon', true) ? get_term_meta($feature_list->term_id, 'ttbm_feature_icon', true) : 'fas fa-forward'; ?>
-							<label class="customCheckboxLabel">
-								<input type="checkbox" <?php echo TTBM_Function::check_exit_feature($features, $feature_list->name) ? 'checked' : ''; ?> data-checked="<?php echo esc_attr($feature_list->term_id); ?>"/> <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php esc_html_e($feature_list->name); ?></span>
+							<label class="customCheckboxLabel py-1">
+								<input class="text-black" type="checkbox" <?php echo TTBM_Function::check_exit_feature($features, $feature_list->name) ? 'checked' : ''; ?> data-checked="<?php echo esc_attr($feature_list->term_id); ?>"/> <span class="customCheckbox text-black"><i class="me-1 text-primary fa-lg <?php echo esc_attr($icon); ?>"></i><?php esc_html_e($feature_list->name); ?></span>
 							</label>
 						<?php } ?>
 					</div>

@@ -26,28 +26,29 @@
 				<div class="tabsItem ttbm_settings_admin_note" data-tabs="#ttbm_settings_admin_note">
 					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Admin Note Settings', 'tour-booking-manager'); ?></h2>
 					<hr>
-					<h5 class="dFlex">
-						<span class="mR"><?php esc_html_e('On/Off Admin Note', 'tour-booking-manager'); ?></span>
-						<?php MP_Custom_Layout::switch_button('ttbm_display_admin_note', $checked); ?>
-					</h5>
-					<?php TTBM_Settings::des_p('ttbm_display_admin_note'); ?>
-					<div class="divider"></div>
-					<div data-collapse="#ttbm_settings_admin_note" class="<?php echo esc_attr($active); ?>">
-						<table class="layoutFixed">
-							<tbody>
-							<tr>
-								<th><?php esc_html_e('Note ', 'tour-booking-manager'); ?></th>
-								<td colspan="3">
-									<label>
-										<textarea class="formControl" name="ttbm_admin_note" rows="7"><?php echo esc_attr($admin_note); ?></textarea>
-									</label>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="4"><?php TTBM_Settings::des_p('ttbm_admin_note'); ?></td>
-							</tr>
-							</tbody>
-						</table>
+
+					<section class="component d-flex justify-content-between align-items-center mb-2">
+                        <div class="w-100 d-flex justify-content-between align-items-center">
+                            <label for=""><?php esc_html_e('On/Off Admin Note', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_admin_note'); ?></i></label>
+                            <div class=" d-flex justify-content-between">
+								<?php MP_Custom_Layout::switch_button('ttbm_display_admin_note', $checked); ?>
+                            </div>    
+                        </div>
+                    </section>
+
+
+					<div data-collapse="#ttbm_display_admin_note" class="<?php echo esc_attr($active); ?>">
+						
+						<section class="component d-flex justify-content-between align-items-center mb-2">
+							<div class="w-100 d-flex justify-content-between align-items-center">
+								<label for=""><?php esc_html_e('Note ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_admin_note'); ?></i></label>
+								<div class=" d-flex justify-content-between">
+									<textarea name="ttbm_admin_note" cols="50" rows="2"><?php echo esc_attr($admin_note); ?></textarea>
+
+								</div>    
+							</div>
+						</section>
+
 					</div>
 				</div>
 				<?php

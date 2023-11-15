@@ -35,9 +35,7 @@
 					<div class="mtb ttbm_features_table">
 						<?php $this->feature($tour_id); ?>
 					</div>
-					<?php MP_Custom_Layout::popup_button('add_new_feature_popup', esc_html__('Create New Feature', 'tour-booking-manager')); ?>
-					<?php TTBM_Settings::des_p('add_new_feature_popup'); ?>
-					<?php $this->add_new_feature_popup(); ?>
+					
 				</div>
 				<?php
 			}
@@ -64,16 +62,21 @@
                         </div>
 						<div class="mt-4 w-100 d-flex justify-content-between align-items-center"> 
                             <div class="w-50 d-flex justify-content-between align-items-center">
-								<div data-collapse="#ttbm_display_include_service" class="<?php echo esc_attr($include_active); ?> w-100 p-2 bg-light">
+								<div data-collapse="#ttbm_display_include_service" class="<?php echo esc_attr($include_active); ?> w-100 p-2 bg-light rounded border">
 									<?php $this->feature_list($tour_id, 'ttbm_service_included_in_price'); ?> 
 								</div>
                             </div>
                             <div class="w-50 d-flex justify-content-between align-items-center ms-5">
-								<div data-collapse="#ttbm_display_exclude_service" class="<?php echo esc_attr($include_active); ?> w-100 p-2 bg-light">
+								<div data-collapse="#ttbm_display_exclude_service" class="<?php echo esc_attr($include_active); ?> w-100 p-2 bg-light  rounded border">
 									<?php $this->feature_list($tour_id, 'ttbm_service_excluded_in_price'); ?>
 								</div>
                             </div>
                         </div>
+						<div class="mt-4 w-100 d-flex justify-content-between align-items-center">
+							<?php TTBM_Settings::des_p('add_new_feature_popup'); ?>
+							<?php MP_Custom_Layout::popup_button('add_new_feature_popup', esc_html__('Create New Feature', 'tour-booking-manager')); ?>
+							<?php $this->add_new_feature_popup(); ?>
+						</div>
                     </section>
 
 					<?php

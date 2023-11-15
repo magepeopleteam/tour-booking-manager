@@ -7085,7 +7085,7 @@ div > .ppof-metabox {
 
 .mpStyle .ppof-button {
   border-radius: 0.25rem;
-  background-color: var(--mpl-sky);
+  background-color: var(--mpl-primary);
   border: 0px solid transparent;
   padding: 0.5rem 1rem;
   box-shadow: none;

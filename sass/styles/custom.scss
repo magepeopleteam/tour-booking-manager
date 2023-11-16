@@ -67,6 +67,15 @@
     div.mpStyle select.formControl:focus {
       background-color: $color-white;
     }
+    .mpStyle .mp_remove_icon {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+      opacity: 1;
+    }
 }
 
 // =============date config style customization=============

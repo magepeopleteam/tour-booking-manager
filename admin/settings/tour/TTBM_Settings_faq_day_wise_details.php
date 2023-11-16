@@ -54,7 +54,7 @@
 								}
 							}
 						?>
-						<?php MP_Custom_Layout::add_new_button(esc_html__('Add New Day Wise Details', 'tour-booking-manager'), 'ttbm_add_day_wise_details', 'bg-primary p-1 text-white my-1 rounded'); ?>
+						<?php MP_Custom_Layout::add_new_button(esc_html__('Add New Day Wise Details', 'tour-booking-manager'), 'ttbm_add_day_wise_details', 'btn'); ?>
 					</div>
 				</div>
 				<?php
@@ -92,7 +92,7 @@
 								}
 							}
 						?>
-						<?php MP_Custom_Layout::add_new_button(esc_html__('Add New F.A.Q', 'tour-booking-manager'), 'ttbm_add_faq_content', 'bg-primary text-white p-1 my-2 rounded'); ?>
+						<?php MP_Custom_Layout::add_new_button(esc_html__('Add New F.A.Q', 'tour-booking-manager'), 'ttbm_add_faq_content', ''); ?>
 					</div>
 				</div>
 				<?php

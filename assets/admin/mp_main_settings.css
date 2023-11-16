@@ -6122,6 +6122,7 @@ readers do not read off random characters that represent icons */
   --mpl-light:#f7f7f7;
   --mpl-white:#ffffff;
   --mpl-black:#000000;
+  --mpl-yellow:#ffcb00;
   --flow-space: 1.5rem;
 }
 
@@ -7043,6 +7044,36 @@ readers do not read off random characters that represent icons */
   .mpStyle .tabsContent {
     overflow: visible;
   }
+  .mpStyle .navy_blueButton, .mpStyle [class*=_navy_blueButton] {
+    background-color: var(--mpl-primary);
+    color: var(--mpl-white);
+    padding: 0.75em;
+    border: 2px solid var(--mpl-primary);
+  }
+  .mpStyle .navy_blueButton:hover, .mpStyle [class*=_navy_blueButton]:hover {
+    background-color: var(--mpl-white);
+    color: var(--mpl-primary);
+    border-color: var(--mpl-primary);
+  }
+  .mpStyle .navy_blueButton:hover span, .mpStyle [class*=_navy_blueButton]:hover span {
+    color: var(--mpl-primary);
+  }
+  .mpStyle .warningButton, .mpStyle [class*=_warningButton] {
+    background-color: var(--mpl-yellow);
+    color: var(--mpl-white);
+    padding: 0.75em;
+    border: 2px solid var(--mpl-yellow);
+  }
+  .mpStyle .warningButton:hover, .mpStyle [class*=_warningButton]:hover {
+    background-color: var(--mpl-white);
+    color: var(--mpl-yellow);
+  }
+  .mpStyle .warningButton:hover span, .mpStyle [class*=_warningButton]:hover span {
+    color: var(--mpl-yellow);
+  }
+  div.mpStyle select.formControl:focus {
+    background-color: var(--mpl-white);
+  }
 }
 .ppof-settings .form-wrapper {
   margin-left: 250px;
@@ -7105,7 +7136,7 @@ div > .ppof-metabox {
   div.mp_multi_image {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: start;
     align-items: stretch;
     gap: 0.5em;
     margin-bottom: 0.5em;

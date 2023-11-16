@@ -94,7 +94,7 @@
 				<section class="ttbm_ticket_config  <?php echo esc_html($type_class); ?>">
 					<h2 class="h4 px-0 text-primary"><?php echo esc_html($tour_label) . ' ' . esc_html__(' Price Configuration :', 'tour-booking-manager'); ?></h2>	
 					<div class="component mp_settings_area ttbm_price_config">
-						<section class=" d-flex justify-content-between align-items-center mb-2">
+						<section class=" d-flex justify-content-between align-items-center mb-5">
 							<div class="w-100 d-flex justify-content-between align-items-center">
 								<label for=""><?php esc_html_e('Show advance columns', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_advance'); ?></i></label>
 								<div class=" d-flex justify-content-between">

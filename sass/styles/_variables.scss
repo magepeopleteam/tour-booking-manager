@@ -10,6 +10,7 @@ $prefix:'mpl';
     --#{$prefix}-light:#f7f7f7;
     --#{$prefix}-white:#ffffff;
     --#{$prefix}-black:#000000;
+    --#{$prefix}-yellow:#ffcb00;
     // ==========spacing =======
     --flow-space: 1.5rem;
 }
@@ -23,6 +24,8 @@ $color-gray:var(--#{$prefix}-gray);
 $color-light:var(--#{$prefix}-light);
 $color-white:var(--#{$prefix}-white);
 $color-black:var(--#{$prefix}-black);
+$color-black:var(--#{$prefix}-black);
+$color-yellow:var(--#{$prefix}-yellow);
 
 // ==========fonts=============
 $font-text:ubuntu;

@@ -34,6 +34,39 @@
     .mpStyle .tabsContent {
       overflow: visible;
     }
+
+    .mpStyle .navy_blueButton, .mpStyle [class*="_navy_blueButton"] {
+      background-color: $color-primary;
+      color: $color-white;
+      padding: calc($spacing * 1.5);
+      border: 2px solid $color-primary;
+      &:hover{
+        background-color: $color-white;
+        color:  $color-primary;
+        border-color: $color-primary;
+        span{
+          color:  $color-primary;
+        }
+      }
+    }
+
+    .mpStyle .warningButton, .mpStyle [class*="_warningButton"] {
+      background-color: $color-yellow;
+      color: $color-white;
+      padding: calc($spacing * 1.5);
+      border: 2px solid $color-yellow;
+      &:hover{
+        background-color: $color-white;
+        color: $color-yellow;
+        span{
+          color: $color-yellow;
+        }
+      }
+    }
+
+    div.mpStyle select.formControl:focus {
+      background-color: $color-white;
+    }
 }
 
 // =============date config style customization=============
@@ -107,7 +140,7 @@ div > .ppof-metabox {
   div.mp_multi_image {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: start;
     align-items: stretch;
     gap: $spacing;
     margin-bottom: $spacing;

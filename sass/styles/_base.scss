@@ -92,6 +92,8 @@
 }
 
 .btn{
+  border: 0px solid;
+  box-shadow: none;
   background-color: $color-primary;
   border-radius: $border-radius;
   padding: $spacing calc($spacing * 1.5);

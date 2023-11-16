@@ -55,7 +55,9 @@
   .tab-content-ttbm_date_config_meta_boxs,.tab-content-ttbm_tax_meta_boxs{
     .description{
       margin: 0;
-      padding:0;
+      padding:calc($spacing * 1.5) 0;
+      font-family: $font-text;
+      font-size: $font-size;
     }
     table {
       border-collapse: separate; 
@@ -96,11 +98,9 @@ div > .ppof-metabox {
 }
 
 .mpStyle .ppof-button{
-  border-radius: $border-radius;
-  background-color: $color-primary;
-  border: 0px solid transparent;
-  padding: $spacing ($spacing*2);
-  box-shadow: none;
+
+  width: 320px;
+  @extend .btn;
 }
 
 @media only screen and (min-width:0px) {
@@ -115,6 +115,9 @@ div > .ppof-metabox {
       height: 180px;
       object-fit: cover;
     }
+  }
+  div.mpStyle .description{
+    font-size: calc($font-size - .2rem) !important;
   }
   div.mp_multi_image_item {
     width: calc(25% - 7px);

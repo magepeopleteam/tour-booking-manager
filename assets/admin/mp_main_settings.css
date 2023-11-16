@@ -7000,7 +7000,9 @@ readers do not read off random characters that represent icons */
   padding: 1.5em;
   margin-bottom: 1.5em;
 }
-#mp_meta_box_panel .btn {
+#mp_meta_box_panel .btn, #mp_meta_box_panel .mpStyle .ppof-button, .mpStyle #mp_meta_box_panel .ppof-button {
+  border: 0px solid;
+  box-shadow: none;
   background-color: var(--mpl-primary);
   border-radius: 0.25rem;
   padding: 0.5em 0.75em;
@@ -7053,7 +7055,9 @@ readers do not read off random characters that represent icons */
 }
 #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs .description, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs .description {
   margin: 0;
-  padding: 0;
+  padding: 0.75em 0;
+  font-family: ubuntu;
+  font-size: 1rem;
 }
 #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table {
   border-collapse: separate;
@@ -7091,11 +7095,7 @@ div > .ppof-metabox {
 }
 
 .mpStyle .ppof-button {
-  border-radius: 0.25rem;
-  background-color: var(--mpl-primary);
-  border: 0px solid transparent;
-  padding: 0.5em 1em;
-  box-shadow: none;
+  width: 320px;
 }
 
 @media only screen and (min-width: 0px) {
@@ -7110,6 +7110,9 @@ div > .ppof-metabox {
   div.mp_multi_image img {
     height: 180px;
     object-fit: cover;
+  }
+  div.mpStyle .description {
+    font-size: 0.8rem !important;
   }
   div.mp_multi_image_item {
     width: calc(25% - 7px);

@@ -91,4 +91,13 @@
   margin-bottom: calc($spacing*3);
 }
 
+.btn{
+  background-color: $color-primary;
+  border-radius: $border-radius;
+  padding: $spacing calc($spacing * 1.5);
+  color: $color-white;
+  font-size: $font-size;
+  transition: all $time ease-in-out;
+}
+
 }

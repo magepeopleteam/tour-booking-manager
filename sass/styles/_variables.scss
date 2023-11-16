@@ -28,15 +28,15 @@ $color-black:var(--#{$prefix}-black);
 $font-text:ubuntu;
 $font-heading:ubuntu;
 $font-bold:ubuntuBold;
-$font-size:12px;
+$font-size:1rem;
 $font-weight-normal:300;
 $font-weight-bold:600;
 
 //===========utility===========
 $border-radius: .25rem;
-$spacing:.5rem;
+$spacing:.5em;
 $time: .5s;
 
 //============form============
-$input-width:12rem;
-$input-height:1.8rem;
+$input-width:16em;
+$input-height:2.5em;

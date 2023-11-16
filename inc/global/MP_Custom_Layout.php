@@ -98,7 +98,7 @@
 				<?php
 			}
 			/*****************************/
-			public static function add_new_button($button_text, $class = 'mp_add_item', $button_class = 'bg-primary text-white p-1 rounded', $icon_class = 'fas fa-plus-square pe-1') {
+			public static function add_new_button($button_text, $class = 'mp_add_item', $button_class = '', $icon_class = 'fas fa-plus-square pe-1') {
 				?>
 				<button class="<?php echo esc_attr($button_class . ' ' . $class); ?> btn" type="button">
 					<i class="<?php echo esc_attr($icon_class); ?> "></i>

@@ -239,10 +239,10 @@
 				<div class="mpPopup" data-popup="add_new_location_popup">
 					<div class="popupMainArea">
 						<div class="popupHeader">
-							<h4>
+							<h4 class="text-primary">
 								<?php esc_html_e('Add New Location', 'tour-booking-manager'); ?>
 								<p class="_textSuccess_ml_dNone ttbm_success_info">
-									<span class="fas fa-check-circle mR_xs"></span>
+									<span class="fas fa-check-circle mR_xs text-primary"></span>
 									<?php esc_html_e('Location is added successfully.', 'tour-booking-manager') ?>
 								</p>
 							</h4>
@@ -252,7 +252,7 @@
 						</div>
 						<div class="popupFooter">
 							<div class="buttonGroup">
-								<button class="_themeButton ttbm_new_location_save" type="button"><?php esc_html_e('Save', 'tour-booking-manager'); ?></button>
+								<button class="btn ttbm_new_location_save" type="button"><?php esc_html_e('Save', 'tour-booking-manager'); ?></button>
 								<button class="_warningButton ttbm_new_location_save_close" type="button"><?php esc_html_e('Save & Close', 'tour-booking-manager'); ?></button>
 							</div>
 						</div>

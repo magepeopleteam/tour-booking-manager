@@ -21,26 +21,30 @@ select,input[type],input[type=date],input[type=time] {
   }
 // =====================tool tips============================
   .tool-tips{
-    color: $color-gray;
+    color: $color-dark;
     position: relative;
-    padding-left: calc($spacing - 0.25rem);
+    padding-left: calc($spacing/2);
     span{
-      font-family: $font-text;
-      font-size: calc($font-size*.8);
+      position: absolute;
+      z-index: 1;
+      bottom: 130%;
+      left: 50%;
+      transform: translate(-50%);
       visibility: hidden;
-      background-color: $color-black;
-      opacity: .8;
-      color: $color-white;
+
+      font-family: $font-text;
+      font-size: calc($font-size*1);
       text-align: center;
+
+      background-color: $color-black;
+      opacity: .7;
+      color: $color-white;
+      
       border-radius: $border-radius;
       padding:$spacing calc($spacing*1.5);
       width: max-content;
-      bottom: 100%;
-      left:50%;
-      transform: translate(-50%);
-      /* Position the tooltip */
-      position: absolute;
-      z-index: 1;
+      
+      
       &:after{
         content: " ";
         position: absolute;
@@ -49,6 +53,7 @@ select,input[type],input[type=date],input[type=time] {
         transform: translate(-50%);
         border: 5px solid $color-black;
         border-color: $color-black transparent transparent transparent;
+        margin-left:.18em;
       }
     }
     &:hover{

@@ -10,8 +10,6 @@ $prefix:'mpl';
     --#{$prefix}-light:#f7f7f7;
     --#{$prefix}-white:#ffffff;
     --#{$prefix}-black:#000000;
-
-    
     // ==========spacing =======
     --flow-space: 1.5rem;
 }
@@ -33,7 +31,8 @@ $font-bold:ubuntuBold;
 $font-size:12px;
 $font-weight-normal:300;
 $font-weight-bold:600;
-//-------------utility-------
+
+//===========utility===========
 $border-radius: .25rem;
 $spacing:.5rem;
 $time: .5s;

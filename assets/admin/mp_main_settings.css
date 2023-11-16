@@ -6838,27 +6838,26 @@ readers do not read off random characters that represent icons */
   background: var(--mpl-gray);
 }
 #mp_meta_box_panel .tool-tips {
-  color: var(--mpl-gray);
+  color: var(--mpl-dark);
   position: relative;
   padding-left: 0.25rem;
 }
 #mp_meta_box_panel .tool-tips span {
-  font-family: ubuntu;
-  font-size: 9.6px;
+  position: absolute;
+  z-index: 1;
+  bottom: 130%;
+  left: 50%;
+  transform: translate(-50%);
   visibility: hidden;
-  background-color: var(--mpl-black);
-  opacity: 0.8;
-  color: var(--mpl-white);
+  font-family: ubuntu;
+  font-size: 12px;
   text-align: center;
+  background-color: var(--mpl-black);
+  opacity: 0.7;
+  color: var(--mpl-white);
   border-radius: 0.25rem;
   padding: 0.5rem 0.75rem;
   width: max-content;
-  bottom: 100%;
-  left: 50%;
-  transform: translate(-50%);
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
 }
 #mp_meta_box_panel .tool-tips span:after {
   content: " ";
@@ -6868,6 +6867,7 @@ readers do not read off random characters that represent icons */
   transform: translate(-50%);
   border: 5px solid var(--mpl-black);
   border-color: var(--mpl-black) transparent transparent transparent;
+  margin-left: 0.18em;
 }
 #mp_meta_box_panel .tool-tips:hover {
   color: var(--mpl-primary);
@@ -7030,6 +7030,9 @@ readers do not read off random characters that represent icons */
   }
   div.mpStyle [data-tabs-target] {
     color: var(--mpl-secondary);
+  }
+  .mpStyle .tabsContent {
+    overflow: visible;
   }
 }
 .ppof-settings .form-wrapper {

@@ -6841,6 +6841,9 @@ readers do not read off random characters that represent icons */
   width: 58.88em;
   height: 5em;
 }
+#mp_meta_box_panel input[type=search] {
+  border: 0px solid var(--mpl-dark);
+}
 #mp_meta_box_panel .tool-tips {
   color: var(--mpl-dark);
   position: relative;

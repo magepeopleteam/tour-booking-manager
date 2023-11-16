@@ -62,7 +62,7 @@
 						<div class=" d-flex justify-content-between align-items-center">
 							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
 							
-							<input type="text" data-collapse="#<?php echo esc_attr($display_name); ?>" min="0" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="ttbm_travel_duration_night" value="<?php echo MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_night'); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+							<input type="number" data-collapse="#<?php echo esc_attr($display_name); ?>" min="0" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="ttbm_travel_duration_night" value="<?php echo MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_night'); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
 							
 						</div>
 					</div>

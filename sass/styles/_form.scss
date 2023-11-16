@@ -23,6 +23,9 @@
     width:calc( $input-width * 3.68);
     height:calc( $input-height * 2 );
   }
+  input[type="search"]{
+    border: 0px solid $color-dark;
+  }
 
 // =====================tool tips============================
 

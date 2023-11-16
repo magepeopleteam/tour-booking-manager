@@ -43,7 +43,7 @@
 							<div class="w-50 d-flex justify-content-start align-items-center">
 								<label for=""><?php esc_html_e('Related ' . $ttbm_label . ' : ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_related_tour'); ?></i></label>
 							</div>
-							<div class="w-50 d-flex justify-content-end align-items-center">
+							<div class="w-50 d-flex justify-content-end align-items-center ms-5">
 								<div class=" d-flex justify-content-end">
 									<select name="ttbm_related_tour[]" multiple='multiple' class='formControl ttbm_select2' data-placeholder="<?php echo esc_html__('Please Select ', 'tour-booking-manager') . $ttbm_label; ?>">
 										<?php

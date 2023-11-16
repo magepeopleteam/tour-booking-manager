@@ -32,7 +32,7 @@
 								</li>
 							<?php endif; ?>
 						</ul>
-						<div class="tabsContent tab-content mt-0 w-80 p-0 p-1">
+						<div class="tabsContent tab-content mt-0 w-80 p-0 p-2">
 							<?php
 								do_action('add_ttbm_settings_tab_content', $tour_id);
 								do_action('ttbm_meta_box_tab_content', $tour_id);

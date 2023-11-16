@@ -6846,7 +6846,7 @@ readers do not read off random characters that represent icons */
   border: 0px solid var(--mpl-dark);
 }
 #mp_meta_box_panel .tool-tips {
-  color: var(--mpl-dark);
+  color: var(--mpl-gray);
   position: relative;
   padding-left: 0.25em;
 }

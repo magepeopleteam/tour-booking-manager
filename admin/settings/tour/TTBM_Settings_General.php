@@ -157,10 +157,14 @@
 				$active = $display == 'off' ? '' : 'mActive';
 				?>
 				<section class="component d-flex justify-content-between align-items-center mb-2">
-					<div class="w-100 d-flex justify-content-between align-items-center">
+					<div class="w-50 d-flex justify-content-between align-items-center">
 						<label class=""><?php esc_html_e('Full Location for Map ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('full_location'); ?></i></label>
 						<div class="d-flex justify-content-between align-items-center">
 							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+						</div>
+					</div>
+					<div class="w-50 d-flex justify-content-between align-items-center ms-5">
+						<div class="d-flex justify-content-between align-items-center">
 							<textarea data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" cols="90" rows="2" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
 						</div>
 					</div>
@@ -178,11 +182,11 @@
 				?>
 
 				<section class="component d-flex justify-content-between align-items-center mb-2">
-					<div class="w-100 d-flex justify-content-between align-items-center">
+					<div class="w-50 d-flex justify-content-between align-items-center">
 						<label class=""><?php esc_html_e('Short Description', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('short_des'); ?></i></label>
-					</div>
-					<div class="d-flex justify-content-between align-items-center">
 						<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+					</div>
+					<div class="w-50 d-flex justify-content-between align-items-center ms-5">
 						<textarea data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" cols="90" rows="2" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
 					</div>
                 </section>

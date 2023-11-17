@@ -23,7 +23,7 @@
 				$sidebar_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_sidebar', 'off') == 'off' ? '' : 'checked';
 				$duration_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_duration', 'on') == 'off' ? '' : 'checked';
 				?>
-				<div class="mp_settings_panel tabsItem" data-tabs="#ttbm_display_settings">
+				<div class=" tabsItem" data-tabs="#ttbm_display_settings">
 					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Details Settings', 'tour-booking-manager'); ?></h2>
 					
 					<?php $content_title_style = MP_Global_Function::get_post_info($tour_id, 'ttbm_section_title_style') ?: 'ttbm_title_style_2'; ?>

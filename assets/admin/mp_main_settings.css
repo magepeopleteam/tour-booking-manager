@@ -7003,6 +7003,7 @@ readers do not read off random characters that represent icons */
   border-radius: 0.25rem;
   padding: 1.5em;
   margin-bottom: 1.5em;
+  border: 1px solid var(--mpl-gray);
 }
 #mp_meta_box_panel .btn, #mp_meta_box_panel .mpStyle .ppof-button, .mpStyle #mp_meta_box_panel .ppof-button {
   border: 0px solid;

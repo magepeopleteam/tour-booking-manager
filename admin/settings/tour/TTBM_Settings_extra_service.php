@@ -20,11 +20,7 @@
 				
 			}
 			public function extra_service_tab_content($tour_id) {
-				$all_types = TTBM_Function::tour_type();
-				$ttbm_type = TTBM_Function::get_tour_type($tour_id);
-				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_registration', 'on');
-				$active = $display == 'off' ? '' : 'mActive';
-				$checked = $display == 'off' ? '' : 'checked';
+
 				?>
 				<div class="tabsItem ttbm_settings_pricing" data-tabs="#ttbm_settings_extra_service">
 					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Extra service', 'tour-booking-manager'); ?></h2>
@@ -38,7 +34,6 @@
 				$ttbm_extra_service_data = MP_Global_Function::get_post_info($post_id, 'ttbm_extra_service_data', array());
 				wp_nonce_field('ttbm_extra_service_data_nonce', 'ttbm_extra_service_data_nonce');
 				?>
-
 				<div class="mp_settings_area mt-2">
 					<div class="component">
 						<div class="ovAuto mt_xs">

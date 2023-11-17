@@ -402,10 +402,13 @@ if (!class_exists('TTBM_Woocommerce')) {
         }
         public static function add_billing_data($ticket_info, $hotel_info, $user_info, $ttbm_id, $order_id) {
             $order = wc_get_order($order_id);
-            $order_meta = get_post_meta($order_id);
-            $order_status = $order->get_status();
-            $payment_method = $order_meta['_payment_method_title'][0] ?? '';
-            $user_id = $order_meta['_customer_user'][0] ?? '';
+	        $order_status = $order->get_status();
+	        $payment_method = $order->get_payment_method();
+	        $user_id = $order->get_user();
+	        $billing_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+	        $billing_email = $order->get_billing_email();
+	        $billing_phone = $order->get_billing_phone();
+	        $billing_address = $order->get_billing_address_1(). ' ' . $order->get_billing_address_2();
             $hotel_id = sizeof($hotel_info) > 0 ? $hotel_info['hotel_id'] : 0;
             $checkin_date = sizeof($hotel_info) > 0 ? $hotel_info['ttbm_checkin_date'] : '';
             $checkout_date = sizeof($hotel_info) > 0 ? $hotel_info['ttbm_checkout_date'] : '';
@@ -429,10 +432,10 @@ if (!class_exists('TTBM_Woocommerce')) {
                         $zdata[$count]['ttbm_order_status'] = $order_status;
                         $zdata[$count]['ttbm_payment_method'] = $payment_method;
                         $zdata[$count]['ttbm_user_id'] = $user_id;
-                        $zdata[$count]['ttbm_billing_name'] = $order_meta['_billing_first_name'][0] . ' ' . $order_meta['_billing_last_name'][0];
-                        $zdata[$count]['ttbm_billing_email'] = $order_meta['_billing_email'][0];
-                        $zdata[$count]['ttbm_billing_phone'] = $order_meta['_billing_phone'][0];
-                        $zdata[$count]['ttbm_billing_address'] = $order_meta['_billing_address_1'][0] . ' ' . $order_meta['_billing_address_2'][0];
+                        $zdata[$count]['ttbm_billing_name'] = $billing_name;
+                        $zdata[$count]['ttbm_billing_email'] = $billing_email;
+                        $zdata[$count]['ttbm_billing_phone'] = $billing_phone;
+                        $zdata[$count]['ttbm_billing_address'] = $billing_address;
                         $user_data = apply_filters('ttbm_user_booking_data_arr', $zdata[$count], $count, $user_info, $ttbm_id);
                         //echo '<pre>';print_r($user_data['ttbm_billing_name']);echo '</pre>';
                         //echo '<pre>';print_r($user_data);echo '</pre>';die();

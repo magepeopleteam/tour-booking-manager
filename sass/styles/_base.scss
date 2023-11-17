@@ -67,10 +67,10 @@
   }
   a{
     text-decoration: none;
-    color: inherit; 
+    color: $color-primary; 
   }
   a:link,a:visited{
-    color: inherit; 
+    color: $color-primary;  
   }
 // ================container===============
 .container{

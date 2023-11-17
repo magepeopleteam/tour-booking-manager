@@ -6985,10 +6985,10 @@ readers do not read off random characters that represent icons */
 }
 #mp_meta_box_panel a {
   text-decoration: none;
-  color: inherit;
+  color: var(--mpl-primary);
 }
 #mp_meta_box_panel a:link, #mp_meta_box_panel a:visited {
-  color: inherit;
+  color: var(--mpl-primary);
 }
 #mp_meta_box_panel .container {
   width: 1200px;

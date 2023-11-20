@@ -39,18 +39,19 @@
                     </section>
 
 					<div data-collapse="#ttbm_display_registration" class="<?php echo esc_attr($active); ?>">
-							<section class="component d-flex justify-content-between align-items-center mb-2">
-								<div class="w-100 d-flex justify-content-between align-items-center">
-									<label for=""><?php esc_html_e('Tour Type', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_registration'); ?></i></label>
-									<div class=" d-flex justify-content-end align-items-center">
-										<select class="formControl" name="ttbm_type">
-											<?php foreach ($all_types as $key => $type) { ?>
-												<option value="<?php echo esc_attr($key) ?>" <?php echo esc_attr($ttbm_type == $key ? 'selected' : ''); ?>><?php echo esc_html($type) ?></option>
-											<?php } ?>
-										</select>	
-									</div>
+						
+						<section class="component d-flex justify-content-between align-items-center mb-2">
+							<div class="w-100 d-flex justify-content-between align-items-center">
+								<label for=""><?php esc_html_e('Tour Type', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_registration'); ?></i></label>
+								<div class=" d-flex justify-content-end align-items-center">
+									<select class="formControl" name="ttbm_type">
+										<?php foreach ($all_types as $key => $type) { ?>
+											<option value="<?php echo esc_attr($key) ?>" <?php echo esc_attr($ttbm_type == $key ? 'selected' : ''); ?>><?php echo esc_html($type) ?></option>
+										<?php } ?>
+									</select>	
 								</div>
-							</section>	
+							</div>
+						</section>	
 
 						<div class="">
 							<?php do_action('ttbm_tour_pricing_before', $tour_id); ?>
@@ -227,7 +228,7 @@
 				$hotel_class = $ttbm_type == 'hotel' ? '' : 'dNone';
 				?>
 
-				<section class="_fdColumn_mT ttbm_tour_hotel_setting component d-flex justify-content-between align-items-center mb-2 <?php echo esc_attr($hotel_class); ?>">
+				<section class="ttbm_tour_hotel_setting component justify-content-between align-items-center mb-2 <?php echo esc_attr($hotel_class); ?>">
 					<div class="w-100 d-flex justify-content-between align-items-center">
 						<label class=""><?php esc_html_e('Hotel Configuration :', 'tour-booking-manager'); ?>  <i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Select Hotel name that you want to include in this tour , Tour ticket price works based on hotel price configuration . To add new hotel  ', 'tour-booking-manager'); ?>
 						<a href="post-new.php?post_type=ttbm_hotel"><?php esc_html_e('click here', 'tour-booking-manager'); ?></a></span></i></label>

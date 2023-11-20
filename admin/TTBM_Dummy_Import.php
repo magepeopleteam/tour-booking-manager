@@ -202,22 +202,102 @@
                             6 => ['name' => 'Sapuland', 'country' => 'Afghanistan'],
                         ],
                         'ttbm_tour_features_list' => [
-                            0 => ['name' => 'Accommodation'],
-                            1 => ['name' => 'Additional Services'],
-                            2 => ['name' => 'Airport Transfer'],
-                            3 => ['name' => 'BBQ Night'],
-                            4 => ['name' => 'Breakfast'],
-                            5 => ['name' => 'Concert Ticket'],
-                            6 => ['name' => 'Flights'],
-                            7 => ['name' => 'Guide'],
-                            8 => ['name' => 'Hotel Rent'],
-                            9 => ['name' => 'Insurance'],
-                            10 => ['name' => 'Lunch'],
-                            11 => ['name' => 'Meals'],
-                            12 => ['name' => 'Newspaper'],
-                            13 => ['name' => 'Outing Ticket'],
-                            14 => ['name' => 'Transport'],
-                            15 => ['name' => 'Welcome Drinks'],
+                            0 => [
+                                'name' => 'Accommodation',
+                                'tax_data' => array(
+                                    'ttbm_feature_icon' => 'fas fa-hotel'
+                                ),
+                            ],
+                            1 => [
+                                'name' => 'Additional Services',
+                                'tax_data' => array(
+                                    'ttbm_feature_icon' => 'fas fa-spa'
+                                ),
+                            ],
+                            2 => [
+                                'name' => 'Airport Transfer',
+                                'tax_data' => array(
+                                    'ttbm_feature_icon' => 'fas fa-car'
+                                ),
+                            ],
+                            3 => [
+                                'name' => 'BBQ Night',
+                                'tax_data' => array(
+                                    'ttbm_feature_icon' => 'fas fa-drumstick-bite'
+                                ),
+                            ],
+                            4 => [
+                                'name' => 'Breakfast',
+                                'tax_data' => array(
+                                    'ttbm_feature_icon' => 'fas fa-utensils'
+                                ),
+                            ],
+                            5 => [
+                                'name' => 'Concert Ticket',
+                                'tax_data' => array(
+                                    'ttbm_feature_icon' => 'fas  fa-ticket-alt'
+                                ),
+                            ],
+                            6 => [
+                                'name' => 'Flights',
+                                'tax_data' => array(
+                                    'ttbm_feature_icon' => 'fas fa-fighter-jet'
+                                ),
+                            ],
+                            7 => [
+                                'name' => 'Guide',
+                                'tax_data' => array(
+                                    'ttbm_feature_icon' => 'fas fa-book-open'
+                                ),
+                            ],
+                            8 => [
+                                'name' => 'Hotel Rent',
+                                'tax_data' => array(
+                                    'ttbm_feature_icon' => 'fas fa-bed'
+                                ),
+                            ],
+                            9 => [
+                                'name' => 'Insurance',
+                                'tax_data' => array(
+                                    'ttbm_feature_icon' => 'fas fa-user-shield'
+                                ),
+                            ],
+                            10 => [
+                                'name' => 'Lunch',
+                                'tax_data' => array(
+                                    'ttbm_feature_icon' => 'fas fa-hamburger'
+                                ),
+                            ],
+                            11 => [
+                                'name' => 'Meals',
+                                'tax_data' => array(
+                                    'ttbm_feature_icon' => 'fas fa-cheese'
+                                ),
+                            ],
+                            12 => [
+                                'name' => 'Newspaper',
+                                'tax_data' => array(
+                                    'ttbm_feature_icon' => 'fas fa-newspaper'
+                                ),
+                            ],
+                            13 => [
+                                'name' => 'Outing Ticket',
+                                'tax_data' => array(
+                                    'ttbm_feature_icon' => 'fas fa-clipboard-check'
+                                ),
+                            ],
+                            14 => [
+                                'name' => 'Transport',
+                                'tax_data' => array(
+                                    'ttbm_feature_icon' => 'fas fa-taxi'
+                                ),
+                            ],
+                            15 => [
+                                'name' => 'Welcome Drinks',
+                                'tax_data' => array(
+                                    'ttbm_feature_icon' => 'fas fa-wine-glass-alt'
+                                ),
+                            ],
                         ],
                         'ttbm_tour_tag' => [
                             0 => ['name' => 'Cultural'],

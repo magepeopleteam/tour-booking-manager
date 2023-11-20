@@ -88,7 +88,7 @@
 				<tr class="mp_remove_area">
 					<td>
 						<label>
-							<input class="formControl mp_name_validation" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
+							<input class="p-1 bordered w-100 rounded  mp_name_validation" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
 						</label>
 					</td>
 					<td><?php MP_Custom_Layout::move_remove_button(); ?></td>

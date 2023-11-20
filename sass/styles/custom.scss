@@ -154,17 +154,20 @@ div > .ppof-metabox {
     align-items: stretch;
     gap: $spacing;
     margin-bottom: $spacing;
-    img{
-      height: 180px;
-      object-fit: cover;
+    div.mp_multi_image_item {
+      width: calc(25% - 7px);
+      img{
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
     }
+    
   }
   div.mpStyle .description{
     font-size: calc($font-size - .2rem) !important;
   }
-  div.mp_multi_image_item {
-    width: calc(25% - 7px);
-  }
+ 
   .mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::before {
     background: $color-sky;
   }
@@ -184,12 +187,7 @@ div > .ppof-metabox {
     border-radius: 2px;
   }
 }
-.mpStyle img:not(.mp_wp_editor img) {
-  width: 100%;
-  height: 180px;
-  max-width: 100%;
-  border-radius: 0;
-}
+
 
 div.mpStyle span.mp_remove_multi_image {
   background-color:$color-black;

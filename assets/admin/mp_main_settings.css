@@ -7152,15 +7152,16 @@ div > .ppof-metabox {
     gap: 0.5em;
     margin-bottom: 0.5em;
   }
-  div.mp_multi_image img {
+  div.mp_multi_image div.mp_multi_image_item {
+    width: calc(25% - 7px);
+  }
+  div.mp_multi_image div.mp_multi_image_item img {
+    width: 100%;
     height: 180px;
     object-fit: cover;
   }
   div.mpStyle .description {
     font-size: 0.8rem !important;
-  }
-  div.mp_multi_image_item {
-    width: calc(25% - 7px);
   }
   .mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::before {
     background: var(--mpl-sky);
@@ -7181,13 +7182,6 @@ div > .ppof-metabox {
     border-radius: 2px;
   }
 }
-.mpStyle img:not(.mp_wp_editor img) {
-  width: 100%;
-  height: 180px;
-  max-width: 100%;
-  border-radius: 0;
-}
-
 div.mpStyle span.mp_remove_multi_image {
   background-color: var(--mpl-black);
   color: var(--mpl-white);

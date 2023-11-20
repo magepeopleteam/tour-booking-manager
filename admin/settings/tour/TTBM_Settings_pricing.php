@@ -165,37 +165,37 @@
 					<td>
 						<input type="hidden" name="ttbm_hidden_ticket_text[]" value="<?php echo esc_attr($name_text); ?>"/>
 						<label>
-							<input type="text" class="formControl mp_name_validation" name="ticket_type_name[]" placeholder="Ex: Adult" value="<?php echo esc_attr($name); ?>" data-input-text="<?php echo esc_attr($name_text); ?>"/>
+							<input type="text" class="mp_name_validation" name="ticket_type_name[]" placeholder="Ex: Adult" value="<?php echo esc_attr($name); ?>" data-input-text="<?php echo esc_attr($name_text); ?>"/>
 						</label>
 					</td>
 					<td data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
 						<label>
-							<input type="text" class="formControl" name="ticket_type_description[]" placeholder="Ex: description" value="<?php echo esc_attr($description); ?>"/>
+							<input type="text" class="" name="ticket_type_description[]" placeholder="Ex: description" value="<?php echo esc_attr($description); ?>"/>
 						</label>
 					</td>
 					<td>
 						<label>
-							<input type="text" class="formControl mp_price_validation" name="ticket_type_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($price); ?>"/>
+							<input type="text" class="small mp_price_validation" name="ticket_type_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($price); ?>"/>
 						</label>
 					</td>
 					<td data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
 						<label>
-							<input type="text" class="formControl mp_price_validation" name="ticket_type_sale_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($sale_price); ?>"/>
+							<input type="text" class="small mp_price_validation" name="ticket_type_sale_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($sale_price); ?>"/>
 						</label>
 					</td>
 					<td <?php do_action('ttbm_aq_target_hook', $tour_id); ?>>
 						<label>
-							<input type="number" size="4" pattern="[0-9]*" step="1" class="formControl mp_number_validation" data-same-input="ticket_type_qty" name="ticket_type_qty[]" placeholder="Ex: 500" value="<?php echo esc_attr($qty); ?>"/>
+							<input type="number" size="4" pattern="[0-9]*" step="1" class="small mp_number_validation" data-same-input="ticket_type_qty" name="ticket_type_qty[]" placeholder="Ex: 500" value="<?php echo esc_attr($qty); ?>"/>
 						</label>
 					</td>
 					<td data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
 						<label>
-							<input type="number" size="4" pattern="[0-9]*" step="1" class="formControl mp_number_validation" name="ticket_type_default_qty[]" placeholder="Ex: 1" value="<?php echo esc_attr($default_qty); ?>"/>
+							<input type="number" size="4" pattern="[0-9]*" step="1" class="small mp_number_validation" name="ticket_type_default_qty[]" placeholder="Ex: 1" value="<?php echo esc_attr($default_qty); ?>"/>
 						</label>
 					</td>
 					<td data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
 						<label>
-							<input type="number" size="4" pattern="[0-9]*" step="1" class="formControl mp_number_validation" data-same-input="ticket_type_resv_qty" name="ticket_type_resv_qty[]" placeholder="Ex: 5" value="<?php echo esc_attr($reserve_qty); ?>"/>
+							<input type="number" size="4" pattern="[0-9]*" step="1" class="small mp_number_validation" data-same-input="ticket_type_resv_qty" name="ticket_type_resv_qty[]" placeholder="Ex: 5" value="<?php echo esc_attr($reserve_qty); ?>"/>
 						</label>
 					</td>
 					<?php do_action('ttbm_ticket_type_content_end', $field, $tour_id) ?>

@@ -99,12 +99,12 @@
 					</td>
 					<td>
 						<label>
-							<input type="number" pattern="[0-9]*" step="0.01" class="formControl mp_price_validation" name="service_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($service_price); ?>"/>
+							<input type="number" pattern="[0-9]*" step="0.01" class="small mp_price_validation" name="service_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($service_price); ?>"/>
 						</label>
 					</td>
 					<td>
 						<label>
-							<input type="number" pattern="[0-9]*" step="1" class="formControl mp_number_validation" name="service_qty[]" placeholder="Ex: 100" value="<?php echo esc_attr($service_qty); ?>"/>
+							<input type="number" pattern="[0-9]*" step="1" class="small mp_number_validation" name="service_qty[]" placeholder="Ex: 100" value="<?php echo esc_attr($service_qty); ?>"/>
 						</label>
 					</td>
 					<td>

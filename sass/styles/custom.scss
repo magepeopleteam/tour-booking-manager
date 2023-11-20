@@ -198,3 +198,18 @@ div.mpStyle span.mp_remove_multi_image{
   top:-7px;
   right:-7px;
 }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice{
+  background-color: $color-gray;
+  border: 5px solid $color-light;
+  border-radius:$border-radius;
+  cursor: default;
+  float: left;
+  margin-right: 5px;
+  margin-top: 5px;
+  padding: 5px 10px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  padding:5px;
+}

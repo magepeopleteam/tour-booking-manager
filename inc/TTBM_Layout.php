@@ -75,15 +75,15 @@
 					</button>
 				<?php }
 			}
-			public static function ttbm_add_button($button_text, $class = 'ttbm_add_item', $button_class = '_themeButton_xs_mt_xs', $icon_class = 'fas fa-plus-square') {
+			public static function ttbm_add_button($button_text, $class = 'ttbm_add_item', $button_class = 'btn my-2', $icon_class = 'fas fa-plus-square') {
 				?>
 				<button class="<?php echo esc_attr($button_class . ' ' . $class); ?>" type="button">
-					<span class="<?php echo esc_attr($icon_class); ?>"></span>
+					<span class="<?php echo esc_attr($icon_class); ?> pe-1"></span>
 					<span class="ml_xs"><?php echo esc_html($button_text); ?></span>
 				</button>
 				<?php
 			}
-			public static function add_new_button($button_text, $class = 'mp_add_item', $button_class = '_themeButton_xs_mt_xs', $icon_class = 'fas fa-plus-square') {
+			public static function add_new_button($button_text, $class = 'mp_add_item', $button_class = 'btn', $icon_class = 'fas fa-plus-square') {
 				?>
 				<button class="<?php echo esc_attr($button_class . ' ' . $class); ?>" type="button">
 					<span class="<?php echo esc_attr($icon_class); ?>"></span>

@@ -39,7 +39,8 @@
                     </section>
 
 					<div data-collapse="#ttbm_display_registration" class="<?php echo esc_attr($active); ?>">
-						
+						<?php $this->ttbm_add_to_cart_form_shortcode($tour_id); ?>
+						<?php do_action('ttbm_tour_pricing_before', $tour_id); ?>
 						<section class="component d-flex justify-content-between align-items-center mb-2">
 							<div class="w-100 d-flex justify-content-between align-items-center">
 								<label for=""><?php esc_html_e('Tour Type', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_registration'); ?></i></label>
@@ -52,21 +53,12 @@
 								</div>
 							</div>
 						</section>	
-
-						<div class="">
-							<?php do_action('ttbm_tour_pricing_before', $tour_id); ?>
-							<?php do_action('ttbm_hotel_pricing_before', $tour_id); ?>
-							<?php $this->ttbm_hotel_config($tour_id); ?>
-							<?php do_action('ttbm_hotel_pricing_after', $tour_id); ?>
-						</div>
-
+						<?php do_action('ttbm_hotel_pricing_before', $tour_id); ?>
+						<?php $this->ttbm_hotel_config($tour_id); ?>
+						<?php do_action('ttbm_hotel_pricing_after', $tour_id); ?>
 						<?php $this->ttbm_ticket_config($tour_id); ?>
 						<?php do_action('ttbm_tour_pricing_after', $tour_id); ?>
 						<?php $this->advertise_addon(); ?>
-						<?php do_action('ttbm_tour_exs_pricing_before', $tour_id); ?>
-						
-						<?php do_action('ttbm_tour_exs_pricing_after', $tour_id); ?>
-						<?php $this->ttbm_add_to_cart_form_shortcode($tour_id); ?>
 					</div>
 				</div>
 				<?php
@@ -228,7 +220,7 @@
 				$hotel_class = $ttbm_type == 'hotel' ? '' : 'dNone';
 				?>
 
-				<section class="ttbm_tour_hotel_setting component justify-content-between align-items-center mb-2 <?php echo esc_attr($hotel_class); ?>">
+				<section class="ttbm_tour_hotel_setting component mb-2 <?php echo esc_attr($hotel_class); ?>">
 					<div class="w-100 d-flex justify-content-between align-items-center">
 						<label class=""><?php esc_html_e('Hotel Configuration :', 'tour-booking-manager'); ?>  <i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Select Hotel name that you want to include in this tour , Tour ticket price works based on hotel price configuration . To add new hotel  ', 'tour-booking-manager'); ?>
 						<a href="post-new.php?post_type=ttbm_hotel"><?php esc_html_e('click here', 'tour-booking-manager'); ?></a></span></i></label>

@@ -6123,6 +6123,8 @@ readers do not read off random characters that represent icons */
   --mpl-white:#ffffff;
   --mpl-black:#000000;
   --mpl-yellow:#ffcb00;
+  --mpl-red:#d91e1e;
+  --mpl-red-light:#f6dada;
   --flow-space: 1.5rem;
 }
 
@@ -6949,6 +6951,9 @@ readers do not read off random characters that represent icons */
 /**
  * Typography
  */
+#mp_meta_box_panel :where(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, .paragraph, ul, ol, pre, table, figure, blockquote, form, fieldset, dl, address, details, hr, aside, video) + * {
+  margin-block-start: 0;
+}
 #mp_meta_box_panel body,
 #mp_meta_box_panel p {
   color: var(--mpl-secondary);
@@ -7135,23 +7140,51 @@ readers do not read off random characters that represent icons */
 #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input#mep_disable_ticket_time, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input#mep_disable_ticket_time {
   margin-right: 0.5em;
 }
-#mp_meta_box_panel .form-wrap.form-builder .frmb .field-actions .btn {
-  min-width: 0;
-  padding: 0;
-  background-color: var(--mpl-light);
+#mp_meta_box_panel .form-wrap.form-builder h1, #mp_meta_box_panel .form-wrap.form-builder h2, #mp_meta_box_panel .form-wrap.form-builder h3, #mp_meta_box_panel .form-wrap.form-builder h4, #mp_meta_box_panel .form-wrap.form-builder h5, #mp_meta_box_panel .form-wrap.form-builder h6,
+#mp_meta_box_panel .form-wrap.form-builder .h1, #mp_meta_box_panel .form-wrap.form-builder .h2, #mp_meta_box_panel .form-wrap.form-builder .h3, #mp_meta_box_panel .form-wrap.form-builder .h4, #mp_meta_box_panel .form-wrap.form-builder .h5, #mp_meta_box_panel .form-wrap.form-builder .h6 {
   color: var(--mpl-dark);
 }
-#mp_meta_box_panel .form-wrap.form-builder .frmb .field-actions .del-button:hover {
-  background-color: #c66865;
-  color: #fff;
+#mp_meta_box_panel .form-wrap.form-builder .frmb li {
+  padding-bottom: 1.5em;
+  border: 1px dashed var(--mpl-gray);
+  box-shadow: 0 0 0px var(--mpl-light);
+  background-color: var(--mpl-light);
+  margin-bottom: 0.5em;
 }
-#mp_meta_box_panel .form-wrap.form-builder .frmb .field-actions .toggle-form:hover {
-  background-color: #65aac6;
-  color: #fff;
+#mp_meta_box_panel .form-wrap.form-builder .frmb li.frmb-placeholder, #mp_meta_box_panel .form-wrap.form-builder .frmb li.ui-state-highlight {
+  padding: 2.5em;
+  background: var(--mpl-sky-light);
+  border: 1px dashed var(--mpl-primary);
+  clip-path: none;
+  margin-bottom: 0.5em;
 }
-#mp_meta_box_panel .form-wrap.form-builder .frmb .field-actions .copy-button:hover {
-  background-color: #6fc665;
-  color: #fff;
+#mp_meta_box_panel .form-wrap.form-builder .frmb li:hover {
+  border: 1px dashed var(--mpl-primary);
+  box-shadow: 0 0 10px var(--mpl-light);
+  background-color: var(--mpl-sky-light);
+}
+#mp_meta_box_panel .form-wrap.form-builder .frmb li.delete:hover {
+  border: 1px dashed var(--mpl-red);
+  background-color: var(--mpl-red-light);
+}
+#mp_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .btn {
+  min-width: 0;
+  padding: 0;
+  color: var(--mpl-white);
+  border-radius: 0;
+  transition: all 0;
+}
+#mp_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .del-button {
+  background-color: var(--mpl-red);
+  color: var(--mpl-white);
+}
+#mp_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .toggle-form {
+  background-color: var(--mpl-yellow);
+  transition: all 0;
+}
+#mp_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .copy-button {
+  background-color: var(--mpl-primary);
+  color: var(--mpl-white);
 }
 
 div > .ppof-metabox {

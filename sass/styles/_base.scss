@@ -6,7 +6,7 @@
 #{$main-selector}{
 :where(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, .paragraph, ul, ol, pre, table, figure, blockquote, form, fieldset, dl, address, details, hr, aside, video) {
     + * {
-      // margin-block-start: var(--flow-space);
+       margin-block-start:0;
     }
   }
   // =======================typography==================

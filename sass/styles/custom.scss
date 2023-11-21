@@ -9,8 +9,6 @@
             
         }
     }
-
-    
 } 
 @media only screen and (min-width:0px) {
     #mp_meta_box_panel .tabLists {
@@ -133,26 +131,66 @@
       }
     }
   }
-  .form-wrap.form-builder .frmb .field-actions {
-    .btn {
-      min-width: 0;
-      padding: 0;
-      background-color: $color-light;
+
+
+// form builder custom code==========
+
+  .form-wrap.form-builder {
+    h1, h2, h3, h4, h5, h6,
+    .h1, .h2, .h3, .h4, .h5, .h6{
       color: $color-dark;
     }
-    .del-button:hover {
-      background-color: #c66865;
-      color: #fff;
-    }
-
-    .toggle-form:hover {
-      background-color: #65aac6;
-      color: #fff;
-    }
-
-    .copy-button:hover {
-      background-color: #6fc665;
-      color: #fff;
+    .frmb { 
+      li{
+        padding-bottom: calc($spacing * 3);
+        border:1px dashed $color-gray;
+        box-shadow: 0 0 0px $color-light;
+        background-color: $color-light;
+        margin-bottom: $spacing;
+        &.frmb-placeholder, &.ui-state-highlight{
+          padding:calc($spacing * 5);
+          background:  $color-sky-light;
+          border:1px dashed $color-primary;
+          clip-path:none;  
+          margin-bottom: $spacing;
+        }
+        
+        &:hover{
+          border:1px dashed $color-primary;
+          box-shadow: 0 0 10px $color-light;
+          background-color: $color-sky-light;
+        }
+        &.delete{
+          &:hover{
+            border:1px dashed $color-red;
+            background-color: $color-red-light;
+          }
+        }
+        .field-actions {
+          .btn {
+            min-width: 0;
+            padding: 0;
+            color: $color-white;
+            border-radius:0 ;
+            transition: all 0;
+          }
+          .del-button{
+            background-color: $color-red;
+            color: $color-white;
+          }
+    
+          .toggle-form{
+            background-color: $color-yellow;
+            transition: all 0;
+          }
+    
+          .copy-button{
+            background-color: $color-primary;
+            color: $color-white;
+          }
+        }
+      }
+      
     }
   }
 }

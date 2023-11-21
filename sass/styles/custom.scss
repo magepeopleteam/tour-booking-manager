@@ -122,11 +122,11 @@
       }
       table{
         border-collapse: separate;
-        border-spacing: 0 1.5em;
-        border: 2px solid $color-primary;
+        border-spacing: 0 0.5em;
+        // border: 2px solid $color-primary;
         margin: 0;
         background-color: $color-sky-light;
-        // border-radius: $border-radius;
+        border-radius: $border-radius;
         tr:nth-child(2n) {
           background-color: $color-white;
         }

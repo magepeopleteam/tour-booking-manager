@@ -1025,10 +1025,10 @@
   }
   .mp_settings_panel .metabox-holder table {
     border-collapse: separate;
-    border-spacing: 0 1.5em;
-    border: 2px solid var(--mpl-primary);
+    border-spacing: 0 0.5em;
     margin: 0;
     background-color: var(--mpl-sky-light);
+    border-radius: 0.25rem;
   }
   .mp_settings_panel .metabox-holder table tr:nth-child(2n) {
     background-color: var(--mpl-white);

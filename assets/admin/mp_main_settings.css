@@ -1011,7 +1011,8 @@
     padding: 0;
     margin: 0;
     width: calc(100% - 300px);
-    border: 5px solid var(--mpl-sky-light);
+    border: 15px solid var(--mpl-sky-light);
+    background-color: var(--mpl-sky-light);
   }
   .mp_settings_panel .metabox-holder h2 {
     border-bottom: 0px solid var(--mpl-white);
@@ -1025,7 +1026,7 @@
   }
   .mp_settings_panel .metabox-holder table {
     border-collapse: separate;
-    border-spacing: 0 0.5em;
+    border-spacing: 0 0.1em;
     margin: 0;
     background-color: var(--mpl-sky-light);
     border-radius: 0.25rem;

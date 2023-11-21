@@ -394,10 +394,6 @@
 				$sold_query = TTBM_Query::query_all_sold($tour_id, $tour_date, $type, $hotel_id);
 				return $sold_query->post_count;
 			}
-			public static function get_total_service_sold($tour_id, $tour_date, $type = ''): int {
-				$sold_query = TTBM_Query::query_all_service_sold($tour_id, $tour_date, $type);
-				return $sold_query->post_count;
-			}
 			public static function get_total_available($tour_id, $tour_date = '') {
 				$total = self::get_total_seat($tour_id);
 				$reserve = self::get_total_reserve($tour_id);
@@ -512,7 +508,7 @@
 						}
 					}
 				}
-				return $country;
+				return array_unique($country);
 			}
 			//*******************************//
 			public static function get_hotel_list($tour_id) {
@@ -936,6 +932,44 @@
 				$display_suffix = get_option('woocommerce_price_display_suffix') ? get_option('woocommerce_price_display_suffix') : '';
 				return wc_price($return_price) . ' ' . $display_suffix;
 			}
+			public static function get_expired_tours($args)
+			{
+				$tours = array();
+				$query = new WP_Query($args);
+				if($query->have_posts())
+				{
+					while($query->have_posts())
+					{
+						$query->the_post();
+						$dates = TTBM_Function::get_date(get_the_ID());
+						if(is_array($dates) && count($dates))
+						{
+							$tours[] = get_the_ID();
+						}
+					}
+
+					wp_reset_postdata();
+
+					if(count($tours))
+					{
+						unset($args);
+						$args = array(
+							'post_type' => array(TTBM_Function::get_cpt_name()),
+							'posts_per_page' => -1,
+							'order' => 'ASC',
+							'orderby' => 'meta_value',
+							'post__in' => $tours,
+						);
+
+						return new WP_Query($args);
+					}
+
+					return $query;
+
+				}
+				
+				return $query;					
+			}			
 			public static function esc_html($string): string {
 				$allow_attr = array(
 					'input' => ['type' => [], 'class' => [], 'id' => [], 'name' => [], 'value' => [], 'size' => [], 'placeholder' => [], 'min' => [], 'max' => [], 'checked' => [], 'required' => [], 'disabled' => [], 'readonly' => [], 'step' => [], 'data-default-color' => [], 'data-price' => [],],

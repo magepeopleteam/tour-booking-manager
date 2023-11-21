@@ -39,7 +39,7 @@
 		<?php
 	}
 	$activity_filter = $_GET['activity_filter'] ?? '';
-	if($duration_filter){
+	if($activity_filter){
 		?>
 		<input type="hidden" name="activity_filter" value="<?php echo esc_attr($activity_filter);?>" />
 		<?php

@@ -26,7 +26,7 @@
 								esc_html_e( 'Hours ', 'tour-booking-manager' );
 							}
 						}
-						if ( $day && $day < 2 ) {
+						if ( $day && $day <= 1 ) {
 							echo esc_html( $day ) . ' ';
 							if ( $duration_type == 'day' ) {
 								esc_html_e( 'Day ', 'tour-booking-manager' );
@@ -40,7 +40,7 @@
 							if ( $night && $night > 1 ) {
 								echo esc_html( $night ) . ' ' . esc_html__( 'Nights ', 'tour-booking-manager' );
 							}
-							if ( $night && $night < 2 ) {
+							if ( $night && $night <= 1 ) {
 								echo esc_html( $night ) . ' ' . esc_html__( 'Night ', 'tour-booking-manager' );
 							}
 						}

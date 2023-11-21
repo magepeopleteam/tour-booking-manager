@@ -105,7 +105,7 @@
 										<?php
 											$tour_list = TTBM_Query::get_all_tour_in_location($location->name, $status);
 											$thumb_id = get_term_meta($location->term_id, 'ttbm_location_image');
-											$thumbnail_img = wp_get_attachment_url($thumb_id[0]);
+											$thumbnail_img = wp_get_attachment_url($thumb_id[0]);											
 										?>
 										<div data-bg-image="<?php echo esc_html($thumbnail_img); ?>" data-href="<?php echo esc_url(get_term_link($location->term_id)) . '?location_filter=' . esc_attr($location->term_id) . '&location_status=' . esc_attr($status); ?>">
 											<h2 class="ttbm_list_title"> <?php echo esc_html($location->name); ?></h2>
@@ -184,7 +184,7 @@
 					'sidebar-filter' => $sidebar_filter,
 					'title-filter' => 'no',
 					'category-filter' => 'no',
-					'organizer-filter' => 'no',
+					'organizer-filter' => 'yes',
 					'location-filter' => 'yes',
 					'country-filter' => 'no',
 					'activity-filter' => 'yes',

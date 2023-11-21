@@ -36,7 +36,7 @@
 					if ( $night && $night > 1 ) {
 						echo esc_html( $night ) . ' ' . esc_html__( 'Nights ', 'tour-booking-manager' );
 					}
-					if ( $night && $night < 2 ) {
+					if ( $night && $night <= 1 ) {
 						echo esc_html( $night ) . ' ' . esc_html__( 'Night ', 'tour-booking-manager' );
 					}
 				}

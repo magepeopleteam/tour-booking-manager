@@ -125,6 +125,7 @@
 			let value = item.attr(ttbm_filter_item[name]).toString();
 			active = (value && value.match(new RegExp(filter_values, "i"))) ? 2 : 0;
 		}
+		console.log(parent + " "+ item + " " + name + " " + active );
 		return active;
 	}
 	function filter_single_in_multi(parent, item, name, active) {
@@ -134,6 +135,7 @@
 			value = value.split(",");
 			active = (value.indexOf(filter_values) !== -1) ? 2 : 0;
 		}
+		console.log(parent + " "+ item + " " + name + " " + active );
 		return active;
 	}
 	function filter_multi_in_single(parent, item, name, active) {
@@ -143,6 +145,7 @@
 			let value = item.attr(ttbm_filter_item[name]).toString();
 			active = (filter_values.indexOf(value) !== -1) ? 2 : 0;
 		}
+		console.log(parent + " "+ item + " " + name + " " + active );
 		return active;
 	}
 	function filter_multi_in_multi(parent, item, name, active) {
@@ -159,6 +162,7 @@
 			});
 			active = result;
 		}
+		console.log(parent + " "+ item + " " + name + " " + active );
 		return active;
 	}
 	//************Pagination*************//

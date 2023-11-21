@@ -1,4 +1,7 @@
 <?php
+
+use function WCML\functions\getId;
+
 	if (!defined('ABSPATH')) {
 		die;
 	} // Cannot access pages directly.
@@ -91,7 +94,15 @@
 						$org_filter
 					)
 				);
-				return new WP_Query($args);
+				
+				if($status == 'expired')
+				{
+					return TTBM_Function::get_expired_tours($args);
+				}
+				else
+				{
+					return new WP_Query($args);
+				}
 			}
 			public static function get_all_tour_in_location($location, $status = ''): WP_Query {
 				$compare = '>=';
@@ -117,9 +128,20 @@
 					'posts_per_page' => -1,
 					'order' => 'ASC',
 					'orderby' => 'meta_value',
-					'meta_query' => array($location, $expire_filter)
+					'meta_query' => array(
+						$location, 
+						//$expire_filter
+					)
 				);
-				return new WP_Query($args);
+
+				if($status == 'expired')
+				{
+					return TTBM_Function::get_expired_tours($args);
+				}
+				else
+				{
+					return new WP_Query($args);
+				}				
 			}
 			public static function get_order_meta($item_id, $key): string {
 				global $wpdb;

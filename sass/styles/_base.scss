@@ -6,7 +6,7 @@
 #{$main-selector}{
 :where(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, .paragraph, ul, ol, pre, table, figure, blockquote, form, fieldset, dl, address, details, hr, aside, video) {
     + * {
-      margin-block-start: var(--flow-space);
+      // margin-block-start: var(--flow-space);
     }
   }
   // =======================typography==================
@@ -92,16 +92,6 @@
   border: 1px solid $color-gray;
 }
 
-.btn{
-  border: 0px solid;
-  box-shadow: none;
-  background-color: $color-primary;
-  border-radius: $border-radius;
-  padding: $spacing calc($spacing * 1.5);
-  color: $color-white;
-  font-size: $font-size;
-  transition: all $time ease-in-out;
-  min-width: 100px;
-}
+
 
 }

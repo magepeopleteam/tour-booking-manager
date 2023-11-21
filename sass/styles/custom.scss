@@ -133,7 +133,28 @@
       }
     }
   }
-  
+  .form-wrap.form-builder .frmb .field-actions {
+    .btn {
+      min-width: 0;
+      padding: 0;
+      background-color: $color-light;
+      color: $color-dark;
+    }
+    .del-button:hover {
+      background-color: #c66865;
+      color: #fff;
+    }
+
+    .toggle-form:hover {
+      background-color: #65aac6;
+      color: #fff;
+    }
+
+    .copy-button:hover {
+      background-color: #6fc665;
+      color: #fff;
+    }
+  }
 }
 
 div > .ppof-metabox {
@@ -141,9 +162,16 @@ div > .ppof-metabox {
 }
 
 .mpStyle .ppof-button{
-
   width: 320px;
-  @extend .btn;
+  border: 0px solid;
+  box-shadow: none;
+  background-color: $color-primary;
+  border-radius: $border-radius;
+  padding: $spacing calc($spacing * 1.5);
+  color: $color-white;
+  font-size: $font-size;
+  transition: all $time ease-in-out;
+  min-width: 100px;
 }
 
 @media only screen and (min-width:0px) {

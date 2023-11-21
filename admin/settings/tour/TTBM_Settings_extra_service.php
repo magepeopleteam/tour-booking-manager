@@ -109,7 +109,7 @@
 					</td>
 					<td>
 						<label>
-							<select name="service_qty_type[]" class='formControl'>
+							<select name="service_qty_type[]" class='medium'>
 								<option value="inputbox" <?php echo esc_attr($input_type == 'inputbox' ? 'selected' : ''); ?>><?php esc_html_e('Input Box', 'tour-booking-manager'); ?></option>
 								<option value="dropdown" <?php echo esc_attr($input_type == 'dropdown' ? 'selected' : ''); ?>><?php esc_html_e('Dropdown List', 'tour-booking-manager'); ?></option>
 							</select>

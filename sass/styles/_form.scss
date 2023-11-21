@@ -14,7 +14,9 @@
       &.small{
         width:calc($input-width/3);
       }
-
+      &.medium{
+        width:calc($input-width/2);
+      }
       &:disabled {
         background: $color-gray;
       }

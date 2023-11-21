@@ -21,7 +21,7 @@
 				?>
 				<div class="mp_settings_panel_header">
 					<h3>
-						<?php echo esc_html($label . esc_html__(' Global Settings', 'tour-booking-manager')); ?>
+						<?php echo esc_html($label . esc_html__('Global Settings', 'tour-booking-manager')); ?>
 					</h3>
 				</div>
 				<div class="mp_settings_panel">

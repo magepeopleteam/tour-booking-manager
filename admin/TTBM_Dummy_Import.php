@@ -62,7 +62,9 @@
                                     foreach ($dummy_taxonomy as $taxonomy_data) {
                                         unset($term);
                                         $term = wp_insert_term($taxonomy_data['name'], $taxonomy);
-
+                                        
+                                        add_term_meta( $taxonomy_data['term_id'], 'ttbm_feature_icon', 'raselsa', false );
+                                        
                                         if (array_key_exists('tax_data', $taxonomy_data)) {
                                             foreach ($taxonomy_data['tax_data'] as $meta_key => $data) {
                                                 update_term_meta($term['term_id'], $meta_key, $data);
@@ -202,6 +204,7 @@
                             6 => ['name' => 'Sapuland', 'country' => 'Afghanistan'],
                         ],
                         'ttbm_tour_features_list' => [
+
                             0 => [
                                 'name' => 'Accommodation',
                                 'tax_data' => array(

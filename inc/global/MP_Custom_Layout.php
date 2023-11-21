@@ -74,35 +74,34 @@
 				echo ob_get_clean();
 			}
 			/*****************************/
-			public static function switch_button($name, $checked = '') {
+			public static function switch_button($field_name, $checked = '') {
 				?>
-				<label class="roundSwitchLabel">
-					<input type="checkbox" name="<?php echo esc_attr($name); ?>" <?php echo esc_attr($checked); ?>>
-					<span class="roundSwitch" data-collapse-target="#<?php echo esc_attr($name); ?>"></span>
+				<label class="switch">
+					<input type="checkbox" name="<?php echo esc_attr($field_name); ?>" <?php echo esc_attr($checked); ?>>
+					<span class="slider" data-collapse-target="#<?php echo esc_attr($field_name); ?>"></span>
 				</label>
 				<?php
 			}
 			public static function popup_button($target_popup_id, $text) {
 				?>
-				<button type="button" class="_dButton_bgBlue" data-target-popup="<?php echo esc_attr($target_popup_id); ?>">
-					<span class="fas fa-plus-square"></span>
+				<button type="button" class="btn" data-target-popup="<?php echo esc_attr($target_popup_id); ?>">
+					<i class="fas fa-plus-square pe-1"></i>
 					<?php echo esc_html($text); ?>
 				</button>
 				<?php
 			}
 			public static function popup_button_xs($target_popup_id, $text) {
 				?>
-				<button type="button" class="_dButton_xs_bgBlue" data-target-popup="<?php echo esc_attr($target_popup_id); ?>">
-					<span class="fas fa-plus-square"></span>
-					<?php echo esc_html($text); ?>
+				<button type="button" class="btn" data-target-popup="<?php echo esc_attr($target_popup_id); ?>">
+					<i class="fas fa-plus-square text-white pe-1"></i> <?php echo esc_html($text); ?>
 				</button>
 				<?php
 			}
 			/*****************************/
-			public static function add_new_button($button_text, $class = 'mp_add_item', $button_class = '_themeButton_xs_mT_xs', $icon_class = 'fas fa-plus-square') {
+			public static function add_new_button($button_text, $class = 'mp_add_item', $button_class = '', $icon_class = 'fas fa-plus-square pe-1') {
 				?>
-				<button class="<?php echo esc_attr($button_class . ' ' . $class); ?>" type="button">
-					<span class="<?php echo esc_attr($icon_class); ?> mR_xs"></span>
+				<button class="<?php echo esc_attr($button_class . ' ' . $class); ?> btn" type="button">
+					<i class="<?php echo esc_attr($icon_class); ?> "></i>
 					<?php echo MP_Global_Function::esc_html($button_text); ?>
 				</button>
 				<?php

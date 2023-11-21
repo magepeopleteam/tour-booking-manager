@@ -52,14 +52,16 @@
 									?>
 									<div class="mp_multi_image_item" data-image-id="<?php esc_attr_e($image); ?>">
 										<span class="fas fa-times circleIcon_xs mp_remove_multi_image"></span>
-										<img src="<?php echo MP_Global_Function::get_image_url('', $image, 'medium'); ?>" alt="<?php esc_attr_e($image); ?>"/>
+										<img class="w-100" src="<?php echo MP_Global_Function::get_image_url('', $image, 'medium'); ?>" alt="<?php esc_attr_e($image); ?>"/>
 									</div>
 									<?php
 								}
 							}
 						?>
 					</div>
-					<?php MP_Custom_Layout::add_new_button(esc_html__('Add Image', 'tour-booking-manager'), 'add_multi_image', '_dButton_bgColor_1'); ?>
+					<div class="d-flex justify-content-start py-2">
+						<?php MP_Custom_Layout::add_new_button(esc_html__('Add Image', 'tour-booking-manager'), 'add_multi_image', 'btn'); ?>
+					</div>
 				</div>
 				<?php
 			}
@@ -73,15 +75,15 @@
 					</button>
 				<?php }
 			}
-			public static function ttbm_add_button($button_text, $class = 'ttbm_add_item', $button_class = '_themeButton_xs_mt_xs', $icon_class = 'fas fa-plus-square') {
+			public static function ttbm_add_button($button_text, $class = 'ttbm_add_item', $button_class = 'btn my-2', $icon_class = 'fas fa-plus-square') {
 				?>
 				<button class="<?php echo esc_attr($button_class . ' ' . $class); ?>" type="button">
-					<span class="<?php echo esc_attr($icon_class); ?>"></span>
+					<span class="<?php echo esc_attr($icon_class); ?> pe-1"></span>
 					<span class="ml_xs"><?php echo esc_html($button_text); ?></span>
 				</button>
 				<?php
 			}
-			public static function add_new_button($button_text, $class = 'mp_add_item', $button_class = '_themeButton_xs_mt_xs', $icon_class = 'fas fa-plus-square') {
+			public static function add_new_button($button_text, $class = 'mp_add_item', $button_class = 'btn', $icon_class = 'fas fa-plus-square') {
 				?>
 				<button class="<?php echo esc_attr($button_class . ' ' . $class); ?>" type="button">
 					<span class="<?php echo esc_attr($icon_class); ?>"></span>

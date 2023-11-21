@@ -11,8 +11,8 @@
 			}
 			public function add_tab() {
 				?>
-				<li data-tabs-target="#ttbm_settings_why_chose_us">
-					<span class="fas fa-info-circle"></span><?php esc_html_e(' Why Book With Us ?', 'tour-booking-manager'); ?>
+				<li class="nav-item" data-tabs-target="#ttbm_settings_why_chose_us">
+					<i class="fas fa-info-circle"></i> <?php esc_html_e('Why Book With Us ?', 'tour-booking-manager'); ?>
 				</li>
 				<?php
 			}
@@ -23,12 +23,17 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
 				<div class="tabsItem mp_settings_area ttbm_settings_why_chose_us" data-tabs="#ttbm_settings_why_chose_us">
-					<h5 class="dFlex">
-						<span class="mR"><?php esc_html_e('Why Chose Us' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?></span>
-						<?php MP_Custom_Layout::switch_button('ttbm_display_why_choose_us', $checked); ?>
-					</h5>
-					<?php TTBM_Settings::des_p('ttbm_display_why_choose_us'); ?>
-					<div class="divider"></div>
+					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Why Book With Us?', 'tour-booking-manager'); ?></h2>
+					
+					<section class="component d-flex justify-content-between align-items-center mb-2">
+                        <div class="w-100 d-flex justify-content-between align-items-center">
+                            <label for=""><?php esc_html_e('Why Chose Us' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_why_choose_us'); ?></i></label>
+                            <div class=" d-flex justify-content-between">
+								<?php MP_Custom_Layout::switch_button('ttbm_display_why_choose_us', $checked); ?>
+                            </div>    
+                        </div>
+                    </section>
+
 					<div data-collapse="#ttbm_display_why_choose_us" class="<?php echo esc_attr($active); ?>">
 						<?php $this->why_chose_us($tour_id); ?>
 					</div>
@@ -38,39 +43,37 @@
 			public function why_chose_us($tour_id) {
 				$why_chooses = MP_Global_Function::get_post_info($tour_id, 'ttbm_why_choose_us_texts', array());
 				?>
-				<table class="layoutFixed">
-					<tbody>
-					<tr>
-						<th>
-							<?php esc_html_e('Why Book With Us?', 'tour-booking-manager'); ?>
-							<?php TTBM_Settings::des_p('why_chose_us'); ?>
-						</th>
-						<td colspan="3">
-							<table>
-								<thead>
-								<tr>
-									<th><?php esc_html_e('Item List.', 'tour-booking-manager'); ?></th>
-									<th><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
-								</tr>
-								</thead>
-								<tbody class="mp_sortable_area mp_item_insert">
-								<?php
-									if (sizeof($why_chooses)) {
-										foreach ($why_chooses as $why_choose) {
-											$this->why_chose_us_item($why_choose);
-										}
+				<section class="component d-flex flex-column justify-content-between align-items-center mb-2">
+					<!-- <div class="w-100 mb-2 d-flex justify-content-between align-items-center">
+						<label for=""><?php esc_html_e('Why Book With Us?', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('why_chose_us'); ?></i></label>
+					</div> -->
+					<div class="w-100 d-flex justify-content-between align-items-center">
+						<table>
+							<thead>
+							<tr>
+								<th><?php esc_html_e('Item List.', 'tour-booking-manager'); ?></th>
+								<th><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
+							</tr>
+							</thead>
+							<tbody class="mp_sortable_area mp_item_insert">
+							<?php
+								if (sizeof($why_chooses)) {
+									foreach ($why_chooses as $why_choose) {
+										$this->why_chose_us_item($why_choose);
 									}
-									else {
-										$this->why_chose_us_item();
-									}
-								?>
-								</tbody>
-							</table>
-							<?php MP_Custom_Layout::add_new_button(esc_html__('Add New Item', 'tour-booking-manager')); ?>
-						</td>
-					</tr>
-					</tbody>
-				</table>
+								}
+								else {
+									$this->why_chose_us_item();
+								}
+							?>
+							</tbody>
+						</table>
+					</div>
+					<div class="w-100 d-flex justify-content-start align-items-center my-2">
+						<?php MP_Custom_Layout::add_new_button(esc_html__('Add New Item', 'tour-booking-manager')); ?>
+					</div>
+				</section>
+				
 				<div class="mp_hidden_content">
 					<table>
 						<tbody class="mp_hidden_item">
@@ -85,7 +88,7 @@
 				<tr class="mp_remove_area">
 					<td>
 						<label>
-							<input class="formControl mp_name_validation" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
+							<input class="p-1 bordered w-100 rounded  mp_name_validation" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
 						</label>
 					</td>
 					<td><?php MP_Custom_Layout::move_remove_button(); ?></td>

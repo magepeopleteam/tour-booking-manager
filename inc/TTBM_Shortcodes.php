@@ -103,7 +103,7 @@
 								<?php foreach ($locations as $location) { ?>
 									<div class="filter_item <?php echo esc_attr($grid_class); ?>" data-placeholder>
 										<?php
-											$tour_list = TTBM_Query::get_all_tour_in_location($location->name, $status);
+											$tour_list = TTBM_Query::get_all_tour_in_location($location->name, $status);  
 											$thumb_id = get_term_meta($location->term_id, 'ttbm_location_image');
 											$thumbnail_img = wp_get_attachment_url($thumb_id[0]);											
 										?>

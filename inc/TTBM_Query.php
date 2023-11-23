@@ -1,7 +1,4 @@
 <?php
-
-use function WCML\functions\getId;
-
 	if (!defined('ABSPATH')) {
 		die;
 	} // Cannot access pages directly.

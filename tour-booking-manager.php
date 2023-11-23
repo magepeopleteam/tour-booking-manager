@@ -79,6 +79,28 @@
 					);
 					wp_insert_post($ttbm_search_page);
 				}
+				if (!MP_Global_Function::get_page_by_slug('lotus-grid')) {
+					$ttbm_search_page = array(
+						'post_type' => 'page',
+						'post_name' => 'lotus-grid',
+						'post_title' => 'Tour Lotus Grid View',
+						'post_content' => "[travel-list style='lotus' column=4 show='12' pagination='yes']",
+						'post_status' => 'publish',
+					);
+					wp_insert_post($ttbm_search_page);
+				}
+
+				if (!MP_Global_Function::get_page_by_slug('orchid-grid')) {
+					$ttbm_search_page = array(
+						'post_type' => 'page',
+						'post_name' => 'orchid-grid',
+						'post_title' => 'Tour Orchid Grid View',
+						'post_content' => "[travel-list style='orchid' column=4 pagination='yes' show=12]",
+						'post_status' => 'publish',
+					);
+					wp_insert_post($ttbm_search_page);
+				}
+				
 				if (get_option('ttbm_repeated_field_update') != 'completed') {
 					$args = array(
 						'post_type' => 'ttbm_tour',

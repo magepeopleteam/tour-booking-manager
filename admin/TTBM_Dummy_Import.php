@@ -521,7 +521,7 @@
                                     'ttbm_location_name' => '',
                                     'ttbm_display_map' => 'off',
                                     'ttbm_display_description' => 'on',
-                                    'ttbm_short_description' => '',
+                                    'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
                                     //date_settings
                                     'ttbm_travel_type' => 'fixed',
                                     'ttbm_travel_start_date' => date('Y-m-d', strtotime(' +35 day')),
@@ -673,7 +673,7 @@
                                     'ttbm_location_name' => '',
                                     'ttbm_display_map' => 'off',
                                     'ttbm_display_description' => 'on',
-                                    'ttbm_short_description' => '',
+                                    'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
                                     //date_settings
                                     'ttbm_travel_type' => 'repeated',
                                     'ttbm_travel_repeated_after' => '4',
@@ -833,7 +833,7 @@
                                     'ttbm_location_name' => '',
                                     'ttbm_display_map' => 'off',
                                     'ttbm_display_description' => 'on',
-                                    'ttbm_short_description' => '',
+                                    'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
                                     //date_settings
                                     'ttbm_travel_type' => 'repeated',
                                     'ttbm_travel_repeated_after' => '7',
@@ -993,7 +993,7 @@
                                     'ttbm_location_name' => '',
                                     'ttbm_display_map' => 'off',
                                     'ttbm_display_description' => 'on',
-                                    'ttbm_short_description' => '',
+                                    'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
                                     //date_settings
                                     'ttbm_travel_type' => 'repeated',
                                     'ttbm_travel_repeated_after' => '15',

@@ -932,7 +932,7 @@
 				$display_suffix = get_option('woocommerce_price_display_suffix') ? get_option('woocommerce_price_display_suffix') : '';
 				return wc_price($return_price) . ' ' . $display_suffix;
 			}
-			public static function get_expired_tours($args)
+			public static function get_active_tours($args)
 			{
 				$tours = array();
 				$query = new WP_Query($args);

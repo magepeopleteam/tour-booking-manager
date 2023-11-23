@@ -134,13 +134,17 @@
                                                     }
 
                                                     update_post_meta($post_id,'ttbm_gallery_images',$thumnail_ids);
+                                                    if(count($thumnail_ids))
+                                                    {
+                                                        set_post_thumbnail( $post_id, $thumnail_ids[0] );
+                                                    }                                                    
                                                 }
                                                 else
                                                 {
                                                     update_post_meta($post_id,'ttbm_gallery_images',array(isset($dummy_images[$data])?$dummy_images[$data]:''));
                                                 }
 
-                                            } 
+                                            }
                                             else 
                                             {
                                                 update_post_meta($post_id, $meta_key, $data);
@@ -811,13 +815,6 @@
                                 ',
                                 'post_data' => [
                                     //General_settings
-                                    'feature_image' => array(
-                                        'https://img.freepik.com/free-photo/blue-villa-beautiful-sea-hotel_1203-5316.jpg',
-                                        'https://img.freepik.com/free-photo/pileh-blue-lagoon-phi-phi-island-thailand_231208-1487.jpg',
-                                        'https://img.freepik.com/free-photo/beautiful-mountains-ratchaprapha-dam-khao-sok-national-park-surat-thani-province-thailand_335224-851.jpg',
-                                        'https://img.freepik.com/free-photo/photographer-taking-picture-ocean-coast_657883-287.jpg',
-                                        'https://img.freepik.com/free-photo/godafoss-waterfall-sunset-winter-iceland-guy-red-jacket-looks-godafoss-waterfall_335224-673.jpg',                                            
-                                    ),
                                     'ttbm_travel_duration' => 2,
                                     'ttbm_travel_duration_type' => 'day',
                                     'ttbm_display_duration_night' => 'on',
@@ -971,13 +968,6 @@
                                 ',
                                 'post_data' => [
                                     //General_settings
-                                    'feature_image' => array(
-                                        'https://img.freepik.com/free-photo/godafoss-waterfall-sunset-winter-iceland-guy-red-jacket-looks-godafoss-waterfall_335224-673.jpg',
-                                        'https://img.freepik.com/free-photo/photographer-taking-picture-ocean-coast_657883-287.jpg',
-                                        'https://img.freepik.com/free-photo/blue-villa-beautiful-sea-hotel_1203-5316.jpg',
-                                        'https://img.freepik.com/free-photo/pileh-blue-lagoon-phi-phi-island-thailand_231208-1487.jpg',
-                                        'https://img.freepik.com/free-photo/beautiful-mountains-ratchaprapha-dam-khao-sok-national-park-surat-thani-province-thailand_335224-851.jpg',
-                                    ),
                                     'ttbm_travel_duration' => 4,
                                     'ttbm_travel_duration_type' => 'day',
                                     'ttbm_display_duration_night' => 'on',

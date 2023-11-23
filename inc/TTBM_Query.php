@@ -92,9 +92,9 @@
 					)
 				);
 				
-				if($status == 'expired')
+				if($status == 'active')
 				{
-					return TTBM_Function::get_expired_tours($args);
+					return TTBM_Function::get_active_tours($args);
 				}
 				else
 				{
@@ -127,13 +127,13 @@
 					'orderby' => 'meta_value',
 					'meta_query' => array(
 						$location, 
-						//$expire_filter
+						$expire_filter
 					)
 				);
 
-				if($status == 'expired')
+				if($status == 'active')
 				{
-					return TTBM_Function::get_expired_tours($args);
+					return TTBM_Function::get_active_tours($args);
 				}
 				else
 				{

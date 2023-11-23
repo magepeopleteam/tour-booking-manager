@@ -11,8 +11,8 @@
 			}
 			public function add_tab() {
 				?>
-				<li data-tabs-target="#ttbm_settings_gallery">
-					<span class="fas fa-images"></span><?php esc_html_e('Gallery ', 'tour-booking-manager'); ?>
+				<li class="nav-item" data-tabs-target="#ttbm_settings_gallery">
+					<i class="fas fa-images"></i><?php esc_html_e('Gallery ', 'tour-booking-manager'); ?>
 				</li>
 				<?php
 			}
@@ -22,27 +22,30 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				$image_ids = MP_Global_Function::get_post_info($tour_id, 'ttbm_gallery_images', array());
 				?>
+				
 				<div class="tabsItem ttbm_settings_gallery" data-tabs="#ttbm_settings_gallery">
-					<h5 class="dFlex">
-						<span class="mR"><?php esc_html_e('On/Off Slider', 'tour-booking-manager'); ?></span>
-						<?php MP_Custom_Layout::switch_button('ttbm_display_slider', $checked); ?>
-					</h5>
-					<?php TTBM_Settings::des_p('ttbm_display_slider'); ?>
-					<div class="divider"></div>
+					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Gallery Settings', 'tour-booking-manager'); ?></h2>
+					<section class="component d-flex justify-content-between align-items-center mb-2">
+                        <div class="w-100 d-flex justify-content-between align-items-center">
+                            <label for=""><?php esc_html_e('On/Off Slider', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_slider'); ?></i></label>
+                            <div class=" d-flex justify-content-between">
+								<?php MP_Custom_Layout::switch_button('ttbm_display_slider', $checked); ?>
+                            </div>    
+                        </div>
+                    </section>
+
 					<div data-collapse="#ttbm_display_slider" class="<?php echo esc_attr($active); ?>">
-						<table class="layoutFixed">
-							<tbody>
-							<tr>
-								<th><?php esc_html_e('Gallery Images ', 'tour-booking-manager'); ?></th>
-								<td colspan="3">
-									<?php TTBM_Layout::add_multi_image('ttbm_gallery_images', $image_ids); ?>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="4"><?php TTBM_Settings::des_p('ttbm_gallery_images'); ?></td>
-							</tr>
-							</tbody>
-						</table>
+						
+						<section class="component d-flex flex-column justify-content-between align-items-start mb-2">
+							<div class="w-100 d-flex justify-content-between align-items-start mb-2">
+								<label for=""><?php esc_html_e('Gallery Images ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_gallery_images'); ?></i></label>
+								
+							</div>
+							<div class="w-100 d-flex justify-content-between align-items-start">
+								<?php TTBM_Layout::add_multi_image('ttbm_gallery_images', $image_ids); ?>
+							</div>
+						</section>
+						
 					</div>
 				</div>
 				<?php

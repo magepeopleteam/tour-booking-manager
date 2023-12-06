@@ -1,4 +1,4 @@
-=== Travel Booking Plugin | Tour & Hotel Booking Solution For WooCommerce – WpTravelly  ===
+=== WordPress Tour & Travel Booking Plugin for WooCommerce - WpTravelly  ===
 Contributors: magepeopleteam, aamahin, cseshafiul
 Plugin link: https://mage-people.com/
 Tags: tour-booking, tour-operator, travel, travel-booking, travel-agency
@@ -9,41 +9,77 @@ Stable tag: 1.6.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-wptravelly is the perfect tour & hotel booking solution for travel operators and agencies. Our free plugin helps you build your travel booking website in just 5 minutes, providing plenty of exciting features such as Hip-Hop City Tours, and resort and hotel bookings. Try it now to get started with your travel booking website!
+Manage and enhance your travel bookings with WpTravelly.A complete WordPress booking solution for your website.
 
 == Description ==
 
-Best Travel Booking Plugin For WooCommerce - wptravelly is the ideal solution for tour operators and travel agencies looking to create and manage customized tour packages. This complete travel management system offers a range of features that make it easy to establish your own travel booking website in five minutes or less.
+WpTravelly- Complete tour and travel booking solution for WordPress website – The online tour booking system is the ideal solution for tour operators and travel agencies looking to create and manage customized tour packages. Offers a range of features that make it easy to establish your own travel booking website in five minutes or less using the best tour booking plugin.
 
-= Key Features and Highlights = 
+###  Explore The Demo:
+
+🌐 [Live Demo](https://tour.mage-people.com/)
+📘 [Online Documentation](https://docs.mage-people.com/tour-travel-booking-manager/)
+🛍️ [Install WpTravelly](https://downloads.wordpress.org/plugin/tour-booking-manager.zip)
 
 
-###  Free Version Plugin Features:
+###  The #1 WordPress Booking Plugin With 1000+ Installations
 
-➡ Support All Payment Methods available in WooCommerce.
-➡ Cross Browser Support – (Chrome, Firefox, Safari, Opera, Etc.)
-➡ Responsive and SEO Friendly.  
-➡ Multilingual Translation Support
-➡ Available Short Code for Customizing Tour & For Showing In Any Web Page. 
-➡ Tour Name &  Description
-➡ Manage Ticket Type, Quantity, Prices, Category & Organizer. 
-➡ Extra Service with Price & Quantity Management.
-➡ Show Location Using Google Maps.
-➡ Option of Adding Start Date, End Date& Time. 
-➡ View Registered Guest Info from WooCommerce Order Details.
-➡ Works with Any Standards Compliant WordPress Theme.
-➡ WooCommerce Support, You can sell products and tour separately. There is no mixing with Event with the WooCommerce Products.
-👉  [View Live PRO Version Demo](https://tour.mage-people.com/)
+= Unlock a World of Possibilities with Our FREE Version Plugin: =
+
+🌐 Support for All Payment Methods:
+Easily integrate the booking system with WooCommerce and accept payments through various methods.
+
+🖥️ Cross Browser Support: 
+Ensure a consistent and smooth experience across different browsers for your users.
+
+📱 Responsive and SEO-friendly: 
+Create your booking system while ensuring the perfect search engine optimization and providing an excellent viewing experience on any device.
+
+🌍 Multilingual Translation Support: 
+Reach a global audience with multilingual translation support.
+
+🔍 Short Codes for Customization: 
+Easily customize tour details and display them on any web page using available shortcodes.
+
+🌟 Comprehensive Tour Management:
+
+➡Tour Name & Description
+➡Ticket Type, Quantity, Prices, Category & Organizer Management
+➡Extra Service with Price & Quantity Management
+➡Google Maps Integration for Location Display
+➡Start Date, End Date & Time Options
+➡View Registered Guest Info via WooCommerce Order Details
+➡Compatibility with any standards-compliant WordPress Theme
+
+
+🛒 WooCommerce Support: 
+
+Sell products and tours separately without any mixing with WooCommerce products.
+Ready for the Next Level? Explore our PRO Version Plugin
+Activate advanced features and take your booking and service experience to new heights with our PRO Version. Upgrade your booking capabilities for an automated and efficient reservation process.
+
+
+🎫 Download PDF Tickets: 
+Provide tickets in downloadable PDF format for their tours.
+
+📝 Custom Registration Form: 
+Craft registration forms for a personalized attendee experience.
+
+📧 Automatic Email Confirmation and PDF Ticket Mailing: 
+Streamline communication with customers through automated emails and PDF ticket mailing.
+
+📊 Export Attendee List in CSV Format: 
+Simplify user and customer management by exporting lists in CSV format.
+
+📅 Particular and Repeated Dates Recurring Tours: 
+Offer flexibility with particular or repeated dates for recurring tours.
+
+= Ready to upgrade your tour booking experience? View our live PRO Version Demo now. =
+Let's install the Plugin and discover what is waiting for you.
+
+
 
 ###  [Pro Version](https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/) Plugin Features 
-➡ Download PDF tickets for Tour attendees.
-➡ Custom Registration Form for Attendees.
-➡ Automatic Email Conformation Message and PDF ticket mailing Features
-➡ Export Attendee List in CSV Format. 
-➡ Particular Dates Recurrings Tours. 
-➡ Repeated Dates Recurrings Tours. 
-➡ [Buy WooCommerce Tour and Travel Booking Manager Pro](https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/) 
-
 
 
 ### Shortcodes included with Tour & Travel Booking  Manager
@@ -144,7 +180,7 @@ Tour Details page demo with [Viator template](https://tour.mage-people.com/tour-
   The Seat Plan Addon for the Tour Booking Plugin is specifically designed to optimize ticket sales of tours that require specific seating arrangements. For example, when booking a cruise that requires reservations at restaurants or other seating preferences, this Addon provides an ideal solution.
 
 👉[Seasonal Pricing Addon for Tour Plugin](https://mage-people.com/product/seasonal-pricing-addon-for-woocommerce-tour-plugin/)👈
-  Seasonal pricing addon for WooCommerce Tour Plugin is a good enhancement of tour plugin, with this addon tour owners can sell tickets with different pricing based on date range.
+  Seasonal pricing addon for the WooCommerce Tour Plugin is a good enhancement of tour plugin, with this addon tour owners can sell tickets with different pricing based on date range.
 
 👉[Group Pricing or Bulk Pricing for Tour Plugin](https://mage-people.com/product/group-pricing-or-bulk-qty-discount-addon-for-tour-plugin/)👈
   This plugin addon will enhance your pricing features. With this addon, tour operators can offer different prices based on ticket quantity at checkout. For example, prices can be specified for quantities 1 through 5, and discounts may be applied for quantities 6 through 10.
@@ -157,20 +193,15 @@ Tour Details page demo with [Viator template](https://tour.mage-people.com/tour-
 
 
 
-
-
-
-
-
 = PAYMENT GATEWAYS =
-Our Plugin Works with WooCommerce. so all payment method will work that work with WooCommerce and this very good Advantange of this plugin
+Our Plugin Works with WooCommerce. so all payment methods will work work with WooCommerce and this very good advantage of this plugin
 
 
 = Support and Suggestions =
 If you need any further assistance or support, do contact us at this [support form](https://mage-people.com/submit-ticket/). We are very open to your suggestions. So do feel free to tell us if there is anything we can do to improve the plugin. 
 
 = Theme Compatibility =
-It will compatible with any theme that works with WooCommerce. 
+It will be compatible with any theme that works with WooCommerce. 
 
 
 
@@ -203,14 +234,14 @@ https://www.youtube.com/watch?v=ZQ99Z3kOMws
 
 **CHECKOUT OUR OTHER PRODUCTS**
 
-**CHECKOUR OUR OTHER PLUGINS** 
+**CHECK OUR OUR OTHER PLUGINS** 
 [Bus Booking Manager](https://wordpress.org/plugins/bus-booking-manager/)
 [Bus Ticket Booking with Seat Reservation](https://wordpress.org/plugins/bus-ticket-booking-with-seat-reservation/)
 [Woocommerce Events Manager](https://wordpress.org/plugins/mage-eventpress/)
 
 
 ## Privacy Policy
-Tour Booking Manager For Woocommerce uses [Appsero](https://appsero.com) SDK to collect some telemetry data upon user's confirmation. This helps us to troubleshoot problems faster & make product improvements.
+Tour Booking Manager For Woocommerce uses [Appsero](https://appsero.com) SDK to collect some telemetry data upon the user's confirmation. This helps us to troubleshoot problems faster & make product improvements.
 
 Appsero SDK **does not gather any data by default.** The SDK only starts gathering basic telemetry data **when a user allows it via the admin notice**. We collect the data to ensure a great user experience for all our users.
 

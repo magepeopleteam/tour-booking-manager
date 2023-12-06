@@ -194,7 +194,7 @@ Tour Details page demo with [Viator template](https://tour.mage-people.com/tour-
 
 
 = PAYMENT GATEWAYS =
-Our Plugin Works with WooCommerce. so all payment methods will work work with WooCommerce and this very good advantage of this plugin
+Our Plugin Works with WooCommerce. so all payment methods will work with WooCommerce and this very good advantage of this plugin
 
 
 = Support and Suggestions =

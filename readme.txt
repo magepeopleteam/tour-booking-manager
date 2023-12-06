@@ -13,7 +13,7 @@ Manage and enhance your travel bookings with WpTravelly.A complete WordPress boo
 
 == Description ==
 
-WpTravelly- Complete tour and travel booking solution for WordPress website – The online tour booking system is the ideal solution for tour operators and travel agencies looking to create and manage customized tour packages. Offers a range of features that make it easy to establish your own travel booking website in five minutes or less using the best tour booking plugin.
+WpTravelly- Complete [tour and travel booking solution](https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/) for WordPress website – The online tour booking system is the ideal solution for tour operators and travel agencies looking to create and manage customized tour packages. Offers a range of features that make it easy to establish your own travel booking website in five minutes or less using the best tour booking plugin.
 
 ###  Explore The Demo:
 

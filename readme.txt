@@ -26,22 +26,22 @@ WpTravelly- Complete tour and travel booking solution for WordPress website – 
 
 = Unlock a World of Possibilities with Our FREE Version Plugin: =
 
-🌐 ### Support for All Payment Methods:
+### 🌐 Support for All Payment Methods:
 Easily integrate the booking system with WooCommerce and accept payments through various methods.
 
-🖥️ ### Cross Browser Support: 
+### 🖥️ Cross Browser Support: 
 Ensure a consistent and smooth experience across different browsers for your users.
 
-📱 ### Responsive and SEO-friendly: 
+### 📱  Responsive and SEO-friendly: 
 Create your booking system while ensuring the perfect search engine optimization and providing an excellent viewing experience on any device.
 
-🌍 ### Multilingual Translation Support: 
+### 🌍  Multilingual Translation Support: 
 Reach a global audience with multilingual translation support.
 
-🔍 ### Short Codes for Customization: 
+### 🔍 Short Codes for Customization: 
 Easily customize tour details and display them on any web page using available shortcodes.
 
-🌟 ### Comprehensive Tour Management:
+### 🌟 Comprehensive Tour Management:
 
 ➡ Tour Name & Description
 ➡ Ticket Type, Quantity, Prices, Category & Organizer Management
@@ -52,26 +52,26 @@ Easily customize tour details and display them on any web page using available s
 ➡ Compatibility with any standards-compliant WordPress Theme
 
 
-🛒 ### WooCommerce Support: 
+### 🛒 WooCommerce Support: 
 
 Sell products and tours separately without any mixing with WooCommerce products.
 Ready for the Next Level? Explore our PRO Version Plugin
 Activate advanced features and take your booking and service experience to new heights with our PRO Version. Upgrade your booking capabilities for an automated and efficient reservation process.
 
 
-🎫 ### Download PDF Tickets: 
+### 🎫 Download PDF Tickets: 
 Provide tickets in downloadable PDF format for their tours.
 
-📝 ### Custom Registration Form: 
+### 📝 Custom Registration Form: 
 Craft registration forms for a personalized attendee experience.
 
-📧 ### Automatic Email Confirmation and PDF Ticket Mailing: 
+### 📧 Automatic Email Confirmation and PDF Ticket Mailing: 
 Streamline communication with customers through automated emails and PDF ticket mailing.
 
-📊 ### Export Attendee List in CSV Format: 
+### 📊 Export Attendee List in CSV Format: 
 Simplify user and customer management by exporting lists in CSV format.
 
-📅 ### Particular and Repeated Dates Recurring Tours: 
+### 📅 Particular and Repeated Dates Recurring Tours: 
 Offer flexibility with particular or repeated dates for recurring tours.
 
 = Ready to upgrade your tour booking experience? View our live PRO Version Demo now. =

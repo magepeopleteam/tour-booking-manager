@@ -63,7 +63,7 @@
 										<?php } ?>
 										<span><?php echo MP_Global_Function::esc_html($ticket_price); ?></span>
 									</td>
-									<td><?php TTBM_Layout::qty_input($ticket_name, $available, $ticket_qty_type, $default_qty, $min_qty, $max_qty, $ticket_price_raw, 'ticket_qty[]'); ?></td>
+									<td><?php TTBM_Layout::qty_input($ticket_name, $available, $ticket_qty_type, $default_qty, $min_qty, $max_qty, $ticket_price_raw, 'ticket_qty[]',$tour_id); ?></td>
 								</tr>
 								<tr>
 									<td colspan=3>

@@ -89,6 +89,7 @@ if (!class_exists('TTBM_CPT')) {
         }
         public function custom_column_data($column, $post_id) {
             TTBM_Function::update_upcoming_date_month($post_id);
+            $ttbm_travel_type = MP_Global_Function::get_post_info($post_id, 'ttbm_travel_type');
             switch ($column) {
                 case 'ttbm_location' :
                     echo TTBM_Function::get_full_location($post_id);
@@ -109,7 +110,10 @@ if (!class_exists('TTBM_CPT')) {
                     }
                     break;
                 case 'ttbm_end_date' :
-                    echo TTBM_Function::datetime_format(TTBM_Function::get_reg_end_date($post_id), 'date-text');
+                    if($ttbm_travel_type == 'fixed')
+                    {
+                        echo TTBM_Function::datetime_format(TTBM_Function::get_reg_end_date($post_id), 'date-text');
+                    }
                     break;
             }
         }

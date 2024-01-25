@@ -894,16 +894,16 @@ class TTBMTourListWidget extends Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 
-		$cat 				= $settings['ttbm_tour_list_cat'] > 0 ? $settings['ttbm_tour_list_cat'] : '';
-		$org 				= $settings['ttbm_tour_list_org'] > 0 ? $settings['ttbm_tour_list_org'] : '';
-	    $city 				= $settings['ttbm_tour_list_location'];
-		$country 			= $settings['ttbm_tour_list_country'];
-		$style 				= $settings['ttbm_tour_list_style'] ? $settings['ttbm_tour_list_style'] : 'grid';
-		$column 			= $settings['ttbm_tour_list_column'] ? $settings['ttbm_tour_list_column'] : '3';		
-		$show 				= $settings['ttbm_tour_list_show'] ? $settings['ttbm_tour_list_show'] : '10';
-		$pagination 		= $settings['ttbm_tour_list_pagination'] ? $settings['ttbm_tour_list_pagination'] : 'no';
-		$sort 				= $settings['ttbm_tour_list_sort'] ? $settings['ttbm_tour_list_sort'] : 'ASC';
-		$status 			= $settings['ttbm_tour_list_status'] ? $settings['ttbm_tour_list_status'] : 'upcoming';
+		$cat 				= array_key_exists('ttbm_tour_list_cat',$settings) && $settings['ttbm_tour_list_cat'] > 0 ? $settings['ttbm_tour_list_cat'] : '';
+		$org 				= array_key_exists('ttbm_tour_list_org',$settings) && $settings['ttbm_tour_list_org'] > 0 ? $settings['ttbm_tour_list_org'] : '';
+	    $city 				= array_key_exists('ttbm_tour_list_location',$settings) ? $settings['ttbm_tour_list_location'] : '';
+		$country 			= array_key_exists('ttbm_tour_list_country',$settings) ? $settings['ttbm_tour_list_country'] : '';
+		$style 				= array_key_exists('ttbm_tour_list_style',$settings) ? $settings['ttbm_tour_list_style'] : 'grid';
+		$column 			= array_key_exists('ttbm_tour_list_column',$settings) ? $settings['ttbm_tour_list_column'] : '3';		
+		$show 				= array_key_exists('ttbm_tour_list_show',$settings) ? $settings['ttbm_tour_list_show'] : '10';
+		$pagination 		= array_key_exists('ttbm_tour_list_pagination',$settings) ? $settings['ttbm_tour_list_pagination'] : 'no';
+		$sort 				= array_key_exists('ttbm_tour_list_sort',$settings) ? $settings['ttbm_tour_list_sort'] : 'ASC';
+		$status 			= array_key_exists('ttbm_tour_list_status',$settings) ? $settings['ttbm_tour_list_status'] : 'upcoming';
 
 
 ?>

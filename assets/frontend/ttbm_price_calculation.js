@@ -15,6 +15,10 @@ function mpTourTotalPrice(parent) {
 	currentTarget.each(function () {
 		let unitPrice = parseFloat(jQuery(this).attr('data-price'));
 		let qty = parseInt(jQuery(this).val());
+		if(qty > 0 && jQuery(this).data('unit-qty') > 0 && jQuery(this).data('group-ticket-option') == 'on')
+		{
+			//qty = parseInt(qty*jQuery(this).data('unit-qty'));
+		}
 		totalQty += qty;
 		let hotel_parent = jQuery(this).closest('.ttbm_hotel_item');
 		let hotel_id = hotel_parent.find('[name="ttbm_hotel_id"').val();
@@ -79,9 +83,18 @@ function mp_tour_ticket_qty(parent) {
 	parent.find('.mp_tour_ticket_type').find('.formControl[data-price]').each(function () {
 		let qty = parseInt(jQuery(this).val());
 		qty=qty>0?qty:0;
+		if(qty > 0 && jQuery(this).data('unit-qty') > 0 && jQuery(this).data('group-ticket-option') == 'on')
+		{
+			//qty = parseInt(qty*jQuery(this).data('unit-qty'));
+		}
 		totalQty += qty;
 		if (single_attendee === 'off') {
-			ttbm_multi_attendee_form(jQuery(this).closest('tr'), qty);
+			if(qty > 0 && jQuery(this).data('unit-qty') > 0 && jQuery(this).data('group-ticket-option') == 'on')
+			{
+				qty = parseInt(1);
+			}
+
+			ttbm_multi_attendee_form(jQuery(this).closest('tr'), qty);			
 		}
 	});
 	totalQty=totalQty > 0 ? totalQty : 0;

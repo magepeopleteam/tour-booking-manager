@@ -199,6 +199,9 @@ if (!class_exists('TTBM_Woocommerce')) {
                         }
                     }
                 }
+
+                do_action('ttbm_send_mail',$order_id);
+                update_post_meta($order_id, 'ttbm_initial_email_send', 'yes');
             }
         }
         public function order_status_changed($order_id) {
@@ -311,7 +314,8 @@ if (!class_exists('TTBM_Woocommerce')) {
                                         <h6><?php echo esc_html(TTBM_Function::ticket_price_text()); ?> :&nbsp;</h6>
                                         <span><?php echo ' ( ' . MP_Global_Function::wc_price($ttbm_id, $ticket['ticket_price']) . ' x ' . $ticket['ticket_qty'] . ' x ' . $hotel_info['ttbm_hotel_num_of_day'] . ') = ' . MP_Global_Function::wc_price($ttbm_id, ($ticket['ticket_price'] * $ticket['ticket_qty'] * $hotel_info['ttbm_hotel_num_of_day'])); ?></span>
                                     </li>
-                                <?php } else { ?>
+                                <?php } else { 
+                                    $ticket_type_unit_qty = apply_filters('ttbm_get_group_ticket_qty','',$ticket['ticket_name'],$ttbm_id);?>
                                     <li>
                                         <h6><?php echo esc_html(TTBM_Function::ticket_name_text()); ?> :&nbsp;</h6>
                                         <span><?php echo esc_html($ticket['ticket_name']); ?></span>
@@ -445,15 +449,18 @@ if (!class_exists('TTBM_Woocommerce')) {
             $checkout_date = sizeof($hotel_info) > 0 ? $hotel_info['ttbm_checkout_date'] : '';
             $num_of_day = sizeof($hotel_info) > 0 ? $hotel_info['ttbm_hotel_num_of_day'] : 1;
             if (sizeof($ticket_info) > 0) {
-                $count = 0;
+                $count = 0; $k = -1;$prev_ticket_type_name = "";
                 foreach ($ticket_info as $_ticket) {
-                    $qty = $_ticket['ticket_qty'];
+                    $ticket_type_unit_qty = apply_filters('ttbm_get_group_ticket_qty','',$_ticket['ticket_name'],$ttbm_id);
+                    $qty = $_ticket['ticket_qty']*($ticket_type_unit_qty > 1?$ticket_type_unit_qty:1);
+                    //$price = TTBM_Function::get_price_by_name($names[$i], $tour_id, $hotel_id, $ticket_type_qty, $start_date) * $ticket_type_qty;
                     for ($key = 0; $key < $qty; $key++) {
                         $zdata[$count]['ttbm_ticket_name'] = $_ticket['ticket_name'];
                         $zdata[$count]['ttbm_ticket_price'] = $_ticket['ticket_price'] * $num_of_day;
-                        $zdata[$count]['ttbm_ticket_total_price'] = ($_ticket['ticket_price'] * $_ticket['ticket_qty']) * $num_of_day;
+                        $zdata[$count]['ttbm_ticket_total_price'] = ($_ticket['ticket_price'] * $qty) * $num_of_day;
                         $zdata[$count]['ttbm_date'] = $_ticket['ttbm_date'];
                         $zdata[$count]['ttbm_ticket_qty'] = $_ticket['ticket_qty'];
+                        $zdata[$count]['ttbm_group_ticket_unit_qty'] = $qty;
                         $zdata[$count]['ttbm_hotel_id'] = $hotel_id;
                         $zdata[$count]['ttbm_checkin_date'] = $checkin_date;
                         $zdata[$count]['ttbm_checkout_date'] = $checkout_date;
@@ -468,8 +475,9 @@ if (!class_exists('TTBM_Woocommerce')) {
                         $zdata[$count]['ttbm_billing_phone'] = $billing_phone;
                         $zdata[$count]['ttbm_billing_address'] = $billing_address;
                         $user_data = apply_filters('ttbm_user_booking_data_arr', $zdata[$count], $count, $user_info, $ttbm_id);
-                        //echo '<pre>';print_r($user_data['ttbm_billing_name']);echo '</pre>';
-                        //echo '<pre>';print_r($user_data);echo '</pre>';die();
+                        // echo '<pre>';print_r($user_data['ttbm_billing_name']);echo '</pre>';
+                        // echo '<pre>';print_r($user_data);echo '</pre>';die();
+                        //echo "<pre>";print_r(array($k,$user_data));echo "</pre>";exit;
                         self::add_cpt_data('ttbm_booking', $user_data['ttbm_billing_name'], $user_data);
                         $count++;
                     }
@@ -536,6 +544,9 @@ if (!class_exists('TTBM_Woocommerce')) {
             if (sizeof($names) > 0) {
                 for ($i = 0; $i < $count; $i++) {
                     if ($qty[$i] > 0) {
+                        // $ticket_type_unit_qty = apply_filters('ttbm_get_group_ticket_qty','',$names[$i],$tour_id);
+                        // $ticket_type_qty = ($qty[$i] * ($ticket_type_unit_qty > 1?$ticket_type_unit_qty:1));
+                        // $price = TTBM_Function::get_price_by_name($names[$i], $tour_id, $hotel_id, $ticket_type_qty, $start_date) * $ticket_type_qty;
                         $price = TTBM_Function::get_price_by_name($names[$i], $tour_id, $hotel_id, $qty[$i], $start_date) * $qty[$i];
                         if ($hotel_id > 0) {
                             $price = $price * MP_Global_Function::get_submit_info('ttbm_hotel_num_of_day');

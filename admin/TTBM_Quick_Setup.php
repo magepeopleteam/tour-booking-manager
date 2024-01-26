@@ -29,91 +29,96 @@
 				}
 			}
 			public function quick_setup() {
+			
 				$status = MP_Global_Function::check_woocommerce();
-				if (isset($_POST['active_woo_btn'])) {
-					?>
-					<script>
-						dLoaderBody();
-					</script>
-					<?php
-					activate_plugin('woocommerce/woocommerce.php');
-					TTBM_Woocommerce_Plugin::on_activation_page_create();
-					?>
-					<script>
-						(function ($) {
-							"use strict";
-							$(document).ready(function () {
-								let ttbm_admin_location = window.location.href;
-								ttbm_admin_location = ttbm_admin_location.replace('admin.php?post_type=ttbm_tour&page=ttbm_quick_setup', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
-								ttbm_admin_location = ttbm_admin_location.replace('admin.php?page=ttbm_tour', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
-								ttbm_admin_location = ttbm_admin_location.replace('admin.php?page=ttbm_quick_setup', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
-								window.location.href = ttbm_admin_location;
-							});
-						}(jQuery));
-					</script>
-					<?php
-				}
-				if (isset($_POST['install_and_active_woo_btn'])) {
-					echo '<div style="display:none">';
-					include_once(ABSPATH . 'wp-admin/includes/plugin-install.php');
-					include_once(ABSPATH . 'wp-admin/includes/file.php');
-					include_once(ABSPATH . 'wp-admin/includes/misc.php');
-					include_once(ABSPATH . 'wp-admin/includes/class-wp-upgrader.php');
-					$plugin = 'woocommerce';
-					$api = plugins_api('plugin_information', array(
-						'slug' => $plugin,
-						'fields' => array(
-							'short_description' => false,
-							'sections' => false,
-							'requires' => false,
-							'rating' => false,
-							'ratings' => false,
-							'downloaded' => false,
-							'last_updated' => false,
-							'added' => false,
-							'tags' => false,
-							'compatibility' => false,
-							'homepage' => false,
-							'donate_link' => false,
-						),
-					));
-					$woocommerce_plugin = new Plugin_Upgrader(new Plugin_Installer_Skin(compact('title', 'url', 'nonce', 'plugin', 'api')));
-					$woocommerce_plugin->install($api->download_link);
-					activate_plugin('woocommerce/woocommerce.php');
-					TTBM_Woocommerce_Plugin::on_activation_page_create();
-					echo '</div>';
-					?>
-					<script>
-						(function ($) {
-							"use strict";
-							$(document).ready(function () {
-								let ttbm_admin_location = window.location.href;
-								ttbm_admin_location = ttbm_admin_location.replace('admin.php?post_type=ttbm_tour&page=ttbm_quick_setup', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
-								ttbm_admin_location = ttbm_admin_location.replace('admin.php?page=ttbm_tour', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
-								ttbm_admin_location = ttbm_admin_location.replace('admin.php?page=ttbm_quick_setup', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
-								window.location.href = ttbm_admin_location;
-							});
-						}(jQuery));
-					</script>
-					<?php
-				}
-				if (isset($_POST['finish_quick_setup'])) {
-					$label = isset($_POST['ttbm_travel_label']) ? sanitize_text_field($_POST['ttbm_travel_label']) : 'Tour';
-					$slug = isset($_POST['ttbm_travel_slug']) ? sanitize_text_field($_POST['ttbm_travel_slug']) : 'Tour';
-					$general_settings_data = get_option('ttbm_basic_gen_settings');
-					$update_general_settings_arr = [
-						'ttbm_travel_label' => $label,
-						'ttbm_travel_slug' => $slug
-					];
-					$new_general_settings_data = is_array($general_settings_data) ? array_replace($general_settings_data, $update_general_settings_arr) : $update_general_settings_arr;
-					update_option('ttbm_basic_gen_settings', $new_general_settings_data);
-					update_option('ttbm_quick_setup_done', 'yes');
-					wp_redirect(admin_url('edit.php?post_type=ttbm_tour'));
+				if (isset($_POST['ttbm_quick_setup']) && wp_verify_nonce($_POST['ttbm_quick_setup'], 'ttbm_quick_setup_nonce'))
+				{
+					if (isset($_POST['active_woo_btn'])) {
+						?>
+						<script>
+							dLoaderBody();
+						</script>
+						<?php
+						activate_plugin('woocommerce/woocommerce.php');
+						TTBM_Woocommerce_Plugin::on_activation_page_create();
+						?>
+						<script>
+							(function ($) {
+								"use strict";
+								$(document).ready(function () {
+									let ttbm_admin_location = window.location.href;
+									ttbm_admin_location = ttbm_admin_location.replace('admin.php?post_type=ttbm_tour&page=ttbm_quick_setup', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
+									ttbm_admin_location = ttbm_admin_location.replace('admin.php?page=ttbm_tour', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
+									ttbm_admin_location = ttbm_admin_location.replace('admin.php?page=ttbm_quick_setup', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
+									window.location.href = ttbm_admin_location;
+								});
+							}(jQuery));
+						</script>
+						<?php
+					}
+					if (isset($_POST['install_and_active_woo_btn'])) {
+						echo '<div style="display:none">';
+						include_once(ABSPATH . 'wp-admin/includes/plugin-install.php');
+						include_once(ABSPATH . 'wp-admin/includes/file.php');
+						include_once(ABSPATH . 'wp-admin/includes/misc.php');
+						include_once(ABSPATH . 'wp-admin/includes/class-wp-upgrader.php');
+						$plugin = 'woocommerce';
+						$api = plugins_api('plugin_information', array(
+							'slug' => $plugin,
+							'fields' => array(
+								'short_description' => false,
+								'sections' => false,
+								'requires' => false,
+								'rating' => false,
+								'ratings' => false,
+								'downloaded' => false,
+								'last_updated' => false,
+								'added' => false,
+								'tags' => false,
+								'compatibility' => false,
+								'homepage' => false,
+								'donate_link' => false,
+							),
+						));
+						$woocommerce_plugin = new Plugin_Upgrader(new Plugin_Installer_Skin(compact('title', 'url', 'nonce', 'plugin', 'api')));
+						$woocommerce_plugin->install($api->download_link);
+						activate_plugin('woocommerce/woocommerce.php');
+						TTBM_Woocommerce_Plugin::on_activation_page_create();
+						echo '</div>';
+						?>
+						<script>
+							(function ($) {
+								"use strict";
+								$(document).ready(function () {
+									let ttbm_admin_location = window.location.href;
+									ttbm_admin_location = ttbm_admin_location.replace('admin.php?post_type=ttbm_tour&page=ttbm_quick_setup', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
+									ttbm_admin_location = ttbm_admin_location.replace('admin.php?page=ttbm_tour', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
+									ttbm_admin_location = ttbm_admin_location.replace('admin.php?page=ttbm_quick_setup', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
+									window.location.href = ttbm_admin_location;
+								});
+							}(jQuery));
+						</script>
+						<?php
+					}
+					if (isset($_POST['finish_quick_setup'])) {
+						$label = isset($_POST['ttbm_travel_label']) ? sanitize_text_field($_POST['ttbm_travel_label']) : 'Tour';
+						$slug = isset($_POST['ttbm_travel_slug']) ? sanitize_text_field($_POST['ttbm_travel_slug']) : 'Tour';
+						$general_settings_data = get_option('ttbm_basic_gen_settings');
+						$update_general_settings_arr = [
+							'ttbm_travel_label' => $label,
+							'ttbm_travel_slug' => $slug
+						];
+						$new_general_settings_data = is_array($general_settings_data) ? array_replace($general_settings_data, $update_general_settings_arr) : $update_general_settings_arr;
+						update_option('ttbm_basic_gen_settings', $new_general_settings_data);
+						update_option('ttbm_quick_setup_done', 'yes');
+						wp_redirect(admin_url('edit.php?post_type=ttbm_tour'));
+					}					
 				}
 				?>
 				<div class="mpStyle">
 					<div class=_dShadow_6_adminLayout">
 						<form method="post" action="">
+							<?php wp_nonce_field('ttbm_quick_setup_nonce', 'ttbm_quick_setup'); ?>
 							<div class="mpTabsNext">
 								<div class="tabListsNext _max_700_mAuto">
 									<div data-tabs-target-next="#ttbm_qs_welcome" class="tabItemNext" data-open-text="1" data-close-text=" " data-open-icon="" data-close-icon="fas fa-check" data-add-class="success">

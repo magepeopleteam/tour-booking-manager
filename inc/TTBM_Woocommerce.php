@@ -478,7 +478,7 @@ if (!class_exists('TTBM_Woocommerce')) {
                         // echo '<pre>';print_r($user_data['ttbm_billing_name']);echo '</pre>';
                         // echo '<pre>';print_r($user_data);echo '</pre>';die();
                         //echo "<pre>";print_r(array($k,$user_data));echo "</pre>";exit;
-                        self::add_cpt_data('ttbm_booking', $user_data['ttbm_billing_name'], $user_data);
+                        self::add_cpt_data('ttbm_booking', $user_data['ttbm_billing_name'], $user_data);                        
                         $count++;
                     }
                 }
@@ -568,26 +568,64 @@ if (!class_exists('TTBM_Woocommerce')) {
             }
             return $total_price;
         }
-        public static function add_cpt_data($cpt_name, $title, $meta_data = array(), $status = 'publish', $cat = array()) {
-            $new_post = array(
-                'post_title' => $title,
-                'post_content' => '',
-                'post_category' => $cat,
-                'tags_input' => array(),
-                'post_status' => $status,
-                'post_type' => $cpt_name
-            );
-            $post_id = wp_insert_post($new_post);
-            if (sizeof($meta_data) > 0) {
-                foreach ($meta_data as $key => $value) {
-                    update_post_meta($post_id, $key, $value);
+        public static function add_cpt_data($cpt_name, $title, $meta_data = array(), $status = 'publish', $cat = array()) 
+        {
+            if(!self::check_duplicate_order( $meta_data['ttbm_order_id'], $meta_data['ttbm_id']))
+            {
+                $new_post = array(
+                    'post_title' => $title,
+                    'post_content' => '',
+                    'post_category' => $cat,
+                    'tags_input' => array(),
+                    'post_status' => $status,
+                    'post_type' => $cpt_name
+                );
+                $post_id = wp_insert_post($new_post);
+                if (sizeof($meta_data) > 0) {
+                    foreach ($meta_data as $key => $value) {
+                        update_post_meta($post_id, $key, $value);
+                    }
                 }
+                if ($cpt_name == 'ttbm_booking') {
+                    $ttbm_pin = $meta_data['ttbm_user_id'] . $meta_data['ttbm_order_id'] . $meta_data['ttbm_id'] . $post_id;
+                    update_post_meta($post_id, 'ttbm_pin', $ttbm_pin);
+                }
+
             }
-            if ($cpt_name == 'ttbm_booking') {
-                $ttbm_pin = $meta_data['ttbm_user_id'] . $meta_data['ttbm_order_id'] . $meta_data['ttbm_id'] . $post_id;
-                update_post_meta($post_id, 'ttbm_pin', $ttbm_pin);
+            
+        }
+
+        public static function check_duplicate_order($order_id, $ttbm_id)
+        {
+            $args = array(
+                'post_type'      => 'ttbm_booking',
+                'meta_query'     => array(
+                    'relation' => 'AND',
+                    array(
+                        'key'     => 'ttbm_order_id',
+                        'value'   => $order_id,
+                        'compare' => '=',
+                    ),
+                    array(
+                        'key'     => 'ttbm_id',
+                        'value'   => $ttbm_id,
+                        'compare' => '=',
+                    ),
+                ),
+            );
+
+            $query = new WP_Query($args);
+
+            if ($query->have_posts()) 
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
+
     }
     new TTBM_Woocommerce();
 }

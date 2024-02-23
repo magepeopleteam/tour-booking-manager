@@ -34,7 +34,7 @@
 			}
 
 
-        public function get_meta_values( $meta_key = '', $post_type = 'post', $post_status = 'publish' ) {
+        public static function get_meta_values( $meta_key = '', $post_type = 'post', $post_status = 'publish' ) {
 
                 global $wpdb;
 

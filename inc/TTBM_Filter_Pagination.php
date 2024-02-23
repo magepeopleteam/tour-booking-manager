@@ -189,7 +189,14 @@
 				if ( $params['organizer-filter'] == 'yes' ) {
 					$organizers = MP_Global_Function::get_taxonomy( 'ttbm_tour_org' );
 
-					if ( sizeof( $organizers ) > 0 ) {
+                    $total_organizers = 0;
+                    foreach ($organizers as $organizer) {
+                        if (get_term($organizer->term_id, 'ttbm_tour_org')->count) {
+                            $total_organizers++;
+                        }
+                    }
+
+					if ( sizeof( $organizers ) > 0 && $total_organizers ) {
 						?>
 						<h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#ttbm_organizer_filter_left" data-placeholder>
 							<?php esc_html_e( 'Filters By Organizer', 'tour-booking-manager' ); ?>
@@ -487,7 +494,15 @@
 			public function tag_filter_multiple( $params ) {
 				if ( $params['tag-filter'] == 'yes' ) {
 					$tags = MP_Global_Function::get_taxonomy( 'ttbm_tour_tag' );
-					if ( sizeof( $tags ) > 0 ) {
+                    $total_tags = 0;
+                    foreach ($tags as $tag) {
+                        if (get_term($tag->term_id, 'ttbm_tour_tag')->count) {
+                            $total_tags++;
+                        }
+                    }
+
+
+                        if ( sizeof( $tags ) > 0 && $total_tags ) {
 						?>
 						<h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#tag_filter_multiple" data-placeholder>
 							<?php esc_html_e( 'Specials', 'tour-booking-manager' ); ?>

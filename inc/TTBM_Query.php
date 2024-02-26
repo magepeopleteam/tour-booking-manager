@@ -98,6 +98,7 @@
 				}
 				else
 				{
+					//return TTBM_Function::get_active_tours($args);
 					return new WP_Query($args);
 				}
 			}

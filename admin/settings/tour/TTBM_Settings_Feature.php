@@ -30,7 +30,7 @@
 			public function ttbm_settings_feature($tour_id) {
 				?>
 				<div class="tabsItem ttbm_settings_feature" data-tabs="#ttbm_settings_feature">
-					<h2 class="h4 px-0 text-primary"><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></h2>
+					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Feature Settings', 'tour-booking-manager'); ?></h2>
 					
 					<div class="mtb ttbm_features_table">
 						<?php $this->feature($tour_id); ?>
@@ -63,12 +63,16 @@
 						<div class="mt-4 w-100 d-flex justify-content-between align-items-center"> 
                             <div class="w-50 d-flex justify-content-between align-items-center">
 								<div data-collapse="#ttbm_display_include_service" class="<?php echo esc_attr($include_active); ?> w-100 p-2 bg-light rounded border">
-									<?php $this->feature_list($tour_id, 'ttbm_service_included_in_price'); ?> 
+									<div class="includedd-features-section">
+										<?php $this->feature_list($tour_id, 'ttbm_service_included_in_price'); ?> 
+									</div>
 								</div>
                             </div>
                             <div class="w-50 d-flex justify-content-between align-items-center ms-5">
 								<div data-collapse="#ttbm_display_exclude_service" class="<?php echo esc_attr($include_active); ?> w-100 p-2 bg-light  rounded border">
-									<?php $this->feature_list($tour_id, 'ttbm_service_excluded_in_price'); ?>
+									<div class="excludedd-features-section">	
+										<?php $this->feature_list($tour_id, 'ttbm_service_excluded_in_price'); ?>
+									</div>
 								</div>
                             </div>
                         </div>
@@ -150,10 +154,29 @@
 				<?php
 				die();
 			}
-			public function ttbm_reload_feature_list() {
+			// public function ttbm_reload_feature_list() {
+			// 	$ttbm_id = MP_Global_Function::data_sanitize($_POST['ttbm_id']);
+			// 	$this->feature($ttbm_id);
+			// 	die();
+			// }
+			public function ttbm_reload_feature_list()
+			{
 				$ttbm_id = MP_Global_Function::data_sanitize($_POST['ttbm_id']);
+
+				// Load the included and excluded features sections
+				ob_start();
 				$this->feature($ttbm_id);
-				die();
+				$included_features_html = ob_get_clean();
+
+				ob_start();
+				$this->feature($ttbm_id);
+				$excluded_features_html = ob_get_clean();
+
+				// Return the HTML content of both sections
+				wp_send_json_success(array(
+					'included_features_html' => $included_features_html,
+					'excluded_features_html' => $excluded_features_html
+				));
 			}
 			//*********//
 			public function save_features($tour_id) {

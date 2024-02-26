@@ -99,6 +99,7 @@ if (!class_exists('TTBM_CPT')) {
                     break;
                 case 'ttbm_start_date' :
                     $upcoming_date = MP_Global_Function::get_post_info($post_id, 'ttbm_upcoming_date');
+
                     if ($upcoming_date) {
                         ?>
                         <span class="textSuccess"><?php echo esc_html(TTBM_Function::datetime_format($upcoming_date, 'date-text')); ?></span>

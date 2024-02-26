@@ -64,7 +64,7 @@
 											<div class="min_300" data-collapse="#ttbm_list_organizer_filter">
 												<label data-placeholder>
 													<select class="formControl" name="ttbm_list_organizer_filter">
-														<option selected value=""><?php esc_html_e('All Organizer', 'tour-booking-manager'); ?></option>
+														<option selected value=""><?php esc_html_e('All Organizer tt', 'tour-booking-manager'); ?></option>
 														<?php foreach ($organizers as $organizer) { ?>
 															<option value="<?php echo esc_attr($organizer->term_id); ?>"><?php echo esc_html($organizer->name); ?></option>
 														<?php } ?>

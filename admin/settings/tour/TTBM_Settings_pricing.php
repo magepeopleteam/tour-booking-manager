@@ -325,7 +325,3 @@ if (!class_exists('TTBM_Settings_pricing')) {
     }
     new TTBM_Settings_pricing();
 }
-
-
-
-

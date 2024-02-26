@@ -40,7 +40,6 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_General.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_pricing.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_filter.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_extra_service.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Gallery.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Feature.php';

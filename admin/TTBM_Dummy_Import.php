@@ -63,7 +63,10 @@
                                         unset($term);
                                         $term = wp_insert_term($taxonomy_data['name'], $taxonomy);
                                         
-                                        add_term_meta( $taxonomy_data['term_id'], 'ttbm_feature_icon', 'raselsa', false );
+                                        if (array_key_exists('term_id', $taxonomy_data)) 
+                                        {
+                                            add_term_meta( $taxonomy_data['term_id'], 'ttbm_feature_icon', 'raselsa', false );
+                                        }
                                         
                                         if (array_key_exists('tax_data', $taxonomy_data)) {
                                             foreach ($taxonomy_data['tax_data'] as $meta_key => $data) {

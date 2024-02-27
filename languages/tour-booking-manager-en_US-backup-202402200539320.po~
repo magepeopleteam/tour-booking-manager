@@ -393,7 +393,7 @@ msgstr "Make your booking"
 
 #: inc/TTBM_Booking.php:34 inc/TTBM_Ajax.php:47
 msgid "Available Ticket List "
-msgstr "Make your booking"
+msgstr ""
 
 #: support/elementor/widget/tour-list.php:335
 #: support/elementor/widget/tour-list.php:456

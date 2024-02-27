@@ -580,6 +580,7 @@ if (!class_exists('TTBM_Woocommerce')) {
                     'post_status' => $status,
                     'post_type' => $cpt_name
                 );
+                wp_reset_postdata();
                 $post_id = wp_insert_post($new_post);
                 if (sizeof($meta_data) > 0) {
                     foreach ($meta_data as $key => $value) {
@@ -590,6 +591,7 @@ if (!class_exists('TTBM_Woocommerce')) {
                     $ttbm_pin = $meta_data['ttbm_user_id'] . $meta_data['ttbm_order_id'] . $meta_data['ttbm_id'] . $post_id;
                     update_post_meta($post_id, 'ttbm_pin', $ttbm_pin);
                 }
+                wp_reset_postdata();
 
             }
             

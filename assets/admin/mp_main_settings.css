@@ -748,7 +748,7 @@
   left: 50%;
   transform: translate(-50%);
   visibility: hidden;
-  font-family: ubuntu;
+  font-family: "Sans-serif";
   font-size: 0.9rem;
   text-align: center;
   background-color: var(--mpl-black);
@@ -843,14 +843,14 @@
 #mp_meta_box_panel body,
 #mp_meta_box_panel p {
   color: var(--mpl-secondary);
-  font-family: ubuntu;
+  font-family: "Sans-serif";
   font-size: 1rem;
   font-weight: initial;
   line-height: 1.5;
 }
 #mp_meta_box_panel h1, #mp_meta_box_panel h2, #mp_meta_box_panel h3, #mp_meta_box_panel h4, #mp_meta_box_panel h5, #mp_meta_box_panel h6,
 #mp_meta_box_panel .h1, #mp_meta_box_panel .h2, #mp_meta_box_panel .h3, #mp_meta_box_panel .h4, #mp_meta_box_panel .h5, #mp_meta_box_panel .h6 {
-  font-family: ubuntu;
+  font-family: "sans-serif";
   line-height: 1.3;
 }
 #mp_meta_box_panel h1,
@@ -883,7 +883,7 @@
   line-height: 1.5;
 }
 #mp_meta_box_panel .fw-bold {
-  font-family: ubuntuBold;
+  font-family: "sans-serif";
   font-weight: 500;
 }
 #mp_meta_box_panel a {
@@ -1066,7 +1066,7 @@
 #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs .description, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs .description {
   margin: 0;
   padding: 0.75em 0;
-  font-family: ubuntu;
+  font-family: "Sans-serif";
   font-size: 1rem;
 }
 #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table {

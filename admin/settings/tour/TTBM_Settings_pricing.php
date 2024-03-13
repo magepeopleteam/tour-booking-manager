@@ -64,7 +64,7 @@ if (!class_exists('TTBM_Settings_pricing')) {
             <?php
         }
 
-        public function ttbm_add_to_cart_form_shortcode(){
+        public function ttbm_add_to_cart_form_shortcode($tour_id){
             ?>
             <section class="component d-flex justify-content-between align-items-center my-2">
                 <div class="w-100 d-flex justify-content-between align-items-center">
@@ -280,16 +280,25 @@ if (!class_exists('TTBM_Settings_pricing')) {
                 update_post_meta($tour_id, 'ttbm_hotels', $ttbm_hotels);
                 //*********Regular Ticket Price**************//
                 $ttbm_travel_type = TTBM_Function::get_travel_type($tour_id);
-                if ($ttbm_travel_type == 'particular') {
+                if($ttbm_travel_type == 'fixed')
+                {
+                    update_post_meta($tour_id, 'ttbm_travel_start_date', MP_Global_Function::get_submit_info('ttbm_travel_start_date'));
+                    update_post_meta($tour_id, 'ttbm_travel_start_date_time', MP_Global_Function::get_submit_info('ttbm_travel_start_date_time'));
+                    update_post_meta($tour_id, 'ttbm_travel_end_date', MP_Global_Function::get_submit_info('ttbm_travel_end_date'));
+                    update_post_meta($tour_id, 'ttbm_travel_reg_end_date', MP_Global_Function::get_submit_info('ttbm_travel_reg_end_date'));
+                }
+                elseif ($ttbm_travel_type == 'particular') {
                     $after_day = date('Y-m-d', strtotime(' +500 day'));
                     update_post_meta($tour_id, 'ttbm_travel_reg_end_date', $after_day);
                 }
                 elseif ($ttbm_travel_type == 'repeated') {
                     update_post_meta($tour_id, 'ttbm_travel_reg_end_date', MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_date'));
                 }
-                else {
+                else
+                {
                     update_post_meta($tour_id, 'ttbm_travel_reg_end_date', MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_reg_end_date'));
                 }
+                
                 //*************Regular ticket***********************//
                 $new_ticket_type = array();
                 $icon = MP_Global_Function::get_submit_info('ticket_type_icon', array());

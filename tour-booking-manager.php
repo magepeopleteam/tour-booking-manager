@@ -8,8 +8,6 @@
 	 * Author URI: http://www.mage-people.com/
 	 * Text Domain: tour-booking-manager
 	 * Domain Path: /languages/
-	 * WC requires at least: 3.0.9
-	 * WC tested up to: 5.0
 	 */
 	if (!defined('ABSPATH')) {
 		die;

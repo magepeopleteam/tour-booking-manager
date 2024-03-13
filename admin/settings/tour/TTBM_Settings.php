@@ -12,7 +12,7 @@
 			//************************//
 			public function settings_meta() {
 				$label = TTBM_Function::get_name();
-				add_meta_box('mp_meta_box_panel', '<span class="fas fa-cogs"></span>' . $label . esc_html__(' Information Settings : ', 'tour-booking-manager') . get_the_title(get_the_id()), array($this, 'settings'), 'ttbm_tour', 'normal', 'high');
+				add_meta_box('mp_meta_box_panel', '' . $label . esc_html__(' Information Settings : ', 'tour-booking-manager') . get_the_title(get_the_id()), array($this, 'settings'), 'ttbm_tour', 'normal', 'high');
 			}
 			//******************************//
 			public function settings() {

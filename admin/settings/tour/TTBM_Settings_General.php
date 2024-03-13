@@ -43,28 +43,30 @@
 				$checked = ($display == 'off') ? '' : 'checked';
 				$active = ($display == 'off') ? '' : 'mActive';
 				?>
-				<h2 class="h4 px-0 text-primary"><?php esc_html_e('General Information Settings', 'tour-booking-manager'); ?></h2>
-				<hr>
-				<section class="component d-flex justify-content-between align-items-center mb-2">
-					<div class="w-50 d-flex justify-content-between align-items-center">
-						<label for=""><?php esc_html_e('Tour Duration', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('duration'); ?></i></label>
-						<div class=" d-flex justify-content-between">
-							<input class="small rounded text-center" min="0" type="number" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
-							<select class="rounded ms-2" name="ttbm_travel_duration_type">
-								<option value="day" <?php echo esc_attr($duration_type == 'day' ? 'selected' : ''); ?>><?php esc_html_e('Days', 'tour-booking-manager'); ?></option>
-								<option value="hour" <?php echo esc_attr($duration_type == 'hour' ? 'selected' : ''); ?>><?php esc_html_e('Hours', 'tour-booking-manager'); ?></option>
-								<option value="min" <?php echo esc_attr($duration_type == 'min' ? 'selected' : ''); ?>><?php esc_html_e('Minutes', 'tour-booking-manager'); ?> </option>
-							</select>
-						</div>
+				<h2><?php esc_html_e('General Information Settings', 'tour-booking-manager'); ?></h2>
+				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore aliquam asperiores impedit officiis fuga odit eligendi recusandae ullam cum magnam!</p>
+				<!-- header end -->
+				<section>
+					<div>
+						<label for=""><?php esc_html_e('Tour Duration', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+						<?php TTBM_Settings::des_p('duration'); ?>
 					</div>
-					<div class="w-50 ms-5 d-flex justify-content-between align-items-center">
+					<div class="dFlex">
+						<input class="small rounded text-center" min="0" type="number" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+						<select class="rounded ms-2" name="ttbm_travel_duration_type">
+							<option value="day" <?php echo esc_attr($duration_type == 'day' ? 'selected' : ''); ?>><?php esc_html_e('Days', 'tour-booking-manager'); ?></option>
+							<option value="hour" <?php echo esc_attr($duration_type == 'hour' ? 'selected' : ''); ?>><?php esc_html_e('Hours', 'tour-booking-manager'); ?></option>
+							<option value="min" <?php echo esc_attr($duration_type == 'min' ? 'selected' : ''); ?>><?php esc_html_e('Minutes', 'tour-booking-manager'); ?> </option>
+						</select>
+					</div>
+				</section>
+				<section>
+					<div >
 						<label for=""><?php esc_html_e('Stay Night', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
-						<div class=" d-flex justify-content-between align-items-center">
-							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
-							
-							<input type="number" data-collapse="#<?php echo esc_attr($display_name); ?>" min="0" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="ttbm_travel_duration_night" value="<?php echo MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_night'); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
-							
-						</div>
+					</div>	
+					<div class="dFlex_alignCenter">
+						<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+						<input type="number" data-collapse="#<?php echo esc_attr($display_name); ?>" min="0" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="ttbm_travel_duration_night" value="<?php echo MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_night'); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
 					</div>
 				</section>
 				<?php
@@ -87,24 +89,26 @@
 				$max_people_status_active = ($max_people_field_status == 'off') ? '' : 'mActive';
 				?>
 				
-				<section class="component d-flex justify-content-between mb-2">
-					<div class="w-50 d-flex justify-content-between align-items-center">
-						<label for=""><?php esc_html_e('Tour Start Price', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('start_price'); ?></i></label>
-						<div class=" d-flex justify-content-between align-items-center">
-							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
-							<input type="number"  min="0" data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
-						</div>
+				<section>
+					<div>
+						<label for=""><?php esc_html_e('Tour Start Price', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"></i></label>
+						<?php TTBM_Settings::des_p('start_price'); ?>
 					</div>
-					<div class="w-50 ms-5 d-flex justify-content-between align-items-center">
-						<label for=""><?php esc_html_e('Max People Allow', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('max_people'); ?></i></label>
-						<div class=" d-flex justify-content-between align-items-center">
-							<?php MP_Custom_Layout::switch_button($max_people_status_field_name, $max_people_status_checked); ?>
-							
-							<input type="number" min="0" data-collapse="#<?php echo esc_attr($max_people_status_field_name); ?>" class="ms-2 rounded <?php echo esc_attr($max_people_status_active); ?>" name="<?php echo esc_attr($max_people_field_name); ?>" value="<?php echo esc_attr($max_people_field_value); ?>" placeholder="<?php echo esc_attr($max_people_placeholder); ?>"/>
-						</div>
+					<div class="dFlex_alignCenter">
+						<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+						<input type="number"  min="0" data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
 					</div>
 				</section>
-
+				<section>
+					<div>
+						<label for=""><?php esc_html_e('Max People Allow', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+						<?php TTBM_Settings::des_p('max_people'); ?>
+					</div>
+					<div class="dFlex_alignCenter">
+						<?php MP_Custom_Layout::switch_button($max_people_status_field_name, $max_people_status_checked); ?>
+						<input type="number" min="0" data-collapse="#<?php echo esc_attr($max_people_status_field_name); ?>" class="ms-2 rounded <?php echo esc_attr($max_people_status_active); ?>" name="<?php echo esc_attr($max_people_field_name); ?>" value="<?php echo esc_attr($max_people_field_value); ?>" placeholder="<?php echo esc_attr($max_people_placeholder); ?>"/>
+					</div>
+				</section>
 			<?php
 			}
 			
@@ -126,21 +130,24 @@
 				$status_active = $status == 'off' ? '' : 'mActive';
 				?>
 
-				<section class="component d-flex justify-content-between align-items-center mb-2">
-					<div class="w-50 d-flex justify-content-between align-items-center">
-						<label for=""><?php esc_html_e('Age Range', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('age_range'); ?></i></label>
-						<div class=" d-flex justify-content-between align-items-center">
-							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
-							<input type="text" data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
-						</div>
+				<section>
+					<div>
+						<label for=""><?php esc_html_e('Age Range', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+						<?php TTBM_Settings::des_p('age_range'); ?>
 					</div>
-					<div class="w-50 ms-5 d-flex justify-content-between align-items-center">
-						<label for=""><?php esc_html_e('Start Place', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('start_place'); ?></i></label>
-						<div class=" d-flex justify-content-between align-items-center">
-							<?php MP_Custom_Layout::switch_button($status_field_name, $status_checked); ?>
-							
-							<input type="text" data-collapse="#<?php echo esc_attr($status_field_name); ?>" class="ms-2 rounded <?php echo esc_attr($status_active); ?>" name="<?php echo esc_attr($location_field_name); ?>" value="<?php echo esc_attr($location_field_value); ?>" placeholder="<?php echo esc_attr($location_placeholder); ?>"/>
-						</div>
+					<div class="dFlex_alignCenter">
+						<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+						<input type="text" data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+					</div>
+				</section>
+				<section>
+					<div>
+						<label for=""><?php esc_html_e('Start Place', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+						<?php TTBM_Settings::des_p('start_place'); ?>
+					</div>
+					<div class="dFlex_alignCenter">
+						<?php MP_Custom_Layout::switch_button($status_field_name, $status_checked); ?>
+						<input type="text" data-collapse="#<?php echo esc_attr($status_field_name); ?>" class="ms-2 rounded <?php echo esc_attr($status_active); ?>" name="<?php echo esc_attr($location_field_name); ?>" value="<?php echo esc_attr($location_field_value); ?>" placeholder="<?php echo esc_attr($location_placeholder); ?>"/>
 					</div>
 				</section>
 
@@ -156,17 +163,14 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				$active = $display == 'off' ? '' : 'mActive';
 				?>
-				<section class="component d-flex justify-content-between align-items-center mb-2">
-					<div class="w-50 d-flex justify-content-between align-items-center">
-						<label class=""><?php esc_html_e('Full Location for Map ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('full_location'); ?></i></label>
-						<div class="d-flex justify-content-between align-items-center">
-							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
-						</div>
+				<section>
+					<div>
+						<label><?php esc_html_e('Full Location for Map ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+						<?php TTBM_Settings::des_p('full_location'); ?>
 					</div>
-					<div class="w-50 d-flex justify-content-between align-items-center ms-5">
-						<div class="d-flex justify-content-between align-items-center">
-							<textarea data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" cols="90" rows="2" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
-						</div>
+					<div class="dFlex_alignCenter">
+						<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+						<textarea data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" cols="90" rows="2" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
 					</div>
 				</section>
 				<?php
@@ -181,12 +185,13 @@
 				$active = $display == 'off' ? '' : 'mActive';
 				?>
 
-				<section class="component d-flex justify-content-between align-items-center mb-2">
-					<div class="w-50 d-flex justify-content-between align-items-center">
-						<label class=""><?php esc_html_e('Short Description', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('short_des'); ?></i></label>
-						<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+				<section>
+					<div>
+						<label class=""><?php esc_html_e('Short Description', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+						<?php TTBM_Settings::des_p('short_des'); ?>
 					</div>
-					<div class="w-50 d-flex justify-content-between align-items-center ms-5">
+					<div class="dFlex_alignCenter">
+						<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
 						<textarea data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" cols="90" rows="2" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
 					</div>
                 </section>
@@ -200,20 +205,16 @@
 				$checked = $display == 'off' ? '' : 'checked';
 
 				?>
-				<section class="component d-flex justify-content-between align-items-center mb-2">
-					<div class="w-50 d-flex justify-content-between align-items-center">
-						<label for=""><?php esc_html_e('Tour Location', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('location'); ?></i></label>
-						<div class=" d-flex justify-content-between align-items-center">
-							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
-							<?php self::location_select($tour_id); ?>
-						</div>
+				<section>
+					<div>
+						<label for=""><?php esc_html_e('Tour Location', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+						<?php TTBM_Settings::des_p('location'); ?>
 					</div>
-					<div class="w-50 ms-5 d-flex justify-content-between align-items-center">
-						<label for=""><?php echo esc_html__('Create New Location', 'tour-booking-manager') ?> <i class="fas fa-question-circle tool-tips"></i></label>
-						<div class=" d-flex justify-content-between align-items-center">
-							<?php MP_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__('Create New Location', 'tour-booking-manager')); ?>
-						</div>
+					<div class="dFlex_alignCenter">
+						<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+						<?php self::location_select($tour_id); ?>
 					</div>
+					<?php MP_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__('', 'tour-booking-manager')); ?>
 				</section>
 				<?php
 				self::add_new_location_popup();

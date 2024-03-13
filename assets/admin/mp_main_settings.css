@@ -2,7 +2,7 @@
   --mpl-primary:#F12971;
   --mpl-sky:#7AD6FF;
   --mpl-sky-light:#EFFAFF;
-  --mpl-secondary:#2B363F;
+  --mpl-secondary:#1d2327;
   --mpl-dark:#a4a4a4;
   --mpl-gray:#e0e0e0;
   --mpl-light:#F5F5F5;
@@ -12,110 +12,6 @@
   --mpl-red:#d91e1e;
   --mpl-red-light:#f6dada;
   --flow-space: 1.5rem;
-}
-
-/* Reset all margins */
-#mp_meta_box_panel {
-  /* Remove padding on lists */
-  /* Media elements defaults */
-  /* Reset font styling */
-  /* Prevent sub and sup elements from affecting the line height */
-  /* Normalize outline to ensure A11y */
-  /* Disable animations and transitions for users that prefer reduced motion */
-}
-#mp_meta_box_panel * {
-  margin: 0;
-}
-#mp_meta_box_panel html {
-  block-size: 100%;
-  box-sizing: border-box;
-  overflow-wrap: break-word;
-  text-size-adjust: none;
-  /*
-  * Add smooth scrolling behavior when focused within the html element
-  * https://css-tricks.com/fixing-smooth-scrolling-with-find-on-page/
-  */
-}
-#mp_meta_box_panel html *,
-#mp_meta_box_panel html *::before,
-#mp_meta_box_panel html *::after {
-  box-sizing: inherit;
-}
-#mp_meta_box_panel html:focus-within {
-  scroll-behavior: smooth;
-}
-#mp_meta_box_panel html,
-#mp_meta_box_panel body {
-  block-size: 100%;
-}
-#mp_meta_box_panel body {
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  line-height: 1.5;
-  text-rendering: optimizeSpeed;
-}
-#mp_meta_box_panel a:not([class]) {
-  text-decoration-skip-ink: auto;
-}
-#mp_meta_box_panel ul,
-#mp_meta_box_panel ol {
-  padding: 0;
-}
-#mp_meta_box_panel img,
-#mp_meta_box_panel picture,
-#mp_meta_box_panel svg,
-#mp_meta_box_panel video,
-#mp_meta_box_panel canvas,
-#mp_meta_box_panel audio,
-#mp_meta_box_panel iframe,
-#mp_meta_box_panel embed,
-#mp_meta_box_panel object {
-  display: block;
-  max-inline-size: 100%;
-}
-#mp_meta_box_panel input,
-#mp_meta_box_panel button,
-#mp_meta_box_panel textarea,
-#mp_meta_box_panel select,
-#mp_meta_box_panel table {
-  font: inherit;
-}
-#mp_meta_box_panel sub,
-#mp_meta_box_panel sup {
-  font-size: 0.75em;
-  line-height: 0;
-  position: relative;
-  vertical-align: baseline;
-}
-#mp_meta_box_panel sub {
-  inset-block-end: -0.25em;
-}
-#mp_meta_box_panel sup {
-  inset-block-start: -0.5em;
-}
-#mp_meta_box_panel :focus-visible {
-  outline-color: Highlight;
-  outline-color: -webkit-focus-ring-color;
-  outline-offset: 2px;
-  outline-style: dotted;
-  outline-width: 2px;
-}
-@media (prefers-reduced-motion: reduce) {
-  #mp_meta_box_panel {
-    /* Disable smooth scrolling for html element when focused within */
-    /* Disable animations and transitions for all elements, including pseudo-elements */
-  }
-  #mp_meta_box_panel html:focus-within {
-    scroll-behavior: auto;
-  }
-  #mp_meta_box_panel *,
-  #mp_meta_box_panel *::before,
-  #mp_meta_box_panel *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-  }
 }
 
 @font-face {
@@ -689,14 +585,20 @@
 }
 
 #mp_meta_box_panel label {
-  font-size: 1rem;
-  font-weight: 300;
+  margin: 0;
+  margin-bottom: 0px;
+  font-size: 14px;
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  color: var(--mpl-secondary);
 }
 #mp_meta_box_panel textarea, #mp_meta_box_panel select, #mp_meta_box_panel input[type=text], #mp_meta_box_panel input[type=email], #mp_meta_box_panel input[type=search], #mp_meta_box_panel input[type=tel], #mp_meta_box_panel input[type=url], #mp_meta_box_panel input[type=password], #mp_meta_box_panel input[type=file], #mp_meta_box_panel input[type=color], #mp_meta_box_panel input[type=number], #mp_meta_box_panel input[type=range], #mp_meta_box_panel input[type=date], #mp_meta_box_panel input[type=month], #mp_meta_box_panel input[type=week], #mp_meta_box_panel input[type=time], #mp_meta_box_panel input[type=datetime], #mp_meta_box_panel input[type=datetime-local] {
   width: 16em;
   height: 2.5em;
-  border: 0px solid var(--mpl-dark);
-  border: 1px solid var(--mpl-dark);
+  border: 0px;
+  border: 1px solid var(--mpl-gray);
   color: var(--mpl-secondary);
   padding: 0.5em;
 }
@@ -710,7 +612,6 @@
   background: var(--mpl-gray);
 }
 #mp_meta_box_panel textarea {
-  width: 100%;
   height: 5em;
 }
 #mp_meta_box_panel input[type=search] {
@@ -758,13 +659,14 @@
   display: inline-block;
   width: 50px;
   height: 24px;
+  margin-bottom: 0;
 }
 #mp_meta_box_panel .switch input {
   opacity: 0;
   width: 0;
   height: 0;
   border: 1px solid var(--mpl-primary);
-  background-color: var(--mpl-gray);
+  background-color: var(--mpl-light);
 }
 #mp_meta_box_panel .slider {
   position: absolute;
@@ -777,6 +679,7 @@
   border: 1px solid var(--mpl-dark);
   background-color: var(--mpl-gray);
   transition: 0.5s;
+  margin-right: 0;
 }
 #mp_meta_box_panel .slider:before {
   position: absolute;
@@ -792,8 +695,9 @@
   box-shadow: 0 0 1px var(--mpl-dark);
 }
 #mp_meta_box_panel input:checked + .slider {
-  background-color: var(--mpl-sky);
+  background-color: var(--mpl-primary);
   border: 1px solid var(--mpl-primary);
+  margin-right: 0;
 }
 #mp_meta_box_panel input:checked + .slider:before {
   transform: translateX(26px);
@@ -938,6 +842,41 @@
 #mp_meta_box_panel .ttbm_settings .tabsContent {
   width: 80%;
   padding: 2% 5%;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem > h2 {
+  padding: 0;
+  color: var(--mpl-secondary);
+  margin: 30px 0 20px 0;
+  margin-bottom: 20px;
+  font-size: 22px;
+  line-height: 26px;
+  font-family: Roboto, sans-serif;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem > p {
+  color: var(--mpl-secondary);
+  margin: 0;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 24px;
+  font-family: Roboto, sans-serif;
+  margin-bottom: 50px;
+}
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #d8d8d8;
+  padding: 20px;
+  border-bottom: 0;
+}
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section span {
+  color: #6B7280;
+}
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section:last-child {
+  border-bottom: 1px solid #d8d8d8;
 }
 
 @media only screen and (min-width: 0px) {

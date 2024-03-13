@@ -935,6 +935,10 @@
 #mp_meta_box_panel .ttbm_settings .tabLists li.active::after, #mp_meta_box_panel .ttbm_settings .tabLists li:hover::after {
   width: 100%;
 }
+#mp_meta_box_panel .ttbm_settings .tabsContent {
+  width: 80%;
+  padding: 2% 5%;
+}
 
 @media only screen and (min-width: 0px) {
   #mp_meta_box_panel .tabLists {

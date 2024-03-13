@@ -1,6 +1,6 @@
 #{$main-selector}{
     .postbox-header{
-        background-color: $color-secondary;
+        background-color: $color-primary;
         .handle-actions{
             margin-top: 0;
             .handle-order-higher, .handle-order-lower, .toggle-indicator{
@@ -8,6 +8,44 @@
             }
             
         }
+    }
+    .ttbm_settings{
+      background-color: #fff;
+      .tabLists{
+        width: 20%;
+        padding: 25px;
+        background-color: $color-light;
+        padding-right: 0;
+        li{
+          border-left: 0;
+          border-right:0 ;
+          padding:15px;
+          color:$color-secondary;
+          border-left: 2px solid transparent;
+          i{
+            margin-right: 25px;
+            color: $color-primary
+          }
+          &::after{
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            border-bottom: 1px solid #d8d8d8;
+            width: 91%;
+          }
+          &.active,&:hover{
+            background-color: #fff;
+            color: #333;
+            font-weight: normal;
+            border-left: 2px solid $color-primary;
+            &::after{
+              width: 100%;
+              
+            }
+          }
+        }
+      }
     }
 } 
 @media only screen and (min-width:0px) {

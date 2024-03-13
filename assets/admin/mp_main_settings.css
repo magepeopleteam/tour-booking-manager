@@ -1,11 +1,11 @@
 :root {
-  --mpl-primary:#03A9F4;
+  --mpl-primary:#F12971;
   --mpl-sky:#7AD6FF;
   --mpl-sky-light:#EFFAFF;
   --mpl-secondary:#2B363F;
   --mpl-dark:#a4a4a4;
   --mpl-gray:#e0e0e0;
-  --mpl-light:#f7f7f7;
+  --mpl-light:#F5F5F5;
   --mpl-white:#ffffff;
   --mpl-black:#000000;
   --mpl-yellow:#ffcb00;
@@ -465,26 +465,6 @@
   color: var(--mpl-black);
 }
 
-#mp_meta_box_panel .nav {
-  list-style: none;
-}
-#mp_meta_box_panel .nav-item {
-  background-color: var(--mpl-white);
-  border-radius: 0.25rem;
-  margin: 0;
-  margin-bottom: 0.5em;
-  padding: 0.7em 1em;
-  cursor: pointer;
-  transition: background-color 0.5s;
-}
-#mp_meta_box_panel .nav-item i {
-  padding-right: 0.5rem;
-}
-#mp_meta_box_panel .nav-item:hover, #mp_meta_box_panel .nav-item.active {
-  background-color: var(--mpl-primary);
-  color: var(--mpl-white);
-}
-
 #mp_meta_box_panel hr, #mp_meta_box_panel .hr {
   margin: 0.5em 0;
   border: 0;
@@ -910,13 +890,50 @@
 }
 
 #mp_meta_box_panel .postbox-header {
-  background-color: var(--mpl-secondary);
+  background-color: var(--mpl-primary);
 }
 #mp_meta_box_panel .postbox-header .handle-actions {
   margin-top: 0;
 }
 #mp_meta_box_panel .postbox-header .handle-actions .handle-order-higher, #mp_meta_box_panel .postbox-header .handle-actions .handle-order-lower, #mp_meta_box_panel .postbox-header .handle-actions .toggle-indicator {
   color: var(--mpl-white);
+}
+#mp_meta_box_panel .ttbm_settings {
+  background-color: #fff;
+}
+#mp_meta_box_panel .ttbm_settings .tabLists {
+  width: 20%;
+  padding: 25px;
+  background-color: var(--mpl-light);
+  padding-right: 0;
+}
+#mp_meta_box_panel .ttbm_settings .tabLists li {
+  border-left: 0;
+  border-right: 0;
+  padding: 15px;
+  color: var(--mpl-secondary);
+  border-left: 2px solid transparent;
+}
+#mp_meta_box_panel .ttbm_settings .tabLists li i {
+  margin-right: 25px;
+  color: var(--mpl-primary);
+}
+#mp_meta_box_panel .ttbm_settings .tabLists li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  border-bottom: 1px solid #d8d8d8;
+  width: 91%;
+}
+#mp_meta_box_panel .ttbm_settings .tabLists li.active, #mp_meta_box_panel .ttbm_settings .tabLists li:hover {
+  background-color: #fff;
+  color: #333;
+  font-weight: normal;
+  border-left: 2px solid var(--mpl-primary);
+}
+#mp_meta_box_panel .ttbm_settings .tabLists li.active::after, #mp_meta_box_panel .ttbm_settings .tabLists li:hover::after {
+  width: 100%;
 }
 
 @media only screen and (min-width: 0px) {

@@ -18,16 +18,16 @@
 			public function settings() {
 				$tour_id = get_the_id();
 				?>
-				<div class="mpStyle ttbm_settings bg-sky-light">
+				<div class="mpStyle ttbm_settings">
 					<div class="mpTabs leftTabs d-flex justify-content-between">
-						<ul class="tabLists nav p-1 sidebar w-20">
-							<li class="nav-item" data-tabs-target="#ttbm_general_info">
+						<ul class="tabLists">
+							<li data-tabs-target="#ttbm_general_info">
 								<i class="fas fa-tools"></i><?php esc_html_e('General Info', 'tour-booking-manager'); ?>
 							</li>
 							<?php do_action('ttbm_meta_box_tab_name', $tour_id); ?>
 							<?php do_action('add_ttbm_settings_tab_name'); ?>
 							<?php if (is_plugin_active('mage-partial-payment-pro/mage_partial_pro.php')) : ?>
-								<li class="nav-item" data-tabs-target="#_mep_pp_deposits_type">
+								<li data-tabs-target="#_mep_pp_deposits_type">
 									<i class="far fa-money-bill-alt"></i>&nbsp;&nbsp;<?php esc_html_e('Partial Payment', 'tour-booking-manager'); ?>
 								</li>
 							<?php endif; ?>

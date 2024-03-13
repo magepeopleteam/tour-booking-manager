@@ -64,7 +64,7 @@ if ( ! class_exists( 'TtbmAddMetaBox' ) ) {
 
 		public function mp_event_all_in_tab_menu_list() {
 			?>
-            <li class="nav-item" data-tabs-target="#<?php echo esc_html($this->get_meta_box_id()); ?>">
+            <li data-tabs-target="#<?php echo esc_html($this->get_meta_box_id()); ?>">
 				<?php echo mep_esc_html($this->get_meta_box_title()); ?>
             </li>
 			<?php

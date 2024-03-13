@@ -11,7 +11,7 @@
 			}
 			public function add_tab() {
 				?>
-				<li class="nav-item" data-tabs-target="#ttbm_display_settings">
+				<li data-tabs-target="#ttbm_display_settings">
 					<i class="fas fa-chalkboard"></i><?php esc_html_e(' Display settings', 'tour-booking-manager'); ?>
 				</li>
 				<?php

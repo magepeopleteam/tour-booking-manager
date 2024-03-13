@@ -13,7 +13,7 @@
 			}
 			public function add_tab() {
 				?>
-				<li class="nav-item" data-tabs-target="#ttbm_settings_pricing">
+				<li data-tabs-target="#ttbm_settings_pricing">
 					<i class="fas fa-hand-holding-usd"></i><?php esc_html_e(' Pricing', 'tour-booking-manager'); ?>
 				</li>
 				<?php

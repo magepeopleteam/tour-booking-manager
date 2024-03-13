@@ -19,7 +19,7 @@
 			}
 			public function add_tab() {
 				?>
-				<li class="nav-item" data-tabs-target="#ttbm_settings_activies">
+				<li data-tabs-target="#ttbm_settings_activies">
 					<i class="fas fa-clipboard-list"></i><?php esc_html_e(' Activities', 'tour-booking-manager'); ?>
 				</li>
 				<?php

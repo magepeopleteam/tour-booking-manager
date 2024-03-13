@@ -15,10 +15,10 @@
 			}
 			public function add_tab() {
 				?>
-				<li class="nav-item" data-tabs-target="#ttbm_settings_day_wise_details">
+				<li data-tabs-target="#ttbm_settings_day_wise_details">
 					<i class="fas fa-th-list"></i><?php esc_html_e('Day wise Details', 'tour-booking-manager'); ?>
 				</li>
-				<li class="nav-item" data-tabs-target="#ttbm_settings_faq">
+				<li data-tabs-target="#ttbm_settings_faq">
 					<i class="fas fa-question-circle"></i><?php esc_html_e('F.A.Q', 'tour-booking-manager'); ?>
 				</li>
 				<?php

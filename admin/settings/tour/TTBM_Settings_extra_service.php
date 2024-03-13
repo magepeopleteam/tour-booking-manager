@@ -13,7 +13,7 @@
 			}
 			public function add_tab() {
 				?>
-				<li class="nav-item" data-tabs-target="#ttbm_settings_extra_service">
+				<li data-tabs-target="#ttbm_settings_extra_service">
 					<i class="fas fa-parachute-box"></i><?php esc_html_e(' Extra Service', 'tour-booking-manager'); ?>
 				</li>
 				<?php

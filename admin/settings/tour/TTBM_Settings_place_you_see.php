@@ -19,7 +19,7 @@
 			}
 			public function add_tab() {
 				?>
-				<li class="nav-item" data-tabs-target="#ttbm_settings_place_you_see">
+				<li data-tabs-target="#ttbm_settings_place_you_see">
 					<i class="fas fa-map-marker-alt"></i><?php esc_html_e(' Places You\'ll Visit', 'tour-booking-manager'); ?>
 				</li>
 				<?php

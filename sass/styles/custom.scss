@@ -77,17 +77,13 @@
             align-items: center;
             border: 1px solid #d8d8d8;
             padding: 20px;
-            border-bottom: 0;
-            
+            margin-top: -1px;
             span{
               color: #6B7280;
             }
           }
-          section:last-child{
-              border-bottom: 1px solid #d8d8d8;
-            }
+         
         }
-        
       }
     }
 } 

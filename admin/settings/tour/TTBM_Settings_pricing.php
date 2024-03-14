@@ -29,29 +29,27 @@
 				<div class="tabsItem ttbm_settings_pricing" data-tabs="#ttbm_settings_pricing">
 					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Pricing Settings', 'tour-booking-manager'); ?></h2>
                 
-					<section class="component d-flex justify-content-between align-items-center mb-2">
-                        <div class="w-100 d-flex justify-content-between align-items-center">
-                            <label for=""><?php esc_html_e('On/Off Registration', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_registration'); ?></i></label>
-							<div class=" d-flex justify-content-end align-items-center">
-								<?php MP_Custom_Layout::switch_button('ttbm_display_registration', $checked); ?>
-                            </div>
-                        </div>
+					<section>
+						<div>
+							<label for=""><?php esc_html_e('On/Off Registration', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+							<?php TTBM_Settings::des_p('ttbm_display_registration'); ?>
+						</div>
+						<?php MP_Custom_Layout::switch_button('ttbm_display_registration', $checked); ?>
                     </section>
 
 					<div data-collapse="#ttbm_display_registration" class="<?php echo esc_attr($active); ?>">
 						<?php $this->ttbm_add_to_cart_form_shortcode($tour_id); ?>
 						<?php do_action('ttbm_tour_pricing_before', $tour_id); ?>
-						<section class="component d-flex justify-content-between align-items-center mb-2">
-							<div class="w-100 d-flex justify-content-between align-items-center">
-								<label for=""><?php esc_html_e('Tour Type', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_registration'); ?></i></label>
-								<div class=" d-flex justify-content-end align-items-center">
-									<select class="formControl" name="ttbm_type">
-										<?php foreach ($all_types as $key => $type) { ?>
-											<option value="<?php echo esc_attr($key) ?>" <?php echo esc_attr($ttbm_type == $key ? 'selected' : ''); ?>><?php echo esc_html($type) ?></option>
-										<?php } ?>
-									</select>	
-								</div>
+						<section >
+							<div>
+								<label for=""><?php esc_html_e('Tour Type', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+								<?php TTBM_Settings::des_p('ttbm_display_registration'); ?>
 							</div>
+							<select class="formControl" name="ttbm_type">
+								<?php foreach ($all_types as $key => $type) { ?>
+									<option value="<?php echo esc_attr($key) ?>" <?php echo esc_attr($ttbm_type == $key ? 'selected' : ''); ?>><?php echo esc_html($type) ?></option>
+								<?php } ?>
+							</select>	
 						</section>	
 						<?php do_action('ttbm_hotel_pricing_before', $tour_id); ?>
 						<?php $this->ttbm_hotel_config($tour_id); ?>
@@ -66,11 +64,12 @@
 
 			public function ttbm_add_to_cart_form_shortcode(){
 				?>
-				<section class="component d-flex justify-content-between align-items-center my-2">
-					<div class="w-100 d-flex justify-content-between align-items-center">
-						<label for=""><?php esc_html_e('Add To Cart Form Shortcode : ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_short_code'); ?></i></label>
-						<code> [ttbm-registration ttbm_id="<?php echo esc_html($tour_id); ?>"]</code>  
+				<section>
+					<div>
+						<label for=""><?php esc_html_e('Add To Cart Form Shortcode : ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+						<?php TTBM_Settings::des_p('ttbm_short_code'); ?>
 					</div>
+						<code> [ttbm-registration ttbm_id="<?php echo esc_html($tour_id); ?>"]</code>
 				</section>
 			<?php 
 			}
@@ -84,16 +83,15 @@
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
-				<section class="ttbm_ticket_config  <?php echo esc_html($type_class); ?>">
-					<h2 class="h4 px-0 text-primary"><?php echo esc_html($tour_label) . ' ' . esc_html__(' Price Configuration :', 'tour-booking-manager'); ?></h2>	
-					<div class="component mp_settings_area ttbm_price_config">
-						<section class=" d-flex justify-content-between align-items-center mb-5">
-							<div class="w-100 d-flex justify-content-between align-items-center">
-								<label for=""><?php esc_html_e('Show advance columns', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_advance'); ?></i></label>
-								<div class=" d-flex justify-content-between">
-									<?php MP_Custom_Layout::switch_button('ttbm_display_advance', $checked); ?>
-								</div>    
+				<div class="ttbm_ticket_config  <?php echo esc_html($type_class); ?>">
+					<h2><?php echo esc_html($tour_label) . ' ' . esc_html__(' Price Configuration :', 'tour-booking-manager'); ?></h2>	
+					<div class="mp_settings_area ttbm_price_config">
+						<section>
+							<div>
+								<label for=""><?php esc_html_e('Show advance columns', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+								<?php TTBM_Settings::des_p('ttbm_display_advance'); ?>
 							</div>
+							<?php MP_Custom_Layout::switch_button('ttbm_display_advance', $checked); ?>
 						</section>
 						<?php do_action('ttbm_ticket_type_before', $tour_id); ?>
 						<div class="ovAuto _mT">
@@ -140,7 +138,7 @@
 					</div>
 					
 					<?php do_action('ttbm_tour_pricing_inner', $tour_id); ?>
-				</section>
+				</div>
 				<?php
 			}
 			public function pricing_item($field = array()) {
@@ -220,21 +218,19 @@
 				$hotel_class = $ttbm_type == 'hotel' ? '' : 'dNone';
 				?>
 
-				<section class="ttbm_tour_hotel_setting component mb-2 <?php echo esc_attr($hotel_class); ?>">
-					<div class="w-100 d-flex justify-content-between align-items-center">
-						<label class=""><?php esc_html_e('Hotel Configuration :', 'tour-booking-manager'); ?>  <i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Select Hotel name that you want to include in this tour , Tour ticket price works based on hotel price configuration . To add new hotel  ', 'tour-booking-manager'); ?>
-						<a href="post-new.php?post_type=ttbm_hotel"><?php esc_html_e('click here', 'tour-booking-manager'); ?></a></span></i></label>
-						<div class="w-60 d-flex justify-content-between align-items-center">
-							<select name="ttbm_hotels[]" multiple='multiple' class='formControl ttbm_select2' data-placeholder="<?php esc_html_e('Please Select Hotel', 'tour-booking-manager'); ?>">
-								<?php
-									foreach ($hotel_lists->posts as $hotel) {
-										$hotel_id = $hotel->ID;
-										?>
-										<option value="<?php echo esc_attr($hotel_id) ?>" <?php echo in_array($hotel_id, $ttbm_hotels) ? 'selected' : ''; ?>><?php echo get_the_title($hotel_id); ?></option>
-									<?php } ?>
-							</select>
-						</div>
+				<section class="ttbm_tour_hotel_setting <?php echo esc_attr($hotel_class); ?>">
+					<div>
+						<label><?php esc_html_e('Hotel Configuration :', 'tour-booking-manager'); ?>  <i class="fas fa-question-circle tool-tips"></i></label>
+						<span><?php esc_html_e('Select Hotel name that you want to include in this tour , Tour ticket price works based on hotel price configuration . To add new hotel  ', 'tour-booking-manager'); ?><a href="post-new.php?post_type=ttbm_hotel"><?php esc_html_e('click here', 'tour-booking-manager'); ?></a></span>
 					</div>
+					<select name="ttbm_hotels[]" multiple='multiple' class='formControl ttbm_select2' data-placeholder="<?php esc_html_e('Please Select Hotel', 'tour-booking-manager'); ?>">
+						<?php
+							foreach ($hotel_lists->posts as $hotel) {
+								$hotel_id = $hotel->ID;
+								?>
+								<option value="<?php echo esc_attr($hotel_id) ?>" <?php echo in_array($hotel_id, $ttbm_hotels) ? 'selected' : ''; ?>><?php echo get_the_title($hotel_id); ?></option>
+							<?php } ?>
+					</select>
 				</section>
 			<?php
 			}

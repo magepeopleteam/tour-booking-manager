@@ -57,7 +57,8 @@
       border-radius: $border-radius;
       padding:$spacing calc($spacing*1.5);
       width: max-content;
-      
+      max-width: 350px;
+      font-weight: normal;
       
       &:after{
         content: " ";

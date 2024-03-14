@@ -637,6 +637,8 @@
   border-radius: 0.25rem;
   padding: 0.5em 0.75em;
   width: max-content;
+  max-width: 350px;
+  font-weight: normal;
 }
 #mp_meta_box_panel .tool-tips span:after {
   content: " ";
@@ -872,7 +874,7 @@
   padding: 20px;
   margin-top: -1px;
 }
-#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section span {
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label + span {
   color: #6B7280;
 }
 

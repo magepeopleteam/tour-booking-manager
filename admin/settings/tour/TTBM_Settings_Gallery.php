@@ -24,24 +24,21 @@
 				?>
 				
 				<div class="tabsItem ttbm_settings_gallery" data-tabs="#ttbm_settings_gallery">
-					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Gallery Settings', 'tour-booking-manager'); ?></h2>
-					<section class="component d-flex justify-content-between align-items-center mb-2">
-                        <div class="w-100 d-flex justify-content-between align-items-center">
-                            <label for=""><?php esc_html_e('On/Off Slider', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_slider'); ?></i></label>
-                            <div class=" d-flex justify-content-between">
-								<?php MP_Custom_Layout::switch_button('ttbm_display_slider', $checked); ?>
-                            </div>    
+					<h2 ><?php esc_html_e('Gallery Settings', 'tour-booking-manager'); ?></h2>
+					<section>
+                        <div>
+                            <label for=""><?php esc_html_e('On/Off Slider', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+							<?php TTBM_Settings::des_p('ttbm_display_slider'); ?>
                         </div>
+						<?php MP_Custom_Layout::switch_button('ttbm_display_slider', $checked); ?>
                     </section>
-
 					<div data-collapse="#ttbm_display_slider" class="<?php echo esc_attr($active); ?>">
 						
-						<section class="component d-flex flex-column justify-content-between align-items-start mb-2">
-							<div class="w-100 d-flex justify-content-between align-items-start mb-2">
-								<label for=""><?php esc_html_e('Gallery Images ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_gallery_images'); ?></i></label>
-								
-							</div>
-							<div class="w-100 d-flex justify-content-between align-items-start">
+						<section>
+							<div >
+								<label for=""><?php esc_html_e('Gallery Images ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+								<?php TTBM_Settings::des_p('ttbm_gallery_images'); ?>
+								<div class="mt-5"></div>
 								<?php TTBM_Layout::add_multi_image('ttbm_gallery_images', $image_ids); ?>
 							</div>
 						</section>

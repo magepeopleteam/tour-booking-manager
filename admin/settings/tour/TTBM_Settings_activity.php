@@ -33,16 +33,13 @@
 				
 				<div class="tabsItem mp_settings_area ttbm_settings_activities" data-tabs="#ttbm_settings_activies">
 					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Activity Settings', 'tour-booking-manager'); ?></h2>
-					
-					<section class="component d-flex justify-content-between align-items-center mb-2">
-                        <div class="w-100 d-flex justify-content-between align-items-center">
-                            <label for=""><?php esc_html_e($ttbm_label . ' Activities Settings', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_activities'); ?></i></label>
-                            <div class=" d-flex justify-content-between">
-								<?php MP_Custom_Layout::switch_button('ttbm_display_activities', $checked); ?> 
-                            </div>    
+					<section>
+                        <div>
+                            <label for=""><?php esc_html_e($ttbm_label . ' Activities Settings', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+							<?php TTBM_Settings::des_p('ttbm_display_activities'); ?>
                         </div>
+						<?php MP_Custom_Layout::switch_button('ttbm_display_activities', $checked); ?> 
                     </section>
-
 					<div data-collapse="#ttbm_display_activities" class="ttbm_activities_area <?php echo esc_attr($active); ?>">
 						<?php $this->activities($tour_id); ?>
 					</div>
@@ -53,28 +50,24 @@
 				$activities = MP_Global_Function::get_taxonomy('ttbm_tour_activities');
 				$tour_activities = MP_Global_Function::get_post_info($tour_id, 'ttbm_tour_activities', []);
 				?>
-				<div class="ttbm_activities_table component">
-					<section class="d-flex justify-content-between align-items-center mb-2">
-						<div class="w-50 d-flex justify-content-between align-items-center"> 
-							<label for=""><?php esc_html_e('Activities', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('activities'); ?></i></label>
-							
+				<div class="ttbm_activities_table">
+					<section>
+						<div> 
+							<label for=""><?php esc_html_e('Activities', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+							<?php TTBM_Settings::des_p('activities'); ?>
 						</div>
-						<div class="w-50 d-flex justify-content-end align-items-center"> 
-							<?php if (sizeof($activities) > 0) { ?>
-								<select name="ttbm_tour_activities[]" multiple='multiple' class='formControl ttbm_select2' data-placeholder="<?php esc_html_e('Please Select a Activities ', 'tour-booking-manager'); ?>">
-									<?php foreach ($activities as $activity) { ?>
-										<option value="<?php echo esc_attr($activity->name) ?>" <?php echo in_array($activity->name, $tour_activities) ? 'selected' : ''; ?>>
-											<?php echo esc_html($activity->name); ?>
-										</option>
-									<?php } ?>
-								</select>
-							<?php } else { ?>
-								<?php MP_Custom_Layout::popup_button('add_new_activity_popup', esc_html__('Create New Activity', 'tour-booking-manager')); ?>
-							<?php } ?> 
-						</div>
-					</section>
-					<section class="d-flex justify-content-end align-items-center">
-						<?php MP_Custom_Layout::popup_button_xs('add_new_activity_popup', esc_html__('Create New Activity', 'tour-booking-manager')); ?>
+						<?php if (sizeof($activities) > 0) { ?>
+							<select name="ttbm_tour_activities[]" multiple='multiple' class='formControl ttbm_select2' data-placeholder="<?php esc_html_e('Please Select a Activities ', 'tour-booking-manager'); ?>">
+								<?php foreach ($activities as $activity) { ?>
+									<option value="<?php echo esc_attr($activity->name) ?>" <?php echo in_array($activity->name, $tour_activities) ? 'selected' : ''; ?>>
+										<?php echo esc_html($activity->name); ?>
+									</option>
+								<?php } ?>
+							</select>
+						<?php } else { ?>
+							<?php MP_Custom_Layout::popup_button('add_new_activity_popup', esc_html__('Create New Activity', 'tour-booking-manager')); ?>
+						<?php } ?> 
+						<?php MP_Custom_Layout::popup_button_xs('add_new_activity_popup', esc_html__('', 'tour-booking-manager')); ?>
 					</section>
 				</div>
 				<?php

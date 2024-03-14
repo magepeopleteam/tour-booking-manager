@@ -24,29 +24,24 @@
 				$admin_note       = $admin_note ? html_entity_decode( $admin_note ) : '';
 				?>
 				<div class="tabsItem ttbm_settings_admin_note" data-tabs="#ttbm_settings_admin_note">
-					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Admin Note Settings', 'tour-booking-manager'); ?></h2>
-					<hr>
-
-					<section class="component d-flex justify-content-between align-items-center mb-2">
-                        <div class="w-100 d-flex justify-content-between align-items-center">
-                            <label for=""><?php esc_html_e('On/Off Admin Note', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_admin_note'); ?></i></label>
-                            <div class=" d-flex justify-content-between">
-								<?php MP_Custom_Layout::switch_button('ttbm_display_admin_note', $checked); ?>
-                            </div>    
+					<h2><?php esc_html_e('Admin Note Settings', 'tour-booking-manager'); ?></h2>
+				
+					<section>
+                        <div>
+                            <label for=""><?php esc_html_e('On/Off Admin Note', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+							<?php TTBM_Settings::des_p('ttbm_display_admin_note'); ?>
                         </div>
+						<?php MP_Custom_Layout::switch_button('ttbm_display_admin_note', $checked); ?>
                     </section>
-
 
 					<div data-collapse="#ttbm_display_admin_note" class="<?php echo esc_attr($active); ?>">
 						
-						<section class="component d-flex justify-content-between align-items-center mb-2">
-							<div class="w-100 d-flex justify-content-between align-items-center">
-								<label for=""><?php esc_html_e('Note ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_admin_note'); ?></i></label>
-								<div class=" d-flex justify-content-between">
-									<textarea name="ttbm_admin_note" cols="50" rows="2"><?php echo esc_attr($admin_note); ?></textarea>
-
-								</div>    
+						<section>
+							<div>
+								<label for=""><?php esc_html_e('Note ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>   
+								<?php TTBM_Settings::des_p('ttbm_admin_note'); ?> 
 							</div>
+							<textarea name="ttbm_admin_note" cols="50" rows="2"><?php echo esc_attr($admin_note); ?></textarea>
 						</section>
 
 					</div>

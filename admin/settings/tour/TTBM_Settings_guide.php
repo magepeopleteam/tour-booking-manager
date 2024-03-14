@@ -29,69 +29,66 @@
                 $ttbm_guide_description_style = MP_Global_Function::get_post_info($tour_id, 'ttbm_guide_description_style', 'full');
                 ?>
                 <div class="tabsItem" data-tabs="#ttbm_settings_guide">
-                    <h2 class="h4 px-0 text-primary"><?php esc_html_e('Guide Settings', 'tour-booking-manager'); ?></h2>
+                    <h2><?php esc_html_e('Guide Settings', 'tour-booking-manager'); ?></h2>
                     
-                    <section class="component d-flex justify-content-between align-items-center mb-2">
-                        <div class="w-100 d-flex justify-content-between align-items-center">
-                            <label for=""><?php echo esc_html__('On/Off', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html__('Guide', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_tour_guide'); ?></i></label>
-                            <div class=" d-flex justify-content-between">
-                                <?php MP_Custom_Layout::switch_button('ttbm_display_tour_guide', $checked_guide); ?>
-                            </div>    
+                    <section>
+                        <div>
+                            <label for=""><?php echo esc_html__('On/Off', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html__('Guide', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+                            <?php TTBM_Settings::des_p('ttbm_display_tour_guide'); ?> 
                         </div>
+                        <?php MP_Custom_Layout::switch_button('ttbm_display_tour_guide', $checked_guide); ?>
                     </section>
 
                     <div data-collapse="#ttbm_display_tour_guide" class="<?php echo esc_attr($active_guide); ?>">
-                        <section class="component d-flex justify-content-between align-items-center mb-2">
-                            <div class="w-50 d-flex justify-content-between align-items-center">
-                                <label for=""><?php esc_html_e('Select tour guide', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_tour_guide'); ?></i></label>
-                                <div class=" d-flex justify-content-between">
-                                    <select name="ttbm_tour_guide[]" multiple='multiple' class='formControl ttbm_select2' data-placeholder="<?php echo esc_html__('Please Select Guide', 'tour-booking-manager'); ?>">
-                                        <?php
-                                            if ($all_guides->post_count > 0) {
-                                                foreach ($all_guides->posts as $guide) {
-                                                    $ttbm_id = $guide->ID;
-                                                    ?>
-                                                    <option value="<?php echo esc_attr($ttbm_id) ?>" <?php echo in_array($ttbm_id, $guides) ? 'selected' : ''; ?>><?php echo get_the_title($ttbm_id); ?></option>
-                                                    <?php
-                                                }
-                                            }
-                                        ?>
-                                    </select>
-                                </div>    
+                        <section>
+                            <div>
+                                <label for=""><?php esc_html_e('Select tour guide', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+                                <?php TTBM_Settings::des_p('ttbm_tour_guide'); ?>
                             </div>
-                            <div class="w-50 d-flex justify-content-between align-items-center ms-5">
-                                <label for=""><?php esc_html_e('Guide Style', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_guide_style'); ?></i></label>
-                                <div class=" d-flex justify-content-between">
-                                    <select name="ttbm_guide_style" class='formControl'>
-                                        <option value="all" <?php echo esc_attr($ttbm_guide_style=='all'? 'selected' : '') ; ?>><?php esc_html_e('All Visible', 'tour-booking-manager'); ?></option>
-                                        <option value="carousel" <?php echo esc_attr($ttbm_guide_style=='carousel'? 'selected' : '') ; ?>><?php esc_html_e('Carousel', 'tour-booking-manager'); ?></option>
-                                    </select>
-                                </div>    
+                            <select name="ttbm_tour_guide[]" multiple='multiple' class='formControl ttbm_select2' data-placeholder="<?php echo esc_html__('Please Select Guide', 'tour-booking-manager'); ?>">
+                                <?php
+                                    if ($all_guides->post_count > 0) {
+                                        foreach ($all_guides->posts as $guide) {
+                                            $ttbm_id = $guide->ID;
+                                            ?>
+                                            <option value="<?php echo esc_attr($ttbm_id) ?>" <?php echo in_array($ttbm_id, $guides) ? 'selected' : ''; ?>><?php echo get_the_title($ttbm_id); ?></option>
+                                            <?php
+                                        }
+                                    }
+                                ?>
+                            </select>
+                        </section>
+                        <section>
+                            <div>
+                                <label for=""><?php esc_html_e('Guide Style', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+                                <?php TTBM_Settings::des_p('ttbm_guide_style'); ?>
                             </div>
+                            <select name="ttbm_guide_style" class='formControl'>
+                                <option value="all" <?php echo esc_attr($ttbm_guide_style=='all'? 'selected' : '') ; ?>><?php esc_html_e('All Visible', 'tour-booking-manager'); ?></option>
+                                <option value="carousel" <?php echo esc_attr($ttbm_guide_style=='carousel'? 'selected' : '') ; ?>><?php esc_html_e('Carousel', 'tour-booking-manager'); ?></option>
+                            </select>
                         </section>
                         
-                        <section class="component d-flex justify-content-between align-items-center mb-2">
-                            <div class="w-50 d-flex justify-content-between align-items-center">
-                                <label for=""><?php esc_html_e('Guide Image Style', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_guide_image_style'); ?></i></label>
-                                <div class=" d-flex justify-content-between">
-                                    <select name="ttbm_guide_image_style" class='formControl'>
-                                        <option value="circle" <?php echo esc_attr($ttbm_guide_image_style=='circle'? 'selected' : '') ; ?>><?php esc_html_e('Circle', 'tour-booking-manager'); ?></option>
-                                        <option value="squire" <?php echo esc_attr($ttbm_guide_image_style=='squire'? 'selected' : '') ; ?>><?php esc_html_e('Squire', 'tour-booking-manager'); ?></option>
-                                    </select>
-                                </div>    
+                        <section>
+                            <div>
+                                <label for=""><?php esc_html_e('Guide Image Style', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+                                <?php TTBM_Settings::des_p('ttbm_guide_image_style'); ?>
                             </div>
-                            <div class="w-50 d-flex justify-content-between align-items-center ms-5">
-                                <label for=""><?php esc_html_e('Guide Description Style', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_guide_description_style'); ?></i></label>
-                                <div class=" d-flex justify-content-between">
-                                    <select name="ttbm_guide_description_style" class='formControl'>
-                                        <option value="short" <?php echo esc_attr($ttbm_guide_description_style=='short'? 'selected' : '') ; ?>><?php esc_html_e('Short', 'tour-booking-manager'); ?></option>
-                                        <option value="full" <?php echo esc_attr($ttbm_guide_description_style=='full'? 'selected' : '') ; ?>><?php esc_html_e('Full', 'tour-booking-manager'); ?></option>
-                                    </select>
-                                </div>    
-                            </div>
+                            <select name="ttbm_guide_image_style" class='formControl'>
+                                <option value="circle" <?php echo esc_attr($ttbm_guide_image_style=='circle'? 'selected' : '') ; ?>><?php esc_html_e('Circle', 'tour-booking-manager'); ?></option>
+                                <option value="squire" <?php echo esc_attr($ttbm_guide_image_style=='squire'? 'selected' : '') ; ?>><?php esc_html_e('Squire', 'tour-booking-manager'); ?></option>
+                            </select>
                         </section>
-                        
-                        
+                        <section>
+                            <div>
+                                <label for=""><?php esc_html_e('Guide Description Style', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>  
+                                <?php TTBM_Settings::des_p('ttbm_guide_description_style'); ?>
+                            </div>
+                            <select name="ttbm_guide_description_style" class='formControl'>
+                                <option value="short" <?php echo esc_attr($ttbm_guide_description_style=='short'? 'selected' : '') ; ?>><?php esc_html_e('Short', 'tour-booking-manager'); ?></option>
+                                <option value="full" <?php echo esc_attr($ttbm_guide_description_style=='full'? 'selected' : '') ; ?>><?php esc_html_e('Full', 'tour-booking-manager'); ?></option>
+                            </select>
+                        </section>
                     </div>
                 </div>
                 <?php

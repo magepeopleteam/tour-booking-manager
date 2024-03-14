@@ -293,11 +293,13 @@
 			//******************************//
 			public static function des_array($key) {
 				$des = array(
-					'start_price' => esc_html__('Price Starts  are displayed on the tour details and tour list pages. If you would like to hide them, you can do so by switching the option.', 'tour-booking-manager'),
-					'max_people' => esc_html__('This tour only allows a maximum of X people. This number is displayed for informational purposes only and can be hidden by switching the option.', 'tour-booking-manager'),
+					'ttip_start_price' => esc_html__('If you would like to hide them, you can do so by switching the option.', 'tour-booking-manager'),
+					'start_price' => esc_html__('Price Starts  are displayed on the tour details and tour list pages.', 'tour-booking-manager'),
+					'ttip_max_people' => esc_html__('This number is displayed for informational purposes only and can be hidden by switching the option.', 'tour-booking-manager'),
+					'max_people' => esc_html__('This tour only allows a maximum of X people', 'tour-booking-manager'),
 					'age_range' => esc_html__('The age limit for this tour is X to Y years old. This is for information purposes only.', 'tour-booking-manager'),
 					'start_place' => esc_html__('This will be the starting point for the tour group. The tour will begin from here.', 'tour-booking-manager'),
-					'location' => esc_html__('Please select the name of the location you wish to create a tour for. If you would like to create a new location, please go to the Tour page.', 'tour-booking-manager'),
+					'location' => esc_html__('Please select the name of the location you wish to create a tour.', 'tour-booking-manager'),
 					'full_location' => esc_html__('Please Type Full Address of the location, it will use for the google map', 'tour-booking-manager'),
 					'short_des' => esc_html__('For a Tour short description, toggle this switching option.', 'tour-booking-manager'),
 					'duration' => esc_html__('Please enter the number of days and nights for your tour package.', 'tour-booking-manager'),
@@ -353,6 +355,10 @@
 					'ttbm_guide_description_style' => esc_html__('To change tour guide description style, please select style.', 'tour-booking-manager'),
 					'ttbm_display_admin_note' => esc_html__('By default Admin note is on but you can keep it off by switching this option.', 'tour-booking-manager'),
 					'ttbm_admin_note' => esc_html__('This are the only text massage about this', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
+					'general_settings_description' => esc_html__('You can easily set up essential tour details in this section, including tour duration, location, Google Maps address, and maximum number of guests.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
+					'tour_general_settings' => esc_html__('Tour General Settings', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
+					'tour_settings_des' => esc_html__('Here you can set tour duration, night, price, people count and age etc.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
+					'create_location' => esc_html__('If you would like to create a new location, click this button', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 				);
 				$des = apply_filters('ttbm_filter_description_array', $des);
 				return $des[$key];
@@ -370,8 +376,7 @@
 				<?php
 			}
 			public static function des_p($key) {
-				
-				echo '<span>'.self::des_array($key).'</span>';
+				echo self::des_array($key);
 			}
 			//********************//
 			public function save_settings($tour_id) {

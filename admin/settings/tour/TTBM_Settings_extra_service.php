@@ -23,7 +23,7 @@
 
 				?>
 				<div class="tabsItem ttbm_settings_pricing" data-tabs="#ttbm_settings_extra_service">
-					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Extra service', 'tour-booking-manager'); ?></h2>
+					<h2><?php esc_html_e('Extra service', 'tour-booking-manager'); ?></h2>
 					
 					<?php do_action('ttbm_tour_exs_pricing_before', $tour_id); ?>
 					<?php $this->ttbm_extra_service_config($tour_id); ?>
@@ -39,7 +39,7 @@
 				wp_nonce_field('ttbm_extra_service_data_nonce', 'ttbm_extra_service_data_nonce');
 				?>
 				<div class="mp_settings_area mt-2">
-					<div class="component">
+					<section>
 						<div class="ovAuto mt_xs">
 							<table>
 								<thead>
@@ -64,9 +64,9 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="d-flex justify-content-end py-2">
-							<?php MP_Custom_Layout::add_new_button(esc_html__('Add Extra New Service', 'tour-booking-manager')); ?>
-						</div>
+					</section>
+					<div class="d-flex justify-content-end py-2">
+						<?php MP_Custom_Layout::add_new_button(esc_html__('Add Extra New Service', 'tour-booking-manager')); ?>
 					</div>
 					<?php do_action('add_mp_hidden_table', 'ttbm_extra_service_item'); ?>
 				</div>

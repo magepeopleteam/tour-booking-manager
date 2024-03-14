@@ -25,13 +25,12 @@
 				<div class="tabsItem mp_settings_area ttbm_settings_why_chose_us" data-tabs="#ttbm_settings_why_chose_us">
 					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Why Book With Us?', 'tour-booking-manager'); ?></h2>
 					
-					<section class="component d-flex justify-content-between align-items-center mb-2">
-                        <div class="w-100 d-flex justify-content-between align-items-center">
-                            <label for=""><?php esc_html_e('Why Chose Us' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_why_choose_us'); ?></i></label>
-                            <div class=" d-flex justify-content-between">
-								<?php MP_Custom_Layout::switch_button('ttbm_display_why_choose_us', $checked); ?>
-                            </div>    
+					<section>
+                        <div>
+                            <label for=""><?php esc_html_e('Why Chose Us' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+							<?php TTBM_Settings::des_p('ttbm_display_why_choose_us'); ?>
                         </div>
+						<?php MP_Custom_Layout::switch_button('ttbm_display_why_choose_us', $checked); ?>
                     </section>
 
 					<div data-collapse="#ttbm_display_why_choose_us" class="<?php echo esc_attr($active); ?>">

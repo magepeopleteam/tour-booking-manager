@@ -73,13 +73,12 @@
 				<div class="tabsItem" data-tabs="#ttbm_settings_faq">
 					<h2 class="h4 px-0 text-primary"><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></h2>
 					
-					<section class="component d-flex justify-content-between align-items-center mb-2">
-                        <div class="w-100 d-flex justify-content-between align-items-center">
-                            <label for=""><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_faq'); ?></i></label>
-                            <div class=" d-flex justify-content-between">
-								<?php MP_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>
-                            </div>    
+					<section >
+                        <div >
+                            <label for=""><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+							<?php TTBM_Settings::des_p('ttbm_display_faq'); ?>
                         </div>
+						<?php MP_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>
                     </section>
 					
 					<div data-collapse="#ttbm_display_faq" class="<?php echo esc_attr($active); ?>">

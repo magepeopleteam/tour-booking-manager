@@ -370,6 +370,7 @@
 					'gallery_settings_description' => esc_html__('Here gallery image can be added related to tour so that guest can understand about this trip.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 					'featrue_settings_description' => esc_html__('Here features can be configured. Package included feature and package excluded feature need to add from here.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 					'guide_settings_description' => esc_html__('Here you can setup tour guide information who will be guider to this tour and his details', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
+					'activity_settings_description' => esc_html__('Here tour activities can be added type tour type beach, hiking etc.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 				);
 				$des = apply_filters('ttbm_filter_description_array', $des);
 				return $des[$key];

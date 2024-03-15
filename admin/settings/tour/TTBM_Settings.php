@@ -378,6 +378,7 @@
 					'contact_settings_description' => esc_html__('Contact information for this trip can be added here.', 'tour-booking-manager'),
 					'why_book_settings_description' => esc_html__('Here, you can write details about offer the opportunity to include highly compelling information pertaining to our tour, in order to entice potential customers into booking it.', 'tour-booking-manager'),
 					'admin_note_settings_description' => esc_html__('Here you can write private note only for understanding admins about this tour.', 'tour-booking-manager'),
+					'display_settings_description' => esc_html__('Display settings is somthing that you can use to control frontend display.', 'tour-booking-manager'),
 				);
 				$des = apply_filters('ttbm_filter_description_array', $des);
 				return $des[$key];

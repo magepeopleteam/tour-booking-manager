@@ -24,8 +24,9 @@
 				$duration_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_duration', 'on') == 'off' ? '' : 'checked';
 				?>
 				<div class="tabsItem" data-tabs="#ttbm_display_settings">
-					<h2><?php esc_html_e('Details Settings', 'tour-booking-manager'); ?></h2>
-					
+					<h2><?php esc_html_e('Display Settings', 'tour-booking-manager'); ?></h2>
+					<p><?php TTBM_Settings::des_p('display_settings_description'); ?> </p>
+
 					<?php $content_title_style = MP_Global_Function::get_post_info($tour_id, 'ttbm_section_title_style') ?: 'ttbm_title_style_2'; ?>
 					<?php $ticketing_system = MP_Global_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'availability_section'); ?>
 					<section>

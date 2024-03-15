@@ -351,7 +351,8 @@
 					'ttbm_display_hotel_distance' => esc_html__('Please add Distance Description', 'tour-booking-manager'),
 					'ttbm_display_hotel_rating' => esc_html__('Please Select Hotel rating ', 'tour-booking-manager'),
 					'ttbm_display_tour_guide' => esc_html__('You can keep off tour guide information by switching this option', 'tour-booking-manager'),
-					'ttbm_tour_guide' => esc_html__('To add tour guide information, simply select an option from the list below.', 'tour-booking-manager'),
+					'ttbm_tour_guide' => esc_html__('Select tour guide', 'tour-booking-manager'),
+					'ttip_tour_guide' => esc_html__('To add tour guide, simply select from the list below.', 'tour-booking-manager'),
 					'ttbm_guide_style' => esc_html__('To change tour guide style, please select style.', 'tour-booking-manager'),
 					'ttbm_guide_image_style' => esc_html__('To change tour guide image, please select style.', 'tour-booking-manager'),
 					'ttbm_guide_description_style' => esc_html__('To change tour guide description style, please select style.', 'tour-booking-manager'),
@@ -368,6 +369,7 @@
 					'extra_service_descriptoin' => esc_html__('Additional features can be offered through this option. For example, organizers may provide a pickup service or other paid services as optional add-ons.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 					'gallery_settings_description' => esc_html__('Here gallery image can be added related to tour so that guest can understand about this trip.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 					'featrue_settings_description' => esc_html__('Here features can be configured. Package included feature and package excluded feature need to add from here.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
+					'guide_settings_description' => esc_html__('Here you can setup tour guide information who will be guider to this tour and his details', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 				);
 				$des = apply_filters('ttbm_filter_description_array', $des);
 				return $des[$key];

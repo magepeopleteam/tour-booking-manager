@@ -11,7 +11,6 @@
   --mpl-yellow:#ffcb00;
   --mpl-red:#d91e1e;
   --mpl-red-light:#f6dada;
-  --flow-space: 1.5rem;
 }
 
 @font-face {
@@ -1031,11 +1030,10 @@
 #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table {
   border-collapse: separate;
   border-spacing: 0 1.5em;
-  border: 0px solid;
+  border: 0;
   margin: 0;
 }
 #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th, #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td {
-  background-color: var(--mpl-white);
   background-color: var(--mpl-white);
   border-radius: 0.25rem;
   padding: 1.5em;

@@ -309,7 +309,8 @@
 					'ttbm_location_country' => esc_html__('Please select your tour location country from the list below.', 'tour-booking-manager'),
 					'ttbm_location_image' => esc_html__('Please select an image for your tour location.', 'tour-booking-manager'),
 					'ttbm_display_registration' => esc_html__("If you don't want to use the tour registration feature, you can just keep it turned off.", 'tour-booking-manager'),
-					'ttbm_short_code' => esc_html__('You can display this Ticket type list with the add to cart button anywhere on your website by copying the shortcode and using it on any post or page.', 'tour-booking-manager'),
+					'ttbm_short_code' => esc_html__('You can display this Ticket type list with the add to cart button anywhere.', 'tour-booking-manager'),
+					'ttip_short_code' => esc_html__('Copy the shortcode and paste into any post or page', 'tour-booking-manager'),
 					'ttbm_display_schedule' => esc_html__('Please find the detailed timeline for you tour as day 1, day 2 etc.', 'tour-booking-manager'),
 					'add_new_feature_popup' => esc_html__('To include or exclude a feature from your tour, please select it from the list below. To create a new feature, go to the Tour page.', 'tour-booking-manager'),
 					'ttbm_display_include_service' => esc_html__('The price of this tour includes the service, which you can keep hidden by turning it off.', 'tour-booking-manager'),
@@ -356,9 +357,13 @@
 					'ttbm_display_admin_note' => esc_html__('By default Admin note is on but you can keep it off by switching this option.', 'tour-booking-manager'),
 					'ttbm_admin_note' => esc_html__('This are the only text massage about this', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 					'general_settings_description' => esc_html__('You can easily set up essential tour details in this section, including tour duration, location, Google Maps address, and maximum number of guests.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
+					'price_settings_description' => esc_html__('You have the flexibility to configure your tour pricing or disable registration by toggling the options. This will ensure that all necessary tour information is accurately displayed.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 					'tour_general_settings' => esc_html__('Tour General Settings', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 					'tour_settings_des' => esc_html__('Here you can set tour duration, night, price, people count and age etc.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 					'create_location' => esc_html__('If you would like to create a new location, click this button', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
+					'hotel_config_click' => esc_html__('Click Here', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
+					'hotel_config' => esc_html__('Tour ticket price works based on hotel price configuration . To add new hotel '),//''          => esc_html__( '', 'tour-booking-manager' ),
+					'ttip_hotel_config' => esc_html__('Select Hotel name that you want to include in this tour', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 				);
 				$des = apply_filters('ttbm_filter_description_array', $des);
 				return $des[$key];

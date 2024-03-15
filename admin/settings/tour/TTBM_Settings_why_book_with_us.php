@@ -24,11 +24,11 @@
 				?>
 				<div class="tabsItem mp_settings_area ttbm_settings_why_chose_us" data-tabs="#ttbm_settings_why_chose_us">
 					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Why Book With Us?', 'tour-booking-manager'); ?></h2>
-					
+					<p><?php TTBM_Settings::des_p('why_book_settings_description'); ?></p>
 					<section>
                         <div>
-                            <label for=""><?php esc_html_e('Why Chose Us' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
-							<?php TTBM_Settings::des_p('ttbm_display_why_choose_us'); ?>
+                            <label for=""><?php esc_html_e('Why Chose Us' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?></label>
+							<span><?php TTBM_Settings::des_p('ttbm_display_why_choose_us'); ?></span>
                         </div>
 						<?php MP_Custom_Layout::switch_button('ttbm_display_why_choose_us', $checked); ?>
                     </section>

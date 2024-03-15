@@ -373,6 +373,7 @@
 					'activity_settings_description' => esc_html__('Here tour activities can be added type tour type beach, hiking etc.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 					'places_visit_description' => esc_html__('Here tour places can be configured where guest will be visited with package', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 					'daywise_details_description' => esc_html__('You have the ability to include detailed tour information and accompanying images here. For instance, you can outline the itinerary for each day of the tour, starting with the first day and continuing on to subsequent days', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
+					'faq_settings_description' => esc_html__('Frequently Asked Questions (FAQs) can be conveniently curated and included on this page, providing comprehensive answers to commonly asked questions.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 				);
 				$des = apply_filters('ttbm_filter_description_array', $des);
 				return $des[$key];

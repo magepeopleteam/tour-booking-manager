@@ -81,12 +81,20 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
 				<div class="tabsItem" data-tabs="#ttbm_settings_faq">
-					<h2 class="h4 px-0 text-primary"><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></h2>
+					<h2><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></h2>
+					<p><?php TTBM_Settings::des_p('faq_settings_description'); ?></p>
+					
+					<section class="bg-light">
+                        <div>
+                            <label for=""><?php esc_html_e('Frequently Asked Question', 'tour-booking-manager'); ?></label>
+							<span><?php esc_html_e('You can add frequently asked question', 'tour-booking-manager'); ?></span>
+                        </div>
+                    </section>
 					
 					<section >
                         <div >
-                            <label for=""><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
-							<?php TTBM_Settings::des_p('ttbm_display_faq'); ?>
+                            <label for=""><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></label>
+							<span><?php TTBM_Settings::des_p('ttbm_display_faq'); ?></span>
                         </div>
 						<?php MP_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>
                     </section>

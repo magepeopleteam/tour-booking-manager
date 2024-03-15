@@ -365,6 +365,7 @@
 					'hotel_config' => esc_html__('Tour ticket price works based on hotel price configuration . To add new hotel '),//''          => esc_html__( '', 'tour-booking-manager' ),
 					'ttip_hotel_config' => esc_html__('Select Hotel name that you want to include in this tour', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 					'extra_service_descriptoin' => esc_html__('Additional features can be offered through this option. For example, organizers may provide a pickup service or other paid services as optional add-ons.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
+					'gallery_settings_description' => esc_html__('Here gallery image can be added related to tour so that guest can understand about this trip.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 				);
 				$des = apply_filters('ttbm_filter_description_array', $des);
 				return $des[$key];

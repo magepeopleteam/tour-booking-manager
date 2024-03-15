@@ -25,10 +25,17 @@
 				
 				<div class="tabsItem ttbm_settings_gallery" data-tabs="#ttbm_settings_gallery">
 					<h2 ><?php esc_html_e('Gallery Settings', 'tour-booking-manager'); ?></h2>
+					<p ><?php TTBM_Settings::des_p('gallery_settings_description'); ?></p>
+					<section class="bg-light">
+                        <div>
+                            <label><?php esc_html_e('Gallery Settings', 'tour-booking-manager'); ?></label>
+							<span><?php esc_html_e('Gallery Settings', 'tour-booking-manager'); ?></span>
+                        </div>
+                    </section>
 					<section>
                         <div>
-                            <label for=""><?php esc_html_e('On/Off Slider', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
-							<?php TTBM_Settings::des_p('ttbm_display_slider'); ?>
+                            <label for=""><?php esc_html_e('On/Off Slider', 'tour-booking-manager'); ?></label>
+							<span><?php TTBM_Settings::des_p('ttbm_display_slider'); ?></span>
                         </div>
 						<?php MP_Custom_Layout::switch_button('ttbm_display_slider', $checked); ?>
                     </section>
@@ -36,8 +43,8 @@
 						
 						<section>
 							<div >
-								<label for=""><?php esc_html_e('Gallery Images ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
-								<?php TTBM_Settings::des_p('ttbm_gallery_images'); ?>
+								<label for=""><?php esc_html_e('Gallery Images ', 'tour-booking-manager'); ?></label>
+								<span><?php TTBM_Settings::des_p('ttbm_gallery_images'); ?></span>
 								<div class="mt-5"></div>
 								<?php TTBM_Layout::add_multi_image('ttbm_gallery_images', $image_ids); ?>
 							</div>

@@ -29,9 +29,17 @@
 
 					<?php $content_title_style = MP_Global_Function::get_post_info($tour_id, 'ttbm_section_title_style') ?: 'ttbm_title_style_2'; ?>
 					<?php $ticketing_system = MP_Global_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'availability_section'); ?>
+					
+					<section class="bg-light">
+                        <div>
+                            <label><?php esc_html_e('Display Settings', 'tour-booking-manager'); ?></label> 
+							<?php esc_html_e('Display Settings', 'tour-booking-manager'); ?> 
+                        </div>
+					</section>
+
 					<section>
                         <div>
-                            <label for=""><?php esc_html_e('Section Title Style?', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label> 
+                            <label for=""><?php esc_html_e('Section Title Style?', 'tour-booking-manager'); ?></label> 
 							<?php TTBM_Settings::des_p('ttbm_section_title_style'); ?>  
                         </div>
 						<select class="formControl" name="ttbm_section_title_style">
@@ -42,7 +50,7 @@
 					</section>
 					<section>
 						<div>
-                            <label for=""><?php esc_html_e('Ticket Purchase Settings', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>  
+                            <label for=""><?php esc_html_e('Ticket Purchase Settings', 'tour-booking-manager'); ?></label>  
 							<?php TTBM_Settings::des_p('ttbm_ticketing_system'); ?>
                         </div>
 						<select class="formControl" name="ttbm_ticketing_system">
@@ -53,7 +61,7 @@
 					
 					<section>
                         <div>
-							<label for=""><?php esc_html_e('On/Off Seat Info', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+							<label for=""><?php esc_html_e('On/Off Seat Info', 'tour-booking-manager'); ?></label>
 							<?php TTBM_Settings::des_p('ttbm_display_seat_details'); ?>
 						</div>
 						<?php MP_Custom_Layout::switch_button('ttbm_display_seat_details', $seat_details_checked); ?> 
@@ -61,7 +69,7 @@
 					
 					<section>
 						<div>
-							<label for=""><?php esc_html_e('On/Off Tour Type', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+							<label for=""><?php esc_html_e('On/Off Tour Type', 'tour-booking-manager'); ?></label>
 							<?php TTBM_Settings::des_p('ttbm_display_tour_type'); ?>
 						</div>
                         <?php MP_Custom_Layout::switch_button('ttbm_display_tour_type', $tour_type_checked); ?> 
@@ -69,7 +77,7 @@
 
 					<section>
                         <div>
-                        	<label for=""><?php esc_html_e('On/Off Hotels', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+                        	<label for=""><?php esc_html_e('On/Off Hotels', 'tour-booking-manager'); ?></label>
 							<?php TTBM_Settings::des_p('ttbm_display_hotels'); ?>
 						</div>
                         <?php MP_Custom_Layout::switch_button('ttbm_display_hotels', $hotel_checked); ?> 
@@ -77,7 +85,7 @@
 
 					<section>
 						<div>
-							<label for=""><?php esc_html_e('On/Off Sidebar widget', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+							<label for=""><?php esc_html_e('On/Off Sidebar widget', 'tour-booking-manager'); ?></label>
 							<?php TTBM_Settings::des_p('ttbm_display_sidebar'); ?>
 						</div>
                         <?php MP_Custom_Layout::switch_button('ttbm_display_sidebar', $sidebar_checked); ?> 
@@ -85,7 +93,7 @@
 
 					<section>
                         <div> 
-                            <label for=""><?php esc_html_e('On/Off Duration', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
+                            <label for=""><?php esc_html_e('On/Off Duration', 'tour-booking-manager'); ?></label>
 							<?php TTBM_Settings::des_p('ttbm_display_duration'); ?>
                         </div>
                         <?php MP_Custom_Layout::switch_button('ttbm_display_duration', $duration_checked); ?> 

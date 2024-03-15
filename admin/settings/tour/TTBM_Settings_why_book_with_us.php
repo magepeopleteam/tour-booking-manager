@@ -25,6 +25,14 @@
 				<div class="tabsItem mp_settings_area ttbm_settings_why_chose_us" data-tabs="#ttbm_settings_why_chose_us">
 					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Why Book With Us?', 'tour-booking-manager'); ?></h2>
 					<p><?php TTBM_Settings::des_p('why_book_settings_description'); ?></p>
+					
+					<section class="bg-light">
+                        <div>
+                            <label for=""><?php esc_html_e('Why Chose Us Settings', 'tour-booking-manager'); ?></label>
+							<span><?php esc_html_e('You can set why chose us settings', 'tour-booking-manager'); ?></span>
+                        </div>
+                    </section>
+					
 					<section>
                         <div>
                             <label for=""><?php esc_html_e('Why Chose Us' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?></label>

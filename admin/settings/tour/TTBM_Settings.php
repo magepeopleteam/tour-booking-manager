@@ -319,7 +319,7 @@
 					'ttbm_feature_name' => esc_html__('The name is how it appears on your site.', 'tour-booking-manager'),
 					'ttbm_feature_description' => esc_html__('The description is not prominent by default; however, some themes may show it.', 'tour-booking-manager'),
 					'ttbm_display_hiphop' => esc_html__('By default Places You\'ll See  is ON but you can keep it off by switching this option', 'tour-booking-manager'),
-					'ttbm_place_you_see' => esc_html__('Please Select Place Name. To create new place, go Tour->Places; or click on the Create New Place button', 'tour-booking-manager'),
+					'ttbm_place_you_see' => esc_html__('To create new place, go Tour->Places; or click on the Create New Place button', 'tour-booking-manager'),
 					'ttbm_place_name' => esc_html__('The name is how it appears on your site.', 'tour-booking-manager'),
 					'ttbm_place_description' => esc_html__('The description is not prominent by default; however, some themes may show it.', 'tour-booking-manager'),
 					'ttbm_place_image' => esc_html__('Please Select Place Image.', 'tour-booking-manager'),
@@ -371,6 +371,7 @@
 					'featrue_settings_description' => esc_html__('Here features can be configured. Package included feature and package excluded feature need to add from here.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 					'guide_settings_description' => esc_html__('Here you can setup tour guide information who will be guider to this tour and his details', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 					'activity_settings_description' => esc_html__('Here tour activities can be added type tour type beach, hiking etc.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
+					'places_visit_description' => esc_html__('Here tour places can be configured where guest will be visited with package', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 				);
 				$des = apply_filters('ttbm_filter_description_array', $des);
 				return $des[$key];

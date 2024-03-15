@@ -40,7 +40,7 @@
 					<section>
                         <div>
                             <label for=""><?php esc_html_e('Section Title Style?', 'tour-booking-manager'); ?></label> 
-							<?php TTBM_Settings::des_p('ttbm_section_title_style'); ?>  
+							<span><?php TTBM_Settings::des_p('ttbm_section_title_style'); ?>  </span>
                         </div>
 						<select class="formControl" name="ttbm_section_title_style">
 							<option value="style_1" <?php echo esc_attr($content_title_style == 'style_1' ? 'selected' : ''); ?>><?php esc_html_e('Style One', 'tour-booking-manager'); ?></option>
@@ -50,8 +50,8 @@
 					</section>
 					<section>
 						<div>
-                            <label for=""><?php esc_html_e('Ticket Purchase Settings', 'tour-booking-manager'); ?></label>  
-							<?php TTBM_Settings::des_p('ttbm_ticketing_system'); ?>
+                            <label for=""><?php esc_html_e('Ticket Purchase Settings', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_ticketing_system'); ?></span></i></label>  
+							<span><?php TTBM_Settings::des_p('ttbm_ticketing_system'); ?></span>
                         </div>
 						<select class="formControl" name="ttbm_ticketing_system">
 							<option value="regular_ticket" <?php echo esc_attr(!$ticketing_system ? 'selected' : ''); ?>><?php esc_html_e('Ticket Open', 'tour-booking-manager'); ?></option>
@@ -62,7 +62,7 @@
 					<section>
                         <div>
 							<label for=""><?php esc_html_e('On/Off Seat Info', 'tour-booking-manager'); ?></label>
-							<?php TTBM_Settings::des_p('ttbm_display_seat_details'); ?>
+							<span><?php TTBM_Settings::des_p('ttbm_display_seat_details'); ?></span>
 						</div>
 						<?php MP_Custom_Layout::switch_button('ttbm_display_seat_details', $seat_details_checked); ?> 
 					</section>
@@ -70,7 +70,7 @@
 					<section>
 						<div>
 							<label for=""><?php esc_html_e('On/Off Tour Type', 'tour-booking-manager'); ?></label>
-							<?php TTBM_Settings::des_p('ttbm_display_tour_type'); ?>
+							<span><?php TTBM_Settings::des_p('ttbm_display_tour_type'); ?></span>
 						</div>
                         <?php MP_Custom_Layout::switch_button('ttbm_display_tour_type', $tour_type_checked); ?> 
                     </section>
@@ -78,7 +78,7 @@
 					<section>
                         <div>
                         	<label for=""><?php esc_html_e('On/Off Hotels', 'tour-booking-manager'); ?></label>
-							<?php TTBM_Settings::des_p('ttbm_display_hotels'); ?>
+							<span><?php TTBM_Settings::des_p('ttbm_display_hotels'); ?></span>
 						</div>
                         <?php MP_Custom_Layout::switch_button('ttbm_display_hotels', $hotel_checked); ?> 
 					</section>
@@ -86,7 +86,7 @@
 					<section>
 						<div>
 							<label for=""><?php esc_html_e('On/Off Sidebar widget', 'tour-booking-manager'); ?></label>
-							<?php TTBM_Settings::des_p('ttbm_display_sidebar'); ?>
+							<span><?php TTBM_Settings::des_p('ttbm_display_sidebar'); ?></span>
 						</div>
                         <?php MP_Custom_Layout::switch_button('ttbm_display_sidebar', $sidebar_checked); ?> 
                     </section>
@@ -94,7 +94,7 @@
 					<section>
                         <div> 
                             <label for=""><?php esc_html_e('On/Off Duration', 'tour-booking-manager'); ?></label>
-							<?php TTBM_Settings::des_p('ttbm_display_duration'); ?>
+							<span><?php TTBM_Settings::des_p('ttbm_display_duration'); ?></span>
                         </div>
                         <?php MP_Custom_Layout::switch_button('ttbm_display_duration', $duration_checked); ?> 
                     </section>

@@ -24,7 +24,7 @@
 				?>
 				<div class="tabsItem ttbm_settings_pricing" data-tabs="#ttbm_settings_extra_service">
 					<h2><?php esc_html_e('Extra service', 'tour-booking-manager'); ?></h2>
-					
+					<p><?php TTBM_Settings::des_p('extra_service_descriptoin'); ?></p>
 					<?php do_action('ttbm_tour_exs_pricing_before', $tour_id); ?>
 					<?php $this->ttbm_extra_service_config($tour_id); ?>
 					<?php do_action('ttbm_tour_exs_pricing_after', $tour_id); ?>

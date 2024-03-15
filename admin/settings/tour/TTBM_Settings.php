@@ -312,7 +312,8 @@
 					'ttbm_short_code' => esc_html__('You can display this Ticket type list with the add to cart button anywhere.', 'tour-booking-manager'),
 					'ttip_short_code' => esc_html__('Copy the shortcode and paste into any post or page', 'tour-booking-manager'),
 					'ttbm_display_schedule' => esc_html__('Please find the detailed timeline for you tour as day 1, day 2 etc.', 'tour-booking-manager'),
-					'add_new_feature_popup' => esc_html__('To include or exclude a feature from your tour, please select it from the list below. To create a new feature, go to the Tour page.', 'tour-booking-manager'),
+					'add_new_feature_popup' => esc_html__('Add include/exclude features here', 'tour-booking-manager'),
+					'ttip_add_new_feature_popup' => esc_html__('To include or exclude a feature from your tour, please select it from the list below. To create a new feature, go to the Tour page.', 'tour-booking-manager'),
 					'ttbm_display_include_service' => esc_html__('The price of this tour includes the service, which you can keep hidden by turning it off.', 'tour-booking-manager'),
 					'ttbm_display_exclude_service' => esc_html__('The price of this tour excludes the service, which you can keep hidden by turning it off.', 'tour-booking-manager'),
 					'ttbm_feature_name' => esc_html__('The name is how it appears on your site.', 'tour-booking-manager'),
@@ -366,6 +367,7 @@
 					'ttip_hotel_config' => esc_html__('Select Hotel name that you want to include in this tour', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 					'extra_service_descriptoin' => esc_html__('Additional features can be offered through this option. For example, organizers may provide a pickup service or other paid services as optional add-ons.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 					'gallery_settings_description' => esc_html__('Here gallery image can be added related to tour so that guest can understand about this trip.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
+					'featrue_settings_description' => esc_html__('Here features can be configured. Package included feature and package excluded feature need to add from here.', 'tour-booking-manager'),//''          => esc_html__( '', 'tour-booking-manager' ),
 				);
 				$des = apply_filters('ttbm_filter_description_array', $des);
 				return $des[$key];

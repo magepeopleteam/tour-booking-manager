@@ -737,8 +737,10 @@
 }
 #mp_meta_box_panel h2,
 #mp_meta_box_panel .h2 {
-  font-size: 2.1875rem;
-  font-weight: 500;
+  font-size: 22px;
+  line-height: 26px;
+  font-family: Roboto, sans-serif;
+  font-weight: 700;
 }
 #mp_meta_box_panel h3,
 #mp_meta_box_panel .h3 {

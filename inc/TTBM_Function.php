@@ -483,6 +483,7 @@
 				$country = self::get_country($tour_id);
 				$full_location = $city && $country ? $city . ' , ' . $country : '';
 				$full_location = $city && !$country ? $city : $full_location;
+				$full_location = is_array($full_location)?'':$full_location;
 				return !$city && $country ? $country : $full_location;
 			}
 			public static function get_country($tour_id) {
@@ -932,7 +933,7 @@
 				$display_suffix = get_option('woocommerce_price_display_suffix') ? get_option('woocommerce_price_display_suffix') : '';
 				return wc_price($return_price) . ' ' . $display_suffix;
 			}
-			public static function get_expired_tours($args)
+			public static function get_active_tours($args)
 			{
 				$tours = array();
 				$query = new WP_Query($args);
@@ -941,10 +942,19 @@
 					while($query->have_posts())
 					{
 						$query->the_post();
-						$dates = TTBM_Function::get_date(get_the_ID());
+						$tour_id = '';
+						$tour_id = get_the_ID();
+						$tour_id = TTBM_Function::post_id_multi_language($tour_id);
+						$dates = TTBM_Function::get_date($tour_id);
+						$ticket_lists = MP_Global_Function::get_post_info($tour_id, 'ttbm_ticket_type', array());
+						$available_seat = TTBM_Function::get_total_available($tour_id);
+						
 						if(is_array($dates) && count($dates))
 						{
-							$tours[] = get_the_ID();
+							if ($available_seat > 0 && sizeof($ticket_lists) > 0) 
+							{
+								$tours[] = $tour_id;
+							}
 						}
 					}
 

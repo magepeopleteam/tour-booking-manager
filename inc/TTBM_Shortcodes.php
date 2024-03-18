@@ -32,6 +32,7 @@
 				ob_start();
 				?>
 				<div class="mpStyle ttbm_wraper placeholderLoader ttbm_filter_area">
+					<div class="mpContainer">
 					<?php
 						if ($params['sidebar-filter'] == 'yes') {
 							?>
@@ -54,6 +55,7 @@
 							do_action('ttbm_pagination', $params, $loop->post_count);
 						}
 					?>
+					</div>
 				</div>
 				<?php
 				return ob_get_clean();
@@ -69,6 +71,7 @@
 				ob_start();
 				?>
 				<div class="mpStyle ttbm_wraper placeholderLoader ttbm_filter_area">
+					<div class="mpContainer">
 					<?php
 						if ($search == 'yes') {
 							do_action('ttbm_top_filter', $params);
@@ -77,6 +80,7 @@
 						do_action('ttbm_sort_result', $loop, $params);
 						do_action('ttbm_pagination', $params, $loop->post_count);
 					?>
+					</div>
 				</div>
 				<?php
 				return ob_get_clean();
@@ -98,12 +102,13 @@
 					$grid_class = (int)$params['column'] > 0 ? 'grid_' . (int)$params['column'] : 'grid_1';
 					?>
 					<div class="mpStyle ttbm_wraper placeholderLoader ttbm_filter_area ttbm_location_list">
+						<div class="mpContainer">
 						<div class="all_filter_item">
 							<div class="placeholder_area flexWrap">
 								<?php foreach ($locations as $location) { ?>
 									<div class="filter_item <?php echo esc_attr($grid_class); ?>" data-placeholder>
 										<?php
-											$tour_list = TTBM_Query::get_all_tour_in_location($location->name, $status);
+											$tour_list = TTBM_Query::get_all_tour_in_location($location->name, $status);  
 											$thumb_id = get_term_meta($location->term_id, 'ttbm_location_image');
 											$thumbnail_img = wp_get_attachment_url($thumb_id[0]);											
 										?>
@@ -118,6 +123,7 @@
 							</div>
 						</div>
 						<?php do_action('ttbm_pagination', $params, count($locations)); ?>
+						</div>
 					</div>
 					<?php
 				}
@@ -142,7 +148,9 @@
 				if ($tour_id) {
 					?>
 					<div class="mpStyle">
+						<div class="mpContainer">
 						<?php include(TTBM_Function::template_path('ticket/registration.php')); ?>
+						</div>
 					</div>
 					<?php
 				}
@@ -157,7 +165,9 @@
 				if ($tour_id) {
 					?>
 					<div class="mpStyle">
+						<div class="mpContainer">
 						<?php include(TTBM_Function::template_path('layout/related_tour.php')); ?>
+						</div>
 					</div>
 					<?php
 				}

@@ -174,57 +174,142 @@
 		let feature_name = parent.find('[name="ttbm_feature_name"]').val();
 		let feature_description = parent.find('[name="ttbm_feature_description"]').val();
 		let feature_icon = parent.find('[name="ttbm_feature_icon"]').val();
+	
 		if (!feature_name) {
 			parent.find('[data-required="ttbm_feature_name"]').slideDown('fast');
 		} else {
 			parent.find('[data-required="ttbm_feature_name"]').slideUp('fast');
 		}
+	
 		if (!feature_icon) {
 			parent.find('[data-required="ttbm_feature_icon"]').slideDown('fast');
 		} else {
 			parent.find('[data-required="ttbm_feature_icon"]').slideUp('fast');
 		}
+	
+		let selected_included_in_price_features = $('[name="ttbm_service_included_in_price"]').val();
+		let selected_excluded_in_price_features = $('[name="ttbm_service_excluded_in_price"]').val();
+	
+		let includedFeaturesArray = selected_included_in_price_features.split(',');
+		let excludedFeaturesArray = selected_excluded_in_price_features.split(',');
+	
 		if (feature_name && feature_icon) {
 			$.ajax({
-				type: 'POST', url: mp_ajax_url, data: {
-					"action": "ttbm_new_feature_save", "feature_name": feature_name, "feature_description": feature_description, "feature_icon": feature_icon
-				}, beforeSend: function () {
+				type: 'POST',
+				url: mp_ajax_url,
+				data: {
+					"action": "ttbm_new_feature_save",
+					"feature_name": feature_name,
+					"feature_description": feature_description,
+					"feature_icon": feature_icon
+				},
+				beforeSend: function () {
 					dLoader(parent);
-				}, success: function () {
+				},
+				success: function () {
 					parent.find('[name="ttbm_feature_name"]').val('');
 					parent.find('[name="ttbm_feature_description"]').val('');
 					parent.find('[name="ttbm_feature_icon"]').val('');
 					$this.closest('.popupMainArea').find('.remove_input_icon').trigger('click');
 					parent.find('.ttbm_success_info').slideDown('fast');
-					ttbm_reload_feature_list();
+					console.log("Included Features Array: ", includedFeaturesArray);
+					console.log("Excluded Features Array: ", excludedFeaturesArray);
+					//ttbm_reload_feature_list(includedFeaturesArray, excludedFeaturesArray);
+					reload_features();
 					dLoaderRemove(parent);
 					if (($this).hasClass('ttbm_new_feature_save_close')) {
 						$this.closest('.popupMainArea').find('.popupClose').trigger('click');
 					}
 					return true;
-				}, error: function (response) {
+				},
+				error: function (response) {
 					console.log(response);
 				}
 			});
 		}
 		return false;
 	}
-	function ttbm_reload_feature_list() {
-		let ttbm_id = $('[name="post_id"]').val();
+
+	function reload_features()
+	{
+		let ttbm_id = $('[name="post_ID"]').val();
 		let parent = $('.ttbm_features_table');
 		$.ajax({
-			type: 'POST', url: mp_ajax_url, data: {
-				"action": "ttbm_reload_feature_list", "ttbm_id": ttbm_id
-			}, beforeSend: function () {
+			type: 'POST',
+			url: mp_ajax_url,
+			data: {
+				"action": "ttbm_reload_feature_list",
+				"ttbm_id": ttbm_id
+			},
+			beforeSend: function () {
 				dLoader(parent);
-			}, success: function (data) {
-				parent.empty().append(data);
-				return true;
-			}, error: function (response) {
+			},
+			success: function (response) {
+				// parent.empty().append(data);
+				// // Update the included features section
+				// $('.included-features-section').html(response.data.included_features_html);
+				// $('#ttbm_display_include_service').html(response.data.included_features_html);
+				
+				// Update the excluded features section
+				// $('.excluded-features-section').html(response.data.excluded_features_html);
+				// $('#ttbm_display_exclude_service').html(response.data.excluded_features_html);
+
+				if (window.location.href.indexOf('#ttbm_settings_feature') === -1) 
+				{
+					window.location.href = window.location.href + '#ttbm_settings_feature';
+				}
+				window.location.reload();
+			},
+			error: function (response) {
 				console.log(response);
 			}
 		});
 	}
+	
+	function ttbm_reload_feature_list(includedFeaturesArray, excludedFeaturesArray) {
+		let ttbm_id = $('[name="post_ID"]').val();
+		let parent = $('.ttbm_features_table');
+		$.ajax({
+			type: 'POST',
+			url: mp_ajax_url,
+			data: {
+				"action": "ttbm_reload_feature_list",
+				"ttbm_id": ttbm_id
+			},
+			beforeSend: function () {
+				dLoader(parent);
+			},
+			success: function (data) {
+				parent.empty().append(data);
+	
+				console.log("Reloaded feature list");
+	
+				// After reloading, reapply the checkbox states
+				$('[name="ttbm_service_included_in_price"]').each(function () {
+					let feature = $(this).val();
+					console.log("Checking included feature:", feature);
+					if (includedFeaturesArray.includes(feature)) {
+						$(this).prop('checked', true);
+						console.log("Included feature checked:", feature);
+					}
+				});
+	
+				$('[name="ttbm_service_excluded_in_price"]').each(function () {
+					let feature = $(this).val();
+					console.log("Checking excluded feature:", feature);
+					if (excludedFeaturesArray.includes(feature)) {
+						$(this).prop('checked', true);
+						console.log("Excluded feature checked:", feature);
+					}
+				});
+				return true;
+			},
+			error: function (response) {
+				console.log(response);
+			}
+		});
+	}
+	
 	//*******Activity**************//
 	$(document).on('click', '.ttbm_settings_activities [data-target-popup]', function () {
 		let target = $(this).closest('.ttbm_settings_activities').find('.ttbm_activity_form_area');

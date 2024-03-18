@@ -11,6 +11,7 @@
 				add_action( 'ttbm_pagination', array( $this, 'pagination' ), 10, 3 );
 				add_action( 'ttbm_filter_top_bar', array( $this, 'filter_top_bar' ), 10, 2 );
 				add_action( 'ttbm_sort_result', array( $this, 'sort_result' ), 10, 2 );
+                $this->upcomming_date =  array_reverse(MP_Global_Function::get_meta_values( 'ttbm_upcoming_date','ttbm_tour' ));
 			}
 			public function top_filter_static( $params ) {
 				?>
@@ -162,7 +163,11 @@
 			//****************************************/
 			public function organizer_filter( $params, $organizers = array() ) {
 				if ( $params['organizer-filter'] == 'yes' ) {
-					$organizers = sizeof( $organizers ) > 0 ? $organizers : MP_Global_Function::get_taxonomy( 'ttbm_tour_org' );
+					$organizers = sizeof( $organizers ) > 0 ? $organizers : MP_Global_Function::get_taxonomy( 'ttbm_tour_org','ttbm_tour' );
+
+
+
+
 					if ( sizeof( $organizers ) > 0 ) {
 						$url      = $_GET['organizer_filter'] ?? '';
 						$current  = $url ? get_term_by( 'id', $url, 'ttbm_tour_org' )->term_id : '';
@@ -171,9 +176,9 @@
 						<label data-placeholder>
 							<select class="formControl" name="organizer_filter">
 								<option selected value=""><?php esc_html_e( 'All Organizer', 'tour-booking-manager' ); ?></option>
-								<?php foreach ( $organizers as $organizer ) { ?>
-									<option value="<?php echo esc_attr( $organizer->term_id ); ?>" <?php echo esc_attr($url && $current == $organizer->term_id ? 'selected' : ''); ?>><?php echo esc_html( $organizer->name ); ?></option>
-								<?php } ?>
+								<?php foreach ( $organizers as $organizer ) { if(get_term($organizer->term_id,'ttbm_tour_org')->count){ ?>
+									<option value="<?php echo esc_attr( $organizer->term_id ); ?>" <?php echo esc_attr($url && $current == $organizer->term_id ? 'selected' : ''); ?>><?php echo esc_html( $organizer->name ) ?></option>
+								<?php } } ?>
 							</select>
 						</label>
 						<?php
@@ -183,7 +188,15 @@
 			public function organizer_filter_left( $params ) {
 				if ( $params['organizer-filter'] == 'yes' ) {
 					$organizers = MP_Global_Function::get_taxonomy( 'ttbm_tour_org' );
-					if ( sizeof( $organizers ) > 0 ) {
+
+                    $total_organizers = 0;
+                    foreach ($organizers as $organizer) {
+                        if (get_term($organizer->term_id, 'ttbm_tour_org')->count) {
+                            $total_organizers++;
+                        }
+                    }
+
+					if ( sizeof( $organizers ) > 0 && $total_organizers ) {
 						?>
 						<h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#ttbm_organizer_filter_left" data-placeholder>
 							<?php esc_html_e( 'Filters By Organizer', 'tour-booking-manager' ); ?>
@@ -224,34 +237,47 @@
 					}
 				}
 			}
-			public function location_filter_multiple( $params ) {
-				if ( $params['location-filter'] == 'yes' ) {
-					$locations = MP_Global_Function::get_taxonomy( 'ttbm_tour_location' );
-					if ( sizeof( $locations ) > 0 ) {
-						$url_location     = $_GET['location_filter'] ?? '';
-						$current_location = $url_location ? get_term_by( 'id', $url_location, 'ttbm_tour_location' )->term_id : '';
-						?>
-						<h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#ttbm_location_filter_multiple" data-placeholder>
-							<?php esc_html_e( 'Filters By Location', 'tour-booking-manager' ); ?>
-							<span data-icon class="fas fa-chevron-down"></span>
-						</h5>
-						<div class="divider"></div>
-						<div class="mActive" data-collapse="#ttbm_location_filter_multiple" data-placeholder>
-							<div class="groupCheckBox">
-								<input type="hidden" name="location_filter_multiple" value="<?php echo esc_attr( $current_location ); ?>"/>
-								<?php foreach ( $locations as $location ) { ?>
-									<?php $checked = $current_location == $location->term_id ? 'checked' : ''; ?>
-									<label class="customCheckboxLabel">
-										<input type="checkbox" class="formControl" data-checked="<?php echo esc_attr( $location->term_id ); ?>" <?php echo esc_attr( $checked ); ?> />
-										<span class="customCheckbox"><?php echo esc_html( $location->name ); ?></span>
-									</label>
-								<?php } ?>
-							</div>
-						</div>
-						<?php
-					}
-				}
-			}
+
+            public function location_filter_multiple( $params ) {
+                if ( $params['location-filter'] == 'yes' ) {
+
+                    $upcomming_date =  $this->upcomming_date;
+                    $locations =  MP_Global_Function::get_meta_values( 'ttbm_location_name','ttbm_tour' );
+                    $exist_locations = [];
+                    for($i=0; $i<count($locations) ; $i++){
+                        if($upcomming_date[$i] && $locations[$i]){
+                            $exist_locations[$i] = $locations[$i];
+                        }
+                    }
+                    $exist_locations = array_unique($exist_locations);
+
+                    if ( sizeof( $exist_locations ) > 0 ) {
+                        $url_location     = $_GET['location_filter'] ?? '';
+                        $current_location = $url_location ? get_term_by( 'id', $url_location, 'ttbm_tour_location' )->term_id : '';
+                        ?>
+                        <h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#ttbm_location_filter_multiple" data-placeholder>
+                            <?php esc_html_e( 'Filters By Location', 'tour-booking-manager' ); ?>
+                            <span data-icon class="fas fa-chevron-down"></span>
+                        </h5>
+                        <div class="divider"></div>
+                        <div class="mActive" data-collapse="#ttbm_location_filter_multiple" data-placeholder>
+                            <div class="groupCheckBox">
+                                <input type="hidden" name="location_filter_multiple" value="<?php echo esc_attr( $current_location ); ?>"/>
+                                <?php foreach ( $exist_locations as $location ) { ?>
+                                    <?php $term_id = get_term_by('name', $location, 'ttbm_tour_location')->term_id; ?>
+                                    <?php $checked = $current_location == $term_id ? 'checked' : ''; ?>
+                                    <label class="customCheckboxLabel">
+                                        <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr( $term_id ); ?>" <?php echo esc_attr( $checked ); ?> />
+                                        <span class="customCheckbox"><?php echo esc_html( $location ); ?></span>
+                                    </label>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                }
+            }
+
 			//****************************************/
 			public function country_filter( $params, $countries = '' ) {
 				if ( $params['country-filter'] == 'yes' ) {
@@ -360,8 +386,18 @@
 			//****************************************/
 			public function feature_filter_multiple( $params ) {
 				if ( $params['feature-filter'] == 'yes' ) {
-					$features = MP_Global_Function::get_taxonomy( 'ttbm_tour_features_list' );
-					if ( sizeof( $features ) > 0 ) {
+
+                    $features =  MP_Global_Function::get_meta_values( 'ttbm_service_included_in_price','ttbm_tour' );
+                    $upcomming_date =  $this->upcomming_date;
+
+                    $exist_feature = [];
+                    for($i=0; $i<count($features) ; $i++){
+                        if($upcomming_date[$i]){
+                            $exist_feature = array_unique(array_merge($exist_feature, unserialize($features[$i])));
+                        }
+                    }
+
+					if ( sizeof( $exist_feature ) > 0 ) {
 						$url = $_GET['feature_filter'] ?? '';
 						?>
 						<h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#feature_filter_multiple" data-placeholder>
@@ -372,11 +408,14 @@
 						<div class="mActive" data-collapse="#feature_filter_multiple" data-placeholder>
 							<div class="groupCheckBox">
 								<input type="hidden"  name="feature_filter_multiple" value="<?php echo esc_attr( $url ); ?>"/>
-								<?php foreach ( $features as $feature ) { ?>
-									<?php $icon = get_term_meta( $feature->term_id, 'ttbm_feature_icon', true ) ? get_term_meta( $feature->term_id, 'ttbm_feature_icon', true ) : 'fas fa-forward'; ?>
+								<?php foreach($exist_feature as $feature_item){ ?>
+									<?php
+                                    $term_id = get_term_by('name', $feature_item, 'ttbm_tour_features_list')->term_id;
+
+                                    $icon = get_term_meta( $term_id, 'ttbm_feature_icon', true ) ? get_term_meta( $term_id, 'ttbm_feature_icon', true ) : 'fas fa-forward'; ?>
 									<label class="customCheckboxLabel">
-										<input type="checkbox" class="formControl" data-checked="<?php echo esc_attr( $feature->term_id ); ?>"/>
-										<span class="customCheckbox"><span class="mR_xs <?php echo esc_attr( $icon ); ?>"></span><?php esc_html_e( $feature->name ); ?></span>
+										<input type="checkbox" class="formControl" data-checked="<?php echo esc_attr( $term_id ); ?>"/>
+										<span class="customCheckbox"><span class="mR_xs <?php echo esc_attr( $icon ); ?>"></span><?php esc_html_e( $feature_item ); ?></span>
 									</label>
 								<?php } ?>
 							</div>
@@ -408,8 +447,20 @@
 			}
 			public function activity_filter_multiple( $params ) {
 				if ( $params['activity-filter'] == 'yes' ) {
-					$activities = MP_Global_Function::get_taxonomy( 'ttbm_tour_activities' );
-					if ( sizeof( $activities ) > 0 ) {
+
+
+                    $activities =  MP_Global_Function::get_meta_values( 'ttbm_tour_activities','ttbm_tour' );
+                    $upcomming_date =  $this->upcomming_date;
+
+                    $exist_activities = [];
+                    for($i=0; $i<count($activities) ; $i++){
+                        if($upcomming_date[$i]){
+                            $exist_activities = array_unique(array_merge($exist_activities, unserialize($activities[$i])));
+                        }
+                    }
+
+
+					if ( sizeof( $exist_activities ) > 0 ) {
 						$url_activity     = $_GET['activity_filter'] ?? '';
 						$current_activity = $url_activity ? get_term_by( 'id', $url_activity, 'ttbm_tour_activities' )->term_id : '';
 						?>
@@ -421,12 +472,17 @@
 						<div class="mActive" data-collapse="#activity_filter_multiple" data-placeholder>
 							<div class="groupCheckBox">
 								<input type="hidden" name="activity_filter_multiple" value="<?php echo esc_attr( $current_activity ); ?>"/>
-								<?php foreach ( $activities as $activity ) { ?>
-									<?php $checked = $current_activity == $activity->term_id ? 'checked' : ''; ?>
+								<?php foreach ( $exist_activities as $activity ) { ?>
+
+                                    <?php $term_id = get_term_by('name', $activity, 'ttbm_tour_activities')->term_id; ?>
+                                    <?php $checked = $current_activity == $term_id ? 'checked' : ''; ?>
+
 									<label class="customCheckboxLabel">
-										<input type="checkbox" class="formControl" data-checked="<?php echo esc_attr( $activity->term_id ); ?>" <?php echo esc_attr( $checked ); ?>/>
-										<span class="customCheckbox"><?php esc_html_e( $activity->name ); ?></span>
+										<input type="checkbox" class="formControl" data-checked="<?php echo esc_attr( $term_id ); ?>" <?php echo esc_attr( $checked ); ?>/>
+										<span class="customCheckbox"><?php esc_html_e( $activity ); ?></span>
 									</label>
+
+
 								<?php } ?>
 							</div>
 						</div>
@@ -438,7 +494,15 @@
 			public function tag_filter_multiple( $params ) {
 				if ( $params['tag-filter'] == 'yes' ) {
 					$tags = MP_Global_Function::get_taxonomy( 'ttbm_tour_tag' );
-					if ( sizeof( $tags ) > 0 ) {
+                    $total_tags = 0;
+                    foreach ($tags as $tag) {
+                        if (get_term($tag->term_id, 'ttbm_tour_tag')->count) {
+                            $total_tags++;
+                        }
+                    }
+
+
+                        if ( sizeof( $tags ) > 0 && $total_tags ) {
 						?>
 						<h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#tag_filter_multiple" data-placeholder>
 							<?php esc_html_e( 'Specials', 'tour-booking-manager' ); ?>
@@ -448,12 +512,12 @@
 						<div class="mActive" data-collapse="#tag_filter_multiple" data-placeholder>
 							<div class="groupCheckBox">
 								<input type="hidden" name="tag_filter_multiple" value=""/>
-								<?php foreach ( $tags as $tag ) { ?>
+								<?php foreach ( $tags as $tag ) { if(get_term($tag->term_id,'ttbm_tour_tag')->count){ ?>
 									<label class="customCheckboxLabel">
 										<input type="checkbox" class="formControl" data-checked="<?php echo esc_attr( $tag->term_id ); ?>"/>
 										<span class="customCheckbox"><?php esc_html_e( $tag->name ); ?></span>
 									</label>
-								<?php } ?>
+								<?php } } ?>
 							</div>
 						</div>
 						<?php

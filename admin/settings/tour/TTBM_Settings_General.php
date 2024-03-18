@@ -94,6 +94,7 @@
 				$max_people_status_checked = ($max_people_field_status == 'off') ? '' : 'checked';
 				$max_people_status_active = ($max_people_field_status == 'off') ? '' : 'mActive';
 				?>
+
 				<section>
 					<div>
 						<label for=""><?php esc_html_e('Max People Allow', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('max_people'); ?></span></i></label>
@@ -264,9 +265,10 @@
 					$location_key = 'ttbm_hotel_location';
 				}
 				$value = MP_Global_Function::get_post_info($tour_id, $location_key, array());
+				// $value = is_array($value)?$value:array($value);
 				$all_location = TTBM_Function::get_all_location();
 				?>
-				<select class="rounded ms-2 " name="<?php echo esc_attr($location_key); ?>">
+				<select class="rounded ms-2 select2" name="<?php echo esc_attr($location_key); ?>" >
 					<?php foreach ($all_location as $key => $location) : ?>
 						<option value="<?php echo esc_attr($key); ?>" <?php echo esc_attr($key == $value ? 'selected' : ''); ?>><?php echo esc_html($location); ?></option>
 					<?php endforeach; ?>

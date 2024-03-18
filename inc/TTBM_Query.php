@@ -1,7 +1,4 @@
 <?php
-
-use function WCML\functions\getId;
-
 	if (!defined('ABSPATH')) {
 		die;
 	} // Cannot access pages directly.
@@ -95,12 +92,13 @@ use function WCML\functions\getId;
 					)
 				);
 				
-				if($status == 'expired')
+				if($status == 'active')
 				{
-					return TTBM_Function::get_expired_tours($args);
+					return TTBM_Function::get_active_tours($args);
 				}
 				else
 				{
+					//return TTBM_Function::get_active_tours($args);
 					return new WP_Query($args);
 				}
 			}
@@ -130,13 +128,13 @@ use function WCML\functions\getId;
 					'orderby' => 'meta_value',
 					'meta_query' => array(
 						$location, 
-						//$expire_filter
+						$expire_filter
 					)
 				);
 
-				if($status == 'expired')
+				if($status == 'active')
 				{
-					return TTBM_Function::get_expired_tours($args);
+					return TTBM_Function::get_active_tours($args);
 				}
 				else
 				{

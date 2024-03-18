@@ -63,7 +63,10 @@
                                         unset($term);
                                         $term = wp_insert_term($taxonomy_data['name'], $taxonomy);
                                         
-                                        add_term_meta( $taxonomy_data['term_id'], 'ttbm_feature_icon', 'raselsa', false );
+                                        if (array_key_exists('term_id', $taxonomy_data)) 
+                                        {
+                                            add_term_meta( $taxonomy_data['term_id'], 'ttbm_feature_icon', 'raselsa', false );
+                                        }
                                         
                                         if (array_key_exists('tax_data', $taxonomy_data)) {
                                             foreach ($taxonomy_data['tax_data'] as $meta_key => $data) {
@@ -136,13 +139,17 @@
                                                     }
 
                                                     update_post_meta($post_id,'ttbm_gallery_images',$thumnail_ids);
+                                                    if(count($thumnail_ids))
+                                                    {
+                                                        set_post_thumbnail( $post_id, $thumnail_ids[0] );
+                                                    }                                                    
                                                 }
                                                 else
                                                 {
                                                     update_post_meta($post_id,'ttbm_gallery_images',array(isset($dummy_images[$data])?$dummy_images[$data]:''));
                                                 }
 
-                                            } 
+                                            }
                                             else 
                                             {
                                                 update_post_meta($post_id, $meta_key, $data);
@@ -524,7 +531,7 @@
                                     'ttbm_location_name' => '',
                                     'ttbm_display_map' => 'off',
                                     'ttbm_display_description' => 'on',
-                                    'ttbm_short_description' => '',
+                                    'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
                                     //date_settings
                                     'ttbm_travel_type' => 'fixed',
                                     'ttbm_travel_start_date' => date('Y-m-d', strtotime(' +35 day')),
@@ -676,7 +683,7 @@
                                     'ttbm_location_name' => '',
                                     'ttbm_display_map' => 'off',
                                     'ttbm_display_description' => 'on',
-                                    'ttbm_short_description' => '',
+                                    'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
                                     //date_settings
                                     'ttbm_travel_type' => 'repeated',
                                     'ttbm_travel_repeated_after' => '4',
@@ -814,13 +821,6 @@
                                 ',
                                 'post_data' => [
                                     //General_settings
-                                    'feature_image' => array(
-                                        'https://img.freepik.com/free-photo/blue-villa-beautiful-sea-hotel_1203-5316.jpg',
-                                        'https://img.freepik.com/free-photo/pileh-blue-lagoon-phi-phi-island-thailand_231208-1487.jpg',
-                                        'https://img.freepik.com/free-photo/beautiful-mountains-ratchaprapha-dam-khao-sok-national-park-surat-thani-province-thailand_335224-851.jpg',
-                                        'https://img.freepik.com/free-photo/photographer-taking-picture-ocean-coast_657883-287.jpg',
-                                        'https://img.freepik.com/free-photo/godafoss-waterfall-sunset-winter-iceland-guy-red-jacket-looks-godafoss-waterfall_335224-673.jpg',                                            
-                                    ),
                                     'ttbm_travel_duration' => 2,
                                     'ttbm_travel_duration_type' => 'day',
                                     'ttbm_display_duration_night' => 'on',
@@ -836,7 +836,7 @@
                                     'ttbm_location_name' => '',
                                     'ttbm_display_map' => 'off',
                                     'ttbm_display_description' => 'on',
-                                    'ttbm_short_description' => '',
+                                    'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
                                     //date_settings
                                     'ttbm_travel_type' => 'repeated',
                                     'ttbm_travel_repeated_after' => '7',
@@ -974,13 +974,6 @@
                                 ',
                                 'post_data' => [
                                     //General_settings
-                                    'feature_image' => array(
-                                        'https://img.freepik.com/free-photo/godafoss-waterfall-sunset-winter-iceland-guy-red-jacket-looks-godafoss-waterfall_335224-673.jpg',
-                                        'https://img.freepik.com/free-photo/photographer-taking-picture-ocean-coast_657883-287.jpg',
-                                        'https://img.freepik.com/free-photo/blue-villa-beautiful-sea-hotel_1203-5316.jpg',
-                                        'https://img.freepik.com/free-photo/pileh-blue-lagoon-phi-phi-island-thailand_231208-1487.jpg',
-                                        'https://img.freepik.com/free-photo/beautiful-mountains-ratchaprapha-dam-khao-sok-national-park-surat-thani-province-thailand_335224-851.jpg',
-                                    ),
                                     'ttbm_travel_duration' => 4,
                                     'ttbm_travel_duration_type' => 'day',
                                     'ttbm_display_duration_night' => 'on',
@@ -996,7 +989,7 @@
                                     'ttbm_location_name' => '',
                                     'ttbm_display_map' => 'off',
                                     'ttbm_display_description' => 'on',
-                                    'ttbm_short_description' => '',
+                                    'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
                                     //date_settings
                                     'ttbm_travel_type' => 'repeated',
                                     'ttbm_travel_repeated_after' => '15',

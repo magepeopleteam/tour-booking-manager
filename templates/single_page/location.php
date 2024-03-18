@@ -32,8 +32,13 @@
 	{
 		get_header();
 	}
+	$term_id = get_queried_object()->name;
+	$status=$_GET['location_status'] ?? '' ;
+	$shortcode = "[travel-list city='" . $term_id . "' style='modern' show='10'  pagination='yes' sidebar-filter='yes'";
+	$status?$shortcode .= " status='" . $status . "'":'';
+	$shortcode .= "]";
 	do_action( 'ttbm_single_location_page_before_wrapper' );
-	echo do_shortcode( "[travel-list style='modern' show='10'  pagination='yes' sidebar-filter='yes']" );
+	echo do_shortcode( $shortcode );
 	do_action( 'ttbm_single_location_page_after_wrapper' );
 	if ( wp_is_block_theme() ) 
 	{

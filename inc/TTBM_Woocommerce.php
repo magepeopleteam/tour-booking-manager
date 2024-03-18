@@ -16,7 +16,8 @@ if (!class_exists('TTBM_Woocommerce')) {
             //************//
             add_action('woocommerce_after_checkout_validation', array($this, 'after_checkout_validation'));
             add_action('woocommerce_checkout_create_order_line_item', array($this, 'checkout_create_order_line_item'), 90, 4);
-            add_action('woocommerce_checkout_order_processed', array($this, 'checkout_order_processed'), 10);
+            //add_action('woocommerce_checkout_order_processed', array($this, 'checkout_order_processed'), 10);
+            add_action('woocommerce_before_thankyou', array($this, 'woocommerce_before_thankyou'), 10);
             add_filter('woocommerce_order_status_changed', array($this, 'order_status_changed'), 10, 4);
             //*******************//
             //*******************//
@@ -40,8 +41,6 @@ if (!class_exists('TTBM_Woocommerce')) {
                 $cart_item_data = apply_filters('ttbm_add_cart_item', $cart_item_data, $product_id);
             }
             $cart_item_data['ttbm_id'] = $product_id;
-            //echo '<pre>';print_r($_POST );echo '</pre>';
-           // echo '<pre>';print_r($cart_item_data);echo '</pre>';die();
             return $cart_item_data;
         }
         public function before_calculate_totals($cart_object) {
@@ -171,6 +170,40 @@ if (!class_exists('TTBM_Woocommerce')) {
                 }
             }
         }
+        public function woocommerce_before_thankyou($order_id) {
+            if(is_object($order_id))
+            {
+                $order_id = $order_id->get_id();
+            }
+            if ($order_id) {
+                // echo "<pre>";print_r($order);echo "</pre>";exit;
+                // $order_id = $order->get_id();
+                $order = wc_get_order($order_id);
+                $order_status = $order->get_status();
+                if ($order_status != 'failed') {
+                    //$item_id = current( array_keys( $order->get_items() ) );
+                    foreach ($order->get_items() as $item_id => $item) {
+                        $ttbm_id = MP_Global_Function::get_order_item_meta($item_id, '_ttbm_id');
+	                    $ttbm_id=TTBM_Function::post_id_multi_language($ttbm_id);
+                        if (get_post_type($ttbm_id) == TTBM_Function::get_cpt_name()) {
+                            $ticket = MP_Global_Function::get_order_item_meta($item_id, '_ttbm_ticket_info');
+                            $ticket_info = $ticket ? MP_Global_Function::data_sanitize($ticket) : [];
+                            $hotel = MP_Global_Function::get_order_item_meta($item_id, '_ttbm_hotel_info');
+                            $hotel_info = $hotel ? MP_Global_Function::data_sanitize($hotel) : [];
+                            $user = MP_Global_Function::get_order_item_meta($item_id, '_ttbm_user_info');
+                            $user_info = $user ? MP_Global_Function::data_sanitize($user) : [];
+                            $service = MP_Global_Function::get_order_item_meta($item_id, '_ttbm_service_info');
+                            $service_info = $service ? MP_Global_Function::data_sanitize($service) : [];
+                            self::add_billing_data($ticket_info, $hotel_info, $user_info, $ttbm_id, $order_id);
+                            $this->add_extra_service_data($service_info, $ttbm_id, $order_id);
+                        }
+                    }
+                }
+
+                do_action('ttbm_send_mail',$order_id);
+                update_post_meta($order_id, 'ttbm_initial_email_send', 'yes');
+            }
+        }
         public function order_status_changed($order_id) {
             $order = wc_get_order($order_id);
             $order_status = $order->get_status();
@@ -281,7 +314,8 @@ if (!class_exists('TTBM_Woocommerce')) {
                                         <h6><?php echo esc_html(TTBM_Function::ticket_price_text()); ?> :&nbsp;</h6>
                                         <span><?php echo ' ( ' . MP_Global_Function::wc_price($ttbm_id, $ticket['ticket_price']) . ' x ' . $ticket['ticket_qty'] . ' x ' . $hotel_info['ttbm_hotel_num_of_day'] . ') = ' . MP_Global_Function::wc_price($ttbm_id, ($ticket['ticket_price'] * $ticket['ticket_qty'] * $hotel_info['ttbm_hotel_num_of_day'])); ?></span>
                                     </li>
-                                <?php } else { ?>
+                                <?php } else { 
+                                    $ticket_type_unit_qty = apply_filters('ttbm_get_group_ticket_qty','',$ticket['ticket_name'],$ttbm_id);?>
                                     <li>
                                         <h6><?php echo esc_html(TTBM_Function::ticket_name_text()); ?> :&nbsp;</h6>
                                         <span><?php echo esc_html($ticket['ticket_name']); ?></span>
@@ -381,7 +415,8 @@ if (!class_exists('TTBM_Woocommerce')) {
             $order_meta = get_post_meta($order_id);
             $order_status = $order->get_status();
             $payment_method = $order_meta['_payment_method_title'][0] ?? '';
-            $user_id = $order_meta['_customer_user'][0] ?? '';
+            //$user_id = $order_meta['_customer_user'][0] ?? '';
+            $user_id = $order->get_user_id()??'';
             $zdata = [];
             if (sizeof($service_info) > 0) {
                 foreach ($service_info as $key=>$_ticket) {
@@ -404,7 +439,7 @@ if (!class_exists('TTBM_Woocommerce')) {
             $order = wc_get_order($order_id);
 	        $order_status = $order->get_status();
 	        $payment_method = $order->get_payment_method();
-	        $user_id = $order->get_user();
+	        $user_id = $order->get_user_id()??'';
 	        $billing_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
 	        $billing_email = $order->get_billing_email();
 	        $billing_phone = $order->get_billing_phone();
@@ -414,15 +449,18 @@ if (!class_exists('TTBM_Woocommerce')) {
             $checkout_date = sizeof($hotel_info) > 0 ? $hotel_info['ttbm_checkout_date'] : '';
             $num_of_day = sizeof($hotel_info) > 0 ? $hotel_info['ttbm_hotel_num_of_day'] : 1;
             if (sizeof($ticket_info) > 0) {
-                $count = 0;
+                $count = 0; $k = -1;$prev_ticket_type_name = "";
                 foreach ($ticket_info as $_ticket) {
-                    $qty = $_ticket['ticket_qty'];
+                    $ticket_type_unit_qty = apply_filters('ttbm_get_group_ticket_qty','',$_ticket['ticket_name'],$ttbm_id);
+                    $qty = $_ticket['ticket_qty']*($ticket_type_unit_qty > 1?$ticket_type_unit_qty:1);
+                    //$price = TTBM_Function::get_price_by_name($names[$i], $tour_id, $hotel_id, $ticket_type_qty, $start_date) * $ticket_type_qty;
                     for ($key = 0; $key < $qty; $key++) {
                         $zdata[$count]['ttbm_ticket_name'] = $_ticket['ticket_name'];
                         $zdata[$count]['ttbm_ticket_price'] = $_ticket['ticket_price'] * $num_of_day;
-                        $zdata[$count]['ttbm_ticket_total_price'] = ($_ticket['ticket_price'] * $_ticket['ticket_qty']) * $num_of_day;
+                        $zdata[$count]['ttbm_ticket_total_price'] = ($_ticket['ticket_price'] * $qty) * $num_of_day;
                         $zdata[$count]['ttbm_date'] = $_ticket['ttbm_date'];
                         $zdata[$count]['ttbm_ticket_qty'] = $_ticket['ticket_qty'];
+                        $zdata[$count]['ttbm_group_ticket_unit_qty'] = $qty;
                         $zdata[$count]['ttbm_hotel_id'] = $hotel_id;
                         $zdata[$count]['ttbm_checkin_date'] = $checkin_date;
                         $zdata[$count]['ttbm_checkout_date'] = $checkout_date;
@@ -437,9 +475,10 @@ if (!class_exists('TTBM_Woocommerce')) {
                         $zdata[$count]['ttbm_billing_phone'] = $billing_phone;
                         $zdata[$count]['ttbm_billing_address'] = $billing_address;
                         $user_data = apply_filters('ttbm_user_booking_data_arr', $zdata[$count], $count, $user_info, $ttbm_id);
-                        //echo '<pre>';print_r($user_data['ttbm_billing_name']);echo '</pre>';
-                        //echo '<pre>';print_r($user_data);echo '</pre>';die();
-                        self::add_cpt_data('ttbm_booking', $user_data['ttbm_billing_name'], $user_data);
+                        // echo '<pre>';print_r($user_data['ttbm_billing_name']);echo '</pre>';
+                        // echo '<pre>';print_r($user_data);echo '</pre>';die();
+                        //echo "<pre>";print_r(array($k,$user_data));echo "</pre>";exit;
+                        self::add_cpt_data('ttbm_booking', $user_data['ttbm_billing_name'], $user_data);                        
                         $count++;
                     }
                 }
@@ -505,6 +544,9 @@ if (!class_exists('TTBM_Woocommerce')) {
             if (sizeof($names) > 0) {
                 for ($i = 0; $i < $count; $i++) {
                     if ($qty[$i] > 0) {
+                        // $ticket_type_unit_qty = apply_filters('ttbm_get_group_ticket_qty','',$names[$i],$tour_id);
+                        // $ticket_type_qty = ($qty[$i] * ($ticket_type_unit_qty > 1?$ticket_type_unit_qty:1));
+                        // $price = TTBM_Function::get_price_by_name($names[$i], $tour_id, $hotel_id, $ticket_type_qty, $start_date) * $ticket_type_qty;
                         $price = TTBM_Function::get_price_by_name($names[$i], $tour_id, $hotel_id, $qty[$i], $start_date) * $qty[$i];
                         if ($hotel_id > 0) {
                             $price = $price * MP_Global_Function::get_submit_info('ttbm_hotel_num_of_day');
@@ -526,26 +568,66 @@ if (!class_exists('TTBM_Woocommerce')) {
             }
             return $total_price;
         }
-        public static function add_cpt_data($cpt_name, $title, $meta_data = array(), $status = 'publish', $cat = array()) {
-            $new_post = array(
-                'post_title' => $title,
-                'post_content' => '',
-                'post_category' => $cat,
-                'tags_input' => array(),
-                'post_status' => $status,
-                'post_type' => $cpt_name
-            );
-            $post_id = wp_insert_post($new_post);
-            if (sizeof($meta_data) > 0) {
-                foreach ($meta_data as $key => $value) {
-                    update_post_meta($post_id, $key, $value);
+        public static function add_cpt_data($cpt_name, $title, $meta_data = array(), $status = 'publish', $cat = array()) 
+        {
+            if(!self::check_duplicate_order( $meta_data['ttbm_order_id'], $meta_data['ttbm_id']))
+            {
+                $new_post = array(
+                    'post_title' => $title,
+                    'post_content' => '',
+                    'post_category' => $cat,
+                    'tags_input' => array(),
+                    'post_status' => $status,
+                    'post_type' => $cpt_name
+                );
+                wp_reset_postdata();
+                $post_id = wp_insert_post($new_post);
+                if (sizeof($meta_data) > 0) {
+                    foreach ($meta_data as $key => $value) {
+                        update_post_meta($post_id, $key, $value);
+                    }
                 }
+                if ($cpt_name == 'ttbm_booking') {
+                    $ttbm_pin = $meta_data['ttbm_user_id'] . $meta_data['ttbm_order_id'] . $meta_data['ttbm_id'] . $post_id;
+                    update_post_meta($post_id, 'ttbm_pin', $ttbm_pin);
+                }
+                wp_reset_postdata();
+
             }
-            if ($cpt_name == 'ttbm_booking') {
-                $ttbm_pin = $meta_data['ttbm_user_id'] . $meta_data['ttbm_order_id'] . $meta_data['ttbm_id'] . $post_id;
-                update_post_meta($post_id, 'ttbm_pin', $ttbm_pin);
+            
+        }
+
+        public static function check_duplicate_order($order_id, $ttbm_id)
+        {
+            $args = array(
+                'post_type'      => 'ttbm_booking',
+                'meta_query'     => array(
+                    'relation' => 'AND',
+                    array(
+                        'key'     => 'ttbm_order_id',
+                        'value'   => $order_id,
+                        'compare' => '=',
+                    ),
+                    array(
+                        'key'     => 'ttbm_id',
+                        'value'   => $ttbm_id,
+                        'compare' => '=',
+                    ),
+                ),
+            );
+
+            $query = new WP_Query($args);
+
+            if ($query->have_posts()) 
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
+
     }
     new TTBM_Woocommerce();
 }

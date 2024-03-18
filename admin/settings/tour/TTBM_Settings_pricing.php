@@ -46,6 +46,16 @@
 						</div>
 						<?php MP_Custom_Layout::switch_button('ttbm_display_registration', $checked); ?>
                     </section>
+                    <?php do_action('ttbm_hotel_pricing_before', $tour_id); ?>
+                    <?php $this->ttbm_hotel_config($tour_id); ?>
+                    <?php do_action('ttbm_hotel_pricing_after', $tour_id); ?>
+                    <?php $this->ttbm_ticket_config($tour_id); ?>
+                    <?php do_action('ttbm_tour_pricing_after', $tour_id); ?>
+                    <?php $this->advertise_addon(); ?>
+                </div>
+            </div>
+            <?php
+        }
 
 					<div data-collapse="#ttbm_display_registration" class="<?php echo esc_attr($active); ?>">
 						<?php $this->ttbm_add_to_cart_form_shortcode($tour_id); ?>

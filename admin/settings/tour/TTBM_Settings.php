@@ -52,7 +52,7 @@
 					'sections' => [
 						'section_2' => [
 							'title' => esc_html__('Date Configuration', 'tour-booking-manager'),
-							'description' => esc_html__('', 'tour-booking-manager'),
+							'description' => esc_html__('Tour type and date time can be easily configured here, providing a crucial feature for recurring, fixed, or specific date tours.', 'tour-booking-manager'),
 							'options' => apply_filters('ttbm_date_info_boxs_meta_box', [
 								[
 									'id' => 'ttbm_travel_type',

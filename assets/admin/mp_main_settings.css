@@ -726,13 +726,6 @@
   margin-block-start: 0;
 }
 #mp_meta_box_panel body,
-#mp_meta_box_panel p {
-  color: var(--mpl-secondary);
-  font-family: "Sans-serif";
-  font-size: 1rem;
-  font-weight: initial;
-  line-height: 1.5;
-}
 #mp_meta_box_panel h1, #mp_meta_box_panel h2, #mp_meta_box_panel h3, #mp_meta_box_panel h4, #mp_meta_box_panel h5, #mp_meta_box_panel h6,
 #mp_meta_box_panel .h1, #mp_meta_box_panel .h2, #mp_meta_box_panel .h3, #mp_meta_box_panel .h4, #mp_meta_box_panel .h5, #mp_meta_box_panel .h6 {
   font-family: "sans-serif";
@@ -1015,11 +1008,16 @@
 }
 
 #mp_meta_box_panel h1 {
-  font-size: 1.625rem;
-  line-height: 1.4;
-  color: var(--mpl-primary);
-  font-weight: 500;
-  padding: 8px 0;
+  padding: 0;
+  color: var(--mpl-secondary);
+  margin: 30px 0 20px 0;
+  margin-bottom: 20px;
+  margin-bottom: 20px;
+  font-size: 22px;
+  line-height: 26px;
+  font-family: Roboto, sans-serif;
+  margin-bottom: 12px;
+  font-weight: 700;
 }
 #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs .description, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs .description {
   margin: 0;
@@ -1028,17 +1026,21 @@
   font-size: 1rem;
 }
 #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table {
-  border-collapse: separate;
-  border-spacing: 0 1.5em;
+  border-collapse: collapse;
+  border-spacing: 0;
   border: 0;
   margin: 0;
+  margin-top: 50px;
 }
 #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th, #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td {
   background-color: var(--mpl-white);
-  border-radius: 0.25rem;
   padding: 1.5em;
   margin-bottom: 1.5em;
   width: 50%;
+  border: 1px solid var(--mpl-gray);
+}
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th p, #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td p, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th p, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td p {
+  font-size: 0.8rem;
 }
 #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td {
   text-align: right;
@@ -1138,7 +1140,8 @@ div > .ppof-metabox {
     object-fit: cover;
   }
   div.mpStyle .description {
-    font-size: 0.8rem !important;
+    font-size: 1rem !important;
+    color: #6B7280;
   }
   .mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::before {
     background: var(--mpl-sky);

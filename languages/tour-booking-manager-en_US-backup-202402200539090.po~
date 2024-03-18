@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Tour Booking Manager For Woocommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-28 04:46+0000\n"
-"PO-Revision-Date: 2024-02-20 05:39+0000\n"
+"PO-Revision-Date: 2022-08-17 03:45+0000\n"
 "Last-Translator: \n"
 "Language-Team: English (United States)\n"
 "Language: en_US\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.6; wp-6.4.3\n"
+"X-Loco-Version: 2.5.8; wp-5.9\n"
 "X-Domain: tour-booking-manager"
 
 #: inc/TTBM_Shortcodes.php:199
@@ -389,11 +389,11 @@ msgstr ""
 #: admin/TTBM_Settings_Global.php:307
 #: templates/single/ticket_list_heading.php:3
 msgid "Available Ticket List"
-msgstr "Make your booking"
+msgstr ""
 
 #: inc/TTBM_Booking.php:34 inc/TTBM_Ajax.php:47
 msgid "Available Ticket List "
-msgstr "Make your booking"
+msgstr ""
 
 #: support/elementor/widget/tour-list.php:335
 #: support/elementor/widget/tour-list.php:456

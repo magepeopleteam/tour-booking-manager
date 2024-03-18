@@ -257,7 +257,9 @@ function mp_all_content_change($this) {
 		let current = $(this);
 		let target = current.closest('.qtyIncDec').find('input');
 		let currentValue = parseInt(target.val());
-		let value = current.hasClass('incQty') ? (currentValue + 1) : ((currentValue - 1) > 0 ? (currentValue - 1) : 0);
+		//let unitValue = parseInt(target.data('unit-qty')) || parseInt(1);
+		let unitValue = parseInt(1);
+		let value = current.hasClass('incQty') ? (currentValue + unitValue) : ((currentValue - unitValue) > 0 ? (currentValue - unitValue) : 0);
 		let min = parseInt(target.attr('min'));
 		let max = parseInt(target.attr('max'));
 		target.parents('.qtyIncDec').find('.incQty , .decQty').removeClass('mpDisabled');
@@ -269,7 +271,10 @@ function mp_all_content_change($this) {
 			value = max;
 			target.parents('.qtyIncDec').find('.incQty').addClass('mpDisabled');
 		}
-		target.val(value).trigger('change').trigger('input');
+		target.val(value)
+		.trigger('change')
+		.trigger('input')
+		;
 	});
 }(jQuery));
 //===========Sticky================//

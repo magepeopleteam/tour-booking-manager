@@ -8,7 +8,7 @@
 				add_action('admin_menu', array($this, 'tour_list_menu'), 1);
 				//===//
 				add_action('wp_ajax_ttbm_trash_post', array($this, 'ttbm_trash_post'));
-				add_action('wp_ajax_nopriv_ttbm_trash_post', array($this, 'ttbm_trash_post'));
+				//add_action('wp_ajax_nopriv_ttbm_trash_post', array($this, 'ttbm_trash_post'));
 			}
 			public function tour_list_menu() {
 				$label = TTBM_Function::get_name();
@@ -64,7 +64,7 @@
 											<div class="min_300" data-collapse="#ttbm_list_organizer_filter">
 												<label data-placeholder>
 													<select class="formControl" name="ttbm_list_organizer_filter">
-														<option selected value=""><?php esc_html_e('All Organizer', 'tour-booking-manager'); ?></option>
+														<option selected value=""><?php esc_html_e('All Organizer tt', 'tour-booking-manager'); ?></option>
 														<?php foreach ($organizers as $organizer) { ?>
 															<option value="<?php echo esc_attr($organizer->term_id); ?>"><?php echo esc_html($organizer->name); ?></option>
 														<?php } ?>
@@ -196,17 +196,33 @@
 				}
 				//echo '<pre>'; print_r( $all_orders ); echo '</pre>';
 			}
-			public function ttbm_trash_post(){
-				$post_id = isset($_REQUEST['post_id']) ? MP_Global_Function::data_sanitize($_REQUEST['post_id']) : '';
-				if ($post_id > 0) {
-					$args = array('post_type' => array('ttbm_tour'), 'posts_per_page' => -1, 'p' => $post_id, 'post_status' => 'publish');
-					$loop = new WP_Query($args);
-					if($loop->found_posts) {
-						$current_post = get_post($post_id, 'ARRAY_A');
-						$current_post['post_status'] = 'trash';
-						wp_update_post($current_post);
+			public function ttbm_trash_post()
+			{
+
+				if(current_user_can('administrator'))
+				{
+					if (get_post_type($_REQUEST['post_id']) == TTBM_Function::get_cpt_name()) 
+					{
+						$post_id = isset($_REQUEST['post_id']) ? MP_Global_Function::data_sanitize($_REQUEST['post_id']) : '';
+						
+						if ($post_id > 0) 
+						{
+							$args = array('post_type' => array('ttbm_tour'), 'posts_per_page' => -1, 'p' => $post_id, 'post_status' => 'publish');
+							$loop = new WP_Query($args);
+							if($loop->found_posts) 
+							{
+								$current_post = get_post($post_id, 'ARRAY_A');
+								$current_post['post_status'] = 'trash';
+								wp_update_post($current_post);
+							}
+						}
 					}
 				}
+				else
+				{
+					echo "You don't have the permissions to delete the post";
+				}
+				
 				die();
 			}
 		}

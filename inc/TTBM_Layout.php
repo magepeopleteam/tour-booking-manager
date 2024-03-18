@@ -105,7 +105,7 @@
 				</div>
 				<?php
 			}
-			public static function qty_input($name, $available_seat, $ticket_qty_type, $default_qty, $min_qty, $max_qty, $ticket_price_raw, $input_name) {
+			public static function qty_input($name, $available_seat, $ticket_qty_type, $default_qty, $min_qty, $max_qty, $ticket_price_raw, $input_name,$tour_id='') {
 				$min_qty = max($default_qty, $min_qty);
 				$data_ticket_name = preg_replace('/[^A-Za-z0-9\-]/', '', $name);
 				if ($available_seat > $min_qty) {
@@ -122,6 +122,7 @@
 										<input type="text"
 											class="formControl inputIncDec"
 											data-price="<?php echo esc_attr($ticket_price_raw); ?>"
+											<?php do_action('ttbm_input_data',$name,$tour_id); ?>
 											name="<?php echo esc_attr($input_name); ?>"
 											value="<?php echo esc_attr(max(0, $default_qty)); ?>"
 											min="<?php echo esc_attr($min_qty); ?>"
@@ -137,7 +138,8 @@
 									<select name="<?php echo esc_attr($input_name); ?>" data-price="<?php echo esc_html($ticket_price_raw); ?>" class="formControl">
 										<?php
 											$max_total = $max_qty > 0 ? $max_qty : $available_seat;
-											for ($i = $min_qty; $i <= $max_total; $i++) {
+											$increment = apply_filters('ttbm_increment_for_dropdown',1,$name,$tour_id);
+											for ($i = $min_qty; $i <= $max_total; $i+=$increment) {
 												?>
 												<option value="<?php echo esc_html($i); ?>"> <?php echo esc_html($i); ?> </option>
 											<?php } ?>

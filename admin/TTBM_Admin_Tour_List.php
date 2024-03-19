@@ -25,7 +25,7 @@
 				<div class="wrap travel-list">
 					<div class="mpStyle">
 						<div class="_dLayout_pRelative placeholder_area " id="ttbm_list_page">
-							<button class="_navy_blueButton" type="button" data-href="<?php echo esc_url(admin_url('post-new.php?post_type=' . TTBM_Function::get_cpt_name())); ?>" title="<?php esc_attr_e('Add New', 'tour-booking-manager'); ?>">
+							<button class="_navy_blueButton rounded" type="button" data-href="<?php echo esc_url(admin_url('post-new.php?post_type=' . TTBM_Function::get_cpt_name())); ?>" title="<?php esc_attr_e('Add New', 'tour-booking-manager'); ?>">
 								<span class="fas fa-plus _mR_xs"></span><?php echo esc_html__('Add New ', 'tour-booking-manager') . ' ' . $label; ?>
 							</button>
 							<div class="_mb_dFlex_justifyBetween_alignCenter my-2" data-placeholder>

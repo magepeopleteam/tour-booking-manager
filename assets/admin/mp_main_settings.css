@@ -845,7 +845,10 @@
   border-radius: 5px;
 }
 .travel-list #ttbm_list_page table tr:nth-child(odd) {
-  background-color: #d9d9d9;
+  background-color: #5b4545;
+}
+.travel-list #ttbm_list_page table tr:hover {
+  background-color: #F5F5F5;
 }
 .travel-list #ttbm_list_page table tr td {
   border: 0;
@@ -866,7 +869,6 @@
   width: 100px;
   height: 60px;
   object-fit: cover;
-  border-radius: 0;
 }
 
 div.mpStyle [class*=textSuccess] {

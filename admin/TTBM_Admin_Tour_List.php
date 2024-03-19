@@ -115,8 +115,9 @@
 					<table class="layoutFixed" data-placeholder>
 						<thead>
 						<tr>
-							<th><input type="checkbox"></th>
-							<th class="textLeft" colspan="2"><?php esc_html_e('Title', 'tour-booking-manager'); ?></th>
+							<th class="w-3"><input type="checkbox"></th>
+							<th class="textLeft w-8"><?php esc_html_e('Featured Image', 'tour-booking-manager'); ?></th>
+							<th class="textLeft w-30"><?php esc_html_e('Title', 'tour-booking-manager'); ?></th>
 							<th class="textLeft"><?php esc_html_e('Category', 'tour-booking-manager'); ?></th>
 							<th class="textLeft"><?php esc_html_e('Organizer', 'tour-booking-manager'); ?></th>
 							<th class="textLeft"><?php esc_html_e('Location', 'tour-booking-manager'); ?></th>
@@ -145,13 +146,13 @@
 								$admin_note=MP_Global_Function::get_post_info($post_id, 'ttbm_admin_note');
 								?>
 								<tr data-upcoming_date="<?php echo esc_attr($upcoming_date); ?>" data-post_id="<?php echo esc_attr($post_id); ?>" data-category="<?php echo esc_attr($category); ?>" data-organizer="<?php echo esc_attr($organizer); ?>" data-location="<?php echo esc_attr($location); ?>">
-									<th><input type="checkbox"></th>
-									<th><?php  echo get_the_post_thumbnail($post_id, 'thumbnail');  ?></th>
-									<th class="textLeft">
-										<span class="green">Total: <?php echo esc_html($total)?></span>
-										<span class="beguni">Sold: <?php echo esc_html($sold)?></span>
-										<span class="blue">Reserve: <?php echo esc_html($reserve)?></span>
-										<span class="purple">Available: <?php echo esc_html($total - ($reserve + $sold))?></span>
+									<td><input type="checkbox"></td>
+									<td valign="middle"><?php  echo get_the_post_thumbnail($post_id, 'thumbnail');  ?></td>
+									<td class="textLeft w-10" valign="middle">
+										<span class="badge green">Total: <?php echo esc_html($total)?></span>
+										<span class="badge beguni">Sold: <?php echo esc_html($sold)?></span>
+										<span class="badge blue">Reserve: <?php echo esc_html($reserve)?></span>
+										<span class="badge purple">Available: <?php echo esc_html($total - ($reserve + $sold))?></span>
 										<p><a href="<?php echo get_the_permalink($post_id); ?>"><?php echo get_the_title($post_id); ?></a></p>
 									</th>
 									

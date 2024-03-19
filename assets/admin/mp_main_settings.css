@@ -797,6 +797,26 @@
   border: 1px solid var(--mpl-gray);
 }
 
+.green {
+  background-color: rgba(0, 166, 86, 0.0823529412);
+  color: #00A656;
+}
+
+.beguni {
+  background-color: rgba(126, 85, 216, 0.0823529412);
+  color: #7E55D8;
+}
+
+.blue {
+  background-color: rgba(38, 103, 214, 0.0823529412);
+  color: #2667D6;
+}
+
+.purple {
+  background-color: rgba(198, 40, 127, 0.0823529412);
+  color: #C6287F;
+}
+
 .travel-list .total-found {
   color: #666666;
 }
@@ -804,47 +824,59 @@
   background-color: #f6dfec;
   border-radius: 20px;
   padding: 0.1em 0.5em;
-  color: #c6287f;
+  color: #C6287F;
 }
-.travel-list span.green {
-  background-color: rgba(0, 166, 86, 0.1843137255);
-  color: #00a656;
+.travel-list .badge {
   border-radius: 20px;
-  padding: 0.1em 0.5em;
-}
-.travel-list span.beguni {
-  background-color: rgba(126, 85, 216, 0.1843137255);
-  color: #7e55d8;
-  border-radius: 20px;
-  padding: 0.1em 0.5em;
-}
-.travel-list span.blue {
-  background-color: rgba(38, 103, 214, 0.1843137255);
-  color: #2667d6;
-  border-radius: 20px;
-  padding: 0.1em 0.5em;
-}
-.travel-list span.purple {
-  background-color: rgba(198, 40, 127, 0.1843137255);
-  color: #c6287f;
-  border-radius: 20px;
-  padding: 0.1em 0.5em;
+  padding: 0.4em 1em;
 }
 .travel-list #ttbm_list_page table {
   width: 100%;
-}
-.travel-list #ttbm_list_page table thead tbody tr:nth-of-type(2n) th:first-child {
-  background-color: var(--color_light);
+  border-collapse: separate;
 }
 .travel-list #ttbm_list_page table thead th {
-  color: #fff;
+  background-color: #F5F5F5;
+  color: #666666;
   border: 0;
-  padding: 10px;
+  padding: 15px;
   vertical-align: middle;
 }
-.travel-list #ttbm_list_page table thead th img {
+.travel-list #ttbm_list_page table tbody tr:nth-of-type(2n) th:first-child {
+  background-color: var(--color_light);
+}
+.travel-list #ttbm_list_page table tr {
+  box-shadow: 0px 0px 5px #d9d9d9;
+  margin: 5px 0;
+  background-color: #fff;
+  border-radius: 5px;
+}
+.travel-list #ttbm_list_page table tr:nth-child(odd) {
+  background-color: #d9d9d9;
+}
+.travel-list #ttbm_list_page table tr td {
+  border: 0;
+  vertical-align: middle;
+}
+.travel-list #ttbm_list_page table tr td:nth-child(2) {
+  padding: 5px;
+}
+.travel-list #ttbm_list_page table tr td a {
+  font-size: 14px;
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  color: var(--mpl-secondary);
+}
+.travel-list #ttbm_list_page table tr td img {
+  width: 100px;
   height: 60px;
   object-fit: cover;
+  border-radius: 0;
+}
+
+div.mpStyle [class*=textSuccess] {
+  color: #00A656;
 }
 
 #mp_meta_box_panel .postbox-header, .travel-list .postbox-header {

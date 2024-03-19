@@ -26,16 +26,10 @@ $beguni-light: #7E55D815;
 
     .total-found{
         color: #666666;
-        span{
-            background-color: #f6dfec;
-            border-radius: 20px;
-            padding:$spacing*0.2 $spacing;
-            color:#C6287F;
-        }
     }
     .badge{
         border-radius: 20px;
-        padding:calc( $spacing * 0.8 ) calc( $spacing * 2);
+        padding:calc( $spacing * 0.5 ) calc( $spacing * 1);
     }
     #ttbm_list_page{
         table{

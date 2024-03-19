@@ -92,7 +92,7 @@
 								</div>
 								<p class="total-found">
 									<?php esc_html_e('Total Found :', 'tour-booking-manager'); ?>&nbsp;
-									<span><?php echo esc_html($post_query->found_posts.' Travels'); ?></span>
+									<span class="badge purple"><b><?php echo esc_html($post_query->found_posts); ?></b> <?php echo esc_html('Travels','tour-booking-manager'); ?></span>
 								</p>
 								<!-- <label class="groupContent bgWhite textDefault"><span class="padding_xs">--><?php //echo $label . ' ' . esc_html__('Per Page', 'tour-booking-manager'); ?><!--</span> <input type="number" min="1" class="formControl _max_100_textCenter" name="post_per_page" value="20"/></label>-->
 							</div>
@@ -149,10 +149,10 @@
 									<td><input type="checkbox"></td>
 									<td valign="middle"><?php  echo get_the_post_thumbnail($post_id, 'thumbnail');  ?></td>
 									<td class="textLeft w-10" valign="middle">
-										<span class="badge green">Total: <?php echo esc_html($total)?></span>
-										<span class="badge beguni">Sold: <?php echo esc_html($sold)?></span>
-										<span class="badge blue">Reserve: <?php echo esc_html($reserve)?></span>
-										<span class="badge purple">Available: <?php echo esc_html($total - ($reserve + $sold))?></span>
+										<span class="badge green"><?php esc_html_e('Total','tour-booking-manager')?> <b><?php echo esc_html($total)?></b></span>
+										<span class="badge beguni"><?php esc_html_e('Sold','tour-booking-manager')?> <b><?php echo esc_html($sold)?></b></span>
+										<span class="badge blue"><?php esc_html_e('Reserved','tour-booking-manager')?> <b><?php echo esc_html($reserve)?></b></span>
+										<span class="badge purple"><?php esc_html_e('Available','tour-booking-manager')?> <b><?php echo esc_html($total - ($reserve + $sold))?></b></span>
 										<p><a href="<?php echo get_the_permalink($post_id); ?>"><?php echo get_the_title($post_id); ?></a></p>
 									</th>
 									

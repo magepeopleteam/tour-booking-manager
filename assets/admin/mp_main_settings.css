@@ -820,15 +820,9 @@
 .travel-list .total-found {
   color: #666666;
 }
-.travel-list .total-found span {
-  background-color: #f6dfec;
-  border-radius: 20px;
-  padding: 0.1em 0.5em;
-  color: #C6287F;
-}
 .travel-list .badge {
   border-radius: 20px;
-  padding: 0.4em 1em;
+  padding: 0.25em 0.5em;
 }
 .travel-list #ttbm_list_page table {
   width: 100%;

@@ -1,0 +1,63 @@
+.travel-list {
+  $purple: #c6287f;
+  $purple-light: #c6287f2f;
+  $green: #00a656;
+  $green-light: #00a6562f;
+  $blue: #2667d6;
+  $blue-light: #2667d62f;
+  $beguni: #7e55d8;
+  $beguni-light: #7e55d82f;
+  .total-found {
+    color: #666666;
+    span {
+      background-color: #f6dfec;
+      border-radius: 20px;
+      padding: $spacing * 0.2 $spacing;
+      color: #c6287f;
+    }
+  }
+  span.green {
+    background-color: $green-light;
+    color: $green;
+    border-radius: 20px;
+    padding: $spacing * 0.2 $spacing;
+  }
+  span.beguni {
+    background-color: $beguni-light;
+    color: $beguni;
+    border-radius: 20px;
+    padding: $spacing * 0.2 $spacing;
+  }
+  span.blue {
+    background-color: $blue-light;
+    color: $blue;
+    border-radius: 20px;
+    padding: $spacing * 0.2 $spacing;
+  }
+  span.purple {
+    background-color: $purple-light;
+    color: $purple;
+    border-radius: 20px;
+    padding: $spacing * 0.2 $spacing;
+  }
+  #ttbm_list_page {
+    table {
+      width: 100%;
+      thead {
+        tbody tr:nth-of-type(2n) th:first-child {
+          background-color: var(--color_light);
+        }
+        th {
+          color: #fff;
+          border: 0;
+          padding: 10px;
+          vertical-align: middle;
+          img {
+            height: 60px;
+            object-fit: cover;
+          }
+        }
+      }
+    }
+  }
+}

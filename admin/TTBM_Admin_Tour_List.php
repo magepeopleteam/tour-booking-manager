@@ -146,7 +146,7 @@
 								$admin_note=MP_Global_Function::get_post_info($post_id, 'ttbm_admin_note');
 								?>
 								<tr data-upcoming_date="<?php echo esc_attr($upcoming_date); ?>" data-post_id="<?php echo esc_attr($post_id); ?>" data-category="<?php echo esc_attr($category); ?>" data-organizer="<?php echo esc_attr($organizer); ?>" data-location="<?php echo esc_attr($location); ?>">
-									<td><input type="checkbox"></td>
+									<td class="textCenter"><input type="checkbox"></td>
 									<td valign="middle"><?php  echo get_the_post_thumbnail($post_id, 'thumbnail');  ?></td>
 									<td class="textLeft w-10" valign="middle">
 										<span class="badge green"><?php esc_html_e('Total','tour-booking-manager')?> <b><?php echo esc_html($total)?></b></span>
@@ -173,7 +173,7 @@
 												<span class="fas fa-edit mp_zero"></span>
 											</button>
 											<?php do_action('add_ttbm_list_action_button', $post_id); ?>
-											<button class="_mpBtn_xs_textGray ttbm_trash_post" type="button" data-alert="<?php echo esc_attr__('Are you sure ? To trash : ', 'tour-booking-manager').' '.get_the_title($post_id); ?>" data-post-id="<?php echo esc_attr($post_id); ?>" title="<?php echo esc_attr__('Trash ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>">
+											<button class="_mpBtn_xs_textDanger ttbm_trash_post" type="button" data-alert="<?php echo esc_attr__('Are you sure ? To trash : ', 'tour-booking-manager').' '.get_the_title($post_id); ?>" data-post-id="<?php echo esc_attr($post_id); ?>" title="<?php echo esc_attr__('Trash ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>">
 												<span class="fas fa-trash-alt mp_zero"></span>
 											</button>
 										</div>

@@ -820,18 +820,17 @@
   color: #C6287F;
 }
 
-.travel-list .total-found {
-  color: #666666;
-}
-.travel-list .badge {
+.badge {
   border-radius: 20px;
   padding: 0.25em 0.5em;
 }
+
 .travel-list #ttbm_list_page table {
   width: 100%;
-  border-collapse: separate;
+  border-collapse: collapse;
 }
 .travel-list #ttbm_list_page table thead th {
+  border: 0;
   background-color: #F5F5F5;
   color: #666666;
   border: 0;
@@ -842,16 +841,16 @@
   background-color: var(--color_light);
 }
 .travel-list #ttbm_list_page table tr {
-  box-shadow: 0px 0px 5px #d9d9d9;
+  border: 1px solid #f2f2f2;
   margin: 5px 0;
-  background-color: #fff;
   border-radius: 5px;
-}
-.travel-list #ttbm_list_page table tr:nth-child(odd) {
-  background-color: #5b4545;
+  background-color: #fff;
 }
 .travel-list #ttbm_list_page table tr:hover {
   background-color: #F5F5F5;
+}
+.travel-list #ttbm_list_page table tr th {
+  border: 0;
 }
 .travel-list #ttbm_list_page table tr td {
   border: 0;
@@ -873,9 +872,49 @@
   height: 60px;
   object-fit: cover;
 }
+.travel-list #ttbm_list_page .ttbm_list_attendee_area {
+  background-color: #C6287F;
+}
+.travel-list div.mpStyle label {
+  font-size: inherit;
+  font-weight: 700;
+}
 
 div.mpStyle [class*=textSuccess] {
   color: #00A656;
+}
+
+.mpStyle [class*=_successButton] {
+  background-color: #00A656;
+  border: 2px solid #00A656;
+}
+
+.mpStyle [class*=_themeButton] {
+  background-color: #2667D6;
+  border: 2px solid #2667D6;
+}
+.mpStyle [class*=_themeButton] span {
+  color: #fff;
+}
+.mpStyle [class*=_themeButton]:hover {
+  background-color: #fff;
+  border: 2px solid #2667D6;
+  color: #2667D6;
+}
+.mpStyle [class*=_themeButton]:hover span {
+  color: #2667D6;
+}
+
+div.mpStyle [class*=_textDanger] {
+  color: #C6287F;
+}
+
+div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
+  color: #C6287F;
+}
+
+#ttbm_list_page table tbody tr:nth-of-type(2n+1) td, #ttbm_list_page table tbody tr:nth-of-type(2n) th:first-child {
+  background-color: #FFF;
 }
 
 #mp_meta_box_panel .postbox-header, .travel-list .postbox-header {

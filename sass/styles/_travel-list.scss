@@ -22,23 +22,23 @@ $beguni-light: #7E55D815;
     background-color: $purple-light;
     color: $purple;
 }
+
+.badge{
+    border-radius: 20px;
+    padding:calc( $spacing * 0.5 ) calc( $spacing * 1);
+}
+
 .travel-list{
 
-    .total-found{
-        color: #666666;
-    }
-    .badge{
-        border-radius: 20px;
-        padding:calc( $spacing * 0.5 ) calc( $spacing * 1);
-    }
     #ttbm_list_page{
         table{
             width: 100%;
-            border-collapse:separate;
+            border-collapse:collapse;
             
             thead{
                 
                 th{
+                    border: 0;
                     background-color:#F5F5F5;
                     color:#666666;
                     border: 0;
@@ -51,15 +51,15 @@ $beguni-light: #7E55D815;
                 background-color: var(--color_light);
             }
             tr{
-                box-shadow: 0px 0px 5px #d9d9d9;
+                border: 1px solid #f2f2f2;
                 margin: 5px 0;
-                background-color: #fff;
                 border-radius: 5px;
-                &:nth-child(odd){
-                    background-color: #5b4545;
-                }
+                background-color: #fff;
                 &:hover{
                     background-color: #F5F5F5;
+                }
+                th{
+                    border: 0;
                 }
                 td{
                     border: 0;
@@ -84,9 +84,51 @@ $beguni-light: #7E55D815;
                 }
             }
         }
+        .ttbm_list_attendee_area{
+            background-color: $purple;
+        }
+    }
+
+    div.mpStyle label {
+        font-size: inherit;
+        font-weight:700;
     }
 }
 
+
+
 div.mpStyle [class*="textSuccess"] {
 color: $green;
+}
+
+.mpStyle [class*="_successButton"]{
+    background-color: $green;
+    border: 2px solid $green;
+}
+
+.mpStyle [class*="_themeButton"]{
+    background-color: $blue;
+    border: 2px solid $blue;
+    span{
+        color: #fff;
+    }
+    &:hover{
+        background-color: #fff;
+        border: 2px solid $blue;
+        color: $blue;
+        span{
+            color: $blue;
+        }
+    }
+}
+
+div.mpStyle [class*="_textDanger"]{
+    color: $purple;
+}
+div.mpStyle .textTheme, div.mpStyle [class*="_textTheme"] {
+color: $purple;
+}
+
+#ttbm_list_page table tbody tr:nth-of-type(2n+1) td, #ttbm_list_page table tbody tr:nth-of-type(2n) th:first-child {
+  background-color: #FFF;
 }

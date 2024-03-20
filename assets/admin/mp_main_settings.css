@@ -811,7 +811,7 @@
 }
 #mp_meta_box_panel .component, .travel-list .component {
   background-color: var(--mpl-white);
-  border-radius: 0.25rem;
+  border-radius: 0;
   padding: 1.5em;
   margin-bottom: 1.5em;
   border: 1px solid var(--mpl-gray);

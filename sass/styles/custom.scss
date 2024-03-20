@@ -89,6 +89,9 @@
           }
          
         }
+        .span-row{
+          color: #6B7280;
+        }
       }
     }
 } 
@@ -400,7 +403,7 @@ div > .ppof-metabox {
   }
   div.mpStyle .description{
     font-size:$font-size !important;
-    color: #6B7280;
+    color: var(--mpl-secondary);
   }
  
   .mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::before {

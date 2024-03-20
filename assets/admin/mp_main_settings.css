@@ -1019,6 +1019,9 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label input, .travel-list .ttbm_settings .tabsContent .tabsItem section label input {
   font-family: DejaVuSans;
 }
+#mp_meta_box_panel .ttbm_settings .tabsContent .span-row, .travel-list .ttbm_settings .tabsContent .span-row {
+  color: #6B7280;
+}
 
 @media only screen and (min-width: 0px) {
   #mp_meta_box_panel .tabLists {
@@ -1292,7 +1295,7 @@ div > .ppof-metabox {
   }
   div.mpStyle .description {
     font-size: 1rem !important;
-    color: #6B7280;
+    color: var(--mpl-secondary);
   }
   .mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::before {
     background: var(--mpl-sky);

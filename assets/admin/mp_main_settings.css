@@ -27,6 +27,20 @@
   font-weight: 500;
   src: url("../../fonts/Ubuntu-Bold.woff") format("woff");
 }
+@font-face {
+  font-display: swap;
+  font-family: "DejaVuSans";
+  font-style: normal;
+  font-weight: 300;
+  src: url("../../fonts/dejavusans/DejaVuSans-webfont.woff") format("woff");
+}
+@font-face {
+  font-display: swap;
+  font-family: "DejaVuSansBold";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../../fonts/dejavusans/DejaVuSans-Bold-webfont.woff") format("woff");
+}
 #mp_meta_box_panel .p-0, .travel-list .p-0 {
   padding: 0em;
 }
@@ -587,11 +601,14 @@
   margin: 0;
   margin-bottom: 0px;
   font-size: 14px;
-  font-family: Roboto, sans-serif;
+  font-family: DejaVuSansBold, sans-serif;
   font-weight: 600;
   line-height: 1.2;
   margin-bottom: 8px;
   color: var(--mpl-secondary);
+}
+#mp_meta_box_panel label input, .travel-list label input {
+  font-weight: normal;
 }
 #mp_meta_box_panel textarea, #mp_meta_box_panel select, #mp_meta_box_panel input[type=text], #mp_meta_box_panel input[type=email], #mp_meta_box_panel input[type=search], #mp_meta_box_panel input[type=tel], #mp_meta_box_panel input[type=url], #mp_meta_box_panel input[type=password], #mp_meta_box_panel input[type=file], #mp_meta_box_panel input[type=color], #mp_meta_box_panel input[type=number], #mp_meta_box_panel input[type=range], #mp_meta_box_panel input[type=date], #mp_meta_box_panel input[type=month], #mp_meta_box_panel input[type=week], #mp_meta_box_panel input[type=time], #mp_meta_box_panel input[type=datetime], #mp_meta_box_panel input[type=datetime-local], .travel-list textarea, .travel-list select, .travel-list input[type=text], .travel-list input[type=email], .travel-list input[type=search], .travel-list input[type=tel], .travel-list input[type=url], .travel-list input[type=password], .travel-list input[type=file], .travel-list input[type=color], .travel-list input[type=number], .travel-list input[type=range], .travel-list input[type=date], .travel-list input[type=month], .travel-list input[type=week], .travel-list input[type=time], .travel-list input[type=datetime], .travel-list input[type=datetime-local] {
   width: 16em;
@@ -628,7 +645,7 @@
   left: 50%;
   transform: translate(-50%);
   visibility: hidden;
-  font-family: "Sans-serif";
+  font-family: DejaVuSans;
   font-size: 0.9rem;
   text-align: center;
   background-color: var(--mpl-black);
@@ -733,7 +750,7 @@
 #mp_meta_box_panel .h1, #mp_meta_box_panel .h2, #mp_meta_box_panel .h3, #mp_meta_box_panel .h4, #mp_meta_box_panel .h5, #mp_meta_box_panel .h6, .travel-list body,
 .travel-list h1, .travel-list h2, .travel-list h3, .travel-list h4, .travel-list h5, .travel-list h6,
 .travel-list .h1, .travel-list .h2, .travel-list .h3, .travel-list .h4, .travel-list .h5, .travel-list .h6 {
-  font-family: "sans-serif";
+  font-family: DejaVuSansBold;
   line-height: 1.3;
 }
 #mp_meta_box_panel h1,
@@ -746,7 +763,7 @@
 .travel-list .h2 {
   font-size: 22px;
   line-height: 26px;
-  font-family: Roboto, sans-serif;
+  font-family: DejaVuSansBold, sans-serif;
   font-weight: 700;
 }
 #mp_meta_box_panel h3,
@@ -774,7 +791,7 @@
   line-height: 1.5;
 }
 #mp_meta_box_panel .fw-bold, .travel-list .fw-bold {
-  font-family: "sans-serif";
+  font-family: DejaVuSansBold;
   font-weight: 500;
 }
 #mp_meta_box_panel a, .travel-list a {
@@ -966,7 +983,7 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
 #mp_meta_box_panel .ttbm_settings .tabsContent, .travel-list .ttbm_settings .tabsContent {
   width: 80%;
   padding: 2% 5%;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-family: DejaVuSans, Arial, Helvetica, sans-serif;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem > h2, .travel-list .ttbm_settings .tabsContent .tabsItem > h2 {
   padding: 0;
@@ -975,7 +992,7 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   margin-bottom: 20px;
   font-size: 22px;
   line-height: 26px;
-  font-family: Roboto, sans-serif;
+  font-family: DejaVuSansBold, sans-serif;
   margin-bottom: 12px;
   font-weight: 700;
 }
@@ -985,7 +1002,7 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   font-size: 16px;
   font-weight: 300;
   line-height: 24px;
-  font-family: Roboto, sans-serif;
+  font-family: DejaVuSans, sans-serif;
   margin-bottom: 50px;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section, .travel-list .ttbm_settings .tabsContent .tabsItem section {
@@ -998,6 +1015,9 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label + span, .travel-list .ttbm_settings .tabsContent .tabsItem section label + span {
   color: #6B7280;
+}
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label input, .travel-list .ttbm_settings .tabsContent .tabsItem section label input {
+  font-family: DejaVuSans;
 }
 
 @media only screen and (min-width: 0px) {
@@ -1152,7 +1172,7 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
 #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs .description, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs .description, .travel-list .tab-content-ttbm_date_config_meta_boxs .description, .travel-list .tab-content-ttbm_tax_meta_boxs .description {
   margin: 0;
   padding: 0.75em 0;
-  font-family: "Sans-serif";
+  font-family: DejaVuSans;
   font-size: 1rem;
 }
 #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table, .travel-list .tab-content-ttbm_date_config_meta_boxs table, .travel-list .tab-content-ttbm_tax_meta_boxs table {

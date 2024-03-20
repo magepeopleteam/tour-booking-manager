@@ -3,11 +3,14 @@
     margin: 0;
     margin-bottom: 0px;
     font-size: 14px;
-    font-family: Roboto, sans-serif;
+    font-family: DejaVuSansBold, sans-serif;
     font-weight: 600;
     line-height: 1.2;
     margin-bottom: 8px;  
     color: $color-secondary;
+    input{
+      font-weight: normal;
+    }
   }
   textarea, select, input[type="text"], input[type="email"], input[type="search"], input[type="tel"], input[type="url"], input[type="password"],  input[type="file"], input[type="color"], input[type="number"], input[type="range"], input[type="date"], input[type="month"], input[type="week"], input[type="time"], input[type="datetime"], input[type="datetime-local"] {
       width:$input-width;

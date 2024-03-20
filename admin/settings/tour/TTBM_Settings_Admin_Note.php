@@ -29,7 +29,7 @@
 					<section>
                         <div>
                             <label for=""><?php esc_html_e('On/Off Admin Note', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>
-							<?php TTBM_Settings::des_p('ttbm_display_admin_note'); ?>
+							<span><?php TTBM_Settings::des_p('ttbm_display_admin_note'); ?></span>
                         </div>
 						<?php MP_Custom_Layout::switch_button('ttbm_display_admin_note', $checked); ?>
                     </section>
@@ -39,7 +39,7 @@
 						<section>
 							<div>
 								<label for=""><?php esc_html_e('Note ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>   
-								<?php TTBM_Settings::des_p('ttbm_admin_note'); ?> 
+								<span><?php TTBM_Settings::des_p('ttbm_admin_note'); ?></span> 
 							</div>
 							<textarea name="ttbm_admin_note" cols="50" rows="2"><?php echo esc_attr($admin_note); ?></textarea>
 						</section>

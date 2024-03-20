@@ -1,0 +1,134 @@
+$purple:#C6287F;
+$purple-light:#c6287f15;
+$green: #00A656;
+$green-light: #00a65615;
+$blue: #2667D6;
+$blue-light: #2667D615;
+$beguni: #7E55D8;
+$beguni-light: #7E55D815;
+.green{
+    background-color: $green-light;
+    color: $green;
+}
+.beguni{
+    background-color: $beguni-light;
+    color: $beguni;
+}
+.blue{
+    background-color: $blue-light;
+    color: $blue;
+}
+.purple{
+    background-color: $purple-light;
+    color: $purple;
+}
+
+.badge{
+    border-radius: 20px;
+    padding:calc( $spacing * 0.5 ) calc( $spacing * 1);
+}
+
+.travel-list{
+
+    #ttbm_list_page{
+        table{
+            width: 100%;
+            border-collapse:collapse;
+            
+            thead{
+                
+                th{
+                    border: 0;
+                    background-color:#F5F5F5;
+                    color:#666666;
+                    border: 0;
+                    padding:15px;
+                    vertical-align:middle;
+                    
+                }
+            }
+            tbody tr:nth-of-type(2n) th:first-child {
+                background-color: var(--color_light);
+            }
+            tr{
+                border: 1px solid #f2f2f2;
+                margin: 5px 0;
+                border-radius: 5px;
+                background-color: #fff;
+                &:hover{
+                    background-color: #F5F5F5;
+                }
+                th{
+                    border: 0;
+                }
+                td{
+                    border: 0;
+                    vertical-align: middle;
+                    &:nth-child(2){
+                        padding: 5px;
+                    }
+                    
+                    a{
+                        font-size: 14px;
+                        font-family: Roboto, sans-serif;
+                        font-weight: 600;
+                        line-height: 1.2;
+                        margin-bottom: 8px;
+                        color: var(--mpl-secondary);
+                    }
+                    img{
+                        width: 100px;
+                        height: 60px;
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
+        .ttbm_list_attendee_area{
+            background-color: $purple;
+        }
+    }
+
+    div.mpStyle label {
+        font-size: inherit;
+        font-weight:700;
+    }
+}
+
+
+
+div.mpStyle [class*="textSuccess"] {
+color: $green;
+}
+
+.mpStyle [class*="_successButton"]{
+    background-color: $green;
+    border: 2px solid $green;
+}
+
+.mpStyle [class*="_themeButton"]{
+    background-color: $blue;
+    border: 2px solid $blue;
+    span{
+        color: #fff;
+    }
+    &:hover{
+        background-color: #fff;
+        border: 2px solid $blue;
+        color: $blue;
+        span{
+            color: $blue;
+        }
+    }
+}
+
+div.mpStyle [class*="_textDanger"]{
+    color: $purple;
+}
+div.mpStyle .textTheme, div.mpStyle [class*="_textTheme"] {
+color: $purple;
+}
+
+#ttbm_list_page table tbody tr:nth-of-type(2n+1) td, #ttbm_list_page table tbody tr:nth-of-type(2n) th:first-child {
+  background-color: #FFF;
+}

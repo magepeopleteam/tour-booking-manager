@@ -919,7 +919,7 @@ div[class*="simpleSpinner"] {
 	.mpStyle optgroup,
 	.mpStyle select,
 	.mpStyle textarea,
-	.mpStyle button { font-family: inherit; line-height: 1.25; margin: 0; }
+	.mpStyle button { font-family: inherit; line-height: 1.25; margin: 0;font-weight: normal; }
 	.mpStyle .formControl:-webkit-autofill,
 	.mpStyle .formControl:-webkit-autofill:hover,
 	.mpStyle .formControl:-webkit-autofill:focus,
@@ -1201,11 +1201,11 @@ div.mp_input_add_icon {
 button.mp_input_add_icon_button span.remove_input_icon {
 	cursor: pointer;display: none;
 	position: absolute;top: -7px;right: -7px;
-	background-color: #6B003E;color: #FFF;
+	background-color: var(--mpl-primary);color: #FFF;
 	padding: 4px;
 	font-size: 12px;
 	border-radius: 50%;
-	height: auto; width: auto;
+	height: 20px; width: 20px;
 }
 button.mp_input_add_icon_button span.remove_input_icon.active {display: block;}
 /*************popup font***************/

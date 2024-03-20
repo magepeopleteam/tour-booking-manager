@@ -165,10 +165,7 @@ if ( ! class_exists( 'TtbmAddMetaBox' ) ) {
 						$current_page = 1;
 						foreach ( $this->get_panels() as $panelsIndex => $panel ):
 							?>
-                            <div class="tab-content <?php if ( $current_page == 1 ) {
-								echo 'active';
-							} ?>  tab-content-<?php
-							echo esc_html($panelsIndex); ?>">
+                            <div class="tab-content-<?php echo esc_html($panelsIndex); ?>">
 								<?php
 										wp_nonce_field('ttbm_ticket_type_nonce', 'ttbm_ticket_type_nonce');
 								foreach ( $panel['sections'] as $sectionIndex => $section ):
@@ -176,16 +173,19 @@ if ( ! class_exists( 'TtbmAddMetaBox' ) ) {
                                     <div class="section">
                                         <h1 id="<?php echo esc_html($sectionIndex); ?>" class="section-title"><?php echo esc_html($section['title']); ?></h1>
                                         <p class="description"><?php echo esc_html($section['description']); ?></p>
-                                        <table class="form-table">
-                                            <tbody>
+                                        
+										<div class="form-table">
 											<?php
 											foreach ( $section['options'] as $option ):
                                                 $details = isset( $option['details'] ) ? $option['details'] : "";
 												?>
-                                                <tr id='mage_row_<?php echo esc_html($option['id']); ?>' class='mage_row_<?php echo esc_html($option['id']); ?>'>
-                                                    <th scope="row"><?php echo $option['title']; /* Escaped before */ ?><?php if(!empty($details)){ ?><p class='description'><?php echo $details; /* Escaped before */ ?></p><?php } ?></th>
-                                                    <td>
-														<?php
+                                                <section id='mage_row_<?php echo esc_html($option['id']); ?>' class='mage_row_<?php echo esc_html($option['id']); ?>'>
+                                                    <th scope="row"></th>
+													<div>
+														<label for=""><?php echo $option['title']; /* Escaped before */ ?></label>
+														<span><?php if(!empty($details)){   echo $details; } ?></span>
+													</div>
+													<?php
 														$option_value = get_post_meta( $this->get_post_id(), $option['id'], true );
 														if ( is_serialized( $option_value ) ) {
 															$option_value = maybe_unserialize( $option_value );
@@ -193,13 +193,11 @@ if ( ! class_exists( 'TtbmAddMetaBox' ) ) {
 														$option['value'] = $option_value;
 														$this->field_generator( $option )
 														?>
-                                                    </td>
-                                                </tr>
+                                                </section>
 											<?php
 											endforeach;
 											?>
-                                            </tbody>
-                                        </table>
+                                        </div>
                                     </div>
 								<?php
 								endforeach;

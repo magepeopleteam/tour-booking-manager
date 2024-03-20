@@ -880,7 +880,7 @@ div[class*="simpleSpinner"] {
 	.mpStyle .circleIcon_xs, .mpStyle [class*="_circleIcon_xs"] { width: 25px; height: 25px; min-width: 25px; font-size: var(--fs_small); margin: 0 var(--dMP_xs) 0 0; }
 	/*****Remove icon******/
 	.mpStyle .mp_remove_area { position: relative; }
-	.mpStyle .mp_remove_icon { position: absolute; top: -5px; right: -5px; width: 20px; height: 20px; cursor: pointer; opacity: 0; font-size: var(--fs); background-color: var(--color_danger); color: var(--mpl-primary_alter); }
+	.mpStyle .mp_remove_icon { position: absolute; top: -5px; right: -5px; width: 20px; height: 20px; cursor: pointer; opacity: 0; font-size: var(--fs); background-color: var(--mpl-primary); color: #fff; }
 	/**************Default************************/
 	.mpStyle .dLayout, .mpStyle [class*="_dLayout"] { padding: var(--dMP); margin-bottom: var(--dMP); background-color: var(--color_white); border: 1px solid var(--color_border); }
 	.mpStyle .dLayout_xs, .mpStyle [class*="_dLayout_xs"] { padding: var(--dMP_xs); background-color: var(--color_white); border: 1px solid var(--color_border); margin-bottom: var(--dMP_xs); }

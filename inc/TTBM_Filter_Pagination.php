@@ -3,7 +3,9 @@
 		die;
 	} // Cannot access pages directly.
 	if ( ! class_exists( 'TTBM_Filter_Pagination' ) ) {
+		
 		class TTBM_Filter_Pagination {
+			public $upcomming_date='';
 			public function __construct() {
 				add_action( 'ttbm_top_filter_static', array( $this, 'top_filter_static' ), 10, 1 );
 				add_action( 'ttbm_left_filter', array( $this, 'left_filter' ), 10, 1 );

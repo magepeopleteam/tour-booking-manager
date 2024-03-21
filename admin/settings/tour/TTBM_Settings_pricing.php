@@ -37,7 +37,6 @@
 							<span><?php esc_html_e('This setup related to price configuration', 'tour-booking-manager'); ?></span>
 						</div>
                     </section>
-
 					
 					<section>
 						<div>

@@ -454,7 +454,7 @@
 
                     $exist_activities = [];
                     for($i=0; $i<count($activities) ; $i++){
-                        if($upcomming_date[$i]){
+                        if($upcomming_date[$i] && is_array($activities[$i])){
                             $exist_activities = array_unique(array_merge($exist_activities, unserialize($activities[$i])));
                         }
                     }

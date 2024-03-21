@@ -137,7 +137,7 @@
 								<label data-ticket-type-name="<?php echo esc_html($data_ticket_name); ?>">
 									<select name="<?php echo esc_attr($input_name); ?>" data-price="<?php echo esc_html($ticket_price_raw); ?>" class="formControl">
 										<?php
-											$max_total = $max_qty > 0 ? $max_qty : $available_seat;
+											$max_total = $max_qty > 0 ? $max_qty : $available_seat; 
 											$increment = apply_filters('ttbm_increment_for_dropdown',1,$name,$tour_id);
 											for ($i = $min_qty; $i <= $max_total; $i+=$increment) {
 												?>

@@ -69,7 +69,7 @@ if (!class_exists('TTBM_Settings_pricing')) {
             <section class="component d-flex justify-content-between align-items-center my-2">
                 <div class="w-100 d-flex justify-content-between align-items-center">
                     <label for=""><?php esc_html_e('Add To Cart Form Shortcode : ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_short_code'); ?></i></label>
-                    <code> <?php echo "[ttbm-registration ttbm_id=".esc_html($tour_id); ?> </code>
+                    <code> <?php echo "[ttbm-registration ttbm_id='".esc_html($tour_id)."']"; ?> </code>
                 </div>
             </section>
             <?php

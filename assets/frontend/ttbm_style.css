@@ -32,7 +32,7 @@ div.viator_top_section .ttbm_booking_panel form,
 }
 /*****************Details page*********************************/
 div.ttbm_details_page {display: block;position: relative;}
-div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-webkit-flex-wrap: wrap;flex-wrap: wrap;-webkit-justify-content: space-between;justify-content: space-between;}
+div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-webkit-flex-wrap: wrap;flex-wrap: wrap;-webkit-justify-content: space-between;justify-content: space-between;padding-top:5px}
 .ttbm_content__left {width: calc(100% - 346px);}
 .hip_hop_hotel_theme .ttbm_content__left,
 .ttbm_spring_theme .ttbm_content__left {width: calc(50% - 20px);}

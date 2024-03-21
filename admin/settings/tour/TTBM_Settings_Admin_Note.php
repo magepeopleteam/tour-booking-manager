@@ -26,6 +26,13 @@
 				<div class="tabsItem ttbm_settings_admin_note" data-tabs="#ttbm_settings_admin_note">
 					<h2><?php esc_html_e('Admin Note Settings', 'tour-booking-manager'); ?></h2>
 					<p><?php TTBM_Settings::des_p('admin_note_settings_description'); ?></p>
+
+					<section class="bg-light">
+						<div>
+                            <label for=""><?php esc_html_e('Admin Note Settings', 'tour-booking-manager'); ?></label>
+							<span><?php esc_html_e('Here you can add admin not and on/off admin note.', 'tour-booking-manager'); ?></span>
+                        </div>
+					</section>
 					<section>
                         <div>
                             <label for=""><?php esc_html_e('On/Off Admin Note', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></label>

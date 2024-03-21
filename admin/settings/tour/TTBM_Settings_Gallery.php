@@ -29,7 +29,7 @@
 					<section class="bg-light">
                         <div>
                             <label><?php esc_html_e('Gallery Settings', 'tour-booking-manager'); ?></label>
-							<span><?php esc_html_e('Gallery Settings', 'tour-booking-manager'); ?></span>
+							<span><?php esc_html_e('Here you can add images for tour.', 'tour-booking-manager'); ?></span>
                         </div>
                     </section>
 					<section>

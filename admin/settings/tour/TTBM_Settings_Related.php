@@ -32,8 +32,8 @@
 					
 					<section class="bg-light">
                         <div >
-                            <label for=""><?php echo esc_html__('Related Travel Settings', 'tour-booking-manager'); ?></label>
-							<span><?php echo esc_html__('Related travel settings', 'tour-booking-manager'); ?></span>
+                            <label for=""><?php echo esc_html__('Related '.$ttbm_label.' Settings', 'tour-booking-manager'); ?></label>
+							<span><?php echo esc_html__('You can set related '.$ttbm_label.' here. ', 'tour-booking-manager'); ?></span>
                         </div>
                     </section>
 

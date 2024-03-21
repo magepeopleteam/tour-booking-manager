@@ -35,7 +35,7 @@
                     <section class="bg-light">
                         <div>
                             <label for=""><?php echo esc_html__('Guide Settings', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html__('Guide', 'tour-booking-manager'); ?></label>
-                            <span><?php echo esc_html__('Guide Settings', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html__('Guide', 'tour-booking-manager'); ?></span>
+                            <span><?php echo esc_html__('Here you can set tour guide, on/off tour guide etc.', 'tour-booking-manager'); ?></span>
                         </div>
                     </section>
 
@@ -70,7 +70,7 @@
                         <section class="bg-light" style="margin-top: 20px;">
                             <div>
                                 <label for=""><?php echo esc_html__('Guide Dispaly Style', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html__('Guide', 'tour-booking-manager'); ?></label>
-                                <span><?php echo esc_html__('To view Guide Photos on frontend, set style here', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html__('Guide', 'tour-booking-manager'); ?></span>
+                                <span><?php echo esc_html__('To view Guide Photos on frontend, set guide view style here', 'tour-booking-manager'); ?></span>
                             </div>
                         </section>
                         <section>

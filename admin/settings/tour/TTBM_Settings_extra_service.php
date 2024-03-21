@@ -39,6 +39,12 @@
 				wp_nonce_field('ttbm_extra_service_data_nonce', 'ttbm_extra_service_data_nonce');
 				?>
 				<div class="mp_settings_area mt-2">
+					<section class="bg-light">
+						<div>
+							<label><?php _e('Extra Service', 'tour-booking-manager'); ?></label>
+							<span><?php esc_html_e('Here you can set extra service for tour.', 'tour-booking-manager'); ?></span>
+						</div>
+					</section>
 					<section>
 						<div class="ovAuto mt_xs">
 							<table>

@@ -34,7 +34,7 @@
 					<section class="bg-light">
 						<div>
 							<label><?php esc_html_e('Price Setup', 'tour-booking-manager'); ?></label>
-							<span><?php esc_html_e('This setup related to price configuration', 'tour-booking-manager'); ?></span>
+							<span><?php esc_html_e('Here you can set price; based on tour type.', 'tour-booking-manager'); ?></span>
 						</div>
                     </section>
 

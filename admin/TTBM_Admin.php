@@ -48,7 +48,7 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_place_you_see.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_faq_day_wise_details.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Related.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Extras.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Contact.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_why_book_with_us.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Admin_Note.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Display.php';

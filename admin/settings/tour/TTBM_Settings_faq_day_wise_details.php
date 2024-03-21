@@ -39,8 +39,8 @@
 					
 					<section class="bg-light">
                         <div>
-                            <label for=""><?php esc_html_e('Day Wise Details Settings', 'tour-booking-manager'); ?></label> 
-							<span><?php esc_html_e('Day Wise Details Settings', 'tour-booking-manager'); ?></span>   
+                            <label for=""><?php esc_html_e('Day Wise Details', 'tour-booking-manager'); ?></label> 
+							<span><?php esc_html_e('Here you can set tour daywise details information.', 'tour-booking-manager'); ?></span>   
                         </div>
                     </section>
 
@@ -87,7 +87,7 @@
 					<section class="bg-light">
                         <div>
                             <label for=""><?php esc_html_e('Frequently Asked Question', 'tour-booking-manager'); ?></label>
-							<span><?php esc_html_e('You can add frequently asked question', 'tour-booking-manager'); ?></span>
+							<span><?php esc_html_e('You can add frequently asked question for your tour.', 'tour-booking-manager'); ?></span>
                         </div>
                     </section>
 					

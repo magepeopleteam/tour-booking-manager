@@ -141,8 +141,8 @@
 				?>
 				<section class="bg-light mt-5" style="margin-top: 20px;">
 					<div>
-						<label for="">Location Settings</label>
-						<span>Tour settings configureation</span>
+						<label><?php _e('Location Settings','tour-booking-manager'); ?></label>
+						<span><?php _e('Here you can set tour location, place, map etc.','tour-booking-manager'); ?></span>
 					</div>
 				</section>
 				<section>

@@ -2,8 +2,8 @@
 	if (!defined('ABSPATH')) {
 		die;
 	} // Cannot access pages directly.
-	if (!class_exists('TTBM_Settings_Extras')) {
-		class TTBM_Settings_Extras {
+	if (!class_exists('TTBM_Settings_Contact')) {
+		class TTBM_Settings_Contact {
 			public function __construct() {
 				add_action( 'add_ttbm_settings_tab_name', [ $this, 'add_tab' ], 90 );
 				add_action('add_ttbm_settings_tab_content', [$this, 'extras_settings']);
@@ -32,7 +32,7 @@
 					<section class="bg-light">
                         <div>
                             <label><?php esc_html_e('Contact Settings', 'tour-booking-manager'); ?></label>
-							<span><?php esc_html_e('Contact Settings', 'tour-booking-manager'); ?></span>
+							<span><?php esc_html_e('Here you can set contact information.', 'tour-booking-manager'); ?></span>
                         </div>
                     </section>
 
@@ -84,5 +84,5 @@
 				}
 			}
 		}
-		new TTBM_Settings_Extras();
+		new TTBM_Settings_Contact();
 	}

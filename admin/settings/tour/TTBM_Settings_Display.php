@@ -33,7 +33,7 @@
 					<section class="bg-light">
                         <div>
                             <label><?php esc_html_e('Display Settings', 'tour-booking-manager'); ?></label> 
-							<?php esc_html_e('Display Settings', 'tour-booking-manager'); ?> 
+							<?php esc_html_e('Here you can set what will be display or not.', 'tour-booking-manager'); ?> 
                         </div>
 					</section>
 

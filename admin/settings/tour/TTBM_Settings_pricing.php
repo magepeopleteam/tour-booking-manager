@@ -71,7 +71,7 @@
 				<?php
 			}
 
-			public function ttbm_add_to_cart_form_shortcode(){
+			public function ttbm_add_to_cart_form_shortcode($tour_id){
 				?>
 				<section>
 					<div>

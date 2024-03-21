@@ -403,7 +403,7 @@ div[class*="simpleSpinner"] {
 	.mpStyle .mpBtn, .mpStyle [class*="_mpBtn"],
 	.mpStyle button { position: relative; font-size: var(--button_fs); font-weight: var(--fw-medium); line-height: 1; cursor: pointer; overflow: visible; border: none; -webkit-appearance: button; text-transform: capitalize; }
 	.mpStyle button[disabled] { cursor: not-allowed; opacity: 0.8; background-color: #DDD; }
-	.mpStyle button:hover, .mpStyle button:focus { text-decoration: none; opacity: 0.8; background-color: var(--d_color); color: #FFF; }
+	.mpStyle button:hover, .mpStyle button:focus { text-decoration: none; opacity: 0.8; background-color: var(--mpl-primary); color: #FFF; }
 	.mpStyle button:hover span, .mpStyle button:focus span { color: #FFF; }
 	.mpStyle .mpBtn, .mpStyle [class*="_mpBtn"] { padding: var(--dMP_xs) var(--dMP); color: var(--d_color); background-color: transparent; border: 1px solid var(--color_border); }
 	.mpStyle .mpBtn.mpActive, .mpStyle [class*="_mpBtn"].mpActive { border-color: var(--mpl-primary); color: var(--mpl-primary); }
@@ -415,10 +415,10 @@ div[class*="simpleSpinner"] {
 	.mpStyle .dButton, .mpStyle [class*="_dButton"] { color: var(--color_button); background-color: var(--button_bg); }
 	.mpStyle .dButton span, .mpStyle [class*="_dButton"] span { color: var(--color_button); }
 	/***/
-	.mpStyle .themeButton, .mpStyle [class*="_themeButton"] { background-color: var(--mpl-primary); color: var(--mpl-primary_alter); padding: var(--dMP_xs) var(--dMP); border: 2px solid var(--mpl-primary); }
+	.mpStyle .themeButton, .mpStyle [class*="_themeButton"] { background-color: var(--mpl-primary); color: #fff; padding: var(--dMP_xs) var(--dMP); border: 2px solid var(--mpl-primary); }
 	.mpStyle .themeButton span, .mpStyle [class*="_themeButton"] span { color: var(--mpl-primary_alter); }
-	.mpStyle .themeButton:hover, .mpStyle [class*="_themeButton"]:hover { background-color: #000; color: var(--mpl-primary_alter); border-color: #000; }
-	.mpStyle .themeButton:hover span, .mpStyle [class*="_themeButton"]:hover span { color: var(--mpl-primary_alter); }
+	.mpStyle .themeButton:hover, .mpStyle [class*="_themeButton"]:hover { background-color: var(--mpl-primary); color: var(--mpl-primary_alter); border-color: var(--mpl-primary) }
+	.mpStyle .themeButton:hover span, .mpStyle [class*="_themeButton"]:hover span { color: #fff; }
 	/****/
 	.mpStyle .warningButton, .mpStyle [class*="_warningButton"] { background-color: var(--color_warning); color: var(--mpl-primary_alter); padding: var(--dMP_xs) var(--dMP); border: 2px solid var(--color_warning); }
 	.mpStyle .warningButton span, .mpStyle [class*="_warningButton"] span { color: var(--mpl-primary_alter); }
@@ -1149,7 +1149,7 @@ div[class*="simpleSpinner"] {
 	}
 	.mpTabsNext .tabItemNext [class*="circleIcon"] { background-color: var(--color_light); color: var(--d_color); margin: 0; z-index: 1; }
 	.mpTabsNext .tabItemNext .circleTitle { color: var(--d_color); margin: var(--dMP_xs) 0 0 0; left: 0; top: 40px; width: 100%; position: absolute; text-align: center; }
-	.mpTabsNext .tabItemNext.active [class*="circleIcon"] { background-color: var(--mpl-primary); color: var(--mpl-primary_alter); }
+	.mpTabsNext .tabItemNext.active [class*="circleIcon"] { background-color: var(--mpl-primary); color: #fff; }
 	.mpTabsNext .tabItemNext.active [class*="circleIcon"].success {background-color: var(--color_success);}
 	.mpTabsNext .tabItemNext.active .circleTitle { color: var(--mpl-primary_aa); }
 	.mpTabsNext .tabItemNext.active .circleTitle.success {color: var(--color_success);}

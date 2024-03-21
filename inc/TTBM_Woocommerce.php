@@ -40,6 +40,7 @@ if (!class_exists('TTBM_Woocommerce')) {
                 $cart_item_data['line_subtotal'] = $total_price;
                 $cart_item_data = apply_filters('ttbm_add_cart_item', $cart_item_data, $product_id);
             }
+            $cart_item_data['ttbm_translation_ttbm_id'] = apply_filters('ttbm_get_translation_post_id',$product_id);
             $cart_item_data['ttbm_id'] = $product_id;
             return $cart_item_data;
         }

@@ -17,7 +17,11 @@ if (!class_exists('TTBM_Woocommerce')) {
             add_action('woocommerce_after_checkout_validation', array($this, 'after_checkout_validation'));
             add_action('woocommerce_checkout_create_order_line_item', array($this, 'checkout_create_order_line_item'), 90, 4);
             //add_action('woocommerce_checkout_order_processed', array($this, 'checkout_order_processed'), 10);
-            add_action('woocommerce_before_thankyou', array($this, 'woocommerce_before_thankyou'), 10);
+            //add_action('woocommerce_before_thankyou', array($this, 'woocommerce_before_thankyou'), 10);
+            add_action('woocommerce_checkout_order_processed', array($this,'woocommerce_before_thankyou'), 90);
+            //   add_action('__experimental_woocommerce_blocks_checkout_order_processed', 'checkout_order_processed', 90); 
+            add_action('woocommerce_store_api_checkout_order_processed', array($this,'woocommerce_before_thankyou'), 90);
+
             add_filter('woocommerce_order_status_changed', array($this, 'order_status_changed'), 10, 4);
             //*******************//
             //*******************//
@@ -572,29 +576,30 @@ if (!class_exists('TTBM_Woocommerce')) {
         public static function add_cpt_data($cpt_name, $title, $meta_data = array(), $status = 'publish', $cat = array()) 
         {
             if(!self::check_duplicate_order( $meta_data['ttbm_order_id'], $meta_data['ttbm_id']))
-            {
-                $new_post = array(
-                    'post_title' => $title,
-                    'post_content' => '',
-                    'post_category' => $cat,
-                    'tags_input' => array(),
-                    'post_status' => $status,
-                    'post_type' => $cpt_name
-                );
-                wp_reset_postdata();
-                $post_id = wp_insert_post($new_post);
-                if (sizeof($meta_data) > 0) {
-                    foreach ($meta_data as $key => $value) {
-                        update_post_meta($post_id, $key, $value);
-                    }
-                }
-                if ($cpt_name == 'ttbm_booking') {
-                    $ttbm_pin = $meta_data['ttbm_user_id'] . $meta_data['ttbm_order_id'] . $meta_data['ttbm_id'] . $post_id;
-                    update_post_meta($post_id, 'ttbm_pin', $ttbm_pin);
-                }
-                wp_reset_postdata();
+            {                
 
             }
+
+            $new_post = array(
+                'post_title' => $title,
+                'post_content' => '',
+                'post_category' => $cat,
+                'tags_input' => array(),
+                'post_status' => $status,
+                'post_type' => $cpt_name
+            );
+            wp_reset_postdata();
+            $post_id = wp_insert_post($new_post);
+            if (sizeof($meta_data) > 0) {
+                foreach ($meta_data as $key => $value) {
+                    update_post_meta($post_id, $key, $value);
+                }
+            }
+            if ($cpt_name == 'ttbm_booking') {
+                $ttbm_pin = $meta_data['ttbm_user_id'] . $meta_data['ttbm_order_id'] . $meta_data['ttbm_id'] . $post_id;
+                update_post_meta($post_id, 'ttbm_pin', $ttbm_pin);
+            }
+            wp_reset_postdata();
             
         }
 

@@ -92,8 +92,8 @@
 			}
 			public static function popup_button_xs($target_popup_id, $text) {
 				?>
-				<button type="button" class="btn" data-target-popup="<?php echo esc_attr($target_popup_id); ?>">
-					<i class="fas fa-plus-square text-white pe-1"></i> <?php echo esc_html($text); ?>
+				<button type="button" class="btn bg-primary" data-target-popup="<?php echo esc_attr($target_popup_id); ?>">
+					<i class="fas fa-plus-square text-white  me-1"></i> <?php echo esc_html($text); ?>
 				</button>
 				<?php
 			}

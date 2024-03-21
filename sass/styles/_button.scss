@@ -9,5 +9,8 @@
         font-size: $font-size;
         transition: all $time ease-in-out;
         min-width: 100px;
+        &:hover{
+            background-color: $color-primary;
+        }
     }
 }

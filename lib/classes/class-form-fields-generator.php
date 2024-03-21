@@ -8304,7 +8304,7 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
                         <?php if($sortable):?>
                         html += '<span class="button sort" ><i class="fas fa-arrows-alt"></i></span>';
                         <?php endif; ?>
-                        html += ' <span  class="title-text" style="cursor:pointer;display: inline-block;width: 84%;">==> Click to Expand</span></div>';
+                        html += ' <span  class="button title-text" style="cursor:pointer;display: inline-block;"><i class="fas fa-angle-double-down"></i> Expand</span></div>';
                         // html += ' <span  class="title-text">#'+now+'</span></div>';
                         fields_arr.forEach(function(element) {
                             type = element.type;
@@ -8314,7 +8314,7 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
                             <?php if($collapsible):?>
                             html+='<div class="content">';
                             <?php endif; ?>
-                            html+='<div class="item-title">'+element.name+'</div>';
+                            html+='<label class="item-title">'+element.name+'</label>';
                             if(type == 'text'){
                                 html+='<input type="text" <?php echo esc_attr(TTBM_Layout::no_pro_disabled($field_name)); ?> value="'+default_val+'" name="<?php echo esc_attr($field_name); ?>['+now+']['+element.item_id+']"/>';
                             }else if(type == 'mp_icon'){

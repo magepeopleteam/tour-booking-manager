@@ -15,10 +15,10 @@
 			}
 			public function add_tab() {
 				?>
-				<li class="nav-item" data-tabs-target="#ttbm_settings_day_wise_details">
+				<li data-tabs-target="#ttbm_settings_day_wise_details">
 					<i class="fas fa-th-list"></i><?php esc_html_e('Day wise Details', 'tour-booking-manager'); ?>
 				</li>
-				<li class="nav-item" data-tabs-target="#ttbm_settings_faq">
+				<li data-tabs-target="#ttbm_settings_faq">
 					<i class="fas fa-question-circle"></i><?php esc_html_e('F.A.Q', 'tour-booking-manager'); ?>
 				</li>
 				<?php
@@ -34,16 +34,24 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
 				<div class="tabsItem ttbm_settings_day_wise_details" data-tabs="#ttbm_settings_day_wise_details">
-					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Day wise Details', 'tour-booking-manager'); ?></h2>
+					<h2><?php esc_html_e('Day wise Details', 'tour-booking-manager'); ?></h2>
+					<p><?php TTBM_Settings::des_p('daywise_details_description') ?></p>
 					
-					<section class="component d-flex justify-content-between align-items-center mb-2">
-                        <div class="w-100 d-flex justify-content-between align-items-center">
-                            <label for=""><?php esc_html_e('Day Wise Details Settings', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_schedule'); ?></i></label>
-                            <div class=" d-flex justify-content-between">
-								<?php MP_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
-                            </div>    
+					<section class="bg-light">
+                        <div>
+                            <label for=""><?php esc_html_e('Day Wise Details Settings', 'tour-booking-manager'); ?></label> 
+							<span><?php esc_html_e('Day Wise Details Settings', 'tour-booking-manager'); ?></span>   
                         </div>
                     </section>
+
+					<section>
+                        <div>
+                            <label for=""><?php esc_html_e('Day Wise Details Settings', 'tour-booking-manager'); ?></label> 
+							<span><?php TTBM_Settings::des_p('ttbm_display_schedule'); ?></span>   
+                        </div>
+						<?php MP_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
+                    </section>
+
 					<div data-collapse="#ttbm_display_schedule" class="<?php echo esc_attr($active); ?>">
 						<?php
 							$day_details = MP_Global_Function::get_post_info($tour_id, 'ttbm_daywise_details', array());
@@ -54,7 +62,9 @@
 								}
 							}
 						?>
-						<?php MP_Custom_Layout::add_new_button(esc_html__('Add New Day Wise Details', 'tour-booking-manager'), 'ttbm_add_day_wise_details', 'btn'); ?>
+						<div class="mt-2">
+							<?php MP_Custom_Layout::add_new_button(esc_html__('Add New Day Wise Details', 'tour-booking-manager'), 'ttbm_add_day_wise_details', 'btn'); ?>
+						</div>
 					</div>
 				</div>
 				<?php
@@ -71,15 +81,22 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
 				<div class="tabsItem" data-tabs="#ttbm_settings_faq">
-					<h2 class="h4 px-0 text-primary"><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></h2>
+					<h2><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></h2>
+					<p><?php TTBM_Settings::des_p('faq_settings_description'); ?></p>
 					
-					<section class="component d-flex justify-content-between align-items-center mb-2">
-                        <div class="w-100 d-flex justify-content-between align-items-center">
-                            <label for=""><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_faq'); ?></i></label>
-                            <div class=" d-flex justify-content-between">
-								<?php MP_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>
-                            </div>    
+					<section class="bg-light">
+                        <div>
+                            <label for=""><?php esc_html_e('Frequently Asked Question', 'tour-booking-manager'); ?></label>
+							<span><?php esc_html_e('You can add frequently asked question', 'tour-booking-manager'); ?></span>
                         </div>
+                    </section>
+					
+					<section >
+                        <div >
+                            <label for=""><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></label>
+							<span><?php TTBM_Settings::des_p('ttbm_display_faq'); ?></span>
+                        </div>
+						<?php MP_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>
                     </section>
 					
 					<div data-collapse="#ttbm_display_faq" class="<?php echo esc_attr($active); ?>">

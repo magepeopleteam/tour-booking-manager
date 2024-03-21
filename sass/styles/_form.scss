@@ -1,14 +1,22 @@
 #{$main-selector}{
   label {
-    font-size: $font-size;   
-    font-weight: $font-weight-normal; 
+    margin: 0;
+    margin-bottom: 0px;
+    font-size: 14px;
+    font-family: DejaVuSansBold, sans-serif;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 8px;  
+    color: $color-secondary;
+    input{
+      font-weight: normal;
+    }
   }
   textarea, select, input[type="text"], input[type="email"], input[type="search"], input[type="tel"], input[type="url"], input[type="password"],  input[type="file"], input[type="color"], input[type="number"], input[type="range"], input[type="date"], input[type="month"], input[type="week"], input[type="time"], input[type="datetime"], input[type="datetime-local"] {
-
       width:$input-width;
       height: $input-height;
-      border: 0px solid $color-dark;
-      border: 1px solid $color-dark;
+      border: 0px;
+      border: 1px solid $color-gray;
       color: $color-secondary;
       padding: $spacing;
       &.small{
@@ -22,7 +30,6 @@
       }
   }
   textarea{
-    width:100%;
     height:calc( $input-height * 2 );
   }
   input[type="search"]{
@@ -53,7 +60,8 @@
       border-radius: $border-radius;
       padding:$spacing calc($spacing*1.5);
       width: max-content;
-      
+      max-width: 350px;
+      font-weight: normal;
       
       &:after{
         content: " ";
@@ -80,13 +88,13 @@
       display: inline-block;
       width: 50px;
       height: 24px;
-
+      margin-bottom: 0;
       input { 
         opacity: 0;
         width: 0;
         height: 0;
         border: 1px solid $color-primary;
-        background-color: $color-gray;
+        background-color: $color-light;
       }
     }
     
@@ -103,6 +111,7 @@
       border: 1px solid $color-dark;
       background-color: $color-gray;
       transition: $time;
+      margin-right: 0;
       &:before {
         position: absolute;
         content: "";
@@ -120,8 +129,9 @@
     
     input:checked {
       + .slider {
-        background-color: $color-sky;
+        background-color: $color-primary;
         border: 1px solid $color-primary;
+        margin-right: 0;
         &:before{
           transform: translateX(26px);
         }

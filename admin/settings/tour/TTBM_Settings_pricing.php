@@ -93,7 +93,7 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
 				<div class="ttbm_ticket_config  <?php echo esc_html($type_class); ?>">
-					<section class="bg-light mt-5" style="margin-top:20px">
+					<section class="bg-light" style="margin-top:20px">
 						<div>
 							<label><?php esc_html_e('Pricing Configuration', 'tour-booking-manager'); ?></label>
 							<span><?php esc_html_e('You can set tour price here', 'tour-booking-manager'); ?></span>
@@ -108,7 +108,7 @@
 							<?php MP_Custom_Layout::switch_button('ttbm_display_advance', $checked); ?>
 						</section>
 						<?php do_action('ttbm_ticket_type_before', $tour_id); ?>
-						<div class="ovAuto _mT">
+						<div class="ovAuto component">
 							<table>
 								<thead>
 								<tr>

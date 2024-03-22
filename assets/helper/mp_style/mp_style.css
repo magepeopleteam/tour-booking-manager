@@ -7,7 +7,7 @@
 	body {margin: 0;padding: 0;}
 	body.noScroll {overflow: hidden;}
 	/******/
-	.mpStyle {font-size: var(--fs);font-weight: var(--fw);color: var(--d_color);line-height: 1.5;width: 100%;display: block;}
+	.mpStyle {color: var(--d_color);line-height: 1.5;width: 100%;display: block;}
 	.mpStyle [data-collapse].mActive {display: block;}
 	.mpStyle p:not(.mp_wp_editor p) {margin: 0;padding: 0;line-height: 1.5;font-size: var(--fs);}
 	.mpStyle a:not(.mp_wp_editor a) {color: var(--mpl-primary);text-decoration: none;}

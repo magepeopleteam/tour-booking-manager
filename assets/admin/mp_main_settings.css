@@ -1021,6 +1021,8 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .span-row, .travel-list .ttbm_settings .tabsContent .span-row {
   color: #6B7280;
+  font-size: 13px;
+  font-weight: normal;
 }
 
 @media only screen and (min-width: 0px) {

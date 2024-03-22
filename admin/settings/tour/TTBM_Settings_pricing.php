@@ -232,7 +232,7 @@
 				$hotel_class = $ttbm_type == 'hotel' ? '' : 'dNone';
 				?>
 
-				<section class="ttbm_tour_hotel_setting <?php echo esc_attr($hotel_class); ?>">
+				<section class="ttbm_tour_hotel_setting <?php echo esc_attr($hotel_class); ?>" style="display:none">
 					<div>
 						<label><?php esc_html_e('Hotel Configuration', 'tour-booking-manager'); ?>  <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_hotel_config') ?></span></i></label>
 						<span><?php TTBM_Settings::des_p('hotel_config'); ?><a href="post-new.php?post_type=ttbm_hotel"><?php TTBM_Settings::des_p('hotel_config_click') ?></a></span>

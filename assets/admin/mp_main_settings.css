@@ -1024,6 +1024,16 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   font-size: 13px;
   font-weight: normal;
 }
+#mp_meta_box_panel .ttbm_settings .tabsContent .long-input, .travel-list .ttbm_settings .tabsContent .long-input {
+  width: 80%;
+}
+#mp_meta_box_panel .ttbm_settings .tabsContent .wp-switch-editor, .travel-list .ttbm_settings .tabsContent .wp-switch-editor {
+  height: auto;
+}
+#mp_meta_box_panel .ttbm_settings .tabsContent .wp-editor-area, .travel-list .ttbm_settings .tabsContent .wp-editor-area {
+  width: 100%;
+  border: 0;
+}
 
 @media only screen and (min-width: 0px) {
   #mp_meta_box_panel .tabLists {

@@ -59,7 +59,7 @@
 							}
 						?>
 					</div>
-					<div class="d-flex justify-content-start py-2">
+					<div class="">
 						<?php MP_Custom_Layout::add_new_button(esc_html__('Add Image', 'tour-booking-manager'), 'add_multi_image', 'btn'); ?>
 					</div>
 				</div>

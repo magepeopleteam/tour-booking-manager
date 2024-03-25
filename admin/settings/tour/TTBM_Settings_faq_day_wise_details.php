@@ -137,23 +137,30 @@
 				$content_name = $array['content_name'];
 				$content = array_key_exists($content_name, $data) ? html_entity_decode($data[$content_name]) : '';
 				?>
-				<div class='my-2 dLayout mp_remove_area'>
-					<label>
-						<span class="min_200"><?php echo esc_html($title); ?></span> <input type="text" class="formControl" name="<?php echo esc_attr($title_name); ?>[]" value="<?php echo esc_attr($title_value); ?>"/>
-					</label>
-					<div class="dFlex">
-						<span class="min_200"><?php echo esc_html($image_title); ?></span>
-						<?php TTBM_Layout::add_multi_image($image_name . '[]', $images); ?>
-					</div>
-					<label>
-						<span class="min_200"><?php echo esc_html($content_title); ?></span>
-						<?php
-							$settings = ['wpautop' => false, 'media_buttons' => false, 'textarea_name' => $content_name . '[]', 'tabindex' => '323', 'editor_height' => 200, 'editor_css' => '', 'editor_class' => '', 'teeny' => false, 'dfw' => false, 'tinymce' => true, 'quicktags' => true];
-							wp_editor($content, $id, $settings);
-						?>
-					</label>
+				<div class='mp_remove_area my-5'>
+					<section class="bg-light">
+						<div>
+							<label>
+								<?php echo esc_html($title); ?>
+							</label>
+						</div>
+							<input type="text"class="long-input mb-20" name="<?php echo esc_attr($title_name); ?>[]" value="<?php echo esc_attr($title_value); ?>"/>
+					</section>
+					<section>
+						<div class="w-100">
+							<label>
+								<?php echo esc_html($content_title); ?>
+							</label>
+							<?php TTBM_Layout::add_multi_image($image_name . '[]', $images); ?>
+							<?php
+								$settings = ['wpautop' => false, 'media_buttons' => false, 'textarea_name' => $content_name . '[]', 'tabindex' => '323', 'editor_height' => 200, 'editor_css' => '', 'editor_class' => '', 'teeny' => false, 'dfw' => false, 'tinymce' => true, 'quicktags' => true];
+								wp_editor($content, $id, $settings);
+							?>
+						</div>
+					</section>
 					<span class="fas fa-times circleIcon_xs mp_remove_icon"></span>
 				</div>
+				
 				<?php
 				//return ob_get_clean();
 			}

@@ -66,7 +66,7 @@
 						$data = self::data_sanitize($data);
 					}
 					else {
-						$data = sanitize_text_field(stripslashes(strip_tags($data)));
+						$data = sanitize_text_field($data);
 					}
 				}
 				elseif (is_array($data)) {
@@ -75,7 +75,7 @@
 							$value = self::data_sanitize($value);
 						}
 						else {
-							$value = sanitize_text_field(stripslashes(strip_tags($value)));
+							$value = sanitize_text_field($value);
 						}
 					}
 				}

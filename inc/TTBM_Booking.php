@@ -43,7 +43,7 @@
 				do_action( 'ttbm_booking_panel', $tour_id, $start_date, $hotel_id );
 				die();
 			}
-			public function booking_panel( $tour_id, $tour_date = '', $hotel_id = '' ) {
+			public function booking_panel( $tour_id, $tour_date = '', $hotel_id = '') {
 				$tour_date = $tour_date ?: current( TTBM_Function::get_date( $tour_id ) );
 				$action    = apply_filters( 'ttbm_form_submit_path', '', $tour_id );
 				?>
@@ -65,7 +65,7 @@
 						}
 					?>
 				</form>
-				<?php do_action( 'ttbm_tour_reg_form_hidden', $tour_id, $hotel_id ); ?>
+				<?php do_action( 'ttbm_tour_reg_form_hidden', $tour_id, $hotel_id); ?>
 				<?php
 			}
 		}

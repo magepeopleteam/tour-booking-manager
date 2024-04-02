@@ -13,7 +13,7 @@
 				add_action( 'ttbm_pagination', array( $this, 'pagination' ), 10, 3 );
 				add_action( 'ttbm_filter_top_bar', array( $this, 'filter_top_bar' ), 10, 2 );
 				add_action( 'ttbm_sort_result', array( $this, 'sort_result' ), 10, 2 );
-                $this->upcomming_date =  array_reverse(MP_Global_Function::get_meta_values( 'ttbm_upcoming_date','ttbm_tour' ));
+                $this->upcomming_date =  array_reverse(TTBM_Function::get_meta_values( 'ttbm_upcoming_date','ttbm_tour' ));
 			}
 			public function top_filter_static( $params ) {
 				?>
@@ -244,7 +244,7 @@
                 if ( $params['location-filter'] == 'yes' ) {
 
                     $upcomming_date =  $this->upcomming_date;
-                    $locations =  MP_Global_Function::get_meta_values( 'ttbm_location_name','ttbm_tour' );
+                    $locations =  TTBM_Function::get_meta_values( 'ttbm_location_name','ttbm_tour' );
                     $exist_locations = [];
                     for($i=0; $i<count($locations) ; $i++){
                         if($upcomming_date[$i] && $locations[$i]){
@@ -389,7 +389,7 @@
 			public function feature_filter_multiple( $params ) {
 				if ( $params['feature-filter'] == 'yes' ) {
 
-                    $features =  MP_Global_Function::get_meta_values( 'ttbm_service_included_in_price','ttbm_tour' );
+                    $features =  TTBM_Function::get_meta_values( 'ttbm_service_included_in_price','ttbm_tour' );
                     $upcomming_date =  $this->upcomming_date;
 
                     $exist_feature = [];
@@ -451,7 +451,7 @@
 				if ( $params['activity-filter'] == 'yes' ) {
 
 
-                    $activities =  MP_Global_Function::get_meta_values( 'ttbm_tour_activities','ttbm_tour' );
+                    $activities =  TTBM_Function::get_meta_values( 'ttbm_tour_activities','ttbm_tour' );
                     $upcomming_date =  $this->upcomming_date;
 
                     $exist_activities = [];

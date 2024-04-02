@@ -3,13 +3,11 @@
 	 * Plugin Name: Travel Booking Plugin | Tour & Hotel Booking Solution For WooCommerce – wptravelly 
 	 * Plugin URI: http://mage-people.com
 	 * Description: A Complete Tour and Travel Solution for WordPress by MagePeople.
-	 * Version: 1.6.1
+	 * Version: 1.6.4
 	 * Author: MagePeople Team
 	 * Author URI: http://www.mage-people.com/
 	 * Text Domain: tour-booking-manager
 	 * Domain Path: /languages/
-	 * WC requires at least: 3.0.9
-	 * WC tested up to: 5.0
 	 */
 	if (!defined('ABSPATH')) {
 		die;
@@ -30,7 +28,6 @@
 				$this->load_global_file();
 				if (MP_Global_Function::check_woocommerce() == 1) {
 					add_action('activated_plugin', array($this, 'activation_redirect'), 90, 1);
-					self::on_activation_page_create();
 					$this->appsero_init_tracker_ttbm();
 					require_once TTBM_PLUGIN_DIR . '/lib/classes/class-ttbm.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Dependencies.php';
@@ -57,12 +54,18 @@
 				$client->insights()->init();
 			}
 			public function activation_redirect($plugin) {
+				if (MP_Global_Function::check_woocommerce() == 1) {
+					self::on_activation_page_create();
+				}
 				$ttbm_quick_setup_done = get_option('ttbm_quick_setup_done');
 				if ($plugin == plugin_basename(__FILE__) && $ttbm_quick_setup_done != 'yes') {
 					exit(wp_redirect(admin_url('edit.php?post_type=ttbm_tour&page=ttbm_quick_setup')));
 				}
 			}
 			public function activation_redirect_setup($plugin) {
+				if (MP_Global_Function::check_woocommerce() == 1) {
+					self::on_activation_page_create();
+				}
 				$ttbm_quick_setup_done = get_option('ttbm_quick_setup_done');
 				if ($plugin == plugin_basename(__FILE__) && $ttbm_quick_setup_done != 'yes') {
 					exit(wp_redirect(admin_url('admin.php?post_type=ttbm_tour&page=ttbm_quick_setup')));
@@ -77,7 +80,12 @@
 						'post_content' => '[ttbm-search-result]',
 						'post_status' => 'publish',
 					);
-					wp_insert_post($ttbm_search_page);
+					unset($find_page_id);
+					$find_page_id = wp_insert_post($ttbm_search_page);
+					if (is_wp_error($find_page_id)) {
+						printf('<div class="error" style="background:red; color:#fff;"><p>%s</p></div>', $find_page_id->get_error_message());
+					}
+					
 				}
 				if (!MP_Global_Function::get_page_by_slug('lotus-grid')) {
 					$ttbm_search_page = array(
@@ -87,7 +95,11 @@
 						'post_content' => "[travel-list style='lotus' column=4 show='12' pagination='yes']",
 						'post_status' => 'publish',
 					);
-					wp_insert_post($ttbm_search_page);
+					unset($find_page_id);
+					$find_page_id = wp_insert_post($ttbm_search_page);
+					if (is_wp_error($find_page_id)) {
+						printf('<div class="error" style="background:red; color:#fff;"><p>%s</p></div>', $find_page_id->get_error_message());
+					}
 				}
 
 				if (!MP_Global_Function::get_page_by_slug('orchid-grid')) {
@@ -98,7 +110,11 @@
 						'post_content' => "[travel-list style='orchid' column=4 pagination='yes' show=12]",
 						'post_status' => 'publish',
 					);
-					wp_insert_post($ttbm_search_page);
+					unset($find_page_id);
+					$find_page_id = wp_insert_post($ttbm_search_page);
+					if (is_wp_error($find_page_id)) {
+						printf('<div class="error" style="background:red; color:#fff;"><p>%s</p></div>', $find_page_id->get_error_message());
+					}
 				}
 				
 				if (get_option('ttbm_repeated_field_update') != 'completed') {

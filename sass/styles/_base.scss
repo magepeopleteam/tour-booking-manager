@@ -11,13 +11,7 @@
   }
   // =======================typography==================
   body,
-  p{
-    color: $color-secondary;
-    font-family: $font-text;
-    font-size: $font-size;
-    font-weight: initial;
-    line-height: 1.5;
-  }
+
   
   h1, h2, h3, h4, h5, h6,
   .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -32,8 +26,10 @@
   
   h2,
   .h2 {
-    font-size: 2.1875rem;
-    font-weight: 500;
+    font-size: 22px;
+    line-height: 26px;
+    font-family: DejaVuSansBold, sans-serif;
+    font-weight: 700;
   }
   
   h3,
@@ -86,7 +82,7 @@
 
 .component{
   background-color: $color-white;
-  border-radius: $border-radius;
+  border-radius: 0;
   padding: calc($spacing*3);
   margin-bottom: calc($spacing*3);
   border: 1px solid $color-gray;

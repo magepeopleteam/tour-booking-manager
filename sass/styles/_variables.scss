@@ -1,20 +1,19 @@
-$main-selector:'#mp_meta_box_panel';
+$main-selector:'#mp_meta_box_panel, .travel-list';
 $prefix:'mpl';
 :root{
-    --#{$prefix}-primary:#03A9F4;
-    --#{$prefix}-sky:#7AD6FF;
+    --#{$prefix}-primary:#F12971;
+    --#{$prefix}-sky:#f38fb3;
     --#{$prefix}-sky-light:#EFFAFF;
-    --#{$prefix}-secondary:#2B363F;
+    --#{$prefix}-secondary:#1d2327;
     --#{$prefix}-dark:#a4a4a4;
     --#{$prefix}-gray:#e0e0e0;
-    --#{$prefix}-light:#f7f7f7;
+    --#{$prefix}-light:#F5F5F5;
     --#{$prefix}-white:#ffffff;
     --#{$prefix}-black:#000000;
     --#{$prefix}-yellow:#ffcb00;
     --#{$prefix}-red:#d91e1e;
     --#{$prefix}-red-light:#f6dada;
-    // ==========spacing =======
-    --flow-space: 1.5rem;
+
 }
 // ------------color--------
 $color-primary:var(--#{$prefix}-primary);
@@ -32,9 +31,9 @@ $color-red:var(--#{$prefix}-red);
 $color-red-light:var(--#{$prefix}-red-light);
 
 // ==========fonts=============
-$font-text:ubuntu;
-$font-heading:ubuntu;
-$font-bold:ubuntuBold;
+$font-text:DejaVuSans;
+$font-heading:DejaVuSansBold;
+$font-bold:DejaVuSansBold;
 $font-size:1rem;
 $font-weight-normal:300;
 $font-weight-bold:600;

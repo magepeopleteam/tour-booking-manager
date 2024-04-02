@@ -466,7 +466,9 @@ div > .ppof-metabox {
 
 
 .ppof-settings .collapsible.active .content{
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 

@@ -11,7 +11,7 @@
 			}
 			public function add_tab() {
 				?>
-				<li class="nav-item" data-tabs-target="#ttbm_settings_why_chose_us">
+				<li data-tabs-target="#ttbm_settings_why_chose_us">
 					<i class="fas fa-info-circle"></i> <?php esc_html_e('Why Book With Us ?', 'tour-booking-manager'); ?>
 				</li>
 				<?php
@@ -24,14 +24,21 @@
 				?>
 				<div class="tabsItem mp_settings_area ttbm_settings_why_chose_us" data-tabs="#ttbm_settings_why_chose_us">
 					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Why Book With Us?', 'tour-booking-manager'); ?></h2>
+					<p><?php TTBM_Settings::des_p('why_book_settings_description'); ?></p>
 					
-					<section class="component d-flex justify-content-between align-items-center mb-2">
-                        <div class="w-100 d-flex justify-content-between align-items-center">
-                            <label for=""><?php esc_html_e('Why Chose Us' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_why_choose_us'); ?></i></label>
-                            <div class=" d-flex justify-content-between">
-								<?php MP_Custom_Layout::switch_button('ttbm_display_why_choose_us', $checked); ?>
-                            </div>    
+					<section class="bg-light">
+                        <div>
+                            <label for=""><?php esc_html_e('Why Chose Us Settings', 'tour-booking-manager'); ?></label>
+							<span><?php esc_html_e('You can set why chose us settings', 'tour-booking-manager'); ?></span>
                         </div>
+                    </section>
+					
+					<section>
+                        <div>
+                            <label for=""><?php esc_html_e('Why Chose Us' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?></label>
+							<span><?php TTBM_Settings::des_p('ttbm_display_why_choose_us'); ?></span>
+                        </div>
+						<?php MP_Custom_Layout::switch_button('ttbm_display_why_choose_us', $checked); ?>
                     </section>
 
 					<div data-collapse="#ttbm_display_why_choose_us" class="<?php echo esc_attr($active); ?>">

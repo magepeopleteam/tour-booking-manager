@@ -3,7 +3,9 @@
 		die;
 	} // Cannot access pages directly.
 	if ( ! class_exists( 'TTBM_Filter_Pagination' ) ) {
+		
 		class TTBM_Filter_Pagination {
+			public $upcomming_date='';
 			public function __construct() {
 				add_action( 'ttbm_top_filter_static', array( $this, 'top_filter_static' ), 10, 1 );
 				add_action( 'ttbm_left_filter', array( $this, 'left_filter' ), 10, 1 );
@@ -454,7 +456,7 @@
 
                     $exist_activities = [];
                     for($i=0; $i<count($activities) ; $i++){
-                        if($upcomming_date[$i]){
+                        if($upcomming_date[$i] && is_array($activities[$i])){
                             $exist_activities = array_unique(array_merge($exist_activities, unserialize($activities[$i])));
                         }
                     }

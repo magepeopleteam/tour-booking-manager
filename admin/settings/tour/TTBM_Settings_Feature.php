@@ -22,7 +22,7 @@
 			}
 			public function add_tab() {
 				?>
-				<li class="nav-item" data-tabs-target="#ttbm_settings_feature">
+				<li data-tabs-target="#ttbm_settings_feature">
 					<i class="fas fa-clipboard-list"></i><?php esc_html_e(' Features', 'tour-booking-manager'); ?>
 				</li>
 				<?php
@@ -30,8 +30,8 @@
 			public function ttbm_settings_feature($tour_id) {
 				?>
 				<div class="tabsItem ttbm_settings_feature" data-tabs="#ttbm_settings_feature">
-					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Feature Settings', 'tour-booking-manager'); ?></h2>
-					
+					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Features Settings', 'tour-booking-manager'); ?></h2>
+					<p><?php TTBM_Settings::des_p('featrue_settings_description') ?></p>
 					<div class="mtb ttbm_features_table">
 						<?php $this->feature($tour_id); ?>
 					</div>
@@ -48,15 +48,28 @@
 				$in_checked = $include_display == 'off' ? '' : 'checked';
 				$ex_checked = $exclude_display == 'off' ? '' : 'checked';
 				if (sizeof($features) > 0) { ?>
-					
-					<section class="component d-flex flex-column justify-content-between align-items-center mb-2">
+					<section class="bg-light">
+						<div>
+							<label><?php esc_html_e('Include Exclude Feature', 'tour-booking-manager'); ?></label>
+							<span><?php esc_html_e('You can add new feature to Include/Exclude Feature of tours', 'tour-booking-manager'); ?></span>
+						</div>
+					</section>
+					<section>
+						<div>
+							<label><?php esc_html_e('Create a feature', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_add_new_feature_popup'); ?></span></i></label>
+							<span><?php TTBM_Settings::des_p('add_new_feature_popup'); ?></span>
+						</div>
+						<?php MP_Custom_Layout::popup_button('add_new_feature_popup', esc_html__('Create New Feature', 'tour-booking-manager')); ?>
+						<?php $this->add_new_feature_popup(); ?>
+					</section>
+					<section class="d-flex flex-column justify-content-between align-items-center">
                         <div class="w-100 d-flex justify-content-between align-items-center"> 
                             <div class="w-50 d-flex justify-content-between align-items-center">
-                                <label for=""><?php esc_html_e('Price Included Feature', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_include_service'); ?></i></label>
+                                <label for=""><?php esc_html_e('Price Included Feature', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_include_service'); ?></span></i></label>
                                 <?php MP_Custom_Layout::switch_button('ttbm_display_include_service', $in_checked); ?> 
                             </div>
                             <div class="w-50 d-flex justify-content-between align-items-center ms-5">
-                                <label for=""><?php esc_html_e('Price Excluded Feature', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('ttbm_display_exclude_service'); ?></i></label>
+                                <label for=""><?php esc_html_e('Price Excluded Feature', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_exclude_service'); ?></span></i></label>
                                 <?php MP_Custom_Layout::switch_button('ttbm_display_exclude_service', $ex_checked); ?> 
                             </div>
                         </div>
@@ -76,11 +89,6 @@
 								</div>
                             </div>
                         </div>
-						<div class="mt-4 w-100 d-flex justify-content-between align-items-center">
-							<?php TTBM_Settings::des_p('add_new_feature_popup'); ?>
-							<?php MP_Custom_Layout::popup_button('add_new_feature_popup', esc_html__('Create New Feature', 'tour-booking-manager')); ?>
-							<?php $this->add_new_feature_popup(); ?>
-						</div>
                     </section>
 
 					<?php

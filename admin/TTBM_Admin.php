@@ -14,7 +14,7 @@
 				add_filter('wp_mail_content_type', array($this, 'email_content_type'));
 			}
 			public function flush_rewrite() {
-				flush_rewrite_rules();
+				update_option('rewrite_rules','');
 			}
 			private function load_ttbm_admin() {
 				require_once TTBM_PLUGIN_DIR . '/lib/classes/class-form-fields-generator.php';
@@ -48,7 +48,7 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_place_you_see.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_faq_day_wise_details.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Related.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Extras.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Contact.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_why_book_with_us.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Admin_Note.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Display.php';

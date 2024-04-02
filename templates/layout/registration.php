@@ -30,7 +30,7 @@
 				?>
 				<div class="ttbm_booking_panel placeholder_area">
 					<?php if ( $check_ability == 'regular_ticket' || $travel_type == 'fixed' ) { ?>
-						<?php do_action( 'ttbm_booking_panel', $tour_id, $date, '', $check_ability ); ?>
+						<?php do_action( 'ttbm_booking_panel', $tour_id, $date, '', $check_ability); ?>
 					<?php } ?>
 				</div>
 			</div>

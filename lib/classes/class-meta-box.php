@@ -64,7 +64,7 @@ if ( ! class_exists( 'TtbmAddMetaBox' ) ) {
 
 		public function mp_event_all_in_tab_menu_list() {
 			?>
-            <li class="nav-item" data-tabs-target="#<?php echo esc_html($this->get_meta_box_id()); ?>">
+            <li data-tabs-target="#<?php echo esc_html($this->get_meta_box_id()); ?>">
 				<?php echo mep_esc_html($this->get_meta_box_title()); ?>
             </li>
 			<?php
@@ -176,14 +176,18 @@ if ( ! class_exists( 'TtbmAddMetaBox' ) ) {
                                     <div class="section">
                                         <h1 id="<?php echo esc_html($sectionIndex); ?>" class="section-title"><?php echo esc_html($section['title']); ?></h1>
                                         <p class="description"><?php echo esc_html($section['description']); ?></p>
-                                        <table class="form-table">
+                                        
+										<table class="form-table">
                                             <tbody>
 											<?php
 											foreach ( $section['options'] as $option ):
                                                 $details = isset( $option['details'] ) ? $option['details'] : "";
 												?>
                                                 <tr id='mage_row_<?php echo esc_html($option['id']); ?>' class='mage_row_<?php echo esc_html($option['id']); ?>'>
-                                                    <th scope="row"><?php echo $option['title']; /* Escaped before */ ?><?php if(!empty($details)){ ?><p class='description'><?php echo $details; /* Escaped before */ ?></p><?php } ?></th>
+                                                    <th scope="row">
+														<label><?php echo $option['title']; ?><?php if(!empty($details)){ ?><?php } ?></label>
+														<span class="span-row"><?php echo $details;?></span>
+													</th>
                                                     <td>
 														<?php
 														$option_value = get_post_meta( $this->get_post_id(), $option['id'], true );

@@ -1,6 +1,6 @@
 #{$main-selector}{
     .postbox-header{
-        background-color: $color-secondary;
+        background-color: $color-primary;
         .handle-actions{
             margin-top: 0;
             .handle-order-higher, .handle-order-lower, .toggle-indicator{
@@ -8,6 +8,103 @@
             }
             
         }
+    }
+    .ttbm_settings{
+      background-color: #fff;
+      .tabLists{
+        width: 20%;
+        padding: 25px;
+        background-color: $color-light;
+        padding-right: 0;
+        li{
+          border-left: 0;
+          border-right:0 ;
+          padding:15px;
+          color:$color-secondary;
+          border-left: 2px solid transparent;
+          i{
+            margin-right: 25px;
+            color: $color-primary
+          }
+          &::after{
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            border-bottom: 1px solid #d8d8d8;
+            width: 91%;
+          }
+          &.active,&:hover{
+            background-color: #fff;
+            color: #333;
+            font-weight: normal;
+            border-left: 2px solid $color-primary;
+            &::after{
+              width: 100%;
+              
+            }
+          }
+        }
+      }
+      .tabsContent{
+        width: 80%;
+        padding: 2% 5%;
+        font-family:DejaVuSans, Arial, Helvetica, sans-serif;
+        .tabsItem{
+          & > h2{
+            padding: 0;
+            color: $color-secondary;
+            margin: 30px 0 20px 0;
+            margin-bottom: 20px;
+            font-size: 22px;
+            line-height: 26px;
+            font-family: DejaVuSansBold, sans-serif;
+            margin-bottom: 12px;
+            font-weight: 700;
+          }
+          & > p {
+            color: $color-secondary;
+            margin: 0;
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 24px;
+            font-family: DejaVuSans, sans-serif;
+            margin-bottom: 50px;
+          }
+          section{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #d8d8d8;
+            padding: 20px;
+            margin-top: -1px;
+            label{
+              + span{
+                color: #6B7280;
+              }
+              input{
+                font-family: DejaVuSans;
+              }
+            }
+          }
+         
+        }
+        .span-row{
+          color: #6B7280;
+          font-size: 13px;
+          font-weight: normal;
+        }
+        .long-input{
+          width:80%;
+        }
+        .wp-switch-editor{
+          height: auto;
+        }
+        .wp-editor-area{
+          width: 100%;
+          border: 0;
+        }
+      }
     }
 } 
 @media only screen and (min-width:0px) {
@@ -75,6 +172,82 @@
       cursor: pointer;
       opacity: 1;
     }
+    // settings page css==================
+    .mp_settings_panel_header {
+      background: $color-secondary;
+      padding: calc($spacing * 2) $spacing;
+      color: $color-white;
+      font-size: 20px;
+      margin-top: 30px;
+    }
+    .mp_settings_panel{
+      padding-bottom: $spacing;
+     .nav-tab-wrapper {
+      background:$color-sky-light;
+      border: 5px solid $color-sky-light;
+      .nav-tab{
+        box-sizing: border-box;
+        background:$color-white;
+        color: $color-secondary;
+        margin-bottom: $spacing;
+        border-radius: $border-radius;
+        &:hover{
+          background: $color-primary;
+          color: $color-white;
+        }
+        &.nav-tab-active {
+          background: $color-primary;
+          color: $color-white;
+        }
+      }
+    }
+    .metabox-holder {
+      background: #FFF;
+      padding:0;
+      margin: 0;
+      width: calc(100% - 300px);
+      border: 15px solid $color-sky-light;
+      background-color: $color-sky-light;
+
+      h2{
+        border-bottom: 0px solid $color-white;
+        font-size: 1.625rem;
+        line-height: 1.4;
+        padding:$spacing 0;
+        margin: 0;
+        font-weight: $font-weight-normal;
+        background:$color-sky-light;
+        color: $color-primary !important;
+      }
+      table{
+        border-collapse: separate;
+        border-spacing: 0 0.1em;
+        // border: 2px solid $color-primary;
+        margin: 0;
+        background-color: $color-sky-light;
+        border-radius: $border-radius;
+        tr:nth-child(2n) {
+          background-color: $color-white;
+        }
+      }
+    }
+    p.submit input {
+      font-size: 16px;
+      padding: 5px 30px;
+      border-radius: $border-radius;
+      background: $color-primary;
+      border-color: $color-primary;
+      transition: 0.2s;
+      &:hover{
+        background: $color-primary;
+        border-color: $color-primary;
+      }
+    }
+  }
+  #wpbody-content .metabox-holder {
+    padding-top: 0px;
+    padding-bottom: $spacing;
+  }
 }
 
 // =============date config style customization=============
@@ -87,33 +260,43 @@
 }
 #{$main-selector}{
   h1{
-    font-size: 1.625rem;
-    line-height: 1.4;
-    color:$color-primary;
-    font-weight: 500;
-    padding: 8px 0;
+    padding: 0;
+    color: var(--mpl-secondary);
+    margin: 30px 0 20px 0;
+    margin-bottom: 20px;
+    margin-bottom: 20px;
+    font-size: 22px;
+    line-height: 26px;
+    font-family: Roboto, sans-serif;
+    margin-bottom: 12px;
+    font-weight: 700;
   }
+
   .tab-content-ttbm_date_config_meta_boxs,.tab-content-ttbm_tax_meta_boxs{
     .description{
       margin: 0;
       padding:calc($spacing * 1.5) 0;
       font-family: $font-text;
-      font-size: $font-size;
+      font-size: 1rem;
     }
     table {
-      border-collapse: separate; 
-      border-spacing:0 calc($spacing*3);
-      border: 0px solid;
+      border-collapse: collapse; 
+      border-spacing:0;
+      border: 0;
       margin: 0;
+      margin-top: 50px;
     }
     table.form-table tr th,table.form-table tr td{
       background-color: $color-white;
-      background-color: $color-white;
-      border-radius: $border-radius;
       padding: calc($spacing*3);
       margin-bottom: calc($spacing*3);
-      width:50%
+      width:50%;
+      border:1px solid $color-gray;
+      p{
+        font-size: .8rem;
+      }
     }
+    
     table.form-table tr td{
       text-align: right;
       label{
@@ -231,7 +414,8 @@ div > .ppof-metabox {
     
   }
   div.mpStyle .description{
-    font-size: calc($font-size - .2rem) !important;
+    font-size:$font-size !important;
+    color: var(--mpl-secondary);
   }
  
   .mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::before {

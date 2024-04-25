@@ -247,7 +247,7 @@
                     $locations =  TTBM_Function::get_meta_values( 'ttbm_location_name','ttbm_tour' );
                     $exist_locations = [];
                     for($i=0; $i<count($locations) ; $i++){
-                        if($upcomming_date[$i] && $locations[$i]){
+                        if(is_array($upcomming_date) && $upcomming_date[$i] && $locations[$i]){
                             $exist_locations[$i] = $locations[$i];
                         }
                     }

@@ -13,6 +13,7 @@
 				$grid_class = 'grid_' . $params['column'];
 				$per_page = $params['show'] > 1 ? $params['show'] : $loop->post_count;
 				$count = 0;
+				$category_filter=isset($_GET['category_filter']) && $_GET['category_filter']?$_GET['category_filter']:'';
 				?>
 				<div class="all_filter_item">
 					<div class="flexWrap <?php echo esc_attr($style); ?>">
@@ -31,7 +32,7 @@
 										<?php if ($params['type-filter'] == 'yes') { ?>
 											data-type="<?php echo esc_attr(TTBM_Function::get_tour_type($tour_id)); ?>"
 										<?php } ?>
-										<?php if ($params['category-filter'] == 'yes') { ?>
+										<?php if ($params['category-filter'] == 'yes'  || $category_filter) { ?>
 											data-category="<?php echo esc_attr(TTBM_Function::get_taxonomy_id_string($tour_id, 'ttbm_tour_cat')); ?>"
 										<?php } ?>
 										<?php if ($params['organizer-filter'] == 'yes') { ?>

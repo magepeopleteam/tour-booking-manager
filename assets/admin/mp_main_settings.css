@@ -742,65 +742,6 @@
 /**
  * Typography
  */
-#mp_meta_box_panel :where(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, .paragraph, ul, ol, pre, table, figure, blockquote, form, fieldset, dl, address, details, hr, aside, video) + *, .travel-list :where(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, .paragraph, ul, ol, pre, table, figure, blockquote, form, fieldset, dl, address, details, hr, aside, video) + * {
-  margin-block-start: 0;
-}
-#mp_meta_box_panel body,
-#mp_meta_box_panel h1, #mp_meta_box_panel h2, #mp_meta_box_panel h3, #mp_meta_box_panel h4, #mp_meta_box_panel h5, #mp_meta_box_panel h6,
-#mp_meta_box_panel .h1, #mp_meta_box_panel .h2, #mp_meta_box_panel .h3, #mp_meta_box_panel .h4, #mp_meta_box_panel .h5, #mp_meta_box_panel .h6, .travel-list body,
-.travel-list h1, .travel-list h2, .travel-list h3, .travel-list h4, .travel-list h5, .travel-list h6,
-.travel-list .h1, .travel-list .h2, .travel-list .h3, .travel-list .h4, .travel-list .h5, .travel-list .h6 {
-  font-family: DejaVuSansBold;
-  line-height: 1.3;
-}
-#mp_meta_box_panel h1,
-#mp_meta_box_panel .h1, .travel-list h1,
-.travel-list .h1 {
-  font-size: 2.375rem;
-}
-#mp_meta_box_panel h2,
-#mp_meta_box_panel .h2, .travel-list h2,
-.travel-list .h2 {
-  font-size: 22px;
-  line-height: 26px;
-  font-family: DejaVuSansBold, sans-serif;
-  font-weight: 700;
-}
-#mp_meta_box_panel h3,
-#mp_meta_box_panel .h3, .travel-list h3,
-.travel-list .h3 {
-  font-size: 1.9375rem;
-  line-height: 1.4;
-}
-#mp_meta_box_panel h4,
-#mp_meta_box_panel .h4, .travel-list h4,
-.travel-list .h4 {
-  font-size: 1.625rem;
-  line-height: 1.4;
-}
-#mp_meta_box_panel h5,
-#mp_meta_box_panel .h5, .travel-list h5,
-.travel-list .h5 {
-  font-size: 1.375rem;
-  line-height: 1.5;
-}
-#mp_meta_box_panel h6,
-#mp_meta_box_panel .h6, .travel-list h6,
-.travel-list .h6 {
-  font-size: 1.0625rem;
-  line-height: 1.5;
-}
-#mp_meta_box_panel .fw-bold, .travel-list .fw-bold {
-  font-family: DejaVuSansBold;
-  font-weight: 500;
-}
-#mp_meta_box_panel a, .travel-list a {
-  text-decoration: none;
-  color: var(--mpl-primary);
-}
-#mp_meta_box_panel a:link, #mp_meta_box_panel a:visited, .travel-list a:link, .travel-list a:visited {
-  color: var(--mpl-primary);
-}
 #mp_meta_box_panel .container, .travel-list .container {
   width: 1200px;
   margin: 0 auto;
@@ -1041,12 +982,6 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   }
   .leftTabs [data-tabs-target] {
     border-bottom: 0px solid var(--mpl-light);
-  }
-  .leftTabs > .tabLists {
-    -webkit-flex-flow: column;
-    flex-flow: column;
-    min-width: inherit;
-    max-width: inherit;
   }
   div.mpStyle [data-tabs-target] {
     color: var(--mpl-secondary);

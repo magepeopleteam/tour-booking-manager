@@ -55,8 +55,6 @@ span.textSuccess { color: var(--color_success); font-size: var(--fs);}
 /***************/
 #mep_disable_ticket_time {margin: 0 10px 0 0;}
 
-/*css added by ariful*/
-a#ttbm_basic_license_settings-tab { display: none;}
 /***************************************/
 div.ttbm_welcome_page { margin: 20px 20px 20px 0;}
 div.ttbm_welcome_page h1 { color: #FFF;}

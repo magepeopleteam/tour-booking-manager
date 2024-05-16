@@ -534,7 +534,7 @@
 					$current_date = current_time( 'Y-m-d' );
 					$month        = date( 'n', strtotime( $current_date ) );
 					$selected     = $url_month == $month ? 'selected' : '';
-					$date_format  = TTBM_Function::get_general_settings( 'ttbm_date_format_short', 'M , Y' );
+					$date_format  = MP_Global_Function::get_settings( 'mp_global_settings', 'date_format_short', 'M , Y' );
 					?>
 					<label data-placeholder>
 						<select class="formControl" name="month_filter">

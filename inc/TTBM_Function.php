@@ -77,8 +77,7 @@
 							}
 						}
 					}
-				}
-				else if ($travel_type == 'repeated') {
+				} else if ($travel_type == 'repeated') {
 					$now_date = strtotime(current_time('Y-m-d'));
 					$start_date = MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_date');
 					$start_date = $start_date ? date('Y-m-d', strtotime($start_date)) : '';
@@ -100,8 +99,7 @@
 								$tour_date[] = $current_date;
 							}
 						}
-					}
-					else {
+					} else {
 						$interval = MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_after', 1);
 						$all_dates = MP_Global_Function::date_separate_period($start_date, $end_date, $interval);
 						foreach ($all_dates as $date) {
@@ -117,8 +115,7 @@
 							}
 						}
 					}
-				}
-				else {
+				} else {
 					$date = MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date');
 					if ($date) {
 						$time = MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
@@ -151,8 +148,7 @@
 							$tour_date = $date;
 						}
 					}
-				}
-				else {
+				} else {
 					$full_date = TTBM_Function::reduce_stop_sale_hours($date . ' ' . '23.59.59');
 					if ($expire || $now <= strtotime($full_date)) {
 						$tour_date = $date;
@@ -204,8 +200,7 @@
 					foreach ($all_months as $all_month) {
 						$month = $month ? $month . ',' . $all_month : $all_month;
 					}
-				}
-				else {
+				} else {
 					$month = date('n', strtotime($dates));
 				}
 				update_post_meta($tour_id, 'ttbm_month_list', $month);
@@ -222,26 +217,19 @@
 				$timestamp = strtotime($date . ' ' . $timezone);
 				if ($type == 'date-time') {
 					$date = wp_date($wp_settings, $timestamp);
-				}
-				elseif ($type == 'date-text') {
+				} elseif ($type == 'date-text') {
 					$date = wp_date($date_format, $timestamp);
-				}
-				elseif ($type == 'date') {
+				} elseif ($type == 'date') {
 					$date = wp_date($date_format, $timestamp);
-				}
-				elseif ($type == 'time') {
+				} elseif ($type == 'time') {
 					$date = wp_date($time_format, $timestamp, wp_timezone());
-				}
-				elseif ($type == 'day') {
+				} elseif ($type == 'day') {
 					$date = wp_date('d', $timestamp);
-				}
-				elseif ($type == 'month') {
+				} elseif ($type == 'month') {
 					$date = wp_date('M', $timestamp);
-				}
-				elseif ($type == 'date-time-text') {
+				} elseif ($type == 'date-time-text') {
 					$date = wp_date($wp_settings, $timestamp, wp_timezone());
-				}
-				else {
+				} else {
 					$date = wp_date($type, $timestamp);
 				}
 				return $date;
@@ -422,8 +410,7 @@
 						}
 					}
 					return 0;
-				}
-				else {
+				} else {
 					return self::get_total_available($tour_id);
 				}
 			}
@@ -483,7 +470,7 @@
 				$country = self::get_country($tour_id);
 				$full_location = $city && $country ? $city . ' , ' . $country : '';
 				$full_location = $city && !$country ? $city : $full_location;
-				$full_location = is_array($full_location)?'':$full_location;
+				$full_location = is_array($full_location) ? '' : $full_location;
 				return !$city && $country ? $country : $full_location;
 			}
 			public static function get_country($tour_id) {
@@ -528,19 +515,16 @@
 					foreach ($services as $service) {
 						if (is_array($service) && array_key_exists('name', $service)) {
 							$terms[] = $service['name'];
-						}
-						else {
+						} else {
 							if (is_array($service)) {
 								$terms[] = $service['ttbm_feature_item'];
-							}
-							else {
+							} else {
 								$terms[] = $service;
 							}
 						}
 					}
 					$services = $terms;
-				}
-				else {
+				} else {
 					$services = self::feature_id_to_array($services);
 				}
 				return $services;
@@ -723,33 +707,33 @@
 					$all_date[] = '"' . date('j-n-Y', strtotime($date)) . '"';
 				}
 				?>
-				<script>
-					jQuery(document).ready(function () {
-						jQuery("<?php echo esc_attr($selector); ?>").datepicker({
-							dateFormat: ttbm_date_format,
-							minDate: new Date(<?php echo $start_year; ?>, <?php echo $start_month; ?>, <?php echo $start_day; ?>),
-							maxDate: new Date(<?php echo $end_year; ?>, <?php echo $end_month; ?>, <?php echo $end_day; ?>),
-							autoSize: true,
-							changeMonth: true,
-							changeYear: true,
-							beforeShowDay: WorkingDates,
-							onSelect: onCloseForDatePicker
-						});
-						function WorkingDates(date) {
-							let availableDates = [<?php echo implode(',', $all_date); ?>];
-							let dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
-							if (jQuery.inArray(dmy, availableDates) !== -1) {
-								return [true, "", "Available"];
-							} else {
-								return [false, "", "unAvailable"];
-							}
-						}
-						function onCloseForDatePicker(dateString, data) {
-							let tour_date = data.selectedYear + '-' + (parseInt(data.selectedMonth) + 1) + '-' + data.selectedDay;
-							jQuery('input[type="hidden"][name="ttbm_date"]').val(tour_date).trigger('change');
-						}
-					});
-				</script>
+                <script>
+                    jQuery(document).ready(function () {
+                        jQuery("<?php echo esc_attr($selector); ?>").datepicker({
+                            dateFormat: mp_date_format,
+                            minDate: new Date(<?php echo $start_year; ?>, <?php echo $start_month; ?>, <?php echo $start_day; ?>),
+                            maxDate: new Date(<?php echo $end_year; ?>, <?php echo $end_month; ?>, <?php echo $end_day; ?>),
+                            autoSize: true,
+                            changeMonth: true,
+                            changeYear: true,
+                            beforeShowDay: WorkingDates,
+                            onSelect: onCloseForDatePicker
+                        });
+                        function WorkingDates(date) {
+                            let availableDates = [<?php echo implode(',', $all_date); ?>];
+                            let dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+                            if (jQuery.inArray(dmy, availableDates) !== -1) {
+                                return [true, "", "Available"];
+                            } else {
+                                return [false, "", "unAvailable"];
+                            }
+                        }
+                        function onCloseForDatePicker(dateString, data) {
+                            let tour_date = data.selectedYear + '-' + (parseInt(data.selectedMonth) + 1) + '-' + data.selectedDay;
+                            jQuery('input[type="hidden"][name="ttbm_date"]').val(tour_date).trigger('change');
+                        }
+                    });
+                </script>
 				<?php
 			}
 			//******************************************************************** Remove nearly no use any where***********//
@@ -763,17 +747,14 @@
 					$data = maybe_unserialize($data);
 					if (is_array($data)) {
 						$data = MP_Global_Function::data_sanitize($data);
-					}
-					else {
+					} else {
 						$data = sanitize_text_field($data);
 					}
-				}
-				elseif (is_array($data)) {
+				} elseif (is_array($data)) {
 					foreach ($data as &$value) {
 						if (is_array($value)) {
 							$value = MP_Global_Function::data_sanitize($value);
-						}
-						else {
+						} else {
 							$value = sanitize_text_field($value);
 						}
 					}
@@ -827,22 +808,16 @@
 				}
 				return wp_get_attachment_image_url($image_id, $size);
 			}
-			public static function get_style_settings($key, $default = '') {
-				$options = get_option('ttbm_basic_style_settings');
-				return self::get_ttbm_settings($options, $key, $default);
-			}
 			public static function check_time($tour_id, $date): bool {
 				$time_slots = self::get_time($tour_id, $date);
 				if ($time_slots) {
 					if (is_array($time_slots)) {
 						if (sizeof($time_slots) > 0) {
 							return true;
-						}
-						else {
+						} else {
 							return false;
 						}
-					}
-					else {
+					} else {
 						return true;
 					}
 				}
@@ -873,8 +848,7 @@
 				$tax_with_price = get_option('woocommerce_tax_display_shop');
 				if ('' === $price) {
 					return '';
-				}
-				elseif (empty($qty)) {
+				} elseif (empty($qty)) {
 					return 0.0;
 				}
 				$line_price = (float)$price * (int)$qty;
@@ -885,13 +859,11 @@
 						$taxes = WC_Tax::calc_tax($line_price, $tax_rates);
 						if ('yes' === get_option('woocommerce_tax_round_at_subtotal')) {
 							$taxes_total = array_sum($taxes);
-						}
-						else {
+						} else {
 							$taxes_total = array_sum(array_map('wc_round_tax_total', $taxes));
 						}
 						$return_price = $tax_with_price == 'excl' ? round($line_price, $num_of_decimal) : round($line_price + $taxes_total, $num_of_decimal);
-					}
-					else {
+					} else {
 						$tax_rates = WC_Tax::get_rates($product->get_tax_class());
 						$base_tax_rates = WC_Tax::get_base_tax_rates($product->get_tax_class('unfiltered'));
 						/**
@@ -902,8 +874,7 @@
 							$remove_taxes = apply_filters('woocommerce_adjust_non_base_location_prices', true) ? WC_Tax::calc_tax($line_price, $base_tax_rates, true) : WC_Tax::calc_tax($line_price, $tax_rates, true);
 							if ('yes' === get_option('woocommerce_tax_round_at_subtotal')) {
 								$remove_taxes_total = array_sum($remove_taxes);
-							}
-							else {
+							} else {
 								$remove_taxes_total = array_sum(array_map('wc_round_tax_total', $remove_taxes));
 							}
 							// $return_price = round( $line_price, $num_of_decimal);
@@ -913,15 +884,13 @@
 							 * e.g. If a product costs 10 including tax, all users will pay 10 regardless of location and taxes.
 							 * This feature is experimental @since 2.4.7 and may change in the future. Use at your risk.
 							 */
-						}
-						else {
+						} else {
 							$base_taxes = WC_Tax::calc_tax($line_price, $base_tax_rates, true);
 							$modded_taxes = WC_Tax::calc_tax($line_price - array_sum($base_taxes), $tax_rates);
 							if ('yes' === get_option('woocommerce_tax_round_at_subtotal')) {
 								$base_taxes_total = array_sum($base_taxes);
 								$modded_taxes_total = array_sum($modded_taxes);
-							}
-							else {
+							} else {
 								$base_taxes_total = array_sum(array_map('wc_round_tax_total', $base_taxes));
 								$modded_taxes_total = array_sum(array_map('wc_round_tax_total', $modded_taxes));
 							}
@@ -933,14 +902,11 @@
 				$display_suffix = get_option('woocommerce_price_display_suffix') ? get_option('woocommerce_price_display_suffix') : '';
 				return wc_price($return_price) . ' ' . $display_suffix;
 			}
-			public static function get_active_tours($args)
-			{
+			public static function get_active_tours($args) {
 				$tours = array();
 				$query = new WP_Query($args);
-				if($query->have_posts())
-				{
-					while($query->have_posts())
-					{
+				if ($query->have_posts()) {
+					while ($query->have_posts()) {
 						$query->the_post();
 						$tour_id = '';
 						$tour_id = get_the_ID();
@@ -948,20 +914,14 @@
 						$dates = TTBM_Function::get_date($tour_id);
 						$ticket_lists = MP_Global_Function::get_post_info($tour_id, 'ttbm_ticket_type', array());
 						$available_seat = TTBM_Function::get_total_available($tour_id);
-						
-						if(is_array($dates) && count($dates))
-						{
-							if ($available_seat > 0 && sizeof($ticket_lists) > 0) 
-							{
+						if (is_array($dates) && count($dates)) {
+							if ($available_seat > 0 && sizeof($ticket_lists) > 0) {
 								$tours[] = $tour_id;
 							}
 						}
 					}
-
 					wp_reset_postdata();
-
-					if(count($tours))
-					{
+					if (count($tours)) {
 						unset($args);
 						$args = array(
 							'post_type' => array(TTBM_Function::get_cpt_name()),
@@ -970,16 +930,12 @@
 							'orderby' => 'meta_value',
 							'post__in' => $tours,
 						);
-
 						return new WP_Query($args);
 					}
-
 					return $query;
-
 				}
-				
-				return $query;					
-			}			
+				return $query;
+			}
 			public static function esc_html($string): string {
 				$allow_attr = array(
 					'input' => ['type' => [], 'class' => [], 'id' => [], 'name' => [], 'value' => [], 'size' => [], 'placeholder' => [], 'min' => [], 'max' => [], 'checked' => [], 'required' => [], 'disabled' => [], 'readonly' => [], 'step' => [], 'data-default-color' => [], 'data-price' => [],],
@@ -1010,25 +966,134 @@
 				);
 				return wp_kses($string, $allow_attr);
 			}
-
-            public static function get_meta_values( $meta_key = '', $post_type = 'post', $post_status = 'publish' ) {
-
-                global $wpdb;
-
-                if( empty( $meta_key ) )
-                    return;
-
-                $meta_values = $wpdb->get_col( $wpdb->prepare( "
+			public static function get_meta_values($meta_key = '', $post_type = 'post', $post_status = 'publish') {
+				global $wpdb;
+				if (empty($meta_key))
+					return;
+				$meta_values = $wpdb->get_col($wpdb->prepare("
         SELECT pm.meta_value FROM {$wpdb->postmeta} pm
         LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
         WHERE pm.meta_key = %s 
         AND p.post_type = %s 
         AND p.post_status = %s 
-    ", $meta_key, $post_type, $post_status ) );
-
-                return $meta_values;
-            }
-
+    ", $meta_key, $post_type, $post_status));
+				return $meta_values;
+			}
 		}
 		new TTBM_Function();
+	}
+	if (!function_exists('mep_esc_html')) {
+		function mep_esc_html($string): string {
+			$allow_attr = array(
+				'input' => [
+					'type' => [],
+					'class' => [],
+					'id' => [],
+					'name' => [],
+					'value' => [],
+					'size' => [],
+					'placeholder' => [],
+					'min' => [],
+					'max' => [],
+					'checked' => [],
+					'required' => [],
+					'disabled' => [],
+					'readonly' => [],
+					'step' => [],
+					'data-default-color' => [],
+					'data-price' => [],
+				],
+				'p' => ['class' => [], 'style' => []],
+				'img' => ['class' => [], 'id' => [], 'src' => [], 'alt' => [], 'style' => []],
+				'fieldset' => ['class' => [], 'style' => []],
+				'label' => ['for' => [], 'class' => [], 'style' => []],
+				'select' => [
+					'class' => [],
+					'name' => [],
+					'id' => [],
+					'data-price' => [],
+					'style' => [],
+				],
+				'option' => [
+					'class' => [],
+					'value' => [],
+					'id' => [],
+					'selected' => [],
+					'style' => [],
+				],
+				'textarea' => [
+					'class' => [],
+					'rows' => [],
+					'id' => [],
+					'cols' => [],
+					'name' => [],
+					'style' => []
+				],
+				'h2' => ['class' => [], 'id' => [], 'style' => []],
+				'a' => ['class' => [], 'id' => [], 'href' => [], 'style' => []],
+				'div' => [
+					'class' => [], 'style' => [],
+					'id' => [],
+					'data-ticket-type-name' => [],
+				],
+				'span' => [
+					'class' => [], 'style' => [],
+					'id' => [],
+					'data' => [],
+				],
+				'i' => [
+					'class' => [], 'style' => [],
+					'id' => [],
+					'data' => [],
+				],
+				'table' => [
+					'class' => [], 'style' => [],
+					'id' => [],
+					'data' => [],
+				],
+				'tr' => [
+					'class' => [], 'style' => [],
+					'id' => [],
+					'data' => [],
+				],
+				'td' => [
+					'class' => [], 'style' => [],
+					'id' => [],
+					'data' => [],
+				],
+				'thead' => [
+					'class' => [], 'style' => [],
+					'id' => [],
+					'data' => [],
+				],
+				'tbody' => [
+					'class' => [], 'style' => [],
+					'id' => [],
+					'data' => [],
+				],
+				'th' => [
+					'class' => [], 'style' => [],
+					'id' => [],
+					'data' => [],
+				],
+				'svg' => [
+					'class' => [], 'style' => [],
+					'id' => [],
+					'width' => [],
+					'height' => [],
+					'viewBox' => [],
+					'xmlns' => [],
+				],
+				'g' => [
+					'fill' => [], 'style' => [],
+				],
+				'path' => [
+					'd' => [], 'style' => [],
+				],
+				'br' => array(),
+				'em' => array(),
+				'strong' => array(),
+			);
+			return wp_kses($string, $allow_attr);
+		}
 	}

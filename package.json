@@ -12,5 +12,8 @@
     "build": "sass --watch --style compressed sass/main.scss assets/admin/mp_main_settings.css"
   },
   "author": "mage-people",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "sass": "^1.77.0"
+  }
 }

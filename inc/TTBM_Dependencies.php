@@ -10,10 +10,6 @@
 				add_action('wp_enqueue_scripts', array($this, 'frontend_script'), 90);
 				add_action('admin_enqueue_scripts', array($this, 'admin_script'), 90);
 				add_action('ttbm_registration_enqueue', array($this, 'registration_enqueue'), 90);
-				add_action('admin_head', array($this, 'js_constant'), 5);
-				add_action('wp_head', array($this, 'js_constant'), 5);
-				add_action('wp_head', array($this, 'apply_custom_css'), 90);
-				add_action('admin_head', array($this, 'apply_custom_css'), 90);
 				add_action('admin_init', array($this, 'ttbm_upgrade'));
 			}
 			public function language_load() {
@@ -35,25 +31,12 @@
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
 			}
 			public function global_enqueue() {
-				wp_enqueue_script('jquery');
-				wp_enqueue_script('jquery-ui-core');
-				wp_enqueue_script('jquery-ui-datepicker');
-				wp_localize_script('jquery', 'ttbm_ajax', array('ttbm_ajax' => admin_url('admin-ajax.php')));
-				wp_enqueue_style('mp_jquery_ui', TTBM_PLUGIN_URL . '/assets/helper/jquery-ui.min.css', array(), '1.13.2');
-				wp_enqueue_style('mp_font_awesome', '//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css', array(), '5.15.4');
-				wp_enqueue_style('mp_select_2', TTBM_PLUGIN_URL . '/assets/helper/select_2/select2.min.css', array(), '4.0.13');
-				wp_enqueue_script('mp_select_2', TTBM_PLUGIN_URL . '/assets/helper/select_2/select2.min.js', array(), '4.0.13',true);
-				wp_enqueue_style('mp_owl_carousel', TTBM_PLUGIN_URL . '/assets/helper/owl_carousel/owl.carousel.min.css', array(), '2.3.4');
-				wp_enqueue_script('mp_owl_carousel', TTBM_PLUGIN_URL . '/assets/helper/owl_carousel/owl.carousel.min.js', array(), '2.3.4',true);
-				wp_enqueue_style('mp_plugin_global', TTBM_PLUGIN_URL . '/assets/helper/mp_style/mp_style.css', array(), time());
-				wp_enqueue_script('mp_plugin_global', TTBM_PLUGIN_URL . '/assets/helper/mp_style/mp_script.js', array('jquery'), time(), true);
 				do_action('ttbm_common_script');
 			}
 			public function frontend_script() {
 				$this->global_enqueue();
 				wp_enqueue_script('jquery-ui-accordion');
-				wp_enqueue_style('ttbm_filter_pagination_style', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.css', array(), time());
-				wp_enqueue_script('ttbm_filter_pagination_script', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.js', array('jquery'), time(), true);
+
 				wp_enqueue_style('ttbm_style', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_style.css', array(), time());
 				wp_enqueue_script('ttbm_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_script.js', array('jquery'), time(), true);
 				$this->registration_enqueue();
@@ -61,27 +44,18 @@
 			}
 			public function admin_script() {
 				$this->global_enqueue();
-				wp_enqueue_editor();
-				//admin script
-				wp_enqueue_script('jquery-ui-sortable');
-				wp_enqueue_style('wp-color-picker');
-				wp_enqueue_script('wp-color-picker');
-				wp_enqueue_style('wp-codemirror');
-				wp_enqueue_script('wp-codemirror');
-				//********//
 				wp_enqueue_script('magepeople-options-framework', TTBM_PLUGIN_URL . '/assets/helper/js/mage-options-framework.js', array('jquery'), null);
 				wp_localize_script('PickpluginsOptionsFramework', 'PickpluginsOptionsFramework_ajax', array('PickpluginsOptionsFramework_ajaxurl' => admin_url('admin-ajax.php')));
-				wp_enqueue_script('form-field-dependency', TTBM_PLUGIN_URL . '/assets/helper/js/form-field-dependency.js', array('jquery'), null);
+				//wp_enqueue_script('form-field-dependency', TTBM_PLUGIN_URL . '/assets/helper/js/form-field-dependency.js', array('jquery'), null);
 				wp_enqueue_style('mage-options-framework', TTBM_PLUGIN_URL . '/assets/helper/css/mage-options-framework.css');
-				// custom
-				wp_enqueue_script('mp_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/mp_admin_settings.js', array('jquery'), time(), true);
-				wp_enqueue_style('mp_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/mp_admin_settings.css', array(), time());
 				wp_enqueue_script('ttbm_admin_script', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_script.js', array('jquery'), time(), true);
 				wp_enqueue_style('ttbm_admin_style', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_style.css', array(), time());
 				wp_enqueue_style('mp_main_settings', TTBM_PLUGIN_URL . '/assets/admin/mp_main_settings.css', array(), time());
 				do_action('ttbm_admin_script');
 			}
 			public function registration_enqueue() {
+				wp_enqueue_style('ttbm_filter_pagination_style', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.css', array(), time());
+				wp_enqueue_script('ttbm_filter_pagination_script', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.js', array('jquery'), time(), true);
 				wp_enqueue_style('ttbm_date_range_picker', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.min.css', array(), '1');
 				wp_enqueue_script('ttbm_date_range_picker_js', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.js', array('jquery', 'moment'), '1', true);
 				wp_enqueue_style('ttbm_registration_style', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.css', array(), time());
@@ -89,48 +63,73 @@
 				wp_enqueue_script('ttbm_price_calculation', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_price_calculation.js', array('jquery'), time(), true);
 				do_action('add_ttbm_registration_enqueue');
 			}
-			public function js_constant() {
-				?>
-				<script type="text/javascript">
-					let ttbm_date_format = "<?php echo esc_attr(TTBM_Function::get_general_settings('ttbm_date_format', 'D d M , yy')); ?>";
-					let mp_ajax_url = "<?php echo admin_url('admin-ajax.php'); ?>";
-					let mp_currency_symbol = "<?php echo get_woocommerce_currency_symbol(); ?>";
-					let mp_currency_position = "<?php echo get_option('woocommerce_currency_pos'); ?>";
-					let mp_currency_decimal = "<?php echo wc_get_price_decimal_separator(); ?>";
-					let mp_currency_thousands_separator = "<?php echo wc_get_price_thousand_separator(); ?>";
-					let mp_num_of_decimal = parseInt(<?php echo get_option('woocommerce_price_num_decimals', 2); ?>);
-					let mp_empty_image_url = "<?php echo esc_attr(TTBM_PLUGIN_URL . '/assets/helper/images/no_image.png'); ?>";
-					let mp_date_format = "<?php echo esc_attr(TTBM_Function::get_general_settings('date_format', 'D d M , yy')); ?>";
-				</script>
-				<?php
-			}
-			public function apply_custom_css() {
-				$options = get_option('ttbm_custom_css');
-				$custom_css = TTBM_Function::get_ttbm_settings($options, 'custom_css');
-				ob_start();
-				?>
-				<style>
-					<?php echo $custom_css; ?>
-				</style>
-				<?php
-				echo ob_get_clean();
-			}
 			public function ttbm_upgrade() {
-				if (get_option('ttbm_upgrade_order_meta') != 'completed') {
-					$ex_services = MP_Global_Function::get_all_post_id('ttbm_service_booking', -1, 1, 'any');
-					if (sizeof($ex_services) > 0) {
-						$all_service=[];
-						foreach ($ex_services as $ex_service_id) {
-							$order_id=MP_Global_Function::get_post_info($ex_service_id, 'ttbm_order_id');
-							$ex_name=MP_Global_Function::get_post_info($ex_service_id, 'ttbm_service_name');
-							if(array_key_exists($order_id,$all_service) && in_array($ex_name,$all_service[$order_id])){
-								wp_delete_post($ex_service_id);
-							}else{
-								$all_service[$order_id][]=$ex_name;
-							}
-						}
+				if (get_option('ttbm_upgrade_global') != 'completed') {
+					$basic_settings = get_option('ttbm_basic_gen_settings');
+					$global_settings = get_option('mp_global_settings');
+					if (isset($basic_settings['ttbm_date_format']) && $basic_settings['ttbm_date_format']) {
+						$global_settings['date_format'] = $basic_settings['ttbm_date_format'];
 					}
-					update_option('ttbm_upgrade_order_meta', 'completed');
+                    if (isset($basic_settings['ttbm_date_format_short']) && $basic_settings['ttbm_date_format_short']) {
+						$global_settings['date_format_short'] = $basic_settings['ttbm_date_format_short'];
+					}
+					update_option('mp_global_settings', $global_settings);
+					$custom_css = get_option('ttbm_custom_css');
+					update_option('mp_add_custom_css', $custom_css);
+					$style_settings = get_option('ttbm_basic_style_settings');
+					if(is_array($style_settings) && sizeof($style_settings)>0){
+						$current_style=get_option('mp_style_settings');
+						if (isset($style_settings['ttbm_default_text_color']) && $style_settings['ttbm_default_text_color']) {
+							$current_style['default_text_color'] = $style_settings['ttbm_default_text_color'];
+						}
+						if (isset($style_settings['ttbm_theme_color']) && $style_settings['ttbm_theme_color']) {
+							$current_style['theme_color'] = $style_settings['ttbm_theme_color'];
+						}
+						if (isset($style_settings['ttbm_theme_alternate_color']) && $style_settings['ttbm_theme_alternate_color']) {
+							$current_style['theme_alternate_color'] = $style_settings['ttbm_theme_alternate_color'];
+						}
+						if (isset($style_settings['ttbm_warning_color']) && $style_settings['ttbm_warning_color']) {
+							$current_style['warning_color'] = $style_settings['ttbm_warning_color'];
+						}
+						if (isset($style_settings['ttbm_default_font_size']) && $style_settings['ttbm_default_font_size']) {
+							$current_style['default_font_size'] = $style_settings['ttbm_default_font_size'];
+						}
+						if (isset($style_settings['ttbm_font_size_h1']) && $style_settings['ttbm_font_size_h1']) {
+							$current_style['font_size_h1'] = $style_settings['ttbm_font_size_h1'];
+						}
+						if (isset($style_settings['ttbm_font_size_h2']) && $style_settings['ttbm_font_size_h2']) {
+							$current_style['font_size_h2'] = $style_settings['ttbm_font_size_h2'];
+						}
+						if (isset($style_settings['ttbm_font_size_h3']) && $style_settings['ttbm_font_size_h3']) {
+							$current_style['font_size_h3'] = $style_settings['ttbm_font_size_h3'];
+						}
+						if (isset($style_settings['ttbm_font_size_h4']) && $style_settings['ttbm_font_size_h4']) {
+							$current_style['font_size_h4'] = $style_settings['ttbm_font_size_h4'];
+						}
+						if (isset($style_settings['ttbm_font_size_h5']) && $style_settings['ttbm_font_size_h5']) {
+							$current_style['font_size_h5'] = $style_settings['ttbm_font_size_h5'];
+						}
+						if (isset($style_settings['ttbm_font_size_h6']) && $style_settings['ttbm_font_size_h6']) {
+							$current_style['font_size_h6'] = $style_settings['ttbm_font_size_h6'];
+						}
+						if (isset($style_settings['ttbm_font_size_label']) && $style_settings['ttbm_font_size_label']) {
+							$current_style['font_size_label'] = $style_settings['ttbm_font_size_label'];
+						}
+						if (isset($style_settings['ttbm_font_size_button']) && $style_settings['ttbm_font_size_button']) {
+							$current_style['button_font_size'] = $style_settings['ttbm_font_size_button'];
+						}
+						if (isset($style_settings['ttbm_button_color']) && $style_settings['ttbm_button_color']) {
+							$current_style['button_color'] = $style_settings['ttbm_button_color'];
+						}
+						if (isset($style_settings['ttbm_button_bg']) && $style_settings['ttbm_button_bg']) {
+							$current_style['button_bg'] = $style_settings['ttbm_button_bg'];
+						}
+						if (isset($style_settings['ttbm_section_bg']) && $style_settings['ttbm_section_bg']) {
+							$current_style['section_bg'] = $style_settings['ttbm_section_bg'];
+						}
+						update_option('mp_style_settings', $current_style);
+					}
+					update_option('ttbm_upgrade_global', 'completed');
 				}
 			}
 		}

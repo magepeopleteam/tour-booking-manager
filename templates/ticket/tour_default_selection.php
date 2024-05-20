@@ -15,7 +15,6 @@
 		$time          = is_array( $time ) ? $time[0]['time'] : $time;
 		$date          = $time ? $date . ' ' . $time : $date;
 		$date=$time?date( 'Y-m-d H:i', strtotime( $date) ):date( 'Y-m-d', strtotime( $date) );
-		$date_format   = $date_format??TTBM_Function::date_format();
 		?>
 		<div class="ttbm_registration_area <?php echo esc_attr( $check_ability ); ?>">
 			<input type="hidden" name="ttbm_id" value="<?php echo esc_attr( $tour_id ); ?>"/>
@@ -28,7 +27,7 @@
 						<div class="justifyCenter ttbm_select_date_area">
 							<label>
 								<span class="date_time_label"><?php echo is_array( $time_slots ) && sizeof( $time_slots ) > 0 ? esc_html__( 'Select Date & Time : ', 'tour-booking-manager' ) : esc_html__( 'Select Date  : ', 'tour-booking-manager' ); ?></span>
-								<input type="text" id="ttbm_select_date" name="" class="formControl date_type" value="<?php echo esc_attr__( date_i18n( $date_format, strtotime( $all_dates[0] ) ) ); ?>"/>
+								<input type="text" id="ttbm_select_date" name="" class="formControl date_type" value="<?php echo esc_attr(MP_Global_Function::date_format( $all_dates[0] )); ?>"/>
 							</label>
 							<?php
 								$template_name = MP_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );

@@ -81,16 +81,6 @@ if ( ! class_exists( 'TtbmAddMetaBox' ) ) {
 			?>
             <div class='wrap ppof-settings ppof-metabox'>
                 <div class='navigation <?php echo esc_html($get_nav_position); ?>'>
-                    <div class="nav-header">
-						<?php
-						do_action( 'nav_header_top' );
-						?>
-                        <div class="themeName"><?php echo esc_html($this->get_item_name()); ?></div>
-                        <div class="themeVersion"><?php echo sprintf( __( 'Version: %s', 'wp-theme-settings' ), $this->get_item_version() ); ?></div>
-						<?php
-						do_action( 'nav_header_bottom' );
-						?>
-                    </div>
                     <div class="nav-items">
 						<?php
 						do_action( 'nav_nav_items_top' );

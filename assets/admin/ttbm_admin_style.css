@@ -7,7 +7,7 @@ div.ttbm_settings table th,
 div.ttbm_settings table td {border: 0;}
 div.ttbm_settings table tbody th {text-align: left;font-size: var(--fs);}
 div.ttbm_settings table tbody thead th {text-align: center;}
-div.ttbm_settings .formControl {min-width: 80px;box-shadow: none;padding: 5px var(--dMP_xs);max-width: 300px;}
+div.ttbm_settings .formControl {min-width: 80px;box-shadow: none;padding: 5px var(--dmp_xs);max-width: 300px;}
 div.ttbm_settings .formControl.date_type,
 div.ttbm_settings .formControl[type="date"] {padding: 5px 5px 5px 40px;max-width: 300px;font-size:inherit;min-width: 200px;font-weight:normal;}
 div.ttbm_settings span.dropdown-wrapper {margin: 0 !important;}
@@ -55,8 +55,6 @@ span.textSuccess { color: var(--color_success); font-size: var(--fs);}
 /***************/
 #mep_disable_ticket_time {margin: 0 10px 0 0;}
 
-/*css added by ariful*/
-a#ttbm_basic_license_settings-tab { display: none;}
 /***************************************/
 div.ttbm_welcome_page { margin: 20px 20px 20px 0;}
 div.ttbm_welcome_page h1 { color: #FFF;}
@@ -128,7 +126,7 @@ label.ttbm_id_select{height: 100%;}
 #ttbm_list_page table td{border-color: #F7EFEF;}
 #ttbm_list_page .ttbm_list_attendee_area,
 #ttbm_list_page table tbody tr:nth-of-type(odd) td table  th,
-#ttbm_list_page table tbody tr:nth-of-type(odd) td table  td{padding: var(--dMP_xs);border-color: var(--color_border);}
+#ttbm_list_page table tbody tr:nth-of-type(odd) td table  td{padding: var(--dmp_xs);border-color: var(--color_border);}
 /****************/
 .mpStyle .mp_search_on{display: block;}
 .mpStyle tr.mp_search_on{display: table-row;}

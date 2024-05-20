@@ -125,7 +125,7 @@
 			let value = item.attr(ttbm_filter_item[name]).toString();
 			active = (value && value.match(new RegExp(filter_values, "i"))) ? 2 : 0;
 		}
-		console.log(parent + " "+ item + " " + name + " " + active );
+		//console.log(parent + " "+ item + " " + name + " " + active );
 		return active;
 	}
 	function filter_single_in_multi(parent, item, name, active) {
@@ -135,7 +135,7 @@
 			value = value.split(",");
 			active = (value.indexOf(filter_values) !== -1) ? 2 : 0;
 		}
-		console.log(parent + " "+ item + " " + name + " " + active );
+		//console.log(parent + " "+ item + " " + name + " " + active );
 		return active;
 	}
 	function filter_multi_in_single(parent, item, name, active) {
@@ -145,7 +145,7 @@
 			let value = item.attr(ttbm_filter_item[name]).toString();
 			active = (filter_values.indexOf(value) !== -1) ? 2 : 0;
 		}
-		console.log(parent + " "+ item + " " + name + " " + active );
+		//console.log(parent + " "+ item + " " + name + " " + active );
 		return active;
 	}
 	function filter_multi_in_multi(parent, item, name, active) {
@@ -162,7 +162,7 @@
 			});
 			active = result;
 		}
-		console.log(parent + " "+ item + " " + name + " " + active );
+		//console.log(parent + " "+ item + " " + name + " " + active );
 		return active;
 	}
 	//************Pagination*************//
@@ -276,3 +276,42 @@
 		parent.find('.total_filter_qty').html($(parent).find(item_class).length);
 	}
 }(jQuery));
+function ttbm_pagination_page_management(parent, pagination_page, total_item) {
+	let per_page_item = parseInt(parent.find('input[name="pagination_per_page"]').val());
+	let total_active_page = Math.floor(total_item / per_page_item) + ((total_item % per_page_item) > 0 ? 1 : 0);
+	let page_limit_start = (pagination_page > 2) ? (pagination_page - 2) : 0;
+	let page_limit_end = (pagination_page > 2) ? (pagination_page + 2) : 4;
+	let limit_dif = total_active_page - pagination_page;
+	if (total_active_page > 5 && limit_dif < 3) {
+		page_limit_start = page_limit_start - ((limit_dif > 1) ? 1 : 2);
+	}
+	let total_page = parent.find('[data-pagination]').length;
+	for (let i = 0; i < total_page; i++) {
+		if (i < total_active_page && i >= page_limit_start && i <= page_limit_end) {
+			parent.find('[data-pagination="' + i + '"]').slideDown(200);
+		} else {
+			parent.find('[data-pagination="' + i + '"]').slideUp(200);
+		}
+	}
+	if (pagination_page > 0) {
+		parent.find('.page_prev').removeAttr('disabled');
+	} else {
+		parent.find('.page_prev').prop('disabled', true);
+	}
+	if (pagination_page > 2 && total_active_page > 5) {
+		parent.find('.ellipse_left').slideDown(200);
+	} else {
+		parent.find('.ellipse_left').slideUp(200);
+	}
+	if (pagination_page < total_active_page - 3 && total_active_page > 5) {
+		parent.find('.ellipse_right').slideDown(200);
+	} else {
+		parent.find('.ellipse_right').slideUp(200);
+	}
+	if (pagination_page < total_active_page - 1) {
+		parent.find('.page_next').removeAttr('disabled');
+	} else {
+		parent.find('.page_next').prop('disabled', true);
+	}
+	return true;
+}

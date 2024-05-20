@@ -116,12 +116,7 @@
       border-bottom: 0px solid $color-light;
     }
 
-    .leftTabs > .tabLists {
-      -webkit-flex-flow: column;
-      flex-flow: column;
-      min-width:inherit;
-      max-width:inherit;
-    }
+
     div.mpStyle [data-tabs-target]{
       color: $color-secondary;
       

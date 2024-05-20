@@ -14,16 +14,14 @@
 				add_filter('wp_mail_content_type', array($this, 'email_content_type'));
 			}
 			public function flush_rewrite() {
-				update_option('rewrite_rules','');
+				update_option('rewrite_rules', '');
 			}
 			private function load_ttbm_admin() {
 				require_once TTBM_PLUGIN_DIR . '/lib/classes/class-form-fields-generator.php';
 				require_once TTBM_PLUGIN_DIR . '/lib/classes/class-meta-box.php';
 				require_once TTBM_PLUGIN_DIR . '/lib/classes/class-taxonomy-edit.php';
 				//**************//
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_LIcense.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Dummy_Import.php';
-
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_CPT.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Taxonomy.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Hidden_Product.php';
@@ -31,11 +29,9 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Welcome.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Status.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_License.php';
 				//**********//
-				require_once TTBM_PLUGIN_DIR . '/select_icon_popup/Select_Icon_Popup.php';
-				//**********//
-                require_once TTBM_PLUGIN_DIR . '/admin/settings/global/MAGE_Setting_API.php';
-                require_once TTBM_PLUGIN_DIR . '/admin/settings/global/TTBM_Settings_Global.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Settings_Global.php';
 				//**********//
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_General.php';
@@ -63,7 +59,7 @@
 			}
 			//************Disable Gutenberg************************//
 			public function disable_gutenberg($current_status, $post_type) {
-				$user_status = TTBM_Function::get_general_settings('ttbm_disable_block_editor', 'yes');
+				$user_status = MP_Global_Function::get_settings('mp_global_settings', 'disable_block_editor', 'yes');
 				if ($post_type === TTBM_Function::get_cpt_name() && $user_status == 'yes') {
 					return false;
 				}
@@ -108,8 +104,7 @@
 					}
 					wp_redirect(admin_url('post.php?action=edit&post=' . $new_post_id));
 					exit;
-				}
-				else {
+				} else {
 					wp_die('Post creation failed, could not find original post: ' . $post_id);
 				}
 			}

@@ -573,27 +573,28 @@
 			}
 			public static function add_cpt_data($cpt_name, $title, $meta_data = array(), $status = 'publish', $cat = array()) {
 				if (!self::check_duplicate_order($meta_data['ttbm_order_id'], $meta_data['ttbm_id'])) {
-				}
-				$new_post = array(
-					'post_title' => $title,
-					'post_content' => '',
-					'post_category' => $cat,
-					'tags_input' => array(),
-					'post_status' => $status,
-					'post_type' => $cpt_name
-				);
-				wp_reset_postdata();
-				$post_id = wp_insert_post($new_post);
-				if (sizeof($meta_data) > 0) {
-					foreach ($meta_data as $key => $value) {
-						update_post_meta($post_id, $key, $value);
+					$new_post = array(
+						'post_title' => $title,
+						'post_content' => '',
+						'post_category' => $cat,
+						'tags_input' => array(),
+						'post_status' => $status,
+						'post_type' => $cpt_name
+					);
+					wp_reset_postdata();
+					$post_id = wp_insert_post($new_post);
+					if (sizeof($meta_data) > 0) {
+						foreach ($meta_data as $key => $value) {
+							update_post_meta($post_id, $key, $value);
+						}
 					}
+					if ($cpt_name == 'ttbm_booking') {
+						$ttbm_pin = $meta_data['ttbm_user_id'] . $meta_data['ttbm_order_id'] . $meta_data['ttbm_id'] . $post_id;
+						update_post_meta($post_id, 'ttbm_pin', $ttbm_pin);
+					}
+					wp_reset_postdata();
 				}
-				if ($cpt_name == 'ttbm_booking') {
-					$ttbm_pin = $meta_data['ttbm_user_id'] . $meta_data['ttbm_order_id'] . $meta_data['ttbm_id'] . $post_id;
-					update_post_meta($post_id, 'ttbm_pin', $ttbm_pin);
-				}
-				wp_reset_postdata();
+
 			}
 			public static function check_duplicate_order($order_id, $ttbm_id) {
 				$args = array(

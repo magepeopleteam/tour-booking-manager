@@ -130,13 +130,12 @@
 					if (is_array($categories) && sizeof($categories) > 0) {
 						$url = $_GET['category_filter'] ?? '';
 						$current = $url ? get_term_by('id', $url, 'ttbm_tour_cat')->term_id : '';
-						$selected = $url && $current == $url ? 'selected' : '';
 						?>
                         <label data-placeholder>
                             <select class="formControl" name="category_filter">
                                 <option selected value=""><?php esc_html_e('All Category', 'tour-booking-manager'); ?></option>
 								<?php foreach ($categories as $category) { ?>
-                                    <option value="<?php echo esc_attr($category->term_id); ?>" <?php echo esc_attr($selected); ?>><?php echo esc_html($category->name); ?></option>
+                                    <option value="<?php echo esc_attr($category->term_id); ?>" <?php echo esc_attr($url && $current == $category->term_id ? 'selected' : ''); ?>><?php echo esc_html($category->name); ?></option>
 								<?php } ?>
                             </select>
                         </label>
@@ -168,7 +167,6 @@
 					if (sizeof($organizers) > 0) {
 						$url = $_GET['organizer_filter'] ?? '';
 						$current = $url ? get_term_by('id', $url, 'ttbm_tour_org')->term_id : '';
-						$selected = $url && $current == $url ? 'selected' : '';
 						?>
                         <label data-placeholder>
                             <select class="formControl" name="organizer_filter">

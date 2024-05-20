@@ -36,8 +36,7 @@
 			public function frontend_script() {
 				$this->global_enqueue();
 				wp_enqueue_script('jquery-ui-accordion');
-				wp_enqueue_style('ttbm_filter_pagination_style', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.css', array(), time());
-				wp_enqueue_script('ttbm_filter_pagination_script', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.js', array('jquery'), time(), true);
+
 				wp_enqueue_style('ttbm_style', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_style.css', array(), time());
 				wp_enqueue_script('ttbm_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_script.js', array('jquery'), time(), true);
 				$this->registration_enqueue();
@@ -55,6 +54,8 @@
 				do_action('ttbm_admin_script');
 			}
 			public function registration_enqueue() {
+				wp_enqueue_style('ttbm_filter_pagination_style', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.css', array(), time());
+				wp_enqueue_script('ttbm_filter_pagination_script', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.js', array('jquery'), time(), true);
 				wp_enqueue_style('ttbm_date_range_picker', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.min.css', array(), '1');
 				wp_enqueue_script('ttbm_date_range_picker_js', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.js', array('jquery', 'moment'), '1', true);
 				wp_enqueue_style('ttbm_registration_style', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.css', array(), time());

@@ -67,10 +67,10 @@
 				if (get_option('ttbm_upgrade_global') != 'completed') {
 					$basic_settings = get_option('ttbm_basic_gen_settings');
 					$global_settings = get_option('mp_global_settings');
-					if (isset($basic_settings['ttbm_date_format']) && $basic_settings['ttbm_date_format']) {
+					if (is_array($basic_settings) && array_key_exists('ttbm_date_format',$basic_settings) && $basic_settings['ttbm_date_format']) {
 						$global_settings['date_format'] = $basic_settings['ttbm_date_format'];
 					}
-                    if (isset($basic_settings['ttbm_date_format_short']) && $basic_settings['ttbm_date_format_short']) {
+					if (is_array($basic_settings) && array_key_exists('ttbm_date_format_short',$basic_settings) && $basic_settings['ttbm_date_format_short']) {
 						$global_settings['date_format_short'] = $basic_settings['ttbm_date_format_short'];
 					}
 					update_option('mp_global_settings', $global_settings);

@@ -29,8 +29,8 @@
 					?>
 					<div class="allCenter ttbm_date_time_select">
 						<div class="justifyCenter ttbm_select_date_area">
-							<label>
-								<span class="date_time_label"><?php echo is_array( $time_slots ) && sizeof( $time_slots ) > 0 ? esc_html__( 'Select Date & Time : ', 'tour-booking-manager' ) : esc_html__( 'Select Date  : ', 'tour-booking-manager' ); ?></span>
+							<label class="_allCenter">
+								<span class="date_time_label _mR_xs"><?php echo is_array( $time_slots ) && sizeof( $time_slots ) > 0 ? esc_html__( 'Select Date & Time : ', 'tour-booking-manager' ) : esc_html__( 'Select Date  : ', 'tour-booking-manager' ); ?></span>
 
 
                                 <input type="hidden" name="ttbm_date" value="<?php echo esc_attr($hidden_date); ?>" required/>

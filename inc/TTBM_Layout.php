@@ -70,7 +70,7 @@
 				$travel_type = TTBM_Function::get_travel_type($tour_id);
 				$check_ability = MP_Global_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'availability_section');
 				if ($check_ability == 'availability_section' && $travel_type != 'fixed') { ?>
-					<button class="_dButton ttbm_check_ability" type="button">
+					<button class="navy_blueButton ttbm_check_ability" type="button">
 						<?php esc_html_e('Check  Availability', 'tour-booking-manager'); ?>
 					</button>
 				<?php }

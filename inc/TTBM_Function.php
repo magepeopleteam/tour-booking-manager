@@ -9,7 +9,6 @@
 	if (!class_exists('TTBM_Function')) {
 		class TTBM_Function {
 			public function __construct() {
-				add_action('ttbm_date_picker_js', array($this, 'date_picker_js'), 10, 2);
 			}
 			//**************Support multi Language*********************//
 			public static function post_id_multi_language($post_id) {
@@ -692,49 +691,6 @@
 					return true;
 				}
 				return '';
-			}
-			public function date_picker_js($selector, $dates) {
-				$start_date = $dates[0];
-				$start_year = date('Y', strtotime($start_date));
-				$start_month = (date('n', strtotime($start_date)) - 1);
-				$start_day = date('j', strtotime($start_date));
-				$end_date = end($dates);
-				$end_year = date('Y', strtotime($end_date));
-				$end_month = (date('n', strtotime($end_date)) - 1);
-				$end_day = date('j', strtotime($end_date));
-				$all_date = [];
-				foreach ($dates as $date) {
-					$all_date[] = '"' . date('j-n-Y', strtotime($date)) . '"';
-				}
-				?>
-                <script>
-                    jQuery(document).ready(function () {
-                        jQuery("<?php echo esc_attr($selector); ?>").datepicker({
-                            dateFormat: mp_date_format,
-                            minDate: new Date(<?php echo $start_year; ?>, <?php echo $start_month; ?>, <?php echo $start_day; ?>),
-                            maxDate: new Date(<?php echo $end_year; ?>, <?php echo $end_month; ?>, <?php echo $end_day; ?>),
-                            autoSize: true,
-                            changeMonth: true,
-                            changeYear: true,
-                            beforeShowDay: WorkingDates,
-                            onSelect: onCloseForDatePicker
-                        });
-                        function WorkingDates(date) {
-                            let availableDates = [<?php echo implode(',', $all_date); ?>];
-                            let dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
-                            if (jQuery.inArray(dmy, availableDates) !== -1) {
-                                return [true, "", "Available"];
-                            } else {
-                                return [false, "", "unAvailable"];
-                            }
-                        }
-                        function onCloseForDatePicker(dateString, data) {
-                            let tour_date = data.selectedYear + '-' + (parseInt(data.selectedMonth) + 1) + '-' + data.selectedDay;
-                            jQuery('input[type="hidden"][name="ttbm_date"]').val(tour_date).trigger('change');
-                        }
-                    });
-                </script>
-				<?php
 			}
 			//******************************************************************** Remove nearly no use any where***********//
 			public static function get_post_info($tour_id, $key, $default = '') {

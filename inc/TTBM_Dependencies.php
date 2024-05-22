@@ -64,9 +64,11 @@
 				do_action('add_ttbm_registration_enqueue');
 			}
 			public function ttbm_upgrade() {
+	
 				if (get_option('ttbm_upgrade_global') != 'completed') {
-					$basic_settings = get_option('ttbm_basic_gen_settings');
-					$global_settings = get_option('mp_global_settings');
+					$basic_settings 	= get_option('ttbm_basic_gen_settings');
+					$global_settings 	= get_option('mp_global_settings') ? get_option('mp_global_settings') : [];
+					
 					if (is_array($basic_settings) && array_key_exists('ttbm_date_format',$basic_settings) && $basic_settings['ttbm_date_format']) {
 						$global_settings['date_format'] = $basic_settings['ttbm_date_format'];
 					}
@@ -78,7 +80,9 @@
 					update_option('mp_add_custom_css', $custom_css);
 					$style_settings = get_option('ttbm_basic_style_settings');
 					if(is_array($style_settings) && sizeof($style_settings)>0){
-						$current_style=get_option('mp_style_settings');
+						
+						$current_style = get_option('mp_style_settings') ? get_option('mp_style_settings') : [];
+
 						if (isset($style_settings['ttbm_default_text_color']) && $style_settings['ttbm_default_text_color']) {
 							$current_style['default_text_color'] = $style_settings['ttbm_default_text_color'];
 						}

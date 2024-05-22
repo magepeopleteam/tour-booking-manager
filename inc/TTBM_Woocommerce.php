@@ -45,6 +45,7 @@
 				}
 				$cart_item_data['ttbm_translation_ttbm_id'] = apply_filters('ttbm_get_translation_post_id', $product_id);
 				$cart_item_data['ttbm_id'] = $product_id;
+                //echo '<pre>';print_r($cart_item_data);echo '</pre>';
 				return $cart_item_data;
 			}
 			public function before_calculate_totals($cart_object) {
@@ -246,8 +247,7 @@
 				$tour_name = TTBM_Function::get_name();
 				$location = MP_Global_Function::get_post_info($ttbm_id, 'ttbm_location_name');
 				$date = $cart_item['ttbm_date'];
-				$data_format = MP_Global_Function::check_time_exit_date($date) ? 'full' : '';
-				$date = MP_Global_Function::date_format( $date,$data_format);
+				$data_format = MP_Global_Function::check_time_exit_date($date) ? 'full' : 'date';
 				$hotel_info = $cart_item['ttbm_hotel_info'] ?: array();
 				?>
                 <div class="mpStyle">
@@ -286,7 +286,7 @@
                                 <li>
                                     <span class="far fa-calendar-alt"></span>&nbsp;&nbsp;
                                     <h6><?php echo esc_html($tour_name . ' ' . esc_html__('Date', 'tour-booking-manager')); ?> :&nbsp;</h6>
-                                    <span><?php echo esc_html($date); ?></span>
+                                    <span><?php echo esc_html(MP_Global_Function::date_format( $date,$data_format)); ?></span>
                                 </li>
 							<?php } ?>
                         </ul>

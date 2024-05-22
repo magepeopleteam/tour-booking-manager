@@ -2,6 +2,17 @@
 	if (!defined('ABSPATH')) {
 		die;
 	} // Cannot access pages directly.
+
+	add_action('admin_init','ttbm_quick_setup_exit',99);
+	function ttbm_quick_setup_exit(){
+		if(isset($_REQUEST['ttbm_skip_quick_setup'])){
+			update_option('ttbm_quick_setup_done', 'exit');
+			exit(wp_redirect(admin_url('index.php')));
+		}
+		
+		
+	}
+
 	if (!class_exists('TTBM_Quick_Setup')) {
 		class TTBM_Quick_Setup {
 			public function __construct() {
@@ -201,6 +212,11 @@
 							<button class="themeButton" type="submit" name="active_woo_btn"><?php esc_html_e('Active Now', 'tour-booking-manager'); ?></button>
 						<?php } ?>
 					</div>
+					<?php if ($status != 1) { ?>
+					<div class='mep_seup_exit_sec'>
+						<button style='margin:10px auto;' class="warningButton" type="submit" name="ttbm_skip_quick_setup"><?php _e('Skip, Go to Dashboard') ?></button>
+					</div>
+					<?php } ?>
 				</div>
 				<?php
 			}

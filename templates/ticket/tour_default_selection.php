@@ -15,10 +15,14 @@
 		$time          = is_array( $time ) ? $time[0]['time'] : $time;
 		$date          = $time ? $date . ' ' . $time : $date;
 		$date=$time?date( 'Y-m-d H:i', strtotime( $date) ):date( 'Y-m-d', strtotime( $date) );
+        /************/
+		$date_format = MP_Global_Function::date_picker_format();
+		$now = date_i18n($date_format, strtotime(current_time('Y-m-d')));
+		$hidden_date = $date ? date('Y-m-d', strtotime($date)) : '';
+		$visible_date = $date ? date_i18n($date_format, strtotime($date)) : '';
 		?>
 		<div class="ttbm_registration_area <?php echo esc_attr( $check_ability ); ?>">
 			<input type="hidden" name="ttbm_id" value="<?php echo esc_attr( $tour_id ); ?>"/>
-			<input type="hidden" name="ttbm_date" value="<?php echo esc_attr( $date ); ?>"/>
 			<?php
 				if ($travel_type == 'repeated' ) {
 					$time_slots = TTBM_Function::get_time( $tour_id, $all_dates[0] );
@@ -27,7 +31,10 @@
 						<div class="justifyCenter ttbm_select_date_area">
 							<label>
 								<span class="date_time_label"><?php echo is_array( $time_slots ) && sizeof( $time_slots ) > 0 ? esc_html__( 'Select Date & Time : ', 'tour-booking-manager' ) : esc_html__( 'Select Date  : ', 'tour-booking-manager' ); ?></span>
-								<input type="text" id="ttbm_select_date" name="" class="formControl date_type" value="<?php echo esc_attr(MP_Global_Function::date_format( $all_dates[0] )); ?>"/>
+
+
+                                <input type="hidden" name="ttbm_date" value="<?php echo esc_attr($hidden_date); ?>" required/>
+                                <input id="ttbm_select_date" type="text" value="<?php echo esc_attr($visible_date); ?>" class="formControl " placeholder="<?php echo esc_attr($now); ?>"  readonly required/>
 							</label>
 							<?php
 								$template_name = MP_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
@@ -50,7 +57,7 @@
 						<?php } ?>
 					</div>
 					<?php
-					do_action( 'ttbm_date_picker_js', '#ttbm_select_date', $all_dates );
+					do_action( 'mp_load_date_picker_js', '#ttbm_select_date', $all_dates );
 				}
 				if ( $template_name == 'viator.php' ) {
 					TTBM_Layout::availability_button( $tour_id );

@@ -3,7 +3,7 @@
 	 * Plugin Name: Travel Booking Plugin | Tour & Hotel Booking Solution For WooCommerce – wptravelly
 	 * Plugin URI: http://mage-people.com
 	 * Description: A Complete Tour and Travel Solution for WordPress by MagePeople.
-	 * Version: 1.6.6
+	 * Version: 1.6.9
 	 * Author: MagePeople Team
 	 * Author URI: http://www.mage-people.com/
 	 * Text Domain: tour-booking-manager
@@ -31,15 +31,17 @@
 				require_once TTBM_PLUGIN_DIR . '/mp_global/MP_Global_File_Load.php';
 				$this->load_global_file();
 				if (MP_Global_Function::check_woocommerce() == 1) {
-					add_action('activated_plugin', array($this, 'activation_redirect'), 90, 1);
+					// add_action('activated_plugin', array($this, 'activation_redirect'), 90, 1);
 					$this->appsero_init_tracker_ttbm();
 					require_once TTBM_PLUGIN_DIR . '/lib/classes/class-ttbm.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Dependencies.php';
 				} else {
 					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
 					//add_action('admin_notices', [$this, 'woocommerce_not_active']);
-					add_action('activated_plugin', array($this, 'activation_redirect_setup'), 90, 1);
+					// add_action('activated_plugin', array($this, 'activation_redirect_setup'), 90, 1);
 				}
+				add_action('admin_init', array($this, 'activation_redirect_setup'), 90);
+
 			}
 			public function load_global_file() {
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Style.php';
@@ -56,7 +58,7 @@
 					self::on_activation_page_create();
 				}
 				$ttbm_quick_setup_done = get_option('ttbm_quick_setup_done');
-				if ($plugin == plugin_basename(__FILE__) && $ttbm_quick_setup_done != 'yes') {
+				if ($ttbm_quick_setup_done != 'yes') {
 					exit(wp_redirect(admin_url('edit.php?post_type=ttbm_tour&page=ttbm_quick_setup')));
 				}
 			}
@@ -64,9 +66,15 @@
 				if (MP_Global_Function::check_woocommerce() == 1) {
 					self::on_activation_page_create();
 				}
-				$ttbm_quick_setup_done = get_option('ttbm_quick_setup_done');
-				if ($plugin == plugin_basename(__FILE__) && $ttbm_quick_setup_done != 'yes') {
-					exit(wp_redirect(admin_url('admin.php?post_type=ttbm_tour&page=ttbm_quick_setup')));
+				$ttbm_quick_setup_done = get_option('ttbm_quick_setup_done') ? get_option('ttbm_quick_setup_done') : 'no';
+				if ($ttbm_quick_setup_done == 'no') {
+
+					if(isset($_REQUEST['page']) && $_REQUEST['page'] == 'ttbm_quick_setup'){
+						return null;
+					}else{
+						exit(wp_redirect(admin_url('admin.php?post_type=ttbm_tour&page=ttbm_quick_setup')));
+					}
+					
 				}
 			}
 			public static function on_activation_page_create() {

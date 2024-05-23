@@ -39,15 +39,19 @@
 				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'off');
 				$checked = ($display == 'off') ? '' : 'checked';
 				$active = ($display == 'off') ? '' : 'mActive';
+				$placeholder='';
 				?>
 				<section>
-					<div >
-						<label for=""><?php esc_html_e('Stay Night', 'tour-booking-manager'); ?></label>
-					</div>	
-					<div class="dFlex_alignCenter">
-						<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
-						<input type="number" data-collapse="#<?php echo esc_attr($display_name); ?>" min="0" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="ttbm_travel_duration_night" value="<?php echo MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_night'); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
-					</div>
+					<label class="label">
+						<div >
+							<p><?php esc_html_e('Stay Night', 'tour-booking-manager'); ?></p>
+							<span class="text">test</span>
+						</div>	
+						<div class="_dFlex_alignCenter_justfyBetween">
+							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+							<input type="number" data-collapse="#<?php echo esc_attr($display_name); ?>" min="0" class="ms-2 <?php echo esc_attr($active); ?>" name="ttbm_travel_duration_night" value="<?php echo MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_night'); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+						</div>
+					</label>
 				</section>
 				<?php
 			}
@@ -63,26 +67,29 @@
 				<h2><?php esc_html_e('General Information Settings', 'tour-booking-manager'); ?></h2>
 				<p><?php TTBM_Settings::des_p('general_settings_description'); ?></p>
 				<section class="bg-light">
-					<div>
-						<label for=""><?php TTBM_Settings::des_p('tour_general_settings'); ?></label>
-						<span><?php TTBM_Settings::des_p('tour_settings_des'); ?></span>
-					</div>
+					<label class="label">
+						<div>
+							<p><?php TTBM_Settings::des_p('tour_general_settings'); ?></p>
+							<span class="text"><?php TTBM_Settings::des_p('tour_settings_des'); ?></span>
+						</div>
+					</label>
 				</section>
 				<section>
-					<div>
-						<label for=""><?php esc_html_e('Tour Duration', 'tour-booking-manager'); ?></label>
-						<span><?php TTBM_Settings::des_p('duration'); ?></span>
-					</div>
-					<div class="dFlex">
-						<input class="small rounded text-center" min="0.1" step="0.1" type="number" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
-						<select class="rounded ms-2" name="ttbm_travel_duration_type">
-							<option value="day" <?php echo esc_attr($duration_type == 'day' ? 'selected' : ''); ?>><?php esc_html_e('Days', 'tour-booking-manager'); ?></option>
-							<option value="hour" <?php echo esc_attr($duration_type == 'hour' ? 'selected' : ''); ?>><?php esc_html_e('Hours', 'tour-booking-manager'); ?></option>
-							<option value="min" <?php echo esc_attr($duration_type == 'min' ? 'selected' : ''); ?>><?php esc_html_e('Minutes', 'tour-booking-manager'); ?> </option>
-						</select>
-					</div>
+					<label class="label">
+						<div>
+							<p><?php esc_html_e('Tour Duration', 'tour-booking-manager'); ?></p>
+							<span class="text"><?php TTBM_Settings::des_p('duration'); ?></span>
+						</div>
+						<div class="dFlex">
+							<input class="small rounded text-center" min="0.1" step="0.1" type="number" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+							<select class="rounded ms-2" name="ttbm_travel_duration_type">
+								<option value="day" <?php echo esc_attr($duration_type == 'day' ? 'selected' : ''); ?>><?php esc_html_e('Days', 'tour-booking-manager'); ?></option>
+								<option value="hour" <?php echo esc_attr($duration_type == 'hour' ? 'selected' : ''); ?>><?php esc_html_e('Hours', 'tour-booking-manager'); ?></option>
+								<option value="min" <?php echo esc_attr($duration_type == 'min' ? 'selected' : ''); ?>><?php esc_html_e('Minutes', 'tour-booking-manager'); ?> </option>
+							</select>
+						</div>
+					</label>
 				</section>
-				
 				<?php
 			}
 			public function max_people($tour_id) {
@@ -95,14 +102,16 @@
 				$max_people_status_active = ($max_people_field_status == 'off') ? '' : 'mActive';
 				?>
 				<section>
-					<div>
-						<label for=""><?php esc_html_e('Max People Allow', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('max_people'); ?></span></i></label>
-						<span><?php TTBM_Settings::des_p('max_people'); ?></span>
-					</div>
-					<div class="dFlex_alignCenter">
-						<?php MP_Custom_Layout::switch_button($max_people_status_field_name, $max_people_status_checked); ?>
-						<input type="number" min="0" data-collapse="#<?php echo esc_attr($max_people_status_field_name); ?>" class="ms-2 rounded <?php echo esc_attr($max_people_status_active); ?>" name="<?php echo esc_attr($max_people_field_name); ?>" value="<?php echo esc_attr($max_people_field_value); ?>" placeholder="<?php echo esc_attr($max_people_placeholder); ?>"/>
-					</div>
+					<label class="label">
+						<div>
+							<p><?php esc_html_e('Max People Allow', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('max_people'); ?></span></i></p>
+							<span class="text"><?php TTBM_Settings::des_p('max_people'); ?></span>
+						</div>
+						<div class="_dFlex_alignCenter_justifyBetween">
+							<?php MP_Custom_Layout::switch_button($max_people_status_field_name, $max_people_status_checked); ?>
+							<input type="number" min="0" data-collapse="#<?php echo esc_attr($max_people_status_field_name); ?>" class="ms-2 rounded <?php echo esc_attr($max_people_status_active); ?>" name="<?php echo esc_attr($max_people_field_name); ?>" value="<?php echo esc_attr($max_people_field_value); ?>" placeholder="<?php echo esc_attr($max_people_placeholder); ?>"/>
+						</div>
+					</label>
 				</section>
 				<?php
 			}
@@ -118,14 +127,16 @@
 				?>
 				
 				<section>
-					<div>
-						<label for=""><?php esc_html_e('Tour Start Price', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('start_price'); ?></span></i> </label>
-						<span><?php TTBM_Settings::des_p('start_price'); ?></span>
-					</div>
-					<div class="dFlex_alignCenter">
-						<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
-						<input type="number"  min="0" data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
-					</div>
+					<label class="label">
+						<div>
+							<p><?php esc_html_e('Tour Start Price', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('start_price'); ?></span></i> </p>
+							<span class="text"><?php TTBM_Settings::des_p('start_price'); ?></span>
+						</div>
+						<div class="_dFlex_alignCenter_justifyBetween">
+							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+							<input type="number"  min="0" data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+						</div>
+					</label>
 				</section>
 			<?php
 			}
@@ -139,21 +150,25 @@
 				$status_checked = $status == 'off' ? '' : 'checked';
 				$status_active = $status == 'off' ? '' : 'mActive';
 				?>
-				<section class="bg-light mt-5" style="margin-top: 20px;">
-					<div>
-						<label><?php _e('Location Settings','tour-booking-manager'); ?></label>
-						<span><?php _e('Here you can set tour location, place, map etc.','tour-booking-manager'); ?></span>
-					</div>
+				<section class="bg-light">
+					<label class="label">
+						<div>
+							<p><?php _e('Location Settings','tour-booking-manager'); ?></p>
+							<span class="text"><?php _e('Here you can set tour location, place, map etc.','tour-booking-manager'); ?></span>
+						</div>
+					</label>
 				</section>
 				<section>
-					<div>
-						<label for=""><?php esc_html_e('Start Place', 'tour-booking-manager'); ?></label>
-						<span><?php TTBM_Settings::des_p('start_place'); ?></span>
-					</div>
-					<div class="dFlex_alignCenter">
-						<?php MP_Custom_Layout::switch_button($status_field_name, $status_checked); ?>
-						<input type="text" data-collapse="#<?php echo esc_attr($status_field_name); ?>" class="ms-2 rounded <?php echo esc_attr($status_active); ?>" name="<?php echo esc_attr($location_field_name); ?>" value="<?php echo esc_attr($location_field_value); ?>" placeholder="<?php echo esc_attr($location_placeholder); ?>"/>
-					</div>
+					<label class="label">
+						<div>
+							<p><?php esc_html_e('Start Place', 'tour-booking-manager'); ?></p>
+							<span class="text"><?php TTBM_Settings::des_p('start_place'); ?></span>
+						</div>
+						<div class="_dFlex_alignCenter_justifyBetween">
+							<?php MP_Custom_Layout::switch_button($status_field_name, $status_checked); ?>
+							<input type="text" data-collapse="#<?php echo esc_attr($status_field_name); ?>" class="ms-2 rounded <?php echo esc_attr($status_active); ?>" name="<?php echo esc_attr($location_field_name); ?>" value="<?php echo esc_attr($location_field_value); ?>" placeholder="<?php echo esc_attr($location_placeholder); ?>"/>
+						</div>
+					</label>
 				</section>
 				<?php
 			}
@@ -169,14 +184,16 @@
 				?>
 
 				<section>
-					<div>
-						<label for=""><?php esc_html_e('Age Range', 'tour-booking-manager'); ?></label>
-						<span><?php TTBM_Settings::des_p('age_range'); ?></span>
-					</div>
-					<div class="dFlex_alignCenter">
-						<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
-						<input type="text" data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
-					</div>
+					<label class="label">
+						<div>
+							<p><?php esc_html_e('Age Range', 'tour-booking-manager'); ?></p>
+							<span class="text"><?php TTBM_Settings::des_p('age_range'); ?></span>
+						</div>
+						<div class="_dFlex_alignCenter_justifyBetween">
+							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+							<input type="text" data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+						</div>
+					</label>
 				</section>
 
 			<?php
@@ -193,14 +210,16 @@
 				?>
 
 				<section>
-					<div>
-						<label class=""><?php esc_html_e('Short Description', 'tour-booking-manager'); ?></label>
-						<span><?php TTBM_Settings::des_p('short_des'); ?></span>
-					</div>
-					<div class="dFlex_alignCenter">
-						<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
-						<textarea data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" cols="90" rows="2" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
-					</div>
+					<label class="label">
+						<div>
+							<p><?php esc_html_e('Short Description', 'tour-booking-manager'); ?></p>
+							<span class="text"><?php TTBM_Settings::des_p('short_des'); ?></span>
+						</div>
+						<div class="_dFlex_alignCenter_justifyBetween">
+							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+							<textarea data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" cols="90" rows="2" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
+						</div>
+					</label>
                 </section>
 				<?php
 			}
@@ -217,14 +236,16 @@
 				
 
 				<section>
-					<div>
-						<label><?php esc_html_e('Full Location for Map ', 'tour-booking-manager'); ?></label>
-						<span><?php TTBM_Settings::des_p('full_location'); ?></span>
-					</div>
-					<div class="dFlex_alignCenter">
-						<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
-						<textarea data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" cols="90" rows="2" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
-					</div>
+					<label class="label">
+						<div>
+							<p><?php esc_html_e('Full Location for Map ', 'tour-booking-manager'); ?></p>
+							<span class="text"><?php TTBM_Settings::des_p('full_location'); ?></span>
+						</div>
+						<div class="_dFlex_alignCenter_justifyBetween">
+							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+							<textarea data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" cols="90" rows="2" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
+						</div>
+					</label>
 				</section>
 				<?php
 			}
@@ -238,21 +259,25 @@
 
 				?>
 				<section>
-					<div>
-						<label for=""><?php esc_html_e('Tour Location', 'tour-booking-manager'); ?> </label>
-						<span><?php TTBM_Settings::des_p('location'); ?></span>
-					</div>
-					<div class="dFlex_alignCenter">
-						<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
-						<?php self::location_select($tour_id); ?>
-					</div>
+					<label class="label">
+						<div>
+							<p><?php esc_html_e('Tour Location', 'tour-booking-manager'); ?> </p>
+							<span class="text"><?php TTBM_Settings::des_p('location'); ?></span>
+						</div>
+						<div class="_dFlex_alignCenter_justifyBetween">
+							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+							<?php self::location_select($tour_id); ?>
+						</div>
+					</label>
 				</section>
 				<section>
-					<div>
-						<label for=""><?php esc_html_e('Create New Location', 'tour-booking-manager'); ?> </label>
-						<span><?php TTBM_Settings::des_p('create_location'); ?></span>
-					</div>
-					<?php MP_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__('Create New ', 'tour-booking-manager')); ?>
+					<label class="label">
+						<div>
+							<p><?php esc_html_e('Create New Location', 'tour-booking-manager'); ?> </p>
+							<span class="text"><?php TTBM_Settings::des_p('create_location'); ?></span>
+						</div>
+						<?php MP_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__('Create New ', 'tour-booking-manager')); ?>
+					</label>
 				</section>
 				<?php
 				self::add_new_location_popup();

@@ -92,7 +92,15 @@
               }
             }
           }
-         
+        }
+        th[scope="row"]{
+          label{
+            display: block;
+            margin-bottom: 10px;
+            h6{
+              margin-top: 10px;
+            }
+          }
         }
         .span-row{
           color: #6B7280;

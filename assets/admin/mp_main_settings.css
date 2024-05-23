@@ -956,6 +956,13 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   color: #6B7280;
   font-weight: normal;
 }
+#mp_meta_box_panel .ttbm_settings .tabsContent th[scope=row] label, .travel-list .ttbm_settings .tabsContent th[scope=row] label {
+  display: block;
+  margin-bottom: 10px;
+}
+#mp_meta_box_panel .ttbm_settings .tabsContent th[scope=row] label h6, .travel-list .ttbm_settings .tabsContent th[scope=row] label h6 {
+  margin-top: 10px;
+}
 #mp_meta_box_panel .ttbm_settings .tabsContent .span-row, .travel-list .ttbm_settings .tabsContent .span-row {
   color: #6B7280;
   font-size: 13px;

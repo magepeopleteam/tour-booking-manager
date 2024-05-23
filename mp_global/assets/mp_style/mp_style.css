@@ -2143,7 +2143,7 @@
     display: none;
   }
   .mpStyle .roundSwitch {
-    width: 60px;
+    width: 50px;
     height: 25px;
     min-width: auto;
     position: relative;
@@ -2155,10 +2155,10 @@
   .mpStyle .roundSwitch::before {
     position: absolute;
     content: "";
-    height: 17px;
-    width: 17px;
-    left: 4px;
-    bottom: 4px;
+    height: 23px;
+    width: 23px;
+    left: 1px;
+    bottom: 1px;
     background-color: white;
     border-radius: 50%;
     -webkit-transition: 0.4s;
@@ -2171,8 +2171,8 @@
     box-shadow: 0 0 1px #2276d2;
   }
   .mpStyle .roundSwitchLabel input:checked + .roundSwitch:before {
-    -ms-transform: translateX(35px);
-    transform: translateX(35px);
+    -ms-transform: translateX(28px);
+    transform: translateX(28px);
   }
   /*********Group radio check*******/
   .groupRadioCheck [data-radio-check] {

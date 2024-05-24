@@ -39,17 +39,19 @@
 					
 					<section class="bg-light">
                         <div>
-                            <label for=""><?php esc_html_e('Day Wise Details', 'tour-booking-manager'); ?></label> 
-							<span><?php esc_html_e('Here you can set tour daywise details information.', 'tour-booking-manager'); ?></span>   
+                            <p><?php esc_html_e('Day Wise Details', 'tour-booking-manager'); ?></p> 
+							<span class="text"><?php esc_html_e('Here you can set tour daywise details information.', 'tour-booking-manager'); ?></span>   
                         </div>
                     </section>
 
 					<section>
-                        <div>
-                            <label for=""><?php esc_html_e('Day Wise Details Settings', 'tour-booking-manager'); ?></label> 
-							<span><?php TTBM_Settings::des_p('ttbm_display_schedule'); ?></span>   
-                        </div>
-						<?php MP_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
+                       <label class="label">
+							<div>
+								<p><?php esc_html_e('Day Wise Details Settings', 'tour-booking-manager'); ?></p> 
+								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_schedule'); ?></span>   
+							</div>
+							<?php MP_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
+					   </label>
                     </section>
 
 					<div data-collapse="#ttbm_display_schedule" class="<?php echo esc_attr($active); ?>">
@@ -139,12 +141,10 @@
 				?>
 				<div class='mp_remove_area my-5'>
 					<section class="bg-light">
-						<div>
-							<label>
-								<?php echo esc_html($title); ?>
-							</label>
-						</div>
+						<label class="label">
+							<p><?php echo esc_html($title); ?></p>
 							<input type="text"class="long-input mb-20" name="<?php echo esc_attr($title_name); ?>[]" value="<?php echo esc_attr($title_value); ?>"/>
+						</label>
 					</section>
 					<section>
 						<div class="w-100">

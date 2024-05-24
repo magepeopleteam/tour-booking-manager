@@ -94,11 +94,13 @@
                     </section>
 					
 					<section >
-                        <div >
-                            <label for=""><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></label>
-							<span><?php TTBM_Settings::des_p('ttbm_display_faq'); ?></span>
-                        </div>
-						<?php MP_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>
+                        <label class="label">
+							<div>
+								<p><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></p>
+								<span><?php TTBM_Settings::des_p('ttbm_display_faq'); ?></span>
+							</div>
+							<?php MP_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>
+						</label>
                     </section>
 					
 					<div data-collapse="#ttbm_display_faq" class="<?php echo esc_attr($active); ?>">
@@ -148,9 +150,9 @@
 					</section>
 					<section>
 						<div class="w-100">
-							<label>
+							<!-- <label>
 								<?php echo esc_html($content_title); ?>
-							</label>
+							</label> -->
 							<?php TTBM_Layout::add_multi_image($image_name . '[]', $images); ?>
 							<?php
 								$settings = ['wpautop' => false, 'media_buttons' => false, 'textarea_name' => $content_name . '[]', 'tabindex' => '323', 'editor_height' => 200, 'editor_css' => '', 'editor_class' => '', 'teeny' => false, 'dfw' => false, 'tinymce' => true, 'quicktags' => true];

@@ -1307,7 +1307,7 @@
     width: 100%;
     overflow: hidden;
     position: relative;
-    height: max-content;
+    height: 200px;
   }
   [data-bg-image] {
     background-size: 100% 100%;

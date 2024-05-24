@@ -50,46 +50,51 @@
 				if (sizeof($features) > 0) { ?>
 					<section class="bg-light">
 						<div>
-							<label><?php esc_html_e('Include Exclude Feature', 'tour-booking-manager'); ?></label>
-							<span><?php esc_html_e('You can add new feature to Include/Exclude Feature of tours', 'tour-booking-manager'); ?></span>
+							<p><?php esc_html_e('Include Exclude Feature', 'tour-booking-manager'); ?></p>
+							<span class="text"><?php esc_html_e('You can add new feature to Include/Exclude Feature of tours', 'tour-booking-manager'); ?></span>
 						</div>
 					</section>
 					<section>
-						<div>
-							<label><?php esc_html_e('Create a feature', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_add_new_feature_popup'); ?></span></i></label>
-							<span><?php TTBM_Settings::des_p('add_new_feature_popup'); ?></span>
-						</div>
-						<?php MP_Custom_Layout::popup_button('add_new_feature_popup', esc_html__('Create New Feature', 'tour-booking-manager')); ?>
+						<label class="label">
+							<div>
+								<p><?php esc_html_e('Create a feature', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_add_new_feature_popup'); ?></span></i></p>
+								<span class="text"><?php TTBM_Settings::des_p('add_new_feature_popup'); ?></span>
+							</div>
+							<?php MP_Custom_Layout::popup_button('add_new_feature_popup', esc_html__('Create New Feature', 'tour-booking-manager')); ?>
+						</label>
 						<?php $this->add_new_feature_popup(); ?>
 					</section>
-					<section class="d-flex flex-column justify-content-between align-items-center">
-                        <div class="w-100 d-flex justify-content-between align-items-center"> 
-                            <div class="w-50 d-flex justify-content-between align-items-center">
+					<section>
+                        <label class="label"> 
+                            <div class="w-50 _dFlex_justifyBetween_alignCenter">
                                 <label for=""><?php esc_html_e('Price Included Feature', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_include_service'); ?></span></i></label>
                                 <?php MP_Custom_Layout::switch_button('ttbm_display_include_service', $in_checked); ?> 
                             </div>
-                            <div class="w-50 d-flex justify-content-between align-items-center ms-5">
+                            <div class="w-50 _dFlex_justifyBetween_alignCenter_mL">
                                 <label for=""><?php esc_html_e('Price Excluded Feature', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_exclude_service'); ?></span></i></label>
                                 <?php MP_Custom_Layout::switch_button('ttbm_display_exclude_service', $ex_checked); ?> 
                             </div>
-                        </div>
-						<div class="mt-4 w-100 d-flex justify-content-between align-items-center"> 
-                            <div class="w-50 d-flex justify-content-between align-items-center">
-								<div data-collapse="#ttbm_display_include_service" class="<?php echo esc_attr($include_active); ?> w-100 p-2 bg-light rounded border">
+                        </label>
+						<label class="label"> 
+                            <div class="w-50 _mT">
+								<div data-collapse="#ttbm_display_include_service" class="<?php echo esc_attr($include_active); ?>">
 									<div class="includedd-features-section">
 										<?php $this->feature_list($tour_id, 'ttbm_service_included_in_price'); ?> 
 									</div>
 								</div>
                             </div>
-                            <div class="w-50 d-flex justify-content-between align-items-center ms-5">
-								<div data-collapse="#ttbm_display_exclude_service" class="<?php echo esc_attr($include_active); ?> w-100 p-2 bg-light  rounded border">
+                            <div class="w-50 _mT_mL">
+								<div data-collapse="#ttbm_display_exclude_service" class="<?php echo esc_attr($include_active); ?>">
 									<div class="excludedd-features-section">	
 										<?php $this->feature_list($tour_id, 'ttbm_service_excluded_in_price'); ?>
 									</div>
 								</div>
                             </div>
-                        </div>
+                        </label>
                     </section>
+					<section>
+						
+					</section>
 
 					<?php
 				}
@@ -100,7 +105,7 @@
 				$feature_ids = TTBM_Function::feature_array_to_string($features);
 				if (sizeof($all_features) > 0) {
 					?>
-					<div class="groupCheckBox">
+					<div class="groupCheckBox _dFlex flexColumn">
 						<input type="hidden" name="<?php echo esc_attr($feature_name); ?>" value="<?php echo esc_attr($feature_ids); ?>"/>
 						<?php foreach ($all_features as $feature_list) { ?>
 							<?php $icon = get_term_meta($feature_list->term_id, 'ttbm_feature_icon', true) ? get_term_meta($feature_list->term_id, 'ttbm_feature_icon', true) : 'fas fa-forward'; ?>

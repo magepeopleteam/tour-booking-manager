@@ -28,23 +28,25 @@
 					<p ><?php TTBM_Settings::des_p('gallery_settings_description'); ?></p>
 					<section class="bg-light">
                         <div>
-                            <label><?php esc_html_e('Gallery Settings', 'tour-booking-manager'); ?></label>
-							<span><?php esc_html_e('Here you can add images for tour.', 'tour-booking-manager'); ?></span>
+                            <p><?php esc_html_e('Gallery Settings', 'tour-booking-manager'); ?></p>
+							<span class="text"><?php esc_html_e('Here you can add images for tour.', 'tour-booking-manager'); ?></span>
                         </div>
                     </section>
 					<section>
-                        <div>
-                            <label for=""><?php esc_html_e('On/Off Slider', 'tour-booking-manager'); ?></label>
-							<span><?php TTBM_Settings::des_p('ttbm_display_slider'); ?></span>
-                        </div>
-						<?php MP_Custom_Layout::switch_button('ttbm_display_slider', $checked); ?>
+                        <label class="label">
+                            <div>
+								<p><?php esc_html_e('On/Off Slider', 'tour-booking-manager'); ?></p>
+								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_slider'); ?></span>
+							</div>
+							<?php MP_Custom_Layout::switch_button('ttbm_display_slider', $checked); ?>
+                        </label>
+						
                     </section>
 					<div data-collapse="#ttbm_display_slider" class="<?php echo esc_attr($active); ?>">
 						
 						<section>
 							<div >
-								<label for=""><?php esc_html_e('Gallery Images ', 'tour-booking-manager'); ?></label>
-								<span><?php TTBM_Settings::des_p('ttbm_gallery_images'); ?></span>
+								<label class="label"><p><?php esc_html_e('Gallery Images ', 'tour-booking-manager'); ?></p></label>
 								<div class="mt-5"></div>
 								<?php TTBM_Layout::add_multi_image('ttbm_gallery_images', $image_ids); ?>
 							</div>

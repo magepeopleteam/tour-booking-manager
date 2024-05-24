@@ -39,17 +39,19 @@
 					
 					<section class="bg-light">
                         <div>
-                            <label for=""><?php esc_html_e('Day Wise Details', 'tour-booking-manager'); ?></label> 
-							<span><?php esc_html_e('Here you can set tour daywise details information.', 'tour-booking-manager'); ?></span>   
+                            <p><?php esc_html_e('Day Wise Details', 'tour-booking-manager'); ?></p> 
+							<span class="text"><?php esc_html_e('Here you can set tour daywise details information.', 'tour-booking-manager'); ?></span>   
                         </div>
                     </section>
 
 					<section>
-                        <div>
-                            <label for=""><?php esc_html_e('Day Wise Details Settings', 'tour-booking-manager'); ?></label> 
-							<span><?php TTBM_Settings::des_p('ttbm_display_schedule'); ?></span>   
-                        </div>
-						<?php MP_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
+                       <label class="label">
+							<div>
+								<p><?php esc_html_e('Day Wise Details Settings', 'tour-booking-manager'); ?></p> 
+								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_schedule'); ?></span>   
+							</div>
+							<?php MP_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
+					   </label>
                     </section>
 
 					<div data-collapse="#ttbm_display_schedule" class="<?php echo esc_attr($active); ?>">
@@ -92,11 +94,13 @@
                     </section>
 					
 					<section >
-                        <div >
-                            <label for=""><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></label>
-							<span><?php TTBM_Settings::des_p('ttbm_display_faq'); ?></span>
-                        </div>
-						<?php MP_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>
+                        <label class="label">
+							<div>
+								<p><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></p>
+								<span><?php TTBM_Settings::des_p('ttbm_display_faq'); ?></span>
+							</div>
+							<?php MP_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>
+						</label>
                     </section>
 					
 					<div data-collapse="#ttbm_display_faq" class="<?php echo esc_attr($active); ?>">
@@ -109,7 +113,7 @@
 								}
 							}
 						?>
-						<?php MP_Custom_Layout::add_new_button(esc_html__('Add New F.A.Q', 'tour-booking-manager'), 'ttbm_add_faq_content', ''); ?>
+						<?php MP_Custom_Layout::add_new_button(esc_html__('Add New F.A.Q', 'tour-booking-manager'), 'btn ttbm_add_faq_content', ''); ?>
 					</div>
 				</div>
 				<?php
@@ -139,18 +143,16 @@
 				?>
 				<div class='mp_remove_area my-5'>
 					<section class="bg-light">
-						<div>
-							<label>
-								<?php echo esc_html($title); ?>
-							</label>
-						</div>
+						<label class="label">
+							<p><?php echo esc_html($title); ?></p>
 							<input type="text"class="long-input mb-20" name="<?php echo esc_attr($title_name); ?>[]" value="<?php echo esc_attr($title_value); ?>"/>
+						</label>
 					</section>
 					<section>
 						<div class="w-100">
-							<label>
+							<!-- <label>
 								<?php echo esc_html($content_title); ?>
-							</label>
+							</label> -->
 							<?php TTBM_Layout::add_multi_image($image_name . '[]', $images); ?>
 							<?php
 								$settings = ['wpautop' => false, 'media_buttons' => false, 'textarea_name' => $content_name . '[]', 'tabindex' => '323', 'editor_height' => 200, 'editor_css' => '', 'editor_class' => '', 'teeny' => false, 'dfw' => false, 'tinymce' => true, 'quicktags' => true];

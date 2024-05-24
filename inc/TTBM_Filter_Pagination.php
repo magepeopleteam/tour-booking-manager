@@ -253,7 +253,7 @@
                         </h5>
                         <div class="divider"></div>
                         <div class="mActive" data-collapse="#ttbm_location_filter_multiple" data-placeholder>
-                            <div class="groupCheckBox">
+                            <div class="groupCheckBox _dFlex flexColumn" >
                                 <input type="hidden" name="location_filter_multiple" value="<?php echo esc_attr($current_location); ?>"/>
 								<?php foreach ($exist_locations as $location) { ?>
 									<?php $term_id = get_term_by('name', $location, 'ttbm_tour_location')->term_id; ?>
@@ -347,7 +347,7 @@
                         </h5>
                         <div class="divider"></div>
                         <div class="mActive" data-collapse="#ttbm_duration_filter_multiple" data-placeholder>
-                            <div class="groupCheckBox">
+                            <div class="groupCheckBox _dFlex flexColumn">
                                 <input type="hidden" name="duration_filter_multiple" value="<?php echo esc_attr($url); ?>"/>
 								<?php foreach ($durations as $duration) { ?>
 									<?php if ($duration > 0) { ?>
@@ -394,7 +394,7 @@
                         </h5>
                         <div class="divider"></div>
                         <div class="mActive" data-collapse="#feature_filter_multiple" data-placeholder>
-                            <div class="groupCheckBox">
+                            <div class="groupCheckBox _dFlex flexColumn">
                                 <input type="hidden" name="feature_filter_multiple" value="<?php echo esc_attr($url); ?>"/>
 								<?php foreach ($exist_feature as $feature_item) { ?>
 									<?php
@@ -452,7 +452,7 @@
                         </h5>
                         <div class="divider"></div>
                         <div class="mActive" data-collapse="#activity_filter_multiple" data-placeholder>
-                            <div class="groupCheckBox">
+                            <div class="groupCheckBox _dFlex flexColumn">
                                 <input type="hidden" name="activity_filter_multiple" value="<?php echo esc_attr($current_activity); ?>"/>
 								<?php foreach ($exist_activities as $activity) { ?>
 									<?php $term_id = get_term_by('name', $activity, 'ttbm_tour_activities')->term_id; ?>
@@ -486,7 +486,7 @@
                         </h5>
                         <div class="divider"></div>
                         <div class="mActive" data-collapse="#tag_filter_multiple" data-placeholder>
-                            <div class="groupCheckBox">
+                            <div class="groupCheckBox _dFlex flexColumn">
                                 <input type="hidden" name="tag_filter_multiple" value=""/>
 								<?php foreach ($tags as $tag) {
 									if (get_term($tag->term_id, 'ttbm_tour_tag')->count) { ?>

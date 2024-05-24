@@ -223,14 +223,16 @@
 				}
 			}
 			public function ttbm_new_place_save() {
-				$place_name = MP_Global_Function::data_sanitize($_POST['place_name']);
-				$place_description = MP_Global_Function::data_sanitize($_POST['place_description']);
-				$place_image = MP_Global_Function::data_sanitize($_POST['place_image']);
-				$args = array('post_title' => $place_name, 'post_content' => $place_description, 'post_status' => 'publish', 'post_type' => 'ttbm_places');
-				$query = wp_insert_post($args);
-				if ($query) {
-					set_post_thumbnail($query, $place_image);
-				}
+                if(is_admin() && defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+	                $place_name = MP_Global_Function::data_sanitize($_POST['place_name']);
+	                $place_description = MP_Global_Function::data_sanitize($_POST['place_description']);
+	                $place_image = MP_Global_Function::data_sanitize($_POST['place_image']);
+	                $args = array('post_title' => $place_name, 'post_content' => $place_description, 'post_status' => 'publish', 'post_type' => 'ttbm_places');
+	                $query = wp_insert_post($args);
+	                if ($query) {
+		                set_post_thumbnail($query, $place_image);
+	                }
+                }
 				die();
 			}
 		}

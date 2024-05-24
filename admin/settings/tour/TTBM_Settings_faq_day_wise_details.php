@@ -113,7 +113,7 @@
 								}
 							}
 						?>
-						<?php MP_Custom_Layout::add_new_button(esc_html__('Add New F.A.Q', 'tour-booking-manager'), 'ttbm_add_faq_content', ''); ?>
+						<?php MP_Custom_Layout::add_new_button(esc_html__('Add New F.A.Q', 'tour-booking-manager'), 'btn ttbm_add_faq_content', ''); ?>
 					</div>
 				</div>
 				<?php

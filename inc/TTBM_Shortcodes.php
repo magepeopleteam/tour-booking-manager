@@ -112,12 +112,18 @@
 											$thumb_id = get_term_meta($location->term_id, 'ttbm_location_image');
 											$thumbnail_img = wp_get_attachment_url($thumb_id[0]);											
 										?>
-										<div data-bg-image="<?php echo esc_html($thumbnail_img); ?>" data-href="<?php echo esc_url(get_term_link($location->term_id)) . '?location_filter=' . esc_attr($location->term_id) . '&location_status=' . esc_attr($status); ?>">
-											<h2 class="ttbm_list_title"> <?php echo esc_html($location->name); ?></h2>
-											<h4 class="ttbm_list_title">
-												<?php echo esc_html($tour_list->post_count) . esc_attr__(' - Tour Available', 'tour-booking-manager'); ?>
-											</h4>
+										<div class="ttbm_location_image">
+											<div data-bg-image="<?php echo esc_html($thumbnail_img); ?>" data-href="<?php echo esc_url(get_term_link($location->term_id)) . '?location_filter=' . esc_attr($location->term_id) . '&location_status=' . esc_attr($status); ?>">
+											
+											</div>
+											<div class="ttbm_location_info">
+												<h2> <?php echo esc_html($location->name); ?></h2>
+												<p>
+													<?php echo esc_html($tour_list->post_count) . esc_attr__(' - Tour Available', 'tour-booking-manager'); ?>
+												</p>
+											</div>
 										</div>
+										
 									</div>
 								<?php } ?>
 							</div>

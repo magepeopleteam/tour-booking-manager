@@ -8,7 +8,8 @@
 	if ( ! empty( $ttbm_product_id ) ) {
 		$seat_infos = MP_Global_Function::get_post_info( $tour_id, 'ttbma_seat_plan', array());
 		$display = MP_Global_Function::get_post_info( $tour_id, 'ttbma_display_seat_plan', 'off' );
-		$seat_plan  = class_exists('TTBMA_Seat_Plan') && $display == 'on' && sizeof($seat_infos)>0? 'dNone' : '';
+		$display_front_end = MP_Global_Function::get_post_info($tour_id, 'frontend_display_seat_plan', 'on');
+		$seat_plan  = class_exists('TTBMA_Seat_Plan') && $display == 'on' && sizeof($seat_infos)>0 && $display_front_end=='on'? 'dNone' : '';
 		$button_type=apply_filters('ttbm_book_now_button_type','button',$tour_id);
 		?>
 		<div class="dLayout_xs justifyBetween ttbm_book_now_area" data-placeholder>
@@ -17,7 +18,7 @@
 				<p><strong> <?php esc_html_e( 'Total : ', 'tour-booking-manager' ); ?></strong>&nbsp;<span class="tour_price"></span></p>
 			</div>
 			<?php do_action('ttbm_before_add_cart_btn', $ttbm_product_id,$tour_id); ?>
-			<?php if(class_exists('TTBMA_Seat_Plan') && $display == 'on' && sizeof($seat_infos)>0){ ?>
+			<?php if(class_exists('TTBMA_Seat_Plan') && $display == 'on' && sizeof($seat_infos)>0 && $display_front_end=='on'){ ?>
 				<button class="dButton ttbm_load_seat_plan" type="submit">
 					<?php esc_html_e( 'Seat Plan', 'tour-booking-manager' ) ; ?>
 				</button>

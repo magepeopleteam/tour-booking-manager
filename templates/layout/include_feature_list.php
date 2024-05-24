@@ -11,22 +11,26 @@
 		<ul>
 			<?php
 				$count = 0;
-				foreach ( $include_services as $services ) {
+				foreach ( $include_services as $key => $services ) {
 					//if ( $count < $term_count && $services ) {
 						$term = get_term_by( 'name', $services, 'ttbm_tour_features_list' );
+						
 						if ( $term ) {
 							$icon      = get_term_meta( $term->term_id, 'ttbm_feature_icon', true );
 							$icon      = $icon ?: 'fas fa-forward';
 							$term_name = $term_name ? $term->name : '';
+							if($key < 4):
 							?>
+							
 							<li title="<?php echo esc_attr( $term->name ); ?>">
 								<span class="circleIcon_xs <?php esc_attr_e( $icon ); ?>"></span>
 								<?php echo esc_html( $term_name ); ?>
 							</li>
 							<?php
+							endif;
 						}
 					//}
-					$count ++;
+				$count ++;
 				}
 			?>
 		</ul>

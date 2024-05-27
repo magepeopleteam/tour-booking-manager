@@ -37,7 +37,6 @@
     font-size: 16px;
     font-weight: 300;
     line-height: 24px;
-    font-family: DejaVuSans, sans-serif;
   }
   .mpStyle a:not(.mp_wp_editor a) {
     color: var(--color_theme);
@@ -171,7 +170,7 @@
 }
 /******************************************************************** Font Size & Font weight ************************************************/
 @media only screen and (min-width: 10px) {
-  div.mpStyle label,
+  div.mpStyle,
   div.mpStyle h1,
   div.mpStyle h2,
   div.mpStyle h3,
@@ -231,16 +230,9 @@
   }
   div.mpStyle label,
   div.mpStyle [class*="_fs_label"] {
-    margin: 0;
-    margin-bottom: 0px;
-    margin-bottom: 0px;
-    font-size: 14px;
-    font-family: DejaVuSansBold, sans-serif;
-    font-weight: 600;
-    line-height: 1.2;
-    margin-bottom: 8px;
     color: var(--mpl-secondary);
     /* font-weight: var(--fw-medium); */
+    line-height: 0;
   }
   div.mpStyle .fs_50,
   div.mpStyle [class*="_fs_50"] {
@@ -1315,7 +1307,7 @@
     width: 100%;
     overflow: hidden;
     position: relative;
-    height: max-content;
+    height: 200px;
   }
   [data-bg-image] {
     background-size: 100% 100%;
@@ -1324,6 +1316,17 @@
     height: 100%;
     width: 100%;
     min-height: inherit;
+    position: relative;
+  }
+  [data-bg-image]:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(170deg, transparent, Black);
+    opacity: .4;
   }
   [data-bg-image] > * {
     color: #fff;
@@ -1685,6 +1688,7 @@
     margin-bottom: var(--dmp_xs);
   }
 }
+
 /******************************************************************** position Section************************************************/
 @media only screen and (min-width: 10px) {
   /********Absolute Content********/
@@ -2141,9 +2145,10 @@
   /*********Input Switch*******/
   .mpStyle .roundSwitchLabel input[type="checkbox"] {
     display: none;
+    line-height: 0;
   }
   .mpStyle .roundSwitch {
-    width: 60px;
+    width: 50px;
     height: 25px;
     min-width: auto;
     position: relative;
@@ -2155,10 +2160,10 @@
   .mpStyle .roundSwitch::before {
     position: absolute;
     content: "";
-    height: 17px;
-    width: 17px;
-    left: 4px;
-    bottom: 4px;
+    height: 23px;
+    width: 23px;
+    left: 1px;
+    bottom: 1px;
     background-color: white;
     border-radius: 50%;
     -webkit-transition: 0.4s;
@@ -2171,8 +2176,8 @@
     box-shadow: 0 0 1px #2276d2;
   }
   .mpStyle .roundSwitchLabel input:checked + .roundSwitch:before {
-    -ms-transform: translateX(35px);
-    transform: translateX(35px);
+    -ms-transform: translateX(28px);
+    transform: translateX(28px);
   }
   /*********Group radio check*******/
   .groupRadioCheck [data-radio-check] {
@@ -3972,4 +3977,24 @@
   .component:last-child{
     border: 1px solid var(--color_border);
   }
+}
+/* ***********************location********************* */
+.ttbm_location_image{
+  position: relative;
+}
+.ttbm_location_info{
+  position: absolute;
+  color: #fff;
+  background-color: #00000075;
+  left: 5px;
+  bottom: 5px;
+  padding: 5px;
+}
+div.ttbm_location_info h2{
+  color: #fff;
+  font-size: 18px;
+  font-weight: var(--fw-bold);
+}
+.ttbm_location_info p{
+  color: #fff;
 }

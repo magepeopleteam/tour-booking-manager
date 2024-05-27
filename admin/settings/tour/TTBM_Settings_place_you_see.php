@@ -34,17 +34,19 @@
 					
 					<section class="bg-light">
                         <div>
-                            <label><?php esc_html_e('Place Settings', 'tour-booking-manager'); ?></label>
-							<span><?php esc_html_e('You can set your future places here.', 'tour-booking-manager'); ?></span>  
+                            <p><?php esc_html_e('Place Settings', 'tour-booking-manager'); ?></p>
+							<span class="text"><?php esc_html_e('You can set your future places here.', 'tour-booking-manager'); ?></span>  
                         </div>
                     </section>
 
 					<section>
-                        <div>
-                            <label for=""><?php esc_html_e('Places You\'ll Visit ' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?></label>
-							<span><?php TTBM_Settings::des_p('ttbm_display_hiphop'); ?></span>  
-                        </div>
-						<?php MP_Custom_Layout::switch_button('ttbm_display_hiphop', $checked); ?>
+                        <label class="label">
+							<div>
+								<p><?php esc_html_e('Places You\'ll Visit ' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?></p>
+								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_hiphop'); ?></span>  
+							</div>
+							<?php MP_Custom_Layout::switch_button('ttbm_display_hiphop', $checked); ?>
+						</label>
                     </section>
 
 					<div data-collapse="#ttbm_display_hiphop" class="ttbm_place_you_see_area <?php echo esc_attr($active); ?>">
@@ -60,10 +62,12 @@
 				?>
 				<div class="ttbm_place_you_see_table">
 					<section>
+
                         <div>
                             <label for=""><?php esc_html_e('Create new place', 'tour-booking-manager'); ?></label>  
 							<span><?php TTBM_Settings::des_p('ttbm_place_you_see'); ?></span>  
                         </div>
+
                     </section>
 					<?php if ($all_places->post_count > 0) { ?>
 						<section>

@@ -597,16 +597,6 @@
   right: 0;
 }
 
-#mp_meta_box_panel label, .travel-list label {
-  margin: 0;
-  margin-bottom: 0px;
-  font-size: 14px;
-  font-family: DejaVuSansBold, sans-serif;
-  font-weight: 600;
-  line-height: 1.2;
-  margin-bottom: 8px;
-  color: var(--mpl-secondary);
-}
 #mp_meta_box_panel label input, .travel-list label input {
   font-weight: normal;
 }
@@ -924,7 +914,6 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
 #mp_meta_box_panel .ttbm_settings .tabsContent, .travel-list .ttbm_settings .tabsContent {
   width: 80%;
   padding: 2% 5%;
-  font-family: DejaVuSans, Arial, Helvetica, sans-serif;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem > h2, .travel-list .ttbm_settings .tabsContent .tabsItem > h2 {
   padding: 0;
@@ -933,7 +922,6 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   margin-bottom: 20px;
   font-size: 22px;
   line-height: 26px;
-  font-family: DejaVuSansBold, sans-serif;
   margin-bottom: 12px;
   font-weight: 700;
 }
@@ -941,24 +929,39 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   color: var(--mpl-secondary);
   margin: 0;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: var(--fw-bold);
   line-height: 24px;
   font-family: DejaVuSans, sans-serif;
   margin-bottom: 50px;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section, .travel-list .ttbm_settings .tabsContent .tabsItem section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   border: 1px solid #d8d8d8;
   padding: 20px;
   margin-top: -1px;
 }
-#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label + span, .travel-list .ttbm_settings .tabsContent .tabsItem section label + span {
-  color: #6B7280;
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
 }
-#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label input, .travel-list .ttbm_settings .tabsContent .tabsItem section label input {
-  font-family: DejaVuSans;
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label p, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label p {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  color: var(--mpl-secondary);
+}
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label .text, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label .text {
+  color: #6B7280;
+  font-weight: normal;
+}
+#mp_meta_box_panel .ttbm_settings .tabsContent th[scope=row] label, .travel-list .ttbm_settings .tabsContent th[scope=row] label {
+  display: block;
+  margin-bottom: 10px;
+}
+#mp_meta_box_panel .ttbm_settings .tabsContent th[scope=row] label h6, .travel-list .ttbm_settings .tabsContent th[scope=row] label h6 {
+  margin-top: 10px;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .span-row, .travel-list .ttbm_settings .tabsContent .span-row {
   color: #6B7280;
@@ -1233,11 +1236,11 @@ div > .ppof-metabox {
     margin-bottom: 0.5em;
   }
   div.mp_multi_image div.mp_multi_image_item {
-    width: calc(25% - 7px);
+    width: calc(25% - 16px);
   }
   div.mp_multi_image div.mp_multi_image_item img {
     width: 100%;
-    height: 180px;
+    height: 150px;
     object-fit: cover;
   }
   div.mpStyle .description {

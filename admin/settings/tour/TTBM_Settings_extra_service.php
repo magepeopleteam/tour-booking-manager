@@ -41,8 +41,8 @@
 				<div class="mp_settings_area mt-2">
 					<section class="bg-light">
 						<div>
-							<label><?php _e('Extra Service', 'tour-booking-manager'); ?></label>
-							<span><?php esc_html_e('Here you can set extra service for tour.', 'tour-booking-manager'); ?></span>
+							<p><?php _e('Extra Service', 'tour-booking-manager'); ?></p>
+							<span class="text"><?php esc_html_e('Here you can set extra service for tour.', 'tour-booking-manager'); ?></span>
 						</div>
 					</section>
 					<section>
@@ -70,11 +70,11 @@
 								</tbody>
 							</table>
 						</div>
+						<div class="d-flex justify-content-end py-2">
+							<?php MP_Custom_Layout::add_new_button(esc_html__('Add Extra New Service', 'tour-booking-manager')); ?>
+						</div>
+						<?php do_action('add_mp_hidden_table', 'ttbm_extra_service_item'); ?>
 					</section>
-					<div class="d-flex justify-content-end py-2">
-						<?php MP_Custom_Layout::add_new_button(esc_html__('Add Extra New Service', 'tour-booking-manager')); ?>
-					</div>
-					<?php do_action('add_mp_hidden_table', 'ttbm_extra_service_item'); ?>
 				</div>
 				<?php
 			}

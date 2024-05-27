@@ -28,17 +28,19 @@
 					
 					<section class="bg-light">
                         <div>
-                            <label for=""><?php esc_html_e('Why Chose Us Settings', 'tour-booking-manager'); ?></label>
-							<span><?php esc_html_e('You can set why chose us settings', 'tour-booking-manager'); ?></span>
+                            <p><?php esc_html_e('Why Chose Us', 'tour-booking-manager'); ?></p>
+							<span class="text"><?php esc_html_e('You can set why chose us settings', 'tour-booking-manager'); ?></span>
                         </div>
                     </section>
 					
 					<section>
-                        <div>
-                            <label for=""><?php esc_html_e('Why Chose Us' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?></label>
-							<span><?php TTBM_Settings::des_p('ttbm_display_why_choose_us'); ?></span>
-                        </div>
-						<?php MP_Custom_Layout::switch_button('ttbm_display_why_choose_us', $checked); ?>
+                        <label class="label">
+							<div>
+								<p><?php esc_html_e('Why Chose Us' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?></p>
+								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_why_choose_us'); ?></span>
+							</div>
+							<?php MP_Custom_Layout::switch_button('ttbm_display_why_choose_us', $checked); ?>
+						</label>
                     </section>
 
 					<div data-collapse="#ttbm_display_why_choose_us" class="<?php echo esc_attr($active); ?>">
@@ -50,11 +52,11 @@
 			public function why_chose_us($tour_id) {
 				$why_chooses = MP_Global_Function::get_post_info($tour_id, 'ttbm_why_choose_us_texts', array());
 				?>
-				<section class="component d-flex flex-column justify-content-between align-items-center mb-2">
+				<section >
 					<!-- <div class="w-100 mb-2 d-flex justify-content-between align-items-center">
 						<label for=""><?php esc_html_e('Why Book With Us?', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('why_chose_us'); ?></i></label>
 					</div> -->
-					<div class="w-100 d-flex justify-content-between align-items-center">
+					<div>
 						<table>
 							<thead>
 							<tr>

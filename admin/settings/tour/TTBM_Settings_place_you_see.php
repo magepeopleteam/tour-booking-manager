@@ -14,8 +14,6 @@
 				add_action('wp_ajax_nopriv_ttbm_reload_place_you_see_list', [$this, 'ttbm_reload_place_you_see_list']);
 				/******************************/
 				add_action('ttbm_settings_save', [$this, 'save_place_you_see']);
-				add_action('wp_ajax_ttbm_new_place_save', [$this, 'ttbm_new_place_save']);
-				add_action('wp_ajax_nopriv_ttbm_new_place_save', [$this, 'ttbm_new_place_save']);
 			}
 			public function add_tab() {
 				?>
@@ -66,7 +64,6 @@
                             <label for=""><?php esc_html_e('Create new place', 'tour-booking-manager'); ?></label>  
 							<span><?php TTBM_Settings::des_p('ttbm_place_you_see'); ?></span>  
                         </div>
-						<?php MP_Custom_Layout::popup_button_xs('add_new_place_you_see_popup', esc_html__('Create New Place', 'tour-booking-manager')); ?>
                     </section>
 					<?php if ($all_places->post_count > 0) { ?>
 						<section>
@@ -110,7 +107,6 @@
 				</div>
 				<?php
 				wp_reset_postdata();
-				$this->add_new_place_you_see_popup();
 			}
 			public function place_you_see_item($places, $hiphop_place = array()) {
 				$place_id = is_array($hiphop_place) && array_key_exists('ttbm_city_place_id', $hiphop_place) ? $hiphop_place['ttbm_city_place_id'] : '';
@@ -144,32 +140,7 @@
 				</tr>
 				<?php
 			}
-			public function add_new_place_you_see_popup() {
-				?>
-				<div class="mpPopup" data-popup="add_new_place_you_see_popup">
-					<div class="popupMainArea">
-						<div class="popupHeader">
-							<h4>
-								<?php esc_html_e('Add New Place', 'tour-booking-manager'); ?>
-								<p class="_textSuccess_ml_dNone ttbm_success_info">
-									<span class="fas fa-check-circle mR_xs"></span>
-									<?php esc_html_e('Place is added successfully.', 'tour-booking-manager') ?>
-								</p>
-							</h4>
-							<span class="fas fa-times popupClose"></span>
-						</div>
-						<div class="popupBody ttbm_place_you_see_form_area">
-						</div>
-						<div class="popupFooter">
-							<div class="buttonGroup">
-								<button class="_themeButton ttbm_new_place_you_see_save" type="button"><?php esc_html_e('Save', 'tour-booking-manager'); ?></button>
-								<button class="_warningButton ttbm_new_place_you_see_save_close" type="button"><?php esc_html_e('Save & Close', 'tour-booking-manager'); ?></button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<?php
-			}
+
 			public function load_ttbm_place_you_see_form() {
 				?>
 				<label class="flexEqual">
@@ -222,19 +193,7 @@
 					update_post_meta($tour_id, 'ttbm_hiphop_places', $place_info);
 				}
 			}
-			public function ttbm_new_place_save() {
-                if(is_admin() && defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-	                $place_name = MP_Global_Function::data_sanitize($_POST['place_name']);
-	                $place_description = MP_Global_Function::data_sanitize($_POST['place_description']);
-	                $place_image = MP_Global_Function::data_sanitize($_POST['place_image']);
-	                $args = array('post_title' => $place_name, 'post_content' => $place_description, 'post_status' => 'publish', 'post_type' => 'ttbm_places');
-	                $query = wp_insert_post($args);
-	                if ($query) {
-		                set_post_thumbnail($query, $place_image);
-	                }
-                }
-				die();
-			}
+
 		}
 		new TTBM_Settings_place_you_see();
 	}

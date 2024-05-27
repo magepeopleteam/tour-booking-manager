@@ -397,50 +397,6 @@
             $(this).closest('.ttbm_settings_place_you_see').find('.ttbm_place_you_see_form_area').html('');
         }
     });
-    $(document).on('click', '.ttbm_new_place_you_see_save,.ttbm_new_place_you_see_save_close', function () {
-        ttbm_new_place_save($(this));
-    });
-    function ttbm_new_place_save($this) {
-        let parent = $this.closest('.popupMainArea');
-        parent.find('.ttbm_success_info').slideUp('fast');
-        let place_name = parent.find('[name="ttbm_place_name"]').val();
-        let place_description = parent.find('[name="ttbm_place_description"]').val();
-        let place_image = parent.find('[name="ttbm_place_image"]').val();
-        if (!place_name) {
-            parent.find('[data-required="ttbm_place_name"]').slideDown('fast');
-        } else {
-            parent.find('[data-required="ttbm_place_name"]').slideUp('fast');
-        }
-        if (!place_image) {
-            parent.find('[data-required="ttbm_place_image"]').slideDown('fast');
-        } else {
-            parent.find('[data-required="ttbm_place_image"]').slideUp('fast');
-        }
-        if (place_name && place_image) {
-            $.ajax({
-                type: 'POST', url: mp_ajax_url, data: {
-                    "action": "ttbm_new_place_save", "place_name": place_name, "place_description": place_description, "place_image": place_image
-                }, beforeSend: function () {
-                    dLoader(parent);
-                }, success: function () {
-                    parent.find('[name="ttbm_place_name"]').val('');
-                    parent.find('[name="ttbm_place_description"]').val('');
-                    parent.find('[name="ttbm_place_image"]').val('');
-                    $this.closest('.popupMainArea').find('.mp_remove_single_image').trigger('click');
-                    parent.find('.ttbm_success_info').slideDown('fast');
-                    ttbm_reload_place_you_see();
-                    dLoaderRemove(parent);
-                    if (($this).hasClass('ttbm_new_place_you_see_save_close')) {
-                        $this.closest('.popupMainArea').find('.popupClose').trigger('click');
-                    }
-                    return true;
-                }, error: function (response) {
-                    console.log(response);
-                }
-            });
-        }
-        return false;
-    }
     function ttbm_reload_place_you_see() {
         let ttbm_id = $('[name="post_id"]').val();
         let parent = $('.ttbm_place_you_see_table');

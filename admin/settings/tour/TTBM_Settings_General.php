@@ -150,7 +150,7 @@
 				$status_checked = $status == 'off' ? '' : 'checked';
 				$status_active = $status == 'off' ? '' : 'mActive';
 				?>
-				<section class="bg-light">
+				<section class="bg-light mT">
 					<label class="label">
 						<div>
 							<p><?php _e('Location Settings','tour-booking-manager'); ?></p>

@@ -1412,8 +1412,6 @@
   div.superSlider .sliderShowcase {
     display: -webkit-flex;
     display: flex;
-    -webkit-justify-content: space-between;
-    justify-content: space-between;
   }
   div.superSlider .sliderShowcase.right,
   div.superSlider .sliderShowcase.left {
@@ -1458,10 +1456,7 @@
   div.superSlider .sliderShowcase.bottom {
     margin: var(--dmp_xs) 0 0 0;
   }
-  div.superSlider .sliderShowcaseItem {
-    position: relative;
-    overflow: hidden;
-  }
+  div.superSlider .sliderShowcaseItem {margin: 0 0 10px 0;    position: relative;    overflow: hidden;  }
   div.superSlider .area_column .sliderShowcaseItem {
     width: calc(25% - var(--dmp_xs));
   }

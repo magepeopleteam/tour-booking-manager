@@ -47,6 +47,7 @@
 						<section>
 							<div >
 								<label class="label"><p><?php esc_html_e('Gallery Images ', 'tour-booking-manager'); ?></p></label>
+								<?php echo esc_html__('Please upload gallary images size in ratio 4:3. Ex: Image size width=1200px and height=900px. gallery and feature image should be in same size.','tour-booking-manager'); ?>
 								<div class="mt-5"></div>
 								<?php TTBM_Layout::add_multi_image('ttbm_gallery_images', $image_ids); ?>
 							</div>

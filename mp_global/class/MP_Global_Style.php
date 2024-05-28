@@ -24,8 +24,8 @@
 				$fs_h4           = MP_Global_Function::get_style_settings( 'font_size_h4', '22' ) . 'px';
 				$fs_h5           = MP_Global_Function::get_style_settings( 'font_size_h5', '18' ) . 'px';
 				$fs_h6           = MP_Global_Function::get_style_settings( 'font_size_h6', '16' ) . 'px';
-				$fs_label        = MP_Global_Function::get_style_settings( 'font_size_label', '16' ) . 'px';
-				$button_fs       = MP_Global_Function::get_style_settings( 'button_font_size', '16' ) . 'px';
+				$fs_label        = MP_Global_Function::get_style_settings( 'font_size_label', '14' ) . 'px';
+				$button_fs       = MP_Global_Function::get_style_settings( 'button_font_size', '14' ) . 'px';
 				$button_color    = MP_Global_Function::get_style_settings( 'button_color', $alternate_color );
 				$button_bg       = MP_Global_Function::get_style_settings( 'button_bg', '#ea8125' );
 				$section_bg      = MP_Global_Function::get_style_settings( 'section_bg', '#FAFCFE' );

@@ -28,7 +28,7 @@
                 $ttbm_guide_image_style = MP_Global_Function::get_post_info($tour_id, 'ttbm_guide_image_style', 'squire');
                 $ttbm_guide_description_style = MP_Global_Function::get_post_info($tour_id, 'ttbm_guide_description_style', 'full');
                 ?>
-                <div class="tabsItem" data-tabs="#ttbm_settings_guide">
+                <div class="tabsItem ttbm_settings_guide" data-tabs="#ttbm_settings_guide">
                     <h2><?php esc_html_e('Guide Settings', 'tour-booking-manager'); ?></h2>
                     <p><?php TTBM_Settings::des_p('guide_settings_description'); ?> </p>
                     

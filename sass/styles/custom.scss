@@ -53,21 +53,18 @@
           & > h2{
             padding: 0;
             color: $color-secondary;
-            margin: 30px 0 20px 0;
-            margin-bottom: 20px;
+            margin-bottom: 20px 0 0 0;
             font-size: 22px;
             line-height: 26px;
-            margin-bottom: 12px;
-            font-weight: 700;
+            font-weight: bold;
           }
           & > p {
             color: $color-secondary;
             margin: 0;
-            font-size: 16px;
-            font-weight: var(--fw-bold);
+            font-size: 14px;
+            font-weight: normal;
             line-height: 24px;
-            font-family: DejaVuSans, sans-serif;
-            margin-bottom: 50px;
+            margin-bottom:30px;
           }
           section{
             border: 1px solid #d8d8d8;
@@ -80,10 +77,10 @@
               align-items: center;
               cursor: pointer;
               p{
-                font-size: 16px;
+                font-size: 14px;
                 font-weight: bold;
-                line-height: 1.2;
-                margin-bottom: 8px;
+                line-height: 0;
+                margin-bottom: 10px;
                 color: var(--mpl-secondary);
               }
               .text{
@@ -470,4 +467,8 @@ div.mpStyle span.mp_remove_multi_image{
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
   padding:5px;
+}
+
+.ttbm_select2{
+  min-height: 250px;
 }

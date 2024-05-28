@@ -82,7 +82,7 @@
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
-				<div class="tabsItem" data-tabs="#ttbm_settings_faq">
+				<div class="tabsItem ttbm_settings_faq" data-tabs="#ttbm_settings_faq">
 					<h2><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></h2>
 					<p><?php TTBM_Settings::des_p('faq_settings_description'); ?></p>
 					

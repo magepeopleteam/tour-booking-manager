@@ -26,7 +26,7 @@
 				$tours = $all_tours->posts;
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
-				<div class="tabsItem" data-tabs="#ttbm_settings_related_tour">
+				<div class="tabsItem ttbm_settings_related_tour" data-tabs="#ttbm_settings_related_tour">
 					<h2><?php esc_html_e('Related '.$ttbm_label.' Settings', 'tour-booking-manager'); ?></h2>
                     <p><?php TTBM_Settings::des_p('related_settings_description'); ?></p>
 					

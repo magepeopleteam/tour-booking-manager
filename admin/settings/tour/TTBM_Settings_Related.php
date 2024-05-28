@@ -47,7 +47,7 @@
 						</label>
                     </section>
 
-					<div data-collapse="#ttbm_display_related" class="<?php echo esc_attr($active); ?>">
+					<div data-collapse="#ttbm_display_related" class="ttbm_display_related <?php echo esc_attr($active); ?>">
 						<section>
 							<label class="label">
 								<div class="w-50">

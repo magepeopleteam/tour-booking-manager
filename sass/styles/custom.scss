@@ -468,7 +468,8 @@ div.mpStyle span.mp_remove_multi_image{
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
   padding:5px;
 }
-
-.ttbm_select2{
-  min-height: 250px;
+.tabsItem{
+  .ttbm_select2{
+    min-height: 150px;
+  }
 }

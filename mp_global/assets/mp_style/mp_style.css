@@ -1550,7 +1550,7 @@
     right: 0;
     top: 0;
     bottom: 0;
-    z-index: 1111;
+    z-index: 111111111;
     overflow: hidden auto;
     background: #000c;
   }

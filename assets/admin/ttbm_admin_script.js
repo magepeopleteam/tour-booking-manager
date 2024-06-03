@@ -146,7 +146,7 @@
         });
     }
     //*******Feature**************//
-    $(document).on('click', '.ttbm_settings_feature [data-target-popup]', function () {
+    $(document).on('click', '.ttbm_settings_feature [data-target-popup="add_new_feature_popup"]', function () {
         let target = $(this).closest('.ttbm_settings_feature').find('.ttbm_feature_form_area');
         $.ajax({
             type: 'POST', url: mp_ajax_url, data: {

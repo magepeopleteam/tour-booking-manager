@@ -7,8 +7,8 @@
 			public function __construct() {
 				add_action('init', array($this, 'language_load'));
 				$this->load_file();
-				add_action('wp_enqueue_scripts', array($this, 'frontend_script'), 90);
-				add_action('admin_enqueue_scripts', array($this, 'admin_script'), 90);
+				add_action('add_mp_frontend_enqueue', array($this, 'frontend_script'), 90);
+				add_action('add_mp_admin_enqueue', array($this, 'admin_script'), 90);
 				add_action('ttbm_registration_enqueue', array($this, 'registration_enqueue'), 90);
 				add_action('admin_init', array($this, 'ttbm_upgrade'));
 			}

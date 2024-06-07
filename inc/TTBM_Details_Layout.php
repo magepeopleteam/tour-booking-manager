@@ -105,6 +105,7 @@
             }
             public function hotel_list() {
                 //include( TTBM_Function::template_path( 'layout/hotel_list.php' ) );
+                //echo '<pre>';print_r();echo '</pre>';
             }
             public function related_tour() {
                 include(TTBM_Function::template_path('layout/related_tour.php'));

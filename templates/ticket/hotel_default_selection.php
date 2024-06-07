@@ -67,7 +67,7 @@
 												<?php } ?>
 										</div>
 									</div>
-									<h4 class="textTheme"><?php echo wc_price( TTBM_Function::get_hotel_room_min_price( $hotel_id ) ); ?></h4>
+									<h4 class="textTheme"><span><?php esc_html_e( 'Price From : ', 'tour-booking-manager' ); ?>&nbsp;</span>&nbsp; <?php echo wc_price( TTBM_Function::get_hotel_room_min_price( $hotel_id ) ); ?></h4>
 									<?php
 										$ttbm_hotel_des = get_post_field( 'post_content', $tour_id );
 										if ( $ttbm_hotel_des ) {

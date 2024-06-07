@@ -54,7 +54,7 @@
 									<label for=""><?php esc_html_e('Related ' . $ttbm_label, 'tour-booking-manager'); ?></label>
 									<span><?php TTBM_Settings::des_p('ttbm_related_tour'); ?></span>
 								</div>
-								<select name="ttbm_related_tour[]" multiple='multiple' class='ttbm_select2 w-50' data-placeholder="<?php echo esc_html__('Please Select ', 'tour-booking-manager') . $ttbm_label; ?>">
+								<select name="ttbm_related_tour[]" multiple='multiple' class='mp_select2 w-50' data-placeholder="<?php echo esc_html__('Please Select ', 'tour-booking-manager') . $ttbm_label; ?>">
 									<?php
 										foreach ($tours as $tour) {
 											$ttbm_id = $tour->ID;

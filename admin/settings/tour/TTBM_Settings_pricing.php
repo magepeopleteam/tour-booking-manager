@@ -248,7 +248,7 @@
 						<label><?php esc_html_e('Hotel Configuration', 'tour-booking-manager'); ?>  <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_hotel_config') ?></span></i></label>
 						<span><?php TTBM_Settings::des_p('hotel_config'); ?><a href="post-new.php?post_type=ttbm_hotel"><?php TTBM_Settings::des_p('hotel_config_click') ?></a></span>
 					</div>
-					<select name="ttbm_hotels[]" multiple='multiple' class='formControl ttbm_select2' data-placeholder="<?php esc_html_e('Please Select Hotel', 'tour-booking-manager'); ?>">
+					<select name="ttbm_hotels[]" multiple='multiple' class='formControl mp_select2' data-placeholder="<?php esc_html_e('Please Select Hotel', 'tour-booking-manager'); ?>">
 						<?php
 							foreach ($hotel_lists->posts as $hotel) {
 								$hotel_id = $hotel->ID;

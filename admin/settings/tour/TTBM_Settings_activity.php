@@ -77,7 +77,7 @@
 								<p><?php esc_html_e('Activities', 'tour-booking-manager'); ?></p>
 								<span><?php TTBM_Settings::des_p('activities'); ?></span>
 							</div>
-							<select name="ttbm_tour_activities[]" multiple='multiple' class='ttbm_select2' data-placeholder="<?php esc_html_e('Please Select a Activities ', 'tour-booking-manager'); ?>">
+							<select name="ttbm_tour_activities[]" multiple='multiple' class='mp_select2' data-placeholder="<?php esc_html_e('Please Select a Activities ', 'tour-booking-manager'); ?>">
 								<?php foreach ($activities as $activity) { ?>
 									<option value="<?php echo esc_attr($activity->name) ?>" <?php echo in_array($activity->name, $tour_activities) ? 'selected' : ''; ?>>
 										<?php echo esc_html($activity->name); ?>

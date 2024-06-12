@@ -40,10 +40,12 @@
 				?>
 				<div class="mp_settings_area mt-2">
 					<section class="bg-light">
-						<div>
-							<p><?php _e('Extra Service', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php esc_html_e('Here you can set extra service for tour.', 'tour-booking-manager'); ?></span>
-						</div>
+						<label class="label">
+							<div>
+								<p><?php _e('Extra Service', 'tour-booking-manager'); ?></p>
+								<span class="text"><?php esc_html_e('Here you can set extra service for tour.', 'tour-booking-manager'); ?></span>
+							</div>
+						</label>
 					</section>
 					<section>
 						<div class="ovAuto mt_xs">
@@ -95,7 +97,7 @@
 					<td><?php do_action('mp_input_add_icon', 'service_icon[]', $service_icon); ?></td>
 					<td>
 						<label>
-							<input type="text" class="formControl mp_name_validation" name="service_name[]" placeholder="Ex: Cap" value="<?php echo esc_attr($service_name); ?>"/>
+							<input type="text" class="formControl medium mp_name_validation" name="service_name[]" placeholder="Ex: Cap" value="<?php echo esc_attr($service_name); ?>"/>
 						</label>
 					</td>
 					<td>

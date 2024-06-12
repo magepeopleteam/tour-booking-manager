@@ -49,10 +49,12 @@
 				$ex_checked = $exclude_display == 'off' ? '' : 'checked';
 				if (sizeof($features) > 0) { ?>
 					<section class="bg-light">
-						<div>
-							<p><?php esc_html_e('Include Exclude Feature', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php esc_html_e('You can add new feature to Include/Exclude Feature of tours', 'tour-booking-manager'); ?></span>
-						</div>
+						<label class="label">
+							<div>
+								<p><?php esc_html_e('Include Exclude Feature', 'tour-booking-manager'); ?></p>
+								<span class="text"><?php esc_html_e('You can add new feature to Include/Exclude Feature of tours', 'tour-booking-manager'); ?></span>
+							</div>
+						</label>
 					</section>
 					<section>
 						<label class="label">

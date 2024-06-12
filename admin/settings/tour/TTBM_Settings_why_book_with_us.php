@@ -62,8 +62,8 @@
 						<table>
 							<thead>
 							<tr>
-								<th><?php esc_html_e('Item List.', 'tour-booking-manager'); ?></th>
-								<th><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
+								<th class="w-70"><?php esc_html_e('Item List.', 'tour-booking-manager'); ?></th>
+								<th class="w-10"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
 							</tr>
 							</thead>
 							<tbody class="mp_sortable_area mp_item_insert">
@@ -88,7 +88,7 @@
 				<div class="mp_hidden_content">
 					<table>
 						<tbody class="mp_hidden_item">
-						<?php $this->why_chose_us_item(); ?>
+							<?php $this->why_chose_us_item(); ?>
 						</tbody>
 					</table>
 				</div>
@@ -99,7 +99,7 @@
 				<tr class="mp_remove_area">
 					<td>
 						<label>
-							<input class="p-1 bordered w-100   mp_name_validation" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
+							<input class="p-1 bordered w-100 rounded  mp_name_validation" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
 						</label>
 					</td>
 					<td><?php MP_Custom_Layout::move_remove_button(); ?></td>

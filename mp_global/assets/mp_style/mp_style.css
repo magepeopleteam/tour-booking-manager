@@ -28,7 +28,7 @@
   }
   .mpStyle table th[data-collapse].mActive,
   .mpStyle table td[data-collapse].mActive {
-    display: table-cell;
+    display:block;
   }
   .mpStyle p:not(.mp_wp_editor p) {
     color: var(--mpl-secondary);
@@ -2404,13 +2404,7 @@
     vertical-align: middle;
   }
   /**************/
-  .mpStyle table tr[data-collapse].mActive {
-    display: table-row;
-  }
-  .mpStyle table th[data-collapse].mActive,
-  .mpStyle table td[data-collapse].mActive {
-    display: table-cell;
-  }
+
 }
 /******************************************************************** Tabs section ************************************************/
 @media only screen and (min-width: 10px) {

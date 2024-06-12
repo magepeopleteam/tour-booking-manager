@@ -402,6 +402,19 @@ div > .ppof-metabox {
 }
 
 @media only screen and (min-width:0px) {
+  #{$main-selector}{
+    table.price_config_table{
+      table-layout: auto;
+      thead{
+        tr{
+          th{
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+
   div.mp_multi_image {
     display: flex;
     flex-wrap: wrap;

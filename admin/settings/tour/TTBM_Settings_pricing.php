@@ -125,7 +125,7 @@
 						</section>
 						
 						<section>
-							<div class="ovAuto">
+							<div style="overflow-x:auto;">
 								<table class="price_config_table">
 									<thead>
 									<tr>

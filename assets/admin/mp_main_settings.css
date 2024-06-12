@@ -1195,6 +1195,12 @@ div > .ppof-metabox {
 }
 
 @media only screen and (min-width: 0px) {
+  #mp_meta_box_panel table.price_config_table, .travel-list table.price_config_table {
+    table-layout: auto;
+  }
+  #mp_meta_box_panel table.price_config_table thead tr th, .travel-list table.price_config_table thead tr th {
+    font-size: 12px;
+  }
   div.mp_multi_image {
     display: flex;
     flex-wrap: wrap;

@@ -89,10 +89,12 @@
 					<p><?php TTBM_Settings::des_p('faq_settings_description'); ?></p>
 					
 					<section class="bg-light">
-                        <div>
-                            <label for=""><?php esc_html_e('Frequently Asked Question', 'tour-booking-manager'); ?></label>
-							<span><?php esc_html_e('You can add frequently asked question for your tour.', 'tour-booking-manager'); ?></span>
-                        </div>
+                        <label for="" class="label">
+							<div>
+								<p><?php esc_html_e('Frequently Asked Question', 'tour-booking-manager'); ?></p>
+								<span class="text"><?php esc_html_e('You can add frequently asked question for your tour.', 'tour-booking-manager'); ?></span>
+							</div>
+						</label>
                     </section>
 					
 					<section >

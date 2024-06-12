@@ -27,10 +27,12 @@
 					<p><?php TTBM_Settings::des_p('why_book_settings_description'); ?></p>
 					
 					<section class="bg-light">
-                        <div>
-                            <p><?php esc_html_e('Why Chose Us', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php esc_html_e('You can set why chose us settings', 'tour-booking-manager'); ?></span>
-                        </div>
+                        <label for="" class="label">
+							<div>
+								<p><?php esc_html_e('Why Chose Us', 'tour-booking-manager'); ?></p>
+								<span class="text"><?php esc_html_e('You can set why chose us settings', 'tour-booking-manager'); ?></span>
+							</div>
+						</label>
                     </section>
 					
 					<section>
@@ -97,7 +99,7 @@
 				<tr class="mp_remove_area">
 					<td>
 						<label>
-							<input class="p-1 bordered w-100 rounded  mp_name_validation" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
+							<input class="p-1 bordered w-100   mp_name_validation" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
 						</label>
 					</td>
 					<td><?php MP_Custom_Layout::move_remove_button(); ?></td>

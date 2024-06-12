@@ -28,10 +28,12 @@
 					<p><?php TTBM_Settings::des_p('admin_note_settings_description'); ?></p>
 
 					<section class="bg-light">
-						<div>
-                            <p><?php esc_html_e('Admin Note Settings', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php esc_html_e('Here you can add admin not and on/off admin note.', 'tour-booking-manager'); ?></span>
-                        </div>
+						<label for="" class="label">
+							<div>
+								<p><?php esc_html_e('Admin Note Settings', 'tour-booking-manager'); ?></p>
+								<span class="text"><?php esc_html_e('Here you can add admin not and on/off admin note.', 'tour-booking-manager'); ?></span>
+							</div>
+						</label>
 					</section>
 					<section>
                         <label class="label">

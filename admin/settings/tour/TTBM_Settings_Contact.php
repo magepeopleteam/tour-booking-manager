@@ -30,17 +30,19 @@
 
 
 					<section class="bg-light">
-                        <div>
-                            <p><?php esc_html_e('Contact Settings', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php esc_html_e('Here you can set contact information.', 'tour-booking-manager'); ?></span>
-                        </div>
+                        <label for="" class="label">
+							<div>
+								<p><?php esc_html_e('Contact Settings', 'tour-booking-manager'); ?></p>
+								<span class="text"><?php esc_html_e('Here you can set contact information.', 'tour-booking-manager'); ?></span>
+							</div>
+						</label>
                     </section>
 
 					<section>
                         <label class="label">
 							<div>
-								<label><?php esc_html_e('On/Off Contact', 'tour-booking-manager'); ?> </label>
-								<span><?php TTBM_Settings::des_p('ttbm_display_get_question'); ?></span>
+								<p><?php esc_html_e('On/Off Contact', 'tour-booking-manager'); ?> </p>
+								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_get_question'); ?></span>
 							</div>
 							<?php MP_Custom_Layout::switch_button('ttbm_display_get_question', $checked_gaq); ?>
 						</label>

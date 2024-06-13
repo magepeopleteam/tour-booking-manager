@@ -27,10 +27,12 @@
 					<p><?php TTBM_Settings::des_p('why_book_settings_description'); ?></p>
 					
 					<section class="bg-light">
-                        <div>
-                            <p><?php esc_html_e('Why Chose Us', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php esc_html_e('You can set why chose us settings', 'tour-booking-manager'); ?></span>
-                        </div>
+                        <label for="" class="label">
+							<div>
+								<p><?php esc_html_e('Why Chose Us', 'tour-booking-manager'); ?></p>
+								<span class="text"><?php esc_html_e('You can set why chose us settings', 'tour-booking-manager'); ?></span>
+							</div>
+						</label>
                     </section>
 					
 					<section>
@@ -60,8 +62,8 @@
 						<table>
 							<thead>
 							<tr>
-								<th><?php esc_html_e('Item List.', 'tour-booking-manager'); ?></th>
-								<th><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
+								<th class="w-70"><?php esc_html_e('Item List.', 'tour-booking-manager'); ?></th>
+								<th class="w-10"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
 							</tr>
 							</thead>
 							<tbody class="mp_sortable_area mp_item_insert">
@@ -86,7 +88,7 @@
 				<div class="mp_hidden_content">
 					<table>
 						<tbody class="mp_hidden_item">
-						<?php $this->why_chose_us_item(); ?>
+							<?php $this->why_chose_us_item(); ?>
 						</tbody>
 					</table>
 				</div>

@@ -45,7 +45,7 @@
 					<label class="label">
 						<div >
 							<p><?php esc_html_e('Stay Night', 'tour-booking-manager'); ?></p>
-							<span class="text">test</span>
+							<span class="text"><?php esc_html_e('Turn on/off stay night settings.', 'tour-booking-manager'); ?></span>
 						</div>	
 						<div class="_dFlex_alignCenter_justfyBetween">
 							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
@@ -150,7 +150,7 @@
 				$status_checked = $status == 'off' ? '' : 'checked';
 				$status_active = $status == 'off' ? '' : 'mActive';
 				?>
-				<section class="bg-light mT">
+				<section class="bg-light" style="margin-top: 20px;">
 					<label class="label">
 						<div>
 							<p><?php _e('Location Settings','tour-booking-manager'); ?></p>
@@ -265,18 +265,10 @@
 							<span class="text"><?php TTBM_Settings::des_p('location'); ?></span>
 						</div>
 						<div class="_dFlex_alignCenter_justifyBetween">
+							<div class="me-2"><?php MP_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__('', 'tour-booking-manager')); ?></div>
 							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
 							<?php self::location_select($tour_id); ?>
 						</div>
-					</label>
-				</section>
-				<section>
-					<label class="label">
-						<div>
-							<p><?php esc_html_e('Create New Location', 'tour-booking-manager'); ?> </p>
-							<span class="text"><?php TTBM_Settings::des_p('create_location'); ?></span>
-						</div>
-						<?php MP_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__('Create New ', 'tour-booking-manager')); ?>
 					</label>
 				</section>
 				<?php
@@ -291,7 +283,7 @@
 				$value = MP_Global_Function::get_post_info($tour_id, $location_key, array());
 				$all_location = TTBM_Function::get_all_location();
 				?>
-				<select class="rounded ms-2 " name="<?php echo esc_attr($location_key); ?>">
+				<select class="rounded ms-2" name="<?php echo esc_attr($location_key); ?>">
 					<?php foreach ($all_location as $key => $location) : ?>
 						<option value="<?php echo esc_attr($key); ?>" <?php echo esc_attr($key == $value ? 'selected' : ''); ?>><?php echo esc_html($location); ?></option>
 					<?php endforeach; ?>

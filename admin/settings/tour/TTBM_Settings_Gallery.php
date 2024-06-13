@@ -27,10 +27,12 @@
 					<h2 ><?php esc_html_e('Gallery Settings', 'tour-booking-manager'); ?></h2>
 					<p ><?php TTBM_Settings::des_p('gallery_settings_description'); ?></p>
 					<section class="bg-light">
-                        <div>
-                            <p><?php esc_html_e('Gallery Settings', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php esc_html_e('Here you can add images for tour.', 'tour-booking-manager'); ?></span>
-                        </div>
+						<label class="label">
+							<div>
+								<p><?php esc_html_e('Gallery Settings', 'tour-booking-manager'); ?></p>
+								<span class="text"><?php esc_html_e('Here you can add images for tour.', 'tour-booking-manager'); ?></span>
+							</div>
+						</label>
                     </section>
 					<section>
                         <label class="label">

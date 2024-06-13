@@ -607,7 +607,6 @@
   left: 50%;
   transform: translate(-50%);
   visibility: hidden;
-  font-family: DejaVuSans;
   font-size: 0.9rem;
   text-align: center;
   background-color: var(--mpl-black);
@@ -687,7 +686,7 @@
 }
 
 #mp_meta_box_panel .btn, .travel-list .btn {
-  border: 0px solid;
+  border: 0;
   box-shadow: none;
   background-color: var(--mpl-primary);
   border-radius: 0.25rem;
@@ -695,7 +694,6 @@
   color: var(--mpl-white);
   font-size: 1rem;
   transition: all 0.5s ease-in-out;
-  min-width: 100px;
 }
 #mp_meta_box_panel .btn:hover, .travel-list .btn:hover {
   background-color: var(--mpl-primary);
@@ -917,13 +915,14 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label p, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label p {
   font-size: 14px;
   font-weight: bold;
-  line-height: 0;
+  line-height: 14px;
   margin-bottom: 10px;
   color: var(--mpl-secondary);
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label .text, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label .text {
   color: #6B7280;
   font-weight: normal;
+  line-height: 20px;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent th[scope=row] label, .travel-list .ttbm_settings .tabsContent th[scope=row] label {
   display: block;

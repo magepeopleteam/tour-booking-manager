@@ -33,10 +33,12 @@
                     <p><?php TTBM_Settings::des_p('guide_settings_description'); ?> </p>
                     
                     <section class="bg-light">
-                        <div>
-                            <p><?php echo esc_html__('Guide Settings', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html__('Guide', 'tour-booking-manager'); ?></p>
-                            <span class="text"><?php echo esc_html__('Here you can set tour guide, on/off tour guide etc.', 'tour-booking-manager'); ?></span>
-                        </div>
+                        <label class="label">
+                            <div>
+                                <p><?php echo esc_html__('Guide Settings', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html__('Guide', 'tour-booking-manager'); ?></p>
+                                <span class="text"><?php echo esc_html__('Here you can set tour guide, on/off tour guide etc.', 'tour-booking-manager'); ?></span>
+                            </div>
+                        </label>
                     </section>
 
                     <section>
@@ -56,26 +58,30 @@
                                     <p><?php esc_html_e('Select tour guide', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_tour_guide'); ?></span></i></p>
                                     <span class="text"><?php TTBM_Settings::des_p('ttbm_tour_guide'); ?></span>
                                 </div>
-                                <select name="ttbm_tour_guide[]" multiple='multiple' class='formControl mp_select2 w-50' data-placeholder="<?php echo esc_html__('Please Select Guide', 'tour-booking-manager'); ?>">
-                                    <?php
-                                        if ($all_guides->post_count > 0) {
-                                            foreach ($all_guides->posts as $guide) {
-                                                $ttbm_id = $guide->ID;
-                                                ?>
-                                                <option value="<?php echo esc_attr($ttbm_id) ?>" <?php echo in_array($ttbm_id, $guides) ? 'selected' : ''; ?>><?php echo get_the_title($ttbm_id); ?></option>
-                                                <?php
+                                <div class="w-50">
+                                    <select name="ttbm_tour_guide[]" multiple='multiple' class='formControl mp_select2 w-50' data-placeholder="<?php echo esc_html__('Please Select Guide', 'tour-booking-manager'); ?>">
+                                        <?php
+                                            if ($all_guides->post_count > 0) {
+                                                foreach ($all_guides->posts as $guide) {
+                                                    $ttbm_id = $guide->ID;
+                                                    ?>
+                                                    <option value="<?php echo esc_attr($ttbm_id) ?>" <?php echo in_array($ttbm_id, $guides) ? 'selected' : ''; ?>><?php echo get_the_title($ttbm_id); ?></option>
+                                                    <?php
+                                                }
                                             }
-                                        }
-                                    ?>
-                                </select>
+                                        ?>
+                                    </select>
+                                </div>
                             </label>
                         </section>
 
                         <section class="bg-light" style="margin-top: 20px;">
-                            <div>
-                                <p><?php echo esc_html__('Guide Dispaly Style', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html__('Guide', 'tour-booking-manager'); ?></p>
-                                <span class="text"><?php echo esc_html__('To view Guide Photos on frontend, set guide view style here', 'tour-booking-manager'); ?></span>
-                            </div>
+                            <label class="label">
+                                <div>
+                                    <p><?php echo esc_html__('Guide Dispaly Style', 'tour-booking-manager'); ?></p>
+                                    <span class="text"><?php echo esc_html__('To view Guide Photos on frontend, set guide view style here', 'tour-booking-manager'); ?></span>
+                                </div>
+                            </label>
                         </section>
                         <section>
                             <label class="label">

@@ -31,10 +31,12 @@
 					<?php $ticketing_system = MP_Global_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'availability_section'); ?>
 					
 					<section class="bg-light">
-                        <div>
-                            <p><?php esc_html_e('Display Settings', 'tour-booking-manager'); ?></p> 
-							<?php esc_html_e('Here you can set what will be display or not.', 'tour-booking-manager'); ?> 
-                        </div>
+                        <label for="" class="label">
+							<div>
+								<p><?php esc_html_e('Display Settings', 'tour-booking-manager'); ?></p> 
+								<span class="text"><?php esc_html_e('Here you can set what will be display or not.', 'tour-booking-manager'); ?> </span>
+							</div>
+						</label>
 					</section>
 
 					<section>

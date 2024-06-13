@@ -36,10 +36,12 @@
 					<p><?php TTBM_Settings::des_p('activity_settings_description'); ?></p>
 					
 					<section class="bg-light">
-						<div>
-							<p><?php esc_html_e('Activity Settings', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php esc_html_e('You can add tour activity here', 'tour-booking-manager'); ?></span>
-						</div>
+						<label for="" class="label">
+							<div>
+								<p><?php esc_html_e('Activity Settings', 'tour-booking-manager'); ?></p>
+								<span class="text"><?php esc_html_e('You can add tour activity here', 'tour-booking-manager'); ?></span>
+							</div>
+						</label>
 					</section>
 					<section>
                         <label class="label">
@@ -77,13 +79,15 @@
 								<p><?php esc_html_e('Activities', 'tour-booking-manager'); ?></p>
 								<span><?php TTBM_Settings::des_p('activities'); ?></span>
 							</div>
-							<select name="ttbm_tour_activities[]" multiple='multiple' class='mp_select2' data-placeholder="<?php esc_html_e('Please Select a Activities ', 'tour-booking-manager'); ?>">
-								<?php foreach ($activities as $activity) { ?>
-									<option value="<?php echo esc_attr($activity->name) ?>" <?php echo in_array($activity->name, $tour_activities) ? 'selected' : ''; ?>>
-										<?php echo esc_html($activity->name); ?>
-									</option>
-								<?php } ?>
-							</select>
+							<div class="w-50">
+								<select name="ttbm_tour_activities[]" multiple='multiple' class='mp_select2' data-placeholder="<?php esc_html_e('Please Select a Activities ', 'tour-booking-manager'); ?>">
+									<?php foreach ($activities as $activity) { ?>
+										<option value="<?php echo esc_attr($activity->name) ?>" <?php echo in_array($activity->name, $tour_activities) ? 'selected' : ''; ?>>
+											<?php echo esc_html($activity->name); ?>
+										</option>
+									<?php } ?>
+								</select>
+							</div>
 						</label>
 					</section>
 				</div>

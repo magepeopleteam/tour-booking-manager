@@ -246,23 +246,29 @@
 				$ttbm_hotels = TTBM_Function::get_hotel_list($tour_id);
 				$hotel_lists = MP_Global_Function::query_post_type('ttbm_hotel');
 				$ttbm_type = TTBM_Function::get_tour_type($tour_id);
-				$hotel_class = $ttbm_type == 'hotel' ? '' : 'dNone';
+				$hotel_class = $ttbm_type == 'hotel' ? 'dBlock' : 'dNone';
 				?>
 
-				<section class="ttbm_tour_hotel_setting <?php echo esc_attr($hotel_class); ?>" style="display:none">
-					<div>
-						<label><?php esc_html_e('Hotel Configuration', 'tour-booking-manager'); ?>  <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_hotel_config') ?></span></i></label>
-						<span><?php TTBM_Settings::des_p('hotel_config'); ?><a href="post-new.php?post_type=ttbm_hotel"><?php TTBM_Settings::des_p('hotel_config_click') ?></a></span>
-					</div>
-					<select name="ttbm_hotels[]" multiple='multiple' class='formControl mp_select2' data-placeholder="<?php esc_html_e('Please Select Hotel', 'tour-booking-manager'); ?>">
-						<?php
-							foreach ($hotel_lists->posts as $hotel) {
-								$hotel_id = $hotel->ID;
-								?>
-								<option value="<?php echo esc_attr($hotel_id) ?>" <?php echo in_array($hotel_id, $ttbm_hotels) ? 'selected' : ''; ?>><?php echo get_the_title($hotel_id); ?></option>
-							<?php } ?>
-					</select>
-				</section>
+				<div class="ttbm_tour_hotel_setting <?php echo esc_attr($hotel_class); ?>">
+					<section>
+						<label class="label">
+							<div>
+								<p><?php esc_html_e('Hotel Configuration', 'tour-booking-manager'); ?>  <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_hotel_config') ?></span></i></p>
+								<span class="text"><?php TTBM_Settings::des_p('hotel_config'); ?><a href="post-new.php?post_type=ttbm_hotel"><?php TTBM_Settings::des_p('hotel_config_click') ?></a></span>
+							</div>
+							<div class="w-50">
+								<select name="ttbm_hotels[]" multiple='multiple' class='formControl mp_select2' data-placeholder="<?php esc_html_e('Please Select Hotel', 'tour-booking-manager'); ?>">
+									<?php
+										foreach ($hotel_lists->posts as $hotel) {
+											$hotel_id = $hotel->ID;
+											?>
+											<option value="<?php echo esc_attr($hotel_id) ?>" <?php echo in_array($hotel_id, $ttbm_hotels) ? 'selected' : ''; ?>><?php echo get_the_title($hotel_id); ?></option>
+										<?php } ?>
+								</select>
+							</div>
+						</label>
+					</section>
+				</div>
 			<?php
 			}
 			/*******************************/

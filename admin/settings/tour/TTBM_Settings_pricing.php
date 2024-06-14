@@ -128,28 +128,28 @@
 							<div style="overflow-x:auto;">
 								<table class="price_config_table">
 									<thead>
-									<tr>
-										<?php do_action('ttbm_ticket_type_headeing_start', $tour_id); ?>
-										<th><?php esc_html_e('Ticket Icon', 'tour-booking-manager'); ?></th>
-										<th><?php esc_html_e('Ticket Name', 'tour-booking-manager'); ?><span class="textRequired">&nbsp;*</span></th>
-										<th data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
-											<?php esc_html_e('Short Description', 'tour-booking-manager'); ?>
-										</th>
-										<th><?php esc_html_e('Regular Price', 'tour-booking-manager'); ?><span class="textRequired">&nbsp;*</span></th>
-										<th data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
-											<?php esc_html_e('Sale Price', 'tour-booking-manager'); ?>
-										</th>
-										<th <?php do_action('ttbm_aq_target_hook', $tour_id); ?>><?php esc_html_e('Capacity', 'tour-booking-manager'); ?><span class="textRequired">&nbsp;*</span></th>
-										<th data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
-											<?php esc_html_e('Default Qty', 'tour-booking-manager'); ?>
-										</th>
-										<th data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
-											<?php esc_html_e("Reserve Qty", "tour-booking-manager"); ?>
-										</th>
-										<?php do_action('ttbm_ticket_type_headeing_end', $tour_id); ?>
-										<th><?php esc_html_e('Qty Box Type', 'tour-booking-manager'); ?></th>
-										<th><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
-									</tr>
+										<tr>
+											<?php do_action('ttbm_ticket_type_headeing_start', $tour_id); ?>
+											<th><?php esc_html_e('Ticket Icon', 'tour-booking-manager'); ?></th>
+											<th><?php esc_html_e('Ticket Name', 'tour-booking-manager'); ?><span class="textRequired">&nbsp;*</span></th>
+											<th data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
+												<?php esc_html_e('Short Description', 'tour-booking-manager'); ?>
+											</th>
+											<th><?php esc_html_e('Regular Price', 'tour-booking-manager'); ?><span class="textRequired">&nbsp;*</span></th>
+											<th data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
+												<?php esc_html_e('Sale Price', 'tour-booking-manager'); ?>
+											</th>
+											<th <?php do_action('ttbm_aq_target_hook', $tour_id); ?>><?php esc_html_e('Capacity', 'tour-booking-manager'); ?><span class="textRequired">&nbsp;*</span></th>
+											<th data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
+												<?php esc_html_e('Default Qty', 'tour-booking-manager'); ?>
+											</th>
+											<th data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
+												<?php esc_html_e("Reserve Qty", "tour-booking-manager"); ?>
+											</th>
+											<?php do_action('ttbm_ticket_type_headeing_end', $tour_id); ?>
+											<th><?php esc_html_e('Qty Box Type', 'tour-booking-manager'); ?></th>
+											<th><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
+										</tr>
 									</thead>
 									<tbody class="mp_sortable_area mp_item_insert">
 									<?php
@@ -193,48 +193,48 @@
 					<td><?php do_action('mp_input_add_icon', 'ticket_type_icon[]', $icon); ?></td>
 					<td>
 						<input type="hidden" name="ttbm_hidden_ticket_text[]" value="<?php echo esc_attr($name_text); ?>"/>
-						<label>
+						
 							<input type="text" class="medium mp_name_validation" name="ticket_type_name[]" placeholder="Ex: Adult" value="<?php echo esc_attr($name); ?>" data-input-text="<?php echo esc_attr($name_text); ?>"/>
-						</label>
+						
 					</td>
 					<td data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
-						<label>
+						
 							<input type="text" class="" name="ticket_type_description[]" placeholder="Ex: description" value="<?php echo esc_attr($description); ?>"/>
-						</label>
+						
 					</td>
 					<td>
-						<label>
+						
 							<input type="text" class="medium mp_price_validation" name="ticket_type_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($price); ?>"/>
-						</label>
+						
 					</td>
 					<td data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
-						<label>
+						
 							<input type="text" class="medium mp_price_validation" name="ticket_type_sale_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($sale_price); ?>"/>
-						</label>
+						
 					</td>
 					<td <?php do_action('ttbm_aq_target_hook', $tour_id); ?>>
-						<label>
+						
 							<input type="number" size="4" pattern="[0-9]*" step="1" class="medium mp_number_validation" data-same-input="ticket_type_qty" name="ticket_type_qty[]" placeholder="Ex: 500" value="<?php echo esc_attr($qty); ?>"/>
-						</label>
+						
 					</td>
 					<td data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
-						<label>
+						
 							<input type="number" size="4" pattern="[0-9]*" step="1" class="medium mp_number_validation" name="ticket_type_default_qty[]" placeholder="Ex: 1" value="<?php echo esc_attr($default_qty); ?>"/>
-						</label>
+						
 					</td>
 					<td data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
-						<label>
+						
 							<input type="number" size="4" pattern="[0-9]*" step="1" class="medium mp_number_validation" data-same-input="ticket_type_resv_qty" name="ticket_type_resv_qty[]" placeholder="Ex: 5" value="<?php echo esc_attr($reserve_qty); ?>"/>
-						</label>
+						
 					</td>
 					<?php do_action('ttbm_ticket_type_content_end', $field, $tour_id) ?>
 					<td>
-						<label>
+						
 							<select name="ticket_type_qty_type[]" class='medium formControl'>
 								<option value="inputbox" <?php echo esc_attr($input_type == 'inputbox' ? 'selected' : ''); ?>><?php esc_html_e('Input Box', 'tour-booking-manager'); ?></option>
 								<option value="dropdown" <?php echo esc_attr($input_type == 'dropdown' ? 'selected' : ''); ?>><?php esc_html_e('Dropdown List', 'tour-booking-manager'); ?></option>
 							</select>
-						</label>
+						
 					</td>
 					<td><?php MP_Custom_Layout::move_remove_button(); ?></td>
 				</tr>

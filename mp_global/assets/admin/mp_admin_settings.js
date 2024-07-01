@@ -92,7 +92,7 @@ function load_sortable_datepicker(parent, item) {
         return false;
     });
     //=========Remove Setting Item ==============//
-    $(document).on("click", ".mp_item_remove", function (e) {
+    $(document).on("click", ".mp_item_remove,.mp_remove_icon", function (e) {
         e.preventDefault();
         if (
             confirm(
@@ -151,6 +151,13 @@ function load_sortable_datepicker(parent, item) {
         }
         load_sortable_datepicker(parent, item);
         parent.find(".mp_item_insert").find(".add_mp_select2").select2({});
+        return true;
+    });
+    $(document).on('click', '.ttbm_add_item', function () {
+        let parent = $(this).closest('.mp_settings_area');
+        let item = parent.find('>.mp_hidden_content').first().find('.mp_hidden_item').html();
+        load_sortable_datepicker(parent, item);
+        parent.find('.mp_item_insert').find('.add_ttbm_select2').select2({});
         return true;
     });
 })(jQuery);

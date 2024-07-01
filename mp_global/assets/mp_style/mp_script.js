@@ -359,27 +359,22 @@ function mp_sticky_management() {
     if (jQuery('.mpStyle .mp_sticky_area').length > 0) {
         window.onscroll = function () {
             jQuery('.mpStyle .mp_sticky_area').each(function () {
+                let body_width = jQuery('body').outerWidth();
+                let scroll_top = jQuery(window).scrollTop();
                 let current = jQuery(this);
                 let target_scroll = current.find('.mp_sticky_on_scroll');
+                let content_top = current.parent().offset().top;
                 let parent = current.closest('.mp_sticky_section');
-                let target_content = parent.find('.mp_sticky_depend_area');
-                let scroll_top = jQuery(window).scrollTop();
-                let content_top = target_content.offset().top;
-                let scroll_height = target_content.innerHeight() - target_scroll.innerHeight();
-                if (jQuery('body').outerWidth() > 800) {
-                    if (scroll_top > content_top + scroll_height - 100) {
-                        if (!current.hasClass('stickyFixed')) {
-                            current.removeClass('mpSticky').addClass('stickyFixed');
-                        }
-                    } else if (scroll_top > content_top - 100) {
-                        if (!current.hasClass('mpSticky')) {
-                            current.addClass('mpSticky').removeClass('stickyFixed');
-                        }
-                    } else {
-                        current.removeClass('mpSticky').removeClass('stickyFixed');
+                let depend_height = parent.find('.mp_sticky_depend_area').innerHeight();
+                let content_height = depend_height - Math.max(scroll_top - content_top, 0) - (target_scroll.offset().top - current.offset().top) - 100;
+                if (body_width > 800 && scroll_top + 100 >= content_top) {
+                    target_scroll.css('max-height', content_height);
+                    if (!current.hasClass('mpSticky')) {
+                        current.addClass('mpSticky').css('top', 100);
                     }
                 } else {
-                    current.removeClass('mpSticky').removeClass('stickyFixed');
+                    target_scroll.css('max-height', content_height + 100);
+                    current.removeClass('mpSticky');
                 }
             });
         };
@@ -726,14 +721,14 @@ function mp_pagination_page_management(parent, pagination_page, total_item) {
     });
     //*************** Pagination Load More ***************//
     $(document).on('click', 'div.mp_pagination_main_area  .pagination_load_more', function () {
-        let pagination_page = parseInt($(this).attr('data-load-more')) + 1;
+        let pagination_page = parseInt($(this).attr('data-load-more'))+1;
         let parent = $(this).closest('div.mp_pagination_main_area');
         let per_page_item = parseInt(parent.find('input[name="pagination_per_page"]').val());
-        let count = 0;
-        let end_item = per_page_item * pagination_page + per_page_item;
+        let count=0;
+        let end_item = per_page_item*pagination_page+per_page_item;
         $(this).attr('data-load-more', pagination_page).promise().done(function () {
-            parent.find('.mp_pagination_item').each(function () {
-                if (count < end_item) {
+            parent.find('.mp_pagination_item').each(function (){
+                if(count<end_item){
                     $(this).slideDown(250);
                 }
                 count++;
@@ -778,10 +773,8 @@ function mp_pagination_page_management(parent, pagination_page, total_item) {
 (function ($) {
     "use strict";
     //=================initial call============//
-    $(document).ready(function () {
-        $('.superSlider').each(function () {
-            sliderItemActive($(this), 1);
-        });
+    $('.superSlider').each(function () {
+        sliderItemActive($(this), 1);
     });
     //==============Slider===================//
     $(document).on('click', '.superSlider [data-slide-target]', function () {
@@ -804,7 +797,6 @@ function mp_pagination_page_management(parent, pagination_page, total_item) {
         sliderItemActive(parent, activeItem);
     });
     function sliderItemActive(parent, activeItem) {
-       // let sliderAllItem=parent.find('.sliderAllItem').first();
         let itemLength = parent.find('.sliderAllItem').first().find('[data-slide-index]').length;
         let currentItem = getSliderItem(parent, activeItem);
         let activeCurrent = parseInt(parent.find('.sliderAllItem').first().find('.sliderItem.activeSlide').data('slide-index'));
@@ -815,31 +807,7 @@ function mp_pagination_page_management(parent, pagination_page, total_item) {
                 sliderClassControl(target, currentItem, activeCurrent, 'prevSlider', 'nextSlider');
             }
             if (i === currentItem) {
-                parent.find('.sliderAllItem').first().find('[data-slide-index="' + currentItem + '"]').removeClass('prevSlider nextSlider').addClass('activeSlide').promise().done(function () {
-                    let height = $(this).find('[data-bg-image]').css('min-height');
-                    //console.log(height);
-                    if (height && height !=='0px') {
-                        $(this).closest('.sliderAllItem').css('height', height);
-                    } else {
-                        let target_img = target.find('[data-bg-image]');
-                        let width = target_img.outerWidth();
-                        let height = target_img.outerHeight();
-                        if (target_img.css('background-image') === 'none' || width === 0 || height === 0) {
-                            let bg_url = target_img.data('bg-image');
-                            if (!bg_url || bg_url.width === 0 || bg_url.width === 'undefined') {
-                                bg_url = mp_empty_image_url;
-                            }
-                            let tmpImg = new Image();
-                            tmpImg.src = bg_url;
-                            jQuery(tmpImg).one('load', function () {
-                                let imgWidth = tmpImg.width;
-                                let imgHeight = tmpImg.height;
-                                let height = target.outerWidth() * imgHeight / imgWidth;
-                                $(this).closest('.sliderAllItem').css('height', height);
-                            });
-                        }
-                    }
-                });
+                parent.find('.sliderAllItem').first().find('[data-slide-index="' + currentItem + '"]').removeClass('prevSlider nextSlider').addClass('activeSlide');
             }
             if (i > currentItem && currentItem !== itemLength) {
                 sliderClassControl(target, currentItem, activeCurrent, 'nextSlider', 'prevSlider');

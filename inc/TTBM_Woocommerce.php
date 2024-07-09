@@ -186,19 +186,21 @@
 					if ($order_status != 'failed') {
 						//$item_id = current( array_keys( $order->get_items() ) );
 						foreach ($order->get_items() as $item_id => $item) {
-							$ttbm_id = MP_Global_Function::get_order_item_meta($item_id, '_ttbm_id');
-							$ttbm_id = TTBM_Function::post_id_multi_language($ttbm_id);
-							if (get_post_type($ttbm_id) == TTBM_Function::get_cpt_name()) {
-								$ticket = MP_Global_Function::get_order_item_meta($item_id, '_ttbm_ticket_info');
-								$ticket_info = $ticket ? MP_Global_Function::data_sanitize($ticket) : [];
-								$hotel = MP_Global_Function::get_order_item_meta($item_id, '_ttbm_hotel_info');
-								$hotel_info = $hotel ? MP_Global_Function::data_sanitize($hotel) : [];
-								$user = MP_Global_Function::get_order_item_meta($item_id, '_ttbm_user_info');
-								$user_info = $user ? MP_Global_Function::data_sanitize($user) : [];
-								$service = MP_Global_Function::get_order_item_meta($item_id, '_ttbm_service_info');
-								$service_info = $service ? MP_Global_Function::data_sanitize($service) : [];
-								self::add_billing_data($ticket_info, $hotel_info, $user_info, $ttbm_id, $order_id);
-								$this->add_extra_service_data($service_info, $ttbm_id, $order_id);
+							if (!self::check_duplicate_order($order_id, $item_id)) {
+								$ttbm_id = MP_Global_Function::get_order_item_meta($item_id, '_ttbm_id');
+								$ttbm_id = TTBM_Function::post_id_multi_language($ttbm_id);
+								if (get_post_type($ttbm_id) == TTBM_Function::get_cpt_name()) {
+									$ticket = MP_Global_Function::get_order_item_meta($item_id, '_ttbm_ticket_info');
+									$ticket_info = $ticket ? MP_Global_Function::data_sanitize($ticket) : [];
+									$hotel = MP_Global_Function::get_order_item_meta($item_id, '_ttbm_hotel_info');
+									$hotel_info = $hotel ? MP_Global_Function::data_sanitize($hotel) : [];
+									$user = MP_Global_Function::get_order_item_meta($item_id, '_ttbm_user_info');
+									$user_info = $user ? MP_Global_Function::data_sanitize($user) : [];
+									$service = MP_Global_Function::get_order_item_meta($item_id, '_ttbm_service_info');
+									$service_info = $service ? MP_Global_Function::data_sanitize($service) : [];
+									self::add_billing_data($ticket_info, $hotel_info, $user_info, $ttbm_id, $order_id);
+									$this->add_extra_service_data($service_info, $ttbm_id, $order_id);
+								}
 							}
 						}
 					}
@@ -479,7 +481,7 @@
 							$zdata[$count]['ttbm_billing_address'] = $billing_address;
 							$user_data = apply_filters('ttbm_user_booking_data_arr', $zdata[$count], $count, $user_info, $ttbm_id);
 							// echo '<pre>';print_r($user_data['ttbm_billing_name']);echo '</pre>';
-							// echo '<pre>';print_r($user_data);echo '</pre>';die();
+							 //echo '<pre>';print_r($user_data);echo '</pre>';die();
 							//echo "<pre>";print_r(array($k,$user_data));echo "</pre>";exit;
 							self::add_cpt_data('ttbm_booking', $user_data['ttbm_billing_name'], $user_data);
 							$count++;
@@ -572,7 +574,7 @@
 				return $total_price;
 			}
 			public static function add_cpt_data($cpt_name, $title, $meta_data = array(), $status = 'publish', $cat = array()) {
-				if (!self::check_duplicate_order($meta_data['ttbm_order_id'], $meta_data['ttbm_id'])) {
+
 					$new_post = array(
 						'post_title' => $title,
 						'post_content' => '',
@@ -593,7 +595,7 @@
 						update_post_meta($post_id, 'ttbm_pin', $ttbm_pin);
 					}
 					wp_reset_postdata();
-				}
+
 
 			}
 			public static function check_duplicate_order($order_id, $ttbm_id) {

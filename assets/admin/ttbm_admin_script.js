@@ -1,5 +1,28 @@
 (function ($) {
     "use strict";
+    $(document).on('click', '.ttbm_add_item', function () {
+        let parent = $(this).closest('.mp_settings_area');
+        let item = parent.find('>.mp_hidden_content').first().find('.mp_hidden_item').html();
+        load_sortable_datepicker(parent, item);
+        parent.find('.mp_item_insert').find('.add_ttbm_select2').select2({});
+        return true;
+    });
+    $(document).on("click", ".mp_remove_icon", function (e) {
+        e.preventDefault();
+        if (
+            confirm(
+                "Are You Sure , Remove this row ? \n\n 1. Ok : To Remove . \n 2. Cancel : To Cancel ."
+            )
+        ) {
+            $(this).closest(".mp_remove_area").slideUp(250).remove();
+            return true;
+        } else {
+            return false;
+        }
+    });
+}(jQuery));
+(function ($) {
+    "use strict";
     $(document).on('change', '.ttbm_settings [name="ttbm_type"]', function (e) {
         e.preventDefault();
         let ttbm_type = $(this).val();

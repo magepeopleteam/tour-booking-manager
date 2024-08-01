@@ -905,12 +905,19 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   border: 1px solid #d8d8d8;
   padding: 20px;
   margin-top: -1px;
+  width: 100%;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: row;
   cursor: pointer;
+}
+@media (max-width: 1200px) {
+  #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label {
+    flex-direction: column;
+  }
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label p, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label p {
   font-size: 14px;
@@ -958,7 +965,7 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
     color: var(--mpl-secondary);
   }
   .mpStyle .tabsContent {
-    overflow: visible;
+    overflow: scroll;
   }
   .mpStyle .navy_blueButton, .mpStyle [class*=_navy_blueButton] {
     background-color: var(--mpl-primary);

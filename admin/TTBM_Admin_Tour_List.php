@@ -92,7 +92,7 @@
                                 </div>
                                 <p class="total-found">
 									<?php esc_html_e('Total Found :', 'tour-booking-manager'); ?>&nbsp;
-                                    <span class="badge purple"><b><?php echo esc_html($post_query->found_posts); ?></b> <?php echo esc_html('Travels', 'tour-booking-manager'); ?></span>
+                                    <span class="badge purple"><b><?php echo esc_html($post_query->found_posts); ?></b> <?php echo esc_html__('Travels', 'tour-booking-manager'); ?></span>
                                 </p>
                                 <!-- <label class="groupContent bgWhite textDefault"><span class="padding_xs">--><?php //echo $label . ' ' . esc_html__('Per Page', 'tour-booking-manager'); ?><!--</span> <input type="number" min="1" class="formControl _max_100_textCenter" name="post_per_page" value="20"/></label>-->
                             </div>

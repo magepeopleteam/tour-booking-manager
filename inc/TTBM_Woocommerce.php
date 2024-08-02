@@ -103,8 +103,8 @@
 					$extra_service = $values['ttbm_extra_service_info'] ?: [];
 					$user_info = $values['ttbm_user_info'] ?: [];
 					$date = $values['ttbm_date'] ?: '';
-					$data_format = MP_Global_Function::check_time_exit_date($date) ? 'date-time-text' : 'date-text';
-					$start_date = MP_Global_Function::date_format( $date);
+					$data_format = MP_Global_Function::check_time_exit_date($date) ? 'full' : 'date';
+					$start_date = MP_Global_Function::date_format( $date,$data_format);
 					$location = MP_Global_Function::get_post_info($ttbm_id, 'ttbm_location_name');
 					$date_text = TTBM_Function::get_name() . ' ' . esc_html__('Date', 'tour-booking-manager');
 					$location_text = TTBM_Function::get_name() . ' ' . esc_html__('Location', 'tour-booking-manager');

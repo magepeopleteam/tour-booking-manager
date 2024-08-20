@@ -240,12 +240,28 @@
 				return $interval->format('%h')."H ".$interval->format('%i')."M";
 			}
 			//***********************************//
-			public static function get_settings($section, $key, $default = '') {
-				$options = get_option($section);
-				if (isset($options[$key]) && $options[$key]) {
-					$default = $options[$key];
+			public static function get_settings( $section, $key, $default = '' ) {
+				$options = get_option( $section );
+				if ( isset( $options[ $key ] ) ) {
+					if ( is_array( $options[ $key ] ) ) {
+						if ( ! empty( $options[ $key ] ) ) {
+							return $options[ $key ];
+						} else {
+							return $default;
+						}
+					} else {
+						if ( ! empty( $options[ $key ] ) ) {
+							return wp_kses_post( $options[ $key ] );
+						} else {
+							return $default;
+						}
+					}
 				}
-				return $default;
+				if ( is_array( $default ) ) {
+					return $default;
+				} else {
+					return wp_kses_post( $default );
+				}
 			}
 			public static function get_style_settings($key, $default = '') {
 				return self::get_settings('mp_style_settings', $key, $default);

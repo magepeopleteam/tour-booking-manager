@@ -528,11 +528,11 @@
             $.ajax({
                 type: 'POST', url: mp_ajax_url, data: {
                     "action": "ttbm_trash_post",
-                    "post_id": post_id
+                    "post_id": post_id,
+                    "nonce": $(this).closest('.buttonGroup').find('#edd_sample_nonce').val(),
                 }, beforeSend: function () {
                     dLoader(target);
                 }, success: function (data) {
-                    //alert(data);
                     dLoaderRemove(target);
                     window.location.reload();
                 }

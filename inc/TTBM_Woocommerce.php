@@ -103,8 +103,8 @@
 					$extra_service = $values['ttbm_extra_service_info'] ?: [];
 					$user_info = $values['ttbm_user_info'] ?: [];
 					$date = $values['ttbm_date'] ?: '';
-					$data_format = MP_Global_Function::check_time_exit_date($date) ? 'date-time-text' : 'date-text';
-					$start_date = MP_Global_Function::date_format( $date);
+					$data_format = MP_Global_Function::check_time_exit_date($date) ? 'full' : 'date';
+					$start_date = MP_Global_Function::date_format( $date,$data_format);
 					$location = MP_Global_Function::get_post_info($ttbm_id, 'ttbm_location_name');
 					$date_text = TTBM_Function::get_name() . ' ' . esc_html__('Date', 'tour-booking-manager');
 					$location_text = TTBM_Function::get_name() . ' ' . esc_html__('Location', 'tour-booking-manager');
@@ -168,7 +168,7 @@
 								$service = MP_Global_Function::get_order_item_meta($item_id, '_ttbm_service_info');
 								$service_info = $service ? MP_Global_Function::data_sanitize($service) : [];
 								self::add_billing_data($ticket_info, $hotel_info, $user_info, $ttbm_id, $order_id);
-								$this->add_extra_service_data($service_info, $ttbm_id, $order_id);
+								self::add_extra_service_data($service_info, $ttbm_id, $order_id);
 							}
 						}
 					}
@@ -199,7 +199,7 @@
 									$service = MP_Global_Function::get_order_item_meta($item_id, '_ttbm_service_info');
 									$service_info = $service ? MP_Global_Function::data_sanitize($service) : [];
 									self::add_billing_data($ticket_info, $hotel_info, $user_info, $ttbm_id, $order_id);
-									$this->add_extra_service_data($service_info, $ttbm_id, $order_id);
+									self::add_extra_service_data($service_info, $ttbm_id, $order_id);
 								}
 							}
 						}
@@ -413,7 +413,7 @@
 				}
 			}
 			//**********************//
-			public function add_extra_service_data($service_info, $ttbm_id, $order_id): array {
+			public static function add_extra_service_data($service_info, $ttbm_id, $order_id): array {
 				$order = wc_get_order($order_id);
 				$order_meta = get_post_meta($order_id);
 				$order_status = $order->get_status();

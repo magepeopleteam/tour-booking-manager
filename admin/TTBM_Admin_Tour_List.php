@@ -8,7 +8,7 @@
 				add_action('admin_menu', array($this, 'tour_list_menu'), 1);
 				//===//
 				add_action('wp_ajax_ttbm_trash_post', array($this, 'ttbm_trash_post'));
-				//add_action('wp_ajax_nopriv_ttbm_trash_post', array($this, 'ttbm_trash_post'));
+				add_action('wp_ajax_nopriv_ttbm_trash_post', array($this, 'ttbm_trash_post'));
 			}
 			public function tour_list_menu() {
 				$label = TTBM_Function::get_name();
@@ -92,7 +92,7 @@
                                 </div>
                                 <p class="total-found">
 									<?php esc_html_e('Total Found :', 'tour-booking-manager'); ?>&nbsp;
-                                    <span class="badge purple"><b><?php echo esc_html($post_query->found_posts); ?></b> <?php echo esc_html('Travels', 'tour-booking-manager'); ?></span>
+                                    <span class="badge purple"><b><?php echo esc_html($post_query->found_posts); ?></b> <?php echo esc_html__('Travels', 'tour-booking-manager'); ?></span>
                                 </p>
                                 <!-- <label class="groupContent bgWhite textDefault"><span class="padding_xs">--><?php //echo $label . ' ' . esc_html__('Per Page', 'tour-booking-manager'); ?><!--</span> <input type="number" min="1" class="formControl _max_100_textCenter" name="post_per_page" value="20"/></label>-->
                             </div>
@@ -168,6 +168,7 @@
                                     <td><?php echo MP_Global_Function::date_format( TTBM_Function::get_reg_end_date($post_id)); ?></td>
                                     <td>
                                         <div class="buttonGroup">
+                                            <?php wp_nonce_field('edd_sample_nonce', 'edd_sample_nonce');  ?>
                                             <button class="_mpBtn_xs_textGray" type="button" title="<?php esc_attr_e('Edit Details.', 'tour-booking-manager'); ?>" data-href="<?php echo esc_url(admin_url('post.php?post=' . $post_id . '&action=edit')); ?>">
                                                 <span class="fas fa-edit mp_zero"></span>
                                             </button>
@@ -196,6 +197,9 @@
 				//echo '<pre>'; print_r( $all_orders ); echo '</pre>';
 			}
 			public function ttbm_trash_post() {
+				if ( ! isset( $_REQUEST['nonce'] ) || ! wp_verify_nonce( $_REQUEST['nonce'], 'edd_sample_nonce' ) ) {
+					die();
+				}
 				if (current_user_can('administrator')) {
 					if (get_post_type($_REQUEST['post_id']) == TTBM_Function::get_cpt_name()) {
 						$post_id = isset($_REQUEST['post_id']) ? MP_Global_Function::data_sanitize($_REQUEST['post_id']) : '';

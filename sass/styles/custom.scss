@@ -87,6 +87,9 @@
                 margin-bottom: 10px;
                 color: var(--mpl-secondary);
               }
+              span,a{
+                line-height: 20px;
+              }
               .text{
                 color: #6B7280;
                 font-weight: normal;
@@ -141,6 +144,18 @@
     }
     .mpStyle .tabsContent {
       overflow: scroll;
+    }
+    code{
+      line-height: 24px;
+    }
+    .tab-content-ttbm_date_config_meta_boxs{
+      tr{
+        th{
+          label{
+            line-height: 14px;
+          }
+        }
+      }
     }
 
     .mpStyle .navy_blueButton, .mpStyle [class*="_navy_blueButton"] {

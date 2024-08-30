@@ -926,6 +926,9 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   margin-bottom: 10px;
   color: var(--mpl-secondary);
 }
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label span, #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label a, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label span, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label a {
+  line-height: 20px;
+}
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label .text, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label .text {
   color: #6B7280;
   font-weight: normal;
@@ -969,6 +972,12 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   }
   .mpStyle .tabsContent {
     overflow: scroll;
+  }
+  code {
+    line-height: 24px;
+  }
+  .tab-content-ttbm_date_config_meta_boxs tr th label {
+    line-height: 14px;
   }
   .mpStyle .navy_blueButton, .mpStyle [class*=_navy_blueButton] {
     background-color: var(--mpl-primary);

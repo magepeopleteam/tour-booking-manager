@@ -70,12 +70,16 @@
             border: 1px solid #d8d8d8;
             padding: 20px;
             margin-top: -1px;
-
+            width: 100%;
             label.label{
               display: flex;
               justify-content: space-between;
               align-items: center;
+              flex-direction: row;
               cursor: pointer;
+              @media (max-width:1200px) {
+                flex-direction: column;
+              }
               p{
                 font-size: 14px;
                 font-weight: bold;
@@ -127,13 +131,16 @@
       border-bottom: 0px solid $color-light;
     }
 
+    div.mp_global_settings label .info_text {
+      line-height: 18px;
+    }
 
     div.mpStyle [data-tabs-target]{
       color: $color-secondary;
       
     }
     .mpStyle .tabsContent {
-      overflow: visible;
+      overflow: scroll;
     }
 
     .mpStyle .navy_blueButton, .mpStyle [class*="_navy_blueButton"] {

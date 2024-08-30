@@ -131,6 +131,9 @@
       border-bottom: 0px solid $color-light;
     }
 
+    div.mp_global_settings label .info_text {
+      line-height: 18px;
+    }
 
     div.mpStyle [data-tabs-target]{
       color: $color-secondary;

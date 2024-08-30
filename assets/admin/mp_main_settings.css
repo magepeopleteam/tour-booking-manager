@@ -961,6 +961,9 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   .leftTabs [data-tabs-target] {
     border-bottom: 0px solid var(--mpl-light);
   }
+  div.mp_global_settings label .info_text {
+    line-height: 18px;
+  }
   div.mpStyle [data-tabs-target] {
     color: var(--mpl-secondary);
   }

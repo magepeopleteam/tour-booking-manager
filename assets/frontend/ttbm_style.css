@@ -236,3 +236,17 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 @media only screen and (max-width: 320px) {
 	div.small_box {width: calc(100% - var(--dmp));}
 }
+
+.ttbm_location_list div.filter_item{
+	border-radius: 0;
+}
+
+.ttbm_location_image{
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
+}
+
+.ttbm_location_list div.pagination_area{
+	margin-top: 30px;
+}

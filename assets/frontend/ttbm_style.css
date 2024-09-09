@@ -250,3 +250,18 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 .ttbm_location_list div.pagination_area{
 	margin-top: 30px;
 }
+
+@media only screen and (min-width: 10px) {
+
+	#ui-datepicker-div.ui-datepicker td{
+		background-color: #fff;
+		border: 1px solid var(--color_theme);
+		padding: 4px 6px;
+	}
+	#ui-datepicker-div.ui-datepicker td.ui-datepicker-unselectable.ui-state-disabled {
+		background-color: #d8d8d8;
+		color: var(--color_white);
+		border: 1px solid var(--color_theme);
+		padding: 4px 6px;
+	}
+}

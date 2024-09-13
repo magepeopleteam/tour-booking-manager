@@ -25,6 +25,29 @@
 			placeholderLoaderRemove(all_item);
 		});
 	});
+
+	//on location change
+	$(document).on('change', '#ttbm_location', function () {
+		const location = $(this).val();
+
+		//ajax call
+		$.ajax({
+			url: mp_ajax.ajax_url,
+			type: 'post',
+			data: {
+				action: 'ttbm_get_location_based_activities',
+				location: location,
+			},
+			success: function (response) {
+				const data = JSON.parse(response);
+				if (data.status === 200) {
+					$('#ttbm_activity').html(data.activities);
+				}
+			}
+		});
+	});
+
+
 	//************************************//
 	function search_filter_initial(parent) {
 		parent.find('.all_filter_item').slideDown('fast');

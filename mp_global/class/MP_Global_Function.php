@@ -872,6 +872,37 @@
 					'ZW' => 'Zimbabwe',
 				);
 			}
+
+            public static function location_based_activities($location_name) {
+                $args = array(
+                    'post_type' => 'ttbm_tour',
+                    'post_status' => 'publish',
+                    'posts_per_page' => -1,
+                    'meta_query' => array(
+                        array(
+                            'key' => 'ttbm_location_name',
+                            'value' => $location_name,
+                            'compare' => '=',
+                        ),
+                    ),
+                );
+
+                $query = new WP_Query($args);
+                $posts = $query->posts;
+
+                $post_activities = array();
+                foreach ($posts as $post) {
+                    $post_activities[] = maybe_unserialize(get_post_meta($post->ID, 'ttbm_tour_activities', true));
+                }
+
+                $all_activities = [];
+                foreach ($post_activities as $post_activity) {
+                    foreach ($post_activity as $act) {
+                        $all_activities[] = $act;
+                    }
+                }
+                return array_unique($all_activities);
+            }
 		}
 		new MP_Global_Function();
 	}

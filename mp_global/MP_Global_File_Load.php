@@ -46,6 +46,7 @@
 				wp_enqueue_script('mp_owl_carousel', MP_GLOBAL_PLUGIN_URL . '/assets/owl_carousel/owl.carousel.min.js', array(), time(), true);
 				wp_enqueue_style('mp_plugin_global', MP_GLOBAL_PLUGIN_URL . '/assets/mp_style/mp_style.css', array(), time());
 				wp_enqueue_script('mp_plugin_global', MP_GLOBAL_PLUGIN_URL . '/assets/mp_style/mp_script.js', array('jquery'), time(), true);
+                wp_localize_script('mp_plugin_global', 'mp_ajax', array('ajax_url' => admin_url('admin-ajax.php')));
 				do_action('add_mp_global_enqueue');
 			}
 			public function admin_enqueue() {

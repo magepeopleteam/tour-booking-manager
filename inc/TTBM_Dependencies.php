@@ -29,8 +29,12 @@
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Details_Layout.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Booking.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
+                require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Ajax.php';
 			}
 			public function global_enqueue() {
+                wp_localize_script('filter-script', 'filter_ajax_details', array(
+                    'ajax_url' => admin_url('admin-ajax.php'),
+                ));
 				do_action('ttbm_common_script');
 			}
 			public function frontend_script() {
@@ -61,6 +65,9 @@
 				wp_enqueue_style('ttbm_registration_style', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.css', array(), time());
 				wp_enqueue_script('ttbm_registration_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.js', array('jquery'), time(), true);
 				wp_enqueue_script('ttbm_price_calculation', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_price_calculation.js', array('jquery'), time(), true);
+                wp_localize_script('filter-script', 'filter_ajax_details', array(
+                    'ajax_url' => admin_url('admin-ajax.php'),
+                ));
 				do_action('add_ttbm_registration_enqueue');
 			}
 			public function ttbm_upgrade() {

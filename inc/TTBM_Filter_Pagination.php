@@ -208,13 +208,12 @@
 			//****************************************/
 			public function location_filter($params) {
 				if ($params['location-filter'] == 'yes') {
-                    echo "jkdnkjd";
 					$locations = MP_Global_Function::get_taxonomy('ttbm_tour_location');
 					if (sizeof($locations) > 0) {
 						$url = $_GET['location_filter'] ?? '';
 						?>
                         <label data-placeholder>
-                            <select class="formControl" name="location_filter">
+                            <select class="formControl" name="location_filter" id="ttbm_location">
                                 <option selected value=""><?php esc_html_e('All Location', 'tour-booking-manager'); ?></option>
 								<?php foreach ($locations as $location) { ?>
 									<?php $name = get_term_meta($location->term_id, 'ttbm_country_location'); ?>
@@ -421,7 +420,7 @@
 						$current_activity = $url_activity ? get_term_by('id', $url_activity, 'ttbm_tour_activities')->term_id : '';
 						?>
                         <label data-placeholder>
-                            <select class="formControl" name="activity_filter">
+                            <select class="formControl" name="activity_filter" id="ttbm_activity">
                                 <option selected value=""><?php esc_html_e('All Activity', 'tour-booking-manager'); ?></option>
 								<?php foreach ($activities as $activity) { ?>
 									<?php $selected = $current_activity == $activity->term_id ? 'selected' : ''; ?>

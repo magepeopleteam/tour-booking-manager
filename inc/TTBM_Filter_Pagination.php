@@ -208,6 +208,7 @@
 			//****************************************/
 			public function location_filter($params) {
 				if ($params['location-filter'] == 'yes') {
+                    echo "jkdnkjd";
 					$locations = MP_Global_Function::get_taxonomy('ttbm_tour_location');
 					if (sizeof($locations) > 0) {
 						$url = $_GET['location_filter'] ?? '';

@@ -100,7 +100,7 @@
 					$url = $_GET['type_filter'] ?? '';
 					?>
                     <label data-placeholder>
-                        <select class="formControl" name="type_filter">
+                        <select class="formControl location_select_2_basic" name="type_filter">
                             <option selected value=""><?php esc_html_e('All Type', 'tour-booking-manager'); ?></option>
                             <option value="general" <?php echo esc_attr($url == 'general' ? 'selected' : ''); ?>><?php esc_html_e('Tour', 'tour-booking-manager'); ?></option>
                             <option value="hotel" <?php echo esc_attr($url == 'hotel' ? 'selected' : ''); ?>><?php esc_html_e('Hotel', 'tour-booking-manager'); ?></option>
@@ -132,7 +132,7 @@
 						$current = $url ? get_term_by('id', $url, 'ttbm_tour_cat')->term_id : '';
 						?>
                         <label data-placeholder>
-                            <select class="formControl" name="category_filter">
+                            <select class="formControl location_select_2_basic" name="category_filter">
                                 <option selected value=""><?php esc_html_e('All Category', 'tour-booking-manager'); ?></option>
 								<?php foreach ($categories as $category) { ?>
                                     <option value="<?php echo esc_attr($category->term_id); ?>" <?php echo esc_attr($url && $current == $category->term_id ? 'selected' : ''); ?>><?php echo esc_html($category->name); ?></option>
@@ -169,7 +169,7 @@
 						$current = $url ? get_term_by('id', $url, 'ttbm_tour_org')->term_id : '';
 						?>
                         <label data-placeholder>
-                            <select class="formControl" name="organizer_filter">
+                            <select class="formControl location_select_2_basic" name="organizer_filter">
                                 <option selected value=""><?php esc_html_e('All Organizer', 'tour-booking-manager'); ?></option>
 								<?php foreach ($organizers as $organizer) {
 									if (get_term($organizer->term_id, 'ttbm_tour_org')->count) { ?>
@@ -213,7 +213,7 @@
 						$url = $_GET['location_filter'] ?? '';
 						?>
                         <label data-placeholder>
-                            <select class="formControl" name="location_filter" id="ttbm_location">
+                            <select class="formControl location_select_2_basic" name="location_filter" id="ttbm_location">
                                 <option selected value=""><?php esc_html_e('All Location', 'tour-booking-manager'); ?></option>
 								<?php foreach ($locations as $location) { ?>
 									<?php $name = get_term_meta($location->term_id, 'ttbm_country_location'); ?>
@@ -277,7 +277,7 @@
 						$url = $_GET['country_filter'] ?? '';
 						?>
                         <label data-placeholder>
-                            <select class="formControl" name="country_filter">
+                            <select class="formControl location_select_2_basic" name="country_filter">
                                 <option value="" selected><?php esc_html_e('All Country', 'tour-booking-manager'); ?></option>
 								<?php foreach ($countries as $country) { ?>
 									<?php $selected = $country == $url ? 'selected' : ''; ?>
@@ -314,7 +314,7 @@
 						$url = $_GET['duration_filter'] ?? '';
 						?>
                         <label data-placeholder>
-                            <select class="formControl" name="duration_filter">
+                            <select class="formControl location_select_2_basic" name="duration_filter">
                                 <option value="" selected><?php esc_html_e('All Duration', 'tour-booking-manager'); ?></option>
 								<?php foreach ($durations as $duration) { ?>
 									<?php if ($duration > 0) { ?>
@@ -420,7 +420,7 @@
 						$current_activity = $url_activity ? get_term_by('id', $url_activity, 'ttbm_tour_activities')->term_id : '';
 						?>
                         <label data-placeholder>
-                            <select class="formControl" name="activity_filter" id="ttbm_activity">
+                            <select class="formControl location_select_2_basic" name="activity_filter" id="ttbm_activity">
                                 <option selected value=""><?php esc_html_e('All Activity', 'tour-booking-manager'); ?></option>
 								<?php foreach ($activities as $activity) { ?>
 									<?php $selected = $current_activity == $activity->term_id ? 'selected' : ''; ?>
@@ -513,7 +513,7 @@
 					$date_format = MP_Global_Function::get_settings('mp_global_settings', 'date_format_short', 'M , Y');
 					?>
                     <label data-placeholder>
-                        <select class="formControl" name="month_filter">
+                        <select class="formControl location_select_2_basic" name="month_filter">
                             <option selected value=""><?php esc_html_e('All Month', 'tour-booking-manager'); ?></option>
                             <option value="<?php echo esc_attr($month); ?>" <?php echo esc_attr($selected); ?>><?php echo date_i18n($date_format, strtotime($current_date)); ?></option>
 							<?php

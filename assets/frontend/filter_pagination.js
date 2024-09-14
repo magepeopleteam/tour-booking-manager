@@ -2,6 +2,8 @@
 	"use strict";
 	$(document).ready(function () {
 		load_pagination_initial_item();
+		$('.location_select_2_basic').select2();
+
 	});
 	$(document).on('click', '.ttbm_filter_area .ttbm_grid_view', function () {
 		let parent = $(this).closest('.ttbm_filter_area');

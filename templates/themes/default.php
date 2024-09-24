@@ -25,7 +25,7 @@
 							<?php do_action( 'ttbm_day_wise_details' ); ?>
 							<?php do_action( 'ttbm_faq' ); ?>
 						</div>
-						<div class="ttbm_content__right shadow_one">
+						<div class="ttbm_content__right">
 							<?php do_action( 'ttbm_include_feature' ); ?>
 							<?php do_action( 'ttbm_exclude_service' ); ?>
 							<?php do_action( 'ttbm_activity' ); ?>

@@ -15,6 +15,7 @@
 			public function add_global_style() {
 				$default_color   = MP_Global_Function::get_style_settings( 'default_text_color', '#303030' );
 				$theme_color     = MP_Global_Function::get_style_settings( 'theme_color', '#F12971' );
+				$theme_color_rgb     = MP_Global_Function::get_style_settings( 'theme_color_rgb', 'rgb(241,41,120)' );
 				$alternate_color = MP_Global_Function::get_style_settings( 'theme_alternate_color', '#fff' );
 				$warning_color   = MP_Global_Function::get_style_settings( 'warning_color', '#E67C30' );
 				$default_fs      = MP_Global_Function::get_style_settings( 'default_font_size', '14' ) . 'px';
@@ -79,6 +80,7 @@
 						--color_active: #0E6BB7;
 						--color_section: <?php echo esc_attr($section_bg); ?>;
 						--color_theme: <?php echo esc_attr($theme_color); ?>;
+						--color_theme_rbg: <?php echo esc_attr($theme_color_rgb); ?>;
 						--color_theme_ee: <?php echo esc_attr($theme_color).'ee'; ?>;
 						--color_theme_cc: <?php echo esc_attr($theme_color).'cc'; ?>;
 						--color_theme_aa: <?php echo esc_attr($theme_color).'aa'; ?>;

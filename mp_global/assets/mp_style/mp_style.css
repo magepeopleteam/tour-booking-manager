@@ -232,6 +232,9 @@
 		font-weight: var(--fw-normal);
 		text-transform: inherit;
 	}
+	div.mpStyle label {
+		display: block;
+	}
 	div.mpStyle label,
 	div.mpStyle [class*="_fs_label"] {
 		color: var(--mpl-secondary);
@@ -350,6 +353,7 @@
 		display: flex;
 		-webkit-justify-content: space-between;
 		justify-content: space-between;
+		align-items: center;
 	}
 	.mpStyle [class*="_justifyBetween"],
 	.mpStyle .inputInline .mpForm {
@@ -522,8 +526,8 @@
 	}
 	.mpStyle button[disabled] {
 		cursor: not-allowed;
-		opacity: 0.8;
-		background-color: #ddd;
+		background-color: var(--color_theme);
+		color: #fff;
 	}
 	.mpStyle button:hover,
 	.mpStyle button:focus {
@@ -1314,7 +1318,7 @@
 		height: 200px;
 	}
 	[data-bg-image] {
-		background-size: 100% 100%;
+		background-size: cover;
 		background-position: center center;
 		position: relative;
 		height: 100%;
@@ -1403,6 +1407,7 @@
 		transition: transform 0.6s ease-in-out, -webkit-transform 0.6s ease-in-out;
 		max-height: 510px;
 		overflow: hidden;
+		border-radius: 10px;
 	}
 	div.superSlider .sliderItem.activeSlide {
 		z-index: 1;
@@ -1464,7 +1469,7 @@
 	div.superSlider .sliderShowcase.bottom {
 		margin: var(--dmp_xs) 0 0 0;
 	}
-	div.superSlider .sliderShowcaseItem {margin: 0 0 10px 0;    position: relative;    overflow: hidden;  }
+	div.superSlider .sliderShowcaseItem {margin: 0 0 10px 0;position: relative;overflow: hidden; border-radius:10px;}
 	div.superSlider .area_column .sliderShowcaseItem {
 		width: calc(25% - var(--dmp_xs));
 	}
@@ -1889,9 +1894,14 @@
 		background-color: #fff;
 		padding: 10px 15px;
 		font-weight: 500;
-		height: 46px;
+		height: 40px;
 		border-radius: 6px;
 	}
+
+	div.mpStyle #ttbm_select_date.formControl {
+		height: 30px;
+	}
+
 	.mpStyle .formControl:focus {
 		outline: 0;
 		background-color: #fff;
@@ -2217,6 +2227,7 @@
 		display: flex;
 		align-items: center;
 		gap: 5px;
+		justify-content: center;
 	}
 	div.mpStyle div.groupContent > * {
 		border: 1px solid var(--color_border);
@@ -2235,7 +2246,8 @@
 		padding: 5px;
 		height: 40px;
 		margin-bottom: 0 !important;
-		min-width: 50px;
+		width: 50px;
+		min-width: 35px;
 	}
 
 
@@ -3883,11 +3895,16 @@
 @media only screen and (min-width: 10px) {
 	table.ui-datepicker-calendar{
 		border-collapse: collapse;
+		margin-top: 0 !important;
+		margin-bottom: 0 !important;
 	}
 	#ui-datepicker-div {
-		padding:2px;
-		background-color: #fff;
-		box-shadow: 0 0 5px #ddd;
+		/*padding:2px;*/
+		/*background-color: #fff;*/
+		/*box-shadow: 0 0 5px #ddd;*/
+		box-shadow: 10px 10px 30px 0 rgba(0, 0, 0, 0.3);
+		/*border: 1px solid #f12a7140;*/
+		border: 1px solid rgba(var(--color_theme), 0.5);
 	}
 	table.ui-datepicker-calendar th{
 		padding: 10px;
@@ -3896,9 +3913,9 @@
 		border: 1px solid var(--mpl-secondary);
 	}
 	#ui-datepicker-div .ui-datepicker-header {
-		background-color: var(--color_theme);
+		background-color: var(--color_black);
 		background-image: none;
-		border:1px solid var(--color_theme);
+		/*border:1px solid var(--color_theme);*/
 		padding: var(--dmp_xs);
 		color: var(--color_theme_alter);
 		border-radius: 0;
@@ -3912,20 +3929,22 @@
 		display: none;
 	}
 	#ui-datepicker-div .ui-datepicker-prev {
-		top: 6px;
+		top: 10px;
 		left: 10px;
 		height: 30px;
 		width: 30px;
 		position: absolute;
 		border: 1px solid var(--mpl-white);
+		cursor: pointer;
 	}
 	#ui-datepicker-div .ui-datepicker-next {
-		top: 6px;
+		top: 10px;
 		right: 10px;
 		height: 30px;
 		width: 30px;
 		position: absolute;
 		border: 1px solid var(--mpl-white);
+		cursor: pointer;
 	}
 	#ui-datepicker-div .ui-datepicker-prev:hover,
 	#ui-datepicker-div .ui-datepicker-prev:focus,
@@ -3981,7 +4000,7 @@
 		background-image: none;
 	}
 	#ui-datepicker-div .ui-datepicker-title {
-		background-color: var(--color_theme);
+		/*background-color: var(--color_theme);*/
 		color: var(--color_theme_alter);
 		background-image: none;
 		font-size: var(--fs_h5);
@@ -3996,6 +4015,9 @@
 		padding: 0 var(--dmp_xs);
 		text-align: left;
 		color: var(--d_color);
+		border-radius: 6px;
+		border: 0;
+		margin: 0 3px;
 	}
 	#ui-datepicker-div.ui-datepicker td {
 		background-color: floralwhite;
@@ -4009,9 +4031,9 @@
 		border: 1px solid var(--color_border);
 		border-bottom: 0;
 	}
-	.component:last-child{
-		border: 1px solid var(--color_border);
-	}
+	/*.component:last-child{*/
+	/*	border: 1px solid var(--color_border);*/
+	/*}*/
 }
 /* ***********************location********************* */
 .ttbm_location_image{

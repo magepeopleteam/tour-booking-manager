@@ -13,6 +13,10 @@ div.ttbm_container {width: 100%;max-width: var(--dcontainer_width);margin: 0 aut
 .ttbm_wraper table th,
 /*.ttbm_wraper table td {padding: 5px 5px 5px 15px;vertical-align: middle;border: 1px dotted #DDD;}*/
 div.ttbm_faq_item .ttbm_faq_title {-webkit-transition: 350ms ease-in-out;transition: 350ms ease-in-out;}
+.ttbm-rating-stars {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
 /**********Shadow content****************************/
 div.viator_top_section .ttbm_booking_panel form,
 #ttbm_related_tour div.filter_item,
@@ -36,7 +40,13 @@ div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-w
 .ttbm_content__left {width: calc(100% - 346px);}
 .hip_hop_hotel_theme .ttbm_content__left,
 .ttbm_spring_theme .ttbm_content__left {width: calc(50% - 20px);}
-.ttbm_content__right {width: 330px;}
+.ttbm_content__right {
+	width: 330px;
+	padding: var(--dmp);
+	border: 1px solid var(--color_border);
+	height: max-content;
+	border-radius: 10px;
+}
 .hip_hop_hotel_theme .ttbm_content__right,
 .ttbm_spring_theme .ttbm_content__right {width: 50%;}
 /**/
@@ -104,11 +114,19 @@ div.bg_image_area .group_item .ttbm_list_info {
 	font-size: 12px;
 	background-color: #0007;
 }
-div.include_service ul li[title]:hover::before {position: absolute;content: '';left: calc(50% - 9px);top: -20px;border: 10px solid transparent;border-bottom-color: #333;}
+div.include_service ul li[title]:hover::before {
+	position: absolute;
+	content: '';
+	left: calc(50% - 9px);
+	top: -11px;
+	border: 8px solid transparent;
+	border-bottom-color: #333;
+	transform: rotate(180deg);
+}
 div.include_service ul li[title]:hover::after {
 	content: attr(title);
 	position: absolute;
-	top: -100%;
+	top: -122%;
 	left: 0;
 	background-color: #333;
 	padding: 5px var(--dbr);
@@ -116,6 +134,7 @@ div.include_service ul li[title]:hover::after {
 	border-radius: 5px;
 	white-space: nowrap;
 	font-size: 12px;
+	line-height: 20px;
 }
 div.include_service ul {display: -webkit-flex;display: flex;}
 div.include_service ul li {
@@ -156,7 +175,8 @@ div.include_service ul li:hover {
 /*	background-color: var(--color_theme) !important;*/
 /*	color: var(--color_theme_alter) !important;*/
 /*}*/
-div.filter_top_bar button {background-color: #FFF;color: var(--color_theme);font-size: var(--fs_h2);padding: 5px 7px;}
+div.filter_top_bar button {background-color: #FFF;color: var(--color_theme);font-size: var(--fs_h2);padding: 6px;
+	border-radius: 5px !important;}
 /**************default theme***********************************/
 /**************spring theme***********************************/
 /**************hip hop hotel theme***********************************/
@@ -305,13 +325,13 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 
 	#ui-datepicker-div.ui-datepicker td{
 		background-color: #fff;
-		border: 1px solid var(--color_theme);
+		border: 1px solid #feeaf1;
 		padding: 4px 6px;
 	}
 	#ui-datepicker-div.ui-datepicker td.ui-datepicker-unselectable.ui-state-disabled {
-		background-color: #d8d8d8;
+		background-color: #fef4f8;
 		color: var(--color_white);
-		border: 1px solid var(--color_theme);
+		border: 1px solid #feeaf1;
 		padding: 4px 6px;
 	}
 }

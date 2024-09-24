@@ -153,9 +153,17 @@ span.load_more_text{cursor: pointer;color: var(--color_theme_cc);}
 @media only screen and (max-width: 700px) {
 	div.ttbm_hotel_details_item,
 	div.ttbm_select_date_area {-webkit-flex-direction: column;flex-direction: column;}
-	div.ttbm_date_time_select label span {margin: 0 0 var(--dmp_xs) 0;}
+	div.ttbm_date_time_select label span {
+		/*margin: 0 0 var(--dmp_xs) 0;*/
+		display: inline-block;
+		line-height: 1;
+	}
 	div.ttbm_date_time_select label {margin: var(--dmp_xs) 0;-webkit-flex-wrap: wrap;flex-wrap: wrap;}
 	div.ttbm_hotel_list_details{width: 100%;margin: 20px 0 0 0;}
+
+	.ttbm_select_date_area .formControl {
+		width: auto !important;
+	}
 }
 @media only screen and (max-width: 600px) {
 	div.ttbm_booking_panel table td:last-child > div {min-width: auto;}

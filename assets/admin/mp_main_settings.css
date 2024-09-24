@@ -962,6 +962,10 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   border: 0;
 }
 
+.ttbm-avg-review-header {
+  align-items: center !important;
+}
+
 @media only screen and (min-width: 0px) {
   #mp_meta_box_panel .tabLists {
     border-right: 0px solid var(--mpl-light);

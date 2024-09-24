@@ -24,7 +24,7 @@ div.search_result_empty {
 	width: 100%;background-color: #FFF;padding: var(--dmp);margin: var(--dmp) 0;
 }
 div.filter_top_bar {font-size: var(--fs_h3); width: 100%;background-color: #FFF;padding: var(--dmp_xs);margin: 0 0 var(--dmp_xs) 0;}
-div.filter_short_result { font-size: var(--fs_h5); color: gray;text-align: center;margin: var(--dmp_xs) 0 0 0;}
+div.filter_short_result { font-size: var(--fs_h5); color: var(--d_color);text-align: center;margin: var(--dmpl) 0 0 0;}
 /***************************************/
 div.all_filter_item > div {margin: var(--dmp_xs_negative);}
 div.all_filter_item > div.modern {margin: 0;}

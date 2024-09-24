@@ -11,7 +11,7 @@ div.ttbm_container {width: 100%;max-width: var(--dcontainer_width);margin: 0 aut
 .ttbm_wraper table {table-layout: fixed;margin: 0; width: 100%;}
 .ttbm_wraper table th {font-size: var(--fs_label);}
 .ttbm_wraper table th,
-.ttbm_wraper table td {padding: 5px 5px 5px 15px;vertical-align: middle;border: 1px dotted #DDD;}
+/*.ttbm_wraper table td {padding: 5px 5px 5px 15px;vertical-align: middle;border: 1px dotted #DDD;}*/
 div.ttbm_faq_item .ttbm_faq_title {-webkit-transition: 350ms ease-in-out;transition: 350ms ease-in-out;}
 /**********Shadow content****************************/
 div.viator_top_section .ttbm_booking_panel form,
@@ -65,9 +65,18 @@ div.ttbm_location_list div.filter_item {padding: 0;}
 .ttbm_wraper table label select.formControl {text-align: center;}
 /*****************/
 div.item_section {margin: var(--dmp_xs_negative) var(--dmp_xs_negative) var(--dmp) var(--dmp_xs_negative);}
-div.item_section .ttbm_short_list_more {cursor: pointer;color: var(--color_theme);margin: 0 var(--dmp_xs) 0 0;font-weight: bold;}
+div.item_section .ttbm_short_list_more {
+	cursor: pointer;
+	color: var(--color_theme);
+	margin: 0 0 0 var(--dmp_xs) ;
+	font-weight: var(--fw-medium);
+	font-size: var(--fs_h4);
+	margin-top: var(--dmp_xs);
+	padding: var(--dmp_xs) var(--dmp_xs);
+	display: inline-block;
+}
 div.small_box {
-	padding: var(--dmp_xs);margin: var(--dmp_xs);width: calc(25% - var(--dmp));
+	padding: var(--dmp) var(--dmp_xs) ;margin: var(--dmp_xs);width: calc(25% - var(--dmp));
 	border: 1px solid var(--color_border);border-radius: 10px;
 	background-color: var(--color_section);line-height: 1.25;
 	-webkit-flex-direction: column;flex-direction: column;
@@ -76,7 +85,7 @@ div.small_box {
 div.small_box .item_icon {color: var(--color_theme);margin: 0 0 var(--dmp_xs) 0;font-size: var(--fs_h1);}
 div.small_box > * {text-align: center;}
 /**************************************************/
-.ttbm_wraper button.ttbm_book_now {font-size: var(--fs_h4);margin: 0 var(--dmp_xs) 0 0;}
+.ttbm_wraper button.ttbm_book_now {font-size: var(--fs);margin: 0 var(--dmp_xs) 0 0;}
 /*****************/
 /**********************/
 div.bg_image_area .group_item {
@@ -96,16 +105,57 @@ div.bg_image_area .group_item .ttbm_list_info {
 	background-color: #0007;
 }
 div.include_service ul li[title]:hover::before {position: absolute;content: '';left: calc(50% - 9px);top: -20px;border: 10px solid transparent;border-bottom-color: #333;}
-div.include_service ul li[title]:hover::after {content: attr(title);position: absolute;top: -35px; left: 0;background-color: #333;padding: 5px var(--dmp_xs);color: #FFF;border-radius: 5px;white-space: nowrap;}
+div.include_service ul li[title]:hover::after {
+	content: attr(title);
+	position: absolute;
+	top: -100%;
+	left: 0;
+	background-color: #333;
+	padding: 5px var(--dbr);
+	color: #FFF;
+	border-radius: 5px;
+	white-space: nowrap;
+	font-size: 12px;
+}
 div.include_service ul {display: -webkit-flex;display: flex;}
-div.include_service ul li {position: relative;padding: 5px !important; margin: 0 7px 0 0 !important;border: 1px solid var(--color_border); border-radius: 5px;}
-div.include_service ul li span {
-	background-color: transparent !important;
-	width: auto;height: auto;color: var(--color_theme) !important; min-width: auto;margin: 0 !important;}
-div.include_service ul li span:hover {
+div.include_service ul li {
+	display: inline-block;
+	position: relative;
+	margin: 0 7px 0 0 !important;
+	border: 1px solid var(--color_border);
+	border-radius: 5px;
+	transition: all 0.3s ease-in-out;
+	color: var(--color_theme) !important;
+	font-size: var(--fs);
+	height: 35px;
+	width: 35px;
+	line-height: 35px;
+	text-align: center;
+	/*margin: 0 var(--dmp_xs) 0 0;*/
+}
+
+div.include_service ul li  span {
+	display: inline-block !important;
+}
+
+div.include_service ul li:hover {
 	background-color: var(--color_theme) !important;
 	color: var(--color_theme_alter) !important;
+	border-color: var(--color_theme) !important;
 }
+
+/*div.include_service ul li span {*/
+/*	background-color: transparent !important;*/
+/*	width: auto;*/
+/*	height: auto;*/
+/*	color: var(--color_theme) !important; */
+/*	min-width: auto;*/
+/*	margin: 0 !important;*/
+/*}*/
+/*div.include_service ul li span:hover {*/
+/*	background-color: var(--color_theme) !important;*/
+/*	color: var(--color_theme_alter) !important;*/
+/*}*/
 div.filter_top_bar button {background-color: #FFF;color: var(--color_theme);font-size: var(--fs_h2);padding: 5px 7px;}
 /**************default theme***********************************/
 /**************spring theme***********************************/
@@ -158,7 +208,7 @@ div.day_wise_details_item:last-child {padding-bottom: 0;border: none;}
 div.day_wise_details_item img {width: initial;}
 /*************F.A.Q*************************************/
 div.ttbm_faq_item {margin: 0 0 var(--dmp_xs) 0;}
-div.ttbm_faq_item .ttbm_faq_title {background-color: #FFF;border: 1px solid #DDD;border-radius: 5px;font-weight: normal;text-transform: none;}
+div.ttbm_faq_item .ttbm_faq_title {background-color: #FFF;border: 1px solid #DDD;border-radius: 5px;font-weight: 600;text-transform: none; padding: 5px;}
 div.ttbm_faq_item .ttbm_faq_title.active {border-color: var(--color_theme);border-radius: 5px 5px 0 0;background-color: var(--color_theme);color: var(--color_theme_alter); }
 div.ttbm_faq_item .ttbm_faq_title span {padding: 10px;}
 div.ttbm_faq_content {background-color: #FFF;padding: var(--dmp);border: 1px solid var(--color_theme);border-radius: 0 0 5px 5px;overflow: hidden;}

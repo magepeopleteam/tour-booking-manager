@@ -108,7 +108,7 @@
 					}
 					@media only screen and (max-width: 1100px) {
 						:root {
-							--fs: 14px;
+							--fs: 16px;
 							--fs_small: 12px;
 							--fs_label: 15px;
 							--fs_h4: 20px;

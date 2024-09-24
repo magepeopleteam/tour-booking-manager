@@ -43,12 +43,16 @@
 		text-decoration: none;
 	}
 	.mpStyle a:hover {
-		opacity: 0.5;
+		color: var(--color_theme) !important;
 	}
 	.mpStyle a:not(.mp_wp_editor a),
 	.mpStyle a:hover {
 		text-decoration: none;
 	}
+	.fullWidth {
+		width: 100%;
+	}
+
 	[data-collapse-target],
 	[data-target-popup],
 	[data-icon-change],
@@ -1383,18 +1387,22 @@
 	}
 	div.superSlider .sliderItem img {
 		width: 100%;
-		max-height: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 	div.superSlider .sliderItem {
 		position: relative;
 		float: left;
 		width: 100%;
+		height: 100%;
 		margin-right: -100%;
 		-ms-transform: translateX(100%);
 		transform: translateX(100%);
 		backface-visibility: hidden;
 		-webkit-transition: -webkit-transform 0.06s ease-in-out;
 		transition: transform 0.6s ease-in-out, -webkit-transform 0.6s ease-in-out;
+		max-height: 510px;
+		overflow: hidden;
 	}
 	div.superSlider .sliderItem.activeSlide {
 		z-index: 1;
@@ -1626,14 +1634,19 @@
 		color: var(--color_theme_alter);
 		margin: 0 var(--dmp) 0 0;
 	}
-	.mpStyle .circleIcon_xs,
-	.mpStyle [class*="_circleIcon_xs"] {
-		width: 25px;
-		height: 25px;
-		min-width: 25px;
-		font-size: var(--fs_small);
-		margin: 0 var(--dmp_xs) 0 0;
-	}
+
+	/*.include_service ul li {*/
+
+	/*}*/
+
+	/*.mpStyle .circleIcon_xs,*/
+	/*.mpStyle [class*="_circleIcon_xs"] {*/
+	/*	width: 25px;*/
+	/*	height: 25px;*/
+	/*	min-width: 25px;*/
+	/*	font-size: var(--fs);*/
+	/*	margin: 0 var(--dmp_xs) 0 0;*/
+	/*}*/
 	/*****Remove icon******/
 	.mpStyle .mp_remove_area {
 		position: relative;
@@ -1871,11 +1884,13 @@
 		width: 100%;
 		max-width: inherit;
 		border: 1px solid var(--color_border);
-		padding: 8px;
 		font-size: var(--fs);
 		color: var(--d_color);
 		background-color: #fff;
-		font-weight: normal;
+		padding: 10px 15px;
+		font-weight: 500;
+		height: 46px;
+		border-radius: 6px;
 	}
 	.mpStyle .formControl:focus {
 		outline: 0;
@@ -2064,7 +2079,7 @@
 	}
 	/**********Checkbox Custom*********/
 	.mpStyle .customCheckbox {
-		padding: 3px 0 0 24px;
+		padding: 3px 0 0 28px;
 		position: relative;
 		line-height: 1;
 		min-width: auto;
@@ -2083,7 +2098,8 @@
 		border-radius: 2px;
 	}
 	.mpStyle .customCheckboxLabel {
-		padding: 0 0 10px 0;
+		/*padding: 0 0 10px 0;*/
+		margin-bottom: 15px;
 		cursor: pointer;
 		font-weight: var(--fw-medium);
 	}
@@ -2193,26 +2209,36 @@
 	/*********Group Content*******/
 	.mpStyle .groupContent {
 		font-size: var(--fs);
-		border: 1px solid var(--color_border);
-		background-color: var(--color_theme);
+		/*border: 1px solid var(--color_border);*/
+		/*background-color: var(--color_theme);*/
 		color: var(--color_theme_alter);
 		text-align: center;
 		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 5px;
 	}
 	div.mpStyle div.groupContent > * {
-		border-left: 1px solid var(--color_border);
-		margin: 0;
+		border: 1px solid var(--color_border);
+		margin-bottom: 0;
+		border-radius: 4px;
+
 	}
-	div.mpStyle div.groupContent > *:first-child {
-		border: none;
-	}
+	/*div.mpStyle div.groupContent > *:first-child {*/
+	/*	border: none;*/
+	/*}*/
 	div.mpStyle div.groupContent .formControl {
 		text-align: center;
 		border: none;
 		background-color: var(--color_white);
-		height: 100%;
-		border-radius: 0;
+		border-radius: 4px;
+		padding: 5px;
+		height: 40px;
+		margin-bottom: 0 !important;
+		min-width: 50px;
 	}
+
+
 	.mpStyle .groupContent textarea.formControl {
 		text-align: left;
 	}
@@ -2245,13 +2271,18 @@
 		margin: 10px;
 	}
 	.mpStyle .addonGroupContent {
-		min-width: 30px;
+		min-width: 40px;
 		cursor: pointer;
 		background-color: #fff;
-		color: var(--color_theme_88);
+		color: var(--d_color);
+		height: 40px;
+		font-size: 13px;
+		border-radius: 4px;
+		transition: all 0.3s ease-in-out;
 	}
 	.mpStyle .addonGroupContent:hover {
-		background-color: #555;
+		background-color: var(--d_color);
+		border-color: var(--d_color);
 		color: #f2f2f2;
 	}
 	.mpStyle
@@ -2263,7 +2294,7 @@
 	}
 	/*****Form Qty inc dec*******/
 	.mpStyle .qtyIncDec {
-		max-width: 100px;
+		max-width: 110px;
 	}
 	/**********Responsive*********/
 	@media only screen and (max-width: 1250px) {
@@ -3637,6 +3668,7 @@
 	div.mpStyle .textColor_1,
 	div.mpStyle [class*="_textColor_1"] {
 		color: var(--color_1);
+
 	}
 	div.mpStyle .bgColor_1,
 	div.mpStyle [class*="_bgColor_1"] {
@@ -3880,7 +3912,7 @@
 		display: none;
 	}
 	#ui-datepicker-div .ui-datepicker-prev {
-		top: 14px;
+		top: 6px;
 		left: 10px;
 		height: 30px;
 		width: 30px;
@@ -3888,7 +3920,7 @@
 		border: 1px solid var(--mpl-white);
 	}
 	#ui-datepicker-div .ui-datepicker-next {
-		top: 14px;
+		top: 6px;
 		right: 10px;
 		height: 30px;
 		width: 30px;
@@ -3963,6 +3995,7 @@
 		font-size: var(--fs);
 		padding: 0 var(--dmp_xs);
 		text-align: left;
+		color: var(--d_color);
 	}
 	#ui-datepicker-div.ui-datepicker td {
 		background-color: floralwhite;

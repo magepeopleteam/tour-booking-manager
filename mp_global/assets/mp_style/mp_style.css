@@ -201,17 +201,17 @@
 		font-size: var(--fs_h2);
 		font-weight: var(--fw-bold);
 	}
+	div.mpStyle .dLayout {
+		border-radius: 10px;
+	}
 	div.mpStyle h3,
 	div.mpStyle [class*="_fs_h3"] {
 		padding: 0;
 		color: var(--mpl-secondary);
-		margin: 30px 0 20px 0;
-		margin-bottom: 20px;
-		margin-bottom: 20px;
-		font-size: 22px;
+		margin:0;
+		font-size: 20px;
 		line-height: 26px;
 		font-family: DejaVuSansBold, sans-serif;
-		margin-bottom: 12px;
 		font-weight: 700;
 	}
 	div.mpStyle h4,
@@ -343,6 +343,7 @@
 		display: flex;
 		-webkit-justify-content: center;
 		justify-content: center;
+		align-items: center;
 	}
 	.mpStyle [class*="_justifyCenter"] {
 		-webkit-justify-content: center;
@@ -428,16 +429,16 @@
 		-webkit-flex-direction: column;
 		flex-direction: column;
 	}
-	.flexEqual > *,
-	.equalChild > *,
-	[class*="_equalChild"] > *,
-	[class*="listEqual"] > li,
-	.mpTabs.tabBorder > .tabLists li,
-	.inputInline .inputList {
-		-webkit-flex: 1;
-		-ms-flex: 1;
-		flex: 1;
-	}
+	/*.flexEqual > *,*/
+	/*.equalChild > *,*/
+	/*[class*="_equalChild"] > *,*/
+	/*[class*="listEqual"] > li,*/
+	/*.mpTabs.tabBorder > .tabLists li,*/
+	/*.inputInline .inputList {*/
+	/*	-webkit-flex: 1;*/
+	/*	-ms-flex: 1;*/
+	/*	flex: 1;*/
+	/*}*/
 }
 /******************************************************************** Radios Section************************************************/
 @media only screen and (min-width: 10px) {
@@ -453,8 +454,8 @@
 	.mpStyle [class*="dLayout"],
 	.mpStyle .groupContent,
 	.mpStyle [class*="_dBR"] {
-		-webkit-border-radius: var(--dbr);
-		border-radius: var(--dbr);
+		-webkit-border-radius: var(--dbr_d);
+		border-radius: var(--dbr_d);
 	}
 	.mpStyle div.mp_input_select .formControl:focus,
 	.mpStyle [class*="_dBR_T"] {
@@ -532,8 +533,8 @@
 	.mpStyle button:hover,
 	.mpStyle button:focus {
 		text-decoration: none;
-		opacity: 0.8;
-		background-color: var(--color_theme);
+		/*opacity: 0.8;*/
+		background-color: var(--color_theme_secondary);
 		color: var(--color_white);
 	}
 	.mpStyle button:hover span,
@@ -565,12 +566,13 @@
 	}
 	/***/
 	.mpStyle [class*="dButton"] {
-		padding: 0 var(--dmp);
+		padding: 15px var(--dmp);
 		min-width: var(--button_width);
 		height: auto;
 		min-height: var(--button_height);
 		color: var(--color_button);
 		background-color: var(--color_theme);
+		line-height: 1;
 	}
 	.mpStyle [class*="dButton"] span {
 		margin: 0 var(--dmp_xs) 0 0;
@@ -678,10 +680,11 @@
 	/*********/
 	.mpStyle .navy_blueButton,
 	.mpStyle [class*="_navy_blueButton"] {
-		background-color: var(--color_navy_blue);
-		color: var(--color_theme_alter);
+		background-color: var(--color_black);
+		color: var(--color_white);
 		padding: var(--dmp_xs) var(--dmp);
-		border: 1px solid var(--color_navy_blue);
+		border: 1px solid var(--color_black);
+		font-size: var(--fs);
 	}
 	.mpStyle .navy_blueButton span,
 	.mpStyle [class*="_navy_blueButton"] span {
@@ -689,9 +692,9 @@
 	}
 	.mpStyle .navy_blueButton:hover,
 	.mpStyle [class*="_navy_blueButton"]:hover {
-		background-color: var(--color_theme_alter);
-		color: var(--color_navy_blue);
-		border-color: var(--color_navy_blue);
+		background-color: transparent;
+		color: var(--color_white);
+		border-color: #fff;
 	}
 	.mpStyle .navy_blueButton:hover span,
 	.mpStyle [class*="_navy_blueButton"]:hover span {
@@ -701,8 +704,8 @@
 	.mpStyle [class*="Button_xs"] {
 		min-width: auto;
 		min-height: var(--button_height_xs);
-		padding: 7px var(--dmp_xs);
-		font-size: var(--fs);
+		padding: 11px var(--dmp);
+		font-size: var(--fs_small);
 	}
 	/*************************/
 	.mpStyle [class*="dButton"].mpActive {
@@ -836,10 +839,10 @@
 	.mpStyle [class*="_border"] {
 		border: 1px solid var(--color_border);
 	}
-	.mpStyle .bT,
-	.mpStyle [class*="_bT"] {
-		border-top: 1px solid var(--color_border);
-	}
+	/*.mpStyle .bT,*/
+	/*.mpStyle [class*="_bT"] {*/
+	/*	border-top: 1px solid var(--color_border);*/
+	/*}*/
 	.mpStyle [class*="_bDot"] {
 		border: 1px dotted var(--color_border);
 	}
@@ -1316,6 +1319,7 @@
 		overflow: hidden;
 		position: relative;
 		height: 200px;
+		border-radius: 8px;
 	}
 	[data-bg-image] {
 		background-size: cover;
@@ -1326,6 +1330,11 @@
 		min-height: inherit;
 		position: relative;
 	}
+
+	.ttbm_location_image [data-bg-image] {
+		min-height: 225px !important;
+	}
+
 	[data-bg-image]:before{
 		content: '';
 		position: absolute;
@@ -1671,7 +1680,7 @@
 	/**************Default************************/
 	.mpStyle .dLayout,
 	.mpStyle [class*="_dLayout"] {
-		padding: var(--dmp);
+		padding: var(--dmp_xs) var(--dmp);
 		background-color: var(--color_white);
 		border: 1px solid var(--color_border);
 		margin-top: -1px;
@@ -1810,7 +1819,8 @@
 		border-radius: 3px 6px 6px 0;
 		-webkit-box-shadow: 1px 2px 2px 0 rgba(0, 0, 0, 0.4);
 		box-shadow: 1px 2px 2px 0 rgba(0, 0, 0, 0.4);
-		z-index: 1;
+		z-index: 20;
+		font-size: var(--fs_small);
 	}
 	.mpStyle .ribbon::before {
 		content: "";
@@ -1847,6 +1857,18 @@
 }
 /******************************************************************** Form section ************************************************/
 @media only screen and (min-width: 10px) {
+	.mpStyle input:not[type="submit"] {
+		width: 100%;
+		max-width: inherit;
+		border: 1px solid var(--color_border);
+		font-size: var(--fs);
+		color: var(--d_color);
+		background-color: #fff;
+		padding: 10px 15px;
+		font-weight: 500;
+		height: 40px;
+		border-radius: 6px;
+	}
 	.mpStyle input,
 	.mpStyle optgroup,
 	.mpStyle select,
@@ -1908,6 +1930,8 @@
 		border-color: #80bdff;
 	}
 	div.mpStyle select.formControl {
+		height: 48px;
+		border-radius: 8px;
 		/* background-image: url("../images/arrow_down.png");
     background-repeat: no-repeat;
     background-position: calc(100% - var(--dmp_xs));
@@ -1916,7 +1940,8 @@
     padding: var(--dmp_xs) 35px var(--dmp_xs) var(--dmp_xs); */
 	}
 	div.mpStyle select.formControl:focus {
-		background-color: var(--color_theme_aa);
+		border: 1px solid var(--color_theme);
+		box-shadow: none;
 	}
 	div.mpStyle .formControl.date_type_without_year,
 	div.mpStyle .formControl.date_type,
@@ -3541,6 +3566,15 @@
 	div.mpStyle [class*="_bgWarning"] {
 		background-color: var(--color_warning);
 	}
+
+	.filter_item [class*="_bgWarning"] {
+		border-radius: 0 5px 0 5px;
+	}
+
+	.filter_item .fdColumn .ttbm_list_info:not(:last-child) {
+		border-radius: 0 5px 0 0;
+	}
+
 	/*****required*********/
 	div.mpStyle .textRequired,
 	div.mpStyle [class*="_textRequired"] {
@@ -3900,17 +3934,19 @@
 	}
 	#ui-datepicker-div {
 		/*padding:2px;*/
-		/*background-color: #fff;*/
+		background-color: #fff;
 		/*box-shadow: 0 0 5px #ddd;*/
-		box-shadow: 10px 10px 30px 0 rgba(0, 0, 0, 0.3);
+		box-shadow: 0 10px 30px  rgba(var(--color_theme_rgb), 0.3);
 		/*border: 1px solid #f12a7140;*/
 		border: 1px solid rgba(var(--color_theme), 0.5);
+		border-radius: 10px;
+		overflow: hidden;
 	}
 	table.ui-datepicker-calendar th{
 		padding: 10px;
-		background-color:var(--mpl-secondary);
+		background-color:var(--color_theme);
 		color: var(--mpl-white);
-		border: 1px solid var(--mpl-secondary);
+		border: 1px solid rgba(255, 255,255, 0.2);
 	}
 	#ui-datepicker-div .ui-datepicker-header {
 		background-color: var(--color_black);
@@ -4020,8 +4056,9 @@
 		margin: 0 3px;
 	}
 	#ui-datepicker-div.ui-datepicker td {
-		background-color: floralwhite;
-		border: 1px solid var(--color_theme);
+		background-color: rgba(var(--color_theme_rgb), 0.1);
+		color: var(--color_white);
+		border: 1px solid rgba(var(--color_theme_rgb), 0.2);
 		padding: 4px 6px;
 	}
 }
@@ -4031,6 +4068,17 @@
 		border: 1px solid var(--color_border);
 		border-bottom: 0;
 	}
+
+	.ttbm_attendee_form_area {
+		margin-bottom: 20px;
+		background: #fff;
+	}
+
+	.ttbm_attendee_form_area .component {
+		border: 1px solid var(--color_border);
+		padding: 10px;
+	}
+
 	/*.component:last-child{*/
 	/*	border: 1px solid var(--color_border);*/
 	/*}*/

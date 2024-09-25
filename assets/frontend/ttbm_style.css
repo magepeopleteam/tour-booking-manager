@@ -38,6 +38,7 @@ div.viator_top_section .ttbm_booking_panel form,
 div.ttbm_details_page {display: block;position: relative;}
 div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-webkit-flex-wrap: wrap;flex-wrap: wrap;-webkit-justify-content: space-between;justify-content: space-between;padding-top:5px}
 .ttbm_content__left {width: calc(100% - 346px);}
+
 .hip_hop_hotel_theme .ttbm_content__left,
 .ttbm_spring_theme .ttbm_content__left {width: calc(50% - 20px);}
 .ttbm_content__right {
@@ -113,6 +114,7 @@ div.bg_image_area .group_item .ttbm_list_info {
 	margin: 0 0 var(--dmp_xs) 0;
 	font-size: 12px;
 	background-color: #0007;
+	padding: 10px;
 }
 div.include_service ul li[title]:hover::before {
 	position: absolute;
@@ -329,9 +331,10 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 		padding: 4px 6px;
 	}
 	#ui-datepicker-div.ui-datepicker td.ui-datepicker-unselectable.ui-state-disabled {
-		background-color: #fef4f8;
+		background-color: rgba(var(--color_theme_rgb), 0.1); /* 50% opacity */
 		color: var(--color_white);
-		border: 1px solid #feeaf1;
+		border: 1px solid rgba(var(--color_theme_rgb), 0.2);
 		padding: 4px 6px;
+		z-index: 2;
 	}
 }

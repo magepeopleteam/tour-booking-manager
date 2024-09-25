@@ -14,11 +14,12 @@
 			}
 			public function add_global_style() {
 				$default_color   = MP_Global_Function::get_style_settings( 'default_text_color', '#303030' );
-				$theme_color     = MP_Global_Function::get_style_settings( 'theme_color', '#F12971' );
-				$theme_color_rgb     = MP_Global_Function::get_style_settings( 'theme_color_rgb', 'rgb(241,41,120)' );
+				$theme_color     = MP_Global_Function::get_style_settings( 'theme_color', '#6b35e8' );
+				$theme_color_secondary     = MP_Global_Function::get_style_settings( 'theme_color_secondary', '#3F13A4' );
+                $theme_color_rgb = $this->hexToRgb($theme_color);
 				$alternate_color = MP_Global_Function::get_style_settings( 'theme_alternate_color', '#fff' );
 				$warning_color   = MP_Global_Function::get_style_settings( 'warning_color', '#E67C30' );
-				$default_fs      = MP_Global_Function::get_style_settings( 'default_font_size', '14' ) . 'px';
+				$default_fs      = MP_Global_Function::get_style_settings( 'default_font_size', '16' ) . 'px';
 				$fs_h1           = MP_Global_Function::get_style_settings( 'font_size_h1', '35' ) . 'px';
 				$fs_h2           = MP_Global_Function::get_style_settings( 'font_size_h2', '30' ) . 'px';
 				$fs_h3           = MP_Global_Function::get_style_settings( 'font_size_h3', '25' ) . 'px';
@@ -44,13 +45,14 @@
 						--dmp_xs_negative: -10px;
 						--dbrl: 10px;
 						--dbr: 5px;
+						--dbr_d: 8px;
 						--dshadow: 0 0 2px #665F5F7A;
 					}
 					/*****Font size********/
 					:root {
 						--fs: <?php echo esc_attr($default_fs); ?>;
 						--fw: normal;
-						--fs_small: 10px;
+						--fs_small: 14px;
 						--fs_label: <?php echo esc_attr($fs_label); ?>;
 						--fs_h6: <?php echo esc_attr($fs_h6); ?>;
 						--fs_h5: <?php echo esc_attr($fs_h5); ?>;
@@ -80,6 +82,8 @@
 						--color_active: #0E6BB7;
 						--color_section: <?php echo esc_attr($section_bg); ?>;
 						--color_theme: <?php echo esc_attr($theme_color); ?>;
+                        --color_theme_rgb: <?php echo esc_attr($theme_color_rgb); ?>;
+						--color_theme_secondary: <?php echo esc_attr($theme_color_secondary); ?>;
 						--color_theme_rbg: <?php echo esc_attr($theme_color_rgb); ?>;
 						--color_theme_ee: <?php echo esc_attr($theme_color).'ee'; ?>;
 						--color_theme_cc: <?php echo esc_attr($theme_color).'cc'; ?>;
@@ -88,7 +92,8 @@
 						--color_theme_77: <?php echo esc_attr($theme_color).'77'; ?>;
 						--color_theme_alter: <?php echo esc_attr($alternate_color); ?>;
 						--color_warning: <?php echo esc_attr($warning_color); ?>;
-						--color_black: #000;
+						/*--color_black: #0a111f;*/
+						--color_black: #1b2021;
 						--color_success: #00A656;
 						--color_danger: #C00;
 						--color_required: #C00;
@@ -111,7 +116,7 @@
 					@media only screen and (max-width: 1100px) {
 						:root {
 							--fs: 16px;
-							--fs_small: 12px;
+							--fs_small: 14px;
 							--fs_label: 15px;
 							--fs_h4: 20px;
 							--fs_h3: 22px;
@@ -144,6 +149,22 @@
 				</style>
 				<?php
 			}
+
+            public function hexToRgb($hex) {
+                $hex = str_replace("#", "", $hex);
+
+                if(strlen($hex) == 3) {
+                    $r = hexdec(substr($hex, 0, 1) . substr($hex, 0, 1));
+                    $g = hexdec(substr($hex, 1, 1) . substr($hex, 1, 1));
+                    $b = hexdec(substr($hex, 2, 1) . substr($hex, 2, 1));
+                } else {
+                    $r = hexdec(substr($hex, 0, 2));
+                    $g = hexdec(substr($hex, 2, 2));
+                    $b = hexdec(substr($hex, 4, 2));
+                }
+
+                return $r . ',' . $g . ',' . $b;
+            }
 		}
 		new MP_Global_Style();
 	}

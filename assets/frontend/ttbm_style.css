@@ -230,10 +230,18 @@ div.day_wise_details_item:last-child {padding-bottom: 0;border: none;}
 div.day_wise_details_item img {width: initial;}
 /*************F.A.Q*************************************/
 div.ttbm_faq_item {margin: 0 0 var(--dmp_xs) 0;}
-div.ttbm_faq_item .ttbm_faq_title {background-color: #FFF;border: 1px solid #DDD;border-radius: 5px;font-weight: 600;text-transform: none; padding: 5px;}
+div.ttbm_faq_item .ttbm_faq_title {background-color: #FFF;border: 1px solid #DDD;border-radius: 5px;font-weight: 600;text-transform: none; padding: 5px; font-size: var(--fs_h4)}
 div.ttbm_faq_item .ttbm_faq_title.active {border-color: var(--color_theme);border-radius: 5px 5px 0 0;background-color: var(--color_theme);color: var(--color_theme_alter); }
 div.ttbm_faq_item .ttbm_faq_title span {padding: 10px;}
 div.ttbm_faq_content {background-color: #FFF;padding: var(--dmp);border: 1px solid var(--color_theme);border-radius: 0 0 5px 5px;overflow: hidden;}
+div.ttbm_faq_content p {
+	margin-top: 0;
+}
+
+div.ttbm_faq_content p:last-child {
+	margin-bottom: 0;
+}
+
 div.ttbm_faq_item div.superSlider {min-width: 300px;max-width: 50%; margin: 0 var(--dmp_xs) var(--dmp_xs) 0;float: left;}
 /*****************dynamic sidebar*********************************/
 div.ttbm_sidebar_widget {margin: 0 0 var(--dmp) 0;}
@@ -245,10 +253,34 @@ div.ttbm_sidebar_widget ul li a:hover {color: var(--color_theme);margin: 0 0 0 7
 div.ttbm_sidebar_widget ul li a::before {content: '>';margin: 0 5px 0 0;}
 /************** owlCarousel***********************************/
 div.ttbm_wraper .carousel_area span {cursor: pointer;}
-div.ttbm_wraper .carousel_area span:hover {color: var(--color_theme);}
+.carousel_area .prev, .carousel_area .next {
+	display: block;
+	height: 30px;
+	width: 30px;
+	text-align: center;
+	background: var(--color_theme);
+	margin-left: 10px;
+	line-height: 30px;
+	border-radius: var(--dbr);
+	color: #fff;
+	font-size: 14px;
+}
+
+.carousel_area .prev:hover, .carousel_area .next:hover {
+	background: var(--color_theme_secondary);
+	color: var(--color_white);
+
+}
 div.ttbm_wraper .owl-carousel .owl-stage {display: -webkit-flex;display: flex;}
 div.ttbm_wraper .owl-item div.filter_item,
 div.ttbm_wraper .owl-item .section_item {width: 100%;height: 100%;}
+
+@media(min-width: 767px) {
+	.ttbm_widget_content.owl-carousel .owl-stage-outer {
+		margin-left: -10px;
+	}
+}
+
 div.ttbm_wraper .owl-nav > button {
 	width: 40px; height: 40px;
 	margin-top: 0; background: #FFF; border-radius: 50%;

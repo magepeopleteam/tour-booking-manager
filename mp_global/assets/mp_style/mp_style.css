@@ -183,7 +183,7 @@
 	div.mpStyle h6 {
 		margin: 0;
 		padding: 0;
-		line-height: 1.25;
+		line-height: inherit;
 	}
 	div.mpStyle strong {
 		font-weight: var(--fw-bold);
@@ -258,6 +258,10 @@
 	.mpStyle .mpMenu li {
 		display: -webkit-flex;
 		display: flex;
+	}
+	.mpStyle [class*="_dFlex"] {
+		align-items: baseline;
+		gap: 5px;
 	}
 	.mpStyle .groupContent,
 	.mpStyle .buttonGroup,
@@ -1760,9 +1764,10 @@
 	.mpStyle .abTopRight_xs,
 	.mpStyle [class*="_abTopRight_xs"] {
 		position: absolute;
-		right: var(--dmp_xs);
-		top: var(--dmp_xs);
+		right: var(--dmp);
+		top: 11px;
 	}
+
 	.mpStyle .abTopLeft_xs,
 	.mpStyle [class*="_abTopLeft_xs"] {
 		position: absolute;

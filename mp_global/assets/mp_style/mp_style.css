@@ -1877,21 +1877,39 @@
 	.mpStyle input,
 	.mpStyle optgroup,
 	.mpStyle select,
-	.mpStyle textarea,
-	.mpStyle button {
+	.mpStyle textarea {
 		font-family: inherit;
-		line-height: 1.25;
+		line-height: inherit;
 		margin: 0;
+		width: 100%;
+		max-width: inherit;
+		border: 1px solid var(--color_border);
+		font-size: var(--fs);
+		color: var(--d_color);
+		background-color: #fff;
+		padding: 10px 15px;
+		font-weight: 500;
+		height: 40px;
+		border-radius: 6px;
 	}
 	.mpStyle .formControl:-webkit-autofill,
 	.mpStyle .formControl:-webkit-autofill:hover,
 	.mpStyle .formControl:-webkit-autofill:focus,
 	.mpStyle .formControl:-webkit-autofill:active {
-		-webkit-transition: color 9999s ease-out, background-color 9999s ease-out;
-		transition: color 9999s ease-out, background-color 9999s ease-out;
-		-webkit-transition-delay: 9999s;
-		transition-delay: 9999s;
+		box-shadow: none;
+		outline: 0;
+		border-color: var(--color_theme);
 	}
+
+	.mpStyle input:focus,
+	.mpStyle optgroup:focus,
+	.mpStyle select:focus,
+	.mpStyle textarea:focus {
+		box-shadow: none;
+		outline: 0;
+		border-color: var(--color_theme);
+	}
+
 	div.mpStyle form {
 		margin: 0;
 		padding: 0;

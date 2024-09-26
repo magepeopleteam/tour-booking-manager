@@ -38,6 +38,13 @@ div.viator_top_section .ttbm_booking_panel form,
 div.ttbm_details_page {display: block;position: relative;}
 div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-webkit-flex-wrap: wrap;flex-wrap: wrap;-webkit-justify-content: space-between;justify-content: space-between;padding-top:5px}
 
+.ttbm_details_page_header {
+	margin-bottom: 20px;
+}
+
+.ttbm_details_page_header .ttbm-rating-stars {
+	margin: 0 0 10px 0 !important;
+}
 
 
 .ttbm_content__left {width: calc(100% - 346px);}
@@ -54,7 +61,8 @@ div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-w
 .hip_hop_hotel_theme .ttbm_content__right,
 .ttbm_spring_theme .ttbm_content__right {width: 50%;}
 /**/
-div.ttbm_details_page div.superSlider {margin: 0 0 var(--dmp) 0;}
+div.ttbm_details_page div.superSlider {margin: 0;}
+
 div.ttbm_details_page div.ttbm_description {margin: 0 0 var(--dmp) 0;}
 /*********/
 div.ttbm_details_page .location_name {font-size: var(--fs_h5);margin: 0 0 var(--dmp) 0;}
@@ -78,80 +86,52 @@ div.ttbm_location_list div.filter_item {padding: 0;}
 .ttbm_wraper table label {max-width: 100px;}
 .ttbm_wraper table label select.formControl {text-align: center;}
 
+/***************** Rating Stars *********************************/
 .rating-group {
-	display: inline-flex;
-	direction: row-reverse;
-	justify-content: flex-start;
-}
-
-.rating-group input {
-	display: none; /* Hide radio buttons */
+	display: flex;
+	/*direction: rtl; !* Reverses the stars display order *!*/
 }
 
 .rating-group label {
-	font-size: 30px;
-	color: #ddd; /* Default star color */
+	font-size: 22px;
+	color: lightgray; /* Default color */
 	cursor: pointer;
 	transition: color 0.3s ease;
 }
 
-.rating-group input:checked ~ label {
-	color: gold; /* Set the active star color */
-}
-
-.rating-group label:hover,
-.rating-group label:hover ~ label {
-	color: gold; /* Set the hover color */
-}
-
-/* Ensure that selected stars are colored when hovering on previous stars */
-.rating-group input:checked ~ label:hover,
-.rating-group input:checked ~ label:hover ~ label {
-	color: gold; /* Keep stars active when hovering after selection */
-}
-
-
-
-
-
-
-.rating-group {
-	display: inline-flex;
-	/*direction: ltr; !* Left to right *!*/
-	justify-content: flex-start;
-}
-
 .rating-group input {
-	display: none; /* Hide radio buttons */
+	display: none; /* Hide the radio buttons */
 }
 
-.rating-group label {
-	font-size: 30px;
-	color: #ddd; /* Default star color */
-	cursor: pointer;
-	transition: color 0.3s ease;
-}
-
-.rating-group input:checked ~ label {
-	color: gold; /* Set the active star color */
-}
-
+/* Hover effect */
 .rating-group label:hover,
 .rating-group label:hover ~ label {
-	color: gold; /* Set the hover color */
+	color: gold;
 }
 
-/* Ensure that selected stars remain colored when hovering after selection */
-.rating-group input:checked ~ label:hover,
-.rating-group input:checked ~ label:hover ~ label {
-	color: gold; /* Keep stars active when hovering after selection */
+/* If a radio input is checked, make the corresponding stars gold */
+.rating-group input:checked ~ label {
+	color: gold;
 }
 
+.mage-modal-header {
+	display: flex;
+	align-items: center;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+}
 
+.close {
+	color: var(--color_black) !important;
+	font-size: 30px !important;
+	opacity: 1 !important;
+	transition: all 0.3s ease-in-out;
+}
 
-
-
-
+.close:hover {
+	color: var(--color_theme) !important;
+	opacity: 1 !important;
+}
 
 /*****************/
 div.item_section {margin: var(--dmp_xs_negative) var(--dmp_xs_negative) var(--dmp) var(--dmp_xs_negative);}
@@ -218,8 +198,8 @@ div.include_service ul li[title]:hover::after {
 	line-height: 20px;
 }
 div.include_service ul {display: -webkit-flex;display: flex;}
-div.include_service ul li {
-	display: inline-block;
+div.include_service ul li, .ttbm_widget_content .ttbm_list_details .include_service ul li {
+	display: inline-block !important;
 	position: relative;
 	margin: 0 7px 0 0 !important;
 	border: 1px solid var(--color_border);
@@ -228,17 +208,20 @@ div.include_service ul li {
 	color: var(--color_theme) !important;
 	font-size: var(--fs);
 	height: 35px;
-	width: 35px;
+	width: 35px !important;
+	padding: 0 !important;
 	line-height: 35px;
 	text-align: center;
 	/*margin: 0 var(--dmp_xs) 0 0;*/
 }
 
-div.include_service ul li  span {
+div.include_service ul li span, .ttbm_widget_content div.ttbm_list_details .include_service ul li span {
 	display: inline-block !important;
+	margin: 0 !important;
 }
 
-div.include_service ul li:hover {
+div.include_service ul li:hover,
+.ttbm_widget_content .ttbm_list_details .include_service ul li:hover {
 	background-color: var(--color_theme) !important;
 	color: var(--color_theme_alter) !important;
 	border-color: var(--color_theme) !important;

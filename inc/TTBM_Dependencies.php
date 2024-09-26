@@ -61,6 +61,8 @@
 				wp_enqueue_style('ttbm_registration_style', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.css', array(), time());
 				wp_enqueue_script('ttbm_registration_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.js', array('jquery'), time(), true);
 				wp_enqueue_script('ttbm_price_calculation', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_price_calculation.js', array('jquery'), time(), true);
+                // Google Font
+                wp_enqueue_style('google-font', 'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap', array(), time());
 				do_action('add_ttbm_registration_enqueue');
 			}
 			public function ttbm_upgrade() {

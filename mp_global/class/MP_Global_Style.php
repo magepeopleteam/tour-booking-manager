@@ -113,37 +113,37 @@
 						--color_4: #6148BA;
 						--color_5: #BCB;
 					}
-					@media only screen and (max-width: 1100px) {
+					@media only screen and (max-width: 1024px) {
 						:root {
-							--fs: 16px;
-							--fs_small: 14px;
-							--fs_label: 15px;
+							/*--fs: 16px;*/
+							/*--fs_small: 14px;*/
+							/*--fs_label: 15px;*/
 							--fs_h4: 20px;
 							--fs_h3: 22px;
 							--fs_h2: 25px;
 							--fs_h1: 30px;
-							--dmpl: 32px;
-							--dmp: 16px;
-							--dmp_negetive: -16px;
-							--dmp_xs: 8px;
-							--dmp_xs_negative: -8px;
+							/*--dmpl: 32px;*/
+							/*--dmp: 16px;*/
+							/*--dmp_negetive: -16px;*/
+							/*--dmp_xs: 8px;*/
+							/*--dmp_xs_negative: -8px;*/
 						}
 					}
 					@media only screen and (max-width: 700px) {
 						:root {
-							--fs: 12px;
-							--fs_small: 10px;
-							--fs_label: 13px;
-							--fs_h6: 15px;
-							--fs_h5: 16px;
-							--fs_h4: 18px;
-							--fs_h3: 20px;
-							--fs_h2: 22px;
-							--fs_h1: 24px;
-							--dmp: 10px;
-							--dmp_xs: 5px;
-							--dmp_xs_negative: -5px;
-							--button_fs: 14px;
+							/*--fs: 12px;*/
+							/*--fs_small: 10px;*/
+							/*--fs_label: 13px;*/
+							/*--fs_h6: 15px;*/
+							/*--fs_h5: 16px;*/
+							/*--fs_h4: 18px;*/
+							/*--fs_h3: 20px;*/
+							/*--fs_h2: 22px;*/
+							/*--fs_h1: 24px;*/
+							/*--dmp: 10px;*/
+							/*--dmp_xs: 5px;*/
+							/*--dmp_xs_negative: -5px;*/
+							/*--button_fs: 14px;*/
 						}
 					}
 				</style>

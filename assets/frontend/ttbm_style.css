@@ -14,8 +14,8 @@ div.ttbm_container {width: 100%;max-width: var(--dcontainer_width);margin: 0 aut
 /*.ttbm_wraper table td {padding: 5px 5px 5px 15px;vertical-align: middle;border: 1px dotted #DDD;}*/
 div.ttbm_faq_item .ttbm_faq_title {-webkit-transition: 350ms ease-in-out;transition: 350ms ease-in-out;}
 .ttbm-rating-stars {
-	margin-top: 10px;
-	margin-bottom: 10px;
+	margin-top: 15px;
+	/*margin-bottom: 10px;*/
 }
 /**********Shadow content****************************/
 div.viator_top_section .ttbm_booking_panel form,
@@ -37,6 +37,9 @@ div.viator_top_section .ttbm_booking_panel form,
 /*****************Details page*********************************/
 div.ttbm_details_page {display: block;position: relative;}
 div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-webkit-flex-wrap: wrap;flex-wrap: wrap;-webkit-justify-content: space-between;justify-content: space-between;padding-top:5px}
+
+
+
 .ttbm_content__left {width: calc(100% - 346px);}
 
 .hip_hop_hotel_theme .ttbm_content__left,
@@ -74,6 +77,82 @@ div.ttbm_location_list div.filter_item {padding: 0;}
 /*********Group Content*******/
 .ttbm_wraper table label {max-width: 100px;}
 .ttbm_wraper table label select.formControl {text-align: center;}
+
+.rating-group {
+	display: inline-flex;
+	direction: row-reverse;
+	justify-content: flex-start;
+}
+
+.rating-group input {
+	display: none; /* Hide radio buttons */
+}
+
+.rating-group label {
+	font-size: 30px;
+	color: #ddd; /* Default star color */
+	cursor: pointer;
+	transition: color 0.3s ease;
+}
+
+.rating-group input:checked ~ label {
+	color: gold; /* Set the active star color */
+}
+
+.rating-group label:hover,
+.rating-group label:hover ~ label {
+	color: gold; /* Set the hover color */
+}
+
+/* Ensure that selected stars are colored when hovering on previous stars */
+.rating-group input:checked ~ label:hover,
+.rating-group input:checked ~ label:hover ~ label {
+	color: gold; /* Keep stars active when hovering after selection */
+}
+
+
+
+
+
+
+.rating-group {
+	display: inline-flex;
+	/*direction: ltr; !* Left to right *!*/
+	justify-content: flex-start;
+}
+
+.rating-group input {
+	display: none; /* Hide radio buttons */
+}
+
+.rating-group label {
+	font-size: 30px;
+	color: #ddd; /* Default star color */
+	cursor: pointer;
+	transition: color 0.3s ease;
+}
+
+.rating-group input:checked ~ label {
+	color: gold; /* Set the active star color */
+}
+
+.rating-group label:hover,
+.rating-group label:hover ~ label {
+	color: gold; /* Set the hover color */
+}
+
+/* Ensure that selected stars remain colored when hovering after selection */
+.rating-group input:checked ~ label:hover,
+.rating-group input:checked ~ label:hover ~ label {
+	color: gold; /* Keep stars active when hovering after selection */
+}
+
+
+
+
+
+
+
 /*****************/
 div.item_section {margin: var(--dmp_xs_negative) var(--dmp_xs_negative) var(--dmp) var(--dmp_xs_negative);}
 div.item_section .ttbm_short_list_more {
@@ -217,7 +296,13 @@ div.viator_top_section .ttbm_book_now {margin: var(--dmp_xs) 0 0 0;}
 /******************day wise details********************************/
 div.ttbm_day_wise_details div.superSlider {min-width: 300px;max-width: 50%; margin: 0 var(--dmp) var(--dmp) 0;float: left;}
 div.day_wise_details_item .day_wise_details_item_details {margin: var(--dmp_xs) 0 0 0;overflow: hidden;}
-div.ttbm_day_wise_details .day_wise_details_item_title {padding: 0 var(--dmp_xs) var(--dmp_xs) 0;border-bottom: 1px solid #DDD;font-weight: normal;}
+div.ttbm_day_wise_details .day_wise_details_item_title {
+	padding: 0 var(--dmp_xs) var(--dmp_xs) 0;
+	border-bottom: 1px solid #DDD;
+	font-size: var(--fs_h4);
+	font-weight: var(--fw-medium);
+}
+
 div.day_wise_details_item { border-left: 1px solid var(--color_theme); position: relative; margin: 0;padding: 0 0 var(--dmp) 25px;}
 div.day_wise_details_item:before {
 	content: "";width: 15px; height: 15px;top: 0;left: -8px;position: absolute;
@@ -315,7 +400,7 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 }
 @media only screen and (max-width: 900px) {
 }
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 767px) {
 	div.ttbm_viator_theme .ttbm_content__left,
 	div.ttbm_viator_theme .ttbm_content__right,
 	div.ttbm_viator_theme .viator_top_section .ttbm_content__left,
@@ -330,6 +415,11 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 	div.ttbm_viator_theme .ttbm_content__right {margin: var(--dmp) 0 0 0;}
 	div.viator_top_section .ttbm_booking_panel {position: relative;left: inherit;right: inherit;}
 	div.viator_top_section .ttbm_booking_panel {position: initial;left: inherit;right: inherit;}
+
+	div.ttbm_content_area .ttbm_content__right {
+		margin-top: 50px;
+	}
+
 }
 @media only screen and (max-width: 600px) {
 	div.small_box {width: calc(100% - var(--dmp_xs));}
@@ -355,18 +445,18 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 	margin-top: 30px;
 }
 
-@media only screen and (min-width: 10px) {
 
-	#ui-datepicker-div.ui-datepicker td{
-		background-color: #fff;
-		border: 1px solid #feeaf1;
-		padding: 4px 6px;
-	}
-	#ui-datepicker-div.ui-datepicker td.ui-datepicker-unselectable.ui-state-disabled {
-		background-color: rgba(var(--color_theme_rgb), 0.1); /* 50% opacity */
-		color: var(--color_white);
-		border: 1px solid rgba(var(--color_theme_rgb), 0.2);
-		padding: 4px 6px;
-		z-index: 2;
-	}
+
+#ui-datepicker-div.ui-datepicker td{
+	background-color: #fff;
+	border: 1px solid #feeaf1;
+	padding: 4px 6px;
 }
+#ui-datepicker-div.ui-datepicker td.ui-datepicker-unselectable.ui-state-disabled {
+	background-color: rgba(var(--color_theme_rgb), 0.1); /* 50% opacity */
+	color: var(--color_white);
+	border: 1px solid rgba(var(--color_theme_rgb), 0.2);
+	padding: 4px 6px;
+	z-index: 2;
+}
+

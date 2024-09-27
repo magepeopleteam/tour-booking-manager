@@ -3679,7 +3679,7 @@ div.mpStyle div.grid_3 {
     }
 
     div.mpStyle .grid div.grid_3 {
-        min-height: 482px;
+        min-height: 510px;
     }
 
     div.mpStyle .blossom div.grid_3 {
@@ -3713,6 +3713,10 @@ div.mpStyle .grid div.grid_4 {
     min-height: 584px;
 }
 
+div.mpStyle .grid div.grid_4 {
+    min-height: 416px;
+}
+
 
 @media(max-width: 1400px) {
     div.mpStyle div.grid_4 {
@@ -3725,6 +3729,24 @@ div.mpStyle .grid div.grid_4 {
 
     div.mpStyle .grid div.grid_4 {
         min-height: 513px;
+    }
+
+    div.mpStyle .orchid div.grid_4 {
+        min-height: 316px;
+    }
+
+}
+
+@media(max-width: 1200px) {
+    div.mpStyle .orchid div.grid_4 {
+        min-height: 388px;
+    }
+}
+
+
+@media(max-width: 767px) {
+    div.mpStyle .orchid div.grid_4 {
+        min-height: auto;
     }
 }
 

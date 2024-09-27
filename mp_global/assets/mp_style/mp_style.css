@@ -3673,6 +3673,7 @@ div.mpStyle div.grid_3 {
     padding: var(--dmp_xs);
 }
 
+
 @media(min-width: 992px) {
     div.mpStyle div.grid_3 {
         min-height: 575px;
@@ -3680,6 +3681,10 @@ div.mpStyle div.grid_3 {
 
     div.mpStyle .grid div.grid_3 {
         min-height: 510px;
+    }
+
+    div.mpStyle .ttbm_widget_content.grid div.grid_3 {
+        min-height: auto !important;
     }
 
     div.mpStyle .blossom div.grid_3 {
@@ -3703,6 +3708,10 @@ div.mpStyle div.grid_3 {
 
 }
 
+
+
+
+
 div.mpStyle div.grid_4 {
     width: calc(25% - var(--dmp));
     margin: var(--dmp_xs);
@@ -3713,9 +3722,9 @@ div.mpStyle .grid div.grid_4 {
     min-height: 584px;
 }
 
-div.mpStyle .grid div.grid_4 {
-    min-height: 416px;
-}
+/*div.mpStyle .grid div.grid_4 {*/
+/*    min-height: 416px;*/
+/*}*/
 
 
 @media(max-width: 1400px) {

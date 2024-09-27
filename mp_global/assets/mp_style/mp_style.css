@@ -41,8 +41,8 @@ body.noScroll {
     margin: 0;
     margin-bottom: 0px;
     font-size: 16px;
-    font-weight: 300;
     line-height: 24px;
+    font-weight: 400;
 }
 
 .mpStyle a:not(.mp_wp_editor a) {
@@ -2229,6 +2229,7 @@ div.mpStyle .mp_sticky_area.mpSticky .mp_sticky_on_scroll {
 }
 
 .mpStyle input:not(.checkbox),
+.mpStyle input:not([type=submit]),
 .mpStyle optgroup,
 .mpStyle select,
 .mpStyle textarea {
@@ -3630,13 +3631,77 @@ div.mpStyle div.grid_2 {
     padding: var(--dmp_xs);
 }
 
+@media(min-width: 1200px) {
+    div.mpStyle .orchid div.grid_2 {
+        min-height: auto;
+    }
+}
+
+@media(max-width: 1200px) {
+    div.mpStyle .grid div.grid_2 {
+        min-height: 482px;
+    }
+}
+
+@media(min-width: 992px) {
+    div.mpStyle .lotus div.grid_2 {
+        min-height: 543px;
+    }
+
+    .ttbm_list_info_wrapper {
+        height: 82px;
+    }
+
+    div.filter_item.grid_2 div.ttbm_description > div {
+        -webkit-line-clamp: 3;
+        max-height: 3em;
+    }
+
+    div.mpStyle .blossom div.grid_2 {
+        min-height: 360px;
+    }
+
+    div.mpStyle .orchid div.grid_2 {
+        min-height: 384px;
+    }
+
+}
+
 div.mpStyle div.grid_3 {
     width: calc(33.333333% - var(--dmp));
     /*margin: var(--dmp_xs);*/
     padding: var(--dmp_xs);
 }
 
+@media(min-width: 992px) {
+    div.mpStyle div.grid_3 {
+        min-height: 575px;
+    }
 
+    div.mpStyle .grid div.grid_3 {
+        min-height: 482px;
+    }
+
+    div.mpStyle .blossom div.grid_3 {
+        min-height: 390px;
+    }
+
+    div.mpStyle .blossom div.grid_4 {
+        min-height: 416px;
+    }
+
+    div.mpStyle .orchid div.grid_3 {
+        min-height: 388px;
+    }
+
+}
+
+@media(min-width: 767px) {
+    div.mpStyle .blossom div.grid_3 {
+        min-height: 385px;
+    }
+
+}
 
 div.mpStyle div.grid_4 {
     width: calc(25% - var(--dmp));
@@ -3644,11 +3709,25 @@ div.mpStyle div.grid_4 {
     padding: var(--dbrl);
 }
 
+div.mpStyle .grid div.grid_4 {
+    min-height: 584px;
+}
+
+
 @media(max-width: 1400px) {
     div.mpStyle div.grid_4 {
         width: calc(33.333333% - var(--dmp));
     }
+
+    div.mpStyle .blossom div.grid_4 {
+        min-height: 388px;
+    }
+
+    div.mpStyle .grid div.grid_4 {
+        min-height: 513px;
+    }
 }
+
 
 div.mpStyle div.grid_5 {
     width: calc(20% - var(--dmp));

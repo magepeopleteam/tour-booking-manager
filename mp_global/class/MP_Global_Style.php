@@ -125,7 +125,7 @@
 							/*--dmpl: 32px;*/
 							/*--dmp: 16px;*/
 							/*--dmp_negetive: -16px;*/
-							/*--dmp_xs: 8px;*/
+							--dmp_xs: 8px;
 							/*--dmp_xs_negative: -8px;*/
 						}
 					}

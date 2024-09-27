@@ -86,52 +86,6 @@ div.ttbm_location_list div.filter_item {padding: 0;}
 .ttbm_wraper table label {max-width: 100px;}
 .ttbm_wraper table label select.formControl {text-align: center;}
 
-/***************** Rating Stars *********************************/
-.rating-group {
-	display: flex;
-	/*direction: rtl; !* Reverses the stars display order *!*/
-}
-
-.rating-group label {
-	font-size: 22px;
-	color: lightgray; /* Default color */
-	cursor: pointer;
-	transition: color 0.3s ease;
-}
-
-.rating-group input {
-	display: none; /* Hide the radio buttons */
-}
-
-/* Hover effect */
-.rating-group label:hover,
-.rating-group label:hover ~ label {
-	color: gold;
-}
-
-/* If a radio input is checked, make the corresponding stars gold */
-.rating-group input:checked ~ label {
-	color: gold;
-}
-
-.mage-modal-header {
-	display: flex;
-	align-items: center;
-	flex-direction: row-reverse;
-	justify-content: space-between;
-}
-
-.close {
-	color: var(--color_black) !important;
-	font-size: 30px !important;
-	opacity: 1 !important;
-	transition: all 0.3s ease-in-out;
-}
-
-.close:hover {
-	color: var(--color_theme) !important;
-	opacity: 1 !important;
-}
 
 /*****************/
 div.item_section {margin: var(--dmp_xs_negative) var(--dmp_xs_negative) var(--dmp) var(--dmp_xs_negative);}
@@ -442,4 +396,5 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 	padding: 4px 6px;
 	z-index: 2;
 }
+
 

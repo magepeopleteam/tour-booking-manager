@@ -597,7 +597,7 @@ div.mpPopup .popupClose,
 .mpStyle button {
     position: relative;
     font-size: var(--button_fs);
-    font-weight: var(--fw-medium);
+    font-weight: var(--fw-normal);
     cursor: pointer;
     overflow: visible;
     border: none;
@@ -829,6 +829,7 @@ div.mpPopup .popupClose,
     padding: 11px var(--dmp);
     font-size: var(--fs_small);
     border-radius: var(--dbr);
+    line-height: 1.4;
 }
 
 /*************************/
@@ -3675,9 +3676,9 @@ div.mpStyle div.grid_3 {
 
 
 @media(min-width: 992px) {
-    div.mpStyle div.grid_3 {
-        min-height: 575px;
-    }
+    /*div.mpStyle div.grid_3 {*/
+    /*    min-height: 575px;*/
+    /*}*/
 
     div.mpStyle .grid div.grid_3 {
         min-height: 510px;
@@ -3707,9 +3708,6 @@ div.mpStyle div.grid_3 {
     }
 
 }
-
-
-
 
 
 div.mpStyle div.grid_4 {

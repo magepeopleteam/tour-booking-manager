@@ -68,7 +68,7 @@
                         <?php $add_class = $count > 3 ? 'dNone' : ''; ?>
                         <?php include(TTBM_Function::template_path('layout/seat_info.php')); ?>
                         <?php if ($count > 4) { ?>
-							<div class="justifyEnd fullWidth">
+							<div class="fullWidth">
 								<h6 class="ttbm_short_list_more" data-text-change data-open-text="<?php esc_html_e('View More', 'tour-booking-manager'); ?>" data-close-text="<?php esc_html_e('Less More', 'tour-booking-manager'); ?>">
 									<span data-text><?php esc_html_e('View More', 'tour-booking-manager'); ?></span>
 								</h6>

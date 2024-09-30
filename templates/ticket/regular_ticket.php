@@ -24,11 +24,11 @@
 				<div class="ttbm_widget_content" data-placeholder>
 					<table class="mp_tour_ticket_type">
 						<thead>
-						<tr>
-							<th class="textL"><?php echo MP_Global_Function::data_sanitize(TTBM_Function::ticket_name_text()); ?></th>
-							<th><?php echo MP_Global_Function::data_sanitize(TTBM_Function::ticket_price_text()); ?></th>
-							<th><?php echo MP_Global_Function::data_sanitize(TTBM_Function::ticket_qty_text()); ?></th>
-						</tr>
+                            <tr>
+                                <th class="textL"><?php echo MP_Global_Function::data_sanitize(TTBM_Function::ticket_name_text()); ?></th>
+                                <th><?php echo MP_Global_Function::data_sanitize(TTBM_Function::ticket_price_text()); ?></th>
+                                <th><?php echo MP_Global_Function::data_sanitize(TTBM_Function::ticket_qty_text()); ?></th>
+                            </tr>
 						</thead>
 						<tbody>
 						<?php
@@ -51,11 +51,15 @@
 								?>
 								<tr>
 									<th>
-										<?php if ($ticket_type_icon) { ?>
-											<span class="<?php echo esc_attr($ticket_type_icon); ?>"></span>
-										<?php } ?>
-										<?php echo MP_Global_Function::esc_html($ticket_name); ?>
-										<div class="mT_xs"><?php MP_Custom_Layout::load_more_text($description, 100); ?></div>
+                                        <div class="person-info">
+                                            <?php if ($ticket_type_icon) { ?>
+                                                <span class="<?php echo esc_attr($ticket_type_icon); ?>"></span>
+                                            <?php } ?>
+                                            <?php echo MP_Global_Function::esc_html($ticket_name); ?>
+                                        </div>
+                                        <?php if ($description) { ?>
+										    <div class="mT_xs"><?php MP_Custom_Layout::load_more_text($description, 100); ?></div>
+                                        <?php } ?>
 									</th>
 									<td class="text-center">
 										<?php if ($regular_price) { ?>
@@ -65,6 +69,7 @@
 									</td>
 									<td><?php TTBM_Layout::qty_input($ticket_name, $available, $ticket_qty_type, $default_qty, $min_qty, $max_qty, $ticket_price_raw, 'ticket_qty[]',$tour_id); ?></td>
 								</tr>
+
 								<tr>
 									<td colspan=3>
 										<input type="hidden" name='tour_id[]' value='<?php echo esc_html($tour_id); ?>'>

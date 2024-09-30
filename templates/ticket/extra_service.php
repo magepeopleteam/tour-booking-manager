@@ -48,7 +48,9 @@
 										<span class="<?php echo esc_attr($service_icon); ?>"></span>
 									<?php } ?>
 									<?php echo MP_Global_Function::esc_html($service_name); ?>
-									<div class="mT_xs"><?php MP_Custom_Layout::load_more_text($description, 100); ?></div>
+                                    <?php if ($description) { ?>
+									    <div class="mT_xs"><?php MP_Custom_Layout::load_more_text($description, 100); ?></div>
+                                    <?php } ?>
 								</th>
 								<td class="text-center"><?php echo MP_Global_Function::esc_html($service_price); ?></td>
 								<td><?php TTBM_Layout::qty_input($service_name, $available, $input_type, $default_qty, $min_qty, $max_qty, $service_price_raw, 'service_qty[]'); ?></td>

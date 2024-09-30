@@ -20,6 +20,12 @@
       &:disabled {
         background: $color-gray;
       }
+
+    &:focus {
+      outline: none;
+      border: 1px solid $color-primary;
+      box-shadow: none;
+    }
   }
   textarea{
     height:calc( $input-height * 2 );

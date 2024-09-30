@@ -11,8 +11,12 @@ div.ttbm_container {width: 100%;max-width: var(--dcontainer_width);margin: 0 aut
 .ttbm_wraper table {table-layout: fixed;margin: 0; width: 100%;}
 .ttbm_wraper table th {font-size: var(--fs_label);}
 .ttbm_wraper table th,
-.ttbm_wraper table td {padding: 5px 5px 5px 15px;vertical-align: middle;border: 1px dotted #DDD;}
+/*.ttbm_wraper table td {padding: 5px 5px 5px 15px;vertical-align: middle;border: 1px dotted #DDD;}*/
 div.ttbm_faq_item .ttbm_faq_title {-webkit-transition: 350ms ease-in-out;transition: 350ms ease-in-out;}
+.ttbm-rating-stars {
+	margin-top: 15px;
+	/*margin-bottom: 10px;*/
+}
 /**********Shadow content****************************/
 div.viator_top_section .ttbm_booking_panel form,
 #ttbm_related_tour div.filter_item,
@@ -33,14 +37,32 @@ div.viator_top_section .ttbm_booking_panel form,
 /*****************Details page*********************************/
 div.ttbm_details_page {display: block;position: relative;}
 div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-webkit-flex-wrap: wrap;flex-wrap: wrap;-webkit-justify-content: space-between;justify-content: space-between;padding-top:5px}
+
+.ttbm_details_page_header {
+	margin-bottom: 20px;
+}
+
+.ttbm_details_page_header .ttbm-rating-stars {
+	margin: 0 0 10px 0 !important;
+}
+
+
 .ttbm_content__left {width: calc(100% - 346px);}
+
 .hip_hop_hotel_theme .ttbm_content__left,
 .ttbm_spring_theme .ttbm_content__left {width: calc(50% - 20px);}
-.ttbm_content__right {width: 330px;}
+.ttbm_content__right {
+	width: 330px;
+	padding: var(--dmp);
+	border: 1px solid var(--color_border);
+	height: max-content;
+	border-radius: 10px;
+}
 .hip_hop_hotel_theme .ttbm_content__right,
 .ttbm_spring_theme .ttbm_content__right {width: 50%;}
 /**/
-div.ttbm_details_page div.superSlider {margin: 0 0 var(--dmp) 0;}
+div.ttbm_details_page div.superSlider {margin: 0;}
+
 div.ttbm_details_page div.ttbm_description {margin: 0 0 var(--dmp) 0;}
 /*********/
 div.ttbm_details_page .location_name {font-size: var(--fs_h5);margin: 0 0 var(--dmp) 0;}
@@ -63,11 +85,22 @@ div.ttbm_location_list div.filter_item {padding: 0;}
 /*********Group Content*******/
 .ttbm_wraper table label {max-width: 100px;}
 .ttbm_wraper table label select.formControl {text-align: center;}
+
+
 /*****************/
 div.item_section {margin: var(--dmp_xs_negative) var(--dmp_xs_negative) var(--dmp) var(--dmp_xs_negative);}
-div.item_section .ttbm_short_list_more {cursor: pointer;color: var(--color_theme);margin: 0 var(--dmp_xs) 0 0;font-weight: bold;}
+div.item_section .ttbm_short_list_more {
+	cursor: pointer;
+	color: var(--color_theme);
+	margin: 0 0 0 var(--dmp_xs) ;
+	font-weight: var(--fw-medium);
+	font-size: var(--fs_h4);
+	margin-top: var(--dmp_xs);
+	padding: var(--dmp_xs) var(--dmp_xs);
+	display: inline-block;
+}
 div.small_box {
-	padding: var(--dmp_xs);margin: var(--dmp_xs);width: calc(25% - var(--dmp));
+	padding: var(--dmp) var(--dmp_xs) ;margin: var(--dmp_xs);width: calc(25% - var(--dmp));
 	border: 1px solid var(--color_border);border-radius: 10px;
 	background-color: var(--color_section);line-height: 1.25;
 	-webkit-flex-direction: column;flex-direction: column;
@@ -76,7 +109,7 @@ div.small_box {
 div.small_box .item_icon {color: var(--color_theme);margin: 0 0 var(--dmp_xs) 0;font-size: var(--fs_h1);}
 div.small_box > * {text-align: center;}
 /**************************************************/
-.ttbm_wraper button.ttbm_book_now {font-size: var(--fs_h4);margin: 0 var(--dmp_xs) 0 0;}
+.ttbm_wraper button.ttbm_book_now {font-size: var(--fs);margin: 0 var(--dmp_xs) 0 0;}
 /*****************/
 /**********************/
 div.bg_image_area .group_item {
@@ -94,19 +127,74 @@ div.bg_image_area .group_item .ttbm_list_info {
 	margin: 0 0 var(--dmp_xs) 0;
 	font-size: 12px;
 	background-color: #0007;
+	padding: 10px;
 }
-div.include_service ul li[title]:hover::before {position: absolute;content: '';left: calc(50% - 9px);top: -20px;border: 10px solid transparent;border-bottom-color: #333;}
-div.include_service ul li[title]:hover::after {content: attr(title);position: absolute;top: -35px; left: 0;background-color: #333;padding: 5px var(--dmp_xs);color: #FFF;border-radius: 5px;white-space: nowrap;}
+div.include_service ul li[title]:hover::before {
+	position: absolute;
+	content: '';
+	left: calc(50% - 9px);
+	top: -11px;
+	border: 8px solid transparent;
+	border-bottom-color: #333;
+	transform: rotate(180deg);
+}
+div.include_service ul li[title]:hover::after {
+	content: attr(title);
+	position: absolute;
+	top: -122%;
+	left: 0;
+	background-color: #333;
+	padding: 5px var(--dbr);
+	color: #FFF;
+	border-radius: 5px;
+	white-space: nowrap;
+	font-size: 12px;
+	line-height: 20px;
+}
 div.include_service ul {display: -webkit-flex;display: flex;}
-div.include_service ul li {position: relative;padding: 5px !important; margin: 0 7px 0 0 !important;border: 1px solid var(--color_border); border-radius: 5px;}
-div.include_service ul li span {
-	background-color: transparent !important;
-	width: auto;height: auto;color: var(--color_theme) !important; min-width: auto;margin: 0 !important;}
-div.include_service ul li span:hover {
+div.include_service ul li, .ttbm_widget_content .ttbm_list_details .include_service ul li {
+	display: inline-block !important;
+	position: relative;
+	margin: 0 7px 0 0 !important;
+	border: 1px solid var(--color_border);
+	border-radius: 5px;
+	transition: all 0.3s ease-in-out;
+	color: var(--color_theme) !important;
+	font-size: var(--fs);
+	height: 35px;
+	width: 35px !important;
+	padding: 0 !important;
+	line-height: 35px;
+	text-align: center;
+	/*margin: 0 var(--dmp_xs) 0 0;*/
+}
+
+div.include_service ul li span, .ttbm_widget_content div.ttbm_list_details .include_service ul li span {
+	display: inline-block !important;
+	margin: 0 !important;
+}
+
+div.include_service ul li:hover,
+.ttbm_widget_content .ttbm_list_details .include_service ul li:hover {
 	background-color: var(--color_theme) !important;
 	color: var(--color_theme_alter) !important;
+	border-color: var(--color_theme) !important;
 }
-div.filter_top_bar button {background-color: #FFF;color: var(--color_theme);font-size: var(--fs_h2);padding: 5px 7px;}
+
+/*div.include_service ul li span {*/
+/*	background-color: transparent !important;*/
+/*	width: auto;*/
+/*	height: auto;*/
+/*	color: var(--color_theme) !important; */
+/*	min-width: auto;*/
+/*	margin: 0 !important;*/
+/*}*/
+/*div.include_service ul li span:hover {*/
+/*	background-color: var(--color_theme) !important;*/
+/*	color: var(--color_theme_alter) !important;*/
+/*}*/
+div.filter_top_bar button {background-color: #FFF;color: var(--color_theme);font-size: var(--fs_h2);padding: 6px;
+	border-radius: 5px !important;}
 /**************default theme***********************************/
 /**************spring theme***********************************/
 /**************hip hop hotel theme***********************************/
@@ -145,7 +233,13 @@ div.viator_top_section .ttbm_book_now {margin: var(--dmp_xs) 0 0 0;}
 /******************day wise details********************************/
 div.ttbm_day_wise_details div.superSlider {min-width: 300px;max-width: 50%; margin: 0 var(--dmp) var(--dmp) 0;float: left;}
 div.day_wise_details_item .day_wise_details_item_details {margin: var(--dmp_xs) 0 0 0;overflow: hidden;}
-div.ttbm_day_wise_details .day_wise_details_item_title {padding: 0 var(--dmp_xs) var(--dmp_xs) 0;border-bottom: 1px solid #DDD;font-weight: normal;}
+div.ttbm_day_wise_details .day_wise_details_item_title {
+	padding: 0 var(--dmp_xs) var(--dmp_xs) 0;
+	border-bottom: 1px solid #DDD;
+	font-size: var(--fs_h4);
+	font-weight: var(--fw-medium);
+}
+
 div.day_wise_details_item { border-left: 1px solid var(--color_theme); position: relative; margin: 0;padding: 0 0 var(--dmp) 25px;}
 div.day_wise_details_item:before {
 	content: "";width: 15px; height: 15px;top: 0;left: -8px;position: absolute;
@@ -158,10 +252,18 @@ div.day_wise_details_item:last-child {padding-bottom: 0;border: none;}
 div.day_wise_details_item img {width: initial;}
 /*************F.A.Q*************************************/
 div.ttbm_faq_item {margin: 0 0 var(--dmp_xs) 0;}
-div.ttbm_faq_item .ttbm_faq_title {background-color: #FFF;border: 1px solid #DDD;border-radius: 5px;font-weight: normal;text-transform: none;}
+div.ttbm_faq_item .ttbm_faq_title {background-color: #FFF;border: 1px solid #DDD;border-radius: 5px;font-weight: 600;text-transform: none; padding: 5px; font-size: var(--fs_h4)}
 div.ttbm_faq_item .ttbm_faq_title.active {border-color: var(--color_theme);border-radius: 5px 5px 0 0;background-color: var(--color_theme);color: var(--color_theme_alter); }
 div.ttbm_faq_item .ttbm_faq_title span {padding: 10px;}
 div.ttbm_faq_content {background-color: #FFF;padding: var(--dmp);border: 1px solid var(--color_theme);border-radius: 0 0 5px 5px;overflow: hidden;}
+div.ttbm_faq_content p {
+	margin-top: 0;
+}
+
+div.ttbm_faq_content p:last-child {
+	margin-bottom: 0;
+}
+
 div.ttbm_faq_item div.superSlider {min-width: 300px;max-width: 50%; margin: 0 var(--dmp_xs) var(--dmp_xs) 0;float: left;}
 /*****************dynamic sidebar*********************************/
 div.ttbm_sidebar_widget {margin: 0 0 var(--dmp) 0;}
@@ -173,10 +275,34 @@ div.ttbm_sidebar_widget ul li a:hover {color: var(--color_theme);margin: 0 0 0 7
 div.ttbm_sidebar_widget ul li a::before {content: '>';margin: 0 5px 0 0;}
 /************** owlCarousel***********************************/
 div.ttbm_wraper .carousel_area span {cursor: pointer;}
-div.ttbm_wraper .carousel_area span:hover {color: var(--color_theme);}
+.carousel_area .prev, .carousel_area .next {
+	display: block;
+	height: 30px;
+	width: 30px;
+	text-align: center;
+	background: var(--color_theme);
+	margin-left: 10px;
+	line-height: 30px;
+	border-radius: var(--dbr);
+	color: #fff;
+	font-size: 14px;
+}
+
+.carousel_area .prev:hover, .carousel_area .next:hover {
+	background: var(--color_theme_secondary);
+	color: var(--color_white);
+
+}
 div.ttbm_wraper .owl-carousel .owl-stage {display: -webkit-flex;display: flex;}
 div.ttbm_wraper .owl-item div.filter_item,
 div.ttbm_wraper .owl-item .section_item {width: 100%;height: 100%;}
+
+@media(min-width: 767px) {
+	.ttbm_widget_content.owl-carousel .owl-stage-outer {
+		margin-left: -10px;
+	}
+}
+
 div.ttbm_wraper .owl-nav > button {
 	width: 40px; height: 40px;
 	margin-top: 0; background: #FFF; border-radius: 50%;
@@ -211,7 +337,7 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 }
 @media only screen and (max-width: 900px) {
 }
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 767px) {
 	div.ttbm_viator_theme .ttbm_content__left,
 	div.ttbm_viator_theme .ttbm_content__right,
 	div.ttbm_viator_theme .viator_top_section .ttbm_content__left,
@@ -226,6 +352,11 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 	div.ttbm_viator_theme .ttbm_content__right {margin: var(--dmp) 0 0 0;}
 	div.viator_top_section .ttbm_booking_panel {position: relative;left: inherit;right: inherit;}
 	div.viator_top_section .ttbm_booking_panel {position: initial;left: inherit;right: inherit;}
+
+	div.ttbm_content_area .ttbm_content__right {
+		margin-top: 50px;
+	}
+
 }
 @media only screen and (max-width: 600px) {
 	div.small_box {width: calc(100% - var(--dmp_xs));}
@@ -251,17 +382,19 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 	margin-top: 30px;
 }
 
-@media only screen and (min-width: 10px) {
 
-	#ui-datepicker-div.ui-datepicker td{
-		background-color: #fff;
-		border: 1px solid var(--color_theme);
-		padding: 4px 6px;
-	}
-	#ui-datepicker-div.ui-datepicker td.ui-datepicker-unselectable.ui-state-disabled {
-		background-color: #d8d8d8;
-		color: var(--color_white);
-		border: 1px solid var(--color_theme);
-		padding: 4px 6px;
-	}
+
+#ui-datepicker-div.ui-datepicker td{
+	background-color: #fff;
+	border: 1px solid #feeaf1;
+	padding: 4px 6px;
 }
+#ui-datepicker-div.ui-datepicker td.ui-datepicker-unselectable.ui-state-disabled {
+	background-color: rgba(var(--color_theme_rgb), 0.1); /* 50% opacity */
+	color: var(--color_white);
+	border: 1px solid rgba(var(--color_theme_rgb), 0.2);
+	padding: 4px 6px;
+	z-index: 2;
+}
+
+

@@ -121,8 +121,25 @@ div.ttbm_list_title {margin-top: var(--dmp_xs);}
 	-webkit-line-clamp: 3;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
-	height: 80px;
+	/*height: 80px;*/
 	margin-top: 0;
+}
+
+.flora .filter_item.grid_4 .ttbm_list_title a {
+	-webkit-line-clamp: 2;
+	font-size: 18px;
+	height: 52px;
+}
+
+@media(max-width: 767px) {
+	.flora .filter_item.grid_4 .ttbm_list_title a {
+		height: auto;
+		font-size: 22px;
+	}
+}
+
+.flora .filter_item .ttbm_list_title {
+	margin-bottom: 0;
 }
 
 .filter_item.grid_3 .ttbm_list_title a {
@@ -132,6 +149,7 @@ div.ttbm_list_title {margin-top: var(--dmp_xs);}
 	overflow: hidden;
 	/*height: 52px;*/
 	margin-top: 0;
+
 }
 
 @media(max-width: 1400px) {

@@ -3675,10 +3675,18 @@ div.mpStyle div.grid_3 {
 }
 
 
+.flora div.filter_item {
+    justify-content: flex-start;
+}
+
 @media(min-width: 992px) {
     /*div.mpStyle div.grid_3 {*/
     /*    min-height: 575px;*/
     /*}*/
+
+    div.mpStyle .flora div.grid_3 {
+        min-height: 295px;
+    }
 
     div.mpStyle .grid div.grid_3 {
         min-height: 510px;

@@ -1828,477 +1828,615 @@
 	}
 }
 /******************************************************************** Form section ************************************************/
-@media only screen and (min-width: 10px) {
-	.mpStyle input,
-	.mpStyle optgroup,
-	.mpStyle select,
-	.mpStyle textarea,
-	.mpStyle button {
-		font-family: inherit;
-		line-height: 1.25;
-		margin: 0;
-	}
-	.mpStyle .formControl:-webkit-autofill,
-	.mpStyle .formControl:-webkit-autofill:hover,
-	.mpStyle .formControl:-webkit-autofill:focus,
-	.mpStyle .formControl:-webkit-autofill:active {
-		-webkit-transition: color 9999s ease-out, background-color 9999s ease-out;
-		transition: color 9999s ease-out, background-color 9999s ease-out;
-		-webkit-transition-delay: 9999s;
-		transition-delay: 9999s;
-	}
-	div.mpStyle form {
-		margin: 0;
-		padding: 0;
-		line-height: 1.25;
-	}
-	.mpStyle label {
-		position: relative;
-	}
-	.mpStyle label > span {
-		white-space: nowrap;
-	}
-	/***************************/
-	.mpStyle .formControl::placeholder {
-		color: #0005;
-	}
-	.mpStyle .formControl:disabled {
-		background-color: #ddd5;
-		color: #fff;
-	}
-	/***************************/
-	div.mpStyle .formControl {
-		width: 100%;
-		max-width: inherit;
-		border: 1px solid var(--color_border);
-		padding: 8px;
-		font-size: var(--fs);
-		color: var(--d_color);
-		background-color: #fff;
-		font-weight: normal;
-	}
-	.mpStyle .formControl:focus {
-		outline: 0;
-		background-color: #fff;
-		border-color: #80bdff;
-	}
-	div.mpStyle select.formControl {
-		/* background-image: url("../images/arrow_down.png");
+
+.mpStyle input:not[type="submit"] {
+    width: 100%;
+    max-width: inherit;
+    border: 1px solid var(--color_border);
+    font-size: var(--fs);
+    color: var(--d_color);
+    background-color: #fff;
+    padding: 10px 15px;
+    font-weight: 500;
+    height: 40px;
+    border-radius: 6px;
+}
+
+.mpStyle input:not(.checkbox),
+.mpStyle input:not([type=submit]),
+.mpStyle optgroup,
+.mpStyle select,
+.mpStyle textarea {
+    font-family: inherit;
+    line-height: initial;
+    margin: 0;
+    max-width: inherit;
+    border: 1px solid var(--color_border);
+    font-size: var(--fs);
+    color: var(--d_color);
+    background-color: #fff;
+    padding: 10px 15px;
+    font-weight: 500;
+
+}
+
+.mpStyle .formControl:-webkit-autofill,
+.mpStyle .formControl:-webkit-autofill:hover,
+.mpStyle .formControl:-webkit-autofill:focus,
+.mpStyle .formControl:-webkit-autofill:active {
+    box-shadow: none;
+    outline: 0;
+    border-color: var(--color_theme);
+}
+
+.mpStyle input:focus,
+.mpStyle optgroup:focus,
+.mpStyle select:focus,
+.mpStyle textarea:focus {
+    box-shadow: none;
+    outline: 0;
+    border-color: var(--color_theme);
+}
+
+div.mpStyle form {
+    margin: 0;
+    padding: 0;
+    line-height: 1.25;
+}
+
+.mpStyle label {
+    position: relative;
+}
+
+.mpStyle label > span {
+    white-space: nowrap;
+}
+
+/***************************/
+.mpStyle .formControl::placeholder {
+    color: #0005;
+}
+
+.mpStyle .formControl:disabled {
+    background-color: #ddd5;
+    color: #fff;
+}
+
+/***************************/
+div.mpStyle .formControl {
+    width: 100%;
+    max-width: inherit;
+    border: 1px solid var(--color_border);
+    font-size: var(--fs);
+    color: var(--d_color);
+    background-color: #fff;
+    padding: 10px 15px;
+    font-weight: 500;
+    height: 40px;
+    border-radius: 6px;
+}
+
+div.mpStyle #ttbm_select_date.formControl {
+    height: 30px;
+}
+
+.mpStyle .formControl:focus {
+    outline: 0;
+    background-color: #fff;
+    border-color: #80bdff;
+}
+
+div.mpStyle select.formControl {
+    height: 48px;
+    border-radius: 8px;
+    /* background-image: url("../images/arrow_down.png");
+background-repeat: no-repeat;
+background-position: calc(100% - var(--dmp_xs));
+background-size: auto;
+-webkit-appearance: none;
+padding: var(--dmp_xs) 35px var(--dmp_xs) var(--dmp_xs); */
+}
+
+div.mpStyle select.formControl:focus {
+    border: 1px solid var(--color_theme);
+    box-shadow: none;
+}
+
+div.mpStyle .formControl.date_type_without_year,
+div.mpStyle .formControl.date_type,
+div.mpStyle .formControl[type="date"] {
+    background-image: url("../images/calendar.png");
     background-repeat: no-repeat;
-    background-position: calc(100% - var(--dmp_xs));
+    background-position: 8px center;
     background-size: auto;
     -webkit-appearance: none;
-    padding: var(--dmp_xs) 35px var(--dmp_xs) var(--dmp_xs); */
-	}
-	div.mpStyle select.formControl:focus {
-		background-color: var(--color_theme_aa);
-	}
-	div.mpStyle .formControl.date_type_without_year,
-	div.mpStyle .formControl.date_type,
-	div.mpStyle .formControl[type="date"] {
-		background-image: url("../images/calendar.png");
-		background-repeat: no-repeat;
-		background-position: 8px center;
-		background-size: auto;
-		-webkit-appearance: none;
-		font-weight: normal;
-		padding: 8px 8px 8px 40px;
-	}
-	div.mpStyle textarea.formControl {
-		height: auto;
-	}
-	.mpStyle .mpForm label {
-		margin: var(--dmp_xs) 0 0 0;
-		text-transform: capitalize;
-	}
-	.mpStyle .mpForm label span {
-		width: 100%;
-		margin: 0 0 var(--dmp_xs) 0;
-	}
-	.mpStyle .mpForm label span::before {
-		padding: 0 var(--dmp_xs);
-	}
-	/****************/
-	.mpStyle .inputList {
-		margin: var(--dmp) 0 0 0;
-		position: relative;
-	}
-	.mpStyle .inputList textarea.formControl {
-		height: auto;
-	}
-	/******* group form*********/
-	.mpStyle .inputGroup {
-		width: 100%;
-		padding: 0 0 var(--dmp_xs) 0;
-	}
-	.mpStyle .inputGroup label {
-		width: auto;
-		padding: 0 var(--dmp) 0 0;
-	}
-	.mpStyle .inputGroup label input[type="checkbox"] {
-		margin: 0 var(--dmp_xs);
-	}
-	/******* input as a select*********/
-	div.mpStyle div.mp_input_select .formControl:focus {
-		border-color: var(--color_border);
-	}
-	.mpStyle div.mp_input_select {
-		position: relative;
-	}
-	.mpStyle ul.mp_input_select_list {
-		display: none;
-		z-index: 111;
-		overflow: auto;
-		max-height: 250px;
-		height: auto;
-		width: 100%;
-		margin: 1px 0 0 0;
-		padding: 10px;
-		position: absolute;
-		left: 0;
-		top: 100%;
-		right: 0;
-		border: 1px solid var(--color_border);
-		background-color: var(--color_white);
-	}
-	.mpStyle ul.mp_input_select_list li {
-		padding: 10px;
-		cursor: pointer;
-		border-bottom: 1px solid var(--color_border);
-		margin: 0;
-		list-style-type: none;
-	}
-	.mpStyle ul.mp_input_select_list li:last-child {
-		border-bottom: none;
-	}
-	.mpStyle ul.mp_input_select_list li:hover {
-		background-color: #777;
-		color: #fff;
-	}
-	.mpStyle ul.mp_input_select_list li span {
-		margin: 0 var(--dmp_xs) 0 0;
-	}
-	/*****Form inline*******/
-	.mpStyle .inputInline .mpForm {
-		width: 100%;
-		max-width: 100%;
-	}
-	.mpStyle .inputInline .inputList {
-		width: 100%;
-		margin: var(--dmp_xs) var(--dmp_xs) 0 0;
-	}
-	.mpStyle .inputInline .inputList label {
-		margin: 0;
-	}
-	.mpStyle .inputInline .inputList:last-child {
-		margin-right: 0;
-	}
-	/********Form Horizontal**************/
-	.mpStyle .inputHorizontal {
-		max-width: 500px;
-		width: 100%;
-		margin: 0 auto;
-	}
-	/**********Checkbox Radio*********/
-	div.mpStyle .customRadioLabel {
-		font-size: var(--fs_h6);
-		font-weight: var(--fw-medium);
-		-webkit-flex-wrap: wrap;
-		flex-wrap: wrap;
-	}
-	div.mpStyle .customRadioLabel input[type="radio"] ~ .formControl,
-	.mpStyle .customRadioLabel input[type="radio"] {
-		display: none;
-	}
-	.mpStyle .customRadio {
-		padding: 0 var(--dmp_xs) 0 30px;
-		margin: 0 var(--dmp_xs) var(--dmp_xs) 0;
-		position: relative;
-		cursor: pointer;
-		line-height: 1;
-		white-space: nowrap;
-		min-height: 20px;
-	}
-	.mpStyle .customRadio::before {
-		content: "";
-		position: absolute;
-		left: 0;
-		top: 0;
-		height: 20px;
-		width: 20px;
-		background-color: #fff;
-		border: 2px rgba(0, 0, 0, 0.5) solid;
-		border-radius: 50%;
-	}
-	.mpStyle .customRadioLabel input[type="radio"]:checked ~ .formControl {
-		display: block;
-	}
-	.mpStyle .customRadioLabel input[type="radio"]:checked ~ .customRadio::after,
-	.mpStyle .customRadio.active::after {
-		content: "";
-		position: absolute;
-		left: 5px;
-		top: 5px;
-		height: 10px;
-		width: 10px;
-		background-color: var(--color_theme);
-		border: 1px solid rgba(0, 0, 0, 0.5);
-		border-radius: 50%;
-	}
-	.mpStyle .customRadio.button_type {
-		padding: var(--dmp_xs);
-		margin: 5px;
-		min-width: 120px;
-		text-align: center;
-		border: 1px solid var(--color_theme_alter);
-		color: var(--color_theme_alter);
-		background-color: var(--color_theme);
-	}
-	.mpStyle .customRadio.button_type.active {
-		background-color: grey;
-		color: var(--color_theme_alter);
-	}
-	.mpStyle .customRadio.button_type::before,
-	.mpStyle .customRadio.button_type::after {
-		display: none;
-	}
-	/**********Checkbox Custom*********/
-	.mpStyle .customCheckbox {
-		padding: 3px 0 0 24px;
-		position: relative;
-		line-height: 1;
-		min-width: auto;
-		white-space: wrap;
-		margin-right: 5px;
-	}
-	.mpStyle .customCheckbox::before {
-		content: "";
-		position: absolute;
-		left: 0;
-		top: 0;
-		height: 20px;
-		width: 20px;
-		background-color: var(--color_theme_alter);
-		border: 2px solid var(--color_theme_aa);
-		border-radius: 2px;
-	}
-	.mpStyle .customCheckboxLabel {
-		padding: 0 0 10px 0;
-		cursor: pointer;
-		font-weight: var(--fw-medium);
-	}
-	.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::before {
-		background: var(--color_theme);
-	}
-	/*******************/
-	div.mpStyle .selectCheckbox {
-		min-width: 150px;
-		padding: var(--dmp_xs);
-		width: auto;
-		border: 1px solid var(--color_border);
-		cursor: pointer;
-	}
-	div.mpStyle .customCheckboxLabel input[type="checkbox"],
-	div.mpStyle .selectCheckbox input[type="checkbox"] {
-		display: none;
-	}
-	div.mpStyle .selectCheckbox .customCheckbox::before {
-		border: none;
-		background-color: transparent;
-	}
-	div.mpStyle .customCheckboxLabel input:focus ~ .customCheckbox::before,
-	div.mpStyle .selectCheckbox input:focus ~ .customCheckbox::before {
-		outline: 0;
-	}
-	div.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::after,
-	div.mpStyle .selectCheckbox input:checked ~ .customCheckbox::after {
-		content: "";
-		position: absolute;
-		left: 2px;
-		top: 4px;
-		height: 8px;
-		width: 16px;
-		border: 2px solid var(--color_theme_alter);
-		border-top: none;
-		border-right: none;
-		z-index: 11;
-		background-color: transparent;
-		-ms-transform: rotate(-45deg);
-		transform: rotate(-45deg);
-	}
-	div.mpStyle .active_select {
-		background-color: var(--color_theme);
-		color: var(--color_theme_alter);
-	}
-	div.mpStyle .customCheckboxLabel.only_checkbox {
-		width: 20px;
-		margin: 0;
-	}
-	div.mpStyle .customCheckboxLabel.only_checkbox span {
-		padding: 0;
-	}
-	/*********Input Switch*******/
-	.mpStyle .roundSwitchLabel input[type="checkbox"] {
-		display: none;
-		line-height: 0;
-	}
-	.mpStyle .roundSwitch {
-		width: 50px;
-		height: 25px;
-		min-width: auto;
-		position: relative;
-		background-color: #ccc;
-		border-radius: 30px;
-		-webkit-transition: 0.4s;
-		transition: 0.4s;
-	}
-	.mpStyle .roundSwitch::before {
-		position: absolute;
-		content: "";
-		height: 23px;
-		width: 23px;
-		left: 1px;
-		bottom: 1px;
-		background-color: white;
-		border-radius: 50%;
-		-webkit-transition: 0.4s;
-		transition: 0.4s;
-	}
-	.mpStyle .roundSwitchLabel input:checked + .roundSwitch {
-		background-color: var(--color_theme);
-	}
-	.mpStyle .roundSwitchLabel input:focus + .roundSwitch {
-		box-shadow: 0 0 1px #2276d2;
-	}
-	.mpStyle .roundSwitchLabel input:checked + .roundSwitch:before {
-		-ms-transform: translateX(28px);
-		transform: translateX(28px);
-	}
-	/*********Group radio check*******/
-	.groupRadioCheck [data-radio-check] {
-		cursor: pointer;
-		-webkit-justify-content: flex-start;
-		justify-content: flex-start;
-	}
-	.groupRadioCheck button[data-radio-check] {
-		-webkit-justify-content: center;
-		justify-content: center;
-	}
-	.groupRadioCheck [data-radio-check]:hover {
-		border-color: var(--color_theme_88);
-	}
-	.groupRadioCheck [data-radio-check].mpActive {
-		border-color: var(--color_theme);
-	}
-	/*********Group Content*******/
-	.mpStyle .groupContent {
-		font-size: var(--fs);
-		border: 1px solid var(--color_border);
-		background-color: var(--color_theme);
-		color: var(--color_theme_alter);
-		text-align: center;
-		position: relative;
-	}
-	div.mpStyle div.groupContent > * {
-		border-left: 1px solid var(--color_border);
-		margin: 0;
-	}
-	div.mpStyle div.groupContent > *:first-child {
-		border: none;
-	}
-	div.mpStyle div.groupContent .formControl {
-		text-align: center;
-		border: none;
-		background-color: var(--color_white);
-		height: 100%;
-		border-radius: 0;
-	}
-	.mpStyle .groupContent textarea.formControl {
-		text-align: left;
-	}
-	.mpStyle .groupContent input[type="radio"] {
-	}
-	.mpStyle .groupContent input[type="radio"]::after {
-		position: absolute;
-		content: "";
-		width: 20px;
-		height: 20px;
-		left: 0;
-		top: 0;
-		border: 1px solid var(--color_border);
-		border-radius: 50%;
-		margin: 10px;
-	}
-	div.mpStyle .groupContent input[type="radio"]:checked::after {
-		border-color: var(--color_theme);
-	}
-	.mpStyle .groupContent input[type="radio"]:checked::before {
-		position: absolute;
-		content: "";
-		width: 14px;
-		height: 14px;
-		left: 3px;
-		top: 3px;
-		border: 1px solid var(--color_theme);
-		border-radius: 50%;
-		background-color: var(--color_theme);
-		margin: 10px;
-	}
-	.mpStyle .addonGroupContent {
-		min-width: 30px;
-		cursor: pointer;
-		background-color: #fff;
-		color: var(--color_theme_88);
-	}
-	.mpStyle .addonGroupContent:hover {
-		background-color: #555;
-		color: #f2f2f2;
-	}
-	.mpStyle
-	.groupContent
-	.select2-container--default
-	.select2-selection--single {
-		border: none;
-		border-radius: 0;
-	}
-	/*****Form Qty inc dec*******/
-	.mpStyle .qtyIncDec {
-		max-width: 100px;
-	}
-	/**********Responsive*********/
-	@media only screen and (max-width: 1250px) {
-		.mpStyle .inputInline .inputList {
-			max-width: calc(25% - 10px);
-		}
-	}
-	@media only screen and (max-width: 1050px) {
-		.mpStyle .inputInline .mpForm {
-			-webkit-flex-wrap: wrap;
-			flex-wrap: wrap;
-		}
-		.mpStyle .inputInline .inputList {
-			max-width: calc(33.33% - 10px);
-			-webkit-flex: inherit;
-			flex: inherit;
-		}
-	}
-	@media only screen and (max-width: 850px) {
-		.mpStyle .inputInline .inputList {
-			max-width: calc(50% - 10px);
-		}
-	}
-	@media only screen and (max-width: 600px) {
-		.mpStyle .inputInline .inputList {
-			max-width: 100%;
-			min-width: 100%;
-		}
-	}
-	@media only screen and (max-width: 450px) {
-		.mpStyle .addonGroupContent {
-			min-width: 25px;
-		}
-	}
+    font-weight: normal;
+    padding: 8px 8px 8px 40px;
 }
+
+div.mpStyle textarea.formControl {
+    height: auto;
+}
+
+.mpStyle .mpForm label {
+    margin: var(--dmp_xs) 0 0 0;
+    text-transform: capitalize;
+}
+
+.mpStyle .mpForm label span {
+    width: 100%;
+    margin: 0 0 var(--dmp_xs) 0;
+}
+
+.mpStyle .mpForm label span::before {
+    padding: 0 var(--dmp_xs);
+}
+
+/****************/
+.mpStyle .inputList {
+    margin: var(--dmp) 0 0 0;
+    position: relative;
+}
+
+.mpStyle .inputList textarea.formControl {
+    height: auto;
+}
+
+/******* group form*********/
+.mpStyle .inputGroup {
+    width: 100%;
+    padding: 0 0 var(--dmp_xs) 0;
+}
+
+.mpStyle .inputGroup label {
+    width: auto;
+    padding: 0 var(--dmp) 0 0;
+}
+
+.mpStyle .inputGroup label input[type="checkbox"] {
+    margin: 0 var(--dmp_xs);
+}
+
+/******* input as a select*********/
+div.mpStyle div.mp_input_select .formControl:focus {
+    border-color: var(--color_border);
+}
+
+.mpStyle div.mp_input_select {
+    position: relative;
+}
+
+.mpStyle ul.mp_input_select_list {
+    display: none;
+    z-index: 111;
+    overflow: auto;
+    max-height: 250px;
+    height: auto;
+    width: 100%;
+    margin: 1px 0 0 0;
+    padding: 10px;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    right: 0;
+    border: 1px solid var(--color_border);
+    background-color: var(--color_white);
+}
+
+.mpStyle ul.mp_input_select_list li {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--color_border);
+    margin: 0;
+    list-style-type: none;
+}
+
+.mpStyle ul.mp_input_select_list li:last-child {
+    border-bottom: none;
+}
+
+.mpStyle ul.mp_input_select_list li:hover {
+    background-color: #777;
+    color: #fff;
+}
+
+.mpStyle ul.mp_input_select_list li span {
+    margin: 0 var(--dmp_xs) 0 0;
+}
+
+/*****Form inline*******/
+.mpStyle .inputInline .mpForm {
+    width: 100%;
+    max-width: 100%;
+}
+
+.mpStyle .inputInline .inputList {
+    width: 100%;
+    margin: var(--dmp_xs) var(--dmp_xs) 0 0;
+}
+
+.mpStyle .inputInline .inputList label {
+    margin: 0;
+}
+
+.mpStyle .inputInline .inputList:last-child {
+    margin-right: 0;
+}
+
+/********Form Horizontal**************/
+.mpStyle .inputHorizontal {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/**********Checkbox Radio*********/
+div.mpStyle .customRadioLabel {
+    font-size: var(--fs_h6);
+    font-weight: var(--fw-medium);
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+div.mpStyle .customRadioLabel input[type="radio"] ~ .formControl,
+.mpStyle .customRadioLabel input[type="radio"] {
+    display: none;
+}
+
+.mpStyle .customRadio {
+    padding: 0 var(--dmp_xs) 0 30px;
+    margin: 0 var(--dmp_xs) var(--dmp_xs) 0;
+    position: relative;
+    cursor: pointer;
+    line-height: 1;
+    white-space: nowrap;
+    min-height: 20px;
+}
+
+.mpStyle .customRadio::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border: 2px rgba(0, 0, 0, 0.5) solid;
+    border-radius: 50%;
+}
+
+.mpStyle .customRadioLabel input[type="radio"]:checked ~ .formControl {
+    display: block;
+}
+
+.mpStyle .customRadioLabel input[type="radio"]:checked ~ .customRadio::after,
+.mpStyle .customRadio.active::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    height: 10px;
+    width: 10px;
+    background-color: var(--color_theme);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+}
+
+.mpStyle .customRadio.button_type {
+    padding: var(--dmp_xs);
+    margin: 5px;
+    min-width: 120px;
+    text-align: center;
+    border: 1px solid var(--color_theme_alter);
+    color: var(--color_theme_alter);
+    background-color: var(--color_theme);
+}
+
+.mpStyle .customRadio.button_type.active {
+    background-color: grey;
+    color: var(--color_theme_alter);
+}
+
+.mpStyle .customRadio.button_type::before,
+.mpStyle .customRadio.button_type::after {
+    display: none;
+}
+
+/**********Checkbox Custom*********/
+.mpStyle .customCheckbox {
+    padding: 3px 0 0 28px;
+    position: relative;
+    line-height: 1;
+    min-width: auto;
+    white-space: wrap;
+    margin-right: 5px;
+}
+
+.mpStyle .customCheckbox::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 18px;
+    width: 18px;
+    background-color: var(--color_theme_alter);
+    border: 1.5px solid var(--color_black);
+    border-radius: 2px;
+}
+
+.mpStyle .customCheckboxLabel {
+    /*padding: 0 0 10px 0;*/
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-weight: var(--fw-medium);
+}
+
+.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::before {
+    background: var(--color_theme);
+    border-color: var(--color_theme);
+}
+
+/*******************/
+div.mpStyle .selectCheckbox {
+    min-width: 150px;
+    padding: var(--dmp_xs);
+    width: auto;
+    border: 1px solid var(--color_border);
+    cursor: pointer;
+}
+
+div.mpStyle .customCheckboxLabel input[type="checkbox"],
+div.mpStyle .selectCheckbox input[type="checkbox"] {
+    display: none;
+}
+
+div.mpStyle .selectCheckbox .customCheckbox::before {
+    border: none;
+    background-color: transparent;
+}
+
+div.mpStyle .customCheckboxLabel input:focus ~ .customCheckbox::before,
+div.mpStyle .selectCheckbox input:focus ~ .customCheckbox::before {
+    outline: 0;
+}
+
+div.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::after,
+div.mpStyle .selectCheckbox input:checked ~ .customCheckbox::after {
+    content: "";
+    position: absolute;
+    left: 3.5px;
+    top: 5px;
+    height: 6px;
+    width: 10px;
+    border: 2px solid var(--color_theme_alter);
+    border-top: none;
+    border-right: none;
+    z-index: 11;
+    background-color: transparent;
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+div.mpStyle .active_select {
+    background-color: var(--color_theme);
+    color: var(--color_theme_alter);
+}
+
+div.mpStyle .customCheckboxLabel.only_checkbox {
+    width: 20px;
+    margin: 0;
+}
+
+div.mpStyle .customCheckboxLabel.only_checkbox span {
+    padding: 0;
+}
+
+/*********Input Switch*******/
+.mpStyle .roundSwitchLabel input[type="checkbox"] {
+    display: none;
+    line-height: 0;
+}
+
+.mpStyle .roundSwitch {
+    width: 50px;
+    height: 25px;
+    min-width: auto;
+    position: relative;
+    background-color: #ccc;
+    border-radius: 30px;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.mpStyle .roundSwitch::before {
+    position: absolute;
+    content: "";
+    height: 23px;
+    width: 23px;
+    left: 1px;
+    bottom: 1px;
+    background-color: white;
+    border-radius: 50%;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.mpStyle .roundSwitchLabel input:checked + .roundSwitch {
+    background-color: var(--color_theme);
+}
+
+.mpStyle .roundSwitchLabel input:focus + .roundSwitch {
+    box-shadow: 0 0 1px #2276d2;
+}
+
+.mpStyle .roundSwitchLabel input:checked + .roundSwitch:before {
+    -ms-transform: translateX(28px);
+    transform: translateX(28px);
+}
+
+/*********Group radio check*******/
+.groupRadioCheck [data-radio-check] {
+    cursor: pointer;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+}
+
+.groupRadioCheck button[data-radio-check] {
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.groupRadioCheck [data-radio-check]:hover {
+    border-color: var(--color_theme_88);
+}
+
+.groupRadioCheck [data-radio-check].mpActive {
+    border-color: var(--color_theme);
+}
+
+/*********Group Content*******/
+.mpStyle .groupContent {
+    font-size: var(--fs);
+    /*border: 1px solid var(--color_border);*/
+    /*background-color: var(--color_theme);*/
+    color: var(--color_theme_alter);
+    text-align: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: center;
+}
+
+div.mpStyle div.groupContent > * {
+    border: 1px solid var(--color_border);
+    margin-bottom: 0;
+    border-radius: 4px;
+
+}
+
+/*div.mpStyle div.groupContent > *:first-child {*/
+/*	border: none;*/
+/*}*/
+div.mpStyle div.groupContent .formControl {
+    text-align: center;
+    border: none;
+    background-color: var(--color_white);
+    border-radius: 4px;
+    padding: 5px;
+    height: 40px;
+    margin-bottom: 0 !important;
+    width: 50px;
+    min-width: 35px;
+}
+
+
+.mpStyle .groupContent textarea.formControl {
+    text-align: left;
+}
+
+.mpStyle .groupContent input[type="radio"] {
+}
+
+.mpStyle .groupContent input[type="radio"]::after {
+    position: absolute;
+    content: "";
+    width: 20px;
+    height: 20px;
+    left: 0;
+    top: 0;
+    border: 1px solid var(--color_border);
+    border-radius: 50%;
+    margin: 10px;
+}
+
+div.mpStyle .groupContent input[type="radio"]:checked::after {
+    border-color: var(--color_theme);
+}
+
+.mpStyle .groupContent input[type="radio"]:checked::before {
+    position: absolute;
+    content: "";
+    width: 14px;
+    height: 14px;
+    left: 3px;
+    top: 3px;
+    border: 1px solid var(--color_theme);
+    border-radius: 50%;
+    background-color: var(--color_theme);
+    margin: 10px;
+}
+
+.mpStyle .addonGroupContent {
+    min-width: 40px;
+    cursor: pointer;
+    background-color: #fff;
+    color: var(--d_color);
+    height: 40px;
+    font-size: 13px;
+    border-radius: 4px;
+    transition: all 0.3s ease-in-out;
+}
+
+.mpStyle .addonGroupContent:hover {
+    background-color: var(--d_color);
+    border-color: var(--d_color);
+    color: #f2f2f2;
+}
+
+.mpStyle
+.groupContent
+.select2-container--default
+.select2-selection--single {
+    border: none;
+    border-radius: 0;
+}
+
+/*****Form Qty inc dec*******/
+.mpStyle .qtyIncDec {
+    max-width: 110px;
+}
+
+/**********Responsive*********/
+@media only screen and (max-width: 1250px) {
+    .mpStyle .inputInline .inputList {
+        max-width: calc(25% - 10px);
+    }
+}
+
+@media only screen and (max-width: 1050px) {
+    .mpStyle .inputInline .mpForm {
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
+
+    .mpStyle .inputInline .inputList {
+        max-width: calc(33.33% - 10px);
+        -webkit-flex: inherit;
+        flex: inherit;
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    .mpStyle .inputInline .inputList {
+        max-width: calc(50% - 10px);
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .mpStyle .inputInline .inputList {
+        max-width: 100%;
+        min-width: 100%;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .mpStyle .addonGroupContent {
+        min-width: 25px;
+    }
+}
+
+
 /******************************************************************** List section ************************************************/
 @media only screen and (min-width: 10px) {
 	.mpStyle ul:not(.mp_wp_editor ul) {

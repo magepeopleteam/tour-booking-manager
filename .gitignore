@@ -1,3 +1,8 @@
-.idea
+.DS_Store
+.sass-cache
 .vscode
-./node_modules
+desktop.ini
+node_modules
+npm-debug.log
+package
+.idea

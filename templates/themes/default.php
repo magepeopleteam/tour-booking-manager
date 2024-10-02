@@ -10,9 +10,11 @@
 		<div class='mpStyle ttbm_wraper'>
 			<div class="ttbm_container">
 				<div class="ttbm_details_page">
-					<?php do_action( 'ttbm_details_title' ); ?>
-					<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
-					<?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
+                    <div class="ttbm_details_page_header">
+                        <?php do_action( 'ttbm_details_title' ); ?>
+                        <?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
+                        <?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
+                    </div>
 					<div class="ttbm_content_area">
 						<div class="ttbm_content__left">
 							<?php do_action( 'ttbm_slider' ); ?>
@@ -24,8 +26,9 @@
 							<?php do_action( 'ttbm_hiphop_place' ); ?>
 							<?php do_action( 'ttbm_day_wise_details' ); ?>
 							<?php do_action( 'ttbm_faq' ); ?>
+                            <?php do_action( 'ttbm_review' ); ?>
 						</div>
-						<div class="ttbm_content__right shadow_one">
+						<div class="ttbm_content__right">
 							<?php do_action( 'ttbm_include_feature' ); ?>
 							<?php do_action( 'ttbm_exclude_service' ); ?>
 							<?php do_action( 'ttbm_activity' ); ?>

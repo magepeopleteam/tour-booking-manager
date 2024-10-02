@@ -43,7 +43,7 @@
 				?>
 				<section>
 					<label class="label">
-						<div >
+						<div class="label-inner">
 							<p><?php esc_html_e('Stay Night', 'tour-booking-manager'); ?></p>
 							<span class="text"><?php esc_html_e('Turn on/off stay night settings.', 'tour-booking-manager'); ?></span>
 						</div>	
@@ -68,7 +68,7 @@
 				<p><?php TTBM_Settings::des_p('general_settings_description'); ?></p>
 				<section class="bg-light">
 					<label class="label">
-						<div>
+						<div class="label-inner">
 							<p><?php TTBM_Settings::des_p('tour_general_settings'); ?></p>
 							<span class="text"><?php TTBM_Settings::des_p('tour_settings_des'); ?></span>
 						</div>
@@ -76,7 +76,7 @@
 				</section>
 				<section>
 					<label class="label">
-						<div>
+						<div class="label-inner">
 							<p><?php esc_html_e('Tour Duration', 'tour-booking-manager'); ?></p>
 							<span class="text"><?php TTBM_Settings::des_p('duration'); ?></span>
 						</div>
@@ -103,7 +103,7 @@
 				?>
 				<section>
 					<label class="label">
-						<div>
+						<div class="label-inner">
 							<p><?php esc_html_e('Max People Allow', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('max_people'); ?></span></i></p>
 							<span class="text"><?php TTBM_Settings::des_p('max_people'); ?></span>
 						</div>
@@ -128,7 +128,7 @@
 				
 				<section>
 					<label class="label">
-						<div>
+						<div class="label-inner">
 							<p><?php esc_html_e('Tour Start Price', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('start_price'); ?></span></i> </p>
 							<span class="text"><?php TTBM_Settings::des_p('start_price'); ?></span>
 						</div>
@@ -152,7 +152,7 @@
 				?>
 				<section class="bg-light" style="margin-top: 20px;">
 					<label class="label">
-						<div>
+						<div class="label-inner">
 							<p><?php _e('Location Settings','tour-booking-manager'); ?></p>
 							<span class="text"><?php _e('Here you can set tour location, place, map etc.','tour-booking-manager'); ?></span>
 						</div>
@@ -160,7 +160,7 @@
 				</section>
 				<section>
 					<label class="label">
-						<div>
+						<div class="label-inner">
 							<p><?php esc_html_e('Start Place', 'tour-booking-manager'); ?></p>
 							<span class="text"><?php TTBM_Settings::des_p('start_place'); ?></span>
 						</div>
@@ -185,7 +185,7 @@
 
 				<section>
 					<label class="label">
-						<div>
+						<div class="label-inner">
 							<p><?php esc_html_e('Age Range', 'tour-booking-manager'); ?></p>
 							<span class="text"><?php TTBM_Settings::des_p('age_range'); ?></span>
 						</div>
@@ -211,7 +211,7 @@
 
 				<section>
 					<label class="label">
-						<div>
+						<div class="label-inner">
 							<p><?php esc_html_e('Short Description', 'tour-booking-manager'); ?></p>
 							<span class="text"><?php TTBM_Settings::des_p('short_des'); ?></span>
 						</div>
@@ -237,7 +237,7 @@
 
 				<section>
 					<label class="label">
-						<div>
+						<div class="label-inner">
 							<p><?php esc_html_e('Full Location for Map ', 'tour-booking-manager'); ?></p>
 							<span class="text"><?php TTBM_Settings::des_p('full_location'); ?></span>
 						</div>
@@ -260,7 +260,7 @@
 				?>
 				<section>
 					<label class="label">
-						<div>
+						<div class="label-inner">
 							<p><?php esc_html_e('Tour Location', 'tour-booking-manager'); ?> </p>
 							<span class="text"><?php TTBM_Settings::des_p('location'); ?></span>
 						</div>

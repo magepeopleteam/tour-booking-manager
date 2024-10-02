@@ -1,11 +1,11 @@
 === WordPress Tour & Travel Booking Plugin for WooCommerce - WpTravelly  ===
-Contributors: magepeopleteam, aamahin, cseshafiul
+Contributors: magepeopleteam, aamahin
 Plugin link: https://mage-people.com/
 Tags: tour-booking, tour-operator, travel, travel-booking, travel-agency
 Requires at least: 4.4.0
-Tested up to: 6.3
+Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 1.6.7
+Stable tag: 1.7.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -17,7 +17,7 @@ WpTravelly- Complete [tour and travel booking solution](https://mage-people.com/
 
 ###  Explore The Demo:
 
-🌐 [Live Demo](https://tour.mage-people.com/)
+🌐 [Live Demo](https://wptravelly.com/)
 📘 [Online Documentation](https://docs.mage-people.com/tour-travel-booking-manager/)
 🛍️ [Install WpTravelly](https://downloads.wordpress.org/plugin/tour-booking-manager.zip)
 
@@ -90,66 +90,66 @@ Let's install the Plugin and discover what is waiting for you.
 
 ### Tour List view 
 
-To Show the Tour list Style you need to use the shortcode below. example 👉 [List Style Demo ](https://tour.mage-people.com/modern-list/) 👈:
+To Show the Tour list Style you need to use the shortcode below. example 👉 [List Style Demo ](https://wptravelly.com/modern-list/) 👈:
 `
 [travel-list style='list']
 `
 
 ### Tour Grid view 
 
-To Show the Tour grid Style you need to use the shortcode below. example 👉 [Grid Style Demo ](https://tour.mage-people.com/travel-grid-view/) 👈:
+To Show the Tour grid Style you need to use the shortcode below. example 👉 [Grid Style Demo ](https://wptravelly.com/travel-grid-view/) 👈:
 `
 [travel-list style='grid']
 `
 
 ### Tour Grid view style Lotus
 
-To Show the Tour grid Style lotus you need to use the shortcode below. example 👉 [Grid lotus Style Demo ](https://tour.mage-people.com/lotus-grid-style/) 👈:
+To Show the Tour grid Style lotus you need to use the shortcode below. example 👉 [Grid lotus Style Demo ](https://wptravelly.com/lotus-grid-style/) 👈:
 `
 [travel-list style='lotus' column=3]
 `
 
 ### Tour Grid view style Flora
 
-To Show the Tour grid Style Flora you need to use the shortcode below. example 👉 [Grid Flora Style Demo ](https://tour.mage-people.com/flora-grid-style/) 👈:
+To Show the Tour grid Style Flora you need to use the shortcode below. example 👉 [Grid Flora Style Demo ](https://wptravelly.com/flora-grid-style/) 👈:
 `
 [travel-list style='flora' column=3 show='15' pagination='yes']
 `
 
 ### Tour Grid view style Blossom
 
-To Show the Tour grid Style Blossom you need to use the shortcode below. example 👉 [Grid Blossom Style Demo ](https://tour.mage-people.com/blossom-grid/) 👈:
+To Show the Tour grid Style Blossom you need to use the shortcode below. example 👉 [Grid Blossom Style Demo ](https://wptravelly.com/blossom-grid/) 👈:
 `
 [travel-list style='blossom' show='9' column=3 pagination='yes']
 `
 
 ### Tour Grid view style Orchid
 
-To Show the Tour grid Style Orchid you need to use the shortcode below. example 👉 [Grid Orchid Style Demo ](https://tour.mage-people.com/orchid-grid-style/) 👈:
+To Show the Tour grid Style Orchid you need to use the shortcode below. example 👉 [Grid Orchid Style Demo ](https://wptravelly.com/orchid-grid-style/) 👈:
 `
 [travel-list style='orchid' column=3 pagination='yes' show=12]
 `
 
 ### Tour Location grid view
-To Show the Tour location grid view you need to use the shortcode below. example 👉 [Tour Location list Demo ](https://tour.mage-people.com/travel-location-list-display-shortcode/) 👈:
+To Show the Tour location grid view you need to use the shortcode below. example 👉 [Tour Location list Demo ](https://wptravelly.com/travel-location-list-display-shortcode/) 👈:
 `
 [travel-location-list column=4 show=4]
 `
 
 ### Tour Search form
-To Show Tour search form you need to use the shortcode below. example 👉 [Tour search form Demo ](https://tour.mage-people.com/tour-search-form/) 👈:
+To Show Tour search form you need to use the shortcode below. example 👉 [Tour search form Demo ](https://wptravelly.com/tour-search-form/) 👈:
 `
 [ttbm-top-search]
 `
 
 ### Tour list without sidebar filter
-To Show the Tour list without a sidebar filter you need to use the shortcode below. example 👉 [Tour list without sidebar Demo ](https://tour.mage-people.com/tour-list-grid-without-filter/) 👈:
+To Show the Tour list without a sidebar filter you need to use the shortcode below. example 👉 [Tour list without sidebar Demo ](https://wptravelly.com/tour-list-grid-without-filter/) 👈:
 `
 [travel-list style='grid' show='9' column=3 pagination='yes' sidebar-filter='no']
 `
 
 ### Tour list with top filter
-To Show the Tour list top filter you need to use the shortcode below. example 👉 [Tour list without sidebar Demo ](https://tour.mage-people.com/tour-list-with-top-filter/) 👈:
+To Show the Tour list top filter you need to use the shortcode below. example 👉 [Tour list without sidebar Demo ](https://wptravelly.com/tour-list-with-top-filter/) 👈:
 `
 [ttbm-top-filter style='list']
 `
@@ -157,16 +157,16 @@ To Show the Tour list top filter you need to use the shortcode below. example �
 
 
 ### Expire Tour list Only
-To Show the Expire Tour list only, we  use the shortcode below. example 👉 [Expire Tour list Only Demo ](https://tour.mage-people.com/expire-tour-list/) 👈:
+To Show the Expire Tour list only, we  use the shortcode below. example 👉 [Expire Tour list Only Demo ](https://wptravelly.com/expire-tour-list/) 👈:
 `
 [travel-list style='list' status='expired']
 `
 
-Tour Details page demo with [title section style 1](https://tour.mage-people.com/tour-travel/coxbazaar-3day-4-night/) 👈
-Tour Details page demo with [title section style 2](https://tour.mage-people.com/tour-travel/get-social-central-europe-highlights/) 👈
-Tour Details page demo with [title section style 3](https://tour.mage-people.com/tour-travel/bandarban-experience/) 👈
-Tour Details page demo with [default template](https://tour.mage-people.com/tour-travel/boat-tour-hop-on-hop-off-bus-berlin-copy-copy/) 👈
-Tour Details page demo with [Viator template](https://tour.mage-people.com/tour-travel/sajek-valley-4-days-3-night-copy/) 👈
+Tour Details page demo with [title section style 1](https://wptravelly.com/tour-travel/coxbazaar-3day-4-night/) 👈
+Tour Details page demo with [title section style 2](https://wptravelly.com/tour-travel/get-social-central-europe-highlights/) 👈
+Tour Details page demo with [title section style 3](https://wptravelly.com/tour-travel/bandarban-experience/) 👈
+Tour Details page demo with [default template](https://wptravelly.com/tour-travel/boat-tour-hop-on-hop-off-bus-berlin-copy-copy/) 👈
+Tour Details page demo with [Viator template](https://wptravelly.com/tour-travel/sajek-valley-4-days-3-night-copy/) 👈
 
 
 
@@ -399,7 +399,6 @@ Bug Fixed
 Bug Fixed
 - 17 May 2023*
 
-
 = 1.5.3 =
 Tour List Menu Added
 Qucik Setup Improved
@@ -427,7 +426,6 @@ New Hooks added
 Bug Fixed
 - 27 July 2023*
 
-
 = 1.5.6 =
 Astra Theme issue fixed
 Quick Setup Fixing
@@ -435,3 +433,10 @@ Code Optimized
 New Hooks added
 Bug Fixed
 - 09 Aug 2023*
+
+= 1.7.8 =
+Security Issue Fixed.
+Code Optimized
+New Hooks added
+Bug Fixed
+- 20 Aug 2024*

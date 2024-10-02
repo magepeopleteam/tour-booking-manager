@@ -13,7 +13,7 @@
 		<div class="alignCenter small_box <?php echo esc_attr( $add_class ?? '' ); ?>" data-placeholder>
 			<div class="item_icon"><span class="fas fa-clock"></span></div>
 			<h6>
-				<?php esc_html_e( 'Duration : ', 'tour-booking-manager' ); ?>&nbsp;
+				<?php esc_html_e( 'Duration :', 'tour-booking-manager' ); ?>
 				<strong>
 					<?php
 						if ( $day && $day > 1 ) {

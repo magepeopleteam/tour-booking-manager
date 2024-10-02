@@ -568,6 +568,9 @@
   bottom: 0;
   right: 0;
 }
+#mp_meta_box_panel .fullWidth, .travel-list .fullWidth {
+  width: 100%;
+}
 
 #mp_meta_box_panel label input, .travel-list label input {
   font-weight: normal;
@@ -588,6 +591,11 @@
 }
 #mp_meta_box_panel textarea:disabled, #mp_meta_box_panel select:disabled, #mp_meta_box_panel input[type=text]:disabled, #mp_meta_box_panel input[type=email]:disabled, #mp_meta_box_panel input[type=search]:disabled, #mp_meta_box_panel input[type=tel]:disabled, #mp_meta_box_panel input[type=url]:disabled, #mp_meta_box_panel input[type=password]:disabled, #mp_meta_box_panel input[type=file]:disabled, #mp_meta_box_panel input[type=color]:disabled, #mp_meta_box_panel input[type=number]:disabled, #mp_meta_box_panel input[type=range]:disabled, #mp_meta_box_panel input[type=date]:disabled, #mp_meta_box_panel input[type=month]:disabled, #mp_meta_box_panel input[type=week]:disabled, #mp_meta_box_panel input[type=time]:disabled, #mp_meta_box_panel input[type=datetime]:disabled, #mp_meta_box_panel input[type=datetime-local]:disabled, .travel-list textarea:disabled, .travel-list select:disabled, .travel-list input[type=text]:disabled, .travel-list input[type=email]:disabled, .travel-list input[type=search]:disabled, .travel-list input[type=tel]:disabled, .travel-list input[type=url]:disabled, .travel-list input[type=password]:disabled, .travel-list input[type=file]:disabled, .travel-list input[type=color]:disabled, .travel-list input[type=number]:disabled, .travel-list input[type=range]:disabled, .travel-list input[type=date]:disabled, .travel-list input[type=month]:disabled, .travel-list input[type=week]:disabled, .travel-list input[type=time]:disabled, .travel-list input[type=datetime]:disabled, .travel-list input[type=datetime-local]:disabled {
   background: var(--mpl-gray);
+}
+#mp_meta_box_panel textarea:focus, #mp_meta_box_panel select:focus, #mp_meta_box_panel input[type=text]:focus, #mp_meta_box_panel input[type=email]:focus, #mp_meta_box_panel input[type=search]:focus, #mp_meta_box_panel input[type=tel]:focus, #mp_meta_box_panel input[type=url]:focus, #mp_meta_box_panel input[type=password]:focus, #mp_meta_box_panel input[type=file]:focus, #mp_meta_box_panel input[type=color]:focus, #mp_meta_box_panel input[type=number]:focus, #mp_meta_box_panel input[type=range]:focus, #mp_meta_box_panel input[type=date]:focus, #mp_meta_box_panel input[type=month]:focus, #mp_meta_box_panel input[type=week]:focus, #mp_meta_box_panel input[type=time]:focus, #mp_meta_box_panel input[type=datetime]:focus, #mp_meta_box_panel input[type=datetime-local]:focus, .travel-list textarea:focus, .travel-list select:focus, .travel-list input[type=text]:focus, .travel-list input[type=email]:focus, .travel-list input[type=search]:focus, .travel-list input[type=tel]:focus, .travel-list input[type=url]:focus, .travel-list input[type=password]:focus, .travel-list input[type=file]:focus, .travel-list input[type=color]:focus, .travel-list input[type=number]:focus, .travel-list input[type=range]:focus, .travel-list input[type=date]:focus, .travel-list input[type=month]:focus, .travel-list input[type=week]:focus, .travel-list input[type=time]:focus, .travel-list input[type=datetime]:focus, .travel-list input[type=datetime-local]:focus {
+  outline: none;
+  border: 1px solid var(--mpl-primary);
+  box-shadow: none;
 }
 #mp_meta_box_panel textarea, .travel-list textarea {
   height: 5em;
@@ -919,11 +927,13 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
     flex-direction: column;
   }
 }
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label .label-inner, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label .label-inner {
+  padding-right: 20px;
+}
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label p, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label p {
-  font-size: 14px;
+  font-size: var(--fs);
   font-weight: bold;
-  line-height: 14px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   color: var(--mpl-secondary);
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label span, #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label a, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label span, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label a {
@@ -936,7 +946,7 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent th[scope=row] label, .travel-list .ttbm_settings .tabsContent th[scope=row] label {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent th[scope=row] label h6, .travel-list .ttbm_settings .tabsContent th[scope=row] label h6 {
   margin-top: 10px;
@@ -955,6 +965,10 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
 #mp_meta_box_panel .ttbm_settings .tabsContent .wp-editor-area, .travel-list .ttbm_settings .tabsContent .wp-editor-area {
   width: 100%;
   border: 0;
+}
+
+.ttbm-avg-review-header {
+  align-items: center !important;
 }
 
 @media only screen and (min-width: 0px) {
@@ -1011,12 +1025,13 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   }
   .mpStyle .mp_remove_icon {
     position: absolute;
-    top: -5px;
-    right: -5px;
-    width: 25px;
-    height: 25px;
+    top: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
     opacity: 1;
+    font-size: 10px;
   }
   .mp_settings_panel_header {
     background: var(--mpl-secondary);
@@ -1277,10 +1292,6 @@ div.mpStyle span.mp_remove_multi_image {
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
   padding: 5px;
-}
-
-.tabsItem .ttbm_select2 {
-  min-height: 150px;
 }
 
 /*# sourceMappingURL=mp_main_settings.css.map */

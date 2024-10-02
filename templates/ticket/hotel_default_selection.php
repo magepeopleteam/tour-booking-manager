@@ -77,7 +77,7 @@
 											</div>
 										<?php } ?>
 									<div class="hotel_list_middle_right justifyBetween ">
-										<div></div>
+
 										<button class="fRight mt_xs  ttbm_hotel_open_room_list" type="button">
 											<?php esc_html_e( 'See availability', 'tour-booking-manager' ); ?>
 											<span class="fas fa-angle-right ml"></span>

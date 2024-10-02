@@ -276,7 +276,7 @@
 				if (!class_exists('TTBMA_Seasonal_Pricing')) {
 					?>
 					<div class="_dLayout_bgYellow_77">
-						<div class="textColor_1 alignCenter">
+						<div class="textColor_1 alignCenter d-flex align-items-center">
 							<span class="fas fa-dollar-sign fa-2x"></span> &nbsp;&nbsp;
 							<strong>
 								<?php esc_html_e('Seasonal pricing addon allow different pricing  based on  date range, time slot etc..  ', 'tour-booking-manager'); ?>&nbsp;
@@ -288,7 +288,7 @@
 				if (!class_exists('TTBMA_Group_Pricing')) {
 					?>
 					<div class="_dLayout_bgColor_3">
-						<div class="textColor_1 alignCenter">
+						<div class="textColor_1 alignCenter d-flex align-items-center">
 							<span class="fas fa-fill-drip fa-2x"></span> &nbsp;&nbsp;
 							<strong>
 								<?php esc_html_e('Group price allow different pricing during buying based on quantity .', 'tour-booking-manager'); ?>&nbsp;

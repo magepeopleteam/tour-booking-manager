@@ -34,7 +34,7 @@
 
 
                                 <input type="hidden" name="ttbm_date" value="<?php echo esc_attr($hidden_date); ?>" required/>
-                                <input id="ttbm_select_date" type="text" value="<?php echo esc_attr($visible_date); ?>" class="formControl " placeholder="<?php echo esc_attr($now); ?>"  readonly required/>
+                                <input id="ttbm_select_date" type="text" value="<?php echo esc_attr($visible_date); ?>" class="formControl mb-0 " placeholder="<?php echo esc_attr($now); ?>"  readonly required/>
 							</label>
 							<?php
 								$template_name = MP_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );

@@ -24,11 +24,35 @@
 				$tag_filter=isset($_GET['tag_filter']) && $_GET['tag_filter']?$_GET['tag_filter']:'';
 				$duration_filter=isset($_GET['duration_filter']) && $_GET['duration_filter']?$_GET['duration_filter']:'';
 				$activity_filter=isset($_GET['activity_filter']) && $_GET['activity_filter']?$_GET['activity_filter']:'';
+				 $sortable_tours = [];
+
+					foreach ($loop->posts as $tour) {
+						$ttbm_post_id = $tour->ID;
+						$tour_id = TTBM_Function::post_id_multi_language($ttbm_post_id);
+						$display_order = get_post_meta($tour_id, 'ttbm_display_order_tour', true);
+						$travel_rank = get_post_meta($tour_id, 'ttbm_travel_rank_tour', true);
+
+						if ($display_order == 'on') {
+							$sortable_tours[] = [
+								'tour' => $tour,
+								'rank' => (int)$travel_rank 
+							];
+						} else {
+							$sortable_tours[] = [
+								'tour' => $tour,
+								'rank' => PHP_INT_MAX 
+							];
+						}
+					}
+
+					usort($sortable_tours, function($a, $b) {
+						return $a['rank'] <=> $b['rank'];
+					});
 				?>
 				<div class="all_filter_item">
 					<div class="flexWrap <?php echo esc_attr($style); ?>">
-						<?php
-							foreach ($loop->posts as $tour) {
+					<?php foreach ($sortable_tours as $tour_data) {
+                $tour = $tour_data['tour'];
 								$ttbm_post_id = $tour->ID;
 								$tour_id = TTBM_Function::post_id_multi_language($ttbm_post_id);
 								//if ($ttbm_post_id == $tour_id) {

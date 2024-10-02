@@ -114,10 +114,35 @@
 							<?php MP_Custom_Layout::switch_button('ttbm_display_duration', $duration_checked); ?>
 						</label> 
                     </section>
+						<?php
+       						 $this->rank_tour($tour_id); 
+       					 ?>
+
 
 					<?php do_action('add_ttbm_display_settings', $tour_id); ?>
 					
 				</div>
+				<?php
+			}
+			public function rank_tour($tour_id) {
+				$display_name = 'ttbm_display_order_tour';
+				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'off');
+				$checked = ($display == 'off') ? '' : 'checked';
+				$active = ($display == 'off') ? '' : 'mActive';
+				$placeholder='';
+				?>
+				<section>
+					<label class="label">
+						<div class="label-inner">
+							<p><?php esc_html_e('Rank Tour', 'tour-booking-manager'); ?></p>
+							<span class="text"><?php esc_html_e('Turn on/off rank tour settings.', 'tour-booking-manager'); ?></span>
+						</div>	
+						<div class="_dFlex_alignCenter_justfyBetween">
+							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+							<input type="number" data-collapse="#<?php echo esc_attr($display_name); ?>" min="0" class="ms-2 <?php echo esc_attr($active); ?>" name="ttbm_travel_rank_tour" value="<?php echo MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_rank_tour'); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+						</div>
+					</label>
+				</section>
 				<?php
 			}
 			public function save_display($tour_id) {
@@ -129,6 +154,10 @@
 					$tour_type = MP_Global_Function::get_submit_info('ttbm_display_tour_type') ? 'on' : 'off';
 					$hotels = MP_Global_Function::get_submit_info('ttbm_display_hotels') ? 'on' : 'off';
 					$duration = MP_Global_Function::get_submit_info('ttbm_display_duration') ? 'on' : 'off';
+					$ttbm_display_rank = MP_Global_Function::get_submit_info('ttbm_display_order_tour') ? 'on' : 'off';
+					$ttbm_travel_rank_tour = MP_Global_Function::get_submit_info('ttbm_travel_rank_tour');
+					update_post_meta($tour_id, 'ttbm_travel_rank_tour', $ttbm_travel_rank_tour);
+					update_post_meta($tour_id, 'ttbm_display_order_tour', $ttbm_display_rank);
 					update_post_meta($tour_id, 'ttbm_section_title_style', $content_title_style);
 					update_post_meta($tour_id, 'ttbm_ticketing_system', $ticketing_system);
 					update_post_meta($tour_id, 'ttbm_display_seat_details', $seat_info);

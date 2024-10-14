@@ -6,7 +6,7 @@ div.filter_item {
 	/*-webkit-box-shadow: 0 8px 12px rgb(51 65 80 / 6%), 0 14px 44px rgb(51 65 80 / 11%);*/
 	/*box-shadow: 0 8px 12px rgb(51 65 80 / 6%), 0 14px 44px rgb(51 65 80 / 11%);*/
 	border: 1px solid var(--color_border);
-	height: max-content;
+	height: auto;
 	border-radius: 10px;
 }
 
@@ -140,6 +140,10 @@ div.ttbm_list_title {margin-top: var(--dmp_xs);}
 
 .flora .filter_item .ttbm_list_title {
 	margin-bottom: 0;
+}
+
+.lotus .ttbm_list_info_header .ttbm_list_title a{
+	text-decoration: none !important;
 }
 
 .filter_item.grid_3 .ttbm_list_title a {

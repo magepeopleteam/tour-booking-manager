@@ -132,3 +132,13 @@ label.ttbm_id_select{height: 100%;}
 .mpStyle tr.mp_search_on{display: table-row;}
 .mpStyle .mp_search_off{display: none;}
 select#mep_ticket_offdays{height:200px !important;}
+#submit{
+	background-color: var(--color_theme_alter);
+	color: var(--color_theme);
+	border: 1px solid var(--color_theme);
+}
+#submit:hover{
+	background-color: var(--color_theme);
+	color: var(--color_theme_alter);
+	border: 1px solid var(--color_theme);
+}

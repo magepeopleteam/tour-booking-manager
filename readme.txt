@@ -437,6 +437,10 @@ Bug Fixed
 = 1.7.8 =
 Security Issue Fixed.
 Code Optimized
+
+= 1.8.2 =
+Style fixing.
+Code Optimized
 New Hooks added
 Bug Fixed
 - 20 Aug 2024*

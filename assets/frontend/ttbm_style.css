@@ -88,7 +88,10 @@ div.mpStyle .mp_tour_ticket_form{
 	margin-top:10px;
 	padding: 10px;
 }
-
+.person-description{
+	font-size: 12px;
+	color: #666;
+}
 
 .ttbm_spring_theme .ttbm_booking_panel table,
 .hip_hop_hotel_theme .ttbm_booking_panel table {table-layout: initial;}

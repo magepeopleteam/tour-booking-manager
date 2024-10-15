@@ -58,7 +58,7 @@
                                             <?php echo MP_Global_Function::esc_html($ticket_name); ?>
                                         </div>
                                         <?php if ($description) { ?>
-										    <div class="mT_xs"><?php MP_Custom_Layout::load_more_text($description, 100); ?></div>
+										    <div class="mT_xs person-description"><?php MP_Custom_Layout::load_more_text($description, 100); ?></div>
                                         <?php } ?>
 									</th>
 									<td class="text-center">

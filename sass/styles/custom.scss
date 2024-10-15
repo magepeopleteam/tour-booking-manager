@@ -406,6 +406,11 @@
 		}
 
 		.frmb {
+			.form-elements {
+				label{
+					line-height: inherit;
+				}
+			}
 			li {
 				padding-bottom: calc($spacing * 3);
 				border: 1px dashed $color-gray;

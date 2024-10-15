@@ -12,7 +12,7 @@
                 add_action('ttbm_description', array($this, 'description'));
                 add_action('ttbm_include_feature', array($this, 'include_feature'));
                 add_action('ttbm_exclude_service', array($this, 'exclude_service'));
-                add_action('ttbm_short_details', array($this, 'short_details'));
+                add_action('ttbm_short_details', array($this, 'short_details'),10);
                 add_action('ttbm_location_map', array($this, 'location_map'), 10, 1);
                 add_action('ttbm_activity', array($this, 'activity'));
                 add_action('ttbm_hiphop_place', array($this, 'hiphop_place'));
@@ -49,7 +49,7 @@
             }
             //*******************************************//
             public function short_details() {
-	            $ttbm_post_id = $ttbm_post_id ?? get_the_id();
+                $ttbm_post_id = $ttbm_post_id ?? get_the_id();
 	            $tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
                 $tour_type = $tour_type ?? TTBM_Function::get_tour_type($tour_id);
                 if ($tour_type != 'hotel') {
@@ -57,23 +57,17 @@
                     ?>
 					<div class="flexWrap item_section">
                         <?php include(TTBM_Function::template_path('layout/duration_box.php')); ?>
-                        <?php $add_class = $count > 3 ? 'dNone' : ''; ?>
+                        
                         <?php include(TTBM_Function::template_path('layout/start_price_box.php')); ?>
-                        <?php $add_class = $count > 3 ? 'dNone' : ''; ?>
+                        
                         <?php include(TTBM_Function::template_path('layout/max_people_box.php')); ?>
-                        <?php $add_class = $count > 3 ? 'dNone' : ''; ?>
+                        
                         <?php include(TTBM_Function::template_path('layout/start_location_box.php')); ?>
-                        <?php $add_class = $count > 3 ? 'dNone' : ''; ?>
+                        
                         <?php include(TTBM_Function::template_path('layout/age_range_box.php')); ?>
-                        <?php $add_class = $count > 3 ? 'dNone' : ''; ?>
+
                         <?php include(TTBM_Function::template_path('layout/seat_info.php')); ?>
-                        <?php if ($count > 4) { ?>
-							<div class="fullWidth">
-								<h6 class="ttbm_short_list_more" data-text-change data-open-text="<?php esc_html_e('View More', 'tour-booking-manager'); ?>" data-close-text="<?php esc_html_e('Less More', 'tour-booking-manager'); ?>">
-									<span data-text><?php esc_html_e('View More', 'tour-booking-manager'); ?></span>
-								</h6>
-							</div>
-                        <?php } ?>
+                        
 					</div>
                     <?php
                 }

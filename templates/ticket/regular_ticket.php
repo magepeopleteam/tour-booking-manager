@@ -19,7 +19,7 @@
 				<?php
 					$option_name = 'ttbm_string_availabe_ticket_list';
 					$default_title = esc_html__('Available Ticket List ', 'tour-booking-manager');
-					include(TTBM_Function::template_path('layout/title_section.php'));
+					//include(TTBM_Function::template_path('layout/title_section.php'));
 				?>
 				<div class="ttbm_widget_content" data-placeholder>
 					<table class="mp_tour_ticket_type">

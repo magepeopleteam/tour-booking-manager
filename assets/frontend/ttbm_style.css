@@ -60,10 +60,12 @@ div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-w
 	position: sticky;
 	top: 30px;
 }
+
+
 .hip_hop_hotel_theme .ttbm_content__right,
 .ttbm_spring_theme .ttbm_content__right {width: 50%;}
 /**/
-div.ttbm_details_page div.superSlider {margin-bottom: 15px;}
+div.ttbm_details_page div.superSlider {margin-bottom: 15px;height:54vh;}
 
 div.ttbm_details_page div.ttbm_description {margin: 0 0 var(--dmp) 0;}
 /*********/
@@ -80,17 +82,46 @@ div.ttbm_map_area #gmap_canvas {max-width: 100%;width: 100%;min-height: 320px;}
 /*********************Location list*****************************/
 div.ttbm_location_list div.filter_item {padding: 0;}
 /**************************************************/
+div.mpStyle .mp_tour_ticket_form{
+  	border: 1px solid var(--color_theme);
+	border-radius:8px;
+	margin-top:10px;
+	padding: 10px;
+}
+
+
 .ttbm_spring_theme .ttbm_booking_panel table,
 .hip_hop_hotel_theme .ttbm_booking_panel table {table-layout: initial;}
 .ttbm_spring_theme .ttbm_booking_panel table tr:nth-of-type(odd) td:last-child,
 .hip_hop_hotel_theme .ttbm_booking_panel table tr:nth-of-type(odd) td:last-child {width: 160px;padding: 5px;}
+.ttbm_select_date_area h4.ttbm_title_style_2{
+	color: var(--color_white);
+	margin: 8px;
+}
+
+.date-picker-icon{
+	margin-left: 10px;
+	position: relative;
+}
+.date-picker-icon i{
+	position:absolute;
+	top: 10px;
+	left: 5px;
+	color: var(--color_theme);
+	font-size: 20px;
+}
+div.mpStyle #ttbm_select_date.formControl {
+	padding: 20px;
+	padding-left: 30px;
+
+}
 /*********Group Content*******/
 .ttbm_wraper table label {max-width: 100px;}
 .ttbm_wraper table label select.formControl {text-align: center;}
 
 
 /*****************/
-div.item_section {margin: var(--dmp_xs_negative) var(--dmp_xs_negative) var(--dmp) var(--dmp_xs_negative);}
+div.item_section {margin: var(--dmp_xs_negative) var(--dmp_xs_negative) var(--dmp) var(--dmp_xs_negative); padding:0 var(--dmp);justify-content: start;}
 div.item_section .ttbm_short_list_more {
 	cursor: pointer;
 	color: var(--color_theme);
@@ -108,8 +139,12 @@ div.small_box {
 	-webkit-flex-direction: column;flex-direction: column;
 	-webkit-justify-content: center;justify-content: center;
 }
-div.small_box .item_icon {color: var(--color_theme);margin: 0 0 var(--dmp_xs) 0;font-size: var(--fs_h1);}
-div.small_box > * {text-align: center;}
+div .item_icon {padding:5px 35px 5px 0}
+div .item_icon i {color: var(--color_theme);}
+
+div.mpStyle [data-bg-image]{
+	transform: scale(1);
+}
 /**************************************************/
 .ttbm_wraper button.ttbm_book_now {font-size: var(--fs);margin: 0 var(--dmp_xs) 0 0;}
 /*****************/
@@ -216,6 +251,7 @@ div.viator_top_section .ttbm_booking_panel {
 	position:initial;top: 100%;left: var(--dmp_negetive);right: var(--dmp_negetive);z-index:1;
 	padding: var(--dmp_xs);z-index: 11;background-color: #F5F5F5;
 }
+div.ttbm_date_time_select span.date_time_label {font-size: 20px;}
 div.viator_top_section .ttbm_booking_panel h3 {font-size: var(--fs_h5);}
 div.viator_top_section .ttbm_booking_panel .addonGroupContent {min-width: 25px;}
 div.viator_top_section .ttbm_booking_panel .qtyIncDec {max-width: 100%;}
@@ -232,6 +268,12 @@ div.viator_top_section div.ttbm_select_time_area {margin: var(--dmp_xs) 0 0 0;}
 div.viator_top_section div.ttbm_book_now_area {-webkit-flex-direction: column;flex-direction: column;margin: 0;}
 div.viator_top_section .ttbm_check_ability {width: 100%;margin: var(--dmp) 0 0 0; }
 div.viator_top_section .ttbm_book_now {margin: var(--dmp_xs) 0 0 0;}
+.mpStyle .navy_blueButton.ttbm_check_ability{
+	background-color: var(--color_yellow);
+    color: var(--color_theme);
+    padding: var(--dmp_xs) var(--dmp);
+    border: 1px solid var(--color_yellow);
+}
 /******************day wise details********************************/
 div.ttbm_day_wise_details div.superSlider {min-width: 300px;max-width: 50%; margin: 0 var(--dmp) var(--dmp) 0;float: left;}
 div.day_wise_details_item .day_wise_details_item_details {margin: var(--dmp_xs) 0 0 0;overflow: hidden;}

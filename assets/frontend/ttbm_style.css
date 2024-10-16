@@ -65,7 +65,7 @@ div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-w
 .hip_hop_hotel_theme .ttbm_content__right,
 .ttbm_spring_theme .ttbm_content__right {width: 50%;}
 /**/
-div.ttbm_details_page div.superSlider {margin-bottom: 15px;height:54vh;}
+div.ttbm_details_page div.superSlider {margin-bottom: 15px;}
 
 div.ttbm_details_page div.ttbm_description {margin: 0 0 var(--dmp) 0;}
 /*********/
@@ -124,7 +124,7 @@ div.mpStyle #ttbm_select_date.formControl {
 
 
 /*****************/
-div.item_section {margin: var(--dmp_xs_negative) var(--dmp_xs_negative) var(--dmp) var(--dmp_xs_negative); padding:0 var(--dmp);justify-content: start;}
+div.item_section {margin:20px 0;justify-content: start;}
 div.item_section .ttbm_short_list_more {
 	cursor: pointer;
 	color: var(--color_theme);
@@ -142,7 +142,16 @@ div.small_box {
 	-webkit-flex-direction: column;flex-direction: column;
 	-webkit-justify-content: center;justify-content: center;
 }
-div .item_icon {padding:5px 35px 5px 0}
+div .item_icon {
+	padding:5px;
+	width: 49%;
+}
+@media (min-width:640px) {
+	div .item_icon {
+		padding:5px 35px 5px 0;
+		width: 25%;
+	}
+}
 div .item_icon i {color: var(--color_theme);}
 
 div.mpStyle [data-bg-image]{
@@ -301,7 +310,7 @@ div.day_wise_details_item img {width: initial;}
 div.ttbm_faq_item {margin: 0 0 var(--dmp_xs) 0;}
 div.ttbm_faq_item .ttbm_faq_title {background-color: #FFF;border: 1px solid #DDD;border-radius: 5px;font-weight: 600;text-transform: none; padding: 5px; font-size: var(--fs_h4)}
 div.ttbm_faq_item .ttbm_faq_title.active {border-color: var(--color_theme);border-radius: 5px 5px 0 0;background-color: var(--color_theme);color: var(--color_theme_alter); }
-div.ttbm_faq_item .ttbm_faq_title span {padding: 10px;}
+div.ttbm_faq_item .ttbm_faq_title span {padding:5px 10px;}
 div.ttbm_faq_content {background-color: #FFF;padding: var(--dmp);border: 1px solid var(--color_theme);border-radius: 0 0 5px 5px;overflow: hidden;}
 div.ttbm_faq_content p {
 	margin-top: 0;

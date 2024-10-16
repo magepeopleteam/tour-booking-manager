@@ -109,7 +109,7 @@ div.mpStyle .mp_tour_ticket_form{
 .date-picker-icon i{
 	position:absolute;
 	top: 10px;
-	left: 5px;
+	left: 20px;
 	color: var(--color_theme);
 	font-size: 20px;
 }

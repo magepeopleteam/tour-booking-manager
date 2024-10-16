@@ -12,8 +12,10 @@
 				<div class="ttbm_details_page">
                     <div class="ttbm_details_page_header">
                         <?php do_action( 'ttbm_details_title' ); ?>
-                        <?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
-                        <?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
+                        <div class="dFlex justifyStart">
+							<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?> <span class="pL_xs pR_xs">|</span>
+							<?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
+						</div>
                     </div>
 					<div class="ttbm_content_area">
 						<div class="ttbm_content__left">

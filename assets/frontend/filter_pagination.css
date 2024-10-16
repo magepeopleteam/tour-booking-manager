@@ -186,7 +186,8 @@ div.ttbm_list_info > span:first-child {margin: 0 var(--dbr) 0 0;}
 	}
 }
 /*************************/
-div.ttbm_description {display: block;-webkit-flex: auto;flex: auto;}
+div.ttbm_description {display: block;-webkit-flex: auto;flex: auto;margin-bottom: var(--dmp);}
+div.ttbm_description h2{margin-bottom: 20px;}
 div.filter_item div.ttbm_description > div {
 	overflow: hidden;
 	text-overflow: ellipsis;

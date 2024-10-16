@@ -123,6 +123,7 @@ function ttbm_multi_attendee_form(parentTr, qty) {
 				let form_copy = jQuery('[data-form-type]').html();
 				for (let i = formLength; i < qty; i++) {
 					target_tr.find('td').append(form_copy).find('.ttbm_attendee_form_item:last-child').slideDown(250).promise().done(function (){
+						target_tr.find('td').find('.ttbm_attendee_form_item:last-child .ttbm_attendee_form_title span').html(qty);
 						target_tr.find(".date_type").removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind().promise().done(function (){
 							mp_load_date_picker(target_tr);
 						});

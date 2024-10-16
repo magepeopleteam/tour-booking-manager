@@ -1513,7 +1513,7 @@
 		top: calc(50% - 15px);
 		font-size: 30px;
 		cursor: pointer;
-		color: #222;
+		color: #fff;
 	}
 	div.superSlider .iconIndicator:hover {
 		color: #fff;

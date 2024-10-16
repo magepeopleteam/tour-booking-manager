@@ -69,11 +69,12 @@
 			public static function availability_button($tour_id) {
 				$travel_type = TTBM_Function::get_travel_type($tour_id);
 				$check_ability = MP_Global_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'availability_section');
-				if ($check_ability == 'availability_section' && $travel_type != 'fixed') { ?>
+				// if ($check_ability == 'availability_section' && $travel_type != 'fixed') { 
+					?>
 					<button class="navy_blueButton ttbm_check_ability" type="button">
 						<?php esc_html_e('Check  Availability', 'tour-booking-manager'); ?>
 					</button>
-				<?php }
+				<?php // }
 			}
 			public static function ttbm_add_button($button_text, $class = 'ttbm_add_item', $button_class = 'btn my-2', $icon_class = 'fas fa-plus-square') {
 				?>

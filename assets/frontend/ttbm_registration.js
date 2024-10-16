@@ -26,9 +26,10 @@ function get_ttbm_ticket(current, date = '') {
 		},
 		success: function (data) {
 			target.html(data).slideDown('fast').promise().done(function () {
-				parent.find('.ttbm_check_ability').slideUp('fast').promise().done(function () {
-					ttbm_price_calculation(parent);
-				});
+				// parent.find('.ttbm_check_ability').slideUp('fast').promise().done(function () {
+					// ttbm_price_calculation(parent);
+				// });
+				ttbm_price_calculation(parent);
 				placeholderLoaderRemove(parent);
 				simpleSpinnerRemove(parent);
 				get_ttbm_sold_ticket(parent, tour_id, tour_date);

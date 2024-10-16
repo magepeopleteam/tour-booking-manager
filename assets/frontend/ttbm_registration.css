@@ -33,21 +33,33 @@ div.ttbm_booking_panel .ttbm_widget_content {padding: 0;border: none;}
 div.ttbm_booking_panel table tbody tr:nth-of-type(even) {background-color: #FFF;}
 div.ttbm_booking_panel table tbody tr:nth-of-type(even) td {padding: 0;}
 
-div.ttbm_booking_panel table tbody tr td .ttbm_attendee_form_item:not(:last-child) {border-bottom: 1px solid #DDD;padding: 20px 10px;}
+div.ttbm_booking_panel table tbody tr td .ttbm_attendee_form_item:not(:last-child) {border-bottom: 1px solid #DDD;}
 
 div.ttbm_booking_panel table thead th,
 div.ttbm_booking_panel table td:last-child {text-align: center;padding: 8px;}
 div.ttbm_booking_panel table thead th:first-child{text-align: left;padding: 10px;}
 div.ttbm_booking_panel table td:last-child > div {display: inline-block;min-width: 100px;}
 div.ttbm_booking_panel table th {background-color: #fff;text-align: left;padding: 10px 15px; vertical-align: middle;}
-div.ttbm_booking_panel table thead th {background-color: #fff;}
+div.ttbm_booking_panel table thead th {
+	background-color: #f5f5f5;
+
+}
+div.ttbm_booking_panel table tbody tr {
+	border-bottom: 1px dashed #DDD;
+}
+.mpStyle table th, .mpStyle table td{
+	border: 0;
+}
 div.ttbm_booking_panel table td {background-color: #fff;}
 /*************************************************/
-div.ttbm_date_time_select {margin: 0 0 var(--dmp) 0;border-bottom: 1px solid #f2f2f2;}
-div.ttbm_select_date_area {padding: var(--dmp_xs);background-color: var(--color_theme);width: 100%;border-radius: 8px;}
+div.ttbm_date_time_select {margin:0;border-bottom: 1px solid #f2f2f2;}
+div.ttbm_select_date_area {padding: var(--dmp_xs);background-color: var(--color_theme);width: 100%;border-radius:8px 8px;}
 div.ttbm_date_time_select label span {color: var(--color_theme_alter);white-space: nowrap;}
 div.ttbm_date_time_select label {min-width: 120px;margin: 0 var(--dmp_xs) 0 0;}
 div.availability_section div.ttbm_date_time_select {-webkit-flex-direction: column;flex-direction: column;}
+#ttbm_select_date{
+	text-align: center;
+}
 /************************************************/
 button.ttbm_hotel_open_room_list {
 	background-color: var(--color_theme);

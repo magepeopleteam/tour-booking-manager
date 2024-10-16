@@ -28,20 +28,29 @@
 					$time_slots = TTBM_Function::get_time( $tour_id, $all_dates[0] );
 					?>
 					<div class="allCenter ttbm_date_time_select">
-						<div class="justifyCenter ttbm_select_date_area">
-							<label class="_allCenter">
-								<span class="date_time_label _mR_xs"><?php echo is_array( $time_slots ) && sizeof( $time_slots ) > 0 ? esc_html__( 'Select Date & Time : ', 'tour-booking-manager' ) : esc_html__( 'Select Date  : ', 'tour-booking-manager' ); ?></span>
-
-
-                                <input type="hidden" name="ttbm_date" value="<?php echo esc_attr($hidden_date); ?>" required/>
-                                <input id="ttbm_select_date" type="text" value="<?php echo esc_attr($visible_date); ?>" class="formControl mb-0 " placeholder="<?php echo esc_attr($now); ?>"  readonly required/>
-							</label>
+						<div class="justifyBetween ttbm_select_date_area">
 							<?php
-								$template_name = MP_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
-								if ( $template_name != 'viator.php' && $check_ability == 'availability_section' ) {
-									TTBM_Layout::availability_button( $tour_id );
-								}
+								$option_name = 'ttbm_string_availabe_ticket_list';
+								$default_title = esc_html__('Available Ticket List ', 'tour-booking-manager');
+								include(TTBM_Function::template_path('layout/title_section.php'));
 							?>
+							<div class="dFlex justifyBetween">
+								<label class="_allCenter">
+									<span class="date_time_label _mR_xs"><?php echo is_array( $time_slots ) && sizeof( $time_slots ) > 0 ? esc_html__( 'Select Date & Time : ', 'tour-booking-manager' ) : esc_html__( 'Select Date  : ', 'tour-booking-manager' ); ?></span>
+									<span class="date-picker-icon">
+									<i class="far fa-calendar"></i>
+									<input type="hidden" name="ttbm_date" value="<?php echo esc_attr($hidden_date); ?>" required/>
+									<input id="ttbm_select_date" type="text" value="<?php echo esc_attr($visible_date); ?>" class="formControl mb-0 " placeholder="<?php echo esc_attr($now); ?>"  readonly required/>
+									</span>
+								</label>
+								<?php
+									$template_name = MP_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
+									// if ( $template_name != 'viator.php' && $check_ability == 'availability_section' ) {
+										
+									// }
+									TTBM_Layout::availability_button( $tour_id );
+								?>
+							</div>
 							<?php if ( is_array( $time_slots ) && sizeof( $time_slots ) > 0 && $check_ability == 'regular_ticket' && $template_name != 'viator.php' ) { ?>
 								<div class="flexWrap ttbm_select_time_area">
 									<?php do_action( 'ttbm_time_select', $tour_id, $all_dates[0] ); ?>

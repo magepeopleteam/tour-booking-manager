@@ -10,9 +10,9 @@
 	$count     = $count ?? 0;
 	if ( ( $day || $night ) && $tour_type == 'general' && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_duration', 'on' ) != 'off' ) {
 		?>
-		<div class="alignCenter small_box <?php echo esc_attr( $add_class ?? '' ); ?>" data-placeholder>
-			<div class="item_icon"><span class="fas fa-clock"></span></div>
-			<h6>
+
+			<div class="item_icon">
+				<i class="fas fa-clock"></i>
 				<?php esc_html_e( 'Duration :', 'tour-booking-manager' ); ?>
 				<strong>
 					<?php
@@ -46,8 +46,7 @@
 						}
 					?>
 				</strong>
-			</h6>
-		</div>
+			</div>
 		<?php
 		$count ++;
 	}

@@ -12,17 +12,20 @@
 				<div class="ttbm_details_page">
                     <div class="ttbm_details_page_header">
                         <?php do_action( 'ttbm_details_title' ); ?>
-                        <?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
-                        <?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
+                        <div class="dFlex justifyStart">
+							<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?> 
+							<?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
+						</div>
                     </div>
 					<div class="ttbm_content_area">
 						<div class="ttbm_content__left">
 							<?php do_action( 'ttbm_slider' ); ?>
 							<?php do_action( 'ttbm_short_details' ); ?>
+							<?php do_action( 'ttbm_description' ); ?>
 							<?php do_action( 'ttbm_registration_before', $ttbm_post_id ); ?>
 							<?php include( TTBM_Function::template_path( 'ticket/registration.php' ) ); ?>
 							<?php include( TTBM_Function::template_path( 'ticket/particular_item_area.php' ) ); ?>
-							<?php do_action( 'ttbm_description' ); ?>
+							
 							<?php do_action( 'ttbm_hiphop_place' ); ?>
 							<?php do_action( 'ttbm_day_wise_details' ); ?>
 							<?php do_action( 'ttbm_faq' ); ?>

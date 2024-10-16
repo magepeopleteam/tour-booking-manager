@@ -1168,6 +1168,9 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
 .travel-list .form-wrap.form-builder .h1, .travel-list .form-wrap.form-builder .h2, .travel-list .form-wrap.form-builder .h3, .travel-list .form-wrap.form-builder .h4, .travel-list .form-wrap.form-builder .h5, .travel-list .form-wrap.form-builder .h6 {
   color: var(--mpl-dark);
 }
+#mp_meta_box_panel .form-wrap.form-builder .frmb .form-elements label, .travel-list .form-wrap.form-builder .frmb .form-elements label {
+  line-height: inherit;
+}
 #mp_meta_box_panel .form-wrap.form-builder .frmb li, .travel-list .form-wrap.form-builder .frmb li {
   padding-bottom: 1.5em;
   border: 1px dashed var(--mpl-gray);

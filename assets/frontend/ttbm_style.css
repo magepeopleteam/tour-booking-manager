@@ -38,9 +38,6 @@ div.viator_top_section .ttbm_booking_panel form,
 div.ttbm_details_page {display: block;position: relative;}
 div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-webkit-flex-wrap: wrap;flex-wrap: wrap;-webkit-justify-content: space-between;justify-content: space-between;padding-top:5px}
 
-.ttbm_details_page_header {
-	margin-bottom: 20px;
-}
 
 .ttbm_details_page_header .ttbm-rating-stars {
 	margin: 0 0 10px 0 !important;

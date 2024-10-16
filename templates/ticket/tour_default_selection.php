@@ -45,9 +45,10 @@
 								</label>
 								<?php
 									$template_name = MP_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
-									if ( $template_name != 'viator.php' && $check_ability == 'availability_section' ) {
-										TTBM_Layout::availability_button( $tour_id );
-									}
+									// if ( $template_name != 'viator.php' && $check_ability == 'availability_section' ) {
+										
+									// }
+									TTBM_Layout::availability_button( $tour_id );
 								?>
 							</div>
 							<?php if ( is_array( $time_slots ) && sizeof( $time_slots ) > 0 && $check_ability == 'regular_ticket' && $template_name != 'viator.php' ) { ?>

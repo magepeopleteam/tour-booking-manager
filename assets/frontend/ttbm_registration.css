@@ -34,30 +34,27 @@ div.ttbm_booking_panel table tbody tr:nth-of-type(even) {background-color: #FFF;
 div.ttbm_booking_panel table tbody tr:nth-of-type(even) td {padding: 0;}
 
 div.ttbm_booking_panel table tbody tr td .ttbm_attendee_form_item:not(:last-child) {border-bottom: 1px solid #DDD;}
-
+.mpStyle table th, .mpStyle table td{ border: 0;}
 div.ttbm_booking_panel table thead th,
 div.ttbm_booking_panel table td:last-child {text-align: center;padding: 8px;}
 div.ttbm_booking_panel table thead th:first-child{text-align: left;padding: 10px;}
 div.ttbm_booking_panel table td:last-child > div {display: inline-block;min-width: 100px;}
 div.ttbm_booking_panel table th {background-color: #fff;text-align: left;padding: 10px 15px; vertical-align: middle;}
 div.ttbm_booking_panel table thead th {
-	background-color: #f5f5f5;
-
+	background-color: #ddd;
 }
 
-div.ttbm_booking_panel table.mp_tour_ticket_type tbody tr:nth-child(even) {
-	border-bottom: 1px solid #ddd;
+div.ttbm_booking_panel table.mp_tour_ticket_type thead tr th:first-child{
+	border-top-left-radius: 10px;
 }
-div.ttbm_booking_panel table.mp_tour_ticket_extra tbody tr:nth-child(even) {
-	border-bottom: 1px solid #ddd;
+div.ttbm_booking_panel table.mp_tour_ticket_type thead tr th:last-child{
+	border-top-right-radius: 10px;
 }
-div.ttbm_booking_panel table.mp_tour_ticket_extra tbody tr:last-child{
-	border-bottom: 0;
+div.ttbm_booking_panel table.mp_tour_ticket_type tbody td, table.mp_tour_ticket_type tbody th{
+
+	border-bottom: 1px dotted #ddd;
 }
 
-.mpStyle table th, .mpStyle table td{
-	border: 0;
-}
 div.ttbm_booking_panel table td {background-color: #fff;}
 /*************************************************/
 div.ttbm_date_time_select {margin:0;border-bottom: 1px solid #f2f2f2;}

@@ -61,12 +61,12 @@
 										    <div class="mT_xs person-description"><?php MP_Custom_Layout::load_more_text($description, 100); ?></div>
                                         <?php } ?>
 									</th>
-									<td class="text-center">
+									<th class="textCenter">
 										<?php if ($regular_price) { ?>
 											<span class="strikeLine"><?php echo MP_Global_Function::wc_price($tour_id, $regular_price); ?></span>
 										<?php } ?>
 										<span><?php echo MP_Global_Function::esc_html($ticket_price); ?></span>
-									</td>
+									</th>
 									<td><?php TTBM_Layout::qty_input($ticket_name, $available, $ticket_qty_type, $default_qty, $min_qty, $max_qty, $ticket_price_raw, 'ticket_qty[]',$tour_id); ?></td>
 								</tr>
 

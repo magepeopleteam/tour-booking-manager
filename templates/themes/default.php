@@ -5,6 +5,7 @@
 	}
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
 	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
+	$class_location = $class_location ?? '';
 ?>
 	<div class="ttbm_default_theme">
 		<div class='mpStyle ttbm_wraper'>
@@ -14,6 +15,12 @@
                         <?php do_action( 'ttbm_details_title' ); ?>
                         <div class="dFlex justifyStart">
 							<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?> 
+							<?php
+							$location = TTBM_Function::get_full_location( $ttbm_post_id );
+							if ( $location && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_location', 'on' ) != 'off' ) {
+								?>
+							<span class="pL_xs pR_xs">|</span>
+							<?php } ?>
 							<?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
 						</div>
                     </div>

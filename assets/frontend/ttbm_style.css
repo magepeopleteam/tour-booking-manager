@@ -312,6 +312,17 @@ div.ttbm_faq_content {background-color: #FFF;padding: var(--dmp);border: 1px sol
 div.ttbm_faq_content p {
 	margin-top: 0;
 }
+.ttbm_registration_area div[class*="simpleSpinner"] {
+		position: absolute;
+		z-index: 11111;
+		left: 0;
+		right: 0;
+		top: 50%;
+		font-size: var(--fs_h1);
+		width: 100%;
+		padding: var(--dmp);
+	color: var(--color_theme);
+}
 
 div.ttbm_faq_content p:last-child {
 	margin-bottom: 0;

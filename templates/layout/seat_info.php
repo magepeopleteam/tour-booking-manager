@@ -12,7 +12,8 @@
 		$available_seat = $available_seat??TTBM_Function::get_total_available( $tour_id );
 		?>
 
-		<div class="item_icon ttbm_available_seat_area"><i class="fas fa-chair"></i>
+		<div class="item_icon ttbm_available_seat_area">
+			<i class="fas fa-restroom"></i>
 			<?php esc_html_e( 'Total Seats :', 'tour-booking-manager' ); ?>
 			<strong><span class="ttbm_available_seat"><?php echo esc_html( $available_seat); ?></span>/<?php echo esc_html(  $total_seat ); ?></strong>
 		</div>

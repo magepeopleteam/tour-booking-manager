@@ -17,10 +17,10 @@
 						$images = explode( ',', $faq_images );
 						?>
 						<div class="ttbm_faq_item">
-							<h5 class="ttbm_faq_title justifyBetween" data-open-icon="fa-plus" data-close-icon="fa-minus" data-collapse-target="#ttbm_faq_datails_<?php esc_attr_e( $key ); ?>" data-add-class="active">
+							<h2 class="ttbm_faq_title justifyBetween" data-open-icon="fa-plus" data-close-icon="fa-minus" data-collapse-target="#ttbm_faq_datails_<?php esc_attr_e( $key ); ?>" data-add-class="active">
 								<?php echo esc_html( $faq_title ); ?>
 								<span data-icon class="fas fa-plus"></span>
-							</h5>
+							</h2>
 							<div data-collapse="#ttbm_faq_datails_<?php esc_attr_e( $key ); ?>">
 								<div class="ttbm_faq_content mp_wp_editor">
 									<?php

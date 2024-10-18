@@ -1395,6 +1395,7 @@
 		backface-visibility: hidden;
 		-webkit-transition: -webkit-transform 0.06s ease-in-out;
 		transition: transform 0.6s ease-in-out, -webkit-transform 0.6s ease-in-out;
+		max-height: 500px;		height: 100%;
 	}
 	div.superSlider .sliderItem.activeSlide {
 		z-index: 1;
@@ -1456,10 +1457,8 @@
 	div.superSlider .sliderShowcase.bottom {
 		margin: var(--dmp_xs) 0 0 0;
 	}
-	div.superSlider .sliderShowcaseItem {margin: 0 0 10px 0;    position: relative;    overflow: hidden;  }
-	div.superSlider .area_column .sliderShowcaseItem {
-		width: calc(25% - var(--dmp_xs));
-	}
+	div.superSlider .sliderShowcaseItem {margin: 0 0 10px 0;    position: relative;    overflow: hidden; height: 118px; }
+	div.superSlider .area_column .sliderShowcaseItem {		width: calc(25% - var(--dmp_xs));	}
 	div.superSlider .sliderShowcase div.superSlider .area_column {
 		margin: 0 0 var(--dmp_xs) 0;
 		position: relative;

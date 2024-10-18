@@ -1386,7 +1386,7 @@
 		max-height: 100%;
 	}
 	div.superSlider .sliderItem {
-		position: relative;
+		position: relative;overflow: hidden;
 		float: left;
 		width: 100%;
 		margin-right: -100%;

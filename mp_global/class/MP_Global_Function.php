@@ -622,6 +622,37 @@
 				}
 				return $message;
 			}
+			// ================== Get languages =============
+			public static function get_languages(){
+				$languages = array(
+					'en_US' => 'English (United States)',
+					'es_ES' => 'Spanish (Spain)',
+					'fr_FR' => 'French (France)',
+					'de_DE' => 'German (Germany)',
+					'it_IT' => 'Italian (Italy)',
+					'pt_PT' => 'Portuguese (Portugal)',
+					'ru_RU' => 'Russian (Russia)',
+					'zh_CN' => 'Chinese (Simplified)',
+					'ja_JP' => 'Japanese (Japan)',
+					'ko_KR' => 'Korean (South Korea)',
+					'ar_SA' => 'Arabic (Saudi Arabia)',
+					'hi_IN' => 'Hindi (India)',
+					'bn_BD' => 'Bengali (Bangladesh)',
+					'tr_TR' => 'Turkish (Turkey)',
+					'nl_NL' => 'Dutch (Netherlands)',
+					'sv_SE' => 'Swedish (Sweden)',
+					'pl_PL' => 'Polish (Poland)',
+					'da_DK' => 'Danish (Denmark)',
+					'fi_FI' => 'Finnish (Finland)',
+					'no_NO' => 'Norwegian (Norway)',
+					'cs_CZ' => 'Czech (Czech Republic)',
+					'el_GR' => 'Greek (Greece)',
+					'hu_HU' => 'Hungarian (Hungary)',
+					'th_TH' => 'Thai (Thailand)',
+					'vi_VN' => 'Vietnamese (Vietnam)'
+				);
+				return $languages;
+			}
 			//***********************************//
 			public static function get_country_list() {
 				return array(

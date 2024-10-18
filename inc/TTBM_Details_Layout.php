@@ -67,6 +67,8 @@
                         <?php include(TTBM_Function::template_path('layout/age_range_box.php')); ?>
 
                         <?php include(TTBM_Function::template_path('layout/seat_info.php')); ?>
+
+                        <?php include(TTBM_Function::template_path('layout/language_box.php')); ?>
                         
 					</div>
                     <?php

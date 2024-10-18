@@ -33,15 +33,20 @@
 	}
 	if ( sizeof( $all_dates ) > 0 && $tour_type == 'hotel' && $travel_type == 'repeated' ) {
 		?>
-		<div class="allCenter ttbm_date_time_select">
-			<div class="allCenter ttbm_select_date_area">
-				<label class="max_400" data-placeholder>
-					<span class="date_time_label"><?php esc_html_e( 'Select Date Range : ', 'tour-booking-manager' ); ?></span>
-					<input type="text" name="ttbm_hotel_date_range" class="formControl textCenter" value="" placeholder="<?php echo esc_html__( 'Checkin - Checkout', 'tour-booking-manager' ); ?>"/>
-				</label>
-				<button class="_dButton  ttbm_hotel_check_availability" type="button">
-					<?php esc_html_e( 'Check  Availability', 'tour-booking-manager' ); ?>
-				</button>
+		<div class="justifyBetween ttbm_date_time_select mB">
+			<div class="justifyBetween ttbm_select_date_area">
+				<h4 class="ttbm_title_style_2">
+					<?php esc_html_e('Make your booking', 'tour-booking-manager'); ?>
+				</h4>
+				<div class="dFlex justifyBetween booking-button">
+					<label class="_allCenter">
+						<span class="date_time_label mR_xs"><?php esc_html_e( 'Select Date Range : ', 'tour-booking-manager' ); ?></span>
+						<input type="text" name="ttbm_hotel_date_range" class="formControl " value="" placeholder="<?php echo esc_html__( 'Checkin - Checkout', 'tour-booking-manager' ); ?>"/>
+					</label>
+					<button class="navy_blueButton ttbm_check_ability ttbm_hotel_check_availability" type="button">
+						<?php esc_html_e( 'Check  Availability', 'tour-booking-manager' ); ?>
+					</button>
+				</div>
 			</div>
 		</div>
 		<?php

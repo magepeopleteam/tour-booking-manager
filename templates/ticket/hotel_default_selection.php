@@ -24,21 +24,21 @@
 								<div class="ttbm_hotel_list_details">
 									<div class="hotel_list_top_area justifyBetween">
 										<div class="hotel_list_top_left fdColumn">
-											<h4 class="flexWrap alignCenter">
+											<h4 class="flexWrap alignCenter mp_zero">
 												<?php echo get_the_title( $hotel_id ); ?>
-												<div class="dFlex hotel_rating">
-													<?php
-														$ttbm_hotel_rating = MP_Global_Function::get_post_info( $hotel_id, 'ttbm_hotel_rating' );
-														if ( $ttbm_hotel_rating > 0 ) {
-															for ( $i = 0; $i < $ttbm_hotel_rating; $i ++ ) {
-																?>
-																<span class="fas fa-star"></span>
-																<?php
-															}
-														}
-													?>
-												</div>
 											</h4>
+											<div class="dFlex hotel_rating">
+												<?php
+													$ttbm_hotel_rating = MP_Global_Function::get_post_info( $hotel_id, 'ttbm_hotel_rating' );
+													if ( $ttbm_hotel_rating > 0 ) {
+														for ( $i = 0; $i < $ttbm_hotel_rating; $i ++ ) {
+															?>
+															<span class="fas fa-star"></span>
+															<?php
+														}
+													}
+												?>
+											</div>
 											<ul class="flexWrap">
 												<?php
 													$hotel_location = MP_Global_Function::get_post_info( $hotel_id, 'ttbm_hotel_location' );
@@ -72,11 +72,11 @@
 										$ttbm_hotel_des = get_post_field( 'post_content', $tour_id );
 										if ( $ttbm_hotel_des ) {
 											?>
-											<div class="mp_wp_editor hotel_list_middle_left">
-												<?php echo MP_Global_Function::esc_html( $ttbm_hotel_des ); ?>
+											<div class="mp_wp_editor hotel_list_middle_left" data-collapse-target="#show_descripton">
+												<?php echo  MP_Custom_Layout::load_more_text($ttbm_hotel_des,190); ?>
 											</div>
 										<?php } ?>
-									<div class="hotel_list_middle_right justifyBetween ">
+									<div class="hotel_list_middle_right justifyEnd ">
 
 										<button class="fRight mt_xs  ttbm_hotel_open_room_list" type="button">
 											<?php esc_html_e( 'See availability', 'tour-booking-manager' ); ?>

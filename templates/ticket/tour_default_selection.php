@@ -34,7 +34,7 @@
 								$default_title = esc_html__('Available Ticket List ', 'tour-booking-manager');
 								include(TTBM_Function::template_path('layout/title_section.php'));
 							?>
-							<div class="dFlex justifyBetween">
+							<div class="dFlex justifyBetween booking-button">
 								<label class="_allCenter">
 									<span class="date_time_label _mR_xs"><?php echo is_array( $time_slots ) && sizeof( $time_slots ) > 0 ? esc_html__( 'Select Date & Time : ', 'tour-booking-manager' ) : esc_html__( 'Select Date  : ', 'tour-booking-manager' ); ?></span>
 									<span class="date-picker-icon">

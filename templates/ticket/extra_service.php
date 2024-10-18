@@ -10,11 +10,7 @@
 		?>
 		<div class="ttbm_default_widget ttbm_extra_service_area">
 			<?php do_action('ttbm_before_extra_service_list_table', $tour_id); ?>
-			<?php
-				$option_name = 'ttbm_string_available_service_list';
-				$default_title = esc_html__('Available Extra Service List ', 'tour-booking-manager');
-				include(TTBM_Function::template_path('layout/title_section.php'));
-			?>
+			<h2 class="extra_service_title"><?php echo esc_html__('Available Extra Service List ', 'tour-booking-manager'); ?></h2>
 			<div class="ttbm_widget_content" data-placeholder>
 				<table class="mp_tour_ticket_extra">
 					<thead>

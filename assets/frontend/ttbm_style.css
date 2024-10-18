@@ -145,14 +145,32 @@ div .item_icon {
 }
 @media (min-width:640px) {
 	div .item_icon {
-		padding:5px 35px 5px 0;
-		width: 25%;
+		padding:5px 0;
+		width: 18%;
+	}
+	div .item_icon:nth-child(1) {
+		width: 23%;
 	}
 }
 div .item_icon i {color: var(--color_theme);}
 
 div.mpStyle [data-bg-image]{
 	transform: scale(1);
+}
+@media (max-width:600px) {
+	.booking-button{
+		flex-direction: column;
+		
+	}
+	.ttbm_select_date_area{
+		text-align: center;
+	}
+}
+.ttbm_default_widget h2.extra_service_title{
+	padding: 12px 0;
+	font-weight: bold;
+	margin-bottom: var(--dmp);
+	border-bottom: 1px solid #ddd;
 }
 /**************************************************/
 .ttbm_wraper button.ttbm_book_now {font-size: var(--fs);margin: 0 var(--dmp_xs) 0 0;}

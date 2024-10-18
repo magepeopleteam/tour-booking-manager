@@ -127,7 +127,7 @@ div.ttbm_hotel_details_item {
 }
 
 .hotel_list_top_right_left.fdColumn.textRight {
-	border: 1px solid #e1e1e1;
+
 	padding: 5px 15px;
 	display: flex;
 	align-items: center;
@@ -175,7 +175,9 @@ div.hotel_list_top_left h4 {
 .ttbm_hotel_list_details h4.textTheme {
 	margin-bottom: 20px;
 }
-
+div.hotel_rating{
+	display: block;
+}
 div.hotel_rating span {color: #FEBB02;padding: 3px;font-size: 12px;}
 div.hotel_list_top_area {display: -webkit-flex;display: flex;-webkit-justify-content: space-between;justify-content: space-between;}
 div.hotel_list_top_left ul li {	padding: 5px 10px 5px 0;	line-height: 18px;}
@@ -185,7 +187,7 @@ div.hotel_list_top_left ul li a {color: #0071C2;
 	font-weight: 600;}
 div.hotel_list_top_right_right {
 	align-items: center;
-	background: #003580;
+	background: var(--color_theme);
 	border-radius: 5.8181818182px 5.8181818182px 5.8181818182px 0;
 	color: #FFF;
 	display: -ms-flexbox;

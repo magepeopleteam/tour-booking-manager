@@ -29,11 +29,9 @@
 					?>
 					<div class="allCenter ttbm_date_time_select">
 						<div class="justifyBetween ttbm_select_date_area">
-							<?php
-								$option_name = 'ttbm_string_availabe_ticket_list';
-								$default_title = esc_html__('Available Ticket List ', 'tour-booking-manager');
-								include(TTBM_Function::template_path('layout/title_section.php'));
-							?>
+							<h4 class="ttbm_title_style_2" data-placeholder>
+								<?php esc_html_e('Make your booking', 'tour-booking-manager'); ?>
+							</h4>
 							<div class="dFlex justifyBetween booking-button">
 								<label class="_allCenter">
 									<span class="date_time_label _mR_xs"><?php echo is_array( $time_slots ) && sizeof( $time_slots ) > 0 ? esc_html__( 'Select Date & Time : ', 'tour-booking-manager' ) : esc_html__( 'Select Date  : ', 'tour-booking-manager' ); ?></span>

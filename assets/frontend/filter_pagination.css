@@ -1,5 +1,5 @@
 /***************************************/
-div.ttbm_filter.leftSidebar,
+div.leftSidebar,
 div.filter_top_bar,
 div.search_result_empty,
 div.filter_item {
@@ -31,7 +31,14 @@ div.ttbm_top_filter .formControl::placeholder {color: var(--color_theme_alter);}
 div.ttbm_top_filter.ttbm_filter .formControl {background-color: #FFF;color: inherit;border: 1px solid var(--color_border);}
 /*************Left Filter section**************************/
 div.left_filter {display: -webkit-flex;display: flex;}
-div.ttbm_filter.leftSidebar {
+.leftSidebar .filter-top-label {
+	padding: var(--dmp);
+	background-color: var(--color_theme);
+	color: var(--color_theme_alter);
+	border: 1px solid var(--color_theme);
+	border-radius: 10px 10px 0 0;
+}
+.leftSidebar div.ttbm_filter {
 	width: 100%;
 	display: block;
 	background-color: #FFF;
@@ -39,6 +46,7 @@ div.ttbm_filter.leftSidebar {
 	margin: 0 0 var(--dmp) 0;
 	position: sticky;
 	top: 30px;
+	height: 100vh;
 }
 
 @media(max-width: 767px) {

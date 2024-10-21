@@ -192,11 +192,17 @@ div.superSlider .sliderAllItem{
 div.superSlider .sliderShowcaseItem{
 	border-radius: 10px;
 }
-.mp_slider-wrapper {
-	height: 500px;
-}
+
 div.superSlider .sliderShowcaseItem:last-child{
 	margin-bottom: 0;
+}
+.mp_slider-wrapper {
+	height: 30vh;
+}
+@media (min-width:600px) {
+	.mp_slider-wrapper {
+		height: 500px;
+	}
 }
 /***************************************/
 div.ttbm_list_info {display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;margin: var(--dbr) 0 0 0;overflow: hidden;}

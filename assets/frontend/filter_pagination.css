@@ -32,11 +32,14 @@ div.ttbm_top_filter.ttbm_filter .formControl {background-color: #FFF;color: inhe
 /*************Left Filter section**************************/
 div.left_filter {display: -webkit-flex;display: flex;}
 .leftSidebar .filter-top-label {
-	padding: var(--dmp);
+	padding: 15px var(--dmp);
 	background-color: var(--color_theme);
 	color: var(--color_theme_alter);
 	border: 1px solid var(--color_theme);
 	border-radius: 10px 10px 0 0;
+}
+.leftSidebar .filter-top-label h4{
+	color: var(--color_theme_alter);
 }
 .leftSidebar div.ttbm_filter {
 	width: 100%;

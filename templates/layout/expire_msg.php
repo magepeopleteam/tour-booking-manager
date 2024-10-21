@@ -7,7 +7,7 @@
 	$upcoming_date = MP_Global_Function::get_post_info($tour_id, 'ttbm_upcoming_date');
 	$tour_type = TTBM_Function::get_tour_type($tour_id);
 	if (!$upcoming_date && $tour_type == 'general') { ?>
-		<div class="ttbm_list_info _bT_bgWarning" data-placeholder>
+		<div class="ttbm_list_info _bgWarning" data-placeholder>
 			<?php esc_html_e('Expired !', 'tour-booking-manager'); ?>
 		</div>
 		<?php
@@ -18,7 +18,7 @@
 			$any_date_available = TTBM_Function::get_any_date_seat_available($tour_id);
 			if ($any_date_available < 1) {
 				?>
-				<div class="ttbm_list_info _bT_bgWarning" data-placeholder>
+				<div class="ttbm_list_info _bgWarning" data-placeholder>
 					<?php esc_html_e('Fully Booked !', 'tour-booking-manager'); ?>
 				</div>
 				<?php

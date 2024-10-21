@@ -56,18 +56,22 @@
 			}
 			public function left_filter($params) {
 				?>
-                <h4 data-placeholder><span class="mR_xs fas fa-filter"></span><?php esc_html_e('Filters', 'tour-booking-manager'); ?></h4>
-				<?php $this->title_filter_left($params); ?>
-				<?php $this->type_filter_left($params); ?>
-				<?php $this->category_filter_left($params); ?>
-				<?php $this->organizer_filter_left($params); ?>
-				<?php $this->month_filter_left($params); ?>
-				<?php $this->country_filter_left($params); ?>
-				<?php $this->location_filter_multiple($params); ?>
-				<?php $this->duration_filter_multiple($params); ?>
-				<?php $this->feature_filter_multiple($params); ?>
-				<?php $this->activity_filter_multiple($params); ?>
-				<?php $this->tag_filter_multiple($params); ?>
+				<div class="filter-top-label">
+					<h4 data-placeholder><span class="mR_xs fas fa-filter"></span><?php esc_html_e('Filters', 'tour-booking-manager'); ?></h4>
+				</div>
+				<div class="ttbm_filter">
+					<?php $this->location_filter_multiple($params); ?>
+					<?php $this->country_filter_left($params); ?>
+					<?php $this->title_filter_left($params); ?>
+					<?php $this->type_filter_left($params); ?>
+					<?php $this->category_filter_left($params); ?>
+					<?php $this->month_filter_left($params); ?>
+					<?php $this->duration_filter_multiple($params); ?>
+					<?php $this->feature_filter_multiple($params); ?>
+					<?php $this->activity_filter_multiple($params); ?>
+					<?php $this->tag_filter_multiple($params); ?>
+					<?php $this->organizer_filter_left($params); ?>
+				</div>
 				<?php
 			}
 			//****************************************/

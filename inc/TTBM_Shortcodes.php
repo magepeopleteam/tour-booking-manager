@@ -37,7 +37,7 @@
 						if ($params['sidebar-filter'] == 'yes') {
 							?>
 							<div class="left_filter">
-								<div class="leftSidebar placeholder_area ttbm_filter">
+								<div class="leftSidebar placeholder_area">
 									<?php do_action('ttbm_left_filter', $params); ?>
 								</div>
 								<div class="mainSection">

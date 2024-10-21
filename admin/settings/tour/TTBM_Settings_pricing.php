@@ -17,7 +17,7 @@
 					<i class="fas fa-hand-holding-usd"></i><?php esc_html_e(' Pricing', 'tour-booking-manager'); ?>
 				</li>
 				<?php
-				do_action('ttbm_meta_box_tab_after_pricing');
+				
 			}
 			public function pricing_tab_content($tour_id) {
 				$all_types = TTBM_Function::tour_type();

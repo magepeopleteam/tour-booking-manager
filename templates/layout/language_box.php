@@ -12,11 +12,11 @@
             $language =  $value;
         }
     endforeach;
-	if ( $tour_type == 'general' && $status != 'off' && isset($language)) {
+	if ( $tour_type == 'general' && $status != 'off' && !empty($language)) {
 		?>
         <div class="item_icon">
             <i class="fas fa-language"></i>
-            <?php echo esc_html( $language ); ?>
+            <?php echo __('Language :','tour-booking-manager') . esc_html( $language ); ?>
         </div>
 	<?php
 	}

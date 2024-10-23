@@ -444,3 +444,8 @@ Code Optimized
 New Hooks added
 Bug Fixed
 - 20 Aug 2024*
+
+= 1.8.3 =
+Style fixing.
+Bug Fixed
+- 23 Aug 2024*

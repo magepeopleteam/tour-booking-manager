@@ -45,7 +45,8 @@
 				}
 				$cart_item_data['ttbm_translation_ttbm_id'] = apply_filters('ttbm_get_translation_post_id', $product_id);
 				$cart_item_data['ttbm_id'] = $product_id;
-                //echo '<pre>';print_r($cart_item_data);echo '</pre>';
+                //echo '<pre>';print_r($cart_item_data['ttbm_user_info']);echo '</pre>';
+               // echo '<pre>';print_r($cart_item_data);echo '</pre>';die();
 				return $cart_item_data;
 			}
 			public function before_calculate_totals($cart_object) {
@@ -318,7 +319,7 @@
                                             <span><?php echo ' ( ' . MP_Global_Function::wc_price($ttbm_id, $ticket['ticket_price']) . ' x ' . $ticket['ticket_qty'] . ' x ' . $hotel_info['ttbm_hotel_num_of_day'] . ') = ' . MP_Global_Function::wc_price($ttbm_id, ($ticket['ticket_price'] * $ticket['ticket_qty'] * $hotel_info['ttbm_hotel_num_of_day'])); ?></span>
                                         </li>
 									<?php } else {
-										$ticket_type_unit_qty = apply_filters('ttbm_get_group_ticket_qty', '', $ticket['ticket_name'], $ttbm_id); ?>
+										 ?>
                                         <li>
                                             <h6><?php echo esc_html(TTBM_Function::ticket_name_text()); ?> :&nbsp;</h6>
                                             <span><?php echo esc_html($ticket['ticket_name']); ?></span>
@@ -453,12 +454,8 @@
 				$num_of_day = sizeof($hotel_info) > 0 ? $hotel_info['ttbm_hotel_num_of_day'] : 1;
 				if (sizeof($ticket_info) > 0) {
 					$count = 0;
-					$k = -1;
-					$prev_ticket_type_name = "";
 					foreach ($ticket_info as $_ticket) {
-						$ticket_type_unit_qty = apply_filters('ttbm_get_group_ticket_qty', '', $_ticket['ticket_name'], $ttbm_id);
-						$qty = $_ticket['ticket_qty'] * ($ticket_type_unit_qty > 1 ? $ticket_type_unit_qty : 1);
-						//$price = TTBM_Function::get_price_by_name($names[$i], $tour_id, $hotel_id, $ticket_type_qty, $start_date) * $ticket_type_qty;
+						$qty = apply_filters('ttbm_group_ticket_qty_actual', $_ticket['ticket_qty'],$ttbm_id,$_ticket['ticket_name']);
 						for ($key = 0; $key < $qty; $key++) {
 							$zdata[$count]['ttbm_ticket_name'] = $_ticket['ticket_name'];
 							$zdata[$count]['ttbm_ticket_price'] = $_ticket['ticket_price'] * $num_of_day;
@@ -480,9 +477,6 @@
 							$zdata[$count]['ttbm_billing_phone'] = $billing_phone;
 							$zdata[$count]['ttbm_billing_address'] = $billing_address;
 							$user_data = apply_filters('ttbm_user_booking_data_arr', $zdata[$count], $count, $user_info, $ttbm_id);
-							// echo '<pre>';print_r($user_data['ttbm_billing_name']);echo '</pre>';
-							 //echo '<pre>';print_r($user_data);echo '</pre>';die();
-							//echo "<pre>";print_r(array($k,$user_data));echo "</pre>";exit;
 							self::add_cpt_data('ttbm_booking', $user_data['ttbm_billing_name'], $user_data);
 							$count++;
 						}
@@ -549,9 +543,6 @@
 				if (sizeof($names) > 0) {
 					for ($i = 0; $i < $count; $i++) {
 						if ($qty[$i] > 0) {
-							// $ticket_type_unit_qty = apply_filters('ttbm_get_group_ticket_qty','',$names[$i],$tour_id);
-							// $ticket_type_qty = ($qty[$i] * ($ticket_type_unit_qty > 1?$ticket_type_unit_qty:1));
-							// $price = TTBM_Function::get_price_by_name($names[$i], $tour_id, $hotel_id, $ticket_type_qty, $start_date) * $ticket_type_qty;
 							$price = TTBM_Function::get_price_by_name($names[$i], $tour_id, $hotel_id, $qty[$i], $start_date) * $qty[$i];
 							if ($hotel_id > 0) {
 								$price = $price * MP_Global_Function::get_submit_info('ttbm_hotel_num_of_day');

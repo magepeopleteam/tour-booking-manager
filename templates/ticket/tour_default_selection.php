@@ -66,9 +66,6 @@
 					<?php
 					do_action( 'mp_load_date_picker_js', '#ttbm_select_date', $all_dates );
 				}
-				if ( $template_name == 'viator.php' ) {
-					TTBM_Layout::availability_button( $tour_id );
-				}
 			?>
 			<div class="ttbm_booking_panel placeholder_area">
 				<?php if ( $check_ability == 'regular_ticket' || $travel_type == 'fixed' ) { ?>

@@ -11,6 +11,7 @@
 		$tour_type   = $tour_type ?? TTBM_Function::get_tour_type( $tour_id );
 		$travel_type = $travel_type ?? TTBM_Function::get_travel_type( $tour_id );
 		include( TTBM_Function::template_path( 'ticket/date_selection.php' ) );
+		
 		include( TTBM_Function::template_path( 'ticket/tour_default_selection.php' ) );
 		//include( TTBM_Function::template_path( 'ticket/particular_item_area.php' ) );
 		if ( sizeof( $all_dates ) > 0 && $tour_type == 'hotel' && $travel_type != 'particular' ) {

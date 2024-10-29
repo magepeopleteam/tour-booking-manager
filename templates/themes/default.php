@@ -1,5 +1,6 @@
 <?php
 	// Template Name: Default Theme
+	
 	if ( ! defined( 'ABSPATH' ) ) {
 		exit;
 	}

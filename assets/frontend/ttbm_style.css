@@ -489,3 +489,32 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 }
 
 
+
+/* =====================ttbm_viator_theme overrite========== */
+
+.ttbm_viator_theme .ttbm_select_date_area{
+	display: flex;
+	flex-direction: column;
+}
+.ttbm_viator_theme .ttbm_select_date_area h4{
+	color:var(--color_theme);
+	display: none;
+}
+
+.ttbm_viator_theme .booking-button{
+	flex-direction: column;
+}
+
+.ttbm_viator_theme .booking-button .date-picker-icon{
+	width: 100%;
+	margin: 0;
+	margin-top: var(--dmp);
+}
+
+.ttbm_viator_theme .booking-button label{
+	margin: 0;
+}
+
+.ttbm_viator_theme .item_icon{
+	width: 100%;
+}

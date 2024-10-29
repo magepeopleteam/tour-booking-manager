@@ -91,10 +91,10 @@ function mp_tour_ticket_qty(parent) {
 		if (single_attendee === 'off') {
 			if(qty > 0 && jQuery(this).data('unit-qty') > 0 && jQuery(this).data('group-ticket-option') == 'on')
 			{
-				qty = parseInt(1);
+				qty = parseInt(qty*jQuery(this).data('unit-qty'));
 			}
 
-			ttbm_multi_attendee_form(jQuery(this).closest('tr'), qty);			
+			ttbm_multi_attendee_form(jQuery(this).closest('tr'), qty);
 		}
 	});
 	totalQty=totalQty > 0 ? totalQty : 0;
@@ -123,13 +123,20 @@ function ttbm_multi_attendee_form(parentTr, qty) {
 				let form_copy = jQuery('[data-form-type]').html();
 				for (let i = formLength; i < qty; i++) {
 					target_tr.find('td').append(form_copy).find('.ttbm_attendee_form_item:last-child').slideDown(250).promise().done(function (){
-						target_tr.find('td').find('.ttbm_attendee_form_item:last-child .ttbm_attendee_form_title span').html(qty);
+						target_tr.find('td').find('.ttbm_attendee_form_item:last-child .ttbm_attendee_form_title').html(qty);
 						target_tr.find(".date_type").removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind().promise().done(function (){
 							mp_load_date_picker(target_tr);
 						});
 					});
 
 				}
+				let name=target_tr.find('[name="ticket_name[]"]').val();
+				let count=1;
+				target_tr.find('.ttbm_attendee_form_item').each(function () {
+					jQuery(this).find('.form_title_text').html(name);
+					jQuery(this).find('.ttbm_attendee_form_title').html(count);
+					count++;
+				});
 			}
 		}
 	} else {

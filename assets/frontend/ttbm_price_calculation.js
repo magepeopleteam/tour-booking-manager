@@ -134,7 +134,7 @@ function ttbm_multi_attendee_form(parentTr, qty) {
 				let count=1;
 				target_tr.find('.ttbm_attendee_form_item').each(function () {
 					jQuery(this).find('.form_title_text').html(name);
-					jQuery(this).find('.ttbm_attendee_form_title').html(count);
+					jQuery(this).find('.ttbm_attendee_title').html(count);
 					count++;
 				});
 			}

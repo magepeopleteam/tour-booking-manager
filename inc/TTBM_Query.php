@@ -153,7 +153,7 @@
 			public static function query_all_sold($tour_id, $tour_date, $type = '', $hotel_id = ''): WP_Query {
 				$_seat_booked_status = TTBM_Function::get_general_settings('ttbm_set_book_status', array('processing', 'completed'));
 				$seat_booked_status = !empty($_seat_booked_status) ? $_seat_booked_status : [];
-				$type_filter = !empty($type) ? array(
+				$type_filter = !empty($type) && !is_array($type) ? array(
 					'key' => 'ttbm_ticket_name',
 					'value' => $type,
 					'compare' => '='

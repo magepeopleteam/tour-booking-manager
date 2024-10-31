@@ -3122,7 +3122,7 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 	}
 	div.mpStyle div.grid_4 {
 		width: calc(25% - var(--dmp));
-		margin: var(--dmp_xs);
+		margin: 10px auto;
 		padding: var(--dmp_xs);
 	}
 	div.mpStyle div.grid_5 {

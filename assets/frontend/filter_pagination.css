@@ -23,7 +23,7 @@ div.filter_item {
 /**********Top Static Filter*****************************/
 div.ttbm_top_filter {margin: 0 0 var(--dmp) 0;}
 div.ttbm_top_filter .dButton,
-div.ttbm_top_filter label {margin: var(--dmp) var(--dmp) 0 0;font-weight: var(--fw-bold);}
+div.ttbm_top_filter label {margin:10px 5px;font-weight: var(--fw-bold);}
 div.ttbm_top_filter > :last-child {margin: var(--dmp) 0 0 0;}
 div.ttbm_top_filter .formControl { border-radius: 0;min-width: 200px; font-weight: var(--fw-medium);}
 /*div.ttbm_top_filter .formControl:focus {background-color: var(--color_theme_cc);}*/

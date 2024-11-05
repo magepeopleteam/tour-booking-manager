@@ -487,6 +487,7 @@
 				$start_date = MP_Global_Function::get_submit_info('ttbm_start_date');
 				$names = MP_Global_Function::get_submit_info('ticket_name', array());
 				$qty = MP_Global_Function::get_submit_info('ticket_qty', array());
+				$group_qty = MP_Global_Function::get_submit_info('ticket_qroup_qty', array());
 				$max_qty = MP_Global_Function::get_submit_info('ticket_max_qty', array());
 				$hotel_id = MP_Global_Function::get_submit_info('ttbm_tour_hotel_list', 0);
 				$ticket_info = [];
@@ -497,6 +498,7 @@
 							$ticket_info[$i]['ticket_name'] = $name;
 							$ticket_info[$i]['ticket_price'] = TTBM_Function::get_price_by_name($name, $tour_id, $hotel_id, $qty[$i], $start_date);
 							$ticket_info[$i]['ticket_qty'] = $qty[$i];
+							$ticket_info[$i]['qroup_qty'] = $group_qty[$i];
 							$ticket_info[$i]['ttbm_max_qty'] = $max_qty[$i] ?? '';
 							$ticket_info[$i]['ttbm_date'] = $start_date ?? '';
 						}

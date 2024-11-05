@@ -56,18 +56,22 @@
 			}
 			public function left_filter($params) {
 				?>
-                <h4 data-placeholder><span class="mR_xs fas fa-filter"></span><?php esc_html_e('Filters', 'tour-booking-manager'); ?></h4>
-				<?php $this->title_filter_left($params); ?>
-				<?php $this->type_filter_left($params); ?>
-				<?php $this->category_filter_left($params); ?>
-				<?php $this->organizer_filter_left($params); ?>
-				<?php $this->month_filter_left($params); ?>
-				<?php $this->country_filter_left($params); ?>
-				<?php $this->location_filter_multiple($params); ?>
-				<?php $this->duration_filter_multiple($params); ?>
-				<?php $this->feature_filter_multiple($params); ?>
-				<?php $this->activity_filter_multiple($params); ?>
-				<?php $this->tag_filter_multiple($params); ?>
+				<div class="filter-top-label" >
+					<h4 data-placeholder><span class="mR_xs fas fa-filter"></span><?php esc_html_e('Filters', 'tour-booking-manager'); ?></h4>
+				</div>
+				<div class="ttbm_filter">
+					<?php $this->location_filter_multiple($params); ?>
+					<?php $this->country_filter_left($params); ?>
+					<?php $this->title_filter_left($params); ?>
+					<?php $this->type_filter_left($params); ?>
+					<?php $this->category_filter_left($params); ?>
+					<?php $this->month_filter_left($params); ?>
+					<?php $this->duration_filter_multiple($params); ?>
+					<?php $this->feature_filter_multiple($params); ?>
+					<?php $this->activity_filter_multiple($params); ?>
+					<?php $this->tag_filter_multiple($params); ?>
+					<?php $this->organizer_filter_left($params); ?>
+				</div>
 				<?php
 			}
 			//****************************************/
@@ -83,7 +87,7 @@
 			public function title_filter_left($params) {
 				if ($params['title-filter'] == 'yes') {
 					?>
-                    <h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#ttbm_title_filter" data-placeholder>
+                    <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_title_filter" data-placeholder>
 						<?php esc_html_e('Filters By Tour Name', 'tour-booking-manager'); ?>
                         <span data-icon class="fas fa-chevron-down"></span>
                     </h5>
@@ -112,7 +116,7 @@
 			public function type_filter_left($params) {
 				if ($params['type-filter'] == 'yes') {
 					?>
-                    <h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#ttbm_type_filter_left" data-placeholder>
+                    <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_type_filter_left" data-placeholder>
 						<?php esc_html_e('Filters By Type', 'tour-booking-manager'); ?>
                         <span data-icon class="fas fa-chevron-down"></span>
                     </h5>
@@ -148,7 +152,7 @@
 					$categories = MP_Global_Function::get_taxonomy('ttbm_tour_cat');
 					if (sizeof($categories) > 0) {
 						?>
-                        <h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#ttbm_category_filter_left" data-placeholder>
+                        <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_category_filter_left" data-placeholder>
 							<?php esc_html_e('Filters By Category', 'tour-booking-manager'); ?>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
@@ -193,7 +197,7 @@
 					}
 					if (sizeof($organizers) > 0 && $total_organizers) {
 						?>
-                        <h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#ttbm_organizer_filter_left" data-placeholder>
+                        <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_organizer_filter_left" data-placeholder>
 							<?php esc_html_e('Filters By Organizer', 'tour-booking-manager'); ?>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
@@ -247,7 +251,7 @@
 						$url_location = $_GET['location_filter'] ?? '';
 						$current_location = $url_location ? get_term_by('id', $url_location, 'ttbm_tour_location')->term_id : '';
 						?>
-                        <h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#ttbm_location_filter_multiple" data-placeholder>
+                        <h5 class="justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_location_filter_multiple" data-placeholder>
 							<?php esc_html_e('Filters By Location', 'tour-booking-manager'); ?>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
@@ -294,7 +298,7 @@
 					$countries = TTBM_Function::get_all_country();
 					if (sizeof($countries) > 0) {
 						?>
-                        <h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#country_filter" data-placeholder>
+                        <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#country_filter" data-placeholder>
 							<?php esc_html_e('Filters By Country', 'tour-booking-manager'); ?>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
@@ -341,7 +345,7 @@
 					if (sizeof($durations) > 0) {
 						$url = $_GET['duration_filter'] ?? '';
 						?>
-                        <h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#ttbm_duration_filter_multiple" data-placeholder>
+                        <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_duration_filter_multiple" data-placeholder>
 							<?php esc_html_e('Filters By Duration', 'tour-booking-manager'); ?>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
@@ -388,7 +392,7 @@
 					if (sizeof($exist_feature) > 0) {
 						$url = $_GET['feature_filter'] ?? '';
 						?>
-                        <h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#feature_filter_multiple" data-placeholder>
+                        <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#feature_filter_multiple" data-placeholder>
 							<?php esc_html_e('Filters By Feature', 'tour-booking-manager'); ?>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
@@ -446,7 +450,7 @@
 						$url_activity = $_GET['activity_filter'] ?? '';
 						$current_activity = $url_activity ? get_term_by('id', $url_activity, 'ttbm_tour_activities')->term_id : '';
 						?>
-                        <h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#activity_filter_multiple" data-placeholder>
+                        <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#activity_filter_multiple" data-placeholder>
 							<?php esc_html_e('Filter By Activity', 'tour-booking-manager'); ?>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
@@ -480,7 +484,7 @@
 					}
 					if (sizeof($tags) > 0 && $total_tags) {
 						?>
-                        <h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#tag_filter_multiple" data-placeholder>
+                        <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#tag_filter_multiple" data-placeholder>
 							<?php esc_html_e('Specials', 'tour-booking-manager'); ?>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
@@ -533,7 +537,7 @@
 			}
 			public function month_filter_left($params) {
 				if ($params['month-filter'] == 'yes') { ?>
-                    <h5 class="mT justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#month_filter_left" data-placeholder>
+                    <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#month_filter_left" data-placeholder>
 						<?php esc_html_e('Filters By Month', 'tour-booking-manager'); ?>
                         <span data-icon class="fas fa-chevron-down"></span>
                     </h5>

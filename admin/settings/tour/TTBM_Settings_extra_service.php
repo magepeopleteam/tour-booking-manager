@@ -17,7 +17,7 @@
 					<i class="fas fa-parachute-box"></i><?php esc_html_e(' Extra Service', 'tour-booking-manager'); ?>
 				</li>
 				<?php
-				
+				do_action('ttbm_meta_box_tab_after_pricing');
 			}
 			public function extra_service_tab_content($tour_id) {
 

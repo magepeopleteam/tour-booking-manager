@@ -27,6 +27,7 @@
 						$this->max_people($tour_id);
 						$this->age_range($tour_id);
 						$this->short_description($tour_id);
+						$this->tour_language($tour_id);
 						$this->starting_place($tour_id);
 						$this->location($tour_id);
 						$this->full_location($tour_id);
@@ -199,6 +200,35 @@
 			<?php
 			}
 			
+			public function tour_language ($tour_id) {
+				$display_name = 'ttbm_travel_language_status';
+				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
+				$language = 'ttbm_travel_language';
+				$language = MP_Global_Function::get_post_info($tour_id, $language);
+				$checked = $display == 'off' ? '' : 'checked';
+				$active = $display == 'off' ? '' : 'mActive';
+				$language_lists = MP_Global_Function::get_languages();
+				?>
+
+				<section>
+					<label class="label">
+						<div class="label-inner">
+							<p><?php esc_html_e('Tour Language', 'tour-booking-manager'); ?></p>
+							<span class="text"><?php esc_html_e('Easily select your preferred language to enhance your travel experience.', 'tour-booking-manager'); ?></span>
+						</div>
+						<div class="_dFlex_alignCenter_justifyBetween">
+							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+							
+							<select class="rounded ms-2 <?php echo esc_attr($active); ?>" name="ttbm_travel_language" data-collapse="#<?php echo esc_attr($display_name); ?>">
+								<?php foreach($language_lists as $key => $value): ?>
+									<option value="<?php echo esc_html($key); ?>" <?php echo esc_attr($key == $language ? 'selected' : ''); ?>><?php esc_html_e($value); ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					</label>
+                </section>
+				<?php
+			}
 			public function short_description($tour_id) {
 				$display_name = 'ttbm_display_description';
 				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
@@ -224,6 +254,7 @@
 				<?php
 			}
 
+			
 			public function full_location($tour_id) {
 				$display_name = 'ttbm_display_map';
 				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
@@ -418,6 +449,11 @@
 					$description = MP_Global_Function::get_submit_info('ttbm_short_description');
 					update_post_meta($tour_id, 'ttbm_display_description', $visible_description);
 					update_post_meta($tour_id, 'ttbm_short_description', $description);
+					/***************/
+					$language_status = MP_Global_Function::get_submit_info('ttbm_travel_language_status') ? 'on' : 'off';
+					$language = MP_Global_Function::get_submit_info('ttbm_travel_language','en_US');
+					update_post_meta($tour_id, 'ttbm_travel_language_status', $language_status);
+					update_post_meta($tour_id, 'ttbm_travel_language', $language);
 					/***************/
 				}
 			}

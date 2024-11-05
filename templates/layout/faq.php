@@ -6,9 +6,9 @@
 	$faqs = MP_Global_Function::get_post_info($ttbm_post_id, 'mep_event_faq', array());
 	if ( sizeof( $faqs ) > 0 && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_faq', 'on' ) != 'off' ) {
 		?>
-		<div class='ttbm_default_widget'>
-			<?php do_action( 'ttbm_section_title', 'ttbm_string_faq', esc_html__( 'F.A.Q ', 'tour-booking-manager' ) ); ?>
-			<div class='ttbm_widget_content'>
+		<div class='ttbm_description'>
+			<h2><?php esc_html_e( 'F.A.Q ', 'tour-booking-manager' ) ?></h2>
+			<div class='ttbm_faq_content'>
 				<?php
 					foreach ( $faqs as $key => $faq ) {
 						$faq_title = array_key_exists( 'ttbm_faq_title', $faq ) ? html_entity_decode( $faq['ttbm_faq_title'] ) : '';

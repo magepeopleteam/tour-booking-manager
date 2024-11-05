@@ -31,10 +31,11 @@
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
 			}
 			public function global_enqueue() {
+				$this->registration_enqueue();
 				do_action('ttbm_common_script');
 			}
 			public function frontend_script() {
-				$this->global_enqueue();
+				//$this->global_enqueue();
 				wp_enqueue_script('jquery-ui-accordion');
 
 				wp_enqueue_style('ttbm_style', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_style.css', array(), time());

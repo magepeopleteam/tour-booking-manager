@@ -123,7 +123,6 @@
 										<input type="text"
 											class="formControl inputIncDec"
 											data-price="<?php echo esc_attr($ticket_price_raw); ?>"
-											<?php do_action('ttbm_input_data',$name,$tour_id); ?>
 											name="<?php echo esc_attr($input_name); ?>"
 											value="<?php echo esc_attr(max(0, $default_qty)); ?>"
 											min="<?php echo esc_attr($min_qty); ?>"

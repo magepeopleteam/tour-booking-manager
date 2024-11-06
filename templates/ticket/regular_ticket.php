@@ -46,7 +46,7 @@
 								$max_qty = apply_filters('ttbm_ticket_type_max_qty', 0);
 								$sold_type = TTBM_Function::get_total_sold($tour_id, $tour_date, $ticket_name);
 								$available = (int)$ticket_qty - ($sold_type + (int)$reserve);
-								$available=apply_filters('ttbm_group_ticket_qty', $available,$tour_id,$ticket_name);
+								$available = apply_filters('ttbm_group_ticket_qty', $available,$tour_id,$ticket_name);
 								$ticket_type_icon = array_key_exists('ticket_type_icon', $ticket) ? $ticket['ticket_type_icon'] : '';
 								$description = array_key_exists('ticket_type_description', $ticket) ? $ticket['ticket_type_description'] : '';
 								?>
@@ -68,11 +68,15 @@
 										<?php } ?>
 										<span><?php echo MP_Global_Function::esc_html($ticket_price); ?></span>
 									</th>
-									<td><?php TTBM_Layout::qty_input($ticket_name, $available, $ticket_qty_type, $default_qty, $min_qty, $max_qty, $ticket_price_raw, 'ticket_qty[]',$tour_id); ?></td>
+									<td>
+
+                                        <?php TTBM_Layout::qty_input($ticket_name, $available, $ticket_qty_type, $default_qty, $min_qty, $max_qty, $ticket_price_raw, 'ticket_qty[]',$tour_id); ?>
+                                    </td>
 								</tr>
 
 								<tr>
 									<td colspan=3>
+										<?php do_action('ttbm_input_data',$ticket_name,$tour_id); ?>
 										<input type="hidden" name='tour_id[]' value='<?php echo esc_html($tour_id); ?>'>
 										<input type="hidden" name='ticket_name[]' value='<?php echo esc_html($ticket_name); ?>'>
 										<input type="hidden" name='ticket_max_qty[]' value='<?php echo esc_html($max_qty); ?>'>

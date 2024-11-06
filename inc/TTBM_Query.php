@@ -235,6 +235,37 @@
 				wp_reset_query();
 				return max(0,$total_qty);
 			}
+			public static function query_group_id($group_id){
+				$_seat_booked_status = TTBM_Function::get_general_settings('ttbm_set_book_status', array('processing', 'completed'));
+				$seat_booked_status = !empty($_seat_booked_status) ? $_seat_booked_status : [];
+				$args = array(
+					'post_type' => 'ttbm_booking',
+					'posts_per_page' => -1,
+					'meta_query' => array(
+						'relation' => 'AND',
+						array(
+							'key' => 'ttbm_group_id',
+							'value' => $group_id,
+							'compare' => '='
+						),
+						array(
+							'key' => 'ttbm_order_status',
+							'value' => $seat_booked_status,
+							'compare' => 'IN'
+						)
+					)
+				);
+				$ex_service_infos= new WP_Query($args);
+				$group_ids=[];
+				if ($ex_service_infos->post_count > 0) {
+					$ex_service_info = $ex_service_infos->posts;
+					foreach ($ex_service_info as $ex_service) {
+						$group_ids[]=$ex_service->ID;
+					}
+				}
+				wp_reset_query();
+				return $group_ids;
+			}
 		}
 		new TTBM_Query();
 	}

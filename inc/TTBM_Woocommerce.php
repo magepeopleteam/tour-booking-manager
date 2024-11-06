@@ -454,31 +454,46 @@
 				$num_of_day = sizeof($hotel_info) > 0 ? $hotel_info['ttbm_hotel_num_of_day'] : 1;
 				if (sizeof($ticket_info) > 0) {
 					$count = 0;
+
 					foreach ($ticket_info as $_ticket) {
-						$qty = apply_filters('ttbm_group_ticket_qty_actual', $_ticket['ticket_qty'],$ttbm_id,$_ticket['ticket_name']);
+
+						//$qty = apply_filters('ttbm_group_ticket_qty_actual', $_ticket['ticket_qty'],$ttbm_id,$_ticket['ticket_name']);
+						$qty = $_ticket['ticket_qty'];
 						for ($key = 0; $key < $qty; $key++) {
-							$zdata[$count]['ttbm_ticket_name'] = $_ticket['ticket_name'];
-							$zdata[$count]['ttbm_ticket_price'] = $_ticket['ticket_price'] * $num_of_day;
-							$zdata[$count]['ttbm_ticket_total_price'] = ($_ticket['ticket_price'] * $qty) * $num_of_day;
-							$zdata[$count]['ttbm_date'] = $_ticket['ttbm_date'];
-							$zdata[$count]['ttbm_ticket_qty'] = $_ticket['ticket_qty'];
-							$zdata[$count]['ttbm_group_ticket_unit_qty'] = $qty;
-							$zdata[$count]['ttbm_hotel_id'] = $hotel_id;
-							$zdata[$count]['ttbm_checkin_date'] = $checkin_date;
-							$zdata[$count]['ttbm_checkout_date'] = $checkout_date;
-							$zdata[$count]['ttbm_hotel_num_of_day'] = $num_of_day;
-							$zdata[$count]['ttbm_id'] = $ttbm_id;
-							$zdata[$count]['ttbm_order_id'] = $order_id;
-							$zdata[$count]['ttbm_order_status'] = $order_status;
-							$zdata[$count]['ttbm_payment_method'] = $payment_method;
-							$zdata[$count]['ttbm_user_id'] = $user_id;
-							$zdata[$count]['ttbm_billing_name'] = $billing_name;
-							$zdata[$count]['ttbm_billing_email'] = $billing_email;
-							$zdata[$count]['ttbm_billing_phone'] = $billing_phone;
-							$zdata[$count]['ttbm_billing_address'] = $billing_address;
-							$user_data = apply_filters('ttbm_user_booking_data_arr', $zdata[$count], $count, $user_info, $ttbm_id);
-							self::add_cpt_data('ttbm_booking', $user_data['ttbm_billing_name'], $user_data);
-							$count++;
+							$group_attendee_id='';
+							$group_count=0;
+                            $actual_qty=apply_filters('ttbm_group_ticket_qty_actual', 1,$ttbm_id,$_ticket['ticket_name']);
+                            for($j=0;$j<$actual_qty;$j++){
+                                $group_id=$actual_qty>1?'on':'';
+                                if($group_count>0){
+                                    $current_group_id=MP_Global_Function::get_post_info($group_attendee_id, 'ttbm_group_id');
+	                                $group_id=($current_group_id && $current_group_id !='on')?$current_group_id:$group_attendee_id;
+                                }
+	                            $zdata[$count]['ttbm_ticket_name'] = $_ticket['ticket_name'];
+	                            $zdata[$count]['ttbm_ticket_price'] = $_ticket['ticket_price'] * $num_of_day;
+	                            $zdata[$count]['ttbm_ticket_total_price'] = ($_ticket['ticket_price'] * $qty) * $num_of_day;
+	                            $zdata[$count]['ttbm_date'] = $_ticket['ttbm_date'];
+	                            $zdata[$count]['ttbm_ticket_qty'] = $_ticket['ticket_qty'];
+	                            $zdata[$count]['ttbm_group_id'] = $group_id;
+	                            $zdata[$count]['ttbm_hotel_id'] = $hotel_id;
+	                            $zdata[$count]['ttbm_checkin_date'] = $checkin_date;
+	                            $zdata[$count]['ttbm_checkout_date'] = $checkout_date;
+	                            $zdata[$count]['ttbm_hotel_num_of_day'] = $num_of_day;
+	                            $zdata[$count]['ttbm_id'] = $ttbm_id;
+	                            $zdata[$count]['ttbm_order_id'] = $order_id;
+	                            $zdata[$count]['ttbm_order_status'] = $order_status;
+	                            $zdata[$count]['ttbm_payment_method'] = $payment_method;
+	                            $zdata[$count]['ttbm_user_id'] = $user_id;
+	                            $zdata[$count]['ttbm_billing_name'] = $billing_name;
+	                            $zdata[$count]['ttbm_billing_email'] = $billing_email;
+	                            $zdata[$count]['ttbm_billing_phone'] = $billing_phone;
+	                            $zdata[$count]['ttbm_billing_address'] = $billing_address;
+	                            $user_data = apply_filters('ttbm_user_booking_data_arr', $zdata[$count], $count, $user_info, $ttbm_id);
+	                            $group_attendee_id=self::add_cpt_data('ttbm_booking', $user_data['ttbm_billing_name'], $user_data);
+	                            $count++;
+	                            $group_count++;
+                            }
+
 						}
 					}
 				}
@@ -588,8 +603,7 @@
 						update_post_meta($post_id, 'ttbm_pin', $ttbm_pin);
 					}
 					wp_reset_postdata();
-
-
+                    return $post_id;
 			}
 			public static function check_duplicate_order($order_id, $ttbm_id) {
 				$args = array(

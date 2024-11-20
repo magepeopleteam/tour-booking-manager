@@ -21,7 +21,7 @@
 				?>
                 <div class="mpStyle mp_global_settings">
                     <div class="mpPanel">
-                        <div class="mpPanelHeader"><?php echo esc_html(esc_html__(' Global Settings', 'ecab-taxi-booking-manager')); ?></div>
+                        <div class="mpPanelHeader"><?php echo esc_html(esc_html__(' Global Settings', 'tour-booking-manager')); ?></div>
                         <div class="mpPanelBody mp_zero">
                             <div class="mpTabs leftTabs">
 								<?php $this->settings_api->show_navigation(); ?>

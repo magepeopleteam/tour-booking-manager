@@ -51,6 +51,14 @@
 					'show_in_rest' => true
 				];
 				register_post_type('ttbm_tour', $args);
+				$args = array(
+					'public' => true,
+					'label' => esc_html__( 'Ticket Types', 'tour-booking-manager' ),
+					'supports' => array( 'title' ),
+					'show_in_menu' => 'edit.php?post_type=ttbm_tour',
+					'capability_type' => 'post',
+				);
+				register_post_type( 'ttbm_ticket_types', $args );
 				$args = [
 					'public' => true,
 					'label' => esc_html__('Hotel', 'tour-booking-manager'),
@@ -75,6 +83,7 @@
 					'capability_type' => 'post',
 				];
 				register_post_type('ttbm_guide', $args);
+
 			}
 			public function set_custom_columns($columns) {
 				unset($columns['date']);

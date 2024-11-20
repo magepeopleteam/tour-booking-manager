@@ -44,6 +44,25 @@
             parent.find('table tbody tr:last-child').find('[name="ttbm_hidden_ticket_text[]"]').val(unique_id);
         }
     });
+    //*********Import ticket type************//
+    $(document).on('change', '.ttbm_price_config [name="ticket_type_import"]', function () {
+        let form_id = $(this).val();
+        let parent = $(this).closest('.ttbm_price_config');
+        let target = parent.find('.ttbm_insert_ticket_type');
+        let post_id = $('[name="post_ID"]').val();
+        if (form_id) {
+            $.ajax({
+                type: 'POST', url: mp_ajax_url, data: {
+                    "action": "get_ttbm_insert_ticket_type", "form_id": form_id, "post_id": post_id
+                }, beforeSend: function () {
+                    dLoader(parent);
+                }, success: function (data) {
+                    target.html(data);
+                    dLoaderRemove(parent);
+                }
+            });
+        }
+    });
     //*********Add F.A.Q Item************//
     $(document).on('click', '.ttbm_add_faq_content', function () {
         let $this = $(this);

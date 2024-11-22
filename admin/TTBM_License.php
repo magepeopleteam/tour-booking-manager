@@ -14,7 +14,7 @@
 			public function tour_licence() {
 				?>
 				<tr>
-					<th colspan="4" class="_textLeft"><?php echo esc_html(TTBM_PLUGIN_DATA['Name']); ?></th>
+					<th colspan="4" class="_textLeft"><?php echo esc_html('Travel Booking Plugin | Tour & Hotel Booking Solution For WooCommerce – wptravelly','tour-booking-manager'); ?></th>
 					<th><?php esc_html_e('Free','tour-booking-manager'); ?></th>
 					<th></th>
 					<th colspan="2"><?php esc_html_e('Unlimited','tour-booking-manager'); ?></th>

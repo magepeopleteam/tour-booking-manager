@@ -26,13 +26,12 @@
 					define('TTBM_PLUGIN_URL', plugins_url() . '/' . plugin_basename(dirname(__FILE__)));
 				}
 				if (!defined('TTBM_PLUGIN_DATA')) {
-					define('TTBM_PLUGIN_DATA', get_plugin_data(__FILE__));
+					// define('TTBM_PLUGIN_DATA', get_plugin_data(__FILE__));
 				}
 				require_once TTBM_PLUGIN_DIR . '/mp_global/MP_Global_File_Load.php';
 				$this->load_global_file();
 				if (MP_Global_Function::check_woocommerce() == 1) {
 					// add_action('activated_plugin', array($this, 'activation_redirect'), 90, 1);
-					$this->appsero_init_tracker_ttbm();
 					require_once TTBM_PLUGIN_DIR . '/lib/classes/class-ttbm.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Dependencies.php';
 				} else {
@@ -46,13 +45,7 @@
 			public function load_global_file() {
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Style.php';
 			}
-			public function appsero_init_tracker_ttbm() {
-				if (!class_exists('Appsero\Client')) {
-					require_once __DIR__ . '/lib/appsero/src/Client.php';
-				}
-				$client = new Appsero\Client('5e44d3f4-ddea-4784-8c15-4502ad6e7426', 'Tour Booking Manager For Woocommerce', __FILE__);
-				$client->insights()->init();
-			}
+			
 			public function activation_redirect($plugin) {
 				if (MP_Global_Function::check_woocommerce() == 1) {
 					self::on_activation_page_create();

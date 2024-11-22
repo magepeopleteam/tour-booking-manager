@@ -7,6 +7,7 @@
 			public function __construct() {
 				add_action('init', array($this, 'language_load'));
 				$this->load_file();
+				$this->appsero_init_tracker_ttbm();
 				add_action('add_mp_frontend_enqueue', array($this, 'frontend_script'), 90);
 				add_action('add_mp_admin_enqueue', array($this, 'admin_script'), 90);
 				add_action('ttbm_registration_enqueue', array($this, 'registration_enqueue'), 90);
@@ -29,6 +30,13 @@
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Details_Layout.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Booking.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
+			}
+			public function appsero_init_tracker_ttbm() {
+				if (!class_exists('Appsero\Client')) {
+					require_once TTBM_PLUGIN_DIR . '/lib/appsero/src/Client.php';
+				}
+				$client = new Appsero\Client('5e44d3f4-ddea-4784-8c15-4502ad6e7426', 'Tour Booking Manager For Woocommerce', __FILE__);
+				$client->insights()->init();
 			}
 			public function global_enqueue() {
 				$this->registration_enqueue();

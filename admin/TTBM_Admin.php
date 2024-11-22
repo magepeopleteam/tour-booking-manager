@@ -32,6 +32,7 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_License.php';
 				//**********//
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Settings_Global.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Ticket_Types.php';
 				//**********//
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_General.php';

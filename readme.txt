@@ -5,15 +5,15 @@ Tags: tour-booking, tour-operator, travel, travel-booking, travel-agency
 Requires at least: 4.4.0
 Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 1.8.3
+Stable tag: 1.8.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Manage and enhance your travel bookings with WpTravelly. A complete WordPress booking solution for your website.
+Enhance and manage travel bookings effortlessly with WPTravelly—your complete WordPress booking solution for websites.
 
 == Description ==
 
-WpTravelly- Complete [tour and travel booking solution](https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/) for WordPress website – The online tour booking system is the ideal solution for tour operators and travel agencies looking to create and manage customized tour packages. Offers a range of features that make it easy to establish your own travel booking website in five minutes or less using the best tour booking plugin.
+WPTravelly - The ultimate [tour and travel booking solution](https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/) for WordPress websites. This online booking system is perfect for tour operators and travel agencies to create and manage customized packages effortlessly. Packed with features, it allows you to set up your travel booking website in under five minutes using the top-rated tour booking plugin.
 
 ###  Explore The Demo:
 

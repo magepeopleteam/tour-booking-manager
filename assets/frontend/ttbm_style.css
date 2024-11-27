@@ -146,19 +146,18 @@ div .item_icon {
 @media (min-width:640px) {
 	div .item_icon {
 		padding:5px;
-		width: 19%;
 	}
 	div .item_icon:nth-child(1) {
 		width: 23%;
 	}
 	div .item_icon:nth-child(2) {
-		width: 17%;
+		width: 20%;
 	}
 	div .item_icon:nth-child(3) {
 		width: 15%;
 	}
 	div .item_icon:nth-child(4) {
-		width: 19%;
+		width: 25%;
 	}
 }
 div .item_icon i {color: var(--color_theme);}

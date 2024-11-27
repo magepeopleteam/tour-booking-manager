@@ -506,21 +506,24 @@
 				$max_qty = MP_Global_Function::get_submit_info('ticket_max_qty', array());
 				$hotel_id = MP_Global_Function::get_submit_info('ttbm_tour_hotel_list', 0);
 				$ticket_info = [];
-				if (sizeof($names) > 0) {
+
+				if (!empty($names)) {
 					for ($i = 0; $i < count($names); $i++) {
-						if ($qty[$i] > 0) {
+						if (isset($qty[$i]) && $qty[$i] > 0) {
 							$name = $names[$i] ?? '';
 							$ticket_info[$i]['ticket_name'] = $name;
 							$ticket_info[$i]['ticket_price'] = TTBM_Function::get_price_by_name($name, $tour_id, $hotel_id, $qty[$i], $start_date);
 							$ticket_info[$i]['ticket_qty'] = $qty[$i];
-							$ticket_info[$i]['qroup_qty'] = $group_qty[$i];
+							$ticket_info[$i]['qroup_qty'] = $group_qty[$i] ?? 0; 
 							$ticket_info[$i]['ttbm_max_qty'] = $max_qty[$i] ?? '';
 							$ticket_info[$i]['ttbm_date'] = $start_date ?? '';
 						}
 					}
 				}
+				
 				return apply_filters('ttbm_cart_ticket_info_data_prepare', $ticket_info, $tour_id);
 			}
+
 			public static function cart_hotel_info(): array {
 				$hotel_id = MP_Global_Function::get_submit_info('ttbm_tour_hotel_list', 0);
 				$hotel_info = array();

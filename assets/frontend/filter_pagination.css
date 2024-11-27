@@ -251,7 +251,7 @@ div.ttbm_list_inline div.ttbm_list_info {margin: 0 var(--dmp_xs) 0 0;}
 
 /***************************************/
 .placeholderLoader div.absolute_item[data-placeholder] {position: absolute;}
-div.absolute_item {position: absolute; top: 55px;z-index: 20;max-width: calc(100% - var(--dmp_xs) - var(--dmp_xs));}
+div.absolute_item {position: absolute;z-index: 20;max-width: calc(100% - var(--dmp_xs) - var(--dmp_xs));}
 .absolute_item .ttbm_list_info {
 	color: var(--color_theme_alter); background-color: var(--color_theme); font-size: var(--fs_small);padding: 5px var(--dmp_xs);margin: 0;
 	-webkit-justify-content: center;justify-content: center;

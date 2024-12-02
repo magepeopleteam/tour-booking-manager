@@ -62,12 +62,19 @@
 			}
 			public function list_with_top_filter($attribute) {
 				$defaults = $this->default_attribute();
+				$defaults['shuffle'] = 'no'; 
 				$params = shortcode_atts($defaults, $attribute);
 				$pagination = $params['pagination'];
 				$search = $params['search-filter'];
 				$show = $params['show'];
 				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
-				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'],$params['sort_by']);
+				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'], $params['sort_by']);
+				if (isset($params['shuffle']) && $params['shuffle'] == 'yes') {
+					$posts = $loop->posts;
+					shuffle($posts);
+					$loop->posts = $posts;
+					$loop->post_count = count($posts);
+				}
 				ob_start();
 				?>
 				<div class="mpStyle ttbm_wraper placeholderLoader ttbm_filter_area">
@@ -85,6 +92,8 @@
 				<?php
 				return ob_get_clean();
 			}
+
+
 			public function location_list($attribute) {
 				ob_start();
 				$defaults = array(
@@ -180,37 +189,39 @@
 				return ob_get_clean();
 			}
 			//***************************//
-			public function default_attribute($style = 'grid', $show = 9, $search_filter = 'yes', $sidebar_filter = 'no', $feature_filter = 'no', $tag_filter = 'no', $month_filter = 'yes', $tour_type = '',$sort_by=''): array {
-				return array(
-					"style" => $style,
-					"show" => $show,
-					"pagination" => "yes",
-					"city" => "",
-					"country" => "",
-					'sort' => 'ASC',
-					'sort_by' => $sort_by,
-					'status' => '',
-					"pagination-style" => "load_more",
-					"column" => 3,
-					"tour-type" => $tour_type,
-					"cat" => "0",
-					"org" => "0",
-					"activity" => "0",
-					'search-filter' => $search_filter,
-					'sidebar-filter' => $sidebar_filter,
-					'title-filter' => 'no',
-					'category-filter' => 'no',
-					'organizer-filter' => 'yes',
-					'location-filter' => 'yes',
-					'country-filter' => 'no',
-					'activity-filter' => 'yes',
-					'month-filter' => $month_filter,
-					'tag-filter' => $tag_filter,
-					'feature-filter' => $feature_filter,
-					'duration-filter' => 'no',
-					'type-filter' => 'no'
-				);
-			}
+			public function default_attribute($style = 'grid', $show = 9, $search_filter = 'yes', $sidebar_filter = 'no', $feature_filter = 'no', $tag_filter = 'no', $month_filter = 'yes', $tour_type = '', $sort_by = '', $shuffle = 'no'): array {
+			return array(
+				"style" => $style,
+				"show" => $show,
+				"pagination" => "yes",
+				"city" => "",
+				"country" => "",
+				'sort' => 'ASC',
+				'sort_by' => $sort_by,
+				'status' => '',
+				"pagination-style" => "load_more",
+				"column" => 3,
+				"tour-type" => $tour_type,
+				"cat" => "0",
+				"org" => "0",
+				"activity" => "0",
+				'search-filter' => $search_filter,
+				'sidebar-filter' => $sidebar_filter,
+				'title-filter' => 'no',
+				'category-filter' => 'no',
+				'organizer-filter' => 'yes',
+				'location-filter' => 'yes',
+				'country-filter' => 'no',
+				'activity-filter' => 'yes',
+				'month-filter' => $month_filter,
+				'tag-filter' => $tag_filter,
+				'feature-filter' => $feature_filter,
+				'duration-filter' => 'no',
+				'type-filter' => 'no',
+				'shuffle' => $shuffle,
+			);
+		}
+
 		}
 		new TTBM_Shortcode();
 	}

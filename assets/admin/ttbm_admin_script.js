@@ -238,7 +238,8 @@
                     "action": "ttbm_new_feature_save",
                     "feature_name": feature_name,
                     "feature_description": feature_description,
-                    "feature_icon": feature_icon
+                    "feature_icon": feature_icon,
+                    "_wp_nonce": parent.find('[name="ttbm_add_new_feature_popup"]').val(),
                 },
                 beforeSend: function () {
                     dLoader(parent);

@@ -143,6 +143,7 @@
 				<?php
 			}
 			public function load_ttbm_feature_form() {
+				wp_nonce_field('ttbm_add_new_feature_popup', 'ttbm_add_new_feature_popup');
 				?>
 				<label class="flexEqual">
 					<span><?php esc_html_e('Feature Name : ', 'tour-booking-manager'); ?><sup class="textRequired">*</sup></span> <input type="text" name="ttbm_feature_name" class="formControl" required>
@@ -213,6 +214,9 @@
 			}
 			/************************/
 			public function ttbm_new_feature_save() {
+				if (!isset($_POST['_wp_nonce']) || !wp_verify_nonce($_POST['_wp_nonce'], 'ttbm_add_new_feature_popup')) {
+					die();
+				}
 				$feature_name = MP_Global_Function::data_sanitize($_POST['feature_name']);
 				$feature_description = MP_Global_Function::data_sanitize($_POST['feature_description']);
 				$feature_icon = MP_Global_Function::data_sanitize($_POST['feature_icon']);

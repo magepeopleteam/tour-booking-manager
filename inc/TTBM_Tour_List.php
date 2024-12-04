@@ -48,11 +48,24 @@
 					usort($sortable_tours, function($a, $b) {
 						return $a['rank'] <=> $b['rank'];
 					});
+
+                $activities = MP_Global_Function::get_taxonomy('ttbm_tour_activities');
 				?>
 				<div class="all_filter_item">
+
+                    <div class="ttbm_all_item_activities_holder">
+                        <?php foreach ( $activities as $activitie) { ?>
+                            <div class="ttbm_item_activity">
+                                <span class="ttbm_item_filter_by_activity" id="<?php echo esc_attr( $activitie->term_id);?>">
+                                    <?php echo esc_attr( $activitie->name);?>
+                                </span>
+                            </div>
+                        <?php }?>
+                    </div>
+
 					<div class="flexWrap <?php echo esc_attr($style); ?>">
 					<?php foreach ($sortable_tours as $tour_data) {
-                $tour = $tour_data['tour'];
+                    $tour = $tour_data['tour'];
 								$ttbm_post_id = $tour->ID;
 								$tour_id = TTBM_Function::post_id_multi_language($ttbm_post_id);
 								//if ($ttbm_post_id == $tour_id) {
@@ -103,6 +116,7 @@
 											data-activity="<?php echo esc_attr(TTBM_Function::get_taxonomy_name_to_id_string($tour_id, 'ttbm_tour_activities', 'ttbm_tour_activities')); ?>"
 										<?php } ?>
 									>
+                                        <input type="hidden" name="ttbm_item_activities" value="<?php echo esc_attr(TTBM_Function::get_taxonomy_name_to_id_string($tour_id, 'ttbm_tour_activities', 'ttbm_tour_activities')); ?>" />
 										<?php
 											if ($params['style'] == 'blossom') {
 												include(TTBM_Function::template_path('list/blossom_list.php'));

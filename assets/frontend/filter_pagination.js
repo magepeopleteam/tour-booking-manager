@@ -2,6 +2,25 @@
 	"use strict";
 	$(document).ready(function () {
 		load_pagination_initial_item();
+
+		$(document).on('click', '.ttbm_item_filter_by_activity', function () {
+			let term_id = $(this).attr('id'); // Get the term ID from the clicked button
+			$(this).parent().siblings().removeClass( 'ttbm_item_activity_active' );
+			$(this).parent().addClass( 'ttbm_item_activity_active' );
+			$('.filter_item').each(function () {
+				let activities = $(this).find('input[name="ttbm_item_activities"]').val();
+				if (activities && activities.split(',').includes(term_id)) {
+					$(this).fadeIn('fast');
+				} else {
+					$(this).fadeOut('fast');
+				}
+			});
+			let visibleCount = $('.filter_item:visible').length;
+
+			// console.log(`Visible items count: ${visibleCount}`);
+			$('.filter_short_result').text(`Visible items: ${visibleCount}`);
+		});
+
 	});
 	$(document).on('click', '.ttbm_filter_area .ttbm_grid_view', function () {
 		let parent = $(this).closest('.ttbm_filter_area');

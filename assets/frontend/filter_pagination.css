@@ -317,28 +317,75 @@ div.modern div.ttbm_list_details {
 }
 
 .ttbm_all_item_activities_holder{
-	display: flex;
-	gap: 10px;
-	padding: 5px 5px 10px 5px;
-	margin-bottom: 5px;
+
 }
-.ttbm_item_activity{
+.ttbm_item_filter_by_activity{
 	display: block;
 	float: left;
 	background-color: #ededed;
-	padding: 10px 20px 12px 20px;
+	padding: 8px 18px 8px 18px;
 	border-radius: 20px;
 	color: #4f4c4c;
+	font-size: 14px;
 	font-weight: bold;
 	cursor: pointer;
 }
-.ttbm_item_activity:hover{
+.ttbm_item_filter_by_activity:hover{
 	background-color: #6e7073;
 	color: #f7f5f5;
 }
 .ttbm_item_activity_active{
 	background-color: #6e7073;
 	color: #f7f5f5;
+}
+.ttbm_all_item_activities_wrapper {
+	display: flex;
+	align-items: center;
+	position: relative;
+	width: calc(100% - 10px);
+	margin: auto;
+	padding: 10px 0px;
+}
+.ttbm_all_item_activities_holder {
+	display: flex;
+	overflow-x: hidden; /* Hide the scrollbar */
+	white-space: nowrap;
+	scroll-behavior: smooth; /* Smooth scrolling for modern browsers */
+	width: 100%;
+	gap: 5px;
+	/*padding: 5px 5px 10px 5px;*/
+	padding: 5px 10px 5px 10px;
+	margin-bottom: 5px;
+}
+.ttbm_all_item_activities_holder::-webkit-scrollbar {
+	display: none; /* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+}
+
+.ttbm_all_item_activities_holder {
+	-ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+	scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+.ttbm_item_activity {
+	display: inline-block;
+	margin: 0 5px;
+}
+
+button.scroll-left, button.scroll-right {
+	background-color: #ccc;
+	border: none;
+	cursor: pointer;
+	padding: 10px;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 1;
+	display: none; /* Initially hide the arrows */
+}
+button.scroll-left {
+	left: 0; /* Position left arrow */
+}
+button.scroll-right {
+	right: 0; /* Position right arrow */
 }
 
 /**********Grid******************************/

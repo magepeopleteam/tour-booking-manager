@@ -8,6 +8,9 @@
 				add_action('ttbm_all_list_item', array($this, 'all_list_item'), 10, 2);
 			}
 			public function all_list_item($loop, $params) {
+
+                error_log( print_r( [ '$loop' => $loop ], true ) );
+
 				$style = $params['style'] ?: 'modern';
 				$style = $style == 'list' ? 'modern' : $style;
 				$grid_class = 'grid_' . $params['column'];
@@ -53,14 +56,18 @@
 				?>
 				<div class="all_filter_item">
 
-                    <div class="ttbm_all_item_activities_holder">
-                        <?php foreach ( $activities as $activitie) { ?>
-                            <div class="ttbm_item_activity">
-                                <span class="ttbm_item_filter_by_activity" id="<?php echo esc_attr( $activitie->term_id);?>">
-                                    <?php echo esc_attr( $activitie->name);?>
-                                </span>
-                            </div>
-                        <?php }?>
+                    <div class="ttbm_all_item_activities_wrapper">
+                        <button class="scroll-left">←</button>
+                        <div class="ttbm_all_item_activities_holder">
+                            <?php foreach ( $activities as $activitie) { ?>
+                                <div class="ttbm_item_activity">
+                                    <div class="ttbm_item_filter_by_activity" id="<?php echo esc_attr( $activitie->term_id);?>">
+                                        <?php echo esc_attr( $activitie->name);?>
+                                    </div>
+                                </div>
+                            <?php }?>
+                        </div>
+                        <button class="scroll-right">→</button>
                     </div>
 
 					<div class="flexWrap <?php echo esc_attr($style); ?>">

@@ -3,9 +3,9 @@
 	$(document).ready(function () {
 		load_pagination_initial_item();
 
-		$(document).on('click', '.ttbm_item_filter_by_activity', function () {
+		$(document).on('click', '.ttbm_item_filter_by_activity1', function () {
 			let term_id = $(this).attr('id'); // Get the term ID from the clicked button
-			$(this).parent().siblings().removeClass( 'ttbm_item_activity_active' );
+			// $(this).parent().siblings().removeClass( 'ttbm_item_activity_active' );
 			$(this).parent().addClass( 'ttbm_item_activity_active' );
 			$('.filter_item').each(function () {
 				let activities = $(this).find('input[name="ttbm_item_activities"]').val();
@@ -21,7 +21,65 @@
 			$('.filter_short_result').text(`Visible items: ${visibleCount}`);
 		});
 
+		$(document).on('click', '.ttbm_item_filter_by_activity', function () {
+			$(this).toggleClass('ttbm_item_activity_active');
+			let activeIds = [];
+			$('.ttbm_item_activity_active').each(function () {
+				let id = $(this).attr('id'); // Get the ID of the current element
+				if (id) {
+					activeIds.push(id);
+				}
+			});
+			if (activeIds.length === 0) {
+				$('.filter_item').fadeIn('fast'); // Show all items
+			} else {
+				$('.filter_item').each(function () {
+					let activities = $(this).find('input[name="ttbm_item_activities"]').val();
+					if (activities) {
+						let activityArray = activities.split(',');
+						if (activeIds.some(id => activityArray.includes(id))) {
+							$(this).fadeIn('fast');
+						} else {
+							$(this).fadeOut('fast');
+						}
+					} else {
+						$(this).fadeOut('fast');
+					}
+				});
+			}
+			let visibleCount = $('.filter_item:visible').length;
+			$('.filter_short_result').text(`Visible items: ${visibleCount}`);
+		});
+
+		const holder = $('.ttbm_all_item_activities_holder');
+		const parent = holder.parent();
+		const scrollLeftBtn = $('<button class="scroll-left">&lt;</button>').appendTo(parent);
+		const scrollRightBtn = $('<button class="scroll-right">&gt;</button>').appendTo(parent);
+		const scrollAmount = 150;
+		function updateArrows() {
+			const totalItemsWidth = holder.find('.ttbm_item_activity').toArray().reduce((total, item) => {
+				return total + $(item).outerWidth(true); // Include margins
+			}, 0);
+			const holderWidth = parent.width(); // Parent width
+			const maxScroll = totalItemsWidth - holderWidth;
+			const currentScroll = holder.scrollLeft();
+			scrollLeftBtn.toggle(currentScroll > 0); // Show left arrow if not at the start
+			scrollRightBtn.toggle(totalItemsWidth > holderWidth && currentScroll < maxScroll); // Show right arrow if overflow exists and not at the end
+		}
+		scrollLeftBtn.on('click', function () {
+			holder.scrollLeft(holder.scrollLeft() - scrollAmount);
+			setTimeout(updateArrows, 50); // Delay to allow scrolling to complete
+		});
+		scrollRightBtn.on('click', function () {
+			holder.scrollLeft(holder.scrollLeft() + scrollAmount);
+			setTimeout(updateArrows, 50); // Delay to allow scrolling to complete
+		});
+		holder.on('scroll', updateArrows);
+		updateArrows();
+		$(window).on('resize', updateArrows);
+
 	});
+
 	$(document).on('click', '.ttbm_filter_area .ttbm_grid_view', function () {
 		let parent = $(this).closest('.ttbm_filter_area');
 		let all_item = parent.find('.all_filter_item');

@@ -8,9 +8,6 @@
 				add_action('ttbm_all_list_item', array($this, 'all_list_item'), 10, 2);
 			}
 			public function all_list_item($loop, $params) {
-
-                error_log( print_r( [ '$loop' => $loop ], true ) );
-
 				$style = $params['style'] ?: 'modern';
 				$style = $style == 'list' ? 'modern' : $style;
 				$grid_class = 'grid_' . $params['column'];

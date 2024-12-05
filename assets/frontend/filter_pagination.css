@@ -316,9 +316,6 @@ div.modern div.ttbm_list_details {
     border: 0;
 }
 
-.ttbm_all_item_activities_holder{
-
-}
 .ttbm_item_filter_by_activity{
 	display: block;
 	float: left;
@@ -353,9 +350,8 @@ div.modern div.ttbm_list_details {
 	scroll-behavior: smooth; /* Smooth scrolling for modern browsers */
 	width: 100%;
 	gap: 5px;
-	/*padding: 5px 5px 10px 5px;*/
 	padding: 5px 10px 5px 10px;
-	margin-bottom: 5px;
+	/*margin-bottom: 5px;*/
 }
 .ttbm_all_item_activities_holder::-webkit-scrollbar {
 	display: none; /* Hide scrollbar for WebKit browsers (Chrome, Safari) */

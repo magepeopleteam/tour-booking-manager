@@ -53,7 +53,8 @@
 				?>
 				<div class="all_filter_item">
 
-                    <div class="ttbm_all_item_activities_wrapper">
+                    <?php if( $params['filter_by_activity'] === 'yes' ){?>
+                        <div class="ttbm_all_item_activities_wrapper">
                         <button class="scroll-left">←</button>
                         <div class="ttbm_all_item_activities_holder">
                             <?php foreach ( $activities as $activitie) { ?>
@@ -66,6 +67,7 @@
                         </div>
                         <button class="scroll-right">→</button>
                     </div>
+                    <?php }?>
 
 					<div class="flexWrap <?php echo esc_attr($style); ?>">
 					<?php foreach ($sortable_tours as $tour_data) {

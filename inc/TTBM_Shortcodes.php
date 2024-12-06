@@ -219,6 +219,7 @@
 				'duration-filter' => 'no',
 				'type-filter' => 'no',
 				'shuffle' => $shuffle,
+				'filter_by_activity' => 'yes',
 			);
 		}
 

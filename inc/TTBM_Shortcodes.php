@@ -60,6 +60,46 @@
 				<?php
 				return ob_get_clean();
 			}
+			public function list_with_left_filter_for_search( $attribute, $type_filter, $organizer_filter, $location_filter, $activity_filter, $date_filter ) {
+				$defaults = $this->default_attribute('modern', 12, 'no', 'yes', 'yes', 'yes', $month_filter = 'yes', $tour_type = '');
+				$params = shortcode_atts($defaults, $attribute);
+				$show = $params['show'];
+				$pagination = $params['pagination'];
+				$search = $params['sidebar-filter'];
+				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
+
+				$loop = TTBM_Query::ttbm_query_for_top_Search($show, $params['sort'], $params['sort_by'], $params['status'], $type_filter, $organizer_filter, $location_filter, $activity_filter, $date_filter );
+                ob_start();
+				?>
+				<div class="mpStyle ttbm_wraper placeholderLoader ttbm_filter_area">
+					<div class="mpContainer">
+					<?php
+						if ($params['sidebar-filter'] == 'yes') {
+							?>
+							<div class="left_filter">
+								<div class="leftSidebar placeholder_area">
+									<?php do_action('ttbm_left_filter', $params); ?>
+								</div>
+								<div class="mainSection">
+									<?php do_action('ttbm_filter_top_bar', $loop, $params); ?>
+									<?php do_action('ttbm_all_list_item', $loop, $params); ?>
+									<?php do_action('ttbm_sort_result', $loop, $params); ?>
+									<?php do_action('ttbm_pagination', $params, $loop->post_count); ?>
+								</div>
+							</div>
+							<?php
+						} else {
+							include( TTBM_Function::template_path( 'layout/filter_hidden.php' ) );
+							do_action('ttbm_all_list_item', $loop, $params);
+							do_action('ttbm_sort_result', $loop, $params);
+							do_action('ttbm_pagination', $params, $loop->post_count);
+						}
+					?>
+					</div>
+				</div>
+				<?php
+				return ob_get_clean();
+			}
 			public function list_with_top_filter($attribute) {
 				$defaults = $this->default_attribute();
 				$defaults['shuffle'] = 'no'; 
@@ -147,7 +187,11 @@
 			public function search_result($attribute) {
 				ob_start();
 				$type_filter = $_GET['type_filter'] ?? '';
-				echo $this->list_with_left_filter($attribute, $type_filter);
+				$organizer_filter = $_GET['organizer_filter'] ?? '';
+				$location_filter = $_GET['location_filter'] ?? '';
+				$activity_filter = $_GET['activity_filter'] ?? '';
+				$date_filter = $_GET['month_filter'] ?? '';
+				echo $this->list_with_left_filter_for_search( $attribute, $type_filter, $organizer_filter, $location_filter, $activity_filter, $date_filter );
 				return ob_get_clean();
 			}
 			public function hotel_list($attribute) {

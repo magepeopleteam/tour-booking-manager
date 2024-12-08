@@ -28,6 +28,7 @@
 							<?php $this->country_filter($params); ?>
 							<?php $this->activity_filter($params); ?>
 							<?php $this->month_filter($params); ?>
+							<?php $this->selected_month_filter($params); ?>
                             <button type="submit" class="dButton min_200" data-placeholder><?php esc_html_e('Find Tours', 'tour-booking-manager'); ?></button>
                         </div>
                     </form>
@@ -532,6 +533,80 @@
 							?>
                         </select>
                     </label>
+					<?php
+				}
+			}
+			public function selected_month_filter($params) {
+				if ($params['month-filter'] == 'yes') {
+					$url_month = $_GET['month_filter'] ?? '';
+					$first_date = date('Y-m-01');
+					$current_date = current_time('Y-m-d');
+					$month = date('n', strtotime($current_date));
+					$selected = $url_month == $month ? 'selected' : '';
+					$date_format = MP_Global_Function::get_settings('mp_global_settings', 'date_format_short', 'M , Y');
+					?>
+                    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+                    <style>
+                        .date-picker-container {
+                            display: flex;
+                            align-items: center;
+                            position: relative;
+                        }
+                        .date-picker-input {
+                            width: 200px;
+                            padding: 8px;
+                            font-size: 14px;
+                            border: 1px solid #ccc;
+                            border-radius: 4px;
+                        }
+                        .calendar-icon {
+                            width: 24px;
+                            height: 24px;
+                            background: url('https://cdn-icons-png.flaticon.com/512/860/860790.png') no-repeat center center;
+                            background-size: cover;
+                            margin-left: 8px;
+                            cursor: pointer;
+                        }
+                    </style>
+                    <label data-placeholder>
+                        <div class="date-picker-container">
+                            <input name="date_filter_start" type="text" id="date-input_from" class="date-picker-input" placeholder="From Date">
+<!--                            <div id="calendar-icon" class="calendar-icon"></div>-->
+                        </div>
+                    </label>
+                    <label data-placeholder>
+                        <div class="date-picker-container">
+                            <input name="date_filter_end" type="text" id="date-input_to" class="date-picker-input" placeholder="To Date">
+<!--                            <div id="calendar-icon" class="calendar-icon"></div>-->
+                        </div>
+                    </label>
+                    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+                    <script>
+                        $(document).ready(function () {
+                            // Initialize the datepicker with minDate and custom date format
+                            $("#date-input_from").datepicker({
+                                dateFormat: "MM d, yy", // Custom date format: March 20, 2024
+                                minDate: 0, // Disable past dates
+                                showAnim: "fadeIn"
+                            });
+
+                            // Open the datepicker when clicking the icon
+                            $("#calendar-icon").on("click", function () {
+                                $("#date-input_from").datepicker("show");
+                            });
+                            $("#date-input_to").datepicker({
+                                dateFormat: "MM d, yy", // Custom date format: March 20, 2024
+                                minDate: 0, // Disable past dates
+                                showAnim: "fadeIn"
+                            });
+
+                            // Open the datepicker when clicking the icon
+                            $("#calendar-icon").on("click", function () {
+                                $("#date-input_to").datepicker("show");
+                            });
+                        });
+                    </script>
 					<?php
 				}
 			}

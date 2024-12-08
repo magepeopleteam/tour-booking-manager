@@ -103,8 +103,44 @@
 				}
 			}
 
-            public static function ttbm_query_for_top_Search($show, $sort , $sort_by, $status , $type_filter, $organizer_filter, $location, $activity, $date_filter): WP_Query {
-				TTBM_Function::update_all_upcoming_date_month();
+            public static function ttbm_query_for_top_Search( $show, $sort , $sort_by, $status , $type_filter, $organizer_filter, $location, $activity, $date_filter = '' ): WP_Query {
+                if( is_array( $date_filter )){
+                    if( !empty( $date_filter['start_date'] ) ){
+                        $start_date = DateTime::createFromFormat('F d, Y', $date_filter['start_date']);
+                        $start_date = $start_date->format('Y-m-d');
+                    }else{
+                        $start_date = '';
+                    }
+                    if( !empty( $date_filter['end_date'] ) ){
+                        $end_date = DateTime::createFromFormat('F d, Y', $date_filter['end_date']);
+                        $end_date = $end_date->format('Y-m-d');
+                    }else{
+                        $end_date = '';
+                    }
+                    if( $end_date === '' && $start_date === ''){
+                        $date = '';
+                        $compare = '';
+                    }elseif( $end_date === '' && $start_date !== '' ){
+                        $date =$start_date ;
+                        $compare = '=';
+                    }elseif( $end_date !== '' && $start_date === '' ){
+                        $date = $end_date ;
+                        $compare = '=';
+                    }else{
+                        $date =[$start_date, $end_date] ;
+                        $compare = 'BETWEEN';
+                    }
+                    $selected_date_filter = $start_date ? array(
+                        'key' => 'ttbm_upcoming_date',
+                        'value' => $date,
+                        'compare' => $compare,
+                        'type'    => 'DATE',
+                    ) : '';
+                }else{
+                    $selected_date_filter = '';
+                }
+
+                TTBM_Function::update_all_upcoming_date_month();
 				$sort_by = $sort_by ?: 'meta_value';
 				if (get_query_var('paged')) {
 					$paged = get_query_var('paged');
@@ -151,7 +187,6 @@
 					'value' => $location,
 					'compare' => 'LIKE'
 				) : '';
-                error_log( print_r( [ '$city_filter' => $city_filter ], true ) );
 				$country_filter = !empty($country) ? array(
 					'key' => 'ttbm_country_name',
 					'value' => $country,
@@ -175,7 +210,8 @@
 						$city_filter,
 						$country_filter,
 						$tour_type_filter,
-						$activity_filter
+						$activity_filter,
+                        $selected_date_filter
 					),
 					'tax_query' => array(
 						$cat_filter,

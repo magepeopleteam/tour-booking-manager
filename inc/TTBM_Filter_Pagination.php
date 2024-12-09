@@ -27,8 +27,8 @@
 							<?php $this->location_filter($params); ?>
 							<?php $this->country_filter($params); ?>
 							<?php $this->activity_filter($params); ?>
-							<?php $this->month_filter($params); ?>
-							<?php $this->selected_month_filter($params); ?>
+<!--							--><?php //$this->month_filter($params); ?>
+							<?php $this->select_month_filter($params); ?>
                             <button type="submit" class="dButton min_200" data-placeholder><?php esc_html_e('Find Tours', 'tour-booking-manager'); ?></button>
                         </div>
                     </form>
@@ -536,7 +536,7 @@
 					<?php
 				}
 			}
-			public function selected_month_filter($params) {
+			public function select_month_filter($params) {
 				if ($params['month-filter'] == 'yes') {
 					$url_month = $_GET['month_filter'] ?? '';
 					$first_date = date('Y-m-01');
@@ -553,31 +553,37 @@
                             position: relative;
                         }
                         .date-picker-input {
-                            width: 200px;
-                            padding: 8px;
-                            font-size: 14px;
-                            border: 1px solid #ccc;
-                            border-radius: 4px;
+                            width: 100%;
+                            max-width: inherit;
+                            border: 1px solid var(--color_border);
+                            font-size: var(--fs);
+                            color: var(--d_color);
+                            background-color: #fff;
+                            padding: 10px 15px;
+                            min-width: 200px;
+                            font-weight: var(--fw-medium);
                         }
                         .calendar-icon {
-                            width: 24px;
-                            height: 24px;
-                            background: url('https://cdn-icons-png.flaticon.com/512/860/860790.png') no-repeat center center;
-                            background-size: cover;
-                            margin-left: 8px;
+                            width: 10px;
+                            height: 12px;
+                            background: url('https://cdn-icons-png.flaticon.com/512/271/271210.png') no-repeat center center;
+                            background-size: contain;
+                            margin-right: 4px;
                             cursor: pointer;
+                            position: absolute;
+                            right: 0;
                         }
                     </style>
                     <label data-placeholder>
                         <div class="date-picker-container">
                             <input name="date_filter_start" type="text" id="date-input_from" class="date-picker-input" placeholder="From Date">
-<!--                            <div id="calendar-icon" class="calendar-icon"></div>-->
+                            <div id="calendar-icon" class="calendar-icon"></div>
                         </div>
                     </label>
                     <label data-placeholder>
                         <div class="date-picker-container">
                             <input name="date_filter_end" type="text" id="date-input_to" class="date-picker-input" placeholder="To Date">
-<!--                            <div id="calendar-icon" class="calendar-icon"></div>-->
+                            <div id="calendar-icon" class="calendar-icon"></div>
                         </div>
                     </label>
                     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

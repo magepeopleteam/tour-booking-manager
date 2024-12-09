@@ -3,24 +3,6 @@
 	$(document).ready(function () {
 		load_pagination_initial_item();
 
-		$(document).on('click', '.ttbm_item_filter_by_activity1', function () {
-			let term_id = $(this).attr('id'); // Get the term ID from the clicked button
-			// $(this).parent().siblings().removeClass( 'ttbm_item_activity_active' );
-			$(this).parent().addClass( 'ttbm_item_activity_active' );
-			$('.filter_item').each(function () {
-				let activities = $(this).find('input[name="ttbm_item_activities"]').val();
-				if (activities && activities.split(',').includes(term_id)) {
-					$(this).fadeIn('fast');
-				} else {
-					$(this).fadeOut('fast');
-				}
-			});
-			let visibleCount = $('.filter_item:visible').length;
-
-			// console.log(`Visible items count: ${visibleCount}`);
-			$('.filter_short_result').text(`Visible items: ${visibleCount}`);
-		});
-
 		$(document).on('click', '.ttbm_item_filter_by_activity', function () {
 			$(this).toggleClass('ttbm_item_activity_active');
 			let activeIds = [];
@@ -39,16 +21,25 @@
 						let activityArray = activities.split(',');
 						if (activeIds.some(id => activityArray.includes(id))) {
 							$(this).fadeIn('fast');
+							$(this).removeClass('search_off').addClass('search_on');
 						} else {
 							$(this).fadeOut('fast');
+							$(this).removeClass('search_on').addClass('search_off');
 						}
 					} else {
 						$(this).fadeOut('fast');
 					}
 				});
 			}
-			let visibleCount = $('.filter_item:visible').length;
-			$('.filter_short_result').text(`Visible items: ${visibleCount}`);
+
+			function filter_qty_palace() {
+				let countSearchOn = $('.search_on').length;
+				let show = ' Showing <strong class="qty_count">' +countSearchOn+ '</strong> of <strong class="total_filter_qty">' +countSearchOn+ '</strong>';
+				$('.filter_short_result').html( show );
+			}
+			filter_qty_palace();
+
+			// $('.filter_short_result').text(`Visible items: ${countSearchOn}`);
 		});
 
 		const holder = $('.ttbm_all_item_activities_holder');

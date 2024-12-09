@@ -193,6 +193,7 @@
 				$date_filter_start = $_GET['date_filter_start'] ?? '';
 				$date_filter_end = $_GET['date_filter_end'] ?? '';
                 $date_filter = array( 'start_date' => $date_filter_start, 'end_date' => $date_filter_end );
+//                echo $this->list_with_left_filter($attribute, $type_filter);
 				echo $this->list_with_left_filter_for_search( $attribute, $type_filter, $organizer_filter, $location_filter, $activity_filter, $date_filter );
 				return ob_get_clean();
 			}

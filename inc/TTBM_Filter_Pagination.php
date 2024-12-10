@@ -545,74 +545,18 @@
 					$selected = $url_month == $month ? 'selected' : '';
 					$date_format = MP_Global_Function::get_settings('mp_global_settings', 'date_format_short', 'M , Y');
 					?>
-                    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-                    <style>
-                        .date-picker-container {
-                            display: flex;
-                            align-items: center;
-                            position: relative;
-                        }
-                        .date-picker-input {
-                            width: 100%;
-                            max-width: inherit;
-                            border: 1px solid var(--color_border);
-                            font-size: var(--fs);
-                            color: var(--d_color);
-                            background-color: #fff;
-                            padding: 10px 15px;
-                            min-width: 200px;
-                            font-weight: var(--fw-medium);
-                        }
-                        .calendar-icon {
-                            width: 10px;
-                            height: 12px;
-                            background: url('https://cdn-icons-png.flaticon.com/512/271/271210.png') no-repeat center center;
-                            background-size: contain;
-                            margin-right: 4px;
-                            cursor: pointer;
-                            position: absolute;
-                            right: 0;
-                        }
-                    </style>
                     <label data-placeholder>
-                        <div class="date-picker-container">
-                            <input name="date_filter_start" type="text" id="date-input_from" class="date-picker-input" placeholder="From Date">
-                            <div id="calendar-icon" class="calendar-icon"></div>
+                        <div class="ttbm_date-picker-container">
+                            <input name="date_filter_start" type="text" id="ttbm_date-input_from" class="ttbm_date-picker-input" placeholder="From Date">
+                            <div id="ttbm_calendar-icon" class="ttbm_calendar-icon"></div>
                         </div>
                     </label>
                     <label data-placeholder>
-                        <div class="date-picker-container">
-                            <input name="date_filter_end" type="text" id="date-input_to" class="date-picker-input" placeholder="To Date">
-                            <div id="calendar-icon" class="calendar-icon"></div>
+                        <div class="ttbm_date-picker-container">
+                            <input name="date_filter_end" type="text" id="ttbm_date-input_to" class="ttbm_date-picker-input" placeholder="To Date">
+                            <div id="ttbm_calendar-icon" class="ttbm_calendar-icon"></div>
                         </div>
                     </label>
-                    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-                    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-                    <script>
-                        $(document).ready(function () {
-                            // Initialize the datepicker with minDate and custom date format
-                            $("#date-input_from").datepicker({
-                                dateFormat: "MM d, yy", // Custom date format: March 20, 2024
-                                minDate: 0, // Disable past dates
-                                showAnim: "fadeIn"
-                            });
-
-                            // Open the datepicker when clicking the icon
-                            $("#calendar-icon").on("click", function () {
-                                $("#date-input_from").datepicker("show");
-                            });
-                            $("#date-input_to").datepicker({
-                                dateFormat: "MM d, yy", // Custom date format: March 20, 2024
-                                minDate: 0, // Disable past dates
-                                showAnim: "fadeIn"
-                            });
-
-                            // Open the datepicker when clicking the icon
-                            $("#calendar-icon").on("click", function () {
-                                $("#date-input_to").datepicker("show");
-                            });
-                        });
-                    </script>
 					<?php
 				}
 			}

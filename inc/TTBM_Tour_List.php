@@ -26,28 +26,40 @@
 				$activity_filter=isset($_GET['activity_filter']) && $_GET['activity_filter']?$_GET['activity_filter']:'';
 				 $sortable_tours = [];
 
-					foreach ($loop->posts as $tour) {
-						$ttbm_post_id = $tour->ID;
-						$tour_id = TTBM_Function::post_id_multi_language($ttbm_post_id);
-						$display_order = get_post_meta($tour_id, 'ttbm_display_order_tour', true);
-						$travel_rank = get_post_meta($tour_id, 'ttbm_travel_rank_tour', true);
+                $term_ids = '';
+                $terms_id_array = [];
+                foreach ($loop->posts as $tour) {
+                    $ttbm_post_id = $tour->ID;
+                    $tour_id = TTBM_Function::post_id_multi_language($ttbm_post_id);
+                    $display_order = get_post_meta($tour_id, 'ttbm_display_order_tour', true);
+                    $travel_rank = get_post_meta($tour_id, 'ttbm_travel_rank_tour', true);
 
-						if ($display_order == 'on') {
-							$sortable_tours[] = [
-								'tour' => $tour,
-								'rank' => (int)$travel_rank 
-							];
-						} else {
-							$sortable_tours[] = [
-								'tour' => $tour,
-								'rank' => PHP_INT_MAX 
-							];
-						}
-					}
+                    if( isset( $params['filter_by_activity'] ) && $params['filter_by_activity'] === 'yes'  ) {
+                        $terms = TTBM_Function::get_taxonomy_name_to_id_string($tour_id, 'ttbm_tour_activities', 'ttbm_tour_activities');
+                        $term_ids .= $terms.',';
+                    }
 
-					usort($sortable_tours, function($a, $b) {
-						return $a['rank'] <=> $b['rank'];
-					});
+                    if ($display_order == 'on') {
+                        $sortable_tours[] = [
+                            'tour' => $tour,
+                            'rank' => (int)$travel_rank
+                        ];
+                    } else {
+                        $sortable_tours[] = [
+                            'tour' => $tour,
+                            'rank' => PHP_INT_MAX
+                        ];
+                    }
+                }
+
+                usort($sortable_tours, function($a, $b) {
+                    return $a['rank'] <=> $b['rank'];
+                });
+
+                if( $term_ids !== '' ){
+                    $term_ids = rtrim( $term_ids, ',');
+                    $terms_id_array = array_unique( explode(',', $term_ids ) );
+                }
 
                 $activities = MP_Global_Function::get_taxonomy('ttbm_tour_activities');
 				?>
@@ -57,13 +69,20 @@
                         <div class="ttbm_all_item_activities_wrapper">
                         <button class="scroll-left">←</button>
                         <div class="ttbm_all_item_activities_holder">
-                            <?php foreach ( $activities as $activitie) { ?>
-                                <div class="ttbm_item_activity">
-                                    <div class="ttbm_item_filter_by_activity" id="<?php echo esc_attr( $activitie->term_id);?>">
-                                        <?php echo esc_attr( $activitie->name);?>
+                            <?php
+                            if( is_array( $activities ) && count( $activities ) > 0 ){
+                                foreach ( $activities as $activitie) {
+                                    if (in_array( $activitie->term_id, $terms_id_array )) {
+                                    ?>
+                                    <div class="ttbm_item_activity">
+                                        <div class="ttbm_item_filter_by_activity" id="<?php echo esc_attr( $activitie->term_id);?>">
+                                            <?php echo esc_attr( $activitie->name);?>
+                                        </div>
                                     </div>
-                                </div>
-                            <?php }?>
+                            <?php }
+                                }
+                            }
+                            ?>
                         </div>
                         <button class="scroll-right">→</button>
                     </div>

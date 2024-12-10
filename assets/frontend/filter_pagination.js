@@ -3,6 +3,27 @@
 	$(document).ready(function () {
 		load_pagination_initial_item();
 
+		$("#ttbm_date-input_from").datepicker({
+			dateFormat: "MM d, yy", // Custom date format: March 20, 2024
+			minDate: 0, // Disable past dates
+			showAnim: "fadeIn"
+		});
+
+		// Open the datepicker when clicking the icon
+		$("#ttbm_calendar-icon").on("click", function () {
+			$("#ttbm_date-input_from").datepicker("show");
+		});
+		$("#ttbm_date-input_to").datepicker({
+			dateFormat: "MM d, yy", // Custom date format: March 20, 2024
+			minDate: 0, // Disable past dates
+			showAnim: "fadeIn"
+		});
+
+		// Open the datepicker when clicking the icon
+		$("#ttbm_calendar-icon").on("click", function () {
+			$("#ttbm_date-input_to").datepicker("show");
+		});
+
 		$(document).on('click', '.ttbm_item_filter_by_activity', function () {
 			$(this).toggleClass('ttbm_item_activity_active');
 			let activeIds = [];
@@ -13,7 +34,11 @@
 				}
 			});
 			if (activeIds.length === 0) {
-				$('.filter_item').fadeIn('fast'); // Show all items
+				 // Show all items
+				$('.filter_item').each(function () {
+					$(this).fadeIn('fast');
+					$(this).removeClass('search_off').addClass('search_on');
+				});
 			} else {
 				$('.filter_item').each(function () {
 					let activities = $(this).find('input[name="ttbm_item_activities"]').val();
@@ -27,12 +52,16 @@
 							$(this).removeClass('search_on').addClass('search_off');
 						}
 					} else {
+						$('.filter_item').each(function () {
+							$(this).removeClass('search_off').addClass('search_on');
+						});
 						$(this).fadeOut('fast');
 					}
 				});
 			}
 
 			function filter_qty_palace() {
+				alert( 'clicked' );
 				let countSearchOn = $('.search_on').length;
 				let show = ' Showing <strong class="qty_count">' +countSearchOn+ '</strong> of <strong class="total_filter_qty">' +countSearchOn+ '</strong>';
 				$('.filter_short_result').html( show );

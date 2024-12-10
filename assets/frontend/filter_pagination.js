@@ -61,7 +61,6 @@
 			}
 
 			function filter_qty_palace() {
-				alert( 'clicked' );
 				let countSearchOn = $('.search_on').length;
 				let show = ' Showing <strong class="qty_count">' +countSearchOn+ '</strong> of <strong class="total_filter_qty">' +countSearchOn+ '</strong>';
 				$('.filter_short_result').html( show );

@@ -256,7 +256,7 @@
 				'sidebar-filter' => $sidebar_filter,
 				'title-filter' => 'no',
 				'category-filter' => 'no',
-				'organizer-filter' => 'yes',
+				'organizer-filter' => 'no',
 				'location-filter' => 'yes',
 				'country-filter' => 'no',
 				'activity-filter' => 'yes',

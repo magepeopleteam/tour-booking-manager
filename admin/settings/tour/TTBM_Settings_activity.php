@@ -121,6 +121,7 @@
 				<?php
 			}
 			public function load_ttbm_activity_form() {
+				wp_nonce_field('ttbm_add_new_activity_popup', 'ttbm_add_new_activity_popup');
 				?>
 				<label class="flexEqual">
 					<span><?php esc_html_e('Activity Name : ', 'tour-booking-manager'); ?><sup class="textRequired">*</sup></span> <input type="text" name="ttbm_activity_name" class="formControl" required>
@@ -161,6 +162,13 @@
 				}
 			}
 			public function ttbm_new_activity_save() {
+				if (!isset($_POST['_wp_nonce']) || !wp_verify_nonce($_POST['_wp_nonce'], 'ttbm_add_new_activity_popup')) {
+					die();
+				}
+				if (!current_user_can('manage_options')) { // Change this capability as needed
+					wp_send_json_error('You do not have permission to perform this action.');
+					wp_die();
+				}
 				$name = MP_Global_Function::data_sanitize($_POST['activity_name']);
 				$description = MP_Global_Function::data_sanitize($_POST['activity_description']);
 				$icon = MP_Global_Function::data_sanitize($_POST['activity_icon']);

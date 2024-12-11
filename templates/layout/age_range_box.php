@@ -10,9 +10,10 @@
 		?>
 		
 			<div class="item_icon">
-				<i class="far fa-grin"></i>
-				<?php esc_html_e( 'Age Range :', 'tour-booking-manager' ); ?>
+				<i class="fas fa-users"></i>
+				
 				<strong><?php echo esc_html( $age_range ); ?></strong>
+				<?php esc_html_e( '+', 'tour-booking-manager' ); ?>
 			</div>
 
 		<?php

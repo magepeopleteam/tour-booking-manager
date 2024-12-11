@@ -13,7 +13,6 @@
 
 			<div class="item_icon">
 				<i class="fas fa-clock"></i>
-				<?php esc_html_e( 'Duration :', 'tour-booking-manager' ); ?>
 				<strong>
 					<?php
 						if ( $day && $day > 1 ) {

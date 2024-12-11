@@ -55,7 +55,7 @@
                 if ($tour_type != 'hotel') {
                     $count = 0;
                     ?>
-					<div class="flexWrap item_section">
+					<div class="flexWrap item_section justifyBetween">
                         <?php include(TTBM_Function::template_path('layout/duration_box.php')); ?>
                         
                         <?php include(TTBM_Function::template_path('layout/start_price_box.php')); ?>

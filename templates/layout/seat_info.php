@@ -13,8 +13,7 @@
 		?>
 
 		<div class="item_icon ttbm_available_seat_area">
-			<i class="fas fa-restroom"></i>
-			<?php esc_html_e( 'Total Seats :', 'tour-booking-manager' ); ?>
+		<i class="fas fa-couch"></i>
 			<strong><span class="ttbm_available_seat"><?php echo esc_html( $available_seat); ?></span>/<?php echo esc_html(  $total_seat ); ?></strong>
 		</div>
 

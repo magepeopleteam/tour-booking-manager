@@ -11,8 +11,9 @@
 	if ( ( $day || $night ) && $tour_type == 'general' && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_duration', 'on' ) != 'off' ) {
 		?>
 
-			<div class="item_icon">
+			<div class="item_icon" title="<?php esc_html_e( 'Duration', 'tour-booking-manager' ); ?>">
 				<i class="fas fa-clock"></i>
+				
 				<strong>
 					<?php
 						if ( $day && $day > 1 ) {

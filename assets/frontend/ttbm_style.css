@@ -145,6 +145,15 @@ div .item_icon {
   	text-align: center;
 	border: 1px solid #ddd;
 	margin: 5px;
+	cursor: pointer;
+	transition: all .5s;
+}
+div .item_icon:hover{
+	background: var(--color_theme);
+  	color: var(--color_white);
+}
+div .item_icon:hover i{
+	color: var(--color_white);
 }
 div .item_icon i {color: var(--color_theme);}
 

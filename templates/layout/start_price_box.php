@@ -7,9 +7,13 @@
 	$count       = $count ?? 0;
 	if ( $start_price && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) != 'off' ) {
 		?>
-			<div class="item_icon">
-				<i class="fas fa-coins"></i>
-				<?php include( TTBM_Function::template_path( 'layout/start_price.php' ) ); ?>
+			<div class="item_icon" title="<?php esc_html_e( 'Price', 'tour-booking-manager' ); ?>">
+				<i class="far fa-money-bill-alt"></i>
+				<?php
+				if ( $start_price && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) != 'off' ) {
+					?> 
+					<strong><?php echo wc_price($start_price); ?></strong>
+				<?php } ?>
 			</div>
 		<?php
 		$count ++;

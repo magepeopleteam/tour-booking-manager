@@ -9,9 +9,8 @@
 	if ( $start_place && $tour_type == 'general' && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_start_location', 'on' ) != 'off' ) {
 		?>
 		
-			<div class="item_icon">
+			<div class="item_icon" title="<?php esc_html_e( 'Start Location', 'tour-booking-manager' ); ?>">
 				<i class="fas fa-map-marker"></i>
-				<?php esc_html_e( 'Start Location :', 'tour-booking-manager' ); ?>&nbsp;
 				<strong><?php echo esc_html( $start_place ); ?></strong>
 			</div>
 

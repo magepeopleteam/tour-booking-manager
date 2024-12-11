@@ -44,7 +44,7 @@
 					$slider_style      = MP_Global_Function::get_slider_settings( 'slider_style', 'style_1' );
 					?>
 					<div class="superSlider placeholder_area fdColumn">
-						<div class="dFlex mp_slider-wrapper  <?php echo esc_attr( $column_class ); ?>">
+						<div class="dFlex mp_slider-wrapper <?php echo esc_attr( $column_class ); ?>">
 							<?php
 								if ( $showcase_position == 'top' || $showcase_position == 'left' ) {
 									$this->slider_showcase( $image_ids );

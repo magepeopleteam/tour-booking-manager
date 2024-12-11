@@ -9,9 +9,8 @@
 	if ( $max_people && $tour_type == 'general' && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_max_people', 'on' ) != 'off' ) {
 		?>
 
-			<div class="item_icon">
+			<div class="item_icon" title="<?php esc_html_e( 'Max People', 'tour-booking-manager' ); ?>">
 				<i class="fas fa-users"></i>
-				<?php esc_html_e( 'Max People :', 'tour-booking-manager' ); ?>&nbsp;&nbsp;
 				<strong><?php echo esc_html( $max_people ); ?></strong>
 			</div>
 

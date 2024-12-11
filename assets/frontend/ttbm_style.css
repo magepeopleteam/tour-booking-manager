@@ -140,25 +140,20 @@ div.small_box {
 	-webkit-justify-content: center;justify-content: center;
 }
 div .item_icon {
-	padding:5px;
-	width: 49%;
+	padding:5px 20px;
+	border-radius: 50px;
+  	text-align: center;
+	border: 1px solid #ddd;
+	margin: 5px;
+	cursor: pointer;
+	transition: all .2s;
 }
-@media (min-width:640px) {
-	div .item_icon {
-		padding:5px;
-	}
-	div .item_icon:nth-child(1) {
-		width: 23%;
-	}
-	div .item_icon:nth-child(2) {
-		width: 20%;
-	}
-	div .item_icon:nth-child(3) {
-		width: 15%;
-	}
-	div .item_icon:nth-child(4) {
-		width: 25%;
-	}
+div .item_icon:hover{
+	background: var(--color_theme);
+  	color: var(--color_white);
+}
+div .item_icon:hover i{
+	color: var(--color_white);
 }
 div .item_icon i {color: var(--color_theme);}
 

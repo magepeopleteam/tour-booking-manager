@@ -2,7 +2,103 @@
 	"use strict";
 	$(document).ready(function () {
 		load_pagination_initial_item();
+
+		$("#ttbm_date-input_from").datepicker({
+			dateFormat: "MM d, yy", // Custom date format: March 20, 2024
+			minDate: 0, // Disable past dates
+			showAnim: "fadeIn"
+		});
+
+		// Open the datepicker when clicking the icon
+		$("#ttbm_calendar-icon").on("click", function () {
+			$("#ttbm_date-input_from").datepicker("show");
+		});
+		$("#ttbm_date-input_to").datepicker({
+			dateFormat: "MM d, yy", // Custom date format: March 20, 2024
+			minDate: 0, // Disable past dates
+			showAnim: "fadeIn"
+		});
+
+		// Open the datepicker when clicking the icon
+		$("#ttbm_calendar-icon").on("click", function () {
+			$("#ttbm_date-input_to").datepicker("show");
+		});
+
+		$(document).on('click', '.ttbm_item_filter_by_activity', function () {
+			$(this).toggleClass('ttbm_item_activity_active');
+			let activeIds = [];
+			$('.ttbm_item_activity_active').each(function () {
+				let id = $(this).attr('id'); // Get the ID of the current element
+				if (id) {
+					activeIds.push(id);
+				}
+			});
+			if (activeIds.length === 0) {
+				 // Show all items
+				$('.filter_item').each(function () {
+					$(this).fadeIn('fast');
+					$(this).removeClass('search_off').addClass('search_on');
+				});
+			} else {
+				$('.filter_item').each(function () {
+					let activities = $(this).find('input[name="ttbm_item_activities"]').val();
+					if (activities) {
+						let activityArray = activities.split(',');
+						if (activeIds.some(id => activityArray.includes(id))) {
+							$(this).fadeIn('fast');
+							$(this).removeClass('search_off').addClass('search_on');
+						} else {
+							$(this).fadeOut('fast');
+							$(this).removeClass('search_on').addClass('search_off');
+						}
+					} else {
+						$('.filter_item').each(function () {
+							$(this).removeClass('search_off').addClass('search_on');
+						});
+						$(this).fadeOut('fast');
+					}
+				});
+			}
+
+			function filter_qty_palace() {
+				let countSearchOn = $('.search_on').length;
+				let show = ' Showing <strong class="qty_count">' +countSearchOn+ '</strong> of <strong class="total_filter_qty">' +countSearchOn+ '</strong>';
+				$('.filter_short_result').html( show );
+			}
+			filter_qty_palace();
+
+			// $('.filter_short_result').text(`Visible items: ${countSearchOn}`);
+		});
+
+		const holder = $('.ttbm_all_item_activities_holder');
+		const parent = holder.parent();
+		const scrollLeftBtn = $('<button class="scroll-left">&lt;</button>').appendTo(parent);
+		const scrollRightBtn = $('<button class="scroll-right">&gt;</button>').appendTo(parent);
+		const scrollAmount = 150;
+		function updateArrows() {
+			const totalItemsWidth = holder.find('.ttbm_item_activity').toArray().reduce((total, item) => {
+				return total + $(item).outerWidth(true); // Include margins
+			}, 0);
+			const holderWidth = parent.width(); // Parent width
+			const maxScroll = totalItemsWidth - holderWidth;
+			const currentScroll = holder.scrollLeft();
+			scrollLeftBtn.toggle(currentScroll > 0); // Show left arrow if not at the start
+			scrollRightBtn.toggle(totalItemsWidth > holderWidth && currentScroll < maxScroll); // Show right arrow if overflow exists and not at the end
+		}
+		scrollLeftBtn.on('click', function () {
+			holder.scrollLeft(holder.scrollLeft() - scrollAmount);
+			setTimeout(updateArrows, 50); // Delay to allow scrolling to complete
+		});
+		scrollRightBtn.on('click', function () {
+			holder.scrollLeft(holder.scrollLeft() + scrollAmount);
+			setTimeout(updateArrows, 50); // Delay to allow scrolling to complete
+		});
+		holder.on('scroll', updateArrows);
+		updateArrows();
+		$(window).on('resize', updateArrows);
+
 	});
+
 	$(document).on('click', '.ttbm_filter_area .ttbm_grid_view', function () {
 		let parent = $(this).closest('.ttbm_filter_area');
 		let all_item = parent.find('.all_filter_item');

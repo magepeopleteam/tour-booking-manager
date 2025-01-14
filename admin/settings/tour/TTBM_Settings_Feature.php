@@ -214,6 +214,9 @@
 			}
 			/************************/
 			public function ttbm_new_feature_save() {
+				if (!current_user_can('manage_options')) {
+					wp_send_json_error('You do not have sufficient permissions to perform this action.');
+				}
 				if (!isset($_POST['_wp_nonce']) || !wp_verify_nonce($_POST['_wp_nonce'], 'ttbm_add_new_feature_popup')) {
 					die();
 				}

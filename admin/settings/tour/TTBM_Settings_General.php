@@ -348,6 +348,7 @@
 				<?php
 			}
 			public function load_ttbm_location_form() {
+				wp_nonce_field('ttbm_add_new_location_popup', 'ttbm_add_new_location_popup');
 				$all_countries = ttbm_get_coutnry_arr();
 				?>
 				<label class="flexEqual">
@@ -458,6 +459,12 @@
 				}
 			}
 			public function ttbm_new_location_save() {
+				if (!current_user_can('manage_options')) {
+					wp_send_json_error('You do not have sufficient permissions to perform this action.');
+				}
+				if (!isset($_POST['_wp_nonce']) || !wp_verify_nonce($_POST['_wp_nonce'], 'ttbm_add_new_location_popup')) {
+					die();
+				}
 				$name = MP_Global_Function::data_sanitize($_POST['name']);
 				$description = MP_Global_Function::data_sanitize($_POST['description']);
 				$address = MP_Global_Function::data_sanitize($_POST['address']);

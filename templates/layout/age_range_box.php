@@ -9,10 +9,10 @@
 	if ( $age_range && $tour_type == 'general' && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_min_age', 'on' ) != 'off' ) {
 		?>
 		
-			<div class="item_icon">
-				<i class="far fa-grin"></i>
-				<?php esc_html_e( 'Age Range :', 'tour-booking-manager' ); ?>
+			<div class="item_icon" title="<?php esc_html_e( 'Age Limit', 'tour-booking-manager' ); ?>">
+				<i class="fas fa-users"></i>
 				<strong><?php echo esc_html( $age_range ); ?></strong>
+				<?php esc_html_e( '+', 'tour-booking-manager' ); ?>
 			</div>
 
 		<?php

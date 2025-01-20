@@ -277,7 +277,7 @@
 		let pagination_page = parseInt($(this).attr('data-load-more'));
 		let parent = $(this).closest('.ttbm_filter_area');
 		let item_class = get_item_class(parent);
-		if (parent.find(item_class + ':hidden').size() > 0) {
+		if (parent.find(item_class + ':hidden').length > 0) {
 			pagination_page = pagination_page + 1;
 		} else {
 			pagination_page = 0;

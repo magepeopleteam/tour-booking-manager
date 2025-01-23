@@ -2155,7 +2155,7 @@ div.mpStyle .customRadioLabel input[type="radio"] ~ .formControl,
     content: "";
     position: absolute;
     left: 0;
-    top: 0;
+    top: -11px !important;
     height: 18px;
     width: 18px;
     background-color: var(--color_theme_alter);
@@ -2204,7 +2204,7 @@ div.mpStyle .selectCheckbox input:checked ~ .customCheckbox::after {
     content: "";
     position: absolute;
     left: 3.5px;
-    top: 5px;
+    top: -5px !important;
     height: 6px;
     width: 10px;
     border: 2px solid var(--color_theme_alter);
@@ -2527,10 +2527,12 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		white-space: nowrap;
 		background-color: var(--color_light);
 		color: var(--d_color);
+		border: 1px solid #8080804a;
 	}
 	.mpStyle table tbody th {
 		vertical-align: top;
 		font-weight: normal;
+		border: 1px solid #8080804a !important;
 	}
 	.mpStyle table td {
 		padding: var(--dmp_xs);
@@ -2539,6 +2541,7 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		line-height: 1.25;
 		color: var(--d_color);
 		vertical-align: middle;
+		border: 1px solid #8080804a !important;
 	}
 	/**************/
 
@@ -3589,8 +3592,10 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 	}
 	div.mpStyle .bgTheme,
 	div.mpStyle [class*="_bgTheme"] {
-		background-color: var(--color_theme);
-		color: var(--color_theme_alter);
+		background-color: #2b72b94f !important;
+		color: #2667d6 !important;
+		text-align: left !important;
+		padding: 3px 7px !important;
 	}
 	div.mpStyle [class*="_bTheme"],
 	.bTheme {

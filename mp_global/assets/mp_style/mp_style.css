@@ -3592,10 +3592,10 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 	}
 	div.mpStyle .bgTheme,
 	div.mpStyle [class*="_bgTheme"] {
-		background-color: #2b72b94f;
-		color: #2667d6;
-		text-align: left;
-		padding: 3px 7px;
+		background-color: #2b72b94f !important;
+		color: #2667d6 !important;
+		text-align: left !important;
+		padding: 3px 7px !important;
 	}
 	div.mpStyle [class*="_bTheme"],
 	.bTheme {

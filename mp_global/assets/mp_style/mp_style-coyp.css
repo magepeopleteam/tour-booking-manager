@@ -3544,8 +3544,10 @@
 	}
 	div.mpStyle .bgTheme,
 	div.mpStyle [class*="_bgTheme"] {
-		background-color: var(--color_theme);
-		color: var(--color_theme_alter);
+		background-color: #2b72b94f !important;
+		color: #2667d6 !important;
+		text-align: left !important; ;
+		padding: 3px 7px !important;
 	}
 	div.mpStyle [class*="_bTheme"],
 	.bTheme {

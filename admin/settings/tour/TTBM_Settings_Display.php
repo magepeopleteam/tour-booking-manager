@@ -7,7 +7,6 @@
 			public function __construct() {
 				add_action( 'add_ttbm_settings_tab_name', [ $this, 'add_tab' ], 90 );
 				add_action('add_ttbm_settings_tab_content', [$this, 'display_settings']);
-				add_action('ttbm_settings_save', [$this, 'save_display']);
 			}
 			public function add_tab() {
 				?>
@@ -22,6 +21,7 @@
 				$hotel_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_hotels', 'on') == 'off' ? '' : 'checked';
 				$sidebar_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_sidebar', 'off') == 'off' ? '' : 'checked';
 				$duration_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_duration', 'on') == 'off' ? '' : 'checked';
+				$template_name = MP_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
 				?>
 				<div class="tabsItem ttbm_display_settings" data-tabs="#ttbm_display_settings">
 					<h2><?php esc_html_e('Display Settings', 'tour-booking-manager'); ?></h2>
@@ -114,6 +114,18 @@
 							<?php MP_Custom_Layout::switch_button('ttbm_display_duration', $duration_checked); ?>
 						</label> 
                     </section>
+                    <section>
+                        <label class="label">
+                            <div>
+                                <p><?php esc_html_e('Template', 'tour-booking-manager'); ?></p>
+                            </div>
+                            <select class="" name="ttbm_theme_file">
+                                <option disabled selected><?php esc_html_e('Please select ...', 'tour-booking-manager'); ?></option>
+                                <option value="default.php" <?php echo esc_attr($template_name == 'default.php' ? 'selected' : ''); ?>><?php esc_html_e('Default Theme', 'tour-booking-manager'); ?></option>
+                                <option value="static.php" <?php echo esc_attr($template_name == 'viator.php' ? 'selected' : ''); ?>><?php esc_html_e('Viator Theme', 'tour-booking-manager'); ?></option>
+                            </select>
+                        </label>
+                    </section>
 						<?php
        						 $this->rank_tour($tour_id); 
        					 ?>
@@ -144,28 +156,6 @@
 					</label>
 				</section>
 				<?php
-			}
-			public function save_display($tour_id) {
-				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
-					$content_title_style = MP_Global_Function::get_submit_info('ttbm_section_title_style') ?: 'style_1';
-					$ticketing_system = MP_Global_Function::get_submit_info('ttbm_ticketing_system', 'availability_section');
-					$seat_info = MP_Global_Function::get_submit_info('ttbm_display_seat_details') ? 'on' : 'off';
-					$sidebar = MP_Global_Function::get_submit_info('ttbm_display_sidebar') ? 'on' : 'off';
-					$tour_type = MP_Global_Function::get_submit_info('ttbm_display_tour_type') ? 'on' : 'off';
-					$hotels = MP_Global_Function::get_submit_info('ttbm_display_hotels') ? 'on' : 'off';
-					$duration = MP_Global_Function::get_submit_info('ttbm_display_duration') ? 'on' : 'off';
-					$ttbm_display_rank = MP_Global_Function::get_submit_info('ttbm_display_order_tour') ? 'on' : 'off';
-					$ttbm_travel_rank_tour = MP_Global_Function::get_submit_info('ttbm_travel_rank_tour');
-					update_post_meta($tour_id, 'ttbm_travel_rank_tour', $ttbm_travel_rank_tour);
-					update_post_meta($tour_id, 'ttbm_display_order_tour', $ttbm_display_rank);
-					update_post_meta($tour_id, 'ttbm_section_title_style', $content_title_style);
-					update_post_meta($tour_id, 'ttbm_ticketing_system', $ticketing_system);
-					update_post_meta($tour_id, 'ttbm_display_seat_details', $seat_info);
-					update_post_meta($tour_id, 'ttbm_display_sidebar', $sidebar);
-					update_post_meta($tour_id, 'ttbm_display_tour_type', $tour_type);
-					update_post_meta($tour_id, 'ttbm_display_hotels', $hotels);
-					update_post_meta($tour_id, 'ttbm_display_duration', $duration);
-				}
 			}
 		}
 		new TTBM_Settings_Display();

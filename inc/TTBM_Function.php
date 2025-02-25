@@ -701,9 +701,9 @@
 				return MP_Global_Function::data_sanitize($data);
 			}
 			public static function data_sanitize($data) {
-				$data = maybe_unserialize($data);
-				if (is_string($data)) {
-					$data = maybe_unserialize($data);
+				$data = @unserialize( $data, ['allowed_classes' => false] );
+				if (is_string($data) || is_serialized( $data )) {
+					$data = @unserialize( $data, ['allowed_classes' => false] );
 					if (is_array($data)) {
 						$data = MP_Global_Function::data_sanitize($data);
 					} else {

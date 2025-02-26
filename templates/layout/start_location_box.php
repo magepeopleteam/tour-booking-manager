@@ -11,7 +11,7 @@
 		
 			<div class="item_icon" title="<?php esc_html_e( 'Start Location', 'tour-booking-manager' ); ?>">
 				<i class="fas fa-map-marker"></i>
-				<strong><?php echo esc_html( $start_place ); ?></strong>
+				<?php echo esc_html( $start_place ); ?>
 			</div>
 
 		<?php

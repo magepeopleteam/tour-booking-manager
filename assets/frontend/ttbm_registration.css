@@ -17,7 +17,7 @@ div.ttbm_default_widget .ttbm_title_style_2 ~ .ttbm_widget_content.ttbm_day_wise
 }
 
 div.ttbm_default_widget .ttbm_title_style_3 {border-bottom: 2px solid var(--color_theme_77);}
-div.ttbm_default_widget .ttbm_title_style_2{border: 1px solid #ededed;background-color: #f5f5f5;padding: 12px var(--dmp);font-weight: bold; border-radius: var(--dbr_d); margin-bottom: var(--dmp);}
+div.ttbm_default_widget .ttbm_title_style_2{border: 1px solid var(--color_theme);background-color: rgba(var(--color_theme_rbg),0.1);padding: 12px var(--dmp);font-weight: bold; border-radius: var(--dbr_d); margin-bottom: var(--dmp);}
 
 /*****************List*********************************/
 .ttbm_widget_content ul li:not(.mp_wp_editor li) {width: 100%;}

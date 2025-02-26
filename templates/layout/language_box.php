@@ -16,7 +16,7 @@
 		?>
         <div class="item_icon" title="<?php echo __('Language','tour-booking-manager'); ?>">
             <i class="fas fa-language"></i>
-            <strong><?php echo esc_html( $language ); ?></strong>
+            <?php echo esc_html( $language ); ?>
         </div>
 	<?php
 	}

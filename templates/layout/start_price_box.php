@@ -12,7 +12,7 @@
 				<?php
 				if ( $start_price && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) != 'off' ) {
 					?> 
-					<strong><?php echo wc_price($start_price); ?></strong>
+					<?php echo wc_price($start_price); ?>
 				<?php } ?>
 			</div>
 		<?php

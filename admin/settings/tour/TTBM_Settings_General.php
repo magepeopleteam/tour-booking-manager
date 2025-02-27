@@ -42,9 +42,9 @@
 						</div>
 					</div>
 					<?php
-
-						$this->short_description($tour_id);
 						$this->starting_place($tour_id);
+						$this->short_description($tour_id);
+						
 						$this->location($tour_id);
 						$this->full_location($tour_id);
 					?>
@@ -59,7 +59,7 @@
 				$placeholder='';
 				?>
 				<section>
-					<label class="label">
+					<div class="label">
 						<div class="label-inner">
 							<p><?php esc_html_e('Stay Night', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Turn on/off stay night settings.', 'tour-booking-manager'); ?></span></i></p>
 						</div>	
@@ -67,7 +67,7 @@
 							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
 							<input type="number" data-collapse="#<?php echo esc_attr($display_name); ?>" min="0" class="ms-2 <?php echo esc_attr($active); ?>" name="ttbm_travel_duration_night" value="<?php echo MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_night'); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
 						</div>
-					</label>
+					</div>
 				</section>
 				<?php
 			}
@@ -105,7 +105,7 @@
 				$max_people_status_active = ($max_people_field_status == 'off') ? '' : 'mActive';
 				?>
 				<section>
-					<label class="label">
+					<div class="label">
 						<div class="label-inner">
 							<p><?php esc_html_e('Max People', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('max_people'); ?></span></i></p>
 						</div>
@@ -113,7 +113,7 @@
 							<?php MP_Custom_Layout::switch_button($max_people_status_field_name, $max_people_status_checked); ?>
 							<input type="number" min="0" data-collapse="#<?php echo esc_attr($max_people_status_field_name); ?>" class="ms-2 rounded <?php echo esc_attr($max_people_status_active); ?>" name="<?php echo esc_attr($max_people_field_name); ?>" value="<?php echo esc_attr($max_people_field_value); ?>" placeholder="<?php echo esc_attr($max_people_placeholder); ?>"/>
 						</div>
-					</label>
+					</div>
 				</section>
 				<?php
 			}
@@ -129,7 +129,7 @@
 				?>
 				
 				<section>
-					<label class="label">
+					<div class="label">
 						<div class="label-inner">
 							<p><?php esc_html_e('Start Price', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('start_price'); ?></span></i> </p>
 							
@@ -138,7 +138,7 @@
 							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
 							<input type="number"  min="0" data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
 						</div>
-					</label>
+					</div>
 				</section>
 			<?php
 			}
@@ -152,16 +152,8 @@
 				$status_checked = $status == 'off' ? '' : 'checked';
 				$status_active = $status == 'off' ? '' : 'mActive';
 				?>
-				<section class="bg-light" style="margin-top: 20px;">
-					<label class="label">
-						<div class="label-inner">
-							<p><?php _e('Location Settings','tour-booking-manager'); ?></p>
-							<span class="text"><?php _e('Here you can set tour location, place, map etc.','tour-booking-manager'); ?></span>
-						</div>
-					</label>
-				</section>
 				<section>
-					<label class="label">
+					<div class="label">
 						<div class="label-inner">
 							<p><?php esc_html_e('Start Place', 'tour-booking-manager'); ?></p>
 							<span class="text"><?php TTBM_Settings::des_p('start_place'); ?></span>
@@ -170,7 +162,7 @@
 							<?php MP_Custom_Layout::switch_button($status_field_name, $status_checked); ?>
 							<input type="text" data-collapse="#<?php echo esc_attr($status_field_name); ?>" class="ms-2 rounded <?php echo esc_attr($status_active); ?>" name="<?php echo esc_attr($location_field_name); ?>" value="<?php echo esc_attr($location_field_value); ?>" placeholder="<?php echo esc_attr($location_placeholder); ?>"/>
 						</div>
-					</label>
+					</div>
 				</section>
 				<?php
 			}
@@ -186,7 +178,7 @@
 				?>
 
 				<section>
-					<label class="label">
+					<div class="label">
 						<div class="label-inner">
 							<p><?php esc_html_e('Age Range', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('age_range'); ?></span></i></p>
 						</div>
@@ -194,7 +186,7 @@
 							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
 							<input type="text" data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
 						</div>
-					</label>
+					</div>
 				</section>
 
 			<?php
@@ -211,7 +203,7 @@
 				?>
 
 				<section>
-					<label class="label">
+					<div class="label">
 						<div class="label-inner">
 							<p><?php esc_html_e('Tour Language', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Easily select your preferred language to enhance your travel experience.', 'tour-booking-manager'); ?></span></i></p>
 						</div>
@@ -224,7 +216,7 @@
 								<?php endforeach; ?>
 							</select>
 						</div>
-					</label>
+					</div>
                 </section>
 				<?php
 			}
@@ -239,7 +231,7 @@
 				?>
 
 				<section>
-					<label class="label">
+					<div class="label">
 						<div class="label-inner">
 							<p><?php esc_html_e('Short Description', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('short_des'); ?></span></i></p>
 						</div>
@@ -247,35 +239,100 @@
 							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
 							<textarea data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" cols="72" rows="2" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
 						</div>
-					</label>
+					</div>
                 </section>
 				<?php
 			}
 
 			
 			public function full_location($tour_id) {
-				$display_name = 'ttbm_display_map';
-				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
-				$value_name = 'ttbm_full_location_name';
-				$value = MP_Global_Function::get_post_info($tour_id, $value_name);
-				$placeholder = esc_html__('Please type Full address location...', 'tour-booking-manager');
-				$checked = $display == 'off' ? '' : 'checked';
-				$active = $display == 'off' ? '' : 'mActive';
+				$location_name = get_post_meta($tour_id, 'ttbm_full_location_name', true);
+				$location_name = $location_name?$location_name:'Dhaka';
+				$latitude = get_post_meta($tour_id, 'ttbm_map_latitude', true);
+				$latitude = $latitude?$latitude:23.804093;
+				$longitude = get_post_meta($tour_id, 'ttbm_map_longitude', true);
+				$longitude = $longitude?$longitude:90.4152376;
+				
 				?>
 				
 
 				<section>
-					<label class="label">
-						<div class="label-inner">
-							<p><?php esc_html_e('Full Location for Map ', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php TTBM_Settings::des_p('full_location'); ?></span>
-						</div>
-						<div class="_dFlex_alignCenter_justifyBetween">
-							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
-							<textarea data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" cols="90" rows="2" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
-						</div>
-					</label>
+					<div class="label">
+						<label>
+							<p><?php esc_html_e('Location ', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i></p>
+							<input id="full_location" name="ttbm_full_location_name" placeholder="<?php esc_html_e('Please type location...', 'tour-booking-manager'); ?>" value="<?php echo esc_attr($location_name); ?>">
+						</label>
+						<label>
+							<p><?php esc_html_e('Latitude ', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i></p>
+							<input type="text" id="map_latitude" name="ttbm_map_latitude" value="<?php echo esc_attr($latitude); ?>">
+						</label>
+						<label>
+							<p><?php esc_html_e('Longitude ', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i></p>
+							<input type="text" id="map_longitude" name="ttbm_map_longitude" value="<?php echo esc_attr($longitude); ?>">
+						</label>
+					</div>
 				</section>
+
+				<section>
+					<div id="map_canvas" style="width: 100%; height: 300px; margin-top: 10px;"></div>
+				</section>
+
+				<script>
+					let map, marker, autocomplete;
+
+					function initMap() {
+						// Default values from the form input fields
+						let lati = parseFloat(document.getElementById('map_latitude').value);
+						let longdi = parseFloat(document.getElementById('map_longitude').value);
+
+						// Initialize the map centered on the latitude and longitude
+						map = new google.maps.Map(document.getElementById('map_canvas'), {
+							center: { lat: lati, lng: longdi },
+							zoom: 12
+						});
+
+						// Initialize the marker
+						marker = new google.maps.Marker({
+							position: { lat: lati, lng: longdi },
+							map: map,
+							title: "Selected Location",
+							draggable: true
+						});
+
+						// Update latitude and longitude when the marker is dragged
+						marker.addListener("dragend", function (event) {
+							document.getElementById('map_latitude').value = event.latLng.lat();
+							document.getElementById('map_longitude').value = event.latLng.lng();
+						});
+
+						// Initialize Autocomplete for the address input field
+						autocomplete = new google.maps.places.Autocomplete(document.getElementById("full_location"));
+						autocomplete.addListener("place_changed", onPlaceChanged);
+					}
+
+					function onPlaceChanged() {
+						// Get the selected place from the autocomplete
+						let place = autocomplete.getPlace();
+
+						if (!place.geometry) {
+							console.error("No details available for the selected place.");
+							return;
+						}
+
+						// Get the location of the selected place
+						let location = place.geometry.location;
+						let lat = location.lat();
+						let lng = location.lng();
+
+						// Update the map center, marker position, and input fields
+						map.setCenter(location);
+						marker.setPosition(location);
+						document.getElementById("map_latitude").value = lat;
+						document.getElementById("map_longitude").value = lng;
+					}
+				</script>
+
+				<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPBoBHrluZc6Mi7Bt0XREbNuek2_lU17g&libraries=places&callback=initMap" async defer></script>
 				<?php
 			}
 			
@@ -287,8 +344,16 @@
 				$checked = $display == 'off' ? '' : 'checked';
 
 				?>
-				<section>
+				<section class="bg-light" style="margin-top: 20px;">
 					<label class="label">
+						<div class="label-inner">
+							<p><?php _e('Location Settings','tour-booking-manager'); ?></p>
+							<span class="text"><?php _e('Here you can set tour location, place, map etc.','tour-booking-manager'); ?></span>
+						</div>
+					</label>
+				</section>
+				<section>
+					<div class="label">
 						<div class="label-inner">
 							<p><?php esc_html_e('Tour Location', 'tour-booking-manager'); ?> </p>
 							<span class="text"><?php TTBM_Settings::des_p('location'); ?></span>
@@ -298,7 +363,7 @@
 							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
 							<?php self::location_select($tour_id); ?>
 						</div>
-					</label>
+					</div>
 				</section>
 				<?php
 				self::add_new_location_popup();
@@ -442,6 +507,11 @@
 					$ttbm_full_location_name = MP_Global_Function::get_submit_info('ttbm_full_location_name');
 					update_post_meta($tour_id, 'ttbm_display_map', $ttbm_display_map);
 					update_post_meta($tour_id, 'ttbm_full_location_name', $ttbm_full_location_name);
+					/***************/
+					$map_latitude = MP_Global_Function::get_submit_info('ttbm_map_latitude');
+					$map_longitude = MP_Global_Function::get_submit_info('ttbm_map_longitude');
+					update_post_meta($tour_id, 'ttbm_map_latitude', $map_latitude);
+					update_post_meta($tour_id, 'ttbm_map_longitude', $map_longitude);
 					/***************/
 					$visible_description = MP_Global_Function::get_submit_info('ttbm_display_description') ? 'on' : 'off';
 					$description = MP_Global_Function::get_submit_info('ttbm_short_description');

@@ -917,7 +917,7 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   margin-top: -1px;
   width: 100%;
 }
-#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label {
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label, .travel-list .ttbm_settings .tabsContent .tabsItem section .label {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -925,23 +925,23 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   cursor: pointer;
 }
 @media (max-width: 1200px) {
-  #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label {
+  #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label, .travel-list .ttbm_settings .tabsContent .tabsItem section .label {
     flex-direction: column;
   }
 }
-#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label .label-inner, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label .label-inner {
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label .label-inner, .travel-list .ttbm_settings .tabsContent .tabsItem section .label .label-inner {
   padding-right: 20px;
 }
-#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label p, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label p {
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label p, .travel-list .ttbm_settings .tabsContent .tabsItem section .label p {
   font-size: var(--fs);
   font-weight: bold;
   margin-bottom: 5px;
   color: var(--mpl-secondary);
 }
-#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label span, #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label a, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label span, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label a {
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label span, #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label a, .travel-list .ttbm_settings .tabsContent .tabsItem section .label span, .travel-list .ttbm_settings .tabsContent .tabsItem section .label a {
   line-height: 20px;
 }
-#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section label.label .text, .travel-list .ttbm_settings .tabsContent .tabsItem section label.label .text {
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label .text, .travel-list .ttbm_settings .tabsContent .tabsItem section .label .text {
   color: #6B7280;
   font-weight: normal;
   line-height: 20px;

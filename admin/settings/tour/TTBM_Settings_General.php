@@ -19,15 +19,31 @@
 			public function general_settings($tour_id) {
 				?>
 				<div class="tabsItem ttbm_settings_general contentTab" data-tabs="#ttbm_general_info">
+					<h2><?php esc_html_e('General Information Settings', 'tour-booking-manager'); ?></h2>
+					<p><?php TTBM_Settings::des_p('general_settings_description'); ?></p>
+					<section class="bg-light">
+						<label class="label">
+							<div class="label-inner">
+								<p><?php TTBM_Settings::des_p('tour_general_settings'); ?></p>
+								<span class="text"><?php TTBM_Settings::des_p('tour_settings_des'); ?></span>
+							</div>
+						</label>
+					</section>
+					<div class="dFlex">
+						<div class="col-left">
+							<?php $this->tour_duration($tour_id); ?>
+							<?php $this->starting_price($tour_id); ?>
+							<?php $this->age_range($tour_id); ?>
+						</div>
+						<div class="col-right">
+							<?php $this->stay_night($tour_id); ?>
+							<?php $this->max_people($tour_id); ?>
+							<?php $this->tour_language($tour_id); ?>
+						</div>
+					</div>
 					<?php
 
-						$this->tour_duration($tour_id);
-						$this->stay_night($tour_id);
-						$this->starting_price($tour_id);
-						$this->max_people($tour_id);
-						$this->age_range($tour_id);
 						$this->short_description($tour_id);
-						$this->tour_language($tour_id);
 						$this->starting_place($tour_id);
 						$this->location($tour_id);
 						$this->full_location($tour_id);
@@ -45,8 +61,7 @@
 				<section>
 					<label class="label">
 						<div class="label-inner">
-							<p><?php esc_html_e('Stay Night', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php esc_html_e('Turn on/off stay night settings.', 'tour-booking-manager'); ?></span>
+							<p><?php esc_html_e('Stay Night', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Turn on/off stay night settings.', 'tour-booking-manager'); ?></span></i></p>
 						</div>	
 						<div class="_dFlex_alignCenter_justfyBetween">
 							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
@@ -62,24 +77,11 @@
 				$value = MP_Global_Function::get_post_info($tour_id, $value_name);
 				$duration_type = MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_type', 'day');
 				$placeholder = esc_html__('Ex: 3', 'tour-booking-manager');
-				// ===========night field===============
-				
-				?>
-				<h2><?php esc_html_e('General Information Settings', 'tour-booking-manager'); ?></h2>
-				<p><?php TTBM_Settings::des_p('general_settings_description'); ?></p>
-				<section class="bg-light">
-					<label class="label">
-						<div class="label-inner">
-							<p><?php TTBM_Settings::des_p('tour_general_settings'); ?></p>
-							<span class="text"><?php TTBM_Settings::des_p('tour_settings_des'); ?></span>
-						</div>
-					</label>
-				</section>
+			?>
 				<section>
 					<label class="label">
 						<div class="label-inner">
-							<p><?php esc_html_e('Tour Duration', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php TTBM_Settings::des_p('duration'); ?></span>
+							<p><?php esc_html_e('Duration', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('duration'); ?></span></i></p>
 						</div>
 						<div class="dFlex">
 							<input class="small rounded text-center" min="0.1" step="0.1" type="number" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
@@ -105,8 +107,7 @@
 				<section>
 					<label class="label">
 						<div class="label-inner">
-							<p><?php esc_html_e('Max People Allow', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('max_people'); ?></span></i></p>
-							<span class="text"><?php TTBM_Settings::des_p('max_people'); ?></span>
+							<p><?php esc_html_e('Max People', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('max_people'); ?></span></i></p>
 						</div>
 						<div class="_dFlex_alignCenter_justifyBetween">
 							<?php MP_Custom_Layout::switch_button($max_people_status_field_name, $max_people_status_checked); ?>
@@ -130,8 +131,8 @@
 				<section>
 					<label class="label">
 						<div class="label-inner">
-							<p><?php esc_html_e('Tour Start Price', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('start_price'); ?></span></i> </p>
-							<span class="text"><?php TTBM_Settings::des_p('start_price'); ?></span>
+							<p><?php esc_html_e('Start Price', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('start_price'); ?></span></i> </p>
+							
 						</div>
 						<div class="_dFlex_alignCenter_justifyBetween">
 							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
@@ -187,8 +188,7 @@
 				<section>
 					<label class="label">
 						<div class="label-inner">
-							<p><?php esc_html_e('Age Range', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php TTBM_Settings::des_p('age_range'); ?></span>
+							<p><?php esc_html_e('Age Range', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('age_range'); ?></span></i></p>
 						</div>
 						<div class="_dFlex_alignCenter_justifyBetween">
 							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
@@ -213,8 +213,7 @@
 				<section>
 					<label class="label">
 						<div class="label-inner">
-							<p><?php esc_html_e('Tour Language', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php esc_html_e('Easily select your preferred language to enhance your travel experience.', 'tour-booking-manager'); ?></span>
+							<p><?php esc_html_e('Tour Language', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Easily select your preferred language to enhance your travel experience.', 'tour-booking-manager'); ?></span></i></p>
 						</div>
 						<div class="_dFlex_alignCenter_justifyBetween">
 							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
@@ -242,12 +241,11 @@
 				<section>
 					<label class="label">
 						<div class="label-inner">
-							<p><?php esc_html_e('Short Description', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php TTBM_Settings::des_p('short_des'); ?></span>
+							<p><?php esc_html_e('Short Description', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('short_des'); ?></span></i></p>
 						</div>
 						<div class="_dFlex_alignCenter_justifyBetween">
 							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
-							<textarea data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" cols="90" rows="2" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
+							<textarea data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" cols="72" rows="2" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
 						</div>
 					</label>
                 </section>

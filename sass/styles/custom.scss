@@ -116,7 +116,12 @@
 							line-height: 20px;
 						}
 					}
+					textarea{
+						width: 100%;
+					}
 				}
+				.col-left{width: 50%;}
+				.col-right{width: 50%;}
 			}
 
 			th[scope="row"] {

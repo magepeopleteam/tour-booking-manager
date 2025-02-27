@@ -41,6 +41,12 @@
 			public function global_enqueue() {
 				$this->registration_enqueue();
 				do_action('ttbm_common_script');
+				$pro_key = TTBM_Function::get_general_settings('ttbm_gmap_api_key');
+				$free_key = get_option('ttbm_google_map_settings');
+				$api_key  = $free_key?$free_key['ttbm_gmap_api_key']:$pro_key;
+				if (!empty($api_key)) {
+					wp_enqueue_script( 'google-maps-api', 'https://maps.googleapis.com/maps/api/js?key=' . esc_attr($api_key) . '&libraries=places&callback=initMap', [], null,true);
+				}
 			}
 			public function frontend_script() {
 				$this->global_enqueue();
@@ -51,6 +57,7 @@
 			}
 			public function admin_script() {
 				$this->global_enqueue();
+				
 				wp_enqueue_script('magepeople-options-framework', TTBM_PLUGIN_URL . '/assets/helper/js/mage-options-framework.js', array('jquery'), null);
 				wp_localize_script('PickpluginsOptionsFramework', 'PickpluginsOptionsFramework_ajax', array('PickpluginsOptionsFramework_ajaxurl' => admin_url('admin-ajax.php')));
 				//wp_enqueue_script('form-field-dependency', TTBM_PLUGIN_URL . '/assets/helper/js/form-field-dependency.js', array('jquery'), null);

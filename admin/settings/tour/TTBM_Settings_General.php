@@ -247,11 +247,11 @@
 			
 			public function full_location($tour_id) {
 				$location_name = get_post_meta($tour_id, 'ttbm_full_location_name', true);
-				$location_name = $location_name?$location_name:'Dhaka';
+				$location_name = $location_name?$location_name:'New York, NY, USA';
 				$latitude = get_post_meta($tour_id, 'ttbm_map_latitude', true);
-				$latitude = $latitude?$latitude:23.804093;
+				$latitude = $latitude?$latitude:40.7127753;
 				$longitude = get_post_meta($tour_id, 'ttbm_map_longitude', true);
-				$longitude = $longitude?$longitude:90.4152376;
+				$longitude = $longitude?$longitude:-74.0059728;
 				
 				?>
 				
@@ -276,19 +276,21 @@
 				<section>
 					<div id="map_canvas" style="width: 100%; height: 300px; margin-top: 10px;"></div>
 				</section>
-
 				<script>
-					let map, marker, autocomplete;
+					let map, marker, autocomplete, geocoder;
 
 					function initMap() {
-						// Default values from the form input fields
 						let lati = parseFloat(document.getElementById('map_latitude').value);
 						let longdi = parseFloat(document.getElementById('map_longitude').value);
 
-						// Initialize the map centered on the latitude and longitude
+						// Initialize the map
 						map = new google.maps.Map(document.getElementById('map_canvas'), {
 							center: { lat: lati, lng: longdi },
-							zoom: 12
+							zoom: 12,
+							zoomControl: true,
+							streetViewControl: false,
+							mapTypeControl: false,
+							scaleControl: true
 						});
 
 						// Initialize the marker
@@ -299,19 +301,68 @@
 							draggable: true
 						});
 
+						// Initialize the geocoder for reverse geocoding
+						geocoder = new google.maps.Geocoder();
+
 						// Update latitude and longitude when the marker is dragged
 						marker.addListener("dragend", function (event) {
 							document.getElementById('map_latitude').value = event.latLng.lat();
 							document.getElementById('map_longitude').value = event.latLng.lng();
+							reverseGeocode(event.latLng); // Update location name when dragging the marker
 						});
 
 						// Initialize Autocomplete for the address input field
 						autocomplete = new google.maps.places.Autocomplete(document.getElementById("full_location"));
 						autocomplete.addListener("place_changed", onPlaceChanged);
+
+						// Add a click event listener to the map
+						map.addListener("click", function(event) {
+							let clickedLatLng = event.latLng;
+
+							// Move the marker to the clicked position
+							marker.setPosition(clickedLatLng);
+
+							// Update the latitude and longitude input fields
+							document.getElementById('map_latitude').value = clickedLatLng.lat();
+							document.getElementById('map_longitude').value = clickedLatLng.lng();
+
+							// Reverse geocode the clicked position to get the address
+							reverseGeocode(clickedLatLng);
+						});
+					}
+
+					function enableEditing() {
+						// Allow the user to edit the location name when clicked
+						document.getElementById('full_location').readOnly = false;
+						document.getElementById('save_location_name').style.display = 'inline-block'; // Show save button
+					}
+
+					function saveLocationName() {
+						// Disable editing after saving the location name
+						document.getElementById('full_location').readOnly = true;
+						document.getElementById('save_location_name').style.display = 'none'; // Hide save button
+
+						// You may want to send the updated location name to the server or process it here
+						// For example:
+						console.log('New Location Name: ' + document.getElementById('full_location').value);
+					}
+
+					function reverseGeocode(latLng) {
+						geocoder.geocode({ 'location': latLng }, function(results, status) {
+							if (status === google.maps.GeocoderStatus.OK) {
+								if (results[0]) {
+									// Set the location name from the geocode results
+									document.getElementById('full_location').value = results[0].formatted_address;
+								} else {
+									console.error("No results found for the given location.");
+								}
+							} else {
+								console.error("Geocoder failed due to: " + status);
+							}
+						});
 					}
 
 					function onPlaceChanged() {
-						// Get the selected place from the autocomplete
 						let place = autocomplete.getPlace();
 
 						if (!place.geometry) {
@@ -319,20 +370,18 @@
 							return;
 						}
 
-						// Get the location of the selected place
 						let location = place.geometry.location;
 						let lat = location.lat();
 						let lng = location.lng();
 
-						// Update the map center, marker position, and input fields
 						map.setCenter(location);
 						marker.setPosition(location);
 						document.getElementById("map_latitude").value = lat;
 						document.getElementById("map_longitude").value = lng;
-					}
-				</script>
 
-				<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPBoBHrluZc6Mi7Bt0XREbNuek2_lU17g&libraries=places&callback=initMap" async defer></script>
+						reverseGeocode(location);
+					}
+					</script>
 				<?php
 			}
 			

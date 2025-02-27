@@ -247,7 +247,7 @@
 			
 			public function full_location($tour_id) {
 				$location_name = get_post_meta($tour_id, 'ttbm_full_location_name', true);
-				$location_name = $location_name?$location_name:'New York, NY, USA';
+				$location_name = $location_name?$location_name:'650 Manchester Road, New York, NY 10007, USA';
 				$latitude = get_post_meta($tour_id, 'ttbm_map_latitude', true);
 				$latitude = $latitude?$latitude:40.7127753;
 				$longitude = get_post_meta($tour_id, 'ttbm_map_longitude', true);
@@ -257,24 +257,22 @@
 				
 
 				<section>
-					<div class="label">
-						<label>
-							<p><?php esc_html_e('Location ', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i></p>
-							<input id="full_location" name="ttbm_full_location_name" placeholder="<?php esc_html_e('Please type location...', 'tour-booking-manager'); ?>" value="<?php echo esc_attr($location_name); ?>">
-						</label>
-						<label>
-							<p><?php esc_html_e('Latitude ', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i></p>
-							<input type="text" id="map_latitude" name="ttbm_map_latitude" value="<?php echo esc_attr($latitude); ?>">
-						</label>
-						<label>
-							<p><?php esc_html_e('Longitude ', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i></p>
-							<input type="text" id="map_longitude" name="ttbm_map_longitude" value="<?php echo esc_attr($longitude); ?>">
-						</label>
-					</div>
+					<label class="label">
+						<div class="label-inner">
+						<p><?php esc_html_e('Google Map Location ', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i></p>
+						</div>
+						<input style="width: 80%;" id="full_location" name="ttbm_full_location_name" placeholder="<?php esc_html_e('Please type location...', 'tour-booking-manager'); ?>" value="<?php echo esc_attr($location_name); ?>">
+					</label>
 				</section>
 
 				<section>
-					<div id="map_canvas" style="width: 100%; height: 300px; margin-top: 10px;"></div>
+					<div id="map_canvas" style="width: 100%; height: 300px;"></div>
+					<div style="margin-top: 10px;">
+						<?php esc_html_e('Latitude ', 'tour-booking-manager'); ?>
+						<input type="text" id="map_latitude" name="ttbm_map_latitude" value="<?php echo esc_attr($latitude); ?>" >
+						<?php esc_html_e('Longitude ', 'tour-booking-manager'); ?>
+						<input type="text" id="map_longitude" name="ttbm_map_longitude" value="<?php echo esc_attr($longitude); ?>" >
+					</div>
 				</section>
 				<script>
 					let map, marker, autocomplete, geocoder;

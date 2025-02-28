@@ -247,11 +247,13 @@
 			
 			public function full_location($tour_id) {
 				$location_name = get_post_meta($tour_id, 'ttbm_full_location_name', true);
-				$location_name = $location_name?$location_name:'650 Manchester Road, New York, NY 10007, USA';
+				$location_name = !empty($location_name) ? $location_name : '650 Manchester Road, New York, NY 10007, USA';
+
 				$latitude = get_post_meta($tour_id, 'ttbm_map_latitude', true);
-				$latitude = $latitude?$latitude:'';
+				$latitude = !empty($latitude) ? $latitude : '40.712776'; // Default Latitude for New York
+
 				$longitude = get_post_meta($tour_id, 'ttbm_map_longitude', true);
-				$longitude = $longitude?$longitude:'';
+				$longitude = !empty($longitude) ? $longitude : '-74.005974';
 				
 				?>
 				

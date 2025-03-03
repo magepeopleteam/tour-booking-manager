@@ -875,6 +875,36 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   display: none;
 }
 
+#mp_meta_box_panel .ttbm-daywise-section .ttbm-daywise-item {
+  background-color: #fff;
+  cursor: grabbing;
+}
+#mp_meta_box_panel .ttbm-daywise-section .ttbm-daywise-item.ui-sortable-helper {
+  background: var(--mpl-light);
+  visibility: visible;
+  cursor: grabbing;
+}
+#mp_meta_box_panel .ttbm-daywise-section .daywise-header {
+  position: relative;
+  z-index: 0;
+}
+#mp_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+#mp_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action span {
+  padding: 5px 10px;
+  background-color: var(--mpl-light);
+  color: var(--mpl-primary);
+  border-radius: 2px;
+}
+#mp_meta_box_panel .ttbm-daywise-section .daywise-content {
+  display: none;
+}
+
 .ttbm-modal-container {
   position: fixed;
   right: -100%; /* Initially hidden off-screen */

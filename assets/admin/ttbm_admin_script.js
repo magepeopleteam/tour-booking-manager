@@ -651,6 +651,171 @@
             }
         });
     });
+
+    // ================daywise sidebar modal=================//
+    $(document).on('click', '.ttbm-daywise-item-new', function (e) {
+        $('#ttbm-daywise-msg').html('');
+        $('.ttbm_daywise_save_buttons').show();
+        $('.ttbm_daywise_update_buttons').hide();
+        empty_daywise_form();
+    });
+    function close_sidebar_modal(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('.ttbm-modal-container').removeClass('open');
+    }
+    $(document).on('click', '.ttbm-daywise-item-edit', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('#ttbm-daywise-msg').html('');
+        $('.ttbm_daywise_save_buttons').hide();
+        $('.ttbm_daywise_update_buttons').show();
+        var itemId = $(this).closest('.ttbm-daywise-item').data('id');
+        var parent = $(this).closest('.ttbm-daywise-item');
+        var headerText = parent.find('.daywise-header p').text().trim();
+        var daywiseContentId = parent.find('.daywise-content').text().trim();
+        var editorId = 'ttbm_day_content';
+        $('input[name="ttbm_day_title"]').val(headerText);
+        $('input[name="ttbm_daywise_item_id"]').val(itemId);
+        if (tinymce.get(editorId)) {
+            tinymce.get(editorId).setContent(daywiseContentId);
+        } else {
+            $('#' + editorId).val(daywiseContentId);
+        }
+    });
+    $(document).on('click', '.ttbm-daywise-item-delete', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var itemId = $(this).closest('.ttbm-daywise-item').data('id');
+        var isConfirmed = confirm('Are you sure you want to delete this row?');
+        if (isConfirmed) {
+            delete_daywise_item(itemId);
+        } else {
+            console.log('Deletion canceled.' + itemId);
+        }
+    });
+    function empty_daywise_form() {
+        $('input[name="ttbm_day_title"]').val('');
+        tinyMCE.get('ttbm_day_content').setContent('');
+        $('input[name="ttbm_daywise_item_id"]').val('');
+    }
+    $(document).on('click', '#ttbm_daywise_update', function (e) {
+        e.preventDefault();
+        update_daywise();
+    });
+    $(document).on('click', '#ttbm_daywise_save', function (e) {
+        e.preventDefault();
+        save_daywise();
+    });
+    $(document).on('click', '#ttbm_daywise_save_close', function (e) {
+        e.preventDefault();
+        save_daywise();
+        close_sidebar_modal(e);
+    });
+    function update_daywise() {
+        var title = $('input[name="ttbm_day_title"]');
+        var content = tinyMCE.get('ttbm_day_content').getContent();
+        var postID = $('input[name="ttbm_post_id"]');
+        var itemId = $('input[name="ttbm_daywise_item_id"]');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_daywise_data_update',
+                ttbm_day_title: title.val(),
+                ttbm_day_content: content,
+                ttbm_daywise_postID: postID.val(),
+                ttbm_daywise_itemID: itemId.val(),
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                $('#ttbm-daywise-msg').html(response.data.message);
+                $('.ttbm-daywise-items').html('');
+                $('.ttbm-daywise-items').append(response.data.html);
+                setTimeout(function () {
+                    $('.ttbm-modal-container').removeClass('open');
+                    empty_daywise_form();
+                }, 1000);
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+    function save_daywise() {
+        var title = $('input[name="ttbm_day_title"]');
+        var content = tinyMCE.get('ttbm_day_content').getContent();
+        var postID = $('input[name="ttbm_post_id"]');
+        console.log(ttbm_admin_ajax.ajax_url);
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_daywise_data_save',
+                ttbm_day_title: title.val(),
+                ttbm_day_content: content,
+                ttbm_daywise_postID: postID.val(),
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                $('#ttbm-daywise-msg').html(response.data.message);
+                $('.ttbm-daywise-items').html('');
+                $('.ttbm-daywise-items').append(response.data.html);
+                empty_daywise_form();
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+    function delete_daywise_item(itemId) {
+        var postID = $('input[name="ttbm_post_id"]');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_daywise_delete_item',
+                ttbm_daywise_postID: postID.val(),
+                itemId: itemId,
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                $('.ttbm-daywise-items').html('');
+                $('.ttbm-daywise-items').append(response.data.html);
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+
+    // daywise sorting
+    $(document).on("ready", function(e) {
+        $(".ttbm-daywise-items").sortable({
+            update: function(event, ui) {
+                event.preventDefault();
+                var sortedIDs = $(this).sortable("toArray", { attribute: "data-id" });
+                $.ajax({
+                    url: ttbm_admin_ajax.ajax_url,
+                    type: 'POST',
+                    data: {
+                        action: 'ttbm_sort_daywise',
+                        postID: $('input[name="ttbm_post_id"]').val(),
+                        sortedIDs: sortedIDs,
+                        nonce: ttbm_admin_ajax.nonce
+                    },
+                    success: function (response) {
+                        $('.ttbm-daywise-items').html('');
+                        $('.ttbm-daywise-items').append(response.data.html);
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                })
+            }
+        });
+    });
+
 }(jQuery));
 //==========search tour list page=================//
 (function ($) {

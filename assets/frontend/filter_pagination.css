@@ -315,6 +315,101 @@ div.modern div.ttbm_list_details {
 .mpStyle .ribbon::before {
     border: 0;
 }
+
+.ttbm_item_filter_by_activity{
+	display: block;
+	float: left;
+	background-color: #ededed;
+	padding: 8px 18px 8px 18px;
+	border-radius: 20px;
+	color: #4f4c4c;
+	font-size: 14px;
+	font-weight: bold;
+	cursor: pointer;
+}
+.ttbm_item_filter_by_activity:hover{
+	background-color: #6e7073;
+	color: #f7f5f5;
+}
+.ttbm_item_activity_active{
+	background-color: #6e7073;
+	color: #f7f5f5;
+}
+.ttbm_all_item_activities_wrapper {
+	display: flex;
+	align-items: center;
+	position: relative;
+	width: calc(100% - 10px);
+	margin: auto;
+	padding: 10px 0px;
+}
+.ttbm_all_item_activities_holder {
+	display: flex;
+	overflow-x: hidden; /* Hide the scrollbar */
+	white-space: nowrap;
+	scroll-behavior: smooth; /* Smooth scrolling for modern browsers */
+	width: 100%;
+	gap: 5px;
+	padding: 5px 10px 5px 10px;
+	/*margin-bottom: 5px;*/
+}
+.ttbm_all_item_activities_holder::-webkit-scrollbar {
+	display: none; /* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+}
+
+.ttbm_all_item_activities_holder {
+	-ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+	scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+.ttbm_item_activity {
+	display: inline-block;
+	margin: 0 5px;
+}
+
+button.scroll-left, button.scroll-right {
+	background-color: #ccc;
+	border: none;
+	cursor: pointer;
+	padding: 10px;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 1;
+	display: none; /* Initially hide the arrows */
+}
+.ttbm_date-picker-container {
+	display: flex;
+	align-items: center;
+	position: relative;
+}
+.ttbm_date-picker-input {
+	width: 200px;
+	max-width: inherit;
+	border: 1px solid var(--color_border);
+	font-size: var(--fs);
+	color: var(--d_color);
+	background-color: #fff;
+	border-radius: 6px;
+	padding: 13px 15px !important;
+	font-weight: var(--fw-medium);
+}
+.ttbm_calendar-icon {
+	width: 9px;
+	height: 10px;
+	background: url('https://cdn-icons-png.flaticon.com/512/271/271210.png') no-repeat center center;
+	background-size: contain;
+	margin-right: 5px;
+	cursor: pointer;
+	position: absolute;
+	right: 0;
+}
+button.scroll-left {
+	left: 0; /* Position left arrow */
+}
+button.scroll-right {
+	right: 0; /* Position right arrow */
+}
+
 /**********Grid******************************/
 /**********Orchid Grid******************************/
 div.bg_image_area {margin: 0;border-radius: 5px;}
@@ -323,6 +418,11 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 /****************************************/
 /****************************************/
 /****************************************/
+@media only screen and (max-width: 600px) {
+	.ttbm_date-picker-input{
+		width: 100%;
+	}
+}
 @media only screen and (max-width: 1199px) {
 	div.filter_item {min-width: calc(50% - var(--dmp));}
 }

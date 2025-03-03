@@ -59,28 +59,26 @@
 			public static function get_submit_info_get_method($key, $default = '') {
 				return self::data_sanitize($_GET[$key] ?? $default);
 			}
-			public static function data_sanitize($data) {
-				$data = maybe_unserialize($data);
-				if (is_string($data)) {
-					$data = maybe_unserialize($data);
-					if (is_array($data)) {
-						$data = self::data_sanitize($data);
-					}
-					else {
-						$data = sanitize_text_field(stripslashes(strip_tags($data)));
-					}
+			public static function data_sanitize( $array ) {
+				if ( ! is_array( $array ) ) {
+					return sanitize_text_field( $array );
 				}
-				elseif (is_array($data)) {
-					foreach ($data as &$value) {
-						if (is_array($value)) {
-							$value = self::data_sanitize($value);
-						}
-						else {
-							$value = sanitize_text_field(stripslashes(strip_tags($value)));
+
+				foreach ( $array as $key => $value ) {
+					if ( is_array( $value ) ) {
+						$array[ $key ] = self::data_sanitize( $value );
+					} else {
+						if ( filter_var( $value, FILTER_VALIDATE_EMAIL ) ) {
+							$array[ $key ] = sanitize_email( $value );
+						} elseif ( filter_var( $value, FILTER_VALIDATE_URL ) ) {
+							$array[ $key ] = esc_url_raw( $value );
+						} else {
+							$array[ $key ] = sanitize_text_field( $value );
 						}
 					}
 				}
-				return $data;
+
+				return $array;
 			}
 			//**************Date related*********************//
 			public static function date_picker_format_without_year($key = 'date_format'): string {

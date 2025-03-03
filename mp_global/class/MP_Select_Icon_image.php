@@ -19,18 +19,20 @@
 				$icon_class = $icon ? '' : 'dNone';
 				$button_active_class = $icon ? 'dNone' : '';
 				?>
-                <div class="mp_add_icon_image_area fdColumn">
-                    <input type="hidden" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr($icon); ?>"/>
-                    <div class="mp_icon_item <?php echo esc_attr($icon_class); ?>">
-                        <div class="allCenter">
-                            <span class="<?php echo esc_attr($icon); ?>" data-add-icon></span>
+                <div class="mpStyle">
+                    <div class="mp_add_icon_image_area fdColumn">
+                        <input type="hidden" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr($icon); ?>"/>
+                        <div class="mp_icon_item <?php echo esc_attr($icon_class); ?>">
+                            <div class="allCenter">
+                                <span class="<?php echo esc_attr($icon); ?>" data-add-icon></span>
+                            </div>
+                            <span class="fas fa-times mp_remove_icon mp_icon_remove" title="<?php esc_html_e('Remove Icon', 'bus-ticket-booking-with-seat-reservation'); ?>"></span>
                         </div>
-                        <span class="fas fa-times mp_remove_icon mp_icon_remove" title="<?php esc_html_e('Remove Icon', 'bus-ticket-booking-with-seat-reservation'); ?>"></span>
-                    </div>
-                    <div class="mp_add_icon_image_button_area <?php echo esc_attr($button_active_class); ?>">
-                        <div class="flexEqual">
-                        <button class="_mpBtn_xs mp_icon_add" type="button" data-target-popup="#mp_add_icon_popup">
-                            <span class="fas fa-plus"></span><?php esc_html_e('Icon', 'bus-ticket-booking-with-seat-reservation'); ?></button>
+                        <div class="mp_add_icon_image_button_area <?php echo esc_attr($button_active_class); ?>">
+                            <div class="flexEqual">
+                                <button class="_mpBtn_xs mp_icon_add" type="button" data-target-popup="#mp_add_icon_popup">
+                                    <span class="fas fa-plus"></span><?php esc_html_e('Icon', 'bus-ticket-booking-with-seat-reservation'); ?></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -46,7 +48,7 @@
                             <div class="popupHeader allCenter">
                                 <h2 class="_mR"><?php esc_html_e('Select Icon', 'bus-ticket-booking-with-seat-reservation'); ?></h2>
                                 <label class="min_300">
-                                    <input type="text" class="formControl mp_name_validation" name="mp_select_icon_name" placeholder="<?php esc_attr_e('Icon/class name....', 'bus-ticket-booking-with-seat-reservation'); ?>" />
+                                    <input type="text" class="formControl mp_name_validation" name="mp_select_icon_name" placeholder="<?php esc_attr_e('Icon/class name....', 'bus-ticket-booking-with-seat-reservation'); ?>"/>
                                 </label>
                                 <span class="fas fa-times popupClose"></span>
                             </div>

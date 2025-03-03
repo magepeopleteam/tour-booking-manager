@@ -145,7 +145,7 @@
         if (name && image) {
             $.ajax({
                 type: 'POST', url: mp_ajax_url, data: {
-                    "action": "ttbm_new_location_save", "name": name, "description": description, "address": address, "country": country, "image": image
+                    "action": "ttbm_new_location_save", "name": name, "description": description, "address": address, "country": country, "image": image, "_wp_nonce": parent.find('[name="ttbm_add_new_location_popup"]').val(),
                 }, beforeSend: function () {
                     dLoader(parent);
                 }, success: function () {
@@ -368,9 +368,9 @@
         let activity_description = parent.find('[name="ttbm_activity_description"]').val();
         let activity_icon = parent.find('[name="ttbm_activity_icon"]').val();
         if (!activity_name) {
-            parent.find('[data-required="ttbm_feature_name"]').slideDown('fast');
+            parent.find('[data-required="ttbm_activity_name"]').slideDown('fast');
         } else {
-            parent.find('[data-required="ttbm_feature_name"]').slideUp('fast');
+            parent.find('[data-required="ttbm_activity_name"]').slideUp('fast');
         }
         if (!activity_icon) {
             parent.find('[data-required="ttbm_activity_icon"]').slideDown('fast');
@@ -380,7 +380,7 @@
         if (activity_name && activity_icon) {
             $.ajax({
                 type: 'POST', url: mp_ajax_url, data: {
-                    "action": "ttbm_new_activity_save", "activity_name": activity_name, "activity_description": activity_description, "activity_icon": activity_icon
+                    "action": "ttbm_new_activity_save", "activity_name": activity_name, "activity_description": activity_description, "activity_icon": activity_icon,"_wp_nonce": parent.find('[name="ttbm_add_new_activity_popup"]').val(),
                 }, beforeSend: function () {
                     dLoader(parent);
                 }, success: function () {

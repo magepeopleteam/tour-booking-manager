@@ -27,7 +27,8 @@
 							<?php $this->location_filter($params); ?>
 							<?php $this->country_filter($params); ?>
 							<?php $this->activity_filter($params); ?>
-							<?php $this->month_filter($params); ?>
+<!--							--><?php //$this->month_filter($params); ?>
+							<?php $this->select_month_filter($params); ?>
                             <button type="submit" class="dButton min_200" data-placeholder><?php esc_html_e('Find Tours', 'tour-booking-manager'); ?></button>
                         </div>
                     </form>
@@ -531,6 +532,30 @@
 								}
 							?>
                         </select>
+                    </label>
+					<?php
+				}
+			}
+			public function select_month_filter($params) {
+				if ($params['month-filter'] == 'yes') {
+					$url_month = $_GET['month_filter'] ?? '';
+					$first_date = date('Y-m-01');
+					$current_date = current_time('Y-m-d');
+					$month = date('n', strtotime($current_date));
+					$selected = $url_month == $month ? 'selected' : '';
+					$date_format = MP_Global_Function::get_settings('mp_global_settings', 'date_format_short', 'M , Y');
+					?>
+                    <label data-placeholder>
+                        <div class="ttbm_date-picker-container">
+                            <input name="date_filter_start" type="text" id="ttbm_date-input_from" class="ttbm_date-picker-input" placeholder="From Date">
+                            <div id="ttbm_calendar-icon" class="ttbm_calendar-icon"></div>
+                        </div>
+                    </label>
+                    <label data-placeholder>
+                        <div class="ttbm_date-picker-container">
+                            <input name="date_filter_end" type="text" id="ttbm_date-input_to" class="ttbm_date-picker-input" placeholder="To Date">
+                            <div id="ttbm_calendar-icon" class="ttbm_calendar-icon"></div>
+                        </div>
                     </label>
 					<?php
 				}

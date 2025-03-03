@@ -268,20 +268,6 @@
 				if (get_option('woocommerce_calc_taxes') == 'yes') {
 					new TtbmAddMetaBox($ttbm_tax_meta_boxs_args);
 				}
-				$ttbm_list_template = ['page_nav' => __('Template', 'tour-booking-manager'), 'priority' => 10, 'sections' => ['section_2' => ['title' => __('', 'tour-booking-manager'), 'description' => __('', 'tour-booking-manager'), 'options' => [['id' => 'ttbm_theme_file', 'title' => __(' Template', 'tour-booking-manager'), 'details' => __('Please Select a Template', 'tour-booking-manager'), 'type' => 'select', 'class' => 'omg', 'default' => 'fixed', 'args' => TTBM_Function::all_details_template()],]],],];
-				$ttbm_list_template_meta_args = [
-					'meta_box_id' => 'ttbm_list_thumbnail_meta_boxes',
-					'meta_box_title' => __('Template', 'tour-booking-manager'),
-					'screen' => [TTBM_Function::get_cpt_name()],
-					'context' => 'side', // 'normal', 'side', and 'advanced'
-					'priority' => 'low', // 'high', 'low'
-					'callback_args' => [],
-					'nav_position' => 'none', // right, top, left, none
-					'item_name' => "MagePeople",
-					'item_version' => "2.0",
-					'panels' => ['ttbm_list_template_meta_box' => $ttbm_list_template],
-				];
-				new TtbmAddMetaBox($ttbm_list_template_meta_args);
 			}
 			//********* Display settings*************//
 			public function partial_payment_settings($tour_id) {
@@ -407,6 +393,28 @@
 					return;
 				}
 				$this->save_map($tour_id);
+				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
+					$content_title_style = MP_Global_Function::get_submit_info('ttbm_section_title_style') ?: 'style_1';
+					$ticketing_system = MP_Global_Function::get_submit_info('ttbm_ticketing_system', 'availability_section');
+					$seat_info = MP_Global_Function::get_submit_info('ttbm_display_seat_details') ? 'on' : 'off';
+					$sidebar = MP_Global_Function::get_submit_info('ttbm_display_sidebar') ? 'on' : 'off';
+					$tour_type = MP_Global_Function::get_submit_info('ttbm_display_tour_type') ? 'on' : 'off';
+					$hotels = MP_Global_Function::get_submit_info('ttbm_display_hotels') ? 'on' : 'off';
+					$duration = MP_Global_Function::get_submit_info('ttbm_display_duration') ? 'on' : 'off';
+					$ttbm_display_rank = MP_Global_Function::get_submit_info('ttbm_display_order_tour') ? 'on' : 'off';
+					$ttbm_travel_rank_tour = MP_Global_Function::get_submit_info('ttbm_travel_rank_tour');
+					$ttbm_template= isset($_POST['ttbm_theme_file']) && $_POST['ttbm_theme_file']? sanitize_file_name($_POST['ttbm_theme_file']):'default.php';
+					update_post_meta($tour_id, 'ttbm_travel_rank_tour', $ttbm_travel_rank_tour);
+					update_post_meta($tour_id, 'ttbm_display_order_tour', $ttbm_display_rank);
+					update_post_meta($tour_id, 'ttbm_section_title_style', $content_title_style);
+					update_post_meta($tour_id, 'ttbm_ticketing_system', $ticketing_system);
+					update_post_meta($tour_id, 'ttbm_display_seat_details', $seat_info);
+					update_post_meta($tour_id, 'ttbm_display_sidebar', $sidebar);
+					update_post_meta($tour_id, 'ttbm_display_tour_type', $tour_type);
+					update_post_meta($tour_id, 'ttbm_display_hotels', $hotels);
+					update_post_meta($tour_id, 'ttbm_display_duration', $duration);
+					update_post_meta($tour_id, 'ttbm_theme_file', $ttbm_template);
+				}
 				do_action('wcpp_partial_settings_saved', $tour_id);
 				do_action('ttbm_settings_save', $tour_id);
 				TTBM_Function::update_upcoming_date_month($tour_id, true);

@@ -76,7 +76,9 @@
 							}
 						}
 					}
-				} else if ($travel_type == 'repeated') {
+					$tour_date=array_unique($tour_date);
+				}
+				else if ($travel_type == 'repeated') {
 					$now_date = strtotime(current_time('Y-m-d'));
 					$start_date = MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_date');
 					$start_date = $start_date ? date('Y-m-d', strtotime($start_date)) : '';
@@ -114,7 +116,8 @@
 							}
 						}
 					}
-				} else {
+				}
+				else {
 					$date = MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date');
 					if ($date) {
 						$time = MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
@@ -698,9 +701,9 @@
 				return MP_Global_Function::data_sanitize($data);
 			}
 			public static function data_sanitize($data) {
-				$data = maybe_unserialize($data);
-				if (is_string($data)) {
-					$data = maybe_unserialize($data);
+				$data = @unserialize( $data, ['allowed_classes' => false] );
+				if (is_string($data) || is_serialized( $data )) {
+					$data = @unserialize( $data, ['allowed_classes' => false] );
 					if (is_array($data)) {
 						$data = MP_Global_Function::data_sanitize($data);
 					} else {

@@ -514,7 +514,7 @@
 							$ticket_info[$i]['ticket_name'] = $name;
 							$ticket_info[$i]['ticket_price'] = TTBM_Function::get_price_by_name($name, $tour_id, $hotel_id, $qty[$i], $start_date);
 							$ticket_info[$i]['ticket_qty'] = $qty[$i];
-							$ticket_info[$i]['qroup_qty'] = $group_qty[$i] ?? 1;
+							$ticket_info[$i]['qroup_qty'] = apply_filters('ttbm_group_actual_qty',1,$tour_id,$name);
 							$ticket_info[$i]['ttbm_max_qty'] = $max_qty[$i] ?? '';
 							$ticket_info[$i]['ttbm_date'] = $start_date ?? '';
 						}

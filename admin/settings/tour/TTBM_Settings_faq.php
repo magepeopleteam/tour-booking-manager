@@ -17,19 +17,17 @@ if (!class_exists('TTBM_Settings_faq')) {
 		public function __construct() {
 			add_action('add_ttbm_settings_tab_name', [$this, 'add_tab'], 90);
 			add_action('add_ttbm_settings_tab_content', [$this, 'tab_content'], 10, 1);
-
 			add_action('admin_enqueue_scripts', [$this, 'my_custom_editor_enqueue']);
 			// save faq data
 			add_action('wp_ajax_ttbm_faq_data_save', [$this, 'save_faq_data_settings']);
-			add_action('wp_ajax_nopriv_ttbm_faq_data_save', [$this, 'save_faq_data_settings']);
 			// update faq data
 			add_action('wp_ajax_ttbm_faq_data_update', [$this, 'faq_data_update']);
-			add_action('wp_ajax_nopriv_ttbm_faq_data_update', [$this, 'faq_data_update']);
 			// ttbm_delete_faq_data
 			add_action('wp_ajax_ttbm_faq_delete_item', [$this, 'faq_delete_item']);
-			add_action('wp_ajax_nopriv_ttbm_faq_delete_item', [$this, 'faq_delete_item']);
 			// FAQ sort_faq
 			add_action('wp_ajax_ttbm_sort_faq', [$this, 'sort_faq']);
+			// FAQ sort_faq
+			add_action('ttbm_settings_save', [$this, 'save_faq_settings']);
 		}
 
 
@@ -84,7 +82,7 @@ if (!class_exists('TTBM_Settings_faq')) {
 				<p><?php TTBM_Settings::des_p('faq_settings_description'); ?></p>
 				
 				<section class="bg-light">
-					<label for="" class="label">
+					<label class="label">
 						<div>
 							<p><?php esc_html_e('Frequently Asked Question', 'tour-booking-manager'); ?></p>
 							<span class="text"><?php esc_html_e('You can add frequently asked question for your tour.', 'tour-booking-manager'); ?></span>
@@ -93,15 +91,15 @@ if (!class_exists('TTBM_Settings_faq')) {
 				</section>
 				
 				<section >
-					<label class="label">
+					<div class="label">
 						<div>
-							<p><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></p>
+							<p><?php esc_html_e('F.A.Q Enable/Disable', 'tour-booking-manager'); ?></p>
 							<span><?php TTBM_Settings::des_p('ttbm_display_faq'); ?></span>
 						</div>
 						<?php MP_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>
-					</label>
+					</div>
 				</section>
-				<section class="ttbm-faq-section <?php echo esc_attr($active_class); ?>" data-collapse="#ttbm_faq_active">
+				<section class="ttbm-faq-section ">
 					<div class="ttbm-faq-items mB">
 						<?php $this->show_faq_data($post_id); ?>
 					</div>
@@ -265,6 +263,10 @@ if (!class_exists('TTBM_Settings_faq')) {
 				]);
 			}
 			die;
+		}
+		public function save_faq_settings($tour_id){
+			$faq = MP_Global_Function::get_submit_info('ttbm_display_faq') ? 'on' : 'off';
+			update_post_meta($tour_id, 'ttbm_display_faq', $faq);
 		}
 	}
 	new TTBM_Settings_faq();

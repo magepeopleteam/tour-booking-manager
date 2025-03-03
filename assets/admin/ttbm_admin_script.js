@@ -63,25 +63,7 @@
             });
         }
     });
-    //*********Add F.A.Q Item************//
-    $(document).on('click', '.ttbm_add_faq_content', function () {
-        let $this = $(this);
-        let parent = $this.closest('.tabsItem');
-        let dt = new Date();
-        let time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
-        $.ajax({
-            type: 'POST', url: mp_ajax_url, data: {"action": "get_ttbm_add_faq_content", "id": time}, beforeSend: function () {
-                dLoader(parent);
-            }, success: function (data) {
-                $this.before(data);
-                tinymce.execCommand('mceAddEditor', true, time);
-                dLoaderRemove(parent);
-            }, error: function (response) {
-                console.log(response);
-            }
-        });
-        return false;
-    });
+    
     //*********Day wise details************//
     $(document).on('click', '.ttbm_add_day_wise_details', function () {
         let $this = $(this);

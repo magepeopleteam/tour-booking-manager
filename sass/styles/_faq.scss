@@ -1,0 +1,33 @@
+#mp_meta_box_panel{
+    .ttbm-faq-section{
+        .ttbm-faq-item{
+            background-color: #fff;
+            cursor:  grabbing;
+            &.ui-sortable-helper{
+                background: var(--mpl-light);
+                visibility: visible;
+                cursor:  grabbing;
+            }
+        }
+        .faq-header{
+            position: relative;
+            z-index: 0;
+            .faq-action{
+                position:absolute;
+                top: 50%;
+                right: 0;
+                transform: translateY(-50%);
+                z-index:1;
+                span{
+                    padding: 5px 10px;
+                    background-color: var(--mpl-light);
+                    color: var(--mpl-primary);
+                    border-radius: 2px;
+                }
+            }
+        }
+        .faq-content{
+            display: none;
+        }
+    }
+}

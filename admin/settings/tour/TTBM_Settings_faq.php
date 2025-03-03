@@ -186,7 +186,7 @@ if (!class_exists('TTBM_Settings_faq')) {
 			$ttbm_faq_content = isset($_POST['ttbm_faq_content']) ? wp_kses_post(wp_unslash($_POST['ttbm_faq_content'])) : '';
 			$ttbm_faq = get_post_meta($post_id, 'mep_event_faq', true);
 			$ttbm_faq = !empty($ttbm_faq) ? $ttbm_faq : [];
-			$new_data = ['title' => $ttbm_faq_title, 'content' => $ttbm_faq_content];
+			$new_data = ['ttbm_faq_title' => $ttbm_faq_title, 'ttbm_faq_content' => $ttbm_faq_content];
 			if (!empty($ttbm_faq)) {
 				if (isset($_POST['ttbm_faq_itemID'])) {
 					$ttbm_faq[sanitize_text_field(wp_unslash($_POST['ttbm_faq_itemID']))] = $new_data;
@@ -213,7 +213,7 @@ if (!class_exists('TTBM_Settings_faq')) {
 			$ttbm_faq_content = isset($_POST['ttbm_faq_content']) ? wp_kses_post(wp_unslash($_POST['ttbm_faq_content'])) : '';
 			$ttbm_faq = get_post_meta($post_id, 'mep_event_faq', true);
 			$ttbm_faq = !empty($ttbm_faq) ? $ttbm_faq : [];
-			$new_data = ['title' => $ttbm_faq_title, 'content' => $ttbm_faq_content];
+			$new_data = ['ttbm_faq_title' => $ttbm_faq_title, 'ttbm_faq_content' => $ttbm_faq_content];
 			if (isset($post_id)) {
 				array_push($ttbm_faq, $new_data);
 			}

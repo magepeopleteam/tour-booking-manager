@@ -519,6 +519,8 @@
         $('.ttbm-modal-container').removeClass('open');
     }
     $(document).on('click', '.ttbm-faq-item-edit', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         $('#ttbm-faq-msg').html('');
         $('.ttbm_faq_save_buttons').hide();
         $('.ttbm_faq_update_buttons').show();
@@ -598,6 +600,7 @@
         var title = $('input[name="ttbm_faq_title"]');
         var content = tinyMCE.get('ttbm_faq_content').getContent();
         var postID = $('input[name="ttbm_post_id"]');
+        console.log(ttbm_admin_ajax.ajax_url);
         $.ajax({
             url: ttbm_admin_ajax.ajax_url,
             type: 'POST',

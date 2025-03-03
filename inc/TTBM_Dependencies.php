@@ -65,6 +65,10 @@
 				wp_enqueue_script('ttbm_admin_script', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_script.js', array('jquery'), time(), true);
 				wp_enqueue_style('ttbm_admin_style', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_style.css', array(), time());
 				wp_enqueue_style('mp_main_settings', TTBM_PLUGIN_URL . '/assets/admin/mp_main_settings.css', array(), time());
+				wp_localize_script('ttbm_admin_script', 'ttbm_admin_ajax', array(
+					'ajax_url'  => admin_url('admin-ajax.php'),
+					'nonce'   => wp_create_nonce('ttbm_admin_nonce')
+				));
 				do_action('ttbm_admin_script');
 			}
 			public function registration_enqueue() {

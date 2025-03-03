@@ -213,5 +213,5 @@
 				}
 			}
 		}
-		new TTBM_Settings_faq_day_wise_details();
+		// new TTBM_Settings_faq_day_wise_details();
 	}

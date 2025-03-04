@@ -1407,24 +1407,6 @@ div > .ppof-metabox {
     font-size: 1rem !important;
     color: var(--mpl-secondary);
   }
-  .mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::before {
-    background: var(--mpl-sky);
-  }
-  .mpStyle .customCheckboxLabel {
-    cursor: pointer;
-    font-weight: 300;
-  }
-  .mpStyle .customCheckbox::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 20px;
-    width: 20px;
-    background-color: var(--mpl-white);
-    border: 1px solid var(--mpl-primary);
-    border-radius: 2px;
-  }
 }
 div.mpStyle span.mp_remove_multi_image {
   background-color: var(--mpl-black);
@@ -1450,6 +1432,46 @@ div.mpStyle span.mp_remove_multi_image {
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
   padding: 5px;
+}
+
+.includedd-features-section {
+  margin-top: 15px;
+}
+.includedd-features-section .groupCheckBox {
+  overflow: hidden;
+}
+.includedd-features-section .customCheckboxLabel {
+  float: left;
+  margin: 5px;
+  padding: 7px 7px;
+  border: 1px solid #d8d8d8;
+  background-color: rgba(248, 248, 248, 0.3568627451);
+  width: 227px;
+  border-radius: 5px;
+  font-weight: normal;
+}
+.includedd-features-section .customCheckboxLabel .customCheckbox {
+  padding: 3px;
+  padding-left: 30px;
+}
+.includedd-features-section .customCheckboxLabel .customCheckbox i {
+  color: #888;
+}
+.includedd-features-section .customCheckboxLabel .customCheckbox::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0 !important;
+  height: 20px;
+  width: 20px;
+  background-color: var(--mpl-white);
+  border: 1px solid var(--mpl-primary);
+  border-radius: 50px;
+}
+
+div.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::after {
+  left: 5px;
+  top: 5px !important;
 }
 
 /*# sourceMappingURL=mp_main_settings.css.map */

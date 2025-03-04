@@ -129,7 +129,7 @@ if (!class_exists('TTBM_Settings_faq')) {
 								$settings = array(
 									'textarea_name' => 'ttbm_faq_content',
 									'media_buttons' => true,
-									'textarea_rows' => 10,
+									'textarea_rows' => 100,
 								);
 								wp_editor($content, $editor_id, $settings);
 							?>
@@ -181,7 +181,9 @@ if (!class_exists('TTBM_Settings_faq')) {
 			}
 			$post_id = isset($_POST['ttbm_faq_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_faq_postID'])) : '';
 			$ttbm_faq_title = isset($_POST['ttbm_faq_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_faq_title'])) : '';
-			$ttbm_faq_content = isset($_POST['ttbm_faq_content']) ? wp_kses_post(wp_unslash($_POST['ttbm_faq_content'])) : '';
+			
+			$allowed_tags = wp_kses_allowed_html('post'); 
+			$ttbm_faq_content = isset($_POST['ttbm_faq_content']) ? wp_kses(wp_unslash($_POST['ttbm_faq_content']), $allowed_tags) : '';
 			$ttbm_faq = get_post_meta($post_id, 'mep_event_faq', true);
 			$ttbm_faq = !empty($ttbm_faq) ? $ttbm_faq : [];
 			$new_data = ['ttbm_faq_title' => $ttbm_faq_title, 'ttbm_faq_content' => $ttbm_faq_content];
@@ -208,7 +210,8 @@ if (!class_exists('TTBM_Settings_faq')) {
 			$post_id = isset($_POST['ttbm_faq_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_faq_postID'])) : '';
 			update_post_meta($post_id, 'ttbm_faq_active', 'on');
 			$ttbm_faq_title = isset($_POST['ttbm_faq_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_faq_title'])) : '';
-			$ttbm_faq_content = isset($_POST['ttbm_faq_content']) ? wp_kses_post(wp_unslash($_POST['ttbm_faq_content'])) : '';
+			$allowed_tags = wp_kses_allowed_html('post'); 
+			$ttbm_faq_content = isset($_POST['ttbm_faq_content']) ? wp_kses(wp_unslash($_POST['ttbm_faq_content']), $allowed_tags) : '';
 			$ttbm_faq = get_post_meta($post_id, 'mep_event_faq', true);
 			$ttbm_faq = !empty($ttbm_faq) ? $ttbm_faq : [];
 			$new_data = ['ttbm_faq_title' => $ttbm_faq_title, 'ttbm_faq_content' => $ttbm_faq_content];

@@ -180,7 +180,9 @@ if (!class_exists('TTBM_Daywise_Details')) {
 			}
 			$post_id = isset($_POST['ttbm_daywise_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_daywise_postID'])) : '';
 			$ttbm_day_title = isset($_POST['ttbm_day_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_day_title'])) : '';
-			$ttbm_day_content = isset($_POST['ttbm_day_content']) ? wp_kses_post(wp_unslash($_POST['ttbm_day_content'])) : '';
+			$allowed_tags = wp_kses_allowed_html('post'); 
+			$ttbm_day_content = isset($_POST['ttbm_day_content']) ? wp_kses(wp_unslash($_POST['ttbm_day_content']), $allowed_tags) : '';
+
 			$ttbm_daywise = get_post_meta($post_id, 'ttbm_daywise_details', true);
 			$ttbm_daywise = !empty($ttbm_daywise) ? $ttbm_daywise : [];
 			$new_data = ['ttbm_day_title' => $ttbm_day_title, 'ttbm_day_content' => $ttbm_day_content];
@@ -205,9 +207,9 @@ if (!class_exists('TTBM_Daywise_Details')) {
 				wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 			}
 			$post_id = isset($_POST['ttbm_daywise_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_daywise_postID'])) : '';
-			update_post_meta($post_id, 'ttbm_daywise_active', 'on');
 			$ttbm_day_title = isset($_POST['ttbm_day_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_day_title'])) : '';
-			$ttbm_day_content = isset($_POST['ttbm_day_content']) ? wp_kses_post(wp_unslash($_POST['ttbm_day_content'])) : '';
+			$allowed_tags = wp_kses_allowed_html('post'); 
+			$ttbm_day_content = isset($_POST['ttbm_day_content']) ? wp_kses(wp_unslash($_POST['ttbm_day_content']), $allowed_tags) : '';
 			$ttbm_daywise = get_post_meta($post_id, 'ttbm_daywise_details', true);
 			$ttbm_daywise = !empty($ttbm_daywise) ? $ttbm_daywise : [];
 			$new_data = ['ttbm_day_title' => $ttbm_day_title, 'ttbm_day_content' => $ttbm_day_content];

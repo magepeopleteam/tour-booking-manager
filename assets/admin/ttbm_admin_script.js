@@ -509,7 +509,7 @@
         var itemId = $(this).closest('.ttbm-faq-item').data('id');
         var parent = $(this).closest('.ttbm-faq-item');
         var headerText = parent.find('.faq-header p').text().trim();
-        var faqContentId = parent.find('.faq-content').text().trim();
+        var faqContentId = parent.find('.faq-content').html().trim();
         var editorId = 'ttbm_faq_content';
         $('input[name="ttbm_faq_title"]').val(headerText);
         $('input[name="ttbm_faq_item_id"]').val(itemId);
@@ -673,7 +673,7 @@
         var itemId = $(this).closest('.ttbm-daywise-item').data('id');
         var parent = $(this).closest('.ttbm-daywise-item');
         var headerText = parent.find('.daywise-header p').text().trim();
-        var daywiseContentId = parent.find('.daywise-content').text().trim();
+        var daywiseContentId = parent.find('.daywise-content').html().trim();
         var editorId = 'ttbm_day_content';
         $('input[name="ttbm_day_title"]').val(headerText);
         $('input[name="ttbm_daywise_item_id"]').val(itemId);

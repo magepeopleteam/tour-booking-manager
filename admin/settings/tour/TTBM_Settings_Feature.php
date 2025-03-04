@@ -81,7 +81,7 @@
 					<section>
 						<label class="label">
 							<div>
-								<p><?php esc_html_e('Price Included Feature', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_include_service'); ?></span></i></p>
+								<p><?php esc_html_e('Price Excluded Feature', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_include_service'); ?></span></i></p>
 								<span class="text"><?php TTBM_Settings::des_p('add_new_feature_popup'); ?></span>
 							</div>
 							<?php MP_Custom_Layout::switch_button('ttbm_display_exclude_service', $ex_checked); ?>  

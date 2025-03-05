@@ -42,20 +42,20 @@
                     </section>
 
                     <section>
-                        <label class="label">
+                        <div class="label">
                             <div>
-                                <p><?php echo esc_html__('On/Off', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html__('Guide', 'tour-booking-manager'); ?> </p>
+                                <p><?php echo esc_html__('Enable', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html__('Guide', 'tour-booking-manager'); ?> </p>
                                 <span class="text"><?php TTBM_Settings::des_p('ttbm_display_tour_guide'); ?> </span>
                             </div>
                             <?php MP_Custom_Layout::switch_button('ttbm_display_tour_guide', $checked_guide); ?>
-                        </label>
+                        </div>
                     </section>
 
                     <div data-collapse="#ttbm_display_tour_guide" class="<?php echo esc_attr($active_guide); ?>">
                         <section>
                             <label class="label">
                                 <div>
-                                    <p><?php esc_html_e('Select tour guide', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_tour_guide'); ?></span></i></p>
+                                    <p><?php esc_html_e('Select', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html_e('guide', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_tour_guide'); ?></span></i></p>
                                     <span class="text"><?php TTBM_Settings::des_p('ttbm_tour_guide'); ?></span>
                                 </div>
                                 <div class="w-50">

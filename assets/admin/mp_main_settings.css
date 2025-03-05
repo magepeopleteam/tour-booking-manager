@@ -576,19 +576,21 @@
   font-weight: normal;
 }
 #mp_meta_box_panel select, #mp_meta_box_panel input[type=text], #mp_meta_box_panel input[type=email], #mp_meta_box_panel input[type=search], #mp_meta_box_panel input[type=tel], #mp_meta_box_panel input[type=url], #mp_meta_box_panel input[type=password], #mp_meta_box_panel input[type=file], #mp_meta_box_panel input[type=color], #mp_meta_box_panel input[type=number], #mp_meta_box_panel input[type=range], #mp_meta_box_panel input[type=date], #mp_meta_box_panel input[type=month], #mp_meta_box_panel input[type=week], #mp_meta_box_panel input[type=time], #mp_meta_box_panel input[type=datetime], #mp_meta_box_panel input[type=datetime-local], .travel-list select, .travel-list input[type=text], .travel-list input[type=email], .travel-list input[type=search], .travel-list input[type=tel], .travel-list input[type=url], .travel-list input[type=password], .travel-list input[type=file], .travel-list input[type=color], .travel-list input[type=number], .travel-list input[type=range], .travel-list input[type=date], .travel-list input[type=month], .travel-list input[type=week], .travel-list input[type=time], .travel-list input[type=datetime], .travel-list input[type=datetime-local] {
-  width: 16em;
+  width: 14em;
   height: 2.5em;
   border: 0px;
   border: 1px solid var(--mpl-gray);
   color: var(--mpl-secondary);
   padding: 0.5em;
   font-weight: normal;
+  font-size: 14px;
+  background-color: #f5f8ff;
 }
 #mp_meta_box_panel select.small, #mp_meta_box_panel input[type=text].small, #mp_meta_box_panel input[type=email].small, #mp_meta_box_panel input[type=search].small, #mp_meta_box_panel input[type=tel].small, #mp_meta_box_panel input[type=url].small, #mp_meta_box_panel input[type=password].small, #mp_meta_box_panel input[type=file].small, #mp_meta_box_panel input[type=color].small, #mp_meta_box_panel input[type=number].small, #mp_meta_box_panel input[type=range].small, #mp_meta_box_panel input[type=date].small, #mp_meta_box_panel input[type=month].small, #mp_meta_box_panel input[type=week].small, #mp_meta_box_panel input[type=time].small, #mp_meta_box_panel input[type=datetime].small, #mp_meta_box_panel input[type=datetime-local].small, .travel-list select.small, .travel-list input[type=text].small, .travel-list input[type=email].small, .travel-list input[type=search].small, .travel-list input[type=tel].small, .travel-list input[type=url].small, .travel-list input[type=password].small, .travel-list input[type=file].small, .travel-list input[type=color].small, .travel-list input[type=number].small, .travel-list input[type=range].small, .travel-list input[type=date].small, .travel-list input[type=month].small, .travel-list input[type=week].small, .travel-list input[type=time].small, .travel-list input[type=datetime].small, .travel-list input[type=datetime-local].small {
-  width: 5.3333333333em;
+  width: 4.6666666667em;
 }
 #mp_meta_box_panel select.medium, #mp_meta_box_panel input[type=text].medium, #mp_meta_box_panel input[type=email].medium, #mp_meta_box_panel input[type=search].medium, #mp_meta_box_panel input[type=tel].medium, #mp_meta_box_panel input[type=url].medium, #mp_meta_box_panel input[type=password].medium, #mp_meta_box_panel input[type=file].medium, #mp_meta_box_panel input[type=color].medium, #mp_meta_box_panel input[type=number].medium, #mp_meta_box_panel input[type=range].medium, #mp_meta_box_panel input[type=date].medium, #mp_meta_box_panel input[type=month].medium, #mp_meta_box_panel input[type=week].medium, #mp_meta_box_panel input[type=time].medium, #mp_meta_box_panel input[type=datetime].medium, #mp_meta_box_panel input[type=datetime-local].medium, .travel-list select.medium, .travel-list input[type=text].medium, .travel-list input[type=email].medium, .travel-list input[type=search].medium, .travel-list input[type=tel].medium, .travel-list input[type=url].medium, .travel-list input[type=password].medium, .travel-list input[type=file].medium, .travel-list input[type=color].medium, .travel-list input[type=number].medium, .travel-list input[type=range].medium, .travel-list input[type=date].medium, .travel-list input[type=month].medium, .travel-list input[type=week].medium, .travel-list input[type=time].medium, .travel-list input[type=datetime].medium, .travel-list input[type=datetime-local].medium {
-  width: 8em;
+  width: 7em;
 }
 #mp_meta_box_panel select:disabled, #mp_meta_box_panel input[type=text]:disabled, #mp_meta_box_panel input[type=email]:disabled, #mp_meta_box_panel input[type=search]:disabled, #mp_meta_box_panel input[type=tel]:disabled, #mp_meta_box_panel input[type=url]:disabled, #mp_meta_box_panel input[type=password]:disabled, #mp_meta_box_panel input[type=file]:disabled, #mp_meta_box_panel input[type=color]:disabled, #mp_meta_box_panel input[type=number]:disabled, #mp_meta_box_panel input[type=range]:disabled, #mp_meta_box_panel input[type=date]:disabled, #mp_meta_box_panel input[type=month]:disabled, #mp_meta_box_panel input[type=week]:disabled, #mp_meta_box_panel input[type=time]:disabled, #mp_meta_box_panel input[type=datetime]:disabled, #mp_meta_box_panel input[type=datetime-local]:disabled, .travel-list select:disabled, .travel-list input[type=text]:disabled, .travel-list input[type=email]:disabled, .travel-list input[type=search]:disabled, .travel-list input[type=tel]:disabled, .travel-list input[type=url]:disabled, .travel-list input[type=password]:disabled, .travel-list input[type=file]:disabled, .travel-list input[type=color]:disabled, .travel-list input[type=number]:disabled, .travel-list input[type=range]:disabled, .travel-list input[type=date]:disabled, .travel-list input[type=month]:disabled, .travel-list input[type=week]:disabled, .travel-list input[type=time]:disabled, .travel-list input[type=datetime]:disabled, .travel-list input[type=datetime-local]:disabled {
   background: var(--mpl-gray);
@@ -600,10 +602,13 @@
 }
 #mp_meta_box_panel textarea, .travel-list textarea {
   height: 5em;
+  background-color: #f5f8ff;
   font-weight: normal;
+  font-size: 14px;
 }
 #mp_meta_box_panel input[type=search], .travel-list input[type=search] {
   border: 0px solid var(--mpl-dark);
+  background-color: #f5f8ff;
 }
 #mp_meta_box_panel .tool-tips, .travel-list .tool-tips {
   color: var(--mpl-gray);
@@ -1077,8 +1082,8 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   padding-right: 20px;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label p, .travel-list .ttbm_settings .tabsContent .tabsItem section .label p {
-  font-size: var(--fs);
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: 500;
   margin-bottom: 5px;
   color: var(--mpl-secondary);
 }
@@ -1089,6 +1094,7 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   color: #6B7280;
   font-weight: normal;
   line-height: 20px;
+  font-size: 13px;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section textarea, .travel-list .ttbm_settings .tabsContent .tabsItem section textarea {
   width: 100%;

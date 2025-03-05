@@ -52,10 +52,10 @@
 							<table>
 								<thead>
 								<tr>
-									<th><?php esc_html_e('Service Icon', 'tour-booking-manager'); ?></th>
+									<th><?php esc_html_e(' Icon', 'tour-booking-manager'); ?></th>
 									<th><?php esc_html_e('Service Name', 'tour-booking-manager'); ?></th>
 									<th><?php esc_html_e('Short description', 'tour-booking-manager'); ?></th>
-									<th><?php esc_html_e('Service Price', 'tour-booking-manager'); ?></th>
+									<th><?php esc_html_e('Price', 'tour-booking-manager'); ?></th>
 									<th><?php esc_html_e('Available Qty', 'tour-booking-manager'); ?></th>
 									<th><?php esc_html_e('Qty Box Type', 'tour-booking-manager'); ?></th>
 									<th><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
@@ -72,7 +72,7 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="d-flex justify-content-end py-2">
+						<div class="d-flex justify-content-end">
 							<?php MP_Custom_Layout::add_new_button(esc_html__('Add Extra New Service', 'tour-booking-manager')); ?>
 						</div>
 						<?php do_action('add_mp_hidden_table', 'ttbm_extra_service_item'); ?>

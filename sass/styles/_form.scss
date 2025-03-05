@@ -12,6 +12,8 @@ select, input[type="text"], input[type="email"], input[type="search"], input[typ
       color: $color-secondary;
       padding: $spacing;
       font-weight: normal;
+      font-size: 14px;
+      background-color: #f5f8ff;
       &.small{
         width:calc($input-width/3);
       }
@@ -30,10 +32,13 @@ select, input[type="text"], input[type="email"], input[type="search"], input[typ
   }
   textarea{
     height:calc( $input-height * 2 );
+    background-color: #f5f8ff;
     font-weight: normal;
+    font-size: 14px;
   }
   input[type="search"]{
     border: 0px solid $color-dark;
+    background-color: #f5f8ff;
   }
 
 // =====================tool tips============================

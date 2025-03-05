@@ -1,6 +1,6 @@
 <?php
 /**
- * Daywise Details Settings 
+ * Itinerary Builder Settings 
  * 
  * @package Tour Booking Manager
  * @since 1.8.7
@@ -34,7 +34,7 @@ if (!class_exists('TTBM_Daywise_Details')) {
 		public function add_tab() {
 			?>
 			<li data-tabs-target="#ttbm_daywise_settings">
-				<i class="fas fa-list-ul"></i><?php esc_html_e('Daywise Details', 'tour-booking-manager'); ?>
+				<i class="fas fa-list-ul"></i><?php esc_html_e('Itinerary Builder', 'tour-booking-manager'); ?>
 			</li>
 			<?php
 		}
@@ -77,13 +77,13 @@ if (!class_exists('TTBM_Daywise_Details')) {
 			$checked = $daywise_active == 'on' ? 'checked' : '';
 			?>
 			<div class="tabsItem ttbm_settings_daywise" data-tabs="#ttbm_daywise_settings">
-				<h2><?php esc_html_e('Daywise Details Settings', 'tour-booking-manager'); ?></h2>
-				<p><?php esc_html_e('Daywise Details Settings', 'tour-booking-manager'); ?></p>
+				<h2><?php esc_html_e('Itinerary Builder Settings', 'tour-booking-manager'); ?></h2>
+				<p><?php esc_html_e('Itinerary Builder Settings', 'tour-booking-manager'); ?></p>
 				
 				<section class="bg-light">
 					<label class="label">
 						<div>
-							<p><?php esc_html_e('Daywise Details', 'tour-booking-manager'); ?></p>
+							<p><?php esc_html_e('Itinerary Builder', 'tour-booking-manager'); ?></p>
 							<span class="text"><?php esc_html_e('You can add frequently asked question for your tour.', 'tour-booking-manager'); ?></span>
 						</div>
 					</label>
@@ -92,8 +92,8 @@ if (!class_exists('TTBM_Daywise_Details')) {
 				<section >
 					<div class="label">
 						<div>
-							<p><?php esc_html_e('Daywise Details Enable/Disable', 'tour-booking-manager'); ?></p>
-							<span><?php esc_html_e('Daywise Details Enable/Disable', 'tour-booking-manager'); ?></span>
+							<p><?php esc_html_e('Itinerary Builder Enable/Disable', 'tour-booking-manager'); ?></p>
+							<span><?php esc_html_e('Itinerary Builder Enable/Disable by this toggle switch.', 'tour-booking-manager'); ?></span>
 						</div>
 						<?php MP_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
 					</div>

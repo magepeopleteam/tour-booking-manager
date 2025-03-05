@@ -100,8 +100,8 @@
 						}
 
 						p {
-							font-size: var(--fs);
-							font-weight: bold;
+							font-size: 14px;
+							font-weight: 500;
 							margin-bottom: 5px;
 							color: var(--mpl-secondary);
 						}
@@ -114,6 +114,7 @@
 							color: #6B7280;
 							font-weight: normal;
 							line-height: 20px;
+							font-size: 13px;
 						}
 					}
 					textarea{

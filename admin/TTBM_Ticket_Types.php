@@ -23,8 +23,8 @@
                         <table class="price_config_table">
                             <thead>
                             <tr>
-                                <th><?php esc_html_e('Ticket Icon', 'tour-booking-manager'); ?></th>
-                                <th><?php esc_html_e('Ticket Name', 'tour-booking-manager'); ?><span class="textRequired">&nbsp;*</span></th>
+                                <th><?php esc_html_e('Icon', 'tour-booking-manager'); ?></th>
+                                <th><?php esc_html_e('Ticket Type', 'tour-booking-manager'); ?><span class="textRequired">&nbsp;*</span></th>
                                 <th> <?php esc_html_e('Short Description', 'tour-booking-manager'); ?></th>
                                 <th><?php esc_html_e('Regular Price', 'tour-booking-manager'); ?><span class="textRequired">&nbsp;*</span></th>
                                 <th> <?php esc_html_e('Sale Price', 'tour-booking-manager'); ?></th>

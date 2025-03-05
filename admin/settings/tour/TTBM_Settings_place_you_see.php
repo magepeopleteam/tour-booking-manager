@@ -42,13 +42,13 @@
                     </section>
 
 					<section>
-                        <label class="label">
+                        <div class="label">
 							<div>
 								<p><?php esc_html_e('Places You\'ll Visit ' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?></p>
 								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_hiphop'); ?></span>  
 							</div>
 							<?php MP_Custom_Layout::switch_button('ttbm_display_hiphop', $checked); ?>
-						</label>
+						</div>
                     </section>
 
 					<div data-collapse="#ttbm_display_hiphop" class="ttbm_place_you_see_area <?php echo esc_attr($active); ?>">
@@ -78,9 +78,9 @@
 								<table class="mb-2">
 									<thead>
 										<tr>
-											<th class="text-start"><?php esc_html_e('Place Label', 'tour-booking-manager'); ?></th>
+											<th class="text-start"><?php esc_html_e('Place Name', 'tour-booking-manager'); ?></th>
 											<th class="text-start"><?php esc_html_e('Place', 'tour-booking-manager'); ?></th>
-											<th class="text-start"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
+											<th class="text-center"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
 										</tr>
 										</thead>
 										<tbody class="mp_sortable_area mp_item_insert">
@@ -121,12 +121,12 @@
 				$place_name = $place_id && !$place_name ? get_the_title($place_id) : $place_name;
 				?>
 				<tr class="mp_remove_area">
-					<td class="text-center">
+					<td class="text-start">
 						<label>
-							<input class="formControl mp_name_validation" name="ttbm_place_label[]" value="<?php echo esc_attr($place_name); ?>"/>
+							<input class="formControl mp_name_validation" name="ttbm_place_label[]" value="<?php echo esc_attr($place_name); ?>" placeholder="Place name"/>
 						</label>
 					</td>
-					<td class="text-center">
+					<td class="text-start">
 						<label>
 							<select class="formControl <?php echo esc_attr(is_array($hiphop_place) && sizeof($hiphop_place) > 0 ? 'ttbm_select2' : 'add_ttbm_select2'); ?>" name="ttbm_city_place_id[]">
 								<option value="" selected disabled>

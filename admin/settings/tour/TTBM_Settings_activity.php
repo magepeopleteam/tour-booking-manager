@@ -44,13 +44,13 @@
 						</label>
 					</section>
 					<section>
-                        <label class="label">
+                        <div class="label">
 							<div>
 								<p><?php esc_html_e($ttbm_label . ' Activities Settings', 'tour-booking-manager'); ?></p>
 								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_activities'); ?></span>
 							</div>
 							<?php MP_Custom_Layout::switch_button('ttbm_display_activities', $checked); ?> 
-						</label>
+						</div>
                     </section>
 					<div data-collapse="#ttbm_display_activities" class="ttbm_activities_area <?php echo esc_attr($active); ?>">
 						<?php $this->activities($tour_id); ?>
@@ -67,7 +67,7 @@
 						<label class="label">
 						<div>
 							<p><?php esc_html_e('Create activities', 'tour-booking-manager'); ?></p>
-							<span><?php esc_html_e('To create new activity, click this button', 'tour-booking-manager'); ?></span>
+							<span class="text"><?php esc_html_e('To create new activity, click this button', 'tour-booking-manager'); ?></span>
 						</div>
 						<?php MP_Custom_Layout::popup_button_xs('add_new_activity_popup', esc_html__('Create New Activity', 'tour-booking-manager')); ?>
 						</label>
@@ -77,7 +77,7 @@
 						<label class="label">
 							<div> 
 								<p><?php esc_html_e('Activities', 'tour-booking-manager'); ?></p>
-								<span><?php TTBM_Settings::des_p('activities'); ?></span>
+								<span class="text"><?php TTBM_Settings::des_p('activities'); ?></span>
 							</div>
 							<div class="w-50">
 								<select name="ttbm_tour_activities[]" multiple='multiple' class='mp_select2' data-placeholder="<?php esc_html_e('Please Select a Activities ', 'tour-booking-manager'); ?>">

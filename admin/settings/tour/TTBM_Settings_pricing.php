@@ -75,7 +75,7 @@
 			}
 			public function ttbm_add_to_cart_form_shortcode($tour_id) {
 				?>
-                <section>
+                <section style="background-color: #f5f8ff;">
                     <label class="label">
                         <div>
                             <p><?php esc_html_e('Add To Cart Form Shortcode', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_short_code'); ?></span></i></p>
@@ -127,8 +127,8 @@
                                     <thead>
                                     <tr>
 										<?php do_action('ttbm_ticket_type_headeing_start', $tour_id); ?>
-                                        <th><?php esc_html_e('Ticket Icon', 'tour-booking-manager'); ?></th>
-                                        <th><?php esc_html_e('Ticket Name', 'tour-booking-manager'); ?><span class="textRequired">&nbsp;*</span></th>
+                                        <th><?php esc_html_e('Icon', 'tour-booking-manager'); ?></th>
+                                        <th><?php esc_html_e('Ticket Type', 'tour-booking-manager'); ?><span class="textRequired">&nbsp;*</span></th>
                                         <th>
 											<?php esc_html_e('Short Description', 'tour-booking-manager'); ?>
                                         </th>

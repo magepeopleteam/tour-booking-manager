@@ -137,7 +137,7 @@
                             <select class="" name="ttbm_theme_file">
                                 <option disabled selected><?php esc_html_e('Please select ...', 'tour-booking-manager'); ?></option>
                                 <option value="default.php" <?php echo esc_attr($template_name == 'default.php' ? 'selected' : ''); ?>><?php esc_html_e('Default Theme', 'tour-booking-manager'); ?></option>
-                                <option value="static.php" <?php echo esc_attr($template_name == 'viator.php' ? 'selected' : ''); ?>><?php esc_html_e('Viator Theme', 'tour-booking-manager'); ?></option>
+                                <option value="viator.php" <?php echo esc_attr($template_name == 'viator.php' ? 'selected' : ''); ?>><?php esc_html_e('Viator Theme', 'tour-booking-manager'); ?></option>
                             </select>
                         </label>
                     </section>

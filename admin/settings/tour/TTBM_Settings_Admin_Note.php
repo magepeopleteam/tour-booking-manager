@@ -38,8 +38,7 @@
 					<section>
                         <label class="label">
 							<div>
-								<p><?php esc_html_e('On/Off Admin Note', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></p>
-								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_admin_note'); ?></span>
+								<p><?php esc_html_e('Show Admin Note', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e( 'Show admin note in frontend', 'tour-booking-manager' ); ?></span></i></p>
 							</div>
 							<?php MP_Custom_Layout::switch_button('ttbm_display_admin_note', $checked); ?>
 						</label>
@@ -50,10 +49,9 @@
 						<section>
 							<label class="label">
 								<div>
-									<p><?php esc_html_e('Note ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"></i></p>   
-									<span class="text"><?php TTBM_Settings::des_p('ttbm_admin_note'); ?></span> 
+									<p><?php esc_html_e('Note ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_admin_note'); ?></span></i></p>
 								</div>
-								<textarea name="ttbm_admin_note" cols="50" rows="2"><?php echo esc_attr($admin_note); ?></textarea>
+								<textarea name="ttbm_admin_note" cols="5" rows="2" style="width: 50%;"><?php echo esc_attr($admin_note); ?></textarea>
 							</label>
 						</section>
 

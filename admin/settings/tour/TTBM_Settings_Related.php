@@ -31,22 +31,22 @@
                     <p><?php TTBM_Settings::des_p('related_settings_description'); ?></p>
 					
 					<section class="bg-light">
-                        <label for="" class="label">
+                        <div for="" class="label">
 							<div >
 								<p><?php echo esc_html__('Related '.$ttbm_label.' Settings', 'tour-booking-manager'); ?></p>
 								<span class="text"><?php echo esc_html__('You can set related '.$ttbm_label.' here. ', 'tour-booking-manager'); ?></span>
 							</div>
-						</label>
+						</div>
                     </section>
 
 					<section>
-                        <label class="label">
+                        <div class="label">
 							<div>
 								<p><?php echo esc_html__('Related ', 'tour-booking-manager') . $ttbm_label . esc_html__(' Settings', 'tour-booking-manager') ?></p>
 								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_related'); ?></span>
 							</div>
 							<?php MP_Custom_Layout::switch_button('ttbm_display_related', $checked); ?>
-						</label>
+						</div>
                     </section>
 
 					<div data-collapse="#ttbm_display_related" class="ttbm_display_related <?php echo esc_attr($active); ?>">

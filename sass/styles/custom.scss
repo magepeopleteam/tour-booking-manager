@@ -157,7 +157,15 @@
 		}
 	}
 }
-
+.auto-search-wrapper.loupe{
+	margin-bottom: 20px;
+	&::before{
+	margin: 10px 0;
+	}
+	button{
+		display: none;
+	}
+}
 .ttbm-avg-review-header {
 	align-items: center !important;
 }

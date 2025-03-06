@@ -25,7 +25,7 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 				/************add New location save********************/
 				add_action('wp_ajax_ttbm_new_location_save', [$this, 'ttbm_new_location_save']);
 				add_action('wp_ajax_nopriv_ttbm_new_location_save', [$this, 'ttbm_new_location_save']);
-		}
+			}
 
 		public function add_tab($tour_id){
 			?>
@@ -50,12 +50,108 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 					</section>
 					<?php 
 						$this->location($tour_id);
-						$this->full_location($tour_id);
+
+						$map_settings = get_option('ttbm_google_map_settings'); // Get the entire settings array
+						$gmap_api_key = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
+
+						if($gmap_api_key){
+							$this->google_map_display($tour_id);
+						}else{
+							$this->open_street_map_display($tour_id);
+						}
+						
 					?>
 				</div>	
 			<?php
 		}
 		//*************location setup***********//
+		public function open_street_map_display($tour_id){
+		?>
+			<section>
+				<div class="auto-search-wrapper  loupe">
+					<input type="text" autocomplete="off" id="search" style="width:100%;padding-left:32px;" class="" placeholder="enter the city name" />
+				</div>
+				<div id="map" class="map"></div>
+			</section>
+			<script>
+				document.addEventListener("DOMContentLoaded", function () {
+				new Autocomplete("search", {
+					selectFirst: true,
+					insertToInput: true,
+					cache: true,
+					howManyCharacters: 2,
+
+					// Fetch results from Nominatim API
+					onSearch: ({ currentValue }) => {
+						const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&q=${encodeURIComponent(currentValue)}`;
+						return fetch(api)
+							.then((response) => response.json())
+							.then((data) => data.features)
+							.catch((error) => console.error("Error:", error));
+									},
+							onResults: ({ currentValue, matches, template }) => {
+								const regex = new RegExp(currentValue, "gi");
+								return matches.length === 0
+									? template('<li>No results found</li>')
+									: matches
+										.map((element) => {
+											return `
+											<li>
+												<p>${element.properties.display_name.replace(regex, "<b>$&</b>")}</p>
+											</li>`;
+										})
+										.join("");
+							},
+
+							// Handle selected location
+							onSubmit: ({ object }) => {
+								map.eachLayer((layer) => {
+									if (layer instanceof L.Marker) {
+										map.removeLayer(layer);
+									}
+								});
+
+								const { display_name } = object.properties;
+								const [lng, lat] = object.geometry.coordinates;
+
+								const marker = L.marker([lat, lng], { title: display_name });
+								marker.addTo(map).bindPopup(display_name);
+								map.setView([lat, lng], 8);
+							},
+
+							// Handle no results
+							noResults: ({ currentValue, template }) => template(`<li>No results found for "${currentValue}"</li>`),
+						});
+
+						// OpenStreetMap Configuration
+						const config = { minZoom: 4, maxZoom: 18 };
+						const zoom = 3;
+						const lat = 10.531020008464989;
+						const lng = 78.22265625000001;
+
+						const map = L.map("map", config).setView([lat, lng], zoom);
+
+						// Add fullscreen control
+						const fsControl = L.control.fullscreen();
+						map.addControl(fsControl);
+
+						map.on("enterFullscreen", () => console.log("Enter Fullscreen"));
+						map.on("exitFullscreen", () => console.log("Exit Fullscreen"));
+
+						// Click event to get Lat/Lng
+						map.on("click", (e) => {
+							alert("Lat, Lon: " + e.latlng.lat + ", " + e.latlng.lng);
+						});
+
+						// Add OSM tile layer
+						L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+							attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+						}).addTo(map);
+					});
+			</script>
+		<?php
+		}
+
 		public function location($tour_id) {
 			$display_name = 'ttbm_display_location';
 			$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
@@ -173,7 +269,7 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 			die();
 		}
 
-		public function full_location($tour_id) {
+		public function google_map_display($tour_id) {
 			$location_name = get_post_meta($tour_id, 'ttbm_full_location_name', true);
 			$location_name = !empty($location_name) ? $location_name : '650 Manchester Road, New York, NY 10007, USA';
 
@@ -182,7 +278,6 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 
 			$longitude = get_post_meta($tour_id, 'ttbm_map_longitude', true);
 			$longitude = !empty($longitude) ? $longitude : '-74.005974';
-			
 			?>
 			
 

@@ -1128,6 +1128,16 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   border: 0;
 }
 
+.auto-search-wrapper.loupe {
+  margin-bottom: 20px;
+}
+.auto-search-wrapper.loupe::before {
+  margin: 10px 0;
+}
+.auto-search-wrapper.loupe button {
+  display: none;
+}
+
 .ttbm-avg-review-header {
   align-items: center !important;
 }

@@ -25,8 +25,30 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 				/************add New location save********************/
 				add_action('wp_ajax_ttbm_new_location_save', [$this, 'ttbm_new_location_save']);
 				add_action('wp_ajax_nopriv_ttbm_new_location_save', [$this, 'ttbm_new_location_save']);
+
+				add_action('ttbm_common_script',[$this,'ttbm_common_script']);
 			}
 
+		public function ttbm_common_script(){
+			//openstreet map css
+			wp_enqueue_style('ttbm_leaflet_style', TTBM_PLUGIN_URL . '/assets/osmap/leaflet.css', array(), time());
+			wp_enqueue_style('fullScreen_style', TTBM_PLUGIN_URL . '/assets/osmap/Control.FullScreen.css', array(), time());
+			wp_enqueue_style('autocomplete_style', TTBM_PLUGIN_URL . '/assets/osmap/autocomplete.min.css', array(), time());
+			//openstreet map js
+			wp_enqueue_script('ttbm_leaflet_script', TTBM_PLUGIN_URL . '/assets/osmap/leaflet.js', array('jquery'), time(), true);
+			wp_enqueue_script('autocomplete_script', TTBM_PLUGIN_URL . '/assets/osmap/autocomplete.min.js', array('jquery'), time(), true);
+			wp_enqueue_script('fullScreen_script', TTBM_PLUGIN_URL . '/assets/osmap/Control.FullScreen.js', array('jquery'), time(), true);
+			
+			$pro_key = TTBM_Function::get_general_settings('ttbm_gmap_api_key');
+			$free_key = get_option('ttbm_google_map_settings');
+			$api_key  = $free_key?$free_key['ttbm_gmap_api_key']:$pro_key;
+			if (!empty($api_key)) {
+				wp_enqueue_script( 'google-maps-api', 'https://maps.googleapis.com/maps/api/js?key=' . esc_attr($api_key) . '&libraries=places&callback=initMap', [], null,true);
+			}
+			wp_localize_script('ttbm_leaflet_script', 'ttbm_map', array(
+				'api_key'   => esc_attr($api_key),
+			));
+		}
 		public function add_tab($tour_id){
 			?>
 			<li data-tabs-target="#ttbm_settings_location">
@@ -50,108 +72,13 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 					</section>
 					<?php 
 						$this->location($tour_id);
-
-						$map_settings = get_option('ttbm_google_map_settings'); // Get the entire settings array
-						$gmap_api_key = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
-
-						if($gmap_api_key){
-							$this->google_map_display($tour_id);
-						}else{
-							$this->open_street_map_display($tour_id);
-						}
-						
+						$this->map_display($tour_id);						
 					?>
 				</div>	
 			<?php
 		}
 		//*************location setup***********//
-		public function open_street_map_display($tour_id){
-		?>
-			<section>
-				<div class="auto-search-wrapper  loupe">
-					<input type="text" autocomplete="off" id="search" style="width:100%;padding-left:32px;" class="" placeholder="enter the city name" />
-				</div>
-				<div id="map" class="map"></div>
-			</section>
-			<script>
-				document.addEventListener("DOMContentLoaded", function () {
-				new Autocomplete("search", {
-					selectFirst: true,
-					insertToInput: true,
-					cache: true,
-					howManyCharacters: 2,
-
-					// Fetch results from Nominatim API
-					onSearch: ({ currentValue }) => {
-						const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&q=${encodeURIComponent(currentValue)}`;
-						return fetch(api)
-							.then((response) => response.json())
-							.then((data) => data.features)
-							.catch((error) => console.error("Error:", error));
-									},
-							onResults: ({ currentValue, matches, template }) => {
-								const regex = new RegExp(currentValue, "gi");
-								return matches.length === 0
-									? template('<li>No results found</li>')
-									: matches
-										.map((element) => {
-											return `
-											<li>
-												<p>${element.properties.display_name.replace(regex, "<b>$&</b>")}</p>
-											</li>`;
-										})
-										.join("");
-							},
-
-							// Handle selected location
-							onSubmit: ({ object }) => {
-								map.eachLayer((layer) => {
-									if (layer instanceof L.Marker) {
-										map.removeLayer(layer);
-									}
-								});
-
-								const { display_name } = object.properties;
-								const [lng, lat] = object.geometry.coordinates;
-
-								const marker = L.marker([lat, lng], { title: display_name });
-								marker.addTo(map).bindPopup(display_name);
-								map.setView([lat, lng], 8);
-							},
-
-							// Handle no results
-							noResults: ({ currentValue, template }) => template(`<li>No results found for "${currentValue}"</li>`),
-						});
-
-						// OpenStreetMap Configuration
-						const config = { minZoom: 4, maxZoom: 18 };
-						const zoom = 3;
-						const lat = 10.531020008464989;
-						const lng = 78.22265625000001;
-
-						const map = L.map("map", config).setView([lat, lng], zoom);
-
-						// Add fullscreen control
-						const fsControl = L.control.fullscreen();
-						map.addControl(fsControl);
-
-						map.on("enterFullscreen", () => console.log("Enter Fullscreen"));
-						map.on("exitFullscreen", () => console.log("Exit Fullscreen"));
-
-						// Click event to get Lat/Lng
-						map.on("click", (e) => {
-							alert("Lat, Lon: " + e.latlng.lat + ", " + e.latlng.lng);
-						});
-
-						// Add OSM tile layer
-						L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-							attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-						}).addTo(map);
-					});
-			</script>
-		<?php
-		}
-
+		
 		public function location($tour_id) {
 			$display_name = 'ttbm_display_location';
 			$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
@@ -269,7 +196,7 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 			die();
 		}
 
-		public function google_map_display($tour_id) {
+		public function map_display($tour_id) {
 			$location_name = get_post_meta($tour_id, 'ttbm_full_location_name', true);
 			$location_name = !empty($location_name) ? $location_name : '650 Manchester Road, New York, NY 10007, USA';
 
@@ -278,20 +205,25 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 
 			$longitude = get_post_meta($tour_id, 'ttbm_map_longitude', true);
 			$longitude = !empty($longitude) ? $longitude : '-74.005974';
+
+			$map_settings = get_option('ttbm_google_map_settings'); 
+			$gmap_api_key = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
 			?>
 			
 
 			<section>
 				<label class="label">
 					<div class="label-inner">
-					<p><?php esc_html_e('Google Map Location ', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i></p>
+						<p><?php $gmap_api_key? esc_html_e('Google Map Location', 'tour-booking-manager'):esc_html_e('OSMap Location', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i></p>
 					</div>
-					<input style="width: 80%;" id="full_location" name="ttbm_full_location_name" placeholder="<?php esc_html_e('Please type location...', 'tour-booking-manager'); ?>" value="<?php echo esc_attr($location_name); ?>">
+					<div style="width: 80%;" class="auto-search-wrapper loupe">
+						<input style="padding-left:30px" id="<?php echo esc_attr($gmap_api_key? 'ttbm_map_location':'ttbm_osmap_location'); ?>" name="ttbm_full_location_name" placeholder="<?php esc_html_e('Please type location...', 'tour-booking-manager'); ?>" value="<?php echo esc_attr($location_name); ?>">
+					</div>
 				</label>
 			</section>
 
 			<section>
-				<div id="map_canvas" style="width: 100%; height: 300px;"></div>
+				<div id="<?php echo esc_attr($gmap_api_key? 'gmap_canvas':'osmap_canvas'); ?>" style="width: 100%; height: 400px;"></div>
 				<div style="margin-top: 10px;">
 					<?php esc_html_e('Latitude ', 'tour-booking-manager'); ?>
 					<input type="text" id="map_latitude" name="ttbm_map_latitude" value="<?php echo esc_attr($latitude); ?>" >
@@ -299,112 +231,6 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 					<input type="text" id="map_longitude" name="ttbm_map_longitude" value="<?php echo esc_attr($longitude); ?>" >
 				</div>
 			</section>
-			<script>
-				let map, marker, autocomplete, geocoder;
-
-				function initMap() {
-					let lati = parseFloat(document.getElementById('map_latitude').value);
-					let longdi = parseFloat(document.getElementById('map_longitude').value);
-
-					// Initialize the map
-					map = new google.maps.Map(document.getElementById('map_canvas'), {
-						center: { lat: lati, lng: longdi },
-						zoom: 12,
-						zoomControl: true,
-						streetViewControl: false,
-						mapTypeControl: false,
-						scaleControl: true
-					});
-
-					// Initialize the marker
-					marker = new google.maps.Marker({
-						position: { lat: lati, lng: longdi },
-						map: map,
-						title: "Selected Location",
-						draggable: true
-					});
-
-					// Initialize the geocoder for reverse geocoding
-					geocoder = new google.maps.Geocoder();
-
-					// Update latitude and longitude when the marker is dragged
-					marker.addListener("dragend", function (event) {
-						document.getElementById('map_latitude').value = event.latLng.lat();
-						document.getElementById('map_longitude').value = event.latLng.lng();
-						reverseGeocode(event.latLng); // Update location name when dragging the marker
-					});
-
-					// Initialize Autocomplete for the address input field
-					autocomplete = new google.maps.places.Autocomplete(document.getElementById("full_location"));
-					autocomplete.addListener("place_changed", onPlaceChanged);
-
-					// Add a click event listener to the map
-					map.addListener("click", function(event) {
-						let clickedLatLng = event.latLng;
-
-						// Move the marker to the clicked position
-						marker.setPosition(clickedLatLng);
-
-						// Update the latitude and longitude input fields
-						document.getElementById('map_latitude').value = clickedLatLng.lat();
-						document.getElementById('map_longitude').value = clickedLatLng.lng();
-
-						// Reverse geocode the clicked position to get the address
-						reverseGeocode(clickedLatLng);
-					});
-				}
-
-				function enableEditing() {
-					// Allow the user to edit the location name when clicked
-					document.getElementById('full_location').readOnly = false;
-					document.getElementById('save_location_name').style.display = 'inline-block'; // Show save button
-				}
-
-				function saveLocationName() {
-					// Disable editing after saving the location name
-					document.getElementById('full_location').readOnly = true;
-					document.getElementById('save_location_name').style.display = 'none'; // Hide save button
-
-					// You may want to send the updated location name to the server or process it here
-					// For example:
-					console.log('New Location Name: ' + document.getElementById('full_location').value);
-				}
-
-				function reverseGeocode(latLng) {
-					geocoder.geocode({ 'location': latLng }, function(results, status) {
-						if (status === google.maps.GeocoderStatus.OK) {
-							if (results[0]) {
-								// Set the location name from the geocode results
-								document.getElementById('full_location').value = results[0].formatted_address;
-							} else {
-								console.error("No results found for the given location.");
-							}
-						} else {
-							console.error("Geocoder failed due to: " + status);
-						}
-					});
-				}
-
-				function onPlaceChanged() {
-					let place = autocomplete.getPlace();
-
-					if (!place.geometry) {
-						console.error("No details available for the selected place.");
-						return;
-					}
-
-					let location = place.geometry.location;
-					let lat = location.lat();
-					let lng = location.lng();
-
-					map.setCenter(location);
-					marker.setPosition(location);
-					document.getElementById("map_latitude").value = lat;
-					document.getElementById("map_longitude").value = lng;
-
-					reverseGeocode(location);
-				}
-				</script>
 			<?php
 		}
 

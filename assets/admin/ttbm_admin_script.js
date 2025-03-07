@@ -881,4 +881,176 @@
     });
 }(jQuery));
 
+// =================Open Street map location search==================
+(function($) {
+    // OpenStreetMap setup
+    let osmMap, osmMarker, osmAutocomplete, osmGeocoder;
+    
+    function initOSMMap() {
+        let lati = parseFloat(document.getElementById('map_latitude')?.value) || 23.8103; // Default to Dhaka
+        let longdi = parseFloat(document.getElementById('map_longitude')?.value) || 90.4125;
 
+        setTimeout(() => {
+            osmMap.invalidateSize();
+        }, 500);
+
+        // Initialize the OpenStreetMap
+        osmMap = L.map("osmap_canvas", { minZoom: 1, maxZoom: 100 }).setView([lati, longdi], 12);
+
+        // Add OSM tile layer
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(osmMap);
+
+        // Initialize the marker for OpenStreetMap
+        osmMarker = L.marker([lati, longdi], { title: "Selected Location" }).addTo(osmMap);
+
+        // Initialize Autocomplete for OpenStreetMap search
+        osmAutocomplete = new Autocomplete("ttbm_osmap_location", {
+            selectFirst: true,
+            insertToInput: true,
+            cache: true,
+            howManyCharacters: 2,
+
+            // Fetch results from Nominatim API for OSM
+            onSearch: ({ currentValue }) => {
+                const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&q=${encodeURIComponent(currentValue)}`;
+                return fetch(api)
+                    .then((response) => response.json())
+                    .then((data) => data.features)
+                    .catch((error) => console.error("Error:", error));
+            },
+            onResults: ({ currentValue, matches, template }) => {
+                const regex = new RegExp(currentValue, "gi");
+                return matches.length === 0
+                    ? template('<li>No results found</li>')
+                    : matches
+                        .map((element) => {
+                            return `
+                            <li>
+                                <p>${element.properties.display_name.replace(regex, "<b>$&</b>")}</p>
+                            </li>`;
+                        })
+                        .join("");
+            },
+            // Handle selected location
+            onSubmit: ({ object }) => {
+                osmMap.eachLayer((layer) => {
+                    if (layer instanceof L.Marker) {
+                        osmMap.removeLayer(layer);
+                    }
+                });
+
+                const { display_name } = object.properties;
+                const [lng, lat] = object.geometry.coordinates;
+
+                osmMarker = L.marker([lat, lng], { title: display_name }).addTo(osmMap);
+                osmMap.setView([lat, lng], 8);
+            },
+            noResults: ({ currentValue, template }) => template(`<li>No results found for "${currentValue}"</li>`),
+        });
+
+        // Add fullscreen control
+        const fsControl = L.control.fullscreen();
+        osmMap.addControl(fsControl);
+    
+        osmMap.on("enterFullscreen", () => console.log("Enter Fullscreen"));
+        osmMap.on("exitFullscreen", () => console.log("Exit Fullscreen"));
+       
+
+        // Add click event to OSM map
+        osmMap.on("click", (e) => {
+            alert("Lat, Lon: " + e.latlng.lat + ", " + e.latlng.lng);
+        });
+    }
+
+    // ===========Google Map setup=============
+    let gmap, gmapMarker, gmapAutocomplete, gmapGeocoder;
+
+    if(ttbm_map.api_key){
+        initGMap();
+    }else{
+        initOSMMap();
+    }
+    function initGMap() {
+        let lati = parseFloat(document.getElementById('map_latitude').value);
+        let longdi = parseFloat(document.getElementById('map_longitude').value);
+
+        // Initialize Google Map
+        gmap = new google.maps.Map(document.getElementById('gmap_canvas'), {
+            center: { lat: lati, lng: longdi },
+            zoom: 12,
+            zoomControl: true,
+            streetViewControl: false,
+            mapTypeControl: false,
+            scaleControl: true
+        });
+
+        // Initialize Google Marker
+        gmapMarker = new google.maps.Marker({
+            position: { lat: lati, lng: longdi },
+            map: gmap,
+            title: "Selected Location",
+            draggable: true
+        });
+
+        // Initialize Google geocoder for reverse geocoding
+        gmapGeocoder = new google.maps.Geocoder();
+
+        // Update latitude and longitude when the marker is dragged
+        gmapMarker.addListener("dragend", function(event) {
+            document.getElementById('map_latitude').value = event.latLng.lat();
+            document.getElementById('map_longitude').value = event.latLng.lng();
+            reverseGeocode(event.latLng); // Update location name when dragging the marker
+        });
+
+        // Initialize Autocomplete for Google address input field
+        gmapAutocomplete = new google.maps.places.Autocomplete(document.getElementById("ttbm_map_location"));
+        gmapAutocomplete.addListener("place_changed", onPlaceChanged);
+
+        // Add a click event listener to Google Map
+        gmap.addListener("click", function(event) {
+            let clickedLatLng = event.latLng;
+            gmapMarker.setPosition(clickedLatLng);
+            document.getElementById('map_latitude').value = clickedLatLng.lat();
+            document.getElementById('map_longitude').value = clickedLatLng.lng();
+            reverseGeocode(clickedLatLng);
+        });
+    }
+
+    // Reverse geocoding for Google Map
+    function reverseGeocode(latLng) {
+        gmapGeocoder.geocode({ 'location': latLng }, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                    document.getElementById('ttbm_map_location').value = results[0].formatted_address;
+                } else {
+                    console.error("No results found for the given location.");
+                }
+            } else {
+                console.error("Geocoder failed due to: " + status);
+            }
+        });
+    }
+
+    // Handle place change for Google Map
+    function onPlaceChanged() {
+        let place = gmapAutocomplete.getPlace();
+
+        if (!place.geometry) {
+            console.error("No details available for the selected place.");
+            return;
+        }
+
+        let location = place.geometry.location;
+        gmap.setCenter(location);
+        gmapMarker.setPosition(location);
+        document.getElementById("map_latitude").value = location.lat();
+        document.getElementById("map_longitude").value = location.lng();
+        reverseGeocode(location);
+    }
+
+    
+   
+
+})(jQuery);

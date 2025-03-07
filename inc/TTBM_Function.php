@@ -104,16 +104,17 @@
 						$interval = MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_after', 1);
 						$all_dates = MP_Global_Function::date_separate_period($start_date, $end_date, $interval);
 						foreach ($all_dates as $date) {
-							$date = $date->format('Y-m-d');
-							if ($expire || $now_date <= strtotime($date)) {
-								$day = strtolower(date('D', strtotime($date)));
-								if (!in_array($day, $off_days) && !in_array($date, $off_dates)) {
-									$current_date = self::get_date_by_time_check($tour_id, $date, $expire);
-									if ($current_date) {
-										$tour_date[] = $current_date;
-									}
-								}
-							}
+						    $date = $date->format('Y-m-d'); // Convert DateTime object to string
+						    if ($expire || $now_date <= strtotime($date)) {
+						        $day = strtolower(date('D', strtotime($date))); // Get the day in lowercase
+						        // Ensure $off_days and $off_dates are arrays before using in_array()
+						        if (!in_array($day, (array) $off_days) && !in_array($date, (array) $off_dates)) {
+						            $current_date = self::get_date_by_time_check($tour_id, $date, $expire);
+						            if ($current_date) {
+						                $tour_date[] = $current_date;
+						            }
+						        }
+						    }
 						}
 					}
 				}

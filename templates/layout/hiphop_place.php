@@ -55,7 +55,7 @@
 			</div>
 		</div>
 		<?php
-		do_action( 'ttbm_hiphop_place_map', $ttbm_post_id );
 	}
+	do_action( 'ttbm_hiphop_place_map', $ttbm_post_id );
 ?>
 

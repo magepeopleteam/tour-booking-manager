@@ -26,10 +26,11 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 				add_action('wp_ajax_ttbm_new_location_save', [$this, 'ttbm_new_location_save']);
 				add_action('wp_ajax_nopriv_ttbm_new_location_save', [$this, 'ttbm_new_location_save']);
 
-				add_action('ttbm_common_script',[$this,'ttbm_common_script']);
+				add_action('ttbm_hiphop_place_map',[$this,'show_map_frontend']);
+				add_action('ttbm_common_script',[$this,'osmap_script']);
 			}
 
-		public function ttbm_common_script(){
+		public function osmap_script(){
 			//openstreet map css
 			wp_enqueue_style('ttbm_leaflet_style', TTBM_PLUGIN_URL . '/assets/osmap/leaflet.css', array(), time());
 			wp_enqueue_style('fullScreen_style', TTBM_PLUGIN_URL . '/assets/osmap/Control.FullScreen.css', array(), time());
@@ -196,6 +197,25 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 			die();
 		}
 
+		public function show_map_frontend($tour_id) {
+
+			$location_name = get_post_meta($tour_id, 'ttbm_full_location_name', true);
+			$location_name = !empty($location_name) ? $location_name : '650 Manchester Road, New York, NY 10007, USA';
+
+			$latitude = get_post_meta($tour_id, 'ttbm_map_latitude', true);
+			$latitude = !empty($latitude) ? $latitude : '40.712776'; // Default Latitude for New York
+
+			$longitude = get_post_meta($tour_id, 'ttbm_map_longitude', true);
+			$longitude = !empty($longitude) ? $longitude : '-74.005974';
+
+			$map_settings = get_option('ttbm_google_map_settings'); 
+			$gmap_api_key = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
+			?>
+			<div class="ttbm_default_widget" style="width: 100%; height: 400px;">
+				<div id="<?php echo esc_attr($gmap_api_key? 'gmap_canvas':'osmap_canvas'); ?>" style="width: 100%; height:100%;" data-lati="<?php echo esc_attr($latitude); ?>" data-longdi="<?php echo esc_attr($longitude); ?>"></div>
+			</div>	
+			<?php
+		}
 		public function map_display($tour_id) {
 			$location_name = get_post_meta($tour_id, 'ttbm_full_location_name', true);
 			$location_name = !empty($location_name) ? $location_name : '650 Manchester Road, New York, NY 10007, USA';
@@ -210,7 +230,6 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 			$gmap_api_key = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
 			?>
 			
-
 			<section>
 				<label class="label">
 					<div class="label-inner">
@@ -220,6 +239,11 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 						<input style="padding-left:30px" id="<?php echo esc_attr($gmap_api_key? 'ttbm_map_location':'ttbm_osmap_location'); ?>" name="ttbm_full_location_name" placeholder="<?php esc_html_e('Please type location...', 'tour-booking-manager'); ?>" value="<?php echo esc_attr($location_name); ?>">
 					</div>
 				</label>
+				<?php if(!$gmap_api_key): ?>
+					<p class="text"><?php esc_html_e('To use google map, you have to add google map API key from', 'tour-booking-manager'); ?>
+					<a href="<?php echo admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page'); ?>"><?Php esc_html_e('settings.','tour-booking-manager'); ?></a>
+				</p>
+				<?php endif; ?>
 			</section>
 
 			<section>

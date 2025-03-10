@@ -70,4 +70,32 @@
 	$("#ttbm_tour_guide .prev").click(function () {
 		$('#ttbm_tour_guide .owl-prev').trigger('click');
 	});
+
+	//========= google map load=========
+	if(ttbm_map.api_key){
+        initGMap();
+    }else{
+        initOSMMap();
+    }
+	function initGMap() {
+		var gmap_canvas = document.getElementById("gmap_canvas");
+        
+		var lati = parseFloat(gmap_canvas.getAttribute("data-lati")) || 0;
+		var longdi = parseFloat(gmap_canvas.getAttribute("data-longdi")) || 0;
+
+		var location = { lat: lati, lng: longdi };
+
+		// Create a new map instance
+		var map = new google.maps.Map(gmap_canvas, {
+			zoom: 12, // Zoom level
+			center: location // Set center of the map
+		});
+
+		// Add a marker at the center
+		var marker = new google.maps.Marker({
+			position: location,
+			map: map,
+			title: "Dhaka, Bangladesh"
+		});
+    }
 }(jQuery));

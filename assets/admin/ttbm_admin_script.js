@@ -889,13 +889,7 @@
     function initOSMMap() {
         let lati = parseFloat(document.getElementById('map_latitude')?.value) || 23.8103; // Default to Dhaka
         let longdi = parseFloat(document.getElementById('map_longitude')?.value) || 90.4125;
-
-        setTimeout(() => {
-            osmMap.invalidateSize();
-        }, 500);
-
-        // Initialize the OpenStreetMap
-        osmMap = L.map("osmap_canvas", { minZoom: 1, maxZoom: 100 }).setView([lati, longdi], 12);
+        osmMap = L.map("osmap_canvas", { minZoom: 4, maxZoom: 18 }).setView([lati, longdi], 12);
 
         // Add OSM tile layer
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -906,49 +900,60 @@
         osmMarker = L.marker([lati, longdi], { title: "Selected Location" }).addTo(osmMap);
 
         // Initialize Autocomplete for OpenStreetMap search
-        osmAutocomplete = new Autocomplete("ttbm_osmap_location", {
-            selectFirst: true,
-            insertToInput: true,
-            cache: true,
-            howManyCharacters: 2,
-
-            // Fetch results from Nominatim API for OSM
-            onSearch: ({ currentValue }) => {
-                const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&q=${encodeURIComponent(currentValue)}`;
-                return fetch(api)
-                    .then((response) => response.json())
-                    .then((data) => data.features)
-                    .catch((error) => console.error("Error:", error));
-            },
-            onResults: ({ currentValue, matches, template }) => {
-                const regex = new RegExp(currentValue, "gi");
-                return matches.length === 0
-                    ? template('<li>No results found</li>')
-                    : matches
-                        .map((element) => {
-                            return `
+        
+            new Autocomplete("ttbm_osmap_location", {
+                selectFirst: true,
+                insertToInput: true,
+                cache: true,
+                howManyCharacters: 2,
+        
+                // onSearch
+                onSearch: ({ currentValue }) => {
+                    const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&city=${encodeURI(currentValue)}`;
+                    return new Promise((resolve) => {
+                        fetch(api)
+                            .then((response) => response.json())
+                            .then((data) => resolve(data.features))
+                            .catch((error) => console.error(error));
+                    });
+                },
+        
+                // onResults
+                onResults: ({ currentValue, matches, template }) => {
+                    const regex = new RegExp(currentValue, "gi");
+                    return matches.length === 0
+                        ? template(`<li>No results found: "${currentValue}"</li>`)
+                        : matches.map((element) => `
                             <li>
-                                <p>${element.properties.display_name.replace(regex, "<b>$&</b>")}</p>
-                            </li>`;
-                        })
-                        .join("");
-            },
-            // Handle selected location
-            onSubmit: ({ object }) => {
-                osmMap.eachLayer((layer) => {
-                    if (layer instanceof L.Marker) {
-                        osmMap.removeLayer(layer);
-                    }
-                });
-
-                const { display_name } = object.properties;
-                const [lng, lat] = object.geometry.coordinates;
-
-                osmMarker = L.marker([lat, lng], { title: display_name }).addTo(osmMap);
-                osmMap.setView([lat, lng], 8);
-            },
-            noResults: ({ currentValue, template }) => template(`<li>No results found for "${currentValue}"</li>`),
-        });
+                                <p>${element.properties.display_name.replace(regex, (str) => `<b>${str}</b>`)}</p>
+                            </li>`
+                        ).join("");
+                },
+        
+                // onSubmit
+                onSubmit: ({ object }) => {
+                    osmMap.eachLayer((layer) => {
+                        if (!!layer.toGeoJSON) {
+                            osmMap.removeLayer(layer);
+                        }
+                    });
+        
+                    const { display_name } = object.properties;
+                    const [lng, lat] = object.geometry.coordinates;
+                    
+                    const marker = L.marker([lat, lng], { title: display_name });
+                    marker.addTo(osmMap).bindPopup(display_name);
+                    osmMap.setView([lat, lng], 8);
+                },
+        
+                // onSelectedItem
+                onSelectedItem: ({ index, element, object }) => {
+                    console.log("onSelectedItem:", { index, element, object });
+                },
+        
+                // noResults
+                noResults: ({ currentValue, template }) => template(`<li>No results found: "${currentValue}"</li>`),
+            });
 
         // Add fullscreen control
         const fsControl = L.control.fullscreen();

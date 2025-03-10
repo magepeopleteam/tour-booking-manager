@@ -1128,9 +1128,6 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   border: 0;
 }
 
-.auto-search-wrapper.loupe {
-  margin-bottom: 20px;
-}
 .auto-search-wrapper.loupe::before {
   margin: 10px 0;
 }

@@ -422,7 +422,7 @@
 				//$user_id = $order_meta['_customer_user'][0] ?? '';
 				$user_id = $order->get_user_id() ?? '';
 				$zdata = [];
-				if (sizeof($service_info) > 0) {
+				if (is_array($service_info) && sizeof($service_info) > 0) {
 					foreach ($service_info as $key => $_ticket) {
 						$zdata[$key]['ttbm_service_name'] = $_ticket['service_name'];
 						$zdata[$key]['ttbm_service_price'] = $_ticket['service_price'];
@@ -448,11 +448,11 @@
 				$billing_email = $order->get_billing_email();
 				$billing_phone = $order->get_billing_phone();
 				$billing_address = $order->get_billing_address_1() . ' ' . $order->get_billing_address_2();
-				$hotel_id = sizeof($hotel_info) > 0 ? $hotel_info['hotel_id'] : 0;
-				$checkin_date = sizeof($hotel_info) > 0 ? $hotel_info['ttbm_checkin_date'] : '';
-				$checkout_date = sizeof($hotel_info) > 0 ? $hotel_info['ttbm_checkout_date'] : '';
-				$num_of_day = sizeof($hotel_info) > 0 ? $hotel_info['ttbm_hotel_num_of_day'] : 1;
-				if (sizeof($ticket_info) > 0) {
+				$hotel_id = is_array($hotel_info) && sizeof($hotel_info) > 0 ? $hotel_info['hotel_id'] : 0;
+				$checkin_date = is_array($hotel_info) && sizeof($hotel_info) > 0 ? $hotel_info['ttbm_checkin_date'] : '';
+				$checkout_date = is_array($hotel_info) && sizeof($hotel_info) > 0 ? $hotel_info['ttbm_checkout_date'] : '';
+				$num_of_day = is_array($hotel_info) && sizeof($hotel_info) > 0 ? $hotel_info['ttbm_hotel_num_of_day'] : 1;
+				if (is_array($ticket_info) && sizeof($ticket_info) > 0) {
 					$count = 0;
 
 					foreach ($ticket_info as $_ticket) {

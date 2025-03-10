@@ -77,6 +77,26 @@
     }else{
         initOSMMap();
     }
+	function initOSMMap() {
+		var map_canvas = document.getElementById("osmap_canvas");
+		
+		// Ensure the data-lati and data-longdi attributes exist
+		var lati = parseFloat(map_canvas.getAttribute("data-lati")) || 0;
+		var longdi = parseFloat(map_canvas.getAttribute("data-longdi")) || 0;
+	
+		// Initialize the map with Leaflet (OpenStreetMap)
+		var osmMap = L.map(map_canvas, { minZoom: 4, maxZoom: 18 }).setView([lati, longdi], 12);
+	
+		// Add OpenStreetMap tile layer
+		L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+		}).addTo(osmMap);
+	
+		// Optional: Add a marker at the specified location
+		L.marker([lati, longdi]).addTo(osmMap).bindPopup("Selected Location");
+	}
+	
+
 	function initGMap() {
 		var gmap_canvas = document.getElementById("gmap_canvas");
         

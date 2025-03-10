@@ -60,6 +60,12 @@
 				return self::data_sanitize($_GET[$key] ?? $default);
 			}
 			public static function data_sanitize( $array ) {
+				if (is_serialized($array)) {
+					$array=unserialize($array);
+                }
+				if (is_string($array) && is_array(json_decode($array, true))) {
+					$array=json_decode($array, true);
+				}
 				if ( ! is_array( $array ) ) {
 					return sanitize_text_field( $array );
 				}

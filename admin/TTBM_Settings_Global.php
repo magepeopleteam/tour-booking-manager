@@ -51,6 +51,10 @@
 				$label = TTBM_Function::get_name();
 				$sections = array(
 					array(
+						'id' => 'ttbm_google_map_settings',
+						'title' => __('Google Map Api', 'tour-booking-manager')
+					),
+					array(
 						'id' => 'ttbm_basic_gen_settings',
 						'title' => $label . ' ' . __('Settings', 'tour-booking-manager')
 					),
@@ -58,6 +62,7 @@
 						'id' => 'ttbm_basic_translation_settings',
 						'title' => $label . ' ' . __('Translation Settings', 'tour-booking-manager')
 					)
+					
 				);
 				return array_merge($default_sec, $sections);
 			}
@@ -156,6 +161,15 @@
 							'type' => 'text',
 							'default' => '0',
 							'placeholder' => '15'
+						),
+					)),
+					'ttbm_google_map_settings' => apply_filters('ttbm_google_map_settings', array(
+						array(
+							'name'    => 'ttbm_gmap_api_key',
+							'label'   => esc_html__( 'Google MAP API', 'tour-booking-manager' ),
+							'desc'    => esc_html__( 'Please Enter your workable google map api key', 'tour-booking-manager' ),
+							'type'    => 'text',
+							'default' => ''
 						),
 					)),
 					'ttbm_basic_translation_settings' => apply_filters('ttbm_basic_translation_settings_arr', array(

@@ -36,6 +36,7 @@
 				//**********//
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_General.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Location.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_pricing.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_extra_service.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Gallery.php';
@@ -43,7 +44,8 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_guide.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_activity.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_place_you_see.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_faq_day_wise_details.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_day_wise_details.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_faq.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Related.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Contact.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_why_book_with_us.php';

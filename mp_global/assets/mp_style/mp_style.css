@@ -3737,12 +3737,15 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 	}
 	div.mpStyle [class*="bgYellow"] {
 		background-color: var(--color_yellow);
+		font-size: 14px;
 	}
 	div.mpStyle [class*="bgYellow_99"] {
 		background-color: #ffff0099;
+		font-size: 14px;
 	}
 	div.mpStyle [class*="bgYellow_77"] {
-		background-color: #ffff0077;
+		background-color: #ffff0022;
+		font-size: 14px;
 	}
 	/*****white*********/
 	div.mpStyle [class*="textWhite"] {
@@ -3801,6 +3804,7 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 	div.mpStyle .bgColor_3,
 	div.mpStyle [class*="_bgColor_3"] {
 		background-color: #f2ffc3;
+		font-size: 14px;
 	}
 	/*****Color_4*********/
 	div.mpStyle .textColor_4,

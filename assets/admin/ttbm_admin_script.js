@@ -63,25 +63,7 @@
             });
         }
     });
-    //*********Add F.A.Q Item************//
-    $(document).on('click', '.ttbm_add_faq_content', function () {
-        let $this = $(this);
-        let parent = $this.closest('.tabsItem');
-        let dt = new Date();
-        let time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
-        $.ajax({
-            type: 'POST', url: mp_ajax_url, data: {"action": "get_ttbm_add_faq_content", "id": time}, beforeSend: function () {
-                dLoader(parent);
-            }, success: function (data) {
-                $this.before(data);
-                tinymce.execCommand('mceAddEditor', true, time);
-                dLoaderRemove(parent);
-            }, error: function (response) {
-                console.log(response);
-            }
-        });
-        return false;
-    });
+    
     //*********Day wise details************//
     $(document).on('click', '.ttbm_add_day_wise_details', function () {
         let $this = $(this);
@@ -498,6 +480,342 @@
             $(visible[id]).slideDown('fast');
         }
     }
+    // =====================sidebar modal open close=============
+    $(document).on('click', '[data-modal]', function (e) {
+        const modalTarget = $(this).data('modal');
+        $(`[data-modal-target="${modalTarget}"]`).addClass('open');
+    });
+    $(document).on('click', '[data-modal-target] .ttbm-modal-close', function (e) {
+        $(this).closest('[data-modal-target]').removeClass('open');
+    });
+    // ================FAQ sidebar modal=================//
+    $(document).on('click', '.ttbm-faq-item-new', function (e) {
+        $('#ttbm-faq-msg').html('');
+        $('.ttbm_faq_save_buttons').show();
+        $('.ttbm_faq_update_buttons').hide();
+        empty_faq_form();
+    });
+    function close_sidebar_modal(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('.ttbm-modal-container').removeClass('open');
+    }
+    $(document).on('click', '.ttbm-faq-item-edit', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('#ttbm-faq-msg').html('');
+        $('.ttbm_faq_save_buttons').hide();
+        $('.ttbm_faq_update_buttons').show();
+        var itemId = $(this).closest('.ttbm-faq-item').data('id');
+        var parent = $(this).closest('.ttbm-faq-item');
+        var headerText = parent.find('.faq-header p').text().trim();
+        var faqContentId = parent.find('.faq-content').html().trim();
+        var editorId = 'ttbm_faq_content';
+        $('input[name="ttbm_faq_title"]').val(headerText);
+        $('input[name="ttbm_faq_item_id"]').val(itemId);
+        if (tinymce.get(editorId)) {
+            tinymce.get(editorId).setContent(faqContentId);
+        } else {
+            $('#' + editorId).val(faqContentId);
+        }
+    });
+    $(document).on('click', '.ttbm-faq-item-delete', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var itemId = $(this).closest('.ttbm-faq-item').data('id');
+        var isConfirmed = confirm('Are you sure you want to delete this row?');
+        if (isConfirmed) {
+            delete_faq_item(itemId);
+        } else {
+            console.log('Deletion canceled.' + itemId);
+        }
+    });
+    function empty_faq_form() {
+        $('input[name="ttbm_faq_title"]').val('');
+        tinyMCE.get('ttbm_faq_content').setContent('');
+        $('input[name="ttbm_faq_item_id"]').val('');
+    }
+    $(document).on('click', '#ttbm_faq_update', function (e) {
+        e.preventDefault();
+        update_faq();
+    });
+    $(document).on('click', '#ttbm_faq_save', function (e) {
+        e.preventDefault();
+        save_faq();
+    });
+    $(document).on('click', '#ttbm_faq_save_close', function (e) {
+        e.preventDefault();
+        save_faq();
+        close_sidebar_modal(e);
+    });
+    function update_faq() {
+        var title = $('input[name="ttbm_faq_title"]');
+        var content = tinyMCE.get('ttbm_faq_content').getContent();
+        var postID = $('input[name="ttbm_post_id"]');
+        var itemId = $('input[name="ttbm_faq_item_id"]');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_faq_data_update',
+                ttbm_faq_title: title.val(),
+                ttbm_faq_content: content,
+                ttbm_faq_postID: postID.val(),
+                ttbm_faq_itemID: itemId.val(),
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                $('#ttbm-faq-msg').html(response.data.message);
+                $('.ttbm-faq-items').html('');
+                $('.ttbm-faq-items').append(response.data.html);
+                setTimeout(function () {
+                    $('.ttbm-modal-container').removeClass('open');
+                    empty_faq_form();
+                }, 1000);
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+    function save_faq() {
+        var title = $('input[name="ttbm_faq_title"]');
+        var content = tinyMCE.get('ttbm_faq_content').getContent();
+        var postID = $('input[name="ttbm_post_id"]');
+        console.log(ttbm_admin_ajax.ajax_url);
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_faq_data_save',
+                ttbm_faq_title: title.val(),
+                ttbm_faq_content: content,
+                ttbm_faq_postID: postID.val(),
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                $('#ttbm-faq-msg').html(response.data.message);
+                $('.ttbm-faq-items').html('');
+                $('.ttbm-faq-items').append(response.data.html);
+                empty_faq_form();
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+    function delete_faq_item(itemId) {
+        var postID = $('input[name="ttbm_post_id"]');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_faq_delete_item',
+                ttbm_faq_postID: postID.val(),
+                itemId: itemId,
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                $('.ttbm-faq-items').html('');
+                $('.ttbm-faq-items').append(response.data.html);
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+
+    // faq sorting
+    $(document).on("ready", function(e) {
+        $(".ttbm-faq-items").sortable({
+            update: function(event, ui) {
+                event.preventDefault();
+                var sortedIDs = $(this).sortable("toArray", { attribute: "data-id" });
+                $.ajax({
+                    url: ttbm_admin_ajax.ajax_url,
+                    type: 'POST',
+                    data: {
+                        action: 'ttbm_sort_faq',
+                        postID: $('input[name="ttbm_post_id"]').val(),
+                        sortedIDs: sortedIDs,
+                        nonce: ttbm_admin_ajax.nonce
+                    },
+                    success: function (response) {
+                        $('.ttbm-faq-items').html('');
+                        $('.ttbm-faq-items').append(response.data.html);
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                })
+            }
+        });
+    });
+
+    // ================daywise sidebar modal=================//
+    $(document).on('click', '.ttbm-daywise-item-new', function (e) {
+        $('#ttbm-daywise-msg').html('');
+        $('.ttbm_daywise_save_buttons').show();
+        $('.ttbm_daywise_update_buttons').hide();
+        empty_daywise_form();
+    });
+    function close_sidebar_modal(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('.ttbm-modal-container').removeClass('open');
+    }
+    $(document).on('click', '.ttbm-daywise-item-edit', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('#ttbm-daywise-msg').html('');
+        $('.ttbm_daywise_save_buttons').hide();
+        $('.ttbm_daywise_update_buttons').show();
+        var itemId = $(this).closest('.ttbm-daywise-item').data('id');
+        var parent = $(this).closest('.ttbm-daywise-item');
+        var headerText = parent.find('.daywise-header p').text().trim();
+        var daywiseContentId = parent.find('.daywise-content').html().trim();
+        var editorId = 'ttbm_day_content';
+        $('input[name="ttbm_day_title"]').val(headerText);
+        $('input[name="ttbm_daywise_item_id"]').val(itemId);
+        if (tinymce.get(editorId)) {
+            tinymce.get(editorId).setContent(daywiseContentId);
+        } else {
+            $('#' + editorId).val(daywiseContentId);
+        }
+    });
+    $(document).on('click', '.ttbm-daywise-item-delete', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var itemId = $(this).closest('.ttbm-daywise-item').data('id');
+        var isConfirmed = confirm('Are you sure you want to delete this row?');
+        if (isConfirmed) {
+            delete_daywise_item(itemId);
+        } else {
+            console.log('Deletion canceled.' + itemId);
+        }
+    });
+    function empty_daywise_form() {
+        $('input[name="ttbm_day_title"]').val('');
+        tinyMCE.get('ttbm_day_content').setContent('');
+        $('input[name="ttbm_daywise_item_id"]').val('');
+    }
+    $(document).on('click', '#ttbm_daywise_update', function (e) {
+        e.preventDefault();
+        update_daywise();
+    });
+    $(document).on('click', '#ttbm_daywise_save', function (e) {
+        e.preventDefault();
+        save_daywise();
+    });
+    $(document).on('click', '#ttbm_daywise_save_close', function (e) {
+        e.preventDefault();
+        save_daywise();
+        close_sidebar_modal(e);
+    });
+    function update_daywise() {
+        var title = $('input[name="ttbm_day_title"]');
+        var content = tinyMCE.get('ttbm_day_content').getContent();
+        var postID = $('input[name="ttbm_post_id"]');
+        var itemId = $('input[name="ttbm_daywise_item_id"]');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_daywise_data_update',
+                ttbm_day_title: title.val(),
+                ttbm_day_content: content,
+                ttbm_daywise_postID: postID.val(),
+                ttbm_daywise_itemID: itemId.val(),
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                $('#ttbm-daywise-msg').html(response.data.message);
+                $('.ttbm-daywise-items').html('');
+                $('.ttbm-daywise-items').append(response.data.html);
+                setTimeout(function () {
+                    $('.ttbm-modal-container').removeClass('open');
+                    empty_daywise_form();
+                }, 1000);
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+    function save_daywise() {
+        var title = $('input[name="ttbm_day_title"]');
+        var content = tinyMCE.get('ttbm_day_content').getContent();
+        var postID = $('input[name="ttbm_post_id"]');
+        console.log(ttbm_admin_ajax.ajax_url);
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_daywise_data_save',
+                ttbm_day_title: title.val(),
+                ttbm_day_content: content,
+                ttbm_daywise_postID: postID.val(),
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                $('#ttbm-daywise-msg').html(response.data.message);
+                $('.ttbm-daywise-items').html('');
+                $('.ttbm-daywise-items').append(response.data.html);
+                empty_daywise_form();
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+    function delete_daywise_item(itemId) {
+        var postID = $('input[name="ttbm_post_id"]');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_daywise_delete_item',
+                ttbm_daywise_postID: postID.val(),
+                itemId: itemId,
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                $('.ttbm-daywise-items').html('');
+                $('.ttbm-daywise-items').append(response.data.html);
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+
+    // daywise sorting
+    $(document).on("ready", function(e) {
+        $(".ttbm-daywise-items").sortable({
+            update: function(event, ui) {
+                event.preventDefault();
+                var sortedIDs = $(this).sortable("toArray", { attribute: "data-id" });
+                $.ajax({
+                    url: ttbm_admin_ajax.ajax_url,
+                    type: 'POST',
+                    data: {
+                        action: 'ttbm_sort_daywise',
+                        postID: $('input[name="ttbm_post_id"]').val(),
+                        sortedIDs: sortedIDs,
+                        nonce: ttbm_admin_ajax.nonce
+                    },
+                    success: function (response) {
+                        $('.ttbm-daywise-items').html('');
+                        $('.ttbm-daywise-items').append(response.data.html);
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                })
+            }
+        });
+    });
+
 }(jQuery));
 //==========search tour list page=================//
 (function ($) {
@@ -562,3 +880,182 @@
         return false;
     });
 }(jQuery));
+
+// =================Open Street map location search==================
+(function($) {
+    // OpenStreetMap setup
+    let osmMap, osmMarker, osmAutocomplete, osmGeocoder;
+    
+    function initOSMMap() {
+        let lati = parseFloat(document.getElementById('map_latitude')?.value) || 23.8103; // Default to Dhaka
+        let longdi = parseFloat(document.getElementById('map_longitude')?.value) || 90.4125;
+        osmMap = L.map("osmap_canvas", { minZoom: 4, maxZoom: 18 }).setView([lati, longdi], 12);
+
+        // Add OSM tile layer
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(osmMap);
+
+        // Initialize the marker for OpenStreetMap
+        osmMarker = L.marker([lati, longdi], { title: "Selected Location" }).addTo(osmMap);
+
+        // Initialize Autocomplete for OpenStreetMap search
+        
+            new Autocomplete("ttbm_osmap_location", {
+                selectFirst: true,
+                insertToInput: true,
+                cache: true,
+                howManyCharacters: 2,
+        
+                // onSearch
+                onSearch: ({ currentValue }) => {
+                    const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&city=${encodeURI(currentValue)}`;
+                    return new Promise((resolve) => {
+                        fetch(api)
+                            .then((response) => response.json())
+                            .then((data) => resolve(data.features))
+                            .catch((error) => console.error(error));
+                    });
+                },
+        
+                // onResults
+                onResults: ({ currentValue, matches, template }) => {
+                    const regex = new RegExp(currentValue, "gi");
+                    return matches.length === 0
+                        ? template(`<li>No results found: "${currentValue}"</li>`)
+                        : matches.map((element) => `
+                            <li>
+                                <p>${element.properties.display_name.replace(regex, (str) => `<b>${str}</b>`)}</p>
+                            </li>`
+                        ).join("");
+                },
+        
+                // onSubmit
+                onSubmit: ({ object }) => {
+                    osmMap.eachLayer((layer) => {
+                        if (!!layer.toGeoJSON) {
+                            osmMap.removeLayer(layer);
+                        }
+                    });
+        
+                    const { display_name } = object.properties;
+                    const [lng, lat] = object.geometry.coordinates;
+                    
+                    const marker = L.marker([lat, lng], { title: display_name });
+                    marker.addTo(osmMap).bindPopup(display_name);
+                    osmMap.setView([lat, lng], 8);
+                },
+        
+                // onSelectedItem
+                onSelectedItem: ({ index, element, object }) => {
+                    console.log("onSelectedItem:", { index, element, object });
+                },
+        
+                // noResults
+                noResults: ({ currentValue, template }) => template(`<li>No results found: "${currentValue}"</li>`),
+            });
+
+        // Add fullscreen control
+        const fsControl = L.control.fullscreen();
+        osmMap.addControl(fsControl);
+    
+        osmMap.on("enterFullscreen", () => console.log("Enter Fullscreen"));
+        osmMap.on("exitFullscreen", () => console.log("Exit Fullscreen"));
+       
+
+        // Add click event to OSM map
+        osmMap.on("click", (e) => {
+            alert("Lat, Lon: " + e.latlng.lat + ", " + e.latlng.lng);
+        });
+    }
+
+    // ===========Google Map setup=============
+    let gmap, gmapMarker, gmapAutocomplete, gmapGeocoder;
+
+    if(ttbm_map.api_key){
+        initGMap();
+    }else{
+        initOSMMap();
+    }
+    function initGMap() {
+        let lati = parseFloat(document.getElementById('map_latitude').value);
+        let longdi = parseFloat(document.getElementById('map_longitude').value);
+
+        // Initialize Google Map
+        gmap = new google.maps.Map(document.getElementById('gmap_canvas'), {
+            center: { lat: lati, lng: longdi },
+            zoom: 12,
+            zoomControl: true,
+            streetViewControl: false,
+            mapTypeControl: false,
+            scaleControl: true
+        });
+
+        // Initialize Google Marker
+        gmapMarker = new google.maps.Marker({
+            position: { lat: lati, lng: longdi },
+            map: gmap,
+            title: "Selected Location",
+            draggable: true
+        });
+
+        // Initialize Google geocoder for reverse geocoding
+        gmapGeocoder = new google.maps.Geocoder();
+
+        // Update latitude and longitude when the marker is dragged
+        gmapMarker.addListener("dragend", function(event) {
+            document.getElementById('map_latitude').value = event.latLng.lat();
+            document.getElementById('map_longitude').value = event.latLng.lng();
+            reverseGeocode(event.latLng); // Update location name when dragging the marker
+        });
+
+        // Initialize Autocomplete for Google address input field
+        gmapAutocomplete = new google.maps.places.Autocomplete(document.getElementById("ttbm_map_location"));
+        gmapAutocomplete.addListener("place_changed", onPlaceChanged);
+
+        // Add a click event listener to Google Map
+        gmap.addListener("click", function(event) {
+            let clickedLatLng = event.latLng;
+            gmapMarker.setPosition(clickedLatLng);
+            document.getElementById('map_latitude').value = clickedLatLng.lat();
+            document.getElementById('map_longitude').value = clickedLatLng.lng();
+            reverseGeocode(clickedLatLng);
+        });
+    }
+
+    // Reverse geocoding for Google Map
+    function reverseGeocode(latLng) {
+        gmapGeocoder.geocode({ 'location': latLng }, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                    document.getElementById('ttbm_map_location').value = results[0].formatted_address;
+                } else {
+                    console.error("No results found for the given location.");
+                }
+            } else {
+                console.error("Geocoder failed due to: " + status);
+            }
+        });
+    }
+
+    // Handle place change for Google Map
+    function onPlaceChanged() {
+        let place = gmapAutocomplete.getPlace();
+
+        if (!place.geometry) {
+            console.error("No details available for the selected place.");
+            return;
+        }
+
+        let location = place.geometry.location;
+        gmap.setCenter(location);
+        gmapMarker.setPosition(location);
+        document.getElementById("map_latitude").value = location.lat();
+        document.getElementById("map_longitude").value = location.lng();
+        reverseGeocode(location);
+    }
+
+    
+   
+
+})(jQuery);

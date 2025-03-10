@@ -39,81 +39,96 @@
 						</label>
 					</section>
 
-					<section>
-                        <label class="label">
-							<div>
-								<p><?php esc_html_e('Section Title Style?', 'tour-booking-manager'); ?></p> 
-								<span class="text"><?php TTBM_Settings::des_p('ttbm_section_title_style'); ?>  </span>
-							</div>
-							<select class="formControl" name="ttbm_section_title_style">
-								<option value="style_1" <?php echo esc_attr($content_title_style == 'style_1' ? 'selected' : ''); ?>><?php esc_html_e('Style One', 'tour-booking-manager'); ?></option>
-								<option value="ttbm_title_style_2" <?php echo esc_attr($content_title_style == 'ttbm_title_style_2' ? 'selected' : ''); ?>><?php esc_html_e('Style Two', 'tour-booking-manager'); ?></option>
-								<option value="ttbm_title_style_3" <?php echo esc_attr($content_title_style == 'ttbm_title_style_3' ? 'selected' : ''); ?>><?php esc_html_e('Style Three', 'tour-booking-manager'); ?></option>
-							</select>
-						</label>
-					</section>
-					<section>
-						<label class="label">
-							<div>
-								<p><?php esc_html_e('Ticket Purchase Settings', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_ticketing_system'); ?></span></i></p>  
-								<span class="text"><?php TTBM_Settings::des_p('ttbm_ticketing_system'); ?></span>
-							</div>
-							<select class="formControl" name="ttbm_ticketing_system">
-								<option value="regular_ticket" <?php echo esc_attr(!$ticketing_system ? 'selected' : ''); ?>><?php esc_html_e('Ticket Open', 'tour-booking-manager'); ?></option>
-								<option value="availability_section" <?php echo esc_attr($ticketing_system == 'availability_section' ? 'selected' : ''); ?>><?php esc_html_e('Ticket Collapse System', 'tour-booking-manager'); ?></option>
-							</select>
-						</label>
-                    </section>
+					<div class="dFlex">
+						<div class="col-left">
+							<section>
+								<label class="label">
+									<div>
+										<p><?php esc_html_e('Section Title Style', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_section_title_style'); ?></span></i></p>
+									</div>
+									<select class="formControl" name="ttbm_section_title_style">
+										<option value="style_1" <?php echo esc_attr($content_title_style == 'style_1' ? 'selected' : ''); ?>><?php esc_html_e('Style One', 'tour-booking-manager'); ?></option>
+										<option value="ttbm_title_style_2" <?php echo esc_attr($content_title_style == 'ttbm_title_style_2' ? 'selected' : ''); ?>><?php esc_html_e('Style Two', 'tour-booking-manager'); ?></option>
+										<option value="ttbm_title_style_3" <?php echo esc_attr($content_title_style == 'ttbm_title_style_3' ? 'selected' : ''); ?>><?php esc_html_e('Style Three', 'tour-booking-manager'); ?></option>
+									</select>
+								</label>
+							</section>
+						</div>
+						<div class="col-right">
+							<section>
+								<label class="label">
+									<div>
+										<p><?php esc_html_e('Ticket Purchase', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_ticketing_system'); ?></span></i></p> 
+									</div>
+									<select class="formControl" name="ttbm_ticketing_system">
+										<option value="regular_ticket" <?php echo esc_attr(!$ticketing_system ? 'selected' : ''); ?>><?php esc_html_e('Ticket Open', 'tour-booking-manager'); ?></option>
+										<option value="availability_section" <?php echo esc_attr($ticketing_system == 'availability_section' ? 'selected' : ''); ?>><?php esc_html_e('Ticket Collapse System', 'tour-booking-manager'); ?></option>
+									</select>
+								</label>
+							</section>
+						</div>
+					</div>
+					<div class="dFlex">
+						<div class="col-left">
+							<section>
+								<div class="label">
+									<div>
+										<p><?php esc_html_e('Display Seat Count', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_seat_details'); ?></span></i></p>
+									</div>
+									<?php MP_Custom_Layout::switch_button('ttbm_display_seat_details', $seat_details_checked); ?> 
+								</div>
+							</section>
+						</div>
+						<div class="col-right">
+							<section>
+								<div class="label">
+									<div>
+										<p><?php esc_html_e('Display Tour Type', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_tour_type'); ?></span></i></p>
+									</div>
+									<?php MP_Custom_Layout::switch_button('ttbm_display_tour_type', $tour_type_checked); ?>
+								</div> 
+							</section>
+						</div>
+					</div>
+					<div class="dFlex">
+						<div class="col-left">
+							<section>
+								<div class="label">
+									<div>
+										<p><?php esc_html_e('Display Hotels Info', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_hotels'); ?></span></i></p>
+										
+									</div>
+									<?php MP_Custom_Layout::switch_button('ttbm_display_hotels', $hotel_checked); ?>
+								</div> 
+							</section>
+						</div>
+						<div class="col-right">
+							<section>
+								<div class="label">
+									<div>
+										<p><?php esc_html_e('Dispaly Sidebar widget', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_sidebar'); ?></span></i></p>
+									</div>
+									<?php MP_Custom_Layout::switch_button('ttbm_display_sidebar', $sidebar_checked); ?>
+								</div> 
+							</section>
+						</div>
+					</div>
+					<div class="dFlex">
+						<div class="col-left">
+							<section>
+								<div class="label">
+									<div> 
+										<p><?php esc_html_e('Display Duration', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_duration'); ?></span></i></p>
+									</div>
+									<?php MP_Custom_Layout::switch_button('ttbm_display_duration', $duration_checked); ?>
+								</div> 
+							</section>
+						</div>
+						<div class="col-right">
+							<?php $this->rank_tour($tour_id);  ?>
+						</div>
+					</div>
 					
-					<section>
-                        <label class="label">
-							<div>
-								<p><?php esc_html_e('On/Off Seat Info', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_seat_details'); ?></span>
-							</div>
-							<?php MP_Custom_Layout::switch_button('ttbm_display_seat_details', $seat_details_checked); ?> 
-						</label>
-					</section>
-					
-					<section>
-						<label class="label">
-							<div>
-								<p><?php esc_html_e('On/Off Tour Type', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_tour_type'); ?></span>
-							</div>
-							<?php MP_Custom_Layout::switch_button('ttbm_display_tour_type', $tour_type_checked); ?>
-						</label> 
-                    </section>
-
-					<section>
-                        <label class="label">
-							<div>
-								<p><?php esc_html_e('On/Off Hotels', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_hotels'); ?></span>
-							</div>
-							<?php MP_Custom_Layout::switch_button('ttbm_display_hotels', $hotel_checked); ?>
-						</label> 
-					</section>
-
-					<section>
-						<label class="label">
-							<div>
-								<p><?php esc_html_e('On/Off Sidebar widget', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_sidebar'); ?></span>
-							</div>
-							<?php MP_Custom_Layout::switch_button('ttbm_display_sidebar', $sidebar_checked); ?>
-						</label> 
-                    </section>
-
-					<section>
-                        <label class="label">
-							<div> 
-								<p><?php esc_html_e('On/Off Duration', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_duration'); ?></span>
-							</div>
-							<?php MP_Custom_Layout::switch_button('ttbm_display_duration', $duration_checked); ?>
-						</label> 
-                    </section>
                     <section>
                         <label class="label">
                             <div>
@@ -122,15 +137,11 @@
                             <select class="" name="ttbm_theme_file">
                                 <option disabled selected><?php esc_html_e('Please select ...', 'tour-booking-manager'); ?></option>
                                 <option value="default.php" <?php echo esc_attr($template_name == 'default.php' ? 'selected' : ''); ?>><?php esc_html_e('Default Theme', 'tour-booking-manager'); ?></option>
-                                <option value="static.php" <?php echo esc_attr($template_name == 'viator.php' ? 'selected' : ''); ?>><?php esc_html_e('Viator Theme', 'tour-booking-manager'); ?></option>
+                                <option value="viator.php" <?php echo esc_attr($template_name == 'viator.php' ? 'selected' : ''); ?>><?php esc_html_e('Viator Theme', 'tour-booking-manager'); ?></option>
                             </select>
                         </label>
                     </section>
-						<?php
-       						 $this->rank_tour($tour_id); 
-       					 ?>
-
-
+					
 					<?php do_action('add_ttbm_display_settings', $tour_id); ?>
 					
 				</div>
@@ -144,16 +155,15 @@
 				$placeholder='';
 				?>
 				<section>
-					<label class="label">
+					<div class="label">
 						<div class="label-inner">
-							<p><?php esc_html_e('Rank Tour', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php esc_html_e('Turn on/off rank tour settings.', 'tour-booking-manager'); ?></span>
+							<p><?php esc_html_e('Rank Tour', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Turn on/off rank tour settings.', 'tour-booking-manager'); ?></span></i></p>
 						</div>	
 						<div class="_dFlex_alignCenter_justfyBetween">
 							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
 							<input type="number" data-collapse="#<?php echo esc_attr($display_name); ?>" min="0" class="ms-2 <?php echo esc_attr($active); ?>" name="ttbm_travel_rank_tour" value="<?php echo MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_rank_tour'); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
 						</div>
-					</label>
+					</div>
 				</section>
 				<?php
 			}

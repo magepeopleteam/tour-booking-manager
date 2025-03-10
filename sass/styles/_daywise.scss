@@ -1,0 +1,33 @@
+#mp_meta_box_panel{
+    .ttbm-daywise-section{
+        .ttbm-daywise-item{
+            background-color: #fff;
+            cursor:  grabbing;
+            &.ui-sortable-helper{
+                background: var(--mpl-light);
+                visibility: visible;
+                cursor:  grabbing;
+            }
+        }
+        .daywise-header{
+            position: relative;
+            z-index: 0;
+            .daywise-action{
+                position:absolute;
+                top: 50%;
+                right: 0;
+                transform: translateY(-50%);
+                z-index:1;
+                span{
+                    padding: 5px 10px;
+                    background-color: var(--mpl-light);
+                    color: var(--mpl-primary);
+                    border-radius: 2px;
+                }
+            }
+        }
+        .daywise-content{
+            display: none;
+        }
+    }
+}

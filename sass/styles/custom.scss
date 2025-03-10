@@ -85,7 +85,7 @@
 					margin-top: -1px;
 					width: 100%;
 
-					label.label {
+					.label {
 						display: flex;
 						justify-content: space-between;
 						align-items: center;
@@ -100,8 +100,8 @@
 						}
 
 						p {
-							font-size: var(--fs);
-							font-weight: bold;
+							font-size: 14px;
+							font-weight: 500;
 							margin-bottom: 5px;
 							color: var(--mpl-secondary);
 						}
@@ -114,9 +114,15 @@
 							color: #6B7280;
 							font-weight: normal;
 							line-height: 20px;
+							font-size: 13px;
 						}
 					}
+					textarea{
+						width: 100%;
+					}
 				}
+				.col-left{width: 50%;}
+				.col-right{width: 50%;}
 			}
 
 			th[scope="row"] {
@@ -151,7 +157,14 @@
 		}
 	}
 }
-
+.auto-search-wrapper.loupe{
+	&::before{
+	margin: 10px 0;
+	}
+	button{
+		display: none;
+	}
+}
 .ttbm-avg-review-header {
 	align-items: center !important;
 }
@@ -510,25 +523,6 @@ div > .ppof-metabox {
 		font-size: $font-size !important;
 		color: var(--mpl-secondary);
 	}
-
-	.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::before {
-		background: $color-sky;
-	}
-	.mpStyle .customCheckboxLabel {
-		cursor: pointer;
-		font-weight: $font-weight-normal;
-	}
-	.mpStyle .customCheckbox::before {
-		content: "";
-		position: absolute;
-		left: 0;
-		top: 0;
-		height: 20px;
-		width: 20px;
-		background-color: $color-white;
-		border: 1px solid $color-primary;
-		border-radius: 2px;
-	}
 }
 
 
@@ -558,8 +552,42 @@ div.mpStyle span.mp_remove_multi_image {
 	padding: 5px;
 }
 
-//.tabsItem {
-//	.ttbm_select2 {
-//		min-height: 150px;
-//	}
-//}
+.includedd-features-section {
+	margin-top:15px;
+	.groupCheckBox {
+		overflow: hidden;
+	}
+	.customCheckboxLabel {
+		float: left;
+		margin:5px;
+		padding:7px 7px;
+		border: 1px solid #d8d8d8;
+		background-color: #f8f8f8;
+		width: 227px;
+		border-radius:5px;
+		font-weight: normal;
+		.customCheckbox{
+			padding: 3px;padding-left: 30px;
+			i{
+				color: #888;
+			}
+			&::before {
+				content: "";
+				position: absolute;
+				left: 0;
+				top: 0 !important;
+				height: 20px;
+				width: 20px;
+				background-color: $color-white;
+				border: 1px solid $color-primary;
+				border-radius: 50px;
+			}
+		}
+	}
+	
+}
+
+div.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::after {
+	left: 5px;
+	top: 5px !important;
+}

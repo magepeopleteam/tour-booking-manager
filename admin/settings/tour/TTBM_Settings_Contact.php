@@ -39,13 +39,13 @@
                     </section>
 
 					<section>
-                        <label class="label">
+                        <div class="label">
 							<div>
-								<p><?php esc_html_e('On/Off Contact', 'tour-booking-manager'); ?> </p>
+								<p><?php esc_html_e('Enable Contact', 'tour-booking-manager'); ?> </p>
 								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_get_question'); ?></span>
 							</div>
 							<?php MP_Custom_Layout::switch_button('ttbm_display_get_question', $checked_gaq); ?>
-						</label>
+						</div>
                     </section>
 
 					<div data-collapse="#ttbm_display_get_question" class=" <?php echo esc_attr($active_gaq); ?>">

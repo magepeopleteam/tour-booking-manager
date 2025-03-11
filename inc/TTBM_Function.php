@@ -28,21 +28,24 @@
 			public static function all_details_template() {
 				$template_path = get_stylesheet_directory() . '/ttbm_templates/themes/';
 				$default_path = TTBM_PLUGIN_DIR . '/templates/themes/';
+			
+				// Get the list of template files
 				$dir = is_dir($template_path) ? glob($template_path . "*") : glob($default_path . "*");
-				$names = array();
+				$templates = [];
+				
 				foreach ($dir as $filename) {
-					if (is_file($filename)) {
+					if (is_file($filename) && is_readable($filename)) {
 						$file = basename($filename);
-						$name = str_replace("?>", "", strip_tags(file_get_contents($filename, false, null, 24, 16)));
-						$names[$file] = $name;
+						$file_contents = file_get_contents($filename);
+						preg_match('/Template Name:\s*(.+)/i', $file_contents, $matches);
+						$template_name = !empty($matches[1]) ? trim($matches[1]) : $file;
+						$templates[$file] = $template_name;
 					}
 				}
-				$name = [];
-				foreach ($names as $key => $value) {
-					$name[$key] = $value;
-				}
-				return apply_filters('ttbm_template_list_arr', $name);
+				
+				return apply_filters('ttbm_template_list_arr', $templates);
 			}
+			
 			public static function details_template_path(): string {
 				$tour_id = get_the_id();
 				$template_name = MP_Global_Function::get_post_info($tour_id, 'ttbm_theme_file', 'default.php');

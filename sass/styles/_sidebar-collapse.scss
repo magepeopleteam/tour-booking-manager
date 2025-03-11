@@ -1,3 +1,4 @@
+#{$main-selector} {
 .ttbm-modal-container{
     position: fixed;
     right: -100%; /* Initially hidden off-screen */
@@ -50,6 +51,7 @@
             padding: 10px;
             font-size: 18px;
             border: 1px solid #dfdfdf;
+            background-color: #fff;
         }
         label{
             display: flex;
@@ -58,8 +60,8 @@
             flex-direction: column;
             font-weight: normal;
             font-size: 18px;
-            gap: 7px;
-            margin: 15px 0;
+            gap: 15px;
+            margin: 25px 0;
         }
         .mp_add_icon_image_area{
             position: relative;
@@ -81,4 +83,5 @@
         }
     }
     
+}
 }

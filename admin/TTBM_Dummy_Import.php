@@ -96,15 +96,26 @@
 												update_post_meta($post_id, $meta_key, $data);
 											}
 										}
-									}
+									}									
 								}
 							}
 						}
 					}
 					//$this->craete_pages();
+					$this->update_related_products($custom_post);
 					update_option('ttbm_dummy_already_inserted', 'yes');
 				}
 			}
+
+			public function update_related_products($custom_post) {
+				$args = array( 'fields' => 'ids', 'post_type' => $custom_post, 'numberposts' => - 1, 'post_status' => 'publish' );
+				$ids  = get_posts( $args );
+				foreach ( $ids as $id ) {
+					update_post_meta($id, 'ttbm_related_tour', $ids);
+				}
+			}
+			
+
 			public static function dummy_images() {
 				$urls = array(
 					'https://img.freepik.com/free-photo/blue-villa-beautiful-sea-hotel_1203-5316.jpg',

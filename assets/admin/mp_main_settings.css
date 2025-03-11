@@ -910,7 +910,7 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   display: none;
 }
 
-.ttbm-modal-container {
+#mp_meta_box_panel .ttbm-modal-container, .travel-list .ttbm-modal-container {
   position: fixed;
   right: -100%; /* Initially hidden off-screen */
   top: 0;
@@ -920,10 +920,10 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   transition: right 0.3s ease; /* Animation effect */
   z-index: 1000; /* Ensure it's above other content */
 }
-.ttbm-modal-container.open {
+#mp_meta_box_panel .ttbm-modal-container.open, .travel-list .ttbm-modal-container.open {
   right: 0; /* Slide in */
 }
-.ttbm-modal-container .ttbm-modal-content {
+#mp_meta_box_panel .ttbm-modal-container .ttbm-modal-content, .travel-list .ttbm-modal-container .ttbm-modal-content {
   background-color: #fff;
   width: 800px;
   height: 100%;
@@ -932,55 +932,56 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   right: 0;
   padding: 70px 0px;
 }
-.ttbm-modal-container .ttbm-modal-content .title {
+#mp_meta_box_panel .ttbm-modal-container .ttbm-modal-content .title, .travel-list .ttbm-modal-container .ttbm-modal-content .title {
   padding-left: 40px;
 }
-.ttbm-modal-container .ttbm-modal-content .ttbm-modal-close {
+#mp_meta_box_panel .ttbm-modal-container .ttbm-modal-content .ttbm-modal-close, .travel-list .ttbm-modal-container .ttbm-modal-content .ttbm-modal-close {
   position: absolute;
   top: 40px;
   right: 15px;
   font-size: 20px;
   cursor: pointer;
 }
-.ttbm-modal-container .ttbm-modal-content .content {
+#mp_meta_box_panel .ttbm-modal-container .ttbm-modal-content .content, .travel-list .ttbm-modal-container .ttbm-modal-content .content {
   height: 100%;
   overflow-y: scroll;
   padding: 0 40px;
   padding-bottom: 40px;
 }
-.ttbm-modal-container .ttbm-modal-content p {
+#mp_meta_box_panel .ttbm-modal-container .ttbm-modal-content p, .travel-list .ttbm-modal-container .ttbm-modal-content p {
   margin: 15px 0;
 }
-.ttbm-modal-container .ttbm-modal-content h3 {
+#mp_meta_box_panel .ttbm-modal-container .ttbm-modal-content h3, .travel-list .ttbm-modal-container .ttbm-modal-content h3 {
   font-size: 18px;
   padding: 0;
   margin: 5px 0;
   margin-bottom: 30px;
 }
-.ttbm-modal-container .ttbm-modal-content input[type=text], .ttbm-modal-container .ttbm-modal-content input[type=number], .ttbm-modal-container .ttbm-modal-content textarea, .ttbm-modal-container .ttbm-modal-content select {
+#mp_meta_box_panel .ttbm-modal-container .ttbm-modal-content input[type=text], #mp_meta_box_panel .ttbm-modal-container .ttbm-modal-content input[type=number], #mp_meta_box_panel .ttbm-modal-container .ttbm-modal-content textarea, #mp_meta_box_panel .ttbm-modal-container .ttbm-modal-content select, .travel-list .ttbm-modal-container .ttbm-modal-content input[type=text], .travel-list .ttbm-modal-container .ttbm-modal-content input[type=number], .travel-list .ttbm-modal-container .ttbm-modal-content textarea, .travel-list .ttbm-modal-container .ttbm-modal-content select {
   width: 100%;
   display: block;
   font-weight: normal;
   padding: 10px;
   font-size: 18px;
   border: 1px solid #dfdfdf;
+  background-color: #fff;
 }
-.ttbm-modal-container .ttbm-modal-content label {
+#mp_meta_box_panel .ttbm-modal-container .ttbm-modal-content label, .travel-list .ttbm-modal-container .ttbm-modal-content label {
   display: flex;
   justify-content: start;
   align-items: start;
   flex-direction: column;
   font-weight: normal;
   font-size: 18px;
-  gap: 7px;
-  margin: 15px 0;
+  gap: 15px;
+  margin: 25px 0;
 }
-.ttbm-modal-container .ttbm-modal-content .mp_add_icon_image_area {
+#mp_meta_box_panel .ttbm-modal-container .ttbm-modal-content .mp_add_icon_image_area, .travel-list .ttbm-modal-container .ttbm-modal-content .mp_add_icon_image_area {
   position: relative;
   max-width: 202px;
   margin: 10px 0;
 }
-.ttbm-modal-container .ttbm-modal-content .mp_add_icon_image_area .mp_add_icon_image_button_area {
+#mp_meta_box_panel .ttbm-modal-container .ttbm-modal-content .mp_add_icon_image_area .mp_add_icon_image_button_area, .travel-list .ttbm-modal-container .ttbm-modal-content .mp_add_icon_image_area .mp_add_icon_image_button_area {
   display: flex;
   flex-direction: row;
   justify-content: start;
@@ -988,7 +989,7 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   width: 100%;
   border-radius: 3px;
 }
-.ttbm-modal-container .ttbm-modal-content .mp_add_icon_image_area .mp_add_icon_image_button_area .mp_image_add, .ttbm-modal-container .ttbm-modal-content .mp_add_icon_image_area .mp_add_icon_image_button_area .mp_icon_add {
+#mp_meta_box_panel .ttbm-modal-container .ttbm-modal-content .mp_add_icon_image_area .mp_add_icon_image_button_area .mp_image_add, #mp_meta_box_panel .ttbm-modal-container .ttbm-modal-content .mp_add_icon_image_area .mp_add_icon_image_button_area .mp_icon_add, .travel-list .ttbm-modal-container .ttbm-modal-content .mp_add_icon_image_area .mp_add_icon_image_button_area .mp_image_add, .travel-list .ttbm-modal-container .ttbm-modal-content .mp_add_icon_image_area .mp_add_icon_image_button_area .mp_icon_add {
   padding: 10px 26px;
   border-radius: 0;
   margin: 1px;

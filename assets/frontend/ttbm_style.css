@@ -530,8 +530,11 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 	margin: 0;
 }
 
-.ttbm_viator_theme .item_icon{
-	width: 100%;
+div.ttbm_viator_theme .item_section{
+	margin-top: 20px;
+}
+div.ttbm_viator_theme .item_icon{
+	width:auto;
 }
 
 .ttbm_viator_theme .ttbm_booking_panel .mp_tour_ticket_form{
@@ -545,6 +548,19 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 .ttbm_viator_theme  .ttbm_booking_panel .ttbm_ticket_area .ttbm_widget_content{
 	background-color: transparent;
 }
+
+.ttbm_viator_theme .ttbm_content__right{
+	padding: 0;
+}
+
+.ttbm_viator_theme  .ttbm_registration_area{
+	margin-bottom: 0;
+}
+
+.ttbm_viator_theme  .ttbm_booking_panel .ttbm_ticket_area .ttbm_default_widget{
+	padding: 0;
+}
+
 .ttbm_viator_theme  .ttbm_booking_panel .mp_tour_ticket_type .inputIncDec{
 	width: 35px;
 	height: 35px;

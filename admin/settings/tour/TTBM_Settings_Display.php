@@ -22,6 +22,7 @@
 				$sidebar_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_sidebar', 'off') == 'off' ? '' : 'checked';
 				$duration_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_duration', 'on') == 'off' ? '' : 'checked';
 				$template_name = MP_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
+				$template_lists = TTBM_Function::all_details_template();
 				?>
 				<div class="tabsItem ttbm_display_settings" data-tabs="#ttbm_display_settings">
 					<h2><?php esc_html_e('Display Settings', 'tour-booking-manager'); ?></h2>
@@ -135,9 +136,10 @@
                                 <p><?php esc_html_e('Template', 'tour-booking-manager'); ?></p>
                             </div>
                             <select class="" name="ttbm_theme_file">
-                                <option disabled selected><?php esc_html_e('Please select ...', 'tour-booking-manager'); ?></option>
-                                <option value="default.php" <?php echo esc_attr($template_name == 'default.php' ? 'selected' : ''); ?>><?php esc_html_e('Default Theme', 'tour-booking-manager'); ?></option>
-                                <option value="viator.php" <?php echo esc_attr($template_name == 'viator.php' ? 'selected' : ''); ?>><?php esc_html_e('Viator Theme', 'tour-booking-manager'); ?></option>
+                                <option><?php esc_html_e('Please select ...', 'tour-booking-manager'); ?></option>
+								<?php foreach($template_lists as $key => $value): ?>
+									<option value="<?php echo esc_attr($key); ?>" <?php echo esc_attr($template_name == $key? 'selected' : ''); ?>><?php echo esc_attr($value); ?></option>
+								<?php endforeach; ?>
                             </select>
                         </label>
                     </section>

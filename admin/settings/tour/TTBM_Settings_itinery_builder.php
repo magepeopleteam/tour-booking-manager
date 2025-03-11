@@ -109,7 +109,7 @@ if (!class_exists('TTBM_Daywise_Details')) {
 					<div class="ttbm-modal-content">
 						<span class="ttbm-modal-close"><i class="fas fa-times"></i></span>
 						<div class="title">
-							<h3><?php esc_html_e('Add F.A.Q.', 'tour-booking-manager'); ?></h3>
+							<h3><?php esc_html_e('Add New Itinerary', 'tour-booking-manager'); ?></h3>
 							<div id="ttbm-service-msg"></div>
 						</div>
 						<div class="content">

@@ -18,10 +18,17 @@
 				<div class="ttbm_content_area">
 					<div class="ttbm_content__left">
 						<?php do_action( 'ttbm_slider' ); ?>
+						<div class="item_section">
+							<?php include( TTBM_Function::template_path( 'layout/seat_info.php' ) ); ?>
+							<?php include( TTBM_Function::template_path( 'layout/duration_box.php' ) ); ?>
+							<?php include( TTBM_Function::template_path( 'layout/max_people_box.php' ) ); ?>
+							<?php include( TTBM_Function::template_path( 'layout/age_range_box.php' ) ); ?>
+							<?php include( TTBM_Function::template_path( 'layout/start_location_box.php' ) ); ?>
+						</div>
 					</div>
 					<div class="ttbm_content__right">
 						<?php do_action( 'ttbm_registration_before', $ttbm_post_id ); ?>
-						<h5><?php include( TTBM_Function::template_path( 'layout/start_price.php' ) ); ?></h5>
+						<h4><?php include( TTBM_Function::template_path( 'layout/start_price.php' ) ); ?></h4>
 						<div class="divider"></div>
 						<?php
 							if ( sizeof( $all_dates ) > 0 && $travel_type == 'particular' && $available_seat>0) {
@@ -39,11 +46,6 @@
 								<?php
 							} ?>
 						<?php include( TTBM_Function::template_path( 'ticket/registration.php' ) ); ?>
-						<?php include( TTBM_Function::template_path( 'layout/seat_info.php' ) ); ?>
-						<?php include( TTBM_Function::template_path( 'layout/duration_box.php' ) ); ?>
-						<?php include( TTBM_Function::template_path( 'layout/max_people_box.php' ) ); ?>
-						<?php include( TTBM_Function::template_path( 'layout/age_range_box.php' ) ); ?>
-						<?php include( TTBM_Function::template_path( 'layout/start_location_box.php' ) ); ?>
 					</div>
 				</div>
 			</div>

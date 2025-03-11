@@ -204,7 +204,6 @@ function ttbm_partial_payment_job(parent, total) {
             }else{
                 let book_now_area=$(this).closest('.ttbm_book_now_area');
                 if(book_now_area.find('[name="ttbm_direct_order_product_id"]').length>0){
-                    alert('yes');
                     book_now_area.find('.ttbm_add_to_cart').attr('name','').trigger('click');
                 }else {
                     book_now_area.find('.ttbm_add_to_cart').trigger('click');

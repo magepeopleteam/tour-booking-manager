@@ -96,29 +96,23 @@
 												update_post_meta($post_id, $meta_key, $data);
 											}
 										}
-									}
-									//related tour
-									$this->update_related_products($post_id,$custom_post);
+									}									
 								}
 							}
 						}
 					}
 					//$this->craete_pages();
-					
+					$this->update_related_products($custom_post);
 					update_option('ttbm_dummy_already_inserted', 'yes');
 				}
 			}
 
-			public function update_related_products($post_id, $custom_post) {
-				$args = array(
-					'fields'         => 'ids',
-					'post_type'      => $custom_post,
-					'posts_per_page' => -1,
-					'post_status'    => 'publish'
-				);
-				$all_post_ids = get_posts($args);
-				$related_ids = array_diff($all_post_ids, array($post_id));
-				update_post_meta($post_id, 'ttbm_related_tour', array_values($related_ids));
+			public function update_related_products($custom_post) {
+				$args = array( 'fields' => 'ids', 'post_type' => $custom_post, 'numberposts' => - 1, 'post_status' => 'publish' );
+				$ids  = get_posts( $args );
+				foreach ( $ids as $id ) {
+					update_post_meta($id, 'ttbm_related_tour', $ids);
+				}
 			}
 			
 

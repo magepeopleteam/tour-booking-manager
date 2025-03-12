@@ -972,11 +972,14 @@
     // ===========Google Map setup=============
     let gmap, gmapMarker, gmapAutocomplete, gmapGeocoder;
 
-    if(ttbm_map.api_key){
-        initGMap();
-    }else{
-        initOSMMap();
-    }
+
+    $(document).on('click', '.ttbm_settings_location', function () {
+        if(ttbm_map.api_key){
+            initGMap();
+        }else{
+            initOSMMap();
+        }
+    });
     function initGMap() {
         let lati = parseFloat(document.getElementById('map_latitude').value);
         let longdi = parseFloat(document.getElementById('map_longitude').value);

@@ -1457,6 +1457,8 @@
 	div.superSlider .sliderShowcase.bottom {
 		margin: var(--dmp_xs) 0 0 0;
 	}
+	div.superSlider .sliderShowcase.bottom .sliderShowcaseItem{margin:0 10px 0 0;width: auto;max-width:25%;-webkit-flex:1;flex:1;}
+	div.superSlider .sliderShowcase.bottom .sliderShowcaseItem:last-child{margin: 0;}
 	div.superSlider .sliderShowcaseItem {margin: 0 0 10px 0;    position: relative;    overflow: hidden; height: 118px; }
 	div.superSlider .area_column .sliderShowcaseItem {		width: calc(25% - var(--dmp_xs));	}
 	div.superSlider .sliderShowcase div.superSlider .area_column {

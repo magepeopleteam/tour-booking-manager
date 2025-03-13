@@ -588,3 +588,23 @@ div.ttbm_viator_theme .item_icon{
 	display: block;
 	width: 100%;
 }
+
+.ttbm_smart_theme .ttbm-sidebar-booking{
+	box-shadow: 0 0 5px #9c9c9c;
+	padding: 20px;
+	border-radius: 10px;
+	margin-bottom: 10px;
+}
+.ttbm_smart_theme .ttbm-title-price{
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	font-size: 20px;
+	padding-bottom:7px;
+	margin-bottom: 20px;
+	border-bottom: 1px solid #ddd;
+}
+.ttbm_smart_theme .ttbm-title-price .item_icon{padding: 0 5px;font-size: 30px;}
+.ttbm_smart_theme .ttbm-sidebar-booking .ttbm-title-price i{
+	display: none;
+}

@@ -20,6 +20,8 @@
 					<?php do_action( 'ttbm_short_details' ); ?>
 					<?php do_action( 'ttbm_details_particular_area' ); ?>
 					<?php do_action( 'ttbm_description' ); ?>
+					<?php do_action( 'ttbm_include_feature' ); ?>
+					<?php do_action( 'ttbm_exclude_service' ); ?>
 					<?php do_action( 'ttbm_registration_before', $ttbm_post_id ); ?>
 					<?php do_action( 'ttbm_hiphop_place' ); ?>
 					<?php do_action( 'ttbm_day_wise_details' ); ?>
@@ -28,8 +30,7 @@
 				</div>
 				<div class="ttbm_content__right">
 					<?php do_action( 'ttbm_registration' ); ?>
-					<?php do_action( 'ttbm_include_feature' ); ?>
-					<?php do_action( 'ttbm_exclude_service' ); ?>
+					
 					<?php do_action( 'ttbm_activity' ); ?>
 					<?php do_action( 'ttbm_location_map', $ttbm_post_id ); ?>
 					<?php do_action( 'ttbm_why_choose_us' ); ?>

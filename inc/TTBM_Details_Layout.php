@@ -35,10 +35,15 @@
                 $ttbm_display_registration = $ttbm_display_registration ?? MP_Global_Function::get_post_info( $tour_id, 'ttbm_display_registration', 'on' );
                 if ( $ttbm_display_registration != 'off' ) {
                     ?>
-                    <div class="ttbm_select_date_area">
-                        <h4 class="ttbm_title_style_2"><?php _e("Book This Tour",'tour-booking-manager'); ?></h4>
+                    <div class="ttbm-sidebar-booking">
+                        <div class="ttbm-title-price"><?php _e("From",'tour-booking-manager'); ?><?php include(TTBM_Function::template_path('layout/start_price_box.php')); ?></div>
+                        
                         <?php TTBM_Details_Layout::date_selection(); ?>
-                        <?php MP_Custom_Layout::popup_button('registration-popup', esc_html__('Book Now', 'tour-booking-manager')); ?>    
+                        <button type="button" class="_dButton_bgBlue_fullWidth" data-target-popup="registration-popup">
+                            <span class="fas fa-plus-square"></span>
+                            <?php esc_html_e('Book Now','tour-booking-manager'); ?>				
+                        </button>
+   
                     </div>
                         <div class="mpPopup mpStyle" data-popup="registration-popup">
                         <div class="popupMainArea">
@@ -84,16 +89,14 @@
                                 $time_slots = TTBM_Function::get_time( $tour_id, $all_dates[0] );
                                 ?>
                                 <div class="">
-                                    <div class="ttbm_select_date_area">
-                                        <div class="booking-button">
-                                            <label class="_allCenter">
-                                                <span class="date-picker-icon">
-                                                <i class="far fa-calendar-alt"></i>
-                                                <input type="hidden" name="ttbm_date" value="<?php echo esc_attr($hidden_date); ?>" required/>
-                                                <input id="ttbm_select_date" type="text" value="<?php echo esc_attr($visible_date); ?>" class="formControl mb-0 " placeholder="<?php echo esc_attr($now); ?>"  readonly required/>
-                                                </span>
-                                            </label>
-                                        </div>
+                                    <div class="">
+                                        <label class="_allCenter">
+                                            <span class="date-picker-icon">
+                                            <i class="far fa-calendar-alt"></i>
+                                            <input type="hidden" name="ttbm_date" value="<?php echo esc_attr($hidden_date); ?>" required/>
+                                            <input id="ttbm_select_date" type="text" value="<?php echo esc_attr($visible_date); ?>" class="formControl mb-0 " placeholder="<?php echo esc_attr($now); ?>"  readonly required/>
+                                            </span>
+                                        </label>
                                     </div>
                                 </div>
                                 <?php

@@ -55,7 +55,9 @@ div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-w
 	top: 30px;
 	z-index: 0;
 }
-
+div.superSlider .sliderAllItem{
+	z-index: 0;
+}
 
 .hip_hop_hotel_theme .ttbm_content__right,
 .ttbm_spring_theme .ttbm_content__right {width: 50%;}

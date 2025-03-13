@@ -41,7 +41,7 @@
                         <?php MP_Custom_Layout::popup_button('registration-popup', esc_html__('Book Now', 'tour-booking-manager')); ?>    
                     </div>
                         <div class="mpPopup mpStyle" data-popup="registration-popup">
-                        <div class="popupMainArea fullWidth">
+                        <div class="popupMainArea">
                             <div class="popupHeader allCenter">
                                 <h2 class="_mR"><?php esc_html_e('Select Icon', 'bus-ticket-booking-with-seat-reservation'); ?></h2>
                                 <span class="fas fa-times popupClose"></span>

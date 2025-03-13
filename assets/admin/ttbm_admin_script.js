@@ -888,87 +888,88 @@
     
     function initOSMMap() {
         let lati = parseFloat(document.getElementById('map_latitude')?.value) || 23.8103; // Default to Dhaka
-        let longdi = parseFloat(document.getElementById('map_longitude')?.value) || 90.4125;
-        osmMap = L.map("osmap_canvas", { minZoom: 4, maxZoom: 18 }).setView([lati, longdi], 12);
-
+        let longdi = parseFloat(document.getElementById('map_longitude')?.value) || 90.4125; // Default to Dhaka
+        
+        osmMap = L.map("osmap_canvas", { minZoom: 1, maxZoom: 20 }).setView([lati, longdi], 12);
+        
         // Add OSM tile layer
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(osmMap);
-
-        // Initialize the marker for OpenStreetMap
-        osmMarker = L.marker([lati, longdi], { title: "Selected Location" }).addTo(osmMap);
-
+    
+        // Initialize the marker for OpenStreetMap (draggable)
+        osmMarker = L.marker([lati, longdi], { title: "Tour Location", draggable: true }).addTo(osmMap);
+    
+        // When the marker is dragged, update the latitude and longitude values
+        osmMarker.on("dragend", function (e) {
+            let newLatLng = osmMarker.getLatLng(); // Get new latitude and longitude
+            document.getElementById('map_latitude').value = newLatLng.lat;
+            document.getElementById('map_longitude').value = newLatLng.lng;
+        });
+    
         // Initialize Autocomplete for OpenStreetMap search
-        
-            new Autocomplete("ttbm_osmap_location", {
-                selectFirst: true,
-                insertToInput: true,
-                cache: true,
-                howManyCharacters: 2,
-        
-                // onSearch
-                onSearch: ({ currentValue }) => {
-                    const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&city=${encodeURI(currentValue)}`;
-                    return new Promise((resolve) => {
-                        fetch(api)
-                            .then((response) => response.json())
-                            .then((data) => resolve(data.features))
-                            .catch((error) => console.error(error));
-                    });
-                },
-        
-                // onResults
-                onResults: ({ currentValue, matches, template }) => {
-                    const regex = new RegExp(currentValue, "gi");
-                    return matches.length === 0
-                        ? template(`<li>No results found: "${currentValue}"</li>`)
-                        : matches.map((element) => `
-                            <li>
-                                <p>${element.properties.display_name.replace(regex, (str) => `<b>${str}</b>`)}</p>
-                            </li>`
-                        ).join("");
-                },
-        
-                // onSubmit
-                onSubmit: ({ object }) => {
-                    osmMap.eachLayer((layer) => {
-                        if (!!layer.toGeoJSON) {
-                            osmMap.removeLayer(layer);
-                        }
-                    });
-        
-                    const { display_name } = object.properties;
-                    const [lng, lat] = object.geometry.coordinates;
-                    
-                    const marker = L.marker([lat, lng], { title: display_name });
-                    marker.addTo(osmMap).bindPopup(display_name);
-                    osmMap.setView([lat, lng], 8);
-                },
-        
-                // onSelectedItem
-                onSelectedItem: ({ index, element, object }) => {
-                    console.log("onSelectedItem:", { index, element, object });
-                },
-        
-                // noResults
-                noResults: ({ currentValue, template }) => template(`<li>No results found: "${currentValue}"</li>`),
-            });
-
+        new Autocomplete("ttbm_osmap_location", {
+            selectFirst: true,
+            insertToInput: true,
+            cache: true,
+            howManyCharacters: 2,
+    
+            // onSearch
+            onSearch: ({ currentValue }) => {
+                const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&city=${encodeURI(currentValue)}`;
+                return new Promise((resolve) => {
+                    fetch(api)
+                        .then((response) => response.json())
+                        .then((data) => resolve(data.features))
+                        .catch((error) => console.error(error));
+                });
+            },
+    
+            // onResults
+            onResults: ({ currentValue, matches, template }) => {
+                const regex = new RegExp(currentValue, "gi");
+                return matches.length === 0
+                    ? template(`<li>No results found: "${currentValue}"</li>`)
+                    : matches.map((element) => `
+                        <li>
+                            <p>${element.properties.display_name.replace(regex, (str) => `<b>${str}</b>`)}</p>
+                        </li>`
+                    ).join("");
+            },
+    
+            // onSubmit
+            onSubmit: ({ object }) => {
+                const { display_name } = object.properties;
+                const [lng, lat] = object.geometry.coordinates;
+    
+                // Set new marker position
+                osmMarker.setLatLng([lat, lng]);
+    
+                // Update input fields
+                document.getElementById('map_latitude').value = lat;
+                document.getElementById('map_longitude').value = lng;
+    
+                // Move map to new location
+                osmMap.setView([lat, lng], 12);
+            },
+    
+            // onSelectedItem
+            onSelectedItem: ({ index, element, object }) => {
+                console.log("onSelectedItem:", { index, element, object });
+            },
+    
+            // noResults
+            noResults: ({ currentValue, template }) => template(`<li>No results found: "${currentValue}"</li>`),
+        });
+    
         // Add fullscreen control
         const fsControl = L.control.fullscreen();
         osmMap.addControl(fsControl);
     
         osmMap.on("enterFullscreen", () => console.log("Enter Fullscreen"));
         osmMap.on("exitFullscreen", () => console.log("Exit Fullscreen"));
-       
-
-        // Add click event to OSM map
-        osmMap.on("click", (e) => {
-            alert("Lat, Lon: " + e.latlng.lat + ", " + e.latlng.lng);
-        });
     }
-
+    
     // ===========Google Map setup=============
     let gmap, gmapMarker, gmapAutocomplete, gmapGeocoder;
 

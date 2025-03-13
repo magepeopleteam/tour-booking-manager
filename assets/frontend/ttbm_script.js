@@ -115,7 +115,6 @@
 		var marker = new google.maps.Marker({
 			position: location,
 			map: map,
-			title: "Dhaka, Bangladesh"
 		});
     }
 }(jQuery));

@@ -972,14 +972,24 @@
     // ===========Google Map setup=============
     let gmap, gmapMarker, gmapAutocomplete, gmapGeocoder;
 
-
-    $(document).on('click', '.ttbm_settings_location', function () {
-        if(ttbm_map.api_key){
+    $(document).on('click', '.ttbm_settings_location,[data-collapse-target="#ttbm_display_map"]', function () {
+        if (gmap) {
+            gmap = null;
+            $('#gmap_canvas').empty();
+        }
+        if (osmMap) {
+            osmMap.remove();
+            osmMap = null;
+            $('#osmap_canvas').empty();
+        }
+        if (ttbm_map.api_key) {
             initGMap();
-        }else{
+        } else {
             initOSMMap();
         }
     });
+
+
     function initGMap() {
         let lati = parseFloat(document.getElementById('map_latitude').value);
         let longdi = parseFloat(document.getElementById('map_longitude').value);
@@ -1057,8 +1067,4 @@
         document.getElementById("map_longitude").value = location.lng();
         reverseGeocode(location);
     }
-
-    
-   
-
 })(jQuery);

@@ -89,8 +89,8 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 			<section>
 				<div class="label">
 					<div class="label-inner">
-						<p><?php esc_html_e('Tour Location', 'tour-booking-manager'); ?> </p>
-						<span class="text"><?php TTBM_Settings::des_p('location'); ?></span>
+						<p><?php esc_html_e('Tour City', 'tour-booking-manager'); ?></p>
+						<span class="text"><?php esc_html_e('Select Tour City from this list', 'tour-booking-manager'); ?></span>
 					</div>
 					<div class="_dFlex_alignCenter_justifyBetween">
 						<div class="me-2"><?php MP_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__('', 'tour-booking-manager')); ?></div>
@@ -210,11 +210,14 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 
 			$map_settings = get_option('ttbm_google_map_settings'); 
 			$gmap_api_key = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
+			$display_map = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'off');
+			if($display_map=='on'):
 			?>
 			<div class="ttbm_default_widget" style="width: 100%; height: 400px;">
 				<div id="<?php echo esc_attr($gmap_api_key? 'gmap_canvas':'osmap_canvas'); ?>" style="width: 100%; height:100%;" data-lati="<?php echo esc_attr($latitude); ?>" data-longdi="<?php echo esc_attr($longitude); ?>"></div>
 			</div>	
 			<?php
+			endif;
 		}
 		public function map_display($tour_id) {
 			$location_name = get_post_meta($tour_id, 'ttbm_full_location_name', true);
@@ -228,33 +231,47 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 
 			$map_settings = get_option('ttbm_google_map_settings'); 
 			$gmap_api_key = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
+			
+			$display_map = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'on');
+			$checked = $display_map == 'off' ? '' : 'checked';
+			$active = $display_map == 'off' ? '' : 'mActive';
 			?>
 			
 			<section>
 				<label class="label">
 					<div class="label-inner">
-						<p><?php $gmap_api_key? esc_html_e('Google Map Location', 'tour-booking-manager'):esc_html_e('OSMap Location', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i></p>
+						<p><?php esc_html_e('Enable/Disable Map Location', 'tour-booking-manager');?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('To show Tour Location on Map enable It.','tour-booking-manager'); ?></span></i></p>
 					</div>
-					<div style="width: 80%;" class="auto-search-wrapper loupe">
-						<input style="padding-left:30px" id="<?php echo esc_attr($gmap_api_key? 'ttbm_map_location':'ttbm_osmap_location'); ?>" name="ttbm_full_location_name" placeholder="<?php esc_html_e('Please type location...', 'tour-booking-manager'); ?>" value="<?php echo esc_attr($location_name); ?>">
-					</div>
+					<?php MP_Custom_Layout::switch_button('ttbm_display_map', $checked); ?>
 				</label>
-				<?php if(!$gmap_api_key): ?>
-					<p class="text"><?php esc_html_e('To use google map, you have to add google map API key from', 'tour-booking-manager'); ?>
-					<a href="<?php echo admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page'); ?>"><?Php esc_html_e('settings.','tour-booking-manager'); ?></a>
-				</p>
-				<?php endif; ?>
 			</section>
-
-			<section>
-				<div id="<?php echo esc_attr($gmap_api_key? 'gmap_canvas':'osmap_canvas'); ?>" style="width: 100%; height: 400px;"></div>
-				<div style="margin-top: 10px;">
-					<?php esc_html_e('Latitude ', 'tour-booking-manager'); ?>
-					<input type="text" id="map_latitude" name="ttbm_map_latitude" value="<?php echo esc_attr($latitude); ?>" >
-					<?php esc_html_e('Longitude ', 'tour-booking-manager'); ?>
-					<input type="text" id="map_longitude" name="ttbm_map_longitude" value="<?php echo esc_attr($longitude); ?>" >
-				</div>
-			</section>
+			<div class="<?php echo esc_attr($active); ?>" data-collapse="#<?php echo esc_attr('ttbm_display_map'); ?>">
+				<section>
+					<label class="label">
+						<div class="label-inner">
+							<p><?php $gmap_api_key? esc_html_e('Google Map Location', 'tour-booking-manager'):esc_html_e('OSMap Location', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i></p>
+						</div>
+						<div style="width: 80%;" class="auto-search-wrapper loupe">
+							<input style="padding-left:30px" id="<?php echo esc_attr($gmap_api_key? 'ttbm_map_location':'ttbm_osmap_location'); ?>" name="ttbm_full_location_name" placeholder="<?php esc_html_e('Please type location...', 'tour-booking-manager'); ?>" value="<?php echo esc_attr($location_name); ?>">
+						</div>
+					</label>
+				</section>
+				<section>
+					<?php if(!$gmap_api_key): ?>
+						<p class="text"><?php esc_html_e('To use google map, you have to add google map API key from', 'tour-booking-manager'); ?>
+							<a href="<?php echo admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page'); ?>"><?Php esc_html_e('settings.','tour-booking-manager'); ?></a>
+						</p>
+					<?php endif; ?>
+					<div id="<?php echo esc_attr($gmap_api_key? 'gmap_canvas':'osmap_canvas'); ?>" style="width: 100%; height: 400px;"></div>
+					<div style="margin-top: 10px;">
+						<?php esc_html_e('Latitude ', 'tour-booking-manager'); ?>
+						<input type="text" id="map_latitude" name="ttbm_map_latitude" value="<?php echo esc_attr($latitude); ?>" >
+						<?php esc_html_e('Longitude ', 'tour-booking-manager'); ?>
+						<input type="text" id="map_longitude" name="ttbm_map_longitude" value="<?php echo esc_attr($longitude); ?>" >
+					</div>
+				</section>
+			</div>
+			
 			<?php
 		}
 

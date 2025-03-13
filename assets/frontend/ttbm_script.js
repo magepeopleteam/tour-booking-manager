@@ -83,6 +83,7 @@
 		// Ensure the data-lati and data-longdi attributes exist
 		var lati = parseFloat(map_canvas.getAttribute("data-lati")) || 0;
 		var longdi = parseFloat(map_canvas.getAttribute("data-longdi")) || 0;
+		var location = map_canvas.getAttribute("data-location") || 'Tour Location';
 	
 		// Initialize the map with Leaflet (OpenStreetMap)
 		var osmMap = L.map(map_canvas, { minZoom: 4, maxZoom: 18 }).setView([lati, longdi], 12);
@@ -93,7 +94,7 @@
 		}).addTo(osmMap);
 	
 		// Optional: Add a marker at the specified location
-		L.marker([lati, longdi]).addTo(osmMap).bindPopup("Selected Location");
+		L.marker([lati, longdi]).addTo(osmMap).bindPopup(location);
 	}
 	
 

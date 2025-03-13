@@ -887,9 +887,9 @@
     let osmMap, osmMarker, osmAutocomplete, osmGeocoder;
     
     function initOSMMap() {
-        let lati = parseFloat(document.getElementById('map_latitude')?.value) || 23.8103; // Default to Dhaka
-        let longdi = parseFloat(document.getElementById('map_longitude')?.value) || 90.4125;
-        osmMap = L.map("osmap_canvas", { minZoom: 4, maxZoom: 18 }).setView([lati, longdi], 12);
+        let lati = parseFloat(document.getElementById('map_latitude')?.value); 
+        let longdi = parseFloat(document.getElementById('map_longitude')?.value);
+        osmMap = L.map("osmap_canvas", { minZoom: 1, maxZoom: 20 }).setView([lati, longdi], 12);
 
         // Add OSM tile layer
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -898,7 +898,7 @@
 
         // Initialize the marker for OpenStreetMap
         osmMarker = L.marker([lati, longdi], { title: "Selected Location" }).addTo(osmMap);
-
+        
         // Initialize Autocomplete for OpenStreetMap search
         
             new Autocomplete("ttbm_osmap_location", {
@@ -944,6 +944,12 @@
                     const marker = L.marker([lat, lng], { title: display_name });
                     marker.addTo(osmMap).bindPopup(display_name);
                     osmMap.setView([lat, lng], 8);
+
+                    osmMarker.setLatLng([lat, lng]);
+    
+                    // Update input fields
+                    document.getElementById('map_latitude').value = lat;
+                    document.getElementById('map_longitude').value = lng;
                 },
         
                 // onSelectedItem
@@ -962,11 +968,6 @@
         osmMap.on("enterFullscreen", () => console.log("Enter Fullscreen"));
         osmMap.on("exitFullscreen", () => console.log("Exit Fullscreen"));
        
-
-        // Add click event to OSM map
-        osmMap.on("click", (e) => {
-            alert("Lat, Lon: " + e.latlng.lat + ", " + e.latlng.lng);
-        });
     }
 
     // ===========Google Map setup=============

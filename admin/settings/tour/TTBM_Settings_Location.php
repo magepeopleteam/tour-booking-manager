@@ -232,7 +232,7 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 			$map_settings = get_option('ttbm_google_map_settings'); 
 			$gmap_api_key = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
 			
-			$display_map = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'off');
+			$display_map = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'on');
 			$checked = $display_map == 'off' ? '' : 'checked';
 			$active = $display_map == 'off' ? '' : 'mActive';
 			?>

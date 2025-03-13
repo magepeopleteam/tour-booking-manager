@@ -146,6 +146,7 @@ div .item_icon {
 	padding:5px 20px;
   	text-align: center;
 	position: relative;
+	white-space: nowrap;
 }
 div .item_icon::after{
 	content: '';

@@ -52,7 +52,7 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 		}
 		public function add_tab($tour_id){
 			?>
-			<li data-tabs-target="#ttbm_settings_location">
+			<li data-tabs-target="#ttbm_settings_location" class="ttbm_settings_location">
 				<i class="fas fa-map-marker-alt"></i><?php esc_html_e(' Location', 'tour-booking-manager'); ?>
 			</li>
 			<?php

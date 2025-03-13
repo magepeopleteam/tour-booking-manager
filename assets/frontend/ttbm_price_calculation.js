@@ -187,8 +187,30 @@ function ttbm_partial_payment_job(parent, total) {
     });
     $(document).on("click", ".ttbm_book_now", function (e) {
         e.preventDefault();
+
         if (mp_tour_ticket_qty($(this).closest('.ttbm_registration_area')) > 0) {
-            $(this).closest('.ttbm_book_now_area').find('.ttbm_add_to_cart').trigger('click');
+            let error_exit=0;
+            let parent = $(this).closest('.mp_tour_ticket_form');
+            parent.find('.formControl').each(function () {
+                if ($(this).is(':required') && $(this).val() === '') {
+                    $(this).closest('.ttbm_form_item').addClass('mage_error');
+                    error_exit++;
+                } else {
+                    $(this).closest('.ttbm_form_item').removeClass('mage_error');
+                }
+            });
+            if(error_exit>0){
+                return false;
+            }else{
+                let book_now_area=$(this).closest('.ttbm_book_now_area');
+                if(book_now_area.find('[name="ttbm_direct_order_product_id"]').length>0){
+
+                    book_now_area.find('.ttbm_add_to_cart').attr('name','').trigger('click');
+                }else {
+                    book_now_area.find('.ttbm_add_to_cart').trigger('click');
+                }
+            }
+
         } else {
             alert('Please Select Ticket Type');
             let currentTarget = $(this).closest('.ttbm_registration_area').find('.mp_tour_ticket_type .formControl[data-price]');

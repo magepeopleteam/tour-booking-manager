@@ -9,6 +9,7 @@
                 add_action('ttbm_section_title', array($this, 'section_title'), 10, 2);
                 add_action('ttbm_section_titles', array($this, 'section_titles'), 10, 2);
                 add_action('ttbm_slider', array($this, 'slider'));
+                add_action('ttbm_details_location', array($this, 'details_location'));
                 add_action('ttbm_description', array($this, 'description'));
                 add_action('ttbm_include_feature', array($this, 'include_feature'));
                 add_action('ttbm_exclude_service', array($this, 'exclude_service'));
@@ -21,9 +22,97 @@
                 add_action('ttbm_why_choose_us', array($this, 'why_choose_us'));
                 add_action('ttbm_get_a_question', array($this, 'get_a_question'));
                 add_action('ttbm_tour_guide', array($this, 'tour_guide'));
+                add_action('ttbm_details_particular_area', array($this, 'particular_area'));
                 //add_action( 'ttbm_hotel_list', array( $this, 'hotel_list' ) );
                 add_action('ttbm_related_tour', array($this, 'related_tour'));
                 add_action('ttbm_dynamic_sidebar', array($this, 'dynamic_sidebar'), 10, 1);
+                add_action('ttbm_registration', array($this, 'ticket_registration'));
+            }
+
+            public function ticket_registration(){
+                $ttbm_post_id = $ttbm_post_id ?? get_the_id();
+	            $tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
+                $ttbm_display_registration = $ttbm_display_registration ?? MP_Global_Function::get_post_info( $tour_id, 'ttbm_display_registration', 'on' );
+                if ( $ttbm_display_registration != 'off' ) {
+                    ?>
+                    <div class="ttbm-sidebar-booking">
+                        <div class="ttbm-title-price"><?php _e("From",'tour-booking-manager'); ?><?php include(TTBM_Function::template_path('layout/start_price_box.php')); ?></div>
+                        
+                        <?php TTBM_Details_Layout::date_selection(); ?>
+                        <button type="button" class="_dButton_bgBlue_fullWidth" data-target-popup="registration-popup">
+                            <span class="fas fa-plus-square"></span>
+                            <?php esc_html_e('Book Now','tour-booking-manager'); ?>				
+                        </button>
+   
+                    </div>
+                        <div class="mpPopup mpStyle" data-popup="registration-popup">
+                        <div class="popupMainArea">
+                            <div class="popupHeader allCenter">
+                                <h2 class="_mR"><?php esc_html_e('Select Icon', 'bus-ticket-booking-with-seat-reservation'); ?></h2>
+                                <span class="fas fa-times popupClose"></span>
+                            </div>
+                            <div class="popupBody">
+                                <?php
+                                    include( TTBM_Function::template_path( 'ticket/tour_default_selection.php' ) );
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+            }
+
+            public function date_selection(){
+                $ttbm_post_id = $ttbm_post_id ?? get_the_id();
+                $tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
+                $all_dates     = $all_dates ?? TTBM_Function::get_date( $tour_id );
+                $travel_type   = $travel_type ?? TTBM_Function::get_travel_type( $tour_id );
+                $tour_type     = $tour_type ?? TTBM_Function::get_tour_type( $tour_id );
+                $template_name = $template_name ?? MP_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
+                if ( sizeof( $all_dates ) > 0 && $tour_type == 'general' && $travel_type != 'particular' ) {
+                    $date          = current( $all_dates );
+                    $check_ability = MP_Global_Function::get_post_info( $tour_id, 'ttbm_ticketing_system', 'availability_section' );
+                    $time          = TTBM_Function::get_time( $tour_id, $date );
+                    $time          = is_array( $time ) ? $time[0]['time'] : $time;
+                    $date          = $time ? $date . ' ' . $time : $date;
+                    $date=$time?date( 'Y-m-d H:i', strtotime( $date) ):date( 'Y-m-d', strtotime( $date) );
+                    /************/
+                    $date_format = MP_Global_Function::date_picker_format();
+                    $now = date_i18n($date_format, strtotime(current_time('Y-m-d')));
+                    $hidden_date = $date ? date('Y-m-d', strtotime($date)) : '';
+                    $visible_date = $date ? date_i18n($date_format, strtotime($date)) : '';
+                    ?>
+                    <div class="ttbm_registration_area <?php echo esc_attr( $check_ability ); ?>">
+                        <input type="hidden" name="ttbm_id" value="<?php echo esc_attr( $tour_id ); ?>"/>
+                        <?php
+                            if ($travel_type == 'repeated' ) {
+                                $time_slots = TTBM_Function::get_time( $tour_id, $all_dates[0] );
+                                ?>
+                                <div class="">
+                                    <div class="">
+                                        <label class="_allCenter">
+                                            <span class="date-picker-icon">
+                                            <i class="far fa-calendar-alt"></i>
+                                            <input type="hidden" name="ttbm_date" value="<?php echo esc_attr($hidden_date); ?>" required/>
+                                            <input id="ttbm_select_date" type="text" value="<?php echo esc_attr($visible_date); ?>" class="formControl mb-0 " placeholder="<?php echo esc_attr($now); ?>"  readonly required/>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <?php
+                                do_action( 'mp_load_date_picker_js', '#ttbm_select_date', $all_dates );
+                            }
+                        ?>
+                        
+                    </div>
+                <?php } 
+            }
+
+            public function particular_area(){
+                include( TTBM_Function::template_path( 'ticket/particular_item_area.php' ) );
+            }
+            public function details_location(){
+                include( TTBM_Function::template_path( 'layout/location.php' ) );
             }
             public function details_title() {
                 include(TTBM_Function::template_path('layout/title_details_page.php'));

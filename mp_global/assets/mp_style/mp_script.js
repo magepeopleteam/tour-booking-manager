@@ -721,14 +721,14 @@ function mp_pagination_page_management(parent, pagination_page, total_item) {
     });
     //*************** Pagination Load More ***************//
     $(document).on('click', 'div.mp_pagination_main_area  .pagination_load_more', function () {
-        let pagination_page = parseInt($(this).attr('data-load-more'))+1;
+        let pagination_page = parseInt($(this).attr('data-load-more')) + 1;
         let parent = $(this).closest('div.mp_pagination_main_area');
         let per_page_item = parseInt(parent.find('input[name="pagination_per_page"]').val());
-        let count=0;
-        let end_item = per_page_item*pagination_page+per_page_item;
+        let count = 0;
+        let end_item = per_page_item * pagination_page + per_page_item;
         $(this).attr('data-load-more', pagination_page).promise().done(function () {
-            parent.find('.mp_pagination_item').each(function (){
-                if(count<end_item){
+            parent.find('.mp_pagination_item').each(function () {
+                if (count < end_item) {
                     $(this).slideDown(250);
                 }
                 count++;

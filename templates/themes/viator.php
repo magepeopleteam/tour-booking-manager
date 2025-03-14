@@ -67,7 +67,6 @@
 						<?php do_action( 'ttbm_exclude_service' ); ?>
 						<?php do_action( 'ttbm_activity' ); ?>
 						<?php //do_action( 'ttbm_hotel_list' ); ?>
-						<?php do_action( 'ttbm_location_map', $ttbm_post_id ); ?>
 						<?php do_action( 'ttbm_why_choose_us' ); ?>
 						<?php do_action( 'ttbm_get_a_question' ); ?>
 						<?php do_action( 'ttbm_tour_guide' ); ?>

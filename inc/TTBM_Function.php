@@ -465,7 +465,7 @@
 			//***********Location & Place*************************//
 			public static function get_all_location(): array {
 				$locations = MP_Global_Function::get_taxonomy('ttbm_tour_location');
-				$arr = array('' => esc_html__('Please Select a Location', 'tour-booking-manager'));
+				$arr = array('' => esc_html__('--Select a city--', 'tour-booking-manager'));
 				foreach ($locations as $_terms) {
 					$arr[$_terms->name] = $_terms->name;
 				}

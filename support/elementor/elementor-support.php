@@ -32,6 +32,13 @@ class TTBMPluginElementor {
 	
 	private function include_widgets_files() {		
 		require_once( __DIR__ . '/widget/tour-list.php' );		
+		require_once( __DIR__ . '/widget/tour-top-search.php' );
+		require_once( __DIR__ . '/widget/tour-top-filter.php' );
+		require_once( __DIR__ . '/widget/tour-location-list.php' );
+		require_once( __DIR__ . '/widget/tour-search-result.php' );
+		require_once( __DIR__ . '/widget/tour-hotel-list.php' );
+		require_once( __DIR__ . '/widget/tour-registration.php' );
+		require_once( __DIR__ . '/widget/tour-related.php' );
 	}
 	
 	public function register_widgets() {
@@ -41,6 +48,13 @@ class TTBMPluginElementor {
 		
 		// Register Widgets					
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\TTBMTourListWidget() );		
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\TTBMTourTopSearchWidget() );
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\TTBMTourTopFilterWidget() );
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\TTBMTourLocationListWidget() );
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\TTBMTourSearchResultWidget() );
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\TTBMTourHotelListWidget() );
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\TTBMTourRegistrationWidget() );
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\TTBMTourRelatedWidget() );
 	}
 	
 	public function __construct() {
@@ -52,7 +66,6 @@ class TTBMPluginElementor {
         }
 	}
 }
-
 
 // Instantiate Plugin Class
 TTBMPluginElementor::instance();

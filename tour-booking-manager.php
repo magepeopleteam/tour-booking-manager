@@ -16,6 +16,7 @@
 		class TTBM_Woocommerce_Plugin {
 			public function __construct() {
 				$this->load_ttbm_plugin();
+				add_action('init', array($this, 'load_blocks'));
 			}
 			private function load_ttbm_plugin() {
 				include_once(ABSPATH . 'wp-admin/includes/plugin.php');
@@ -116,30 +117,62 @@
             self::update_repeated_fields();
         }
 
-        private static function update_repeated_fields() {
-            if (get_option('ttbm_repeated_field_update') === 'completed') {
-                return; // Skip if already updated
-            }
+			public function load_blocks() {
+				// Add block editor support
+				require_once TTBM_PLUGIN_DIR . '/support/blocks/index.php';
+				
+				// Add block category
+				add_filter('block_categories_all', array($this, 'ttbm_block_category'));
+				
+				// Register block editor assets
+				add_action('enqueue_block_editor_assets', array($this, 'ttbm_enqueue_block_editor_assets'));
+			}
 
-            $args = [
-                'post_type' => 'ttbm_tour',
-                'posts_per_page' => -1,
-            ];
+			public function ttbm_block_category($categories) {
+				return array_merge(
+					array(
+						array(
+							'slug' => 'tour-booking-manager',
+							'title' => __('Tour Booking Manager', 'tour-booking-manager'),
+							'icon' => 'calendar-alt',
+						),
+					),
+					$categories
+				);
+			}
 
-            $query = new WP_Query($args);
-            if ($query->have_posts()) {
-                foreach ($query->posts as $post) {
-                    $post_id = $post->ID;
-                    $start_date = MP_Global_Function::get_post_info($post_id, 'ttbm_travel_start_date');
-                    $end_date = MP_Global_Function::get_post_info($post_id, 'ttbm_travel_end_date');
-                    update_post_meta($post_id, 'ttbm_travel_repeated_start_date', $start_date);
-                    update_post_meta($post_id, 'ttbm_travel_repeated_end_date', $end_date);
-                }
-            }
+			public function ttbm_enqueue_block_editor_assets() {
+				wp_enqueue_script(
+					'tour-booking-manager-blocks',
+					plugins_url('support/blocks/build/index.js', __FILE__),
+					array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor')
+				);
+			}
 
-            wp_reset_postdata();
-            update_option('ttbm_repeated_field_update', 'completed');
-        }
+			private static function update_repeated_fields() {
+				if (get_option('ttbm_repeated_field_update') === 'completed') {
+					return; // Skip if already updated
+				}
+
+				$args = [
+					'post_type' => 'ttbm_tour',
+					'posts_per_page' => -1,
+				];
+
+				$query = new WP_Query($args);
+				if ($query->have_posts()) {
+					foreach ($query->posts as $post) {
+						$post_id = $post->ID;
+						$start_date = MP_Global_Function::get_post_info($post_id, 'ttbm_travel_start_date');
+						$end_date = MP_Global_Function::get_post_info($post_id, 'ttbm_travel_end_date');
+						update_post_meta($post_id, 'ttbm_travel_repeated_start_date', $start_date);
+						update_post_meta($post_id, 'ttbm_travel_repeated_end_date', $end_date);
+					}
+				}
+
+				wp_reset_postdata();
+				update_option('ttbm_repeated_field_update', 'completed');
+			}
 			public function woocommerce_not_active() {
 				$wc_install_url = get_admin_url() . 'plugin-install.php?s=woocommerce&tab=search&type=term';
 				printf('<div class="error" style="background:red; color:#fff;"><p>%s</p></div>', __('You Must Install WooCommerce Plugin before activating Tour Booking Manager, Because It is dependent on Woocommerce Plugin. <a class="btn button" href=' . $wc_install_url . '>Click Here to Install</a>'));

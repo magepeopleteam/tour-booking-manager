@@ -1,0 +1,45 @@
+.ttbm-block-preview {
+    background: #f8f9fa;
+    border: 1px dashed #adb5bd;
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #495057;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+.ttbm-block-preview::before {
+    content: '📍';
+    display: block;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.wp-block[data-type="tour-booking-manager/travel-list"] .ttbm-block-preview::before {
+    content: '📋';
+}
+
+.wp-block[data-type="tour-booking-manager/top-filter"] .ttbm-block-preview::before {
+    content: '🔍';
+}
+
+.wp-block[data-type="tour-booking-manager/location-list"] .ttbm-block-preview::before {
+    content: '🗺️';
+}
+
+.wp-block[data-type="tour-booking-manager/search-result"] .ttbm-block-preview::before {
+    content: '🔎';
+}
+
+.wp-block[data-type="tour-booking-manager/hotel-list"] .ttbm-block-preview::before {
+    content: '🏨';
+}
+
+.wp-block[data-type="tour-booking-manager/registration"] .ttbm-block-preview::before {
+    content: '📝';
+}
+
+.wp-block[data-type="tour-booking-manager/related"] .ttbm-block-preview::before {
+    content: '🔄';
+} 

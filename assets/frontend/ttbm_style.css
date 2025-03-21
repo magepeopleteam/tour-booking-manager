@@ -124,6 +124,7 @@ div.item_section {
 	padding: 10px;
 	border-radius: 50px;
 	margin-bottom: 15px;
+	flex-wrap: wrap;
 }
 div.item_section .ttbm_short_list_more {
 	cursor: pointer;
@@ -176,6 +177,12 @@ div.mpStyle [data-bg-image]{
 	}
 	.ttbm_select_date_area{
 		text-align: center;
+	}
+	div.item_section {
+		border-radius: 10px;
+	}
+	div.item_section .item_icon{
+		padding:5px 10px;
 	}
 }
 

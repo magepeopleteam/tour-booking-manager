@@ -275,6 +275,20 @@ div.include_service ul li:hover,
 	border-color: var(--color_theme) !important;
 }
 
+/* ===============include exclude feature========= */
+.ttbm-include-exclude{
+	display: flex;
+	justify-content: start;
+	align-items: start;
+	gap: 10px;
+}
+.ttbm-include-exclude .items{
+	width: 50%;
+}
+.ttbm-include-exclude .items li{
+	margin-bottom: 10px;
+}
+
 /*div.include_service ul li span {*/
 /*	background-color: transparent !important;*/
 /*	width: auto;*/

@@ -11,6 +11,7 @@
                 add_action('ttbm_slider', array($this, 'slider'));
                 add_action('ttbm_details_location', array($this, 'details_location'));
                 add_action('ttbm_description', array($this, 'description'));
+                add_action('ttbm_include_exclude', array($this, 'include_exclude'));
                 add_action('ttbm_include_feature', array($this, 'include_feature'));
                 add_action('ttbm_exclude_service', array($this, 'exclude_service'));
                 add_action('ttbm_short_details', array($this, 'short_details'),10);
@@ -130,6 +131,9 @@
                 include(TTBM_Function::template_path('layout/description.php'));
             }
             //***************Feature************************//
+            public function include_exclude() {
+                include(TTBM_Function::template_path('layout/include_exclude.php'));
+            }
             public function include_feature() {
                 include(TTBM_Function::template_path('layout/include_feature.php'));
             }

@@ -288,7 +288,30 @@ div.include_service ul li:hover,
 .ttbm-include-exclude .items li{
 	margin-bottom: 10px;
 }
-
+.ttbm-activities{
+	display: flex;
+	justify-content: start;
+	align-items: start;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+.ttbm-activities .ttbm-items{
+	width: 49%;
+	margin-bottom: 10px;
+}
+.get-enquiry-form{
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: start;
+	gap: 10px;
+	padding: 20px 10px;
+}
+.mpStyle .get-enquiry-form input,.get-enquiry-form textarea{
+	width: 100%;
+	margin-bottom: 20px;
+}
+/* ===============include exclude feature========= */
 /*div.include_service ul li span {*/
 /*	background-color: transparent !important;*/
 /*	width: auto;*/

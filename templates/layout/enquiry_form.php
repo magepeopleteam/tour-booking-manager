@@ -1,7 +1,6 @@
 <?php
-	if ( ! defined( 'ABSPATH' ) ) {
-		die;
-	}
+	if ( ! defined( 'ABSPATH' ) ) die;
+
 	$ttbm_post_id         = $ttbm_post_id ?? get_the_id();
 	$tour_activities = MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_tour_activities', array() );
 	if ( sizeof( $tour_activities ) > 0 && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_activities', 'on' ) != 'off' ) {

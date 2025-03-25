@@ -35,10 +35,7 @@
 							</li>
 						<?php } ?>
 					</ul>
-					<button type="button" class="_dButton_fullWidth" data-target-popup="get-enquiry-popup">
-						<span class="far fa-envelope"></span>
-						<?php esc_html_e('Get Enquiry','tour-booking-manager'); ?>				
-					</button>
+					<?php do_action( 'ttbm_enquery_popup_button');?>
 				</div>
 			</div>
 			<?php

@@ -70,6 +70,29 @@
 	$("#ttbm_tour_guide .prev").click(function () {
 		$('#ttbm_tour_guide .owl-prev').trigger('click');
 	});
+	// ==========get enquiry form submit============
+	$(document).on('click', '#ttbm-enquiry-form-submit', function(e){	
+		e.preventDefault();
+		let form = $(this).closest('form');
+		let data = form.serialize();
+		jQuery.ajax({
+			type: 'POST',
+			url: ttbm_ajax.ajax_url,
+			data:{
+				action: 'ttbm_enquiry_form_submit',
+				nonce: ttbm_ajax.nonce,
+				data: data
+			},
+			success: function(response){
+				if (response.success) {
+					$('.ajax-response').html(response.data.message).css('color', 'green');
+					form[0].reset();
+				} else {
+					$('.ajax-response').html(response.data.message).css('color', 'red');
+				}
+			}
+		});
+	});
 
 	//========= google map load=========
 	if(ttbm_map.api_key){
@@ -118,4 +141,6 @@
 			map: map,
 		});
     }
+
+	
 }(jQuery));

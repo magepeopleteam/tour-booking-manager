@@ -923,7 +923,34 @@
             });
         }
     });
+    $(document).on('click', '.ttbm-view-enquiry', function (e) {
+        e.preventDefault();
+        let enquiryId = $(this).data('id');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_view_enquiry',
+                enquiry_id: enquiryId,
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                if (response.success) {
+                    $('.ttbm-view-enquiry-response').html(response.data.html);
+                } else {
+                    alert('Failed to load the enquiry details. Please try again.');
+                }
+            },
+            error: function (error) {
+                console.log('Error:', error);
+                alert('An error occurred while loading the enquiry details.');
+            }
+        });
+    });
 
+    $(document).on('click', '#ttbm-enquiry-modal .modal-close', function () {
+        $('#ttbm-enquiry-modal').removeClass('open');
+    });
 }(jQuery));
 
 // =================Open Street map location search==================

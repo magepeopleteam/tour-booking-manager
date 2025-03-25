@@ -19,8 +19,24 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             add_action('ttbm_enquery_popup_button', [$this, 'get_enquiry_button']);
             add_action('wp_ajax_ttbm_enquiry_form_submit', [$this, 'enquiry_form_submit']);
             add_action('wp_ajax_noprev_ttbm_enquiry_form_submit', [$this, 'enquiry_form_submit']);
+            add_action('wp_ajax_ttbm_delete_enquiry', [$this, 'delete_enquiry']);
         }
 
+        public function delete_enquiry(){
+            if (!isset($_POST['enquiry_id']) || !is_numeric($_POST['enquiry_id'])) {
+                wp_send_json_error(['message' => __('Invalid enquiry ID.', 'tour-booking-manager')]);
+            }
+
+            $enquiry_id = intval($_POST['enquiry_id']);
+
+            $post = get_post($enquiry_id);
+            if ($post && $post->post_type === 'ttbm_enquiry' && wp_delete_post($enquiry_id, true)) {
+                wp_send_json_success(['message' => __('Enquiry deleted successfully.', 'tour-booking-manager')]);
+            } else {
+                wp_send_json_error(['message' => __('Failed to delete enquiry. Please try again.', 'tour-booking-manager')]);
+            }
+            die;
+        }
         public function enquiry_form_submit(){
             if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_frontend_nonce')) {
                 wp_send_json_error(['message' => __('Failed to submit enquiry. Please try again.', 'tour-booking-manager')]);
@@ -95,7 +111,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 'menu_position'      => null,
                 'supports'           => ['title', 'editor', 'custom-fields'],
                 'capabilities'       => [
-                    'create_posts' => 'do_not_allow', // Disable direct creation in admin
+                    'create_posts' => 'do_not_allow',
                 ],
                 'map_meta_cap'       => true,
             ];
@@ -142,64 +158,75 @@ if (! class_exists('TTBM_Get_Enquiry')) {
         public function get_enquiry_page()
         {
         ?>
-            <div id="screen-meta-links">
-                <div id="screen-options-link-wrap" class="hide-if-no-js screen-meta-toggle">
-                    <button type="button" id="show-settings-link" class="button show-settings" aria-controls="screen-options-wrap" aria-expanded="false">Screen Options</button>
-                </div>
-            </div>
-            <div class="wrap nosubsub">
+            <div class="wrap">
                 <h1 class="wp-heading-inline">Enquiry</h1>
                 <hr class="wp-header-end">
-                <div id="col-container" class="wp-clearfix">
+                <h2 class="nav-tab-wrapper">
+                    <a href="#tab1" class="nav-tab nav-tab-active">Enquiry List</a>
+                    <a href="#tab2" class="nav-tab">Enquiry Settings</a>
+                </h2>
+                <div id="tab1" class="tab-content" style="display: block;">
+                    <div class="wrap">
+                        <table class="wp-list-table widefat fixed striped posts">
+                            <thead>
+                                <tr>
+                                    <th class="manage-column column-title">Subject</th>
+                                    <th class="manage-column column-title">Name</th>
+                                    <th class="manage-column column-title">Email</th>
+                                    <th class="manage-column column-title">Message</th>
+                                    <th class="manage-column column-title">Date</th>
+                                    <th class="manage-column column-title">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $args = [
+                                    'post_type' => 'ttbm_enquiry',
+                                    'post_status' => 'publish',
+                                    'posts_per_page' => -1
+                                ];
+                                $enquiry = new WP_Query($args);
+                                if ($enquiry->have_posts()) {
+                                    while ($enquiry->have_posts()) {
+                                        $enquiry->the_post();
+                                ?>
+                                <tr>
+                                    <td><?php the_title(); ?></td>
+                                    <td><?php echo esc_html(get_post_meta(get_the_ID(), 'name', true)); ?></td>
+                                    <td><?php echo esc_html(get_post_meta(get_the_ID(), 'email', true)); ?></td>
+                                    <td><?php echo esc_html(get_the_content()); ?></td>
+                                    <td><?php echo get_the_date() . ' ' . get_the_time(); ?></td>
+                                    <td>
+                                        <a href="#" class="ttbm-delete-enquiry" data-id="<?php echo get_the_ID(); ?>">Delete</a>
+                                    </td>
+                                </tr>
+                                <?php
+                                    }
+                                    wp_reset_postdata();
+                                } else {
+                                ?>
+                                    <tr>
+                                        <td colspan="5"><?php esc_html_e('No enquiries found.', 'tour-booking-manager'); ?></td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="tab2" class="tab-content" style="display: none;">
                     <div id="col-left">
                         <div class="col-wrap">
                             <div class="form-wrap">
                                 <h2>Enquiry Settings</h2>
                                 <form id="addtag" method="post" action="">
-                                    <div class="form-field
-                                    term-name-wrap">
+                                    <div class="form-field term-name-wrap">
                                         <label for="name">Name</label>
                                         <input name="name" id="name" type="text" value="" size="40" aria-required="true">
                                     </div>
                                 </form>
                             </div>
-                        </div>
-                    </div>
-                    <div id="col-right">
-                        <div class="col-wrap">
-                            <table class="wp-list-table widefat fixed striped posts">
-                                <thead>
-                                    <tr>
-                                        <th class="manage-column column-title">Subject</th>
-                                        <th class="manage-column column-title">Name</th>
-                                        <th class="manage-column column-title">Email</th>
-                                        <th class="manage-column column-title">Message</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $args = [
-                                        'post_type' => 'ttbm_enquiry',
-                                        'post_status' => 'publish',
-                                        'posts_per_page' => -1
-                                    ];
-                                    $enquiry = new WP_Query($args);
-                                    if ($enquiry->have_posts()) {
-                                        while ($enquiry->have_posts()) {
-                                            $enquiry->the_post();
-                                    ?>
-                                            <tr>
-                                                <td><?php the_title(); ?></td>
-                                                <td><?php echo get_post_meta(get_the_ID(), 'name', true); ?></td>
-                                                <td><?php echo get_post_meta(get_the_ID(), 'email', true); ?></td>
-                                                <td><?php echo get_the_content(); ?></td>
-                                            </tr>
-                                    <?php
-                                        }
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>

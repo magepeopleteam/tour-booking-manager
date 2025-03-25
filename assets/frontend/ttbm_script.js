@@ -70,6 +70,12 @@
 	$("#ttbm_tour_guide .prev").click(function () {
 		$('#ttbm_tour_guide .owl-prev').trigger('click');
 	});
+	
+	$(document).on('click', '[data-target-popup="get-enquiry-popup"]', function () {
+		$('#ttbm-enquiry-form')[0].reset();
+		$('.ajax-response').html('');
+	});
+
 	// ==========get enquiry form submit============
 	$(document).on('click', '#ttbm-enquiry-form-submit', function(e){	
 		e.preventDefault();

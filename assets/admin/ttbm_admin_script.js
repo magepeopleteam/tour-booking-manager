@@ -879,6 +879,51 @@
         }
         return false;
     });
+
+    // ================Get Enquiry=================//
+    $(document).ready(function ($) {
+        const tabs = $('.nav-tab');
+        const contents = $('.tab-content');
+
+        tabs.on('click', function (e) {
+            e.preventDefault();
+            tabs.removeClass('nav-tab-active');
+            contents.hide();
+
+            $(this).addClass('nav-tab-active');
+            const target = $(this).attr('href');
+            $(target).show();
+        });
+    });
+    $(document).on('click', '.ttbm-delete-enquiry', function (e) {
+        e.preventDefault();
+        let isConfirmed = confirm('Are you sure you want to delete this row?');
+        if (isConfirmed) {
+            let row = $(this).closest('tr');
+            let enquiryId = $(this).data('id');
+            $.ajax({
+                url: ttbm_admin_ajax.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'ttbm_delete_enquiry',
+                    enquiry_id: enquiryId,
+                    nonce: ttbm_admin_ajax.nonce
+                },
+                success: function (response) {
+                    if (response.success) {
+                        row.remove();
+                    } else {
+                        alert('Failed to delete the enquiry. Please try again.');
+                    }
+                },
+                error: function (error) {
+                    console.log('Error:', error);
+                    alert('An error occurred while deleting the enquiry.');
+                }
+            });
+        }
+    });
+
 }(jQuery));
 
 // =================Open Street map location search==================

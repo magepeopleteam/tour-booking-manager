@@ -1,0 +1,20 @@
+{
+  "name": "tour-booking-manager-blocks",
+  "version": "1.0.0",
+  "description": "Blocks for Tour Booking Manager",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack --watch --mode development"
+  },
+  "author": "MagePeople Team",
+  "license": "GPL-2.0-or-later",
+  "devDependencies": {
+    "@babel/core": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-react": "^7.26.3",
+    "babel-loader": "^9.2.1",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^5.1.4"
+  }
+} 

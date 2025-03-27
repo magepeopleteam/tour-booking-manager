@@ -57,7 +57,7 @@
 									?>
 									<div class="abTopLeft">
 										<button type="button" class="_dButton_bgWhite_textDefault" data-target-popup="superSlider" data-slide-index="1">
-											<?php echo esc_html__( 'View All', 'bus-ticket-booking-with-seat-reservation' ) . ' ' . sizeof( $image_ids ) . ' ' . esc_html__( 'Images', 'bus-ticket-booking-with-seat-reservation' ); ?>
+											<?php echo esc_html__( 'View All', 'tour-booking-manager' ) . ' ' . sizeof( $image_ids ) . ' ' . esc_html__( 'Images', 'tour-booking-manager' ); ?>
 										</button>
 									</div>
 									<?php

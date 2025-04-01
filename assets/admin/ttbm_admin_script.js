@@ -923,6 +923,11 @@
             });
         }
     });
+    $(document).on('click', '.ttbm-reply-enquiry', function (e) {
+        e.preventDefault();
+        let enquiryId = $(this).data('id');
+        console.log(enquiryId);
+    });
     $(document).on('click', '.ttbm-view-enquiry', function (e) {
         e.preventDefault();
         let enquiryId = $(this).data('id');

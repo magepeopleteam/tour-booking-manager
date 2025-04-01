@@ -163,6 +163,41 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             register_post_type('ttbm_enquiry', $args);
         }
 
+        public function reply_enquery_popup() {
+            ?>
+            <div class="mpPopup mpStyle" data-popup="reply-enquiry-popup">
+                <div class="popupMainArea">
+                    <div class="popupHeader allCenter">
+                        <h2 class="_mR"><?php esc_html_e('Reply', 'bus-ticket-booking-with-seat-reservation'); ?></h2>
+                        <span class="fas fa-times popupClose"></span>
+                    </div>
+                    <div class="popupBody">
+                        <div class="ajax-response"></div>
+                        <form method="post" id="ttbm-enquiry-form">
+                            <fieldset>
+                                <legend><?php esc_html_e('Enquiry', 'tour-booking-manager'); ?></legend>
+                                <div class="get-enquiry-form">
+                                    <label for="name"><?php esc_html_e('Name:', 'tour-booking-manager'); ?></label>
+                                    <input type="text" name="name" id="name" placeholder="<?php esc_attr_e('Your Name', 'tour-booking-manager'); ?>" required>
+
+                                    <label for="email"><?php esc_html_e('Email:', 'tour-booking-manager'); ?></label>
+                                    <input type="email" name="email" id="email" placeholder="<?php esc_attr_e('Your Email', 'tour-booking-manager'); ?>" required>
+
+                                    <label for="subject"><?php esc_html_e('Subject:', 'tour-booking-manager'); ?></label>
+                                    <input type="text" name="subject" id="subject" placeholder="<?php esc_attr_e('Subject', 'tour-booking-manager'); ?>" required>
+
+                                    <label for="message"><?php esc_html_e('Message:', 'tour-booking-manager'); ?></label>
+                                    <textarea name="message" id="message" placeholder="<?php esc_attr_e('Your Message', 'tour-booking-manager'); ?>" rows="5" required></textarea>
+
+                                    <button class="_dButton_fullWidth" id="ttbm-enquiry-form-submit"><?php esc_html_e('Send Message', 'tour-booking-manager'); ?></button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
         public function get_enquiry_pop_up($tour_id) {
             ?>
                 <div class="mpPopup mpStyle" data-popup="get-enquiry-popup">
@@ -212,7 +247,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 <div id="tab1" class="tab-content" style="display: block;">
                     <div class="wrap ">
                         <div class="mpStyle">
-                            <?php do_action('ttbm_enquery_popup'); ?>
+                            <?php $this->reply_enquery_popup(); ?>
                             <div class="mpPopup mpStyle" data-popup="view-enquiry-popup">
                                 <div class="popupMainArea">
                                     <div class="popupHeader allCenter">
@@ -256,7 +291,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                                     <td><?php echo get_the_date() . ' ' . get_the_time(); ?></td>
                                     <td class="mpStyle">
                                         <a href="#" class="ttbm-view-enquiry" data-id="<?php echo get_the_ID(); ?>" data-target-popup="view-enquiry-popup" >View |</a>
-                                        <a href="#" class="ttbm-edit-enquiry" data-id="<?php echo get_the_ID(); ?>" data-target-popup="get-enquiry-popup" >Edit |</a>
+                                        <a href="#" class="ttbm-reply-enquiry" data-id="<?php echo get_the_ID(); ?>" data-target-popup="reply-enquiry-popup" >Reply |</a>
                                         <a href="#" class="ttbm-delete-enquiry" data-id="<?php echo get_the_ID(); ?>">Delete</a>
                                     </td>
                                 </tr>

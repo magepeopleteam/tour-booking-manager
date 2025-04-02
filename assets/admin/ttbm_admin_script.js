@@ -926,8 +926,42 @@
     $(document).on('click', '.ttbm-reply-enquiry', function (e) {
         e.preventDefault();
         let enquiryId = $(this).data('id');
-        console.log(enquiryId);
+        var row = $(this).closest('.ttbm-enquiry-list');
+        var subject = row.find('td:eq(0)').text().trim();
+        var name = row.find('td:eq(1)').text().trim();
+        var email = row.find('td:eq(2)').text().trim();
+        $('#ttbm-reply-to').val(email);
+        $('#ttbm-reply-subject').val(subject);
     });
+    $('#ttbm-reply-enquiry-form').on('submit', function (e) {
+        e.preventDefault();
+        if (typeof tinyMCE !== 'undefined' && tinyMCE.get('ttbm-reply-message')) {
+            tinyMCE.get('ttbm-reply-message').save();
+        }
+        var formData = $(this).serialize();
+        $.ajax({
+            type: "POST",
+            url: ttbm_admin_ajax.ajax_url, 
+            data: {
+                action: 'ttbm_reply_enquiry',
+                nonce: ttbm_admin_ajax.nonce,
+                data:formData
+            },
+            success: function (response) {
+                console.log(response);
+                if (response.success) {
+                    $('.reply-ajax-response').html(response.data.message).css('color', 'green');
+                } else {
+                    $('.reply-ajax-response').html(response.data.message).css('color', 'red');
+                }
+            },
+            error: function (error) {
+                console.log('Error:', error);
+                alert('An error occurred while loading the enquiry details.');
+            }
+        });
+    });
+    // ==========view enquiry=============
     $(document).on('click', '.ttbm-view-enquiry', function (e) {
         e.preventDefault();
         let enquiryId = $(this).data('id');

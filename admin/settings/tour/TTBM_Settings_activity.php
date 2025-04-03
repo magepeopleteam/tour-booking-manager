@@ -61,6 +61,9 @@
 			public function activities($tour_id) {
 				$activities = MP_Global_Function::get_taxonomy('ttbm_tour_activities');
 				$tour_activities = MP_Global_Function::get_post_info($tour_id, 'ttbm_tour_activities', []);
+				
+				$tour_activity = implode(',', $tour_activities);
+				$tour_activities_array = explode(',', $tour_activities[0]);
 				?>
 				<div class="ttbm_activities_table">
 					<section>
@@ -72,23 +75,25 @@
 						<?php MP_Custom_Layout::popup_button_xs('add_new_activity_popup', esc_html__('Create New Activity', 'tour-booking-manager')); ?>
 						</label>
 					</section>
-
-					<section>
+					
+					<section class="includedd-features-section">
 						<label class="label">
-							<div> 
+							<div>
 								<p><?php esc_html_e('Activities', 'tour-booking-manager'); ?></p>
 								<span class="text"><?php TTBM_Settings::des_p('activities'); ?></span>
 							</div>
-							<div class="w-50">
-								<select name="ttbm_tour_activities[]" multiple='multiple' class='mp_select2' data-placeholder="<?php esc_html_e('Please Select a Activities ', 'tour-booking-manager'); ?>">
-									<?php foreach ($activities as $activity) { ?>
-										<option value="<?php echo esc_attr($activity->name) ?>" <?php echo in_array($activity->name, $tour_activities) ? 'selected' : ''; ?>>
-											<?php echo esc_html($activity->name); ?>
-										</option>
-									<?php } ?>
-								</select>
-							</div>
 						</label>
+						<div class="groupCheckBox">
+							<input type="hidden" name="ttbm_tour_activities[]" value="<?php echo esc_attr($tour_activity); ?>"/>
+							<?php foreach ($activities as $activity) { ?>
+								<label class="customCheckboxLabel">
+									<input type="checkbox" <?php echo in_array($activity->term_id, $tour_activities_array) ? 'checked' : ''; ?> data-checked="<?php echo esc_attr($activity->term_id); ?>"/> 
+									<span class="customCheckbox">
+										<?php esc_html_e($activity->name); ?>
+									</span>
+								</label>
+							<?php } ?>
+						</div>
 					</section>
 				</div>
 				<?php

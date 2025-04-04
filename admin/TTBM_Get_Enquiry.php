@@ -37,8 +37,11 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                     'time'    => get_the_time('g:i a', $post),
                     'name'    => esc_html(get_post_meta($enquiry_id, 'name', true)),
                     'email'   => esc_html(get_post_meta($enquiry_id, 'email', true)),
+                    'status'   => esc_html(get_post_meta($enquiry_id, 'status', true)),
                 ];
-
+                if($response['status']=='new'){
+                    update_post_meta($enquiry_id, 'status', 'viewed');
+                }
                 ob_start();
                 ?>
                 <table>
@@ -65,7 +68,6 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 </table>
                 <?php
                 $html = ob_get_clean();
-
                 wp_send_json_success(['html' => $html]);
             } else {
                 wp_send_json_error(['message' => __('Enquiry not found.', 'tour-booking-manager')]);
@@ -89,12 +91,14 @@ if (! class_exists('TTBM_Get_Enquiry')) {
 			}
             $form_data = [];
             parse_str($_POST['data'], $form_data);
+            $postId=sanitize_text_field($form_data['ttbm_post_id'] ?? '');
             $from = sanitize_text_field($form_data['ttbm-reply-from'] ?? '');
             $to = sanitize_email($form_data['ttbm-reply-to'] ?? '');
             $subject = sanitize_text_field($form_data['ttbm-reply-subject'] ?? '');
             $message = sanitize_textarea_field($form_data['ttbm-reply-message'] ?? '');
             $headers = ['Content-Type: text/html; charset=UTF-8'];
             if (wp_mail($to, $subject, $message, $headers)) {
+                update_post_meta($postId, 'status', 'replied');
                 wp_send_json_success(['message' => __('Message sent successfully!','tour-booking-manager')]);
             } else {
                 wp_send_json_error(['message' => __('Failed to send email.','tour-booking-manager')]);
@@ -120,6 +124,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 'meta_input'   => [
                     'name'   => $name,
                     'email'   => $email,
+                    'status' => 'new',
                 ],
             ]);
             $to = get_option('admin_email', 'admin@' . parse_url(get_site_url(), PHP_URL_HOST));
@@ -199,6 +204,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                         <form method="post" id="ttbm-reply-enquiry-form">
                             <fieldset>
                                 <div class="reply-enquiry-form">
+                                    <input type="hidden" name="ttbm_post_id" id="ttbm-post-id" value="">
                                     <label for="name"><?php esc_html_e('From:', 'tour-booking-manager'); ?></label>
                                     <input type="text" name="ttbm-reply-from" id="ttbm-reply-from" value="<?php echo esc_attr($from_email); ?>" placeholder="<?php esc_attr_e('admin@gamil.com', 'tour-booking-manager'); ?>" required>
 
@@ -320,6 +326,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                                     <th class="manage-column column-title"><?php _e('Name','tour-booking-manager'); ?></th>
                                     <th class="manage-column column-title"><?php _e('Email','tour-booking-manager'); ?></th>
                                     <th class="manage-column column-title"><?php _e('Message','tour-booking-manager'); ?></th>
+                                    <th class="manage-column column-title"><?php _e('Status','tour-booking-manager'); ?></th>
                                     <th class="manage-column column-title"><?php _e('Date','tour-booking-manager'); ?></th>
                                     <th class="manage-column column-title"><?php _e('Action','tour-booking-manager'); ?></th>
                                 </tr>
@@ -335,9 +342,10 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                                 if ($enquiry->have_posts()) {
                                     while ($enquiry->have_posts()) {
                                         $enquiry->the_post();
+                                        $status = get_post_meta(get_the_ID(), 'status', true);
                                 ?>
                                 <tr class="ttbm-enquiry-list" data-id="<?php echo get_the_ID(); ?>">
-                                    <td>
+                                    <td class="<?php echo esc_attr(($status=='new')?'new':''); ?>">
                                         <?php
                                         $title = get_the_title(); // Get the post title
                                         $trimmed_title = mb_strimwidth($title, 0, 40, '...'); // Trim to 150 chars with ellipsis
@@ -353,6 +361,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                                         echo esc_html($trimmed_title);
                                         ?>
                                     </td>
+                                    <td class="<?php echo esc_attr($status); ?>"><?php echo esc_html(ucfirst($status)); ?></td>
                                     <td><?php echo get_the_date() . ' ' . get_the_time(); ?></td>
                                     <td class="mpStyle">
                                         <a href="#" class="ttbm-view-enquiry" data-id="<?php echo get_the_ID(); ?>" data-target-popup="view-enquiry-popup" ><?php _e('View |','tour-booking-manager'); ?></a>

@@ -606,3 +606,19 @@ div.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::after {
 	margin-bottom: 20px;
 	max-width: 400px;
 }
+.ttbm-enquiry-list{
+	td:first-child{
+		&.new{
+			font-weight: bold;
+		}
+	}
+	.new{
+		color: green;
+	}
+	.viewed{
+		color: skyblue;
+	}
+	.replied{
+		color: rgb(255, 162, 162);
+	}
+}

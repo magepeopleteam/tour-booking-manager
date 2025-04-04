@@ -930,6 +930,7 @@
         var subject = row.find('td:eq(0)').text().trim();
         var name = row.find('td:eq(1)').text().trim();
         var email = row.find('td:eq(2)').text().trim();
+        $('#ttbm-post-id').val(enquiryId);
         $('#ttbm-reply-to').val(email);
         $('#ttbm-reply-subject').val(subject);
     });

@@ -322,66 +322,102 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                         <table class="wp-list-table widefat fixed striped posts ttbm-enquiry-table">
                             <thead>
                                 <tr>
-                                    <th class="manage-column column-title"><?php _e('Subject','tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php _e('Name','tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php _e('Email','tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php _e('Message','tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php _e('Status','tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php _e('Date','tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php _e('Action','tour-booking-manager'); ?></th>
+                                    <th class="manage-column column-title"><?php _e('Subject', 'tour-booking-manager'); ?></th>
+                                    <th class="manage-column column-title"><?php _e('Name', 'tour-booking-manager'); ?></th>
+                                    <th class="manage-column column-title"><?php _e('Email', 'tour-booking-manager'); ?></th>
+                                    <th class="manage-column column-title"><?php _e('Message', 'tour-booking-manager'); ?></th>
+                                    <th class="manage-column column-title"><?php _e('Status', 'tour-booking-manager'); ?></th>
+                                    <th class="manage-column column-title"><?php _e('Date', 'tour-booking-manager'); ?></th>
+                                    <th class="manage-column column-title"><?php _e('Action', 'tour-booking-manager'); ?></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
+                                $paged = isset($_GET['paged']) ? intval($_GET['paged']) : 1;
                                 $args = [
-                                    'post_type' => 'ttbm_enquiry',
-                                    'post_status' => 'publish',
-                                    'posts_per_page' => -1
+                                    'post_type'      => 'ttbm_enquiry',
+                                    'post_status'    => 'publish',
+                                    'posts_per_page' => 2,
+                                    'paged'          => $paged,
                                 ];
+
                                 $enquiry = new WP_Query($args);
-                                if ($enquiry->have_posts()) {
-                                    while ($enquiry->have_posts()) {
-                                        $enquiry->the_post();
+
+                                if ($enquiry->have_posts()) :
+                                    while ($enquiry->have_posts()) : $enquiry->the_post();
                                         $status = get_post_meta(get_the_ID(), 'status', true);
                                 ?>
-                                <tr class="ttbm-enquiry-list" data-id="<?php echo get_the_ID(); ?>">
-                                    <td class="<?php echo esc_attr(($status=='new')?'new':''); ?>">
-                                        <?php
-                                        $title = get_the_title(); // Get the post title
-                                        $trimmed_title = mb_strimwidth($title, 0, 40, '...'); // Trim to 150 chars with ellipsis
-                                        echo esc_html($trimmed_title);
-                                        ?>
-                                        </td>
-                                    <td><?php echo esc_html(get_post_meta(get_the_ID(), 'name', true)); ?></td>
-                                    <td><?php echo esc_html(get_post_meta(get_the_ID(), 'email', true)); ?></td>
-                                    <td>
-                                        <?php
-                                        $title = get_the_content(); // Get the post title
-                                        $trimmed_title = mb_strimwidth($title, 0, 40, '...'); // Trim to 150 chars with ellipsis
-                                        echo esc_html($trimmed_title);
-                                        ?>
-                                    </td>
-                                    <td class="<?php echo esc_attr($status); ?>"><?php echo esc_html(ucfirst($status)); ?></td>
-                                    <td><?php echo get_the_date() . ' ' . get_the_time(); ?></td>
-                                    <td class="mpStyle">
-                                        <a href="#" class="ttbm-view-enquiry" data-id="<?php echo get_the_ID(); ?>" data-target-popup="view-enquiry-popup" ><?php _e('View |','tour-booking-manager'); ?></a>
-                                        <a href="#" class="ttbm-reply-enquiry" data-id="<?php echo get_the_ID(); ?>" data-target-popup="reply-enquiry-popup" ><?php _e('Reply |','tour-booking-manager'); ?></a>
-                                        <a href="#" class="ttbm-delete-enquiry" data-id="<?php echo get_the_ID(); ?>"><?php _e('Delete','tour-booking-manager'); ?></a>
-                                    </td>
-                                </tr>
+                                        <tr class="ttbm-enquiry-list" data-id="<?php echo get_the_ID(); ?>">
+                                            <td class="<?php echo esc_attr($status === 'new' ? 'new' : ''); ?>">
+                                                <?php
+                                                $title = get_the_title();
+                                                echo esc_html(mb_strimwidth($title, 0, 40, '...'));
+                                                ?>
+                                            </td>
+                                            <td><?php echo esc_html(get_post_meta(get_the_ID(), 'name', true)); ?></td>
+                                            <td><?php echo esc_html(get_post_meta(get_the_ID(), 'email', true)); ?></td>
+                                            <td>
+                                                <?php
+                                                $message = get_the_content();
+                                                echo esc_html(mb_strimwidth($message, 0, 40, '...'));
+                                                ?>
+                                            </td>
+                                            <td class="<?php echo esc_attr($status); ?>"><?php echo esc_html(ucfirst($status)); ?></td>
+                                            <td><?php echo esc_html(get_the_date() . ' ' . get_the_time()); ?></td>
+                                            <td class="mpStyle">
+                                                <a href="#" class="ttbm-view-enquiry" data-id="<?php echo get_the_ID(); ?>" data-target-popup="view-enquiry-popup"><?php _e('View |', 'tour-booking-manager'); ?></a>
+                                                <a href="#" class="ttbm-reply-enquiry" data-id="<?php echo get_the_ID(); ?>" data-target-popup="reply-enquiry-popup"><?php _e('Reply |', 'tour-booking-manager'); ?></a>
+                                                <a href="#" class="ttbm-delete-enquiry" data-id="<?php echo get_the_ID(); ?>"><?php _e('Delete', 'tour-booking-manager'); ?></a>
+                                            </td>
+                                        </tr>
                                 <?php
-                                    }
+                                    endwhile;
                                     wp_reset_postdata();
-                                } else {
+                                else :
                                 ?>
                                     <tr>
-                                        <td colspan="6"><?php esc_html_e('No enquiries found.', 'tour-booking-manager'); ?></td>
+                                        <td colspan="7"><?php esc_html_e('No enquiries found.', 'tour-booking-manager'); ?></td>
                                     </tr>
-                                <?php
-                                }
-                                ?>
+                                <?php endif; ?>
                             </tbody>
                         </table>
+
+                        <?php
+                        // Pagination
+                        $total_pages = $enquiry->max_num_pages;
+
+                        if ($total_pages > 1) :
+                            $current_page = max(1, $paged);
+                            echo '<div class="tablenav"><div class="tablenav-pages">';
+                            echo '<span class="displaying-num">' . $enquiry->found_posts . ' items</span>';
+                            echo '<span class="pagination-links">';
+
+                            // First and Previous
+                            if ($current_page > 1) {
+                                echo '<a class="first-page button" href="' . esc_url(add_query_arg('paged', 1)) . '"><span aria-hidden="true">«</span></a>';
+                                echo '<a class="prev-page button" href="' . esc_url(add_query_arg('paged', $current_page - 1)) . '"><span aria-hidden="true">‹</span></a>';
+                            } else {
+                                echo '<span class="tablenav-pages-navspan button disabled">«</span>';
+                                echo '<span class="tablenav-pages-navspan button disabled">‹</span>';
+                            }
+
+                            // Page info
+                            echo '<span class="screen-reader-text">Current Page</span>';
+                            echo '<span class="paging-input"><span class="tablenav-paging-text">' . $current_page . ' of <span class="total-pages">' . $total_pages . '</span></span></span>';
+
+                            // Next and Last
+                            if ($current_page < $total_pages) {
+                                echo '<a class="next-page button" href="' . esc_url(add_query_arg('paged', $current_page + 1)) . '"><span aria-hidden="true">›</span></a>';
+                                echo '<a class="last-page button" href="' . esc_url(add_query_arg('paged', $total_pages)) . '"><span aria-hidden="true">»</span></a>';
+                            } else {
+                                echo '<span class="tablenav-pages-navspan button disabled">›</span>';
+                                echo '<span class="tablenav-pages-navspan button disabled">»</span>';
+                            }
+
+                            echo '</span></div></div>';
+                        endif;
+                        ?>
+
                     </div>
                 </div>
                 <div id="mptbm-enquiry-settings" class="tab-content" style="display: none;">

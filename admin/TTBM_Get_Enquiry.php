@@ -319,6 +319,24 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                                 </div>
                             </div>
                         </div>
+                        <ul class="subsubsub">
+                            <li class="all">
+                                <a href="<?php echo esc_url(add_query_arg('post_type', 'ttbm_tour')); ?>" class="current" aria-current="page">
+                                    <?php _e('All', 'tour-booking-manager'); ?>
+                                    <span class="count">
+                                        (<?php echo esc_html(wp_count_posts('ttbm_enquiry')->publish); ?>)
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <form method="get" style="float:right;">
+                            <input type="hidden" name="post_type" value="ttbm_tour">
+                            <input type="hidden" name="page" value="ttbm_get_enquiry">
+                            <input type="text" name="s" value="<?php echo esc_attr($_GET['s'] ?? ''); ?>" placeholder="Search enquiries..." />
+                            <input type="submit" class="button" value="Search" />
+                        </form>
+
                         <table class="wp-list-table widefat fixed striped posts ttbm-enquiry-table">
                             <thead>
                                 <tr>
@@ -334,13 +352,16 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                             <tbody>
                                 <?php
                                 $paged = isset($_GET['paged']) ? intval($_GET['paged']) : 1;
+                                $search = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
                                 $args = [
                                     'post_type'      => 'ttbm_enquiry',
                                     'post_status'    => 'publish',
-                                    'posts_per_page' => 2,
+                                    'posts_per_page' => 10,
                                     'paged'          => $paged,
                                 ];
-
+                                if (!empty($search)) {
+                                    $args['s'] = $search;
+                                }
                                 $enquiry = new WP_Query($args);
 
                                 if ($enquiry->have_posts()) :

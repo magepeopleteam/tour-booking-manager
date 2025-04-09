@@ -27,6 +27,7 @@
 				add_action('ttbm_related_tour', array($this, 'related_tour'));
 				add_action('ttbm_dynamic_sidebar', array($this, 'dynamic_sidebar'), 10, 1);
 				add_action('ttbm_registration', array($this, 'ticket_registration'));
+				add_action('ttbm_details_title_after', array($this, 'print_button'), 10, 1);
 			}
 			public function ticket_registration() {
 				$ttbm_post_id = $ttbm_post_id ?? get_the_id();
@@ -243,6 +244,15 @@
 				if (MP_Global_Function::get_post_info($tour_id, 'ttbm_display_sidebar', 'on') != 'off') {
 					dynamic_sidebar('ttbm_details_sidebar');
 				}
+			}
+
+			/**
+			 * Add print button to tour details page
+			 *
+			 * @param int $tour_id Tour ID
+			 */
+			public function print_button($tour_id) {
+				include(TTBM_Function::template_path('layout/print_button.php'));
 			}
 		}
 		new TTBM_Details_Layout();

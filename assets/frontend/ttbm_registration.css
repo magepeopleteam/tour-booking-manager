@@ -242,3 +242,4 @@ span.load_more_text{cursor: pointer;color: var(--color_theme_cc);}
 @media only screen and (max-width: 600px) {
 	div.ttbm_booking_panel table td:last-child > div {min-width: auto;}
 }
+div.ttbm_smart_theme div.ttbm_date_time_select label{margin: 0 0 10px 0;width: 100%;display: block;}

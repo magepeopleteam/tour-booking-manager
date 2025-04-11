@@ -137,12 +137,15 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             die;
         }
         public function get_enquiry_button(){
+            $display_enquiry = MP_Global_Function::get_post_info(get_the_ID(), 'ttbm_display_enquiry', 'on');
+            if($display_enquiry == 'on'):
             ?>
             <button type="button" class="_dButton_fullWidth" data-target-popup="get-enquiry-popup">
                 <span class="far fa-envelope"></span>
                 <?php esc_html_e('Get Enquiry','tour-booking-manager'); ?>				
             </button>
             <?php
+            endif;
         }
 
         public function get_enquiry_admin_menu()

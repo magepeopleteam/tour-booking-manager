@@ -81,7 +81,7 @@
                         <!--                        <button type="button" class="_dButton_bgBlue_fullWidth" data-target-popup="registration-popup">-->
                         <button type="button" class="_dButton_bgBlue_fullWidth ttbm_load_popup_reg">
                             <span class="fas fa-plus-square"></span>
-							<?php esc_html_e('Book Now', 'tour-booking-manager'); ?>
+							<?php esc_html_e('Check Availability', 'tour-booking-manager'); ?>
                         </button>
                         <input type="hidden" class="registration_popup" data-target-popup="registration-popup">
                         <div class="mpPopup mpStyle" data-popup="registration-popup">

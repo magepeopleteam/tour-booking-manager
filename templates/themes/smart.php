@@ -10,12 +10,20 @@
 ?>
 <div class="ttbm_smart_theme ">
 	<div class='mpStyle ttbm_wraper'>
+        <div class="ttbm_container">
+            <div class="ttbm_details_page">
+	            <?php do_action( 'ttbm_details_title' ); ?>
+                    <div class="_dFlex_wrap">
+	                    <?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
+	                    <?php do_action( 'ttbm_details_location'); ?>
+                    </div>
+
+            </div>
+        </div>
 		<div class="ttbm_container">
 			<div class="ttbm_details_page ttbm_content_area">
 				<div class="ttbm_content__left">
-					<?php do_action( 'ttbm_details_title' ); ?>
-					<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
-					<?php do_action( 'ttbm_details_location'); ?>
+
 					<?php do_action( 'ttbm_slider' ); ?>
 					<?php do_action( 'ttbm_short_details' ); ?>
 					<?php do_action( 'ttbm_details_particular_area' ); ?>

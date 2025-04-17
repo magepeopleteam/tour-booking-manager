@@ -34,13 +34,13 @@
 						<?php MP_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__('Create New Location', 'tour-booking-manager')); ?>
 					</th>
 					<td><?php MP_Custom_Layout::switch_button($display_name, $checked); ?></td>
-					<td colspan="3" class="ttbm_location_select_area"><?php TTBM_Settings_General::location_select($tour_id); ?></td>
+					<td colspan="3" class="ttbm_location_select_area"><?php TTBM_Settings_Location::location_select($tour_id); ?></td>
 				</tr>
 				<tr>
 					<td colspan="7"><?php TTBM_Settings::des_p('location'); ?></td>
 				</tr>
 				<?php
-				TTBM_Settings_General::add_new_location_popup();
+				TTBM_Settings_Location::add_new_location_popup();
 			}
 			public function distance_description($tour_id) {
 				$display_name = 'ttbm_display_hotel_distance';

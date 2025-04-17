@@ -16,6 +16,11 @@
 				if ( $post->post_type && $post->post_type == 'ttbm_booking') {
 					$template = TTBM_Function::template_path( 'single_page/ttbm_booking.php' );
 				}
+				if ( $post->post_type && $post->post_type == 'ttbm_hotel') {
+					$template = TTBM_Function::template_path( 'single_page/ttbm_hotel.php' );
+				}
+
+
 				return $template;
 			}
 			public function load_template( $template ): string {

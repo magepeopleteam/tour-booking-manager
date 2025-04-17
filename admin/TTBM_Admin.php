@@ -25,6 +25,8 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_CPT.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Taxonomy.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Hidden_Product.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Hidden_Hotel_Product.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Hotel_Template.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin_Tour_List.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Welcome.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';

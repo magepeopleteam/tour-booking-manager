@@ -56,6 +56,18 @@
 				}
 				return self::template_path($file_name);
 			}
+
+            public static function details_template_file_path( $post_id = '' ): string {
+                $post_id       = $post_id ?? get_the_id();
+                $template_name = MP_Global_Function::get_post_info( $post_id, 'ttbm_hotel_template', 'hotel_default.php' );
+                $file_name     = 'themes/' . $template_name;
+                $dir           = TTBM_PLUGIN_DIR . '/templates/' . $file_name;
+                if ( ! file_exists( $dir ) ) {
+                    $file_name = 'themes/hotel_default.php';
+                }
+
+                return self::template_path( $file_name );
+            }
 			public static function template_path($file_name): string {
 				$template_path = get_stylesheet_directory() . '/ttbm_templates/';
 				$default_dir = TTBM_PLUGIN_DIR . '/templates/';

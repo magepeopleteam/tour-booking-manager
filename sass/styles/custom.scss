@@ -566,8 +566,10 @@ div.mpStyle span.mp_remove_multi_image {
 		width: 227px;
 		border-radius:5px;
 		font-weight: normal;
+		font-size: 14px;
 		.customCheckbox{
-			padding: 3px;padding-left: 30px;
+			padding: 2px;
+			padding-left: 20px;
 			i{
 				color: #888;
 			}
@@ -576,8 +578,8 @@ div.mpStyle span.mp_remove_multi_image {
 				position: absolute;
 				left: 0;
 				top: 0 !important;
-				height: 20px;
-				width: 20px;
+				height: 15px;
+				width: 15px;
 				background-color: $color-white;
 				border: 1px solid $color-primary;
 				border-radius: 50px;
@@ -588,6 +590,8 @@ div.mpStyle span.mp_remove_multi_image {
 }
 
 div.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::after {
-	left: 5px;
-	top: 5px !important;
+	left: 3px;
+	top: 4px !important;
+	height: 5px;
+	width: 10px;
 }

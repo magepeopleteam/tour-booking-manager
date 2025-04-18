@@ -145,8 +145,7 @@
 				<section>
 					<div class="label">
 						<div class="label-inner">
-							<p><?php esc_html_e('Start Place', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php TTBM_Settings::des_p('start_place'); ?></span>
+							<p><?php esc_html_e('Start Place', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('start_place'); ?></span></i></p>
 						</div>
 						<div class="_dFlex_alignCenter_justifyBetween">
 							<?php MP_Custom_Layout::switch_button($status_field_name, $status_checked); ?>

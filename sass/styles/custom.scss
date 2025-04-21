@@ -595,3 +595,13 @@ div.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::after {
 	height: 5px;
 	width: 10px;
 }
+
+div.mp_global_settings .tabLists {
+    border-right: 0;
+}
+div.mpStyle .mpPanelBody {
+	background-color: #fff;
+}
+div.mp_global_settings .mpTabs{
+	display: flex;
+}

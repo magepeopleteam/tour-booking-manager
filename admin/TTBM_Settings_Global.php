@@ -27,11 +27,11 @@
 								<div class="leftTabs">
 									<?php $this->settings_api->show_navigation(); ?>
 								</div>
-								<form method="post" action="">
-									<div class="tabsContent">
-										<?php $this->settings_api->show_forms(); ?>
-									</div>
-								</form>
+								
+								<div class="tabsContent">
+									<?php $this->settings_api->show_forms(); ?>
+								</div>
+								
 							</div>
                         </div>
                     </div>

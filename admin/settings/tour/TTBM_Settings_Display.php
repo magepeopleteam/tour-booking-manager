@@ -23,6 +23,8 @@
 				$duration_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_duration', 'on') == 'off' ? '' : 'checked';
 				$template_name = MP_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
 				$template_lists = TTBM_Function::all_details_template();
+				$display_enquiry = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_enquiry', 'on');
+				$enquiry_checked = $display_enquiry == 'off' ? '' : 'checked';
 				?>
 				<div class="tabsItem ttbm_display_settings" data-tabs="#ttbm_display_settings">
 					<h2><?php esc_html_e('Display Settings', 'tour-booking-manager'); ?></h2>
@@ -121,7 +123,7 @@
 									<div> 
 										<p><?php esc_html_e('Display Duration', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_duration'); ?></span></i></p>
 									</div>
-									<?php MP_Custom_Layout::switch_button('ttbm_display_duration', $duration_checked); ?>
+									<?php MP_Custom_Layout::switch_button('ttbm_display_duration', $display_enquiry); ?>
 								</div> 
 							</section>
 						</div>
@@ -129,7 +131,14 @@
 							<?php $this->rank_tour($tour_id);  ?>
 						</div>
 					</div>
-					
+					<section>
+                        <label class="label">
+                            <div>
+                                <p><?php esc_html_e('Get Enquiry', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Enable/Disable Get Enquiry Button in frontend'); ?></span></i></p>
+                            </div>
+                            <?php MP_Custom_Layout::switch_button('ttbm_display_enquiry', $enquiry_checked); ?>
+                        </label>
+                    </section>
                     <section>
                         <label class="label">
                             <div>

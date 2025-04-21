@@ -1488,4 +1488,32 @@ div.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::after {
   top: 5px !important;
 }
 
+.reply-enquiry-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 10px;
+  padding: 20px 10px;
+}
+
+.reply-enquiry-form input[type=text], .reply-enquiry-form input[type=email], .ttbm-reply-message {
+  width: 100%;
+  margin-bottom: 20px;
+  max-width: 400px;
+}
+
+.ttbm-enquiry-list td:first-child.new {
+  font-weight: bold;
+}
+.ttbm-enquiry-list .new {
+  color: green;
+}
+.ttbm-enquiry-list .viewed {
+  color: skyblue;
+}
+.ttbm-enquiry-list .replied {
+  color: rgb(255, 162, 162);
+}
+
 /*# sourceMappingURL=mp_main_settings.css.map */

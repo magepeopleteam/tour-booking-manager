@@ -360,9 +360,9 @@
 						<div class="tabsItem" data-tabs="#<?php echo esc_attr($form['id']); ?>">
 							<?php
 								do_action('wsa_form_top_' . $form['id'], $form);
-								settings_fields($form['id']);
-								do_settings_sections($form['id']);
-								//$this->get_settings_sections($form['id']);
+								//settings_fields($form['id']);
+								//do_settings_sections($form['id']);
+								$this->get_settings_sections($form['id']);
 								do_action('wsa_form_bottom_' . $form['id'], $form);
 								if (isset($this->settings_fields[$form['id']])):
 									?>
@@ -402,9 +402,9 @@
 					}
 
 					if ( isset( $wp_settings_fields[ $form_id ][ $section['id'] ] ) ) {
-						echo '<table class="form-table" role="presentation">';
+						echo '<section>';
 						$this->get_settings_fields( $form_id, $section['id'] );
-						echo '</table>';
+						echo '</section>';
 					}
 
 					if ( '' !== $section['after_section'] ) {
@@ -419,26 +419,13 @@
 				if ( ! isset( $wp_settings_fields[ $form_id ][ $section ] ) ) {
 					return;
 				}
+				
 			
-				foreach ( (array) $wp_settings_fields[ $form_id ][ $section ] as $field ) {
-					$class = '';
-			
-					if ( ! empty( $field['args']['class'] ) ) {
-						$class = ' class="' . esc_attr( $field['args']['class'] ) . '"';
-					}
-			
-					echo "<tr{$class}>";
-			
-					if ( ! empty( $field['args']['label_for'] ) ) {
-						echo '<th scope="row"><label for="' . esc_attr( $field['args']['label_for'] ) . '">' . $field['title'] . '</label></th>';
-					} else {
-						echo '<th scope="row">' . $field['title'] . '</th>';
-					}
-			
-					echo '<td>';
-					call_user_func( $field['callback'], $field['args'] );
-					echo '</td>';
-					echo '</tr>';
+				foreach ( $wp_settings_fields[ $form_id ][ $section ] as $data ) {
+					?>
+					<?php
+					call_user_func( $data['callback'], $data['args'] ); ?>
+					<?php
 				}
 			}
 

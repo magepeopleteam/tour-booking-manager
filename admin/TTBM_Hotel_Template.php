@@ -27,7 +27,7 @@ if (!class_exists('TTBM_Hotel_Template')) {
         public function template_header( $post_id ){
 //            $post_id = get_the_id();
             $thumbnail_url = get_the_post_thumbnail_url($post_id, 'full');
-            error_log( print_r($thumbnail_url, true));
+//            error_log( print_r($thumbnail_url, true));
             if ( has_post_thumbnail() ) : ?>
                 <header class="mptrs-header-baner">
                     <img alt="<?php esc_attr( get_the_title() );?>" src=" <?php  echo esc_attr( $thumbnail_url );?>">

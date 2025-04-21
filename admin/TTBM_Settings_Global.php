@@ -23,12 +23,16 @@
                     <div class="mpPanel">
                         <div class="mpPanelHeader"><?php echo esc_html(esc_html__(' Global Settings', 'tour-booking-manager')); ?></div>
                         <div class="mpPanelBody mp_zero">
-                            <div class="mpTabs leftTabs">
-								<?php $this->settings_api->show_navigation(); ?>
-                                <div class="tabsContent">
-									<?php $this->settings_api->show_forms(); ?>
-                                </div>
-                            </div>
+                            <div class="mpTabs">
+								<div class="leftTabs">
+									<?php $this->settings_api->show_navigation(); ?>
+								</div>
+								<form method="post" action="">
+									<div class="tabsContent">
+										<?php $this->settings_api->show_forms(); ?>
+									</div>
+								</form>
+							</div>
                         </div>
                     </div>
                 </div>

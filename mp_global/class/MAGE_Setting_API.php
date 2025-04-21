@@ -356,27 +356,92 @@
 			}
 			function show_forms() {
 				?>
-				<?php foreach ($this->settings_sections as $form) { ?>
-                    <div class="tabsItem" data-tabs="#<?php echo esc_attr($form['id']); ?>">
-                        <form method="post" action="options.php">
+					<?php foreach ($this->settings_sections as $form) { ?>
+						<div class="tabsItem" data-tabs="#<?php echo esc_attr($form['id']); ?>">
 							<?php
 								do_action('wsa_form_top_' . $form['id'], $form);
 								settings_fields($form['id']);
 								do_settings_sections($form['id']);
+								//$this->get_settings_sections($form['id']);
 								do_action('wsa_form_bottom_' . $form['id'], $form);
 								if (isset($this->settings_fields[$form['id']])):
 									?>
-                                    <div class="justifyBetween _mT">
-                                        <div></div>
+									<div class="justifyBetween _mT">
+										<div></div>
 										<?php submit_button(); ?>
-                                    </div>
-								<?php endif; ?>
-                        </form>
-                    </div>
+									</div>
+							<?php endif; ?>
+                    	</div>
 				<?php } ?>
 				<?php
 				$this->script();
 			}
+
+			public function get_settings_sections($form_id) {
+				global $wp_settings_sections, $wp_settings_fields;
+
+				if ( ! isset( $wp_settings_sections[ $form_id ] ) ) {
+					return;
+				}
+
+				foreach ( (array) $wp_settings_sections[ $form_id ] as $section ) {
+					if ( '' !== $section['before_section'] ) {
+						if ( '' !== $section['section_class'] ) {
+							echo wp_kses_post( sprintf( $section['before_section'], esc_attr( $section['section_class'] ) ) );
+						} else {
+							echo wp_kses_post( $section['before_section'] );
+						}
+					}
+			
+					if ( $section['title'] ) {
+						echo "<h2>{$section['title']}</h2>\n";
+					}
+			
+					if ( $section['callback'] ) {
+						call_user_func( $section['callback'], $section );
+					}
+
+					if ( isset( $wp_settings_fields[ $form_id ][ $section['id'] ] ) ) {
+						echo '<table class="form-table" role="presentation">';
+						$this->get_settings_fields( $form_id, $section['id'] );
+						echo '</table>';
+					}
+
+					if ( '' !== $section['after_section'] ) {
+						echo wp_kses_post( $section['after_section'] );
+					}
+				}
+			}
+
+			public function get_settings_fields( $form_id, $section ) {
+				global $wp_settings_fields;
+			
+				if ( ! isset( $wp_settings_fields[ $form_id ][ $section ] ) ) {
+					return;
+				}
+			
+				foreach ( (array) $wp_settings_fields[ $form_id ][ $section ] as $field ) {
+					$class = '';
+			
+					if ( ! empty( $field['args']['class'] ) ) {
+						$class = ' class="' . esc_attr( $field['args']['class'] ) . '"';
+					}
+			
+					echo "<tr{$class}>";
+			
+					if ( ! empty( $field['args']['label_for'] ) ) {
+						echo '<th scope="row"><label for="' . esc_attr( $field['args']['label_for'] ) . '">' . $field['title'] . '</label></th>';
+					} else {
+						echo '<th scope="row">' . $field['title'] . '</th>';
+					}
+			
+					echo '<td>';
+					call_user_func( $field['callback'], $field['args'] );
+					echo '</td>';
+					echo '</tr>';
+				}
+			}
+
 			function script() {
 				?>
                 <script>

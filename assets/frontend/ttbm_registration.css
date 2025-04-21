@@ -242,3 +242,6 @@ span.load_more_text{cursor: pointer;color: var(--color_theme_cc);}
 @media only screen and (max-width: 600px) {
 	div.ttbm_booking_panel table td:last-child > div {min-width: auto;}
 }
+div.ttbm_smart_theme div.ttbm_date_time_select label{margin: 0 0 10px 0;width: 100%;display: block;}
+div.ttbm_smart_theme .ttbm-rating-stars {padding: 0 20px 0 0; margin: 0;border-right: 2px solid #ddd;}
+div.ttbm_smart_theme div.ttbm_details_page .location_name{padding: 0 20px; margin: 0;border-right: 2px solid #ddd;}

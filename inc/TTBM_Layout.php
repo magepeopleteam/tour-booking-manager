@@ -149,7 +149,11 @@
 				<?php } else { ?>
 					<input type="hidden" name="<?php echo esc_attr($input_name); ?>"/>
 					<span class='textWarning'>
-						<?php  esc_html_e('Sorry, Not Available', 'tour-booking-manager'); ?>
+					<?php 
+					$no_seat_msg = get_option('ttbm_basic_translation_settings');
+					$default_msg = esc_html__('Sorry, Not Available', 'tour-booking-manager');
+					echo isset($no_seat_msg['ttbm_no_seat_available']) ? esc_html($no_seat_msg['ttbm_no_seat_available']) : $default_msg;
+					?>
 					</span>
 					<?php
 				}

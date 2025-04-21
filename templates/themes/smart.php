@@ -40,6 +40,5 @@
 		</div>
 	</div>
 	<?php do_action( 'ttbm_single_tour_after' ); ?>
-
 	<?php do_action( 'ttbm_related_tour' ); ?>
 </div>

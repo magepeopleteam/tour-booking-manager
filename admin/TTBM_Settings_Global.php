@@ -174,7 +174,7 @@
 					)),
 					'ttbm_basic_translation_settings' => apply_filters('ttbm_basic_translation_settings_arr', array(
 						array(
-							'name' => 'ttbm_no_seat_availabe',
+							'name' => 'ttbm_no_seat_available',
 							'label' => esc_html__('Sorry, Not Available', 'tour-booking-manager'),
 							'desc' => esc_html__('Enter the translated text of: ', 'tour-booking-manager') . '<strong>' . esc_html__('Sorry, Not Available.', 'tour-booking-manager') . '</stong>',
 							'type' => 'text',

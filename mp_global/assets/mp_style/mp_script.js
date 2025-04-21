@@ -163,7 +163,7 @@ function mp_resize_bg_image_area(target, bg_url) {
 (function ($) {
     let bg_image_load = false;
     $(document).ready(function () {
-        $('body').find('[data-bg-image]').each(function () {
+        $('body').find('.mpStyle [data-bg-image]').each(function () {
             dLoader($(this));
         });
         $(window).on('load', function () {
@@ -176,14 +176,14 @@ function mp_resize_bg_image_area(target, bg_url) {
             });
         }
     });
-    $(document).on('click', '[data-href]', function () {
+    $(document).on('click', '.mpStyle [data-href]', function () {
         let href = $(this).data('href');
         if (href) {
             window.location.href = href;
         }
     });
     $(window).on('load , resize', function () {
-        $('body').find('[data-bg-image]:visible').each(function () {
+        $('body').find('.mpStyle [data-bg-image]:visible').each(function () {
             let target = $(this);
             let bg_url = target.data('bg-image');
             if (!bg_url || bg_url.width === 0 || bg_url.width === 'undefined') {
@@ -254,7 +254,7 @@ function mp_all_content_change($this) {
 }
 (function ($) {
     "use strict";
-    $(document).on('click', '.mp_load_more_text_area [data-read]', function (e) {
+    $(document).on('click', '.mpStyle .mp_load_more_text_area [data-read]', function (e) {
         e.stopPropagation();
         let parent = $(this).closest('.mp_load_more_text_area');
         let open_text = parent.find('[data-read-open]').html();
@@ -263,19 +263,19 @@ function mp_all_content_change($this) {
         parent.find('[data-read-open]').html(close_text);
         content_text_change($(this));
     });
-    $(document).on('click', '[data-all-change]', function () {
+    $(document).on('click', '.mpStyle [data-all-change]', function () {
         mp_all_content_change($(this));
     });
-    $(document).on('click', '[data-icon-change]', function () {
+    $(document).on('click', '.mpStyle [data-icon-change]', function () {
         content_icon_change($(this));
     });
-    $(document).on('click', '[data-text-change]', function () {
+    $(document).on('click', '.mpStyle [data-text-change]', function () {
         content_text_change($(this));
     });
-    $(document).on('click', '[data-class-change]', function () {
+    $(document).on('click', '.mpStyle [data-class-change]', function () {
         content_class_change($(this));
     });
-    $(document).on('click', '[data-value-change]', function () {
+    $(document).on('click', '.mpStyle [data-value-change]', function () {
         content_input_value_change($(this));
     });
     $(document).on('keyup change', '.mpStyle [data-input-text]', function () {
@@ -495,7 +495,7 @@ function mp_sticky_management() {
 //======================================================================Collapse=================//
 (function ($) {
     "use strict";
-    $(document).on('click', '[data-collapse-target]', function () {
+    $(document).on('click', '.mpStyle [data-collapse-target]', function () {
         let currentTarget = $(this);
         let target_id = currentTarget.data('collapse-target');
         let close_id = currentTarget.data('close-target');
@@ -504,7 +504,7 @@ function mp_sticky_management() {
             mp_all_content_change(currentTarget);
         }
     });
-    $(document).on('change', 'select[data-collapse-target]', function () {
+    $(document).on('change', '.mpStyle select[data-collapse-target]', function () {
         let currentTarget = $(this);
         let value = currentTarget.val();
         currentTarget.find('option').each(function () {
@@ -579,7 +579,7 @@ function mp_sticky_management() {
 //=====================================================================Group Check box==========//
 (function ($) {
     "use strict";
-    $(document).on('click', '.groupCheckBox .customCheckboxLabel', function () {
+    $(document).on('click', '.mpStyle .groupCheckBox .customCheckboxLabel', function () {
         let parent = $(this).closest('.groupCheckBox');
         let value = '';
         let separator = ',';
@@ -593,14 +593,14 @@ function mp_sticky_management() {
         });
     });
     // radio
-    $(document).on('click', '[data-radio]', function () {
+    $(document).on('click', '.mpStyle [data-radio]', function () {
         let target = $(this).closest('label');
         let value = $(this).attr('data-radio');
         target.find('.customRadio').removeClass('active');
         $(this).addClass('active');
         target.find('input').val(value).trigger('change');
     });
-    $(document).on('click', '.groupRadioBox [data-group-radio]', function () {
+    $(document).on('click', '.mpStyle .groupRadioBox [data-group-radio]', function () {
         let parent = $(this).closest('.groupRadioBox');
         let $this = $(this);
         let value = $this.data('group-radio');
@@ -612,7 +612,7 @@ function mp_sticky_management() {
         });
     });
     //Group radio like checkbox
-    $(document).on('click', '.groupRadioCheck [data-radio-check]', function () {
+    $(document).on('click', '.mpStyle .groupRadioCheck [data-radio-check]', function () {
         //e.stopPropagation();
         let parent = $(this).closest('.groupRadioCheck');
         let $this = $(this);
@@ -707,28 +707,28 @@ function mp_pagination_page_management(parent, pagination_page, total_item) {
 }
 (function ($) {
     "use strict";
-    $(document).on('click', '.pagination_area .page_prev', function (e) {
+    $(document).on('click', '.mpStyle .pagination_area .page_prev', function (e) {
         e.preventDefault();
         let parent = $(this).closest('.pagination_area');
         let page_no = parseInt(parent.find('.active_pagination').data('pagination')) - 1;
         parent.find('[data-pagination="' + page_no + '"]').trigger('click');
     });
-    $(document).on('click', '.pagination_area .page_next', function (e) {
+    $(document).on('click', '.mpStyle .pagination_area .page_next', function (e) {
         e.preventDefault();
         let parent = $(this).closest('.pagination_area');
         let page_no = parseInt(parent.find('.active_pagination').data('pagination')) + 1;
         parent.find('[data-pagination="' + page_no + '"]').trigger('click');
     });
     //*************** Pagination Load More ***************//
-    $(document).on('click', 'div.mp_pagination_main_area  .pagination_load_more', function () {
-        let pagination_page = parseInt($(this).attr('data-load-more'))+1;
+    $(document).on('click', '.mpStyle div.mp_pagination_main_area  .pagination_load_more', function () {
+        let pagination_page = parseInt($(this).attr('data-load-more')) + 1;
         let parent = $(this).closest('div.mp_pagination_main_area');
         let per_page_item = parseInt(parent.find('input[name="pagination_per_page"]').val());
-        let count=0;
-        let end_item = per_page_item*pagination_page+per_page_item;
+        let count = 0;
+        let end_item = per_page_item * pagination_page + per_page_item;
         $(this).attr('data-load-more', pagination_page).promise().done(function () {
-            parent.find('.mp_pagination_item').each(function (){
-                if(count<end_item){
+            parent.find('.mp_pagination_item').each(function () {
+                if (count < end_item) {
                     $(this).slideDown(250);
                 }
                 count++;
@@ -777,7 +777,7 @@ function mp_pagination_page_management(parent, pagination_page, total_item) {
         sliderItemActive($(this), 1);
     });
     //==============Slider===================//
-    $(document).on('click', '.superSlider [data-slide-target]', function () {
+    $(document).on('click', '.mpStyle .superSlider [data-slide-target]', function () {
         if (!$(this).hasClass('activeSlide')) {
             let activeItem = $(this).data('slide-target');
             let parent = $(this).closest('.superSlider');
@@ -786,7 +786,7 @@ function mp_pagination_page_management(parent, pagination_page, total_item) {
             $(this).addClass('activeSlide');
         }
     });
-    $(document).on('click', '.superSlider .iconIndicator', function () {
+    $(document).on('click', '.mpStyle .superSlider .iconIndicator', function () {
         let parent = $(this).closest('.superSlider');
         let activeItem = parseInt(parent.find('.sliderAllItem').first().find('.sliderItem.activeSlide').data('slide-index'));
         if ($(this).hasClass('nextItem')) {
@@ -846,7 +846,7 @@ function mp_pagination_page_management(parent, pagination_page, total_item) {
         return activeItem;
     }
     //popup
-    $(document).on('click', '.superSlider [data-target-popup]', function () {
+    $(document).on('click', '.mpStyle .superSlider [data-target-popup]', function () {
         let target = $(this).data('target-popup');
         let activeItem = $(this).data('slide-index');
         $('body').addClass('noScroll').find('[data-popup="' + target + '"]').addClass('in').promise().done(function () {
@@ -854,7 +854,7 @@ function mp_pagination_page_management(parent, pagination_page, total_item) {
             loadBgImage();
         });
     });
-    $(document).on('click', '.superSlider .popupClose', function () {
+    $(document).on('click', '.mpStyle .superSlider .popupClose', function () {
         $(this).closest('[data-popup]').removeClass('in');
         $('body').removeClass('noScroll');
     });

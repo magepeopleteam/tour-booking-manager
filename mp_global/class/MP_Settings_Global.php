@@ -19,7 +19,7 @@
 				$sections = array(
 					array(
 						'id' => 'mp_global_settings',
-						'title' => esc_html__('Global Settings', 'bus-ticket-booking-with-seat-reservation')
+						'title' => esc_html__('Global Settings', 'tour-booking-manager')
 					),
 				);
 				return array_merge($default_sec, $sections);
@@ -28,15 +28,15 @@
 				$sections = array(
 					array(
 						'id' => 'mp_style_settings',
-						'title' => esc_html__('Style Settings', 'bus-ticket-booking-with-seat-reservation')
+						'title' => esc_html__('Style Settings', 'tour-booking-manager')
 					),
 					array(
 						'id' => 'mp_add_custom_css',
-						'title' => esc_html__('Custom CSS', 'bus-ticket-booking-with-seat-reservation')
+						'title' => esc_html__('Custom CSS', 'tour-booking-manager')
 					),
 					array(
 						'id' => 'mp_basic_license_settings',
-						'title' => esc_html__('Mage-People License', 'bus-ticket-booking-with-seat-reservation')
+						'title' => esc_html__('Mage-People License', 'tour-booking-manager')
 					)
 				);
 				return array_merge($default_sec, $sections);
@@ -47,19 +47,19 @@
 					'mp_global_settings' => apply_filters('filter_mp_global_settings', array(
 						array(
 							'name' => 'disable_block_editor',
-							'label' => esc_html__('Disable Block/Gutenberg Editor', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('If you want to disable WordPress\'s new Block/Gutenberg editor, please select Yes.', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Disable Block/Gutenberg Editor', 'tour-booking-manager'),
+							'desc' => esc_html__('If you want to disable WordPress\'s new Block/Gutenberg editor, please select Yes.', 'tour-booking-manager'),
 							'type' => 'select',
 							'default' => 'yes',
 							'options' => array(
-								'yes' => esc_html__('Yes', 'bus-ticket-booking-with-seat-reservation'),
-								'no' => esc_html__('No', 'bus-ticket-booking-with-seat-reservation')
+								'yes' => esc_html__('Yes', 'tour-booking-manager'),
+								'no' => esc_html__('No', 'tour-booking-manager')
 							)
 						),
 						array(
 							'name' => 'date_format',
-							'label' => esc_html__('Date Picker Format', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('If you want to change Date Picker Format, please select format. Default  is D d M , yy.', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Date Picker Format', 'tour-booking-manager'),
+							'desc' => esc_html__('If you want to change Date Picker Format, please select format. Default  is D d M , yy.', 'tour-booking-manager'),
 							'type' => 'select',
 							'default' => 'D d M , yy',
 							'options' => array(
@@ -79,8 +79,8 @@
 						),
 						array(
 							'name' => 'date_format_short',
-							'label' => esc_html__('Short Date  Format', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('If you want to change Short Date  Format, please select format. Default  is M , Y.', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Short Date  Format', 'tour-booking-manager'),
+							'desc' => esc_html__('If you want to change Short Date  Format, please select format. Default  is M , Y.', 'tour-booking-manager'),
 							'type' => 'select',
 							'default' => 'M , Y',
 							'options' => array(
@@ -106,120 +106,120 @@
 					'mp_style_settings' => apply_filters('filter_mp_style_settings', array(
 						array(
 							'name' => 'theme_color',
-							'label' => esc_html__('Theme Color', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('Select Default Theme Color', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Theme Color', 'tour-booking-manager'),
+							'desc' => esc_html__('Select Default Theme Color', 'tour-booking-manager'),
 							'type' => 'color',
 							'default' => '#F12971'
 						),
                         array(
                             'name' => 'theme_color_secondary',
-                            'label' => esc_html__('Theme Color Secondary', 'bus-ticket-booking-with-seat-reservation'),
-                            'desc' => esc_html__('Select Default Secondary Theme Color', 'bus-ticket-booking-with-seat-reservation'),
+                            'label' => esc_html__('Theme Color Secondary', 'tour-booking-manager'),
+                            'desc' => esc_html__('Select Default Secondary Theme Color', 'tour-booking-manager'),
                             'type' => 'color',
                             'default' => '#3F13A4'
                         ),
 						array(
 							'name' => 'theme_alternate_color',
-							'label' => esc_html__('Theme Alternate Color', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('Select Default Theme Alternate  Color that means, if background theme color then it will be text color.', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Theme Alternate Color', 'tour-booking-manager'),
+							'desc' => esc_html__('Select Default Theme Alternate  Color that means, if background theme color then it will be text color.', 'tour-booking-manager'),
 							'type' => 'color',
 							'default' => '#fff'
 						),
 						array(
 							'name' => 'default_text_color',
-							'label' => esc_html__('Default Text Color', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('Select Default Text  Color.', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Default Text Color', 'tour-booking-manager'),
+							'desc' => esc_html__('Select Default Text  Color.', 'tour-booking-manager'),
 							'type' => 'color',
 							'default' => '#303030'
 						),
 						array(
 							'name' => 'default_font_size',
-							'label' => esc_html__('Default Font Size', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('Type Default Font Size(in PX Unit).', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Default Font Size', 'tour-booking-manager'),
+							'desc' => esc_html__('Type Default Font Size(in PX Unit).', 'tour-booking-manager'),
 							'type' => 'number',
 							'default' => '15'
 						),
 						array(
 							'name' => 'font_size_h1',
-							'label' => esc_html__('Font Size h1 Title', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('Type Font Size Main Title(in PX Unit).', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Font Size h1 Title', 'tour-booking-manager'),
+							'desc' => esc_html__('Type Font Size Main Title(in PX Unit).', 'tour-booking-manager'),
 							'type' => 'number',
 							'default' => '35'
 						),
 						array(
 							'name' => 'font_size_h2',
-							'label' => esc_html__('Font Size h2 Title', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('Type Font Size h2 Title(in PX Unit).', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Font Size h2 Title', 'tour-booking-manager'),
+							'desc' => esc_html__('Type Font Size h2 Title(in PX Unit).', 'tour-booking-manager'),
 							'type' => 'number',
 							'default' => '25'
 						),
 						array(
 							'name' => 'font_size_h3',
-							'label' => esc_html__('Font Size h3 Title', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('Type Font Size h3 Title(in PX Unit).', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Font Size h3 Title', 'tour-booking-manager'),
+							'desc' => esc_html__('Type Font Size h3 Title(in PX Unit).', 'tour-booking-manager'),
 							'type' => 'number',
 							'default' => '22'
 						),
 						array(
 							'name' => 'font_size_h4',
-							'label' => esc_html__('Font Size h4 Title', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('Type Font Size h4 Title(in PX Unit).', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Font Size h4 Title', 'tour-booking-manager'),
+							'desc' => esc_html__('Type Font Size h4 Title(in PX Unit).', 'tour-booking-manager'),
 							'type' => 'number',
 							'default' => '20'
 						),
 						array(
 							'name' => 'font_size_h5',
-							'label' => esc_html__('Font Size h5 Title', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('Type Font Size h5 Title(in PX Unit).', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Font Size h5 Title', 'tour-booking-manager'),
+							'desc' => esc_html__('Type Font Size h5 Title(in PX Unit).', 'tour-booking-manager'),
 							'type' => 'number',
 							'default' => '18'
 						),
 						array(
 							'name' => 'font_size_h6',
-							'label' => esc_html__('Font Size h6 Title', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('Type Font Size h6 Title(in PX Unit).', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Font Size h6 Title', 'tour-booking-manager'),
+							'desc' => esc_html__('Type Font Size h6 Title(in PX Unit).', 'tour-booking-manager'),
 							'type' => 'number',
 							'default' => '16'
 						),
 						array(
 							'name' => 'button_font_size',
-							'label' => esc_html__('Button Font Size ', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('Type Font Size Button(in PX Unit).', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Button Font Size ', 'tour-booking-manager'),
+							'desc' => esc_html__('Type Font Size Button(in PX Unit).', 'tour-booking-manager'),
 							'type' => 'number',
 							'default' => '18'
 						),
 						array(
 							'name' => 'button_color',
-							'label' => esc_html__('Button Text Color', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('Select Button Text  Color.', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Button Text Color', 'tour-booking-manager'),
+							'desc' => esc_html__('Select Button Text  Color.', 'tour-booking-manager'),
 							'type' => 'color',
 							'default' => '#FFF'
 						),
 						array(
 							'name' => 'button_bg',
-							'label' => esc_html__('Button Background Color', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('Select Button Background  Color.', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Button Background Color', 'tour-booking-manager'),
+							'desc' => esc_html__('Select Button Background  Color.', 'tour-booking-manager'),
 							'type' => 'color',
 							'default' => '#222'
 						),
 						array(
 							'name' => 'font_size_label',
-							'label' => esc_html__('Label Font Size ', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('Type Font Size Label(in PX Unit).', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Label Font Size ', 'tour-booking-manager'),
+							'desc' => esc_html__('Type Font Size Label(in PX Unit).', 'tour-booking-manager'),
 							'type' => 'number',
 							'default' => '18'
 						),
 						array(
 							'name' => 'warning_color',
-							'label' => esc_html__('Warning Color', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('Select Warning  Color.', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Warning Color', 'tour-booking-manager'),
+							'desc' => esc_html__('Select Warning  Color.', 'tour-booking-manager'),
 							'type' => 'color',
 							'default' => '#E67C30'
 						),
 						array(
 							'name' => 'section_bg',
-							'label' => esc_html__('Section Background color', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('Select Background  Color.', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Section Background color', 'tour-booking-manager'),
+							'desc' => esc_html__('Select Background  Color.', 'tour-booking-manager'),
 							'type' => 'color',
 							'default' => '#FAFCFE'
 						),
@@ -227,8 +227,8 @@
 					'mp_add_custom_css' => apply_filters('filter_mp_add_custom_css', array(
 						array(
 							'name' => 'custom_css',
-							'label' => esc_html__('Custom CSS', 'bus-ticket-booking-with-seat-reservation'),
-							'desc' => esc_html__('Write Your Custom CSS Code Here', 'bus-ticket-booking-with-seat-reservation'),
+							'label' => esc_html__('Custom CSS', 'tour-booking-manager'),
+							'desc' => esc_html__('Write Your Custom CSS Code Here', 'tour-booking-manager'),
 							'type' => 'textarea',
 						)
 					))
@@ -238,10 +238,10 @@
 			public function license_settings() {
 				?>
 				<div class="mp_basic_license_settings">
-					<h3><?php esc_html_e('Mage-People License', 'bus-ticket-booking-with-seat-reservation'); ?></h3>
+					<h3><?php esc_html_e('Mage-People License', 'tour-booking-manager'); ?></h3>
 					<div class="_dFlex">
 						<span class="fas fa-info-circle _mR_xs"></span>
-						<i><?php esc_html_e('Thanking you for using our Mage-People plugin. Our some plugin  free and no license is required. We have some Additional addon to enhance feature of this plugin functionality. If you have any addon you need to enter a valid license for that plugin below.', 'bus-ticket-booking-with-seat-reservation'); ?>                    </i>
+						<i><?php esc_html_e('Thanking you for using our Mage-People plugin. Our some plugin  free and no license is required. We have some Additional addon to enhance feature of this plugin functionality. If you have any addon you need to enter a valid license for that plugin below.', 'tour-booking-manager'); ?>                    </i>
 					</div>
 					<div class="divider"></div>
 					<div class="dLayout mp_basic_license_area">
@@ -255,13 +255,13 @@
 				<table>
 					<thead>
 					<tr>
-						<th colspan="4"><?php esc_html_e('Plugin Name', 'bus-ticket-booking-with-seat-reservation'); ?></th>
-						<th><?php esc_html_e('Type', 'bus-ticket-booking-with-seat-reservation'); ?></th>
-						<th><?php esc_html_e('Order No', 'bus-ticket-booking-with-seat-reservation'); ?></th>
-						<th colspan="2"><?php esc_html_e('Expire on', 'bus-ticket-booking-with-seat-reservation'); ?></th>
-						<th colspan="3"><?php esc_html_e('License Key', 'bus-ticket-booking-with-seat-reservation'); ?></th>
-						<th><?php esc_html_e('Status', 'bus-ticket-booking-with-seat-reservation'); ?></th>
-						<th colspan="2"><?php esc_html_e('Action', 'bus-ticket-booking-with-seat-reservation'); ?></th>
+						<th colspan="4"><?php esc_html_e('Plugin Name', 'tour-booking-manager'); ?></th>
+						<th><?php esc_html_e('Type', 'tour-booking-manager'); ?></th>
+						<th><?php esc_html_e('Order No', 'tour-booking-manager'); ?></th>
+						<th colspan="2"><?php esc_html_e('Expire on', 'tour-booking-manager'); ?></th>
+						<th colspan="3"><?php esc_html_e('License Key', 'tour-booking-manager'); ?></th>
+						<th><?php esc_html_e('Status', 'tour-booking-manager'); ?></th>
+						<th colspan="2"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
 					</tr>
 					</thead>
 					<tbody>

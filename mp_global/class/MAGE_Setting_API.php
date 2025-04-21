@@ -362,8 +362,8 @@
 							<?php
 								do_action('wsa_form_top_' . $form['id'], $form);
 								settings_fields($form['id']);
-								do_settings_sections($form['id']);
-								//$this->get_settings_sections($form['id']);
+								//do_settings_sections($form['id']);
+								$this->get_settings_sections($form['id']);
 								do_action('wsa_form_bottom_' . $form['id'], $form);
 								if (isset($this->settings_fields[$form['id']])):
 									?>
@@ -396,7 +396,7 @@
 					}
 			
 					if ( $section['title'] ) {
-						echo "<h2>{$section['title']}</h2>\n";
+						echo "<h3>{$section['title']}</h3>\n";
 					}
 			
 					if ( $section['callback'] ) {
@@ -421,15 +421,19 @@
 				if ( ! isset( $wp_settings_fields[ $form_id ][ $section ] ) ) {
 					return;
 				}
-				
 			
 				foreach ( $wp_settings_fields[ $form_id ][ $section ] as $data ) {
 					?>
-					<?php
-					call_user_func( $data['callback'], $data['args'] ); ?>
+					<div class="mptrs-setting-field">
+						<div class="label">
+							<?php print_r($data['title']); ?>
+						</div>
+						<?php call_user_func( $data['callback'], $data['args'] ); ?>
+					</div>
 					<?php
 				}
 			}
+			
 
 			function script() {
 				?>

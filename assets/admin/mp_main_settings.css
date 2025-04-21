@@ -1001,7 +1001,11 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
 #mp_meta_box_panel .postbox-header .handle-actions, .travel-list .postbox-header .handle-actions {
   margin-top: 0;
 }
-#mp_meta_box_panel .postbox-header .handle-actions .handle-order-higher, #mp_meta_box_panel .postbox-header .handle-actions .handle-order-lower, #mp_meta_box_panel .postbox-header .handle-actions .toggle-indicator, .travel-list .postbox-header .handle-actions .handle-order-higher, .travel-list .postbox-header .handle-actions .handle-order-lower, .travel-list .postbox-header .handle-actions .toggle-indicator {
+#mp_meta_box_panel .postbox-header .handle-actions .handle-order-higher,
+#mp_meta_box_panel .postbox-header .handle-actions .handle-order-lower,
+#mp_meta_box_panel .postbox-header .handle-actions .toggle-indicator, .travel-list .postbox-header .handle-actions .handle-order-higher,
+.travel-list .postbox-header .handle-actions .handle-order-lower,
+.travel-list .postbox-header .handle-actions .toggle-indicator {
   color: var(--mpl-white);
 }
 #mp_meta_box_panel .ttbm_settings, .travel-list .ttbm_settings {
@@ -1088,11 +1092,13 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   margin-bottom: 5px;
   color: var(--mpl-secondary);
 }
-#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label span, #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label a, .travel-list .ttbm_settings .tabsContent .tabsItem section .label span, .travel-list .ttbm_settings .tabsContent .tabsItem section .label a {
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label span,
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label a, .travel-list .ttbm_settings .tabsContent .tabsItem section .label span,
+.travel-list .ttbm_settings .tabsContent .tabsItem section .label a {
   line-height: 20px;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label .text, .travel-list .ttbm_settings .tabsContent .tabsItem section .label .text {
-  color: #6B7280;
+  color: #6b7280;
   font-weight: normal;
   line-height: 20px;
   font-size: 13px;
@@ -1114,7 +1120,7 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   margin-top: 10px;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .span-row, .travel-list .ttbm_settings .tabsContent .span-row {
-  color: #6B7280;
+  color: #6b7280;
   font-size: 13px;
   font-weight: normal;
 }
@@ -1162,31 +1168,37 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   .tab-content-ttbm_date_config_meta_boxs tr th label {
     line-height: 14px;
   }
-  .mpStyle .navy_blueButton, .mpStyle [class*=_navy_blueButton] {
+  .mpStyle .navy_blueButton,
+  .mpStyle [class*=_navy_blueButton] {
     background-color: var(--mpl-primary);
     color: var(--mpl-white);
     padding: 0.75em;
     border: 2px solid var(--mpl-primary);
   }
-  .mpStyle .navy_blueButton:hover, .mpStyle [class*=_navy_blueButton]:hover {
+  .mpStyle .navy_blueButton:hover,
+  .mpStyle [class*=_navy_blueButton]:hover {
     background-color: var(--mpl-white);
     color: var(--mpl-primary);
     border-color: var(--mpl-primary);
   }
-  .mpStyle .navy_blueButton:hover span, .mpStyle [class*=_navy_blueButton]:hover span {
+  .mpStyle .navy_blueButton:hover span,
+  .mpStyle [class*=_navy_blueButton]:hover span {
     color: var(--mpl-primary);
   }
-  .mpStyle .warningButton, .mpStyle [class*=_warningButton] {
+  .mpStyle .warningButton,
+  .mpStyle [class*=_warningButton] {
     background-color: var(--mpl-yellow);
     color: var(--mpl-white);
     padding: 0.75em;
     border: 2px solid var(--mpl-yellow);
   }
-  .mpStyle .warningButton:hover, .mpStyle [class*=_warningButton]:hover {
+  .mpStyle .warningButton:hover,
+  .mpStyle [class*=_warningButton]:hover {
     background-color: var(--mpl-white);
     color: var(--mpl-yellow);
   }
-  .mpStyle .warningButton:hover span, .mpStyle [class*=_warningButton]:hover span {
+  .mpStyle .warningButton:hover span,
+  .mpStyle [class*=_warningButton]:hover span {
     color: var(--mpl-yellow);
   }
   div.mpStyle select.formControl:focus {
@@ -1232,7 +1244,7 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
     color: var(--mpl-white);
   }
   .mp_settings_panel .metabox-holder {
-    background: #FFF;
+    background: #fff;
     padding: 0;
     margin: 0;
     width: calc(100% - 300px);
@@ -1293,48 +1305,94 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   margin-bottom: 12px;
   font-weight: 700;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs .description, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs .description, .travel-list .tab-content-ttbm_date_config_meta_boxs .description, .travel-list .tab-content-ttbm_tax_meta_boxs .description {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs .description,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs .description, .travel-list .tab-content-ttbm_date_config_meta_boxs .description,
+.travel-list .tab-content-ttbm_tax_meta_boxs .description {
   margin: 0;
   padding: 0.75em 0;
   font-family: DejaVuSans;
   font-size: 1rem;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table, .travel-list .tab-content-ttbm_date_config_meta_boxs table, .travel-list .tab-content-ttbm_tax_meta_boxs table {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table, .travel-list .tab-content-ttbm_date_config_meta_boxs table,
+.travel-list .tab-content-ttbm_tax_meta_boxs table {
   border-collapse: collapse;
   border-spacing: 0;
   border: 0;
   margin: 0;
   margin-top: 50px;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th, #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr th, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr th, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th,
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr th,
+.travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr th,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td {
   background-color: var(--mpl-white);
   padding: 1.5em;
   margin-bottom: 1.5em;
   width: 50%;
   border: 1px solid var(--mpl-gray);
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th p, #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td p, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th p, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td p, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr th p, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td p, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr th p, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td p {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th p,
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td p,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th p,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td p, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr th p,
+.travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td p,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr th p,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td p {
   font-size: 0.8rem;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td {
   text-align: right;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td label, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td label, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td label, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td label {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td label,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td label, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td label,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td label {
   display: block;
   text-align: right;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td input {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td input {
   border-radius: 0.25rem;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input.select2-search__field, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input.select2-search__field, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input.select2-search__field, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td input.select2-search__field {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input.select2-search__field,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input.select2-search__field, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input.select2-search__field,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td input.select2-search__field {
   border: 0;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input#mep_disable_ticket_time, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input#mep_disable_ticket_time, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input#mep_disable_ticket_time, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td input#mep_disable_ticket_time {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input#mep_disable_ticket_time,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input#mep_disable_ticket_time, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input#mep_disable_ticket_time,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td input#mep_disable_ticket_time {
   margin-right: 0.5em;
 }
-#mp_meta_box_panel .form-wrap.form-builder h1, #mp_meta_box_panel .form-wrap.form-builder h2, #mp_meta_box_panel .form-wrap.form-builder h3, #mp_meta_box_panel .form-wrap.form-builder h4, #mp_meta_box_panel .form-wrap.form-builder h5, #mp_meta_box_panel .form-wrap.form-builder h6,
-#mp_meta_box_panel .form-wrap.form-builder .h1, #mp_meta_box_panel .form-wrap.form-builder .h2, #mp_meta_box_panel .form-wrap.form-builder .h3, #mp_meta_box_panel .form-wrap.form-builder .h4, #mp_meta_box_panel .form-wrap.form-builder .h5, #mp_meta_box_panel .form-wrap.form-builder .h6, .travel-list .form-wrap.form-builder h1, .travel-list .form-wrap.form-builder h2, .travel-list .form-wrap.form-builder h3, .travel-list .form-wrap.form-builder h4, .travel-list .form-wrap.form-builder h5, .travel-list .form-wrap.form-builder h6,
-.travel-list .form-wrap.form-builder .h1, .travel-list .form-wrap.form-builder .h2, .travel-list .form-wrap.form-builder .h3, .travel-list .form-wrap.form-builder .h4, .travel-list .form-wrap.form-builder .h5, .travel-list .form-wrap.form-builder .h6 {
+#mp_meta_box_panel .form-wrap.form-builder h1,
+#mp_meta_box_panel .form-wrap.form-builder h2,
+#mp_meta_box_panel .form-wrap.form-builder h3,
+#mp_meta_box_panel .form-wrap.form-builder h4,
+#mp_meta_box_panel .form-wrap.form-builder h5,
+#mp_meta_box_panel .form-wrap.form-builder h6,
+#mp_meta_box_panel .form-wrap.form-builder .h1,
+#mp_meta_box_panel .form-wrap.form-builder .h2,
+#mp_meta_box_panel .form-wrap.form-builder .h3,
+#mp_meta_box_panel .form-wrap.form-builder .h4,
+#mp_meta_box_panel .form-wrap.form-builder .h5,
+#mp_meta_box_panel .form-wrap.form-builder .h6, .travel-list .form-wrap.form-builder h1,
+.travel-list .form-wrap.form-builder h2,
+.travel-list .form-wrap.form-builder h3,
+.travel-list .form-wrap.form-builder h4,
+.travel-list .form-wrap.form-builder h5,
+.travel-list .form-wrap.form-builder h6,
+.travel-list .form-wrap.form-builder .h1,
+.travel-list .form-wrap.form-builder .h2,
+.travel-list .form-wrap.form-builder .h3,
+.travel-list .form-wrap.form-builder .h4,
+.travel-list .form-wrap.form-builder .h5,
+.travel-list .form-wrap.form-builder .h6 {
   color: var(--mpl-dark);
 }
 #mp_meta_box_panel .form-wrap.form-builder .frmb .form-elements label, .travel-list .form-wrap.form-builder .frmb .form-elements label {
@@ -1501,6 +1559,23 @@ div.mpStyle .mpPanelBody {
 
 div.mp_global_settings .mpTabs {
   display: flex;
+}
+
+div.mp_global_settings {
+  max-width: 1400px;
+}
+
+div.mp_global_settings .mptrs-setting-field {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #d8d8d8;
+  align-items: center;
+  padding: 10px;
+  margin-top: -1px;
+}
+div.mp_global_settings .mptrs-setting-field .label,
+div.mp_global_settings .mptrs-setting-field label {
+  width: 49%;
 }
 
 /*# sourceMappingURL=mp_main_settings.css.map */

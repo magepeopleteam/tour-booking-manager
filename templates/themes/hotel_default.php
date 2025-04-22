@@ -4,26 +4,49 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
-
-$post_id = get_the_ID();
-//error_log( print_r( [ ''], true ) );
+$ttbm_post_id = $ttbm_post_id ?? get_the_id();
+error_log( print_r( $ttbm_post_id, true ) );
+$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
+$class_location = $class_location ?? '';
 ?>
-<main class="mptrs-default-template">
-    <?php do_action('ttbm_template_header', $post_id ); ?>
-    <div class="mptrs-header">
-<!--        --><?php //do_action('mptrs_template_logo'); ?>
-        <div class="mptrs-restaurant-info">
-<!--            --><?php //do_action('mptrs_restaurant_info'); ?>
+    <div class="ttbm_default_theme">
+        <div class='mpStyle ttbm_wraper'>
+            <div class="ttbm_container">
+                <div class="ttbm_details_page">
+                    <div class="ttbm_details_page_header">
+                        <?php do_action( 'ttbm_details_title' ); ?>
+                        <div class="dFlex justifyStart">
+                            <?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
+                            <?php
+                            if ( is_plugin_active( 'tour-booking-manager-pro/tour-booking-manager-pro.php' ) ):
+                                $location = TTBM_Function::get_full_location( $ttbm_post_id );
+                                if ( $location && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_hotel_location', 'on' ) != 'off' ) {
+                                    ?>
+                                    <span class="pL_xs pR_xs">|</span>
+                                <?php }
+                            endif;
+                            ?>
+                            <?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
+                        </div>
+
+                        <div class="ttbm_content_area">
+                            <div class="ttbm_content__left">
+                                <?php do_action( 'ttbm_hotel_slider' ); ?>
+
+                                <?php do_action( 'ttbm_make_hotel_booking', $ttbm_post_id);?>
+
+                                <?php do_action( 'ttbm_description' ); ?>
+                            </div>
+                            <div class="ttbm_content__right">
+                                <?php do_action( 'ttbm_include_feature' ); ?>
+                                <?php do_action( 'ttbm_exclude_service' ); ?>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
+        <?php do_action( 'ttbm_single_tour_after' ); ?>
     </div>
-    <div class="mptrs-content">
-        <div class="mptrs-content-left">
-<!--            --><?php //do_action('mptrs_template_menus'); ?>
-        </div>
-        <div class="mptrs-content-right">
-            ssss de
-<!--            --><?php //do_action('mptrs_template_basket'); ?>
-<!--            --><?php //do_action('mptrs_sidebar_content'); ?>
-        </div>
-    </div>
-</main>
+<?php do_action( 'ttbm_related_tour' ); ?>

@@ -681,6 +681,17 @@ div.mpStyle select.formControl {
   border-radius: 5px;
 }
 
+.mpStyle [data-tabs-target].active {
+  background-color: var(--mpl-white);
+  color: var(--d_color);
+  border-left: 2px solid var(--mpl-primary);
+}
+
+.mpStyle [data-tabs-target]:hover {
+  border-left: 2px solid var(--mpl-primary);
+  background-color: var(--mpl-white);
+}
+
 @media only screen and (min-width: 0px) {
   #mp_meta_box_panel .tabLists {
     border-right: 0px solid var(--mpl-light);

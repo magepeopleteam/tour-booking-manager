@@ -74,7 +74,7 @@
 							'max' => isset($option['max']) ? $option['max'] : '',
 							'step' => isset($option['step']) ? $option['step'] : '',
 						);
-						$label .= $this->get_field_description($args);
+						//$label .= $this->get_field_description($args);
 						add_settings_field("{$section}[{$name}]", $label, $callback, $section, $section, $args);
 					}
 				}
@@ -355,6 +355,7 @@
 				}
 			}
 			function show_forms() {
+				
 				?>
 					<?php foreach ($this->settings_sections as $form) { ?>
 						<div class="tabsItem" data-tabs="#<?php echo esc_attr($form['id']); ?>">
@@ -381,12 +382,13 @@
 
 			public function get_settings_sections($form_id) {
 				global $wp_settings_sections, $wp_settings_fields;
-
+				
 				if ( ! isset( $wp_settings_sections[ $form_id ] ) ) {
 					return;
 				}
 
-				foreach ( (array) $wp_settings_sections[ $form_id ] as $section ) {
+				foreach ($wp_settings_sections[ $form_id ] as $section ) {
+					
 					if ( '' !== $section['before_section'] ) {
 						if ( '' !== $section['section_class'] ) {
 							echo wp_kses_post( sprintf( $section['before_section'], esc_attr( $section['section_class'] ) ) );
@@ -402,7 +404,7 @@
 					if ( $section['callback'] ) {
 						call_user_func( $section['callback'], $section );
 					}
-
+					
 					if ( isset( $wp_settings_fields[ $form_id ][ $section['id'] ] ) ) {
 						echo '<section>';
 						$this->get_settings_fields( $form_id, $section['id'] );
@@ -421,12 +423,14 @@
 				if ( ! isset( $wp_settings_fields[ $form_id ][ $section ] ) ) {
 					return;
 				}
-			
+				
 				foreach ( $wp_settings_fields[ $form_id ][ $section ] as $data ) {
 					?>
-					<div class="mptrs-setting-field">
+					
+					<div class="ttbm-setting-field">
 						<div class="label">
-							<?php print_r($data['title']); ?>
+							<?php echo $data['title']; ?>
+							<span class="tooltips" data-tooltip="<?php echo $data['args']['desc']; ?>"><i class="fa fa-info-circle"></i></span>
 						</div>
 						<?php call_user_func( $data['callback'], $data['args'] ); ?>
 					</div>

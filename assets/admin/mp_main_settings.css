@@ -995,6 +995,89 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   margin: 1px;
 }
 
+body.ttbm_settings_page {
+  background-color: #fff;
+}
+body.ttbm_settings_page .mp_global_settings {
+  padding-top: 150px;
+}
+
+div.mp_global_settings .tabLists {
+  border-right: 0;
+}
+
+div.mpStyle .mpPanelBody {
+  background-color: #fff;
+}
+
+div.mp_global_settings .mpTabs {
+  display: flex;
+}
+
+div.mp_global_settings {
+  max-width: 1400px;
+  margin: auto;
+}
+
+div.mp_global_settings .ttbm-setting-field {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #d8d8d8;
+  align-items: center;
+  padding: 10px;
+  margin-top: -1px;
+}
+div.mp_global_settings .ttbm-setting-field .label,
+div.mp_global_settings .ttbm-setting-field label {
+  width: 49%;
+}
+div.mp_global_settings .ttbm-setting-field fieldset {
+  padding: 10px;
+}
+
+div.mp_global_settings .ttbm-setting-field .tooltips {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  color: var(--mpl-gray);
+}
+div.mp_global_settings .ttbm-setting-field .tooltips::before {
+  content: "";
+  position: absolute;
+  bottom: 95%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #000 transparent transparent transparent;
+  visibility: hidden;
+  transition: 0s;
+  z-index: 99;
+}
+div.mp_global_settings .ttbm-setting-field .tooltips::after {
+  content: attr(data-tooltip);
+  visibility: hidden;
+  width: max-content;
+  max-width: 350px;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: normal;
+  z-index: 999;
+  transition: opacity 0s ease-in-out;
+  font-weight: normal;
+}
+div.mp_global_settings .ttbm-setting-field .tooltips:hover::after, div.mp_global_settings .ttbm-setting-field .tooltips:hover::before {
+  visibility: visible;
+  opacity: 1;
+}
+
 #mp_meta_box_panel .postbox-header, .travel-list .postbox-header {
   background-color: var(--mpl-primary);
 }
@@ -1547,78 +1630,6 @@ div.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::after {
   top: 4px !important;
   height: 5px;
   width: 10px;
-}
-
-div.mp_global_settings .tabLists {
-  border-right: 0;
-}
-
-div.mpStyle .mpPanelBody {
-  background-color: #fff;
-}
-
-div.mp_global_settings .mpTabs {
-  display: flex;
-}
-
-div.mp_global_settings {
-  max-width: 1400px;
-}
-
-div.mp_global_settings .ttbm-setting-field {
-  display: flex;
-  justify-content: space-between;
-  border: 1px solid #d8d8d8;
-  align-items: center;
-  padding: 10px;
-  margin-top: -1px;
-}
-div.mp_global_settings .ttbm-setting-field .label,
-div.mp_global_settings .ttbm-setting-field label {
-  width: 49%;
-}
-
-div.mp_global_settings .ttbm-setting-field .tooltips {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  color: var(--mpl-gray);
-}
-div.mp_global_settings .ttbm-setting-field .tooltips::before {
-  content: "";
-  position: absolute;
-  bottom: 95%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 6px;
-  border-style: solid;
-  border-color: #000 transparent transparent transparent;
-  visibility: hidden;
-  transition: 0s;
-  z-index: 99;
-}
-div.mp_global_settings .ttbm-setting-field .tooltips::after {
-  content: attr(data-tooltip); /* Tooltip text comes from data-tooltip attribute */
-  visibility: hidden;
-  width: max-content;
-  max-width: 350px;
-  background-color: #000;
-  color: #fff;
-  text-align: center;
-  padding: 6px 10px;
-  border-radius: 5px;
-  position: absolute;
-  bottom: 125%;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: normal;
-  z-index: 999;
-  transition: opacity 0s ease-in-out;
-  font-weight: normal;
-}
-div.mp_global_settings .ttbm-setting-field .tooltips:hover::after, div.mp_global_settings .ttbm-setting-field .tooltips:hover::before {
-  visibility: visible;
-  opacity: 1;
 }
 
 /*# sourceMappingURL=mp_main_settings.css.map */

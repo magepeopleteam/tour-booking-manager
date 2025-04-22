@@ -238,15 +238,10 @@
 			public function license_settings() {
 				?>
 				<div class="mp_basic_license_settings">
-					<h3><?php esc_html_e('Mage-People License', 'tour-booking-manager'); ?></h3>
-					<div class="_dFlex">
-						<span class="fas fa-info-circle _mR_xs"></span>
-						<i><?php esc_html_e('Thanking you for using our Mage-People plugin. Our some plugin  free and no license is required. We have some Additional addon to enhance feature of this plugin functionality. If you have any addon you need to enter a valid license for that plugin below.', 'tour-booking-manager'); ?>                    </i>
+					<div>
+						<?php esc_html_e('Thanking you for using our Mage-People plugin. Our some plugin  free and no license is required. We have some Additional addon to enhance feature of this plugin functionality. If you have any addon you need to enter a valid license for that plugin below.', 'tour-booking-manager'); ?> 
 					</div>
-					<div class="divider"></div>
-					<div class="dLayout mp_basic_license_area">
-						<?php $this->licence_area(); ?>
-					</div>
+					<?php $this->licence_area(); ?>
 				</div>
 				<?php
 			}

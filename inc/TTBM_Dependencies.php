@@ -106,33 +106,33 @@
 						if (isset($style_settings['ttbm_warning_color']) && $style_settings['ttbm_warning_color']) {
 							$current_style['warning_color'] = $style_settings['ttbm_warning_color'];
 						}
-						if (isset($style_settings['ttbm_default_font_size']) && $style_settings['ttbm_default_font_size']) {
-							$current_style['default_font_size'] = $style_settings['ttbm_default_font_size'];
-						}
-						if (isset($style_settings['ttbm_font_size_h1']) && $style_settings['ttbm_font_size_h1']) {
-							$current_style['font_size_h1'] = $style_settings['ttbm_font_size_h1'];
-						}
-						if (isset($style_settings['ttbm_font_size_h2']) && $style_settings['ttbm_font_size_h2']) {
-							$current_style['font_size_h2'] = $style_settings['ttbm_font_size_h2'];
-						}
-						if (isset($style_settings['ttbm_font_size_h3']) && $style_settings['ttbm_font_size_h3']) {
-							$current_style['font_size_h3'] = $style_settings['ttbm_font_size_h3'];
-						}
-						if (isset($style_settings['ttbm_font_size_h4']) && $style_settings['ttbm_font_size_h4']) {
-							$current_style['font_size_h4'] = $style_settings['ttbm_font_size_h4'];
-						}
-						if (isset($style_settings['ttbm_font_size_h5']) && $style_settings['ttbm_font_size_h5']) {
-							$current_style['font_size_h5'] = $style_settings['ttbm_font_size_h5'];
-						}
-						if (isset($style_settings['ttbm_font_size_h6']) && $style_settings['ttbm_font_size_h6']) {
-							$current_style['font_size_h6'] = $style_settings['ttbm_font_size_h6'];
-						}
-						if (isset($style_settings['ttbm_font_size_label']) && $style_settings['ttbm_font_size_label']) {
-							$current_style['font_size_label'] = $style_settings['ttbm_font_size_label'];
-						}
-						if (isset($style_settings['ttbm_font_size_button']) && $style_settings['ttbm_font_size_button']) {
-							$current_style['button_font_size'] = $style_settings['ttbm_font_size_button'];
-						}
+						// if (isset($style_settings['ttbm_default_font_size']) && $style_settings['ttbm_default_font_size']) {
+						// 	$current_style['default_font_size'] = $style_settings['ttbm_default_font_size'];
+						// }
+						// if (isset($style_settings['ttbm_font_size_h1']) && $style_settings['ttbm_font_size_h1']) {
+						// 	$current_style['font_size_h1'] = $style_settings['ttbm_font_size_h1'];
+						// }
+						// if (isset($style_settings['ttbm_font_size_h2']) && $style_settings['ttbm_font_size_h2']) {
+						// 	$current_style['font_size_h2'] = $style_settings['ttbm_font_size_h2'];
+						// }
+						// if (isset($style_settings['ttbm_font_size_h3']) && $style_settings['ttbm_font_size_h3']) {
+						// 	$current_style['font_size_h3'] = $style_settings['ttbm_font_size_h3'];
+						// }
+						// if (isset($style_settings['ttbm_font_size_h4']) && $style_settings['ttbm_font_size_h4']) {
+						// 	$current_style['font_size_h4'] = $style_settings['ttbm_font_size_h4'];
+						// }
+						// if (isset($style_settings['ttbm_font_size_h5']) && $style_settings['ttbm_font_size_h5']) {
+						// 	$current_style['font_size_h5'] = $style_settings['ttbm_font_size_h5'];
+						// }
+						// if (isset($style_settings['ttbm_font_size_h6']) && $style_settings['ttbm_font_size_h6']) {
+						// 	$current_style['font_size_h6'] = $style_settings['ttbm_font_size_h6'];
+						// }
+						// if (isset($style_settings['ttbm_font_size_label']) && $style_settings['ttbm_font_size_label']) {
+						// 	$current_style['font_size_label'] = $style_settings['ttbm_font_size_label'];
+						// }
+						// if (isset($style_settings['ttbm_font_size_button']) && $style_settings['ttbm_font_size_button']) {
+						// 	$current_style['button_font_size'] = $style_settings['ttbm_font_size_button'];
+						// }
 						if (isset($style_settings['ttbm_button_color']) && $style_settings['ttbm_button_color']) {
 							$current_style['button_color'] = $style_settings['ttbm_button_color'];
 						}

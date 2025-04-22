@@ -1,168 +1,4 @@
-#{$main-selector} {
-  .postbox-header {
-    background-color: $color-primary;
 
-    .handle-actions {
-      margin-top: 0;
-
-      .handle-order-higher,
-      .handle-order-lower,
-      .toggle-indicator {
-        color: $color-white;
-      }
-    }
-  }
-
-  .ttbm_settings {
-    background-color: #fff;
-
-    .tabLists {
-      width: 20%;
-      padding: 25px;
-      background-color: $color-light;
-      padding-right: 0;
-
-      li {
-        border-left: 0;
-        border-right: 0;
-        padding: 15px;
-        color: $color-secondary;
-        border-left: 2px solid transparent;
-
-        i {
-          margin-right: 25px;
-          color: $color-primary;
-        }
-
-        &::after {
-          content: "";
-          position: absolute;
-          left: 0;
-          bottom: -1px;
-          border-bottom: 1px solid #d8d8d8;
-          width: 91%;
-        }
-
-        &.active,
-        &:hover {
-          background-color: #fff;
-          color: #333;
-          font-weight: normal;
-          border-left: 2px solid $color-primary;
-
-          &::after {
-            width: 100%;
-          }
-        }
-      }
-    }
-
-    .tabsContent {
-      width: 80%;
-      padding: 2% 5%;
-
-      .tabsItem {
-        & > h2 {
-          padding: 0;
-          color: $color-secondary;
-          margin-bottom: 20px 0 0 0;
-          font-size: 22px;
-          line-height: 26px;
-          font-weight: bold;
-        }
-
-        & > p {
-          color: $color-secondary;
-          margin: 0;
-          font-size: 14px;
-          font-weight: normal;
-          line-height: 24px;
-          margin-bottom: 30px;
-        }
-
-        section {
-          border: 1px solid #d8d8d8;
-          padding: 20px;
-          margin-top: -1px;
-          width: 100%;
-
-          .label {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-direction: row;
-            cursor: pointer;
-            @media (max-width: 1200px) {
-              flex-direction: column;
-            }
-
-            .label-inner {
-              padding-right: 20px;
-            }
-
-            p {
-              font-size: 14px;
-              font-weight: 500;
-              margin-bottom: 5px;
-              color: var(--mpl-secondary);
-            }
-
-            span,
-            a {
-              line-height: 20px;
-            }
-
-            .text {
-              color: #6b7280;
-              font-weight: normal;
-              line-height: 20px;
-              font-size: 13px;
-            }
-          }
-          textarea {
-            width: 100%;
-          }
-        }
-        .col-left {
-          width: 50%;
-        }
-        .col-right {
-          width: 50%;
-        }
-      }
-
-      th[scope="row"] {
-        label {
-          display: block;
-          margin-bottom: 5px;
-
-          h6 {
-            margin-top: 10px;
-          }
-        }
-      }
-
-      .span-row {
-        color: #6b7280;
-        font-size: 13px;
-        font-weight: normal;
-      }
-
-      .long-input {
-        width: 80%;
-      }
-
-      .wp-switch-editor {
-        height: auto;
-      }
-
-      .wp-editor-area {
-        width: 100%;
-        border: 0;
-      }
-    }
-  }
-}
 .auto-search-wrapper.loupe {
   &::before {
     margin: 10px 0;
@@ -175,13 +11,17 @@
   align-items: center !important;
 }
 
+div.mpStyle select.formControl {
+  border-radius: 5px;
+}
+
 @media only screen and (min-width: 0px) {
   #mp_meta_box_panel .tabLists {
-    border-right: 0px solid $color-light;
+    border-right: 0px solid var(--mpl-light);
   }
 
   .leftTabs [data-tabs-target] {
-    border-bottom: 0px solid $color-light;
+    border-bottom: 0px solid var(--mpl-light);
   }
 
   div.mp_global_settings label .info_text {
@@ -189,7 +29,7 @@
   }
 
   div.mpStyle [data-tabs-target] {
-    color: $color-secondary;
+    color: var(--mpl-secondary);
   }
   .mpStyle .tabsContent {
     overflow: scroll;
@@ -209,41 +49,41 @@
 
   .mpStyle .navy_blueButton,
   .mpStyle [class*="_navy_blueButton"] {
-    background-color: $color-primary;
-    color: $color-white;
-    padding: calc($spacing * 1.5);
-    border: 2px solid $color-primary;
+    background-color: var(--mpl-primary);
+    color: var(--mpl-white);
+    padding: calc(.5em * 1.5);
+    border: 2px solid var(--mpl-primary);
 
     &:hover {
-      background-color: $color-white;
-      color: $color-primary;
-      border-color: $color-primary;
+      background-color: var(--mpl-white);
+      color: var(--mpl-primary);
+      border-color: var(--mpl-primary);
 
       span {
-        color: $color-primary;
+        color: var(--mpl-primary);
       }
     }
   }
 
   .mpStyle .warningButton,
   .mpStyle [class*="_warningButton"] {
-    background-color: $color-yellow;
-    color: $color-white;
-    padding: calc($spacing * 1.5);
-    border: 2px solid $color-yellow;
+    background-color: var(--mpl-yellow);
+    color: var(--mpl-white);
+    padding: calc(.5em * 1.5);
+    border: 2px solid var(--mpl-yellow);
 
     &:hover {
-      background-color: $color-white;
-      color: $color-yellow;
+      background-color: var(--mpl-white);
+      color: var(--mpl-yellow);
 
       span {
-        color: $color-yellow;
+        color: var(--mpl-yellow);
       }
     }
   }
 
   div.mpStyle select.formControl:focus {
-    background-color: $color-white;
+    background-color: var(--mpl-white);
   }
   .mpStyle .mp_remove_icon {
     position: absolute;
@@ -257,34 +97,34 @@
   }
   // settings page css==================
   .mp_settings_panel_header {
-    background: $color-secondary;
-    padding: calc($spacing * 2) $spacing;
-    color: $color-white;
+    background: var(--mpl-secondary);
+    padding: calc(.5em * 2) .5em;
+    color: var(--mpl-white);
     font-size: 20px;
     margin-top: 30px;
   }
   .mp_settings_panel {
-    padding-bottom: $spacing;
+    padding-bottom: .5em;
 
     .nav-tab-wrapper {
-      background: $color-sky-light;
-      border: 5px solid $color-sky-light;
+      background: var(---mpl-sky-light);
+      border: 5px solid var(---mpl-sky-light);
 
       .nav-tab {
         box-sizing: border-box;
-        background: $color-white;
-        color: $color-secondary;
-        margin-bottom: $spacing;
-        border-radius: $border-radius;
+        background: var(--mpl-white);
+        color: var(--mpl-secondary);
+        margin-bottom: .5em;
+        border-radius:.25rem;
 
         &:hover {
-          background: $color-primary;
-          color: $color-white;
+          background: var(--mpl-primary);
+          color: var(--mpl-white);
         }
 
         &.nav-tab-active {
-          background: $color-primary;
-          color: $color-white;
+          background: var(--mpl-primary);
+          color: var(--mpl-white);
         }
       }
     }
@@ -294,30 +134,30 @@
       padding: 0;
       margin: 0;
       width: calc(100% - 300px);
-      border: 15px solid $color-sky-light;
-      background-color: $color-sky-light;
+      border: 15px solid var(---mpl-sky-light);
+      background-color: var(---mpl-sky-light);
 
       h2 {
-        border-bottom: 0px solid $color-white;
+        border-bottom: 0px solid var(--mpl-white);
         font-size: 1.625rem;
         line-height: 1.4;
-        padding: $spacing 0;
+        padding:.5em 0;
         margin: 0;
-        font-weight: $font-weight-normal;
-        background: $color-sky-light;
-        color: $color-primary !important;
+        font-weight:300;
+        background: var(---mpl-sky-light);
+        color: var(--mpl-primary) !important;
       }
 
       table {
         border-collapse: separate;
         border-spacing: 0 0.1em;
-        // border: 2px solid $color-primary;
+        // border: 2px solid var(--mpl-primary);
         margin: 0;
-        background-color: $color-sky-light;
-        border-radius: $border-radius;
+        background-color: var(---mpl-sky-light);
+        border-radius:.25rem;
 
         tr:nth-child(2n) {
-          background-color: $color-white;
+          background-color: var(--mpl-white);
         }
       }
     }
@@ -325,20 +165,20 @@
     p.submit input {
       font-size: 16px;
       padding: 5px 30px;
-      border-radius: $border-radius;
-      background: $color-primary;
-      border-color: $color-primary;
+      border-radius:.25rem;
+      background: var(--mpl-primary);
+      border-color: var(--mpl-primary);
       transition: 0.2s;
 
       &:hover {
-        background: $color-primary;
-        border-color: $color-primary;
+        background: var(--mpl-primary);
+        border-color: var(--mpl-primary);
       }
     }
   }
   #wpbody-content .metabox-holder {
     padding-top: 0px;
-    padding-bottom: $spacing;
+    padding-bottom: .5em;
   }
 }
 
@@ -368,8 +208,7 @@
   .tab-content-ttbm_tax_meta_boxs {
     .description {
       margin: 0;
-      padding: calc($spacing * 1.5) 0;
-      font-family: $font-text;
+      padding: 0.75em 0;
       font-size: 1rem;
     }
 
@@ -383,11 +222,11 @@
 
     table.form-table tr th,
     table.form-table tr td {
-      background-color: $color-white;
-      padding: calc($spacing * 3);
-      margin-bottom: calc($spacing * 3);
+      background-color: var(--mpl-white);
+      padding: calc(.5em * 3);
+      margin-bottom: calc(.5em * 3);
       width: 50%;
-      border: 1px solid $color-gray;
+      border: 1px solid var(--mpl-gray);
 
       p {
         font-size: 0.8rem;
@@ -403,7 +242,7 @@
       }
 
       input {
-        border-radius: $border-radius;
+        border-radius: .25rem;
       }
 
       input.select2-search__field {
@@ -411,7 +250,7 @@
       }
 
       input#mep_disable_ticket_time {
-        margin-right: $spacing;
+        margin-right: .5em;
       }
     }
   }
@@ -431,7 +270,7 @@
     .h4,
     .h5,
     .h6 {
-      color: $color-dark;
+      color: var(--mpl-dark);
     }
 
     .frmb {
@@ -441,31 +280,31 @@
         }
       }
       li {
-        padding-bottom: calc($spacing * 3);
-        border: 1px dashed $color-gray;
-        box-shadow: 0 0 0px $color-light;
-        background-color: $color-light;
-        margin-bottom: $spacing;
+        padding-bottom: calc(.5em * 3);
+        border: 1px dashed var(--mpl-gray);
+        box-shadow: 0 0 0px var(--mpl-light);
+        background-color: var(--mpl-light);
+        margin-bottom: .5em;
 
         &.frmb-placeholder,
         &.ui-state-highlight {
-          padding: calc($spacing * 5);
-          background: $color-sky-light;
-          border: 1px dashed $color-primary;
+          padding: calc(.5em * 5);
+          background: var(---mpl-sky-light);
+          border: 1px dashed var(--mpl-primary);
           clip-path: none;
-          margin-bottom: $spacing;
+          margin-bottom: .5em;
         }
 
         &:hover {
-          border: 1px dashed $color-primary;
-          box-shadow: 0 0 10px $color-light;
-          background-color: $color-sky-light;
+          border: 1px dashed var(--mpl-primary);
+          box-shadow: 0 0 10px var(--mpl-light);
+          background-color: var(---mpl-sky-light);
         }
 
         &.delete {
           &:hover {
-            border: 1px dashed $color-red;
-            background-color: $color-red-light;
+            border: 1px dashed var(--mpl-red);
+            background-color: var(--mpl-red)-light;
           }
         }
 
@@ -473,24 +312,24 @@
           .btn {
             min-width: 0;
             padding: 0;
-            color: $color-white;
+            color: var(--mpl-white);
             border-radius: 0;
             transition: all 0;
           }
 
           .del-button {
-            background-color: $color-red;
-            color: $color-white;
+            background-color: var(--mpl-red);
+            color: var(--mpl-white);
           }
 
           .toggle-form {
-            background-color: $color-yellow;
+            background-color: var(--mpl-yellow);
             transition: all 0;
           }
 
           .copy-button {
-            background-color: $color-primary;
-            color: $color-white;
+            background-color: var(--mpl-primary);
+            color: var(--mpl-white);
           }
         }
       }
@@ -506,12 +345,12 @@ div > .ppof-metabox {
   width: 320px;
   border: 0px solid;
   box-shadow: none;
-  background-color: $color-primary;
-  border-radius: $border-radius;
-  padding: $spacing calc($spacing * 1.5);
-  color: $color-white;
-  font-size: $font-size;
-  transition: all $time ease-in-out;
+  background-color: var(--mpl-primary);
+  border-radius:.25rem;
+  padding: .5em calc(.5em * 1.5);
+  color: var(--mpl-white);
+  font-size: 1rem;
+  transition: all .5s ease-in-out;
   min-width: 100px;
 }
 
@@ -521,8 +360,8 @@ div > .ppof-metabox {
     flex-wrap: wrap;
     justify-content: start;
     align-items: stretch;
-    gap: $spacing;
-    margin-bottom: $spacing;
+    gap: .5em;
+    margin-bottom:.5em;
 
     div.mp_multi_image_item {
       width: calc(25% - 16px);
@@ -535,15 +374,15 @@ div > .ppof-metabox {
     }
   }
   div.mpStyle .description {
-    font-size: $font-size !important;
+    font-size: 1rem !important;
     color: var(--mpl-secondary);
   }
 }
 
 div.mpStyle span.mp_remove_multi_image {
-  background-color: $color-black;
-  color: $color-white;
-  box-shadow: 0 0 5px $color-white;
+  background-color: var(--mpl-black);
+  color: var(--mpl-white);
+  box-shadow: 0 0 5px var(--mpl-white);
 }
 
 div.mpStyle span.mp_remove_multi_image {
@@ -554,9 +393,9 @@ div.mpStyle span.mp_remove_multi_image {
 .select2-container--default
   .select2-selection--multiple
   .select2-selection__choice {
-  background-color: $color-gray;
-  border: 5px solid $color-light;
-  border-radius: $border-radius;
+  background-color: var(--mpl-gray);
+  border: 5px solid var(--mpl-light);
+  border-radius:.25rem;
   cursor: default;
   float: left;
   margin-right: 5px;
@@ -598,8 +437,8 @@ div.mpStyle span.mp_remove_multi_image {
         top: 0 !important;
         height: 15px;
         width: 15px;
-        background-color: $color-white;
-        border: 1px solid $color-primary;
+        background-color: var(--mpl-white);
+        border: 1px solid var(--mpl-primary);
         border-radius: 50px;
       }
     }

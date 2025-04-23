@@ -816,6 +816,41 @@
         });
     });
 
+   //=================== tour lists load more===========================
+    $(document).on('click','#ttbm-load-more', function(e) {
+        e.preventDefault();
+        const button = $(this);
+        const paged = parseInt(button.attr('data-paged'));
+        const postPerPage = button.data('posts-per-page');
+        const nonce = button.data('nonce');
+
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'ttbm_load_more',
+                paged: paged,
+                post_per_page: postPerPage,
+                nonce: nonce,
+            },
+            beforeSend: function() {
+                button.text('Loading...');
+            },
+            success: function(response) {
+                if (response.success && response.data.html) {
+                    $('.ttbm-event-list').append(response.data.html);
+                    if (paged >= response.data.max_pages) {
+                        button.remove();
+                    } else {
+                        button.attr('data-paged', paged + 1).text('Load More');
+                    }
+                } else {
+                    button.remove();
+                }
+            }
+        });
+    });
+
 }(jQuery));
 //==========search tour list page=================//
 (function ($) {

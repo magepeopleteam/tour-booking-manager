@@ -261,6 +261,10 @@
     width: 100%;
   }
 }
+.ttbm-tour-list-page .ttbm-load-more-wrap {
+  text-align: center;
+  margin: 10px auto;
+}
 
 #mp_meta_box_panel .ttbm-faq-section .ttbm-faq-item {
   background-color: #fff;

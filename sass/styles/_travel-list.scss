@@ -1,134 +1,127 @@
-$purple:#C6287F;
-$purple-light:#c6287f15;
-$green: #00A656;
-$green-light: #00a65615;
-$blue: #2667D6;
-$blue-light: #2667D615;
-$beguni: #7E55D8;
-$beguni-light: #7E55D815;
-.green{
-    background-color: $green-light;
-    color: $green;
-}
-.beguni{
-    background-color: $beguni-light;
-    color: $beguni;
-}
-.blue{
-    background-color: $blue-light;
-    color: $blue;
-}
-.purple{
-    background-color: $purple-light;
-    color: $purple;
-}
-
-.badge{
-    border-radius: 20px;
-    padding:calc( .5em * 0.5 ) calc(.5em * 1);
-}
-
-.travel-list{
-
-    #ttbm_list_page{
-        table{
+.ttbm-tour-list-page{
+    padding: 20px;
+    background: #fff;
+    .ttbm-event-list {
+        display: flex;
+        flex-wrap: wrap;
+        .event-card {
+            border-bottom: 1px solid #eee;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
             width: 100%;
-            border-collapse:collapse;
+            &:hover{
+                cursor: pointer;
+                background: var(--mpl-light);
+            }
+            .event-details{
+                display: flex;
+                flex-direction: row;
+                justify-content: start;
+                gap:10px;
+                width:70%;
+                .event-thumb {
+                    position: relative;
+                    width: 150px;
+                    padding: 10px 0;
+                    img {
+                    width: 100%;
+                    height: auto;
+                    display: block;
+                    object-fit: cover;
+                    }
             
-            thead{
-                
-                th{
-                    border: 0;
-                    background-color:#F5F5F5;
-                    color:#666666;
-                    border: 0;
-                    padding:15px;
-                    vertical-align:middle;
-                    
-                }
-            }
-            tbody tr:nth-of-type(2n) th:first-child {
-                background-color: var(--color_light);
-            }
-            tr{
-                border: 1px solid #f2f2f2;
-                margin: 5px 0;
-                border-radius: 5px;
-                background-color: #fff;
-                &:hover{
-                    background-color: #F5F5F5;
-                }
-                th{
-                    border: 0;
-                }
-                td{
-                    border: 0;
-                    vertical-align: middle;
-                    &:nth-child(2){
-                        padding: 5px;
-                    }
-                    
-                    a{
-                        font-size: 14px;
-                        font-family: Roboto, sans-serif;
-                        font-weight: 600;
-                        line-height: 1.2;
-                        margin-bottom: 8px;
-                        color: var(--mpl-secondary);
-                    }
-                    img{
-                        width: 100px;
-                        height: 60px;
-                        object-fit: cover;
+                    .event-icon {
+                    position: absolute;
+                    bottom: 10px;
+                    left: 10px;
+                    background: #ff4081;
+                    color: #fff;
+                    padding: 5px 10px;
+                    border-radius: 6px;
+                    font-size: 14px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
                     }
                 }
             }
+
+        .event-info {
+            padding:20px 0;
+            h3 {
+                margin:0;
+                font-size: 18px;
+                a {
+                    text-decoration: none;
+                    color: var(--mpl-black);
+                }
+            }
+            .location {
+                color: var(--mpl-primary);
+                font-size: 14px;
+                margin-bottom: 6px;
+            }
+
+            .description {
+                font-size: 13px;
+                color: #555;
+            }
         }
-        .ttbm_list_attendee_area{
-            background-color: $purple;
+
+        .event-meta {
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 30%;
+            .meta-item {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                flex-direction: column;
+                justify-content: center;
+                .meta-icon {
+                    background-color: var(--mpl-light);
+                    color: var(--mpl-dark);
+                    padding:13px;
+                    width: 60px;
+                    height: 60px;
+                    border-radius:50%;
+                    font-size: 25px;
+                    box-sizing: border-box;
+                    text-align: center;
+                }
+                .meta-label{
+                    color: var(--mpl-black);
+                }
+            }
+            .meta-action {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                padding: 10px;
+                flex-direction: column;
+                background-color: var(--mpl-primary);
+                color: #fff;
+                border-radius:5px;
+                a{
+                    color: #fff;
+                    text-decoration: none;
+                }
+            }
         }
     }
 
-    div.mpStyle label {
-        font-size: inherit;
-        font-weight:700;
-    }
-}
+        // Mobile responsiveness
+        @media (max-width: 1024px) {
+            .event-card {
+                width: calc(50% - 20px);
+            }
+        }
 
-
-
-div.mpStyle [class*="textSuccess"] {
-color: $green;
-}
-
-.mpStyle [class*="_successButton"]{
-    background-color: $green;
-    border: 2px solid $green;
-}
-
-.mpStyle [class*="_themeButton"]{
-    background-color: $blue;
-    border: 2px solid $blue;
-    span{
-        color: #fff;
-    }
-    &:hover{
-        background-color: #fff;
-        border: 2px solid $blue;
-        color: $blue;
-        span{
-            color: $blue;
+        @media (max-width: 600px) {
+            .event-card {
+                width: 100%;
+            }
         }
     }
-}
-
-div.mpStyle [class*="_textDanger"]{
-    color: $purple;
-}
-div.mpStyle .textTheme, div.mpStyle [class*="_textTheme"] {
-color: $purple;
-}
-
-#ttbm_list_page table tbody tr:nth-of-type(2n+1) td, #ttbm_list_page table tbody tr:nth-of-type(2n) th:first-child {
-  background-color: #FFF;
 }

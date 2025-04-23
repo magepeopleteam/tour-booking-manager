@@ -239,7 +239,7 @@
 				?>
 				<div class="mp_basic_license_settings">
 					<div>
-						<?php esc_html_e('Thanking you for using our Mage-People plugin. Our some plugin  free and no license is required. We have some Additional addon to enhance feature of this plugin functionality. If you have any addon you need to enter a valid license for that plugin below.', 'tour-booking-manager'); ?> 
+						<?php esc_html_e('Thank you for using our plugin. Our some plugin  free and no license is required. We have some Additional addon to enhance feature of this plugin functionality. If you have any addon you need to enter a valid license for that plugin below.', 'tour-booking-manager'); ?> 
 					</div>
 					<?php $this->licence_area(); ?>
 				</div>

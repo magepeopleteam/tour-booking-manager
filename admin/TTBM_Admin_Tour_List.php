@@ -46,7 +46,7 @@
 			public function ttbm_list() {
                 ?>
                 <div class="wrap ttbm-tour-list-page">
-                    <div class="ttbm-event-list">
+                    <div class="ttbm-tour-list">
                     <?php
                         $paged = isset($_GET['paged']) ? (int) $_GET['paged'] : 1;
                         $post_per_page = isset($_REQUEST['post_per_page']) ? (int) $_REQUEST['post_per_page'] : 2;
@@ -95,18 +95,18 @@
                         $reserve = TTBM_Function::get_total_reserve($post_id);
                         ?>
                         
-                        <div class="event-card">
-                            <div class="event-details">
-                                <div class="event-thumb">
+                        <div class="ttbm-tour-card">
+                            <div class="ttbm-tour-details">
+                                <div class="ttbm-tour-thumb">
                                     <?php echo get_the_post_thumbnail($post_id, 'thumbnail'); ?>
                                 </div>
-                                <div class="event-info">
+                                <div class="ttbm-tour-info">
                                     <h3><a href="<?php echo get_the_permalink($post_id); ?>"><?php echo get_the_title($post_id); ?></a></h3>
                                     <p class="location"><?php echo esc_html($location); ?></p>
                                     <p class="description"><?php echo esc_html(wp_trim_words(get_the_excerpt($post_id), 15)); ?></p>
                                 </div>
                             </div>
-                            <div class="event-meta">
+                            <div class="ttbm-tour-meta">
                                 <div class="meta-item">
                                     <div class="meta-icon"><i class="fa fa-dollar-sign"></i></div>
                                     <div class="meta-label"><?php echo esc_html($total); ?> total</div>
@@ -135,9 +135,9 @@
                                     </button>
                                     <a href="<?php echo get_edit_post_link($post_id); ?>"><i class="fa fa-edit"></i></a>
                                     <?php do_action('add_ttbm_list_action_button', $post_id); ?>
-                                    <button class="ttbm_trash_post" type="button" data-alert="<?php echo esc_attr__('Are you sure ? To trash : ', 'tour-booking-manager') . ' ' . get_the_title($post_id); ?>" data-post-id="<?php echo esc_attr($post_id); ?>" title="<?php echo esc_attr__('Trash ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>">
+                                    <span class="ttbm_trash_post" data-alert="<?php echo esc_attr__('Are you sure ? To trash : ', 'tour-booking-manager') . ' ' . get_the_title($post_id); ?>" data-post-id="<?php echo esc_attr($post_id); ?>" title="<?php echo esc_attr__('Trash ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>">
                                         <i class="fa fa-trash"></i> 
-                                    </button>
+                                    </span>
                                     
                                 </div>
                             </div>

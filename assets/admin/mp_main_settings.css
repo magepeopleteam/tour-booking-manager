@@ -145,40 +145,40 @@
   padding: 20px;
   background: #fff;
 }
-.ttbm-tour-list-page .ttbm-event-list {
+.ttbm-tour-list-page .ttbm-tour-list {
   display: flex;
   flex-wrap: wrap;
 }
-.ttbm-tour-list-page .ttbm-event-list .event-card {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
   border-bottom: 1px solid #eee;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
 }
-.ttbm-tour-list-page .ttbm-event-list .event-card:hover {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card:hover {
   cursor: pointer;
   background: var(--mpl-light);
 }
-.ttbm-tour-list-page .ttbm-event-list .event-card .event-details {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details {
   display: flex;
   flex-direction: row;
   justify-content: start;
   gap: 10px;
   width: 70%;
 }
-.ttbm-tour-list-page .ttbm-event-list .event-card .event-details .event-thumb {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details .ttbm-tour-thumb {
   position: relative;
   width: 150px;
   padding: 10px 0;
 }
-.ttbm-tour-list-page .ttbm-event-list .event-card .event-details .event-thumb img {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details .ttbm-tour-thumb img {
   width: 100%;
   height: auto;
   display: block;
   object-fit: cover;
 }
-.ttbm-tour-list-page .ttbm-event-list .event-card .event-details .event-thumb .event-icon {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details .ttbm-tour-thumb .ttbm-tour-icon {
   position: absolute;
   bottom: 10px;
   left: 10px;
@@ -189,41 +189,41 @@
   font-size: 14px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-.ttbm-tour-list-page .ttbm-event-list .event-card .event-info {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-info {
   padding: 20px 0;
 }
-.ttbm-tour-list-page .ttbm-event-list .event-card .event-info h3 {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-info h3 {
   margin: 0;
   font-size: 18px;
 }
-.ttbm-tour-list-page .ttbm-event-list .event-card .event-info h3 a {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-info h3 a {
   text-decoration: none;
   color: var(--mpl-black);
 }
-.ttbm-tour-list-page .ttbm-event-list .event-card .event-info .location {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-info .location {
   color: var(--mpl-primary);
   font-size: 14px;
   margin-bottom: 6px;
 }
-.ttbm-tour-list-page .ttbm-event-list .event-card .event-info .description {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-info .description {
   font-size: 13px;
   color: #555;
 }
-.ttbm-tour-list-page .ttbm-event-list .event-card .event-meta {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta {
   padding: 10px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 30%;
 }
-.ttbm-tour-list-page .ttbm-event-list .event-card .event-meta .meta-item {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-item {
   display: flex;
   align-items: center;
   gap: 5px;
   flex-direction: column;
   justify-content: center;
 }
-.ttbm-tour-list-page .ttbm-event-list .event-card .event-meta .meta-item .meta-icon {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-item .meta-icon {
   background-color: var(--mpl-light);
   color: var(--mpl-dark);
   padding: 13px;
@@ -234,10 +234,10 @@
   box-sizing: border-box;
   text-align: center;
 }
-.ttbm-tour-list-page .ttbm-event-list .event-card .event-meta .meta-item .meta-label {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-item .meta-label {
   color: var(--mpl-black);
 }
-.ttbm-tour-list-page .ttbm-event-list .event-card .event-meta .meta-action {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-action {
   display: flex;
   align-items: center;
   gap: 20px;
@@ -247,17 +247,17 @@
   color: #fff;
   border-radius: 5px;
 }
-.ttbm-tour-list-page .ttbm-event-list .event-card .event-meta .meta-action a {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-action a {
   color: #fff;
   text-decoration: none;
 }
 @media (max-width: 1024px) {
-  .ttbm-tour-list-page .ttbm-event-list .event-card {
+  .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
     width: calc(50% - 20px);
   }
 }
 @media (max-width: 600px) {
-  .ttbm-tour-list-page .ttbm-event-list .event-card {
+  .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
     width: 100%;
   }
 }

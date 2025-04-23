@@ -1,10 +1,10 @@
 .ttbm-tour-list-page{
     padding: 20px;
     background: #fff;
-    .ttbm-event-list {
+    .ttbm-tour-list {
         display: flex;
         flex-wrap: wrap;
-        .event-card {
+        .ttbm-tour-card {
             border-bottom: 1px solid #eee;
             display: flex;
             flex-direction: row;
@@ -14,13 +14,13 @@
                 cursor: pointer;
                 background: var(--mpl-light);
             }
-            .event-details{
+            .ttbm-tour-details{
                 display: flex;
                 flex-direction: row;
                 justify-content: start;
                 gap:10px;
                 width:70%;
-                .event-thumb {
+                .ttbm-tour-thumb {
                     position: relative;
                     width: 150px;
                     padding: 10px 0;
@@ -31,7 +31,7 @@
                     object-fit: cover;
                     }
             
-                    .event-icon {
+                    .ttbm-tour-icon {
                     position: absolute;
                     bottom: 10px;
                     left: 10px;
@@ -45,7 +45,7 @@
                 }
             }
 
-        .event-info {
+        .ttbm-tour-info {
             padding:20px 0;
             h3 {
                 margin:0;
@@ -67,7 +67,7 @@
             }
         }
 
-        .event-meta {
+        .ttbm-tour-meta {
             padding: 10px 0;
             display: flex;
             align-items: center;
@@ -113,13 +113,13 @@
 
         // Mobile responsiveness
         @media (max-width: 1024px) {
-            .event-card {
+            .ttbm-tour-card {
                 width: calc(50% - 20px);
             }
         }
 
         @media (max-width: 600px) {
-            .event-card {
+            .ttbm-tour-card {
                 width: 100%;
             }
         }

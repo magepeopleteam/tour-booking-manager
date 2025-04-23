@@ -817,7 +817,7 @@
     });
 
    //=================== tour lists load more===========================
-    $(document).on('click','#ttbm-load-more', function(e) {
+   $(document).on('click','#ttbm-load-more', function(e) {
         e.preventDefault();
         const button = $(this);
         const paged = parseInt(button.attr('data-paged'));
@@ -838,7 +838,7 @@
             },
             success: function(response) {
                 if (response.success && response.data.html) {
-                    $('.ttbm-event-list').append(response.data.html);
+                    $('.ttbm-tour-list').append(response.data.html);
                     if (paged >= response.data.max_pages) {
                         button.remove();
                     } else {
@@ -893,16 +893,16 @@
             }
         });
     }
-    $(document).on('click', '#ttbm_list_page .ttbm_trash_post', function () {
+    $(document).on('click', '.ttbm-tour-card .ttbm_trash_post', function () {
         let alert_text = $(this).data('alert');
         if (confirm(alert_text + '\n\n 1. Ok : To Remove . \n 2. Cancel : To Cancel .')) {
-            let target = $(this).closest('#ttbm_list_page');
+            let target = $(this).closest('.ttbm-tour-card');
             let post_id = $(this).data('post-id');
             $.ajax({
                 type: 'POST', url: mp_ajax_url, data: {
                     "action": "ttbm_trash_post",
                     "post_id": post_id,
-                    "nonce": $(this).closest('.buttonGroup').find('#edd_sample_nonce').val(),
+                    "nonce": $(this).closest('.ttbm-tour-card').find('#edd_sample_nonce').val(),
                 }, beforeSend: function () {
                     dLoader(target);
                 }, success: function (data) {

@@ -10,9 +10,19 @@
 				add_action('wp_ajax_ttbm_trash_post', array($this, 'ttbm_trash_post'));
 
                 add_action('wp_ajax_ttbm_load_more', array($this, 'load_more_callback') );
+                add_action('admin_head', [$this,'remove_admin_notice']);
+                
 			}
 
-            function load_more_callback() {
+            public function remove_admin_notice(){
+                $screen = get_current_screen();
+                if ($screen && $screen->id === 'ttbm_tour_page_ttbm_list') {
+                    remove_all_actions('admin_notices');
+                    remove_all_actions('all_admin_notices');
+                }
+            }
+
+            public  function load_more_callback() {
                 check_ajax_referer('ttbm_load_more', 'nonce');
             
                 $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;

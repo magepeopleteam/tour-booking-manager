@@ -148,6 +148,8 @@
 .ttbm-tour-list-page .ttbm-tour-list {
   display: flex;
   flex-wrap: wrap;
+  border-top: 1px solid var(--mpl-light);
+  margin-top: 10px;
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
   border-bottom: 1px solid #eee;

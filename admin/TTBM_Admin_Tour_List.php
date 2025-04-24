@@ -5,7 +5,7 @@
 	if (!class_exists('TTBM_Admin_Tour_List')) {
 		class TTBM_Admin_Tour_List {
 			public function __construct() {
-				add_action('admin_menu', array($this, 'tour_list_menu'), 1);
+				// add_action('admin_menu', array($this, 'tour_list_menu'), 1);
 				//===//
 				add_action('wp_ajax_ttbm_trash_post', array($this, 'ttbm_trash_post'));
 
@@ -13,8 +13,16 @@
                 add_action('wp_ajax_ttbm_search_tours', array($this, 'search_tours_callback'));
 
                 add_action('admin_head', [$this,'remove_admin_notice']);
+                add_action('admin_menu', [$this,'remove_default_menu'],0);
                 
 			}
+            public function remove_default_menu(){
+                remove_submenu_page('edit.php?post_type=ttbm_tour', 'edit.php?post_type=ttbm_tour');
+                remove_submenu_page('edit.php?post_type=ttbm_tour', 'post-new.php?post_type=ttbm_tour');
+                $label = TTBM_Function::get_name();
+				add_submenu_page('edit.php?post_type=ttbm_tour', $label . ' ' . esc_html__('List', 'tour-booking-manager'), $label . ' ' . esc_html__('List', 'tour-booking-manager'), 'manage_options', 'ttbm_list', array($this, 'ttbm_list'),0);
+            }
+
             public function search_tours_callback(){
                            
                 $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
@@ -81,14 +89,16 @@
 			}
 
 			public function ttbm_list() {
+                $label = TTBM_Function::get_name();
                 ?>
                 <div class="wrap ttbm-tour-list-page ">
-                    <h1 class="page-title"><?php _e('Tour Lists','tour-booking-manager'); ?></h1>
+                
+                    <h1 class="page-title"><?php echo esc_html($label).__(' Lists','tour-booking-manager'); ?></h1>
                     <div class="ttbm-tour-list-header">
                         <a href="<?php echo admin_url('post-new.php?post_type=ttbm_tour'); ?>" class="page-title-action">
-                            <i class="fas fa-plus"></i> <?php esc_html_e('Add New Tour', 'tour-booking-manager'); ?>
+                            <i class="fas fa-plus"></i> <?php esc_html_e('Add New', 'tour-booking-manager'); ?>
                         </a>
-                        <input type="text" name="ttbm_tour_search" id="ttbm-tour-search" data-nonce="<?php echo wp_create_nonce("ttbm_search_nonce"); ?>" placeholder="Search Tour">
+                        <input type="text" name="ttbm_tour_search" id="ttbm-tour-search" data-nonce="<?php echo wp_create_nonce("ttbm_search_nonce"); ?>" placeholder="Search <?php echo esc_html($label); ?>">
                     </div>
                     <div class="ttbm-tour-list">
                     <?php

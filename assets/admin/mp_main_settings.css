@@ -161,6 +161,10 @@
 .ttbm-tour-list-page .ttbm-tour-list-header .page-title-action {
   position: inherit;
   margin: 0;
+  background-color: var(--mpl-primary);
+  color: #fff;
+  border: var(--mpl-primary) solid 1px;
+  font-weight: bold;
 }
 .ttbm-tour-list-page .ttbm-tour-list {
   display: flex;
@@ -283,6 +287,12 @@
 .ttbm-tour-list-page .ttbm-load-more-wrap {
   text-align: center;
   margin: 10px auto;
+}
+.ttbm-tour-list-page .ttbm-load-more-wrap .button {
+  background-color: var(--mpl-primary);
+  color: #fff;
+  border: var(--mpl-primary) solid 1px;
+  font-weight: bold;
 }
 
 #mp_meta_box_panel .ttbm-faq-section .ttbm-faq-item {

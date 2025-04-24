@@ -82,11 +82,11 @@
 
 			public function ttbm_list() {
                 ?>
-                <div class="wrap ttbm-tour-list-page">
+                <div class="wrap ttbm-tour-list-page ">
                     <h1 class="page-title"><?php _e('Tour Lists','tour-booking-manager'); ?></h1>
                     <div class="ttbm-tour-list-header">
                         <a href="<?php echo admin_url('post-new.php?post_type=ttbm_tour'); ?>" class="page-title-action">
-                            <?php esc_html_e('Add New Tour', 'tour-booking-manager'); ?>
+                            <i class="fas fa-plus"></i> <?php esc_html_e('Add New Tour', 'tour-booking-manager'); ?>
                         </a>
                         <input type="text" name="ttbm_tour_search" id="ttbm-tour-search" data-nonce="<?php echo wp_create_nonce("ttbm_search_nonce"); ?>" placeholder="Search Tour">
                     </div>
@@ -119,7 +119,7 @@
                                     data-paged="<?php echo esc_attr($paged + 1); ?>" 
                                     data-posts-per-page="<?php echo esc_attr($post_per_page); ?>" 
                                     data-nonce="<?php echo wp_create_nonce('ttbm_load_more'); ?>">
-                                <?php esc_html_e('Load More', 'tour-booking-manager'); ?>
+                                    <i class="fas fa-sync-alt"></i> <?php esc_html_e('Load More', 'tour-booking-manager'); ?>
                             </button>
                         </div>
                     <?php endif; ?>

@@ -16,6 +16,10 @@
         .page-title-action{
             position: inherit;
             margin: 0;
+            background-color: var(--mpl-primary);
+            color: #fff;
+            border: var(--mpl-primary) solid 1px;
+            font-weight: bold;
         }
     }
     .ttbm-tour-list {
@@ -146,5 +150,11 @@
     .ttbm-load-more-wrap{
         text-align: center;
         margin: 10px auto;
+        .button{
+            background-color: var(--mpl-primary);
+            color: #fff;
+            border: var(--mpl-primary) solid 1px;
+            font-weight: bold;
+        }
     }
 }

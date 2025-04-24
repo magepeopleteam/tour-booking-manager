@@ -147,7 +147,9 @@
                                 </div>
                                 <div class="ttbm-tour-info">
                                     <h3><a href="<?php echo get_the_permalink($post_id); ?>"><?php echo get_the_title($post_id); ?></a></h3>
-                                    <p class="location"><?php echo esc_html($location); ?></p>
+                                    <?php if($location): ?>
+                                    <p class="location"><i class="fas fa-map-marker-alt"></i> <?php echo esc_html($location); ?></p>
+                                    <?php endif; ?>
                                     <p class="description"><?php echo esc_html(wp_trim_words(get_the_excerpt($post_id), 15)); ?></p>
                                 </div>
                             </div>

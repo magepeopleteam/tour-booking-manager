@@ -863,6 +863,9 @@
                 search_term: search,
                 wpnonce: nonce,
             },
+            beforeSend: function() {
+                $('.ttbm-tour-list').text('Loading...');
+            },
             success: function(response) {
                 if (response.success && response.data.html) {
                     $('.ttbm-tour-list').html('');

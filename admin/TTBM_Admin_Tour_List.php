@@ -10,9 +10,36 @@
 				add_action('wp_ajax_ttbm_trash_post', array($this, 'ttbm_trash_post'));
 
                 add_action('wp_ajax_ttbm_load_more', array($this, 'load_more_callback') );
+                add_action('wp_ajax_ttbm_search_tours', array($this, 'search_tours_callback'));
+
                 add_action('admin_head', [$this,'remove_admin_notice']);
                 
 			}
+            public function search_tours_callback(){
+                           
+                $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
+                $post_per_page = isset($_POST['post_per_page']) ? intval($_POST['post_per_page']) : 2;
+                $search = isset($_POST['search_term']) ? sanitize_text_field($_POST['search_term']) : ''; 
+                $args = array(
+                    'post_type'      => 'ttbm_tour',
+                    'post_status'    => 'publish',
+                    'paged'          => $paged,
+                    'posts_per_page' => $post_per_page,
+                    's'              => $search,
+                    'orderby'        => 'date',
+                    'order'          => 'DESC',
+                );
+
+                $posts_query = new WP_Query($args);
+                ob_start();
+                $this->tour_list($posts_query);
+                $html = ob_get_clean();
+                wp_send_json_success(array(
+                    'html' => $html,
+                    'max_pages' => $posts_query->max_num_pages
+                ));
+                wp_die();
+            }
 
             public function remove_admin_notice(){
                 $screen = get_current_screen();
@@ -56,9 +83,13 @@
 			public function ttbm_list() {
                 ?>
                 <div class="wrap ttbm-tour-list-page">
-                    <a href="<?php echo admin_url('post-new.php?post_type=ttbm_tour'); ?>" class="page-title-action">
-                        <?php esc_html_e('Add New Tour', 'tour-booking-manager'); ?>
-                    </a>
+                    <h1 class="page-title"><?php _e('Tour Lists','tour-booking-manager'); ?></h1>
+                    <div class="ttbm-tour-list-header">
+                        <a href="<?php echo admin_url('post-new.php?post_type=ttbm_tour'); ?>" class="page-title-action">
+                            <?php esc_html_e('Add New Tour', 'tour-booking-manager'); ?>
+                        </a>
+                        <input type="text" name="ttbm_tour_search" id="ttbm-tour-search" data-nonce="<?php echo wp_create_nonce("ttbm_search_nonce"); ?>" placeholder="Search Tour">
+                    </div>
                     <div class="ttbm-tour-list">
                     <?php
                         $paged = isset($_GET['paged']) ? (int) $_GET['paged'] : 1;
@@ -76,6 +107,7 @@
                             'orderby'        => 'date',
                             'order'          => 'DESC',
                         );
+                        
                         $posts_query = new WP_Query($args);
                         
                         $this->tour_list($posts_query); 

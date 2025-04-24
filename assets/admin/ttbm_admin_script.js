@@ -825,7 +825,7 @@
         const nonce = button.data('nonce');
 
         $.ajax({
-            url: ajaxurl,
+            url: ttbm_admin_ajax.ajax_url,
             type: 'POST',
             data: {
                 action: 'ttbm_load_more',
@@ -838,6 +838,34 @@
             },
             success: function(response) {
                 if (response.success && response.data.html) {
+                    $('.ttbm-tour-list').append(response.data.html);
+                    if (paged >= response.data.max_pages) {
+                        button.remove();
+                    } else {
+                        button.attr('data-paged', paged + 1).text('Load More');
+                    }
+                } else {
+                    button.remove();
+                }
+            }
+        });
+    });
+
+    //=================== tour lists search===========================
+    $(document).on('input','#ttbm-tour-search', function() {
+        var search = $(this).val();
+        var nonce =  $(this).data('nonce');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_search_tours',
+                search_term: search,
+                wpnonce: nonce,
+            },
+            success: function(response) {
+                if (response.success && response.data.html) {
+                    $('.ttbm-tour-list').html('');
                     $('.ttbm-tour-list').append(response.data.html);
                     if (paged >= response.data.max_pages) {
                         button.remove();

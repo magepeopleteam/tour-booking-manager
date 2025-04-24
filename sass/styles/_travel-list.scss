@@ -1,6 +1,23 @@
 .ttbm-tour-list-page{
     padding: 20px;
     background: #fff;
+    .page-title{
+        padding: 0;
+        margin-bottom: 10px;
+    }
+    .ttbm-tour-list-header{
+        display: flex;
+        gap:20px;
+        justify-content: space-between;
+        align-items: center;
+        input{
+            width: 50%;
+        }
+        .page-title-action{
+            position: inherit;
+            margin: 0;
+        }
+    }
     .ttbm-tour-list {
         display: flex;
         flex-wrap: wrap;

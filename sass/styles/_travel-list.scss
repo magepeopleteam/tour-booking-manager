@@ -45,13 +45,16 @@
                 width:70%;
                 .ttbm-tour-thumb {
                     position: relative;
-                    width: 150px;
-                    padding: 10px 0;
+                    width: 100px;
+                    height: 100px;
+                    padding: 10px;
+                   
                     img {
                     width: 100%;
-                    height: auto;
-                    display: block;
+                    height: 100%;
+                    border-radius:5px;
                     object-fit: cover;
+                    display: block;
                     }
             
                     .ttbm-tour-icon {
@@ -120,7 +123,7 @@
             .meta-action {
                 display: flex;
                 align-items: center;
-                gap: 20px;
+                gap: 10px;
                 padding: 10px;
                 flex-direction: column;
                 background-color: var(--mpl-primary);

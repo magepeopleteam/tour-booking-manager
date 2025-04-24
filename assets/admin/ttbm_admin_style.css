@@ -142,3 +142,8 @@ select#mep_ticket_offdays{height:200px !important;}
 	color: var(--mpl-white);
 	border: 1px solid var(--mpl-primary);
 }
+
+/* =====================quick setup=============== */
+.ttbm-quick-setup .mpTabsNext .tabsContentNext p{
+	margin-bottom: 5px;
+}

@@ -132,7 +132,7 @@
 					}					
 				}
 				?>
-				<div class="mpStyle">
+				<div class="mpStyle ttbm-quick-setup">
 					<div class=_dShadow_6_adminLayout">
 						<form method="post" action="">
 							<?php wp_nonce_field('ttbm_quick_setup_nonce', 'ttbm_quick_setup'); ?>
@@ -143,21 +143,21 @@
 											<span class="mp_zero" data-icon></span>
 											<span class="mp_zero" data-text>1</span>
 										</h4>
-										<h6 class="circleTitle" data-class><?php esc_html_e('Welcome', 'tour-booking-manager'); ?></h6>
+										<h2 class="circleTitle" data-class><?php esc_html_e('Welcome', 'tour-booking-manager'); ?></h2>
 									</div>
 									<div data-tabs-target-next="#ttbm_qs_general" class="tabItemNext" data-open-text="2" data-close-text="" data-open-icon="" data-close-icon="fas fa-check" data-add-class="success">
 										<h4 class="circleIcon" data-class>
 											<span class="mp_zero" data-icon></span>
 											<span class="mp_zero" data-text>2</span>
 										</h4>
-										<h6 class="circleTitle" data-class><?php esc_html_e('General', 'tour-booking-manager'); ?></h6>
+										<h2 class="circleTitle" data-class><?php esc_html_e('General', 'tour-booking-manager'); ?></h2>
 									</div>
 									<div data-tabs-target-next="#ttbm_qs_done" class="tabItemNext" data-open-text="3" data-close-text="" data-open-icon="" data-close-icon="fas fa-check" data-add-class="success">
 										<h4 class="circleIcon" data-class>
 											<span class="mp_zero" data-icon></span>
 											<span class="mp_zero" data-text>3</span>
 										</h4>
-										<h6 class="circleTitle" data-class><?php esc_html_e('Done', 'tour-booking-manager'); ?></h6>
+										<h2 class="circleTitle" data-class><?php esc_html_e('Done', 'tour-booking-manager'); ?></h2>
 									</div>
 								</div>
 								<div class="tabsContentNext _infoLayout_mT">
@@ -189,9 +189,9 @@
 				?>
 				<div data-tabs-next="#ttbm_qs_welcome">
 					<h2><?php esc_html_e('Tour Booking Manager For Woocommerce Plugin', 'tour-booking-manager'); ?></h2>
-					<p class="mTB_xs"><?php esc_html_e('Thanks for choosing Tour Booking Manager Plugin for WooCommerce for your site, Please go step by step and choose some options to get started.', 'tour-booking-manager'); ?></p>
+					<p><?php esc_html_e('Thanks for choosing Tour Booking Manager Plugin for WooCommerce for your site, Please go step by step and choose some options to get started.', 'tour-booking-manager'); ?></p>
 					<div class="_dLayout_mT_alignCenter justifyBetween">
-						<h5>
+						<h4>
 							<?php if ($status == 1) {
 								esc_html_e('Woocommerce already installed and activated', 'tour-booking-manager');
 							}
@@ -201,11 +201,11 @@
 							else {
 								esc_html_e('Woocommerce already install , please activate it', 'tour-booking-manager');
 							} ?>
-						</h5>
+						</h4>
 						<?php if ($status == 1) { ?>
-							<h5>
+							<h4>
 								<span class="fas fa-check-circle textSuccess"></span>
-							</h5>
+							</h4>
 						<?php } elseif ($status == 0) { ?>
 							<button class="warningButton" type="submit" name="install_and_active_woo_btn"><?php esc_html_e('Install & Active Now', 'tour-booking-manager'); ?></button>
 						<?php } else { ?>
@@ -230,7 +230,7 @@
 						<p class="mTB_xs"><?php esc_html_e('Choose some general option.', 'tour-booking-manager'); ?></p>
 						<div class="_dLayout_mT">
 							<label class="fullWidth">
-								<span class="min_200"><?php esc_html_e('Tour Label:', 'tour-booking-manager'); ?></span>
+								<p class="min_200"><?php esc_html_e('Tour Label:', 'tour-booking-manager'); ?></p>
 								<input type="text" class="formControl" name="ttbm_travel_label" value='<?php echo esc_attr($label); ?>'/>
 							</label>
 							<i class="info_text">
@@ -239,7 +239,7 @@
 							</i>
 							<div class="divider"></div>
 							<label class="fullWidth">
-								<span class="min_200"><?php esc_html_e('Tour Slug:', 'tour-booking-manager'); ?></span>
+								<p class="min_200"><?php esc_html_e('Tour Slug:', 'tour-booking-manager'); ?></p>
 								<input type="text" class="formControl" name="ttbm_travel_slug" value='<?php echo esc_attr($slug); ?>'/>
 							</label>
 							<i class="info_text">

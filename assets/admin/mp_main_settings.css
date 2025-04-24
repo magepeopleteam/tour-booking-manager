@@ -665,7 +665,7 @@ div.mp_global_settings .ttbm-setting-field .tooltips:hover::after, div.mp_global
   width: 100%;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .roundSwitchLabel, .travel-list .ttbm_settings .tabsContent .tabsItem section .roundSwitchLabel {
-  margin-right: 10px;
+  margin: 0 10px;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .roundSwitchLabel input:checked + .roundSwitch, .travel-list .ttbm_settings .tabsContent .tabsItem section .roundSwitchLabel input:checked + .roundSwitch {
   background-color: var(--mpl-primary);
@@ -727,6 +727,16 @@ div.mpStyle select.formControl {
 .mpStyle [data-tabs-target]:hover {
   border-left: 2px solid var(--mpl-primary);
   background-color: var(--mpl-white);
+}
+
+.mpStyle .themeButton, .mpStyle [class*=_themeButton] {
+  background-color: var(--mpl-primary);
+  color: var(--mpl-white);
+  padding: 10px;
+  border: 1px solid var(--mpl-primary);
+}
+.mpStyle .themeButton i, .mpStyle [class*=_themeButton] i {
+  color: #fff;
 }
 
 @media only screen and (min-width: 0px) {
@@ -1125,10 +1135,19 @@ div.mpStyle span.mp_remove_multi_image {
 }
 
 div.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::after {
+  content: "";
+  position: absolute;
   left: 3px;
   top: 4px !important;
   height: 5px;
   width: 10px;
+  border: 2px solid var(--mpl-white);
+  border-top: none;
+  border-right: none;
+  z-index: 11;
+  background-color: transparent;
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
 }
 
 /*# sourceMappingURL=mp_main_settings.css.map */

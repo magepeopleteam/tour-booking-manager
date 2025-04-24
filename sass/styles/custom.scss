@@ -26,6 +26,16 @@ div.mpStyle select.formControl {
   background-color: var(--mpl-white);
 }
 
+.mpStyle .themeButton, .mpStyle [class*="_themeButton"]{
+  background-color: var(--mpl-primary);
+  color: var(--mpl-white);
+  padding: 10px;
+  border: 1px solid var(--mpl-primary);
+  i{
+    color: #fff;
+  }
+}
+
 @media only screen and (min-width: 0px) {
   #mp_meta_box_panel .tabLists {
     border-right: 0px solid var(--mpl-light);
@@ -452,13 +462,23 @@ div.mpStyle span.mp_remove_multi_image {
         border: 1px solid var(--mpl-primary);
         border-radius: 50px;
       }
+      
     }
   }
 }
 
 div.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::after {
+  content: "";
+  position: absolute;
   left: 3px;
   top: 4px !important;
   height: 5px;
   width: 10px;
+  border: 2px solid var(--mpl-white);
+  border-top:none;
+  border-right:none;
+  z-index: 11;
+  background-color: transparent;
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
 }

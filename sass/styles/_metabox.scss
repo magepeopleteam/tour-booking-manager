@@ -120,7 +120,7 @@
               width: 100%;
             }
             .roundSwitchLabel{
-                margin-right: 10px;
+                margin:0 10px;
             }
             .roundSwitchLabel input:checked + .roundSwitch {
                 background-color: var(--mpl-primary);

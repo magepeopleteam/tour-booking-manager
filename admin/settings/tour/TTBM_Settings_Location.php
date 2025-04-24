@@ -92,8 +92,7 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 						<p><?php esc_html_e('Tour City', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Select Tour City from this list', 'tour-booking-manager'); ?></span></i></p>
 					</div>
 					<div class="_dFlex_alignCenter_justifyBetween">
-						<div class="me-2"><?php MP_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__('', 'tour-booking-manager')); ?></div>
-						<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+						<div><?php MP_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__(' Add', 'tour-booking-manager')); ?> </div> <?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
 						<?php self::location_select($tour_id); ?>
 					</div>
 				</div>

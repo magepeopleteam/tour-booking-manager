@@ -1,0 +1,66 @@
+.ttbm_hotel_container {
+    font-family: Arial, sans-serif;
+    /*max-width: 400px;*/
+    flex: 1;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    background-color: #fff;
+    color: #666666;
+}
+
+.ttbm_hotel_rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.ttbm_hotel_star {
+    color: #FFD700;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.ttbm_hotel_location {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.ttbm_hotel_location_icon {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.ttbm_hotel_location_text {
+    font-size: 14px;
+}
+
+.ttbm_hotel_nearby_title {
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+}
+
+.ttbm_hotel_nearby_item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.ttbm_hotel_nearby_icon {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.ttbm_hotel_nearby_text {
+    font-size: 14px;
+}
+
+.ttbm_hotel_distance {
+    font-weight: normal;
+}
+
+.ttbm_hotel_highlight {
+    cursor: pointer;
+}

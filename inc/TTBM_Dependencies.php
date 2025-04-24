@@ -30,6 +30,7 @@
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Details_Layout.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Details_Layout.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Booking.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Booking.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
 			}
 			public function appsero_init_tracker_ttbm() {
@@ -69,6 +70,8 @@
 			}
 			public function registration_enqueue() {
 				wp_enqueue_style('ttbm_filter_pagination_style', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.css', array(), time());
+				wp_enqueue_style('ttbm_hotel_style', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_style.css', array(), time());
+				wp_enqueue_script('ttbm_hotel_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_script.js', array('jquery'), time(), true);
 				wp_enqueue_script('ttbm_filter_pagination_script', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.js', array('jquery'), time(), true);
 				wp_enqueue_style('ttbm_date_range_picker', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.min.css', array(), '1');
 				wp_enqueue_script('ttbm_date_range_picker_js', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.js', array('jquery', 'moment'), '1', true);

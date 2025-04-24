@@ -5,13 +5,13 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 $ttbm_post_id = $ttbm_post_id ?? get_the_id();
-error_log( print_r( $ttbm_post_id, true ) );
 $tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
 $class_location = $class_location ?? '';
 ?>
     <div class="ttbm_default_theme">
         <div class='mpStyle ttbm_wraper'>
-            <div class="ttbm_container">
+            <div class="ttbm_hotel_item fdColumn">
+                <div class="ttbm_container">
                 <div class="ttbm_details_page">
                     <div class="ttbm_details_page_header">
                         <?php do_action( 'ttbm_details_title' ); ?>
@@ -38,6 +38,7 @@ $class_location = $class_location ?? '';
                                 <?php do_action( 'ttbm_description' ); ?>
                             </div>
                             <div class="ttbm_content__right">
+                                <?php do_action( 'ttbm_hotel_location_details' ); ?>
                                 <?php do_action( 'ttbm_include_feature' ); ?>
                                 <?php do_action( 'ttbm_exclude_service' ); ?>
                             </div>
@@ -45,6 +46,7 @@ $class_location = $class_location ?? '';
 
                     </div>
                 </div>
+            </div>
             </div>
         </div>
         <?php do_action( 'ttbm_single_tour_after' ); ?>

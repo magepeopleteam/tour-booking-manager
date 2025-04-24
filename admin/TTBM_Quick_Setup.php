@@ -128,7 +128,7 @@
 
                         update_option('ttbm_basic_gen_settings', $new_general_settings_data);
 						update_option('ttbm_quick_setup_done', 'yes');
-						wp_redirect(admin_url('edit.php?post_type=ttbm_tour'));
+						wp_redirect(admin_url('edit.php?post_type=ttbm_tour&page=ttbm_list'));
 					}					
 				}
 				?>

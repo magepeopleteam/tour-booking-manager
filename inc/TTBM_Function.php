@@ -705,23 +705,25 @@
 				return MP_Global_Function::data_sanitize($data);
 			}
 			public static function data_sanitize($data) {
-				$data = @unserialize( $data, ['allowed_classes' => false] );
-				if (is_string($data) || is_serialized( $data )) {
-					$data = @unserialize( $data, ['allowed_classes' => false] );
-					if (is_array($data)) {
-						$data = MP_Global_Function::data_sanitize($data);
-					} else {
-						$data = sanitize_text_field($data);
-					}
-				} elseif (is_array($data)) {
+				if (is_array($data)) {
 					foreach ($data as &$value) {
 						if (is_array($value)) {
-							$value = MP_Global_Function::data_sanitize($value);
+							$value = self::data_sanitize($value);
 						} else {
 							$value = sanitize_text_field($value);
 						}
 					}
+					return $data;
 				}
+				
+				if (is_string($data) && !empty($data)) {
+					$unserialized = @unserialize($data, ['allowed_classes' => false]);
+					if ($unserialized !== false || $data === 'b:0;') {
+						return self::data_sanitize($unserialized);
+					}
+					return sanitize_text_field($data);
+				}
+				
 				return $data;
 			}
 			public static function get_submit_info($key, $default = '') {

@@ -26,7 +26,7 @@ if ( ! empty( $ttbm_product_id ) ) {
                 <?php esc_html_e( 'Seat Plan', 'tour-booking-manager' ) ; ?>
             </button>
         <?php } ?>
-        <button class="dButton ttbm_book_now <?php echo esc_attr($seat_plan); ?>" type="<?php echo esc_attr($button_type); ?>">
+        <button class="dButton ttbm_hotel_book_now <?php echo esc_attr($seat_plan); ?>" type="<?php echo esc_attr($button_type); ?>">
             <span class="fas fa-cart-plus"></span>
             <?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?>
         </button>

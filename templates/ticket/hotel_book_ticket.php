@@ -5,13 +5,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 $ttbm_post_id = $ttbm_post_id ?? get_the_id();
-$room_lists = MP_Global_Function::get_post_info( $hotel_id, 'ttbm_room_details', array() );
+//$room_lists = MP_Global_Function::get_post_info( $hotel_id, 'ttbm_room_details', array() );
 $date_range = $_REQUEST['date_range'] ?: "";
-if ( sizeof( $room_lists ) > 0 && $hotel_id && $date_range ) {
+if ( $hotel_id && $date_range ) {
     $hotel_date = explode( "-", $date_range );
     $date1      = date( 'Y-m-d', strtotime( $hotel_date[0] ) );
     $date2      = date( 'Y-m-d', strtotime( $hotel_date[1] ) );
     $days       = date_diff( date_create( $date1 ), date_create( $date2 ) );
+
+    $room_lists_new = MP_Global_Function::pa_get_full_room_ticket_info( $hotel_id, $date1, $date2 );
+
     ?>
     <input type="hidden" name='ttbm_tour_hotel_list' value='<?php echo esc_attr( $hotel_id ); ?>'>
     <input type="hidden" name='ttbm_hotel_num_of_day' value='<?php echo esc_attr( $days->days ); ?>'>
@@ -34,10 +37,7 @@ if ( sizeof( $room_lists ) > 0 && $hotel_id && $date_range ) {
                 </thead>
                 <tbody>
                 <?php
-                foreach ( $room_lists as $ticket ) {
-
-                    error_log( print_r( $ticket, true ) );
-
+                foreach ( $room_lists_new as $ticket ) {
                     $room_name        = array_key_exists( 'ttbm_hotel_room_name', $ticket ) ? $ticket['ttbm_hotel_room_name'] : '';
                     $price            = array_key_exists( 'ttbm_hotel_room_price', $ticket ) ? $ticket['ttbm_hotel_room_price'] : 0;
                     $sale_price            = array_key_exists( 'sale_price', $ticket ) ? $ticket['sale_price'] : '';
@@ -49,7 +49,8 @@ if ( sizeof( $room_lists ) > 0 && $hotel_id && $date_range ) {
                     $max_qty          = apply_filters( 'ttbm_ticket_type_max_qty', 0 );
 //                    $sold_type        = TTBM_Function::get_total_sold( $tour_id, $tour_date, $room_name, $hotel_id );
                     $sold_type = 0;
-                    $available        = $ticket_qty - ( $sold_type + $reserve );
+//                    $available        = $ticket_qty - ( $sold_type + $reserve );
+                    $available        = $ticket['available'];
                     ?>
                     <tr>
                         <td>
@@ -81,7 +82,7 @@ if ( sizeof( $room_lists ) > 0 && $hotel_id && $date_range ) {
                             <?php esc_html_e( 'Night ', 'tour-booking-manager' ); ?>&nbsp;X
                             <?php echo esc_html( $days->days ); ?>
                         </td>
-                        <td><?php TTBM_Layout::qty_input( $room_name, $available, 'inputbox', 0, $min_qty, $max_qty, $ticket_price_raw, 'ticket_qty[]' ); ?></td>
+                        <td class="ttbm_hotel_room_incDec"><?php TTBM_Layout::qty_input( $room_name, $available, 'inputbox', 0, $min_qty, $max_qty, $ticket_price_raw, 'ticket_qty[]' ); ?></td>
                     </tr>
                     <tr>
                         <td colspan=3>

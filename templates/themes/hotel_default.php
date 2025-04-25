@@ -29,11 +29,12 @@ $class_location = $class_location ?? '';
                             <?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
                         </div>
 
-                        <div class="ttbm_content_area">
+                        <div class="ttbm_content_area ttbm_hotel_content_area">
+                            <input type="hidden" id="ttbm_booking_hotel_id" value="<?php echo esc_attr( $ttbm_post_id )?>">
                             <div class="ttbm_content__left">
                                 <?php do_action( 'ttbm_hotel_slider' ); ?>
 
-                                <?php do_action( 'ttbm_make_hotel_booking', $ttbm_post_id);?>
+                                <?php do_action( 'ttbm_make_hotel_booking', $ttbm_post_id );?>
 
                                 <?php do_action( 'ttbm_description' ); ?>
                             </div>

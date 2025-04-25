@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <span class="date_time_label mR_xs"><?php esc_html_e('Select Date Range :', 'tour-booking-manager'); ?></span>
                 <input type="text" name="ttbm_hotel_date_range" class="formControl" value="" placeholder="<?php esc_attr_e('Checkin - Checkout', 'tour-booking-manager'); ?>">
             </label>
-            <button class="navy_blueButton ttbm_check_ability ttbm_hotel_check_availability" type="button">
+            <button class="navy_blueButton ttbm_check_ability ttbm_hotel_room_check_availability" type="button">
                 <?php esc_html_e('See Availability', 'tour-booking-manager'); ?>
             </button>
         </div>

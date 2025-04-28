@@ -56,8 +56,8 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
 
                 <!-- Order Summary -->
                 <div class="ttbm_total_booking_summary">
-                    <div class="ttbm_total_booking_found">Total <span><?php echo $query->found_posts; ?></span><?php echo esc_attr__( 'Order Found', 'tour-booking-manager' )?></div>
-                    <div class="ttbm_total_booking_showing">Showing <span><?php echo $query->post_count; ?></span><?php echo esc_attr__( 'Order', 'tour-booking-manager' )?> </div>
+                    <div class="ttbm_total_booking_found"><?php echo esc_attr__( 'Total ', 'tour-booking-manager' )?> <span><?php echo $query->found_posts; ?></span><?php echo esc_attr__( ' Order Found', 'tour-booking-manager' )?></div>
+                    <div class="ttbm_total_booking_showing"><?php echo esc_attr__( 'Showing ', 'tour-booking-manager' )?>  <span><?php echo $query->post_count; ?></span><?php echo esc_attr__( ' Order', 'tour-booking-manager' )?> </div>
                     <div class="ttbm_total_booking_per_page">
                         <span><?php echo esc_attr__( 'Guest Per Page', 'tour-booking-manager' )?></span>
                         <input type="number" value="20" class="ttbm_total_booking_page_input">
@@ -101,6 +101,7 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                             $order_date = get_the_date('F j, Y');
                             $order_status = get_post_meta(get_the_ID(), '_ttbm_hotel_booking_status', true);
                             $paid_amount = get_post_meta(get_the_ID(), '_ttbm_hotel_booking_price', true);
+                            $paid_amount = str_replace(',', '', $paid_amount);
                             $payment_method = get_post_meta(get_the_ID(), '_ttbm_hotel_booking_payment_method', true);
                             ?>
 
@@ -109,7 +110,14 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                                 <td class="ttbm_total_booking_td ttbm_total_booking_order_id">#<?php echo esc_html($order_id); ?></td>
                                 <td class="ttbm_total_booking_td ttbm_total_booking_billing">
                                     <?php echo esc_html($billing_name); ?>
-                                    <button class="ttbm_total_booking_view_more"><?php echo esc_attr__( 'View More', 'tour-booking-manager' )?></button>
+                                    <div class="ttbm_booking_user_more_info_holder">
+                                        <div class="ttbm_booking_user_more_info" style="display: none">
+                                            name: rubel
+                                            address: niamat
+                                            phone: dsf
+                                        </div>
+                                        <button class="ttbm_total_booking_view_more"><?php echo esc_attr__( 'View More', 'tour-booking-manager' )?></button>
+                                    </div>
                                 </td>
                                 <td class="ttbm_total_booking_td ttbm_total_booking_travel">
                                     <?php echo esc_html($travel_name); ?>
@@ -136,7 +144,9 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                                 <td class="ttbm_total_booking_td ttbm_total_booking_tour_date"><?php echo esc_html($check_out); ?></td>
                                 <td class="ttbm_total_booking_td ttbm_total_booking_order_date"><?php echo esc_html($order_date); ?></td>
                                 <td class="ttbm_total_booking_td ttbm_total_booking_status"><?php echo esc_html($order_status); ?></td>
-                                <td class="ttbm_total_booking_td ttbm_total_booking_amount"><?php echo esc_html($paid_amount); ?>৳</td>
+                                <td class="ttbm_total_booking_td ttbm_total_booking_amount">
+                                    <?php echo wp_kses_post( wc_price( $paid_amount ) ); ?>
+                                </td>
                                 <td class="ttbm_total_booking_td ttbm_total_booking_payment"><?php echo esc_html($payment_method); ?></td>
                                 <!--<td class="ttbm_total_booking_td ttbm_total_booking_action">
                                     <button class="ttbm_total_booking_action_btn">

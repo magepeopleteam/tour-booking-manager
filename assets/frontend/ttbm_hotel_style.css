@@ -64,3 +64,219 @@
 .ttbm_hotel_highlight {
     cursor: pointer;
 }
+
+/* Prefixing all styles with ttbm_hotel_ */
+.ttbm_hotel_ordered_room_list {
+    display: flex !important;
+    gap: 15px;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ttbm_hotel_room {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.ttbm_hotel_room_name {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.ttbm_hotel_qty,
+.ttbm_hotel_price {
+    font-size: 1em;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.ttbm_hotel_qty {
+    font-weight: normal;
+}
+
+.ttbm_hotel_price {
+    font-weight: bold;
+    color: #007cba; /* Change this to match your theme's accent color */
+}
+
+
+
+
+/* Main Container */
+.ttbm_total_booking_wrapper {
+    font-family: Arial, sans-serif;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.ttbm_total_booking_title {
+    background-color: #f0f0f0;
+    padding: 10px 15px;
+    margin: 0;
+    color: #6a5acd;
+    border: 1px solid #ddd;
+    border-radius: 5px 5px 0 0;
+}
+
+/* Filter Section */
+.ttbm_total_booking_filter_section {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-top: none;
+}
+
+.ttbm_total_booking_filter_label {
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+.ttbm_total_booking_filter_options {
+    display: flex;
+    margin-right: 20px;
+}
+
+.ttbm_total_booking_radio_container {
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.ttbm_total_booking_radio_text {
+    margin-left: 5px;
+}
+
+.ttbm_total_booking_filter_controls {
+    display: flex;
+    align-items: center;
+}
+
+.ttbm_total_booking_select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    min-width: 200px;
+}
+
+.ttbm_total_booking_filter_btn {
+    padding: 8px 15px;
+    background-color: #3174d0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.ttbm_total_booking_reset_btn {
+    padding: 8px 15px;
+    background-color: #f0c14b;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+/* Order Summary */
+.ttbm_total_booking_summary {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #f3f3f3;
+    border: 1px solid #ddd;
+    border-top: none;
+}
+
+.ttbm_total_booking_found,
+.ttbm_total_booking_showing {
+    font-weight: bold;
+}
+
+.ttbm_total_booking_per_page {
+    display: flex;
+    align-items: center;
+}
+
+.ttbm_total_booking_page_input {
+    width: 60px;
+    padding: 5px;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Table Styles */
+.ttbm_total_booking_table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+.ttbm_total_booking_thead {
+    background-color: #f5f5f5;
+}
+
+.ttbm_total_booking_th {
+    padding: 12px 8px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+    font-weight: bold;
+}
+
+.ttbm_total_booking_tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.ttbm_total_booking_td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+}
+
+.ttbm_total_booking_view_more {
+    display: block;
+    background-color: #3174d0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-top: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.ttbm_total_booking_attendee_btn {
+    background-color: #3174d0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+.ttbm_total_booking_status {
+    color: #ff8c00;
+}
+
+.ttbm_total_booking_action_btn {
+    background-color: transparent;
+    border: none;
+    color: #3174d0;
+    cursor: pointer;
+}
+
+.ttbm_total_booking_icon:before {
+    content: "📄";
+}

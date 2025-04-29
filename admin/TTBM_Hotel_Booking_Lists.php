@@ -7,43 +7,6 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
 
         public function __construct() {
             add_action('admin_menu', array($this, 'hotel_booking_list_menu'), 1);
-
-            add_action('wp_ajax_get_ttbm_hotel_booking_all_lists', [$this, 'get_ttbm_hotel_booking_all_lists']);
-            add_action('wp_ajax_nopriv_get_ttbm_hotel_booking_all_lists', [$this, 'get_ttbm_hotel_booking_all_lists']);
-        }
-
-        public function get_ttbm_hotel_booking_all_lists() {
-            $result = 0;
-            $result_data = '';
-            $message = 'Something went wrong';
-            if( isset( $_POST ) ){
-                if( isset( $_POST['action'] ) && $_POST['action'] == 'get_ttbm_hotel_booking_all_lists' ){
-                    if (isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'ttbm_admin_nonce')) {
-
-                        $paged = 1;
-                        $result = 1;
-
-                        $selected_hotel_id = isset( $_POST['hotel_id'] ) ? sanitize_text_field( wp_unslash( $_POST['hotel_id'] ) ) : '' ;
-                        $selected_date = isset( $_POST['date'] ) ? sanitize_text_field( wp_unslash( $_POST['date'] ) ) : '' ;
-
-                        $posts_per_page = isset( $_POST['display_limit'] ) ? (int) $_POST['display_limit'] : -1;
-                        $excluded_post_ids = [];
-
-                        $query = self::ttbm_hotel_order_query( $paged, $selected_date, $selected_hotel_id, $excluded_post_ids, $posts_per_page );
-//                        error_log( print_r( [ '$query' => $query ], true ) );
-                        $result_data = self::ttbm_display_booking_lists( $query, $paged );
-                        $message = 'Seat Successfully Reserved!';
-
-                    }
-                }
-            }
-
-
-            wp_send_json_success([
-                'message' => $message,
-                'success' => $result,
-                'data' => $result_data,
-            ]);
         }
 
         public function hotel_booking_list_menu() {
@@ -60,7 +23,7 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
 
         }
 
-        public static function ttbm_hotel_order_query( $paged, $selected_date ='', $selected_hotel_id = [], $excluded_post_ids = [], $posts_per_page = 20 ) {
+        public static function ttbm_hotel_order_query( $selected_date ='', $selected_hotel_id = [], $excluded_post_ids = [], $posts_per_page = 20 ) {
 
             if( $selected_date !== '' ){
                 $checkin_date_filter = array(
@@ -93,7 +56,6 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
             $args = array(
                 'post_type'      => 'ttbm_hotel_booking',
                 'posts_per_page' => $posts_per_page,
-                'paged'          => $paged,
                 'meta_query'     => array(
                     'relation' => 'AND',
                     $checkin_date_filter,
@@ -107,13 +69,12 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
         }
 
         public function ttbm_hotel_order() {
-            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
             $excluded_post_ids = array();
             $selected_date = '';
             $selected_hotel_id = array();
-            $posts_per_page = 5;
-            $query = self::ttbm_hotel_order_query( $paged, $selected_date, $selected_hotel_id, $excluded_post_ids, $posts_per_page );
+            $posts_per_page = 2;
+            $query = self::ttbm_hotel_order_query( $selected_date, $selected_hotel_id, $excluded_post_ids, $posts_per_page );
 
             ?>
 
@@ -134,26 +95,24 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                             <?php TTBM_Layout::hotel_list_in_select(); ?>
                         </div>
 
-                       <input type="text" name="ttbm_booking_date_filter" id="ttbm_booking_date_filter" class="ttbm_booking_date_filter">
+                       <input type="text" name="ttbm_booking_date_filter" id="ttbm_booking_date_filter" class="ttbm_booking_date_filter" placeholder="Select date">
                         <button class="ttbm_total_booking_filter_btn"><?php echo __( 'Filter', 'tour-booking-manager' )?></button>
                         <button class="ttbm_total_booking_reset_btn"><?php echo __( 'Reset', 'tour-booking-manager' )?></button>
                     </div>
                 </div>
 
-                <!-- Order Summary -->
                 <div class="ttbm_total_booking_summary">
-                    <div class="ttbm_total_booking_found"><?php echo esc_attr__( 'Total ', 'tour-booking-manager' )?> <span><?php echo $query->found_posts; ?></span><?php echo esc_attr__( ' Order Found', 'tour-booking-manager' )?></div>
-                    <div class="ttbm_total_booking_showing"><?php echo esc_attr__( 'Showing ', 'tour-booking-manager' )?>  <span><?php echo $query->post_count; ?></span><?php echo esc_attr__( ' Order', 'tour-booking-manager' )?> </div>
+                    <div class="ttbm_total_booking_found"><?php echo esc_attr__( 'Total ', 'tour-booking-manager' )?> <span class="ttbm_total_posts"><?php echo esc_attr( $query->found_posts ); ?></span><?php echo esc_attr__( ' Order Found', 'tour-booking-manager' )?></div>
+                    <div class="ttbm_total_booking_showing"><?php echo esc_attr__( 'Showing ', 'tour-booking-manager' )?>  <span class="ttbm_showing_items"><?php echo esc_attr( $query->post_count ) ; ?></span><?php echo esc_attr__( ' Order', 'tour-booking-manager' )?> </div>
                     <div class="ttbm_total_booking_per_page">
                         <span><?php echo esc_attr__( 'Guest Per Page', 'tour-booking-manager' )?></span>
-                        <input type="number" value="20" class="ttbm_total_booking_page_input">
+                        <input type="number" value="<?php echo esc_attr( $posts_per_page )?>" class="ttbm_total_booking_page_input">
                     </div>
                 </div>
 
                 <table class="ttbm_total_booking_table" >
                     <thead class="ttbm_total_booking_thead">
                     <tr>
-                        <th class="ttbm_total_booking_th"><?php echo esc_attr__('Sl.', 'tour-booking-manager'); ?></th>
                         <th class="ttbm_total_booking_th"><?php echo esc_attr__('Order ID', 'tour-booking-manager'); ?></th>
                         <th class="ttbm_total_booking_th"><?php echo esc_attr__('Billing Information', 'tour-booking-manager'); ?></th>
                         <th class="ttbm_total_booking_th"><?php echo esc_attr__('Hotel', 'tour-booking-manager'); ?></th>
@@ -168,33 +127,28 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                     </tr>
                     </thead>
                     <tbody class="ttbm_total_booking_tbody" id="ttbm_total_booking_tbody">
-                        <?php echo wp_kses_post( self::ttbm_display_booking_lists( $query, $paged ) )?>
+                        <?php echo wp_kses_post( self::ttbm_display_booking_lists( $query ) )?>
                     </tbody>
                 </table>
 
-            </div>
+                <?php if( $query->found_posts > $posts_per_page ){?>
+                    <div class="ttbm_hotel_booking_load_more_holder">
+                        <button class="ttbm_hotel_booking_load_more_btn">Load More</button>
+                    </div>
+                <?php }?>
 
-            <!--<div class="ttbm_total_booking_pagination">
-                <?php
-/*                echo paginate_links(array(
-                    'total' => $query->max_num_pages,
-                    'current' => $paged,
-                    'prev_text' => __('« Prev', 'tour-booking-manager'),
-                    'next_text' => __('Next »', 'tour-booking-manager'),
-                ));
-                */?>
-            </div>-->
+            </div>
 
             <?php
         }
 
 
-        public static function ttbm_display_booking_lists( $query, $paged ) {
+        public static function ttbm_display_booking_lists( $query, $load_more='' ) {
             ob_start();
             ?>
             <?php
+                $sl = 1;
                 if ( $query->have_posts() ) :
-                $sl = 1 + ( ( $paged - 1 ) * 20 );
                 while ( $query->have_posts() ) : $query->the_post();
                     $order_id = get_post_meta(get_the_ID(), '_ttbm_hotel_booking_order_id', true);
                     $billing_name = get_post_meta(get_the_ID(), '_ttbm_hotel_booking_customer_name', true);
@@ -213,7 +167,6 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                     ?>
 
                     <tr class="ttbm_total_booking_tr" id="<?php echo esc_attr( get_the_ID() )?>">
-                        <td class="ttbm_total_booking_td"><?php echo $sl++; ?></td>
                         <td class="ttbm_total_booking_td ttbm_total_booking_order_id">#<?php echo esc_html($order_id); ?></td>
                         <td class="ttbm_total_booking_td ttbm_total_booking_billing">
                             <?php echo esc_html($billing_name); ?>
@@ -253,9 +206,11 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
 
                 <?php endwhile;
                 wp_reset_postdata();
-            else : ?>
+            else :
+                if( $load_more === '' ){
+                ?>
                 <tr><td colspan="14"><?php echo esc_attr__('No bookings found.', 'tour-booking-manager'); ?></td></tr>
-            <?php endif; ?>
+            <?php } endif; ?>
             <?php
 
             return ob_get_clean();

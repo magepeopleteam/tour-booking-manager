@@ -30,7 +30,6 @@ if ( wp_is_block_theme() ) { ?>
     </div>
     <?php
 } else {
-    echo 'Here';
     get_header();
     the_post();
 }

@@ -188,6 +188,36 @@
 				</label>
 				<?php
 			}
+			public static function hotel_list_in_select() {
+				$label = TTBM_Function::get_name();
+				?>
+				<label class="min_400 ttbm_id_select">
+					<select name="ttbm_id" class="formControl ttbm_select2" id="all_hotel_list" required>
+						<option value="" selected><?php echo esc_html__('Select', 'tour-booking-manager') . ' ' . esc_html($label); ?></option>
+						<?php
+							$post_query = MP_Global_Function::query_post_type( 'ttbm_hotel' );
+							$all_posts = $post_query->posts;
+							foreach ($all_posts as $post) {
+								$ttbm_post_id = $post->ID;
+								$hotel_id = TTBM_Function::post_id_multi_language($ttbm_post_id);
+								if ($ttbm_post_id == $hotel_id) {
+									$recurring = TTBM_Function::recurring_check($ttbm_post_id);
+									$tour_type = TTBM_Function::get_tour_type($ttbm_post_id);
+									?>
+									<option value="<?php echo $ttbm_post_id; ?>" data-recurring="<?php echo esc_attr($recurring ? 'yes' : ''); ?>">
+										<?php echo get_the_title($ttbm_post_id); ?>
+										<?php esc_html_e($recurring ? '- Multi date' : ''); ?>
+										<?php esc_html_e($tour_type == 'hotel' ? '- Hotel' : ''); ?>
+									</option>
+									<?php
+								}
+							}
+							wp_reset_postdata();
+						?>
+					</select>
+				</label>
+				<?php
+			}
 			/****************************/
 			public static function pro_text() {
 				ob_start();

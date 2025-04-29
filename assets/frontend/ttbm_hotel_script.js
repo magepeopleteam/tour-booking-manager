@@ -65,11 +65,8 @@
                 total_price += quantity * price;
             }
         });
-
         roomDataInfo = JSON.stringify( roomDataInfo );
-        console.log( total_price );
-
-       jQuery.ajax({
+        jQuery.ajax({
             type: 'POST',
             url: mp_ajax_url,
             data: {
@@ -80,7 +77,6 @@
                 "price": total_price,
             },
             success: function (data) {
-                // console.log(data);
                 window.location.href = mp_site_url+'/index.php/checkout/';
             }
         });

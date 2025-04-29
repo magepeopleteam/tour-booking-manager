@@ -212,8 +212,14 @@ if ( ! class_exists( 'TTBM_Hotel_Booking' ) ) {
             $check_in = date( 'Y-m-d', strtotime( $date[0] ) );
             $check_out = date( 'Y-m-d', strtotime( $date[1] ) );
 
-            $days = 2;
 
+            $check_in_date = date('Y-m-d', strtotime($date[0]));
+            $check_out_date = date('Y-m-d', strtotime($date[1]));
+
+            $datetime1 = new DateTime($check_in_date);
+            $datetime2 = new DateTime($check_out_date);
+            $interval = $datetime1->diff($datetime2);
+            $days = $interval->days;
 
             $post_id = get_post_meta( $hotel_id, 'link_wc_product', true);
             $price = $_REQUEST['price'] ?? 0;

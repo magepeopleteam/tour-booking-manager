@@ -173,9 +173,33 @@
 
 
 .ttbm_booking_user_more_info{
+    display: none;
     border: 1px solid #b9b4b4;
     padding: 5px;
-    width: 120px;
+    width: 200px;
     border-radius: 5px;
     background-color: #f6f6f6;
+}
+
+.ttbm_hotel_booking_load_more_holder{
+    display: flex;
+    padding: 10px;
+    width: 100%;
+    justify-content: center;
+}
+
+.ttbm_hotel_booking_load_more_btn{
+    padding: 10px 20px;
+    border: 1px solid #c3bfbf;
+    border-radius: 3px;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    min-width: 150px;
+}
+
+.ttbm_hotel_booking_load_more_btn:hover{
+    cursor: pointer;
+    background-color: #0a7aff;
+    color: #f6f6f6;
 }

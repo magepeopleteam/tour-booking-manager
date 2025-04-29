@@ -173,6 +173,7 @@
 
 
 .ttbm_booking_user_more_info{
+    display: none;
     border: 1px solid #b9b4b4;
     padding: 5px;
     width: 120px;

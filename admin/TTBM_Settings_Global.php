@@ -8,6 +8,7 @@
 			public function __construct() {
 				$this->settings_api = new MAGE_Setting_API;
 				add_action('admin_menu', array($this, 'global_settings_menu'));
+				add_filter('admin_body_class', [$this,'add_admin_body_class']);
 				add_action('admin_init', array($this, 'admin_init'));
 				add_filter('mp_settings_sec_reg', array($this, 'settings_sec_reg'), 30);
 				add_filter('mp_settings_sec_reg', array($this, 'slider_sec_reg'), 80);
@@ -17,18 +18,29 @@
 				$label = TTBM_Function::get_name();
 				add_submenu_page('edit.php?post_type=ttbm_tour', $label . esc_html__(' Settings', 'tour-booking-manager'), $label . esc_html__(' Settings', 'tour-booking-manager'), 'manage_options', 'ttbm_settings_page', array($this, 'settings_page'));
 			}
+			public function add_admin_body_class($classes) {
+				$screen = get_current_screen();
+				if ($screen->id == 'ttbm_tour_page_ttbm_settings_page') {
+					$classes .= ' ttbm_settings_page';
+				}
+				return $classes;
+			}
 			public function settings_page() {
 				?>
                 <div class="mpStyle mp_global_settings">
                     <div class="mpPanel">
                         <div class="mpPanelHeader"><?php echo esc_html(esc_html__(' Global Settings', 'tour-booking-manager')); ?></div>
                         <div class="mpPanelBody mp_zero">
-                            <div class="mpTabs leftTabs">
-								<?php $this->settings_api->show_navigation(); ?>
-                                <div class="tabsContent">
+                            <div class="mpTabs">
+								<div class="leftTabs">
+									<?php $this->settings_api->show_navigation(); ?>
+								</div>
+								
+								<div class="tabsContent">
 									<?php $this->settings_api->show_forms(); ?>
-                                </div>
-                            </div>
+								</div>
+								
+							</div>
                         </div>
                     </div>
                 </div>

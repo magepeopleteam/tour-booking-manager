@@ -40,8 +40,7 @@
                     <section>
                         <div class="label">
                             <div>
-                                <p><?php esc_html_e('On/Off Registration', 'tour-booking-manager'); ?></p>
-                                <span class="text"><?php TTBM_Settings::des_p('ttbm_display_registration'); ?></span>
+                                <p><?php esc_html_e('Enable/Disable Registration', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_registration'); ?></span></i></p>
                             </div>
 							<?php MP_Custom_Layout::switch_button('ttbm_display_registration', $checked); ?>
                         </div>
@@ -52,8 +51,8 @@
                         <section>
                             <label class="label">
                                 <div>
-                                    <p><?php esc_html_e('Tour Type', 'tour-booking-manager'); ?></p>
-                                    <span class="text"><?php TTBM_Settings::des_p('ttbm_display_registration'); ?></span>
+                                    <p><?php esc_html_e('Tour Type', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_registration'); ?></span></i></p>
+                                    
                                 </div>
                                 <select class="formControl" name="ttbm_type">
 									<?php foreach ($all_types as $key => $type) { ?>
@@ -79,7 +78,6 @@
                     <label class="label">
                         <div>
                             <p><?php esc_html_e('Add To Cart Form Shortcode', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_short_code'); ?></span></i></p>
-                            <span class="text"><?php TTBM_Settings::des_p('ttbm_short_code'); ?></span>
                         </div>
                         <div>
                             <code> [ttbm-registration ttbm_id="<?php echo esc_html($tour_id); ?>"]</code>
@@ -106,8 +104,7 @@
                         <section>
                             <label class="label">
                                 <div>
-                                    <p><?php esc_html_e('Import Ticket type', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_ticket_type'); ?></span></i></p>
-                                    <span class="text"><?php TTBM_Settings::des_p('get_ticket_type'); ?></span>
+                                    <p><?php esc_html_e('Import Ticket type', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('get_ticket_type'); ?></span></i></p>
                                 </div>
 								<?php if ($all_forms->post_count > 0) { ?>
                                     <select class="formControl" name="ticket_type_import">

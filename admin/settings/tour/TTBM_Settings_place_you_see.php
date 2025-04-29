@@ -44,8 +44,7 @@
 					<section>
                         <div class="label">
 							<div>
-								<p><?php esc_html_e('Places You\'ll Visit ' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_hiphop'); ?></span>  
+								<p><?php esc_html_e('Places You\'ll Visit ' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_hiphop'); ?></span></i></p> 
 							</div>
 							<?php MP_Custom_Layout::switch_button('ttbm_display_hiphop', $checked); ?>
 						</div>
@@ -66,8 +65,7 @@
 					<section>
 						<label for="" class="label">
 							<div>
-								<p><?php esc_html_e('Create new place', 'tour-booking-manager'); ?></p>  
-								<span class="text"><?php TTBM_Settings::des_p('ttbm_place_you_see'); ?></span>  
+								<p><?php esc_html_e('Create new place', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_place_you_see'); ?></span></i></p>   
 							</div>
 							<a href="edit.php?post_type=ttbm_places" ><?php esc_html_e('Create new place', 'tour-booking-manager'); ?></a>
 						</label>

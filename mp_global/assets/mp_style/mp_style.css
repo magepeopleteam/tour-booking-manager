@@ -16,7 +16,7 @@
 	}
 	/******/
 	.mpStyle {
-		font-size: var(--fs);
+		
 		font-weight: var(--fw);
 		color: var(--d_color);
 		line-height: 1.5;
@@ -189,12 +189,10 @@
 	}
 	div.mpStyle h1,
 	div.mpStyle [class*="_fs_h1"] {
-		font-size: var(--fs_h1);
 		font-weight: var(--fw-bold);
 	}
 	div.mpStyle h2,
 	div.mpStyle [class*="_fs_h2"] {
-		font-size: var(--fs_h2);
 		font-weight: var(--fw-bold);
 	}
 	div.mpStyle h3,
@@ -212,19 +210,18 @@
 	}
 	div.mpStyle h4,
 	div.mpStyle [class*="_fs_h4"] {
-		font-size: var(--fs_h4);
 		font-weight: var(--fw-medium);
 		text-transform: inherit;
 	}
 	div.mpStyle h5,
 	div.mpStyle [class*="_fs_h5"] {
-		font-size: var(--fs_h5);
+
 		font-weight: var(--fw-medium);
 		text-transform: inherit;
 	}
 	div.mpStyle h6,
 	div.mpStyle [class*="_fs_h6"] {
-		font-size: var(--fs_h6);
+
 		font-weight: var(--fw-normal);
 		text-transform: inherit;
 	}
@@ -507,7 +504,6 @@
 	.mpStyle [class*="_mpBtn"],
 	.mpStyle button {
 		position: relative;
-		font-size: var(--button_fs);
 		font-weight: var(--fw-medium);
 		line-height: 1;
 		cursor: pointer;
@@ -694,7 +690,6 @@
 		min-width: auto;
 		min-height: var(--button_height_xs);
 		padding: 7px var(--dmp_xs);
-		font-size: var(--fs);
 	}
 	/*************************/
 	.mpStyle [class*="dButton"].mpActive {
@@ -704,9 +699,7 @@
 }
 /******************************************************************** Helper Section************************************************/
 @media only screen and (min-width: 10px) {
-	.mpStyle small {
-		font-size: var(--fs_small);
-	}
+
 	/********Helper Class***********/
 	.mpStyle .divider,
 	.mpStyle [class*="_divider"],
@@ -1082,7 +1075,6 @@
 		right: 0;
 		top: 0;
 		bottom: 0;
-		font-size: var(--fs_h1);
 		width: 100%;
 		height: 100%;
 	}
@@ -1095,9 +1087,7 @@
 		max-width: 100vw;
 		max-height: 100vh;
 	}
-	div.dLoader_xs {
-		font-size: var(--fs_h5);
-	}
+
 	div[class*="dLoader"].border_spin_loader span {
 		border-top: 5px solid var(--color_theme_alter);
 		border-right: 5px solid var(--color_theme);
@@ -1206,7 +1196,6 @@
 		color: var(--color_white);
 		font-weight: 500;
 		text-align: center;
-		font-size: var(--fs_h6);
 		padding: var(--dmp) var(--dmp_xs);
 		width: 100%;
 	}
@@ -1632,7 +1621,6 @@
 		width: 25px;
 		height: 25px;
 		min-width: 25px;
-		font-size: var(--fs_small);
 		margin: 0 var(--dmp_xs) 0 0;
 	}
 	/*****Remove icon******/
@@ -1647,7 +1635,6 @@
 		height: 20px;
 		cursor: pointer;
 		opacity: 0;
-		font-size: var(--fs);
 		background-color: var(--color_danger);
 		color: var(--color_theme_alter);
 	}
@@ -1834,7 +1821,7 @@
     width: 100%;
     max-width: inherit;
     border: 1px solid var(--color_border);
-    font-size: var(--fs);
+
     color: var(--d_color);
     background-color: #fff;
     padding: 10px 15px;
@@ -1853,7 +1840,6 @@
     margin: 0;
     max-width: inherit;
     border: 1px solid var(--color_border);
-    font-size: var(--fs);
     color: var(--d_color);
     background-color: #fff;
     padding: 10px 15px;
@@ -1908,7 +1894,6 @@ div.mpStyle .formControl {
     width: 100%;
     max-width: inherit;
     border: 1px solid var(--color_border);
-    font-size: var(--fs);
     color: var(--d_color);
     background-color: #fff;
     padding: 10px 15px;
@@ -2073,7 +2058,6 @@ div.mpStyle div.mp_input_select .formControl:focus {
 
 /**********Checkbox Radio*********/
 div.mpStyle .customRadioLabel {
-    font-size: var(--fs_h6);
     font-weight: var(--fw-medium);
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
@@ -2297,7 +2281,6 @@ div.mpStyle .customCheckboxLabel.only_checkbox span {
 
 /*********Group Content*******/
 .mpStyle .groupContent {
-    font-size: var(--fs);
     /*border: 1px solid var(--color_border);*/
     /*background-color: var(--color_theme);*/
     color: var(--color_theme_alter);
@@ -2525,7 +2508,6 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		vertical-align: middle;
 		padding: var(--dmp_xs);
 		font-weight: bold;
-		font-size: var(--fs);
 		white-space: nowrap;
 		background-color: var(--color_light);
 		color: var(--d_color);
@@ -2539,7 +2521,6 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 	.mpStyle table td {
 		padding: var(--dmp_xs);
 		font-weight: var(--fw);
-		font-size: var(--fs);
 		line-height: 1.25;
 		color: var(--d_color);
 		vertical-align: middle;
@@ -2556,7 +2537,6 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		display: flex;
 	}
 	.mpStyle .tabLists {
-		font-size: var(--fs_h6);
 		width: 100%;
 	}
 	.mpStyle .tabLists span {
@@ -2783,7 +2763,6 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		border-radius: 0 0 5px 5px;
 		overflow: hidden;
 		color: #606b7b;
-		font-size: var(--fs_label);
 	}
 	div.mp_faq_item div.superSlider {
 		min-width: 300px;
@@ -2880,7 +2859,6 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		color: var(--color_theme_alter);
 		background-color: var(--color_active);
 		min-width: 75px;
-		font-size: var(--fs_h4);
 	}
 	div.pagination_area button.ellipse_left {
 		display: none;
@@ -3903,7 +3881,6 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		height: 37px;
 	}
 	div.mpStyle span.select2-container span {
-		font-size: var(--fs);
 		margin: 0;
 	}
 }
@@ -3946,7 +3923,6 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 	div.woocommerce ul.cart_list {
 		list-style-type: none;
 		line-height: 1.25;
-		font-size: var(--fs);
 		color: var(--d_color);
 	}
 	div.woocommerce ul.cart_list li {
@@ -3968,7 +3944,6 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		border-radius: var(--dbr);
 	}
 	div.woocommerce td.product-name {
-		font-size: var(--fs_h5);
 		font-weight: 500;
 		color: var(--color_theme);
 	}
@@ -4022,7 +3997,6 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		display: flex;
 		-webkit-justify-content: center;
 		justify-content: center;
-		font-size: var(--fs_h6);
 	}
 	#ui-datepicker-div .ui-datepicker-header .ui-icon {
 		display: none;
@@ -4056,7 +4030,6 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		content: ">";
 		color: #fff;
 		left: 10px;
-		font-size: var(--fs_h3);
 		top: 2px;
 		font-weight: bold;
 		line-height: 1;
@@ -4100,7 +4073,6 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		background-color: var(--color_theme);
 		color: var(--color_theme_alter);
 		background-image: none;
-		font-size: var(--fs_h5);
 		display: -webkit-flex;
 		display: flex;
 		margin: 0;
@@ -4108,7 +4080,6 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 	#ui-datepicker-div .ui-datepicker-title select {
 		min-width: 100px;
 		height: 30px;
-		font-size: var(--fs);
 		padding: 0 var(--dmp_xs);
 		text-align: left;
 	}

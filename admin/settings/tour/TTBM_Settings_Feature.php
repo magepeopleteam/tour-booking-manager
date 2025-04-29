@@ -60,7 +60,6 @@
 						<label class="label">
 							<div>
 								<p><?php esc_html_e('Create a feature', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_add_new_feature_popup'); ?></span></i></p>
-								<span class="text"><?php TTBM_Settings::des_p('add_new_feature_popup'); ?></span>
 							</div>
 							<?php MP_Custom_Layout::popup_button('add_new_feature_popup', esc_html__('Create New Feature', 'tour-booking-manager')); ?>
 						</label>
@@ -70,7 +69,6 @@
 						<label class="label">
 							<div>
 								<p><?php esc_html_e('Price Included Feature', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_include_service'); ?></span></i></p>
-								<span class="text"><?php TTBM_Settings::des_p('add_new_feature_popup'); ?></span>
 							</div>
 							<?php MP_Custom_Layout::switch_button('ttbm_display_include_service', $in_checked); ?> 
 						</label>
@@ -81,8 +79,7 @@
 					<section>
 						<label class="label">
 							<div>
-								<p><?php esc_html_e('Price Excluded Feature', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_include_service'); ?></span></i></p>
-								<span class="text"><?php TTBM_Settings::des_p('add_new_feature_popup'); ?></span>
+								<p><?php esc_html_e('Price Excluded Feature', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_get_question'); ?></span></i></p>
 							</div>
 							<?php MP_Custom_Layout::switch_button('ttbm_display_exclude_service', $ex_checked); ?>  
 						</label>

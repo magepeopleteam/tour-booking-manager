@@ -1,8 +1,8 @@
 :root {
   --mpl-primary:#F12971;
+  --mpl-secondary:#1d2327;
   --mpl-sky:#f38fb3;
   --mpl-sky-light:#EFFAFF;
-  --mpl-secondary:#1d2327;
   --mpl-dark:#a4a4a4;
   --mpl-gray:#e0e0e0;
   --mpl-light:#F5F5F5;
@@ -11,565 +11,6 @@
   --mpl-yellow:#ffcb00;
   --mpl-red:#d91e1e;
   --mpl-red-light:#f6dada;
-}
-
-#mp_meta_box_panel .p-0, .travel-list .p-0 {
-  padding: 0em;
-}
-#mp_meta_box_panel .p-1, .travel-list .p-1 {
-  padding: 0.5em;
-}
-#mp_meta_box_panel .p-2, .travel-list .p-2 {
-  padding: 0.75em;
-}
-#mp_meta_box_panel .p-3, .travel-list .p-3 {
-  padding: 1em;
-}
-#mp_meta_box_panel .p-4, .travel-list .p-4 {
-  padding: 1.25em;
-}
-#mp_meta_box_panel .p-5, .travel-list .p-5 {
-  padding: 1.5em;
-}
-#mp_meta_box_panel .p-6, .travel-list .p-6 {
-  padding: 1.75em;
-}
-#mp_meta_box_panel .px-0, .travel-list .px-0 {
-  padding-left: 0em;
-  padding-right: 0em;
-}
-#mp_meta_box_panel .px-1, .travel-list .px-1 {
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-}
-#mp_meta_box_panel .px-2, .travel-list .px-2 {
-  padding-left: 1em;
-  padding-right: 1em;
-}
-#mp_meta_box_panel .px-3, .travel-list .px-3 {
-  padding-left: 1.5em;
-  padding-right: 1.5em;
-}
-#mp_meta_box_panel .px-4, .travel-list .px-4 {
-  padding-left: 2em;
-  padding-right: 2em;
-}
-#mp_meta_box_panel .px-5, .travel-list .px-5 {
-  padding-left: 2.5em;
-  padding-right: 2.5em;
-}
-#mp_meta_box_panel .px-6, .travel-list .px-6 {
-  padding-left: 3em;
-  padding-right: 3em;
-}
-#mp_meta_box_panel .py-0, .travel-list .py-0 {
-  padding-top: 0em;
-  padding-bottom: 0em;
-}
-#mp_meta_box_panel .py-1, .travel-list .py-1 {
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-}
-#mp_meta_box_panel .py-2, .travel-list .py-2 {
-  padding-top: 1em;
-  padding-bottom: 1.5em;
-}
-#mp_meta_box_panel .py-3, .travel-list .py-3 {
-  padding-top: 1.5em;
-  padding-bottom: 1.5em;
-}
-#mp_meta_box_panel .py-4, .travel-list .py-4 {
-  padding-top: 2em;
-  padding-bottom: 2em;
-}
-#mp_meta_box_panel .py-5, .travel-list .py-5 {
-  padding-top: 2.5em;
-  padding-bottom: 2.5em;
-}
-#mp_meta_box_panel .py-6, .travel-list .py-6 {
-  padding-top: 3em;
-  padding-bottom: 3em;
-}
-#mp_meta_box_panel .ps-0, .travel-list .ps-0 {
-  padding-left: 0em;
-}
-#mp_meta_box_panel .ps-1, .travel-list .ps-1 {
-  padding-left: 0.5em;
-}
-#mp_meta_box_panel .ps-2, .travel-list .ps-2 {
-  padding-left: 1em;
-}
-#mp_meta_box_panel .ps-3, .travel-list .ps-3 {
-  padding-left: 1.5em;
-}
-#mp_meta_box_panel .ps-4, .travel-list .ps-4 {
-  padding-left: 2em;
-}
-#mp_meta_box_panel .ps-5, .travel-list .ps-5 {
-  padding-left: 2.5em;
-}
-#mp_meta_box_panel .ps-6, .travel-list .ps-6 {
-  padding-left: 3em;
-}
-#mp_meta_box_panel .pe-0, .travel-list .pe-0 {
-  padding-right: 0em;
-}
-#mp_meta_box_panel .pe-1, .travel-list .pe-1 {
-  padding-right: 0.5em;
-}
-#mp_meta_box_panel .pe-2, .travel-list .pe-2 {
-  padding-right: 1em;
-}
-#mp_meta_box_panel .pe-3, .travel-list .pe-3 {
-  padding-right: 1.5em;
-}
-#mp_meta_box_panel .pe-4, .travel-list .pe-4 {
-  padding-right: 2em;
-}
-#mp_meta_box_panel .pe-5, .travel-list .pe-5 {
-  padding-right: 2.5em;
-}
-#mp_meta_box_panel .pe-6, .travel-list .pe-6 {
-  padding-right: 3em;
-}
-#mp_meta_box_panel .m-0, .travel-list .m-0 {
-  margin: 0em;
-}
-#mp_meta_box_panel .m-1, .travel-list .m-1 {
-  margin: 0.5em;
-}
-#mp_meta_box_panel .m-2, .travel-list .m-2 {
-  margin: 0.75em;
-}
-#mp_meta_box_panel .m-3, .travel-list .m-3 {
-  margin: 1em;
-}
-#mp_meta_box_panel .m-4, .travel-list .m-4 {
-  margin: 1.25em;
-}
-#mp_meta_box_panel .m-5, .travel-list .m-5 {
-  margin: 1.5em;
-}
-#mp_meta_box_panel .m-6, .travel-list .m-6 {
-  margin: 1.75em;
-}
-#mp_meta_box_panel .mx-0, .travel-list .mx-0 {
-  margin-left: 0em;
-  margin-right: 0em;
-}
-#mp_meta_box_panel .mx-1, .travel-list .mx-1 {
-  margin-left: 0.5em;
-  margin-right: 0.5em;
-}
-#mp_meta_box_panel .mx-2, .travel-list .mx-2 {
-  margin-left: 1em;
-  margin-right: 1.5em;
-}
-#mp_meta_box_panel .mx-3, .travel-list .mx-3 {
-  margin-left: 1.5em;
-  margin-right: 1.5em;
-}
-#mp_meta_box_panel .mx-4, .travel-list .mx-4 {
-  margin-left: 2em;
-  margin-right: 2em;
-}
-#mp_meta_box_panel .mx-5, .travel-list .mx-5 {
-  margin-left: 2.5em;
-  margin-right: 2.5em;
-}
-#mp_meta_box_panel .mx-6, .travel-list .mx-6 {
-  margin-left: 3em;
-  margin-right: 3em;
-}
-#mp_meta_box_panel .my-0, .travel-list .my-0 {
-  margin-top: 0em;
-  margin-bottom: 0em;
-}
-#mp_meta_box_panel .my-1, .travel-list .my-1 {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-}
-#mp_meta_box_panel .my-2, .travel-list .my-2 {
-  margin-top: 1em;
-  margin-bottom: 1.5em;
-}
-#mp_meta_box_panel .my-3, .travel-list .my-3 {
-  margin-top: 1.5em;
-  margin-bottom: 1.5em;
-}
-#mp_meta_box_panel .my-4, .travel-list .my-4 {
-  margin-top: 2em;
-  margin-bottom: 2em;
-}
-#mp_meta_box_panel .my-5, .travel-list .my-5 {
-  margin-top: 2.5em;
-  margin-bottom: 2.5em;
-}
-#mp_meta_box_panel .my-6, .travel-list .my-6 {
-  margin-top: 3em;
-  margin-bottom: 3em;
-}
-#mp_meta_box_panel .ms-0, .travel-list .ms-0 {
-  margin-left: 0em;
-}
-#mp_meta_box_panel .ms-1, .travel-list .ms-1 {
-  margin-left: 0.5em;
-}
-#mp_meta_box_panel .ms-2, .travel-list .ms-2 {
-  margin-left: 1em;
-}
-#mp_meta_box_panel .ms-3, .travel-list .ms-3 {
-  margin-left: 1.5em;
-}
-#mp_meta_box_panel .ms-4, .travel-list .ms-4 {
-  margin-left: 2em;
-}
-#mp_meta_box_panel .ms-5, .travel-list .ms-5 {
-  margin-left: 2.5em;
-}
-#mp_meta_box_panel .ms-6, .travel-list .ms-6 {
-  margin-left: 3em;
-}
-#mp_meta_box_panel .me-0, .travel-list .me-0 {
-  margin-right: 0em;
-}
-#mp_meta_box_panel .me-1, .travel-list .me-1 {
-  margin-right: 0.5em;
-}
-#mp_meta_box_panel .me-2, .travel-list .me-2 {
-  margin-right: 1em;
-}
-#mp_meta_box_panel .me-3, .travel-list .me-3 {
-  margin-right: 1.5em;
-}
-#mp_meta_box_panel .me-4, .travel-list .me-4 {
-  margin-right: 2em;
-}
-#mp_meta_box_panel .me-5, .travel-list .me-5 {
-  margin-right: 2.5em;
-}
-#mp_meta_box_panel .me-6, .travel-list .me-6 {
-  margin-right: 3em;
-}
-#mp_meta_box_panel .mt-0, .travel-list .mt-0 {
-  margin-top: 0em;
-}
-#mp_meta_box_panel .mt-1, .travel-list .mt-1 {
-  margin-top: 0.5em;
-}
-#mp_meta_box_panel .mt-2, .travel-list .mt-2 {
-  margin-top: 1em;
-}
-#mp_meta_box_panel .mt-3, .travel-list .mt-3 {
-  margin-top: 1.5em;
-}
-#mp_meta_box_panel .mt-4, .travel-list .mt-4 {
-  margin-top: 2em;
-}
-#mp_meta_box_panel .mt-5, .travel-list .mt-5 {
-  margin-top: 2.5em;
-}
-#mp_meta_box_panel .mt-6, .travel-list .mt-6 {
-  margin-top: 3em;
-}
-#mp_meta_box_panel .mb-0, .travel-list .mb-0 {
-  margin-bottom: 0em;
-}
-#mp_meta_box_panel .mb-1, .travel-list .mb-1 {
-  margin-bottom: 0.5em;
-}
-#mp_meta_box_panel .mb-2, .travel-list .mb-2 {
-  margin-bottom: 1em;
-}
-#mp_meta_box_panel .mb-3, .travel-list .mb-3 {
-  margin-bottom: 1.5em;
-}
-#mp_meta_box_panel .mb-4, .travel-list .mb-4 {
-  margin-bottom: 2em;
-}
-#mp_meta_box_panel .mb-5, .travel-list .mb-5 {
-  margin-bottom: 2.5em;
-}
-#mp_meta_box_panel .mb-6, .travel-list .mb-6 {
-  margin-bottom: 3em;
-}
-
-#mp_meta_box_panel .bg-primary, .travel-list .bg-primary {
-  background-color: var(--mpl-primary);
-}
-#mp_meta_box_panel .bg-secondary, .travel-list .bg-secondary {
-  background-color: var(--mpl-secondary);
-}
-#mp_meta_box_panel .bg-sky, .travel-list .bg-sky {
-  background-color: var(--mpl-sky);
-}
-#mp_meta_box_panel .bg-sky-light, .travel-list .bg-sky-light {
-  background-color: var(--mpl-sky-light);
-}
-#mp_meta_box_panel .bg-dark, .travel-list .bg-dark {
-  background-color: var(--mpl-dark);
-}
-#mp_meta_box_panel .bg-gray, .travel-list .bg-gray {
-  background-color: var(--mpl-gray);
-}
-#mp_meta_box_panel .bg-light, .travel-list .bg-light {
-  background-color: var(--mpl-light);
-}
-#mp_meta_box_panel .bg-white, .travel-list .bg-white {
-  background-color: var(--mpl-white);
-}
-#mp_meta_box_panel .bg-black, .travel-list .bg-black {
-  background-color: var(--mpl-black);
-}
-#mp_meta_box_panel .text-primary, .travel-list .text-primary {
-  color: var(--mpl-primary);
-}
-#mp_meta_box_panel .text-secondary, .travel-list .text-secondary {
-  color: var(--mpl-secondary);
-}
-#mp_meta_box_panel .text-sky, .travel-list .text-sky {
-  color: var(--mpl-sky);
-}
-#mp_meta_box_panel .text-dark, .travel-list .text-dark {
-  color: var(--mpl-dark);
-}
-#mp_meta_box_panel .text-gray, .travel-list .text-gray {
-  color: var(--mpl-gray);
-}
-#mp_meta_box_panel .text-light, .travel-list .text-light {
-  color: var(--mpl-light);
-}
-#mp_meta_box_panel .text-white, .travel-list .text-white {
-  color: var(--mpl-white);
-}
-#mp_meta_box_panel .text-black, .travel-list .text-black {
-  color: var(--mpl-black);
-}
-
-#mp_meta_box_panel hr, #mp_meta_box_panel .hr, .travel-list hr, .travel-list .hr {
-  margin: 0.5em 0;
-  border: 0;
-  border-top: 1px solid var(--mpl-light);
-}
-#mp_meta_box_panel .rounded, .travel-list .rounded {
-  border-radius: 0.25rem;
-}
-#mp_meta_box_panel .rounded-top, .travel-list .rounded-top {
-  border-radius: 0.25rem 0.25rem 0 0;
-}
-#mp_meta_box_panel .rounded-bottom, .travel-list .rounded-bottom {
-  border-radius: 0 0 0.25rem 0.25rem;
-}
-#mp_meta_box_panel .rounded-left, .travel-list .rounded-left {
-  border-radius: 0.25rem 0 0 0.25rem;
-}
-#mp_meta_box_panel .rounded-right, .travel-list .rounded-right {
-  border-radius: 0 0.25rem 0.25rem 0;
-}
-#mp_meta_box_panel .w-0, .travel-list .w-0 {
-  width: 0%;
-}
-#mp_meta_box_panel .w-1, .travel-list .w-1 {
-  width: 1%;
-}
-#mp_meta_box_panel .w-2, .travel-list .w-2 {
-  width: 2%;
-}
-#mp_meta_box_panel .w-3, .travel-list .w-3 {
-  width: 3%;
-}
-#mp_meta_box_panel .w-4, .travel-list .w-4 {
-  width: 4%;
-}
-#mp_meta_box_panel .w-5, .travel-list .w-5 {
-  width: 5%;
-}
-#mp_meta_box_panel .w-6, .travel-list .w-6 {
-  width: 6%;
-}
-#mp_meta_box_panel .w-7, .travel-list .w-7 {
-  width: 7%;
-}
-#mp_meta_box_panel .w-8, .travel-list .w-8 {
-  width: 8%;
-}
-#mp_meta_box_panel .w-9, .travel-list .w-9 {
-  width: 9rem;
-}
-#mp_meta_box_panel .w-10, .travel-list .w-10 {
-  width: 10%;
-}
-#mp_meta_box_panel .w-20, .travel-list .w-20 {
-  width: 20%;
-}
-#mp_meta_box_panel .w-25, .travel-list .w-25 {
-  width: 25%;
-}
-#mp_meta_box_panel .w-30, .travel-list .w-30 {
-  width: 30%;
-}
-#mp_meta_box_panel .w-40, .travel-list .w-40 {
-  width: 40%;
-}
-#mp_meta_box_panel .w-50, .travel-list .w-50 {
-  width: 50%;
-}
-#mp_meta_box_panel .w-60, .travel-list .w-60 {
-  width: 60%;
-}
-#mp_meta_box_panel .w-70, .travel-list .w-70 {
-  width: 70%;
-}
-#mp_meta_box_panel .w-75, .travel-list .w-75 {
-  width: 75%;
-}
-#mp_meta_box_panel .w-80, .travel-list .w-80 {
-  width: 80%;
-}
-#mp_meta_box_panel .w-90, .travel-list .w-90 {
-  width: 90%;
-}
-#mp_meta_box_panel .w-100, .travel-list .w-100 {
-  width: 100%;
-}
-#mp_meta_box_panel .h-0, .travel-list .h-0 {
-  height: 0%;
-}
-#mp_meta_box_panel .h-1, .travel-list .h-1 {
-  height: 1%;
-}
-#mp_meta_box_panel .h-2, .travel-list .h-2 {
-  height: 2%;
-}
-#mp_meta_box_panel .h-3, .travel-list .h-3 {
-  height: 3%;
-}
-#mp_meta_box_panel .h-4, .travel-list .h-4 {
-  height: 4%;
-}
-#mp_meta_box_panel .h-5, .travel-list .h-5 {
-  height: 5%;
-}
-#mp_meta_box_panel .h-6, .travel-list .h-6 {
-  height: 6%;
-}
-#mp_meta_box_panel .h-7, .travel-list .h-7 {
-  height: 7%;
-}
-#mp_meta_box_panel .h-8, .travel-list .h-8 {
-  height: 8%;
-}
-#mp_meta_box_panel .h-9, .travel-list .h-9 {
-  height: 9rem;
-}
-#mp_meta_box_panel .h-10, .travel-list .h-10 {
-  height: 10%;
-}
-#mp_meta_box_panel .h-20, .travel-list .h-20 {
-  height: 20%;
-}
-#mp_meta_box_panel .h-25, .travel-list .h-25 {
-  height: 25%;
-}
-#mp_meta_box_panel .h-30, .travel-list .h-30 {
-  height: 30%;
-}
-#mp_meta_box_panel .h-40, .travel-list .h-40 {
-  height: 40%;
-}
-#mp_meta_box_panel .h-50, .travel-list .h-50 {
-  height: 50%;
-}
-#mp_meta_box_panel .h-60, .travel-list .h-60 {
-  height: 60%;
-}
-#mp_meta_box_panel .h-70, .travel-list .h-70 {
-  height: 70%;
-}
-#mp_meta_box_panel .h-75, .travel-list .h-75 {
-  height: 75%;
-}
-#mp_meta_box_panel .h-80, .travel-list .h-80 {
-  height: 80%;
-}
-#mp_meta_box_panel .h-90, .travel-list .h-90 {
-  height: 90%;
-}
-#mp_meta_box_panel .h-100, .travel-list .h-100 {
-  height: 100%;
-}
-#mp_meta_box_panel .d-flex, .travel-list .d-flex {
-  display: flex;
-}
-#mp_meta_box_panel .flex-row, .travel-list .flex-row {
-  flex-direction: row;
-}
-#mp_meta_box_panel .flex-column, .travel-list .flex-column {
-  flex-direction: column;
-}
-#mp_meta_box_panel .justify-content-start, .travel-list .justify-content-start {
-  justify-content: start;
-}
-#mp_meta_box_panel .justify-content-center, .travel-list .justify-content-center {
-  justify-content: center;
-}
-#mp_meta_box_panel .justify-content-end, .travel-list .justify-content-end {
-  justify-content: end;
-}
-#mp_meta_box_panel .justify-content-around, .travel-list .justify-content-around {
-  justify-content: space-around;
-}
-#mp_meta_box_panel .justify-content-between, .travel-list .justify-content-between {
-  justify-content: space-between;
-}
-#mp_meta_box_panel .justify-content-evenly, .travel-list .justify-content-evenly {
-  justify-content: space-evenly;
-}
-#mp_meta_box_panel .align-items-start, .travel-list .align-items-start {
-  align-items: start;
-}
-#mp_meta_box_panel .align-items-center, .travel-list .align-items-center {
-  align-items: center;
-}
-#mp_meta_box_panel .align-items-end, .travel-list .align-items-end {
-  align-items: end;
-}
-#mp_meta_box_panel .align-items-stretch, .travel-list .align-items-stretch {
-  align-items: stretch;
-}
-#mp_meta_box_panel .text-start, .travel-list .text-start {
-  text-align: left;
-}
-#mp_meta_box_panel .text-center, .travel-list .text-center {
-  text-align: center;
-}
-#mp_meta_box_panel .text-end, .travel-list .text-end {
-  text-align: right;
-}
-#mp_meta_box_panel .position-relative, .travel-list .position-relative {
-  position: relative;
-}
-#mp_meta_box_panel .position-absolute, .travel-list .position-absolute {
-  position: absolute;
-}
-#mp_meta_box_panel .top-left, .travel-list .top-left {
-  top: 0;
-  left: 0;
-}
-#mp_meta_box_panel .top-right, .travel-list .top-right {
-  top: 0;
-  right: 0;
-}
-#mp_meta_box_panel .bottom-left, .travel-list .bottom-left {
-  bottom: 0;
-  left: 0;
-}
-#mp_meta_box_panel .bottom-right, .travel-list .bottom-right {
-  bottom: 0;
-  right: 0;
-}
-#mp_meta_box_panel .fullWidth, .travel-list .fullWidth {
-  width: 100%;
 }
 
 #mp_meta_box_panel label input, .travel-list label input {
@@ -700,154 +141,160 @@
   box-shadow: inset 0 0 1px var(--mpl-dark);
 }
 
-#mp_meta_box_panel .btn, .travel-list .btn {
-  border: 0;
-  box-shadow: none;
+.ttbm-tour-list-page {
+  padding: 20px;
+  background: #fff;
+}
+.ttbm-tour-list-page .page-title {
+  padding: 0;
+  margin-bottom: 10px;
+}
+.ttbm-tour-list-page .ttbm-tour-list-header {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+.ttbm-tour-list-page .ttbm-tour-list-header input {
+  width: 50%;
+}
+.ttbm-tour-list-page .ttbm-tour-list-header .page-title-action {
+  position: inherit;
+  margin: 0;
   background-color: var(--mpl-primary);
-  border-radius: 0.25rem;
-  padding: 0.5em 0.75em;
-  color: var(--mpl-white);
-  font-size: 1rem;
-  transition: all 0.5s ease-in-out;
-}
-#mp_meta_box_panel .btn:hover, .travel-list .btn:hover {
-  background-color: var(--mpl-primary);
-}
-
-/**
- * Typography
- */
-#mp_meta_box_panel .container, .travel-list .container {
-  width: 1200px;
-  margin: 0 auto;
-}
-#mp_meta_box_panel .container-fulid, .travel-list .container-fulid {
-  width: 100%;
-  margin: 0 auto;
-}
-#mp_meta_box_panel .component, .travel-list .component {
-  background-color: var(--mpl-white);
-  border-radius: 0;
-  padding: 1.5em;
-  margin-bottom: 1.5em;
-  border: 1px solid var(--mpl-gray);
-}
-
-.green {
-  background-color: rgba(0, 166, 86, 0.0823529412);
-  color: #00A656;
-}
-
-.beguni {
-  background-color: rgba(126, 85, 216, 0.0823529412);
-  color: #7E55D8;
-}
-
-.blue {
-  background-color: rgba(38, 103, 214, 0.0823529412);
-  color: #2667D6;
-}
-
-.purple {
-  background-color: rgba(198, 40, 127, 0.0823529412);
-  color: #C6287F;
-}
-
-.badge {
-  border-radius: 20px;
-  padding: 0.25em 0.5em;
-}
-
-.travel-list #ttbm_list_page table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.travel-list #ttbm_list_page table thead th {
-  border: 0;
-  background-color: #F5F5F5;
-  color: #666666;
-  border: 0;
-  padding: 15px;
-  vertical-align: middle;
-}
-.travel-list #ttbm_list_page table tbody tr:nth-of-type(2n) th:first-child {
-  background-color: var(--color_light);
-}
-.travel-list #ttbm_list_page table tr {
-  border: 1px solid #f2f2f2;
-  margin: 5px 0;
-  border-radius: 5px;
-  background-color: #fff;
-}
-.travel-list #ttbm_list_page table tr:hover {
-  background-color: #F5F5F5;
-}
-.travel-list #ttbm_list_page table tr th {
-  border: 0;
-}
-.travel-list #ttbm_list_page table tr td {
-  border: 0;
-  vertical-align: middle;
-}
-.travel-list #ttbm_list_page table tr td:nth-child(2) {
-  padding: 5px;
-}
-.travel-list #ttbm_list_page table tr td a {
-  font-size: 14px;
-  font-family: Roboto, sans-serif;
-  font-weight: 600;
-  line-height: 1.2;
-  margin-bottom: 8px;
-  color: var(--mpl-secondary);
-}
-.travel-list #ttbm_list_page table tr td img {
-  width: 100px;
-  height: 60px;
-  object-fit: cover;
-}
-.travel-list #ttbm_list_page .ttbm_list_attendee_area {
-  background-color: #C6287F;
-}
-.travel-list div.mpStyle label {
-  font-size: inherit;
-  font-weight: 700;
-}
-
-div.mpStyle [class*=textSuccess] {
-  color: #00A656;
-}
-
-.mpStyle [class*=_successButton] {
-  background-color: #00A656;
-  border: 2px solid #00A656;
-}
-
-.mpStyle [class*=_themeButton] {
-  background-color: #2667D6;
-  border: 2px solid #2667D6;
-}
-.mpStyle [class*=_themeButton] span {
   color: #fff;
+  border: var(--mpl-primary) solid 1px;
+  font-weight: bold;
 }
-.mpStyle [class*=_themeButton]:hover {
-  background-color: #fff;
-  border: 2px solid #2667D6;
-  color: #2667D6;
+.ttbm-tour-list-page .ttbm-tour-list {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--mpl-light);
+  margin-top: 10px;
 }
-.mpStyle [class*=_themeButton]:hover span {
-  color: #2667D6;
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
+  border-bottom: 1px solid #eee;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 }
-
-div.mpStyle [class*=_textDanger] {
-  color: #C6287F;
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card:hover {
+  cursor: pointer;
+  background: var(--mpl-light);
 }
-
-div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
-  color: #C6287F;
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  gap: 10px;
+  width: 70%;
 }
-
-#ttbm_list_page table tbody tr:nth-of-type(2n+1) td, #ttbm_list_page table tbody tr:nth-of-type(2n) th:first-child {
-  background-color: #FFF;
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details .ttbm-tour-thumb {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details .ttbm-tour-thumb img {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  object-fit: cover;
+  display: block;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details .ttbm-tour-thumb .ttbm-tour-icon {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: #ff4081;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-info {
+  padding: 20px 0;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-info h3 {
+  margin: 0;
+  font-size: 18px;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-info h3 a {
+  text-decoration: none;
+  color: var(--mpl-black);
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-info .location {
+  color: var(--mpl-primary);
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-info .description {
+  font-size: 13px;
+  color: #555;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta {
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 30%;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-direction: column;
+  justify-content: center;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-item .meta-icon {
+  background-color: var(--mpl-light);
+  color: var(--mpl-dark);
+  padding: 13px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 25px;
+  box-sizing: border-box;
+  text-align: center;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-item .meta-label {
+  color: var(--mpl-black);
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-action {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  flex-direction: column;
+  background-color: var(--mpl-primary);
+  color: #fff;
+  border-radius: 5px;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-action a {
+  color: #fff;
+  text-decoration: none;
+}
+@media (max-width: 1024px) {
+  .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
+    width: calc(50% - 20px);
+  }
+}
+@media (max-width: 600px) {
+  .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
+    width: 100%;
+  }
+}
+.ttbm-tour-list-page .ttbm-load-more-wrap {
+  text-align: center;
+  margin: 10px auto;
+}
+.ttbm-tour-list-page .ttbm-load-more-wrap .button {
+  background-color: var(--mpl-primary);
+  color: #fff;
+  border: var(--mpl-primary) solid 1px;
+  font-weight: bold;
 }
 
 #mp_meta_box_panel .ttbm-faq-section .ttbm-faq-item {
@@ -995,13 +442,129 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   margin: 1px;
 }
 
+body.ttbm_settings_page {
+  font-size: 16px;
+  background-color: #fff;
+}
+body.ttbm_settings_page .mp_global_settings {
+  padding-top: 50px;
+}
+
+div.mp_global_settings .tabLists {
+  border-right: 0;
+}
+
+div.mpStyle .mpPanelBody {
+  background-color: #fff;
+}
+
+div.mp_global_settings .mpTabs {
+  display: flex;
+}
+
+div.mp_global_settings {
+  max-width: 1600px;
+  margin: auto;
+}
+div.mp_global_settings select.formControl, div.mp_global_settings input.formControl {
+  background-color: #f5f8ff;
+  height: 2.5em;
+}
+div.mp_global_settings .mp_basic_license_settings table {
+  margin-top: 20px;
+}
+
+.mpStyle button:hover span, .mpStyle button:focus span {
+  color: var(--mpl-dark);
+}
+
+div.mp_global_settings .mpPanelHeader {
+  background: var(--mpl-primary);
+}
+
+.mpStyle [data-tabs-target].active {
+  border-left: 2px solid var(--mpl-primary);
+}
+
+div.mpStyle select.formControl:focus {
+  border: 1px solid var(--mpl-dark);
+  box-shadow: none;
+}
+
+.mpStyle [data-tabs-target]:hover {
+  border-left: 2px solid var(--mpl-primary);
+}
+
+div.mp_global_settings .ttbm-setting-field {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #ececec;
+  align-items: center;
+  padding: 10px;
+  margin-top: -1px;
+}
+div.mp_global_settings .ttbm-setting-field .label,
+div.mp_global_settings .ttbm-setting-field label {
+  width: 49%;
+}
+div.mp_global_settings .ttbm-setting-field fieldset {
+  padding: 10px;
+}
+
+div.mp_global_settings .ttbm-setting-field .tooltips {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  color: var(--mpl-gray);
+}
+div.mp_global_settings .ttbm-setting-field .tooltips::before {
+  content: "";
+  position: absolute;
+  bottom: 95%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #000 transparent transparent transparent;
+  visibility: hidden;
+  transition: 0s;
+  z-index: 99;
+}
+div.mp_global_settings .ttbm-setting-field .tooltips::after {
+  content: attr(data-tooltip);
+  visibility: hidden;
+  width: max-content;
+  max-width: 350px;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: normal;
+  z-index: 999;
+  transition: opacity 0s ease-in-out;
+  font-weight: normal;
+}
+div.mp_global_settings .ttbm-setting-field .tooltips:hover::after, div.mp_global_settings .ttbm-setting-field .tooltips:hover::before {
+  visibility: visible;
+  opacity: 1;
+}
+
 #mp_meta_box_panel .postbox-header, .travel-list .postbox-header {
   background-color: var(--mpl-primary);
 }
 #mp_meta_box_panel .postbox-header .handle-actions, .travel-list .postbox-header .handle-actions {
   margin-top: 0;
 }
-#mp_meta_box_panel .postbox-header .handle-actions .handle-order-higher, #mp_meta_box_panel .postbox-header .handle-actions .handle-order-lower, #mp_meta_box_panel .postbox-header .handle-actions .toggle-indicator, .travel-list .postbox-header .handle-actions .handle-order-higher, .travel-list .postbox-header .handle-actions .handle-order-lower, .travel-list .postbox-header .handle-actions .toggle-indicator {
+#mp_meta_box_panel .postbox-header .handle-actions .handle-order-higher,
+#mp_meta_box_panel .postbox-header .handle-actions .handle-order-lower,
+#mp_meta_box_panel .postbox-header .handle-actions .toggle-indicator, .travel-list .postbox-header .handle-actions .handle-order-higher,
+.travel-list .postbox-header .handle-actions .handle-order-lower,
+.travel-list .postbox-header .handle-actions .toggle-indicator {
   color: var(--mpl-white);
 }
 #mp_meta_box_panel .ttbm_settings, .travel-list .ttbm_settings {
@@ -1012,6 +575,7 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   padding: 25px;
   background-color: var(--mpl-light);
   padding-right: 0;
+  font-size: 16px;
 }
 #mp_meta_box_panel .ttbm_settings .tabLists li, .travel-list .ttbm_settings .tabLists li {
   border-left: 0;
@@ -1048,15 +612,13 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem > h2, .travel-list .ttbm_settings .tabsContent .tabsItem > h2 {
   padding: 0;
   color: var(--mpl-secondary);
-  margin-bottom: 20px 0 0 0;
+  margin-bottom: 10px;
   font-size: 22px;
-  line-height: 26px;
   font-weight: bold;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem > p, .travel-list .ttbm_settings .tabsContent .tabsItem > p {
   color: var(--mpl-secondary);
   margin: 0;
-  font-size: 14px;
   font-weight: normal;
   line-height: 24px;
   margin-bottom: 30px;
@@ -1066,6 +628,9 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   padding: 20px;
   margin-top: -1px;
   width: 100%;
+}
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section.bg-light, .travel-list .ttbm_settings .tabsContent .tabsItem section.bg-light {
+  background-color: var(--mpl-light);
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label, .travel-list .ttbm_settings .tabsContent .tabsItem section .label {
   display: flex;
@@ -1088,17 +653,28 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   margin-bottom: 5px;
   color: var(--mpl-secondary);
 }
-#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label span, #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label a, .travel-list .ttbm_settings .tabsContent .tabsItem section .label span, .travel-list .ttbm_settings .tabsContent .tabsItem section .label a {
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label span,
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label a, .travel-list .ttbm_settings .tabsContent .tabsItem section .label span,
+.travel-list .ttbm_settings .tabsContent .tabsItem section .label a {
   line-height: 20px;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label .text, .travel-list .ttbm_settings .tabsContent .tabsItem section .label .text {
-  color: #6B7280;
   font-weight: normal;
   line-height: 20px;
   font-size: 13px;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section textarea, .travel-list .ttbm_settings .tabsContent .tabsItem section textarea {
   width: 100%;
+}
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .roundSwitchLabel, .travel-list .ttbm_settings .tabsContent .tabsItem section .roundSwitchLabel {
+  margin: 0 10px;
+}
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .roundSwitchLabel input:checked + .roundSwitch, .travel-list .ttbm_settings .tabsContent .tabsItem section .roundSwitchLabel input:checked + .roundSwitch {
+  background-color: var(--mpl-primary);
+}
+#mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .customCheckboxLabel input:checked ~ .customCheckbox::before, .travel-list .ttbm_settings .tabsContent .tabsItem section .customCheckboxLabel input:checked ~ .customCheckbox::before {
+  background: var(--mpl-primary);
+  border-color: var(--mpl-primary);
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .tabsItem .col-left, .travel-list .ttbm_settings .tabsContent .tabsItem .col-left {
   width: 50%;
@@ -1114,7 +690,7 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   margin-top: 10px;
 }
 #mp_meta_box_panel .ttbm_settings .tabsContent .span-row, .travel-list .ttbm_settings .tabsContent .span-row {
-  color: #6B7280;
+  color: #6b7280;
   font-size: 13px;
   font-weight: normal;
 }
@@ -1140,6 +716,31 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   align-items: center !important;
 }
 
+div.mpStyle select.formControl {
+  border-radius: 5px;
+}
+
+.mpStyle [data-tabs-target].active {
+  background-color: var(--mpl-white);
+  color: var(--d_color);
+  border-left: 2px solid var(--mpl-primary);
+}
+
+.mpStyle [data-tabs-target]:hover {
+  border-left: 2px solid var(--mpl-primary);
+  background-color: var(--mpl-white);
+}
+
+.mpStyle .themeButton, .mpStyle [class*=_themeButton] {
+  background-color: var(--mpl-primary);
+  color: var(--mpl-white);
+  padding: 10px;
+  border: 1px solid var(--mpl-primary);
+}
+.mpStyle .themeButton i, .mpStyle [class*=_themeButton] i {
+  color: #fff;
+}
+
 @media only screen and (min-width: 0px) {
   #mp_meta_box_panel .tabLists {
     border-right: 0px solid var(--mpl-light);
@@ -1162,31 +763,37 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   .tab-content-ttbm_date_config_meta_boxs tr th label {
     line-height: 14px;
   }
-  .mpStyle .navy_blueButton, .mpStyle [class*=_navy_blueButton] {
+  .mpStyle .navy_blueButton,
+  .mpStyle [class*=_navy_blueButton] {
     background-color: var(--mpl-primary);
     color: var(--mpl-white);
     padding: 0.75em;
     border: 2px solid var(--mpl-primary);
   }
-  .mpStyle .navy_blueButton:hover, .mpStyle [class*=_navy_blueButton]:hover {
+  .mpStyle .navy_blueButton:hover,
+  .mpStyle [class*=_navy_blueButton]:hover {
     background-color: var(--mpl-white);
     color: var(--mpl-primary);
     border-color: var(--mpl-primary);
   }
-  .mpStyle .navy_blueButton:hover span, .mpStyle [class*=_navy_blueButton]:hover span {
+  .mpStyle .navy_blueButton:hover span,
+  .mpStyle [class*=_navy_blueButton]:hover span {
     color: var(--mpl-primary);
   }
-  .mpStyle .warningButton, .mpStyle [class*=_warningButton] {
+  .mpStyle .warningButton,
+  .mpStyle [class*=_warningButton] {
     background-color: var(--mpl-yellow);
     color: var(--mpl-white);
     padding: 0.75em;
     border: 2px solid var(--mpl-yellow);
   }
-  .mpStyle .warningButton:hover, .mpStyle [class*=_warningButton]:hover {
+  .mpStyle .warningButton:hover,
+  .mpStyle [class*=_warningButton]:hover {
     background-color: var(--mpl-white);
     color: var(--mpl-yellow);
   }
-  .mpStyle .warningButton:hover span, .mpStyle [class*=_warningButton]:hover span {
+  .mpStyle .warningButton:hover span,
+  .mpStyle [class*=_warningButton]:hover span {
     color: var(--mpl-yellow);
   }
   div.mpStyle select.formControl:focus {
@@ -1213,8 +820,8 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
     padding-bottom: 0.5em;
   }
   .mp_settings_panel .nav-tab-wrapper {
-    background: var(--mpl-sky-light);
-    border: 5px solid var(--mpl-sky-light);
+    background: var(---mpl-sky-light);
+    border: 5px solid var(---mpl-sky-light);
   }
   .mp_settings_panel .nav-tab-wrapper .nav-tab {
     box-sizing: border-box;
@@ -1232,12 +839,12 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
     color: var(--mpl-white);
   }
   .mp_settings_panel .metabox-holder {
-    background: #FFF;
+    background: #fff;
     padding: 0;
     margin: 0;
     width: calc(100% - 300px);
-    border: 15px solid var(--mpl-sky-light);
-    background-color: var(--mpl-sky-light);
+    border: 15px solid var(---mpl-sky-light);
+    background-color: var(---mpl-sky-light);
   }
   .mp_settings_panel .metabox-holder h2 {
     border-bottom: 0px solid var(--mpl-white);
@@ -1246,14 +853,14 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
     padding: 0.5em 0;
     margin: 0;
     font-weight: 300;
-    background: var(--mpl-sky-light);
+    background: var(---mpl-sky-light);
     color: var(--mpl-primary) !important;
   }
   .mp_settings_panel .metabox-holder table {
     border-collapse: separate;
     border-spacing: 0 0.1em;
     margin: 0;
-    background-color: var(--mpl-sky-light);
+    background-color: var(---mpl-sky-light);
     border-radius: 0.25rem;
   }
   .mp_settings_panel .metabox-holder table tr:nth-child(2n) {
@@ -1293,48 +900,93 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
   margin-bottom: 12px;
   font-weight: 700;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs .description, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs .description, .travel-list .tab-content-ttbm_date_config_meta_boxs .description, .travel-list .tab-content-ttbm_tax_meta_boxs .description {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs .description,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs .description, .travel-list .tab-content-ttbm_date_config_meta_boxs .description,
+.travel-list .tab-content-ttbm_tax_meta_boxs .description {
   margin: 0;
   padding: 0.75em 0;
-  font-family: DejaVuSans;
   font-size: 1rem;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table, .travel-list .tab-content-ttbm_date_config_meta_boxs table, .travel-list .tab-content-ttbm_tax_meta_boxs table {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table, .travel-list .tab-content-ttbm_date_config_meta_boxs table,
+.travel-list .tab-content-ttbm_tax_meta_boxs table {
   border-collapse: collapse;
   border-spacing: 0;
   border: 0;
   margin: 0;
   margin-top: 50px;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th, #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr th, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr th, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th,
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr th,
+.travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr th,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td {
   background-color: var(--mpl-white);
   padding: 1.5em;
   margin-bottom: 1.5em;
   width: 50%;
   border: 1px solid var(--mpl-gray);
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th p, #mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td p, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th p, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td p, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr th p, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td p, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr th p, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td p {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th p,
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td p,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th p,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td p, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr th p,
+.travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td p,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr th p,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td p {
   font-size: 0.8rem;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td {
   text-align: right;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td label, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td label, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td label, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td label {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td label,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td label, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td label,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td label {
   display: block;
   text-align: right;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td input {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td input {
   border-radius: 0.25rem;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input.select2-search__field, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input.select2-search__field, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input.select2-search__field, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td input.select2-search__field {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input.select2-search__field,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input.select2-search__field, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input.select2-search__field,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td input.select2-search__field {
   border: 0;
 }
-#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input#mep_disable_ticket_time, #mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input#mep_disable_ticket_time, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input#mep_disable_ticket_time, .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td input#mep_disable_ticket_time {
+#mp_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input#mep_disable_ticket_time,
+#mp_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input#mep_disable_ticket_time, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td input#mep_disable_ticket_time,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td input#mep_disable_ticket_time {
   margin-right: 0.5em;
 }
-#mp_meta_box_panel .form-wrap.form-builder h1, #mp_meta_box_panel .form-wrap.form-builder h2, #mp_meta_box_panel .form-wrap.form-builder h3, #mp_meta_box_panel .form-wrap.form-builder h4, #mp_meta_box_panel .form-wrap.form-builder h5, #mp_meta_box_panel .form-wrap.form-builder h6,
-#mp_meta_box_panel .form-wrap.form-builder .h1, #mp_meta_box_panel .form-wrap.form-builder .h2, #mp_meta_box_panel .form-wrap.form-builder .h3, #mp_meta_box_panel .form-wrap.form-builder .h4, #mp_meta_box_panel .form-wrap.form-builder .h5, #mp_meta_box_panel .form-wrap.form-builder .h6, .travel-list .form-wrap.form-builder h1, .travel-list .form-wrap.form-builder h2, .travel-list .form-wrap.form-builder h3, .travel-list .form-wrap.form-builder h4, .travel-list .form-wrap.form-builder h5, .travel-list .form-wrap.form-builder h6,
-.travel-list .form-wrap.form-builder .h1, .travel-list .form-wrap.form-builder .h2, .travel-list .form-wrap.form-builder .h3, .travel-list .form-wrap.form-builder .h4, .travel-list .form-wrap.form-builder .h5, .travel-list .form-wrap.form-builder .h6 {
+#mp_meta_box_panel .form-wrap.form-builder h1,
+#mp_meta_box_panel .form-wrap.form-builder h2,
+#mp_meta_box_panel .form-wrap.form-builder h3,
+#mp_meta_box_panel .form-wrap.form-builder h4,
+#mp_meta_box_panel .form-wrap.form-builder h5,
+#mp_meta_box_panel .form-wrap.form-builder h6,
+#mp_meta_box_panel .form-wrap.form-builder .h1,
+#mp_meta_box_panel .form-wrap.form-builder .h2,
+#mp_meta_box_panel .form-wrap.form-builder .h3,
+#mp_meta_box_panel .form-wrap.form-builder .h4,
+#mp_meta_box_panel .form-wrap.form-builder .h5,
+#mp_meta_box_panel .form-wrap.form-builder .h6, .travel-list .form-wrap.form-builder h1,
+.travel-list .form-wrap.form-builder h2,
+.travel-list .form-wrap.form-builder h3,
+.travel-list .form-wrap.form-builder h4,
+.travel-list .form-wrap.form-builder h5,
+.travel-list .form-wrap.form-builder h6,
+.travel-list .form-wrap.form-builder .h1,
+.travel-list .form-wrap.form-builder .h2,
+.travel-list .form-wrap.form-builder .h3,
+.travel-list .form-wrap.form-builder .h4,
+.travel-list .form-wrap.form-builder .h5,
+.travel-list .form-wrap.form-builder .h6 {
   color: var(--mpl-dark);
 }
 #mp_meta_box_panel .form-wrap.form-builder .frmb .form-elements label, .travel-list .form-wrap.form-builder .frmb .form-elements label {
@@ -1349,7 +1001,7 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
 }
 #mp_meta_box_panel .form-wrap.form-builder .frmb li.frmb-placeholder, #mp_meta_box_panel .form-wrap.form-builder .frmb li.ui-state-highlight, .travel-list .form-wrap.form-builder .frmb li.frmb-placeholder, .travel-list .form-wrap.form-builder .frmb li.ui-state-highlight {
   padding: 2.5em;
-  background: var(--mpl-sky-light);
+  background: var(---mpl-sky-light);
   border: 1px dashed var(--mpl-primary);
   clip-path: none;
   margin-bottom: 0.5em;
@@ -1357,11 +1009,11 @@ div.mpStyle .textTheme, div.mpStyle [class*=_textTheme] {
 #mp_meta_box_panel .form-wrap.form-builder .frmb li:hover, .travel-list .form-wrap.form-builder .frmb li:hover {
   border: 1px dashed var(--mpl-primary);
   box-shadow: 0 0 10px var(--mpl-light);
-  background-color: var(--mpl-sky-light);
+  background-color: var(---mpl-sky-light);
 }
 #mp_meta_box_panel .form-wrap.form-builder .frmb li.delete:hover, .travel-list .form-wrap.form-builder .frmb li.delete:hover {
   border: 1px dashed var(--mpl-red);
-  background-color: var(--mpl-red-light);
+  background-color: var(--mpl-red) -light;
 }
 #mp_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .btn, .travel-list .form-wrap.form-builder .frmb li .field-actions .btn {
   min-width: 0;
@@ -1463,10 +1115,11 @@ div.mpStyle span.mp_remove_multi_image {
   width: 227px;
   border-radius: 5px;
   font-weight: normal;
+  font-size: 14px;
 }
 .includedd-features-section .customCheckboxLabel .customCheckbox {
-  padding: 3px;
-  padding-left: 30px;
+  padding: 2px;
+  padding-left: 20px;
 }
 .includedd-features-section .customCheckboxLabel .customCheckbox i {
   color: #888;
@@ -1476,16 +1129,27 @@ div.mpStyle span.mp_remove_multi_image {
   position: absolute;
   left: 0;
   top: 0 !important;
-  height: 20px;
-  width: 20px;
+  height: 15px;
+  width: 15px;
   background-color: var(--mpl-white);
   border: 1px solid var(--mpl-primary);
   border-radius: 50px;
 }
 
 div.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::after {
-  left: 5px;
-  top: 5px !important;
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 4px !important;
+  height: 5px;
+  width: 10px;
+  border: 2px solid var(--mpl-white);
+  border-top: none;
+  border-right: none;
+  z-index: 11;
+  background-color: transparent;
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
 }
 
 .reply-enquiry-form {

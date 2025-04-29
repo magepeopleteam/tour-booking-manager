@@ -46,8 +46,7 @@
 					<section>
                         <div class="label">
 							<div>
-								<p><?php esc_html_e($ttbm_label . ' Activities Settings', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_activities'); ?></span>
+								<p><?php esc_html_e($ttbm_label . ' Activities Settings', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_activities'); ?></span></i></p>
 							</div>
 							<?php MP_Custom_Layout::switch_button('ttbm_display_activities', $checked); ?> 
 						</div>
@@ -69,8 +68,7 @@
 					<section>
 						<label class="label">
 						<div>
-							<p><?php esc_html_e('Create activities', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php esc_html_e('To create new activity, click this button', 'tour-booking-manager'); ?></span>
+							<p><?php esc_html_e('Create activities', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('To create new activity, click this button', 'tour-booking-manager'); ?></span></i></p>
 						</div>
 						<?php MP_Custom_Layout::popup_button_xs('add_new_activity_popup', esc_html__('Create New Activity', 'tour-booking-manager')); ?>
 						</label>
@@ -78,9 +76,9 @@
 					
 					<section class="includedd-features-section">
 						<label class="label">
-							<div>
-								<p><?php esc_html_e('Activities', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php TTBM_Settings::des_p('activities'); ?></span>
+							<div> 
+								<p><?php esc_html_e('Activities', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('activities'); ?></span></i></p>
+
 							</div>
 						</label>
 						<div class="groupCheckBox">

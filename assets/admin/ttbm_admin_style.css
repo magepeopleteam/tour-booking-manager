@@ -153,3 +153,9 @@ select#mep_ticket_offdays{height:200px !important;}
     margin-bottom: 6px;
     border-radius: 20px;
 }
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta {
+    padding: 0px 0;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-action {
+    border-radius: 0 5px 5px 0;
+}

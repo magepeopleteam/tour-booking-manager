@@ -118,18 +118,7 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                                 </div>
                             </div>
                             <table class="ttbm_total_booking_table" >
-                                <thead class="ttbm_total_booking_thead">
-                                <tr>
-                                    <th class="ttbm_total_booking_th"><?php echo esc_attr__('Hotel ID', 'tour-booking-manager'); ?></th>
-                                    <th class="ttbm_total_booking_th"><?php echo esc_attr__('Hotel Image', 'tour-booking-manager'); ?></th>
-                                    <th class="ttbm_total_booking_th"><?php echo esc_attr__('Hotel Nate', 'tour-booking-manager'); ?></th>
-                                    <th class="ttbm_total_booking_th"><?php echo esc_attr__('Total Description', 'tour-booking-manager'); ?></th>
-                                    <th class="ttbm_total_booking_th"><?php echo esc_attr__('Actions', 'tour-booking-manager'); ?></th>
-                                </tr>
-                                </thead>
-                                <tbody class="ttbm_total_booking_tbody" id="ttbm_total_booking_tbody">
                                 <?php echo wp_kses_post( self::ttbm_display_Hotel_lists( $hotel_list_query ) )?>
-                                </tbody>
                             </table>
                         </div>
                     </div>

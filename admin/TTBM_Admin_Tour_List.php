@@ -26,7 +26,7 @@
             public function search_tours_callback(){
                            
                 $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
-                $post_per_page = isset($_POST['post_per_page']) ? intval($_POST['post_per_page']) : 2;
+                $post_per_page = isset($_POST['post_per_page']) ? intval($_POST['post_per_page']) : 10;
                 $search = isset($_POST['search_term']) ? sanitize_text_field($_POST['search_term']) : ''; 
                 $args = array(
                     'post_type'      => 'ttbm_tour',

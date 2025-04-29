@@ -147,3 +147,9 @@ select#mep_ticket_offdays{height:200px !important;}
 .ttbm-quick-setup .mpTabsNext .tabsContentNext p{
 	margin-bottom: 5px;
 }
+
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
+    border: 1px solid #dfd6d6;
+    margin-bottom: 6px;
+    border-radius: 20px;
+}

@@ -10,37 +10,27 @@
 ?>
 <div class="ttbm_smart_theme ">
 	<div class='mpStyle ttbm_wraper'>
-        <div class="ttbm_container">
-            <div class="ttbm_details_page">
-	            <?php do_action( 'ttbm_details_title' ); ?>
-                    <div class="_dFlex_wrap">
-	                    <?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
-	                    <?php do_action( 'ttbm_details_location'); ?>
-                    </div>
-
-            </div>
-        </div>
 		<div class="ttbm_container">
 			<div class="ttbm_details_page ttbm_content_area">
 				<div class="ttbm_content__left">
-
+					<?php do_action( 'ttbm_details_title' ); ?>
+					<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
+					<?php do_action( 'ttbm_details_location'); ?>
 					<?php do_action( 'ttbm_slider' ); ?>
 					<?php do_action( 'ttbm_short_details' ); ?>
 					<?php do_action( 'ttbm_details_particular_area' ); ?>
 					<?php do_action( 'ttbm_description' ); ?>
-					<?php do_action( 'ttbm_include_feature' ); ?>
-					<?php do_action( 'ttbm_exclude_service' ); ?>
+					<?php do_action( 'ttbm_include_exclude' ); ?>
+					<?php do_action( 'ttbm_smart_activity' ); ?>
 					<?php do_action( 'ttbm_registration_before', $ttbm_post_id ); ?>
 					<?php do_action( 'ttbm_hiphop_place' ); ?>
 					<?php do_action( 'ttbm_day_wise_details' ); ?>
 					<?php do_action( 'ttbm_faq' ); ?>
 					<?php do_action( 'ttbm_review' ); ?>
+					<?php do_action('ttbm_enquery_popup'); ?>
 				</div>
 				<div class="ttbm_content__right">
 					<?php do_action( 'ttbm_registration' ); ?>
-					
-					<?php do_action( 'ttbm_activity' ); ?>
-					<?php do_action( 'ttbm_location_map', $ttbm_post_id ); ?>
 					<?php do_action( 'ttbm_why_choose_us' ); ?>
 					<?php do_action( 'ttbm_get_a_question' ); ?>
 					<?php do_action( 'ttbm_tour_guide' ); ?>
@@ -50,6 +40,5 @@
 		</div>
 	</div>
 	<?php do_action( 'ttbm_single_tour_after' ); ?>
-
 	<?php do_action( 'ttbm_related_tour' ); ?>
 </div>

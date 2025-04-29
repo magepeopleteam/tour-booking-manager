@@ -33,6 +33,7 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Status.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_License.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Get_Enquiry.php';
 				//**********//
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Settings_Global.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Ticket_Types.php';

@@ -32,8 +32,7 @@
 					<section class="bg-light">
                         <label for="" class="label">
 							<div>
-								<p><?php esc_html_e('Contact Settings', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php esc_html_e('Here you can set contact information.', 'tour-booking-manager'); ?></span>
+								<p><?php esc_html_e('Contact Settings', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Here you can set contact information.', 'tour-booking-manager'); ?></span></i></p>
 							</div>
 						</label>
                     </section>
@@ -41,8 +40,7 @@
 					<section>
                         <div class="label">
 							<div>
-								<p><?php esc_html_e('Enable Contact', 'tour-booking-manager'); ?> </p>
-								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_get_question'); ?></span>
+								<p><?php esc_html_e('Enable Contact', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Select Tour City from this list', 'tour-booking-manager'); ?></span></i></p>
 							</div>
 							<?php MP_Custom_Layout::switch_button('ttbm_display_get_question', $checked_gaq); ?>
 						</div>
@@ -52,8 +50,7 @@
 						<section>
 							<label class="label">
 								<div>
-									<p><?php esc_html_e('Contact E-Mail', 'tour-booking-manager'); ?></p>
-									<span class="text"><?php TTBM_Settings::des_p('ttbm_contact_email'); ?></span>
+									<p><?php esc_html_e('Contact E-Mail', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_contact_email'); ?></span></i></p>
 								</div>
 								<input class="formControl" name="ttbm_contact_email" value="<?php echo esc_attr($contact_email); ?>" placeholder="<?php esc_html_e('Please enter Contact Email', 'tour-booking-manager'); ?>"/>
 							</label>
@@ -61,8 +58,7 @@
 						<section>
 							<label class="label">
 								<div>
-									<p><?php esc_html_e('Contact Phone', 'tour-booking-manager'); ?> </p>
-									<span class="text"><?php TTBM_Settings::des_p('ttbm_contact_phone'); ?></span>
+									<p><?php esc_html_e('Contact Phone', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_contact_phone'); ?></span></i></p>
 								</div>
 								<input class="formControl" name="ttbm_contact_phone" value="<?php echo esc_attr($contact_phone); ?>" placeholder="<?php esc_html_e('Please enter Contact Phone', 'tour-booking-manager'); ?>"/>
 							</label>
@@ -70,9 +66,8 @@
 
 						<section>
 							<label class="label">
-								<div>
-									<p><?php esc_html_e('Short Description', 'tour-booking-manager'); ?></p>
-									<span class="text"><?php TTBM_Settings::des_p('ttbm_contact_text'); ?></span>
+								<div class="w-50">
+									<p><?php esc_html_e('Short Description', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_contact_text'); ?></span></i></p>
 								</div>
 								<textarea class="w-50" name="ttbm_contact_text" rows="4" placeholder="<?php esc_html_e('Please Enter Contact Section Text', 'tour-booking-manager'); ?>"><?php echo esc_attr($contact_text); ?></textarea>
 							</label>

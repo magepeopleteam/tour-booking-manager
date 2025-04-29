@@ -405,6 +405,7 @@
 					$duration = MP_Global_Function::get_submit_info('ttbm_display_duration') ? 'on' : 'off';
 					$ttbm_display_rank = MP_Global_Function::get_submit_info('ttbm_display_order_tour') ? 'on' : 'off';
 					$ttbm_travel_rank_tour = MP_Global_Function::get_submit_info('ttbm_travel_rank_tour');
+					$display_enquiry= MP_Global_Function::get_submit_info('ttbm_display_enquiry') ? 'on' : 'off';
 					$ttbm_template= isset($_POST['ttbm_theme_file']) && $_POST['ttbm_theme_file']? sanitize_file_name($_POST['ttbm_theme_file']):'default.php';
 					update_post_meta($tour_id, 'ttbm_travel_rank_tour', $ttbm_travel_rank_tour);
 					update_post_meta($tour_id, 'ttbm_display_order_tour', $ttbm_display_rank);
@@ -416,6 +417,7 @@
 					update_post_meta($tour_id, 'ttbm_display_hotels', $hotels);
 					update_post_meta($tour_id, 'ttbm_display_duration', $duration);
 					update_post_meta($tour_id, 'ttbm_theme_file', $ttbm_template);
+					update_post_meta($tour_id, 'ttbm_display_enquiry', $display_enquiry);
 				}
 				do_action('wcpp_partial_settings_saved', $tour_id);
 				do_action('ttbm_settings_save', $tour_id);

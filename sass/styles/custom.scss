@@ -1,593 +1,518 @@
-#{$main-selector} {
-	.postbox-header {
-		background-color: $color-primary;
 
-		.handle-actions {
-			margin-top: 0;
-
-			.handle-order-higher, .handle-order-lower, .toggle-indicator {
-				color: $color-white;
-			}
-
-		}
-	}
-
-	.ttbm_settings {
-		background-color: #fff;
-
-		.tabLists {
-			width: 20%;
-			padding: 25px;
-			background-color: $color-light;
-			padding-right: 0;
-
-			li {
-				border-left: 0;
-				border-right: 0;
-				padding: 15px;
-				color: $color-secondary;
-				border-left: 2px solid transparent;
-
-				i {
-					margin-right: 25px;
-					color: $color-primary
-				}
-
-				&::after {
-					content: '';
-					position: absolute;
-					left: 0;
-					bottom: -1px;
-					border-bottom: 1px solid #d8d8d8;
-					width: 91%;
-				}
-
-				&.active, &:hover {
-					background-color: #fff;
-					color: #333;
-					font-weight: normal;
-					border-left: 2px solid $color-primary;
-
-					&::after {
-						width: 100%;
-
-					}
-				}
-			}
-		}
-
-		.tabsContent {
-			width: 80%;
-			padding: 2% 5%;
-
-			.tabsItem {
-				& > h2 {
-					padding: 0;
-					color: $color-secondary;
-					margin-bottom: 20px 0 0 0;
-					font-size: 22px;
-					line-height: 26px;
-					font-weight: bold;
-				}
-
-				& > p {
-					color: $color-secondary;
-					margin: 0;
-					font-size: 14px;
-					font-weight: normal;
-					line-height: 24px;
-					margin-bottom: 30px;
-				}
-
-				section {
-					border: 1px solid #d8d8d8;
-					padding: 20px;
-					margin-top: -1px;
-					width: 100%;
-
-					.label {
-						display: flex;
-						justify-content: space-between;
-						align-items: center;
-						flex-direction: row;
-						cursor: pointer;
-						@media (max-width: 1200px) {
-							flex-direction: column;
-						}
-
-						.label-inner {
-							padding-right: 20px;
-						}
-
-						p {
-							font-size: 14px;
-							font-weight: 500;
-							margin-bottom: 5px;
-							color: var(--mpl-secondary);
-						}
-
-						span, a {
-							line-height: 20px;
-						}
-
-						.text {
-							color: #6B7280;
-							font-weight: normal;
-							line-height: 20px;
-							font-size: 13px;
-						}
-					}
-					textarea{
-						width: 100%;
-					}
-				}
-				.col-left{width: 50%;}
-				.col-right{width: 50%;}
-			}
-
-			th[scope="row"] {
-				label {
-					display: block;
-					margin-bottom: 5px;
-
-					h6 {
-						margin-top: 10px;
-					}
-				}
-			}
-
-			.span-row {
-				color: #6B7280;
-				font-size: 13px;
-				font-weight: normal;
-			}
-
-			.long-input {
-				width: 80%;
-			}
-
-			.wp-switch-editor {
-				height: auto;
-			}
-
-			.wp-editor-area {
-				width: 100%;
-				border: 0;
-			}
-		}
-	}
-}
-.auto-search-wrapper.loupe{
-	&::before{
-	margin: 10px 0;
-	}
-	button{
-		display: none;
-	}
+.auto-search-wrapper.loupe {
+  &::before {
+    margin: 10px 0;
+  }
+  button {
+    display: none;
+  }
 }
 .ttbm-avg-review-header {
-	align-items: center !important;
+  align-items: center !important;
+}
+
+div.mpStyle select.formControl {
+  border-radius: 5px;
+}
+
+.mpStyle [data-tabs-target].active {
+  background-color: var(--mpl-white);
+  color: var(--d_color);
+  border-left: 2px solid var(--mpl-primary);
+}
+
+.mpStyle [data-tabs-target]:hover {
+  border-left: 2px solid var(--mpl-primary);
+  background-color: var(--mpl-white);
+}
+
+.mpStyle .themeButton, .mpStyle [class*="_themeButton"]{
+  background-color: var(--mpl-primary);
+  color: var(--mpl-white);
+  padding: 10px;
+  border: 1px solid var(--mpl-primary);
+  i{
+    color: #fff;
+  }
 }
 
 @media only screen and (min-width: 0px) {
-	#mp_meta_box_panel .tabLists {
-		border-right: 0px solid $color-light;
-	}
+  #mp_meta_box_panel .tabLists {
+    border-right: 0px solid var(--mpl-light);
+  }
 
-	.leftTabs [data-tabs-target] {
-		border-bottom: 0px solid $color-light;
-	}
+  .leftTabs [data-tabs-target] {
+    border-bottom: 0px solid var(--mpl-light);
+  }
 
-	div.mp_global_settings label .info_text {
-		line-height: 18px;
-	}
+  div.mp_global_settings label .info_text {
+    line-height: 18px;
+  }
 
-	div.mpStyle [data-tabs-target] {
-		color: $color-secondary;
+  div.mpStyle [data-tabs-target] {
+    color: var(--mpl-secondary);
+  }
+  .mpStyle .tabsContent {
+    overflow: scroll;
+  }
+  code {
+    line-height: 24px;
+  }
+  .tab-content-ttbm_date_config_meta_boxs {
+    tr {
+      th {
+        label {
+          line-height: 14px;
+        }
+      }
+    }
+  }
 
-	}
-	.mpStyle .tabsContent {
-		overflow: scroll;
-	}
-	code {
-		line-height: 24px;
-	}
-	.tab-content-ttbm_date_config_meta_boxs {
-		tr {
-			th {
-				label {
-					line-height: 14px;
-				}
-			}
-		}
-	}
+  .mpStyle .navy_blueButton,
+  .mpStyle [class*="_navy_blueButton"] {
+    background-color: var(--mpl-primary);
+    color: var(--mpl-white);
+    padding: calc(.5em * 1.5);
+    border: 2px solid var(--mpl-primary);
 
-	.mpStyle .navy_blueButton, .mpStyle [class*="_navy_blueButton"] {
-		background-color: $color-primary;
-		color: $color-white;
-		padding: calc($spacing * 1.5);
-		border: 2px solid $color-primary;
+    &:hover {
+      background-color: var(--mpl-white);
+      color: var(--mpl-primary);
+      border-color: var(--mpl-primary);
 
-		&:hover {
-			background-color: $color-white;
-			color: $color-primary;
-			border-color: $color-primary;
+      span {
+        color: var(--mpl-primary);
+      }
+    }
+  }
 
-			span {
-				color: $color-primary;
-			}
-		}
-	}
+  .mpStyle .warningButton,
+  .mpStyle [class*="_warningButton"] {
+    background-color: var(--mpl-yellow);
+    color: var(--mpl-white);
+    padding: calc(.5em * 1.5);
+    border: 2px solid var(--mpl-yellow);
 
-	.mpStyle .warningButton, .mpStyle [class*="_warningButton"] {
-		background-color: $color-yellow;
-		color: $color-white;
-		padding: calc($spacing * 1.5);
-		border: 2px solid $color-yellow;
+    &:hover {
+      background-color: var(--mpl-white);
+      color: var(--mpl-yellow);
 
-		&:hover {
-			background-color: $color-white;
-			color: $color-yellow;
+      span {
+        color: var(--mpl-yellow);
+      }
+    }
+  }
 
-			span {
-				color: $color-yellow;
-			}
+  div.mpStyle select.formControl:focus {
+    background-color: var(--mpl-white);
+  }
+  .mpStyle .mp_remove_icon {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    opacity: 1;
+    font-size: 10px;
+  }
+  // settings page css==================
+  .mp_settings_panel_header {
+    background: var(--mpl-secondary);
+    padding: calc(.5em * 2) .5em;
+    color: var(--mpl-white);
+    font-size: 20px;
+    margin-top: 30px;
+  }
+  .mp_settings_panel {
+    padding-bottom: .5em;
 
-		}
-	}
+    .nav-tab-wrapper {
+      background: var(---mpl-sky-light);
+      border: 5px solid var(---mpl-sky-light);
 
-	div.mpStyle select.formControl:focus {
-		background-color: $color-white;
-	}
-	.mpStyle .mp_remove_icon {
-		position: absolute;
-		top: -8px;
-		right: -8px;
-		width: 20px;
-		height: 20px;
-		cursor: pointer;
-		opacity: 1;
-        font-size: 10px;
-	}
-	// settings page css==================
-	.mp_settings_panel_header {
-		background: $color-secondary;
-		padding: calc($spacing * 2) $spacing;
-		color: $color-white;
-		font-size: 20px;
-		margin-top: 30px;
-	}
-	.mp_settings_panel {
-		padding-bottom: $spacing;
+      .nav-tab {
+        box-sizing: border-box;
+        background: var(--mpl-white);
+        color: var(--mpl-secondary);
+        margin-bottom: .5em;
+        border-radius:.25rem;
 
-		.nav-tab-wrapper {
-			background: $color-sky-light;
-			border: 5px solid $color-sky-light;
+        &:hover {
+          background: var(--mpl-primary);
+          color: var(--mpl-white);
+        }
 
-			.nav-tab {
-				box-sizing: border-box;
-				background: $color-white;
-				color: $color-secondary;
-				margin-bottom: $spacing;
-				border-radius: $border-radius;
+        &.nav-tab-active {
+          background: var(--mpl-primary);
+          color: var(--mpl-white);
+        }
+      }
+    }
 
-				&:hover {
-					background: $color-primary;
-					color: $color-white;
-				}
+    .metabox-holder {
+      background: #fff;
+      padding: 0;
+      margin: 0;
+      width: calc(100% - 300px);
+      border: 15px solid var(---mpl-sky-light);
+      background-color: var(---mpl-sky-light);
 
-				&.nav-tab-active {
-					background: $color-primary;
-					color: $color-white;
-				}
-			}
-		}
+      h2 {
+        border-bottom: 0px solid var(--mpl-white);
+        font-size: 1.625rem;
+        line-height: 1.4;
+        padding:.5em 0;
+        margin: 0;
+        font-weight:300;
+        background: var(---mpl-sky-light);
+        color: var(--mpl-primary) !important;
+      }
 
-		.metabox-holder {
-			background: #FFF;
-			padding: 0;
-			margin: 0;
-			width: calc(100% - 300px);
-			border: 15px solid $color-sky-light;
-			background-color: $color-sky-light;
+      table {
+        border-collapse: separate;
+        border-spacing: 0 0.1em;
+        // border: 2px solid var(--mpl-primary);
+        margin: 0;
+        background-color: var(---mpl-sky-light);
+        border-radius:.25rem;
 
-			h2 {
-				border-bottom: 0px solid $color-white;
-				font-size: 1.625rem;
-				line-height: 1.4;
-				padding: $spacing 0;
-				margin: 0;
-				font-weight: $font-weight-normal;
-				background: $color-sky-light;
-				color: $color-primary !important;
-			}
+        tr:nth-child(2n) {
+          background-color: var(--mpl-white);
+        }
+      }
+    }
 
-			table {
-				border-collapse: separate;
-				border-spacing: 0 0.1em;
-				// border: 2px solid $color-primary;
-				margin: 0;
-				background-color: $color-sky-light;
-				border-radius: $border-radius;
+    p.submit input {
+      font-size: 16px;
+      padding: 5px 30px;
+      border-radius:.25rem;
+      background: var(--mpl-primary);
+      border-color: var(--mpl-primary);
+      transition: 0.2s;
 
-				tr:nth-child(2n) {
-					background-color: $color-white;
-				}
-			}
-		}
-
-		p.submit input {
-			font-size: 16px;
-			padding: 5px 30px;
-			border-radius: $border-radius;
-			background: $color-primary;
-			border-color: $color-primary;
-			transition: 0.2s;
-
-			&:hover {
-				background: $color-primary;
-				border-color: $color-primary;
-			}
-		}
-	}
-	#wpbody-content .metabox-holder {
-		padding-top: 0px;
-		padding-bottom: $spacing;
-	}
+      &:hover {
+        background: var(--mpl-primary);
+        border-color: var(--mpl-primary);
+      }
+    }
+  }
+  #wpbody-content .metabox-holder {
+    padding-top: 0px;
+    padding-bottom: .5em;
+  }
 }
 
 // =============date config style customization=============
 .ppof-settings {
-	.form-wrapper {
-		margin-left: 250px;
-		background: transparent;
-
-	}
+  .form-wrapper {
+    margin-left: 250px;
+    background: transparent;
+  }
 }
 
 #{$main-selector} {
-	h1 {
-		padding: 0;
-		color: var(--mpl-secondary);
-		margin: 30px 0 20px 0;
-		margin-bottom: 20px;
-		margin-bottom: 20px;
-		font-size: 22px;
-		line-height: 26px;
-		font-family: Roboto, sans-serif;
-		margin-bottom: 12px;
-		font-weight: 700;
-	}
+  h1 {
+    padding: 0;
+    color: var(--mpl-secondary);
+    margin: 30px 0 20px 0;
+    margin-bottom: 20px;
+    margin-bottom: 20px;
+    font-size: 22px;
+    line-height: 26px;
+    font-family: Roboto, sans-serif;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
 
-	.tab-content-ttbm_date_config_meta_boxs, .tab-content-ttbm_tax_meta_boxs {
-		.description {
-			margin: 0;
-			padding: calc($spacing * 1.5) 0;
-			font-family: $font-text;
-			font-size: 1rem;
-		}
+  .tab-content-ttbm_date_config_meta_boxs,
+  .tab-content-ttbm_tax_meta_boxs {
+    .description {
+      margin: 0;
+      padding: 0.75em 0;
+      font-size: 1rem;
+    }
 
-		table {
-			border-collapse: collapse;
-			border-spacing: 0;
-			border: 0;
-			margin: 0;
-			margin-top: 50px;
-		}
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      border: 0;
+      margin: 0;
+      margin-top: 50px;
+    }
 
-		table.form-table tr th, table.form-table tr td {
-			background-color: $color-white;
-			padding: calc($spacing * 3);
-			margin-bottom: calc($spacing * 3);
-			width: 50%;
-			border: 1px solid $color-gray;
+    table.form-table tr th,
+    table.form-table tr td {
+      background-color: var(--mpl-white);
+      padding: calc(.5em * 3);
+      margin-bottom: calc(.5em * 3);
+      width: 50%;
+      border: 1px solid var(--mpl-gray);
 
-			p {
-				font-size: .8rem;
-			}
-		}
+      p {
+        font-size: 0.8rem;
+      }
+    }
 
-		table.form-table tr td {
-			text-align: right;
+    table.form-table tr td {
+      text-align: right;
 
-			label {
-				display: block;
-				text-align: right;
-			}
+      label {
+        display: block;
+        text-align: right;
+      }
 
-			input {
-				border-radius: $border-radius;
-			}
+      input {
+        border-radius: .25rem;
+      }
 
-			input.select2-search__field {
-				border: 0;
-			}
+      input.select2-search__field {
+        border: 0;
+      }
 
-			input#mep_disable_ticket_time {
-				margin-right: $spacing;
-			}
-		}
-	}
+      input#mep_disable_ticket_time {
+        margin-right: .5em;
+      }
+    }
+  }
 
+  // form builder custom code==========
 
-	// form builder custom code==========
+  .form-wrap.form-builder {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .h1,
+    .h2,
+    .h3,
+    .h4,
+    .h5,
+    .h6 {
+      color: var(--mpl-dark);
+    }
 
-	.form-wrap.form-builder {
-		h1, h2, h3, h4, h5, h6,
-		.h1, .h2, .h3, .h4, .h5, .h6 {
-			color: $color-dark;
-		}
+    .frmb {
+      .form-elements {
+        label {
+          line-height: inherit;
+        }
+      }
+      li {
+        padding-bottom: calc(.5em * 3);
+        border: 1px dashed var(--mpl-gray);
+        box-shadow: 0 0 0px var(--mpl-light);
+        background-color: var(--mpl-light);
+        margin-bottom: .5em;
 
-		.frmb {
-			.form-elements {
-				label{
-					line-height: inherit;
-				}
-			}
-			li {
-				padding-bottom: calc($spacing * 3);
-				border: 1px dashed $color-gray;
-				box-shadow: 0 0 0px $color-light;
-				background-color: $color-light;
-				margin-bottom: $spacing;
+        &.frmb-placeholder,
+        &.ui-state-highlight {
+          padding: calc(.5em * 5);
+          background: var(---mpl-sky-light);
+          border: 1px dashed var(--mpl-primary);
+          clip-path: none;
+          margin-bottom: .5em;
+        }
 
-				&.frmb-placeholder, &.ui-state-highlight {
-					padding: calc($spacing * 5);
-					background: $color-sky-light;
-					border: 1px dashed $color-primary;
-					clip-path: none;
-					margin-bottom: $spacing;
-				}
+        &:hover {
+          border: 1px dashed var(--mpl-primary);
+          box-shadow: 0 0 10px var(--mpl-light);
+          background-color: var(---mpl-sky-light);
+        }
 
-				&:hover {
-					border: 1px dashed $color-primary;
-					box-shadow: 0 0 10px $color-light;
-					background-color: $color-sky-light;
-				}
+        &.delete {
+          &:hover {
+            border: 1px dashed var(--mpl-red);
+            background-color: var(--mpl-red)-light;
+          }
+        }
 
-				&.delete {
-					&:hover {
-						border: 1px dashed $color-red;
-						background-color: $color-red-light;
-					}
-				}
+        .field-actions {
+          .btn {
+            min-width: 0;
+            padding: 0;
+            color: var(--mpl-white);
+            border-radius: 0;
+            transition: all 0;
+          }
 
-				.field-actions {
-					.btn {
-						min-width: 0;
-						padding: 0;
-						color: $color-white;
-						border-radius: 0;
-						transition: all 0;
-					}
+          .del-button {
+            background-color: var(--mpl-red);
+            color: var(--mpl-white);
+          }
 
-					.del-button {
-						background-color: $color-red;
-						color: $color-white;
-					}
+          .toggle-form {
+            background-color: var(--mpl-yellow);
+            transition: all 0;
+          }
 
-					.toggle-form {
-						background-color: $color-yellow;
-						transition: all 0;
-					}
-
-					.copy-button {
-						background-color: $color-primary;
-						color: $color-white;
-					}
-				}
-			}
-
-		}
-	}
+          .copy-button {
+            background-color: var(--mpl-primary);
+            color: var(--mpl-white);
+          }
+        }
+      }
+    }
+  }
 }
 
 div > .ppof-metabox {
-	background: transparent;
+  background: transparent;
 }
 
 .mpStyle .ppof-button {
-	width: 320px;
-	border: 0px solid;
-	box-shadow: none;
-	background-color: $color-primary;
-	border-radius: $border-radius;
-	padding: $spacing calc($spacing * 1.5);
-	color: $color-white;
-	font-size: $font-size;
-	transition: all $time ease-in-out;
-	min-width: 100px;
+  width: 320px;
+  border: 0px solid;
+  box-shadow: none;
+  background-color: var(--mpl-primary);
+  border-radius:.25rem;
+  padding: .5em calc(.5em * 1.5);
+  color: var(--mpl-white);
+  font-size: 1rem;
+  transition: all .5s ease-in-out;
+  min-width: 100px;
 }
 
 @media only screen and (min-width: 0px) {
-	div.mp_multi_image {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: start;
-		align-items: stretch;
-		gap: $spacing;
-		margin-bottom: $spacing;
+  div.mp_multi_image {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: stretch;
+    gap: .5em;
+    margin-bottom:.5em;
 
-		div.mp_multi_image_item {
-			width: calc(25% - 16px);
+    div.mp_multi_image_item {
+      width: calc(25% - 16px);
 
-			img {
-				width: 100%;
-				height: 150px;
-				object-fit: cover;
-			}
-		}
-
-	}
-	div.mpStyle .description {
-		font-size: $font-size !important;
-		color: var(--mpl-secondary);
-	}
-}
-
-
-div.mpStyle span.mp_remove_multi_image {
-	background-color: $color-black;
-	color: $color-white;
-	box-shadow: 0 0 5px $color-white;
+      img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+      }
+    }
+  }
+  div.mpStyle .description {
+    font-size: 1rem !important;
+    color: var(--mpl-secondary);
+  }
 }
 
 div.mpStyle span.mp_remove_multi_image {
-	top: -7px;
-	right: -7px;
+  background-color: var(--mpl-black);
+  color: var(--mpl-white);
+  box-shadow: 0 0 5px var(--mpl-white);
 }
 
-.select2-container--default .select2-selection--multiple .select2-selection__choice {
-	background-color: $color-gray;
-	border: 5px solid $color-light;
-	border-radius: $border-radius;
-	cursor: default;
-	float: left;
-	margin-right: 5px;
-	margin-top: 5px;
-	padding: 5px 10px;
+div.mpStyle span.mp_remove_multi_image {
+  top: -7px;
+  right: -7px;
 }
 
-.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-	padding: 5px;
+.select2-container--default
+  .select2-selection--multiple
+  .select2-selection__choice {
+  background-color: var(--mpl-gray);
+  border: 5px solid var(--mpl-light);
+  border-radius:.25rem;
+  cursor: default;
+  float: left;
+  margin-right: 5px;
+  margin-top: 5px;
+  padding: 5px 10px;
+}
+
+.select2-container--default
+  .select2-selection--multiple
+  .select2-selection__choice__remove {
+  padding: 5px;
 }
 
 .includedd-features-section {
-	margin-top:15px;
-	.groupCheckBox {
-		overflow: hidden;
-	}
-	.customCheckboxLabel {
-		float: left;
-		margin:5px;
-		padding:7px 7px;
-		border: 1px solid #d8d8d8;
-		background-color: #f8f8f8;
-		width: 227px;
-		border-radius:5px;
-		font-weight: normal;
-		.customCheckbox{
-			padding: 3px;padding-left: 30px;
-			i{
-				color: #888;
-			}
-			&::before {
-				content: "";
-				position: absolute;
-				left: 0;
-				top: 0 !important;
-				height: 20px;
-				width: 20px;
-				background-color: $color-white;
-				border: 1px solid $color-primary;
-				border-radius: 50px;
-			}
-		}
-	}
-	
+  margin-top: 15px;
+  .groupCheckBox {
+    overflow: hidden;
+  }
+  .customCheckboxLabel {
+    float: left;
+    margin: 5px;
+    padding: 7px 7px;
+    border: 1px solid #d8d8d8;
+    background-color: #f8f8f8;
+    width: 227px;
+    border-radius: 5px;
+    font-weight: normal;
+    font-size: 14px;
+    .customCheckbox {
+      padding: 2px;
+      padding-left: 20px;
+      i {
+        color: #888;
+      }
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0 !important;
+        height: 15px;
+        width: 15px;
+        background-color: var(--mpl-white);
+        border: 1px solid var(--mpl-primary);
+        border-radius: 50px;
+      }
+      
+    }
+  }
 }
 
 div.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 4px !important;
+  height: 5px;
+  width: 10px;
+  border: 2px solid var(--mpl-white);
+  border-top:none;
+  border-right:none;
+  z-index: 11;
+  background-color: transparent;
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
 	left: 5px;
 	top: 5px !important;
 }
+
+// ==================Enquiry form=====================
+.reply-enquiry-form{
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: start;
+	gap: 10px;
+	padding: 20px 10px;
+}
+.reply-enquiry-form input[type=text],.reply-enquiry-form input[type=email],.ttbm-reply-message{
+	width: 100%;
+	margin-bottom: 20px;
+	max-width: 400px;
+}
+.ttbm-enquiry-list{
+	td:first-child{
+		&.new{
+			font-weight: bold;
+		}
+	}
+	.new{
+		color: green;
+	}
+	.viewed{
+		color: skyblue;
+	}
+	.replied{
+		color: rgb(255, 162, 162);
+	}
+}
+

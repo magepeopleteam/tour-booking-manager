@@ -23,7 +23,7 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
 				<div class="tabsItem mp_settings_area ttbm_settings_why_chose_us" data-tabs="#ttbm_settings_why_chose_us">
-					<h2 class="h4 px-0 text-primary"><?php esc_html_e('Why Book With Us?', 'tour-booking-manager'); ?></h2>
+					<h2 class=""><?php esc_html_e('Why Book With Us?', 'tour-booking-manager'); ?></h2>
 					<p><?php TTBM_Settings::des_p('why_book_settings_description'); ?></p>
 					
 					<section class="bg-light">
@@ -38,8 +38,7 @@
 					<section>
                         <label class="label">
 							<div>
-								<p><?php esc_html_e('Why Chose Us' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_why_choose_us'); ?></span>
+								<p><?php esc_html_e('Why Chose Us ' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_why_choose_us'); ?></span></i></p>
 							</div>
 							<?php MP_Custom_Layout::switch_button('ttbm_display_why_choose_us', $checked); ?>
 						</label>
@@ -62,8 +61,8 @@
 						<table>
 							<thead>
 							<tr>
-								<th class="w-70"><?php esc_html_e('Item List.', 'tour-booking-manager'); ?></th>
-								<th class="w-10"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
+								<th class="ps-2"><?php esc_html_e('Item List.', 'tour-booking-manager'); ?></th>
+								<th class="ps-2"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
 							</tr>
 							</thead>
 							<tbody class="mp_sortable_area mp_item_insert">
@@ -97,9 +96,9 @@
 			public function why_chose_us_item($why_choose = '') {
 				?>
 				<tr class="mp_remove_area">
-					<td>
+					<td class="ps-2">
 						<label>
-							<input class="p-1 bordered w-100 rounded  mp_name_validation" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
+							<input class="bordered w-100 rounded  mp_name_validation" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
 						</label>
 					</td>
 					<td><?php MP_Custom_Layout::move_remove_button(); ?></td>

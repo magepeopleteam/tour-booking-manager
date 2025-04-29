@@ -816,6 +816,72 @@
         });
     });
 
+   //=================== tour lists load more===========================
+   $(document).on('click','#ttbm-load-more', function(e) {
+        e.preventDefault();
+        const button = $(this);
+        const paged = parseInt(button.attr('data-paged'));
+        const postPerPage = button.data('posts-per-page');
+        const nonce = button.data('nonce');
+
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_load_more',
+                paged: paged,
+                post_per_page: postPerPage,
+                nonce: nonce,
+            },
+            beforeSend: function() {
+                button.text('Loading...');
+            },
+            success: function(response) {
+                if (response.success && response.data.html) {
+                    $('.ttbm-tour-list').append(response.data.html);
+                    if (paged >= response.data.max_pages) {
+                        button.remove();
+                    } else {
+                        button.attr('data-paged', paged + 1).text('Load More');
+                    }
+                } else {
+                    button.remove();
+                }
+            }
+        });
+    });
+
+    //=================== tour lists search===========================
+    $(document).on('input','#ttbm-tour-search', function() {
+        var search = $(this).val();
+        var nonce =  $(this).data('nonce');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_search_tours',
+                search_term: search,
+                wpnonce: nonce,
+            },
+            beforeSend: function() {
+                $('.ttbm-tour-list').text('Loading...');
+            },
+            success: function(response) {
+                if (response.success && response.data.html) {
+                    $('.ttbm-tour-list').html('');
+                    $('.ttbm-tour-list').append(response.data.html);
+                    if (paged >= response.data.max_pages) {
+                        button.remove();
+                    } else {
+                        button.attr('data-paged', paged + 1).text('Load More');
+                    }
+                } else {
+                    button.remove();
+                }
+            }
+        });
+    });
+
 }(jQuery));
 //==========search tour list page=================//
 (function ($) {
@@ -858,16 +924,16 @@
             }
         });
     }
-    $(document).on('click', '#ttbm_list_page .ttbm_trash_post', function () {
+    $(document).on('click', '.ttbm-tour-card .ttbm_trash_post', function () {
         let alert_text = $(this).data('alert');
         if (confirm(alert_text + '\n\n 1. Ok : To Remove . \n 2. Cancel : To Cancel .')) {
-            let target = $(this).closest('#ttbm_list_page');
+            let target = $(this).closest('.ttbm-tour-card');
             let post_id = $(this).data('post-id');
             $.ajax({
                 type: 'POST', url: mp_ajax_url, data: {
                     "action": "ttbm_trash_post",
                     "post_id": post_id,
-                    "nonce": $(this).closest('.buttonGroup').find('#edd_sample_nonce').val(),
+                    "nonce": $(this).closest('.ttbm-tour-card').find('#edd_sample_nonce').val(),
                 }, beforeSend: function () {
                     dLoader(target);
                 }, success: function (data) {
@@ -878,6 +944,118 @@
             return true;
         }
         return false;
+    });
+
+    // ================Get Enquiry=================//
+    $(document).ready(function ($) {
+        const tabs = $('.nav-tab');
+        const contents = $('.tab-content');
+
+        tabs.on('click', function (e) {
+            e.preventDefault();
+            tabs.removeClass('nav-tab-active');
+            contents.hide();
+
+            $(this).addClass('nav-tab-active');
+            const target = $(this).attr('href');
+            $(target).show();
+        });
+    });
+    $(document).on('click', '.ttbm-delete-enquiry', function (e) {
+        e.preventDefault();
+        let isConfirmed = confirm('Are you sure you want to delete this row?');
+        if (isConfirmed) {
+            let row = $(this).closest('tr');
+            let enquiryId = $(this).data('id');
+            $.ajax({
+                url: ttbm_admin_ajax.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'ttbm_delete_enquiry',
+                    enquiry_id: enquiryId,
+                    nonce: ttbm_admin_ajax.nonce
+                },
+                success: function (response) {
+                    if (response.success) {
+                        row.remove();
+                    } else {
+                        alert('Failed to delete the enquiry. Please try again.');
+                    }
+                },
+                error: function (error) {
+                    console.log('Error:', error);
+                    alert('An error occurred while deleting the enquiry.');
+                }
+            });
+        }
+    });
+    $(document).on('click', '.ttbm-reply-enquiry', function (e) {
+        e.preventDefault();
+        let enquiryId = $(this).data('id');
+        var row = $(this).closest('.ttbm-enquiry-list');
+        var subject = row.find('td:eq(0)').text().trim();
+        var name = row.find('td:eq(1)').text().trim();
+        var email = row.find('td:eq(2)').text().trim();
+        $('#ttbm-post-id').val(enquiryId);
+        $('#ttbm-reply-to').val(email);
+        $('#ttbm-reply-subject').val(subject);
+    });
+    $('#ttbm-reply-enquiry-form').on('submit', function (e) {
+        e.preventDefault();
+        if (typeof tinyMCE !== 'undefined' && tinyMCE.get('ttbm-reply-message')) {
+            tinyMCE.get('ttbm-reply-message').save();
+        }
+        var formData = $(this).serialize();
+        $.ajax({
+            type: "POST",
+            url: ttbm_admin_ajax.ajax_url, 
+            data: {
+                action: 'ttbm_reply_enquiry',
+                nonce: ttbm_admin_ajax.nonce,
+                data:formData
+            },
+            success: function (response) {
+                console.log(response);
+                if (response.success) {
+                    $('.reply-ajax-response').html(response.data.message).css('color', 'green');
+                } else {
+                    $('.reply-ajax-response').html(response.data.message).css('color', 'red');
+                }
+            },
+            error: function (error) {
+                console.log('Error:', error);
+                alert('An error occurred while loading the enquiry details.');
+            }
+        });
+    });
+    // ==========view enquiry=============
+    $(document).on('click', '.ttbm-view-enquiry', function (e) {
+        e.preventDefault();
+        let enquiryId = $(this).data('id');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_view_enquiry',
+                enquiry_id: enquiryId,
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                if (response.success) {
+                    $('.ttbm-view-enquiry-response').html(response.data.html);
+                } else {
+                    alert('Failed to load the enquiry details. Please try again.');
+                }
+            },
+            error: function (error) {
+                console.log('Error:', error);
+                alert('An error occurred while loading the enquiry details.');
+            }
+        });
+    });
+
+    $(document).on('click', '#ttbm-enquiry-modal .modal-close', function () {
+        $('#ttbm-enquiry-modal').removeClass('open');
     });
 }(jQuery));
 

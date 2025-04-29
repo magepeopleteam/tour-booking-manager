@@ -42,8 +42,7 @@
 					<section>
                         <div class="label">
 							<div>
-								<p><?php echo esc_html__('Related ', 'tour-booking-manager') . $ttbm_label . esc_html__(' Settings', 'tour-booking-manager') ?></p>
-								<span class="text"><?php TTBM_Settings::des_p('ttbm_display_related'); ?></span>
+								<p><?php echo esc_html__('Related ', 'tour-booking-manager') . $ttbm_label . esc_html__(' Settings', 'tour-booking-manager') ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_related'); ?></span></i></p>
 							</div>
 							<?php MP_Custom_Layout::switch_button('ttbm_display_related', $checked); ?>
 						</div>
@@ -53,8 +52,7 @@
 						<section>
 							<label class="label">
 								<div class="w-50">
-									<p><?php esc_html_e('Related ' . $ttbm_label, 'tour-booking-manager'); ?></p>
-									<span class="text"><?php TTBM_Settings::des_p('ttbm_related_tour'); ?></span>
+									<p><?php esc_html_e('Related ' . $ttbm_label, 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_related_tour'); ?></span></i></p>
 								</div>
 								<div class="w-50">
 									<select name="ttbm_related_tour[]" multiple='multiple' class='mp_select2 w-50' data-placeholder="<?php echo esc_html__('Please Select ', 'tour-booking-manager') . $ttbm_label; ?>">

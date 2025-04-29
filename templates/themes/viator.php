@@ -18,6 +18,7 @@
 				<div class="ttbm_content_area">
 					<div class="ttbm_content__left">
 						<?php do_action( 'ttbm_slider' ); ?>
+						<?php do_action('ttbm_enquery_popup'); ?>
 						<div class="item_section">
 							<?php include( TTBM_Function::template_path( 'layout/seat_info.php' ) ); ?>
 							<?php include( TTBM_Function::template_path( 'layout/duration_box.php' ) ); ?>

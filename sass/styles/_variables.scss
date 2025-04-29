@@ -1,48 +1,15 @@
 $main-selector:'#mp_meta_box_panel, .travel-list';
-$prefix:'mpl';
 :root{
-    --#{$prefix}-primary:#F12971;
-    --#{$prefix}-sky:#f38fb3;
-    --#{$prefix}-sky-light:#EFFAFF;
-    --#{$prefix}-secondary:#1d2327;
-    --#{$prefix}-dark:#a4a4a4;
-    --#{$prefix}-gray:#e0e0e0;
-    --#{$prefix}-light:#F5F5F5;
-    --#{$prefix}-white:#ffffff;
-    --#{$prefix}-black:#000000;
-    --#{$prefix}-yellow:#ffcb00;
-    --#{$prefix}-red:#d91e1e;
-    --#{$prefix}-red-light:#f6dada;
-
+    --mpl-primary:#F12971;
+    --mpl-secondary:#1d2327;
+    --mpl-sky:#f38fb3;
+    --mpl-sky-light:#EFFAFF;
+    --mpl-dark:#a4a4a4;
+    --mpl-gray:#e0e0e0;
+    --mpl-light:#F5F5F5;
+    --mpl-white:#ffffff;
+    --mpl-black:#000000;
+    --mpl-yellow:#ffcb00;
+    --mpl-red:#d91e1e;
+    --mpl-red-light:#f6dada;
 }
-// ------------color--------
-$color-primary:var(--#{$prefix}-primary);
-$color-secondary:var(--#{$prefix}-secondary);
-$color-sky:var(--#{$prefix}-sky);
-$color-sky-light:var(--#{$prefix}-sky-light);
-$color-dark:var(--#{$prefix}-dark);
-$color-gray:var(--#{$prefix}-gray);
-$color-light:var(--#{$prefix}-light);
-$color-white:var(--#{$prefix}-white);
-$color-black:var(--#{$prefix}-black);
-$color-black:var(--#{$prefix}-black);
-$color-yellow:var(--#{$prefix}-yellow);
-$color-red:var(--#{$prefix}-red);
-$color-red-light:var(--#{$prefix}-red-light);
-
-// ==========fonts=============
-$font-text:DejaVuSans;
-//$font-heading:DejaVuSansBold;
-//$font-bold:DejaVuSansBold;
-$font-size:1rem;
-$font-weight-normal:300;
-$font-weight-bold:600;
-
-//===========utility===========
-$border-radius: .25rem;
-$spacing:.5em;
-$time: .5s;
-
-//============form============
-$input-width:14em;
-$input-height:2.5em;

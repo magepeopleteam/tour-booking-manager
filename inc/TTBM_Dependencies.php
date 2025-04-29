@@ -50,6 +50,10 @@
 				wp_enqueue_script('jquery-ui-accordion');
 				wp_enqueue_style('ttbm_style', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_style.css', array(), time());
 				wp_enqueue_script('ttbm_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_script.js', array('jquery'), time(), true);
+				wp_localize_script('ttbm_script', 'ttbm_ajax', array(
+					'ajax_url'  => admin_url('admin-ajax.php'),
+					'nonce'   => wp_create_nonce('ttbm_frontend_nonce')
+				));
 				do_action('ttbm_frontend_script');
 			}
 			public function admin_script() {
@@ -80,6 +84,7 @@
 				wp_enqueue_style('ttbm_registration_style', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.css', array(), time());
 				wp_enqueue_script('ttbm_registration_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.js', array('jquery'), time(), true);
 				wp_enqueue_script('ttbm_price_calculation', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_price_calculation.js', array('jquery'), time(), true);
+				
 				// Google Font
 				wp_enqueue_style('google-font', 'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap', array(), time());
 				do_action('add_ttbm_registration_enqueue');
@@ -112,33 +117,33 @@
 						if (isset($style_settings['ttbm_warning_color']) && $style_settings['ttbm_warning_color']) {
 							$current_style['warning_color'] = $style_settings['ttbm_warning_color'];
 						}
-						if (isset($style_settings['ttbm_default_font_size']) && $style_settings['ttbm_default_font_size']) {
-							$current_style['default_font_size'] = $style_settings['ttbm_default_font_size'];
-						}
-						if (isset($style_settings['ttbm_font_size_h1']) && $style_settings['ttbm_font_size_h1']) {
-							$current_style['font_size_h1'] = $style_settings['ttbm_font_size_h1'];
-						}
-						if (isset($style_settings['ttbm_font_size_h2']) && $style_settings['ttbm_font_size_h2']) {
-							$current_style['font_size_h2'] = $style_settings['ttbm_font_size_h2'];
-						}
-						if (isset($style_settings['ttbm_font_size_h3']) && $style_settings['ttbm_font_size_h3']) {
-							$current_style['font_size_h3'] = $style_settings['ttbm_font_size_h3'];
-						}
-						if (isset($style_settings['ttbm_font_size_h4']) && $style_settings['ttbm_font_size_h4']) {
-							$current_style['font_size_h4'] = $style_settings['ttbm_font_size_h4'];
-						}
-						if (isset($style_settings['ttbm_font_size_h5']) && $style_settings['ttbm_font_size_h5']) {
-							$current_style['font_size_h5'] = $style_settings['ttbm_font_size_h5'];
-						}
-						if (isset($style_settings['ttbm_font_size_h6']) && $style_settings['ttbm_font_size_h6']) {
-							$current_style['font_size_h6'] = $style_settings['ttbm_font_size_h6'];
-						}
-						if (isset($style_settings['ttbm_font_size_label']) && $style_settings['ttbm_font_size_label']) {
-							$current_style['font_size_label'] = $style_settings['ttbm_font_size_label'];
-						}
-						if (isset($style_settings['ttbm_font_size_button']) && $style_settings['ttbm_font_size_button']) {
-							$current_style['button_font_size'] = $style_settings['ttbm_font_size_button'];
-						}
+						// if (isset($style_settings['ttbm_default_font_size']) && $style_settings['ttbm_default_font_size']) {
+						// 	$current_style['default_font_size'] = $style_settings['ttbm_default_font_size'];
+						// }
+						// if (isset($style_settings['ttbm_font_size_h1']) && $style_settings['ttbm_font_size_h1']) {
+						// 	$current_style['font_size_h1'] = $style_settings['ttbm_font_size_h1'];
+						// }
+						// if (isset($style_settings['ttbm_font_size_h2']) && $style_settings['ttbm_font_size_h2']) {
+						// 	$current_style['font_size_h2'] = $style_settings['ttbm_font_size_h2'];
+						// }
+						// if (isset($style_settings['ttbm_font_size_h3']) && $style_settings['ttbm_font_size_h3']) {
+						// 	$current_style['font_size_h3'] = $style_settings['ttbm_font_size_h3'];
+						// }
+						// if (isset($style_settings['ttbm_font_size_h4']) && $style_settings['ttbm_font_size_h4']) {
+						// 	$current_style['font_size_h4'] = $style_settings['ttbm_font_size_h4'];
+						// }
+						// if (isset($style_settings['ttbm_font_size_h5']) && $style_settings['ttbm_font_size_h5']) {
+						// 	$current_style['font_size_h5'] = $style_settings['ttbm_font_size_h5'];
+						// }
+						// if (isset($style_settings['ttbm_font_size_h6']) && $style_settings['ttbm_font_size_h6']) {
+						// 	$current_style['font_size_h6'] = $style_settings['ttbm_font_size_h6'];
+						// }
+						// if (isset($style_settings['ttbm_font_size_label']) && $style_settings['ttbm_font_size_label']) {
+						// 	$current_style['font_size_label'] = $style_settings['ttbm_font_size_label'];
+						// }
+						// if (isset($style_settings['ttbm_font_size_button']) && $style_settings['ttbm_font_size_button']) {
+						// 	$current_style['button_font_size'] = $style_settings['ttbm_font_size_button'];
+						// }
 						if (isset($style_settings['ttbm_button_color']) && $style_settings['ttbm_button_color']) {
 							$current_style['button_color'] = $style_settings['ttbm_button_color'];
 						}

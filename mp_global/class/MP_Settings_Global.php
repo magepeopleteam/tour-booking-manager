@@ -132,62 +132,62 @@
 							'type' => 'color',
 							'default' => '#303030'
 						),
-						array(
-							'name' => 'default_font_size',
-							'label' => esc_html__('Default Font Size', 'tour-booking-manager'),
-							'desc' => esc_html__('Type Default Font Size(in PX Unit).', 'tour-booking-manager'),
-							'type' => 'number',
-							'default' => '15'
-						),
-						array(
-							'name' => 'font_size_h1',
-							'label' => esc_html__('Font Size h1 Title', 'tour-booking-manager'),
-							'desc' => esc_html__('Type Font Size Main Title(in PX Unit).', 'tour-booking-manager'),
-							'type' => 'number',
-							'default' => '35'
-						),
-						array(
-							'name' => 'font_size_h2',
-							'label' => esc_html__('Font Size h2 Title', 'tour-booking-manager'),
-							'desc' => esc_html__('Type Font Size h2 Title(in PX Unit).', 'tour-booking-manager'),
-							'type' => 'number',
-							'default' => '25'
-						),
-						array(
-							'name' => 'font_size_h3',
-							'label' => esc_html__('Font Size h3 Title', 'tour-booking-manager'),
-							'desc' => esc_html__('Type Font Size h3 Title(in PX Unit).', 'tour-booking-manager'),
-							'type' => 'number',
-							'default' => '22'
-						),
-						array(
-							'name' => 'font_size_h4',
-							'label' => esc_html__('Font Size h4 Title', 'tour-booking-manager'),
-							'desc' => esc_html__('Type Font Size h4 Title(in PX Unit).', 'tour-booking-manager'),
-							'type' => 'number',
-							'default' => '20'
-						),
-						array(
-							'name' => 'font_size_h5',
-							'label' => esc_html__('Font Size h5 Title', 'tour-booking-manager'),
-							'desc' => esc_html__('Type Font Size h5 Title(in PX Unit).', 'tour-booking-manager'),
-							'type' => 'number',
-							'default' => '18'
-						),
-						array(
-							'name' => 'font_size_h6',
-							'label' => esc_html__('Font Size h6 Title', 'tour-booking-manager'),
-							'desc' => esc_html__('Type Font Size h6 Title(in PX Unit).', 'tour-booking-manager'),
-							'type' => 'number',
-							'default' => '16'
-						),
-						array(
-							'name' => 'button_font_size',
-							'label' => esc_html__('Button Font Size ', 'tour-booking-manager'),
-							'desc' => esc_html__('Type Font Size Button(in PX Unit).', 'tour-booking-manager'),
-							'type' => 'number',
-							'default' => '18'
-						),
+						// array(
+						// 	'name' => 'default_font_size',
+						// 	'label' => esc_html__('Default Font Size', 'tour-booking-manager'),
+						// 	'desc' => esc_html__('Type Default Font Size(in PX Unit).', 'tour-booking-manager'),
+						// 	'type' => 'number',
+						// 	'default' => '15'
+						// ),
+						// array(
+						// 	'name' => 'font_size_h1',
+						// 	'label' => esc_html__('Font Size h1 Title', 'tour-booking-manager'),
+						// 	'desc' => esc_html__('Type Font Size Main Title(in PX Unit).', 'tour-booking-manager'),
+						// 	'type' => 'number',
+						// 	'default' => '35'
+						// ),
+						// array(
+						// 	'name' => 'font_size_h2',
+						// 	'label' => esc_html__('Font Size h2 Title', 'tour-booking-manager'),
+						// 	'desc' => esc_html__('Type Font Size h2 Title(in PX Unit).', 'tour-booking-manager'),
+						// 	'type' => 'number',
+						// 	'default' => '25'
+						// ),
+						// array(
+						// 	'name' => 'font_size_h3',
+						// 	'label' => esc_html__('Font Size h3 Title', 'tour-booking-manager'),
+						// 	'desc' => esc_html__('Type Font Size h3 Title(in PX Unit).', 'tour-booking-manager'),
+						// 	'type' => 'number',
+						// 	'default' => '22'
+						// ),
+						// array(
+						// 	'name' => 'font_size_h4',
+						// 	'label' => esc_html__('Font Size h4 Title', 'tour-booking-manager'),
+						// 	'desc' => esc_html__('Type Font Size h4 Title(in PX Unit).', 'tour-booking-manager'),
+						// 	'type' => 'number',
+						// 	'default' => '20'
+						// ),
+						// array(
+						// 	'name' => 'font_size_h5',
+						// 	'label' => esc_html__('Font Size h5 Title', 'tour-booking-manager'),
+						// 	'desc' => esc_html__('Type Font Size h5 Title(in PX Unit).', 'tour-booking-manager'),
+						// 	'type' => 'number',
+						// 	'default' => '18'
+						// ),
+						// array(
+						// 	'name' => 'font_size_h6',
+						// 	'label' => esc_html__('Font Size h6 Title', 'tour-booking-manager'),
+						// 	'desc' => esc_html__('Type Font Size h6 Title(in PX Unit).', 'tour-booking-manager'),
+						// 	'type' => 'number',
+						// 	'default' => '16'
+						// ),
+						// array(
+						// 	'name' => 'button_font_size',
+						// 	'label' => esc_html__('Button Font Size ', 'tour-booking-manager'),
+						// 	'desc' => esc_html__('Type Font Size Button(in PX Unit).', 'tour-booking-manager'),
+						// 	'type' => 'number',
+						// 	'default' => '18'
+						// ),
 						array(
 							'name' => 'button_color',
 							'label' => esc_html__('Button Text Color', 'tour-booking-manager'),
@@ -202,13 +202,13 @@
 							'type' => 'color',
 							'default' => '#222'
 						),
-						array(
-							'name' => 'font_size_label',
-							'label' => esc_html__('Label Font Size ', 'tour-booking-manager'),
-							'desc' => esc_html__('Type Font Size Label(in PX Unit).', 'tour-booking-manager'),
-							'type' => 'number',
-							'default' => '18'
-						),
+						// array(
+						// 	'name' => 'font_size_label',
+						// 	'label' => esc_html__('Label Font Size ', 'tour-booking-manager'),
+						// 	'desc' => esc_html__('Type Font Size Label(in PX Unit).', 'tour-booking-manager'),
+						// 	'type' => 'number',
+						// 	'default' => '18'
+						// ),
 						array(
 							'name' => 'warning_color',
 							'label' => esc_html__('Warning Color', 'tour-booking-manager'),
@@ -238,15 +238,10 @@
 			public function license_settings() {
 				?>
 				<div class="mp_basic_license_settings">
-					<h3><?php esc_html_e('Mage-People License', 'tour-booking-manager'); ?></h3>
-					<div class="_dFlex">
-						<span class="fas fa-info-circle _mR_xs"></span>
-						<i><?php esc_html_e('Thanking you for using our Mage-People plugin. Our some plugin  free and no license is required. We have some Additional addon to enhance feature of this plugin functionality. If you have any addon you need to enter a valid license for that plugin below.', 'tour-booking-manager'); ?>                    </i>
+					<div>
+						<?php esc_html_e('Thank you for using our plugin. Our some plugin  free and no license is required. We have some Additional addon to enhance feature of this plugin functionality. If you have any addon you need to enter a valid license for that plugin below.', 'tour-booking-manager'); ?> 
 					</div>
-					<div class="divider"></div>
-					<div class="dLayout mp_basic_license_area">
-						<?php $this->licence_area(); ?>
-					</div>
+					<?php $this->licence_area(); ?>
 				</div>
 				<?php
 			}

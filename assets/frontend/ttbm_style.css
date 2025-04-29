@@ -1,3 +1,12 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #222;
+}
+h2{
+	font-size: 22px;
+}
 body.theme-astra div.ttbm_wraper,
 body.theme-twentytwenty div.ttbm_wraper,
 body.theme-twentytwentyone div.ttbm_wraper,
@@ -203,7 +212,7 @@ div.mpStyle [data-bg-image]{
 	border-bottom: 1px solid #ddd;
 }
 /**************************************************/
-.ttbm_wraper button.ttbm_book_now {font-size: var(--fs);margin: 0 var(--dmp_xs) 0 0;}
+.ttbm_wraper button.ttbm_book_now {margin: 0 var(--dmp_xs) 0 0;}
 /*****************/
 /**********************/
 div.bg_image_area .group_item {
@@ -275,6 +284,43 @@ div.include_service ul li:hover,
 	border-color: var(--color_theme) !important;
 }
 
+/* ===============include exclude feature========= */
+.ttbm-include-exclude{
+	display: flex;
+	justify-content: start;
+	align-items: start;
+	gap: 10px;
+}
+.ttbm-include-exclude .items{
+	width: 50%;
+}
+.ttbm-include-exclude .items li{
+	margin-bottom: 10px;
+}
+.ttbm-activities{
+	display: flex;
+	justify-content: start;
+	align-items: start;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+.ttbm-activities .ttbm-items{
+	width: 49%;
+	margin-bottom: 10px;
+}
+.get-enquiry-form{
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: start;
+	gap: 10px;
+	padding: 20px 10px;
+}
+.mpStyle .get-enquiry-form input,.get-enquiry-form textarea{
+	width: 100%;
+	margin-bottom: 20px;
+}
+/* ===============include exclude feature========= */
 /*div.include_service ul li span {*/
 /*	background-color: transparent !important;*/
 /*	width: auto;*/
@@ -616,3 +662,12 @@ div.ttbm_viator_theme .item_icon{
 .ttbm_smart_theme .ttbm-sidebar-booking .ttbm-title-price i{
 	display: none;
 }
+
+.mpStyle .dButton, .mpStyle [class*="_dButton"] {
+    color: var(--color_theme_alter);
+    background-color: var(--color_theme);
+  }
+
+  .mpStyle .dButton  span{
+    color: var(--color_theme_alter);
+  }

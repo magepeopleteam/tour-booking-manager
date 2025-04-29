@@ -120,4 +120,15 @@
         minDate: 0
     });
 
+
+    $('.ttbm_hotel_tab_item').on('click', function() {
+        var tab_id = $(this).data('tab');
+
+        $('.ttbm_hotel_tab_item').removeClass('active');
+        $(this).addClass('active');
+
+        $('.ttbm_hotel_tab_content').removeClass('active');
+        $('#' + tab_id).addClass('active');
+    });
+
 })(jQuery);

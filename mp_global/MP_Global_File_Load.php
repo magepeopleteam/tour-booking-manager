@@ -89,6 +89,7 @@
 					let mp_currency_thousands_separator = "";
 					let mp_num_of_decimal = "";
 					let mp_ajax_url = "<?php echo admin_url('admin-ajax.php'); ?>";
+					let mp_site_url = " <?php echo esc_attr( get_site_url() ) ?>";
 					let mp_empty_image_url = "<?php echo esc_attr(MP_GLOBAL_PLUGIN_URL . '/assets/images/no_image.png'); ?>";
 					let mp_date_format = "<?php echo esc_attr(MP_Global_Function::get_settings('mp_global_settings', 'date_format', 'D d M , yy')); ?>";
 					let mp_date_format_without_year = "<?php echo esc_attr(MP_Global_Function::get_settings('mp_global_settings', 'date_format_without_year', 'D d M')); ?>";

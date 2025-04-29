@@ -84,6 +84,18 @@
 				];
 				register_post_type('ttbm_guide', $args);
 
+                register_post_type('ttbm_hotel_booking', array(
+                    'labels' => array(
+                        'name' => __('Hotel Bookings'),
+                        'singular_name' => __('Hotel Booking'),
+                    ),
+                    'public' => true,
+                    'has_archive' => true,
+                    'show_ui' => false,
+                    'show_in_menu' => true, // Ensure it's visible in the admin menu
+                    'supports' => array('title', 'editor', 'custom-fields'),
+                ));
+
 			}
 			public function set_custom_columns($columns) {
 				unset($columns['date']);

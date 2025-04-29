@@ -73,7 +73,7 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
             $excluded_post_ids = array();
             $selected_date = '';
             $selected_hotel_id = array();
-            $posts_per_page = 2;
+            $posts_per_page = 20;
             $query = self::ttbm_hotel_order_query( $selected_date, $selected_hotel_id, $excluded_post_ids, $posts_per_page );
 
             ?>
@@ -106,7 +106,7 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                     <div class="ttbm_total_booking_showing"><?php echo esc_attr__( 'Showing ', 'tour-booking-manager' )?>  <span class="ttbm_showing_items"><?php echo esc_attr( $query->post_count ) ; ?></span><?php echo esc_attr__( ' Order', 'tour-booking-manager' )?> </div>
                     <div class="ttbm_total_booking_per_page">
                         <span><?php echo esc_attr__( 'Guest Per Page', 'tour-booking-manager' )?></span>
-                        <input type="number" value="<?php echo esc_attr( $posts_per_page )?>" class="ttbm_total_booking_page_input">
+                        <input type="number" value="<?php echo esc_attr( $posts_per_page )?>" class="ttbm_total_booking_page_input" readonly>
                     </div>
                 </div>
 
@@ -148,6 +148,8 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
             ?>
             <?php
                 $sl = 1;
+                $billing_email = $billing_phone = $billing_address = '';
+
                 if ( $query->have_posts() ) :
                 while ( $query->have_posts() ) : $query->the_post();
                     $order_id = get_post_meta(get_the_ID(), '_ttbm_hotel_booking_order_id', true);
@@ -164,17 +166,24 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                     $paid_amount = get_post_meta(get_the_ID(), '_ttbm_hotel_booking_price', true);
                     $paid_amount = str_replace(',', '', $paid_amount);
                     $payment_method = get_post_meta(get_the_ID(), '_ttbm_hotel_booking_payment_method', true);
-                    ?>
 
+                    $order = wc_get_order( $order_id );
+                    if ( $order ) {
+                        $billing_email   = $order->get_billing_email();
+                        $billing_phone   = $order->get_billing_phone();
+                        $billing_address = $order->get_formatted_billing_address();
+                    }
+                    ?>
                     <tr class="ttbm_total_booking_tr" id="<?php echo esc_attr( get_the_ID() )?>">
                         <td class="ttbm_total_booking_td ttbm_total_booking_order_id">#<?php echo esc_html($order_id); ?></td>
                         <td class="ttbm_total_booking_td ttbm_total_booking_billing">
                             <?php echo esc_html($billing_name); ?>
                             <div class="ttbm_booking_user_more_info_holder">
                                 <div class="ttbm_booking_user_more_info" style="display: none">
-                                    name: rubel
-                                    address: niamat
-                                    phone: dsf
+                                    <div class="ttbm_billing_name"><?php esc_attr_e( 'Name:', 'tour-booking-manager'); echo esc_attr( $billing_name )?></div>
+                                    <div class="ttbm_billing_email"><?php esc_attr_e( 'Email:', 'tour-booking-manager'); echo esc_attr( $billing_email )?></div>
+                                    <div class="ttbm_billing_phone"><?php esc_attr_e( 'Phone:', 'tour-booking-manager'); echo esc_attr( $billing_phone )?></div>
+                                    <div class="ttbm_billing_address"><?php esc_attr_e( 'Address:', 'tour-booking-manager'); echo wp_kses_post( $billing_address )?></div>
                                 </div>
                                 <button class="ttbm_total_booking_view_more"><?php echo esc_attr__('View More', 'tour-booking-manager'); ?></button>
                             </div>

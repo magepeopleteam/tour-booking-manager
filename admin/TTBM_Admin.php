@@ -25,11 +25,15 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_CPT.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Taxonomy.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Hidden_Product.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Hidden_Hotel_Product.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Hotel_Template.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin_Tour_List.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Hotel_Booking_Lists.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Welcome.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Status.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_License.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Get_Enquiry.php';
 				//**********//
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Settings_Global.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Ticket_Types.php';
@@ -54,6 +58,7 @@
 				//**********//
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_General.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Gallery_Hotel.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_Price.php';
 				//**********//
 			}

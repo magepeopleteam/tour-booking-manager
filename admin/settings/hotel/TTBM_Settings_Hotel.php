@@ -27,6 +27,9 @@
 							<li data-tabs-target="#ttbm_settings_feature">
 								<span class="fas fa-tasks"></span><?php esc_html_e(' Features', 'tour-booking-manager'); ?>
 							</li>
+							<li data-tabs-target="#ttbm_settings_gallery">
+								<span class="fas fa-images"></span><?php esc_html_e(' Hotel Gallery', 'tour-booking-manager'); ?>
+							</li>
 						</ul>
 						<div class="tabsContent tab-content">
 							<?php
@@ -45,6 +48,7 @@
 				if (get_post_type($post_id) == 'ttbm_hotel') {
 					do_action('ttbm_settings_feature_save', $post_id);
 					do_action('ttbm_hotel_settings_save', $post_id);
+					do_action('ttbm_settings_gallery_save', $post_id);
 				}
 			}
 		}

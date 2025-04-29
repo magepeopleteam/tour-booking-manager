@@ -56,6 +56,18 @@
 				}
 				return self::template_path($file_name);
 			}
+
+            public static function details_template_file_path( $post_id = '' ): string {
+                $post_id       = $post_id ?? get_the_id();
+                $template_name = MP_Global_Function::get_post_info( $post_id, 'ttbm_hotel_template', 'hotel_default.php' );
+                $file_name     = 'themes/' . $template_name;
+                $dir           = TTBM_PLUGIN_DIR . '/templates/' . $file_name;
+                if ( ! file_exists( $dir ) ) {
+                    $file_name = 'themes/hotel_default.php';
+                }
+
+                return self::template_path( $file_name );
+            }
 			public static function template_path($file_name): string {
 				$template_path = get_stylesheet_directory() . '/ttbm_templates/';
 				$default_dir = TTBM_PLUGIN_DIR . '/templates/';
@@ -705,23 +717,25 @@
 				return MP_Global_Function::data_sanitize($data);
 			}
 			public static function data_sanitize($data) {
-				$data = @unserialize( $data, ['allowed_classes' => false] );
-				if (is_string($data) || is_serialized( $data )) {
-					$data = @unserialize( $data, ['allowed_classes' => false] );
-					if (is_array($data)) {
-						$data = MP_Global_Function::data_sanitize($data);
-					} else {
-						$data = sanitize_text_field($data);
-					}
-				} elseif (is_array($data)) {
+				if (is_array($data)) {
 					foreach ($data as &$value) {
 						if (is_array($value)) {
-							$value = MP_Global_Function::data_sanitize($value);
+							$value = self::data_sanitize($value);
 						} else {
 							$value = sanitize_text_field($value);
 						}
 					}
+					return $data;
 				}
+				
+				if (is_string($data) && !empty($data)) {
+					$unserialized = @unserialize($data, ['allowed_classes' => false]);
+					if ($unserialized !== false || $data === 'b:0;') {
+						return self::data_sanitize($unserialized);
+					}
+					return sanitize_text_field($data);
+				}
+				
 				return $data;
 			}
 			public static function get_submit_info($key, $default = '') {

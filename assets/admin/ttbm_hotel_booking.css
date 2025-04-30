@@ -178,7 +178,9 @@
     background-color: #f6f6f6;
 }
 
-.ttbm_hotel_booking_load_more_holder{
+.ttbm_hotel_booking_load_more_holder,
+.ttbm_hotel_list_load_more_btn_holder
+{
     display: flex;
     padding: 10px;
     width: 100%;

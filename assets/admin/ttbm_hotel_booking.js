@@ -55,6 +55,63 @@
 
     });
 
+    $(document).on('click', '#ttbm_hotel_list_load_more_btn',function() {
+
+        let clicked_btn_txt = $(this).text().trim();
+        if( clicked_btn_txt === 'Load More' ){
+            $(this).text('Loading...');
+            let nonce = ttbm_admin_ajax.nonce;
+            let setUrl = mp_ajax_url;
+            let display_limit = 2;
+
+            let hotelIds = [];
+
+            $('.ttbm_hotel_list_view tr[id^="hotel_"]').each(function() {
+                let rawId = $(this).attr('id');
+                let cleanId = rawId.replace('hotel_', '');
+                hotelIds.push(cleanId);
+            });
+            hotelIds = hotelIds.join(',');
+            let type = 'POST';
+            jQuery.ajax({
+                type: type,
+                url: setUrl,
+                data: {
+                    action: "ttbm_load_more_hotel_lists_admin",
+                    loaded_ids_str: hotelIds,
+                    display_limit: display_limit,
+                    nonce: nonce,
+                },
+                success: function( response ) {
+                    let searchData =  response.data.result_data;
+                    $("#ttbm_hotel_list_view").append( searchData );
+
+                    $("#ttbm_hotel_list_load_more_btn").text(clicked_btn_txt );
+                    if( response.data.post_count < display_limit ){
+                        $(".ttbm_hotel_list_load_more_btn_holder").fadeOut();
+                    }else{
+                        $(".ttbm_hotel_list_load_more_btn_holder").fadeIn();
+                    }
+
+                },
+                error: function(xhr, status, error) {
+                    $("#ttbm_hotel_list_load_more_btn").text(clicked_btn_txt );
+                    console.error(xhr.responseText);
+                }
+            });
+        }else{
+            alert('Please Wait Somethimes');
+        }
+
+    });
+
+    $(document).on('click', '.ttbm-hotel-list-delete-btn', function(e) {
+        var confirmMsg = $(this).data('confirm') || 'Are you sure?';
+        if (!confirm(confirmMsg)) {
+            e.preventDefault(); // Stop link navigation if cancel
+        }
+    });
+
     $(document).on("click", ".ttbm_total_booking_filter_btn", function (e) {
         e.preventDefault();
 
@@ -154,7 +211,7 @@
 
     }
 
-    $('#ttbm_hotel_title_SearchBox').on('input', function() {
+    $(document).on('input', '#ttbm_hotel_title_SearchBox',function() {
         let search_term = jQuery(this).val();
         let nonce = ttbm_admin_ajax.nonce;
         let setUrl = mp_ajax_url;
@@ -177,6 +234,5 @@
             get_search_data_and_display( setUrl, type, search_term, nonce);
         }
     });
-
 
 })(jQuery);

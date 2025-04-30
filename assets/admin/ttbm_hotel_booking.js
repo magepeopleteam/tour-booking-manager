@@ -131,4 +131,52 @@
         $('#' + tab_id).addClass('active');
     });
 
+
+
+
+    function get_search_data_and_display( setUrl, type, search_term, nonce){
+        jQuery.ajax({
+            type: type,
+            url: setUrl,
+            data: {
+                action: "get_ttbm_hotel_search_by_title",
+                search_term: search_term,
+                limit: 20
+            },
+            success: function( response ) {
+                let searchData =  response.data.result_data;
+                $("#ttbm_hotel_list_view").html( searchData );
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+
+    }
+
+    $('#ttbm_hotel_title_SearchBox').on('input', function() {
+        let search_term = jQuery(this).val();
+        let nonce = ttbm_admin_ajax.nonce;
+        let setUrl = mp_ajax_url;
+        let type = 'POST';
+        if( search_term.length > 0 ) {
+            jQuery("#productTitleWrapper").show();
+            jQuery("#productDropDownMenu").show();
+        }
+        if( search_term.length === 3 ) { // Trigger search when input length is more than 2
+            get_search_data_and_display( setUrl, type, search_term, nonce);
+        }else if( search_term.length === 12 ){
+            get_search_data_and_display( setUrl, type, search_term, nonce);
+        }else if( search_term.length === 22 ){
+            get_search_data_and_display( setUrl, type, search_term, nonce);
+        }else if( search_term.length === 33 ){
+            get_search_data_and_display( setUrl, type, search_term, nonce);
+        }
+        else if( search_term.length < 3 ){
+            search_term = '';
+            get_search_data_and_display( setUrl, type, search_term, nonce);
+        }
+    });
+
+
 })(jQuery);

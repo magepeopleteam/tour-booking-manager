@@ -11,6 +11,45 @@ if (!class_exists('TTBM_Settings_Hotel_Ajax')) {
 
             add_action('wp_ajax_get_ttbm_hotel_booking_load_more_lists', [$this, 'get_ttbm_hotel_booking_load_more_lists']);
             add_action('wp_ajax_nopriv_get_ttbm_hotel_booking_load_more_lists', [$this, 'get_ttbm_hotel_booking_load_more_lists']);
+
+            add_action('wp_ajax_get_ttbm_hotel_search_by_title', [$this, 'get_ttbm_hotel_search_by_title']);
+            add_action('wp_ajax_nopriv_get_ttbm_hotel_search_by_title', [$this, 'get_ttbm_hotel_search_by_title']);
+        }
+
+        public function get_ttbm_hotel_search_by_title() {
+
+            $search_term = isset( $_POST['search_term'] ) ? sanitize_text_field( wp_unslash( $_POST['search_term'] ) ) : '';
+            $display_limit = 20;
+            $success = false;
+            $nonce = '';
+
+            if( empty( $search_term ) ) {
+                $args = array(
+                    'post_type' => 'ttbm_hotel',
+                    'post_status' => 'publish',
+                    'posts_per_page' => $display_limit,
+                );
+            }else {
+                $args = array(
+                    'post_type' => 'ttbm_hotel',
+                    'post_status' => 'publish',
+                    's' => $search_term,
+                    'fields' => 'ids',
+                    'posts_per_page' => $display_limit,
+                );
+            }
+            $query = new WP_Query( $args );
+
+//          $result_data = TTBM_Hotel_Booking_Lists::ttbm_display_Hotel_lists( $query );
+            $result_data = TTBM_Hotel_Booking_Lists::display_hotel_lists_as_table( $query );
+            if( $result_data){
+                $success = true;
+            }
+
+            wp_send_json_success([
+                'result_data' => $result_data,
+                'success' => $success,
+            ]);
         }
 
         public function get_ttbm_hotel_booking_all_lists() {

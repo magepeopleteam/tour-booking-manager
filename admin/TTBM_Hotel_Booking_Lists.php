@@ -101,6 +101,10 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                         <div class="ttbm_total_booking_wrapper" style="display: block">
                             <h2 class="ttbm_total_booking_title"><?php echo esc_attr__( 'Hotel List', 'tour-booking-manager' )?></h2>
 
+                            <div class="ttbm_add_new_hotel_header">
+                                <a href="http://localhost/mage_people_pro/wp-admin/post-new.php?post_type=ttbm_hotel" class="page-title-action">
+                                    <i class="fas fa-plus"></i> Add New</a>
+                            </div>
                             <div class="ttbm_total_booking_filter_section">
                                 <span class="ttbm_total_booking_filter_label"><?php echo esc_attr__( 'Filter List By:', 'tour-booking-manager' )?></span>
                                 <div class="ttbm_total_booking_filter_options">

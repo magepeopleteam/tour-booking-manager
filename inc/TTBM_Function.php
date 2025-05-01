@@ -957,7 +957,7 @@
 				return $meta_values;
 			}
 
-            public static function get_hotel_analytical_data(){
+            public static function get_travel_analytical_data(){
 
                 $result_date = array();
                 $travel_args = array(

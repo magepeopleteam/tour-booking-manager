@@ -110,7 +110,7 @@
                 $posts_query = new WP_Query($args);
                 $remaining_travel = $posts_query->found_posts - $post_per_page;
 
-                $analytics_Data = TTBM_Function::get_hotel_analytical_data();
+                $analytics_Data = TTBM_Function::get_travel_analytical_data();
 
                 ?>
                 <div class="wrap ttbm-tour-list-page ">

@@ -824,6 +824,8 @@
         const postPerPage = button.data('posts-per-page');
         const nonce = button.data('nonce');
 
+        let load_more_count = $(this).children('.ttbm_load_more_remaining_travel').text().trim();
+
         $.ajax({
             url: ttbm_admin_ajax.ajax_url,
             type: 'POST',
@@ -842,7 +844,10 @@
                     if (paged >= response.data.max_pages) {
                         button.remove();
                     } else {
+                        let remainig_travel = load_more_count - response.data.count_travels;
                         button.attr('data-paged', paged + 1).text('Load More');
+                        let remaining_span = '(<span class="ttbm_load_more_remaining_travel">'+remainig_travel+'</span>)';
+                        button.append(remaining_span);
                     }
                 } else {
                     button.remove();

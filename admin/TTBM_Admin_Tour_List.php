@@ -61,7 +61,7 @@
                 check_ajax_referer('ttbm_load_more', 'nonce');
             
                 $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
-                $post_per_page = isset($_POST['post_per_page']) ? intval($_POST['post_per_page']) : 10;
+                $post_per_page = isset($_POST['post_per_page']) ? intval($_POST['post_per_page']) : 1;
             
                 $args = array(
                     'post_type'      => 'ttbm_tour',
@@ -79,6 +79,7 @@
             
                 wp_send_json_success(array(
                     'html' => $html,
+                    'count_travels' => $posts_query->post_count,
                     'max_pages' => $posts_query->max_num_pages
                 ));
             }
@@ -90,38 +91,48 @@
 
 			public function ttbm_list() {
                 $label = TTBM_Function::get_name();
+                $paged = isset($_GET['paged']) ? (int) $_GET['paged'] : 1;
+                $post_per_page = isset($_REQUEST['post_per_page']) ? (int) $_REQUEST['post_per_page'] : 1;
+                if (isset($_GET['_wpnonce']) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'ttbm_pagination')) {
+                    $paged = isset($_GET['paged']) ? max(1, intval($_GET['paged'])) : 1;
+                } else {
+                    $paged = 1;
+                }
+                $args = array(
+                    'post_type'      => 'ttbm_tour',
+                    'post_status'    => 'publish',
+                    'paged'          => $paged,
+                    'posts_per_page' => $post_per_page,
+                    'orderby'        => 'date',
+                    'order'          => 'DESC',
+                );
+
+                $posts_query = new WP_Query($args);
+                $remaining_travel = $posts_query->found_posts - $post_per_page;
+
+                $analytics_Data = TTBM_Function::get_hotel_analytical_data();
+
                 ?>
                 <div class="wrap ttbm-tour-list-page ">
-                
-                    <h1 class="page-title"><?php echo esc_html($label).__(' Lists','tour-booking-manager'); ?></h1>
+
                     <div class="ttbm-tour-list-header">
-                        <a href="<?php echo admin_url('post-new.php?post_type=ttbm_tour'); ?>" class="page-title-action">
-                            <i class="fas fa-plus"></i> <?php esc_html_e('Add New', 'tour-booking-manager'); ?>
-                        </a>
-                        <input type="text" name="ttbm_tour_search" id="ttbm-tour-search" data-nonce="<?php echo wp_create_nonce("ttbm_search_nonce"); ?>" placeholder="Search <?php echo esc_html($label); ?>">
+                        <h1 class="page-title"><?php echo esc_html($label).__(' Lists','tour-booking-manager'); ?></h1>
+<!--                        <div class="ttbm_total_travel_count">--><?php //esc_attr_e( 'Total Travels: ', 'tour-booking-manager' ); echo esc_attr( $posts_query->found_posts )?><!--</div>-->
+                        <div class="ttbm_tour_search_add_holder">
+                            <input type="text" name="ttbm_tour_search" id="ttbm-tour-search" data-nonce="<?php echo wp_create_nonce("ttbm_search_nonce"); ?>" placeholder="Search <?php echo esc_html($label); ?>">
+                            <a href="<?php echo admin_url('post-new.php?post_type=ttbm_tour'); ?>" class="page-title-action">
+                                <i class="fas fa-plus"></i> <?php esc_html_e('Add New', 'tour-booking-manager'); ?>
+                            </a>
+                        </div>
                     </div>
+
+                    <!--Here Analytics-->
+                    <?php do_action('ttbm_travel_analytics_display', $posts_query->found_posts, $analytics_Data )?>
+
                     <div class="ttbm-tour-list">
                     <?php
-                        $paged = isset($_GET['paged']) ? (int) $_GET['paged'] : 1;
-                        $post_per_page = isset($_REQUEST['post_per_page']) ? (int) $_REQUEST['post_per_page'] : 10;
-                        if (isset($_GET['_wpnonce']) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'ttbm_pagination')) {
-                            $paged = isset($_GET['paged']) ? max(1, intval($_GET['paged'])) : 1;
-                        } else {
-                            $paged = 1;
-                        }
-                        $args = array(
-                            'post_type'      => 'ttbm_tour',
-                            'post_status'    => 'publish',
-                            'paged'          => $paged,
-                            'posts_per_page' => $post_per_page,
-                            'orderby'        => 'date',
-                            'order'          => 'DESC',
-                        );
-                        
-                        $posts_query = new WP_Query($args);
-                        
                         $this->tour_list($posts_query); 
-                        ?>
+                    ?>
                     </div>
                     <?php if ($posts_query->max_num_pages > $paged) : ?>
                         <div class="ttbm-load-more-wrap">
@@ -129,7 +140,7 @@
                                     data-paged="<?php echo esc_attr($paged + 1); ?>" 
                                     data-posts-per-page="<?php echo esc_attr($post_per_page); ?>" 
                                     data-nonce="<?php echo wp_create_nonce('ttbm_load_more'); ?>">
-                                    <i class="fas fa-sync-alt"></i> <?php esc_html_e('Load More', 'tour-booking-manager'); ?>
+                                <i class="fas fa-sync-alt"></i> <?php esc_html_e('Load More', 'tour-booking-manager'); ?> (<span class="ttbm_load_more_remaining_travel"><?php echo esc_attr( $remaining_travel );?></span>)
                             </button>
                         </div>
                     <?php endif; ?>

@@ -29,6 +29,7 @@
                 add_action('ttbm_related_tour', array($this, 'related_tour'));
                 add_action('ttbm_dynamic_sidebar', array($this, 'dynamic_sidebar'), 10, 1);
                 add_action('ttbm_registration', array($this, 'ticket_registration'));
+                add_action('ttbm_travel_analytics_display', array($this, 'travel_analytics_display'), 10, 2);
             }
 
             public function ticket_registration(){
@@ -198,6 +199,77 @@
                     dynamic_sidebar('ttbm_details_sidebar');
                 }
             }
+
+            public function travel_analytics_display( $found_posts, $analytics_Data ) { ?>
+                <div class="ttbm_travel_analytics-container">
+                    <div class="ttbm_travel_analytics-bar">
+                        <div class="ttbm_travel_metrics-group">
+                            <div class="ttbm_travel_metric-card">
+                                <div class="ttbm_travel_icon-circle ttbm_travel_blue-bg">
+                                    <i class="fas fa-book-open ttbm_travel_blue-text"></i>
+                                </div>
+                                <div>
+                                    <p class="ttbm_travel_metric-label"><?php esc_attr_e( 'Tours', 'tour-booking-manager' );?></p>
+                                    <p class="ttbm_travel_metric-value ttbm_travel_blue-text" id="total-tours"><?php echo esc_attr( $found_posts );?></p>
+                                </div>
+                            </div>
+
+                            <div class="ttbm_travel_metric-card">
+                                <div class="ttbm_travel_icon-circle ttbm_travel_green-bg">
+                                    <i class="fas fa-dollar-sign ttbm_travel_green-text"></i>
+                                </div>
+                                <div>
+                                    <p class="ttbm_travel_metric-label"><?php esc_attr_e( 'Revenue', 'tour-booking-manager' );?></p>
+                                    <p class="ttbm_travel_metric-value ttbm_travel_green-text" id="total-revenue">$2,345</p>
+                                </div>
+                            </div>
+
+                            <div class="ttbm_travel_metric-card">
+                                <div class="ttbm_travel_icon-circle ttbm_travel_purple-bg">
+                                    <i class="fas fa-calendar-alt ttbm_travel_purple-text"></i>
+                                </div>
+                                <div>
+                                    <p class="ttbm_travel_metric-label"><?php esc_attr_e( 'Active', 'tour-booking-manager' );?></p>
+                                    <p class="ttbm_travel_metric-value ttbm_travel_purple-text" id="active-tours"><?php echo esc_attr( $analytics_Data['active_tour'] )?></p>
+                                </div>
+                            </div>
+
+                            <div class="ttbm_travel_metric-card">
+                                <div class="ttbm_travel_icon-circle ttbm_travel_amber-bg">
+                                    <i class="fas fa-map-marker-alt ttbm_travel_amber-text"></i>
+                                </div>
+                                <div>
+                                    <p class="ttbm_travel_metric-label"><?php esc_attr_e( 'Locations', 'tour-booking-manager' );?></p>
+                                    <p class="ttbm_travel_metric-value ttbm_travel_amber-text" id="ttbm_travel_total-locations"><?php echo esc_attr($analytics_Data['location_count'] )?></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ttbm_travel_metrics-group">
+                            <div class="ttbm_travel_info-card">
+                                <div class="ttbm_travel_info-section">
+                                    <p class="ttbm_travel_metric-label"><?php esc_attr_e( 'Top Destination', 'tour-booking-manager' );?></p>
+                                    <p class="ttbm_travel_metric-value ttbm_travel_indigo-text" id="top-destination"><?php esc_attr_e( 'New York', 'tour-booking-manager' );?></p>
+                                </div>
+                                <div class="ttbm_travel_info-section">
+                                    <p class="ttbm_travel_metric-label"><?php esc_attr_e( 'Avg Price', 'tour-booking-manager' );?></p>
+                                    <p class="ttbm_travel_metric-value ttbm_travel_pink-text" id="avg-price">$218</p>
+                                </div>
+                            </div>
+
+                            <div class="ttbm_travel_status-card">
+                                <p class="ttbm_travel_metric-label"><?php esc_attr_e( 'Status', 'tour-booking-manager' );?></p>
+                                <div class="ttbm_travel_status-indicators">
+                                    <span class="ttbm_travel_status-dot ttbm_travel_dot-active"></span>
+                                    <span class="ttbm_travel_status-text" id="ttbm_travel_active-count"> <?php echo esc_attr( $analytics_Data['active_tour'] ); esc_attr_e( ' Active', 'tour-booking-manager' );?></span>
+                                    <span class="ttbm_travel_status-dot ttbm_travel_dot-expired"></span>
+                                    <span class="ttbm_travel_status-text" id="ttbm_travel_expired-count"><?php echo esc_attr( $analytics_Data['expired_tour'] );  esc_attr_e( ' Expired', 'tour-booking-manager' );?></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php }
         }
         new TTBM_Details_Layout();
     }

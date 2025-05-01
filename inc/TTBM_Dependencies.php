@@ -67,6 +67,7 @@
 				wp_enqueue_script('ttbm_hotel_booking', TTBM_PLUGIN_URL . '/assets/admin/ttbm_hotel_booking.js', array('jquery'), time(), true);
 				wp_enqueue_style('ttbm_admin_style', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_style.css', array(), time());
 				wp_enqueue_style('mp_main_settings', TTBM_PLUGIN_URL . '/assets/admin/mp_main_settings.css', array(), time());
+				wp_enqueue_style('ttbm_travel_list_header', TTBM_PLUGIN_URL . '/assets/admin/ttbm_travel_list_header.css', array(), time());
 				wp_enqueue_style('ttbm_hotel_booking', TTBM_PLUGIN_URL . '/assets/admin/ttbm_hotel_booking.css', array(), time());
 				wp_localize_script('ttbm_admin_script', 'ttbm_admin_ajax', array(
 					'ajax_url'  => admin_url('admin-ajax.php'),

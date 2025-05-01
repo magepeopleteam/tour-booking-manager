@@ -95,9 +95,6 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
             $today_date = current_time('Y-m-d');
             $all_booked_rooms = $today_booked_rooms = 0;
 
-            $test_array = [];
-
-
             if ( $query->have_posts() ) :
                 while ( $query->have_posts() ) : $query->the_post();
                     $post_id   = get_the_ID();
@@ -123,15 +120,12 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                 endwhile;
             endif;
 
-
             foreach ( $allRoomsData as $roomSet ) {
                 foreach ( $roomSet as $room ) {
                     $qty = isset($room['ttbm_hotel_room_qty']) ? (int)$room['ttbm_hotel_room_qty'] : 0;
                     $totalRooms += $qty;
                 }
             }
-
-
 
             return array(
                    'total_hotel' => $total_hotel,
@@ -157,7 +151,6 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
 
                 <?php
                 $hotel_data = self::ttbm_get_all_hotel_analysis_data();
-                error_log( print_r( [ '$hotel_data' => $hotel_data ], true ) );
 
                 ?>
                 <div class="ttbm_hotel_list_header_stats-container">

@@ -141,7 +141,7 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
             $excluded_post_ids = array();
             $selected_date = '';
             $selected_hotel_id = array();
-            $posts_per_page = 2;
+            $posts_per_page = 10;
             $query = self::ttbm_hotel_order_query( $selected_date, $selected_hotel_id, $excluded_post_ids, $posts_per_page );
             $hotel_list_query = self::ttbm_hotel_list_query( $posts_per_page );
 
@@ -474,9 +474,9 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                     <table class="ttbm-hotel-list-table">
                         <thead>
                         <tr>
-                            <th scope="col" class="ttbm-hotel-list-column-image">Image</th>
-                            <th scope="col" class="ttbm-hotel-list-column-hotel">Hotel</th>
-                            <th scope="col" class="ttbm-hotel-list-column-actions">Actions</th>
+                            <th scope="col" class="ttbm-hotel-list-column-image"><?php echo esc_attr__('Image', 'tour-booking-manager'); ?></th>
+                            <th scope="col" class="ttbm-hotel-list-column-hotel"><?php echo esc_attr__('Hotel', 'tour-booking-manager'); ?></th>
+                            <th scope="col" class="ttbm-hotel-list-column-actions"><?php echo esc_attr__('Actions', 'tour-booking-manager'); ?></th>
                         </tr>
                         </thead>
                         <tbody class="ttbm_hotel_list_view" id="ttbm_hotel_list_view">

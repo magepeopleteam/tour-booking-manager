@@ -215,16 +215,6 @@
                             </div>
 
                             <div class="ttbm_travel_metric-card">
-                                <div class="ttbm_travel_icon-circle ttbm_travel_green-bg">
-                                    <i class="fas fa-dollar-sign ttbm_travel_green-text"></i>
-                                </div>
-                                <div>
-                                    <p class="ttbm_travel_metric-label"><?php esc_attr_e( 'Revenue', 'tour-booking-manager' );?></p>
-                                    <p class="ttbm_travel_metric-value ttbm_travel_green-text" id="total-revenue">$2,345</p>
-                                </div>
-                            </div>
-
-                            <div class="ttbm_travel_metric-card">
                                 <div class="ttbm_travel_icon-circle ttbm_travel_purple-bg">
                                     <i class="fas fa-calendar-alt ttbm_travel_purple-text"></i>
                                 </div>

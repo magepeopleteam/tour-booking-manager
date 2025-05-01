@@ -61,7 +61,7 @@
                 check_ajax_referer('ttbm_load_more', 'nonce');
             
                 $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
-                $post_per_page = isset($_POST['post_per_page']) ? intval($_POST['post_per_page']) : 1;
+                $post_per_page = isset($_POST['post_per_page']) ? intval($_POST['post_per_page']) : 10;
             
                 $args = array(
                     'post_type'      => 'ttbm_tour',
@@ -92,7 +92,7 @@
 			public function ttbm_list() {
                 $label = TTBM_Function::get_name();
                 $paged = isset($_GET['paged']) ? (int) $_GET['paged'] : 1;
-                $post_per_page = isset($_REQUEST['post_per_page']) ? (int) $_REQUEST['post_per_page'] : 1;
+                $post_per_page = isset($_REQUEST['post_per_page']) ? (int) $_REQUEST['post_per_page'] : 10;
                 if (isset($_GET['_wpnonce']) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'ttbm_pagination')) {
                     $paged = isset($_GET['paged']) ? max(1, intval($_GET['paged'])) : 1;
                 } else {

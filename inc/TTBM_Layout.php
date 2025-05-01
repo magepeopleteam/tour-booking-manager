@@ -193,6 +193,7 @@
 				?>
 				<label class="min_400 ttbm_id_select">
 					<select name="ttbm_id" class="formControl ttbm_select2" id="<?php echo esc_attr( $hotel_list_id )?>" required>
+
 						<option value="" selected><?php echo esc_html__('Select', 'tour-booking-manager') . ' ' . esc_html($label); ?></option>
 						<?php
 							$post_query = MP_Global_Function::query_post_type( 'ttbm_hotel' );

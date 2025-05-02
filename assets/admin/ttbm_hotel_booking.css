@@ -300,6 +300,7 @@
 li.ttbm_hotel_tab_item {
     border: 1px solid #cfcaca;
     margin-bottom: 0px;
+    width:200px;
 }
 
 .ttbm_hotel_lists_list_title {

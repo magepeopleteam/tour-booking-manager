@@ -68,15 +68,72 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
             return new WP_Query($args);
         }
 
-        public static function ttbm_hotel_list_query( $posts_per_page = 20 ) {
+        public static function ttbm_hotel_list_query( $posts_per_page = 20, $excluded_post_ids=[] ) {
 
             $args = array(
                 'post_type'      => 'ttbm_hotel',
                 'posts_per_page' => $posts_per_page,
                 'post_status'    => 'publish',
+                'post__not_in'   => $excluded_post_ids,
             );
 
             return new WP_Query($args);
+        }
+
+        public static function ttbm_get_all_hotel_analysis_data(){
+
+            $args = array(
+                'post_type'      => 'ttbm_hotel',
+                'post_status'    => 'publish',
+            );
+
+            $query = new WP_Query($args);
+            $total_hotel = $query->found_posts;
+            $hotel_room_details = $allRoomsData = $ttbm_hotel_bookings = [];
+            $totalRooms = 0;
+
+            $today_date = current_time('Y-m-d');
+            $all_booked_rooms = $today_booked_rooms = 0;
+
+            if ( $query->have_posts() ) :
+                while ( $query->have_posts() ) : $query->the_post();
+                    $post_id   = get_the_ID();
+                    $hotel_room_details = get_post_meta( $post_id, 'ttbm_room_details', true );
+                    $ttbm_hotel_bookings = get_post_meta( $post_id, 'ttbm_hotel_bookings', true );
+
+                    if ( is_array($hotel_room_details) ) {
+                        $allRoomsData[] = $hotel_room_details;
+                    }
+
+                    if ( ! empty( $ttbm_hotel_bookings ) && is_array( $ttbm_hotel_bookings ) ) {
+                        foreach ( $ttbm_hotel_bookings as $booking ) {
+                            if ( isset($booking['check_in'], $booking['rooms_booked']) && $booking['check_in'] >= $today_date ) {
+                                $all_booked_rooms += (int) $booking['rooms_booked'];
+                            }
+
+                            if ( isset($booking['check_in'], $booking['rooms_booked']) && $booking['check_in'] === $today_date ) {
+                                $today_booked_rooms += (int) $booking['rooms_booked'];
+                            }
+                        }
+                    }
+
+                endwhile;
+            endif;
+
+            foreach ( $allRoomsData as $roomSet ) {
+                foreach ( $roomSet as $room ) {
+                    $qty = isset($room['ttbm_hotel_room_qty']) ? (int)$room['ttbm_hotel_room_qty'] : 0;
+                    $totalRooms += $qty;
+                }
+            }
+
+            return array(
+                   'total_hotel' => $total_hotel,
+                   'totalRooms' => $totalRooms,
+                   'today_booked_rooms' => $today_booked_rooms,
+                   'all_booked_rooms' => $all_booked_rooms,
+            );
+
         }
 
         public function ttbm_hotel_order() {
@@ -84,49 +141,90 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
             $excluded_post_ids = array();
             $selected_date = '';
             $selected_hotel_id = array();
-            $posts_per_page = 2;
+            $posts_per_page = 10;
             $query = self::ttbm_hotel_order_query( $selected_date, $selected_hotel_id, $excluded_post_ids, $posts_per_page );
-            $hotel_list_query = self::ttbm_hotel_list_query( $selected_date, $selected_hotel_id, $excluded_post_ids, $posts_per_page );
+            $hotel_list_query = self::ttbm_hotel_list_query( $posts_per_page );
 
             ?>
 
             <div class="ttbm_hotel_tab_holder">
+
+                <?php
+                $hotel_data = self::ttbm_get_all_hotel_analysis_data();
+
+                ?>
+                <div class="ttbm_hotel_list_header_stats-container">
+                    <div class="ttbm_hotel_list_header_stat-card ttbm_hotel_list_header_blue-card">
+                        <div class="ttbm_hotel_list_header_stat-icon ttbm_hotel_list_header_blue-bg">
+                            <i class="fas fa-hotel"></i>
+                        </div>
+                        <div class="ttbm_hotel_list_header_stat-info">
+                            <div class="ttbm_hotel_list_header_stat-label"><?php echo esc_attr__( 'Total Hotels', 'tour-booking-manager' )?></div>
+                            <div class="ttbm_hotel_list_header_stat-value ttbm_hotel_list_header_blue-value"><?php echo esc_attr( $hotel_data['total_hotel']);?></div>
+                        </div>
+                    </div>
+
+                    <div class="ttbm_hotel_list_header_stat-card ttbm_hotel_list_header_green-card">
+                        <div class="ttbm_hotel_list_header_stat-icon ttbm_hotel_list_header_green-bg">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <div class="ttbm_hotel_list_header_stat-info">
+                            <div class="ttbm_hotel_list_header_stat-label"><?php echo esc_attr__( 'Available Rooms', 'tour-booking-manager' )?></div>
+                            <div class="ttbm_hotel_list_header_stat-value ttbm_hotel_list_header_green-value"><?php echo esc_attr( $hotel_data['totalRooms']);?></div>
+                        </div>
+                    </div>
+
+                    <div class="ttbm_hotel_list_header_stat-card ttbm_hotel_list_header_purple-card">
+                        <div class="ttbm_hotel_list_header_stat-icon ttbm_hotel_list_header_purple-bg">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="ttbm_hotel_list_header_stat-info">
+                            <div class="ttbm_hotel_list_header_stat-label"><?php echo esc_attr__( 'Bookings Today', 'tour-booking-manager' )?></div>
+                            <div class="ttbm_hotel_list_header_stat-value ttbm_hotel_list_header_purple-value"><?php echo esc_attr( $hotel_data['today_booked_rooms']);?></div>
+                        </div>
+                    </div>
+
+                    <div class="ttbm_hotel_list_header_stat-card ttbm_hotel_list_header_orange-card">
+                        <div class="ttbm_hotel_list_header_stat-icon ttbm_hotel_list_header_orange-bg">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="ttbm_hotel_list_header_stat-info">
+                            <div class="ttbm_hotel_list_header_stat-label"><?php echo esc_attr__( 'Avg Rating', 'tour-booking-manager' )?></div>
+                            <div class="ttbm_hotel_list_header_stat-value ttbm_hotel_list_header_orange-value">4.7</div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <ul class="ttbm_hotel_tab_menu">
-                    <li class="ttbm_hotel_tab_item active" data-tab="ttbm_hotel_list_tab">Hotel Lists</li>
-                    <li class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_booking_tab">Hotel Booking Lists</li>
+                    <li class="ttbm_hotel_tab_item active" data-tab="ttbm_hotel_list_tab"><?php echo esc_attr__( 'Hotel Lists', 'tour-booking-manager' )?></li>
+                    <li class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_booking_tab"><?php echo esc_attr__( 'Hotel Booking Lists', 'tour-booking-manager' )?></li>
                 </ul>
                 <div class="ttbm_hotel_tab_content_holder">
 
                     <div id="ttbm_hotel_list_tab" class="ttbm_hotel_tab_content active">
                         <div class="ttbm_total_booking_wrapper" style="display: block">
-                            <h2 class="ttbm_total_booking_title"><?php echo esc_attr__( 'Hotel List', 'tour-booking-manager' )?></h2>
 
-                            <div class="ttbm_add_new_hotel_header">
-                                <a href="http://localhost/mage_people_pro/wp-admin/post-new.php?post_type=ttbm_hotel" class="page-title-action">
-                                    <i class="fas fa-plus"></i> Add New</a>
-                            </div>
-                            <div class="ttbm_total_booking_filter_section">
-                                <span class="ttbm_total_booking_filter_label"><?php echo esc_attr__( 'Filter List By:', 'tour-booking-manager' )?></span>
-                                <div class="ttbm_total_booking_filter_options">
-                                    <label class="ttbm_total_booking_radio_container">
-                                        <input type="radio" name="filter_type_hotel" value="Hotel" checked>
-                                        <span class="ttbm_total_booking_radio_text"><?php echo esc_attr__( 'Hotel', 'tour-booking-manager' )?></span>
-                                    </label>
-                                </div>
-                                <div class="ttbm_total_booking_filter_controls">
+                            <div class="ttbm_hotel_list_header">
 
-                                    <div data-collapse="#ttbm_hotel_id" class="mActive">
-                                        <?php TTBM_Layout::hotel_list_in_select('get_all_hotel_list' ); ?>
+                                <h2 class="ttbm_total_booking_title"><?php echo esc_attr__( 'Hotel List', 'tour-booking-manager' )?></h2>
+                                <div class="ttbm_hotel_search_addHolder">
+                                    <div class="ttbm_hotel_titleSearchContainer">
+                                        <input type="text" class="ttbm_hotel_title_SearchBox" id="ttbm_hotel_title_SearchBox" placeholder="Hotel Name Search...">
                                     </div>
-                                    <button class="ttbm_hotel_filter_btn" id=""><?php echo __( 'Filter', 'tour-booking-manager' )?></button>
+                                    <div class="ttbm_add_new_hotel_header">
+                                        <a href="http://localhost/mage_people_pro/wp-admin/post-new.php?post_type=ttbm_hotel" class="ttbm_add_new_hotel_text">
+                                            <i class="fas fa-plus"></i> <?php echo esc_attr__( 'Add New', 'tour-booking-manager' )?></a>
+                                    </div>
                                 </div>
                             </div>
-                            <table class="ttbm_total_booking_table" >
-                                <?php echo wp_kses_post( self::ttbm_display_Hotel_lists( $hotel_list_query ) )?>
-                            </table>
+
+                            <?php echo wp_kses_post( self::ttbm_display_Hotel_lists( $hotel_list_query, $posts_per_page ) )?>
                         </div>
                     </div>
 
+
+                    <!--Booking List Display-->
                     <div id="ttbm_hotel_booking_tab" class="ttbm_hotel_tab_content">
                         <div class="ttbm_total_booking_wrapper" style="display: block">
                             <h2 class="ttbm_total_booking_title"><?php echo esc_attr__( 'Hotel Booking List', 'tour-booking-manager' )?></h2>
@@ -183,7 +281,7 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
 
                             <?php if( $query->found_posts > $posts_per_page ){?>
                                 <div class="ttbm_hotel_booking_load_more_holder">
-                                    <button class="ttbm_hotel_booking_load_more_btn">Load More</button>
+                                    <button class="ttbm_hotel_booking_load_more_btn"><?php esc_attr_e( 'Load More', 'tour-booking-manager');?></button>
                                 </div>
                             <?php }?>
 
@@ -194,7 +292,6 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
 
             <?php
         }
-
 
         public static function ttbm_display_booking_lists( $query, $load_more='' ) {
             ob_start();
@@ -278,50 +375,123 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
             return ob_get_clean();
         }
 
-        public static function ttbm_display_Hotel_lists( $query, $load_more = '' ) {
+        public static function display_hotel_lists_as_table( $query, $is_load_more = '' ) {
+            $tag_color = array(
+              'first-tag', 'second-tag', 'third-tag',
+            );
+
             ob_start();
-            ?>
-            <div class="ttbm_hotel_lists_listview">
-                <?php
-                if ( $query->have_posts() ) :
-                    while ( $query->have_posts() ) : $query->the_post();
-                        $post_id = get_the_ID();
-                        $title   = get_the_title();
-                        $desc    = get_the_excerpt();
-                        $image   = get_the_post_thumbnail_url( $post_id, 'thumbnail' );
-                        ?>
-                        <div class="ttbm_hotel_lists_list_item" id="ttbm_hotel_lists_<?php echo esc_attr($post_id); ?>">
-                            <div class="ttbm_hotel_lists_list_image">
-                                <?php if ( $image ) : ?>
-                                    <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($title); ?>">
-                                <?php else : ?>
-                                    <div class="ttbm_hotel_lists_list_image_placeholder">No Image</div>
-                                <?php endif; ?>
+            if ( $query->have_posts() ) :
+                while ( $query->have_posts() ) : $query->the_post();
+                    $post_id   = get_the_ID();
+                    $title     = get_the_title();
+                    $desc      = get_the_excerpt();
+                    $image     = get_the_post_thumbnail_url( $post_id, 'thumbnail' );
+                    $image     = $image ? $image : esc_url( includes_url( 'images/media/default.png' ) ); // fallback WP default
+                    $services  = get_post_meta( $post_id, 'ttbm_service_included_in_price', true );
+                    $location  = get_post_meta( $post_id, 'ttbm_hotel_location', true );
+                    ?>
+                    <tr id="hotel_<?php echo esc_attr( $post_id ); ?>">
+                        <td class="ttbm-hotel-list-column-image">
+                            <div class="ttbm-hotel-list-image-placeholder">
+                                <img src="<?php echo esc_url( $image ); ?>" alt="<?php echo esc_attr( $title ); ?>" width="60" height="60" />
                             </div>
-                            <div class="ttbm_hotel_lists_list_content">
-                                <h3 class="ttbm_hotel_lists_list_title"><?php echo esc_html($title); ?> (ID: <?php echo $post_id; ?>)</h3>
-                                <p class="ttbm_hotel_lists_list_desc"><?php echo esc_html($desc); ?></p>
-                                <div class="ttbm_hotel_lists_list_actions">
-                                    <a href="<?php echo get_permalink($post_id); ?>" class="ttbm_hotel_lists_btn view">View</a>
-                                    <a href="<?php echo get_edit_post_link($post_id); ?>" class="ttbm_hotel_lists_btn edit">Edit</a>
-                                    <a href="#" data-id="<?php echo $post_id; ?>" class="ttbm_hotel_lists_btn delete">Delete</a>
+                        </td>
+                        <td class="ttbm-hotel-list-column-hotel">
+                            <div class="ttbm-hotel-list-hotel-title">
+                                <?php echo esc_html( $title ); ?> <span class="hotel-id">(ID: <?php echo esc_html( $post_id ); ?>)</span>
+                            </div>
+                            <?php if ( $location ) : ?>
+                                <div class="ttbm-hotel-list-hotel-location">
+                                    <i class="fas fa-map-marker-alt"></i> <?php echo esc_html( $location ); ?>
                                 </div>
+                            <?php endif; ?>
+                            <?php if ( $desc ) : ?>
+                                <div class="ttbm-hotel-list-hotel-description">
+                                    <?php echo esc_html( $desc ); ?>
+                                </div>
+                            <?php endif; ?>
+                            <?php
+                            $icon = '';
+                            if ( ! empty( $services ) && is_array( $services ) ) : ?>
+                                <div class="ttbm-hotel-list-hotel-features">
+                                    <?php
+                                    $count = 0;
+                                    foreach ( $services as $key => $service ) {
+                                        $term = get_term_by('name', $service, 'ttbm_tour_features_list');
+                                        if ($term) {
+                                            $icon = get_term_meta($term->term_id, 'ttbm_feature_icon', true);
+                                            $icon = $icon ?: 'fas fa-forward';
+                                        }
+                                        if( $count < 3){
+                                        ?>
+                                        <span class="ttbm-hotel-list-feature-tag <?php echo esc_attr( $tag_color[$count] );?>">
+                                            <i class=" <?php esc_attr_e( $icon )?>"></i>
+                                            <?php echo esc_html( $service ); ?>
+                                        </span>
+                                    <?php }
+                                        $count++;
+                                    }
+                                    ?>
+                                </div>
+                            <?php endif; ?>
+                        </td>
+                        <td class="ttbm-hotel-list-column-actions">
+                            <div class="ttbm-hotel-list-action-buttons">
+                                <a href="<?php echo get_permalink( $post_id ); ?>"
+                                   class="ttbm-hotel-list-action-btn ttbm-hotel-list-view-btn"
+                                   title="View" target="_blank">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+
+                                <a href="<?php echo get_edit_post_link( $post_id ); ?>"
+                                   class="ttbm-hotel-list-action-btn ttbm-hotel-list-edit-btn"
+                                   title="Edit" target="_blank">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+
+                                <a href="<?php echo get_delete_post_link( $post_id ); ?>"
+                                   class="ttbm-hotel-list-action-btn ttbm-hotel-list-delete-btn"
+                                   data-confirm="Are you sure you want to delete this hotel?"
+                                   title="Delete">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
                             </div>
-                        </div>
-                    <?php
-                    endwhile;
-                    wp_reset_postdata();
-                else :
-                    if( $load_more === '' ){
-                        echo '<div class="ttbm_hotel_lists_no_data">'.esc_html__('No hotels found.', 'tour-booking-manager').'</div>';
-                    }
-                endif;
-                ?>
-            </div>
-            <?php
+
+                        </td>
+                    </tr>
+                <?php
+                endwhile;
+            endif;
+            wp_reset_postdata();
+
             return ob_get_clean();
         }
 
+        public static function ttbm_display_Hotel_lists( $query, $posts_per_page ) {
+            ob_start(); ?>
+                <div class="hotel-list-container">
+                    <table class="ttbm-hotel-list-table">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="ttbm-hotel-list-column-image"><?php echo esc_attr__('Image', 'tour-booking-manager'); ?></th>
+                            <th scope="col" class="ttbm-hotel-list-column-hotel"><?php echo esc_attr__('Hotel', 'tour-booking-manager'); ?></th>
+                            <th scope="col" class="ttbm-hotel-list-column-actions"><?php echo esc_attr__('Actions', 'tour-booking-manager'); ?></th>
+                        </tr>
+                        </thead>
+                        <tbody class="ttbm_hotel_list_view" id="ttbm_hotel_list_view">
+                            <?php echo wp_kses_post( self::display_hotel_lists_as_table( $query ) )?>
+                        </tbody>
+                    </table>
+                    <?php if( $query->found_posts > $posts_per_page ){?>
+                        <div class="ttbm_hotel_list_load_more_btn_holder">
+                            <button class="ttbm_hotel_list_load_more_btn" id="ttbm_hotel_list_load_more_btn"><?php esc_attr_e( 'Load More', 'tour-booking-manager');?></button>
+                        </div>
+                    <?php }?>
+                </div>
+            <?php
+            return ob_get_clean();
+        }
     }
 
     new TTBM_Hotel_Booking_Lists();

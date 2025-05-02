@@ -956,6 +956,53 @@
     ", $meta_key, $post_type, $post_status));
 				return $meta_values;
 			}
+
+            public static function get_travel_analytical_data(){
+
+                $result_date = array();
+                $travel_args = array(
+                    'post_type'      => 'ttbm_tour',
+                    'post_status'    => 'publish',
+                    'posts_per_page' => -1,
+                    'orderby'        => 'date',
+                    'order'          => 'DESC',
+                );
+                $all_travel_query = new WP_Query( $travel_args );
+
+                $active_tour = $expired_tour = $total_price = $price_count = $average_price= 0;
+                if ($all_travel_query->have_posts()) {
+                    while ($all_travel_query->have_posts()) {
+                        $all_travel_query->the_post();
+                        $travel_post_id = get_the_ID();
+                        $status = TTBM_Function::get_tour_status( $travel_post_id );
+                        if( $status === 'active' ){
+                            $active_tour = $active_tour + 1;
+                        }else{
+                            $expired_tour = $expired_tour + 1;
+                        }
+
+                        $get_price = get_post_meta( $travel_post_id, 'ttbm_travel_start_price', true );
+                        if( $get_price > 0 ){
+                            $price_count++;
+                            $total_price = $total_price + $get_price;
+                        }
+                    }
+                }
+                if( $price_count> 0 && $total_price> 0 ){
+                    $average_price = $total_price/$price_count;
+                }
+
+                $all_location = TTBM_Function::get_all_location();
+                unset($all_location['']);
+                $location_count = count($all_location);
+
+                return array(
+                    'location_count' =>$location_count,
+                    'average_price' =>$average_price,
+                    'active_tour' =>$active_tour,
+                    'expired_tour' =>$expired_tour,
+                );
+            }
 		}
 		new TTBM_Function();
 	}

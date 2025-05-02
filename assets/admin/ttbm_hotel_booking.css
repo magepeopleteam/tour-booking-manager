@@ -228,7 +228,6 @@
 }
 
 .ttbm_hotel_tab_item {
-    flex: 1;
     padding: 12px 20px;
     text-align: center;
     cursor: pointer;
@@ -242,8 +241,8 @@
 }
 
 .ttbm_hotel_tab_item.active {
-    background: #0073aa;
     color: #fff;
+    background: #dedbe1;
 }
 
 .ttbm_hotel_tab_content_holder {
@@ -297,6 +296,10 @@
 
 .ttbm_hotel_lists_list_content {
     flex: 1;
+}
+li.ttbm_hotel_tab_item {
+    border: 1px solid #cfcaca;
+    margin-bottom: 0px;
 }
 
 .ttbm_hotel_lists_list_title {

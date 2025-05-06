@@ -2,8 +2,8 @@
 /******************************************************************** Global settings ************************************************/
 @media only screen and (min-width: 10px) {
 	div.mp_global_settings {max-width: 1700px; margin: 30px 30px 30px 15px; width: calc(100% - 30px);}
-	div.mp_global_settings .button-primary {min-width: 200px;font-size: var(--fs_h5);font-weight: var(--fw-medium);padding: var(--dmp_xs); }
-	div.mp_global_settings .mpPanelHeader {background: var(--color_theme); color: #FFF;padding: var(--dmp_xs);font-size:var(--fs_h5);font-weight: var(--fw-medium); }
+	div.mp_global_settings .button-primary {min-width: 200px;font-weight: var(--fw-medium);padding: var(--dmp_xs); }
+	div.mp_global_settings .mpPanelHeader {background: var(--color_theme); color: #FFF;padding: var(--dmp_xs);font-weight: var(--fw-medium); }
 	div.mp_global_settings .tabLists {border-right: 1px solid var(--color_border);}
 	div.mp_global_settings form > h2 {display: none;}
 	div.mp_global_settings table {table-layout: fixed;margin: 0;}
@@ -25,8 +25,8 @@
 	#mp_meta_box_panel table tr:nth-child(even) {background-color: var(--color_light);}
 	#mp_meta_box_panel table tr:nth-child(odd) {background-color: #FFF;}
 	#mp_meta_box_panel table th,
-	#mp_meta_box_panel table td {border: 0;vertical-align: top;padding: 10px 2px;}
-	#mp_meta_box_panel table th {text-align:left;font-size: 14px; font-weight: 500}
+	#mp_meta_box_panel table td {border: 0;vertical-align: top;padding: 10px 3px; border-right: 1px solid #e5d4d4; }
+	#mp_meta_box_panel table th {text-align:left;font-size: 12px; font-weight: 500}
 	#mp_meta_box_panel table th.mActive,#mp_meta_box_panel table td.mActive{display: table-cell;}
 	#mp_meta_box_panel table tbody th {text-align: left;}
 	#mp_meta_box_panel table tbody thead th {text-align: center;}
@@ -128,11 +128,11 @@
 	div.mpStyle .adminLayout th,
 	div.mpStyle .adminLayout td,
 	div.mpStyle [class*="_adminLayout"] th,
-	div.mpStyle [class*="_adminLayout"] td {text-align: left;font-size: var(--fs_h5);}
+	div.mpStyle [class*="_adminLayout"] td {text-align: left;}
 }
 /********************************************************************  ************************************************/
 @media only screen and (min-width: 10px) {
 }
 /********Info Text******************/
-div.mpStyle .info_text {display: block;font-weight: normal;font-size: var(--fs_small);color: #666;}
+div.mpStyle .info_text {display: block;font-weight: normal;color: #666;}
 div.mpStyle .info_text span {margin: 0 5px 0 0;}

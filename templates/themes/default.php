@@ -40,6 +40,7 @@
 							<?php do_action( 'ttbm_day_wise_details' ); ?>
 							<?php do_action( 'ttbm_faq' ); ?>
                             <?php do_action( 'ttbm_review' ); ?>
+							<?php do_action('ttbm_enquery_popup'); ?>
 						</div>
 						<div class="ttbm_content__right">
 							<?php do_action( 'ttbm_include_feature' ); ?>

@@ -1,0 +1,173 @@
+#{$main-selector} {
+    .postbox-header {
+      background-color: var(--mpl-primary);
+      .handle-actions {
+        margin-top: 0;
+        .handle-order-higher,
+        .handle-order-lower,
+        .toggle-indicator {
+          color: var(--mpl-white);
+        }
+      }
+    }
+  
+    .ttbm_settings {
+      background-color: #fff;
+  
+      .tabLists {
+        width: 20%;
+        padding: 25px;
+        background-color: var(--mpl-light);
+        padding-right: 0;
+        font-size: 16px;
+        li {
+          border-left: 0;
+          border-right: 0;
+          padding: 15px;
+          color: var(--mpl-secondary);
+          border-left: 2px solid transparent;
+  
+          i {
+            margin-right: 25px;
+            color: var(--mpl-primary);
+          }
+  
+          &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            border-bottom: 1px solid #d8d8d8;
+            width: 91%;
+          }
+  
+          &.active,
+          &:hover {
+            background-color: #fff;
+            color: #333;
+            font-weight: normal;
+            border-left: 2px solid var(--mpl-primary);
+  
+            &::after {
+              width: 100%;
+            }
+          }
+        }
+      }
+  
+      .tabsContent {
+        width: 80%;
+        padding: 2% 5%;
+  
+        .tabsItem {
+          & > h2 {
+            padding: 0;
+            color: var(--mpl-secondary);
+            margin-bottom: 10px;
+            font-size: 22px;
+            font-weight: bold;
+          }
+  
+          & > p {
+            color: var(--mpl-secondary);
+            margin: 0;
+            font-weight: normal;
+            line-height: 24px;
+            margin-bottom: 30px;
+          }
+  
+          section {
+            border: 1px solid #d8d8d8;
+            padding: 20px;
+            margin-top: -1px;
+            width: 100%;
+            &.bg-light{
+                background-color: var(--mpl-light);
+            }
+            .label {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              flex-direction: row;
+              cursor: pointer;
+              @media (max-width: 1200px) {
+                flex-direction: column;
+              }
+  
+              .label-inner {
+                padding-right: 20px;
+              }
+  
+              p {
+                font-size: 14px;
+                font-weight: 500;
+                margin-bottom: 5px;
+                color: var(--mpl-secondary);
+              }
+  
+              span,
+              a {
+                line-height: 20px;
+              }
+  
+              .text {
+                font-weight: normal;
+                line-height: 20px;
+                font-size: 13px;
+              }
+            }
+            textarea {
+              width: 100%;
+            }
+            .roundSwitchLabel{
+                margin:0 10px;
+            }
+            .roundSwitchLabel input:checked + .roundSwitch {
+                background-color: var(--mpl-primary);
+            }
+            .customCheckboxLabel input:checked ~ .customCheckbox::before {
+                background:var(--mpl-primary);
+                border-color:var(--mpl-primary);
+            }
+            
+          }
+          .col-left {
+            width: 50%;
+          }
+          .col-right {
+            width: 50%;
+          }
+        }
+  
+        th[scope="row"] {
+          label {
+            display: block;
+            margin-bottom: 5px;
+  
+            h6 {
+              margin-top: 10px;
+            }
+          }
+        }
+  
+        .span-row {
+          color: #6b7280;
+          font-size: 13px;
+          font-weight: normal;
+        }
+  
+        .long-input {
+          width: 80%;
+        }
+  
+        .wp-switch-editor {
+          height: auto;
+        }
+  
+        .wp-editor-area {
+          width: 100%;
+          border: 0;
+        }
+      }
+    }
+  }

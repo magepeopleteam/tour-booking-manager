@@ -19,15 +19,15 @@
                 $theme_color_rgb = $this->hexToRgb($theme_color);
 				$alternate_color = MP_Global_Function::get_style_settings( 'theme_alternate_color', '#fff' );
 				$warning_color   = MP_Global_Function::get_style_settings( 'warning_color', '#E67C30' );
-				$default_fs      = MP_Global_Function::get_style_settings( 'default_font_size', '16' ) . 'px';
-				$fs_h1           = MP_Global_Function::get_style_settings( 'font_size_h1', '35' ) . 'px';
-				$fs_h2           = MP_Global_Function::get_style_settings( 'font_size_h2', '30' ) . 'px';
-				$fs_h3           = MP_Global_Function::get_style_settings( 'font_size_h3', '25' ) . 'px';
-				$fs_h4           = MP_Global_Function::get_style_settings( 'font_size_h4', '22' ) . 'px';
-				$fs_h5           = MP_Global_Function::get_style_settings( 'font_size_h5', '18' ) . 'px';
-				$fs_h6           = MP_Global_Function::get_style_settings( 'font_size_h6', '16' ) . 'px';
-				$fs_label        = MP_Global_Function::get_style_settings( 'font_size_label', '14' ) . 'px';
-				$button_fs       = MP_Global_Function::get_style_settings( 'button_font_size', '14' ) . 'px';
+				// $default_fs      = MP_Global_Function::get_style_settings( 'default_font_size', '16' ) . 'px';
+				// $fs_h1           = MP_Global_Function::get_style_settings( 'font_size_h1', '35' ) . 'px';
+				// $fs_h2           = MP_Global_Function::get_style_settings( 'font_size_h2', '30' ) . 'px';
+				// $fs_h3           = MP_Global_Function::get_style_settings( 'font_size_h3', '25' ) . 'px';
+				// $fs_h4           = MP_Global_Function::get_style_settings( 'font_size_h4', '22' ) . 'px';
+				// $fs_h5           = MP_Global_Function::get_style_settings( 'font_size_h5', '18' ) . 'px';
+				// $fs_h6           = MP_Global_Function::get_style_settings( 'font_size_h6', '16' ) . 'px';
+				// $fs_label        = MP_Global_Function::get_style_settings( 'font_size_label', '14' ) . 'px';
+				// $button_fs       = MP_Global_Function::get_style_settings( 'button_font_size', '14' ) . 'px';
 				$button_color    = MP_Global_Function::get_style_settings( 'button_color', $alternate_color );
 				$button_bg       = MP_Global_Function::get_style_settings( 'button_bg', '#ea8125' );
 				$section_bg      = MP_Global_Function::get_style_settings( 'section_bg', '#FAFCFE' );
@@ -50,16 +50,9 @@
 					}
 					/*****Font size********/
 					:root {
-						--fs: <?php echo esc_attr($default_fs); ?>;
+						
 						--fw: normal;
 						--fs_small: 14px;
-						--fs_label: <?php echo esc_attr($fs_label); ?>;
-						--fs_h6: <?php echo esc_attr($fs_h6); ?>;
-						--fs_h5: <?php echo esc_attr($fs_h5); ?>;
-						--fs_h4: <?php echo esc_attr($fs_h4); ?>;
-						--fs_h3: <?php echo esc_attr($fs_h3); ?>;
-						--fs_h2: <?php echo esc_attr($fs_h2); ?>;
-						--fs_h1: <?php echo esc_attr($fs_h1); ?>;
 						--fw-thin: 300; /*font weight medium*/
 						--fw-normal: 500; /*font weight medium*/
 						--fw-medium: 600; /*font weight medium*/
@@ -69,7 +62,7 @@
 					:root {
 						--button_bg: <?php echo esc_attr($button_bg); ?>;
 						--color_button: <?php echo esc_attr($button_color); ?>;
-						--button_fs: <?php echo esc_attr($button_fs); ?>;
+						
 						--button_height: 40px;
 						--button_height_xs: 30px;
 						--button_width: 120px;

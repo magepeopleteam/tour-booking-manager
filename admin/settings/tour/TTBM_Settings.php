@@ -318,6 +318,7 @@
 					'ttbm_activity_description' => esc_html__('The description is not prominent by default; however, some themes may show it.', 'tour-booking-manager'),
 					'ttbm_display_related' => esc_html__('Please select a related tour from this list.', 'tour-booking-manager'),
 					'ttbm_display_slider' => esc_html__('By default slider is ON but you can keep it off by switching this option', 'tour-booking-manager'),
+					'ttbm_display_slider_hotel' => esc_html__('By default slider is ON but you can keep it off by switching this option', 'tour-booking-manager'),
 					'ttbm_section_title_style' => esc_html__('By default Section title is style one', 'tour-booking-manager'),
 					'ttbm_ticketing_system' => esc_html__('Select ticket purchase system type.', 'tour-booking-manager'),
 					'ttip_ticketing_system' => esc_html__('By default, the ticket purchase system is open. Once you check the availability, you can choose the system that best suits your needs.', 'tour-booking-manager'),
@@ -332,6 +333,7 @@
 					'ttbm_contact_text' => esc_html__('Please Enter Contact Section Text', 'tour-booking-manager'),
 					'ttbm_contact_email' => esc_html__('Please Enter contact phone email', 'tour-booking-manager'),
 					'ttbm_gallery_images' => esc_html__('Please upload images for gallery', 'tour-booking-manager'),
+					'ttbm_gallery_images_hotel' => esc_html__('Please upload images for gallery', 'tour-booking-manager'),
 					'ttbm_type' => esc_html__('By default Type is General', 'tour-booking-manager'),
 					'ttbm_display_advance' => esc_html__('By default Advance option is Off but you can keep it On by switching this option', 'tour-booking-manager'),
 					'ttbm_display_extra_advance' => esc_html__('By default Advance option is on but you can keep it off by switching this option', 'tour-booking-manager'),
@@ -403,6 +405,7 @@
 					$duration = MP_Global_Function::get_submit_info('ttbm_display_duration') ? 'on' : 'off';
 					$ttbm_display_rank = MP_Global_Function::get_submit_info('ttbm_display_order_tour') ? 'on' : 'off';
 					$ttbm_travel_rank_tour = MP_Global_Function::get_submit_info('ttbm_travel_rank_tour');
+					$display_enquiry= MP_Global_Function::get_submit_info('ttbm_display_enquiry') ? 'on' : 'off';
 					$ttbm_template= isset($_POST['ttbm_theme_file']) && $_POST['ttbm_theme_file']? sanitize_file_name($_POST['ttbm_theme_file']):'default.php';
 					update_post_meta($tour_id, 'ttbm_travel_rank_tour', $ttbm_travel_rank_tour);
 					update_post_meta($tour_id, 'ttbm_display_order_tour', $ttbm_display_rank);
@@ -414,6 +417,7 @@
 					update_post_meta($tour_id, 'ttbm_display_hotels', $hotels);
 					update_post_meta($tour_id, 'ttbm_display_duration', $duration);
 					update_post_meta($tour_id, 'ttbm_theme_file', $ttbm_template);
+					update_post_meta($tour_id, 'ttbm_display_enquiry', $display_enquiry);
 				}
 				do_action('wcpp_partial_settings_saved', $tour_id);
 				do_action('ttbm_settings_save', $tour_id);

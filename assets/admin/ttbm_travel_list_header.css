@@ -1,0 +1,132 @@
+.ttbm_tour_search_add_holder{
+    display: flex;
+    gap: 20px;
+    justify-content: end;
+    align-items: center;
+    width: 60%;
+}
+
+.ttbm_travel_analytics-container {
+    margin: 1rem auto;
+    background: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.ttbm_travel_analytics-bar {
+    padding: 0.75rem;
+    background: linear-gradient(to right, #eff6ff, #f5f3ff);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+}
+.ttbm_travel_metrics-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    width: 49%;
+    flex: 1;
+}
+}
+
+.ttbm_travel_blue-bg {
+    background-color: #dbeafe;
+}
+.ttbm_travel_icon-circle {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5rem;
+}
+.ttbm_travel_metric-label {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+.ttbm_travel_metric-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+.ttbm_travel_metric-card {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    flex:1;
+}
+.ttbm_travel_green-bg {
+    background-color: #d1fae5;
+}
+.ttbm_travel_green-text {
+    color: #059669;
+}
+.ttbm_travel_purple-bg {
+    background-color: #ede9fe;
+}
+.ttbm_travel_purple-text {
+    color: #7c3aed;
+}
+.ttbm_travel_pink-text {
+    color: #db2777;
+}
+.ttbm_travel_indigo-text {
+    color: #6366f1;
+}
+.ttbm_travel_amber-bg {
+    background-color: #fde68a;
+}
+.ttbm_travel_amber-text {
+    color: #d97706;
+}
+.ttbm_travel_info-card {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    flex:1;
+}
+.ttbm_travel_info-section:not(:last-child) {
+    border-right: 1px solid #f3f4f6;
+}
+.ttbm_travel_info-section {
+    padding: 0 0.5rem;
+    text-align: center;
+}
+.ttbm_travel_status-card {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    flex: 1;
+}
+.ttbm_travel_status-indicators {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+}
+.ttbm_travel_dot-active {
+    background-color: #10b981;
+}
+.ttbm_travel_status-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    display: inline-block;
+}
+.ttbm_travel_status-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+.ttbm_travel_dot-expired {
+    background-color: #ef4444;
+}

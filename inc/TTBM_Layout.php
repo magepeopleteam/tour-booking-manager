@@ -149,7 +149,11 @@
 				<?php } else { ?>
 					<input type="hidden" name="<?php echo esc_attr($input_name); ?>"/>
 					<span class='textWarning'>
-						<?php  esc_html_e('Sorry, Not Available', 'tour-booking-manager'); ?>
+					<?php 
+					$no_seat_msg = get_option('ttbm_basic_translation_settings');
+					$default_msg = esc_html__('Sorry, Not Available', 'tour-booking-manager');
+					echo isset($no_seat_msg['ttbm_no_seat_available']) ? esc_html($no_seat_msg['ttbm_no_seat_available']) : $default_msg;
+					?>
 					</span>
 					<?php
 				}
@@ -167,6 +171,37 @@
 								$ttbm_post_id = $post->ID;
 								$tour_id = TTBM_Function::post_id_multi_language($ttbm_post_id);
 								if ($ttbm_post_id == $tour_id) {
+									$recurring = TTBM_Function::recurring_check($ttbm_post_id);
+									$tour_type = TTBM_Function::get_tour_type($ttbm_post_id);
+									?>
+									<option value="<?php echo $ttbm_post_id; ?>" data-recurring="<?php echo esc_attr($recurring ? 'yes' : ''); ?>">
+										<?php echo get_the_title($ttbm_post_id); ?>
+										<?php esc_html_e($recurring ? '- Multi date' : ''); ?>
+										<?php esc_html_e($tour_type == 'hotel' ? '- Hotel' : ''); ?>
+									</option>
+									<?php
+								}
+							}
+							wp_reset_postdata();
+						?>
+					</select>
+				</label>
+				<?php
+			}
+			public static function hotel_list_in_select( $hotel_list_id ) {
+				$label = TTBM_Function::get_name();
+				?>
+				<label class="min_400 ttbm_id_select">
+					<select name="ttbm_id" class="formControl ttbm_select2" id="<?php echo esc_attr( $hotel_list_id )?>" required>
+
+						<option value="" selected><?php echo esc_html__('Select', 'tour-booking-manager') . ' ' . esc_html($label); ?></option>
+						<?php
+							$post_query = MP_Global_Function::query_post_type( 'ttbm_hotel' );
+							$all_posts = $post_query->posts;
+							foreach ($all_posts as $post) {
+								$ttbm_post_id = $post->ID;
+								$hotel_id = TTBM_Function::post_id_multi_language($ttbm_post_id);
+								if ($ttbm_post_id == $hotel_id) {
 									$recurring = TTBM_Function::recurring_check($ttbm_post_id);
 									$tour_type = TTBM_Function::get_tour_type($ttbm_post_id);
 									?>

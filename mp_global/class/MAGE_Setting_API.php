@@ -74,7 +74,7 @@
 							'max' => isset($option['max']) ? $option['max'] : '',
 							'step' => isset($option['step']) ? $option['step'] : '',
 						);
-						$label .= $this->get_field_description($args);
+						//$label .= $this->get_field_description($args);
 						add_settings_field("{$section}[{$name}]", $label, $callback, $section, $section, $args);
 					}
 				}

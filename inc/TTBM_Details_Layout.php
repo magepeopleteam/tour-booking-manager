@@ -30,7 +30,29 @@
                 add_action('ttbm_dynamic_sidebar', array($this, 'dynamic_sidebar'), 10, 1);
                 add_action('ttbm_registration', array($this, 'ticket_registration'));
                 add_action('ttbm_travel_analytics_display', array($this, 'travel_analytics_display'), 10, 2);
+
+                add_action('ttbm_travel_lists_display', array($this, 'travel_lists_display'), 10, 3);
             }
+
+            public function travel_lists_display( $posts_query, $paged, $post_per_page ){ ?>
+                <div class="ttbm-tour-list_holder">
+                    <div class="ttbm-tour-list">
+                        <?php
+                        $this->tour_list($posts_query);
+                        ?>
+                    </div>
+                    <?php if ($posts_query->max_num_pages > $paged) : ?>
+                        <div class="ttbm-load-more-wrap">
+                            <button id="ttbm-load-more" class="button"
+                                    data-paged="<?php echo esc_attr($paged + 1); ?>"
+                                    data-posts-per-page="<?php echo esc_attr($post_per_page); ?>"
+                                    data-nonce="<?php echo wp_create_nonce('ttbm_load_more'); ?>">
+                                <i class="fas fa-sync-alt"></i> <?php esc_html_e('Load More', 'tour-booking-manager'); ?> (<span class="ttbm_load_more_remaining_travel"><?php echo esc_attr( $remaining_travel );?></span>)
+                            </button>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php }
 
             public function ticket_registration(){
                 $ttbm_post_id = $ttbm_post_id ?? get_the_id();
@@ -52,6 +74,7 @@
                     <?php
                 }
             }
+
 
             public function date_selection(){
                 $ttbm_post_id = $ttbm_post_id ?? get_the_id();

@@ -29,7 +29,6 @@
     width: 49%;
     flex: 1;
 }
-}
 
 .ttbm_travel_blue-bg {
     background-color: #dbeafe;
@@ -130,3 +129,212 @@
 .ttbm_travel_dot-expired {
     background-color: #ef4444;
 }
+
+/*Travel Tabs*/
+.ttbm_trvel_lists_tab_holder {
+    width: 100%;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+.ttbm_trvel_lists_tabs {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    border-bottom: 2px solid #ccc;
+    box-sizing: border-box;
+}
+
+.ttbm_trvel_lists_tabs button {
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 14.28%; /* 100% / 7 tabs */
+    background: #f1f1f1;
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.ttbm_trvel_lists_tabs button.active {
+    background: #0073aa;
+    color: #fff;
+    border-bottom: 3px solid #0073aa;
+}
+
+.ttbm_trvel_lists_content {
+    display: none;
+    padding: 20px;
+    /*border: 1px solid #ddd;*/
+    border-top: none;
+    background-color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ttbm_trvel_lists_content.active {
+    display: block;
+}
+
+/* Responsive for small screens */
+@media (max-width: 768px) {
+    .ttbm_trvel_lists_tabs {
+        flex-direction: column;
+    }
+
+    .ttbm_trvel_lists_tabs button {
+        max-width: 100%;
+    }
+}
+
+/*Location tab display*/
+.ttbm-locations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+.ttbm-location-card {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+    padding: 10px;
+    background: #fff;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    align-items: flex-start;
+}
+.ttbm-location-card:hover {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.ttbm-card-left img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+.ttbm-card-left {
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+.ttbm-card-right {
+    flex-grow: 1;
+    position: relative;
+}
+.ttbm-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 5px;
+}
+.ttbm-description {
+    font-size: 13px;
+    color: #555;
+    margin: 0;
+    padding-right: 60px; /* for space near edit button */
+}
+.ttbm-edit-btn {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: #0073aa;
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.ttbm-location-card:hover .ttbm-edit-btn {
+    opacity: 1;
+}
+/*Location Add*/
+/* Overlay background */
+.ttbm-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Popup box */
+.ttbm-popup-box {
+    background: #fff;
+    padding: 20px 25px;
+    width: 500px;
+    max-width: 95%;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.ttbm-popup-box h3 {
+    margin-top: 0;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+/* Inputs and textareas */
+.ttbm-popup-box input[type="text"],
+.ttbm-popup-box textarea,
+.ttbm-popup-box select {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* Image preview */
+#ttbm-image-preview img {
+    margin-top: 10px;
+    max-width: 100px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Buttons */
+.ttbm-popup-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.ttbm-popup-buttons button {
+    padding: 8px 16px;
+    border: none;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#ttbm-save-location {
+    background-color: #0073aa;
+    color: white;
+}
+
+#ttbm-close-popup {
+    background-color: #ccc;
+    color: #333;
+}
+
+#ttbm-save-location:hover {
+    background-color: #005a87;
+}
+
+#ttbm-close-popup:hover {
+    background-color: #bbb;
+}
+

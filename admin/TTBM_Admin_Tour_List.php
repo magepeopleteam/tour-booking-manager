@@ -115,35 +115,30 @@
                 ?>
                 <div class="wrap ttbm-tour-list-page ">
 
-                    <div class="ttbm-tour-list-header">
-                        <h1 class="page-title"><?php echo esc_html($label).__(' Lists','tour-booking-manager'); ?></h1>
-<!--                        <div class="ttbm_total_travel_count">--><?php //esc_attr_e( 'Total Travels: ', 'tour-booking-manager' ); echo esc_attr( $posts_query->found_posts )?><!--</div>-->
-                        <div class="ttbm_tour_search_add_holder">
-                            <input type="text" name="ttbm_tour_search" id="ttbm-tour-search" data-nonce="<?php echo wp_create_nonce("ttbm_search_nonce"); ?>" placeholder="Search <?php echo esc_html($label); ?>">
-                            <a href="<?php echo admin_url('post-new.php?post_type=ttbm_tour'); ?>" class="page-title-action">
-                                <i class="fas fa-plus"></i> <?php esc_html_e('Add New', 'tour-booking-manager'); ?>
-                            </a>
-                        </div>
-                    </div>
+
 
                     <!--Here Analytics-->
                     <?php do_action('ttbm_travel_analytics_display', $posts_query->found_posts, $analytics_Data )?>
 
-                    <div class="ttbm-tour-list">
-                    <?php
-                        $this->tour_list($posts_query); 
-                    ?>
-                    </div>
-                    <?php if ($posts_query->max_num_pages > $paged) : ?>
-                        <div class="ttbm-load-more-wrap">
-                            <button id="ttbm-load-more" class="button" 
-                                    data-paged="<?php echo esc_attr($paged + 1); ?>" 
-                                    data-posts-per-page="<?php echo esc_attr($post_per_page); ?>" 
-                                    data-nonce="<?php echo wp_create_nonce('ttbm_load_more'); ?>">
-                                <i class="fas fa-sync-alt"></i> <?php esc_html_e('Load More', 'tour-booking-manager'); ?> (<span class="ttbm_load_more_remaining_travel"><?php echo esc_attr( $remaining_travel );?></span>)
-                            </button>
+                    <?php do_action('ttbm_travel_lists_tab_display', $label, $analytics_Data )?>
+
+                    <div class="ttbm-tour-list_holder">
+                        <div class="ttbm-tour-list">
+                            <?php
+                            $this->tour_list($posts_query);
+                            ?>
                         </div>
-                    <?php endif; ?>
+                        <?php if ($posts_query->max_num_pages > $paged) : ?>
+                            <div class="ttbm-load-more-wrap">
+                                <button id="ttbm-load-more" class="button"
+                                        data-paged="<?php echo esc_attr($paged + 1); ?>"
+                                        data-posts-per-page="<?php echo esc_attr($post_per_page); ?>"
+                                        data-nonce="<?php echo wp_create_nonce('ttbm_load_more'); ?>">
+                                    <i class="fas fa-sync-alt"></i> <?php esc_html_e('Load More', 'tour-booking-manager'); ?> (<span class="ttbm_load_more_remaining_travel"><?php echo esc_attr( $remaining_travel );?></span>)
+                                </button>
+                            </div>
+                        <?php endif; ?>
+                    </div>
                 </div>
 				<?php
 			}

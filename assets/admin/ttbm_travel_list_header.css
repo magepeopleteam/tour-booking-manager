@@ -320,7 +320,7 @@
     cursor: pointer;
 }
 
-#ttbm-save-location {
+.ttbm-save-location {
     background-color: #0073aa;
     color: white;
 }
@@ -330,7 +330,7 @@
     color: #333;
 }
 
-#ttbm-save-location:hover {
+.ttbm-save-location:hover {
     background-color: #005a87;
 }
 

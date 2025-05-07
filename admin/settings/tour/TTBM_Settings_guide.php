@@ -19,14 +19,14 @@
 	        }
             public function guide_setting($tour_id){
                 $ttbm_label = TTBM_Function::get_name();
-                $all_guides = MP_Global_Function::query_post_type('ttbm_guide');
-                $display_guide = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_tour_guide', 'off');
+                $all_guides = TTBM_Global_Function::query_post_type('ttbm_guide');
+                $display_guide = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_tour_guide', 'off');
                 $active_guide = $display_guide == 'off' ? '' : 'mActive';
                 $checked_guide = $display_guide == 'off' ? '' : 'checked';
-                $guides = MP_Global_Function::get_post_info($tour_id, 'ttbm_tour_guide', array());
-                $ttbm_guide_style = MP_Global_Function::get_post_info($tour_id, 'ttbm_guide_style', 'carousel');
-                $ttbm_guide_image_style = MP_Global_Function::get_post_info($tour_id, 'ttbm_guide_image_style', 'squire');
-                $ttbm_guide_description_style = MP_Global_Function::get_post_info($tour_id, 'ttbm_guide_description_style', 'full');
+                $guides = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_tour_guide', array());
+                $ttbm_guide_style = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_guide_style', 'carousel');
+                $ttbm_guide_image_style = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_guide_image_style', 'squire');
+                $ttbm_guide_description_style = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_guide_description_style', 'full');
                 ?>
                 <div class="tabsItem ttbm_settings_guide" data-tabs="#ttbm_settings_guide">
                     <h2><?php esc_html_e('Guide Settings', 'tour-booking-manager'); ?></h2>
@@ -46,7 +46,7 @@
                             <div>
                                 <p><?php echo esc_html__('Enable', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html__('Guide', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_tour_guide'); ?></span></i></p>
                             </div>
-                            <?php MP_Custom_Layout::switch_button('ttbm_display_tour_guide', $checked_guide); ?>
+                            <?php TTBM_Custom_Layout::switch_button('ttbm_display_tour_guide', $checked_guide); ?>
                         </div>
                     </section>
 
@@ -121,15 +121,15 @@
             }
             public function save_guide( $tour_id ) {
                 if ( get_post_type( $tour_id ) == TTBM_Function::get_cpt_name() ) {
-                    $ttbm_display_tour_guide = MP_Global_Function::get_submit_info( 'ttbm_display_tour_guide' ) ? 'on' : 'off';
+                    $ttbm_display_tour_guide = TTBM_Global_Function::get_submit_info( 'ttbm_display_tour_guide' ) ? 'on' : 'off';
                     update_post_meta( $tour_id, 'ttbm_display_tour_guide', $ttbm_display_tour_guide );
-                    $ttbm_tour_guide = MP_Global_Function::get_submit_info( 'ttbm_tour_guide', array() );
+                    $ttbm_tour_guide = TTBM_Global_Function::get_submit_info( 'ttbm_tour_guide', array() );
                     update_post_meta( $tour_id, 'ttbm_tour_guide', $ttbm_tour_guide );
-                    $ttbm_guide_style = MP_Global_Function::get_submit_info( 'ttbm_guide_style', 'carousel' );
+                    $ttbm_guide_style = TTBM_Global_Function::get_submit_info( 'ttbm_guide_style', 'carousel' );
                     update_post_meta( $tour_id, 'ttbm_guide_style', $ttbm_guide_style );
-                    $ttbm_guide_image_style = MP_Global_Function::get_submit_info( 'ttbm_guide_image_style', 'squire' );
+                    $ttbm_guide_image_style = TTBM_Global_Function::get_submit_info( 'ttbm_guide_image_style', 'squire' );
                     update_post_meta( $tour_id, 'ttbm_guide_image_style', $ttbm_guide_image_style );
-                    $ttbm_guide_description_style = MP_Global_Function::get_submit_info( 'ttbm_guide_description_style', 'full' );
+                    $ttbm_guide_description_style = TTBM_Global_Function::get_submit_info( 'ttbm_guide_description_style', 'full' );
                     update_post_meta( $tour_id, 'ttbm_guide_description_style', $ttbm_guide_description_style );
                 }
             }

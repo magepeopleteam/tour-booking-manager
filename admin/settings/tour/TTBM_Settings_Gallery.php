@@ -17,10 +17,10 @@
 				<?php
 			}
 			public function gallery_settings($tour_id) {
-				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_slider', 'on');
+				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_slider', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
-				$image_ids = MP_Global_Function::get_post_info($tour_id, 'ttbm_gallery_images', array());
+				$image_ids = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_gallery_images', array());
 				?>
 				
 				<div class="tabsItem ttbm_settings_gallery" data-tabs="#ttbm_settings_gallery">
@@ -39,7 +39,7 @@
                             <div>
 								<p><?php esc_html_e('Enable/Disable Slider', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_slider'); ?></span></i></p>
 							</div>
-							<?php MP_Custom_Layout::switch_button('ttbm_display_slider', $checked); ?>
+							<?php TTBM_Custom_Layout::switch_button('ttbm_display_slider', $checked); ?>
                         </label>
 						
                     </section>
@@ -60,9 +60,9 @@
 			}
 			public function save_gallery($tour_id) {
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
-					$slider = MP_Global_Function::get_submit_info('ttbm_display_slider') ? 'on' : 'off';
+					$slider = TTBM_Global_Function::get_submit_info('ttbm_display_slider') ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_slider', $slider);
-					$images = MP_Global_Function::get_submit_info('ttbm_gallery_images', array());
+					$images = TTBM_Global_Function::get_submit_info('ttbm_gallery_images', array());
 					$all_images = explode(',', $images);
 					update_post_meta($tour_id, 'ttbm_gallery_images', $all_images);
 				}

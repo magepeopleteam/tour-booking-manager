@@ -11,14 +11,14 @@
 			}
 			public function ticket_type_meta() {
 				$label = TTBM_Function::get_name();
-				add_meta_box('mp_meta_box_panel', '<span class="dashicons dashicons-tickets-alt"></span>' . $label . '  ' . esc_html__('Ticket Type Settings : ', 'tour-booking-manager') . get_the_title(get_the_id()), array($this, 'ttbm_ticket_types'), 'ttbm_ticket_types', 'normal', 'high');
+				add_meta_box('ttbm_meta_box_panel', '<span class="dashicons dashicons-tickets-alt"></span>' . $label . '  ' . esc_html__('Ticket Type Settings : ', 'tour-booking-manager') . get_the_title(get_the_id()), array($this, 'ttbm_ticket_types'), 'ttbm_ticket_types', 'normal', 'high');
 			}
 			public function ttbm_ticket_types() {
 				$post_id = get_the_ID();
-				$ticket_type = MP_Global_Function::get_post_info($post_id, 'ttbm_ticket_type', array());
+				$ticket_type = TTBM_Global_Function::get_post_info($post_id, 'ttbm_ticket_type', array());
 				wp_nonce_field('ttbm_ticket_item_nonce', 'ttbm_ticket_item_nonce');
 				?>
-                <div class="mpStyle">
+                <div class="ttbm_style">
                     <div class="mp_settings_area padding">
                         <table class="price_config_table">
                             <thead>
@@ -35,7 +35,7 @@
                                 <th><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
                             </tr>
                             </thead>
-                            <tbody class="mp_sortable_area mp_item_insert">
+                            <tbody class="ttbm_sortable_area ttbm_item_insert">
 			                <?php
 				                if (sizeof($ticket_type) > 0) {
 					                foreach ($ticket_type as $field) {
@@ -45,7 +45,7 @@
 			                ?>
                             </tbody>
                         </table>
-		                <?php MP_Custom_Layout::add_new_button(esc_html__('Add New Ticket Type', 'tour-booking-manager')); ?>
+		                <?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Ticket Type', 'tour-booking-manager')); ?>
 		                <?php do_action('add_mp_hidden_table', 'ttbm_ticket_item'); ?>
                     </div>
                 </div>
@@ -66,28 +66,28 @@
 				$description = array_key_exists('ticket_type_description', $field) ? $field['ticket_type_description'] : '';
 				?>
                 <tr class="mp_remove_area">
-                    <td><?php do_action('mp_input_add_icon', 'ticket_type_icon[]', $icon); ?></td>
+                    <td><?php do_action('ttbm_input_add_icon', 'ticket_type_icon[]', $icon); ?></td>
                     <td>
                         <input type="hidden" name="ttbm_hidden_ticket_text[]" value="<?php echo esc_attr($name_text); ?>"/>
-                        <input type="text" class="medium mp_name_validation" name="ticket_type_name[]" placeholder="Ex: Adult" value="<?php echo esc_attr($name); ?>" data-input-text="<?php echo esc_attr($name_text); ?>"/>
+                        <input type="text" class="medium ttbm_name_validation" name="ticket_type_name[]" placeholder="Ex: Adult" value="<?php echo esc_attr($name); ?>" data-input-text="<?php echo esc_attr($name_text); ?>"/>
                     </td>
                     <td>
                         <input type="text" class="" name="ticket_type_description[]" placeholder="Ex: description" value="<?php echo esc_attr($description); ?>"/>
                     </td>
                     <td>
-                        <input type="text" class="medium mp_price_validation" name="ticket_type_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($price); ?>"/>
+                        <input type="text" class="medium ttbm_price_validation" name="ticket_type_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($price); ?>"/>
                     </td>
                     <td>
-                        <input type="text" class="medium mp_price_validation" name="ticket_type_sale_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($sale_price); ?>"/>
+                        <input type="text" class="medium ttbm_price_validation" name="ticket_type_sale_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($sale_price); ?>"/>
                     </td>
                     <td>
-                        <input type="number" size="4" pattern="[0-9]*" step="1" class="medium mp_number_validation" data-same-input="ticket_type_qty" name="ticket_type_qty[]" placeholder="Ex: 500" value="<?php echo esc_attr($qty); ?>"/>
+                        <input type="number" size="4" pattern="[0-9]*" step="1" class="medium ttbm_number_validation" data-same-input="ticket_type_qty" name="ticket_type_qty[]" placeholder="Ex: 500" value="<?php echo esc_attr($qty); ?>"/>
                     </td>
                     <td>
-                        <input type="number" size="4" pattern="[0-9]*" step="1" class="medium mp_number_validation" name="ticket_type_default_qty[]" placeholder="Ex: 1" value="<?php echo esc_attr($default_qty); ?>"/>
+                        <input type="number" size="4" pattern="[0-9]*" step="1" class="medium ttbm_number_validation" name="ticket_type_default_qty[]" placeholder="Ex: 1" value="<?php echo esc_attr($default_qty); ?>"/>
                     </td>
                     <td>
-                        <input type="number" size="4" pattern="[0-9]*" step="1" class="medium mp_number_validation" data-same-input="ticket_type_resv_qty" name="ticket_type_resv_qty[]" placeholder="Ex: 5" value="<?php echo esc_attr($reserve_qty); ?>"/>
+                        <input type="number" size="4" pattern="[0-9]*" step="1" class="medium ttbm_number_validation" data-same-input="ticket_type_resv_qty" name="ticket_type_resv_qty[]" placeholder="Ex: 5" value="<?php echo esc_attr($reserve_qty); ?>"/>
                     </td>
                     <td>
                         <select name="ticket_type_qty_type[]" class='medium formControl'>
@@ -95,7 +95,7 @@
                             <option value="dropdown" <?php echo esc_attr($input_type == 'dropdown' ? 'selected' : ''); ?>><?php esc_html_e('Dropdown List', 'tour-booking-manager'); ?></option>
                         </select>
                     </td>
-                    <td><?php MP_Custom_Layout::move_remove_button(); ?></td>
+                    <td><?php TTBM_Custom_Layout::move_remove_button(); ?></td>
                 </tr>
 				<?php
 			}
@@ -111,15 +111,15 @@
 						return;
 					};
 					$new_ticket_type = array();
-					$icon = MP_Global_Function::get_submit_info('ticket_type_icon', array());
-					$names = MP_Global_Function::get_submit_info('ticket_type_name', array());
-					$ticket_price = MP_Global_Function::get_submit_info('ticket_type_price', array());
-					$sale_price = MP_Global_Function::get_submit_info('ticket_type_sale_price', array());
-					$qty = MP_Global_Function::get_submit_info('ticket_type_qty', array());
-					$default_qty = MP_Global_Function::get_submit_info('ticket_type_default_qty', array());
-					$rsv = MP_Global_Function::get_submit_info('ticket_type_resv_qty', array());
-					$qty_type = MP_Global_Function::get_submit_info('ticket_type_qty_type', array());
-					$description = MP_Global_Function::get_submit_info('ticket_type_description', array());
+					$icon = TTBM_Global_Function::get_submit_info('ticket_type_icon', array());
+					$names = TTBM_Global_Function::get_submit_info('ticket_type_name', array());
+					$ticket_price = TTBM_Global_Function::get_submit_info('ticket_type_price', array());
+					$sale_price = TTBM_Global_Function::get_submit_info('ticket_type_sale_price', array());
+					$qty = TTBM_Global_Function::get_submit_info('ticket_type_qty', array());
+					$default_qty = TTBM_Global_Function::get_submit_info('ticket_type_default_qty', array());
+					$rsv = TTBM_Global_Function::get_submit_info('ticket_type_resv_qty', array());
+					$qty_type = TTBM_Global_Function::get_submit_info('ticket_type_qty_type', array());
+					$description = TTBM_Global_Function::get_submit_info('ticket_type_description', array());
 					$count = count($names);
 					for ($i = 0; $i < $count; $i++) {
 						if ($names[$i] && $ticket_price[$i] >= 0 && $qty[$i] > 0) {

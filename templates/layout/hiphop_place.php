@@ -3,12 +3,12 @@
 		die;
 	} // Cannot access pages directly.
 	$ttbm_post_id   = $ttbm_post_id ?? get_the_id();
-	$places    = MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_hiphop_places', array());
+	$places    = TTBM_Global_Function::get_post_info($ttbm_post_id, 'ttbm_hiphop_places', array());
 	$all_place = new WP_Query( array(
 		'post_type'   => 'ttbm_places',
 		'post_status' => 'publish'
 	) );
-	if ( $all_place->post_count > 0 && sizeof( $places ) > 0 && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_hiphop', 'on' ) != 'off' ) {
+	if ( $all_place->post_count > 0 && sizeof( $places ) > 0 && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_hiphop', 'on' ) != 'off' ) {
 		?>
 		<div class="ttbm_default_widget" id="place_you_see">
 
@@ -28,7 +28,7 @@
 						$place_name = $_places['ttbm_place_label'];
 						$place_id   = $_places['ttbm_city_place_id'];
 						if ( $place_id ) {
-							$thumbnail = MP_Global_Function::get_image_url( $place_id );
+							$thumbnail = TTBM_Global_Function::get_image_url( $place_id );
 							?>
 							<div class="filter_item <?php if ( sizeof( $places ) < 4 ) {
 								echo "grid_3";
@@ -41,7 +41,7 @@
 											?>
 											<span class="circleIcon_xs abTopRight fas fa-question-circle"></span>
 											<div class="popover-content">
-												<p><?php echo MP_Global_Function::esc_html( $description ) ?></p>
+												<p><?php echo TTBM_Global_Function::esc_html( $description ) ?></p>
 											</div>
 										<?php } ?>
 								</div>

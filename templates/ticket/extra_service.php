@@ -5,7 +5,7 @@
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
 	$tour_id = $tour_id ?? TTBM_Function::post_id_multi_language($ttbm_post_id);
 	$tour_date = $tour_date ?? current(TTBM_Function::get_date($tour_id));
-	$extra_services = MP_Global_Function::get_post_info($tour_id, 'ttbm_extra_service_data', array());
+	$extra_services = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_extra_service_data', array());
 	if (sizeof($extra_services) > 0) {
 		?>
 		<div class="ttbm_default_widget ttbm_extra_service_area">
@@ -25,8 +25,8 @@
 						foreach ($extra_services as $service) {
 							$service_name = array_key_exists('service_name', $service) ? $service['service_name'] : '';
 							$service_price = array_key_exists('service_price', $service) ? $service['service_price'] : 0;
-							$service_price = MP_Global_Function::wc_price($tour_id, $service_price);
-							$service_price_raw = MP_Global_Function::price_convert_raw($service_price);
+							$service_price = TTBM_Global_Function::wc_price($tour_id, $service_price);
+							$service_price_raw = TTBM_Global_Function::price_convert_raw($service_price);
 							$service_qty = array_key_exists('service_qty', $service) ? $service['service_qty'] : 0;
 							$reserve = apply_filters('ttbm_service_reserve_qty', 0);
 							$input_type = array_key_exists('service_qty_type', $service) ? $service['service_qty_type'] : 'inputbox';
@@ -43,12 +43,12 @@
 									<?php if ($service_icon) { ?>
 										<span class="<?php echo esc_attr($service_icon); ?>"></span>
 									<?php } ?>
-									<?php echo MP_Global_Function::esc_html($service_name); ?>
+									<?php echo TTBM_Global_Function::esc_html($service_name); ?>
                                     <?php if ($description) { ?>
-									    <div class="mT_xs"><?php MP_Custom_Layout::load_more_text($description, 100); ?></div>
+									    <div class="mT_xs"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
                                     <?php } ?>
 								</th>
-								<td class="text-center"><?php echo MP_Global_Function::esc_html($service_price); ?></td>
+								<td class="text-center"><?php echo TTBM_Global_Function::esc_html($service_price); ?></td>
 								<td><?php TTBM_Layout::qty_input($service_name, $available, $input_type, $default_qty, $min_qty, $max_qty, $service_price_raw, 'service_qty[]'); ?></td>
 							</tr>
 							<tr>

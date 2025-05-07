@@ -11,10 +11,10 @@ if (!class_exists('TTBM_Settings_Gallery_Hotel')) {
             add_action('ttbm_settings_gallery_save', [$this, 'save_gallery']);
         }
         public function gallery_settings($tour_id) {
-            $display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_slider_hotel', 'on');
+            $display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_slider_hotel', 'on');
             $active = $display == 'off' ? '' : 'mActive';
             $checked = $display == 'off' ? '' : 'checked';
-            $image_ids = MP_Global_Function::get_post_info($tour_id, 'ttbm_gallery_images_hotel', array());
+            $image_ids = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_gallery_images_hotel', array());
             ?>
 
             <div class="tabsItem ttbm_settings_gallery" data-tabs="#ttbm_settings_gallery">
@@ -34,7 +34,7 @@ if (!class_exists('TTBM_Settings_Gallery_Hotel')) {
                             <p><?php esc_html_e('On/Off Slider', 'tour-booking-manager'); ?></p>
                             <span class="text"><?php TTBM_Settings::des_p('ttbm_display_slider_hotel'); ?></span>
                         </div>
-                        <?php MP_Custom_Layout::switch_button('ttbm_display_slider_hotel', $checked); ?>
+                        <?php TTBM_Custom_Layout::switch_button('ttbm_display_slider_hotel', $checked); ?>
                     </label>
 
                 </section>
@@ -54,9 +54,9 @@ if (!class_exists('TTBM_Settings_Gallery_Hotel')) {
             <?php
         }
         public function save_gallery($tour_id) {
-                $slider = MP_Global_Function::get_submit_info('ttbm_display_slider_hotel') ? 'on' : 'off';
+                $slider = TTBM_Global_Function::get_submit_info('ttbm_display_slider_hotel') ? 'on' : 'off';
                 update_post_meta($tour_id, 'ttbm_display_slider_hotel', $slider);
-                $images = MP_Global_Function::get_submit_info('ttbm_gallery_images_hotel', array());
+                $images = TTBM_Global_Function::get_submit_info('ttbm_gallery_images_hotel', array());
                 $all_images = explode(',', $images);
                 update_post_meta( $tour_id, 'ttbm_gallery_images_hotel', $all_images);
         }

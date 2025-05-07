@@ -17,10 +17,10 @@
 				<?php
 			}
 			public function extras_settings($tour_id) {
-				$contact_text = MP_Global_Function::get_post_info($tour_id, 'ttbm_contact_text');
-				$contact_phone = MP_Global_Function::get_post_info($tour_id, 'ttbm_contact_phone');
-				$contact_email = MP_Global_Function::get_post_info($tour_id, 'ttbm_contact_email');
-				$display_gaq = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_get_question', 'on');
+				$contact_text = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_contact_text');
+				$contact_phone = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_contact_phone');
+				$contact_email = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_contact_email');
+				$display_gaq = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_get_question', 'on');
 				$active_gaq = $display_gaq == 'off' ? '' : 'mActive';
 				$checked_gaq = $display_gaq == 'off' ? '' : 'checked';
 				?>
@@ -42,7 +42,7 @@
 							<div>
 								<p><?php esc_html_e('Enable Contact', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Select Tour City from this list', 'tour-booking-manager'); ?></span></i></p>
 							</div>
-							<?php MP_Custom_Layout::switch_button('ttbm_display_get_question', $checked_gaq); ?>
+							<?php TTBM_Custom_Layout::switch_button('ttbm_display_get_question', $checked_gaq); ?>
 						</div>
                     </section>
 
@@ -78,11 +78,11 @@
 			}
 			public function save_extras($tour_id) {
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
-					$get_question = MP_Global_Function::get_submit_info('ttbm_display_get_question') ? 'on' : 'off';
+					$get_question = TTBM_Global_Function::get_submit_info('ttbm_display_get_question') ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_get_question', $get_question);
-					$email = MP_Global_Function::get_submit_info('ttbm_contact_email');
-					$phone = MP_Global_Function::get_submit_info('ttbm_contact_phone');
-					$des = MP_Global_Function::get_submit_info('ttbm_contact_text');
+					$email = TTBM_Global_Function::get_submit_info('ttbm_contact_email');
+					$phone = TTBM_Global_Function::get_submit_info('ttbm_contact_phone');
+					$des = TTBM_Global_Function::get_submit_info('ttbm_contact_text');
 					update_post_meta($tour_id, 'ttbm_contact_email', $email);
 					update_post_meta($tour_id, 'ttbm_contact_phone', $phone);
 					update_post_meta($tour_id, 'ttbm_contact_text', $des);

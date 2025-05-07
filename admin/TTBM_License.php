@@ -9,7 +9,7 @@
 	if (!class_exists('TTBM_License')) {
 		class TTBM_License {
 			public function __construct() {
-				add_action('mp_license_page_plugin_list', [$this, 'tour_licence'], 50);
+				add_action('ttbm_license_page_plugin_list', [$this, 'tour_licence'], 50);
 			}
 			public function tour_licence() {
 				?>

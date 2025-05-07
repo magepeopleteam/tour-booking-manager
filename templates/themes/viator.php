@@ -4,13 +4,13 @@
 	if ( ! defined( 'ABSPATH' ) ) exit;
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
 	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
-	$template_name = $template_name ?? MP_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
+	$template_name = $template_name ?? TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
 	$all_dates     = $all_dates ?? TTBM_Function::get_date( $tour_id );
 	$travel_type   = $travel_type ?? TTBM_Function::get_travel_type( $tour_id );
 	$available_seat = $available_seat??TTBM_Function::get_total_available( $tour_id );
 ?>
 <div class="ttbm_viator_theme">
-	<div class='mpStyle ttbm_wraper viator_top_section'>
+	<div class='ttbm_style ttbm_wraper viator_top_section'>
 		<div class="ttbm_container shadow_one">
 			<div class="ttbm_details_page">
 				<?php do_action( 'ttbm_details_title' ); ?>
@@ -52,7 +52,7 @@
 			</div>
 		</div>
 	</div>
-	<div class='mpStyle ttbm_wraper'>
+	<div class='ttbm_style ttbm_wraper'>
 		<div class="mpContainer">
 			<div class="ttbm_details_page">
 				<div class="ttbm_content_area">

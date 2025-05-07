@@ -82,7 +82,7 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 		
 		public function location($tour_id) {
 			$display_name = 'ttbm_display_location';
-			$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'on');
+			$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
 			$checked = $display == 'off' ? '' : 'checked';
 
 			?>
@@ -92,7 +92,7 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 						<p><?php esc_html_e('Tour City', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Select Tour City from this list', 'tour-booking-manager'); ?></span></i></p>
 					</div>
 					<div class="_dFlex_alignCenter_justifyBetween">
-						<div><?php MP_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__(' Add', 'tour-booking-manager')); ?> </div> <?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
+						<div><?php TTBM_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__(' Add', 'tour-booking-manager')); ?> </div> <?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
 						<?php self::location_select($tour_id); ?>
 					</div>
 				</div>
@@ -106,7 +106,7 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 			} else {
 				$location_key = 'ttbm_hotel_location';
 			}
-			$value = MP_Global_Function::get_post_info($tour_id, $location_key, array());
+			$value = TTBM_Global_Function::get_post_info($tour_id, $location_key, array());
 			$all_location = TTBM_Function::get_all_location();
 			?>
 			<select class="rounded ms-2" name="<?php echo esc_attr($location_key); ?>">
@@ -118,7 +118,7 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 		}
 		public static function add_new_location_popup() {
 			?>
-			<div class="mpPopup" data-popup="add_new_location_popup">
+			<div class="ttbm_popup" data-popup="add_new_location_popup">
 				<div class="popupMainArea">
 					<div class="popupHeader">
 						<h4 class="text-primary">
@@ -190,7 +190,7 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 			die();
 		}
 		public function ttbm_reload_location_list() {
-			$ttbm_id = MP_Global_Function::data_sanitize($_POST['ttbm_id']);
+			$ttbm_id = TTBM_Global_Function::data_sanitize($_POST['ttbm_id']);
 			self::location_select($ttbm_id);
 			die();
 		}
@@ -208,7 +208,7 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 
 			$map_settings = get_option('ttbm_google_map_settings'); 
 			$gmap_api_key = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
-			$display_map = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'off');
+			$display_map = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'off');
 			if($display_map=='on'):
 			?>
 			<div class="ttbm_default_widget" style="width: 100%; height: 400px;">
@@ -230,7 +230,7 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 			$map_settings = get_option('ttbm_google_map_settings'); 
 			$gmap_api_key = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
 			
-			$display_map = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'on');
+			$display_map = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'on');
 			$checked = $display_map == 'off' ? '' : 'checked';
 			$active = $display_map == 'off' ? '' : 'mActive';
 			?>
@@ -240,7 +240,7 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 					<div class="label-inner">
 						<p><?php esc_html_e('Enable/Disable Map Location', 'tour-booking-manager');?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('To show Tour Location on Map enable It.','tour-booking-manager'); ?></span></i></p>
 					</div>
-					<?php MP_Custom_Layout::switch_button('ttbm_display_map', $checked); ?>
+					<?php TTBM_Custom_Layout::switch_button('ttbm_display_map', $checked); ?>
 				</label>
 			</section>
 			<div class="<?php echo esc_attr($active); ?>" data-collapse="#<?php echo esc_attr('ttbm_display_map'); ?>">
@@ -276,32 +276,32 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 		public function save_general_settings($tour_id) {
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
 					
-					$ttbm_display_location = MP_Global_Function::get_submit_info('ttbm_display_location') ? 'on' : 'off';
-					$ttbm_location_name = MP_Global_Function::get_submit_info('ttbm_location_name');
+					$ttbm_display_location = TTBM_Global_Function::get_submit_info('ttbm_display_location') ? 'on' : 'off';
+					$ttbm_location_name = TTBM_Global_Function::get_submit_info('ttbm_location_name');
 					update_post_meta($tour_id, 'ttbm_display_location', $ttbm_display_location);
 					update_post_meta($tour_id, 'ttbm_location_name', $ttbm_location_name);
 					$location = get_term_by('name',$ttbm_location_name,'ttbm_tour_location');
 					$ttbm_country_name = get_term_meta($location->term_id, 'ttbm_country_location',true);
 					update_post_meta($tour_id, 'ttbm_country_name', $ttbm_country_name);
 					/***************/
-					$ttbm_display_map = MP_Global_Function::get_submit_info('ttbm_display_map') ? 'on' : 'off';
-					$ttbm_full_location_name = MP_Global_Function::get_submit_info('ttbm_full_location_name');
+					$ttbm_display_map = TTBM_Global_Function::get_submit_info('ttbm_display_map') ? 'on' : 'off';
+					$ttbm_full_location_name = TTBM_Global_Function::get_submit_info('ttbm_full_location_name');
 					update_post_meta($tour_id, 'ttbm_display_map', $ttbm_display_map);
 					update_post_meta($tour_id, 'ttbm_full_location_name', $ttbm_full_location_name);
 					/***************/
-					$map_latitude = MP_Global_Function::get_submit_info('ttbm_map_latitude');
-					$map_longitude = MP_Global_Function::get_submit_info('ttbm_map_longitude');
+					$map_latitude = TTBM_Global_Function::get_submit_info('ttbm_map_latitude');
+					$map_longitude = TTBM_Global_Function::get_submit_info('ttbm_map_longitude');
 					update_post_meta($tour_id, 'ttbm_map_latitude', $map_latitude);
 					update_post_meta($tour_id, 'ttbm_map_longitude', $map_longitude);
 					
 				}
 			}
 			public function ttbm_new_location_save() {
-				$name = MP_Global_Function::data_sanitize($_POST['name']);
-				$description = MP_Global_Function::data_sanitize($_POST['description']);
-				$address = MP_Global_Function::data_sanitize($_POST['address']);
-				$country = MP_Global_Function::data_sanitize($_POST['country']);
-				$image = MP_Global_Function::data_sanitize($_POST['image']);
+				$name = TTBM_Global_Function::data_sanitize($_POST['name']);
+				$description = TTBM_Global_Function::data_sanitize($_POST['description']);
+				$address = TTBM_Global_Function::data_sanitize($_POST['address']);
+				$country = TTBM_Global_Function::data_sanitize($_POST['country']);
+				$image = TTBM_Global_Function::data_sanitize($_POST['image']);
 				$query = wp_insert_term($name,   // the term
 					'ttbm_tour_location', // the taxonomy
 					array('description' => $description));

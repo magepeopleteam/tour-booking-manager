@@ -44,7 +44,7 @@
 		"style"            => "modern",
 	);
 ?>
-	<div class="mpStyle ttbm_wraper placeholderLoader ttbm_item_filter_area">
+	<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_item_filter_area">
 		<div class="left_filter">
 			<div class="leftSidebar">
 				<?php do_action( 'ttbm_left_filter', $loop, $params ); ?>

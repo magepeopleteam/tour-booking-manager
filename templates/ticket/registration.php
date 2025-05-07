@@ -5,7 +5,7 @@
 	
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
 	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
-	$ttbm_display_registration = $ttbm_display_registration ?? MP_Global_Function::get_post_info( $tour_id, 'ttbm_display_registration', 'on' );
+	$ttbm_display_registration = $ttbm_display_registration ?? TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_display_registration', 'on' );
 	if ( $ttbm_display_registration != 'off' ) {
 		$all_dates   = $all_dates ?? TTBM_Function::get_date( $tour_id );
 		$tour_type   = $tour_type ?? TTBM_Function::get_tour_type( $tour_id );

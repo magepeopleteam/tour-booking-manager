@@ -2,52 +2,52 @@
 body.ttbm_settings_page{
     font-size: 16px;
     background-color: #fff;
-    .mp_global_settings{
+    .ttbm_global_settings{
         padding-top: 50px;
     }
 }
 
-div.mp_global_settings .tabLists {
+div.ttbm_global_settings .tabLists {
     border-right: 0;
 }
-  div.mpStyle .mpPanelBody {
+  div.ttbm_style .ttbmPanelBody {
     background-color: #fff;
   }
-  div.mp_global_settings .mpTabs {
+  div.ttbm_global_settings .ttbmTabs {
     display: flex;
   }
-  div.mp_global_settings {
+  div.ttbm_global_settings {
     max-width: 1600px;
     margin: auto;
     select.formControl,input.formControl{
       background-color: #f5f8ff;
       height: 2.5em;
     }
-    .mp_basic_license_settings{
+    .ttbm_license_settings{
       table{
         margin-top: 20px;
       }
     }
     
   }
-  .mpStyle button:hover span, .mpStyle button:focus span {
+  .ttbm_style button:hover span, .ttbm_style button:focus span {
     color: var(--mpl-dark);
   }
-  div.mp_global_settings .mpPanelHeader {
+  div.ttbm_global_settings .ttbmPanelHeader {
     background: var(--mpl-primary);
   }
-  .mpStyle [data-tabs-target].active {
+  .ttbm_style [data-tabs-target].active {
     border-left: 2px solid var(--mpl-primary);
   }
-  div.mpStyle select.formControl:focus {
+  div.ttbm_style select.formControl:focus {
     border: 1px solid var(--mpl-dark);
     box-shadow: none;
   }
-  .mpStyle [data-tabs-target]:hover {
+  .ttbm_style [data-tabs-target]:hover {
     border-left: 2px solid var(--mpl-primary);
   }
   
-  div.mp_global_settings .ttbm-setting-field {
+  div.ttbm_global_settings .ttbm-setting-field {
     display: flex;
     justify-content: space-between;
     border: 1px solid #ececec;
@@ -63,7 +63,7 @@ div.mp_global_settings .tabLists {
     }
   }
   
-  div.mp_global_settings .ttbm-setting-field .tooltips {
+  div.ttbm_global_settings .ttbm-setting-field .tooltips {
     position: relative;
     display: inline-block;
     cursor: pointer;

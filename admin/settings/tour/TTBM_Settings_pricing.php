@@ -22,7 +22,7 @@
 			public function pricing_tab_content($tour_id) {
 				$all_types = TTBM_Function::tour_type();
 				$ttbm_type = TTBM_Function::get_tour_type($tour_id);
-				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_registration', 'on');
+				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_registration', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
@@ -42,7 +42,7 @@
                             <div>
                                 <p><?php esc_html_e('Enable/Disable Registration', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_registration'); ?></span></i></p>
                             </div>
-							<?php MP_Custom_Layout::switch_button('ttbm_display_registration', $checked); ?>
+							<?php TTBM_Custom_Layout::switch_button('ttbm_display_registration', $checked); ?>
                         </div>
                     </section>
                     <div data-collapse="#ttbm_display_registration" class="<?php echo esc_attr($active); ?>">
@@ -87,14 +87,14 @@
 				<?php
 			}
 			public function ttbm_ticket_config($tour_id) {
-				$ticket_type = MP_Global_Function::get_post_info($tour_id, 'ttbm_ticket_type', array());
+				$ticket_type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticket_type', array());
 				$tour_label = TTBM_Function::get_name();
 				$ttbm_type = TTBM_Function::get_tour_type($tour_id);
 				$type_class = $ttbm_type == 'general' ? '' : 'dNone';
-				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_advance', 'off');
+				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_advance', 'off');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
-				$all_forms = MP_Global_Function::query_post_type('ttbm_ticket_types');
+				$all_forms = TTBM_Global_Function::query_post_type('ttbm_ticket_types');
 				?>
                 <div class="ttbm_ticket_config  <?php echo esc_html($type_class); ?>">
 
@@ -146,7 +146,7 @@
                                         <th><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
                                     </tr>
                                     </thead>
-                                    <tbody class="mp_sortable_area mp_item_insert ttbm_insert_ticket_type">
+                                    <tbody class="ttbm_sortable_area ttbm_item_insert ttbm_insert_ticket_type">
 									<?php
 										if (sizeof($ticket_type) > 0) {
 											foreach ($ticket_type as $field) {
@@ -158,7 +158,7 @@
                                 </table>
                             </div>
                             <div class="d-flex justify-content-end ">
-								<?php MP_Custom_Layout::add_new_button(esc_html__('Add New Ticket Type', 'tour-booking-manager')); ?>
+								<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Ticket Type', 'tour-booking-manager')); ?>
                             </div>
 							<?php do_action('add_mp_hidden_table', 'ttbm_price_item'); ?>
                         </section>
@@ -170,7 +170,7 @@
 			public function ticket_table() {
 				$form_id = $_REQUEST['form_id'] ?? '';
 				$post_id = $_REQUEST['post_id'] ?? '';
-				$ticket_type = MP_Global_Function::get_post_info($form_id, 'ttbm_ticket_type', array());
+				$ticket_type = TTBM_Global_Function::get_post_info($form_id, 'ttbm_ticket_type', array());
 				if (sizeof($ticket_type) > 0) {
 					foreach ($ticket_type as $field) {
 						$this->pricing_item($field, $post_id);
@@ -180,7 +180,7 @@
 			}
 			public function pricing_item($field = array(), $tour_id = '') {
 				$tour_id = $tour_id ?: get_the_id();
-				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_advance', 'off');
+				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_advance', 'off');
 				$active = $display == 'off' ? '' : 'mActive';
 				$field = $field ?: array();
 				$icon = array_key_exists('ticket_type_icon', $field) ? $field['ticket_type_icon'] : '';
@@ -196,28 +196,28 @@
 				?>
                 <tr class="mp_remove_area">
 					<?php do_action('ttbm_ticket_type_content_start', $field, $tour_id) ?>
-                    <td><?php do_action('mp_input_add_icon', 'ticket_type_icon[]', $icon); ?></td>
+                    <td><?php do_action('ttbm_input_add_icon', 'ticket_type_icon[]', $icon); ?></td>
                     <td>
                         <input type="hidden" name="ttbm_hidden_ticket_text[]" value="<?php echo esc_attr($name_text); ?>"/>
-                        <input type="text" class="medium mp_name_validation" name="ticket_type_name[]" placeholder="Ex: Adult" value="<?php echo esc_attr($name); ?>" data-input-text="<?php echo esc_attr($name_text); ?>"/>
+                        <input type="text" class="medium ttbm_name_validation" name="ticket_type_name[]" placeholder="Ex: Adult" value="<?php echo esc_attr($name); ?>" data-input-text="<?php echo esc_attr($name_text); ?>"/>
                     </td>
                     <td>
                         <input type="text" class="" name="ticket_type_description[]" placeholder="Ex: description" value="<?php echo esc_attr($description); ?>"/>
                     </td>
                     <td>
-                        <input type="text" class="medium mp_price_validation" name="ticket_type_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($price); ?>"/>
+                        <input type="text" class="medium ttbm_price_validation" name="ticket_type_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($price); ?>"/>
                     </td>
                     <td>
-                        <input type="text" class="medium mp_price_validation" name="ticket_type_sale_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($sale_price); ?>"/>
+                        <input type="text" class="medium ttbm_price_validation" name="ticket_type_sale_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($sale_price); ?>"/>
                     </td>
                     <td <?php do_action('ttbm_aq_target_hook', $tour_id); ?>>
-                        <input type="number" size="4" pattern="[0-9]*" step="1" class="medium mp_number_validation" data-same-input="ticket_type_qty" name="ticket_type_qty[]" placeholder="Ex: 500" value="<?php echo esc_attr($qty); ?>"/>
+                        <input type="number" size="4" pattern="[0-9]*" step="1" class="medium ttbm_number_validation" data-same-input="ticket_type_qty" name="ticket_type_qty[]" placeholder="Ex: 500" value="<?php echo esc_attr($qty); ?>"/>
                     </td>
                     <td>
-                        <input type="number" size="4" pattern="[0-9]*" step="1" class="medium mp_number_validation" name="ticket_type_default_qty[]" placeholder="Ex: 1" value="<?php echo esc_attr($default_qty); ?>"/>
+                        <input type="number" size="4" pattern="[0-9]*" step="1" class="medium ttbm_number_validation" name="ticket_type_default_qty[]" placeholder="Ex: 1" value="<?php echo esc_attr($default_qty); ?>"/>
                     </td>
                     <td>
-                        <input type="number" size="4" pattern="[0-9]*" step="1" class="medium mp_number_validation" data-same-input="ticket_type_resv_qty" name="ticket_type_resv_qty[]" placeholder="Ex: 5" value="<?php echo esc_attr($reserve_qty); ?>"/>
+                        <input type="number" size="4" pattern="[0-9]*" step="1" class="medium ttbm_number_validation" data-same-input="ticket_type_resv_qty" name="ticket_type_resv_qty[]" placeholder="Ex: 5" value="<?php echo esc_attr($reserve_qty); ?>"/>
                     </td>
 					<?php do_action('ttbm_ticket_type_content_end', $field, $tour_id) ?>
                     <td>
@@ -226,13 +226,13 @@
                             <option value="dropdown" <?php echo esc_attr($input_type == 'dropdown' ? 'selected' : ''); ?>><?php esc_html_e('Dropdown List', 'tour-booking-manager'); ?></option>
                         </select>
                     </td>
-                    <td><?php MP_Custom_Layout::move_remove_button(); ?></td>
+                    <td><?php TTBM_Custom_Layout::move_remove_button(); ?></td>
                 </tr>
 				<?php
 			}
 			public function ttbm_hotel_config($tour_id) {
 				$ttbm_hotels = TTBM_Function::get_hotel_list($tour_id);
-				$hotel_lists = MP_Global_Function::query_post_type('ttbm_hotel');
+				$hotel_lists = TTBM_Global_Function::query_post_type('ttbm_hotel');
 				$ttbm_type = TTBM_Function::get_tour_type($tour_id);
 				$hotel_class = $ttbm_type == 'hotel' ? 'dBlock' : 'dNone';
 				?>
@@ -288,15 +288,15 @@
 			/***********/
 			public function save_pricing($tour_id) {
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
-					$registration = MP_Global_Function::get_submit_info('ttbm_display_registration') ? 'on' : 'off';
+					$registration = TTBM_Global_Function::get_submit_info('ttbm_display_registration') ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_registration', $registration);
-					$advance_option = MP_Global_Function::get_submit_info('ttbm_display_advance') ? 'on' : 'off';
+					$advance_option = TTBM_Global_Function::get_submit_info('ttbm_display_advance') ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_advance', $advance_option);
 					//*********Tour Type**************//
-					$tour_type = MP_Global_Function::get_submit_info('ttbm_type', 'general');
+					$tour_type = TTBM_Global_Function::get_submit_info('ttbm_type', 'general');
 					update_post_meta($tour_id, 'ttbm_type', $tour_type);
 					//*********Hotel Configuration**************//
-					$ttbm_hotels = MP_Global_Function::get_submit_info('ttbm_hotels', array());
+					$ttbm_hotels = TTBM_Global_Function::get_submit_info('ttbm_hotels', array());
 					update_post_meta($tour_id, 'ttbm_hotels', $ttbm_hotels);
 					//*********Regular Ticket Price**************//
 					$ttbm_travel_type = TTBM_Function::get_travel_type($tour_id);
@@ -304,23 +304,23 @@
 						$after_day = date('Y-m-d', strtotime(' +500 day'));
 						update_post_meta($tour_id, 'ttbm_travel_reg_end_date', $after_day);
 					} elseif ($ttbm_travel_type == 'repeated') {
-						update_post_meta($tour_id, 'ttbm_travel_reg_end_date', MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_date'));
+						update_post_meta($tour_id, 'ttbm_travel_reg_end_date', TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_date'));
 					} else {
-						update_post_meta($tour_id, 'ttbm_travel_reg_end_date', MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_reg_end_date'));
+						update_post_meta($tour_id, 'ttbm_travel_reg_end_date', TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_reg_end_date'));
 					}
 					//*************Regular ticket***********************//
 					$new_ticket_type = array();
-					$icon = MP_Global_Function::get_submit_info('ticket_type_icon', array());
-					$names = MP_Global_Function::get_submit_info('ticket_type_name', array());
-					$ticket_price = MP_Global_Function::get_submit_info('ticket_type_price', array());
-					$sale_price = MP_Global_Function::get_submit_info('ticket_type_sale_price', array());
-					$qty = MP_Global_Function::get_submit_info('ticket_type_qty', array());
+					$icon = TTBM_Global_Function::get_submit_info('ticket_type_icon', array());
+					$names = TTBM_Global_Function::get_submit_info('ticket_type_name', array());
+					$ticket_price = TTBM_Global_Function::get_submit_info('ticket_type_price', array());
+					$sale_price = TTBM_Global_Function::get_submit_info('ticket_type_sale_price', array());
+					$qty = TTBM_Global_Function::get_submit_info('ticket_type_qty', array());
 					$qty = apply_filters('ttbm_ticket_type_qty', $qty, $tour_id);
-					$default_qty = MP_Global_Function::get_submit_info('ticket_type_default_qty', array());
-					$rsv = MP_Global_Function::get_submit_info('ticket_type_resv_qty', array());
+					$default_qty = TTBM_Global_Function::get_submit_info('ticket_type_default_qty', array());
+					$rsv = TTBM_Global_Function::get_submit_info('ticket_type_resv_qty', array());
 					$rsv = apply_filters('ttbm_ticket_type_resv_qty', $rsv, $tour_id);
-					$qty_type = MP_Global_Function::get_submit_info('ticket_type_qty_type', array());
-					$description = MP_Global_Function::get_submit_info('ticket_type_description', array());
+					$qty_type = TTBM_Global_Function::get_submit_info('ticket_type_qty_type', array());
+					$description = TTBM_Global_Function::get_submit_info('ticket_type_description', array());
 					$count = count($names);
 					for ($i = 0; $i < $count; $i++) {
 						if ($names[$i] && $ticket_price[$i] >= 0 && $qty[$i] > 0) {

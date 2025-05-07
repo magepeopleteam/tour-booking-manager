@@ -16,22 +16,22 @@
 				<?php
 			}
 			public function display_settings($tour_id) {
-				$seat_details_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_seat_details', 'on') == 'off' ? '' : 'checked';
-				$tour_type_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_tour_type', 'on') == 'off' ? '' : 'checked';
-				$hotel_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_hotels', 'on') == 'off' ? '' : 'checked';
-				$sidebar_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_sidebar', 'off') == 'off' ? '' : 'checked';
-				$duration_checked = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_duration', 'on') == 'off' ? '' : 'checked';
-				$template_name = MP_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
+				$seat_details_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_seat_details', 'on') == 'off' ? '' : 'checked';
+				$tour_type_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_tour_type', 'on') == 'off' ? '' : 'checked';
+				$hotel_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_hotels', 'on') == 'off' ? '' : 'checked';
+				$sidebar_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_sidebar', 'off') == 'off' ? '' : 'checked';
+				$duration_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_duration', 'on') == 'off' ? '' : 'checked';
+				$template_name = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
 				$template_lists = TTBM_Function::all_details_template();
-				$display_enquiry = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_enquiry', 'on');
+				$display_enquiry = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_enquiry', 'on');
 				$enquiry_checked = $display_enquiry == 'off' ? '' : 'checked';
 				?>
 				<div class="tabsItem ttbm_display_settings" data-tabs="#ttbm_display_settings">
 					<h2><?php esc_html_e('Display Settings', 'tour-booking-manager'); ?></h2>
 					<p><?php TTBM_Settings::des_p('display_settings_description'); ?> </p>
 
-					<?php $content_title_style = MP_Global_Function::get_post_info($tour_id, 'ttbm_section_title_style') ?: 'ttbm_title_style_2'; ?>
-					<?php $ticketing_system = MP_Global_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'availability_section'); ?>
+					<?php $content_title_style = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_section_title_style') ?: 'ttbm_title_style_2'; ?>
+					<?php $ticketing_system = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'availability_section'); ?>
 					
 					<section class="bg-light">
                         <label for="" class="label">
@@ -78,7 +78,7 @@
 									<div>
 										<p><?php esc_html_e('Display Seat Count', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_seat_details'); ?></span></i></p>
 									</div>
-									<?php MP_Custom_Layout::switch_button('ttbm_display_seat_details', $seat_details_checked); ?> 
+									<?php TTBM_Custom_Layout::switch_button('ttbm_display_seat_details', $seat_details_checked); ?> 
 								</div>
 							</section>
 						</div>
@@ -88,7 +88,7 @@
 									<div>
 										<p><?php esc_html_e('Display Tour Type', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_tour_type'); ?></span></i></p>
 									</div>
-									<?php MP_Custom_Layout::switch_button('ttbm_display_tour_type', $tour_type_checked); ?>
+									<?php TTBM_Custom_Layout::switch_button('ttbm_display_tour_type', $tour_type_checked); ?>
 								</div> 
 							</section>
 						</div>
@@ -101,7 +101,7 @@
 										<p><?php esc_html_e('Display Hotels Info', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_hotels'); ?></span></i></p>
 										
 									</div>
-									<?php MP_Custom_Layout::switch_button('ttbm_display_hotels', $hotel_checked); ?>
+									<?php TTBM_Custom_Layout::switch_button('ttbm_display_hotels', $hotel_checked); ?>
 								</div> 
 							</section>
 						</div>
@@ -111,7 +111,7 @@
 									<div>
 										<p><?php esc_html_e('Dispaly Sidebar widget', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_sidebar'); ?></span></i></p>
 									</div>
-									<?php MP_Custom_Layout::switch_button('ttbm_display_sidebar', $sidebar_checked); ?>
+									<?php TTBM_Custom_Layout::switch_button('ttbm_display_sidebar', $sidebar_checked); ?>
 								</div> 
 							</section>
 						</div>
@@ -123,7 +123,7 @@
 									<div> 
 										<p><?php esc_html_e('Display Duration', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_duration'); ?></span></i></p>
 									</div>
-									<?php MP_Custom_Layout::switch_button('ttbm_display_duration', $display_enquiry); ?>
+									<?php TTBM_Custom_Layout::switch_button('ttbm_display_duration', $display_enquiry); ?>
 								</div> 
 							</section>
 						</div>
@@ -136,7 +136,7 @@
                             <div>
                                 <p><?php esc_html_e('Get Enquiry', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Enable/Disable Get Enquiry Button in frontend'); ?></span></i></p>
                             </div>
-                            <?php MP_Custom_Layout::switch_button('ttbm_display_enquiry', $enquiry_checked); ?>
+                            <?php TTBM_Custom_Layout::switch_button('ttbm_display_enquiry', $enquiry_checked); ?>
                         </label>
                     </section>
                     <section>
@@ -160,7 +160,7 @@
 			}
 			public function rank_tour($tour_id) {
 				$display_name = 'ttbm_display_order_tour';
-				$display = MP_Global_Function::get_post_info($tour_id, $display_name, 'off');
+				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'off');
 				$checked = ($display == 'off') ? '' : 'checked';
 				$active = ($display == 'off') ? '' : 'mActive';
 				$placeholder='';
@@ -171,8 +171,8 @@
 							<p><?php esc_html_e('Rank Tour', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Turn on/off rank tour settings.', 'tour-booking-manager'); ?></span></i></p>
 						</div>	
 						<div class="_dFlex_alignCenter_justfyBetween">
-							<?php MP_Custom_Layout::switch_button($display_name, $checked); ?>
-							<input type="number" data-collapse="#<?php echo esc_attr($display_name); ?>" min="0" class="ms-2 <?php echo esc_attr($active); ?>" name="ttbm_travel_rank_tour" value="<?php echo MP_Global_Function::get_post_info($tour_id, 'ttbm_travel_rank_tour'); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+							<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
+							<input type="number" data-collapse="#<?php echo esc_attr($display_name); ?>" min="0" class="ms-2 <?php echo esc_attr($active); ?>" name="ttbm_travel_rank_tour" value="<?php echo TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_rank_tour'); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
 						</div>
 					</div>
 				</section>

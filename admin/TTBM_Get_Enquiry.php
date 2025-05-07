@@ -137,7 +137,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             die;
         }
         public function get_enquiry_button(){
-            $display_enquiry = MP_Global_Function::get_post_info(get_the_ID(), 'ttbm_display_enquiry', 'on');
+            $display_enquiry = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_display_enquiry', 'on');
             if($display_enquiry == 'on'):
             ?>
             <button type="button" class="_dButton_fullWidth" data-target-popup="get-enquiry-popup">
@@ -196,7 +196,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
         public function reply_enquery_popup() {
             $from_email = get_option('admin_email', 'admin@' . parse_url(get_site_url(), PHP_URL_HOST));
             ?>
-            <div class="mpPopup mpStyle" data-popup="reply-enquiry-popup">
+            <div class="ttbm_popup ttbm_style" data-popup="reply-enquiry-popup">
                 <div class="popupMainArea">
                     <div class="popupHeader allCenter">
                         <h2 class="_mR"><?php esc_html_e('Reply', 'bus-ticket-booking-with-seat-reservation'); ?></h2>
@@ -247,7 +247,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
         }
         public function get_enquiry_pop_up($tour_id) {
             ?>
-                <div class="mpPopup mpStyle" data-popup="get-enquiry-popup">
+                <div class="ttbm_popup ttbm_style" data-popup="get-enquiry-popup">
                     <div class="popupMainArea">
                         <div class="popupHeader allCenter">
                             <h2 class="_mR"><?php esc_html_e('Get Enquiry', 'bus-ticket-booking-with-seat-reservation'); ?></h2>
@@ -308,9 +308,9 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 </h2>
                 <div id="mptbm-enquiry-list" class="tab-content" style="display: block;">
                     <div class="wrap ">
-                        <div class="mpStyle">
+                        <div class="ttbm_style">
                             <?php $this->reply_enquery_popup(); ?>
-                            <div class="mpPopup mpStyle" data-popup="view-enquiry-popup">
+                            <div class="ttbm_popup ttbm_style" data-popup="view-enquiry-popup">
                                 <div class="popupMainArea">
                                     <div class="popupHeader allCenter">
                                         <h2 class="_mR"><?php esc_html_e('View Enquiry', 'bus-ticket-booking-with-seat-reservation'); ?></h2>
@@ -388,7 +388,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                                             </td>
                                             <td class="<?php echo esc_attr($status); ?>"><?php echo esc_html(ucfirst($status)); ?></td>
                                             <td><?php echo esc_html(get_the_date() . ' ' . get_the_time()); ?></td>
-                                            <td class="mpStyle">
+                                            <td class="ttbm_style">
                                                 <a href="#" class="ttbm-view-enquiry" data-id="<?php echo get_the_ID(); ?>" data-target-popup="view-enquiry-popup"><?php _e('View |', 'tour-booking-manager'); ?></a>
                                                 <a href="#" class="ttbm-reply-enquiry" data-id="<?php echo get_the_ID(); ?>" data-target-popup="reply-enquiry-popup"><?php _e('Reply |', 'tour-booking-manager'); ?></a>
                                                 <a href="#" class="ttbm-delete-enquiry" data-id="<?php echo get_the_ID(); ?>"><?php _e('Delete', 'tour-booking-manager'); ?></a>

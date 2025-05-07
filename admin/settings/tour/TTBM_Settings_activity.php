@@ -26,7 +26,7 @@
 			}
 			public function ttbm_settings_activities($tour_id) {
 				$ttbm_label = TTBM_Function::get_name();
-				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_activities', 'on');
+				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_activities', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
@@ -48,7 +48,7 @@
 							<div>
 								<p><?php esc_html_e($ttbm_label . ' Activities Settings', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_activities'); ?></span></i></p>
 							</div>
-							<?php MP_Custom_Layout::switch_button('ttbm_display_activities', $checked); ?> 
+							<?php TTBM_Custom_Layout::switch_button('ttbm_display_activities', $checked); ?> 
 						</div>
                     </section>
 					<div data-collapse="#ttbm_display_activities" class="ttbm_activities_area <?php echo esc_attr($active); ?>">
@@ -58,8 +58,8 @@
 				<?php
 			}
 			public function activities($tour_id) {
-				$activities = MP_Global_Function::get_taxonomy('ttbm_tour_activities');
-				$tour_activities = MP_Global_Function::get_post_info($tour_id, 'ttbm_tour_activities', []);
+				$activities = TTBM_Global_Function::get_taxonomy('ttbm_tour_activities');
+				$tour_activities = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_tour_activities', []);
 				
 				$tour_activity = implode(',', $tour_activities);
 				$tour_activities_array = explode(',', $tour_activities[0]);
@@ -70,7 +70,7 @@
 						<div>
 							<p><?php esc_html_e('Create activities', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('To create new activity, click this button', 'tour-booking-manager'); ?></span></i></p>
 						</div>
-						<?php MP_Custom_Layout::popup_button_xs('add_new_activity_popup', esc_html__('Create New Activity', 'tour-booking-manager')); ?>
+						<?php TTBM_Custom_Layout::popup_button_xs('add_new_activity_popup', esc_html__('Create New Activity', 'tour-booking-manager')); ?>
 						</label>
 					</section>
 					
@@ -99,7 +99,7 @@
 			}
 			public function add_new_activity_popup() {
 				?>
-				<div class="mpPopup" data-popup="add_new_activity_popup">
+				<div class="ttbm_popup" data-popup="add_new_activity_popup">
 					<div class="popupMainArea">
 						<div class="popupHeader">
 							<h4>
@@ -142,7 +142,7 @@
 				<div class="divider"></div>
 				<div class="flexEqual">
 					<span><?php esc_html_e('Activity Icon : ', 'tour-booking-manager'); ?><sup class="textRequired">*</sup></span>
-					<?php do_action('mp_input_add_icon', 'ttbm_activity_icon'); ?>
+					<?php do_action('ttbm_input_add_icon', 'ttbm_activity_icon'); ?>
 				</div>
 				<p class="textRequired" data-required="ttbm_activity_icon">
 					<span class="fas fa-info-circle"></span>
@@ -152,15 +152,15 @@
 				die();
 			}
 			public function ttbm_reload_activity_list() {
-				$ttbm_id = MP_Global_Function::data_sanitize($_POST['ttbm_id']);
+				$ttbm_id = TTBM_Global_Function::data_sanitize($_POST['ttbm_id']);
 				$this->activities($ttbm_id);
 				die();
 			}
 			public function save_activities($tour_id) {
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
-					$display_activities = MP_Global_Function::get_submit_info('ttbm_display_activities') ? 'on' : 'off';
+					$display_activities = TTBM_Global_Function::get_submit_info('ttbm_display_activities') ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_activities', $display_activities);
-					$activities = MP_Global_Function::get_submit_info('ttbm_tour_activities', array());
+					$activities = TTBM_Global_Function::get_submit_info('ttbm_tour_activities', array());
 					update_post_meta($tour_id, 'ttbm_tour_activities', $activities);
 				}
 			}
@@ -172,9 +172,9 @@
 					wp_send_json_error('You do not have permission to perform this action.');
 					wp_die();
 				}
-				$name = MP_Global_Function::data_sanitize($_POST['activity_name']);
-				$description = MP_Global_Function::data_sanitize($_POST['activity_description']);
-				$icon = MP_Global_Function::data_sanitize($_POST['activity_icon']);
+				$name = TTBM_Global_Function::data_sanitize($_POST['activity_name']);
+				$description = TTBM_Global_Function::data_sanitize($_POST['activity_description']);
+				$icon = TTBM_Global_Function::data_sanitize($_POST['activity_icon']);
 				$query = wp_insert_term($name,   // the term
 					'ttbm_tour_activities', // the taxonomy
 					array('description' => $description));

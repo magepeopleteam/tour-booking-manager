@@ -7,7 +7,7 @@
 	$all_dates     = $all_dates ?? TTBM_Function::get_date( $tour_id );
 	$travel_type   = $travel_type ?? TTBM_Function::get_travel_type( $tour_id );
 	$tour_type     = $tour_type ?? TTBM_Function::get_tour_type( $tour_id );
-	$template_name = $template_name ?? MP_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
+	$template_name = $template_name ?? TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
 	if ( sizeof( $all_dates ) > 0 && $tour_type == 'general' && $travel_type == 'particular' ) {
 		?>
 		<div class="_shadow_two_dFlex ttbm_particular_date_area">

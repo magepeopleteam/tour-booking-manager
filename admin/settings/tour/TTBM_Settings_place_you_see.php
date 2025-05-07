@@ -24,7 +24,7 @@
 			}
 			public function place_you_see_settings($tour_id) {
 				$ttbm_label = TTBM_Function::get_name();
-				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_hiphop', 'on');
+				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_hiphop', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
@@ -46,7 +46,7 @@
 							<div>
 								<p><?php esc_html_e('Places You\'ll Visit ' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_hiphop'); ?></span></i></p> 
 							</div>
-							<?php MP_Custom_Layout::switch_button('ttbm_display_hiphop', $checked); ?>
+							<?php TTBM_Custom_Layout::switch_button('ttbm_display_hiphop', $checked); ?>
 						</div>
                     </section>
 
@@ -57,8 +57,8 @@
 				<?php
 			}
 			public function place_you_see($tour_id) {
-				$hiphop_places = MP_Global_Function::get_post_info($tour_id, 'ttbm_hiphop_places', array());
-				$all_places = MP_Global_Function::query_post_type('ttbm_places');
+				$hiphop_places = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_hiphop_places', array());
+				$all_places = TTBM_Global_Function::query_post_type('ttbm_places');
 				$places = $all_places->posts;
 				?>
 				<div class="ttbm_place_you_see_table">
@@ -81,7 +81,7 @@
 											<th class="text-center"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
 										</tr>
 										</thead>
-										<tbody class="mp_sortable_area mp_item_insert">
+										<tbody class="ttbm_sortable_area ttbm_item_insert">
 										<?php
 											if (sizeof($hiphop_places)) {
 												foreach ($hiphop_places as $hiphop_place) {
@@ -94,7 +94,7 @@
 										?>
 									</tbody>
 								</table>
-								<?php MP_Custom_Layout::add_new_button(esc_html__('Add New Place', 'tour-booking-manager')); ?>
+								<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Place', 'tour-booking-manager')); ?>
 								
 							</div>
 						</section>
@@ -103,9 +103,9 @@
 					}
 					?>
 				</div>
-				<div class="mp_hidden_content">
+				<div class="ttbm_hidden_content">
 					<table>
-						<tbody class="mp_hidden_item">
+						<tbody class="ttbm_hidden_item">
 						<?php $this->place_you_see_item($places); ?>
 						</tbody>
 					</table>
@@ -121,7 +121,7 @@
 				<tr class="mp_remove_area">
 					<td class="text-start">
 						<label>
-							<input class="formControl mp_name_validation" name="ttbm_place_label[]" value="<?php echo esc_attr($place_name); ?>" placeholder="Place name"/>
+							<input class="formControl ttbm_name_validation" name="ttbm_place_label[]" value="<?php echo esc_attr($place_name); ?>" placeholder="Place name"/>
 						</label>
 					</td>
 					<td class="text-start">
@@ -141,7 +141,7 @@
 							</select>
 						</label>
 					</td>
-					<td class="text-center"><?php MP_Custom_Layout::move_remove_button(); ?></td>
+					<td class="text-center"><?php TTBM_Custom_Layout::move_remove_button(); ?></td>
 				</tr>
 				<?php
 			}
@@ -175,17 +175,17 @@
 				die();
 			}
 			public function ttbm_reload_place_you_see_list() {
-				$ttbm_id = MP_Global_Function::data_sanitize($_POST['ttbm_id']);
+				$ttbm_id = TTBM_Global_Function::data_sanitize($_POST['ttbm_id']);
 				$this->place_you_see($ttbm_id);
 				die();
 			}
 			public function save_place_you_see($tour_id) {
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
 					$place_info = array();
-					$hiphop = MP_Global_Function::get_submit_info('ttbm_display_hiphop') ? 'on' : 'off';
+					$hiphop = TTBM_Global_Function::get_submit_info('ttbm_display_hiphop') ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_hiphop', $hiphop);
-					$place_labels = MP_Global_Function::get_submit_info('ttbm_place_label', array());
-					$place_ids = MP_Global_Function::get_submit_info('ttbm_city_place_id', array());
+					$place_labels = TTBM_Global_Function::get_submit_info('ttbm_place_label', array());
+					$place_ids = TTBM_Global_Function::get_submit_info('ttbm_city_place_id', array());
 					if (sizeof($place_ids) > 0) {
 						foreach ($place_ids as $key => $place_id) {
 							if ($place_id && $place_id > 0) {

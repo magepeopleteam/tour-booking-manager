@@ -7,16 +7,16 @@
 	$all_dates     = $all_dates ?? TTBM_Function::get_date( $tour_id );
 	$travel_type   = $travel_type ?? TTBM_Function::get_travel_type( $tour_id );
 	$tour_type     = $tour_type ?? TTBM_Function::get_tour_type( $tour_id );
-	$template_name = $template_name ?? MP_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
+	$template_name = $template_name ?? TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
 	if ( sizeof( $all_dates ) > 0 && $tour_type == 'general' && $travel_type != 'particular' ) {
 		$date          = current( $all_dates );
-		$check_ability = MP_Global_Function::get_post_info( $tour_id, 'ttbm_ticketing_system', 'availability_section' );
+		$check_ability = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_ticketing_system', 'availability_section' );
 		$time          = TTBM_Function::get_time( $tour_id, $date );
 		$time          = is_array( $time ) ? $time[0]['time'] : $time;
 		$date          = $time ? $date . ' ' . $time : $date;
 		$date=$time?date( 'Y-m-d H:i', strtotime( $date) ):date( 'Y-m-d', strtotime( $date) );
         /************/
-		$date_format = MP_Global_Function::date_picker_format();
+		$date_format = TTBM_Global_Function::date_picker_format();
 		$now = date_i18n($date_format, strtotime(current_time('Y-m-d')));
 		$hidden_date = $date ? date('Y-m-d', strtotime($date)) : '';
 		$visible_date = $date ? date_i18n($date_format, strtotime($date)) : '';
@@ -42,7 +42,7 @@
 									</span>
 								</label>
 								<?php
-									$template_name = MP_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
+									$template_name = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
 									// if ( $template_name != 'viator.php' && $check_ability == 'availability_section' ) {
 										
 									// }
@@ -64,7 +64,7 @@
 						<?php } ?>
 					</div>
 					<?php
-					do_action( 'mp_load_date_picker_js', '#ttbm_select_date', $all_dates );
+					do_action( 'ttbm_load_date_picker_js', '#ttbm_select_date', $all_dates );
 				}
 			?>
 			<div class="ttbm_booking_panel placeholder_area">

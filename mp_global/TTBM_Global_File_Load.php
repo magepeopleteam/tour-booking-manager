@@ -6,8 +6,8 @@
 	if (!defined('ABSPATH')) {
 		die;
 	} // Cannot access pages directly.
-	if (!class_exists('MP_Global_File_Load')) {
-		class MP_Global_File_Load {
+	if (!class_exists('TTBM_Global_File_Load')) {
+		class TTBM_Global_File_Load {
 			public function __construct() {
 				$this->define_constants();
 				$this->load_global_file();
@@ -26,13 +26,13 @@
 				}
 			}
 			public function load_global_file() {
-				require_once MP_GLOBAL_PLUGIN_DIR . '/class/MP_Global_Function.php';
-				require_once MP_GLOBAL_PLUGIN_DIR . '/class/MP_Global_Style.php';
-				require_once MP_GLOBAL_PLUGIN_DIR . '/class/MP_Custom_Layout.php';
-				require_once MP_GLOBAL_PLUGIN_DIR . '/class/MP_Custom_Slider.php';
-				require_once MP_GLOBAL_PLUGIN_DIR . '/class/MP_Select_Icon_image.php';
-				require_once MP_GLOBAL_PLUGIN_DIR . '/class/MAGE_Setting_API.php';
-				require_once MP_GLOBAL_PLUGIN_DIR . '/class/MP_Settings_Global.php';
+				require_once MP_GLOBAL_PLUGIN_DIR . '/class/TTBM_Global_Function.php';
+				require_once MP_GLOBAL_PLUGIN_DIR . '/class/TTBM_Global_Style.php';
+				require_once MP_GLOBAL_PLUGIN_DIR . '/class/TTBM_Custom_Layout.php';
+				require_once MP_GLOBAL_PLUGIN_DIR . '/class/TTBM_Custom_Slider.php';
+				require_once MP_GLOBAL_PLUGIN_DIR . '/class/TTBM_Select_Icon_image.php';
+				require_once MP_GLOBAL_PLUGIN_DIR . '/class/TTBM_Setting_API.php';
+				require_once MP_GLOBAL_PLUGIN_DIR . '/class/TTBM_Global_Settings.php';
 			}
 			public function global_enqueue() {
 				wp_enqueue_script('jquery');
@@ -44,8 +44,8 @@
 				wp_enqueue_script('mp_select_2', MP_GLOBAL_PLUGIN_URL . '/assets/select_2/select2.min.js', array(), time(), true);
 				wp_enqueue_style('mp_owl_carousel', MP_GLOBAL_PLUGIN_URL . '/assets/owl_carousel/owl.carousel.min.css', array(), time());
 				wp_enqueue_script('mp_owl_carousel', MP_GLOBAL_PLUGIN_URL . '/assets/owl_carousel/owl.carousel.min.js', array(), time(), true);
-				wp_enqueue_style('mp_plugin_global', MP_GLOBAL_PLUGIN_URL . '/assets/mp_style/mp_style.css', array(), time());
-				wp_enqueue_script('mp_plugin_global', MP_GLOBAL_PLUGIN_URL . '/assets/mp_style/mp_script.js', array('jquery'), time(), true);
+				wp_enqueue_style('ttbm_plugin_global', MP_GLOBAL_PLUGIN_URL . '/assets/mp_style/ttbm_plugin_global.css', array(), time());
+				wp_enqueue_script('ttbm_plugin_global', MP_GLOBAL_PLUGIN_URL . '/assets/mp_style/ttbm_plugin_global.js', array('jquery'), time(), true);
 				do_action('add_mp_global_enqueue');
 			}
 			public function admin_enqueue() {
@@ -65,8 +65,8 @@
 				//=====================//
 				wp_enqueue_script('form-field-dependency', MP_GLOBAL_PLUGIN_URL . '/assets/admin/form-field-dependency.js', array('jquery'), null, false);
 				// admin setting global
-				wp_enqueue_script('mp_admin_settings', MP_GLOBAL_PLUGIN_URL . '/assets/admin/mp_admin_settings.js', array('jquery'), time(), true);
-				wp_enqueue_style('mp_admin_settings', MP_GLOBAL_PLUGIN_URL . '/assets/admin/mp_admin_settings.css', array(), time());
+				wp_enqueue_script('ttbm_admin_settings', MP_GLOBAL_PLUGIN_URL . '/assets/admin/ttbm_admin_settings.js', array('jquery'), time(), true);
+				wp_enqueue_style('ttbm_admin_settings', MP_GLOBAL_PLUGIN_URL . '/assets/admin/ttbm_admin_settings.css', array(), time());
 				do_action('add_mp_admin_enqueue');
 			}
 			public function frontend_enqueue() {
@@ -83,32 +83,32 @@
 			public function js_constant() {
 				?>
 				<script type="text/javascript">
-					let mp_currency_symbol = "";
-					let mp_currency_position = "";
-					let mp_currency_decimal = "";
-					let mp_currency_thousands_separator = "";
-					let mp_num_of_decimal = "";
+					let ttbm_currency_symbol = "";
+					let ttbm_currency_position = "";
+					let ttbm_currency_decimal = "";
+					let ttbm_currency_thousands_separator = "";
+					let ttbm_num_of_decimal = "";
 					let mp_ajax_url = "<?php echo admin_url('admin-ajax.php'); ?>";
 					let mp_site_url = " <?php echo esc_attr( get_site_url() ) ?>";
-					let mp_empty_image_url = "<?php echo esc_attr(MP_GLOBAL_PLUGIN_URL . '/assets/images/no_image.png'); ?>";
-					let mp_date_format = "<?php echo esc_attr(MP_Global_Function::get_settings('mp_global_settings', 'date_format', 'D d M , yy')); ?>";
-					let mp_date_format_without_year = "<?php echo esc_attr(MP_Global_Function::get_settings('mp_global_settings', 'date_format_without_year', 'D d M')); ?>";
+					let ttbm_empty_image_url = "<?php echo esc_attr(MP_GLOBAL_PLUGIN_URL . '/assets/images/no_image.png'); ?>";
+					let mp_date_format = "<?php echo esc_attr(TTBM_Global_Function::get_settings('ttbm_global_settings', 'date_format', 'D d M , yy')); ?>";
+					let mp_date_format_without_year = "<?php echo esc_attr(TTBM_Global_Function::get_settings('ttbm_global_settings', 'date_format_without_year', 'D d M')); ?>";
 				</script>
 				<?php
-				if (MP_Global_Function::check_woocommerce() == 1) {
+				if (TTBM_Global_Function::check_woocommerce() == 1) {
 					?>
 					<script type="text/javascript">
-						mp_currency_symbol = "<?php echo get_woocommerce_currency_symbol(); ?>";
-						mp_currency_position = "<?php echo get_option('woocommerce_currency_pos'); ?>";
-						mp_currency_decimal = "<?php echo wc_get_price_decimal_separator(); ?>";
-						mp_currency_thousands_separator = "<?php echo wc_get_price_thousand_separator(); ?>";
-						mp_num_of_decimal = "<?php echo get_option('woocommerce_price_num_decimals', 2); ?>";
+						ttbm_currency_symbol = "<?php echo get_woocommerce_currency_symbol(); ?>";
+						ttbm_currency_position = "<?php echo get_option('woocommerce_currency_pos'); ?>";
+						ttbm_currency_decimal = "<?php echo wc_get_price_decimal_separator(); ?>";
+						ttbm_currency_thousands_separator = "<?php echo wc_get_price_thousand_separator(); ?>";
+						ttbm_num_of_decimal = "<?php echo get_option('woocommerce_price_num_decimals', 2); ?>";
 					</script>
 					<?php
 				}
 			}
 			public function custom_css() {
-				$custom_css = MP_Global_Function::get_settings('mp_add_custom_css', 'custom_css');
+				$custom_css = TTBM_Global_Function::get_settings('ttbm_custom_css', 'custom_css');
 				ob_start();
 				?>
 				<style>
@@ -118,5 +118,5 @@
 				echo ob_get_clean();
 			}
 		}
-		new MP_Global_File_Load();
+		new TTBM_Global_File_Load();
 	}

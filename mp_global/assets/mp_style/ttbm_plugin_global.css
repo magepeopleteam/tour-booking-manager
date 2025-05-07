@@ -1,9 +1,9 @@
 @charset "utf-8";
 /******************************************************************** General ************************************************/
 @media only screen and (min-width: 10px) {
-	.mpStyle *,
-	.mpStyle *::after,
-	.mpStyle *::before {
+	.ttbm_style *,
+	.ttbm_style *::after,
+	.ttbm_style *::before {
 		-webkit-box-sizing: border-box;
 		box-sizing: border-box;
 	}
@@ -15,22 +15,22 @@
 		overflow: hidden;
 	}
 	/******/
-	.mpStyle {
+	.ttbm_style {
 		
 		font-weight: var(--fw);
 		color: var(--d_color);
 		line-height: 1.5;
 		width: 100%;
 	}
-	.mpStyle,
-	.mpStyle [data-collapse].mActive {
+	.ttbm_style,
+	.ttbm_style [data-collapse].mActive {
 		display: block;
 	}
-	.mpStyle table th[data-collapse].mActive,
-	.mpStyle table td[data-collapse].mActive {
+	.ttbm_style table th[data-collapse].mActive,
+	.ttbm_style table td[data-collapse].mActive {
 		display:block;
 	}
-	.mpStyle p:not(.mp_wp_editor p) {
+	.ttbm_style p:not(.ttbm_wp_editor p) {
 		color: var(--mpl-secondary);
 		margin: 0;
 		margin-bottom: 0px;
@@ -38,15 +38,15 @@
 		font-weight: 300;
 		line-height: 24px;
 	}
-	.mpStyle a:not(.mp_wp_editor a) {
+	.ttbm_style a:not(.ttbm_wp_editor a) {
 		color: var(--color_theme);
 		text-decoration: none;
 	}
-	.mpStyle a:hover {
+	.ttbm_style a:hover {
 		opacity: 0.5;
 	}
-	.mpStyle a:not(.mp_wp_editor a),
-	.mpStyle a:hover {
+	.ttbm_style a:not(.ttbm_wp_editor a),
+	.ttbm_style a:hover {
 		text-decoration: none;
 	}
 	[data-collapse-target],
@@ -55,20 +55,20 @@
 	[data-icon-change] {
 		cursor: pointer;
 	}
-	div.mpStyle [data-required],
-	div.mpStyle [data-collapse] {
+	div.ttbm_style [data-required],
+	div.ttbm_style [data-collapse] {
 		display: none;
 	}
 	/*******/
-	div.mpStyle a,
-	div.mpStyle button,
-	div.mpStyle [data-bg-image],
-	div.mpStyle [data-tabs-target],
-	div.mpPopup,
-	div.mpPopup .popupClose,
-	div.mpStyle .customCheckbox,
-	div.mpStyle .mpTransition,
-	div.mpStyle [class*="_mpTransition"] {
+	div.ttbm_style a,
+	div.ttbm_style button,
+	div.ttbm_style [data-bg-image],
+	div.ttbm_style [data-tabs-target],
+	div.ttbm_popup,
+	div.ttbm_popup .popupClose,
+	div.ttbm_style .customCheckbox,
+	div.ttbm_style .mpTransition,
+	div.ttbm_style [class*="_mpTransition"] {
 		-webkit-transition: all 350ms ease-in-out;
 		-moz-transition: all 350ms ease-in-out;
 		-o-transition: all 350ms ease-in-out;
@@ -77,91 +77,91 @@
 }
 /******************************************************************** Shadow content ************************************************/
 @media only screen and (min-width: 10px) {
-	div.mpStyle .dShadow,
-	div.mpStyle [class*="_dShadow"] {
+	div.ttbm_style .dShadow,
+	div.ttbm_style [class*="_dShadow"] {
 		-webkit-box-shadow: var(--dshadow);
 		-moz-box-shadow: var(--dshadow);
 		-o-box-shadow: var(--dshadow);
 		box-shadow: var(--dshadow);
 	}
 	.groupRadioCheck [data-radio-check].mpActive,
-	div.mpStyle .dShadow_1,
-	div.mpStyle [class*="_dShadow_1"] {
+	div.ttbm_style .dShadow_1,
+	div.ttbm_style [class*="_dShadow_1"] {
 		-webkit-box-shadow: 0 5px 10px rgba(0, 44, 102, 0.2);
 		-moz-box-shadow: 0 5px 10px rgba(0, 44, 102, 0.2);
 		-o-box-shadow: 0 5px 10px rgba(0, 44, 102, 0.2);
 		box-shadow: 0 5px 10px rgba(0, 44, 102, 0.2);
 	}
-	div.mpStyle .dShadow_2,
-	div.mpStyle [class*="_dShadow_2"] {
+	div.ttbm_style .dShadow_2,
+	div.ttbm_style [class*="_dShadow_2"] {
 		-webkit-box-shadow: 0 1px 2px rgb(3 54 63 / 40%),
 		0 -1px 2px rgb(3 54 63 / 4%);
 		-moz-box-shadow: 0 1px 2px rgb(3 54 63 / 40%), 0 -1px 2px rgb(3 54 63 / 4%);
 		-o-box-shadow: 0 1px 2px rgb(3 54 63 / 40%), 0 -1px 2px rgb(3 54 63 / 4%);
 		box-shadow: 0 1px 2px rgb(3 54 63 / 40%), 0 -1px 2px rgb(3 54 63 / 4%);
 	}
-	div.mpStyle .dShadow_3,
-	div.mpStyle [class*="_dShadow_3"],
-	div.mpStyle [class*="slideIndicatorItem"].active {
+	div.ttbm_style .dShadow_3,
+	div.ttbm_style [class*="_dShadow_3"],
+	div.ttbm_style [class*="slideIndicatorItem"].active {
 		-webkit-box-shadow: 0 2px 10px #444;
 		-moz-box-shadow: 0 2px 10px #444;
 		-o-box-shadow: 0 2px 10px #444;
 		box-shadow: 0 2px 10px #444;
 	}
-	div.mpStyle .dShadow_4,
+	div.ttbm_style .dShadow_4,
 	[class*="_dShadow_4"],
-	div.mpStyle ul.mp_input_select_list {
+	div.ttbm_style ul.ttbm_input_select_list {
 		-webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
 		-moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
 		-o-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
 		box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
 	}
-	div.mpStyle .dShadow_5,
-	div.mpStyle [class*="_dShadow_5"],
-	div.mpStyle [class*="dButton"] {
+	div.ttbm_style .dShadow_5,
+	div.ttbm_style [class*="_dShadow_5"],
+	div.ttbm_style [class*="dButton"] {
 		-webkit-box-shadow: var(--button_shadows);
 		-moz-box-shadow: var(--button_shadows);
 		-o-box-shadow: var(--button_shadows);
 		box-shadow: var(--button_shadows);
 	}
-	div.mpStyle .dShadow_6,
-	div.mpStyle [class*="_dShadow_6"] {
+	div.ttbm_style .dShadow_6,
+	div.ttbm_style [class*="_dShadow_6"] {
 		-webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 		-moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 		-o-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 		box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 	}
-	div.mpStyle .dShadow_7,
-	div.mpStyle [class*="_dShadow_7"] {
+	div.ttbm_style .dShadow_7,
+	div.ttbm_style [class*="_dShadow_7"] {
 		-webkit-box-shadow: 5px 4px 30px rgba(189, 189, 189, 0.07);
 		-moz-box-shadow: 5px 4px 30px rgba(189, 189, 189, 0.07);
 		-o-box-shadow: 5px 4px 30px rgba(189, 189, 189, 0.07);
 		box-shadow: 5px 4px 30px rgba(189, 189, 189, 0.07);
 	}
-	div.mpStyle .dShadow_8,
-	div.mpStyle [class*="_dShadow_8"] {
+	div.ttbm_style .dShadow_8,
+	div.ttbm_style [class*="_dShadow_8"] {
 		-webkit-box-shadow: 2px 4px 40px rgba(103, 103, 103, 0.1);
 		-moz-box-shadow: 2px 4px 40px rgba(103, 103, 103, 0.1);
 		-o-box-shadow: 2px 4px 40px rgba(103, 103, 103, 0.1);
 		box-shadow: 2px 4px 40px rgba(103, 103, 103, 0.1);
 	}
-	.mpStyle .formControl:focus,
-	div.mpStyle .dShadow_9,
-	div.mpStyle [class*="_dShadow_9"] {
+	.ttbm_style .formControl:focus,
+	div.ttbm_style .dShadow_9,
+	div.ttbm_style [class*="_dShadow_9"] {
 		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
 		0 0 8px rgba(102, 175, 233, 0.6);
 		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
 		0 0 8px rgba(102, 175, 233, 0.6);
 	}
-	div.mpStyle .selectCheckbox input:focus ~ .customCheckbox::before,
-	div.mpStyle .dShadow_10,
-	div.mpStyle [class*="_dShadow_10"] {
+	div.ttbm_style .selectCheckbox input:focus ~ .customCheckbox::before,
+	div.ttbm_style .dShadow_10,
+	div.ttbm_style [class*="_dShadow_10"] {
 		-webkit-box-shadow: 0 0 0 3px rgba(0, 119, 204, 0.3);
 		box-shadow: 0 0 0 3px rgba(0, 119, 204, 0.3);
 	}
-	.mpStyle .groupContent input[type="radio"],
-	.mpStyle .groupContent input[type="radio"] ~ input:focus,
-	div.mpStyle [class*="noShadow"] {
+	.ttbm_style .groupContent input[type="radio"],
+	.ttbm_style .groupContent input[type="radio"] ~ input:focus,
+	div.ttbm_style [class*="noShadow"] {
 		-webkit-box-shadow: none;
 		-moz-box-shadow: none;
 		-o-box-shadow: none;
@@ -170,33 +170,33 @@
 }
 /******************************************************************** Font Size & Font weight ************************************************/
 @media only screen and (min-width: 10px) {
-	div.mpStyle,
-	div.mpStyle h1,
-	div.mpStyle h2,
-	div.mpStyle h3,
-	div.mpStyle h4,
-	div.mpStyle h5,
-	div.mpStyle h6 {
+	div.ttbm_style,
+	div.ttbm_style h1,
+	div.ttbm_style h2,
+	div.ttbm_style h3,
+	div.ttbm_style h4,
+	div.ttbm_style h5,
+	div.ttbm_style h6 {
 		margin: 0;
 		padding: 0;
 		line-height: 1.25;
 	}
-	div.mpStyle strong {
+	div.ttbm_style strong {
 		font-weight: var(--fw-bold);
 	}
-	div.mpStyle .extraBold {
+	div.ttbm_style .extraBold {
 		font-weight: 900;
 	}
-	div.mpStyle h1,
-	div.mpStyle [class*="_fs_h1"] {
+	div.ttbm_style h1,
+	div.ttbm_style [class*="_fs_h1"] {
 		font-weight: var(--fw-bold);
 	}
-	div.mpStyle h2,
-	div.mpStyle [class*="_fs_h2"] {
+	div.ttbm_style h2,
+	div.ttbm_style [class*="_fs_h2"] {
 		font-weight: var(--fw-bold);
 	}
-	div.mpStyle h3,
-	div.mpStyle [class*="_fs_h3"] {
+	div.ttbm_style h3,
+	div.ttbm_style [class*="_fs_h3"] {
 		padding: 0;
 		color: var(--mpl-secondary);
 		margin: 30px 0 20px 0;
@@ -208,78 +208,78 @@
 		margin-bottom: 12px;
 		font-weight: 700;
 	}
-	div.mpStyle h4,
-	div.mpStyle [class*="_fs_h4"] {
+	div.ttbm_style h4,
+	div.ttbm_style [class*="_fs_h4"] {
 		font-weight: var(--fw-medium);
 		text-transform: inherit;
 	}
-	div.mpStyle h5,
-	div.mpStyle [class*="_fs_h5"] {
+	div.ttbm_style h5,
+	div.ttbm_style [class*="_fs_h5"] {
 
 		font-weight: var(--fw-medium);
 		text-transform: inherit;
 	}
-	div.mpStyle h6,
-	div.mpStyle [class*="_fs_h6"] {
+	div.ttbm_style h6,
+	div.ttbm_style [class*="_fs_h6"] {
 
 		font-weight: var(--fw-normal);
 		text-transform: inherit;
 	}
-	div.mpStyle label,
-	div.mpStyle [class*="_fs_label"] {
+	div.ttbm_style label,
+	div.ttbm_style [class*="_fs_label"] {
 		color: var(--mpl-secondary);
 		/* font-weight: var(--fw-medium); */
 		line-height: 0;
 	}
-	div.mpStyle .fs_50,
-	div.mpStyle [class*="_fs_50"] {
+	div.ttbm_style .fs_50,
+	div.ttbm_style [class*="_fs_50"] {
 		font-size: 50px;
 		font-weight: var(--fw-medium);
 	}
 }
 /******************************************************************** Flex Section ************************************************/
 @media only screen and (min-width: 10px) {
-	.mpStyle [class*="_equalChild"],
-	.mpStyle .equalChild,
-	.mpStyle .flexEqual,
-	.mpStyle [class*="listEqual"],
-	.mpStyle [class*="_dFlex"],
-	.mpStyle .dFlex,
-	.mpStyle .mpMenu li {
+	.ttbm_style [class*="_equalChild"],
+	.ttbm_style .equalChild,
+	.ttbm_style .flexEqual,
+	.ttbm_style [class*="listEqual"],
+	.ttbm_style [class*="_dFlex"],
+	.ttbm_style .dFlex,
+	.ttbm_style .mpMenu li {
 		display: -webkit-flex;
 		display: flex;
 	}
-	.mpStyle .groupContent,
-	.mpStyle .buttonGroup,
-	.mpStyle .inputGroup,
-	.mpStyle .inputInline .mpForm,
-	.mpStyle [class^="mpMenu"] {
+	.ttbm_style .groupContent,
+	.ttbm_style .buttonGroup,
+	.ttbm_style .inputGroup,
+	.ttbm_style .inputInline .mpForm,
+	.ttbm_style [class^="mpMenu"] {
 		display: -webkit-inline-flex;
 		display: inline-flex;
 	}
-	.mpStyle .mpRow,
-	.mpStyle .flexWrap,
-	.mpStyle .listInline,
-	.mpStyle .mage_menu {
+	.ttbm_style .mpRow,
+	.ttbm_style .flexWrap,
+	.ttbm_style .listInline,
+	.ttbm_style .mage_menu {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-flex-wrap: wrap;
 		-ms-flex-wrap: wrap;
 		flex-wrap: wrap;
 	}
-	.mpStyle [class*="_wrap"] {
+	.ttbm_style [class*="_wrap"] {
 		-webkit-flex-wrap: wrap;
 		-ms-flex-wrap: wrap;
 		flex-wrap: wrap;
 	}
-	.mpStyle .flexNowrap {
+	.ttbm_style .flexNowrap {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-flex-wrap: nowrap;
 		flex-wrap: nowrap;
 	}
-	.mpStyle ul.list_inline_two,
-	.mpStyle .flexWrapJustifyBetween {
+	.ttbm_style ul.list_inline_two,
+	.ttbm_style .flexWrapJustifyBetween {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-flex-wrap: wrap;
@@ -288,22 +288,22 @@
 		justify-content: space-between;
 	}
 	[data-bg-image],
-	.mpStyle .allCenter,
-	.mpStyle [class*="_allCenter"],
-	.mpStyle .mp_remove_icon,
-	.mpStyle [class*="mage_qty"],
-	.mpStyle .mpMenu li a,
-	.mpTabs.tabBorder > .tabLists li,
-	.mpStyle [class*="addonGroupContent"],
-	.mpStyle button,
-	.mpStyle .mpBtn,
-	.mpStyle [class*="_mpBtn"],
-	.mpStyle [class*="slideIndicator"],
-	.mpStyle [class*="circleIcon"],
+	.ttbm_style .allCenter,
+	.ttbm_style [class*="_allCenter"],
+	.ttbm_style .ttbm_remove_icon,
+	.ttbm_style [class*="mage_qty"],
+	.ttbm_style .mpMenu li a,
+	.ttbmTabs.tabBorder > .tabLists li,
+	.ttbm_style [class*="addonGroupContent"],
+	.ttbm_style button,
+	.ttbm_style .mpBtn,
+	.ttbm_style [class*="_mpBtn"],
+	.ttbm_style [class*="slideIndicator"],
+	.ttbm_style [class*="circleIcon"],
 	div[class*="dLoader"],
 	div[class*="simpleSpinner"],
-	div.mpPopup.in,
-	div.mpPopup .popupClose {
+	div.ttbm_popup.in,
+	div.ttbm_popup .popupClose {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-justify-content: center;
@@ -312,60 +312,60 @@
 		align-items: center;
 	}
 	/************/
-	.mpStyle [class*="_flexAuto"],
-	.mpStyle .flexAuto {
+	.ttbm_style [class*="_flexAuto"],
+	.ttbm_style .flexAuto {
 		-webkit-flex: auto;
 		flex: auto;
 	}
 	/************/
-	.mpStyle .justifyStart {
+	.ttbm_style .justifyStart {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-justify-content: flex-start;
 		justify-content: flex-start;
 	}
-	.mpStyle [class*="_justifyStart"] {
+	.ttbm_style [class*="_justifyStart"] {
 		-webkit-justify-content: flex-start;
 		justify-content: flex-start;
 	}
-	.mpStyle .justifyCenter {
+	.ttbm_style .justifyCenter {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-justify-content: center;
 		justify-content: center;
 	}
-	.mpStyle [class*="_justifyCenter"] {
+	.ttbm_style [class*="_justifyCenter"] {
 		-webkit-justify-content: center;
 		justify-content: center;
 	}
-	.mpStyle .justifyBetween {
+	.ttbm_style .justifyBetween {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-justify-content: space-between;
 		justify-content: space-between;
 	}
-	.mpStyle [class*="_justifyBetween"],
-	.mpStyle .inputInline .mpForm {
+	.ttbm_style [class*="_justifyBetween"],
+	.ttbm_style .inputInline .mpForm {
 		-webkit-justify-content: space-between;
 		justify-content: space-between;
 	}
-	.mpStyle .justifyAround {
+	.ttbm_style .justifyAround {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-justify-content: space-around;
 		justify-content: space-around;
 	}
-	.mpStyle [class*="_justifyAround"] {
+	.ttbm_style [class*="_justifyAround"] {
 		-webkit-justify-content: space-around;
 		justify-content: space-around;
 	}
-	.mpStyle .justifyEnd {
+	.ttbm_style .justifyEnd {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-justify-content: flex-end;
 		justify-content: flex-end;
 	}
-	.mpStyle [class*="_justifyEnd"] {
+	.ttbm_style [class*="_justifyEnd"] {
 		-webkit-justify-content: flex-end;
 		justify-content: flex-end;
 	}
@@ -374,7 +374,7 @@
 		-webkit-align-items: center;
 		align-items: center;
 	}
-	.mpStyle .alignBaseline {
+	.ttbm_style .alignBaseline {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-align-items: baseline;
@@ -384,7 +384,7 @@
 		-webkit-align-items: baseline;
 		align-items: baseline;
 	}
-	.mpStyle .alignStart {
+	.ttbm_style .alignStart {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-align-items: flex-start;
@@ -395,8 +395,8 @@
 		align-items: flex-start;
 	}
 	/*****************/
-	.mpStyle .ffColumn,
-	.mpStyle .flexColumn {
+	.ttbm_style .ffColumn,
+	.ttbm_style .flexColumn {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-flex-flow: column;
@@ -406,7 +406,7 @@
 		-webkit-flex-flow: column;
 		flex-flow: column;
 	}
-	.mpStyle .fdColumn {
+	.ttbm_style .fdColumn {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-flex-direction: column;
@@ -421,7 +421,7 @@
 	.equalChild > *,
 	[class*="_equalChild"] > *,
 	[class*="listEqual"] > li,
-	.mpTabs.tabBorder > .tabLists li,
+	.ttbmTabs.tabBorder > .tabLists li,
 	.inputInline .inputList {
 		-webkit-flex: 1;
 		-ms-flex: 1;
@@ -430,79 +430,79 @@
 }
 /******************************************************************** Radios Section************************************************/
 @media only screen and (min-width: 10px) {
-	.mpStyle img,
-	.mpStyle [class*="dButton"],
-	.mpStyle button,
+	.ttbm_style img,
+	.ttbm_style [class*="dButton"],
+	.ttbm_style button,
 	div.filter_item,
-	.mpStyle .formControl,
-	div.mpPopup .popupMainArea,
-	div.mpPopup .popupClose,
-	.mpStyle [class*="clickSlide"],
-	.mpStyle [class*="slideIndicatorItem"],
-	.mpStyle [class*="dLayout"],
-	.mpStyle .groupContent,
-	.mpStyle [class*="_dBR"] {
+	.ttbm_style .formControl,
+	div.ttbm_popup .popupMainArea,
+	div.ttbm_popup .popupClose,
+	.ttbm_style [class*="clickSlide"],
+	.ttbm_style [class*="slideIndicatorItem"],
+	.ttbm_style [class*="dLayout"],
+	.ttbm_style .groupContent,
+	.ttbm_style [class*="_dBR"] {
 		-webkit-border-radius: var(--dbr);
 		border-radius: var(--dbr);
 	}
-	.mpStyle div.mp_input_select .formControl:focus,
-	.mpStyle [class*="_dBR_T"] {
+	.ttbm_style div.ttbm_input_select .formControl:focus,
+	.ttbm_style [class*="_dBR_T"] {
 		-webkit-border-radius: var(--dbr) var(--dbr) 0 0;
 		border-radius: var(--dbr) var(--dbr) 0 0;
 	}
-	.mpStyle .buttonGroup > :last-child,
-	.mpStyle [class*="_dBR_R"] {
+	.ttbm_style .buttonGroup > :last-child,
+	.ttbm_style [class*="_dBR_R"] {
 		-webkit-border-radius: 0 var(--dbr) var(--dbr) 0;
 		border-radius: 0 var(--dbr) var(--dbr) 0;
 	}
-	.mpStyle ul.mp_input_select_list,
-	.mpStyle [class*="_dBR_B"] {
+	.ttbm_style ul.ttbm_input_select_list,
+	.ttbm_style [class*="_dBR_B"] {
 		-webkit-border-radius: 0 0 var(--dbr) var(--dbr);
 		border-radius: 0 0 var(--dbr) var(--dbr);
 	}
-	.mpStyle .buttonGroup > :first-child,
-	.mpStyle [class*="_dBR_L"] {
+	.ttbm_style .buttonGroup > :first-child,
+	.ttbm_style [class*="_dBR_L"] {
 		-webkit-border-radius: var(--dbr) 0 0 var(--dbr);
 		border-radius: var(--dbr) 0 0 var(--dbr);
 	}
-	.mpStyle [class*="_dBRL"] {
+	.ttbm_style [class*="_dBRL"] {
 		-webkit-border-radius: var(--dbrl);
 		border-radius: var(--dbrl);
 	}
-	.mpStyle [class*="_dBRL_T"] {
+	.ttbm_style [class*="_dBRL_T"] {
 		-webkit-border-radius: var(--dbrl) var(--dbrl) 0 0;
 		border-radius: var(--dbrl) var(--dbrl) 0 0;
 	}
-	.mpStyle [class*="_dBRL_R"] {
+	.ttbm_style [class*="_dBRL_R"] {
 		-webkit-border-radius: 0 var(--dbrl) var(--dbrl) 0;
 		border-radius: 0 var(--dbrl) var(--dbrl) 0;
 	}
-	.mpStyle [class*="_dBRL_B"] {
+	.ttbm_style [class*="_dBRL_B"] {
 		-webkit-border-radius: 0 0 var(--dbrl) var(--dbrl);
 		border-radius: 0 0 var(--dbrl) var(--dbrl);
 	}
-	.mpStyle [class*="_bB_50"] {
+	.ttbm_style [class*="_bB_50"] {
 		-webkit-border-radius: 50px;
 		border-radius: 50px;
 	}
-	.mpStyle .mp_remove_icon,
-	.mpStyle [class*="circle"] {
+	.ttbm_style .ttbm_remove_icon,
+	.ttbm_style [class*="circle"] {
 		-webkit-border-radius: 50%;
 		border-radius: 50%;
 	}
-	.mpStyle .buttonGroup > *,
-	.mpStyle .groupContent .formControl,
-	.mpStyle .zeroRadius,
-	.mpStyle [class*="_zeroRadius"] {
+	.ttbm_style .buttonGroup > *,
+	.ttbm_style .groupContent .formControl,
+	.ttbm_style .zeroRadius,
+	.ttbm_style [class*="_zeroRadius"] {
 		-webkit-border-radius: 0;
 		border-radius: 0;
 	}
 }
 /******************************************************************** Button Section ************************************************/
 @media only screen and (min-width: 10px) {
-	.mpStyle .mpBtn,
-	.mpStyle [class*="_mpBtn"],
-	.mpStyle button {
+	.ttbm_style .mpBtn,
+	.ttbm_style [class*="_mpBtn"],
+	.ttbm_style button {
 		position: relative;
 		font-weight: var(--fw-medium);
 		line-height: 1;
@@ -512,47 +512,47 @@
 		-webkit-appearance: button;
 		text-transform: capitalize;
 	}
-	.mpStyle button[disabled] {
+	.ttbm_style button[disabled] {
 		cursor: not-allowed;
 		opacity: 0.8;
 		background-color: #ddd;
 	}
-	.mpStyle button:hover,
-	.mpStyle button:focus {
+	.ttbm_style button:hover,
+	.ttbm_style button:focus {
 		text-decoration: none;
 		opacity: 0.8;
 		background-color: var(--color_theme);
 		color: var(--color_white);
 	}
-	.mpStyle button:hover span,
-	.mpStyle button:focus span {
+	.ttbm_style button:hover span,
+	.ttbm_style button:focus span {
 		color: var(--color_white);
 	}
-	.mpStyle .mpBtn,
-	.mpStyle [class*="_mpBtn"] {
-		padding: var(--dmp_xs) var(--dmp);
+	.ttbm_style .mpBtn,
+	.ttbm_style [class*="_mpBtn"] {
+		padding: var(--ttbm_mp_xs) var(--dmp);
 		color: var(--d_color);
 		background-color: transparent;
 		border: 1px solid var(--color_border);
 	}
-	.mpStyle .mpBtn_xs,
-	.mpStyle [class*="_mpBtn_xs"] {
-		padding: 7px var(--dmp_xs);
+	.ttbm_style .mpBtn_xs,
+	.ttbm_style [class*="_mpBtn_xs"] {
+		padding: 7px var(--ttbm_mp_xs);
 	}
-	.mpStyle .mpBtn.mpActive,
-	.mpStyle [class*="_mpBtn"].mpActive {
+	.ttbm_style .mpBtn.mpActive,
+	.ttbm_style [class*="_mpBtn"].mpActive {
 		border-color: var(--color_theme);
 		color: var(--color_theme);
 	}
-	.mpStyle .mpBtn.mActive,
-	.mpStyle [class*="_mpBtn"].mActive,
-	.mpStyle .mpBtn.mpActive:hover,
-	.mpStyle [class*="_mpBtn"].mpActive:hover {
+	.ttbm_style .mpBtn.mActive,
+	.ttbm_style [class*="_mpBtn"].mActive,
+	.ttbm_style .mpBtn.mpActive:hover,
+	.ttbm_style [class*="_mpBtn"].mpActive:hover {
 		background-color: var(--color_theme);
 		color: var(--color_theme_alter);
 	}
 	/***/
-	.mpStyle [class*="dButton"] {
+	.ttbm_style [class*="dButton"] {
 		padding: 0 var(--dmp);
 		min-width: var(--button_width);
 		height: auto;
@@ -560,139 +560,139 @@
 		color: var(--color_button);
 		background-color: var(--color_theme);
 	}
-	.mpStyle [class*="dButton"] span {
-		margin: 0 var(--dmp_xs) 0 0;
+	.ttbm_style [class*="dButton"] span {
+		margin: 0 var(--ttbm_mp_xs) 0 0;
 	}
-	.mpStyle .dButton,
-	.mpStyle [class*="_dButton"] {
+	.ttbm_style .dButton,
+	.ttbm_style [class*="_dButton"] {
 		color: var(--color_button);
 		background-color: var(--color_theme);
 	}
-	.mpStyle .dButton.mActive,
-	.mpStyle [class*="_dButton"].mActive {
+	.ttbm_style .dButton.mActive,
+	.ttbm_style [class*="_dButton"].mActive {
 		color: var(--color_white);
 		background-color: var(--color_theme);
 	}
-	.mpStyle .dButton span,
-	.mpStyle [class*="_dButton"] span {
+	.ttbm_style .dButton span,
+	.ttbm_style [class*="_dButton"] span {
 		color: var(--color_button);
 	}
 	/***/
-	.mpStyle .themeButton,
-	.mpStyle [class*="_themeButton"] {
+	.ttbm_style .themeButton,
+	.ttbm_style [class*="_themeButton"] {
 		background-color: var(--color_theme);
 		color: var(--color_theme_alter);
-		padding: var(--dmp_xs) var(--dmp);
+		padding: var(--ttbm_mp_xs) var(--dmp);
 		border: 1px solid var(--color_theme);
 	}
-	.mpStyle .themeButton span,
-	.mpStyle [class*="_themeButton"] span {
+	.ttbm_style .themeButton span,
+	.ttbm_style [class*="_themeButton"] span {
 		color: var(--color_theme_alter);
 	}
-	.mpStyle .themeButton:hover,
-	.mpStyle [class*="_themeButton"]:hover {
+	.ttbm_style .themeButton:hover,
+	.ttbm_style [class*="_themeButton"]:hover {
 		background-color: var(--color_theme);
 		color: var(--color_theme_alter);
 		border-color: var(--color_theme);
 	}
-	.mpStyle .themeButton:hover span,
-	.mpStyle [class*="_themeButton"]:hover span {
+	.ttbm_style .themeButton:hover span,
+	.ttbm_style [class*="_themeButton"]:hover span {
 		color: var(--color_theme_alter);
 	}
 	/****/
-	.mpStyle .warningButton,
-	.mpStyle [class*="_warningButton"] {
+	.ttbm_style .warningButton,
+	.ttbm_style [class*="_warningButton"] {
 		background-color: var(--color_2);
 		color: var(--color_theme);
-		padding: var(--dmp_xs) var(--dmp);
+		padding: var(--ttbm_mp_xs) var(--dmp);
 		border: 1px solid var(--color_2);
 	}
-	.mpStyle .warningButton span,
-	.mpStyle [class*="_warningButton"] span {
+	.ttbm_style .warningButton span,
+	.ttbm_style [class*="_warningButton"] span {
 		color: var(--color_danger);
 	}
-	.mpStyle .warningButton:hover,
-	.mpStyle [class*="_warningButton"]:hover {
+	.ttbm_style .warningButton:hover,
+	.ttbm_style [class*="_warningButton"]:hover {
 		background-color: var(--color_light);
 		color: var(--color_danger);
 	}
-	.mpStyle .warningButton:hover span,
-	.mpStyle [class*="_warningButton"]:hover span {
+	.ttbm_style .warningButton:hover span,
+	.ttbm_style [class*="_warningButton"]:hover span {
 		color: var(--color_danger);
 	}
 	/****************/
-	.mpStyle .whiteButton,
-	.mpStyle [class*="_whiteButton"] {
+	.ttbm_style .whiteButton,
+	.ttbm_style [class*="_whiteButton"] {
 		background-color: var(--color_white);
 		color: var(--color_black);
-		padding: var(--dmp_xs) var(--dmp);
+		padding: var(--ttbm_mp_xs) var(--dmp);
 		border: 1px solid var(--color_theme);
 		margin-right: -1px;
 	}
-	.mpStyle .whiteButton span,
-	.mpStyle [class*="whiteButton"] span {
+	.ttbm_style .whiteButton span,
+	.ttbm_style [class*="whiteButton"] span {
 		color: var(--color_theme);
 	}
-	.mpStyle .whiteButton:hover,
-	.mpStyle [class*="whiteButton"]:hover {
+	.ttbm_style .whiteButton:hover,
+	.ttbm_style [class*="whiteButton"]:hover {
 		background-color: var(--color_theme_aa);
 		color: var(--color_white);
 	}
-	.mpStyle .whiteButton:hover span,
-	.mpStyle [class*="whiteButton"]:hover span {
+	.ttbm_style .whiteButton:hover span,
+	.ttbm_style [class*="whiteButton"]:hover span {
 		color: var(--color_white);
 	}
 	/*********/
-	.mpStyle .successButton,
-	.mpStyle [class*="_successButton"] {
+	.ttbm_style .successButton,
+	.ttbm_style [class*="_successButton"] {
 		background-color: var(--color_success);
 		color: var(--color_theme_alter);
-		padding: var(--dmp_xs) var(--dmp);
+		padding: var(--ttbm_mp_xs) var(--dmp);
 		border: 1px solid var(--color_success);
 	}
-	.mpStyle .successButton span,
-	.mpStyle [class*="_successButton"] span {
+	.ttbm_style .successButton span,
+	.ttbm_style [class*="_successButton"] span {
 		color: var(--color_theme_alter);
 	}
-	.mpStyle .successButton:hover,
-	.mpStyle [class*="_successButton"]:hover {
+	.ttbm_style .successButton:hover,
+	.ttbm_style [class*="_successButton"]:hover {
 		background-color: var(--color_light);
 		color: var(--color_success);
 	}
-	.mpStyle .successButton:hover span,
-	.mpStyle [class*="_successButton"]:hover span {
+	.ttbm_style .successButton:hover span,
+	.ttbm_style [class*="_successButton"]:hover span {
 		color: var(--color_success);
 	}
 	/*********/
-	.mpStyle .navy_blueButton,
-	.mpStyle [class*="_navy_blueButton"] {
+	.ttbm_style .navy_blueButton,
+	.ttbm_style [class*="_navy_blueButton"] {
 		background-color: var(--color_navy_blue);
 		color: var(--color_theme_alter);
-		padding: var(--dmp_xs) var(--dmp);
+		padding: var(--ttbm_mp_xs) var(--dmp);
 		border: 1px solid var(--color_navy_blue);
 	}
-	.mpStyle .navy_blueButton span,
-	.mpStyle [class*="_navy_blueButton"] span {
+	.ttbm_style .navy_blueButton span,
+	.ttbm_style [class*="_navy_blueButton"] span {
 		color: var(--color_theme_alter);
 	}
-	.mpStyle .navy_blueButton:hover,
-	.mpStyle [class*="_navy_blueButton"]:hover {
+	.ttbm_style .navy_blueButton:hover,
+	.ttbm_style [class*="_navy_blueButton"]:hover {
 		background-color: var(--color_theme_alter);
 		color: var(--color_navy_blue);
 		border-color: var(--color_navy_blue);
 	}
-	.mpStyle .navy_blueButton:hover span,
-	.mpStyle [class*="_navy_blueButton"]:hover span {
+	.ttbm_style .navy_blueButton:hover span,
+	.ttbm_style [class*="_navy_blueButton"]:hover span {
 		color: var(--color_navy_blue);
 	}
 	/****/
-	.mpStyle [class*="Button_xs"] {
+	.ttbm_style [class*="Button_xs"] {
 		min-width: auto;
 		min-height: var(--button_height_xs);
-		padding: 7px var(--dmp_xs);
+		padding: 7px var(--ttbm_mp_xs);
 	}
 	/*************************/
-	.mpStyle [class*="dButton"].mpActive {
+	.ttbm_style [class*="dButton"].mpActive {
 		background-color: var(--color_theme);
 		color: var(--color_theme_alter);
 	}
@@ -701,10 +701,10 @@
 @media only screen and (min-width: 10px) {
 
 	/********Helper Class***********/
-	.mpStyle .divider,
-	.mpStyle [class*="_divider"],
-	.mpStyle hr {
-		margin: var(--dmp_xs) 0;
+	.ttbm_style .divider,
+	.ttbm_style [class*="_divider"],
+	.ttbm_style hr {
+		margin: var(--ttbm_mp_xs) 0;
 		line-height: 1;
 		border-color: var(--color_border);
 		display: block;
@@ -712,9 +712,9 @@
 		background-color: var(--color_border);
 		width: 100%;
 	}
-	.mpStyle .divider_3,
-	.mpStyle [class*="_divider_3"] {
-		margin: var(--dmp_xs) 0;
+	.ttbm_style .divider_3,
+	.ttbm_style [class*="_divider_3"] {
+		margin: var(--ttbm_mp_xs) 0;
 		line-height: 1;
 		border-color: var(--color_border);
 		display: block;
@@ -722,8 +722,8 @@
 		background-color: var(--color_border);
 		width: 100%;
 	}
-	.mpStyle .dividerL,
-	.mpStyle [class*="_dividerL"] {
+	.ttbm_style .dividerL,
+	.ttbm_style [class*="_dividerL"] {
 		margin: var(--dmp) 0;
 		line-height: 1;
 		border-color: var(--color_border);
@@ -732,25 +732,25 @@
 		background-color: var(--color_border);
 		width: 100%;
 	}
-	.mpStyle .separatorRight > *,
-	.mpStyle [class*="_separatorRight"] > * {
+	.ttbm_style .separatorRight > *,
+	.ttbm_style [class*="_separatorRight"] > * {
 		border-right: 2px solid var(--color_border);
 	}
-	.mpStyle .separatorRight > *,
-	.mpStyle [class*="_separatorRight"] > :last-child {
+	.ttbm_style .separatorRight > *,
+	.ttbm_style [class*="_separatorRight"] > :last-child {
 		border-right: none;
 	}
-	div.mpStyle .mpDisabled {
+	div.ttbm_style .mpDisabled {
 		cursor: no-drop;
 		opacity: 0.7;
 		pointer-events: none;
 	}
-	.mpStyle .strikeLine {
+	.ttbm_style .strikeLine {
 		position: relative;
-		padding: 0 var(--dmp_xs);
+		padding: 0 var(--ttbm_mp_xs);
 		color: var(--color_warning);
 	}
-	.mpStyle .strikeLine:before {
+	.ttbm_style .strikeLine:before {
 		content: " ";
 		display: block;
 		width: 100%;
@@ -762,305 +762,305 @@
 		transform: rotate(-11deg);
 	}
 	/**************/
-	.mpStyle .rotate_90,
-	.mpStyle [class*="_rotate_90"] {
+	.ttbm_style .rotate_90,
+	.ttbm_style [class*="_rotate_90"] {
 		transform: rotate(90deg);
 	}
 	/**************/
-	div.mpStyle .mp_hidden_content,
-	.mpStyle .dNone,
-	.mpStyle [class*="_dNone"] {
+	div.ttbm_style .ttbm_hidden_content,
+	.ttbm_style .dNone,
+	.ttbm_style [class*="_dNone"] {
 		display: none;
 	}
-	.mpStyle .dBlock,
-	.mpStyle [class*="_dBlock"] {
+	.ttbm_style .dBlock,
+	.ttbm_style [class*="_dBlock"] {
 		display: block;
 	}
-	.mpStyle .dInlineBlock,
-	.mpStyle [class*="_dInlineBlock"],
-	.mpStyle small,
-	.mpStyle span,
-	.mpStyle strong {
+	.ttbm_style .dInlineBlock,
+	.ttbm_style [class*="_dInlineBlock"],
+	.ttbm_style small,
+	.ttbm_style span,
+	.ttbm_style strong {
 		display: inline-block;
 	}
 	/**************/
-	.mpStyle .fLeft,
-	.mpStyle [class*="_fLeft"] {
+	.ttbm_style .fLeft,
+	.ttbm_style [class*="_fLeft"] {
 		float: left;
 	}
-	.mpStyle .fRight,
-	.mpStyle [class*="_fRight"] {
+	.ttbm_style .fRight,
+	.ttbm_style [class*="_fRight"] {
 		float: right;
 	}
 	/**************/
 	/**************/
-	.mpStyle .textLeft,
-	.mpStyle [class*="_textLeft"] {
+	.ttbm_style .textLeft,
+	.ttbm_style [class*="_textLeft"] {
 		text-align: left;
 	}
-	.mpStyle .textCenter,
-	.mpStyle [class*="_textCenter"] {
+	.ttbm_style .textCenter,
+	.ttbm_style [class*="_textCenter"] {
 		text-align: center;
 	}
-	.mpStyle .textRight,
-	.mpStyle [class*="_textRight"] {
+	.ttbm_style .textRight,
+	.ttbm_style [class*="_textRight"] {
 		text-align: right;
 	}
-	.mpStyle .textCapitalize,
-	.mpStyle [class*="_textCapitalize"] {
+	.ttbm_style .textCapitalize,
+	.ttbm_style [class*="_textCapitalize"] {
 		text-transform: capitalize;
 	}
-	.mpStyle .textNowrap,
-	.mpStyle [class*="_textNowrap"] {
+	.ttbm_style .textNowrap,
+	.ttbm_style [class*="_textNowrap"] {
 		white-space: nowrap;
 	}
 	/**************/
-	.mpStyle [class*="_dotted"] {
+	.ttbm_style [class*="_dotted"] {
 		border-style: dotted;
 	}
-	.mpStyle [class*="_border"] {
+	.ttbm_style [class*="_border"] {
 		border: 1px solid var(--color_border);
 	}
-	.mpStyle .bT,
-	.mpStyle [class*="_bT"] {
+	.ttbm_style .bT,
+	.ttbm_style [class*="_bT"] {
 		border-top: 1px solid var(--color_border);
 	}
-	.mpStyle [class*="_bDot"] {
+	.ttbm_style [class*="_bDot"] {
 		border: 1px dotted var(--color_border);
 	}
-	.mpStyle [class*="_bDash"] {
+	.ttbm_style [class*="_bDash"] {
 		border: 1px dashed var(--color_border);
 	}
-	.mpStyle [class*="_bR"] {
+	.ttbm_style [class*="_bR"] {
 		border-right: 1px solid var(--color_border);
 	}
-	.mpStyle [class*="_bR_dash"] {
+	.ttbm_style [class*="_bR_dash"] {
 		border-right: 1px dashed var(--color_border);
 	}
-	.mpStyle [class*="_bR_dot"] {
+	.ttbm_style [class*="_bR_dot"] {
 		border-right: 1px dotted var(--color_border);
 	}
-	.mpStyle [class*="_bB"],
-	.mpStyle .borB {
+	.ttbm_style [class*="_bB"],
+	.ttbm_style .borB {
 		border-bottom: 1px solid var(--color_border);
 	}
-	.mpStyle [class*="_bB_dot"] {
+	.ttbm_style [class*="_bB_dot"] {
 		border-bottom: 1px dotted var(--color_border);
 	}
-	.mpStyle .zeroBorder,
-	.mpStyle [class*="_zeroBorder"] {
+	.ttbm_style .zeroBorder,
+	.ttbm_style [class*="_zeroBorder"] {
 		border: none;
 	}
 	/**************/
-	.mpStyle .padZero,
-	.mpStyle span.padZero,
-	.mpStyle [class*="_pad_zero"] {
+	.ttbm_style .padZero,
+	.ttbm_style span.padZero,
+	.ttbm_style [class*="_pad_zero"] {
 		padding: 0;
 	}
-	.mpStyle .padding,
-	.mpStyle [class*="_padding"] {
+	.ttbm_style .padding,
+	.ttbm_style [class*="_padding"] {
 		padding: var(--dmp);
 	}
-	.mpStyle .padding_xs,
-	.mpStyle [class*="_padding_xs"] {
-		padding: var(--dmp_xs);
+	.ttbm_style .padding_xs,
+	.ttbm_style [class*="_padding_xs"] {
+		padding: var(--ttbm_mp_xs);
 	}
-	.mpStyle .pad_25,
-	.mpStyle [class*="_pad_25"] {
+	.ttbm_style .pad_25,
+	.ttbm_style [class*="_pad_25"] {
 		padding: 25px;
 	}
-	.mpStyle .pT,
-	.mpStyle [class*="_pT"] {
+	.ttbm_style .pT,
+	.ttbm_style [class*="_pT"] {
 		padding-top: var(--dmp);
 	}
-	.mpStyle .pT_xs,
-	.mpStyle [class*="_pT_xs"] {
-		padding-top: var(--dmp_xs);
+	.ttbm_style .pT_xs,
+	.ttbm_style [class*="_pT_xs"] {
+		padding-top: var(--ttbm_mp_xs);
 	}
-	.mpStyle .pR,
-	.mpStyle [class*="_pR"] {
+	.ttbm_style .pR,
+	.ttbm_style [class*="_pR"] {
 		padding-right: var(--dmp);
 	}
-	.mpStyle .pR_xs,
-	.mpStyle [class*="_pR_xs"] {
-		padding-right: var(--dmp_xs);
+	.ttbm_style .pR_xs,
+	.ttbm_style [class*="_pR_xs"] {
+		padding-right: var(--ttbm_mp_xs);
 	}
-	.mpStyle .pR_5,
-	.mpStyle [class*="_pR_5"] {
+	.ttbm_style .pR_5,
+	.ttbm_style [class*="_pR_5"] {
 		padding-right: 5%;
 	}
-	.mpStyle .pr_15 {
+	.ttbm_style .pr_15 {
 		padding-right: 15%;
 	}
-	.mpStyle .pB,
-	.mpStyle [class*="_pB"] {
+	.ttbm_style .pB,
+	.ttbm_style [class*="_pB"] {
 		padding-bottom: var(--dmp);
 	}
-	.mpStyle .pB_xs,
-	.mpStyle [class*="_pB_xs"] {
-		padding-bottom: var(--dmp_xs);
+	.ttbm_style .pB_xs,
+	.ttbm_style [class*="_pB_xs"] {
+		padding-bottom: var(--ttbm_mp_xs);
 	}
-	.mpStyle .pL,
-	.mpStyle [class*="_pL"] {
+	.ttbm_style .pL,
+	.ttbm_style [class*="_pL"] {
 		padding-left: var(--dmp);
 	}
-	.mpStyle .pL_xs,
-	.mpStyle [class*="_pL_xs"] {
-		padding-left: var(--dmp_xs);
+	.ttbm_style .pL_xs,
+	.ttbm_style [class*="_pL_xs"] {
+		padding-left: var(--ttbm_mp_xs);
 	}
-	.mpStyle .pTB,
-	.mpStyle [class*="_pTB"] {
+	.ttbm_style .pTB,
+	.ttbm_style [class*="_pTB"] {
 		padding: var(--dmp) 0;
 	}
-	.mpStyle .pTB_xs,
-	.mpStyle [class*="pTB_xs"] {
-		padding: var(--dmp_xs) 0;
+	.ttbm_style .pTB_xs,
+	.ttbm_style [class*="pTB_xs"] {
+		padding: var(--ttbm_mp_xs) 0;
 	}
 	/**************/
-	div.mpStyle .margin,
-	div.mpStyle [class*="_margin"] {
+	div.ttbm_style .margin,
+	div.ttbm_style [class*="_margin"] {
 		margin: var(--dmp);
 	}
-	div.mpStyle .mZero,
-	div.mpStyle [class*="_mZero"],
-	.mpStyle span[class*="_icon"] {
+	div.ttbm_style .mZero,
+	div.ttbm_style [class*="_mZero"],
+	.ttbm_style span[class*="_icon"] {
 		margin: 0;
 	}
-	div.mpStyle .mAuto,
-	div.mpStyle [class*="_mAuto"] {
+	div.ttbm_style .mAuto,
+	div.ttbm_style [class*="_mAuto"] {
 		margin: 0 auto;
 	}
-	div.mpStyle .fullAuto,
-	div.mpStyle [class*="_fullAuto"] {
+	div.ttbm_style .fullAuto,
+	div.ttbm_style [class*="_fullAuto"] {
 		margin: auto;
 	}
-	.mpStyle .mT,
-	.mpStyle [class*="_mT"] {
+	.ttbm_style .mT,
+	.ttbm_style [class*="_mT"] {
 		margin-top: var(--dmp);
 	}
-	.mpStyle .mT_xs,
-	.mpStyle [class*="_mT_xs"] {
-		margin-top: var(--dmp_xs);
+	.ttbm_style .mT_xs,
+	.ttbm_style [class*="_mT_xs"] {
+		margin-top: var(--ttbm_mp_xs);
 	}
-	.mpStyle .mT_25,
-	.mpStyle [class*="_mT_25"] {
+	.ttbm_style .mT_25,
+	.ttbm_style [class*="_mT_25"] {
 		margin-top: 25px;
 	}
-	.mpStyle .mT_40,
-	.mpStyle [class*="_mT_40"] {
+	.ttbm_style .mT_40,
+	.ttbm_style [class*="_mT_40"] {
 		margin-top: 40px;
 	}
-	.mpStyle .mR,
-	.mpStyle [class*="_mR"] {
+	.ttbm_style .mR,
+	.ttbm_style [class*="_mR"] {
 		margin-right: var(--dmp);
 	}
-	.mpStyle .mR_xs,
-	.mpStyle [class*="_mR_xs"] {
-		margin-right: var(--dmp_xs);
+	.ttbm_style .mR_xs,
+	.ttbm_style [class*="_mR_xs"] {
+		margin-right: var(--ttbm_mp_xs);
 	}
-	.mpStyle .mR_5,
-	.mpStyle [class*="_mR_5"] {
+	.ttbm_style .mR_5,
+	.ttbm_style [class*="_mR_5"] {
 		margin-right: 5%;
 	}
-	.mpStyle .mB,
-	.mpStyle [class*="_mB"] {
+	.ttbm_style .mB,
+	.ttbm_style [class*="_mB"] {
 		margin-bottom: var(--dmp);
 	}
-	.mpStyle .mB_xs,
-	.mpStyle [class*="_mB_xs"] {
-		margin-bottom: var(--dmp_xs);
+	.ttbm_style .mB_xs,
+	.ttbm_style [class*="_mB_xs"] {
+		margin-bottom: var(--ttbm_mp_xs);
 	}
-	.mpStyle .mL,
-	.mpStyle [class*="_mL"] {
+	.ttbm_style .mL,
+	.ttbm_style [class*="_mL"] {
 		margin-left: var(--dmp);
 	}
-	.mpStyle .mL_xs,
-	.mpStyle [class*="_mL_xs"] {
-		margin-left: var(--dmp_xs);
+	.ttbm_style .mL_xs,
+	.ttbm_style [class*="_mL_xs"] {
+		margin-left: var(--ttbm_mp_xs);
 	}
-	.mpStyle .mL_20,
-	.mpStyle [class*="_mL_20"] {
+	.ttbm_style .mL_20,
+	.ttbm_style [class*="_mL_20"] {
 		margin-left: 20px;
 	}
-	.mpStyle .mL_25,
-	.mpStyle [class*="_mL_25"] {
+	.ttbm_style .mL_25,
+	.ttbm_style [class*="_mL_25"] {
 		margin-left: 25px;
 	}
-	.mpStyle .mTB,
-	.mpStyle [class*="_mTB"] {
+	.ttbm_style .mTB,
+	.ttbm_style [class*="_mTB"] {
 		margin: var(--dmp) 0;
 	}
-	.mpStyle .mTB_xs,
-	.mpStyle [class*="_mTB_xs"] {
-		margin: var(--dmp_xs) 0;
+	.ttbm_style .mTB_xs,
+	.ttbm_style [class*="_mTB_xs"] {
+		margin: var(--ttbm_mp_xs) 0;
 	}
-	.mpStyle .mLR,
-	.mpStyle [class*="_mLR"] {
+	.ttbm_style .mLR,
+	.ttbm_style [class*="_mLR"] {
 		margin: 0 var(--dmp);
 	}
-	.mpStyle .mLR_xs,
-	.mpStyle [class*="_mLR_xs"] {
-		margin: 0 var(--dmp_xs);
+	.ttbm_style .mLR_xs,
+	.ttbm_style [class*="_mLR_xs"] {
+		margin: 0 var(--ttbm_mp_xs);
 	}
-	.mpStyle .mTR_xs,
-	.mpStyle [class*="_mTR_xs"] {
-		margin: var(--dmp_xs) var(--dmp_xs) 0 0;
+	.ttbm_style .mTR_xs,
+	.ttbm_style [class*="_mTR_xs"] {
+		margin: var(--ttbm_mp_xs) var(--ttbm_mp_xs) 0 0;
 	}
 	/***************/
-	div.mpStyle .mp_zero,
-	div.mpStyle [class*="_mp_zero"] {
+	div.ttbm_style .mp_zero,
+	div.ttbm_style [class*="_mp_zero"] {
 		margin: 0;
 		padding: 0;
 	}
 	/***************/
-	.mpStyle .oAuto,
-	.mpStyle [class*="_oAuto"] {
+	.ttbm_style .oAuto,
+	.ttbm_style [class*="_oAuto"] {
 		overflow: auto;
 	}
-	.mpStyle .ovAuto,
-	.mpStyle [class*="_ovAuto"] {
+	.ttbm_style .ovAuto,
+	.ttbm_style [class*="_ovAuto"] {
 		overflow: auto;
 	}
-	.mpStyle .ovAuto > *,
-	.mpStyle [class*="_ovAuto"] > *,
-	.mpStyle .ovHidden,
-	.mpStyle [class*="_ovHidden"] {
+	.ttbm_style .ovAuto > *,
+	.ttbm_style [class*="_ovAuto"] > *,
+	.ttbm_style .ovHidden,
+	.ttbm_style [class*="_ovHidden"] {
 		overflow: hidden;
 	}
 	/***************/
-	.mpStyle .offsetRight_1 {
+	.ttbm_style .offsetRight_1 {
 		margin-right: 8.3333333333%;
 	}
 	/***************/
-	.mpStyle .textUppercase {
+	.ttbm_style .textUppercase {
 		text-transform: uppercase;
 	}
 	/*****************/
-	.mpStyle .noBR,
-	.mpStyle [class*="_noBR"] {
+	.ttbm_style .noBR,
+	.ttbm_style [class*="_noBR"] {
 		border: none;
 		-webkit-border-radius: 0;
 		border-radius: 0;
 	}
 	/*****************/
-	.mpStyle .contentScroll {
+	.ttbm_style .contentScroll {
 		overflow: auto;
 	}
 	/*****************/
-	.mpStyle .verticalTop,
-	.mpStyle [class*="_verticalTop"] {
+	.ttbm_style .verticalTop,
+	.ttbm_style [class*="_verticalTop"] {
 		vertical-align: top;
 	}
 	/*****************/
 	/*****************/
 	@media only screen and (max-width: 900px) {
-		div.mpStyle .hidden_sm {
+		div.ttbm_style .hidden_sm {
 			display: none;
 		}
 	}
 	@media only screen and (max-width: 767px) {
-		div.mpStyle .hidden_xs,
-		div.mpStyle [class*="_hidden_xs"] {
+		div.ttbm_style .hidden_xs,
+		div.ttbm_style [class*="_hidden_xs"] {
 			display: none;
 		}
 	}
@@ -1128,7 +1128,7 @@
 	.placeholderLoader .placeholder_area {
 		background-color: #fff;
 		position: relative;
-		padding: var(--dmp_xs);
+		padding: var(--ttbm_mp_xs);
 	}
 	.placeholderLoader .placeholder_area::before {
 		position: absolute;
@@ -1182,30 +1182,30 @@
 }
 /******************************************************************** Menu section ************************************************/
 @media only screen and (min-width: 10px) {
-	nav.mpStyle {
+	nav.ttbm_style {
 		background-color: var(--color_4);
 	}
-	.mpStyle .mpMenu li {
+	.ttbm_style .mpMenu li {
 		position: relative;
 		border-left: 1px dotted var(--color_border);
 	}
-	.mpStyle .mpMenu li:last-child {
+	.ttbm_style .mpMenu li:last-child {
 		border-right: 1px dotted var(--color_border);
 	}
-	.mpStyle .mpMenu li a {
+	.ttbm_style .mpMenu li a {
 		color: var(--color_white);
 		font-weight: 500;
 		text-align: center;
-		padding: var(--dmp) var(--dmp_xs);
+		padding: var(--dmp) var(--ttbm_mp_xs);
 		width: 100%;
 	}
-	.mpStyle .mpMenu li a:hover {
+	.ttbm_style .mpMenu li a:hover {
 		color: var(--color_theme);
 	}
-	.mpStyle .mpMenu li.current_page_item a {
+	.ttbm_style .mpMenu li.current_page_item a {
 		color: var(--color_5);
 	}
-	.mpStyle .mpSubMenu {
+	.ttbm_style .mpSubMenu {
 		display: none;
 		position: absolute;
 		top: 100%;
@@ -1215,35 +1215,35 @@
 		min-width: 280px;
 		z-index: 111111;
 	}
-	.mpStyle .mpSubMenu .mpSubMenu {
+	.ttbm_style .mpSubMenu .mpSubMenu {
 		top: -1px;
 		left: 100%;
 		border-left: 2px solid var(--color_theme);
 	}
-	.mpStyle .mpMenu li:last-child .mpSubMenu {
+	.ttbm_style .mpMenu li:last-child .mpSubMenu {
 		right: 0;
 		left: inherit;
 	}
-	.mpStyle .mpMenu li:hover > .mpSubMenu {
+	.ttbm_style .mpMenu li:hover > .mpSubMenu {
 		display: block;
 	}
-	.mpStyle .mpSubMenu {
+	.ttbm_style .mpSubMenu {
 		border-top: 1px dotted var(--color_border);
 		border-bottom: 1px dotted var(--color_border);
 	}
-	.mpStyle .mpSubMenu li {
+	.ttbm_style .mpSubMenu li {
 		border-bottom: 1px dotted var(--color_border);
 		border-left: none;
 		border-right: none;
 	}
-	.mpStyle .mpSubMenu li a {
-		padding: var(--dmp_xs);
+	.ttbm_style .mpSubMenu li a {
+		padding: var(--ttbm_mp_xs);
 		text-align: left;
 	}
-	.mpStyle .mpSubMenu li:last-child {
+	.ttbm_style .mpSubMenu li:last-child {
 		border: none;
 	}
-	.mpStyle .menu-item-has-children > a::after {
+	.ttbm_style .menu-item-has-children > a::after {
 		content: "✛";
 		margin: 0 0 0 10px;
 		color: var(--color_theme);
@@ -1253,42 +1253,42 @@
 }
 /******************************************************************** Image/slider Section ************************************************/
 @media only screen and (min-width: 10px) {
-	.mpStyle img:not(.mp_wp_editor img) {
+	.ttbm_style img:not(.ttbm_wp_editor img) {
 		width: 100%;
 		height: auto;
 		max-width: 100%;
 	}
 	/*******Click slider***************/
-	.mpStyle [class*="clickSlide"] {
+	.ttbm_style [class*="clickSlide"] {
 		background-color: var(--color_white);
 		padding: var(--dmp);
 	}
-	.mpStyle [class*="slideItem"] {
+	.ttbm_style [class*="slideItem"] {
 		display: none;
 	}
-	.mpStyle [class*="slideItem"].active {
+	.ttbm_style [class*="slideItem"].active {
 		display: block;
 	}
-	.mpStyle [class*="slideItem"] img {
+	.ttbm_style [class*="slideItem"] img {
 		width: 100%;
 	}
-	.mpStyle [class*="slideIndicator"] {
+	.ttbm_style [class*="slideIndicator"] {
 		margin: var(--dmp) 0 0 0;
 	}
-	.mpStyle [class*="slideIndicatorItem"] {
+	.ttbm_style [class*="slideIndicatorItem"] {
 		border: 3px solid var(--color_border);
 		margin: 0 5px;
 		background-color: var(--color_border);
 	}
-	.mpStyle [class*="slideIndicatorItem"].active {
+	.ttbm_style [class*="slideIndicatorItem"].active {
 		border-color: var(--color_active);
 		background-color: var(--color_active);
 	}
-	.mpStyle [class*="slideIndicatorItem"] img {
+	.ttbm_style [class*="slideIndicatorItem"] img {
 		height: 30px;
 		width: auto;
 	}
-	.mpStyle [class*="slideIndicatorItem"].active img {
+	.ttbm_style [class*="slideIndicatorItem"].active img {
 		height: 35px;
 	}
 	/***********Bg Image****************/
@@ -1421,37 +1421,37 @@
 	}
 	div.superSlider .sliderShowcase.style_2 > div {
 		width: calc(50% - 5px);
-		margin: 0 var(--dmp_xs) 0 0;
+		margin: 0 var(--ttbm_mp_xs) 0 0;
 	}
 	div.superSlider .sliderShowcase.style_2 > div:first-child {
 		width: 100%;
-		margin: 0 0 var(--dmp_xs) 0;
+		margin: 0 0 var(--ttbm_mp_xs) 0;
 	}
 	div.superSlider .sliderShowcase.style_2 > div:last-child {
 		margin: 0;
 	}
 	div.superSlider .sliderShowcase.left {
-		margin: 0 var(--dmp_xs) 0 0;
+		margin: 0 var(--ttbm_mp_xs) 0 0;
 	}
 	div.superSlider .sliderShowcase.right {
-		margin: 0 0 0 var(--dmp_xs);
+		margin: 0 0 0 var(--ttbm_mp_xs);
 	}
 	div.superSlider .area_column .sliderShowcase {
 		width: 100%;
 		min-width: 100%;
 	}
 	div.superSlider .sliderShowcase.top {
-		margin: 0 0 var(--dmp_xs) 0;
+		margin: 0 0 var(--ttbm_mp_xs) 0;
 	}
 	div.superSlider .sliderShowcase.bottom {
-		margin: var(--dmp_xs) 0 0 0;
+		margin: var(--ttbm_mp_xs) 0 0 0;
 	}
 	div.superSlider .sliderShowcase.bottom .sliderShowcaseItem{margin:0 10px 0 0;width: auto;max-width:25%;-webkit-flex:1;flex:1;}
 	div.superSlider .sliderShowcase.bottom .sliderShowcaseItem:last-child{margin: 0;}
 	div.superSlider .sliderShowcaseItem {margin: 0 0 10px 0;    position: relative;    overflow: hidden; height: 118px; }
-	div.superSlider .area_column .sliderShowcaseItem {		width: calc(25% - var(--dmp_xs));	}
+	div.superSlider .area_column .sliderShowcaseItem {		width: calc(25% - var(--ttbm_mp_xs));	}
 	div.superSlider .sliderShowcase div.superSlider .area_column {
-		margin: 0 0 var(--dmp_xs) 0;
+		margin: 0 0 var(--ttbm_mp_xs) 0;
 		position: relative;
 		cursor: pointer;
 		overflow: hidden;
@@ -1607,8 +1607,8 @@
 /******************************************************************** Layout Section ************************************************/
 @media only screen and (min-width: 10px) {
 	/***********Circular***********/
-	.mpStyle .circleIcon,
-	.mpStyle [class*="_circleIcon"] {
+	.ttbm_style .circleIcon,
+	.ttbm_style [class*="_circleIcon"] {
 		width: 40px;
 		height: 40px;
 		min-width: 40px;
@@ -1616,18 +1616,18 @@
 		color: var(--color_theme_alter);
 		margin: 0 var(--dmp) 0 0;
 	}
-	.mpStyle .circleIcon_xs,
-	.mpStyle [class*="_circleIcon_xs"] {
+	.ttbm_style .circleIcon_xs,
+	.ttbm_style [class*="_circleIcon_xs"] {
 		width: 25px;
 		height: 25px;
 		min-width: 25px;
-		margin: 0 var(--dmp_xs) 0 0;
+		margin: 0 var(--ttbm_mp_xs) 0 0;
 	}
 	/*****Remove icon******/
-	.mpStyle .mp_remove_area {
+	.ttbm_style .mp_remove_area {
 		position: relative;
 	}
-	.mpStyle .mp_remove_icon {
+	.ttbm_style .ttbm_remove_icon {
 		position: absolute;
 		top: -5px;
 		right: -5px;
@@ -1639,59 +1639,59 @@
 		color: var(--color_theme_alter);
 	}
 	/**************Default************************/
-	.mpStyle .dLayout,
-	.mpStyle [class*="_dLayout"] {
+	.ttbm_style .dLayout,
+	.ttbm_style [class*="_dLayout"] {
 		padding: var(--dmp);
 		background-color: var(--color_white);
 		border: 1px solid var(--color_border);
 		margin-top: -1px;
 		border-radius: 0;
 	}
-	.mpStyle .dLayout:last-child,
-	.mpStyle [class*="_dLayout"]:last-child {
+	.ttbm_style .dLayout:last-child,
+	.ttbm_style [class*="_dLayout"]:last-child {
 		border-bottom: 1px solid var(--color_border);
 	}
 
-	.mpStyle .dLayout_xs,
-	.mpStyle [class*="_dLayout_xs"] {
-		padding: var(--dmp_xs);
+	.ttbm_style .dLayout_xs,
+	.ttbm_style [class*="_dLayout_xs"] {
+		padding: var(--ttbm_mp_xs);
 		background-color: var(--color_white);
 		border: 1px solid var(--color_border);
 	}
 	/***********info***********/
-	.mpStyle .infoLayout,
-	.mpStyle [class*="_infoLayout"] {
+	.ttbm_style .infoLayout,
+	.ttbm_style [class*="_infoLayout"] {
 		padding: var(--dmp);
 		background-color: var(--color_light);
 		margin-bottom: var(--dmp);
 	}
-	.mpStyle .infoLayout_xs,
-	.mpStyle [class*="_infoLayout_xs"] {
-		padding: var(--dmp_xs);
-		margin-bottom: var(--dmp_xs);
+	.ttbm_style .infoLayout_xs,
+	.ttbm_style [class*="_infoLayout_xs"] {
+		padding: var(--ttbm_mp_xs);
+		margin-bottom: var(--ttbm_mp_xs);
 	}
 }
 
 /******************************************************************** position Section************************************************/
 @media only screen and (min-width: 10px) {
 	/********Absolute Content********/
-	.mpStyle .pFixed,
-	.mpStyle [class*="_pFixed"] {
+	.ttbm_style .pFixed,
+	.ttbm_style [class*="_pFixed"] {
 		position: fixed;
 	}
-	.mpStyle .pRelative,
-	.mpStyle [class*="_pRelative"] {
+	.ttbm_style .pRelative,
+	.ttbm_style [class*="_pRelative"] {
 		position: relative;
 	}
-	.mpStyle [class*="pRelative"]:hover [class*="hoverAbsolute"] {
+	.ttbm_style [class*="pRelative"]:hover [class*="hoverAbsolute"] {
 		display: block;
 	}
-	.mpStyle .pAbsolute,
-	.mpStyle [class*="_pAbsolute"] {
+	.ttbm_style .pAbsolute,
+	.ttbm_style [class*="_pAbsolute"] {
 		position: absolute;
 	}
-	.mpStyle .fullAbsolute,
-	.mpStyle [class*="_fullAbsolute"] {
+	.ttbm_style .fullAbsolute,
+	.ttbm_style [class*="_fullAbsolute"] {
 		position: absolute;
 		left: 0;
 		top: 0;
@@ -1701,7 +1701,7 @@
 		width: 100%;
 		height: 100%;
 	}
-	.mpStyle [class*="hoverAbsolute"] {
+	.ttbm_style [class*="hoverAbsolute"] {
 		position: absolute;
 		right: 0;
 		top: 100%;
@@ -1712,34 +1712,34 @@
 		font-size: 15px;
 		z-index: 111;
 	}
-	.mpStyle .abTopRight,
-	.mpStyle [class*="_abTopRight"] {
+	.ttbm_style .abTopRight,
+	.ttbm_style [class*="_abTopRight"] {
 		position: absolute;
 		right: 0;
 		top: 0;
 	}
-	.mpStyle .abTopRight_xs,
-	.mpStyle [class*="_abTopRight_xs"] {
+	.ttbm_style .abTopRight_xs,
+	.ttbm_style [class*="_abTopRight_xs"] {
 		position: absolute;
-		right: var(--dmp_xs);
-		top: var(--dmp_xs);
+		right: var(--ttbm_mp_xs);
+		top: var(--ttbm_mp_xs);
 	}
-	.mpStyle .abTopLeft_xs,
-	.mpStyle [class*="_abTopLeft_xs"] {
+	.ttbm_style .abTopLeft_xs,
+	.ttbm_style [class*="_abTopLeft_xs"] {
 		position: absolute;
-		left: var(--dmp_xs);
-		top: var(--dmp_xs);
+		left: var(--ttbm_mp_xs);
+		top: var(--ttbm_mp_xs);
 		z-index: 1;
 	}
-	.mpStyle .abTopLeft,
-	.mpStyle [class*="_abTopLeft"] {
+	.ttbm_style .abTopLeft,
+	.ttbm_style [class*="_abTopLeft"] {
 		position: absolute;
 		left: var(--dmp);
 		top: var(--dmp);
 		z-index: 1;
 	}
-	.mpStyle .abBottomRight,
-	.mpStyle [class*="_abBottomRight"] {
+	.ttbm_style .abBottomRight,
+	.ttbm_style [class*="_abBottomRight"] {
 		position: absolute;
 		right: -1px;
 		bottom: -1px;
@@ -1748,27 +1748,27 @@
 		font-size: 20px;
 		font-weight: 500;
 	}
-	.mpStyle .abLeftRightBottom,
-	.mpStyle [class*="_abLeftRightBottom"] {
+	.ttbm_style .abLeftRightBottom,
+	.ttbm_style [class*="_abLeftRightBottom"] {
 		position: absolute;
 		left: 0;
 		right: 0;
 		top: 100%;
 		z-index: 111;
-		padding: var(--dmp_xs);
+		padding: var(--ttbm_mp_xs);
 	}
-	.mpStyle .abLeftRightBottom_inside,
-	.mpStyle [class*="_abLeftRightBottom_inside"] {
+	.ttbm_style .abLeftRightBottom_inside,
+	.ttbm_style [class*="_abLeftRightBottom_inside"] {
 		position: absolute;
 		left: 0;
 		right: 0;
 		top: inherit;
 		bottom: 0;
 		z-index: 111;
-		padding: var(--dmp_xs);
+		padding: var(--ttbm_mp_xs);
 	}
 	/****************/
-	.mpStyle .ribbon {
+	.ttbm_style .ribbon {
 		position: absolute;
 		top: var(--dmp);
 		left: 0;
@@ -1782,7 +1782,7 @@
 		box-shadow: 1px 2px 2px 0 rgba(0, 0, 0, 0.4);
 		z-index: 1;
 	}
-	.mpStyle .ribbon::before {
+	.ttbm_style .ribbon::before {
 		content: "";
 		position: absolute;
 		left: 0;
@@ -1795,7 +1795,7 @@
 		z-index: -1;
 	}
 	/****************/
-	.mpStyle .title_on_border {
+	.ttbm_style .title_on_border {
 		line-height: 1;
 		height: 40px;
 		position: absolute;
@@ -1807,17 +1807,17 @@
 		border-radius: var(--dbr);
 	}
 	/********fixed Content********/
-	div.mpStyle .mp_sticky_area.mpSticky {
+	div.ttbm_style .ttbm_sticky_area.mpSticky {
 		position: fixed;
 	}
-	div.mpStyle .mp_sticky_area.mpSticky .mp_sticky_on_scroll {
+	div.ttbm_style .ttbm_sticky_area.mpSticky .mp_sticky_on_scroll {
 		overflow: auto;
 		z-index: 1111;
 	}
 }
 /******************************************************************** Form section ************************************************/
 
-.mpStyle input:not[type="submit"] {
+.ttbm_style input:not[type="submit"] {
     width: 100%;
     max-width: inherit;
     border: 1px solid var(--color_border);
@@ -1830,11 +1830,11 @@
     border-radius: 6px;
 }
 
-.mpStyle input:not(.checkbox),
-.mpStyle input:not([type=submit]),
-.mpStyle optgroup,
-.mpStyle select,
-.mpStyle textarea {
+.ttbm_style input:not(.checkbox),
+.ttbm_style input:not([type=submit]),
+.ttbm_style optgroup,
+.ttbm_style select,
+.ttbm_style textarea {
     font-family: inherit;
     line-height: initial;
     margin: 0;
@@ -1847,50 +1847,50 @@
 
 }
 
-.mpStyle .formControl:-webkit-autofill,
-.mpStyle .formControl:-webkit-autofill:hover,
-.mpStyle .formControl:-webkit-autofill:focus,
-.mpStyle .formControl:-webkit-autofill:active {
+.ttbm_style .formControl:-webkit-autofill,
+.ttbm_style .formControl:-webkit-autofill:hover,
+.ttbm_style .formControl:-webkit-autofill:focus,
+.ttbm_style .formControl:-webkit-autofill:active {
     box-shadow: none;
     outline: 0;
     border-color: var(--color_theme);
 }
 
-.mpStyle input:focus,
-.mpStyle optgroup:focus,
-.mpStyle select:focus,
-.mpStyle textarea:focus {
+.ttbm_style input:focus,
+.ttbm_style optgroup:focus,
+.ttbm_style select:focus,
+.ttbm_style textarea:focus {
     box-shadow: none;
     outline: 0;
     border-color: var(--color_theme);
 }
 
-div.mpStyle form {
+div.ttbm_style form {
     margin: 0;
     padding: 0;
     line-height: 1.25;
 }
 
-.mpStyle label {
+.ttbm_style label {
     position: relative;
 }
 
-.mpStyle label > span {
+.ttbm_style label > span {
     white-space: nowrap;
 }
 
 /***************************/
-.mpStyle .formControl::placeholder {
+.ttbm_style .formControl::placeholder {
     color: #0005;
 }
 
-.mpStyle .formControl:disabled {
+.ttbm_style .formControl:disabled {
     background-color: #ddd5;
     color: #fff;
 }
 
 /***************************/
-div.mpStyle .formControl {
+div.ttbm_style .formControl {
     width: 100%;
     max-width: inherit;
     border: 1px solid var(--color_border);
@@ -1902,35 +1902,35 @@ div.mpStyle .formControl {
     border-radius: 6px;
 }
 
-div.mpStyle #ttbm_select_date.formControl {
+div.ttbm_style #ttbm_select_date.formControl {
     height: 30px;
 }
 
-.mpStyle .formControl:focus {
+.ttbm_style .formControl:focus {
     outline: 0;
     background-color: #fff;
     border-color: #80bdff;
 }
 
-div.mpStyle select.formControl {
+div.ttbm_style select.formControl {
     height: 48px;
     border-radius: 8px;
     /* background-image: url("../images/arrow_down.png");
 background-repeat: no-repeat;
-background-position: calc(100% - var(--dmp_xs));
+background-position: calc(100% - var(--ttbm_mp_xs));
 background-size: auto;
 -webkit-appearance: none;
-padding: var(--dmp_xs) 35px var(--dmp_xs) var(--dmp_xs); */
+padding: var(--ttbm_mp_xs) 35px var(--ttbm_mp_xs) var(--ttbm_mp_xs); */
 }
 
-div.mpStyle select.formControl:focus {
+div.ttbm_style select.formControl:focus {
     border: 1px solid var(--color_theme);
     box-shadow: none;
 }
 
-div.mpStyle .formControl.date_type_without_year,
-div.mpStyle .formControl.date_type,
-div.mpStyle .formControl[type="date"] {
+div.ttbm_style .formControl.date_type_without_year,
+div.ttbm_style .formControl.date_type,
+div.ttbm_style .formControl[type="date"] {
     background-image: url("../images/calendar.png");
     background-repeat: no-repeat;
     background-position: 8px center;
@@ -1940,59 +1940,59 @@ div.mpStyle .formControl[type="date"] {
     padding: 8px 8px 8px 40px;
 }
 
-div.mpStyle textarea.formControl {
+div.ttbm_style textarea.formControl {
     height: auto;
 }
 
-.mpStyle .mpForm label {
-    margin: var(--dmp_xs) 0 0 0;
+.ttbm_style .mpForm label {
+    margin: var(--ttbm_mp_xs) 0 0 0;
     text-transform: capitalize;
 }
 
-.mpStyle .mpForm label span {
+.ttbm_style .mpForm label span {
     width: 100%;
-    margin: 0 0 var(--dmp_xs) 0;
+    margin: 0 0 var(--ttbm_mp_xs) 0;
 }
 
-.mpStyle .mpForm label span::before {
-    padding: 0 var(--dmp_xs);
+.ttbm_style .mpForm label span::before {
+    padding: 0 var(--ttbm_mp_xs);
 }
 
 /****************/
-.mpStyle .inputList {
+.ttbm_style .inputList {
     margin: var(--dmp) 0 0 0;
     position: relative;
 }
 
-.mpStyle .inputList textarea.formControl {
+.ttbm_style .inputList textarea.formControl {
     height: auto;
 }
 
 /******* group form*********/
-.mpStyle .inputGroup {
+.ttbm_style .inputGroup {
     width: 100%;
-    padding: 0 0 var(--dmp_xs) 0;
+    padding: 0 0 var(--ttbm_mp_xs) 0;
 }
 
-.mpStyle .inputGroup label {
+.ttbm_style .inputGroup label {
     width: auto;
     padding: 0 var(--dmp) 0 0;
 }
 
-.mpStyle .inputGroup label input[type="checkbox"] {
-    margin: 0 var(--dmp_xs);
+.ttbm_style .inputGroup label input[type="checkbox"] {
+    margin: 0 var(--ttbm_mp_xs);
 }
 
 /******* input as a select*********/
-div.mpStyle div.mp_input_select .formControl:focus {
+div.ttbm_style div.ttbm_input_select .formControl:focus {
     border-color: var(--color_border);
 }
 
-.mpStyle div.mp_input_select {
+.ttbm_style div.ttbm_input_select {
     position: relative;
 }
 
-.mpStyle ul.mp_input_select_list {
+.ttbm_style ul.ttbm_input_select_list {
     display: none;
     z-index: 111;
     overflow: auto;
@@ -2009,7 +2009,7 @@ div.mpStyle div.mp_input_select .formControl:focus {
     background-color: var(--color_white);
 }
 
-.mpStyle ul.mp_input_select_list li {
+.ttbm_style ul.ttbm_input_select_list li {
     padding: 10px;
     cursor: pointer;
     border-bottom: 1px solid var(--color_border);
@@ -2017,60 +2017,60 @@ div.mpStyle div.mp_input_select .formControl:focus {
     list-style-type: none;
 }
 
-.mpStyle ul.mp_input_select_list li:last-child {
+.ttbm_style ul.ttbm_input_select_list li:last-child {
     border-bottom: none;
 }
 
-.mpStyle ul.mp_input_select_list li:hover {
+.ttbm_style ul.ttbm_input_select_list li:hover {
     background-color: #777;
     color: #fff;
 }
 
-.mpStyle ul.mp_input_select_list li span {
-    margin: 0 var(--dmp_xs) 0 0;
+.ttbm_style ul.ttbm_input_select_list li span {
+    margin: 0 var(--ttbm_mp_xs) 0 0;
 }
 
 /*****Form inline*******/
-.mpStyle .inputInline .mpForm {
+.ttbm_style .inputInline .mpForm {
     width: 100%;
     max-width: 100%;
 }
 
-.mpStyle .inputInline .inputList {
+.ttbm_style .inputInline .inputList {
     width: 100%;
-    margin: var(--dmp_xs) var(--dmp_xs) 0 0;
+    margin: var(--ttbm_mp_xs) var(--ttbm_mp_xs) 0 0;
 }
 
-.mpStyle .inputInline .inputList label {
+.ttbm_style .inputInline .inputList label {
     margin: 0;
 }
 
-.mpStyle .inputInline .inputList:last-child {
+.ttbm_style .inputInline .inputList:last-child {
     margin-right: 0;
 }
 
 /********Form Horizontal**************/
-.mpStyle .inputHorizontal {
+.ttbm_style .inputHorizontal {
     max-width: 500px;
     width: 100%;
     margin: 0 auto;
 }
 
 /**********Checkbox Radio*********/
-div.mpStyle .customRadioLabel {
+div.ttbm_style .customRadioLabel {
     font-weight: var(--fw-medium);
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 }
 
-div.mpStyle .customRadioLabel input[type="radio"] ~ .formControl,
-.mpStyle .customRadioLabel input[type="radio"] {
+div.ttbm_style .customRadioLabel input[type="radio"] ~ .formControl,
+.ttbm_style .customRadioLabel input[type="radio"] {
     display: none;
 }
 
-.mpStyle .customRadio {
-    padding: 0 var(--dmp_xs) 0 30px;
-    margin: 0 var(--dmp_xs) var(--dmp_xs) 0;
+.ttbm_style .customRadio {
+    padding: 0 var(--ttbm_mp_xs) 0 30px;
+    margin: 0 var(--ttbm_mp_xs) var(--ttbm_mp_xs) 0;
     position: relative;
     cursor: pointer;
     line-height: 1;
@@ -2078,7 +2078,7 @@ div.mpStyle .customRadioLabel input[type="radio"] ~ .formControl,
     min-height: 20px;
 }
 
-.mpStyle .customRadio::before {
+.ttbm_style .customRadio::before {
     content: "";
     position: absolute;
     left: 0;
@@ -2090,12 +2090,12 @@ div.mpStyle .customRadioLabel input[type="radio"] ~ .formControl,
     border-radius: 50%;
 }
 
-.mpStyle .customRadioLabel input[type="radio"]:checked ~ .formControl {
+.ttbm_style .customRadioLabel input[type="radio"]:checked ~ .formControl {
     display: block;
 }
 
-.mpStyle .customRadioLabel input[type="radio"]:checked ~ .customRadio::after,
-.mpStyle .customRadio.active::after {
+.ttbm_style .customRadioLabel input[type="radio"]:checked ~ .customRadio::after,
+.ttbm_style .customRadio.active::after {
     content: "";
     position: absolute;
     left: 5px;
@@ -2107,8 +2107,8 @@ div.mpStyle .customRadioLabel input[type="radio"] ~ .formControl,
     border-radius: 50%;
 }
 
-.mpStyle .customRadio.button_type {
-    padding: var(--dmp_xs);
+.ttbm_style .customRadio.button_type {
+    padding: var(--ttbm_mp_xs);
     margin: 5px;
     min-width: 120px;
     text-align: center;
@@ -2117,18 +2117,18 @@ div.mpStyle .customRadioLabel input[type="radio"] ~ .formControl,
     background-color: var(--color_theme);
 }
 
-.mpStyle .customRadio.button_type.active {
+.ttbm_style .customRadio.button_type.active {
     background-color: grey;
     color: var(--color_theme_alter);
 }
 
-.mpStyle .customRadio.button_type::before,
-.mpStyle .customRadio.button_type::after {
+.ttbm_style .customRadio.button_type::before,
+.ttbm_style .customRadio.button_type::after {
     display: none;
 }
 
 /**********Checkbox Custom*********/
-.mpStyle .customCheckbox {
+.ttbm_style .customCheckbox {
     padding: 3px 0 0 28px;
     position: relative;
     line-height: 1;
@@ -2137,7 +2137,7 @@ div.mpStyle .customRadioLabel input[type="radio"] ~ .formControl,
     margin-right: 5px;
 }
 
-.mpStyle .customCheckbox::before {
+.ttbm_style .customCheckbox::before {
     content: "";
     position: absolute;
     left: 0;
@@ -2149,44 +2149,44 @@ div.mpStyle .customRadioLabel input[type="radio"] ~ .formControl,
     border-radius: 2px;
 }
 
-.mpStyle .customCheckboxLabel {
+.ttbm_style .customCheckboxLabel {
     /*padding: 0 0 10px 0;*/
     margin-bottom: 10px;
     cursor: pointer;
     font-weight: var(--fw-medium);
 }
 
-.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::before {
+.ttbm_style .customCheckboxLabel input:checked ~ .customCheckbox::before {
     background: var(--color_theme);
     border-color: var(--color_theme);
 }
 
 /*******************/
-div.mpStyle .selectCheckbox {
+div.ttbm_style .selectCheckbox {
     min-width: 150px;
-    padding: var(--dmp_xs);
+    padding: var(--ttbm_mp_xs);
     width: auto;
     border: 1px solid var(--color_border);
     cursor: pointer;
 }
 
-div.mpStyle .customCheckboxLabel input[type="checkbox"],
-div.mpStyle .selectCheckbox input[type="checkbox"] {
+div.ttbm_style .customCheckboxLabel input[type="checkbox"],
+div.ttbm_style .selectCheckbox input[type="checkbox"] {
     display: none;
 }
 
-div.mpStyle .selectCheckbox .customCheckbox::before {
+div.ttbm_style .selectCheckbox .customCheckbox::before {
     border: none;
     background-color: transparent;
 }
 
-div.mpStyle .customCheckboxLabel input:focus ~ .customCheckbox::before,
-div.mpStyle .selectCheckbox input:focus ~ .customCheckbox::before {
+div.ttbm_style .customCheckboxLabel input:focus ~ .customCheckbox::before,
+div.ttbm_style .selectCheckbox input:focus ~ .customCheckbox::before {
     outline: 0;
 }
 
-div.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::after,
-div.mpStyle .selectCheckbox input:checked ~ .customCheckbox::after {
+div.ttbm_style .customCheckboxLabel input:checked ~ .customCheckbox::after,
+div.ttbm_style .selectCheckbox input:checked ~ .customCheckbox::after {
     content: "";
     position: absolute;
     left: 3.5px;
@@ -2202,27 +2202,27 @@ div.mpStyle .selectCheckbox input:checked ~ .customCheckbox::after {
     transform: rotate(-45deg);
 }
 
-div.mpStyle .active_select {
+div.ttbm_style .active_select {
     background-color: var(--color_theme);
     color: var(--color_theme_alter);
 }
 
-div.mpStyle .customCheckboxLabel.only_checkbox {
+div.ttbm_style .customCheckboxLabel.only_checkbox {
     width: 20px;
     margin: 0;
 }
 
-div.mpStyle .customCheckboxLabel.only_checkbox span {
+div.ttbm_style .customCheckboxLabel.only_checkbox span {
     padding: 0;
 }
 
 /*********Input Switch*******/
-.mpStyle .roundSwitchLabel input[type="checkbox"] {
+.ttbm_style .roundSwitchLabel input[type="checkbox"] {
     display: none;
     line-height: 0;
 }
 
-.mpStyle .roundSwitch {
+.ttbm_style .roundSwitch {
     width: 50px;
     height: 25px;
     min-width: auto;
@@ -2233,7 +2233,7 @@ div.mpStyle .customCheckboxLabel.only_checkbox span {
     transition: 0.4s;
 }
 
-.mpStyle .roundSwitch::before {
+.ttbm_style .roundSwitch::before {
     position: absolute;
     content: "";
     height: 23px;
@@ -2246,15 +2246,15 @@ div.mpStyle .customCheckboxLabel.only_checkbox span {
     transition: 0.4s;
 }
 
-.mpStyle .roundSwitchLabel input:checked + .roundSwitch {
+.ttbm_style .roundSwitchLabel input:checked + .roundSwitch {
     background-color: var(--color_theme);
 }
 
-.mpStyle .roundSwitchLabel input:focus + .roundSwitch {
+.ttbm_style .roundSwitchLabel input:focus + .roundSwitch {
     box-shadow: 0 0 1px #2276d2;
 }
 
-.mpStyle .roundSwitchLabel input:checked + .roundSwitch:before {
+.ttbm_style .roundSwitchLabel input:checked + .roundSwitch:before {
     -ms-transform: translateX(28px);
     transform: translateX(28px);
 }
@@ -2280,7 +2280,7 @@ div.mpStyle .customCheckboxLabel.only_checkbox span {
 }
 
 /*********Group Content*******/
-.mpStyle .groupContent {
+.ttbm_style .groupContent {
     /*border: 1px solid var(--color_border);*/
     /*background-color: var(--color_theme);*/
     color: var(--color_theme_alter);
@@ -2292,17 +2292,17 @@ div.mpStyle .customCheckboxLabel.only_checkbox span {
     justify-content: center;
 }
 
-div.mpStyle div.groupContent > * {
+div.ttbm_style div.groupContent > * {
     border: 1px solid var(--color_border);
     margin-bottom: 0;
     border-radius: 4px;
 
 }
 
-/*div.mpStyle div.groupContent > *:first-child {*/
+/*div.ttbm_style div.groupContent > *:first-child {*/
 /*	border: none;*/
 /*}*/
-div.mpStyle div.groupContent .formControl {
+div.ttbm_style div.groupContent .formControl {
     text-align: center;
     border: none;
     background-color: var(--color_white);
@@ -2315,14 +2315,14 @@ div.mpStyle div.groupContent .formControl {
 }
 
 
-.mpStyle .groupContent textarea.formControl {
+.ttbm_style .groupContent textarea.formControl {
     text-align: left;
 }
 
-.mpStyle .groupContent input[type="radio"] {
+.ttbm_style .groupContent input[type="radio"] {
 }
 
-.mpStyle .groupContent input[type="radio"]::after {
+.ttbm_style .groupContent input[type="radio"]::after {
     position: absolute;
     content: "";
     width: 20px;
@@ -2334,11 +2334,11 @@ div.mpStyle div.groupContent .formControl {
     margin: 10px;
 }
 
-div.mpStyle .groupContent input[type="radio"]:checked::after {
+div.ttbm_style .groupContent input[type="radio"]:checked::after {
     border-color: var(--color_theme);
 }
 
-.mpStyle .groupContent input[type="radio"]:checked::before {
+.ttbm_style .groupContent input[type="radio"]:checked::before {
     position: absolute;
     content: "";
     width: 14px;
@@ -2351,7 +2351,7 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
     margin: 10px;
 }
 
-.mpStyle .addonGroupContent {
+.ttbm_style .addonGroupContent {
     min-width: 40px;
     cursor: pointer;
     background-color: #fff;
@@ -2362,13 +2362,13 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
     transition: all 0.3s ease-in-out;
 }
 
-.mpStyle .addonGroupContent:hover {
+.ttbm_style .addonGroupContent:hover {
     background-color: var(--d_color);
     border-color: var(--d_color);
     color: #f2f2f2;
 }
 
-.mpStyle
+.ttbm_style
 .groupContent
 .select2-container--default
 .select2-selection--single {
@@ -2377,24 +2377,24 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 }
 
 /*****Form Qty inc dec*******/
-.mpStyle .qtyIncDec {
+.ttbm_style .qtyIncDec {
     max-width: 110px;
 }
 
 /**********Responsive*********/
 @media only screen and (max-width: 1250px) {
-    .mpStyle .inputInline .inputList {
+    .ttbm_style .inputInline .inputList {
         max-width: calc(25% - 10px);
     }
 }
 
 @media only screen and (max-width: 1050px) {
-    .mpStyle .inputInline .mpForm {
+    .ttbm_style .inputInline .mpForm {
         -webkit-flex-wrap: wrap;
         flex-wrap: wrap;
     }
 
-    .mpStyle .inputInline .inputList {
+    .ttbm_style .inputInline .inputList {
         max-width: calc(33.33% - 10px);
         -webkit-flex: inherit;
         flex: inherit;
@@ -2402,20 +2402,20 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 }
 
 @media only screen and (max-width: 850px) {
-    .mpStyle .inputInline .inputList {
+    .ttbm_style .inputInline .inputList {
         max-width: calc(50% - 10px);
     }
 }
 
 @media only screen and (max-width: 600px) {
-    .mpStyle .inputInline .inputList {
+    .ttbm_style .inputInline .inputList {
         max-width: 100%;
         min-width: 100%;
     }
 }
 
 @media only screen and (max-width: 450px) {
-    .mpStyle .addonGroupContent {
+    .ttbm_style .addonGroupContent {
         min-width: 25px;
     }
 }
@@ -2423,103 +2423,103 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 
 /******************************************************************** List section ************************************************/
 @media only screen and (min-width: 10px) {
-	.mpStyle ul:not(.mp_wp_editor ul) {
+	.ttbm_style ul:not(.ttbm_wp_editor ul) {
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
 		line-height: 1.25;
 	}
-	.mpStyle ul li {
+	.ttbm_style ul li {
 		margin: 0;
 		padding: 0;
 		line-height: inherit;
 	}
 	/******List inline**********/
-	.mpStyle ul.listInline li {
+	.ttbm_style ul.listInline li {
 		text-align: center;
 		border-right: 1px solid;
 	}
-	.mpStyle ul.listInline li:last-child {
+	.ttbm_style ul.listInline li:last-child {
 		border: none;
 	}
-	.mpStyle ul.listInline li a {
-		padding: var(--dmp_xs);
+	.ttbm_style ul.listInline li a {
+		padding: var(--ttbm_mp_xs);
 		display: block;
 	}
-	.mpStyle ul.listInline li.mage_active {
+	.ttbm_style ul.listInline li.mage_active {
 		background-color: var(--color_active);
 	}
-	.mpStyle ul.listInline li.mage_active a {
+	.ttbm_style ul.listInline li.mage_active a {
 		color: #fff;
 	}
 	/******list Horizontal*****/
-	.mpStyle ul.mp_list {
-		margin: var(--dmp_xs) 0 0 0;
+	.ttbm_style ul.mp_list {
+		margin: var(--ttbm_mp_xs) 0 0 0;
 	}
-	.mpStyle ul.mp_list li {
+	.ttbm_style ul.mp_list li {
 		padding: 5px 0;
 		border-bottom: 1px dotted var(--color_border);
 		width: 100%;
 	}
-	.mpStyle ul.mp_list li:last-child {
+	.ttbm_style ul.mp_list li:last-child {
 		border: none;
 	}
 	/******All in one line*****/
-	.mpStyle ul.listEqual li {
+	.ttbm_style ul.listEqual li {
 		text-align: center;
 		border-right: 1px solid;
 	}
-	.mpStyle ul.listEqual li a {
-		padding: var(--dmp_xs);
+	.ttbm_style ul.listEqual li a {
+		padding: var(--ttbm_mp_xs);
 		display: block;
 	}
-	.mpStyle ul.listEqual li.mage_active {
+	.ttbm_style ul.listEqual li.mage_active {
 		background-color: var(--color_active);
 	}
-	.mpStyle ul.listEqual li.mage_active a {
+	.ttbm_style ul.listEqual li.mage_active a {
 		color: #fff;
 	}
 	/***list inline two li***/
-	.mpStyle ul.list_inline_two li {
+	.ttbm_style ul.list_inline_two li {
 		width: 45%;
 		padding: 5px;
 		border-bottom: 1px solid var(--color_border);
 	}
-	.mpStyle ul.list_inline_two li span {
-		margin: 0 var(--dmp_xs) 0 0;
+	.ttbm_style ul.list_inline_two li span {
+		margin: 0 var(--ttbm_mp_xs) 0 0;
 	}
 }
 /******************************************************************** Table section ************************************************/
 @media only screen and (min-width: 10px) {
-	.mpStyle table {
+	.ttbm_style table {
 		border-collapse: collapse;
 		width: 100%;
 	}
-	.mpStyle table.layoutFixed,
-	.mpStyle table[class*="_layoutFixed"] {
+	.ttbm_style table.layoutFixed,
+	.ttbm_style table[class*="_layoutFixed"] {
 		table-layout: fixed;
 	}
-	.mpStyle table th,
-	.mpStyle table td {
+	.ttbm_style table th,
+	.ttbm_style table td {
 		border: 1px solid var(--color_border);
-		padding: var(--dmp_xs);
+		padding: var(--ttbm_mp_xs);
 	}
-	.mpStyle table thead th {
+	.ttbm_style table thead th {
 		vertical-align: middle;
-		padding: var(--dmp_xs);
+		padding: var(--ttbm_mp_xs);
 		font-weight: bold;
 		white-space: nowrap;
 		background-color: var(--color_light);
 		color: var(--d_color);
 		border: 1px solid #8080804a;
 	}
-	.mpStyle table tbody th {
+	.ttbm_style table tbody th {
 		vertical-align: top;
 		font-weight: normal;
 		border: 1px solid #8080804a !important;
 	}
-	.mpStyle table td {
-		padding: var(--dmp_xs);
+	.ttbm_style table td {
+		padding: var(--ttbm_mp_xs);
 		font-weight: var(--fw);
 		line-height: 1.25;
 		color: var(--d_color);
@@ -2531,16 +2531,16 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 }
 /******************************************************************** Tabs section ************************************************/
 @media only screen and (min-width: 10px) {
-	.mpStyle .tabLists,
-	.mpStyle .leftTabs {
+	.ttbm_style .tabLists,
+	.ttbm_style .leftTabs {
 		display: -webkit-flex;
 		display: flex;
 	}
-	.mpStyle .tabLists {
+	.ttbm_style .tabLists {
 		width: 100%;
 	}
-	.mpStyle .tabLists span {
-		margin: 0 var(--dmp_xs) 0 0;
+	.ttbm_style .tabLists span {
+		margin: 0 var(--ttbm_mp_xs) 0 0;
 		color: var(--color_theme);
 	}
 	.leftTabs > .tabLists {
@@ -2551,7 +2551,7 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		background-color: var(--color_light);
 		padding: 10px;
 	}
-	div.mpStyle [data-tabs-target] {
+	div.ttbm_style [data-tabs-target] {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-align-items: center;
@@ -2565,11 +2565,11 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		color: var(--d_color);
 		border-left: 2px solid transparent;
 	}
-	.mpStyle [data-tabs-target]:hover {
+	.ttbm_style [data-tabs-target]:hover {
 		border-left: 2px solid var(--color_theme);
 		background-color: var(--color_theme_alter);
 	}
-	.mpStyle [data-tabs-target].active {
+	.ttbm_style [data-tabs-target].active {
 		background-color: var(--color_theme_alter);
 		color: var(--d_color);
 		border-left: 2px solid var(--color_theme);
@@ -2585,7 +2585,7 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		border-right: none;
 	}
 
-	.mpStyle [data-tabs-target].active::after,.mpStyle [data-tabs-target]:hover::after{
+	.ttbm_style [data-tabs-target].active::after,.ttbm_style [data-tabs-target]:hover::after{
 		width: 100%;
 	}
 
@@ -2601,7 +2601,7 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		bottom: 0;
 		border-bottom: 1px solid var(--color_border);
 	}
-	.mpStyle .tabsContent {
+	.ttbm_style .tabsContent {
 		position: relative;
 		overflow: hidden;
 		width: 100%;
@@ -2611,24 +2611,24 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		display: none;
 	}
 	/**************/
-	.mpTabs.tabBorder {
+	.ttbmTabs.tabBorder {
 		border: 1px solid var(--color_border);
 	}
-	.mpTabs.tabBorder > .tabLists {
+	.ttbmTabs.tabBorder > .tabLists {
 	}
 	/******Tab next*********/
-	.mpStyle .mpTabsNext {
+	.ttbm_style .ttbmTabsNext {
 	}
-	.mpTabsNext .tabListsNext {
+	.ttbmTabsNext .tabListsNext {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-justify-content: space-between;
 		justify-content: space-between;
 	}
-	.mpTabsNext .tabListsNext.dNone {
+	.ttbmTabsNext .tabListsNext.dNone {
 		display: none;
 	}
-	.mpTabsNext .tabItemNext {
+	.ttbmTabsNext .tabItemNext {
 		position: relative;
 		min-height: 80px;
 		display: -webkit-flex;
@@ -2640,35 +2640,35 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		-webkit-flex: 1;
 		flex: 1;
 	}
-	.mpTabsNext .tabItemNext [class*="circleIcon"] {
+	.ttbmTabsNext .tabItemNext [class*="circleIcon"] {
 		background-color: var(--color_light);
 		color: var(--d_color);
 		margin: 0;
 		z-index: 1;
 	}
-	.mpTabsNext .tabItemNext .circleTitle {
+	.ttbmTabsNext .tabItemNext .circleTitle {
 		color: var(--d_color);
-		margin: var(--dmp_xs) 0 0 0;
+		margin: var(--ttbm_mp_xs) 0 0 0;
 		left: 0;
 		top: 40px;
 		width: 100%;
 		position: absolute;
 		text-align: center;
 	}
-	.mpTabsNext .tabItemNext.active [class*="circleIcon"] {
+	.ttbmTabsNext .tabItemNext.active [class*="circleIcon"] {
 		background-color: var(--color_theme);
 		color: var(--color_theme_alter);
 	}
-	.mpTabsNext .tabItemNext.active [class*="circleIcon"].success {
+	.ttbmTabsNext .tabItemNext.active [class*="circleIcon"].success {
 		background-color: var(--color_success);
 	}
-	.mpTabsNext .tabItemNext.active .circleTitle {
+	.ttbmTabsNext .tabItemNext.active .circleTitle {
 		color: var(--color_theme_aa);
 	}
-	.mpTabsNext .tabItemNext.active .circleTitle.success {
+	.ttbmTabsNext .tabItemNext.active .circleTitle.success {
 		color: var(--color_success);
 	}
-	.mpTabsNext .tabItemNext [class*="circleIcon"]::after {
+	.ttbmTabsNext .tabItemNext [class*="circleIcon"]::after {
 		content: "";
 		right: 0;
 		left: calc(50% + 20px);
@@ -2678,14 +2678,14 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		z-index: -1;
 		width: 100%;
 	}
-	.mpTabsNext .tabItemNext.active [class*="circleIcon"]::after {
+	.ttbmTabsNext .tabItemNext.active [class*="circleIcon"]::after {
 		border-color: var(--color_theme);
 	}
-	.mpTabsNext .tabItemNext:last-child [class*="circleIcon"]::after {
+	.ttbmTabsNext .tabItemNext:last-child [class*="circleIcon"]::after {
 		border: none;
 		width: 0;
 	}
-	.mpStyle .tabsContentNext {
+	.ttbm_style .tabsContentNext {
 		position: relative;
 		width: 100%;
 		padding: var(--dmp);
@@ -2702,35 +2702,35 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 }
 /******************************************************************** Panel section ************************************************/
 @media only screen and (min-width: 10px) {
-	div.mpStyle .mpPanel,
-	div.mpStyle .mpPanel_xs {
+	div.ttbm_style .ttbmPanel,
+	div.ttbm_style .ttbmPanel_xs {
 		position: relative;
 		border: 1px solid var(--color_border);
 		border-radius: var(--dbr);
 	}
-	div.mpStyle .mpPanelHeader {
+	div.ttbm_style .ttbmPanelHeader {
 		padding: 10px var(--dmp);
 		background-color: #555;
 		color: #fff;
 		border-radius: var(--dbr) var(--dbr) 0 0;
 	}
 
-	div.mpStyle .mpPanelHeader .panelTitle,
-	div.mpStyle .mpPanelHeader .panelTitle span {
+	div.ttbm_style .ttbmPanelHeader .panelTitle,
+	div.ttbm_style .ttbmPanelHeader .panelTitle span {
 		color: #fff;
 	}
-	div.mpStyle .mpPanelBody {
+	div.ttbm_style .ttbmPanelBody {
 		padding: var(--dmp);
 		background-color: var(--color_3);
 		overflow-x: auto;
 		border-radius: 0 0 var(--dbr) var(--dbr);
 	}
 
-	div.mpStyle .mpPanel_xs .mpPanelHeader,
-	div.mpStyle .mpPanel_xs .mpPanelBody {
-		padding: var(--dmp_xs);
+	div.ttbm_style .ttbmPanel_xs .ttbmPanelHeader,
+	div.ttbm_style .ttbmPanel_xs .ttbmPanelBody {
+		padding: var(--ttbm_mp_xs);
 	}
-	div.mpStyle .mpPanelBody.mp_zero {
+	div.ttbm_style .ttbmPanelBody.mp_zero {
 		margin: 0;
 		padding: 0;
 	}
@@ -2738,7 +2738,7 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 /******************************************************************** Faq section ************************************************/
 @media only screen and (min-width: 10px) {
 	div.mp_faq_item {
-		margin: 0 0 var(--dmp_xs) 0;
+		margin: 0 0 var(--ttbm_mp_xs) 0;
 	}
 	div.mp_faq_item .mp_faq_title {
 		background-color: #fff;
@@ -2767,7 +2767,7 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 	div.mp_faq_item div.superSlider {
 		min-width: 300px;
 		max-width: 50%;
-		margin: 0 var(--dmp_xs) var(--dmp_xs) 0;
+		margin: 0 var(--ttbm_mp_xs) var(--ttbm_mp_xs) 0;
 		float: left;
 	}
 }
@@ -2776,7 +2776,7 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 	[data-target-popup] {
 		cursor: pointer;
 	}
-	div.mpPopup {
+	div.ttbm_popup {
 		display: none;
 		position: fixed;
 		left: 0;
@@ -2787,7 +2787,7 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		overflow: hidden;
 		background: #000c;
 	}
-	div.mpPopup .popupMainArea {
+	div.ttbm_popup .popupMainArea {
 		min-width: 500px;
 		max-width: 700px;
 		width: auto;
@@ -2804,11 +2804,11 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		-webkit-flex-flow: column;
 		flex-flow: column;
 	}
-	div.mpPopup .popupMainArea.fullWidth {
+	div.ttbm_popup .popupMainArea.fullWidth {
 		max-width: 100vw;
 		width: 100%;
 	}
-	div.mpPopup .popupClose {
+	div.ttbm_popup .popupClose {
 		position: fixed;
 		z-index: 1111;
 		cursor: pointer;
@@ -2820,37 +2820,37 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		color: #fff;
 		font-size: 20px;
 	}
-	div.mpPopup .popupClose:hover {
+	div.ttbm_popup .popupClose:hover {
 		color: #fff;
 		background-color: #6b003e;
 	}
-	div.mpPopup .popupHeader {
+	div.ttbm_popup .popupHeader {
 		border-bottom: 4px double var(--color_border);
-		padding: var(--dmp_xs);
+		padding: var(--ttbm_mp_xs);
 	}
-	div.mpPopup .popupBody {
+	div.ttbm_popup .popupBody {
 		padding: var(--dmp);
 		overflow: auto;
 	}
-	div.mpPopup .popupFooter {
+	div.ttbm_popup .popupFooter {
 		border-top: 4px double var(--color_border);
-		padding: var(--dmp_xs);
+		padding: var(--ttbm_mp_xs);
 	}
-	div.mpPopup .dLayout,
-	div.mpPopup [class*="_dLayout"] {
+	div.ttbm_popup .dLayout,
+	div.ttbm_popup [class*="_dLayout"] {
 		margin: 0;
 	}
 }
 /******************************************************************** Pagination section ************************************************/
 @media only screen and (min-width: 10px) {
-	div.mp_pagination_main_area .mp_pagination_item {
+	div.ttbm_pagination_main_area .mp_pagination_item {
 		position: relative;
 	}
-	div.mp_pagination_main_area .ribbon {
-		left: var(--dmp_xs_negative);
+	div.ttbm_pagination_main_area .ribbon {
+		left: var(--ttbm_mp_xs_negative);
 	}
 	div.pagination_area {
-		margin: var(--dmp_xs) 0 0 0;
+		margin: var(--ttbm_mp_xs) 0 0 0;
 	}
 	div.pagination_area button[class*="dButton_xs"] {
 		min-width: 50px;
@@ -2872,16 +2872,16 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 /******************************************************************** Grid Section************************************************/
 @media only screen and (min-width: 10px) {
 	/********Sidebar Content**************/
-	.mpStyle .leftSidebar,
-	.mpStyle .leftSidebar .mp_sticky_area {
+	.ttbm_style .leftSidebar,
+	.ttbm_style .leftSidebar .ttbm_sticky_area {
 		width: 100%;
 		max-width: var(--sidebarleft);
 	}
-	.mpStyle .rightSidebar {
+	.ttbm_style .rightSidebar {
 		width: 100%;
 		max-width: var(--sidebarright);
 	}
-	.mpStyle .mainSection {
+	.ttbm_style .mainSection {
 		width: 100%;
 		max-width: var(--mainsection);
 		margin: 0 0 0 var(--dmp);
@@ -2900,899 +2900,899 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		min-height: 1px;
 	}
 	/************************/
-	div.mpStyle .fullHeight,
-	div.mpStyle [class*="_fullHeight"] {
+	div.ttbm_style .fullHeight,
+	div.ttbm_style [class*="_fullHeight"] {
 		height: 100%;
 	}
-	div.mpStyle [class*="_h_100"] {
+	div.ttbm_style [class*="_h_100"] {
 		height: 100px;
 	}
-	div.mpStyle [class*="_h_200"] {
+	div.ttbm_style [class*="_h_200"] {
 		height: 200px;
 	}
 	/************************/
-	div.mpStyle [class*="_w_50"] {
+	div.ttbm_style [class*="_w_50"] {
 		width: 50px;
 		min-width: 50px;
 	}
-	div.mpStyle [class*="_w_75"] {
+	div.ttbm_style [class*="_w_75"] {
 		width: 75px;
 		min-width: 75px;
 	}
-	div.mpStyle [class*="_w_100"] {
+	div.ttbm_style [class*="_w_100"] {
 		width: 100px;
 		min-width: 100px;
 		max-width: 100px;
 	}
-	div.mpStyle [class*="_w_125"] {
+	div.ttbm_style [class*="_w_125"] {
 		width: 125px;
 		min-width: 125px;
 	}
-	div.mpStyle [class*="_w_150"] {
+	div.ttbm_style [class*="_w_150"] {
 		width: 150px;
 		min-width: 150px;
 	}
-	div.mpStyle [class*="_w_200"] {
+	div.ttbm_style [class*="_w_200"] {
 		width: 200px;
 		min-width: 200px;
 	}
-	div.mpStyle [class*="_w_300"] {
+	div.ttbm_style [class*="_w_300"] {
 		width: 300px;
 		min-width: 300px;
 	}
-	div.mpStyle [class*="_w_400"] {
+	div.ttbm_style [class*="_w_400"] {
 		width: 400px;
 		min-width: 400px;
 	}
-	div.mpStyle [class*="_w_500"] {
+	div.ttbm_style [class*="_w_500"] {
 		width: 500px;
 		min-width: 500px;
 	}
-	div.mpStyle [class*="_w_600"] {
+	div.ttbm_style [class*="_w_600"] {
 		width: 600px;
 		min-width: 600px;
 	}
-	div.mpStyle [class*="_fullWidth"] {
+	div.ttbm_style [class*="_fullWidth"] {
 		width: 100%;
 		max-width: 100%;
 	}
 	/************************/
-	div.mpStyle .max_100,
-	div.mpStyle [class*="_max_100"] {
+	div.ttbm_style .max_100,
+	div.ttbm_style [class*="_max_100"] {
 		max-width: 100px;
 		width: 100%;
 	}
-	div.mpStyle .max_150,
-	div.mpStyle [class*="_max_150"] {
+	div.ttbm_style .max_150,
+	div.ttbm_style [class*="_max_150"] {
 		max-width: 150px;
 		width: 100%;
 	}
-	div.mpStyle .max_200,
-	div.mpStyle [class*="_max_200"] {
+	div.ttbm_style .max_200,
+	div.ttbm_style [class*="_max_200"] {
 		max-width: 200px;
 		width: 100%;
 	}
-	div.mpStyle .max_300,
-	div.mpStyle [class*="_max_300"] {
+	div.ttbm_style .max_300,
+	div.ttbm_style [class*="_max_300"] {
 		max-width: 300px;
 		width: 100%;
 	}
-	div.mpStyle .max_400,
-	div.mpStyle [class*="_max_400"] {
+	div.ttbm_style .max_400,
+	div.ttbm_style [class*="_max_400"] {
 		max-width: 400px;
 		width: 100%;
 	}
-	div.mpStyle .max_500,
-	div.mpStyle [class*="_max_500"] {
+	div.ttbm_style .max_500,
+	div.ttbm_style [class*="_max_500"] {
 		max-width: 500px;
 		width: 100%;
 	}
-	div.mpStyle .max_600,
-	div.mpStyle [class*="_max_600"] {
+	div.ttbm_style .max_600,
+	div.ttbm_style [class*="_max_600"] {
 		max-width: 600px;
 		width: 100%;
 	}
-	div.mpStyle .max_700,
-	div.mpStyle [class*="_max_700"] {
+	div.ttbm_style .max_700,
+	div.ttbm_style [class*="_max_700"] {
 		max-width: 700px;
 		width: 100%;
 	}
-	div.mpStyle .max_800,
-	div.mpStyle [class*="_max_800"] {
+	div.ttbm_style .max_800,
+	div.ttbm_style [class*="_max_800"] {
 		max-width: 800px;
 		width: 100%;
 	}
-	div.mpStyle .max_900,
-	div.mpStyle [class*="_max_900"] {
+	div.ttbm_style .max_900,
+	div.ttbm_style [class*="_max_900"] {
 		max-width: 900px;
 		width: 100%;
 	}
-	div.mpStyle .max_1000,
-	div.mpStyle [class*="_max_1000"] {
+	div.ttbm_style .max_1000,
+	div.ttbm_style [class*="_max_1000"] {
 		max-width: 1000px;
 		width: 100%;
 	}
-	div.mpStyle .max_1100,
-	div.mpStyle [class*="_max_1100"] {
+	div.ttbm_style .max_1100,
+	div.ttbm_style [class*="_max_1100"] {
 		max-width: 1100px;
 		width: 100%;
 	}
-	div.mpStyle .max_1200,
-	div.mpStyle [class*="_max_1200"] {
+	div.ttbm_style .max_1200,
+	div.ttbm_style [class*="_max_1200"] {
 		max-width: 1200px;
 		width: 100%;
 	}
-	div.mpStyle .max_full,
-	div.mpStyle [class*="_max_full"] {
+	div.ttbm_style .max_full,
+	div.ttbm_style [class*="_max_full"] {
 		max-width: 100%;
 		width: 100%;
 	}
 	/************************/
-	div.mpStyle .min_50,
-	div.mpStyle [class*="_min_50"] {
+	div.ttbm_style .min_50,
+	div.ttbm_style [class*="_min_50"] {
 		min-width: 50px;
 	}
-	div.mpStyle .min_100,
-	div.mpStyle [class*="_min_100"] {
+	div.ttbm_style .min_100,
+	div.ttbm_style [class*="_min_100"] {
 		min-width: 100px;
 	}
-	div.mpStyle .min_125,
-	div.mpStyle [class*="_min_125"] {
+	div.ttbm_style .min_125,
+	div.ttbm_style [class*="_min_125"] {
 		min-width: 125px;
 	}
-	div.mpStyle .min_150,
-	div.mpStyle [class*="_min_150"] {
+	div.ttbm_style .min_150,
+	div.ttbm_style [class*="_min_150"] {
 		min-width: 150px;
 	}
-	div.mpStyle .min_200,
-	div.mpStyle [class*="_min_200"] {
+	div.ttbm_style .min_200,
+	div.ttbm_style [class*="_min_200"] {
 		min-width: 200px;
 	}
-	div.mpStyle .min_250,
-	div.mpStyle [class*="_min_250"] {
+	div.ttbm_style .min_250,
+	div.ttbm_style [class*="_min_250"] {
 		min-width: 250px;
 	}
-	div.mpStyle .min_300,
-	div.mpStyle [class*="_min_300"] {
+	div.ttbm_style .min_300,
+	div.ttbm_style [class*="_min_300"] {
 		min-width: 300px;
 	}
-	div.mpStyle .min_400,
-	div.mpStyle [class*="_min_400"] {
+	div.ttbm_style .min_400,
+	div.ttbm_style [class*="_min_400"] {
 		min-width: 400px;
 	}
-	div.mpStyle .min_500,
-	div.mpStyle [class*="_min_500"] {
+	div.ttbm_style .min_500,
+	div.ttbm_style [class*="_min_500"] {
 		min-width: 500px;
 	}
-	div.mpStyle .min_600,
-	div.mpStyle [class*="_min_600"] {
+	div.ttbm_style .min_600,
+	div.ttbm_style [class*="_min_600"] {
 		min-width: 600px;
 	}
-	div.mpStyle .min_700,
-	div.mpStyle [class*="_min_700"] {
+	div.ttbm_style .min_700,
+	div.ttbm_style [class*="_min_700"] {
 		min-width: 700px;
 	}
-	div.mpStyle .min_800,
-	div.mpStyle [class*="_min_800"] {
+	div.ttbm_style .min_800,
+	div.ttbm_style [class*="_min_800"] {
 		min-width: 800px;
 	}
-	div.mpStyle .min_900,
-	div.mpStyle [class*="_min_900"] {
+	div.ttbm_style .min_900,
+	div.ttbm_style [class*="_min_900"] {
 		min-width: 900px;
 	}
-	div.mpStyle .min_1000,
-	div.mpStyle [class*="_min_1000"] {
+	div.ttbm_style .min_1000,
+	div.ttbm_style [class*="_min_1000"] {
 		min-width: 1000px;
 	}
-	div.mpStyle .min_auto,
-	div.mpStyle [class*="_min_auto"] {
+	div.ttbm_style .min_auto,
+	div.ttbm_style [class*="_min_auto"] {
 		min-width: auto;
 	}
 	/**********************/
-	div.mpStyle div.grid_1 {
+	div.ttbm_style div.grid_1 {
 		width: 100%;
-		padding: var(--dmp_xs);
+		padding: var(--ttbm_mp_xs);
 	}
-	div.mpStyle div.grid_2 {
+	div.ttbm_style div.grid_2 {
 		width: calc(50% - var(--dmp));
-		margin: var(--dmp_xs);
-		padding: var(--dmp_xs);
+		margin: var(--ttbm_mp_xs);
+		padding: var(--ttbm_mp_xs);
 	}
-	div.mpStyle div.grid_3 {
+	div.ttbm_style div.grid_3 {
 		width: calc(33.333333% - var(--dmp));
-		margin: var(--dmp_xs);
-		padding: var(--dmp_xs);
+		margin: var(--ttbm_mp_xs);
+		padding: var(--ttbm_mp_xs);
 	}
-	div.mpStyle div.grid_4 {
+	div.ttbm_style div.grid_4 {
 		width: calc(25% - var(--dmp));
 		margin: 10px auto;
-		padding: var(--dmp_xs);
+		padding: var(--ttbm_mp_xs);
 	}
-	div.mpStyle div.grid_5 {
+	div.ttbm_style div.grid_5 {
 		width: calc(20% - var(--dmp));
-		margin: var(--dmp_xs);
-		padding: var(--dmp_xs);
+		margin: var(--ttbm_mp_xs);
+		padding: var(--ttbm_mp_xs);
 	}
-	div.mpStyle div.grid_6 {
+	div.ttbm_style div.grid_6 {
 		width: calc(16.66666667% - var(--dmp));
-		margin: var(--dmp_xs);
-		padding: var(--dmp_xs);
+		margin: var(--ttbm_mp_xs);
+		padding: var(--ttbm_mp_xs);
 	}
-	div.mpStyle div.grid_7 {
+	div.ttbm_style div.grid_7 {
 		width: calc(14.285715% - var(--dmp));
-		margin: var(--dmp_xs);
-		padding: var(--dmp_xs);
+		margin: var(--ttbm_mp_xs);
+		padding: var(--ttbm_mp_xs);
 	}
-	div.mpStyle div.grid_8 {
+	div.ttbm_style div.grid_8 {
 		width: calc(12.5% - var(--dmp));
-		margin: var(--dmp_xs);
-		padding: var(--dmp_xs);
+		margin: var(--ttbm_mp_xs);
+		padding: var(--ttbm_mp_xs);
 	}
-	div.mpStyle div.grid_9 {
+	div.ttbm_style div.grid_9 {
 		width: calc(11.1111111111% - var(--dmp));
-		margin: var(--dmp_xs);
-		padding: var(--dmp_xs);
+		margin: var(--ttbm_mp_xs);
+		padding: var(--ttbm_mp_xs);
 	}
-	div.mpStyle div.grid_10 {
+	div.ttbm_style div.grid_10 {
 		width: calc(10% - var(--dmp));
-		margin: var(--dmp_xs);
-		padding: var(--dmp_xs);
+		margin: var(--ttbm_mp_xs);
+		padding: var(--ttbm_mp_xs);
 	}
 	@media only screen and (max-width: 1000px) {
-		div.mpStyle div.grid_2,
-		div.mpStyle div.grid_3,
-		div.mpStyle div.grid_4,
-		div.mpStyle div.grid_5,
-		div.mpStyle div.grid_6,
-		div.mpStyle div.grid_7,
-		div.mpStyle div.grid_8,
-		div.mpStyle div.grid_9,
-		div.mpStyle div.grid_10 {
+		div.ttbm_style div.grid_2,
+		div.ttbm_style div.grid_3,
+		div.ttbm_style div.grid_4,
+		div.ttbm_style div.grid_5,
+		div.ttbm_style div.grid_6,
+		div.ttbm_style div.grid_7,
+		div.ttbm_style div.grid_8,
+		div.ttbm_style div.grid_9,
+		div.ttbm_style div.grid_10 {
 			width: calc(50% - var(--dmp));
 		}
 	}
 	@media only screen and (max-width: 600px) {
-		div.mpStyle div.grid_2,
-		div.mpStyle div.grid_3,
-		div.mpStyle div.grid_4,
-		div.mpStyle div.grid_5,
-		div.mpStyle div.grid_6,
-		div.mpStyle div.grid_7,
-		div.mpStyle div.grid_8,
-		div.mpStyle div.grid_9,
-		div.mpStyle div.grid_10 {
+		div.ttbm_style div.grid_2,
+		div.ttbm_style div.grid_3,
+		div.ttbm_style div.grid_4,
+		div.ttbm_style div.grid_5,
+		div.ttbm_style div.grid_6,
+		div.ttbm_style div.grid_7,
+		div.ttbm_style div.grid_8,
+		div.ttbm_style div.grid_9,
+		div.ttbm_style div.grid_10 {
 			width: 100%;
 		}
 	}
 	/**********************/
-	.mpStyle .col_1 {
+	.ttbm_style .col_1 {
 		width: 8.3333333333%;
 	}
-	.mpStyle .col_2 {
+	.ttbm_style .col_2 {
 		width: 16.666666667%;
 	}
-	.mpStyle .col_3 {
+	.ttbm_style .col_3 {
 		width: 25%;
 	}
-	.mpStyle .col_4 {
+	.ttbm_style .col_4 {
 		width: 33.333333333%;
 	}
-	.mpStyle .col_5 {
+	.ttbm_style .col_5 {
 		width: 41.666666667%;
 	}
-	.mpStyle .col_6 {
+	.ttbm_style .col_6 {
 		width: 50%;
 	}
-	.mpStyle .col_7 {
+	.ttbm_style .col_7 {
 		width: 58.333333333%;
 	}
-	.mpStyle .col_8 {
+	.ttbm_style .col_8 {
 		width: 66.666666667%;
 	}
-	.mpStyle .col_9 {
+	.ttbm_style .col_9 {
 		width: 75%;
 	}
-	.mpStyle .col_10 {
+	.ttbm_style .col_10 {
 		width: 83.33333333%;
 	}
-	.mpStyle .col_11 {
+	.ttbm_style .col_11 {
 		width: 91.66666667%;
 	}
-	div.mpStyle .col_12 {
+	div.ttbm_style .col_12 {
 		width: 100%;
 	}
 	/**********************/
 	@media only screen and (max-width: 1200px) {
-		.mpStyle .col_1_1200 {
+		.ttbm_style .col_1_1200 {
 			width: 8.3333333333%;
 		}
-		.mpStyle .col_2_1200 {
+		.ttbm_style .col_2_1200 {
 			width: 16.666666667%;
 		}
-		.mpStyle .col_3_1200 {
+		.ttbm_style .col_3_1200 {
 			width: 25%;
 		}
-		.mpStyle .col_4_1200 {
+		.ttbm_style .col_4_1200 {
 			width: 33.333333333%;
 		}
-		.mpStyle .col_5_1200 {
+		.ttbm_style .col_5_1200 {
 			width: 41.666666667%;
 		}
-		.mpStyle .col_6_1200 {
+		.ttbm_style .col_6_1200 {
 			width: 50%;
 		}
-		.mpStyle .col_7_1200 {
+		.ttbm_style .col_7_1200 {
 			width: 58.333333333%;
 		}
-		.mpStyle .col_8_1200 {
+		.ttbm_style .col_8_1200 {
 			width: 66.666666667%;
 		}
-		.mpStyle .col_9_1200 {
+		.ttbm_style .col_9_1200 {
 			width: 75%;
 		}
-		.mpStyle .col_10_1200 {
+		.ttbm_style .col_10_1200 {
 			width: 83.33333333%;
 		}
-		.mpStyle .col_11_1200 {
+		.ttbm_style .col_11_1200 {
 			width: 91.66666667%;
 		}
-		.mpStyle .col_12_1200 {
+		.ttbm_style .col_12_1200 {
 			width: 100%;
 		}
 	}
 	/**********************/
 	@media only screen and (max-width: 1100px) {
-		.mpStyle .col_1_1100 {
+		.ttbm_style .col_1_1100 {
 			width: 8.3333333333%;
 		}
-		.mpStyle .col_2_1100 {
+		.ttbm_style .col_2_1100 {
 			width: 16.666666667%;
 		}
-		.mpStyle .col_3_1100 {
+		.ttbm_style .col_3_1100 {
 			width: 25%;
 		}
-		.mpStyle .col_4_1100 {
+		.ttbm_style .col_4_1100 {
 			width: 33.333333333%;
 		}
-		.mpStyle .col_5_1100 {
+		.ttbm_style .col_5_1100 {
 			width: 41.666666667%;
 		}
-		.mpStyle .col_6_1100 {
+		.ttbm_style .col_6_1100 {
 			width: 50%;
 		}
-		.mpStyle .col_7_1100 {
+		.ttbm_style .col_7_1100 {
 			width: 58.333333333%;
 		}
-		.mpStyle .col_8_1100 {
+		.ttbm_style .col_8_1100 {
 			width: 66.666666667%;
 		}
-		.mpStyle .col_9_1100 {
+		.ttbm_style .col_9_1100 {
 			width: 75%;
 		}
-		.mpStyle .col_10_1100 {
+		.ttbm_style .col_10_1100 {
 			width: 83.33333333%;
 		}
-		.mpStyle .col_11_1100 {
+		.ttbm_style .col_11_1100 {
 			width: 91.66666667%;
 		}
-		.mpStyle .col_12_1100 {
+		.ttbm_style .col_12_1100 {
 			width: 100%;
 		}
 	}
 	/**********************/
 	@media only screen and (max-width: 1000px) {
-		.mpStyle .col_1_1000 {
+		.ttbm_style .col_1_1000 {
 			width: 8.3333333333%;
 		}
-		.mpStyle .col_2_1000 {
+		.ttbm_style .col_2_1000 {
 			width: 16.666666667%;
 		}
-		.mpStyle .col_3_1000 {
+		.ttbm_style .col_3_1000 {
 			width: 25%;
 		}
-		.mpStyle .col_4_1000 {
+		.ttbm_style .col_4_1000 {
 			width: 33.333333333%;
 		}
-		.mpStyle .col_5_1000 {
+		.ttbm_style .col_5_1000 {
 			width: 41.666666667%;
 		}
-		.mpStyle .col_6_1000 {
+		.ttbm_style .col_6_1000 {
 			width: 50%;
 		}
-		.mpStyle .col_7_1000 {
+		.ttbm_style .col_7_1000 {
 			width: 58.333333333%;
 		}
-		.mpStyle .col_8_1000 {
+		.ttbm_style .col_8_1000 {
 			width: 66.666666667%;
 		}
-		.mpStyle .col_9_1000 {
+		.ttbm_style .col_9_1000 {
 			width: 75%;
 		}
-		.mpStyle .col_10_1000 {
+		.ttbm_style .col_10_1000 {
 			width: 83.33333333%;
 		}
-		.mpStyle .col_11_1000 {
+		.ttbm_style .col_11_1000 {
 			width: 91.66666667%;
 		}
-		.mpStyle .col_12_1000 {
+		.ttbm_style .col_12_1000 {
 			width: 100%;
 		}
 	}
 	/**********************/
 	@media only screen and (max-width: 900px) {
-		.mpStyle .col_1_900 {
+		.ttbm_style .col_1_900 {
 			width: 8.3333333333%;
 		}
-		.mpStyle .col_2_900 {
+		.ttbm_style .col_2_900 {
 			width: 16.666666667%;
 		}
-		.mpStyle .col_3_900 {
+		.ttbm_style .col_3_900 {
 			width: 25%;
 		}
-		.mpStyle .col_4_900 {
+		.ttbm_style .col_4_900 {
 			width: 33.333333333%;
 		}
-		.mpStyle .col_5_900 {
+		.ttbm_style .col_5_900 {
 			width: 41.666666667%;
 		}
-		.mpStyle .col_6_900 {
+		.ttbm_style .col_6_900 {
 			width: 50%;
 		}
-		.mpStyle .col_7_900 {
+		.ttbm_style .col_7_900 {
 			width: 58.333333333%;
 		}
-		.mpStyle .col_8_900 {
+		.ttbm_style .col_8_900 {
 			width: 66.666666667%;
 		}
-		.mpStyle .col_9_900 {
+		.ttbm_style .col_9_900 {
 			width: 75%;
 		}
-		.mpStyle .col_10_900 {
+		.ttbm_style .col_10_900 {
 			width: 83.33333333%;
 		}
-		.mpStyle .col_11_900 {
+		.ttbm_style .col_11_900 {
 			width: 91.66666667%;
 		}
-		.mpStyle .col_12_900 {
+		.ttbm_style .col_12_900 {
 			width: 100%;
 		}
 	}
 	/**********************/
 	@media only screen and (max-width: 800px) {
-		.mpStyle .col_1_800 {
+		.ttbm_style .col_1_800 {
 			width: 8.3333333333%;
 		}
-		.mpStyle .col_2_800 {
+		.ttbm_style .col_2_800 {
 			width: 16.666666667%;
 		}
-		.mpStyle .col_3_800 {
+		.ttbm_style .col_3_800 {
 			width: 25%;
 		}
-		.mpStyle .col_4_800 {
+		.ttbm_style .col_4_800 {
 			width: 33.333333333%;
 		}
-		.mpStyle .col_5_800 {
+		.ttbm_style .col_5_800 {
 			width: 41.666666667%;
 		}
-		.mpStyle .col_6_800 {
+		.ttbm_style .col_6_800 {
 			width: 50%;
 		}
-		.mpStyle .col_7_800 {
+		.ttbm_style .col_7_800 {
 			width: 58.333333333%;
 		}
-		.mpStyle .col_8_800 {
+		.ttbm_style .col_8_800 {
 			width: 66.666666667%;
 		}
-		.mpStyle .col_9_800 {
+		.ttbm_style .col_9_800 {
 			width: 75%;
 		}
-		.mpStyle .col_10_800 {
+		.ttbm_style .col_10_800 {
 			width: 83.33333333%;
 		}
-		.mpStyle .col_11_800 {
+		.ttbm_style .col_11_800 {
 			width: 91.66666667%;
 		}
-		.mpStyle .col_12_800 {
+		.ttbm_style .col_12_800 {
 			width: 100%;
 		}
 	}
 	/**********************/
 	@media only screen and (max-width: 700px) {
-		.mpStyle .col_1_700 {
+		.ttbm_style .col_1_700 {
 			width: 8.3333333333%;
 		}
-		.mpStyle .col_2_700 {
+		.ttbm_style .col_2_700 {
 			width: 16.666666667%;
 		}
-		.mpStyle .col_3_700 {
+		.ttbm_style .col_3_700 {
 			width: 25%;
 		}
-		.mpStyle .col_4_700 {
+		.ttbm_style .col_4_700 {
 			width: 33.333333333%;
 		}
-		.mpStyle .col_5_700 {
+		.ttbm_style .col_5_700 {
 			width: 41.666666667%;
 		}
-		.mpStyle .col_6_700 {
+		.ttbm_style .col_6_700 {
 			width: 50%;
 		}
-		.mpStyle .col_7_700 {
+		.ttbm_style .col_7_700 {
 			width: 58.333333333%;
 		}
-		.mpStyle .col_8_700 {
+		.ttbm_style .col_8_700 {
 			width: 66.666666667%;
 		}
-		.mpStyle .col_9_700 {
+		.ttbm_style .col_9_700 {
 			width: 75%;
 		}
-		.mpStyle .col_10_700 {
+		.ttbm_style .col_10_700 {
 			width: 83.33333333%;
 		}
-		.mpStyle .col_11_700 {
+		.ttbm_style .col_11_700 {
 			width: 91.66666667%;
 		}
-		.mpStyle .col_12_700 {
+		.ttbm_style .col_12_700 {
 			width: 100%;
 		}
 	}
 	/**********************/
 	@media only screen and (max-width: 600px) {
-		.mpStyle .col_1_600 {
+		.ttbm_style .col_1_600 {
 			width: 8.3333333333%;
 		}
-		.mpStyle .col_2_600 {
+		.ttbm_style .col_2_600 {
 			width: 16.666666667%;
 		}
-		.mpStyle .col_3_600 {
+		.ttbm_style .col_3_600 {
 			width: 25%;
 		}
-		.mpStyle .col_4_600 {
+		.ttbm_style .col_4_600 {
 			width: 33.333333333%;
 		}
-		.mpStyle .col_5_600 {
+		.ttbm_style .col_5_600 {
 			width: 41.666666667%;
 		}
-		.mpStyle .col_6_600 {
+		.ttbm_style .col_6_600 {
 			width: 50%;
 		}
-		.mpStyle .col_7_600 {
+		.ttbm_style .col_7_600 {
 			width: 58.333333333%;
 		}
-		.mpStyle .col_8_600 {
+		.ttbm_style .col_8_600 {
 			width: 66.666666667%;
 		}
-		.mpStyle .col_9_600 {
+		.ttbm_style .col_9_600 {
 			width: 75%;
 		}
-		.mpStyle .col_10_600 {
+		.ttbm_style .col_10_600 {
 			width: 83.33333333%;
 		}
-		.mpStyle .col_11_600 {
+		.ttbm_style .col_11_600 {
 			width: 91.66666667%;
 		}
-		.mpStyle .col_12_600 {
+		.ttbm_style .col_12_600 {
 			width: 100%;
 		}
 	}
 	/**********************/
 	@media only screen and (max-width: 500px) {
-		.mpStyle .col_1_500 {
+		.ttbm_style .col_1_500 {
 			width: 8.3333333333%;
 		}
-		.mpStyle .col_2_500 {
+		.ttbm_style .col_2_500 {
 			width: 16.666666667%;
 		}
-		.mpStyle .col_3_500 {
+		.ttbm_style .col_3_500 {
 			width: 25%;
 		}
-		.mpStyle .col_4_500 {
+		.ttbm_style .col_4_500 {
 			width: 33.333333333%;
 		}
-		.mpStyle .col_5_500 {
+		.ttbm_style .col_5_500 {
 			width: 41.666666667%;
 		}
-		.mpStyle .col_6_500 {
+		.ttbm_style .col_6_500 {
 			width: 50%;
 		}
-		.mpStyle .col_7_500 {
+		.ttbm_style .col_7_500 {
 			width: 58.333333333%;
 		}
-		.mpStyle .col_8_500 {
+		.ttbm_style .col_8_500 {
 			width: 66.666666667%;
 		}
-		.mpStyle .col_9_500 {
+		.ttbm_style .col_9_500 {
 			width: 75%;
 		}
-		.mpStyle .col_10_500 {
+		.ttbm_style .col_10_500 {
 			width: 83.33333333%;
 		}
-		.mpStyle .col_11_500 {
+		.ttbm_style .col_11_500 {
 			width: 91.66666667%;
 		}
-		.mpStyle .col_12_500 {
+		.ttbm_style .col_12_500 {
 			width: 100%;
 		}
 	}
 	/**********************/
 	@media only screen and (max-width: 400px) {
-		.mpStyle .col_1_400 {
+		.ttbm_style .col_1_400 {
 			width: 8.3333333333%;
 		}
-		.mpStyle .col_2_400 {
+		.ttbm_style .col_2_400 {
 			width: 16.666666667%;
 		}
-		.mpStyle .col_3_400 {
+		.ttbm_style .col_3_400 {
 			width: 25%;
 		}
-		.mpStyle .col_4_400 {
+		.ttbm_style .col_4_400 {
 			width: 33.333333333%;
 		}
-		.mpStyle .col_5_400 {
+		.ttbm_style .col_5_400 {
 			width: 41.666666667%;
 		}
-		.mpStyle .col_6_400 {
+		.ttbm_style .col_6_400 {
 			width: 50%;
 		}
-		.mpStyle .col_7_400 {
+		.ttbm_style .col_7_400 {
 			width: 58.333333333%;
 		}
-		.mpStyle .col_8_400 {
+		.ttbm_style .col_8_400 {
 			width: 66.666666667%;
 		}
-		.mpStyle .col_9_400 {
+		.ttbm_style .col_9_400 {
 			width: 75%;
 		}
-		.mpStyle .col_10_400 {
+		.ttbm_style .col_10_400 {
 			width: 83.33333333%;
 		}
-		.mpStyle .col_11_400 {
+		.ttbm_style .col_11_400 {
 			width: 91.66666667%;
 		}
-		.mpStyle .col_12_400 {
+		.ttbm_style .col_12_400 {
 			width: 100%;
 		}
 	}
 }
 /******************************************************************** Color section ************************************************/
 @media only screen and (min-width: 10px) {
-	div.mpStyle .error {
+	div.ttbm_style .error {
 		background-color: red;
 		color: #fff;
 	}
-	div.mpStyle .mDisabled {
+	div.ttbm_style .mDisabled {
 		cursor: not-allowed;
 		opacity: 0.8;
 		background-color: #f2f2f2;
 		color: #777;
 	}
 	/*****Theme*********/
-	div.mpStyle .textTheme,
-	div.mpStyle [class*="_textTheme"] {
+	div.ttbm_style .textTheme,
+	div.ttbm_style [class*="_textTheme"] {
 		color: var(--color_theme);
 	}
-	div.mpStyle .bgTheme,
-	div.mpStyle [class*="_bgTheme"] {
+	div.ttbm_style .bgTheme,
+	div.ttbm_style [class*="_bgTheme"] {
 		background-color: #2b72b94f !important;
 		color: #2667d6 !important;
 		text-align: left !important;
 		padding: 3px 7px !important;
 	}
-	div.mpStyle [class*="_bTheme"],
+	div.ttbm_style [class*="_bTheme"],
 	.bTheme {
 		border: 1px solid var(--color_theme);
 	}
 	/*****default*********/
-	div.mpStyle [class*="textDefault"] {
+	div.ttbm_style [class*="textDefault"] {
 		color: var(--d_color);
 	}
-	div.mpStyle [class*="bgDefault"] {
+	div.ttbm_style [class*="bgDefault"] {
 		background-color: var(--d_color);
 	}
 	/*****Success*********/
-	div.mpStyle [class*="textSuccess"] {
+	div.ttbm_style [class*="textSuccess"] {
 		color: var(--color_success);
 	}
-	div.mpStyle [class*="bgSuccess"] {
+	div.ttbm_style [class*="bgSuccess"] {
 		background-color: var(--color_success);
 	}
 	/*****Success*********/
-	div.mpStyle [class*="textInfo"] {
+	div.ttbm_style [class*="textInfo"] {
 		color: var(--color_info);
 	}
-	div.mpStyle [class*="bgInfo"] {
+	div.ttbm_style [class*="bgInfo"] {
 		background-color: var(--color_info);
 	}
 	/*****danger*********/
-	div.mpStyle .textDanger,
-	div.mpStyle [class*="_textDanger"] {
+	div.ttbm_style .textDanger,
+	div.ttbm_style [class*="_textDanger"] {
 		color: var(--color_danger);
 	}
-	div.mpStyle .bgDanger,
-	div.mpStyle [class*="_bgDanger"] {
+	div.ttbm_style .bgDanger,
+	div.ttbm_style [class*="_bgDanger"] {
 		background-color: var(--color_danger);
 	}
 	/*****warning*********/
-	div.mpStyle .textWarning,
-	div.mpStyle [class*="_textWarning"] {
+	div.ttbm_style .textWarning,
+	div.ttbm_style [class*="_textWarning"] {
 		color: var(--color_warning);
 	}
-	div.mpStyle .bgWarning,
-	div.mpStyle [class*="_bgWarning"] {
+	div.ttbm_style .bgWarning,
+	div.ttbm_style [class*="_bgWarning"] {
 		background-color: var(--color_warning);
 	}
 	/*****required*********/
-	div.mpStyle .textRequired,
-	div.mpStyle [class*="_textRequired"] {
+	div.ttbm_style .textRequired,
+	div.ttbm_style [class*="_textRequired"] {
 		color: var(--color_required);
 	}
-	div.mpStyle .bgRequired,
-	div.mpStyle [class*="_bgRequired"] {
+	div.ttbm_style .bgRequired,
+	div.ttbm_style [class*="_bgRequired"] {
 		background-color: var(--color_required);
 	}
-	div.mpStyle .mpRequired,
-	div.mpStyle [class*="_mpRequired"] {
+	div.ttbm_style .mpRequired,
+	div.ttbm_style [class*="_mpRequired"] {
 		border-color: var(--color_required);
 	}
 	/*****Light*********/
-	div.mpStyle .textLight,
-	div.mpStyle [class*="_textLight"] {
+	div.ttbm_style .textLight,
+	div.ttbm_style [class*="_textLight"] {
 		color: var(--color_light);
 	}
-	div.mpStyle .bgLight,
-	div.mpStyle [class*="_bgLight"] {
+	div.ttbm_style .bgLight,
+	div.ttbm_style [class*="_bgLight"] {
 		background-color: var(--color_light);
 	}
-	div.mpStyle .textLight_1,
-	div.mpStyle [class*="_textLight_1"] {
+	div.ttbm_style .textLight_1,
+	div.ttbm_style [class*="_textLight_1"] {
 		color: var(--color_light_1);
 	}
-	div.mpStyle .bgLight_1,
-	div.mpStyle [class*="_bgLight_1"] {
+	div.ttbm_style .bgLight_1,
+	div.ttbm_style [class*="_bgLight_1"] {
 		background-color: var(--color_light_1);
 	}
-	div.mpStyle .textLight_2,
-	div.mpStyle [class*="_textLight_2"] {
+	div.ttbm_style .textLight_2,
+	div.ttbm_style [class*="_textLight_2"] {
 		color: var(--color_light_2);
 	}
-	div.mpStyle .bgLight_2,
-	div.mpStyle [class*="_bgLight_2"] {
+	div.ttbm_style .bgLight_2,
+	div.ttbm_style [class*="_bgLight_2"] {
 		background-color: var(--color_light_2);
 	}
-	div.mpStyle .btLight_2,
-	div.mpStyle [class*="_btLight_2"] {
+	div.ttbm_style .btLight_2,
+	div.ttbm_style [class*="_btLight_2"] {
 		background-color: var(--color_light_2);
 		color: var(--color_info);
 	}
-	div.mpStyle .textLight_3,
-	div.mpStyle [class*="_textLight_3"] {
+	div.ttbm_style .textLight_3,
+	div.ttbm_style [class*="_textLight_3"] {
 		color: var(--color_light_3);
 	}
-	div.mpStyle .bgLight_3,
-	div.mpStyle [class*="_bgLight_3"] {
+	div.ttbm_style .bgLight_3,
+	div.ttbm_style [class*="_bgLight_3"] {
 		background-color: var(--color_light_3);
 	}
-	div.mpStyle .btLight_3,
-	div.mpStyle [class*="_btLight_3"] {
+	div.ttbm_style .btLight_3,
+	div.ttbm_style [class*="_btLight_3"] {
 		background-color: var(--color_light_3);
 		color: var(--color_info);
 	}
-	div.mpStyle .textLight_4,
-	div.mpStyle [class*="_textLight_4"] {
+	div.ttbm_style .textLight_4,
+	div.ttbm_style [class*="_textLight_4"] {
 		color: var(--color_light_4);
 	}
-	div.mpStyle .bgLight_4,
-	div.mpStyle [class*="_bgLight_4"] {
+	div.ttbm_style .bgLight_4,
+	div.ttbm_style [class*="_bgLight_4"] {
 		background-color: var(--color_light_4);
 	}
-	div.mpStyle .btLight_4,
-	div.mpStyle [class*="_btLight_4"] {
+	div.ttbm_style .btLight_4,
+	div.ttbm_style [class*="_btLight_4"] {
 		background-color: var(--color_light_4);
 		color: var(--color_info);
 	}
 	/*****Gray*********/
-	div.mpStyle .textGray,
-	div.mpStyle [class*="_textGray"] {
+	div.ttbm_style .textGray,
+	div.ttbm_style [class*="_textGray"] {
 		color: rgb(128, 128, 128);
 	}
-	div.mpStyle .bgGray,
-	div.mpStyle [class*="_bgGray"] {
+	div.ttbm_style .bgGray,
+	div.ttbm_style [class*="_bgGray"] {
 		background-color: rgb(128, 128, 128);
 	}
 	/*****Black*********/
-	div.mpStyle .textBlack,
-	div.mpStyle a.textBlack,
-	div.mpStyle [class*="_textBlack"],
-	div.mpStyle a[class*="_textBlack"] {
+	div.ttbm_style .textBlack,
+	div.ttbm_style a.textBlack,
+	div.ttbm_style [class*="_textBlack"],
+	div.ttbm_style a[class*="_textBlack"] {
 		color: var(--color_black);
 	}
-	div.mpStyle .bgBlack,
-	div.mpStyle [class*="_bgBlack"] {
+	div.ttbm_style .bgBlack,
+	div.ttbm_style [class*="_bgBlack"] {
 		background-color: var(--color_black);
 	}
 	/*****yellow*********/
-	div.mpStyle .textYellow,
+	div.ttbm_style .textYellow,
 	div.textYellow,
-	.mpStyle [class*="textYellow"] {
+	.ttbm_style [class*="textYellow"] {
 		color: var(--color_yellow);
 	}
-	div.mpStyle [class*="bgYellow"] {
+	div.ttbm_style [class*="bgYellow"] {
 		background-color: var(--color_yellow);
 		font-size: 14px;
 	}
-	div.mpStyle [class*="bgYellow_99"] {
+	div.ttbm_style [class*="bgYellow_99"] {
 		background-color: #ffff0099;
 		font-size: 14px;
 	}
-	div.mpStyle [class*="bgYellow_77"] {
+	div.ttbm_style [class*="bgYellow_77"] {
 		background-color: #ffff0022;
 		font-size: 14px;
 	}
 	/*****white*********/
-	div.mpStyle [class*="textWhite"] {
+	div.ttbm_style [class*="textWhite"] {
 		color: #fff;
 	}
-	div.mpStyle [class*="bgWhite"] {
+	div.ttbm_style [class*="bgWhite"] {
 		background-color: #fff;
 	}
 	/*****blue*********/
-	div.mpStyle [class*="textBlue"] {
+	div.ttbm_style [class*="textBlue"] {
 		color: var(--color_blue);
 	}
-	div.mpStyle .bgBlue,
-	div.mpStyle [class*="_bgBlue"] {
+	div.ttbm_style .bgBlue,
+	div.ttbm_style [class*="_bgBlue"] {
 		background-color: var(--color_blue);
 	}
-	div.mpStyle [class*="borderBlue"] {
+	div.ttbm_style [class*="borderBlue"] {
 		border-color: var(--color_blue);
 	}
-	div.mpStyle [class*="textBorderBlue"] {
+	div.ttbm_style [class*="textBorderBlue"] {
 		border-color: var(--color_blue);
 		color: var(--color_blue);
 	}
 	/*****Navy blue*********/
-	div.mpStyle .textNavyBlue,
-	div.mpStyle [class*="_textNavyBlue"] {
+	div.ttbm_style .textNavyBlue,
+	div.ttbm_style [class*="_textNavyBlue"] {
 		color: var(--color_navy_blue);
 	}
-	div.mpStyle .bgNavyBlue,
-	div.mpStyle [class*="_bgNavyBlue"] {
+	div.ttbm_style .bgNavyBlue,
+	div.ttbm_style [class*="_bgNavyBlue"] {
 		background-color: var(--color_navy_blue);
 	}
 	/*****Color_1*********/
-	div.mpStyle .textColor_1,
-	div.mpStyle [class*="_textColor_1"] {
+	div.ttbm_style .textColor_1,
+	div.ttbm_style [class*="_textColor_1"] {
 		color: var(--color_1);
 	}
-	div.mpStyle .bgColor_1,
-	div.mpStyle [class*="_bgColor_1"] {
+	div.ttbm_style .bgColor_1,
+	div.ttbm_style [class*="_bgColor_1"] {
 		background-color: var(--color_1);
 	}
 	/*****Color_2*********/
-	div.mpStyle .textColor_2,
-	div.mpStyle [class*="_textColor_2"] {
+	div.ttbm_style .textColor_2,
+	div.ttbm_style [class*="_textColor_2"] {
 		color: var(--color_2);
 	}
-	div.mpStyle .bgColor_2,
-	div.mpStyle [class*="_bgColor_2"] {
+	div.ttbm_style .bgColor_2,
+	div.ttbm_style [class*="_bgColor_2"] {
 		background-color: var(--color_2);
 	}
 	/*****Color_3*********/
-	div.mpStyle .textColor_3,
-	div.mpStyle [class*="_textColor_3"] {
+	div.ttbm_style .textColor_3,
+	div.ttbm_style [class*="_textColor_3"] {
 		color: #f2ffc3;
 	}
-	div.mpStyle .bgColor_3,
-	div.mpStyle [class*="_bgColor_3"] {
+	div.ttbm_style .bgColor_3,
+	div.ttbm_style [class*="_bgColor_3"] {
 		background-color: #f2ffc3;
 		font-size: 14px;
 	}
 	/*****Color_4*********/
-	div.mpStyle .textColor_4,
-	div.mpStyle [class*="_textColor_4"] {
+	div.ttbm_style .textColor_4,
+	div.ttbm_style [class*="_textColor_4"] {
 		color: #1a1919;
 	}
-	div.mpStyle .bgColor_4,
-	div.mpStyle [class*="_bgColor_4"] {
+	div.ttbm_style .bgColor_4,
+	div.ttbm_style [class*="_bgColor_4"] {
 		background-color: #1a1919;
 	}
 }
@@ -3858,44 +3858,44 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 }
 /******************************************************************** select_2 custom css************************************************/
 @media only screen and (min-width: 10px) {
-	div.mpStyle span.selection,
-	div.mpStyle span.select2-container.select2,
-	div.mpStyle span.select2-container span.select2-selection {
+	div.ttbm_style span.selection,
+	div.ttbm_style span.select2-container.select2,
+	div.ttbm_style span.select2-container span.select2-selection {
 		min-width: auto;
 		width: 100% !important;
 		height: 100%;
 	}
-	div.mpStyle span.selection {
+	div.ttbm_style span.selection {
 		overflow: hidden;
 		max-width: 100%;
 	}
-	div.mpStyle span.select2-container span.select2-selection__rendered {
+	div.ttbm_style span.select2-container span.select2-selection__rendered {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-align-items: center;
 		align-items: center;
 		height: 100%;
 	}
-	div.mpStyle span.select2-container .select2-selection__arrow {
+	div.ttbm_style span.select2-container .select2-selection__arrow {
 		top: 2px;
 		height: 37px;
 	}
-	div.mpStyle span.select2-container span {
+	div.ttbm_style span.select2-container span {
 		margin: 0;
 	}
 }
 /******************************************************************** Owl Carousel************************************************/
 @media only screen and (min-width: 10px) {
-	div.mpStyle .owl-nav {
+	div.ttbm_style .owl-nav {
 		display: none;
 	}
 }
 /******************************************************************** Load More************************************************/
 @media only screen and (min-width: 10px) {
-	div.mpStyle .mp_load_more_text_area {
+	div.ttbm_style .ttbm_load_more_text_area {
 		color: var(--d_color);
 	}
-	div.mpStyle [data-read] {
+	div.ttbm_style [data-read] {
 		color: var(--color_theme);
 		cursor: pointer;
 	}
@@ -3904,7 +3904,7 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 @media only screen and (min-width: 10px) {
 	.woocommerce-cart table.cart .product-remove {
 		vertical-align: top;
-		padding: var(--dmp_xs);
+		padding: var(--ttbm_mp_xs);
 		width: 50px;
 	}
 	.woocommerce-cart table.cart .product-remove a:hover {
@@ -3914,7 +3914,7 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 	.woocommerce-cart table.cart .product-thumbnail {
 		min-width: 20%;
 		vertical-align: top;
-		padding: var(--dmp_xs);
+		padding: var(--ttbm_mp_xs);
 	}
 	div.woocommerce .dLayout_xs,
 	div.woocommerce .dLayout {
@@ -3935,12 +3935,12 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		flex-wrap: wrap;
 	}
 	div.woocommerce ul.cart_list li span {
-		margin: 0 var(--dmp_xs) 0 0;
+		margin: 0 var(--ttbm_mp_xs) 0 0;
 	}
 	div.woocommerce .cart_product_item {
 		border: 1px solid var(--color_border);
-		margin: var(--dmp_xs) 0 0 0;
-		padding: var(--dmp_xs);
+		margin: var(--ttbm_mp_xs) 0 0 0;
+		padding: var(--ttbm_mp_xs);
 		border-radius: var(--dbr);
 	}
 	div.woocommerce td.product-name {
@@ -3956,14 +3956,14 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		margin: 0;
 	}
 	div.woocommerce td.product-name dl.variation dd {
-		margin: var(--dmp_xs) 0 0 0;
+		margin: var(--ttbm_mp_xs) 0 0 0;
 	}
 	.woocommerce-order-details ul.wc-item-meta li {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-align-items: center;
 		align-items: center;
-		margin: var(--dmp_xs) 0 0 0;
+		margin: var(--ttbm_mp_xs) 0 0 0;
 	}
 	.woocommerce-order-details ul.wc-item-meta li > p {
 		margin: 0;
@@ -3990,7 +3990,7 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 		background-color: var(--color_theme);
 		background-image: none;
 		border:1px solid var(--color_theme);
-		padding: var(--dmp_xs);
+		padding: var(--ttbm_mp_xs);
 		color: var(--color_theme_alter);
 		border-radius: 0;
 		display: -webkit-flex;
@@ -4080,7 +4080,7 @@ div.mpStyle .groupContent input[type="radio"]:checked::after {
 	#ui-datepicker-div .ui-datepicker-title select {
 		min-width: 100px;
 		height: 30px;
-		padding: 0 var(--dmp_xs);
+		padding: 0 var(--ttbm_mp_xs);
 		text-align: left;
 	}
 	#ui-datepicker-div.ui-datepicker td {

@@ -2,12 +2,12 @@
     "use strict";
     $(document).on('click', '.ttbm_add_item', function () {
         let parent = $(this).closest('.mp_settings_area');
-        let item = parent.find('>.mp_hidden_content').first().find('.mp_hidden_item').html();
-        load_sortable_datepicker(parent, item);
-        parent.find('.mp_item_insert').find('.add_ttbm_select2').select2({});
+        let item = parent.find('>.ttbm_hidden_content').first().find('.ttbm_hidden_item').html();
+        ttbm_load_sortable_datepicker(parent, item);
+        parent.find('.ttbm_item_insert').find('.add_ttbm_select2').select2({});
         return true;
     });
-    $(document).on("click", ".mp_remove_icon", function (e) {
+    $(document).on("click", ".ttbm_remove_icon", function (e) {
         e.preventDefault();
         if (
             confirm(
@@ -36,7 +36,7 @@
         }
     });
     //*********Pricing************//
-    $(document).on('click', '.ttbm_price_config  .mp_add_item', function (e) {
+    $(document).on('click', '.ttbm_price_config  .ttbm_add_item', function (e) {
         if (e.result) {
             let parent = $(this).closest('.ttbm_price_config');
             let unique_id = new Date().getTime();
@@ -136,7 +136,7 @@
                     parent.find('[name="ttbm_location_address"]').val('');
                     parent.find('[name="ttbm_location_country"]').val('');
                     parent.find('[name="ttbm_location_image"]').val('');
-                    $this.closest('.popupMainArea').find('.mp_remove_single_image').trigger('click');
+                    $this.closest('.popupMainArea').find('.ttbm_remove_single_image').trigger('click');
                     parent.find('.ttbm_success_info').slideDown('fast');
                     ttbm_reload_location();
                     dLoaderRemove(parent);

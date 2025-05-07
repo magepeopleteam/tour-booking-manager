@@ -6,19 +6,19 @@
 	if (!defined('ABSPATH')) {
 		die;
 	} // Cannot access pages directly.
-	if (!class_exists('MP_Settings_Global')) {
-		class MP_Settings_Global {
+	if (!class_exists('TTBM_Global_Settings')) {
+		class TTBM_Global_Settings {
 			public function __construct() {
-				add_filter('mp_settings_sec_reg', array($this, 'settings_sec_reg'), 10, 1);
-				add_filter('mp_settings_sec_reg', array($this, 'global_sec_reg'), 90, 1);
-				add_filter('mp_settings_sec_fields', array($this, 'settings_sec_fields'), 10, 1);
-				add_action('wsa_form_bottom_mp_basic_license_settings', [$this, 'license_settings'], 5);
-				add_action('mp_basic_license_list', [$this, 'licence_area']);
+				add_filter('ttbm_settings_sec_reg', array($this, 'settings_sec_reg'), 10, 1);
+				add_filter('ttbm_settings_sec_reg', array($this, 'global_sec_reg'), 90, 1);
+				add_filter('ttbm_settings_sec_fields', array($this, 'settings_sec_fields'), 10, 1);
+				add_action('wsa_form_bottom_ttbm_license_settings', [$this, 'license_settings'], 5);
+				add_action('ttbm_basic_license_list', [$this, 'licence_area']);
 			}
 			public function settings_sec_reg($default_sec): array {
 				$sections = array(
 					array(
-						'id' => 'mp_global_settings',
+						'id' => 'ttbm_global_settings',
 						'title' => esc_html__('Global Settings', 'tour-booking-manager')
 					),
 				);
@@ -27,15 +27,15 @@
             public function global_sec_reg($default_sec): array {
 				$sections = array(
 					array(
-						'id' => 'mp_style_settings',
+						'id' => 'ttbm_style_settings',
 						'title' => esc_html__('Style Settings', 'tour-booking-manager')
 					),
 					array(
-						'id' => 'mp_add_custom_css',
+						'id' => 'ttbm_custom_css',
 						'title' => esc_html__('Custom CSS', 'tour-booking-manager')
 					),
 					array(
-						'id' => 'mp_basic_license_settings',
+						'id' => 'ttbm_license_settings',
 						'title' => esc_html__('Mage-People License', 'tour-booking-manager')
 					)
 				);
@@ -44,7 +44,7 @@
 			public function settings_sec_fields($default_fields): array {
 				$current_date = current_time('Y-m-d');
 				$settings_fields = array(
-					'mp_global_settings' => apply_filters('filter_mp_global_settings', array(
+					'ttbm_global_settings' => apply_filters('filter_ttbm_global_settings', array(
 						array(
 							'name' => 'disable_block_editor',
 							'label' => esc_html__('Disable Block/Gutenberg Editor', 'tour-booking-manager'),
@@ -103,7 +103,7 @@
 							)
 						),
 					)),
-					'mp_style_settings' => apply_filters('filter_mp_style_settings', array(
+					'ttbm_style_settings' => apply_filters('filter_ttbm_style_settings', array(
 						array(
 							'name' => 'theme_color',
 							'label' => esc_html__('Theme Color', 'tour-booking-manager'),
@@ -224,7 +224,7 @@
 							'default' => '#FAFCFE'
 						),
 					)),
-					'mp_add_custom_css' => apply_filters('filter_mp_add_custom_css', array(
+					'ttbm_custom_css' => apply_filters('filter_ttbm_custom_css', array(
 						array(
 							'name' => 'custom_css',
 							'label' => esc_html__('Custom CSS', 'tour-booking-manager'),
@@ -237,7 +237,7 @@
 			}
 			public function license_settings() {
 				?>
-				<div class="mp_basic_license_settings">
+				<div class="ttbm_license_settings">
 					<div>
 						<?php esc_html_e('Thank you for using our plugin. Our some plugin  free and no license is required. We have some Additional addon to enhance feature of this plugin functionality. If you have any addon you need to enter a valid license for that plugin below.', 'tour-booking-manager'); ?> 
 					</div>
@@ -260,11 +260,11 @@
 					</tr>
 					</thead>
 					<tbody>
-					<?php do_action('mp_license_page_plugin_list'); ?>
+					<?php do_action('ttbm_license_page_plugin_list'); ?>
 					</tbody>
 				</table>
 				<?php
 			}
 		}
-		new MP_Settings_Global();
+		new TTBM_Global_Settings();
 	}

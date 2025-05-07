@@ -3,16 +3,16 @@
 		die;
 	}
 	$ttbm_post_id       = $ttbm_post_id ?? get_the_id();
-	$related_tours = MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_related_tour', array());
+	$related_tours = TTBM_Global_Function::get_post_info($ttbm_post_id, 'ttbm_related_tour', array());
 	$related_tour_count=sizeof( $related_tours );
 	$num_of_tour=$num_of_tour??'';
-	if ( $related_tour_count > 0 && (MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_related', 'on' ) != 'off' || $num_of_tour>0)) {
+	if ( $related_tour_count > 0 && (TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_related', 'on' ) != 'off' || $num_of_tour>0)) {
 		$num_of_tour=$num_of_tour>0?$num_of_tour:4;
 		$num_of_tour=min($num_of_tour,$related_tour_count);
 		$grid_class=$related_tour_count <= $num_of_tour?'grid_'.$num_of_tour:'';
 		$div_class=$related_tour_count==1?'flexWrap modern':'flexWrap grid';
 		?>
-		<div class='mpStyle ttbm_wraper shadow_one' id="ttbm_related_tour">
+		<div class='ttbm_style ttbm_wraper shadow_one' id="ttbm_related_tour">
 			<div class="ttbm_container">
 				<div class='ttbm_default_widget'>
 					<?php do_action( 'ttbm_section_title', 'ttbm_string_related_tour', esc_html__( 'You may like Tour ', 'tour-booking-manager' ) ); ?>

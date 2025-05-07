@@ -18,7 +18,7 @@
 			}
 			public function why_chose_us_settings($tour_id) {
 				$ttbm_label = TTBM_Function::get_name();
-				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_why_choose_us', 'on');
+				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_why_choose_us', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
@@ -40,7 +40,7 @@
 							<div>
 								<p><?php esc_html_e('Why Chose Us ' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_why_choose_us'); ?></span></i></p>
 							</div>
-							<?php MP_Custom_Layout::switch_button('ttbm_display_why_choose_us', $checked); ?>
+							<?php TTBM_Custom_Layout::switch_button('ttbm_display_why_choose_us', $checked); ?>
 						</label>
                     </section>
 
@@ -51,7 +51,7 @@
 				<?php
 			}
 			public function why_chose_us($tour_id) {
-				$why_chooses = MP_Global_Function::get_post_info($tour_id, 'ttbm_why_choose_us_texts', array());
+				$why_chooses = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_why_choose_us_texts', array());
 				?>
 				<section >
 					<!-- <div class="w-100 mb-2 d-flex justify-content-between align-items-center">
@@ -65,7 +65,7 @@
 								<th class="ps-2"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
 							</tr>
 							</thead>
-							<tbody class="mp_sortable_area mp_item_insert">
+							<tbody class="ttbm_sortable_area ttbm_item_insert">
 							<?php
 								if (sizeof($why_chooses)) {
 									foreach ($why_chooses as $why_choose) {
@@ -80,13 +80,13 @@
 						</table>
 					</div>
 					<div class="w-100 d-flex justify-content-start align-items-center my-2">
-						<?php MP_Custom_Layout::add_new_button(esc_html__('Add New Item', 'tour-booking-manager')); ?>
+						<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Item', 'tour-booking-manager')); ?>
 					</div>
 				</section>
 				
-				<div class="mp_hidden_content">
+				<div class="ttbm_hidden_content">
 					<table>
-						<tbody class="mp_hidden_item">
+						<tbody class="ttbm_hidden_item">
 							<?php $this->why_chose_us_item(); ?>
 						</tbody>
 					</table>
@@ -98,19 +98,19 @@
 				<tr class="mp_remove_area">
 					<td class="ps-2">
 						<label>
-							<input class="bordered w-100 rounded  mp_name_validation" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
+							<input class="bordered w-100 rounded  ttbm_name_validation" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
 						</label>
 					</td>
-					<td><?php MP_Custom_Layout::move_remove_button(); ?></td>
+					<td><?php TTBM_Custom_Layout::move_remove_button(); ?></td>
 				</tr>
 				<?php
 			}
 			public function save_why_chose_us($tour_id) {
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
 					$why_chose_us_info = array();
-					$why_choose_display = MP_Global_Function::get_submit_info('ttbm_display_why_choose_us') ? 'on' : 'off';
+					$why_choose_display = TTBM_Global_Function::get_submit_info('ttbm_display_why_choose_us') ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_why_choose_us', $why_choose_display);
-					$why_chose_infos = MP_Global_Function::get_submit_info('ttbm_why_choose_us_texts', array());
+					$why_chose_infos = TTBM_Global_Function::get_submit_info('ttbm_why_choose_us_texts', array());
 					if (sizeof($why_chose_infos) > 0) {
 						foreach ($why_chose_infos as $why_chose) {
 							if ($why_chose) {

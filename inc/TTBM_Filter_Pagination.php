@@ -16,7 +16,7 @@
 			}
 			public function top_filter_static($params) {
 				?>
-                <div class="mpStyle placeholderLoader ttbm_wraper ttbm_top_filter">
+                <div class="ttbm_style placeholderLoader ttbm_wraper ttbm_top_filter">
                     <form method="get" action="<?php echo get_home_url() . '/find/'; ?>">
                         <div class="flexWrap justifyCenter">
 							<?php $this->title_filter($params); ?>
@@ -131,7 +131,7 @@
 			//****************************************/
 			public function category_filter($params, $categories = '') {
 				if ($params['category-filter'] == 'yes') {
-					$categories = is_array($categories) ? $categories : MP_Global_Function::get_taxonomy('ttbm_tour_cat');
+					$categories = is_array($categories) ? $categories : TTBM_Global_Function::get_taxonomy('ttbm_tour_cat');
 					if (is_array($categories) && sizeof($categories) > 0) {
 						$url = $_GET['category_filter'] ?? '';
 						$current = $url ? get_term_by('id', $url, 'ttbm_tour_cat')->term_id : '';
@@ -150,7 +150,7 @@
 			}
 			public function category_filter_left($params) {
 				if ($params['category-filter'] == 'yes') {
-					$categories = MP_Global_Function::get_taxonomy('ttbm_tour_cat');
+					$categories = TTBM_Global_Function::get_taxonomy('ttbm_tour_cat');
 					if (sizeof($categories) > 0) {
 						?>
                         <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_category_filter_left" data-placeholder>
@@ -168,7 +168,7 @@
 			//****************************************/
 			public function organizer_filter($params, $organizers = array()) {
 				if ($params['organizer-filter'] == 'yes') {
-					$organizers = sizeof($organizers) > 0 ? $organizers : MP_Global_Function::get_taxonomy('ttbm_tour_org', 'ttbm_tour');
+					$organizers = sizeof($organizers) > 0 ? $organizers : TTBM_Global_Function::get_taxonomy('ttbm_tour_org', 'ttbm_tour');
 					if (sizeof($organizers) > 0) {
 						$url = $_GET['organizer_filter'] ?? '';
 						$current = $url ? get_term_by('id', $url, 'ttbm_tour_org')->term_id : '';
@@ -189,7 +189,7 @@
 			}
 			public function organizer_filter_left($params) {
 				if ($params['organizer-filter'] == 'yes') {
-					$organizers = MP_Global_Function::get_taxonomy('ttbm_tour_org');
+					$organizers = TTBM_Global_Function::get_taxonomy('ttbm_tour_org');
 					$total_organizers = 0;
 					foreach ($organizers as $organizer) {
 						if (get_term($organizer->term_id, 'ttbm_tour_org')->count) {
@@ -213,7 +213,7 @@
 			//****************************************/
 			public function location_filter($params) {
 				if ($params['location-filter'] == 'yes') {
-					$locations = MP_Global_Function::get_taxonomy('ttbm_tour_location');
+					$locations = TTBM_Global_Function::get_taxonomy('ttbm_tour_location');
 					if (sizeof($locations) > 0) {
 						$url = $_GET['location_filter'] ?? '';
 						?>
@@ -419,7 +419,7 @@
 			//****************************************/
 			public function activity_filter($params) {
 				if ($params['activity-filter'] == 'yes') {
-					$activities = MP_Global_Function::get_taxonomy('ttbm_tour_activities');
+					$activities = TTBM_Global_Function::get_taxonomy('ttbm_tour_activities');
 					if (sizeof($activities) > 0) {
 						$url_activity = $_GET['activity_filter'] ?? '';
 						$current_activity = $url_activity ? get_term_by('id', $url_activity, 'ttbm_tour_activities')->term_id : '';
@@ -476,7 +476,7 @@
 			//****************************************/
 			public function tag_filter_multiple($params) {
 				if ($params['tag-filter'] == 'yes') {
-					$tags = MP_Global_Function::get_taxonomy('ttbm_tour_tag');
+					$tags = TTBM_Global_Function::get_taxonomy('ttbm_tour_tag');
 					$total_tags = 0;
 					foreach ($tags as $tag) {
 						if (get_term($tag->term_id, 'ttbm_tour_tag')->count) {
@@ -515,7 +515,7 @@
 					$current_date = current_time('Y-m-d');
 					$month = date('n', strtotime($current_date));
 					$selected = $url_month == $month ? 'selected' : '';
-					$date_format = MP_Global_Function::get_settings('mp_global_settings', 'date_format_short', 'M , Y');
+					$date_format = TTBM_Global_Function::get_settings('ttbm_global_settings', 'date_format_short', 'M , Y');
 					?>
                     <label data-placeholder>
                         <select class="formControl" name="month_filter">
@@ -543,7 +543,7 @@
 					$current_date = current_time('Y-m-d');
 					$month = date('n', strtotime($current_date));
 					$selected = $url_month == $month ? 'selected' : '';
-					$date_format = MP_Global_Function::get_settings('mp_global_settings', 'date_format_short', 'M , Y');
+					$date_format = TTBM_Global_Function::get_settings('ttbm_global_settings', 'date_format_short', 'M , Y');
 					?>
                     <label data-placeholder>
                         <div class="ttbm_date-picker-container">

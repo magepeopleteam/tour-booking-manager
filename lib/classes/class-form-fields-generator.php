@@ -5674,7 +5674,7 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
             <div <?php if(!empty($depends)) {?> data-depends="[<?php echo esc_attr($depends); ?>]" <?php } ?> id="field-wrapper-<?php echo esc_attr($id); ?>" class="<?php if(!empty($depends)) echo 'dependency-field'; ?> field-wrapper field-icon-wrapper
             field-icon-wrapper-<?php echo esc_attr($id); ?>">
              
-	            <?php do_action('mp_input_add_icon',$field_name,$value); ?>
+	            <?php do_action('ttbm_input_add_icon',$field_name,$value); ?>
             </div>
 
             <?php
@@ -8318,8 +8318,8 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
                             if(type == 'text'){
                                 html+='<input type="text" <?php echo esc_attr(TTBM_Layout::no_pro_disabled($field_name)); ?> value="'+default_val+'" name="<?php echo esc_attr($field_name); ?>['+now+']['+element.item_id+']"/>';
                             }else if(type == 'mp_icon'){
-								html+='<div class="mp_input_add_icon">' +
-								    '<button type="button" class="mp_input_add_icon_button dButton_xs">' +
+								html+='<div class="ttbm_input_add_icon">' +
+								    '<button type="button" class="ttbm_input_add_icon_button dButton_xs">' +
 								    '<input type="hidden" name="<?php echo esc_attr($field_name); ?>['+now+']['+element.item_id+']" placeholder="" value=""/>' +
 								    '<span class="" data-empty-text="<?php esc_html_e( 'Add Icon', 'tour-booking-manager' ); ?>"><?php esc_html_e( 'Add Icon', 'tour-booking-manager' );?></span>' +
 								    '<span class="fas fa-times remove_input_icon " title="<?php esc_html_e( 'Remove Icon', 'tour-booking-manager' ); ?>"></span>' +
@@ -8440,7 +8440,7 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
 	                                            $mp_icon_name="{$field_name}[{$index}][{$item_id}]";
 								  $default = isset($field['default']) ? $field['default'] : '';
 								  $value = !empty($val[$item_id]) ? $val[$item_id] : $default;
-							  do_action('mp_input_add_icon',$mp_icon_name,$value);
+							  do_action('ttbm_input_add_icon',$mp_icon_name,$value);
 	                                            ?>
                                             <?php elseif($type == 'number'):
                                                 $default = isset($field['default']) ? $field['default'] : '';

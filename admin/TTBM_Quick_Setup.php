@@ -22,14 +22,14 @@
 				add_action('admin_menu', array($this, 'quick_setup_menu'));
 			}
 			public function add_admin_scripts() {
-				//wp_enqueue_style('mp_plugin_global', TTBM_PLUGIN_URL . '/assets/helper/mp_style/mp_style.css', array(), time());
-				//wp_enqueue_script('mp_plugin_global', TTBM_PLUGIN_URL . '/assets/helper/mp_style/mp_script.js', array('jquery'), time(), true);
-				//wp_enqueue_script('mp_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/mp_admin_settings.js', array('jquery'), time(), true);
-				//wp_enqueue_style('mp_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/mp_admin_settings.css', array(), time());
+				//wp_enqueue_style('mp_plugin_global', TTBM_PLUGIN_URL . '/assets/helper/mp_style/ttbm_plugin_global.css', array(), time());
+				//wp_enqueue_script('mp_plugin_global', TTBM_PLUGIN_URL . '/assets/helper/mp_style/ttbm_plugin_global.js', array('jquery'), time(), true);
+				//wp_enqueue_script('mp_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_settings.js', array('jquery'), time(), true);
+				//wp_enqueue_style('mp_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_settings.css', array(), time());
 				//wp_enqueue_style('mp_font_awesome', '//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css', array(), '5.15.4');
 			}
 			public function quick_setup_menu() {
-				$status = MP_Global_Function::check_woocommerce();
+				$status = TTBM_Global_Function::check_woocommerce();
 				if ($status == 1) {
 					add_submenu_page('edit.php?post_type=ttbm_tour', __('Quick Setup', 'tour-booking-manager'), '<span style="color:#10dd10">' . esc_html__('Quick Setup', 'tour-booking-manager') . '</span>', 'manage_options', 'ttbm_quick_setup', array($this, 'quick_setup'));
 					add_submenu_page('ttbm_tour', esc_html__('Quick Setup', 'tour-booking-manager'), '<span style="color:#10dd10">' . esc_html__('Quick Setup', 'tour-booking-manager') . '</span>', 'manage_options', 'ttbm_quick_setup', array($this, 'quick_setup'));
@@ -41,7 +41,7 @@
 			}
 			public function quick_setup() {
 			
-				$status = MP_Global_Function::check_woocommerce();
+				$status = TTBM_Global_Function::check_woocommerce();
 				if (isset($_POST['ttbm_quick_setup']) && wp_verify_nonce($_POST['ttbm_quick_setup'], 'ttbm_quick_setup_nonce'))
 				{
 					if (isset($_POST['active_woo_btn'])) {
@@ -132,11 +132,11 @@
 					}					
 				}
 				?>
-				<div class="mpStyle ttbm-quick-setup">
+				<div class="ttbm_style ttbm-quick-setup">
 					<div class=_dShadow_6_adminLayout">
 						<form method="post" action="">
 							<?php wp_nonce_field('ttbm_quick_setup_nonce', 'ttbm_quick_setup'); ?>
-							<div class="mpTabsNext">
+							<div class="ttbmTabsNext">
 								<div class="tabListsNext _max_700_mAuto">
 									<div data-tabs-target-next="#ttbm_qs_welcome" class="tabItemNext" data-open-text="1" data-close-text=" " data-open-icon="" data-close-icon="fas fa-check" data-add-class="success">
 										<h4 class="circleIcon" data-class>
@@ -185,7 +185,7 @@
 				<?php
 			}
 			public function setup_welcome_content() {
-				$status = MP_Global_Function::check_woocommerce();
+				$status = TTBM_Global_Function::check_woocommerce();
 				?>
 				<div data-tabs-next="#ttbm_qs_welcome">
 					<h2><?php esc_html_e('Tour Booking Manager For Woocommerce Plugin', 'tour-booking-manager'); ?></h2>
@@ -221,8 +221,8 @@
 				<?php
 			}
 			public function setup_general_content() {
-				$label = MP_Global_Function::get_settings('ttbm_basic_gen_settings', 'ttbm_travel_label', 'Travel');
-				$slug = MP_Global_Function::get_settings('ttbm_basic_gen_settings', 'ttbm_travel_slug', 'travel');
+				$label = TTBM_Global_Function::get_settings('ttbm_basic_gen_settings', 'ttbm_travel_label', 'Travel');
+				$slug = TTBM_Global_Function::get_settings('ttbm_basic_gen_settings', 'ttbm_travel_slug', 'travel');
 				?>
 				<div data-tabs-next="#ttbm_qs_general">
 					<div class="section">

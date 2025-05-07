@@ -7,7 +7,7 @@
 	$travel_type   = $travel_type ?? TTBM_Function::get_travel_type( $tour_id );
 	$tour_type     = $tour_type ?? TTBM_Function::get_tour_type( $tour_id );
 	$all_dates     = $all_dates ?? TTBM_Function::get_date( $tour_id );
-	$check_ability = MP_Global_Function::get_post_info( $tour_id, 'ttbm_ticketing_system', 'availability_section' );
+	$check_ability = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_ticketing_system', 'availability_section' );
 	if ( sizeof( $all_dates ) > 0 && $travel_type == 'fixed' ) {
 		$start_date = $all_dates['date'];
 		$end_date   = $all_dates['checkout_date'];
@@ -16,9 +16,9 @@
 			<div class="justifyCenter ttbm_select_date_area">
 				<h5 class="textWhite">
 					<?php
-						echo TTBM_Function::get_name() . '&nbsp;' . esc_html__( 'Date : ', 'tour-booking-manager' ) . '&nbsp;' .MP_Global_Function::date_format( $start_date );
+						echo TTBM_Function::get_name() . '&nbsp;' . esc_html__( 'Date : ', 'tour-booking-manager' ) . '&nbsp;' .TTBM_Global_Function::date_format( $start_date );
 						if ( array_key_exists( 'checkout_date', $all_dates ) && $all_dates['checkout_date'] ) {
-							echo '&nbsp;' . esc_html__( '-', 'tour-booking-manager' ) . '&nbsp;' . MP_Global_Function::date_format( $end_date );
+							echo '&nbsp;' . esc_html__( '-', 'tour-booking-manager' ) . '&nbsp;' . TTBM_Global_Function::date_format( $end_date );
 						}
 						if ( $tour_type == 'hotel' && $start_date && $end_date ) {
 							?>

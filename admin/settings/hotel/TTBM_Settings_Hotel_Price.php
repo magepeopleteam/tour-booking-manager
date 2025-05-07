@@ -10,8 +10,8 @@
 				add_action('ttbm_hotel_settings_save', array($this, 'save_hotel_price'), 10, 1);
 			}
 			public function price_content($hotel_id) {
-				$room_lists = MP_Global_Function::get_post_info($hotel_id, 'ttbm_room_details', array());
-				$display = MP_Global_Function::get_post_info($hotel_id, 'ttbm_display_advance', 'off');
+				$room_lists = TTBM_Global_Function::get_post_info($hotel_id, 'ttbm_room_details', array());
+				$display = TTBM_Global_Function::get_post_info($hotel_id, 'ttbm_display_advance', 'off');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
@@ -21,7 +21,7 @@
 						<div class="divider"></div>
 						<h5 class="dFlex">
 							<span class="mR"><?php esc_html_e('Show advance columns', 'tour-booking-manager'); ?></span>
-							<?php MP_Custom_Layout::switch_button('ttbm_display_advance', $checked); ?>
+							<?php TTBM_Custom_Layout::switch_button('ttbm_display_advance', $checked); ?>
 						</h5>
 						<?php TTBM_Settings::des_p('ttbm_display_advance'); ?>
 						<div class="ovAuto _mT">
@@ -51,7 +51,7 @@
 									<th><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
 								</tr>
 								</thead>
-								<tbody class="mp_sortable_area mp_item_insert">
+								<tbody class="ttbm_sortable_area ttbm_item_insert">
 								<?php
 									if (sizeof($room_lists) > 0) {
 										foreach ($room_lists as $field) {
@@ -62,7 +62,7 @@
 								</tbody>
 							</table>
 						</div>
-						<?php MP_Custom_Layout::add_new_button(esc_html__('Add New Room', 'tour-booking-manager')); ?>
+						<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Room', 'tour-booking-manager')); ?>
 						<?php do_action('add_mp_hidden_table', 'ttbm_room_item'); ?>
 					</div>
 				</div>
@@ -70,7 +70,7 @@
 			}
 			public function room_item($field = array()) {
 				$tour_id = get_the_id();
-				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_advance', 'off');
+				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_advance', 'off');
 				$active = $display == 'off' ? '' : 'mActive';
 				$field = $field ?: array();
 				$icon = array_key_exists('room_type_icon', $field) ? $field['room_type_icon'] : '';
@@ -86,11 +86,11 @@
 				$description = array_key_exists('room_description', $field) ? $field['room_description'] : '';
 				?>
 				<tr class="mp_remove_area">
-					<td><?php do_action('mp_input_add_icon', 'room_type_icon[]', $icon); ?></td>
+					<td><?php do_action('ttbm_input_add_icon', 'room_type_icon[]', $icon); ?></td>
 					<td>
 						<input type="hidden" name="ttbm_hidden_ticket_text[]" value="<?php echo esc_attr($name_text); ?>"/>
 						<label>
-							<input type="text" class="formControl mp_name_validation" name="ttbm_hotel_room_name[]" placeholder="Ex: AC" value="<?php echo esc_attr($name); ?>" data-input-text="<?php echo esc_attr($name_text); ?>"/>
+							<input type="text" class="formControl ttbm_name_validation" name="ttbm_hotel_room_name[]" placeholder="Ex: AC" value="<?php echo esc_attr($name); ?>" data-input-text="<?php echo esc_attr($name_text); ?>"/>
 						</label>
 					</td>
 					<td data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
@@ -100,32 +100,32 @@
 					</td>
 					<td>
 						<label>
-							<input type="text" class="formControl mp_price_validation" name="ttbm_hotel_room_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($price); ?>"/>
+							<input type="text" class="formControl ttbm_price_validation" name="ttbm_hotel_room_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($price); ?>"/>
 						</label>
 					</td>
 					<td data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
 						<label>
-							<input type="text" class="formControl mp_price_validation" name="sale_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($sale_price); ?>"/>
+							<input type="text" class="formControl ttbm_price_validation" name="sale_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($sale_price); ?>"/>
 						</label>
 					</td>
 					<td>
 						<label>
-							<input type="number" size="4" pattern="[0-9]*" step="1" class="formControl mp_number_validation" name="ttbm_hotel_room_qty[]" placeholder="Ex: 500" value="<?php echo esc_attr($qty); ?>"/>
+							<input type="number" size="4" pattern="[0-9]*" step="1" class="formControl ttbm_number_validation" name="ttbm_hotel_room_qty[]" placeholder="Ex: 500" value="<?php echo esc_attr($qty); ?>"/>
 						</label>
 					</td>
 					<td data-collapse="#ttbm_display_advance" class="<?php echo esc_attr($active); ?>">
 						<label>
-							<input type="number" size="4" pattern="[0-9]*" step="1" class="formControl mp_number_validation" name="room_reserve_qty[]" placeholder="Ex: 5" value="<?php echo esc_attr($reserve_qty); ?>"/>
+							<input type="number" size="4" pattern="[0-9]*" step="1" class="formControl ttbm_number_validation" name="room_reserve_qty[]" placeholder="Ex: 5" value="<?php echo esc_attr($reserve_qty); ?>"/>
 						</label>
 					</td>
 					<td>
 						<label>
-							<input type="number" size="4" pattern="[0-9]*" step="1" class="formControl mp_number_validation" name="ttbm_hotel_room_capacity_adult[]" placeholder="Ex: 1" value="<?php echo esc_attr($adult_qty); ?>"/>
+							<input type="number" size="4" pattern="[0-9]*" step="1" class="formControl ttbm_number_validation" name="ttbm_hotel_room_capacity_adult[]" placeholder="Ex: 1" value="<?php echo esc_attr($adult_qty); ?>"/>
 						</label>
 					</td>
 					<td>
 						<label>
-							<input type="number" size="4" pattern="[0-9]*" step="1" class="formControl mp_number_validation" name="ttbm_hotel_room_capacity_child[]" placeholder="Ex: 1" value="<?php echo esc_attr($child_qty); ?>"/>
+							<input type="number" size="4" pattern="[0-9]*" step="1" class="formControl ttbm_number_validation" name="ttbm_hotel_room_capacity_child[]" placeholder="Ex: 1" value="<?php echo esc_attr($child_qty); ?>"/>
 						</label>
 					</td>
 					<td>
@@ -136,27 +136,27 @@
 							</select>
 						</label>
 					</td>
-					<td><?php MP_Custom_Layout::move_remove_button(); ?></td>
+					<td><?php TTBM_Custom_Layout::move_remove_button(); ?></td>
 				</tr>
 				<?php
 			}
 			public function save_hotel_price($post_id) {
 				if (get_post_type($post_id) == 'ttbm_hotel') {
-					$advance_option = MP_Global_Function::get_submit_info('ttbm_display_advance') ? 'on' : 'off';
+					$advance_option = TTBM_Global_Function::get_submit_info('ttbm_display_advance') ? 'on' : 'off';
 					update_post_meta($post_id, 'ttbm_display_advance', $advance_option);
 					/************************/
-					$old_ticket_type = MP_Global_Function::get_post_info($post_id, 'ttbm_room_details', array());
+					$old_ticket_type = TTBM_Global_Function::get_post_info($post_id, 'ttbm_room_details', array());
 					$new_ticket_type = array();
-					$icon = MP_Global_Function::get_submit_info('room_type_icon', array());
-					$names = MP_Global_Function::get_submit_info('ttbm_hotel_room_name', array());
-					$ticket_price = MP_Global_Function::get_submit_info('ttbm_hotel_room_price', array());
-					$sale_price = MP_Global_Function::get_submit_info('sale_price', array());
-					$qty = MP_Global_Function::get_submit_info('ttbm_hotel_room_qty', array());
-					$adult_qty = MP_Global_Function::get_submit_info('ttbm_hotel_room_capacity_adult', array());
-					$child_qty = MP_Global_Function::get_submit_info('ttbm_hotel_room_capacity_child', array());
-					$rsv = MP_Global_Function::get_submit_info('room_reserve_qty', array());
-					$qty_type = MP_Global_Function::get_submit_info('room_qty_type', array());
-					$description = MP_Global_Function::get_submit_info('room_description', array());
+					$icon = TTBM_Global_Function::get_submit_info('room_type_icon', array());
+					$names = TTBM_Global_Function::get_submit_info('ttbm_hotel_room_name', array());
+					$ticket_price = TTBM_Global_Function::get_submit_info('ttbm_hotel_room_price', array());
+					$sale_price = TTBM_Global_Function::get_submit_info('sale_price', array());
+					$qty = TTBM_Global_Function::get_submit_info('ttbm_hotel_room_qty', array());
+					$adult_qty = TTBM_Global_Function::get_submit_info('ttbm_hotel_room_capacity_adult', array());
+					$child_qty = TTBM_Global_Function::get_submit_info('ttbm_hotel_room_capacity_child', array());
+					$rsv = TTBM_Global_Function::get_submit_info('room_reserve_qty', array());
+					$qty_type = TTBM_Global_Function::get_submit_info('room_qty_type', array());
+					$description = TTBM_Global_Function::get_submit_info('room_description', array());
 					$count = count($names);
 					for ($i = 0; $i < $count; $i++) {
 						if ($names[$i] && $ticket_price[$i] >= 0 && $qty[$i] > 0) {

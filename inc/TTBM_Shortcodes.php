@@ -31,7 +31,7 @@
 				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'],$params['sort_by']);
 				ob_start();
 				?>
-				<div class="mpStyle ttbm_wraper placeholderLoader ttbm_filter_area">
+				<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
 					<div class="mpContainer">
 					<?php
 						if ($params['sidebar-filter'] == 'yes') {
@@ -71,7 +71,7 @@
 				$loop = TTBM_Query::ttbm_query_for_top_Search($show, $params['sort'], $params['sort_by'], $params['status'], $type_filter, $organizer_filter, $location_filter, $activity_filter, $date_filter );
                 ob_start();
 				?>
-				<div class="mpStyle ttbm_wraper placeholderLoader ttbm_filter_area">
+				<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
 					<div class="mpContainer">
 					<?php
 						if ($params['sidebar-filter'] == 'yes') {
@@ -117,7 +117,7 @@
 				}
 				ob_start();
 				?>
-				<div class="mpStyle ttbm_wraper placeholderLoader ttbm_filter_area">
+				<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
 					<div class="mpContainer">
 					<?php
 						if ($search == 'yes') {
@@ -146,11 +146,11 @@
 				);
 				$params = shortcode_atts($defaults, $attribute);
 				$status = $params['status'];
-				$locations = MP_Global_Function::get_taxonomy('ttbm_tour_location');
+				$locations = TTBM_Global_Function::get_taxonomy('ttbm_tour_location');
 				if (is_array($locations) && sizeof($locations)) {
 					$grid_class = (int)$params['column'] > 0 ? 'grid_' . (int)$params['column'] : 'grid_1';
 					?>
-					<div class="mpStyle ttbm_wraper placeholderLoader ttbm_filter_area ttbm_location_list">
+					<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area ttbm_location_list">
 						<div class="mpContainer">
 						<div class="all_filter_item">
 							<div class="placeholder_area flexWrap">
@@ -209,7 +209,7 @@
 				$tour_id = $params['ttbm_id'] ?? get_the_id();
 				if ($tour_id) {
 					?>
-					<div class="mpStyle">
+					<div class="ttbm_style">
 						<div class="mpContainer">
 						<?php include(TTBM_Function::template_path('ticket/registration.php')); ?>
 						</div>
@@ -226,7 +226,7 @@
 				$num_of_tour = $params['show'];
 				if ($tour_id) {
 					?>
-					<div class="mpStyle">
+					<div class="ttbm_style">
 						<div class="mpContainer">
 						<?php include(TTBM_Function::template_path('layout/related_tour.php')); ?>
 						</div>

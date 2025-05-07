@@ -270,7 +270,7 @@
 		$(this).addClass('active_pagination').promise().done(function () {
 			load_pagination(parent, pagination_page);
 		}).promise().done(function () {
-			loadBgImage();
+			ttbm_loadBgImage();
 		});
 	});
 	$(document).on('click', '.ttbm_filter_area .pagination_area .pagination_load_more', function () {
@@ -287,7 +287,7 @@
 		}).promise().done(function () {
 			lode_more_init(parent);
 		}).promise().done(function () {
-			loadBgImage();
+			ttbm_loadBgImage();
 		});
 	});
 	function lode_more_init(parent) {
@@ -336,7 +336,7 @@
 			item++;
 		}).promise().done(function () {
 			all_item.css({"height": "auto", "overflow": "inherit"}).promise().done(function () {
-				loadBgImage();
+				ttbm_loadBgImage();
 				filter_qty_palace(parent, items_class);
 				pagination_management(parent, pagination_page);
 				placeholderLoaderRemove(all_item);

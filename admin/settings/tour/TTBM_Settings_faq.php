@@ -73,7 +73,7 @@ if (!class_exists('TTBM_Settings_faq')) {
 			wp_enqueue_style('thickbox');
 		}
 		public function tab_content($post_id) {
-			$faq_active = MP_Global_Function::get_post_info($post_id, 'ttbm_display_faq', 'off');
+			$faq_active = TTBM_Global_Function::get_post_info($post_id, 'ttbm_display_faq', 'off');
 			$active_class = $faq_active == 'on' ? 'mActive' : '';
 			$checked = $faq_active == 'on' ? 'checked' : '';
 			?>
@@ -96,7 +96,7 @@ if (!class_exists('TTBM_Settings_faq')) {
 							<p><?php esc_html_e('F.A.Q Enable/Disable', 'tour-booking-manager'); ?></p>
 							<span><?php TTBM_Settings::des_p('ttbm_display_faq'); ?></span>
 						</div>
-						<?php MP_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>
+						<?php TTBM_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>
 					</div>
 				</section>
 				<section class="ttbm-faq-section ">
@@ -268,7 +268,7 @@ if (!class_exists('TTBM_Settings_faq')) {
 			die;
 		}
 		public function save_faq_settings($tour_id){
-			$faq = MP_Global_Function::get_submit_info('ttbm_display_faq') ? 'on' : 'off';
+			$faq = TTBM_Global_Function::get_submit_info('ttbm_display_faq') ? 'on' : 'off';
 			update_post_meta($tour_id, 'ttbm_display_faq', $faq);
 		}
 	}

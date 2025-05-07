@@ -4,7 +4,7 @@
 	}
 	$ttbm_post_id          = $ttbm_post_id ?? get_the_id();
 	$exclude_services = TTBM_Function::get_feature_list( $ttbm_post_id, 'ttbm_service_excluded_in_price' );
-	if ( sizeof( $exclude_services ) > 0 && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_exclude_service', 'on' ) != 'off' ) {
+	if ( sizeof( $exclude_services ) > 0 && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_exclude_service', 'on' ) != 'off' ) {
 		?>
 		<div class="ttbm_default_widget">
 			<?php $this->section_title( "ttbm_string_exclude_price_list", esc_html__( "What's Excluded", "tour-booking-manager" ) ); ?>

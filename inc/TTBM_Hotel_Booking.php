@@ -113,7 +113,7 @@ if ( ! class_exists( 'TTBM_Hotel_Booking' ) ) {
                         }
                     }
                     if( !empty( $booking_request ) ) {
-                        MP_Global_Function::pa_add_multiple_room_type_booking( $hotel_id, $booking_request, $check_in, $check_out);
+                        TTBM_Global_Function::pa_add_multiple_room_type_booking( $hotel_id, $booking_request, $check_in, $check_out);
                     }
 
                 }

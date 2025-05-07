@@ -6,31 +6,31 @@
 	if ( ! defined( 'ABSPATH' ) ) {
 		die;
 	} // Cannot access pages directly.
-	if ( ! class_exists('MP_Global_Style') ) {
-		class MP_Global_Style {
+	if ( ! class_exists('TTBM_Global_Style') ) {
+		class TTBM_Global_Style {
 			public function __construct() {
 				add_action( 'wp_head', array( $this, 'add_global_style' ), 100 );
 				add_action( 'admin_head', array( $this, 'add_global_style' ), 100 );
 			}
 			public function add_global_style() {
-				$default_color   = MP_Global_Function::get_style_settings( 'default_text_color', '#303030' );
-				$theme_color     = MP_Global_Function::get_style_settings( 'theme_color', '#6b35e8' );
-				$theme_color_secondary     = MP_Global_Function::get_style_settings( 'theme_color_secondary', '#3F13A4' );
+				$default_color   = TTBM_Global_Function::get_style_settings( 'default_text_color', '#303030' );
+				$theme_color     = TTBM_Global_Function::get_style_settings( 'theme_color', '#6b35e8' );
+				$theme_color_secondary     = TTBM_Global_Function::get_style_settings( 'theme_color_secondary', '#3F13A4' );
                 $theme_color_rgb = $this->hexToRgb($theme_color);
-				$alternate_color = MP_Global_Function::get_style_settings( 'theme_alternate_color', '#fff' );
-				$warning_color   = MP_Global_Function::get_style_settings( 'warning_color', '#E67C30' );
-				// $default_fs      = MP_Global_Function::get_style_settings( 'default_font_size', '16' ) . 'px';
-				// $fs_h1           = MP_Global_Function::get_style_settings( 'font_size_h1', '35' ) . 'px';
-				// $fs_h2           = MP_Global_Function::get_style_settings( 'font_size_h2', '30' ) . 'px';
-				// $fs_h3           = MP_Global_Function::get_style_settings( 'font_size_h3', '25' ) . 'px';
-				// $fs_h4           = MP_Global_Function::get_style_settings( 'font_size_h4', '22' ) . 'px';
-				// $fs_h5           = MP_Global_Function::get_style_settings( 'font_size_h5', '18' ) . 'px';
-				// $fs_h6           = MP_Global_Function::get_style_settings( 'font_size_h6', '16' ) . 'px';
-				// $fs_label        = MP_Global_Function::get_style_settings( 'font_size_label', '14' ) . 'px';
-				// $button_fs       = MP_Global_Function::get_style_settings( 'button_font_size', '14' ) . 'px';
-				$button_color    = MP_Global_Function::get_style_settings( 'button_color', $alternate_color );
-				$button_bg       = MP_Global_Function::get_style_settings( 'button_bg', '#ea8125' );
-				$section_bg      = MP_Global_Function::get_style_settings( 'section_bg', '#FAFCFE' );
+				$alternate_color = TTBM_Global_Function::get_style_settings( 'theme_alternate_color', '#fff' );
+				$warning_color   = TTBM_Global_Function::get_style_settings( 'warning_color', '#E67C30' );
+				// $default_fs      = TTBM_Global_Function::get_style_settings( 'default_font_size', '16' ) . 'px';
+				// $fs_h1           = TTBM_Global_Function::get_style_settings( 'font_size_h1', '35' ) . 'px';
+				// $fs_h2           = TTBM_Global_Function::get_style_settings( 'font_size_h2', '30' ) . 'px';
+				// $fs_h3           = TTBM_Global_Function::get_style_settings( 'font_size_h3', '25' ) . 'px';
+				// $fs_h4           = TTBM_Global_Function::get_style_settings( 'font_size_h4', '22' ) . 'px';
+				// $fs_h5           = TTBM_Global_Function::get_style_settings( 'font_size_h5', '18' ) . 'px';
+				// $fs_h6           = TTBM_Global_Function::get_style_settings( 'font_size_h6', '16' ) . 'px';
+				// $fs_label        = TTBM_Global_Function::get_style_settings( 'font_size_label', '14' ) . 'px';
+				// $button_fs       = TTBM_Global_Function::get_style_settings( 'button_font_size', '14' ) . 'px';
+				$button_color    = TTBM_Global_Function::get_style_settings( 'button_color', $alternate_color );
+				$button_bg       = TTBM_Global_Function::get_style_settings( 'button_bg', '#ea8125' );
+				$section_bg      = TTBM_Global_Function::get_style_settings( 'section_bg', '#FAFCFE' );
 				?>
 				<style>
 					:root {
@@ -41,8 +41,8 @@
 						--dmpl: 40px;
 						--dmp: 20px;
 						--dmp_negetive: -20px;
-						--dmp_xs: 10px;
-						--dmp_xs_negative: -10px;
+						--ttbm_mp_xs: 10px;
+						--ttbm_mp_xs_negative: -10px;
 						--dbrl: 10px;
 						--dbr: 5px;
 						--dbr_d: 8px;
@@ -118,8 +118,8 @@
 							/*--dmpl: 32px;*/
 							/*--dmp: 16px;*/
 							/*--dmp_negetive: -16px;*/
-							--dmp_xs: 8px;
-							/*--dmp_xs_negative: -8px;*/
+							--ttbm_mp_xs: 8px;
+							/*--ttbm_mp_xs_negative: -8px;*/
 						}
 					}
 					@media only screen and (max-width: 700px) {
@@ -134,8 +134,8 @@
 							/*--fs_h2: 22px;*/
 							/*--fs_h1: 24px;*/
 							/*--dmp: 10px;*/
-							/*--dmp_xs: 5px;*/
-							/*--dmp_xs_negative: -5px;*/
+							/*--ttbm_mp_xs: 5px;*/
+							/*--ttbm_mp_xs_negative: -5px;*/
 							/*--button_fs: 14px;*/
 						}
 					}
@@ -159,5 +159,5 @@
                 return $r . ',' . $g . ',' . $b;
             }
 		}
-		new MP_Global_Style();
+		new TTBM_Global_Style();
 	}

@@ -20,7 +20,7 @@
 							<span data-icon class="fas fa-plus"></span>
 						</h2>
 						<div data-collapse="#ttbm_faq_datails_<?php esc_attr_e( $key ); ?>">
-							<div class="ttbm_faq_content mp_wp_editor">
+							<div class="ttbm_faq_content ttbm_wp_editor">
 								<?php echo wp_kses_post($faq['ttbm_faq_content']); ?>
 							</div>
 						</div>

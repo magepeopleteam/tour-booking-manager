@@ -3,10 +3,10 @@
 		die;
 	}
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
-	if ( MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_get_question', 'on' ) != 'off' ) {
-		$contact_text  = MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_contact_text');
-		$contact_phone = MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_contact_phone');
-		$contact_email = MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_contact_email');
+	if ( TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_get_question', 'on' ) != 'off' ) {
+		$contact_text  = TTBM_Global_Function::get_post_info($ttbm_post_id, 'ttbm_contact_text');
+		$contact_phone = TTBM_Global_Function::get_post_info($ttbm_post_id, 'ttbm_contact_phone');
+		$contact_email = TTBM_Global_Function::get_post_info($ttbm_post_id, 'ttbm_contact_email');
 		if ( $contact_text || $contact_phone || $contact_email ) {
 			?>
 			<div class='ttbm_default_widget'>

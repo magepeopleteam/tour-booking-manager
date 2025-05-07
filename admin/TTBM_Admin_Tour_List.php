@@ -155,7 +155,7 @@
                         $posts_query->the_post();
                         $post_id = get_the_ID();
                         $location = get_post_meta($post_id, 'ttbm_location_name', true);
-                        $upcoming_date = MP_Global_Function::get_post_info($post_id, 'ttbm_upcoming_date');
+                        $upcoming_date = TTBM_Global_Function::get_post_info($post_id, 'ttbm_upcoming_date');
                         $total = TTBM_Function::get_total_seat($post_id);
                         $sold = TTBM_Function::get_total_sold($post_id, $upcoming_date);
                         $reserve = TTBM_Function::get_total_reserve($post_id);
@@ -188,7 +188,7 @@
                                     <div class="meta-label">
                                         <?php
                                         if ($upcoming_date) {
-                                            echo esc_html(MP_Global_Function::date_format($upcoming_date));
+                                            echo esc_html(TTBM_Global_Function::date_format($upcoming_date));
                                         } else {
                                             echo '<span class="textWarning">' . esc_html__('Expired!', 'tour-booking-manager') . '</span>';
                                         }
@@ -222,7 +222,7 @@
 				}
 				if (current_user_can('administrator')) {
 					if (get_post_type($_REQUEST['post_id']) == TTBM_Function::get_cpt_name()) {
-						$post_id = isset($_REQUEST['post_id']) ? MP_Global_Function::data_sanitize($_REQUEST['post_id']) : '';
+						$post_id = isset($_REQUEST['post_id']) ? TTBM_Global_Function::data_sanitize($_REQUEST['post_id']) : '';
 						if ($post_id > 0) {
 							$args = array('post_type' => array('ttbm_tour'), 'posts_per_page' => -1, 'p' => $post_id, 'post_status' => 'publish');
 							$loop = new WP_Query($args);

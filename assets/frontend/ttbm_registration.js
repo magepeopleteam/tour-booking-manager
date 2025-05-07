@@ -174,7 +174,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         let date_range = target.val();
         if (date_range) {
             $('.ttbm_hotel_area').slideDown('fast');
-            loadBgImage();
+            ttbm_loadBgImage();
         } else {
             $('.ttbm_hotel_area').slideUp('fast');
             target.trigger('focus');
@@ -225,7 +225,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
     $(document).on('click', '.get_particular_hotel', function () {
         let parent = $(this).closest('.particular_date_area');
         parent.find('.ttbm_hotel_area').slideToggle(250);
-        loadBgImage();
+        ttbm_loadBgImage();
     });
     $(document).on('click', '.ttbm_go_particular_booking', function () {
         pageScrollTo($('#particular_item_area'));

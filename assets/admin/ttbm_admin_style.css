@@ -7,21 +7,21 @@ div.ttbm_settings table th,
 div.ttbm_settings table td {border: 0;}
 div.ttbm_settings table tbody th {text-align: left;font-size: var(--fs);}
 div.ttbm_settings table tbody thead th {text-align: center;}
-div.ttbm_settings .formControl {min-width: 80px;box-shadow: none;padding: 5px var(--dmp_xs);max-width: 300px;}
+div.ttbm_settings .formControl {min-width: 80px;box-shadow: none;padding: 5px var(--ttbm_mp_xs);max-width: 300px;}
 div.ttbm_settings .formControl.date_type,
 div.ttbm_settings .formControl[type="date"] {padding: 8px;padding-left:35px; max-width: 250px;font-size:inherit;min-width: 180px;font-weight:normal;}
 div.ttbm_settings span.dropdown-wrapper {margin: 0 !important;}
 div.ttbm_settings p.ttbm_description {display: block;font-weight: normal;font-size: var(--fs_small) !important;color: #666;}
 div.ttbm_settings p.ttbm_description span {margin: 0 5px 0 0;}
-div.ttbm_settings .mpPopup .popupMainArea {width: 100%;}
+div.ttbm_settings .ttbm_popup .popupMainArea {width: 100%;}
 /************Custom Pick Plugin**************************/
 .pickPluginInputItem:first-child { border-top: 1px dashed #0C5460;}
 .pickPluginInputItem {padding: 10px 0;border-bottom: 1px dashed #0C5460;}
-.mpStyle .ppof-button { width: auto; display: inline-block; text-align: center; height: auto; font-size: 15px; background-color: #0C5460; color: #FFF;}
-.mpStyle .ppof-button.clear { background-color: #7C1337;}
-.mpStyle .pickPluginInputItem select { min-width: 150px;}
-.mpStyle .pickPluginInputItem textarea { padding: 10px;}
-.mpStyle .select2-search__field { min-width: 320px;}
+.ttbm_style .ppof-button { width: auto; display: inline-block; text-align: center; height: auto; font-size: 15px; background-color: #0C5460; color: #FFF;}
+.ttbm_style .ppof-button.clear { background-color: #7C1337;}
+.ttbm_style .pickPluginInputItem select { min-width: 150px;}
+.ttbm_style .pickPluginInputItem textarea { padding: 10px;}
+.ttbm_style .select2-search__field { min-width: 320px;}
 /**************************/
 .inside .sec { display: block; font-size: 15px; font-weight: normal; margin: 0;}
 .sec label { font-size: 16px; font-weight: bold;}
@@ -65,7 +65,7 @@ div.unlimited_section {background-color: #F2F2F2;margin: 15px 0 0 0;padding: 50p
 .unlimited_section .content_area {padding: 25px 15px 0 0;}
 div.unlimited_section .content_area img {width: auto;max-width: 100px;}
 /****/
-.mpStyle a[class*='customButton'] {
+.ttbm_style a[class*='customButton'] {
 	width: auto;height: 45px;font-size: 20px;font-weight: 500;position: relative;
 	background-image: -webkit-linear-gradient(#FF8F8E, #FF8787, #FF7B7D, #FF6369, #FF575F, #FF515A);
 	background-image: -moz-linear-gradient(#FF8F8E, #FF8787, #FF7B7D, #FF6369, #FF575F, #FF515A);
@@ -75,38 +75,38 @@ div.unlimited_section .content_area img {width: auto;max-width: 100px;}
 	margin: 20px 0 0 0;padding: 0 20px;
 	color: #FFF;min-width: 170px;
 }
-.mpStyle a[class*='customButton']:hover {color: #F2F2F2;}
-.mpStyle .buttonOutline {
+.ttbm_style a[class*='customButton']:hover {color: #F2F2F2;}
+.ttbm_style .buttonOutline {
 	min-width: 160px;min-height: 60px;border: 2px solid #FF555D;color: #FF555D;font-size: 16px;font-weight: 500;
 	display: -webkit-inline-flex;display: inline-flex;
 	margin: 30px 0 0 0;padding: 0 15px;
 }
-.mpStyle .buttonOutline:hover {background-color: #FF555D;color: #FFF;}
+.ttbm_style .buttonOutline:hover {background-color: #FF555D;color: #FFF;}
 .postDash::after { position: absolute;content: ""; top: 23px;width: 45px; height: 2px;background-color: #F26E26;}
 .postDash::after {right: -65px;}
 @media only screen and (max-width: 1100px) {
 	.unlimited_section .textContent {padding: 0 0 0 20px;}
 	.unlimited_section .content_area {padding: 15px 10px 0 0;}
 	.unlimited_section .textContent h4 {margin: 0 0 7px 0;font-size: 18px;}
-	.mpStyle .buttonOutline {min-height: 50px;font-size: 15px;margin: 20px 0 0 0;}
-	.mpStyle [class*="customButton"] {font-size: 18px;}
+	.ttbm_style .buttonOutline {min-height: 50px;font-size: 15px;margin: 20px 0 0 0;}
+	.ttbm_style [class*="customButton"] {font-size: 18px;}
 }
 @media only screen and (max-width: 900px) {
 	.unlimited_section {padding: 40px 0;}
-	.mpStyle section h1 {margin: 0 0 20px 0;font-size: 40px;}
+	.ttbm_style section h1 {margin: 0 0 20px 0;font-size: 40px;}
 	.unlimited_section .textContent {padding: 0 0 0 15px;}
 	.unlimited_section .content_area {padding: 10px 7px 0 0;}
 	.unlimited_section .textContent h4 {font-size: 16px;}
-	.mpStyle .buttonOutline {min-height: 45px;font-size: 15px;margin: 15px 0 0 0;}
+	.ttbm_style .buttonOutline {min-height: 45px;font-size: 15px;margin: 15px 0 0 0;}
 }
 @media only screen and (max-width: 700px) {
 	.unlimited_section {padding: 30px 0;}
-	.mpStyle [class*="extraBold"] {font-weight: 500;}
-	.mpStyle [class*="customButton"] {height: 30px;font-size: 14px;margin: 0 0 10px 0;}
+	.ttbm_style [class*="extraBold"] {font-weight: 500;}
+	.ttbm_style [class*="customButton"] {height: 30px;font-size: 14px;margin: 0 0 10px 0;}
 	.postDash::after {top: 15px;width: 40px;height: 1px;}
 	.postDash::after {right: -50px;}
 	.unlimited_section .textContent {padding: 0 0 0 10px;}
-	.mpStyle .buttonOutline {min-height: 40px;font-size: 14px;margin: 10px 0 0 0;}
+	.ttbm_style .buttonOutline {min-height: 40px;font-size: 14px;margin: 10px 0 0 0;}
 }
 @media only screen and (max-width: 500px) {
 	.unlimited_section {padding: 25px 0;}
@@ -126,11 +126,11 @@ label.ttbm_id_select{height: 100%;}
 #ttbm_list_page table td{border-color: #F7EFEF;}
 #ttbm_list_page .ttbm_list_attendee_area,
 #ttbm_list_page table tbody tr:nth-of-type(odd) td table  th,
-#ttbm_list_page table tbody tr:nth-of-type(odd) td table  td{padding: var(--dmp_xs);border-color: var(--color_border);}
+#ttbm_list_page table tbody tr:nth-of-type(odd) td table  td{padding: var(--ttbm_mp_xs);border-color: var(--color_border);}
 /****************/
-.mpStyle .mp_search_on{display: block;}
-.mpStyle tr.mp_search_on{display: table-row;}
-.mpStyle .mp_search_off{display: none;}
+.ttbm_style .mp_search_on{display: block;}
+.ttbm_style tr.mp_search_on{display: table-row;}
+.ttbm_style .mp_search_off{display: none;}
 select#mep_ticket_offdays{height:200px !important;}
 #submit{
 	background-color: var(--mpl-white);
@@ -144,7 +144,7 @@ select#mep_ticket_offdays{height:200px !important;}
 }
 
 /* =====================quick setup=============== */
-.ttbm-quick-setup .mpTabsNext .tabsContentNext p{
+.ttbm-quick-setup .ttbmTabsNext .tabsContentNext p{
 	margin-bottom: 5px;
 }
 

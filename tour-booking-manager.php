@@ -26,9 +26,9 @@
 				if (!defined('TTBM_PLUGIN_URL')) {
 					define('TTBM_PLUGIN_URL', plugins_url() . '/' . plugin_basename(dirname(__FILE__)));
 				}
-				require_once TTBM_PLUGIN_DIR . '/mp_global/MP_Global_File_Load.php';
+				require_once TTBM_PLUGIN_DIR . '/mp_global/TTBM_Global_File_Load.php';
 				$this->load_global_file();
-				if (MP_Global_Function::check_woocommerce() == 1) {
+				if (TTBM_Global_Function::check_woocommerce() == 1) {
 					// add_action('activated_plugin', array($this, 'activation_redirect'), 90, 1);
 					require_once TTBM_PLUGIN_DIR . '/lib/classes/class-ttbm.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Dependencies.php';
@@ -45,7 +45,7 @@
 			}
 			
 			public function activation_redirect($plugin) {
-				if (MP_Global_Function::check_woocommerce() == 1) {
+				if (TTBM_Global_Function::check_woocommerce() == 1) {
 					self::on_activation_page_create();
 				}
 				$ttbm_quick_setup_done = get_option('ttbm_quick_setup_done');
@@ -54,7 +54,7 @@
 				}
 			}
 			public function activation_redirect_setup($plugin) {
-				if (MP_Global_Function::check_woocommerce() == 1) {
+				if (TTBM_Global_Function::check_woocommerce() == 1) {
 					self::on_activation_page_create();
 				}
 				$ttbm_quick_setup_done = get_option('ttbm_quick_setup_done') ? get_option('ttbm_quick_setup_done') : 'no';
@@ -91,7 +91,7 @@
             ];
 
             foreach ($pages_to_create as $page_data) {
-                $page_exists = MP_Global_Function::get_page_by_slug($page_data['slug']); // Check by slug
+                $page_exists = TTBM_Global_Function::get_page_by_slug($page_data['slug']); // Check by slug
                 $option_exists = get_option($page_data['option_key']); // Check option table
 
                 if (!$page_exists && !$option_exists) {
@@ -163,8 +163,8 @@
 				if ($query->have_posts()) {
 					foreach ($query->posts as $post) {
 						$post_id = $post->ID;
-						$start_date = MP_Global_Function::get_post_info($post_id, 'ttbm_travel_start_date');
-						$end_date = MP_Global_Function::get_post_info($post_id, 'ttbm_travel_end_date');
+						$start_date = TTBM_Global_Function::get_post_info($post_id, 'ttbm_travel_start_date');
+						$end_date = TTBM_Global_Function::get_post_info($post_id, 'ttbm_travel_end_date');
 						update_post_meta($post_id, 'ttbm_travel_repeated_start_date', $start_date);
 						update_post_meta($post_id, 'ttbm_travel_repeated_end_date', $end_date);
 					}

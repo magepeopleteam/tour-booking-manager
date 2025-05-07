@@ -3,7 +3,7 @@
 	$ttbm_post_id          = $ttbm_post_id ?? get_the_id();
 	$include_services = TTBM_Function::get_feature_list( $ttbm_post_id, 'ttbm_service_included_in_price' );
 	$exclude_services = TTBM_Function::get_feature_list( $ttbm_post_id, 'ttbm_service_excluded_in_price' );
-	$display_include  = MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_include_service', 'on' );
+	$display_include  = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_include_service', 'on' );
 	$term_name        = $term_name ?? true;
 	if ( $display_include != 'off' ) {
         $list_view_task=true;
@@ -54,7 +54,7 @@
 				</div>
 			</div>
 		</div>
-		<div data-popup="include-exclude-popup" class="mpPopup mpStyle">
+		<div data-popup="include-exclude-popup" class="ttbm_popup ttbm_style">
 			<div class="popupMainArea">
 				<div class="popupHeader allCenter">
 					<h2 class="_mR"><?php esc_html_e('What\'s Included','tour-booking-manager'); ?></h2>

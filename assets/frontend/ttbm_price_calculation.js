@@ -2,7 +2,7 @@ function ttbm_price_calculation(parent) {
     let total = mpTourTotalPrice(parent);
     let qty = mp_tour_ticket_qty(parent);
     parent.find(' #ttbm_total_price').val(total);
-    parent.find(' .tour_price').html(mp_price_format(total));
+    parent.find(' .tour_price').html(ttbm_price_format(total));
     parent.find('.tour_qty').html(qty);
     // Partial Payment Job
     ttbm_partial_payment_job(parent, total);
@@ -128,7 +128,7 @@ function ttbm_multi_attendee_form(parentTr, qty) {
 							});
                         }
                         target_tr.find(".date_type").removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind().promise().done(function () {
-                            mp_load_date_picker(target_tr);
+                            ttbm_load_date_picker(target_tr);
                         });
                     });
                 }
@@ -145,7 +145,7 @@ function ttbm_single_attendee_form(parent, totalQty) {
             let form_copy = parent.find('[data-form-type]').html();
             parent.find('.ttbm_attendee_form_area').append(form_copy).promise().done(function () {
                 parent.find('.ttbm_attendee_form_area').find(".date_type").removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind().promise().done(function () {
-                    mp_load_date_picker(parent.find('.ttbm_attendee_form_area'));
+                    ttbm_load_date_picker(parent.find('.ttbm_attendee_form_area'));
                 });
             });
         }
@@ -163,7 +163,7 @@ function ttbm_partial_payment_job(parent, total) {
     if (deposit_type === 'percent') {
         let percent = parseFloat(parent.find('[name="payment_plan"]').data('percent'));
         payment = total * percent / 100;
-        parent.find('.payment_amount').html(mp_price_format(payment));
+        parent.find('.payment_amount').html(ttbm_price_format(payment));
     }
     if (deposit_type === 'minimum_amount') {
         parent.find('.mep-pp-payment-terms .mep-pp-user-amountinput').attr('max', total);

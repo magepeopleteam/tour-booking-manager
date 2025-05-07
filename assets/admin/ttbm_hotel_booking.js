@@ -178,7 +178,7 @@
     });
 
 
-    $('.ttbm_hotel_tab_item').on('click', function() {
+    $(document).on('click', '.ttbm_hotel_tab_item', function() {
         var tab_id = $(this).data('tab');
 
         $('.ttbm_hotel_tab_item').removeClass('active');
@@ -187,9 +187,6 @@
         $('.ttbm_hotel_tab_content').removeClass('active');
         $('#' + tab_id).addClass('active');
     });
-
-
-
 
     function get_search_data_and_display( setUrl, type, search_term, nonce){
         jQuery.ajax({
@@ -220,7 +217,7 @@
             jQuery("#productTitleWrapper").show();
             jQuery("#productDropDownMenu").show();
         }
-        if( search_term.length === 3 ) { // Trigger search when input length is more than 2
+        if( search_term.length === 3 ) {
             get_search_data_and_display( setUrl, type, search_term, nonce);
         }else if( search_term.length === 12 ){
             get_search_data_and_display( setUrl, type, search_term, nonce);
@@ -235,10 +232,24 @@
         }
     });
 
-
     $(document).on('click', '.ttbm_trvel_lists_tabs button', function() {
         var targetId = $(this).data('target');
-        alert( targetId );
+
+        let action = '';
+        if( targetId === 'ttbm_trvel_lists_location' ){
+            action = 'ttbm_get_locations_html';
+        }else if( targetId === 'ttbm_trvel_lists_organiser' ){
+            action = 'ttbm_get_organiser_html_data';
+        }else if( targetId === 'ttbm_trvel_lists_features' ){
+            action = 'ttbm_get_feature_html_data';
+        }else if( targetId === 'ttbm_trvel_lists_tag' ){
+            action = 'ttbm_get_tag_html_data';
+        }else if( targetId === 'ttbm_trvel_lists_activities' ){
+            action = 'ttbm_get_activities_html_data';
+        }else if( targetId === 'ttbm_trvel_lists_places' ){
+            action = 'ttbm_get_places_html_data';
+        }
+
         if( targetId === 'ttbm_trvel_lists_tour' ){
             $(".ttbm-tour-list_holder").show();
         }else{
@@ -258,17 +269,40 @@
             nonce: nonce,
             type: 'POST',
             data: {
-                action: 'ttbm_get_locations_html',
+                action: action,
             },
             success: function (response) {
-                if (response.success) {
-                    console.log('HTML returned as object:', response.data); // ✅ object with HTML
-                    $('#ttbm_travel_list_location_shows').html(response.data.html); // render HTML
-                } else {
-                    $('#ttbm_travel_list_location_shows').html('<p>No locations found.</p>');
+                if( targetId === 'ttbm_trvel_lists_location' ){
+                    if (response.success) {
+                        $('#ttbm_travel_list_location_shows').html(response.data.html);
+                    } else {
+                        $('#ttbm_travel_list_location_shows').html('<p>No locations found.</p>');
+                    }
+                }else if(  targetId === 'ttbm_trvel_lists_organiser'){
+                    if (response.success) {
+                        $('#ttbm_travel_list_organiser_content').html(response.data.html);
+                    }
+                }else if(  targetId === 'ttbm_trvel_lists_features'){
+                    if (response.success) {
+                        $('#ttbm_travel_list_feature_content').html(response.data.html);
+                    }
+                }else if(  targetId === 'ttbm_trvel_lists_tag'){
+                    if (response.success) {
+                        $('#ttbm_travel_list_tag_content').html(response.data.html);
+                    }
+                }else if(  targetId === 'ttbm_trvel_lists_activities'){
+                    if (response.success) {
+                        $('#ttbm_travel_list_activies_content').html(response.data.html);
+                    }
+                }else if(  targetId === 'ttbm_trvel_lists_places'){
+                    if (response.success) {
+                        $('#ttbm_travel_list_places_content').html(response.data.html);
+                    }
                 }
             }
         });
+
+
     });
 
 

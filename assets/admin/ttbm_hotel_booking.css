@@ -609,6 +609,19 @@ body{
     flex-direction: column;
 }
 
+.ttbm-location-card {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+.ttbm-card-left img {
+    width: 100px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+
 
 
 

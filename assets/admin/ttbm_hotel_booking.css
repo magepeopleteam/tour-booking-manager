@@ -620,7 +620,14 @@ body{
     object-fit: cover;
     border-radius: 8px;
 }
-
+.ttbm_travel_content_loader{
+    display: flex;
+    padding: 10px 20px;
+    /*border: 1px solid #0a4b78;*/
+    margin-top: 10px;
+    color: #999900;
+    width: 150px;
+}
 
 
 

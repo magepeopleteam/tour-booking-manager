@@ -162,38 +162,50 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                     <a href="<?php echo admin_url('post-new.php?post_type=ttbm_places'); ?>">
                         <button class="ttbm-button">Add New Places</button>
                     </a>
-                    <div class="ttbm_travel_list_places_content" id="ttbm_travel_list_places_content"></div>
+                    <div class="ttbm_travel_list_places_content" id="ttbm_travel_list_places_content">
+                        <div class="ttbm_travel_content_loader">Loading...</div>
+                    </div>
                 </div>
 
                 <div id="ttbm_trvel_lists_organiser" class="ttbm_trvel_lists_content">
                     <p><?php echo __('Content for Trip Organiser','tour-booking-manager'); ?></p>
 
                     <button>Add new organiser</button>
-                    <div class="ttbm_travel_list_organiser_content" id="ttbm_travel_list_organiser_content"></div>
+                    <div class="ttbm_travel_list_organiser_content" id="ttbm_travel_list_organiser_content">
+                        <div class="ttbm_travel_content_loader">Loading...</div>
+                    </div>
                 </div>
                 <div id="ttbm_trvel_lists_location" class="ttbm_trvel_lists_content">
                     <?php do_action( 'ttbm_add_new_location_popup', 'ttbm_tour_location' );?>
                     <p><?php echo __('Content for Trip Locationg','tour-booking-manager'); ?></p>
                     <div id="ttbm-add-new-location-btn"><?php echo __('Add New Locations','tour-booking-manager'); ?></div>
-                    <div class="ttbm_travel_list_location_shows" id="ttbm_travel_list_location_shows"></div>
+                    <div class="ttbm_travel_list_location_shows" id="ttbm_travel_list_location_shows">
+                        <div class="ttbm_travel_content_loader">Loading...</div>
+                    </div>
                 </div>
 
                 <div id="ttbm_trvel_lists_features" class="ttbm_trvel_lists_content">
                     <p>Content for Features</p>
                     <button>Add new Feature</button>
-                    <div class="ttbm_travel_list_feature_content" id="ttbm_travel_list_feature_content"></div>
+                    <div class="ttbm_travel_list_feature_content" id="ttbm_travel_list_feature_content">
+                        <div class="ttbm_travel_content_loader">Loading...</div>
+                    </div>
                 </div>
 
                 <div id="ttbm_trvel_lists_tag" class="ttbm_trvel_lists_content">
                     <p>Content for Tag nre</p>
                     <button >Add New tag</button>
-                    <div class="ttbm_travel_list_tag_content" id="ttbm_travel_list_tag_content"></div>
+                    <div class="ttbm_travel_list_tag_content" id="ttbm_travel_list_tag_content">
+                        <div class="ttbm_travel_content_loader">Loading...</div>
+                    </div>
                 </div>
 
                 <div id="ttbm_trvel_lists_activities" class="ttbm_trvel_lists_content">
                     <p>Content for Activities</p>
                     <button >Add New Activities</button>
-                    <div class="ttbm_travel_list_activies_content" id="ttbm_travel_list_activies_content"></div>
+                    <div class="ttbm_travel_list_activies_content" id="ttbm_travel_list_activies_content">
+                        <div class="ttbm_travel_content_loader">Loading...</div>
+                    </div>
 
                 </div>
 

@@ -21,7 +21,7 @@
 								<span data-icon class="fas fa-chevron-down"></span>
 							</h5>
 							<div data-collapse="#ttbm_day_datails_<?php esc_attr_e( $key ); ?>">
-								<div class="day_wise_details_item_details mp_wp_editor">
+								<div class="day_wise_details_item_details ttbm_wp_editor">
 									<?php echo wp_kses_post( $day['ttbm_day_content']); ?>
 								</div>
 							</div>

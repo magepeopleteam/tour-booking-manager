@@ -110,7 +110,7 @@
 			}
 			public function custom_column_data($column, $post_id) {
 				TTBM_Function::update_upcoming_date_month($post_id);
-				$ttbm_travel_type = MP_Global_Function::get_post_info($post_id, 'ttbm_travel_type');
+				$ttbm_travel_type = TTBM_Global_Function::get_post_info($post_id, 'ttbm_travel_type');
 				switch ($column) {
 					case 'ttbm_location' :
 						echo TTBM_Function::get_full_location($post_id);
@@ -119,10 +119,10 @@
 						echo 'status';
 						break;
 					case 'ttbm_start_date' :
-						$upcoming_date = MP_Global_Function::get_post_info($post_id, 'ttbm_upcoming_date');
+						$upcoming_date = TTBM_Global_Function::get_post_info($post_id, 'ttbm_upcoming_date');
 						if ($upcoming_date) {
 							?>
-                            <span class="textSuccess"><?php echo esc_html(MP_Global_Function::date_format($upcoming_date)); ?></span>
+                            <span class="textSuccess"><?php echo esc_html(TTBM_Global_Function::date_format($upcoming_date)); ?></span>
 							<?php
 						} else {
 							?>
@@ -132,7 +132,7 @@
 						break;
 					case 'ttbm_end_date' :
 						if ($ttbm_travel_type == 'fixed') {
-							echo MP_Global_Function::date_format(TTBM_Function::get_reg_end_date($post_id));
+							echo TTBM_Global_Function::date_format(TTBM_Function::get_reg_end_date($post_id));
 						}
 						break;
 				}

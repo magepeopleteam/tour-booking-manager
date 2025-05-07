@@ -40,10 +40,10 @@
 				<?php
 			}
 			public function feature($tour_id) {
-				$features = MP_Global_Function::get_taxonomy('ttbm_tour_features_list');
-				$include_display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_include_service', 'on');
+				$features = TTBM_Global_Function::get_taxonomy('ttbm_tour_features_list');
+				$include_display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_include_service', 'on');
 				$include_active = $include_display == 'off' ? '' : 'mActive';
-				$exclude_display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_exclude_service', 'on');
+				$exclude_display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_exclude_service', 'on');
 				$exclude_active = $exclude_display == 'off' ? '' : 'mActive';
 				$in_checked = $include_display == 'off' ? '' : 'checked';
 				$ex_checked = $exclude_display == 'off' ? '' : 'checked';
@@ -61,7 +61,7 @@
 							<div>
 								<p><?php esc_html_e('Create a feature', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_add_new_feature_popup'); ?></span></i></p>
 							</div>
-							<?php MP_Custom_Layout::popup_button('add_new_feature_popup', esc_html__('Create New Feature', 'tour-booking-manager')); ?>
+							<?php TTBM_Custom_Layout::popup_button('add_new_feature_popup', esc_html__('Create New Feature', 'tour-booking-manager')); ?>
 						</label>
 						<?php $this->add_new_feature_popup(); ?>
 					</section>
@@ -70,7 +70,7 @@
 							<div>
 								<p><?php esc_html_e('Price Included Feature', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_include_service'); ?></span></i></p>
 							</div>
-							<?php MP_Custom_Layout::switch_button('ttbm_display_include_service', $in_checked); ?> 
+							<?php TTBM_Custom_Layout::switch_button('ttbm_display_include_service', $in_checked); ?> 
 						</label>
 						<div data-collapse="#ttbm_display_include_service" class="includedd-features-section <?php echo esc_attr($include_active); ?>">
 							<?php $this->feature_list($tour_id, 'ttbm_service_included_in_price'); ?>
@@ -81,7 +81,7 @@
 							<div>
 								<p><?php esc_html_e('Price Excluded Feature', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_get_question'); ?></span></i></p>
 							</div>
-							<?php MP_Custom_Layout::switch_button('ttbm_display_exclude_service', $ex_checked); ?>  
+							<?php TTBM_Custom_Layout::switch_button('ttbm_display_exclude_service', $ex_checked); ?>  
 						</label>
 						<div data-collapse="#ttbm_display_exclude_service" class="includedd-features-section <?php echo esc_attr($include_active); ?>">
 							<?php $this->feature_list($tour_id, 'ttbm_service_excluded_in_price'); ?>
@@ -92,7 +92,7 @@
 				}
 			}
 			public function feature_list($tour_id, $feature_name) {
-				$all_features = MP_Global_Function::get_taxonomy('ttbm_tour_features_list');
+				$all_features = TTBM_Global_Function::get_taxonomy('ttbm_tour_features_list');
 				$features = TTBM_Function::get_feature_list($tour_id, $feature_name);
 				$feature_ids = TTBM_Function::feature_array_to_string($features);
 				if (sizeof($all_features) > 0) {
@@ -115,7 +115,7 @@
 			}
 			public function add_new_feature_popup() {
 				?>
-				<div class="mpPopup" data-popup="add_new_feature_popup">
+				<div class="ttbm_popup" data-popup="add_new_feature_popup">
 					<div class="popupMainArea">
 						<div class="popupHeader">
 							<h4>
@@ -155,7 +155,7 @@
 				<div class="divider"></div>
 				<div class="flexEqual">
 					<span><?php esc_html_e('Feature Icon : ', 'tour-booking-manager'); ?><sup class="textRequired">*</sup></span>
-					<?php do_action('mp_input_add_icon', 'ttbm_feature_icon'); ?>
+					<?php do_action('ttbm_input_add_icon', 'ttbm_feature_icon'); ?>
 				</div>
 				<p class="textRequired" data-required="ttbm_feature_icon">
 					<span class="fas fa-info-circle"></span>
@@ -165,13 +165,13 @@
 				die();
 			}
 			// public function ttbm_reload_feature_list() {
-			// 	$ttbm_id = MP_Global_Function::data_sanitize($_POST['ttbm_id']);
+			// 	$ttbm_id = TTBM_Global_Function::data_sanitize($_POST['ttbm_id']);
 			// 	$this->feature($ttbm_id);
 			// 	die();
 			// }
 			public function ttbm_reload_feature_list()
 			{
-				$ttbm_id = MP_Global_Function::data_sanitize($_POST['ttbm_id']);
+				$ttbm_id = TTBM_Global_Function::data_sanitize($_POST['ttbm_id']);
 
 				// Load the included and excluded features sections
 				ob_start();
@@ -195,14 +195,14 @@
 				}
 			}
 			public function save_feature_data($tour_id) {
-				$include_service = MP_Global_Function::get_submit_info('ttbm_display_include_service') ? 'on' : 'off';
-				$exclude_service = MP_Global_Function::get_submit_info('ttbm_display_exclude_service') ? 'on' : 'off';
+				$include_service = TTBM_Global_Function::get_submit_info('ttbm_display_include_service') ? 'on' : 'off';
+				$exclude_service = TTBM_Global_Function::get_submit_info('ttbm_display_exclude_service') ? 'on' : 'off';
 				update_post_meta($tour_id, 'ttbm_display_include_service', $include_service);
 				update_post_meta($tour_id, 'ttbm_display_exclude_service', $exclude_service);
-				$include = MP_Global_Function::get_submit_info('ttbm_service_included_in_price', array());
+				$include = TTBM_Global_Function::get_submit_info('ttbm_service_included_in_price', array());
 				$new_include = TTBM_Function::feature_id_to_array($include);
 				update_post_meta($tour_id, 'ttbm_service_included_in_price', $new_include);
-				$exclude = MP_Global_Function::get_submit_info('ttbm_service_excluded_in_price', array());
+				$exclude = TTBM_Global_Function::get_submit_info('ttbm_service_excluded_in_price', array());
 				$new_exclude = TTBM_Function::feature_id_to_array($exclude);
 				update_post_meta($tour_id, 'ttbm_service_excluded_in_price', $new_exclude);
 			}
@@ -214,9 +214,9 @@
 				if (!isset($_POST['_wp_nonce']) || !wp_verify_nonce($_POST['_wp_nonce'], 'ttbm_add_new_feature_popup')) {
 					die();
 				}
-				$feature_name = MP_Global_Function::data_sanitize($_POST['feature_name']);
-				$feature_description = MP_Global_Function::data_sanitize($_POST['feature_description']);
-				$feature_icon = MP_Global_Function::data_sanitize($_POST['feature_icon']);
+				$feature_name = TTBM_Global_Function::data_sanitize($_POST['feature_name']);
+				$feature_description = TTBM_Global_Function::data_sanitize($_POST['feature_description']);
+				$feature_icon = TTBM_Global_Function::data_sanitize($_POST['feature_icon']);
 				$query = wp_insert_term($feature_name,   // the term
 					'ttbm_tour_features_list', // the taxonomy
 					array('description' => $feature_description));

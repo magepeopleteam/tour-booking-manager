@@ -19,10 +19,10 @@
 			}
 			public function related_tour_settings($tour_id) {
 				$ttbm_label = TTBM_Function::get_name();
-				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_related', 'on');
+				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_related', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
-				$related_tours = MP_Global_Function::get_post_info($tour_id, 'ttbm_related_tour', array());
-				$all_tours = MP_Global_Function::query_post_type(TTBM_Function::get_cpt_name());
+				$related_tours = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_related_tour', array());
+				$all_tours = TTBM_Global_Function::query_post_type(TTBM_Function::get_cpt_name());
 				$tours = $all_tours->posts;
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
@@ -44,7 +44,7 @@
 							<div>
 								<p><?php echo esc_html__('Related ', 'tour-booking-manager') . $ttbm_label . esc_html__(' Settings', 'tour-booking-manager') ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_related'); ?></span></i></p>
 							</div>
-							<?php MP_Custom_Layout::switch_button('ttbm_display_related', $checked); ?>
+							<?php TTBM_Custom_Layout::switch_button('ttbm_display_related', $checked); ?>
 						</div>
                     </section>
 
@@ -73,9 +73,9 @@
 			}
 			public function save_related_tour($tour_id) {
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
-					$related = MP_Global_Function::get_submit_info('ttbm_display_related') ? 'on' : 'off';
+					$related = TTBM_Global_Function::get_submit_info('ttbm_display_related') ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_related', $related);
-					$related_tours = MP_Global_Function::get_submit_info('ttbm_related_tour', array());
+					$related_tours = TTBM_Global_Function::get_submit_info('ttbm_related_tour', array());
 					update_post_meta($tour_id, 'ttbm_related_tour', $related_tours);
 				}
 			}

@@ -9,7 +9,7 @@
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
 	$tour_id = $tour_id ?? TTBM_Function::post_id_multi_language($ttbm_post_id);
 	$tour_date = $tour_date ?? current(TTBM_Function::get_date($tour_id));
-	$ticket_lists = MP_Global_Function::get_post_info($tour_id, 'ttbm_ticket_type', array());
+	$ticket_lists = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticket_type', array());
 	$available_seat = TTBM_Function::get_total_available($tour_id, $tour_date);
 	if ($available_seat > 0 && sizeof($ticket_lists) > 0) {
 		do_action('ttbm_before_ticket_type_area', $tour_id, $tour_date);
@@ -25,9 +25,9 @@
 					<table class="mp_tour_ticket_type">
 						<thead>
                             <tr>
-                                <th class="textL"><?php echo MP_Global_Function::data_sanitize(TTBM_Function::ticket_name_text()); ?></th>
-                                <th><?php echo MP_Global_Function::data_sanitize(TTBM_Function::ticket_price_text()); ?></th>
-                                <th><?php echo MP_Global_Function::data_sanitize(TTBM_Function::ticket_qty_text()); ?></th>
+                                <th class="textL"><?php echo TTBM_Global_Function::data_sanitize(TTBM_Function::ticket_name_text()); ?></th>
+                                <th><?php echo TTBM_Global_Function::data_sanitize(TTBM_Function::ticket_price_text()); ?></th>
+                                <th><?php echo TTBM_Global_Function::data_sanitize(TTBM_Function::ticket_qty_text()); ?></th>
                             </tr>
 						</thead>
 						<tbody>
@@ -36,8 +36,8 @@
 								$ticket_name = array_key_exists('ticket_type_name', $ticket) ? $ticket['ticket_type_name'] : '';
 								$price = TTBM_Function::get_price_by_name($ticket_name, $tour_id, '', '', $tour_date);
 								$regular_price = TTBM_Function::check_discount_price_exit($tour_id, $ticket_name, '', '', $tour_date);
-								$ticket_price = MP_Global_Function::wc_price($tour_id, $price);
-								$ticket_price_raw = MP_Global_Function::price_convert_raw($ticket_price);
+								$ticket_price = TTBM_Global_Function::wc_price($tour_id, $price);
+								$ticket_price_raw = TTBM_Global_Function::price_convert_raw($ticket_price);
 								$ticket_qty = array_key_exists('ticket_type_qty', $ticket) && $ticket['ticket_type_qty'] > 0 ? $ticket['ticket_type_qty'] : 0;
 								$reserve = array_key_exists('ticket_type_resv_qty', $ticket) && $ticket['ticket_type_resv_qty'] > 0 ? $ticket['ticket_type_resv_qty'] : 0;
 								$ticket_qty_type = array_key_exists('ticket_type_qty_type', $ticket) ? $ticket['ticket_type_qty_type'] : 'inputbox';
@@ -56,17 +56,17 @@
                                             <?php if ($ticket_type_icon) { ?>
                                                 <span class="<?php echo esc_attr($ticket_type_icon); ?>"></span>
                                             <?php } ?>
-                                            <?php echo MP_Global_Function::esc_html($ticket_name); ?>
+                                            <?php echo TTBM_Global_Function::esc_html($ticket_name); ?>
                                         </div>
                                         <?php if ($description) { ?>
-										    <div class="mT_xs person-description"><?php MP_Custom_Layout::load_more_text($description, 100); ?></div>
+										    <div class="mT_xs person-description"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
                                         <?php } ?>
 									</th>
 									<th class="textCenter">
 										<?php if ($regular_price) { ?>
-											<span class="strikeLine"><?php echo MP_Global_Function::wc_price($tour_id, $regular_price); ?></span>
+											<span class="strikeLine"><?php echo TTBM_Global_Function::wc_price($tour_id, $regular_price); ?></span>
 										<?php } ?>
-										<span><?php echo MP_Global_Function::esc_html($ticket_price); ?></span>
+										<span><?php echo TTBM_Global_Function::esc_html($ticket_price); ?></span>
 									</th>
 									<td>
 

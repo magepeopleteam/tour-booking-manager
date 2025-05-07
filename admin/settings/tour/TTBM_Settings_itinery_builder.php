@@ -73,7 +73,7 @@ if (!class_exists('TTBM_Daywise_Details')) {
 			wp_enqueue_style('thickbox');
 		}
 		public function tab_content($post_id) {
-			$daywise_active = MP_Global_Function::get_post_info($post_id, 'ttbm_display_schedule', 'off');
+			$daywise_active = TTBM_Global_Function::get_post_info($post_id, 'ttbm_display_schedule', 'off');
 			$checked = $daywise_active == 'on' ? 'checked' : '';
 			?>
 			<div class="tabsItem ttbm_settings_daywise" data-tabs="#ttbm_daywise_settings">
@@ -94,7 +94,7 @@ if (!class_exists('TTBM_Daywise_Details')) {
 						<div>
 							<p><?php esc_html_e('Itinerary Builder Enable/Disable', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Itinerary Builder Enable/Disable by this toggle switch.', 'tour-booking-manager'); ?></span></i></p>
 						</div>
-						<?php MP_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
+						<?php TTBM_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
 					</div>
 				</section>
 				<section class="ttbm-daywise-section ">
@@ -265,7 +265,7 @@ if (!class_exists('TTBM_Daywise_Details')) {
 			die;
 		}
 		public function save_daywise_settings($tour_id){
-			$daywise = MP_Global_Function::get_submit_info('ttbm_display_schedule') ? 'on' : 'off';
+			$daywise = TTBM_Global_Function::get_submit_info('ttbm_display_schedule') ? 'on' : 'off';
 			update_post_meta($tour_id, 'ttbm_display_schedule', $daywise);
 		}
 	}

@@ -92,6 +92,19 @@
 				do_action('add_ttbm_registration_enqueue');
 			}
 			public function ttbm_upgrade() {
+				if ( get_option( 'ttbm_conflict_update' ) != 'completed' ) {
+					$mp_global_settings = get_option( 'mp_global_settings' );
+					update_option( 'ttbm_global_settings', $mp_global_settings );
+					$style_settings = get_option( 'mp_style_settings' );
+					update_option( 'ttbm_style_settings', $style_settings );
+					$slider_settings = get_option( 'mp_slider_settings' );
+					update_option( 'ttbm_slider_settings', $slider_settings );
+					$custom_css = get_option( 'mp_add_custom_css' );
+					update_option( 'ttbm_custom_css', $custom_css );
+					$license_settings = get_option( 'mp_basic_license_settings' );
+					update_option( 'ttbm_license_settings', $license_settings );
+					update_option( 'ttbm_conflict_update', 'completed' );
+				}
 				if (get_option('ttbm_upgrade_global') != 'completed') {
 					$basic_settings = get_option('ttbm_basic_gen_settings');
 					$global_settings = get_option('mp_global_settings') ? get_option('mp_global_settings') : [];

@@ -7,7 +7,7 @@
 	$tour_type = TTBM_Function::get_tour_type( $tour_id );
 	$count     = $count ?? 0;
 	$travel_type = TTBM_Function::get_travel_type( $tour_id );
-	if ( $tour_type == 'general' && MP_Global_Function::get_post_info( $tour_id, 'ttbm_display_seat_details', 'on' ) == 'on' ) {
+	if ( $tour_type == 'general' && TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_display_seat_details', 'on' ) == 'on' ) {
 		$total_seat     = $total_seat??TTBM_Function::get_total_seat( $tour_id );
 		$available_seat = $available_seat??TTBM_Function::get_total_available( $tour_id );
 		?>

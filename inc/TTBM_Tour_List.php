@@ -61,7 +61,7 @@
                     $terms_id_array = array_unique( explode(',', $term_ids ) );
                 }
 
-                $activities = MP_Global_Function::get_taxonomy('ttbm_tour_activities');
+                $activities = TTBM_Global_Function::get_taxonomy('ttbm_tour_activities');
 				?>
 				<div class="all_filter_item">
 
@@ -111,7 +111,7 @@
 											data-organizer="<?php echo esc_attr(TTBM_Function::get_taxonomy_id_string($tour_id, 'ttbm_tour_org')); ?>"
 										<?php } ?>
 										<?php if ($params['location-filter'] == 'yes' || $location_filter) {
-											$location = MP_Global_Function::get_post_info($tour_id, 'ttbm_location_name');
+											$location = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_location_name');
 											$location_id = $location ? get_term_by('name', $location, 'ttbm_tour_location')->term_id : '';
 											?>
 											data-location="<?php echo esc_attr($location_id); ?>"
@@ -120,7 +120,7 @@
 											data-country="<?php echo esc_attr(TTBM_Function::get_country($tour_id)); ?>"
 										<?php } ?>
 										<?php if ($params['month-filter'] == 'yes' || $month_filter) { ?>
-											data-month="<?php echo esc_attr(MP_Global_Function::get_post_info($tour_id, 'ttbm_month_list')); ?>"
+											data-month="<?php echo esc_attr(TTBM_Global_Function::get_post_info($tour_id, 'ttbm_month_list')); ?>"
 										<?php } ?>
 										<?php
 											if ($params['feature-filter'] == 'yes' || $feature_filter) {

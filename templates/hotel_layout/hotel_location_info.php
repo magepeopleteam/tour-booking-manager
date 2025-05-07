@@ -4,9 +4,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $ttbm_post_id    = $ttbm_post_id ?? get_the_id();
-$display_hotel_rating= MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_display_hotel_rating');
-$display_hotel_location= MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_display_hotel_location');
-$display_hotel_distance= MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_display_hotel_distance');
+$display_hotel_rating= TTBM_Global_Function::get_post_info($ttbm_post_id, 'ttbm_display_hotel_rating');
+$display_hotel_location= TTBM_Global_Function::get_post_info($ttbm_post_id, 'ttbm_display_hotel_location');
+$display_hotel_distance= TTBM_Global_Function::get_post_info($ttbm_post_id, 'ttbm_display_hotel_distance');
 
 
 ?>
@@ -14,7 +14,7 @@ $display_hotel_distance= MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_
         <div class="ttbm_hotel_container">
 
             <?php if( $display_hotel_rating === 'on' ){
-                $hotel_rating= MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_hotel_rating');
+                $hotel_rating= TTBM_Global_Function::get_post_info($ttbm_post_id, 'ttbm_hotel_rating');
                 $rating = $hotel_rating.' Stars';
                 ?>
             <div class="ttbm_hotel_rating">
@@ -24,7 +24,7 @@ $display_hotel_distance= MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_
             <?php }?>
 
             <?php if( $display_hotel_location === 'on' ){
-                $hotel_location= MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_hotel_location');
+                $hotel_location= TTBM_Global_Function::get_post_info($ttbm_post_id, 'ttbm_hotel_location');
                 ?>
             <div class="ttbm_hotel_location">
                 <span class="ttbm_hotel_location_icon">📍</span>
@@ -33,7 +33,7 @@ $display_hotel_distance= MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_
             <?php }?>
 
             <?php if( $display_hotel_distance === 'on' ){
-                $hotel_distance_des= MP_Global_Function::get_post_info($ttbm_post_id, 'ttbm_hotel_distance_des');
+                $hotel_distance_des= TTBM_Global_Function::get_post_info($ttbm_post_id, 'ttbm_hotel_distance_des');
                 ?>
             <div class="ttbm_hotel_nearby_title"><?php esc_html_e( 'What\'s Nearby', 'tour-booking-manager' );?></div>
 

@@ -17,10 +17,10 @@
 				<?php
 			}
 			public function admin_note_settings($tour_id) {
-				$display = MP_Global_Function::get_post_info($tour_id, 'ttbm_display_admin_note', 'on');
+				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_admin_note', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
-				$admin_note = MP_Global_Function::get_post_info($tour_id, 'ttbm_admin_note');
+				$admin_note = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_admin_note');
 				$admin_note       = $admin_note ? html_entity_decode( $admin_note ) : '';
 				?>
 				<div class="tabsItem ttbm_settings_admin_note" data-tabs="#ttbm_settings_admin_note">
@@ -40,7 +40,7 @@
 							<div>
 								<p><?php esc_html_e('Show Admin Note', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e( 'Show admin note in frontend', 'tour-booking-manager' ); ?></span></i></p>
 							</div>
-							<?php MP_Custom_Layout::switch_button('ttbm_display_admin_note', $checked); ?>
+							<?php TTBM_Custom_Layout::switch_button('ttbm_display_admin_note', $checked); ?>
 						</label>
                     </section>
 
@@ -61,9 +61,9 @@
 			}
 			public function save_admin_note($post_id) {
 				if (get_post_type($post_id) == TTBM_Function::get_cpt_name()) {
-					$display_note = MP_Global_Function::get_submit_info('ttbm_display_admin_note') ? 'on' : 'off';
+					$display_note = TTBM_Global_Function::get_submit_info('ttbm_display_admin_note') ? 'on' : 'off';
 					update_post_meta($post_id, 'ttbm_display_admin_note', $display_note);
-					$note=MP_Global_Function::get_submit_info('ttbm_admin_note');
+					$note=TTBM_Global_Function::get_submit_info('ttbm_admin_note');
 					update_post_meta($post_id, 'ttbm_admin_note', $note);
 				}
 			}

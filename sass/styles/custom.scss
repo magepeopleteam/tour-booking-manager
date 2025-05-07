@@ -11,22 +11,22 @@
   align-items: center !important;
 }
 
-div.mpStyle select.formControl {
+div.ttbm_style select.formControl {
   border-radius: 5px;
 }
 
-.mpStyle [data-tabs-target].active {
+.ttbm_style [data-tabs-target].active {
   background-color: var(--mpl-white);
   color: var(--d_color);
   border-left: 2px solid var(--mpl-primary);
 }
 
-.mpStyle [data-tabs-target]:hover {
+.ttbm_style [data-tabs-target]:hover {
   border-left: 2px solid var(--mpl-primary);
   background-color: var(--mpl-white);
 }
 
-.mpStyle .themeButton, .mpStyle [class*="_themeButton"]{
+.ttbm_style .themeButton, .ttbm_style [class*="_themeButton"]{
   background-color: var(--mpl-primary);
   color: var(--mpl-white);
   padding: 10px;
@@ -37,7 +37,7 @@ div.mpStyle select.formControl {
 }
 
 @media only screen and (min-width: 0px) {
-  #mp_meta_box_panel .tabLists {
+  #ttbm_meta_box_panel .tabLists {
     border-right: 0px solid var(--mpl-light);
   }
 
@@ -45,14 +45,14 @@ div.mpStyle select.formControl {
     border-bottom: 0px solid var(--mpl-light);
   }
 
-  div.mp_global_settings label .info_text {
+  div.ttbm_global_settings label .info_text {
     line-height: 18px;
   }
 
-  div.mpStyle [data-tabs-target] {
+  div.ttbm_style [data-tabs-target] {
     color: var(--mpl-secondary);
   }
-  .mpStyle .tabsContent {
+  .ttbm_style .tabsContent {
     overflow: scroll;
   }
   code {
@@ -68,8 +68,8 @@ div.mpStyle select.formControl {
     }
   }
 
-  .mpStyle .navy_blueButton,
-  .mpStyle [class*="_navy_blueButton"] {
+  .ttbm_style .navy_blueButton,
+  .ttbm_style [class*="_navy_blueButton"] {
     background-color: var(--mpl-primary);
     color: var(--mpl-white);
     padding: calc(.5em * 1.5);
@@ -86,8 +86,8 @@ div.mpStyle select.formControl {
     }
   }
 
-  .mpStyle .warningButton,
-  .mpStyle [class*="_warningButton"] {
+  .ttbm_style .warningButton,
+  .ttbm_style [class*="_warningButton"] {
     background-color: var(--mpl-yellow);
     color: var(--mpl-white);
     padding: calc(.5em * 1.5);
@@ -103,10 +103,10 @@ div.mpStyle select.formControl {
     }
   }
 
-  div.mpStyle select.formControl:focus {
+  div.ttbm_style select.formControl:focus {
     background-color: var(--mpl-white);
   }
-  .mpStyle .mp_remove_icon {
+  .ttbm_style .ttbm_remove_icon {
     position: absolute;
     top: -8px;
     right: -8px;
@@ -362,7 +362,7 @@ div > .ppof-metabox {
   background: transparent;
 }
 
-.mpStyle .ppof-button {
+.ttbm_style .ppof-button {
   width: 320px;
   border: 0px solid;
   box-shadow: none;
@@ -376,7 +376,7 @@ div > .ppof-metabox {
 }
 
 @media only screen and (min-width: 0px) {
-  div.mp_multi_image {
+  div.ttbm_multi_image {
     display: flex;
     flex-wrap: wrap;
     justify-content: start;
@@ -384,7 +384,7 @@ div > .ppof-metabox {
     gap: .5em;
     margin-bottom:.5em;
 
-    div.mp_multi_image_item {
+    div.ttbm_multi_image_item {
       width: calc(25% - 16px);
 
       img {
@@ -394,19 +394,19 @@ div > .ppof-metabox {
       }
     }
   }
-  div.mpStyle .description {
+  div.ttbm_style .description {
     font-size: 1rem !important;
     color: var(--mpl-secondary);
   }
 }
 
-div.mpStyle span.mp_remove_multi_image {
+div.ttbm_style span.ttbm_remove_multi_image {
   background-color: var(--mpl-black);
   color: var(--mpl-white);
   box-shadow: 0 0 5px var(--mpl-white);
 }
 
-div.mpStyle span.mp_remove_multi_image {
+div.ttbm_style span.ttbm_remove_multi_image {
   top: -7px;
   right: -7px;
 }
@@ -467,7 +467,7 @@ div.mpStyle span.mp_remove_multi_image {
   }
 }
 
-div.mpStyle .customCheckboxLabel input:checked ~ .customCheckbox::after {
+div.ttbm_style .customCheckboxLabel input:checked ~ .customCheckbox::after {
   content: "";
   position: absolute;
   left: 3px;

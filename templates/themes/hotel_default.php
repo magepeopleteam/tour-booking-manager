@@ -9,7 +9,7 @@ $tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
 $class_location = $class_location ?? '';
 ?>
     <div class="ttbm_default_theme">
-        <div class='mpStyle ttbm_wraper'>
+        <div class='ttbm_style ttbm_wraper'>
             <div class="ttbm_hotel_item fdColumn">
                 <div class="ttbm_container">
                 <div class="ttbm_details_page">
@@ -20,7 +20,7 @@ $class_location = $class_location ?? '';
                             <?php
                             if ( is_plugin_active( 'tour-booking-manager-pro/tour-booking-manager-pro.php' ) ):
                                 $location = TTBM_Function::get_full_location( $ttbm_post_id );
-                                if ( $location && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_hotel_location', 'on' ) != 'off' ) {
+                                if ( $location && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_hotel_location', 'on' ) != 'off' ) {
                                     ?>
                                     <span class="pL_xs pR_xs">|</span>
                                 <?php }

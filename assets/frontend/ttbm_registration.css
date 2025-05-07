@@ -3,12 +3,12 @@
 .ttbm_default__title {margin:0;padding:0 0 5px 0;}
 div.ttbm_default_widget {display: block;font-size: var(--fs);color: var(--d_color);position: relative;margin: 0 0 var(--dmp) 0;}
 div > div.ttbm_default_widget:last-child {margin: 0;}
-div.ttbm_default_widget .ttbm_widget_title {padding: var(--dmp_xs) var(--dmp);text-align: center;margin: 0;background-color: var(--color_theme);color: var(--color_theme_alter);}
-.ttbm_widget_content {padding: var(--dmp_xs);}
+div.ttbm_default_widget .ttbm_widget_title {padding: var(--ttbm_mp_xs) var(--dmp);text-align: center;margin: 0;background-color: var(--color_theme);color: var(--color_theme_alter);}
+.ttbm_widget_content {padding: var(--ttbm_mp_xs);}
 div.ttbm_default_widget .ttbm_widget_content {background-color: var(--color_section);border: 1px solid #DDD;}
 /*div.ttbm_default_widget .ttbm_widget_content a {margin: 0 0 7px 0;}*/
 div.ttbm_default_widget .ttbm_title_style_3,
-div.ttbm_default_widget .ttbm_title_style_2 {padding: 0 0 var(--dmp_xs) 0;}
+div.ttbm_default_widget .ttbm_title_style_2 {padding: 0 0 var(--ttbm_mp_xs) 0;}
 div.ttbm_default_widget .ttbm_title_style_2 ~ .ttbm_widget_content,
 div.ttbm_default_widget .ttbm_title_style_3 ~ .ttbm_widget_content {border: none;background-color: transparent;padding: 0;}
 
@@ -20,11 +20,11 @@ div.ttbm_default_widget .ttbm_title_style_3 {border-bottom: 2px solid var(--colo
 div.ttbm_default_widget .ttbm_title_style_2{border: 1px solid var(--color_theme);background-color: rgba(var(--color_theme_rbg),0.1);padding: 12px var(--dmp);font-weight: bold; border-radius: var(--dbr_d); margin-bottom: var(--dmp);}
 
 /*****************List*********************************/
-.ttbm_widget_content ul li:not(.mp_wp_editor li) {width: 100%;}
+.ttbm_widget_content ul li:not(.ttbm_wp_editor li) {width: 100%;}
 .ttbm_widget_content ul li i,
-.ttbm_widget_content ul li span {margin: 0 var(--dmp_xs) 0 0;}
-.ttbm_widget_content ul li:not(.mp_wp_editor li) {padding: 10px 0 !important;border-bottom: 1px dashed #DDD;position: relative;font-size: var(--fs);display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;}
-.ttbm_widget_content ul li a:not(.mp_wp_editor li a) {display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;}
+.ttbm_widget_content ul li span {margin: 0 var(--ttbm_mp_xs) 0 0;}
+.ttbm_widget_content ul li:not(.ttbm_wp_editor li) {padding: 10px 0 !important;border-bottom: 1px dashed #DDD;position: relative;font-size: var(--fs);display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;}
+.ttbm_widget_content ul li a:not(.ttbm_wp_editor li a) {display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;}
 /*************************************************/
 div.ttbm_registration_area {position: relative;margin: 0 0 var(--dmp) 0;}
 /***/
@@ -34,7 +34,7 @@ div.ttbm_booking_panel table tbody tr:nth-of-type(even) {background-color: #FFF;
 div.ttbm_booking_panel table tbody tr:nth-of-type(even) td {padding: 0;}
 
 div.ttbm_booking_panel table tbody tr td .ttbm_attendee_form_item:not(:last-child) {border-bottom: 1px solid #DDD;}
-.mpStyle table th, .mpStyle table td{ border: 0;}
+.ttbm_style table th, .ttbm_style table td{ border: 0;}
 div.ttbm_booking_panel table thead th,
 div.ttbm_booking_panel table td:last-child {text-align: center;padding: 8px;}
 div.ttbm_booking_panel table thead th:first-child{text-align: left;padding: 10px;}
@@ -58,9 +58,9 @@ div.ttbm_booking_panel table.mp_tour_ticket_type tbody td, table.mp_tour_ticket_
 div.ttbm_booking_panel table td {background-color: #fff;}
 /*************************************************/
 div.ttbm_date_time_select {margin:0;border-bottom: 1px solid #f2f2f2;}
-div.ttbm_select_date_area {padding: var(--dmp_xs);background-color: var(--color_theme);width: 100%;border-radius:8px 8px;}
+div.ttbm_select_date_area {padding: var(--ttbm_mp_xs);background-color: var(--color_theme);width: 100%;border-radius:8px 8px;}
 div.ttbm_date_time_select label span {color: var(--color_theme_alter);white-space: nowrap;}
-div.ttbm_date_time_select label {min-width: 120px;margin: 0 var(--dmp_xs) 0 0;}
+div.ttbm_date_time_select label {min-width: 120px;margin: 0 var(--ttbm_mp_xs) 0 0;}
 div.availability_section div.ttbm_date_time_select {-webkit-flex-direction: column;flex-direction: column;}
 #ttbm_select_date{
 	text-align: center;
@@ -111,7 +111,7 @@ div.particular_date_item {
 	align-items: center;
 	font-size: 14px;
 }
-div.particular_date_area .mp_tour_ticket_form {margin: var(--dmp_xs)  0 0 0;}
+div.particular_date_area .mp_tour_ticket_form {margin: var(--ttbm_mp_xs)  0 0 0;}
 div.ttbm_hotel_area {margin: 0 0 var(--dmp) 0;}
 div.ttbm_hotel_item {
 	border: 1px solid #C6C6C6;
@@ -222,7 +222,7 @@ span.load_more_text{cursor: pointer;color: var(--color_theme_cc);}
 	div.ttbm_hotel_details_item,
 	div.ttbm_select_date_area {-webkit-flex-direction: column;flex-direction: column;}
 	div.ttbm_date_time_select label span {
-		/*margin: 0 0 var(--dmp_xs) 0;*/
+		/*margin: 0 0 var(--ttbm_mp_xs) 0;*/
 		display: inline-block;
 		line-height: 1;
 	}
@@ -232,7 +232,7 @@ span.load_more_text{cursor: pointer;color: var(--color_theme_cc);}
 		gap: 10px;
 	}
 
-	div.ttbm_date_time_select label {margin: var(--dmp_xs) 0;-webkit-flex-wrap: wrap;flex-wrap: wrap;}
+	div.ttbm_date_time_select label {margin: var(--ttbm_mp_xs) 0;-webkit-flex-wrap: wrap;flex-wrap: wrap;}
 	div.ttbm_hotel_list_details{width: 100%;margin: 20px 0 0 0;}
 
 	.ttbm_select_date_area .formControl {

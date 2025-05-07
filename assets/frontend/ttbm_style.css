@@ -88,7 +88,7 @@ div.ttbm_map_area #gmap_canvas {max-width: 100%;width: 100%;min-height: 320px;}
 /*********************Location list*****************************/
 div.ttbm_location_list div.filter_item {padding: 0;}
 /**************************************************/
-div.mpStyle .mp_tour_ticket_form{
+div.ttbm_style .mp_tour_ticket_form{
   	border: 1px solid var(--color_theme);
 	border-radius:8px;
 	margin-top:10px;
@@ -119,7 +119,7 @@ div.mpStyle .mp_tour_ticket_form{
 	color: var(--color_theme);
 	font-size: 20px;
 }
-div.mpStyle #ttbm_select_date.formControl {
+div.ttbm_style #ttbm_select_date.formControl {
 	padding: 20px;
 	padding-left: 30px;
 
@@ -141,15 +141,15 @@ div.item_section {
 div.item_section .ttbm_short_list_more {
 	cursor: pointer;
 	color: var(--color_theme);
-	margin: 0 0 0 var(--dmp_xs) ;
+	margin: 0 0 0 var(--ttbm_mp_xs) ;
 	font-weight: var(--fw-medium);
 	font-size: var(--fs_h4);
-	margin-top: var(--dmp_xs);
-	padding: var(--dmp_xs) var(--dmp_xs);
+	margin-top: var(--ttbm_mp_xs);
+	padding: var(--ttbm_mp_xs) var(--ttbm_mp_xs);
 	display: inline-block;
 }
 div.small_box {
-	padding: var(--dmp) var(--dmp_xs) ;margin: var(--dmp_xs);width: calc(25% - var(--dmp));
+	padding: var(--dmp) var(--ttbm_mp_xs) ;margin: var(--ttbm_mp_xs);width: calc(25% - var(--dmp));
 	border: 1px solid var(--color_border);border-radius: 10px;
 	background-color: var(--color_section);line-height: 1.25;
 	-webkit-flex-direction: column;flex-direction: column;
@@ -179,7 +179,7 @@ div .item_icon:last-child:after{
 
 div .item_icon i {color: var(--color_theme);}
 
-div.mpStyle [data-bg-image]{
+div.ttbm_style [data-bg-image]{
 	transform: scale(1);
 }
 @media (max-width:600px) {
@@ -212,7 +212,7 @@ div.mpStyle [data-bg-image]{
 	border-bottom: 1px solid #ddd;
 }
 /**************************************************/
-.ttbm_wraper button.ttbm_book_now {margin: 0 var(--dmp_xs) 0 0;}
+.ttbm_wraper button.ttbm_book_now {margin: 0 var(--ttbm_mp_xs) 0 0;}
 /*****************/
 /**********************/
 div.bg_image_area .group_item {
@@ -227,7 +227,7 @@ div.bg_image_area .group_item > * {color: #FFF;font-weight: bold;width: 100%;}
 div.bg_image_area .group_item span {color: #FFF;}
 div.bg_image_area .group_item .ttbm_list_info {
 	-webkit-justify-content: center;justify-content: center;
-	margin: 0 0 var(--dmp_xs) 0;
+	margin: 0 0 var(--ttbm_mp_xs) 0;
 	font-size: 12px;
 	background-color: #0007;
 	padding: 10px;
@@ -269,7 +269,7 @@ div.include_service ul li, .ttbm_widget_content .ttbm_list_details .include_serv
 	padding: 0 !important;
 	line-height: 35px;
 	text-align: center;
-	/*margin: 0 var(--dmp_xs) 0 0;*/
+	/*margin: 0 var(--ttbm_mp_xs) 0 0;*/
 }
 
 div.include_service ul li span, .ttbm_widget_content div.ttbm_list_details .include_service ul li span {
@@ -316,7 +316,7 @@ div.include_service ul li:hover,
 	gap: 10px;
 	padding: 20px 10px;
 }
-.mpStyle .get-enquiry-form input,.get-enquiry-form textarea{
+.ttbm_style .get-enquiry-form input,.get-enquiry-form textarea{
 	width: 100%;
 	margin-bottom: 20px;
 }
@@ -345,14 +345,14 @@ div.ttbm_viator_theme .viator_top_section .ttbm_content__left {width: calc(100% 
 div.ttbm_viator_theme .viator_top_section .ttbm_content__right {width: 380px;background-color: #F5F5F5;padding: var(--dmp);}
 div.ttbm_viator_theme div.superSlider {margin: 0;}
 div.ttbm_viator_theme div.small_box {width: 100%;
-	padding: 0; border: none;border-radius: 0;margin: var(--dmp_xs) 0 0 0;background-color: transparent;
+	padding: 0; border: none;border-radius: 0;margin: var(--ttbm_mp_xs) 0 0 0;background-color: transparent;
 	-webkit-flex-direction: initial;flex-direction: initial;
 	-webkit-justify-content: initial;justify-content: initial;
 }
-div.ttbm_viator_theme .item_icon {margin: 0 var(--dmp_xs) 0 0;font-size: var(--fs_h5);}
+div.ttbm_viator_theme .item_icon {margin: 0 var(--ttbm_mp_xs) 0 0;font-size: var(--fs_h5);}
 div.viator_top_section .ttbm_booking_panel {
 	position:initial;top: 100%;left: var(--dmp_negetive);right: var(--dmp_negetive);z-index:1;
-	padding: var(--dmp_xs);z-index: 11;background-color: #F5F5F5;
+	padding: var(--ttbm_mp_xs);z-index: 11;background-color: #F5F5F5;
 }
 div.ttbm_date_time_select span.date_time_label {font-size: 20px;}
 div.viator_top_section .ttbm_booking_panel h3 {font-size: var(--fs_h5);}
@@ -367,22 +367,22 @@ div.viator_top_section div.ttbm_date_time_select {padding: 0;background-color: t
 div.viator_top_section .ttbm_select_date_area > *,
 div.viator_top_section .ttbm_date_time_select > * {width: 100%;}
 div.viator_top_section div.ttbm_select_date_area {padding: 0;background-color: transparent;}
-div.viator_top_section div.ttbm_select_time_area {margin: var(--dmp_xs) 0 0 0;}
+div.viator_top_section div.ttbm_select_time_area {margin: var(--ttbm_mp_xs) 0 0 0;}
 div.viator_top_section div.ttbm_book_now_area {-webkit-flex-direction: column;flex-direction: column;margin: 0;}
 div.viator_top_section .ttbm_check_ability {width: 100%;margin: var(--dmp) 0 0 0; }
-div.viator_top_section .ttbm_book_now {margin: var(--dmp_xs) 0 0 0;}
-.mpStyle .navy_blueButton.ttbm_check_ability{
+div.viator_top_section .ttbm_book_now {margin: var(--ttbm_mp_xs) 0 0 0;}
+.ttbm_style .navy_blueButton.ttbm_check_ability{
 	background-color: var(--button_bg);
     color: var(--color_button);
-    padding: var(--dmp_xs);
+    padding: var(--ttbm_mp_xs);
     border: 1px solid var(--color_button);
 	font-size: 16px;
 }
 /******************day wise details********************************/
 div.ttbm_day_wise_details div.superSlider {min-width: 300px;max-width: 50%; margin: 0 var(--dmp) var(--dmp) 0;float: left;}
-div.day_wise_details_item .day_wise_details_item_details {margin: var(--dmp_xs) 0 0 0;overflow: hidden;}
+div.day_wise_details_item .day_wise_details_item_details {margin: var(--ttbm_mp_xs) 0 0 0;overflow: hidden;}
 div.ttbm_day_wise_details .day_wise_details_item_title {
-	padding: 0 var(--dmp_xs) var(--dmp_xs) 0;
+	padding: 0 var(--ttbm_mp_xs) var(--ttbm_mp_xs) 0;
 	border-bottom: 1px solid #DDD;
 	font-size: var(--fs_h4);
 	font-weight: var(--fw-medium);
@@ -399,7 +399,7 @@ div.day_wise_details_item:before {
 div.day_wise_details_item:last-child {padding-bottom: 0;border: none;}
 div.day_wise_details_item img {width: initial;}
 /*************F.A.Q*************************************/
-div.ttbm_faq_item {margin: 0 0 var(--dmp_xs) 0;}
+div.ttbm_faq_item {margin: 0 0 var(--ttbm_mp_xs) 0;}
 div.ttbm_faq_item .ttbm_faq_title {background-color: #FFF;border-bottom: 1px solid #DDD;border-radius: 0;font-weight: normal;text-transform: none; padding: 5px; font-size: var(--fs_h5)}
 div.ttbm_faq_item .ttbm_faq_title.active {border-color: #f5f5f5;border-radius: 5px 5px 0 0;background-color:  #f5f5f5; color: var(--color_black); }
 div.ttbm_faq_item .ttbm_faq_title span {padding:5px 0;font-size: 14px; font-weight: bold;}
@@ -423,7 +423,7 @@ div.ttbm_faq_content p:last-child {
 	margin-bottom: 0;
 }
 
-div.ttbm_faq_item div.superSlider {min-width: 300px;max-width: 50%; margin: 0 var(--dmp_xs) var(--dmp_xs) 0;float: left;}
+div.ttbm_faq_item div.superSlider {min-width: 300px;max-width: 50%; margin: 0 var(--ttbm_mp_xs) var(--ttbm_mp_xs) 0;float: left;}
 /*****************dynamic sidebar*********************************/
 div.ttbm_sidebar_widget {margin: 0 0 var(--dmp) 0;}
 div.ttbm_sidebar_widget .form-group-with-button {display: -webkit-flex;display: flex;}
@@ -482,7 +482,7 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 #place_you_see span.abTopRight {margin: 0;}
 #ttbm_related_tour div.filter_item:not([class*='grid_']) {margin: 0;}
 #place_you_see .filter_item {box-shadow: none !important;padding: 0 !important;border-radius: 0 !important;}
-.ttbm_tour_guide [data-bg-image].circle {max-width: 100%;border: 2px solid var(--color_theme);margin: var(--dmp_xs) auto;width: 170px;}
+.ttbm_tour_guide [data-bg-image].circle {max-width: 100%;border: 2px solid var(--color_theme);margin: var(--ttbm_mp_xs) auto;width: 170px;}
 /**************Responsive***********************************/
 @media only screen and (max-width: 1100px) {
 	.ttbm_content__left {width: calc(100% - 316px);}
@@ -518,7 +518,7 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 
 }
 @media only screen and (max-width: 600px) {
-	div.small_box {width: calc(100% - var(--dmp_xs));}
+	div.small_box {width: calc(100% - var(--ttbm_mp_xs));}
 	.section_item {width: 100%;}
 	div.small_box {width: calc(50% - var(--dmp));}
 	div.ttbm_top_filter label {width: 100%; margin-right: 0;}
@@ -663,11 +663,11 @@ div.ttbm_viator_theme .item_icon{
 	display: none;
 }
 
-.mpStyle .dButton, .mpStyle [class*="_dButton"] {
+.ttbm_style .dButton, .ttbm_style [class*="_dButton"] {
     color: var(--color_theme_alter);
     background-color: var(--color_theme);
   }
 
-  .mpStyle .dButton  span{
+  .ttbm_style .dButton  span{
     color: var(--color_theme_alter);
   }

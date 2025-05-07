@@ -355,7 +355,7 @@
 					$ex_service_info = $ex_service_infos->posts;
 					foreach ($ex_service_info as $ex_service) {
 						$service_id = $ex_service->ID;
-						$qty = MP_Global_Function::get_post_info($service_id, 'ttbm_service_qty',0);
+						$qty = TTBM_Global_Function::get_post_info($service_id, 'ttbm_service_qty',0);
 						$total_qty+=$qty;
 					}
 				}

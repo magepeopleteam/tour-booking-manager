@@ -9,7 +9,7 @@
 	$class_location = $class_location ?? '';
 ?>
 <div class="ttbm_smart_theme ">
-	<div class='mpStyle ttbm_wraper'>
+	<div class='ttbm_style ttbm_wraper'>
 		<div class="ttbm_container">
 			<div class="ttbm_details_page ttbm_content_area">
 				<div class="ttbm_content__left">

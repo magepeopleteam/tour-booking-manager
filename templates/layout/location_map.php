@@ -3,8 +3,8 @@
 		exit;
 	}
 	$ttbm_post_id      = $ttbm_post_id ?? get_the_id();
-	$full_address = MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_full_location_name' );
-	if ( $full_address && MP_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_map', 'on' ) != 'off' ) {
+	$full_address = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_full_location_name' );
+	if ( $full_address && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_map', 'on' ) != 'off' ) {
 		?>
 		<div class="ttbm_default_widget">
 			<?php $this->section_title( 'ttbm_string_tour_location', esc_html__( 'Location Map', 'tour-booking-manager' ) ); ?>

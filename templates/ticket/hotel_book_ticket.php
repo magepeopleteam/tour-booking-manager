@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 $ttbm_post_id = $ttbm_post_id ?? get_the_id();
-//$room_lists = MP_Global_Function::get_post_info( $hotel_id, 'ttbm_room_details', array() );
+//$room_lists = TTBM_Global_Function::get_post_info( $hotel_id, 'ttbm_room_details', array() );
 $date_range = $_REQUEST['date_range'] ?: "";
 if ( $hotel_id && $date_range ) {
     $hotel_date = explode( "-", $date_range );
@@ -13,7 +13,7 @@ if ( $hotel_id && $date_range ) {
     $date2      = date( 'Y-m-d', strtotime( $hotel_date[1] ) );
     $days       = date_diff( date_create( $date1 ), date_create( $date2 ) );
 
-    $room_lists_new = MP_Global_Function::pa_get_full_room_ticket_info( $hotel_id, $date1, $date2 );
+    $room_lists_new = TTBM_Global_Function::pa_get_full_room_ticket_info( $hotel_id, $date1, $date2 );
 
     ?>
     <input type="hidden" name='ttbm_tour_hotel_list' value='<?php echo esc_attr( $hotel_id ); ?>'>
@@ -41,8 +41,8 @@ if ( $hotel_id && $date_range ) {
                     $room_name        = array_key_exists( 'ttbm_hotel_room_name', $ticket ) ? $ticket['ttbm_hotel_room_name'] : '';
                     $price            = array_key_exists( 'ttbm_hotel_room_price', $ticket ) ? $ticket['ttbm_hotel_room_price'] : 0;
                     $sale_price            = array_key_exists( 'sale_price', $ticket ) ? $ticket['sale_price'] : '';
-                    $price            = MP_Global_Function::wc_price( $hotel_id, $price );
-                    $ticket_price_raw = MP_Global_Function::price_convert_raw( $price );
+                    $price            = TTBM_Global_Function::wc_price( $hotel_id, $price );
+                    $ticket_price_raw = TTBM_Global_Function::price_convert_raw( $price );
                     $ticket_qty       = array_key_exists( 'ttbm_hotel_room_qty', $ticket ) ? $ticket['ttbm_hotel_room_qty'] : 0;
                     $reserve          = 0;
                     $min_qty          = apply_filters( 'ttbm_ticket_type_min_qty', 0 );
@@ -54,7 +54,7 @@ if ( $hotel_id && $date_range ) {
                     ?>
                     <tr>
                         <td>
-                            <h5><?php echo MP_Global_Function::esc_html( $room_name ); ?></h5>
+                            <h5><?php echo TTBM_Global_Function::esc_html( $room_name ); ?></h5>
                             <?php
                             $adult_qty = array_key_exists( 'ttbm_hotel_room_capacity_adult', $ticket ) ? $ticket['ttbm_hotel_room_capacity_adult'] : 0;
                             $child_qty = array_key_exists( 'ttbm_hotel_room_capacity_child', $ticket ) ? $ticket['ttbm_hotel_room_capacity_child'] : 0;
@@ -76,9 +76,9 @@ if ( $hotel_id && $date_range ) {
                         </td>
                         <td>
                             <?php if ($sale_price) { ?>
-                                <span class="strikeLine"><?php echo MP_Global_Function::wc_price($hotel_id, $sale_price); ?></span>
+                                <span class="strikeLine"><?php echo TTBM_Global_Function::wc_price($hotel_id, $sale_price); ?></span>
                             <?php } ?>
-                            <?php echo MP_Global_Function::esc_html( $price ); ?>/
+                            <?php echo TTBM_Global_Function::esc_html( $price ); ?>/
                             <?php esc_html_e( 'Night ', 'tour-booking-manager' ); ?>&nbsp;X
                             <?php echo esc_html( $days->days ); ?>
                         </td>

@@ -11,10 +11,26 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
 
         }
 
-    public static function edit_location_popup( $term_id, $button_name ){
+        public static function get_taxonomy_type( $tab_type ){
+
+            $taxonomy_type = '';
+            if( $tab_type === 'Add New Locations' ){
+                $taxonomy_type = 'ttbm_tour_location';
+            }else if( $tab_type === 'Add New Organiser' ){
+                $taxonomy_type = 'ttbm_tour_org';
+            }
+
+            return $taxonomy_type;
+        }
+
+        public static function edit_location_popup( $term_id, $button_name, $tab_type ){
+
+
+
+            $taxonomy_type= self::get_taxonomy_type( $tab_type );
 
             if( $term_id ){
-                $term = get_term( $term_id, 'ttbm_tour_location' );
+                $term = get_term( $term_id, $taxonomy_type );
 
                 $term_name = esc_html( $term->name );
                 $term_slug = esc_html( $term->slug );
@@ -24,12 +40,21 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                 $meta = get_term_meta( $term_id );
 
 
-                $location_image = isset( $meta['ttbm_location_image'][0] ) ? $meta['ttbm_location_image'][0] : '';
-                $full_address = isset( $meta['ttbm_location_address'][0] ) ? $meta['ttbm_location_address'][0] : '';
-                $country_location = isset( $meta['ttbm_country_location'][0] ) ? $meta['ttbm_country_location'][0] : '';
-                $img_url = isset( $meta['ttbm_location_image'][0] ) && !empty( $meta['ttbm_location_image'][0] )
-                    ? wp_get_attachment_image_url( $meta['ttbm_location_image'][0], 'thumbnail')
-                    : '';
+                if( $tab_type === 'Add New Locations' ){
+                    $location_image = isset( $meta['ttbm_location_image'][0] ) ? $meta['ttbm_location_image'][0] : '';
+                    $full_address = isset( $meta['ttbm_location_address'][0] ) ? $meta['ttbm_location_address'][0] : '';
+                    $country_location = isset( $meta['ttbm_country_location'][0] ) ? $meta['ttbm_country_location'][0] : '';
+                    $img_url = isset( $meta['ttbm_location_image'][0] ) && !empty( $meta['ttbm_location_image'][0] )
+                        ? wp_get_attachment_image_url( $meta['ttbm_location_image'][0], 'thumbnail')
+                        : '';
+                }else{
+                    $location_image = '';
+                    $full_address = '';
+                    $country_location = '';
+                    $parent = '';
+                    $img_url =  '';
+                }
+
             }else{
                 $term_name = '';
                 $term_slug = '';
@@ -51,18 +76,19 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                     <?php wp_kses_post( self::add_term_common_fields( $term_name, $term_slug, $description ) );?>
 
                     <!--parent Location-->
-                    <?php self::parent_location_add( $parent );?>
+                    <?php self::parent_location_add( $parent, $taxonomy_type );?>
 
                     <!--Full Address-->
-                    <?php wp_kses_post( self::location_full_address_add( $full_address ) );?>
-
-                    <!--Country-->
-                    <?php wp_kses_post( self::country_add( $country_location ) );?>
-
-                    <!--Image-->
-                    <?php wp_kses_post( self::image_add( $location_image, $img_url ) )?>
+                    <?php
+                    if( $tab_type === 'Add New Locations' ){
+                         wp_kses_post( self::location_full_address_add( $full_address ) );
+                         wp_kses_post( self::country_add( $country_location ) );
+                         wp_kses_post( self::image_add( $location_image, $img_url ) );
+                    }
+                    ?>
 
                     <div class="ttbm-popup-buttons" id="<?php echo esc_attr( $term_id )?>">
+                        <input type="hidden" class="ttbm_get_clicked_tab_name" value="<?php echo esc_attr( $tab_type )?>">
                         <button class="ttbm-save-location"><?php echo esc_attr( $button_name )?></button>
                         <button id="ttbm-close-popup"><?php echo __('Cancel','tour-booking-manager'); ?></button>
                     </div>
@@ -91,12 +117,12 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
 
         <?php }
 
-        public static function parent_location_add( $parent ){ ?>
+        public static function parent_location_add( $parent, $taxonomy_type ){ ?>
             <label><?php echo __('Parent Location:','tour-booking-manager'); ?></label>
             <select id="ttbm-location-parent">
                 <option value=""><?php echo __('— None —','tour-booking-manager'); ?></option>
                 <?php
-                $terms = get_terms(['taxonomy' => 'ttbm_tour_location', 'hide_empty' => false]);
+                $terms = get_terms(['taxonomy' => $taxonomy_type, 'hide_empty' => false]);
                 if( is_array( $terms ) && !empty( $terms ) ){
                     foreach ($terms as $term) {
                         if( $parent == $term->term_id){
@@ -170,7 +196,9 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                 <div id="ttbm_trvel_lists_organiser" class="ttbm_trvel_lists_content">
                     <p><?php echo __('Content for Trip Organiser','tour-booking-manager'); ?></p>
 
-                    <button>Add new organiser</button>
+<!--                    <button cl>Add new organiser</button>-->
+                    <div id="ttbm-add-new-location-btn"><?php echo __('Add New Organiser','tour-booking-manager'); ?></div>
+
                     <div class="ttbm_travel_list_organiser_content" id="ttbm_travel_list_organiser_content">
                         <div class="ttbm_travel_content_loader">Loading...</div>
                     </div>

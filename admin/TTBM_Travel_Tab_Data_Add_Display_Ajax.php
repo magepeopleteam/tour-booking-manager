@@ -246,10 +246,9 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                         $view_link = get_permalink($post_id);
                         $edit_link = get_edit_post_link($post_id);
 
-                        // Get featured image URL or fallback
                         $img_url = get_the_post_thumbnail_url($post_id, 'thumbnail');
                         if (!$img_url) {
-                            $img_url = 'https://i.imgur.com/GD3zKtz.png'; // Default image
+                            $img_url = 'https://i.imgur.com/GD3zKtz.png';
                         }
                         ?>
                         <div class="ttbm-location-card" ttbm-data-location-id="<?php echo esc_attr($post_id); ?>">
@@ -283,8 +282,6 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
 
         function ttbm_add_new_location_term() {
-//            check_ajax_referer('ttbm_add_location_nonce');
-
             $name = sanitize_text_field($_POST['name']);
             $slug = sanitize_title($_POST['slug']);
             $parent = absint($_POST['parent']);
@@ -292,6 +289,7 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             $address = sanitize_textarea_field($_POST['address']);
             $country = sanitize_text_field($_POST['country']);
             $action_type = sanitize_text_field($_POST['action_type']);
+            $taxonomy_type = sanitize_text_field($_POST['taxonomy_type']);
             $imageId = absint($_POST['imageId']);
 
             if (empty($name)) {
@@ -304,7 +302,7 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                     'slug'        => $slug ?: null,
                     'parent'      => $parent ?: 0
                 ];
-                $term = wp_insert_term( $name, 'ttbm_tour_location', $args );
+                $term = wp_insert_term( $name, $taxonomy_type, $args );
             }else{
                 $args = [
                     'name' => $name,
@@ -313,7 +311,7 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                     'parent'      => $parent ?: 0
                 ];
                 $term_id = absint($_POST['term_id']);
-                $term = wp_update_term( $term_id, 'ttbm_tour_location', $args);
+                $term = wp_update_term( $term_id, $taxonomy_type, $args);
             }
 
             if (is_wp_error($term)) {
@@ -343,7 +341,8 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
             if (!is_wp_error( $term_id )) {
                 $button_name = 'Save';
-                $add_popup = TTBM_Travel_List_Tab_Details::edit_location_popup( $term_id,$button_name );
+                $tab_type = $_POST['tab_type'];
+                $add_popup = TTBM_Travel_List_Tab_Details::edit_location_popup( $term_id, $button_name, $tab_type );
                 $success = true;
             }
 
@@ -361,7 +360,8 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
             if (!is_wp_error( $term_id )) {
                 $button_name = 'Update';
-                $edit_popup = TTBM_Travel_List_Tab_Details::edit_location_popup( $term_id, $button_name );
+                $tab_type = '';
+                $edit_popup = TTBM_Travel_List_Tab_Details::edit_location_popup( $term_id, $button_name, $tab_type );
                 $success = true;
             }
 

@@ -16,6 +16,8 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             add_action('wp_ajax_ttbm_add_new_locations_ajax_html', [ $this, 'ttbm_add_new_locations_ajax_html' ]);
             add_action('wp_ajax_ttbm_edit_locations_ajax_html', [ $this, 'ttbm_edit_locations_ajax_html' ]);
 
+            add_action('wp_ajax_ttbm_delete_taxonomy_data_by_id', [ $this, 'ttbm_delete_taxonomy_data_by_id' ]);
+
         }
 
         public static function ttbm_get_term_data( $term_type ){
@@ -44,15 +46,18 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                             : 'https://i.imgur.com/GD3zKtz.png';
 
                         ?>
-                        <div class="ttbm-location-card"
-                             ttbm-data-location-id="<?php echo esc_attr( $term_id )?>">
+                        <div class="ttbm-location-card" >
                             <div class="ttbm-card-left">
                                 <img src="<?= $img_url ?>" alt="<?= $term_name ?>" width="70" height="70">
                             </div>
                             <div class="ttbm-card-right">
                                 <h3 class="ttbm-title"><?= $term_name ?></h3>
                                 <p class="ttbm-description"><?= $description ?></p>
-                                <span class="ttbm-edit-btn ttbm_edit_trip_location">Edit</span>
+                            </div>
+                            <div class="ttbm-location-card-actions ttbm-card-actions"  ttbm-data-location-id="<?php echo esc_attr( $term_id )?>">
+                                <button class="ttbm-btn ttbm-view-btn"> <i class="fas fa-eye"></i> View</button>
+                                <button class="ttbm-btn ttbm-edit-btn ttbm_edit_trip_location"><i class="fas fa-pen"></i> Edit</button>
+                                <button class="ttbm-btn ttbm-delete-btn ttbm_delete_taxonomy_data"> <i class="fas fa-trash"></i> Delete</button>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -70,6 +75,7 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                 'html' => $html,
             ]);
         }
+
         public function ttbm_get_organiser_html_data() {
             $terms = self::ttbm_get_term_data( 'ttbm_tour_org' );
 
@@ -77,23 +83,16 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
             if (!empty($terms) && !is_wp_error($terms)) {
                 ?>
-                <div class="ttbm-locations-list">
+                <div class="ttbm-taxonomy-list-holder">
                     <?php foreach ($terms as $term):
                         $term_id    = $term->term_id;
                         $term_name  = esc_html( $term->name );
                         $term_slug  = esc_html( $term->slug );
                         $description = esc_html( $term->description );
 
-
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description );
                         ?>
-                        <div class="ttbm-location-card" ttbm-data-location-id="<?php echo esc_attr( $term_id )?>">
 
-                            <div class="ttbm-card-right">
-                                <h3 class="ttbm-title"><?= $term_name ?></h3>
-                                <p class="ttbm-description"><?= $description ?></p>
-                                <span class="ttbm-edit-btn ttbm_edit_trip_location">Edit</span>
-                            </div>
-                        </div>
                     <?php endforeach; ?>
                 </div>
                 <?php
@@ -115,23 +114,16 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
             if (!empty($terms) && !is_wp_error($terms)) {
                 ?>
-                <div class="ttbm-locations-list">
+                <div class="ttbm-taxonomy-list-holder">
                     <?php foreach ($terms as $term):
                         $term_id    = $term->term_id;
                         $term_name  = esc_html( $term->name );
                         $term_slug  = esc_html( $term->slug );
                         $description = esc_html( $term->description );
 
-
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description );
                         ?>
-                        <div class="ttbm-location-card" ttbm-data-location-id="<?php echo esc_attr( $term_id )?>">
 
-                            <div class="ttbm-card-right">
-                                <h3 class="ttbm-title"><?= $term_name ?></h3>
-                                <p class="ttbm-description"><?= $description ?></p>
-                                <span class="ttbm-edit-btn ttbm_edit_trip_location">Edit</span>
-                            </div>
-                        </div>
                     <?php endforeach; ?>
                 </div>
                 <?php
@@ -153,23 +145,15 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
             if (!empty($terms) && !is_wp_error($terms)) {
                 ?>
-                <div class="ttbm-locations-list">
+                <div class="ttbm-taxonomy-list-holder">
                     <?php foreach ($terms as $term):
                         $term_id    = $term->term_id;
                         $term_name  = esc_html( $term->name );
                         $term_slug  = esc_html( $term->slug );
                         $description = esc_html( $term->description );
 
-
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description );
                         ?>
-                        <div class="ttbm-location-card" ttbm-data-location-id="<?php echo esc_attr( $term_id )?>">
-
-                            <div class="ttbm-card-right">
-                                <h3 class="ttbm-title"><?= $term_name ?></h3>
-                                <p class="ttbm-description"><?= $description ?></p>
-                                <span class="ttbm-edit-btn ttbm_edit_trip_location">Edit</span>
-                            </div>
-                        </div>
                     <?php endforeach; ?>
                 </div>
                 <?php
@@ -191,7 +175,7 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
             if (!empty($terms) && !is_wp_error($terms)) {
                 ?>
-                <div class="ttbm-locations-list">
+                <div class="ttbm-taxonomy-list-holder">
                     <?php foreach ($terms as $term):
                         $term_id    = $term->term_id;
                         $term_name  = esc_html( $term->name );
@@ -199,15 +183,9 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                         $description = esc_html( $term->description );
 
 
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description );
                         ?>
-                        <div class="ttbm-location-card" ttbm-data-location-id="<?php echo esc_attr( $term_id )?>">
 
-                            <div class="ttbm-card-right">
-                                <h3 class="ttbm-title"><?= $term_name ?></h3>
-                                <p class="ttbm-description"><?= $description ?></p>
-                                <span class="ttbm-edit-btn ttbm_edit_trip_location">Edit</span>
-                            </div>
-                        </div>
                     <?php endforeach; ?>
                 </div>
                 <?php
@@ -222,6 +200,23 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                 'html' => $html,
             ]);
         }
+
+        public static function ttbm_display_taxonomy_data( $term_id, $term_name, $description ){ ?>
+
+            <div class="ttbm-taxonomy-card">
+
+                <div class="ttbm-card-right">
+                    <h3 class="ttbm-title"><?php echo esc_attr( $term_name ) ?></h3>
+                    <p class="ttbm-description"><?echo esc_attr( $description ) ?></p>
+                    <div class="ttbm-card-actions"  ttbm-data-location-id="<?php echo esc_attr( $term_id )?>">
+                        <button class="ttbm-btn ttbm-view-btn"> <i class="fas fa-eye"></i> View</button>
+                        <button class="ttbm-btn ttbm-edit-btn ttbm_edit_trip_location"><i class="fas fa-pen"></i> Edit</button>
+                        <button class="ttbm-btn ttbm-delete-btn ttbm_delete_taxonomy_data"> <i class="fas fa-trash"></i> Delete</button>
+                    </div>
+                </div>
+            </div>
+
+        <?php }
 
         public function ttbm_get_places_html_data() {
             $args = array(
@@ -282,6 +277,8 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
 
         function ttbm_add_new_location_term() {
+
+            $img_url = '';
             $name = sanitize_text_field($_POST['name']);
             $slug = sanitize_title($_POST['slug']);
             $parent = absint($_POST['parent']);
@@ -308,8 +305,13 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                     'name' => $name,
                     'description' => $desc,
                     'slug'        => $slug ?: null,
-                    'parent'      => $parent ?: 0
+//                    'parent'      => $parent ?: 0
                 ];
+
+                if( $taxonomy_type !== 'ttbm_tour_tag' ){
+                    $args['parent'] = $parent ?: 0;
+                }
+
                 $term_id = absint($_POST['term_id']);
                 $term = wp_update_term( $term_id, $taxonomy_type, $args);
             }
@@ -320,11 +322,14 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
             $term_id = $term['term_id'];
 
-            update_term_meta($term_id, 'ttbm_location_address', $address);
-            update_term_meta($term_id, 'ttbm_country_location', $country);
-            update_term_meta($term_id, 'ttbm_location_image', $imageId);
+            if( $taxonomy_type === 'ttbm_tour_location' ) {
+                update_term_meta($term_id, 'ttbm_location_address', $address );
+                update_term_meta($term_id, 'ttbm_country_location', $country );
+                update_term_meta($term_id, 'ttbm_location_image', $imageId );
+                $img_url = wp_get_attachment_image_url( $imageId, 'thumbnail' );
+            }
 
-            $img_url = wp_get_attachment_image_url( $imageId, 'thumbnail' );
+
 
             wp_send_json_success([
                 'term_id' => $term_id,
@@ -360,7 +365,7 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
             if (!is_wp_error( $term_id )) {
                 $button_name = 'Update';
-                $tab_type = '';
+                $tab_type = $_POST['tab_type'];
                 $edit_popup = TTBM_Travel_List_Tab_Details::edit_location_popup( $term_id, $button_name, $tab_type );
                 $success = true;
             }
@@ -368,6 +373,29 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             wp_send_json_success([
                 'success' => $success,
                 'edit_popup' => $edit_popup,
+            ]);
+        }
+
+        public function ttbm_delete_taxonomy_data_by_id(){
+
+            $term_id = absint($_POST['term_id']);
+            $success = $result = false;
+            $message = 'Something went wrong.';
+
+            if (!is_wp_error( $term_id )) {
+                $button_name = 'Update';
+                $tab_type = $_POST['tab_type'];
+                $taxonomy_type= TTBM_Travel_List_Tab_Details::get_taxonomy_type( $tab_type );
+
+                $result = wp_delete_term( $term_id, $taxonomy_type );
+                $success = true;
+                $message = 'Taxonomy data has been deleted.';
+            }
+
+            wp_send_json_success([
+                'success' => $success,
+                'deleted_id' => $term_id,
+                'message' => $message,
             ]);
         }
 

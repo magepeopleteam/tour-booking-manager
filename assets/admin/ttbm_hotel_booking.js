@@ -339,9 +339,31 @@
             taxonomy_type = 'ttbm_tour_location';
         }else if( tab_type === 'Add New Organiser' ){
             taxonomy_type = 'ttbm_tour_org';
+        }else if( tab_type === 'Add New Feature' ){
+            taxonomy_type = 'ttbm_tour_features_list';
+        }else if( tab_type === 'Add New Tag' ){
+            taxonomy_type = 'ttbm_tour_tag';
+        }else if( tab_type === 'Add New Activities' ){
+            taxonomy_type = 'ttbm_tour_activities';
         }
 
         return taxonomy_type;
+    }
+    function get_tab_action_name_by_tab( tab_action_type ){
+        let tab_type = '';
+        if( tab_action_type === 'Trip Location' ){
+            tab_type = 'Add New Locations';
+        }else if( tab_action_type === 'Trip Organiser' ){
+            tab_type = 'Add New Organiser';
+        }else if( tab_action_type === 'Features' ){
+            tab_type = 'Add New Feature';
+        }else if( tab_action_type === 'Tags' ){
+            tab_type = 'Add New Tag';
+        }else if( tab_action_type === 'Activities' ){
+            tab_type = 'Add New Activities';
+        }
+
+        return tab_type;
     }
 
     jQuery(document).on('click', '.ttbm-save-location', function (e) {
@@ -363,8 +385,9 @@
 
         const name = jQuery('#ttbm-location-name').val().trim();
         const slug = jQuery('#ttbm-location-slug').val().trim();
-        const parent = jQuery('#ttbm-location-parent').val();
         const desc = jQuery('#ttbm-location-desc').val().trim();
+
+        const parent = jQuery('#ttbm-location-parent').val();
 
         let address = '';
         let country = '';
@@ -412,7 +435,9 @@
                                         <div class="ttbm-card-right">
                                             <h3 class="ttbm-title">${name}</h3>
                                             <p class="ttbm-description">${address}</p>
-                                            <span class="ttbm-edit-btn ttbm_edit_trip_location">Edit</span>
+                                             <div class="ttbm-card-actions">
+                                                <span class="ttbm-btn ttbm-edit-btn ttbm_edit_trip_location">Edit</span>
+                                            </div>
                                         </div>
                                     </div>`;
                 if( term_id === '' ){
@@ -450,15 +475,47 @@
         });
     })
 
+    $(document).on( 'click', '.ttbm_delete_taxonomy_data', function ( e ) {
+        e.preventDefault();
+        let term_id = $(this).parent().attr('ttbm-data-location-id');
+        let tab_action_type = $('.ttbm_trvel_lists_tabs button.active').text().trim();
+        let tab_type = get_tab_action_name_by_tab( tab_action_type );
+        const clicked_btn = $(this);
+        $.ajax({
+            url: mp_ajax_url,
+            type: 'POST',
+            data: {
+                term_id: term_id,
+                tab_type: tab_type,
+                nonce:  ttbm_admin_ajax.nonce,
+                action: 'ttbm_delete_taxonomy_data_by_id',
+            },
+            success: function (response) {
+                if (response.success) {
+                    if( tab_type === 'Add New Locations' ){
+                        clicked_btn.closest('.ttbm-location-card').fadeOut;
+                    }else{
+                        clicked_btn.closest('.ttbm-taxonomy-card').fadeOut();
+                    }
+
+                    alert( response.data.message);
+                }
+            }
+        });
+    });
+
     $(document).on( 'click', '.ttbm_edit_trip_location', function () {
 
-        let term_id = $(this).parent().parent().attr('ttbm-data-location-id');
+        let term_id = $(this).parent().attr('ttbm-data-location-id');
+        let tab_action_type = $('.ttbm_trvel_lists_tabs button.active').text().trim();
+        let tab_type = get_tab_action_name_by_tab( tab_action_type );
 
         $.ajax({
             url: mp_ajax_url,
             type: 'POST',
             data: {
                 term_id: term_id,
+                tab_type: tab_type,
                 nonce:  ttbm_admin_ajax.nonce,
                 action: 'ttbm_edit_locations_ajax_html',
             },

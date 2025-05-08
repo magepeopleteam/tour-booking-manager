@@ -20,7 +20,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: mp_ajax_url,
+                url: ttbm_admin_ajax.ajax_url,
                 data: {
                     action: "get_ttbm_hotel_booking_load_more_lists",
                     date: date,
@@ -61,7 +61,7 @@
         if( clicked_btn_txt === 'Load More' ){
             $(this).text('Loading...');
             let nonce = ttbm_admin_ajax.nonce;
-            let setUrl = mp_ajax_url;
+            let setUrl = ttbm_admin_ajax.ajax_url;
             let display_limit = 2;
 
             let hotelIds = [];
@@ -125,7 +125,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: mp_ajax_url,
+                url: ttbm_admin_ajax.ajax_url,
                 data: {
                     action: "get_ttbm_hotel_booking_all_lists",
                     date: date,
@@ -211,7 +211,7 @@
     $(document).on('input', '#ttbm_hotel_title_SearchBox',function() {
         let search_term = jQuery(this).val();
         let nonce = ttbm_admin_ajax.nonce;
-        let setUrl = mp_ajax_url;
+        let setUrl = ttbm_admin_ajax.ajax_url;
         let type = 'POST';
         if( search_term.length > 0 ) {
             jQuery("#productTitleWrapper").show();
@@ -265,7 +265,7 @@
         let nonce = ttbm_admin_ajax.nonce;
 
         $.ajax({
-            url: mp_ajax_url,
+            url: ttbm_admin_ajax.ajax_url,
             nonce: nonce,
             type: 'POST',
             data: {
@@ -408,7 +408,7 @@
         // Optional: Show loading indicator
         jQuery('.ttbm-save-location').text('Saving...').prop('disabled', true);
 
-        jQuery.post(mp_ajax_url, {
+        jQuery.post(ttbm_admin_ajax.ajax_url, {
             action: action,
             _wpnonce: ttbm_admin_ajax.nonce,
             name,
@@ -459,7 +459,7 @@
         let tab_type = $(this).text().trim();
 
         $.ajax({
-            url: mp_ajax_url,
+            url: ttbm_admin_ajax.ajax_url,
             type: 'POST',
             data: {
                 term_id: term_id,
@@ -482,7 +482,7 @@
         let tab_type = get_tab_action_name_by_tab( tab_action_type );
         const clicked_btn = $(this);
         $.ajax({
-            url: mp_ajax_url,
+            url: ttbm_admin_ajax.ajax_url,
             type: 'POST',
             data: {
                 term_id: term_id,
@@ -511,7 +511,7 @@
         let tab_type = get_tab_action_name_by_tab( tab_action_type );
 
         $.ajax({
-            url: mp_ajax_url,
+            url: ttbm_admin_ajax.ajax_url,
             type: 'POST',
             data: {
                 term_id: term_id,

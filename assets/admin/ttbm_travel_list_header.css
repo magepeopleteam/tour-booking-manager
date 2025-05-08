@@ -363,6 +363,7 @@
     justify-content: space-between;
     margin-top: 15px;
     gap: 10px;
+    width: 100px;
 }
 
 .ttbm-location-card-actions {
@@ -371,30 +372,58 @@
 }
 
 .ttbm-btn {
-    padding: 6px 12px;
+    padding: 5px 4px;
     font-size: 13px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    flex: 1;
     text-align: center;
+    width: 25px;
 }
 
 .ttbm-view-btn {
-    background-color: #17a2b8;
-    color: #fff;
+    background: #EAE7FF;
+    color: #5342BB;
+}
+.ttbm-view-btn:hover{
+    background: #5342BB;
+    color: #FFF;
 }
 
 .ttbm-edit-btn {
-    background-color: #0073aa;
-    color: #fff;
+    background: #DBF7E8;
+    color: #2DC78A;
+}
+.ttbm-edit-btn:hover{
+    background: #2DC78A;
+    color: #FFF;
 }
 
 .ttbm-delete-btn {
-    background-color: #dc3545;
-    color: #fff;
+    background: #FFE1E2;
+    color: #FF383C;
+}
+.ttbm-delete-btn:hover{
+    background: #e9252c;
+    color: #FFF;
 }
 
 .ttbm-btn:hover {
     opacity: 0.9;
+}
+
+.ttbm-title-row {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 20px;
+}
+
+.ttbm-taxonomy-card-actions {
+    display: none;
+    gap: 8px;
+}
+
+.ttbm-taxonomy-card:hover .ttbm-taxonomy-card-actions {
+    display: flex;
 }

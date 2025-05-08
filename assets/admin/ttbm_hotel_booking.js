@@ -74,7 +74,7 @@
             });
             hotelIds = hotelIds.join(',');
             let type = 'POST';
-            jQuery.ajax({
+            $.ajax({
                 type: type,
                 url: setUrl,
                 data: {
@@ -190,7 +190,7 @@
     });
 
     function get_search_data_and_display( setUrl, type, search_term, nonce){
-        jQuery.ajax({
+        $.ajax({
             type: type,
             url: setUrl,
             data: {
@@ -210,13 +210,13 @@
     }
 
     $(document).on('input', '#ttbm_hotel_title_SearchBox',function() {
-        let search_term = jQuery(this).val();
+        let search_term = $(this).val();
         let nonce = ttbm_admin_ajax.nonce;
         let setUrl = ttbm_admin_ajax.ajax_url;
         let type = 'POST';
         if( search_term.length > 0 ) {
-            jQuery("#productTitleWrapper").show();
-            jQuery("#productDropDownMenu").show();
+            $("#productTitleWrapper").show();
+            $("#productDropDownMenu").show();
         }
         if( search_term.length === 3 ) {
             get_search_data_and_display( setUrl, type, search_term, nonce);
@@ -367,7 +367,7 @@
         return tab_type;
     }
 
-    jQuery(document).on('click', '.ttbm-save-location', function (e) {
+    $(document).on('click', '.ttbm-save-location', function (e) {
         e.preventDefault();
 
         let tab_type = $(this).siblings('.ttbm_get_clicked_tab_name').val().trim();
@@ -384,20 +384,29 @@
             term_id = $(this).parent().attr('id');
         }
 
-        const name = jQuery('#ttbm-location-name').val().trim();
-        const slug = jQuery('#ttbm-location-slug').val().trim();
-        const desc = jQuery('#ttbm-location-desc').val().trim();
+        const name = $('#ttbm-location-name').val().trim();
+        const slug = $('#ttbm-location-slug').val().trim();
+        const desc = $('#ttbm-location-desc').val().trim();
 
-        const parent = jQuery('#ttbm-location-parent').val();
+        const parent = $('#ttbm-location-parent').val();
 
         let address = '';
         let country = '';
         let imageId = '';
 
         if( tab_type === 'Add New Locations' ){
-            address = jQuery('#ttbm-location-address').val().trim();
-            country = jQuery('#ttbm-location-country').val();
-            imageId = jQuery('#ttbm-location-image-id').val();
+            address = $('#ttbm-location-address').val().trim();
+            country = $('#ttbm-location-country').val();
+            imageId = $('#ttbm-location-image-id').val();
+        }
+
+        let icon = '';
+        if( tab_type === 'Add New Feature' ){
+            icon = $('[name="ttbm_feature_icon"]').val();
+        }
+
+        if( tab_type === 'Add New Activities' ){
+            icon = $('[name="ttbm_activity_icon"]').val();
         }
 
 
@@ -407,9 +416,9 @@
         }
 
         // Optional: Show loading indicator
-        jQuery('.ttbm-save-location').text('Saving...').prop('disabled', true);
+        $('.ttbm-save-location').text('Saving...').prop('disabled', true);
 
-        jQuery.post(ttbm_admin_ajax.ajax_url, {
+        $.post(ttbm_admin_ajax.ajax_url, {
             action: action,
             _wpnonce: ttbm_admin_ajax.nonce,
             name,
@@ -422,10 +431,11 @@
             term_id,
             action_type,
             taxonomy_type,
+            icon,
 
         },
             function (response) {
-            jQuery('.ttbm-save-location').text('Save').prop('disabled', false);
+                $('.ttbm-save-location').text('Save').prop('disabled', false);
             if (response.success) {
                 let img_url = response.data.img_url;
 
@@ -449,7 +459,7 @@
                 alert(response.data?.message || 'Something went wrong. Please try again.');
             }
         }).fail(function () {
-            jQuery('.ttbm-save-location').text('Save').prop('disabled', false);
+            $('.ttbm-save-location').text('Save').prop('disabled', false);
             alert('AJAX request failed. Please check your connection.');
         });
     });

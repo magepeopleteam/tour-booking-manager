@@ -92,6 +92,21 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                     }
                     ?>
 
+                    <!--Icon Add-->
+                    <?php
+                    if(  $tab_type === 'Add New Activities' ){
+                        $taxonomy_type = 'Activity Icon';
+                        $tab_name = 'ttbm_activity_icon';
+                        wp_kses_post( self::add_icon( $taxonomy_type, $tab_name ) );
+                    }
+
+                    if(  $tab_type === 'Add New Feature' ){
+                        $taxonomy_type = 'Feature Icon';
+                        $tab_name = 'ttbm_feature_icon';
+                        wp_kses_post( self::add_icon( $taxonomy_type, $tab_name ) );
+                    }
+                    ?>
+
                     <div class="ttbm-popup-buttons" id="<?php echo esc_attr( $term_id )?>">
                         <input type="hidden" class="ttbm_get_clicked_tab_name" value="<?php echo esc_attr( $tab_type )?>">
                         <button class="ttbm-save-location"><?php echo esc_attr( $button_name )?></button>
@@ -120,6 +135,13 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
             <label><?php echo __('Full Address','tour-booking-manager'); ?>:</label>
             <textarea id="ttbm-location-address" placeholder="Full address"><?php echo esc_attr( $full_address )?></textarea>
 
+        <?php }
+
+        public static function add_icon( $taxonomy_type, $taxonomy_name ){ ?>
+            <div class="flexEqual">
+                <span><?php esc_html( $taxonomy_type ); ?><sup class="textRequired">*</sup></span>
+                <?php do_action('ttbm_input_add_icon', $taxonomy_name); ?>
+            </div>
         <?php }
 
         public static function parent_taxonomy_add( $parent, $taxonomy_type ){ ?>
@@ -170,10 +192,15 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
             </div>
         <?php }
 
+
+
         public function travel_lists_tab_display( $label, $b ){
             $category = '';
             ?>
             <div class="ttbm_trvel_lists_tab_holder">
+
+                <?php wp_kses_post( self::icon_popup());?>
+
                 <div class="ttbm_travel_list_popup" id="ttbm_travel_list_popup"></div>
                 <div class="ttbm_trvel_lists_tabs">
                     <button class="active" data-target="ttbm_trvel_lists_tour"><?php echo __(' Tour Package','tour-booking-manager'); ?></button>
@@ -256,6 +283,65 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                 </div>
             </div>
         <?php }
+
+        public static function icon_popup() {
+            if (!$GLOBALS['ttbm_icon_popup_exit']) {
+                $GLOBALS['ttbm_icon_popup_exit'] = true;
+                ?>
+                <div class="ttbm_add_icon_popup ttbm_popup ttbm_style" data-popup="#ttbm_add_icon_popup">
+                    <div class="popupMainArea fullWidth">
+                        <div class="popupHeader allCenter">
+                            <h2 class="_mR"><?php esc_html_e('Select Icon', 'tour-booking-manager'); ?></h2>
+                            <label class="min_300">
+                                <input type="text" class="formControl ttbm_name_validation" name="ttbm_select_icon_name" placeholder="<?php esc_attr_e('Icon/class name....', 'tour-booking-manager'); ?>"/>
+                            </label>
+                            <span class="fas fa-times popupClose"></span>
+                        </div>
+                        <div class="popupBody">
+                            <?php
+                            $icons = TTBM_Select_Icon_image::all_icon_array();
+                            if (sizeof($icons) > 0) {
+                                $total_icon = 0;
+                                foreach ($icons as $icon) {
+                                    $total_icon += sizeof($icon['icon']);
+                                }
+                                ?>
+                                <div class="dFlex">
+                                    <ul class="popupIconMenu">
+                                        <li class="active" data-icon-menu="all_item" data-icon-title="all_item">
+                                            <?php esc_html_e('All Icon', 'tour-booking-manager'); ?>&nbsp;(
+                                            <strong><?php echo esc_html($total_icon); ?></strong>
+                                            )
+                                        </li>
+                                        <?php foreach ($icons as $key => $icon) { ?>
+                                            <li data-icon-menu="<?php echo esc_attr($key); ?>">
+                                                <?php echo esc_html($icon['title']) . '&nbsp;(<strong>' . sizeof($icon['icon']) . '</strong>)'; ?>
+                                            </li>
+                                        <?php } ?>
+                                    </ul>
+                                    <div class="popup_all_icon">
+                                        <?php foreach ($icons as $key => $icon) { ?>
+                                            <div class="popupTabItem" data-icon-list="<?php echo esc_attr($key); ?>" data-icon-title="<?php echo esc_attr($icon['title']); ?>">
+                                                <h5 class="textTheme"><?php echo esc_html($icon['title']) . '&nbsp;(<strong>' . sizeof($icon['icon']) . '</strong>)'; ?></h5>
+                                                <div class="divider"></div>
+                                                <div class="itemIconArea">
+                                                    <?php foreach ($icon['icon'] as $icon => $item) { ?>
+                                                        <div class="iconItem allCenter" data-icon-class="<?php echo esc_attr($icon); ?>" data-icon-name="<?php echo esc_attr($item); ?>" title="<?php echo esc_attr($item); ?>">
+                                                            <span class="<?php echo esc_attr($icon); ?>"></span>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+        }
 
 
     }

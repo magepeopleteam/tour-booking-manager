@@ -545,7 +545,7 @@ li.ttbm_hotel_tab_item {
     background: #DBF7E8;
     color:#2DC78A;
 }
-.ttbm-hotel-list-edit-btn {
+.ttbm-hotel-list-edit-btn:hover {
     background: #2DC78A;
     color:#fff;
 }

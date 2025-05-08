@@ -519,13 +519,13 @@ li.ttbm_hotel_tab_item {
 }
 
 .first-tag {
-    background: linear-gradient(to right, #4facfe, #00f2fe);
+    background: rgb(106, 183, 255);
 }
 .second-tag {
-    background: linear-gradient(to right, #43e97b, #38f9d7);
+    background: rgb(38, 166, 154);
 }
 .third-tag {
-    background: linear-gradient(to right, #f6d365, #fda085);
+    background: rgb(255, 109, 0);
 }
 
 .ttbm-hotel-list-view-btn {

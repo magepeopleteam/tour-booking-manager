@@ -801,6 +801,6 @@ body{
  {
     border-radius: 10px !important;
 }
-select[name="ttbm_attendee_list_theme"] {
+#ttbm_attendee_list_result select[name="ttbm_attendee_list_theme"] {
   margin: 0 10px;
 }

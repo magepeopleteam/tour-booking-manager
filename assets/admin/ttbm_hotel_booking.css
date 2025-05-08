@@ -716,7 +716,7 @@ body{
             display: inline-block;
             width: 20px;
             height: 20px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='4' width='20' height='16' rx='2'%3E%3C/rect%3E%3Cpath d='M7 15h0M12 15h0M17 15h0'%3E%3C/path%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='black' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1m-12 0h12m-12 0v11a2 2 0 002 2h8a2 2 0 002-2V7m-10 4h.01m4-.01h.01'/%3E%3C/svg%3E");
             background-size: contain;
             background-repeat: no-repeat;
             margin-right: 8px;

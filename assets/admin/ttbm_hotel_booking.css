@@ -364,8 +364,8 @@ li.ttbm_hotel_tab_item {
 }
 .ttbm_add_new_hotel_header{
     padding: 7px 15px;
-    border: 1px solid #1479a7;
-    background-color: #258fbf;
+    border: 1px solid rgb(30, 136, 229);
+    background-color: rgb(30, 136, 229);
     border-radius: 5px;
 }
 .ttbm_add_new_hotel_text{
@@ -585,10 +585,10 @@ body{
 }
 
 .ttbm_hotel_list_header_blue-bg {
-    background: linear-gradient(135deg, #0073aa, #00a0d2);
+    background: rgb(30, 136, 229);
 }
 .ttbm_hotel_list_header_green-bg {
-    background: linear-gradient(135deg, #46b450, #79c37c);
+    background: rgb(38, 166, 154);
 }
 .ttbm_hotel_list_header_purple-bg {
     background: linear-gradient(135deg, #826eb4, #9c7eda);

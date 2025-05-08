@@ -788,3 +788,12 @@ body{
 #ttbm_order_list_result ._warningButtons_show{float: right; font-size: 12px !important; padding: 2px 4px !important; margin-top: 0px !important;}
 #ttbm_order_list_result ._themeButton{padding:5px;}
 #ttbm_order_list_result h6{font-size:18px;}
+#ttbm_attendee_list_result ._justifyBetween_alignCenter{background: #efefef;}
+#ttbm_attendee_list_result .buttonGroup
+ {
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+#ttbm_attendee_list_result input.formControl.max_100.pagination_input {
+    margin: 0px 20px;
+}

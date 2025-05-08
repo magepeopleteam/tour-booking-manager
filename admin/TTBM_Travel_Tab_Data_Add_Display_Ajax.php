@@ -282,6 +282,8 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
 
         function ttbm_add_new_location_term() {
+
+            $img_url = '';
             $name = sanitize_text_field($_POST['name']);
             $slug = sanitize_title($_POST['slug']);
             $parent = absint($_POST['parent']);
@@ -308,8 +310,13 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                     'name' => $name,
                     'description' => $desc,
                     'slug'        => $slug ?: null,
-                    'parent'      => $parent ?: 0
+//                    'parent'      => $parent ?: 0
                 ];
+
+                if( $taxonomy_type !== 'ttbm_tour_tag' ){
+                    $args['parent'] = $parent ?: 0;
+                }
+
                 $term_id = absint($_POST['term_id']);
                 $term = wp_update_term( $term_id, $taxonomy_type, $args);
             }
@@ -320,11 +327,14 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
             $term_id = $term['term_id'];
 
-            update_term_meta($term_id, 'ttbm_location_address', $address);
-            update_term_meta($term_id, 'ttbm_country_location', $country);
-            update_term_meta($term_id, 'ttbm_location_image', $imageId);
+            if( $taxonomy_type === 'ttbm_tour_location' ) {
+                update_term_meta($term_id, 'ttbm_location_address', $address );
+                update_term_meta($term_id, 'ttbm_country_location', $country );
+                update_term_meta($term_id, 'ttbm_location_image', $imageId );
+                $img_url = wp_get_attachment_image_url( $imageId, 'thumbnail' );
+            }
 
-            $img_url = wp_get_attachment_image_url( $imageId, 'thumbnail' );
+
 
             wp_send_json_success([
                 'term_id' => $term_id,
@@ -360,7 +370,7 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
             if (!is_wp_error( $term_id )) {
                 $button_name = 'Update';
-                $tab_type = '';
+                $tab_type = $_POST['tab_type'];
                 $edit_popup = TTBM_Travel_List_Tab_Details::edit_location_popup( $term_id, $button_name, $tab_type );
                 $success = true;
             }

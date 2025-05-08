@@ -798,7 +798,6 @@ body{
     margin: 0px 20px;
 }
 #ttbm_attendee_list_result button._navy_blueButton_xs.ttbm_download_selected_attendee_pdf
-Specificity: (0,2,1)
  {
     border-radius: 10px !important;
 }

@@ -222,7 +222,7 @@
     padding: 0;
     list-style: none;
     background: #f5f5f5;
-    border-bottom: 1px solid #ddd;
+    border: 1px solid #ddd;
 }
 
 .ttbm_hotel_tab_item {
@@ -242,7 +242,6 @@
     background: rgba(66, 133, 244, 0.1);
     width: 200px;
     color: #4285f4;
-    border-bottom: 2px solid #4285f4;
 }
 
 .ttbm_hotel_tab_content_holder {
@@ -668,7 +667,7 @@ body{
 
 
 
-   .ttbm_hotel_tab_menu {
+.ttbm_hotel_tab_menu {
             display: flex;
             position: relative;
             list-style: none;
@@ -680,8 +679,8 @@ body{
             margin-bottom: 20px;
         }
         
-        .ttbm_hotel_tab_item {
-            padding: 16px 25px;
+ .ttbm_hotel_tab_item {
+            padding: 10px 25px;
             font-size: 15px;
             font-weight: 600;
             color: #718096;

@@ -463,6 +463,11 @@ li.ttbm_hotel_tab_item {
     align-items: center;
     gap: 5px;
 }
+
+.ttbm-hotel-list-hotel-location .fas{
+  color:rgb(255, 109, 0);
+}
+
 .ttbm-hotel-list-hotel-description {
     font-size: 13px;
     color: #555;

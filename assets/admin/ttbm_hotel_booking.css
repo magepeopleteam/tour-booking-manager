@@ -550,8 +550,14 @@ li.ttbm_hotel_tab_item {
     color:#fff;
 }
 .ttbm-hotel-list-delete-btn {
-    background: linear-gradient(to bottom, #f14668, #dc3545);
+    background: #FFE1E2;
+    color: #FF383C;
 }
+.ttbm-hotel-list-delete-btn:hover {
+    background: #FF383C;
+    color: #fff;
+}
+
 body{
     margin: 0;
     padding: 0;

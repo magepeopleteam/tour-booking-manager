@@ -97,7 +97,7 @@ if (!class_exists('TTBM_Daywise_Details')) {
 						<?php TTBM_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
 					</div>
 				</section>
-				<section class="ttbm-daywise-section ">
+				<section data-collapse="#ttbm_display_schedule" class="ttbm-daywise-section ">
 					<div class="ttbm-daywise-items mB">
 						<?php $this->show_daywise_data($post_id); ?>
 					</div>

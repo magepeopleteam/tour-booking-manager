@@ -36,12 +36,12 @@
 						</label>
 					</section>
 					<section>
-                        <label class="label">
+                        <div class="label">
 							<div>
 								<p><?php esc_html_e('Show Admin Note', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e( 'Show admin note in frontend', 'tour-booking-manager' ); ?></span></i></p>
 							</div>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_admin_note', $checked); ?>
-						</label>
+						</div>
                     </section>
 
 					<div data-collapse="#ttbm_display_admin_note" class="<?php echo esc_attr($active); ?>">

@@ -307,9 +307,6 @@
 
 
     let ttbm_image_frame;
-    $(document).on('click', '#ttbm-add-new-location-btn',function() {
-        $('#ttbm-location-popup').fadeIn();
-    });
 
     // Hide popup
     $(document).on('click',  '#ttbm-close-popup',function() {
@@ -336,9 +333,23 @@
         ttbm_image_frame.open();
     });
 
+    function get_add_taxonomy_type( tab_type ){
+        let taxonomy_type = '';
+        if( tab_type === 'Add New Locations' ){
+            taxonomy_type = 'ttbm_tour_location';
+        }else if( tab_type === 'Add New Organiser' ){
+            taxonomy_type = 'ttbm_tour_org';
+        }
+
+        return taxonomy_type;
+    }
 
     jQuery(document).on('click', '.ttbm-save-location', function (e) {
         e.preventDefault();
+
+        let tab_type = $(this).siblings('.ttbm_get_clicked_tab_name').val().trim();
+        let taxonomy_type = get_add_taxonomy_type( tab_type );
+
 
         let action_type = $(this).text().trim();
         let action = '';
@@ -354,9 +365,17 @@
         const slug = jQuery('#ttbm-location-slug').val().trim();
         const parent = jQuery('#ttbm-location-parent').val();
         const desc = jQuery('#ttbm-location-desc').val().trim();
-        const address = jQuery('#ttbm-location-address').val().trim();
-        const country = jQuery('#ttbm-location-country').val();
-        const imageId = jQuery('#ttbm-location-image-id').val();
+
+        let address = '';
+        let country = '';
+        let imageId = '';
+
+        if( tab_type === 'Add New Locations' ){
+            address = jQuery('#ttbm-location-address').val().trim();
+            country = jQuery('#ttbm-location-country').val();
+            imageId = jQuery('#ttbm-location-image-id').val();
+        }
+
 
         if (!name) {
             alert('Name is required.');
@@ -378,7 +397,10 @@
             imageId,
             term_id,
             action_type,
-        }, function (response) {
+            taxonomy_type,
+
+        },
+            function (response) {
             jQuery('.ttbm-save-location').text('Save').prop('disabled', false);
             if (response.success) {
                 let img_url = response.data.img_url;
@@ -409,12 +431,14 @@
     $(document).on( 'click', '#ttbm-add-new-location-btn', function () {
 
         let term_id = '';
+        let tab_type = $(this).text().trim();
 
         $.ajax({
             url: mp_ajax_url,
             type: 'POST',
             data: {
                 term_id: term_id,
+                tab_type: tab_type,
                 nonce:  ttbm_admin_ajax.nonce,
                 action: 'ttbm_add_new_locations_ajax_html',
             },

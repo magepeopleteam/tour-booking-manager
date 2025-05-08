@@ -784,4 +784,5 @@ body{
         .ttbm_tab_content.active {
             display: block;
         }
-
+#ttbm_order_list_result .billing-value{float: left;}
+#ttbm_order_list_result ._warningButtons_show{float: right; font-size: 12px !important;}

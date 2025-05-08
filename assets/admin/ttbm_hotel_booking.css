@@ -534,7 +534,12 @@ li.ttbm_hotel_tab_item {
 }
 
 .ttbm-hotel-list-view-btn {
-    background: rgb(30, 136, 229);
+    background: #EAE7FF;
+    color: #5342BB;
+}
+.ttbm-hotel-list-view-btn:hover {
+    background: #5342BB;
+    color: #fff;
 }
 .ttbm-hotel-list-edit-btn {
     background: rgb(38, 166, 154);

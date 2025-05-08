@@ -28,7 +28,7 @@
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
-				<div class="tabsItem mp_settings_area ttbm_settings_place_you_see" data-tabs="#ttbm_settings_place_you_see">
+				<div class="tabsItem ttbm_settings_area ttbm_settings_place_you_see" data-tabs="#ttbm_settings_place_you_see">
 					<h2><?php esc_html_e('Places You\'ll Visit', 'tour-booking-manager'); ?></h2>
                     <p><?php TTBM_Settings::des_p('places_visit_description'); ?> </p>
 					
@@ -118,7 +118,7 @@
 				$place_name = is_array($hiphop_place) && array_key_exists('ttbm_place_label', $hiphop_place) ? $hiphop_place['ttbm_place_label'] : '';
 				$place_name = $place_id && !$place_name ? get_the_title($place_id) : $place_name;
 				?>
-				<tr class="mp_remove_area">
+				<tr class="ttbm_remove_area">
 					<td class="text-start">
 						<label>
 							<input class="formControl ttbm_name_validation" name="ttbm_place_label[]" value="<?php echo esc_attr($place_name); ?>" placeholder="Place name"/>

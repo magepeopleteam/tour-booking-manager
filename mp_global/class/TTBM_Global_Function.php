@@ -143,7 +143,7 @@ if (!class_exists('TTBM_Global_Function')) {
 <script>
 jQuery(document).ready(function() {
   jQuery("<?php echo esc_attr($selector); ?>").datepicker({
-    dateFormat: mp_date_format,
+    dateFormat: ttbm_date_format,
     minDate: new Date(<?php echo esc_attr($start_year); ?>, <?php echo esc_attr($start_month); ?>,
       <?php echo esc_attr($start_day); ?>),
     maxDate: new Date(<?php echo esc_attr($end_year); ?>, <?php echo esc_attr($end_month); ?>,
@@ -284,7 +284,7 @@ jQuery(document).ready(function() {
 		}
 		public static function get_slider_settings($key, $default = '')
 		{
-			return self::get_settings('mp_slider_settings', $key, $default);
+			return self::get_settings('ttbm_slider_settings', $key, $default);
 		}
 		public static function get_licence_settings($key, $default = '')
 		{
@@ -1138,7 +1138,7 @@ if (
 <script>
 jQuery(document).ready(function() {
   jQuery("<?php echo esc_attr($selector); ?>").datepicker({
-    dateFormat: mp_date_format,
+    dateFormat: ttbm_date_format,
     minDate: new Date(<?php echo esc_attr($start_year); ?>, <?php echo esc_attr($start_month); ?>,
       <?php echo esc_attr($start_day); ?>),
     maxDate: new Date(<?php echo esc_attr($end_year); ?>, <?php echo esc_attr($end_month); ?>,
@@ -1279,7 +1279,7 @@ jQuery(document).ready(function() {
 		}
 		public static function get_slider_settings($key, $default = '')
 		{
-			return self::get_settings('mp_slider_settings', $key, $default);
+			return self::get_settings('ttbm_slider_settings', $key, $default);
 		}
 		public static function get_licence_settings($key, $default = '')
 		{

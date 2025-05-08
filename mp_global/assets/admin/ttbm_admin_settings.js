@@ -5,7 +5,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
             .promise()
             .done(function () {
                 parent.find(".ttbm_sortable_area").sortable({
-                    handle: jQuery(this).find(".mp_sortable_button"),
+                    handle: jQuery(this).find(".ttbm_sortable_button"),
                 });
                 ttbm_load_date_picker(parent);
             });
@@ -17,7 +17,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
             .promise()
             .done(function () {
                 parent.find(".ttbm_sortable_area").sortable({
-                    handle: jQuery(this).find(".mp_sortable_button"),
+                    handle: jQuery(this).find(".ttbm_sortable_button"),
                 });
                 ttbm_load_date_picker(parent);
             });
@@ -31,7 +31,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
         $(document)
             .find(".ttbm_sortable_area")
             .sortable({
-                handle: $(this).find(".mp_sortable_button"),
+                handle: $(this).find(".ttbm_sortable_button"),
             });
     });
     //=========upload image==============//
@@ -99,7 +99,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
                 "Are You Sure , Remove this row ? \n\n 1. Ok : To Remove . \n 2. Cancel : To Cancel ."
             )
         ) {
-            $(this).closest(".mp_remove_area").slideUp(250).remove();
+            $(this).closest(".ttbm_remove_area").slideUp(250).remove();
             return true;
         } else {
             return false;
@@ -137,7 +137,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
             "display",
             "block"
         );
-        let parent = $(this).closest(".mp_settings_area");
+        let parent = $(this).closest(".ttbm_settings_area");
         let item = $(this)
             .next($(".ttbm_hidden_content"))
             .find(" .ttbm_hidden_item")
@@ -150,7 +150,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
                 .html();
         }
         ttbm_load_sortable_datepicker(parent, item);
-        parent.find(".ttbm_item_insert").find(".add_mp_select2").select2({});
+        parent.find(".ttbm_item_insert").find(".add_ttbm_select2").select2({});
         return true;
     });
 

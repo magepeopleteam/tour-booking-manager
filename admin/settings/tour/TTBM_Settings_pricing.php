@@ -98,7 +98,7 @@
 				?>
                 <div class="ttbm_ticket_config  <?php echo esc_html($type_class); ?>">
 
-                    <div class="mp_settings_area ttbm_price_config">
+                    <div class="ttbm_settings_area ttbm_price_config">
 						<?php do_action('ttbm_ticket_type_before', $tour_id); ?>
                         
                         <section>
@@ -160,7 +160,7 @@
                             <div class="d-flex justify-content-end ">
 								<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Ticket Type', 'tour-booking-manager')); ?>
                             </div>
-							<?php do_action('add_mp_hidden_table', 'ttbm_price_item'); ?>
+							<?php do_action('add_ttbm_hidden_table', 'ttbm_price_item'); ?>
                         </section>
                     </div>
 					<?php do_action('ttbm_tour_pricing_inner', $tour_id); ?>
@@ -194,7 +194,7 @@
 				$input_type = array_key_exists('ticket_type_qty_type', $field) ? $field['ticket_type_qty_type'] : 'inputbox';
 				$description = array_key_exists('ticket_type_description', $field) ? $field['ticket_type_description'] : '';
 				?>
-                <tr class="mp_remove_area">
+                <tr class="ttbm_remove_area">
 					<?php do_action('ttbm_ticket_type_content_start', $field, $tour_id) ?>
                     <td><?php do_action('ttbm_input_add_icon', 'ticket_type_icon[]', $icon); ?></td>
                     <td>
@@ -244,7 +244,7 @@
                                 <span class="text"><?php TTBM_Settings::des_p('hotel_config'); ?><a href="post-new.php?post_type=ttbm_hotel"><?php TTBM_Settings::des_p('hotel_config_click') ?></a></span>
                             </div>
                             <div class="w-50">
-                                <select name="ttbm_hotels[]" multiple='multiple' class='formControl mp_select2' data-placeholder="<?php esc_html_e('Please Select Hotel', 'tour-booking-manager'); ?>">
+                                <select name="ttbm_hotels[]" multiple='multiple' class='formControl ttbm_select2' data-placeholder="<?php esc_html_e('Please Select Hotel', 'tour-booking-manager'); ?>">
 									<?php
 										foreach ($hotel_lists->posts as $hotel) {
 											$hotel_id = $hotel->ID;

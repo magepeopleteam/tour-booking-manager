@@ -20,7 +20,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: mp_ajax_url,
+                url: ttbm_ajax_url,
                 data: {
                     action: "get_ttbm_hotel_booking_load_more_lists",
                     date: date,
@@ -61,7 +61,7 @@
         if( clicked_btn_txt === 'Load More' ){
             $(this).text('Loading...');
             let nonce = ttbm_admin_ajax.nonce;
-            let setUrl = mp_ajax_url;
+            let setUrl = ttbm_ajax_url;
             let display_limit = 2;
 
             let hotelIds = [];
@@ -125,7 +125,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: mp_ajax_url,
+                url: ttbm_ajax_url,
                 data: {
                     action: "get_ttbm_hotel_booking_all_lists",
                     date: date,
@@ -211,7 +211,7 @@
     $(document).on('input', '#ttbm_hotel_title_SearchBox',function() {
         let search_term = jQuery(this).val();
         let nonce = ttbm_admin_ajax.nonce;
-        let setUrl = mp_ajax_url;
+        let setUrl = ttbm_ajax_url;
         let type = 'POST';
         if( search_term.length > 0 ) {
             jQuery("#productTitleWrapper").show();

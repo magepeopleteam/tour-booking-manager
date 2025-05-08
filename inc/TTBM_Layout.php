@@ -99,7 +99,7 @@
 						<button class="_warningButton_xs ttbm_item_remove" type="button">
 							<span class="fas fa-trash-alt mp_zero"></span>
 						</button>
-						<div class="_mpBtn_themeButton_xs mp_sortable_button" type="">
+						<div class="_mpBtn_themeButton_xs ttbm_sortable_button" type="">
 							<span class="fas fa-expand-arrows-alt mp_zero"></span>
 						</div>
 					</div>

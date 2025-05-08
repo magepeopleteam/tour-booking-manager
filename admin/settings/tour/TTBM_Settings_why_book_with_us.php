@@ -22,7 +22,7 @@
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
-				<div class="tabsItem mp_settings_area ttbm_settings_why_chose_us" data-tabs="#ttbm_settings_why_chose_us">
+				<div class="tabsItem ttbm_settings_area ttbm_settings_why_chose_us" data-tabs="#ttbm_settings_why_chose_us">
 					<h2 class=""><?php esc_html_e('Why Book With Us?', 'tour-booking-manager'); ?></h2>
 					<p><?php TTBM_Settings::des_p('why_book_settings_description'); ?></p>
 					
@@ -95,7 +95,7 @@
 			}
 			public function why_chose_us_item($why_choose = '') {
 				?>
-				<tr class="mp_remove_area">
+				<tr class="ttbm_remove_area">
 					<td class="ps-2">
 						<label>
 							<input class="bordered w-100 rounded  ttbm_name_validation" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>

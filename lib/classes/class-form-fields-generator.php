@@ -6220,7 +6220,7 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
                 <?php
                 if($multiple):
                     ?>
-                    <select <?php echo esc_attr(TTBM_Layout::no_pro_disabled($field_name)); ?> name='<?php echo esc_attr($field_name); ?>[]' id='<?php echo esc_attr($field_id); ?>' class="mp_select2" multiple>
+                    <select <?php echo esc_attr(TTBM_Layout::no_pro_disabled($field_name)); ?> name='<?php echo esc_attr($field_name); ?>[]' id='<?php echo esc_attr($field_id); ?>' class="ttbm_select2" multiple>
                     <?php
                 else:
                     ?>

@@ -31,7 +31,7 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
 				
-				<div class="tabsItem mp_settings_area ttbm_settings_activities" data-tabs="#ttbm_settings_activies">
+				<div class="tabsItem ttbm_settings_area ttbm_settings_activities" data-tabs="#ttbm_settings_activies">
 					<h2><?php esc_html_e('Activity Settings', 'tour-booking-manager'); ?></h2>
 					<p><?php TTBM_Settings::des_p('activity_settings_description'); ?></p>
 					

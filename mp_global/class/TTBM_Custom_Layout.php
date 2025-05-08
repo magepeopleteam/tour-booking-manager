@@ -9,8 +9,8 @@
 	if ( !class_exists('TTBM_Custom_Layout')) {
 		class TTBM_Custom_Layout {
 			public function __construct() {
-				add_action('add_mp_hidden_table', array($this, 'hidden_table'), 10, 2);
-				add_action('add_mp_pagination_section', array($this, 'pagination'), 10, 3);
+				add_action('add_ttbm_hidden_table', array($this, 'hidden_table'), 10, 2);
+				add_action('add_ttbm_pagination_section', array($this, 'pagination'), 10, 3);
 			}
 			public function hidden_table($hook_name, $data = array()) {
 				?>
@@ -29,7 +29,7 @@
 				?>
                 <input type="hidden" name="pagination_per_page" value="<?php echo esc_attr($per_page); ?>"/>
                 <input type="hidden" name="pagination_style" value="<?php echo esc_attr($params['pagination-style']); ?>"/>
-                <input type="hidden" name="mp_total_item" value="<?php echo esc_attr($total_item); ?>"/>
+                <input type="hidden" name="ttbm_total_item" value="<?php echo esc_attr($total_item); ?>"/>
 				<?php if ($total_item > $per_page) { ?>
                     <div class="allCenter pagination_area" data-placeholder>
 						<?php
@@ -145,7 +145,7 @@
 			}
 			public static function move_button() {
 				?>
-                <div class="_mpBtn_themeButton_xs mp_sortable_button" type="">
+                <div class="_mpBtn_themeButton_xs ttbm_sortable_button" type="">
                     <span class="fas fa-expand-arrows-alt mp_zero"></span>
                 </div>
 				<?php
@@ -245,8 +245,8 @@
 		&& !class_exists('MP_Custom_Layout')) {
 		class MP_Custom_Layout {
 			public function __construct() {
-				add_action('add_mp_hidden_table', array($this, 'hidden_table'), 10, 2);
-				add_action('add_mp_pagination_section', array($this, 'pagination'), 10, 3);
+				add_action('add_ttbm_hidden_table', array($this, 'hidden_table'), 10, 2);
+				add_action('add_ttbm_pagination_section', array($this, 'pagination'), 10, 3);
 			}
 			public function hidden_table($hook_name, $data = array()) {
 				?>
@@ -265,7 +265,7 @@
 				?>
                 <input type="hidden" name="pagination_per_page" value="<?php echo esc_attr($per_page); ?>"/>
                 <input type="hidden" name="pagination_style" value="<?php echo esc_attr($params['pagination-style']); ?>"/>
-                <input type="hidden" name="mp_total_item" value="<?php echo esc_attr($total_item); ?>"/>
+                <input type="hidden" name="ttbm_total_item" value="<?php echo esc_attr($total_item); ?>"/>
 				<?php if ($total_item > $per_page) { ?>
                     <div class="allCenter pagination_area" data-placeholder>
 						<?php
@@ -381,7 +381,7 @@
 			}
 			public static function move_button() {
 				?>
-                <div class="_mpBtn_themeButton_xs mp_sortable_button" type="">
+                <div class="_mpBtn_themeButton_xs ttbm_sortable_button" type="">
                     <span class="fas fa-expand-arrows-alt mp_zero"></span>
                 </div>
 				<?php

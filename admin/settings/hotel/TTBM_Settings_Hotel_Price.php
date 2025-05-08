@@ -16,7 +16,7 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
 				<div class="tabsItem" data-tabs="#ttbm_settings_pricing">
-					<div class="_mT_dLayout_xs mp_settings_area">
+					<div class="_mT_dLayout_xs ttbm_settings_area">
 						<h5><?php esc_html_e(' Price Configuration :', 'tour-booking-manager'); ?></h5>
 						<div class="divider"></div>
 						<h5 class="dFlex">
@@ -63,7 +63,7 @@
 							</table>
 						</div>
 						<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Room', 'tour-booking-manager')); ?>
-						<?php do_action('add_mp_hidden_table', 'ttbm_room_item'); ?>
+						<?php do_action('add_ttbm_hidden_table', 'ttbm_room_item'); ?>
 					</div>
 				</div>
 				<?php
@@ -85,7 +85,7 @@
 				$input_type = array_key_exists('room_qty_type', $field) ? $field['room_qty_type'] : 'inputbox';
 				$description = array_key_exists('room_description', $field) ? $field['room_description'] : '';
 				?>
-				<tr class="mp_remove_area">
+				<tr class="ttbm_remove_area">
 					<td><?php do_action('ttbm_input_add_icon', 'room_type_icon[]', $icon); ?></td>
 					<td>
 						<input type="hidden" name="ttbm_hidden_ticket_text[]" value="<?php echo esc_attr($name_text); ?>"/>

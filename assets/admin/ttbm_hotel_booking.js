@@ -62,6 +62,7 @@
             $(this).text('Loading...');
             let nonce = ttbm_admin_ajax.nonce;
             let setUrl = ttbm_admin_ajax.ajax_url;
+
             let display_limit = 2;
 
             let hotelIds = [];

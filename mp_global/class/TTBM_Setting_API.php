@@ -116,13 +116,13 @@
                 </label>
 				<?php
 			}
-			function callback_mp_select2($args) {
+			function callback_ttbm_select2($args) {
 				$value = TTBM_Global_Function::get_settings($args['section'], $args['id'], $args['std']);
 				$name = $args['section'] . '[' . $args['id'] . ']';
 
 				?>
                 <label>
-                    <select name="<?php echo esc_attr($name); ?>" class="formControl mp_select2">
+                    <select name="<?php echo esc_attr($name); ?>" class="formControl ttbm_select2">
 						<?php foreach ($args['options'] as $key => $label) { ?>
                             <option value="<?php echo esc_attr($key); ?>" <?php echo esc_attr($key == $value ? 'selected' : ''); ?>><?php echo esc_html($label); ?></option>
 						<?php } ?>
@@ -130,14 +130,14 @@
                 </label>
 				<?php
 			}
-			function callback_mp_select2_role($args) {
+			function callback_ttbm_select2_role($args) {
 				global $wp_roles;
 				$value = TTBM_Global_Function::get_settings($args['section'], $args['id'], $args['std']);
 				$name = $args['section'] . '[' . $args['id'] . '][]';
 				$value=is_array($value)?$value:[$value];
 				?>
                 <label>
-                    <select name="<?php echo esc_attr($name); ?>" class="formControl mp_select2" multiple>
+                    <select name="<?php echo esc_attr($name); ?>" class="formControl ttbm_select2" multiple>
 						<?php foreach ($wp_roles->roles as $key => $label) { ?>
                             <option value="<?php echo esc_attr($key); ?>" <?php echo in_array($key, $value) ? 'selected' : ''; ?>><?php echo esc_html($label['name']); ?></option>
 						<?php } ?>

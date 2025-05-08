@@ -812,3 +812,8 @@ div.attendee_filter_list h5, #ttbm_booking_attendee_list_result h6
     margin: 0 20px 0 0;
     font-size: 18px;
 }
+#ttbm_booking_attendee_list_result table#ttbm_attendee_short_info
+ {
+    margin-bottom: 15px;
+}
+#ttbm_booking_attendee_list_result label.justifyCenter{display:inline;}

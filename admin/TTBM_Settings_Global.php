@@ -81,7 +81,7 @@
 			public function slider_sec_reg($default_sec): array {
 				$sections = array(
 					array(
-						'id' => 'mp_slider_settings',
+						'id' => 'ttbm_slider_settings',
 						'title' => __('Slider Settings', 'tour-booking-manager')
 					)
 				);
@@ -354,7 +354,7 @@
 							'default' => ''
 						),
 					)),
-					'mp_slider_settings' => array(
+					'ttbm_slider_settings' => array(
 						array(
 							'name' => 'slider_type',
 							'label' => esc_html__('Slider Type', 'tour-booking-manager'),

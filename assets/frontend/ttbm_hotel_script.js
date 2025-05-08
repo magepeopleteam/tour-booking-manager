@@ -14,7 +14,7 @@
             $('.ttbm_hotel_area').find('.ttbm_booking_panel').slideUp('fast');
             jQuery.ajax({
                     type: 'POST',
-                    url: mp_ajax_url,
+                    url: ttbm_ajax_url,
                     data: {
                         "action": "ttbm_get_hotel_room_list",
                         "hotel_id": hotel_id,
@@ -68,7 +68,7 @@
         roomDataInfo = JSON.stringify( roomDataInfo );
         jQuery.ajax({
             type: 'POST',
-            url: mp_ajax_url,
+            url: ttbm_ajax_url,
             data: {
                 "action": "ttbm_hotel_room_booking",
                 "hotel_id": hotel_id,
@@ -77,7 +77,7 @@
                 "price": total_price,
             },
             success: function (data) {
-                window.location.href = mp_site_url+'/index.php/checkout/';
+                window.location.href = ttbm_site_url+'/index.php/checkout/';
             }
         });
 

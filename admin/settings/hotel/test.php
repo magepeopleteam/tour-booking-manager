@@ -204,7 +204,7 @@
     $('#productTitleSearchBox').on('input', function() {
         let search_term = jQuery(this).val();
         let nonce = ttbm_admin_ajax.nonce;
-        let setUrl = mp_ajax_url;
+        let setUrl = ttbm_ajax_url;
         let type = 'POST';
         if( search_term.length > 0 ) {
             jQuery("#productTitleWrapper").show();

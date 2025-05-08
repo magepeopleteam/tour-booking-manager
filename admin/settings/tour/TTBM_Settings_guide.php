@@ -57,7 +57,7 @@
                                     <p><?php esc_html_e('Select ', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html_e('guide', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_tour_guide'); ?></span></i></p>
                                 </div>
                                 <div class="w-50">
-                                    <select name="ttbm_tour_guide[]" multiple='multiple' class='formControl mp_select2 w-50' data-placeholder="<?php echo esc_html__('Please Select Guide', 'tour-booking-manager'); ?>">
+                                    <select name="ttbm_tour_guide[]" multiple='multiple' class='formControl ttbm_select2 w-50' data-placeholder="<?php echo esc_html__('Please Select Guide', 'tour-booking-manager'); ?>">
                                         <?php
                                             if ($all_guides->post_count > 0) {
                                                 foreach ($all_guides->posts as $guide) {

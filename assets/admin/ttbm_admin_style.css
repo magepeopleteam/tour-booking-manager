@@ -128,9 +128,9 @@ label.ttbm_id_select{height: 100%;}
 #ttbm_list_page table tbody tr:nth-of-type(odd) td table  th,
 #ttbm_list_page table tbody tr:nth-of-type(odd) td table  td{padding: var(--ttbm_mp_xs);border-color: var(--color_border);}
 /****************/
-.ttbm_style .mp_search_on{display: block;}
-.ttbm_style tr.mp_search_on{display: table-row;}
-.ttbm_style .mp_search_off{display: none;}
+.ttbm_style .ttbm_search_on{display: block;}
+.ttbm_style tr.ttbm_search_on{display: table-row;}
+.ttbm_style .ttbm_search_off{display: none;}
 select#mep_ticket_offdays{height:200px !important;}
 #submit{
 	background-color: var(--mpl-white);

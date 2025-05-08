@@ -19,7 +19,7 @@
 				wp_nonce_field('ttbm_ticket_item_nonce', 'ttbm_ticket_item_nonce');
 				?>
                 <div class="ttbm_style">
-                    <div class="mp_settings_area padding">
+                    <div class="ttbm_settings_area padding">
                         <table class="price_config_table">
                             <thead>
                             <tr>
@@ -46,7 +46,7 @@
                             </tbody>
                         </table>
 		                <?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Ticket Type', 'tour-booking-manager')); ?>
-		                <?php do_action('add_mp_hidden_table', 'ttbm_ticket_item'); ?>
+		                <?php do_action('add_ttbm_hidden_table', 'ttbm_ticket_item'); ?>
                     </div>
                 </div>
 				<?php
@@ -65,7 +65,7 @@
 				$input_type = array_key_exists('ticket_type_qty_type', $field) ? $field['ticket_type_qty_type'] : 'inputbox';
 				$description = array_key_exists('ticket_type_description', $field) ? $field['ticket_type_description'] : '';
 				?>
-                <tr class="mp_remove_area">
+                <tr class="ttbm_remove_area">
                     <td><?php do_action('ttbm_input_add_icon', 'ticket_type_icon[]', $icon); ?></td>
                     <td>
                         <input type="hidden" name="ttbm_hidden_ticket_text[]" value="<?php echo esc_attr($name_text); ?>"/>

@@ -38,7 +38,7 @@
 				$ttbm_extra_service_data = TTBM_Global_Function::get_post_info($post_id, 'ttbm_extra_service_data', array());
 				wp_nonce_field('ttbm_extra_service_data_nonce', 'ttbm_extra_service_data_nonce');
 				?>
-				<div class="mp_settings_area mt-2">
+				<div class="ttbm_settings_area mt-2">
 					<section class="bg-light">
 						<label class="label">
 							<div>
@@ -75,7 +75,7 @@
 						<div class="d-flex justify-content-end">
 							<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add Extra New Service', 'tour-booking-manager')); ?>
 						</div>
-						<?php do_action('add_mp_hidden_table', 'ttbm_extra_service_item'); ?>
+						<?php do_action('add_ttbm_hidden_table', 'ttbm_extra_service_item'); ?>
 					</section>
 				</div>
 				<?php
@@ -92,7 +92,7 @@
 				$active = $display == 'off' ? '' : 'mActive';
 				$description = array_key_exists('extra_service_description', $field) ? $field['extra_service_description'] : '';
 				?>
-				<tr class="mp_remove_area">
+				<tr class="ttbm_remove_area">
 					<?php do_action('ttbm_ticket_type_content_start', $field, $tour_id) ?>
 					<td><?php do_action('ttbm_input_add_icon', 'service_icon[]', $service_icon); ?></td>
 					<td>

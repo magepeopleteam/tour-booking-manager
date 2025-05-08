@@ -1,7 +1,7 @@
 (function ($) {
     "use strict";
     $(document).on('click', '.ttbm_add_item', function () {
-        let parent = $(this).closest('.mp_settings_area');
+        let parent = $(this).closest('.ttbm_settings_area');
         let item = parent.find('>.ttbm_hidden_content').first().find('.ttbm_hidden_item').html();
         ttbm_load_sortable_datepicker(parent, item);
         parent.find('.ttbm_item_insert').find('.add_ttbm_select2').select2({});
@@ -14,7 +14,7 @@
                 "Are You Sure , Remove this row ? \n\n 1. Ok : To Remove . \n 2. Cancel : To Cancel ."
             )
         ) {
-            $(this).closest(".mp_remove_area").slideUp(250).remove();
+            $(this).closest(".ttbm_remove_area").slideUp(250).remove();
             return true;
         } else {
             return false;
@@ -52,7 +52,7 @@
         let post_id = $('[name="post_ID"]').val();
         if (form_id) {
             $.ajax({
-                type: 'POST', url: mp_ajax_url, data: {
+                type: 'POST', url: ttbm_ajax_url, data: {
                     "action": "get_ttbm_insert_ticket_type", "form_id": form_id, "post_id": post_id
                 }, beforeSend: function () {
                     dLoader(parent);
@@ -71,7 +71,7 @@
         let dt = new Date();
         let time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
         $.ajax({
-            type: 'POST', url: mp_ajax_url, data: {"action": "get_ttbm_add_day_wise_details", "id": time}, beforeSend: function () {
+            type: 'POST', url: ttbm_ajax_url, data: {"action": "get_ttbm_add_day_wise_details", "id": time}, beforeSend: function () {
                 dLoader(parent);
             }, success: function (data) {
                 $this.before(data);
@@ -87,7 +87,7 @@
     $(document).on('click', '.ttbm_settings_general [data-target-popup]', function () {
         let target = $(this).closest('.ttbm_settings_general').find('.ttbm_location_form_area');
         $.ajax({
-            type: 'POST', url: mp_ajax_url, data: {
+            type: 'POST', url: ttbm_ajax_url, data: {
                 "action": "load_ttbm_location_form"
             }, beforeSend: function () {
                 simpleSpinner(target);
@@ -126,7 +126,7 @@
         }
         if (name && image) {
             $.ajax({
-                type: 'POST', url: mp_ajax_url, data: {
+                type: 'POST', url: ttbm_ajax_url, data: {
                     "action": "ttbm_new_location_save", "name": name, "description": description, "address": address, "country": country, "image": image, "_wp_nonce": parent.find('[name="ttbm_add_new_location_popup"]').val(),
                 }, beforeSend: function () {
                     dLoader(parent);
@@ -155,7 +155,7 @@
         let ttbm_id = $('[name="post_id"]').val();
         let parent = $('.ttbm_location_select_area');
         $.ajax({
-            type: 'POST', url: mp_ajax_url, data: {
+            type: 'POST', url: ttbm_ajax_url, data: {
                 "action": "ttbm_reload_location_list", "ttbm_id": ttbm_id
             }, beforeSend: function () {
                 dLoader(parent);
@@ -173,7 +173,7 @@
     $(document).on('click', '.ttbm_settings_feature [data-target-popup="add_new_feature_popup"]', function () {
         let target = $(this).closest('.ttbm_settings_feature').find('.ttbm_feature_form_area');
         $.ajax({
-            type: 'POST', url: mp_ajax_url, data: {
+            type: 'POST', url: ttbm_ajax_url, data: {
                 "action": "load_ttbm_feature_form"
             }, beforeSend: function () {
                 simpleSpinner(target);
@@ -215,7 +215,7 @@
         if (feature_name && feature_icon) {
             $.ajax({
                 type: 'POST',
-                url: mp_ajax_url,
+                url: ttbm_ajax_url,
                 data: {
                     "action": "ttbm_new_feature_save",
                     "feature_name": feature_name,
@@ -254,7 +254,7 @@
         let parent = $('.ttbm_features_table');
         $.ajax({
             type: 'POST',
-            url: mp_ajax_url,
+            url: ttbm_ajax_url,
             data: {
                 "action": "ttbm_reload_feature_list",
                 "ttbm_id": ttbm_id
@@ -285,7 +285,7 @@
         let parent = $('.ttbm_features_table');
         $.ajax({
             type: 'POST',
-            url: mp_ajax_url,
+            url: ttbm_ajax_url,
             data: {
                 "action": "ttbm_reload_feature_list",
                 "ttbm_id": ttbm_id
@@ -324,7 +324,7 @@
     $(document).on('click', '.ttbm_settings_activities [data-target-popup]', function () {
         let target = $(this).closest('.ttbm_settings_activities').find('.ttbm_activity_form_area');
         $.ajax({
-            type: 'POST', url: mp_ajax_url, data: {
+            type: 'POST', url: ttbm_ajax_url, data: {
                 "action": "load_ttbm_activity_form"
             }, beforeSend: function () {
                 simpleSpinner(target);
@@ -361,7 +361,7 @@
         }
         if (activity_name && activity_icon) {
             $.ajax({
-                type: 'POST', url: mp_ajax_url, data: {
+                type: 'POST', url: ttbm_ajax_url, data: {
                     "action": "ttbm_new_activity_save", "activity_name": activity_name, "activity_description": activity_description, "activity_icon": activity_icon,"_wp_nonce": parent.find('[name="ttbm_add_new_activity_popup"]').val(),
                 }, beforeSend: function () {
                     dLoader(parent);
@@ -388,7 +388,7 @@
         let ttbm_id = $('[name="post_id"]').val();
         let parent = $('.ttbm_activities_table');
         $.ajax({
-            type: 'POST', url: mp_ajax_url, data: {
+            type: 'POST', url: ttbm_ajax_url, data: {
                 "action": "ttbm_reload_activity_list", "ttbm_id": ttbm_id
             }, beforeSend: function () {
                 dLoader(parent);
@@ -406,7 +406,7 @@
     $(document).on('click', '.ttbm_settings_place_you_see [data-target-popup]', function () {
         let target = $(this).closest('.ttbm_settings_place_you_see').find('.ttbm_place_you_see_form_area');
         $.ajax({
-            type: 'POST', url: mp_ajax_url, data: {
+            type: 'POST', url: ttbm_ajax_url, data: {
                 "action": "load_ttbm_place_you_see_form"
             }, beforeSend: function () {
                 dLoader(target);
@@ -426,7 +426,7 @@
         let ttbm_id = $('[name="post_id"]').val();
         let parent = $('.ttbm_place_you_see_table');
         $.ajax({
-            type: 'POST', url: mp_ajax_url, data: {
+            type: 'POST', url: ttbm_ajax_url, data: {
                 "action": "ttbm_reload_place_you_see_list", "ttbm_id": ttbm_id
             }, beforeSend: function () {
                 dLoader(parent);
@@ -920,12 +920,12 @@
                 value = value.split(",");
                 let active = (value.indexOf(current_value) !== -1) ? 1 : 0;
                 if (active > 0) {
-                    $(this).addClass('mp_search_on').removeClass('mp_search_off');
+                    $(this).addClass('ttbm_search_on').removeClass('ttbm_search_off');
                 } else {
-                    $(this).addClass('mp_search_off').removeClass('mp_search_on');
+                    $(this).addClass('ttbm_search_off').removeClass('ttbm_search_on');
                 }
             } else {
-                $(this).addClass('mp_search_on').removeClass('mp_search_off');
+                $(this).addClass('ttbm_search_on').removeClass('ttbm_search_off');
             }
         });
     }
@@ -935,7 +935,7 @@
             let target = $(this).closest('.ttbm-tour-card');
             let post_id = $(this).data('post-id');
             $.ajax({
-                type: 'POST', url: mp_ajax_url, data: {
+                type: 'POST', url: ttbm_ajax_url, data: {
                     "action": "ttbm_trash_post",
                     "post_id": post_id,
                     "nonce": $(this).closest('.ttbm-tour-card').find('#edd_sample_nonce').val(),

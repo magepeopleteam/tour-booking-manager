@@ -85,7 +85,7 @@ function ttbm_load_date_picker(parent = jQuery('.ttbm_style')) {
         jQuery(this).removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind();
     }).promise().done(function () {
         parent.find(".date_type").datepicker({
-            dateFormat: mp_date_format,
+            dateFormat: ttbm_date_format,
             //showButtonPanel: true,
             autoSize: true,
             changeMonth: true,
@@ -106,13 +106,13 @@ function ttbm_load_date_picker(parent = jQuery('.ttbm_style')) {
         jQuery(this).removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind();
     }).promise().done(function () {
         parent.find(".date_type_without_year").datepicker({
-            dateFormat: mp_date_format_without_year,
+            dateFormat: ttbm_date_format_without_year,
             //showButtonPanel: true,
             autoSize: true,
             changeMonth: true,
             changeYear: false,
             onSelect: function (dateString, data) {
-                //console.log(mp_date_format_without_year);
+                //console.log(ttbm_date_format_without_year);
                 let date = ('0' + (parseInt(data.selectedMonth) + 1)).slice(-2) + '-' + ('0' + parseInt(data.selectedDay)).slice(-2);
                 jQuery(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
             }
@@ -128,7 +128,7 @@ function ttbm_alert($this, attr = 'alert') {
     "use strict";
     $(document).ready(function () {
         ttbm_load_date_picker();
-        $('.mp_select2').select2({});
+        $('.ttbm_select2').select2({});
     });
 }(jQuery));
 //====================================================================Load Bg Image=================//
@@ -362,10 +362,10 @@ function ttbm_sticky_management() {
                 let body_width = jQuery('body').outerWidth();
                 let scroll_top = jQuery(window).scrollTop();
                 let current = jQuery(this);
-                let target_scroll = current.find('.mp_sticky_on_scroll');
+                let target_scroll = current.find('.ttbm_sticky_on_scroll');
                 let content_top = current.parent().offset().top;
-                let parent = current.closest('.mp_sticky_section');
-                let depend_height = parent.find('.mp_sticky_depend_area').innerHeight();
+                let parent = current.closest('.ttbm_sticky_section');
+                let depend_height = parent.find('.ttbm_sticky_depend_area').innerHeight();
                 let content_height = depend_height - Math.max(scroll_top - content_top, 0) - (target_scroll.offset().top - current.offset().top) - 100;
                 if (body_width > 800 && scroll_top + 100 >= content_top) {
                     target_scroll.css('max-height', content_height);
@@ -727,7 +727,7 @@ function ttbm_pagination_page_management(parent, pagination_page, total_item) {
         let count = 0;
         let end_item = per_page_item * pagination_page + per_page_item;
         $(this).attr('data-load-more', pagination_page).promise().done(function () {
-            parent.find('.mp_pagination_item').each(function () {
+            parent.find('.ttbm_pagination_item').each(function () {
                 if (count < end_item) {
                     $(this).slideDown(250);
                 }
@@ -740,7 +740,7 @@ function ttbm_pagination_page_management(parent, pagination_page, total_item) {
         });
     });
     function lode_more_init(parent) {
-        if (parent.find('.mp_pagination_item:hidden').length === 0) {
+        if (parent.find('.ttbm_pagination_item:hidden').length === 0) {
             parent.find('[data-load-more]').attr('disabled', 'disabled');
         } else {
             parent.find('[data-load-more]').removeAttr('disabled');
@@ -749,7 +749,7 @@ function ttbm_pagination_page_management(parent, pagination_page, total_item) {
     function load_more_scroll(parent, pagination_page) {
         let per_page_item = parseInt(parent.find('input[name="pagination_per_page"]').val());
         let start_item = pagination_page > 0 ? pagination_page * per_page_item : 0;
-        let target = parent.find('.mp_pagination_item:nth-child(' + (start_item + 1) + ')');
+        let target = parent.find('.ttbm_pagination_item:nth-child(' + (start_item + 1) + ')');
         pageScrollTo(target);
     }
 }(jQuery));

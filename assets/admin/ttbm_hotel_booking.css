@@ -398,21 +398,21 @@ li.ttbm_hotel_tab_item {
 
 .hotel-list-container {
     background-color: white;
-    border: 1px solid #c3c4c7;
+    border: 1px solid rgb(238, 238, 238);
     border-radius: 4px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     overflow: hidden;
 }
 
 .ttbm-hotel-list-table thead th {
-    border-bottom: 1px solid #c3c4c7;
+    border-bottom: 1px solid rgb(238, 238, 238);
     padding: 10px;
     text-align: left;
     line-height: 1.3em;
     font-size: 14px;
     font-weight: 600;
     color: #3c434a;
-    background-color: #f9f9f9;
+    background-color: rgb(238, 238, 238);
 }
 .ttbm-hotel-list-table .ttbm-hotel-list-column-image {
     width: 80px;

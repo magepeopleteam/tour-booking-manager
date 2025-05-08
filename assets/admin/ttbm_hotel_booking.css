@@ -542,7 +542,12 @@ li.ttbm_hotel_tab_item {
     color: #fff;
 }
 .ttbm-hotel-list-edit-btn {
-    background: rgb(38, 166, 154);
+    background: #DBF7E8;
+    color:#2DC78A;
+}
+.ttbm-hotel-list-edit-btn {
+    background: #2DC78A;
+    color:#fff;
 }
 .ttbm-hotel-list-delete-btn {
     background: linear-gradient(to bottom, #f14668, #dc3545);

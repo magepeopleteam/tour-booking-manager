@@ -535,12 +535,20 @@ li.ttbm_hotel_tab_item {
 .second-tag {
     background: #DBF7E8;
     color:#2DC78A;
+    border: 1px solid #ccf1e3;
+}
+.second-tag:hover {
+    background: #2DC78A;
+    color:#fff;
 }
 .third-tag {
     background: #FFE1E2;
     color: #FF383C;
 }
-
+.third-tag:hover {
+    background: #FF383C;
+    color: #fff;
+}
 .ttbm-hotel-list-view-btn {
     background: #EAE7FF;
     color: #5342BB;

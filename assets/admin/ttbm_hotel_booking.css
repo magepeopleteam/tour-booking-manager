@@ -803,6 +803,7 @@ body{
 }
 #ttbm_attendee_list_result select[name="ttbm_attendee_list_theme"] {
   margin: 0 10px;
+  border-radius: 5px;
 }
 div.attendee_filter_list h5
  {

@@ -299,7 +299,6 @@
     flex: 1;
 }
 li.ttbm_hotel_tab_item {
-    border: 1px solid #cfcaca;
     margin-bottom: 0px;
     width:200px;
 }
@@ -668,4 +667,121 @@ body{
 
 
 
+
+   .ttbm_hotel_tab_menu {
+            display: flex;
+            position: relative;
+            list-style: none;
+            background: linear-gradient(to right, #f5f7fa, #f8fafc);
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .ttbm_hotel_tab_item {
+            padding: 16px 25px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #718096;
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            z-index: 1;
+            flex: 1;
+            text-align: center;
+            max-width: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        /* Add icons before text */
+        .ttbm_hotel_tab_item:nth-child(1)::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'%3E%3C/path%3E%3Cpolyline points='9 22 9 12 15 12 15 22'%3E%3C/polyline%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-right: 8px;
+        }
+        
+        .ttbm_hotel_tab_item:nth-child(2)::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='4' width='20' height='16' rx='2'%3E%3C/rect%3E%3Cpath d='M7 15h0M12 15h0M17 15h0'%3E%3C/path%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-right: 8px;
+        }
+        
+        .ttbm_hotel_tab_item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background-color: #1e88e5;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .ttbm_hotel_tab_item:hover {
+            color: #4a5568;
+            background-color: rgba(30, 136, 229, 0.05);
+        }
+        
+        .ttbm_hotel_tab_item.active {
+            color: #1e88e5;
+            font-weight: 700;
+        }
+        
+        .ttbm_hotel_tab_item.active::after {
+            width: 100%;
+            box-shadow: 0 0 8px rgba(30, 136, 229, 0.5);
+        }
+        
+        /* Tab indicator - will be controlled by JS */
+        .ttbm_tab_indicator {
+            position: absolute;
+            bottom: 0;
+            height: 3px;
+            background: linear-gradient(to right, #1e88e5, #42a5f5);
+            transition: all 0.3s ease;
+            border-radius: 3px 3px 0 0;
+            box-shadow: 0 0 8px rgba(30, 136, 229, 0.5);
+        }
+        
+        /* Add subtle hover animation */
+        @keyframes tab-hover {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
+            100% { transform: translateY(0); }
+        }
+        
+        .ttbm_hotel_tab_item:hover::before {
+            animation: tab-hover 0.5s ease;
+        }
+
+        /* Tab content containers */
+        .ttbm_tab_content {
+            display: none;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .ttbm_tab_content.active {
+            display: block;
+        }
 

@@ -54,10 +54,10 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                                 <h3 class="ttbm-title"><?= $term_name ?></h3>
                                 <p class="ttbm-description"><?= $description ?></p>
                             </div>
-                            <div class="ttbm-location-card-actions ttbm-card-actions"  ttbm-data-location-id="<?php echo esc_attr( $term_id )?>">
-                                <button class="ttbm-btn ttbm-view-btn"> <i class="fas fa-eye"></i> View</button>
-                                <button class="ttbm-btn ttbm-edit-btn ttbm_edit_trip_location"><i class="fas fa-pen"></i> Edit</button>
-                                <button class="ttbm-btn ttbm-delete-btn ttbm_delete_taxonomy_data"> <i class="fas fa-trash"></i> Delete</button>
+                            <div class=" ttbm-card-actions"  ttbm-data-location-id="<?php echo esc_attr( $term_id )?>">
+                                <button class="ttbm-btn ttbm-view-btn"> <i class="fas fa-eye"></i></button>
+                                <button class="ttbm-btn ttbm-edit-btn ttbm_edit_trip_location"><i class="fas fa-edit"></i></button>
+                                <button class="ttbm-btn ttbm-delete-btn ttbm_delete_taxonomy_data"> <i class="fas fa-trash-alt"></i></button>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -121,7 +121,9 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                         $term_slug  = esc_html( $term->slug );
                         $description = esc_html( $term->description );
 
-                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description );
+                        $get_feature_icon = get_term_meta( $term_id, 'ttbm_feature_icon', true );
+
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $get_feature_icon );
                         ?>
 
                     <?php endforeach; ?>
@@ -181,9 +183,10 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                         $term_name  = esc_html( $term->name );
                         $term_slug  = esc_html( $term->slug );
                         $description = esc_html( $term->description );
+                        $get_activities_icon = get_term_meta( $term_id, 'ttbm_activities_icon', true );
 
 
-                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description );
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $get_activities_icon );
                         ?>
 
                     <?php endforeach; ?>
@@ -201,20 +204,23 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             ]);
         }
 
-        public static function ttbm_display_taxonomy_data( $term_id, $term_name, $description ){ ?>
+        public static function ttbm_display_taxonomy_data( $term_id, $term_name, $description, $icon='' ){
+            ?>
 
             <div class="ttbm-taxonomy-card">
-
                 <div class="ttbm-card-right">
-                    <h3 class="ttbm-title"><?php echo esc_attr( $term_name ) ?></h3>
-                    <p class="ttbm-description"><?echo esc_attr( $description ) ?></p>
-                    <div class="ttbm-card-actions"  ttbm-data-location-id="<?php echo esc_attr( $term_id )?>">
-                        <button class="ttbm-btn ttbm-view-btn"> <i class="fas fa-eye"></i> View</button>
-                        <button class="ttbm-btn ttbm-edit-btn ttbm_edit_trip_location"><i class="fas fa-pen"></i> Edit</button>
-                        <button class="ttbm-btn ttbm-delete-btn ttbm_delete_taxonomy_data"> <i class="fas fa-trash"></i> Delete</button>
+                    <div class="ttbm-title-row">
+                        <h3 class="ttbm-title"><i class="<?php echo esc_attr( $icon )?> "></i> <?php echo esc_attr( $term_name ) ?></h3>
+                        <div class="ttbm-taxonomy-card-actions" ttbm-data-location-id="<?php echo esc_attr( $term_id )?>">
+<!--                            <button class="ttbm-btn ttbm-view-btn"><i class="fas fa-eye"></i></button>-->
+                            <button class="ttbm-btn ttbm-edit-btn ttbm_edit_trip_location"><i class="fas fa-edit"></i></button>
+                            <button class="ttbm-btn ttbm-delete-btn ttbm_delete_taxonomy_data"><i class="fas fa-trash-alt"></i></button>
+                        </div>
                     </div>
+                    <p class="ttbm-description"><?php echo esc_attr( $description ) ?></p>
                 </div>
             </div>
+
 
         <?php }
 

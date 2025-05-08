@@ -246,8 +246,9 @@
 }
 
 .ttbm_hotel_tab_content_holder {
-    padding: 20px;
+    padding: 10px 20px;
     background: #fff;
+    margin-top:15px;
 }
 
 .ttbm_hotel_tab_content {

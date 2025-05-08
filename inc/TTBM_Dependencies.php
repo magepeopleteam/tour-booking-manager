@@ -8,8 +8,8 @@
 				add_action('init', array($this, 'language_load'));
 				$this->load_file();
 				$this->appsero_init_tracker_ttbm();
-				add_action('add_mp_frontend_enqueue', array($this, 'frontend_script'), 90);
-				add_action('add_mp_admin_enqueue', array($this, 'admin_script'), 90);
+				add_action('add_ttbm_frontend_enqueue', array($this, 'frontend_script'), 90);
+				add_action('add_ttbm_admin_enqueue', array($this, 'admin_script'), 90);
 				add_action('ttbm_registration_enqueue', array($this, 'registration_enqueue'), 90);
 				add_action('admin_init', array($this, 'ttbm_upgrade'));
 			}
@@ -96,7 +96,7 @@
 					update_option( 'ttbm_global_settings', $mp_global_settings );
 					$style_settings = get_option( 'mp_style_settings' );
 					update_option( 'ttbm_style_settings', $style_settings );
-					$slider_settings = get_option( 'mp_slider_settings' );
+					$slider_settings = get_option( 'ttbm_slider_settings' );
 					update_option( 'ttbm_slider_settings', $slider_settings );
 					$custom_css = get_option( 'mp_add_custom_css' );
 					update_option( 'ttbm_custom_css', $custom_css );

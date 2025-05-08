@@ -1624,7 +1624,7 @@
 		margin: 0 var(--ttbm_mp_xs) 0 0;
 	}
 	/*****Remove icon******/
-	.ttbm_style .mp_remove_area {
+	.ttbm_style .ttbm_remove_area {
 		position: relative;
 	}
 	.ttbm_style .ttbm_remove_icon {
@@ -1810,7 +1810,7 @@
 	div.ttbm_style .ttbm_sticky_area.mpSticky {
 		position: fixed;
 	}
-	div.ttbm_style .ttbm_sticky_area.mpSticky .mp_sticky_on_scroll {
+	div.ttbm_style .ttbm_sticky_area.mpSticky .ttbm_sticky_on_scroll {
 		overflow: auto;
 		z-index: 1111;
 	}
@@ -2843,7 +2843,7 @@ div.ttbm_style .groupContent input[type="radio"]:checked::after {
 }
 /******************************************************************** Pagination section ************************************************/
 @media only screen and (min-width: 10px) {
-	div.ttbm_pagination_main_area .mp_pagination_item {
+	div.ttbm_pagination_main_area .ttbm_pagination_item {
 		position: relative;
 	}
 	div.ttbm_pagination_main_area .ribbon {

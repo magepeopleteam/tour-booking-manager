@@ -809,36 +809,36 @@ div.ttbm_style select.formControl {
     opacity: 1;
     font-size: 10px;
   }
-  .mp_settings_panel_header {
+  .ttbm_settings_panel_header {
     background: var(--mpl-secondary);
     padding: 1em 0.5em;
     color: var(--mpl-white);
     font-size: 20px;
     margin-top: 30px;
   }
-  .mp_settings_panel {
+  .ttbm_settings_panel {
     padding-bottom: 0.5em;
   }
-  .mp_settings_panel .nav-tab-wrapper {
+  .ttbm_settings_panel .nav-tab-wrapper {
     background: var(---mpl-sky-light);
     border: 5px solid var(---mpl-sky-light);
   }
-  .mp_settings_panel .nav-tab-wrapper .nav-tab {
+  .ttbm_settings_panel .nav-tab-wrapper .nav-tab {
     box-sizing: border-box;
     background: var(--mpl-white);
     color: var(--mpl-secondary);
     margin-bottom: 0.5em;
     border-radius: 0.25rem;
   }
-  .mp_settings_panel .nav-tab-wrapper .nav-tab:hover {
+  .ttbm_settings_panel .nav-tab-wrapper .nav-tab:hover {
     background: var(--mpl-primary);
     color: var(--mpl-white);
   }
-  .mp_settings_panel .nav-tab-wrapper .nav-tab.nav-tab-active {
+  .ttbm_settings_panel .nav-tab-wrapper .nav-tab.nav-tab-active {
     background: var(--mpl-primary);
     color: var(--mpl-white);
   }
-  .mp_settings_panel .metabox-holder {
+  .ttbm_settings_panel .metabox-holder {
     background: #fff;
     padding: 0;
     margin: 0;
@@ -846,7 +846,7 @@ div.ttbm_style select.formControl {
     border: 15px solid var(---mpl-sky-light);
     background-color: var(---mpl-sky-light);
   }
-  .mp_settings_panel .metabox-holder h2 {
+  .ttbm_settings_panel .metabox-holder h2 {
     border-bottom: 0px solid var(--mpl-white);
     font-size: 1.625rem;
     line-height: 1.4;
@@ -856,17 +856,17 @@ div.ttbm_style select.formControl {
     background: var(---mpl-sky-light);
     color: var(--mpl-primary) !important;
   }
-  .mp_settings_panel .metabox-holder table {
+  .ttbm_settings_panel .metabox-holder table {
     border-collapse: separate;
     border-spacing: 0 0.1em;
     margin: 0;
     background-color: var(---mpl-sky-light);
     border-radius: 0.25rem;
   }
-  .mp_settings_panel .metabox-holder table tr:nth-child(2n) {
+  .ttbm_settings_panel .metabox-holder table tr:nth-child(2n) {
     background-color: var(--mpl-white);
   }
-  .mp_settings_panel p.submit input {
+  .ttbm_settings_panel p.submit input {
     font-size: 16px;
     padding: 5px 30px;
     border-radius: 0.25rem;
@@ -874,7 +874,7 @@ div.ttbm_style select.formControl {
     border-color: var(--mpl-primary);
     transition: 0.2s;
   }
-  .mp_settings_panel p.submit input:hover {
+  .ttbm_settings_panel p.submit input:hover {
     background: var(--mpl-primary);
     border-color: var(--mpl-primary);
   }

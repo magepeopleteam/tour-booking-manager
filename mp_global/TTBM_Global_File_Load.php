@@ -18,35 +18,35 @@
 				add_action('wp_head', array($this, 'add_frontend_head'), 5);
 			}
 			public function define_constants() {
-				if (!defined('MP_GLOBAL_PLUGIN_DIR')) {
-					define('MP_GLOBAL_PLUGIN_DIR', dirname(__FILE__));
+				if (!defined('TTBM_GLOBAL_PLUGIN_DIR')) {
+					define('TTBM_GLOBAL_PLUGIN_DIR', dirname(__FILE__));
 				}
-				if (!defined('MP_GLOBAL_PLUGIN_URL')) {
-					define('MP_GLOBAL_PLUGIN_URL', plugins_url() . '/' . plugin_basename(dirname(__FILE__)));
+				if (!defined('TTBM_GLOBAL_PLUGIN_URL')) {
+					define('TTBM_GLOBAL_PLUGIN_URL', plugins_url() . '/' . plugin_basename(dirname(__FILE__)));
 				}
 			}
 			public function load_global_file() {
-				require_once MP_GLOBAL_PLUGIN_DIR . '/class/TTBM_Global_Function.php';
-				require_once MP_GLOBAL_PLUGIN_DIR . '/class/TTBM_Global_Style.php';
-				require_once MP_GLOBAL_PLUGIN_DIR . '/class/TTBM_Custom_Layout.php';
-				require_once MP_GLOBAL_PLUGIN_DIR . '/class/TTBM_Custom_Slider.php';
-				require_once MP_GLOBAL_PLUGIN_DIR . '/class/TTBM_Select_Icon_image.php';
-				require_once MP_GLOBAL_PLUGIN_DIR . '/class/TTBM_Setting_API.php';
-				require_once MP_GLOBAL_PLUGIN_DIR . '/class/TTBM_Global_Settings.php';
+				require_once TTBM_GLOBAL_PLUGIN_DIR . '/class/TTBM_Global_Function.php';
+				require_once TTBM_GLOBAL_PLUGIN_DIR . '/class/TTBM_Global_Style.php';
+				require_once TTBM_GLOBAL_PLUGIN_DIR . '/class/TTBM_Custom_Layout.php';
+				require_once TTBM_GLOBAL_PLUGIN_DIR . '/class/TTBM_Custom_Slider.php';
+				require_once TTBM_GLOBAL_PLUGIN_DIR . '/class/TTBM_Select_Icon_image.php';
+				require_once TTBM_GLOBAL_PLUGIN_DIR . '/class/TTBM_Setting_API.php';
+				require_once TTBM_GLOBAL_PLUGIN_DIR . '/class/TTBM_Global_Settings.php';
 			}
 			public function global_enqueue() {
 				wp_enqueue_script('jquery');
 				wp_enqueue_script('jquery-ui-core');
 				wp_enqueue_script('jquery-ui-datepicker');
-				wp_enqueue_style('mp_jquery_ui', MP_GLOBAL_PLUGIN_URL . '/assets/jquery-ui.min.css', array(), time(), true);
+				wp_enqueue_style('mp_jquery_ui', TTBM_GLOBAL_PLUGIN_URL . '/assets/jquery-ui.min.css', array(), time(), true);
 				wp_enqueue_style('mp_font_awesome', '//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css', array(), time());
-				wp_enqueue_style('mp_select_2', MP_GLOBAL_PLUGIN_URL . '/assets/select_2/select2.min.css', array(), time());
-				wp_enqueue_script('mp_select_2', MP_GLOBAL_PLUGIN_URL . '/assets/select_2/select2.min.js', array(), time(), true);
-				wp_enqueue_style('mp_owl_carousel', MP_GLOBAL_PLUGIN_URL . '/assets/owl_carousel/owl.carousel.min.css', array(), time());
-				wp_enqueue_script('mp_owl_carousel', MP_GLOBAL_PLUGIN_URL . '/assets/owl_carousel/owl.carousel.min.js', array(), time(), true);
-				wp_enqueue_style('ttbm_plugin_global', MP_GLOBAL_PLUGIN_URL . '/assets/mp_style/ttbm_plugin_global.css', array(), time());
-				wp_enqueue_script('ttbm_plugin_global', MP_GLOBAL_PLUGIN_URL . '/assets/mp_style/ttbm_plugin_global.js', array('jquery'), time(), true);
-				do_action('add_mp_global_enqueue');
+				wp_enqueue_style('mp_select_2', TTBM_GLOBAL_PLUGIN_URL . '/assets/select_2/select2.min.css', array(), time());
+				wp_enqueue_script('mp_select_2', TTBM_GLOBAL_PLUGIN_URL . '/assets/select_2/select2.min.js', array(), time(), true);
+				wp_enqueue_style('mp_owl_carousel', TTBM_GLOBAL_PLUGIN_URL . '/assets/owl_carousel/owl.carousel.min.css', array(), time());
+				wp_enqueue_script('mp_owl_carousel', TTBM_GLOBAL_PLUGIN_URL . '/assets/owl_carousel/owl.carousel.min.js', array(), time(), true);
+				wp_enqueue_style('ttbm_plugin_global', TTBM_GLOBAL_PLUGIN_URL . '/assets/mp_style/ttbm_plugin_global.css', array(), time());
+				wp_enqueue_script('ttbm_plugin_global', TTBM_GLOBAL_PLUGIN_URL . '/assets/mp_style/ttbm_plugin_global.js', array('jquery'), time(), true);
+				do_action('add_ttbm_global_enqueue');
 			}
 			public function admin_enqueue() {
 				$this->global_enqueue();
@@ -63,15 +63,15 @@
 				wp_enqueue_style('jquery.timepicker.min', 'https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css');
 				wp_enqueue_script('jquery.timepicker.min', 'https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js', array('jquery'), 1, true);
 				//=====================//
-				wp_enqueue_script('form-field-dependency', MP_GLOBAL_PLUGIN_URL . '/assets/admin/form-field-dependency.js', array('jquery'), null, false);
+				wp_enqueue_script('form-field-dependency', TTBM_GLOBAL_PLUGIN_URL . '/assets/admin/form-field-dependency.js', array('jquery'), null, false);
 				// admin setting global
-				wp_enqueue_script('ttbm_admin_settings', MP_GLOBAL_PLUGIN_URL . '/assets/admin/ttbm_admin_settings.js', array('jquery'), time(), true);
-				wp_enqueue_style('ttbm_admin_settings', MP_GLOBAL_PLUGIN_URL . '/assets/admin/ttbm_admin_settings.css', array(), time());
-				do_action('add_mp_admin_enqueue');
+				wp_enqueue_script('ttbm_admin_settings', TTBM_GLOBAL_PLUGIN_URL . '/assets/admin/ttbm_admin_settings.js', array('jquery'), time(), true);
+				wp_enqueue_style('ttbm_admin_settings', TTBM_GLOBAL_PLUGIN_URL . '/assets/admin/ttbm_admin_settings.css', array(), time());
+				do_action('add_ttbm_admin_enqueue');
 			}
 			public function frontend_enqueue() {
 				$this->global_enqueue();
-				do_action('add_mp_frontend_enqueue');
+				do_action('add_ttbm_frontend_enqueue');
 			}
 			public function add_admin_head() {
 				$this->js_constant();
@@ -88,11 +88,11 @@
 					let ttbm_currency_decimal = "";
 					let ttbm_currency_thousands_separator = "";
 					let ttbm_num_of_decimal = "";
-					let mp_ajax_url = "<?php echo admin_url('admin-ajax.php'); ?>";
-					let mp_site_url = " <?php echo esc_attr( get_site_url() ) ?>";
-					let ttbm_empty_image_url = "<?php echo esc_attr(MP_GLOBAL_PLUGIN_URL . '/assets/images/no_image.png'); ?>";
-					let mp_date_format = "<?php echo esc_attr(TTBM_Global_Function::get_settings('ttbm_global_settings', 'date_format', 'D d M , yy')); ?>";
-					let mp_date_format_without_year = "<?php echo esc_attr(TTBM_Global_Function::get_settings('ttbm_global_settings', 'date_format_without_year', 'D d M')); ?>";
+					let ttbm_ajax_url = "<?php echo admin_url('admin-ajax.php'); ?>";
+					let ttbm_site_url = " <?php echo esc_attr( get_site_url() ) ?>";
+					let ttbm_empty_image_url = "<?php echo esc_attr(TTBM_GLOBAL_PLUGIN_URL . '/assets/images/no_image.png'); ?>";
+					let ttbm_date_format = "<?php echo esc_attr(TTBM_Global_Function::get_settings('ttbm_global_settings', 'date_format', 'D d M , yy')); ?>";
+					let ttbm_date_format_without_year = "<?php echo esc_attr(TTBM_Global_Function::get_settings('ttbm_global_settings', 'date_format_without_year', 'D d M')); ?>";
 				</script>
 				<?php
 				if (TTBM_Global_Function::check_woocommerce() == 1) {

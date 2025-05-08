@@ -400,6 +400,15 @@
             imageId = $('#ttbm-location-image-id').val();
         }
 
+        let icon = '';
+        if( tab_type === 'Add New Feature' ){
+            icon = $('[name="ttbm_feature_icon"]').val();
+        }
+
+        if( tab_type === 'Add New Activities' ){
+            icon = $('[name="ttbm_activity_icon"]').val();
+        }
+
 
         if (!name) {
             alert('Name is required.');
@@ -422,6 +431,7 @@
             term_id,
             action_type,
             taxonomy_type,
+            icon,
 
         },
             function (response) {

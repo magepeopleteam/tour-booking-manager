@@ -293,6 +293,7 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             $country = sanitize_text_field($_POST['country']);
             $action_type = sanitize_text_field($_POST['action_type']);
             $taxonomy_type = sanitize_text_field($_POST['taxonomy_type']);
+            $icon_name = sanitize_text_field($_POST['icon']);
             $imageId = absint($_POST['imageId']);
 
             if (empty($name)) {
@@ -334,6 +335,15 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                 update_term_meta($term_id, 'ttbm_location_image', $imageId );
                 $img_url = wp_get_attachment_image_url( $imageId, 'thumbnail' );
             }
+
+
+            if( $taxonomy_type === 'ttbm_tour_activities' ){
+                update_term_meta( $term_id, 'ttbm_activities_icon', $icon_name );
+            }
+            if( $taxonomy_type === 'ttbm_tour_features_list' ){
+                update_term_meta( $term_id, 'ttbm_feature_icon', $icon_name );
+            }
+
 
 
 

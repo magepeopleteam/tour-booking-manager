@@ -54,7 +54,7 @@
                             </div>
                             <div class="popupBody">
 								<?php
-									$icons = $this->all_icon_array();
+									$icons = self::all_icon_array();
 									if (sizeof($icons) > 0) {
 										$total_icon = 0;
 										foreach ($icons as $icon) {
@@ -172,7 +172,7 @@
 				add_action('admin_footer', array($this, 'icon_popup'));
 			}
 			//==============//
-			public function all_icon_array(): array {
+			public static function all_icon_array(): array {
 				return [
 					0 => [
 						'title' => 'Accessibility',

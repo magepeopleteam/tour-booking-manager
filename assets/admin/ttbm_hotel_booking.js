@@ -276,6 +276,10 @@
                 if( targetId === 'ttbm_trvel_lists_location' ){
                     if (response.success) {
                         $('#ttbm_travel_list_location_shows').html(response.data.html);
+
+                        /*Function */
+                        ttbm_load_more_location_data(30 );
+
                     } else {
                         $('#ttbm_travel_list_location_shows').html('<p>No locations found.</p>');
                     }
@@ -297,6 +301,12 @@
                     }
                 }else if(  targetId === 'ttbm_trvel_lists_places'){
                     if (response.success) {
+                        if( response.data.all_places_count >= 30){
+                            let remianing = response.data.all_places_count - response.data.total_found;
+                            $("#ttbm_places_load_more_holder").fadeIn();
+                            $(".ttbm_places_sub_title_class").text( 'Places('+response.data.all_places_count+')' );
+                            $("#ttbm_places_load_more_btn").text( 'Load More('+remianing+')' );
+                        }
                         $('#ttbm_travel_list_places_content').html(response.data.html);
                     }
                 }
@@ -307,8 +317,27 @@
     });
 
 
-    let ttbm_image_frame;
+    function ttbm_load_more_location_data( cardsPerClick ){
 
+        let $cards = $('.ttbm-location-card');
+        let $button = $('#ttbm-location-load-more');
+        $cards.hide().slice(0, cardsPerClick).show();
+        $button.on('click', function() {
+            let hiddenCards = $cards.filter(':hidden');
+            hiddenCards.slice(0, cardsPerClick).slideDown();
+            if (hiddenCards.length <= cardsPerClick) {
+                $button.parent().fadeOut();
+            }
+        });
+        if ($cards.length <= cardsPerClick) {
+            $button.parent().hide();
+        }else{
+            $button.parent().fadeIn();
+        }
+    }
+
+
+    let ttbm_image_frame;
     // Hide popup
     $(document).on('click',  '#ttbm-close-popup',function() {
         $('#ttbm-location-popup').fadeOut();
@@ -576,5 +605,56 @@
             }
         });
     }
+
+    $(document).on('click', '.ttbm_places_load_more_btn', function( e ) {
+        e.preventDefault();
+        let loaded_post_ids = [];
+        let $this = $(this);
+        $this.text( 'Loading...' );
+
+        $('[ttbm-data-places-id]').each(function() {
+            let id = $(this).attr('ttbm-data-places-id');
+            if (id) {
+                loaded_post_ids.push(id);
+            }
+        });
+
+        let total_loaded = loaded_post_ids.length;
+
+        let loaded_post_ids_str = loaded_post_ids.join(',');
+        // console.log(idString);
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                loaded_post_ids_str: loaded_post_ids_str,
+                nonce:  ttbm_admin_ajax.nonce,
+                action: 'ttbm_get_places_html_data',
+            },
+            success: function (response) {
+                if (response.success) {
+                    if (response.success) {
+                        if( response.data.total_found < 30){
+                            $("#ttbm_places_load_more_holder").fadeOut();
+                        }else{
+                            $("#ttbm_places_load_more_holder").fadeIn();
+                        }
+
+                        let remaining = response.data.all_places_count - response.data.total_found;
+
+                        $this.text( 'Load More('+remaining+')' );
+
+                        $('#ttbm_travel_list_places_content').append(response.data.html);
+
+                    }
+                }
+            }
+        });
+
+    });
+
+
+
+
 
 })(jQuery);

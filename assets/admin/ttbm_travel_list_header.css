@@ -427,3 +427,23 @@
 .ttbm-taxonomy-card:hover .ttbm-taxonomy-card-actions {
     display: flex;
 }
+
+.ttbm_places_load_more_holder,
+.ttbm_plocation_load_more_holder
+{
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+}
+
+.ttbm_places_load_more_btn,
+.ttbm-location-load-more {
+    cursor: pointer;
+    padding: 7px 25px;
+    border: 1px solid #cfc9c9;
+    border-radius: 3px;
+}
+.ttbm_places_load_more_btn:hover{
+    background-color: #1972b9;
+    color: #fff;
+}

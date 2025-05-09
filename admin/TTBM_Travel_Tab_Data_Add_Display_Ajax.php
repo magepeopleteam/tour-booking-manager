@@ -241,7 +241,7 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                 'post_status'    => 'publish',
                 'orderby'        => 'date',
                 'order'          => 'DESC',
-                'posts_per_page' => 30,
+                'posts_per_page' => 5,
                 'post__not_in'   => $not_in_places,
             );
 

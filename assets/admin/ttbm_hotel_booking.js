@@ -276,12 +276,7 @@
                 if( targetId === 'ttbm_trvel_lists_location' ){
                     if (response.success) {
                         $('#ttbm_travel_list_location_shows').html(response.data.html);
-
-                        /*Function */
-                        let cards = $('.ttbm-location-card');
-                        let load_more_btn_id = $('#ttbm-location-load-more');
-                        ttbm_load_more_location_data(30, load_more_btn_id, cards );
-
+                        ttbm_load_more_location_data(3 );
                     } else {
                         $('#ttbm_travel_list_location_shows').html('<p>No locations found.</p>');
                     }
@@ -303,7 +298,7 @@
                     }
                 }else if(  targetId === 'ttbm_trvel_lists_places'){
                     if (response.success) {
-                        if( response.data.all_places_count >= 30){
+                        if( response.data.all_places_count >= 5){
                             let remianing = response.data.all_places_count - response.data.total_found;
                             $("#ttbm_places_load_more_holder").fadeIn();
                             $(".ttbm_places_sub_title_class").text( 'Places('+response.data.all_places_count+')' );
@@ -319,9 +314,10 @@
     });
 
 
-    function ttbm_load_more_location_data( cardsPerClick, load_more_btn_id, cards ){
+    function ttbm_load_more_location_data( cardsPerClick){
 
-
+        let cards = $('.ttbm_search_location_by_title');
+        let load_more_btn_id = $('#ttbm-location-load-more');
         cards.hide().slice(0, cardsPerClick).show();
         load_more_btn_id.on('click', function() {
             let hiddenCards = cards.filter(':hidden');
@@ -635,15 +631,13 @@
             success: function (response) {
                 if (response.success) {
                     if (response.success) {
-                        if( response.data.total_found < 30){
+                        if( response.data.total_found < 5){
                             $("#ttbm_places_load_more_holder").fadeOut();
                         }else{
                             $("#ttbm_places_load_more_holder").fadeIn();
+                            let remaining = response.data.all_places_count - response.data.total_found;
+                            $this.text( 'Load More('+remaining+')' );
                         }
-
-                        let remaining = response.data.all_places_count - response.data.total_found;
-
-                        $this.text( 'Load More('+remaining+')' );
 
                         $('#ttbm_travel_list_places_content').append(response.data.html);
 

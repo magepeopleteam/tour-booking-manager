@@ -464,7 +464,7 @@
         });
     });
     
-    $(document).on( 'click', '#ttbm-add-new-location-btn', function () {
+    $(document).on( 'click', '.ttbm-add-new-taxonomy-btn', function () {
 
         let term_id = '';
         let tab_type = $(this).text().trim();
@@ -540,5 +540,41 @@
         });
     })
 
+    /*Search By Title Tab Data*/
+    $(document).on('keyup', '#ttbm_tourist_location_Search', function() {
+        let searchText = $(this).val().toLowerCase();
+        ttbm_function_search_title( searchText, 'ttbm_search_location_by_title' );
+    });
+    $(document).on('keyup', '#ttbm_tab_features_Search', function() {
+        let searchText = $(this).val().toLowerCase();
+        ttbm_function_search_title( searchText, 'ttbm_search_from_feature' );
+    });
+    $(document).on('keyup', '#ttbm_tourist_organiser_Search', function() {
+        let searchText = $(this).val().toLowerCase();
+        ttbm_function_search_title( searchText, 'ttbm_search_from_organiser' );
+    });
+    $(document).on('keyup', '#ttbm_tab_tag_Search', function() {
+        let searchText = $(this).val().toLowerCase();
+        ttbm_function_search_title( searchText, 'ttbm_search_from_tag' );
+    });
+    $(document).on('keyup', '#ttbm_tab_activities_Search', function() {
+        let searchText = $(this).val().toLowerCase();
+        ttbm_function_search_title( searchText, 'ttbm_search_from_activity' );
+    });
+    $(document).on('keyup', '#ttbm_tourist_place_Search', function() {
+        let searchText = $(this).val().toLowerCase();
+        ttbm_function_search_title( searchText, 'ttbm_search_place_by_title' );
+    });
+    function ttbm_function_search_title( searchText, class_name ){
+        $('.'+class_name).each(function() {
+            let location = $(this).data('taxonomy').toLowerCase();
+
+            if ( location.includes( searchText ) ) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
 
 })(jQuery);

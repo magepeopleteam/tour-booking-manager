@@ -46,7 +46,7 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                             : 'https://i.imgur.com/GD3zKtz.png';
 
                         ?>
-                        <div class="ttbm-location-card" >
+                        <div class="ttbm-location-card ttbm_search_location_by_title" data-taxonomy="<?php echo esc_attr( $term_name )?>" >
                             <div class="ttbm-card-left">
                                 <img src="<?= $img_url ?>" alt="<?= $term_name ?>" width="70" height="70">
                             </div>
@@ -90,7 +90,8 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                         $term_slug  = esc_html( $term->slug );
                         $description = esc_html( $term->description );
 
-                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description );
+                        $search_class = 'ttbm_search_from_organiser';
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class );
                         ?>
 
                     <?php endforeach; ?>
@@ -123,7 +124,8 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
                         $get_feature_icon = get_term_meta( $term_id, 'ttbm_feature_icon', true );
 
-                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $get_feature_icon );
+                        $search_class = 'ttbm_search_from_feature';
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $get_feature_icon );
                         ?>
 
                     <?php endforeach; ?>
@@ -154,7 +156,8 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                         $term_slug  = esc_html( $term->slug );
                         $description = esc_html( $term->description );
 
-                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description );
+                        $search_class = 'ttbm_search_from_tag';
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class );
                         ?>
                     <?php endforeach; ?>
                 </div>
@@ -184,9 +187,9 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                         $term_slug  = esc_html( $term->slug );
                         $description = esc_html( $term->description );
                         $get_activities_icon = get_term_meta( $term_id, 'ttbm_activities_icon', true );
+                        $search_class = 'ttbm_search_from_activity';
 
-
-                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $get_activities_icon );
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $get_activities_icon );
                         ?>
 
                     <?php endforeach; ?>
@@ -204,10 +207,10 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             ]);
         }
 
-        public static function ttbm_display_taxonomy_data( $term_id, $term_name, $description, $icon='' ){
+        public static function ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $icon='' ){
             ?>
 
-            <div class="ttbm-taxonomy-card">
+            <div class="ttbm-taxonomy-card <?php echo esc_attr( $search_class )?>" data-taxonomy="<?php echo esc_attr( $term_name )?>">
                 <div class="ttbm-card-right">
                     <div class="ttbm-title-row">
                         <h3 class="ttbm-title"><i class="<?php echo esc_attr( $icon )?> "></i> <?php echo esc_attr( $term_name ) ?></h3>
@@ -246,23 +249,32 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                         $description = get_the_excerpt();
                         $view_link = get_permalink($post_id);
                         $edit_link = get_edit_post_link($post_id);
+                        $delete_link  = get_delete_post_link($post_id, '', true);
 
                         $img_url = get_the_post_thumbnail_url($post_id, 'thumbnail');
                         if (!$img_url) {
                             $img_url = 'https://i.imgur.com/GD3zKtz.png';
                         }
                         ?>
-                        <div class="ttbm-location-card" ttbm-data-location-id="<?php echo esc_attr($post_id); ?>">
+                        <div class="ttbm-location-card ttbm_search_place_by_title" data-taxonomy="<?php echo esc_attr( $places_name )?>" ttbm-data-location-id="<?php echo esc_attr($post_id); ?>">
                             <div class="ttbm-card-left">
                                 <img src="<?php echo esc_url($img_url); ?>" alt="<?php echo esc_attr($places_name); ?>" class="ttbm-location-thumb" />
                             </div>
                             <div class="ttbm-card-right">
                                 <h3 class="ttbm-title">
                                     <?php echo esc_html($places_name); ?>
-                                    <a href="<?php echo esc_url($view_link); ?>" target="_blank" class="ttbm-view-link">[View]</a>
-                                    <a href="<?php echo esc_url($edit_link); ?>" target="_blank" class="ttbm-edit-link">[Edit]</a>
                                 </h3>
                                 <p class="ttbm-description"><?php echo esc_html($description); ?></p>
+                            </div>
+                            <div class=" ttbm-card-actions"  ttbm-data-place-id="<?php echo esc_attr( $post_id )?>">
+                                <a href="<?php echo esc_url($view_link); ?>" target="_blank" class="ttbm-view-link"><button class="ttbm-btn ttbm-view-btn"> <i class="fas fa-eye"></i></button></a>
+                                <a href="<?php echo esc_url($edit_link); ?>" target="_blank" class="ttbm-edit-link"><button class="ttbm-btn ttbm-edit-btn"><i class="fas fa-edit"></i></button></a>
+<!--                                <a href="--><?php //echo esc_url($delete_link); ?><!--" target="_blank" class="ttbm-delete-link"><button class="ttbm-btn ttbm-delete-btn"> <i class="fas fa-trash-alt"></i></button></a>-->
+                                <a href="<?php echo esc_url($delete_link); ?>"
+                                   class="ttbm-btn ttbm-delete-btn"
+                                   onclick="return confirm('Are you sure you want to delete this place?');">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
                             </div>
                         </div>
                     <?php endwhile; ?>

@@ -278,7 +278,9 @@
                         $('#ttbm_travel_list_location_shows').html(response.data.html);
 
                         /*Function */
-                        ttbm_load_more_location_data(30 );
+                        let cards = $('.ttbm-location-card');
+                        let load_more_btn_id = $('#ttbm-location-load-more');
+                        ttbm_load_more_location_data(30, load_more_btn_id, cards );
 
                     } else {
                         $('#ttbm_travel_list_location_shows').html('<p>No locations found.</p>');
@@ -317,22 +319,21 @@
     });
 
 
-    function ttbm_load_more_location_data( cardsPerClick ){
+    function ttbm_load_more_location_data( cardsPerClick, load_more_btn_id, cards ){
 
-        let $cards = $('.ttbm-location-card');
-        let $button = $('#ttbm-location-load-more');
-        $cards.hide().slice(0, cardsPerClick).show();
-        $button.on('click', function() {
-            let hiddenCards = $cards.filter(':hidden');
+
+        cards.hide().slice(0, cardsPerClick).show();
+        load_more_btn_id.on('click', function() {
+            let hiddenCards = cards.filter(':hidden');
             hiddenCards.slice(0, cardsPerClick).slideDown();
             if (hiddenCards.length <= cardsPerClick) {
-                $button.parent().fadeOut();
+                load_more_btn_id.parent().fadeOut();
             }
         });
-        if ($cards.length <= cardsPerClick) {
-            $button.parent().hide();
+        if (cards.length <= cardsPerClick) {
+            load_more_btn_id.parent().hide();
         }else{
-            $button.parent().fadeIn();
+            load_more_btn_id.parent().fadeIn();
         }
     }
 

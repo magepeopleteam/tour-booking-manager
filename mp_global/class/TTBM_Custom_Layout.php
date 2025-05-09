@@ -232,17 +232,22 @@
 		}
 		new TTBM_Custom_Layout();
 	}
-    if (
-		(class_exists('TTBM_Woocommerce_Plugin_Pro') && get_option('ttbm_conflict_update_pro') != 'completed')
-		|| (class_exists('TTBM_Addon_Backend_Order') && get_option('ttbm_conflict_update_bo') != 'completed')
-		|| (class_exists('TTBMA_Early_Bird') && get_option('ttbm_conflict_update_eb') != 'completed')
-		|| (class_exists('TTBMA_Group_Pricing') && get_option('ttbm_conflict_update_gp') != 'completed')
-		|| (class_exists('TTBM_Addon_Group_Ticket') && get_option('ttbm_conflict_update_gt') != 'completed')
-		|| (class_exists('TTBMA_Order_Request') && get_option('ttbm_conflict_update_or') != 'completed')
-		|| (class_exists('TTBM_QR_License') && get_option('ttbm_conflict_update_qr') != 'completed')
-		|| (class_exists('TTBMA_Seasonal_Pricing') && get_option('ttbm_conflict_update_sep') != 'completed')
-		|| (class_exists('TTBMA_Seat_Plan') && get_option('ttbm_conflict_update_sp') != 'completed')
-		&& !class_exists('MP_Custom_Layout')) {
+	$active_plugins = get_option( 'active_plugins' );
+	if (
+		(
+			(in_array('tour-booking-manager-pro/tour-booking-manager-pro.php',$active_plugins) && get_option('ttbm_conflict_update_pro') != 'completed') ||
+			(in_array('ttbm-addon-group-pricing/TTBMA_Group_Pricing.php',$active_plugins) && get_option('ttbm_conflict_update_gp') != 'completed') ||
+			(in_array('ttbm-addon-group-ticket/ttbm-addon-group-ticket.php',$active_plugins) && get_option('ttbm_conflict_update_gt') != 'completed') ||
+			(in_array('ttbm-addon-backend-order/TTBM_Addon_Backend_Order.php',$active_plugins) && get_option('ttbm_conflict_update_bo') != 'completed') ||
+			(in_array('ttbm-addon-early-bird/TTBMA_Early_Bird.php',$active_plugins) && get_option('ttbm_conflict_update_eb') != 'completed') ||
+			(in_array('ttbm-addon-order-request/TTBMA_Order_Request.php',$active_plugins) && get_option('ttbm_conflict_update_or') != 'completed') ||
+			(in_array('ttbm-addon-seasonal-price/TTBMA_Seasonal_Pricing.php',$active_plugins) && get_option('ttbm_conflict_update_sep') != 'completed') ||
+			(in_array('ttbm-addon-qr-code/qr_code.php',$active_plugins) && get_option('ttbm_conflict_update_qr') != 'completed') ||
+			(in_array('ttbm-addon-seat-plan/TTBMA_Seat_Plan.php',$active_plugins) && get_option('ttbm_conflict_update_sp') != 'completed')
+		)
+		&&
+		!class_exists('MP_Global_Function')
+	) {
 		class MP_Custom_Layout {
 			public function __construct() {
 				add_action('add_ttbm_hidden_table', array($this, 'hidden_table'), 10, 2);

@@ -646,7 +646,9 @@ body{
     flex-direction: column;
 }
 
-.ttbm-location-card {
+.ttbm-location-card,
+.ttbm-places-card
+{
     display: flex;
     gap: 15px;
 }

@@ -986,7 +986,7 @@ jQuery(document).ready(function() {
 	new TTBM_Global_Function();
 }
 if (
-	(class_exists('TTBM_Woocommerce_Plugin_Pro') && get_option('ttbm_conflict_update_pro') != 'completed')
+	((class_exists('TTBM_Woocommerce_Plugin_Pro') && get_option('ttbm_conflict_update_pro') != 'completed')
 	|| (class_exists('TTBM_Addon_Backend_Order') && get_option('ttbm_conflict_update_bo') != 'completed')
 	|| (class_exists('TTBMA_Early_Bird') && get_option('ttbm_conflict_update_eb') != 'completed')
 	|| (class_exists('TTBMA_Group_Pricing') && get_option('ttbm_conflict_update_gp') != 'completed')
@@ -994,7 +994,7 @@ if (
 	|| (class_exists('TTBMA_Order_Request') && get_option('ttbm_conflict_update_or') != 'completed')
 	|| (class_exists('TTBM_QR_License') && get_option('ttbm_conflict_update_qr') != 'completed')
 	|| (class_exists('TTBMA_Seasonal_Pricing') && get_option('ttbm_conflict_update_sep') != 'completed')
-	|| (class_exists('TTBMA_Seat_Plan') && get_option('ttbm_conflict_update_sp') != 'completed')
+	|| (class_exists('TTBMA_Seat_Plan') && get_option('ttbm_conflict_update_sp') != 'completed'))
 	&& !class_exists('MP_Global_Function')
 ) {
 	class MP_Global_Function

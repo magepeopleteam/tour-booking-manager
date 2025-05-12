@@ -99,7 +99,7 @@ if (!class_exists('TTBM_Settings_faq')) {
 						<?php TTBM_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>
 					</div>
 				</section>
-				<section class="ttbm-faq-section ">
+				<section data-collapse="#ttbm_display_faq" class="ttbm-faq-section ">
 					<div class="ttbm-faq-items mB">
 						<?php $this->show_faq_data($post_id); ?>
 					</div>

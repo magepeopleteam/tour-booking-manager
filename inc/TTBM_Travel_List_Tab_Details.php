@@ -8,7 +8,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
 
             add_action('ttbm_travel_list_tour_package_header', array($this, 'travel_list_tour_package_header'), 10, 1);
             add_action('ttbm_travel_lists_tab_display', array($this, 'travel_lists_tab_display'), 10, 2);
-
+            add_action('admin_head', [$this,'remove_admin_notice']);
         }
 
         public static function get_taxonomy_type( $tab_type ){
@@ -27,6 +27,14 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
             }
 
             return $taxonomy_type;
+        }
+
+        public function remove_admin_notice(){
+            $screen = get_current_screen();
+            if ($screen && $screen->id === 'ttbm_tour_page_ttbm_list') {
+                remove_all_actions('admin_notices');
+                remove_all_actions('all_admin_notices');
+            }
         }
 
         public static function edit_location_popup( $term_id, $button_name, $tab_type ){
@@ -312,10 +320,10 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
             <div class="ttbm-tour-list-header">
                 <h1 class="page-title"><?php echo esc_html($label).__(' Lists','tour-booking-manager'); ?></h1>
                 <div class="ttbm_tour_search_add_holder">
-                    <input type="text" name="ttbm_tour_search" id="ttbm-tour-search" data-nonce="<?php echo wp_create_nonce("ttbm_search_nonce"); ?>" placeholder="Search <?php echo esc_html($label); ?>">
                     <a href="<?php echo admin_url('post-new.php?post_type=ttbm_tour'); ?>" class="page-title-action">
                         <i class="fas fa-plus"></i> <?php esc_html_e('Add New', 'tour-booking-manager'); ?>
                     </a>
+                    <input type="text" name="ttbm_tour_search" id="ttbm-tour-search" data-nonce="<?php echo wp_create_nonce("ttbm_search_nonce"); ?>" placeholder="Search <?php echo esc_html($label); ?>">
                 </div>
             </div>
         <?php }

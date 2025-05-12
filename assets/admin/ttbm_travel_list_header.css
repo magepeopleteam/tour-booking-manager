@@ -138,17 +138,15 @@
 }
 
 .ttbm_trvel_lists_tabs {
-    display: flex;
     flex-wrap: wrap;
     width: 100%;
-    border-bottom: 2px solid #ccc;
     box-sizing: border-box;
 }
 
 .ttbm_trvel_lists_tabs button {
     flex: 1 1 auto;
     width: 100%;
-    max-width: 14.28%; /* 100% / 7 tabs */
+    max-width: 12%; /* 100% / 7 tabs */
     background: #f1f1f1;
     border: none;
     outline: none;
@@ -435,4 +433,56 @@
     padding: 5px 0px;
     color: #b3af0f;
     background-color: #ddd;
+}
+
+
+.ttbm_trvel_lists_tabs {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 5px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.ttbm_trvel_lists_tabs button {
+    background: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    position: relative;
+    border: 1px solid #ddd;
+    margin: 5px;
+}
+
+.ttbm_trvel_lists_tabs button:hover {
+    background-color: #eaf6ff;
+    color: #0077cc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 119, 204, 0.15);
+}
+
+.ttbm_trvel_lists_tabs button.active {
+    background-color: #0077cc;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 119, 204, 0.3);
+}
+
+@media screen and (max-width: 768px) {
+    .ttbm_trvel_lists_tabs {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ttbm_trvel_lists_tabs button {
+        width: 100%;
+        text-align: center;
+    }
 }

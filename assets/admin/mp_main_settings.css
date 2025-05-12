@@ -169,15 +169,28 @@
 .ttbm-tour-list-page .ttbm-tour-list {
   display: flex;
   flex-wrap: wrap;
-  border-top: 1px solid var(--mpl-light);
   margin-top: 10px;
+  gap: 36px;
+}
+@media (min-width: 1024px) {
+  .ttbm-tour-list-page .ttbm-tour-list {
+    gap: 10px;
+  }
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
-  border-bottom: 1px solid #eee;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
+  gap: 10px;
+  border: 1px solid #dfd6d6;
+  margin-bottom: 6px;
+  border-radius: 20px;
+}
+@media (min-width: 1024px) {
+  .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
+    flex-direction: row;
+  }
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card:hover {
   cursor: pointer;
@@ -188,13 +201,23 @@
   flex-direction: row;
   justify-content: start;
   gap: 10px;
-  width: 70%;
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details {
+    width: 70%;
+  }
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details .ttbm-tour-thumb {
   position: relative;
-  width: 100px;
+  width: 260px;
   height: 100px;
   padding: 10px;
+}
+@media (min-width: 1024px) {
+  .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details .ttbm-tour-thumb {
+    width: 100px;
+  }
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details .ttbm-tour-thumb img {
   width: 100%;
@@ -239,7 +262,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 30%;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+@media (min-width: 1024px) {
+  .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta {
+    width: 20%;
+    padding: 0;
+  }
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-item {
   display: flex;
@@ -262,17 +293,25 @@
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-item .meta-label {
   color: var(--mpl-black);
 }
-.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-action {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action {
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
   gap: 10px;
   padding: 10px;
-  flex-direction: column;
+  flex-direction: row;
   background-color: var(--mpl-primary);
   color: #fff;
   border-radius: 5px;
+  margin: 10px;
 }
-.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-action a {
+@media (min-width: 1024px) {
+  .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action {
+    flex-direction: column;
+    margin: 0;
+  }
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action a {
   color: #fff;
   text-decoration: none;
 }
@@ -1150,6 +1189,8 @@ div.ttbm_style .customCheckboxLabel input:checked ~ .customCheckbox::after {
   background-color: transparent;
   -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
+  left: 5px;
+  top: 5px !important;
 }
 
 .reply-enquiry-form {

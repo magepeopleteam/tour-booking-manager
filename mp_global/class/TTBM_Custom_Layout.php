@@ -246,7 +246,7 @@
 			(in_array('ttbm-addon-seat-plan/TTBMA_Seat_Plan.php',$active_plugins) && get_option('ttbm_conflict_update_sp') != 'completed')
 		)
 		&&
-		!class_exists('MP_Global_Function')
+		!class_exists('MP_Custom_Layout')
 	) {
 		class MP_Custom_Layout {
 			public function __construct() {

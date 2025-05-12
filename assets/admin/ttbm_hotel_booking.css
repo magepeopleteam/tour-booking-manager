@@ -223,7 +223,6 @@
     padding: 0;
     list-style: none;
     background: #f5f5f5;
-    border: 1px solid #ddd;
 }
 
 .ttbm_hotel_tab_item {
@@ -301,6 +300,7 @@
 li.ttbm_hotel_tab_item {
     margin-bottom: 0px;
     width:200px;
+    border: 1px solid #e1e1e1;
 }
 
 .ttbm_hotel_lists_list_title {
@@ -724,18 +724,6 @@ body{
             margin-right: 8px;
         }
         
-        .ttbm_hotel_tab_item::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 3px;
-            background-color: #1e88e5;
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-            border-radius: 3px 3px 0 0;
-        }
         
         .ttbm_hotel_tab_item:hover {
             color: #4a5568;
@@ -819,3 +807,55 @@ div.attendee_filter_list h5, #ttbm_booking_attendee_list_result h6
     margin-bottom: 15px;
 }
 #ttbm_booking_attendee_list_result label.justifyCenter{display:inline; font-size:18px;}
+
+
+.ttbm_hotel_tab_menu {
+    display: flex;
+    gap: 12px;
+    padding: 2px 12px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    list-style: none;
+    margin: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.ttbm_hotel_tab_item {
+    background: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    user-select: none;
+}
+
+.ttbm_hotel_tab_item:hover {
+    background-color: #eaf6ff;
+    color: #0077cc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 119, 204, 0.15);
+}
+
+.ttbm_hotel_tab_item.active {
+    background-color: #0077cc;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 119, 204, 0.3);
+}
+
+@media screen and (max-width: 768px) {
+    .ttbm_hotel_tab_menu {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ttbm_hotel_tab_item {
+        width: 100%;
+        text-align: center;
+    }
+}
+

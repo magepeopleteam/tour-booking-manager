@@ -25,14 +25,23 @@
     .ttbm-tour-list {
         display: flex;
         flex-wrap: wrap;
-        border-top: 1px solid var(--mpl-light);
         margin-top: 10px;
+        gap: 36px;
+        @media (min-width: 1024px) {
+            gap: 10px;
+        }
         .ttbm-tour-card {
-            border-bottom: 1px solid #eee;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             justify-content: space-between;
             width: 100%;
+            gap:10px;
+            border: 1px solid #dfd6d6;
+            margin-bottom: 6px;
+            border-radius: 20px;
+            @media (min-width: 1024px) {
+                flex-direction: row;
+            }
             &:hover{
                 cursor: pointer;
                 background: var(--mpl-light);
@@ -42,13 +51,18 @@
                 flex-direction: row;
                 justify-content: start;
                 gap:10px;
-                width:70%;
+                width:100%;
+                @media (min-width: 1024px) {
+                    width:70%;
+                }
                 .ttbm-tour-thumb {
                     position: relative;
-                    width: 100px;
+                    width: 260px;
                     height: 100px;
                     padding: 10px;
-                   
+                    @media (min-width: 1024px) {
+                        width: 100px;
+                    }
                     img {
                     width: 100%;
                     height: 100%;
@@ -98,7 +112,13 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width: 30%;
+            width:100%;
+            padding:10px;
+            box-sizing: border-box;
+            @media (min-width: 1024px) {
+                width:20%;
+                padding: 0;
+            }
             .meta-item {
                 display: flex;
                 align-items: center;
@@ -120,19 +140,26 @@
                     color: var(--mpl-black);
                 }
             }
-            .meta-action {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                padding: 10px;
+            
+        }
+        .meta-action {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            gap: 10px;
+            padding: 10px;
+            flex-direction: row;
+            background-color: var(--mpl-primary);
+            color: #fff;
+            border-radius:5px;
+            margin: 10px;
+            @media (min-width: 1024px) {
                 flex-direction: column;
-                background-color: var(--mpl-primary);
+                margin: 0;
+            }
+            a{
                 color: #fff;
-                border-radius:5px;
-                a{
-                    color: #fff;
-                    text-decoration: none;
-                }
+                text-decoration: none;
             }
         }
     }

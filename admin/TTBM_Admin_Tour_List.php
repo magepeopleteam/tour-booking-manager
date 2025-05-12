@@ -190,16 +190,15 @@
                                         ?>
                                     </div>
                                 </div>
-                                <div class="meta-action">
-                                    <?php wp_nonce_field('edd_sample_nonce', 'edd_sample_nonce');  ?>
-                                    <a href="<?php echo the_permalink($post_id); ?>" target="_blank"><i class="fa fa-eye"></i></a>
-                                    <a href="<?php echo get_edit_post_link($post_id); ?>"><i class="fa fa-edit"></i></a>
-                                    <?php do_action('add_ttbm_list_action_button', $post_id); ?>
-                                    <span class="ttbm_trash_post" data-alert="<?php echo esc_attr__('Are you sure ? To trash : ', 'tour-booking-manager') . ' ' . get_the_title($post_id); ?>" data-post-id="<?php echo esc_attr($post_id); ?>" title="<?php echo esc_attr__('Trash ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>">
-                                        <i class="fa fa-trash"></i> 
-                                    </span>
-                                    
-                                </div>
+                            </div>
+                            <div class="meta-action">
+                                <?php wp_nonce_field('edd_sample_nonce', 'edd_sample_nonce');  ?>
+                                <a href="<?php echo the_permalink($post_id); ?>" target="_blank"><i class="fa fa-eye"></i></a>
+                                <a href="<?php echo get_edit_post_link($post_id); ?>"><i class="fa fa-edit"></i></a>
+                                <?php do_action('add_ttbm_list_action_button', $post_id); ?>
+                                <span class="ttbm_trash_post" data-alert="<?php echo esc_attr__('Are you sure ? To trash : ', 'tour-booking-manager') . ' ' . get_the_title($post_id); ?>" data-post-id="<?php echo esc_attr($post_id); ?>" title="<?php echo esc_attr__('Trash ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>">
+                                    <i class="fa fa-trash"></i> 
+                                </span>
                             </div>
                         </div>
 

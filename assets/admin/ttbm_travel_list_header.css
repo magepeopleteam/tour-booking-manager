@@ -449,7 +449,6 @@
 
 
 .ttbm_trvel_lists_tabs {
-    display: flex;
     flex-wrap: wrap;
     gap: 12px;
     padding: 5px;

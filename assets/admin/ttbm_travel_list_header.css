@@ -138,7 +138,6 @@
 }
 
 .ttbm_trvel_lists_tabs {
-    display: flex;
     flex-wrap: wrap;
     width: 100%;
     border-bottom: 2px solid #ccc;
@@ -453,7 +452,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    padding: 16px;
+    padding: 5px;
     background: #f9f9f9;
     border-radius: 12px;
     justify-content: center;

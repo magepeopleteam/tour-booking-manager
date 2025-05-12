@@ -724,18 +724,6 @@ body{
             margin-right: 8px;
         }
         
-        .ttbm_hotel_tab_item::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 3px;
-            background-color: #1e88e5;
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-            border-radius: 3px 3px 0 0;
-        }
         
         .ttbm_hotel_tab_item:hover {
             color: #4a5568;
@@ -824,7 +812,7 @@ div.attendee_filter_list h5, #ttbm_booking_attendee_list_result h6
 .ttbm_hotel_tab_menu {
     display: flex;
     gap: 12px;
-    padding: 16px;
+    padding: 2px;
     background: #f9f9f9;
     border-radius: 12px;
     list-style: none;

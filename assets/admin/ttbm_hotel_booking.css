@@ -819,3 +819,56 @@ div.attendee_filter_list h5, #ttbm_booking_attendee_list_result h6
     margin-bottom: 15px;
 }
 #ttbm_booking_attendee_list_result label.justifyCenter{display:inline; font-size:18px;}
+
+
+.ttbm_hotel_tab_menu {
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.ttbm_hotel_tab_item {
+    background: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    user-select: none;
+}
+
+.ttbm_hotel_tab_item:hover {
+    background-color: #eaf6ff;
+    color: #0077cc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 119, 204, 0.15);
+}
+
+.ttbm_hotel_tab_item.active {
+    background-color: #0077cc;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 119, 204, 0.3);
+}
+
+@media screen and (max-width: 768px) {
+    .ttbm_hotel_tab_menu {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ttbm_hotel_tab_item {
+        width: 100%;
+        text-align: center;
+    }
+}
+

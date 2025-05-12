@@ -812,7 +812,7 @@ div.attendee_filter_list h5, #ttbm_booking_attendee_list_result h6
 .ttbm_hotel_tab_menu {
     display: flex;
     gap: 12px;
-    padding: 2px;
+    padding: 2px 12px;
     background: #f9f9f9;
     border-radius: 12px;
     list-style: none;

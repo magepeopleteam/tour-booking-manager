@@ -380,6 +380,8 @@
         let tab_type = '';
         if( tab_action_type === 'Trip Location' ){
             tab_type = 'Add New Locations';
+        }else if( tab_action_type === 'Tourist Attraction' ){
+            tab_type = 'Add New Places';
         }else if( tab_action_type === 'Trip Organiser' ){
             tab_type = 'Add New Organiser';
         }else if( tab_action_type === 'Features' ){
@@ -392,6 +394,41 @@
 
         return tab_type;
     }
+
+    $(document).on('click', '.ttbm-save-places_data', function (e) {
+
+        let action_type = $(this).text().trim();
+        let action = 'ttbm_add_edit_new_places_term';
+        let post_id = '';
+        if( action_type === 'Update' ){
+            post_id = $(this).parent().attr('id');
+        }
+
+        const name = $('#ttbm-location-name').val().trim();
+        const desc = $('#ttbm-location-desc').val().trim();
+        const imageId = $('#ttbm-location-image-id').val();
+
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                post_id: post_id,
+                post_name: name,
+                description: desc,
+                thumbnail_id: imageId,
+                nonce:  ttbm_admin_ajax.nonce,
+                action: action,
+            },
+            success: function (response) {
+                if (response.success) {
+                    $('#ttbm-location-popup').fadeOut();
+                    alert( response.data.message);
+                }
+            }
+        });
+
+
+    });
 
     $(document).on('click', '.ttbm-save-location', function (e) {
         e.preventDefault();
@@ -529,12 +566,11 @@
             },
             success: function (response) {
                 if (response.success) {
-                    if( tab_type === 'Add New Locations' ){
+                    if( tab_type === 'Add New Locations' || tab_type === 'Add New Places' ){
                         clicked_btn.closest('.ttbm-location-card').fadeOut;
                     }else{
                         clicked_btn.closest('.ttbm-taxonomy-card').fadeOut();
                     }
-
                     alert( response.data.message);
                 }
             }
@@ -558,7 +594,6 @@
             },
             success: function (response) {
                 if (response.success) {
-                    console.log('HTML returned as object:', response.data); // ✅ object with HTML
                     // $('#ttbm_travel_list_location_shows').html(response.data.html); // render HTML
                     $('#ttbm_travel_list_popup').html(response.data.edit_popup );
                 }
@@ -648,7 +683,17 @@
 
     });
 
+    $(document).on('click', '.ttbm_show_location_shortcode', function() {
+        const textToCopy = $(this).text().trim();
+        const tempInput = $('<textarea>');
 
+        $('body').append(tempInput);
+        tempInput.val(textToCopy).select();
+        document.execCommand('copy');
+        tempInput.remove();
+
+        alert('Copied to clipboard: ' + textToCopy);
+    });
 
 
 

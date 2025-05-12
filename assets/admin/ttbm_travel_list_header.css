@@ -231,27 +231,15 @@
 .ttbm-description {
     font-size: 13px;
     color: #555;
-    margin: 0;
-    padding-right: 60px; /* for space near edit button */
+    padding-right: 60px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 5px;
 }
-/*.ttbm-edit-btn {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    background: #0073aa;
-    color: #fff;
-    font-size: 12px;
-    padding: 4px 8px;
-    border-radius: 3px;
-    text-decoration: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-.ttbm-location-card:hover .ttbm-edit-btn {
-    opacity: 1;
-}*/
-/*Location Add*/
-/* Overlay background */
+
 .ttbm-popup-overlay {
     position: fixed;
     top: 0;
@@ -265,7 +253,6 @@
     z-index: 9999;
 }
 
-/* Popup box */
 .ttbm-popup-box {
     background: #fff;
     padding: 20px 25px;
@@ -282,7 +269,6 @@
     margin-bottom: 15px;
 }
 
-/* Inputs and textareas */
 .ttbm-popup-box input[type="text"],
 .ttbm-popup-box textarea,
 .ttbm-popup-box select {
@@ -295,7 +281,6 @@
     font-size: 14px;
 }
 
-/* Image preview */
 #ttbm-image-preview img {
     margin-top: 10px;
     max-width: 100px;
@@ -303,7 +288,6 @@
     border-radius: 4px;
 }
 
-/* Buttons */
 .ttbm-popup-buttons {
     display: flex;
     justify-content: flex-end;
@@ -444,6 +428,11 @@
 .ttbm_places_load_more_btn:hover{
     background-color: #1972b9;
     color: #fff;
+}
+.ttbm_show_location_shortcode{
+    padding: 5px 0px;
+    color: #b3af0f;
+    background-color: #ddd;
 }
 
 

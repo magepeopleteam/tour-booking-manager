@@ -405,27 +405,35 @@
         }
 
         const name = $('#ttbm-location-name').val().trim();
-        const desc = $('#ttbm-location-desc').val().trim();
-        const imageId = $('#ttbm-location-image-id').val();
 
-        $.ajax({
-            url: ttbm_admin_ajax.ajax_url,
-            type: 'POST',
-            data: {
-                post_id: post_id,
-                post_name: name,
-                description: desc,
-                thumbnail_id: imageId,
-                nonce:  ttbm_admin_ajax.nonce,
-                action: action,
-            },
-            success: function (response) {
-                if (response.success) {
-                    $('#ttbm-location-popup').fadeOut();
-                    alert( response.data.message);
+        if( name ){
+            const desc = $('#ttbm-location-desc').val().trim();
+            const imageId = $('#ttbm-location-image-id').val();
+
+            $.ajax({
+                url: ttbm_admin_ajax.ajax_url,
+                type: 'POST',
+                data: {
+                    post_id: post_id,
+                    post_name: name,
+                    description: desc,
+                    thumbnail_id: imageId,
+                    nonce:  ttbm_admin_ajax.nonce,
+                    action: action,
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $('#ttbm-location-popup').fadeOut();
+                        alert( response.data.message);
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            alert('Name is required!');
+            $("#ttbm-location-name").focus();
+        }
+
+
 
 
     });

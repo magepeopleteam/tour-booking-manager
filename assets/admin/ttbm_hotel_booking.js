@@ -267,9 +267,9 @@
 
         $.ajax({
             url: ttbm_admin_ajax.ajax_url,
-            nonce: nonce,
             type: 'POST',
             data: {
+                nonce: nonce,
                 action: action,
             },
             success: function (response) {
@@ -433,9 +433,6 @@
             $("#ttbm-location-name").focus();
         }
 
-
-
-
     });
 
     $(document).on('click', '.ttbm-save-location', function (e) {
@@ -491,7 +488,7 @@
 
         $.post(ttbm_admin_ajax.ajax_url, {
             action: action,
-            _wpnonce: ttbm_admin_ajax.nonce,
+            nonce: ttbm_admin_ajax.nonce,
             name,
             slug,
             parent,

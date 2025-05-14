@@ -5,8 +5,9 @@
 	if (!class_exists('TTBM_Admin_Tour_List')) {
 		class TTBM_Admin_Tour_List {
 			public function __construct() {
+
 				// add_action('admin_menu', array($this, 'tour_list_menu'), 1);
-				//===//
+
 				add_action('wp_ajax_ttbm_trash_post', array($this, 'ttbm_trash_post'));
 
                 add_action('wp_ajax_ttbm_load_more', array($this, 'load_more_callback') );

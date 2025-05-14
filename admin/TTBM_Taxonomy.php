@@ -41,6 +41,7 @@ if (!class_exists('TTBM_Taxonomy')) {
                 "public" => true,
                 'labels' => $labels,
                 'show_ui' => true,
+                'show_in_menu'      => false, // THIS hides it from the admin menu
                 'show_admin_column' => true,
                 'update_count_callback' => '_update_post_term_count',
                 'query_var' => true,
@@ -49,41 +50,47 @@ if (!class_exists('TTBM_Taxonomy')) {
                 'rest_base' => 'ttbm_tour_cat'
             ];
             register_taxonomy('ttbm_tour_cat', 'ttbm_tour', $args);
+
             $labels_tour_org = [
-                'name' => $tour_org_label,
-                'singular_name' => $tour_org_label,
-                'menu_name' => $tour_org_label,
-                'all_items' => __('All ' . $tour_label . ' ' . $tour_org_label, 'tour-booking-manager'),
-                'parent_item' => __('Parent ' . $tour_org_label, 'tour-booking-manager'),
-                'parent_item_colon' => __('Parent ' . $tour_org_label . ':', 'tour-booking-manager'),
-                'new_item_name' => __('New ' . $tour_org_label . ' Name', 'tour-booking-manager'),
-                'add_new_item' => __('Add New ' . $tour_org_label, 'tour-booking-manager'),
-                'edit_item' => __('Edit ' . $tour_org_label, 'tour-booking-manager'),
-                'update_item' => __('Update ' . $tour_org_label, 'tour-booking-manager'),
-                'view_item' => __('View ' . $tour_org_label, 'tour-booking-manager'),
+                'name'                  => $tour_org_label,
+                'singular_name'         => $tour_org_label,
+                'menu_name'             => $tour_org_label,
+                'all_items'             => __('All ' . $tour_label . ' ' . $tour_org_label, 'tour-booking-manager'),
+                'parent_item'           => __('Parent ' . $tour_org_label, 'tour-booking-manager'),
+                'parent_item_colon'     => __('Parent ' . $tour_org_label . ':', 'tour-booking-manager'),
+                'new_item_name'         => __('New ' . $tour_org_label . ' Name', 'tour-booking-manager'),
+                'add_new_item'          => __('Add New ' . $tour_org_label, 'tour-booking-manager'),
+                'edit_item'             => __('Edit ' . $tour_org_label, 'tour-booking-manager'),
+                'update_item'           => __('Update ' . $tour_org_label, 'tour-booking-manager'),
+                'view_item'             => __('View ' . $tour_org_label, 'tour-booking-manager'),
                 'separate_items_with_commas' => __('Separate ' . $tour_org_label . ' with commas', 'tour-booking-manager'),
-                'add_or_remove_items' => __('Add or remove ' . $tour_org_label, 'tour-booking-manager'),
+                'add_or_remove_items'   => __('Add or remove ' . $tour_org_label, 'tour-booking-manager'),
                 'choose_from_most_used' => __('Choose from the most used', 'tour-booking-manager'),
-                'popular_items' => __('Popular ' . $tour_org_label, 'tour-booking-manager'),
-                'search_items' => __('Search ' . $tour_org_label, 'tour-booking-manager'),
-                'not_found' => __('Not Found', 'tour-booking-manager'),
-                'no_terms' => __('No ' . $tour_org_label, 'tour-booking-manager'),
-                'items_list' => __($tour_org_label . ' list', 'tour-booking-manager'),
+                'popular_items'         => __('Popular ' . $tour_org_label, 'tour-booking-manager'),
+                'search_items'          => __('Search ' . $tour_org_label, 'tour-booking-manager'),
+                'not_found'             => __('Not Found', 'tour-booking-manager'),
+                'no_terms'              => __('No ' . $tour_org_label, 'tour-booking-manager'),
+                'items_list'            => __($tour_org_label . ' list', 'tour-booking-manager'),
                 'items_list_navigation' => __($tour_org_label . ' list navigation', 'tour-booking-manager'),
             ];
+
             $args_tour_org = [
-                'hierarchical' => true,
-                "public" => true,
-                'labels' => $labels_tour_org,
-                'show_ui' => true,
-                'show_admin_column' => true,
+                'hierarchical'          => true,
+                'public'                => true,
+                'labels'                => $labels_tour_org,
+                'show_ui'               => true,
+                'show_admin_column'     => true,
+                'show_in_menu'          => false, // ✅ move it here
                 'update_count_callback' => '_update_post_term_count',
-                'query_var' => true,
-                'rewrite' => ['slug' => $tour_org_slug],
-                'show_in_rest' => true,
-                'rest_base' => 'ttbm_org',
+                'query_var'             => true,
+                'rewrite'               => ['slug' => $tour_org_slug],
+                'show_in_rest'          => true,
+                'rest_base'             => 'ttbm_org',
             ];
+
             register_taxonomy('ttbm_tour_org', 'ttbm_tour', $args_tour_org);
+
+
             $labels_location = [
                 'name' => _x('Location', 'tour-booking-manager'),
                 'singular_name' => _x('Location', 'tour-booking-manager'),
@@ -94,6 +101,7 @@ if (!class_exists('TTBM_Taxonomy')) {
                 "public" => true,
                 'labels' => $labels_location,
                 'show_ui' => true,
+                'show_in_menu'      => false, // THIS hides it from the admin menu
                 'show_admin_column' => true,
                 'update_count_callback' => '_update_post_term_count',
                 'query_var' => true,
@@ -113,6 +121,7 @@ if (!class_exists('TTBM_Taxonomy')) {
                 "public" => true,
                 'labels' => $labels_feature,
                 'show_ui' => true,
+                'show_in_menu'      => false, // THIS hides it from the admin menu
                 'show_admin_column' => true,
                 'update_count_callback' => '_update_post_term_count',
                 'query_var' => true,
@@ -136,13 +145,14 @@ if (!class_exists('TTBM_Taxonomy')) {
                 'menu_name' => __('Tags'),
             ];
             register_taxonomy('ttbm_tour_tag', ['ttbm_tour'], [
-                'hierarchical' => false,
-                'labels' => $labels_tags,
-                'show_ui' => true,
-                'show_in_rest' => true,
+                'hierarchical'  => false,
+                'labels'        => $labels_tags,
+                'show_ui'       => true,
+                'show_in_menu'  => false, // THIS hides it from the admin menu
+                'show_in_rest'  => true,
                 'show_admin_column' => true,
-                'query_var' => true,
-                'rewrite' => ['slug' => 'ttbm_tour_tag'],
+                'query_var'     => true,
+                'rewrite'       => ['slug' => 'ttbm_tour_tag'],
             ]);
             $labels = [
                 'name' => esc_html__('Activities Type', 'tour-booking-manager'),
@@ -151,6 +161,7 @@ if (!class_exists('TTBM_Taxonomy')) {
                 'all_items' => __('All Activities Type'),
                 'parent_item' => __('Parent Activities Type'),
                 'parent_item_colon' => __('Parent Activities Type:'),
+                
                 'edit_item' => __('Edit Activities Type'),
                 'update_item' => __('Update Activities Type'),
                 'add_new_item' => __('Add New Activities Type'),
@@ -162,6 +173,7 @@ if (!class_exists('TTBM_Taxonomy')) {
                 "public" => true,
                 'labels' => $labels,
                 'show_ui' => true,
+                'show_in_menu'      => false, // THIS hides it from the admin menu
                 'show_admin_column' => true,
                 'update_count_callback' => '_update_post_term_count',
                 'query_var' => true,

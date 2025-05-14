@@ -155,6 +155,14 @@
                         $total = TTBM_Function::get_total_seat($post_id);
                         $sold = TTBM_Function::get_total_sold($post_id, $upcoming_date);
                         $reserve = TTBM_Function::get_total_reserve($post_id);
+
+                        $max_features = [];
+                        $features = get_post_meta( $post_id, 'ttbm_service_included_in_price', true );
+                        if( is_array( $features ) && !empty( $features ) ){
+                            $max_features = array_slice( $features, 0, 3 );
+                        }
+
+//                        error_log( print_r( [ '$max_features' => $max_features ], true ) );
                         ?>
                         
                         <div class="ttbm-tour-card">
@@ -168,6 +176,20 @@
                                     <p class="location"><i class="fas fa-map-marker-alt"></i> <?php echo esc_html($location); ?></p>
                                     <?php endif; ?>
                                     <p class="description"><?php echo esc_html(wp_trim_words(get_the_excerpt($post_id), 15)); ?></p>
+                                    <div class="ttbm_travel_lists_tour-features">
+                                        <?php if( !empty( $max_features ) ){
+                                            foreach ( $max_features as $key => $feature ){
+                                                if( $key === 0 ){
+                                                    $feature_bg = 'ttbm_travel_lists_first_feature';
+                                                }elseif ( $key === 1 ){
+                                                    $feature_bg = 'ttbm_travel_lists_second_feature';
+                                                }else{
+                                                    $feature_bg = 'ttbm_travel_lists_third_feature';
+                                                }
+                                            ?>
+                                        <div class="ttbm_travel_lists_tour-feature <?php echo esc_attr( $feature_bg )?>"><?php echo esc_attr( $feature )?></div>
+                                        <?php } }?>
+                                    </div>
                                 </div>
                             </div>
                             <div class="ttbm-tour-meta">

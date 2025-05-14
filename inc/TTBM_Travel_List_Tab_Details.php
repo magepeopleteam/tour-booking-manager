@@ -291,7 +291,9 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
             ?>
             <div class="ttbm_trvel_lists_tab_holder">
 
-                <?php wp_kses_post( self::icon_popup());?>
+                <?php //wp_kses_post( self::icon_popup());?>
+                <?php self::icon_popup(); ?>
+
 
                 <div class="ttbm_travel_list_popup" id="ttbm_travel_list_popup"></div>
                 <div class="ttbm_trvel_lists_tabs">
@@ -310,7 +312,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                 <div id="ttbm_trvel_lists_places" class="ttbm_trvel_lists_content">
                     <?php do_action( 'ttbm_travel_list_category', $category);?>
 
-                    <?php wp_kses_post( self::ttbm_travel_list_tab_header( 'Places', 'Add New Places', 'ttbm_tourist_place_Search', 'ttbm_tourist_place_Search', 'Search Tourist Placess',  'ttbm-add-new-taxonomy-btn', '', 'ttbm_places_sub_title_class' ) );?>
+                    <?php self::ttbm_travel_list_tab_header( 'Places', 'Add New Places', 'ttbm_tourist_place_Search', 'ttbm_tourist_place_Search', 'Search Tourist Placess',  'ttbm-add-new-taxonomy-btn', '', 'ttbm_places_sub_title_class' );?>
 
                     <div class="ttbm_travel_list_places_content" id="ttbm_travel_list_places_content">
                         <div class="ttbm_travel_content_loader">Loading...</div>
@@ -323,7 +325,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
 
                 <div id="ttbm_trvel_lists_organiser" class="ttbm_trvel_lists_content">
 
-                    <?php wp_kses_post( self::ttbm_travel_list_tab_header( 'Trip Organiser', 'Add New Organiser', 'ttbm_tourist_organiser_Search', 'ttbm_tourist_organiser_Search', 'Search Organiser',  'ttbm-add-new-taxonomy-btn' ) );?>
+                    <?php  self::ttbm_travel_list_tab_header( 'Trip Organiser', 'Add New Organiser', 'ttbm_tourist_organiser_Search', 'ttbm_tourist_organiser_Search', 'Search Organiser',  'ttbm-add-new-taxonomy-btn'  );?>
 
                     <div class="ttbm_travel_list_organiser_content" id="ttbm_travel_list_organiser_content">
                         <div class="ttbm_travel_content_loader">Loading...</div>
@@ -332,7 +334,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                 <div id="ttbm_trvel_lists_location" class="ttbm_trvel_lists_content">
                     <?php do_action( 'ttbm_add_new_location_popup', 'ttbm_tour_location' );?>
 
-                    <?php wp_kses_post( self::ttbm_travel_list_tab_header( 'Trip Location', 'Add New Locations', 'ttbm_tourist_location_Search', 'ttbm_tourist_location_Search', 'Search Location',  'ttbm-add-new-taxonomy-btn', '','ttbm_location_sub_title_class' ) );?>
+                    <?php self::ttbm_travel_list_tab_header( 'Trip Location', 'Add New Locations', 'ttbm_tourist_location_Search', 'ttbm_tourist_location_Search', 'Search Location',  'ttbm-add-new-taxonomy-btn', '','ttbm_location_sub_title_class' );?>
                     <div class="ttbm_travel_list_location_shows" id="ttbm_travel_list_location_shows">
                         <div class="ttbm_travel_content_loader">Loading...</div>
                     </div>
@@ -345,7 +347,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
 
                 <div id="ttbm_trvel_lists_features" class="ttbm_trvel_lists_content">
 
-                    <?php wp_kses_post( self::ttbm_travel_list_tab_header( 'Content for Features', 'Add New Feature', 'ttbm_tab_features_Search', 'ttbm_tab_features_Search', 'Search Features',  'ttbm-add-new-taxonomy-btn' ) );?>
+                    <?php self::ttbm_travel_list_tab_header( 'Content for Features', 'Add New Feature', 'ttbm_tab_features_Search', 'ttbm_tab_features_Search', 'Search Features',  'ttbm-add-new-taxonomy-btn' );?>
 
                     <div class="ttbm_travel_list_feature_content" id="ttbm_travel_list_feature_content">
                         <div class="ttbm_travel_content_loader">Loading...</div>
@@ -354,7 +356,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
 
                 <div id="ttbm_trvel_lists_tag" class="ttbm_trvel_lists_content">
 
-                    <?php wp_kses_post( self::ttbm_travel_list_tab_header( 'Content for Tag', 'Add New Tag', 'ttbm_tab_tag_Search', 'ttbm_tab_tag_Search', 'Search Tag',  'ttbm-add-new-taxonomy-btn' ) );?>
+                    <?php self::ttbm_travel_list_tab_header( 'Content for Tag', 'Add New Tag', 'ttbm_tab_tag_Search', 'ttbm_tab_tag_Search', 'Search Tag',  'ttbm-add-new-taxonomy-btn'  );?>
                     <div class="ttbm_travel_list_tag_content" id="ttbm_travel_list_tag_content">
                         <div class="ttbm_travel_content_loader">Loading...</div>
                     </div>
@@ -362,7 +364,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
 
                 <div id="ttbm_trvel_lists_activities" class="ttbm_trvel_lists_content">
 
-                    <?php wp_kses_post( self::ttbm_travel_list_tab_header( 'All Activities', 'Add New Activities', 'ttbm_tab_activities_Search', 'ttbm_tab_activities_Search', 'Search Activities',  'ttbm-add-new-taxonomy-btn' ) );?>
+                    <?php self::ttbm_travel_list_tab_header( 'All Activities', 'Add New Activities', 'ttbm_tab_activities_Search', 'ttbm_tab_activities_Search', 'Search Activities',  'ttbm-add-new-taxonomy-btn'  );?>
 
                     <div class="ttbm_travel_list_activies_content" id="ttbm_travel_list_activies_content">
                         <div class="ttbm_travel_content_loader">Loading...</div>

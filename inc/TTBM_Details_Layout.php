@@ -231,9 +231,11 @@
                                 <div class="ttbm_travel_icon-circle ttbm_travel_blue-bg">
                                     <i class="fas fa-book-open ttbm_travel_blue-text"></i>
                                 </div>
+                                <div >
+                                    <div class="ttbm_travel_metric-label"><?php esc_attr_e( 'Tours', 'tour-booking-manager' );?></div>
+                                </div>
                                 <div>
-                                    <p class="ttbm_travel_metric-label"><?php esc_attr_e( 'Tours', 'tour-booking-manager' );?></p>
-                                    <p class="ttbm_travel_metric-value ttbm_travel_blue-text" id="total-tours"><?php echo esc_attr( $found_posts );?></p>
+                                    <span class="ttbm_travel_metric-value ttbm_travel_blue-text" id="total-tours"><?php echo esc_attr( $found_posts );?></span>
                                 </div>
                             </div>
 
@@ -241,9 +243,11 @@
                                 <div class="ttbm_travel_icon-circle ttbm_travel_purple-bg">
                                     <i class="fas fa-calendar-alt ttbm_travel_purple-text"></i>
                                 </div>
+                                <div class="">
+                                    <div class="ttbm_travel_metric-label"><?php esc_attr_e( 'Active', 'tour-booking-manager' );?></div>
+                                </div>
                                 <div>
-                                    <p class="ttbm_travel_metric-label"><?php esc_attr_e( 'Active', 'tour-booking-manager' );?></p>
-                                    <p class="ttbm_travel_metric-value ttbm_travel_purple-text" id="active-tours"><?php echo esc_attr( $analytics_Data['active_tour'] )?></p>
+                                    <span class="ttbm_travel_metric-value ttbm_travel_purple-text" id="active-tours"><?php echo esc_attr( $analytics_Data['active_tour'] )?></span>
                                 </div>
                             </div>
 
@@ -251,9 +255,11 @@
                                 <div class="ttbm_travel_icon-circle ttbm_travel_amber-bg">
                                     <i class="fas fa-map-marker-alt ttbm_travel_amber-text"></i>
                                 </div>
+                                <div class="">
+                                    <div class="ttbm_travel_metric-label"><?php esc_attr_e( 'Locations', 'tour-booking-manager' );?></div>
+                                </div>
                                 <div>
-                                    <p class="ttbm_travel_metric-label"><?php esc_attr_e( 'Locations', 'tour-booking-manager' );?></p>
-                                    <p class="ttbm_travel_metric-value ttbm_travel_amber-text" id="ttbm_travel_total-locations"><?php echo esc_attr($analytics_Data['location_count'] )?></p>
+                                    <span class="ttbm_travel_metric-value ttbm_travel_amber-text" id="ttbm_travel_total-locations"><?php echo esc_attr($analytics_Data['location_count'] )?></span>
                                 </div>
                             </div>
                         </div>

@@ -270,7 +270,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
             <div class="ttbm-tour-list-header">
                 <h1 class="page-title <?php echo esc_attr( $ttbm_sub_title_class );?>"><?php echo esc_attr( $tab_subtitle )?></h1>
                 <div class="ttbm_tour_search_add_holder">
-                    <input type="text" name="<?php echo esc_attr( $search_name )?>" id="<?php echo esc_attr( $search_id )?>" placeholder="<?php echo esc_attr( $place_holder )?>">
+
                     <?php if( $is_btn_link === '' ){?>
                     <div class="page-title-action <?php echo esc_attr( $add_btn_class_name )?>">
                         <i class="fas fa-plus"></i><?php echo esc_attr( $add_new_btn_title )?>
@@ -282,6 +282,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                         </div>
                     </a>
                 <?php }?>
+                    <input type="text" name="<?php echo esc_attr( $search_name )?>" id="<?php echo esc_attr( $search_id )?>" placeholder="<?php echo esc_attr( $place_holder )?>">
                 </div>
             </div>
         <?php }

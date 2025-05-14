@@ -267,9 +267,9 @@
 
         $.ajax({
             url: ttbm_admin_ajax.ajax_url,
-            nonce: nonce,
             type: 'POST',
             data: {
+                nonce: nonce,
                 action: action,
             },
             success: function (response) {
@@ -405,28 +405,33 @@
         }
 
         const name = $('#ttbm-location-name').val().trim();
-        const desc = $('#ttbm-location-desc').val().trim();
-        const imageId = $('#ttbm-location-image-id').val();
 
-        $.ajax({
-            url: ttbm_admin_ajax.ajax_url,
-            type: 'POST',
-            data: {
-                post_id: post_id,
-                post_name: name,
-                description: desc,
-                thumbnail_id: imageId,
-                nonce:  ttbm_admin_ajax.nonce,
-                action: action,
-            },
-            success: function (response) {
-                if (response.success) {
-                    $('#ttbm-location-popup').fadeOut();
-                    alert( response.data.message);
+        if( name ){
+            const desc = $('#ttbm-location-desc').val().trim();
+            const imageId = $('#ttbm-location-image-id').val();
+
+            $.ajax({
+                url: ttbm_admin_ajax.ajax_url,
+                type: 'POST',
+                data: {
+                    post_id: post_id,
+                    post_name: name,
+                    description: desc,
+                    thumbnail_id: imageId,
+                    nonce:  ttbm_admin_ajax.nonce,
+                    action: action,
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $('#ttbm-location-popup').fadeOut();
+                        alert( response.data.message);
+                    }
                 }
-            }
-        });
-
+            });
+        }else{
+            alert('Name is required!');
+            $("#ttbm-location-name").focus();
+        }
 
     });
 
@@ -483,7 +488,7 @@
 
         $.post(ttbm_admin_ajax.ajax_url, {
             action: action,
-            _wpnonce: ttbm_admin_ajax.nonce,
+            nonce: ttbm_admin_ajax.nonce,
             name,
             slug,
             parent,

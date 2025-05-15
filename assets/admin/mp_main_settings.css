@@ -207,7 +207,7 @@
 }
 @media (min-width: 1024px) {
   .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details {
-    width: 50%;
+    width: 55%;
   }
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details .ttbm-tour-thumb {
@@ -218,7 +218,7 @@
 }
 @media (min-width: 1024px) {
   .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details .ttbm-tour-thumb {
-    width: 100px;
+    width: 200px;
   }
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details .ttbm-tour-thumb img {

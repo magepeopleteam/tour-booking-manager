@@ -45,6 +45,7 @@
 .ttbm_travel_metric-label {
     font-size: 0.75rem;
     color: #6b7280;
+    padding: 10px 0px;
 }
 .ttbm_travel_metric-value {
     font-size: 1.125rem;
@@ -53,11 +54,12 @@
 .ttbm_travel_metric-card {
     background: white;
     border-radius: 0.5rem;
-    padding: 0.5rem;
     display: flex;
-    align-items: center;
+    align-items: self-start;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    flex:1;
+    flex-direction: column;
+    flex: 1;
+    padding: 20px;
 }
 .ttbm_travel_green-bg {
     background-color: #d1fae5;
@@ -165,7 +167,7 @@
 
 .ttbm_trvel_lists_content {
     display: none;
-    padding: 20px;
+    padding: 20px 0px;
     /*border: 1px solid #ddd;*/
     border-top: none;
     background-color: #fff;
@@ -231,27 +233,15 @@
 .ttbm-description {
     font-size: 13px;
     color: #555;
-    margin: 0;
-    padding-right: 60px; /* for space near edit button */
+    padding-right: 60px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 5px;
 }
-/*.ttbm-edit-btn {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    background: #0073aa;
-    color: #fff;
-    font-size: 12px;
-    padding: 4px 8px;
-    border-radius: 3px;
-    text-decoration: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-.ttbm-location-card:hover .ttbm-edit-btn {
-    opacity: 1;
-}*/
-/*Location Add*/
-/* Overlay background */
+
 .ttbm-popup-overlay {
     position: fixed;
     top: 0;
@@ -265,7 +255,6 @@
     z-index: 9999;
 }
 
-/* Popup box */
 .ttbm-popup-box {
     background: #fff;
     padding: 20px 25px;
@@ -282,7 +271,6 @@
     margin-bottom: 15px;
 }
 
-/* Inputs and textareas */
 .ttbm-popup-box input[type="text"],
 .ttbm-popup-box textarea,
 .ttbm-popup-box select {
@@ -295,7 +283,6 @@
     font-size: 14px;
 }
 
-/* Image preview */
 #ttbm-image-preview img {
     margin-top: 10px;
     max-width: 100px;
@@ -303,7 +290,6 @@
     border-radius: 4px;
 }
 
-/* Buttons */
 .ttbm-popup-buttons {
     display: flex;
     justify-content: flex-end;
@@ -341,7 +327,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    padding: 10px;
+    padding: 10px 0px;
 }
 
 .ttbm-taxonomy-card {
@@ -445,6 +431,11 @@
     background-color: #1972b9;
     color: #fff;
 }
+.ttbm_show_location_shortcode{
+    padding: 5px 0px;
+    color: #b3af0f;
+    background-color: #ddd;
+}
 
 
 .ttbm_trvel_lists_tabs {
@@ -486,6 +477,33 @@
     box-shadow: 0 4px 10px rgba(0, 119, 204, 0.3);
 }
 
+.ttbm_travel_lists_tour-features {
+    display: flex;
+    gap: 10px;
+}
+.ttbm_travel_lists_tour-feature {
+    padding: 5px 10px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: #555;
+    text-align: center;
+}
+.ttbm_travel_lists_tour-feature.ttbm_travel_lists_first_feature {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+.ttbm_travel_lists_tour-feature.ttbm_travel_lists_second_feature {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+.ttbm_travel_lists_tour-feature.ttbm_travel_lists_third_feature {
+    background-color: #fff3e0;
+    color: #e65100;
+}
+
+.ttbm-tour-list-page, .ttbm_trvel_lists_content{background: linear-gradient(to right, #eff6ff, #f5f3ff)}
+.ttbm-tour-list-page .ttbm-tour-card{ background:#fff; }
 @media screen and (max-width: 768px) {
     .ttbm_trvel_lists_tabs {
         flex-direction: column;

@@ -59,19 +59,23 @@
 					'capability_type' => 'post',
 				);
 				register_post_type( 'ttbm_ticket_types', $args );
+			
 				$args = [
 					'public' => true,
 					'label' => esc_html__('Hotel', 'tour-booking-manager'),
 					'supports' => ['title', 'thumbnail', 'editor'],
-					'show_in_menu' => 'edit.php?post_type=ttbm_tour',
+					// 'show_in_menu' => 'edit.php?post_type=ttbm_tour',
+					'show_in_menu' => false,
 					'capability_type' => 'post',
 				];
 				register_post_type('ttbm_hotel', $args);
+				
 				$args = [
 					'public' => true,
 					'label' => esc_html__('Places', 'tour-booking-manager'),
 					'supports' => ['title', 'thumbnail', 'editor'],
-					'show_in_menu' => 'edit.php?post_type=ttbm_tour',
+					// 'show_in_menu' => 'edit.php?post_type=ttbm_tour',
+					'show_in_menu' => false,
 					'capability_type' => 'post',
 				];
 				register_post_type('ttbm_places', $args);

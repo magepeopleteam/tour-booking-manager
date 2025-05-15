@@ -229,60 +229,49 @@
                         <div class="ttbm_travel_metrics-group">
                             <div class="ttbm_travel_metric-card">
                                 <div class="ttbm_travel_icon-circle ttbm_travel_blue-bg">
-                                    <i class="fas fa-book-open ttbm_travel_blue-text"></i>
+                                    <i class="fas fa-umbrella-beach ttbm_travel_blue-text"></i>
                                 </div>
-                                <div >
-                                    <div class="ttbm_travel_metric-label"><?php esc_attr_e( 'Tours', 'tour-booking-manager' );?></div>
-                                </div>
-                                <div>
-                                    <span class="ttbm_travel_metric-value ttbm_travel_blue-text" id="total-tours"><?php echo esc_attr( $found_posts );?></span>
-                                </div>
+                                <h3 class="ttbm_travel_metric-label"><?php esc_attr_e( 'Tours', 'tour-booking-manager' );?></h3>
+                                <h2 class="ttbm_travel_metric-value ttbm_travel_blue-text" id="total-tours"><?php echo esc_attr( $found_posts );?></h2>
+                                
                             </div>
 
                             <div class="ttbm_travel_metric-card">
                                 <div class="ttbm_travel_icon-circle ttbm_travel_purple-bg">
                                     <i class="fas fa-calendar-alt ttbm_travel_purple-text"></i>
                                 </div>
-                                <div class="">
-                                    <div class="ttbm_travel_metric-label"><?php esc_attr_e( 'Active', 'tour-booking-manager' );?></div>
-                                </div>
-                                <div>
-                                    <span class="ttbm_travel_metric-value ttbm_travel_purple-text" id="active-tours"><?php echo esc_attr( $analytics_Data['active_tour'] )?></span>
-                                </div>
+                                <h3 class="ttbm_travel_metric-label"><?php esc_attr_e( 'Active', 'tour-booking-manager' );?></h3>
+                                <h2 class="ttbm_travel_metric-value ttbm_travel_purple-text" id="active-tours"><?php echo esc_attr( $analytics_Data['active_tour'] )?></h2>
                             </div>
 
                             <div class="ttbm_travel_metric-card">
                                 <div class="ttbm_travel_icon-circle ttbm_travel_amber-bg">
                                     <i class="fas fa-map-marker-alt ttbm_travel_amber-text"></i>
                                 </div>
-                                <div class="">
-                                    <div class="ttbm_travel_metric-label"><?php esc_attr_e( 'Locations', 'tour-booking-manager' );?></div>
-                                </div>
-                                <div>
-                                    <span class="ttbm_travel_metric-value ttbm_travel_amber-text" id="ttbm_travel_total-locations"><?php echo esc_attr($analytics_Data['location_count'] )?></span>
-                                </div>
+                                <h3 class="ttbm_travel_metric-label"><?php esc_attr_e( 'Locations', 'tour-booking-manager' );?></h3>
+                                <h2 class="ttbm_travel_metric-value ttbm_travel_amber-text" id="ttbm_travel_total-locations"><?php echo esc_attr($analytics_Data['location_count'] )?></h2>
                             </div>
                         </div>
 
                         <div class="ttbm_travel_metrics-group">
                             <div class="ttbm_travel_info-card">
                                 <div class="ttbm_travel_info-section">
-                                    <p class="ttbm_travel_metric-label"><?php esc_attr_e( 'Top Destination', 'tour-booking-manager' );?></p>
-                                    <p class="ttbm_travel_metric-value ttbm_travel_indigo-text" id="top-destination"><?php esc_attr_e( 'New York', 'tour-booking-manager' );?></p>
+                                    <h3 class="ttbm_travel_metric-label"><?php esc_attr_e( 'Top Destination', 'tour-booking-manager' );?></h3>
+                                    <h2 class="ttbm_travel_metric-value ttbm_travel_indigo-text" id="top-destination"><?php esc_attr_e( 'New York', 'tour-booking-manager' );?></h2>
                                 </div>
                                 <div class="ttbm_travel_info-section">
-                                    <p class="ttbm_travel_metric-label"><?php esc_attr_e( 'Avg Price', 'tour-booking-manager' );?></p>
-                                    <p class="ttbm_travel_metric-value ttbm_travel_pink-text" id="avg-price">$218</p>
+                                    <h3 class="ttbm_travel_metric-label"><?php esc_attr_e( 'Avg Price', 'tour-booking-manager' );?></h3>
+                                    <h2 class="ttbm_travel_metric-value ttbm_travel_pink-text" id="avg-price">$218</h2>
                                 </div>
                             </div>
 
                             <div class="ttbm_travel_status-card">
                                 <p class="ttbm_travel_metric-label"><?php esc_attr_e( 'Status', 'tour-booking-manager' );?></p>
                                 <div class="ttbm_travel_status-indicators">
-                                    <span class="ttbm_travel_status-dot ttbm_travel_dot-active"></span>
-                                    <span class="ttbm_travel_status-text" id="ttbm_travel_active-count"> <?php echo esc_attr( $analytics_Data['active_tour'] ); esc_attr_e( ' Active', 'tour-booking-manager' );?></span>
-                                    <span class="ttbm_travel_status-dot ttbm_travel_dot-expired"></span>
-                                    <span class="ttbm_travel_status-text" id="ttbm_travel_expired-count"><?php echo esc_attr( $analytics_Data['expired_tour'] );  esc_attr_e( ' Expired', 'tour-booking-manager' );?></span>
+                                    <h3 class="ttbm_travel_status-dot ttbm_travel_dot-active"></h3>
+                                    <h2 class="ttbm_travel_status-text" id="ttbm_travel_active-count"> <?php echo esc_attr( $analytics_Data['active_tour'] ); esc_attr_e( ' Active', 'tour-booking-manager' );?></h2>
+                                    <h3 class="ttbm_travel_status-dot ttbm_travel_dot-expired"></h3>
+                                    <h2 class="ttbm_travel_status-text" id="ttbm_travel_expired-count"><?php echo esc_attr( $analytics_Data['expired_tour'] );  esc_attr_e( ' Expired', 'tour-booking-manager' );?></h2>
                                 </div>
                             </div>
                         </div>

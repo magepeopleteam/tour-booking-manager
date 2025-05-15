@@ -38,13 +38,15 @@
             gap:10px;
             border: 1px solid #dfd6d6;
             margin-bottom: 6px;
-            border-radius: 20px;
+            border-radius: 10px;
+            transition: all .5s;
             @media (min-width: 1024px) {
                 flex-direction: row;
             }
             &:hover{
                 cursor: pointer;
-                background: var(--mpl-light);
+                transform: translateY(-3px);
+                box-shadow: 0 2px 5px #ddd;
             }
             .ttbm-tour-details{
                 display: flex;
@@ -53,7 +55,7 @@
                 gap:10px;
                 width:100%;
                 @media (min-width: 1024px) {
-                    width:70%;
+                    width:50%;
                 }
                 .ttbm-tour-thumb {
                     position: relative;
@@ -116,7 +118,7 @@
             padding:10px;
             box-sizing: border-box;
             @media (min-width: 1024px) {
-                width:20%;
+                width:25%;
                 padding: 0;
             }
             .meta-item {
@@ -126,8 +128,8 @@
                 flex-direction: column;
                 justify-content: center;
                 .meta-icon {
-                    background-color: var(--mpl-light);
-                    color: var(--mpl-dark);
+                    background-color: #e3f2fd;
+                    color: #4d96dd;
                     padding:13px;
                     width: 60px;
                     height: 60px;
@@ -149,18 +151,33 @@
             gap: 10px;
             padding: 10px;
             flex-direction: row;
-            background-color: var(--mpl-primary);
-            color: #fff;
-            border-radius:5px;
-            margin: 10px;
-            @media (min-width: 1024px) {
-                flex-direction: column;
-                margin: 0;
-            }
+            background-color: #F3FFF9;
+            color: var(--mpl-dark);
+            border-radius:0 10px 10px 0;
+            margin:0;
             a{
-                color: #fff;
+                font-size: 15px;
                 text-decoration: none;
+                padding:5px 10px;
+                border-radius: 5px;
+                &.ttbm_view_post{
+                    border: 1px solid #3498db;
+                    background-color: #d8f0ff;
+                    color: #3498db;
+                }
+                &.ttbm_edit_post{
+                    border: 1px solid #f1c40f;
+                    background-color: #fef5d2;
+                    color:#f1c40f;
+                }
+                &.ttbm_trash_post{
+                    border: 1px solid #e74c3c;
+                    background-color: #fcd5d0;
+                    color: #e74c3c;
+                }
             }
+            
+
         }
     }
 

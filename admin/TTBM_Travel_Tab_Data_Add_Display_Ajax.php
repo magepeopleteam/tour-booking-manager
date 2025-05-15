@@ -289,7 +289,9 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                             <button class="ttbm-btn ttbm-delete-btn ttbm_delete_taxonomy_data"><i class="fas fa-trash-alt"></i></button>
                         </div>
                     </div>
-                    <p class="ttbm-description"><?php echo esc_attr( $description ) ?></p>
+                    <?php if($description): ?>
+                        <p class="ttbm-description"><?php echo esc_attr( $description ) ?></p>
+                    <?php endif; ?>
                 </div>
             </div>
 

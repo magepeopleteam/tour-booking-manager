@@ -8,14 +8,11 @@
 
 .ttbm_travel_analytics-container {
     margin: 1rem auto;
-    background: white;
     border-radius: 0.5rem;
     overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); */
 }
 .ttbm_travel_analytics-bar {
-    padding: 0.75rem;
-    background: linear-gradient(to right, #eff6ff, #f5f3ff);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -33,33 +30,41 @@
 .ttbm_travel_blue-bg {
     background-color: #dbeafe;
 }
+
+.ttbm_travel_blue-text {
+    color: #006eff;
+}
+
 .ttbm_travel_icon-circle {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 9999px;
+    width: 66px;
+    height: 66px;
+    border-radius:100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 0.5rem;
+}
+.ttbm_travel_icon-circle i{
+    font-size:1.3rem;
 }
 .ttbm_travel_metric-label {
-    font-size: 0.75rem;
+    font-size:1rem;
     color: #6b7280;
-    padding: 10px 0px;
+    margin: 0;
 }
 .ttbm_travel_metric-value {
-    font-size: 1.125rem;
+    font-size: 1.5rem;
     font-weight: 700;
+    margin: 10px 0;
 }
 .ttbm_travel_metric-card {
     background: white;
     border-radius: 0.5rem;
     display: flex;
-    align-items: self-start;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    flex-direction: column;
+    align-items:center;
     flex: 1;
-    padding: 20px;
+    gap:15px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    padding: 10px;
 }
 .ttbm_travel_green-bg {
     background-color: #d1fae5;
@@ -88,10 +93,10 @@
 .ttbm_travel_info-card {
     background: white;
     border-radius: 0.5rem;
-    padding: 0.5rem;
+    padding:15px;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 25px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     flex:1;
 }
@@ -99,8 +104,8 @@
     border-right: 1px solid #f3f4f6;
 }
 .ttbm_travel_info-section {
-    padding: 0 0.5rem;
-    text-align: center;
+    text-align: left;
+    padding-right:20px;
 }
 .ttbm_travel_status-card {
     background: white;
@@ -162,7 +167,6 @@
 .ttbm_trvel_lists_tabs button.active {
     background: #0073aa;
     color: #fff;
-    border-bottom: 3px solid #0073aa;
 }
 
 .ttbm_trvel_lists_content {
@@ -173,6 +177,7 @@
     background-color: #fff;
     width: 100%;
     box-sizing: border-box;
+    margin: 10px 0;
 }
 
 .ttbm_trvel_lists_content.active {
@@ -227,8 +232,11 @@
 }
 .ttbm-title {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: normal;
     margin: 0 0 5px;
+}
+.ttbm-title i{
+    margin-right: 10px;
 }
 .ttbm-description {
     font-size: 13px;
@@ -442,25 +450,24 @@
     flex-wrap: wrap;
     gap: 12px;
     padding: 5px;
-    background: #f9f9f9;
-    border-radius: 12px;
+    background: #fff;
+    border-radius: 8px;
     justify-content: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .ttbm_trvel_lists_tabs button {
-    background: #fff;
+    background: #81b7ff1b;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
     padding: 10px 20px;
     font-size: 16px;
     font-weight: 500;
-    color: #333;
+    color: #006eff;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     position: relative;
-    border: 1px solid #ddd;
+    border: 1px solid #c6dfff;
     margin: 5px;
 }
 
@@ -472,9 +479,9 @@
 }
 
 .ttbm_trvel_lists_tabs button.active {
-    background-color: #0077cc;
+    background-color: #006eff;
     color: #fff;
-    box-shadow: 0 4px 10px rgba(0, 119, 204, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 119, 204, 0.15);
 }
 
 .ttbm_travel_lists_tour-features {

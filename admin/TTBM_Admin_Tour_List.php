@@ -173,9 +173,9 @@
                                 <div class="ttbm-tour-info">
                                     <h3><a href="<?php echo get_edit_post_link($post_id); ?>"><?php echo get_the_title($post_id); ?></a></h3>
                                     <?php if($location): ?>
-                                    <p class="location"><i class="fas fa-map-marker-alt"></i> <?php echo esc_html($location); ?></p>
+                                    <div class="location"><i class="fas fa-map-marker-alt"></i> <?php echo esc_html($location); ?></div>
                                     <?php endif; ?>
-                                    <p class="description"><?php echo esc_html(wp_trim_words(get_the_excerpt($post_id), 39)); ?></p>
+                                    <div class="description"><?php echo esc_html(wp_trim_words(get_the_excerpt($post_id), 39)); ?></div>
                                     <div class="ttbm_travel_lists_tour-features">
                                         <?php if( !empty( $max_features ) ){
                                             foreach ( $max_features as $key => $feature ){

@@ -502,6 +502,8 @@
     color: #e65100;
 }
 
+.ttbm-tour-list-page{background: linear-gradient(to right, #eff6ff, #f5f3ff)}
+
 @media screen and (max-width: 768px) {
     .ttbm_trvel_lists_tabs {
         flex-direction: column;

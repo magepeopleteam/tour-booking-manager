@@ -503,7 +503,7 @@
 }
 
 .ttbm-tour-list-page{background: linear-gradient(to right, #eff6ff, #f5f3ff)}
-
+.ttbm-tour-list-page .ttbm-tour-card{ background:#fff; }
 @media screen and (max-width: 768px) {
     .ttbm_trvel_lists_tabs {
         flex-direction: column;

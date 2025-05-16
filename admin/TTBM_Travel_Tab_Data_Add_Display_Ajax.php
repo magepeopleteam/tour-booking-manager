@@ -19,6 +19,51 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             add_action('wp_ajax_ttbm_delete_taxonomy_data_by_id', [ $this, 'ttbm_delete_taxonomy_data_by_id' ]);
             add_action('wp_ajax_ttbm_add_edit_new_places_term', [ $this, 'ttbm_add_edit_new_places_term' ]);
 
+            add_action('admin_action_ttbm_duplicate_post', [$this,'ttbm_duplicate_post_function']);
+
+        }
+
+        function ttbm_duplicate_post_function() {
+            if ( !isset( $_GET['post_id']) || !isset($_GET['_wpnonce']) ||
+                !wp_verify_nonce($_GET['_wpnonce'], 'ttbm_duplicate_post_' . sanitize_text_field( $_GET['post_id'] ) )
+            ) {
+                wp_die('Invalid request (missing or invalid nonce).');
+            }
+
+            $post_id = (int)   $post_name   = sanitize_text_field( wp_unslash( $_POST['post_id'] ) );
+            $post = get_post($post_id);
+
+            if (!$post || $post->post_type !== 'ttbm_tour') {
+                wp_die('Invalid post or post type.');
+            }
+
+            // Create new post array
+            $new_post = array(
+                'post_title'   => $post->post_title . ' (Copy)',
+                'post_content' => $post->post_content,
+                'post_status'  => 'draft',
+                'post_type'    => $post->post_type,
+                'post_author'  => get_current_user_id(),
+            );
+
+            // Insert new post
+            $new_post_id = wp_insert_post($new_post);
+
+            if (is_wp_error($new_post_id) || !$new_post_id) {
+                wp_die('Failed to duplicate post.');
+            }
+
+            // Copy post meta
+            $meta = get_post_meta($post_id);
+            foreach ($meta as $key => $values) {
+                foreach ($values as $value) {
+                    add_post_meta($new_post_id, $key, maybe_unserialize($value));
+                }
+            }
+
+            // Redirect to the edit page of the new post
+            wp_redirect(admin_url('post.php?action=edit&post=' . $new_post_id));
+            exit;
         }
 
         function ttbm_add_edit_new_places_term() {

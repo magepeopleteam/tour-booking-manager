@@ -30,7 +30,7 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                 wp_die('Invalid request (missing or invalid nonce).');
             }
 
-            $post_id = (int)   $post_name   = sanitize_text_field( wp_unslash( $_POST['post_id'] ) );
+            $post_id = (int)sanitize_text_field( wp_unslash( $_GET['post_id'] ) );
             $post = get_post($post_id);
 
             if (!$post || $post->post_type !== 'ttbm_tour') {

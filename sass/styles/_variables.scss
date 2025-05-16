@@ -1,6 +1,7 @@
 $main-selector:'#ttbm_meta_box_panel, .travel-list';
 :root{
     --mpl-primary:#F12971;
+    --mpl-primary-rgba:rgba(241, 41, 113, 0.08);
     --mpl-secondary:#1d2327;
     --mpl-sky:#f38fb3;
     --mpl-sky-light:#EFFAFF;
@@ -12,4 +13,5 @@ $main-selector:'#ttbm_meta_box_panel, .travel-list';
     --mpl-yellow:#ffcb00;
     --mpl-red:#d91e1e;
     --mpl-red-light:#f6dada;
+    --mpl-gradient:linear-gradient(135deg, #F12971, #c4185b);
 }

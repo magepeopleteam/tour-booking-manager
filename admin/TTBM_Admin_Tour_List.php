@@ -7,7 +7,6 @@
 			public function __construct() {
 
 				// add_action('admin_menu', array($this, 'tour_list_menu'), 1);
-
 				add_action('wp_ajax_ttbm_trash_post', array($this, 'ttbm_trash_post'));
 
                 add_action('wp_ajax_ttbm_load_more', array($this, 'load_more_callback') );
@@ -15,8 +14,9 @@
 
                 add_action('admin_head', [$this,'remove_admin_notice']);
                 add_action('admin_menu', [$this,'remove_default_menu'],0);
-                
-			}
+
+            }
+
             public function remove_default_menu(){
                 remove_submenu_page('edit.php?post_type=ttbm_tour', 'edit.php?post_type=ttbm_tour');
                 remove_submenu_page('edit.php?post_type=ttbm_tour', 'post-new.php?post_type=ttbm_tour');
@@ -218,6 +218,13 @@
                                 <?php wp_nonce_field('edd_sample_nonce', 'edd_sample_nonce');  ?>
                                 <a class="ttbm_view_post" href="<?php echo the_permalink($post_id); ?>" target="_blank"><i class="fa fa-eye"></i></a>
                                 <a class="ttbm_edit_post" href="<?php echo get_edit_post_link($post_id); ?>"><i class="fa fa-edit"></i></a>
+                                <a class="ttbm_duplicate_post" href="<?php echo wp_nonce_url(
+                                    admin_url('admin.php?action=ttbm_duplicate_post&post_id=' . $post_id),
+                                    'ttbm_duplicate_post_' . $post_id
+                                ); ?>">
+                                    <i class="fa fa-clone"></i>
+                                </a>
+
                                 <?php //do_action('add_ttbm_list_action_button', $post_id); ?>
                                 <a class="ttbm_trash_post" data-alert="<?php echo esc_attr__('Are you sure ? To trash : ', 'tour-booking-manager') . ' ' . get_the_title($post_id); ?>" data-post-id="<?php echo esc_attr($post_id); ?>" title="<?php echo esc_attr__('Trash ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>">
                                     <i class="fa fa-trash"></i> 

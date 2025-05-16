@@ -376,9 +376,35 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
             </div>
         <?php  }
 
-        public static function travel_list_tour_package_header( $label ){ ?>
+        public static function travel_list_tour_package_header( $label ){
+            $counts = wp_count_posts('ttbm_tour');
+            $total_count     = array_sum((array) $counts);
+            $published_count = isset($counts->publish) ? $counts->publish : 0;
+            $trash_count     = isset($counts->trash) ? $counts->trash : 0;
+            $draft_count     = isset($counts->draft) ? $counts->draft : 0;
+            $trash_link = add_query_arg([
+                'post_status' => 'trash',
+                'post_type'   => 'ttbm_tour',
+            ], admin_url('edit.php'));
+
+            $draft_link = add_query_arg([
+                'post_status' => 'draft',
+                'post_type'   => 'ttbm_tour',
+            ], admin_url('edit.php'));
+
+            ?>
             <div class="ttbm-tour-list-header">
-                <h1 class="page-title"><?php echo esc_html($label).__(' Lists','tour-booking-manager'); ?></h1>
+
+                <div class="ttbm_tour_list_text_header">
+                    <h1 class="page-title"><?php echo esc_html($label).__(' Lists','tour-booking-manager'); ?></h1>
+                    <div class="ttbm_tour_count_holder">
+                        <div class="ttbm_total_travel_display"><?php echo __(' Total Tour:','tour-booking-manager'); ?> <?php echo esc_attr( $total_count )?> </div>
+                        <div class="ttbm_total_publish_display"><?php echo __(' Published Tour:','tour-booking-manager'); ?> <?php echo esc_attr( $published_count )?> </div>
+                        <a class="ttbm_trash_link" href="<?php echo esc_url( $draft_link )?>"><div class="ttbm_total_publish_display"><?php echo __(' Draft Tour:','tour-booking-manager'); ?> <?php echo esc_attr( $draft_count )?> </div></a>
+                        <a class="ttbm_trash_link" href="<?php echo esc_url( $trash_link )?>"><div class="ttbm_total_trash_display"><?php echo __(' Trash Tour:','tour-booking-manager'); ?> <?php echo esc_attr( $trash_count )?> </div></a>
+                    </div>
+                </div>
+
                 <div class="ttbm_tour_search_add_holder">
                     <a href="<?php echo admin_url('post-new.php?post_type=ttbm_tour'); ?>" class="page-title-action">
                         <i class="fas fa-plus"></i> <?php esc_html_e('Add New', 'tour-booking-manager'); ?>

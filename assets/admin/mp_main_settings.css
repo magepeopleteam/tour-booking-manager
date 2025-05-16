@@ -324,6 +324,11 @@
   background-color: #fef5d2;
   color: #f1c40f;
 }
+.ttbm_duplicate_post{
+  border: 1px solid #fef5d2;
+  background-color: #f1c40f;
+  color:#6f5f1f;
+}
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action a.ttbm_trash_post {
   border: 1px solid #e74c3c;
   background-color: #fcd5d0;

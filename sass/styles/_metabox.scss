@@ -191,4 +191,12 @@
         }
       }
     }
+    // +++++++++++ map zoom icon +++++++++++
+    .fullscreen-icon {
+      background-size: 22px 30px;
+      background-position: 4px 0px;
+    }
+    .leaflet-touch .fullscreen-icon.leaflet-fullscreen-on {
+      background-position: 4px 0px;
+    }
   }

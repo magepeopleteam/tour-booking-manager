@@ -781,6 +781,13 @@ div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after, div.ttbm_gl
   width: 100%;
   border: 0;
 }
+#ttbm_meta_box_panel .fullscreen-icon, .travel-list .fullscreen-icon {
+  background-size: 22px 30px;
+  background-position: 4px 0px;
+}
+#ttbm_meta_box_panel .leaflet-touch .fullscreen-icon.leaflet-fullscreen-on, .travel-list .leaflet-touch .fullscreen-icon.leaflet-fullscreen-on {
+  background-position: 4px 0px;
+}
 
 .auto-search-wrapper.loupe::before {
   margin: 10px 0;

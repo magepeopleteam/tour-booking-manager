@@ -29,18 +29,19 @@ if (!class_exists('TTBM_Settings_Hotel_Ajax')) {
             if( empty( $search_term ) ) {
                 $args = array(
                     'post_type' => 'ttbm_hotel',
-                    'post_status' => 'publish',
+                    'post_status'    => array( 'publish', 'draft' ),
                     'posts_per_page' => $display_limit,
                 );
             }else {
                 $args = array(
                     'post_type' => 'ttbm_hotel',
-                    'post_status' => 'publish',
+                    'post_status'    => array( 'publish', 'draft' ),
                     's' => $search_term,
                     'fields' => 'ids',
                     'posts_per_page' => $display_limit,
                 );
             }
+
             $query = new WP_Query( $args );
 
 //          $result_data = TTBM_Hotel_Booking_Lists::ttbm_display_Hotel_lists( $query );

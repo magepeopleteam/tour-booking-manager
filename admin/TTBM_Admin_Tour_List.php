@@ -243,7 +243,6 @@
                                     <i class="fa fa-clone"></i>
                                 </a>
 
-                                <?php //do_action('add_ttbm_list_action_button', $post_id); ?>
                                 <a class="ttbm_trash_post" data-alert="<?php echo esc_attr__('Are you sure ? To trash : ', 'tour-booking-manager') . ' ' . get_the_title($post_id); ?>" data-post-id="<?php echo esc_attr($post_id); ?>" title="<?php echo esc_attr__('Trash ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>">
                                     <i class="fa fa-trash"></i> 
                                 </a>

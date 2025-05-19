@@ -972,24 +972,30 @@ div.ttbm_style select.formControl {
   background: transparent;
 }
 
-#ttbm_meta_box_panel h1, .travel-list h1 {
+#ttbm_meta_box_panel #ttbm_date_config_meta_boxs .date-configeration, .travel-list #ttbm_date_config_meta_boxs .date-configeration {
   padding: 0;
   color: var(--mpl-secondary);
-  margin: 30px 0 20px 0;
-  margin-bottom: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 22px;
-  line-height: 26px;
-  font-family: Roboto, sans-serif;
-  margin-bottom: 12px;
-  font-weight: 700;
+  font-weight: bold;
 }
-#ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs .description,
-#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs .description, .travel-list .tab-content-ttbm_date_config_meta_boxs .description,
-.travel-list .tab-content-ttbm_tax_meta_boxs .description {
+#ttbm_meta_box_panel #ttbm_date_config_meta_boxs .date-configeration-desc, .travel-list #ttbm_date_config_meta_boxs .date-configeration-desc {
+  color: var(--mpl-secondary);
   margin: 0;
-  padding: 0.75em 0;
-  font-size: 1rem;
+  margin-bottom: 0px;
+  font-weight: normal;
+  line-height: 24px;
+  margin-bottom: 30px;
+}
+#ttbm_meta_box_panel #ttbm_date_config_meta_boxs .ttbm-header, .travel-list #ttbm_date_config_meta_boxs .ttbm-header {
+  border: 0;
+}
+#ttbm_meta_box_panel #ttbm_date_config_meta_boxs table.form-table tr th, .travel-list #ttbm_date_config_meta_boxs table.form-table tr th {
+  text-align: left !important;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: var(--mpl-secondary);
 }
 #ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table,
 #ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table, .travel-list .tab-content-ttbm_date_config_meta_boxs table,
@@ -998,7 +1004,11 @@ div.ttbm_style select.formControl {
   border-spacing: 0;
   border: 0;
   margin: 0;
-  margin-top: 50px;
+}
+#ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th,
+#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr th,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr th {
+  text-align: left;
 }
 #ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th,
 #ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td,
@@ -1008,19 +1018,9 @@ div.ttbm_style select.formControl {
 .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr th,
 .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td {
   background-color: var(--mpl-white);
-  padding: 1.5em;
-  margin-bottom: 1.5em;
+  padding: 15px;
   width: 50%;
   border: 1px solid var(--mpl-gray);
-}
-#ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th p,
-#ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td p,
-#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th p,
-#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td p, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr th p,
-.travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td p,
-.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr th p,
-.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td p {
-  font-size: 0.8rem;
 }
 #ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td,
 #ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td,

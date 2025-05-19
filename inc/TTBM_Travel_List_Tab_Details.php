@@ -406,11 +406,13 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                         <div class="ttbm_total_publish_display"><?php /*echo __(' Published Tour:','tour-booking-manager'); */?> <?php /*echo esc_attr( $published_count )*/?> </div>
                         <a class="ttbm_trash_link" href="<?php /*echo esc_url( $draft_link )*/?>"><div class="ttbm_total_publish_display"><?php /*echo __(' Draft Tour:','tour-booking-manager'); */?> <?php /*echo esc_attr( $draft_count )*/?> </div></a>
 -->
-                        <div class="ttbm_travel_filter_item ttbm_filter_btn_active_bg_color" data-filter-item="all">All(<?php echo esc_attr( $total_count )?>)</div>
-                        <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="publish">Publish(<?php echo esc_attr( $published_count )?>)</div>
-                        <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="draft">Draft(<?php echo esc_attr( $draft_count )?>)</div>
+                        <div class="ttbm_travel_filter_item ttbm_filter_btn_active_bg_color" data-filter-item="all">All (<?php echo esc_attr( $total_count )?>)</div>
+                        <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="publish">Publish (<?php echo esc_attr( $published_count )?>)</div>
+                        <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="draft">Draft (<?php echo esc_attr( $draft_count )?>)</div>
 
-                        <a class="ttbm_trash_link" href="<?php echo esc_url( $trash_link )?>"><div class="ttbm_total_trash_display"><?php echo __(' Trash Tour:','tour-booking-manager'); ?> <?php echo esc_attr( $trash_count )?> </div></a>
+                        <a class="ttbm_trash_link" href="<?php echo esc_url( $trash_link )?>">
+                            <div class="ttbm_total_trash_display"><?php echo __(' Trash Tour:','tour-booking-manager'); ?> <?php echo esc_attr( $trash_count )?> </div>
+                        </a>
                     </div>
                 </div>
 

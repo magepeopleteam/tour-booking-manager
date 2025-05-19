@@ -123,11 +123,11 @@
 
                     <?php do_action('ttbm_travel_lists_tab_display', $label, $analytics_Data )?>
 
-                    <div class="ttbm_travel_filter_holder">
+                    <!--<div class="ttbm_travel_filter_holder">
                         <div class="ttbm_travel_filter_item ttbm_filter_btn_active_bg_color" data-filter-item="all">All</div>
                         <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="publish">Publish</div>
                         <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="draft">Draft</div>
-                    </div>
+                    </div>-->
                     <div class="ttbm-tour-list_holder">
                         <div class="ttbm-tour-list">
                             <?php

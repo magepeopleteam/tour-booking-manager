@@ -1,5 +1,6 @@
 :root {
   --mpl-primary:#F12971;
+  --mpl-primary-rgba:rgba(241, 41, 113, 0.08);
   --mpl-secondary:#1d2327;
   --mpl-sky:#f38fb3;
   --mpl-sky-light:#EFFAFF;
@@ -11,6 +12,7 @@
   --mpl-yellow:#ffcb00;
   --mpl-red:#d91e1e;
   --mpl-red-light:#f6dada;
+  --mpl-gradient:linear-gradient(135deg, #F12971, #c4185b);
 }
 
 #ttbm_meta_box_panel label input, .travel-list label input {
@@ -18,7 +20,6 @@
 }
 #ttbm_meta_box_panel select, #ttbm_meta_box_panel input[type=text], #ttbm_meta_box_panel input[type=email], #ttbm_meta_box_panel input[type=search], #ttbm_meta_box_panel input[type=tel], #ttbm_meta_box_panel input[type=url], #ttbm_meta_box_panel input[type=password], #ttbm_meta_box_panel input[type=file], #ttbm_meta_box_panel input[type=color], #ttbm_meta_box_panel input[type=number], #ttbm_meta_box_panel input[type=range], #ttbm_meta_box_panel input[type=date], #ttbm_meta_box_panel input[type=month], #ttbm_meta_box_panel input[type=week], #ttbm_meta_box_panel input[type=time], #ttbm_meta_box_panel input[type=datetime], #ttbm_meta_box_panel input[type=datetime-local], .travel-list select, .travel-list input[type=text], .travel-list input[type=email], .travel-list input[type=search], .travel-list input[type=tel], .travel-list input[type=url], .travel-list input[type=password], .travel-list input[type=file], .travel-list input[type=color], .travel-list input[type=number], .travel-list input[type=range], .travel-list input[type=date], .travel-list input[type=month], .travel-list input[type=week], .travel-list input[type=time], .travel-list input[type=datetime], .travel-list input[type=datetime-local] {
   width: 14em;
-  height: 2.5em;
   border: 0px;
   border: 1px solid var(--mpl-gray);
   color: var(--mpl-secondary);
@@ -42,10 +43,9 @@
   box-shadow: none;
 }
 #ttbm_meta_box_panel textarea, .travel-list textarea {
-  height: 5em;
   background-color: #f5f8ff;
   font-weight: normal;
-  font-size: 14px;
+  line-height: 1.5rem;
 }
 #ttbm_meta_box_panel input[type=search], .travel-list input[type=search] {
   border: 0px solid var(--mpl-dark);
@@ -613,7 +613,8 @@ div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after, div.ttbm_gl
 }
 
 #ttbm_meta_box_panel .postbox-header, .travel-list .postbox-header {
-  background-color: var(--mpl-primary);
+  background: var(--mpl-gradient);
+  padding: 16px 24px;
 }
 #ttbm_meta_box_panel .postbox-header .handle-actions, .travel-list .postbox-header .handle-actions {
   margin-top: 0;
@@ -630,9 +631,9 @@ div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after, div.ttbm_gl
 }
 #ttbm_meta_box_panel .ttbm_settings .tabLists, .travel-list .ttbm_settings .tabLists {
   width: 20%;
-  padding: 25px;
-  background-color: var(--mpl-light);
-  padding-right: 0;
+  padding: 0;
+  background-color: var(--mpl-white);
+  border-right: 1px solid var(--mpl-gray);
   font-size: 16px;
 }
 #ttbm_meta_box_panel .ttbm_settings .tabLists li, .travel-list .ttbm_settings .tabLists li {
@@ -644,28 +645,32 @@ div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after, div.ttbm_gl
 }
 #ttbm_meta_box_panel .ttbm_settings .tabLists li i, .travel-list .ttbm_settings .tabLists li i {
   margin-right: 25px;
-  color: var(--mpl-primary);
+  color: #757575;
 }
 #ttbm_meta_box_panel .ttbm_settings .tabLists li::after, .travel-list .ttbm_settings .tabLists li::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: -1px;
-  border-bottom: 1px solid #d8d8d8;
-  width: 91%;
+  width: 0;
 }
-#ttbm_meta_box_panel .ttbm_settings .tabLists li.active, #ttbm_meta_box_panel .ttbm_settings .tabLists li:hover, .travel-list .ttbm_settings .tabLists li.active, .travel-list .ttbm_settings .tabLists li:hover {
-  background-color: #fff;
-  color: #333;
+#ttbm_meta_box_panel .ttbm_settings .tabLists li.active, .travel-list .ttbm_settings .tabLists li.active {
+  background-color: var(--mpl-primary-rgba);
+  color: var(--mpl-primary);
   font-weight: normal;
   border-left: 2px solid var(--mpl-primary);
 }
-#ttbm_meta_box_panel .ttbm_settings .tabLists li.active::after, #ttbm_meta_box_panel .ttbm_settings .tabLists li:hover::after, .travel-list .ttbm_settings .tabLists li.active::after, .travel-list .ttbm_settings .tabLists li:hover::after {
-  width: 100%;
+#ttbm_meta_box_panel .ttbm_settings .tabLists li.active i, .travel-list .ttbm_settings .tabLists li.active i {
+  color: var(--mpl-primary);
+}
+#ttbm_meta_box_panel .ttbm_settings .tabLists li:hover, .travel-list .ttbm_settings .tabLists li:hover {
+  background-color: var(--mpl-light);
+  color: var(--mpl-primary);
 }
 #ttbm_meta_box_panel .ttbm_settings .tabsContent, .travel-list .ttbm_settings .tabsContent {
   width: 80%;
   padding: 2% 5%;
+  background-color: var(--mpl-light);
 }
 #ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem > h2, .travel-list .ttbm_settings .tabsContent .tabsItem > h2 {
   padding: 0;
@@ -682,13 +687,33 @@ div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after, div.ttbm_gl
   margin-bottom: 30px;
 }
 #ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section, .travel-list .ttbm_settings .tabsContent .tabsItem section {
-  border: 1px solid #d8d8d8;
-  padding: 20px;
-  margin-top: -1px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1019607843);
+  padding: 24px;
+  margin-bottom: 24px;
+  transition: transform 0.2s, box-shadow 0.2s;
   width: 100%;
 }
-#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section.bg-light, .travel-list .ttbm_settings .tabsContent .tabsItem section.bg-light {
-  background-color: var(--mpl-light);
+#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section:hover, .travel-list .ttbm_settings .tabsContent .tabsItem section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .ttbm-header, .travel-list .ttbm_settings .tabsContent .tabsItem section .ttbm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--mpl-gray);
+}
+#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .ttbm-header h4, .travel-list .ttbm_settings .tabsContent .tabsItem section .ttbm-header h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 #ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label, .travel-list .ttbm_settings .tabsContent .tabsItem section .label {
   display: flex;
@@ -696,14 +721,13 @@ div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after, div.ttbm_gl
   align-items: center;
   flex-direction: row;
   cursor: pointer;
+  margin: 10px 0;
+  padding: 10px;
 }
 @media (max-width: 1200px) {
   #ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label, .travel-list .ttbm_settings .tabsContent .tabsItem section .label {
     flex-direction: column;
   }
-}
-#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label .label-inner, .travel-list .ttbm_settings .tabsContent .tabsItem section .label .label-inner {
-  padding-right: 20px;
 }
 #ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label p, .travel-list .ttbm_settings .tabsContent .tabsItem section .label p {
   font-size: 14px;

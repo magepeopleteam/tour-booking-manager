@@ -1,6 +1,7 @@
 #{$main-selector} {
     .postbox-header {
-      background-color: var(--mpl-primary);
+      background: var(--mpl-gradient);
+      padding: 16px 24px;
       .handle-actions {
         margin-top: 0;
         .handle-order-higher,
@@ -16,9 +17,9 @@
   
       .tabLists {
         width: 20%;
-        padding: 25px;
-        background-color: var(--mpl-light);
-        padding-right: 0;
+        padding: 0;
+        background-color: var(--mpl-white);
+        border-right: 1px solid var(--mpl-gray);
         font-size: 16px;
         li {
           border-left: 0;
@@ -29,7 +30,7 @@
   
           i {
             margin-right: 25px;
-            color: var(--mpl-primary);
+            color: #757575;
           }
   
           &::after {
@@ -37,20 +38,21 @@
             position: absolute;
             left: 0;
             bottom: -1px;
-            border-bottom: 1px solid #d8d8d8;
-            width: 91%;
+            width: 0;
           }
   
-          &.active,
-          &:hover {
-            background-color: #fff;
-            color: #333;
+          &.active {
+            background-color: var(--mpl-primary-rgba);
+            color: var(--mpl-primary);
             font-weight: normal;
             border-left: 2px solid var(--mpl-primary);
-  
-            &::after {
-              width: 100%;
+            i {
+              color: var(--mpl-primary);
             }
+          }
+          &:hover{
+            background-color: var(--mpl-light);
+            color: var(--mpl-primary);
           }
         }
       }
@@ -58,7 +60,7 @@
       .tabsContent {
         width: 80%;
         padding: 2% 5%;
-  
+        background-color: var(--mpl-light);
         .tabsItem {
           & > h2 {
             padding: 0;
@@ -77,12 +79,32 @@
           }
   
           section {
-            border: 1px solid #d8d8d8;
-            padding: 20px;
-            margin-top: -1px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px #0000001a;
+            padding: 24px;
+            margin-bottom: 24px;
+            transition: transform 0.2s, box-shadow 0.2s;
             width: 100%;
-            &.bg-light{
-                background-color: var(--mpl-light);
+            &:hover{
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            .ttbm-header{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                padding-bottom: 16px;
+                border-bottom: 1px solid var(--mpl-gray);
+                h4{
+                  margin: 0;
+                  font-size: 16px;
+                  font-weight: 600;
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                }
             }
             .label {
               display: flex;
@@ -90,13 +112,12 @@
               align-items: center;
               flex-direction: row;
               cursor: pointer;
+              margin: 10px 0;
+              padding: 10px;
               @media (max-width: 1200px) {
                 flex-direction: column;
               }
-  
-              .label-inner {
-                padding-right: 20px;
-              }
+
   
               p {
                 font-size: 14px;

@@ -178,10 +178,15 @@
     width: 100%;
     box-sizing: border-box;
     margin: 10px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
 }
 
 .ttbm_trvel_lists_content.active {
     display: block;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 /* Responsive for small screens */

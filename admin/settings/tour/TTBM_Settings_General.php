@@ -207,7 +207,7 @@
 
 				<div class="label">
 					<div class="label-inner">
-						<p><?php esc_html_e('Short Description', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('short_des'); ?></span></i></p>
+						<p><?php esc_html_e('Short Description Enable/Disable', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('short_des'); ?></span></i></p>
 					</div>
 					<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
 				</div>
@@ -223,8 +223,11 @@
 				?>
 				<div class="<?php echo esc_attr($active); ?>" data-collapse="#<?php echo esc_attr($display_name); ?>">
 					<div class="label">
-						<textarea class="ms-2 rounded" cols="72" rows="5" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
+						<div class="label-inner">
+							<p><?php esc_html_e('Short Description', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('short_des'); ?></span></i></p>
+						</div>
 					</div>
+					<textarea class="ms-2 rounded" cols="50" rows="5" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
 				</div>
 				<?php
 			}

@@ -631,6 +631,14 @@
         let searchText = $(this).val().toLowerCase();
         ttbm_function_search_title( searchText, 'ttbm_search_place_by_title' );
     });
+
+    $(document).on('click', '.ttbm_travel_filter_item', function() {
+
+        $('.ttbm_travel_filter_item').removeClass('ttbm_filter_btn_active_bg_color').addClass('ttbm_filter_btn_bg_color');
+        $(this).removeClass('ttbm_filter_btn_bg_color').addClass('ttbm_filter_btn_active_bg_color');
+        let searchText = $(this).attr('data-filter-item');
+        ttbm_function_filter_by_post_type( searchText, 'ttbm-tour-card' );
+    });
     function ttbm_function_search_title( searchText, class_name ){
         $('.'+class_name).each(function() {
             let location = $(this).data('taxonomy').toLowerCase();
@@ -640,6 +648,21 @@
             } else {
                 $(this).hide();
             }
+        });
+    }
+    function ttbm_function_filter_by_post_type( searchText, class_name ){
+        $('.'+class_name).each(function() {
+            let by_filter = $(this).data('travel-type').toLowerCase();
+            if( searchText === 'all' ){
+                $(this).fadeIn();
+            }else{
+                if ( by_filter.includes( searchText ) ) {
+                    $(this).fadeIn();
+                } else {
+                    $(this).fadeOut();
+                }
+            }
+
         });
     }
 

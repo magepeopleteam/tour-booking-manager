@@ -212,6 +212,10 @@ div.ttbm_style select.formControl {
   }
 }
 
+.dFlex{
+  align-items: center;
+}
+
 #{$main-selector} {
 
   #ttbm_date_config_meta_boxs .date-configeration{
@@ -229,9 +233,7 @@ div.ttbm_style select.formControl {
     line-height: 24px;
     margin-bottom: 30px;
   }
-  #ttbm_date_config_meta_boxs .ttbm-header{
-    border: 0;
-  }
+  
 
   #ttbm_date_config_meta_boxs {
     table.form-table tr th{

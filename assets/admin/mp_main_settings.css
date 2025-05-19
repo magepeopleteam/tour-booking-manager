@@ -972,6 +972,10 @@ div.ttbm_style select.formControl {
   background: transparent;
 }
 
+.dFlex {
+  align-items: center;
+}
+
 #ttbm_meta_box_panel #ttbm_date_config_meta_boxs .date-configeration, .travel-list #ttbm_date_config_meta_boxs .date-configeration {
   padding: 0;
   color: var(--mpl-secondary);
@@ -986,9 +990,6 @@ div.ttbm_style select.formControl {
   font-weight: normal;
   line-height: 24px;
   margin-bottom: 30px;
-}
-#ttbm_meta_box_panel #ttbm_date_config_meta_boxs .ttbm-header, .travel-list #ttbm_date_config_meta_boxs .ttbm-header {
-  border: 0;
 }
 #ttbm_meta_box_panel #ttbm_date_config_meta_boxs table.form-table tr th, .travel-list #ttbm_date_config_meta_boxs table.form-table tr th {
   text-align: left !important;

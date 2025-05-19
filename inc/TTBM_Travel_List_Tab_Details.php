@@ -393,24 +393,21 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
             ], admin_url('edit.php'));
 
             ?>
-            <div class="ttbm-tour-list-header">
+            <div class="ttbm-tour-list-header ttbm_travel_list_page_title_bg">
 
                 <div class="ttbm_tour_list_text_header">
-                    <div>
+                    <div class="ttbm_travel_list_header_text">
                         <h1 class="ttbm_tour_page-title"><?php echo esc_html($label).__(' Lists','tour-booking-manager'); ?></h1>
                     </div>
 
                     <div class="ttbm_tour_count_holder">
+                        <div class="ttbm_travel_filter_item ttbm_filter_btn_active_bg_color" data-filter-item="all">All (<?php echo esc_attr( $total_count )?>)</div>
+                        <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="publish">Publish (<?php echo esc_attr( $published_count )?>)</div>
+                        <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="draft">Draft (<?php echo esc_attr( $draft_count )?>)</div>
 
-                       <!-- <div class="ttbm_total_travel_display"><?php /*echo __(' Total Tour:','tour-booking-manager'); */?> <?php /*echo esc_attr( $total_count )*/?> </div>
-                        <div class="ttbm_total_publish_display"><?php /*echo __(' Published Tour:','tour-booking-manager'); */?> <?php /*echo esc_attr( $published_count )*/?> </div>
-                        <a class="ttbm_trash_link" href="<?php /*echo esc_url( $draft_link )*/?>"><div class="ttbm_total_publish_display"><?php /*echo __(' Draft Tour:','tour-booking-manager'); */?> <?php /*echo esc_attr( $draft_count )*/?> </div></a>
--->
-                        <div class="ttbm_travel_filter_item ttbm_filter_btn_active_bg_color" data-filter-item="all">All(<?php echo esc_attr( $total_count )?>)</div>
-                        <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="publish">Publish(<?php echo esc_attr( $published_count )?>)</div>
-                        <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="draft">Draft(<?php echo esc_attr( $draft_count )?>)</div>
-
-                        <a class="ttbm_trash_link" href="<?php echo esc_url( $trash_link )?>"><div class="ttbm_total_trash_display"><?php echo __(' Trash Tour:','tour-booking-manager'); ?> <?php echo esc_attr( $trash_count )?> </div></a>
+                        <a class="ttbm_trash_link" href="<?php echo esc_url( $trash_link )?>">
+                            <div class="ttbm_total_trash_display">Trash Tour (<?php echo esc_attr( $trash_count )?>) </div>
+                        </a>
                     </div>
                 </div>
 

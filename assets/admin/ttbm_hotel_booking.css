@@ -878,14 +878,25 @@ div.attendee_filter_list h5, #ttbm_booking_attendee_list_result h6
 }
 
 .ttbm_total_trash_display{
-    color: #ef1f13;
+    background-color: #555555;
+    color: #fff;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 5px;
 }
-.ttbm_total_trash_display:hover{
+/*.ttbm_total_trash_display:hover{
     text-decoration: underline;
     cursor: pointer;
-}
+}*/
 .ttbm_trash_link{
     text-decoration: none;
-    margin-top: 7px;
+    /*margin-top: 7px;*/
+}
+
+.ttbm_travel_list_page_title_bg{
+    padding: 13px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 

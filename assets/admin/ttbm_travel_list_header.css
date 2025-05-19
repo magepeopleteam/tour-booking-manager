@@ -513,6 +513,30 @@
     background-color: #fff3e0;
     color: #e65100;
 }
+.ttbm_travel_filter_holder{
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 5px;
+}
+
+.ttbm_travel_filter_item{
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.ttbm_filter_btn_bg_color{
+    background-color: #555555;
+    color: #fff;
+}
+.ttbm_filter_btn_active_bg_color{
+    background-color: #990000;
+    color: #fff;
+}
+
+.ttbm_travel_filter_item:hover{
+    background-color: #0e0909;
+}
 
 .ttbm-tour-list-page, .ttbm_trvel_lists_content{background: linear-gradient(to right, #eff6ff, #f5f3ff)}
 .ttbm-tour-list-page .ttbm-tour-card{ background:#fff; }

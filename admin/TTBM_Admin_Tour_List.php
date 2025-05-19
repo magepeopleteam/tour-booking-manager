@@ -31,7 +31,7 @@
                 $search = isset($_POST['search_term']) ? sanitize_text_field($_POST['search_term']) : ''; 
                 $args = array(
                     'post_type'      => 'ttbm_tour',
-                    'post_status'    => 'publish',
+//                    'post_status'    => 'publish',
                     'paged'          => $paged,
                     'posts_per_page' => $post_per_page,
                     's'              => $search,
@@ -66,7 +66,7 @@
             
                 $args = array(
                     'post_type'      => 'ttbm_tour',
-                    'post_status'    => 'publish',
+//                    'post_status'    => 'publish',
                     'paged'          => $paged,
                     'posts_per_page' => $post_per_page,
                     'orderby'        => 'date',
@@ -101,7 +101,7 @@
                 }
                 $args = array(
                     'post_type'      => 'ttbm_tour',
-                    'post_status'    => 'publish',
+//                    'post_status'    => 'publish',
                     'paged'          => $paged,
                     'posts_per_page' => $post_per_page,
                     'orderby'        => 'date',
@@ -123,6 +123,11 @@
 
                     <?php do_action('ttbm_travel_lists_tab_display', $label, $analytics_Data )?>
 
+                    <div class="ttbm_travel_filter_holder">
+                        <div class="ttbm_travel_filter_item ttbm_filter_btn_active_bg_color" data-filter-item="all">All</div>
+                        <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="publish">Publish</div>
+                        <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="draft">Draft</div>
+                    </div>
                     <div class="ttbm-tour-list_holder">
                         <div class="ttbm-tour-list">
                             <?php
@@ -156,6 +161,15 @@
                         $sold = TTBM_Function::get_total_sold($post_id, $upcoming_date);
                         $reserve = TTBM_Function::get_total_reserve($post_id);
 
+                        $post_status = get_post_status();
+                        if( $post_status === 'publish' ){
+                            $background = '#b7f1ba';
+                            $icon = 'far fa-paper-plane';
+                        }else{
+                            $background = '#ede2b4';
+                            $icon = 'far fa-file-alt';
+                        }
+
                         $max_features = [];
                         $features = get_post_meta( $post_id, 'ttbm_service_included_in_price', true );
                         if( is_array( $features ) && !empty( $features ) ){
@@ -165,7 +179,7 @@
 //                        error_log( print_r( [ '$max_features' => $max_features ], true ) );
                         ?>
                         
-                        <div class="ttbm-tour-card">
+                        <div class="ttbm-tour-card" data-travel-type="<?php echo esc_attr( $post_status )?>">
                             <div class="ttbm-tour-details">
                                 <div class="ttbm-tour-thumb">
                                     <?php echo get_the_post_thumbnail($post_id, 'thumbnail'); ?>
@@ -194,6 +208,10 @@
                             </div>
                             <div class="ttbm-tour-meta">
                                 <div class="meta-item">
+                                    <div class="meta-icon" style="background-color: <?php echo esc_attr( $background );?>"><i class="<?php echo esc_attr( $icon );?>"></i></div>
+                                    <div class="ttbm_travel_status"><?php echo esc_attr( $post_status )?></div>
+                                </div>
+                                <div class="meta-item">
                                     <div class="meta-icon"><i class="fa fa-chair"></i></div>
                                     <div class="meta-label"><?php echo esc_html($total); ?> total</div>
                                 </div>
@@ -216,9 +234,9 @@
                             </div>
                             <div class="meta-action">
                                 <?php wp_nonce_field('edd_sample_nonce', 'edd_sample_nonce');  ?>
-                                <a class="ttbm_view_post" href="<?php echo the_permalink($post_id); ?>" target="_blank"><i class="fa fa-eye"></i></a>
-                                <a class="ttbm_edit_post" href="<?php echo get_edit_post_link($post_id); ?>"><i class="fa fa-edit"></i></a>
-                                <a class="ttbm_duplicate_post" href="<?php echo wp_nonce_url(
+                                <a title="<?php echo esc_attr__('View ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>" class="ttbm_view_post" href="<?php echo the_permalink($post_id); ?>" target="_blank"><i class="fa fa-eye"></i></a>
+                                <a title="<?php echo esc_attr__('Edit ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>" class="ttbm_edit_post" href="<?php echo get_edit_post_link($post_id); ?>"><i class="fa fa-edit"></i></a>
+                                <a title="<?php echo esc_attr__('Duplicate Post ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>" class="ttbm_duplicate_post" href="<?php echo wp_nonce_url(
                                     admin_url('admin.php?action=ttbm_duplicate_post&post_id=' . $post_id),
                                     'ttbm_duplicate_post_' . $post_id
                                 ); ?>">

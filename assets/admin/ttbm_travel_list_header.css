@@ -462,8 +462,6 @@
 }
 
 .ttbm_trvel_lists_tabs button {
-
-    border: none;
     border-radius: 5px;
     padding: 10px 20px;
     font-size: 16px;
@@ -472,7 +470,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
-    border: 1px solid #d7dadd
+    border: 1px solid #ddd;
     margin: 5px;
 }
 

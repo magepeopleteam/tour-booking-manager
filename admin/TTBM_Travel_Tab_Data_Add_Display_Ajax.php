@@ -33,9 +33,9 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             $post_id = (int)sanitize_text_field( wp_unslash( $_GET['post_id'] ) );
             $post = get_post($post_id);
 
-            if (!$post || $post->post_type !== 'ttbm_tour') {
+            /*if (!$post || $post->post_type !== 'ttbm_tour') {
                 wp_die('Invalid post or post type.');
-            }
+            }*/
 
             // Create new post array
             $new_post = array(

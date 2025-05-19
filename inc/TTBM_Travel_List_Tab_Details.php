@@ -378,17 +378,18 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
 
         public static function travel_list_tour_package_header( $label ){
             $counts = wp_count_posts('ttbm_tour');
-            $total_count     = array_sum((array) $counts);
+            /*$total_count     = array_sum((array) $counts);
+            $published_count = isset($counts->publish) ? $counts->publish : 0;
+            $trash_count     = isset($counts->trash) ? $counts->trash : 0;
+            $draft_count     = isset($counts->draft) ? $counts->draft : 0;*/
+
             $published_count = isset($counts->publish) ? $counts->publish : 0;
             $trash_count     = isset($counts->trash) ? $counts->trash : 0;
             $draft_count     = isset($counts->draft) ? $counts->draft : 0;
+            $total_count = $published_count + $trash_count + $draft_count;
+
             $trash_link = add_query_arg([
                 'post_status' => 'trash',
-                'post_type'   => 'ttbm_tour',
-            ], admin_url('edit.php'));
-
-            $draft_link = add_query_arg([
-                'post_status' => 'draft',
                 'post_type'   => 'ttbm_tour',
             ], admin_url('edit.php'));
 
@@ -405,14 +406,14 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                         <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="publish">Publish (<?php echo esc_attr( $published_count )?>)</div>
                         <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="draft">Draft (<?php echo esc_attr( $draft_count )?>)</div>
 
-                        <a class="ttbm_trash_link" href="<?php echo esc_url( $trash_link )?>">
+                        <a class="ttbm_trash_link" href="<?php echo esc_url( $trash_link )?>" target="_blank">
                             <div class="ttbm_total_trash_display">Trash Tour (<?php echo esc_attr( $trash_count )?>) </div>
                         </a>
                     </div>
                 </div>
 
                 <div class="ttbm_tour_search_add_holder">
-                    <a href="<?php echo admin_url('post-new.php?post_type=ttbm_tour'); ?>" class="page-title-action">
+                    <a href="<?php echo admin_url('post-new.php?post_type=ttbm_tour'); ?>" class="page-title-action" >
                         <i class="fas fa-plus"></i> <?php esc_html_e('Add New', 'tour-booking-manager'); ?>
                     </a>
                     <input type="text" name="ttbm_tour_search" id="ttbm-tour-search" data-nonce="<?php echo wp_create_nonce("ttbm_search_nonce"); ?>" placeholder="Search <?php echo esc_html($label); ?>">

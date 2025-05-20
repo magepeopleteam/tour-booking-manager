@@ -29,7 +29,7 @@
 					<section>
 						<div class="ttbm-header">
 							<h4><i class="fas fa-info-circle"></i><?php esc_html_e('Promotional Text', 'tour-booking-manager'); ?></h4>
-							<?php TTBM_Custom_Layout::switch_button('ttbm_display_get_question', $checked); ?>
+							<?php TTBM_Custom_Layout::switch_button('ttbm_display_why_choose_us', $checked); ?>
 						</div>
 						<div data-collapse="#ttbm_display_why_choose_us" class="<?php echo esc_attr($active); ?>">
 							<?php $this->why_chose_us($tour_id); ?>
@@ -42,7 +42,7 @@
 			public function why_chose_us($tour_id) {
 				$why_chooses = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_why_choose_us_texts', array());
 				?>
-				<div >
+				<div class="promotional-text">
 					<!-- <div class="w-100 mb-2 d-flex justify-content-between align-items-center">
 						<label for=""><?php esc_html_e('Why Book With Us?', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('why_chose_us'); ?></i></label>
 					</div> -->

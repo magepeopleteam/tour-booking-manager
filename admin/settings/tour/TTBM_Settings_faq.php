@@ -146,7 +146,7 @@ if (!class_exists('TTBM_Settings_faq')) {
 				foreach ($ttbm_faq as $key => $value) :
 					?>
 					<div class="ttbm-faq-item" data-id="<?php echo esc_attr($key); ?>">
-						<section class="faq-header" data-collapse-target="#faq-content-<?php echo esc_attr($key); ?>">
+						<div class="faq-header" data-collapse-target="#faq-content-<?php echo esc_attr($key); ?>">
 							<label class="label">
 								<p><?php echo esc_html($value['ttbm_faq_title']); ?></p>
 								<div class="faq-action">
@@ -155,10 +155,10 @@ if (!class_exists('TTBM_Settings_faq')) {
 									<span class="ttbm-faq-item-delete"><i class="fas fa-trash"></i></span>
 								</div>
 							</label>
-						</section>
-						<section class="faq-content mB" data-collapse="#faq-content-<?php echo esc_attr($key); ?>">
-							<?php echo wp_kses_post($value['ttbm_faq_content']); ?>
-						</section>
+						</div>
+						<div class="faq-content" data-collapse="#faq-content-<?php echo esc_attr($key); ?>">
+							<?php echo wp_kses_post( $value['ttbm_faq_content']); ?>
+						</div>
 					</div>
 				<?php
 				endforeach;

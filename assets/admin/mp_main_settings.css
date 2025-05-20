@@ -392,11 +392,18 @@
 #ttbm_meta_box_panel .ttbm-daywise-section .daywise-header {
   position: relative;
   z-index: 0;
+  background-color: var(--mpl-light);
+  border: 1px solid #ddd;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header.mActive {
+  border-radius: 15px 15px 0 0;
 }
 #ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action {
   position: absolute;
   top: 50%;
-  right: 0;
+  right: 15px;
   transform: translateY(-50%);
   z-index: 1;
 }
@@ -408,6 +415,12 @@
 }
 #ttbm_meta_box_panel .ttbm-daywise-section .daywise-content {
   display: none;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 0 0 15px 15px;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-content.mActive {
+  border-radius: 0 0 15px 15px;
 }
 
 #ttbm_meta_box_panel .ttbm-modal-container, .travel-list .ttbm-modal-container {

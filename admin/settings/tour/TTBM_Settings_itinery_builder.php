@@ -75,6 +75,7 @@ if (!class_exists('TTBM_Daywise_Details')) {
 		public function tab_content($post_id) {
 			$daywise_active = TTBM_Global_Function::get_post_info($post_id, 'ttbm_display_schedule', 'off');
 			$checked = $daywise_active == 'on' ? 'checked' : '';
+			$active = $daywise_active == 'off' ? '' : 'mActive';
 			?>
 			<div class="tabsItem ttbm_settings_daywise" data-tabs="#ttbm_daywise_settings">
 				<h2><?php esc_html_e('Itinerary Builder Settings', 'tour-booking-manager'); ?></h2>
@@ -85,7 +86,7 @@ if (!class_exists('TTBM_Daywise_Details')) {
 						<h4><i class="fas fa-list-ul"></i><?php esc_html_e('Itinerary Builder', 'tour-booking-manager'); ?></h4>
 						<?php TTBM_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
 					</div>
-					<div data-collapse="#ttbm_display_schedule" class="ttbm-daywise-section ">
+					<div data-collapse="#ttbm_display_schedule" class="ttbm-daywise-section <?php echo esc_attr($active); ?>">
 						<div class="ttbm-daywise-items mB">
 							<?php $this->show_daywise_data($post_id); ?>
 						</div>
@@ -144,7 +145,7 @@ if (!class_exists('TTBM_Daywise_Details')) {
 				foreach ($ttbm_daywise as $key => $value) :
 					?>
 					<div class="ttbm-daywise-item" data-id="<?php echo esc_attr($key); ?>">
-						<section class="daywise-header" data-collapse-target="#daywise-content-<?php echo esc_attr($key); ?>">
+						<div class="daywise-header" data-collapse-target="#daywise-content-<?php echo esc_attr($key); ?>">
 							<label class="label">
 								<p><?php echo esc_html($value['ttbm_day_title']); ?></p>
 								<div class="daywise-action">
@@ -153,10 +154,10 @@ if (!class_exists('TTBM_Daywise_Details')) {
 									<span class="ttbm-daywise-item-delete"><i class="fas fa-trash"></i></span>
 								</div>
 							</label>
-						</section>
-						<section class="daywise-content mB" data-collapse="#daywise-content-<?php echo esc_attr($key); ?>">
+						</div>
+						<div class="daywise-content mB" data-collapse="#daywise-content-<?php echo esc_attr($key); ?>">
 							<?php echo wp_kses_post($value['ttbm_day_content']); ?>
-						</section>
+						</div>
 					</div>
 				<?php
 				endforeach;

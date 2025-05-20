@@ -518,6 +518,7 @@ function ttbm_sticky_management() {
         let target_id = currentTarget.data('collapse-target');
         let close_id = currentTarget.data('close-target');
         let target = $('[data-collapse="' + target_id + '"]');
+        currentTarget.toggleClass('mActive');
         if (target_close(close_id, target_id) && collapse_close_inside(currentTarget) && target_collapse(target, currentTarget)) {
             ttbm_all_content_change(currentTarget);
         }

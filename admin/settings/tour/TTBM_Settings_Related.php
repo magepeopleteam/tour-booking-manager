@@ -13,7 +13,7 @@
 				$ttbm_label = TTBM_Function::get_name();
 				?>
 				<li data-tabs-target="#ttbm_settings_related_tour">
-					<i class="fas fa-map-marked-alt"></i><?php echo esc_html__('Related ', 'tour-booking-manager') . $ttbm_label; ?>
+					<i class="fas fa-link"></i><?php echo esc_html__('Related ', 'tour-booking-manager') . $ttbm_label; ?>
 				</li>
 				<?php
 			}
@@ -32,7 +32,7 @@
 					
 					<section>
 						<div class="ttbm-header">
-							<h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Related Settings', 'tour-booking-manager'); ?></h4>
+							<h4><i class="fas fa-link"></i><?php esc_html_e('Related Settings', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_related', $checked); ?>
 						</div>
 						<div data-collapse="#ttbm_display_related" class="ttbm_display_related <?php echo esc_attr($active); ?>">

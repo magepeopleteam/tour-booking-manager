@@ -34,7 +34,7 @@
 
                     <section>
                         <div class="ttbm-header">
-							<h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Included Feature', 'tour-booking-manager'); ?></h4>
+							<h4><i class="fas fa-hiking"></i><?php esc_html_e('Guide', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_tour_guide', $checked_guide); ?>
 						</div>
                         

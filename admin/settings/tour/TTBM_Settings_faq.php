@@ -80,10 +80,10 @@ if (!class_exists('TTBM_Settings_faq')) {
 			<div class="tabsItem ttbm_settings_faq" data-tabs="#ttbm_faq_settings">
 				<h2><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></h2>
 				<p><?php TTBM_Settings::des_p('faq_settings_description'); ?></p>
-								
+
 				<section >
 					<div class="ttbm-header">
-						<h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Frequently Asked Question', 'tour-booking-manager'); ?></h4>
+						<h4><i class="fas fa-question-circle"></i><?php esc_html_e('Frequently Asked Question', 'tour-booking-manager'); ?></h4>
 						<?php TTBM_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>
 					</div>
 					<div data-collapse="#ttbm_display_faq" class="ttbm-faq-section <?php echo esc_attr($active_class); ?>">

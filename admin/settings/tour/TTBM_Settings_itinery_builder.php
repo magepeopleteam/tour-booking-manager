@@ -82,7 +82,7 @@ if (!class_exists('TTBM_Daywise_Details')) {
 				
 				<section >
 					<div class="ttbm-header">
-						<h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Itinerary Builder', 'tour-booking-manager'); ?></h4>
+						<h4><i class="fas fa-list-ul"></i><?php esc_html_e('Itinerary Builder', 'tour-booking-manager'); ?></h4>
 						<?php TTBM_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
 					</div>
 					<div data-collapse="#ttbm_display_schedule" class="ttbm-daywise-section ">

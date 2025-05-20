@@ -47,6 +47,7 @@
 					
 				</div>
 				<?php
+				$this->add_new_activity_popup();
 			}
 			public function activities($tour_id) {
 				$activities = TTBM_Global_Function::get_taxonomy('ttbm_tour_activities');
@@ -72,7 +73,7 @@
 					</div>
 				</div>
 				<?php
-				$this->add_new_activity_popup();
+				
 			}
 			public function add_new_activity_popup() {
 				?>

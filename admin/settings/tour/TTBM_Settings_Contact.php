@@ -12,7 +12,7 @@
 			public function add_tab() {
 				?>
 				<li data-tabs-target="#ttbm_settings_extras">
-					<i class="fas fa-file-alt"></i><?php esc_html_e('Contact ', 'tour-booking-manager'); ?>
+					<i class="fab fa-telegram-plane"></i><?php esc_html_e('Contact ', 'tour-booking-manager'); ?>
 				</li>
 				<?php
 			}
@@ -29,7 +29,7 @@
 					<p><?php TTBM_Settings::des_p('contact_settings_description'); ?></p>
 					<section>
 						<div class="ttbm-header">
-							<h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Contact Settings', 'tour-booking-manager'); ?></h4>
+							<h4><i class="fab fa-telegram-plane"></i><?php esc_html_e('Contact Settings', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_get_question', $checked_gaq); ?>
 						</div>
 						<div data-collapse="#ttbm_display_get_question" class=" <?php echo esc_attr($active_gaq); ?>">

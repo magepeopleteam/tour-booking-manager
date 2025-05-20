@@ -41,7 +41,7 @@
 				<div class="ttbm_settings_area mt-2">
 					<section>
 						<div class="ttbm-header">
-							<h4><i class="fas fa-list-ul"></i><?php esc_html_e('Extra Service', 'tour-booking-manager'); ?></h4>
+							<h4><i class="fas fa-parachute-box"></i><?php esc_html_e('Extra Service', 'tour-booking-manager'); ?></h4>
 						</div>
 						<div class="ovAuto mt_xs">
 							<table>

@@ -35,7 +35,7 @@
 					
 					<section>
 						<div class="ttbm-header">
-							<h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Display Settings', 'tour-booking-manager'); ?></h4>
+							<h4><i class="fas fa-chalkboard"></i><?php esc_html_e('Display Settings', 'tour-booking-manager'); ?></h4>
 						</div>
 						<div class="dFlex">
 							<div class="col-left">
@@ -78,6 +78,17 @@
 							<div class="col-right">
 								<label class="label">
 									<div>
+										<p><?php esc_html_e('Template', 'tour-booking-manager'); ?></p>
+									</div>
+									<select class="" name="ttbm_theme_file">
+										<option><?php esc_html_e('Please select ...', 'tour-booking-manager'); ?></option>
+										<?php foreach($template_lists as $key => $value): ?>
+											<option value="<?php echo esc_attr($key); ?>" <?php echo esc_attr($template_name == $key? 'selected' : ''); ?>><?php echo esc_attr($value); ?></option>
+										<?php endforeach; ?>
+									</select>
+								</label>
+								<label class="label">
+									<div>
 										<p><?php esc_html_e('Ticket Purchase', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_ticketing_system'); ?></span></i></p> 
 									</div>
 									<select name="ttbm_ticketing_system">
@@ -98,17 +109,7 @@
 									<?php TTBM_Custom_Layout::switch_button('ttbm_display_sidebar', $sidebar_checked); ?>
 								</div>
 								<?php $this->rank_tour($tour_id);  ?>
-								<label class="label">
-									<div>
-										<p><?php esc_html_e('Template', 'tour-booking-manager'); ?></p>
-									</div>
-									<select class="" name="ttbm_theme_file">
-										<option><?php esc_html_e('Please select ...', 'tour-booking-manager'); ?></option>
-										<?php foreach($template_lists as $key => $value): ?>
-											<option value="<?php echo esc_attr($key); ?>" <?php echo esc_attr($template_name == $key? 'selected' : ''); ?>><?php echo esc_attr($value); ?></option>
-										<?php endforeach; ?>
-									</select>
-								</label>
+								
 							</div>
 						</div>
 						<?php do_action('add_ttbm_display_settings', $tour_id); ?>

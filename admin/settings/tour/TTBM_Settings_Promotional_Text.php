@@ -28,7 +28,7 @@
 					
 					<section>
 						<div class="ttbm-header">
-							<h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Promotional Text', 'tour-booking-manager'); ?></h4>
+							<h4><i class="fas fa-info-circle"></i><?php esc_html_e('Promotional Text', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_get_question', $checked); ?>
 						</div>
 						<div data-collapse="#ttbm_display_why_choose_us" class="<?php echo esc_attr($active); ?>">

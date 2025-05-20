@@ -80,28 +80,17 @@ if (!class_exists('TTBM_Daywise_Details')) {
 				<h2><?php esc_html_e('Itinerary Builder Settings', 'tour-booking-manager'); ?></h2>
 				<p><?php esc_html_e('Itinerary Builder Settings', 'tour-booking-manager'); ?></p>
 				
-				<section class="bg-light">
-					<label class="label">
-						<div>
-							<p><?php esc_html_e('Itinerary Builder', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php esc_html_e('You can add frequently asked question for your tour.', 'tour-booking-manager'); ?></span>
-						</div>
-					</label>
-				</section>
-				
 				<section >
-					<div class="label">
-						<div>
-							<p><?php esc_html_e('Itinerary Builder Enable/Disable', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Itinerary Builder Enable/Disable by this toggle switch.', 'tour-booking-manager'); ?></span></i></p>
-						</div>
+					<div class="ttbm-header">
+						<h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Itinerary Builder', 'tour-booking-manager'); ?></h4>
 						<?php TTBM_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
 					</div>
-				</section>
-				<section data-collapse="#ttbm_display_schedule" class="ttbm-daywise-section ">
-					<div class="ttbm-daywise-items mB">
-						<?php $this->show_daywise_data($post_id); ?>
+					<div data-collapse="#ttbm_display_schedule" class="ttbm-daywise-section ">
+						<div class="ttbm-daywise-items mB">
+							<?php $this->show_daywise_data($post_id); ?>
+						</div>
+						<button class="button ttbm-daywise-item-new" data-modal="ttbm-daywise-item-new" type="button"><?php esc_html_e('Add Itinerary', 'tour-booking-manager'); ?></button>
 					</div>
-					<button class="button ttbm-daywise-item-new" data-modal="ttbm-daywise-item-new" type="button"><?php esc_html_e('Add Itinerary', 'tour-booking-manager'); ?></button>
 				</section>
 				<!-- sidebar collapse open -->
 				<div class="ttbm-modal-container" data-modal-target="ttbm-daywise-item-new">

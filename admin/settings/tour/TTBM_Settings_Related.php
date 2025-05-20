@@ -30,43 +30,27 @@
 					<h2><?php esc_html_e('Related '.$ttbm_label.' Settings', 'tour-booking-manager'); ?></h2>
                     <p><?php TTBM_Settings::des_p('related_settings_description'); ?></p>
 					
-					<section class="bg-light">
-                        <div for="" class="label">
-							<div >
-								<p><?php echo esc_html__('Related '.$ttbm_label.' Settings', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php echo esc_html__('You can set related '.$ttbm_label.' here. ', 'tour-booking-manager'); ?></span>
-							</div>
-						</div>
-                    </section>
-
 					<section>
-                        <div class="label">
-							<div>
-								<p><?php echo esc_html__('Related ', 'tour-booking-manager') . $ttbm_label . esc_html__(' Settings', 'tour-booking-manager') ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_related'); ?></span></i></p>
-							</div>
+						<div class="ttbm-header">
+							<h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Related Settings', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_related', $checked); ?>
 						</div>
+						<div data-collapse="#ttbm_display_related" class="ttbm_display_related <?php echo esc_attr($active); ?>">
+							<label class="label">
+								<p><?php esc_html_e('Related ' . $ttbm_label, 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_related_tour'); ?></span></i></p>
+							</label>
+							<select name="ttbm_related_tour[]" multiple='multiple' class='ttbm_select2 w-50' data-placeholder="<?php echo esc_html__('Please Select ', 'tour-booking-manager') . $ttbm_label; ?>">
+								<?php
+									foreach ($tours as $tour) {
+										$ttbm_id = $tour->ID;
+									?>
+									<option value="<?php echo esc_attr($ttbm_id) ?>" <?php echo in_array($ttbm_id, $related_tours) ? 'selected' : ''; ?>><?php echo get_the_title($ttbm_id); ?></option>
+								<?php } ?>
+							</select>
+						</div>
                     </section>
 
-					<div data-collapse="#ttbm_display_related" class="ttbm_display_related <?php echo esc_attr($active); ?>">
-						<section>
-							<label class="label">
-								<div class="w-50">
-									<p><?php esc_html_e('Related ' . $ttbm_label, 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_related_tour'); ?></span></i></p>
-								</div>
-								<div class="w-50">
-									<select name="ttbm_related_tour[]" multiple='multiple' class='ttbm_select2 w-50' data-placeholder="<?php echo esc_html__('Please Select ', 'tour-booking-manager') . $ttbm_label; ?>">
-										<?php
-											foreach ($tours as $tour) {
-												$ttbm_id = $tour->ID;
-											?>
-											<option value="<?php echo esc_attr($ttbm_id) ?>" <?php echo in_array($ttbm_id, $related_tours) ? 'selected' : ''; ?>><?php echo get_the_title($ttbm_id); ?></option>
-										<?php } ?>
-									</select>
-								</div>
-							</label>
-						</section>
-					</div>
+					
 				</div>
 				<?php
 				wp_reset_postdata();

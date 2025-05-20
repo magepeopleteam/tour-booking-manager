@@ -57,16 +57,14 @@
 									<?php esc_html_e('To create new place click', 'tour-booking-manager'); ?>
 									<a href="edit.php?post_type=ttbm_places" ><?php esc_html_e('Here', 'tour-booking-manager'); ?></a>
 									<i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_place_you_see'); ?></span></i>
-								</p>   
-								
-								
+								</p>
 							</div>
-							<table class="mb-2">
+							<table>
 								<thead>
 									<tr>
-										<th class="text-start"><?php esc_html_e('Place Name', 'tour-booking-manager'); ?></th>
-										<th class="text-start"><?php esc_html_e('Place', 'tour-booking-manager'); ?></th>
-										<th class="text-center"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
+										<th><?php esc_html_e('Place Name', 'tour-booking-manager'); ?></th>
+										<th><?php esc_html_e('Place', 'tour-booking-manager'); ?></th>
+										<th><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
 									</tr>
 									</thead>
 									<tbody class="ttbm_sortable_area ttbm_item_insert">
@@ -105,14 +103,14 @@
 				$place_name = $place_id && !$place_name ? get_the_title($place_id) : $place_name;
 				?>
 				<tr class="ttbm_remove_area">
-					<td class="text-start">
+					<td>
 						<label>
-							<input class="formControl ttbm_name_validation" name="ttbm_place_label[]" value="<?php echo esc_attr($place_name); ?>" placeholder="Place name"/>
+							<input class="ttbm_name_validation" name="ttbm_place_label[]" value="<?php echo esc_attr($place_name); ?>" placeholder="Place name"/>
 						</label>
 					</td>
-					<td class="text-start">
+					<td>
 						<label>
-							<select class="formControl <?php echo esc_attr(is_array($hiphop_place) && sizeof($hiphop_place) > 0 ? 'ttbm_select2' : 'add_ttbm_select2'); ?>" name="ttbm_city_place_id[]">
+							<select class=" <?php echo esc_attr(is_array($hiphop_place) && sizeof($hiphop_place) > 0 ? 'ttbm_select2' : 'add_ttbm_select2'); ?>" name="ttbm_city_place_id[]">
 								<option value="" selected disabled>
 									<?php esc_html_e('Please Select a Place', 'tour-booking-manager'); ?>
 								</option>
@@ -127,7 +125,7 @@
 							</select>
 						</label>
 					</td>
-					<td class="text-center"><?php TTBM_Custom_Layout::move_remove_button(); ?></td>
+					<td class="textRight"><?php TTBM_Custom_Layout::move_remove_button(); ?></td>
 				</tr>
 				<?php
 			}

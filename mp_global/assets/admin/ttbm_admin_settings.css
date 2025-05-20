@@ -26,7 +26,7 @@
 	#ttbm_meta_box_panel table tr:nth-child(odd) {background-color: #FFF;}
 	#ttbm_meta_box_panel table th,
 	#ttbm_meta_box_panel table td {border: 0;vertical-align: top;padding: 10px 3px; border-right: 1px solid #e5d4d4; }
-	#ttbm_meta_box_panel table th {text-align:left;font-size: 12px; font-weight: 500}
+	#ttbm_meta_box_panel table th {text-align:left;font-size: 15px; font-weight: 500;padding:15px 10px;}
 	#ttbm_meta_box_panel table th.mActive,#ttbm_meta_box_panel table td.mActive{display: table-cell;}
 	#ttbm_meta_box_panel table tbody th {text-align: left;}
 	#ttbm_meta_box_panel table tbody thead th {text-align: center;}

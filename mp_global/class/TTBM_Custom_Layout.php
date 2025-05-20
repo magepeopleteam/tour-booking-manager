@@ -112,14 +112,12 @@
 			}
 			public static function move_remove_button() {
 				?>
-                <div class="allCenter">
-                    <div class="buttonGroup max_100">
-						<?php
-							self::remove_button();
-							self::move_button();
-						?>
-                    </div>
-                </div>
+				<div class="buttonGroup max_100">
+					<?php
+						self::remove_button();
+						self::move_button();
+					?>
+				</div>
 				<?php
 			}
 			public static function edit_move_remove_button() {

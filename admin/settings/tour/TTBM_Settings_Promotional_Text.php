@@ -50,8 +50,7 @@
 					<table>
 						<thead>
 						<tr>
-							<th class="ps-2"><?php esc_html_e('Item List.', 'tour-booking-manager'); ?></th>
-							<th class="ps-2"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
+							<th colspan="2"><?php esc_html_e('Item List.', 'tour-booking-manager'); ?></th>
 						</tr>
 						</thead>
 						<tbody class="ttbm_sortable_area ttbm_item_insert">
@@ -82,12 +81,16 @@
 			public function why_chose_us_item($why_choose = '') {
 				?>
 				<tr class="ttbm_remove_area">
-					<td class="ps-2">
+					<td class="">
 						<label>
-							<input class="bordered w-100 rounded  ttbm_name_validation" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
+							<input class="ttbm_name_validation input-fullwidth" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
 						</label>
 					</td>
-					<td><?php TTBM_Custom_Layout::move_remove_button(); ?></td>
+					<td>
+						<div class="textRight">
+							<?php TTBM_Custom_Layout::move_remove_button(); ?>
+						</div>
+					</td>
 				</tr>
 				<?php
 			}

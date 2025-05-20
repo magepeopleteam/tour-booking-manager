@@ -1246,6 +1246,11 @@ div.ttbm_style span.ttbm_remove_multi_image {
   border-radius: 50px;
 }
 
+.input-fullwidth {
+  width: 100%;
+  border-radius: 5px;
+}
+
 div.ttbm_style .customCheckboxLabel input:checked ~ .customCheckbox::after {
   content: "";
   position: absolute;

@@ -35,25 +35,16 @@
 					<h2><?php esc_html_e('Activity Settings', 'tour-booking-manager'); ?></h2>
 					<p><?php TTBM_Settings::des_p('activity_settings_description'); ?></p>
 					
-					<section class="bg-light">
-						<label for="" class="label">
-							<div>
-								<p><?php esc_html_e('Activity Settings', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php esc_html_e('You can add tour activity here', 'tour-booking-manager'); ?></span>
-							</div>
-						</label>
-					</section>
 					<section>
-                        <div class="label">
-							<div>
-								<p><?php esc_html_e($ttbm_label . ' Activities Settings', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_activities'); ?></span></i></p>
-							</div>
-							<?php TTBM_Custom_Layout::switch_button('ttbm_display_activities', $checked); ?> 
+						<div class="ttbm-header">
+							<h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Activities Settings', 'tour-booking-manager'); ?></h4>
+							<?php TTBM_Custom_Layout::switch_button('ttbm_display_activities', $checked); ?>
+						</div>
+						<div data-collapse="#ttbm_display_activities" class="ttbm_activities_area <?php echo esc_attr($active); ?>">
+							<?php $this->activities($tour_id); ?>
 						</div>
                     </section>
-					<div data-collapse="#ttbm_display_activities" class="ttbm_activities_area <?php echo esc_attr($active); ?>">
-						<?php $this->activities($tour_id); ?>
-					</div>
+					
 				</div>
 				<?php
 			}
@@ -64,23 +55,8 @@
 				$tour_activity = implode(',', $tour_activities);
 				$tour_activities_array = explode(',', $tour_activities[0]);
 				?>
-				<div class="ttbm_activities_table">
-					<section>
-						<label class="label">
-						<div>
-							<p><?php esc_html_e('Create activities', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('To create new activity, click this button', 'tour-booking-manager'); ?></span></i></p>
-						</div>
-						<?php TTBM_Custom_Layout::popup_button_xs('add_new_activity_popup', esc_html__('Create New Activity', 'tour-booking-manager')); ?>
-						</label>
-					</section>
-					
-					<section class="includedd-features-section">
-						<label class="label">
-							<div> 
-								<p><?php esc_html_e('Activities', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('activities'); ?></span></i></p>
-
-							</div>
-						</label>
+				<div class="ttbm_activities_table">					
+					<div class="includedd-features-section">
 						<div class="groupCheckBox">
 							<input type="hidden" name="ttbm_tour_activities[]" value="<?php echo esc_attr($tour_activity); ?>"/>
 							<?php foreach ($activities as $activity) { ?>
@@ -92,7 +68,8 @@
 								</label>
 							<?php } ?>
 						</div>
-					</section>
+						<?php TTBM_Custom_Layout::popup_button_xs('add_new_activity_popup', esc_html__('Create New Activity', 'tour-booking-manager')); ?>
+					</div>
 				</div>
 				<?php
 				$this->add_new_activity_popup();

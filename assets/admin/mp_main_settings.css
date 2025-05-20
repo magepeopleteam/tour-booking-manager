@@ -1190,14 +1190,13 @@ div.ttbm_style span.ttbm_remove_multi_image {
 }
 .includedd-features-section .groupCheckBox {
   overflow: hidden;
+  margin-bottom: 5px;
 }
 .includedd-features-section .customCheckboxLabel {
   float: left;
-  margin: 5px;
+  margin-right: 10px;
   padding: 7px 7px;
-  border: 1px solid #d8d8d8;
-  background-color: #f8f8f8;
-  width: 227px;
+  width: 225px;
   border-radius: 5px;
   font-weight: normal;
   font-size: 14px;
@@ -1235,8 +1234,8 @@ div.ttbm_style .customCheckboxLabel input:checked ~ .customCheckbox::after {
   background-color: transparent;
   -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
-  left: 5px;
-  top: 5px !important;
+  left: 3px;
+  top: 4px !important;
 }
 
 .reply-enquiry-form {

@@ -27,35 +27,18 @@
 					<h2><?php esc_html_e('Admin Note Settings', 'tour-booking-manager'); ?></h2>
 					<p><?php TTBM_Settings::des_p('admin_note_settings_description'); ?></p>
 
-					<section class="bg-light">
-						<label for="" class="label">
-							<div>
-								<p><?php esc_html_e('Admin Note Settings', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php esc_html_e('Here you can add admin not and on/off admin note.', 'tour-booking-manager'); ?></span>
-							</div>
-						</label>
-					</section>
 					<section>
-                        <div class="label">
-							<div>
-								<p><?php esc_html_e('Show Admin Note', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e( 'Show admin note in frontend', 'tour-booking-manager' ); ?></span></i></p>
-							</div>
-							<?php TTBM_Custom_Layout::switch_button('ttbm_display_admin_note', $checked); ?>
+						<div class="ttbm-header">
+							<h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Admin Note Settings', 'tour-booking-manager'); ?></h4>
+							<?php TTBM_Custom_Layout::switch_button('ttbm_display_get_question', $checked); ?>
+						</div>
+						<div data-collapse="#ttbm_display_admin_note" class="<?php echo esc_attr($active); ?>">
+							<label class="label">
+								<p><?php esc_html_e('Note ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_admin_note'); ?></span></i></p>
+							</label>
+							<textarea name="ttbm_admin_note" cols="5" rows="2"><?php echo esc_attr($admin_note); ?></textarea>
 						</div>
                     </section>
-
-					<div data-collapse="#ttbm_display_admin_note" class="<?php echo esc_attr($active); ?>">
-						
-						<section>
-							<label class="label">
-								<div>
-									<p><?php esc_html_e('Note ', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_admin_note'); ?></span></i></p>
-								</div>
-								<textarea name="ttbm_admin_note" cols="5" rows="2" style="width: 50%;"><?php echo esc_attr($admin_note); ?></textarea>
-							</label>
-						</section>
-
-					</div>
 				</div>
 				<?php
 			}

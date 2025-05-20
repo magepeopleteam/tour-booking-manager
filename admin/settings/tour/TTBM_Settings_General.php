@@ -15,7 +15,7 @@
 					<p><?php TTBM_Settings::des_p('general_settings_description'); ?></p>
 					<section>
 						<div class="ttbm-header">
-							<h4><i class="fas fa-sliders-h"></i><?php TTBM_Settings::des_p('tour_general_settings'); ?></h4>
+							<h4><i class="fas fa-tools"></i><?php esc_html_e('Genearl Information','tour-booking-manager'); ?></h4>
 						</div>
 						<div class="dFlex">
 							<div class="col-left">
@@ -65,12 +65,10 @@
 				$placeholder = esc_html__('Ex: 3', 'tour-booking-manager');
 			?>
 				<label class="label">
-					<div class="label-inner">
-						<p><?php esc_html_e('Duration', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('duration'); ?></span></i></p>
-					</div>
+					<p><?php esc_html_e('Duration', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('duration'); ?></span></i></p>
 					<div class="dFlex">
-						<input class="small rounded text-center" min="0.1" step="0.1" type="number" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
-						<select class="rounded ms-2" name="ttbm_travel_duration_type">
+						<input style="margin-right: 10px;" class="small" min="0.1" step="0.1" type="number" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+						<select class="rounded" name="ttbm_travel_duration_type">
 							<option value="day" <?php echo esc_attr($duration_type == 'day' ? 'selected' : ''); ?>><?php esc_html_e('Days', 'tour-booking-manager'); ?></option>
 							<option value="hour" <?php echo esc_attr($duration_type == 'hour' ? 'selected' : ''); ?>><?php esc_html_e('Hours', 'tour-booking-manager'); ?></option>
 							<option value="min" <?php echo esc_attr($duration_type == 'min' ? 'selected' : ''); ?>><?php esc_html_e('Minutes', 'tour-booking-manager'); ?> </option>

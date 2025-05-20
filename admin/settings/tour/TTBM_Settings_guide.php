@@ -34,7 +34,7 @@
 
                     <section>
                         <div class="ttbm-header">
-							<h4><i class="fas fa-hiking"></i><?php esc_html_e('Guide', 'tour-booking-manager'); ?></h4>
+							<h4><i class="fas fa-hiking"></i><?php esc_html_e('Guide Settings', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_tour_guide', $checked_guide); ?>
 						</div>
                         
@@ -70,7 +70,7 @@
                                 <div>
                                     <p><?php esc_html_e('Select ', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html_e('guide', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_tour_guide'); ?></span></i></p>
                                 </div>
-                                <div class="w-50">
+                                <div style="max-width: 70%;">
                                     <select name="ttbm_tour_guide[]" multiple='multiple' class='ttbm_select2 w-50' data-placeholder="<?php echo esc_html__('Please Select Guide', 'tour-booking-manager'); ?>">
                                         <?php
                                             if ($all_guides->post_count > 0) {

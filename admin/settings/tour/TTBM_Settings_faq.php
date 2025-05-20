@@ -80,31 +80,20 @@ if (!class_exists('TTBM_Settings_faq')) {
 			<div class="tabsItem ttbm_settings_faq" data-tabs="#ttbm_faq_settings">
 				<h2><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></h2>
 				<p><?php TTBM_Settings::des_p('faq_settings_description'); ?></p>
-				
-				<section class="bg-light">
-					<label class="label">
-						<div>
-							<p><?php esc_html_e('Frequently Asked Question', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php esc_html_e('You can add frequently asked question for your tour.', 'tour-booking-manager'); ?></span>
-						</div>
-					</label>
-				</section>
-				
+								
 				<section >
-					<div class="label">
-						<div>
-							<p><?php esc_html_e('F.A.Q Enable/Disable', 'tour-booking-manager'); ?></p>
-							<span><?php TTBM_Settings::des_p('ttbm_display_faq'); ?></span>
-						</div>
+					<div class="ttbm-header">
+						<h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Frequently Asked Question', 'tour-booking-manager'); ?></h4>
 						<?php TTBM_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>
 					</div>
-				</section>
-				<section data-collapse="#ttbm_display_faq" class="ttbm-faq-section <?php echo esc_attr($active_class); ?>">
-					<div class="ttbm-faq-items mB">
-						<?php $this->show_faq_data($post_id); ?>
+					<div data-collapse="#ttbm_display_faq" class="ttbm-faq-section <?php echo esc_attr($active_class); ?>">
+						<div class="ttbm-faq-items mB">
+							<?php $this->show_faq_data($post_id); ?>
+						</div>
+						<button class="button ttbm-faq-item-new" data-modal="ttbm-faq-item-new" type="button"><?php esc_html_e('Add FAQ', 'tour-booking-manager'); ?></button>
 					</div>
-					<button class="button ttbm-faq-item-new" data-modal="ttbm-faq-item-new" type="button"><?php esc_html_e('Add FAQ', 'tour-booking-manager'); ?></button>
 				</section>
+				
 				<!-- sidebar collapse open -->
 				<div class="ttbm-modal-container" data-modal-target="ttbm-faq-item-new">
 					<div class="ttbm-modal-content">

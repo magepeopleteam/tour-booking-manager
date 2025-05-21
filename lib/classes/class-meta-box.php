@@ -149,66 +149,64 @@ if ( ! class_exists( 'TtbmAddMetaBox' ) ) {
 					$form_wrapper_position = 'full-width';
 				}
 				?>
-                <div class="form-wrapper <?php echo esc_html($form_wrapper_position); ?>">
-                    <div class="form-section">
+
+			<?php
+				$current_page = 1;
+				foreach ( $this->get_panels() as $panelsIndex => $panel ):
+					?>
+					<div class="tab-content <?php echo $current_page == 1 ? 'active':'';  ?>  tab-content-<?php echo esc_html($panelsIndex); ?>" id="<?php echo esc_html($panelsIndex); ?>">
 						<?php
-						$current_page = 1;
-						foreach ( $this->get_panels() as $panelsIndex => $panel ):
+						wp_nonce_field('ttbm_ticket_type_nonce', 'ttbm_ticket_type_nonce');
+						foreach ( $panel['sections'] as $sectionIndex => $section ):
 							?>
-                            <div class="tab-content <?php if ( $current_page == 1 ) {
-								echo 'active';
-							} ?>  tab-content-<?php
-							echo esc_html($panelsIndex); ?>">
-								<?php
-										wp_nonce_field('ttbm_ticket_type_nonce', 'ttbm_ticket_type_nonce');
-								foreach ( $panel['sections'] as $sectionIndex => $section ):
-									?>
-                                    <div class="section">
-                                        <h1 id="<?php echo esc_html($sectionIndex); ?>" class="section-title"><?php echo esc_html($section['title']); ?></h1>
-                                        <p class="description"><?php echo esc_html($section['description']); ?></p>
-                                        
-										<table class="form-table">
-                                            <tbody>
-											<?php
-											foreach ( $section['options'] as $option ):
-                                                $details = isset( $option['details'] ) ? $option['details'] : "";
-												?>
-                                                <tr id='mage_row_<?php echo esc_html($option['id']); ?>' class='mage_row_<?php echo esc_html($option['id']); ?>'>
-                                                    <th scope="row">
-														<label><?php echo $option['title']; ?><?php if(!empty($details)){ ?><?php } ?></label>
-														<span class="span-row"><?php echo $details;?></span>
-													</th>
-                                                    <td>
-														<?php
-														$option_value = get_post_meta( $this->get_post_id(), $option['id'], true );
-														if ( is_serialized( $option_value ) ) {
-															$option_value = @unserialize( $option_value, ['allowed_classes' => false] );
-														}
-														$option['value'] = $option_value;
-														$this->field_generator( $option )
-														?>
-                                                    </td>
-                                                </tr>
-											<?php
-											endforeach;
+								<h2 class="date-configeration"><?php echo esc_html($section['title']); ?></h2>
+								<p class="date-configeration-desc"><?php echo esc_html($section['description']); ?></p>
+								<section>
+									<div class="ttbm-header">
+										<h4><i class="fas fa-calendar"></i><?php esc_html_e('Date Settings', 'tour-booking-manager'); ?></h4>
+									</div>
+									<table class="form-table">
+										<tbody>
+										<?php
+										foreach ( $section['options'] as $option ):
+											$details = isset( $option['details'] ) ? $option['details'] : "";
 											?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-								<?php
-								endforeach;
-								?>
-                            </div>
-							<?php
-							$current_page ++;
+											<tr id='mage_row_<?php echo esc_html($option['id']); ?>' class='mage_row_<?php echo esc_html($option['id']); ?>'>
+												<th scope="row">
+													<label><?php echo $option['title']; ?><?php if(!empty($details)){ ?><?php } ?></label>
+													<span class="span-row"><?php echo $details;?></span>
+												</th>
+												<td>
+													<?php
+													$option_value = get_post_meta( $this->get_post_id(), $option['id'], true );
+													if ( is_serialized( $option_value ) ) {
+														$option_value = @unserialize( $option_value, ['allowed_classes' => false] );
+													}
+													$option['value'] = $option_value;
+													$this->field_generator( $option )
+													?>
+												</td>
+											</tr>
+										<?php
+										endforeach;
+										?>
+										</tbody>
+									</table>
+								</section>
+							
+						<?php
 						endforeach;
 						?>
-                    </div>
-                </div>
+					</div>
+					<?php
+					$current_page ++;
+				endforeach;
+			?>
+
 			<?php 
-	$dynamic_action_name = 'mage_meta_tab_details_after_'.$this->get_meta_box_id();
-	do_action($dynamic_action_name,$post_id);
-?>
+				$dynamic_action_name = 'mage_meta_tab_details_after_'.$this->get_meta_box_id();
+				do_action($dynamic_action_name,$post_id);
+			?>
             </div>
 			<?php
 			if ( $this->get_meta_box_screen()[0] == 'ttbm_tour' && $this->get_meta_box_context() == 'normal'  && !isset( $this->data['seat_plan'] )) {

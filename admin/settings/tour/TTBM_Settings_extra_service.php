@@ -23,8 +23,8 @@
 
 				?>
 				<div class="tabsItem ttbm_settings_pricing" data-tabs="#ttbm_settings_extra_service">
-					<h2><?php esc_html_e('Extra service', 'tour-booking-manager'); ?></h2>
-					<p><?php TTBM_Settings::des_p('extra_service_descriptoin'); ?></p>
+					<h2><?php esc_html_e('Extra Service', 'tour-booking-manager'); ?></h2>
+                    <p><?php esc_html_e('Extra Service details', 'tour-booking-manager'); ?></p>
 					<?php do_action('ttbm_tour_exs_pricing_before', $tour_id); ?>
 					<?php $this->ttbm_extra_service_config($tour_id); ?>
 					<?php do_action('ttbm_tour_exs_pricing_after', $tour_id); ?>
@@ -39,15 +39,10 @@
 				wp_nonce_field('ttbm_extra_service_data_nonce', 'ttbm_extra_service_data_nonce');
 				?>
 				<div class="ttbm_settings_area mt-2">
-					<section class="bg-light">
-						<label class="label">
-							<div>
-								<p><?php _e('Extra Service', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php esc_html_e('Here you can set extra service for tour.', 'tour-booking-manager'); ?></span>
-							</div>
-						</label>
-					</section>
 					<section>
+						<div class="ttbm-header">
+							<h4><i class="fas fa-parachute-box"></i><?php esc_html_e('Extra Service', 'tour-booking-manager'); ?></h4>
+						</div>
 						<div class="ovAuto mt_xs">
 							<table>
 								<thead>

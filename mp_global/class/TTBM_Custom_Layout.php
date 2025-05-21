@@ -89,16 +89,15 @@
 			}
 			public static function popup_button($target_popup_id, $text) {
 				?>
-                <button type="button" class="_dButton_bgBlue" data-target-popup="<?php echo esc_attr($target_popup_id); ?>">
-                    <span class="fas fa-plus-square"></span>
-					<?php echo esc_html($text); ?>
+                <button type="button" class="_themeButton dFlex" data-target-popup="<?php echo esc_attr($target_popup_id); ?>">
+                    <span class="fas fa-plus"></span>&nbsp;<?php echo esc_html($text); ?>
                 </button>
 				<?php
 			}
 			public static function popup_button_xs($target_popup_id, $text) {
 				?>
                 <button type="button" class="_themeButton_xs" data-target-popup="<?php echo esc_attr($target_popup_id); ?>">
-                    <i class="fas fa-plus"></i> <?php echo esc_html($text); ?>
+                    <i class="fas fa-plus"></i>&nbsp;<?php echo esc_html($text); ?>
                 </button>
 				<?php
 			}
@@ -113,14 +112,12 @@
 			}
 			public static function move_remove_button() {
 				?>
-                <div class="allCenter">
-                    <div class="buttonGroup max_100">
-						<?php
-							self::remove_button();
-							self::move_button();
-						?>
-                    </div>
-                </div>
+				<div class="buttonGroup max_100">
+					<?php
+						self::remove_button();
+						self::move_button();
+					?>
+				</div>
 				<?php
 			}
 			public static function edit_move_remove_button() {

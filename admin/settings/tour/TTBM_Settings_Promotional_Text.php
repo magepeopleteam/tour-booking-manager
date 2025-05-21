@@ -26,63 +26,48 @@
 					<h2 class=""><?php esc_html_e('Why Book With Us?', 'tour-booking-manager'); ?></h2>
 					<p><?php TTBM_Settings::des_p('why_book_settings_description'); ?></p>
 					
-					<section class="bg-light">
-                        <label for="" class="label">
-							<div>
-								<p><?php esc_html_e('Why Chose Us', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php esc_html_e('You can set why chose us settings', 'tour-booking-manager'); ?></span>
-							</div>
-						</label>
-                    </section>
-					
 					<section>
-                        <label class="label">
-							<div>
-								<p><?php esc_html_e('Why Chose Us ' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_why_choose_us'); ?></span></i></p>
-							</div>
+						<div class="ttbm-header">
+							<h4><i class="fas fa-info-circle"></i><?php esc_html_e('Promotional Text', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_why_choose_us', $checked); ?>
-						</label>
+						</div>
+						<div data-collapse="#ttbm_display_why_choose_us" class="<?php echo esc_attr($active); ?>">
+							<?php $this->why_chose_us($tour_id); ?>
+						</div>
                     </section>
 
-					<div data-collapse="#ttbm_display_why_choose_us" class="<?php echo esc_attr($active); ?>">
-						<?php $this->why_chose_us($tour_id); ?>
-					</div>
 				</div>
 				<?php
 			}
 			public function why_chose_us($tour_id) {
 				$why_chooses = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_why_choose_us_texts', array());
 				?>
-				<section >
+				<div class="promotional-text">
 					<!-- <div class="w-100 mb-2 d-flex justify-content-between align-items-center">
 						<label for=""><?php esc_html_e('Why Book With Us?', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><?php TTBM_Settings::des_p('why_chose_us'); ?></i></label>
 					</div> -->
-					<div>
-						<table>
-							<thead>
-							<tr>
-								<th class="ps-2"><?php esc_html_e('Item List.', 'tour-booking-manager'); ?></th>
-								<th class="ps-2"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
-							</tr>
-							</thead>
-							<tbody class="ttbm_sortable_area ttbm_item_insert">
-							<?php
-								if (sizeof($why_chooses)) {
-									foreach ($why_chooses as $why_choose) {
-										$this->why_chose_us_item($why_choose);
-									}
+					
+					<table>
+						<thead>
+						<tr>
+							<th colspan="2"><?php esc_html_e('Item List.', 'tour-booking-manager'); ?></th>
+						</tr>
+						</thead>
+						<tbody class="ttbm_sortable_area ttbm_item_insert">
+						<?php
+							if (sizeof($why_chooses)) {
+								foreach ($why_chooses as $why_choose) {
+									$this->why_chose_us_item($why_choose);
 								}
-								else {
-									$this->why_chose_us_item();
-								}
-							?>
-							</tbody>
-						</table>
-					</div>
-					<div class="w-100 d-flex justify-content-start align-items-center my-2">
-						<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Item', 'tour-booking-manager')); ?>
-					</div>
-				</section>
+							}
+							else {
+								$this->why_chose_us_item();
+							}
+						?>
+						</tbody>
+					</table>
+					<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Item', 'tour-booking-manager')); ?>
+				</div>
 				
 				<div class="ttbm_hidden_content">
 					<table>
@@ -96,12 +81,16 @@
 			public function why_chose_us_item($why_choose = '') {
 				?>
 				<tr class="ttbm_remove_area">
-					<td class="ps-2">
+					<td class="">
 						<label>
-							<input class="bordered w-100 rounded  ttbm_name_validation" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
+							<input class="ttbm_name_validation input-fullwidth" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
 						</label>
 					</td>
-					<td><?php TTBM_Custom_Layout::move_remove_button(); ?></td>
+					<td>
+						<div class="textRight">
+							<?php TTBM_Custom_Layout::move_remove_button(); ?>
+						</div>
+					</td>
 				</tr>
 				<?php
 			}

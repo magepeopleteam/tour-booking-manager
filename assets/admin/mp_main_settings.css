@@ -367,11 +367,18 @@
 #ttbm_meta_box_panel .ttbm-faq-section .faq-header {
   position: relative;
   z-index: 0;
+  background-color: var(--mpl-light);
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header.mActive {
+  border-radius: 15px 15px 0 0;
 }
 #ttbm_meta_box_panel .ttbm-faq-section .faq-header .faq-action {
   position: absolute;
   top: 50%;
-  right: 0;
+  right: 15px;
   transform: translateY(-50%);
   z-index: 1;
 }
@@ -383,6 +390,12 @@
 }
 #ttbm_meta_box_panel .ttbm-faq-section .faq-content {
   display: none;
+  border: 1px solid #ddd;
+  border-radius: 0;
+  padding: 10px;
+}
+#ttbm_meta_box_panel .ttbm-faq-section .faq-content.mActive {
+  border-radius: 0 0 15px 15px;
 }
 
 #ttbm_meta_box_panel .ttbm-daywise-section .ttbm-daywise-item {
@@ -397,11 +410,18 @@
 #ttbm_meta_box_panel .ttbm-daywise-section .daywise-header {
   position: relative;
   z-index: 0;
+  background-color: var(--mpl-light);
+  border: 1px solid #ddd;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header.mActive {
+  border-radius: 15px 15px 0 0;
 }
 #ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action {
   position: absolute;
   top: 50%;
-  right: 0;
+  right: 15px;
   transform: translateY(-50%);
   z-index: 1;
 }
@@ -413,6 +433,12 @@
 }
 #ttbm_meta_box_panel .ttbm-daywise-section .daywise-content {
   display: none;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 0 0 15px 15px;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-content.mActive {
+  border-radius: 0 0 15px 15px;
 }
 
 #ttbm_meta_box_panel .ttbm-modal-container, .travel-list .ttbm-modal-container {
@@ -786,6 +812,13 @@ div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after, div.ttbm_gl
   width: 100%;
   border: 0;
 }
+#ttbm_meta_box_panel .fullscreen-icon, .travel-list .fullscreen-icon {
+  background-size: 22px 30px;
+  background-position: 4px 0px;
+}
+#ttbm_meta_box_panel .leaflet-touch .fullscreen-icon.leaflet-fullscreen-on, .travel-list .leaflet-touch .fullscreen-icon.leaflet-fullscreen-on {
+  background-position: 4px 0px;
+}
 
 .auto-search-wrapper.loupe::before {
   margin: 10px 0;
@@ -970,24 +1003,31 @@ div.ttbm_style select.formControl {
   background: transparent;
 }
 
-#ttbm_meta_box_panel h1, .travel-list h1 {
+.dFlex {
+  align-items: center;
+}
+
+#ttbm_meta_box_panel #ttbm_date_config_meta_boxs .date-configeration, .travel-list #ttbm_date_config_meta_boxs .date-configeration {
   padding: 0;
   color: var(--mpl-secondary);
-  margin: 30px 0 20px 0;
-  margin-bottom: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 22px;
-  line-height: 26px;
-  font-family: Roboto, sans-serif;
-  margin-bottom: 12px;
-  font-weight: 700;
+  font-weight: bold;
 }
-#ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs .description,
-#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs .description, .travel-list .tab-content-ttbm_date_config_meta_boxs .description,
-.travel-list .tab-content-ttbm_tax_meta_boxs .description {
+#ttbm_meta_box_panel #ttbm_date_config_meta_boxs .date-configeration-desc, .travel-list #ttbm_date_config_meta_boxs .date-configeration-desc {
+  color: var(--mpl-secondary);
   margin: 0;
-  padding: 0.75em 0;
-  font-size: 1rem;
+  margin-bottom: 0px;
+  font-weight: normal;
+  line-height: 24px;
+  margin-bottom: 30px;
+}
+#ttbm_meta_box_panel #ttbm_date_config_meta_boxs table.form-table tr th, .travel-list #ttbm_date_config_meta_boxs table.form-table tr th {
+  text-align: left !important;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: var(--mpl-secondary);
 }
 #ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table,
 #ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table, .travel-list .tab-content-ttbm_date_config_meta_boxs table,
@@ -996,7 +1036,11 @@ div.ttbm_style select.formControl {
   border-spacing: 0;
   border: 0;
   margin: 0;
-  margin-top: 50px;
+}
+#ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th,
+#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr th,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr th {
+  text-align: left;
 }
 #ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th,
 #ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td,
@@ -1006,19 +1050,9 @@ div.ttbm_style select.formControl {
 .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr th,
 .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td {
   background-color: var(--mpl-white);
-  padding: 1.5em;
-  margin-bottom: 1.5em;
+  padding: 15px;
   width: 50%;
   border: 1px solid var(--mpl-gray);
-}
-#ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th p,
-#ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td p,
-#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th p,
-#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td p, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr th p,
-.travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td p,
-.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr th p,
-.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td p {
-  font-size: 0.8rem;
 }
 #ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td,
 #ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td,
@@ -1187,14 +1221,13 @@ div.ttbm_style span.ttbm_remove_multi_image {
 }
 .includedd-features-section .groupCheckBox {
   overflow: hidden;
+  margin-bottom: 5px;
 }
 .includedd-features-section .customCheckboxLabel {
   float: left;
-  margin: 5px;
+  margin-right: 10px;
   padding: 7px 7px;
-  border: 1px solid #d8d8d8;
-  background-color: #f8f8f8;
-  width: 227px;
+  width: 225px;
   border-radius: 5px;
   font-weight: normal;
   font-size: 14px;
@@ -1218,6 +1251,11 @@ div.ttbm_style span.ttbm_remove_multi_image {
   border-radius: 50px;
 }
 
+.input-fullwidth {
+  width: 100%;
+  border-radius: 5px;
+}
+
 div.ttbm_style .customCheckboxLabel input:checked ~ .customCheckbox::after {
   content: "";
   position: absolute;
@@ -1232,8 +1270,8 @@ div.ttbm_style .customCheckboxLabel input:checked ~ .customCheckbox::after {
   background-color: transparent;
   -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
-  left: 5px;
-  top: 5px !important;
+  left: 3px;
+  top: 4px !important;
 }
 
 .reply-enquiry-form {

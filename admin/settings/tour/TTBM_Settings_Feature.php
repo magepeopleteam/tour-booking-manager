@@ -35,7 +35,7 @@
 					<div class="mtb ttbm_features_table">
 						<?php $this->feature($tour_id); ?>
 					</div>
-					
+					<?php $this->add_new_feature_popup(); ?>
 				</div>
 				<?php
 			}
@@ -48,45 +48,27 @@
 				$in_checked = $include_display == 'off' ? '' : 'checked';
 				$ex_checked = $exclude_display == 'off' ? '' : 'checked';
 				if (sizeof($features) > 0) { ?>
-					<section class="bg-light">
-						<label class="label">
-							<div>
-								<p><?php esc_html_e('Include Exclude Feature', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php esc_html_e('You can add new feature to Include/Exclude Feature of tours', 'tour-booking-manager'); ?></span>
-							</div>
-						</label>
-					</section>
+					
 					<section>
-						<label class="label">
-							<div>
-								<p><?php esc_html_e('Create a feature', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_add_new_feature_popup'); ?></span></i></p>
-							</div>
-							<?php TTBM_Custom_Layout::popup_button('add_new_feature_popup', esc_html__('Create New Feature', 'tour-booking-manager')); ?>
-						</label>
-						<?php $this->add_new_feature_popup(); ?>
-					</section>
-					<section>
-						<label class="label">
-							<div>
-								<p><?php esc_html_e('Price Included Feature', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_include_service'); ?></span></i></p>
-							</div>
-							<?php TTBM_Custom_Layout::switch_button('ttbm_display_include_service', $in_checked); ?> 
-						</label>
+						<div class="ttbm-header">
+							<h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Included Feature', 'tour-booking-manager'); ?></h4>
+							<?php TTBM_Custom_Layout::switch_button('ttbm_display_include_service', $in_checked); ?>
+						</div>
 						<div data-collapse="#ttbm_display_include_service" class="includedd-features-section <?php echo esc_attr($include_active); ?>">
 							<?php $this->feature_list($tour_id, 'ttbm_service_included_in_price'); ?>
+							<?php TTBM_Custom_Layout::popup_button('add_new_feature_popup', esc_html__('Create New', 'tour-booking-manager')); ?>
 						</div>
                     </section>
 					<section>
-						<label class="label">
-							<div>
-								<p><?php esc_html_e('Price Excluded Feature', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_get_question'); ?></span></i></p>
-							</div>
-							<?php TTBM_Custom_Layout::switch_button('ttbm_display_exclude_service', $ex_checked); ?>  
-						</label>
+						<div class="ttbm-header">
+							<h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Excluded Feature', 'tour-booking-manager'); ?></h4>
+							<?php TTBM_Custom_Layout::switch_button('ttbm_display_exclude_service', $ex_checked); ?>
+						</div>
 						<div data-collapse="#ttbm_display_exclude_service" class="includedd-features-section <?php echo esc_attr($include_active); ?>">
 							<?php $this->feature_list($tour_id, 'ttbm_service_excluded_in_price'); ?>
+							<?php TTBM_Custom_Layout::popup_button('add_new_feature_popup', esc_html__('Create New', 'tour-booking-manager')); ?>
 						</div>
-                    </section>
+					</section>
 					
 					<?php
 				}

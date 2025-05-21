@@ -204,6 +204,7 @@ div.ttbm_style select.formControl {
 }
 
 // =============date config style customization=============
+
 .ppof-settings {
   .form-wrapper {
     margin-left: 250px;
@@ -211,52 +212,59 @@ div.ttbm_style select.formControl {
   }
 }
 
+.dFlex{
+  align-items: center;
+}
+
 #{$main-selector} {
-  h1 {
+
+  #ttbm_date_config_meta_boxs .date-configeration{
     padding: 0;
     color: var(--mpl-secondary);
-    margin: 30px 0 20px 0;
-    margin-bottom: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 22px;
-    line-height: 26px;
-    font-family: Roboto, sans-serif;
-    margin-bottom: 12px;
-    font-weight: 700;
+    font-weight: bold;
   }
+  #ttbm_date_config_meta_boxs .date-configeration-desc{
+    color: var(--mpl-secondary);
+    margin: 0;
+    margin-bottom: 0px;
+    font-weight: normal;
+    line-height: 24px;
+    margin-bottom: 30px;
+  }
+  
 
+  #ttbm_date_config_meta_boxs {
+    table.form-table tr th{
+      text-align: left !important;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 5px;
+      color: var(--mpl-secondary);
+    }
+  }
   .tab-content-ttbm_date_config_meta_boxs,
   .tab-content-ttbm_tax_meta_boxs {
-    .description {
-      margin: 0;
-      padding: 0.75em 0;
-      font-size: 1rem;
-    }
-
     table {
       border-collapse: collapse;
       border-spacing: 0;
       border: 0;
       margin: 0;
-      margin-top: 50px;
     }
-
+    table.form-table tr th{
+      text-align: left;
+    }
     table.form-table tr th,
     table.form-table tr td {
       background-color: var(--mpl-white);
-      padding: calc(.5em * 3);
-      margin-bottom: calc(.5em * 3);
+      padding: 15px;
       width: 50%;
       border: 1px solid var(--mpl-gray);
-
-      p {
-        font-size: 0.8rem;
-      }
     }
 
     table.form-table tr td {
       text-align: right;
-
       label {
         display: block;
         text-align: right;
@@ -434,14 +442,13 @@ div.ttbm_style span.ttbm_remove_multi_image {
   margin-top: 15px;
   .groupCheckBox {
     overflow: hidden;
+    margin-bottom: 5px;
   }
   .customCheckboxLabel {
     float: left;
-    margin: 5px;
+    margin-right: 10px;
     padding: 7px 7px;
-    border: 1px solid #d8d8d8;
-    background-color: #f8f8f8;
-    width: 227px;
+    width: 225px;
     border-radius: 5px;
     font-weight: normal;
     font-size: 14px;
@@ -466,7 +473,10 @@ div.ttbm_style span.ttbm_remove_multi_image {
     }
   }
 }
-
+.input-fullwidth{
+  width: 100%;
+  border-radius: 5px;
+}
 div.ttbm_style .customCheckboxLabel input:checked ~ .customCheckbox::after {
   content: "";
   position: absolute;
@@ -481,8 +491,8 @@ div.ttbm_style .customCheckboxLabel input:checked ~ .customCheckbox::after {
   background-color: transparent;
   -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
-	left: 5px;
-	top: 5px !important;
+	left: 3px;
+  top: 4px !important;
 }
 
 // ==================Enquiry form=====================

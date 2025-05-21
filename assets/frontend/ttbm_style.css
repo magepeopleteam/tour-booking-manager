@@ -89,10 +89,10 @@ div.ttbm_map_area #gmap_canvas {max-width: 100%;width: 100%;min-height: 320px;}
 div.ttbm_location_list div.filter_item {padding: 0;}
 /**************************************************/
 div.ttbm_style .mp_tour_ticket_form{
-  	border: 1px solid var(--color_theme);
 	border-radius:8px;
 	margin-top:10px;
-	padding: 10px;
+	padding: 20px;
+	
 }
 .person-description{
 	font-size: 12px;
@@ -556,7 +556,10 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 	z-index: 2;
 }
 
-
+.ttbm_booking_panel .mp_tour_ticket_form .ttbm_default_widget{
+	border: 0;
+	padding: 0;
+}
 
 /* =====================ttbm_viator_theme overrite========== */
 

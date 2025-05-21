@@ -524,16 +524,17 @@
     border-radius: 5px;
 }
 .ttbm_filter_btn_bg_color{
-    background-color: #a7a1a1;
-    color: #fff;
+    background-color: #e3f2fd;
+    color: #333;
 }
 .ttbm_filter_btn_active_bg_color{
-    background-color: #990000;
+    background-color: #006eff;
     color: #fff;
 }
 
 .ttbm_travel_filter_item:hover{
-    background-color: #0e0909;
+    background-color: #006eff;
+    color: #fff;
 }
 
 .ttbm-tour-list-page, .ttbm_trvel_lists_content{background: linear-gradient(to right, #eff6ff, #f5f3ff)}

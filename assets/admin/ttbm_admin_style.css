@@ -97,7 +97,7 @@ div.unlimited_section .content_area img {width: auto;max-width: 100px;}
 button._mpBtn_xs.ttbm_icon_add {border:none !important;}
 input[name="extra_service_description[]"].formControl {width:100% !important;}
 table.form-table tr td, table.form-table tr th{border: 1px solid #efeaea !important; }
-
+div.ttbm_style span.select2-container span{height:40px !important;}
 @media only screen and (max-width: 1100px) {
 	.unlimited_section .textContent {padding: 0 0 0 20px;}
 	.unlimited_section .content_area {padding: 15px 10px 0 0;}

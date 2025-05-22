@@ -85,6 +85,7 @@ div.unlimited_section .content_area img {width: auto;max-width: 100px;}
 .postDash::after { position: absolute;content: ""; top: 23px;width: 45px; height: 2px;background-color: #F26E26;}
 .postDash::after {right: -65px;}
 table.price_config_table input[name="ticket_type_description[]"] {width: 10em !important;}
+table.price_config_table input.medium.ttbm_price_validation {width:100% !important;}
 
 @media only screen and (max-width: 1100px) {
 	.unlimited_section .textContent {padding: 0 0 0 20px;}

@@ -54,11 +54,12 @@
 							
 						</div>
 					</section>
-					<section>
+					<?php do_action('ttbm_tour_pricing_inner', $tour_id); ?>
+					<div style="margin-bottom: 20px;">
 						<?php $this->advertise_addon(); ?>
-					</section>
+					</div>
 					<?php do_action('ttbm_tour_pricing_after', $tour_id); ?>
-                   <?php $this->ttbm_add_to_cart_form_shortcode($tour_id); ?>
+                   	<?php $this->ttbm_add_to_cart_form_shortcode($tour_id); ?>
                 </div>
 				<?php
 			}
@@ -145,8 +146,9 @@
 							<?php do_action('add_ttbm_hidden_table', 'ttbm_price_item'); ?>
                         </div>
                     </div>
-					<?php do_action('ttbm_tour_pricing_inner', $tour_id); ?>
+					
                 </div>
+				
 				<?php
 			}
 			public function ticket_table() {

@@ -54,9 +54,9 @@
 							
 						</div>
 					</section>
-					<section>
+					<div>
 						<?php $this->advertise_addon(); ?>
-					</section>
+					</div>
 					<?php do_action('ttbm_tour_pricing_after', $tour_id); ?>
                    <?php $this->ttbm_add_to_cart_form_shortcode($tour_id); ?>
                 </div>

@@ -84,6 +84,8 @@ div.unlimited_section .content_area img {width: auto;max-width: 100px;}
 .ttbm_style .buttonOutline:hover {background-color: #FF555D;color: #FFF;}
 .postDash::after { position: absolute;content: ""; top: 23px;width: 45px; height: 2px;background-color: #F26E26;}
 .postDash::after {right: -65px;}
+table.price_config_table input[name="ticket_type_description[]"] {width: 10em !important;}
+
 @media only screen and (max-width: 1100px) {
 	.unlimited_section .textContent {padding: 0 0 0 20px;}
 	.unlimited_section .content_area {padding: 15px 10px 0 0;}

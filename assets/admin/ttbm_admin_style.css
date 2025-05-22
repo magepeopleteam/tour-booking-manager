@@ -89,10 +89,10 @@ table.price_config_table input.medium.ttbm_price_validation {width:100% !importa
 table.price_config_table select.medium.formControl {height: 40px !important;}
 table.price_config_table div.ttbm_add_icon_image_area
  {
-        border: 1px solid #c1b2b8;
-        margin-top: 1px;
-        padding: 7px 10px;
-        border-radius: 5px;
+        border: 1px solid #c1b2b8 !important;
+        margin-top: 1px !important;
+        padding: 7px 10px !important;
+        border-radius: 5px !important;
     }
 
 @media only screen and (max-width: 1100px) {

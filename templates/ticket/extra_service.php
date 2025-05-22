@@ -8,7 +8,7 @@
 	$extra_services = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_extra_service_data', array());
 	if (sizeof($extra_services) > 0) {
 		?>
-		<div class="ttbm_default_widget ttbm_extra_service_area">
+		<div class="ttbm_extra_service_area">
 			<?php do_action('ttbm_before_extra_service_list_table', $tour_id); ?>
 			<h2 class="extra_service_title"><?php echo esc_html__('Available Extra Service List ', 'tour-booking-manager'); ?></h2>
 			<div class="ttbm_widget_content" data-placeholder>

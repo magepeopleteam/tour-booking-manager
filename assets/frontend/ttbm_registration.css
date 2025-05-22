@@ -89,6 +89,17 @@ div.ttbm_booking_panel table tbody th,div.ttbm_booking_panel table tbody td{
 }
 div.ttbm_booking_panel .ttbm_book_now_area{
 	border: 0;
+	margin-top: 30px;
+}
+div.ttbm_booking_panel .ttbm_book_now_area .tour_qty,
+div.ttbm_booking_panel .ttbm_book_now_area .tour_price{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+div.ttbm_booking_panel table.mp_tour_ticket_type{
+	box-shadow: 0 0 1px #ddd;
+	border-radius: 12px 12px 0 0;
 }
 div.ttbm_booking_panel table.mp_tour_ticket_type thead tr th:first-child{
 	border-top-left-radius: 10px;
@@ -100,7 +111,14 @@ div.ttbm_booking_panel table.mp_tour_ticket_type tbody td, table.mp_tour_ticket_
 
 	border-bottom: 1px dotted #ddd;
 }
-
+div.ttbm_booking_panel  .qtyIncDec .decQty,
+div.ttbm_booking_panel  .qtyIncDec .incQty{
+	border-radius: 100px;
+}
+div.ttbm_booking_panel  .qtyIncDec label{
+	border: 0;
+	font-weight: bold;
+}
 div.ttbm_booking_panel table td {background-color: #fff;}
 /*************************************************/
 div.ttbm_date_time_select {margin:0;border-bottom: 1px solid #f2f2f2;}

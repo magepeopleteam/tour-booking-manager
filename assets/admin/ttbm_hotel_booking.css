@@ -915,8 +915,8 @@ div.attendee_filter_list h5, #ttbm_booking_attendee_list_result h6
 }
 
 .ttbm_total_trash_display{
-    background-color: #a7a1a1;
-    color: #fff;
+    background-color: #fcd5d0;
+    color: #e74c3c;
     padding: 6px 10px;
     cursor: pointer;
     border-radius: 5px;
@@ -931,9 +931,8 @@ div.attendee_filter_list h5, #ttbm_booking_attendee_list_result h6
 }
 
 .ttbm_travel_list_page_title_bg{
-    padding: 13px;
-    background-color: #fff;
+    padding: 8px 0;
     border-radius: 5px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    
 }
 

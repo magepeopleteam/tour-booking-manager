@@ -95,6 +95,8 @@ div.unlimited_section .content_area img {width: auto;max-width: 100px;}
         border-radius: 5px !important;
     }
 button._mpBtn_xs.ttbm_icon_add {border:none !important;}
+input[name="extra_service_description[]"].formControl {width:100% !important;}
+
 @media only screen and (max-width: 1100px) {
 	.unlimited_section .textContent {padding: 0 0 0 20px;}
 	.unlimited_section .content_area {padding: 15px 10px 0 0;}

@@ -90,9 +90,16 @@ div.ttbm_location_list div.filter_item {padding: 0;}
 /**************************************************/
 div.ttbm_style .mp_tour_ticket_form{
 	border-radius:8px;
+	margin-top:0px;
+	padding: 0px;
+	
+}
+@media (min-width:540px) {
+	div.ttbm_style .mp_tour_ticket_form{
+	border-radius:8px;
 	margin-top:10px;
 	padding: 20px;
-	
+}
 }
 .person-description{
 	font-size: 12px;
@@ -199,17 +206,14 @@ div.ttbm_style [data-bg-image]{
 }
 
 .ttbm_default_widget{
-	padding: var(--dmp);
 	border: 1px solid var(--color_border);
 	border-radius: 10px;
-	background-color: #fbfaf5;
+	box-shadow: 0 2px 10px #0000001b;
 }
 
-.ttbm_default_widget h2.extra_service_title{
-	padding: 12px 0;
+.ttbm_extra_service_area h2.extra_service_title{
+	padding:20px 0;
 	font-weight: bold;
-	margin-bottom: var(--dmp);
-	border-bottom: 1px solid #ddd;
 }
 /**************************************************/
 .ttbm_wraper button.ttbm_book_now {margin: 0 var(--ttbm_mp_xs) 0 0;}

@@ -84,10 +84,10 @@ div.unlimited_section .content_area img {width: auto;max-width: 100px;}
 .ttbm_style .buttonOutline:hover {background-color: #FF555D;color: #FFF;}
 .postDash::after { position: absolute;content: ""; top: 23px;width: 45px; height: 2px;background-color: #F26E26;}
 .postDash::after {right: -65px;}
-table.price_config_table input[name="ticket_type_description[]"] {width: 10em !important;}
-table.price_config_table input.medium.ttbm_price_validation {width:100% !important;}
-table.price_config_table select.medium.formControl {height: 40px !important;}
-table.price_config_table div.ttbm_add_icon_image_area
+.ttbm_settings_pricing input[name="ticket_type_description[]"] {width: 10em !important;}
+.ttbm_settings_pricing input.medium.ttbm_price_validation {width:100% !important;}
+.ttbm_settings_pricing select.medium.formControl {height: 40px !important;}
+.ttbm_settings_pricing div.ttbm_add_icon_image_area
  {
         border: 1px solid #c1b2b8 !important;
         margin-top: 1px !important;

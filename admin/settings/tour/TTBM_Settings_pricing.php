@@ -55,7 +55,7 @@
 						</div>
 					</section>
 					<?php do_action('ttbm_tour_pricing_inner', $tour_id); ?>
-					<div>
+					<div style="margin-bottom: 20px;">
 						<?php $this->advertise_addon(); ?>
 					</div>
 					<?php do_action('ttbm_tour_pricing_after', $tour_id); ?>

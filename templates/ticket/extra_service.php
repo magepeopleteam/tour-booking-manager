@@ -48,7 +48,7 @@
 									    <div class="mT_xs"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
                                     <?php } ?>
 								</th>
-								<td class="text-center"><?php echo TTBM_Global_Function::esc_html($service_price); ?></td>
+								<td class="textCenter"><?php echo TTBM_Global_Function::esc_html($service_price); ?></td>
 								<td><?php TTBM_Layout::qty_input($service_name, $available, $input_type, $default_qty, $min_qty, $max_qty, $service_price_raw, 'service_qty[]'); ?></td>
 							</tr>
 							<tr>

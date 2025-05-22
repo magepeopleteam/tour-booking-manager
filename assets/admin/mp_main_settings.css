@@ -634,7 +634,7 @@ div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after, div.ttbm_gl
 
 #ttbm_meta_box_panel .postbox-header, .travel-list .postbox-header {
   background: var(--mpl-gradient);
-  padding: 16px 24px;
+  padding: 5px;
 }
 #ttbm_meta_box_panel .postbox-header .handle-actions, .travel-list .postbox-header .handle-actions {
   margin-top: 0;

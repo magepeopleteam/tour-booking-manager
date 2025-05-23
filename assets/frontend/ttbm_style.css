@@ -211,6 +211,17 @@ div.ttbm_style [data-bg-image]{
 	box-shadow: 0 2px 10px #0000001b;
 }
 
+#ttbm_related_tour .ttbm_default_widget .ttbm_widget_content{
+	padding: 10px;
+}
+
+.ttbm_extra_service_area table.mp_tour_ticket_extra th:first-child{
+	border-radius: 12px 0 0 0;
+}
+.ttbm_extra_service_area table.mp_tour_ticket_extra th:last-child{
+	border-radius: 0 12px  0 0;
+}
+
 .ttbm_extra_service_area h2.extra_service_title{
 	padding:20px 0;
 	font-weight: bold;

@@ -15,7 +15,7 @@
 		do_action('ttbm_before_ticket_type_area', $tour_id, $tour_date);
 		?>
 		<div class="ttbm_ticket_area">
-			<div class="ttbm_default_widget">
+			<div class="">
 				<?php
 					$option_name = 'ttbm_string_availabe_ticket_list';
 					$default_title = esc_html__('Available Ticket List ', 'tour-booking-manager');

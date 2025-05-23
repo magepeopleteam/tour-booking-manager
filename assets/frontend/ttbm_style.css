@@ -225,6 +225,10 @@ div.ttbm_style [data-bg-image]{
 	padding: 10px;
 }
 
+.ttbm_extra_service_area table.mp_tour_ticket_extra{
+	box-shadow: 0 0 1px #ddd;
+}
+
 .ttbm_extra_service_area table.mp_tour_ticket_extra thead{
 	border: 0;
 }
@@ -233,6 +237,14 @@ div.ttbm_style [data-bg-image]{
 }
 .ttbm_extra_service_area table.mp_tour_ticket_extra thead th:last-child{
 	border-radius: 0 12px  0 0;
+}
+
+.ttbm_extra_service_area table.mp_tour_ticket_extra tbody tr{
+	border-bottom: 1px solid #f5f5f5;
+}
+
+.ttbm_extra_service_area table.mp_tour_ticket_extra tbody tr:last-child{
+	border-bottom: 0;
 }
 
 .ttbm_extra_service_area h2.extra_service_title{

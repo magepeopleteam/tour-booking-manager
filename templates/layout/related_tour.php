@@ -12,7 +12,7 @@
 		$grid_class=$related_tour_count <= $num_of_tour?'grid_'.$num_of_tour:'';
 		$div_class=$related_tour_count==1?'flexWrap modern':'flexWrap grid';
 		?>
-		<div class='ttbm_style ttbm_wraper shadow_one' id="ttbm_related_tour">
+		<div class='ttbm_style ttbm_wraper' id="ttbm_related_tour">
 			<div class="ttbm_container">
 				<div class='ttbm_default_widget'>
 					<?php do_action( 'ttbm_section_title', 'ttbm_string_related_tour', esc_html__( 'You may like Tour ', 'tour-booking-manager' ) ); ?>

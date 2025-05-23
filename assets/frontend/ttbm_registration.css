@@ -24,6 +24,7 @@ div.ttbm_default_widget .ttbm_title_style_2 ~ .ttbm_widget_content.ttbm_day_wise
 }
 
 div.ttbm_default_widget .ttbm_title_style_3 {border-bottom: 2px solid var(--color_theme_77);padding: 10px 10px;}
+div.ttbm_default_widget .ttbm_day_wise_details {padding: 20px;}
 div.ttbm_default_widget .ttbm_title_style_2{
 	background: rgba(var(--color_theme_rbg),0.1);
 	padding: 12px var(--dmp);

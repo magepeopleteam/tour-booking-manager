@@ -227,6 +227,7 @@ div.ttbm_style [data-bg-image]{
 
 .ttbm_extra_service_area table.mp_tour_ticket_extra{
 	box-shadow: 0 0 1px #ddd;
+	border-radius: 12px 12px 0 0;
 }
 
 .ttbm_extra_service_area table.mp_tour_ticket_extra thead{

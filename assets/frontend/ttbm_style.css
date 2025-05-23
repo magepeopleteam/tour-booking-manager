@@ -131,6 +131,9 @@ div.ttbm_style #ttbm_select_date.formControl {
 	padding-left: 30px;
 
 }
+.ttbm_booking_panel .ttbm_ticket_area table.mp_tour_ticket_type thead{
+	border: 0;
+}
 /*********Group Content*******/
 .ttbm_wraper table label {max-width: 100px;}
 .ttbm_wraper table label select.formControl {text-align: center;}

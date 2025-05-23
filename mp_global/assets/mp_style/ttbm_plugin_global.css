@@ -2143,7 +2143,7 @@ div.ttbm_style .customRadioLabel input[type="radio"] ~ .formControl,
     content: "";
     position: absolute;
     left: 0;
-    top: -11px !important;
+    top: 0 !important;
     height: 18px;
     width: 18px;
     background-color: var(--color_theme_alter);

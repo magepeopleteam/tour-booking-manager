@@ -85,7 +85,6 @@ div.ttbm_booking_panel table thead th {
 
 div.ttbm_booking_panel table tbody th,div.ttbm_booking_panel table tbody td{
 	border: 0 !important;
-	border-bottom: 1px solid #f6f6f6 !important;
 }
 div.ttbm_booking_panel .ttbm_book_now_area{
 	border: 0;

@@ -136,6 +136,10 @@ div.ttbm_style #ttbm_select_date.formControl {
 }
 .ttbm_booking_panel .ttbm_ticket_area table.mp_tour_ticket_type tbody tr:nth-child(2n+1){
 	background: none;
+	border-bottom: 1px solid #f6f6f6;
+}
+.ttbm_booking_panel .ttbm_ticket_area table.mp_tour_ticket_type tbody tr:last-child{
+	border-bottom: 0;
 }
 /*********Group Content*******/
 .ttbm_wraper table label {max-width: 100px;}

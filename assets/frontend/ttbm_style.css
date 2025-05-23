@@ -252,6 +252,10 @@ div.ttbm_style [data-bg-image]{
 	font-weight: bold;
 	font-size: 18px;
 }
+
+table div.ttbm_attendee_form_item{
+	padding: 15px;
+}
 /**************************************************/
 .ttbm_wraper button.ttbm_book_now {margin: 0 var(--ttbm_mp_xs) 0 0;}
 /*****************/

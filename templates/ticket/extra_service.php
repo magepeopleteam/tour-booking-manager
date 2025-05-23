@@ -45,7 +45,7 @@
 									<?php } ?>
 									<?php echo TTBM_Global_Function::esc_html($service_name); ?>
                                     <?php if ($description) { ?>
-									    <div class="mT_xs"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
+									    <div class="mT_xs person-description"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
                                     <?php } ?>
 								</th>
 								<td class="textCenter"><?php echo TTBM_Global_Function::esc_html($service_price); ?></td>

@@ -215,16 +215,20 @@ div.ttbm_style [data-bg-image]{
 	padding: 10px;
 }
 
-.ttbm_extra_service_area table.mp_tour_ticket_extra th:first-child{
+.ttbm_extra_service_area table.mp_tour_ticket_extra thead{
+	border: 0;
+}
+.ttbm_extra_service_area table.mp_tour_ticket_extra thead th:first-child{
 	border-radius: 12px 0 0 0;
 }
-.ttbm_extra_service_area table.mp_tour_ticket_extra th:last-child{
+.ttbm_extra_service_area table.mp_tour_ticket_extra thead th:last-child{
 	border-radius: 0 12px  0 0;
 }
 
 .ttbm_extra_service_area h2.extra_service_title{
 	padding:20px 0;
 	font-weight: bold;
+	font-size: 18px;
 }
 /**************************************************/
 .ttbm_wraper button.ttbm_book_now {margin: 0 var(--ttbm_mp_xs) 0 0;}

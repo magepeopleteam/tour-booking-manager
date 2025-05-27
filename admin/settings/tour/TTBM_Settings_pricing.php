@@ -224,7 +224,7 @@
                     <label class="label">
 						<div>
 							<p><?php esc_html_e('Hotel Configuration', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_hotel_config') ?></span></i></p>
-							<span class="text"><?php TTBM_Settings::des_p('hotel_config'); ?><a href="post-new.php?post_type=ttbm_hotel"><?php TTBM_Settings::des_p('hotel_config_click') ?></a></span>
+							<span class="text"><?php TTBM_Settings::des_p('hotel_config'); ?><a href="<?php echo admin_url('post-new.php?post_type=ttbm_hotel'); ?>"><?php TTBM_Settings::des_p('hotel_config_click') ?></a></span>
 						</div>
 					</label>
 					<select name="ttbm_hotels[]" multiple='multiple' class='formControl ttbm_select2' data-placeholder="<?php esc_html_e('Please Select Hotel', 'tour-booking-manager'); ?>">

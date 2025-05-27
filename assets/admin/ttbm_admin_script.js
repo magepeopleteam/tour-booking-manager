@@ -953,18 +953,23 @@
 
     // ================Get Enquiry=================//
     $(document).ready(function ($) {
-        const tabs = $('.nav-tab');
-        const contents = $('.tab-content');
+        // Only run tab logic on our plugin's settings page
+        if ($('#ttbm-settings-page').length) {
+            const tabs = $('#ttbm-settings-page .nav-tab');
+            const contents = $('#ttbm-settings-page .tab-content');
 
-        tabs.on('click', function (e) {
-            e.preventDefault();
-            tabs.removeClass('nav-tab-active');
-            contents.hide();
+            tabs.on('click', function (e) {
+                e.preventDefault();
+                tabs.removeClass('nav-tab-active');
+                contents.hide();
 
-            $(this).addClass('nav-tab-active');
-            const target = $(this).attr('href');
-            $(target).show();
-        });
+                $(this).addClass('nav-tab-active');
+                const target = $(this).attr('href');
+                if (target && target.startsWith('#')) {
+                    $(target).show();
+                }
+            });
+        }
     });
     $(document).on('click', '.ttbm-delete-enquiry', function (e) {
         e.preventDefault();

@@ -244,7 +244,7 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
 
                                 <div class="ttbm_hotel_search_addHolder">
                                     <div class="ttbm_add_new_hotel_header">
-                                        <a href="http://localhost/mage_people_pro/wp-admin/post-new.php?post_type=ttbm_hotel" class="ttbm_add_new_hotel_text">
+                                        <a href="<?php echo admin_url('post-new.php?post_type=ttbm_hotel'); ?>" class="ttbm_add_new_hotel_text">
                                             <i class="fas fa-plus"></i> <?php echo esc_attr__( 'Add New', 'tour-booking-manager' )?></a>
                                     </div>
                                     <div class="ttbm_hotel_titleSearchContainer">

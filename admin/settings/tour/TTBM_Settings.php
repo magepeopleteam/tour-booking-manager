@@ -18,6 +18,7 @@
 			public function settings() {
 				$tour_id = get_the_id();
 				?>
+				<div id="ttbm-settings-page">
 				<div class="ttbm_style ttbm_settings">
 					<div class="ttbmTabs leftTabs d-flex justify-content-between">
 						<ul class="tabLists">
@@ -40,6 +41,7 @@
 							?>
 						</div>
 					</div>
+				</div>
 				</div>
 				<?php
 			}

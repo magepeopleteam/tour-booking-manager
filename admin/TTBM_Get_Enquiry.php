@@ -301,6 +301,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             }
             $from_email = sanitize_email($from_email);        
         ?>
+            <div id="ttbm-settings-page">
             <div class="wrap ">
                 <h1 class="wp-heading-inline"><?php _e('Enquiry', 'tour-booking-manager'); ?></h1>
                 <hr class="wp-header-end">

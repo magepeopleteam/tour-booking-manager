@@ -110,10 +110,7 @@ div.ttbm_style .mp_tour_ticket_form{
 .hip_hop_hotel_theme .ttbm_booking_panel table {table-layout: initial;}
 .ttbm_spring_theme .ttbm_booking_panel table tr:nth-of-type(odd) td:last-child,
 .hip_hop_hotel_theme .ttbm_booking_panel table tr:nth-of-type(odd) td:last-child {width: 160px;padding: 5px;}
-.ttbm_select_date_area h4.ttbm_title_style_2{
-	color: var(--color_white);
-	margin: 8px;
-}
+
 
 .date-picker-icon{
 	margin-left: 10px;
@@ -203,9 +200,6 @@ div.ttbm_style [data-bg-image]{
 	.booking-button{
 		flex-direction: column;
 		
-	}
-	.ttbm_select_date_area{
-		text-align: center;
 	}
 	div.item_section {
 		border-radius: 10px;

@@ -27,14 +27,14 @@
 				if ($travel_type == 'repeated' ) {
 					$time_slots = TTBM_Function::get_time( $tour_id, $all_dates[0] );
 					?>
-					<div class="allCenter ttbm_date_time_select">
-						<div class="justifyBetween ttbm_select_date_area">
-							<h4 class="ttbm_title_style_2" data-placeholder>
+					<div class=" ttbm_date_time_select">
+						<div class="ttbm_select_date_area">
+							<div class="ttbm-title" data-placeholder>
 								<?php esc_html_e('Make your booking', 'tour-booking-manager'); ?>
-							</h4>
-							<div class="dFlex justifyBetween booking-button">
-								<label class="_allCenter">
-									<span class="date_time_label _mR_xs"><?php echo is_array( $time_slots ) && sizeof( $time_slots ) > 0 ? esc_html__( 'Select Date & Time : ', 'tour-booking-manager' ) : esc_html__( 'Select Date  : ', 'tour-booking-manager' ); ?></span>
+							</div>
+							<div class="booking-button">
+								<label class="date-picker">
+									<span class="date_time_label"><?php echo is_array( $time_slots ) && sizeof( $time_slots ) > 0 ? esc_html__( 'Select Date & Time : ', 'tour-booking-manager' ) : esc_html__( 'Select Date  : ', 'tour-booking-manager' ); ?></span>
 									<span class="date-picker-icon">
 									<i class="far fa-calendar-alt"></i>
 									<input type="hidden" name="ttbm_date" value="<?php echo esc_attr($hidden_date); ?>" required/>

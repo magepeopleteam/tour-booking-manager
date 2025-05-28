@@ -131,6 +131,7 @@ div.ttbm_select_date_area {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	gap:10px;
 }
 
 .ttbm_select_date_area .ttbm-title{
@@ -139,13 +140,46 @@ div.ttbm_select_date_area {
 	font-size: 20px;
 }
 
+.ttbm_select_date_area .date-picker{
+	display: flex;
+  	align-items: center;
+	justify-content: start;
+	flex-wrap: wrap;
+	gap:10px;
+}
 .ttbm_select_date_area .booking-button{
 	color: var(--color_white);
 	display: flex;
-	justify-content: end;
+	justify-content: start;
 	align-items: center;
 	gap:10px;
 }
+.ttbm_select_date_area .ttbm_check_ability{
+	margin: 0;
+}
+
+.ttbm_select_date_area .navy_blueButton.ttbm_check_ability{
+	background-color: var(--button_bg);
+    color: var(--color_button);
+    padding: 12px;
+    border: 1px solid var(--color_button);
+	font-size: 16px;
+}
+.date-picker-icon{
+	position: relative;
+}
+div.ttbm_style #ttbm_select_date.formControl {
+	padding: 20px;
+	padding-left: 20px;
+}
+.date-picker-icon i{
+	position:absolute;
+	top: 10px;
+	left:10px;
+	color: var(--color_theme);
+	font-size: 20px;
+}
+
 @media (max-width: 767px) {
 	div.ttbm_select_date_area {
 		flex-direction: column;
@@ -156,8 +190,12 @@ div.ttbm_select_date_area {
 		justify-content: end;
 		align-items: center;
 	}
+	.ttbm_select_date_area .date-picker{
+		justify-content: center;
+	}
 	
 }
+
 
 
 div.availability_section div.ttbm_date_time_select {-webkit-flex-direction: column;flex-direction: column;}

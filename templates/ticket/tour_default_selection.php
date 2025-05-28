@@ -27,20 +27,20 @@
 				if ($travel_type == 'repeated' ) {
 					$time_slots = TTBM_Function::get_time( $tour_id, $all_dates[0] );
 					?>
-					<div class="allCenter ttbm_date_time_select">
-						<div class="justifyBetween ttbm_select_date_area">
-							<h4 class="ttbm_title_style_2" data-placeholder>
+					<div class=" ttbm_date_time_select">
+						<div class="ttbm_select_date_area">
+							<div class="ttbm-title" data-placeholder>
 								<?php esc_html_e('Make your booking', 'tour-booking-manager'); ?>
-							</h4>
-							<div class="dFlex justifyBetween booking-button">
-								<label class="_allCenter">
-									<span class="date_time_label _mR_xs"><?php echo is_array( $time_slots ) && sizeof( $time_slots ) > 0 ? esc_html__( 'Select Date & Time : ', 'tour-booking-manager' ) : esc_html__( 'Select Date  : ', 'tour-booking-manager' ); ?></span>
-									<span class="date-picker-icon">
-									<i class="far fa-calendar-alt"></i>
-									<input type="hidden" name="ttbm_date" value="<?php echo esc_attr($hidden_date); ?>" required/>
-									<input id="ttbm_select_date" type="text" value="<?php echo esc_attr($visible_date); ?>" class="formControl mb-0 " placeholder="<?php echo esc_attr($now); ?>"  readonly required/>
-									</span>
-								</label>
+							</div>
+							<div class="booking-button">
+								<div class="date-picker">
+									<div class="date_time_label"><?php echo is_array( $time_slots ) && sizeof( $time_slots ) > 0 ? esc_html__( 'Select Date & Time : ', 'tour-booking-manager' ) : esc_html__( 'Select Date  : ', 'tour-booking-manager' ); ?></div>
+									<div class="date-picker-icon">
+										<i class="far fa-calendar-alt"></i>
+										<input type="hidden" name="ttbm_date" value="<?php echo esc_attr($hidden_date); ?>" required/>
+										<input id="ttbm_select_date" type="text" value="<?php echo esc_attr($visible_date); ?>" class="formControl mb-0 " placeholder="<?php echo esc_attr($now); ?>"  readonly required/>
+									</div>
+								</div>
 								<?php
 									$template_name = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
 									// if ( $template_name != 'viator.php' && $check_ability == 'availability_section' ) {

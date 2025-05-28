@@ -128,9 +128,76 @@ div.ttbm_select_date_area {
 	background-color: var(--color_theme);
 	width: 100%;
 	border-radius:12px 12px 0 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap:10px;
 }
-div.ttbm_date_time_select label span {color: var(--color_theme_alter);white-space: nowrap;}
-div.ttbm_date_time_select label {min-width: 120px;margin: 0 var(--ttbm_mp_xs) 0 0;}
+
+.ttbm_select_date_area .ttbm-title{
+	color: var(--color_white);
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.ttbm_select_date_area .date-picker{
+	display: flex;
+  	align-items: center;
+	justify-content: start;
+	flex-wrap: wrap;
+	gap:10px;
+}
+.ttbm_select_date_area .booking-button{
+	color: var(--color_white);
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	gap:10px;
+}
+.ttbm_select_date_area .ttbm_check_ability{
+	margin: 0;
+}
+
+.ttbm_select_date_area .navy_blueButton.ttbm_check_ability{
+	background-color: var(--button_bg);
+    color: var(--color_button);
+    padding: 12px;
+    border: 1px solid var(--color_button);
+	font-size: 16px;
+}
+.date-picker-icon{
+	position: relative;
+}
+div.ttbm_style #ttbm_select_date.formControl {
+	padding: 20px;
+	padding-left: 20px;
+}
+.date-picker-icon i{
+	position:absolute;
+	top: 10px;
+	left:10px;
+	color: var(--color_theme);
+	font-size: 20px;
+}
+
+@media (max-width: 767px) {
+	div.ttbm_select_date_area {
+		flex-direction: column;
+		align-items: center;
+	}
+	.ttbm_select_date_area .booking-button{
+		flex-direction: column;
+		justify-content: end;
+		align-items: center;
+	}
+	.ttbm_select_date_area .date-picker{
+		justify-content: center;
+	}
+	
+}
+
+
+
 div.availability_section div.ttbm_date_time_select {-webkit-flex-direction: column;flex-direction: column;}
 #ttbm_select_date{
 	text-align: center;
@@ -290,24 +357,14 @@ div.hotel_list_middle_left {
 span.load_more_text{cursor: pointer;color: var(--color_theme_cc);}
 @media only screen and (max-width: 767px) {
 	div.ttbm_hotel_details_item,
-	div.ttbm_select_date_area {-webkit-flex-direction: column;flex-direction: column;}
 	div.ttbm_date_time_select label span {
 		/*margin: 0 0 var(--ttbm_mp_xs) 0;*/
 		display: inline-block;
 		line-height: 1;
 	}
-
-	.ttbm_select_date_area ._allCenter {
-		flex-direction: column;
-		gap: 10px;
-	}
-
 	div.ttbm_date_time_select label {margin: var(--ttbm_mp_xs) 0;-webkit-flex-wrap: wrap;flex-wrap: wrap;}
 	div.ttbm_hotel_list_details{width: 100%;margin: 20px 0 0 0;}
 
-	.ttbm_select_date_area .formControl {
-		width: auto !important;
-	}
 }
 @media only screen and (max-width: 600px) {
 	div.ttbm_booking_panel table td:last-child > div {min-width: auto;}

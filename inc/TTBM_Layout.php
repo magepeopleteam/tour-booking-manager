@@ -108,7 +108,7 @@
 			}
 			public static function qty_input($name, $available_seat, $ticket_qty_type, $default_qty, $min_qty, $max_qty, $ticket_price_raw, $input_name,$tour_id='') {
 				$min_qty = max($default_qty, $min_qty);
-				// $data_ticket_name = preg_replace('/[^A-Za-z0-9\-]/', '', $name);
+				$data_ticket_name = preg_replace('/[^A-Za-z0-9\-]/', '', $name);
 				if ($available_seat > $min_qty) {
 					?>
 					<div data-ticket-type-name="<?php echo esc_attr($data_ticket_name); ?>">

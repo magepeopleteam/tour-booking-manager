@@ -6,8 +6,8 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
     class TTBM_Travel_List_Tab_Details{
         public function __construct() {
 
-            add_action('ttbm_travel_list_tour_package_header', array($this, 'travel_list_tour_package_header'), 10, 1);
-            add_action('ttbm_travel_lists_tab_display', array($this, 'travel_lists_tab_display'), 10, 2);
+            add_action('ttbm_travel_list_tour_package_header', array($this, 'travel_list_tour_package_header'), 10, 2 );
+            add_action('ttbm_travel_lists_tab_display', array($this, 'travel_lists_tab_display'), 10, 3);
             add_action('admin_head', [$this,'remove_admin_notice']);
         }
 
@@ -287,7 +287,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
             </div>
         <?php }
 
-        public function travel_lists_tab_display( $label, $b ){
+        public function travel_lists_tab_display( $label, $b, $posts_query ){
             $category = '';
             ?>
             <div class="ttbm_trvel_lists_tab_holder">
@@ -308,7 +308,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                 </div>
 
                 <div id="ttbm_trvel_lists_tour" class="ttbm_trvel_lists_content active">
-                    <?php do_action( 'ttbm_travel_list_tour_package_header', $label);?>
+                    <?php do_action( 'ttbm_travel_list_tour_package_header', $label, $posts_query );?>
                 </div>
                 <div id="ttbm_trvel_lists_places" class="ttbm_trvel_lists_content">
                     <?php do_action( 'ttbm_travel_list_category', $category);?>
@@ -376,12 +376,25 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
             </div>
         <?php  }
 
-        public static function travel_list_tour_package_header( $label ){
+        public static function travel_list_tour_package_header( $label, $posts_query ){
             $counts = wp_count_posts('ttbm_tour');
             /*$total_count     = array_sum((array) $counts);
             $published_count = isset($counts->publish) ? $counts->publish : 0;
             $trash_count     = isset($counts->trash) ? $counts->trash : 0;
             $draft_count     = isset($counts->draft) ? $counts->draft : 0;*/
+
+
+            $expire_count = 0;
+            if ($posts_query->have_posts()) {
+                while ($posts_query->have_posts()) {
+                    $posts_query->the_post();
+                    $post_id = get_the_ID();
+                    $upcoming_date = TTBM_Global_Function::get_post_info( $post_id, 'ttbm_upcoming_date' );
+                    if( $upcoming_date === '' ){
+                        $expire_count++;
+                    }
+                }
+            }
 
             $published_count = isset($counts->publish) ? $counts->publish : 0;
             $trash_count     = isset($counts->trash) ? $counts->trash : 0;
@@ -405,10 +418,13 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                         <div class="ttbm_travel_filter_item ttbm_filter_btn_active_bg_color" data-filter-item="all">All (<?php echo esc_attr( $total_count )?>)</div>
                         <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="publish">Publish (<?php echo esc_attr( $published_count )?>)</div>
                         <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="draft">Draft (<?php echo esc_attr( $draft_count )?>)</div>
-
+                        <?php if( $expire_count > 0 ){?>
+                            <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="expired_tour">Expire Tour( <?php echo esc_attr( $expire_count )?>)</div>
+                        <?php }?>
                         <a class="ttbm_trash_link" href="<?php echo esc_url( $trash_link )?>" target="_blank">
                             <div class="ttbm_total_trash_display">Trash Tour (<?php echo esc_attr( $trash_count )?>) </div>
                         </a>
+
                     </div>
                 </div>
 

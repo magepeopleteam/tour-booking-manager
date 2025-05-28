@@ -239,6 +239,8 @@
         let action = '';
         if( targetId === 'ttbm_trvel_lists_location' ){
             action = 'ttbm_get_locations_html';
+        }else if( targetId === 'ttbm_trvel_lists_tour_category' ){
+            action = 'ttbm_get_category_html_data';
         }else if( targetId === 'ttbm_trvel_lists_organiser' ){
             action = 'ttbm_get_organiser_html_data';
         }else if( targetId === 'ttbm_trvel_lists_features' ){
@@ -283,6 +285,10 @@
                 }else if(  targetId === 'ttbm_trvel_lists_organiser'){
                     if (response.success) {
                         $('#ttbm_travel_list_organiser_content').html(response.data.html);
+                    }
+                }else if(  targetId === 'ttbm_trvel_lists_tour_category'){
+                    if (response.success) {
+                        $('#ttbm_travel_list_category_content').html(response.data.html);
                     }
                 }else if(  targetId === 'ttbm_trvel_lists_features'){
                     if (response.success) {
@@ -372,6 +378,8 @@
             taxonomy_type = 'ttbm_tour_tag';
         }else if( tab_type === 'Add New Activities' ){
             taxonomy_type = 'ttbm_tour_activities';
+        }else if( tab_type === 'Add New Category' ){
+            taxonomy_type = 'ttbm_tour_cat';
         }
 
         return taxonomy_type;
@@ -390,6 +398,8 @@
             tab_type = 'Add New Tag';
         }else if( tab_action_type === 'Activities' ){
             tab_type = 'Add New Activities';
+        }else if( tab_action_type === 'Category' ){
+            tab_type = 'Add New Category';
         }
 
         return tab_type;
@@ -441,6 +451,7 @@
         let tab_type = $(this).siblings('.ttbm_get_clicked_tab_name').val().trim();
         let taxonomy_type = get_add_taxonomy_type( tab_type );
 
+        console.log( tab_type, taxonomy_type );
 
         let action_type = $(this).text().trim();
         let action = '';
@@ -502,30 +513,30 @@
             icon,
 
         },
-            function (response) {
-                $('.ttbm-save-location').text('Save').prop('disabled', false);
-            if (response.success) {
-                let img_url = response.data.img_url;
+        function (response) {
+            $('.ttbm-save-location').text('Save').prop('disabled', false);
+        if (response.success) {
+            let img_url = response.data.img_url;
 
-                let new_location_added = `<div class="ttbm-location-card">
-                                        <div class="ttbm-card-left">
-                                            <img src="${img_url}" alt="${name}" width="70" height="70">
+            let new_location_added = `<div class="ttbm-location-card">
+                                    <div class="ttbm-card-left">
+                                        <img src="${img_url}" alt="${name}" width="70" height="70">
+                                    </div>
+                                    <div class="ttbm-card-right">
+                                        <h3 class="ttbm-title">${name}</h3>
+                                        <p class="ttbm-description">${address}</p>
+                                         <div class="ttbm-card-actions">
+                                            <span class="ttbm-btn ttbm-edit-btn ttbm_edit_trip_location">Edit</span>
                                         </div>
-                                        <div class="ttbm-card-right">
-                                            <h3 class="ttbm-title">${name}</h3>
-                                            <p class="ttbm-description">${address}</p>
-                                             <div class="ttbm-card-actions">
-                                                <span class="ttbm-btn ttbm-edit-btn ttbm_edit_trip_location">Edit</span>
-                                            </div>
-                                        </div>
-                                    </div>`;
-                if( term_id === '' ){
-                    $(".ttbm-locations-list").prepend( new_location_added );
-                }
-                $('#ttbm-location-popup').fadeOut();
-            } else {
-                alert(response.data?.message || 'Something went wrong. Please try again.');
+                                    </div>
+                                </div>`;
+            if( term_id === '' ){
+                $(".ttbm-locations-list").prepend( new_location_added );
             }
+            $('#ttbm-location-popup').fadeOut();
+        } else {
+            alert(response.data?.message || 'Something went wrong. Please try again.');
+        }
         }).fail(function () {
             $('.ttbm-save-location').text('Save').prop('disabled', false);
             alert('AJAX request failed. Please check your connection.');
@@ -626,6 +637,10 @@
     $(document).on('keyup', '#ttbm_tab_activities_Search', function() {
         let searchText = $(this).val().toLowerCase();
         ttbm_function_search_title( searchText, 'ttbm_search_from_activity' );
+    });
+    $(document).on('keyup', '#ttbm_tab_category_search', function() {
+        let searchText = $(this).val().toLowerCase();
+        ttbm_function_search_title( searchText, 'ttbm_search_from_category' );
     });
     $(document).on('keyup', '#ttbm_tourist_place_Search', function() {
         let searchText = $(this).val().toLowerCase();

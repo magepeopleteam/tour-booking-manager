@@ -418,7 +418,9 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                         <div class="ttbm_travel_filter_item ttbm_filter_btn_active_bg_color" data-filter-item="all">All (<?php echo esc_attr( $total_count )?>)</div>
                         <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="publish">Publish (<?php echo esc_attr( $published_count )?>)</div>
                         <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="draft">Draft (<?php echo esc_attr( $draft_count )?>)</div>
-                        <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="expired_tour">Expire Tour( <?php echo esc_attr( $expire_count )?>)</div>
+                        <?php if( $expire_count > 0 ){?>
+                            <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="expired_tour">Expire Tour( <?php echo esc_attr( $expire_count )?>)</div>
+                        <?php }?>
                         <a class="ttbm_trash_link" href="<?php echo esc_url( $trash_link )?>" target="_blank">
                             <div class="ttbm_total_trash_display">Trash Tour (<?php echo esc_attr( $trash_count )?>) </div>
                         </a>

@@ -121,7 +121,7 @@
                     <!--Here Analytics-->
                     <?php do_action('ttbm_travel_analytics_display', $posts_query->found_posts, $analytics_Data )?>
 
-                    <?php do_action('ttbm_travel_lists_tab_display', $label, $analytics_Data )?>
+                    <?php do_action('ttbm_travel_lists_tab_display', $label, $analytics_Data, $posts_query )?>
 
                     <!--<div class="ttbm_travel_filter_holder">
                         <div class="ttbm_travel_filter_item ttbm_filter_btn_active_bg_color" data-filter-item="all">All</div>
@@ -176,10 +176,14 @@
                             $max_features = array_slice( $features, 0, 3 );
                         }
 
-//                        error_log( print_r( [ '$max_features' => $max_features ], true ) );
+                        $is_expire = 'upcoming_tour';
+                        if( $upcoming_date === '' ){
+                            $is_expire = 'expired_tour';
+                        }
+
                         ?>
                         
-                        <div class="ttbm-tour-card" data-travel-type="<?php echo esc_attr( $post_status )?>">
+                        <div class="ttbm-tour-card" data-travel-type="<?php echo esc_attr( $post_status )?>" data-expire-tour="<?php echo esc_attr( $is_expire );?>">
                             <div class="ttbm-tour-details">
                                 <div class="ttbm-tour-thumb">
                                     <?php echo get_the_post_thumbnail($post_id, 'thumbnail'); ?>

@@ -637,22 +637,21 @@
         $('.ttbm_travel_filter_item').removeClass('ttbm_filter_btn_active_bg_color').addClass('ttbm_filter_btn_bg_color');
         $(this).removeClass('ttbm_filter_btn_bg_color').addClass('ttbm_filter_btn_active_bg_color');
         let searchText = $(this).attr('data-filter-item');
-        ttbm_function_filter_by_post_type( searchText, 'ttbm-tour-card' );
+        let expired_find = '';
+        if( searchText === 'expired_tour' ) {
+            expired_find = 'expire';
+        }
+        ttbm_function_filter_by_post_type( searchText, 'ttbm-tour-card', expired_find );
     });
-    function ttbm_function_search_title( searchText, class_name ){
+    function ttbm_function_filter_by_post_type( searchText, class_name, expired_find='' ){
         $('.'+class_name).each(function() {
-            let location = $(this).data('taxonomy').toLowerCase();
-
-            if ( location.includes( searchText ) ) {
-                $(this).show();
-            } else {
-                $(this).hide();
+            let by_filter = '';
+            if( expired_find === 'expire' ){
+                by_filter = $(this).data('expire-tour').toLowerCase();
+            }else{
+                by_filter = $(this).data('travel-type').toLowerCase();
             }
-        });
-    }
-    function ttbm_function_filter_by_post_type( searchText, class_name ){
-        $('.'+class_name).each(function() {
-            let by_filter = $(this).data('travel-type').toLowerCase();
+
             if( searchText === 'all' ){
                 $(this).fadeIn();
             }else{
@@ -663,6 +662,18 @@
                 }
             }
 
+        });
+    }
+
+    function ttbm_function_search_title( searchText, class_name ){
+        $('.'+class_name).each(function() {
+            let location = $(this).data('taxonomy').toLowerCase();
+
+            if ( location.includes( searchText ) ) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
         });
     }
 

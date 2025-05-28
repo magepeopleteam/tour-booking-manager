@@ -449,3 +449,15 @@ Bug Fixed
 Style fixing.
 Bug Fixed
 - 23 Aug 2024*
+
+### Customer Dashboard & Cancellations
+
+Allow your customers to view their bookings and request cancellations directly from a modern dashboard.
+
+**Shortcode:**
+```
+[ttbm-customer-dashboard]
+```
+- Customers can see their orders and request a cancellation (if within the allowed window).
+- Admin can manage all cancellation requests from the backend, approve/reject, and send notifications.
+- The cancellation window is set globally in Travel Settings.

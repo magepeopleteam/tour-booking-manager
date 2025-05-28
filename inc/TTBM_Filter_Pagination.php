@@ -225,7 +225,7 @@
                                     <option value="<?php echo esc_attr($location->term_id); ?>" <?php echo esc_attr($url && $location->term_id == $url ? 'selected' : ''); ?>>
 										<?php echo esc_html($location->name); ?>
 										<?php
-											if (is_array($name) && sizeof($name) > 0) {
+											if (is_array($name) && isset($name[0]) && $name[0] !== '') {
 												echo esc_html(' - ' . $name[0]);
 											}
 										?>

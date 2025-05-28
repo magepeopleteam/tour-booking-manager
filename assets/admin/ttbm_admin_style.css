@@ -50,7 +50,7 @@ div.ttbm_settings .ttbm_popup .popupMainArea {width: 100%;}
 /************************************/
 #ttbm_status_page table th {text-align: left;}
 /************************************/
-span.textWarning { color: var(--color_warning); font-size: var(--fs);font-weight: var(--fw-bold);}
+span.textWarning { color: #fff; background: #e10b0b; padding: 0px 5px 4px 5px; font-size: var(--fs);font-weight: var(--fw-bold);}
 span.textSuccess { color: var(--color_success); font-size: var(--fs);}
 /***************/
 #mep_disable_ticket_time {margin: 0 10px 0 0;}

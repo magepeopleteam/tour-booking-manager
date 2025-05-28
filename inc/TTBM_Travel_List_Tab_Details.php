@@ -26,6 +26,8 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                 $taxonomy_type = 'ttbm_tour_tag';
             }else if( $tab_type === 'Add New Activities' ){
                 $taxonomy_type = 'ttbm_tour_activities';
+            }else if( $tab_type === 'Add New Category' ){
+                $taxonomy_type = 'ttbm_tour_cat';
             }
 
             return $taxonomy_type;
@@ -299,6 +301,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                 <div class="ttbm_travel_list_popup" id="ttbm_travel_list_popup"></div>
                 <div class="ttbm_trvel_lists_tabs">
                     <button class="active" data-target="ttbm_trvel_lists_tour"><?php echo __(' Tour Package','tour-booking-manager'); ?></button>
+                    <button data-target="ttbm_trvel_lists_tour_category"><?php echo __('Category','tour-booking-manager'); ?></button>
                     <button data-target="ttbm_trvel_lists_places"><?php echo __('Tourist Attraction','tour-booking-manager'); ?></button>
                     <button data-target="ttbm_trvel_lists_organiser"><?php echo __('Trip Organiser','tour-booking-manager'); ?></button>
                     <button data-target="ttbm_trvel_lists_location"><?php echo __('Trip Location','tour-booking-manager'); ?></button>
@@ -351,6 +354,15 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                     <?php self::ttbm_travel_list_tab_header( 'Content for Features', 'Add New Feature', 'ttbm_tab_features_Search', 'ttbm_tab_features_Search', 'Search Features',  'ttbm-add-new-taxonomy-btn' );?>
 
                     <div class="ttbm_travel_list_feature_content" id="ttbm_travel_list_feature_content">
+                        <div class="ttbm_travel_content_loader">Loading...</div>
+                    </div>
+                </div>
+
+                <div id="ttbm_trvel_lists_tour_category" class="ttbm_trvel_lists_content">
+
+                    <?php self::ttbm_travel_list_tab_header( 'Content for Category', 'Add New Category', 'ttbm_tab_category_search', 'ttbm_tab_category_search', 'Search Category',  'ttbm-add-new-taxonomy-btn' );?>
+
+                    <div class="ttbm_travel_list_category_content" id="ttbm_travel_list_category_content">
                         <div class="ttbm_travel_content_loader">Loading...</div>
                     </div>
                 </div>

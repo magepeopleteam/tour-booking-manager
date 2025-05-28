@@ -8,6 +8,7 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             add_action('wp_ajax_ttbm_get_locations_html', [ $this, 'ttbm_get_locations_html' ] );
             add_action('wp_ajax_ttbm_get_organiser_html_data', [ $this, 'ttbm_get_organiser_html_data' ] );
             add_action('wp_ajax_ttbm_get_feature_html_data', [ $this, 'ttbm_get_feature_html_data' ] );
+            add_action('wp_ajax_ttbm_get_category_html_data', [ $this, 'ttbm_get_category_html_data' ] );
             add_action('wp_ajax_ttbm_get_tag_html_data', [ $this, 'ttbm_get_tag_html_data' ] );
             add_action('wp_ajax_ttbm_get_activities_html_data', [ $this, 'ttbm_get_activities_html_data' ] );
             add_action('wp_ajax_ttbm_get_places_html_data', [ $this, 'ttbm_get_places_html_data' ] );
@@ -110,7 +111,7 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
         }
 
         public static function ttbm_get_term_data( $term_type ){
-            return $terms = get_terms([
+            return get_terms([
                 'taxonomy'   => $term_type,
                 'hide_empty' => false,
             ]);
@@ -209,6 +210,46 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                 'html' => $html,
             ]);
         }
+        public function ttbm_get_category_html_data() {
+
+            if ( ! isset($_POST['nonce']) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_admin_nonce') ) {
+                wp_send_json_error(['message' => 'Invalid nonce']);
+            }
+
+            $terms = self::ttbm_get_term_data( 'ttbm_tour_cat' );
+
+            ob_start();
+
+            if (!empty($terms) && !is_wp_error($terms)) {
+                ?>
+                <div class="ttbm-taxonomy-list-holder">
+                    <?php foreach ($terms as $term):
+                        $term_id    = $term->term_id;
+                        $term_name  = esc_html( $term->name );
+                        $term_slug  = esc_html( $term->slug );
+                        $description = esc_html( $term->description );
+
+                        $get_feature_icon = get_term_meta( $term_id, 'ttbm_feature_icon', true );
+
+                        $search_class = 'ttbm_search_from_category';
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $get_feature_icon );
+                        ?>
+
+                    <?php endforeach; ?>
+                </div>
+                <?php
+            } else {
+                ?>
+                <p>No category found.</p>
+                <?php
+            }
+            $html = ob_get_clean();
+
+            wp_send_json_success([
+                'html' => $html,
+            ]);
+        }
+
         public function ttbm_get_feature_html_data() {
 
             if ( ! isset($_POST['nonce']) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_admin_nonce') ) {
@@ -422,7 +463,6 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                 'all_places_count' => $all_places_count,
             ]);
         }
-
 
         function ttbm_add_new_location_term() {
 

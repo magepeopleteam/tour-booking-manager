@@ -153,7 +153,7 @@
 .ttbm_trvel_lists_tabs button {
     flex: 1 1 auto;
     width: 100%;
-    max-width: 12%; /* 100% / 7 tabs */
+    max-width: 11%; /* 100% / 7 tabs */
     background: #f1f1f1;
     border: none;
     outline: none;

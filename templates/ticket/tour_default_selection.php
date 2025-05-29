@@ -35,11 +35,11 @@
 							<div class="booking-button">
 								<div class="date-picker">
 									<div class="date_time_label"><?php echo is_array( $time_slots ) && sizeof( $time_slots ) > 0 ? esc_html__( 'Select Date & Time : ', 'tour-booking-manager' ) : esc_html__( 'Select Date  : ', 'tour-booking-manager' ); ?></div>
-									<div class="date-picker-icon">
+									<label class="date-picker-icon">
 										<i class="far fa-calendar-alt"></i>
 										<input type="hidden" name="ttbm_date" value="<?php echo esc_attr($hidden_date); ?>" required/>
 										<input id="ttbm_select_date" type="text" value="<?php echo esc_attr($visible_date); ?>" class="formControl mb-0 " placeholder="<?php echo esc_attr($now); ?>"  readonly required/>
-									</div>
+									</label>
 								</div>
 								<?php
 									$template_name = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );

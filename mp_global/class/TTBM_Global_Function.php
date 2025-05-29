@@ -116,6 +116,7 @@
 				return $format == 'D M d , yy' ? 'D M  j, Y' : $date_format;
 			}
 			public function date_picker_js($selector, $dates) {
+				//echo '<pre>';print_r($dates);echo '</pre>';
 				$start_date = $dates[0];
 				$start_year = date('Y', strtotime($start_date));
 				$start_month = (date('n', strtotime($start_date)) - 1);
@@ -142,8 +143,7 @@
                             changeYear: true,
                             beforeShowDay: WorkingDates,
                             onSelect: function (dateString, data) {
-                                let date = data.selectedYear + '-' + ('0' + (parseInt(data.selectedMonth) + 1)).slice(-2) + '-' + ('0' +
-                                    parseInt(data.selectedDay)).slice(-2);
+                                let date = data.selectedYear + '-' + ('0' + (parseInt(data.selectedMonth) + 1)).slice(-2) + '-' + ('0' + parseInt(data.selectedDay)).slice(-2);
                                 jQuery(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
                             }
                         });
@@ -951,7 +951,7 @@
 	) {
 		class MP_Global_Function {
 			public function __construct() {
-				//add_action('ttbm_load_date_picker_js', [$this, 'date_picker_js'], 10, 2);
+				add_action('mp_load_date_picker_js', [$this, 'date_picker_js'], 10, 2);
 			}
 			public static function query_post_type($post_type, $show = -1, $page = 1): WP_Query {
 				$args = array(

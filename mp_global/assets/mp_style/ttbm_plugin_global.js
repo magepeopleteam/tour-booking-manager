@@ -133,7 +133,7 @@ function ttbm_alert($this, attr = 'alert') {
 }(jQuery));
 //====================================================================Load Bg Image=================//
 function ttbm_loadBgImage() {
-    jQuery('body').find('[data-bg-image]:visible').each(function () {
+    jQuery('body').find('.ttbm_style [data-bg-image]:visible').each(function () {
         let target = jQuery(this);
         let width = target.outerWidth();
         let height = target.outerHeight();
@@ -792,7 +792,7 @@ function ttbm_pagination_page_management(parent, pagination_page, total_item) {
 (function ($) {
     "use strict";
     //=================initial call============//
-    $('.superSlider').each(function () {
+    $('.ttbm_style .superSlider').each(function () {
         sliderItemActive($(this), 1);
     });
     //==============Slider===================//

@@ -547,13 +547,13 @@
 					?>
                     <label data-placeholder>
                         <div class="ttbm_date-picker-container">
-                            <input name="date_filter_start" type="text" id="ttbm_date-input_from" class="ttbm_date-picker-input" placeholder="From Date">
+                            <input name="date_filter_start" type="text" id="ttbm_date-input_from" class="ttbm_date-picker-input" placeholder="<?php esc_html_e('From Date', 'tour-booking-manager'); ?>">
                             <div id="ttbm_calendar-icon" class="ttbm_calendar-icon"></div>
                         </div>
                     </label>
                     <label data-placeholder>
                         <div class="ttbm_date-picker-container">
-                            <input name="date_filter_end" type="text" id="ttbm_date-input_to" class="ttbm_date-picker-input" placeholder="To Date">
+                            <input name="date_filter_end" type="text" id="ttbm_date-input_to" class="ttbm_date-picker-input" placeholder="<?php esc_html_e('To Date', 'tour-booking-manager'); ?>">
                             <div id="ttbm_calendar-icon" class="ttbm_calendar-icon"></div>
                         </div>
                     </label>

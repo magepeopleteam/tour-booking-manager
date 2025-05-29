@@ -28,6 +28,7 @@
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Filter_Pagination.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Tour_List.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Details_Layout.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Travel_List_Tab_Details.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Details_Layout.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Booking.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Booking.php';

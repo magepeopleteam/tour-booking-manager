@@ -295,6 +295,23 @@ function ttbm_all_content_change($this) {
 }(jQuery));
 //==============================================================================Qty inc dec================//
 (function ($) {
+    function ttbm_calculateTotalQtyPrice(){
+        let totalQty = 0;
+        let totalPrice = 0;
+
+        $('.ttbm_hotel_room_incDec').each(function () {
+            const $input = $(this).find('.inputIncDec');
+            const qty = parseInt($input.val()) || 0;
+            const price = parseFloat($input.data('price')) || 0;
+
+            totalQty += qty;
+            totalPrice += qty * price;
+
+            $(".tour_qty").text( totalQty );
+            $(".tour_price").text( totalPrice );
+        });
+
+    }
     "use strict";
     $(document).on("click", "div.ttbm_style .decQty ,div.ttbm_style .incQty", function () {
         let current = $(this);
@@ -313,6 +330,7 @@ function ttbm_all_content_change($this) {
             target.parents('.qtyIncDec').find('.incQty').addClass('mpDisabled');
         }
         target.val(value).trigger('change').trigger('input');
+        ttbm_calculateTotalQtyPrice();
     });
 }(jQuery));
 //==============================================================================Input use as select================//
@@ -500,6 +518,7 @@ function ttbm_sticky_management() {
         let target_id = currentTarget.data('collapse-target');
         let close_id = currentTarget.data('close-target');
         let target = $('[data-collapse="' + target_id + '"]');
+        currentTarget.toggleClass('mActive');
         if (target_close(close_id, target_id) && collapse_close_inside(currentTarget) && target_collapse(target, currentTarget)) {
             ttbm_all_content_change(currentTarget);
         }

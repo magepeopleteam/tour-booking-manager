@@ -9,7 +9,7 @@
 .ttbm_total_booking_title {
     color: #666666;
     font-size: 20px;
-    margin: 0;
+    margin-top: 5px;
 }
 
 /* Filter Section */
@@ -210,6 +210,7 @@
     width: 100%;
     margin: 20px auto;
     border: 1px solid #ddd;
+    background-color: #f5f7fa;
     border-radius: 8px;
     overflow: hidden;
     font-family: Arial, sans-serif;
@@ -222,7 +223,6 @@
     padding: 0;
     list-style: none;
     background: #f5f5f5;
-    border-bottom: 1px solid #ddd;
 }
 
 .ttbm_hotel_tab_item {
@@ -242,12 +242,12 @@
     background: rgba(66, 133, 244, 0.1);
     width: 200px;
     color: #4285f4;
-    border-bottom: 2px solid #4285f4;
 }
 
 .ttbm_hotel_tab_content_holder {
-    padding: 20px;
+    padding: 10px;
     background: #fff;
+    margin-top:15px;
 }
 
 .ttbm_hotel_tab_content {
@@ -298,9 +298,9 @@
     flex: 1;
 }
 li.ttbm_hotel_tab_item {
-    border: 1px solid #cfcaca;
     margin-bottom: 0px;
     width:200px;
+    border: 1px solid #e1e1e1;
 }
 
 .ttbm_hotel_lists_list_title {
@@ -364,8 +364,8 @@ li.ttbm_hotel_tab_item {
 }
 .ttbm_add_new_hotel_header{
     padding: 7px 15px;
-    border: 1px solid #1479a7;
-    background-color: #258fbf;
+    border: 1px solid #5342BB;
+    background-color: #5342BB;
     border-radius: 5px;
 }
 .ttbm_add_new_hotel_text{
@@ -383,7 +383,7 @@ li.ttbm_hotel_tab_item {
     margin: 2px;
     padding: 4px 5px;
     vertical-align: middle;
-    border: 1px solid #cdc7c7;
+    border: 1px solid rgb(224, 224, 224);
     border-radius: 5px;
     min-width: 220px;
 }
@@ -398,21 +398,21 @@ li.ttbm_hotel_tab_item {
 
 .hotel-list-container {
     background-color: white;
-    border: 1px solid #c3c4c7;
+    border: 1px solid rgb(238, 238, 238);
     border-radius: 4px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     overflow: hidden;
 }
 
 .ttbm-hotel-list-table thead th {
-    border-bottom: 1px solid #c3c4c7;
+    border-bottom: 1px solid #e2e8f0;
     padding: 10px;
     text-align: left;
     line-height: 1.3em;
     font-size: 14px;
     font-weight: 600;
     color: #3c434a;
-    background-color: #f9f9f9;
+    background-color: #f8fafc;
 }
 .ttbm-hotel-list-table .ttbm-hotel-list-column-image {
     width: 80px;
@@ -463,6 +463,11 @@ li.ttbm_hotel_tab_item {
     align-items: center;
     gap: 5px;
 }
+
+.ttbm-hotel-list-hotel-location .fas{
+  color:rgb(255, 109, 0);
+}
+
 .ttbm-hotel-list-hotel-description {
     font-size: 13px;
     color: #555;
@@ -479,7 +484,7 @@ li.ttbm_hotel_tab_item {
 .ttbm-hotel-list-hotel-features {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 10px;
 }
 .ttbm-hotel-list-table .ttbm-hotel-list-column-actions {
     width: 130px;
@@ -489,21 +494,37 @@ li.ttbm_hotel_tab_item {
 .ttbm-hotel-list-action-buttons {
     display: flex;
     justify-content: flex-end;
+    gap: 8px;
+}
+.ttbm_hotel_count_holder{
+    display: flex;
+    gap: 10px;
+    height: 30px;
+
+}
+.ttbm_hotel_duplicate_post{
+    border: 1px solid #fef5d2;
+    background-color: #f1c40f;
+    color:#6f5f1f;
+}
+.ttbm-hotel-lists-status{
+    display: flex;
+    justify-content: flex-start;
     gap: 5px;
 }
 .ttbm-hotel-list-action-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 6px;
+    padding: 8px;
     border-radius: 4px;
     color: white;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease;
     border: none;
     cursor: pointer;
-    width: 32px;
-    height: 32px;
+    width: 20px;
+    height: 20px;
 }
 .ttbm-hotel-list-feature-tag {
     display: inline-flex;
@@ -519,24 +540,56 @@ li.ttbm_hotel_tab_item {
 }
 
 .first-tag {
-    background: linear-gradient(to right, #4facfe, #00f2fe);
+    background: #EAE7FF;
+    color: #5342BB;
 }
-.second-tag {
-    background: linear-gradient(to right, #43e97b, #38f9d7);
-}
-.third-tag {
-    background: linear-gradient(to right, #f6d365, #fda085);
+.first-tag:hover {
+    background: #5342BB;
+    color: #fff;
 }
 
+.second-tag {
+    background: #DBF7E8;
+    color:#2DC78A;
+    border: 1px solid #ccf1e3;
+}
+.second-tag:hover {
+    background: #2DC78A;
+    color:#fff;
+}
+.third-tag {
+    background: #FFE1E2;
+    color: #FF383C;
+}
+.third-tag:hover {
+    background: #FF383C;
+    color: #fff;
+}
 .ttbm-hotel-list-view-btn {
-    background: linear-gradient(to bottom, #00a0d2, #0073aa);
+    background: #EAE7FF;
+    color: #5342BB;
+}
+.ttbm-hotel-list-view-btn:hover {
+    background: #5342BB;
+    color: #fff;
 }
 .ttbm-hotel-list-edit-btn {
-    background: linear-gradient(to bottom, #46b450, #389e44);
+    background: #DBF7E8;
+    color:#2DC78A;
+}
+.ttbm-hotel-list-edit-btn:hover {
+    background: #2DC78A;
+    color:#fff;
 }
 .ttbm-hotel-list-delete-btn {
-    background: linear-gradient(to bottom, #f14668, #dc3545);
+    background: #FFE1E2;
+    color: #FF383C;
 }
+.ttbm-hotel-list-delete-btn:hover {
+    background: #FF383C;
+    color: #fff;
+}
+
 body{
     margin: 0;
     padding: 0;
@@ -580,10 +633,10 @@ body{
 }
 
 .ttbm_hotel_list_header_blue-bg {
-    background: linear-gradient(135deg, #0073aa, #00a0d2);
+    background: rgb(30, 136, 229);
 }
 .ttbm_hotel_list_header_green-bg {
-    background: linear-gradient(135deg, #46b450, #79c37c);
+    background: rgb(38, 166, 154);
 }
 .ttbm_hotel_list_header_purple-bg {
     background: linear-gradient(135deg, #826eb4, #9c7eda);
@@ -609,6 +662,277 @@ body{
     flex-direction: column;
 }
 
+.ttbm-location-card,
+.ttbm-places-card
+{
+    display: flex;
+    gap: 15px;
+}
+.ttbm-card-left img {
+    width: 100px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.ttbm_travel_content_loader{
+    display: flex;
+    padding: 10px 20px;
+    /*border: 1px solid #0a4b78;*/
+    margin-top: 10px;
+    color: #999900;
+    width: 150px;
+}
+
+.ttbm_hotel_status_items {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-direction: column;
+    justify-content: center;
+    .meta-icon {
+        background-color: #e3f2fd;
+        color: #4d96dd;
+        padding:13px;
+        width: 60px;
+        height: 60px;
+        border-radius:50%;
+        font-size: 25px;
+        box-sizing: border-box;
+        text-align: center;
+    }
+    .meta-label{
+        color: var(--mpl-black);
+    }
+}
 
 
+
+.ttbm_hotel_tab_menu {
+            display: flex;
+            position: relative;
+            list-style: none;
+            background: linear-gradient(to right, #f5f7fa, #f8fafc);
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            margin-left:2px;
+        }
+        
+ .ttbm_hotel_tab_item {
+            padding: 10px 25px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #718096;
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            z-index: 1;
+            flex: 1;
+            text-align: center;
+            max-width: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        /* Add icons before text */
+        .ttbm_hotel_tab_item:nth-child(1)::before {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'%3E%3C/path%3E%3Cpolyline points='9 22 9 12 15 12 15 22'%3E%3C/polyline%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-right: 8px;
+        }
+        
+        .ttbm_hotel_tab_item:nth-child(2)::before {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='black' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M4 7a2 2 0 012-2h12a2 2 0 012 2v2H4V7zM3 10h18v8a2 2 0 01-2 2H5a2 2 0 01-2-2v-8zM9 17h6'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-right: 8px;
+        }
+        
+        
+        .ttbm_hotel_tab_item:hover {
+            color: #4a5568;
+            background-color: rgba(30, 136, 229, 0.05);
+        }
+        
+        .ttbm_hotel_tab_item.active {
+            color: #1e88e5;
+            font-weight: 700;
+        }
+        
+        .ttbm_hotel_tab_item.active::after {
+            width: 100%;
+            box-shadow: 0 0 8px rgba(30, 136, 229, 0.5);
+        }
+        
+        /* Tab indicator - will be controlled by JS */
+        .ttbm_tab_indicator {
+            position: absolute;
+            bottom: 0;
+            height: 3px;
+            background: linear-gradient(to right, #1e88e5, #42a5f5);
+            transition: all 0.3s ease;
+            border-radius: 3px 3px 0 0;
+            box-shadow: 0 0 8px rgba(30, 136, 229, 0.5);
+        }
+        
+        /* Add subtle hover animation */
+        @keyframes tab-hover {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
+            100% { transform: translateY(0); }
+        }
+        
+        .ttbm_hotel_tab_item:hover::before {
+            animation: tab-hover 0.5s ease;
+        }
+
+        /* Tab content containers */
+        .ttbm_tab_content {
+            display: none;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .ttbm_tab_content.active {
+            display: block;
+        }
+#ttbm_order_list_result .billing-value{float: left;}
+#ttbm_order_list_result ._warningButtons_show{float: right; font-size: 12px !important; padding: 2px 4px !important; margin-top: 0px !important;}
+#ttbm_order_list_result ._themeButton{padding:5px;}
+#ttbm_order_list_result h6{font-size:18px;}
+#ttbm_attendee_list_result ._justifyBetween_alignCenter{background: #efefef;}
+#ttbm_attendee_list_result .buttonGroup
+ {
+        border-radius: 5px;
+        margin-right: 10px;
+        border-radius: 15px;
+    }
+#ttbm_attendee_list_result input.formControl.max_100.pagination_input {
+    margin: 0px 20px;
+    border-radius: 15px;
+}
+#ttbm_attendee_list_result button._navy_blueButton_xs.ttbm_download_selected_attendee_pdf
+ {
+    border-radius: 10px !important;
+}
+#ttbm_attendee_list_result select[name="ttbm_attendee_list_theme"] {
+  margin: 0 10px;
+  border-radius: 15px;
+}
+div.attendee_filter_list h5, #ttbm_booking_attendee_list_result h6
+ {
+    margin: 0 20px 0 0;
+    font-size: 18px;
+}
+#ttbm_booking_attendee_list_result table#ttbm_attendee_short_info
+ {
+    margin-bottom: 15px;
+}
+#ttbm_booking_attendee_list_result label.justifyCenter{display:inline; font-size:18px;}
+
+
+.ttbm_hotel_tab_menu {
+    display: flex;
+    gap: 12px;
+    padding: 2px 12px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    list-style: none;
+    margin: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.ttbm_hotel_tab_item {
+    background: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    user-select: none;
+}
+
+.ttbm_hotel_tab_item:hover {
+    background-color: #eaf6ff;
+    color: #0077cc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 119, 204, 0.15);
+}
+
+.ttbm_hotel_tab_item.active {
+    background-color: #0077cc;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 119, 204, 0.3);
+}
+
+@media screen and (max-width: 768px) {
+    .ttbm_hotel_tab_menu {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ttbm_hotel_tab_item {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.ttbm_tour_list_text_header{
+    display: flex;
+    gap: 20px;
+}
+.ttbm_tour_count_holder{
+    display: flex;
+    gap: 10px;
+    height: 30px;
+    margin-top: 10px;
+}
+.ttbm_total_travel_display{
+    color: #ef17c9;
+}
+
+.ttbm_total_publish_display{
+    color: #1793ef;
+}
+
+.ttbm_total_trash_display{
+    background-color: #fcd5d0;
+    color: #e74c3c;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+/*.ttbm_total_trash_display:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}*/
+.ttbm_trash_link{
+    text-decoration: none;
+    /*margin-top: 7px;*/
+}
+
+.ttbm_travel_list_page_title_bg{
+    padding: 8px 0;
+    border-radius: 5px;
+    
+}
 

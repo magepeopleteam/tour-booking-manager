@@ -6,11 +6,9 @@
   }
 select, input[type="text"], input[type="email"], input[type="search"], input[type="tel"], input[type="url"], input[type="password"],  input[type="file"], input[type="color"], input[type="number"], input[type="range"], input[type="date"], input[type="month"], input[type="week"], input[type="time"], input[type="datetime"], input[type="datetime-local"] {
       width:14em;
-      height: 2.5em;
       border: 0px;
       border: 1px solid var(--mpl-gray);
       color: var(--mpl-secondary);
-      padding: .5em;
       font-weight: normal;
       font-size: 14px;
       background-color: #f5f8ff;
@@ -31,10 +29,9 @@ select, input[type="text"], input[type="email"], input[type="search"], input[typ
     }
   }
   textarea{
-    height:calc( 2.5em * 2 );
     background-color: #f5f8ff;
     font-weight: normal;
-    font-size: 14px;
+    line-height: 1.5rem;
   }
   input[type="search"]{
     border: 0px solid var(--mpl-dark);

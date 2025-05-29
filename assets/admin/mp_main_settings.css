@@ -1,5 +1,6 @@
 :root {
   --mpl-primary:#F12971;
+  --mpl-primary-rgba:rgba(241, 41, 113, 0.08);
   --mpl-secondary:#1d2327;
   --mpl-sky:#f38fb3;
   --mpl-sky-light:#EFFAFF;
@@ -11,6 +12,7 @@
   --mpl-yellow:#ffcb00;
   --mpl-red:#d91e1e;
   --mpl-red-light:#f6dada;
+  --mpl-gradient:linear-gradient(135deg, #F12971, #c4185b);
 }
 
 #ttbm_meta_box_panel label input, .travel-list label input {
@@ -18,11 +20,9 @@
 }
 #ttbm_meta_box_panel select, #ttbm_meta_box_panel input[type=text], #ttbm_meta_box_panel input[type=email], #ttbm_meta_box_panel input[type=search], #ttbm_meta_box_panel input[type=tel], #ttbm_meta_box_panel input[type=url], #ttbm_meta_box_panel input[type=password], #ttbm_meta_box_panel input[type=file], #ttbm_meta_box_panel input[type=color], #ttbm_meta_box_panel input[type=number], #ttbm_meta_box_panel input[type=range], #ttbm_meta_box_panel input[type=date], #ttbm_meta_box_panel input[type=month], #ttbm_meta_box_panel input[type=week], #ttbm_meta_box_panel input[type=time], #ttbm_meta_box_panel input[type=datetime], #ttbm_meta_box_panel input[type=datetime-local], .travel-list select, .travel-list input[type=text], .travel-list input[type=email], .travel-list input[type=search], .travel-list input[type=tel], .travel-list input[type=url], .travel-list input[type=password], .travel-list input[type=file], .travel-list input[type=color], .travel-list input[type=number], .travel-list input[type=range], .travel-list input[type=date], .travel-list input[type=month], .travel-list input[type=week], .travel-list input[type=time], .travel-list input[type=datetime], .travel-list input[type=datetime-local] {
   width: 14em;
-  height: 2.5em;
   border: 0px;
   border: 1px solid var(--mpl-gray);
   color: var(--mpl-secondary);
-  padding: 0.5em;
   font-weight: normal;
   font-size: 14px;
   background-color: #f5f8ff;
@@ -42,10 +42,9 @@
   box-shadow: none;
 }
 #ttbm_meta_box_panel textarea, .travel-list textarea {
-  height: 5em;
   background-color: #f5f8ff;
   font-weight: normal;
-  font-size: 14px;
+  line-height: 1.5rem;
 }
 #ttbm_meta_box_panel input[type=search], .travel-list input[type=search] {
   border: 0px solid var(--mpl-dark);
@@ -169,32 +168,57 @@
 .ttbm-tour-list-page .ttbm-tour-list {
   display: flex;
   flex-wrap: wrap;
-  border-top: 1px solid var(--mpl-light);
   margin-top: 10px;
+  gap: 36px;
+}
+@media (min-width: 1024px) {
+  .ttbm-tour-list-page .ttbm-tour-list {
+    gap: 10px;
+  }
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
-  border-bottom: 1px solid #eee;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
+  gap: 10px;
+  border: 1px solid #dfd6d6;
+  margin-bottom: 6px;
+  border-radius: 10px;
+  transition: all 0.5s;
+}
+@media (min-width: 1024px) {
+  .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
+    flex-direction: row;
+  }
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card:hover {
   cursor: pointer;
-  background: var(--mpl-light);
+  transform: translateY(-3px);
+  box-shadow: 0 2px 5px #ddd;
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details {
   display: flex;
   flex-direction: row;
   justify-content: start;
   gap: 10px;
-  width: 70%;
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details {
+    width: 55%;
+  }
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details .ttbm-tour-thumb {
   position: relative;
-  width: 100px;
+  width: 260px;
   height: 100px;
   padding: 10px;
+}
+@media (min-width: 1024px) {
+  .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details .ttbm-tour-thumb {
+    width: 200px;
+  }
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-details .ttbm-tour-thumb img {
   width: 100%;
@@ -228,18 +252,27 @@
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-info .location {
   color: var(--mpl-primary);
   font-size: 14px;
-  margin-bottom: 6px;
+  margin: 6px 0;
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-info .description {
   font-size: 13px;
   color: #555;
+  margin-bottom: 6px;
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta {
   padding: 10px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 30%;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+@media (min-width: 1024px) {
+  .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta {
+    width: 25%;
+    padding: 0;
+  }
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-item {
   display: flex;
@@ -249,8 +282,8 @@
   justify-content: center;
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-item .meta-icon {
-  background-color: var(--mpl-light);
-  color: var(--mpl-dark);
+  background-color: #e3f2fd;
+  color: #4d96dd;
   padding: 13px;
   width: 60px;
   height: 60px;
@@ -262,19 +295,38 @@
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-item .meta-label {
   color: var(--mpl-black);
 }
-.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-action {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action {
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
   gap: 10px;
   padding: 10px;
-  flex-direction: column;
-  background-color: var(--mpl-primary);
-  color: #fff;
+  flex-direction: row;
+  background-color: #F3FFF9;
+  color: var(--mpl-dark);
+  border-radius: 0 10px 10px 0;
+  margin: 0;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action a {
+  font-size: 15px;
+  text-decoration: none;
+  padding: 5px 10px;
   border-radius: 5px;
 }
-.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-action a {
-  color: #fff;
-  text-decoration: none;
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action a.ttbm_view_post {
+  border: 1px solid #3498db;
+  background-color: #d8f0ff;
+  color: #3498db;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action a.ttbm_edit_post {
+  border: 1px solid #f1c40f;
+  background-color: #fef5d2;
+  color: #f1c40f;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action a.ttbm_trash_post {
+  border: 1px solid #e74c3c;
+  background-color: #fcd5d0;
+  color: #e74c3c;
 }
 @media (max-width: 1024px) {
   .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
@@ -309,11 +361,18 @@
 #ttbm_meta_box_panel .ttbm-faq-section .faq-header {
   position: relative;
   z-index: 0;
+  background-color: var(--mpl-light);
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header.mActive {
+  border-radius: 15px 15px 0 0;
 }
 #ttbm_meta_box_panel .ttbm-faq-section .faq-header .faq-action {
   position: absolute;
   top: 50%;
-  right: 0;
+  right: 15px;
   transform: translateY(-50%);
   z-index: 1;
 }
@@ -325,6 +384,12 @@
 }
 #ttbm_meta_box_panel .ttbm-faq-section .faq-content {
   display: none;
+  border: 1px solid #ddd;
+  border-radius: 0;
+  padding: 10px;
+}
+#ttbm_meta_box_panel .ttbm-faq-section .faq-content.mActive {
+  border-radius: 0 0 15px 15px;
 }
 
 #ttbm_meta_box_panel .ttbm-daywise-section .ttbm-daywise-item {
@@ -339,11 +404,18 @@
 #ttbm_meta_box_panel .ttbm-daywise-section .daywise-header {
   position: relative;
   z-index: 0;
+  background-color: var(--mpl-light);
+  border: 1px solid #ddd;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header.mActive {
+  border-radius: 15px 15px 0 0;
 }
 #ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action {
   position: absolute;
   top: 50%;
-  right: 0;
+  right: 15px;
   transform: translateY(-50%);
   z-index: 1;
 }
@@ -355,6 +427,12 @@
 }
 #ttbm_meta_box_panel .ttbm-daywise-section .daywise-content {
   display: none;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 0 0 15px 15px;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-content.mActive {
+  border-radius: 0 0 15px 15px;
 }
 
 #ttbm_meta_box_panel .ttbm-modal-container, .travel-list .ttbm-modal-container {
@@ -555,7 +633,8 @@ div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after, div.ttbm_gl
 }
 
 #ttbm_meta_box_panel .postbox-header, .travel-list .postbox-header {
-  background-color: var(--mpl-primary);
+  background: var(--mpl-gradient);
+  padding: 5px;
 }
 #ttbm_meta_box_panel .postbox-header .handle-actions, .travel-list .postbox-header .handle-actions {
   margin-top: 0;
@@ -572,9 +651,9 @@ div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after, div.ttbm_gl
 }
 #ttbm_meta_box_panel .ttbm_settings .tabLists, .travel-list .ttbm_settings .tabLists {
   width: 20%;
-  padding: 25px;
-  background-color: var(--mpl-light);
-  padding-right: 0;
+  padding: 0;
+  background-color: var(--mpl-white);
+  border-right: 1px solid var(--mpl-gray);
   font-size: 16px;
 }
 #ttbm_meta_box_panel .ttbm_settings .tabLists li, .travel-list .ttbm_settings .tabLists li {
@@ -586,28 +665,32 @@ div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after, div.ttbm_gl
 }
 #ttbm_meta_box_panel .ttbm_settings .tabLists li i, .travel-list .ttbm_settings .tabLists li i {
   margin-right: 25px;
-  color: var(--mpl-primary);
+  color: #757575;
 }
 #ttbm_meta_box_panel .ttbm_settings .tabLists li::after, .travel-list .ttbm_settings .tabLists li::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: -1px;
-  border-bottom: 1px solid #d8d8d8;
-  width: 91%;
+  width: 0;
 }
-#ttbm_meta_box_panel .ttbm_settings .tabLists li.active, #ttbm_meta_box_panel .ttbm_settings .tabLists li:hover, .travel-list .ttbm_settings .tabLists li.active, .travel-list .ttbm_settings .tabLists li:hover {
-  background-color: #fff;
-  color: #333;
+#ttbm_meta_box_panel .ttbm_settings .tabLists li.active, .travel-list .ttbm_settings .tabLists li.active {
+  background-color: var(--mpl-primary-rgba);
+  color: var(--mpl-primary);
   font-weight: normal;
   border-left: 2px solid var(--mpl-primary);
 }
-#ttbm_meta_box_panel .ttbm_settings .tabLists li.active::after, #ttbm_meta_box_panel .ttbm_settings .tabLists li:hover::after, .travel-list .ttbm_settings .tabLists li.active::after, .travel-list .ttbm_settings .tabLists li:hover::after {
-  width: 100%;
+#ttbm_meta_box_panel .ttbm_settings .tabLists li.active i, .travel-list .ttbm_settings .tabLists li.active i {
+  color: var(--mpl-primary);
+}
+#ttbm_meta_box_panel .ttbm_settings .tabLists li:hover, .travel-list .ttbm_settings .tabLists li:hover {
+  background-color: var(--mpl-light);
+  color: var(--mpl-primary);
 }
 #ttbm_meta_box_panel .ttbm_settings .tabsContent, .travel-list .ttbm_settings .tabsContent {
   width: 80%;
   padding: 2% 5%;
+  background-color: var(--mpl-light);
 }
 #ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem > h2, .travel-list .ttbm_settings .tabsContent .tabsItem > h2 {
   padding: 0;
@@ -624,13 +707,33 @@ div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after, div.ttbm_gl
   margin-bottom: 30px;
 }
 #ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section, .travel-list .ttbm_settings .tabsContent .tabsItem section {
-  border: 1px solid #d8d8d8;
-  padding: 20px;
-  margin-top: -1px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1019607843);
+  padding: 24px;
+  margin-bottom: 24px;
+  transition: transform 0.2s, box-shadow 0.2s;
   width: 100%;
 }
-#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section.bg-light, .travel-list .ttbm_settings .tabsContent .tabsItem section.bg-light {
-  background-color: var(--mpl-light);
+#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section:hover, .travel-list .ttbm_settings .tabsContent .tabsItem section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .ttbm-header, .travel-list .ttbm_settings .tabsContent .tabsItem section .ttbm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--mpl-gray);
+}
+#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .ttbm-header h4, .travel-list .ttbm_settings .tabsContent .tabsItem section .ttbm-header h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 #ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label, .travel-list .ttbm_settings .tabsContent .tabsItem section .label {
   display: flex;
@@ -638,14 +741,13 @@ div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after, div.ttbm_gl
   align-items: center;
   flex-direction: row;
   cursor: pointer;
+  margin: 10px 0;
+  padding: 10px;
 }
 @media (max-width: 1200px) {
   #ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label, .travel-list .ttbm_settings .tabsContent .tabsItem section .label {
     flex-direction: column;
   }
-}
-#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label .label-inner, .travel-list .ttbm_settings .tabsContent .tabsItem section .label .label-inner {
-  padding-right: 20px;
 }
 #ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label p, .travel-list .ttbm_settings .tabsContent .tabsItem section .label p {
   font-size: 14px;
@@ -703,6 +805,13 @@ div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after, div.ttbm_gl
 #ttbm_meta_box_panel .ttbm_settings .tabsContent .wp-editor-area, .travel-list .ttbm_settings .tabsContent .wp-editor-area {
   width: 100%;
   border: 0;
+}
+#ttbm_meta_box_panel .fullscreen-icon, .travel-list .fullscreen-icon {
+  background-size: 22px 30px;
+  background-position: 4px 0px;
+}
+#ttbm_meta_box_panel .leaflet-touch .fullscreen-icon.leaflet-fullscreen-on, .travel-list .leaflet-touch .fullscreen-icon.leaflet-fullscreen-on {
+  background-position: 4px 0px;
 }
 
 .auto-search-wrapper.loupe::before {
@@ -888,24 +997,31 @@ div.ttbm_style select.formControl {
   background: transparent;
 }
 
-#ttbm_meta_box_panel h1, .travel-list h1 {
+.dFlex {
+  align-items: center;
+}
+
+#ttbm_meta_box_panel #ttbm_date_config_meta_boxs .date-configeration, .travel-list #ttbm_date_config_meta_boxs .date-configeration {
   padding: 0;
   color: var(--mpl-secondary);
-  margin: 30px 0 20px 0;
-  margin-bottom: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 22px;
-  line-height: 26px;
-  font-family: Roboto, sans-serif;
-  margin-bottom: 12px;
-  font-weight: 700;
+  font-weight: bold;
 }
-#ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs .description,
-#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs .description, .travel-list .tab-content-ttbm_date_config_meta_boxs .description,
-.travel-list .tab-content-ttbm_tax_meta_boxs .description {
+#ttbm_meta_box_panel #ttbm_date_config_meta_boxs .date-configeration-desc, .travel-list #ttbm_date_config_meta_boxs .date-configeration-desc {
+  color: var(--mpl-secondary);
   margin: 0;
-  padding: 0.75em 0;
-  font-size: 1rem;
+  margin-bottom: 0px;
+  font-weight: normal;
+  line-height: 24px;
+  margin-bottom: 30px;
+}
+#ttbm_meta_box_panel #ttbm_date_config_meta_boxs table.form-table tr th, .travel-list #ttbm_date_config_meta_boxs table.form-table tr th {
+  text-align: left !important;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: var(--mpl-secondary);
 }
 #ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table,
 #ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table, .travel-list .tab-content-ttbm_date_config_meta_boxs table,
@@ -914,7 +1030,11 @@ div.ttbm_style select.formControl {
   border-spacing: 0;
   border: 0;
   margin: 0;
-  margin-top: 50px;
+}
+#ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th,
+#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr th,
+.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr th {
+  text-align: left;
 }
 #ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th,
 #ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td,
@@ -924,19 +1044,9 @@ div.ttbm_style select.formControl {
 .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr th,
 .travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td {
   background-color: var(--mpl-white);
-  padding: 1.5em;
-  margin-bottom: 1.5em;
+  padding: 15px;
   width: 50%;
   border: 1px solid var(--mpl-gray);
-}
-#ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr th p,
-#ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td p,
-#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th p,
-#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td p, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr th p,
-.travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td p,
-.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr th p,
-.travel-list .tab-content-ttbm_tax_meta_boxs table.form-table tr td p {
-  font-size: 0.8rem;
 }
 #ttbm_meta_box_panel .tab-content-ttbm_date_config_meta_boxs table.form-table tr td,
 #ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td, .travel-list .tab-content-ttbm_date_config_meta_boxs table.form-table tr td,
@@ -1105,14 +1215,13 @@ div.ttbm_style span.ttbm_remove_multi_image {
 }
 .includedd-features-section .groupCheckBox {
   overflow: hidden;
+  margin-bottom: 5px;
 }
 .includedd-features-section .customCheckboxLabel {
   float: left;
-  margin: 5px;
+  margin-right: 10px;
   padding: 7px 7px;
-  border: 1px solid #d8d8d8;
-  background-color: #f8f8f8;
-  width: 227px;
+  width: 225px;
   border-radius: 5px;
   font-weight: normal;
   font-size: 14px;
@@ -1136,6 +1245,11 @@ div.ttbm_style span.ttbm_remove_multi_image {
   border-radius: 50px;
 }
 
+.input-fullwidth {
+  width: 100%;
+  border-radius: 5px;
+}
+
 div.ttbm_style .customCheckboxLabel input:checked ~ .customCheckbox::after {
   content: "";
   position: absolute;
@@ -1150,6 +1264,8 @@ div.ttbm_style .customCheckboxLabel input:checked ~ .customCheckbox::after {
   background-color: transparent;
   -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
+  left: 3px;
+  top: 4px !important;
 }
 
 .reply-enquiry-form {

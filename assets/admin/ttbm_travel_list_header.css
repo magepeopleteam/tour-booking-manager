@@ -8,14 +8,11 @@
 
 .ttbm_travel_analytics-container {
     margin: 1rem auto;
-    background: white;
     border-radius: 0.5rem;
     overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); */
 }
 .ttbm_travel_analytics-bar {
-    padding: 0.75rem;
-    background: linear-gradient(to right, #eff6ff, #f5f3ff);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -33,31 +30,41 @@
 .ttbm_travel_blue-bg {
     background-color: #dbeafe;
 }
+
+.ttbm_travel_blue-text {
+    color: #006eff;
+}
+
 .ttbm_travel_icon-circle {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 9999px;
+    width: 66px;
+    height: 66px;
+    border-radius:100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 0.5rem;
+}
+.ttbm_travel_icon-circle i{
+    font-size:1.3rem;
 }
 .ttbm_travel_metric-label {
-    font-size: 0.75rem;
+    font-size:1rem;
     color: #6b7280;
+    margin: 0;
 }
 .ttbm_travel_metric-value {
-    font-size: 1.125rem;
+    font-size: 1.5rem;
     font-weight: 700;
+    margin: 10px 0;
 }
 .ttbm_travel_metric-card {
     background: white;
     border-radius: 0.5rem;
-    padding: 0.5rem;
     display: flex;
-    align-items: center;
+    align-items:center;
+    flex: 1;
+    gap:15px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    flex:1;
+    padding: 10px;
 }
 .ttbm_travel_green-bg {
     background-color: #d1fae5;
@@ -86,10 +93,10 @@
 .ttbm_travel_info-card {
     background: white;
     border-radius: 0.5rem;
-    padding: 0.5rem;
+    padding:15px;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 25px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     flex:1;
 }
@@ -97,8 +104,8 @@
     border-right: 1px solid #f3f4f6;
 }
 .ttbm_travel_info-section {
-    padding: 0 0.5rem;
-    text-align: center;
+    text-align: left;
+    padding-right:20px;
 }
 .ttbm_travel_status-card {
     background: white;
@@ -128,4 +135,426 @@
 }
 .ttbm_travel_dot-expired {
     background-color: #ef4444;
+}
+
+/*Travel Tabs*/
+.ttbm_trvel_lists_tab_holder {
+    width: 100%;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+.ttbm_trvel_lists_tabs {
+    flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ttbm_trvel_lists_tabs button {
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 11%; /* 100% / 7 tabs */
+    background: #f1f1f1;
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.ttbm_trvel_lists_tabs button.active {
+    background: #0073aa;
+    color: #fff;
+}
+
+.ttbm_trvel_lists_content {
+    display: none;
+    padding: 20px 0px;
+    /*border: 1px solid #ddd;*/
+    border-top: none;
+    background-color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 10px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+}
+
+.ttbm_trvel_lists_content.active {
+    display: block;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Responsive for small screens */
+@media (max-width: 768px) {
+    .ttbm_trvel_lists_tabs {
+        flex-direction: column;
+    }
+
+    .ttbm_trvel_lists_tabs button {
+        max-width: 100%;
+    }
+}
+
+/*Location tab display*/
+.ttbm-locations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+.ttbm-location-card {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+    padding: 10px;
+    background: #fff;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    align-items: flex-start;
+}
+.ttbm-location-card:hover {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.ttbm-card-left img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+.ttbm-card-left {
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+.ttbm-card-right {
+    flex-grow: 1;
+    position: relative;
+}
+.ttbm-title {
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0 0 5px;
+}
+.ttbm-title i{
+    margin-right: 10px;
+}
+.ttbm-description {
+    font-size: 13px;
+    color: #555;
+    padding-right: 60px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 5px;
+}
+
+.ttbm-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.ttbm-popup-box {
+    background: #fff;
+    padding: 20px 25px;
+    width: 500px;
+    max-width: 95%;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.ttbm-popup-box h3 {
+    margin-top: 0;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.ttbm-popup-box input[type="text"],
+.ttbm-popup-box textarea,
+.ttbm-popup-box select {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+#ttbm-image-preview img {
+    margin-top: 10px;
+    max-width: 100px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.ttbm-popup-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.ttbm-popup-buttons button {
+    padding: 8px 16px;
+    border: none;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.ttbm-save-location {
+    background-color: #0073aa;
+    color: white;
+}
+
+#ttbm-close-popup {
+    background-color: #ccc;
+    color: #333;
+}
+
+.ttbm-save-location:hover {
+    background-color: #005a87;
+}
+
+#ttbm-close-popup:hover {
+    background-color: #bbb;
+}
+
+
+.ttbm-taxonomy-list-holder {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 10px 0px;
+}
+
+.ttbm-taxonomy-card {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.ttbm-taxonomy-card:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.ttbm-card-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    gap: 10px;
+    width: 100px;
+}
+
+.ttbm-location-card-actions {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.ttbm-btn {
+    padding: 5px 4px;
+    font-size: 13px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    width: 25px;
+}
+
+.ttbm-view-btn {
+    background: #EAE7FF;
+    color: #5342BB;
+}
+.ttbm-view-btn:hover{
+    background: #5342BB;
+    color: #FFF;
+}
+
+.ttbm-edit-btn {
+    background: #DBF7E8;
+    color: #2DC78A;
+}
+.ttbm-edit-btn:hover{
+    background: #2DC78A;
+    color: #FFF;
+}
+
+.ttbm-delete-btn {
+    background: #FFE1E2;
+    color: #FF383C;
+}
+.ttbm-delete-btn:hover{
+    background: #e9252c;
+    color: #FFF;
+}
+
+.ttbm-btn:hover {
+    opacity: 0.9;
+}
+
+.ttbm-title-row {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 20px;
+}
+
+.ttbm-taxonomy-card-actions {
+    display: none;
+    gap: 8px;
+}
+
+.ttbm-taxonomy-card:hover .ttbm-taxonomy-card-actions {
+    display: flex;
+}
+
+.ttbm_places_load_more_holder,
+.ttbm_plocation_load_more_holder
+{
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+}
+
+.ttbm_places_load_more_btn,
+.ttbm-location-load-more {
+    cursor: pointer;
+    padding: 7px 25px;
+    border: 1px solid #cfc9c9;
+    border-radius: 3px;
+}
+.ttbm_places_load_more_btn:hover{
+    background-color: #1972b9;
+    color: #fff;
+}
+.ttbm_show_location_shortcode{
+    padding: 5px 0px;
+    color: #b3af0f;
+    background-color: #ddd;
+}
+
+
+.ttbm_trvel_lists_tabs {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 5px;
+    background: #fff;
+    border-radius: 8px;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.ttbm_trvel_lists_tabs button {
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    border: 1px solid #ddd;
+    margin: 5px;
+}
+
+.ttbm_trvel_lists_tabs button:hover {
+    background-color: #eaf6ff;
+    color: #0077cc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 119, 204, 0.15);
+}
+
+.ttbm_trvel_lists_tabs button.active {
+    background-color: #006eff;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 119, 204, 0.15);
+}
+
+.ttbm_travel_lists_tour-features {
+    display: flex;
+    gap: 10px;
+}
+.ttbm_travel_lists_tour-feature {
+    padding: 5px 10px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: #555;
+    text-align: center;
+}
+.ttbm_travel_lists_tour-feature.ttbm_travel_lists_first_feature {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+.ttbm_travel_lists_tour-feature.ttbm_travel_lists_second_feature {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+.ttbm_travel_lists_tour-feature.ttbm_travel_lists_third_feature {
+    background-color: #fff3e0;
+    color: #e65100;
+}
+.ttbm_travel_filter_holder{
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 5px;
+}
+
+.ttbm_travel_filter_item{
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.ttbm_filter_btn_bg_color{
+    background-color: #e3f2fd;
+    color: #333;
+}
+.ttbm_filter_btn_active_bg_color{
+    background-color: #006eff;
+    color: #fff;
+}
+
+.ttbm_travel_filter_item:hover{
+    background-color: #006eff;
+    color: #fff;
+}
+
+.meta-action i.fa.fa-clone
+ {
+    border: 1px solid #618593;
+    font-weight: 600;
+    padding: 8px 10px;
+    border-radius: 5px;
+}
+
+.ttbm-tour-list-page, .ttbm_trvel_lists_content{background: linear-gradient(to right, #eff6ff, #f5f3ff)}
+.ttbm-tour-list-page .ttbm-tour-card{ background:#fff; }
+@media screen and (max-width: 768px) {
+    .ttbm_trvel_lists_tabs {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ttbm_trvel_lists_tabs button {
+        width: 100%;
+        text-align: center;
+    }
 }

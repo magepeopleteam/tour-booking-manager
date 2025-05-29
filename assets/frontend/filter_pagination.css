@@ -210,7 +210,7 @@ div.ttbm_list_info span {font-size: var(--fs_h6); color: var(--color_theme);}
 div.ttbm_list_info > span:first-child {margin: 0 var(--dbr) 0 0;}
 
 .filter_item.grid_4 .ttbm_list_info_wrapper, .filter_item.grid_3 .ttbm_list_info_wrapper {
-	height: 87px;
+	height: auto;
 }
 
 @media(max-width: 767px) {

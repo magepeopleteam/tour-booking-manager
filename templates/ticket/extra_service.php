@@ -8,7 +8,7 @@
 	$extra_services = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_extra_service_data', array());
 	if (sizeof($extra_services) > 0) {
 		?>
-		<div class="ttbm_default_widget ttbm_extra_service_area">
+		<div class="ttbm_extra_service_area">
 			<?php do_action('ttbm_before_extra_service_list_table', $tour_id); ?>
 			<h2 class="extra_service_title"><?php echo esc_html__('Available Extra Service List ', 'tour-booking-manager'); ?></h2>
 			<div class="ttbm_widget_content" data-placeholder>
@@ -45,10 +45,10 @@
 									<?php } ?>
 									<?php echo TTBM_Global_Function::esc_html($service_name); ?>
                                     <?php if ($description) { ?>
-									    <div class="mT_xs"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
+									    <div class="mT_xs person-description"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
                                     <?php } ?>
 								</th>
-								<td class="text-center"><?php echo TTBM_Global_Function::esc_html($service_price); ?></td>
+								<td class="textCenter"><?php echo TTBM_Global_Function::esc_html($service_price); ?></td>
 								<td><?php TTBM_Layout::qty_input($service_name, $available, $input_type, $default_qty, $min_qty, $max_qty, $service_price_raw, 'service_qty[]'); ?></td>
 							</tr>
 							<tr>

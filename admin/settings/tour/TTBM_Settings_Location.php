@@ -63,42 +63,72 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 			<div class="tabsItem ttbm_settings_general contentTab" data-tabs="#ttbm_settings_location">
 					<h2><?php esc_html_e('Location Settings', 'tour-booking-manager'); ?></h2>
 					<p><?php esc_html_e('Here you can set your tour locatoin Settings', 'tour-booking-manager'); ?></p>
-					<section class="bg-light">
-						<label class="label">
-							<div class="label-inner">
-								<p><?php esc_html_e('Location Settings', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php esc_html_e('Location Settings', 'tour-booking-manager'); ?></span>
+					<section>
+						<div class="ttbm-header">
+							<h4><i class="fas fa-map-marker-alt"></i><?php esc_html_e('Location Settings', 'tour-booking-manager'); ?></h4>
+						</div>
+						<div class="dFlex">
+							<div class="col-left">
+								<?php $this->location_enable($tour_id); ?>
+								<?php $this->create_location($tour_id); ?>
+								
 							</div>
-						</label>
+							<div class="col-right">
+								<?php $this->map_enable($tour_id); ?>
+								<?php $this->location($tour_id); ?>
+							</div>
+						</div>
+						<?php $this->map_display($tour_id); ?>
 					</section>
-					<?php 
-						$this->location($tour_id);
-						$this->map_display($tour_id);						
-					?>
+					<?php self::add_new_location_popup(); ?>
 				</div>	
 			<?php
 		}
 		//*************location setup***********//
 		
-		public function location($tour_id) {
+		public function location_enable($tour_id) {
 			$display_name = 'ttbm_display_location';
 			$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
 			$checked = $display == 'off' ? '' : 'checked';
-
 			?>
-			<section>
+			<div class="label">
+				<div class="label-inner">
+					<p><?php esc_html_e('Location Enable/Disable', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Show/Hide location in frontend', 'tour-booking-manager'); ?></span></i></p>
+				</div>
+				<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
+			</div>
+			<?php
+		}
+		public function location($tour_id) {
+			$display_name = 'ttbm_display_location';
+			$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
+			$active = ($display == 'off') ? '' : 'mActive';
+			?>
+			<div class="<?php echo esc_attr($active); ?>" data-collapse="#ttbm_display_location">
 				<div class="label">
 					<div class="label-inner">
-						<p><?php esc_html_e('Tour City', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Select Tour City from this list', 'tour-booking-manager'); ?></span></i></p>
+						<p><?php esc_html_e('Select Location', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Select Tour Location from this list', 'tour-booking-manager'); ?></span></i></p>
 					</div>
-					<div class="_dFlex_alignCenter_justifyBetween">
-						<div><?php TTBM_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__(' Add', 'tour-booking-manager')); ?> </div> <?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
-						<?php self::location_select($tour_id); ?>
-					</div>
+					<?php self::location_select($tour_id); ?>
 				</div>
-			</section>
+			</div>
 			<?php
-			self::add_new_location_popup();
+			
+		}
+		public function create_location($tour_id) {
+			$display_name = 'ttbm_display_location';
+			$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
+			$active = ($display == 'off') ? '' : 'mActive';
+			?>
+			<div class="<?php echo esc_attr($active); ?>" data-collapse="#ttbm_display_location">
+				<div class="label">
+					<div class="label-inner">
+						<p><?php esc_html_e('Create New Location', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Create Tour Location if not exits', 'tour-booking-manager'); ?></span></i></p>
+					</div>
+					<?php TTBM_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__('Create New Location', 'tour-booking-manager')); ?>
+				</div>
+			</div>
+			<?php
 		}
 		public static function location_select($tour_id) {
 			if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
@@ -109,7 +139,7 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 			$value = TTBM_Global_Function::get_post_info($tour_id, $location_key, array());
 			$all_location = TTBM_Function::get_all_location();
 			?>
-			<select class="rounded ms-2" name="<?php echo esc_attr($location_key); ?>">
+			<select style="width: 70%;" name="<?php echo esc_attr($location_key); ?>">
 				<?php foreach ($all_location as $key => $location) : ?>
 					<option value="<?php echo esc_attr($key); ?>" <?php echo esc_attr($key == $value ? 'selected' : ''); ?>><?php echo esc_html($location); ?></option>
 				<?php endforeach; ?>
@@ -217,6 +247,20 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 			<?php
 			endif;
 		}
+		public function map_enable($tour_id) {
+			$display_map = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'on');
+			$checked = $display_map == 'off' ? '' : 'checked';
+			?>
+			<div>
+				<label class="label">
+					<div class="label-inner">
+						<p><?php esc_html_e('Enable/Disable Map Location', 'tour-booking-manager');?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('To show Tour Location on Map enable It.','tour-booking-manager'); ?></span></i></p>
+					</div>
+					<?php TTBM_Custom_Layout::switch_button('ttbm_display_map', $checked); ?>
+				</label>
+			</div>
+			<?php
+		}
 		public function map_display($tour_id) {
 			$location_name = get_post_meta($tour_id, 'ttbm_full_location_name', true);
 			$location_name = !empty($location_name) ? $location_name : '650 Manchester Road, New York, NY 10007, USA';
@@ -231,43 +275,39 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 			$gmap_api_key = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
 			
 			$display_map = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'on');
-			$checked = $display_map == 'off' ? '' : 'checked';
 			$active = $display_map == 'off' ? '' : 'mActive';
 			?>
 			
-			<section>
+			
+			<div class="<?php echo esc_attr($active); ?>" data-collapse="#<?php echo esc_attr('ttbm_display_map'); ?>">
 				<label class="label">
 					<div class="label-inner">
-						<p><?php esc_html_e('Enable/Disable Map Location', 'tour-booking-manager');?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('To show Tour Location on Map enable It.','tour-booking-manager'); ?></span></i></p>
+						<p><?php $gmap_api_key? esc_html_e('Google Map Location', 'tour-booking-manager'):esc_html_e('OSMap Location', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i></p>
 					</div>
-					<?php TTBM_Custom_Layout::switch_button('ttbm_display_map', $checked); ?>
+					<div style="width: 80%;" class="auto-search-wrapper loupe">
+						<input style="padding-left:30px" id="<?php echo esc_attr($gmap_api_key? 'ttbm_map_location':'ttbm_osmap_location'); ?>" name="ttbm_full_location_name" placeholder="<?php esc_html_e('Please type location...', 'tour-booking-manager'); ?>" value="<?php echo esc_attr($location_name); ?>">
+					</div>
 				</label>
-			</section>
-			<div class="<?php echo esc_attr($active); ?>" data-collapse="#<?php echo esc_attr('ttbm_display_map'); ?>">
-				<section>
-					<label class="label">
-						<div class="label-inner">
-							<p><?php $gmap_api_key? esc_html_e('Google Map Location', 'tour-booking-manager'):esc_html_e('OSMap Location', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i></p>
-						</div>
-						<div style="width: 80%;" class="auto-search-wrapper loupe">
-							<input style="padding-left:30px" id="<?php echo esc_attr($gmap_api_key? 'ttbm_map_location':'ttbm_osmap_location'); ?>" name="ttbm_full_location_name" placeholder="<?php esc_html_e('Please type location...', 'tour-booking-manager'); ?>" value="<?php echo esc_attr($location_name); ?>">
-						</div>
-					</label>
-				</section>
-				<section>
+				<div class="label">
 					<?php if(!$gmap_api_key): ?>
-						<p class="text"><?php esc_html_e('To use google map, you have to add google map API key from', 'tour-booking-manager'); ?>
-							<a href="<?php echo admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page'); ?>"><?Php esc_html_e('settings.','tour-booking-manager'); ?></a>
-						</p>
+						<div class="label-inner">
+							<p><?php esc_html_e('To use google map, you have to add google map API key from', 'tour-booking-manager'); ?>
+								<a href="<?php echo admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page'); ?>"><?Php esc_html_e('settings.','tour-booking-manager'); ?></a>
+							</p>
+						</div>
 					<?php endif; ?>
-					<div id="<?php echo esc_attr($gmap_api_key? 'gmap_canvas':'osmap_canvas'); ?>" style="width: 100%; height: 400px;"></div>
-					<div style="margin-top: 10px;">
-						<?php esc_html_e('Latitude ', 'tour-booking-manager'); ?>
-						<input type="text" id="map_latitude" name="ttbm_map_latitude" value="<?php echo esc_attr($latitude); ?>" >
-						<?php esc_html_e('Longitude ', 'tour-booking-manager'); ?>
-						<input type="text" id="map_longitude" name="ttbm_map_longitude" value="<?php echo esc_attr($longitude); ?>" >
+				</div>
+				<div class="label">
+					<div style="width: 100%;">
+						<div id="<?php echo esc_attr($gmap_api_key? 'gmap_canvas':'osmap_canvas'); ?>" style="width: 100%; height: 400px;"></div>
+						<div style="margin-top: 10px;">
+							<?php esc_html_e('Latitude ', 'tour-booking-manager'); ?>
+							<input type="text" id="map_latitude" name="ttbm_map_latitude" value="<?php echo esc_attr($latitude); ?>" >
+							<?php esc_html_e('Longitude ', 'tour-booking-manager'); ?>
+							<input type="text" id="map_longitude" name="ttbm_map_longitude" value="<?php echo esc_attr($longitude); ?>" >
+						</div>
 					</div>
-				</section>
+				</div>
 			</div>
 			
 			<?php

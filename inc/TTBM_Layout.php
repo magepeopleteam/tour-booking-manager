@@ -60,7 +60,7 @@
 						?>
 					</div>
 					<div class="">
-						<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add Image', 'tour-booking-manager'), 'add_multi_image', 'btn'); ?>
+						<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add Image', 'tour-booking-manager'), 'add_multi_image', '_themeButton_xs'); ?>
 					</div>
 				</div>
 				<?php
@@ -76,7 +76,7 @@
 					</button>
 				<?php // }
 			}
-			public static function ttbm_add_button($button_text, $class = 'ttbm_add_item', $button_class = 'btn my-2', $icon_class = 'fas fa-plus-square') {
+			public static function ttbm_add_button($button_text, $class = 'ttbm_add_item', $button_class = '_themeButton_xs ', $icon_class = 'fas fa-plus-square') {
 				?>
 				<button class="<?php echo esc_attr($button_class . ' ' . $class); ?>" type="button">
 					<span class="<?php echo esc_attr($icon_class); ?> pe-1"></span>
@@ -108,7 +108,7 @@
 			}
 			public static function qty_input($name, $available_seat, $ticket_qty_type, $default_qty, $min_qty, $max_qty, $ticket_price_raw, $input_name,$tour_id='') {
 				$min_qty = max($default_qty, $min_qty);
-				$data_ticket_name = preg_replace('/[^A-Za-z0-9\-]/', '', $name);
+				// $data_ticket_name = preg_replace('/[^A-Za-z0-9\-]/', '', $name);
 				if ($available_seat > $min_qty) {
 					?>
 					<div data-ticket-type-name="<?php echo esc_attr($data_ticket_name); ?>">

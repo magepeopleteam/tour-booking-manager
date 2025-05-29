@@ -1622,6 +1622,8 @@
 		height: 25px;
 		min-width: 25px;
 		margin: 0 var(--ttbm_mp_xs) 0 0;
+		border: 1px solid rgba(var(--color_theme_rbg),0.1);
+		color: var(--color_theme);
 	}
 	/*****Remove icon******/
 	.ttbm_style .ttbm_remove_area {
@@ -1842,7 +1844,7 @@
     border: 1px solid var(--color_border);
     color: var(--d_color);
     background-color: #fff;
-    padding: 10px 15px;
+    padding: 10px 10px;
     font-weight: 500;
 
 }
@@ -2141,7 +2143,7 @@ div.ttbm_style .customRadioLabel input[type="radio"] ~ .formControl,
     content: "";
     position: absolute;
     left: 0;
-    top: -11px !important;
+    top: 0 !important;
     height: 18px;
     width: 18px;
     background-color: var(--color_theme_alter);
@@ -2190,7 +2192,7 @@ div.ttbm_style .selectCheckbox input:checked ~ .customCheckbox::after {
     content: "";
     position: absolute;
     left: 3.5px;
-    top: -5px !important;
+    top: 5px;
     height: 6px;
     width: 10px;
     border: 2px solid var(--color_theme_alter);

@@ -140,10 +140,12 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             $display_enquiry = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_display_enquiry', 'on');
             if($display_enquiry == 'on'):
             ?>
-            <button type="button" class="_dButton_fullWidth" data-target-popup="get-enquiry-popup">
-                <span class="far fa-envelope"></span>
-                <?php esc_html_e('Get Enquiry','tour-booking-manager'); ?>				
-            </button>
+            <div class="get-enquiry-popup">
+                <button type="button" class="_dButton_fullWidth" data-target-popup="get-enquiry-popup">
+                    <span class="far fa-envelope"></span>
+                    <?php esc_html_e('Get Enquiry','tour-booking-manager'); ?>				
+                </button>
+            </div>
             <?php
             endif;
         }
@@ -299,6 +301,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             }
             $from_email = sanitize_email($from_email);        
         ?>
+            <div id="ttbm-settings-page">
             <div class="wrap ">
                 <h1 class="wp-heading-inline"><?php _e('Enquiry', 'tour-booking-manager'); ?></h1>
                 <hr class="wp-header-end">

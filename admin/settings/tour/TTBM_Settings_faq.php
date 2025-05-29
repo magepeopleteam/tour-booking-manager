@@ -80,31 +80,20 @@ if (!class_exists('TTBM_Settings_faq')) {
 			<div class="tabsItem ttbm_settings_faq" data-tabs="#ttbm_faq_settings">
 				<h2><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></h2>
 				<p><?php TTBM_Settings::des_p('faq_settings_description'); ?></p>
-				
-				<section class="bg-light">
-					<label class="label">
-						<div>
-							<p><?php esc_html_e('Frequently Asked Question', 'tour-booking-manager'); ?></p>
-							<span class="text"><?php esc_html_e('You can add frequently asked question for your tour.', 'tour-booking-manager'); ?></span>
-						</div>
-					</label>
-				</section>
-				
+
 				<section >
-					<div class="label">
-						<div>
-							<p><?php esc_html_e('F.A.Q Enable/Disable', 'tour-booking-manager'); ?></p>
-							<span><?php TTBM_Settings::des_p('ttbm_display_faq'); ?></span>
-						</div>
+					<div class="ttbm-header">
+						<h4><i class="fas fa-question-circle"></i><?php esc_html_e('Frequently Asked Question', 'tour-booking-manager'); ?></h4>
 						<?php TTBM_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>
 					</div>
-				</section>
-				<section class="ttbm-faq-section ">
-					<div class="ttbm-faq-items mB">
-						<?php $this->show_faq_data($post_id); ?>
+					<div data-collapse="#ttbm_display_faq" class="ttbm-faq-section <?php echo esc_attr($active_class); ?>">
+						<div class="ttbm-faq-items mB">
+							<?php $this->show_faq_data($post_id); ?>
+						</div>
+						<button class="button ttbm-faq-item-new" data-modal="ttbm-faq-item-new" type="button"><?php esc_html_e('Add FAQ', 'tour-booking-manager'); ?></button>
 					</div>
-					<button class="button ttbm-faq-item-new" data-modal="ttbm-faq-item-new" type="button"><?php esc_html_e('Add FAQ', 'tour-booking-manager'); ?></button>
 				</section>
+				
 				<!-- sidebar collapse open -->
 				<div class="ttbm-modal-container" data-modal-target="ttbm-faq-item-new">
 					<div class="ttbm-modal-content">
@@ -157,7 +146,7 @@ if (!class_exists('TTBM_Settings_faq')) {
 				foreach ($ttbm_faq as $key => $value) :
 					?>
 					<div class="ttbm-faq-item" data-id="<?php echo esc_attr($key); ?>">
-						<section class="faq-header" data-collapse-target="#faq-content-<?php echo esc_attr($key); ?>">
+						<div class="faq-header" data-collapse-target="#faq-content-<?php echo esc_attr($key); ?>">
 							<label class="label">
 								<p><?php echo esc_html($value['ttbm_faq_title']); ?></p>
 								<div class="faq-action">
@@ -166,10 +155,10 @@ if (!class_exists('TTBM_Settings_faq')) {
 									<span class="ttbm-faq-item-delete"><i class="fas fa-trash"></i></span>
 								</div>
 							</label>
-						</section>
-						<section class="faq-content mB" data-collapse="#faq-content-<?php echo esc_attr($key); ?>">
-							<?php echo wp_kses_post($value['ttbm_faq_content']); ?>
-						</section>
+						</div>
+						<div class="faq-content" data-collapse="#faq-content-<?php echo esc_attr($key); ?>">
+							<?php echo wp_kses_post( $value['ttbm_faq_content']); ?>
+						</div>
 					</div>
 				<?php
 				endforeach;

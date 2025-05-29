@@ -50,7 +50,7 @@ div.ttbm_settings .ttbm_popup .popupMainArea {width: 100%;}
 /************************************/
 #ttbm_status_page table th {text-align: left;}
 /************************************/
-span.textWarning { color: var(--color_warning); font-size: var(--fs);font-weight: var(--fw-bold);}
+span.textWarning { color: #fff; background: #e10b0b; padding: 0px 5px 4px 5px; border-radius: 5px; font-size: var(--fs);font-weight: var(--fw-bold);}
 span.textSuccess { color: var(--color_success); font-size: var(--fs);}
 /***************/
 #mep_disable_ticket_time {margin: 0 10px 0 0;}
@@ -84,6 +84,22 @@ div.unlimited_section .content_area img {width: auto;max-width: 100px;}
 .ttbm_style .buttonOutline:hover {background-color: #FF555D;color: #FFF;}
 .postDash::after { position: absolute;content: ""; top: 23px;width: 45px; height: 2px;background-color: #F26E26;}
 .postDash::after {right: -65px;}
+.ttbm_settings_pricing input[name="ticket_type_description[]"] {width: 10em !important;}
+.ttbm_settings_pricing input.medium.ttbm_price_validation {width:100% !important;}
+.ttbm_settings_pricing select.medium.formControl {height: 40px !important;}
+.ttbm_settings_pricing div.ttbm_add_icon_image_area
+ {
+        border: 1px solid var(--mpl-gray) !important;
+        margin-top: 1px !important;
+        padding: 7px 10px !important;
+        border-radius: 5px !important;
+    }
+button._mpBtn_xs.ttbm_icon_add {border:none !important;}
+input[name="extra_service_description[]"].formControl {width:100% !important;}
+table.form-table tr td, table.form-table tr th{border: 1px solid #efeaea !important; }
+div.ttbm_style span.select2-container span{min-height:40px;}
+.ttbm_place_you_see_table input.ttbm_name_validation {width:97% !important; margin-left:5px; border-radius:5px; }
+
 @media only screen and (max-width: 1100px) {
 	.unlimited_section .textContent {padding: 0 0 0 20px;}
 	.unlimited_section .content_area {padding: 15px 10px 0 0;}
@@ -149,13 +165,5 @@ select#mep_ticket_offdays{height:200px !important;}
 }
 
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
-    border: 1px solid #dfd6d6;
-    margin-bottom: 6px;
-    border-radius: 20px;
-}
-.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta {
-    padding: 0px 0 !important;
-}
-.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-meta .meta-action {
-    border-radius: 0 5px 5px 0 !important;
+    
 }

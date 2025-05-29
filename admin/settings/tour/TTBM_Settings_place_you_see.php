@@ -31,28 +31,16 @@
 				<div class="tabsItem ttbm_settings_area ttbm_settings_place_you_see" data-tabs="#ttbm_settings_place_you_see">
 					<h2><?php esc_html_e('Places You\'ll Visit', 'tour-booking-manager'); ?></h2>
                     <p><?php TTBM_Settings::des_p('places_visit_description'); ?> </p>
-					
-					<section class="bg-light">
-                        <label for="" class="label">
-							<div>
-								<p><?php esc_html_e('Place Settings', 'tour-booking-manager'); ?></p>
-								<span class="text"><?php esc_html_e('You can set your future places here.', 'tour-booking-manager'); ?></span>  
-							</div>
-						</label>
-                    </section>
 
 					<section>
-                        <div class="label">
-							<div>
-								<p><?php esc_html_e('Places You\'ll Visit ' . $ttbm_label . ' Settings', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_hiphop'); ?></span></i></p> 
-							</div>
+						<div class="ttbm-header">
+							<h4><i class="fas fa-map-marker-alt"></i><?php esc_html_e('Places You\'ll Visit', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_hiphop', $checked); ?>
 						</div>
+						<div data-collapse="#ttbm_display_hiphop" class="ttbm_place_you_see_area <?php echo esc_attr($active); ?>">
+							<?php $this->place_you_see($tour_id); ?>
+						</div>
                     </section>
-
-					<div data-collapse="#ttbm_display_hiphop" class="ttbm_place_you_see_area <?php echo esc_attr($active); ?>">
-						<?php $this->place_you_see($tour_id); ?>
-					</div>
 				</div>
 				<?php
 			}
@@ -62,42 +50,38 @@
 				$places = $all_places->posts;
 				?>
 				<div class="ttbm_place_you_see_table">
-					<section>
-						<label for="" class="label">
-							<div>
-								<p><?php esc_html_e('Create new place', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_place_you_see'); ?></span></i></p>   
-							</div>
-							<a href="edit.php?post_type=ttbm_places" ><?php esc_html_e('Create new place', 'tour-booking-manager'); ?></a>
-						</label>
-                    </section>
 					<?php if ($all_places->post_count > 0) { ?>
-						<section>
-							<div class="w-100">
-								<table class="mb-2">
-									<thead>
-										<tr>
-											<th class="text-start"><?php esc_html_e('Place Name', 'tour-booking-manager'); ?></th>
-											<th class="text-start"><?php esc_html_e('Place', 'tour-booking-manager'); ?></th>
-											<th class="text-center"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
-										</tr>
-										</thead>
-										<tbody class="ttbm_sortable_area ttbm_item_insert">
-										<?php
-											if (sizeof($hiphop_places)) {
-												foreach ($hiphop_places as $hiphop_place) {
-													$this->place_you_see_item($places, $hiphop_place);
-												}
-											}
-											else {
-												$this->place_you_see_item($places);
-											}
-										?>
-									</tbody>
-								</table>
-								<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Place', 'tour-booking-manager')); ?>
-								
+						<div>
+							<div class="label">
+								<p>
+									<?php esc_html_e('To create new place click', 'tour-booking-manager'); ?>
+									<a href="edit.php?post_type=ttbm_places" ><?php esc_html_e('Here', 'tour-booking-manager'); ?></a>
+									<i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_place_you_see'); ?></span></i>
+								</p>
 							</div>
-						</section>
+							<table>
+								<thead>
+									<tr>
+										<th><?php esc_html_e('Place Name', 'tour-booking-manager'); ?></th>
+										<th><?php esc_html_e('Place', 'tour-booking-manager'); ?></th>
+										<th><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
+									</tr>
+									</thead>
+									<tbody class="ttbm_sortable_area ttbm_item_insert">
+									<?php
+										if (sizeof($hiphop_places)) {
+											foreach ($hiphop_places as $hiphop_place) {
+												$this->place_you_see_item($places, $hiphop_place);
+											}
+										}
+										else {
+											$this->place_you_see_item($places);
+										}
+									?>
+								</tbody>
+							</table>
+							<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Place', 'tour-booking-manager')); ?>
+						</div>
 					<?php
 						
 					}
@@ -119,14 +103,14 @@
 				$place_name = $place_id && !$place_name ? get_the_title($place_id) : $place_name;
 				?>
 				<tr class="ttbm_remove_area">
-					<td class="text-start">
+					<td>
 						<label>
-							<input class="formControl ttbm_name_validation" name="ttbm_place_label[]" value="<?php echo esc_attr($place_name); ?>" placeholder="Place name"/>
+							<input class="ttbm_name_validation" name="ttbm_place_label[]" value="<?php echo esc_attr($place_name); ?>" placeholder="Place name"/>
 						</label>
 					</td>
-					<td class="text-start">
+					<td>
 						<label>
-							<select class="formControl <?php echo esc_attr(is_array($hiphop_place) && sizeof($hiphop_place) > 0 ? 'ttbm_select2' : 'add_ttbm_select2'); ?>" name="ttbm_city_place_id[]">
+							<select class=" <?php echo esc_attr(is_array($hiphop_place) && sizeof($hiphop_place) > 0 ? 'ttbm_select2' : 'add_ttbm_select2'); ?>" name="ttbm_city_place_id[]">
 								<option value="" selected disabled>
 									<?php esc_html_e('Please Select a Place', 'tour-booking-manager'); ?>
 								</option>
@@ -141,7 +125,7 @@
 							</select>
 						</label>
 					</td>
-					<td class="text-center"><?php TTBM_Custom_Layout::move_remove_button(); ?></td>
+					<td class="textRight"><?php TTBM_Custom_Layout::move_remove_button(); ?></td>
 				</tr>
 				<?php
 			}

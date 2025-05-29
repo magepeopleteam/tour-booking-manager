@@ -62,7 +62,7 @@
 										    <div class="mT_xs person-description"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
                                         <?php } ?>
 									</th>
-									<th class="textCenter">
+									<th class="textCenter" data-regular-price="<?php echo esc_attr(TTBM_Global_Function::price_convert_raw(TTBM_Global_Function::wc_price($tour_id, $regular_price))); ?>" data-base-price="<?php echo esc_attr($ticket['ticket_type_price']); ?>">
 										<?php if ($regular_price) { ?>
 											<span class="strikeLine"><?php echo TTBM_Global_Function::wc_price($tour_id, $regular_price); ?></span>
 										<?php } ?>

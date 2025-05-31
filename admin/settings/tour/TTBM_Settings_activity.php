@@ -139,6 +139,9 @@
 					$display_activities = TTBM_Global_Function::get_submit_info('ttbm_display_activities') ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_activities', $display_activities);
 					$activities = TTBM_Global_Function::get_submit_info('ttbm_tour_activities', array());
+					if (is_array($activities) && count($activities) === 1 && strpos($activities[0], ',') !== false) {
+						$activities = array_filter(array_map('trim', explode(',', $activities[0])));
+					}
 					update_post_meta($tour_id, 'ttbm_tour_activities', $activities);
 				}
 			}

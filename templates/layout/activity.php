@@ -11,7 +11,7 @@
 			<div class="ttbm_widget_content">
 				<ul>
 					<?php foreach ( $tour_activities as $tour_activity ) {
-						$term = get_term_by( 'name', $tour_activity, 'ttbm_tour_activities' );
+						$term = get_term_by( 'id', $tour_activity, 'ttbm_tour_activities' );
 						if ( $term ) {
 							$icon = get_term_meta( $term->term_id, 'ttbm_activities_icon', true );
 							$icon = $icon ?: 'far fa-check-circle';

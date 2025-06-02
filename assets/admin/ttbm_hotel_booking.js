@@ -568,8 +568,7 @@
     $(document).on( 'click', '.ttbm_delete_taxonomy_data', function ( e ) {
         e.preventDefault();
         let term_id = $(this).parent().attr('ttbm-data-location-id');
-        let tab_action_type = $('.ttbm_trvel_lists_tabs button.active').text().trim();
-        let tab_type = get_tab_action_name_by_tab( tab_action_type );
+        let tab_type = $('.ttbm_trvel_lists_tabs button.active').data('tab-type');
         const clicked_btn = $(this);
         $.ajax({
             url: ttbm_admin_ajax.ajax_url,
@@ -596,8 +595,7 @@
     $(document).on( 'click', '.ttbm_edit_trip_location', function () {
 
         let term_id = $(this).parent().attr('ttbm-data-location-id');
-        let tab_action_type = $('.ttbm_trvel_lists_tabs button.active').text().trim();
-        let tab_type = get_tab_action_name_by_tab( tab_action_type );
+        let tab_type = $('.ttbm_trvel_lists_tabs button.active').data('tab-type');
 
         $.ajax({
             url: ttbm_admin_ajax.ajax_url,

@@ -615,11 +615,18 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                         $message = 'Failed to delete post.';
                     }
                 }else {
-                    $result = wp_delete_term($term_id, $taxonomy_type);
-                    if ( $result ) {
-                        $message = 'Taxonomy data has been deleted successfully.';
+                    // Only attempt to delete if taxonomy_type is not empty and term_id is valid
+                    if ( ! empty( $taxonomy_type ) && $term_id ) {
+                        $result = wp_delete_term( (int)$term_id, (string)$taxonomy_type );
+                        if ( $result && ! is_wp_error( $result ) ) {
+                            $message = 'Taxonomy data has been deleted successfully.';
+                        } else if ( is_wp_error( $result ) ) {
+                            $message = $result->get_error_message();
+                        } else {
+                            $message = 'Failed to delete Taxonomy.';
+                        }
                     } else {
-                        $message = 'Failed to delete Taxonomy.';
+                        $message = 'Invalid taxonomy or term ID.';
                     }
                 }
                 $success = true;

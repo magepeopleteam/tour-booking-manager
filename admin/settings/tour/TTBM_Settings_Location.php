@@ -321,7 +321,10 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 					update_post_meta($tour_id, 'ttbm_display_location', $ttbm_display_location);
 					update_post_meta($tour_id, 'ttbm_location_name', $ttbm_location_name);
 					$location = get_term_by('name',$ttbm_location_name,'ttbm_tour_location');
-					$ttbm_country_name = get_term_meta($location->term_id, 'ttbm_country_location',true);
+					$ttbm_country_name = '';
+					if ($location && isset($location->term_id)) {
+						$ttbm_country_name = get_term_meta($location->term_id, 'ttbm_country_location',true);
+					}
 					update_post_meta($tour_id, 'ttbm_country_name', $ttbm_country_name);
 					/***************/
 					$ttbm_display_map = TTBM_Global_Function::get_submit_info('ttbm_display_map') ? 'on' : 'off';

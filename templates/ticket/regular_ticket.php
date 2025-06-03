@@ -22,9 +22,6 @@
 					//include(TTBM_Function::template_path('layout/title_section.php'));
 				?>
 				<div class="ttbm_widget_content" data-placeholder>
-					<div class="mp_tour_ticket_form">
-						<?php echo do_shortcode('[ttbm_tiered_pricing_table]'); ?>
-					</div>
 					<table class="mp_tour_ticket_type">
 						<thead>
                             <tr>

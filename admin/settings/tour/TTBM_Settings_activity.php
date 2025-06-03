@@ -43,7 +43,8 @@
 						<div data-collapse="#ttbm_display_activities" class="ttbm_activities_area <?php echo esc_attr($active); ?>">
 							<?php $this->activities($tour_id); ?>
 						</div>
-                    </section>
+						<input type="hidden" id="ttbm_checked_activities_holder" name="ttbm_checked_activities_holder" value="<?php echo esc_attr(implode(',', TTBM_Global_Function::get_post_info($tour_id, 'ttbm_tour_activities', []))); ?>" />
+					</section>
 					
 				</div>
 				<?php
@@ -52,20 +53,17 @@
 			public function activities($tour_id) {
 				$activities = TTBM_Global_Function::get_taxonomy('ttbm_tour_activities');
 				$tour_activities = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_tour_activities', []);
+				$tour_activities_array = $tour_activities;
 				
-				$tour_activity = implode(',', $tour_activities);
-				$tour_activities_array = explode(',', $tour_activities[0]);
+				$tour_activity = implode(',', $tour_activities_array);
 				?>
 				<div class="ttbm_activities_table">					
 					<div class="includedd-features-section">
 						<div class="groupCheckBox">
-							<input type="hidden" name="ttbm_tour_activities[]" value="<?php echo esc_attr($tour_activity); ?>"/>
 							<?php foreach ($activities as $activity) { ?>
 								<label class="customCheckboxLabel">
-									<input type="checkbox" <?php echo in_array($activity->term_id, $tour_activities_array) ? 'checked' : ''; ?> data-checked="<?php echo esc_attr($activity->term_id); ?>"/> 
-									<span class="customCheckbox">
-										<?php esc_html_e($activity->name); ?>
-									</span>
+									<input type="checkbox" name="ttbm_tour_activities[]" value="<?php echo esc_attr($activity->term_id); ?>" <?php echo in_array($activity->term_id, $tour_activities_array) ? 'checked' : ''; ?> />
+									<span class="customCheckbox"><?php esc_html_e($activity->name); ?></span>
 								</label>
 							<?php } ?>
 						</div>
@@ -130,7 +128,7 @@
 				die();
 			}
 			public function ttbm_reload_activity_list() {
-				$ttbm_id = TTBM_Global_Function::data_sanitize($_POST['ttbm_id']);
+				$ttbm_id = isset($_POST['ttbm_id']) ? TTBM_Global_Function::data_sanitize($_POST['ttbm_id']) : 0;
 				$this->activities($ttbm_id);
 				die();
 			}
@@ -138,7 +136,10 @@
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
 					$display_activities = TTBM_Global_Function::get_submit_info('ttbm_display_activities') ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_activities', $display_activities);
-					$activities = TTBM_Global_Function::get_submit_info('ttbm_tour_activities', array());
+					$activities = [];
+					if (!empty($_POST['ttbm_checked_activities_holder'])) {
+						$activities = array_filter(array_map('trim', explode(',', $_POST['ttbm_checked_activities_holder'])));
+					}
 					update_post_meta($tour_id, 'ttbm_tour_activities', $activities);
 				}
 			}

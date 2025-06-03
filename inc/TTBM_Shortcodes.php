@@ -13,6 +13,7 @@
 				add_shortcode('ttbm-hotel-list', array($this, 'hotel_list'));
 				add_shortcode('ttbm-registration', array($this, 'registration'));
 				add_shortcode('ttbm-related', array($this, 'related'));
+				add_shortcode('ttbm_customer_dashboard', array($this, 'customer_dashboard_shortcode'));
 			}
 			public function static_filter($attribute) {
 				$defaults = $this->default_attribute();
@@ -232,6 +233,20 @@
 						</div>
 					</div>
 					<?php
+				}
+				return ob_get_clean();
+			}
+			public function customer_dashboard_shortcode($atts = array(), $content = null) {
+				ob_start();
+				if (is_user_logged_in()) {
+					$template = TTBM_Function::template_path('customer_dashboard.php');
+					if (file_exists($template)) {
+						include $template;
+					} else {
+						echo '<p>' . esc_html__('Dashboard template not found.', 'tour-booking-manager') . '</p>';
+					}
+				} else {
+					echo '<p>' . esc_html__('You must be logged in to view your dashboard.', 'tour-booking-manager') . '</p>';
 				}
 				return ob_get_clean();
 			}

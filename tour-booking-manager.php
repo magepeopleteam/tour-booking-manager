@@ -3,7 +3,7 @@
 	 * Plugin Name: Travel Booking Plugin | Tour & Hotel Booking Solution For WooCommerce – wptravelly
 	 * Plugin URI: http://mage-people.com
 	 * Description: A Complete Tour and Travel Solution for WordPress by MagePeople.
-	 * Version: 1.9.7
+	 * Version: 1.9.8
 	 * Author: MagePeople Team
 	 * Author URI: http://www.mage-people.com/
 	 * Text Domain: tour-booking-manager
@@ -17,6 +17,58 @@
 			public function __construct() {
 				$this->load_ttbm_plugin();
 				add_action('init', array($this, 'load_blocks'));
+				add_action('wp_ajax_ttbm_submit_cancel_request', function() {
+					if (!is_user_logged_in()) {
+						wp_send_json_error(['message' => __('You must be logged in.', 'tour-booking-manager')]);
+					}
+					$user_id = get_current_user_id();
+					$order_id = intval($_POST['order_id'] ?? 0);
+					$tour_id = intval($_POST['tour_id'] ?? 0);
+					$reason = sanitize_textarea_field($_POST['reason'] ?? '');
+					if (!$order_id || !$tour_id || empty($reason)) {
+						wp_send_json_error(['message' => __('Missing data.', 'tour-booking-manager')]);
+					}
+					// Prevent duplicate requests
+					$existing = get_posts([
+						'post_type' => 'ttbm_cancel_request',
+						'post_status' => ['publish', 'pending', 'draft'],
+						'meta_query' => [
+							['key' => 'order_id', 'value' => $order_id],
+							['key' => 'tour_id', 'value' => $tour_id],
+							['key' => 'user_id', 'value' => $user_id],
+						],
+						'numberposts' => 1
+					]);
+					if ($existing) {
+						wp_send_json_error(['message' => __('A cancellation request already exists for this order.', 'tour-booking-manager')]);
+					}
+					$post_id = wp_insert_post([
+						'post_type' => 'ttbm_cancel_request',
+						'post_status' => 'publish',
+						'post_title' => 'Cancel Request #' . $order_id,
+						'post_content' => $reason,
+						'post_author' => $user_id,
+					]);
+					if ($post_id) {
+						update_post_meta($post_id, 'order_id', $order_id);
+						update_post_meta($post_id, 'tour_id', $tour_id);
+						update_post_meta($post_id, 'user_id', $user_id);
+						update_post_meta($post_id, 'reason', $reason);
+						update_post_meta($post_id, 'cancel_status', 'pending');
+						ttbm_send_cancel_email('admin_new', [
+							'order_id' => $order_id,
+							'tour_id' => $tour_id,
+							'user_id' => $user_id,
+							'reason' => $reason,
+						]);
+						wp_send_json_success(['message' => __('Cancellation request submitted.', 'tour-booking-manager')]);
+					} else {
+						wp_send_json_error(['message' => __('Failed to submit request.', 'tour-booking-manager')]);
+					}
+				});
+				add_action('wp_ajax_nopriv_ttbm_submit_cancel_request', function() {
+					wp_send_json_error(['message' => __('You must be logged in.', 'tour-booking-manager')]);
+				});
 			}
 			private function load_ttbm_plugin() {
 				include_once(ABSPATH . 'wp-admin/includes/plugin.php');
@@ -32,6 +84,7 @@
 					// add_action('activated_plugin', array($this, 'activation_redirect'), 90, 1);
 					require_once TTBM_PLUGIN_DIR . '/lib/classes/class-ttbm.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Dependencies.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Cancellation.php';
 				} else {
 					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
 					//add_action('admin_notices', [$this, 'woocommerce_not_active']);
@@ -180,3 +233,7 @@
 		}
 		new TTBM_Woocommerce_Plugin();
 	}
+
+
+
+	

@@ -25,6 +25,15 @@
 				//*******************//
 				//*******************//
 				add_action('ttbm_wc_order_status_change', array($this, 'wc_order_status_change'), 10, 3);
+				// === TTBM Customer Dashboard Tab in My Account ===
+				// Add endpoint for customer dashboard
+				add_action('init', array($this, 'ttbm_add_customer_dashboard_endpoint'));
+				// Add the tab to My Account menu
+				add_filter('woocommerce_account_menu_items', array($this, 'ttbm_add_customer_dashboard_tab'));
+				// Show content for the tab
+				add_action('woocommerce_account_customer-dashboard_endpoint', array($this, 'ttbm_customer_dashboard_content'));
+				// Flush rewrite rules on plugin activation
+				add_action('activate_plugin', array($this, 'ttbm_flush_rewrite_rules'));
 			}
 			public function add_cart_item_data($cart_item_data, $product_id) {
 				$linked_ttbm_id = TTBM_Global_Function::get_post_info($product_id, 'link_ttbm_id', $product_id);
@@ -631,6 +640,25 @@
 				} else {
 					return false;
 				}
+			}
+			// === TTBM Customer Dashboard Tab in My Account ===
+			// Add endpoint for customer dashboard
+			public function ttbm_add_customer_dashboard_endpoint() {
+				add_rewrite_endpoint( 'customer-dashboard', EP_ROOT | EP_PAGES );
+			}
+			// Add the tab to My Account menu
+			public function ttbm_add_customer_dashboard_tab( $items ) {
+				$items['customer-dashboard'] = __( 'Customer Dashboard', 'tour-booking-manager' );
+				return $items;
+			}
+			// Show content for the tab
+			public function ttbm_customer_dashboard_content() {
+				echo do_shortcode('[ttbm_customer_dashboard]');
+			}
+			// Flush rewrite rules on plugin activation
+			public function ttbm_flush_rewrite_rules() {
+				$this->ttbm_add_customer_dashboard_endpoint();
+				flush_rewrite_rules();
 			}
 		}
 		new TTBM_Woocommerce();

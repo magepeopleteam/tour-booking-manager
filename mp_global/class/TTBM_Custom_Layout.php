@@ -95,8 +95,9 @@
 				<?php
 			}
 			public static function popup_button_xs($target_popup_id, $text) {
+				$extra_class = $target_popup_id === 'add_new_activity_popup' ? 'open-activity-popup' : '';
 				?>
-                <button type="button" class="_themeButton_xs" data-target-popup="<?php echo esc_attr($target_popup_id); ?>">
+                <button type="button" class="_themeButton_xs <?php echo esc_attr($extra_class); ?>" data-target-popup="<?php echo esc_attr($target_popup_id); ?>">
                     <i class="fas fa-plus"></i>&nbsp;<?php echo esc_html($text); ?>
                 </button>
 				<?php
@@ -334,9 +335,10 @@
 				<?php
 			}
 			public static function popup_button_xs($target_popup_id, $text) {
+				$extra_class = $target_popup_id === 'add_new_activity_popup' ? 'open-activity-popup' : '';
 				?>
-                <button type="button" class="_themeButton_xs" data-target-popup="<?php echo esc_attr($target_popup_id); ?>">
-                    <i class="fas fa-plus"></i> <?php echo esc_html($text); ?>
+                <button type="button" class="_themeButton_xs <?php echo esc_attr($extra_class); ?>" data-target-popup="<?php echo esc_attr($target_popup_id); ?>">
+                    <i class="fas fa-plus"></i>&nbsp;<?php echo esc_html($text); ?>
                 </button>
 				<?php
 			}

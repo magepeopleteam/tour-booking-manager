@@ -1915,8 +1915,8 @@ div.ttbm_style #ttbm_select_date.formControl {
 }
 
 div.ttbm_style select.formControl {
-    height: 48px;
-    border-radius: 8px;
+    height: 42px !important;
+    border-radius: 8px !important;
     /* background-image: url("../images/arrow_down.png");
 background-repeat: no-repeat;
 background-position: calc(100% - var(--ttbm_mp_xs));

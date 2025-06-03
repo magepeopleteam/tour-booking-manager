@@ -22,6 +22,9 @@
 					//include(TTBM_Function::template_path('layout/title_section.php'));
 				?>
 				<div class="ttbm_widget_content" data-placeholder>
+					<div class="mp_tour_ticket_form">
+						<?php echo do_shortcode('[ttbm_tiered_pricing_table]'); ?>
+					</div>
 					<table class="mp_tour_ticket_type">
 						<thead>
                             <tr>
@@ -62,7 +65,7 @@
 										    <div class="mT_xs person-description"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
                                         <?php } ?>
 									</th>
-									<th class="textCenter">
+									<th class="textCenter" data-regular-price="<?php echo esc_attr(TTBM_Global_Function::price_convert_raw(TTBM_Global_Function::wc_price($tour_id, $regular_price))); ?>" data-base-price="<?php echo esc_attr($ticket['ticket_type_price']); ?>">
 										<?php if ($regular_price) { ?>
 											<span class="strikeLine"><?php echo TTBM_Global_Function::wc_price($tour_id, $regular_price); ?></span>
 										<?php } ?>

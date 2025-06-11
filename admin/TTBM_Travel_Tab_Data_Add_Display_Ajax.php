@@ -192,8 +192,11 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                         $term_slug  = esc_html( $term->slug );
                         $description = esc_html( $term->description );
 
+                        $term_link = get_term_link( (int) $term_id, 'ttbm_tour_org' );
+//                        error_log( print_r( $term_link, true ) );
+
                         $search_class = 'ttbm_search_from_organiser';
-                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class );
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $term_link );
                         ?>
 
                     <?php endforeach; ?>
@@ -230,9 +233,10 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                         $description = esc_html( $term->description );
 
                         $get_feature_icon = get_term_meta( $term_id, 'ttbm_feature_icon', true );
+                        $term_link = get_term_link( (int) $term_id, 'ttbm_tour_cat' );
 
                         $search_class = 'ttbm_search_from_category';
-                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $get_feature_icon );
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $term_link, $get_feature_icon );
                         ?>
 
                     <?php endforeach; ?>
@@ -269,10 +273,12 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                         $term_slug  = esc_html( $term->slug );
                         $description = esc_html( $term->description );
 
+                        $term_link = '';
+
                         $get_feature_icon = get_term_meta( $term_id, 'ttbm_feature_icon', true );
 
                         $search_class = 'ttbm_search_from_feature';
-                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $get_feature_icon );
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $term_link, $get_feature_icon );
                         ?>
 
                     <?php endforeach; ?>
@@ -308,8 +314,10 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                         $term_slug  = esc_html( $term->slug );
                         $description = esc_html( $term->description );
 
+                        $tag_view = '';
+
                         $search_class = 'ttbm_search_from_tag';
-                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class );
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $tag_view );
                         ?>
                     <?php endforeach; ?>
                 </div>
@@ -344,7 +352,9 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                         $get_activities_icon = get_term_meta( $term_id, 'ttbm_activities_icon', true );
                         $search_class = 'ttbm_search_from_activity';
 
-                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $get_activities_icon );
+                        $view_link = '';
+
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $view_link, $get_activities_icon );
                         ?>
 
                     <?php endforeach; ?>
@@ -362,7 +372,7 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             ]);
         }
 
-        public static function ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $icon='' ){
+        public static function ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $term_link, $icon='' ){
             ?>
 
             <div class="ttbm-taxonomy-card <?php echo esc_attr( $search_class )?>" data-taxonomy="<?php echo esc_attr( $term_name )?>">
@@ -371,6 +381,9 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                         <h3 class="ttbm-title"><i class="<?php echo esc_attr( $icon )?> "></i> <?php echo esc_attr( $term_name ) ?></h3>
                         <div class="ttbm-taxonomy-card-actions" ttbm-data-location-id="<?php echo esc_attr( $term_id )?>">
 <!--                            <button class="ttbm-btn ttbm-view-btn"><i class="fas fa-eye"></i></button>-->
+                            <?php if( $term_link !== '' ){?>
+                            <a href="<?php echo esc_attr( $term_link ) ;?>" target="_blank"><button class="ttbm-btn ttbm-view-btn"> <i class="fas fa-eye"></i></button></a>
+                           <?php }?>
                             <button class="ttbm-btn ttbm-edit-btn ttbm_edit_trip_location"><i class="fas fa-edit"></i></button>
                             <button class="ttbm-btn ttbm-delete-btn ttbm_delete_taxonomy_data"><i class="fas fa-trash-alt"></i></button>
                         </div>

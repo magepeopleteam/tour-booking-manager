@@ -95,6 +95,10 @@
 											} else {
 												update_post_meta($post_id, $meta_key, $data);
 											}
+											if ($meta_key == 'ttbm_category') {
+												wp_set_object_terms($post_id, $data, 'ttbm_tour_cat');
+												//wp_set_object_terms($post_id, array('flexible-tour'), 'ttbm_tour_cat');
+											}
 										}
 									}									
 								}
@@ -430,6 +434,8 @@
 									],
 									//gallery_settings
 									'ttbm_gallery_images' => array(0, 1, 2, 3, 4),
+									//category
+									'ttbm_category' => ['fixed-tour'],
 									//extras_settings
 									'ttbm_display_get_question' => 'on',
 									'ttbm_contact_email' => 'example.gmail.com',
@@ -580,6 +586,8 @@
 									],
 									//gallery_settings
 									'ttbm_gallery_images' => array(4, 3, 2, 1, 0),
+									//category
+									'ttbm_category' => ['fixed-tour'],
 									//extras_settings
 									'ttbm_display_get_question' => 'on',
 									'ttbm_contact_email' => 'example.gmail.com',
@@ -732,6 +740,8 @@
 									],
 									//gallery_settings
 									'ttbm_gallery_images' => array(3, 4, 2, 1, 0),
+									//category
+									'ttbm_category' => ['fixed-tour'],
 									//extras_settings
 									'ttbm_display_get_question' => 'on',
 									'ttbm_contact_email' => 'example.gmail.com',
@@ -884,6 +894,8 @@
 									],
 									//gallery_settings
 									'ttbm_gallery_images' => array(1, 2, 3, 4, 0),
+									//category
+									'ttbm_category' => ['fixed-tour'],
 									//extras_settings
 									'ttbm_display_get_question' => 'on',
 									'ttbm_contact_email' => 'example.gmail.com',
@@ -1035,6 +1047,8 @@
 									],
 									//gallery_settings
 									'ttbm_gallery_images' => array(2, 0, 3, 4, 1),
+									//category
+									'ttbm_category' => ['fixed-tour'],
 									//extras_settings
 									'ttbm_display_get_question' => 'on',
 									'ttbm_contact_email' => 'example.gmail.com',

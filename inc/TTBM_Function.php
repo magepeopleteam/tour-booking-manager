@@ -201,6 +201,22 @@
 					self::update_month_list($tour_id, $all_date);
 				}
 			}
+            public static function get_upcoming_date_month( $tour_id, $update = '', $all_date = array() ){
+
+                $date = '';
+                $now = strtotime(current_time('Y-m-d'));
+                $db_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_upcoming_date');
+                $db_date = date('Y-m-d', strtotime($db_date));
+                $month_list = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_month_list');
+                if (!$month_list || !$db_date || $update || strtotime($db_date) < $now) {
+                    $all_date = sizeof($all_date) > 0 ? $all_date : self::get_date($tour_id);
+                    if (sizeof($all_date) > 0) {
+                        $date = current($all_date);
+                    }
+                }
+
+                return $date;
+            }
 			public static function update_all_upcoming_date_month(): void {
 				$tour_ids = TTBM_Global_Function::get_all_post_id(TTBM_Function::get_cpt_name());
 				foreach ($tour_ids as $tour_id) {

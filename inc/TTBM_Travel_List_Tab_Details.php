@@ -402,6 +402,10 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                     $posts_query->the_post();
                     $post_id = get_the_ID();
                     $upcoming_date = TTBM_Global_Function::get_post_info( $post_id, 'ttbm_upcoming_date' );
+                    if( !$upcoming_date ){
+                        $all_dates     = TTBM_Function::get_date( $post_id );
+                        $upcoming_date = TTBM_Function::get_upcoming_date_month( $post_id,true, $all_dates );
+                    }
                     if( $upcoming_date === '' ){
                         $expire_count++;
                     }

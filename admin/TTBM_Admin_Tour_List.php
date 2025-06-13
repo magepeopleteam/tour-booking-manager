@@ -157,6 +157,10 @@
                         $post_id = get_the_ID();
                         $location = get_post_meta($post_id, 'ttbm_location_name', true);
                         $upcoming_date = TTBM_Global_Function::get_post_info($post_id, 'ttbm_upcoming_date');
+                        if( !$upcoming_date ){
+                            $all_dates     = TTBM_Function::get_date( $post_id );
+                            $upcoming_date = TTBM_Function::get_upcoming_date_month( $post_id,true, $all_dates );
+                        }
                         $total = TTBM_Function::get_total_seat($post_id);
                         $sold = TTBM_Function::get_total_sold($post_id, $upcoming_date);
                         $reserve = TTBM_Function::get_total_reserve($post_id);

@@ -240,10 +240,11 @@
 			public function location_filter_multiple($params) {
 				if ($params['location-filter'] == 'yes') {
 					$upcomming_date = $this->upcomming_date;
+
 					$locations = TTBM_Function::get_meta_values('ttbm_location_name', 'ttbm_tour');
 					$exist_locations = [];
 					for ($i = 0; $i < count($locations); $i++) {
-						if (is_array($upcomming_date) && $upcomming_date[$i] && $locations[$i]) {
+						if ( is_array( $upcomming_date) && !empty( $upcomming_date ) && $upcomming_date[$i] && $locations[$i]) {
 							$exist_locations[$i] = $locations[$i];
 						}
 					}
@@ -388,7 +389,7 @@
 					$upcomming_date = $this->upcomming_date;
 					$exist_feature = [];
 					for ($i = 0; $i < count($features); $i++) {
-						if ($upcomming_date[$i]) {
+                        if ( is_array( $upcomming_date) && !empty( $upcomming_date ) && $upcomming_date[$i] && $features[$i]) {
 							$exist_feature = array_unique(array_merge($exist_feature, unserialize($features[$i])));
 						}
 					}
@@ -446,7 +447,8 @@
 					$upcomming_date = $this->upcomming_date;
 					$exist_activities = [];
 					for ($i = 0; $i < count($activities); $i++) {
-						if ($upcomming_date[$i] && is_array($activities[$i])) {
+                        if ( is_array( $upcomming_date) && !empty( $upcomming_date ) && $upcomming_date[$i] && $activities[$i]) {
+//						if ($upcomming_date[$i] && is_array($activities[$i])) {
 							$exist_activities = array_unique(array_merge($exist_activities, unserialize($activities[$i])));
 						}
 					}

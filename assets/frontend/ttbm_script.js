@@ -54,23 +54,26 @@
 	$("#place_you_see .prev").click(function () {
 		$('#place_you_see .owl-prev').trigger('click');
 	});
-	$("#ttbm_tour_guide .owl-carousel").owlCarousel({
+	// ==========Tour Guide Carousel============
+	$("#ttbm-tour-guide").owlCarousel({
 		loop: true,
-		margin: 10,
+		center: true,
+		margin: 5,
 		nav: true,
+		startPosition:0,
 		responsive: {
 			0: {
-				items: 1
+				items:1
 			}
 		}
 	});
-	$("#ttbm_tour_guide .next").click(function () {
-		$('#ttbm_tour_guide .owl-next').trigger('click');
+	$(".ttbm-tour-guide .next").click(function () {
+		$('#ttbm-tour-guide .owl-next').trigger('click');
 	});
-	$("#ttbm_tour_guide .prev").click(function () {
-		$('#ttbm_tour_guide .owl-prev').trigger('click');
+	$(".ttbm-tour-guide .prev").click(function () {
+		$('#ttbm-tour-guide .owl-prev').trigger('click');
 	});
-	
+	// ==========Tour Guide Carousel End============
 	$(document).on('click', '[data-target-popup="get-enquiry-popup"]', function () {
 		$('#ttbm-enquiry-form')[0].reset();
 		$('.ajax-response').html('');

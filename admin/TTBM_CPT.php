@@ -48,7 +48,9 @@
 					'menu_icon' => $tour_icon,
 					'supports' => ['title', 'thumbnail', 'editor', 'excerpt'],
 					'rewrite' => ['slug' => $tour_slug],
-					'show_in_rest' => true
+					'show_in_rest' => true,
+					'capability_type' => 'post',
+					'has_archive' => true,
 				];
 				register_post_type('ttbm_tour', $args);
 				$args = array(

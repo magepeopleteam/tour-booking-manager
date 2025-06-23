@@ -92,6 +92,7 @@
                 } 
                 .ttbm-tour-details{
                     display: flex;
+                    justify-content: space-between;
                     align-items: start;       
                     .ttbm-tour-info {
                         .description {
@@ -100,7 +101,7 @@
                             margin-bottom: 6px;
                         }
                         @media (min-width: 1024px) {
-                            width:90%;
+                            width:75%;
                         }
                     }
                     .ttbm-tour-meta {
@@ -111,7 +112,7 @@
                         width:100%;
                         box-sizing: border-box;
                         @media (min-width: 1024px) {
-                            width:10%;
+                            width:20%;
                         }
                         .tour-stats{
                             display: flex;

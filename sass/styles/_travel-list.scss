@@ -31,6 +31,7 @@
             gap: 10px;
         }
         .ttbm-tour-card {
+            padding:10px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -48,111 +49,102 @@
                 transform: translateY(-3px);
                 box-shadow: 0 2px 5px #ddd;
             }
+            .ttbm-tour-thumb {
+                position: relative;
+                width: 260px;
+                height: 100px;
+                @media (min-width: 1024px) {
+                    width: 200px;
+                }
+                img {
+                width: 100%;
+                height: 100%;
+                border-radius:5px;
+                object-fit: cover;
+                display: block;
+                }
+        
+                .ttbm-tour-icon {
+                position: absolute;
+                bottom: 10px;
+                left: 10px;
+                background: #ff4081;
+                color: #fff;
+                padding: 5px 10px;
+                border-radius: 6px;
+                font-size: 14px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                }
+            }
             .ttbm-tour-details{
                 display: flex;
                 flex-direction: row;
                 justify-content: start;
                 gap:10px;
-                width:100%;
-                @media (min-width: 1024px) {
-                    width:55%;
-                }
-                .ttbm-tour-thumb {
-                    position: relative;
-                    width: 260px;
-                    height: 100px;
-                    padding: 10px;
-                    @media (min-width: 1024px) {
-                        width: 200px;
+                
+                .ttbm-tour-info {
+                    h3 {
+                        margin:0;
+                        font-size: 18px;
+                        a {
+                            text-decoration: none;
+                            color: var(--mpl-black);
+                        }
                     }
-                    img {
-                    width: 100%;
-                    height: 100%;
-                    border-radius:5px;
-                    object-fit: cover;
-                    display: block;
+                    .location {
+                        color: var(--mpl-primary);
+                        font-size: 14px;
+                        margin: 6px 0;
                     }
-            
-                    .ttbm-tour-icon {
-                    position: absolute;
-                    bottom: 10px;
-                    left: 10px;
-                    background: #ff4081;
-                    color: #fff;
-                    padding: 5px 10px;
-                    border-radius: 6px;
-                    font-size: 14px;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+                    .description {
+                        font-size: 13px;
+                        color: #555;
+                        margin-bottom: 6px;
                     }
                 }
             }
 
-        .ttbm-tour-info {
-            padding:20px 0;
-            h3 {
-                margin:0;
-                font-size: 18px;
-                a {
-                    text-decoration: none;
-                    color: var(--mpl-black);
-                }
-            }
-            .location {
-                color: var(--mpl-primary);
-                font-size: 14px;
-                margin: 6px 0;
-            }
-
-            .description {
-                font-size: 13px;
-                color: #555;
-                margin-bottom: 6px;
-            }
-        }
+        
 
         .ttbm-tour-meta {
             padding: 10px 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-direction: column;
             width:100%;
             padding:10px;
             box-sizing: border-box;
             @media (min-width: 1024px) {
-                width:25%;
-                padding: 0;
+                width:10%;
             }
-            .meta-item {
+            .tour-stats{
                 display: flex;
-                align-items: center;
-                gap: 5px;
-                flex-direction: column;
-                justify-content: center;
-                .meta-icon {
-                    background-color: #e3f2fd;
-                    color: #4d96dd;
-                    padding:13px;
-                    width: 60px;
-                    height: 60px;
-                    border-radius:50%;
-                    font-size: 25px;
-                    box-sizing: border-box;
-                    text-align: center;
-                }
-                .meta-label{
-                    color: var(--mpl-black);
+                justify-content: space-between;
+                gap: 10px;
+                .stat{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    .value{
+                        font-weight: bold;
+                        color: #000;
+                    }
                 }
             }
-            
         }
         .meta-action {
+            
+            position: absolute;
+            right: 0;
+            top:0;
             display: flex;
             align-items: center;
             justify-content: space-evenly;
-            gap: 10px;
+            gap: 5px;
             padding: 10px;
             flex-direction: row;
-            background-color: #F3FFF9;
             color: var(--mpl-dark);
             border-radius:0 10px 10px 0;
             margin:0;
@@ -177,8 +169,6 @@
                     color: #e74c3c;
                 }
             }
-            
-
         }
     }
 

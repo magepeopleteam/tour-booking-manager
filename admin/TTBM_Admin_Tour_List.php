@@ -188,10 +188,10 @@
                         ?>
                         
                         <div class="ttbm-tour-card" data-travel-type="<?php echo esc_attr( $post_status )?>" data-expire-tour="<?php echo esc_attr( $is_expire );?>">
+                            <div class="ttbm-tour-thumb">
+                                <?php echo get_the_post_thumbnail($post_id, 'thumbnail'); ?>
+                            </div>
                             <div class="ttbm-tour-details">
-                                <div class="ttbm-tour-thumb">
-                                    <?php echo get_the_post_thumbnail($post_id, 'thumbnail'); ?>
-                                </div>
                                 <div class="ttbm-tour-info">
                                     <h3><a href="<?php echo get_edit_post_link($post_id); ?>"><?php echo get_the_title($post_id); ?></a></h3>
                                     <?php if($location): ?>
@@ -215,29 +215,27 @@
                                 </div>
                             </div>
                             <div class="ttbm-tour-meta">
-                                <div class="meta-item">
-                                    <div class="meta-icon" style="background-color: <?php echo esc_attr( $background );?>"><i class="<?php echo esc_attr( $icon );?>"></i></div>
-                                    <div class="ttbm_travel_status"><?php echo esc_attr( $post_status )?></div>
+                                <div class="ttbm_travel_status">
+                                    <?php echo esc_attr( $post_status )?>
                                 </div>
-                                <div class="meta-item">
-                                    <div class="meta-icon"><i class="fa fa-chair"></i></div>
-                                    <div class="meta-label"><?php echo esc_html($total); ?> total</div>
+                                <div class="tour-stats">
+                                    <div class="stat">
+                                        <span class="value"><?php echo esc_html($total); ?></span> 
+                                        <span class="label"><?php echo esc_html__('Total','tour-booking-manager'); ?></span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="value"><?php echo esc_html($sold); ?></span> 
+                                        <span class="label"><?php echo esc_html__('Sold','tour-booking-manager'); ?></span> 
+                                    </div>
                                 </div>
-                                <div class="meta-item">
-                                    <div class="meta-icon"><i class="fas fa-ticket-alt"></i></div>
-                                    <div class="meta-label"><?php echo esc_html($sold); ?> sold</div>
-                                </div>
-                                <div class="meta-item">
-                                    <div class="meta-icon"><i class="fas fa-calendar-alt"></i></div>
-                                    <div class="meta-label">
-                                        <?php
+                                <div class="meta-date">
+                                    <?php
                                         if ($upcoming_date) {
                                             echo esc_html(TTBM_Global_Function::date_format($upcoming_date));
                                         } else {
                                             echo '<span class="textWarning">' . esc_html__('Expired!', 'tour-booking-manager') . '</span>';
                                         }
-                                        ?>
-                                    </div>
+                                    ?>
                                 </div>
                             </div>
                             <div class="meta-action">

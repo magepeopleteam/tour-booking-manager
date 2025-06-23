@@ -29,7 +29,6 @@ div.ttbm_default_widget .ttbm_title_style_2{
 	background: rgba(var(--color_theme_rbg),0.1);
 	padding: 12px var(--dmp);
 	font-weight: bold; 
-	margin-bottom: var(--dmp);
 	border-radius: 10px 10px 0 0;
 }
 

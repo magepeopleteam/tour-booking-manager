@@ -122,6 +122,30 @@ div.ttbm_style .mp_tour_ticket_form{
 .ttbm_booking_panel .ttbm_ticket_area table.mp_tour_ticket_type tbody tr:last-child{
 	border-bottom: 0;
 }
+
+.ttbm-tour-guide .ttbm_widget_content{
+	margin: 10px;
+}
+.tour-guide-lists .ttbm_tour_guide_item{
+	margin-bottom: 10px;
+}
+.tour-guide-lists.circle{
+	display: flex;
+	flex-wrap: wrap;
+	gap:10px;
+}
+.tour-guide-lists.circle .ttbm_tour_guide_item  .bg_image_area {
+	width:140px;
+	height:140px;
+	border-radius: 100%;
+	margin: auto;
+}
+#ttbm-tour-guide.circle .ttbm_tour_guide_item  .bg_image_area{
+	width:200px;
+	height:200px;
+	border-radius: 100%;
+	margin: auto;
+}
 /*********Group Content*******/
 .ttbm_wraper table label {max-width: 100px;}
 .ttbm_wraper table label select.formControl {text-align: center;}

@@ -52,7 +52,7 @@
             .ttbm-tour-thumb {
                 position: relative;
                 width: 260px;
-                height: 100px;
+                max-height: 200px;
                 @media (min-width: 1024px) {
                     width: 200px;
                 }
@@ -76,64 +76,60 @@
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
                 }
             }
-            .ttbm-tour-details{
-                display: flex;
-                flex-direction: row;
-                justify-content: start;
-                gap:10px;
-                
-                .ttbm-tour-info {
-                    h3 {
-                        margin:0;
-                        font-size: 18px;
-                        a {
-                            text-decoration: none;
-                            color: var(--mpl-black);
+            .ttbm-tour-card-content{    
+                h3 {
+                    margin:0;
+                    font-size: 18px;
+                    a {
+                        text-decoration: none;
+                        color: var(--mpl-black);
+                    }
+                }
+                .location {
+                    color: var(--mpl-primary);
+                    font-size: 14px;
+                    margin: 6px 0;
+                } 
+                .ttbm-tour-details{
+                    display: flex;
+                    align-items: start;       
+                    .ttbm-tour-info {
+                        .description {
+                            font-size: 13px;
+                            color: #555;
+                            margin-bottom: 6px;
+                        }
+                        @media (min-width: 1024px) {
+                            width:90%;
                         }
                     }
-                    .location {
-                        color: var(--mpl-primary);
-                        font-size: 14px;
-                        margin: 6px 0;
-                    }
-
-                    .description {
-                        font-size: 13px;
-                        color: #555;
-                        margin-bottom: 6px;
-                    }
-                }
-            }
-
-        
-
-        .ttbm-tour-meta {
-            padding: 10px 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-direction: column;
-            width:100%;
-            padding:10px;
-            box-sizing: border-box;
-            @media (min-width: 1024px) {
-                width:10%;
-            }
-            .tour-stats{
-                display: flex;
-                justify-content: space-between;
-                gap: 10px;
-                .stat{
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    .value{
-                        font-weight: bold;
-                        color: #000;
+                    .ttbm-tour-meta {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        flex-direction: column;
+                        width:100%;
+                        box-sizing: border-box;
+                        @media (min-width: 1024px) {
+                            width:10%;
+                        }
+                        .tour-stats{
+                            display: flex;
+                            justify-content: space-between;
+                            gap: 10px;
+                            .stat{
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                .value{
+                                    font-weight: bold;
+                                    color: #000;
+                                }
+                            }
+                        }
                     }
                 }
             }
-        }
         .meta-action {
             
             position: absolute;

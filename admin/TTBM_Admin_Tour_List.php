@@ -191,53 +191,56 @@
                             <div class="ttbm-tour-thumb">
                                 <?php echo get_the_post_thumbnail($post_id, 'thumbnail'); ?>
                             </div>
-                            <div class="ttbm-tour-details">
-                                <div class="ttbm-tour-info">
-                                    <h3><a href="<?php echo get_edit_post_link($post_id); ?>"><?php echo get_the_title($post_id); ?></a></h3>
-                                    <?php if($location): ?>
-                                    <div class="location"><i class="fas fa-map-marker-alt"></i> <?php echo esc_html($location); ?></div>
-                                    <?php endif; ?>
-                                    <div class="description"><?php echo esc_html(wp_trim_words(get_the_excerpt($post_id), 39)); ?></div>
-                                    <div class="ttbm_travel_lists_tour-features">
-                                        <?php if( !empty( $max_features ) ){
-                                            foreach ( $max_features as $key => $feature ){
-                                                if( $key === 0 ){
-                                                    $feature_bg = 'ttbm_travel_lists_first_feature';
-                                                }elseif ( $key === 1 ){
-                                                    $feature_bg = 'ttbm_travel_lists_second_feature';
-                                                }else{
-                                                    $feature_bg = 'ttbm_travel_lists_third_feature';
+                            <div class="ttbm-tour-card-content">
+                                <h3><a href="<?php echo get_edit_post_link($post_id); ?>"><?php echo get_the_title($post_id); ?></a></h3>
+                                <?php if($location): ?>
+                                <div class="location"><i class="fas fa-map-marker-alt"></i> <?php echo esc_html($location); ?></div>
+                                <?php endif; ?>
+                                <div class="ttbm-tour-details">
+                                    <div class="ttbm-tour-info">
+                                        <div class="description"><?php echo esc_html(wp_trim_words(get_the_excerpt($post_id), 39)); ?></div>
+                                        <div class="ttbm_travel_lists_tour-features">
+                                            <?php if( !empty( $max_features ) ){
+                                                foreach ( $max_features as $key => $feature ){
+                                                    if( $key === 0 ){
+                                                        $feature_bg = 'ttbm_travel_lists_first_feature';
+                                                    }elseif ( $key === 1 ){
+                                                        $feature_bg = 'ttbm_travel_lists_second_feature';
+                                                    }else{
+                                                        $feature_bg = 'ttbm_travel_lists_third_feature';
+                                                    }
+                                                ?>
+                                            <div class="ttbm_travel_lists_tour-feature <?php echo esc_attr( $feature_bg )?>"><?php echo esc_attr( $feature )?></div>
+                                            <?php } }?>
+                                        </div>
+                                    </div>
+                                    <div class="ttbm-tour-meta">
+                                        <div class="ttbm_travel_status">
+                                            <?php echo esc_attr( $post_status )?>
+                                        </div>
+                                        <div class="tour-stats">
+                                            <div class="stat">
+                                                <span class="value"><?php echo esc_html($total); ?></span> 
+                                                <span class="label"><?php echo esc_html__('Total','tour-booking-manager'); ?></span>
+                                            </div>
+                                            <div class="stat">
+                                                <span class="value"><?php echo esc_html($sold); ?></span> 
+                                                <span class="label"><?php echo esc_html__('Sold','tour-booking-manager'); ?></span> 
+                                            </div>
+                                        </div>
+                                        <div class="meta-date">
+                                            <?php
+                                                if ($upcoming_date) {
+                                                    echo esc_html(TTBM_Global_Function::date_format($upcoming_date));
+                                                } else {
+                                                    echo '<span class="textWarning">' . esc_html__('Expired!', 'tour-booking-manager') . '</span>';
                                                 }
                                             ?>
-                                        <div class="ttbm_travel_lists_tour-feature <?php echo esc_attr( $feature_bg )?>"><?php echo esc_attr( $feature )?></div>
-                                        <?php } }?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="ttbm-tour-meta">
-                                <div class="ttbm_travel_status">
-                                    <?php echo esc_attr( $post_status )?>
-                                </div>
-                                <div class="tour-stats">
-                                    <div class="stat">
-                                        <span class="value"><?php echo esc_html($total); ?></span> 
-                                        <span class="label"><?php echo esc_html__('Total','tour-booking-manager'); ?></span>
-                                    </div>
-                                    <div class="stat">
-                                        <span class="value"><?php echo esc_html($sold); ?></span> 
-                                        <span class="label"><?php echo esc_html__('Sold','tour-booking-manager'); ?></span> 
-                                    </div>
-                                </div>
-                                <div class="meta-date">
-                                    <?php
-                                        if ($upcoming_date) {
-                                            echo esc_html(TTBM_Global_Function::date_format($upcoming_date));
-                                        } else {
-                                            echo '<span class="textWarning">' . esc_html__('Expired!', 'tour-booking-manager') . '</span>';
-                                        }
-                                    ?>
-                                </div>
-                            </div>
+                            
                             <div class="meta-action">
                                 <?php wp_nonce_field('edd_sample_nonce', 'edd_sample_nonce');  ?>
                                 <a title="<?php echo esc_attr__('View ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>" class="ttbm_view_post" href="<?php echo the_permalink($post_id); ?>" target="_blank"><i class="fa fa-eye"></i></a>

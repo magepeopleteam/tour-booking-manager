@@ -253,11 +253,11 @@
                                         <div class="tour-stats">
                                             <div class="stat">
                                                 <span class="value"><?php echo esc_html($total); ?></span> 
-                                                <span class="label"><?php echo esc_html__('Total','tour-booking-manager'); ?></span>
+                                                <span class="label"><?php echo esc_html__('Total Seats','tour-booking-manager'); ?></span>
                                             </div>
                                             <div class="stat">
                                                 <span class="value"><?php echo esc_html($sold); ?></span> 
-                                                <span class="label"><?php echo esc_html__('Sold','tour-booking-manager'); ?></span> 
+                                                <span class="label"><?php echo esc_html__('Sold Seats','tour-booking-manager'); ?></span> 
                                             </div>
                                         </div>
                                         <div class="meta-date">

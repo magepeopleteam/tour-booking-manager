@@ -230,7 +230,7 @@
                                 </div>
                                 <div class="ttbm-tour-details">
                                     <div class="ttbm-tour-info">
-                                        <div class="description"><?php echo esc_html(wp_trim_words(get_the_excerpt($post_id), 39)); ?></div>
+                                        <div class="description"><?php echo esc_html(wp_trim_words(get_the_excerpt($post_id), 80)); ?></div>
                                         <div class="ttbm_travel_lists_tour-features">
                                             <?php if( !empty( $max_features ) ){
                                                 foreach ( $max_features as $key => $feature ){

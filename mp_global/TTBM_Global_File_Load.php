@@ -46,6 +46,7 @@
 				wp_enqueue_script('mp_owl_carousel', TTBM_GLOBAL_PLUGIN_URL . '/assets/owl_carousel/owl.carousel.min.js', array(), time(), true);
 				wp_enqueue_style('ttbm_plugin_global', TTBM_GLOBAL_PLUGIN_URL . '/assets/mp_style/ttbm_plugin_global.css', array(), time());
 				wp_enqueue_script('ttbm_plugin_global', TTBM_GLOBAL_PLUGIN_URL . '/assets/mp_style/ttbm_plugin_global.js', array('jquery'), time(), true);
+                wp_enqueue_style('mp_plugin_global', TTBM_GLOBAL_PLUGIN_URL . '/assets/mp_style/ttbm_popup_style.css', array(), time());
 				do_action('add_ttbm_global_enqueue');
 			}
 			public function admin_enqueue() {

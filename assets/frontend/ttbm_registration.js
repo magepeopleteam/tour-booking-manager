@@ -121,6 +121,13 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
             parent.find('#ttbm_select_date').trigger('focus');
         }
     });
+
+    $(document).on('click', 'div.mpPopup  .popupClose', function () {
+        $(this).closest('[data-popup]').removeClass('in');
+        $('body').removeClass('noScroll').find('[data-active-popup]').removeAttr('data-active-popup');
+        return true;
+    });
+
     $(document).on("click", ".ttbm_registration_area .ttbm_load_popup_reg", function () {
         let parent = $(this).closest('.ttbm_registration_area');
         let time_slot = parent.find('.ttbm_select_time_area');

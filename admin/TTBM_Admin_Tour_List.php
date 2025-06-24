@@ -242,19 +242,20 @@
                             </div>
                             
                             <div class="meta-action">
-                                <?php wp_nonce_field('edd_sample_nonce', 'edd_sample_nonce');  ?>
-                                <a title="<?php echo esc_attr__('View ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>" class="ttbm_view_post" href="<?php echo the_permalink($post_id); ?>" target="_blank"><i class="fa fa-eye"></i></a>
-                                <a title="<?php echo esc_attr__('Edit ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>" class="ttbm_edit_post" href="<?php echo get_edit_post_link($post_id); ?>"><i class="fa fa-edit"></i></a>
-                                <a title="<?php echo esc_attr__('Duplicate Post ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>" class="ttbm_duplicate_post" href="<?php echo wp_nonce_url(
-                                    admin_url('admin.php?action=ttbm_duplicate_post&post_id=' . $post_id),
-                                    'ttbm_duplicate_post_' . $post_id
-                                ); ?>">
-                                    <i class="fa fa-clone"></i>
-                                </a>
-
-                                <a class="ttbm_trash_post" data-alert="<?php echo esc_attr__('Are you sure ? To trash : ', 'tour-booking-manager') . ' ' . get_the_title($post_id); ?>" data-post-id="<?php echo esc_attr($post_id); ?>" title="<?php echo esc_attr__('Trash ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>">
-                                    <i class="fa fa-trash"></i> 
-                                </a>
+                                <div class="action-links">
+                                    <?php wp_nonce_field('edd_sample_nonce', 'edd_sample_nonce');  ?>
+                                    <a title="<?php echo esc_attr__('View ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>" class="ttbm_view_post" href="<?php echo the_permalink($post_id); ?>" target="_blank"><i class="fa fa-eye"></i></a>
+                                    <a title="<?php echo esc_attr__('Edit ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>" class="ttbm_edit_post" href="<?php echo get_edit_post_link($post_id); ?>"><i class="fa fa-edit"></i></a>
+                                    <a title="<?php echo esc_attr__('Duplicate Post ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>" class="ttbm_duplicate_post" href="<?php echo wp_nonce_url(
+                                        admin_url('admin.php?action=ttbm_duplicate_post&post_id=' . $post_id),
+                                        'ttbm_duplicate_post_' . $post_id
+                                    ); ?>">
+                                        <i class="fa fa-clone"></i>
+                                    </a>
+                                    <a class="ttbm_trash_post" data-alert="<?php echo esc_attr__('Are you sure ? To trash : ', 'tour-booking-manager') . ' ' . get_the_title($post_id); ?>" data-post-id="<?php echo esc_attr($post_id); ?>" title="<?php echo esc_attr__('Trash ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>">
+                                        <i class="fa fa-trash"></i> 
+                                    </a>
+                                </div>
                             </div>
                         </div>
 

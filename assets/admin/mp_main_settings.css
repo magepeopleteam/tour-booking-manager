@@ -272,6 +272,37 @@
     width: 10%;
   }
 }
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status {
+  padding: 5px 10px;
+  font-weight: bold;
+  text-transform: capitalize;
+  border-radius: 5px;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.publish {
+  border: 1px solid #d4f4e0;
+  background-color: #e8f5e8;
+  color: #368336;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.draft {
+  border: 1px solid #f0f0f0;
+  background-color: #f8f8f8;
+  color: #777;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.pending {
+  border: 1px solid #fff4cc;
+  background-color: #fff8e1;
+  color: #b58b00;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.scheduled {
+  border: 1px solid #d6ecff;
+  background-color: #ebf4ff;
+  color: #1c6db3;
+}
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.trash {
+  border: 1px solid #ffe3e3;
+  background-color: #fff0f0;
+  color: #d9534f;
+}
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .tour-stats {
   display: flex;
   justify-content: space-between;
@@ -291,8 +322,8 @@
 }
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 5px;
+  top: 5px;
   display: flex;
   align-items: center;
   justify-content: space-evenly;

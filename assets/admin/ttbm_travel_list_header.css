@@ -537,14 +537,6 @@
     color: #fff;
 }
 
-.meta-action i.fa.fa-clone
- {
-    border: 1px solid #618593;
-    font-weight: 600;
-    padding: 8px 10px;
-    border-radius: 5px;
-}
-
 .ttbm-tour-list-page, .ttbm_trvel_lists_content{background: linear-gradient(to right, #eff6ff, #f5f3ff)}
 .ttbm-tour-list-page .ttbm-tour-card{ background:#fff; }
 @media screen and (max-width: 768px) {

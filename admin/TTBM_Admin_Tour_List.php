@@ -166,12 +166,26 @@
                         $reserve = TTBM_Function::get_total_reserve($post_id);
 
                         $post_status = get_post_status();
-                        if( $post_status === 'publish' ){
-                            $background = '#b7f1ba';
-                            $icon = 'far fa-paper-plane';
-                        }else{
-                            $background = '#ede2b4';
-                            $icon = 'far fa-file-alt';
+                        $publish_status = '';
+                        
+                        switch ($post_status) {
+                            case 'publish':
+                                $publish_status = 'publish';
+                                break;
+                            case 'draft':
+                                $publish_status = 'draft';
+                                break;
+                            case 'pending':
+                                $publish_status = 'pending';
+                                break;
+                            case 'future':
+                                $publish_status = 'scheduled';
+                                break;
+                            case 'trash':
+                                $publish_status = 'trash';
+                                break;
+                            default:
+                                $publish_status = '';
                         }
 
                         $max_features = [];
@@ -188,73 +202,78 @@
                         ?>
                         
                         <div class="ttbm-tour-card" data-travel-type="<?php echo esc_attr( $post_status )?>" data-expire-tour="<?php echo esc_attr( $is_expire );?>">
-                            <div class="ttbm-tour-details">
-                                <div class="ttbm-tour-thumb">
-                                    <?php echo get_the_post_thumbnail($post_id, 'thumbnail'); ?>
-                                </div>
-                                <div class="ttbm-tour-info">
+                            <div class="ttbm-tour-thumb">
+                                <?php echo get_the_post_thumbnail($post_id, 'thumbnail'); ?>
+                            </div>
+                            <div class="ttbm-tour-card-content">
+                                <div>
                                     <h3><a href="<?php echo get_edit_post_link($post_id); ?>"><?php echo get_the_title($post_id); ?></a></h3>
                                     <?php if($location): ?>
                                     <div class="location"><i class="fas fa-map-marker-alt"></i> <?php echo esc_html($location); ?></div>
                                     <?php endif; ?>
-                                    <div class="description"><?php echo esc_html(wp_trim_words(get_the_excerpt($post_id), 39)); ?></div>
-                                    <div class="ttbm_travel_lists_tour-features">
-                                        <?php if( !empty( $max_features ) ){
-                                            foreach ( $max_features as $key => $feature ){
-                                                if( $key === 0 ){
-                                                    $feature_bg = 'ttbm_travel_lists_first_feature';
-                                                }elseif ( $key === 1 ){
-                                                    $feature_bg = 'ttbm_travel_lists_second_feature';
-                                                }else{
-                                                    $feature_bg = 'ttbm_travel_lists_third_feature';
+                                    <div class="meta-action">
+                                        <div class="action-links">
+                                            <?php wp_nonce_field('edd_sample_nonce', 'edd_sample_nonce');  ?>
+                                            <a title="<?php echo esc_attr__('View ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>" class="ttbm_view_post" href="<?php echo the_permalink($post_id); ?>" target="_blank"><i class="fa fa-eye"></i></a>
+                                            <a title="<?php echo esc_attr__('Edit ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>" class="ttbm_edit_post" href="<?php echo get_edit_post_link($post_id); ?>"><i class="fa fa-edit"></i></a>
+                                            <a title="<?php echo esc_attr__('Duplicate Post ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>" class="ttbm_duplicate_post" href="<?php echo wp_nonce_url(
+                                                admin_url('admin.php?action=ttbm_duplicate_post&post_id=' . $post_id),
+                                                'ttbm_duplicate_post_' . $post_id
+                                            ); ?>">
+                                                <i class="fa fa-clone"></i>
+                                            </a>
+                                            <a class="ttbm_trash_post" data-alert="<?php echo esc_attr__('Are you sure ? To trash : ', 'tour-booking-manager') . ' ' . get_the_title($post_id); ?>" data-post-id="<?php echo esc_attr($post_id); ?>" title="<?php echo esc_attr__('Trash ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>">
+                                                <i class="fa fa-trash"></i> 
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ttbm-tour-details">
+                                    <div class="ttbm-tour-info">
+                                        <div class="description"><?php echo esc_html(wp_trim_words(get_the_excerpt($post_id), 80)); ?></div>
+                                        <div class="ttbm_travel_lists_tour-features">
+                                            <?php if( !empty( $max_features ) ){
+                                                foreach ( $max_features as $key => $feature ){
+                                                    if( $key === 0 ){
+                                                        $feature_bg = 'ttbm_travel_lists_first_feature';
+                                                    }elseif ( $key === 1 ){
+                                                        $feature_bg = 'ttbm_travel_lists_second_feature';
+                                                    }else{
+                                                        $feature_bg = 'ttbm_travel_lists_third_feature';
+                                                    }
+                                                ?>
+                                            <div class="ttbm_travel_lists_tour-feature <?php echo esc_attr( $feature_bg )?>"><?php echo esc_attr( $feature )?></div>
+                                            <?php } }?>
+                                        </div>
+                                    </div>
+                                    <div class="ttbm-tour-meta">
+                                        <div class="ttbm_travel_status <?php echo esc_attr($publish_status?$publish_status:''); ?>">
+                                            <?php echo esc_attr( $publish_status )?>
+                                        </div>
+                                        <div class="tour-stats">
+                                            <div class="stat">
+                                                <span class="value"><?php echo esc_html($total); ?></span> 
+                                                <span class="label"><?php echo esc_html__('Total Seats','tour-booking-manager'); ?></span>
+                                            </div>
+                                            <div class="stat">
+                                                <span class="value"><?php echo esc_html($sold); ?></span> 
+                                                <span class="label"><?php echo esc_html__('Sold Seats','tour-booking-manager'); ?></span> 
+                                            </div>
+                                        </div>
+                                        <div class="meta-date">
+                                            <?php
+                                                if ($upcoming_date) {
+                                                    echo esc_html(TTBM_Global_Function::date_format($upcoming_date));
+                                                } else {
+                                                    echo '<span class="textWarning">' . esc_html__('Expired!', 'tour-booking-manager') . '</span>';
                                                 }
                                             ?>
-                                        <div class="ttbm_travel_lists_tour-feature <?php echo esc_attr( $feature_bg )?>"><?php echo esc_attr( $feature )?></div>
-                                        <?php } }?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="ttbm-tour-meta">
-                                <div class="meta-item">
-                                    <div class="meta-icon" style="background-color: <?php echo esc_attr( $background );?>"><i class="<?php echo esc_attr( $icon );?>"></i></div>
-                                    <div class="ttbm_travel_status"><?php echo esc_attr( $post_status )?></div>
-                                </div>
-                                <div class="meta-item">
-                                    <div class="meta-icon"><i class="fa fa-chair"></i></div>
-                                    <div class="meta-label"><?php echo esc_html($total); ?> total</div>
-                                </div>
-                                <div class="meta-item">
-                                    <div class="meta-icon"><i class="fas fa-ticket-alt"></i></div>
-                                    <div class="meta-label"><?php echo esc_html($sold); ?> sold</div>
-                                </div>
-                                <div class="meta-item">
-                                    <div class="meta-icon"><i class="fas fa-calendar-alt"></i></div>
-                                    <div class="meta-label">
-                                        <?php
-                                        if ($upcoming_date) {
-                                            echo esc_html(TTBM_Global_Function::date_format($upcoming_date));
-                                        } else {
-                                            echo '<span class="textWarning">' . esc_html__('Expired!', 'tour-booking-manager') . '</span>';
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="meta-action">
-                                <?php wp_nonce_field('edd_sample_nonce', 'edd_sample_nonce');  ?>
-                                <a title="<?php echo esc_attr__('View ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>" class="ttbm_view_post" href="<?php echo the_permalink($post_id); ?>" target="_blank"><i class="fa fa-eye"></i></a>
-                                <a title="<?php echo esc_attr__('Edit ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>" class="ttbm_edit_post" href="<?php echo get_edit_post_link($post_id); ?>"><i class="fa fa-edit"></i></a>
-                                <a title="<?php echo esc_attr__('Duplicate Post ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>" class="ttbm_duplicate_post" href="<?php echo wp_nonce_url(
-                                    admin_url('admin.php?action=ttbm_duplicate_post&post_id=' . $post_id),
-                                    'ttbm_duplicate_post_' . $post_id
-                                ); ?>">
-                                    <i class="fa fa-clone"></i>
-                                </a>
-
-                                <a class="ttbm_trash_post" data-alert="<?php echo esc_attr__('Are you sure ? To trash : ', 'tour-booking-manager') . ' ' . get_the_title($post_id); ?>" data-post-id="<?php echo esc_attr($post_id); ?>" title="<?php echo esc_attr__('Trash ', 'tour-booking-manager') . ' : ' . get_the_title($post_id); ?>">
-                                    <i class="fa fa-trash"></i> 
-                                </a>
-                            </div>
+                            
+                            
                         </div>
 
                         <?php

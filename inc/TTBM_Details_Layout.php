@@ -54,7 +54,7 @@
                 </div>
             <?php }
 
-            public function ticket_registration(){
+            public function ticket_registration_old(){
                 $ttbm_post_id = $ttbm_post_id ?? get_the_id();
 	            $tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
                 $ttbm_display_registration = $ttbm_display_registration ?? TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_display_registration', 'on' );
@@ -71,6 +71,94 @@
    
                     </div>
                         
+                    <?php
+                }
+            }
+
+            public function ticket_registration() {
+                $ttbm_post_id = $ttbm_post_id ?? get_the_id();
+                $tour_id = $tour_id ?? TTBM_Function::post_id_multi_language($ttbm_post_id);
+                $ttbm_display_registration = $ttbm_display_registration ?? TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_registration', 'on');
+                if ($ttbm_display_registration != 'off') {
+                    ?>
+                    <div class="ttbm-sidebar-booking ttbm_registration_area">
+                        <div class="ttbm-title-price"><?php esc_html_e("From", 'tour-booking-manager'); ?><?php include(TTBM_Function::template_path('layout/start_price_box.php')); ?></div>
+                        <input type="hidden" name="ttbm_id" value="<?php echo esc_attr($tour_id); ?>"/>
+                        <?php
+                        $all_dates = $all_dates ?? TTBM_Function::get_date($tour_id);
+                        $date = current($all_dates);
+                        $tour_type = $tour_type ?? TTBM_Function::get_tour_type($tour_id);
+                        $travel_type = $travel_type ?? TTBM_Function::get_travel_type($tour_id);
+                        if (sizeof($all_dates) > 0 && $tour_type == 'general' && $travel_type != 'particular') {
+                            $time = TTBM_Function::get_time($tour_id, $date);
+                            $time = is_array($time) ? $time[0]['time'] : $time;
+                            $date = $time ? $date . ' ' . $time : $date;
+                            $date = $time ? date('Y-m-d H:i', strtotime($date)) : date('Y-m-d', strtotime($date));
+                            /************/
+                            $date_format = TTBM_Global_Function::date_picker_format();
+                            $now = date_i18n($date_format, strtotime(current_time('Y-m-d')));
+                            $hidden_date = $date ? date('Y-m-d', strtotime($date)) : '';
+                            $visible_date = $date ? date_i18n($date_format, strtotime($date)) : '';
+
+                            if ($travel_type == 'repeated') {
+                                $time_slots = TTBM_Function::get_time($tour_id, $all_dates[0]);
+                                ?>
+                                <div class="ttbm_date_time_select _fullWidth_mp_zero">
+                                    <label>
+                                                    <span class="date-picker-icon _fullWidth_mp_zero">
+                                                                <i class="far fa-calendar-alt"></i>
+                                                                <input type="hidden" name="ttbm_date" value="<?php echo esc_attr($hidden_date); ?>" required/>
+                                                                <input id="ttbm_select_date" type="text" value="<?php echo esc_attr($visible_date); ?>" class="formControl mb-0 " placeholder="<?php echo esc_attr($now); ?>" readonly required/>
+                                                     </span>
+                                    </label>
+                                    <?php //TTBM_Layout::availability_button($tour_id); ?>
+
+                                    <?php if (is_array($time_slots) && sizeof($time_slots) > 0) { ?>
+                                        <div class="flexWrap ttbm_select_time_area">
+                                            <?php do_action('ttbm_time_select', $tour_id, $all_dates[0]); ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <?php
+                                do_action('ttbm_load_date_picker_js', '#ttbm_select_date', $all_dates);
+                            }
+                        }
+                        //include(TTBM_Function::template_path('ticket/date_selection.php'));
+                        //include(TTBM_Function::template_path('ticket/tour_default_selection.php'));
+                        ?>
+                        <!--                        <button type="button" class="_dButton_bgBlue_fullWidth" data-target-popup="registration-popup">-->
+                        <button type="button" class="_dButton_bgBlue_fullWidth ttbm_load_popup_reg">
+                            <span class="fas fa-plus-square"></span>
+                            <?php esc_html_e('Check Availability', 'tour-booking-manager'); ?>
+                        </button>
+                        <input type="hidden" class="registration_popup" data-target-popup="registration-popup">
+                        <div class="mpPopup mpStyle" data-popup="registration-popup">
+                            <div class="popupMainArea">
+                                <span class="fas fa-times popupClose"></span>
+                                <div class="popupBody">
+                                    <?php if (sizeof($all_dates) > 0) {
+                                        if ($tour_type == 'general') { ?>
+                                            <div class="ttbm_booking_panel placeholder_area">
+                                                <?php if ($travel_type == 'fixed' ) {
+                                                    do_action('ttbm_booking_panel', $tour_id, $date);
+                                                } ?>
+                                            </div>
+                                        <?php }
+                                        include( TTBM_Function::template_path( 'ticket/particular_item_area.php' ) );
+                                    } else { ?>
+                                        <div class="dLayout allCenter bgWarning">
+                                            <h3 class="textWhite"><?php esc_html_e('Date Expired ! ', 'tour-booking-manager') ?></h3>
+                                        </div>
+                                    <?php }
+                                    if (sizeof($all_dates) > 0 && $tour_type == 'hotel' && $travel_type != 'particular') {
+                                        include(TTBM_Function::template_path('ticket/hotel_default_selection.php'));
+                                    }
+                                    //include(TTBM_Function::template_path('ticket/particular_item_area.php'));
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <?php
                 }
             }

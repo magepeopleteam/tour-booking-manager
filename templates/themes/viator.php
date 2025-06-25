@@ -28,25 +28,27 @@
 						</div>
 					</div>
 					<div class="ttbm_content__right">
-						<?php do_action( 'ttbm_registration_before', $ttbm_post_id ); ?>
-						<h4><?php include( TTBM_Function::template_path( 'layout/start_price.php' ) ); ?></h4>
-						<div class="divider"></div>
-						<?php
-							if ( sizeof( $all_dates ) > 0 && $travel_type == 'particular' && $available_seat>0) {
-								?>
-								<button type="button" class="themeButton fullWidth ttbm_go_particular_booking">
-									<?php esc_html_e( 'Book Now ', 'tour-booking-manager' ) ?>
-								</button>
-								<?php
-							}
-							if ( sizeof( $all_dates ) > 1 && $travel_type != 'particular' ) {
-								?>
-								<h5 class="marB">
-									<?php esc_html_e( 'Select Date and Travelers', 'tour-booking-manager' ); ?>
-								</h5>
-								<?php
-							} ?>
-						<?php include( TTBM_Function::template_path( 'ticket/registration.php' ) ); ?>
+						<div class="booking-form-area">
+							<?php do_action( 'ttbm_registration_before', $ttbm_post_id ); ?>
+							<h4 class="booking-form-price"><?php include( TTBM_Function::template_path( 'layout/start_price.php' ) ); ?></h4>
+							<div class="divider"></div>
+							<?php
+								if ( sizeof( $all_dates ) > 0 && $travel_type == 'particular' && $available_seat>0) {
+									?>
+									<button type="button" class="themeButton fullWidth ttbm_go_particular_booking">
+										<?php esc_html_e( 'Book Now ', 'tour-booking-manager' ) ?>
+									</button>
+									<?php
+								}
+								if ( sizeof( $all_dates ) > 1 && $travel_type != 'particular' ) {
+									?>
+									<h5 class="booking-title">
+										<?php esc_html_e( 'Select Date and Travelers', 'tour-booking-manager' ); ?>
+									</h5>
+									<?php
+								} ?>
+							<?php include( TTBM_Function::template_path( 'ticket/registration.php' ) ); ?>
+						</div>
 					</div>
 				</div>
 			</div>

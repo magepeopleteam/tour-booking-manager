@@ -120,7 +120,7 @@
                                     <?php } ?>
                                 </div>
                                 <?php
-                                do_action('mp_load_date_picker_js', '#ttbm_select_date', $all_dates);
+                                do_action('ttbm_load_date_picker_js', '#ttbm_select_date', $all_dates);
                             }
                         }
                         //include(TTBM_Function::template_path('ticket/date_selection.php'));

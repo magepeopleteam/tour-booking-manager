@@ -371,3 +371,41 @@ span.load_more_text{cursor: pointer;color: var(--color_theme_cc);}
 div.ttbm_smart_theme div.ttbm_date_time_select label{margin: 0 0 10px 0;width: 100%;display: block;}
 div.ttbm_smart_theme .ttbm-rating-stars {padding: 0 20px 0 0; margin: 0;border-right: 2px solid #ddd;}
 div.ttbm_smart_theme div.ttbm_details_page .location_name{padding: 0 20px; margin: 0;border-right: 2px solid #ddd;}
+
+/*===========viator theme booking form=======*/
+div.ttbm_viator_theme  .viator_top_section{
+	position: relative;
+	z-index: 222;
+}
+
+div.ttbm_viator_theme  .viator_top_section .ttbm_registration_area{
+	padding: 0;
+	background: none;
+	box-shadow: none;
+}
+div.ttbm_viator_theme  .viator_top_section .booking-title{
+	margin: 10px 0;
+}
+div.ttbm_viator_theme .viator_top_section .ttbm_select_date_area .ttbm-title,
+div.ttbm_viator_theme .viator_top_section .ttbm_select_date_area .date_time_label{
+	display: none;
+}
+div.ttbm_viator_theme .viator_top_section .ttbm_select_date_area .date-picker{
+	width: 100%;
+}
+div.ttbm_viator_theme .viator_top_section .ttbm_select_date_area .date-picker-icon{
+	margin:0;
+}
+div.viator_top_section .ttbm_check_ability {width: 100%;}
+div.ttbm_viator_theme .viator_top_section div.ttbm_booking_panel table thead th{
+	padding:5px 10px;
+	background-color: #d6d6d6;
+}
+
+div.ttbm_viator_theme .viator_top_section div.ttbm_booking_panel table.mp_tour_ticket_type thead tr th:first-child{
+	border-top-left-radius:5px;
+}
+div.ttbm_viator_theme .viator_top_section div.ttbm_booking_panel table.mp_tour_ticket_type thead tr th:last-child{
+	border-top-right-radius:5px;
+}
+div.ttbm_viator_theme .viator_top_section .ttbm_extra_service_area h2.extra_service_title{padding: 10px 0;}

@@ -1,5 +1,5 @@
 <?php
-// Template Name: Default Theme
+// Template Name: Hotel Booking
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;

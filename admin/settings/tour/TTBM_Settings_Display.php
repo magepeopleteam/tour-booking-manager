@@ -83,7 +83,9 @@
 									<select class="" name="ttbm_theme_file">
 										<option><?php esc_html_e('Please select ...', 'tour-booking-manager'); ?></option>
 										<?php foreach($template_lists as $key => $value): ?>
+											<?php if($key != 'hotel_default.php'): ?> 
 											<option value="<?php echo esc_attr($key); ?>" <?php echo esc_attr($template_name == $key? 'selected' : ''); ?>><?php echo esc_attr($value); ?></option>
+											<?php endif; ?>
 										<?php endforeach; ?>
 									</select>
 								</label>

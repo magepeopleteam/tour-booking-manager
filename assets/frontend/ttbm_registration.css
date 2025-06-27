@@ -74,7 +74,6 @@ div.ttbm_booking_panel table td:last-child > div {display: inline-block;min-widt
 div.ttbm_booking_panel table th {
 	background-color: #fff;
 	text-align: left;
-	padding: 10px 15px; 
 	vertical-align: middle;
 	
 }
@@ -85,24 +84,58 @@ div.ttbm_booking_panel table thead th {
 	padding: 20px 0;
 	
 }
+div.ttbm_booking_panel table tr th.ttbm-person-info{
+	width: 70%;
+}
+div.ttbm_booking_panel table tr .ttbm-person-info .person-info{
+	font-weight: bold;
+	font: 16px;
+}
+
+div.ttbm_booking_panel table tr .ttbm_load_more_text_area{
+	color: #8b8b8b;
+}
+
+div.ttbm_booking_panel table tr th.ttbm-regular-price{
+	width: 10%;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+div.ttbm_booking_panel table tr td.ttbm-select-quantity{
+	width: 20%;
+}
 
 div.ttbm_booking_panel table tbody th,div.ttbm_booking_panel table tbody td{
 	border: 0 !important;
 }
+
 div.ttbm_booking_panel .ttbm_book_now_area{
 	border: 0;
 	margin-top: 30px;
+	background-color: #ebebeb;
 }
+
+div.ttbm_booking_panel .ttbm_book_now_area .ttbm_book_now{margin:0;}
+
 div.ttbm_booking_panel .ttbm_book_now_area .tour_qty,
 div.ttbm_booking_panel .ttbm_book_now_area .tour_price{
 	font-size: 20px;
 	font-weight: bold;
 }
 
-div.ttbm_booking_panel table.mp_tour_ticket_type{
-	box-shadow: 0 0 1px #ddd;
-	border-radius: 12px 12px 0 0;
+div.ttbm_booking_panel .ttbm_attendee_form_area{
+	border-radius: 10px;
+  	margin: 10px 0;
+  	background: #ececec;
+  	padding: 10px;
 }
+
+div.ttbm_booking_panel .ttbm_attendee_form_item{
+	border-radius: 10px;
+	margin: 10px 0;
+}
+
 div.ttbm_booking_panel table.mp_tour_ticket_type thead tr th:first-child{
 	border-top-left-radius: 10px;
 }

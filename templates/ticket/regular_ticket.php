@@ -51,7 +51,7 @@
 								$description = array_key_exists('ticket_type_description', $ticket) ? $ticket['ticket_type_description'] : '';
 								?>
 								<tr>
-									<th >
+									<th class="ttbm-person-info">
                                         <div class="person-info">
                                             <?php if ($ticket_type_icon) { ?>
                                                 <span class="<?php echo esc_attr($ticket_type_icon); ?>"></span>
@@ -62,14 +62,13 @@
 										    <div class="mT_xs person-description"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
                                         <?php } ?>
 									</th>
-									<th class="textCenter" data-regular-price="<?php echo esc_attr(TTBM_Global_Function::price_convert_raw(TTBM_Global_Function::wc_price($tour_id, $regular_price))); ?>" data-base-price="<?php echo esc_attr($ticket['ticket_type_price']); ?>">
+									<th class="ttbm-regular-price" data-regular-price="<?php echo esc_attr(TTBM_Global_Function::price_convert_raw(TTBM_Global_Function::wc_price($tour_id, $regular_price))); ?>" data-base-price="<?php echo esc_attr($ticket['ticket_type_price']); ?>">
 										<?php if ($regular_price) { ?>
 											<span class="strikeLine"><?php echo TTBM_Global_Function::wc_price($tour_id, $regular_price); ?></span>
 										<?php } ?>
 										<span><?php echo TTBM_Global_Function::esc_html($ticket_price); ?></span>
 									</th>
-									<td>
-
+									<td class="ttbm-select-quantity">
                                         <?php TTBM_Layout::qty_input($ticket_name, $available, $ticket_qty_type, $default_qty, $min_qty, $max_qty, $ticket_price_raw, 'ticket_qty[]',$tour_id); ?>
                                     </td>
 								</tr>

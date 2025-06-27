@@ -23,13 +23,13 @@
 				?>
 				<div class="ttbm_widget_content" data-placeholder>
 					<table class="mp_tour_ticket_type">
-						<thead>
+						<!-- <thead>
                             <tr>
                                 <th class="textL"><?php echo TTBM_Global_Function::data_sanitize(TTBM_Function::ticket_name_text()); ?></th>
                                 <th><?php echo TTBM_Global_Function::data_sanitize(TTBM_Function::ticket_price_text()); ?></th>
                                 <th><?php echo TTBM_Global_Function::data_sanitize(TTBM_Function::ticket_qty_text()); ?></th>
                             </tr>
-						</thead>
+						</thead> -->
 						<tbody>
 						<?php
 							foreach ($ticket_lists as $ticket) {
@@ -51,7 +51,7 @@
 								$description = array_key_exists('ticket_type_description', $ticket) ? $ticket['ticket_type_description'] : '';
 								?>
 								<tr>
-									<th>
+									<th >
                                         <div class="person-info">
                                             <?php if ($ticket_type_icon) { ?>
                                                 <span class="<?php echo esc_attr($ticket_type_icon); ?>"></span>

@@ -9,7 +9,7 @@
 	$default_title = $default_title ?? '';
 	if ( $tour_id && $option_name ) {
 		?>
-		<h4 class="<?php echo esc_attr( $title_class ); ?>" data-placeholder>
+		<h2 class="<?php echo esc_attr( $title_class ); ?>" data-placeholder>
 			<?php TTBM_Function::translation_settings( $option_name, $default_title ); ?>
-		</h4>
+		</h2>
 	<?php } ?>

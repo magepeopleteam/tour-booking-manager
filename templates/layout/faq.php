@@ -9,7 +9,7 @@
 	if( !empty($faqs) && $display_faq == 'on' ) {
 		?>
 		<div class='ttbm_description'>
-			<h2><?php esc_html_e( 'F.A.Q ', 'tour-booking-manager' ) ?></h2>
+			<h2 class="ttbm_description_title"><?php esc_html_e( 'F.A.Q ', 'tour-booking-manager' ) ?></h2>
 			<div class='ttbm_faq_content'>
 				<?php
 					foreach ( $faqs as $key => $faq ) {

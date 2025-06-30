@@ -53,28 +53,28 @@ if ( $hotel_id && $date_range ) {
                     $available        = $ticket['available'];
                     ?>
                     <tr>
-                        <td>
-                            <h5><?php echo TTBM_Global_Function::esc_html( $room_name ); ?></h5>
+                        <td class="ttbm-hotel-room-info">
+                            <p><?php echo TTBM_Global_Function::esc_html( $room_name ); ?></p>
                             <?php
                             $adult_qty = array_key_exists( 'ttbm_hotel_room_capacity_adult', $ticket ) ? $ticket['ttbm_hotel_room_capacity_adult'] : 0;
                             $child_qty = array_key_exists( 'ttbm_hotel_room_capacity_child', $ticket ) ? $ticket['ttbm_hotel_room_capacity_child'] : 0;
                             if ( $adult_qty > 0 ) {
                                 for ( $i = 0; $i < $adult_qty; $i ++ ) {
                                     ?>
-                                    <span class="fas fa-user-alt"></span>
+                                    <i class="fas fa-user-alt"></i>
                                     <?php
                                 }
                             }
                             if ( $child_qty > 0 ) {
                                 for ( $i = 0; $i < $child_qty; $i ++ ) {
                                     ?>
-                                    <span class="fas fa-child"></span>
+                                    <i class="fas fa-child-dress"></i>
                                     <?php
                                 }
                             }
                             ?>
                         </td>
-                        <td>
+                        <td style="text-align: right;">
                             <?php if ($sale_price) { ?>
                                 <span class="strikeLine"><?php echo TTBM_Global_Function::wc_price($hotel_id, $sale_price); ?></span>
                             <?php } ?>
@@ -82,7 +82,7 @@ if ( $hotel_id && $date_range ) {
                             <?php esc_html_e( 'Night ', 'tour-booking-manager' ); ?>&nbsp;X
                             <?php echo esc_html( $days->days ); ?>
                         </td>
-                        <td class="ttbm_hotel_room_incDec"><?php TTBM_Layout::qty_input( $room_name, $available, 'inputbox', 0, $min_qty, $max_qty, $ticket_price_raw, 'ticket_qty[]' ); ?></td>
+                        <td style="text-align: right;" class="ttbm_hotel_room_incDec"><?php TTBM_Layout::qty_input( $room_name, $available, 'inputbox', 0, $min_qty, $max_qty, $ticket_price_raw, 'ticket_qty[]' ); ?></td>
                     </tr>
                     <tr>
                         <td colspan=3>

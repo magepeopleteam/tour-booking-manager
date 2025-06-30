@@ -79,17 +79,17 @@ div.ttbm_details_page div.ttbm_description {
   	box-shadow: 0 2px 10px #0000001b;
 }
 
-div.ttbm_details_page div.ttbm_description h2{
+div.ttbm_details_page div.ttbm_description .ttbm_description_title{
 	background: rgba(var(--color_theme_rbg),0.1);
   	padding: 12px var(--dmp);
   	font-weight: bold;
   	border-radius: 10px 10px 0 0;
 	margin: 0;
+	font-size: 22px;
 }
 
 div.ttbm_details_page div.ttbm_description .ttbm_content{
-	padding: 20px;
-	margin-top:-10px;
+	padding:20px 25px;
 }
 /*********/
 div.ttbm_details_page .location_name {font-size: var(--fs_h5);margin: 0 0 var(--dmp) 0;}
@@ -129,12 +129,12 @@ div.ttbm_style .mp_tour_ticket_form{
 .hip_hop_hotel_theme .ttbm_booking_panel table tr:nth-of-type(odd) td:last-child {width: 160px;padding: 5px;}
 
 
-.ttbm_booking_panel .ttbm_ticket_area table.mp_tour_ticket_type thead{
+.ttbm_booking_panel table.mp_tour_ticket_type{
 	border: 0;
 }
-.ttbm_booking_panel .ttbm_ticket_area table.mp_tour_ticket_type tbody tr:nth-child(2n+1){
+.ttbm_booking_panel table.mp_tour_ticket_type tbody tr:nth-child(2n+1){
 	background: none;
-	border-bottom: 1px solid #f6f6f6;
+	border-bottom: 1px solid #dadada;
 }
 .ttbm_booking_panel .ttbm_ticket_area table.mp_tour_ticket_type tbody tr:last-child{
 	border-bottom: 0;

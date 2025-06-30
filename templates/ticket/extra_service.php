@@ -14,11 +14,11 @@
 			<div class="ttbm_widget_content" data-placeholder>
 				<table class="mp_tour_ticket_extra">
 					<thead>
-					<tr>
+					<!-- <tr>
 						<th><?php echo TTBM_Function::service_name_text(); ?></th>
 						<th><?php echo TTBM_Function::service_price_text(); ?></th>
 						<th><?php echo TTBM_Function::service_qty_text(); ?></th>
-					</tr>
+					</tr> -->
 					</thead>
 					<tbody>
 					<?php

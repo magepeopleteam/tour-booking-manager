@@ -97,7 +97,7 @@ div.ttbm_booking_panel table tr .ttbm_load_more_text_area{
 }
 
 div.ttbm_booking_panel table tr th.ttbm-regular-price{
-	width: 10%;
+	width: 20%;
 	font-weight: bold;
 	font-size: 18px;
 }
@@ -128,12 +128,31 @@ div.ttbm_booking_panel .ttbm_attendee_form_area{
 	border-radius: 10px;
   	margin: 10px 0;
   	background: #ececec;
-  	padding: 10px;
 }
 
 div.ttbm_booking_panel .ttbm_attendee_form_item{
 	border-radius: 10px;
 	margin: 10px 0;
+}
+
+div.ttbm_booking_panel .ttbm-attendee-form .ttbm_form_header {
+	background: none;
+	padding: 0;
+	margin-bottom: 10px;
+}
+
+div.ttbm_booking_panel .ttbm-attendee-form{
+	padding: 10px;
+}
+
+div.ttbm_booking_panel .ttbm-attendee-form .groupCheckBox.ttbm_form_item,
+div.ttbm_booking_panel .ttbm-attendee-form .groupRadioBox.ttbm_form_item{
+margin-bottom: 15px;
+}
+
+div.ttbm_booking_panel .ttbm-attendee-form .customCheckboxLabel,
+div.ttbm_booking_panel .ttbm-attendee-form .customRadioLabel{
+	font-weight: normal;
 }
 
 div.ttbm_booking_panel table.mp_tour_ticket_type thead tr th:first-child{

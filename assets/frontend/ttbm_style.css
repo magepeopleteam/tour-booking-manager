@@ -129,10 +129,10 @@ div.ttbm_style .mp_tour_ticket_form{
 .hip_hop_hotel_theme .ttbm_booking_panel table tr:nth-of-type(odd) td:last-child {width: 160px;padding: 5px;}
 
 
-.ttbm_booking_panel .ttbm_ticket_area table.mp_tour_ticket_type thead{
+.ttbm_booking_panel table.mp_tour_ticket_type{
 	border: 0;
 }
-.ttbm_booking_panel .ttbm_ticket_area table.mp_tour_ticket_type tbody tr:nth-child(2n+1){
+.ttbm_booking_panel table.mp_tour_ticket_type tbody tr:nth-child(2n+1){
 	background: none;
 	border-bottom: 1px solid #dadada;
 }

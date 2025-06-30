@@ -20,7 +20,7 @@ if ( $hotel_id && $date_range ) {
     <input type="hidden" name='ttbm_hotel_num_of_day' value='<?php echo esc_attr( $days->days ); ?>'>
     <input type="hidden" name='ttbm_checkin_date' value='<?php echo esc_attr( $date1 ); ?>'>
     <input type="hidden" name='ttbm_checkout_date' value='<?php echo esc_attr( $date2 ); ?>'>
-    <div class="ttbm_default_widget mT">
+    <div class="">
         <?php
         $option_name   = 'ttbm_string_availabe_ticket_list';
         $default_title = esc_html__( 'Available Room List ', 'tour-booking-manager' );
@@ -28,13 +28,13 @@ if ( $hotel_id && $date_range ) {
         ?>
         <div class="ttbm_widget_content" data-placeholder>
             <table class="mp_tour_ticket_type">
-                <thead>
+                <!-- <thead>
                 <tr>
                     <th><?php echo esc_html( TTBM_Function::ticket_name_text() ); ?></th>
                     <th><?php echo esc_html( TTBM_Function::ticket_price_text() ); ?></th>
                     <th><?php echo esc_html( TTBM_Function::ticket_qty_text() ); ?></th>
                 </tr>
-                </thead>
+                </thead> -->
                 <tbody>
                 <?php
                 foreach ( $room_lists_new as $ticket ) {

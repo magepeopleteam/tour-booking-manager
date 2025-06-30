@@ -102,6 +102,11 @@ div.ttbm_booking_panel table tr th.ttbm-regular-price{
 	font-size: 18px;
 }
 
+div.ttbm_booking_panel table .ttbm-hotel-room-info i{
+	color:#a9a9a9;
+	font-size:12px;
+}
+
 div.ttbm_booking_panel table tr td.ttbm-select-quantity{
 	width: 20%;
 }

@@ -84,9 +84,11 @@ div.filter_item {
 	display: flex;
 	-webkit-flex-direction: column;
 	flex-direction: column;
-	background-color: #FFF;color: var(--d_color);
-	margin: var(--ttbm_mp_xs);padding: var(--ttbm_mp_xs);
-	position: relative;overflow: hidden;width: calc(25% - var(--dmp));
+	background-color: #FFF;
+	color: var(--d_color);
+	margin: var(--ttbm_mp_xs);
+	position: relative;
+	overflow: hidden;width: calc(25% - var(--dmp));
 	justify-content: space-between;
 }
 
@@ -117,6 +119,11 @@ div.ttbm_list_title {margin-top: var(--ttbm_mp_xs);}
 .filter_item .ttbm_list_title {
 	margin-top: 10px;
 	margin-bottom: 10px;
+	line-height: 20px;
+	font-size: 16px;
+}
+.filter_item .bg_image_area{
+	border-radius: 0;
 }
 
 .filter_item h3.ttbm_list_title a, .filter_item h3.ttbm_list_title a:focus {
@@ -277,6 +284,7 @@ div.ttbm_list_details {
 	flex: auto;
 	text-align: left;
 	justify-content: space-between;
+	padding: 15px;
 }
 
 .ttbm_list_details .fdColumn .ttbm_list_info:first-child,

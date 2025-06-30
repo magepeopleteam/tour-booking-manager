@@ -27,7 +27,14 @@ div.ttbm_faq_item .ttbm_faq_title {-webkit-transition: 350ms ease-in-out;transit
 	/*margin-bottom: 10px;*/
 }
 /**********Shadow content****************************/
-#ttbm_related_tour div.filter_item,
+
+#ttbm_related_tour div.filter_item{
+	border: 1px solid var(--color_border);
+	padding: 0;
+}
+#ttbm_related_tour div.filter_item .ttbm-rating-stars{
+	margin: 0;
+}
 .shadow_one {
 	background-color: var(--color_white);padding: var(--dmp);
 	-webkit-box-shadow: 0 5px 10px rgba(0, 44, 102, 0.2);

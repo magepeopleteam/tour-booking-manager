@@ -10,8 +10,14 @@
         gap:20px;
         justify-content: space-between;
         align-items: center;
+        @media (max-width:1024px) {
+            flex-direction: column;
+        }
         input{
             width: 50%;
+        }
+        h1.ttbm_tour_page-title{
+            padding: 0;
         }
         .page-title-action{
             position: inherit;
@@ -122,7 +128,7 @@
                         width:100%;
                         box-sizing: border-box;
                         @media (min-width: 1024px) {
-                            width:12%;
+                            width:15%;
                         }
                         .ttbm_travel_status{
                             padding: 5px 10px;
@@ -223,11 +229,7 @@
         }
 
         // Mobile responsiveness
-        @media (max-width: 1024px) {
-            .ttbm-tour-card {
-                width: calc(50% - 20px);
-            }
-        }
+
 
         @media (max-width: 600px) {
             .ttbm-tour-card {

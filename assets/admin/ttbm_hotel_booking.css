@@ -899,12 +899,33 @@ div.attendee_filter_list h5, #ttbm_booking_attendee_list_result h6
 .ttbm_tour_list_text_header{
     display: flex;
     gap: 20px;
+    width: 60%;
+}
+.ttbm_tour_search_add_holder{
+    display: flex;
+    gap: 20px;
+    justify-content: end;
+    align-items: center;
+    width:40%;
 }
 .ttbm_tour_count_holder{
     display: flex;
     gap: 10px;
-    height: 30px;
-    margin-top: 10px;
+    margin-top: 0;
+    align-items: center;
+    justify-content: start;
+}
+@media screen and (max-width: 768px) {
+    .ttbm_tour_count_holder{
+        flex-direction: column;
+        align-items: center;
+    }
+    .ttbm_tour_list_text_header{
+        flex-direction: column;
+    }
+    .ttbm_tour_search_add_holder,.ttbm_tour_list_text_header{
+        width:100%;
+    }
 }
 .ttbm_total_travel_display{
     color: #ef17c9;

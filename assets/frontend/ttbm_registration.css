@@ -85,7 +85,7 @@ div.ttbm_booking_panel table thead th {
 	
 }
 div.ttbm_booking_panel table tr th.ttbm-person-info{
-	width: 70%;
+	width: 60%;
 }
 div.ttbm_booking_panel table tr .ttbm-person-info .person-info{
 	font-weight: bold;
@@ -110,7 +110,18 @@ div.ttbm_booking_panel table .ttbm-hotel-room-info i{
 div.ttbm_booking_panel table tr td.ttbm-select-quantity{
 	width: 20%;
 }
-
+@media (max-width: 1024px) {
+	div.ttbm_booking_panel table tr th.ttbm-person-info{
+		width: auto;
+	}
+	div.ttbm_booking_panel table tr td.ttbm-select-quantity{
+		width: auto;
+	}
+	div.ttbm_booking_panel table tr th.ttbm-regular-price{
+		width: auto;
+	}
+	
+}
 div.ttbm_booking_panel table tbody th,div.ttbm_booking_panel table tbody td{
 	border: 0 !important;
 }

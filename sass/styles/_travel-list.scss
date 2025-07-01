@@ -10,8 +10,14 @@
         gap:20px;
         justify-content: space-between;
         align-items: center;
+        @media (max-width:1024px) {
+            flex-direction: column;
+        }
         input{
             width: 50%;
+        }
+        h1.ttbm_tour_page-title{
+            padding: 0;
         }
         .page-title-action{
             position: inherit;
@@ -55,10 +61,10 @@
             }
             .ttbm-tour-thumb {
                 position: relative;
-                width: 260px;
+                width: 100%;
                 max-height: 200px;
                 @media (min-width: 1024px) {
-                    width: 380px;
+                    width: 10%;
                 }
                 img {
                 width: 100%;
@@ -80,7 +86,12 @@
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
                 }
             }
-            .ttbm-tour-card-content{    
+            .ttbm-tour-card-content{   
+                 width: 100%;
+                 @media (min-width: 1024px) {
+                    width: 90%;
+                    
+                 } 
                 h3 {
                     margin:0;
                     font-size: 18px;
@@ -117,7 +128,7 @@
                         width:100%;
                         box-sizing: border-box;
                         @media (min-width: 1024px) {
-                            width:12%;
+                            width:15%;
                         }
                         .ttbm_travel_status{
                             padding: 5px 10px;
@@ -218,11 +229,7 @@
         }
 
         // Mobile responsiveness
-        @media (max-width: 1024px) {
-            .ttbm-tour-card {
-                width: calc(50% - 20px);
-            }
-        }
+
 
         @media (max-width: 600px) {
             .ttbm-tour-card {

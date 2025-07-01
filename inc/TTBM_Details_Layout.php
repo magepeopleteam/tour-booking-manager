@@ -127,10 +127,14 @@
                         //include(TTBM_Function::template_path('ticket/tour_default_selection.php'));
                         ?>
                         <!--                        <button type="button" class="_dButton_bgBlue_fullWidth" data-target-popup="registration-popup">-->
-                        <button type="button" class="_dButton_bgBlue_fullWidth ttbm_load_popup_reg">
+                        <button type="button" class="_dButton_fullWidth ttbm_load_popup_reg">
                             <span class="fas fa-plus-square"></span>
                             <?php esc_html_e('Check Availability', 'tour-booking-manager'); ?>
                         </button>
+                        <ul class="ttbm-registration-info">
+                            <li><?php _e('Free cancellation up to 24 hours before the experience starts (local time)','tour-booking-manager'); ?></li>
+                            <li><?php _e('Reserve Now and Pay Later - Secure your spot while staying flexible','tour-booking-manager'); ?></li>
+                        </ul>
                         <input type="hidden" class="registration_popup" data-target-popup="registration-popup">
                         <div class="mpPopup mpStyle" data-popup="registration-popup">
                             <div class="popupMainArea">

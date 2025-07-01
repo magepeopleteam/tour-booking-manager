@@ -84,9 +84,7 @@ div.ttbm_booking_panel table thead th {
 	padding: 20px 0;
 	
 }
-div.ttbm_booking_panel table tr th.ttbm-person-info{
-	width: 60%;
-}
+
 div.ttbm_booking_panel table tr .ttbm-person-info .person-info{
 	font-weight: bold;
 	font: 16px;
@@ -97,9 +95,9 @@ div.ttbm_booking_panel table tr .ttbm_load_more_text_area{
 }
 
 div.ttbm_booking_panel table tr th.ttbm-regular-price{
-	width: 20%;
 	font-weight: bold;
 	font-size: 18px;
+	text-align: center;
 }
 
 div.ttbm_booking_panel table .ttbm-hotel-room-info i{
@@ -107,21 +105,6 @@ div.ttbm_booking_panel table .ttbm-hotel-room-info i{
 	font-size:12px;
 }
 
-div.ttbm_booking_panel table tr td.ttbm-select-quantity{
-	width: 20%;
-}
-@media (max-width: 1024px) {
-	div.ttbm_booking_panel table tr th.ttbm-person-info{
-		width: auto;
-	}
-	div.ttbm_booking_panel table tr td.ttbm-select-quantity{
-		width: auto;
-	}
-	div.ttbm_booking_panel table tr th.ttbm-regular-price{
-		width: auto;
-	}
-	
-}
 div.ttbm_booking_panel table tbody th,div.ttbm_booking_panel table tbody td{
 	border: 0 !important;
 }
@@ -440,8 +423,38 @@ span.load_more_text{cursor: pointer;color: var(--color_theme_cc);}
 }
 div.ttbm_smart_theme div.ttbm_date_time_select label{margin: 0 0 10px 0;width: 100%;display: block;}
 div.ttbm_smart_theme .ttbm-rating-stars {padding: 0 20px 0 0; margin: 0;border-right: 2px solid #ddd;}
-div.ttbm_smart_theme div.ttbm_details_page .location_name{padding: 0 20px; margin: 0;border-right: 2px solid #ddd;}
-
+div.ttbm_smart_theme div.ttbm_details_page .location_name{padding: 0 20px; margin: 0;}
+div.ttbm_smart_theme .ttbm_load_popup_reg{
+	box-shadow: 0;
+}
+div.ttbm_smart_theme .ttbm-review-location-area{
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	margin-bottom: 20px;
+}
+div.ttbm_smart_theme ul.ttbm-registration-info{
+	margin: 10px 0;
+	background: rgba(var(--color_theme_rbg),0.1);
+	padding: 15px;
+	border-radius: 10px;
+}
+div.ttbm_smart_theme ul.ttbm-registration-info li{
+	margin: 10px 0;
+}
+div.ttbm_smart_theme ul.ttbm-registration-info li{
+	padding-left: 20px;
+	position: relative;
+	font-size: 12px;
+}
+div.ttbm_smart_theme ul.ttbm-registration-info li::before{
+	content: "\f058";
+	font-family: 'Font Awesome 5 Free';
+	position: absolute;
+	left: 0;
+	top:0;
+	color: rgba(var(--color_theme_rbg),1);
+}
 /*===========viator theme booking form=======*/
 div.ttbm_viator_theme  .viator_top_section{
 	position: relative;

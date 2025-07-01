@@ -9,7 +9,7 @@
         $list_view_task=true;
 		?>
 		<div class="ttbm_description">
-			<h2><?php esc_html_e( "What's Included", 'tour-booking-manager' ); ?></h2>
+			<h2 class="ttbm_description_title"><?php esc_html_e( "What's Included", 'tour-booking-manager' ); ?></h2>
 			<div class="ttbm-include-exclude">
 				<div class="include items">
 					<ul>
@@ -57,7 +57,7 @@
 		<div data-popup="include-exclude-popup" class="ttbm_popup ttbm_style">
 			<div class="popupMainArea">
 				<div class="popupHeader allCenter">
-					<h2 class="_mR"><?php esc_html_e('What\'s Included','tour-booking-manager'); ?></h2>
+					<h2 class="ttbm_description_title _mR"><?php esc_html_e('What\'s Included','tour-booking-manager'); ?></h2>
 					<span class="fas fa-times popupClose"></span>
 				</div>
 				<div class="popupBody">

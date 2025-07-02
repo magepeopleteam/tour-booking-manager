@@ -8,9 +8,15 @@ div.ttbm_default_widget {
 	color: var(--d_color);
 	position: relative;
 	margin: 0 0 var(--dmp) 0;
+	background: #fff;
 }
 div > div.ttbm_default_widget:last-child {margin: 0;}
-div.ttbm_default_widget .ttbm_widget_title {padding: var(--ttbm_mp_xs) var(--dmp);text-align: center;margin: 0;background-color: var(--color_theme);color: var(--color_theme_alter);}
+div.ttbm_default_widget .ttbm_widget_title {
+	padding: var(--ttbm_mp_xs) var(--dmp);
+	text-align: center;margin: 0;
+	background-color: var(--color_theme);
+	color: var(--color_theme_alter);
+}
 .ttbm_widget_content {padding: var(--ttbm_mp_xs);}
 div.ttbm_default_widget .ttbm_widget_content {background-color: var(--color_section);border: 1px solid #DDD;}
 /*div.ttbm_default_widget .ttbm_widget_content a {margin: 0 0 7px 0;}*/
@@ -24,7 +30,19 @@ div.ttbm_default_widget .ttbm_title_style_2 ~ .ttbm_widget_content.ttbm_day_wise
 	padding: 20px;
 }
 
-div.ttbm_default_widget .ttbm_title_style_3 {border-bottom: 2px solid var(--color_theme_77);padding: 10px 10px;}
+div.ttbm_default_widget .ttbm_title_style_3{
+	padding: 10px 10px;
+}
+div.ttbm_default_widget .ttbm_title_style_3::before {
+	content: "";
+	position: absolute;
+	left: 10px;
+	top: 40px;
+	width: 50px;
+	border-bottom: 3px solid var(--color_theme);
+	
+}
+
 div.ttbm_default_widget .ttbm_widget_content.ttbm_day_wise_details {padding: 20px;}
 div.ttbm_default_widget .ttbm_title_style_2{
 	background: rgba(var(--color_theme_rbg),0.1);
@@ -76,6 +94,17 @@ div.ttbm_booking_panel table th {
 	text-align: left;
 	vertical-align: middle;
 	
+}
+.ttbm_default_theme div.ttbm_default_widget .ttbm_widget_title {
+	text-align: left;
+}
+div.ttbm-attendee-form h3{
+	margin: 0;
+}
+label.time_select_box
+{
+    text-align: center;
+    width: 100%;
 }
 
 div.ttbm_booking_panel table thead th {

@@ -377,6 +377,9 @@ div.include_service ul li:hover,
 	gap: 10px;
 	flex-wrap: wrap;
 }
+div.ttbm_description ul.ttbm-activities{
+	padding: 20px;
+}
 .ttbm-activities .ttbm-items{
 	width: 49%;
 	margin-bottom: 10px;

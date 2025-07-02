@@ -58,14 +58,14 @@
 		<div class="mpContainer">
 			<div class="ttbm_details_page">
 				<div class="ttbm_content_area">
-					<div class="ttbm_content__left shadow_one">
+					<div class="ttbm_content__left ">
 						<?php do_action( 'ttbm_description' ); ?>
 						<?php include( TTBM_Function::template_path( 'ticket/particular_item_area.php' ) ); ?>
 						<?php do_action( 'ttbm_hiphop_place' ); ?>
 						<?php do_action( 'ttbm_day_wise_details' ); ?>
 						<?php do_action( 'ttbm_faq' ); ?>
 					</div>
-					<div class="ttbm_content__right shadow_one">
+					<div class="ttbm_content__right">
 						<?php do_action( 'ttbm_include_feature' ); ?>
 						<?php do_action( 'ttbm_exclude_service' ); ?>
 						<?php do_action( 'ttbm_activity' ); ?>

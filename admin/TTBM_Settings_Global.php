@@ -281,6 +281,13 @@
 							'default' => ''
 						),
 						array(
+							'name' => 'ttbm_string_overview',
+							'label' => esc_html__('Overview', 'tour-booking-manager'),
+							'desc' => esc_html__('Enter the translated text of:', 'tour-booking-manager') . '<strong>' . esc_html__('Overview', 'tour-booking-manager') . '</stong>',
+							'type' => 'text',
+							'default' => ''
+						),
+						array(
 							'name' => 'ttbm_string_faq',
 							'label' => esc_html__('F.A.Q', 'tour-booking-manager'),
 							'desc' => esc_html__('Enter the translated text of:', 'tour-booking-manager') . '<strong>' . esc_html__('F.A.Q', 'tour-booking-manager') . '</stong>',

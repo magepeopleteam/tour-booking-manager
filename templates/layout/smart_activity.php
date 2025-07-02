@@ -10,23 +10,25 @@
 	
 	if ( ! empty( $tour_activities ) && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_activities', 'on' ) !== 'off' ) {
 		?>
-		<div class="ttbm_description">
-			<h2><?php esc_html_e( 'Activities', 'tour-booking-manager' ); ?></h2>
-			<ul class="ttbm-activities">
-				<?php
-				foreach ( $activities_terms as $activity ) {
-					if ( in_array( $activity->term_id, $tour_activities_array ) ) {
-						$icon = $icon ?: 'fa fa-check';
-						?>
-						<li class="ttbm-items">
-							<i class="<?php esc_attr_e( $icon ); ?>"></i>
-							<?php esc_html_e( $activity->name ); ?>
-						</li>
-						<?php
+		<div class="ttbm_default_widget">
+			<?php do_action( 'ttbm_section_title', 'ttbm_string_include_price_list', esc_html__( "Activities", 'tour-booking-manager' ) ); ?>
+			<div class="ttbm_widget_content" style="padding: 15px;">
+				<ul class="ttbm-activities">
+					<?php
+					foreach ( $activities_terms as $activity ) {
+						if ( in_array( $activity->term_id, $tour_activities_array ) ) {
+							$icon = $icon ?: 'fa fa-check';
+							?>
+							<li class="ttbm-items">
+								<i class="<?php esc_attr_e( $icon ); ?>"></i>
+								<?php esc_html_e( $activity->name ); ?>
+							</li>
+							<?php
+						}
 					}
-				}
-				?>
-			</ul>
+					?>
+				</ul>
+			</div>
 		</div>
 		<?php
 	}

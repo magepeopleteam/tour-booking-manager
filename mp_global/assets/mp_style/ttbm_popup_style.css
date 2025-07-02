@@ -7,6 +7,7 @@
 
 	div.mpPopup,
 	div.mpPopup .popupClose,
+	div.mpPopup .popupCloseBtn,
 	div.mpStyle [class*="_mpTransition"] {
 		-webkit-transition: all 350ms ease-in-out;
 		-moz-transition: all 350ms ease-in-out;
@@ -17,7 +18,9 @@
 
 @media only screen and (min-width: 10px) {
 	div.mpPopup.in,
-	div.mpPopup .popupClose {
+	div.mpPopup .popupClose,
+	div.mpPopup .popupCloseBtn
+	{
 		display: -webkit-flex;
 		display: flex;
 		-webkit-justify-content: center;
@@ -28,7 +31,9 @@
 }
 @media only screen and (min-width: 10px) {
 	div.mpPopup .popupMainArea,
-	div.mpPopup .popupClose {
+	div.mpPopup .popupClose,
+	div.mpPopup .popupCloseBtn
+	{
 		-webkit-border-radius: var(--dbr);
 		border-radius: var(--dbr);
 	}
@@ -190,6 +195,22 @@
 		font-size: 20px;
 	}
 	div.mpPopup .popupClose:hover {
+		color: #fff;
+		background-color: #6b003e;
+	}
+	div.mpPopup .popupCloseBtn {
+		position: fixed;
+		z-index: 1111;
+		cursor: pointer;
+		top: 50px;
+		right: 50px;
+		width: 50px;
+		height: 50px;
+		background-color: #444;
+		color: #fff;
+		font-size: 20px;
+	}
+	div.mpPopup .popupCloseBtn:hover {
 		color: #fff;
 		background-color: #6b003e;
 	}

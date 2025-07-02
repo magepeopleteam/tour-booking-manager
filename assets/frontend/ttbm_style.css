@@ -362,6 +362,7 @@ div.include_service ul li:hover,
 	justify-content: start;
 	align-items: start;
 	gap: 10px;
+	padding: 20px;
 }
 .ttbm-include-exclude .items{
 	width: 50%;

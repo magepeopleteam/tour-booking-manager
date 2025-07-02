@@ -138,7 +138,7 @@
                         <input type="hidden" class="registration_popup" data-target-popup="registration-popup">
                         <div class="mpPopup mpStyle" data-popup="registration-popup">
                             <div class="popupMainArea">
-                                <span class="fas fa-times popupClose"></span>
+                                <span class="fas fa-times popupCloseBtn"></span>
                                 <div class="popupBody">
                                     <?php if (sizeof($all_dates) > 0) {
                                         if ($tour_type == 'general') { ?>

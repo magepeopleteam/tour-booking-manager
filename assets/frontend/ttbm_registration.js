@@ -122,7 +122,13 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         }
     });
 
-    $(document).on('click', 'div.mpPopup  .popupClose', function () {
+    /*$(document).on('click', 'div.mpPopup  .popupClose', function () {
+        $(this).closest('[data-popup]').removeClass('in');
+        $('body').removeClass('noScroll').find('[data-active-popup]').removeAttr('data-active-popup');
+        return true;
+    });*/
+
+    $(document).on('click', 'div.mpPopup  .popupCloseBtn', function () {
         $(this).closest('[data-popup]').removeClass('in');
         $('body').removeClass('noScroll').find('[data-active-popup]').removeAttr('data-active-popup');
         return true;

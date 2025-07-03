@@ -16,6 +16,7 @@ div.ttbm_default_widget .ttbm_widget_title {
 	text-align: center;margin: 0;
 	background-color: var(--color_theme);
 	color: var(--color_theme_alter);
+	font-size: 22px;
 }
 .ttbm_widget_content {padding: var(--ttbm_mp_xs);}
 div.ttbm_default_widget .ttbm_widget_content {background-color: var(--color_section);border: 1px solid #DDD;}
@@ -32,6 +33,7 @@ div.ttbm_default_widget .ttbm_title_style_2 ~ .ttbm_widget_content.ttbm_day_wise
 
 div.ttbm_default_widget .ttbm_title_style_3{
 	padding: 10px 10px;
+	font-size: 22px;
 }
 div.ttbm_default_widget .ttbm_title_style_3::before {
 	content: "";

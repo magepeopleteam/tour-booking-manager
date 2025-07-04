@@ -455,6 +455,18 @@
 								'on' => esc_html__('ON', 'tour-booking-manager'),
 								'off' => esc_html__('Off', 'tour-booking-manager')
 							)
+						),
+						array(
+							'name' => 'slider_height',
+							'label' => esc_html__('Slider height', 'tour-booking-manager'),
+							'desc' => esc_html__('Please Select Slider Height', 'tour-booking-manager'),
+							'type' => 'select',
+							'default' => 'avg',
+							'options' => array(
+								'min' => esc_html__('Minimum', 'tour-booking-manager'),
+								'avg' => esc_html__('Average', 'tour-booking-manager'),
+								'max' => esc_html__('Maximum', 'tour-booking-manager')
+							)
 						)
 					),
 					'ttbm_cancel_email_settings' => array(

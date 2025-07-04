@@ -44,6 +44,7 @@
 					$slider_style      = TTBM_Global_Function::get_slider_settings( 'slider_style', 'style_1' );
 					?>
 					<div class="superSlider placeholder_area fdColumn">
+                        <input type="hidden" name="slider_height_type" value="<?php echo esc_attr(TTBM_Global_Function::get_slider_settings( 'slider_height', 'avg' )); ?>" />
 						<div class="dFlex ttbm_slider-wrapper <?php echo esc_attr( $column_class ); ?>">
 							<?php
 								if ( $showcase_position == 'top' || $showcase_position == 'left' ) {

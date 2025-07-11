@@ -8,14 +8,7 @@
 				add_action('admin_menu', array($this, 'welcome_menu'));
 			}
 			public function welcome_menu() {
-                add_submenu_page(
-                    'edit.php?post_type=ttbm_tour',
-                    __('Welcome', 'tour-booking-manager'),
-                    __('Welcome', 'tour-booking-manager'),
-                    'manage_options',
-                    'ttbm_welcome_page',
-                    array($this, 'welcome_page')
-                );
+				add_submenu_page('edit.php?post_type=ttbm_tour', __('Welcome', 'tour-booking-manager'), __('Welcome', 'tour-booking-manager'), 'manage_options', 'ttbm_welcome_page', array($this, 'welcome_page'));
 			}
 			public function welcome_page() {
 				?>
@@ -47,21 +40,21 @@
                                     <p>Tour Booking Manager For Woocommerce Pro feature include traveler form builder and pdf ticket and emailing feature. In pro version traver list can export with CSV and pdf ticket can download from traveler list.</p>
                                     <div>
                                         <div class="alignCenter content_area nowrap">
-                                            <img src="<?php echo TTBM_PLUGIN_URL . '/assets/helper/images/welcome/icon_1.png' ?>" alt="icon"/>
+                                            <img src="<?php echo esc_url(TTBM_PLUGIN_URL . '/assets/helper/images/welcome/icon_1.png'); ?>" alt="icon"/>
                                             <div class="textContent">
                                                 <h4>Traveler Management</h4>
                                                 <p>Traveler can be managed easily with Traveler form builder and Traveler information can edit also can export as CSV</p>
                                             </div>
                                         </div>
                                         <div class="alignCenter content_area nowrap">
-                                            <img src="<?php echo TTBM_PLUGIN_URL . '/assets/helper/images/welcome/icon_2.png' ?>" alt="icon"/>
+                                            <img src="<?php echo esc_attr(TTBM_PLUGIN_URL . '/assets/helper/images/welcome/icon_2.png'); ?>" alt="icon"/>
                                             <div class="textContent">
                                                 <h4>PDF Ticketing </h4>
                                                 <p>every ticket purchased a pdf ticket will be generate that can print as entry document, different pdf template possible.</p>
                                             </div>
                                         </div>
                                         <div class="alignCenter content_area nowrap">
-                                            <img src="<?php echo TTBM_PLUGIN_URL . '/assets/helper/images/welcome/icon_3.png' ?>" alt="icon"/>
+                                            <img src="<?php echo esc_url(TTBM_PLUGIN_URL . '/assets/helper/images/welcome/icon_3.png'); ?>" alt="icon"/>
                                             <div class="textContent">
                                                 <h4>Emailing Features</h4>
                                                 <p>Pro version has email feature, after purchase complete, pdf ticket can send to buyer by email, it has customize email shortcode.</p>
@@ -73,7 +66,7 @@
                                 </div>
                             </div>
                             <div class="col_6 sd_12">
-                                <img src="<?php echo TTBM_PLUGIN_URL . '/assets/helper/images/welcome/ullimited_img.png' ?>" alt="unlimited"/>
+                                <img src="<?php echo esc_url(TTBM_PLUGIN_URL . '/assets/helper/images/welcome/ullimited_img.png'); ?>" alt="unlimited"/>
                             </div>
                         </div>
                     </div>

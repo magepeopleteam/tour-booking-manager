@@ -20,7 +20,7 @@ if (!class_exists('TTBM_Taxonomy')) {
                 // translators: %1$s is the tour label, %2$s is the tour category label
                 'singular_name' => sprintf( __( '%1$s %2$s', 'tour-booking-manager' ), $tour_label, $tour_cat_label ),
                 'menu_name' => $tour_cat_label,
-                // translators: %1$s is the tour label, %2$s is the tour category label
+// translators: %1$s is the tour label, %2$s is the tour category label
                 'all_items' => sprintf( __( 'All %1$s %2$s', 'tour-booking-manager' ), $tour_label, $tour_cat_label ),
                 // translators: %s is the tour category label
                 'parent_item' => sprintf( __( 'Parent %1$s', 'tour-booking-manager' ), $tour_cat_label ),
@@ -70,7 +70,7 @@ if (!class_exists('TTBM_Taxonomy')) {
             register_taxonomy('ttbm_tour_cat', 'ttbm_tour', $args);
 
             $labels_tour_org = [
-                'name' => $tour_org_label,
+'name' => $tour_org_label,
                 'singular_name' => $tour_org_label,
                 'menu_name' => $tour_org_label,
                 // translators: %1$s is the tour label, %2$s is the tour organizer label
@@ -189,8 +189,8 @@ if (!class_exists('TTBM_Taxonomy')) {
                 'rewrite'       => ['slug' => 'ttbm_tour_tag'],
             ]);
             $labels = [
-                'name' => __('Activities Type', 'tour-booking-manager'),
-                'singular_name' => __('Activities Type', 'tour-booking-manager'),
+'name' => esc_html__('Activities Type', 'tour-booking-manager'),
+                'singular_name' => esc_html__('Activities Type', 'tour-booking-manager'),
                 'search_items' => __('Search Activities Type', 'tour-booking-manager'),
                 'all_items' => __('All Activities Type', 'tour-booking-manager'),
                 'parent_item' => __('Parent Activities Type', 'tour-booking-manager'),
@@ -200,7 +200,7 @@ if (!class_exists('TTBM_Taxonomy')) {
                 'update_item' => __('Update Activities Type', 'tour-booking-manager'),
                 'add_new_item' => __('Add New Activities Type', 'tour-booking-manager'),
                 'new_item_name' => __('New Activities Type Name', 'tour-booking-manager'),
-                'menu_name' => __('Activities Type', 'tour-booking-manager'),
+ 'menu_name' => __('Activities Type', 'tour-booking-manager'),
             ];
             register_taxonomy('ttbm_tour_activities', ['ttbm_tour'], [
                 'hierarchical' => true,

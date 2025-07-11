@@ -17,10 +17,9 @@
 					<?php
 					foreach ( $activities_terms as $activity ) {
 						if ( in_array( $activity->term_id, $tour_activities_array ) ) {
-							$icon = $icon ?: 'fa fa-check';
 							?>
 							<li class="ttbm-items">
-								<i class="<?php echo esc_attr( $icon ); ?>"></i>
+<i class="fa fa-check"></i>
 								<?php echo esc_html( $activity->name ); ?>
 							</li>
 							<?php

@@ -664,7 +664,7 @@
 			}
 			public static function translation_settings($key, $default = '') {
 				$options = get_option('ttbm_basic_translation_settings');
-				echo self::get_ttbm_settings($options, $key, $default);
+				echo esc_html(self::get_ttbm_settings($options, $key, $default));
 			}
 			//***************************//
 			public static function get_map_api() {

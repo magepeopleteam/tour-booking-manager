@@ -234,7 +234,7 @@ function ttbm_render_cancel_requests_admin_page() {
             echo '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Cancellation Requests</title>';
             echo '<style>body{font-family:sans-serif;margin:40px;}table{border-collapse:collapse;width:100%;}th,td{border:1px solid #ccc;padding:8px;}th{background:#f5f5f5;}</style>';
             echo '</head><body>';
-            echo $html;
+            echo wp_kses_post($html);
             echo '<p style="margin-top:30px;color:#888;font-size:14px;">PDF export is not available on this server. You can print or save this page as PDF using your browser (Ctrl+P).</p>';
             echo '</body></html>';
             exit;
@@ -344,13 +344,13 @@ function ttbm_render_cancel_requests_admin_page() {
             $delete_url = wp_nonce_url(admin_url('edit.php?post_type=ttbm_tour&page=ttbm_cancel_requests&ttbm_single_delete=1&request_id=' . $req->ID), 'ttbm_single_delete_' . $req->ID);
             echo '<tr>';
             echo '<td><input type="checkbox" name="ttbm_request_ids[]" value="' . esc_attr($req->ID) . '"></td>';
-            echo '<td>' . $order_link . '</td>';
-            echo '<td>' . $tour_link . '</td>';
-            echo '<td>' . $user_display . '</td>';
+            echo '<td>' . esc_html($order_link ). '</td>';
+            echo '<td>' . esc_html($tour_link) . '</td>';
+            echo '<td>' . esc_html($user_display) . '</td>';
             echo '<td>' . esc_html($reason) . '</td>';
             echo '<td>' . esc_html($date) . '</td>';
             echo '<td>' . esc_html(ucfirst($status)) . '</td>';
-            echo '<td>' . $actions . ' <a href="' . esc_url($delete_url) . '" class="button button-link-delete" onclick="return confirm(\'Are you sure you want to delete this request?\');">' . esc_html__('Delete', 'tour-booking-manager') . '</a></td>';
+            echo '<td>' . esc_html($actions) . ' <a href="' . esc_url($delete_url) . '" class="button button-link-delete" onclick="return confirm(\'Are you sure you want to delete this request?\');">' . esc_html__('Delete', 'tour-booking-manager') . '</a></td>';
             echo '</tr>';
         }
     } else {

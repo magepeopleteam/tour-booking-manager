@@ -17,9 +17,7 @@
 	?>
 	<div class="ttbm_description ttbm_wp_editor" data-placeholder>
 		<div>
-			<?php echo esc_html($description); ?>
-			<?php //echo do_shortcode($description); ?>
-			<?php //echo TTBM_Global_Function::esc_html( $description ); ?>
+<?php echo esc_html($description,'tour-booking-manager'); ?>
 		</div>
 	</div>
 	<?php 

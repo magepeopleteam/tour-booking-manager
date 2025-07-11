@@ -279,7 +279,9 @@
 				$value = TTBM_Global_Function::get_settings($args['section'], $args['id'], $args['std']);
 				$name = $args['section'] . '[' . $args['id'] . ']';
 				$placeholder = empty($args['placeholder']) ? '' : $args['placeholder'];
-				$label = $args['options']['button_label'] ?? __('Choose File','tour-booking-manager');
+
+				$label = $args['options']['button_label'] ?? esc_html__('Choose File','tour-booking-manager');
+
 				do_action('ttbm_add_single_image',$name,$value);
 			}
 			function callback_password($args) {
@@ -429,8 +431,8 @@
 					
 					<div class="ttbm-setting-field">
 						<div class="label">
-							<?php echo $data['title']; ?>
-							<span class="tooltips" data-tooltip="<?php echo $data['args']['desc']; ?>"><i class="fa fa-info-circle"></i></span>
+							<?php echo esc_html($data['title']); ?>
+							<span class="tooltips" data-tooltip="<?php echo esc_attr($data['args']['desc']); ?>"><i class="fa fa-info-circle"></i></span>
 						</div>
 						<?php call_user_func( $data['callback'], $data['args'] ); ?>
 					</div>

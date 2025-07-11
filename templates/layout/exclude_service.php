@@ -18,7 +18,7 @@
 								$icon = $icon ?: 'fas fa-forward';
 								?>
 								<li>
-									<span class="circleIcon_xs <?php echo esc_attr( $icon ); ?>"></span>
+<span class="circleIcon_xs <?php echo  esc_attr( $icon ); ?>"></span>
 									<?php echo esc_html( $term->name ); ?>
 								</li>
 								<?php

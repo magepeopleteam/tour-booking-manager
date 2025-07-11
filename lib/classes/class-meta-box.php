@@ -154,7 +154,7 @@ if ( ! class_exists( 'TtbmAddMetaBox' ) ) {
 				$current_page = 1;
 				foreach ( $this->get_panels() as $panelsIndex => $panel ):
 					?>
-					<div class="tab-content <?php echo $current_page == 1 ? 'active':'';  ?>  tab-content-<?php echo esc_html($panelsIndex); ?>" id="<?php echo esc_html($panelsIndex); ?>">
+					<div class="tab-content <?php echo esc_attr($current_page == 1 ? 'active':'');  ?>  tab-content-<?php echo esc_html($panelsIndex); ?>" id="<?php echo esc_html($panelsIndex); ?>">
 						<?php
 						wp_nonce_field('ttbm_ticket_type_nonce', 'ttbm_ticket_type_nonce');
 						foreach ( $panel['sections'] as $sectionIndex => $section ):
@@ -173,8 +173,8 @@ if ( ! class_exists( 'TtbmAddMetaBox' ) ) {
 											?>
 											<tr id='mage_row_<?php echo esc_html($option['id']); ?>' class='mage_row_<?php echo esc_html($option['id']); ?>'>
 												<th scope="row">
-													<label><?php echo $option['title']; ?><?php if(!empty($details)){ ?><?php } ?></label>
-													<span class="span-row"><?php echo $details;?></span>
+													<label><?php echo esc_html($option['title']); ?><?php if(!empty($details)){ ?><?php } ?></label>
+													<span class="span-row"><?php echo esc_html($details);?></span>
 												</th>
 												<td>
 													<?php

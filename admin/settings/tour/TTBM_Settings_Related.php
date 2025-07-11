@@ -13,7 +13,7 @@
 				$ttbm_label = TTBM_Function::get_name();
 				?>
 				<li data-tabs-target="#ttbm_settings_related_tour">
-					<i class="fas fa-link"></i><?php echo esc_html__('Related ', 'tour-booking-manager') . $ttbm_label; ?>
+					<i class="fas fa-link"></i><?php echo esc_html__('Related ', 'tour-booking-manager') . esc_html($ttbm_label); ?>
 				</li>
 				<?php
 			}
@@ -27,9 +27,7 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
 				<div class="tabsItem ttbm_settings_related_tour" data-tabs="#ttbm_settings_related_tour">
-					<h2><?php 
-					// translators: %s is replaced with the custom label (e.g., Tour, Package).
-					printf( esc_html__( 'Related %s Settings', 'tour-booking-manager' ), $ttbm_label ); ?></h2>
+<h2><?php echo esc_html($ttbm_label).' '.esc_html__('Related  Settings', 'tour-booking-manager'); ?></h2>
                     <p><?php TTBM_Settings::des_p('related_settings_description'); ?></p>
 					
 					<section>
@@ -39,16 +37,14 @@
 						</div>
 						<div data-collapse="#ttbm_display_related" class="ttbm_display_related <?php echo esc_attr($active); ?>">
 							<label class="label">
-								<p><?php 
-								// translators: %s is replaced with the custom label (e.g., Tour, Package).
-								printf( esc_html__( 'Related %s', 'tour-booking-manager' ), $ttbm_label ); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_related_tour'); ?></span></i></p>
+<p><?php echo esc_html__('Related ', 'tour-booking-manager').' '.esc_html($ttbm_label); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_related_tour'); ?></span></i></p>
 							</label>
-							<select name="ttbm_related_tour[]" multiple='multiple' class='ttbm_select2 w-50' data-placeholder="<?php echo esc_html__('Please Select ', 'tour-booking-manager') . $ttbm_label; ?>">
+							<select name="ttbm_related_tour[]" multiple='multiple' class='ttbm_select2 w-50' data-placeholder="<?php echo esc_html__('Please Select ', 'tour-booking-manager') . esc_html($ttbm_label); ?>">
 								<?php
 									foreach ($tours as $tour) {
 										$ttbm_id = $tour->ID;
 									?>
-									<option value="<?php echo esc_attr($ttbm_id) ?>" <?php echo in_array($ttbm_id, $related_tours) ? 'selected' : ''; ?>><?php echo get_the_title($ttbm_id); ?></option>
+									<option value="<?php echo esc_attr($ttbm_id) ?>" <?php echo esc_attr(in_array($ttbm_id, $related_tours) ? 'selected' : ''); ?>><?php echo esc_html(get_the_title($ttbm_id)); ?></option>
 								<?php } ?>
 							</select>
 						</div>

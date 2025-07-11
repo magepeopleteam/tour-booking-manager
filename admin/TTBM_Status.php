@@ -8,14 +8,7 @@
 				add_action( 'admin_menu', array( $this, 'status_menu' ) );
 			}
 			public function status_menu() {
-				add_submenu_page(
-					'edit.php?post_type=ttbm_tour',
-					__( 'Status', 'tour-booking-manager' ),
-					__( 'Status', 'tour-booking-manager' ),
-					'manage_options',
-					'ttbm_status_page',
-					array( $this, 'ttbm_status_page' )
-				);
+				add_submenu_page( 'edit.php?post_type=ttbm_tour', __( 'Status', 'tour-booking-manager' ), __( 'Status', 'tour-booking-manager' ), 'manage_options', 'ttbm_status_page', array( $this, 'ttbm_status_page' ) );
 			}
 			public function ttbm_status_page() {
 				$wp_v = get_bloginfo( 'version' );
@@ -37,9 +30,9 @@
 									<th data-export-label="WC Version">WordPress Version:</th>
 									<th>
 										<?php if ( $wp_v > 5.5 ) {
-											echo '<span class="textSuccess"> <span class="far fa-check-circle mR_xs"></span>' . $wp_v . '</span>';
+											echo '<span class="textSuccess"> <span class="far fa-check-circle mR_xs"></span>' . esc_html($wp_v ). '</span>';
 										} else {
-											echo '<span class="textWarning"> <span class="fas fa-exclamation-triangle mR_xs"></span>' . $wp_v . '</span>';
+											echo '<span class="textWarning"> <span class="fas fa-exclamation-triangle mR_xs"></span>' . esc_html($wp_v ). '</span>';
 										} ?>
 									</th>
 								</tr>
@@ -57,9 +50,9 @@
 									<tr>
 										<th data-export-label="WC Version">Woocommerce Version:</th>
 										<th><?php if ( $wc_v > 4.8 ) {
-												echo '<span class="textSuccess"> <span class="far fa-check-circle mR_xs"></span>' . $wc_v . '</span>';
+												echo '<span class="textSuccess"> <span class="far fa-check-circle mR_xs"></span>' . esc_html($wc_v) . '</span>';
 											} else {
-												echo '<span class="textWarning"> <span class="fas fa-exclamation-triangle mR_xs"></span>' . $wc_v . '</span>';
+												echo '<span class="textWarning"> <span class="fas fa-exclamation-triangle mR_xs"></span>' . esc_html($wc_v) . '</span>';
 											} ?>
 										</th>
 									</tr>
@@ -67,7 +60,7 @@
 										<th data-export-label="WC Version">Email From Name:</th>
 										<th>
 											<?php if ( $from_name ) {
-												echo '<span class="textSuccess"> <span class="far fa-check-circle mR_xs"></span>' . $from_name . '</span>';
+												echo '<span class="textSuccess"> <span class="far fa-check-circle mR_xs"></span>' . esc_html($from_name) . '</span>';
 											} else {
 												echo '<span class="textWarning"> <span class="fas fa-exclamation-triangle"></span></span>';
 											} ?>
@@ -77,7 +70,7 @@
 										<th data-export-label="WC Version">From Email Address:</th>
 										<th>
 											<?php if ( $from_email ) {
-												echo '<span class="textSuccess"> <span class="far fa-check-circle mR_xs"></span>' . $from_email . '</span>';
+												echo '<span class="textSuccess"> <span class="far fa-check-circle mR_xs"></span>' . esc_html($from_email) . '</span>';
 											} else {
 												echo '<span class="textWarning"> <span class="fas fa-exclamation-triangle"></span></span>';
 											} ?>

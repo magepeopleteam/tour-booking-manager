@@ -18,7 +18,7 @@
 					'singular_name' => $tour_label,
 					'menu_name' => $tour_label,
 					'name_admin_bar' => $tour_label,
-					// translators: %1$s is the tour label
+// translators: %1$s is the tour label
 					'archives' => sprintf( esc_html__( '%1$s List', 'tour-booking-manager' ), $tour_label ),
 					// translators: %1$s is the tour label
 					'attributes' => sprintf( esc_html__( '%1$s List', 'tour-booking-manager' ), $tour_label ),
@@ -115,7 +115,7 @@
 
                 register_post_type('ttbm_hotel_booking', array(
                     'labels' => array(
-                        'name' => __('Hotel Bookings', 'tour-booking-manager'),
+'name' => __('Hotel Bookings', 'tour-booking-manager'),
                         'singular_name' => __('Hotel Booking', 'tour-booking-manager'),
                     ),
                     'public' => true,
@@ -142,7 +142,7 @@
 				$ttbm_travel_type = TTBM_Global_Function::get_post_info($post_id, 'ttbm_travel_type');
 				switch ($column) {
 					case 'ttbm_location' :
-						echo TTBM_Function::get_full_location($post_id);
+						echo esc_html(TTBM_Function::get_full_location($post_id));
 						break;
 					case 'ttbm_status' :
 						echo 'status';
@@ -161,7 +161,7 @@
 						break;
 					case 'ttbm_end_date' :
 						if ($ttbm_travel_type == 'fixed') {
-							echo TTBM_Global_Function::date_format(TTBM_Function::get_reg_end_date($post_id));
+							echo esc_html(TTBM_Global_Function::date_format(TTBM_Function::get_reg_end_date($post_id)));
 						}
 						break;
 				}

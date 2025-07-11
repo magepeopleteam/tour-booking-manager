@@ -115,7 +115,7 @@
 					wp_redirect(admin_url('post.php?action=edit&post=' . $new_post_id));
 					exit;
 				} else {
-					wp_die('Post creation failed, could not find original post: ' . $post_id);
+					wp_die('Post creation failed, could not find original post: ');
 				}
 			}
 			public function post_duplicator($actions, $post) {

@@ -159,7 +159,7 @@
                     $page_id = wp_insert_post($page);
 
                     if (is_wp_error($page_id)) {
-                        printf('<div class="error" style="background:red; color:#fff;"><p>%s</p></div>', $page_id->get_error_message());
+                        printf('<div class="notice notice-error"><p>%s</p></div>', $page_id->get_error_message());
                     } else {
                         update_option($page_data['option_key'], true);
                     }
@@ -228,7 +228,12 @@
 			}
 			public function woocommerce_not_active() {
 				$wc_install_url = get_admin_url() . 'plugin-install.php?s=woocommerce&tab=search&type=term';
-				printf('<div class="error" style="background:red; color:#fff;"><p>%s</p></div>', __('You Must Install WooCommerce Plugin before activating Tour Booking Manager, Because It is dependent on Woocommerce Plugin. <a class="btn button" href=' . $wc_install_url . '>Click Here to Install</a>'));
+				$message = sprintf(
+					/* translators: %s: WooCommerce installation URL */
+					__( 'You Must Install WooCommerce Plugin before activating Tour Booking Manager, Because It is dependent on Woocommerce Plugin. <a class="btn button" href="%s">Click Here to Install</a>', 'tour-booking-manager' ),
+					esc_url( $wc_install_url )
+				);
+				printf( '<div class="notice notice-error is-dismissible"><p>%s</p></div>', $message );
 			}
 		}
 		new TTBM_Woocommerce_Plugin();

@@ -16,11 +16,11 @@
 					foreach ( $daywise as $key => $day ) {
 						?>
 						<div class="day_wise_details_item">
-							<h5 class="day_wise_details_item_title justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#ttbm_day_datails_<?php esc_attr_e( $key ); ?>">
+							<h5 class="day_wise_details_item_title justifyBetween" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="#ttbm_day_datails_<?php echo esc_attr( $key ); ?>">
 								<?php echo esc_html( $day['ttbm_day_title']); ?>
 								<span data-icon class="fas fa-chevron-down"></span>
 							</h5>
-							<div data-collapse="#ttbm_day_datails_<?php esc_attr_e( $key ); ?>">
+							<div data-collapse="#ttbm_day_datails_<?php echo esc_attr( $key ); ?>">
 								<div class="day_wise_details_item_details ttbm_wp_editor">
 									<?php echo wp_kses_post( $day['ttbm_day_content']); ?>
 								</div>

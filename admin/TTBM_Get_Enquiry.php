@@ -201,7 +201,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             <div class="ttbm_popup ttbm_style" data-popup="reply-enquiry-popup">
                 <div class="popupMainArea">
                     <div class="popupHeader allCenter">
-                        <h2 class="_mR"><?php esc_html_e('Reply', 'bus-ticket-booking-with-seat-reservation'); ?></h2>
+                        <h2 class="_mR"><?php esc_html_e('Reply', 'tour-booking-manager'); ?></h2>
                         <span class="fas fa-times popupClose"></span>
                     </div>
                     <div class="popupBody">
@@ -252,7 +252,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 <div class="ttbm_popup ttbm_style" data-popup="get-enquiry-popup">
                     <div class="popupMainArea">
                         <div class="popupHeader allCenter">
-                            <h2 class="_mR"><?php esc_html_e('Get Enquiry', 'bus-ticket-booking-with-seat-reservation'); ?></h2>
+                            <h2 class="_mR"><?php esc_html_e('Get Enquiry', 'tour-booking-manager'); ?></h2>
                             <span class="fas fa-times popupClose"></span>
                         </div>
                         <div class="popupBody">
@@ -316,7 +316,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                             <div class="ttbm_popup ttbm_style" data-popup="view-enquiry-popup">
                                 <div class="popupMainArea">
                                     <div class="popupHeader allCenter">
-                                        <h2 class="_mR"><?php esc_html_e('View Enquiry', 'bus-ticket-booking-with-seat-reservation'); ?></h2>
+                                        <h2 class="_mR"><?php esc_html_e('View Enquiry', 'tour-booking-manager'); ?></h2>
                                         <span class="fas fa-times popupClose"></span>
                                     </div>
                                     <div class="popupBody">

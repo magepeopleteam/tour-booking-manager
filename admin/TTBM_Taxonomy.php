@@ -13,29 +13,47 @@ if (!class_exists('TTBM_Taxonomy')) {
             $tour_cat_label = TTBM_Function::get_category_label();
             $tour_cat_slug = TTBM_Function::get_category_slug();
             $tour_org_label = TTBM_Function::get_organizer_label();
-            $tour_org_slug = TTBM_Function::get_organizer_slug();
+            $tour_org_slug = TTBM_Function::get_organizer_slug();           
             $labels = [
-                'name' => $tour_label . ' ' . $tour_cat_label,
-                'singular_name' => $tour_label . ' ' . $tour_cat_label,
+                // translators: %1$s is the tour label, %2$s is the tour category label
+                'name' => sprintf( __( '%1$s %2$s', 'tour-booking-manager' ), $tour_label, $tour_cat_label ),
+                // translators: %1$s is the tour label, %2$s is the tour category label
+                'singular_name' => sprintf( __( '%1$s %2$s', 'tour-booking-manager' ), $tour_label, $tour_cat_label ),
                 'menu_name' => $tour_cat_label,
-                'all_items' => esc_html__('All ', 'tour-booking-manager') . ' ' . $tour_label . ' ' . $tour_cat_label,
-                'parent_item' => esc_html__('Parent ', 'tour-booking-manager') . ' ' . $tour_cat_label,
-                'parent_item_colon' => esc_html__('Parent ', 'tour-booking-manager') . ' ' . $tour_cat_label,
-                'new_item_name' => esc_html__('New ' . $tour_cat_label . ' Name', 'tour-booking-manager'),
-                'add_new_item' => esc_html__('Add New ' . $tour_cat_label, 'tour-booking-manager'),
-                'edit_item' => esc_html__('Edit ' . $tour_cat_label, 'tour-booking-manager'),
-                'update_item' => esc_html__('Update ' . $tour_cat_label, 'tour-booking-manager'),
-                'view_item' => esc_html__('View ' . $tour_cat_label, 'tour-booking-manager'),
-                'separate_items_with_commas' => esc_html__('Separate ' . $tour_cat_label . ' with commas', 'tour-booking-manager'),
-                'add_or_remove_items' => esc_html__('Add or remove ' . $tour_cat_label, 'tour-booking-manager'),
-                'choose_from_most_used' => esc_html__('Choose from the most used', 'tour-booking-manager'),
-                'popular_items' => esc_html__('Popular ' . $tour_cat_label, 'tour-booking-manager'),
-                'search_items' => esc_html__('Search ' . $tour_cat_label, 'tour-booking-manager'),
-                'not_found' => esc_html__('Not Found', 'tour-booking-manager'),
-                'no_terms' => esc_html__('No ' . $tour_cat_label, 'tour-booking-manager'),
-                'items_list' => esc_html__($tour_cat_label . ' list', 'tour-booking-manager'),
-                'items_list_navigation' => esc_html__($tour_cat_label . ' list navigation', 'tour-booking-manager'),
+                // translators: %1$s is the tour label, %2$s is the tour category label
+                'all_items' => sprintf( __( 'All %1$s %2$s', 'tour-booking-manager' ), $tour_label, $tour_cat_label ),
+                // translators: %s is the tour category label
+                'parent_item' => sprintf( __( 'Parent %1$s', 'tour-booking-manager' ), $tour_cat_label ),
+                // translators: %s is the tour category label
+                'parent_item_colon' => sprintf( __( 'Parent %1$s:', 'tour-booking-manager' ), $tour_cat_label ),
+                // translators: %s is the tour category label
+                'new_item_name' => sprintf( __( 'New %1$s Name', 'tour-booking-manager' ), $tour_cat_label ),
+                // translators: %s is the tour category label
+                'add_new_item' => sprintf( __( 'Add New %1$s', 'tour-booking-manager' ), $tour_cat_label ),
+                // translators: %s is the tour category label
+                'edit_item' => sprintf( __( 'Edit %1$s', 'tour-booking-manager' ), $tour_cat_label ),
+                // translators: %s is the tour category label
+                'update_item' => sprintf( __( 'Update %1$s', 'tour-booking-manager' ), $tour_cat_label ),
+                // translators: %s is the tour category label
+                'view_item' => sprintf( __( 'View %1$s', 'tour-booking-manager' ), $tour_cat_label ),
+                // translators: %s is the tour category label
+                'separate_items_with_commas' => sprintf( __( 'Separate %1$s with commas', 'tour-booking-manager' ), $tour_cat_label ),
+                // translators: %s is the tour category label
+                'add_or_remove_items' => sprintf( __( 'Add or remove %1$s', 'tour-booking-manager' ), $tour_cat_label ),
+                'choose_from_most_used' => __( 'Choose from the most used', 'tour-booking-manager' ),
+                // translators: %s is the tour category label
+                'popular_items' => sprintf( __( 'Popular %1$s', 'tour-booking-manager' ), $tour_cat_label ),
+                // translators: %s is the tour category label
+                'search_items' => sprintf( __( 'Search %1$s', 'tour-booking-manager' ), $tour_cat_label ),
+                'not_found' => __( 'Not Found', 'tour-booking-manager' ),
+                // translators: %s is the tour category label
+                'no_terms' => sprintf( __( 'No %1$s', 'tour-booking-manager' ), $tour_cat_label ),
+                // translators: %s is the tour category label
+                'items_list' => sprintf( __( '%1$s list', 'tour-booking-manager' ), $tour_cat_label ),
+                // translators: %s is the tour category label
+                'items_list_navigation' => sprintf( __( '%1$s list navigation', 'tour-booking-manager' ), $tour_cat_label ),
             ];
+
             $args = [
                 'hierarchical' => true,
                 "public" => true,
@@ -52,27 +70,43 @@ if (!class_exists('TTBM_Taxonomy')) {
             register_taxonomy('ttbm_tour_cat', 'ttbm_tour', $args);
 
             $labels_tour_org = [
-                'name'                  => $tour_org_label,
-                'singular_name'         => $tour_org_label,
-                'menu_name'             => $tour_org_label,
-                'all_items'             => __('All ' . $tour_label . ' ' . $tour_org_label, 'tour-booking-manager'),
-                'parent_item'           => __('Parent ' . $tour_org_label, 'tour-booking-manager'),
-                'parent_item_colon'     => __('Parent ' . $tour_org_label . ':', 'tour-booking-manager'),
-                'new_item_name'         => __('New ' . $tour_org_label . ' Name', 'tour-booking-manager'),
-                'add_new_item'          => __('Add New ' . $tour_org_label, 'tour-booking-manager'),
-                'edit_item'             => __('Edit ' . $tour_org_label, 'tour-booking-manager'),
-                'update_item'           => __('Update ' . $tour_org_label, 'tour-booking-manager'),
-                'view_item'             => __('View ' . $tour_org_label, 'tour-booking-manager'),
-                'separate_items_with_commas' => __('Separate ' . $tour_org_label . ' with commas', 'tour-booking-manager'),
-                'add_or_remove_items'   => __('Add or remove ' . $tour_org_label, 'tour-booking-manager'),
-                'choose_from_most_used' => __('Choose from the most used', 'tour-booking-manager'),
-                'popular_items'         => __('Popular ' . $tour_org_label, 'tour-booking-manager'),
-                'search_items'          => __('Search ' . $tour_org_label, 'tour-booking-manager'),
-                'not_found'             => __('Not Found', 'tour-booking-manager'),
-                'no_terms'              => __('No ' . $tour_org_label, 'tour-booking-manager'),
-                'items_list'            => __($tour_org_label . ' list', 'tour-booking-manager'),
-                'items_list_navigation' => __($tour_org_label . ' list navigation', 'tour-booking-manager'),
+                'name' => $tour_org_label,
+                'singular_name' => $tour_org_label,
+                'menu_name' => $tour_org_label,
+                // translators: %1$s is the tour label, %2$s is the tour organizer label
+                'all_items' => sprintf( __( 'All %1$s %2$s', 'tour-booking-manager' ), $tour_label, $tour_org_label ),
+                // translators: %1$s is the tour organizer label
+                'parent_item' => sprintf( __( 'Parent %1$s', 'tour-booking-manager' ), $tour_org_label ),
+                // translators: %1$s is the tour organizer label
+                'parent_item_colon' => sprintf( __( 'Parent %1$s:', 'tour-booking-manager' ), $tour_org_label ),
+                // translators: %1$s is the tour organizer label
+                'new_item_name' => sprintf( __( 'New %1$s Name', 'tour-booking-manager' ), $tour_org_label ),
+                // translators: %1$s is the tour organizer label
+                'add_new_item' => sprintf( __( 'Add New %1$s', 'tour-booking-manager' ), $tour_org_label ),
+                // translators: %1$s is the tour organizer label
+                'edit_item' => sprintf( __( 'Edit %1$s', 'tour-booking-manager' ), $tour_org_label ),
+                // translators: %1$s is the tour organizer label
+                'update_item' => sprintf( __( 'Update %1$s', 'tour-booking-manager' ), $tour_org_label ),
+                // translators: %1$s is the tour organizer label
+                'view_item' => sprintf( __( 'View %1$s', 'tour-booking-manager' ), $tour_org_label ),
+                // translators: %1$s is the tour organizer label
+                'separate_items_with_commas' => sprintf( __( 'Separate %1$s with commas', 'tour-booking-manager' ), $tour_org_label ),
+                // translators: %1$s is the tour organizer label
+                'add_or_remove_items' => sprintf( __( 'Add or remove %1$s', 'tour-booking-manager' ), $tour_org_label ),
+                'choose_from_most_used' => __( 'Choose from the most used', 'tour-booking-manager' ),
+                // translators: %1$s is the tour organizer label
+                'popular_items' => sprintf( __( 'Popular %1$s', 'tour-booking-manager' ), $tour_org_label ),
+                // translators: %1$s is the tour organizer label
+                'search_items' => sprintf( __( 'Search %1$s', 'tour-booking-manager' ), $tour_org_label ),
+                'not_found' => __( 'Not Found', 'tour-booking-manager' ),
+                // translators: %1$s is the tour organizer label
+                'no_terms' => sprintf( __( 'No %1$s', 'tour-booking-manager' ), $tour_org_label ),
+                // translators: %1$s is the tour organizer label
+                'items_list' => sprintf( __( '%1$s list', 'tour-booking-manager' ), $tour_org_label ),
+                // translators: %1$s is the tour organizer label
+                'items_list_navigation' => sprintf( __( '%1$s list navigation', 'tour-booking-manager' ), $tour_org_label ),
             ];
+
 
             $args_tour_org = [
                 'hierarchical'          => true,
@@ -92,8 +126,8 @@ if (!class_exists('TTBM_Taxonomy')) {
 
 
             $labels_location = [
-                'name' => _x('Location', 'tour-booking-manager'),
-                'singular_name' => _x('Location', 'tour-booking-manager'),
+                'name' => __('Location', 'tour-booking-manager'),
+                'singular_name' => __('Location', 'tour-booking-manager'),
                 'menu_name' => __('Location', 'tour-booking-manager'),
             ];
             $args_location = [
@@ -112,8 +146,8 @@ if (!class_exists('TTBM_Taxonomy')) {
             ];
             register_taxonomy('ttbm_tour_location', 'ttbm_tour', $args_location);
             $labels_feature = [
-                'name' => _x('Features List', 'tour-booking-manager'),
-                'singular_name' => _x('Features List', 'tour-booking-manager'),
+                'name' => __('Features List', 'tour-booking-manager'),
+                'singular_name' => __('Features List', 'tour-booking-manager'),
                 'menu_name' => __('Features List', 'tour-booking-manager'),
             ];
             $args_feature = [
@@ -132,17 +166,17 @@ if (!class_exists('TTBM_Taxonomy')) {
             ];
             register_taxonomy('ttbm_tour_features_list', 'ttbm_tour', $args_feature);
             $labels_tags = [
-                'name' => _x('Tags', 'tour-booking-manager'),
-                'singular_name' => _x('Tags', 'tour-booking-manager'),
-                'search_items' => __('Search Tags'),
-                'all_items' => __('All Tags'),
-                'parent_item' => __('Parent Tag'),
-                'parent_item_colon' => __('Parent Tag:'),
-                'edit_item' => __('Edit Tag'),
-                'update_item' => __('Update Tag'),
-                'add_new_item' => __('Add New Tag'),
-                'new_item_name' => __('New Tag Name'),
-                'menu_name' => __('Tags'),
+                'name' => __('Tags', 'tour-booking-manager'),
+                'singular_name' => __('Tags', 'tour-booking-manager'),
+                'search_items' => __('Search Tags', 'tour-booking-manager'),
+                'all_items' => __('All Tags', 'tour-booking-manager'),
+                'parent_item' => __('Parent Tag', 'tour-booking-manager'),
+                'parent_item_colon' => __('Parent Tag:', 'tour-booking-manager'),
+                'edit_item' => __('Edit Tag', 'tour-booking-manager'),
+                'update_item' => __('Update Tag', 'tour-booking-manager'),
+                'add_new_item' => __('Add New Tag', 'tour-booking-manager'),
+                'new_item_name' => __('New Tag Name', 'tour-booking-manager'),
+                'menu_name' => __('Tags', 'tour-booking-manager'),
             ];
             register_taxonomy('ttbm_tour_tag', ['ttbm_tour'], [
                 'hierarchical'  => false,
@@ -155,18 +189,18 @@ if (!class_exists('TTBM_Taxonomy')) {
                 'rewrite'       => ['slug' => 'ttbm_tour_tag'],
             ]);
             $labels = [
-                'name' => esc_html__('Activities Type', 'tour-booking-manager'),
-                'singular_name' => esc_html__('Activities Type', 'tour-booking-manager'),
-                'search_items' => __('Search Activities Type'),
-                'all_items' => __('All Activities Type'),
-                'parent_item' => __('Parent Activities Type'),
-                'parent_item_colon' => __('Parent Activities Type:'),
+                'name' => __('Activities Type', 'tour-booking-manager'),
+                'singular_name' => __('Activities Type', 'tour-booking-manager'),
+                'search_items' => __('Search Activities Type', 'tour-booking-manager'),
+                'all_items' => __('All Activities Type', 'tour-booking-manager'),
+                'parent_item' => __('Parent Activities Type', 'tour-booking-manager'),
+                'parent_item_colon' => __('Parent Activities Type:', 'tour-booking-manager'),
                 
-                'edit_item' => __('Edit Activities Type'),
-                'update_item' => __('Update Activities Type'),
-                'add_new_item' => __('Add New Activities Type'),
-                'new_item_name' => __('New Activities Type Name'),
-                'menu_name' => esc_html__('Activities Type', 'tour-booking-manager'),
+                'edit_item' => __('Edit Activities Type', 'tour-booking-manager'),
+                'update_item' => __('Update Activities Type', 'tour-booking-manager'),
+                'add_new_item' => __('Add New Activities Type', 'tour-booking-manager'),
+                'new_item_name' => __('New Activities Type Name', 'tour-booking-manager'),
+                'menu_name' => __('Activities Type', 'tour-booking-manager'),
             ];
             register_taxonomy('ttbm_tour_activities', ['ttbm_tour'], [
                 'hierarchical' => true,
@@ -189,8 +223,8 @@ if (!class_exists('TTBM_Taxonomy')) {
             $feature_icon = [
                 [
                     'id' => 'ttbm_feature_icon',
-                    'title' => esc_html__('Feature Icon', 'tour-booking-manager'),
-                    'details' => esc_html__('Please select a suitable icon for this feature', 'tour-booking-manager'),
+                    'title' => __('Feature Icon', 'tour-booking-manager'),
+                    'details' => __('Please select a suitable icon for this feature', 'tour-booking-manager'),
                     'type' => 'mp_icon',
                     'default' => 'fas fa-forward',
                 ],
@@ -203,8 +237,8 @@ if (!class_exists('TTBM_Taxonomy')) {
             $activities_icon = [
                 [
                     'id' => 'ttbm_activities_icon',
-                    'title' => esc_html__('Activities Icon', 'tour-booking-manager'),
-                    'details' => esc_html__('Please select a suitable icon for this Activities', 'tour-booking-manager'),
+                    'title' => __('Activities Icon', 'tour-booking-manager'),
+                    'details' => __('Please select a suitable icon for this Activities', 'tour-booking-manager'),
                     'type' => 'mp_icon',
                     'default' => 'far fa-check-circle',
                 ],
@@ -217,8 +251,8 @@ if (!class_exists('TTBM_Taxonomy')) {
             $full_address = [
                 [
                     'id' => 'ttbm_location_address',
-                    'title' => esc_html__('Full Address ', 'tour-booking-manager'),
-                    'details' => esc_html__('Please Type Location Full Address', 'tour-booking-manager'),
+                    'title' => __('Full Address ', 'tour-booking-manager'),
+                    'details' => __('Please Type Location Full Address', 'tour-booking-manager'),
                     'type' => 'textarea',
                     'default' => '',
                 ],
@@ -231,8 +265,8 @@ if (!class_exists('TTBM_Taxonomy')) {
             $country_location = [
                 [
                     'id' => 'ttbm_country_location',
-                    'title' => esc_html__('Country ', 'tour-booking-manager'),
-                    'details' => esc_html__('Please Select Location Country', 'tour-booking-manager'),
+                    'title' => __('Country ', 'tour-booking-manager'),
+                    'details' => __('Please Select Location Country', 'tour-booking-manager'),
                     'args' => ttbm_get_coutnry_arr(),
                     'type' => 'select',
                 ],
@@ -245,8 +279,8 @@ if (!class_exists('TTBM_Taxonomy')) {
             $location_image = [
                 [
                     'id' => 'ttbm_location_image',
-                    'title' => esc_html__('Location Image ', 'tour-booking-manager'),
-                    'details' => esc_html__('Please select Location Image.', 'tour-booking-manager'),
+                    'title' => __('Location Image ', 'tour-booking-manager'),
+                    'details' => __('Please select Location Image.', 'tour-booking-manager'),
                     'placeholder' => 'https://i.imgur.com/GD3zKtz.png',
                     'type' => 'media',
                 ],

@@ -13,7 +13,15 @@ $customer_orders = wc_get_orders(array(
     'order' => 'DESC',
 ));
 $cancel_period = (int) TTBM_Global_Function::get_settings('ttbm_basic_gen_settings', 'ttbm_cancel_period_hours', 24);
-echo '<div class="ttbm_notice ttbm_style" style="margin-bottom:20px;padding:10px 15px;background:#eaf4ff;border-left:4px solid #3174d0;color:#222;font-size:16px;">' . sprintf(esc_html__('You can cancel your order within %d hours of placing it.', 'tour-booking-manager'), $cancel_period) . '</div>';
+
+// translators: %d is the number of hours a user can cancel an order after placing it.
+echo '<div class="ttbm_notice ttbm_style" style="margin-bottom:20px;padding:10px 15px;background:#eaf4ff;border-left:4px solid #3174d0;color:#222;font-size:16px;">' .
+    sprintf(
+        // translators: %d is the number of hours a user can cancel an order after placing it.
+        __('You can cancel your order within %d hours of placing it.', 'tour-booking-manager'),
+        intval($cancel_period)
+    ) .
+    '</div>';
 ?>
 <div class="ttbm_total_booking_wrapper ttbm_style" style="max-width:1000px;margin:auto;">
     <h2 class="ttbm_total_booking_title" style="color:#3174d0;font-size:2rem;margin-bottom:20px;"><?php esc_html_e('My Tour Orders', 'tour-booking-manager'); ?></h2>

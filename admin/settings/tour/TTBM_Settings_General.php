@@ -185,7 +185,7 @@
 							
 							<select class="rounded ms-2 <?php echo esc_attr($active); ?>" name="ttbm_travel_language" data-collapse="#<?php echo esc_attr($display_name); ?>">
 								<?php foreach($language_lists as $key => $value): ?>
-									<option value="<?php echo esc_html($key); ?>" <?php echo esc_attr($key == $language ? 'selected' : ''); ?>><?php esc_html_e($value); ?></option>
+									<option value="<?php echo esc_html($key); ?>" <?php echo esc_attr($key == $language ? 'selected' : ''); ?>><?php echo esc_html($value); ?></option>
 								<?php endforeach; ?>
 							</select>
 						</div>

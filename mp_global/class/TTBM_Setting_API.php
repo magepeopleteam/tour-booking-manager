@@ -279,7 +279,7 @@
 				$value = TTBM_Global_Function::get_settings($args['section'], $args['id'], $args['std']);
 				$name = $args['section'] . '[' . $args['id'] . ']';
 				$placeholder = empty($args['placeholder']) ? '' : $args['placeholder'];
-				$label = $args['options']['button_label'] ?? esc_html__('Choose File');
+				$label = $args['options']['button_label'] ?? __('Choose File','tour-booking-manager');
 				do_action('ttbm_add_single_image',$name,$value);
 			}
 			function callback_password($args) {

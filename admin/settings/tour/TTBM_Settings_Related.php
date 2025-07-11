@@ -27,7 +27,7 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
 				<div class="tabsItem ttbm_settings_related_tour" data-tabs="#ttbm_settings_related_tour">
-					<h2><?php echo esc_html($ttbm_label).' '.esc_html__('Related  Settings', 'tour-booking-manager'); ?></h2>
+<h2><?php echo esc_html($ttbm_label).' '.esc_html__('Related  Settings', 'tour-booking-manager'); ?></h2>
                     <p><?php TTBM_Settings::des_p('related_settings_description'); ?></p>
 					
 					<section>
@@ -37,7 +37,7 @@
 						</div>
 						<div data-collapse="#ttbm_display_related" class="ttbm_display_related <?php echo esc_attr($active); ?>">
 							<label class="label">
-								<p><?php echo esc_html__('Related ', 'tour-booking-manager').' '.esc_html($ttbm_label); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_related_tour'); ?></span></i></p>
+<p><?php echo esc_html__('Related ', 'tour-booking-manager').' '.esc_html($ttbm_label); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_related_tour'); ?></span></i></p>
 							</label>
 							<select name="ttbm_related_tour[]" multiple='multiple' class='ttbm_select2 w-50' data-placeholder="<?php echo esc_html__('Please Select ', 'tour-booking-manager') . esc_html($ttbm_label); ?>">
 								<?php

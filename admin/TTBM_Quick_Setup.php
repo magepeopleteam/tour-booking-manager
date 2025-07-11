@@ -193,13 +193,13 @@
 					<div class="_dLayout_mT_alignCenter justifyBetween">
 						<h4>
 							<?php if ($status == 1) {
-								esc_html_e('Woocommerce already installed and activated', 'tour-booking-manager');
+								echo esc_html__('Woocommerce already installed and activated', 'tour-booking-manager');
 							}
 							elseif ($status == 0) {
-								esc_html_e('Woocommerce need to install and active', 'tour-booking-manager');
+								echo esc_html__('Woocommerce need to install and active', 'tour-booking-manager');
 							}
 							else {
-								esc_html_e('Woocommerce already install , please activate it', 'tour-booking-manager');
+								echo esc_html__('Woocommerce already install , please activate it', 'tour-booking-manager');
 							} ?>
 						</h4>
 						<?php if ($status == 1) { ?>
@@ -214,7 +214,7 @@
 					</div>
 					<?php if ($status != 1) { ?>
 					<div class='mep_seup_exit_sec'>
-						<button style='margin:10px auto;' class="warningButton" type="submit" name="ttbm_skip_quick_setup"><?php esc_html_e('Skip, Go to Dashboard','tour-booking-manager') ?></button>
+<button style='margin:10px auto;' class="warningButton" type="submit" name="ttbm_skip_quick_setup"><?php esc_html_e('Skip, Go to Dashboard','tour-booking-manager') ?></button>
 					</div>
 					<?php } ?>
 				</div>

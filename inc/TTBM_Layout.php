@@ -52,7 +52,7 @@
 									?>
 									<div class="ttbm_multi_image_item" data-image-id="<?php echo esc_attr($image); ?>">
 										<span class="fas fa-times circleIcon_xs ttbm_remove_multi_image"></span>
-										<img class="w-100" src="<?php echo esc_url(TTBM_Global_Function::get_image_url('', $image, 'medium')); ?>" alt="<?php echo esc_attr($image); ?>"/>
+<img class="w-100" src="<?php echo esc_url(TTBM_Global_Function::get_image_url('', $image, 'medium')); ?>" alt="<?php echo esc_attr($image); ?>"/>
 									</div>
 									<?php
 								}
@@ -174,7 +174,7 @@
 									$recurring = TTBM_Function::recurring_check($ttbm_post_id);
 									$tour_type = TTBM_Function::get_tour_type($ttbm_post_id);
 									?>
-									<option value="<?php echo esc_attr($ttbm_post_id); ?>" data-recurring="<?php echo esc_attr($recurring ? 'yes' : ''); ?>">
+<option value="<?php echo esc_attr($ttbm_post_id); ?>" data-recurring="<?php echo esc_attr($recurring ? 'yes' : ''); ?>">
 										<?php echo esc_html(get_the_title($ttbm_post_id)); ?>
 										<?php echo esc_html($recurring ? '- Multi date' : ''); ?>
 										<?php echo esc_html($tour_type == 'hotel' ? '- Hotel' : ''); ?>
@@ -205,7 +205,7 @@
 									$recurring = TTBM_Function::recurring_check($ttbm_post_id);
 									$tour_type = TTBM_Function::get_tour_type($ttbm_post_id);
 									?>
-									<option value="<?php echo esc_attr($ttbm_post_id); ?>" data-recurring="<?php echo esc_attr($recurring ? 'yes' : ''); ?>">
+<option value="<?php echo esc_attr($ttbm_post_id); ?>" data-recurring="<?php echo esc_attr($recurring ? 'yes' : ''); ?>">
 										<?php echo esc_html(get_the_title($ttbm_post_id)); ?>
 										<?php echo esc_html($recurring ? '- Multi date' : ''); ?>
 										<?php echo esc_html($tour_type == 'hotel' ? '- Hotel' : ''); ?>

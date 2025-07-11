@@ -19,7 +19,7 @@
 						if ( in_array( $activity->term_id, $tour_activities_array ) ) {
 							?>
 							<li class="ttbm-items">
-								<i class="fa fa-check"></i>
+<i class="fa fa-check"></i>
 								<?php echo esc_html( $activity->name ); ?>
 							</li>
 							<?php

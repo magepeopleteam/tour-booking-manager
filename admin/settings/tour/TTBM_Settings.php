@@ -254,6 +254,7 @@
 				$ttbm_date_config_boxs_args = ['meta_box_id' => 'ttbm_travel_date_config_meta_boxes',
 					'meta_box_title' => '<i class="far fa-calendar-plus"></i>' . __('Date Configuration', 'tour-booking-manager'), 'screen' => [TTBM_Function::get_cpt_name()], 'context' => 'normal', 'priority' => 'high', 'callback_args' => [], 'nav_position' => 'none', 'item_name' => "MagePeople", 'item_version' => "2.0", 'panels' => ['ttbm_date_config_meta_boxs' => $ttbm_date_info_boxs]];
 				new TtbmAddMetaBox($ttbm_date_config_boxs_args);
+
 				$ttbm_tax_meta_boxs = [
 					'page_nav' => $tour_label . __('Tax', 'tour-booking-manager'),
 					'priority' => 10,
@@ -288,6 +289,7 @@
 						],
 					],
 				];
+
 				$ttbm_tax_meta_boxs_args = [
 					'meta_box_id' => 'ttbm_tax_meta_boxes',
 					'meta_box_title' => '<i class="fas fa-money-bill-wave"></i> ' . __('Tax', 'tour-booking-manager'),
@@ -388,7 +390,9 @@
 					'tour_settings_des' => esc_html__('Here you can set tour duration, night, price, people count and age etc.', 'tour-booking-manager'),
 					'create_location' => esc_html__('If you would like to create a new location, click this button', 'tour-booking-manager'),
 					'hotel_config_click' => esc_html__('Click Here', 'tour-booking-manager'),
+
 					'hotel_config' => esc_html__('Tour ticket price works based on hotel price configuration . To add new hotel ','tour-booking-manager'),
+
 					'ttip_hotel_config' => esc_html__('Select Hotel name that you want to include in this tour', 'tour-booking-manager'),
 					'extra_service_descriptoin' => esc_html__('Additional features can be offered through this option. For example, organizers may provide a pickup service or other paid services as optional add-ons.', 'tour-booking-manager'),
 					'gallery_settings_description' => esc_html__('Here gallery image can be added related to tour so that guest can understand about this trip.', 'tour-booking-manager'),

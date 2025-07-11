@@ -159,7 +159,7 @@
                     $page_id = wp_insert_post($page);
 
                     if (is_wp_error($page_id)) {
-                        printf('<div class="error" style="background:red; color:#fff;"><p>%s</p></div>', $page_id->get_error_message());
+                        printf('<div class="notice notice-error"><p>%s</p></div>', $page_id->get_error_message());
                     } else {
                         update_option($page_data['option_key'], true);
                     }
@@ -228,8 +228,10 @@
 			}
 			public function woocommerce_not_active() {
 				$wc_install_url = get_admin_url() . 'plugin-install.php?s=woocommerce&tab=search&type=term';
+
 				$text=__('You Must Install WooCommerce Plugin before activating Tour Booking Manager, Because It is dependent on Woocommerce Plugin.','tour-booking-manager').' <a class="btn button" href=' . $wc_install_url . '>'.esc_html__('Click Here to Install','tour-booking-manager').'</a>';
 				printf('<div class="error" style="background:red; color:#fff;"><p>%s</p></div>', $text);
+
 			}
 		}
 		new TTBM_Woocommerce_Plugin();

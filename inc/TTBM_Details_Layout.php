@@ -93,11 +93,11 @@
                             $time = TTBM_Function::get_time($tour_id, $date);
                             $time = is_array($time) ? $time[0]['time'] : $time;
                             $date = $time ? $date . ' ' . $time : $date;
-                            $date = $time ? date('Y-m-d H:i', strtotime($date)) : date('Y-m-d', strtotime($date));
+                            $date = $time ? gmdate('Y-m-d H:i', strtotime($date)) : gmdate('Y-m-d', strtotime($date));
                             /************/
                             $date_format = TTBM_Global_Function::date_picker_format();
                             $now = date_i18n($date_format, strtotime(current_time('Y-m-d')));
-                            $hidden_date = $date ? date('Y-m-d', strtotime($date)) : '';
+                            $hidden_date = $date ? gmdate('Y-m-d', strtotime($date)) : '';
                             $visible_date = $date ? date_i18n($date_format, strtotime($date)) : '';
 
                             if ($travel_type == 'repeated') {
@@ -181,11 +181,11 @@
                     $time          = TTBM_Function::get_time( $tour_id, $date );
                     $time          = is_array( $time ) ? $time[0]['time'] : $time;
                     $date          = $time ? $date . ' ' . $time : $date;
-                    $date=$time?date( 'Y-m-d H:i', strtotime( $date) ):date( 'Y-m-d', strtotime( $date) );
+                    $date=$time?gmdate( 'Y-m-d H:i', strtotime( $date) ):gmdate( 'Y-m-d', strtotime( $date) );
                     /************/
                     $date_format = TTBM_Global_Function::date_picker_format();
                     $now = date_i18n($date_format, strtotime(current_time('Y-m-d')));
-                    $hidden_date = $date ? date('Y-m-d', strtotime($date)) : '';
+                    $hidden_date = $date ? gmdate('Y-m-d', strtotime($date)) : '';
                     $visible_date = $date ? date_i18n($date_format, strtotime($date)) : '';
                     ?>
                     <div class="ttbm_registration_area <?php echo esc_attr( $check_ability ); ?>">

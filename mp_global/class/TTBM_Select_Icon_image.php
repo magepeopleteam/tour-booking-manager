@@ -70,14 +70,32 @@
                                                 </li>
 												<?php foreach ($icons as $key => $icon) { ?>
                                                     <li data-icon-menu="<?php echo esc_attr($key); ?>">
-														<?php echo esc_html($icon['title']) . '&nbsp;(<strong>' . sizeof($icon['icon']) . '</strong>)'; ?>
+														<?php
+															printf(
+																/* translators: %1$s: title, %2$s: number of icons */
+																wp_kses_post( __( '%1$s&nbsp;(<strong>%2$s</strong>)', 'tour-booking-manager' ) ),
+																esc_html( $icon['title'] ),
+																esc_html( sizeof( $icon['icon'] ) )
+															);
+														?>
                                                     </li>
 												<?php } ?>
                                             </ul>
                                             <div class="popup_all_icon">
 												<?php foreach ($icons as $key => $icon) { ?>
                                                     <div class="popupTabItem" data-icon-list="<?php echo esc_attr($key); ?>" data-icon-title="<?php echo esc_attr($icon['title']); ?>">
-                                                        <h5 class="textTheme"><?php echo esc_html($icon['title']) . '&nbsp;(<strong>' . sizeof($icon['icon']) . '</strong>)'; ?></h5>
+                                                       <h5 class="textTheme">
+															<?php
+															echo wp_kses_post(
+																sprintf(
+																	/* translators: %1$s is the title, %2$s is the count */
+																	__( '%1$s&nbsp;(<strong>%2$s</strong>)', 'tour-booking-manager' ),
+																	esc_html( $icon['title'] ),
+																	esc_html( sizeof( $icon['icon'] ) )
+																)
+															);
+															?>
+														</h5>
                                                         <div class="divider"></div>
                                                         <div class="itemIconArea">
 															<?php foreach ($icon['icon'] as $icon => $item) { ?>
@@ -105,7 +123,7 @@
 					<?php if ($image_id) { ?>
                         <div class="ttbm_single_image_item" data-image-id="<?php echo esc_attr($image_id); ?>'">
                             <span class="fas fa-times circleIcon_xs ttbm_remove_single_image"></span>
-                            <img src="<?php echo wp_get_attachment_image_url($image_id, 'medium') ?>" alt="<?php echo esc_attr($image_id); ?>"/>
+                            <img src="<?php echo esc_url(wp_get_attachment_image_url($image_id, 'medium')); ?>" alt="<?php echo esc_attr($image_id); ?>"/>
                         </div>
 					<?php } ?>
                     <button type="button" class="_dButton_xs_bgColor_1_fullWidth <?php echo esc_attr($image_id ? 'dNone' : ''); ?>">
@@ -127,7 +145,7 @@
 									?>
                                     <div class="ttbm_multi_image_item" data-image-id="<?php echo esc_attr($image); ?>">
                                         <span class="fas fa-times circleIcon_xs ttbm_remove_multi_image"></span>
-                                        <img src="<?php echo TTBM_Global_Function::get_image_url('', $image, 'medium'); ?>" alt="<?php echo esc_attr($image); ?>"/>
+                                        <img src="<?php echo esc_url(TTBM_Global_Function::get_image_url('', $image, 'medium')); ?>" alt="<?php echo esc_attr($image); ?>"/>
                                     </div>
 									<?php
 								}

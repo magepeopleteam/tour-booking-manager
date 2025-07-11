@@ -11,14 +11,14 @@
 			$time          = TTBM_Function::get_time( $tour_id, $date );
 			$time          = is_array( $time ) ? $time[0]['time'] : $time;
 			$date          = $time ? $date . ' ' . $time : $date;
-			$date=$time?date( 'Y-m-d H:i', strtotime( $date) ):date( 'Y-m-d', strtotime( $date) );
+			$date		   = $time?gmdate( 'Y-m-d H:i', strtotime( $date) ):gmdate( 'Y-m-d', strtotime( $date) );
 			$check_ability = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_ticketing_system', 'availability_section' );
 			$travel_type   = TTBM_Function::get_travel_type( $tour_id );
 			$template_name = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
 			?>
 			<div class="ttbm_registration_area <?php echo esc_attr( $check_ability ); ?>">
 				<input type="hidden" name="ttbm_id" value="<?php echo esc_attr( $tour_id ); ?>"/>
-				<input type="hidden" name="ttbm_date" value="<?php echo esc_attr( date( 'Y-m-d', strtotime( $date) ) ); ?>"/>
+				<input type="hidden" name="ttbm_date" value="<?php echo esc_attr( gmdate( 'Y-m-d', strtotime( $date) ) ); ?>"/>
 				<?php do_action( 'ttbm_date_time_select', $tour_id, $all_dates ); ?>
 
 				<?php do_action( 'ttbm_hotel_select', $tour_id, $check_ability ); ?>

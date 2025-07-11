@@ -19,17 +19,9 @@
 				<?php
 					$option_name = 'ttbm_string_availabe_ticket_list';
 					$default_title = esc_html__('Available Ticket List ', 'tour-booking-manager');
-					//include(TTBM_Function::template_path('layout/title_section.php'));
 				?>
 				<div class="ttbm_widget_content" data-placeholder>
-					<table class="mp_tour_ticket_type">
-						<!-- <thead>
-                            <tr>
-                                <th class="textL"><?php echo TTBM_Global_Function::data_sanitize(TTBM_Function::ticket_name_text()); ?></th>
-                                <th><?php echo TTBM_Global_Function::data_sanitize(TTBM_Function::ticket_price_text()); ?></th>
-                                <th><?php echo TTBM_Global_Function::data_sanitize(TTBM_Function::ticket_qty_text()); ?></th>
-                            </tr>
-						</thead> -->
+					<table class="mp_tour_ticket_type">		
 						<tbody>
 						<?php
 							foreach ($ticket_lists as $ticket) {
@@ -56,7 +48,7 @@
                                             <?php if ($ticket_type_icon) { ?>
                                                 <span class="<?php echo esc_attr($ticket_type_icon); ?>"></span>
                                             <?php } ?>
-                                            <?php echo TTBM_Global_Function::esc_html($ticket_name); ?>
+                                            <?php echo esc_html($ticket_name); ?>
                                         </div>
                                         <?php if ($description) { ?>
 										    <div class="mT_xs person-description"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
@@ -64,9 +56,13 @@
 									</th>
 									<th class="ttbm-regular-price" data-regular-price="<?php echo esc_attr(TTBM_Global_Function::price_convert_raw(TTBM_Global_Function::wc_price($tour_id, $regular_price))); ?>" data-base-price="<?php echo esc_attr($ticket['ticket_type_price']); ?>">
 										<?php if ($regular_price) { ?>
-											<span class="strikeLine"><?php echo TTBM_Global_Function::wc_price($tour_id, $regular_price); ?></span>
+											<span class="strikeLine"><?php 
+												// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  
+												echo wc_price($tour_id, $regular_price); ?></span>
 										<?php } ?>
-										<span><?php echo TTBM_Global_Function::esc_html($ticket_price); ?></span>
+										<span><?php 
+										// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  
+										echo mep_esc_html($ticket_price); ?></span>
 									</th>
 									<td class="ttbm-select-quantity">
                                         <?php TTBM_Layout::qty_input($ticket_name, $available, $ticket_qty_type, $default_qty, $min_qty, $max_qty, $ticket_price_raw, 'ticket_qty[]',$tour_id); ?>

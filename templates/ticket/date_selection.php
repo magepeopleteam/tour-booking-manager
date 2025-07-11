@@ -16,13 +16,17 @@
 			<div class="justifyCenter ttbm_select_date_area">
 				<h5 class="textWhite">
 					<?php
-						echo TTBM_Function::get_name() . '&nbsp;' . esc_html__( 'Date : ', 'tour-booking-manager' ) . '&nbsp;' .TTBM_Global_Function::date_format( $start_date );
+						echo esc_html( TTBM_Function::get_name() ) . '&nbsp;' 
+						. esc_html__( 'Date : ', 'tour-booking-manager' ) . '&nbsp;' 
+						. esc_html( TTBM_Global_Function::date_format( $start_date ) );
+
 						if ( array_key_exists( 'checkout_date', $all_dates ) && $all_dates['checkout_date'] ) {
-							echo '&nbsp;' . esc_html__( '-', 'tour-booking-manager' ) . '&nbsp;' . TTBM_Global_Function::date_format( $end_date );
+							echo '&nbsp;' . esc_html__( '-', 'tour-booking-manager' ) . '&nbsp;' 
+							. esc_html( TTBM_Global_Function::date_format( $end_date ) );
 						}
 						if ( $tour_type == 'hotel' && $start_date && $end_date ) {
 							?>
-							<input type="hidden" name="ttbm_hotel_date_range" value="<?php echo esc_attr( date( 'Y/m/d', strtotime( $start_date ) ) ) . '    -     ' . esc_attr( date( 'Y/m/d', strtotime( $end_date ) ) ); ?>"/>
+							<input type="hidden" name="ttbm_hotel_date_range" value="<?php echo esc_attr( gmdate( 'Y/m/d', strtotime( $start_date ) ) ) . '    -     ' . esc_attr( gmdate( 'Y/m/d', strtotime( $end_date ) ) ); ?>"/>
 							<?php
 						}
 					?>

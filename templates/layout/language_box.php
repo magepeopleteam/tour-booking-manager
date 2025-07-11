@@ -14,7 +14,7 @@
     endforeach;
 	if ( $tour_type == 'general' && $status != 'off' && !empty($language)) {
 		?>
-        <div class="item_icon" title="<?php echo __('Language','tour-booking-manager'); ?>">
+       <div class="item_icon" title="<?php echo esc_attr( __('Language', 'tour-booking-manager') ); ?>">
             <i class="fas fa-language"></i>
             <?php echo esc_html( $language ); ?>
         </div>

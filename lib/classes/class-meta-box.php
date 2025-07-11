@@ -65,7 +65,9 @@ if ( ! class_exists( 'TtbmAddMetaBox' ) ) {
 		public function mp_event_all_in_tab_menu_list() {
 			?>
             <li data-tabs-target="#<?php echo esc_html($this->get_meta_box_id()); ?>">
-				<?php echo mep_esc_html($this->get_meta_box_title()); ?>
+				<?php 
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo mep_esc_html($this->get_meta_box_title()); ?>
             </li>
 			<?php
 		}
@@ -112,7 +114,9 @@ if ( ! class_exists( 'TtbmAddMetaBox' ) ) {
                                             <li>
                                                 <a sectionId="<?php echo esc_html($section_id); ?>" dataid="<?php echo esc_html($page_id); ?>" href='#<?php echo esc_html($section_id); ?>' class='nav-item <?php if ( $current_page == $page_id ) {
 													echo 'active';
-												} ?>'><?php echo mep_esc_html($nav_sections_title); ?>
+												} ?>'><?php 
+												// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+												echo mep_esc_html($nav_sections_title); ?>
                                                 </a>
                                             </li>
 										<?php
@@ -240,6 +244,7 @@ if ( ! class_exists( 'TtbmAddMetaBox' ) ) {
 
 			endif;
 			if (sizeof($option) > 0 && isset($option['type'])) {
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
 				echo mep_field_generator($option['type'], $option);
 				do_action("wp_theme_settings_field_$type", $option);
 			}

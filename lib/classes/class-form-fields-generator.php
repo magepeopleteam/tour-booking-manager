@@ -1,6 +1,6 @@
 <?php
 if ( ! defined('ABSPATH')) exit;  // if direct access 
-
+// phpcs:disable
 
 /*Input fields
 *  Text

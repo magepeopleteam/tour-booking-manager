@@ -6,11 +6,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $ttbm_post_id = $ttbm_post_id ?? get_the_id();
 //$room_lists = TTBM_Global_Function::get_post_info( $hotel_id, 'ttbm_room_details', array() );
-$date_range = $_REQUEST['date_range'] ?: "";
+$date_range = isset( $_REQUEST['date_range'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_range'] ) ) : '';
 if ( $hotel_id && $date_range ) {
     $hotel_date = explode( "-", $date_range );
-    $date1      = date( 'Y-m-d', strtotime( $hotel_date[0] ) );
-    $date2      = date( 'Y-m-d', strtotime( $hotel_date[1] ) );
+    $date1      = gmdate( 'Y-m-d', strtotime( $hotel_date[0] ) );
+    $date2      = gmdate( 'Y-m-d', strtotime( $hotel_date[1] ) );
     $days       = date_diff( date_create( $date1 ), date_create( $date2 ) );
 
     $room_lists_new = TTBM_Global_Function::pa_get_full_room_ticket_info( $hotel_id, $date1, $date2 );
@@ -54,7 +54,7 @@ if ( $hotel_id && $date_range ) {
                     ?>
                     <tr>
                         <td class="ttbm-hotel-room-info">
-                            <p><?php echo TTBM_Global_Function::esc_html( $room_name ); ?></p>
+                            <p><?php echo esc_html( $room_name ); ?></p>
                             <?php
                             $adult_qty = array_key_exists( 'ttbm_hotel_room_capacity_adult', $ticket ) ? $ticket['ttbm_hotel_room_capacity_adult'] : 0;
                             $child_qty = array_key_exists( 'ttbm_hotel_room_capacity_child', $ticket ) ? $ticket['ttbm_hotel_room_capacity_child'] : 0;
@@ -76,9 +76,11 @@ if ( $hotel_id && $date_range ) {
                         </td>
                         <td style="text-align: right;">
                             <?php if ($sale_price) { ?>
-                                <span class="strikeLine"><?php echo TTBM_Global_Function::wc_price($hotel_id, $sale_price); ?></span>
+                                <span class="strikeLine"><?php 
+                                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+                                    echo wc_price($hotel_id, $sale_price); ?></span>
                             <?php } ?>
-                            <?php echo TTBM_Global_Function::esc_html( $price ); ?>/
+                            <?php echo esc_html( $price ); ?>/
                             <?php esc_html_e( 'Night ', 'tour-booking-manager' ); ?>&nbsp;X
                             <?php echo esc_html( $days->days ); ?>
                         </td>

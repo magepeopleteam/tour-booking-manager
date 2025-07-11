@@ -76,7 +76,7 @@
 				$ttbm_id = array_key_exists('ttbm_id', $cart_item) ? $cart_item['ttbm_id'] : 0;
 				$ttbm_id = TTBM_Function::post_id_multi_language($ttbm_id);
 				if (get_post_type($ttbm_id) == TTBM_Function::get_cpt_name()) {
-					$thumbnail = '<div class="bg_image_area" data-href="' . get_the_permalink($ttbm_id) . '"><div data-bg-image="' . TTBM_Global_Function::get_image_url($ttbm_id) . '"></div></div>';
+					$thumbnail = '<div class="bg_image_area" data-href="' . esc_url(get_the_permalink($ttbm_id)) . '"><div data-bg-image="' . esc_url(TTBM_Global_Function::get_image_url($ttbm_id)) . '"></div></div>';
 				}
 				return $thumbnail;
 			}
@@ -137,16 +137,16 @@
 							}
 							$item->add_meta_data(TTBM_Function::ticket_qty_text(), $ticket['ticket_qty']);
 							if (sizeof($hotel_info) > 0) {
-								$item->add_meta_data(TTBM_Function::ticket_price_text(), ' ( ' . TTBM_Global_Function::wc_price($ttbm_id, $ticket['ticket_price']) . ' x ' . $ticket['ticket_qty'] . 'x' . $hotel_info['ttbm_hotel_num_of_day'] . ') = ' . TTBM_Global_Function::wc_price($ttbm_id, ($ticket['ticket_price'] * $ticket['ticket_qty'] * $hotel_info['ttbm_hotel_num_of_day'])));
+								$item->add_meta_data(TTBM_Function::ticket_price_text(), ' ( ' . wp_kses_post(TTBM_Global_Function::wc_price($ttbm_id, $ticket['ticket_price'])) . ' x ' . esc_html($ticket['ticket_qty']) . 'x' . esc_html($hotel_info['ttbm_hotel_num_of_day']) . ') = ' . wp_kses_post(TTBM_Global_Function::wc_price($ttbm_id, ($ticket['ticket_price'] * $ticket['ticket_qty'] * $hotel_info['ttbm_hotel_num_of_day']))));
 							} else {
-								$item->add_meta_data(TTBM_Function::ticket_price_text(), ' ( ' . TTBM_Global_Function::wc_price($ttbm_id, $ticket['ticket_price']) . ' x ' . $ticket['ticket_qty'] . ') = ' . TTBM_Global_Function::wc_price($ttbm_id, ($ticket['ticket_price'] * $ticket['ticket_qty'])));
+								$item->add_meta_data(TTBM_Function::ticket_price_text(), ' ( ' . wp_kses_post(TTBM_Global_Function::wc_price($ttbm_id, $ticket['ticket_price'])) . ' x ' . esc_html($ticket['ticket_qty']) . ') = ' . wp_kses_post(TTBM_Global_Function::wc_price($ttbm_id, ($ticket['ticket_price'] * $ticket['ticket_qty']))));
 							}
 						}
 						if (sizeof($extra_service) > 0) {
 							foreach ($extra_service as $service) {
 								$item->add_meta_data(TTBM_Function::service_name_text(), $service['service_name']);
 								$item->add_meta_data(TTBM_Function::service_qty_text(), $service['service_qty']);
-								$item->add_meta_data(TTBM_Function::service_price_text(), ' ( ' . TTBM_Global_Function::wc_price($ttbm_id, $service['service_price']) . ' x ' . $service['service_qty'] . ') = ' . TTBM_Global_Function::wc_price($ttbm_id, ($service['service_price'] * $service['service_qty'])));
+								$item->add_meta_data(TTBM_Function::service_price_text(), ' ( ' . wp_kses_post(TTBM_Global_Function::wc_price($ttbm_id, $service['service_price'])) . ' x ' . esc_html($service['service_qty']) . ') = ' . wp_kses_post(TTBM_Global_Function::wc_price($ttbm_id, ($service['service_price'] * $service['service_qty']))));
 							}
 						}
 					}
@@ -277,7 +277,7 @@
                                 <li>
                                     <span class="fas fa-hotel"></span>&nbsp;
                                     <h6><?php esc_html_e('Hotel Name', 'tour-booking-manager'); ?> :&nbsp;</h6>
-                                    <span><?php echo get_the_title($hotel_info['hotel_id']); ?></span>
+                                    <span><?php echo esc_html(get_the_title($hotel_info['hotel_id'])); ?></span>
                                 </li>
                                 <li>
                                     <span class="far fa-calendar-check"></span>&nbsp;
@@ -325,7 +325,7 @@
                                         </li>
                                         <li>
                                             <h6><?php echo esc_html(TTBM_Function::ticket_price_text()); ?> :&nbsp;</h6>
-                                            <span><?php echo ' ( ' . TTBM_Global_Function::wc_price($ttbm_id, $ticket['ticket_price']) . ' x ' . $ticket['ticket_qty'] . ' x ' . $hotel_info['ttbm_hotel_num_of_day'] . ') = ' . TTBM_Global_Function::wc_price($ttbm_id, ($ticket['ticket_price'] * $ticket['ticket_qty'] * $hotel_info['ttbm_hotel_num_of_day'])); ?></span>
+                                            <span><?php echo ' ( ' . wp_kses_post(TTBM_Global_Function::wc_price($ttbm_id, $ticket['ticket_price'])) . ' x ' . esc_html($ticket['ticket_qty']) . ' x ' . esc_html($hotel_info['ttbm_hotel_num_of_day']) . ') = ' . wp_kses_post(TTBM_Global_Function::wc_price($ttbm_id, ($ticket['ticket_price'] * $ticket['ticket_qty'] * $hotel_info['ttbm_hotel_num_of_day']))); ?></span>
                                         </li>
 									<?php } else {
 										 ?>
@@ -339,7 +339,7 @@
                                         </li>
                                         <li>
                                             <h6><?php echo esc_html(TTBM_Function::ticket_price_text()); ?> :&nbsp;</h6>
-                                            <span><?php echo ' ( ' . TTBM_Global_Function::wc_price($ttbm_id, $ticket['ticket_price']) . ' x ' . $ticket['ticket_qty'] . ') = ' . TTBM_Global_Function::wc_price($ttbm_id, ($ticket['ticket_price'] * $ticket['ticket_qty'])); ?></span>
+                                            <span><?php echo ' ( ' . wp_kses_post(TTBM_Global_Function::wc_price($ttbm_id, $ticket['ticket_price'])) . ' x ' . esc_html($ticket['ticket_qty']) . ') = ' . wp_kses_post(TTBM_Global_Function::wc_price($ttbm_id, ($ticket['ticket_price'] * $ticket['ticket_qty']))); ?></span>
                                         </li>
 									<?php } ?>
                                 </ul>
@@ -362,7 +362,7 @@
                                     </li>
                                     <li>
                                         <h6><?php echo esc_html(TTBM_Function::service_price_text()); ?> :&nbsp;</h6>
-                                        <span><?php echo ' ( ' . TTBM_Global_Function::wc_price($ttbm_id, $service['service_price']) . ' x ' . $service['service_qty'] . ') = ' . TTBM_Global_Function::wc_price($ttbm_id, ($service['service_price'] * $service['service_qty'])); ?></span>
+                                        <span><?php echo ' ( ' . wp_kses_post(TTBM_Global_Function::wc_price($ttbm_id, $service['service_price'])) . ' x ' . esc_html($service['service_qty']) . ') = ' . wp_kses_post(TTBM_Global_Function::wc_price($ttbm_id, ($service['service_price'] * $service['service_qty']))); ?></span>
                                     </li>
                                 </ul>
                             </div>

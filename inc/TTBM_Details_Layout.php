@@ -46,7 +46,7 @@
                             <button id="ttbm-load-more" class="button"
                                     data-paged="<?php echo esc_attr($paged + 1); ?>"
                                     data-posts-per-page="<?php echo esc_attr($post_per_page); ?>"
-                                    data-nonce="<?php echo wp_create_nonce('ttbm_load_more'); ?>">
+                                    data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_load_more')); ?>">
                                 <i class="fas fa-sync-alt"></i> <?php esc_html_e('Load More', 'tour-booking-manager'); ?> (<span class="ttbm_load_more_remaining_travel"><?php echo esc_attr( $remaining_travel );?></span>)
                             </button>
                         </div>
@@ -61,7 +61,7 @@
                 if ( $ttbm_display_registration != 'off' ) {
                     ?>
                     <div class="ttbm-sidebar-booking">
-                        <div class="ttbm-title-price"><?php _e("From",'tour-booking-manager'); ?><?php include(TTBM_Function::template_path('layout/start_price_box.php')); ?></div>
+                        <div class="ttbm-title-price"><?php esc_html_e("From",'tour-booking-manager'); ?><?php include(TTBM_Function::template_path('layout/start_price_box.php')); ?></div>
                         
                         <?php TTBM_Details_Layout::date_selection(); ?>
                         <button type="button" class="_dButton_bgBlue_fullWidth" data-target-popup="registration-popup">
@@ -132,8 +132,8 @@
                             <?php esc_html_e('Check Availability', 'tour-booking-manager'); ?>
                         </button>
                         <ul class="ttbm-registration-info">
-                            <li><?php _e('Free cancellation up to 24 hours before the experience starts (local time)','tour-booking-manager'); ?></li>
-                            <li><?php _e('Reserve Now and Pay Later - Secure your spot while staying flexible','tour-booking-manager'); ?></li>
+                            <li><?php esc_html_e('Free cancellation up to 24 hours before the experience starts (local time)','tour-booking-manager'); ?></li>
+                            <li><?php esc_html_e('Reserve Now and Pay Later - Secure your spot while staying flexible','tour-booking-manager'); ?></li>
                         </ul>
                         <input type="hidden" class="registration_popup" data-target-popup="registration-popup">
                         <div class="mpPopup mpStyle" data-popup="registration-popup">

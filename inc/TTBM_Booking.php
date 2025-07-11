@@ -31,7 +31,7 @@
 				$time        = TTBM_Function::get_time( $tour_id, date( 'Y-m-d', strtotime( $date ) ) );
 				$date_format = $time ? 'Y-m-d H:i' : 'Y-m-d';
 				$date        = $date ? date( $date_format, strtotime( $date ) ) : $date;
-				echo TTBM_Function::get_total_available( $tour_id,$date );
+				echo esc_html(TTBM_Function::get_total_available( $tour_id,$date ));
 				die();
 			}
 			public function get_ttbm_hotel_room_list() {

@@ -47,23 +47,23 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 <table>
                     <tr>
                         <th><?php esc_html_e('Subject:', 'tour-booking-manager'); ?></th>
-                        <td><?php echo $response['title']; ?></td>
+                        <td><?php echo esc_html($response['title']); ?></td>
                     </tr>
                     <tr>
                         <th><?php esc_html_e('Date:', 'tour-booking-manager'); ?></th>
-                        <td><?php echo $response['date']; ?> <?php echo $response['time']; ?></td>
+                        <td><?php echo esc_html($response['date']); ?> <?php echo esc_html($response['time']); ?></td>
                     </tr>
                     <tr>
                         <th><?php esc_html_e('Name:', 'tour-booking-manager'); ?></th>
-                        <td><?php echo $response['name']; ?></td>
+                        <td><?php echo esc_html($response['name']); ?></td>
                     </tr>
                     <tr>
                         <th><?php esc_html_e('Email:', 'tour-booking-manager'); ?></th>
-                        <td><?php echo $response['email']; ?></td>
+                        <td><?php echo esc_html($response['email']); ?></td>
                     </tr>
                     <tr>
                         <th><?php esc_html_e('Message:', 'tour-booking-manager'); ?></th>
-                        <td><?php echo $response['content']; ?></td>
+                        <td><?php echo esc_html($response['content']); ?></td>
                     </tr>
                 </table>
                 <?php
@@ -201,7 +201,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             <div class="ttbm_popup ttbm_style" data-popup="reply-enquiry-popup">
                 <div class="popupMainArea">
                     <div class="popupHeader allCenter">
-                        <h2 class="_mR"><?php esc_html_e('Reply', 'bus-ticket-booking-with-seat-reservation'); ?></h2>
+                        <h2 class="_mR"><?php esc_html_e('Reply', 'tour-booking-manager'); ?></h2>
                         <span class="fas fa-times popupClose"></span>
                     </div>
                     <div class="popupBody">
@@ -252,7 +252,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 <div class="ttbm_popup ttbm_style" data-popup="get-enquiry-popup">
                     <div class="popupMainArea">
                         <div class="popupHeader allCenter">
-                            <h2 class="_mR"><?php esc_html_e('Get Enquiry', 'bus-ticket-booking-with-seat-reservation'); ?></h2>
+                            <h2 class="_mR"><?php esc_html_e('Get Enquiry', 'tour-booking-manager'); ?></h2>
                             <span class="fas fa-times popupClose"></span>
                         </div>
                         <div class="popupBody">
@@ -292,7 +292,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                     update_option('ttbm_enquiry_from_email', sanitize_email($_POST['ttbm_enquiry_from_email']));
                     
                 } else {
-                    wp_die(__('Nonce verification failed', 'tour-booking-manager'));
+                    wp_die(esc_html__('Nonce verification failed', 'tour-booking-manager'));
                 }
             } 
             $from_email = get_option('ttbm_enquiry_from_email');
@@ -303,11 +303,11 @@ if (! class_exists('TTBM_Get_Enquiry')) {
         ?>
             <div id="ttbm-settings-page">
             <div class="wrap ">
-                <h1 class="wp-heading-inline"><?php _e('Enquiry', 'tour-booking-manager'); ?></h1>
+                <h1 class="wp-heading-inline"><?php esc_html_e('Enquiry', 'tour-booking-manager'); ?></h1>
                 <hr class="wp-header-end">
                 <h2 class="nav-tab-wrapper">
-                    <a href="#mptbm-enquiry-list" class="nav-tab nav-tab-active"><?php _e('Enquiry List', 'tour-booking-manager'); ?></a>
-                    <a href="#mptbm-enquiry-settings" class="nav-tab"><?php _e('Enquiry Settings', 'tour-booking-manager'); ?></a>
+                    <a href="#mptbm-enquiry-list" class="nav-tab nav-tab-active"><?php esc_html_e('Enquiry List', 'tour-booking-manager'); ?></a>
+                    <a href="#mptbm-enquiry-settings" class="nav-tab"><?php esc_html_e('Enquiry Settings', 'tour-booking-manager'); ?></a>
                 </h2>
                 <div id="mptbm-enquiry-list" class="tab-content" style="display: block;">
                     <div class="wrap ">
@@ -316,7 +316,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                             <div class="ttbm_popup ttbm_style" data-popup="view-enquiry-popup">
                                 <div class="popupMainArea">
                                     <div class="popupHeader allCenter">
-                                        <h2 class="_mR"><?php esc_html_e('View Enquiry', 'bus-ticket-booking-with-seat-reservation'); ?></h2>
+                                        <h2 class="_mR"><?php esc_html_e('View Enquiry', 'tour-booking-manager'); ?></h2>
                                         <span class="fas fa-times popupClose"></span>
                                     </div>
                                     <div class="popupBody">
@@ -328,7 +328,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                         <ul class="subsubsub">
                             <li class="all">
                                 <a href="<?php echo esc_url(add_query_arg('post_type', 'ttbm_tour')); ?>" class="current" aria-current="page">
-                                    <?php _e('All', 'tour-booking-manager'); ?>
+                                    <?php esc_html_e('All', 'tour-booking-manager'); ?>
                                     <span class="count">
                                         (<?php echo esc_html(wp_count_posts('ttbm_enquiry')->publish); ?>)
                                     </span>
@@ -346,13 +346,13 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                         <table class="wp-list-table widefat fixed striped posts ttbm-enquiry-table">
                             <thead>
                                 <tr>
-                                    <th class="manage-column column-title"><?php _e('Subject', 'tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php _e('Name', 'tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php _e('Email', 'tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php _e('Message', 'tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php _e('Status', 'tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php _e('Date', 'tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php _e('Action', 'tour-booking-manager'); ?></th>
+                                    <th class="manage-column column-title"><?php esc_html_e('Subject', 'tour-booking-manager'); ?></th>
+                                    <th class="manage-column column-title"><?php esc_html_e('Name', 'tour-booking-manager'); ?></th>
+                                    <th class="manage-column column-title"><?php esc_html_e('Email', 'tour-booking-manager'); ?></th>
+                                    <th class="manage-column column-title"><?php esc_html_e('Message', 'tour-booking-manager'); ?></th>
+                                    <th class="manage-column column-title"><?php esc_html_e('Status', 'tour-booking-manager'); ?></th>
+                                    <th class="manage-column column-title"><?php esc_html_e('Date', 'tour-booking-manager'); ?></th>
+                                    <th class="manage-column column-title"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -374,7 +374,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                                     while ($enquiry->have_posts()) : $enquiry->the_post();
                                         $status = get_post_meta(get_the_ID(), 'status', true);
                                 ?>
-                                        <tr class="ttbm-enquiry-list" data-id="<?php echo get_the_ID(); ?>">
+                                        <tr class="ttbm-enquiry-list" data-id="<?php echo esc_attr(get_the_ID()); ?>">
                                             <td class="<?php echo esc_attr($status === 'new' ? 'new' : ''); ?>">
                                                 <?php
                                                 $title = get_the_title();
@@ -392,9 +392,9 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                                             <td class="<?php echo esc_attr($status); ?>"><?php echo esc_html(ucfirst($status)); ?></td>
                                             <td><?php echo esc_html(get_the_date() . ' ' . get_the_time()); ?></td>
                                             <td class="ttbm_style">
-                                                <a href="#" class="ttbm-view-enquiry" data-id="<?php echo get_the_ID(); ?>" data-target-popup="view-enquiry-popup"><?php _e('View |', 'tour-booking-manager'); ?></a>
-                                                <a href="#" class="ttbm-reply-enquiry" data-id="<?php echo get_the_ID(); ?>" data-target-popup="reply-enquiry-popup"><?php _e('Reply |', 'tour-booking-manager'); ?></a>
-                                                <a href="#" class="ttbm-delete-enquiry" data-id="<?php echo get_the_ID(); ?>"><?php _e('Delete', 'tour-booking-manager'); ?></a>
+                                                <a href="#" class="ttbm-view-enquiry" data-id="<?php echo esc_html(get_the_ID()); ?>" data-target-popup="view-enquiry-popup"><?php esc_html_e('View |', 'tour-booking-manager'); ?></a>
+                                                <a href="#" class="ttbm-reply-enquiry" data-id="<?php echo esc_html(get_the_ID()); ?>" data-target-popup="reply-enquiry-popup"><?php esc_html_e('Reply |', 'tour-booking-manager'); ?></a>
+                                                <a href="#" class="ttbm-delete-enquiry" data-id="<?php echo esc_html(get_the_ID()); ?>"><?php esc_html_e('Delete', 'tour-booking-manager'); ?></a>
                                             </td>
                                         </tr>
                                 <?php
@@ -416,7 +416,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                         if ($total_pages > 1) :
                             $current_page = max(1, $paged);
                             echo '<div class="tablenav"><div class="tablenav-pages">';
-                            echo '<span class="displaying-num">' . $enquiry->found_posts . ' items</span>';
+                            echo '<span class="displaying-num">' . esc_html($enquiry->found_posts) . ' items</span>';
                             echo '<span class="pagination-links">';
 
                             // First and Previous
@@ -430,7 +430,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
 
                             // Page info
                             echo '<span class="screen-reader-text">Current Page</span>';
-                            echo '<span class="paging-input"><span class="tablenav-paging-text">' . $current_page . ' of <span class="total-pages">' . $total_pages . '</span></span></span>';
+                            echo '<span class="paging-input"><span class="tablenav-paging-text">' . esc_html($current_page ). ' of <span class="total-pages">' . esc_html($total_pages) . '</span></span></span>';
 
                             // Next and Last
                             if ($current_page < $total_pages) {
@@ -453,7 +453,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                             <div class="form-wrap">
                                 <h2><?php esc_html_e('Enquiry Settings', 'tour-booking-manager'); ?></h2>
                                 <form method="post" action="">
-                                    <input type="hidden" name="ttbm_enquiry_nonce" value="<?php echo wp_create_nonce('ttbm_enquiry_nonce'); ?>">
+                                    <input type="hidden" name="ttbm_enquiry_nonce" value="<?php echo esc_attr(wp_create_nonce('ttbm_enquiry_nonce')); ?>">
                                     <div class="form-field term-name-wrap">
                                         <label><?php esc_html_e('From Email', 'tour-booking-manager'); ?></label>
                                         <input name="ttbm_enquiry_from_email" type="email" value="<?php echo esc_attr($from_email); ?>" size="40" aria-required="true">

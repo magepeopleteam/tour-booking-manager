@@ -17,7 +17,7 @@
 			public function top_filter_static($params) {
 				?>
                 <div class="ttbm_style placeholderLoader ttbm_wraper ttbm_top_filter">
-                    <form method="get" action="<?php echo get_home_url() . '/find/'; ?>">
+                    <form method="get" action="<?php echo esc_url(get_home_url() ). '/find/'; ?>">
                         <div class="flexWrap justifyCenter">
 							<?php $this->title_filter($params); ?>
 							<?php $this->type_filter($params); ?>
@@ -36,7 +36,7 @@
 				<?php
 			}
 			public function top_filter($params) {
-				ob_start();
+				//ob_start();
 				$filter = $params['search-filter'];
 				if ($filter == 'yes') {
 					?>
@@ -53,7 +53,7 @@
                     </div>
 					<?php
 				}
-				echo ob_get_clean();
+				//echo ob_get_clean();
 			}
 			public function left_filter($params) {
 				?>
@@ -364,7 +364,7 @@
                                             <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($duration); ?>" <?php echo esc_attr($checked); ?>/>
                                             <span class="customCheckbox">
 
-											<?php esc_html_e($duration); ?>&nbsp;
+											<?php echo esc_html($duration); ?>&nbsp;
 
 											<?php if ($duration == 1) {
 												esc_html_e('Day Tour', 'tour-booking-manager');
@@ -411,7 +411,7 @@
 									$icon = $term_id ? (get_term_meta($term_id, 'ttbm_feature_icon', true) ? get_term_meta($term_id, 'ttbm_feature_icon', true) : 'fas fa-forward') : 'fas fa-forward'; ?>
                                     <label class="customCheckboxLabel">
                                         <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($term_id); ?>"/>
-                                        <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php esc_html_e($feature_item); ?></span>
+                                        <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php echo esc_html($feature_item); ?></span>
                                     </label>
 								<?php } ?>
                             </div>
@@ -472,7 +472,7 @@
 									?>
                                     <label class="customCheckboxLabel">
                                         <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($term_id); ?>" <?php echo esc_attr($checked); ?>/>
-                                        <span class="customCheckbox"><?php esc_html_e($activity); ?></span>
+                                        <span class="customCheckbox"><?php echo esc_html($activity); ?></span>
                                     </label>
 								<?php } ?>
                             </div>
@@ -505,7 +505,7 @@
 									if (get_term($tag->term_id, 'ttbm_tour_tag')->count) { ?>
                                         <label class="customCheckboxLabel">
                                             <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($tag->term_id); ?>"/>
-                                            <span class="customCheckbox"><?php esc_html_e($tag->name); ?></span>
+                                            <span class="customCheckbox"><?php echo esc_html($tag->name); ?></span>
                                         </label>
 									<?php }
 								} ?>
@@ -528,14 +528,14 @@
                     <label data-placeholder>
                         <select class="formControl" name="month_filter">
                             <option selected value=""><?php esc_html_e('All Month', 'tour-booking-manager'); ?></option>
-                            <option value="<?php echo esc_attr($month); ?>" <?php echo esc_attr($selected); ?>><?php echo date_i18n($date_format, strtotime($current_date)); ?></option>
+                            <option value="<?php echo esc_attr($month); ?>" <?php echo esc_attr($selected); ?>><?php echo esc_html(date_i18n($date_format, strtotime($current_date))); ?></option>
 							<?php
 								for ($i = 1; $i < 12; $i++) {
 									$first_date = date('y-m-d', strtotime("+1 month", strtotime($first_date)));
 									$month = date('n', strtotime($first_date));
 									$selected = $url_month == $month ? 'selected' : '';
 									?>
-                                    <option value="<?php echo esc_attr($month); ?>" <?php echo esc_attr($selected); ?>><?php echo date_i18n($date_format, strtotime($first_date)); ?></option>
+                                    <option value="<?php echo esc_attr($month); ?>" <?php echo esc_attr($selected); ?>><?php echo esc_html(date_i18n($date_format, strtotime($first_date))); ?></option>
 									<?php
 								}
 							?>
@@ -582,7 +582,7 @@
 			}
 			//****************************************/
 			public function pagination($params, $total_item, $active_page = 0) {
-				ob_start();
+				//ob_start();
 				$per_page = $params['show'] > 1 ? $params['show'] : $total_item;
 				$search_filter = array_key_exists('search-filter', $params) ? $params['search-filter'] : '';
 				?>
@@ -634,7 +634,7 @@
                     </div>
 					<?php
 				}
-				echo ob_get_clean();
+				//echo ob_get_clean();
 			}
 			public function filter_top_bar($loop, $params) {
 				$style = $params['style'] ?: 'modern';

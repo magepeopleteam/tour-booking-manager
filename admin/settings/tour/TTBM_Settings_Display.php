@@ -70,7 +70,7 @@
 								</div>
 								<label class="label">
 									<div>
-										<p><?php esc_html_e('Get Enquiry', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Enable/Disable Get Enquiry Button in frontend'); ?></span></i></p>
+										<p><?php esc_html_e('Get Enquiry', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Enable/Disable Get Enquiry Button in frontend', 'tour-booking-manager'); ?></span></i></p>
 									</div>
 									<?php TTBM_Custom_Layout::switch_button('ttbm_display_enquiry', $enquiry_checked); ?>
 								</label>
@@ -132,7 +132,7 @@
 					</div>	
 					<div class="_dFlex_alignCenter_justfyBetween">
 						<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
-						<input type="number" data-collapse="#<?php echo esc_attr($display_name); ?>" min="0" class="ms-2 <?php echo esc_attr($active); ?>" name="ttbm_travel_rank_tour" value="<?php echo TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_rank_tour'); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+						<input type="number" data-collapse="#<?php echo esc_attr($display_name); ?>" min="0" class="ms-2 <?php echo esc_attr($active); ?>" name="ttbm_travel_rank_tour" value="<?php echo esc_html(TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_rank_tour')); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
 					</div>
 				</div>
 				<?php

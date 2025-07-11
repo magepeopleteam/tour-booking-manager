@@ -13,7 +13,7 @@
 		        $ttbm_label = TTBM_Function::get_name();
 		        ?>
 				<li data-tabs-target="#ttbm_settings_guide">
-					<i class="fas fa-hiking"></i><?php echo $ttbm_label.'  '.esc_html__('Guide ', 'tour-booking-manager'); ?>
+					<i class="fas fa-hiking"></i><?php echo esc_html($ttbm_label).'  '.esc_html__('Guide ', 'tour-booking-manager'); ?>
 				</li>
 		        <?php
 	        }
@@ -77,7 +77,7 @@
                                                 foreach ($all_guides->posts as $guide) {
                                                     $ttbm_id = $guide->ID;
                                                     ?>
-                                                    <option value="<?php echo esc_attr($ttbm_id) ?>" <?php echo in_array($ttbm_id, $guides) ? 'selected' : ''; ?>><?php echo get_the_title($ttbm_id); ?></option>
+                                                    <option value="<?php echo esc_attr($ttbm_id) ?>" <?php echo esc_attr(in_array($ttbm_id, $guides) ? 'selected' : ''); ?>><?php echo esc_html(get_the_title($ttbm_id)); ?></option>
                                                     <?php
                                                 }
                                             }

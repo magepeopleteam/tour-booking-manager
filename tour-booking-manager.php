@@ -228,7 +228,8 @@
 			}
 			public function woocommerce_not_active() {
 				$wc_install_url = get_admin_url() . 'plugin-install.php?s=woocommerce&tab=search&type=term';
-				printf('<div class="error" style="background:red; color:#fff;"><p>%s</p></div>', __('You Must Install WooCommerce Plugin before activating Tour Booking Manager, Because It is dependent on Woocommerce Plugin. <a class="btn button" href=' . $wc_install_url . '>Click Here to Install</a>'));
+				$text=__('You Must Install WooCommerce Plugin before activating Tour Booking Manager, Because It is dependent on Woocommerce Plugin.','tour-booking-manager').' <a class="btn button" href=' . $wc_install_url . '>'.esc_html__('Click Here to Install','tour-booking-manager').'</a>';
+				printf('<div class="error" style="background:red; color:#fff;"><p>%s</p></div>', $text);
 			}
 		}
 		new TTBM_Woocommerce_Plugin();

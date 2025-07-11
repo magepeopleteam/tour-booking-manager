@@ -344,7 +344,7 @@ class TTBMTourListWidget extends Widget_Base {
 			\Elementor\Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'ttbm_boxbox_shadow',
-				'label' => __( 'Box Shadow', 'plugin-domain' ),
+				'label' => __( 'Box Shadow', 'tour-booking-manager' ),
 				'selector' => '{{WRAPPER}} .ttbm-elementor-tour-list-widget .ttbm_travel_list_item',
 			]
 		);		 
@@ -384,7 +384,7 @@ class TTBMTourListWidget extends Widget_Base {
 		$this->add_control(
 			'ttbm_tour_date_width',
 			[
-				'label' => __( 'Width', 'simple-email-mailchimp-subscriber' ),
+				'label' => __( 'Width', 'tour-booking-manager' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%' ],
 				'range' => [
@@ -516,7 +516,7 @@ class TTBMTourListWidget extends Widget_Base {
 		$this->add_control(
 			'ttbm_tour_location_width',
 			[
-				'label' => __( 'Width', 'simple-email-mailchimp-subscriber' ),
+				'label' => __( 'Width', 'tour-booking-manager' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%' ],
 				'range' => [

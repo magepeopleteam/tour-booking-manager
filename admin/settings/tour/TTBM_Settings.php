@@ -18,31 +18,31 @@
 			public function settings() {
 				$tour_id = get_the_id();
 				?>
-				<div id="ttbm-settings-page">
-				<div class="ttbm_style ttbm_settings">
-					<div class="ttbmTabs leftTabs d-flex justify-content-between">
-						<ul class="tabLists">
-							<li data-tabs-target="#ttbm_general_info">
-								<i class="fas fa-tools"></i><?php esc_html_e('General Info', 'tour-booking-manager'); ?>
-							</li>
-							<?php do_action('ttbm_meta_box_tab_name', $tour_id); ?>
-							<?php do_action('add_ttbm_settings_tab_name'); ?>
-							<?php if (is_plugin_active('mage-partial-payment-pro/mage_partial_pro.php')) : ?>
-								<li data-tabs-target="#_mep_pp_deposits_type">
-									<i class="far fa-money-bill-alt"></i>&nbsp;&nbsp;<?php esc_html_e('Partial Payment', 'tour-booking-manager'); ?>
-								</li>
-							<?php endif; ?>
-						</ul>
-						<div class="tabsContent">
-							<?php
-								do_action('add_ttbm_settings_tab_content', $tour_id);
-								do_action('ttbm_meta_box_tab_content', $tour_id);
-								$this->partial_payment_settings($tour_id);
-							?>
-						</div>
-					</div>
-				</div>
-				</div>
+                <div id="ttbm-settings-page">
+                    <div class="ttbm_style ttbm_settings">
+                        <div class="ttbmTabs leftTabs d-flex justify-content-between">
+                            <ul class="tabLists">
+                                <li data-tabs-target="#ttbm_general_info">
+                                    <i class="fas fa-tools"></i><?php esc_html_e('General Info', 'tour-booking-manager'); ?>
+                                </li>
+								<?php do_action('ttbm_meta_box_tab_name', $tour_id); ?>
+								<?php do_action('add_ttbm_settings_tab_name'); ?>
+								<?php if (is_plugin_active('mage-partial-payment-pro/mage_partial_pro.php')) : ?>
+                                    <li data-tabs-target="#_mep_pp_deposits_type">
+                                        <i class="far fa-money-bill-alt"></i>&nbsp;&nbsp;<?php esc_html_e('Partial Payment', 'tour-booking-manager'); ?>
+                                    </li>
+								<?php endif; ?>
+                            </ul>
+                            <div class="tabsContent">
+								<?php
+									do_action('add_ttbm_settings_tab_content', $tour_id);
+									do_action('ttbm_meta_box_tab_content', $tour_id);
+									$this->partial_payment_settings($tour_id);
+								?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 				<?php
 			}
 			//************************//
@@ -251,10 +251,43 @@
 						],
 					],
 				];
-				$ttbm_date_config_boxs_args = ['meta_box_id' => 'ttbm_travel_date_config_meta_boxes', 
-				'meta_box_title' => '<i class="far fa-calendar-plus"></i>' . __('Date Configuration', 'tour-booking-manager'), 'screen' => [TTBM_Function::get_cpt_name()], 'context' => 'normal', 'priority' => 'high', 'callback_args' => [], 'nav_position' => 'none', 'item_name' => "MagePeople", 'item_version' => "2.0", 'panels' => ['ttbm_date_config_meta_boxs' => $ttbm_date_info_boxs]];
+				$ttbm_date_config_boxs_args = ['meta_box_id' => 'ttbm_travel_date_config_meta_boxes',
+					'meta_box_title' => '<i class="far fa-calendar-plus"></i>' . __('Date Configuration', 'tour-booking-manager'), 'screen' => [TTBM_Function::get_cpt_name()], 'context' => 'normal', 'priority' => 'high', 'callback_args' => [], 'nav_position' => 'none', 'item_name' => "MagePeople", 'item_version' => "2.0", 'panels' => ['ttbm_date_config_meta_boxs' => $ttbm_date_info_boxs]];
 				new TtbmAddMetaBox($ttbm_date_config_boxs_args);
-				$ttbm_tax_meta_boxs = ['page_nav' => $tour_label . __('Tax', 'tour-booking-manager'), 'priority' => 10, 'sections' => ['section_2' => ['title' => __('Tax Settings', 'tour-booking-manager'), 'description' => __('', 'tour-booking-manager'), 'options' => [['id' => '_tax_status', 'title' => $tour_label . __(' Tax Status', 'tour-booking-manager'), 'details' => __('Please Select Tax Status', 'tour-booking-manager'), 'type' => 'select', 'class' => 'omg', 'default' => 'taxable', 'args' => ['taxable' => __('Taxable', 'tour-booking-manager'), 'shipping' => __('Shipping only', 'tour-booking-manager'), 'none' => __('None', 'tour-booking-manager')]], ['id' => '_tax_class', 'title' => $tour_label . __(' Tax Class', 'tour-booking-manager'), 'details' => __('Please Select Tax Class', 'tour-booking-manager'), 'type' => 'select', 'class' => 'omg', 'default' => 'none', 'args' => TTBM_Global_Function::all_tax_list()],]],],];
+				$ttbm_tax_meta_boxs = [
+					'page_nav' => $tour_label . __('Tax', 'tour-booking-manager'),
+					'priority' => 10,
+					'sections' => [
+						'section_2' => [
+							'title' => __('Tax Settings', 'tour-booking-manager'),
+							'description' => '',
+							'options' => [
+								[
+									'id' => '_tax_status',
+									'title' => $tour_label . __(' Tax Status', 'tour-booking-manager'),
+									'details' => __('Please Select Tax Status', 'tour-booking-manager'),
+									'type' => 'select',
+									'class' => 'omg',
+									'default' => 'taxable',
+									'args' => [
+										'taxable' => __('Taxable', 'tour-booking-manager'),
+										'shipping' => __('Shipping only', 'tour-booking-manager'),
+										'none' => __('None', 'tour-booking-manager')
+									]
+								],
+								[
+									'id' => '_tax_class',
+									'title' => $tour_label . __(' Tax Class', 'tour-booking-manager'),
+									'details' => __('Please Select Tax Class', 'tour-booking-manager'),
+									'type' => 'select',
+									'class' => 'omg',
+									'default' => 'none',
+									'args' => TTBM_Global_Function::all_tax_list()
+								],
+							]
+						],
+					],
+				];
 				$ttbm_tax_meta_boxs_args = [
 					'meta_box_id' => 'ttbm_tax_meta_boxes',
 					'meta_box_title' => '<i class="fas fa-money-bill-wave"></i> ' . __('Tax', 'tour-booking-manager'),
@@ -355,7 +388,7 @@
 					'tour_settings_des' => esc_html__('Here you can set tour duration, night, price, people count and age etc.', 'tour-booking-manager'),
 					'create_location' => esc_html__('If you would like to create a new location, click this button', 'tour-booking-manager'),
 					'hotel_config_click' => esc_html__('Click Here', 'tour-booking-manager'),
-					'hotel_config' => esc_html__('Tour ticket price works based on hotel price configuration . To add new hotel '),
+					'hotel_config' => esc_html__('Tour ticket price works based on hotel price configuration . To add new hotel ','tour-booking-manager'),
 					'ttip_hotel_config' => esc_html__('Select Hotel name that you want to include in this tour', 'tour-booking-manager'),
 					'extra_service_descriptoin' => esc_html__('Additional features can be offered through this option. For example, organizers may provide a pickup service or other paid services as optional add-ons.', 'tour-booking-manager'),
 					'gallery_settings_description' => esc_html__('Here gallery image can be added related to tour so that guest can understand about this trip.', 'tour-booking-manager'),
@@ -370,26 +403,26 @@
 					'why_book_settings_description' => esc_html__('Here, you can write details about offer the opportunity to include highly compelling information pertaining to our tour, in order to entice potential customers into booking it.', 'tour-booking-manager'),
 					'admin_note_settings_description' => esc_html__('Here you can write private note only for understanding admins about this tour.', 'tour-booking-manager'),
 					'display_settings_description' => esc_html__('Display settings is somthing that you can use to control frontend display.', 'tour-booking-manager'),
-					'ttip_ticket_type'               => __( 'You can access it by clicking on the ticket types menu item in the left sidebar', 'tour-booking-manager' ),
-					'get_ticket_type'               => __( 'You can import ticket types here . Create new ticket types <a href="post-new.php?post_type=ttbm_ticket_types">Click Me</a>', 'tour-booking-manager' ),
+					'ttip_ticket_type' => __('You can access it by clicking on the ticket types menu item in the left sidebar', 'tour-booking-manager'),
+					'get_ticket_type' => __('You can import ticket types here . Create new ticket types <a href="post-new.php?post_type=ttbm_ticket_types">Click Me</a>', 'tour-booking-manager'),
 				);
 				$des = apply_filters('ttbm_filter_description_array', $des);
 				return $des[$key];
 			}
 			public static function des_row($key) {
 				?>
-				<tr>
-					<td colspan="7" class="textInfo">
-						<p class="ttbm_description">
-							<span class="fas fa-info-circle"></span>
-							<?php echo self::des_array($key); ?>
-						</p>
-					</td>
-				</tr>
+                <tr>
+                    <td colspan="7" class="textInfo">
+                        <p class="ttbm_description">
+                            <span class="fas fa-info-circle"></span>
+							<?php echo esc_html(self::des_array($key)); ?>
+                        </p>
+                    </td>
+                </tr>
 				<?php
 			}
 			public static function des_p($key) {
-				echo self::des_array($key);
+				echo esc_html(self::des_array($key));
 			}
 			//********************//
 			public function save_settings($tour_id) {
@@ -407,8 +440,8 @@
 					$duration = TTBM_Global_Function::get_submit_info('ttbm_display_duration') ? 'on' : 'off';
 					$ttbm_display_rank = TTBM_Global_Function::get_submit_info('ttbm_display_order_tour') ? 'on' : 'off';
 					$ttbm_travel_rank_tour = TTBM_Global_Function::get_submit_info('ttbm_travel_rank_tour');
-					$display_enquiry= TTBM_Global_Function::get_submit_info('ttbm_display_enquiry') ? 'on' : 'off';
-					$ttbm_template= isset($_POST['ttbm_theme_file']) && $_POST['ttbm_theme_file']? sanitize_file_name($_POST['ttbm_theme_file']):'default.php';
+					$display_enquiry = TTBM_Global_Function::get_submit_info('ttbm_display_enquiry') ? 'on' : 'off';
+					$ttbm_template = isset($_POST['ttbm_theme_file']) && $_POST['ttbm_theme_file'] ? sanitize_file_name($_POST['ttbm_theme_file']) : 'default.php';
 					update_post_meta($tour_id, 'ttbm_travel_rank_tour', $ttbm_travel_rank_tour);
 					update_post_meta($tour_id, 'ttbm_display_order_tour', $ttbm_display_rank);
 					update_post_meta($tour_id, 'ttbm_section_title_style', $content_title_style);

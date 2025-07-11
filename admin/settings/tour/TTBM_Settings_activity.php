@@ -63,7 +63,7 @@
 							<?php foreach ($activities as $activity) { ?>
 								<label class="customCheckboxLabel">
 									<input type="checkbox" name="ttbm_tour_activities[]" value="<?php echo esc_attr($activity->term_id); ?>" <?php echo in_array($activity->term_id, $tour_activities_array) ? 'checked' : ''; ?> />
-									<span class="customCheckbox"><?php esc_html_e($activity->name); ?></span>
+									<span class="customCheckbox"><?php echo esc_html($activity->name); ?></span>
 								</label>
 							<?php } ?>
 						</div>

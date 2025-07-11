@@ -51,7 +51,7 @@
 						</div>	
 						<div class="_dFlex_alignCenter_justfyBetween">
 							<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
-							<input type="number" data-collapse="#<?php echo esc_attr($display_name); ?>" min="0" class="ms-2 <?php echo esc_attr($active); ?>" name="ttbm_travel_duration_night" value="<?php echo TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_night'); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+							<input type="number" data-collapse="#<?php echo esc_attr($display_name); ?>" min="0" class="ms-2 <?php echo esc_attr($active); ?>" name="ttbm_travel_duration_night" value="<?php echo esc_attr(TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_night')); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
 						</div>
 					</div>
 				</div>
@@ -185,7 +185,7 @@
 							
 							<select class="rounded ms-2 <?php echo esc_attr($active); ?>" name="ttbm_travel_language" data-collapse="#<?php echo esc_attr($display_name); ?>">
 								<?php foreach($language_lists as $key => $value): ?>
-									<option value="<?php echo esc_html($key); ?>" <?php echo esc_attr($key == $language ? 'selected' : ''); ?>><?php esc_html_e($value); ?></option>
+									<option value="<?php echo esc_html($key); ?>" <?php echo esc_attr($key == $language ? 'selected' : ''); ?>><?php echo esc_html($value); ?></option>
 								<?php endforeach; ?>
 							</select>
 						</div>

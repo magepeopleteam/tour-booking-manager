@@ -7,7 +7,7 @@
 	function ttbm_quick_setup_exit(){
 		if(isset($_REQUEST['ttbm_skip_quick_setup'])){
 			update_option('ttbm_quick_setup_done', 'exit');
-			exit(wp_redirect(admin_url('index.php')));
+			exit(esc_url(wp_redirect(admin_url('index.php'))));
 		}
 		
 		
@@ -214,7 +214,7 @@
 					</div>
 					<?php if ($status != 1) { ?>
 					<div class='mep_seup_exit_sec'>
-						<button style='margin:10px auto;' class="warningButton" type="submit" name="ttbm_skip_quick_setup"><?php _e('Skip, Go to Dashboard') ?></button>
+						<button style='margin:10px auto;' class="warningButton" type="submit" name="ttbm_skip_quick_setup"><?php esc_html_e('Skip, Go to Dashboard','tour-booking-manager') ?></button>
 					</div>
 					<?php } ?>
 				</div>

@@ -21,20 +21,20 @@ if (!class_exists('TTBM_Taxonomy')) {
                 'all_items' => esc_html__('All ', 'tour-booking-manager') . ' ' . $tour_label . ' ' . $tour_cat_label,
                 'parent_item' => esc_html__('Parent ', 'tour-booking-manager') . ' ' . $tour_cat_label,
                 'parent_item_colon' => esc_html__('Parent ', 'tour-booking-manager') . ' ' . $tour_cat_label,
-                'new_item_name' => esc_html__('New ' . $tour_cat_label . ' Name', 'tour-booking-manager'),
-                'add_new_item' => esc_html__('Add New ' . $tour_cat_label, 'tour-booking-manager'),
-                'edit_item' => esc_html__('Edit ' . $tour_cat_label, 'tour-booking-manager'),
-                'update_item' => esc_html__('Update ' . $tour_cat_label, 'tour-booking-manager'),
-                'view_item' => esc_html__('View ' . $tour_cat_label, 'tour-booking-manager'),
-                'separate_items_with_commas' => esc_html__('Separate ' . $tour_cat_label . ' with commas', 'tour-booking-manager'),
-                'add_or_remove_items' => esc_html__('Add or remove ' . $tour_cat_label, 'tour-booking-manager'),
+                'new_item_name' => esc_html__('New Category Name', 'tour-booking-manager'),
+                'add_new_item' => esc_html__('Add New Category ', 'tour-booking-manager'),
+                'edit_item' => esc_html__('Edit Category ' , 'tour-booking-manager'),
+                'update_item' => esc_html__('Update Category' , 'tour-booking-manager'),
+                'view_item' => esc_html__('View Category ', 'tour-booking-manager'),
+                'separate_items_with_commas' => esc_html__('Separate Category with commas', 'tour-booking-manager'),
+                'add_or_remove_items' => esc_html__('Add or remove Category ', 'tour-booking-manager'),
                 'choose_from_most_used' => esc_html__('Choose from the most used', 'tour-booking-manager'),
-                'popular_items' => esc_html__('Popular ' . $tour_cat_label, 'tour-booking-manager'),
-                'search_items' => esc_html__('Search ' . $tour_cat_label, 'tour-booking-manager'),
+                'popular_items' => esc_html__('Popular Category ', 'tour-booking-manager'),
+                'search_items' => esc_html__('Search Category ' , 'tour-booking-manager'),
                 'not_found' => esc_html__('Not Found', 'tour-booking-manager'),
-                'no_terms' => esc_html__('No ' . $tour_cat_label, 'tour-booking-manager'),
-                'items_list' => esc_html__($tour_cat_label . ' list', 'tour-booking-manager'),
-                'items_list_navigation' => esc_html__($tour_cat_label . ' list navigation', 'tour-booking-manager'),
+                'no_terms' => esc_html__('NoCategory ', 'tour-booking-manager'),
+                'items_list' => esc_html__( 'Category  list', 'tour-booking-manager'),
+                'items_list_navigation' => esc_html__('Category list navigation', 'tour-booking-manager'),
             ];
             $args = [
                 'hierarchical' => true,
@@ -55,23 +55,23 @@ if (!class_exists('TTBM_Taxonomy')) {
                 'name'                  => $tour_org_label,
                 'singular_name'         => $tour_org_label,
                 'menu_name'             => $tour_org_label,
-                'all_items'             => __('All ' . $tour_label . ' ' . $tour_org_label, 'tour-booking-manager'),
-                'parent_item'           => __('Parent ' . $tour_org_label, 'tour-booking-manager'),
-                'parent_item_colon'     => __('Parent ' . $tour_org_label . ':', 'tour-booking-manager'),
-                'new_item_name'         => __('New ' . $tour_org_label . ' Name', 'tour-booking-manager'),
-                'add_new_item'          => __('Add New ' . $tour_org_label, 'tour-booking-manager'),
-                'edit_item'             => __('Edit ' . $tour_org_label, 'tour-booking-manager'),
-                'update_item'           => __('Update ' . $tour_org_label, 'tour-booking-manager'),
-                'view_item'             => __('View ' . $tour_org_label, 'tour-booking-manager'),
-                'separate_items_with_commas' => __('Separate ' . $tour_org_label . ' with commas', 'tour-booking-manager'),
-                'add_or_remove_items'   => __('Add or remove ' . $tour_org_label, 'tour-booking-manager'),
+                'all_items'             => __('All Tour Organizer ', 'tour-booking-manager'),
+                'parent_item'           => __('Parent Organizer ', 'tour-booking-manager'),
+                'parent_item_colon'     => __('Parent Organizer :', 'tour-booking-manager'),
+                'new_item_name'         => __('New  Organizer Name', 'tour-booking-manager'),
+                'add_new_item'          => __('Add New Organizer', 'tour-booking-manager'),
+                'edit_item'             => __('Edit Organizer ', 'tour-booking-manager'),
+                'update_item'           => __('Update Organizer ', 'tour-booking-manager'),
+                'view_item'             => __('View Organizer ', 'tour-booking-manager'),
+                'separate_items_with_commas' => __('Separate Organizer  with commas', 'tour-booking-manager'),
+                'add_or_remove_items'   => __('Add or remove Organizer ', 'tour-booking-manager'),
                 'choose_from_most_used' => __('Choose from the most used', 'tour-booking-manager'),
-                'popular_items'         => __('Popular ' . $tour_org_label, 'tour-booking-manager'),
-                'search_items'          => __('Search ' . $tour_org_label, 'tour-booking-manager'),
+                'popular_items'         => __('Popular Organizer', 'tour-booking-manager'),
+                'search_items'          => __('Search Organizer', 'tour-booking-manager'),
                 'not_found'             => __('Not Found', 'tour-booking-manager'),
-                'no_terms'              => __('No ' . $tour_org_label, 'tour-booking-manager'),
-                'items_list'            => __($tour_org_label . ' list', 'tour-booking-manager'),
-                'items_list_navigation' => __($tour_org_label . ' list navigation', 'tour-booking-manager'),
+                'no_terms'              => __('No Organizer ' , 'tour-booking-manager'),
+                'items_list'            => __( 'Organizer list', 'tour-booking-manager'),
+                'items_list_navigation' => __( 'Organizer list navigation', 'tour-booking-manager'),
             ];
 
             $args_tour_org = [
@@ -92,8 +92,8 @@ if (!class_exists('TTBM_Taxonomy')) {
 
 
             $labels_location = [
-                'name' => _x('Location', 'tour-booking-manager'),
-                'singular_name' => _x('Location', 'tour-booking-manager'),
+                'name' => __('Location', 'tour-booking-manager'),
+                'singular_name' => __('Location', 'tour-booking-manager'),
                 'menu_name' => __('Location', 'tour-booking-manager'),
             ];
             $args_location = [
@@ -112,8 +112,8 @@ if (!class_exists('TTBM_Taxonomy')) {
             ];
             register_taxonomy('ttbm_tour_location', 'ttbm_tour', $args_location);
             $labels_feature = [
-                'name' => _x('Features List', 'tour-booking-manager'),
-                'singular_name' => _x('Features List', 'tour-booking-manager'),
+                'name' => __('Features List', 'tour-booking-manager'),
+                'singular_name' => __('Features List', 'tour-booking-manager'),
                 'menu_name' => __('Features List', 'tour-booking-manager'),
             ];
             $args_feature = [
@@ -132,17 +132,17 @@ if (!class_exists('TTBM_Taxonomy')) {
             ];
             register_taxonomy('ttbm_tour_features_list', 'ttbm_tour', $args_feature);
             $labels_tags = [
-                'name' => _x('Tags', 'tour-booking-manager'),
-                'singular_name' => _x('Tags', 'tour-booking-manager'),
-                'search_items' => __('Search Tags'),
-                'all_items' => __('All Tags'),
-                'parent_item' => __('Parent Tag'),
-                'parent_item_colon' => __('Parent Tag:'),
-                'edit_item' => __('Edit Tag'),
-                'update_item' => __('Update Tag'),
-                'add_new_item' => __('Add New Tag'),
-                'new_item_name' => __('New Tag Name'),
-                'menu_name' => __('Tags'),
+                'name' => __('Tags', 'tour-booking-manager'),
+                'singular_name' => __('Tags', 'tour-booking-manager'),
+                'search_items' => __('Search Tags', 'tour-booking-manager'),
+                'all_items' => __('All Tags', 'tour-booking-manager'),
+                'parent_item' => __('Parent Tag', 'tour-booking-manager'),
+                'parent_item_colon' => __('Parent Tag:', 'tour-booking-manager'),
+                'edit_item' => __('Edit Tag', 'tour-booking-manager'),
+                'update_item' => __('Update Tag', 'tour-booking-manager'),
+                'add_new_item' => __('Add New Tag', 'tour-booking-manager'),
+                'new_item_name' => __('New Tag Name', 'tour-booking-manager'),
+                'menu_name' => __('Tags', 'tour-booking-manager'),
             ];
             register_taxonomy('ttbm_tour_tag', ['ttbm_tour'], [
                 'hierarchical'  => false,
@@ -157,15 +157,15 @@ if (!class_exists('TTBM_Taxonomy')) {
             $labels = [
                 'name' => esc_html__('Activities Type', 'tour-booking-manager'),
                 'singular_name' => esc_html__('Activities Type', 'tour-booking-manager'),
-                'search_items' => __('Search Activities Type'),
-                'all_items' => __('All Activities Type'),
-                'parent_item' => __('Parent Activities Type'),
-                'parent_item_colon' => __('Parent Activities Type:'),
+                'search_items' => __('Search Activities Type', 'tour-booking-manager'),
+                'all_items' => __('All Activities Type', 'tour-booking-manager'),
+                'parent_item' => __('Parent Activities Type', 'tour-booking-manager'),
+                'parent_item_colon' => __('Parent Activities Type:', 'tour-booking-manager'),
                 
-                'edit_item' => __('Edit Activities Type'),
-                'update_item' => __('Update Activities Type'),
-                'add_new_item' => __('Add New Activities Type'),
-                'new_item_name' => __('New Activities Type Name'),
+                'edit_item' => __('Edit Activities Type', 'tour-booking-manager'),
+                'update_item' => __('Update Activities Type', 'tour-booking-manager'),
+                'add_new_item' => __('Add New Activities Type', 'tour-booking-manager'),
+                'new_item_name' => __('New Activities Type Name', 'tour-booking-manager'),
                 'menu_name' => esc_html__('Activities Type', 'tour-booking-manager'),
             ];
             register_taxonomy('ttbm_tour_activities', ['ttbm_tour'], [

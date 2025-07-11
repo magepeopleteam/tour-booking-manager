@@ -17,11 +17,10 @@
 					<?php
 					foreach ( $activities_terms as $activity ) {
 						if ( in_array( $activity->term_id, $tour_activities_array ) ) {
-							$icon = $icon ?: 'fa fa-check';
 							?>
 							<li class="ttbm-items">
-								<i class="<?php esc_attr_e( $icon ); ?>"></i>
-								<?php esc_html_e( $activity->name ); ?>
+								<i class="fa fa-check"></i>
+								<?php echo esc_html( $activity->name ); ?>
 							</li>
 							<?php
 						}

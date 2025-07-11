@@ -35,7 +35,7 @@
 					'featured_image' => $tour_label . ' ' . esc_html__(' Feature Image', 'tour-booking-manager'),
 					'set_featured_image' => esc_html__('Set ', 'tour-booking-manager') . ' ' . $tour_label . ' ' . esc_html__(' featured image', 'tour-booking-manager'),
 					'remove_featured_image' => esc_html__('Remove ', 'tour-booking-manager') . ' ' . $tour_label . ' ' . esc_html__(' featured image', 'tour-booking-manager'),
-					'use_featured_image' => esc_html__('Use as ' . $tour_label . ' featured image', 'tour-booking-manager') . ' ' . $tour_label . ' ' . esc_html__(' featured image', 'tour-booking-manager'),
+					'use_featured_image' => esc_html__('Use as Tour featured image', 'tour-booking-manager') . ' ' . $tour_label . ' ' . esc_html__(' featured image', 'tour-booking-manager'),
 					'insert_into_item' => esc_html__('Insert into ', 'tour-booking-manager') . ' ' . $tour_label,
 					'uploaded_to_this_item' => esc_html__('Uploaded to this ', 'tour-booking-manager') . ' ' . $tour_label,
 					'items_list' => $tour_label . ' ' . esc_html__(' list', 'tour-booking-manager'),
@@ -92,8 +92,8 @@
 
                 register_post_type('ttbm_hotel_booking', array(
                     'labels' => array(
-                        'name' => __('Hotel Bookings'),
-                        'singular_name' => __('Hotel Booking'),
+                        'name' => __('Hotel Bookings','tour-booking-manager'),
+                        'singular_name' => __('Hotel Booking','tour-booking-manager'),
                     ),
                     'public' => true,
                     'has_archive' => true,
@@ -119,7 +119,7 @@
 				$ttbm_travel_type = TTBM_Global_Function::get_post_info($post_id, 'ttbm_travel_type');
 				switch ($column) {
 					case 'ttbm_location' :
-						echo TTBM_Function::get_full_location($post_id);
+						echo esc_html(TTBM_Function::get_full_location($post_id));
 						break;
 					case 'ttbm_status' :
 						echo 'status';
@@ -138,7 +138,7 @@
 						break;
 					case 'ttbm_end_date' :
 						if ($ttbm_travel_type == 'fixed') {
-							echo TTBM_Global_Function::date_format(TTBM_Function::get_reg_end_date($post_id));
+							echo esc_html(TTBM_Global_Function::date_format(TTBM_Function::get_reg_end_date($post_id)));
 						}
 						break;
 				}

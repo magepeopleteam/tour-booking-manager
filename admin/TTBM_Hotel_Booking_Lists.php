@@ -470,7 +470,7 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                                         if( $count < 3){
                                         ?>
                                         <span class="ttbm-hotel-list-feature-tag <?php echo esc_attr( $tag_color[$count] );?>">
-                                            <i class=" <?php esc_attr_e( $icon )?>"></i>
+                                            <i class=" <?php echo esc_attr( $icon )?>"></i>
                                             <?php echo esc_html( $service ); ?>
                                         </span>
                                     <?php }

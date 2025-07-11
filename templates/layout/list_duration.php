@@ -15,21 +15,21 @@
 				if ( $duration && $duration > 1 ) {
 					echo esc_html( $duration ) . ' ';
 					if ($duration_type == 'day' ) {
-						esc_html_e( 'Days ', 'tour-booking-manager' );
+						echo esc_html__( 'Days ', 'tour-booking-manager' );
 					}elseif( $duration_type == 'min' ){
-						esc_html_e( 'Minutes ', 'tour-booking-manager' );
+						echo esc_html__( 'Minutes ', 'tour-booking-manager' );
 					} else {
-						esc_html_e( 'Hours ', 'tour-booking-manager' );
+						echo esc_html__( 'Hours ', 'tour-booking-manager' );
 					}
 				}
 				else if ( $duration && $duration <= 1 ) {
 					echo esc_html( $duration ) . ' ';
 					if ( $duration_type == 'day' ) {
-						esc_html_e( 'Day ', 'tour-booking-manager' );
+						echo esc_html__( 'Day ', 'tour-booking-manager' );
 					} elseif( $duration_type== 'min' ){
-						esc_html_e( 'Minute ', 'tour-booking-manager' );
+						echo esc_html__( 'Minute ', 'tour-booking-manager' );
 					}else {
-						esc_html_e( 'Hour ', 'tour-booking-manager' );
+						echo esc_html__( 'Hour ', 'tour-booking-manager' );
 					}
 				}
 				if ( TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_duration_night', 'off' ) != 'off' ) {

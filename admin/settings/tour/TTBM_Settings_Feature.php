@@ -87,7 +87,7 @@
 								<input type="checkbox" <?php echo TTBM_Function::check_exit_feature($features, $feature_list->name) ? 'checked' : ''; ?> data-checked="<?php echo esc_attr($feature_list->term_id); ?>"/> 
 								<span class="customCheckbox">
 									<i class="<?php echo esc_attr($icon); ?>"></i>
-									<?php esc_html_e($feature_list->name); ?>
+									<?php echo esc_html($feature_list->name); ?>
 								</span>
 							</label>
 						<?php } ?>

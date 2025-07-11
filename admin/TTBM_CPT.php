@@ -18,29 +18,52 @@
 					'singular_name' => $tour_label,
 					'menu_name' => $tour_label,
 					'name_admin_bar' => $tour_label,
-					'archives' => $tour_label . ' ' . esc_html__(' List', 'tour-booking-manager'),
-					'attributes' => $tour_label . ' ' . esc_html__(' List', 'tour-booking-manager'),
-					'parent_item_colon' => $tour_label . ' ' . esc_html__(' Item:', 'tour-booking-manager'),
-					'all_items' => esc_html__('All ', 'tour-booking-manager') . ' ' . $tour_label,
-					'add_new_item' => esc_html__('Add New ', 'tour-booking-manager') . ' ' . $tour_label,
-					'add_new' => esc_html__('Add New ', 'tour-booking-manager') . ' ' . $tour_label,
-					'new_item' => esc_html__('New ', 'tour-booking-manager') . ' ' . $tour_label,
-					'edit_item' => esc_html__('Edit ', 'tour-booking-manager') . ' ' . $tour_label,
-					'update_item' => esc_html__('Update ', 'tour-booking-manager') . ' ' . $tour_label,
-					'view_item' => esc_html__('View ', 'tour-booking-manager') . ' ' . $tour_label,
-					'view_items' => esc_html__('View ', 'tour-booking-manager') . ' ' . $tour_label,
-					'search_items' => esc_html__('Search ', 'tour-booking-manager') . ' ' . $tour_label,
-					'not_found' => $tour_label . ' ' . esc_html__(' Not found', 'tour-booking-manager'),
-					'not_found_in_trash' => $tour_label . ' ' . esc_html__(' Not found in Trash', 'tour-booking-manager'),
-					'featured_image' => $tour_label . ' ' . esc_html__(' Feature Image', 'tour-booking-manager'),
-					'set_featured_image' => esc_html__('Set ', 'tour-booking-manager') . ' ' . $tour_label . ' ' . esc_html__(' featured image', 'tour-booking-manager'),
-					'remove_featured_image' => esc_html__('Remove ', 'tour-booking-manager') . ' ' . $tour_label . ' ' . esc_html__(' featured image', 'tour-booking-manager'),
-					'use_featured_image' => esc_html__('Use as ' . $tour_label . ' featured image', 'tour-booking-manager') . ' ' . $tour_label . ' ' . esc_html__(' featured image', 'tour-booking-manager'),
-					'insert_into_item' => esc_html__('Insert into ', 'tour-booking-manager') . ' ' . $tour_label,
-					'uploaded_to_this_item' => esc_html__('Uploaded to this ', 'tour-booking-manager') . ' ' . $tour_label,
-					'items_list' => $tour_label . ' ' . esc_html__(' list', 'tour-booking-manager'),
-					'items_list_navigation' => $tour_label . ' ' . esc_html__(' list navigation', 'tour-booking-manager'),
-					'filter_items_list' => esc_html__('Filter ', 'tour-booking-manager') . ' ' . $tour_label . ' ' . esc_html__(' list', 'tour-booking-manager')
+					// translators: %1$s is the tour label
+					'archives' => sprintf( esc_html__( '%1$s List', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'attributes' => sprintf( esc_html__( '%1$s List', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'parent_item_colon' => sprintf( esc_html__( '%1$s Item:', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'all_items' => sprintf( esc_html__( 'All %1$s', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'add_new_item' => sprintf( esc_html__( 'Add New %1$s', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'add_new' => sprintf( esc_html__( 'Add New %1$s', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'new_item' => sprintf( esc_html__( 'New %1$s', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'edit_item' => sprintf( esc_html__( 'Edit %1$s', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'update_item' => sprintf( esc_html__( 'Update %1$s', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'view_item' => sprintf( esc_html__( 'View %1$s', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'view_items' => sprintf( esc_html__( 'View %1$s', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'search_items' => sprintf( esc_html__( 'Search %1$s', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'not_found' => sprintf( esc_html__( '%1$s not found', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'not_found_in_trash' => sprintf( esc_html__( '%1$s not found in Trash', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'featured_image' => sprintf( esc_html__( '%1$s Feature Image', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'set_featured_image' => sprintf( esc_html__( 'Set %1$s featured image', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'remove_featured_image' => sprintf( esc_html__( 'Remove %1$s featured image', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'use_featured_image' => sprintf( esc_html__( 'Use as %1$s featured image', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'insert_into_item' => sprintf( esc_html__( 'Insert into %1$s', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'uploaded_to_this_item' => sprintf( esc_html__( 'Uploaded to this %1$s', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'items_list' => sprintf( esc_html__( '%1$s list', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'items_list_navigation' => sprintf( esc_html__( '%1$s list navigation', 'tour-booking-manager' ), $tour_label ),
+					// translators: %1$s is the tour label
+					'filter_items_list' => sprintf( esc_html__( 'Filter %1$s list', 'tour-booking-manager' ), $tour_label ),
 				];
 				$args = [
 					'public' => true,
@@ -92,8 +115,8 @@
 
                 register_post_type('ttbm_hotel_booking', array(
                     'labels' => array(
-                        'name' => __('Hotel Bookings'),
-                        'singular_name' => __('Hotel Booking'),
+                        'name' => __('Hotel Bookings', 'tour-booking-manager'),
+                        'singular_name' => __('Hotel Booking', 'tour-booking-manager'),
                     ),
                     'public' => true,
                     'has_archive' => true,

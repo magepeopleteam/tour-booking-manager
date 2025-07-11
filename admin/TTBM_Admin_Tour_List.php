@@ -280,7 +280,7 @@
                     }
                     wp_reset_postdata();
                 } else {
-                    echo '<p>' . esc_html__('No tours found.', 'your-textdomain') . '</p>';
+                    echo '<p>' . esc_html__('No tours found.', 'tour-booking-manager') . '</p>';
                 }
             }
 

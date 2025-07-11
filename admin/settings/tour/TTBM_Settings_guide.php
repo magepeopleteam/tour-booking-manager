@@ -68,7 +68,7 @@
                             </label>
                             <label class="label">
                                 <div>
-                                    <p><?php esc_html_e('Select ', 'tour-booking-manager').'  '.$ttbm_label.'  '.esc_html_e('guide', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_tour_guide'); ?></span></i></p>
+                                    <p><?php echo esc_html__('Select ', 'tour-booking-manager').'  '.esc_html($ttbm_label).'  '.esc_html__('guide', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_tour_guide'); ?></span></i></p>
                                 </div>
                                 <div style="max-width: 70%;">
                                     <select name="ttbm_tour_guide[]" multiple='multiple' class='ttbm_select2 w-50' data-placeholder="<?php echo esc_html__('Please Select Guide', 'tour-booking-manager'); ?>">

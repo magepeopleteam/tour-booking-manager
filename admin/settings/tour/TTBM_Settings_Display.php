@@ -70,7 +70,7 @@
 								</div>
 								<label class="label">
 									<div>
-										<p><?php esc_html_e('Get Enquiry', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Enable/Disable Get Enquiry Button in frontend'); ?></span></i></p>
+										<p><?php esc_html_e('Get Enquiry', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Enable/Disable Get Enquiry Button in frontend', 'tour-booking-manager'); ?></span></i></p>
 									</div>
 									<?php TTBM_Custom_Layout::switch_button('ttbm_display_enquiry', $enquiry_checked); ?>
 								</label>

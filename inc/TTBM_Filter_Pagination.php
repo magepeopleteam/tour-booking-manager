@@ -364,7 +364,7 @@
                                             <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($duration); ?>" <?php echo esc_attr($checked); ?>/>
                                             <span class="customCheckbox">
 
-											<?php esc_html_e($duration); ?>&nbsp;
+											<?php echo esc_html($duration); ?>&nbsp;
 
 											<?php if ($duration == 1) {
 												esc_html_e('Day Tour', 'tour-booking-manager');
@@ -411,7 +411,7 @@
 									$icon = $term_id ? (get_term_meta($term_id, 'ttbm_feature_icon', true) ? get_term_meta($term_id, 'ttbm_feature_icon', true) : 'fas fa-forward') : 'fas fa-forward'; ?>
                                     <label class="customCheckboxLabel">
                                         <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($term_id); ?>"/>
-                                        <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php esc_html_e($feature_item); ?></span>
+                                        <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php echo esc_html($feature_item); ?></span>
                                     </label>
 								<?php } ?>
                             </div>
@@ -472,7 +472,7 @@
 									?>
                                     <label class="customCheckboxLabel">
                                         <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($term_id); ?>" <?php echo esc_attr($checked); ?>/>
-                                        <span class="customCheckbox"><?php esc_html_e($activity); ?></span>
+                                        <span class="customCheckbox"><?php echo esc_html($activity); ?></span>
                                     </label>
 								<?php } ?>
                             </div>
@@ -505,7 +505,7 @@
 									if (get_term($tag->term_id, 'ttbm_tour_tag')->count) { ?>
                                         <label class="customCheckboxLabel">
                                             <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($tag->term_id); ?>"/>
-                                            <span class="customCheckbox"><?php esc_html_e($tag->name); ?></span>
+                                            <span class="customCheckbox"><?php echo esc_html($tag->name); ?></span>
                                         </label>
 									<?php }
 								} ?>

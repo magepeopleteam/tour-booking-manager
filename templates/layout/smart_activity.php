@@ -20,8 +20,8 @@
 							$icon = $icon ?: 'fa fa-check';
 							?>
 							<li class="ttbm-items">
-								<i class="<?php esc_attr_e( $icon ); ?>"></i>
-								<?php esc_html_e( $activity->name ); ?>
+								<i class="<?php echo esc_attr( $icon ); ?>"></i>
+								<?php echo esc_html( $activity->name ); ?>
 							</li>
 							<?php
 						}

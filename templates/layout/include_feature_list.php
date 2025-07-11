@@ -22,7 +22,7 @@
 						if ($key < 3 || $list_view_task):
 							?>
                             <li title="<?php echo esc_attr($term->name); ?>">
-                                <span class="circleIcon_xs <?php esc_attr_e($icon); ?>"></span>
+                                <span class="circleIcon_xs <?php echo esc_attr($icon); ?>"></span>
 								<?php echo esc_html($term_name); ?>
                             </li>
 						<?php

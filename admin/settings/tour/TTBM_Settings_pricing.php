@@ -122,7 +122,7 @@
                                         </th>
                                         <th>
 											<?php esc_html_e("Reserve Qty", "tour-booking-manager"); ?>
-											<i class="fas fa-question-circle tool-tips"><span><?php esc_html_e( 'Add Reserve quantity', 'ttbm-pro' ); ?></span></i>
+											<i class="fas fa-question-circle tool-tips"><span><?php esc_html_e( 'Add Reserve quantity', 'tour-booking-manager' ); ?></span></i>
                                         </th>
 										<?php do_action('ttbm_ticket_type_headeing_end', $tour_id); ?>
                                         <th><?php esc_html_e('Qty Box Type', 'tour-booking-manager'); ?></th>

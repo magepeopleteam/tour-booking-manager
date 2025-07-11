@@ -26,7 +26,7 @@
 			'taxonomy'   => $tax,
 			'hide_empty' => false,
 		) );
-		$list  = array( '0' => __( 'Show All', '' ) );
+		$list  = array( '0' => __( 'Show All', 'tour-booking-manager' ) );
 		foreach ( $terms as $_term ) {
 			if ( $type == 'id' ) {
 				$list[ $_term->term_id ] = $_term->name;

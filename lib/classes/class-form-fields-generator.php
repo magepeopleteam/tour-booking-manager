@@ -4568,7 +4568,7 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
                             ?>
                             <div class="format" datavalue="<?php echo esc_attr($item); ?>">
                                 <label><input type="radio" <?php echo esc_attr($checked); ?> name="preset_<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($item); ?>">
-                                    <span class="name"><?php echo date($item); ?></span></label>
+                                    <span class="name"><?php echo gmdate($item); ?></span></label>
                                 <span class="format"><code><?php echo esc_attr($item); ?></code></span>
                             </div>
                         <?php
@@ -4576,7 +4576,7 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
                         ?>
                         <div class="format-value">
                             <span class="format"><input value="<?php echo esc_attr($value); ?>" name="<?php echo esc_attr($field_name); ?>"></span>
-                            <div class="">Preview: <?php echo date($value); ?></div>
+                            <div class="">Preview: <?php echo gmdate($value); ?></div>
                         </div>
                     <?php
                     endif;
@@ -4703,7 +4703,7 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
                             $checked = ($item == $value) ? 'checked':false;
                             ?>
                             <div class="format" datavalue="<?php echo esc_attr($item); ?>">
-                                <label><input type="radio" <?php echo esc_attr($checked); ?> name="preset_<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($item); ?>"><span class="name"><?php echo date($item); ?></span></label>
+                                <label><input type="radio" <?php echo esc_attr($checked); ?> name="preset_<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($item); ?>"><span class="name"><?php echo gmdate($item); ?></span></label>
                                 <span class="format"><code><?php echo esc_html($item); ?></code></span>
                             </div>
                             <?php
@@ -4711,7 +4711,7 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
                         ?>
                         <div class="format-value">
                             <span class="format"><input value="<?php echo esc_attr($value); ?>" name="<?php echo esc_attr($field_name); ?>"></span>
-                            <div class="">Preview: <?php echo date($value); ?></div>
+                            <div class="">Preview: <?php echo gmdate($value); ?></div>
                         </div>
                     <?php
                     endif;

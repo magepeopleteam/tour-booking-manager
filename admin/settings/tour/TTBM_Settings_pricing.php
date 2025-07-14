@@ -281,7 +281,7 @@
 					//*********Regular Ticket Price**************//
 					$ttbm_travel_type = TTBM_Function::get_travel_type($tour_id);
 					if ($ttbm_travel_type == 'particular') {
-						$after_day = date('Y-m-d', strtotime(' +500 day'));
+						$after_day = gmdate('Y-m-d', strtotime(' +500 day'));
 						update_post_meta($tour_id, 'ttbm_travel_reg_end_date', $after_day);
 					} elseif ($ttbm_travel_type == 'repeated') {
 						update_post_meta($tour_id, 'ttbm_travel_reg_end_date', TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_date'));

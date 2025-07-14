@@ -331,8 +331,8 @@
 									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
 									//date_settings
 									'ttbm_travel_type' => 'fixed',
-									'ttbm_travel_start_date' => date('Y-m-d', strtotime(' +25 day')),
-									'ttbm_travel_reg_end_date' => date('Y-m-d', strtotime(' +30 day')),
+									'ttbm_travel_start_date' => gmdate('Y-m-d', strtotime(' +25 day')),
+									'ttbm_travel_reg_end_date' => gmdate('Y-m-d', strtotime(' +30 day')),
 									//price_settings
 									'ttbm_display_registration' => 'on',
 									'ttbm_display_advance' => 'off',
@@ -484,8 +484,8 @@
 									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
 									//date_settings
 									'ttbm_travel_type' => 'fixed',
-									'ttbm_travel_start_date' => date('Y-m-d', strtotime(' +35 day')),
-									'ttbm_travel_reg_end_date' => date('Y-m-d', strtotime(' +36 day')),
+									'ttbm_travel_start_date' => gmdate('Y-m-d', strtotime(' +35 day')),
+									'ttbm_travel_reg_end_date' => gmdate('Y-m-d', strtotime(' +36 day')),
 									//price_settings
 									'ttbm_display_registration' => 'on',
 									'ttbm_display_advance' => 'off',
@@ -640,8 +640,8 @@
 									//date_settings
 									'ttbm_travel_type' => 'repeated',
 									'ttbm_travel_repeated_after' => '4',
-									'ttbm_travel_repeated_start_date' => date('Y-m-d', strtotime(' +15 day')),
-									'ttbm_travel_repeated_end_date' => date('Y-m-d', strtotime(' +365 day')),
+									'ttbm_travel_repeated_start_date' => gmdate('Y-m-d', strtotime(' +15 day')),
+									'ttbm_travel_repeated_end_date' => gmdate('Y-m-d', strtotime(' +365 day')),
 									//price_settings
 									'ttbm_display_registration' => 'on',
 									'ttbm_display_advance' => 'off',
@@ -796,8 +796,8 @@
 									//date_settings
 									'ttbm_travel_type' => 'repeated',
 									'ttbm_travel_repeated_after' => '7',
-									'ttbm_travel_repeated_start_date' => date('Y-m-d', strtotime(' +25 day')),
-									'ttbm_travel_repeated_end_date' => date('Y-m-d', strtotime(' +365 day')),
+									'ttbm_travel_repeated_start_date' => gmdate('Y-m-d', strtotime(' +25 day')),
+									'ttbm_travel_repeated_end_date' => gmdate('Y-m-d', strtotime(' +365 day')),
 									//price_settings
 									'ttbm_display_registration' => 'on',
 									'ttbm_display_advance' => 'off',
@@ -952,8 +952,8 @@
 									//date_settings
 									'ttbm_travel_type' => 'repeated',
 									'ttbm_travel_repeated_after' => '15',
-									'ttbm_travel_repeated_start_date' => date('Y-m-d', strtotime(' +35 day')),
-									'ttbm_travel_repeated_end_date' => date('Y-m-d', strtotime(' +365 day')),
+									'ttbm_travel_repeated_start_date' => gmdate('Y-m-d', strtotime(' +35 day')),
+									'ttbm_travel_repeated_end_date' => gmdate('Y-m-d', strtotime(' +365 day')),
 									//price_settings
 									'ttbm_display_registration' => 'on',
 									'ttbm_display_advance' => 'off',

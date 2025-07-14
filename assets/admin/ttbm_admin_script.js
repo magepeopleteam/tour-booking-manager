@@ -127,7 +127,7 @@
         if (name && image) {
             $.ajax({
                 type: 'POST', url: ttbm_ajax_url, data: {
-                    "action": "ttbm_new_location_save", "name": name, "description": description, "address": address, "country": country, "image": image, "_wp_nonce": parent.find('[name="ttbm_add_new_location_popup"]').val(),
+                    "action": "ttbm_new_location_save", "name": name, "description": description, "address": address, "country": country, "image": image, "_wp_nonce": parent.find('[name="ttbm_add_new_location_popup"]').val(),nonce: ttbm_admin_ajax.nonce
                 }, beforeSend: function () {
                     dLoader(parent);
                 }, success: function () {
@@ -156,7 +156,7 @@
         let parent = $('.ttbm_location_select_area');
         $.ajax({
             type: 'POST', url: ttbm_ajax_url, data: {
-                "action": "ttbm_reload_location_list", "ttbm_id": ttbm_id
+                "action": "ttbm_reload_location_list", "ttbm_id": ttbm_id,nonce: ttbm_admin_ajax.nonce
             }, beforeSend: function () {
                 dLoader(parent);
             }, success: function (data) {
@@ -234,7 +234,6 @@
                     parent.find('.ttbm_success_info').slideDown('fast');
                     console.log("Included Features Array: ", includedFeaturesArray);
                     console.log("Excluded Features Array: ", excludedFeaturesArray);
-                    //ttbm_reload_feature_list(includedFeaturesArray, excludedFeaturesArray);
                     reload_features();
                     dLoaderRemove(parent);
                     if (($this).hasClass('ttbm_new_feature_save_close')) {
@@ -257,7 +256,7 @@
             url: ttbm_ajax_url,
             data: {
                 "action": "ttbm_reload_feature_list",
-                "ttbm_id": ttbm_id
+                "ttbm_id": ttbm_id,nonce: ttbm_admin_ajax.nonce
             },
             beforeSend: function () {
                 dLoader(parent);
@@ -274,46 +273,6 @@
                     window.location.href = window.location.href + '#ttbm_settings_feature';
                 }
                 window.location.reload();
-            },
-            error: function (response) {
-                console.log(response);
-            }
-        });
-    }
-    function ttbm_reload_feature_list(includedFeaturesArray, excludedFeaturesArray) {
-        let ttbm_id = $('[name="post_ID"]').val();
-        let parent = $('.ttbm_features_table');
-        $.ajax({
-            type: 'POST',
-            url: ttbm_ajax_url,
-            data: {
-                "action": "ttbm_reload_feature_list",
-                "ttbm_id": ttbm_id
-            },
-            beforeSend: function () {
-                dLoader(parent);
-            },
-            success: function (data) {
-                parent.empty().append(data);
-                console.log("Reloaded feature list");
-                // After reloading, reapply the checkbox states
-                $('[name="ttbm_service_included_in_price"]').each(function () {
-                    let feature = $(this).val();
-                    console.log("Checking included feature:", feature);
-                    if (includedFeaturesArray.includes(feature)) {
-                        $(this).prop('checked', true);
-                        console.log("Included feature checked:", feature);
-                    }
-                });
-                $('[name="ttbm_service_excluded_in_price"]').each(function () {
-                    let feature = $(this).val();
-                    console.log("Checking excluded feature:", feature);
-                    if (excludedFeaturesArray.includes(feature)) {
-                        $(this).prop('checked', true);
-                        console.log("Excluded feature checked:", feature);
-                    }
-                });
-                return true;
             },
             error: function (response) {
                 console.log(response);
@@ -408,7 +367,7 @@
             url: ttbm_ajax_url,
             data: {
                 "action": "ttbm_reload_activity_list",
-                "ttbm_id": ttbm_id
+                "ttbm_id": ttbm_id,nonce: ttbm_admin_ajax.nonce
             },
             beforeSend: function () {
                 dLoader(parent);
@@ -457,7 +416,7 @@
         let parent = $('.ttbm_place_you_see_table');
         $.ajax({
             type: 'POST', url: ttbm_ajax_url, data: {
-                "action": "ttbm_reload_place_you_see_list", "ttbm_id": ttbm_id
+                "action": "ttbm_reload_place_you_see_list", "ttbm_id": ttbm_id,nonce: ttbm_admin_ajax.nonce
             }, beforeSend: function () {
                 dLoader(parent);
             }, success: function (data) {
@@ -896,7 +855,7 @@
             data: {
                 action: 'ttbm_search_tours',
                 search_term: search,
-                wpnonce: nonce,
+                nonce: ttbm_admin_ajax.nonce
             },
             beforeSend: function() {
                 $('.ttbm-tour-list').text('Loading...');

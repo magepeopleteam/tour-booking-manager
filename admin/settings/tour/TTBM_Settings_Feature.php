@@ -146,14 +146,13 @@
 				<?php
 				die();
 			}
-			// public function ttbm_reload_feature_list() {
-			// 	$ttbm_id = TTBM_Global_Function::data_sanitize($_POST['ttbm_id']);
-			// 	$this->feature($ttbm_id);
-			// 	die();
-			// }
 			public function ttbm_reload_feature_list()
 			{
-				$ttbm_id = TTBM_Global_Function::data_sanitize($_POST['ttbm_id']);
+				if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field(wp_unslash($_POST['nonce'] )), 'ttbm_admin_nonce' ) ) {
+					wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
+					die;
+				}
+				$ttbm_id = isset($_POST['ttbm_id']) ? sanitize_text_field(wp_unslash($_POST['ttbm_id'])) : 0;
 
 				// Load the included and excluded features sections
 				ob_start();
@@ -193,12 +192,14 @@
 				if (!current_user_can('manage_options')) {
 					wp_send_json_error('You do not have sufficient permissions to perform this action.');
 				}
-				if (!isset($_POST['_wp_nonce']) || !wp_verify_nonce($_POST['_wp_nonce'], 'ttbm_add_new_feature_popup')) {
+				if (!isset($_POST['_wp_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wp_nonce'])), 'ttbm_add_new_feature_popup')) {
 					die();
 				}
-				$feature_name = TTBM_Global_Function::data_sanitize($_POST['feature_name']);
-				$feature_description = TTBM_Global_Function::data_sanitize($_POST['feature_description']);
-				$feature_icon = TTBM_Global_Function::data_sanitize($_POST['feature_icon']);
+				$feature_name = isset($_POST['feature_name']) ?sanitize_text_field(wp_unslash($_POST['feature_name'])):'';
+				$feature_description = isset($_POST['feature_description']) ?sanitize_text_field(wp_unslash($_POST['feature_description'])):'';
+				$feature_icon = isset($_POST['feature_icon']) ?sanitize_text_field(wp_unslash($_POST['feature_icon'])):'';
+
+
 				$query = wp_insert_term($feature_name,   // the term
 					'ttbm_tour_features_list', // the taxonomy
 					array('description' => $feature_description));

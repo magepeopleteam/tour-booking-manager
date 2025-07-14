@@ -220,7 +220,11 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 			die();
 		}
 		public function ttbm_reload_location_list() {
-			$ttbm_id = TTBM_Global_Function::data_sanitize($_POST['ttbm_id']);
+			if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field(wp_unslash($_POST['nonce'] )), 'ttbm_admin_nonce' ) ) {
+				wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
+				die;
+			}
+			$ttbm_id = isset($_POST['ttbm_id']) ? sanitize_text_field(wp_unslash($_POST['ttbm_id'])) : 0;
 			self::location_select($ttbm_id);
 			die();
 		}
@@ -340,11 +344,15 @@ if ( ! class_exists( 'TTBM_Settings_Location' ) ){
 				}
 			}
 			public function ttbm_new_location_save() {
-				$name = TTBM_Global_Function::data_sanitize($_POST['name']);
-				$description = TTBM_Global_Function::data_sanitize($_POST['description']);
-				$address = TTBM_Global_Function::data_sanitize($_POST['address']);
-				$country = TTBM_Global_Function::data_sanitize($_POST['country']);
-				$image = TTBM_Global_Function::data_sanitize($_POST['image']);
+				if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field(wp_unslash($_POST['nonce'] )), 'ttbm_admin_nonce' ) ) {
+					wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
+					die;
+				}
+				$name = isset($_POST['name']) ?sanitize_text_field(wp_unslash($_POST['name'])):'';
+				$description = isset($_POST['description']) ?sanitize_text_field(wp_unslash($_POST['description'])):'';
+				$address = isset($_POST['address']) ?sanitize_text_field(wp_unslash($_POST['address'])):'';
+				$country = isset($_POST['country']) ?sanitize_text_field(wp_unslash($_POST['country'])):'';
+				$image = isset($_POST['image']) ?sanitize_text_field(wp_unslash($_POST['image'])):'';
 				$query = wp_insert_term($name,   // the term
 					'ttbm_tour_location', // the taxonomy
 					array('description' => $description));

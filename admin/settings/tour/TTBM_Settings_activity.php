@@ -13,7 +13,6 @@
 				add_action('wp_ajax_ttbm_reload_activity_list', [$this, 'ttbm_reload_activity_list']);
 				add_action('wp_ajax_nopriv_ttbm_reload_activity_list', [$this, 'ttbm_reload_activity_list']);
 				//******************//
-				add_action('ttbm_settings_save', [$this, 'save_activities']);
 				add_action('wp_ajax_ttbm_new_activity_save', [$this, 'ttbm_new_activity_save']);
 				add_action('wp_ajax_nopriv_ttbm_new_activity_save', [$this, 'ttbm_new_activity_save']);
 			}
@@ -128,32 +127,25 @@
 				die();
 			}
 			public function ttbm_reload_activity_list() {
-				$ttbm_id = isset($_POST['ttbm_id']) ? TTBM_Global_Function::data_sanitize($_POST['ttbm_id']) : 0;
+				if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field(wp_unslash($_POST['nonce'] )), 'ttbm_admin_nonce' ) ) {
+					wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
+					die;
+				}
+				$ttbm_id = isset($_POST['ttbm_id']) ? sanitize_text_field(wp_unslash($_POST['ttbm_id'])) : 0;
 				$this->activities($ttbm_id);
 				die();
 			}
-			public function save_activities($tour_id) {
-				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
-					$display_activities = TTBM_Global_Function::get_submit_info('ttbm_display_activities') ? 'on' : 'off';
-					update_post_meta($tour_id, 'ttbm_display_activities', $display_activities);
-					$activities = [];
-					if (!empty($_POST['ttbm_checked_activities_holder'])) {
-						$activities = array_filter(array_map('trim', explode(',', $_POST['ttbm_checked_activities_holder'])));
-					}
-					update_post_meta($tour_id, 'ttbm_tour_activities', $activities);
-				}
-			}
 			public function ttbm_new_activity_save() {
-				if (!isset($_POST['_wp_nonce']) || !wp_verify_nonce($_POST['_wp_nonce'], 'ttbm_add_new_activity_popup')) {
+				if (!isset($_POST['_wp_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wp_nonce'])), 'ttbm_add_new_activity_popup')) {
 					die();
 				}
 				if (!current_user_can('manage_options')) { // Change this capability as needed
 					wp_send_json_error('You do not have permission to perform this action.');
 					wp_die();
 				}
-				$name = TTBM_Global_Function::data_sanitize($_POST['activity_name']);
-				$description = TTBM_Global_Function::data_sanitize($_POST['activity_description']);
-				$icon = TTBM_Global_Function::data_sanitize($_POST['activity_icon']);
+				$name = isset($_POST['activity_name']) ?sanitize_text_field(wp_unslash($_POST['activity_name'])):'';
+				$description = isset($_POST['activity_description']) ?sanitize_text_field(wp_unslash($_POST['activity_description'])):'';
+				$icon = isset($_POST['activity_icon']) ?sanitize_text_field(wp_unslash($_POST['activity_icon'])):'';
 				$query = wp_insert_term($name,   // the term
 					'ttbm_tour_activities', // the taxonomy
 					array('description' => $description));

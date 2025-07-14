@@ -42,7 +42,7 @@
 			public function quick_setup() {
 			
 				$status = TTBM_Global_Function::check_woocommerce();
-				if (isset($_POST['ttbm_quick_setup']) && wp_verify_nonce($_POST['ttbm_quick_setup'], 'ttbm_quick_setup_nonce'))
+				if (isset($_POST['ttbm_quick_setup']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_quick_setup'])), 'ttbm_quick_setup_nonce'))
 				{
 					if (isset($_POST['active_woo_btn'])) {
 						?>
@@ -115,8 +115,8 @@
 						<?php
 					}
 					if (isset($_POST['finish_quick_setup'])) {
-						$label = isset($_POST['ttbm_travel_label']) ? sanitize_text_field($_POST['ttbm_travel_label']) : 'Tour';
-						$slug = isset($_POST['ttbm_travel_slug']) ? sanitize_text_field($_POST['ttbm_travel_slug']) : 'Tour';
+						$label = isset($_POST['ttbm_travel_label']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_label'])) : 'Tour';
+						$slug = isset($_POST['ttbm_travel_slug']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_slug'])) : 'Tour';
 						$general_settings_data = get_option('ttbm_basic_gen_settings');
 						$update_general_settings_arr = [
 							'ttbm_travel_label' => $label,

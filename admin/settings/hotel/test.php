@@ -161,7 +161,8 @@
             data: {
                 action: "get_ttbm_hotel_search_by_title",
                 search_term: search_term,
-                limit: 10 // Adjust the limit as needed
+                limit: 10, // Adjust the limit as needed
+                nonce: ttbm_admin_ajax.nonce,
             },
             success: function( response ) {
 

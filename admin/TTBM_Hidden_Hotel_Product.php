@@ -75,7 +75,7 @@ if (!class_exists('TTBM_Hidden_Hotel_Product')) {
         }
         public function run_link_product_on_save($post_id) {
             if (get_post_type($post_id) == 'ttbm_hotel') {
-                if (!isset($_POST['ttbm_ticket_type_nonce']) || !wp_verify_nonce($_POST['ttbm_ticket_type_nonce'], 'ttbm_ticket_type_nonce')) {
+                if (!isset($_POST['ttbm_ticket_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_ticket_type_nonce'])), 'ttbm_ticket_type_nonce')) {
                     return;
                 }
                 if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {

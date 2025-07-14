@@ -26,7 +26,7 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
         function ttbm_duplicate_post_function() {
             if ( !isset( $_GET['post_id']) || !isset($_GET['_wpnonce']) ||
-                !wp_verify_nonce($_GET['_wpnonce'], 'ttbm_duplicate_post_' . sanitize_text_field( $_GET['post_id'] ) )
+                !wp_verify_nonce(sanitize_text_field( wp_unslash($_GET['_wpnonce'])), 'ttbm_duplicate_post_' . sanitize_text_field( wp_unslash($_GET['post_id'] )) )
             ) {
                 wp_die('Invalid request (missing or invalid nonce).');
             }
@@ -73,10 +73,10 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                 wp_send_json_error(['message' => 'Invalid nonce']);
             }
 
-            $post_name   = sanitize_text_field( wp_unslash( $_POST['post_name'] ) );
-            $post_id   = sanitize_text_field(  wp_unslash( $_POST['post_id'] ) );
-            $description = sanitize_textarea_field(  wp_unslash( $_POST['description'] ) );
-            $thumbnail_id = absint(  wp_unslash( $_POST['thumbnail_id'] ) );
+            $post_name   = isset($_POST['post_name'])?sanitize_text_field( wp_unslash( $_POST['post_name'] ) ):'';
+            $post_id   = isset($_POST['post_id'])?sanitize_text_field(  wp_unslash( $_POST['post_id'] ) ):'';
+            $description = isset($_POST['description'])?sanitize_textarea_field(  wp_unslash( $_POST['description'] ) ):'';
+            $thumbnail_id = isset($_POST['thumbnail_id'])?absint(  wp_unslash( $_POST['thumbnail_id'] ) ):'';
 
             if ( $post_id && get_post($post_id) ) {
                 $update_post = array(
@@ -484,16 +484,16 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             }
 
             $img_url = '';
-            $name = isset( $_POST['name'] ) ? sanitize_text_field($_POST['name']) : '';
-            $slug = isset( $_POST['slug'] ) ? sanitize_title($_POST['slug']) : '';
-            $parent = isset( $_POST['parent'] ) ? absint($_POST['parent']) : '';
-            $desc = isset( $_POST['desc'] ) ? sanitize_textarea_field($_POST['desc']) : '';
-            $address = isset( $_POST['address'] ) ? sanitize_textarea_field($_POST['address']) : '';
-            $country = isset( $_POST['address'] ) ? sanitize_text_field($_POST['country']) : '';
-            $action_type = isset( $_POST['action_type'] ) ? sanitize_text_field($_POST['action_type']) : '';
-            $taxonomy_type =isset( $_POST['taxonomy_type'] ) ? sanitize_text_field($_POST['taxonomy_type']) : '';
-            $icon_name = isset( $_POST['icon'] ) ? sanitize_text_field($_POST['icon']) : '';
-            $imageId = isset( $_POST['imageId'] ) ? absint($_POST['imageId']) : '';
+            $name = isset( $_POST['name'] ) ? sanitize_text_field(wp_unslash($_POST['name'])) : '';
+            $slug = isset( $_POST['slug'] ) ? sanitize_title(wp_unslash($_POST['slug'])) : '';
+            $parent = isset( $_POST['parent'] ) ? absint(wp_unslash($_POST['parent'])) : '';
+            $desc = isset( $_POST['desc'] ) ? sanitize_textarea_field(wp_unslash($_POST['desc'])): '';
+            $address = isset( $_POST['address'] ) ? sanitize_textarea_field(wp_unslash($_POST['address'])) : '';
+            $country = isset( $_POST['country'] ) ? sanitize_text_field(wp_unslash($_POST['country'])) : '';
+            $action_type = isset( $_POST['action_type'] ) ? sanitize_text_field(wp_unslash($_POST['action_type'])) : '';
+            $taxonomy_type =isset( $_POST['taxonomy_type'] ) ? sanitize_text_field(wp_unslash($_POST['taxonomy_type'])) : '';
+            $icon_name = isset( $_POST['icon'] ) ? sanitize_text_field(wp_unslash($_POST['icon'])) : '';
+            $imageId = isset( $_POST['imageId'] ) ? absint(wp_unslash($_POST['imageId'])) : '';
 
             if (empty($name)) {
                 wp_send_json_error(['message' => 'Name is required']);
@@ -585,13 +585,13 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                 wp_send_json_error(['message' => 'Invalid nonce']);
             }
 
-            $term_id = absint($_POST['term_id']);
+            $term_id = isset($_POST['term_id'])?absint(wp_unslash($_POST['term_id'])):'';
             $edit_popup = '';
             $success = false;
 
             if (!is_wp_error( $term_id )) {
                 $button_name = 'Update';
-                $tab_type = $_POST['tab_type'];
+                $tab_type = isset($_POST['tab_type'])?sanitize_text_field( wp_unslash($_POST['tab_type'])):'';
                 $edit_popup = TTBM_Travel_List_Tab_Details::edit_location_popup( $term_id, $button_name, $tab_type );
                 $success = true;
             }
@@ -608,13 +608,13 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                 wp_send_json_error(['message' => 'Invalid nonce']);
             }
 
-            $term_id = absint( sanitize_text_field( $_POST['term_id'] ) );
+	        $term_id = isset($_POST['term_id'])?absint(wp_unslash($_POST['term_id'])):'';
             $success = $result = false;
             $message = 'Something went wrong.';
 
             if (!is_wp_error( $term_id )) {
                 $button_name = 'Update';
-                $tab_type = sanitize_text_field( $_POST['tab_type'] );
+	            $tab_type = isset($_POST['tab_type'])?sanitize_text_field( wp_unslash($_POST['tab_type'])):'';
                 $taxonomy_type= TTBM_Travel_List_Tab_Details::get_taxonomy_type( $tab_type );
 
                 if( $taxonomy_type === 'ttbm_places' ){

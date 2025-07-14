@@ -101,7 +101,7 @@
 			}
 			public function save_ticket_item($tour_id) {
 				if (get_post_type($tour_id) == 'ttbm_ticket_types') {
-					if (!isset($_POST['ttbm_ticket_item_nonce']) || !wp_verify_nonce($_POST['ttbm_ticket_item_nonce'], 'ttbm_ticket_item_nonce')) {
+					if (!isset($_POST['ttbm_ticket_item_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_ticket_item_nonce'])), 'ttbm_ticket_item_nonce')) {
 						return;
 					}
 					if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {

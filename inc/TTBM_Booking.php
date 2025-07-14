@@ -14,6 +14,10 @@
 				add_action( 'ttbm_booking_panel', array( $this, 'booking_panel' ), 10, 4 );
 			}
 			public function get_ttbm_ticket() {
+				if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field(wp_unslash($_POST['nonce'] )), 'ttbm_frontend_nonce' ) ) {
+					wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
+					die;
+				}
 				$tour_id  = isset( $_REQUEST['tour_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tour_id'] ) ) : '';
 				$hotel_id = isset( $_REQUEST['hotel_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['hotel_id'] ) ) : '';
 				$date     = isset( $_REQUEST['tour_date'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tour_date'] ) ) : '';
@@ -25,8 +29,12 @@
 				die();
 			}
 			public function get_ttbm_sold_ticket() {
-				$tour_id = sanitize_text_field( wp_unslash( $_REQUEST['tour_id'] ?? '' ) );
-				$date    = sanitize_text_field( wp_unslash( $_REQUEST['tour_date'] ?? '' ) );
+				if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field(wp_unslash($_POST['nonce'] )), 'ttbm_frontend_nonce' ) ) {
+					wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
+					die;
+				}
+				$tour_id  = isset( $_REQUEST['tour_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tour_id'] ) ) : '';
+				$date     = isset( $_REQUEST['tour_date'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tour_date'] ) ) : '';;
 				$date        = str_replace( '/', '-', $date );
 				$time        = TTBM_Function::get_time( $tour_id, gmdate( 'Y-m-d', strtotime( $date ) ) );
 				$date_format = $time ? 'Y-m-d H:i' : 'Y-m-d';
@@ -35,9 +43,14 @@
 				die();
 			}
 			public function get_ttbm_hotel_room_list() {
-				$tour_id    = sanitize_text_field( wp_unslash( $_REQUEST['tour_id'] ?? '' ) );
-				$hotel_id   = sanitize_text_field( wp_unslash( $_REQUEST['hotel_id'] ?? '' ) );
-				$date_range = sanitize_text_field( wp_unslash( $_REQUEST['date_range'] ?? '' ) );
+				if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field(wp_unslash($_POST['nonce'] )), 'ttbm_frontend_nonce' ) ) {
+					wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
+					die;
+				}
+				$tour_id  = isset( $_REQUEST['tour_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tour_id'] ) ) : '';
+				$hotel_id     = isset( $_REQUEST['hotel_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['hotel_id'] ) ) : '';
+				$date_range     = isset( $_REQUEST['date_range'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_range'] ) ) : '';
+
 				$date       = explode( "    -    ", $date_range );
 				$start_date = gmdate( 'Y-m-d', strtotime( $date[0] ) );
 				do_action( 'ttbm_booking_panel', $tour_id, $start_date, $hotel_id );

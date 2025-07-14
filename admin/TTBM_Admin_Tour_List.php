@@ -25,10 +25,13 @@
             }
 
             public function search_tours_callback(){
-                           
-                $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
-                $post_per_page = isset($_POST['post_per_page']) ? intval($_POST['post_per_page']) : 10;
-                $search = isset($_POST['search_term']) ? sanitize_text_field($_POST['search_term']) : ''; 
+	            if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field(wp_unslash($_POST['nonce'] )), 'ttbm_admin_nonce' ) ) {
+		            wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
+		            die;
+	            }
+                $paged = isset($_POST['paged']) ? intval(wp_unslash($_POST['paged'])) : 1;
+                $post_per_page = isset($_POST['post_per_page']) ? intval(wp_unslash($_POST['post_per_page'])) : 10;
+                $search = isset($_POST['search_term']) ? sanitize_text_field(wp_unslash($_POST['search_term'])) : '';
                 $args = array(
                     'post_type'      => 'ttbm_tour',
 //                    'post_status'    => 'publish',
@@ -285,12 +288,12 @@
             }
 
 			public function ttbm_trash_post() {
-				if ( ! isset( $_REQUEST['nonce'] ) || ! wp_verify_nonce( $_REQUEST['nonce'], 'edd_sample_nonce' ) ) {
+				if ( ! isset( $_REQUEST['nonce'] ) || ! wp_verify_nonce(sanitize_text_field(wp_unslash( $_REQUEST['nonce'])), 'edd_sample_nonce' ) ) {
 					die();
 				}
 				if (current_user_can('administrator')) {
-					if (get_post_type($_REQUEST['post_id']) == TTBM_Function::get_cpt_name()) {
-						$post_id = isset($_REQUEST['post_id']) ? TTBM_Global_Function::data_sanitize($_REQUEST['post_id']) : '';
+					$post_id = isset($_POST['ttbm_id']) ? sanitize_text_field(wp_unslash($_POST['ttbm_id'])) : 0;
+					if (get_post_type($post_id) == TTBM_Function::get_cpt_name()) {
 						if ($post_id > 0) {
 							$args = array('post_type' => array('ttbm_tour'), 'posts_per_page' => -1, 'p' => $post_id, 'post_status' => 'publish');
 							$loop = new WP_Query($args);

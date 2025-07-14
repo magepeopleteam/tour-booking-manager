@@ -159,7 +159,11 @@
 				die();
 			}
 			public function ttbm_reload_place_you_see_list() {
-				$ttbm_id = TTBM_Global_Function::data_sanitize($_POST['ttbm_id']);
+				if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field(wp_unslash($_POST['nonce'] )), 'ttbm_admin_nonce' ) ) {
+					wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
+					die;
+				}
+				$ttbm_id = isset($_POST['ttbm_id']) ? sanitize_text_field(wp_unslash($_POST['ttbm_id'])) : 0;
 				$this->place_you_see($ttbm_id);
 				die();
 			}

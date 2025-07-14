@@ -342,9 +342,9 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                     $booking_days   = get_post_meta(get_the_ID(), '_ttbm_hotel_booking_days', true);
                     $hotel_infos    = get_post_meta(get_the_ID(), '_ttbm_hotel_booking_room_info', true);
                     $check_in       = get_post_meta(get_the_ID(), '_ttbm_hotel_booking_checkin_date', true);
-                    $check_in       = date('F j, Y', strtotime($check_in));
+                    $check_in       = gmdate('F j, Y', strtotime($check_in));
                     $check_out      = get_post_meta(get_the_ID(), '_ttbm_hotel_booking_checkout_date', true);
-                    $check_out      = date('F j, Y', strtotime($check_out));
+                    $check_out      = gmdate('F j, Y', strtotime($check_out));
                     $order_date     = get_the_date('F j, Y');
                     $order_status   = get_post_meta(get_the_ID(), '_ttbm_hotel_booking_status', true);
                     $paid_amount    = get_post_meta(get_the_ID(), '_ttbm_hotel_booking_price', true);

@@ -1,14 +1,14 @@
 <?php
 	/**
-	 * Plugin Name: Travel Booking Plugin | Tour & Hotel Booking Solution For WooCommerce – wptravelly
+	 * Plugin Name: Travel Booking Manager - WPTravelly | Tour & Hotel Booking Solution For WooCommerce
 	 * Plugin URI: http://mage-people.com
 	 * Description: A Complete Tour and Travel Solution for WordPress by MagePeople.
-	 * Version: 1.9.9
+	 * Version: 2.0.0
 	 * Author: MagePeople Team
 	 * Author URI: http://www.mage-people.com/
 	 * Text Domain: tour-booking-manager
 	 * License: GPL v2 or later
-	 * License URI: https://www.gnu.org/licenses/gpl-2.0.html* 
+	 * License URI: https://www.gnu.org/licenses/gpl-2.0.html
 	 * Domain Path: /languages/
 	 */
 	if (!defined('ABSPATH')) {

@@ -22,9 +22,9 @@
 						<?php foreach ($guides as $guide_id) { ?>
 							<div class="ttbm_tour_guide_item <?php if (sizeof($guides) > 1 && $ttbm_guide_style=='carousel') { ?>item<?php } ?>" id="<?php echo esc_attr($guide_id); ?>">
 								<div class="bg_image_area" data-placeholder>
-									<div class="" data-bg-image="<?php echo TTBM_Global_Function::get_image_url($guide_id); ?>">
+								<div class="" data-bg-image="<?php echo esc_url( TTBM_Global_Function::get_image_url( $guide_id ) ); ?>">
 										<div class="ttbm_list_title absolute_item bottom" data-placeholder="">
-											<h5><?php echo get_the_title($guide_id); ?></h5>
+											<h5><?php echo esc_html( get_the_title( $guide_id ) ); ?></h5>
 										</div>
 									</div>
 								</div>
@@ -37,9 +37,9 @@
 											$more_message = implode(" ", array_slice(explode(" ", $des), 16, $word_count));
 											?>
 											<div class="ttbm_description ttbm_wp_editor" data-placeholder>
-												<?php echo TTBM_Global_Function::esc_html($message); ?>
+												<?php echo esc_html( $message ); ?>
 												<?php if ($word_count > 16) { ?>
-													<span data-collapse='#<?php echo esc_attr($guide_id); ?>'><?php echo TTBM_Global_Function::esc_html($more_message); ?></span>
+													<span data-collapse='#<?php echo esc_attr($guide_id); ?>'><?php echo esc_html($more_message); ?></span>
 													<span class="load_more_text" data-collapse-target="#<?php echo esc_attr($guide_id); ?>">	<?php esc_html_e('view more ', 'tour-booking-manager'); ?></span>
 												<?php } ?>
 											</div>

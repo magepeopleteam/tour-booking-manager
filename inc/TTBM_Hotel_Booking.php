@@ -5,31 +5,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'TTBM_Hotel_Booking' ) ) {
     class TTBM_Hotel_Booking{
         public function __construct() {
-
             add_action( 'wp_ajax_ttbm_get_hotel_room_list', array( $this, 'ttbm_get_hotel_room_list' ) );
             add_action( 'wp_ajax_nopriv_ttbm_get_hotel_room_list', array( $this, 'ttbm_get_hotel_room_list' ) );
-
             add_action( 'wp_ajax_ttbm_hotel_room_booking', array( $this, 'ttbm_hotel_room_booking' ) );
             add_action( 'wp_ajax_nopriv_ttbm_hotel_room_booking', array( $this, 'ttbm_hotel_room_booking' ) );
-
             add_action( 'ttbm_hotel_booking_panel', array( $this, 'hotel_booking_panel' ), 10, 4 );
-
             add_filter('woocommerce_add_cart_item_data', [$this, 'set_custom_price_cart_item'], 10, 2);
             add_action('woocommerce_before_calculate_totals', [$this, 'update_cart_item_price'], 10, 1);
             add_filter('woocommerce_get_item_data', [$this, 'display_custom_cart_item_data'], 10, 2);
             add_action('woocommerce_order_item_meta_end', [$this, 'display_order_meta'], 10, 3);
             add_action('woocommerce_checkout_create_order_line_item', [$this, 'add_order_item_meta'], 10, 4);
             add_action('woocommerce_new_order', [$this, 'mptrs_woocommerce_new_order'], 10, 1);
-
             add_action( 'woocommerce_order_status_changed', [$this, 'custom_function_on_order_status_change'], 10, 4 );
-
-
         }
 
-
         function custom_function_on_order_status_change( $order_id, $old_status, $new_status, $order ) {
-
-
             if ( $new_status === 'processing' ) {
                 $orderPostId = '';
                 foreach ( $order->get_items() as $item_id => $item ) {
@@ -39,25 +29,21 @@ if ( ! class_exists( 'TTBM_Hotel_Booking' ) ) {
                 $ttbm_booking_data = maybe_unserialize( get_post_meta( $orderPostId, '_ttbm_hotel_booking_data', true ) );
 
                 if( isset( $ttbm_booking_data['hotel_booking'] ) ){
-
-                    $payment_method = $order->get_payment_method_title();
-
-                    $order_description = isset( $ttbm_booking_data['hotel_room_ordered_data_info'] ) ? $ttbm_booking_data['hotel_room_ordered_data_info'] : [];
-                    $checkin_date = isset( $ttbm_booking_data['ttbm_hotel_info']['ttbm_checkin_date'] ) ? $ttbm_booking_data['ttbm_hotel_info']['ttbm_checkin_date'] : '';
-                    $checkout_date = isset( $ttbm_booking_data['ttbm_hotel_info']['ttbm_checkout_date'] ) ? $ttbm_booking_data['ttbm_hotel_info']['ttbm_checkout_date'] : '';
-                    $hotel_id = isset( $ttbm_booking_data['ttbm_hotel_info']['hotel_id'] ) ? $ttbm_booking_data['ttbm_hotel_info']['hotel_id'] : '';
-                    $number_of_days = isset( $ttbm_booking_data['booking_days'] ) ? $ttbm_booking_data['booking_days'] : '';
-                    $price = isset( $ttbm_booking_data['price'] ) ? $ttbm_booking_data['price'] : 0;
-
-                    $hotel_title = get_the_title( $hotel_id );
-
-                    $hotel_booking_status = 'In Progress';
-                    $order_title = 'Hotel Booking #' . $order_id;
-                    $order_created_date = $order->get_date_created()->date('Y-m-d H:i:s');
-                    $order_status = $new_status;
-                    $customer_id = $order->get_customer_id();
-                    $customer_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
-                    $customer_email = $order->get_billing_email();
+                    $payment_method         = $order->get_payment_method_title();
+                    $order_description      = isset( $ttbm_booking_data['hotel_room_ordered_data_info'] ) ? $ttbm_booking_data['hotel_room_ordered_data_info'] : [];
+                    $checkin_date           = isset( $ttbm_booking_data['ttbm_hotel_info']['ttbm_checkin_date'] ) ? $ttbm_booking_data['ttbm_hotel_info']['ttbm_checkin_date'] : '';
+                    $checkout_date          = isset( $ttbm_booking_data['ttbm_hotel_info']['ttbm_checkout_date'] ) ? $ttbm_booking_data['ttbm_hotel_info']['ttbm_checkout_date'] : '';
+                    $hotel_id               = isset( $ttbm_booking_data['ttbm_hotel_info']['hotel_id'] ) ? $ttbm_booking_data['ttbm_hotel_info']['hotel_id'] : '';
+                    $number_of_days         = isset( $ttbm_booking_data['booking_days'] ) ? $ttbm_booking_data['booking_days'] : '';
+                    $price                  = isset( $ttbm_booking_data['price'] ) ? $ttbm_booking_data['price'] : 0;
+                    $hotel_title            = get_the_title( $hotel_id );
+                    $hotel_booking_status   = 'In Progress';
+                    $order_title            = 'Hotel Booking #' . $order_id;
+                    $order_created_date     = $order->get_date_created()->gmdate('Y-m-d H:i:s');
+                    $order_status           = $new_status;
+                    $customer_id            = $order->get_customer_id();
+                    $customer_name          = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+                    $customer_email         = $order->get_billing_email();
 
                     $custom_order_id = wp_insert_post(array(
                         'post_title'    => $order_title,
@@ -173,8 +159,8 @@ if ( ! class_exists( 'TTBM_Hotel_Booking' ) ) {
             $hotel_id   = $_REQUEST['hotel_id'] ?? '';
             $date_range = $_REQUEST['date_range'] ?? "";
             $date       = explode( "    -    ", $date_range );
-            $start_date = date( 'Y-m-d', strtotime( $date[0] ) );
-            $end_date = date( 'Y-m-d', strtotime( $date[1] ) );
+            $start_date = gmdate( 'Y-m-d', strtotime( $date[0] ) );
+            $end_date = gmdate( 'Y-m-d', strtotime( $date[1] ) );
             do_action( 'ttbm_hotel_booking_panel', $start_date, $end_date, $hotel_id );
             die();
         }
@@ -209,12 +195,12 @@ if ( ! class_exists( 'TTBM_Hotel_Booking' ) ) {
             $room_output .= '</div>';
 
             $date       = explode( "    -    ", $date_range );
-            $check_in = date( 'Y-m-d', strtotime( $date[0] ) );
-            $check_out = date( 'Y-m-d', strtotime( $date[1] ) );
+            $check_in = gmdate( 'Y-m-d', strtotime( $date[0] ) );
+            $check_out = gmdate( 'Y-m-d', strtotime( $date[1] ) );
 
 
-            $check_in_date = date('Y-m-d', strtotime($date[0]));
-            $check_out_date = date('Y-m-d', strtotime($date[1]));
+            $check_in_date = gmdate('Y-m-d', strtotime($date[0]));
+            $check_out_date = gmdate('Y-m-d', strtotime($date[1]));
 
             $datetime1 = new DateTime($check_in_date);
             $datetime2 = new DateTime($check_out_date);

@@ -96,9 +96,9 @@
 				else if ($travel_type == 'repeated') {
 					$now_date = strtotime(current_time('Y-m-d'));
 					$start_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_date');
-					$start_date = $start_date ? date('Y-m-d', strtotime($start_date)) : '';
+					$start_date = $start_date ? gmdate('Y-m-d', strtotime($start_date)) : '';
 					$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_end_date');
-					$end_date = $end_date ? date('Y-m-d', strtotime($end_date)) : '';
+					$end_date = $end_date ? gmdate('Y-m-d', strtotime($end_date)) : '';
 					$off_days = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_offdays', array());
 					$all_off_dates = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_off_dates', array());
 					$off_dates = array();
@@ -108,7 +108,7 @@
 					$tour_date = array();
 					if ($start_date == $end_date) {
 						$date = $start_date;
-						$day = strtolower(date('D', strtotime($date)));
+						$day = strtolower(gmdate('D', strtotime($date)));
 						if (!in_array($day, $off_days) && !in_array($date, $off_dates)) {
 							$current_date = self::get_date_by_time_check($tour_id, $date, $expire);
 							if ($current_date) {
@@ -121,7 +121,7 @@
 						foreach ($all_dates as $date) {
 						    $date = $date->format('Y-m-d'); // Convert DateTime object to string
 						    if ($expire || $now_date <= strtotime($date)) {
-						        $day = strtolower(date('D', strtotime($date))); // Get the day in lowercase
+						        $day = strtolower(gmdate('D', strtotime($date))); // Get the day in lowercase
 						        // Ensure $off_days and $off_dates are arrays before using in_array()
 						        if (!in_array($day, (array) $off_days) && !in_array($date, (array) $off_dates)) {
 						            $current_date = self::get_date_by_time_check($tour_id, $date, $expire);
@@ -176,10 +176,10 @@
 			}
 			public static function reduce_stop_sale_hours($date): string {
 				$stop_hours = (int)self::get_general_settings('ttbm_ticket_expire_time') * 60 * 60;
-				return date('Y-m-d H:i:s', strtotime($date) - $stop_hours);
+				return gmdate('Y-m-d H:i:s', strtotime($date) - $stop_hours);
 			}
 			public static function get_time($tour_id, $date = '', $expire = '') {
-				$date = $date ? date('Y-m-d', strtotime($date)) : '';
+				$date = $date ? gmdate('Y-m-d', strtotime($date)) : '';
 				if ($date) {
 					$time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
 					return apply_filters('ttbm_get_time', $time, $tour_id, $date, $expire);
@@ -189,7 +189,7 @@
 			public static function update_upcoming_date_month($tour_id, $update = '', $all_date = array()): void {
 				$now = strtotime(current_time('Y-m-d'));
 				$db_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_upcoming_date');
-				$db_date = date('Y-m-d', strtotime($db_date));
+				$db_date = gmdate('Y-m-d', strtotime($db_date));
 				$month_list = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_month_list');
 				if (!$month_list || !$db_date || $update || strtotime($db_date) < $now) {
 					$date = '';
@@ -206,7 +206,7 @@
                 $date = '';
                 $now = strtotime(current_time('Y-m-d'));
                 $db_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_upcoming_date');
-                $db_date = date('Y-m-d', strtotime($db_date));
+                $db_date = gmdate('Y-m-d', strtotime($db_date));
                 $month_list = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_month_list');
                 if (!$month_list || !$db_date || $update || strtotime($db_date) < $now) {
                     $all_date = sizeof($all_date) > 0 ? $all_date : self::get_date($tour_id);
@@ -228,14 +228,14 @@
 				if (is_array($dates)) {
 					$all_months = array();
 					foreach ($dates as $date) {
-						$all_months[] = date('n', strtotime($date));
+						$all_months[] = gmdate('n', strtotime($date));
 					}
 					$all_months = array_unique($all_months);
 					foreach ($all_months as $all_month) {
 						$month = $month ? $month . ',' . $all_month : $all_month;
 					}
 				} else {
-					$month = date('n', strtotime($dates));
+					$month = gmdate('n', strtotime($dates));
 				}
 				update_post_meta($tour_id, 'ttbm_month_list', $month);
 			}
@@ -484,7 +484,7 @@
 				if ($tour_type == 'general' && $date_type == 'fixed') {
 					$now = current_time('Y-m-d H:i:s');
 					$reg_end_date = self::get_reg_end_date($tour_id);
-					$end_time = date('Y-m-d H:i:s', strtotime($reg_end_date));
+					$end_time = gmdate('Y-m-d H:i:s', strtotime($reg_end_date));
 					$_status = strtotime($now) < strtotime($end_time) ? 'active' : 'expired';
 					$status = !empty($reg_end_date) ? $_status : 'active';
 				}
@@ -755,7 +755,7 @@
 				return $data;
 			}
 			public static function get_submit_info($key, $default = '') {
-				$data = $_POST[$key] ?? $default;
+				$data = isset( $_POST[$key] ) ? sanitize_text_field( wp_unslash( $_POST[$key] ) ) : $default;
 				return TTBM_Global_Function::data_sanitize($data);
 			}
 			public static function get_start_place($tour_id) {

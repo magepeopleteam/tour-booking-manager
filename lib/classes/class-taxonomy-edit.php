@@ -70,10 +70,11 @@ if( ! class_exists( 'TaxonomyEdit' ) ) {
             $option['value'] = is_serialized($option_value) ? unserialize($option_value): $option_value;
 
             if (sizeof($option) > 0 && isset($option['type'])) {
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo mep_field_generator($option['type'], $option);
                 do_action("wp_theme_settings_field_$type", $option);
             }
-            if( !empty( $details ) ) echo "<p class='description'>$details</p>";
+            if( !empty( $details ) ) echo esc_html("<p class='description'>$details</p>");
         }
 
         private function get_taxonomy(){

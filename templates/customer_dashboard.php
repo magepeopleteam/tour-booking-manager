@@ -16,7 +16,11 @@ $cancel_period = (int) TTBM_Global_Function::get_settings('ttbm_basic_gen_settin
 
 ?>
 <div class="ttbm_notice ttbm_style" style="margin-bottom:20px;padding:10px 15px;background:#eaf4ff;border-left:4px solid #3174d0;color:#222;font-size:16px;">
-    <?php echo esc_html__('You can cancel your order within ','tour-booking-manager').$cancel_period.esc_html__('hours of placing it. ','tour-booking-manager'); ?>
+    <?php printf(
+        /* translators: %s is the cancellation period in hours */
+        esc_html__( 'You can cancel your order within %s hours of placing it.', 'tour-booking-manager' ),
+        esc_html( $cancel_period )
+    ); ?>
 </div>
 <div class="ttbm_total_booking_wrapper ttbm_style" style="max-width:1000px;margin:auto;">
     <h2 class="ttbm_total_booking_title" style="color:#3174d0;font-size:2rem;margin-bottom:20px;"><?php esc_html_e('My Tour Orders', 'tour-booking-manager'); ?></h2>
@@ -85,7 +89,7 @@ $cancel_period = (int) TTBM_Global_Function::get_settings('ttbm_basic_gen_settin
                         echo '<td class="ttbm_total_booking_td" style="color:#3174d0;font-weight:500;">' . esc_html($cancel_deadline_str) . '</td>';
                         echo '<td class="ttbm_total_booking_td">';
                         if ($cancel_status) {
-                            echo $cancel_status;
+                            echo esc_html($cancel_status);
                         } elseif ($can_cancel) {
                             echo '<button class="ttbm_total_booking_filter_btn ttbm-cancel-btn" data-order="' . esc_attr($order_id) . '" data-tour="' . esc_attr($ttbm_id) . '" style="background:#3174d0;color:#fff;">' . esc_html__('Cancel', 'tour-booking-manager') . '</button>';
                         } else {
@@ -118,7 +122,7 @@ $cancel_period = (int) TTBM_Global_Function::get_settings('ttbm_basic_gen_settin
         </form>
     </div>
 </div>
-<script type="text/javascript">var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";</script>
+<script type="text/javascript">var ajaxurl = "<?php echo esc_url(admin_url('admin-ajax.php')); ?>";</script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var modal = document.getElementById('ttbm-cancel-modal');

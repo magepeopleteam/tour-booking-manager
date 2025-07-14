@@ -36,6 +36,7 @@
 		
 	do_action( 'ttbm_single_page_before_wrapper' );
 	if ( post_password_required() ) {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
 		echo get_the_password_form(); // WPCS: XSS ok.
 	} else {
 		do_action( 'woocommerce_before_single_product' );

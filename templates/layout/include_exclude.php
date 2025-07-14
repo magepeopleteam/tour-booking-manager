@@ -31,8 +31,7 @@
 							$counter = $counter - 3;
 						?>
 					</ul>
-					<p data-target-popup="include-exclude-popup"><?php echo esc_html__('See ','tour-booking-manager').$counter. esc_html__(' more','tour-booking-manager'); ?></p>
-				</div>
+				<p data-target-popup="include-exclude-popup"> <?php echo esc_html__( 'See ', 'tour-booking-manager' ) .  esc_html( $counter ) .  esc_html__( ' more', 'tour-booking-manager' ); ?></p></div>
 				<div class="exclude items">
 					<ul>
 						<?php

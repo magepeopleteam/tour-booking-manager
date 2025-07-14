@@ -76,6 +76,7 @@
                     </div>
 					<?php
 				}
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  
 				echo ob_get_clean();
 			}
 			/*****************************/
@@ -107,7 +108,7 @@
 				?>
                 <button class="<?php echo esc_attr($button_class . ' ' . $class); ?>" type="button">
                     <i class="<?php echo esc_attr($icon_class); ?>"></i>
-					<?php echo TTBM_Global_Function::esc_html($button_text); ?>
+					<?php echo esc_html($button_text); ?>
                 </button>
 				<?php
 			}
@@ -213,14 +214,15 @@
 						?>
                         <label>
                             <select name="<?php echo esc_attr($input_name); ?>" data-price="<?php echo esc_attr($price); ?>" class="formControl">
-                                <option selected value="0"><?php echo esc_html__('Please select', 'tour-booking-manager') . ' ' . $text; ?></option>
+							<option selected value="0">
+								<?php echo esc_html__( 'Please select', 'tour-booking-manager' ) . ' ' . esc_html( $text ); ?>
+							</option>
 								<?php
 									$max_total = $max_qty > 0 ? $max_qty : $available_seat;
 									$min_value = max(1, $min_qty);
 									for ($i = $min_value; $i <= $max_total; $i++) {
 										?>
-                                        <option value="<?php echo esc_html($i); ?>"> <?php echo esc_html($i) . ' ' . $text;; ?> </option>
-									<?php } ?>
+									<option value="<?php echo esc_attr( $i ); ?>"><?php echo esc_html( $i ) . ' ' . esc_html( $text ); ?></option><?php } ?>
                             </select>
                         </label>
 						<?php
@@ -315,6 +317,7 @@
                     </div>
 					<?php
 				}
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  
 				echo ob_get_clean();
 			}
 			/*****************************/
@@ -347,7 +350,7 @@
 				?>
                 <button class="<?php echo esc_attr($button_class . ' ' . $class); ?>" type="button">
                     <i class="<?php echo esc_attr($icon_class); ?>"></i>
-					<?php echo TTBM_Global_Function::esc_html($button_text); ?>
+					<?php echo esc_html($button_text); ?>
                 </button>
 				<?php
 			}
@@ -455,13 +458,16 @@
 						?>
                         <label>
                             <select name="<?php echo esc_attr($input_name); ?>" data-price="<?php echo esc_attr($price); ?>" class="formControl">
-                                <option selected value="0"><?php echo esc_html__('Please select', 'tour-booking-manager') . ' ' . $text; ?></option>
+							<option selected value="0"><?php printf(/* translators: %s is the field label */ esc_html__( 'Please select %s', 'tour-booking-manager' ), esc_html( $text ) ); ?></option>
 								<?php
 									$max_total = $max_qty > 0 ? $max_qty : $available_seat;
 									$min_value = max(1, $min_qty);
 									for ($i = $min_value; $i <= $max_total; $i++) {
 										?>
-                                        <option value="<?php echo esc_html($i); ?>"> <?php echo esc_html($i) . ' ' . $text;; ?> </option>
+                                       <option value="<?php echo esc_attr( $i ); ?>">
+    <?php echo esc_html( $i ) . ' ' . esc_html( $text ); ?>
+</option>
+
 									<?php } ?>
                             </select>
                         </label>

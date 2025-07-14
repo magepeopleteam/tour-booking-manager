@@ -8,9 +8,9 @@ add_action('wp_ajax_ttbm_submit_cancel_request', function() {
         wp_send_json_error(['message' => __('You must be logged in.', 'tour-booking-manager')]);
     }
     $user_id = get_current_user_id();
-    $order_id = intval($_POST['order_id'] ?? 0);
-    $tour_id = intval($_POST['tour_id'] ?? 0);
-    $reason = sanitize_textarea_field($_POST['reason'] ?? '');
+    $order_id = intval( wp_unslash( $_POST['order_id'] ?? 0 ) );
+    $tour_id  = intval( wp_unslash( $_POST['tour_id'] ?? 0 ) );
+    $reason   = sanitize_textarea_field( wp_unslash( $_POST['reason'] ?? '' ) );
     if (!$order_id || !$tour_id || empty($reason)) {
         wp_send_json_error(['message' => __('Missing data.', 'tour-booking-manager')]);
     }
@@ -137,7 +137,7 @@ function ttbm_render_cancel_requests_admin_page() {
     if (!current_user_can('manage_options')) return;
     // Handle Bulk Delete
     if (isset($_POST['ttbm_bulk_action']) && check_admin_referer('ttbm_cancel_bulk_action')) {
-        $action = sanitize_text_field($_POST['ttbm_bulk_action']);
+       $action = sanitize_text_field( wp_unslash( $_POST['ttbm_bulk_action'] ?? '' ) );
         $ids = isset($_POST['ttbm_request_ids']) ? array_map('intval', (array)$_POST['ttbm_request_ids']) : [];
         if ($action === 'delete' && $ids) {
             foreach ($ids as $id) {
@@ -148,7 +148,7 @@ function ttbm_render_cancel_requests_admin_page() {
     }
     // Handle Single Delete
     if (isset($_GET['ttbm_single_delete'], $_GET['request_id']) && check_admin_referer('ttbm_single_delete_' . $_GET['request_id'])) {
-        $id = intval($_GET['request_id']);
+        $id = isset( $_GET['request_id'] ) ? intval( wp_unslash( $_GET['request_id'] ) ) : 0;
         wp_delete_post($id, true);
         echo '<div class="updated"><p>' . esc_html__('Request deleted.', 'tour-booking-manager') . '</p></div>';
     }
@@ -187,6 +187,8 @@ function ttbm_render_cancel_requests_admin_page() {
                 ucfirst($status)
             ]);
         }
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
         fclose($output);
         exit;
     }
@@ -242,12 +244,14 @@ function ttbm_render_cancel_requests_admin_page() {
     }
     // Handle Approve/Reject
     if (isset($_GET['ttbm_cancel_action'], $_GET['request_id']) && check_admin_referer('ttbm_cancel_action')) {
-        $id = intval($_GET['request_id']);
-        $action = sanitize_text_field($_GET['ttbm_cancel_action']);
-        $order_id = get_post_meta($id, 'order_id', true);
-        $tour_id = get_post_meta($id, 'tour_id', true);
-        $user_id = get_post_meta($id, 'user_id', true);
-        $reason = get_post_meta($id, 'reason', true);
+
+        $id         = isset( $_GET['request_id'] ) ? intval( wp_unslash( $_GET['request_id'] ) ) : 0;
+        $action     = sanitize_text_field($_GET['ttbm_cancel_action']);
+        $order_id   = get_post_meta($id, 'order_id', true);
+        $tour_id    = get_post_meta($id, 'tour_id', true);
+        $user_id    = get_post_meta($id, 'user_id', true);
+        $reason     = get_post_meta($id, 'reason', true);
+
         if ($action === 'approve') {
             update_post_meta($id, 'cancel_status', 'approved');
             // Set order status to cancelled

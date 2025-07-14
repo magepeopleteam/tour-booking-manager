@@ -14,32 +14,32 @@
 				add_action( 'ttbm_booking_panel', array( $this, 'booking_panel' ), 10, 4 );
 			}
 			public function get_ttbm_ticket() {
-				$tour_id     = $_REQUEST['tour_id'] ?? '';
-				$hotel_id    = $_REQUEST['hotel_id'] ?? '';
-				$date        = $_REQUEST['tour_date'] ?? '';
+				$tour_id  = isset( $_REQUEST['tour_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tour_id'] ) ) : '';
+				$hotel_id = isset( $_REQUEST['hotel_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['hotel_id'] ) ) : '';
+				$date     = isset( $_REQUEST['tour_date'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tour_date'] ) ) : '';
 				$date        = str_replace( '/', '-', $date );
-				$time        = TTBM_Function::get_time( $tour_id, date( 'Y-m-d', strtotime( $date ) ) );
+				$time        = TTBM_Function::get_time( $tour_id, gmdate( 'Y-m-d', strtotime( $date ) ) );
 				$date_format = $time ? 'Y-m-d H:i' : 'Y-m-d';
-				$date        = $date ? date( $date_format, strtotime( $date ) ) : $date;
+				$date        = $date ? gmdate( $date_format, strtotime( $date ) ) : $date;
 				do_action( 'ttbm_booking_panel', $tour_id, $date, $hotel_id );
 				die();
 			}
 			public function get_ttbm_sold_ticket() {
-				$tour_id     = $_REQUEST['tour_id'] ?? '';
-				$date        = $_REQUEST['tour_date'] ?? '';
+				$tour_id = sanitize_text_field( wp_unslash( $_REQUEST['tour_id'] ?? '' ) );
+				$date    = sanitize_text_field( wp_unslash( $_REQUEST['tour_date'] ?? '' ) );
 				$date        = str_replace( '/', '-', $date );
-				$time        = TTBM_Function::get_time( $tour_id, date( 'Y-m-d', strtotime( $date ) ) );
+				$time        = TTBM_Function::get_time( $tour_id, gmdate( 'Y-m-d', strtotime( $date ) ) );
 				$date_format = $time ? 'Y-m-d H:i' : 'Y-m-d';
-				$date        = $date ? date( $date_format, strtotime( $date ) ) : $date;
+				$date        = $date ? gmdate( $date_format, strtotime( $date ) ) : $date;
 				echo esc_html(TTBM_Function::get_total_available( $tour_id,$date ));
 				die();
 			}
 			public function get_ttbm_hotel_room_list() {
-				$tour_id    = $_REQUEST['tour_id'] ?? '';
-				$hotel_id   = $_REQUEST['hotel_id'] ?? '';
-				$date_range = $_REQUEST['date_range'] ?? "";
+				$tour_id    = sanitize_text_field( wp_unslash( $_REQUEST['tour_id'] ?? '' ) );
+				$hotel_id   = sanitize_text_field( wp_unslash( $_REQUEST['hotel_id'] ?? '' ) );
+				$date_range = sanitize_text_field( wp_unslash( $_REQUEST['date_range'] ?? '' ) );
 				$date       = explode( "    -    ", $date_range );
-				$start_date = date( 'Y-m-d', strtotime( $date[0] ) );
+				$start_date = gmdate( 'Y-m-d', strtotime( $date[0] ) );
 				do_action( 'ttbm_booking_panel', $tour_id, $start_date, $hotel_id );
 				die();
 			}

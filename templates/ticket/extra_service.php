@@ -13,13 +13,6 @@
 			<h2 class="extra_service_title"><?php echo esc_html__('Available Extra Service List ', 'tour-booking-manager'); ?></h2>
 			<div class="ttbm_widget_content" data-placeholder>
 				<table class="mp_tour_ticket_extra">
-					<thead>
-					<!-- <tr>
-						<th><?php echo TTBM_Function::service_name_text(); ?></th>
-						<th><?php echo TTBM_Function::service_price_text(); ?></th>
-						<th><?php echo TTBM_Function::service_qty_text(); ?></th>
-					</tr> -->
-					</thead>
 					<tbody>
 					<?php
 						foreach ($extra_services as $service) {
@@ -43,12 +36,14 @@
 									<?php if ($service_icon) { ?>
 										<span class="<?php echo esc_attr($service_icon); ?>"></span>
 									<?php } ?>
-									<?php echo TTBM_Global_Function::esc_html($service_name); ?>
+									<?php echo esc_html($service_name); ?>
                                     <?php if ($description) { ?>
 									    <div class="mT_xs person-description"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
                                     <?php } ?>
 								</th>
-								<td class="textCenter"><?php echo TTBM_Global_Function::esc_html($service_price); ?></td>
+								<td class="textCenter"><?php 
+								// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								echo mep_esc_html($service_price); ?></td>
 								<td><?php TTBM_Layout::qty_input($service_name, $available, $input_type, $default_qty, $min_qty, $max_qty, $service_price_raw, 'service_qty[]'); ?></td>
 							</tr>
 							<tr>

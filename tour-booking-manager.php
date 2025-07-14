@@ -7,6 +7,8 @@
 	 * Author: MagePeople Team
 	 * Author URI: http://www.mage-people.com/
 	 * Text Domain: tour-booking-manager
+	 * License: GPL v2 or later
+	 * License URI: https://www.gnu.org/licenses/gpl-2.0.html* 
 	 * Domain Path: /languages/
 	 */
 	if (!defined('ABSPATH')) {
@@ -17,58 +19,6 @@
 			public function __construct() {
 				$this->load_ttbm_plugin();
 				add_action('init', array($this, 'load_blocks'));
-				add_action('wp_ajax_ttbm_submit_cancel_request', function() {
-					if (!is_user_logged_in()) {
-						wp_send_json_error(['message' => __('You must be logged in.', 'tour-booking-manager')]);
-					}
-					$user_id = get_current_user_id();
-					$order_id = intval($_POST['order_id'] ?? 0);
-					$tour_id = intval($_POST['tour_id'] ?? 0);
-					$reason = sanitize_textarea_field($_POST['reason'] ?? '');
-					if (!$order_id || !$tour_id || empty($reason)) {
-						wp_send_json_error(['message' => __('Missing data.', 'tour-booking-manager')]);
-					}
-					// Prevent duplicate requests
-					$existing = get_posts([
-						'post_type' => 'ttbm_cancel_request',
-						'post_status' => ['publish', 'pending', 'draft'],
-						'meta_query' => [
-							['key' => 'order_id', 'value' => $order_id],
-							['key' => 'tour_id', 'value' => $tour_id],
-							['key' => 'user_id', 'value' => $user_id],
-						],
-						'numberposts' => 1
-					]);
-					if ($existing) {
-						wp_send_json_error(['message' => __('A cancellation request already exists for this order.', 'tour-booking-manager')]);
-					}
-					$post_id = wp_insert_post([
-						'post_type' => 'ttbm_cancel_request',
-						'post_status' => 'publish',
-						'post_title' => 'Cancel Request #' . $order_id,
-						'post_content' => $reason,
-						'post_author' => $user_id,
-					]);
-					if ($post_id) {
-						update_post_meta($post_id, 'order_id', $order_id);
-						update_post_meta($post_id, 'tour_id', $tour_id);
-						update_post_meta($post_id, 'user_id', $user_id);
-						update_post_meta($post_id, 'reason', $reason);
-						update_post_meta($post_id, 'cancel_status', 'pending');
-						ttbm_send_cancel_email('admin_new', [
-							'order_id' => $order_id,
-							'tour_id' => $tour_id,
-							'user_id' => $user_id,
-							'reason' => $reason,
-						]);
-						wp_send_json_success(['message' => __('Cancellation request submitted.', 'tour-booking-manager')]);
-					} else {
-						wp_send_json_error(['message' => __('Failed to submit request.', 'tour-booking-manager')]);
-					}
-				});
-				add_action('wp_ajax_nopriv_ttbm_submit_cancel_request', function() {
-					wp_send_json_error(['message' => __('You must be logged in.', 'tour-booking-manager')]);
-				});
 			}
 			private function load_ttbm_plugin() {
 				include_once(ABSPATH . 'wp-admin/includes/plugin.php');
@@ -81,17 +31,13 @@
 				require_once TTBM_PLUGIN_DIR . '/mp_global/TTBM_Global_File_Load.php';
 				$this->load_global_file();
 				if (TTBM_Global_Function::check_woocommerce() == 1) {
-					// add_action('activated_plugin', array($this, 'activation_redirect'), 90, 1);
 					require_once TTBM_PLUGIN_DIR . '/lib/classes/class-ttbm.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Dependencies.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Cancellation.php';
 				} else {
 					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
-					//add_action('admin_notices', [$this, 'woocommerce_not_active']);
-					// add_action('activated_plugin', array($this, 'activation_redirect_setup'), 90, 1);
 				}
 				add_action('admin_init', array($this, 'activation_redirect_setup'), 90);
-
 			}
 			public function load_global_file() {
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Style.php';
@@ -102,8 +48,9 @@
 					self::on_activation_page_create();
 				}
 				$ttbm_quick_setup_done = get_option('ttbm_quick_setup_done');
-				if ($ttbm_quick_setup_done != 'yes') {
-					exit(wp_redirect(admin_url('edit.php?post_type=ttbm_tour&page=ttbm_quick_setup')));
+				if ($ttbm_quick_setup_done !== 'yes') {
+					wp_redirect( admin_url( 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup'));
+					exit;
 				}
 			}
 			public function activation_redirect_setup($plugin) {
@@ -116,7 +63,8 @@
 					if(isset($_REQUEST['page']) && $_REQUEST['page'] == 'ttbm_quick_setup'){
 						return null;
 					}else{
-						exit(wp_redirect(admin_url('admin.php?post_type=ttbm_tour&page=ttbm_quick_setup')));
+						wp_redirect(admin_url('admin.php?post_type=ttbm_tour&page=ttbm_quick_setup'));
+						exit();
 					}
 					
 				}
@@ -156,10 +104,11 @@
                         'post_content' => $page_data['content'],
                         'post_status' => 'publish',
                     ];
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     $page_id = wp_insert_post($page);
 
                     if (is_wp_error($page_id)) {
-                        printf('<div class="notice notice-error"><p>%s</p></div>', $page_id->get_error_message());
+						printf('<div class="notice notice-error"><p>%s</p></div>',esc_html( $page_id->get_error_message() ));
                     } else {
                         update_option($page_data['option_key'], true);
                     }
@@ -228,15 +177,10 @@
 			}
 			public function woocommerce_not_active() {
 				$wc_install_url = get_admin_url() . 'plugin-install.php?s=woocommerce&tab=search&type=term';
-
 				$text=__('You Must Install WooCommerce Plugin before activating Tour Booking Manager, Because It is dependent on Woocommerce Plugin.','tour-booking-manager').' <a class="btn button" href=' . $wc_install_url . '>'.esc_html__('Click Here to Install','tour-booking-manager').'</a>';
-				printf('<div class="error" style="background:red; color:#fff;"><p>%s</p></div>', $text);
+				printf('<div class="error" style="background:red; color:#fff;"><p>%s</p></div>',wp_kses_post( $text ));
 
 			}
 		}
 		new TTBM_Woocommerce_Plugin();
 	}
-
-
-
-	

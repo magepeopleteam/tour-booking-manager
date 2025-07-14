@@ -1,5 +1,5 @@
 <?php
-
+// phpcs:disable
 namespace Appsero;
 
 /**

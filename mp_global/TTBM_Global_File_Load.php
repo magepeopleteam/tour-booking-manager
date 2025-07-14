@@ -89,7 +89,7 @@
 					let ttbm_currency_decimal = "";
 					let ttbm_currency_thousands_separator = "";
 					let ttbm_num_of_decimal = "";
-					let ttbm_ajax_url = "<?php echo admin_url('admin-ajax.php'); ?>";
+					let ttbm_ajax_url = "<?php echo esc_url(admin_url('admin-ajax.php')); ?>";
 					let ttbm_site_url = " <?php echo esc_attr( get_site_url() ) ?>";
 					let ttbm_empty_image_url = "<?php echo esc_attr(TTBM_GLOBAL_PLUGIN_URL . '/assets/images/no_image.png'); ?>";
 					let ttbm_date_format = "<?php echo esc_attr(TTBM_Global_Function::get_settings('ttbm_global_settings', 'date_format', 'D d M , yy')); ?>";
@@ -99,11 +99,13 @@
 				if (TTBM_Global_Function::check_woocommerce() == 1) {
 					?>
 					<script type="text/javascript">
-						ttbm_currency_symbol = "<?php echo get_woocommerce_currency_symbol(); ?>";
-						ttbm_currency_position = "<?php echo get_option('woocommerce_currency_pos'); ?>";
-						ttbm_currency_decimal = "<?php echo wc_get_price_decimal_separator(); ?>";
-						ttbm_currency_thousands_separator = "<?php echo wc_get_price_thousand_separator(); ?>";
-						ttbm_num_of_decimal = "<?php echo get_option('woocommerce_price_num_decimals', 2); ?>";
+						ttbm_currency_symbol = "<?php 
+						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo get_woocommerce_currency_symbol(); ?>";
+						ttbm_currency_position = "<?php echo esc_html(get_option('woocommerce_currency_pos')); ?>";
+						ttbm_currency_decimal = "<?php echo esc_html(wc_get_price_decimal_separator()); ?>";
+						ttbm_currency_thousands_separator = "<?php echo esc_html(wc_get_price_thousand_separator()); ?>";
+						ttbm_num_of_decimal = "<?php echo esc_html(get_option('woocommerce_price_num_decimals', 2)); ?>";
 					</script>
 					<?php
 				}
@@ -113,9 +115,12 @@
 				ob_start();
 				?>
 				<style>
-					<?php echo $custom_css; ?>
+					<?php 
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo $custom_css; ?>
 				</style>
 				<?php
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo ob_get_clean();
 			}
 		}

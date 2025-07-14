@@ -25,7 +25,7 @@
 									<div class="hotel_list_top_area justifyBetween">
 										<div class="hotel_list_top_left fdColumn">
 											<h4 class="flexWrap alignCenter mp_zero">
-												<?php echo get_the_title( $hotel_id ); ?>
+												<?php echo esc_html(get_the_title( $hotel_id )); ?>
 											</h4>
 											<div class="dFlex hotel_rating">
 												<?php
@@ -67,13 +67,15 @@
 												<?php } ?>
 										</div>
 									</div>
-									<h4 class="textTheme"><span><?php esc_html_e( 'Price From : ', 'tour-booking-manager' ); ?>&nbsp;</span>&nbsp; <?php echo wc_price( TTBM_Function::get_hotel_room_min_price( $hotel_id ) ); ?></h4>
+									<h4 class="textTheme"><span><?php esc_html_e( 'Price From : ', 'tour-booking-manager' ); ?>&nbsp;</span>&nbsp; <?php echo 										
+									// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  
+									wc_price( TTBM_Function::get_hotel_room_min_price( $hotel_id ) ); ?></h4>
 									<?php
 										$ttbm_hotel_des = get_post_field( 'post_content', $tour_id );
 										if ( $ttbm_hotel_des ) {
 											?>
 											<div class="ttbm_wp_editor hotel_list_middle_left" data-collapse-target="#show_descripton">
-												<?php echo  TTBM_Custom_Layout::load_more_text($ttbm_hotel_des,190); ?>
+												<?php echo esc_html(TTBM_Custom_Layout::load_more_text($ttbm_hotel_des,190)); ?>
 											</div>
 										<?php } ?>
 									<div class="hotel_list_middle_right justifyEnd ">

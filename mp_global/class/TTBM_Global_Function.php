@@ -118,16 +118,16 @@
 			public function date_picker_js($selector, $dates) {
 				//echo '<pre>';print_r($dates);echo '</pre>';
 				$start_date = $dates[0];
-				$start_year = date('Y', strtotime($start_date));
-				$start_month = (date('n', strtotime($start_date)) - 1);
-				$start_day = date('j', strtotime($start_date));
+				$start_year = gmdate('Y', strtotime($start_date));
+				$start_month = (gmdate('n', strtotime($start_date)) - 1);
+				$start_day = gmdate('j', strtotime($start_date));
 				$end_date = end($dates);
-				$end_year = date('Y', strtotime($end_date));
-				$end_month = (date('n', strtotime($end_date)) - 1);
-				$end_day = date('j', strtotime($end_date));
+				$end_year = gmdate('Y', strtotime($end_date));
+				$end_month = (gmdate('n', strtotime($end_date)) - 1);
+				$end_day = gmdate('j', strtotime($end_date));
 				$all_date = [];
 				foreach ($dates as $date) {
-					$all_date[] = '"' . date('j-n-Y', strtotime($date)) . '"';
+					$all_date[] = '"' . gmdate('j-n-Y', strtotime($date)) . '"';
 				}
 				?>
                 <script>
@@ -148,7 +148,7 @@
                             }
                         });
                         function WorkingDates(date) {
-                            let availableDates = [<?php echo implode(',', $all_date); ?>];
+                     		let availableDates = <?php echo json_encode( array_values( $all_date ) ); ?>;
                             let dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
                             if (jQuery.inArray(dmy, availableDates) !== -1) {
                                 return [true, "", "Available"];
@@ -186,7 +186,7 @@
 			public static function date_separate_period($start_date, $end_date, $repeat = 1): DatePeriod {
 				$repeat = max($repeat, 1);
 				$_interval = "P" . $repeat . "D";
-				$end_date = date('Y-m-d', strtotime($end_date . ' +1 day'));
+				$end_date = gmdate('Y-m-d', strtotime($end_date . ' +1 day'));
 				return new DatePeriod(new DateTime($start_date), new DateInterval($_interval), new DateTime($end_date));
 			}
 			public static function check_time_exit_date($date) {
@@ -202,7 +202,7 @@
 				if ($date) {
 					if ($date == 'lifetime') {
 						return esc_html__('Lifetime', 'tour-booking-manager');
-					} else if (strtotime(current_time('Y-m-d H:i')) < strtotime(date('Y-m-d H:i', strtotime($date)))) {
+					} else if (strtotime(current_time('Y-m-d H:i')) < strtotime(gmdate('Y-m-d H:i', strtotime($date)))) {
 						return TTBM_Global_Function::date_format($date, 'full');
 					} else {
 						return esc_html__('Expired', 'tour-booking-manager');
@@ -1086,7 +1086,7 @@
 			public static function date_separate_period($start_date, $end_date, $repeat = 1): DatePeriod {
 				$repeat = max($repeat, 1);
 				$_interval = "P" . $repeat . "D";
-				$end_date = date('Y-m-d', strtotime($end_date . ' +1 day'));
+				$end_date = gmdate('Y-m-d', strtotime($end_date . ' +1 day'));
 				return new DatePeriod(new DateTime($start_date), new DateInterval($_interval), new DateTime($end_date));
 			}
 			public static function check_time_exit_date($date) {
@@ -1102,7 +1102,7 @@
 				if ($date) {
 					if ($date == 'lifetime') {
 						return esc_html__('Lifetime', 'tour-booking-manager');
-					} else if (strtotime(current_time('Y-m-d H:i')) < strtotime(date('Y-m-d H:i', strtotime($date)))) {
+					} else if (strtotime(current_time('Y-m-d H:i')) < strtotime(gmdate('Y-m-d H:i', strtotime($date)))) {
 						return TTBM_Global_Function::date_format($date, 'full');
 					} else {
 						return esc_html__('Expired', 'tour-booking-manager');

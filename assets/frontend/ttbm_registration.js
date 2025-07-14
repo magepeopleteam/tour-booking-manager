@@ -46,6 +46,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
             "action": "get_ttbm_sold_ticket",
             "tour_id": tour_id,
             "tour_date": tour_date,
+            nonce: ttbm_ajax.nonce
         },
         beforeSend: function () {
             dLoader_xs(target);
@@ -83,7 +84,8 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
                 data: {
                     "action": "get_ttbm_ticket",
                     "tour_id": tour_id,
-                    "tour_date": tour_date
+                    "tour_date": tour_date,
+                    nonce: ttbm_ajax.nonce
                 },
                 beforeSend: function () {
                     target.slideDown('fast');
@@ -213,7 +215,8 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
                         "action": "get_ttbm_hotel_room_list",
                         "tour_id": tour_id,
                         "hotel_id": hotel_id,
-                        "date_range": date_range
+                        "date_range": date_range,
+                        nonce: ttbm_ajax.nonce
                     },
                     beforeSend: function () {
                         target.slideDown('fast');

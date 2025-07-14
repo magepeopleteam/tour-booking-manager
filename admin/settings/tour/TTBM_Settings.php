@@ -430,7 +430,7 @@
 			}
 			//********************//
 			public function save_settings($tour_id) {
-				if (!isset($_POST['ttbm_ticket_type_nonce']) || !wp_verify_nonce($_POST['ttbm_ticket_type_nonce'], 'ttbm_ticket_type_nonce') && defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && !current_user_can('edit_post', $tour_id)) {
+				if (!isset($_POST['ttbm_ticket_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_ticket_type_nonce'])), 'ttbm_ticket_type_nonce') && defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && !current_user_can('edit_post', $tour_id)) {
 					return;
 				}
 				$this->save_map($tour_id);
@@ -445,7 +445,7 @@
 					$ttbm_display_rank = TTBM_Global_Function::get_submit_info('ttbm_display_order_tour') ? 'on' : 'off';
 					$ttbm_travel_rank_tour = TTBM_Global_Function::get_submit_info('ttbm_travel_rank_tour');
 					$display_enquiry = TTBM_Global_Function::get_submit_info('ttbm_display_enquiry') ? 'on' : 'off';
-					$ttbm_template = isset($_POST['ttbm_theme_file']) && $_POST['ttbm_theme_file'] ? sanitize_file_name($_POST['ttbm_theme_file']) : 'default.php';
+					$ttbm_template = isset($_POST['ttbm_theme_file']) ? sanitize_file_name(wp_unslash($_POST['ttbm_theme_file'])) : 'default.php';
 					update_post_meta($tour_id, 'ttbm_travel_rank_tour', $ttbm_travel_rank_tour);
 					update_post_meta($tour_id, 'ttbm_display_order_tour', $ttbm_display_rank);
 					update_post_meta($tour_id, 'ttbm_section_title_style', $content_title_style);
@@ -457,6 +457,15 @@
 					update_post_meta($tour_id, 'ttbm_display_duration', $duration);
 					update_post_meta($tour_id, 'ttbm_theme_file', $ttbm_template);
 					update_post_meta($tour_id, 'ttbm_display_enquiry', $display_enquiry);
+				}
+				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
+					$display_activities = TTBM_Global_Function::get_submit_info('ttbm_display_activities') ? 'on' : 'off';
+					update_post_meta($tour_id, 'ttbm_display_activities', $display_activities);
+					$activities = [];
+					if (!empty($_POST['ttbm_checked_activities_holder'])) {
+						$activities = array_filter(array_map('trim', explode(',', wp_unslash($_POST['ttbm_checked_activities_holder']))));
+					}
+					update_post_meta($tour_id, 'ttbm_tour_activities', $activities);
 				}
 				do_action('wcpp_partial_settings_saved', $tour_id);
 				do_action('ttbm_settings_save', $tour_id);

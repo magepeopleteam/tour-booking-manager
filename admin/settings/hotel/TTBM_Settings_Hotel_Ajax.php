@@ -20,7 +20,10 @@ if (!class_exists('TTBM_Settings_Hotel_Ajax')) {
         }
 
         public function get_ttbm_hotel_search_by_title() {
-
+	        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field(wp_unslash($_POST['nonce'] )), 'ttbm_admin_nonce' ) ) {
+		        wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
+		        die;
+	        }
             $search_term = isset( $_POST['search_term'] ) ? sanitize_text_field( wp_unslash( $_POST['search_term'] ) ) : '';
             $display_limit = 20;
             $success = false;
@@ -61,8 +64,8 @@ if (!class_exists('TTBM_Settings_Hotel_Ajax')) {
             $result_data = '';
             $message = 'Something went wrong';
             if( isset( $_POST ) ){
-                if( isset( $_POST['action'] ) && $_POST['action'] == 'get_ttbm_hotel_booking_all_lists' ){
-                    if (isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'ttbm_admin_nonce')) {
+                if( isset( $_POST['action'] ) &&sanitize_text_field(wp_unslash($_POST['action'] ))== 'get_ttbm_hotel_booking_all_lists' ){
+                    if (isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 
                         $result = 1;
 
@@ -97,8 +100,8 @@ if (!class_exists('TTBM_Settings_Hotel_Ajax')) {
             $result_data = '';
             $message = 'Something went wrong';
             if( isset( $_POST ) ){
-                if( isset( $_POST['action'] ) && $_POST['action'] == 'get_ttbm_hotel_booking_load_more_lists' ){
-                    if ( isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'ttbm_admin_nonce')) {
+                if( isset( $_POST['action'] ) && sanitize_text_field(wp_unslash($_POST['action'] )) == 'get_ttbm_hotel_booking_load_more_lists' ){
+                    if ( isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 
                         $result = 1;
                         $selected_hotel_id = isset( $_POST['hotel_id'] ) ? sanitize_text_field( wp_unslash( $_POST['hotel_id'] ) ) : '' ;
@@ -132,9 +135,9 @@ if (!class_exists('TTBM_Settings_Hotel_Ajax')) {
             $result_data = '';
             $message = 'Something went wrong';
             if( isset( $_POST ) ){
-                if( isset( $_POST['action'] ) && $_POST['action'] == 'ttbm_load_more_hotel_lists_admin' ){
+                if( isset( $_POST['action'] ) && sanitize_text_field(wp_unslash($_POST['action'] ))== 'ttbm_load_more_hotel_lists_admin' ){
 
-                    if ( isset($_POST['nonce']) && wp_verify_nonce( sanitize_text_field( $_POST['nonce'] ), 'ttbm_admin_nonce')) {
+                    if ( isset($_POST['nonce']) && wp_verify_nonce( sanitize_text_field( wp_unslash($_POST['nonce'] )), 'ttbm_admin_nonce')) {
                         $result = 1;
 
                         $loaded_ids_str = isset( $_POST['loaded_ids_str'] ) ? sanitize_text_field( wp_unslash( $_POST['loaded_ids_str'] ) ) : [] ;

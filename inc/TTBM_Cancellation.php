@@ -8,9 +8,9 @@ add_action('wp_ajax_ttbm_submit_cancel_request', function() {
         wp_send_json_error(['message' => __('You must be logged in.', 'tour-booking-manager')]);
     }
     $user_id = get_current_user_id();
-    $order_id = intval( wp_unslash( $_POST['order_id'] ?? 0 ) );
-    $tour_id  = intval( wp_unslash( $_POST['tour_id'] ?? 0 ) );
-    $reason   = sanitize_textarea_field( wp_unslash( $_POST['reason'] ?? '' ) );
+	$order_id=isset($_POST['order_id']) ? sanitize_text_field(wp_unslash($_POST['order_id'])) : 0;
+	$tour_id=isset($_POST['tour_id']) ? sanitize_text_field(wp_unslash($_POST['tour_id'])) : 0;
+	$reason=isset($_POST['reason']) ? sanitize_textarea_field(wp_unslash($_POST['reason'])) : '';
     if (!$order_id || !$tour_id || empty($reason)) {
         wp_send_json_error(['message' => __('Missing data.', 'tour-booking-manager')]);
     }
@@ -147,7 +147,7 @@ function ttbm_render_cancel_requests_admin_page() {
         }
     }
     // Handle Single Delete
-    if (isset($_GET['ttbm_single_delete'], $_GET['request_id']) && check_admin_referer('ttbm_single_delete_' . $_GET['request_id'])) {
+    if (isset($_GET['ttbm_single_delete']) &&  isset($_GET['request_id']) && check_admin_referer('ttbm_single_delete_' . $_GET['request_id'])) {
         $id = isset( $_GET['request_id'] ) ? intval( wp_unslash( $_GET['request_id'] ) ) : 0;
         wp_delete_post($id, true);
         echo '<div class="updated"><p>' . esc_html__('Request deleted.', 'tour-booking-manager') . '</p></div>';
@@ -243,10 +243,10 @@ function ttbm_render_cancel_requests_admin_page() {
         }
     }
     // Handle Approve/Reject
-    if (isset($_GET['ttbm_cancel_action'], $_GET['request_id']) && check_admin_referer('ttbm_cancel_action')) {
+    if (isset($_GET['ttbm_cancel_action']) && isset($_GET['request_id']) && check_admin_referer('ttbm_cancel_action')) {
 
         $id         = isset( $_GET['request_id'] ) ? intval( wp_unslash( $_GET['request_id'] ) ) : 0;
-        $action     = sanitize_text_field($_GET['ttbm_cancel_action']);
+	    $action         = isset( $_GET['ttbm_cancel_action'] ) ? sanitize_text_field( wp_unslash( $_GET['ttbm_cancel_action'] ) ) : '';
         $order_id   = get_post_meta($id, 'order_id', true);
         $tour_id    = get_post_meta($id, 'tour_id', true);
         $user_id    = get_post_meta($id, 'user_id', true);

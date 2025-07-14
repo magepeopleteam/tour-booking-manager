@@ -26,7 +26,11 @@ if (! class_exists('TTBM_Get_Enquiry')) {
         }
 
         public function view_enquiry(){
-            $enquiry_id = intval($_POST['enquiry_id']);
+	        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field(wp_unslash($_POST['nonce'] )), 'ttbm_admin_nonce' ) ) {
+		        wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
+		        die;
+	        }
+	        $enquiry_id = isset($_POST['enquiry_id']) ? intval(wp_unslash($_POST['enquiry_id'] )): '';
             $post = get_post($enquiry_id);
 
             if ($post && $post->post_type === 'ttbm_enquiry') {
@@ -76,7 +80,11 @@ if (! class_exists('TTBM_Get_Enquiry')) {
         }
 
         public function delete_enquiry(){
-            $enquiry_id = intval($_POST['enquiry_id']);
+	        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field(wp_unslash($_POST['nonce'] )), 'ttbm_admin_nonce' ) ) {
+		        wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
+		        die;
+	        }
+	        $enquiry_id = isset($_POST['enquiry_id']) ? intval(wp_unslash($_POST['enquiry_id'] )): '';
             $post = get_post($enquiry_id);
             if ($post && $post->post_type === 'ttbm_enquiry' && wp_delete_post($enquiry_id, true)) {
                 wp_send_json_success(['message' => __('Enquiry deleted successfully.', 'tour-booking-manager')]);
@@ -90,9 +98,9 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 wp_send_json_error(['message' => __('Failed to submit enquiry. Please try again.', 'tour-booking-manager')]);
 			}
             $form_data = [];
-            parse_str($_POST['data'], $form_data);
+	        $data = isset($_POST['data']) ? sanitize_text_field(wp_unslash($_POST['data'] )): '';
+            parse_str($data, $form_data);
             $postId=sanitize_text_field($form_data['ttbm_post_id'] ?? '');
-            $from = sanitize_text_field($form_data['ttbm-reply-from'] ?? '');
             $to = sanitize_email($form_data['ttbm-reply-to'] ?? '');
             $subject = sanitize_text_field($form_data['ttbm-reply-subject'] ?? '');
             $message = sanitize_textarea_field($form_data['ttbm-reply-message'] ?? '');
@@ -110,7 +118,8 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 wp_send_json_error(['message' => __('Failed to submit enquiry. Please try again.', 'tour-booking-manager')]);
 			}
             $form_data = [];
-            parse_str($_POST['data'], $form_data);
+	        $data = isset($_POST['data']) ? sanitize_text_field(wp_unslash($_POST['data'] )): '';
+            parse_str($data, $form_data);
             $name = sanitize_text_field($form_data['name'] ?? '');
             $email = sanitize_email($form_data['email'] ?? '');
             $subject = sanitize_text_field($form_data['subject'] ?? '');
@@ -127,7 +136,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                     'status' => 'new',
                 ],
             ]);
-            $to = get_option('admin_email', 'admin@' . parse_url(get_site_url(), PHP_URL_HOST));
+            $to = get_option('admin_email', 'admin@' . wp_parse_url(get_site_url(), PHP_URL_HOST));
             wp_mail($to, $subject, $message, $headers);
             if ($enquiry_id) {
                 wp_send_json_success(['message' => __('Enquiry submitted successfully.', 'tour-booking-manager')]);
@@ -196,7 +205,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
         }
 
         public function reply_enquery_popup() {
-            $from_email = get_option('admin_email', 'admin@' . parse_url(get_site_url(), PHP_URL_HOST));
+            $from_email = get_option('admin_email', 'admin@' . wp_parse_url(get_site_url(), PHP_URL_HOST));
             ?>
             <div class="ttbm_popup ttbm_style" data-popup="reply-enquiry-popup">
                 <div class="popupMainArea">
@@ -288,8 +297,9 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             
             if (isset($_POST['ttbm_enquiry_submit']) and isset($_POST['ttbm_enquiry_nonce'])) {
                 
-                if (wp_verify_nonce($_POST['ttbm_enquiry_nonce'], 'ttbm_enquiry_nonce')) {
-                    update_option('ttbm_enquiry_from_email', sanitize_email($_POST['ttbm_enquiry_from_email']));
+                if (wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_enquiry_nonce'])), 'ttbm_enquiry_nonce')) {
+                    $ttbm_enquiry_from_email=isset($_POST['ttbm_enquiry_from_email'])?sanitize_email(wp_unslash($_POST['ttbm_enquiry_from_email'])):'';
+                    update_option('ttbm_enquiry_from_email', $ttbm_enquiry_from_email);
                     
                 } else {
                     wp_die(esc_html__('Nonce verification failed', 'tour-booking-manager'));
@@ -297,7 +307,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             } 
             $from_email = get_option('ttbm_enquiry_from_email');
             if (empty($from_email)) {
-                $from_email = get_option('admin_email', 'admin@' . parse_url(get_site_url(), PHP_URL_HOST));
+                $from_email = get_option('admin_email', 'admin@' . wp_parse_url(get_site_url(), PHP_URL_HOST));
             }
             $from_email = sanitize_email($from_email);        
         ?>
@@ -339,7 +349,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                         <form method="get" style="float:right;">
                             <input type="hidden" name="post_type" value="ttbm_tour">
                             <input type="hidden" name="page" value="ttbm_get_enquiry">
-                            <input type="text" name="s" value="<?php echo esc_attr($_GET['s'] ?? ''); ?>" placeholder="Search enquiries..." />
+                            <input type="text" name="s" value="<?php echo esc_attr(isset($_GET['s']) ?sanitize_text_field(wp_unslash($_GET['s'])): ''); ?>" placeholder="Search enquiries..." />
                             <input type="submit" class="button" value="Search" />
                         </form>
 
@@ -357,8 +367,8 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                             </thead>
                             <tbody>
                                 <?php
-                                $paged = isset($_GET['paged']) ? intval($_GET['paged']) : 1;
-                                $search = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
+                                $paged = isset($_GET['paged']) ? intval(wp_unslash($_GET['paged'])) : 1;
+                                $search = isset($_GET['s']) ? sanitize_text_field(wp_unslash(($_GET['s']))) : '';
                                 $args = [
                                     'post_type'      => 'ttbm_enquiry',
                                     'post_status'    => 'publish',

@@ -53,7 +53,7 @@
         if (form_id) {
             $.ajax({
                 type: 'POST', url: ttbm_ajax_url, data: {
-                    "action": "get_ttbm_insert_ticket_type", "form_id": form_id, "post_id": post_id
+                    "action": "get_ttbm_insert_ticket_type", "form_id": form_id, "post_id": post_id,nonce: ttbm_admin_ajax.nonce,
                 }, beforeSend: function () {
                     dLoader(parent);
                 }, success: function (data) {

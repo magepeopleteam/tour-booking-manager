@@ -152,8 +152,13 @@
 				<?php
 			}
 			public function ticket_table() {
-				$form_id = $_REQUEST['form_id'] ?? '';
-				$post_id = $_REQUEST['post_id'] ?? '';
+				if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field(wp_unslash($_POST['nonce'] )), 'ttbm_admin_nonce' ) ) {
+					wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
+					die;
+				}
+
+				$form_id = isset($_POST['form_id']) ? sanitize_text_field(wp_unslash($_POST['form_id'] )): '';
+				$post_id = isset($_POST['post_id']) ? sanitize_text_field(wp_unslash($_POST['post_id'] )): '';
 				$ticket_type = TTBM_Global_Function::get_post_info($form_id, 'ttbm_ticket_type', array());
 				if (sizeof($ticket_type) > 0) {
 					foreach ($ticket_type as $field) {

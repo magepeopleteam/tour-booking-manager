@@ -71,7 +71,7 @@
         let dt = new Date();
         let time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
         $.ajax({
-            type: 'POST', url: ttbm_ajax_url, data: {"action": "get_ttbm_add_day_wise_details", "id": time}, beforeSend: function () {
+            type: 'POST', url: ttbm_ajax_url, data: {"action": "get_ttbm_add_day_wise_details", "id": time,nonce: ttbm_admin_ajax.nonce,}, beforeSend: function () {
                 dLoader(parent);
             }, success: function (data) {
                 $this.before(data);

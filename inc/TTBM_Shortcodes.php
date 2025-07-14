@@ -30,7 +30,7 @@
 				$search = $params['sidebar-filter'];
 				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
 				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'],$params['sort_by']);
-				//ob_start();
+				ob_start();
 				?>
 				<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
 					<div class="mpContainer">
@@ -59,7 +59,7 @@
 					</div>
 				</div>
 				<?php
-				//return ob_get_clean();
+				return ob_get_clean();
 			}
 			public function list_with_left_filter_for_search( $attribute, $type_filter, $organizer_filter, $location_filter, $activity_filter, $date_filter ) {
 				$defaults = $this->default_attribute('modern', 12, 'no', 'yes', 'yes', 'yes', $month_filter = 'yes', $tour_type = '');
@@ -70,7 +70,7 @@
 				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
 
 				$loop = TTBM_Query::ttbm_query_for_top_Search($show, $params['sort'], $params['sort_by'], $params['status'], $type_filter, $organizer_filter, $location_filter, $activity_filter, $date_filter );
-                //ob_start();
+                ob_start();
 				?>
 				<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
 					<div class="mpContainer">
@@ -99,7 +99,7 @@
 					</div>
 				</div>
 				<?php
-				//return ob_get_clean();
+				return ob_get_clean();
 			}
 			public function list_with_top_filter($attribute) {
 				$defaults = $this->default_attribute();

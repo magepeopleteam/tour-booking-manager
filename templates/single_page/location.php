@@ -33,9 +33,9 @@
 		get_header();
 	}
 	$term_id = get_queried_object()->name;
-	$status=$_GET['location_status'] ?? '' ;
+	//$status=$_GET['location_status'] ?? '' ;
 	$shortcode = "[travel-list city='" . $term_id . "' style='modern' show='10'  pagination='yes' sidebar-filter='yes'";
-	$status?$shortcode .= " status='" . $status . "'":'';
+	//$status?$shortcode .= " status='" . $status . "'":'';
 	$shortcode .= "]";
 	do_action( 'ttbm_single_location_page_before_wrapper' );
 	echo do_shortcode( $shortcode );

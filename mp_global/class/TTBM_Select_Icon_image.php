@@ -26,7 +26,7 @@
                             <div class="allCenter">
                                 <span class="<?php echo esc_attr($icon); ?>" data-add-icon></span>
                             </div>
-                            <span class="fas fa-times ttbm_remove_icon ttbm_icon_remove" title="<?php esc_html_e('Remove Icon', 'tour-booking-manager'); ?>"></span>
+                            <span class="fas fa-times ttbm_icon_remove" title="<?php esc_html_e('Remove Icon', 'tour-booking-manager'); ?>"></span>
                         </div>
                         <div class="ttbm_add_icon_image_button_area <?php echo esc_attr($button_active_class); ?>">
                             <div class="flexEqual">

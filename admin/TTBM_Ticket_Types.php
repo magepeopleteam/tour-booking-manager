@@ -7,7 +7,6 @@
 			public function __construct() {
 				add_action('add_meta_boxes', array($this, 'ticket_type_meta'));
 				add_action('ttbm_ticket_item', array($this, 'pricing_item'));
-				add_action('save_post', array($this, 'save_ticket_item'), 99, 1);
 			}
 			public function ticket_type_meta() {
 				$label = TTBM_Function::get_name();
@@ -36,17 +35,17 @@
                             </tr>
                             </thead>
                             <tbody class="ttbm_sortable_area ttbm_item_insert">
-			                <?php
-				                if (sizeof($ticket_type) > 0) {
-					                foreach ($ticket_type as $field) {
-						                $this->pricing_item($field);
-					                }
-				                }
-			                ?>
+							<?php
+								if (sizeof($ticket_type) > 0) {
+									foreach ($ticket_type as $field) {
+										$this->pricing_item($field);
+									}
+								}
+							?>
                             </tbody>
                         </table>
-		                <?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Ticket Type', 'tour-booking-manager')); ?>
-		                <?php do_action('add_ttbm_hidden_table', 'ttbm_ticket_item'); ?>
+						<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Ticket Type', 'tour-booking-manager')); ?>
+						<?php do_action('add_ttbm_hidden_table', 'ttbm_ticket_item'); ?>
                     </div>
                 </div>
 				<?php
@@ -98,44 +97,6 @@
                     <td><?php TTBM_Custom_Layout::move_remove_button(); ?></td>
                 </tr>
 				<?php
-			}
-			public function save_ticket_item($tour_id) {
-				if (get_post_type($tour_id) == 'ttbm_ticket_types') {
-					if (!isset($_POST['ttbm_ticket_item_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_ticket_item_nonce'])), 'ttbm_ticket_item_nonce')) {
-						return;
-					}
-					if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-						return;
-					}
-					if (!current_user_can('edit_post', $tour_id)) {
-						return;
-					};
-					$new_ticket_type = array();
-					$icon = TTBM_Global_Function::get_submit_info('ticket_type_icon', array());
-					$names = TTBM_Global_Function::get_submit_info('ticket_type_name', array());
-					$ticket_price = TTBM_Global_Function::get_submit_info('ticket_type_price', array());
-					$sale_price = TTBM_Global_Function::get_submit_info('ticket_type_sale_price', array());
-					$qty = TTBM_Global_Function::get_submit_info('ticket_type_qty', array());
-					$default_qty = TTBM_Global_Function::get_submit_info('ticket_type_default_qty', array());
-					$rsv = TTBM_Global_Function::get_submit_info('ticket_type_resv_qty', array());
-					$qty_type = TTBM_Global_Function::get_submit_info('ticket_type_qty_type', array());
-					$description = TTBM_Global_Function::get_submit_info('ticket_type_description', array());
-					$count = count($names);
-					for ($i = 0; $i < $count; $i++) {
-						if ($names[$i] && $ticket_price[$i] >= 0 && $qty[$i] > 0) {
-							$new_ticket_type[$i]['ticket_type_icon'] = $icon[$i] ?? '';
-							$new_ticket_type[$i]['ticket_type_name'] = $names[$i];
-							$new_ticket_type[$i]['ticket_type_price'] = $ticket_price[$i];
-							$new_ticket_type[$i]['sale_price'] = $sale_price[$i];
-							$new_ticket_type[$i]['ticket_type_qty'] = $qty[$i];
-							$new_ticket_type[$i]['ticket_type_default_qty'] = $default_qty[$i] ?? 0;
-							$new_ticket_type[$i]['ticket_type_resv_qty'] = $rsv[$i] ?? 0;
-							$new_ticket_type[$i]['ticket_type_qty_type'] = $qty_type[$i] ?? 'inputbox';
-							$new_ticket_type[$i]['ticket_type_description'] = $description[$i] ?? '';
-						}
-					}
-					update_post_meta($tour_id, 'ttbm_ticket_type', $new_ticket_type);
-				}
 			}
 		}
 		new TTBM_Ticket_Types();

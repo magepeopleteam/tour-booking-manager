@@ -92,8 +92,8 @@ if (!class_exists('TTBM_Hidden_Hotel_Product')) {
                 set_post_thumbnail($product_id, get_post_thumbnail_id($post_id));
                 wp_publish_post($product_id);
                 $product_type = 'yes';
-                $_tax_status = TTBM_Global_Function::get_submit_info('_tax_status', 'none');
-                $_tax_class = TTBM_Global_Function::get_submit_info('_tax_class');
+	            $_tax_status = isset($_POST['_tax_status']) ? sanitize_text_field(wp_unslash($_POST['_tax_status'])) : 'none';
+	            $_tax_class = isset($_POST['_tax_class']) ? sanitize_text_field(wp_unslash($_POST['_tax_class'])) : '';
                 update_post_meta($product_id, '_tax_status', $_tax_status);
                 update_post_meta($product_id, '_tax_class', $_tax_class);
                 update_post_meta($product_id, '_stock_status', 'instock');

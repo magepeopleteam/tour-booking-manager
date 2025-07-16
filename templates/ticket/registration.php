@@ -8,6 +8,7 @@
 	$ttbm_display_registration = $ttbm_display_registration ?? TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_display_registration', 'on' );
 	if ( $ttbm_display_registration != 'off' ) {
 		$all_dates   = $all_dates ?? TTBM_Function::get_date( $tour_id );
+        //echo '<pre>';print_r($all_dates);echo '</pre>';
 		$tour_type   = $tour_type ?? TTBM_Function::get_tour_type( $tour_id );
 		$travel_type = $travel_type ?? TTBM_Function::get_travel_type( $tour_id );
 		include( TTBM_Function::template_path( 'ticket/date_selection.php' ) );

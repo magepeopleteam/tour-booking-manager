@@ -103,7 +103,7 @@
 				}
 			}
 
-            public static function ttbm_query_for_top_Search( $show, $sort , $sort_by, $status , $type_filter, $organizer_filter, $location, $activity, $date_filter = '' ): WP_Query {
+            public static function ttbm_query_for_top_Search( $show, $sort , $sort_by, $status , $organizer_filter, $location, $activity, $date_filter = '' ): WP_Query {
                 if( is_array( $date_filter )){
                     if( !empty( $date_filter['start_date'] ) ){
                         $start_date = DateTime::createFromFormat('F d, Y', $date_filter['start_date']);
@@ -268,15 +268,6 @@
 					return new WP_Query($args);
 				}				
 			}
-			public static function get_order_meta($item_id, $key): string {
-				global $wpdb;
-				$table_name = $wpdb->prefix . "woocommerce_order_itemmeta";
-				$results = $wpdb->get_results($wpdb->prepare("SELECT meta_value FROM $table_name WHERE order_item_id = %d AND meta_key = %s", $item_id, $key));
-				foreach ($results as $result) {
-					$value = $result->meta_value;
-				}
-				return $value ?? '';
-			}
 			public static function query_all_sold($tour_id, $tour_date, $type = '', $hotel_id = ''): WP_Query {
 				$_seat_booked_status = TTBM_Function::get_general_settings('ttbm_set_book_status', array('processing', 'completed'));
 				$seat_booked_status = !empty($_seat_booked_status) ? $_seat_booked_status : [];
@@ -359,7 +350,7 @@
 						$total_qty+=$qty;
 					}
 				}
-				wp_reset_query();
+				wp_reset_postdata();
 				return max(0,$total_qty);
 			}
 			public static function query_group_id($group_id){
@@ -390,7 +381,7 @@
 						$group_ids[]=$ex_service->ID;
 					}
 				}
-				wp_reset_query();
+				wp_reset_postdata();
 				return $group_ids;
 			}
 		}

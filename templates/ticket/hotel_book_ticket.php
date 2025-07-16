@@ -3,7 +3,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     die;
 }
 
-
+if (isset($_POST['ttbm_hotel_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_hotel_nonce'])), 'ttbm_hotel_nonce')){
+	$hotel_id = $hotel_id ?? '';
 $ttbm_post_id = $ttbm_post_id ?? get_the_id();
 //$room_lists = TTBM_Global_Function::get_post_info( $hotel_id, 'ttbm_room_details', array() );
 $date_range = isset( $_REQUEST['date_range'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_range'] ) ) : '';
@@ -109,5 +110,6 @@ if ( $hotel_id && $date_range ) {
         <h3 class="textWhite"><?php esc_html_e( 'No Room available !', 'tour-booking-manager' ); ?></h3>
     </div>
     <?php
+}
 }
 ?>

@@ -7,7 +7,10 @@
 	$tour_date  = $tour_date ?? TTBM_Function::get_date( $tour_id )[0];
 	$hotel_id   = $hotel_id ?? current( TTBM_Function::get_hotel_list( $tour_id ) );
 	$room_lists = TTBM_Global_Function::get_post_info( $hotel_id, 'ttbm_room_details', array() );
-	$date_range = isset( $_REQUEST['date_range'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_range'] ) ) : '';
+	$date_range ='';
+	if (isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_frontend_nonce')) {
+		$date_range = isset( $_REQUEST['date_range'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_range'] ) ) : '';
+	}
 	if ( sizeof( $room_lists ) > 0 && $hotel_id && $date_range ) {
 		$hotel_date = explode( "-", $date_range );
 		$date1      = gmdate( 'Y-m-d', strtotime( $hotel_date[0] ) );

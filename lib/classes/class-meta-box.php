@@ -28,7 +28,7 @@ if ( ! class_exists( 'TtbmAddMetaBox' ) ) {
 		public function save_post( $post_id ) {
 			if (
 				!isset($_POST['ttbm_ticket_type_nonce']) ||
-				!wp_verify_nonce($_POST['ttbm_ticket_type_nonce'], 'ttbm_ticket_type_nonce')
+				!wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_ticket_type_nonce'])), 'ttbm_ticket_type_nonce')
 			) {
 				return;
 			}	
@@ -42,13 +42,13 @@ if ( ! class_exists( 'TtbmAddMetaBox' ) ) {
 			$get_option_name = $this->get_option_name();
 			$post_id         = $this->get_post_id();
 			if ( ! empty( $get_option_name ) ):
-				$option_value = maybe_serialize( stripslashes_deep(ttbm_array_strip($_POST[ $get_option_name ])) );
+				$option_value = isset( $_POST[ $get_option_name ]) ? maybe_serialize( sanitize_text_field(wp_unslash($_POST[ $get_option_name ])) ):'';
 				update_post_meta( $post_id, $get_option_name, $option_value );
 			else:
 				foreach ( $this->get_panels() as $panelsIndex => $panel ):
 					foreach ( $panel['sections'] as $sectionIndex => $section ):
 						foreach ( $section['options'] as $option ):
-							$option_value = isset( $_POST[ $option['id'] ] ) ? stripslashes_deep(ttbm_array_strip($_POST[ $option['id'] ])) : '';
+							$option_value = isset( $_POST[ $option['id'] ] ) ? sanitize_text_field(wp_unslash($_POST[ $option['id'] ])) : '';
 							if ( is_array( $option_value ) ) {
 								$option_value = maybe_serialize( $option_value );
 							}

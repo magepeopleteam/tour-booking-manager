@@ -13,7 +13,6 @@
 				add_shortcode('ttbm-hotel-list', array($this, 'hotel_list'));
 				add_shortcode('ttbm-registration', array($this, 'registration'));
 				add_shortcode('ttbm-related', array($this, 'related'));
-				add_shortcode('ttbm_customer_dashboard', array($this, 'customer_dashboard_shortcode'));
 			}
 			public function static_filter($attribute) {
 				$defaults = $this->default_attribute();
@@ -50,7 +49,6 @@
 							</div>
 							<?php
 						} else {
-							include( TTBM_Function::template_path( 'layout/filter_hidden.php' ) );
 							do_action('ttbm_all_list_item', $loop, $params);
 							do_action('ttbm_sort_result', $loop, $params);
 							do_action('ttbm_pagination', $params, $loop->post_count);
@@ -61,15 +59,18 @@
 				<?php
 				return ob_get_clean();
 			}
-			public function list_with_left_filter_for_search( $attribute, $type_filter, $organizer_filter, $location_filter, $activity_filter, $date_filter ) {
+			public function list_with_left_filter_for_search( $attribute, $date_filter=[] ) {
 				$defaults = $this->default_attribute('modern', 12, 'no', 'yes', 'yes', 'yes', $month_filter = 'yes', $tour_type = '');
 				$params = shortcode_atts($defaults, $attribute);
 				$show = $params['show'];
 				$pagination = $params['pagination'];
 				$search = $params['sidebar-filter'];
+				$organizer_filter = $params['organizer-filter'];
+				$location_filter = $params['location-filter'];
+				$activity_filter = $params['activity-filter'];
 				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
 
-				$loop = TTBM_Query::ttbm_query_for_top_Search($show, $params['sort'], $params['sort_by'], $params['status'], $type_filter, $organizer_filter, $location_filter, $activity_filter, $date_filter );
+				$loop = TTBM_Query::ttbm_query_for_top_Search($show, $params['sort'], $params['sort_by'], $params['status'], $organizer_filter, $location_filter, $activity_filter, $date_filter );
                 ob_start();
 				?>
 				<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
@@ -90,7 +91,6 @@
 							</div>
 							<?php
 						} else {
-							include( TTBM_Function::template_path( 'layout/filter_hidden.php' ) );
 							do_action('ttbm_all_list_item', $loop, $params);
 							do_action('ttbm_sort_result', $loop, $params);
 							do_action('ttbm_pagination', $params, $loop->post_count);
@@ -187,15 +187,7 @@
 			}
 			public function search_result($attribute) {
 				ob_start();
-				$type_filter = $_GET['type_filter'] ?? '';
-				$organizer_filter = $_GET['organizer_filter'] ?? '';
-				$location_filter = $_GET['location_filter'] ?? '';
-				$activity_filter = $_GET['activity_filter'] ?? '';
-				$date_filter_start = $_GET['date_filter_start'] ?? '';
-				$date_filter_end = $_GET['date_filter_end'] ?? '';
-                $date_filter = array( 'start_date' => $date_filter_start, 'end_date' => $date_filter_end );
-//                echo $this->list_with_left_filter($attribute, $type_filter);
-				 $this->list_with_left_filter_for_search( $attribute, $type_filter, $organizer_filter, $location_filter, $activity_filter, $date_filter );
+				 $this->list_with_left_filter_for_search( $attribute );
 				return ob_get_clean();
 			}
 			public function hotel_list($attribute) {
@@ -233,20 +225,6 @@
 						</div>
 					</div>
 					<?php
-				}
-				return ob_get_clean();
-			}
-			public function customer_dashboard_shortcode($atts = array(), $content = null) {
-				ob_start();
-				if (is_user_logged_in()) {
-					$template = TTBM_Function::template_path('customer_dashboard.php');
-					if (file_exists($template)) {
-						include $template;
-					} else {
-						echo '<p>' . esc_html__('Dashboard template not found.', 'tour-booking-manager') . '</p>';
-					}
-				} else {
-					echo '<p>' . esc_html__('You must be logged in to view your dashboard.', 'tour-booking-manager') . '</p>';
 				}
 				return ob_get_clean();
 			}

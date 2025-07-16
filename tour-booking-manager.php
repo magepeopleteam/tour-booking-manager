@@ -31,9 +31,7 @@
 				require_once TTBM_PLUGIN_DIR . '/mp_global/TTBM_Global_File_Load.php';
 				$this->load_global_file();
 				if (TTBM_Global_Function::check_woocommerce() == 1) {
-					require_once TTBM_PLUGIN_DIR . '/lib/classes/class-ttbm.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Dependencies.php';
-					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Cancellation.php';
 				} else {
 					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
 				}
@@ -59,13 +57,8 @@
 				}
 				$ttbm_quick_setup_done = get_option('ttbm_quick_setup_done') ? get_option('ttbm_quick_setup_done') : 'no';
 				if ($ttbm_quick_setup_done == 'no') {
-
-					if(isset($_REQUEST['page']) && $_REQUEST['page'] == 'ttbm_quick_setup'){
-						return null;
-					}else{
-						wp_redirect(admin_url('admin.php?post_type=ttbm_tour&page=ttbm_quick_setup'));
-						exit();
-					}
+					wp_redirect(admin_url('admin.php?post_type=ttbm_tour&page=ttbm_quick_setup'));
+					exit();
 					
 				}
 			}

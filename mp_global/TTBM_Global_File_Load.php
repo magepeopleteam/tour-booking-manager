@@ -39,14 +39,14 @@
 				wp_enqueue_script('jquery-ui-core');
 				wp_enqueue_script('jquery-ui-datepicker');
 				wp_enqueue_style('mp_jquery_ui', TTBM_GLOBAL_PLUGIN_URL . '/assets/jquery-ui.min.css', array(), time(), true);
-				wp_enqueue_style('mp_font_awesome', '//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css', array(), time());
+				wp_enqueue_style('mp_font_awesome', TTBM_GLOBAL_PLUGIN_URL . '/assets/admin/all.min.css', array(), '5.15.3');
 				wp_enqueue_style('mp_select_2', TTBM_GLOBAL_PLUGIN_URL . '/assets/select_2/select2.min.css', array(), time());
 				wp_enqueue_script('mp_select_2', TTBM_GLOBAL_PLUGIN_URL . '/assets/select_2/select2.min.js', array(), time(), true);
 				wp_enqueue_style('mp_owl_carousel', TTBM_GLOBAL_PLUGIN_URL . '/assets/owl_carousel/owl.carousel.min.css', array(), time());
 				wp_enqueue_script('mp_owl_carousel', TTBM_GLOBAL_PLUGIN_URL . '/assets/owl_carousel/owl.carousel.min.js', array(), time(), true);
 				wp_enqueue_style('ttbm_plugin_global', TTBM_GLOBAL_PLUGIN_URL . '/assets/mp_style/ttbm_plugin_global.css', array(), time());
 				wp_enqueue_script('ttbm_plugin_global', TTBM_GLOBAL_PLUGIN_URL . '/assets/mp_style/ttbm_plugin_global.js', array('jquery'), time(), true);
-                wp_enqueue_style('mp_plugin_global', TTBM_GLOBAL_PLUGIN_URL . '/assets/mp_style/ttbm_popup_style.css', array(), time());
+				wp_enqueue_style('mp_plugin_global', TTBM_GLOBAL_PLUGIN_URL . '/assets/mp_style/ttbm_popup_style.css', array(), time());
 				do_action('add_ttbm_global_enqueue');
 			}
 			public function admin_enqueue() {
@@ -59,10 +59,9 @@
 				wp_enqueue_script('wp-color-picker');
 				wp_enqueue_style('wp-codemirror');
 				wp_enqueue_script('wp-codemirror');
-				//wp_enqueue_script('jquery-ui-accordion');
 				//loading Time picker
-				wp_enqueue_style('jquery.timepicker.min', 'https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css');
-				wp_enqueue_script('jquery.timepicker.min', 'https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js', array('jquery'), 1, true);
+				wp_enqueue_style('jquery.timepicker.min', TTBM_GLOBAL_PLUGIN_URL . '/assets/admin/timepicker.css', array(), '1.3.5');
+				wp_enqueue_script('jquery.timepicker.min', TTBM_GLOBAL_PLUGIN_URL . '/assets/admin/timepicker.js', array('jquery'), time(), true);
 				//=====================//
 				wp_enqueue_script('form-field-dependency', TTBM_GLOBAL_PLUGIN_URL . '/assets/admin/form-field-dependency.js', array('jquery'), null, false);
 				// admin setting global
@@ -83,30 +82,30 @@
 			}
 			public function js_constant() {
 				?>
-				<script type="text/javascript">
-					let ttbm_currency_symbol = "";
-					let ttbm_currency_position = "";
-					let ttbm_currency_decimal = "";
-					let ttbm_currency_thousands_separator = "";
-					let ttbm_num_of_decimal = "";
-					let ttbm_ajax_url = "<?php echo esc_url(admin_url('admin-ajax.php')); ?>";
-					let ttbm_site_url = " <?php echo esc_attr( get_site_url() ) ?>";
-					let ttbm_empty_image_url = "<?php echo esc_attr(TTBM_GLOBAL_PLUGIN_URL . '/assets/images/no_image.png'); ?>";
-					let ttbm_date_format = "<?php echo esc_attr(TTBM_Global_Function::get_settings('ttbm_global_settings', 'date_format', 'D d M , yy')); ?>";
-					let ttbm_date_format_without_year = "<?php echo esc_attr(TTBM_Global_Function::get_settings('ttbm_global_settings', 'date_format_without_year', 'D d M')); ?>";
-				</script>
+                <script type="text/javascript">
+                    let ttbm_currency_symbol = "";
+                    let ttbm_currency_position = "";
+                    let ttbm_currency_decimal = "";
+                    let ttbm_currency_thousands_separator = "";
+                    let ttbm_num_of_decimal = "";
+                    let ttbm_ajax_url = "<?php echo esc_url(admin_url('admin-ajax.php')); ?>";
+                    let ttbm_site_url = " <?php echo esc_attr(get_site_url()) ?>";
+                    let ttbm_empty_image_url = "<?php echo esc_attr(TTBM_GLOBAL_PLUGIN_URL . '/assets/images/no_image.png'); ?>";
+                    let ttbm_date_format = "<?php echo esc_attr(TTBM_Global_Function::get_settings('ttbm_global_settings', 'date_format', 'D d M , yy')); ?>";
+                    let ttbm_date_format_without_year = "<?php echo esc_attr(TTBM_Global_Function::get_settings('ttbm_global_settings', 'date_format_without_year', 'D d M')); ?>";
+                </script>
 				<?php
 				if (TTBM_Global_Function::check_woocommerce() == 1) {
 					?>
-					<script type="text/javascript">
-						ttbm_currency_symbol = "<?php 
-						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-						echo get_woocommerce_currency_symbol(); ?>";
-						ttbm_currency_position = "<?php echo esc_html(get_option('woocommerce_currency_pos')); ?>";
-						ttbm_currency_decimal = "<?php echo esc_html(wc_get_price_decimal_separator()); ?>";
-						ttbm_currency_thousands_separator = "<?php echo esc_html(wc_get_price_thousand_separator()); ?>";
-						ttbm_num_of_decimal = "<?php echo esc_html(get_option('woocommerce_price_num_decimals', 2)); ?>";
-					</script>
+                    <script type="text/javascript">
+                        ttbm_currency_symbol = "<?php
+							// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo get_woocommerce_currency_symbol(); ?>";
+                        ttbm_currency_position = "<?php echo esc_html(get_option('woocommerce_currency_pos')); ?>";
+                        ttbm_currency_decimal = "<?php echo esc_html(wc_get_price_decimal_separator()); ?>";
+                        ttbm_currency_thousands_separator = "<?php echo esc_html(wc_get_price_thousand_separator()); ?>";
+                        ttbm_num_of_decimal = "<?php echo esc_html(get_option('woocommerce_price_num_decimals', 2)); ?>";
+                    </script>
 					<?php
 				}
 			}
@@ -114,11 +113,11 @@
 				$custom_css = TTBM_Global_Function::get_settings('ttbm_custom_css', 'custom_css');
 				ob_start();
 				?>
-				<style>
-					<?php 
+                <style>
+                    <?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $custom_css; ?>
-				</style>
+                </style>
 				<?php
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo ob_get_clean();

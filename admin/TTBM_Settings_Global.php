@@ -73,10 +73,6 @@
 					array(
 						'id' => 'ttbm_basic_translation_settings',
 						'title' => $label . ' ' . __('Translation Settings', 'tour-booking-manager')
-					),
-					array(
-						'id' => 'ttbm_cancel_email_settings',
-						'title' => __('Cancellation Email', 'tour-booking-manager')
 					)
 				);
 				return array_merge($default_sec, $sections);
@@ -468,74 +464,7 @@
 								'max' => esc_html__('Maximum', 'tour-booking-manager')
 							)
 						)
-					),
-					'ttbm_cancel_email_settings' => array(
-						array(
-							'name' => 'ttbm_cancel_period_hours',
-							'label' => esc_html__('Cancellation Allowed (hours before start)', 'tour-booking-manager'),
-							'desc' => esc_html__('How many hours before the tour start can a customer request cancellation? (Global default, can be overridden per tour)', 'tour-booking-manager'),
-							'type' => 'number',
-							'default' => '24',
-							'placeholder' => '24'
-						),
-						array(
-							'name' => 'ttbm_notify_admin_cancel_request',
-							'label' => esc_html__('Notify admin on new cancellation request', 'tour-booking-manager'),
-							'type' => 'select',
-							'default' => 'off',
-							'options' => array('on' => esc_html__('On', 'tour-booking-manager'), 'off' => esc_html__('Off', 'tour-booking-manager')),
-						),
-						array(
-							'name' => 'ttbm_cancel_admin_subject',
-							'label' => esc_html__('Admin Email Subject', 'tour-booking-manager'),
-							'type' => 'text',
-							'default' => __('New Cancellation Request for Order #{order_id}', 'tour-booking-manager'),
-						),
-						array(
-							'name' => 'ttbm_cancel_admin_body',
-							'label' => esc_html__('Admin Email Body', 'tour-booking-manager'),
-							'type' => 'wysiwyg',
-							'default' => __('A new cancellation request has been submitted.\nOrder: #{order_id}\nTour: {tour_title}\nCustomer: {customer_name}\nReason: {reason}', 'tour-booking-manager'),
-						),
-						array(
-							'name' => 'ttbm_notify_customer_cancel_approved',
-							'label' => esc_html__('Notify customer on approval', 'tour-booking-manager'),
-							'type' => 'select',
-							'default' => 'off',
-							'options' => array('on' => esc_html__('On', 'tour-booking-manager'), 'off' => esc_html__('Off', 'tour-booking-manager')),
-						),
-						array(
-							'name' => 'ttbm_cancel_customer_approved_subject',
-							'label' => esc_html__('Approval Email Subject', 'tour-booking-manager'),
-							'type' => 'text',
-							'default' => __('Your Cancellation Request Approved (Order #{order_id})', 'tour-booking-manager'),
-						),
-						array(
-							'name' => 'ttbm_cancel_customer_approved_body',
-							'label' => esc_html__('Approval Email Body', 'tour-booking-manager'),
-							'type' => 'wysiwyg',
-							'default' => __('Your cancellation request for tour "{tour_title}" (Order #{order_id}) has been approved. Your order is now cancelled.\nThank you.', 'tour-booking-manager'),
-						),
-						array(
-							'name' => 'ttbm_notify_customer_cancel_rejected',
-							'label' => esc_html__('Notify customer on rejection', 'tour-booking-manager'),
-							'type' => 'select',
-							'default' => 'off',
-							'options' => array('on' => esc_html__('On', 'tour-booking-manager'), 'off' => esc_html__('Off', 'tour-booking-manager')),
-						),
-						array(
-							'name' => 'ttbm_cancel_customer_rejected_subject',
-							'label' => esc_html__('Rejection Email Subject', 'tour-booking-manager'),
-							'type' => 'text',
-							'default' => __('Your Cancellation Request Rejected (Order #{order_id})', 'tour-booking-manager'),
-						),
-						array(
-							'name' => 'ttbm_cancel_customer_rejected_body',
-							'label' => esc_html__('Rejection Email Body', 'tour-booking-manager'),
-							'type' => 'wysiwyg',
-							'default' => __('Your cancellation request for tour "{tour_title}" (Order #{order_id}) has been rejected.\nThank you.', 'tour-booking-manager'),
-						),
-					),
+					)
 				);
 				return array_merge($default_fields, $settings_fields);
 			}

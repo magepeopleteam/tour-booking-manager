@@ -33,8 +33,8 @@
 		get_header();
 	}
 	do_action( 'ttbm_single_location_page_before_wrapper' );
-	$status=$_GET['location_status'] ?? '' ;
-	$loop   = TTBM_Query::ttbm_query( - 1, 'ASC', 0, 0,'','',$status );
+	//$status=$_GET['location_status'] ?? '' ;
+	$loop   = TTBM_Query::ttbm_query( - 1, 'ASC', 0, 0,'','' );
 	$params = array(
 		'column'           => 4,
 		'show'             => 10,

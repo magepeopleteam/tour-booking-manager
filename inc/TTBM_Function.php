@@ -28,11 +28,9 @@
 			public static function all_details_template() {
 				$template_path = get_stylesheet_directory() . '/ttbm_templates/themes/';
 				$default_path = TTBM_PLUGIN_DIR . '/templates/themes/';
-			
 				// Get the list of template files
 				$dir = is_dir($template_path) ? glob($template_path . "*") : glob($default_path . "*");
 				$templates = [];
-				
 				foreach ($dir as $filename) {
 					if (is_file($filename) && is_readable($filename)) {
 						$file = basename($filename);
@@ -42,10 +40,8 @@
 						$templates[$file] = $template_name;
 					}
 				}
-				
 				return apply_filters('ttbm_template_list_arr', $templates);
 			}
-			
 			public static function details_template_path(): string {
 				$tour_id = get_the_id();
 				$template_name = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_theme_file', 'default.php');
@@ -56,18 +52,16 @@
 				}
 				return self::template_path($file_name);
 			}
-
-            public static function details_template_file_path( $post_id = '' ): string {
-                $post_id       = $post_id ?? get_the_id();
-                $template_name = TTBM_Global_Function::get_post_info( $post_id, 'ttbm_hotel_template', 'hotel_default.php' );
-                $file_name     = 'themes/' . $template_name;
-                $dir           = TTBM_PLUGIN_DIR . '/templates/' . $file_name;
-                if ( ! file_exists( $dir ) ) {
-                    $file_name = 'themes/hotel_default.php';
-                }
-
-                return self::template_path( $file_name );
-            }
+			public static function details_template_file_path($post_id = ''): string {
+				$post_id = $post_id ?? get_the_id();
+				$template_name = TTBM_Global_Function::get_post_info($post_id, 'ttbm_hotel_template', 'hotel_default.php');
+				$file_name = 'themes/' . $template_name;
+				$dir = TTBM_PLUGIN_DIR . '/templates/' . $file_name;
+				if (!file_exists($dir)) {
+					$file_name = 'themes/hotel_default.php';
+				}
+				return self::template_path($file_name);
+			}
 			public static function template_path($file_name): string {
 				$template_path = get_stylesheet_directory() . '/ttbm_templates/';
 				$default_dir = TTBM_PLUGIN_DIR . '/templates/';
@@ -91,9 +85,8 @@
 							}
 						}
 					}
-					$tour_date=array_unique($tour_date);
-				}
-				else if ($travel_type == 'repeated') {
+					$tour_date = array_unique($tour_date);
+				} else if ($travel_type == 'repeated') {
 					$now_date = strtotime(current_time('Y-m-d'));
 					$start_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_date');
 					$start_date = $start_date ? gmdate('Y-m-d', strtotime($start_date)) : '';
@@ -119,21 +112,20 @@
 						$interval = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_after', 1);
 						$all_dates = TTBM_Global_Function::date_separate_period($start_date, $end_date, $interval);
 						foreach ($all_dates as $date) {
-						    $date = $date->format('Y-m-d'); // Convert DateTime object to string
-						    if ($expire || $now_date <= strtotime($date)) {
-						        $day = strtolower(gmdate('D', strtotime($date))); // Get the day in lowercase
-						        // Ensure $off_days and $off_dates are arrays before using in_array()
-						        if (!in_array($day, (array) $off_days) && !in_array($date, (array) $off_dates)) {
-						            $current_date = self::get_date_by_time_check($tour_id, $date, $expire);
-						            if ($current_date) {
-						                $tour_date[] = $current_date;
-						            }
-						        }
-						    }
+							$date = $date->format('Y-m-d'); // Convert DateTime object to string
+							if ($expire || $now_date <= strtotime($date)) {
+								$day = strtolower(gmdate('D', strtotime($date))); // Get the day in lowercase
+								// Ensure $off_days and $off_dates are arrays before using in_array()
+								if (!in_array($day, (array)$off_days) && !in_array($date, (array)$off_dates)) {
+									$current_date = self::get_date_by_time_check($tour_id, $date, $expire);
+									if ($current_date) {
+										$tour_date[] = $current_date;
+									}
+								}
+							}
 						}
 					}
-				}
-				else {
+				} else {
 					$date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date');
 					if ($date) {
 						$time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
@@ -201,22 +193,20 @@
 					self::update_month_list($tour_id, $all_date);
 				}
 			}
-            public static function get_upcoming_date_month( $tour_id, $update = '', $all_date = array() ){
-
-                $date = '';
-                $now = strtotime(current_time('Y-m-d'));
-                $db_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_upcoming_date');
-                $db_date = gmdate('Y-m-d', strtotime($db_date));
-                $month_list = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_month_list');
-                if (!$month_list || !$db_date || $update || strtotime($db_date) < $now) {
-                    $all_date = sizeof($all_date) > 0 ? $all_date : self::get_date($tour_id);
-                    if (sizeof($all_date) > 0) {
-                        $date = current($all_date);
-                    }
-                }
-
-                return $date;
-            }
+			public static function get_upcoming_date_month($tour_id, $update = '', $all_date = array()) {
+				$date = '';
+				$now = strtotime(current_time('Y-m-d'));
+				$db_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_upcoming_date');
+				$db_date = gmdate('Y-m-d', strtotime($db_date));
+				$month_list = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_month_list');
+				if (!$month_list || !$db_date || $update || strtotime($db_date) < $now) {
+					$all_date = sizeof($all_date) > 0 ? $all_date : self::get_date($tour_id);
+					if (sizeof($all_date) > 0) {
+						$date = current($all_date);
+					}
+				}
+				return $date;
+			}
 			public static function update_all_upcoming_date_month(): void {
 				$tour_ids = TTBM_Global_Function::get_all_post_id(TTBM_Function::get_cpt_name());
 				foreach ($tour_ids as $tour_id) {
@@ -365,6 +355,11 @@
 					}
 				}
 				return $price;
+			}
+			//************************************//
+			public static function get_submit_info($key, $default = '') {
+				//return self::data_sanitize($_POST[$key] ?? $default);
+				return $key;
 			}
 			//***********Duration*************************//
 			public static function get_duration($tour_id) {
@@ -743,7 +738,6 @@
 					}
 					return $data;
 				}
-				
 				if (is_string($data) && !empty($data)) {
 					$unserialized = @unserialize($data, ['allowed_classes' => false]);
 					if ($unserialized !== false || $data === 'b:0;') {
@@ -751,48 +745,7 @@
 					}
 					return sanitize_text_field($data);
 				}
-				
 				return $data;
-			}
-			public static function get_submit_info($key, $default = '') {
-				$data = isset( $_POST[$key] ) ? sanitize_text_field( wp_unslash( $_POST[$key] ) ) : $default;
-				return TTBM_Global_Function::data_sanitize($data);
-			}
-			public static function get_start_place($tour_id) {
-				return TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_place');
-			}
-			public static function get_hiphop_place($tour_id) {
-				return TTBM_Global_Function::get_post_info($tour_id, 'ttbm_hiphop_places', array());
-			}
-			public static function get_day_wise_details($tour_id) {
-				return TTBM_Global_Function::get_post_info($tour_id, 'ttbm_daywise_details', array());
-			}
-			public static function get_max_people_allow($tour_id) {
-				return TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_max_people_allow');
-			}
-			public static function get_min_age_allow($tour_id) {
-				return TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_min_age');
-			}
-			public static function get_contact_text($tour_id) {
-				return TTBM_Global_Function::get_post_info($tour_id, 'ttbm_contact_text');
-			}
-			public static function get_contact_phone($tour_id) {
-				return TTBM_Global_Function::get_post_info($tour_id, 'ttbm_contact_phone');
-			}
-			public static function get_contact_email($tour_id) {
-				return TTBM_Global_Function::get_post_info($tour_id, 'ttbm_contact_email');
-			}
-			public static function get_faq($tour_id) {
-				return TTBM_Global_Function::get_post_info($tour_id, 'mep_event_faq', array());
-			}
-			public static function get_why_choose_us($tour_id) {
-				return TTBM_Global_Function::get_post_info($tour_id, 'ttbm_why_choose_us_texts', array());
-			}
-			public static function get_related_tour($tour_id) {
-				return TTBM_Global_Function::get_post_info($tour_id, 'ttbm_related_tour', array());
-			}
-			public static function get_location($tour_id): string {
-				return TTBM_Global_Function::get_post_info($tour_id, 'ttbm_location_name');
 			}
 			public static function get_image_url($post_id = '', $image_id = '', $size = 'full') {
 				if ($post_id) {
@@ -816,13 +769,6 @@
 				}
 				return false;
 			}
-			public static function get_upcoming_date($tour_id) {
-				$all_date = self::get_date($tour_id);
-				if (sizeof($all_date) > 0) {
-					return current($all_date);
-				}
-				return false;
-			}
 			public static function price_convert_raw($price) {
 				$price = wp_strip_all_tags($price);
 				$price = str_replace(get_woocommerce_currency_symbol(), '', $price);
@@ -831,69 +777,6 @@
 				$price = str_replace('t_s', '', $price);
 				$price = str_replace('d_s', '.', $price);
 				return max($price, 0);
-			}
-			public static function ttbm_wc_price($post_id, $price, $args = array()): string {
-				$num_of_decimal = get_option('woocommerce_price_num_decimals', 2);
-				$args = wp_parse_args($args, array('qty' => '', 'price' => '',));
-				$_product = TTBM_Global_Function::get_post_info($post_id, 'link_wc_product', $post_id);
-				$product = wc_get_product($_product);
-				$qty = '' !== $args['qty'] ? max(0.0, (float)$args['qty']) : 1;
-				$tax_with_price = get_option('woocommerce_tax_display_shop');
-				if ('' === $price) {
-					return '';
-				} elseif (empty($qty)) {
-					return 0.0;
-				}
-				$line_price = (float)$price * (int)$qty;
-				$return_price = $line_price;
-				if ($product->is_taxable()) {
-					if (!wc_prices_include_tax()) {
-						$tax_rates = WC_Tax::get_rates($product->get_tax_class());
-						$taxes = WC_Tax::calc_tax($line_price, $tax_rates);
-						if ('yes' === get_option('woocommerce_tax_round_at_subtotal')) {
-							$taxes_total = array_sum($taxes);
-						} else {
-							$taxes_total = array_sum(array_map('wc_round_tax_total', $taxes));
-						}
-						$return_price = $tax_with_price == 'excl' ? round($line_price, $num_of_decimal) : round($line_price + $taxes_total, $num_of_decimal);
-					} else {
-						$tax_rates = WC_Tax::get_rates($product->get_tax_class());
-						$base_tax_rates = WC_Tax::get_base_tax_rates($product->get_tax_class('unfiltered'));
-						/**
-						 * If the customer is excempt from VAT, remove the taxes here.
-						 * Either remove the base or the user taxes depending on woocommerce_adjust_non_base_location_prices setting.
-						 */
-						if (!empty(WC()->customer) && WC()->customer->get_is_vat_exempt()) { // @codingStandardsIgnoreLine.
-							$remove_taxes = apply_filters('woocommerce_adjust_non_base_location_prices', true) ? WC_Tax::calc_tax($line_price, $base_tax_rates, true) : WC_Tax::calc_tax($line_price, $tax_rates, true);
-							if ('yes' === get_option('woocommerce_tax_round_at_subtotal')) {
-								$remove_taxes_total = array_sum($remove_taxes);
-							} else {
-								$remove_taxes_total = array_sum(array_map('wc_round_tax_total', $remove_taxes));
-							}
-							// $return_price = round( $line_price, $num_of_decimal);
-							$return_price = round($line_price - $remove_taxes_total, $num_of_decimal);
-							/**
-							 * The woocommerce_adjust_non_base_location_prices filter can stop base taxes being taken off when dealing without of base locations.
-							 * e.g. If a product costs 10 including tax, all users will pay 10 regardless of location and taxes.
-							 * This feature is experimental @since 2.4.7 and may change in the future. Use at your risk.
-							 */
-						} else {
-							$base_taxes = WC_Tax::calc_tax($line_price, $base_tax_rates, true);
-							$modded_taxes = WC_Tax::calc_tax($line_price - array_sum($base_taxes), $tax_rates);
-							if ('yes' === get_option('woocommerce_tax_round_at_subtotal')) {
-								$base_taxes_total = array_sum($base_taxes);
-								$modded_taxes_total = array_sum($modded_taxes);
-							} else {
-								$base_taxes_total = array_sum(array_map('wc_round_tax_total', $base_taxes));
-								$modded_taxes_total = array_sum(array_map('wc_round_tax_total', $modded_taxes));
-							}
-							$return_price = $tax_with_price == 'excl' ? round($line_price - $base_taxes_total, $num_of_decimal) : round($line_price - $base_taxes_total + $modded_taxes_total, $num_of_decimal);
-						}
-					}
-				}
-				$return_price = apply_filters('woocommerce_get_price_including_tax', $return_price, $qty, $product);
-				$display_suffix = get_option('woocommerce_price_display_suffix') ? get_option('woocommerce_price_display_suffix') : '';
-				return wc_price($return_price) . ' ' . $display_suffix;
 			}
 			public static function get_active_tours($args) {
 				$tours = array();
@@ -959,66 +842,94 @@
 				);
 				return wp_kses($string, $allow_attr);
 			}
+
 			public static function get_meta_values($meta_key = '', $post_type = 'post', $post_status = 'publish') {
-				global $wpdb;
-				if (empty($meta_key))
-					return;
-				$meta_values = $wpdb->get_col($wpdb->prepare("
-        SELECT pm.meta_value FROM {$wpdb->postmeta} pm
-        LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
-        WHERE pm.meta_key = %s 
-        AND p.post_type = %s 
-        AND p.post_status = %s 
-    ", $meta_key, $post_type, $post_status));
+				if (empty($meta_key) || !is_string($meta_key)) {
+					return false;
+				}
+
+				// Generate a unique cache key
+				$cache_key = 'meta_values_' . md5(serialize([$meta_key, $post_type, $post_status]));
+				$cached = wp_cache_get($cache_key);
+
+				if (false !== $cached) {
+					return $cached;
+				}
+
+				// Use WP_Query to get posts with the specified criteria
+				$args = [
+					'post_type'      => $post_type,
+					'post_status'    => $post_status,
+					'posts_per_page' => -1, // Get all posts
+					'fields'         => 'ids', // Only get post IDs for better performance
+					'meta_query'     => [
+						[
+							'key'     => $meta_key,
+							'compare' => 'EXISTS', // Posts that have this meta key
+						]
+					]
+				];
+
+				$query = new WP_Query($args);
+				$meta_values = [];
+
+				if ($query->have_posts()) {
+					foreach ($query->posts as $post_id) {
+						$value = get_post_meta($post_id, $meta_key, true);
+						if ($value !== '') { // Skip empty values
+							$meta_values[] = $value;
+						}
+					}
+					// Return only unique values
+					$meta_values = array_unique($meta_values);
+				}
+
+				// Cache the results
+				wp_cache_set($cache_key, $meta_values, '', DAY_IN_SECONDS);
+
 				return $meta_values;
 			}
-
-            public static function get_travel_analytical_data(){
-
-                $result_date = array();
-                $travel_args = array(
-                    'post_type'      => 'ttbm_tour',
-                    'post_status'    => 'publish',
-                    'posts_per_page' => -1,
-                    'orderby'        => 'date',
-                    'order'          => 'DESC',
-                );
-                $all_travel_query = new WP_Query( $travel_args );
-
-                $active_tour = $expired_tour = $total_price = $price_count = $average_price= 0;
-                if ($all_travel_query->have_posts()) {
-                    while ($all_travel_query->have_posts()) {
-                        $all_travel_query->the_post();
-                        $travel_post_id = get_the_ID();
-                        $status = TTBM_Function::get_tour_status( $travel_post_id );
-                        if( $status === 'active' ){
-                            $active_tour = $active_tour + 1;
-                        }else{
-                            $expired_tour = $expired_tour + 1;
-                        }
-
-                        $get_price = get_post_meta( $travel_post_id, 'ttbm_travel_start_price', true );
-                        if( $get_price > 0 ){
-                            $price_count++;
-                            $total_price = $total_price + $get_price;
-                        }
-                    }
-                }
-                if( $price_count> 0 && $total_price> 0 ){
-                    $average_price = $total_price/$price_count;
-                }
-
-                $all_location = TTBM_Function::get_all_location();
-                unset($all_location['']);
-                $location_count = count($all_location);
-
-                return array(
-                    'location_count' =>$location_count,
-                    'average_price' =>$average_price,
-                    'active_tour' =>$active_tour,
-                    'expired_tour' =>$expired_tour,
-                );
-            }
+			public static function get_travel_analytical_data() {
+				$result_date = array();
+				$travel_args = array(
+					'post_type' => 'ttbm_tour',
+					'post_status' => 'publish',
+					'posts_per_page' => -1,
+					'orderby' => 'date',
+					'order' => 'DESC',
+				);
+				$all_travel_query = new WP_Query($travel_args);
+				$active_tour = $expired_tour = $total_price = $price_count = $average_price = 0;
+				if ($all_travel_query->have_posts()) {
+					while ($all_travel_query->have_posts()) {
+						$all_travel_query->the_post();
+						$travel_post_id = get_the_ID();
+						$status = TTBM_Function::get_tour_status($travel_post_id);
+						if ($status === 'active') {
+							$active_tour = $active_tour + 1;
+						} else {
+							$expired_tour = $expired_tour + 1;
+						}
+						$get_price = get_post_meta($travel_post_id, 'ttbm_travel_start_price', true);
+						if ($get_price > 0) {
+							$price_count++;
+							$total_price = $total_price + $get_price;
+						}
+					}
+				}
+				if ($price_count > 0 && $total_price > 0) {
+					$average_price = $total_price / $price_count;
+				}
+				$all_location = TTBM_Function::get_all_location();
+				unset($all_location['']);
+				$location_count = count($all_location);
+				return array(
+					'location_count' => $location_count,
+					'average_price' => $average_price,
+					'active_tour' => $active_tour,
+					'expired_tour' => $expired_tour,
+				);
+			}
 		}
 		new TTBM_Function();
 	}
@@ -1136,4 +1047,269 @@
 			);
 			return wp_kses($string, $allow_attr);
 		}
+	}
+	function ttbm_elementor_get_tax_term( $tax, $type = 'id' ): array {
+		$terms = get_terms( array(
+			'taxonomy'   => $tax,
+			'hide_empty' => false,
+		) );
+		$list  = array( '0' => __( 'Show All', 'tour-booking-manager' ) );
+		foreach ( $terms as $_term ) {
+			if ( $type == 'id' ) {
+				$list[ $_term->term_id ] = $_term->name;
+			} else {
+				$list[ $_term->slug ] = $_term->name;
+			}
+		}
+		return $list;
+	}
+	function ttbm_get_coutnry_arr(): array {
+		$countries = array(
+			"Afghanistan",
+			"Albania",
+			"Algeria",
+			"American Samoa",
+			"Andorra",
+			"Angola",
+			"Anguilla",
+			"Antarctica",
+			"Antigua and Barbuda",
+			"Argentina",
+			"Armenia",
+			"Aruba",
+			"Australia",
+			"Austria",
+			"Azerbaijan",
+			"Bahamas",
+			"Bahrain",
+			"Bangladesh",
+			"Barbados",
+			"Belarus",
+			"Belgium",
+			"Belize",
+			"Benin",
+			"Bermuda",
+			"Bhutan",
+			"Bolivia",
+			"Bosnia and Herzegowina",
+			"Botswana",
+			"Bouvet Island",
+			"Brazil",
+			"British Indian Ocean Territory",
+			"Brunei Darussalam",
+			"Bulgaria",
+			"Burkina Faso",
+			"Burundi",
+			"Cambodia",
+			"Cameroon",
+			"Canada",
+			"Cape Verde",
+			"Cayman Islands",
+			"Central African Republic",
+			"Chad",
+			"Chile",
+			"China",
+			"Christmas Island",
+			"Cocos (Keeling) Islands",
+			"Colombia",
+			"Comoros",
+			"Congo",
+			"Congo, the Democratic Republic of the",
+			"Cook Islands",
+			"Costa Rica",
+			"Cote d'Ivoire",
+			"Croatia (Hrvatska)",
+			"Cuba",
+			"Cyprus",
+			"Czech Republic",
+			"Denmark",
+			"Djibouti",
+			"Dominica",
+			"Dominican Republic",
+			"East Timor",
+			"Ecuador",
+			"Egypt",
+			"El Salvador",
+			"Equatorial Guinea",
+			"Eritrea",
+			"Estonia",
+			"Ethiopia",
+			"Falkland Islands (Malvinas)",
+			"Faroe Islands",
+			"Fiji",
+			"Finland",
+			"France",
+			"France Metropolitan",
+			"French Guiana",
+			"French Polynesia",
+			"French Southern Territories",
+			"Gabon",
+			"Gambia",
+			"Georgia",
+			"Germany",
+			"Ghana",
+			"Gibraltar",
+			"Greece",
+			"Greenland",
+			"Grenada",
+			"Guadeloupe",
+			"Guam",
+			"Guatemala",
+			"Guinea",
+			"Guinea-Bissau",
+			"Guyana",
+			"Haiti",
+			"Heard and Mc Donald Islands",
+			"Holy See (Vatican City State)",
+			"Honduras",
+			"Hong Kong",
+			"Hungary",
+			"Iceland",
+			"India",
+			"Indonesia",
+			"Iran (Islamic Republic of)",
+			"Iraq",
+			"Ireland",
+			"Israel",
+			"Italy",
+			"Jamaica",
+			"Japan",
+			"Jordan",
+			"Kazakhstan",
+			"Kenya",
+			"Kiribati",
+			"Korea, Democratic People's Republic of",
+			"Korea, Republic of",
+			"Kuwait",
+			"Kyrgyzstan",
+			"Lao, People's Democratic Republic",
+			"Latvia",
+			"Lebanon",
+			"Lesotho",
+			"Liberia",
+			"Libyan Arab Jamahiriya",
+			"Liechtenstein",
+			"Lithuania",
+			"Luxembourg",
+			"Macau",
+			"Macedonia, The Former Yugoslav Republic of",
+			"Madagascar",
+			"Malawi",
+			"Malaysia",
+			"Maldives",
+			"Mali",
+			"Malta",
+			"Marshall Islands",
+			"Martinique",
+			"Mauritania",
+			"Mauritius",
+			"Mayotte",
+			"Mexico",
+			"Micronesia, Federated States of",
+			"Moldova, Republic of",
+			"Monaco",
+			"Mongolia",
+			"Montserrat",
+			"Morocco",
+			"Mozambique",
+			"Myanmar",
+			"Namibia",
+			"Nauru",
+			"Nepal",
+			"Netherlands",
+			"Netherlands Antilles",
+			"New Caledonia",
+			"New Zealand",
+			"Nicaragua",
+			"Niger",
+			"Nigeria",
+			"Niue",
+			"Norfolk Island",
+			"Northern Mariana Islands",
+			"Norway",
+			"Oman",
+			"Pakistan",
+			"Palau",
+			"Panama",
+			"Papua New Guinea",
+			"Paraguay",
+			"Peru",
+			"Philippines",
+			"Pitcairn",
+			"Poland",
+			"Portugal",
+			"Puerto Rico",
+			"Qatar",
+			"Reunion",
+			"Romania",
+			"Russian Federation",
+			"Rwanda",
+			"Saint Kitts and Nevis",
+			"Saint Lucia",
+			"Saint Vincent and the Grenadines",
+			"Samoa",
+			"San Marino",
+			"Sao Tome and Principe",
+			"Saudi Arabia",
+			"Senegal",
+			"Seychelles",
+			"Sierra Leone",
+			"Singapore",
+			"Slovakia (Slovak Republic)",
+			"Slovenia",
+			"Solomon Islands",
+			"Somalia",
+			"South Africa",
+			"South Georgia and the South Sandwich Islands",
+			"Spain",
+			"Sri Lanka",
+			"St. Helena",
+			"St. Pierre and Miquelon",
+			"Sudan",
+			"Suriname",
+			"Svalbard and Jan Mayen Islands",
+			"Swaziland",
+			"Sweden",
+			"Switzerland",
+			"Syrian Arab Republic",
+			"Taiwan, Province of China",
+			"Tajikistan",
+			"Tanzania, United Republic of",
+			"Thailand",
+			"Togo",
+			"Tokelau",
+			"Tonga",
+			"Trinidad and Tobago",
+			"Tunisia",
+			"Turkey",
+			"Turkmenistan",
+			"Turks and Caicos Islands",
+			"Tuvalu",
+			"Uganda",
+			"Ukraine",
+			"United Arab Emirates",
+			"United Kingdom",
+			"United States",
+			"United States Minor Outlying Islands",
+			"Uruguay",
+			"Uzbekistan",
+			"Vanuatu",
+			"Venezuela",
+			"Vietnam",
+			"Virgin Islands (British)",
+			"Virgin Islands (U.S.)",
+			"Wallis and Futuna Islands",
+			"Western Sahara",
+			"Yemen",
+			"Yugoslavia",
+			"Zambia",
+			"Zimbabwe"
+		);
+		$arr       = array(
+			'' => esc_html__( 'Please Select a Country', 'tour-booking-manager' )
+		);
+		foreach ( $countries as $_terms ) {
+			$arr[ $_terms ] = $_terms;
+		}
+		return $arr;
 	}

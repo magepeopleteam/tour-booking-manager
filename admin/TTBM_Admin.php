@@ -77,46 +77,86 @@
 			}
 			//**************Post duplicator*********************//
 			public function ttbm_duplicate() {
-				global $wpdb;
+				// Check if post ID is provided
 				if (!(isset($_GET['post']) || isset($_POST['post']) || (isset($_REQUEST['action']) && 'ttbm_duplicate' == $_REQUEST['action']))) {
-					wp_die('No post to duplicate has been supplied!');
+					wp_die(esc_html__('No post to duplicate has been supplied!', 'tour-booking-manager'));
 				}
+				// Verify nonce
 				if (!isset($_GET['duplicate_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['duplicate_nonce'])), basename(__FILE__))) {
-					return;
+					wp_die(esc_html__('Security check failed!', 'tour-booking-manager'));
 				}
-				$post_id = (isset($_GET['post']) ? absint($_GET['post']) : absint($_POST['post']));
-				$post = get_post($post_id);
+				$post_id = isset($_GET['post']) ? absint($_GET['post']) : absint($_POST['post']);
+				// Try to get post from cache first
+				$post = wp_cache_get('ttbm_post_' . $post_id, 'ttbm');
+				if (false === $post) {
+					$post = get_post($post_id);
+					if ($post) {
+						wp_cache_set('ttbm_post_' . $post_id, $post, 'ttbm', 3600); // Cache for 1 hour
+					}
+				}
+				if (!$post) {
+					wp_die(esc_html__('Original post not found!', 'tour-booking-manager'));
+				}
 				$current_user = wp_get_current_user();
 				$new_post_author = $current_user->ID;
-				if (isset($post) && $post != null) {
-					$args = array('comment_status' => $post->comment_status, 'ping_status' => $post->ping_status, 'post_author' => $new_post_author, 'post_content' => $post->post_content, 'post_excerpt' => $post->post_excerpt, 'post_name' => $post->post_name, 'post_parent' => $post->post_parent, 'post_password' => $post->post_password, 'post_status' => 'draft', 'post_title' => $post->post_title, 'post_type' => $post->post_type, 'to_ping' => $post->to_ping, 'menu_order' => $post->menu_order);
-					$new_post_id = wp_insert_post($args);
-					$taxonomies = get_object_taxonomies($post->post_type); // returns array of taxonomy names for post type, ex array("category", "post_tag");
-					foreach ($taxonomies as $taxonomy) {
-						$post_terms = wp_get_object_terms($post_id, $taxonomy, array('fields' => 'slugs'));
-						wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
-					}
-					$post_meta_infos = $wpdb->get_results("SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id=$post_id AND meta_key !='total_booking'");
-					if (count($post_meta_infos) != 0) {
-						$sql_query = "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) ";
-						foreach ($post_meta_infos as $meta_info) {
-							$meta_key = $meta_info->meta_key;
-							if ($meta_key == '_wp_old_slug') {
-								continue;
-							}
-							$meta_value = addslashes($meta_info->meta_value);
-							$sql_query_sel[] = "SELECT $new_post_id, '$meta_key', '$meta_value'";
-						}
-						$sql_query .= implode(" UNION ALL ", $sql_query_sel);
-						$wpdb->query($sql_query);
-						$table_name = $wpdb->prefix . 'postmeta';
-						$bi = $wpdb->insert($table_name, array('post_id' => $new_post_id, 'meta_key' => 'total_booking', 'meta_value' => 0), array('%d', '%s', '%d'));
-					}
-					wp_redirect(admin_url('post.php?action=edit&post=' . $new_post_id));
-					exit;
-				} else {
-					wp_die('Post creation failed, could not find original post: ');
+				$args = array(
+					'comment_status' => $post->comment_status,
+					'ping_status' => $post->ping_status,
+					'post_author' => $new_post_author,
+					'post_content' => wp_slash($post->post_content),
+					'post_excerpt' => $post->post_excerpt,
+					'post_name' => $post->post_name,
+					'post_parent' => $post->post_parent,
+					'post_password' => $post->post_password,
+					'post_status' => 'draft',
+					'post_title' => $post->post_title . ' (' . esc_html__('Copy', 'tour-booking-manager') . ')',
+					'post_type' => $post->post_type,
+					'to_ping' => $post->to_ping,
+					'menu_order' => $post->menu_order,
+				);
+				$new_post_id = wp_insert_post($args);
+				if (is_wp_error($new_post_id)) {
+					wp_die(
+						esc_html__('Failed to create duplicate post: ', 'tour-booking-manager') . ' ' . esc_html($new_post_id->get_error_message())
+					);
 				}
+				// Cache the new post immediately
+				wp_cache_set('ttbm_post_' . $new_post_id, get_post($new_post_id), 'ttbm', 3600);
+				// Copy taxonomies - uses WordPress functions which handle caching internally
+				$taxonomies = get_object_taxonomies($post->post_type);
+				foreach ($taxonomies as $taxonomy) {
+					$post_terms = get_the_terms($post_id, $taxonomy);
+					if (!empty($post_terms) && !is_wp_error($post_terms)) {
+						$term_slugs = wp_list_pluck($post_terms, 'slug');
+						wp_set_object_terms($new_post_id, $term_slugs, $taxonomy, false);
+					}
+				}
+				// Copy post meta (excluding 'total_booking') - uses get_post_meta which is cached
+				$post_meta = get_post_meta($post_id);
+				if (!empty($post_meta)) {
+					foreach ($post_meta as $meta_key => $meta_values) {
+						if ($meta_key === 'total_booking' || $meta_key === '_wp_old_slug') {
+							continue;
+						}
+						foreach ($meta_values as $meta_value) {
+							// Unserialize data to ensure proper storage
+							$meta_value = maybe_unserialize($meta_value);
+							update_post_meta($new_post_id, $meta_key, wp_slash($meta_value));
+						}
+					}
+				}
+				// Initialize 'total_booking' - uses update_post_meta which handles caching
+				update_post_meta($new_post_id, 'total_booking', 0);
+				// Clear any relevant cache after operations
+				wp_cache_delete('ttbm_post_' . $post_id, 'ttbm');
+				clean_post_cache($new_post_id);
+				// Redirect to edit new post - properly escaped
+				wp_safe_redirect(
+					esc_url_raw(
+						admin_url('post.php?action=edit&post=' . absint($new_post_id))
+					)
+				);
+				exit;
 			}
 			public function post_duplicator($actions, $post) {
 				if (current_user_can('edit_posts')) {

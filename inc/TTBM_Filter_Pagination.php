@@ -18,6 +18,7 @@
 				?>
                 <div class="ttbm_style placeholderLoader ttbm_wraper ttbm_top_filter">
                     <form method="get" action="<?php echo esc_url(home_url('/find/')); ?>">
+						<?php wp_nonce_field('ttbm_search_nonce', 'ttbm_search_nonce'); ?>
                         <div class="flexWrap justifyCenter">
 							<?php $this->title_filter($params); ?>
 							<?php $this->type_filter($params); ?>
@@ -27,7 +28,6 @@
 							<?php $this->location_filter($params); ?>
 							<?php $this->country_filter($params); ?>
 							<?php $this->activity_filter($params); ?>
-<!--							--><?php //$this->month_filter($params); ?>
 							<?php $this->select_month_filter($params); ?>
                             <button type="submit" class="dButton min_200" data-placeholder><?php esc_html_e('Find Tours', 'tour-booking-manager'); ?></button>
                         </div>
@@ -57,10 +57,10 @@
 			}
 			public function left_filter($params) {
 				?>
-				<div class="filter-top-label" >
-					<h4 data-placeholder><span class="mR_xs fas fa-filter"></span><?php esc_html_e('Filters', 'tour-booking-manager'); ?></h4>
-				</div>
-				<div class="ttbm_filter">
+                <div class="filter-top-label">
+                    <h4 data-placeholder><span class="mR_xs fas fa-filter"></span><?php esc_html_e('Filters', 'tour-booking-manager'); ?></h4>
+                </div>
+                <div class="ttbm_filter">
 					<?php $this->location_filter_multiple($params); ?>
 					<?php $this->country_filter_left($params); ?>
 					<?php $this->title_filter_left($params); ?>
@@ -72,16 +72,19 @@
 					<?php $this->activity_filter_multiple($params); ?>
 					<?php $this->tag_filter_multiple($params); ?>
 					<?php $this->organizer_filter_left($params); ?>
-				</div>
+                </div>
 				<?php
 			}
 			//****************************************/
 			public function title_filter($params) {
 				if ($params['title-filter'] == 'yes') {
-					$title_filter = isset($_GET['title_filter']) ? sanitize_text_field(wp_unslash($_GET['title_filter'])): '';
+					$title_filter = '';
+					if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						$title_filter = isset($_GET['title_filter']) ? sanitize_text_field(wp_unslash($_GET['title_filter'])) : '';
+					}
 					?>
                     <label data-placeholder>
-						<input name="title_filter" value="<?php echo esc_attr($title_filter); ?>" placeholder="<?php esc_attr_e('Search ....', 'tour-booking-manager'); ?>" class="formControl"/>
+                        <input name="title_filter" value="<?php echo esc_attr($title_filter); ?>" placeholder="<?php esc_attr_e('Search ....', 'tour-booking-manager'); ?>" class="formControl"/>
                     </label>
 					<?php
 				}
@@ -103,7 +106,10 @@
 			//****************************************/
 			public function type_filter($params) {
 				if ($params['type-filter'] == 'yes') {
-					$url = isset($_GET['type_filter']) ? sanitize_text_field(wp_unslash($_GET['type_filter'])) : '';
+					$url = '';
+					if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						$url = isset($_GET['type_filter']) ? sanitize_text_field(wp_unslash($_GET['type_filter'])) : '';
+					}
 					?>
                     <label data-placeholder>
                         <select class="formControl" name="type_filter">
@@ -134,9 +140,12 @@
 				if ($params['category-filter'] == 'yes') {
 					$categories = is_array($categories) ? $categories : TTBM_Global_Function::get_taxonomy('ttbm_tour_cat');
 					if (is_array($categories) && sizeof($categories) > 0) {
-						$category_filter = isset($_GET['category_filter']) ? sanitize_text_field(wp_unslash($_GET['category_filter'])) : '';
+						$category_filter = '';
+						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+							$category_filter = isset($_GET['category_filter']) ? sanitize_text_field(wp_unslash($_GET['category_filter'])) : '';
+						}
 						$url = $category_filter;
-						$current = $url ? ( ($term = get_term_by('id', $url, 'ttbm_tour_cat')) ? $term->term_id : '' ) : '';
+						$current = $url ? (($term = get_term_by('id', $url, 'ttbm_tour_cat')) ? $term->term_id : '') : '';
 						?>
                         <label data-placeholder>
                             <select class="formControl" name="category_filter">
@@ -172,9 +181,12 @@
 				if ($params['organizer-filter'] == 'yes') {
 					$organizers = sizeof($organizers) > 0 ? $organizers : TTBM_Global_Function::get_taxonomy('ttbm_tour_org', 'ttbm_tour');
 					if (sizeof($organizers) > 0) {
-						$organizer_filter = isset($_GET['organizer_filter']) ? sanitize_text_field(wp_unslash($_GET['organizer_filter'])) : '';
+						$organizer_filter = '';
+						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+							$organizer_filter = isset($_GET['organizer_filter']) ? sanitize_text_field(wp_unslash($_GET['organizer_filter'])) : '';
+						}
 						$url = $organizer_filter;
-						$current = $url ? ( ($term = get_term_by('id', $url, 'ttbm_tour_org')) ? $term->term_id : '' ) : '';
+						$current = $url ? (($term = get_term_by('id', $url, 'ttbm_tour_org')) ? $term->term_id : '') : '';
 						?>
                         <label data-placeholder>
                             <select class="formControl" name="organizer_filter">
@@ -218,8 +230,11 @@
 				if ($params['location-filter'] == 'yes') {
 					$locations = TTBM_Global_Function::get_taxonomy('ttbm_tour_location');
 					if (sizeof($locations) > 0) {
-$location_filter = isset($_GET['location_filter']) ? sanitize_text_field(wp_unslash($_GET['location_filter'])) : '';
-$url = $location_filter;
+						$location_filter = '';
+						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+							$location_filter = isset($_GET['location_filter']) ? sanitize_text_field(wp_unslash($_GET['location_filter'])) : '';
+						}
+						$url = $location_filter;
 						?>
                         <label data-placeholder>
                             <select class="formControl" name="location_filter">
@@ -244,18 +259,20 @@ $url = $location_filter;
 			public function location_filter_multiple($params) {
 				if ($params['location-filter'] == 'yes') {
 					$upcomming_date = $this->upcomming_date;
-
 					$locations = TTBM_Function::get_meta_values('ttbm_location_name', 'ttbm_tour');
 					$exist_locations = [];
 					for ($i = 0; $i < count($locations); $i++) {
-						if ( is_array( $upcomming_date) && !empty( $upcomming_date ) && $upcomming_date[$i] && $locations[$i]) {
+						if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $locations[$i]) {
 							$exist_locations[$i] = $locations[$i];
 						}
 					}
 					$exist_locations = array_unique($exist_locations);
 					if (sizeof($exist_locations) > 0) {
-						$url_location = isset($_GET['location_filter']) ? sanitize_text_field(wp_unslash($_GET['location_filter'])) : '';
-						$current_location = $url_location ? ( ($term = get_term_by('id', $url_location, 'ttbm_tour_location')) ? $term->term_id : '' ) : '';
+						$url_location = '';
+						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+							$url_location = isset($_GET['location_filter']) ? sanitize_text_field(wp_unslash($_GET['location_filter'])) : '';
+						}
+						$current_location = $url_location ? (($term = get_term_by('id', $url_location, 'ttbm_tour_location')) ? $term->term_id : '') : '';
 						?>
                         <h5 class="justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_location_filter_multiple" data-placeholder>
 							<?php esc_html_e('Filters By Location', 'tour-booking-manager'); ?>
@@ -263,7 +280,7 @@ $url = $location_filter;
                         </h5>
                         <div class="divider"></div>
                         <div class="mActive" data-collapse="#ttbm_location_filter_multiple" data-placeholder>
-                            <div class="groupCheckBox _dFlex flexColumn" >
+                            <div class="groupCheckBox _dFlex flexColumn">
                                 <input type="hidden" name="location_filter_multiple" value="<?php echo esc_attr($current_location); ?>"/>
 								<?php foreach ($exist_locations as $location) { ?>
 									<?php
@@ -286,7 +303,10 @@ $url = $location_filter;
 				if ($params['country-filter'] == 'yes') {
 					$countries = is_array($countries) ? $countries : TTBM_Function::get_all_country();
 					if (sizeof($countries) > 0) {
-						$url = isset($_GET['country_filter']) ? sanitize_text_field(wp_unslash($_GET['country_filter'])) : '';
+						$url = '';
+						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+							$url = isset($_GET['country_filter']) ? sanitize_text_field(wp_unslash($_GET['country_filter'])) : '';
+						}
 						?>
                         <label data-placeholder>
                             <select class="formControl" name="country_filter">
@@ -323,8 +343,10 @@ $url = $location_filter;
 				if ($params['duration-filter'] == 'yes') {
 					$durations = TTBM_Function::get_all_duration();
 					if (sizeof($durations) > 0) {
-						$duration_filter = isset($_GET['duration_filter']) ? sanitize_text_field(wp_unslash($_GET['duration_filter'])) : '';
-						$url = $duration_filter;
+						$url = '';
+						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+							$url = isset($_GET['duration_filter']) ? sanitize_text_field(wp_unslash($_GET['duration_filter'])) : '';
+						}
 						?>
                         <label data-placeholder>
                             <select class="formControl" name="duration_filter">
@@ -352,8 +374,10 @@ $url = $location_filter;
 				if ($params['duration-filter'] == 'yes') {
 					$durations = TTBM_Function::get_all_duration();
 					if (sizeof($durations) > 0) {
-						$duration_filter = isset($_GET['duration_filter']) ? sanitize_text_field(wp_unslash($_GET['duration_filter'])) : '';
-						$url = $duration_filter;
+						$url = '';
+						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+							$url = isset($_GET['duration_filter']) ? sanitize_text_field(wp_unslash($_GET['duration_filter'])) : '';
+						}
 						?>
                         <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_duration_filter_multiple" data-placeholder>
 							<?php esc_html_e('Filters By Duration', 'tour-booking-manager'); ?>
@@ -395,13 +419,15 @@ $url = $location_filter;
 					$upcomming_date = $this->upcomming_date;
 					$exist_feature = [];
 					for ($i = 0; $i < count($features); $i++) {
-                        if ( is_array( $upcomming_date) && !empty( $upcomming_date ) && $upcomming_date[$i] && $features[$i]) {
+						if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $features[$i]) {
 							$exist_feature = array_unique(array_merge($exist_feature, unserialize($features[$i])));
 						}
 					}
 					if (sizeof($exist_feature) > 0) {
-						$feature_filter = isset($_GET['feature_filter']) ? sanitize_text_field(wp_unslash($_GET['feature_filter'])) : '';
-						$url = $feature_filter;
+						$url = '';
+						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+							$url = isset($_GET['feature_filter']) ? sanitize_text_field(wp_unslash($_GET['feature_filter'])) : '';
+						}
 						?>
                         <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#feature_filter_multiple" data-placeholder>
 							<?php esc_html_e('Filters By Feature', 'tour-booking-manager'); ?>
@@ -432,8 +458,11 @@ $url = $location_filter;
 				if ($params['activity-filter'] == 'yes') {
 					$activities = TTBM_Global_Function::get_taxonomy('ttbm_tour_activities');
 					if (sizeof($activities) > 0) {
-						$url_activity = isset($_GET['activity_filter']) ? sanitize_text_field(wp_unslash($_GET['activity_filter'])) : '';
-						$current_activity = $url_activity ? ( ($term = get_term_by('id', $url_activity, 'ttbm_tour_activities')) ? $term->term_id : '' ) : '';
+						$url_activity = '';
+						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+							$url_activity = isset($_GET['activity_filter']) ? sanitize_text_field(wp_unslash($_GET['activity_filter'])) : '';
+						}
+						$current_activity = $url_activity ? (($term = get_term_by('id', $url_activity, 'ttbm_tour_activities')) ? $term->term_id : '') : '';
 						?>
                         <label data-placeholder>
                             <select class="formControl" name="activity_filter">
@@ -454,14 +483,17 @@ $url = $location_filter;
 					$upcomming_date = $this->upcomming_date;
 					$exist_activities = [];
 					for ($i = 0; $i < count($activities); $i++) {
-                        if ( is_array( $upcomming_date) && !empty( $upcomming_date ) && $upcomming_date[$i] && $activities[$i]) {
+						if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $activities[$i]) {
 //						if ($upcomming_date[$i] && is_array($activities[$i])) {
 							$exist_activities = array_unique(array_merge($exist_activities, unserialize($activities[$i])));
 						}
 					}
 					if (sizeof($exist_activities) > 0) {
-						$url_activity = isset($_GET['activity_filter']) ? sanitize_text_field(wp_unslash($_GET['activity_filter'])) : '';
-						$current_activity = $url_activity ? ( ($term = get_term_by('id', $url_activity, 'ttbm_tour_activities')) ? $term->term_id : '' ) : '';
+						$url_activity = '';
+						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+							$url_activity = isset($_GET['activity_filter']) ? sanitize_text_field(wp_unslash($_GET['activity_filter'])) : '';
+						}
+						$current_activity = $url_activity ? (($term = get_term_by('id', $url_activity, 'ttbm_tour_activities')) ? $term->term_id : '') : '';
 						?>
                         <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#activity_filter_multiple" data-placeholder>
 							<?php esc_html_e('Filter By Activity', 'tour-booking-manager'); ?>
@@ -525,7 +557,10 @@ $url = $location_filter;
 			//****************************************/
 			public function month_filter($params) {
 				if ($params['month-filter'] == 'yes') {
-					$url_month = isset($_GET['month_filter']) ? sanitize_text_field(wp_unslash($_GET['month_filter'])) : '';
+					$url_month = '';
+					if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						$url_month = isset($_GET['month_filter']) ? sanitize_text_field(wp_unslash($_GET['month_filter'])) : '';
+					}
 					$first_date = gmdate('Y-m-01');
 					$current_date = current_time('Y-m-d');
 					$month = gmdate('n', strtotime($current_date));
@@ -553,12 +588,6 @@ $url = $location_filter;
 			}
 			public function select_month_filter($params) {
 				if ($params['month-filter'] == 'yes') {
-					$url_month = isset($_GET['month_filter']) ? sanitize_text_field(wp_unslash($_GET['month_filter'])) : '';
-					$first_date = gmdate('Y-m-01');
-					$current_date = current_time('Y-m-d');
-					$month = gmdate('n', strtotime($current_date));
-					$selected = $url_month == $month ? 'selected' : '';
-					$date_format = TTBM_Global_Function::get_settings('ttbm_global_settings', 'date_format_short', 'M , Y');
 					?>
                     <label data-placeholder>
                         <div class="ttbm_date-picker-container">

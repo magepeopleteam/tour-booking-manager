@@ -54,8 +54,7 @@
 			}
 			//***********************************//
 			public static function get_submit_info($key, $default = '') {
-				//return self::data_sanitize($_POST[$key] ?? $default);
-				return $key;
+				return self::data_sanitize($_POST[$key] ?? $default);
 			}
 			public static function data_sanitize($array) {
 				if (is_serialized($array)) {

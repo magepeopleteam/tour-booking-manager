@@ -203,14 +203,7 @@ div.superSlider .sliderShowcaseItem{
 div.superSlider .sliderShowcaseItem:last-child{
 	margin-bottom: 0;
 }
-.ttbm_slider-wrapper {
-	height: 30vh;
-}
-@media (min-width:600px) {
-	.ttbm_slider-wrapper {
-		height: 500px;
-	}
-}
+
 /***************************************/
 div.ttbm_list_info {display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;margin: var(--dbr) 0 0 0;overflow: hidden;}
 div.ttbm_list_info span {font-size: var(--fs_h6); color: var(--color_theme);}

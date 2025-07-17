@@ -358,8 +358,7 @@
 			}
 			//************************************//
 			public static function get_submit_info($key, $default = '') {
-				//return self::data_sanitize($_POST[$key] ?? $default);
-				return $key;
+				return self::data_sanitize($_POST[$key] ?? $default);
 			}
 			//***********Duration*************************//
 			public static function get_duration($tour_id) {

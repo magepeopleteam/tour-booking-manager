@@ -11,6 +11,128 @@
 			public function __construct() {
 				add_action('ttbm_load_date_picker_js', [$this, 'date_picker_js'], 10, 2);
 			}
+			public static function esc_html( $string ): string {
+				$allow_attr = array(
+					'input'    => [
+						'type'               => [],
+						'class'              => [],
+						'id'                 => [],
+						'name'               => [],
+						'value'              => [],
+						'size'               => [],
+						'placeholder'        => [],
+						'min'                => [],
+						'max'                => [],
+						'checked'            => [],
+						'required'           => [],
+						'disabled'           => [],
+						'readonly'           => [],
+						'step'               => [],
+						'data-default-color' => [],
+						'data-price'         => [],
+					],
+					'p'        => [ 'class' => [] ],
+					'img'      => [ 'class' => [], 'id' => [], 'src' => [], 'alt' => [], ],
+					'fieldset' => [
+						'class' => []
+					],
+					'label'    => [
+						'for'   => [],
+						'class' => []
+					],
+					'select'   => [
+						'class'      => [],
+						'name'       => [],
+						'id'         => [],
+						'data-price' => [],
+					],
+					'option'   => [
+						'class'    => [],
+						'value'    => [],
+						'id'       => [],
+						'selected' => [],
+					],
+					'textarea' => [
+						'class' => [],
+						'rows'  => [],
+						'id'    => [],
+						'cols'  => [],
+						'name'  => [],
+					],
+					'h1'       => [ 'class' => [], 'id' => [], ],
+					'h2'       => [ 'class' => [], 'id' => [], ],
+					'h3'       => [ 'class' => [], 'id' => [], ],
+					'h4'       => [ 'class' => [], 'id' => [], ],
+					'h5'       => [ 'class' => [], 'id' => [], ],
+					'h6'       => [ 'class' => [], 'id' => [], ],
+					'a'        => [ 'class' => [], 'id' => [], 'href' => [], ],
+					'div'      => [
+						'class'                 => [],
+						'id'                    => [],
+						'data-ticket-type-name' => [],
+					],
+					'span'     => [
+						'class'             => [],
+						'id'                => [],
+						'data'              => [],
+						'data-input-change' => [],
+					],
+					'i'        => [
+						'class' => [],
+						'id'    => [],
+						'data'  => [],
+					],
+					'table'    => [
+						'class' => [],
+						'id'    => [],
+						'data'  => [],
+					],
+					'tr'       => [
+						'class' => [],
+						'id'    => [],
+						'data'  => [],
+					],
+					'td'       => [
+						'class' => [],
+						'id'    => [],
+						'data'  => [],
+					],
+					'thead'    => [
+						'class' => [],
+						'id'    => [],
+						'data'  => [],
+					],
+					'tbody'    => [
+						'class' => [],
+						'id'    => [],
+						'data'  => [],
+					],
+					'th'       => [
+						'class' => [],
+						'id'    => [],
+						'data'  => [],
+					],
+					'svg'      => [
+						'class'   => [],
+						'id'      => [],
+						'width'   => [],
+						'height'  => [],
+						'viewBox' => [],
+						'xmlns'   => [],
+					],
+					'g'        => [
+						'fill' => [],
+					],
+					'path'     => [
+						'd' => [],
+					],
+					'br'       => array(),
+					'em'       => array(),
+					'strong'   => array(),
+				);
+
+				return wp_kses( $string, $allow_attr );
+			}
 			public static function query_post_type($post_type, $show = -1, $page = 1): WP_Query {
 				$args = array(
 					'post_type' => $post_type,
@@ -375,34 +497,15 @@
 					return 0;
 				}
 			}
-			public static function get_order_item_meta($item_id, $key): string {
-				// Validate input
-				if (empty($item_id) || empty($key)) {
-					return '';
+			public static function get_order_item_meta( $item_id, $key ): string {
+				global $wpdb;
+				$table_name = $wpdb->prefix . "woocommerce_order_itemmeta";
+				$results    = $wpdb->get_results( $wpdb->prepare( "SELECT meta_value FROM $table_name WHERE order_item_id = %d AND meta_key = %s", $item_id, $key ) );
+				foreach ( $results as $result ) {
+					$value = $result->meta_value;
 				}
 
-				// Generate unique cache key
-				$cache_key = 'wc_order_item_meta_' . $item_id . '_' . $key;
-				$cache_group = 'order_item_meta';
-
-				// Try to get cached value first
-				$cached_value = wp_cache_get($cache_key, $cache_group);
-				if (false !== $cached_value) {
-					return $cached_value;
-				}
-
-				// Use WooCommerce API functions instead of direct DB query
-				$meta_value = wc_get_order_item_meta($item_id, $key, true);
-
-				// Handle cases where the meta might not exist
-				if (false === $meta_value || '' === $meta_value) {
-					$meta_value = '';
-				}
-
-				// Cache the result
-				wp_cache_set($cache_key, $meta_value, $cache_group, DAY_IN_SECONDS);
-
-				return $meta_value;
+				return $value ?? '';
 			}
 			public static function wc_product_sku($product_id) {
 				if ($product_id) {
@@ -902,34 +1005,15 @@
 					return 0;
 				}
 			}
-			public static function get_order_item_meta($item_id, $key): string {
-				// Validate input
-				if (empty($item_id) || empty($key)) {
-					return '';
+			public static function get_order_item_meta( $item_id, $key ): string {
+				global $wpdb;
+				$table_name = $wpdb->prefix . "woocommerce_order_itemmeta";
+				$results    = $wpdb->get_results( $wpdb->prepare( "SELECT meta_value FROM $table_name WHERE order_item_id = %d AND meta_key = %s", $item_id, $key ) );
+				foreach ( $results as $result ) {
+					$value = $result->meta_value;
 				}
 
-				// Generate unique cache key
-				$cache_key = 'wc_order_item_meta_' . $item_id . '_' . $key;
-				$cache_group = 'order_item_meta';
-
-				// Try to get cached value first
-				$cached_value = wp_cache_get($cache_key, $cache_group);
-				if (false !== $cached_value) {
-					return $cached_value;
-				}
-
-				// Use WooCommerce API functions instead of direct DB query
-				$meta_value = wc_get_order_item_meta($item_id, $key, true);
-
-				// Handle cases where the meta might not exist
-				if (false === $meta_value || '' === $meta_value) {
-					$meta_value = '';
-				}
-
-				// Cache the result
-				wp_cache_set($cache_key, $meta_value, $cache_group, DAY_IN_SECONDS);
-
-				return $meta_value;
+				return $value ?? '';
 			}
 			public static function wc_product_sku($product_id) {
 				if ($product_id) {

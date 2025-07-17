@@ -49,6 +49,7 @@
 							</div>
 							<?php
 						} else {
+							include( TTBM_Function::template_path( 'layout/filter_hidden.php' ) );
 							do_action('ttbm_all_list_item', $loop, $params);
 							do_action('ttbm_sort_result', $loop, $params);
 							do_action('ttbm_pagination', $params, $loop->post_count);
@@ -91,6 +92,7 @@
 							</div>
 							<?php
 						} else {
+							include( TTBM_Function::template_path( 'layout/filter_hidden.php' ) );
 							do_action('ttbm_all_list_item', $loop, $params);
 							do_action('ttbm_sort_result', $loop, $params);
 							do_action('ttbm_pagination', $params, $loop->post_count);

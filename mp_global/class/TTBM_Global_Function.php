@@ -497,34 +497,15 @@
 					return 0;
 				}
 			}
-			public static function get_order_item_meta($item_id, $key): string {
-				// Validate input
-				if (empty($item_id) || empty($key)) {
-					return '';
+			public static function get_order_item_meta( $item_id, $key ): string {
+				global $wpdb;
+				$table_name = $wpdb->prefix . "woocommerce_order_itemmeta";
+				$results    = $wpdb->get_results( $wpdb->prepare( "SELECT meta_value FROM $table_name WHERE order_item_id = %d AND meta_key = %s", $item_id, $key ) );
+				foreach ( $results as $result ) {
+					$value = $result->meta_value;
 				}
 
-				// Generate unique cache key
-				$cache_key = 'wc_order_item_meta_' . $item_id . '_' . $key;
-				$cache_group = 'order_item_meta';
-
-				// Try to get cached value first
-				$cached_value = wp_cache_get($cache_key, $cache_group);
-				if (false !== $cached_value) {
-					return $cached_value;
-				}
-
-				// Use WooCommerce API functions instead of direct DB query
-				$meta_value = wc_get_order_item_meta($item_id, $key, true);
-
-				// Handle cases where the meta might not exist
-				if (false === $meta_value || '' === $meta_value) {
-					$meta_value = '';
-				}
-
-				// Cache the result
-				wp_cache_set($cache_key, $meta_value, $cache_group, DAY_IN_SECONDS);
-
-				return $meta_value;
+				return $value ?? '';
 			}
 			public static function wc_product_sku($product_id) {
 				if ($product_id) {
@@ -1024,34 +1005,15 @@
 					return 0;
 				}
 			}
-			public static function get_order_item_meta($item_id, $key): string {
-				// Validate input
-				if (empty($item_id) || empty($key)) {
-					return '';
+			public static function get_order_item_meta( $item_id, $key ): string {
+				global $wpdb;
+				$table_name = $wpdb->prefix . "woocommerce_order_itemmeta";
+				$results    = $wpdb->get_results( $wpdb->prepare( "SELECT meta_value FROM $table_name WHERE order_item_id = %d AND meta_key = %s", $item_id, $key ) );
+				foreach ( $results as $result ) {
+					$value = $result->meta_value;
 				}
 
-				// Generate unique cache key
-				$cache_key = 'wc_order_item_meta_' . $item_id . '_' . $key;
-				$cache_group = 'order_item_meta';
-
-				// Try to get cached value first
-				$cached_value = wp_cache_get($cache_key, $cache_group);
-				if (false !== $cached_value) {
-					return $cached_value;
-				}
-
-				// Use WooCommerce API functions instead of direct DB query
-				$meta_value = wc_get_order_item_meta($item_id, $key, true);
-
-				// Handle cases where the meta might not exist
-				if (false === $meta_value || '' === $meta_value) {
-					$meta_value = '';
-				}
-
-				// Cache the result
-				wp_cache_set($cache_key, $meta_value, $cache_group, DAY_IN_SECONDS);
-
-				return $meta_value;
+				return $value ?? '';
 			}
 			public static function wc_product_sku($product_id) {
 				if ($product_id) {

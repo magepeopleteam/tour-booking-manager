@@ -416,11 +416,12 @@
 			public function feature_filter_multiple($params) {
 				if ($params['feature-filter'] == 'yes') {
 					$features = TTBM_Function::get_meta_values('ttbm_service_included_in_price', 'ttbm_tour');
+                    //echo '<pre>';print_r($features);echo '</pre>';
 					$upcomming_date = $this->upcomming_date;
 					$exist_feature = [];
 					for ($i = 0; $i < count($features); $i++) {
 						if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $features[$i]) {
-							$exist_feature = array_unique(array_merge($exist_feature, unserialize($features[$i])));
+							$exist_feature = array_unique(array_merge($exist_feature, $features[$i]));
 						}
 					}
 					if (sizeof($exist_feature) > 0) {
@@ -485,7 +486,7 @@
 					for ($i = 0; $i < count($activities); $i++) {
 						if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $activities[$i]) {
 //						if ($upcomming_date[$i] && is_array($activities[$i])) {
-							$exist_activities = array_unique(array_merge($exist_activities, unserialize($activities[$i])));
+							$exist_activities = array_unique(array_merge($exist_activities, $activities[$i]));
 						}
 					}
 					if (sizeof($exist_activities) > 0) {

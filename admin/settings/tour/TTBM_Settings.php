@@ -407,7 +407,7 @@
 					'get_ticket_type' => __('You can import ticket types here . Create new ticket types <a href="post-new.php?post_type=ttbm_ticket_types">Click Me</a>', 'tour-booking-manager'),
 				);
 				$des = apply_filters('ttbm_filter_description_array', $des);
-				return $des[$key];
+				return array_key_exists($key,$des)?$des[$key]:'';
 			}
 			public static function des_row($key) {
 				?>

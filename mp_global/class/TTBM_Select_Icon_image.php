@@ -39,6 +39,7 @@
 				<?php
 				add_action('admin_footer', array($this, 'icon_popup'));
 			}
+
 			public function icon_popup() {
 				if (!$GLOBALS['ttbm_icon_popup_exit']) {
 					$GLOBALS['ttbm_icon_popup_exit'] = true;
@@ -190,7 +191,17 @@
 				add_action('admin_footer', array($this, 'icon_popup'));
 			}
 			//==============//
-			public static function all_icon_array(): array {
+			public static function mi_icon($icon_type="mi") {
+				$mi_icon_json = file_get_contents(TTBM_PLUGIN_URL . '/assets/mage-icon/data.json');
+				$mi_icons = json_decode($mi_icon_json, true);
+				$all_icon = [];
+				foreach($mi_icons as $mi_icon){
+					$all_icon["{$icon_type} mi-{$mi_icon}"] = $mi_icon;
+				}
+				return $all_icon;
+			}
+
+			public static function all_icon_array(): array {				
 				return [
 					0 => [
 						'title' => 'Accessibility',
@@ -1929,8 +1940,25 @@
 							'fas fa-wheelchair' => 'Wheelchair',
 							'fas fa-wifi' => 'Wifi',
 						]
-					]
+					],
+					58 => [
+						'title' => 'Mage icons solid',
+						'icon' 	=> self::mi_icon('mi'),
+					],
+					59 => [
+						'title' => 'Mage icons regular',
+						'icon' 	=> self::mi_icon('mir'),
+					],
+					60 => [
+						'title' => 'Mage icons light',
+						'icon' 	=> self::mi_icon('mil'),
+					],
+					61 => [
+						'title' => 'Mage icons thin',
+						'icon' 	=> self::mi_icon('mit'),
+					],
 				];
+
 			}
 		}
 		new TTBM_Select_Icon_image();

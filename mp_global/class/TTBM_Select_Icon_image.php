@@ -201,12 +201,7 @@
 				return $all_icon;
 			}
 
-			public static function all_icon_array(): array {
-				$mi_icon_solid = self::mi_icon('mi');
-				$mi_icon_regular = self::mi_icon('mir');
-				$mi_icon_light = self::mi_icon('mil');
-				$mi_icon_thin = self::mi_icon('mit');
-				
+			public static function all_icon_array(): array {				
 				return [
 					0 => [
 						'title' => 'Accessibility',
@@ -1948,15 +1943,15 @@
 					],
 					58 => [
 						'title' => 'Mage icons solid',
-						'icon' 	=> $mi_icon_solid,
+						'icon' 	=> self::mi_icon('mi'),
 					],
 					59 => [
 						'title' => 'Mage icons regular',
-						'icon' 	=> $mi_icon_regular,
+						'icon' 	=> self::mi_icon('mir'),
 					],
 					60 => [
 						'title' => 'Mage icons light',
-						'icon' 	=> $mi_icon_light,
+						'icon' 	=> self::mi_icon('mil'),
 					],
 					61 => [
 						'title' => 'Mage icons thin',

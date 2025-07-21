@@ -5,8 +5,7 @@
 	if (!class_exists('TTBM_Settings_activity')) {
 		class TTBM_Settings_activity {
 			public function __construct() {
-				add_action('add_ttbm_settings_tab_name', [$this, 'add_tab'], 90);
-				add_action('add_ttbm_settings_tab_content', [$this, 'ttbm_settings_activities'], 10, 1);
+				add_action('ttbm_meta_box_tab_content', [$this, 'ttbm_settings_activities'], 10, 1);
 				//*********Activity***************//
 				add_action('wp_ajax_load_ttbm_activity_form', [$this, 'load_ttbm_activity_form']);
 				add_action('wp_ajax_nopriv_load_ttbm_activity_form', [$this, 'load_ttbm_activity_form']);
@@ -15,13 +14,6 @@
 				//******************//
 				add_action('wp_ajax_ttbm_new_activity_save', [$this, 'ttbm_new_activity_save']);
 				add_action('wp_ajax_nopriv_ttbm_new_activity_save', [$this, 'ttbm_new_activity_save']);
-			}
-			public function add_tab() {
-				?>
-                <li data-tabs-target="#ttbm_settings_activies">
-                    <i class="fas fa-clipboard-list"></i><?php esc_html_e(' Activities', 'tour-booking-manager'); ?>
-                </li>
-				<?php
 			}
 			public function ttbm_settings_activities($tour_id) {
 				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_activities', 'on');

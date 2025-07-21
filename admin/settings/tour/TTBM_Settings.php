@@ -17,25 +17,38 @@
 			//******************************//
 			public function settings() {
 				$tour_id = get_the_id();
+				$ttbm_label = TTBM_Function::get_name();
 				?>
                 <div id="ttbm-settings-page">
                     <div class="ttbm_style ttbm_settings">
                         <div class="ttbmTabs leftTabs d-flex justify-content-between">
                             <ul class="tabLists">
-                                <li data-tabs-target="#ttbm_general_info">
-                                    <i class="fas fa-tools"></i><?php esc_html_e('General Info', 'tour-booking-manager'); ?>
-                                </li>
+                                <li data-tabs-target="#ttbm_general_info"><i class="fas fa-tools"></i><?php esc_html_e('General Info', 'tour-booking-manager'); ?> </li>
+                                <li data-tabs-target="#ttbm_settings_location" class="ttbm_settings_location"><i class="fas fa-map-marker-alt"></i><?php esc_html_e(' Location', 'tour-booking-manager'); ?></li>
+<!--                                <li data-tabs-target="#ttbm_settings_dates"><i class="far fa-calendar-plus"></i>--><?php //esc_html_e(' Date Configuration', 'tour-booking-manager'); ?><!--</li>-->
 								<?php do_action('ttbm_meta_box_tab_name', $tour_id); ?>
+                                <li data-tabs-target="#ttbm_settings_pricing"><i class="fas fa-hand-holding-usd"></i><?php esc_html_e(' Pricing', 'tour-booking-manager'); ?> </li>
+                                <li data-tabs-target="#ttbm_settings_extra_service"><i class="fas fa-parachute-box"></i><?php esc_html_e(' Extra Service', 'tour-booking-manager'); ?> </li>
+								<?php do_action('ttbm_meta_box_tab_after_pricing'); ?>
+                                <li data-tabs-target="#ttbm_settings_gallery"><i class="fas fa-images"></i><?php esc_html_e('Gallery ', 'tour-booking-manager'); ?></li>
+                                <li data-tabs-target="#ttbm_settings_feature"><i class="fas fa-clipboard-list"></i><?php esc_html_e(' Features', 'tour-booking-manager'); ?></li>
+                                <li data-tabs-target="#ttbm_settings_guide"><i class="fas fa-hiking"></i><?php echo esc_html($ttbm_label) . '  ' . esc_html__('Guide ', 'tour-booking-manager'); ?></li>
+                                <li data-tabs-target="#ttbm_settings_activies"><i class="fas fa-clipboard-list"></i><?php esc_html_e(' Activities', 'tour-booking-manager'); ?></li>
+                                <li data-tabs-target="#ttbm_settings_place_you_see"><i class="fas fa-map-marker-alt"></i><?php esc_html_e(' Places You\'ll Visit', 'tour-booking-manager'); ?></li>
+                                <li data-tabs-target="#ttbm_daywise_settings"><i class="fas fa-list-ul"></i><?php esc_html_e('Itinerary Builder', 'tour-booking-manager'); ?></li>
+                                <li data-tabs-target="#ttbm_faq_settings"><i class="fas fa-question-circle"></i><?php esc_html_e('F.A.Q', 'tour-booking-manager'); ?></li>
+                                <li data-tabs-target="#ttbm_settings_related_tour"><i class="fas fa-link"></i><?php esc_html_e('Related ', 'tour-booking-manager') . esc_html($ttbm_label); ?></li>
+                                <li data-tabs-target="#ttbm_settings_extras"><i class="fab fa-telegram-plane"></i><?php esc_html_e('Contact ', 'tour-booking-manager'); ?></li>
+                                <li data-tabs-target="#ttbm_settings_why_chose_us"><i class="fas fa-info-circle"></i> <?php esc_html_e('Promotional Text', 'tour-booking-manager'); ?></li>
+                                <li data-tabs-target="#ttbm_settings_admin_note"><i class="fas fa-edit"></i><?php esc_html_e('Admin Note', 'tour-booking-manager'); ?></li>
+                                <li data-tabs-target="#ttbm_display_settings"><i class="fas fa-chalkboard"></i><?php esc_html_e(' Display settings', 'tour-booking-manager'); ?></li>
 								<?php do_action('add_ttbm_settings_tab_name'); ?>
 								<?php if (is_plugin_active('mage-partial-payment-pro/mage_partial_pro.php')) : ?>
-                                    <li data-tabs-target="#_mep_pp_deposits_type">
-                                        <i class="far fa-money-bill-alt"></i>&nbsp;&nbsp;<?php esc_html_e('Partial Payment', 'tour-booking-manager'); ?>
-                                    </li>
+                                    <li data-tabs-target="#_mep_pp_deposits_type"><i class="far fa-money-bill-alt"></i>&nbsp;&nbsp;<?php esc_html_e('Partial Payment', 'tour-booking-manager'); ?>                                    </li>
 								<?php endif; ?>
                             </ul>
                             <div class="tabsContent">
 								<?php
-									do_action('add_ttbm_settings_tab_content', $tour_id);
 									do_action('ttbm_meta_box_tab_content', $tour_id);
 									$this->partial_payment_settings($tour_id);
 								?>
@@ -407,7 +420,7 @@
 					'get_ticket_type' => __('You can import ticket types here . Create new ticket types <a href="post-new.php?post_type=ttbm_ticket_types">Click Me</a>', 'tour-booking-manager'),
 				);
 				$des = apply_filters('ttbm_filter_description_array', $des);
-				return array_key_exists($key,$des)?$des[$key]:'';
+				return array_key_exists($key, $des) ? $des[$key] : '';
 			}
 			public static function des_row($key) {
 				?>
@@ -676,6 +689,20 @@
 					$related_tours = isset($_POST['ttbm_related_tour']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_related_tour'])) : [];
 					update_post_meta($tour_id, 'ttbm_display_related', $related);
 					update_post_meta($tour_id, 'ttbm_related_tour', $related_tours);
+				}
+                //*********features**************//
+				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
+					$display_feature = isset($_POST['ttbm_display_include_service']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_include_service'])) ? 'on' : 'off';
+					$feature = isset($_POST['ttbm_service_included_in_price']) ? sanitize_text_field(wp_unslash($_POST['ttbm_service_included_in_price'])) :'';
+					$feature_info=TTBM_Function::feature_id_to_array($feature);
+					update_post_meta($tour_id, 'ttbm_display_include_service', $display_feature);
+					update_post_meta($tour_id, 'ttbm_service_included_in_price', $feature_info);
+
+					$display_ex_feature = isset($_POST['ttbm_display_exclude_service']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_exclude_service'])) ? 'on' : 'off';
+					$feature_ex = isset($_POST['ttbm_service_excluded_in_price']) ? sanitize_text_field(wp_unslash($_POST['ttbm_service_excluded_in_price'])) :'';
+					$feature_info_ex=TTBM_Function::feature_id_to_array($feature_ex);
+					update_post_meta($tour_id, 'ttbm_display_exclude_service', $display_ex_feature);
+					update_post_meta($tour_id, 'ttbm_service_excluded_in_price', $feature_info_ex);
 				}
 				//*********Extra service price**************//
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {

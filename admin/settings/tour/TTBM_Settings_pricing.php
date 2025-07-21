@@ -5,18 +5,10 @@
 	if (!class_exists('TTBM_Settings_pricing')) {
 		class TTBM_Settings_pricing {
 			public function __construct() {
-				add_action('add_ttbm_settings_tab_name', [$this, 'add_tab'], 10);
-				add_action('add_ttbm_settings_tab_content', [$this, 'pricing_tab_content'], 10, 1);
+				add_action('ttbm_meta_box_tab_content', [$this, 'pricing_tab_content'], 10, 1);
 				add_action('ttbm_price_item', array($this, 'pricing_item'));
 				add_action('wp_ajax_get_ttbm_insert_ticket_type', array($this, 'ticket_table'));
 				add_action('wp_ajax_nopriv_get_ttbm_insert_ticket_type', array($this, 'ticket_table'));
-			}
-			public function add_tab() {
-				?>
-                <li data-tabs-target="#ttbm_settings_pricing">
-                    <i class="fas fa-hand-holding-usd"></i><?php esc_html_e(' Pricing', 'tour-booking-manager'); ?>
-                </li>
-				<?php
 			}
 			public function pricing_tab_content($tour_id) {
 				$all_types = TTBM_Function::tour_type();

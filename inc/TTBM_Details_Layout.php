@@ -208,7 +208,16 @@
 					dynamic_sidebar('ttbm_details_sidebar');
 				}
 			}
-			public function travel_analytics_display($found_posts, $analytics_Data) { ?>
+			public function travel_analytics_display($found_posts, $analytics_Data) { 
+				// Get dynamic data
+				$top_destination = isset($analytics_Data['top_destination']) && !empty($analytics_Data['top_destination']) 
+					? $analytics_Data['top_destination'] 
+					: esc_html__('No Data', 'tour-booking-manager');
+				
+				$average_price = isset($analytics_Data['average_price']) ? $analytics_Data['average_price'] : 0;
+				$currency_symbol = function_exists('get_woocommerce_currency_symbol') ? get_woocommerce_currency_symbol() : '$';
+				$formatted_avg_price = $average_price > 0 ? $currency_symbol . number_format($average_price, 0) : $currency_symbol . '0';
+				?>
                 <div class="ttbm_travel_analytics-container">
                     <div class="ttbm_travel_analytics-bar">
                         <div class="ttbm_travel_metrics-group">
@@ -238,11 +247,11 @@
                             <div class="ttbm_travel_info-card">
                                 <div class="ttbm_travel_info-section">
                                     <h3 class="ttbm_travel_metric-label"><?php esc_attr_e('Top Destination', 'tour-booking-manager'); ?></h3>
-                                    <h2 class="ttbm_travel_metric-value ttbm_travel_indigo-text" id="top-destination"><?php esc_attr_e('New York', 'tour-booking-manager'); ?></h2>
+                                    <h2 class="ttbm_travel_metric-value ttbm_travel_indigo-text" id="top-destination"><?php echo esc_attr($top_destination); ?></h2>
                                 </div>
                                 <div class="ttbm_travel_info-section">
                                     <h3 class="ttbm_travel_metric-label"><?php esc_attr_e('Avg Price', 'tour-booking-manager'); ?></h3>
-                                    <h2 class="ttbm_travel_metric-value ttbm_travel_pink-text" id="avg-price">$218</h2>
+                                    <h2 class="ttbm_travel_metric-value ttbm_travel_pink-text" id="avg-price"><?php echo esc_attr($formatted_avg_price); ?></h2>
                                 </div>
                             </div>
                             <div class="ttbm_travel_status-card">

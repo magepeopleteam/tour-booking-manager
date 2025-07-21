@@ -402,7 +402,7 @@
 					}
 			
 					if ( $section['title'] ) {
-						echo esc_html("<h3>{$section['title']}</h3>\n");
+						echo "<h3>" . esc_html($section['title']) . "</h3>\n";
 					}
 			
 					if ( $section['callback'] ) {

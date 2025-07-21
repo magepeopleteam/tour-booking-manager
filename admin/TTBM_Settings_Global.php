@@ -29,7 +29,7 @@
 				?>
                 <div class="ttbm_style ttbm_global_settings">
                     <div class="ttbmPanel">
-                        <div class="ttbmPanelHeader"><?php echo esc_html(esc_html__(' Global Settings', 'tour-booking-manager')); ?></div>
+                        <div class="ttbmPanelHeader"><?php echo esc_html__(' Global Settings', 'tour-booking-manager'); ?></div>
                         <div class="ttbmPanelBody mp_zero">
                             <div class="ttbmTabs">
 								<div class="leftTabs">

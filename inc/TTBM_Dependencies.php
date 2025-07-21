@@ -44,7 +44,7 @@
 			public function global_enqueue() {
 				$this->registration_enqueue();
 				do_action('ttbm_common_script');
-				
+				wp_enqueue_style('mage-icons', TTBM_PLUGIN_URL . '/assets/mage-icon/css/mage-icon.css', array(), time());
 			}
 			public function frontend_script() {
 				$this->global_enqueue();

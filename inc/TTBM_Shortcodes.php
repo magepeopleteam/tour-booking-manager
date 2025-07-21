@@ -66,9 +66,18 @@
 				$show = $params['show'];
 				$pagination = $params['pagination'];
 				$search = $params['sidebar-filter'];
-				$organizer_filter = $params['organizer-filter'];
-				$location_filter = $params['location-filter'];
-				$activity_filter = $params['activity-filter'];
+				
+				// Extract search parameters from GET request
+				$organizer_filter = '';
+				$location_filter = '';
+				$activity_filter = '';
+				
+				if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+					$organizer_filter = isset($_GET['organizer_filter']) ? sanitize_text_field(wp_unslash($_GET['organizer_filter'])) : '';
+					$location_filter = isset($_GET['location_filter']) ? sanitize_text_field(wp_unslash($_GET['location_filter'])) : '';
+					$activity_filter = isset($_GET['activity_filter']) ? sanitize_text_field(wp_unslash($_GET['activity_filter'])) : '';
+				}
+				
 				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
 
 				$loop = TTBM_Query::ttbm_query_for_top_Search($show, $params['sort'], $params['sort_by'], $params['status'], $organizer_filter, $location_filter, $activity_filter, $date_filter );
@@ -190,7 +199,19 @@
 			}
 			public function search_result($attribute) {
 				ob_start();
-				 $this->list_with_left_filter_for_search( $attribute );
+				
+				// Process search parameters from GET request
+				$date_filter = array();
+				if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+					if (isset($_GET['date_filter_start']) && !empty($_GET['date_filter_start'])) {
+						$date_filter['start_date'] = sanitize_text_field(wp_unslash($_GET['date_filter_start']));
+					}
+					if (isset($_GET['date_filter_end']) && !empty($_GET['date_filter_end'])) {
+						$date_filter['end_date'] = sanitize_text_field(wp_unslash($_GET['date_filter_end']));
+					}
+				}
+				
+				echo $this->list_with_left_filter_for_search( $attribute, $date_filter );
 				return ob_get_clean();
 			}
 			public function hotel_list($attribute) {

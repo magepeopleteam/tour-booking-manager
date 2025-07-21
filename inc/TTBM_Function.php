@@ -899,6 +899,9 @@
 				);
 				$all_travel_query = new WP_Query($travel_args);
 				$active_tour = $expired_tour = $total_price = $price_count = $average_price = 0;
+				$location_counts = array();
+				$top_destination = '';
+				
 				if ($all_travel_query->have_posts()) {
 					while ($all_travel_query->have_posts()) {
 						$all_travel_query->the_post();
@@ -914,19 +917,39 @@
 							$price_count++;
 							$total_price = $total_price + $get_price;
 						}
+						
+						// Count locations for top destination
+						$location = get_post_meta($travel_post_id, 'ttbm_location_name', true);
+						if (!empty($location)) {
+							if (isset($location_counts[$location])) {
+								$location_counts[$location]++;
+							} else {
+								$location_counts[$location] = 1;
+							}
+						}
 					}
 				}
+				
 				if ($price_count > 0 && $total_price > 0) {
 					$average_price = $total_price / $price_count;
 				}
+				
+				// Find top destination
+				if (!empty($location_counts)) {
+					arsort($location_counts);
+					$top_destination = array_key_first($location_counts);
+				}
+				
 				$all_location = TTBM_Function::get_all_location();
 				unset($all_location['']);
 				$location_count = count($all_location);
+				
 				return array(
 					'location_count' => $location_count,
 					'average_price' => $average_price,
 					'active_tour' => $active_tour,
 					'expired_tour' => $expired_tour,
+					'top_destination' => $top_destination,
 				);
 			}
 		}

@@ -19,10 +19,12 @@
 				$start_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
 				$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_date');
 				$end_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_time');
-				$hidden_end_date = $start_date ? gmdate('Y-m-d', strtotime($end_date)) : '';
-				$visible_end_date = $start_date ? date_i18n($date_format, strtotime($end_date)) : '';
+				$hidden_end_date = $end_date ? gmdate('Y-m-d', strtotime($end_date)) : '';
+				$visible_end_date = $end_date ? date_i18n($date_format, strtotime($end_date)) : '';
 				$reg_end = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_reg_end_date');
-
+				$hidden_reg_end_date = $reg_end ? gmdate('Y-m-d', strtotime($reg_end)) : '';
+				$visible_reg_end_date = $reg_end ? date_i18n($date_format, strtotime($reg_end)) : '';
+				$reg_end_time = TTBM_Global_Function::get_post_info($tour_id, 'reg_end_time');
 				//echo $date_type;
 				?>
                 <div class="tabsItem ttbm_settings_dates" data-tabs="#ttbm_settings_dates">
@@ -63,6 +65,18 @@
                                         </label>
                                         <label>
                                             <input type="time" name="ttbm_travel_end_time" class="formControl" value="<?php echo esc_attr($end_time); ?>" style="width:100px;"/>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="_fdColumn">
+                                    <label><?php esc_html_e('Reg. End Date & Time', 'tour-booking-manager'); ?></label>
+                                    <div class="_dFlex_mT_xs">
+                                        <label>
+                                            <input type="hidden" name="ttbm_travel_reg_end_date" value="<?php echo esc_attr($hidden_reg_end_date); ?>"/>
+                                            <input value="<?php echo esc_attr($visible_reg_end_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
+                                        </label>
+                                        <label>
+                                            <input type="time" name="ttbm_travel_end_time" class="formControl" value="<?php echo esc_attr($reg_end_time); ?>" style="width:100px;"/>
                                         </label>
                                     </div>
                                 </div>

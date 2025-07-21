@@ -262,9 +262,11 @@
 					$locations = TTBM_Function::get_meta_values('ttbm_location_name', 'ttbm_tour');
 					$exist_locations = [];
 					for ($i = 0; $i < count($locations); $i++) {
-						if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $locations[$i]) {
-							$exist_locations[$i] = $locations[$i];
-						}
+                        if( isset( $upcomming_date[$i] ) ) {
+                            if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $locations[$i]) {
+                                $exist_locations[$i] = $locations[$i];
+                            }
+                        }
 					}
 					$exist_locations = array_unique($exist_locations);
 					if (sizeof($exist_locations) > 0) {
@@ -420,9 +422,12 @@
 					$upcomming_date = $this->upcomming_date;
 					$exist_feature = [];
 					for ($i = 0; $i < count($features); $i++) {
-						if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $features[$i]) {
-							$exist_feature = array_unique(array_merge($exist_feature, $features[$i]));
-						}
+                        if( isset( $upcomming_date[$i] ) ){
+                            if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $features[$i]) {
+                                $exist_feature = array_unique(array_merge($exist_feature, $features[$i]));
+                            }
+                        }
+
 					}
 					if (sizeof($exist_feature) > 0) {
 						$url = '';
@@ -478,16 +483,19 @@
 					}
 				}
 			}
-			public function activity_filter_multiple($params) {
+			public function activity_filter_multiple_old($params) {
 				if ($params['activity-filter'] == 'yes') {
 					$activities = TTBM_Function::get_meta_values('ttbm_tour_activities', 'ttbm_tour');
 					$upcomming_date = $this->upcomming_date;
 					$exist_activities = [];
+
 					for ($i = 0; $i < count($activities); $i++) {
-						if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $activities[$i]) {
-//						if ($upcomming_date[$i] && is_array($activities[$i])) {
-							$exist_activities = array_unique(array_merge($exist_activities, $activities[$i]));
-						}
+                        if( isset( $upcomming_date[$i] ) ) {
+                            if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $activities[$i]) {
+//						    if ($upcomming_date[$i] && is_array($activities[$i])) {
+                                $exist_activities = array_unique(array_merge($exist_activities, $activities[$i]));
+                            }
+                        }
 					}
 					if (sizeof($exist_activities) > 0) {
 						$url_activity = '';
@@ -504,9 +512,10 @@
                         <div class="mActive" data-collapse="#activity_filter_multiple" data-placeholder>
                             <div class="groupCheckBox _dFlex flexColumn">
                                 <input type="hidden" name="activity_filter_multiple" value="<?php echo esc_attr($current_activity); ?>"/>
-								<?php foreach ($exist_activities as $activity) { ?>
-									<?php
+								<?php foreach ($exist_activities as $activity) {
+                                    if( $activity ){
 									$term = get_term_by('name', $activity, 'ttbm_tour_activities');
+
 									$term_id = $term ? $term->term_id : 0;
 									$checked = $current_activity == $term_id ? 'checked' : '';
 									?>
@@ -514,7 +523,67 @@
                                         <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($term_id); ?>" <?php echo esc_attr($checked); ?>/>
                                         <span class="customCheckbox"><?php echo esc_html($activity); ?></span>
                                     </label>
-								<?php } ?>
+								<?php }
+                                } ?>
+                            </div>
+                        </div>
+						<?php
+					}
+				}
+			}
+			public function activity_filter_multiple($params) {
+				if ($params['activity-filter'] == 'yes') {
+					$activities = TTBM_Function::get_meta_values('ttbm_tour_activities', 'ttbm_tour');
+
+                    $all_activities = [];
+
+                    foreach ($activities as $activity_group) {
+                        $all_activities = array_merge($all_activities, $activity_group);
+                    }
+
+                    $unique_activities = array_values(array_unique($all_activities));
+
+					$upcomming_date = $this->upcomming_date;
+					$exist_activities = [];
+
+					for ($i = 0; $i < count($activities); $i++) {
+                        if( isset( $upcomming_date[$i] ) ) {
+                            if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $activities[$i]) {
+//						    if ($upcomming_date[$i] && is_array($activities[$i])) {
+                                $exist_activities = array_unique(array_merge($exist_activities, $activities[$i]));
+                            }
+                        }
+					}
+					if (sizeof($unique_activities) > 0) {
+						$url_activity = '';
+						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+							$url_activity = isset($_GET['activity_filter']) ? sanitize_text_field(wp_unslash($_GET['activity_filter'])) : '';
+						}
+						$current_activity = $url_activity ? (($term = get_term_by('id', $url_activity, 'ttbm_tour_activities')) ? $term->term_id : '') : '';
+						?>
+                        <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#activity_filter_multiple" data-placeholder>
+							<?php esc_html_e('Filter By Activity', 'tour-booking-manager'); ?>
+                            <span data-icon class="fas fa-chevron-down"></span>
+                        </h5>
+                        <div class="divider"></div>
+                        <div class="mActive" data-collapse="#activity_filter_multiple" data-placeholder>
+                            <div class="groupCheckBox _dFlex flexColumn">
+                                <input type="hidden" name="activity_filter_multiple" value="<?php echo esc_attr($current_activity); ?>"/>
+								<?php foreach ($exist_activities as $activity) {
+                                    if( $activity ){
+//									$term = get_term_by('name', $activity, 'ttbm_tour_activities');
+                                    $term = get_term( $activity, 'ttbm_tour_activities' );
+                                    $term_name = $term->name;
+
+									$term_id = $term ? $term->term_id : 0;
+									$checked = $current_activity == $term_id ? 'checked' : '';
+									?>
+                                    <label class="customCheckboxLabel">
+                                        <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($term_id); ?>" <?php echo esc_attr($checked); ?>/>
+                                        <span class="customCheckbox"><?php echo esc_html($term_name); ?></span>
+                                    </label>
+								<?php }
+                                } ?>
                             </div>
                         </div>
 						<?php

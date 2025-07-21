@@ -4,22 +4,14 @@
 	} // Cannot access pages directly.
 	if (!class_exists('TTBM_Settings_place_you_see')) {
 		class TTBM_Settings_place_you_see {
-			public function __construct() {
-				add_action('add_ttbm_settings_tab_name', [$this, 'add_tab'], 90);
-				add_action('add_ttbm_settings_tab_content', [$this, 'place_you_see_settings'], 10, 1);
+			public function __construct() {;
+				add_action('ttbm_meta_box_tab_content', [$this, 'place_you_see_settings'], 10, 1);
 				//*********add new Place***************//
 				add_action('wp_ajax_load_ttbm_place_you_see_form', [$this, 'load_ttbm_place_you_see_form']);
 				add_action('wp_ajax_nopriv_load_ttbm_place_you_see_form', [$this, 'load_ttbm_place_you_see_form']);
 				add_action('wp_ajax_ttbm_reload_place_you_see_list', [$this, 'ttbm_reload_place_you_see_list']);
 				add_action('wp_ajax_nopriv_ttbm_reload_place_you_see_list', [$this, 'ttbm_reload_place_you_see_list']);
 				/******************************/
-			}
-			public function add_tab() {
-				?>
-                <li data-tabs-target="#ttbm_settings_place_you_see">
-                    <i class="fas fa-map-marker-alt"></i><?php esc_html_e(' Places You\'ll Visit', 'tour-booking-manager'); ?>
-                </li>
-				<?php
 			}
 			public function place_you_see_settings($tour_id) {
 				$ttbm_label = TTBM_Function::get_name();

@@ -13,8 +13,7 @@
 	if (!class_exists('TTBM_Settings_Location')) {
 		class TTBM_Settings_Location {
 			public function __construct() {
-				add_action('ttbm_meta_box_tab_name', [$this, 'add_tab'], 10);
-				add_action('add_ttbm_settings_tab_content', [$this, 'location_tab_content'], 10, 1);
+				add_action('ttbm_meta_box_tab_content', [$this, 'location_tab_content'], 10, 1);
 				//********Location************//
 				add_action('wp_ajax_load_ttbm_location_form', [$this, 'load_ttbm_location_form']);
 				add_action('wp_ajax_nopriv_load_ttbm_location_form', [$this, 'load_ttbm_location_form']);
@@ -44,13 +43,6 @@
 				wp_localize_script('ttbm_leaflet_script', 'ttbm_map', array(
 					'api_key' => esc_attr($api_key),
 				));
-			}
-			public function add_tab($tour_id) {
-				?>
-                <li data-tabs-target="#ttbm_settings_location" class="ttbm_settings_location">
-                    <i class="fas fa-map-marker-alt"></i><?php esc_html_e(' Location', 'tour-booking-manager'); ?>
-                </li>
-				<?php
 			}
 			public function location_tab_content($tour_id) {
 				?>

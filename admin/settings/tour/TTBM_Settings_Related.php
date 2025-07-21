@@ -5,16 +5,7 @@
 	if (!class_exists('TTBM_Settings_Related')) {
 		class TTBM_Settings_Related {
 			public function __construct() {
-				add_action('add_ttbm_settings_tab_name', [$this, 'add_tab'], 90);
-				add_action('add_ttbm_settings_tab_content', [$this, 'related_tour_settings']);
-			}
-			public function add_tab() {
-				$ttbm_label = TTBM_Function::get_name();
-				?>
-                <li data-tabs-target="#ttbm_settings_related_tour">
-                    <i class="fas fa-link"></i><?php echo esc_html__('Related ', 'tour-booking-manager') . esc_html($ttbm_label); ?>
-                </li>
-				<?php
+				add_action('ttbm_meta_box_tab_content', [$this, 'related_tour_settings']);
 			}
 			public function related_tour_settings($tour_id) {
 				$ttbm_label = TTBM_Function::get_name();

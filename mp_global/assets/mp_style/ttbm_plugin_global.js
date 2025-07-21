@@ -639,7 +639,7 @@ function ttbm_sticky_management() {
             $(this).removeClass('active');
         }).promise().done(function () {
             $this.addClass('active');
-            parent.find('input[type="text"]').val(value);
+            parent.find('input').val(value);
         });
     });
     //Group radio like checkbox

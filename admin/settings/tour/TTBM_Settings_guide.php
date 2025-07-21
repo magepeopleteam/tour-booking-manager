@@ -5,16 +5,7 @@
 	if (!class_exists('TTBM_Settings_guide')) {
 		class TTBM_Settings_guide {
 			public function __construct() {
-				add_action('add_ttbm_settings_tab_name', [$this, 'add_tab'], 90);
-				add_action('add_ttbm_settings_tab_content', [$this, 'guide_setting']);
-			}
-			public function add_tab() {
-				$ttbm_label = TTBM_Function::get_name();
-				?>
-                <li data-tabs-target="#ttbm_settings_guide">
-                    <i class="fas fa-hiking"></i><?php echo esc_html($ttbm_label) . '  ' . esc_html__('Guide ', 'tour-booking-manager'); ?>
-                </li>
-				<?php
+				add_action('ttbm_meta_box_tab_content', [$this, 'guide_setting']);
 			}
 			public function guide_setting($tour_id) {
 				$ttbm_label = TTBM_Function::get_name();

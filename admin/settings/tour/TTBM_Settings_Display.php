@@ -5,15 +5,7 @@
 	if (!class_exists('TTBM_Settings_Display')) {
 		class TTBM_Settings_Display {
 			public function __construct() {
-				add_action('add_ttbm_settings_tab_name', [$this, 'add_tab'], 90);
-				add_action('add_ttbm_settings_tab_content', [$this, 'display_settings']);
-			}
-			public function add_tab() {
-				?>
-                <li data-tabs-target="#ttbm_display_settings">
-                    <i class="fas fa-chalkboard"></i><?php esc_html_e(' Display settings', 'tour-booking-manager'); ?>
-                </li>
-				<?php
+				add_action('ttbm_meta_box_tab_content', [$this, 'display_settings']);
 			}
 			public function display_settings($tour_id) {
 				$seat_details_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_seat_details', 'on') == 'off' ? '' : 'checked';

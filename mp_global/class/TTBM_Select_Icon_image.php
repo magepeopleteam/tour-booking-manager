@@ -65,16 +65,14 @@
                                         <div class="dFlex">
                                             <ul class="popupIconMenu">
                                                 <li class="active" data-icon-menu="all_item" data-icon-title="all_item">
-													<?php esc_html_e('All Icon', 'tour-booking-manager'); ?>&nbsp;(
-                                                    <strong><?php echo esc_html($total_icon); ?></strong>
-                                                    )
+													<?php esc_html_e('All Icon', 'tour-booking-manager'); ?> <strong><?php echo esc_html($total_icon); ?></strong>
                                                 </li>
 												<?php foreach ($icons as $key => $icon) { ?>
                                                     <li data-icon-menu="<?php echo esc_attr($key); ?>">
 														<?php
 															printf(
 																/* translators: %1$s: title, %2$s: number of icons */
-																wp_kses_post( __( '%1$s&nbsp;(<strong>%2$s</strong>)', 'tour-booking-manager' ) ),
+																wp_kses_post( __( '%1$s&nbsp; <strong>%2$s</strong>', 'tour-booking-manager' ) ),
 																esc_html( $icon['title'] ),
 																esc_html( sizeof( $icon['icon'] ) )
 															);
@@ -85,7 +83,7 @@
                                             <div class="popup_all_icon">
 												<?php foreach ($icons as $key => $icon) { ?>
                                                     <div class="popupTabItem" data-icon-list="<?php echo esc_attr($key); ?>" data-icon-title="<?php echo esc_attr($icon['title']); ?>">
-                                                       <h5 class="textTheme">
+                                                       <h3>
 															<?php
 															echo wp_kses_post(
 																sprintf(
@@ -96,7 +94,7 @@
 																)
 															);
 															?>
-														</h5>
+														</h3>
                                                         <div class="divider"></div>
                                                         <div class="itemIconArea">
 															<?php foreach ($icon['icon'] as $icon => $item) { ?>

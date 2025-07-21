@@ -49,7 +49,7 @@
                             <div class="popupHeader allCenter">
                                 <h2 class="_mR"><?php esc_html_e('Select Icon', 'tour-booking-manager'); ?></h2>
                                 <label class="min_300">
-                                    <input type="text" class="formControl ttbm_name_validation" name="ttbm_select_icon_name" placeholder="<?php esc_attr_e('Icon/class name....', 'tour-booking-manager'); ?>"/>
+                                    <input type="text" id="searchInputIcon" class="formControl ttbm_name_validation" name="ttbm_select_icon_name" placeholder="<?php esc_attr_e('Icon/class name....', 'tour-booking-manager'); ?>"/>
                                 </label>
                                 <span class="fas fa-times popupClose"></span>
                             </div>

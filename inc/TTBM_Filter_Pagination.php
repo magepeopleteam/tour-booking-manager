@@ -260,7 +260,7 @@
 				if ($params['location-filter'] == 'yes') {
 					$upcomming_date = $this->upcomming_date;
 					$locations = TTBM_Function::get_meta_values('ttbm_location_name', 'ttbm_tour');
-                    error_log( print_r( [ '$upcommin$locationsg_date' => $locations ], true ) );
+//                    error_log( print_r( [ '$upcommin$locationsg_date' => $locations ], true ) );
 					$exist_locations = [];
 					for ($i = 0; $i < count($locations); $i++) {
                         if( isset( $upcomming_date[$i] ) ) {

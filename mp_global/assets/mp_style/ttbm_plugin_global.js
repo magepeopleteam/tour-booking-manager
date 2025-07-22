@@ -639,7 +639,7 @@ function ttbm_sticky_management() {
             $(this).removeClass('active');
         }).promise().done(function () {
             $this.addClass('active');
-            parent.find('input[type="text"]').val(value);
+            parent.find('input').val(value);
         });
     });
     //Group radio like checkbox
@@ -695,7 +695,9 @@ function mp_check_required(input) {
     $(document).on('keyup change', '.ttbm_style [required]', function () {
         mp_check_required($(this));
     });
+    
 }(jQuery));
+
 //==========================================================pagination==========//
 function ttbm_pagination_page_management(parent, pagination_page, total_item) {
     let per_page_item = parseInt(parent.find('input[name="pagination_per_page"]').val());
@@ -957,3 +959,15 @@ function ttbm_slider_resize(target) {
         }
     });
 }(jQuery));
+
+//==== Live search icon======
+document.getElementById('searchInputIcon').addEventListener('input', function () {
+    const filter = this.value.toLowerCase();
+    const items = document.querySelectorAll('.popupTabItem .itemIconArea .iconItem');
+
+    items.forEach(item => {
+        const text = item.getAttribute('title')?.toLowerCase() || '';
+        item.style.display = text.includes(filter) ? '' : 'none';
+    });
+});
+

@@ -65,31 +65,34 @@
 	div.ttbm_image_item:hover .ttbm_remove_icon {opacity: 1;}
 	div.ttbm_add_icon_popup .popupHeader {
 		color: #FFF;height: 60px;
-		margin: 0 auto;width: 100%;background-color: #222;position: relative;
-		border-bottom: 1px solid #FFF;
+		margin: 0 auto;width: 100%;
+		background-color: #032c53;
+		position: relative;
+		border-bottom: 0px solid #FFF;
 	}
 	div.ttbm_add_icon_popup .popupHeader h2 {
 		color: #FFF;text-align: center;
-		font-size: 30px !important;
-		font-weight: 500;
+		font-size: 20px !important;
 	}
 	div.ttbm_add_icon_popup .popupBody {padding: 0;}
 	div.ttbm_add_icon_popup ul.popupIconMenu {
-		min-width: 270px;background-color: #222;margin: 0;
+		padding: 10px;
+		min-width: 270px;background-color: #34424f;margin: 0;
 		max-height: calc(100vh - var(--dmp) - var(--dmp) - 60px);
 		overflow: hidden auto;
 	}
 	div.ttbm_add_icon_popup .popupIconMenu li {
-		padding: 7px 15px;margin: 0;
-		border-bottom: 1px solid #DDD;
+		padding: 10px;
+		margin:5px 0;
+		border-radius:5px;
 		color: #FFF;font-size: 16px;display: block;cursor: pointer;
 		position: relative;
 		font-weight: 500;
 	}
-	div.ttbm_add_icon_popup .popupIconMenu li strong {color: #9F6C8A;}
-	div.ttbm_add_icon_popup .popupIconMenu li.active {background-color: #E3A939;}
-	div.ttbm_add_icon_popup .popupIconMenu li:hover {color: #E3A939;}
-	div.ttbm_add_icon_popup .popupIconMenu li.active:hover {color: #FFF;}
+	div.ttbm_add_icon_popup .popupIconMenu li strong {background-color: #c3cbd6a3;color: #202a33;padding:0px 5px;border-radius: 10px;margin-left: 10px;}
+	div.ttbm_add_icon_popup .popupIconMenu li.active {background-color: #202a33;}
+	div.ttbm_add_icon_popup .popupIconMenu li:hover {color: #c3cbd6;background-color: #202a33;}
+	div.ttbm_add_icon_popup .popupIconMenu li.active:hover {color: #c3cbd6;}
 	div.ttbm_add_icon_popup .popup_all_icon {
 		width: 100%;padding: 10px;background-color: #FFF;
 		max-height: calc(100vh - var(--dmp) - var(--dmp) - 60px);
@@ -102,13 +105,22 @@
 		-webkit-flex-wrap: wrap;flex-wrap: wrap;
 	}
 	div.ttbm_add_icon_popup .iconItem {
-		width: 60px;height: 60px;font-size: 30px;margin: 7px;cursor: pointer;
-		border: 2px solid #FFF;background-color: #F2F2F2;
-		-webkit-box-shadow: 0 1px 4px 1px #DBDBDB;
-		box-shadow: 0 1px 4px 1px #DBDBDB;
+		width: 51px;
+		height: 51px;
+		font-size: 25px;
+		margin: 5px;
+		cursor: pointer;
+		color: #777777;
+		border: 1px solid #DBDBDB;
+		border-radius: 5px;
 	}
 	div.ttbm_add_icon_popup .iconItem.active,
-	div.ttbm_add_icon_popup .iconItem:hover {border-color: var(--color_theme);color: var(--color_theme);border-radius: 5px;}
+	div.ttbm_add_icon_popup .iconItem:hover {
+		background-color: var(--color_theme);
+		color: var(--color_theme_alter);
+		border: 1px solid var(--color_theme);
+		
+	}
 	/************* font***************/
 	div.ttbm_add_icon_popup .iconItem,
 	div.ttbm_add_icon_popup .popupIconMenu li {

@@ -5,8 +5,7 @@
 	if (!class_exists('TTBM_Settings_Feature')) {
 		class TTBM_Settings_Feature {
 			public function __construct() {
-				add_action('add_ttbm_settings_tab_name', [$this, 'add_tab'], 90);
-				add_action('add_ttbm_settings_tab_content', [$this, 'ttbm_settings_feature'], 10, 1);
+				add_action('ttbm_meta_box_tab_content', [$this, 'ttbm_settings_feature'], 10, 1);
 				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'ttbm_settings_feature'], 10, 1);
 				//********Add New Feature************//
 				add_action('wp_ajax_load_ttbm_feature_form', [$this, 'load_ttbm_feature_form']);
@@ -16,13 +15,6 @@
 				/************add New Feature********************/
 				add_action('wp_ajax_ttbm_new_feature_save', [$this, 'ttbm_new_feature_save']);
 				add_action('wp_ajax_nopriv_ttbm_new_feature_save', [$this, 'ttbm_new_feature_save']);
-			}
-			public function add_tab() {
-				?>
-                <li data-tabs-target="#ttbm_settings_feature">
-                    <i class="fas fa-clipboard-list"></i><?php esc_html_e(' Features', 'tour-booking-manager'); ?>
-                </li>
-				<?php
 			}
 			public function ttbm_settings_feature($tour_id) {
 				?>

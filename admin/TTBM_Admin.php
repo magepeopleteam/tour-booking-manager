@@ -22,7 +22,7 @@
 				require_once TTBM_PLUGIN_DIR . '/lib/classes/class-taxonomy-edit.php';
 				//**************//
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Dummy_Import.php';
-				// TTBM_CPT.php is now loaded in main plugin file to ensure post type is always available
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_CPT.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Taxonomy.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Hidden_Product.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Hidden_Hotel_Product.php';

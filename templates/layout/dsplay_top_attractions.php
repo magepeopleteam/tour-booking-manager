@@ -1,0 +1,31 @@
+<?php
+if ($places_query->have_posts()) {
+
+    while ($places_query->have_posts()) {
+        $places_query->the_post();
+        $post_id = get_the_ID();
+        $places_name = get_the_title();
+        $description = get_the_excerpt();
+        $view_link = get_permalink($post_id);
+
+        $img_url = get_the_post_thumbnail_url($post_id, 'thumbnail');
+        if (!$img_url) {
+            $img_url = 'https://i.imgur.com/GD3zKtz.png';
+        }
+
+        ?>
+        <div class="ttbm_attraction_item">
+            <img src="<?php echo esc_url( $img_url );?>" alt="Colosseum">
+            <div>
+                <h4><?php echo esc_attr( $places_name );?></h4>
+                <p><?php echo esc_attr( count( $place_tour[$post_id] ) );?> Tours and Activities</p>
+            </div>
+        </div>
+        <?php
+
+    }
+
+    wp_reset_postdata();
+} else {
+    echo '<p>No attractions found.</p>';
+}

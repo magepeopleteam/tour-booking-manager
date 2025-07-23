@@ -7,9 +7,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 $ttbm_post_id       = $ttbm_post_id ?? get_the_id();
 //$related_tours = array( 163, 164, 165, 94, 96, 100, 102 );
 $related_tours = TTBM_Function::get_top_deals_post_ids($type_tour);
-
-error_log( print_r( [ '$related_tours' => $related_tours, '$type_tour' => $type_tour ], true ) );
-
 $related_tour_count=sizeof( $related_tours );
 $num_of_tour=$num_of_tour??'';
 if ( $related_tour_count > 0 && (TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_top_picks_deals', 'on' ) != 'off' || $num_of_tour>0)) {

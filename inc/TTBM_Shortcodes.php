@@ -14,6 +14,7 @@
 				add_shortcode('ttbm-registration', array($this, 'registration'));
 				add_shortcode('ttbm-related', array($this, 'related'));
 				add_shortcode('wptravelly-tour-list', array($this, 'ttbm_tour_list'));
+				add_shortcode('ttbm-top-attractions', array($this, 'top_attractions'));
 			}
 			public function static_filter($attribute) {
 				$defaults = $this->default_attribute();
@@ -253,7 +254,38 @@
 				}
 				return ob_get_clean();
 			}
-			public function ttbm_tour_list($attribute) {
+            public function top_attractions( $attribute ) {
+                $defaults = array('show' => 4);
+                $params = shortcode_atts($defaults, $attribute);
+                $num_of_places = $params['show'];
+
+                $place_tour = TTBM_Function::get_city_place_ids_with_post_ids( $num_of_places );
+                if( is_array( $place_tour ) && !empty( $place_tour ) ) {
+                    $popular_place_ids = array_values(array_keys($place_tour));
+
+                    $args = array(
+                        'post_type' => 'ttbm_places',
+                        'post_status' => 'publish',
+                        'post__in' => $popular_place_ids,
+                    );
+
+                    $places_query = new WP_Query( $args); ?>
+                    <div class="ttbm_style">
+                        <div class="mpContainer">
+                            <div class="ttbm_top_attraction_holder">
+                                <h2 class="ttbm_attraction_title">Top Attractions</h2>
+                                <div class="ttbm_top_attraction_grid">
+                                    <?php include(TTBM_Function::template_path('layout/dsplay_top_attractions.php')); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+
+            }
+
+            public function ttbm_tour_list($attribute) {
 				$defaults = array( 'type' => 'feature', 'show' => 4);
 				$params = shortcode_atts($defaults, $attribute);
 				ob_start();

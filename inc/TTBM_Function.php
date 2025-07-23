@@ -967,13 +967,12 @@
             public static function get_top_deals_post_ids($type) {
                 $allowed_types = array('popular', 'trending', 'feature', 'deal-discount' );
 
-                // Return empty if invalid type
                 if (!in_array($type, $allowed_types)) {
                     return array();
                 }
 
                 $args = array(
-                    'post_type'      => 'any', // Change to your post type if needed
+                    'post_type'      => 'ttbm_tour', // Change to your post type if needed
                     'posts_per_page' => -1,
                     'fields'         => 'ids', // Only return post IDs
                     'meta_query'     => array(
@@ -990,7 +989,104 @@
                 return $query->posts;
             }
 
-		}
+            public static function get_city_place_ids_with_post_ids_old( $num_of_places ) {
+                $args = [
+                    'post_type'      => 'ttbm_tour', // Change to your post type
+                    'posts_per_page' => -1,
+                    'meta_query'     => [
+                        [
+                            'key'     => 'ttbm_hiphop_places',
+                            'compare' => 'EXISTS', // Just ensure the meta key exists
+                        ],
+                    ],
+                    'fields' => 'ids', // Only return IDs for performance
+                ];
+
+                $query = new WP_Query( $args );
+
+                $city_place_map = [];
+
+                if ( $query->have_posts() ) {
+                    foreach ( $query->posts as $post_id ) {
+                        $places = get_post_meta( $post_id, 'ttbm_hiphop_places', true );
+
+                        $places = maybe_unserialize( $places );
+
+                        if ( is_array( $places ) ) {
+                            foreach ( $places as $place ) {
+                                if ( isset( $place['ttbm_city_place_id'] ) ) {
+                                    $place_id = $place['ttbm_city_place_id'];
+
+                                    if ( ! isset( $city_place_map[ $place_id ] ) ) {
+                                        $city_place_map[ $place_id ] = [];
+                                    }
+
+                                    if ( ! in_array( $post_id, $city_place_map[ $place_id ] ) ) {
+                                        $city_place_map[ $place_id ][] = $post_id;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return $city_place_map;
+            }
+            public static function get_city_place_ids_with_post_ids( $num_of_places = 0 ) {
+                error_log( print_r( [ '$num_of_places' => $num_of_places ], true ) );
+                $args = [
+                    'post_type'      => 'ttbm_tour',
+                    'posts_per_page' => -1,
+                    'meta_query'     => [
+                        [
+                            'key'     => 'ttbm_hiphop_places',
+                            'compare' => 'EXISTS',
+                        ],
+                    ],
+                    'fields' => 'ids',
+                ];
+
+                $query = new WP_Query( $args );
+
+                $city_place_map = [];
+
+                if ( $query->have_posts() ) {
+                    foreach ( $query->posts as $post_id ) {
+                        $places = get_post_meta( $post_id, 'ttbm_hiphop_places', true );
+                        $places = maybe_unserialize( $places );
+
+                        if ( is_array( $places ) ) {
+                            foreach ( $places as $place ) {
+                                if ( isset( $place['ttbm_city_place_id'] ) ) {
+                                    $place_id = $place['ttbm_city_place_id'];
+
+                                    if ( ! isset( $city_place_map[ $place_id ] ) ) {
+                                        $city_place_map[ $place_id ] = [];
+                                    }
+
+                                    if ( ! in_array( $post_id, $city_place_map[ $place_id ] ) ) {
+                                        $city_place_map[ $place_id ][] = $post_id;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                uasort( $city_place_map, function( $a, $b ) {
+                    return count( $b ) - count( $a );
+                });
+
+                if ( $num_of_places > 0 ) {
+                    $city_place_map = array_slice( $city_place_map, 0, $num_of_places, true );
+                }
+
+                return $city_place_map;
+            }
+
+
+
+        }
 		new TTBM_Function();
 	}
 	if (!function_exists('mep_esc_html')) {

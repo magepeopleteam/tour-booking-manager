@@ -13,6 +13,7 @@
 				add_shortcode('ttbm-hotel-list', array($this, 'hotel_list'));
 				add_shortcode('ttbm-registration', array($this, 'registration'));
 				add_shortcode('ttbm-related', array($this, 'related'));
+				add_shortcode('wptravelly-tour-list', array($this, 'ttbm_tour_list'));
 			}
 			public function static_filter($attribute) {
 				$defaults = $this->default_attribute();
@@ -246,6 +247,24 @@
 					<div class="ttbm_style">
 						<div class="mpContainer">
 						<?php include(TTBM_Function::template_path('layout/related_tour.php')); ?>
+						</div>
+					</div>
+					<?php
+				}
+				return ob_get_clean();
+			}
+			public function ttbm_tour_list($attribute) {
+				$defaults = array( 'type' => 'feature', 'show' => 4);
+				$params = shortcode_atts($defaults, $attribute);
+				ob_start();
+				$tour_id = 164;
+				$num_of_tour = $params['show'];
+				$type_tour = $params['type'];
+				if ($type_tour) {
+					?>
+					<div class="ttbm_style">
+						<div class="mpContainer">
+						<?php include(TTBM_Function::template_path('layout/top_picks_deals_tour.php')); ?>
 						</div>
 					</div>
 					<?php

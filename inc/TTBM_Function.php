@@ -963,6 +963,33 @@
 					'top_destination' => $top_destination,
 				);
 			}
+
+            public static function get_top_deals_post_ids($type) {
+                $allowed_types = array('popular', 'trending', 'feature', 'deal-discount' );
+
+                // Return empty if invalid type
+                if (!in_array($type, $allowed_types)) {
+                    return array();
+                }
+
+                $args = array(
+                    'post_type'      => 'any', // Change to your post type if needed
+                    'posts_per_page' => -1,
+                    'fields'         => 'ids', // Only return post IDs
+                    'meta_query'     => array(
+                        array(
+                            'key'     => 'ttbm_top_picks_deals',
+                            'value'   => $type,
+                            'compare' => 'LIKE',
+                        ),
+                    ),
+                );
+
+                $query = new WP_Query($args);
+
+                return $query->posts;
+            }
+
 		}
 		new TTBM_Function();
 	}
@@ -1346,3 +1373,4 @@
 		}
 		return $arr;
 	}
+

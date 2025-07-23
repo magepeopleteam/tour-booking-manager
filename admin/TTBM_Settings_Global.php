@@ -103,6 +103,7 @@
 								'pending' => esc_html__('Pending', 'tour-booking-manager'),
 								'processing' => esc_html__('Processing', 'tour-booking-manager'),
 								'completed' => esc_html__('Completed', 'tour-booking-manager'),
+								'partially-paid' => esc_html__('Partially Paid', 'tour-booking-manager'),
 							)
 						),
 						array(

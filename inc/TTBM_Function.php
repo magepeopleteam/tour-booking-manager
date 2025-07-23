@@ -408,7 +408,14 @@
 				$tour_date = $tour_date ?: TTBM_Global_Function::get_post_info($tour_id, 'ttbm_upcoming_date');
 				$type = apply_filters('ttbm_type_filter', $type, $tour_id);
 				$sold_query = TTBM_Query::query_all_sold($tour_id, $tour_date, $type, $hotel_id);
-				return $sold_query->post_count;
+				$total_qty = 0;
+				if ($sold_query->have_posts()) {
+					foreach ($sold_query->posts as $booking) {
+						$qty = get_post_meta($booking->ID, 'ttbm_ticket_qty', true);
+						$total_qty += intval($qty);
+					}
+				}
+				return $total_qty;
 			}
 			public static function get_total_available($tour_id, $tour_date = '') {
 				$total = self::get_total_seat($tour_id);

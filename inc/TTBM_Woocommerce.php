@@ -188,28 +188,9 @@
 					$tour_id = TTBM_Global_Function::get_order_item_meta($item_id, '_ttbm_id');
 					$tour_id = TTBM_Function::post_id_multi_language($tour_id);
 					if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
-						if ($order->has_status('processing')) {
-							do_action('ttbm_wc_order_status_change', $order_status, $tour_id, $order_id);
-						}
-						if ($order->has_status('pending')) {
-							do_action('ttbm_wc_order_status_change', $order_status, $tour_id, $order_id);
-						}
-						if ($order->has_status('on-hold')) {
-							do_action('ttbm_wc_order_status_change', $order_status, $tour_id, $order_id);
-						}
-						if ($order->has_status('completed')) {
-							do_action('ttbm_wc_order_status_change', $order_status, $tour_id, $order_id);
-						}
-						if ($order->has_status('cancelled')) {
-							do_action('ttbm_wc_order_status_change', $order_status, $tour_id, $order_id);
-						}
-						if ($order->has_status('refunded')) {
-							do_action('ttbm_wc_order_status_change', $order_status, $tour_id, $order_id);
-						}
-						if ($order->has_status('failed')) {
-							do_action('ttbm_wc_order_status_change', $order_status, $tour_id, $order_id);
-						}
-						if ($order->has_status('requested')) {
+						// Get the statuses from settings
+						$seat_booked_statuses = TTBM_Function::get_general_settings('ttbm_set_book_status', array('processing', 'completed'));
+						if (!empty($seat_booked_statuses) && in_array($order_status, $seat_booked_statuses, true)) {
 							do_action('ttbm_wc_order_status_change', $order_status, $tour_id, $order_id);
 						}
 					}
@@ -336,6 +317,7 @@
 				<?php
 			}
 			public function wc_order_status_change($order_status, $tour_id, $order_id) {
+				// Check if booking post exists
 				$args = array(
 					'post_type' => 'ttbm_booking',
 					'posts_per_page' => -1,
@@ -356,6 +338,71 @@
 					)
 				);
 				$loop = new WP_Query($args);
+				if (count($loop->posts) === 0) {
+					// No booking post exists, create one
+					$order = wc_get_order($order_id);
+					if ($order) {
+						foreach ($order->get_items() as $item_id => $item_values) {
+							$ttbm_id = TTBM_Global_Function::get_order_item_meta($item_id, '_ttbm_id');
+							$ttbm_id = TTBM_Function::post_id_multi_language($ttbm_id);
+							if ($ttbm_id == $tour_id) {
+								$hotel_info = array(); // You may want to fetch hotel info if needed
+								// Get ticket quantity and travel date from item meta if available
+								$item_ticket_info = $item_values->get_meta('_ttbm_ticket_info', true);
+								$qty = 1;
+								$travel_date = '';
+								if (is_array($item_ticket_info) && isset($item_ticket_info[0]['ticket_qty'])) {
+									$qty = $item_ticket_info[0]['ticket_qty'];
+								} else {
+									$qty = $item_values->get_quantity();
+								}
+								if (is_array($item_ticket_info) && isset($item_ticket_info[0]['ttbm_date'])) {
+									$travel_date = $item_ticket_info[0]['ttbm_date'];
+								} else {
+									$travel_date = $order->get_date_created() ? $order->get_date_created()->date('Y-m-d') : '';
+								}
+								$zdata = array(
+									'ttbm_ticket_name' => $item_values->get_name(),
+									'ttbm_ticket_price' => $item_values->get_total() / max(1, $qty),
+									'ttbm_ticket_total_price' => $item_values->get_total(),
+									'ttbm_date' => $travel_date,
+									'ttbm_ticket_qty' => $qty,
+									'ttbm_group_id' => '',
+									'ttbm_hotel_id' => 0,
+									'ttbm_checkin_date' => '',
+									'ttbm_checkout_date' => '',
+									'ttbm_hotel_num_of_day' => 1,
+									'ttbm_id' => $ttbm_id,
+									'ttbm_order_id' => $order_id,
+									'ttbm_order_status' => $order_status,
+									'ttbm_payment_method' => $order->get_payment_method(),
+									'ttbm_user_id' => $order->get_user_id() ?? '',
+									'ttbm_billing_name' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
+									'ttbm_billing_email' => $order->get_billing_email(),
+									'ttbm_billing_phone' => $order->get_billing_phone(),
+									'ttbm_billing_address' => $order->get_billing_address_1() . ' ' . $order->get_billing_address_2(),
+								);
+								// Merge all meta into booking meta
+								$order_meta = get_post_meta($order_id);
+								$order_meta_flat = array();
+								foreach ($order_meta as $meta_key => $meta_value) {
+									$order_meta_flat[$meta_key] = is_array($meta_value) && count($meta_value) === 1 ? $meta_value[0] : $meta_value;
+								}
+								$item_meta = $item_values->get_meta_data();
+								$item_meta_flat = array();
+								foreach ($item_meta as $meta_obj) {
+									$item_meta_flat[$meta_obj->key] = $meta_obj->value;
+								}
+								$booking_meta = array_merge(
+									$zdata,
+									$order_meta_flat,
+									$item_meta_flat
+								);
+								self::add_cpt_data('ttbm_booking', $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(), $booking_meta);
+							}
+						}
+					}
+				}
 				foreach ($loop->posts as $user) {
 					$user_id = $user->ID;
 					update_post_meta($user_id, 'ttbm_order_status', $order_status);

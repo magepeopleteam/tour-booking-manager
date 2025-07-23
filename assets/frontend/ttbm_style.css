@@ -752,3 +752,17 @@ div.ttbm_viator_theme .item_icon{
   .ttbm_style .dButton  span{
     color: var(--color_theme_alter);
   }
+
+.ttbm_see-more-button {
+	margin-top: 10px;
+	padding: 8px 12px;
+	background-color: unset;
+	color: #666666;
+	border: 1px solid #d5d5d5 !important;
+	cursor: pointer;
+	border-radius: 20px !important;
+}
+.ttbm_see-more-button:hover {
+	background-color: #005e8a;
+}
+

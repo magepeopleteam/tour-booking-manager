@@ -604,7 +604,7 @@
 				return $tags;
 			}
 			//*******************************//
-			public static function get_taxonomy_name_to_id_string($tour_id, $key, $taxonomy) {
+			public static function get_taxonomy_name_to_id_string_old($tour_id, $key, $taxonomy) {
 				$infos = TTBM_Global_Function::get_post_info($tour_id, $key, array());
 				$id = '';
 				if ($infos && sizeof($infos) > 0) {
@@ -614,6 +614,17 @@
 							$id = $id ? $id . ',' . $term->term_id : $term->term_id;
 						}
 					}
+				}
+				return $id;
+			}
+			public static function get_taxonomy_name_to_id_string($tour_id, $key, $taxonomy) {
+				$infos = TTBM_Global_Function::get_post_info($tour_id, $key, array());
+				$id = '';
+				if ($infos && sizeof($infos) > 0) {
+					foreach ($infos as $info) {
+                        $id = $id . ',' . $info;
+					}
+                    $id = ltrim( $id, ',' );
 				}
 				return $id;
 			}
@@ -880,7 +891,7 @@
 						}
 					}
 					// Return only unique values
-					$meta_values = array_unique($meta_values);
+//					$meta_values = array_unique($meta_values);
 				}
 
 				// Cache the results

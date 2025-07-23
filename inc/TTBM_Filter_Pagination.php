@@ -260,16 +260,14 @@
 				if ($params['location-filter'] == 'yes') {
 					$upcomming_date = $this->upcomming_date;
 					$locations = TTBM_Function::get_meta_values('ttbm_location_name', 'ttbm_tour');
-//                    error_log( print_r( [ '$upcommin$locationsg_date' => $locations ], true ) );
-					$exist_locations = [];
-					for ($i = 0; $i < count($locations); $i++) {
+					$exist_locations = $locations;
+					/*for ($i = 0; $i < count($locations); $i++) {
                         if( isset( $upcomming_date[$i] ) ) {
                             if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $locations[$i]) {
                                 $exist_locations[$i] = $locations[$i];
                             }
                         }
-					}
-//                    error_log( print_r( [ '$exist_locations' => $exist_locations ], true ) );
+					}*/
 					$exist_locations = array_unique($exist_locations);
 					if (sizeof($exist_locations) > 0) {
 						$url_location = '';

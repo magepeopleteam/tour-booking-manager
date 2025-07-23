@@ -1,9 +1,9 @@
 <?php
 	/**
-	 * Plugin Name: WpTravelly – Tour & Travel Booking Manager for WooCommerce | Tour & Hotel Booking Solution
+	 * Plugin Name: Travel Booking Manager - WPTravelly | Tour & Hotel Booking Solution For WooCommerce
 	 * Plugin URI: http://mage-people.com
 	 * Description: A Complete Tour and Travel Solution for WordPress by MagePeople.
-	 * Version: 2.0.3
+	 * Version: 2.0.0
 	 * Author: MagePeople Team
 	 * Author URI: http://www.mage-people.com/
 	 * Text Domain: tour-booking-manager
@@ -30,22 +30,25 @@
 				}
 				require_once TTBM_PLUGIN_DIR . '/mp_global/TTBM_Global_File_Load.php';
 				$this->load_global_file();
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
 				if (TTBM_Global_Function::check_woocommerce() == 1) {
+					require_once TTBM_PLUGIN_DIR . '/lib/classes/class-ttbm.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Dependencies.php';
+				} else {
+					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
 				}
 				add_action('admin_init', array($this, 'activation_redirect_setup'), 90);
 			}
 			public function load_global_file() {
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Style.php';
 			}
+			
 			public function activation_redirect($plugin) {
 				if (TTBM_Global_Function::check_woocommerce() == 1) {
 					self::on_activation_page_create();
 				}
 				$ttbm_quick_setup_done = get_option('ttbm_quick_setup_done');
 				if ($ttbm_quick_setup_done !== 'yes') {
-					wp_redirect(admin_url('edit.php?post_type=ttbm_tour&page=ttbm_quick_setup'));
+					wp_redirect( admin_url( 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup'));
 					exit;
 				}
 			}
@@ -54,74 +57,78 @@
 					self::on_activation_page_create();
 				}
 				$ttbm_quick_setup_done = get_option('ttbm_quick_setup_done') ? get_option('ttbm_quick_setup_done') : 'no';
-				// Only redirect if not already on the quick setup page and setup is not done
-				if ($ttbm_quick_setup_done == 'no' &&
-					(!isset($_GET['page']) || $_GET['page'] !== 'ttbm_quick_setup')) {
-					// Check WooCommerce status to determine correct redirect URL
-					$woo_status = TTBM_Global_Function::check_woocommerce();
-					if ($woo_status == 1) {
-						// WooCommerce is active - redirect to submenu under ttbm_tour post type
-						wp_redirect(admin_url('edit.php?post_type=ttbm_tour&page=ttbm_quick_setup'));
-					} else {
-						// WooCommerce is not active - redirect to main menu
-						wp_redirect(admin_url('admin.php?page=ttbm_quick_setup'));
+				if ($ttbm_quick_setup_done == 'no') {
+
+					if(isset($_REQUEST['page']) && $_REQUEST['page'] == 'ttbm_quick_setup'){
+						return null;
+					}else{
+						wp_redirect(admin_url('admin.php?post_type=ttbm_tour&page=ttbm_quick_setup'));
+						exit();
 					}
-					exit();
+					
 				}
 			}
 			public static function on_activation_page_create() {
-				$pages_to_create = [
-					'find' => [
-						'slug' => 'find',
-						'title' => 'Tour Search Result',
-						'content' => '[ttbm-search-result]',
-						'option_key' => 'ttbm_page_find_created',
-					],
-					'lotus-grid' => [
-						'slug' => 'lotus-grid',
-						'title' => 'Tour Lotus Grid View',
-						'content' => "[travel-list style='lotus' column=4 show='12' pagination='yes']",
-						'option_key' => 'ttbm_page_lotus_grid_created',
-					],
-					'orchid-grid' => [
-						'slug' => 'orchid-grid',
-						'title' => 'Tour Orchid Grid View',
-						'content' => "[travel-list style='orchid' column=4 pagination='yes' show=12]",
-						'option_key' => 'ttbm_page_orchid_grid_created',
-					],
-				];
-				foreach ($pages_to_create as $page_data) {
-					$page_exists = TTBM_Global_Function::get_page_by_slug($page_data['slug']); // Check by slug
-					$option_exists = get_option($page_data['option_key']); // Check option table
-					if (!$page_exists && !$option_exists) {
-						// Create the page if it doesn't exist
-						$page = [
-							'post_type' => 'page',
-							'post_name' => $page_data['slug'],
-							'post_title' => $page_data['title'],
-							'post_content' => $page_data['content'],
-							'post_status' => 'publish',
-						];
-						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-						$page_id = wp_insert_post($page);
-						if (is_wp_error($page_id)) {
-							printf('<div class="notice notice-error"><p>%s</p></div>', esc_html($page_id->get_error_message()));
-						} else {
-							update_option($page_data['option_key'], true);
-						}
-					}
-				}
-				// Update repeated fields
-				self::update_repeated_fields();
-			}
+            $pages_to_create = [
+                'find' => [
+                    'slug' => 'find',
+                    'title' => 'Tour Search Result',
+                    'content' => '[ttbm-search-result]',
+                    'option_key' => 'ttbm_page_find_created',
+                ],
+                'lotus-grid' => [
+                    'slug' => 'lotus-grid',
+                    'title' => 'Tour Lotus Grid View',
+                    'content' => "[travel-list style='lotus' column=4 show='12' pagination='yes']",
+                    'option_key' => 'ttbm_page_lotus_grid_created',
+                ],
+                'orchid-grid' => [
+                    'slug' => 'orchid-grid',
+                    'title' => 'Tour Orchid Grid View',
+                    'content' => "[travel-list style='orchid' column=4 pagination='yes' show=12]",
+                    'option_key' => 'ttbm_page_orchid_grid_created',
+                ],
+            ];
+
+            foreach ($pages_to_create as $page_data) {
+                $page_exists = TTBM_Global_Function::get_page_by_slug($page_data['slug']); // Check by slug
+                $option_exists = get_option($page_data['option_key']); // Check option table
+
+                if (!$page_exists && !$option_exists) {
+                    // Create the page if it doesn't exist
+                    $page = [
+                        'post_type' => 'page',
+                        'post_name' => $page_data['slug'],
+                        'post_title' => $page_data['title'],
+                        'post_content' => $page_data['content'],
+                        'post_status' => 'publish',
+                    ];
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    $page_id = wp_insert_post($page);
+
+                    if (is_wp_error($page_id)) {
+						printf('<div class="notice notice-error"><p>%s</p></div>',esc_html( $page_id->get_error_message() ));
+                    } else {
+                        update_option($page_data['option_key'], true);
+                    }
+                }
+            }
+
+            // Update repeated fields
+            self::update_repeated_fields();
+        }
+
 			public function load_blocks() {
 				// Add block editor support
 				require_once TTBM_PLUGIN_DIR . '/support/blocks/index.php';
+				
 				// Add block category
 				add_filter('block_categories_all', array($this, 'ttbm_block_category'));
+				
 				// Register block editor assets
 				add_action('enqueue_block_editor_assets', array($this, 'ttbm_enqueue_block_editor_assets'));
 			}
+
 			public function ttbm_block_category($categories) {
 				return array_merge(
 					array(
@@ -134,6 +141,7 @@
 					$categories
 				);
 			}
+
 			public function ttbm_enqueue_block_editor_assets() {
 				wp_enqueue_script(
 					'tour-booking-manager-blocks',
@@ -141,14 +149,17 @@
 					array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor')
 				);
 			}
+
 			private static function update_repeated_fields() {
 				if (get_option('ttbm_repeated_field_update') === 'completed') {
 					return; // Skip if already updated
 				}
+
 				$args = [
 					'post_type' => 'ttbm_tour',
 					'posts_per_page' => -1,
 				];
+
 				$query = new WP_Query($args);
 				if ($query->have_posts()) {
 					foreach ($query->posts as $post) {
@@ -159,13 +170,15 @@
 						update_post_meta($post_id, 'ttbm_travel_repeated_end_date', $end_date);
 					}
 				}
+
 				wp_reset_postdata();
 				update_option('ttbm_repeated_field_update', 'completed');
 			}
 			public function woocommerce_not_active() {
 				$wc_install_url = get_admin_url() . 'plugin-install.php?s=woocommerce&tab=search&type=term';
-				$text = __('You Must Install WooCommerce Plugin before activating Tour Booking Manager, Because It is dependent on Woocommerce Plugin.', 'tour-booking-manager') . ' <a class="btn button" href=' . $wc_install_url . '>' . esc_html__('Click Here to Install', 'tour-booking-manager') . '</a>';
-				printf('<div class="error" style="background:red; color:#fff;"><p>%s</p></div>', wp_kses_post($text));
+				$text=__('You Must Install WooCommerce Plugin before activating Tour Booking Manager, Because It is dependent on Woocommerce Plugin.','tour-booking-manager').' <a class="btn button" href=' . $wc_install_url . '>'.esc_html__('Click Here to Install','tour-booking-manager').'</a>';
+				printf('<div class="error" style="background:red; color:#fff;"><p>%s</p></div>',wp_kses_post( $text ));
+
 			}
 		}
 		new TTBM_Woocommerce_Plugin();

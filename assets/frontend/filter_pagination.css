@@ -276,7 +276,6 @@ div.ttbm_list_details {
 	flex: auto;
 	text-align: left;
 	justify-content: space-between;
-	padding: 15px;
 }
 
 .ttbm_list_details .fdColumn .ttbm_list_info:first-child,

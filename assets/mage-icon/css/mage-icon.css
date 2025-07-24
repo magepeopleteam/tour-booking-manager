@@ -12,18 +12,6 @@
 /* FONT PATH
  * -------------------------- */
 @font-face {
-  font-family: mageicon;
-  src: url("../fonts/mage-icon.woff2?v=1.0.0") format("woff2"), url("../fonts/mage-icon.woff?v=1.0.0") format("woff"), url("../fonts/mage-icon.ttf?v=1.0.0") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: mageicon-regular;
-  src: url("../fonts/mage-icon-regular.woff2?v=1.0.0") format("woff2"), url("../fonts/mage-icon-regular.woff?v=1.0.0") format("woff"), url("../fonts/mage-icon-regular.ttf?v=1.0.0") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
   font-family: mageicon-light;
   src: url("../fonts/mage-icon-light.woff2?v=1.0.0") format("woff2"), url("../fonts/mage-icon-light.woff?v=1.0.0") format("woff"), url("../fonts/mage-icon-light.ttf?v=1.0.0") format("truetype");
   font-weight: normal;

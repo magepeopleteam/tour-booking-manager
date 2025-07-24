@@ -51,15 +51,10 @@
 				wp_enqueue_script('jquery-ui-accordion');
 				wp_enqueue_style('ttbm_style', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_style.css', array(), time());
 				wp_enqueue_script('ttbm_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_script.js', array('jquery'), time(), true);
-				wp_localize_script('ttbm_script', 'ttbm_ajax', array(
-					'ajax_url'  => admin_url('admin-ajax.php'),
-					'nonce'   => wp_create_nonce('ttbm_frontend_nonce')
-				));
 				do_action('ttbm_frontend_script');
 			}
 			public function admin_script() {
 				$this->global_enqueue();
-				
 				wp_enqueue_script('magepeople-options-framework', TTBM_PLUGIN_URL . '/assets/helper/js/mage-options-framework.js', array('jquery'), null);
 				wp_localize_script('PickpluginsOptionsFramework', 'PickpluginsOptionsFramework_ajax', array('PickpluginsOptionsFramework_ajaxurl' => admin_url('admin-ajax.php')));
 				//wp_enqueue_script('form-field-dependency', TTBM_PLUGIN_URL . '/assets/helper/js/form-field-dependency.js', array('jquery'), null);
@@ -71,8 +66,8 @@
 				wp_enqueue_style('ttbm_travel_list_header', TTBM_PLUGIN_URL . '/assets/admin/ttbm_travel_list_header.css', array(), time());
 				wp_enqueue_style('ttbm_hotel_booking', TTBM_PLUGIN_URL . '/assets/admin/ttbm_hotel_booking.css', array(), time());
 				wp_localize_script('ttbm_admin_script', 'ttbm_admin_ajax', array(
-					'ajax_url'  => admin_url('admin-ajax.php'),
-					'nonce'   => wp_create_nonce('ttbm_admin_nonce')
+					'ajax_url' => admin_url('admin-ajax.php'),
+					'nonce' => wp_create_nonce('ttbm_admin_nonce')
 				));
 				do_action('ttbm_admin_script');
 			}
@@ -83,27 +78,27 @@
 				wp_enqueue_script('ttbm_filter_pagination_script', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.js', array('jquery'), time(), true);
 				wp_enqueue_style('ttbm_date_range_picker', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.min.css', array(), '1');
 				wp_enqueue_script('ttbm_date_range_picker_js', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.js', array('jquery', 'moment'), '1', true);
-				wp_enqueue_style('ttbm_registration_style', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.css', array(), time());
-				wp_enqueue_script('ttbm_registration_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.js', array('jquery'), time(), true);
+				wp_enqueue_style('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.css', array(), time());
+				wp_enqueue_script('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.js', array('jquery'), time(), true);
+				wp_localize_script('ttbm_registration', 'ttbm_ajax', array('ajax_url' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('ttbm_frontend_nonce')));
 				wp_enqueue_script('ttbm_price_calculation', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_price_calculation.js', array('jquery'), time(), true);
-				
 				// Google Font
 				wp_enqueue_style('google-font', 'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap', array(), time());
 				do_action('add_ttbm_registration_enqueue');
 			}
 			public function ttbm_upgrade() {
-				if ( get_option( 'ttbm_conflict_update' ) != 'completed' ) {
-					$mp_global_settings = get_option( 'mp_global_settings' );
-					update_option( 'ttbm_global_settings', $mp_global_settings );
-					$style_settings = get_option( 'mp_style_settings' );
-					update_option( 'ttbm_style_settings', $style_settings );
-					$slider_settings = get_option( 'ttbm_slider_settings' );
-					update_option( 'ttbm_slider_settings', $slider_settings );
-					$custom_css = get_option( 'mp_add_custom_css' );
-					update_option( 'ttbm_custom_css', $custom_css );
-					$license_settings = get_option( 'mp_basic_license_settings' );
-					update_option( 'ttbm_license_settings', $license_settings );
-					update_option( 'ttbm_conflict_update', 'completed' );
+				if (get_option('ttbm_conflict_update') != 'completed') {
+					$mp_global_settings = get_option('mp_global_settings');
+					update_option('ttbm_global_settings', $mp_global_settings);
+					$style_settings = get_option('mp_style_settings');
+					update_option('ttbm_style_settings', $style_settings);
+					$slider_settings = get_option('ttbm_slider_settings');
+					update_option('ttbm_slider_settings', $slider_settings);
+					$custom_css = get_option('mp_add_custom_css');
+					update_option('ttbm_custom_css', $custom_css);
+					$license_settings = get_option('mp_basic_license_settings');
+					update_option('ttbm_license_settings', $license_settings);
+					update_option('ttbm_conflict_update', 'completed');
 				}
 				if (get_option('ttbm_upgrade_global') != 'completed') {
 					$basic_settings = get_option('ttbm_basic_gen_settings');

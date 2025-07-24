@@ -15,7 +15,8 @@ function get_ttbm_ticket(current, date = '') {
         data: {
             "action": "get_ttbm_ticket",
             "tour_id": tour_id,
-            "tour_date": tour_date,nonce: ttbm_ajax.nonce
+            "tour_date": tour_date,
+            nonce: ttbm_ajax.nonce
         },
         beforeSend: function () {
             if (jQuery('.mp_tour_ticket_form').length > 0) {

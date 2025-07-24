@@ -1033,7 +1033,6 @@
                 return $city_place_map;
             }
             public static function get_city_place_ids_with_post_ids( $num_of_places = 0 ) {
-                error_log( print_r( [ '$num_of_places' => $num_of_places ], true ) );
                 $args = [
                     'post_type'      => 'ttbm_tour',
                     'posts_per_page' => -1,

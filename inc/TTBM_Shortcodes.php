@@ -255,10 +255,11 @@
 				return ob_get_clean();
 			}
             public function top_attractions( $attribute ) {
-                $defaults = array('show' => 4);
+                $defaults = array('show' => 4, 'column' => 3);
                 $params = shortcode_atts($defaults, $attribute);
                 $num_of_places = $params['show'];
 
+                ob_start();
                 $place_tour = TTBM_Function::get_city_place_ids_with_post_ids( $num_of_places );
                 if( is_array( $place_tour ) && !empty( $place_tour ) ) {
                     $popular_place_ids = array_values(array_keys($place_tour));
@@ -269,28 +270,37 @@
                         'post__in' => $popular_place_ids,
                     );
 
-                    $places_query = new WP_Query( $args); ?>
-                    <div class="ttbm_style">
+                    $places_query = new WP_Query( $args);
+
+
+                    $count_grid_class = (int)$params['column'] > 0 ? 'grid_' . (int)$params['column'] : 'grid_1';
+                    ?>
+                    <div class="ttbm_style ttbm_wraper ttbm_filter_area ttbm_location_list">
                         <div class="mpContainer">
                             <div class="ttbm_top_attraction_holder">
                                 <h2 class="ttbm_attraction_title">Top Attractions</h2>
-                                <div class="ttbm_top_attraction_grid">
-                                    <?php include(TTBM_Function::template_path('layout/dsplay_top_attractions.php')); ?>
+                                <div class="all_filter_item">
+                                    <div class="placeholder_area flexWrap">
+                                        <?php include(TTBM_Function::template_path('layout/display_top_attractions.php')); ?>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
                     <?php
+
                 }
 
+                return ob_get_clean();
             }
 
             public function ttbm_tour_list($attribute) {
-				$defaults = array( 'type' => 'feature', 'show' => 4);
+				$defaults = array( 'type' => 'feature', 'column' => 3, 'carousel' => 'yes', 'show' => '' );
 				$params = shortcode_atts($defaults, $attribute);
 				ob_start();
 				$tour_id = 164;
-				$num_of_tour = $params['show'];
+				$num_of_tour = $params['column'];
 				$type_tour = $params['type'];
 				if ($type_tour) {
 					?>

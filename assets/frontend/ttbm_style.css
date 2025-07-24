@@ -794,7 +794,7 @@ div.ttbm_viator_theme .item_icon{
 
 .ttbm_top_attraction_grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 	gap: 10px 10px;
 }
 
@@ -831,6 +831,18 @@ div.ttbm_viator_theme .item_icon{
 	margin: 3px 0 0;
 	font-size: 14px;
 	color: #555;
+}
+.ttbm_shortcode_load_more_holder{
+	display: flex;
+	justify-content: center;
+	margin: 10px 10px;
+	padding: 10px;
+}
+.ttbm_load_rore_text{
+	cursor: pointer;
+	padding: 8px 20px;
+	border: 1px solid #ede8e8;
+	border-radius: 5px;
 }
 
 

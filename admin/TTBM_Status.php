@@ -13,7 +13,7 @@
 			public function ttbm_status_page() {
 				$wp_v = get_bloginfo( 'version' );
 				$wc_v = WC()->version;
-				$wc_i = TTBM_Global_Function::check_woocommerce();;
+				$wc_i = TTBM_Global_Function::check_woocommerce();
 				$from_name  = get_option( 'woocommerce_email_from_name' );
 				$from_email = get_option( 'woocommerce_email_from_address' );
 				?>

@@ -566,7 +566,7 @@
 					//*********Admin note**************//
 					$display_note = isset($_POST['ttbm_display_admin_note']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_admin_note'])) ? 'on' : 'off';
 					$note = isset($_POST['ttbm_admin_note']) ? sanitize_text_field(wp_unslash($_POST['ttbm_admin_note'])) : '';
-					update_post_meta($tour_id, 'ttbm_display_admin_note', $display_note);;
+					update_post_meta($tour_id, 'ttbm_display_admin_note', $display_note);
 					update_post_meta($tour_id, 'ttbm_admin_note', $note);
 				}
 				//*********Ticket price**************//

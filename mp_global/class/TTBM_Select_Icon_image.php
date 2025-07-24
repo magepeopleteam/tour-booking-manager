@@ -202,10 +202,6 @@
 			public static function all_icon_array(): array {				
 				return [
 					[
-						'title' => 'Mage icon regular',
-						'icon' 	=> self::mi_icon('mir'),
-					],
-					[
 						'title' => 'Mage icon light',
 						'icon' 	=> self::mi_icon('mil'),
 					],

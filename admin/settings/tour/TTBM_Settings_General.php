@@ -5,7 +5,7 @@
 	if (!class_exists('TTBM_Settings_General')) {
 		class TTBM_Settings_General {
 			public function __construct() {
-				add_action('add_ttbm_settings_tab_content', [$this, 'general_settings']);
+				add_action('ttbm_meta_box_tab_content', [$this, 'general_settings']);
 			}
 			public function general_settings($tour_id) {
 				?>

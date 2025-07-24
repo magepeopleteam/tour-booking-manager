@@ -1,9 +1,9 @@
 <?php
 	/**
-	 * Plugin Name: Travel Booking Manager - WPTravelly | Tour & Hotel Booking Solution For WooCommerce
+	 * Plugin Name: WpTravelly – Tour & Travel Booking Manager for WooCommerce | Tour & Hotel Booking Solution
 	 * Plugin URI: http://mage-people.com
 	 * Description: A Complete Tour and Travel Solution for WordPress by MagePeople.
-	 * Version: 2.0.1
+	 * Version: 2.0.3
 	 * Author: MagePeople Team
 	 * Author URI: http://www.mage-people.com/
 	 * Text Domain: tour-booking-manager
@@ -30,24 +30,24 @@
 			}
 			require_once TTBM_PLUGIN_DIR . '/mp_global/TTBM_Global_File_Load.php';
 			$this->load_global_file();
-			
+
 			// Always load Quick Setup for admin menu registration
 			require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
-			
+
 			// Always load CPT for post type registration (needed for Quick Setup menu)
-			require_once TTBM_PLUGIN_DIR . '/admin/TTBM_CPT.php';
-			
+			//require_once TTBM_PLUGIN_DIR . '/admin/TTBM_CPT.php';
+
 			// Load dependencies if WooCommerce is active
 			if (TTBM_Global_Function::check_woocommerce() == 1) {
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Dependencies.php';
 			}
-			
+
 			add_action('admin_init', array($this, 'activation_redirect_setup'), 90);
 		}
 			public function load_global_file() {
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Style.php';
 			}
-			
+
 			public function activation_redirect($plugin) {
 				if (TTBM_Global_Function::check_woocommerce() == 1) {
 					self::on_activation_page_create();
@@ -63,11 +63,11 @@
 					self::on_activation_page_create();
 				}
 				$ttbm_quick_setup_done = get_option('ttbm_quick_setup_done') ? get_option('ttbm_quick_setup_done') : 'no';
-				
+
 				// Only redirect if not already on the quick setup page and setup is not done
-				if ($ttbm_quick_setup_done == 'no' && 
+				if ($ttbm_quick_setup_done == 'no' &&
 					(!isset($_GET['page']) || $_GET['page'] !== 'ttbm_quick_setup')) {
-					
+
 					// Check WooCommerce status to determine correct redirect URL
 					$woo_status = TTBM_Global_Function::check_woocommerce();
 					if ($woo_status == 1) {
@@ -133,10 +133,10 @@
 			public function load_blocks() {
 				// Add block editor support
 				require_once TTBM_PLUGIN_DIR . '/support/blocks/index.php';
-				
+
 				// Add block category
 				add_filter('block_categories_all', array($this, 'ttbm_block_category'));
-				
+
 				// Register block editor assets
 				add_action('enqueue_block_editor_assets', array($this, 'ttbm_enqueue_block_editor_assets'));
 			}

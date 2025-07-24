@@ -14,8 +14,7 @@
 	if (!class_exists('TTBM_Daywise_Details')) {
 		class TTBM_Daywise_Details {
 			public function __construct() {
-				add_action('add_ttbm_settings_tab_name', [$this, 'add_tab'], 90);
-				add_action('add_ttbm_settings_tab_content', [$this, 'tab_content'], 10, 1);
+				add_action('ttbm_meta_box_tab_content', [$this, 'tab_content'], 10, 1);
 				add_action('admin_enqueue_scripts', [$this, 'my_custom_editor_enqueue']);
 				// save daywise data
 				add_action('wp_ajax_ttbm_daywise_data_save', [$this, 'save_daywise_data_settings']);
@@ -26,20 +25,13 @@
 				// daywise sort_daywise
 				add_action('wp_ajax_ttbm_sort_daywise', [$this, 'sort_daywise']);
 			}
-			public function add_tab() {
-				?>
-                <li data-tabs-target="#ttbm_daywise_settings">
-                    <i class="fas fa-list-ul"></i><?php esc_html_e('Itinerary Builder', 'tour-booking-manager'); ?>
-                </li>
-				<?php
-			}
 			public function sort_daywise() {
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 				}
 				$post_id = isset($_POST['postID']) ? sanitize_text_field(wp_unslash($_POST['postID'])) : '';
 				$sorted_ids = isset($_POST['sortedIDs']) ? array_map('intval', $_POST['sortedIDs']) : [];
-				$ttbm_daywise = get_post_meta($post_id, 'ttbm_daywise_details', true);;
+				$ttbm_daywise = get_post_meta($post_id, 'ttbm_daywise_details', true);
 				$new_ordered = [];
 				foreach ($sorted_ids as $id) {
 					if (isset($ttbm_daywise[$id])) {

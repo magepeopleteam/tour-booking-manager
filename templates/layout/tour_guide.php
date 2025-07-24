@@ -45,7 +45,7 @@
 											</div>
 										<?php } else { ?>
 											<div class="ttbm_description ttbm_wp_editor" data-placeholder>
-												<?php echo esc_html($des); ?>
+												<?php echo apply_filters( 'the_content', $des ); ?>
 											</div>
 										<?php } ?>
 									<?php } ?>

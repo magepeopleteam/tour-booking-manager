@@ -60,7 +60,7 @@
 				<?php
 				return ob_get_clean();
 			}
-			public function list_with_left_filter_for_search( $attribute, $date_filter=[] ) {
+			public function list_with_left_filter_for_search( $attribute, $date_filter='') {
 				$defaults = $this->default_attribute('modern', 12, 'no', 'yes', 'yes', 'yes', $month_filter = 'yes', $tour_type = '');
 				$params = shortcode_atts($defaults, $attribute);
 				$show = $params['show'];
@@ -81,11 +81,12 @@
 				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
 
 				$loop = TTBM_Query::ttbm_query_for_top_Search($show, $params['sort'], $params['sort_by'], $params['status'], $organizer_filter, $location_filter, $activity_filter, $date_filter );
-                ob_start();
+//echo '<pre>';print_r($loop->post_count);echo '</pre>';
 				?>
 				<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
 					<div class="mpContainer">
 					<?php
+						include( TTBM_Function::template_path( 'layout/filter_hidden.php' ) );
 						if ($params['sidebar-filter'] == 'yes') {
 							?>
 							<div class="left_filter">
@@ -101,7 +102,7 @@
 							</div>
 							<?php
 						} else {
-							include( TTBM_Function::template_path( 'layout/filter_hidden.php' ) );
+
 							do_action('ttbm_all_list_item', $loop, $params);
 							do_action('ttbm_sort_result', $loop, $params);
 							do_action('ttbm_pagination', $params, $loop->post_count);
@@ -110,7 +111,7 @@
 					</div>
 				</div>
 				<?php
-				return ob_get_clean();
+
 			}
 			public function list_with_top_filter($attribute) {
 				$defaults = $this->default_attribute();

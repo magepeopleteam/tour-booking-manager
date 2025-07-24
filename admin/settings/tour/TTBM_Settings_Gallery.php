@@ -5,15 +5,7 @@
 	if (!class_exists('TTBM_Settings_Gallery')) {
 		class TTBM_Settings_Gallery {
 			public function __construct() {
-				add_action('add_ttbm_settings_tab_name', [$this, 'add_tab'], 90);
-				add_action('add_ttbm_settings_tab_content', [$this, 'gallery_settings']);
-			}
-			public function add_tab() {
-				?>
-                <li data-tabs-target="#ttbm_settings_gallery">
-                    <i class="fas fa-images"></i><?php esc_html_e('Gallery ', 'tour-booking-manager'); ?>
-                </li>
-				<?php
+				add_action('ttbm_meta_box_tab_content', [$this, 'gallery_settings']);
 			}
 			public function gallery_settings($tour_id) {
 				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_slider', 'on');

@@ -11,7 +11,6 @@
  */
 /* FONT PATH
  * -------------------------- */
-
 @font-face {
   font-family: mageicon-light;
   src: url("../fonts/mage-icon-light.woff2?v=1.0.0") format("woff2"), url("../fonts/mage-icon-light.woff?v=1.0.0") format("woff"), url("../fonts/mage-icon-light.ttf?v=1.0.0") format("truetype");

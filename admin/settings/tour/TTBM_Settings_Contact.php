@@ -5,15 +5,7 @@
 	if (!class_exists('TTBM_Settings_Contact')) {
 		class TTBM_Settings_Contact {
 			public function __construct() {
-				add_action('add_ttbm_settings_tab_name', [$this, 'add_tab'], 90);
-				add_action('add_ttbm_settings_tab_content', [$this, 'extras_settings']);
-			}
-			public function add_tab() {
-				?>
-                <li data-tabs-target="#ttbm_settings_extras">
-                    <i class="fab fa-telegram-plane"></i><?php esc_html_e('Contact ', 'tour-booking-manager'); ?>
-                </li>
-				<?php
+				add_action('ttbm_meta_box_tab_content', [$this, 'extras_settings']);
 			}
 			public function extras_settings($tour_id) {
 				$contact_text = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_contact_text');

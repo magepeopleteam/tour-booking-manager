@@ -5,15 +5,7 @@
 	if (!class_exists('TTBM_Settings_why_book_with_us')) {
 		class TTBM_Settings_why_book_with_us {
 			public function __construct() {
-				add_action('add_ttbm_settings_tab_name', [$this, 'add_tab'], 90);
-				add_action('add_ttbm_settings_tab_content', [$this, 'why_chose_us_settings'], 10, 1);
-			}
-			public function add_tab() {
-				?>
-                <li data-tabs-target="#ttbm_settings_why_chose_us">
-                    <i class="fas fa-info-circle"></i> <?php esc_html_e('Promotional Text', 'tour-booking-manager'); ?>
-                </li>
-				<?php
+				add_action('ttbm_meta_box_tab_content', [$this, 'why_chose_us_settings'], 10, 1);
 			}
 			public function why_chose_us_settings($tour_id) {
 				$ttbm_label = TTBM_Function::get_name();

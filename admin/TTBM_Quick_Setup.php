@@ -2,6 +2,13 @@
 	if (!defined('ABSPATH')) {
 		die;
 	} // Cannot access pages directly.
+	add_action('admin_init', 'ttbm_quick_setup_exit', 99);
+	function ttbm_quick_setup_exit() {
+		if (isset($_REQUEST['ttbm_skip_quick_setup'])) {
+			update_option('ttbm_quick_setup_done', 'exit');
+			exit(esc_url(wp_redirect(admin_url('index.php'))));
+		}
+	}
 	if (!class_exists('TTBM_Quick_Setup')) {
 		class TTBM_Quick_Setup {
 			public function __construct() {
@@ -11,6 +18,7 @@
 				$status = TTBM_Global_Function::check_woocommerce();
 				if ($status == 1) {
 					add_submenu_page('edit.php?post_type=ttbm_tour', __('Quick Setup', 'tour-booking-manager'), '<span style="color:#10dd10">' . esc_html__('Quick Setup', 'tour-booking-manager') . '</span>', 'manage_options', 'ttbm_quick_setup', array($this, 'quick_setup'));
+					add_submenu_page('ttbm_tour', esc_html__('Quick Setup', 'tour-booking-manager'), '<span style="color:#10dd10">' . esc_html__('Quick Setup', 'tour-booking-manager') . '</span>', 'manage_options', 'ttbm_quick_setup', array($this, 'quick_setup'));
 				} else {
 					add_menu_page(esc_html__('Tour', 'tour-booking-manager'), esc_html__('Tour', 'tour-booking-manager'), 'manage_options', 'ttbm_tour', array($this, 'quick_setup'), 'dashicons-admin-site-alt2', 6);
 					add_submenu_page('ttbm_tour', esc_html__('Quick Setup', 'tour-booking-manager'), '<span style="color:#10dd17">' . esc_html__('Quick Setup', 'tour-booking-manager') . '</span>', 'manage_options', 'ttbm_quick_setup', array($this, 'quick_setup'));
@@ -19,19 +27,27 @@
 			public function quick_setup() {
 				$status = TTBM_Global_Function::check_woocommerce();
 				if (isset($_POST['ttbm_quick_setup']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_quick_setup'])), 'ttbm_quick_setup_nonce')) {
-					if (isset($_POST['ttbm_skip_quick_setup'])) {
-						update_option('ttbm_quick_setup_done', 'yes');
-						wp_redirect(admin_url('admin.php'));
-						exit();
-					}
 					if (isset($_POST['active_woo_btn'])) {
 						?>
+                        <script>
+                            dLoaderBody();
+                        </script>
 						<?php
 						activate_plugin('woocommerce/woocommerce.php');
 						TTBM_Woocommerce_Plugin::on_activation_page_create();
-						wp_redirect(admin_url('admin.php?post_type=ttbm_tour&page=ttbm_quick_setup'));
-						exit();
 						?>
+                        <script>
+                            (function ($) {
+                                "use strict";
+                                $(document).ready(function () {
+                                    let ttbm_admin_location = window.location.href;
+                                    ttbm_admin_location = ttbm_admin_location.replace('admin.php?post_type=ttbm_tour&page=ttbm_quick_setup', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
+                                    ttbm_admin_location = ttbm_admin_location.replace('admin.php?page=ttbm_tour', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
+                                    ttbm_admin_location = ttbm_admin_location.replace('admin.php?page=ttbm_quick_setup', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
+                                    window.location.href = ttbm_admin_location;
+                                });
+                            }(jQuery));
+                        </script>
 						<?php
 					}
 					if (isset($_POST['install_and_active_woo_btn'])) {
@@ -59,16 +75,26 @@
 							),
 						));
 						$title = 'title';
-						$nonce = 'nonce';
 						$url = 'url';
+						$nonce = 'nonce';
 						$woocommerce_plugin = new Plugin_Upgrader(new Plugin_Installer_Skin(compact('title', 'url', 'nonce', 'plugin', 'api')));
 						$woocommerce_plugin->install($api->download_link);
 						activate_plugin('woocommerce/woocommerce.php');
 						TTBM_Woocommerce_Plugin::on_activation_page_create();
 						echo '</div>';
-						wp_redirect(admin_url('admin.php?post_type=ttbm_tour&page=ttbm_quick_setup'));
-						exit();
 						?>
+                        <script>
+                            (function ($) {
+                                "use strict";
+                                $(document).ready(function () {
+                                    let ttbm_admin_location = window.location.href;
+                                    ttbm_admin_location = ttbm_admin_location.replace('admin.php?post_type=ttbm_tour&page=ttbm_quick_setup', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
+                                    ttbm_admin_location = ttbm_admin_location.replace('admin.php?page=ttbm_tour', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
+                                    ttbm_admin_location = ttbm_admin_location.replace('admin.php?page=ttbm_quick_setup', 'edit.php?post_type=ttbm_tour&page=ttbm_quick_setup');
+                                    window.location.href = ttbm_admin_location;
+                                });
+                            }(jQuery));
+                        </script>
 						<?php
 					}
 					if (isset($_POST['finish_quick_setup'])) {
@@ -87,7 +113,7 @@
 				}
 				?>
                 <div class="ttbm_style ttbm-quick-setup">
-                    <div class="_dShadow_6_adminLayout">
+                    <div class=_dShadow_6_adminLayout">
                         <form method="post" action="">
 							<?php wp_nonce_field('ttbm_quick_setup_nonce', 'ttbm_quick_setup'); ?>
                             <div class="ttbmTabsNext">

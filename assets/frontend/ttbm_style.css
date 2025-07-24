@@ -18,7 +18,7 @@ body.theme-twentytwentytwo div.ttbm_wraper {max-width: 1200px !important;}
 /**************************************************/
 div.ttbm_default_theme,
 div.ttbm_viator_theme {width: 100%;}
-div.ttbm_wraper {max-width: 100%; width: 100%;;margin: var(--dmp) auto;position: relative;}
+div.ttbm_wraper {max-width: 100%; width: 100%;margin: var(--dmp) auto;position: relative;}
 div.ttbm_container {width: 100%;max-width: var(--dcontainer_width);margin: 0 auto;padding: var(--dmp);background-color: var(--color_white);}
 .ttbm_wraper table {table-layout: fixed;margin: 0; width: 100%;}
 .ttbm_wraper table th {font-size: var(--fs_label);}
@@ -557,7 +557,7 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 #place_you_see .filter_item {box-shadow: none !important;padding: 0 !important;border-radius: 0 !important;}
 .ttbm_tour_guide [data-bg-image].circle {max-width: 100%;border: 2px solid var(--color_theme);margin: var(--ttbm_mp_xs) auto;width: 170px;}
 #place_you_see .ttbm_widget_content{
-	padding:0 15px;;
+	padding:0 15px;
 }
 .get-enquiry-popup{
 	padding: 10px;
@@ -752,3 +752,17 @@ div.ttbm_viator_theme .item_icon{
   .ttbm_style .dButton  span{
     color: var(--color_theme_alter);
   }
+
+.ttbm_see-more-button {
+	margin-top: 10px;
+	padding: 8px 12px;
+	background-color: unset;
+	color: #666666;
+	border: 1px solid #d5d5d5 !important;
+	cursor: pointer;
+	border-radius: 20px !important;
+}
+.ttbm_see-more-button:hover {
+	background-color: #005e8a;
+}
+

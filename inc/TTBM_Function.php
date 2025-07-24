@@ -185,11 +185,20 @@
 				$month_list = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_month_list');
 				if (!$month_list || !$db_date || $update || strtotime($db_date) < $now) {
 					$date = '';
+					$end_date = '';
 					$all_date = sizeof($all_date) > 0 ? $all_date : self::get_date($tour_id);
 					if (sizeof($all_date) > 0) {
 						$date = current($all_date);
+						$travel_type = TTBM_Function::get_travel_type($tour_id);
+						if ($travel_type == 'particular' || $travel_type == 'repeated') {
+							$end_date = end($all_date);
+						} else {
+							$reg_end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_reg_end_date');
+							$end_date = $reg_end_date ?: $date;
+						}
 					}
 					update_post_meta($tour_id, 'ttbm_upcoming_date', $date);
+					update_post_meta($tour_id, 'ttbm_reg_end_date', $end_date);
 					self::update_month_list($tour_id, $all_date);
 				}
 			}
@@ -604,7 +613,7 @@
 				return $tags;
 			}
 			//*******************************//
-			public static function get_taxonomy_name_to_id_string($tour_id, $key, $taxonomy) {
+			public static function get_taxonomy_name_to_id_string_old($tour_id, $key, $taxonomy) {
 				$infos = TTBM_Global_Function::get_post_info($tour_id, $key, array());
 				$id = '';
 				if ($infos && sizeof($infos) > 0) {
@@ -614,6 +623,17 @@
 							$id = $id ? $id . ',' . $term->term_id : $term->term_id;
 						}
 					}
+				}
+				return $id;
+			}
+			public static function get_taxonomy_name_to_id_string($tour_id, $key, $taxonomy) {
+				$infos = TTBM_Global_Function::get_post_info($tour_id, $key, array());
+				$id = '';
+				if ($infos && sizeof($infos) > 0) {
+					foreach ($infos as $info) {
+						$id = $id . ',' . $info;
+					}
+					$id = ltrim($id, ',');
 				}
 				return $id;
 			}
@@ -841,37 +861,25 @@
 				);
 				return wp_kses($string, $allow_attr);
 			}
-
 			public static function get_meta_values($meta_key = '', $post_type = 'post', $post_status = 'publish') {
 				if (empty($meta_key) || !is_string($meta_key)) {
 					return false;
 				}
-
-				// Generate a unique cache key
-				$cache_key = 'meta_values_' . md5(serialize([$meta_key, $post_type, $post_status]));
-				$cached = wp_cache_get($cache_key);
-
-				if (false !== $cached) {
-					return $cached;
-				}
-
 				// Use WP_Query to get posts with the specified criteria
 				$args = [
-					'post_type'      => $post_type,
-					'post_status'    => $post_status,
+					'post_type' => $post_type,
+					'post_status' => $post_status,
 					'posts_per_page' => -1, // Get all posts
-					'fields'         => 'ids', // Only get post IDs for better performance
-					'meta_query'     => [
+					'fields' => 'ids', // Only get post IDs for better performance
+					'meta_query' => [
 						[
-							'key'     => $meta_key,
+							'key' => $meta_key,
 							'compare' => 'EXISTS', // Posts that have this meta key
 						]
 					]
 				];
-
 				$query = new WP_Query($args);
 				$meta_values = [];
-
 				if ($query->have_posts()) {
 					foreach ($query->posts as $post_id) {
 						$value = get_post_meta($post_id, $meta_key, true);
@@ -880,12 +888,8 @@
 						}
 					}
 					// Return only unique values
-					$meta_values = array_unique($meta_values);
+				$meta_values = array_unique($meta_values);
 				}
-
-				// Cache the results
-				wp_cache_set($cache_key, $meta_values, '', DAY_IN_SECONDS);
-
 				return $meta_values;
 			}
 			public static function get_travel_analytical_data() {
@@ -901,7 +905,6 @@
 				$active_tour = $expired_tour = $total_price = $price_count = $average_price = 0;
 				$location_counts = array();
 				$top_destination = '';
-				
 				if ($all_travel_query->have_posts()) {
 					while ($all_travel_query->have_posts()) {
 						$all_travel_query->the_post();
@@ -917,7 +920,6 @@
 							$price_count++;
 							$total_price = $total_price + $get_price;
 						}
-						
 						// Count locations for top destination
 						$location = get_post_meta($travel_post_id, 'ttbm_location_name', true);
 						if (!empty($location)) {
@@ -929,21 +931,17 @@
 						}
 					}
 				}
-				
 				if ($price_count > 0 && $total_price > 0) {
 					$average_price = $total_price / $price_count;
 				}
-				
 				// Find top destination
 				if (!empty($location_counts)) {
 					arsort($location_counts);
 					$top_destination = array_key_first($location_counts);
 				}
-				
 				$all_location = TTBM_Function::get_all_location();
 				unset($all_location['']);
 				$location_count = count($all_location);
-				
 				return array(
 					'location_count' => $location_count,
 					'average_price' => $average_price,
@@ -1070,17 +1068,17 @@
 			return wp_kses($string, $allow_attr);
 		}
 	}
-	function ttbm_elementor_get_tax_term( $tax, $type = 'id' ): array {
-		$terms = get_terms( array(
-			'taxonomy'   => $tax,
+	function ttbm_elementor_get_tax_term($tax, $type = 'id'): array {
+		$terms = get_terms(array(
+			'taxonomy' => $tax,
 			'hide_empty' => false,
-		) );
-		$list  = array( '0' => __( 'Show All', 'tour-booking-manager' ) );
-		foreach ( $terms as $_term ) {
-			if ( $type == 'id' ) {
-				$list[ $_term->term_id ] = $_term->name;
+		));
+		$list = array('0' => __('Show All', 'tour-booking-manager'));
+		foreach ($terms as $_term) {
+			if ($type == 'id') {
+				$list[$_term->term_id] = $_term->name;
 			} else {
-				$list[ $_term->slug ] = $_term->name;
+				$list[$_term->slug] = $_term->name;
 			}
 		}
 		return $list;
@@ -1327,11 +1325,11 @@
 			"Zambia",
 			"Zimbabwe"
 		);
-		$arr       = array(
-			'' => esc_html__( 'Please Select a Country', 'tour-booking-manager' )
+		$arr = array(
+			'' => esc_html__('Please Select a Country', 'tour-booking-manager')
 		);
-		foreach ( $countries as $_terms ) {
-			$arr[ $_terms ] = $_terms;
+		foreach ($countries as $_terms) {
+			$arr[$_terms] = $_terms;
 		}
 		return $arr;
 	}

@@ -5,15 +5,7 @@
 	if (!class_exists('TTBM_Settings_Admin_Note')) {
 		class TTBM_Settings_Admin_Note {
 			public function __construct() {
-				add_action('add_ttbm_settings_tab_name', [$this, 'add_tab'], 90);
-				add_action('add_ttbm_settings_tab_content', [$this, 'admin_note_settings']);
-			}
-			public function add_tab() {
-				?>
-                <li data-tabs-target="#ttbm_settings_admin_note">
-                    <i class="fas fa-edit"></i><?php esc_html_e('Admin Note', 'tour-booking-manager'); ?>
-                </li>
-				<?php
+				add_action('ttbm_meta_box_tab_content', [$this, 'admin_note_settings']);
 			}
 			public function admin_note_settings($tour_id) {
 				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_admin_note', 'on');

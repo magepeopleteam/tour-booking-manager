@@ -5,17 +5,8 @@
 	if (!class_exists('TTBM_Settings_extra_service')) {
 		class TTBM_Settings_extra_service {
 			public function __construct() {
-				add_action('add_ttbm_settings_tab_name', [$this, 'add_tab'], 10);
-				add_action('add_ttbm_settings_tab_content', [$this, 'extra_service_tab_content'], 10, 1);
+				add_action('ttbm_meta_box_tab_content', [$this, 'extra_service_tab_content'], 10, 1);
 				add_action('ttbm_extra_service_item', array($this, 'extra_service_item'));
-			}
-			public function add_tab() {
-				?>
-                <li data-tabs-target="#ttbm_settings_extra_service">
-                    <i class="fas fa-parachute-box"></i><?php esc_html_e(' Extra Service', 'tour-booking-manager'); ?>
-                </li>
-				<?php
-				do_action('ttbm_meta_box_tab_after_pricing');
 			}
 			public function extra_service_tab_content($tour_id) {
 				?>

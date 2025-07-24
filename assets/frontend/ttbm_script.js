@@ -132,6 +132,11 @@
 	function initOSMMap() {
 		var map_canvas = document.getElementById("osmap_canvas");
 		
+		// Check if map canvas exists before proceeding
+		if (!map_canvas) {
+			return;
+		}
+		
 		// Ensure the data-lati and data-longdi attributes exist
 		var lati = parseFloat(map_canvas.getAttribute("data-lati")) || 0;
 		var longdi = parseFloat(map_canvas.getAttribute("data-longdi")) || 0;
@@ -152,6 +157,11 @@
 
 	function initGMap() {
 		var gmap_canvas = document.getElementById("gmap_canvas");
+        
+		// Check if map canvas exists before proceeding
+		if (!gmap_canvas) {
+			return;
+		}
         
 		var lati = parseFloat(gmap_canvas.getAttribute("data-lati")) || 0;
 		var longdi = parseFloat(gmap_canvas.getAttribute("data-longdi")) || 0;

@@ -34,7 +34,7 @@
 					die;
 				}
 				$tour_id = isset($_REQUEST['tour_id']) ? sanitize_text_field(wp_unslash($_REQUEST['tour_id'])) : '';
-				$date = isset($_REQUEST['tour_date']) ? sanitize_text_field(wp_unslash($_REQUEST['tour_date'])) : '';;
+				$date = isset($_REQUEST['tour_date']) ? sanitize_text_field(wp_unslash($_REQUEST['tour_date'])) : '';
 				$date = str_replace('/', '-', $date);
 				$time = TTBM_Function::get_time($tour_id, gmdate('Y-m-d', strtotime($date)));
 				$date_format = $time ? 'Y-m-d H:i' : 'Y-m-d';

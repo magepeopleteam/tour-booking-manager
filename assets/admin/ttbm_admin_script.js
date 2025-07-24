@@ -1169,11 +1169,20 @@
 
 
     function initGMap() {
-        let lati = parseFloat(document.getElementById('map_latitude').value);
-        let longdi = parseFloat(document.getElementById('map_longitude').value);
+        const latitudeEl = document.getElementById('map_latitude');
+        const longitudeEl = document.getElementById('map_longitude');
+        const gmapCanvas = document.getElementById('gmap_canvas');
+        
+        // Check if required elements exist before proceeding
+        if (!latitudeEl || !longitudeEl || !gmapCanvas) {
+            return;
+        }
+        
+        let lati = parseFloat(latitudeEl.value);
+        let longdi = parseFloat(longitudeEl.value);
 
         // Initialize Google Map
-        gmap = new google.maps.Map(document.getElementById('gmap_canvas'), {
+        gmap = new google.maps.Map(gmapCanvas, {
             center: { lat: lati, lng: longdi },
             zoom: 12,
             zoomControl: true,

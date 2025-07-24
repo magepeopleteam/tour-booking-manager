@@ -8490,7 +8490,7 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
                                             <?php elseif($type == 'textarea'):
                                                 $default    = isset($field['default']) ? $field['default'] : '';
                                                 $_value     = !empty($val[$item_id]) ? $val[$item_id] : $default;
-                                                $__value    = str_replace('<br />', PHP_EOL, html_entity_decode($_value));;
+                                                $__value    = str_replace('<br />', PHP_EOL, html_entity_decode($_value));
                                                 ?>
                                                 <textarea <?php echo esc_attr(TTBM_Layout::no_pro_disabled($field_name)); ?>  name="<?php echo esc_attr($field_name); ?>[<?php echo esc_attr($index); ?>][<?php echo esc_attr($item_id); ?>]"><?php echo mep_esc_html($__value); ?></textarea>
                                             <?php elseif($type == 'select'):

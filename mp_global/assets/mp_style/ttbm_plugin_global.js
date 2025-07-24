@@ -961,13 +961,16 @@ function ttbm_slider_resize(target) {
 }(jQuery));
 
 //==== Live search icon======
-document.getElementById('searchInputIcon').addEventListener('input', function () {
-    const filter = this.value.toLowerCase();
-    const items = document.querySelectorAll('.popupTabItem .itemIconArea .iconItem');
+const searchInputIcon = document.getElementById('searchInputIcon');
+if (searchInputIcon) {
+    searchInputIcon.addEventListener('input', function () {
+        const filter = this.value.toLowerCase();
+        const items = document.querySelectorAll('.popupTabItem .itemIconArea .iconItem');
 
-    items.forEach(item => {
-        const text = item.getAttribute('title')?.toLowerCase() || '';
-        item.style.display = text.includes(filter) ? '' : 'none';
+        items.forEach(item => {
+            const text = item.getAttribute('title')?.toLowerCase() || '';
+            item.style.display = text.includes(filter) ? '' : 'none';
+        });
     });
-});
+}
 

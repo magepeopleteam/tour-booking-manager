@@ -803,6 +803,7 @@ div.ttbm_viator_theme .item_icon{
 	align-items: center;
 	gap: 15px;
 	padding: 15px 10px;
+	margin-left: 10px;
 	border-radius: 8px;
 	transition: background 0.3s ease;
 }
@@ -832,13 +833,15 @@ div.ttbm_viator_theme .item_icon{
 	font-size: 14px;
 	color: #555;
 }
-.ttbm_shortcode_load_more_holder{
+.ttbm_shortcode_load_more_holder,
+.ttbm_attraction_load_more_holder
+{
 	display: flex;
 	justify-content: center;
 	margin: 10px 10px;
 	padding: 10px;
 }
-.ttbm_load_rore_text{
+.ttbm_load_more_text{
 	cursor: pointer;
 	padding: 8px 20px;
 	border: 1px solid #ede8e8;

@@ -254,7 +254,7 @@
 				}
 				return ob_get_clean();
 			}
-            public function top_attractions( $attribute ) {
+            public function top_attractions_old( $attribute ) {
                 $defaults = array('show' => 4, 'column' => 3);
                 $params = shortcode_atts($defaults, $attribute);
                 $num_of_places = $params['show'];
@@ -278,7 +278,7 @@
                     <div class="ttbm_style ttbm_wraper ttbm_filter_area ttbm_location_list">
                         <div class="mpContainer">
                             <div class="ttbm_top_attraction_holder">
-                                <h2 class="ttbm_attraction_title">Top Attractions</h2>
+                                <h2 class="ttbm_attraction_title"><?php esc_attr_e( 'Top Attractions', 'tour-booking-manager' );?></h2>
                                 <div class="all_filter_item">
                                     <div class="placeholder_area flexWrap">
                                         <?php include(TTBM_Function::template_path('layout/display_top_attractions.php')); ?>
@@ -286,6 +286,27 @@
 
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <?php
+
+                }
+
+                return ob_get_clean();
+            }
+            public function top_attractions( $attribute ) {
+                $defaults = array('show' => 4, 'column' => 3, 'carousal' => 'no', 'load-more-button' => 'yes' );
+                $params = shortcode_atts($defaults, $attribute);
+                $num_of_places = $params['show'];
+
+                ob_start();
+                $place_tour = TTBM_Function::get_city_place_ids_with_post_ids( $num_of_places );
+                if( is_array( $place_tour ) && !empty( $place_tour ) ) {
+                    $count_grid_class = (int)$params['column'] > 0 ? 'grid_' . (int)$params['column'] : 'grid_1';
+                    ?>
+                    <div class="ttbm_style ttbm_wraper ttbm_filter_area ttbm_location_list">
+                        <div class="mpContainer">
+                            <?php include(TTBM_Function::template_path('layout/attraction_display.php')); ?>
                         </div>
                     </div>
                     <?php

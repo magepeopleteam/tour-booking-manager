@@ -103,7 +103,7 @@
 		});
 	});
 
-	const loadMoreBtn = $('#ttbm_load_rore_text');
+	const loadMoreBtn = $('#ttbm_load_more_text');
 	const itemsPerLoad = parseInt($('#ttbm_load_more_tour_shortcode').val()) || 3;
 	const allItems = $('.ttbm_shortcode_load_tour');
 	let currentIndex = 0;

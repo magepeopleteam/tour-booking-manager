@@ -14,7 +14,7 @@ if ($places_query->have_posts()) {
         }
 
         ?>
-        <div class="ttbm_attraction_item <?php echo $count_grid_class?>">
+        <div class="ttbm_attraction_item <?php echo esc_attr($grid_class); echo esc_attr( $load_more_class ); ?>" id="<?php echo esc_attr( $post_id );?>" style="display: <?php echo esc_attr( $display );?>">
             <img src="<?php echo esc_url( $img_url );?>" alt="Colosseum">
             <div>
                 <h4><?php echo esc_attr( $places_name );?></h4>

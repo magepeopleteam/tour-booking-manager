@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     $grid_class= $related_tour_count <= $num_of_tour?'grid_'.$num_of_tour:'';
     $div_class='flexWrap grid';
     if( $carousel == 'no' ){
-        if( $load_more_button === 'yes' ){
+        if( $load_more_button == 'yes' ){
             $load_more_class = 'ttbm_load_top_attractive';
             $display = 'none';
         }else{

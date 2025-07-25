@@ -12,7 +12,7 @@ $num_of_display = $params['show'];
 $carousel = $params['carousal'];
 $load_more_button = $params['load-more-button'];
 
-$grid_class= $related_tour_count <= $num_of_tour?'grid_'.$num_of_tour:'';
+
 $div_class='flexWrap grid';
 if( $carousel == 'no' ){
     if( $load_more_button === 'yes' ){
@@ -23,10 +23,15 @@ if( $carousel == 'no' ){
         $display = '';
     }
 
+//    $grid = $grid_class;
+
 }else{
     $load_more_class = '';
     $display = '';
+//    $grid = $count_grid_class;
+
 }
+
 
 
 ?>

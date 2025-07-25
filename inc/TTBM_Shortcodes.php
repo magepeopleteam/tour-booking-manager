@@ -284,7 +284,6 @@
                 $activity_term_ids = TTBM_Function::get_all_activity_ids_from_posts( $num_of_ids );
                 ob_start();
                 if( is_array( $activity_term_ids ) && !empty( $activity_term_ids ) ) {
-                    $count_grid_class = (int)$params['column'] > 0 ? 'grid_' . (int)$params['column'] : 'grid_1';
                     ?>
                     <div class="ttbm_style ttbm_wraper ttbm_filter_area ttbm_location_list">
                         <div class="mpContainer">

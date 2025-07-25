@@ -1020,9 +1020,9 @@
                     return count( $b ) - count( $a );
                 });
 
-                if ( $num_of_places > 0 ) {
+                /*if ( $num_of_places > 0 ) {
                     $city_place_map = array_slice( $city_place_map, 0, $num_of_places, true );
-                }
+                }*/
 
                 return $city_place_map;
             }

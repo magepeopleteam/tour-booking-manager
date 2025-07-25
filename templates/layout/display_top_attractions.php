@@ -16,7 +16,7 @@ if ($places_query->have_posts()) {
         $view_link = get_permalink($post_id);
 
         ?>
-        <div class="ttbm_attraction_item <?php echo esc_attr($grid_class); echo esc_attr( $load_more_class ); ?>" id="<?php echo esc_attr( $post_id );?>" style="display: <?php echo esc_attr( $display );?>">
+        <div class="ttbm_attraction_item <?php echo esc_attr($grid_class).' '; echo esc_attr( $load_more_class ); ?>" id="<?php echo esc_attr( $post_id );?>" style="display: <?php echo esc_attr( $display );?>">
             <img src="<?php echo esc_url( $img_url );?>" alt="<?php echo esc_attr( $places_name );?>">
             <div>
                 <h4><a href="<?php echo esc_attr( $view_link );?>" target="_blank"><?php echo esc_attr( $places_name );?></a></h4>

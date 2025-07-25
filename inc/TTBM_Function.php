@@ -865,12 +865,6 @@
 				if (empty($meta_key) || !is_string($meta_key)) {
 					return false;
 				}
-				// Generate a unique cache key
-				$cache_key = 'meta_values_' . md5(serialize([$meta_key, $post_type, $post_status]));
-				$cached = wp_cache_get($cache_key);
-				if (false !== $cached) {
-					return $cached;
-				}
 				// Use WP_Query to get posts with the specified criteria
 				$args = [
 					'post_type' => $post_type,
@@ -894,10 +888,8 @@
 						}
 					}
 					// Return only unique values
-//					$meta_values = array_unique($meta_values);
+				$meta_values = array_unique($meta_values);
 				}
-				// Cache the results
-				wp_cache_set($cache_key, $meta_values, '', DAY_IN_SECONDS);
 				return $meta_values;
 			}
 			public static function get_travel_analytical_data() {

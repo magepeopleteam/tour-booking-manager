@@ -4,7 +4,7 @@
 	} // Cannot access pages directly.
 	if (!class_exists('TTBM_Settings_place_you_see')) {
 		class TTBM_Settings_place_you_see {
-			public function __construct() {;
+			public function __construct() {
 				add_action('ttbm_meta_box_tab_content', [$this, 'place_you_see_settings'], 10, 1);
 				//*********add new Place***************//
 				add_action('wp_ajax_load_ttbm_place_you_see_form', [$this, 'load_ttbm_place_you_see_form']);

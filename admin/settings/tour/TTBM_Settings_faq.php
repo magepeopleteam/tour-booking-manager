@@ -23,7 +23,7 @@
 				// ttbm_delete_faq_data
 				add_action('wp_ajax_ttbm_faq_delete_item', [$this, 'faq_delete_item']);
 				// FAQ sort_faq
-				add_action('wp_ajax_ttbm_sort_faq', [$this, 'sort_faq']);;
+				add_action('wp_ajax_ttbm_sort_faq', [$this, 'sort_faq']);
 			}
 			public function sort_faq() {
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
@@ -31,7 +31,7 @@
 				}
 				$post_id = isset($_POST['postID']) ? sanitize_text_field(wp_unslash($_POST['postID'])) : '';
 				$sorted_ids = isset($_POST['sortedIDs']) ? array_map('intval', $_POST['sortedIDs']) : [];
-				$ttbm_faq = get_post_meta($post_id, 'mep_event_faq', true);;
+				$ttbm_faq = get_post_meta($post_id, 'mep_event_faq', true);
 				$new_ordered = [];
 				foreach ($sorted_ids as $id) {
 					if (isset($ttbm_faq[$id])) {

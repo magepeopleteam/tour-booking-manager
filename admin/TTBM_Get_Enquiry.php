@@ -18,7 +18,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             add_action('ttbm_enquery_popup', [$this, 'get_enquiry_pop_up']);
             add_action('ttbm_enquery_popup_button', [$this, 'get_enquiry_button']);
             add_action('wp_ajax_ttbm_enquiry_form_submit', [$this, 'enquiry_form_submit']);
-            add_action('wp_ajax_noprev_ttbm_enquiry_form_submit', [$this, 'enquiry_form_submit']);
+            add_action('wp_ajax_nopriv_ttbm_enquiry_form_submit', [$this, 'enquiry_form_submit']);
             add_action('wp_ajax_ttbm_view_enquiry', [$this, 'view_enquiry']);
             add_action('wp_ajax_ttbm_delete_enquiry', [$this, 'delete_enquiry']);
 
@@ -120,8 +120,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             $form_data = [];
 	        $data = isset($_POST['data']) ? sanitize_text_field(wp_unslash($_POST['data'] )): '';
             parse_str($data, $form_data);
-            $name = isset($_POST['name'])?sanitize_text_field(wp_unslash($_POST['name'])):'';
-
+            $name = sanitize_text_field($form_data['name'] ?? '');
             $email = sanitize_email($form_data['email'] ?? '');
             $subject = sanitize_text_field($form_data['subject'] ?? '');
             $message = sanitize_textarea_field($form_data['message'] ?? '');

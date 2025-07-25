@@ -848,4 +848,10 @@ div.ttbm_viator_theme .item_icon{
 	border-radius: 5px;
 }
 
+.ttbm_term_display_shortcode{
+	background-color: #f2f2f2;
+	margin: 10px;
+	border: 1px solid #eae6e6;
+}
+
 

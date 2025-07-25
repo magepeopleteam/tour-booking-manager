@@ -52,12 +52,19 @@
 					'field' => 'term_id',
 					'terms' => $org
 				) : '';
-				$activity = $activity ? get_term_by('id', $activity, 'ttbm_tour_activities')->name : '';
+//				$activity = $activity ? get_term_by('id', $activity, 'ttbm_tour_activities')->name : '';
 				$activity_filter = !empty($activity) ? array(
 					'key' => 'ttbm_tour_activities',
 					'value' => array($activity),
 					'compare' => 'IN'
 				) : '';
+
+                $short_activity_filter = !empty($activity) ? array(
+                    'key'     => 'ttbm_tour_activities',
+                    'value'   => '"' . $activity . '"',
+                    'compare' => 'LIKE'
+                ) : '';
+
 				$city_filter = !empty($city) ? array(
 					'key' => 'ttbm_location_name',
 					'value' => $city,
@@ -95,8 +102,9 @@
 						$city_filter,
 						$country_filter,
 						$tour_type_filter,
-						$activity_filter,
+//						$activity_filter,
                         $attraction_filter,
+                        $short_activity_filter,
 					),
 					'tax_query' => array(
 						$cat_filter,

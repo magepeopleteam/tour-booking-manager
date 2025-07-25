@@ -40,39 +40,45 @@
     ttbm_promotional_tour_carousal( 'ttbm_trending_tour' );
     ttbm_promotional_tour_carousal( 'ttbm_deal-discount_tour' );
     ttbm_promotional_tour_carousal( 'ttbm_top_attraction' );
+    ttbm_promotional_tour_carousal( 'ttbm_browse_activities' );
 
-    const loadMoreBtn = $('#ttbm_attraction_load_more_text');
-    const itemsPerLoad = parseInt($('#ttbm_load_more_attraction_number').val()) || 3;
-    const allItems = $('.ttbm_load_top_attractive');
-    let currentIndex = 0;
 
-    // Hide all items initially
-    // allItems.hide();
+    function aaa( a, b, c) {
+        const loadMoreBtn = $('#'+a);
+        const itemsPerLoad = parseInt($('#'+b).val()) || 3;
+        const allItems = $('.'+c);
+        let currentIndex = 0;
 
-    function showNextItems() {
-        const nextItems = allItems.slice(currentIndex, currentIndex + itemsPerLoad);
-        nextItems.each(function() {
-            const itemId = $(this).attr('id');
-            $('#' + itemId).fadeIn();
-        });
+        function showNextItems() {
+            const nextItems = allItems.slice(currentIndex, currentIndex + itemsPerLoad);
+            nextItems.each(function () {
+                const itemId = $(this).attr('id');
+                // $('#' + itemId).fadeIn();
+                // console.log( itemId);
+                $(this).fadeIn();
+            });
 
-        currentIndex += itemsPerLoad;
+            currentIndex += itemsPerLoad;
 
-        if (currentIndex >= allItems.length) {
-            loadMoreBtn.hide();
+            if (currentIndex >= allItems.length) {
+                loadMoreBtn.hide();
+            }
         }
-    }
 
-    // Initial load
-    if ( $('#ttbm_load_more_attraction_number').val() !== '') {
-        showNextItems();
-        loadMoreBtn.show();
-    }
+        // Initial load
+        if ($('#'+b).val() !== '') {
+            showNextItems();
+            loadMoreBtn.show();
+        }
 
-    // On "Load More" click
-    loadMoreBtn.on('click', function() {
-        showNextItems();
-    });
+        // On "Load More" click
+        loadMoreBtn.on('click', function () {
+            showNextItems();
+        });
+    }
+    aaa( 'ttbm_attraction_load_more_text', 'ttbm_load_more_attraction_number', 'ttbm_load_top_attractive');
+    aaa( 'ttbm_activities_load_more_text', 'ttbm_load_more_activities_number', 'ttbm_load_activity');
+
 
 
 

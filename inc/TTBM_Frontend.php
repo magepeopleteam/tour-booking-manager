@@ -37,6 +37,9 @@
 				if ( is_tax( 'ttbm_tour_location' ) ) {
 					$template = TTBM_Function::template_path( 'single_page/location.php' );
 				}
+				if ( is_tax( 'ttbm_tour_activities' ) ) {
+					$template = TTBM_Function::template_path( 'single_page/activities.php' );
+				}
 				return $template;
 			}
 		}

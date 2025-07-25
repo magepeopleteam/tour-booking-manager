@@ -24,13 +24,14 @@
 				return ob_get_clean();
 			}
 			public function list_with_left_filter($attribute, $tour_type = '', $month_filter = 'yes') {
+
 				$defaults = $this->default_attribute('modern', 12, 'no', 'yes', 'yes', 'yes', $month_filter, $tour_type);
 				$params = shortcode_atts($defaults, $attribute);
 				$show = $params['show'];
-				$pagination = $params['pagination'];
+                $pagination = $params['pagination'];
 				$search = $params['sidebar-filter'];
 				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
-				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'],$params['sort_by']);
+				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'],$params['sort_by'], $params['attraction']);
 				ob_start();
 				?>
 				<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
@@ -349,6 +350,7 @@
 				"column" => 3,
 				"tour-type" => $tour_type,
 				"cat" => "0",
+				"attraction" => "0",
 				"org" => "0",
 				"activity" => "0",
 				'search-filter' => $search_filter,

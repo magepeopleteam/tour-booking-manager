@@ -888,7 +888,7 @@
 						}
 					}
 					// Return only unique values
-				$meta_values = array_unique($meta_values);
+				// $meta_values = array_unique($meta_values);
 				}
 				return $meta_values;
 			}

@@ -206,7 +206,7 @@
                         
                         <div class="ttbm-tour-card" data-travel-type="<?php echo esc_attr( $post_status )?>" data-expire-tour="<?php echo esc_attr( $is_expire );?>">
                             <div class="ttbm-tour-thumb">
-                                <?php echo get_the_post_thumbnail($post_id, 'thumbnail'); ?>
+                                <?php echo get_the_post_thumbnail($post_id, 'full'); ?>
                             </div>
                             <div class="ttbm-tour-card-content">
                                 <div>

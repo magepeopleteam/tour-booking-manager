@@ -17,8 +17,9 @@ div.ttbm_default_widget .ttbm_widget_title {
 	background-color: var(--color_theme);
 	color: var(--color_theme_alter);
 	font-size: 22px;
+	border-radius: 10px 10px 0 0;
 }
-.ttbm_widget_content {padding: var(--ttbm_mp_xs);}
+.ttbm_widget_content {padding: var(--ttbm_mp_xs); border-radius:0 0 10px 10px ;}
 div.ttbm_default_widget .ttbm_widget_content {background-color: var(--color_section);border: 1px solid #DDD;}
 /*div.ttbm_default_widget .ttbm_widget_content a {margin: 0 0 7px 0;}*/
 div.ttbm_default_widget .ttbm_title_style_3,

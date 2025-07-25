@@ -120,7 +120,8 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             $form_data = [];
 	        $data = isset($_POST['data']) ? sanitize_text_field(wp_unslash($_POST['data'] )): '';
             parse_str($data, $form_data);
-            $name = sanitize_text_field($form_data['name'] ?? '');
+            $name = isset($_POST['name'])?sanitize_text_field(wp_unslash($_POST['name'])):'';
+
             $email = sanitize_email($form_data['email'] ?? '');
             $subject = sanitize_text_field($form_data['subject'] ?? '');
             $message = sanitize_textarea_field($form_data['message'] ?? '');

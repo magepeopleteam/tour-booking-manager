@@ -31,7 +31,7 @@
 				}
 				$post_id = isset($_POST['postID']) ? sanitize_text_field(wp_unslash($_POST['postID'])) : '';
 				$sorted_ids = isset($_POST['sortedIDs']) ? array_map('intval', $_POST['sortedIDs']) : [];
-				$ttbm_daywise = get_post_meta($post_id, 'ttbm_daywise_details', true);;
+				$ttbm_daywise = get_post_meta($post_id, 'ttbm_daywise_details', true);
 				$new_ordered = [];
 				foreach ($sorted_ids as $id) {
 					if (isset($ttbm_daywise[$id])) {

@@ -575,7 +575,7 @@
                                     if( $activity ){
 //									$term = get_term_by('name', $activity, 'ttbm_tour_activities');
                                     $term = get_term( $activity, 'ttbm_tour_activities' );
-                                    $term_name = $term->name;
+                                    $term_name =$term? $term->name:'';
 
 									$term_id = $term ? $term->term_id : 0;
 									$checked = $current_activity == $term_id ? 'checked' : '';

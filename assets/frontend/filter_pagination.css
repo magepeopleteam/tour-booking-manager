@@ -49,7 +49,6 @@ div.left_filter {display: -webkit-flex;display: flex;}
 	margin: 0 0 var(--dmp) 0;
 	position: sticky;
 	top: 30px;
-	height: 100vh;
 }
 
 @media(max-width: 767px) {
@@ -277,8 +276,9 @@ div.ttbm_list_details {
 	flex: auto;
 	text-align: left;
 	justify-content: space-between;
-	padding: 15px;
+	padding: 10px;
 }
+
 
 .ttbm_list_details .fdColumn .ttbm_list_info:first-child,
 .filter_item .bg_image_area .ttbm_list_info:first-child {

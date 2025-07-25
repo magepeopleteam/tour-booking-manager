@@ -25,7 +25,7 @@
                             <ul class="tabLists">
                                 <li data-tabs-target="#ttbm_general_info"><i class="fas fa-tools"></i><?php esc_html_e('General Info', 'tour-booking-manager'); ?> </li>
                                 <li data-tabs-target="#ttbm_settings_location" class="ttbm_settings_location"><i class="fas fa-map-marker-alt"></i><?php esc_html_e(' Location', 'tour-booking-manager'); ?></li>
-                                <li data-tabs-target="#ttbm_settings_dates"><i class="far fa-calendar-plus"></i><?php esc_html_e(' Date Configuration', 'tour-booking-manager'); ?></li>
+<!--                                <li data-tabs-target="#ttbm_settings_dates"><i class="far fa-calendar-plus"></i>--><?php //esc_html_e(' Date Configuration', 'tour-booking-manager'); ?><!--</li>-->
 								<?php do_action('ttbm_meta_box_tab_name', $tour_id); ?>
                                 <li data-tabs-target="#ttbm_settings_pricing"><i class="fas fa-hand-holding-usd"></i><?php esc_html_e(' Pricing', 'tour-booking-manager'); ?> </li>
                                 <li data-tabs-target="#ttbm_settings_extra_service"><i class="fas fa-parachute-box"></i><?php esc_html_e(' Extra Service', 'tour-booking-manager'); ?> </li>
@@ -573,7 +573,7 @@
 					//*********Admin note**************//
 					$display_note = isset($_POST['ttbm_display_admin_note']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_admin_note'])) ? 'on' : 'off';
 					$note = isset($_POST['ttbm_admin_note']) ? sanitize_text_field(wp_unslash($_POST['ttbm_admin_note'])) : '';
-					update_post_meta($tour_id, 'ttbm_display_admin_note', $display_note);;
+					update_post_meta($tour_id, 'ttbm_display_admin_note', $display_note);
 					update_post_meta($tour_id, 'ttbm_admin_note', $note);
 				}
 				//*********Ticket price**************//

@@ -2,6 +2,7 @@
 
     function ttbm_promotional_tour_carousal( id ){
         let target_related_tour = $("#"+id+" .owl-carousel");
+        console.log( target_related_tour );
         let trt_num = target_related_tour.data('show');
         let trt_num_600 = Math.min(trt_num - 2, 2)
         trt_num_600 = Math.max(trt_num_600, 1)
@@ -41,9 +42,13 @@
     ttbm_promotional_tour_carousal( 'ttbm_deal-discount_tour' );
     ttbm_promotional_tour_carousal( 'ttbm_top_attraction' );
     ttbm_promotional_tour_carousal( 'ttbm_browse_activities' );
+    ttbm_promotional_tour_carousal( 'ttbm_category_shortcode' );
+    ttbm_promotional_tour_carousal( 'ttbm_organizer_shortcode' );
+    ttbm_promotional_tour_carousal( 'ttbm_tag_shortcode' );
+    ttbm_promotional_tour_carousal( 'ttbm_feature_shortcode' );
 
 
-    function aaa( a, b, c) {
+    function ttbm_taxonomy_list_load_more( a, b, c) {
         const loadMoreBtn = $('#'+a);
         const itemsPerLoad = parseInt($('#'+b).val()) || 3;
         const allItems = $('.'+c);
@@ -76,8 +81,13 @@
             showNextItems();
         });
     }
-    aaa( 'ttbm_attraction_load_more_text', 'ttbm_load_more_attraction_number', 'ttbm_load_top_attractive');
-    aaa( 'ttbm_activities_load_more_text', 'ttbm_load_more_activities_number', 'ttbm_load_activity');
+
+    ttbm_taxonomy_list_load_more( 'ttbm_attraction_load_more_text', 'ttbm_load_more_attraction_number', 'ttbm_load_top_attractive');
+    ttbm_taxonomy_list_load_more( 'ttbm_activities_load_more_text', 'ttbm_load_more_activities_number', 'ttbm_load_activity');
+    ttbm_taxonomy_list_load_more( 'ttbm_category_load_more_text', 'ttbm_load_more_category_number', 'ttbm_load_category');
+    ttbm_taxonomy_list_load_more( 'ttbm_organizer_load_more_text', 'ttbm_load_more_organizer_number', 'ttbm_load_organizer');
+    ttbm_taxonomy_list_load_more( 'ttbm_tag_load_more_text', 'ttbm_load_more_tag_number', 'ttbm_load_tag');
+    ttbm_taxonomy_list_load_more( 'ttbm_feature_load_more_text', 'ttbm_load_more_feature_number', 'ttbm_load_feature');
 
 
 

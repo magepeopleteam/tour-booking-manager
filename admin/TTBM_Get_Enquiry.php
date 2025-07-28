@@ -120,10 +120,10 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             $form_data = [];
 	        $data = isset($_POST['data']) ? sanitize_text_field(wp_unslash($_POST['data'] )): '';
             parse_str($data, $form_data);
-            $name = sanitize_text_field(isset($form_data['name']) ? $form_data['name'] : '');
-            $email = sanitize_email(isset($form_data['email']) ? $form_data['email'] : '');
-            $subject = sanitize_text_field(isset($form_data['subject']) ? $form_data['subject'] : '');
-            $message = sanitize_textarea_field(isset($form_data['message']) ? $form_data['message'] : '');
+            $name = sanitize_text_field($form_data['name'] ?? '');
+            $email = sanitize_email($form_data['email'] ?? '');
+            $subject = sanitize_text_field($form_data['subject'] ?? '');
+            $message = sanitize_textarea_field($form_data['message'] ?? '');
             $headers = ['Content-Type: text/html; charset=UTF-8'];
             $enquiry_id = wp_insert_post([
                 'post_title'   => $subject,

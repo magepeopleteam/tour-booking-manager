@@ -58,7 +58,7 @@
 										<?php if ($regular_price) { ?>
 											<span class="strikeLine"><?php 
 												// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  
-												echo wc_price($tour_id, $regular_price); ?></span>
+												echo wc_price($regular_price); ?></span>
 										<?php } ?>
 										<span><?php 
 										// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  

@@ -766,3 +766,92 @@ div.ttbm_viator_theme .item_icon{
 	background-color: #005e8a;
 }
 
+
+
+.ttbm_top_attraction_holder{
+	display: block;
+	position: relative;
+	width: 100%;
+	padding: 20px 25px;
+	margin: 10px;
+	background-color: #fbfbfb;
+	border: 1px solid #e5e5e5;
+	border-radius: 10px;
+}
+
+.ttbm_top_attraction {
+	/*max-width: 1000px;*/
+	margin: 0 auto;
+	padding: 20px;
+	font-family: Arial, sans-serif;
+}
+
+.ttbm_top_attraction .ttbm_title {
+	text-align: center;
+	font-size: 28px;
+	margin-bottom: 30px;
+}
+
+.ttbm_top_attraction_grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 10px 10px;
+}
+
+.ttbm_attraction_item {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	padding: 15px 10px;
+	margin-left: 10px;
+	border-radius: 8px;
+	transition: background 0.3s ease;
+}
+
+.ttbm_attraction_item:hover {
+	background-color: #f5f5f5;
+}
+.ttbm_attraction_title{
+	text-align: center;
+}
+
+.ttbm_attraction_item img {
+	width: 90px !important;
+	height: 80px !important;
+	object-fit: cover;
+	border-radius: 8px;
+}
+
+.ttbm_attraction_item h4 {
+	margin: 0;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.ttbm_attraction_item p {
+	margin: 3px 0 0;
+	font-size: 14px;
+	color: #555;
+}
+.ttbm_shortcode_load_more_holder,
+.ttbm_attraction_load_more_holder
+{
+	display: flex;
+	justify-content: center;
+	margin: 10px 10px;
+	padding: 10px;
+}
+.ttbm_load_more_text{
+	cursor: pointer;
+	padding: 8px 20px;
+	border: 1px solid #ede8e8;
+	border-radius: 5px;
+}
+
+.ttbm_term_display_shortcode{
+	background-color: #f2f2f2;
+	margin: 10px;
+	border: 1px solid #eae6e6;
+}
+
+

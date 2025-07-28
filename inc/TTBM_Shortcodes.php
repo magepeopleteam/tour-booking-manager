@@ -13,6 +13,9 @@
 				add_shortcode('ttbm-hotel-list', array($this, 'hotel_list'));
 				add_shortcode('ttbm-registration', array($this, 'registration'));
 				add_shortcode('ttbm-related', array($this, 'related'));
+				add_shortcode('wptravelly-tour-list', array($this, 'ttbm_tour_list'));
+				add_shortcode('ttbm-top-attractions', array($this, 'top_attractions'));
+				add_shortcode('ttbm-activity_browse', array($this, 'activity_browse'));
 			}
 			public function static_filter($attribute) {
 				$defaults = $this->default_attribute();
@@ -22,13 +25,14 @@
 				return ob_get_clean();
 			}
 			public function list_with_left_filter($attribute, $tour_type = '', $month_filter = 'yes') {
+
 				$defaults = $this->default_attribute('modern', 12, 'no', 'yes', 'yes', 'yes', $month_filter, $tour_type);
 				$params = shortcode_atts($defaults, $attribute);
 				$show = $params['show'];
-				$pagination = $params['pagination'];
+                $pagination = $params['pagination'];
 				$search = $params['sidebar-filter'];
 				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
-				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'],$params['sort_by']);
+				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'],$params['sort_by'], $params['attraction']);
 				ob_start();
 				?>
 				<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
@@ -252,6 +256,65 @@
 				}
 				return ob_get_clean();
 			}
+            public function top_attractions( $attribute ) {
+                $defaults = array('show' => 4, 'column' => 3, 'carousal' => 'no', 'load-more-button' => 'yes' );
+                $params = shortcode_atts($defaults, $attribute);
+                $num_of_places = $params['show'];
+
+                ob_start();
+                $place_tour = TTBM_Function::get_city_place_ids_with_post_ids( $num_of_places );
+                if( is_array( $place_tour ) && !empty( $place_tour ) ) {
+                    $count_grid_class = (int)$params['column'] > 0 ? 'grid_' . (int)$params['column'] : 'grid_1';
+                    ?>
+                    <div class="ttbm_style ttbm_wraper ttbm_filter_area ttbm_location_list">
+                        <div class="mpContainer">
+                            <?php include(TTBM_Function::template_path('layout/attraction_display.php')); ?>
+                        </div>
+                    </div>
+                    <?php
+
+                }
+
+                return ob_get_clean();
+            }
+            public function activity_browse( $attribute ) {
+                $defaults = array( 'show' => 4, 'column' => 3, 'carousal' => 'no', 'load-more-button' => 'yes' );
+                $params = shortcode_atts($defaults, $attribute);
+                $num_of_ids = $params['show'];
+                $activity_term_ids = TTBM_Function::get_all_activity_ids_from_posts( $num_of_ids );
+                ob_start();
+                if( is_array( $activity_term_ids ) && !empty( $activity_term_ids ) ) {
+                    ?>
+                    <div class="ttbm_style ttbm_wraper ttbm_filter_area ttbm_location_list">
+                        <div class="mpContainer">
+                            <?php include(TTBM_Function::template_path('layout/browse_activity.php')); ?>
+                        </div>
+                    </div>
+                    <?php
+
+                }
+
+                return ob_get_clean();
+            }
+
+            public function ttbm_tour_list($attribute) {
+				$defaults = array( 'type' => 'feature', 'column' => 3, 'carousel' => 'yes', 'show' => '' );
+				$params = shortcode_atts($defaults, $attribute);
+				ob_start();
+				$tour_id = 164;
+				$num_of_tour = $params['column'];
+				$type_tour = $params['type'];
+				if ($type_tour) {
+					?>
+					<div class="ttbm_style">
+						<div class="mpContainer">
+						<?php include(TTBM_Function::template_path('layout/top_picks_deals_tour.php')); ?>
+						</div>
+					</div>
+					<?php
+				}
+				return ob_get_clean();
+			}
 			//***************************//
 			public function default_attribute($style = 'grid', $show = 9, $search_filter = 'yes', $sidebar_filter = 'no', $feature_filter = 'no', $tag_filter = 'no', $month_filter = 'yes', $tour_type = '', $sort_by = '', $shuffle = 'no'): array {
 			return array(
@@ -267,6 +330,7 @@
 				"column" => 3,
 				"tour-type" => $tour_type,
 				"cat" => "0",
+				"attraction" => "0",
 				"org" => "0",
 				"activity" => "0",
 				'search-filter' => $search_filter,

@@ -57,6 +57,7 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Promotional_Text.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Admin_Note.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings_Display.php';
+                require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Promotional_Deals.php';
 				//**********//
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_Ajax.php';

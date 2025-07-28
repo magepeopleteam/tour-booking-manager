@@ -103,6 +103,39 @@
 		});
 	});
 
+	const loadMoreBtn = $('#ttbm_load_more_text');
+	const itemsPerLoad = parseInt($('#ttbm_load_more_tour_shortcode').val()) || 3;
+	const allItems = $('.ttbm_shortcode_load_tour');
+	let currentIndex = 0;
+
+	// Hide all items initially
+	// allItems.hide();
+
+	function showNextItems() {
+		const nextItems = allItems.slice(currentIndex, currentIndex + itemsPerLoad);
+		nextItems.each(function() {
+			const itemId = $(this).attr('id');
+			$('#' + itemId).fadeIn();
+		});
+
+		currentIndex += itemsPerLoad;
+
+		if (currentIndex >= allItems.length) {
+			loadMoreBtn.hide();
+		}
+	}
+
+	// Initial load
+	if ( $('#ttbm_load_more_tour_shortcode').val() !== '') {
+		showNextItems();
+		loadMoreBtn.show();
+	}
+
+	// On "Load More" click
+	loadMoreBtn.on('click', function() {
+		showNextItems();
+	});
+
 	function ttbm_left_filter_see_more_button( checkBoxHolderId, checkBox, seeMoreButtonId ){
 		const ttbm_itemsToShow = 8;
 		const ttbm_activity_checkboxes = $('#'+checkBoxHolderId+' .'+checkBox+'');

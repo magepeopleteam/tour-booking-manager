@@ -51,6 +51,12 @@
 				wp_enqueue_script('jquery-ui-accordion');
 				wp_enqueue_style('ttbm_style', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_style.css', array(), time());
 				wp_enqueue_script('ttbm_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_script.js', array('jquery'), time(), true);
+				wp_enqueue_script('ttbm_shortcode', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_shortcode.js', array('jquery'), time(), true);
+				wp_localize_script('ttbm_script', 'ttbm_ajax', array(
+					'ajax_url'  => admin_url('admin-ajax.php'),
+					'nonce'   => wp_create_nonce('ttbm_frontend_nonce')
+				));
+
 				do_action('ttbm_frontend_script');
 			}
 			public function admin_script() {

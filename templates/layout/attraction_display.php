@@ -14,12 +14,13 @@ if ( ! defined( 'ABSPATH' ) ) {
     $places_query = new WP_Query( $args);
 
     $related_tour_count = $places_query->found_posts;
-    $num_of_tour = $params['column'];
+    $num_of_tour = $params['show'];
+    $num_of_column = $params['column'];
     $carousel = $params['carousal'];
     $load_more_button = $params['load-more-button'];
 
 
-    $grid_class= $related_tour_count <= $num_of_tour?'grid_'.$num_of_tour:'';
+    $grid_class= $related_tour_count <= $num_of_tour?'grid_'.$num_of_column:'';
     $div_class='flexWrap grid';
     if( $carousel == 'no' ){
         if( $load_more_button == 'yes' ){
@@ -53,7 +54,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <input type="hidden" id="ttbm_load_more_attraction_number" value="<?php echo esc_attr( $num_of_tour )?>">
                     <?php }?>
                 <?php } else {?>
-                    <div class="ttbm_widget_content _mZero  <?php echo esc_attr( $related_tour_count >$num_of_tour?'owl-theme owl-carousel':$div_class); ?>" data-show ="<?php echo esc_attr($num_of_tour); ?>">
+                    <div class="ttbm_widget_content _mZero  <?php echo esc_attr( $related_tour_count >$num_of_tour?'owl-theme owl-carousel':$div_class); ?>" data-show ="<?php echo esc_attr($num_of_column); ?>">
                         <?php }?>
                         <?php
                         include(TTBM_Function::template_path('layout/display_top_attractions.php'));

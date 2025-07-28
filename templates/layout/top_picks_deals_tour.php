@@ -22,7 +22,7 @@ if ( $related_tour_count > 0 && (TTBM_Global_Function::get_post_info( $ttbm_post
         $display = '';
     }else{
         $grid_class = (int)$params['column'] > 0 ? 'grid_' . (int)$params['column'] : 'grid_1';
-        $load_class =  'ttbm_shortcode_load_tour';
+        $load_class =  'ttbm_'.$type_tour.'_shortcode_load_tour';
         $display = 'none';
     }
 //    $div_class=$related_tour_count==1?'flexWrap modern':'flexWrap grid';
@@ -30,7 +30,7 @@ if ( $related_tour_count > 0 && (TTBM_Global_Function::get_post_info( $ttbm_post
     ?>
     <div class='ttbm_style ttbm_wraper' id="ttbm_<?php echo esc_attr( $type_tour );?>_tour">
         <?php if( $carousel == 'no' ){ ?>
-            <input type="hidden" id="ttbm_load_more_tour_shortcode" value="<?php echo esc_attr( $show )?>">
+            <input type="hidden" id="ttbm_<?php echo esc_attr( $type_tour );?>_load_more_tour_shortcode" value="<?php echo esc_attr( $show )?>">
         <?php }?>
         <div class="ttbm_container">
             <div class='ttbm_default_widget'>
@@ -52,7 +52,7 @@ if ( $related_tour_count > 0 && (TTBM_Global_Function::get_post_info( $ttbm_post
 
                 </div>
                 <?php  if( $carousel == 'no' &&  $related_tour_count > $show ){?>
-                    <div class="ttbm_shortcode_load_more_holder"><div class="ttbm_load_more_text" id="ttbm_load_more_text">Load More...</div></div>
+                    <div class="ttbm_shortcode_load_more_holder"><div class="ttbm_load_more_text" id="ttbm_<?php echo esc_attr( $type_tour );?>_load_more_text">Load More...</div></div>
                 <?php }?>
             </div>
         </div>

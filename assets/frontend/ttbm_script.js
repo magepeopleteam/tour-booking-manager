@@ -103,38 +103,49 @@
 		});
 	});
 
-	const loadMoreBtn = $('#ttbm_load_more_text');
-	const itemsPerLoad = parseInt($('#ttbm_load_more_tour_shortcode').val()) || 3;
-	const allItems = $('.ttbm_shortcode_load_tour');
-	let currentIndex = 0;
+	function ttbm_display_promotional_tour_load_more( load_more_btn, load_more_btn_show, tour_type ) {
 
-	// Hide all items initially
-	// allItems.hide();
+		const loadMoreBtn = $('#'+load_more_btn);
+		const itemsPerLoad = parseInt($('#'+load_more_btn_show).val()) || 3;
+		const allItems = $('.'+tour_type);
+		let currentIndex = 0;
 
-	function showNextItems() {
-		const nextItems = allItems.slice(currentIndex, currentIndex + itemsPerLoad);
-		nextItems.each(function() {
-			const itemId = $(this).attr('id');
-			$('#' + itemId).fadeIn();
-		});
+		// Hide all items initially
+		// allItems.hide();
 
-		currentIndex += itemsPerLoad;
+		function showNextItems() {
+			const nextItems = allItems.slice(currentIndex, currentIndex + itemsPerLoad);
+			nextItems.each(function () {
+				const itemId = $(this).attr('id');
+				// $('#' + itemId).fadeIn();
+				$(this).fadeIn();
+			});
 
-		if (currentIndex >= allItems.length) {
-			loadMoreBtn.hide();
+			currentIndex += itemsPerLoad;
+
+			if (currentIndex >= allItems.length) {
+				loadMoreBtn.hide();
+			}
 		}
+
+		// Initial load
+		if ($('#'+load_more_btn_show).val() !== '') {
+			showNextItems();
+			loadMoreBtn.show();
+		}
+
+		// On "Load More" click
+		loadMoreBtn.on('click', function () {
+			showNextItems();
+		});
 	}
 
-	// Initial load
-	if ( $('#ttbm_load_more_tour_shortcode').val() !== '') {
-		showNextItems();
-		loadMoreBtn.show();
-	}
+	ttbm_display_promotional_tour_load_more( 'ttbm_trending_load_more_text', 'ttbm_trending_load_more_tour_shortcode', 'ttbm_trending_shortcode_load_tour' );
+	ttbm_display_promotional_tour_load_more( 'ttbm_popular_load_more_text', 'ttbm_popular_load_more_tour_shortcode', 'ttbm_popular_shortcode_load_tour' );
+	ttbm_display_promotional_tour_load_more( 'ttbm_feature_load_more_text', 'ttbm_feature_load_more_tour_shortcode', 'ttbm_feature_shortcode_load_tour' );
+	ttbm_display_promotional_tour_load_more( 'ttbm_deal-discount_load_more_text', 'ttbm_deal-discount_load_more_tour_shortcode', 'ttbm_deal-discount_shortcode_load_tour' );
 
-	// On "Load More" click
-	loadMoreBtn.on('click', function() {
-		showNextItems();
-	});
+
 
 	function ttbm_left_filter_see_more_button( checkBoxHolderId, checkBox, seeMoreButtonId ){
 		const ttbm_itemsToShow = 8;

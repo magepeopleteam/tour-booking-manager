@@ -79,7 +79,7 @@ if ( $hotel_id && $date_range ) {
                             <?php if ($sale_price) { ?>
                                 <span class="strikeLine"><?php 
                                     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
-                                    echo wc_price($hotel_id, $sale_price); ?></span>
+                                    echo wc_price($sale_price); ?></span>
                             <?php } ?>
                             <?php echo esc_html( $price ); ?>/
                             <?php esc_html_e( 'Night ', 'tour-booking-manager' ); ?>&nbsp;X

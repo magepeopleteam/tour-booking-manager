@@ -42,6 +42,7 @@
                                 <li data-tabs-target="#ttbm_settings_why_chose_us"><i class="fas fa-info-circle"></i> <?php esc_html_e('Promotional Text', 'tour-booking-manager'); ?></li>
                                 <li data-tabs-target="#ttbm_settings_admin_note"><i class="fas fa-edit"></i><?php esc_html_e('Admin Note', 'tour-booking-manager'); ?></li>
                                 <li data-tabs-target="#ttbm_display_settings"><i class="fas fa-chalkboard"></i><?php esc_html_e(' Display settings', 'tour-booking-manager'); ?></li>
+                                <li data-tabs-target="#ttbm_add_promotional_setting"><i class="fas fa-chalkboard"></i><?php esc_html_e(' Promotional Deals', 'tour-booking-manager'); ?></li>
 								<?php do_action('add_ttbm_settings_tab_name'); ?>
 								<?php if (is_plugin_active('mage-partial-payment-pro/mage_partial_pro.php')) : ?>
                                     <li data-tabs-target="#_mep_pp_deposits_type"><i class="far fa-money-bill-alt"></i>&nbsp;&nbsp;<?php esc_html_e('Partial Payment', 'tour-booking-manager'); ?>                                    </li>
@@ -418,6 +419,7 @@
 					'display_settings_description' => esc_html__('Display settings is somthing that you can use to control frontend display.', 'tour-booking-manager'),
 					'ttip_ticket_type' => __('You can access it by clicking on the ticket types menu item in the left sidebar', 'tour-booking-manager'),
 					'get_ticket_type' => __('You can import ticket types here . Create new ticket types <a href="post-new.php?post_type=ttbm_ticket_types">Click Me</a>', 'tour-booking-manager'),
+					'top_picks_and_deals' => __('Top Tours showcases your best-performing and most popular tour packages. Use it to highlight the most booked or highest-rated experiences. The tone is direct and value-driven, reflecting popularity and performance.', 'tour-booking-manager'),
 				);
 				$des = apply_filters('ttbm_filter_description_array', $des);
 				return array_key_exists($key, $des) ? $des[$key] : '';
@@ -552,9 +554,14 @@
 					//*********FAQ**************//
 					$faq = isset($_POST['ttbm_display_faq']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_faq'])) ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_faq', $faq);
-					$display_activities = isset($_POST['ttbm_display_activities']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_activities'])) ? 'on' : 'off';
+                    $display_activities = isset($_POST['ttbm_display_activities']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_activities'])) ? 'on' : 'off';
+
+                    $display_top_picks_deals = isset($_POST['ttbm_display_top_picks_deals']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_top_picks_deals'])) ? 'on' : 'off';
+                    $top_picks_deals = isset($_POST['ttbm_top_picks_deals']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_top_picks_deals'])) : [];
 					//*********Activities**************//
 					update_post_meta($tour_id, 'ttbm_display_activities', $display_activities);
+					update_post_meta($tour_id, 'ttbm_display_top_picks_deals', $display_top_picks_deals);
+					update_post_meta($tour_id, 'ttbm_top_picks_deals', $top_picks_deals);
 					$activities = [];
 					if (!empty($_POST['ttbm_checked_activities_holder'])) {
 						$activities = explode(',', sanitize_text_field(wp_unslash($_POST['ttbm_checked_activities_holder'])));

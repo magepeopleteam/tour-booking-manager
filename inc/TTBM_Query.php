@@ -14,7 +14,7 @@
 				);
 				return new WP_Query($args);
 			}
-			public static function ttbm_query($show, $sort = '', $cat = '', $org = '', $city = '', $country = '', $status = '', $tour_type = '', $activity = '', $sort_by = ''): WP_Query {
+			public static function ttbm_query($show, $sort = '', $cat = '', $org = '', $city = '', $country = '', $status = '', $tour_type = '', $activity = '', $sort_by = '', $attraction = ''): WP_Query {
 				TTBM_Function::update_all_upcoming_date_month();
 				$sort_by = $sort_by ?: 'meta_value';
 				if (get_query_var('paged')) {
@@ -52,12 +52,19 @@
 					'field' => 'term_id',
 					'terms' => $org
 				) : '';
-				$activity = $activity ? get_term_by('id', $activity, 'ttbm_tour_activities')->name : '';
+//				$activity = $activity ? get_term_by('id', $activity, 'ttbm_tour_activities')->name : '';
 				$activity_filter = !empty($activity) ? array(
 					'key' => 'ttbm_tour_activities',
 					'value' => array($activity),
 					'compare' => 'IN'
 				) : '';
+
+                $short_activity_filter = !empty($activity) ? array(
+                    'key'     => 'ttbm_tour_activities',
+                    'value'   => '"' . $activity . '"',
+                    'compare' => 'LIKE'
+                ) : '';
+
 				$city_filter = !empty($city) ? array(
 					'key' => 'ttbm_location_name',
 					'value' => $city,
@@ -73,6 +80,11 @@
 					'value' => $tour_type,
 					'compare' => 'LIKE'
 				) : '';
+                $attraction_filter = !empty($attraction) ? array(
+                    'key'     => 'ttbm_hiphop_places',
+                    'value'   => '"ttbm_city_place_id";s:' . strlen($attraction) . ':"' . $attraction . '"',
+                    'compare' => 'LIKE'
+                ) : '';
 				$args = array(
 					'post_type' => array(TTBM_Function::get_cpt_name()),
 					'paged' => $paged,
@@ -90,7 +102,9 @@
 						$city_filter,
 						$country_filter,
 						$tour_type_filter,
-						$activity_filter
+//						$activity_filter,
+                        $attraction_filter,
+                        $short_activity_filter,
 					),
 					'tax_query' => array(
 						$cat_filter,

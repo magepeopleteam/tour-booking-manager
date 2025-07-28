@@ -10,6 +10,7 @@
 			}
 			public function load_single_template( $template ): string {
 				global $post;
+
 				if ( $post->post_type && $post->post_type == TTBM_Function::get_cpt_name()) {
 					$template = TTBM_Function::template_path( 'single_page/single-ttbm.php' );
 				}
@@ -18,6 +19,9 @@
 				}
 				if ( $post->post_type && $post->post_type == 'ttbm_hotel') {
 					$template = TTBM_Function::template_path( 'single_page/ttbm_hotel.php' );
+				}
+				if ( $post->post_type && $post->post_type == 'ttbm_places') {
+					$template = TTBM_Function::template_path( 'single_page/tourist_attraction.php' );
 				}
 
 
@@ -32,6 +36,9 @@
 				}
 				if ( is_tax( 'ttbm_tour_location' ) ) {
 					$template = TTBM_Function::template_path( 'single_page/location.php' );
+				}
+				if ( is_tax( 'ttbm_tour_activities' ) ) {
+					$template = TTBM_Function::template_path( 'single_page/activities.php' );
 				}
 				return $template;
 			}

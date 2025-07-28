@@ -462,11 +462,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                 <div class="ttbm_add_icon_popup ttbm_popup ttbm_style" data-popup="#ttbm_add_icon_popup">
                     <div class="popupMainArea fullWidth">
                         <div class="popupHeader allCenter">
-                            <h2 class="_mR"><?php esc_html_e('Select Icon', 'tour-booking-manager'); ?></h2>
-                            <label class="min_300">
-                                <input type="text" class="formControl ttbm_name_validation" name="ttbm_select_icon_name" placeholder="<?php esc_attr_e('Icon/class name....', 'tour-booking-manager'); ?>"/>
-                            </label>
-                            <span class="fas fa-times popupClose"></span>
+                            <?php TTBM_Select_Icon_image::disaply_icon_header_in_popup(); ?>
                         </div>
                         <div class="popupBody">
                             <?php TTBM_Select_Icon_image::disaply_icon_in_popup(); ?>

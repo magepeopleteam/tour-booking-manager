@@ -276,6 +276,9 @@ div.ttbm_list_details {
 	flex: auto;
 	text-align: left;
 	justify-content: space-between;
+	
+}
+#ttbm_related_tour div.ttbm_list_details{
 	padding: 10px;
 }
 

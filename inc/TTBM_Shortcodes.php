@@ -257,7 +257,7 @@
 				return ob_get_clean();
 			}
             public function top_attractions( $attribute ) {
-                $defaults = array('show' => 4, 'column' => 3, 'carousal' => 'no', 'load-more-button' => 'yes' );
+                $defaults = array('show' => 4, 'column' => 3, 'carousel' => 'no', 'load-more-button' => 'yes' );
                 $params = shortcode_atts($defaults, $attribute);
                 $num_of_places = $params['show'];
 
@@ -278,7 +278,7 @@
                 return ob_get_clean();
             }
             public function activity_browse( $attribute ) {
-                $defaults = array( 'show' => 4, 'column' => 3, 'carousal' => 'no', 'load-more-button' => 'yes' );
+                $defaults = array( 'show' => 4, 'column' => 3, 'carousel' => 'no', 'load-more-button' => 'yes' );
                 $params = shortcode_atts($defaults, $attribute);
                 $num_of_ids = $params['show'];
                 $activity_term_ids = TTBM_Function::get_all_activity_ids_from_posts( $num_of_ids );
@@ -298,7 +298,7 @@
             }
 
             public function ttbm_tour_list($attribute) {
-				$defaults = array( 'type' => 'feature', 'column' => 3, 'carousel' => 'yes', 'show' => '' );
+				$defaults = array( 'type' => 'feature', 'column' => 3, 'carousel' => 'no', 'show' => '' );
 				$params = shortcode_atts($defaults, $attribute);
 				ob_start();
 				$tour_id = 164;

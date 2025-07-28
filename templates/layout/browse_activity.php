@@ -9,7 +9,7 @@ $terms_data = TTBM_Function::ttbm_get_term_data('ttbm_tour_activities', $term_id
 $related_tour_count = count( $terms_data );
 $num_of_tour = $params['column'];
 $num_of_display = $params['show'];
-$carousel = $params['carousal'];
+$carousel = $params['carousel'];
 $load_more_button = $params['load-more-button'];
 
 

@@ -832,7 +832,7 @@ div.ttbm_viator_theme .item_icon{
 	flex-direction: column;
 }
 
-.ttbm_activity_item h4 a{
+.placeholder_area .ttbm_activity_item h4 a{
 	font-size: 22px;
 }
 

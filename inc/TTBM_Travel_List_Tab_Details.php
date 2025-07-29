@@ -269,10 +269,33 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
             </div>
         <?php }
 
+        public static function shortcode_display( $type ){ ?>
 
-        public static function ttbm_travel_list_tab_header( $tab_subtitle, $add_new_btn_title, $search_name, $search_id, $place_holder, $add_btn_class_name, $is_btn_link = '', $ttbm_sub_title_class= '' ){ ?>
+            <div class="ttbm_promotional_shortcode">
+                <div class="ttbm_shortcode_box">
+                    <?php if( $type === 'attraction'){?>
+                        <div class="ttbm_shortcode_text">[ttbm-top-attractions show=5 column=4 carousel='yes' load-more-button= 'yes']</div>
+                    <?php }
+                    if( $type === 'location'){?>
+                        <div class="ttbm_shortcode_text">[travel-location-list show=5 column=2]</div>
+                    <?php } else if($type === 'activity'){?>
+                        <div class="ttbm_shortcode_text">[ttbm-activity_browse show=3 column=5 carousel='yes' load-more-button= 'yes']</div>
+                    <?php } else{?>
+                        <div class="ttbm_shortcode_text">[ttbm-texonomy-display type='<?php echo esc_attr( $type );?>' show=3 column=3 carousel='no' load-more-button= 'yes']</div>
+                    <?php }?>
+                    <button class="ttbm_copy_btn"><?php esc_attr_e( 'Copy', 'tour-booking-manager' );?></button>
+                </div>
+            </div>
+        <?php }
+
+        public static function ttbm_travel_list_tab_header( $type, $tab_subtitle, $add_new_btn_title, $search_name, $search_id, $place_holder, $add_btn_class_name, $is_btn_link = '', $ttbm_sub_title_class= '' ){
+            ?>
             <div class="ttbm-tour-list-header">
-                <h1 class="page-title <?php echo esc_attr( $ttbm_sub_title_class );?>"><?php echo esc_attr( $tab_subtitle )?></h1>
+                <div class="ttbm_tab_header_shortcode_title">
+                    <h1 class="page-title <?php echo esc_attr( $ttbm_sub_title_class );?>"><?php echo esc_attr( $tab_subtitle )?></h1>
+                    <?php wp_kses_post( self::shortcode_display($type) ); ?>
+                </div>
+
                 <div class="ttbm_tour_search_add_holder">
 
                     <?php if( $is_btn_link === '' ){?>
@@ -318,7 +341,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                 <div id="ttbm_trvel_lists_places" class="ttbm_trvel_lists_content">
                     <?php do_action( 'ttbm_travel_list_category', $category);?>
 
-                    <?php self::ttbm_travel_list_tab_header( 'Places', 'Add New Places', 'ttbm_tourist_place_Search', 'ttbm_tourist_place_Search', 'Search Tourist Placess',  'ttbm-add-new-taxonomy-btn', '', 'ttbm_places_sub_title_class' );?>
+                    <?php self::ttbm_travel_list_tab_header( 'attraction', 'Places', 'Add New Places', 'ttbm_tourist_place_Search', 'ttbm_tourist_place_Search', 'Search Tourist Placess',  'ttbm-add-new-taxonomy-btn', '', 'ttbm_places_sub_title_class' );?>
 
                     <div class="ttbm_travel_list_places_content" id="ttbm_travel_list_places_content">
                         <div class="ttbm_travel_content_loader"><?php esc_html_e('Loading...','tour-booking-manager'); ?></div>
@@ -331,7 +354,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
 
                 <div id="ttbm_trvel_lists_organiser" class="ttbm_trvel_lists_content">
 
-                    <?php  self::ttbm_travel_list_tab_header( 'Trip Organiser', 'Add New Organiser', 'ttbm_tourist_organiser_Search', 'ttbm_tourist_organiser_Search', 'Search Organiser',  'ttbm-add-new-taxonomy-btn'  );?>
+                    <?php  self::ttbm_travel_list_tab_header( 'organizer','Trip Organiser', 'Add New Organiser', 'ttbm_tourist_organiser_Search', 'ttbm_tourist_organiser_Search', 'Search Organiser',  'ttbm-add-new-taxonomy-btn'  );?>
 
                     <div class="ttbm_travel_list_organiser_content" id="ttbm_travel_list_organiser_content">
                         <div class="ttbm_travel_content_loader"><?php  esc_html_e('Loading...','tour-booking-manager'); ?></div>
@@ -340,7 +363,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                 <div id="ttbm_trvel_lists_location" class="ttbm_trvel_lists_content">
                     <?php do_action( 'ttbm_add_new_location_popup', 'ttbm_tour_location' );?>
 
-                    <?php self::ttbm_travel_list_tab_header( 'Trip Location', 'Add New Locations', 'ttbm_tourist_location_Search', 'ttbm_tourist_location_Search', 'Search Location',  'ttbm-add-new-taxonomy-btn', '','ttbm_location_sub_title_class' );?>
+                    <?php self::ttbm_travel_list_tab_header( 'location' ,'Trip Location', 'Add New Locations', 'ttbm_tourist_location_Search', 'ttbm_tourist_location_Search', 'Search Location',  'ttbm-add-new-taxonomy-btn', '','ttbm_location_sub_title_class' );?>
                     <div class="ttbm_travel_list_location_shows" id="ttbm_travel_list_location_shows">
                         <div class="ttbm_travel_content_loader"><?php  esc_html_e('Loading...','tour-booking-manager'); ?></div>
                     </div>
@@ -353,7 +376,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
 
                 <div id="ttbm_trvel_lists_features" class="ttbm_trvel_lists_content">
 
-                    <?php self::ttbm_travel_list_tab_header( 'Content for Features', 'Add New Feature', 'ttbm_tab_features_Search', 'ttbm_tab_features_Search', 'Search Features',  'ttbm-add-new-taxonomy-btn' );?>
+                    <?php self::ttbm_travel_list_tab_header( 'feature','Content for Features', 'Add New Feature', 'ttbm_tab_features_Search', 'ttbm_tab_features_Search', 'Search Features',  'ttbm-add-new-taxonomy-btn' );?>
 
                     <div class="ttbm_travel_list_feature_content" id="ttbm_travel_list_feature_content">
                         <div class="ttbm_travel_content_loader"><?php  esc_html_e('Loading...','tour-booking-manager'); ?></div>
@@ -362,7 +385,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
 
                 <div id="ttbm_trvel_lists_tour_category" class="ttbm_trvel_lists_content">
 
-                    <?php self::ttbm_travel_list_tab_header( 'Content for Category', 'Add New Category', 'ttbm_tab_category_search', 'ttbm_tab_category_search', 'Search Category',  'ttbm-add-new-taxonomy-btn' );?>
+                    <?php self::ttbm_travel_list_tab_header( 'category','Content for Category', 'Add New Category', 'ttbm_tab_category_search', 'ttbm_tab_category_search', 'Search Category',  'ttbm-add-new-taxonomy-btn' );?>
 
                     <div class="ttbm_travel_list_category_content" id="ttbm_travel_list_category_content">
                         <div class="ttbm_travel_content_loader"><?php  esc_html_e('Loading...','tour-booking-manager'); ?></div>
@@ -371,7 +394,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
 
                 <div id="ttbm_trvel_lists_tag" class="ttbm_trvel_lists_content">
 
-                    <?php self::ttbm_travel_list_tab_header( 'Content for Tag', 'Add New Tag', 'ttbm_tab_tag_Search', 'ttbm_tab_tag_Search', 'Search Tag',  'ttbm-add-new-taxonomy-btn'  );?>
+                    <?php self::ttbm_travel_list_tab_header( 'tag','Content for Tag', 'Add New Tag', 'ttbm_tab_tag_Search', 'ttbm_tab_tag_Search', 'Search Tag',  'ttbm-add-new-taxonomy-btn'  );?>
                     <div class="ttbm_travel_list_tag_content" id="ttbm_travel_list_tag_content">
                         <div class="ttbm_travel_content_loader"><?php  esc_html_e('Loading...','tour-booking-manager'); ?></div>
                     </div>
@@ -379,7 +402,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
 
                 <div id="ttbm_trvel_lists_activities" class="ttbm_trvel_lists_content">
 
-                    <?php self::ttbm_travel_list_tab_header( 'All Activities', 'Add New Activities', 'ttbm_tab_activities_Search', 'ttbm_tab_activities_Search', 'Search Activities',  'ttbm-add-new-taxonomy-btn'  );?>
+                    <?php self::ttbm_travel_list_tab_header( 'activity','All Activities', 'Add New Activities', 'ttbm_tab_activities_Search', 'ttbm_tab_activities_Search', 'Search Activities',  'ttbm-add-new-taxonomy-btn'  );?>
 
                     <div class="ttbm_travel_list_activies_content" id="ttbm_travel_list_activies_content">
                         <div class="ttbm_travel_content_loader"><?php  esc_html_e('Loading...','tour-booking-manager'); ?></div>

@@ -37,7 +37,7 @@ if( $carousel == 'no' ){
 ?>
 <div class='ttbm_style ' id="ttbm_browse_activities">
     <div class="ttbm_container">
-        <div class='ttbm_default_widget'>
+        <div class=''>
 <!--            --><?php //do_action( 'ttbm_section_title', 'ttbm_string_related_tour', esc_html__( 'Activity Browse ', 'tour-booking-manager' ) ); ?>
             <div class="ttbm_carousel_holder">
             <?php

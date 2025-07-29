@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     ?>
     <div class='ttbm_style ' id="ttbm_top_attraction">
         <div class="ttbm_container">
-            <div class='ttbm_default_widget'>
+            <div class=''>
 <!--                --><?php //do_action( 'ttbm_section_title', 'ttbm_string_related_tour', esc_html__( 'Top Attraction ', 'tour-booking-manager' ) ); ?>
                 <div class="ttbm_carousel_holder">
                 <?php

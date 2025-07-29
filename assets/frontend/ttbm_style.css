@@ -802,12 +802,18 @@ div.ttbm_viator_theme .item_icon{
 	display: flex;
 	align-items: center;
 	gap: 15px;
-	padding: 15px 10px;
+	padding:10px;
 	margin-left: 10px;
 	border-radius: 8px;
 	transition: background 0.3s ease;
 }
-
+#ttbm_feature_placeholder_area{
+	justify-content: start;
+	gap:5px;
+}
+#ttbm_feature_placeholder_area .ttbm_term_display_shortcode{
+	margin:0;
+}
 .ttbm_attraction_item:hover {
 	background-color: #f5f5f5;
 }

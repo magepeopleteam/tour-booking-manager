@@ -462,51 +462,10 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                 <div class="ttbm_add_icon_popup ttbm_popup ttbm_style" data-popup="#ttbm_add_icon_popup">
                     <div class="popupMainArea fullWidth">
                         <div class="popupHeader allCenter">
-                            <h2 class="_mR"><?php esc_html_e('Select Icon', 'tour-booking-manager'); ?></h2>
-                            <label class="min_300">
-                                <input type="text" class="formControl ttbm_name_validation" name="ttbm_select_icon_name" placeholder="<?php esc_attr_e('Icon/class name....', 'tour-booking-manager'); ?>"/>
-                            </label>
-                            <span class="fas fa-times popupClose"></span>
+                            <?php TTBM_Select_Icon_image::disaply_icon_header_in_popup(); ?>
                         </div>
                         <div class="popupBody">
-                            <?php
-                            $icons = TTBM_Select_Icon_image::all_icon_array();
-                            if (sizeof($icons) > 0) {
-                                $total_icon = 0;
-                                foreach ($icons as $icon) {
-                                    $total_icon += sizeof($icon['icon']);
-                                }
-                                ?>
-                                <div class="dFlex">
-                                    <ul class="popupIconMenu">
-                                        <li class="active" data-icon-menu="all_item" data-icon-title="all_item">
-                                            <?php esc_html_e('All Icon', 'tour-booking-manager'); ?>&nbsp;(
-                                            <strong><?php echo esc_html($total_icon); ?></strong>
-                                            )
-                                        </li>
-                                        <?php foreach ($icons as $key => $icon) { ?>
-                                            <li data-icon-menu="<?php echo esc_attr($key); ?>">
-                                                <?php echo esc_html($icon['title'] . '&nbsp;(<strong>' . sizeof($icon['icon']) . '</strong>)'); ?>
-                                            </li>
-                                        <?php } ?>
-                                    </ul>
-                                    <div class="popup_all_icon">
-                                        <?php foreach ($icons as $key => $icon) { ?>
-                                            <div class="popupTabItem" data-icon-list="<?php echo esc_attr($key); ?>" data-icon-title="<?php echo esc_attr($icon['title']); ?>">
-                                                <h5 class="textTheme"><?php echo esc_html($icon['title']. '&nbsp;(<strong>' . sizeof($icon['icon']) . '</strong>)'); ?></h5>
-                                                <div class="divider"></div>
-                                                <div class="itemIconArea">
-                                                    <?php foreach ($icon['icon'] as $icon => $item) { ?>
-                                                        <div class="iconItem allCenter" data-icon-class="<?php echo esc_attr($icon); ?>" data-icon-name="<?php echo esc_attr($item); ?>" title="<?php echo esc_attr($item); ?>">
-                                                            <span class="<?php echo esc_attr($icon); ?>"></span>
-                                                        </div>
-                                                    <?php } ?>
-                                                </div>
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                            <?php } ?>
+                            <?php TTBM_Select_Icon_image::disaply_icon_in_popup(); ?>
                         </div>
                     </div>
                 </div>

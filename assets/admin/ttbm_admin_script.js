@@ -20,6 +20,21 @@
             return false;
         }
     });
+
+    $(document).on( 'click' ,'.ttbm_copy_btn', function( e ) {
+        e.preventDefault();
+        var shortcodeText = $(this).siblings('.ttbm_shortcode_text').text();
+        var tempInput = $('<input>');
+        $('body').append(tempInput);
+        tempInput.val(shortcodeText).select();
+        document.execCommand('copy');
+        tempInput.remove();
+        $(this).text('Copied!').delay(1500).queue(function(next){
+            $(this).text('Copy');
+            next();
+        });
+    });
+
 }(jQuery));
 (function ($) {
     "use strict";

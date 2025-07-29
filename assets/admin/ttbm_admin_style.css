@@ -167,3 +167,77 @@ select#mep_ticket_offdays{height:200px !important;}
 .ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
     
 }
+
+
+.ttbm_promotional_shortcode_holder {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	justify-content: space-around;
+	margin: 30px 0;
+}
+.ttbm_shortcode_box {
+	background: #ffffff;
+	border: 1px solid #ddd;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+	border-radius: 8px;
+	padding: 15px 20px;
+	width: 320px;
+	position: relative;
+	transition: box-shadow 0.3s ease;
+}
+.ttbm_shortcode_box:hover {
+	box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+.ttbm_shortcode_text {
+	font-family: monospace;
+	font-size: 14px;
+	color: #333;
+	background: #f8f8f8;
+	padding: 12px;
+	border-radius: 5px;
+	margin-bottom: 10px;
+	word-break: break-word;
+}
+.ttbm_copy_btn {
+	background-color: #0073aa;
+	color: white;
+	border: none;
+	padding: 8px 14px;
+	font-size: 14px;
+	border-radius: 4px;
+	cursor: pointer;
+	float: right;
+	transition: background-color 0.3s ease;
+}
+.ttbm_copy_btn:hover {
+	background-color: #005177;
+}
+.ttbm_shortcode_section {
+	margin: 40px 0;
+	padding: 0 15px;
+}
+.ttbm_shortcode_title {
+	font-size: 24px;
+	font-weight: 600;
+	margin-bottom: 20px;
+	color: #222;
+	text-align: center;
+	position: relative;
+}
+.ttbm_shortcode_title::after {
+	content: "";
+	display: block;
+	width: 60px;
+	height: 3px;
+	background-color: #0073aa;
+	margin: 10px auto 0;
+	border-radius: 2px;
+}
+.ttbm_shortcode_item_title {
+	font-size: 18px;
+	font-weight: 600;
+	margin: 0 0 10px 0;
+	color: #333;
+}
+

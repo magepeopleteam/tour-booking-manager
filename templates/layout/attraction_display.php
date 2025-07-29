@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     $related_tour_count = $places_query->found_posts;
     $num_of_tour = $params['show'];
     $num_of_column = $params['column'];
-    $carousel = $params['carousal'];
+    $carousel = $params['carousel'];
     $load_more_button = $params['load-more-button'];
 
 

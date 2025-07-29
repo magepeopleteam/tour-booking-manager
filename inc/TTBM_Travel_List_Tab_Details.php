@@ -275,8 +275,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                 <div class="ttbm_shortcode_box">
                     <?php if( $type === 'attraction'){?>
                         <div class="ttbm_shortcode_text">[ttbm-top-attractions show=5 column=4 carousel='yes' load-more-button= 'yes']</div>
-                    <?php }
-                    if( $type === 'location'){?>
+                    <?php } else if( $type === 'location'){?>
                         <div class="ttbm_shortcode_text">[travel-location-list show=5 column=2]</div>
                     <?php } else if($type === 'activity'){?>
                         <div class="ttbm_shortcode_text">[ttbm-activity_browse show=3 column=5 carousel='yes' load-more-button= 'yes']</div>
@@ -293,7 +292,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
             <div class="ttbm-tour-list-header">
                 <div class="ttbm_tab_header_shortcode_title">
                     <h1 class="page-title <?php echo esc_attr( $ttbm_sub_title_class );?>"><?php echo esc_attr( $tab_subtitle )?></h1>
-                    <?php wp_kses_post( self::shortcode_display($type) ); ?>
+                    <?php echo self::shortcode_display($type) ; ?>
                 </div>
 
                 <div class="ttbm_tour_search_add_holder">

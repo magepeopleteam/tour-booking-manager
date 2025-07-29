@@ -957,3 +957,8 @@ div.attendee_filter_list h5, #ttbm_booking_attendee_list_result h6
     
 }
 
+.ttbm_tab_header_shortcode_title{
+    display: flex;
+    gap: 10px;
+}
+

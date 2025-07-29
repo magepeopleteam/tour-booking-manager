@@ -37,12 +37,15 @@ if( $carousel == 'no' ){
 <div class='ttbm_style ' id="ttbm_<?php echo esc_attr( $taxonomy_type );?>_shortcode">
     <div class="ttbm_container">
         <div class='ttbm_default_widget'>
-            <?php do_action( 'ttbm_section_title', 'ttbm_string_related_tour', esc_html__( ucfirst( $taxonomy_type ), 'tour-booking-manager' ) ); ?>
-
+<!--            --><?php //do_action( 'ttbm_section_title', 'ttbm_string_related_tour', esc_html__( ucfirst( $taxonomy_type ), 'tour-booking-manager' ) ); ?>
+            <div class="ttbm_carousel_holder">
             <?php
             if ( $carousel == 'yes' && $related_tour_count > $num_of_display ) {
                 include( TTBM_Function::template_path( 'layout/carousel_indicator.php' ) );
             }
+            ?>
+            </div>
+            <?php
             if( $carousel == 'no' ){
             ?>
             <div class="placeholder_area flexWrap" id="ttbm_<?php echo esc_attr( $taxonomy_type )?>_placeholder_area">

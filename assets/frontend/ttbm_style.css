@@ -853,5 +853,11 @@ div.ttbm_viator_theme .item_icon{
 	margin: 10px;
 	border: 1px solid #eae6e6;
 }
+.ttbm_carousel_holder{
+	position: absolute;
+	right: 0;
+	z-index: 99;
+	background-color: bisque;
+}
 
 

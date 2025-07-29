@@ -43,34 +43,34 @@ if (!class_exists('TTBM_Promotional_Deals')) {
                                     <?php /*} */?>
                                 </div>-->
                                 <div class="ttbm_shortcode_section">
-                                    <h2 class="ttbm_shortcode_title">🎯 Promotional Shortcodes</h2>
+                                    <h2 class="ttbm_shortcode_title">🎯 <?php esc_attr_e( 'Promotional Shortcodes', 'tour-booking-manager' );?></h2>
                                     <div class="ttbm_promotional_shortcode_holder">
                                         <div class="ttbm_promotional_shortcode">
-                                            <h3 class="ttbm_shortcode_item_title">🌟 Feature Tours</h3>
+                                            <h3 class="ttbm_shortcode_item_title">🌟 <?php esc_attr_e( 'Feature Tours', 'tour-booking-manager' );?></h3>
                                             <div class="ttbm_shortcode_box">
                                                 <div class="ttbm_shortcode_text">[wptravelly-tour-list type='feature' column=2 show=4 carousel='no']</div>
-                                                <button class="ttbm_copy_btn">Copy</button>
+                                                <button class="ttbm_copy_btn"><?php esc_attr_e( 'Copy', 'tour-booking-manager' );?></button>
                                             </div>
                                         </div>
                                         <div class="ttbm_promotional_shortcode">
-                                            <h3 class="ttbm_shortcode_item_title">🔥 Popular Tours</h3>
+                                            <h3 class="ttbm_shortcode_item_title">🔥 <?php esc_attr_e( 'Popular Tours', 'tour-booking-manager' );?></h3>
                                             <div class="ttbm_shortcode_box">
                                                 <div class="ttbm_shortcode_text">[wptravelly-tour-list type='popular' column=2 show=4 carousel='no']</div>
-                                                <button class="ttbm_copy_btn">Copy</button>
+                                                <button class="ttbm_copy_btn"><?php esc_attr_e( 'Copy', 'tour-booking-manager' );?></button>
                                             </div>
                                         </div>
                                         <div class="ttbm_promotional_shortcode">
-                                            <h3 class="ttbm_shortcode_item_title">📈 Trending Tours</h3>
+                                            <h3 class="ttbm_shortcode_item_title">📈 <?php esc_attr_e( 'Trending Tours', 'tour-booking-manager' );?></h3>
                                             <div class="ttbm_shortcode_box">
                                                 <div class="ttbm_shortcode_text">[wptravelly-tour-list type='trending' column=2 show=4 carousel='no']</div>
-                                                <button class="ttbm_copy_btn">Copy</button>
+                                                <button class="ttbm_copy_btn"><?php esc_attr_e( 'Copy', 'tour-booking-manager' );?></button>
                                             </div>
                                         </div>
                                         <div class="ttbm_promotional_shortcode">
-                                            <h3 class="ttbm_shortcode_item_title">💸 Deal & Discounts</h3>
+                                            <h3 class="ttbm_shortcode_item_title">💸 <?php esc_attr_e( 'Deal & Discounts', 'tour-booking-manager' );?></h3>
                                             <div class="ttbm_shortcode_box">
                                                 <div class="ttbm_shortcode_text">[wptravelly-tour-list type='deal-discount' column=2 show=2 carousel='no']</div>
-                                                <button class="ttbm_copy_btn">Copy</button>
+                                                <button class="ttbm_copy_btn"><?php esc_attr_e( 'Copy', 'tour-booking-manager' );?></button>
                                             </div>
                                         </div>
                                     </div>

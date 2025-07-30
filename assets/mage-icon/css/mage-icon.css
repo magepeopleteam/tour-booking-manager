@@ -277,92 +277,184 @@
   content: "\f000";
 }
 
-.mi-airoplane::before {
+.mi-activity::before {
   content: "\f001";
 }
 
-.mi-bbq::before {
+.mi-airoplane::before {
   content: "\f002";
 }
 
-.mi-beach::before {
+.mi-bbq::before {
   content: "\f003";
 }
 
-.mi-breakfast::before {
+.mi-beach::before {
   content: "\f004";
 }
 
-.mi-bus::before {
+.mi-bed::before {
   content: "\f005";
 }
 
-.mi-child::before {
+.mi-boat::before {
   content: "\f006";
 }
 
-.mi-city::before {
+.mi-breakfast::before {
   content: "\f007";
 }
 
-.mi-clock::before {
+.mi-bus::before {
   content: "\f008";
 }
 
-.mi-currnecy::before {
+.mi-child::before {
   content: "\f009";
 }
 
-.mi-food::before {
+.mi-city::before {
   content: "\f00a";
 }
 
-.mi-guide::before {
+.mi-clock::before {
   content: "\f00b";
 }
 
-.mi-home::before {
+.mi-cloud-network::before {
   content: "\f00c";
 }
 
-.mi-hotel::before {
+.mi-currnecy::before {
   content: "\f00d";
 }
 
-.mi-insurance::before {
+.mi-envelop::before {
   content: "\f00e";
 }
 
-.mi-language::before {
+.mi-food::before {
   content: "\f00f";
 }
 
-.mi-location::before {
+.mi-glob-location::before {
   content: "\f010";
 }
 
-.mi-male::before {
+.mi-guide::before {
   content: "\f011";
 }
 
-.mi-people::before {
+.mi-helecopter::before {
   content: "\f012";
 }
 
-.mi-service-booking::before {
+.mi-hiking::before {
   content: "\f013";
 }
 
-.mi-servicing::before {
+.mi-historical::before {
   content: "\f014";
 }
 
-.mi-sofa::before {
+.mi-home::before {
   content: "\f015";
 }
 
-.mi-ticket::before {
+.mi-hotel::before {
   content: "\f016";
+}
+
+.mi-insurance::before {
+  content: "\f017";
+}
+
+.mi-language::before {
+  content: "\f018";
+}
+
+.mi-location::before {
+  content: "\f019";
+}
+
+.mi-male::before {
+  content: "\f01a";
+}
+
+.mi-musium::before {
+  content: "\f01b";
+}
+
+.mi-paper::before {
+  content: "\f01c";
+}
+
+.mi-people::before {
+  content: "\f01d";
+}
+
+.mi-phone::before {
+  content: "\f01e";
+}
+
+.mi-pool::before {
+  content: "\f01f";
+}
+
+.mi-router::before {
+  content: "\f020";
+}
+
+.mi-server::before {
+  content: "\f021";
+}
+
+.mi-service-booking::before {
+  content: "\f022";
+}
+
+.mi-servicing::before {
+  content: "\f023";
+}
+
+.mi-ship::before {
+  content: "\f024";
+}
+
+.mi-snow::before {
+  content: "\f025";
+}
+
+.mi-sofa::before {
+  content: "\f026";
+}
+
+.mi-sunset::before {
+  content: "\f027";
+}
+
+.mi-swimming::before {
+  content: "\f028";
+}
+
+.mi-ticket::before {
+  content: "\f029";
+}
+
+.mi-time::before {
+  content: "\f02a";
+}
+
+.mi-walking::before {
+  content: "\f02b";
+}
+
+.mi-water::before {
+  content: "\f02c";
+}
+
+.mi-wifi::before {
+  content: "\f02d";
 }
 
 .sr-only {

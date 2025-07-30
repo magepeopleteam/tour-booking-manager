@@ -1312,12 +1312,11 @@
 	}
 	.ttbm_style .circleIcon_xs,
 	.ttbm_style [class*="_circleIcon_xs"] {
-		width: 25px;
-		height: 25px;
-		min-width: 25px;
+		width: 30px;
+		height: 30px;
+		min-width: 30px;
+		font-size: 22px;
 		margin: 0 var(--ttbm_mp_xs) 0 0;
-		border: 1px solid rgba(var(--color_theme_rbg), 0.1);
-		color: var(--color_theme);
 	}
 	/*****Remove icon******/
 	.ttbm_style .ttbm_remove_area {

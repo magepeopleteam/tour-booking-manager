@@ -209,12 +209,12 @@
 			public static function all_icon_array(): array {				
 				return [
 					[
-						'title' => 'Mage icon light',
-						'icon' 	=> self::mi_icon('mil'),
+						'title' => 'Mage icon',
+						'icon' 	=> self::mi_icon('mi'),
 					],
 					[
-						'title' => 'Mage icon thin',
-						'icon' 	=> self::mi_icon('mit'),
+						'title' => 'Mage icon regular',
+						'icon' 	=> self::mi_icon('mir'),
 					],
 					[
 						'title' => 'Accessibility',

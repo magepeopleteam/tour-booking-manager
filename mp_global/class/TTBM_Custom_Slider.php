@@ -95,8 +95,9 @@
 							$count = 1;
 							foreach ( $image_ids as $id ) {
 								$image_url = TTBM_Global_Function::get_image_url( '', $id );
-								$size = getimagesize($image_url);
 								$image_url=$image_url?:TTBM_GLOBAL_PLUGIN_URL . '/assets/images/no_image.png';
+								$size = getimagesize($image_url);
+								
 								$width=0;
 								$height=0;
 								if ($size) {

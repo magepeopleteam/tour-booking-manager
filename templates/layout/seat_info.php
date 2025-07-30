@@ -13,7 +13,7 @@
 		?>
 
 		<div class="item_icon ttbm_available_seat_area" title="<?php esc_html_e( 'Available seat', 'tour-booking-manager' ); ?>">
-			<i class="fas fa-couch"></i>
+			<i class="mi mi-sofa"></i>
 			<span class="ttbm_available_seat"><?php echo esc_html( $available_seat); ?></span>/<?php echo esc_html(  $total_seat ); ?>
 		</div>
 

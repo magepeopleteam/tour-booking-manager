@@ -10,7 +10,7 @@
 		?>
 		
 			<div class="item_icon" title="<?php esc_html_e( 'Age Limit', 'tour-booking-manager' ); ?>">
-				<i class="fas fa-users"></i>
+				<i class="mi mi-people"></i>
 				<?php echo esc_html( $age_range ); ?>
 				<?php echo esc_html( '+' ); ?>
 			</div>

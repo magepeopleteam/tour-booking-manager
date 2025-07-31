@@ -277,188 +277,216 @@
   content: "\f000";
 }
 
-.mi-activity::before {
+.mi-activity-list::before {
   content: "\f001";
 }
 
-.mi-airoplane::before {
+.mi-activity::before {
   content: "\f002";
 }
 
-.mi-bbq::before {
+.mi-airoplane::before {
   content: "\f003";
 }
 
-.mi-beach::before {
+.mi-bbq::before {
   content: "\f004";
 }
 
-.mi-bed::before {
+.mi-beach::before {
   content: "\f005";
 }
 
-.mi-boat::before {
+.mi-bed::before {
   content: "\f006";
 }
 
-.mi-breakfast::before {
+.mi-boat::before {
   content: "\f007";
 }
 
-.mi-bus::before {
+.mi-breakfast::before {
   content: "\f008";
 }
 
-.mi-child::before {
+.mi-bus::before {
   content: "\f009";
 }
 
-.mi-city::before {
+.mi-category::before {
   content: "\f00a";
 }
 
-.mi-clock::before {
+.mi-child::before {
   content: "\f00b";
 }
 
-.mi-cloud-network::before {
+.mi-city::before {
   content: "\f00c";
 }
 
-.mi-currnecy::before {
+.mi-clock::before {
   content: "\f00d";
 }
 
-.mi-drinks::before {
+.mi-cloud-network::before {
   content: "\f00e";
 }
 
-.mi-envelop::before {
+.mi-currnecy::before {
   content: "\f00f";
 }
 
-.mi-food::before {
+.mi-drinks::before {
   content: "\f010";
 }
 
-.mi-glob-location::before {
+.mi-envelop::before {
   content: "\f011";
 }
 
-.mi-guide::before {
+.mi-feature-list::before {
   content: "\f012";
 }
 
-.mi-helecopter::before {
+.mi-food::before {
   content: "\f013";
 }
 
-.mi-hiking::before {
+.mi-glob-location::before {
   content: "\f014";
 }
 
-.mi-historical::before {
+.mi-guide::before {
   content: "\f015";
 }
 
-.mi-home::before {
+.mi-helecopter::before {
   content: "\f016";
 }
 
-.mi-hotel::before {
+.mi-hiking::before {
   content: "\f017";
 }
 
-.mi-insurance::before {
+.mi-historical::before {
   content: "\f018";
 }
 
-.mi-language::before {
+.mi-home::before {
   content: "\f019";
 }
 
-.mi-location::before {
+.mi-hotel::before {
   content: "\f01a";
 }
 
-.mi-male::before {
+.mi-insurance::before {
   content: "\f01b";
 }
 
-.mi-musium::before {
+.mi-language::before {
   content: "\f01c";
 }
 
-.mi-paper::before {
+.mi-location::before {
   content: "\f01d";
 }
 
-.mi-people::before {
+.mi-magnet::before {
   content: "\f01e";
 }
 
-.mi-phone::before {
+.mi-male::before {
   content: "\f01f";
 }
 
-.mi-pool::before {
+.mi-musium::before {
   content: "\f020";
 }
 
-.mi-router::before {
+.mi-organizer::before {
   content: "\f021";
 }
 
-.mi-server::before {
+.mi-package::before {
   content: "\f022";
 }
 
-.mi-service-booking::before {
+.mi-paper::before {
   content: "\f023";
 }
 
-.mi-servicing::before {
+.mi-people::before {
   content: "\f024";
 }
 
-.mi-ship::before {
+.mi-phone::before {
   content: "\f025";
 }
 
-.mi-snow::before {
+.mi-pool::before {
   content: "\f026";
 }
 
-.mi-sofa::before {
+.mi-router::before {
   content: "\f027";
 }
 
-.mi-sunset::before {
+.mi-server::before {
   content: "\f028";
 }
 
-.mi-swimming::before {
+.mi-service-booking::before {
   content: "\f029";
 }
 
-.mi-ticket::before {
+.mi-servicing::before {
   content: "\f02a";
 }
 
-.mi-time::before {
+.mi-ship::before {
   content: "\f02b";
 }
 
-.mi-walking::before {
+.mi-snow::before {
   content: "\f02c";
 }
 
-.mi-water::before {
+.mi-sofa::before {
   content: "\f02d";
 }
 
-.mi-wifi::before {
+.mi-sunset::before {
   content: "\f02e";
+}
+
+.mi-swimming::before {
+  content: "\f02f";
+}
+
+.mi-tags::before {
+  content: "\f030";
+}
+
+.mi-ticket::before {
+  content: "\f031";
+}
+
+.mi-time::before {
+  content: "\f032";
+}
+
+.mi-walking::before {
+  content: "\f033";
+}
+
+.mi-water::before {
+  content: "\f034";
+}
+
+.mi-wifi::before {
+  content: "\f035";
 }
 
 .sr-only {

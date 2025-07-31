@@ -209,6 +209,9 @@ div .item_icon {
   	text-align: center;
 	position: relative;
 	white-space: nowrap;
+	display: flex;
+  	align-content: center;
+	line-height: 1.5;
 }
 div .item_icon::after{
 	content: '';
@@ -226,7 +229,7 @@ div .item_icon:last-child:after{
 	height: 0;
 }
 
-div .item_icon i {color: var(--color_theme);}
+div .item_icon i {color: var(--color_theme);font-size: 28px;margin-right:6px;}
 
 div.ttbm_style [data-bg-image]{
 	transform: scale(1);

@@ -146,6 +146,31 @@ To Show the Expire Tour list only, we  use the shortcode below. example 👉 [Ex
 [travel-list style='list' status='expired']
 `
 
+### Display featured Tour list 
+To Show the featured Tour list only, we  use the shortcode below. example 👉 [featured Tour list Only Demo ](https://wptravelly.com/) 👈:
+`
+[wptravelly-tour-list type='feature' column=2 show=4 carousel='no']
+`
+
+### Display popular Tour list 
+To Show the popular Tour list only, we  use the shortcode below. example 👉 [popular Tour list Only Demo ](https://wptravelly.com/) 👈:
+`
+[wptravelly-tour-list type='popular' column=2 show=4 carousel='no']
+`
+### Display trending Tour list Only
+To Show the trending Tour list only, we  use the shortcode below. example 👉 [Display trending Tour list Only Demo ](https://wptravelly.com/) 👈:
+`
+[wptravelly-tour-list type='trending' column=2 show=4 carousel='no']
+`
+### Display deal-discount Tour list Only
+To Show the deal-discount Tour list only, we  use the shortcode below. example 👉 [deal-discount Tour list Only Demo ](https://wptravelly.com/expire-tour-list/) 👈:
+`
+[wptravelly-tour-list type='deal-discount' column=2 show=2 carousel='no']
+`
+
+
+
+
 == Tour Page Templates ==
 
 Preview different Tour Details page styles:

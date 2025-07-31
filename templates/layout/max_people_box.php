@@ -10,7 +10,7 @@
 		?>
 
 			<div class="item_icon" title="<?php esc_html_e( 'Max People', 'tour-booking-manager' ); ?>">
-				<i class="fas fa-users"></i>
+				<i class="mi mi-people"></i>
 				<?php echo esc_html( $max_people ); ?>
 			</div>
 

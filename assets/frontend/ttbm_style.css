@@ -343,8 +343,8 @@ div.include_service ul li, .ttbm_widget_content .ttbm_list_details .include_serv
 	transition: all 0.3s ease-in-out;
 	color: var(--color_theme) !important;
 	font-size: var(--fs);
-	height: 40px;
-	width: 40px !important;
+	height: 30px;
+	width: 30px !important;
 	padding: 0 !important;
 	line-height: 35px;
 	text-align: center;

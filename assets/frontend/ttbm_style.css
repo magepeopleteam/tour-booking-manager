@@ -334,7 +334,8 @@ div.include_service ul li[title]:hover::after {
 }
 div.include_service ul {display: -webkit-flex;display: flex;}
 div.include_service ul li, .ttbm_widget_content .ttbm_list_details .include_service ul li {
-	display: inline-block !important;
+	display: flex;
+	align-items: center;
 	position: relative;
 	margin: 0 7px 0 0 !important;
 	border: 1px solid var(--color_border);
@@ -342,14 +343,18 @@ div.include_service ul li, .ttbm_widget_content .ttbm_list_details .include_serv
 	transition: all 0.3s ease-in-out;
 	color: var(--color_theme) !important;
 	font-size: var(--fs);
-	height: 35px;
-	width: 35px !important;
+	height: 40px;
+	width: 40px !important;
 	padding: 0 !important;
 	line-height: 35px;
 	text-align: center;
+	padding-top: 10px;
 	/*margin: 0 var(--ttbm_mp_xs) 0 0;*/
 }
-
+div.include_service ul li .circleIcon_xs{
+	height:auto;
+	width:100%;
+}
 div.include_service ul li span, .ttbm_widget_content div.ttbm_list_details .include_service ul li span {
 	display: inline-block !important;
 	margin: 0 !important;
@@ -897,5 +902,3 @@ div.ttbm_viator_theme .item_icon{
 	z-index: 99;
 	background-color: bisque;
 }
-
-

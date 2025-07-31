@@ -36,11 +36,9 @@
 									foreach ($dummy_taxonomy as $taxonomy_data) {
 										unset($term);
 										$term = wp_insert_term($taxonomy_data['name'], $taxonomy);
-										if (array_key_exists('term_id', $taxonomy_data)) {
-											add_term_meta($taxonomy_data['term_id'], 'ttbm_feature_icon', 'raselsa', false);
-										}
-										if (array_key_exists('tax_data', $taxonomy_data)) {
-											foreach ($taxonomy_data['tax_data'] as $meta_key => $data) {
+						
+										if (array_key_exists('meta_data', $taxonomy_data)) {
+											foreach ($taxonomy_data['meta_data'] as $meta_key => $data) {
 												update_term_meta($term['term_id'], $meta_key, $data);
 											}
 										}
@@ -161,97 +159,97 @@
 						'ttbm_tour_features_list' => [
 							0 => [
 								'name' => 'Accommodation',
-								'tax_data' => array(
+								'meta_data' => array(
 									'ttbm_feature_icon' => 'mi mi-hotel'
 								),
 							],
 							1 => [
 								'name' => 'Additional Services',
-								'tax_data' => array(
+								'meta_data' => array(
 									'ttbm_feature_icon' => 'mi mi-feature-list'
 								),
 							],
 							2 => [
 								'name' => 'Airport Transfer',
-								'tax_data' => array(
+								'meta_data' => array(
 									'ttbm_feature_icon' => 'mi mi-bus'
 								),
 							],
 							3 => [
 								'name' => 'BBQ Night',
-								'tax_data' => array(
+								'meta_data' => array(
 									'ttbm_feature_icon' => 'mi mi-bbq'
 								),
 							],
 							4 => [
 								'name' => 'Breakfast',
-								'tax_data' => array(
+								'meta_data' => array(
 									'ttbm_feature_icon' => 'mi mi-breakfast'
 								),
 							],
 							5 => [
 								'name' => 'Concert Ticket',
-								'tax_data' => array(
+								'meta_data' => array(
 									'ttbm_feature_icon' => 'mi mi-ticket'
 								),
 							],
 							6 => [
 								'name' => 'Flights',
-								'tax_data' => array(
+								'meta_data' => array(
 									'ttbm_feature_icon' => 'mi mi-airoplane'
 								),
 							],
 							7 => [
 								'name' => 'Guide',
-								'tax_data' => array(
+								'meta_data' => array(
 									'ttbm_feature_icon' => 'mi mi-guide'
 								),
 							],
 							8 => [
 								'name' => 'Hotel Rent',
-								'tax_data' => array(
+								'meta_data' => array(
 									'ttbm_feature_icon' => 'mi mi-bed'
 								),
 							],
 							9 => [
 								'name' => 'Insurance',
-								'tax_data' => array(
+								'meta_data' => array(
 									'ttbm_feature_icon' => 'mi mi-insurance'
 								),
 							],
 							10 => [
 								'name' => 'Lunch',
-								'tax_data' => array(
+								'meta_data' => array(
 									'ttbm_feature_icon' => 'mi mi-food'
 								),
 							],
 							11 => [
 								'name' => 'Meals',
-								'tax_data' => array(
+								'meta_data' => array(
 									'ttbm_feature_icon' => 'mi mi-breakfast'
 								),
 							],
 							12 => [
 								'name' => 'Newspaper',
-								'tax_data' => array(
+								'meta_data' => array(
 									'ttbm_feature_icon' => 'mi mi-paper'
 								),
 							],
 							13 => [
 								'name' => 'Outing Ticket',
-								'tax_data' => array(
+								'meta_data' => array(
 									'ttbm_feature_icon' => 'mi mi-ticket'
 								),
 							],
 							14 => [
 								'name' => 'Transport',
-								'tax_data' => array(
+								'meta_data' => array(
 									'ttbm_feature_icon' => 'mi mi-bus'
 								),
 							],
 							15 => [
 								'name' => 'Welcome Drinks',
-								'tax_data' => array(
+								'meta_data' => array(
 									'ttbm_feature_icon' => 'mi mi-drinks'
 								),
 							],
@@ -261,11 +259,32 @@
 							1 => ['name' => 'Relax']
 						],
 						'ttbm_tour_activities' => [
-							0 => ['name' => 'Beach'],
-							1 => ['name' => 'City Tours'],
-							2 => ['name' => 'Hiking'],
-							3 => ['name' => 'Rural'],
-							4 => ['name' => 'Snow & Ice']
+							0 => [
+								'name' => 'Beach',
+								'meta_data' => array(
+									'ttbm_activities_icon' => 'mi mi-beach'
+								)
+							],
+							1 => ['name' => 'City Tours',
+								'meta_data' => array(
+									'ttbm_activities_icon' => 'mi mi-city'
+								)
+							],
+							2 => ['name' => 'Hiking',
+								'meta_data' => array(
+									'ttbm_activities_icon' => 'mi mi-hiking'
+								)
+							],
+							3 => ['name' => 'Rural',
+								'meta_data' => array(
+									'ttbm_activities_icon' => 'mi mi-water'
+								)
+							],
+							4 => ['name' => 'Snow & Ice',
+								'meta_data' => array(
+									'ttbm_activities_icon' => 'mi mi-snow'
+								)
+							]
 						],
 					],
 				];

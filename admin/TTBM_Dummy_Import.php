@@ -162,97 +162,97 @@
 							0 => [
 								'name' => 'Accommodation',
 								'tax_data' => array(
-									'ttbm_feature_icon' => 'fas fa-hotel'
+									'ttbm_feature_icon' => 'mi mi-hotel'
 								),
 							],
 							1 => [
 								'name' => 'Additional Services',
 								'tax_data' => array(
-									'ttbm_feature_icon' => 'fas fa-spa'
+									'ttbm_feature_icon' => 'mi mi-feature-list'
 								),
 							],
 							2 => [
 								'name' => 'Airport Transfer',
 								'tax_data' => array(
-									'ttbm_feature_icon' => 'fas fa-car'
+									'ttbm_feature_icon' => 'mi mi-bus'
 								),
 							],
 							3 => [
 								'name' => 'BBQ Night',
 								'tax_data' => array(
-									'ttbm_feature_icon' => 'fas fa-drumstick-bite'
+									'ttbm_feature_icon' => 'mi mi-bbq'
 								),
 							],
 							4 => [
 								'name' => 'Breakfast',
 								'tax_data' => array(
-									'ttbm_feature_icon' => 'fas fa-utensils'
+									'ttbm_feature_icon' => 'mi mi-breakfast'
 								),
 							],
 							5 => [
 								'name' => 'Concert Ticket',
 								'tax_data' => array(
-									'ttbm_feature_icon' => 'fas  fa-ticket-alt'
+									'ttbm_feature_icon' => 'mi mi-ticket'
 								),
 							],
 							6 => [
 								'name' => 'Flights',
 								'tax_data' => array(
-									'ttbm_feature_icon' => 'fas fa-fighter-jet'
+									'ttbm_feature_icon' => 'mi mi-airoplane'
 								),
 							],
 							7 => [
 								'name' => 'Guide',
 								'tax_data' => array(
-									'ttbm_feature_icon' => 'fas fa-book-open'
+									'ttbm_feature_icon' => 'mi mi-guide'
 								),
 							],
 							8 => [
 								'name' => 'Hotel Rent',
 								'tax_data' => array(
-									'ttbm_feature_icon' => 'fas fa-bed'
+									'ttbm_feature_icon' => 'mi mi-bed'
 								),
 							],
 							9 => [
 								'name' => 'Insurance',
 								'tax_data' => array(
-									'ttbm_feature_icon' => 'fas fa-user-shield'
+									'ttbm_feature_icon' => 'mi mi-insurance'
 								),
 							],
 							10 => [
 								'name' => 'Lunch',
 								'tax_data' => array(
-									'ttbm_feature_icon' => 'fas fa-hamburger'
+									'ttbm_feature_icon' => 'mi mi-food'
 								),
 							],
 							11 => [
 								'name' => 'Meals',
 								'tax_data' => array(
-									'ttbm_feature_icon' => 'fas fa-cheese'
+									'ttbm_feature_icon' => 'mi mi-breakfast'
 								),
 							],
 							12 => [
 								'name' => 'Newspaper',
 								'tax_data' => array(
-									'ttbm_feature_icon' => 'fas fa-newspaper'
+									'ttbm_feature_icon' => 'mi mi-paper'
 								),
 							],
 							13 => [
 								'name' => 'Outing Ticket',
 								'tax_data' => array(
-									'ttbm_feature_icon' => 'fas fa-clipboard-check'
+									'ttbm_feature_icon' => 'mi mi-ticket'
 								),
 							],
 							14 => [
 								'name' => 'Transport',
 								'tax_data' => array(
-									'ttbm_feature_icon' => 'fas fa-taxi'
+									'ttbm_feature_icon' => 'mi mi-bus'
 								),
 							],
 							15 => [
 								'name' => 'Welcome Drinks',
 								'tax_data' => array(
-									'ttbm_feature_icon' => 'fas fa-wine-glass-alt'
+									'ttbm_feature_icon' => 'mi mi-drinks'
 								),
 							],
 						],

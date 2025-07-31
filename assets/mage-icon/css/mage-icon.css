@@ -329,132 +329,136 @@
   content: "\f00d";
 }
 
-.mi-envelop::before {
+.mi-drinks::before {
   content: "\f00e";
 }
 
-.mi-food::before {
+.mi-envelop::before {
   content: "\f00f";
 }
 
-.mi-glob-location::before {
+.mi-food::before {
   content: "\f010";
 }
 
-.mi-guide::before {
+.mi-glob-location::before {
   content: "\f011";
 }
 
-.mi-helecopter::before {
+.mi-guide::before {
   content: "\f012";
 }
 
-.mi-hiking::before {
+.mi-helecopter::before {
   content: "\f013";
 }
 
-.mi-historical::before {
+.mi-hiking::before {
   content: "\f014";
 }
 
-.mi-home::before {
+.mi-historical::before {
   content: "\f015";
 }
 
-.mi-hotel::before {
+.mi-home::before {
   content: "\f016";
 }
 
-.mi-insurance::before {
+.mi-hotel::before {
   content: "\f017";
 }
 
-.mi-language::before {
+.mi-insurance::before {
   content: "\f018";
 }
 
-.mi-location::before {
+.mi-language::before {
   content: "\f019";
 }
 
-.mi-male::before {
+.mi-location::before {
   content: "\f01a";
 }
 
-.mi-musium::before {
+.mi-male::before {
   content: "\f01b";
 }
 
-.mi-paper::before {
+.mi-musium::before {
   content: "\f01c";
 }
 
-.mi-people::before {
+.mi-paper::before {
   content: "\f01d";
 }
 
-.mi-phone::before {
+.mi-people::before {
   content: "\f01e";
 }
 
-.mi-pool::before {
+.mi-phone::before {
   content: "\f01f";
 }
 
-.mi-router::before {
+.mi-pool::before {
   content: "\f020";
 }
 
-.mi-server::before {
+.mi-router::before {
   content: "\f021";
 }
 
-.mi-service-booking::before {
+.mi-server::before {
   content: "\f022";
 }
 
-.mi-servicing::before {
+.mi-service-booking::before {
   content: "\f023";
 }
 
-.mi-ship::before {
+.mi-servicing::before {
   content: "\f024";
 }
 
-.mi-snow::before {
+.mi-ship::before {
   content: "\f025";
 }
 
-.mi-sofa::before {
+.mi-snow::before {
   content: "\f026";
 }
 
-.mi-sunset::before {
+.mi-sofa::before {
   content: "\f027";
 }
 
-.mi-swimming::before {
+.mi-sunset::before {
   content: "\f028";
 }
 
-.mi-ticket::before {
+.mi-swimming::before {
   content: "\f029";
 }
 
-.mi-time::before {
+.mi-ticket::before {
   content: "\f02a";
 }
 
-.mi-walking::before {
+.mi-time::before {
   content: "\f02b";
 }
 
-.mi-water::before {
+.mi-walking::before {
   content: "\f02c";
 }
 
-.mi-wifi::before {
+.mi-water::before {
   content: "\f02d";
+}
+
+.mi-wifi::before {
+  content: "\f02e";
 }
 
 .sr-only {

@@ -237,6 +237,7 @@
 .ttbm-title i{
     margin-right: 10px;
     font-size: 25px;
+    color: var(--mpl-primary);
 }
 .ttbm-description {
     font-size: 13px;
@@ -350,6 +351,12 @@
 .ttbm-taxonomy-card:hover {
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
+
+.ttbm-taxonomy-card .ttbm-title{
+    display: flex;
+    align-items: center;
+}
+
 .ttbm-card-actions {
     display: flex;
     justify-content: space-between;

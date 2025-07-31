@@ -1,4 +1,4 @@
-#{$main-selector} {
+
 .ttbm-modal-container{
     position: fixed;
     right: -100%; /* Initially hidden off-screen */
@@ -11,7 +11,8 @@
     &.open {
         right: 0; /* Slide in */
     }
-    .ttbm-modal-content{
+}
+.ttbm-modal-content{
         background-color: #fff;
         width: 800px;
         height: 100%;
@@ -67,21 +68,18 @@
             position: relative;
             max-width: 202px;
             margin: 10px 0;
-            .ttbm_add_icon_image_button_area{
-                display: flex;
-                flex-direction: row;
-                justify-content: start;
-                border: 1px solid #8c8f94;
-                width: 100%;
-                border-radius: 3px;
-                .ttbm_image_add,.ttbm_icon_add{
-                    padding:10px 26px;
-                    border-radius: 0;
-                    margin: 1px;
-                }
+        }
+        .ttbm_add_icon_image_button_area{
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            border: 1px solid #8c8f94;
+            width: 100%;
+            border-radius: 3px;
+            .ttbm_image_add,.ttbm_icon_add{
+                padding:10px 26px;
+                border-radius: 0;
+                margin: 1px;
             }
         }
-    }
-    
-}
 }

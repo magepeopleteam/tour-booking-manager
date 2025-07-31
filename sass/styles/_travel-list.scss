@@ -74,7 +74,9 @@
                 display: block;
                 }
         
-                .ttbm-tour-icon {
+                
+            }
+            .ttbm-tour-icon {
                 position: absolute;
                 bottom: 10px;
                 left: 10px;
@@ -85,7 +87,6 @@
                 font-size: 14px;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
                 }
-            }
             .ttbm-tour-card-content{   
                  width: 100%;
                  @media (min-width: 1024px) {

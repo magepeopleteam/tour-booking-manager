@@ -99,6 +99,16 @@
 											if ($meta_key == 'ttbm_organizer') {
 												wp_set_object_terms($post_id, $data, 'ttbm_tour_org');
 											}
+											if ($meta_key == 'ttbm_tour_activities') {
+												$term_ids = [];
+												foreach ((array) $data as $item) {
+													$term = get_term_by('name', $item, 'ttbm_tour_activities');
+													if ($term && !is_wp_error($term)) {
+														$term_ids[] = (int) $term->term_id;
+													}
+												}
+												update_post_meta($post_id, $meta_key, $term_ids);
+											}
 										}
 									}									
 								}

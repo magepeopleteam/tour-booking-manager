@@ -40,7 +40,6 @@
 			public function activities($tour_id) {
 				$activities = TTBM_Global_Function::get_taxonomy('ttbm_tour_activities');
 				$tour_activities = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_tour_activities', []);
-				$tour_activities = $this->terms_name_to_id($tour_activities);
 				?>
                 <div class="ttbm_activities_table">
                     <div class="includedd-features-section">
@@ -63,20 +62,6 @@
 				<?php
 			}
 
-			public function terms_name_to_id($tour_activities){
-				$term_ids = [];
-				foreach ((array) $tour_activities as $item) {
-					if (is_numeric($item)) {
-						$term_ids[] = (int) $item;
-						continue;
-					}
-					$term = get_term_by('name', $item, 'ttbm_tour_activities');
-					if ($term && !is_wp_error($term)) {
-						$term_ids[] = (int) $term->term_id;
-					}
-				}
-				return $term_ids;
-			}
 
 			public function add_new_activity_popup() {
 				?>

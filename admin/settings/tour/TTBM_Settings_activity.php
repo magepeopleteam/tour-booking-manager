@@ -46,9 +46,13 @@
                     <div class="includedd-features-section">
                         <div class="groupCheckBox">
 							<?php foreach ($activities as $activity) { ?>
+								<?php 
+									$icon = get_term_meta($activity->term_id, 'ttbm_activities_icon', true); 
+									$icon = $icon ? $icon : 'fas fa-forward';
+								?>
                                 <label class="customCheckboxLabel">
                                     <input type="checkbox" name="ttbm_tour_activities[]" value="<?php echo esc_attr($activity->term_id); ?>" <?php echo in_array($activity->term_id, $tour_activities) ? 'checked' : ''; ?> />
-                                    <span class="customCheckbox"><?php echo esc_html($activity->name); ?></span>
+									<span class="customCheckbox"><i class="<?php echo esc_attr($icon); ?>"></i> <?php echo esc_html($activity->name); ?></span>
                                 </label>
 							<?php } ?>
                         </div>

@@ -46,7 +46,7 @@
                     <div class="includedd-features-section">
                         <div class="groupCheckBox">
 							<?php foreach ($activities as $activity) { ?>
-								<?php 
+								<?php
 									$icon = get_term_meta($activity->term_id, 'ttbm_activities_icon', true); 
 									$icon = $icon ? $icon : 'fas fa-forward';
 								?>

@@ -8,7 +8,7 @@
 	if ( $start_price && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) != 'off' ) {
 		?>
 			<div class="item_icon" title="<?php esc_html_e( 'Price', 'tour-booking-manager' ); ?>">
-				<i class="mi mi-currnecy"></i>
+				<i class="mi mi-coins"></i>
 				<?php
 				if ( $start_price && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) != 'off' ) {
 					?> 

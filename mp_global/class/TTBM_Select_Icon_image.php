@@ -196,12 +196,12 @@
 				add_action('admin_footer', array($this, 'icon_popup'));
 			}
 			//========Mage Icon library get Icon names======//
-			public static function mi_icon($icon_type="mi") {
+			public static function mi_icon($icon_type="fi") {
 				$mi_icon_json = file_get_contents(TTBM_PLUGIN_URL . '/assets/mage-icon/data.json');
 				$mi_icons = json_decode($mi_icon_json, true);
 				$all_icon = [];
 				foreach($mi_icons as $mi_icon){
-					$all_icon["{$icon_type} mi-{$mi_icon}"] = $mi_icon;
+					$all_icon["{$icon_type} fi-rr-{$mi_icon}"] = $mi_icon;
 				}
 				return $all_icon;
 			}
@@ -210,11 +210,7 @@
 				return [
 					[
 						'title' => 'Mage icon',
-						'icon' 	=> self::mi_icon('mi'),
-					],
-					[
-						'title' => 'Mage icon regular',
-						'icon' 	=> self::mi_icon('mir'),
+						'icon' 	=> self::mi_icon('fi'),
 					],
 					[
 						'title' => 'Accessibility',

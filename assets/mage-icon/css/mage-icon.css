@@ -273,220 +273,14152 @@
   color: #fff;
 }
 
-.mi-accommodation::before {
+.mi-0::before {
   content: "\f000";
 }
 
-.mi-activity-list::before {
+.mi-1::before {
   content: "\f001";
 }
 
-.mi-activity::before {
+.mi-2::before {
   content: "\f002";
 }
 
-.mi-airoplane::before {
+.mi-3::before {
   content: "\f003";
 }
 
-.mi-bbq::before {
+.mi-4::before {
   content: "\f004";
 }
 
-.mi-beach::before {
+.mi-404::before {
   content: "\f005";
 }
 
-.mi-bed::before {
+.mi-5::before {
   content: "\f006";
 }
 
-.mi-boat::before {
+.mi-6::before {
   content: "\f007";
 }
 
-.mi-breakfast::before {
+.mi-7::before {
   content: "\f008";
 }
 
-.mi-bus::before {
+.mi-8::before {
   content: "\f009";
 }
 
-.mi-category::before {
+.mi-9::before {
   content: "\f00a";
 }
 
-.mi-child::before {
+.mi-a::before {
   content: "\f00b";
 }
 
-.mi-city::before {
+.mi-accident::before {
   content: "\f00c";
 }
 
-.mi-clock::before {
+.mi-acorn::before {
   content: "\f00d";
 }
 
-.mi-cloud-network::before {
+.mi-ad-paid::before {
   content: "\f00e";
 }
 
-.mi-currnecy::before {
+.mi-ad::before {
   content: "\f00f";
 }
 
-.mi-drinks::before {
+.mi-add-document::before {
   content: "\f010";
 }
 
-.mi-envelop::before {
+.mi-add-folder::before {
   content: "\f011";
 }
 
-.mi-feature-list::before {
+.mi-add-image::before {
   content: "\f012";
 }
 
-.mi-food::before {
+.mi-add::before {
   content: "\f013";
 }
 
-.mi-glob-location::before {
+.mi-address-book::before {
   content: "\f014";
 }
 
-.mi-guide::before {
+.mi-address-card::before {
   content: "\f015";
 }
 
-.mi-helecopter::before {
+.mi-admin-alt::before {
   content: "\f016";
 }
 
-.mi-hiking::before {
+.mi-admin::before {
   content: "\f017";
 }
 
-.mi-historical::before {
+.mi-age-alt::before {
   content: "\f018";
 }
 
-.mi-home::before {
+.mi-age-restriction-eighteen::before {
   content: "\f019";
 }
 
-.mi-hotel::before {
+.mi-age-restriction-seven::before {
   content: "\f01a";
 }
 
-.mi-insurance::before {
+.mi-age-restriction-six::before {
   content: "\f01b";
 }
 
-.mi-language::before {
+.mi-age-restriction-sixteen::before {
   content: "\f01c";
 }
 
-.mi-location::before {
+.mi-age-restriction-thirteen::before {
   content: "\f01d";
 }
 
-.mi-magnet::before {
+.mi-age-restriction-three::before {
   content: "\f01e";
 }
 
-.mi-male::before {
+.mi-age-restriction-twelve::before {
   content: "\f01f";
 }
 
-.mi-musium::before {
+.mi-age-restriction-twenty-one::before {
   content: "\f020";
 }
 
-.mi-organizer::before {
+.mi-age-restriction-zero::before {
   content: "\f021";
 }
 
-.mi-package::before {
+.mi-age::before {
   content: "\f022";
 }
 
-.mi-paper::before {
+.mi-air-conditioner::before {
   content: "\f023";
 }
 
-.mi-people::before {
+.mi-air-freshener::before {
   content: "\f024";
 }
 
-.mi-phone::before {
+.mi-air-pollution::before {
   content: "\f025";
 }
 
-.mi-pool::before {
+.mi-airplane-journey::before {
   content: "\f026";
 }
 
-.mi-router::before {
+.mi-airplane-window-open::before {
   content: "\f027";
 }
 
-.mi-server::before {
+.mi-airplay::before {
   content: "\f028";
 }
 
-.mi-service-booking::before {
+.mi-alarm-clock::before {
   content: "\f029";
 }
 
-.mi-servicing::before {
+.mi-album-circle-plus::before {
   content: "\f02a";
 }
 
-.mi-ship::before {
+.mi-album-circle-user::before {
   content: "\f02b";
 }
 
-.mi-snow::before {
+.mi-album-collection::before {
   content: "\f02c";
 }
 
-.mi-sofa::before {
+.mi-album::before {
   content: "\f02d";
 }
 
-.mi-sunset::before {
+.mi-alicorn::before {
   content: "\f02e";
 }
 
-.mi-swimming::before {
+.mi-alien::before {
   content: "\f02f";
 }
 
-.mi-tags::before {
+.mi-ambulance::before {
   content: "\f030";
 }
 
-.mi-ticket::before {
+.mi-analyse-alt::before {
   content: "\f031";
 }
 
-.mi-time::before {
+.mi-analyse::before {
   content: "\f032";
 }
 
-.mi-walking::before {
+.mi-anatomical-heart::before {
   content: "\f033";
 }
 
-.mi-water::before {
+.mi-anchor::before {
   content: "\f034";
 }
 
-.mi-wifi::before {
+.mi-angel::before {
   content: "\f035";
+}
+
+.mi-angle-circle-down::before {
+  content: "\f036";
+}
+
+.mi-angle-circle-left::before {
+  content: "\f037";
+}
+
+.mi-angle-circle-right::before {
+  content: "\f038";
+}
+
+.mi-angle-circle-up::before {
+  content: "\f039";
+}
+
+.mi-angle-double-left::before {
+  content: "\f03a";
+}
+
+.mi-angle-double-right::before {
+  content: "\f03b";
+}
+
+.mi-angle-double-small-down::before {
+  content: "\f03c";
+}
+
+.mi-angle-double-small-left::before {
+  content: "\f03d";
+}
+
+.mi-angle-double-small-right::before {
+  content: "\f03e";
+}
+
+.mi-angle-double-small-up::before {
+  content: "\f03f";
+}
+
+.mi-angle-down::before {
+  content: "\f040";
+}
+
+.mi-angle-left::before {
+  content: "\f041";
+}
+
+.mi-angle-right::before {
+  content: "\f042";
+}
+
+.mi-angle-small-down::before {
+  content: "\f043";
+}
+
+.mi-angle-small-left::before {
+  content: "\f044";
+}
+
+.mi-angle-small-right::before {
+  content: "\f045";
+}
+
+.mi-angle-small-up::before {
+  content: "\f046";
+}
+
+.mi-angle-square-down::before {
+  content: "\f047";
+}
+
+.mi-angle-square-left::before {
+  content: "\f048";
+}
+
+.mi-angle-square-right::before {
+  content: "\f049";
+}
+
+.mi-angle-square-up::before {
+  content: "\f04a";
+}
+
+.mi-angle-up::before {
+  content: "\f04b";
+}
+
+.mi-angles-up-down::before {
+  content: "\f04c";
+}
+
+.mi-angry::before {
+  content: "\f04d";
+}
+
+.mi-answer-alt::before {
+  content: "\f04e";
+}
+
+.mi-answer::before {
+  content: "\f04f";
+}
+
+.mi-apartment::before {
+  content: "\f050";
+}
+
+.mi-aperture::before {
+  content: "\f051";
+}
+
+.mi-api::before {
+  content: "\f052";
+}
+
+.mi-apple-core::before {
+  content: "\f053";
+}
+
+.mi-apple-crate::before {
+  content: "\f054";
+}
+
+.mi-apple-whole::before {
+  content: "\f055";
+}
+
+.mi-apps-add::before {
+  content: "\f056";
+}
+
+.mi-apps-delete::before {
+  content: "\f057";
+}
+
+.mi-apps-sort::before {
+  content: "\f058";
+}
+
+.mi-apps::before {
+  content: "\f059";
+}
+
+.mi-archive::before {
+  content: "\f05a";
+}
+
+.mi-archway::before {
+  content: "\f05b";
+}
+
+.mi-arrow-alt-circle-down::before {
+  content: "\f05c";
+}
+
+.mi-arrow-alt-circle-left::before {
+  content: "\f05d";
+}
+
+.mi-arrow-alt-circle-right::before {
+  content: "\f05e";
+}
+
+.mi-arrow-alt-circle-up::before {
+  content: "\f05f";
+}
+
+.mi-arrow-alt-down::before {
+  content: "\f060";
+}
+
+.mi-arrow-alt-from-bottom::before {
+  content: "\f061";
+}
+
+.mi-arrow-alt-from-left::before {
+  content: "\f062";
+}
+
+.mi-arrow-alt-from-right::before {
+  content: "\f063";
+}
+
+.mi-arrow-alt-from-top::before {
+  content: "\f064";
+}
+
+.mi-arrow-alt-left::before {
+  content: "\f065";
+}
+
+.mi-arrow-alt-right::before {
+  content: "\f066";
+}
+
+.mi-arrow-alt-square-down::before {
+  content: "\f067";
+}
+
+.mi-arrow-alt-square-left::before {
+  content: "\f068";
+}
+
+.mi-arrow-alt-square-right::before {
+  content: "\f069";
+}
+
+.mi-arrow-alt-square-up::before {
+  content: "\f06a";
+}
+
+.mi-arrow-alt-to-bottom::before {
+  content: "\f06b";
+}
+
+.mi-arrow-alt-to-left::before {
+  content: "\f06c";
+}
+
+.mi-arrow-alt-to-right::before {
+  content: "\f06d";
+}
+
+.mi-arrow-alt-to-top::before {
+  content: "\f06e";
+}
+
+.mi-arrow-alt-up::before {
+  content: "\f06f";
+}
+
+.mi-arrow-circle-down::before {
+  content: "\f070";
+}
+
+.mi-arrow-circle-left::before {
+  content: "\f071";
+}
+
+.mi-arrow-circle-right::before {
+  content: "\f072";
+}
+
+.mi-arrow-circle-up::before {
+  content: "\f073";
+}
+
+.mi-arrow-comparison::before {
+  content: "\f074";
+}
+
+.mi-arrow-down-from-arc::before {
+  content: "\f075";
+}
+
+.mi-arrow-down-from-dotted-line::before {
+  content: "\f076";
+}
+
+.mi-arrow-down-left::before {
+  content: "\f077";
+}
+
+.mi-arrow-down-small-big::before {
+  content: "\f078";
+}
+
+.mi-arrow-down-to-dotted-line::before {
+  content: "\f079";
+}
+
+.mi-arrow-down-to-square::before {
+  content: "\f07a";
+}
+
+.mi-arrow-down-triangle-square::before {
+  content: "\f07b";
+}
+
+.mi-arrow-down::before {
+  content: "\f07c";
+}
+
+.mi-arrow-from-bottom::before {
+  content: "\f07d";
+}
+
+.mi-arrow-from-left::before {
+  content: "\f07e";
+}
+
+.mi-arrow-from-right::before {
+  content: "\f07f";
+}
+
+.mi-arrow-from-top::before {
+  content: "\f080";
+}
+
+.mi-arrow-left-from-arc::before {
+  content: "\f081";
+}
+
+.mi-arrow-left-from-line::before {
+  content: "\f082";
+}
+
+.mi-arrow-left-to-arc::before {
+  content: "\f083";
+}
+
+.mi-arrow-left::before {
+  content: "\f084";
+}
+
+.mi-arrow-right-to-bracket::before {
+  content: "\f085";
+}
+
+.mi-arrow-right::before {
+  content: "\f086";
+}
+
+.mi-arrow-small-down::before {
+  content: "\f087";
+}
+
+.mi-arrow-small-left::before {
+  content: "\f088";
+}
+
+.mi-arrow-small-right::before {
+  content: "\f089";
+}
+
+.mi-arrow-small-up::before {
+  content: "\f08a";
+}
+
+.mi-arrow-square-down::before {
+  content: "\f08b";
+}
+
+.mi-arrow-square-left::before {
+  content: "\f08c";
+}
+
+.mi-arrow-square-right::before {
+  content: "\f08d";
+}
+
+.mi-arrow-square-up::before {
+  content: "\f08e";
+}
+
+.mi-arrow-to-bottom::before {
+  content: "\f08f";
+}
+
+.mi-arrow-to-left::before {
+  content: "\f090";
+}
+
+.mi-arrow-to-right::before {
+  content: "\f091";
+}
+
+.mi-arrow-to-top::before {
+  content: "\f092";
+}
+
+.mi-arrow-trend-down::before {
+  content: "\f093";
+}
+
+.mi-arrow-trend-up::before {
+  content: "\f094";
+}
+
+.mi-arrow-turn-down-left::before {
+  content: "\f095";
+}
+
+.mi-arrow-turn-down-right::before {
+  content: "\f096";
+}
+
+.mi-arrow-turn-left-up::before {
+  content: "\f097";
+}
+
+.mi-arrow-up-from-dotted-line::before {
+  content: "\f098";
+}
+
+.mi-arrow-up-from-ground-water::before {
+  content: "\f099";
+}
+
+.mi-arrow-up-from-square::before {
+  content: "\f09a";
+}
+
+.mi-arrow-up-left-from-circle::before {
+  content: "\f09b";
+}
+
+.mi-arrow-up-left::before {
+  content: "\f09c";
+}
+
+.mi-arrow-up-right-and-arrow-down-left-from-center::before {
+  content: "\f09d";
+}
+
+.mi-arrow-up-right-from-square::before {
+  content: "\f09e";
+}
+
+.mi-arrow-up-right::before {
+  content: "\f09f";
+}
+
+.mi-arrow-up-small-big::before {
+  content: "\f0a0";
+}
+
+.mi-arrow-up-square-triangle::before {
+  content: "\f0a1";
+}
+
+.mi-arrow-up-to-arc::before {
+  content: "\f0a2";
+}
+
+.mi-arrow-up-to-dotted-line::before {
+  content: "\f0a3";
+}
+
+.mi-arrow-up::before {
+  content: "\f0a4";
+}
+
+.mi-arrow-upward-growth-crypto::before {
+  content: "\f0a5";
+}
+
+.mi-arrows-alt-h::before {
+  content: "\f0a6";
+}
+
+.mi-arrows-alt-v::before {
+  content: "\f0a7";
+}
+
+.mi-arrows-alt::before {
+  content: "\f0a8";
+}
+
+.mi-arrows-cross::before {
+  content: "\f0a9";
+}
+
+.mi-arrows-from-dotted-line::before {
+  content: "\f0aa";
+}
+
+.mi-arrows-from-line::before {
+  content: "\f0ab";
+}
+
+.mi-arrows-h-copy::before {
+  content: "\f0ac";
+}
+
+.mi-arrows-h::before {
+  content: "\f0ad";
+}
+
+.mi-arrows-repeat-1::before {
+  content: "\f0ae";
+}
+
+.mi-arrows-repeat::before {
+  content: "\f0af";
+}
+
+.mi-arrows-retweet::before {
+  content: "\f0b0";
+}
+
+.mi-arrows-split-right-and-left::before {
+  content: "\f0b1";
+}
+
+.mi-arrows-split-up-and-left::before {
+  content: "\f0b2";
+}
+
+.mi-arrows-to-circle::before {
+  content: "\f0b3";
+}
+
+.mi-arrows-to-dotted-line::before {
+  content: "\f0b4";
+}
+
+.mi-arrows-to-eye::before {
+  content: "\f0b5";
+}
+
+.mi-arrows-to-line::before {
+  content: "\f0b6";
+}
+
+.mi-arrows::before {
+  content: "\f0b7";
+}
+
+.mi-artificial-intelligence::before {
+  content: "\f0b8";
+}
+
+.mi-assept-document::before {
+  content: "\f0b9";
+}
+
+.mi-assessment-alt::before {
+  content: "\f0ba";
+}
+
+.mi-assessment::before {
+  content: "\f0bb";
+}
+
+.mi-assign::before {
+  content: "\f0bc";
+}
+
+.mi-assistive-listening-systems::before {
+  content: "\f0bd";
+}
+
+.mi-asterik::before {
+  content: "\f0be";
+}
+
+.mi-at::before {
+  content: "\f0bf";
+}
+
+.mi-attribution-pen::before {
+  content: "\f0c0";
+}
+
+.mi-attribution-pencil::before {
+  content: "\f0c1";
+}
+
+.mi-aubergine::before {
+  content: "\f0c2";
+}
+
+.mi-auction::before {
+  content: "\f0c3";
+}
+
+.mi-audience-megaphone::before {
+  content: "\f0c4";
+}
+
+.mi-audio-description-slash::before {
+  content: "\f0c5";
+}
+
+.mi-audit-alt::before {
+  content: "\f0c6";
+}
+
+.mi-audit::before {
+  content: "\f0c7";
+}
+
+.mi-austral-sign::before {
+  content: "\f0c8";
+}
+
+.mi-avocado::before {
+  content: "\f0c9";
+}
+
+.mi-award::before {
+  content: "\f0ca";
+}
+
+.mi-axe-battle::before {
+  content: "\f0cb";
+}
+
+.mi-axe::before {
+  content: "\f0cc";
+}
+
+.mi-b::before {
+  content: "\f0cd";
+}
+
+.mi-baby-carriage::before {
+  content: "\f0ce";
+}
+
+.mi-baby::before {
+  content: "\f0cf";
+}
+
+.mi-back-up::before {
+  content: "\f0d0";
+}
+
+.mi-background::before {
+  content: "\f0d1";
+}
+
+.mi-backpack::before {
+  content: "\f0d2";
+}
+
+.mi-bacon::before {
+  content: "\f0d3";
+}
+
+.mi-bacteria::before {
+  content: "\f0d4";
+}
+
+.mi-bacterium::before {
+  content: "\f0d5";
+}
+
+.mi-badge-check::before {
+  content: "\f0d6";
+}
+
+.mi-badge-dollar::before {
+  content: "\f0d7";
+}
+
+.mi-badge-leaf::before {
+  content: "\f0d8";
+}
+
+.mi-badge-percent::before {
+  content: "\f0d9";
+}
+
+.mi-badge-sheriff::before {
+  content: "\f0da";
+}
+
+.mi-badge::before {
+  content: "\f0db";
+}
+
+.mi-badger-honey::before {
+  content: "\f0dc";
+}
+
+.mi-badget-check-alt::before {
+  content: "\f0dd";
+}
+
+.mi-badminton::before {
+  content: "\f0de";
+}
+
+.mi-bag-map-pin::before {
+  content: "\f0df";
+}
+
+.mi-bag-seedling::before {
+  content: "\f0e0";
+}
+
+.mi-bag-shopping-minus::before {
+  content: "\f0e1";
+}
+
+.mi-bags-shopping::before {
+  content: "\f0e2";
+}
+
+.mi-baguette::before {
+  content: "\f0e3";
+}
+
+.mi-bahai::before {
+  content: "\f0e4";
+}
+
+.mi-baht-sign::before {
+  content: "\f0e5";
+}
+
+.mi-balance-scale-left::before {
+  content: "\f0e6";
+}
+
+.mi-balance-scale-right::before {
+  content: "\f0e7";
+}
+
+.mi-ball-pile::before {
+  content: "\f0e8";
+}
+
+.mi-ball::before {
+  content: "\f0e9";
+}
+
+.mi-ballet-dance::before {
+  content: "\f0ea";
+}
+
+.mi-balloon::before {
+  content: "\f0eb";
+}
+
+.mi-balloons::before {
+  content: "\f0ec";
+}
+
+.mi-ballot-check::before {
+  content: "\f0ed";
+}
+
+.mi-ballot::before {
+  content: "\f0ee";
+}
+
+.mi-ban-bug::before {
+  content: "\f0ef";
+}
+
+.mi-ban::before {
+  content: "\f0f0";
+}
+
+.mi-banana::before {
+  content: "\f0f1";
+}
+
+.mi-band-aid::before {
+  content: "\f0f2";
+}
+
+.mi-bangladeshi-taka-sign::before {
+  content: "\f0f3";
+}
+
+.mi-banjo::before {
+  content: "\f0f4";
+}
+
+.mi-bank::before {
+  content: "\f0f5";
+}
+
+.mi-banner-2::before {
+  content: "\f0f6";
+}
+
+.mi-banner-3::before {
+  content: "\f0f7";
+}
+
+.mi-banner-4::before {
+  content: "\f0f8";
+}
+
+.mi-banner-5::before {
+  content: "\f0f9";
+}
+
+.mi-banner::before {
+  content: "\f0fa";
+}
+
+.mi-barber-pole::before {
+  content: "\f0fb";
+}
+
+.mi-barber-shop::before {
+  content: "\f0fc";
+}
+
+.mi-barcode-read::before {
+  content: "\f0fd";
+}
+
+.mi-barcode-scan::before {
+  content: "\f0fe";
+}
+
+.mi-barcode::before {
+  content: "\f0ff";
+}
+
+.mi-bars-filter::before {
+  content: "\f100";
+}
+
+.mi-bars-progress::before {
+  content: "\f101";
+}
+
+.mi-bars-sort::before {
+  content: "\f102";
+}
+
+.mi-bars-staggered::before {
+  content: "\f103";
+}
+
+.mi-baseball-alt::before {
+  content: "\f104";
+}
+
+.mi-baseball::before {
+  content: "\f105";
+}
+
+.mi-basket-shopping-minus::before {
+  content: "\f106";
+}
+
+.mi-basket-shopping-plus::before {
+  content: "\f107";
+}
+
+.mi-basket-shopping-simple::before {
+  content: "\f108";
+}
+
+.mi-basket::before {
+  content: "\f109";
+}
+
+.mi-basketball::before {
+  content: "\f10a";
+}
+
+.mi-bat::before {
+  content: "\f10b";
+}
+
+.mi-bath::before {
+  content: "\f10c";
+}
+
+.mi-battery-bolt::before {
+  content: "\f10d";
+}
+
+.mi-battery-empty::before {
+  content: "\f10e";
+}
+
+.mi-battery-exclamation::before {
+  content: "\f10f";
+}
+
+.mi-battery-full::before {
+  content: "\f110";
+}
+
+.mi-battery-half::before {
+  content: "\f111";
+}
+
+.mi-battery-quarter::before {
+  content: "\f112";
+}
+
+.mi-battery-slash::before {
+  content: "\f113";
+}
+
+.mi-battery-three-quarters::before {
+  content: "\f114";
+}
+
+.mi-beacon::before {
+  content: "\f115";
+}
+
+.mi-bed-alt::before {
+  content: "\f116";
+}
+
+.mi-bed-bunk::before {
+  content: "\f117";
+}
+
+.mi-bed-empty::before {
+  content: "\f118";
+}
+
+.mi-bed::before {
+  content: "\f119";
+}
+
+.mi-bee::before {
+  content: "\f11a";
+}
+
+.mi-beer-mug-empty::before {
+  content: "\f11b";
+}
+
+.mi-beer::before {
+  content: "\f11c";
+}
+
+.mi-bell-concierge::before {
+  content: "\f11d";
+}
+
+.mi-bell-notification-call::before {
+  content: "\f11e";
+}
+
+.mi-bell-notification-social-media::before {
+  content: "\f11f";
+}
+
+.mi-bell-ring::before {
+  content: "\f120";
+}
+
+.mi-bell-school-slash::before {
+  content: "\f121";
+}
+
+.mi-bell-school::before {
+  content: "\f122";
+}
+
+.mi-bell-slash::before {
+  content: "\f123";
+}
+
+.mi-bell::before {
+  content: "\f124";
+}
+
+.mi-bells::before {
+  content: "\f125";
+}
+
+.mi-bench-tree::before {
+  content: "\f126";
+}
+
+.mi-benefit-diamond-alt::before {
+  content: "\f127";
+}
+
+.mi-benefit-diamond::before {
+  content: "\f128";
+}
+
+.mi-benefit-hand::before {
+  content: "\f129";
+}
+
+.mi-benefit-increase::before {
+  content: "\f12a";
+}
+
+.mi-benefit-porcent::before {
+  content: "\f12b";
+}
+
+.mi-benefit::before {
+  content: "\f12c";
+}
+
+.mi-betamax::before {
+  content: "\f12d";
+}
+
+.mi-bible::before {
+  content: "\f12e";
+}
+
+.mi-bicycle-journey::before {
+  content: "\f12f";
+}
+
+.mi-bike::before {
+  content: "\f130";
+}
+
+.mi-biking-mountain::before {
+  content: "\f131";
+}
+
+.mi-biking::before {
+  content: "\f132";
+}
+
+.mi-bill-arrow::before {
+  content: "\f133";
+}
+
+.mi-billiard::before {
+  content: "\f134";
+}
+
+.mi-bin-bottles::before {
+  content: "\f135";
+}
+
+.mi-binary::before {
+  content: "\f136";
+}
+
+.mi-binoculars::before {
+  content: "\f137";
+}
+
+.mi-bio-leaves::before {
+  content: "\f138";
+}
+
+.mi-bio::before {
+  content: "\f139";
+}
+
+.mi-biohazard::before {
+  content: "\f13a";
+}
+
+.mi-bird::before {
+  content: "\f13b";
+}
+
+.mi-bitcoin-sign::before {
+  content: "\f13c";
+}
+
+.mi-blanket::before {
+  content: "\f13d";
+}
+
+.mi-blender-phone::before {
+  content: "\f13e";
+}
+
+.mi-blender::before {
+  content: "\f13f";
+}
+
+.mi-blinds-open::before {
+  content: "\f140";
+}
+
+.mi-blinds-raised::before {
+  content: "\f141";
+}
+
+.mi-blinds::before {
+  content: "\f142";
+}
+
+.mi-block-brick::before {
+  content: "\f143";
+}
+
+.mi-block-microphone::before {
+  content: "\f144";
+}
+
+.mi-block-question::before {
+  content: "\f145";
+}
+
+.mi-block-quote::before {
+  content: "\f146";
+}
+
+.mi-block::before {
+  content: "\f147";
+}
+
+.mi-blockchain-3::before {
+  content: "\f148";
+}
+
+.mi-blog-pencil::before {
+  content: "\f149";
+}
+
+.mi-blog-text::before {
+  content: "\f14a";
+}
+
+.mi-blood-dropper::before {
+  content: "\f14b";
+}
+
+.mi-blood-test-tube-alt::before {
+  content: "\f14c";
+}
+
+.mi-blood-test-tube::before {
+  content: "\f14d";
+}
+
+.mi-blood::before {
+  content: "\f14e";
+}
+
+.mi-blueberries::before {
+  content: "\f14f";
+}
+
+.mi-blueprint::before {
+  content: "\f150";
+}
+
+.mi-bold::before {
+  content: "\f151";
+}
+
+.mi-bolt-auto::before {
+  content: "\f152";
+}
+
+.mi-bolt-slash::before {
+  content: "\f153";
+}
+
+.mi-bolt::before {
+  content: "\f154";
+}
+
+.mi-bomb::before {
+  content: "\f155";
+}
+
+.mi-bone-break::before {
+  content: "\f156";
+}
+
+.mi-bone::before {
+  content: "\f157";
+}
+
+.mi-bong::before {
+  content: "\f158";
+}
+
+.mi-bonus-alt::before {
+  content: "\f159";
+}
+
+.mi-bonus-star::before {
+  content: "\f15a";
+}
+
+.mi-bonus::before {
+  content: "\f15b";
+}
+
+.mi-book-alt::before {
+  content: "\f15c";
+}
+
+.mi-book-atlas::before {
+  content: "\f15d";
+}
+
+.mi-book-bookmark::before {
+  content: "\f15e";
+}
+
+.mi-book-dead::before {
+  content: "\f15f";
+}
+
+.mi-book-font::before {
+  content: "\f160";
+}
+
+.mi-book-heart::before {
+  content: "\f161";
+}
+
+.mi-book-medical::before {
+  content: "\f162";
+}
+
+.mi-book-open-cover::before {
+  content: "\f163";
+}
+
+.mi-book-open-reader::before {
+  content: "\f164";
+}
+
+.mi-book-plus::before {
+  content: "\f165";
+}
+
+.mi-book-quran::before {
+  content: "\f166";
+}
+
+.mi-book-section::before {
+  content: "\f167";
+}
+
+.mi-book-spells::before {
+  content: "\f168";
+}
+
+.mi-book-tanakh::before {
+  content: "\f169";
+}
+
+.mi-book-user::before {
+  content: "\f16a";
+}
+
+.mi-book::before {
+  content: "\f16b";
+}
+
+.mi-booking::before {
+  content: "\f16c";
+}
+
+.mi-bookmark-slash::before {
+  content: "\f16d";
+}
+
+.mi-bookmark::before {
+  content: "\f16e";
+}
+
+.mi-books-medical::before {
+  content: "\f16f";
+}
+
+.mi-books::before {
+  content: "\f170";
+}
+
+.mi-boot-heeled::before {
+  content: "\f171";
+}
+
+.mi-boot::before {
+  content: "\f172";
+}
+
+.mi-booth-curtain::before {
+  content: "\f173";
+}
+
+.mi-border-all::before {
+  content: "\f174";
+}
+
+.mi-border-bottom::before {
+  content: "\f175";
+}
+
+.mi-border-center-h::before {
+  content: "\f176";
+}
+
+.mi-border-center-v::before {
+  content: "\f177";
+}
+
+.mi-border-inner::before {
+  content: "\f178";
+}
+
+.mi-border-left::before {
+  content: "\f179";
+}
+
+.mi-border-none::before {
+  content: "\f17a";
+}
+
+.mi-border-outer::before {
+  content: "\f17b";
+}
+
+.mi-border-right::before {
+  content: "\f17c";
+}
+
+.mi-border-style-alt::before {
+  content: "\f17d";
+}
+
+.mi-border-style::before {
+  content: "\f17e";
+}
+
+.mi-border-top::before {
+  content: "\f17f";
+}
+
+.mi-boss::before {
+  content: "\f180";
+}
+
+.mi-bottle-droplet::before {
+  content: "\f181";
+}
+
+.mi-bottle::before {
+  content: "\f182";
+}
+
+.mi-bow-arrow::before {
+  content: "\f183";
+}
+
+.mi-bowl-chopsticks-noodles::before {
+  content: "\f184";
+}
+
+.mi-bowl-chopsticks::before {
+  content: "\f185";
+}
+
+.mi-bowl-rice::before {
+  content: "\f186";
+}
+
+.mi-bowl-scoop::before {
+  content: "\f187";
+}
+
+.mi-bowl-scoops::before {
+  content: "\f188";
+}
+
+.mi-bowl-soft-serve::before {
+  content: "\f189";
+}
+
+.mi-bowl-spoon::before {
+  content: "\f18a";
+}
+
+.mi-bowling-ball::before {
+  content: "\f18b";
+}
+
+.mi-bowling-pins::before {
+  content: "\f18c";
+}
+
+.mi-bowling::before {
+  content: "\f18d";
+}
+
+.mi-box-alt::before {
+  content: "\f18e";
+}
+
+.mi-box-ballot::before {
+  content: "\f18f";
+}
+
+.mi-box-check::before {
+  content: "\f190";
+}
+
+.mi-box-circle-check::before {
+  content: "\f191";
+}
+
+.mi-box-dollar::before {
+  content: "\f192";
+}
+
+.mi-box-open::before {
+  content: "\f193";
+}
+
+.mi-box::before {
+  content: "\f194";
+}
+
+.mi-boxes::before {
+  content: "\f195";
+}
+
+.mi-bracket-curly-right::before {
+  content: "\f196";
+}
+
+.mi-bracket-curly::before {
+  content: "\f197";
+}
+
+.mi-bracket-round-right::before {
+  content: "\f198";
+}
+
+.mi-bracket-round::before {
+  content: "\f199";
+}
+
+.mi-bracket-square-right::before {
+  content: "\f19a";
+}
+
+.mi-bracket-square::before {
+  content: "\f19b";
+}
+
+.mi-brackets-curly::before {
+  content: "\f19c";
+}
+
+.mi-brackets-round::before {
+  content: "\f19d";
+}
+
+.mi-brackets-square::before {
+  content: "\f19e";
+}
+
+.mi-brain-circuit::before {
+  content: "\f19f";
+}
+
+.mi-brain::before {
+  content: "\f1a0";
+}
+
+.mi-brake-warning::before {
+  content: "\f1a1";
+}
+
+.mi-branching::before {
+  content: "\f1a2";
+}
+
+.mi-brand::before {
+  content: "\f1a3";
+}
+
+.mi-branding::before {
+  content: "\f1a4";
+}
+
+.mi-bread-loaf::before {
+  content: "\f1a5";
+}
+
+.mi-bread-slice-butter::before {
+  content: "\f1a6";
+}
+
+.mi-bread-slice::before {
+  content: "\f1a7";
+}
+
+.mi-bread::before {
+  content: "\f1a8";
+}
+
+.mi-briefcase-arrow-right::before {
+  content: "\f1a9";
+}
+
+.mi-briefcase-blank::before {
+  content: "\f1aa";
+}
+
+.mi-briefcase::before {
+  content: "\f1ab";
+}
+
+.mi-brightness-low::before {
+  content: "\f1ac";
+}
+
+.mi-brightness::before {
+  content: "\f1ad";
+}
+
+.mi-bring-forward::before {
+  content: "\f1ae";
+}
+
+.mi-bring-front::before {
+  content: "\f1af";
+}
+
+.mi-broadcast-tower::before {
+  content: "\f1b0";
+}
+
+.mi-broccoli::before {
+  content: "\f1b1";
+}
+
+.mi-broken-chain-link-wrong::before {
+  content: "\f1b2";
+}
+
+.mi-broken-image::before {
+  content: "\f1b3";
+}
+
+.mi-broom-ball::before {
+  content: "\f1b4";
+}
+
+.mi-broom::before {
+  content: "\f1b5";
+}
+
+.mi-browser-ui::before {
+  content: "\f1b6";
+}
+
+.mi-browser::before {
+  content: "\f1b7";
+}
+
+.mi-browsers::before {
+  content: "\f1b8";
+}
+
+.mi-brush::before {
+  content: "\f1b9";
+}
+
+.mi-bucket::before {
+  content: "\f1ba";
+}
+
+.mi-budget-alt::before {
+  content: "\f1bb";
+}
+
+.mi-budget::before {
+  content: "\f1bc";
+}
+
+.mi-bug-slash::before {
+  content: "\f1bd";
+}
+
+.mi-bug::before {
+  content: "\f1be";
+}
+
+.mi-bugs::before {
+  content: "\f1bf";
+}
+
+.mi-build-alt::before {
+  content: "\f1c0";
+}
+
+.mi-build::before {
+  content: "\f1c1";
+}
+
+.mi-builder::before {
+  content: "\f1c2";
+}
+
+.mi-building-circle-arrow-right::before {
+  content: "\f1c3";
+}
+
+.mi-building-ngo::before {
+  content: "\f1c4";
+}
+
+.mi-building::before {
+  content: "\f1c5";
+}
+
+.mi-bulb::before {
+  content: "\f1c6";
+}
+
+.mi-bullet::before {
+  content: "\f1c7";
+}
+
+.mi-bullhorn::before {
+  content: "\f1c8";
+}
+
+.mi-bullseye-arrow::before {
+  content: "\f1c9";
+}
+
+.mi-bullseye-pointer::before {
+  content: "\f1ca";
+}
+
+.mi-bullseye::before {
+  content: "\f1cb";
+}
+
+.mi-burger-alt::before {
+  content: "\f1cc";
+}
+
+.mi-burger-fries::before {
+  content: "\f1cd";
+}
+
+.mi-burger-glass::before {
+  content: "\f1ce";
+}
+
+.mi-burrito::before {
+  content: "\f1cf";
+}
+
+.mi-burst::before {
+  content: "\f1d0";
+}
+
+.mi-bus-alt::before {
+  content: "\f1d1";
+}
+
+.mi-bus::before {
+  content: "\f1d2";
+}
+
+.mi-business-time::before {
+  content: "\f1d3";
+}
+
+.mi-butter::before {
+  content: "\f1d4";
+}
+
+.mi-butterfly::before {
+  content: "\f1d5";
+}
+
+.mi-c::before {
+  content: "\f1d6";
+}
+
+.mi-cabin::before {
+  content: "\f1d7";
+}
+
+.mi-cactus::before {
+  content: "\f1d8";
+}
+
+.mi-cage-empty::before {
+  content: "\f1d9";
+}
+
+.mi-cake-birthday::before {
+  content: "\f1da";
+}
+
+.mi-cake-slice::before {
+  content: "\f1db";
+}
+
+.mi-cake-wedding::before {
+  content: "\f1dc";
+}
+
+.mi-calculator-bill::before {
+  content: "\f1dd";
+}
+
+.mi-calculator-math-tax::before {
+  content: "\f1de";
+}
+
+.mi-calculator-money::before {
+  content: "\f1df";
+}
+
+.mi-calculator-simple::before {
+  content: "\f1e0";
+}
+
+.mi-calculator::before {
+  content: "\f1e1";
+}
+
+.mi-calendar-arrow-down::before {
+  content: "\f1e2";
+}
+
+.mi-calendar-arrow-up::before {
+  content: "\f1e3";
+}
+
+.mi-calendar-birhtday-cake::before {
+  content: "\f1e4";
+}
+
+.mi-calendar-call::before {
+  content: "\f1e5";
+}
+
+.mi-calendar-check::before {
+  content: "\f1e6";
+}
+
+.mi-calendar-clock::before {
+  content: "\f1e7";
+}
+
+.mi-calendar-day::before {
+  content: "\f1e8";
+}
+
+.mi-calendar-days::before {
+  content: "\f1e9";
+}
+
+.mi-calendar-event-tax::before {
+  content: "\f1ea";
+}
+
+.mi-calendar-exclamation::before {
+  content: "\f1eb";
+}
+
+.mi-calendar-gavel-legal::before {
+  content: "\f1ec";
+}
+
+.mi-calendar-heart::before {
+  content: "\f1ed";
+}
+
+.mi-calendar-image::before {
+  content: "\f1ee";
+}
+
+.mi-calendar-lines-pen::before {
+  content: "\f1ef";
+}
+
+.mi-calendar-lines::before {
+  content: "\f1f0";
+}
+
+.mi-calendar-minus::before {
+  content: "\f1f1";
+}
+
+.mi-calendar-payment-loan::before {
+  content: "\f1f2";
+}
+
+.mi-calendar-pen::before {
+  content: "\f1f3";
+}
+
+.mi-calendar-plus::before {
+  content: "\f1f4";
+}
+
+.mi-calendar-salary::before {
+  content: "\f1f5";
+}
+
+.mi-calendar-shift-swap::before {
+  content: "\f1f6";
+}
+
+.mi-calendar-star::before {
+  content: "\f1f7";
+}
+
+.mi-calendar-swap::before {
+  content: "\f1f8";
+}
+
+.mi-calendar-week::before {
+  content: "\f1f9";
+}
+
+.mi-calendar-xmark::before {
+  content: "\f1fa";
+}
+
+.mi-calendar::before {
+  content: "\f1fb";
+}
+
+.mi-calendars::before {
+  content: "\f1fc";
+}
+
+.mi-call-duration::before {
+  content: "\f1fd";
+}
+
+.mi-call-history::before {
+  content: "\f1fe";
+}
+
+.mi-call-incoming::before {
+  content: "\f1ff";
+}
+
+.mi-call-missed::before {
+  content: "\f200";
+}
+
+.mi-call-outgoing::before {
+  content: "\f201";
+}
+
+.mi-camcorder::before {
+  content: "\f202";
+}
+
+.mi-camera-cctv::before {
+  content: "\f203";
+}
+
+.mi-camera-movie::before {
+  content: "\f204";
+}
+
+.mi-camera-retro::before {
+  content: "\f205";
+}
+
+.mi-camera-rotate::before {
+  content: "\f206";
+}
+
+.mi-camera-security::before {
+  content: "\f207";
+}
+
+.mi-camera-slash::before {
+  content: "\f208";
+}
+
+.mi-camera-viewfinder::before {
+  content: "\f209";
+}
+
+.mi-camera::before {
+  content: "\f20a";
+}
+
+.mi-campfire::before {
+  content: "\f20b";
+}
+
+.mi-camping::before {
+  content: "\f20c";
+}
+
+.mi-can-food::before {
+  content: "\f20d";
+}
+
+.mi-candle-holder::before {
+  content: "\f20e";
+}
+
+.mi-candle-lotus-yoga::before {
+  content: "\f20f";
+}
+
+.mi-candle-pose-yoga::before {
+  content: "\f210";
+}
+
+.mi-candy-alt::before {
+  content: "\f211";
+}
+
+.mi-candy-bar::before {
+  content: "\f212";
+}
+
+.mi-candy-cane::before {
+  content: "\f213";
+}
+
+.mi-candy-corn::before {
+  content: "\f214";
+}
+
+.mi-candy-sweet::before {
+  content: "\f215";
+}
+
+.mi-candy::before {
+  content: "\f216";
+}
+
+.mi-cannabis::before {
+  content: "\f217";
+}
+
+.mi-canned-food::before {
+  content: "\f218";
+}
+
+.mi-capsules::before {
+  content: "\f219";
+}
+
+.mi-car-alt::before {
+  content: "\f21a";
+}
+
+.mi-car-battery::before {
+  content: "\f21b";
+}
+
+.mi-car-bolt::before {
+  content: "\f21c";
+}
+
+.mi-car-building::before {
+  content: "\f21d";
+}
+
+.mi-car-bump::before {
+  content: "\f21e";
+}
+
+.mi-car-bus::before {
+  content: "\f21f";
+}
+
+.mi-car-circle-bolt::before {
+  content: "\f220";
+}
+
+.mi-car-crash::before {
+  content: "\f221";
+}
+
+.mi-car-garage::before {
+  content: "\f222";
+}
+
+.mi-car-journey::before {
+  content: "\f223";
+}
+
+.mi-car-mechanic::before {
+  content: "\f224";
+}
+
+.mi-car-rear::before {
+  content: "\f225";
+}
+
+.mi-car-side-bolt::before {
+  content: "\f226";
+}
+
+.mi-car-side::before {
+  content: "\f227";
+}
+
+.mi-car-tilt::before {
+  content: "\f228";
+}
+
+.mi-car-tunnel::before {
+  content: "\f229";
+}
+
+.mi-car-wash::before {
+  content: "\f22a";
+}
+
+.mi-car::before {
+  content: "\f22b";
+}
+
+.mi-caravan-alt::before {
+  content: "\f22c";
+}
+
+.mi-caravan::before {
+  content: "\f22d";
+}
+
+.mi-card-club::before {
+  content: "\f22e";
+}
+
+.mi-card-diamond::before {
+  content: "\f22f";
+}
+
+.mi-card-heart::before {
+  content: "\f230";
+}
+
+.mi-card-spade::before {
+  content: "\f231";
+}
+
+.mi-cardinal-compass::before {
+  content: "\f232";
+}
+
+.mi-career-growth::before {
+  content: "\f233";
+}
+
+.mi-career-path::before {
+  content: "\f234";
+}
+
+.mi-caret-circle-down::before {
+  content: "\f235";
+}
+
+.mi-caret-circle-right::before {
+  content: "\f236";
+}
+
+.mi-caret-circle-up::before {
+  content: "\f237";
+}
+
+.mi-caret-down::before {
+  content: "\f238";
+}
+
+.mi-caret-left::before {
+  content: "\f239";
+}
+
+.mi-caret-quare-up::before {
+  content: "\f23a";
+}
+
+.mi-caret-right::before {
+  content: "\f23b";
+}
+
+.mi-caret-square-down::before {
+  content: "\f23c";
+}
+
+.mi-caret-square-left::before {
+  content: "\f23d";
+}
+
+.mi-caret-square-left_1::before {
+  content: "\f23e";
+}
+
+.mi-caret-square-right::before {
+  content: "\f23f";
+}
+
+.mi-caret-up::before {
+  content: "\f240";
+}
+
+.mi-carrot::before {
+  content: "\f241";
+}
+
+.mi-cars-crash::before {
+  content: "\f242";
+}
+
+.mi-cars::before {
+  content: "\f243";
+}
+
+.mi-cart-arrow-down::before {
+  content: "\f244";
+}
+
+.mi-cart-minus::before {
+  content: "\f245";
+}
+
+.mi-cart-shopping-fast::before {
+  content: "\f246";
+}
+
+.mi-cash-register::before {
+  content: "\f247";
+}
+
+.mi-cassette-tape::before {
+  content: "\f248";
+}
+
+.mi-cassette-vhs::before {
+  content: "\f249";
+}
+
+.mi-castle::before {
+  content: "\f24a";
+}
+
+.mi-cat-head::before {
+  content: "\f24b";
+}
+
+.mi-cat-space::before {
+  content: "\f24c";
+}
+
+.mi-cat::before {
+  content: "\f24d";
+}
+
+.mi-catalog-alt::before {
+  content: "\f24e";
+}
+
+.mi-catalog-magazine::before {
+  content: "\f24f";
+}
+
+.mi-catalog::before {
+  content: "\f250";
+}
+
+.mi-category-alt::before {
+  content: "\f251";
+}
+
+.mi-category::before {
+  content: "\f252";
+}
+
+.mi-cauldron::before {
+  content: "\f253";
+}
+
+.mi-cedi-sign::before {
+  content: "\f254";
+}
+
+.mi-cello::before {
+  content: "\f255";
+}
+
+.mi-cent-sign::before {
+  content: "\f256";
+}
+
+.mi-chair-office::before {
+  content: "\f257";
+}
+
+.mi-chair::before {
+  content: "\f258";
+}
+
+.mi-chalkboard-user::before {
+  content: "\f259";
+}
+
+.mi-chalkboard::before {
+  content: "\f25a";
+}
+
+.mi-challenge-alt::before {
+  content: "\f25b";
+}
+
+.mi-challenge::before {
+  content: "\f25c";
+}
+
+.mi-channel::before {
+  content: "\f25d";
+}
+
+.mi-charging-station::before {
+  content: "\f25e";
+}
+
+.mi-chart-area::before {
+  content: "\f25f";
+}
+
+.mi-chart-bullet::before {
+  content: "\f260";
+}
+
+.mi-chart-candlestick::before {
+  content: "\f261";
+}
+
+.mi-chart-connected::before {
+  content: "\f262";
+}
+
+.mi-chart-gantt::before {
+  content: "\f263";
+}
+
+.mi-chart-histogram::before {
+  content: "\f264";
+}
+
+.mi-chart-kanban::before {
+  content: "\f265";
+}
+
+.mi-chart-line-up-down::before {
+  content: "\f266";
+}
+
+.mi-chart-line-up::before {
+  content: "\f267";
+}
+
+.mi-chart-mixed-up-circle-currency::before {
+  content: "\f268";
+}
+
+.mi-chart-mixed-up-circle-dollar::before {
+  content: "\f269";
+}
+
+.mi-chart-mixed::before {
+  content: "\f26a";
+}
+
+.mi-chart-network::before {
+  content: "\f26b";
+}
+
+.mi-chart-pie-alt::before {
+  content: "\f26c";
+}
+
+.mi-chart-pie-simple-circle-currency::before {
+  content: "\f26d";
+}
+
+.mi-chart-pie-simple-circle-dollar::before {
+  content: "\f26e";
+}
+
+.mi-chart-pie::before {
+  content: "\f26f";
+}
+
+.mi-chart-pyramid::before {
+  content: "\f270";
+}
+
+.mi-chart-radar::before {
+  content: "\f271";
+}
+
+.mi-chart-scatter-3d::before {
+  content: "\f272";
+}
+
+.mi-chart-scatter-bubble::before {
+  content: "\f273";
+}
+
+.mi-chart-scatter::before {
+  content: "\f274";
+}
+
+.mi-chart-set-theory::before {
+  content: "\f275";
+}
+
+.mi-chart-simple-horizontal::before {
+  content: "\f276";
+}
+
+.mi-chart-simple::before {
+  content: "\f277";
+}
+
+.mi-chart-tree-map::before {
+  content: "\f278";
+}
+
+.mi-chart-tree::before {
+  content: "\f279";
+}
+
+.mi-chart-user::before {
+  content: "\f27a";
+}
+
+.mi-chart-waterfall::before {
+  content: "\f27b";
+}
+
+.mi-chat-arrow-down::before {
+  content: "\f27c";
+}
+
+.mi-chat-arrow-grow::before {
+  content: "\f27d";
+}
+
+.mi-chat-bubble-call::before {
+  content: "\f27e";
+}
+
+.mi-chatbot-speech-bubble::before {
+  content: "\f27f";
+}
+
+.mi-chatbot::before {
+  content: "\f280";
+}
+
+.mi-cheap-bill::before {
+  content: "\f281";
+}
+
+.mi-cheap-dollar::before {
+  content: "\f282";
+}
+
+.mi-cheap-stack-dollar::before {
+  content: "\f283";
+}
+
+.mi-cheap-stack::before {
+  content: "\f284";
+}
+
+.mi-cheap::before {
+  content: "\f285";
+}
+
+.mi-check-circle::before {
+  content: "\f286";
+}
+
+.mi-check-double::before {
+  content: "\f287";
+}
+
+.mi-check-in-calendar::before {
+  content: "\f288";
+}
+
+.mi-check-out-calendar::before {
+  content: "\f289";
+}
+
+.mi-check::before {
+  content: "\f28a";
+}
+
+.mi-checkbox::before {
+  content: "\f28b";
+}
+
+.mi-checklist-task-budget::before {
+  content: "\f28c";
+}
+
+.mi-cheese-alt::before {
+  content: "\f28d";
+}
+
+.mi-cheese::before {
+  content: "\f28e";
+}
+
+.mi-cheeseburger::before {
+  content: "\f28f";
+}
+
+.mi-cherry::before {
+  content: "\f290";
+}
+
+.mi-chess-bishop::before {
+  content: "\f291";
+}
+
+.mi-chess-board::before {
+  content: "\f292";
+}
+
+.mi-chess-clock-alt::before {
+  content: "\f293";
+}
+
+.mi-chess-clock::before {
+  content: "\f294";
+}
+
+.mi-chess-king-alt::before {
+  content: "\f295";
+}
+
+.mi-chess-king::before {
+  content: "\f296";
+}
+
+.mi-chess-knight-alt::before {
+  content: "\f297";
+}
+
+.mi-chess-knight::before {
+  content: "\f298";
+}
+
+.mi-chess-pawn-alt::before {
+  content: "\f299";
+}
+
+.mi-chess-piece::before {
+  content: "\f29a";
+}
+
+.mi-chess-queen-alt::before {
+  content: "\f29b";
+}
+
+.mi-chess-queen::before {
+  content: "\f29c";
+}
+
+.mi-chess-rook-alt::before {
+  content: "\f29d";
+}
+
+.mi-chess-rook::before {
+  content: "\f29e";
+}
+
+.mi-chess::before {
+  content: "\f29f";
+}
+
+.mi-chevron-double-down::before {
+  content: "\f2a0";
+}
+
+.mi-chevron-double-up::before {
+  content: "\f2a1";
+}
+
+.mi-child-head::before {
+  content: "\f2a2";
+}
+
+.mi-child::before {
+  content: "\f2a3";
+}
+
+.mi-chimney::before {
+  content: "\f2a4";
+}
+
+.mi-chip::before {
+  content: "\f2a5";
+}
+
+.mi-chocolate::before {
+  content: "\f2a6";
+}
+
+.mi-choir-singing::before {
+  content: "\f2a7";
+}
+
+.mi-choose-alt::before {
+  content: "\f2a8";
+}
+
+.mi-choose::before {
+  content: "\f2a9";
+}
+
+.mi-church::before {
+  content: "\f2aa";
+}
+
+.mi-circle-0::before {
+  content: "\f2ab";
+}
+
+.mi-circle-1::before {
+  content: "\f2ac";
+}
+
+.mi-circle-2::before {
+  content: "\f2ad";
+}
+
+.mi-circle-3::before {
+  content: "\f2ae";
+}
+
+.mi-circle-4::before {
+  content: "\f2af";
+}
+
+.mi-circle-5::before {
+  content: "\f2b0";
+}
+
+.mi-circle-6::before {
+  content: "\f2b1";
+}
+
+.mi-circle-7::before {
+  content: "\f2b2";
+}
+
+.mi-circle-8::before {
+  content: "\f2b3";
+}
+
+.mi-circle-9::before {
+  content: "\f2b4";
+}
+
+.mi-circle-a::before {
+  content: "\f2b5";
+}
+
+.mi-circle-b::before {
+  content: "\f2b6";
+}
+
+.mi-circle-bolt::before {
+  content: "\f2b7";
+}
+
+.mi-circle-book-open::before {
+  content: "\f2b8";
+}
+
+.mi-circle-bookmark::before {
+  content: "\f2b9";
+}
+
+.mi-circle-c::before {
+  content: "\f2ba";
+}
+
+.mi-circle-calendar::before {
+  content: "\f2bb";
+}
+
+.mi-circle-camera::before {
+  content: "\f2bc";
+}
+
+.mi-circle-d::before {
+  content: "\f2bd";
+}
+
+.mi-circle-dashed::before {
+  content: "\f2be";
+}
+
+.mi-circle-divide::before {
+  content: "\f2bf";
+}
+
+.mi-circle-e::before {
+  content: "\f2c0";
+}
+
+.mi-circle-ellipsis-vertical::before {
+  content: "\f2c1";
+}
+
+.mi-circle-ellipsis::before {
+  content: "\f2c2";
+}
+
+.mi-circle-envelope::before {
+  content: "\f2c3";
+}
+
+.mi-circle-exclamation-check::before {
+  content: "\f2c4";
+}
+
+.mi-circle-f::before {
+  content: "\f2c5";
+}
+
+.mi-circle-g::before {
+  content: "\f2c6";
+}
+
+.mi-circle-h::before {
+  content: "\f2c7";
+}
+
+.mi-circle-half-stroke::before {
+  content: "\f2c8";
+}
+
+.mi-circle-half::before {
+  content: "\f2c9";
+}
+
+.mi-circle-heart::before {
+  content: "\f2ca";
+}
+
+.mi-circle-i::before {
+  content: "\f2cb";
+}
+
+.mi-circle-j::before {
+  content: "\f2cc";
+}
+
+.mi-circle-k::before {
+  content: "\f2cd";
+}
+
+.mi-circle-l::before {
+  content: "\f2ce";
+}
+
+.mi-circle-m::before {
+  content: "\f2cf";
+}
+
+.mi-circle-microphone-lines::before {
+  content: "\f2d0";
+}
+
+.mi-circle-microphone::before {
+  content: "\f2d1";
+}
+
+.mi-circle-n::before {
+  content: "\f2d2";
+}
+
+.mi-circle-nodes::before {
+  content: "\f2d3";
+}
+
+.mi-circle-o::before {
+  content: "\f2d4";
+}
+
+.mi-circle-overlap::before {
+  content: "\f2d5";
+}
+
+.mi-circle-p::before {
+  content: "\f2d6";
+}
+
+.mi-circle-phone-flip::before {
+  content: "\f2d7";
+}
+
+.mi-circle-phone-hangup::before {
+  content: "\f2d8";
+}
+
+.mi-circle-phone::before {
+  content: "\f2d9";
+}
+
+.mi-circle-q::before {
+  content: "\f2da";
+}
+
+.mi-circle-quarter::before {
+  content: "\f2db";
+}
+
+.mi-circle-quarters-alt::before {
+  content: "\f2dc";
+}
+
+.mi-circle-r::before {
+  content: "\f2dd";
+}
+
+.mi-circle-s::before {
+  content: "\f2de";
+}
+
+.mi-circle-small::before {
+  content: "\f2df";
+}
+
+.mi-circle-star::before {
+  content: "\f2e0";
+}
+
+.mi-circle-t::before {
+  content: "\f2e1";
+}
+
+.mi-circle-three-quarters::before {
+  content: "\f2e2";
+}
+
+.mi-circle-trash::before {
+  content: "\f2e3";
+}
+
+.mi-circle-u::before {
+  content: "\f2e4";
+}
+
+.mi-circle-user::before {
+  content: "\f2e5";
+}
+
+.mi-circle-v::before {
+  content: "\f2e6";
+}
+
+.mi-circle-video::before {
+  content: "\f2e7";
+}
+
+.mi-circle-w::before {
+  content: "\f2e8";
+}
+
+.mi-circle-waveform-lines::before {
+  content: "\f2e9";
+}
+
+.mi-circle-x::before {
+  content: "\f2ea";
+}
+
+.mi-circle-xmark::before {
+  content: "\f2eb";
+}
+
+.mi-circle-y::before {
+  content: "\f2ec";
+}
+
+.mi-circle-z::before {
+  content: "\f2ed";
+}
+
+.mi-circle::before {
+  content: "\f2ee";
+}
+
+.mi-citrus-slice::before {
+  content: "\f2ef";
+}
+
+.mi-citrus::before {
+  content: "\f2f0";
+}
+
+.mi-city::before {
+  content: "\f2f1";
+}
+
+.mi-clapperboard-play::before {
+  content: "\f2f2";
+}
+
+.mi-clapperboard::before {
+  content: "\f2f3";
+}
+
+.mi-clarinet::before {
+  content: "\f2f4";
+}
+
+.mi-claw-marks::before {
+  content: "\f2f5";
+}
+
+.mi-clear-alt::before {
+  content: "\f2f6";
+}
+
+.mi-clip-file::before {
+  content: "\f2f7";
+}
+
+.mi-clip-mail::before {
+  content: "\f2f8";
+}
+
+.mi-clip::before {
+  content: "\f2f9";
+}
+
+.mi-clipboard-check::before {
+  content: "\f2fa";
+}
+
+.mi-clipboard-exclamation::before {
+  content: "\f2fb";
+}
+
+.mi-clipboard-list-check::before {
+  content: "\f2fc";
+}
+
+.mi-clipboard-list::before {
+  content: "\f2fd";
+}
+
+.mi-clipboard-prescription::before {
+  content: "\f2fe";
+}
+
+.mi-clipboard-question::before {
+  content: "\f2ff";
+}
+
+.mi-clipboard-user::before {
+  content: "\f300";
+}
+
+.mi-clipboard::before {
+  content: "\f301";
+}
+
+.mi-clipoard-wrong::before {
+  content: "\f302";
+}
+
+.mi-clock-desk::before {
+  content: "\f303";
+}
+
+.mi-clock-eight-thirty::before {
+  content: "\f304";
+}
+
+.mi-clock-eleven-thirty::before {
+  content: "\f305";
+}
+
+.mi-clock-eleven::before {
+  content: "\f306";
+}
+
+.mi-clock-five-thirty::before {
+  content: "\f307";
+}
+
+.mi-clock-five::before {
+  content: "\f308";
+}
+
+.mi-clock-four-thirty::before {
+  content: "\f309";
+}
+
+.mi-clock-nine-thirty::before {
+  content: "\f30a";
+}
+
+.mi-clock-nine::before {
+  content: "\f30b";
+}
+
+.mi-clock-one-thirty::before {
+  content: "\f30c";
+}
+
+.mi-clock-one::before {
+  content: "\f30d";
+}
+
+.mi-clock-seven-thirty::before {
+  content: "\f30e";
+}
+
+.mi-clock-seven::before {
+  content: "\f30f";
+}
+
+.mi-clock-six-thirty::before {
+  content: "\f310";
+}
+
+.mi-clock-six::before {
+  content: "\f311";
+}
+
+.mi-clock-ten-thirty::before {
+  content: "\f312";
+}
+
+.mi-clock-ten::before {
+  content: "\f313";
+}
+
+.mi-clock-three-thirty::before {
+  content: "\f314";
+}
+
+.mi-clock-three::before {
+  content: "\f315";
+}
+
+.mi-clock-time-tracking::before {
+  content: "\f316";
+}
+
+.mi-clock-twelve-thirty::before {
+  content: "\f317";
+}
+
+.mi-clock-twelve::before {
+  content: "\f318";
+}
+
+.mi-clock-two-thirty::before {
+  content: "\f319";
+}
+
+.mi-clock-two::before {
+  content: "\f31a";
+}
+
+.mi-clock-up-arrow::before {
+  content: "\f31b";
+}
+
+.mi-clock::before {
+  content: "\f31c";
+}
+
+.mi-clone::before {
+  content: "\f31d";
+}
+
+.mi-closed-captioning-slash::before {
+  content: "\f31e";
+}
+
+.mi-clothes-hanger::before {
+  content: "\f31f";
+}
+
+.mi-cloud-back-up-alt::before {
+  content: "\f320";
+}
+
+.mi-cloud-back-up::before {
+  content: "\f321";
+}
+
+.mi-cloud-check::before {
+  content: "\f322";
+}
+
+.mi-cloud-code::before {
+  content: "\f323";
+}
+
+.mi-cloud-disabled::before {
+  content: "\f324";
+}
+
+.mi-cloud-download-alt::before {
+  content: "\f325";
+}
+
+.mi-cloud-download::before {
+  content: "\f326";
+}
+
+.mi-cloud-drizzle::before {
+  content: "\f327";
+}
+
+.mi-cloud-exclamation::before {
+  content: "\f328";
+}
+
+.mi-cloud-gear-automation::before {
+  content: "\f329";
+}
+
+.mi-cloud-hail-mixed::before {
+  content: "\f32a";
+}
+
+.mi-cloud-hail::before {
+  content: "\f32b";
+}
+
+.mi-cloud-meatball::before {
+  content: "\f32c";
+}
+
+.mi-cloud-moon-rain::before {
+  content: "\f32d";
+}
+
+.mi-cloud-moon::before {
+  content: "\f32e";
+}
+
+.mi-cloud-question::before {
+  content: "\f32f";
+}
+
+.mi-cloud-rain::before {
+  content: "\f330";
+}
+
+.mi-cloud-rainbow::before {
+  content: "\f331";
+}
+
+.mi-cloud-share::before {
+  content: "\f332";
+}
+
+.mi-cloud-showers-heavy::before {
+  content: "\f333";
+}
+
+.mi-cloud-showers::before {
+  content: "\f334";
+}
+
+.mi-cloud-sleet::before {
+  content: "\f335";
+}
+
+.mi-cloud-snow::before {
+  content: "\f336";
+}
+
+.mi-cloud-sun-rain::before {
+  content: "\f337";
+}
+
+.mi-cloud-sun::before {
+  content: "\f338";
+}
+
+.mi-cloud-upload-alt::before {
+  content: "\f339";
+}
+
+.mi-cloud-upload::before {
+  content: "\f33a";
+}
+
+.mi-cloud::before {
+  content: "\f33b";
+}
+
+.mi-clouds-moon::before {
+  content: "\f33c";
+}
+
+.mi-clouds-sun::before {
+  content: "\f33d";
+}
+
+.mi-clouds::before {
+  content: "\f33e";
+}
+
+.mi-clover-alt::before {
+  content: "\f33f";
+}
+
+.mi-club::before {
+  content: "\f340";
+}
+
+.mi-cocktail-alt::before {
+  content: "\f341";
+}
+
+.mi-cocktail::before {
+  content: "\f342";
+}
+
+.mi-coconut::before {
+  content: "\f343";
+}
+
+.mi-code-branch::before {
+  content: "\f344";
+}
+
+.mi-code-commit::before {
+  content: "\f345";
+}
+
+.mi-code-compare::before {
+  content: "\f346";
+}
+
+.mi-code-fork::before {
+  content: "\f347";
+}
+
+.mi-code-merge::before {
+  content: "\f348";
+}
+
+.mi-code-pull-request-closed::before {
+  content: "\f349";
+}
+
+.mi-code-pull-request-draft::before {
+  content: "\f34a";
+}
+
+.mi-code-pull-request::before {
+  content: "\f34b";
+}
+
+.mi-code-simple::before {
+  content: "\f34c";
+}
+
+.mi-coffee-bean::before {
+  content: "\f34d";
+}
+
+.mi-coffee-beans::before {
+  content: "\f34e";
+}
+
+.mi-coffee-heart::before {
+  content: "\f34f";
+}
+
+.mi-coffee-pot::before {
+  content: "\f350";
+}
+
+.mi-coffee::before {
+  content: "\f351";
+}
+
+.mi-coffin-cross::before {
+  content: "\f352";
+}
+
+.mi-coffin::before {
+  content: "\f353";
+}
+
+.mi-coin-up-arrow::before {
+  content: "\f354";
+}
+
+.mi-coin::before {
+  content: "\f355";
+}
+
+.mi-coins::before {
+  content: "\f356";
+}
+
+.mi-colon-sign::before {
+  content: "\f357";
+}
+
+.mi-columns-3::before {
+  content: "\f358";
+}
+
+.mi-comet::before {
+  content: "\f359";
+}
+
+.mi-command::before {
+  content: "\f35a";
+}
+
+.mi-comment-alt-check::before {
+  content: "\f35b";
+}
+
+.mi-comment-alt-dots::before {
+  content: "\f35c";
+}
+
+.mi-comment-alt-edit::before {
+  content: "\f35d";
+}
+
+.mi-comment-alt-medical::before {
+  content: "\f35e";
+}
+
+.mi-comment-alt-middle-top::before {
+  content: "\f35f";
+}
+
+.mi-comment-alt-middle::before {
+  content: "\f360";
+}
+
+.mi-comment-alt-minus::before {
+  content: "\f361";
+}
+
+.mi-comment-alt-music::before {
+  content: "\f362";
+}
+
+.mi-comment-alt::before {
+  content: "\f363";
+}
+
+.mi-comment-arrow-down::before {
+  content: "\f364";
+}
+
+.mi-comment-arrow-up-right::before {
+  content: "\f365";
+}
+
+.mi-comment-arrow-up::before {
+  content: "\f366";
+}
+
+.mi-comment-check::before {
+  content: "\f367";
+}
+
+.mi-comment-code::before {
+  content: "\f368";
+}
+
+.mi-comment-dollar::before {
+  content: "\f369";
+}
+
+.mi-comment-dots::before {
+  content: "\f36a";
+}
+
+.mi-comment-exclamation::before {
+  content: "\f36b";
+}
+
+.mi-comment-heart::before {
+  content: "\f36c";
+}
+
+.mi-comment-image::before {
+  content: "\f36d";
+}
+
+.mi-comment-info::before {
+  content: "\f36e";
+}
+
+.mi-comment-medical::before {
+  content: "\f36f";
+}
+
+.mi-comment-minus::before {
+  content: "\f370";
+}
+
+.mi-comment-pen::before {
+  content: "\f371";
+}
+
+.mi-comment-question::before {
+  content: "\f372";
+}
+
+.mi-comment-quote::before {
+  content: "\f373";
+}
+
+.mi-comment-slash::before {
+  content: "\f374";
+}
+
+.mi-comment-smile::before {
+  content: "\f375";
+}
+
+.mi-comment-sms::before {
+  content: "\f376";
+}
+
+.mi-comment-text::before {
+  content: "\f377";
+}
+
+.mi-comment-user::before {
+  content: "\f378";
+}
+
+.mi-comment-xmark::before {
+  content: "\f379";
+}
+
+.mi-comment::before {
+  content: "\f37a";
+}
+
+.mi-comments-dollar::before {
+  content: "\f37b";
+}
+
+.mi-comments-question-check::before {
+  content: "\f37c";
+}
+
+.mi-comments-question::before {
+  content: "\f37d";
+}
+
+.mi-comments::before {
+  content: "\f37e";
+}
+
+.mi-compass-alt::before {
+  content: "\f37f";
+}
+
+.mi-compass-east::before {
+  content: "\f380";
+}
+
+.mi-compass-north::before {
+  content: "\f381";
+}
+
+.mi-compass-slash::before {
+  content: "\f382";
+}
+
+.mi-compass-south::before {
+  content: "\f383";
+}
+
+.mi-compass-west::before {
+  content: "\f384";
+}
+
+.mi-completed::before {
+  content: "\f385";
+}
+
+.mi-compliance-clipboard::before {
+  content: "\f386";
+}
+
+.mi-compliance-document::before {
+  content: "\f387";
+}
+
+.mi-compliance::before {
+  content: "\f388";
+}
+
+.mi-compress-alt::before {
+  content: "\f389";
+}
+
+.mi-compress::before {
+  content: "\f38a";
+}
+
+.mi-computer-classic::before {
+  content: "\f38b";
+}
+
+.mi-computer-mouse::before {
+  content: "\f38c";
+}
+
+.mi-computer-speaker::before {
+  content: "\f38d";
+}
+
+.mi-computer::before {
+  content: "\f38e";
+}
+
+.mi-concierge-bell::before {
+  content: "\f38f";
+}
+
+.mi-condition-alt::before {
+  content: "\f390";
+}
+
+.mi-condition::before {
+  content: "\f391";
+}
+
+.mi-confetti::before {
+  content: "\f392";
+}
+
+.mi-constellation::before {
+  content: "\f393";
+}
+
+.mi-container-storage::before {
+  content: "\f394";
+}
+
+.mi-convert-document::before {
+  content: "\f395";
+}
+
+.mi-convert-shapes::before {
+  content: "\f396";
+}
+
+.mi-conveyor-belt-alt::before {
+  content: "\f397";
+}
+
+.mi-conveyor-belt-arm::before {
+  content: "\f398";
+}
+
+.mi-conveyor-belt-empty::before {
+  content: "\f399";
+}
+
+.mi-conveyor-belt::before {
+  content: "\f39a";
+}
+
+.mi-cookie-alt::before {
+  content: "\f39b";
+}
+
+.mi-cookie::before {
+  content: "\f39c";
+}
+
+.mi-copy-alt::before {
+  content: "\f39d";
+}
+
+.mi-copy-image::before {
+  content: "\f39e";
+}
+
+.mi-copy::before {
+  content: "\f39f";
+}
+
+.mi-copyright::before {
+  content: "\f3a0";
+}
+
+.mi-corn::before {
+  content: "\f3a1";
+}
+
+.mi-corporate-alt::before {
+  content: "\f3a2";
+}
+
+.mi-corporate::before {
+  content: "\f3a3";
+}
+
+.mi-couch::before {
+  content: "\f3a4";
+}
+
+.mi-court-sport::before {
+  content: "\f3a5";
+}
+
+.mi-cow-alt::before {
+  content: "\f3a6";
+}
+
+.mi-cow::before {
+  content: "\f3a7";
+}
+
+.mi-cowbell-circle-plus::before {
+  content: "\f3a8";
+}
+
+.mi-cowbell-more::before {
+  content: "\f3a9";
+}
+
+.mi-cowbell::before {
+  content: "\f3aa";
+}
+
+.mi-crab::before {
+  content: "\f3ab";
+}
+
+.mi-crate-empty::before {
+  content: "\f3ac";
+}
+
+.mi-cream::before {
+  content: "\f3ad";
+}
+
+.mi-credit-card-buyer::before {
+  content: "\f3ae";
+}
+
+.mi-credit-card-eye::before {
+  content: "\f3af";
+}
+
+.mi-credit-card::before {
+  content: "\f3b0";
+}
+
+.mi-cricket::before {
+  content: "\f3b1";
+}
+
+.mi-crm-alt::before {
+  content: "\f3b2";
+}
+
+.mi-crm-computer::before {
+  content: "\f3b3";
+}
+
+.mi-crm::before {
+  content: "\f3b4";
+}
+
+.mi-croissant::before {
+  content: "\f3b5";
+}
+
+.mi-cross-circle::before {
+  content: "\f3b6";
+}
+
+.mi-cross-religion::before {
+  content: "\f3b7";
+}
+
+.mi-cross-small::before {
+  content: "\f3b8";
+}
+
+.mi-cross::before {
+  content: "\f3b9";
+}
+
+.mi-crow::before {
+  content: "\f3ba";
+}
+
+.mi-crown::before {
+  content: "\f3bb";
+}
+
+.mi-crutch::before {
+  content: "\f3bc";
+}
+
+.mi-crutches::before {
+  content: "\f3bd";
+}
+
+.mi-cruzeiro-sign::before {
+  content: "\f3be";
+}
+
+.mi-crypto-calendar::before {
+  content: "\f3bf";
+}
+
+.mi-cryptocurrency::before {
+  content: "\f3c0";
+}
+
+.mi-crystal-ball::before {
+  content: "\f3c1";
+}
+
+.mi-cube::before {
+  content: "\f3c2";
+}
+
+.mi-cubes-stacked::before {
+  content: "\f3c3";
+}
+
+.mi-cubes::before {
+  content: "\f3c4";
+}
+
+.mi-cucumber::before {
+  content: "\f3c5";
+}
+
+.mi-cup-straw-swoosh::before {
+  content: "\f3c6";
+}
+
+.mi-cup-straw::before {
+  content: "\f3c7";
+}
+
+.mi-cup-togo::before {
+  content: "\f3c8";
+}
+
+.mi-cupcake-alt::before {
+  content: "\f3c9";
+}
+
+.mi-cupcake::before {
+  content: "\f3ca";
+}
+
+.mi-curling::before {
+  content: "\f3cb";
+}
+
+.mi-cursor-finger::before {
+  content: "\f3cc";
+}
+
+.mi-cursor-plus::before {
+  content: "\f3cd";
+}
+
+.mi-cursor-text-alt::before {
+  content: "\f3ce";
+}
+
+.mi-cursor-text::before {
+  content: "\f3cf";
+}
+
+.mi-cursor::before {
+  content: "\f3d0";
+}
+
+.mi-curve-alt::before {
+  content: "\f3d1";
+}
+
+.mi-curve-arrow::before {
+  content: "\f3d2";
+}
+
+.mi-curve::before {
+  content: "\f3d3";
+}
+
+.mi-custard::before {
+  content: "\f3d4";
+}
+
+.mi-customer-care::before {
+  content: "\f3d5";
+}
+
+.mi-customer-service::before {
+  content: "\f3d6";
+}
+
+.mi-customization-cogwheel::before {
+  content: "\f3d7";
+}
+
+.mi-customization::before {
+  content: "\f3d8";
+}
+
+.mi-customize-computer::before {
+  content: "\f3d9";
+}
+
+.mi-customize-edit::before {
+  content: "\f3da";
+}
+
+.mi-customize::before {
+  content: "\f3db";
+}
+
+.mi-cv::before {
+  content: "\f3dc";
+}
+
+.mi-cvv-card::before {
+  content: "\f3dd";
+}
+
+.mi-d::before {
+  content: "\f3de";
+}
+
+.mi-dagger::before {
+  content: "\f3df";
+}
+
+.mi-daily-calendar::before {
+  content: "\f3e0";
+}
+
+.mi-damage::before {
+  content: "\f3e1";
+}
+
+.mi-dart::before {
+  content: "\f3e2";
+}
+
+.mi-dashboard-monitor::before {
+  content: "\f3e3";
+}
+
+.mi-dashboard-panel::before {
+  content: "\f3e4";
+}
+
+.mi-dashboard::before {
+  content: "\f3e5";
+}
+
+.mi-data-transfer::before {
+  content: "\f3e6";
+}
+
+.mi-database::before {
+  content: "\f3e7";
+}
+
+.mi-debt::before {
+  content: "\f3e8";
+}
+
+.mi-deer-rudolph::before {
+  content: "\f3e9";
+}
+
+.mi-deer::before {
+  content: "\f3ea";
+}
+
+.mi-delete-document::before {
+  content: "\f3eb";
+}
+
+.mi-delete-right::before {
+  content: "\f3ec";
+}
+
+.mi-delete-user::before {
+  content: "\f3ed";
+}
+
+.mi-delete::before {
+  content: "\f3ee";
+}
+
+.mi-democrat::before {
+  content: "\f3ef";
+}
+
+.mi-department-structure::before {
+  content: "\f3f0";
+}
+
+.mi-department::before {
+  content: "\f3f1";
+}
+
+.mi-deposit-alt::before {
+  content: "\f3f2";
+}
+
+.mi-deposit::before {
+  content: "\f3f3";
+}
+
+.mi-description-alt::before {
+  content: "\f3f4";
+}
+
+.mi-description::before {
+  content: "\f3f5";
+}
+
+.mi-desk::before {
+  content: "\f3f6";
+}
+
+.mi-desktop-arrow-down::before {
+  content: "\f3f7";
+}
+
+.mi-desktop-wallpaper::before {
+  content: "\f3f8";
+}
+
+.mi-devices::before {
+  content: "\f3f9";
+}
+
+.mi-dewpoint::before {
+  content: "\f3fa";
+}
+
+.mi-dharmachakra::before {
+  content: "\f3fb";
+}
+
+.mi-diagram-cells::before {
+  content: "\f3fc";
+}
+
+.mi-diagram-lean-canvas::before {
+  content: "\f3fd";
+}
+
+.mi-diagram-nested::before {
+  content: "\f3fe";
+}
+
+.mi-diagram-next::before {
+  content: "\f3ff";
+}
+
+.mi-diagram-predecessor::before {
+  content: "\f400";
+}
+
+.mi-diagram-previous::before {
+  content: "\f401";
+}
+
+.mi-diagram-project::before {
+  content: "\f402";
+}
+
+.mi-diagram-sankey::before {
+  content: "\f403";
+}
+
+.mi-diagram-subtask::before {
+  content: "\f404";
+}
+
+.mi-diagram-successor::before {
+  content: "\f405";
+}
+
+.mi-diagram-venn::before {
+  content: "\f406";
+}
+
+.mi-dial-high::before {
+  content: "\f407";
+}
+
+.mi-dial-low::before {
+  content: "\f408";
+}
+
+.mi-dial-max::before {
+  content: "\f409";
+}
+
+.mi-dial-med-low::before {
+  content: "\f40a";
+}
+
+.mi-dial-med::before {
+  content: "\f40b";
+}
+
+.mi-dial-min::before {
+  content: "\f40c";
+}
+
+.mi-dial-off::before {
+  content: "\f40d";
+}
+
+.mi-dial::before {
+  content: "\f40e";
+}
+
+.mi-diamond-exclamation::before {
+  content: "\f40f";
+}
+
+.mi-diamond-turn-right::before {
+  content: "\f410";
+}
+
+.mi-diamond::before {
+  content: "\f411";
+}
+
+.mi-diary-bookmark-down::before {
+  content: "\f412";
+}
+
+.mi-diary-bookmarks::before {
+  content: "\f413";
+}
+
+.mi-diary-clasp::before {
+  content: "\f414";
+}
+
+.mi-dice-alt::before {
+  content: "\f415";
+}
+
+.mi-dice-d10::before {
+  content: "\f416";
+}
+
+.mi-dice-d12::before {
+  content: "\f417";
+}
+
+.mi-dice-d20::before {
+  content: "\f418";
+}
+
+.mi-dice-d4::before {
+  content: "\f419";
+}
+
+.mi-dice-d6::before {
+  content: "\f41a";
+}
+
+.mi-dice-d8::before {
+  content: "\f41b";
+}
+
+.mi-dice-four::before {
+  content: "\f41c";
+}
+
+.mi-dice-one::before {
+  content: "\f41d";
+}
+
+.mi-dice-six::before {
+  content: "\f41e";
+}
+
+.mi-dice-three::before {
+  content: "\f41f";
+}
+
+.mi-dice-two::before {
+  content: "\f420";
+}
+
+.mi-dice::before {
+  content: "\f421";
+}
+
+.mi-digging::before {
+  content: "\f422";
+}
+
+.mi-digital-tachograph::before {
+  content: "\f423";
+}
+
+.mi-dinner::before {
+  content: "\f424";
+}
+
+.mi-diploma::before {
+  content: "\f425";
+}
+
+.mi-direction-signal-arrow::before {
+  content: "\f426";
+}
+
+.mi-direction-signal::before {
+  content: "\f427";
+}
+
+.mi-disc-drive::before {
+  content: "\f428";
+}
+
+.mi-disco-ball::before {
+  content: "\f429";
+}
+
+.mi-discover::before {
+  content: "\f42a";
+}
+
+.mi-disease::before {
+  content: "\f42b";
+}
+
+.mi-disk::before {
+  content: "\f42c";
+}
+
+.mi-display-arrow-down::before {
+  content: "\f42d";
+}
+
+.mi-display-chart-up::before {
+  content: "\f42e";
+}
+
+.mi-display-code::before {
+  content: "\f42f";
+}
+
+.mi-display-medical::before {
+  content: "\f430";
+}
+
+.mi-display-slash::before {
+  content: "\f431";
+}
+
+.mi-distribute-spacing-horizontal::before {
+  content: "\f432";
+}
+
+.mi-distribute-spacing-vertical::before {
+  content: "\f433";
+}
+
+.mi-divide::before {
+  content: "\f434";
+}
+
+.mi-dizzy::before {
+  content: "\f435";
+}
+
+.mi-dna::before {
+  content: "\f436";
+}
+
+.mi-do-not-enter::before {
+  content: "\f437";
+}
+
+.mi-doctor::before {
+  content: "\f438";
+}
+
+.mi-document-circle-wrong::before {
+  content: "\f439";
+}
+
+.mi-document-paid::before {
+  content: "\f43a";
+}
+
+.mi-document-signed::before {
+  content: "\f43b";
+}
+
+.mi-document::before {
+  content: "\f43c";
+}
+
+.mi-dog-leashed::before {
+  content: "\f43d";
+}
+
+.mi-dog::before {
+  content: "\f43e";
+}
+
+.mi-dollar::before {
+  content: "\f43f";
+}
+
+.mi-dolly-flatbed-alt::before {
+  content: "\f440";
+}
+
+.mi-dolly-flatbed-empty::before {
+  content: "\f441";
+}
+
+.mi-dolly-flatbed::before {
+  content: "\f442";
+}
+
+.mi-dolphin::before {
+  content: "\f443";
+}
+
+.mi-domino-effect::before {
+  content: "\f444";
+}
+
+.mi-donate::before {
+  content: "\f445";
+}
+
+.mi-dong-sign::before {
+  content: "\f446";
+}
+
+.mi-donut::before {
+  content: "\f447";
+}
+
+.mi-door-closed::before {
+  content: "\f448";
+}
+
+.mi-door-open::before {
+  content: "\f449";
+}
+
+.mi-dot-circle::before {
+  content: "\f44a";
+}
+
+.mi-dot-pending::before {
+  content: "\f44b";
+}
+
+.mi-dove::before {
+  content: "\f44c";
+}
+
+.mi-down-from-bracket::before {
+  content: "\f44d";
+}
+
+.mi-down-left-and-up-right-to-center::before {
+  content: "\f44e";
+}
+
+.mi-down-left::before {
+  content: "\f44f";
+}
+
+.mi-down-right::before {
+  content: "\f450";
+}
+
+.mi-down-to-line::before {
+  content: "\f451";
+}
+
+.mi-down::before {
+  content: "\f452";
+}
+
+.mi-download::before {
+  content: "\f453";
+}
+
+.mi-drafting-compass::before {
+  content: "\f454";
+}
+
+.mi-dragon::before {
+  content: "\f455";
+}
+
+.mi-draw-polygon::before {
+  content: "\f456";
+}
+
+.mi-draw-square::before {
+  content: "\f457";
+}
+
+.mi-drawer-alt::before {
+  content: "\f458";
+}
+
+.mi-drawer-empty::before {
+  content: "\f459";
+}
+
+.mi-drawer::before {
+  content: "\f45a";
+}
+
+.mi-dreidel::before {
+  content: "\f45b";
+}
+
+.mi-drink-alt::before {
+  content: "\f45c";
+}
+
+.mi-driver-man::before {
+  content: "\f45d";
+}
+
+.mi-driver-woman::before {
+  content: "\f45e";
+}
+
+.mi-drone-alt::before {
+  content: "\f45f";
+}
+
+.mi-drone-front::before {
+  content: "\f460";
+}
+
+.mi-drone::before {
+  content: "\f461";
+}
+
+.mi-drop-down::before {
+  content: "\f462";
+}
+
+.mi-dropdown-select::before {
+  content: "\f463";
+}
+
+.mi-dropdown::before {
+  content: "\f464";
+}
+
+.mi-drum-steelpan::before {
+  content: "\f465";
+}
+
+.mi-drum::before {
+  content: "\f466";
+}
+
+.mi-drumstick-bite::before {
+  content: "\f467";
+}
+
+.mi-drumstick::before {
+  content: "\f468";
+}
+
+.mi-dryer-alt::before {
+  content: "\f469";
+}
+
+.mi-dryer::before {
+  content: "\f46a";
+}
+
+.mi-duck::before {
+  content: "\f46b";
+}
+
+.mi-dumbbell-fitness::before {
+  content: "\f46c";
+}
+
+.mi-dumbbell-horizontal::before {
+  content: "\f46d";
+}
+
+.mi-dumbbell-ray::before {
+  content: "\f46e";
+}
+
+.mi-dumbbell-weightlifting::before {
+  content: "\f46f";
+}
+
+.mi-dumpster-fire::before {
+  content: "\f470";
+}
+
+.mi-dumpster::before {
+  content: "\f471";
+}
+
+.mi-dungeon::before {
+  content: "\f472";
+}
+
+.mi-duplicate::before {
+  content: "\f473";
+}
+
+.mi-duration-alt::before {
+  content: "\f474";
+}
+
+.mi-duration::before {
+  content: "\f475";
+}
+
+.mi-e-learning::before {
+  content: "\f476";
+}
+
+.mi-e::before {
+  content: "\f477";
+}
+
+.mi-ear-deaf::before {
+  content: "\f478";
+}
+
+.mi-ear-muffs::before {
+  content: "\f479";
+}
+
+.mi-ear::before {
+  content: "\f47a";
+}
+
+.mi-earnings::before {
+  content: "\f47b";
+}
+
+.mi-earth-africa::before {
+  content: "\f47c";
+}
+
+.mi-earth-americas::before {
+  content: "\f47d";
+}
+
+.mi-earth-asia::before {
+  content: "\f47e";
+}
+
+.mi-earth-europa::before {
+  content: "\f47f";
+}
+
+.mi-eclipse-alt::before {
+  content: "\f480";
+}
+
+.mi-eclipse::before {
+  content: "\f481";
+}
+
+.mi-edit-alt::before {
+  content: "\f482";
+}
+
+.mi-edit::before {
+  content: "\f483";
+}
+
+.mi-effect::before {
+  content: "\f484";
+}
+
+.mi-egg-fried::before {
+  content: "\f485";
+}
+
+.mi-egg::before {
+  content: "\f486";
+}
+
+.mi-eject::before {
+  content: "\f487";
+}
+
+.mi-elephant::before {
+  content: "\f488";
+}
+
+.mi-elevator::before {
+  content: "\f489";
+}
+
+.mi-email-pending::before {
+  content: "\f48a";
+}
+
+.mi-employee-alt::before {
+  content: "\f48b";
+}
+
+.mi-employee-handbook::before {
+  content: "\f48c";
+}
+
+.mi-employee-man-alt::before {
+  content: "\f48d";
+}
+
+.mi-employee-man::before {
+  content: "\f48e";
+}
+
+.mi-employees-woman-man::before {
+  content: "\f48f";
+}
+
+.mi-employees::before {
+  content: "\f490";
+}
+
+.mi-empty-set::before {
+  content: "\f491";
+}
+
+.mi-endless-loop::before {
+  content: "\f492";
+}
+
+.mi-engine-warning::before {
+  content: "\f493";
+}
+
+.mi-engine::before {
+  content: "\f494";
+}
+
+.mi-enter::before {
+  content: "\f495";
+}
+
+.mi-envelope-ban::before {
+  content: "\f496";
+}
+
+.mi-envelope-bulk::before {
+  content: "\f497";
+}
+
+.mi-envelope-dot::before {
+  content: "\f498";
+}
+
+.mi-envelope-download::before {
+  content: "\f499";
+}
+
+.mi-envelope-heart::before {
+  content: "\f49a";
+}
+
+.mi-envelope-marker::before {
+  content: "\f49b";
+}
+
+.mi-envelope-open-dollar::before {
+  content: "\f49c";
+}
+
+.mi-envelope-open-text::before {
+  content: "\f49d";
+}
+
+.mi-envelope-open::before {
+  content: "\f49e";
+}
+
+.mi-envelope-plus::before {
+  content: "\f49f";
+}
+
+.mi-envelope::before {
+  content: "\f4a0";
+}
+
+.mi-envelopes::before {
+  content: "\f4a1";
+}
+
+.mi-equality::before {
+  content: "\f4a2";
+}
+
+.mi-equals::before {
+  content: "\f4a3";
+}
+
+.mi-eraser::before {
+  content: "\f4a4";
+}
+
+.mi-error-camera::before {
+  content: "\f4a5";
+}
+
+.mi-escalator::before {
+  content: "\f4a6";
+}
+
+.mi-ethernet::before {
+  content: "\f4a7";
+}
+
+.mi-euro::before {
+  content: "\f4a8";
+}
+
+.mi-excavator::before {
+  content: "\f4a9";
+}
+
+.mi-exchange-alt::before {
+  content: "\f4aa";
+}
+
+.mi-exchange-cryptocurrency::before {
+  content: "\f4ab";
+}
+
+.mi-exchange::before {
+  content: "\f4ac";
+}
+
+.mi-exclamation::before {
+  content: "\f4ad";
+}
+
+.mi-exit-alt::before {
+  content: "\f4ae";
+}
+
+.mi-exit::before {
+  content: "\f4af";
+}
+
+.mi-expand-arrows-alt::before {
+  content: "\f4b0";
+}
+
+.mi-expand-arrows::before {
+  content: "\f4b1";
+}
+
+.mi-expand::before {
+  content: "\f4b2";
+}
+
+.mi-expense-bill::before {
+  content: "\f4b3";
+}
+
+.mi-expense::before {
+  content: "\f4b4";
+}
+
+.mi-external-hard-drive::before {
+  content: "\f4b5";
+}
+
+.mi-external-world::before {
+  content: "\f4b6";
+}
+
+.mi-eye-crossed::before {
+  content: "\f4b7";
+}
+
+.mi-eye-dropper-half::before {
+  content: "\f4b8";
+}
+
+.mi-eye-dropper::before {
+  content: "\f4b9";
+}
+
+.mi-eye::before {
+  content: "\f4ba";
+}
+
+.mi-eyes::before {
+  content: "\f4bb";
+}
+
+.mi-f::before {
+  content: "\f4bc";
+}
+
+.mi-fabric::before {
+  content: "\f4bd";
+}
+
+.mi-face-angry-horns::before {
+  content: "\f4be";
+}
+
+.mi-face-anguished::before {
+  content: "\f4bf";
+}
+
+.mi-face-anxious-sweat::before {
+  content: "\f4c0";
+}
+
+.mi-face-astonished::before {
+  content: "\f4c1";
+}
+
+.mi-face-awesome::before {
+  content: "\f4c2";
+}
+
+.mi-face-beam-hand-over-mouth::before {
+  content: "\f4c3";
+}
+
+.mi-face-confounded::before {
+  content: "\f4c4";
+}
+
+.mi-face-confused::before {
+  content: "\f4c5";
+}
+
+.mi-face-cowboy-hat::before {
+  content: "\f4c6";
+}
+
+.mi-face-disappointed::before {
+  content: "\f4c7";
+}
+
+.mi-face-disguise::before {
+  content: "\f4c8";
+}
+
+.mi-face-downcast-sweat::before {
+  content: "\f4c9";
+}
+
+.mi-face-drooling::before {
+  content: "\f4ca";
+}
+
+.mi-face-explode::before {
+  content: "\f4cb";
+}
+
+.mi-face-expressionless::before {
+  content: "\f4cc";
+}
+
+.mi-face-eyes-xmarks::before {
+  content: "\f4cd";
+}
+
+.mi-face-fearful::before {
+  content: "\f4ce";
+}
+
+.mi-face-glasses::before {
+  content: "\f4cf";
+}
+
+.mi-face-grin-tongue-wink::before {
+  content: "\f4d0";
+}
+
+.mi-face-hand-yawn::before {
+  content: "\f4d1";
+}
+
+.mi-face-head-bandage::before {
+  content: "\f4d2";
+}
+
+.mi-face-hushed::before {
+  content: "\f4d3";
+}
+
+.mi-face-icicles::before {
+  content: "\f4d4";
+}
+
+.mi-face-lying::before {
+  content: "\f4d5";
+}
+
+.mi-face-mask::before {
+  content: "\f4d6";
+}
+
+.mi-face-monocle::before {
+  content: "\f4d7";
+}
+
+.mi-face-nauseated::before {
+  content: "\f4d8";
+}
+
+.mi-face-nose-steam::before {
+  content: "\f4d9";
+}
+
+.mi-face-party::before {
+  content: "\f4da";
+}
+
+.mi-face-pensive::before {
+  content: "\f4db";
+}
+
+.mi-face-persevering::before {
+  content: "\f4dc";
+}
+
+.mi-face-pleading::before {
+  content: "\f4dd";
+}
+
+.mi-face-raised-eyebrow::before {
+  content: "\f4de";
+}
+
+.mi-face-relieved::before {
+  content: "\f4df";
+}
+
+.mi-face-sad-sweat::before {
+  content: "\f4e0";
+}
+
+.mi-face-scream::before {
+  content: "\f4e1";
+}
+
+.mi-face-shush::before {
+  content: "\f4e2";
+}
+
+.mi-face-sleeping::before {
+  content: "\f4e3";
+}
+
+.mi-face-sleepy::before {
+  content: "\f4e4";
+}
+
+.mi-face-smile-halo::before {
+  content: "\f4e5";
+}
+
+.mi-face-smile-hearts::before {
+  content: "\f4e6";
+}
+
+.mi-face-smile-horns::before {
+  content: "\f4e7";
+}
+
+.mi-face-smile-tear::before {
+  content: "\f4e8";
+}
+
+.mi-face-smile-tongue::before {
+  content: "\f4e9";
+}
+
+.mi-face-smile-upside-down::before {
+  content: "\f4ea";
+}
+
+.mi-face-smiling-hands::before {
+  content: "\f4eb";
+}
+
+.mi-face-smirking::before {
+  content: "\f4ec";
+}
+
+.mi-face-sunglasses-alt::before {
+  content: "\f4ed";
+}
+
+.mi-face-sunglasses::before {
+  content: "\f4ee";
+}
+
+.mi-face-swear::before {
+  content: "\f4ef";
+}
+
+.mi-face-thermometer::before {
+  content: "\f4f0";
+}
+
+.mi-face-thinking::before {
+  content: "\f4f1";
+}
+
+.mi-face-tissue::before {
+  content: "\f4f2";
+}
+
+.mi-face-tongue-money::before {
+  content: "\f4f3";
+}
+
+.mi-face-tongue-sweat::before {
+  content: "\f4f4";
+}
+
+.mi-face-unamused::before {
+  content: "\f4f5";
+}
+
+.mi-face-viewfinder::before {
+  content: "\f4f6";
+}
+
+.mi-face-vomit::before {
+  content: "\f4f7";
+}
+
+.mi-face-weary::before {
+  content: "\f4f8";
+}
+
+.mi-face-woozy::before {
+  content: "\f4f9";
+}
+
+.mi-face-worried::before {
+  content: "\f4fa";
+}
+
+.mi-face-zany::before {
+  content: "\f4fb";
+}
+
+.mi-face-zipper::before {
+  content: "\f4fc";
+}
+
+.mi-fail::before {
+  content: "\f4fd";
+}
+
+.mi-falafel::before {
+  content: "\f4fe";
+}
+
+.mi-family-dress::before {
+  content: "\f4ff";
+}
+
+.mi-family-pants::before {
+  content: "\f500";
+}
+
+.mi-family::before {
+  content: "\f501";
+}
+
+.mi-fan-table::before {
+  content: "\f502";
+}
+
+.mi-fan::before {
+  content: "\f503";
+}
+
+.mi-farm::before {
+  content: "\f504";
+}
+
+.mi-faucet-drip::before {
+  content: "\f505";
+}
+
+.mi-faucet::before {
+  content: "\f506";
+}
+
+.mi-fax::before {
+  content: "\f507";
+}
+
+.mi-feather-pointed::before {
+  content: "\f508";
+}
+
+.mi-feather::before {
+  content: "\f509";
+}
+
+.mi-features-alt::before {
+  content: "\f50a";
+}
+
+.mi-features::before {
+  content: "\f50b";
+}
+
+.mi-fee-receipt::before {
+  content: "\f50c";
+}
+
+.mi-fee::before {
+  content: "\f50d";
+}
+
+.mi-feedback-alt::before {
+  content: "\f50e";
+}
+
+.mi-feedback-cycle-loop::before {
+  content: "\f50f";
+}
+
+.mi-feedback-hand::before {
+  content: "\f510";
+}
+
+.mi-feedback-review::before {
+  content: "\f511";
+}
+
+.mi-feedback::before {
+  content: "\f512";
+}
+
+.mi-fence::before {
+  content: "\f513";
+}
+
+.mi-ferris-wheel::before {
+  content: "\f514";
+}
+
+.mi-fighter-jet::before {
+  content: "\f515";
+}
+
+.mi-file-ai::before {
+  content: "\f516";
+}
+
+.mi-file-audio::before {
+  content: "\f517";
+}
+
+.mi-file-binary::before {
+  content: "\f518";
+}
+
+.mi-file-chart-line::before {
+  content: "\f519";
+}
+
+.mi-file-chart-pie::before {
+  content: "\f51a";
+}
+
+.mi-file-circle-info::before {
+  content: "\f51b";
+}
+
+.mi-file-cloud::before {
+  content: "\f51c";
+}
+
+.mi-file-code::before {
+  content: "\f51d";
+}
+
+.mi-file-csv::before {
+  content: "\f51e";
+}
+
+.mi-file-download::before {
+  content: "\f51f";
+}
+
+.mi-file-edit::before {
+  content: "\f520";
+}
+
+.mi-file-eps::before {
+  content: "\f521";
+}
+
+.mi-file-excel::before {
+  content: "\f522";
+}
+
+.mi-file-exclamation::before {
+  content: "\f523";
+}
+
+.mi-file-export::before {
+  content: "\f524";
+}
+
+.mi-file-image::before {
+  content: "\f525";
+}
+
+.mi-file-import::before {
+  content: "\f526";
+}
+
+.mi-file-invoice-dollar::before {
+  content: "\f527";
+}
+
+.mi-file-invoice::before {
+  content: "\f528";
+}
+
+.mi-file-medical-alt::before {
+  content: "\f529";
+}
+
+.mi-file-medical::before {
+  content: "\f52a";
+}
+
+.mi-file-minus::before {
+  content: "\f52b";
+}
+
+.mi-file-pdf::before {
+  content: "\f52c";
+}
+
+.mi-file-powerpoint::before {
+  content: "\f52d";
+}
+
+.mi-file-prescription::before {
+  content: "\f52e";
+}
+
+.mi-file-psd::before {
+  content: "\f52f";
+}
+
+.mi-file-signature::before {
+  content: "\f530";
+}
+
+.mi-file-spreadsheet::before {
+  content: "\f531";
+}
+
+.mi-file-upload::before {
+  content: "\f532";
+}
+
+.mi-file-user::before {
+  content: "\f533";
+}
+
+.mi-file-video::before {
+  content: "\f534";
+}
+
+.mi-file-word::before {
+  content: "\f535";
+}
+
+.mi-file-zipper::before {
+  content: "\f536";
+}
+
+.mi-file::before {
+  content: "\f537";
+}
+
+.mi-files-medical::before {
+  content: "\f538";
+}
+
+.mi-fill::before {
+  content: "\f539";
+}
+
+.mi-film-canister::before {
+  content: "\f53a";
+}
+
+.mi-film-slash::before {
+  content: "\f53b";
+}
+
+.mi-film::before {
+  content: "\f53c";
+}
+
+.mi-films::before {
+  content: "\f53d";
+}
+
+.mi-filter-list::before {
+  content: "\f53e";
+}
+
+.mi-filter-slash::before {
+  content: "\f53f";
+}
+
+.mi-filter::before {
+  content: "\f540";
+}
+
+.mi-filters::before {
+  content: "\f541";
+}
+
+.mi-fingerprint-security-risk::before {
+  content: "\f542";
+}
+
+.mi-fingerprint::before {
+  content: "\f543";
+}
+
+.mi-fire-burner::before {
+  content: "\f544";
+}
+
+.mi-fire-extinguisher::before {
+  content: "\f545";
+}
+
+.mi-fire-flame-curved::before {
+  content: "\f546";
+}
+
+.mi-fire-flame-simple::before {
+  content: "\f547";
+}
+
+.mi-fire-hydrant::before {
+  content: "\f548";
+}
+
+.mi-fire-smoke::before {
+  content: "\f549";
+}
+
+.mi-fireplace::before {
+  content: "\f54a";
+}
+
+.mi-first-award::before {
+  content: "\f54b";
+}
+
+.mi-first-laurel::before {
+  content: "\f54c";
+}
+
+.mi-first-medal::before {
+  content: "\f54d";
+}
+
+.mi-first::before {
+  content: "\f54e";
+}
+
+.mi-fish-bones::before {
+  content: "\f54f";
+}
+
+.mi-fish-cooked::before {
+  content: "\f550";
+}
+
+.mi-fish::before {
+  content: "\f551";
+}
+
+.mi-fishing-rod::before {
+  content: "\f552";
+}
+
+.mi-fist-move::before {
+  content: "\f553";
+}
+
+.mi-flag-alt::before {
+  content: "\f554";
+}
+
+.mi-flag-checkered::before {
+  content: "\f555";
+}
+
+.mi-flag-usa::before {
+  content: "\f556";
+}
+
+.mi-flag::before {
+  content: "\f557";
+}
+
+.mi-flame::before {
+  content: "\f558";
+}
+
+.mi-flashlight::before {
+  content: "\f559";
+}
+
+.mi-flask-gear::before {
+  content: "\f55a";
+}
+
+.mi-flask-poison::before {
+  content: "\f55b";
+}
+
+.mi-flask-potion::before {
+  content: "\f55c";
+}
+
+.mi-flask::before {
+  content: "\f55d";
+}
+
+.mi-flatbread-stuffed::before {
+  content: "\f55e";
+}
+
+.mi-flatbread::before {
+  content: "\f55f";
+}
+
+.mi-flip-horizontal::before {
+  content: "\f560";
+}
+
+.mi-floor-alt::before {
+  content: "\f561";
+}
+
+.mi-floor-layer::before {
+  content: "\f562";
+}
+
+.mi-floor::before {
+  content: "\f563";
+}
+
+.mi-floppy-disk-circle-arrow-right::before {
+  content: "\f564";
+}
+
+.mi-floppy-disk-circle-xmark::before {
+  content: "\f565";
+}
+
+.mi-floppy-disk-pen::before {
+  content: "\f566";
+}
+
+.mi-floppy-disks::before {
+  content: "\f567";
+}
+
+.mi-florin-sign::before {
+  content: "\f568";
+}
+
+.mi-flower-bouquet::before {
+  content: "\f569";
+}
+
+.mi-flower-butterfly::before {
+  content: "\f56a";
+}
+
+.mi-flower-daffodil::before {
+  content: "\f56b";
+}
+
+.mi-flower-tulip::before {
+  content: "\f56c";
+}
+
+.mi-flower::before {
+  content: "\f56d";
+}
+
+.mi-flushed::before {
+  content: "\f56e";
+}
+
+.mi-flute::before {
+  content: "\f56f";
+}
+
+.mi-flux-capacitor::before {
+  content: "\f570";
+}
+
+.mi-fly-insect::before {
+  content: "\f571";
+}
+
+.mi-flying-disc::before {
+  content: "\f572";
+}
+
+.mi-fog::before {
+  content: "\f573";
+}
+
+.mi-folder-download::before {
+  content: "\f574";
+}
+
+.mi-folder-fire::before {
+  content: "\f575";
+}
+
+.mi-folder-minus::before {
+  content: "\f576";
+}
+
+.mi-folder-open::before {
+  content: "\f577";
+}
+
+.mi-folder-times::before {
+  content: "\f578";
+}
+
+.mi-folder-tree::before {
+  content: "\f579";
+}
+
+.mi-folder-upload::before {
+  content: "\f57a";
+}
+
+.mi-folder-xmark::before {
+  content: "\f57b";
+}
+
+.mi-folder::before {
+  content: "\f57c";
+}
+
+.mi-folders::before {
+  content: "\f57d";
+}
+
+.mi-follow-folder::before {
+  content: "\f57e";
+}
+
+.mi-followcollection::before {
+  content: "\f57f";
+}
+
+.mi-following::before {
+  content: "\f580";
+}
+
+.mi-fondue-pot::before {
+  content: "\f581";
+}
+
+.mi-football::before {
+  content: "\f582";
+}
+
+.mi-foreign-language-audio::before {
+  content: "\f583";
+}
+
+.mi-fork::before {
+  content: "\f584";
+}
+
+.mi-forklift::before {
+  content: "\f585";
+}
+
+.mi-form::before {
+  content: "\f586";
+}
+
+.mi-fort::before {
+  content: "\f587";
+}
+
+.mi-forward-fast::before {
+  content: "\f588";
+}
+
+.mi-forward::before {
+  content: "\f589";
+}
+
+.mi-fox::before {
+  content: "\f58a";
+}
+
+.mi-frame::before {
+  content: "\f58b";
+}
+
+.mi-franc-sign::before {
+  content: "\f58c";
+}
+
+.mi-free-delivery::before {
+  content: "\f58d";
+}
+
+.mi-free::before {
+  content: "\f58e";
+}
+
+.mi-french-fries::before {
+  content: "\f58f";
+}
+
+.mi-friday::before {
+  content: "\f590";
+}
+
+.mi-frog::before {
+  content: "\f591";
+}
+
+.mi-frown::before {
+  content: "\f592";
+}
+
+.mi-ftp::before {
+  content: "\f593";
+}
+
+.mi-fuel-gauge::before {
+  content: "\f594";
+}
+
+.mi-function-process::before {
+  content: "\f595";
+}
+
+.mi-function-square::before {
+  content: "\f596";
+}
+
+.mi-function::before {
+  content: "\f597";
+}
+
+.mi-funnel-dollar::before {
+  content: "\f598";
+}
+
+.mi-g::before {
+  content: "\f599";
+}
+
+.mi-galaxy-alt::before {
+  content: "\f59a";
+}
+
+.mi-galaxy-planet::before {
+  content: "\f59b";
+}
+
+.mi-galaxy-star::before {
+  content: "\f59c";
+}
+
+.mi-galaxy::before {
+  content: "\f59d";
+}
+
+.mi-gallery-thumbnails::before {
+  content: "\f59e";
+}
+
+.mi-gallery::before {
+  content: "\f59f";
+}
+
+.mi-game-board-alt::before {
+  content: "\f5a0";
+}
+
+.mi-gamepad::before {
+  content: "\f5a1";
+}
+
+.mi-garage-car::before {
+  content: "\f5a2";
+}
+
+.mi-garage-open::before {
+  content: "\f5a3";
+}
+
+.mi-garage::before {
+  content: "\f5a4";
+}
+
+.mi-garlic-alt::before {
+  content: "\f5a5";
+}
+
+.mi-garlic::before {
+  content: "\f5a6";
+}
+
+.mi-gas-pump-alt::before {
+  content: "\f5a7";
+}
+
+.mi-gas-pump-slash::before {
+  content: "\f5a8";
+}
+
+.mi-gas-pump::before {
+  content: "\f5a9";
+}
+
+.mi-gauge-circle-bolt::before {
+  content: "\f5aa";
+}
+
+.mi-gauge-circle-minus::before {
+  content: "\f5ab";
+}
+
+.mi-gauge-circle-plus::before {
+  content: "\f5ac";
+}
+
+.mi-gavel::before {
+  content: "\f5ad";
+}
+
+.mi-gay-couple::before {
+  content: "\f5ae";
+}
+
+.mi-gears::before {
+  content: "\f5af";
+}
+
+.mi-gem::before {
+  content: "\f5b0";
+}
+
+.mi-general::before {
+  content: "\f5b1";
+}
+
+.mi-ghost::before {
+  content: "\f5b2";
+}
+
+.mi-gif-square::before {
+  content: "\f5b3";
+}
+
+.mi-gif::before {
+  content: "\f5b4";
+}
+
+.mi-gift-box-benefits::before {
+  content: "\f5b5";
+}
+
+.mi-gift-card::before {
+  content: "\f5b6";
+}
+
+.mi-gift::before {
+  content: "\f5b7";
+}
+
+.mi-gifts::before {
+  content: "\f5b8";
+}
+
+.mi-gingerbread-man::before {
+  content: "\f5b9";
+}
+
+.mi-glass-champagne::before {
+  content: "\f5ba";
+}
+
+.mi-glass-cheers::before {
+  content: "\f5bb";
+}
+
+.mi-glass-citrus::before {
+  content: "\f5bc";
+}
+
+.mi-glass-empty::before {
+  content: "\f5bd";
+}
+
+.mi-glass-half::before {
+  content: "\f5be";
+}
+
+.mi-glass-water-droplet::before {
+  content: "\f5bf";
+}
+
+.mi-glass-whiskey-rocks::before {
+  content: "\f5c0";
+}
+
+.mi-glass-whiskey::before {
+  content: "\f5c1";
+}
+
+.mi-glass::before {
+  content: "\f5c2";
+}
+
+.mi-glasses::before {
+  content: "\f5c3";
+}
+
+.mi-globe-alt::before {
+  content: "\f5c4";
+}
+
+.mi-globe-pointer::before {
+  content: "\f5c5";
+}
+
+.mi-globe-snow::before {
+  content: "\f5c6";
+}
+
+.mi-globe::before {
+  content: "\f5c7";
+}
+
+.mi-goal-net::before {
+  content: "\f5c8";
+}
+
+.mi-golf-ball::before {
+  content: "\f5c9";
+}
+
+.mi-golf-hole::before {
+  content: "\f5ca";
+}
+
+.mi-golf::before {
+  content: "\f5cb";
+}
+
+.mi-gopuram::before {
+  content: "\f5cc";
+}
+
+.mi-government-budget::before {
+  content: "\f5cd";
+}
+
+.mi-government-flag::before {
+  content: "\f5ce";
+}
+
+.mi-government-user::before {
+  content: "\f5cf";
+}
+
+.mi-gps-navigation::before {
+  content: "\f5d0";
+}
+
+.mi-graduation-cap::before {
+  content: "\f5d1";
+}
+
+.mi-gramophone::before {
+  content: "\f5d2";
+}
+
+.mi-grape::before {
+  content: "\f5d3";
+}
+
+.mi-graph-curve::before {
+  content: "\f5d4";
+}
+
+.mi-graphic-style::before {
+  content: "\f5d5";
+}
+
+.mi-graphic-tablet::before {
+  content: "\f5d6";
+}
+
+.mi-grate-droplet::before {
+  content: "\f5d7";
+}
+
+.mi-grate::before {
+  content: "\f5d8";
+}
+
+.mi-greater-than-equal::before {
+  content: "\f5d9";
+}
+
+.mi-greater-than::before {
+  content: "\f5da";
+}
+
+.mi-greek-helmet::before {
+  content: "\f5db";
+}
+
+.mi-grid-alt::before {
+  content: "\f5dc";
+}
+
+.mi-grid-dividers::before {
+  content: "\f5dd";
+}
+
+.mi-grid::before {
+  content: "\f5de";
+}
+
+.mi-grill-hot-alt::before {
+  content: "\f5df";
+}
+
+.mi-grill::before {
+  content: "\f5e0";
+}
+
+.mi-grimace::before {
+  content: "\f5e1";
+}
+
+.mi-grin-alt::before {
+  content: "\f5e2";
+}
+
+.mi-grin-beam-sweat::before {
+  content: "\f5e3";
+}
+
+.mi-grin-beam::before {
+  content: "\f5e4";
+}
+
+.mi-grin-hearts::before {
+  content: "\f5e5";
+}
+
+.mi-grin-squint-tears::before {
+  content: "\f5e6";
+}
+
+.mi-grin-squint::before {
+  content: "\f5e7";
+}
+
+.mi-grin-stars::before {
+  content: "\f5e8";
+}
+
+.mi-grin-tears::before {
+  content: "\f5e9";
+}
+
+.mi-grin-tongue-squint::before {
+  content: "\f5ea";
+}
+
+.mi-grin-tongue-wink::before {
+  content: "\f5eb";
+}
+
+.mi-grin-tongue::before {
+  content: "\f5ec";
+}
+
+.mi-grin-wink::before {
+  content: "\f5ed";
+}
+
+.mi-grin::before {
+  content: "\f5ee";
+}
+
+.mi-grip-dots-vertical::before {
+  content: "\f5ef";
+}
+
+.mi-grip-dots::before {
+  content: "\f5f0";
+}
+
+.mi-grip-horizontal::before {
+  content: "\f5f1";
+}
+
+.mi-grip-lines-vertical::before {
+  content: "\f5f2";
+}
+
+.mi-grip-lines::before {
+  content: "\f5f3";
+}
+
+.mi-grip-vertical::before {
+  content: "\f5f4";
+}
+
+.mi-grocery-bag::before {
+  content: "\f5f5";
+}
+
+.mi-grocery-basket::before {
+  content: "\f5f6";
+}
+
+.mi-group-arrows-rotate::before {
+  content: "\f5f7";
+}
+
+.mi-group-call::before {
+  content: "\f5f8";
+}
+
+.mi-group-community-social-media::before {
+  content: "\f5f9";
+}
+
+.mi-growth-chart-invest::before {
+  content: "\f5fa";
+}
+
+.mi-guarani-sign::before {
+  content: "\f5fb";
+}
+
+.mi-guide-alt::before {
+  content: "\f5fc";
+}
+
+.mi-guide::before {
+  content: "\f5fd";
+}
+
+.mi-guitar-electric::before {
+  content: "\f5fe";
+}
+
+.mi-guitar::before {
+  content: "\f5ff";
+}
+
+.mi-guitars::before {
+  content: "\f600";
+}
+
+.mi-gun-squirt::before {
+  content: "\f601";
+}
+
+.mi-gym::before {
+  content: "\f602";
+}
+
+.mi-h-square::before {
+  content: "\f603";
+}
+
+.mi-h::before {
+  content: "\f604";
+}
+
+.mi-h1::before {
+  content: "\f605";
+}
+
+.mi-h2::before {
+  content: "\f606";
+}
+
+.mi-h3::before {
+  content: "\f607";
+}
+
+.mi-h4::before {
+  content: "\f608";
+}
+
+.mi-hair-clipper::before {
+  content: "\f609";
+}
+
+.mi-hamburger-soda::before {
+  content: "\f60a";
+}
+
+.mi-hamburger::before {
+  content: "\f60b";
+}
+
+.mi-hammer-crash::before {
+  content: "\f60c";
+}
+
+.mi-hammer-war::before {
+  content: "\f60d";
+}
+
+.mi-hammer::before {
+  content: "\f60e";
+}
+
+.mi-hamsa::before {
+  content: "\f60f";
+}
+
+.mi-hand-back-fist::before {
+  content: "\f610";
+}
+
+.mi-hand-back-point-down::before {
+  content: "\f611";
+}
+
+.mi-hand-back-point-left::before {
+  content: "\f612";
+}
+
+.mi-hand-back-point-ribbon::before {
+  content: "\f613";
+}
+
+.mi-hand-back-point-right::before {
+  content: "\f614";
+}
+
+.mi-hand-bill::before {
+  content: "\f615";
+}
+
+.mi-hand-dots::before {
+  content: "\f616";
+}
+
+.mi-hand-fingers-crossed::before {
+  content: "\f617";
+}
+
+.mi-hand-fist::before {
+  content: "\f618";
+}
+
+.mi-hand-heart::before {
+  content: "\f619";
+}
+
+.mi-hand-holding-box::before {
+  content: "\f61a";
+}
+
+.mi-hand-holding-droplet::before {
+  content: "\f61b";
+}
+
+.mi-hand-holding-heart::before {
+  content: "\f61c";
+}
+
+.mi-hand-holding-magic::before {
+  content: "\f61d";
+}
+
+.mi-hand-holding-medical::before {
+  content: "\f61e";
+}
+
+.mi-hand-holding-seeding::before {
+  content: "\f61f";
+}
+
+.mi-hand-holding-skull::before {
+  content: "\f620";
+}
+
+.mi-hand-holding-usd::before {
+  content: "\f621";
+}
+
+.mi-hand-holding-water::before {
+  content: "\f622";
+}
+
+.mi-hand-horns::before {
+  content: "\f623";
+}
+
+.mi-hand-lizard::before {
+  content: "\f624";
+}
+
+.mi-hand-love::before {
+  content: "\f625";
+}
+
+.mi-hand-middle-finger::before {
+  content: "\f626";
+}
+
+.mi-hand-paper::before {
+  content: "\f627";
+}
+
+.mi-hand-peace::before {
+  content: "\f628";
+}
+
+.mi-hand-point-ribbon::before {
+  content: "\f629";
+}
+
+.mi-hand-scissors::before {
+  content: "\f62a";
+}
+
+.mi-hand-sparkles::before {
+  content: "\f62b";
+}
+
+.mi-hand-spock::before {
+  content: "\f62c";
+}
+
+.mi-hand-wave::before {
+  content: "\f62d";
+}
+
+.mi-hand::before {
+  content: "\f62e";
+}
+
+.mi-handmade::before {
+  content: "\f62f";
+}
+
+.mi-hands-bubbles::before {
+  content: "\f630";
+}
+
+.mi-hands-clapping::before {
+  content: "\f631";
+}
+
+.mi-hands-heart::before {
+  content: "\f632";
+}
+
+.mi-hands-holding-diamond::before {
+  content: "\f633";
+}
+
+.mi-hands-holding::before {
+  content: "\f634";
+}
+
+.mi-hands-usd::before {
+  content: "\f635";
+}
+
+.mi-handshake-angle::before {
+  content: "\f636";
+}
+
+.mi-handshake-deal-loan::before {
+  content: "\f637";
+}
+
+.mi-handshake-house::before {
+  content: "\f638";
+}
+
+.mi-handshake-simple-slash::before {
+  content: "\f639";
+}
+
+.mi-handshake-trust::before {
+  content: "\f63a";
+}
+
+.mi-handshake::before {
+  content: "\f63b";
+}
+
+.mi-hard-hat::before {
+  content: "\f63c";
+}
+
+.mi-hashtag-lock::before {
+  content: "\f63d";
+}
+
+.mi-hastag::before {
+  content: "\f63e";
+}
+
+.mi-hat-beach::before {
+  content: "\f63f";
+}
+
+.mi-hat-birthday::before {
+  content: "\f640";
+}
+
+.mi-hat-chef::before {
+  content: "\f641";
+}
+
+.mi-hat-cowboy-side::before {
+  content: "\f642";
+}
+
+.mi-hat-cowboy::before {
+  content: "\f643";
+}
+
+.mi-hat-santa::before {
+  content: "\f644";
+}
+
+.mi-hat-winter::before {
+  content: "\f645";
+}
+
+.mi-hat-witch::before {
+  content: "\f646";
+}
+
+.mi-hat-wizard::before {
+  content: "\f647";
+}
+
+.mi-hdd::before {
+  content: "\f648";
+}
+
+.mi-head-side-brain::before {
+  content: "\f649";
+}
+
+.mi-head-side-cough-slash::before {
+  content: "\f64a";
+}
+
+.mi-head-side-cough::before {
+  content: "\f64b";
+}
+
+.mi-head-side-headphones::before {
+  content: "\f64c";
+}
+
+.mi-head-side-heart::before {
+  content: "\f64d";
+}
+
+.mi-head-side-mask::before {
+  content: "\f64e";
+}
+
+.mi-head-side-medical::before {
+  content: "\f64f";
+}
+
+.mi-head-side-thinking::before {
+  content: "\f650";
+}
+
+.mi-head-side-virus::before {
+  content: "\f651";
+}
+
+.mi-head-side::before {
+  content: "\f652";
+}
+
+.mi-head-vr::before {
+  content: "\f653";
+}
+
+.mi-heading::before {
+  content: "\f654";
+}
+
+.mi-headphones::before {
+  content: "\f655";
+}
+
+.mi-headset::before {
+  content: "\f656";
+}
+
+.mi-heart-arrow::before {
+  content: "\f657";
+}
+
+.mi-heart-brain::before {
+  content: "\f658";
+}
+
+.mi-heart-crack::before {
+  content: "\f659";
+}
+
+.mi-heart-half-stroke::before {
+  content: "\f65a";
+}
+
+.mi-heart-half::before {
+  content: "\f65b";
+}
+
+.mi-heart-health-muscle::before {
+  content: "\f65c";
+}
+
+.mi-heart-lock::before {
+  content: "\f65d";
+}
+
+.mi-heart-partner-handshake::before {
+  content: "\f65e";
+}
+
+.mi-heart-rate::before {
+  content: "\f65f";
+}
+
+.mi-heart-slash::before {
+  content: "\f660";
+}
+
+.mi-heart-upside-down::before {
+  content: "\f661";
+}
+
+.mi-heart::before {
+  content: "\f662";
+}
+
+.mi-heat::before {
+  content: "\f663";
+}
+
+.mi-helicopter-side::before {
+  content: "\f664";
+}
+
+.mi-helmet-battle::before {
+  content: "\f665";
+}
+
+.mi-hexagon-check::before {
+  content: "\f666";
+}
+
+.mi-hexagon-divide::before {
+  content: "\f667";
+}
+
+.mi-hexagon-exclamation::before {
+  content: "\f668";
+}
+
+.mi-hexagon::before {
+  content: "\f669";
+}
+
+.mi-high-definition::before {
+  content: "\f66a";
+}
+
+.mi-high-five-celebration-yes::before {
+  content: "\f66b";
+}
+
+.mi-high-five::before {
+  content: "\f66c";
+}
+
+.mi-highlighter-line::before {
+  content: "\f66d";
+}
+
+.mi-highlighter::before {
+  content: "\f66e";
+}
+
+.mi-hiking::before {
+  content: "\f66f";
+}
+
+.mi-hippo::before {
+  content: "\f670";
+}
+
+.mi-hockey-puck::before {
+  content: "\f671";
+}
+
+.mi-hockey-stick-puck::before {
+  content: "\f672";
+}
+
+.mi-hockey-sticks::before {
+  content: "\f673";
+}
+
+.mi-holding-hand-gear::before {
+  content: "\f674";
+}
+
+.mi-holding-hand-revenue::before {
+  content: "\f675";
+}
+
+.mi-holly-berry::before {
+  content: "\f676";
+}
+
+.mi-home-heart::before {
+  content: "\f677";
+}
+
+.mi-home-location-alt::before {
+  content: "\f678";
+}
+
+.mi-home-location::before {
+  content: "\f679";
+}
+
+.mi-home::before {
+  content: "\f67a";
+}
+
+.mi-honey-pot::before {
+  content: "\f67b";
+}
+
+.mi-hood-cloak::before {
+  content: "\f67c";
+}
+
+.mi-horizontal-rule::before {
+  content: "\f67d";
+}
+
+.mi-horse-head::before {
+  content: "\f67e";
+}
+
+.mi-horse-saddle::before {
+  content: "\f67f";
+}
+
+.mi-horse::before {
+  content: "\f680";
+}
+
+.mi-horseshoe-broken::before {
+  content: "\f681";
+}
+
+.mi-horseshoe::before {
+  content: "\f682";
+}
+
+.mi-hose-reel::before {
+  content: "\f683";
+}
+
+.mi-hose::before {
+  content: "\f684";
+}
+
+.mi-hospital-symbol::before {
+  content: "\f685";
+}
+
+.mi-hospital-user::before {
+  content: "\f686";
+}
+
+.mi-hospital::before {
+  content: "\f687";
+}
+
+.mi-hospitals::before {
+  content: "\f688";
+}
+
+.mi-hot-tub::before {
+  content: "\f689";
+}
+
+.mi-hotdog::before {
+  content: "\f68a";
+}
+
+.mi-hotel::before {
+  content: "\f68b";
+}
+
+.mi-hourglass-end::before {
+  content: "\f68c";
+}
+
+.mi-hourglass-start::before {
+  content: "\f68d";
+}
+
+.mi-hourglass::before {
+  content: "\f68e";
+}
+
+.mi-house-blank::before {
+  content: "\f68f";
+}
+
+.mi-house-building::before {
+  content: "\f690";
+}
+
+.mi-house-chimney-blank::before {
+  content: "\f691";
+}
+
+.mi-house-chimney-crack::before {
+  content: "\f692";
+}
+
+.mi-house-chimney-heart::before {
+  content: "\f693";
+}
+
+.mi-house-chimney-medical::before {
+  content: "\f694";
+}
+
+.mi-house-chimney-user::before {
+  content: "\f695";
+}
+
+.mi-house-chimney-window::before {
+  content: "\f696";
+}
+
+.mi-house-chimney::before {
+  content: "\f697";
+}
+
+.mi-house-circle-check::before {
+  content: "\f698";
+}
+
+.mi-house-circle-exclamation::before {
+  content: "\f699";
+}
+
+.mi-house-circle-xmark::before {
+  content: "\f69a";
+}
+
+.mi-house-crack-alt::before {
+  content: "\f69b";
+}
+
+.mi-house-crack::before {
+  content: "\f69c";
+}
+
+.mi-house-day::before {
+  content: "\f69d";
+}
+
+.mi-house-fire::before {
+  content: "\f69e";
+}
+
+.mi-house-flag::before {
+  content: "\f69f";
+}
+
+.mi-house-flood::before {
+  content: "\f6a0";
+}
+
+.mi-house-laptop::before {
+  content: "\f6a1";
+}
+
+.mi-house-leave::before {
+  content: "\f6a2";
+}
+
+.mi-house-lock::before {
+  content: "\f6a3";
+}
+
+.mi-house-medical::before {
+  content: "\f6a4";
+}
+
+.mi-house-night::before {
+  content: "\f6a5";
+}
+
+.mi-house-return::before {
+  content: "\f6a6";
+}
+
+.mi-house-signal::before {
+  content: "\f6a7";
+}
+
+.mi-house-tree::before {
+  content: "\f6a8";
+}
+
+.mi-house-tsunami::before {
+  content: "\f6a9";
+}
+
+.mi-house-turret::before {
+  content: "\f6aa";
+}
+
+.mi-house-user::before {
+  content: "\f6ab";
+}
+
+.mi-house-window::before {
+  content: "\f6ac";
+}
+
+.mi-hr-group::before {
+  content: "\f6ad";
+}
+
+.mi-hr-person::before {
+  content: "\f6ae";
+}
+
+.mi-hr::before {
+  content: "\f6af";
+}
+
+.mi-hryvnia::before {
+  content: "\f6b0";
+}
+
+.mi-humidity::before {
+  content: "\f6b1";
+}
+
+.mi-hundred-points::before {
+  content: "\f6b2";
+}
+
+.mi-hurricane::before {
+  content: "\f6b3";
+}
+
+.mi-i::before {
+  content: "\f6b4";
+}
+
+.mi-ice-cream::before {
+  content: "\f6b5";
+}
+
+.mi-ice-skate::before {
+  content: "\f6b6";
+}
+
+.mi-icicles::before {
+  content: "\f6b7";
+}
+
+.mi-icon-star::before {
+  content: "\f6b8";
+}
+
+.mi-id-badge::before {
+  content: "\f6b9";
+}
+
+.mi-id-card-clip-alt::before {
+  content: "\f6ba";
+}
+
+.mi-igloo::before {
+  content: "\f6bb";
+}
+
+.mi-image-slash::before {
+  content: "\f6bc";
+}
+
+.mi-images-user::before {
+  content: "\f6bd";
+}
+
+.mi-images::before {
+  content: "\f6be";
+}
+
+.mi-improve-user::before {
+  content: "\f6bf";
+}
+
+.mi-inbox-full::before {
+  content: "\f6c0";
+}
+
+.mi-inbox-in::before {
+  content: "\f6c1";
+}
+
+.mi-inbox-out::before {
+  content: "\f6c2";
+}
+
+.mi-inbox::before {
+  content: "\f6c3";
+}
+
+.mi-inboxes::before {
+  content: "\f6c4";
+}
+
+.mi-incense-sticks-yoga::before {
+  content: "\f6c5";
+}
+
+.mi-incognito::before {
+  content: "\f6c6";
+}
+
+.mi-indent::before {
+  content: "\f6c7";
+}
+
+.mi-indian-rupee-sign::before {
+  content: "\f6c8";
+}
+
+.mi-industry-alt::before {
+  content: "\f6c9";
+}
+
+.mi-industry-windows::before {
+  content: "\f6ca";
+}
+
+.mi-infinity::before {
+  content: "\f6cb";
+}
+
+.mi-info-guide::before {
+  content: "\f6cc";
+}
+
+.mi-info::before {
+  content: "\f6cd";
+}
+
+.mi-information::before {
+  content: "\f6ce";
+}
+
+.mi-inhaler::before {
+  content: "\f6cf";
+}
+
+.mi-input-numeric::before {
+  content: "\f6d0";
+}
+
+.mi-input-pipe::before {
+  content: "\f6d1";
+}
+
+.mi-input-text::before {
+  content: "\f6d2";
+}
+
+.mi-insert-alt::before {
+  content: "\f6d3";
+}
+
+.mi-insert-arrows::before {
+  content: "\f6d4";
+}
+
+.mi-insert-button-circle::before {
+  content: "\f6d5";
+}
+
+.mi-insert-credit-card::before {
+  content: "\f6d6";
+}
+
+.mi-insert-square::before {
+  content: "\f6d7";
+}
+
+.mi-insert::before {
+  content: "\f6d8";
+}
+
+.mi-insight-alt::before {
+  content: "\f6d9";
+}
+
+.mi-insight-head::before {
+  content: "\f6da";
+}
+
+.mi-insight::before {
+  content: "\f6db";
+}
+
+.mi-integral::before {
+  content: "\f6dc";
+}
+
+.mi-interactive::before {
+  content: "\f6dd";
+}
+
+.mi-interlining::before {
+  content: "\f6de";
+}
+
+.mi-internet-speed-wifi::before {
+  content: "\f6df";
+}
+
+.mi-interrogation::before {
+  content: "\f6e0";
+}
+
+.mi-intersection::before {
+  content: "\f6e1";
+}
+
+.mi-introduction-handshake::before {
+  content: "\f6e2";
+}
+
+.mi-introduction::before {
+  content: "\f6e3";
+}
+
+.mi-inventory-alt::before {
+  content: "\f6e4";
+}
+
+.mi-invest::before {
+  content: "\f6e5";
+}
+
+.mi-investment::before {
+  content: "\f6e6";
+}
+
+.mi-invite-alt::before {
+  content: "\f6e7";
+}
+
+.mi-invite::before {
+  content: "\f6e8";
+}
+
+.mi-iot-alt::before {
+  content: "\f6e9";
+}
+
+.mi-iot::before {
+  content: "\f6ea";
+}
+
+.mi-ip-address::before {
+  content: "\f6eb";
+}
+
+.mi-island-tropical::before {
+  content: "\f6ec";
+}
+
+.mi-issue-loupe::before {
+  content: "\f6ed";
+}
+
+.mi-it-alt::before {
+  content: "\f6ee";
+}
+
+.mi-it-computer::before {
+  content: "\f6ef";
+}
+
+.mi-it::before {
+  content: "\f6f0";
+}
+
+.mi-italian-lira-sign::before {
+  content: "\f6f1";
+}
+
+.mi-italic::before {
+  content: "\f6f2";
+}
+
+.mi-j::before {
+  content: "\f6f3";
+}
+
+.mi-jam::before {
+  content: "\f6f4";
+}
+
+.mi-jar-alt::before {
+  content: "\f6f5";
+}
+
+.mi-jar-wheat::before {
+  content: "\f6f6";
+}
+
+.mi-javascript::before {
+  content: "\f6f7";
+}
+
+.mi-joint::before {
+  content: "\f6f8";
+}
+
+.mi-joker::before {
+  content: "\f6f9";
+}
+
+.mi-journal-alt::before {
+  content: "\f6fa";
+}
+
+.mi-journal::before {
+  content: "\f6fb";
+}
+
+.mi-journey::before {
+  content: "\f6fc";
+}
+
+.mi-joystick::before {
+  content: "\f6fd";
+}
+
+.mi-jpg::before {
+  content: "\f6fe";
+}
+
+.mi-jug-alt::before {
+  content: "\f6ff";
+}
+
+.mi-jug-bottle::before {
+  content: "\f700";
+}
+
+.mi-jug::before {
+  content: "\f701";
+}
+
+.mi-jumping-rope::before {
+  content: "\f702";
+}
+
+.mi-k::before {
+  content: "\f703";
+}
+
+.mi-kaaba::before {
+  content: "\f704";
+}
+
+.mi-kazoo::before {
+  content: "\f705";
+}
+
+.mi-kerning::before {
+  content: "\f706";
+}
+
+.mi-key-lock-crypto::before {
+  content: "\f707";
+}
+
+.mi-key-skeleton-left-right::before {
+  content: "\f708";
+}
+
+.mi-key::before {
+  content: "\f709";
+}
+
+.mi-keyboard-brightness-low::before {
+  content: "\f70a";
+}
+
+.mi-keyboard-brightness::before {
+  content: "\f70b";
+}
+
+.mi-keyboard-down::before {
+  content: "\f70c";
+}
+
+.mi-keyboard-left::before {
+  content: "\f70d";
+}
+
+.mi-keyboard::before {
+  content: "\f70e";
+}
+
+.mi-keynote::before {
+  content: "\f70f";
+}
+
+.mi-kidneys::before {
+  content: "\f710";
+}
+
+.mi-kip-sign::before {
+  content: "\f711";
+}
+
+.mi-kiss-beam::before {
+  content: "\f712";
+}
+
+.mi-kiss-wink-heart::before {
+  content: "\f713";
+}
+
+.mi-kiss::before {
+  content: "\f714";
+}
+
+.mi-kite::before {
+  content: "\f715";
+}
+
+.mi-kiwi-bird::before {
+  content: "\f716";
+}
+
+.mi-kiwi-fruit::before {
+  content: "\f717";
+}
+
+.mi-knife-kitchen::before {
+  content: "\f718";
+}
+
+.mi-knife::before {
+  content: "\f719";
+}
+
+.mi-knitting::before {
+  content: "\f71a";
+}
+
+.mi-kpi-evaluation::before {
+  content: "\f71b";
+}
+
+.mi-kpi::before {
+  content: "\f71c";
+}
+
+.mi-l::before {
+  content: "\f71d";
+}
+
+.mi-label::before {
+  content: "\f71e";
+}
+
+.mi-lacrosse-stick-ball::before {
+  content: "\f71f";
+}
+
+.mi-lacrosse-stick::before {
+  content: "\f720";
+}
+
+.mi-lambda::before {
+  content: "\f721";
+}
+
+.mi-lamp-desk::before {
+  content: "\f722";
+}
+
+.mi-lamp-floor::before {
+  content: "\f723";
+}
+
+.mi-lamp-street::before {
+  content: "\f724";
+}
+
+.mi-lamp::before {
+  content: "\f725";
+}
+
+.mi-land-layer-location::before {
+  content: "\f726";
+}
+
+.mi-land-layers::before {
+  content: "\f727";
+}
+
+.mi-land-location::before {
+  content: "\f728";
+}
+
+.mi-landmark-alt::before {
+  content: "\f729";
+}
+
+.mi-language::before {
+  content: "\f72a";
+}
+
+.mi-laptop-arrow-down::before {
+  content: "\f72b";
+}
+
+.mi-laptop-binary::before {
+  content: "\f72c";
+}
+
+.mi-laptop-code::before {
+  content: "\f72d";
+}
+
+.mi-laptop-medical::before {
+  content: "\f72e";
+}
+
+.mi-laptop-mobile::before {
+  content: "\f72f";
+}
+
+.mi-laptop-slash::before {
+  content: "\f730";
+}
+
+.mi-laptop::before {
+  content: "\f731";
+}
+
+.mi-lari-sign::before {
+  content: "\f732";
+}
+
+.mi-lasso-sparkles::before {
+  content: "\f733";
+}
+
+.mi-lasso::before {
+  content: "\f734";
+}
+
+.mi-last-square::before {
+  content: "\f735";
+}
+
+.mi-laugh-beam::before {
+  content: "\f736";
+}
+
+.mi-laugh-squint::before {
+  content: "\f737";
+}
+
+.mi-laugh-wink::before {
+  content: "\f738";
+}
+
+.mi-laugh::before {
+  content: "\f739";
+}
+
+.mi-lawyer-man::before {
+  content: "\f73a";
+}
+
+.mi-lawyer-woman::before {
+  content: "\f73b";
+}
+
+.mi-layer-minus::before {
+  content: "\f73c";
+}
+
+.mi-layer-plus::before {
+  content: "\f73d";
+}
+
+.mi-layers::before {
+  content: "\f73e";
+}
+
+.mi-layout-fluid::before {
+  content: "\f73f";
+}
+
+.mi-lead-funnel::before {
+  content: "\f740";
+}
+
+.mi-lead-management::before {
+  content: "\f741";
+}
+
+.mi-lead::before {
+  content: "\f742";
+}
+
+.mi-leader-alt::before {
+  content: "\f743";
+}
+
+.mi-leader-speech::before {
+  content: "\f744";
+}
+
+.mi-leader::before {
+  content: "\f745";
+}
+
+.mi-leaderboard-alt::before {
+  content: "\f746";
+}
+
+.mi-leaderboard-trophy::before {
+  content: "\f747";
+}
+
+.mi-leaderboard::before {
+  content: "\f748";
+}
+
+.mi-leadership-alt::before {
+  content: "\f749";
+}
+
+.mi-leadership::before {
+  content: "\f74a";
+}
+
+.mi-leaf-heart::before {
+  content: "\f74b";
+}
+
+.mi-leaf-maple::before {
+  content: "\f74c";
+}
+
+.mi-leaf-oak::before {
+  content: "\f74d";
+}
+
+.mi-leaf::before {
+  content: "\f74e";
+}
+
+.mi-leafy-green::before {
+  content: "\f74f";
+}
+
+.mi-leave::before {
+  content: "\f750";
+}
+
+.mi-left-from-bracket::before {
+  content: "\f751";
+}
+
+.mi-left::before {
+  content: "\f752";
+}
+
+.mi-legal::before {
+  content: "\f753";
+}
+
+.mi-lemon::before {
+  content: "\f754";
+}
+
+.mi-lesbian-couple::before {
+  content: "\f755";
+}
+
+.mi-less-than-equal::before {
+  content: "\f756";
+}
+
+.mi-less-than::before {
+  content: "\f757";
+}
+
+.mi-lesson-class::before {
+  content: "\f758";
+}
+
+.mi-lesson::before {
+  content: "\f759";
+}
+
+.mi-letter-case::before {
+  content: "\f75a";
+}
+
+.mi-lettuce::before {
+  content: "\f75b";
+}
+
+.mi-level-down-alt::before {
+  content: "\f75c";
+}
+
+.mi-level-down::before {
+  content: "\f75d";
+}
+
+.mi-level-up-alt::before {
+  content: "\f75e";
+}
+
+.mi-level-up::before {
+  content: "\f75f";
+}
+
+.mi-license::before {
+  content: "\f760";
+}
+
+.mi-life-ring::before {
+  content: "\f761";
+}
+
+.mi-life::before {
+  content: "\f762";
+}
+
+.mi-light-ceiling::before {
+  content: "\f763";
+}
+
+.mi-light-emergency-on::before {
+  content: "\f764";
+}
+
+.mi-light-emergency::before {
+  content: "\f765";
+}
+
+.mi-light-switch-off::before {
+  content: "\f766";
+}
+
+.mi-light-switch-on::before {
+  content: "\f767";
+}
+
+.mi-light-switch::before {
+  content: "\f768";
+}
+
+.mi-lightbulb-cfl-on::before {
+  content: "\f769";
+}
+
+.mi-lightbulb-cfl::before {
+  content: "\f76a";
+}
+
+.mi-lightbulb-dollar::before {
+  content: "\f76b";
+}
+
+.mi-lightbulb-exclamation::before {
+  content: "\f76c";
+}
+
+.mi-lightbulb-head::before {
+  content: "\f76d";
+}
+
+.mi-lightbulb-on::before {
+  content: "\f76e";
+}
+
+.mi-lightbulb-question::before {
+  content: "\f76f";
+}
+
+.mi-lightbulb-setting::before {
+  content: "\f770";
+}
+
+.mi-lightbulb-slash::before {
+  content: "\f771";
+}
+
+.mi-lighthouse::before {
+  content: "\f772";
+}
+
+.mi-lights-holiday::before {
+  content: "\f773";
+}
+
+.mi-limit-hand::before {
+  content: "\f774";
+}
+
+.mi-limit-speedometer::before {
+  content: "\f775";
+}
+
+.mi-line-width::before {
+  content: "\f776";
+}
+
+.mi-link-alt::before {
+  content: "\f777";
+}
+
+.mi-link-horizontal-slash::before {
+  content: "\f778";
+}
+
+.mi-link-horizontal::before {
+  content: "\f779";
+}
+
+.mi-link-slash-alt::before {
+  content: "\f77a";
+}
+
+.mi-link-slash::before {
+  content: "\f77b";
+}
+
+.mi-link::before {
+  content: "\f77c";
+}
+
+.mi-lion-head::before {
+  content: "\f77d";
+}
+
+.mi-lion::before {
+  content: "\f77e";
+}
+
+.mi-lips::before {
+  content: "\f77f";
+}
+
+.mi-lipstick::before {
+  content: "\f780";
+}
+
+.mi-lira-sign::before {
+  content: "\f781";
+}
+
+.mi-list-check::before {
+  content: "\f782";
+}
+
+.mi-list-dropdown::before {
+  content: "\f783";
+}
+
+.mi-list-music::before {
+  content: "\f784";
+}
+
+.mi-list-timeline::before {
+  content: "\f785";
+}
+
+.mi-list::before {
+  content: "\f786";
+}
+
+.mi-litecoin-sign::before {
+  content: "\f787";
+}
+
+.mi-live-alt::before {
+  content: "\f788";
+}
+
+.mi-live::before {
+  content: "\f789";
+}
+
+.mi-loading::before {
+  content: "\f78a";
+}
+
+.mi-loan::before {
+  content: "\f78b";
+}
+
+.mi-lobster::before {
+  content: "\f78c";
+}
+
+.mi-location-alt::before {
+  content: "\f78d";
+}
+
+.mi-location-arrow::before {
+  content: "\f78e";
+}
+
+.mi-location-crosshairs-slash::before {
+  content: "\f78f";
+}
+
+.mi-location-crosshairs::before {
+  content: "\f790";
+}
+
+.mi-location-dot-slash::before {
+  content: "\f791";
+}
+
+.mi-location-exclamation::before {
+  content: "\f792";
+}
+
+.mi-location-pin-call::before {
+  content: "\f793";
+}
+
+.mi-lock-alt::before {
+  content: "\f794";
+}
+
+.mi-lock-hashtag::before {
+  content: "\f795";
+}
+
+.mi-lock-open-alt::before {
+  content: "\f796";
+}
+
+.mi-lock::before {
+  content: "\f797";
+}
+
+.mi-locust::before {
+  content: "\f798";
+}
+
+.mi-loop-square::before {
+  content: "\f799";
+}
+
+.mi-loveseat::before {
+  content: "\f79a";
+}
+
+.mi-low-vision::before {
+  content: "\f79b";
+}
+
+.mi-luchador::before {
+  content: "\f79c";
+}
+
+.mi-luggage-cart::before {
+  content: "\f79d";
+}
+
+.mi-luggage-rolling::before {
+  content: "\f79e";
+}
+
+.mi-lungs-virus::before {
+  content: "\f79f";
+}
+
+.mi-lungs::before {
+  content: "\f7a0";
+}
+
+.mi-m::before {
+  content: "\f7a1";
+}
+
+.mi-mace::before {
+  content: "\f7a2";
+}
+
+.mi-magic-wand::before {
+  content: "\f7a3";
+}
+
+.mi-magnet-user::before {
+  content: "\f7a4";
+}
+
+.mi-magnet::before {
+  content: "\f7a5";
+}
+
+.mi-mailbox-envelope::before {
+  content: "\f7a6";
+}
+
+.mi-mailbox-flag-up::before {
+  content: "\f7a7";
+}
+
+.mi-mailbox::before {
+  content: "\f7a8";
+}
+
+.mi-makeup-brush::before {
+  content: "\f7a9";
+}
+
+.mi-man-head::before {
+  content: "\f7aa";
+}
+
+.mi-man-scientist::before {
+  content: "\f7ab";
+}
+
+.mi-manat-sign::before {
+  content: "\f7ac";
+}
+
+.mi-mandolin::before {
+  content: "\f7ad";
+}
+
+.mi-mango::before {
+  content: "\f7ae";
+}
+
+.mi-manhole::before {
+  content: "\f7af";
+}
+
+.mi-map-location-track::before {
+  content: "\f7b0";
+}
+
+.mi-map-marker-check::before {
+  content: "\f7b1";
+}
+
+.mi-map-marker-cross::before {
+  content: "\f7b2";
+}
+
+.mi-map-marker-edit::before {
+  content: "\f7b3";
+}
+
+.mi-map-marker-home::before {
+  content: "\f7b4";
+}
+
+.mi-map-marker-minus::before {
+  content: "\f7b5";
+}
+
+.mi-map-marker-plus::before {
+  content: "\f7b6";
+}
+
+.mi-map-marker-question::before {
+  content: "\f7b7";
+}
+
+.mi-map-marker-slash::before {
+  content: "\f7b8";
+}
+
+.mi-map-marker-smile::before {
+  content: "\f7b9";
+}
+
+.mi-map-marker::before {
+  content: "\f7ba";
+}
+
+.mi-map-pin::before {
+  content: "\f7bb";
+}
+
+.mi-map-point::before {
+  content: "\f7bc";
+}
+
+.mi-map::before {
+  content: "\f7bd";
+}
+
+.mi-marker-time::before {
+  content: "\f7be";
+}
+
+.mi-marker::before {
+  content: "\f7bf";
+}
+
+.mi-marketplace-alt::before {
+  content: "\f7c0";
+}
+
+.mi-marketplace-store::before {
+  content: "\f7c1";
+}
+
+.mi-marketplace::before {
+  content: "\f7c2";
+}
+
+.mi-mars-double::before {
+  content: "\f7c3";
+}
+
+.mi-mars-stroke-right::before {
+  content: "\f7c4";
+}
+
+.mi-mars-stroke-up::before {
+  content: "\f7c5";
+}
+
+.mi-mars::before {
+  content: "\f7c6";
+}
+
+.mi-martini-glass-citrus::before {
+  content: "\f7c7";
+}
+
+.mi-martini-glass-empty::before {
+  content: "\f7c8";
+}
+
+.mi-mask-carnival::before {
+  content: "\f7c9";
+}
+
+.mi-mask-face::before {
+  content: "\f7ca";
+}
+
+.mi-mask-snorkel::before {
+  content: "\f7cb";
+}
+
+.mi-mask::before {
+  content: "\f7cc";
+}
+
+.mi-massage::before {
+  content: "\f7cd";
+}
+
+.mi-match-fire::before {
+  content: "\f7ce";
+}
+
+.mi-mattress-pillow::before {
+  content: "\f7cf";
+}
+
+.mi-measuring-tape::before {
+  content: "\f7d0";
+}
+
+.mi-meat::before {
+  content: "\f7d1";
+}
+
+.mi-medal::before {
+  content: "\f7d2";
+}
+
+.mi-medical-star::before {
+  content: "\f7d3";
+}
+
+.mi-medicine::before {
+  content: "\f7d4";
+}
+
+.mi-meditation::before {
+  content: "\f7d5";
+}
+
+.mi-meeting-alt::before {
+  content: "\f7d6";
+}
+
+.mi-meeting::before {
+  content: "\f7d7";
+}
+
+.mi-megaphone-announcement-leader::before {
+  content: "\f7d8";
+}
+
+.mi-megaphone::before {
+  content: "\f7d9";
+}
+
+.mi-meh-blank::before {
+  content: "\f7da";
+}
+
+.mi-meh-rolling-eyes::before {
+  content: "\f7db";
+}
+
+.mi-meh::before {
+  content: "\f7dc";
+}
+
+.mi-melon-alt::before {
+  content: "\f7dd";
+}
+
+.mi-melon::before {
+  content: "\f7de";
+}
+
+.mi-member-list::before {
+  content: "\f7df";
+}
+
+.mi-member-search::before {
+  content: "\f7e0";
+}
+
+.mi-membership-vip::before {
+  content: "\f7e1";
+}
+
+.mi-membership::before {
+  content: "\f7e2";
+}
+
+.mi-memo-circle-check::before {
+  content: "\f7e3";
+}
+
+.mi-memo-pad::before {
+  content: "\f7e4";
+}
+
+.mi-memo::before {
+  content: "\f7e5";
+}
+
+.mi-memory::before {
+  content: "\f7e6";
+}
+
+.mi-menu-burger::before {
+  content: "\f7e7";
+}
+
+.mi-menu-dots-vertical::before {
+  content: "\f7e8";
+}
+
+.mi-menu-dots::before {
+  content: "\f7e9";
+}
+
+.mi-mercury::before {
+  content: "\f7ea";
+}
+
+.mi-message-arrow-down::before {
+  content: "\f7eb";
+}
+
+.mi-message-arrow-up-right::before {
+  content: "\f7ec";
+}
+
+.mi-message-arrow-up::before {
+  content: "\f7ed";
+}
+
+.mi-message-bot::before {
+  content: "\f7ee";
+}
+
+.mi-message-code::before {
+  content: "\f7ef";
+}
+
+.mi-message-dollar::before {
+  content: "\f7f0";
+}
+
+.mi-message-heart::before {
+  content: "\f7f1";
+}
+
+.mi-message-image::before {
+  content: "\f7f2";
+}
+
+.mi-message-question::before {
+  content: "\f7f3";
+}
+
+.mi-message-quote::before {
+  content: "\f7f4";
+}
+
+.mi-message-slash::before {
+  content: "\f7f5";
+}
+
+.mi-message-sms::before {
+  content: "\f7f6";
+}
+
+.mi-message-text::before {
+  content: "\f7f7";
+}
+
+.mi-message-xmark::before {
+  content: "\f7f8";
+}
+
+.mi-messages-dollar::before {
+  content: "\f7f9";
+}
+
+.mi-messages-question::before {
+  content: "\f7fa";
+}
+
+.mi-messages::before {
+  content: "\f7fb";
+}
+
+.mi-meteor::before {
+  content: "\f7fc";
+}
+
+.mi-meter-bolt::before {
+  content: "\f7fd";
+}
+
+.mi-meter-droplet::before {
+  content: "\f7fe";
+}
+
+.mi-meter-fire::before {
+  content: "\f7ff";
+}
+
+.mi-meter::before {
+  content: "\f800";
+}
+
+.mi-method::before {
+  content: "\f801";
+}
+
+.mi-microchip-ai::before {
+  content: "\f802";
+}
+
+.mi-microchip::before {
+  content: "\f803";
+}
+
+.mi-microphone-alt::before {
+  content: "\f804";
+}
+
+.mi-microphone-slash::before {
+  content: "\f805";
+}
+
+.mi-microphone::before {
+  content: "\f806";
+}
+
+.mi-microscope::before {
+  content: "\f807";
+}
+
+.mi-microwave::before {
+  content: "\f808";
+}
+
+.mi-milk-alt::before {
+  content: "\f809";
+}
+
+.mi-milk::before {
+  content: "\f80a";
+}
+
+.mi-mill-sign::before {
+  content: "\f80b";
+}
+
+.mi-mind-share::before {
+  content: "\f80c";
+}
+
+.mi-minus-circle::before {
+  content: "\f80d";
+}
+
+.mi-minus-hexagon::before {
+  content: "\f80e";
+}
+
+.mi-minus-small::before {
+  content: "\f80f";
+}
+
+.mi-minus::before {
+  content: "\f810";
+}
+
+.mi-mistletoe::before {
+  content: "\f811";
+}
+
+.mi-mix::before {
+  content: "\f812";
+}
+
+.mi-mobile-button::before {
+  content: "\f813";
+}
+
+.mi-mobile-notch::before {
+  content: "\f814";
+}
+
+.mi-mobile::before {
+  content: "\f815";
+}
+
+.mi-mockup::before {
+  content: "\f816";
+}
+
+.mi-mode-alt::before {
+  content: "\f817";
+}
+
+.mi-mode-landscape::before {
+  content: "\f818";
+}
+
+.mi-mode-portrait::before {
+  content: "\f819";
+}
+
+.mi-mode::before {
+  content: "\f81a";
+}
+
+.mi-model-cube-arrows::before {
+  content: "\f81b";
+}
+
+.mi-model-cube-space::before {
+  content: "\f81c";
+}
+
+.mi-model-cube::before {
+  content: "\f81d";
+}
+
+.mi-module::before {
+  content: "\f81e";
+}
+
+.mi-monday::before {
+  content: "\f81f";
+}
+
+.mi-money-bill-simple::before {
+  content: "\f820";
+}
+
+.mi-money-bill-transfer::before {
+  content: "\f821";
+}
+
+.mi-money-bill-wave-alt::before {
+  content: "\f822";
+}
+
+.mi-money-bill-wave::before {
+  content: "\f823";
+}
+
+.mi-money-bills-simple::before {
+  content: "\f824";
+}
+
+.mi-money-bills::before {
+  content: "\f825";
+}
+
+.mi-money-check-edit-alt::before {
+  content: "\f826";
+}
+
+.mi-money-check-edit::before {
+  content: "\f827";
+}
+
+.mi-money-check::before {
+  content: "\f828";
+}
+
+.mi-money-coin-transfer::before {
+  content: "\f829";
+}
+
+.mi-money-from-bracket::before {
+  content: "\f82a";
+}
+
+.mi-money-simple-from-bracket::before {
+  content: "\f82b";
+}
+
+.mi-money-transfer-alt::before {
+  content: "\f82c";
+}
+
+.mi-money-transfer-coin-arrow::before {
+  content: "\f82d";
+}
+
+.mi-money-transfer-smartphone::before {
+  content: "\f82e";
+}
+
+.mi-money-wings::before {
+  content: "\f82f";
+}
+
+.mi-money::before {
+  content: "\f830";
+}
+
+.mi-monkey::before {
+  content: "\f831";
+}
+
+.mi-monument::before {
+  content: "\f832";
+}
+
+.mi-moon-stars::before {
+  content: "\f833";
+}
+
+.mi-moon::before {
+  content: "\f834";
+}
+
+.mi-moped::before {
+  content: "\f835";
+}
+
+.mi-mortar-pestle::before {
+  content: "\f836";
+}
+
+.mi-mortgage::before {
+  content: "\f837";
+}
+
+.mi-mosque-alt::before {
+  content: "\f838";
+}
+
+.mi-mosque-moon::before {
+  content: "\f839";
+}
+
+.mi-mosque::before {
+  content: "\f83a";
+}
+
+.mi-mosquito-net::before {
+  content: "\f83b";
+}
+
+.mi-mosquito::before {
+  content: "\f83c";
+}
+
+.mi-motorcycle::before {
+  content: "\f83d";
+}
+
+.mi-mound::before {
+  content: "\f83e";
+}
+
+.mi-mountain-city::before {
+  content: "\f83f";
+}
+
+.mi-mountain::before {
+  content: "\f840";
+}
+
+.mi-mountains::before {
+  content: "\f841";
+}
+
+.mi-mouse-field::before {
+  content: "\f842";
+}
+
+.mi-mouse::before {
+  content: "\f843";
+}
+
+.mi-mov-file::before {
+  content: "\f844";
+}
+
+.mi-move-to-folder-2::before {
+  content: "\f845";
+}
+
+.mi-move-to-folder::before {
+  content: "\f846";
+}
+
+.mi-mp3-file::before {
+  content: "\f847";
+}
+
+.mi-mp3-player::before {
+  content: "\f848";
+}
+
+.mi-mp4-file::before {
+  content: "\f849";
+}
+
+.mi-mug-alt::before {
+  content: "\f84a";
+}
+
+.mi-mug-hot-alt::before {
+  content: "\f84b";
+}
+
+.mi-mug-hot::before {
+  content: "\f84c";
+}
+
+.mi-mug-marshmallows::before {
+  content: "\f84d";
+}
+
+.mi-mug-tea-saucer::before {
+  content: "\f84e";
+}
+
+.mi-mug-tea::before {
+  content: "\f84f";
+}
+
+.mi-mug::before {
+  content: "\f850";
+}
+
+.mi-multiple-alt::before {
+  content: "\f851";
+}
+
+.mi-multiple::before {
+  content: "\f852";
+}
+
+.mi-muscle::before {
+  content: "\f853";
+}
+
+.mi-mushroom-alt::before {
+  content: "\f854";
+}
+
+.mi-mushroom::before {
+  content: "\f855";
+}
+
+.mi-music-alt::before {
+  content: "\f856";
+}
+
+.mi-music-file::before {
+  content: "\f857";
+}
+
+.mi-music-note-slash::before {
+  content: "\f858";
+}
+
+.mi-music-note::before {
+  content: "\f859";
+}
+
+.mi-music-slash::before {
+  content: "\f85a";
+}
+
+.mi-music::before {
+  content: "\f85b";
+}
+
+.mi-n::before {
+  content: "\f85c";
+}
+
+.mi-naira-sign::before {
+  content: "\f85d";
+}
+
+.mi-narwhal::before {
+  content: "\f85e";
+}
+
+.mi-navigation::before {
+  content: "\f85f";
+}
+
+.mi-nesting-dolls::before {
+  content: "\f860";
+}
+
+.mi-network-analytic::before {
+  content: "\f861";
+}
+
+.mi-network-cloud::before {
+  content: "\f862";
+}
+
+.mi-network::before {
+  content: "\f863";
+}
+
+.mi-neuter::before {
+  content: "\f864";
+}
+
+.mi-newsletter-subscribe::before {
+  content: "\f865";
+}
+
+.mi-newspaper-open::before {
+  content: "\f866";
+}
+
+.mi-newspaper::before {
+  content: "\f867";
+}
+
+.mi-nfc-lock::before {
+  content: "\f868";
+}
+
+.mi-nfc-magnifying-glass::before {
+  content: "\f869";
+}
+
+.mi-nfc-pen::before {
+  content: "\f86a";
+}
+
+.mi-nfc-slash::before {
+  content: "\f86b";
+}
+
+.mi-nfc-trash::before {
+  content: "\f86c";
+}
+
+.mi-nfc::before {
+  content: "\f86d";
+}
+
+.mi-night-day::before {
+  content: "\f86e";
+}
+
+.mi-no-fee::before {
+  content: "\f86f";
+}
+
+.mi-no-people::before {
+  content: "\f870";
+}
+
+.mi-nonmarkingreturn::before {
+  content: "\f871";
+}
+
+.mi-noodles::before {
+  content: "\f872";
+}
+
+.mi-nose::before {
+  content: "\f873";
+}
+
+.mi-not-equal::before {
+  content: "\f874";
+}
+
+.mi-not-found-alt::before {
+  content: "\f875";
+}
+
+.mi-not-found-magnifying-glass::before {
+  content: "\f876";
+}
+
+.mi-not-found::before {
+  content: "\f877";
+}
+
+.mi-notdef::before {
+  content: "\f878";
+}
+
+.mi-note-medical::before {
+  content: "\f879";
+}
+
+.mi-note-sticky::before {
+  content: "\f87a";
+}
+
+.mi-note::before {
+  content: "\f87b";
+}
+
+.mi-notebook-alt::before {
+  content: "\f87c";
+}
+
+.mi-notebook::before {
+  content: "\f87d";
+}
+
+.mi-notes-medical::before {
+  content: "\f87e";
+}
+
+.mi-notes::before {
+  content: "\f87f";
+}
+
+.mi-o::before {
+  content: "\f880";
+}
+
+.mi-object-exclude::before {
+  content: "\f881";
+}
+
+.mi-object-group::before {
+  content: "\f882";
+}
+
+.mi-object-intersect::before {
+  content: "\f883";
+}
+
+.mi-object-subtract::before {
+  content: "\f884";
+}
+
+.mi-object-ungroup::before {
+  content: "\f885";
+}
+
+.mi-object-union::before {
+  content: "\f886";
+}
+
+.mi-objects-column::before {
+  content: "\f887";
+}
+
+.mi-octagon-check::before {
+  content: "\f888";
+}
+
+.mi-octagon-divide::before {
+  content: "\f889";
+}
+
+.mi-octagon-exclamation::before {
+  content: "\f88a";
+}
+
+.mi-octagon-minus::before {
+  content: "\f88b";
+}
+
+.mi-octagon-plus::before {
+  content: "\f88c";
+}
+
+.mi-octagon-xmark::before {
+  content: "\f88d";
+}
+
+.mi-octagon::before {
+  content: "\f88e";
+}
+
+.mi-oil-can::before {
+  content: "\f88f";
+}
+
+.mi-oil-temp::before {
+  content: "\f890";
+}
+
+.mi-olive-oil::before {
+  content: "\f891";
+}
+
+.mi-olive::before {
+  content: "\f892";
+}
+
+.mi-olives::before {
+  content: "\f893";
+}
+
+.mi-om::before {
+  content: "\f894";
+}
+
+.mi-omega::before {
+  content: "\f895";
+}
+
+.mi-onboarding::before {
+  content: "\f896";
+}
+
+.mi-onion::before {
+  content: "\f897";
+}
+
+.mi-opacity::before {
+  content: "\f898";
+}
+
+.mi-open-mail-clip::before {
+  content: "\f899";
+}
+
+.mi-operating-system-upgrade::before {
+  content: "\f89a";
+}
+
+.mi-operation::before {
+  content: "\f89b";
+}
+
+.mi-order-history::before {
+  content: "\f89c";
+}
+
+.mi-organization-chart::before {
+  content: "\f89d";
+}
+
+.mi-ornament::before {
+  content: "\f89e";
+}
+
+.mi-otp::before {
+  content: "\f89f";
+}
+
+.mi-otter::before {
+  content: "\f8a0";
+}
+
+.mi-outdent::before {
+  content: "\f8a1";
+}
+
+.mi-oval-alt::before {
+  content: "\f8a2";
+}
+
+.mi-oval::before {
+  content: "\f8a3";
+}
+
+.mi-oven::before {
+  content: "\f8a4";
+}
+
+.mi-overline::before {
+  content: "\f8a5";
+}
+
+.mi-overview::before {
+  content: "\f8a6";
+}
+
+.mi-p::before {
+  content: "\f8a7";
+}
+
+.mi-package::before {
+  content: "\f8a8";
+}
+
+.mi-padlock-check::before {
+  content: "\f8a9";
+}
+
+.mi-page-break::before {
+  content: "\f8aa";
+}
+
+.mi-pager::before {
+  content: "\f8ab";
+}
+
+.mi-paid::before {
+  content: "\f8ac";
+}
+
+.mi-paint-brush::before {
+  content: "\f8ad";
+}
+
+.mi-paint-roller::before {
+  content: "\f8ae";
+}
+
+.mi-paintbrush-pencil::before {
+  content: "\f8af";
+}
+
+.mi-palette::before {
+  content: "\f8b0";
+}
+
+.mi-pallet-alt::before {
+  content: "\f8b1";
+}
+
+.mi-pallet::before {
+  content: "\f8b2";
+}
+
+.mi-pan-food::before {
+  content: "\f8b3";
+}
+
+.mi-pan-frying::before {
+  content: "\f8b4";
+}
+
+.mi-pan::before {
+  content: "\f8b5";
+}
+
+.mi-pancakes::before {
+  content: "\f8b6";
+}
+
+.mi-panorama::before {
+  content: "\f8b7";
+}
+
+.mi-paper-plane-launch::before {
+  content: "\f8b8";
+}
+
+.mi-paper-plane-top::before {
+  content: "\f8b9";
+}
+
+.mi-paper-plane::before {
+  content: "\f8ba";
+}
+
+.mi-paperclip-vertical::before {
+  content: "\f8bb";
+}
+
+.mi-parachute-box::before {
+  content: "\f8bc";
+}
+
+.mi-paragraph-left::before {
+  content: "\f8bd";
+}
+
+.mi-paragraph::before {
+  content: "\f8be";
+}
+
+.mi-parking-circle-slash::before {
+  content: "\f8bf";
+}
+
+.mi-parking-circle::before {
+  content: "\f8c0";
+}
+
+.mi-parking-slash::before {
+  content: "\f8c1";
+}
+
+.mi-parking::before {
+  content: "\f8c2";
+}
+
+.mi-party-bell::before {
+  content: "\f8c3";
+}
+
+.mi-party-horn::before {
+  content: "\f8c4";
+}
+
+.mi-passport::before {
+  content: "\f8c5";
+}
+
+.mi-password-alt::before {
+  content: "\f8c6";
+}
+
+.mi-password-computer::before {
+  content: "\f8c7";
+}
+
+.mi-password-email::before {
+  content: "\f8c8";
+}
+
+.mi-password-smartphone::before {
+  content: "\f8c9";
+}
+
+.mi-password::before {
+  content: "\f8ca";
+}
+
+.mi-paste::before {
+  content: "\f8cb";
+}
+
+.mi-pattern::before {
+  content: "\f8cc";
+}
+
+.mi-pause-circle::before {
+  content: "\f8cd";
+}
+
+.mi-pause-square::before {
+  content: "\f8ce";
+}
+
+.mi-pause::before {
+  content: "\f8cf";
+}
+
+.mi-paw-claws::before {
+  content: "\f8d0";
+}
+
+.mi-paw-heart::before {
+  content: "\f8d1";
+}
+
+.mi-paw::before {
+  content: "\f8d2";
+}
+
+.mi-payment-pos::before {
+  content: "\f8d3";
+}
+
+.mi-payroll-calendar::before {
+  content: "\f8d4";
+}
+
+.mi-payroll-check::before {
+  content: "\f8d5";
+}
+
+.mi-payroll::before {
+  content: "\f8d6";
+}
+
+.mi-peace::before {
+  content: "\f8d7";
+}
+
+.mi-peach::before {
+  content: "\f8d8";
+}
+
+.mi-peanut::before {
+  content: "\f8d9";
+}
+
+.mi-peanuts::before {
+  content: "\f8da";
+}
+
+.mi-peapod::before {
+  content: "\f8db";
+}
+
+.mi-pear::before {
+  content: "\f8dc";
+}
+
+.mi-pedestal::before {
+  content: "\f8dd";
+}
+
+.mi-pen-circle::before {
+  content: "\f8de";
+}
+
+.mi-pen-clip-slash::before {
+  content: "\f8df";
+}
+
+.mi-pen-clip::before {
+  content: "\f8e0";
+}
+
+.mi-pen-fancy-slash::before {
+  content: "\f8e1";
+}
+
+.mi-pen-fancy::before {
+  content: "\f8e2";
+}
+
+.mi-pen-field::before {
+  content: "\f8e3";
+}
+
+.mi-pen-nib-slash::before {
+  content: "\f8e4";
+}
+
+.mi-pen-nib::before {
+  content: "\f8e5";
+}
+
+.mi-pen-slash::before {
+  content: "\f8e6";
+}
+
+.mi-pen-square::before {
+  content: "\f8e7";
+}
+
+.mi-pen-swirl::before {
+  content: "\f8e8";
+}
+
+.mi-pencil-paintbrush::before {
+  content: "\f8e9";
+}
+
+.mi-pencil-ruler::before {
+  content: "\f8ea";
+}
+
+.mi-pencil-slash::before {
+  content: "\f8eb";
+}
+
+.mi-pencil::before {
+  content: "\f8ec";
+}
+
+.mi-pending::before {
+  content: "\f8ed";
+}
+
+.mi-pennant::before {
+  content: "\f8ee";
+}
+
+.mi-people-arrows-left-right::before {
+  content: "\f8ef";
+}
+
+.mi-people-carry-box::before {
+  content: "\f8f0";
+}
+
+.mi-people-dress::before {
+  content: "\f8f1";
+}
+
+.mi-people-network-partner::before {
+  content: "\f8f2";
+}
+
+.mi-people-pants::before {
+  content: "\f8f3";
+}
+
+.mi-people-poll::before {
+  content: "\f8f4";
+}
+
+.mi-people-pulling::before {
+  content: "\f8f5";
+}
+
+.mi-people-roof::before {
+  content: "\f8f6";
+}
+
+.mi-people::before {
+  content: "\f8f7";
+}
+
+.mi-pepper-alt::before {
+  content: "\f8f8";
+}
+
+.mi-pepper-hot::before {
+  content: "\f8f9";
+}
+
+.mi-pepper::before {
+  content: "\f8fa";
+}
+
+.mi-percent-10::before {
+  content: "\f8fb";
+}
+
+.mi-percent-100::before {
+  content: "\f8fc";
+}
+
+.mi-percent-20::before {
+  content: "\f8fd";
+}
+
+.mi-percent-25::before {
+  content: "\f8fe";
+}
+
+.mi-percent-30::before {
+  content: "\f8ff";
+}
+
+.mi-percent-40::before {
+  content: "豈";
+}
+
+.mi-percent-50::before {
+  content: "更";
+}
+
+.mi-percent-60::before {
+  content: "車";
+}
+
+.mi-percent-70::before {
+  content: "賈";
+}
+
+.mi-percent-75::before {
+  content: "滑";
+}
+
+.mi-percent-80::before {
+  content: "串";
+}
+
+.mi-percent-90::before {
+  content: "句";
+}
+
+.mi-percentage::before {
+  content: "龜";
+}
+
+.mi-person-burst::before {
+  content: "龜";
+}
+
+.mi-person-carry-box::before {
+  content: "契";
+}
+
+.mi-person-circle-check::before {
+  content: "金";
+}
+
+.mi-person-circle-exclamation::before {
+  content: "喇";
+}
+
+.mi-person-circle-minus::before {
+  content: "奈";
+}
+
+.mi-person-circle-plus::before {
+  content: "懶";
+}
+
+.mi-person-circle-question::before {
+  content: "癩";
+}
+
+.mi-person-circle-xmark::before {
+  content: "羅";
+}
+
+.mi-person-cv::before {
+  content: "蘿";
+}
+
+.mi-person-dolly-empty::before {
+  content: "螺";
+}
+
+.mi-person-dolly::before {
+  content: "裸";
+}
+
+.mi-person-dress-simple::before {
+  content: "邏";
+}
+
+.mi-person-dress::before {
+  content: "樂";
+}
+
+.mi-person-luggage::before {
+  content: "洛";
+}
+
+.mi-person-lunge::before {
+  content: "烙";
+}
+
+.mi-person-pilates::before {
+  content: "珞";
+}
+
+.mi-person-praying::before {
+  content: "落";
+}
+
+.mi-person-pregnant::before {
+  content: "酪";
+}
+
+.mi-person-seat-reclined::before {
+  content: "駱";
+}
+
+.mi-person-seat::before {
+  content: "亂";
+}
+
+.mi-person-shelter::before {
+  content: "卵";
+}
+
+.mi-person-sign::before {
+  content: "欄";
+}
+
+.mi-person-simple::before {
+  content: "爛";
+}
+
+.mi-person-walking-with-cane::before {
+  content: "蘭";
+}
+
+.mi-peseta-sign::before {
+  content: "鸞";
+}
+
+.mi-peso-sign::before {
+  content: "嵐";
+}
+
+.mi-pets::before {
+  content: "濫";
+}
+
+.mi-pharmacy::before {
+  content: "藍";
+}
+
+.mi-phone-call::before {
+  content: "襤";
+}
+
+.mi-phone-cross::before {
+  content: "拉";
+}
+
+.mi-phone-flip::before {
+  content: "臘";
+}
+
+.mi-phone-guide::before {
+  content: "蠟";
+}
+
+.mi-phone-heart-message::before {
+  content: "廊";
+}
+
+.mi-phone-office::before {
+  content: "朗";
+}
+
+.mi-phone-pause::before {
+  content: "浪";
+}
+
+.mi-phone-plus::before {
+  content: "狼";
+}
+
+.mi-phone-rotary::before {
+  content: "郎";
+}
+
+.mi-phone-slash::before {
+  content: "來";
+}
+
+.mi-photo-capture::before {
+  content: "冷";
+}
+
+.mi-photo-film-music::before {
+  content: "勞";
+}
+
+.mi-photo-video::before {
+  content: "擄";
+}
+
+.mi-physics::before {
+  content: "櫓";
+}
+
+.mi-pi::before {
+  content: "爐";
+}
+
+.mi-piano-keyboard::before {
+  content: "盧";
+}
+
+.mi-piano::before {
+  content: "老";
+}
+
+.mi-pickaxe::before {
+  content: "蘆";
+}
+
+.mi-picking-box::before {
+  content: "虜";
+}
+
+.mi-picking::before {
+  content: "路";
+}
+
+.mi-picnic::before {
+  content: "露";
+}
+
+.mi-picpeople-filled::before {
+  content: "魯";
+}
+
+.mi-picpeople::before {
+  content: "鷺";
+}
+
+.mi-picture::before {
+  content: "碌";
+}
+
+.mi-pie::before {
+  content: "祿";
+}
+
+.mi-piece::before {
+  content: "綠";
+}
+
+.mi-pig-bank-bulb::before {
+  content: "菉";
+}
+
+.mi-pig-face::before {
+  content: "錄";
+}
+
+.mi-pig::before {
+  content: "鹿";
+}
+
+.mi-piggy-bank-budget::before {
+  content: "論";
+}
+
+.mi-piggy-bank::before {
+  content: "壟";
+}
+
+.mi-pills::before {
+  content: "弄";
+}
+
+.mi-pinata::before {
+  content: "籠";
+}
+
+.mi-pineapple-alt::before {
+  content: "聾";
+}
+
+.mi-pineapple::before {
+  content: "牢";
+}
+
+.mi-ping-pong::before {
+  content: "磊";
+}
+
+.mi-pipe-smoking::before {
+  content: "賂";
+}
+
+.mi-pizza-slice::before {
+  content: "雷";
+}
+
+.mi-place-of-worship::before {
+  content: "壘";
+}
+
+.mi-plan-strategy::before {
+  content: "屢";
+}
+
+.mi-plan::before {
+  content: "樓";
+}
+
+.mi-plane-alt::before {
+  content: "淚";
+}
+
+.mi-plane-arrival::before {
+  content: "漏";
+}
+
+.mi-plane-departure::before {
+  content: "累";
+}
+
+.mi-plane-prop::before {
+  content: "縷";
+}
+
+.mi-plane-slash::before {
+  content: "陋";
+}
+
+.mi-plane-tail::before {
+  content: "勒";
+}
+
+.mi-plane::before {
+  content: "肋";
+}
+
+.mi-planet-moon::before {
+  content: "凜";
+}
+
+.mi-planet-ringed::before {
+  content: "凌";
+}
+
+.mi-plant-care::before {
+  content: "稜";
+}
+
+.mi-plant-growth::before {
+  content: "綾";
+}
+
+.mi-plant-seed-invest::before {
+  content: "菱";
+}
+
+.mi-plant-wilt::before {
+  content: "陵";
+}
+
+.mi-plate-utensils::before {
+  content: "讀";
+}
+
+.mi-plate-wheat::before {
+  content: "拏";
+}
+
+.mi-plate::before {
+  content: "樂";
+}
+
+.mi-play-alt::before {
+  content: "諾";
+}
+
+.mi-play-circle::before {
+  content: "丹";
+}
+
+.mi-play-microphone::before {
+  content: "寧";
+}
+
+.mi-play-pause::before {
+  content: "怒";
+}
+
+.mi-play::before {
+  content: "率";
+}
+
+.mi-playing-cards::before {
+  content: "異";
+}
+
+.mi-plug-alt::before {
+  content: "北";
+}
+
+.mi-plug-cable::before {
+  content: "磻";
+}
+
+.mi-plug-circle-bolt::before {
+  content: "便";
+}
+
+.mi-plug-circle-check::before {
+  content: "復";
+}
+
+.mi-plug-circle-exclamation::before {
+  content: "不";
+}
+
+.mi-plug-circle-minus::before {
+  content: "泌";
+}
+
+.mi-plug-circle-plus::before {
+  content: "數";
+}
+
+.mi-plug-connection::before {
+  content: "索";
+}
+
+.mi-plug::before {
+  content: "參";
+}
+
+.mi-plus-hexagon::before {
+  content: "塞";
+}
+
+.mi-plus-minus::before {
+  content: "省";
+}
+
+.mi-plus-small::before {
+  content: "葉";
+}
+
+.mi-plus::before {
+  content: "說";
+}
+
+.mi-png-file::before {
+  content: "殺";
+}
+
+.mi-podcast::before {
+  content: "辰";
+}
+
+.mi-podium-star::before {
+  content: "沈";
+}
+
+.mi-podium-victory-leader::before {
+  content: "拾";
+}
+
+.mi-podium::before {
+  content: "若";
+}
+
+.mi-point-of-sale-bill::before {
+  content: "掠";
+}
+
+.mi-point-of-sale-signal::before {
+  content: "略";
+}
+
+.mi-point-of-sale::before {
+  content: "亮";
+}
+
+.mi-pointer-loading::before {
+  content: "兩";
+}
+
+.mi-pointer-text::before {
+  content: "凉";
+}
+
+.mi-poker-chip::before {
+  content: "梁";
+}
+
+.mi-police-box::before {
+  content: "糧";
+}
+
+.mi-poll-h::before {
+  content: "良";
+}
+
+.mi-pollution::before {
+  content: "諒";
+}
+
+.mi-pompebled::before {
+  content: "量";
+}
+
+.mi-poo-bolt::before {
+  content: "勵";
+}
+
+.mi-poo::before {
+  content: "呂";
+}
+
+.mi-pool-8-ball::before {
+  content: "女";
+}
+
+.mi-poop::before {
+  content: "廬";
+}
+
+.mi-popcorn::before {
+  content: "旅";
+}
+
+.mi-popsicle::before {
+  content: "濾";
+}
+
+.mi-portal-enter::before {
+  content: "礪";
+}
+
+.mi-portal-exit::before {
+  content: "閭";
+}
+
+.mi-portrait::before {
+  content: "驪";
+}
+
+.mi-postal-address::before {
+  content: "麗";
+}
+
+.mi-pot::before {
+  content: "黎";
+}
+
+.mi-potato::before {
+  content: "力";
+}
+
+.mi-pound::before {
+  content: "曆";
+}
+
+.mi-power::before {
+  content: "歷";
+}
+
+.mi-ppt-file::before {
+  content: "轢";
+}
+
+.mi-practice::before {
+  content: "年";
+}
+
+.mi-praying-hands::before {
+  content: "憐";
+}
+
+.mi-prescription-bottle-alt::before {
+  content: "戀";
+}
+
+.mi-prescription-bottle-pill::before {
+  content: "撚";
+}
+
+.mi-prescription-bottle::before {
+  content: "漣";
+}
+
+.mi-prescription::before {
+  content: "煉";
+}
+
+.mi-presentation::before {
+  content: "璉";
+}
+
+.mi-preview::before {
+  content: "秊";
+}
+
+.mi-previous-square::before {
+  content: "練";
+}
+
+.mi-print-magnifying-glass::before {
+  content: "聯";
+}
+
+.mi-print-slash::before {
+  content: "輦";
+}
+
+.mi-print::before {
+  content: "蓮";
+}
+
+.mi-priority-arrow::before {
+  content: "連";
+}
+
+.mi-priority-arrows::before {
+  content: "鍊";
+}
+
+.mi-priority-importance::before {
+  content: "列";
+}
+
+.mi-problem-solving::before {
+  content: "劣";
+}
+
+.mi-procedures::before {
+  content: "咽";
+}
+
+.mi-process::before {
+  content: "烈";
+}
+
+.mi-productivity::before {
+  content: "裂";
+}
+
+.mi-progress-complete::before {
+  content: "說";
+}
+
+.mi-progress-download::before {
+  content: "廉";
+}
+
+.mi-progress-upload::before {
+  content: "念";
+}
+
+.mi-projector::before {
+  content: "捻";
+}
+
+.mi-protractor::before {
+  content: "殮";
+}
+
+.mi-pulse::before {
+  content: "簾";
+}
+
+.mi-pump-medical::before {
+  content: "獵";
+}
+
+.mi-pump::before {
+  content: "令";
+}
+
+.mi-pumpkin-alt-2::before {
+  content: "囹";
+}
+
+.mi-pumpkin-alt::before {
+  content: "寧";
+}
+
+.mi-pumpkin::before {
+  content: "嶺";
+}
+
+.mi-puzzle-alt::before {
+  content: "怜";
+}
+
+.mi-puzzle-piece-integration::before {
+  content: "玲";
+}
+
+.mi-puzzle-pieces::before {
+  content: "瑩";
+}
+
+.mi-puzzle::before {
+  content: "羚";
+}
+
+.mi-pyramid::before {
+  content: "聆";
+}
+
+.mi-q::before {
+  content: "鈴";
+}
+
+.mi-qr-scan::before {
+  content: "零";
+}
+
+.mi-qr::before {
+  content: "靈";
+}
+
+.mi-qrcode::before {
+  content: "領";
+}
+
+.mi-question-square::before {
+  content: "例";
+}
+
+.mi-question::before {
+  content: "禮";
+}
+
+.mi-queue-alt::before {
+  content: "醴";
+}
+
+.mi-queue-line::before {
+  content: "隸";
+}
+
+.mi-queue-signal::before {
+  content: "惡";
+}
+
+.mi-queue::before {
+  content: "了";
+}
+
+.mi-quill-pen-story::before {
+  content: "僚";
+}
+
+.mi-quiz-alt::before {
+  content: "寮";
+}
+
+.mi-quiz::before {
+  content: "尿";
+}
+
+.mi-quote-right::before {
+  content: "料";
+}
+
+.mi-r::before {
+  content: "樂";
+}
+
+.mi-rabbit-fast::before {
+  content: "燎";
+}
+
+.mi-rabbit::before {
+  content: "療";
+}
+
+.mi-raccoon::before {
+  content: "蓼";
+}
+
+.mi-racquet::before {
+  content: "遼";
+}
+
+.mi-radar-monitoring-track::before {
+  content: "龍";
+}
+
+.mi-radar::before {
+  content: "暈";
+}
+
+.mi-radiation-alt::before {
+  content: "阮";
+}
+
+.mi-radiation::before {
+  content: "劉";
+}
+
+.mi-radio-alt::before {
+  content: "杻";
+}
+
+.mi-radio-button::before {
+  content: "柳";
+}
+
+.mi-radio::before {
+  content: "流";
+}
+
+.mi-radish::before {
+  content: "溜";
+}
+
+.mi-rainbow::before {
+  content: "琉";
+}
+
+.mi-raindrops::before {
+  content: "留";
+}
+
+.mi-ram::before {
+  content: "硫";
+}
+
+.mi-ramp-loading::before {
+  content: "紐";
+}
+
+.mi-rank::before {
+  content: "類";
+}
+
+.mi-ranking-podium-empty::before {
+  content: "六";
+}
+
+.mi-ranking-podium::before {
+  content: "戮";
+}
+
+.mi-ranking-star::before {
+  content: "陸";
+}
+
+.mi-ranking-stars::before {
+  content: "倫";
+}
+
+.mi-raygun::before {
+  content: "崙";
+}
+
+.mi-razor-barber::before {
+  content: "淪";
+}
+
+.mi-react::before {
+  content: "輪";
+}
+
+.mi-rec::before {
+  content: "律";
+}
+
+.mi-receipt::before {
+  content: "慄";
+}
+
+.mi-recipe-book::before {
+  content: "栗";
+}
+
+.mi-recipe::before {
+  content: "率";
+}
+
+.mi-record-vinyl::before {
+  content: "隆";
+}
+
+.mi-rectabgle-vertical::before {
+  content: "利";
+}
+
+.mi-rectangle-barcode::before {
+  content: "吏";
+}
+
+.mi-rectangle-code::before {
+  content: "履";
+}
+
+.mi-rectangle-history-circle-plus::before {
+  content: "易";
+}
+
+.mi-rectangle-horizontal::before {
+  content: "李";
+}
+
+.mi-rectangle-list::before {
+  content: "梨";
+}
+
+.mi-rectangle-panoramic::before {
+  content: "泥";
+}
+
+.mi-rectangle-pro::before {
+  content: "理";
+}
+
+.mi-rectangle-vertical-history::before {
+  content: "痢";
+}
+
+.mi-rectangle-vertical::before {
+  content: "罹";
+}
+
+.mi-rectangle-xmark::before {
+  content: "裏";
+}
+
+.mi-rectangles-mixed::before {
+  content: "裡";
+}
+
+.mi-recycle-bin::before {
+  content: "里";
+}
+
+.mi-recycle::before {
+  content: "離";
+}
+
+.mi-redo-alt::before {
+  content: "匿";
+}
+
+.mi-redo::before {
+  content: "溺";
+}
+
+.mi-reel::before {
+  content: "吝";
+}
+
+.mi-refer-arrow::before {
+  content: "燐";
+}
+
+.mi-refer::before {
+  content: "璘";
+}
+
+.mi-referral-alt::before {
+  content: "藺";
+}
+
+.mi-referral-user::before {
+  content: "隣";
+}
+
+.mi-referral::before {
+  content: "鱗";
+}
+
+.mi-reflect-horizontal-alt::before {
+  content: "麟";
+}
+
+.mi-reflect-horizontal::before {
+  content: "林";
+}
+
+.mi-reflect-vertical::before {
+  content: "淋";
+}
+
+.mi-reflect::before {
+  content: "臨";
+}
+
+.mi-refresh::before {
+  content: "立";
+}
+
+.mi-refrigerator::before {
+  content: "笠";
+}
+
+.mi-refund-alt::before {
+  content: "粒";
+}
+
+.mi-refund::before {
+  content: "狀";
+}
+
+.mi-region-pin-alt::before {
+  content: "炙";
+}
+
+.mi-region-pin::before {
+  content: "識";
+}
+
+.mi-registered::before {
+  content: "什";
+}
+
+.mi-registration-paper::before {
+  content: "茶";
+}
+
+.mi-remove-folder::before {
+  content: "刺";
+}
+
+.mi-remove-user::before {
+  content: "切";
+}
+
+.mi-rent-signal::before {
+  content: "度";
+}
+
+.mi-rent::before {
+  content: "拓";
+}
+
+.mi-replace::before {
+  content: "糖";
+}
+
+.mi-replay-10::before {
+  content: "宅";
+}
+
+.mi-replay-30::before {
+  content: "洞";
+}
+
+.mi-replay-5::before {
+  content: "暴";
+}
+
+.mi-reply-all::before {
+  content: "輻";
+}
+
+.mi-republican::before {
+  content: "行";
+}
+
+.mi-reservation-smartphone::before {
+  content: "降";
+}
+
+.mi-reservation-table::before {
+  content: "見";
+}
+
+.mi-resistance-band::before {
+  content: "廓";
+}
+
+.mi-resize::before {
+  content: "兀";
+}
+
+.mi-resources::before {
+  content: "嗀";
+}
+
+.mi-restaurant::before {
+  content: "﨎";
+}
+
+.mi-restock::before {
+  content: "﨏";
+}
+
+.mi-restroom-simple::before {
+  content: "塚";
+}
+
+.mi-resume::before {
+  content: "﨑";
+}
+
+.mi-revenue-alt::before {
+  content: "晴";
+}
+
+.mi-revenue-euro::before {
+  content: "﨓";
+}
+
+.mi-revenue::before {
+  content: "﨔";
+}
+
+.mi-review::before {
+  content: "凞";
+}
+
+.mi-rewind-button-circle::before {
+  content: "猪";
+}
+
+.mi-rewind::before {
+  content: "益";
+}
+
+.mi-rhombus::before {
+  content: "礼";
+}
+
+.mi-ribbon::before {
+  content: "神";
+}
+
+.mi-right-from-bracket::before {
+  content: "祥";
+}
+
+.mi-right::before {
+  content: "福";
+}
+
+.mi-ring-diamond::before {
+  content: "靖";
+}
+
+.mi-ring::before {
+  content: "精";
+}
+
+.mi-rings-wedding::before {
+  content: "羽";
+}
+
+.mi-risk-alt::before {
+  content: "﨟";
+}
+
+.mi-risk::before {
+  content: "蘒";
+}
+
+.mi-road-barrier::before {
+  content: "﨡";
+}
+
+.mi-road-sign-left::before {
+  content: "諸";
+}
+
+.mi-road::before {
+  content: "﨣";
+}
+
+.mi-robot::before {
+  content: "﨤";
+}
+
+.mi-robotic-arm::before {
+  content: "逸";
+}
+
+.mi-rocket-lunch::before {
+  content: "都";
+}
+
+.mi-rocket::before {
+  content: "﨧";
+}
+
+.mi-roller-coaster::before {
+  content: "﨨";
+}
+
+.mi-room-service::before {
+  content: "﨩";
+}
+
+.mi-rotate-exclamation::before {
+  content: "飯";
+}
+
+.mi-rotate-left::before {
+  content: "飼";
+}
+
+.mi-rotate-reverse::before {
+  content: "館";
+}
+
+.mi-rotate-right::before {
+  content: "鶴";
+}
+
+.mi-rotate-square::before {
+  content: "郞";
+}
+
+.mi-roulette::before {
+  content: "隷";
+}
+
+.mi-route-highway::before {
+  content: "侮";
+}
+
+.mi-route-interstate::before {
+  content: "僧";
+}
+
+.mi-route::before {
+  content: "免";
+}
+
+.mi-router::before {
+  content: "勉";
+}
+
+.mi-rss-alt::before {
+  content: "勤";
+}
+
+.mi-rss::before {
+  content: "卑";
+}
+
+.mi-ruble-sign::before {
+  content: "喝";
+}
+
+.mi-rugby::before {
+  content: "嘆";
+}
+
+.mi-ruler-combined::before {
+  content: "器";
+}
+
+.mi-ruler-horizontal::before {
+  content: "塀";
+}
+
+.mi-ruler-triangle::before {
+  content: "墨";
+}
+
+.mi-ruler-vertical::before {
+  content: "層";
+}
+
+.mi-rules-alt::before {
+  content: "屮";
+}
+
+.mi-rules::before {
+  content: "悔";
+}
+
+.mi-running-track::before {
+  content: "慨";
+}
+
+.mi-running::before {
+  content: "憎";
+}
+
+.mi-rupee-sign::before {
+  content: "懲";
+}
+
+.mi-rupiah-sign::before {
+  content: "敏";
+}
+
+.mi-rv::before {
+  content: "既";
+}
+
+.mi-s::before {
+  content: "暑";
+}
+
+.mi-sack-dollar::before {
+  content: "梅";
+}
+
+.mi-sack::before {
+  content: "海";
+}
+
+.mi-sad-cry::before {
+  content: "渚";
+}
+
+.mi-sad-tear::before {
+  content: "漢";
+}
+
+.mi-sad::before {
+  content: "煮";
+}
+
+.mi-safe-box::before {
+  content: "爫";
+}
+
+.mi-sailboat::before {
+  content: "琢";
+}
+
+.mi-salad::before {
+  content: "碑";
+}
+
+.mi-salary-alt::before {
+  content: "社";
+}
+
+.mi-salt-pepper::before {
+  content: "祉";
+}
+
+.mi-salt-shaker::before {
+  content: "祈";
+}
+
+.mi-sandwich-alt::before {
+  content: "祐";
+}
+
+.mi-sandwich::before {
+  content: "祖";
+}
+
+.mi-satellite-dish::before {
+  content: "祝";
+}
+
+.mi-satellite::before {
+  content: "禍";
+}
+
+.mi-saturday::before {
+  content: "禎";
+}
+
+.mi-sauce::before {
+  content: "穀";
+}
+
+.mi-sausage::before {
+  content: "突";
+}
+
+.mi-sax-hot::before {
+  content: "節";
+}
+
+.mi-saxophone::before {
+  content: "練";
+}
+
+.mi-scale-comparison-alt::before {
+  content: "縉";
+}
+
+.mi-scale-comparison::before {
+  content: "繁";
+}
+
+.mi-scale::before {
+  content: "署";
+}
+
+.mi-scalpel-path::before {
+  content: "者";
+}
+
+.mi-scalpel::before {
+  content: "臭";
+}
+
+.mi-scanner-gun::before {
+  content: "艹";
+}
+
+.mi-scanner-image::before {
+  content: "艹";
+}
+
+.mi-scanner-keyboard::before {
+  content: "著";
+}
+
+.mi-scanner-touchscreen::before {
+  content: "褐";
+}
+
+.mi-scarecrow::before {
+  content: "視";
+}
+
+.mi-scarf::before {
+  content: "謁";
+}
+
+.mi-school-bus::before {
+  content: "謹";
+}
+
+.mi-school::before {
+  content: "賓";
+}
+
+.mi-scissors::before {
+  content: "贈";
+}
+
+.mi-scooter::before {
+  content: "辶";
+}
+
+.mi-screen::before {
+  content: "逸";
+}
+
+.mi-screencast::before {
+  content: "難";
+}
+
+.mi-screw-alt::before {
+  content: "響";
+}
+
+.mi-screw::before {
+  content: "頻";
+}
+
+.mi-screwdriver::before {
+  content: "恵";
+}
+
+.mi-scribble::before {
+  content: "𤋮";
+}
+
+.mi-script::before {
+  content: "舘";
+}
+
+.mi-scroll-document-story::before {
+  content: "﩮";
+}
+
+.mi-scroll-old::before {
+  content: "﩯";
+}
+
+.mi-scroll-torah::before {
+  content: "並";
+}
+
+.mi-scroll::before {
+  content: "况";
+}
+
+.mi-scrubber::before {
+  content: "全";
+}
+
+.mi-scythe::before {
+  content: "侀";
+}
+
+.mi-sd-card::before {
+  content: "充";
+}
+
+.mi-sd-cards::before {
+  content: "冀";
+}
+
+.mi-seal-exclamation::before {
+  content: "勇";
+}
+
+.mi-seal-question::before {
+  content: "勺";
+}
+
+.mi-seal::before {
+  content: "喝";
+}
+
+.mi-search-alt::before {
+  content: "啕";
+}
+
+.mi-search-dollar::before {
+  content: "喙";
+}
+
+.mi-search-heart::before {
+  content: "嗢";
+}
+
+.mi-search-location::before {
+  content: "塚";
+}
+
+.mi-search::before {
+  content: "墳";
+}
+
+.mi-seat-airline::before {
+  content: "奄";
+}
+
+.mi-seatbelt-safety-driver::before {
+  content: "奔";
+}
+
+.mi-second-award::before {
+  content: "婢";
+}
+
+.mi-second-laurel::before {
+  content: "嬨";
+}
+
+.mi-second-medal::before {
+  content: "廒";
+}
+
+.mi-second::before {
+  content: "廙";
+}
+
+.mi-security::before {
+  content: "彩";
+}
+
+.mi-seedling::before {
+  content: "徭";
+}
+
+.mi-selection::before {
+  content: "惘";
+}
+
+.mi-sell::before {
+  content: "慎";
+}
+
+.mi-seller-store::before {
+  content: "愈";
+}
+
+.mi-seller::before {
+  content: "憎";
+}
+
+.mi-selling::before {
+  content: "慠";
+}
+
+.mi-send-back::before {
+  content: "懲";
+}
+
+.mi-send-backward::before {
+  content: "戴";
+}
+
+.mi-send-money-smartphone::before {
+  content: "揄";
+}
+
+.mi-send-money::before {
+  content: "搜";
+}
+
+.mi-sensor-alert::before {
+  content: "摒";
+}
+
+.mi-sensor-fire::before {
+  content: "敖";
+}
+
+.mi-sensor-on::before {
+  content: "晴";
+}
+
+.mi-sensor-smoke::before {
+  content: "朗";
+}
+
+.mi-sensor::before {
+  content: "望";
+}
+
+.mi-settings-sliders::before {
+  content: "杖";
+}
+
+.mi-settings::before {
+  content: "歹";
+}
+
+.mi-share-alt-square::before {
+  content: "殺";
+}
+
+.mi-share-square::before {
+  content: "流";
+}
+
+.mi-share::before {
+  content: "滛";
+}
+
+.mi-sheep::before {
+  content: "滋";
+}
+
+.mi-shekel-sign::before {
+  content: "漢";
+}
+
+.mi-shelves::before {
+  content: "瀞";
+}
+
+.mi-shield-alt::before {
+  content: "煮";
+}
+
+.mi-shield-cat::before {
+  content: "瞧";
+}
+
+.mi-shield-check::before {
+  content: "爵";
+}
+
+.mi-shield-cross::before {
+  content: "犯";
+}
+
+.mi-shield-dog::before {
+  content: "猪";
+}
+
+.mi-shield-exclamation::before {
+  content: "瑱";
+}
+
+.mi-shield-interrogation::before {
+  content: "甆";
+}
+
+.mi-shield-keyhole::before {
+  content: "画";
+}
+
+.mi-shield-minus::before {
+  content: "瘝";
+}
+
+.mi-shield-plus::before {
+  content: "瘟";
+}
+
+.mi-shield-security-risk::before {
+  content: "益";
+}
+
+.mi-shield-slash::before {
+  content: "盛";
+}
+
+.mi-shield-trust::before {
+  content: "直";
+}
+
+.mi-shield-virus::before {
+  content: "睊";
+}
+
+.mi-shield-xmark::before {
+  content: "着";
+}
+
+.mi-shield::before {
+  content: "磌";
+}
+
+.mi-ship-side::before {
+  content: "窱";
+}
+
+.mi-ship::before {
+  content: "節";
+}
+
+.mi-shipping-fast::before {
+  content: "类";
+}
+
+.mi-shipping-timed::before {
+  content: "絛";
+}
+
+.mi-shirt-long-sleeve::before {
+  content: "練";
+}
+
+.mi-shirt-running::before {
+  content: "缾";
+}
+
+.mi-shirt-tank-top::before {
+  content: "者";
+}
+
+.mi-shirt::before {
+  content: "荒";
+}
+
+.mi-shish-kebab::before {
+  content: "華";
+}
+
+.mi-shoe-prints::before {
+  content: "蝹";
+}
+
+.mi-shop-lock::before {
+  content: "襁";
+}
+
+.mi-shop-slash::before {
+  content: "覆";
+}
+
+.mi-shop::before {
+  content: "視";
+}
+
+.mi-shopping-bag-add::before {
+  content: "調";
+}
+
+.mi-shopping-bag::before {
+  content: "諸";
+}
+
+.mi-shopping-basket::before {
+  content: "請";
+}
+
+.mi-shopping-cart-add::before {
+  content: "謁";
+}
+
+.mi-shopping-cart-buyer::before {
+  content: "諾";
+}
+
+.mi-shopping-cart-check::before {
+  content: "諭";
+}
+
+.mi-shopping-cart::before {
+  content: "謹";
+}
+
+.mi-shovel-snow::before {
+  content: "變";
+}
+
+.mi-shovel::before {
+  content: "贈";
+}
+
+.mi-shower-down::before {
+  content: "輸";
+}
+
+.mi-shower::before {
+  content: "遲";
+}
+
+.mi-shredder::before {
+  content: "醙";
+}
+
+.mi-shrimp::before {
+  content: "鉶";
+}
+
+.mi-shuffle::before {
+  content: "陼";
+}
+
+.mi-shuttle-van::before {
+  content: "難";
+}
+
+.mi-shuttlecock::before {
+  content: "靖";
+}
+
+.mi-sickle::before {
+  content: "韛";
+}
+
+.mi-sidebar-flip::before {
+  content: "響";
+}
+
+.mi-sidebar::before {
+  content: "頋";
+}
+
+.mi-sigma::before {
+  content: "頻";
+}
+
+.mi-sign-hanging::before {
+  content: "鬒";
+}
+
+.mi-sign-in-alt::before {
+  content: "龜";
+}
+
+.mi-sign-out-alt::before {
+  content: "𢡊";
+}
+
+.mi-sign-posts-wrench::before {
+  content: "𢡄";
+}
+
+.mi-sign-posts::before {
+  content: "𣏕";
+}
+
+.mi-sign-up::before {
+  content: "㮝";
+}
+
+.mi-signal-alt-1::before {
+  content: "䀘";
+}
+
+.mi-signal-alt-2::before {
+  content: "䀹";
+}
+
+.mi-signal-alt-slash::before {
+  content: "𥉉";
+}
+
+.mi-signal-alt::before {
+  content: "𥳐";
+}
+
+.mi-signal-bars-fair::before {
+  content: "𧻓";
+}
+
+.mi-signal-bars-good::before {
+  content: "齃";
+}
+
+.mi-signal-bars-weak::before {
+  content: "龎";
+}
+
+.mi-signal-stream-slash::before {
+  content: "﫚";
+}
+
+.mi-signal-stream::before {
+  content: "﫛";
+}
+
+.mi-signature-lock::before {
+  content: "﫜";
+}
+
+.mi-signature-slash::before {
+  content: "﫝";
+}
+
+.mi-signature::before {
+  content: "﫞";
+}
+
+.mi-sim-card::before {
+  content: "﫟";
+}
+
+.mi-sim-cards::before {
+  content: "﫠";
+}
+
+.mi-sink::before {
+  content: "﫡";
+}
+
+.mi-siren-on::before {
+  content: "﫢";
+}
+
+.mi-siren::before {
+  content: "﫣";
+}
+
+.mi-site-alt::before {
+  content: "﫤";
+}
+
+.mi-site-browser::before {
+  content: "﫥";
+}
+
+.mi-site::before {
+  content: "﫦";
+}
+
+.mi-sitemap::before {
+  content: "﫧";
+}
+
+.mi-skateboard::before {
+  content: "﫨";
+}
+
+.mi-skating::before {
+  content: "﫩";
+}
+
+.mi-skeleton-ribs::before {
+  content: "﫪";
+}
+
+.mi-skeleton::before {
+  content: "﫫";
+}
+
+.mi-skewer::before {
+  content: "﫬";
+}
+
+.mi-ski-boot-ski::before {
+  content: "﫭";
+}
+
+.mi-ski-jump::before {
+  content: "﫮";
+}
+
+.mi-ski-lift::before {
+  content: "﫯";
+}
+
+.mi-skiing-nordic::before {
+  content: "﫰";
+}
+
+.mi-skiing::before {
+  content: "﫱";
+}
+
+.mi-skill-alt::before {
+  content: "﫲";
+}
+
+.mi-skill-user::before {
+  content: "﫳";
+}
+
+.mi-skill::before {
+  content: "﫴";
+}
+
+.mi-skin-arrow::before {
+  content: "﫵";
+}
+
+.mi-skin-drop::before {
+  content: "﫶";
+}
+
+.mi-skin-hair::before {
+  content: "﫷";
+}
+
+.mi-skin::before {
+  content: "﫸";
+}
+
+.mi-skip-15-seconds::before {
+  content: "﫹";
+}
+
+.mi-skull-cow::before {
+  content: "﫺";
+}
+
+.mi-skull-crossbones::before {
+  content: "﫻";
+}
+
+.mi-skull::before {
+  content: "﫼";
+}
+
+.mi-slash::before {
+  content: "﫽";
+}
+
+.mi-sledding::before {
+  content: "﫾";
+}
+
+.mi-sleeping-bag::before {
+  content: "﫿";
+}
+
+.mi-sleigh::before {
+  content: "ﬀ";
+}
+
+.mi-sliders-h-square::before {
+  content: "ﬁ";
+}
+
+.mi-sliders-v-square::before {
+  content: "ﬂ";
+}
+
+.mi-sliders-v::before {
+  content: "ﬃ";
+}
+
+.mi-slot-machine::before {
+  content: "ﬄ";
+}
+
+.mi-smart-home-alt::before {
+  content: "ﬅ";
+}
+
+.mi-smart-home::before {
+  content: "ﬆ";
+}
+
+.mi-smartphone::before {
+  content: "﬇";
+}
+
+.mi-smile-beam::before {
+  content: "﬈";
+}
+
+.mi-smile-plus::before {
+  content: "﬉";
+}
+
+.mi-smile-wink::before {
+  content: "﬊";
+}
+
+.mi-smile::before {
+  content: "﬋";
+}
+
+.mi-smiley-comment-alt::before {
+  content: "﬌";
+}
+
+.mi-smog::before {
+  content: "﬍";
+}
+
+.mi-smoke::before {
+  content: "﬎";
+}
+
+.mi-smoking-ban::before {
+  content: "﬏";
+}
+
+.mi-smoking::before {
+  content: "﬐";
+}
+
+.mi-snake::before {
+  content: "﬑";
+}
+
+.mi-snap::before {
+  content: "﬒";
+}
+
+.mi-snooze::before {
+  content: "ﬓ";
+}
+
+.mi-snow-blowing::before {
+  content: "ﬔ";
+}
+
+.mi-snowboarding::before {
+  content: "ﬕ";
+}
+
+.mi-snowflake-droplets::before {
+  content: "ﬖ";
+}
+
+.mi-snowflake::before {
+  content: "ﬗ";
+}
+
+.mi-snowflakes::before {
+  content: "﬘";
+}
+
+.mi-snowman-alt::before {
+  content: "﬙";
+}
+
+.mi-snowman-head::before {
+  content: "﬚";
+}
+
+.mi-snowmobile::before {
+  content: "﬛";
+}
+
+.mi-snowplow::before {
+  content: "﬜";
+}
+
+.mi-soap-alt::before {
+  content: "יִ";
+}
+
+.mi-soap::before {
+  content: "ﬞ";
+}
+
+.mi-social-network::before {
+  content: "ײַ";
+}
+
+.mi-socks::before {
+  content: "ﬠ";
+}
+
+.mi-sofa-size::before {
+  content: "ﬡ";
+}
+
+.mi-sofa::before {
+  content: "ﬢ";
+}
+
+.mi-solar-panel-sun::before {
+  content: "ﬣ";
+}
+
+.mi-solar-panel::before {
+  content: "ﬤ";
+}
+
+.mi-solar-system::before {
+  content: "ﬥ";
+}
+
+.mi-sold-house::before {
+  content: "ﬦ";
+}
+
+.mi-sold-signal::before {
+  content: "ﬧ";
+}
+
+.mi-sort-alpha-down-alt::before {
+  content: "ﬨ";
+}
+
+.mi-sort-alpha-down::before {
+  content: "﬩";
+}
+
+.mi-sort-alpha-up-alt::before {
+  content: "שׁ";
+}
+
+.mi-sort-alpha-up::before {
+  content: "שׂ";
+}
+
+.mi-sort-alt::before {
+  content: "שּׁ";
+}
+
+.mi-sort-amount-down-alt::before {
+  content: "שּׂ";
+}
+
+.mi-sort-amount-down::before {
+  content: "אַ";
+}
+
+.mi-sort-amount-up-alt::before {
+  content: "אָ";
+}
+
+.mi-sort-amount-up::before {
+  content: "אּ";
+}
+
+.mi-sort-circle-down::before {
+  content: "בּ";
+}
+
+.mi-sort-circle-up::before {
+  content: "גּ";
+}
+
+.mi-sort-circle::before {
+  content: "דּ";
+}
+
+.mi-sort-down::before {
+  content: "הּ";
+}
+
+.mi-sort-numeric-down-alt::before {
+  content: "וּ";
+}
+
+.mi-sort-numeric-down::before {
+  content: "זּ";
+}
+
+.mi-sort-shapes-down::before {
+  content: "﬷";
+}
+
+.mi-sort-shapes-up::before {
+  content: "טּ";
+}
+
+.mi-sort-size-down::before {
+  content: "יּ";
+}
+
+.mi-sort-size-up::before {
+  content: "ךּ";
+}
+
+.mi-sort::before {
+  content: "כּ";
+}
+
+.mi-soup::before {
+  content: "לּ";
+}
+
+.mi-source-data::before {
+  content: "﬽";
+}
+
+.mi-source-document-alt::before {
+  content: "מּ";
+}
+
+.mi-source-document::before {
+  content: "﬿";
+}
+
+.mi-spa::before {
+  content: "נּ";
+}
+
+.mi-space-shuttle::before {
+  content: "סּ";
+}
+
+.mi-space-station-moon-alt::before {
+  content: "﭂";
+}
+
+.mi-space-station-moon::before {
+  content: "ףּ";
+}
+
+.mi-spade::before {
+  content: "פּ";
+}
+
+.mi-spaghetti-monster-flying::before {
+  content: "﭅";
+}
+
+.mi-spain-map::before {
+  content: "צּ";
+}
+
+.mi-sparkles::before {
+  content: "קּ";
+}
+
+.mi-spartan-helmet::before {
+  content: "רּ";
+}
+
+.mi-speaker::before {
+  content: "שּ";
+}
+
+.mi-speakers::before {
+  content: "תּ";
+}
+
+.mi-speech-bubble-story::before {
+  content: "וֹ";
+}
+
+.mi-speedometer-arrow::before {
+  content: "בֿ";
+}
+
+.mi-speedometer-kpi::before {
+  content: "כֿ";
+}
+
+.mi-sphere::before {
+  content: "פֿ";
+}
+
+.mi-spider-black-widow::before {
+  content: "ﭏ";
+}
+
+.mi-spider-web::before {
+  content: "ﭐ";
+}
+
+.mi-spider::before {
+  content: "ﭑ";
+}
+
+.mi-spinner::before {
+  content: "ﭒ";
+}
+
+.mi-split-up-relation::before {
+  content: "ﭓ";
+}
+
+.mi-split::before {
+  content: "ﭔ";
+}
+
+.mi-splotch::before {
+  content: "ﭕ";
+}
+
+.mi-spoon::before {
+  content: "ﭖ";
+}
+
+.mi-sport::before {
+  content: "ﭗ";
+}
+
+.mi-spray-can-sparkles::before {
+  content: "ﭘ";
+}
+
+.mi-spray-can::before {
+  content: "ﭙ";
+}
+
+.mi-spring-calendar::before {
+  content: "ﭚ";
+}
+
+.mi-sprinkler::before {
+  content: "ﭛ";
+}
+
+.mi-spy::before {
+  content: "ﭜ";
+}
+
+.mi-square-0::before {
+  content: "ﭝ";
+}
+
+.mi-square-1::before {
+  content: "ﭞ";
+}
+
+.mi-square-2::before {
+  content: "ﭟ";
+}
+
+.mi-square-3::before {
+  content: "ﭠ";
+}
+
+.mi-square-4::before {
+  content: "ﭡ";
+}
+
+.mi-square-5::before {
+  content: "ﭢ";
+}
+
+.mi-square-6::before {
+  content: "ﭣ";
+}
+
+.mi-square-7::before {
+  content: "ﭤ";
+}
+
+.mi-square-8::before {
+  content: "ﭥ";
+}
+
+.mi-square-9::before {
+  content: "ﭦ";
+}
+
+.mi-square-a::before {
+  content: "ﭧ";
+}
+
+.mi-square-b::before {
+  content: "ﭨ";
+}
+
+.mi-square-bolt::before {
+  content: "ﭩ";
+}
+
+.mi-square-c::before {
+  content: "ﭪ";
+}
+
+.mi-square-code::before {
+  content: "ﭫ";
+}
+
+.mi-square-d::before {
+  content: "ﭬ";
+}
+
+.mi-square-dashed-circle-plus::before {
+  content: "ﭭ";
+}
+
+.mi-square-dashed::before {
+  content: "ﭮ";
+}
+
+.mi-square-divide::before {
+  content: "ﭯ";
+}
+
+.mi-square-e::before {
+  content: "ﭰ";
+}
+
+.mi-square-ellipsis-vertical::before {
+  content: "ﭱ";
+}
+
+.mi-square-ellipsis::before {
+  content: "ﭲ";
+}
+
+.mi-square-exclamation::before {
+  content: "ﭳ";
+}
+
+.mi-square-f::before {
+  content: "ﭴ";
+}
+
+.mi-square-g::before {
+  content: "ﭵ";
+}
+
+.mi-square-h::before {
+  content: "ﭶ";
+}
+
+.mi-square-heart::before {
+  content: "ﭷ";
+}
+
+.mi-square-i::before {
+  content: "ﭸ";
+}
+
+.mi-square-info::before {
+  content: "ﭹ";
+}
+
+.mi-square-j::before {
+  content: "ﭺ";
+}
+
+.mi-square-k::before {
+  content: "ﭻ";
+}
+
+.mi-square-kanban::before {
+  content: "ﭼ";
+}
+
+.mi-square-l::before {
+  content: "ﭽ";
+}
+
+.mi-square-m::before {
+  content: "ﭾ";
+}
+
+.mi-square-minus::before {
+  content: "ﭿ";
+}
+
+.mi-square-n::before {
+  content: "ﮀ";
+}
+
+.mi-square-o::before {
+  content: "ﮁ";
+}
+
+.mi-square-p::before {
+  content: "ﮂ";
+}
+
+.mi-square-phone-hangup::before {
+  content: "ﮃ";
+}
+
+.mi-square-plus::before {
+  content: "ﮄ";
+}
+
+.mi-square-poll-horizontal::before {
+  content: "ﮅ";
+}
+
+.mi-square-poll-vertical::before {
+  content: "ﮆ";
+}
+
+.mi-square-q::before {
+  content: "ﮇ";
+}
+
+.mi-square-quote::before {
+  content: "ﮈ";
+}
+
+.mi-square-r::before {
+  content: "ﮉ";
+}
+
+.mi-square-root::before {
+  content: "ﮊ";
+}
+
+.mi-square-s::before {
+  content: "ﮋ";
+}
+
+.mi-square-small::before {
+  content: "ﮌ";
+}
+
+.mi-square-star::before {
+  content: "ﮍ";
+}
+
+.mi-square-t::before {
+  content: "ﮎ";
+}
+
+.mi-square-terminal::before {
+  content: "ﮏ";
+}
+
+.mi-square-u::before {
+  content: "ﮐ";
+}
+
+.mi-square-up-right::before {
+  content: "ﮑ";
+}
+
+.mi-square-v::before {
+  content: "ﮒ";
+}
+
+.mi-square-w::before {
+  content: "ﮓ";
+}
+
+.mi-square-x::before {
+  content: "ﮔ";
+}
+
+.mi-square-y::before {
+  content: "ﮕ";
+}
+
+.mi-square-z::before {
+  content: "ﮖ";
+}
+
+.mi-square::before {
+  content: "ﮗ";
+}
+
+.mi-squid::before {
+  content: "ﮘ";
+}
+
+.mi-squircle::before {
+  content: "ﮙ";
+}
+
+.mi-squirrel::before {
+  content: "ﮚ";
+}
+
+.mi-staff::before {
+  content: "ﮛ";
+}
+
+.mi-stage-concert::before {
+  content: "ﮜ";
+}
+
+.mi-stage-theatre::before {
+  content: "ﮝ";
+}
+
+.mi-stage::before {
+  content: "ﮞ";
+}
+
+.mi-stairs::before {
+  content: "ﮟ";
+}
+
+.mi-stamp::before {
+  content: "ﮠ";
+}
+
+.mi-standard-definition::before {
+  content: "ﮡ";
+}
+
+.mi-star-and-crescent::before {
+  content: "ﮢ";
+}
+
+.mi-star-christmas::before {
+  content: "ﮣ";
+}
+
+.mi-star-comment-alt::before {
+  content: "ﮤ";
+}
+
+.mi-star-exclamation::before {
+  content: "ﮥ";
+}
+
+.mi-star-octogram::before {
+  content: "ﮦ";
+}
+
+.mi-star-of-david::before {
+  content: "ﮧ";
+}
+
+.mi-star-rating-call::before {
+  content: "ﮨ";
+}
+
+.mi-star-sharp-half-stroke::before {
+  content: "ﮩ";
+}
+
+.mi-star-sharp-half::before {
+  content: "ﮪ";
+}
+
+.mi-star-shooting::before {
+  content: "ﮫ";
+}
+
+.mi-star::before {
+  content: "ﮬ";
+}
+
+.mi-starfighter::before {
+  content: "ﮭ";
+}
+
+.mi-stars::before {
+  content: "ﮮ";
+}
+
+.mi-state-country::before {
+  content: "ﮯ";
+}
+
+.mi-stationary-bike::before {
+  content: "ﮰ";
+}
+
+.mi-stats::before {
+  content: "ﮱ";
+}
+
+.mi-steak::before {
+  content: "﮲";
+}
+
+.mi-steering-wheel::before {
+  content: "﮳";
+}
+
+.mi-step-backward::before {
+  content: "﮴";
+}
+
+.mi-step-forward::before {
+  content: "﮵";
+}
+
+.mi-sterling-sign::before {
+  content: "﮶";
+}
+
+.mi-stethoscope::before {
+  content: "﮷";
+}
+
+.mi-sticker::before {
+  content: "﮸";
+}
+
+.mi-stocking::before {
+  content: "﮹";
+}
+
+.mi-stomach::before {
+  content: "﮺";
+}
+
+.mi-stop-circle::before {
+  content: "﮻";
+}
+
+.mi-stop-square::before {
+  content: "﮼";
+}
+
+.mi-stop::before {
+  content: "﮽";
+}
+
+.mi-stopwatch::before {
+  content: "﮾";
+}
+
+.mi-store-alt::before {
+  content: "﮿";
+}
+
+.mi-store-buyer::before {
+  content: "﯀";
+}
+
+.mi-store-lock::before {
+  content: "﯁";
+}
+
+.mi-store-slash::before {
+  content: "﯂";
+}
+
+.mi-story-book::before {
+  content: "﯃";
+}
+
+.mi-story-fairy-tale::before {
+  content: "﯄";
+}
+
+.mi-story-fantasy::before {
+  content: "﯅";
+}
+
+.mi-strategy-chess-risk::before {
+  content: "﯆";
+}
+
+.mi-strawberry::before {
+  content: "﯇";
+}
+
+.mi-street-view::before {
+  content: "﯈";
+}
+
+.mi-stretcher::before {
+  content: "﯉";
+}
+
+.mi-strikethrough::before {
+  content: "﯊";
+}
+
+.mi-stroopwafel::before {
+  content: "﯋";
+}
+
+.mi-student-alt::before {
+  content: "﯌";
+}
+
+.mi-student::before {
+  content: "﯍";
+}
+
+.mi-subscript::before {
+  content: "﯎";
+}
+
+.mi-subscription-alt::before {
+  content: "﯏";
+}
+
+.mi-subscription::before {
+  content: "﯐";
+}
+
+.mi-subtitles-slash::before {
+  content: "﯑";
+}
+
+.mi-subtitles::before {
+  content: "﯒";
+}
+
+.mi-subway::before {
+  content: "ﯓ";
+}
+
+.mi-suitcase-alt::before {
+  content: "ﯔ";
+}
+
+.mi-summary-check::before {
+  content: "ﯕ";
+}
+
+.mi-summer::before {
+  content: "ﯖ";
+}
+
+.mi-sun-dust::before {
+  content: "ﯗ";
+}
+
+.mi-sun-plant-wilt::before {
+  content: "ﯘ";
+}
+
+.mi-sun-salutation-yoga::before {
+  content: "ﯙ";
+}
+
+.mi-sun::before {
+  content: "ﯚ";
+}
+
+.mi-sunday::before {
+  content: "ﯛ";
+}
+
+.mi-sunglasses-alt::before {
+  content: "ﯜ";
+}
+
+.mi-sunglasses::before {
+  content: "ﯝ";
+}
+
+.mi-sunrise-alt::before {
+  content: "ﯞ";
+}
+
+.mi-sunrise::before {
+  content: "ﯟ";
+}
+
+.mi-sunset::before {
+  content: "ﯠ";
+}
+
+.mi-superscript::before {
+  content: "ﯡ";
+}
+
+.mi-supplier-alt::before {
+  content: "ﯢ";
+}
+
+.mi-supplier::before {
+  content: "ﯣ";
+}
+
+.mi-surfing::before {
+  content: "ﯤ";
+}
+
+.mi-surprise::before {
+  content: "ﯥ";
+}
+
+.mi-surveillance-camera::before {
+  content: "ﯦ";
+}
+
+.mi-survey-xmark::before {
+  content: "ﯧ";
+}
+
+.mi-sushi-alt::before {
+  content: "ﯨ";
+}
+
+.mi-sushi-roll::before {
+  content: "ﯩ";
+}
+
+.mi-sushi::before {
+  content: "ﯪ";
+}
+
+.mi-svg::before {
+  content: "ﯫ";
+}
+
+.mi-swap::before {
+  content: "ﯬ";
+}
+
+.mi-swatchbook::before {
+  content: "ﯭ";
+}
+
+.mi-swimmer::before {
+  content: "ﯮ";
+}
+
+.mi-swimming-pool::before {
+  content: "ﯯ";
+}
+
+.mi-swing::before {
+  content: "ﯰ";
+}
+
+.mi-swipe-down::before {
+  content: "ﯱ";
+}
+
+.mi-swipe-left::before {
+  content: "ﯲ";
+}
+
+.mi-swipe-right::before {
+  content: "ﯳ";
+}
+
+.mi-swipe-up::before {
+  content: "ﯴ";
+}
+
+.mi-sword::before {
+  content: "ﯵ";
+}
+
+.mi-symbol::before {
+  content: "ﯶ";
+}
+
+.mi-symbols::before {
+  content: "ﯷ";
+}
+
+.mi-synagogue::before {
+  content: "ﯸ";
+}
+
+.mi-syringe::before {
+  content: "ﯹ";
+}
+
+.mi-system-cloud::before {
+  content: "ﯺ";
+}
+
+.mi-t::before {
+  content: "ﯻ";
+}
+
+.mi-tab-folder::before {
+  content: "ﯼ";
+}
+
+.mi-table-columns::before {
+  content: "ﯽ";
+}
+
+.mi-table-layout::before {
+  content: "ﯾ";
+}
+
+.mi-table-list::before {
+  content: "ﯿ";
+}
+
+.mi-table-picnic::before {
+  content: "ﰀ";
+}
+
+.mi-table-pivot::before {
+  content: "ﰁ";
+}
+
+.mi-table-rows::before {
+  content: "ﰂ";
+}
+
+.mi-table-tree::before {
+  content: "ﰃ";
+}
+
+.mi-table::before {
+  content: "ﰄ";
+}
+
+.mi-tablet-android-alt::before {
+  content: "ﰅ";
+}
+
+.mi-tablet-android::before {
+  content: "ﰆ";
+}
+
+.mi-tablet-rugged::before {
+  content: "ﰇ";
+}
+
+.mi-tablet::before {
+  content: "ﰈ";
+}
+
+.mi-tachometer-alt-average::before {
+  content: "ﰉ";
+}
+
+.mi-tachometer-alt-fastest::before {
+  content: "ﰊ";
+}
+
+.mi-tachometer-alt-slow::before {
+  content: "ﰋ";
+}
+
+.mi-tachometer-alt-slowest::before {
+  content: "ﰌ";
+}
+
+.mi-tachometer-average::before {
+  content: "ﰍ";
+}
+
+.mi-tachometer-fast::before {
+  content: "ﰎ";
+}
+
+.mi-tachometer-fastest::before {
+  content: "ﰏ";
+}
+
+.mi-tachometer-slow::before {
+  content: "ﰐ";
+}
+
+.mi-tachometer-slowest::before {
+  content: "ﰑ";
+}
+
+.mi-tachometer::before {
+  content: "ﰒ";
+}
+
+.mi-taco::before {
+  content: "ﰓ";
+}
+
+.mi-tags::before {
+  content: "ﰔ";
+}
+
+.mi-talent-alt::before {
+  content: "ﰕ";
+}
+
+.mi-talent-hand::before {
+  content: "ﰖ";
+}
+
+.mi-talent::before {
+  content: "ﰗ";
+}
+
+.mi-tally-1::before {
+  content: "ﰘ";
+}
+
+.mi-tally-2::before {
+  content: "ﰙ";
+}
+
+.mi-tally-3::before {
+  content: "ﰚ";
+}
+
+.mi-tally-4::before {
+  content: "ﰛ";
+}
+
+.mi-tally::before {
+  content: "ﰜ";
+}
+
+.mi-tamale::before {
+  content: "ﰝ";
+}
+
+.mi-tank-water::before {
+  content: "ﰞ";
+}
+
+.mi-tap::before {
+  content: "ﰟ";
+}
+
+.mi-tape::before {
+  content: "ﰠ";
+}
+
+.mi-target-audience::before {
+  content: "ﰡ";
+}
+
+.mi-target::before {
+  content: "ﰢ";
+}
+
+.mi-tax-alt::before {
+  content: "ﰣ";
+}
+
+.mi-tax::before {
+  content: "ﰤ";
+}
+
+.mi-taxi-bus::before {
+  content: "ﰥ";
+}
+
+.mi-taxi::before {
+  content: "ﰦ";
+}
+
+.mi-team-check-alt::before {
+  content: "ﰧ";
+}
+
+.mi-team-check::before {
+  content: "ﰨ";
+}
+
+.mi-teddy-bear::before {
+  content: "ﰩ";
+}
+
+.mi-teeth-open::before {
+  content: "ﰪ";
+}
+
+.mi-telescope::before {
+  content: "ﰫ";
+}
+
+.mi-temperature-down::before {
+  content: "ﰬ";
+}
+
+.mi-temperature-frigid::before {
+  content: "ﰭ";
+}
+
+.mi-temperature-high::before {
+  content: "ﰮ";
+}
+
+.mi-temperature-list::before {
+  content: "ﰯ";
+}
+
+.mi-temperature-low::before {
+  content: "ﰰ";
+}
+
+.mi-temperature-up::before {
+  content: "ﰱ";
+}
+
+.mi-template-alt::before {
+  content: "ﰲ";
+}
+
+.mi-template::before {
+  content: "ﰳ";
+}
+
+.mi-tenge::before {
+  content: "ﰴ";
+}
+
+.mi-tennis::before {
+  content: "ﰵ";
+}
+
+.mi-tent-arrow-down-to-line::before {
+  content: "ﰶ";
+}
+
+.mi-tent-arrow-left-right::before {
+  content: "ﰷ";
+}
+
+.mi-tent-arrow-turn-left::before {
+  content: "ﰸ";
+}
+
+.mi-tent-arrows-down::before {
+  content: "ﰹ";
+}
+
+.mi-tents::before {
+  content: "ﰺ";
+}
+
+.mi-terminal::before {
+  content: "ﰻ";
+}
+
+.mi-terrace::before {
+  content: "ﰼ";
+}
+
+.mi-test-tube::before {
+  content: "ﰽ";
+}
+
+.mi-test::before {
+  content: "ﰾ";
+}
+
+.mi-text-box-dots::before {
+  content: "ﰿ";
+}
+
+.mi-text-box-edit::before {
+  content: "ﱀ";
+}
+
+.mi-text-box::before {
+  content: "ﱁ";
+}
+
+.mi-text-check::before {
+  content: "ﱂ";
+}
+
+.mi-text-height::before {
+  content: "ﱃ";
+}
+
+.mi-text-shadow::before {
+  content: "ﱄ";
+}
+
+.mi-text-size::before {
+  content: "ﱅ";
+}
+
+.mi-text-slash::before {
+  content: "ﱆ";
+}
+
+.mi-text-width::before {
+  content: "ﱇ";
+}
+
+.mi-text::before {
+  content: "ﱈ";
+}
+
+.mi-theater-masks::before {
+  content: "ﱉ";
+}
+
+.mi-thermometer-alt::before {
+  content: "ﱊ";
+}
+
+.mi-thermometer-empty::before {
+  content: "ﱋ";
+}
+
+.mi-thermometer-full::before {
+  content: "ﱌ";
+}
+
+.mi-thermometer-half::before {
+  content: "ﱍ";
+}
+
+.mi-thermometer-quarter::before {
+  content: "ﱎ";
+}
+
+.mi-thermometer-three-quarters::before {
+  content: "ﱏ";
+}
+
+.mi-theta::before {
+  content: "ﱐ";
+}
+
+.mi-third-award::before {
+  content: "ﱑ";
+}
+
+.mi-third-laurel::before {
+  content: "ﱒ";
+}
+
+.mi-third-medal::before {
+  content: "ﱓ";
+}
+
+.mi-third::before {
+  content: "ﱔ";
+}
+
+.mi-thought-bubble::before {
+  content: "ﱕ";
+}
+
+.mi-three-leaf-clover::before {
+  content: "ﱖ";
+}
+
+.mi-thumbs-up-trust::before {
+  content: "ﱗ";
+}
+
+.mi-thumbtack::before {
+  content: "ﱘ";
+}
+
+.mi-thunderstorm-moon::before {
+  content: "ﱙ";
+}
+
+.mi-thunderstorm-risk::before {
+  content: "ﱚ";
+}
+
+.mi-thunderstorm-sun::before {
+  content: "ﱛ";
+}
+
+.mi-thunderstorm::before {
+  content: "ﱜ";
+}
+
+.mi-thursday::before {
+  content: "ﱝ";
+}
+
+.mi-ticket-airline::before {
+  content: "ﱞ";
+}
+
+.mi-ticket-alt::before {
+  content: "ﱟ";
+}
+
+.mi-ticket::before {
+  content: "ﱠ";
+}
+
+.mi-tickets-airline::before {
+  content: "ﱡ";
+}
+
+.mi-tie::before {
+  content: "ﱢ";
+}
+
+.mi-tilde::before {
+  content: "ﱣ";
+}
+
+.mi-time-add::before {
+  content: "ﱤ";
+}
+
+.mi-time-check::before {
+  content: "ﱥ";
+}
+
+.mi-time-delete::before {
+  content: "ﱦ";
+}
+
+.mi-time-fast::before {
+  content: "ﱧ";
+}
+
+.mi-time-forward-sixty::before {
+  content: "ﱨ";
+}
+
+.mi-time-forward-ten::before {
+  content: "ﱩ";
+}
+
+.mi-time-forward::before {
+  content: "ﱪ";
+}
+
+.mi-time-half-past::before {
+  content: "ﱫ";
+}
+
+.mi-time-oclock::before {
+  content: "ﱬ";
+}
+
+.mi-time-past::before {
+  content: "ﱭ";
+}
+
+.mi-time-quarter-past::before {
+  content: "ﱮ";
+}
+
+.mi-time-quarter-to::before {
+  content: "ﱯ";
+}
+
+.mi-time-twenty-four::before {
+  content: "ﱰ";
+}
+
+.mi-time-watch-calendar::before {
+  content: "ﱱ";
+}
+
+.mi-timer-clock-call::before {
+  content: "ﱲ";
+}
+
+.mi-times-hexagon::before {
+  content: "ﱳ";
+}
+
+.mi-tint-slash::before {
+  content: "ﱴ";
+}
+
+.mi-tip-coin::before {
+  content: "ﱵ";
+}
+
+.mi-tire-flat::before {
+  content: "ﱶ";
+}
+
+.mi-tire-pressure-warning::before {
+  content: "ﱷ";
+}
+
+.mi-tire-rugged::before {
+  content: "ﱸ";
+}
+
+.mi-tire::before {
+  content: "ﱹ";
+}
+
+.mi-tired::before {
+  content: "ﱺ";
+}
+
+.mi-to-do-alt::before {
+  content: "ﱻ";
+}
+
+.mi-to-do::before {
+  content: "ﱼ";
+}
+
+.mi-together-people::before {
+  content: "ﱽ";
+}
+
+.mi-toggle-off::before {
+  content: "ﱾ";
+}
+
+.mi-toggle-on::before {
+  content: "ﱿ";
+}
+
+.mi-toilet-paper-blank-under::before {
+  content: "ﲀ";
+}
+
+.mi-toilet-paper-blank::before {
+  content: "ﲁ";
+}
+
+.mi-toilet-paper-slash::before {
+  content: "ﲂ";
+}
+
+.mi-toilet-paper-under-slash::before {
+  content: "ﲃ";
+}
+
+.mi-toilet-paper-under::before {
+  content: "ﲄ";
+}
+
+.mi-toilet::before {
+  content: "ﲅ";
+}
+
+.mi-toilets-portable::before {
+  content: "ﲆ";
+}
+
+.mi-token::before {
+  content: "ﲇ";
+}
+
+.mi-tomato::before {
+  content: "ﲈ";
+}
+
+.mi-tombstone-alt::before {
+  content: "ﲉ";
+}
+
+.mi-tombstone::before {
+  content: "ﲊ";
+}
+
+.mi-tool-box::before {
+  content: "ﲋ";
+}
+
+.mi-tool-crop::before {
+  content: "ﲌ";
+}
+
+.mi-tool-marquee::before {
+  content: "ﲍ";
+}
+
+.mi-tools::before {
+  content: "ﲎ";
+}
+
+.mi-tooth::before {
+  content: "ﲏ";
+}
+
+.mi-toothbrush::before {
+  content: "ﲐ";
+}
+
+.mi-torch-inspiration-leader::before {
+  content: "ﲑ";
+}
+
+.mi-torii-gate::before {
+  content: "ﲒ";
+}
+
+.mi-tornado::before {
+  content: "ﲓ";
+}
+
+.mi-total::before {
+  content: "ﲔ";
+}
+
+.mi-tour-guide-people::before {
+  content: "ﲕ";
+}
+
+.mi-tour-virtual::before {
+  content: "ﲖ";
+}
+
+.mi-tower-control::before {
+  content: "ﲗ";
+}
+
+.mi-track::before {
+  content: "ﲘ";
+}
+
+.mi-tractor::before {
+  content: "ﲙ";
+}
+
+.mi-trademark::before {
+  content: "ﲚ";
+}
+
+.mi-traffic-cone::before {
+  content: "ﲛ";
+}
+
+.mi-traffic-light-go::before {
+  content: "ﲜ";
+}
+
+.mi-traffic-light-slow::before {
+  content: "ﲝ";
+}
+
+.mi-traffic-light-stop::before {
+  content: "ﲞ";
+}
+
+.mi-traffic-light::before {
+  content: "ﲟ";
+}
+
+.mi-trailer::before {
+  content: "ﲠ";
+}
+
+.mi-train-journey::before {
+  content: "ﲡ";
+}
+
+.mi-train-side::before {
+  content: "ﲢ";
+}
+
+.mi-train-station-building::before {
+  content: "ﲣ";
+}
+
+.mi-train-station::before {
+  content: "ﲤ";
+}
+
+.mi-train-subway-tunnel::before {
+  content: "ﲥ";
+}
+
+.mi-train-track::before {
+  content: "ﲦ";
+}
+
+.mi-train-tram::before {
+  content: "ﲧ";
+}
+
+.mi-train::before {
+  content: "ﲨ";
+}
+
+.mi-tram::before {
+  content: "ﲩ";
+}
+
+.mi-transform::before {
+  content: "ﲪ";
+}
+
+.mi-transformation-block::before {
+  content: "ﲫ";
+}
+
+.mi-transformation-circle::before {
+  content: "ﲬ";
+}
+
+.mi-transformation-design::before {
+  content: "ﲭ";
+}
+
+.mi-transformation-shapes::before {
+  content: "ﲮ";
+}
+
+.mi-transformer-bolt::before {
+  content: "ﲯ";
+}
+
+.mi-transgender::before {
+  content: "ﲰ";
+}
+
+.mi-transporter-1::before {
+  content: "ﲱ";
+}
+
+.mi-transporter-2::before {
+  content: "ﲲ";
+}
+
+.mi-transporter-3::before {
+  content: "ﲳ";
+}
+
+.mi-transporter-4::before {
+  content: "ﲴ";
+}
+
+.mi-transporter-5::before {
+  content: "ﲵ";
+}
+
+.mi-transporter-6::before {
+  content: "ﲶ";
+}
+
+.mi-transporter-7::before {
+  content: "ﲷ";
+}
+
+.mi-transporter-empty::before {
+  content: "ﲸ";
+}
+
+.mi-transporter::before {
+  content: "ﲹ";
+}
+
+.mi-trash-can-check::before {
+  content: "ﲺ";
+}
+
+.mi-trash-can-clock::before {
+  content: "ﲻ";
+}
+
+.mi-trash-can-list::before {
+  content: "ﲼ";
+}
+
+.mi-trash-can-plus::before {
+  content: "ﲽ";
+}
+
+.mi-trash-can-slash::before {
+  content: "ﲾ";
+}
+
+.mi-trash-check::before {
+  content: "ﲿ";
+}
+
+.mi-trash-clock::before {
+  content: "ﳀ";
+}
+
+.mi-trash-empty::before {
+  content: "ﳁ";
+}
+
+.mi-trash-list::before {
+  content: "ﳂ";
+}
+
+.mi-trash-plus::before {
+  content: "ﳃ";
+}
+
+.mi-trash-restore-alt::before {
+  content: "ﳄ";
+}
+
+.mi-trash-restore::before {
+  content: "ﳅ";
+}
+
+.mi-trash-slash::before {
+  content: "ﳆ";
+}
+
+.mi-trash-undo-alt::before {
+  content: "ﳇ";
+}
+
+.mi-trash-undo::before {
+  content: "ﳈ";
+}
+
+.mi-trash-xmark::before {
+  content: "ﳉ";
+}
+
+.mi-trash::before {
+  content: "ﳊ";
+}
+
+.mi-treadmill::before {
+  content: "ﳋ";
+}
+
+.mi-treasure-chest::before {
+  content: "ﳌ";
+}
+
+.mi-treatment::before {
+  content: "ﳍ";
+}
+
+.mi-tree-alt::before {
+  content: "ﳎ";
+}
+
+.mi-tree-christmas::before {
+  content: "ﳏ";
+}
+
+.mi-tree-deciduous::before {
+  content: "ﳐ";
+}
+
+.mi-tree::before {
+  content: "ﳑ";
+}
+
+.mi-trees-alt::before {
+  content: "ﳒ";
+}
+
+.mi-trees::before {
+  content: "ﳓ";
+}
+
+.mi-triangle-music::before {
+  content: "ﳔ";
+}
+
+.mi-triangle-person-digging::before {
+  content: "ﳕ";
+}
+
+.mi-triangle-warning::before {
+  content: "ﳖ";
+}
+
+.mi-triangle::before {
+  content: "ﳗ";
+}
+
+.mi-tricycle::before {
+  content: "ﳘ";
+}
+
+.mi-trillium::before {
+  content: "ﳙ";
+}
+
+.mi-trophy-achievement-skill::before {
+  content: "ﳚ";
+}
+
+.mi-trophy-star::before {
+  content: "ﳛ";
+}
+
+.mi-trophy::before {
+  content: "ﳜ";
+}
+
+.mi-truck-arrow-left::before {
+  content: "ﳝ";
+}
+
+.mi-truck-arrow-right::before {
+  content: "ﳞ";
+}
+
+.mi-truck-bolt::before {
+  content: "ﳟ";
+}
+
+.mi-truck-box::before {
+  content: "ﳠ";
+}
+
+.mi-truck-check::before {
+  content: "ﳡ";
+}
+
+.mi-truck-container-empty::before {
+  content: "ﳢ";
+}
+
+.mi-truck-container::before {
+  content: "ﳣ";
+}
+
+.mi-truck-couch::before {
+  content: "ﳤ";
+}
+
+.mi-truck-fire::before {
+  content: "ﳥ";
+}
+
+.mi-truck-flatbed::before {
+  content: "ﳦ";
+}
+
+.mi-truck-front::before {
+  content: "ﳧ";
+}
+
+.mi-truck-ladder::before {
+  content: "ﳨ";
+}
+
+.mi-truck-loading::before {
+  content: "ﳩ";
+}
+
+.mi-truck-medical::before {
+  content: "ﳪ";
+}
+
+.mi-truck-monster::before {
+  content: "ﳫ";
+}
+
+.mi-truck-moving::before {
+  content: "ﳬ";
+}
+
+.mi-truck-pickup::before {
+  content: "ﳭ";
+}
+
+.mi-truck-plow::before {
+  content: "ﳮ";
+}
+
+.mi-truck-ramp::before {
+  content: "ﳯ";
+}
+
+.mi-truck-side::before {
+  content: "ﳰ";
+}
+
+.mi-truck-tow::before {
+  content: "ﳱ";
+}
+
+.mi-truck-utensils::before {
+  content: "ﳲ";
+}
+
+.mi-trumpet::before {
+  content: "ﳳ";
+}
+
+.mi-trust-alt::before {
+  content: "ﳴ";
+}
+
+.mi-trust::before {
+  content: "ﳵ";
+}
+
+.mi-tshirt::before {
+  content: "ﳶ";
+}
+
+.mi-tty-answer::before {
+  content: "ﳷ";
+}
+
+.mi-tty::before {
+  content: "ﳸ";
+}
+
+.mi-tubes::before {
+  content: "ﳹ";
+}
+
+.mi-tuesday::before {
+  content: "ﳺ";
+}
+
+.mi-tugrik-sign::before {
+  content: "ﳻ";
+}
+
+.mi-turkey::before {
+  content: "ﳼ";
+}
+
+.mi-turn-left-down::before {
+  content: "ﳽ";
+}
+
+.mi-turn-left::before {
+  content: "ﳾ";
+}
+
+.mi-turn-right::before {
+  content: "ﳿ";
+}
+
+.mi-turntable::before {
+  content: "ﴀ";
+}
+
+.mi-turtle::before {
+  content: "ﴁ";
+}
+
+.mi-tv-music::before {
+  content: "ﴂ";
+}
+
+.mi-tv-retro::before {
+  content: "ﴃ";
+}
+
+.mi-typewriter::before {
+  content: "ﴄ";
+}
+
+.mi-u::before {
+  content: "ﴅ";
+}
+
+.mi-ufo-beam::before {
+  content: "ﴆ";
+}
+
+.mi-ufo::before {
+  content: "ﴇ";
+}
+
+.mi-ui-ux::before {
+  content: "ﴈ";
+}
+
+.mi-umbrella-beach::before {
+  content: "ﴉ";
+}
+
+.mi-umbrella::before {
+  content: "ﴊ";
+}
+
+.mi-under-construction::before {
+  content: "ﴋ";
+}
+
+.mi-underline::before {
+  content: "ﴌ";
+}
+
+.mi-undo-alt::before {
+  content: "ﴍ";
+}
+
+.mi-undo::before {
+  content: "ﴎ";
+}
+
+.mi-unicorn::before {
+  content: "ﴏ";
+}
+
+.mi-uniform-martial-arts::before {
+  content: "ﴐ";
+}
+
+.mi-universal-access::before {
+  content: "ﴑ";
+}
+
+.mi-unlock::before {
+  content: "ﴒ";
+}
+
+.mi-up-from-bracket::before {
+  content: "ﴓ";
+}
+
+.mi-up-left::before {
+  content: "ﴔ";
+}
+
+.mi-up-right-from-square::before {
+  content: "ﴕ";
+}
+
+.mi-up-right::before {
+  content: "ﴖ";
+}
+
+.mi-up::before {
+  content: "ﴗ";
+}
+
+.mi-upload::before {
+  content: "ﴘ";
+}
+
+.mi-url::before {
+  content: "ﴙ";
+}
+
+.mi-usb-pendrive::before {
+  content: "ﴚ";
+}
+
+.mi-usd-circle::before {
+  content: "ﴛ";
+}
+
+.mi-usd-square::before {
+  content: "ﴜ";
+}
+
+.mi-user-add::before {
+  content: "ﴝ";
+}
+
+.mi-user-alien::before {
+  content: "ﴞ";
+}
+
+.mi-user-astronaut::before {
+  content: "ﴟ";
+}
+
+.mi-user-check::before {
+  content: "ﴠ";
+}
+
+.mi-user-chef::before {
+  content: "ﴡ";
+}
+
+.mi-user-coach::before {
+  content: "ﴢ";
+}
+
+.mi-user-cowboy::before {
+  content: "ﴣ";
+}
+
+.mi-user-crown::before {
+  content: "ﴤ";
+}
+
+.mi-user-gear::before {
+  content: "ﴥ";
+}
+
+.mi-user-graduate::before {
+  content: "ﴦ";
+}
+
+.mi-user-headset::before {
+  content: "ﴧ";
+}
+
+.mi-user-helmet-safety::before {
+  content: "ﴨ";
+}
+
+.mi-user-injured::before {
+  content: "ﴩ";
+}
+
+.mi-user-interface-ui::before {
+  content: "ﴪ";
+}
+
+.mi-user-key::before {
+  content: "ﴫ";
+}
+
+.mi-user-lock::before {
+  content: "ﴬ";
+}
+
+.mi-user-md-chat::before {
+  content: "ﴭ";
+}
+
+.mi-user-md::before {
+  content: "ﴮ";
+}
+
+.mi-user-minus::before {
+  content: "ﴯ";
+}
+
+.mi-user-music::before {
+  content: "ﴰ";
+}
+
+.mi-user-ninja::before {
+  content: "ﴱ";
+}
+
+.mi-user-nurse::before {
+  content: "ﴲ";
+}
+
+.mi-user-pen::before {
+  content: "ﴳ";
+}
+
+.mi-user-pilot-tie::before {
+  content: "ﴴ";
+}
+
+.mi-user-pilot::before {
+  content: "ﴵ";
+}
+
+.mi-user-police::before {
+  content: "ﴶ";
+}
+
+.mi-user-robot-xmarks::before {
+  content: "ﴷ";
+}
+
+.mi-user-robot::before {
+  content: "ﴸ";
+}
+
+.mi-user-salary::before {
+  content: "ﴹ";
+}
+
+.mi-user-shield::before {
+  content: "ﴺ";
+}
+
+.mi-user-skill-gear::before {
+  content: "ﴻ";
+}
+
+.mi-user-slash::before {
+  content: "ﴼ";
+}
+
+.mi-user-tag::before {
+  content: "ﴽ";
+}
+
+.mi-user-time::before {
+  content: "﴾";
+}
+
+.mi-user-trust::before {
+  content: "﴿";
+}
+
+.mi-user-unlock::before {
+  content: "﵀";
+}
+
+.mi-user-visor::before {
+  content: "﵁";
+}
+
+.mi-user-xmark::before {
+  content: "﵂";
+}
+
+.mi-user::before {
+  content: "﵃";
+}
+
+.mi-users-alt::before {
+  content: "﵄";
+}
+
+.mi-users-class::before {
+  content: "﵅";
+}
+
+.mi-users-gear::before {
+  content: "﵆";
+}
+
+.mi-users-medical::before {
+  content: "﵇";
+}
+
+.mi-users-slash::before {
+  content: "﵈";
+}
+
+.mi-users::before {
+  content: "﵉";
+}
+
+.mi-utensils-slash::before {
+  content: "﵊";
+}
+
+.mi-utensils::before {
+  content: "﵋";
+}
+
+.mi-utility-pole-double::before {
+  content: "﵌";
+}
+
+.mi-utility-pole::before {
+  content: "﵍";
+}
+
+.mi-ux-browser::before {
+  content: "﵎";
+}
+
+.mi-ux::before {
+  content: "﵏";
+}
+
+.mi-v::before {
+  content: "ﵐ";
+}
+
+.mi-vacuum-robot::before {
+  content: "ﵑ";
+}
+
+.mi-vacuum::before {
+  content: "ﵒ";
+}
+
+.mi-value-absolute::before {
+  content: "ﵓ";
+}
+
+.mi-vault::before {
+  content: "ﵔ";
+}
+
+.mi-vector-alt::before {
+  content: "ﵕ";
+}
+
+.mi-vector-circle::before {
+  content: "ﵖ";
+}
+
+.mi-vector-polygon::before {
+  content: "ﵗ";
+}
+
+.mi-vector::before {
+  content: "ﵘ";
+}
+
+.mi-venus-double::before {
+  content: "ﵙ";
+}
+
+.mi-venus-mars::before {
+  content: "ﵚ";
+}
+
+.mi-venus::before {
+  content: "ﵛ";
+}
+
+.mi-vest-patches::before {
+  content: "ﵜ";
+}
+
+.mi-vest::before {
+  content: "ﵝ";
+}
+
+.mi-video-arrow-down-left::before {
+  content: "ﵞ";
+}
+
+.mi-video-arrow-up-right::before {
+  content: "ﵟ";
+}
+
+.mi-video-camera-alt::before {
+  content: "ﵠ";
+}
+
+.mi-video-camera::before {
+  content: "ﵡ";
+}
+
+.mi-video-duration::before {
+  content: "ﵢ";
+}
+
+.mi-video-plus::before {
+  content: "ﵣ";
+}
+
+.mi-video-slash::before {
+  content: "ﵤ";
+}
+
+.mi-videoconference::before {
+  content: "ﵥ";
+}
+
+.mi-vihara::before {
+  content: "ﵦ";
+}
+
+.mi-violin::before {
+  content: "ﵧ";
+}
+
+.mi-virus-slash::before {
+  content: "ﵨ";
+}
+
+.mi-virus::before {
+  content: "ﵩ";
+}
+
+.mi-viruses::before {
+  content: "ﵪ";
+}
+
+.mi-visit::before {
+  content: "ﵫ";
+}
+
+.mi-voicemail::before {
+  content: "ﵬ";
+}
+
+.mi-volcano::before {
+  content: "ﵭ";
+}
+
+.mi-volleyball::before {
+  content: "ﵮ";
+}
+
+.mi-volume-down::before {
+  content: "ﵯ";
+}
+
+.mi-volume-mute::before {
+  content: "ﵰ";
+}
+
+.mi-volume-off::before {
+  content: "ﵱ";
+}
+
+.mi-volume-slash::before {
+  content: "ﵲ";
+}
+
+.mi-volume::before {
+  content: "ﵳ";
+}
+
+.mi-vote-nay::before {
+  content: "ﵴ";
+}
+
+.mi-vote-yea::before {
+  content: "ﵵ";
+}
+
+.mi-vr-cardboard::before {
+  content: "ﵶ";
+}
+
+.mi-w::before {
+  content: "ﵷ";
+}
+
+.mi-waffle::before {
+  content: "ﵸ";
+}
+
+.mi-wagon-covered::before {
+  content: "ﵹ";
+}
+
+.mi-walker::before {
+  content: "ﵺ";
+}
+
+.mi-walkie-talkie::before {
+  content: "ﵻ";
+}
+
+.mi-walking::before {
+  content: "ﵼ";
+}
+
+.mi-wallet-arrow::before {
+  content: "ﵽ";
+}
+
+.mi-wallet-buyer::before {
+  content: "ﵾ";
+}
+
+.mi-wallet::before {
+  content: "ﵿ";
+}
+
+.mi-warehouse-alt::before {
+  content: "ﶀ";
+}
+
+.mi-warranty::before {
+  content: "ﶁ";
+}
+
+.mi-washer::before {
+  content: "ﶂ";
+}
+
+.mi-waste-pollution::before {
+  content: "ﶃ";
+}
+
+.mi-waste::before {
+  content: "ﶄ";
+}
+
+.mi-watch-calculator::before {
+  content: "ﶅ";
+}
+
+.mi-watch-fitness::before {
+  content: "ﶆ";
+}
+
+.mi-watch-smart::before {
+  content: "ﶇ";
+}
+
+.mi-watch::before {
+  content: "ﶈ";
+}
+
+.mi-water-bottle::before {
+  content: "ﶉ";
+}
+
+.mi-water-ladder::before {
+  content: "ﶊ";
+}
+
+.mi-water-lower::before {
+  content: "ﶋ";
+}
+
+.mi-water-rise::before {
+  content: "ﶌ";
+}
+
+.mi-water::before {
+  content: "ﶍ";
+}
+
+.mi-watermelon::before {
+  content: "ﶎ";
+}
+
+.mi-wave-sine::before {
+  content: "ﶏ";
+}
+
+.mi-wave-square::before {
+  content: "﶐";
+}
+
+.mi-wave-triangle::before {
+  content: "﶑";
+}
+
+.mi-wave::before {
+  content: "ﶒ";
+}
+
+.mi-waveform-path::before {
+  content: "ﶓ";
+}
+
+.mi-waveform::before {
+  content: "ﶔ";
+}
+
+.mi-web-design::before {
+  content: "ﶕ";
+}
+
+.mi-webcam-slash::before {
+  content: "ﶖ";
+}
+
+.mi-webcam::before {
+  content: "ﶗ";
+}
+
+.mi-webhook::before {
+  content: "ﶘ";
+}
+
+.mi-wednesday::before {
+  content: "ﶙ";
+}
+
+.mi-whale::before {
+  content: "ﶚ";
+}
+
+.mi-wheat-awn-circle-exclamation::before {
+  content: "ﶛ";
+}
+
+.mi-wheat-awn-slash::before {
+  content: "ﶜ";
+}
+
+.mi-wheat-awn::before {
+  content: "ﶝ";
+}
+
+.mi-wheat-slash::before {
+  content: "ﶞ";
+}
+
+.mi-wheat::before {
+  content: "ﶟ";
+}
+
+.mi-wheelchair-move::before {
+  content: "ﶠ";
+}
+
+.mi-wheelchair-sleeping::before {
+  content: "ﶡ";
+}
+
+.mi-wheelchair::before {
+  content: "ﶢ";
+}
+
+.mi-whistle::before {
+  content: "ﶣ";
+}
+
+.mi-white-space::before {
+  content: "ﶤ";
+}
+
+.mi-wifi-1::before {
+  content: "ﶥ";
+}
+
+.mi-wifi-2::before {
+  content: "ﶦ";
+}
+
+.mi-wifi-alt::before {
+  content: "ﶧ";
+}
+
+.mi-wifi-exclamation::before {
+  content: "ﶨ";
+}
+
+.mi-wifi-slash::before {
+  content: "ﶩ";
+}
+
+.mi-wifi::before {
+  content: "ﶪ";
+}
+
+.mi-wind-turbine::before {
+  content: "ﶫ";
+}
+
+.mi-wind-warning::before {
+  content: "ﶬ";
+}
+
+.mi-wind::before {
+  content: "ﶭ";
+}
+
+.mi-window-alt::before {
+  content: "ﶮ";
+}
+
+.mi-window-frame-open::before {
+  content: "ﶯ";
+}
+
+.mi-window-frame::before {
+  content: "ﶰ";
+}
+
+.mi-window-maximize::before {
+  content: "ﶱ";
+}
+
+.mi-window-minimize::before {
+  content: "ﶲ";
+}
+
+.mi-window-restore::before {
+  content: "ﶳ";
+}
+
+.mi-windsock::before {
+  content: "ﶴ";
+}
+
+.mi-wine-bottle::before {
+  content: "ﶵ";
+}
+
+.mi-wine-glass-crack::before {
+  content: "ﶶ";
+}
+
+.mi-wine-glass-empty::before {
+  content: "ﶷ";
+}
+
+.mi-wishlist-heart::before {
+  content: "ﶸ";
+}
+
+.mi-wishlist-star::before {
+  content: "ﶹ";
+}
+
+.mi-woman-head::before {
+  content: "ﶺ";
+}
+
+.mi-woman-scientist::before {
+  content: "ﶻ";
+}
+
+.mi-won-sign::before {
+  content: "ﶼ";
+}
+
+.mi-work-in-progress::before {
+  content: "ﶽ";
+}
+
+.mi-workflow-alt::before {
+  content: "ﶾ";
+}
+
+.mi-workflow-setting-alt::before {
+  content: "ﶿ";
+}
+
+.mi-workflow-setting::before {
+  content: "ﷀ";
+}
+
+.mi-workflow::before {
+  content: "ﷁ";
+}
+
+.mi-workshop::before {
+  content: "ﷂ";
+}
+
+.mi-world::before {
+  content: "ﷃ";
+}
+
+.mi-worm::before {
+  content: "ﷄ";
+}
+
+.mi-wreath::before {
+  content: "ﷅ";
+}
+
+.mi-wrench-alt::before {
+  content: "ﷆ";
+}
+
+.mi-wrench-simple::before {
+  content: "ﷇ";
+}
+
+.mi-x-ray::before {
+  content: "﷈";
+}
+
+.mi-x::before {
+  content: "﷉";
+}
+
+.mi-y::before {
+  content: "﷊";
+}
+
+.mi-yen::before {
+  content: "﷋";
+}
+
+.mi-yin-yang::before {
+  content: "﷌";
+}
+
+.mi-z::before {
+  content: "﷍";
+}
+
+.mi-zip-file::before {
+  content: "﷎";
+}
+
+.mi-zoom-in::before {
+  content: "﷏";
+}
+
+.mi-zoom-out::before {
+  content: "﷐";
 }
 
 .sr-only {

@@ -213,10 +213,6 @@
 						'icon' 	=> self::mi_icon('mi'),
 					],
 					[
-						'title' => 'Mage icon regular',
-						'icon' 	=> self::mi_icon('mir'),
-					],
-					[
 						'title' => 'Accessibility',
 						'icon' => [
 							'fab fa-accessible-icon' => 'Accessible Icon',

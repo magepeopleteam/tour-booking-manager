@@ -236,22 +236,42 @@
     $(document).on('click', '.ttbm_trvel_lists_tabs button', function() {
         var targetId = $(this).data('target');
 
+        let tabParam = '';
+
         let action = '';
         if( targetId === 'ttbm_trvel_lists_location' ){
             action = 'ttbm_get_locations_html';
+            tabParam = 'location';
+
         }else if( targetId === 'ttbm_trvel_lists_tour_category' ){
             action = 'ttbm_get_category_html_data';
+            tabParam = 'category';
         }else if( targetId === 'ttbm_trvel_lists_organiser' ){
             action = 'ttbm_get_organiser_html_data';
+            tabParam = 'organiser';
         }else if( targetId === 'ttbm_trvel_lists_features' ){
             action = 'ttbm_get_feature_html_data';
+            tabParam = 'features';
         }else if( targetId === 'ttbm_trvel_lists_tag' ){
             action = 'ttbm_get_tag_html_data';
+            tabParam = 'tag';
         }else if( targetId === 'ttbm_trvel_lists_activities' ){
             action = 'ttbm_get_activities_html_data';
+            tabParam = 'activities';
         }else if( targetId === 'ttbm_trvel_lists_places' ){
             action = 'ttbm_get_places_html_data';
+            tabParam = 'places';
+        }else{
+            tabParam = 'tour_list';
         }
+
+        /*if (tabParam !== '') {
+            let currentUrl = window.location.href;
+            let cleanUrl = currentUrl.replace(/&tab=[^&]*!/g, '');
+            let newUrl = cleanUrl + '&tab=' + tabParam;
+            history.pushState({ path: newUrl }, '', newUrl);
+        }*/
+
 
         if( targetId === 'ttbm_trvel_lists_tour' ){
             $(".ttbm-tour-list_holder").show();
@@ -447,7 +467,6 @@
 
     $(document).on('click', '.ttbm-save-location', function (e) {
         e.preventDefault();
-
         let tab_type = $(this).siblings('.ttbm_get_clicked_tab_name').val().trim();
         let taxonomy_type = get_add_taxonomy_type( tab_type );
 
@@ -534,6 +553,9 @@
                 $(".ttbm-locations-list").prepend( new_location_added );
             }
             $('#ttbm-location-popup').fadeOut();
+            alert('Successfully Added');
+            location.reload();
+
         } else {
             alert(response.data?.message || 'Something went wrong. Please try again.');
         }

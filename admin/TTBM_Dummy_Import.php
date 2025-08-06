@@ -277,7 +277,7 @@
 							],
 							1 => ['name' => 'City Tours',
 								'meta_data' => array(
-									'ttbm_activities_icon' => 'mi taxi-bus'
+									'ttbm_activities_icon' => 'mi mi-taxi-bus'
 								)
 							],
 							2 => ['name' => 'Hiking',

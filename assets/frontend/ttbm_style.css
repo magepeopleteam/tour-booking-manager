@@ -366,7 +366,9 @@ div.include_service ul li:hover,
 	color: var(--color_theme_alter) !important;
 	border-color: var(--color_theme) !important;
 }
-
+div.include_service ul li:hover .mi{
+	color: var(--color_theme_alter) !important;
+}
 /* ===============include exclude feature========= */
 .ttbm-include-exclude{
 	display: flex;
@@ -816,6 +818,13 @@ div.ttbm_viator_theme .item_icon{
 	transition: background 0.3s ease;
 }
 
+.ttbm_attraction_item .ttbm-title-icon{
+	font-size: 50px;
+	width: 50px;
+	height: 50px;
+	color:#707070;
+}
+
 .ttbm_activity_item{
 	display: flex;
 	align-items: center;
@@ -849,7 +858,7 @@ div.ttbm_viator_theme .item_icon{
 
 #ttbm_feature_placeholder_area{
 	justify-content: start;
-	gap:5px;
+	gap:15px;
 }
 #ttbm_feature_placeholder_area .ttbm_term_display_shortcode{
 	margin:0;
@@ -870,8 +879,8 @@ div.ttbm_viator_theme .item_icon{
 
 .ttbm_attraction_item h4 {
 	margin: 0;
-	font-size: 16px;
 	font-weight: bold;
+	font-size:22px;
 }
 
 .ttbm_attraction_item p {

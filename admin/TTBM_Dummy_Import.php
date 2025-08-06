@@ -170,31 +170,31 @@
 							0 => [
 								'name' => 'Accommodation',
 								'meta_data' => array(
-									'ttbm_feature_icon' => 'mi mi-hotel'
+									'ttbm_feature_icon' => 'mi mi-bed-alt'
 								),
 							],
 							1 => [
 								'name' => 'Additional Services',
 								'meta_data' => array(
-									'ttbm_feature_icon' => 'mi mi-feature-list'
+									'ttbm_feature_icon' => 'mi mi-checklist-task-budget'
 								),
 							],
 							2 => [
 								'name' => 'Airport Transfer',
 								'meta_data' => array(
-									'ttbm_feature_icon' => 'mi mi-bus'
+									'ttbm_feature_icon' => 'mi mi-plane-alt'
 								),
 							],
 							3 => [
 								'name' => 'BBQ Night',
 								'meta_data' => array(
-									'ttbm_feature_icon' => 'mi mi-bbq'
+									'ttbm_feature_icon' => 'mi mi-grill'
 								),
 							],
 							4 => [
 								'name' => 'Breakfast',
 								'meta_data' => array(
-									'ttbm_feature_icon' => 'mi mi-breakfast'
+									'ttbm_feature_icon' => 'mi mi-burger-fries'
 								),
 							],
 							5 => [
@@ -206,7 +206,7 @@
 							6 => [
 								'name' => 'Flights',
 								'meta_data' => array(
-									'ttbm_feature_icon' => 'mi mi-airoplane'
+									'ttbm_feature_icon' => 'mi mi-plane-alt'
 								),
 							],
 							7 => [
@@ -218,31 +218,31 @@
 							8 => [
 								'name' => 'Hotel Rent',
 								'meta_data' => array(
-									'ttbm_feature_icon' => 'mi mi-bed'
+									'ttbm_feature_icon' => 'mi mi-hotel'
 								),
 							],
 							9 => [
 								'name' => 'Insurance',
 								'meta_data' => array(
-									'ttbm_feature_icon' => 'mi mi-insurance'
+									'ttbm_feature_icon' => 'mi mi-hand-holding-seeding'
 								),
 							],
 							10 => [
 								'name' => 'Lunch',
 								'meta_data' => array(
-									'ttbm_feature_icon' => 'mi mi-food'
+									'ttbm_feature_icon' => 'mi mi-bowl-rice'
 								),
 							],
 							11 => [
 								'name' => 'Meals',
 								'meta_data' => array(
-									'ttbm_feature_icon' => 'mi mi-breakfast'
+									'ttbm_feature_icon' => 'mi mi-burger-glass'
 								),
 							],
 							12 => [
 								'name' => 'Newspaper',
 								'meta_data' => array(
-									'ttbm_feature_icon' => 'mi mi-paper'
+									'ttbm_feature_icon' => 'mi mi-newspaper'
 								),
 							],
 							13 => [
@@ -260,7 +260,7 @@
 							15 => [
 								'name' => 'Welcome Drinks',
 								'meta_data' => array(
-									'ttbm_feature_icon' => 'mi mi-drinks'
+									'ttbm_feature_icon' => 'mi mi-drink-alt'
 								),
 							],
 						],
@@ -272,12 +272,12 @@
 							0 => [
 								'name' => 'Beach',
 								'meta_data' => array(
-									'ttbm_activities_icon' => 'mi mi-beach'
+									'ttbm_activities_icon' => 'mi mi-umbrella-beach'
 								)
 							],
 							1 => ['name' => 'City Tours',
 								'meta_data' => array(
-									'ttbm_activities_icon' => 'mi mi-city'
+									'ttbm_activities_icon' => 'mi taxi-bus'
 								)
 							],
 							2 => ['name' => 'Hiking',
@@ -292,7 +292,7 @@
 							],
 							4 => ['name' => 'Snow & Ice',
 								'meta_data' => array(
-									'ttbm_activities_icon' => 'mi mi-snow'
+									'ttbm_activities_icon' => 'mi mi-snowflakes'
 								)
 							]
 						],
@@ -369,7 +369,7 @@
 									'ttbm_hotels' => array(),
 									'ttbm_ticket_type' => [
 										0 => [
-											'ticket_type_icon' => 'fas fa-user-tie',
+											'ticket_type_icon' => 'mi mi-employee-man-alt',
 											'ticket_type_name' => 'Adult',
 											'ticket_type_price' => 15,
 											'sale_price' => 10,
@@ -380,7 +380,7 @@
 											'ticket_type_description' => '',
 										],
 										1 => [
-											'ticket_type_icon' => 'fas fa-snowman',
+											'ticket_type_icon' => 'mi mi-child-head',
 											'ticket_type_name' => 'Child',
 											'ticket_type_price' => 10,
 											'sale_price' => 7,
@@ -393,7 +393,7 @@
 									],
 									'ttbm_extra_service_data' => [
 										0 => [
-											'service_icon' => 'fas fa-graduation-cap',
+											'service_icon' => 'mi mi-graduation-cap',
 											'service_name' => 'Cap',
 											'service_price' => 6,
 											'service_qty' => 500,
@@ -401,7 +401,7 @@
 											'extra_service_description' => '',
 										],
 										1 => [
-											'service_icon' => 'fas fa-coffee',
+											'service_icon' => 'mi mi-coffee-heart',
 											'service_name' => 'Coffe',
 											'service_price' => 4,
 											'service_qty' => 1500,
@@ -522,7 +522,7 @@
 									'ttbm_hotels' => array(),
 									'ttbm_ticket_type' => [
 										0 => [
-											'ticket_type_icon' => 'fas fa-user-tie',
+											'ticket_type_icon' => 'mi mi-employee-man-alt',
 											'ticket_type_name' => 'Adult',
 											'ticket_type_price' => 55,
 											'sale_price' => 40,
@@ -533,7 +533,7 @@
 											'ticket_type_description' => '',
 										],
 										1 => [
-											'ticket_type_icon' => 'fas fa-snowman',
+											'ticket_type_icon' => 'mi mi-child-head',
 											'ticket_type_name' => 'Child',
 											'ticket_type_price' => 100,
 											'sale_price' => 70,
@@ -546,7 +546,7 @@
 									],
 									'ttbm_extra_service_data' => [
 										0 => [
-											'service_icon' => 'fas fa-graduation-cap',
+											'service_icon' => 'mi mi-graduation-cap',
 											'service_name' => 'Cap',
 											'service_price' => 6,
 											'service_qty' => 500,
@@ -554,7 +554,7 @@
 											'extra_service_description' => '',
 										],
 										1 => [
-											'service_icon' => 'fas fa-coffee',
+											'service_icon' => 'mi mi-coffee-heart',
 											'service_name' => 'Coffe',
 											'service_price' => 4,
 											'service_qty' => 1500,
@@ -678,7 +678,7 @@
 									'ttbm_hotels' => array(),
 									'ttbm_ticket_type' => [
 										0 => [
-											'ticket_type_icon' => 'fas fa-user-tie',
+											'ticket_type_icon' => 'mi mi-employee-man-alt',
 											'ticket_type_name' => 'Adult',
 											'ticket_type_price' => 55,
 											'sale_price' => 40,
@@ -689,7 +689,7 @@
 											'ticket_type_description' => '',
 										],
 										1 => [
-											'ticket_type_icon' => 'fas fa-snowman',
+											'ticket_type_icon' => 'mi mi-child-head',
 											'ticket_type_name' => 'Child',
 											'ticket_type_price' => 100,
 											'sale_price' => 70,
@@ -702,7 +702,7 @@
 									],
 									'ttbm_extra_service_data' => [
 										0 => [
-											'service_icon' => 'fas fa-graduation-cap',
+											'service_icon' => 'mi mi-graduation-cap',
 											'service_name' => 'Cap',
 											'service_price' => 6,
 											'service_qty' => 500,
@@ -710,7 +710,7 @@
 											'extra_service_description' => '',
 										],
 										1 => [
-											'service_icon' => 'fas fa-coffee',
+											'service_icon' => 'mi mi-coffee-heart',
 											'service_name' => 'Coffe',
 											'service_price' => 4,
 											'service_qty' => 1500,
@@ -834,7 +834,7 @@
 									'ttbm_hotels' => array(),
 									'ttbm_ticket_type' => [
 										0 => [
-											'ticket_type_icon' => 'fas fa-user-tie',
+											'ticket_type_icon' => 'mi mi-employee-man-alt',
 											'ticket_type_name' => 'Adult',
 											'ticket_type_price' => 105,
 											'sale_price' => 100,
@@ -845,7 +845,7 @@
 											'ticket_type_description' => '',
 										],
 										1 => [
-											'ticket_type_icon' => 'fas fa-snowman',
+											'ticket_type_icon' => 'mi mi-child-head',
 											'ticket_type_name' => 'Child',
 											'ticket_type_price' => 100,
 											'sale_price' => 90,
@@ -858,7 +858,7 @@
 									],
 									'ttbm_extra_service_data' => [
 										0 => [
-											'service_icon' => 'fas fa-graduation-cap',
+											'service_icon' => 'mi mi-graduation-cap',
 											'service_name' => 'Cap',
 											'service_price' => 6,
 											'service_qty' => 500,
@@ -866,7 +866,7 @@
 											'extra_service_description' => '',
 										],
 										1 => [
-											'service_icon' => 'fas fa-coffee',
+											'service_icon' => 'mi mi-coffee-heart',
 											'service_name' => 'Coffe',
 											'service_price' => 4,
 											'service_qty' => 1500,
@@ -990,7 +990,7 @@
 									'ttbm_hotels' => array(),
 									'ttbm_ticket_type' => [
 										0 => [
-											'ticket_type_icon' => 'fas fa-user-tie',
+											'ticket_type_icon' => 'mi mi-employee-man-alt',
 											'ticket_type_name' => 'Adult',
 											'ticket_type_price' => 105,
 											'sale_price' => 100,
@@ -1001,7 +1001,7 @@
 											'ticket_type_description' => '',
 										],
 										1 => [
-											'ticket_type_icon' => 'fas fa-snowman',
+											'ticket_type_icon' => 'mi mi-child-head',
 											'ticket_type_name' => 'Child',
 											'ticket_type_price' => 100,
 											'sale_price' => 90,
@@ -1014,7 +1014,7 @@
 									],
 									'ttbm_extra_service_data' => [
 										0 => [
-											'service_icon' => 'fas fa-graduation-cap',
+											'service_icon' => 'mi mi-graduation-cap',
 											'service_name' => 'Cap',
 											'service_price' => 6,
 											'service_qty' => 500,
@@ -1022,7 +1022,7 @@
 											'extra_service_description' => '',
 										],
 										1 => [
-											'service_icon' => 'fas fa-coffee',
+											'service_icon' => 'mi mi-coffee-heart',
 											'service_name' => 'Coffe',
 											'service_price' => 4,
 											'service_qty' => 1500,

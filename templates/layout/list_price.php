@@ -8,7 +8,7 @@
 	if ( $start_price ) {
 		?>
 		<div class="ttbm_list_info <?php echo esc_attr( $class_price ); ?>" data-placeholder>
-			<span class="fas fa-money-bill"></span>
+			<span class="mi mi-money-bill-wave"></span>
 			<?php esc_html_e( 'From', 'tour-booking-manager' ); ?>&nbsp;
 			<?php 
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 

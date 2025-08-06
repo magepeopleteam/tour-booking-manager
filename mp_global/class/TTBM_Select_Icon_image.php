@@ -201,7 +201,7 @@
 				$mi_icons = json_decode($mi_icon_json, true);
 				$all_icon = [];
 				foreach($mi_icons as $mi_icon){
-					$all_icon["{$icon_type} fi-rr-{$mi_icon}"] = $mi_icon;
+					$all_icon["{$icon_type} mi-{$mi_icon}"] = $mi_icon;
 				}
 				return $all_icon;
 			}
@@ -210,7 +210,7 @@
 				return [
 					[
 						'title' => 'Mage icon',
-						'icon' 	=> self::mi_icon('fi'),
+						'icon' 	=> self::mi_icon('mi'),
 					],
 					[
 						'title' => 'Accessibility',

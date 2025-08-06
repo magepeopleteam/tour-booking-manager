@@ -10,7 +10,7 @@
 		?>
 		
 			<div class="item_icon" title="<?php esc_html_e( 'Start Location', 'tour-booking-manager' ); ?>">
-				<i class="mi mi-location"></i>
+				<i class="mi mi-marker"></i>
 				<?php echo esc_html( $start_place ); ?>
 			</div>
 

@@ -324,14 +324,14 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
 
                 <div class="ttbm_travel_list_popup" id="ttbm_travel_list_popup"></div>
                 <div class="ttbm_trvel_lists_tabs">
-                    <button class="active" data-target="ttbm_trvel_lists_tour" data-tab-type="Add New Tour"><span class="icon-wrap"><i class="mi mi-package"></i><?php  esc_html_e(' Tour Package','tour-booking-manager'); ?></span></button>
+                    <button class="active" data-target="ttbm_trvel_lists_tour" data-tab-type="Add New Tour"><span class="icon-wrap"><i class="mi mi-box"></i><?php  esc_html_e(' Tour Package','tour-booking-manager'); ?></span></button>
                     <button data-target="ttbm_trvel_lists_tour_category" data-tab-type="Add New Category"><span class="icon-wrap"><i class="mi mi-category"></i><?php  esc_html_e('Tour Category','tour-booking-manager'); ?></span></button>
                     <button data-target="ttbm_trvel_lists_places" data-tab-type="Add New Places"><span class="icon-wrap"><i class="mi mi-magnet"></i><?php  esc_html_e('Tourist Attraction','tour-booking-manager'); ?></span></button>
-                    <button data-target="ttbm_trvel_lists_organiser" data-tab-type="Add New Organiser"><span class="icon-wrap"><i class="mi mi-organizer"></i><?php  esc_html_e('Trip Organiser','tour-booking-manager'); ?></span></button>
-                    <button data-target="ttbm_trvel_lists_location" data-tab-type="Add New Locations"><span class="icon-wrap"><i class="mi mi-location"></i><?php  esc_html_e('Trip Location','tour-booking-manager'); ?></span></button>
-                    <button data-target="ttbm_trvel_lists_features" data-tab-type="Add New Feature"><span class="icon-wrap"><i class="mi mi-feature-list"></i><?php  esc_html_e('Features','tour-booking-manager'); ?></span></button>
+                    <button data-target="ttbm_trvel_lists_organiser" data-tab-type="Add New Organiser"><span class="icon-wrap"><i class="mi mi-introduction-handshake"></i><?php  esc_html_e('Trip Organiser','tour-booking-manager'); ?></span></button>
+                    <button data-target="ttbm_trvel_lists_location" data-tab-type="Add New Locations"><span class="icon-wrap"><i class="mi mi-land-layer-location"></i><?php  esc_html_e('Trip Location','tour-booking-manager'); ?></span></button>
+                    <button data-target="ttbm_trvel_lists_features" data-tab-type="Add New Feature"><span class="icon-wrap"><i class="mi mi-list"></i><?php  esc_html_e('Features','tour-booking-manager'); ?></span></button>
                     <button data-target="ttbm_trvel_lists_tag" data-tab-type="Add New Tag"><span class="icon-wrap"><i class="mi mi-tags"></i> <?php  esc_html_e('Tags','tour-booking-manager'); ?></span></button>
-                    <button data-target="ttbm_trvel_lists_activities" data-tab-type="Add New Activities"><span class="icon-wrap"><i class="mi mi-activity-list"></i><?php  esc_html_e('Activities','tour-booking-manager'); ?></span></button>
+                    <button data-target="ttbm_trvel_lists_activities" data-tab-type="Add New Activities"><span class="icon-wrap"><i class="mi mi-practice"></i><?php  esc_html_e('Activities','tour-booking-manager'); ?></span></button>
                 </div>
 
                 <div id="ttbm_trvel_lists_tour" class="ttbm_trvel_lists_content active">

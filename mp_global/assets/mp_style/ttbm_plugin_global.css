@@ -1315,7 +1315,8 @@
 		width: 30px;
 		height: 30px;
 		min-width: 30px;
-		font-size: 22px;
+		font-size: 20px;
+		color: #4c4a4a;
 		margin: 0 var(--ttbm_mp_xs) 0 0;
 	}
 	/*****Remove icon******/

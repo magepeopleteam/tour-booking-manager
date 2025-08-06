@@ -210,7 +210,7 @@ div .item_icon {
 	position: relative;
 	white-space: nowrap;
 	display: flex;
-  	align-content: center;
+  	align-items: center;
 	line-height: 1.5;
 }
 div .item_icon::after{

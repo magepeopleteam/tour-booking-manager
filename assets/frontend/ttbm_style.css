@@ -210,7 +210,7 @@ div .item_icon {
 	position: relative;
 	white-space: nowrap;
 	display: flex;
-  	align-content: center;
+  	align-items: center;
 	line-height: 1.5;
 }
 div .item_icon::after{
@@ -838,8 +838,11 @@ div.ttbm_viator_theme .item_icon{
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+	color:#707070;
 }
-
+.ttbm_activity_item .ttbm-title iframe{
+	color:#707070;
+}
 .placeholder_area .ttbm_activity_item h4 a{
 	font-size: 22px;
 }

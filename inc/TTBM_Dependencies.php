@@ -8,8 +8,8 @@
 				add_action('init', array($this, 'language_load'));
 				$this->load_file();
 				$this->appsero_init_tracker_ttbm();
-				add_action('add_ttbm_frontend_enqueue', array($this, 'frontend_script'), 90);
-				add_action('add_ttbm_admin_enqueue', array($this, 'admin_script'), 90);
+				add_action('wp_enqueue_scripts', array($this, 'frontend_script'), 90);
+				add_action('admin_enqueue_scripts', array($this, 'admin_script'), 90);
 				add_action('ttbm_registration_enqueue', array($this, 'registration_enqueue'), 90);
 				add_action('admin_init', array($this, 'ttbm_upgrade'));
 			}
@@ -18,21 +18,26 @@
 				load_plugin_textdomain('tour-booking-manager', false, $plugin_dir);
 			}
 			private function load_file() {
-				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Function.php';
-				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Layout.php';
-				require_once TTBM_PLUGIN_DIR . '/support/elementor/elementor-support.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin.php';
-				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Frontend.php';
-				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Query.php';
-				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Shortcodes.php';
-				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Filter_Pagination.php';
-				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Tour_List.php';
-				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Details_Layout.php';
-				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Travel_List_Tab_Details.php';
-				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Details_Layout.php';
-				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Booking.php';
-				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Booking.php';
-				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
+				require_once TTBM_PLUGIN_DIR . '/mp_global/TTBM_Global_File_Load.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Style.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
+				if (TTBM_Global_Function::check_woocommerce() == 1) {
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Function.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Layout.php';
+					require_once TTBM_PLUGIN_DIR . '/support/elementor/elementor-support.php';
+					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Frontend.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Query.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Shortcodes.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Filter_Pagination.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Tour_List.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Details_Layout.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Travel_List_Tab_Details.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Details_Layout.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Booking.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Booking.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
+				}
 			}
 			public function appsero_init_tracker_ttbm() {
 				if (!class_exists('Appsero\Client')) {
@@ -42,6 +47,9 @@
 				$client->insights()->init();
 			}
 			public function global_enqueue() {
+				wp_enqueue_script('jquery');
+				wp_enqueue_script('jquery-ui-core');
+				wp_enqueue_script('jquery-ui-datepicker');
 				$this->registration_enqueue();
 				do_action('ttbm_common_script');
 				wp_enqueue_style('mage-icons', TTBM_PLUGIN_URL . '/assets/mage-icon/css/mage-icon.css', array(), time());
@@ -53,24 +61,26 @@
 				wp_enqueue_script('ttbm_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_script.js', array('jquery'), time(), true);
 				wp_enqueue_script('ttbm_shortcode', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_shortcode.js', array('jquery'), time(), true);
 				wp_localize_script('ttbm_script', 'ttbm_ajax', array(
-					'ajax_url'  => admin_url('admin-ajax.php'),
-					'nonce'   => wp_create_nonce('ttbm_frontend_nonce')
+					'ajax_url' => admin_url('admin-ajax.php'),
+					'nonce' => wp_create_nonce('ttbm_frontend_nonce')
 				));
-
 				do_action('ttbm_frontend_script');
 			}
 			public function admin_script() {
+				wp_enqueue_editor();
+				wp_enqueue_media();
+				wp_enqueue_script('jquery-ui-sortable');
+				wp_enqueue_style('wp-color-picker');
+				wp_enqueue_script('wp-color-picker');
+				wp_enqueue_style('wp-codemirror');
+				wp_enqueue_script('wp-codemirror');
 				$this->global_enqueue();
 				wp_enqueue_script('magepeople-options-framework', TTBM_PLUGIN_URL . '/assets/helper/js/mage-options-framework.js', array('jquery'), null);
 				wp_localize_script('PickpluginsOptionsFramework', 'PickpluginsOptionsFramework_ajax', array('PickpluginsOptionsFramework_ajaxurl' => admin_url('admin-ajax.php')));
-				//wp_enqueue_script('form-field-dependency', TTBM_PLUGIN_URL . '/assets/helper/js/form-field-dependency.js', array('jquery'), null);
 				wp_enqueue_style('mage-options-framework', TTBM_PLUGIN_URL . '/assets/helper/css/mage-options-framework.css');
 				wp_enqueue_script('ttbm_admin_script', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_script.js', array('jquery'), time(), true);
 				wp_enqueue_script('ttbm_hotel_booking', TTBM_PLUGIN_URL . '/assets/admin/ttbm_hotel_booking.js', array('jquery'), time(), true);
 				wp_enqueue_style('ttbm_admin_style', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_style.css', array(), time());
-				wp_enqueue_style('mp_main_settings', TTBM_PLUGIN_URL . '/assets/admin/mp_main_settings.css', array(), time());
-				wp_enqueue_style('ttbm_travel_list_header', TTBM_PLUGIN_URL . '/assets/admin/ttbm_travel_list_header.css', array(), time());
-				wp_enqueue_style('ttbm_hotel_booking', TTBM_PLUGIN_URL . '/assets/admin/ttbm_hotel_booking.css', array(), time());
 				wp_localize_script('ttbm_admin_script', 'ttbm_admin_ajax', array(
 					'ajax_url' => admin_url('admin-ajax.php'),
 					'nonce' => wp_create_nonce('ttbm_admin_nonce')
@@ -100,8 +110,6 @@
 					update_option('ttbm_style_settings', $style_settings);
 					$slider_settings = get_option('ttbm_slider_settings');
 					update_option('ttbm_slider_settings', $slider_settings);
-					$custom_css = get_option('mp_add_custom_css');
-					update_option('ttbm_custom_css', $custom_css);
 					$license_settings = get_option('mp_basic_license_settings');
 					update_option('ttbm_license_settings', $license_settings);
 					update_option('ttbm_conflict_update', 'completed');
@@ -116,8 +124,6 @@
 						$global_settings['date_format_short'] = $basic_settings['ttbm_date_format_short'];
 					}
 					update_option('mp_global_settings', $global_settings);
-					$custom_css = get_option('ttbm_custom_css');
-					update_option('mp_add_custom_css', $custom_css);
 					$style_settings = get_option('ttbm_basic_style_settings');
 					if (is_array($style_settings) && sizeof($style_settings) > 0) {
 						$current_style = get_option('mp_style_settings') ? get_option('mp_style_settings') : [];
@@ -133,33 +139,6 @@
 						if (isset($style_settings['ttbm_warning_color']) && $style_settings['ttbm_warning_color']) {
 							$current_style['warning_color'] = $style_settings['ttbm_warning_color'];
 						}
-						// if (isset($style_settings['ttbm_default_font_size']) && $style_settings['ttbm_default_font_size']) {
-						// 	$current_style['default_font_size'] = $style_settings['ttbm_default_font_size'];
-						// }
-						// if (isset($style_settings['ttbm_font_size_h1']) && $style_settings['ttbm_font_size_h1']) {
-						// 	$current_style['font_size_h1'] = $style_settings['ttbm_font_size_h1'];
-						// }
-						// if (isset($style_settings['ttbm_font_size_h2']) && $style_settings['ttbm_font_size_h2']) {
-						// 	$current_style['font_size_h2'] = $style_settings['ttbm_font_size_h2'];
-						// }
-						// if (isset($style_settings['ttbm_font_size_h3']) && $style_settings['ttbm_font_size_h3']) {
-						// 	$current_style['font_size_h3'] = $style_settings['ttbm_font_size_h3'];
-						// }
-						// if (isset($style_settings['ttbm_font_size_h4']) && $style_settings['ttbm_font_size_h4']) {
-						// 	$current_style['font_size_h4'] = $style_settings['ttbm_font_size_h4'];
-						// }
-						// if (isset($style_settings['ttbm_font_size_h5']) && $style_settings['ttbm_font_size_h5']) {
-						// 	$current_style['font_size_h5'] = $style_settings['ttbm_font_size_h5'];
-						// }
-						// if (isset($style_settings['ttbm_font_size_h6']) && $style_settings['ttbm_font_size_h6']) {
-						// 	$current_style['font_size_h6'] = $style_settings['ttbm_font_size_h6'];
-						// }
-						// if (isset($style_settings['ttbm_font_size_label']) && $style_settings['ttbm_font_size_label']) {
-						// 	$current_style['font_size_label'] = $style_settings['ttbm_font_size_label'];
-						// }
-						// if (isset($style_settings['ttbm_font_size_button']) && $style_settings['ttbm_font_size_button']) {
-						// 	$current_style['button_font_size'] = $style_settings['ttbm_font_size_button'];
-						// }
 						if (isset($style_settings['ttbm_button_color']) && $style_settings['ttbm_button_color']) {
 							$current_style['button_color'] = $style_settings['ttbm_button_color'];
 						}

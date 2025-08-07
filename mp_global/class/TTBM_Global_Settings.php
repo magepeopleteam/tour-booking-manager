@@ -31,10 +31,6 @@
 						'title' => esc_html__('Style Settings', 'tour-booking-manager')
 					),
 					array(
-						'id' => 'ttbm_custom_css',
-						'title' => esc_html__('Custom CSS', 'tour-booking-manager')
-					),
-					array(
 						'id' => 'ttbm_license_settings',
 						'title' => esc_html__('Mage-People License', 'tour-booking-manager')
 					)
@@ -224,14 +220,6 @@
 							'default' => '#FAFCFE'
 						),
 					)),
-					'ttbm_custom_css' => apply_filters('filter_ttbm_custom_css', array(
-						array(
-							'name' => 'custom_css',
-							'label' => esc_html__('Custom CSS', 'tour-booking-manager'),
-							'desc' => esc_html__('Write Your Custom CSS Code Here', 'tour-booking-manager'),
-							'type' => 'textarea',
-						)
-					))
 				);
 				return array_merge($default_fields, $settings_fields);
 			}

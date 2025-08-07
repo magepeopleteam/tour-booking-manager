@@ -158,7 +158,7 @@
 							}
 						?>
                     </div>
-                    <button type="button" class="_dButton_bgColor_1 add_multi_image">
+                    <button type="button" class="_dButton_bgColor_1 ttbm_add_multi_image">
                         <span class="fas fa-images mR_xs"></span><?php esc_html_e('Image', 'tour-booking-manager'); ?>
                     </button>
                 </div>

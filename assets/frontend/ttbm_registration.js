@@ -124,12 +124,12 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
             parent.find('#ttbm_select_date').trigger('focus');
         }
     });
-    /*$(document).on('click', 'div.mpPopup  .popupClose', function () {
+    /*$(document).on('click', 'div.ttbm_popup  .popupClose', function () {
         $(this).closest('[data-popup]').removeClass('in');
         $('body').removeClass('noScroll').find('[data-active-popup]').removeAttr('data-active-popup');
         return true;
     });*/
-    $(document).on('click', 'div.mpPopup  .popupCloseBtn', function () {
+    $(document).on('click', 'div.ttbm_popup  .popupCloseBtn', function () {
         $(this).closest('[data-popup]').removeClass('in');
         $('body').removeClass('noScroll').find('[data-active-popup]').removeAttr('data-active-popup');
         return true;

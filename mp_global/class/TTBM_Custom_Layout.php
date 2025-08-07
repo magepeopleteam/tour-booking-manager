@@ -114,7 +114,7 @@
 			}
 			public static function move_remove_button() {
 				?>
-				<div class="buttonGroup max_100">
+				<div class="buttonGroup">
 					<?php
 						self::remove_button();
 						self::move_button();

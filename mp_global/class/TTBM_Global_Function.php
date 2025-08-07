@@ -559,6 +559,18 @@
 				return $ids;
 			}
 			//***********************************//
+			public static function week_day(): array {
+				return [
+					'mon' => esc_html__( 'Monday', 'mage-eventpress' ),
+					'tue' => esc_html__( 'Tuesday', 'mage-eventpress' ),
+					'wed' => esc_html__( 'Wednesday', 'mage-eventpress' ),
+					'thu' => esc_html__( 'Thursday', 'mage-eventpress' ),
+					'fri' => esc_html__( 'Friday', 'mage-eventpress' ),
+					'sat' => esc_html__( 'Saturday', 'mage-eventpress' ),
+					'sun' => esc_html__( 'Sunday', 'mage-eventpress' ),
+				];
+			}
+			//***********************************//
 			public static function license_error_text($response, $license_data, $plugin_name) {
 				if (is_wp_error($response) || 200 !== wp_remote_retrieve_response_code($response)) {
 					$message = (is_wp_error($response) && !empty($response->get_error_message())) ? $response->get_error_message() : esc_html__('An error occurred, please try again.', 'tour-booking-manager');

@@ -209,6 +209,9 @@ div .item_icon {
   	text-align: center;
 	position: relative;
 	white-space: nowrap;
+	display: flex;
+  	align-items: center;
+	line-height: 1.5;
 }
 div .item_icon::after{
 	content: '';
@@ -226,7 +229,7 @@ div .item_icon:last-child:after{
 	height: 0;
 }
 
-div .item_icon i {color: var(--color_theme);}
+div .item_icon i {color: var(--color_theme);font-size: 28px;margin-right:6px;}
 
 div.ttbm_style [data-bg-image]{
 	transform: scale(1);
@@ -331,7 +334,8 @@ div.include_service ul li[title]:hover::after {
 }
 div.include_service ul {display: -webkit-flex;display: flex;}
 div.include_service ul li, .ttbm_widget_content .ttbm_list_details .include_service ul li {
-	display: inline-block !important;
+	display: flex;
+	align-items: center;
 	position: relative;
 	margin: 0 7px 0 0 !important;
 	border: 1px solid var(--color_border);
@@ -339,14 +343,18 @@ div.include_service ul li, .ttbm_widget_content .ttbm_list_details .include_serv
 	transition: all 0.3s ease-in-out;
 	color: var(--color_theme) !important;
 	font-size: var(--fs);
-	height: 35px;
-	width: 35px !important;
+	height: 30px;
+	width: 30px !important;
 	padding: 0 !important;
 	line-height: 35px;
 	text-align: center;
+	padding-top: 10px;
 	/*margin: 0 var(--ttbm_mp_xs) 0 0;*/
 }
-
+div.include_service ul li .circleIcon_xs{
+	height:auto;
+	width:100%;
+}
 div.include_service ul li span, .ttbm_widget_content div.ttbm_list_details .include_service ul li span {
 	display: inline-block !important;
 	margin: 0 !important;
@@ -358,7 +366,9 @@ div.include_service ul li:hover,
 	color: var(--color_theme_alter) !important;
 	border-color: var(--color_theme) !important;
 }
-
+div.include_service ul li:hover .mi{
+	color: var(--color_theme_alter) !important;
+}
 /* ===============include exclude feature========= */
 .ttbm-include-exclude{
 	display: flex;
@@ -802,12 +812,57 @@ div.ttbm_viator_theme .item_icon{
 	display: flex;
 	align-items: center;
 	gap: 15px;
-	padding: 15px 10px;
+	padding:10px;
 	margin-left: 10px;
 	border-radius: 8px;
 	transition: background 0.3s ease;
 }
 
+.ttbm_attraction_item .ttbm-title-icon{
+	font-size: 50px;
+	width: 50px;
+	height: 50px;
+	color:#707070;
+}
+
+.ttbm_activity_item{
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+	gap: 15px;
+	padding:10px;
+	margin-left: 10px;
+	border-radius: 8px;
+	transition: background 0.3s ease;
+}
+
+.ttbm_activity_item .ttbm-title{
+	font-size: 50px;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	color:#707070;
+}
+.ttbm_activity_item .ttbm-title iframe{
+	color:#707070;
+}
+.placeholder_area .ttbm_activity_item h4 a{
+	font-size: 22px;
+}
+
+#ttbm_feature_placeholder_area{
+	justify-content: start;
+	gap:15px;
+}
+#ttbm_feature_placeholder_area .ttbm_term_display_shortcode{
+	margin:0;
+}
 .ttbm_attraction_item:hover {
 	background-color: #f5f5f5;
 }
@@ -824,8 +879,8 @@ div.ttbm_viator_theme .item_icon{
 
 .ttbm_attraction_item h4 {
 	margin: 0;
-	font-size: 16px;
 	font-weight: bold;
+	font-size:22px;
 }
 
 .ttbm_attraction_item p {
@@ -853,5 +908,9 @@ div.ttbm_viator_theme .item_icon{
 	margin: 10px;
 	border: 1px solid #eae6e6;
 }
-
-
+.ttbm_carousel_holder{
+	position: absolute;
+	right: 0;
+	z-index: 99;
+	background-color: bisque;
+}

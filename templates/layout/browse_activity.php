@@ -37,13 +37,16 @@ if( $carousel == 'no' ){
 ?>
 <div class='ttbm_style ' id="ttbm_browse_activities">
     <div class="ttbm_container">
-        <div class='ttbm_default_widget'>
-            <?php do_action( 'ttbm_section_title', 'ttbm_string_related_tour', esc_html__( 'Activity Browse ', 'tour-booking-manager' ) ); ?>
-
+        <div class=''>
+<!--            --><?php //do_action( 'ttbm_section_title', 'ttbm_string_related_tour', esc_html__( 'Activity Browse ', 'tour-booking-manager' ) ); ?>
+            <div class="ttbm_carousel_holder">
             <?php
             if ( $carousel == 'yes' && $related_tour_count > $num_of_tour ) {
                 include( TTBM_Function::template_path( 'layout/carousel_indicator.php' ) );
             }
+            ?>
+            </div>
+            <?php
             if( $carousel == 'no' ){
             ?>
             <div class="placeholder_area flexWrap" id="ttbm_activities_placeholder_area">

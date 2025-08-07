@@ -10,7 +10,7 @@
 	if ( ( $duration || $night ) && $tour_type == 'general' && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_duration', 'on' ) != 'off' ) {
 		?>
 		<div class="ttbm_list_info" data-placeholder>
-			<i class="far fa-clock mR_xs"></i>
+			<span class="mi mi-clock-three"></span> 
 			<?php
 				if ( $duration && $duration > 1 ) {
 					echo esc_html( $duration ) . ' ';

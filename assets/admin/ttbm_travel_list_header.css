@@ -236,6 +236,8 @@
 }
 .ttbm-title i{
     margin-right: 10px;
+    font-size: 25px;
+    color: var(--mpl-primary);
 }
 .ttbm-description {
     font-size: 13px;
@@ -349,6 +351,12 @@
 .ttbm-taxonomy-card:hover {
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
+
+.ttbm-taxonomy-card .ttbm-title{
+    display: flex;
+    align-items: center;
+}
+
 .ttbm-card-actions {
     display: flex;
     justify-content: space-between;
@@ -457,7 +465,7 @@
 
 .ttbm_trvel_lists_tabs button {
     border-radius: 5px;
-    padding: 10px 20px;
+    padding: 10px 15px;
     font-size: 16px;
     font-weight: 500;
     color: #333;
@@ -466,6 +474,13 @@
     position: relative;
     border: 1px solid #ddd;
     margin: 5px;
+}
+.ttbm_trvel_lists_tabs button .icon-wrap{
+    display: flex;
+    align-items: center;
+}
+.ttbm_trvel_lists_tabs button i{
+    margin-right: 5px;
 }
 
 .ttbm_trvel_lists_tabs button:hover {

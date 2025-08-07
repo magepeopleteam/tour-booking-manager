@@ -227,7 +227,7 @@
   object-fit: cover;
   display: block;
 }
-.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-thumb .ttbm-tour-icon {
+.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-icon {
   position: absolute;
   bottom: 10px;
   left: 10px;
@@ -392,16 +392,16 @@
   font-weight: bold;
 }
 
-#ttbm_meta_box_panel .ttbm-faq-section .ttbm-faq-item {
+.ttbm-faq-section .ttbm-faq-item {
   background-color: #fff;
   cursor: grabbing;
 }
-#ttbm_meta_box_panel .ttbm-faq-section .ttbm-faq-item.ui-sortable-helper {
+.ttbm-faq-section .ttbm-faq-item.ui-sortable-helper {
   background: var(--mpl-light);
   visibility: visible;
   cursor: grabbing;
 }
-#ttbm_meta_box_panel .ttbm-faq-section .faq-header {
+.ttbm-faq-section .faq-header {
   position: relative;
   z-index: 0;
   background-color: var(--mpl-light);
@@ -409,42 +409,42 @@
   border-radius: 10px;
   margin-top: 20px;
 }
-#ttbm_meta_box_panel .ttbm-faq-section .faq-header.mActive {
+.ttbm-faq-section .faq-header.mActive {
   border-radius: 15px 15px 0 0;
 }
-#ttbm_meta_box_panel .ttbm-faq-section .faq-header .faq-action {
+.ttbm-faq-section .faq-header .faq-action {
   position: absolute;
   top: 50%;
   right: 15px;
   transform: translateY(-50%);
   z-index: 1;
 }
-#ttbm_meta_box_panel .ttbm-faq-section .faq-header .faq-action span {
+.ttbm-faq-section .faq-header .faq-action span {
   padding: 5px 10px;
   background-color: var(--mpl-light);
   color: var(--mpl-primary);
   border-radius: 2px;
 }
-#ttbm_meta_box_panel .ttbm-faq-section .faq-content {
+.ttbm-faq-section .faq-content {
   display: none;
   border: 1px solid #ddd;
   border-radius: 0;
   padding: 10px;
 }
-#ttbm_meta_box_panel .ttbm-faq-section .faq-content.mActive {
+.ttbm-faq-section .faq-content.mActive {
   border-radius: 0 0 15px 15px;
 }
 
-#ttbm_meta_box_panel .ttbm-daywise-section .ttbm-daywise-item {
+.ttbm-daywise-section .ttbm-daywise-item {
   background-color: #fff;
   cursor: grabbing;
 }
-#ttbm_meta_box_panel .ttbm-daywise-section .ttbm-daywise-item.ui-sortable-helper {
+.ttbm-daywise-section .ttbm-daywise-item.ui-sortable-helper {
   background: var(--mpl-light);
   visibility: visible;
   cursor: grabbing;
 }
-#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header {
+.ttbm-daywise-section .daywise-header {
   position: relative;
   z-index: 0;
   background-color: var(--mpl-light);
@@ -452,33 +452,33 @@
   margin-top: 20px;
   border-radius: 10px;
 }
-#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header.mActive {
+.ttbm-daywise-section .daywise-header.mActive {
   border-radius: 15px 15px 0 0;
 }
-#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action {
+.ttbm-daywise-section .daywise-header .daywise-action {
   position: absolute;
   top: 50%;
   right: 15px;
   transform: translateY(-50%);
   z-index: 1;
 }
-#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action span {
+.ttbm-daywise-section .daywise-header .daywise-action span {
   padding: 5px 10px;
   background-color: var(--mpl-light);
   color: var(--mpl-primary);
   border-radius: 2px;
 }
-#ttbm_meta_box_panel .ttbm-daywise-section .daywise-content {
+.ttbm-daywise-section .daywise-content {
   display: none;
   border: 1px solid #ddd;
   padding: 10px;
   border-radius: 0 0 15px 15px;
 }
-#ttbm_meta_box_panel .ttbm-daywise-section .daywise-content.mActive {
+.ttbm-daywise-section .daywise-content.mActive {
   border-radius: 0 0 15px 15px;
 }
 
-#ttbm_meta_box_panel .ttbm-modal-container, .travel-list .ttbm-modal-container {
+.ttbm-modal-container {
   position: fixed;
   right: -100%; /* Initially hidden off-screen */
   top: 0;
@@ -488,10 +488,11 @@
   transition: right 0.3s ease; /* Animation effect */
   z-index: 1000; /* Ensure it's above other content */
 }
-#ttbm_meta_box_panel .ttbm-modal-container.open, .travel-list .ttbm-modal-container.open {
+.ttbm-modal-container.open {
   right: 0; /* Slide in */
 }
-#ttbm_meta_box_panel .ttbm-modal-container .ttbm-modal-content, .travel-list .ttbm-modal-container .ttbm-modal-content {
+
+.ttbm-modal-content {
   background-color: #fff;
   width: 800px;
   height: 100%;
@@ -500,32 +501,32 @@
   right: 0;
   padding: 70px 0px;
 }
-#ttbm_meta_box_panel .ttbm-modal-container .ttbm-modal-content .title, .travel-list .ttbm-modal-container .ttbm-modal-content .title {
+.ttbm-modal-content .title {
   padding-left: 40px;
 }
-#ttbm_meta_box_panel .ttbm-modal-container .ttbm-modal-content .ttbm-modal-close, .travel-list .ttbm-modal-container .ttbm-modal-content .ttbm-modal-close {
+.ttbm-modal-content .ttbm-modal-close {
   position: absolute;
   top: 40px;
   right: 15px;
   font-size: 20px;
   cursor: pointer;
 }
-#ttbm_meta_box_panel .ttbm-modal-container .ttbm-modal-content .content, .travel-list .ttbm-modal-container .ttbm-modal-content .content {
+.ttbm-modal-content .content {
   height: 100%;
   overflow-y: scroll;
   padding: 0 40px;
   padding-bottom: 40px;
 }
-#ttbm_meta_box_panel .ttbm-modal-container .ttbm-modal-content p, .travel-list .ttbm-modal-container .ttbm-modal-content p {
+.ttbm-modal-content p {
   margin: 15px 0;
 }
-#ttbm_meta_box_panel .ttbm-modal-container .ttbm-modal-content h3, .travel-list .ttbm-modal-container .ttbm-modal-content h3 {
+.ttbm-modal-content h3 {
   font-size: 18px;
   padding: 0;
   margin: 5px 0;
   margin-bottom: 30px;
 }
-#ttbm_meta_box_panel .ttbm-modal-container .ttbm-modal-content input[type=text], #ttbm_meta_box_panel .ttbm-modal-container .ttbm-modal-content input[type=number], #ttbm_meta_box_panel .ttbm-modal-container .ttbm-modal-content textarea, #ttbm_meta_box_panel .ttbm-modal-container .ttbm-modal-content select, .travel-list .ttbm-modal-container .ttbm-modal-content input[type=text], .travel-list .ttbm-modal-container .ttbm-modal-content input[type=number], .travel-list .ttbm-modal-container .ttbm-modal-content textarea, .travel-list .ttbm-modal-container .ttbm-modal-content select {
+.ttbm-modal-content input[type=text], .ttbm-modal-content input[type=number], .ttbm-modal-content textarea, .ttbm-modal-content select {
   width: 100%;
   display: block;
   font-weight: normal;
@@ -534,7 +535,7 @@
   border: 1px solid #dfdfdf;
   background-color: #fff;
 }
-#ttbm_meta_box_panel .ttbm-modal-container .ttbm-modal-content label, .travel-list .ttbm-modal-container .ttbm-modal-content label {
+.ttbm-modal-content label {
   display: flex;
   justify-content: start;
   align-items: start;
@@ -544,12 +545,12 @@
   gap: 15px;
   margin: 25px 0;
 }
-#ttbm_meta_box_panel .ttbm-modal-container .ttbm-modal-content .ttbm_add_icon_image_area, .travel-list .ttbm-modal-container .ttbm-modal-content .ttbm_add_icon_image_area {
+.ttbm-modal-content .ttbm_add_icon_image_area {
   position: relative;
   max-width: 202px;
   margin: 10px 0;
 }
-#ttbm_meta_box_panel .ttbm-modal-container .ttbm-modal-content .ttbm_add_icon_image_area .ttbm_add_icon_image_button_area, .travel-list .ttbm-modal-container .ttbm-modal-content .ttbm_add_icon_image_area .ttbm_add_icon_image_button_area {
+.ttbm-modal-content .ttbm_add_icon_image_button_area {
   display: flex;
   flex-direction: row;
   justify-content: start;
@@ -557,7 +558,7 @@
   width: 100%;
   border-radius: 3px;
 }
-#ttbm_meta_box_panel .ttbm-modal-container .ttbm-modal-content .ttbm_add_icon_image_area .ttbm_add_icon_image_button_area .ttbm_image_add, #ttbm_meta_box_panel .ttbm-modal-container .ttbm-modal-content .ttbm_add_icon_image_area .ttbm_add_icon_image_button_area .ttbm_icon_add, .travel-list .ttbm-modal-container .ttbm-modal-content .ttbm_add_icon_image_area .ttbm_add_icon_image_button_area .ttbm_image_add, .travel-list .ttbm-modal-container .ttbm-modal-content .ttbm_add_icon_image_area .ttbm_add_icon_image_button_area .ttbm_icon_add {
+.ttbm-modal-content .ttbm_add_icon_image_button_area .ttbm_image_add, .ttbm-modal-content .ttbm_add_icon_image_button_area .ttbm_icon_add {
   padding: 10px 26px;
   border-radius: 0;
   margin: 1px;
@@ -1274,7 +1275,7 @@ div.ttbm_style span.ttbm_remove_multi_image {
   padding-left: 20px;
 }
 .includedd-features-section .customCheckboxLabel .customCheckbox i {
-  color: #888;
+  color: #000;
 }
 .includedd-features-section .customCheckboxLabel .customCheckbox::before {
   content: "";

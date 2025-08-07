@@ -33,12 +33,15 @@ if ( $related_tour_count > 0 && (TTBM_Global_Function::get_post_info( $ttbm_post
             <input type="hidden" id="ttbm_<?php echo esc_attr( $type_tour );?>_load_more_tour_shortcode" value="<?php echo esc_attr( $show )?>">
         <?php }?>
         <div class="ttbm_container">
-            <div class='ttbm_default_widget'>
-                <?php do_action( 'ttbm_section_title', 'ttbm_string_related_tour', esc_html__( ' '.ucfirst( $type_tour ).' Tour ', 'tour-booking-manager' ) ); ?>
+            <div class=''>
+<!--                --><?php //do_action( 'ttbm_section_title', 'ttbm_string_related_tour', esc_html__( ' '.ucfirst( $type_tour ).' Tour ', 'tour-booking-manager' ) ); ?>
+                <div class="ttbm_carousel_holder">
                 <?php
                 if ( $carousel == 'yes' && sizeof( $related_tours ) > $num_of_tour ) {
                     include( TTBM_Function::template_path( 'layout/carousel_indicator.php' ) );
-                }
+                } ?>
+                </div>
+               <?php
                 if( $carousel == 'yes'){ ?>
                     <div class="ttbm_widget_content _mZero  <?php echo esc_attr($related_tour_count >$num_of_tour?'owl-theme owl-carousel':$div_class); ?>" data-show="<?php echo esc_attr($num_of_tour); ?>">
                     <?php }else{  ?>

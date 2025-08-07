@@ -196,7 +196,7 @@
 				add_action('admin_footer', array($this, 'icon_popup'));
 			}
 			//========Mage Icon library get Icon names======//
-			public static function mi_icon($icon_type="mi") {
+			public static function mi_icon($icon_type="fi") {
 				$mi_icon_json = file_get_contents(TTBM_PLUGIN_URL . '/assets/mage-icon/data.json');
 				$mi_icons = json_decode($mi_icon_json, true);
 				$all_icon = [];
@@ -209,12 +209,8 @@
 			public static function all_icon_array(): array {				
 				return [
 					[
-						'title' => 'Mage icon light',
-						'icon' 	=> self::mi_icon('mil'),
-					],
-					[
-						'title' => 'Mage icon thin',
-						'icon' 	=> self::mi_icon('mit'),
+						'title' => 'Mage icon',
+						'icon' 	=> self::mi_icon('mi'),
 					],
 					[
 						'title' => 'Accessibility',

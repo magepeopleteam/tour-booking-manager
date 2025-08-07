@@ -69,7 +69,7 @@
                 <tr class="ttbm_remove_area">
                     <td class="">
                         <label>
-                            <input class="ttbm_name_validation input-fullwidth" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
+                            <input class="input-fullwidth" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
                         </label>
                     </td>
                     <td>

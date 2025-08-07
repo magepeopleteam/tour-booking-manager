@@ -40,23 +40,29 @@
 			public function activities($tour_id) {
 				$activities = TTBM_Global_Function::get_taxonomy('ttbm_tour_activities');
 				$tour_activities = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_tour_activities', []);
-				$tour_activities_array = $tour_activities;
 				?>
                 <div class="ttbm_activities_table">
                     <div class="includedd-features-section">
                         <div class="groupCheckBox">
 							<?php foreach ($activities as $activity) { ?>
+								<?php
+									$icon = get_term_meta($activity->term_id, 'ttbm_activities_icon', true); 
+									$icon = $icon ? $icon : 'fas fa-forward';
+								?>
                                 <label class="customCheckboxLabel">
-                                    <input type="checkbox" name="ttbm_tour_activities[]" value="<?php echo esc_attr($activity->term_id); ?>" <?php echo in_array($activity->term_id, $tour_activities_array) ? 'checked' : ''; ?> />
-                                    <span class="customCheckbox"><?php echo esc_html($activity->name); ?></span>
+                                    <input type="checkbox" name="ttbm_tour_activities[]" value="<?php echo esc_attr($activity->term_id); ?>" <?php echo in_array($activity->term_id, $tour_activities) ? 'checked' : ''; ?> />
+									<span class="customCheckbox"><i class="<?php echo esc_attr($icon); ?>"></i> <?php echo esc_html($activity->name); ?></span>
                                 </label>
 							<?php } ?>
                         </div>
 						<?php TTBM_Custom_Layout::popup_button_xs('add_new_activity_popup', esc_html__('Create New Activity', 'tour-booking-manager')); ?>
                     </div>
                 </div>
+				
 				<?php
 			}
+
+
 			public function add_new_activity_popup() {
 				?>
                 <div class="ttbm_popup" data-popup="add_new_activity_popup">

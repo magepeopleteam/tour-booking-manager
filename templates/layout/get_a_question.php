@@ -20,7 +20,7 @@
 						<?php if ( $contact_phone ) { ?>
 							<li>
 								<a href='tel:<?php echo esc_html( $contact_phone ); ?>'>
-									<span class="circleIcon_xs fas fa-phone-alt"></span>
+									<span class="circleIcon_xs mi mi-phone-call"></span>
 									<?php echo esc_html( $contact_phone ); ?>
 								</a>
 							</li>
@@ -29,7 +29,7 @@
 						<?php if ( $contact_email ) { ?>
 							<li>
 								<a href='mailto:<?php echo esc_html( $contact_email ); ?>'>
-									<span class="circleIcon_xs far fa-envelope"></span>
+									<span class="circleIcon_xs mi mi-envelope"></span>
 									<?php echo esc_html( $contact_email ); ?>
 								</a>
 							</li>

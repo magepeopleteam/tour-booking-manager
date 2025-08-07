@@ -61,7 +61,7 @@ div.ttbm_default_widget .ttbm_title_style_2{
 .ttbm_widget_content ul li span {margin: 0 var(--ttbm_mp_xs) 0 0;}
 .ttbm_widget_content ul li:not(.ttbm_wp_editor li) {
 	margin: 5px 10px;
-	padding: 5px 0;
+	padding: 2px 0;
 	border-bottom: 1px solid #f3f3f3;
 	position: relative;
 	font-size: var(--fs);

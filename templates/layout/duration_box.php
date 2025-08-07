@@ -12,9 +12,7 @@
 		?>
 
 			<div class="item_icon" title="<?php esc_html_e( 'Duration', 'tour-booking-manager' ); ?>">
-				<i class="fas fa-clock"></i>
-				
-				
+				<i class="mi mi-clock-three"></i>
 					<?php
 						if ( $day && $day > 1 ) {
 							echo esc_html( $day ) . ' ';

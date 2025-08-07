@@ -18,7 +18,7 @@
 				add_action('woocommerce_new_order', [$this, 'mptrs_woocommerce_new_order'], 10, 1);
 				add_action('woocommerce_order_status_changed', [$this, 'custom_function_on_order_status_change'], 10, 4);
 			}
-			function custom_function_on_order_status_change($order_id, $old_status, $new_status, $order) {
+			function custom_function_on_order_status_change( $order_id, $old_status, $new_status, $order) {
 				if ($new_status === 'processing') {
 					$orderPostId = '';
 					foreach ($order->get_items() as $item_id => $item) {
@@ -37,7 +37,8 @@
 						$hotel_title = get_the_title($hotel_id);
 						$hotel_booking_status = 'In Progress';
 						$order_title = 'Hotel Booking #' . $order_id;
-						$order_created_date = $order->get_date_created()->gmdate('Y-m-d H:i:s');
+
+						$order_created_date = $order->get_date_created()->date('Y-m-d H:i:s');;
 						$order_status = $new_status;
 						$customer_id = $order->get_customer_id();
 						$customer_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
@@ -134,23 +135,24 @@
 				}
 			}
 			public function ttbm_get_hotel_room_list() {
-				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_frontend_nonce')) {
+				if (!isset( $_POST['nonce' ] ) || !wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_frontend_nonce' ) ) {
 					wp_send_json_error(['message' => 'Invalid nonce']);
 					die;
 				}
 				$hotel_id = isset($_REQUEST['hotel_id']) ? sanitize_text_field(wp_unslash($_REQUEST['hotel_id'])) : '';
 				$date_range = isset($_REQUEST['date_range']) ? sanitize_text_field(wp_unslash($_REQUEST['date_range'])) : '';
-				$date = explode("    -    ", $date_range);
+				$date = explode(" - ", $date_range);
 				$start_date = gmdate('Y-m-d', strtotime($date[0]));
 				$end_date = gmdate('Y-m-d', strtotime($date[1]));
 				do_action('ttbm_hotel_booking_panel', $start_date, $end_date, $hotel_id);
 				die();
 			}
 			public function ttbm_hotel_room_booking() {
-				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_frontend_nonce')) {
+				if (!isset($_POST['nonce']) || !wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_frontend_nonce' ) ) {
 					wp_send_json_error(['message' => 'Invalid nonce']);
 					die;
 				}
+
 				$hotel_id = isset($_REQUEST['hotel_id']) ? sanitize_text_field(wp_unslash($_REQUEST['hotel_id'])) : '';
 				$date_range = isset($_REQUEST['date_range']) ? sanitize_text_field(wp_unslash($_REQUEST['date_range'])) : '';
 				$room_data_info = isset($_REQUEST['room_data_info']) ? json_decode(sanitize_text_field(wp_unslash($_REQUEST['room_data_info'])), true) : [];
@@ -171,7 +173,7 @@
 					$room_output .= " </div> ";
 				}
 				$room_output .= '</div>';
-				$date = explode("    -    ", $date_range);
+				$date = explode(" - ", $date_range);
 				$check_in = gmdate('Y-m-d', strtotime($date[0]));
 				$check_out = gmdate('Y-m-d', strtotime($date[1]));
 				$check_in_date = gmdate('Y-m-d', strtotime($date[0]));
@@ -260,9 +262,11 @@
                 </form>
 				<?php
 			}
-			public function set_custom_price_cart_item($cart_item_data, $product_id) {
-				if (isset($cart_item_data['ttbm_hotel_booking']) && (isset($_POST['ttbm_hotel_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_hotel_nonce'])), 'ttbm_hotel_nonce'))) {
-					$cart_item_data['custom_price'] = isset($_POST['price']) ? floatval(sanitize_text_field(wp_unslash($_POST['price']))) :0;
+			public function set_custom_price_cart_item( $cart_item_data, $product_id) {
+
+				if (isset($cart_item_data['ttbm_hotel_booking']) && (isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_frontend_nonce'))) {
+                    $cart_item_data['custom_price'] = isset($_POST['price']) ? floatval(sanitize_text_field(wp_unslash($_POST['price']))) :0;
+
 				}
 				return $cart_item_data;
 			}

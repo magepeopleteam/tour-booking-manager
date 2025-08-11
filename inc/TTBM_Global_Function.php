@@ -450,7 +450,7 @@
 				}
 				$return_price = apply_filters('woocommerce_get_price_including_tax', $return_price, $qty, $product);
 				$display_suffix = get_option('woocommerce_price_display_suffix') ? get_option('woocommerce_price_display_suffix') : '';
-				return wc_price($return_price) . ' ' . $display_suffix;
+				return wc_price($return_price) . ' TTBM_Global_Function.php' . $display_suffix;
 			}
 			public static function get_wc_raw_price($post_id, $price, $args = array()) {
 				$price = self::wc_price($post_id, $price, $args = array());
@@ -578,7 +578,7 @@
 					if (false === $license_data->success) {
 						switch ($license_data->error) {
 							case 'expired':
-								$message = esc_html__('Your license key expired on ', 'tour-booking-manager') . ' ' . date_i18n(get_option('date_format'), strtotime($license_data->expires, current_time('timestamp')));
+								$message = esc_html__('Your license key expired on ', 'tour-booking-manager') . ' TTBM_Global_Function.php' . date_i18n(get_option('date_format'), strtotime($license_data->expires, current_time('timestamp')));
 								break;
 							case 'revoked':
 								$message = esc_html__('Your license key has been disabled.', 'tour-booking-manager');
@@ -593,7 +593,7 @@
 								$message = esc_html__('Your license is not active for this URL.', 'tour-booking-manager');
 								break;
 							case 'item_name_mismatch':
-								$message = esc_html__('This appears to be an invalid license key for .', 'tour-booking-manager') . ' ' . $plugin_name;
+								$message = esc_html__('This appears to be an invalid license key for .', 'tour-booking-manager') . ' TTBM_Global_Function.php' . $plugin_name;
 								break;
 							case 'no_activations_left':
 								$message = esc_html__('Your license key has reached its activation limit.', 'tour-booking-manager');
@@ -605,7 +605,7 @@
 					} else {
 						$payment_id = $license_data->payment_id;
 						$expire = $license_data->expires;
-						$message = esc_html__('Success, License Key is valid for the plugin', 'tour-booking-manager') . ' ' . $plugin_name . ' ' . esc_html__('Your Order id is', 'tour-booking-manager') . ' ' . $payment_id . ' ' . $plugin_name . ' ' . esc_html__('Validity of this licenses is', 'tour-booking-manager') . ' ' . TTBM_Global_Function::check_licensee_date($expire);
+						$message = esc_html__('Success, License Key is valid for the plugin', 'tour-booking-manager') . ' TTBM_Global_Function.php' . $plugin_name . ' ' . esc_html__('Your Order id is', 'tour-booking-manager') . ' ' . $payment_id . ' ' . $plugin_name . ' ' . esc_html__('Validity of this licenses is', 'tour-booking-manager') . ' ' . TTBM_Global_Function::check_licensee_date($expire);
 					}
 				}
 				return $message;
@@ -970,7 +970,7 @@
 				}
 				$return_price = apply_filters('woocommerce_get_price_including_tax', $return_price, $qty, $product);
 				$display_suffix = get_option('woocommerce_price_display_suffix') ? get_option('woocommerce_price_display_suffix') : '';
-				return wc_price($return_price) . ' ' . $display_suffix;
+				return wc_price($return_price) . ' TTBM_Global_Function.php' . $display_suffix;
 			}
 			public static function get_wc_raw_price($post_id, $price, $args = array()) {
 				$price = self::wc_price($post_id, $price, $args = array());
@@ -1101,7 +1101,7 @@
 					if (false === $license_data->success) {
 						switch ($license_data->error) {
 							case 'expired':
-								$message = esc_html__('Your license key expired on ', 'tour-booking-manager') . ' ' . date_i18n(get_option('date_format'), strtotime($license_data->expires, current_time('timestamp')));
+								$message = esc_html__('Your license key expired on ', 'tour-booking-manager') . ' TTBM_Global_Function.php' . date_i18n(get_option('date_format'), strtotime($license_data->expires, current_time('timestamp')));
 								break;
 							case 'revoked':
 								$message = esc_html__('Your license key has been disabled.', 'tour-booking-manager');
@@ -1116,7 +1116,7 @@
 								$message = esc_html__('Your license is not active for this URL.', 'tour-booking-manager');
 								break;
 							case 'item_name_mismatch':
-								$message = esc_html__('This appears to be an invalid license key for .', 'tour-booking-manager') . ' ' . $plugin_name;
+								$message = esc_html__('This appears to be an invalid license key for .', 'tour-booking-manager') . ' TTBM_Global_Function.php' . $plugin_name;
 								break;
 							case 'no_activations_left':
 								$message = esc_html__('Your license key has reached its activation limit.', 'tour-booking-manager');
@@ -1128,7 +1128,7 @@
 					} else {
 						$payment_id = $license_data->payment_id;
 						$expire = $license_data->expires;
-						$message = esc_html__('Success, License Key is valid for the plugin', 'tour-booking-manager') . ' ' . $plugin_name . ' ' . esc_html__('Your Order id is', 'tour-booking-manager') . ' ' . $payment_id . ' ' . $plugin_name . ' ' . esc_html__('Validity of this licenses is', 'tour-booking-manager') . ' ' . TTBM_Global_Function::check_licensee_date($expire);
+						$message = esc_html__('Success, License Key is valid for the plugin', 'tour-booking-manager') . ' TTBM_Global_Function.php' . $plugin_name . ' ' . esc_html__('Your Order id is', 'tour-booking-manager') . ' ' . $payment_id . ' ' . $plugin_name . ' ' . esc_html__('Validity of this licenses is', 'tour-booking-manager') . ' ' . TTBM_Global_Function::check_licensee_date($expire);
 					}
 				}
 				return $message;

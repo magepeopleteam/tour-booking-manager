@@ -104,10 +104,12 @@
 				<?php
 			}
 			/*****************************/
-			public static function add_new_button($button_text, $class = 'ttbm_add_item', $button_class = '_themeButton_xs_mT_xs', $icon_class = 'fas fa-plus') {
+			public static function add_new_button($button_text, $class = 'ttbm_add_item', $button_class = '', $icon_class = '') {
+				$button_class=$button_class?:'_themeButton_xs_mT_xs';
+				$icon_class=$icon_class?:'fas fa-plus';
 				?>
                 <button class="<?php echo esc_attr($button_class . ' ' . $class); ?>" type="button">
-                    <i class="<?php echo esc_attr($icon_class); ?>"></i>
+                    <span class="_mR_xs <?php echo esc_attr($icon_class); ?>"></span>
 					<?php echo esc_html($button_text); ?>
                 </button>
 				<?php
@@ -215,14 +217,14 @@
                         <label>
                             <select name="<?php echo esc_attr($input_name); ?>" data-price="<?php echo esc_attr($price); ?>" class="formControl">
 							<option selected value="0">
-								<?php echo esc_html__( 'Please select', 'tour-booking-manager' ) . ' ' . esc_html( $text ); ?>
+								<?php echo esc_html__('Please select', 'tour-booking-manager') . ' TTBM_Custom_Layout.php' . esc_html( $text ); ?>
 							</option>
 								<?php
 									$max_total = $max_qty > 0 ? $max_qty : $available_seat;
 									$min_value = max(1, $min_qty);
 									for ($i = $min_value; $i <= $max_total; $i++) {
 										?>
-									<option value="<?php echo esc_attr( $i ); ?>"><?php echo esc_html( $i ) . ' ' . esc_html( $text ); ?></option><?php } ?>
+									<option value="<?php echo esc_attr( $i ); ?>"><?php echo esc_html($i) . ' TTBM_Custom_Layout.php' . esc_html( $text ); ?></option><?php } ?>
                             </select>
                         </label>
 						<?php
@@ -465,7 +467,7 @@
 									for ($i = $min_value; $i <= $max_total; $i++) {
 										?>
                                        <option value="<?php echo esc_attr( $i ); ?>">
-    <?php echo esc_html( $i ) . ' ' . esc_html( $text ); ?>
+    <?php echo esc_html($i) . ' TTBM_Custom_Layout.php' . esc_html( $text ); ?>
 </option>
 
 									<?php } ?>

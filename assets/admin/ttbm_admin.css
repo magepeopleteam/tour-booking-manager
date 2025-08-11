@@ -15,6 +15,142 @@
 	--mpl-red-light: #F6DADA;
 	--mpl-gradient: linear-gradient(135deg, #F12971, #C4185B);
 }
+/********************************************************************  ************************************************/
+@media only screen and (min-width: 10px) {
+	div.ttbm_configuration .formControl {font-weight: normal; border: 1px solid var(--mpl-gray); color: var(--mpl-secondary); font-size: 14px; background-color: #F5F8FF; min-width: 80px;padding: 5px var(--ttbm_mp_xs);max-width: 250px;}
+}
+/******************************************************************** Global settings ************************************************/
+@media only screen and (min-width: 10px) {
+	div.ttbm_global_settings {max-width: 1700px; margin: 30px 30px 30px 15px; width: calc(100% - 30px);padding-top: 50px;}
+	div.ttbm_global_settings .button-primary {min-width: 200px;font-weight: var(--fw-medium);padding: var(--ttbm_mp_xs); }
+	div.ttbm_global_settings .ttbmPanelHeader {background: var(--color_theme); color: #FFF;padding: var(--ttbm_mp_xs);font-weight: var(--fw-medium); }
+	div.ttbm_global_settings .tabLists {border-right: 1px solid var(--color_border);}
+	div.ttbm_global_settings form > h2 {display: none;}
+	div.ttbm_global_settings table {table-layout: fixed;margin: 0;}
+	div.ttbm_global_settings table tr:nth-child(even) { background-color: var(--color_light);}
+	div.ttbm_global_settings table tr:nth-child(odd) { background-color: #FFF;}
+	div.ttbm_global_settings table th {width: 40%;min-width: 300px;}
+	div.ttbm_global_settings th label {-webkit-flex-wrap: wrap;flex-wrap: wrap;}
+	div.ttbm_global_settings .ttbmPanel .ttbmPanelBody .ttbmTabs .tabLists { padding: 25px 0 25px 25px; }
+	div.ttbm_license_settings table th {width: inherit;min-width: inherit; }
+	div.ttbm_global_settings .ttbm-setting-field { display: flex; justify-content: space-between; border: 1px solid #ECECEC; align-items: center; padding: 10px; margin-top: -1px;}
+	div.ttbm_global_settings .ttbm-setting-field .label,
+	div.ttbm_global_settings .ttbm-setting-field label { width: 49%;}
+	div.ttbm_global_settings .ttbm-setting-field fieldset { padding: 10px;}
+	div.ttbm_global_settings .ttbm-setting-field .tooltips { position: relative; display: inline-block; cursor: pointer; color: var(--mpl-gray);}
+	div.ttbm_global_settings .ttbm-setting-field .tooltips::before { content: ""; position: absolute; bottom: 95%; left: 50%; transform: translateX(-50%); border-width: 6px; border-style: solid; border-color: #000 transparent transparent transparent; visibility: hidden; transition: 0s; z-index: 99;}
+	div.ttbm_global_settings .ttbm-setting-field .tooltips::after { content: attr(data-tooltip); visibility: hidden; width: max-content; max-width: 350px; background-color: #000; color: #FFF; text-align: center; padding: 6px 10px; border-radius: 5px; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); white-space: normal; z-index: 999; transition: opacity 0s ease-in-out; font-weight: normal;}
+	div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after,
+	div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::before { visibility: visible; opacity: 1;}
+	div.ttbm_global_settings .tabLists { border-right: 0;}
+	div.ttbm_global_settings .ttbmTabs { display: flex;}
+	div.ttbm_global_settings { max-width: 1600px; margin: auto;}
+	div.ttbm_global_settings .ttbm_license_settings table { margin-top: 20px;}
+	div.ttbm_global_settings .ttbmPanelHeader { background: var(--mpl-primary);}
+}
+/******************************************************************** Meta tab settings ************************************************/
+@media only screen and (min-width: 10px) {
+	#ttbm_meta_box_panel table {table-layout: auto;border-collapse: collapse;border: 1px solid #F5F5F5;margin-bottom: 20px;}
+	#ttbm_meta_box_panel table tr:nth-child(even) {background-color: var(--color_light);}
+	#ttbm_meta_box_panel table tr:nth-child(odd) {background-color: #FFF;}
+	#ttbm_meta_box_panel table th,
+	#ttbm_meta_box_panel table td {border: 0;vertical-align: top;padding: 10px 3px; border-right: 1px solid #E5D4D4; }
+	#ttbm_meta_box_panel table th {text-align: left; font-weight: 500;padding: 15px 10px;}
+	#ttbm_meta_box_panel table th.mActive,
+	#ttbm_meta_box_panel table td.mActive {display: table-cell;}
+	#ttbm_meta_box_panel table tbody th {text-align: left;}
+	#ttbm_meta_box_panel table tbody thead th {text-align: center;}
+	/************************************/
+	#ttbm_meta_box_panel .ttbm_style .roundSwitch { min-width: 53px;}
+	#ttbm_meta_box_panel {margin: 15px 0;}
+	#ttbm_meta_box_panel .inside,
+	#ttbm_meta_box_panel .form-section {margin: 0;padding: 0;}
+	#ttbm_meta_box_panel .postbox-header { background-color: var(--color_theme);}
+	#ttbm_meta_box_panel .postbox-header .handle-actions .handle-order-higher,
+	#ttbm_meta_box_panel .postbox-header .handle-actions .handle-order-lower,
+	#ttbm_meta_box_panel .postbox-header .handle-actions .toggle-indicator,
+	.travel-list .postbox-header .handle-actions .handle-order-higher,
+	.travel-list .postbox-header .handle-actions .handle-order-lower,
+	.travel-list .postbox-header .handle-actions .toggle-indicator { color: var(--color_theme_alter);}
+	#ttbm_meta_box_panel .postbox-header h2 {color: #FFF;font-size: 18px;-webkit-justify-content: flex-start;justify-content: flex-start;}
+	#ttbm_meta_box_panel .postbox-header h2 span {margin: 0 7px 0 0;}
+	#ttbm_meta_box_panel .wp-editor-wrap {width: 100%;}
+}
+/******************************************************************** Image upload  ************************************************/
+@media only screen and (min-width: 10px) {
+	div.ttbm_multi_image { display: -webkit-flex; display: flex; -webkit-flex-wrap: wrap; flex-wrap: wrap;}
+	div.ttbm_multi_image_item { position: relative; width: calc(25% - var(--ttbm_mp_xs)); min-width: 150px;margin: 0 var(--ttbm_mp_xs) var(--ttbm_mp_xs) 0;}
+	span.ttbm_remove_single_image,
+	div.ttbm_style span.ttbm_remove_multi_image { cursor: pointer; position: absolute; top: 0; right: 0; background-color: var(--color_danger);margin: 0; opacity: 0;}
+	div.ttbm_single_image_item:hover span.ttbm_remove_single_image,
+	div.ttbm_single_image_item:hover span.ttbm_remove_single_image:hover,
+	div.ttbm_multi_image_item:hover span.ttbm_remove_multi_image {opacity: 0.9;}
+	div.ttbm_add_single_image {max-width: 150px;width: 100%;}
+	div.ttbm_single_image_item {position: relative; width: 100%;}
+}
+/******************************************************************** add Icon image ************************************************/
+@media only screen and (min-width: 10px) {
+	div.ttbm_add_icon_image_area {position: relative;max-width: 120px;}
+	div.ttbm_add_icon_image_area img {max-height: 100px;}
+	div.ttbm_style div.ttbm_add_icon_image_area button {padding: 5px;font-size: 12px;}
+	div.ttbm_add_icon_image_area button span {margin: 0 5px 0 0;}
+	div.ttbm_style div.ttbm_add_icon_image_area img {border-radius: 0;}
+	div.ttbm_add_icon_image_area div.ttbm_icon_item {padding: var(--ttbm_mp_xs);background-color: var(--color_light);font-size: 16px;}
+	div.ttbm_icon_item:hover [class*="_icon_remove"],
+	div.ttbm_image_item:hover .ttbm_remove_icon {opacity: 1;}
+	div.ttbm_add_icon_popup .popupHeader { color: #FFF;height: 60px; margin: 0 auto;width: 100%; background-color: #032C53; position: relative; border-bottom: 0px solid #FFF; }
+	div.ttbm_add_icon_popup .popupHeader h2 { color: #FFF;text-align: center; font-size: 20px !important; }
+	div.ttbm_add_icon_popup .popupBody {padding: 0;}
+	div.ttbm_add_icon_popup ul.popupIconMenu { padding: 10px; min-width: 270px;background-color: #34424F;margin: 0; max-height: calc(100vh - var(--ttbm_mp) - var(--ttbm_mp) - 60px); overflow: hidden auto; }
+	div.ttbm_add_icon_popup .popupIconMenu li { padding: 10px; margin: 5px 0; border-radius: 5px; color: #FFF;font-size: 16px;display: block;cursor: pointer; position: relative; font-weight: 500; }
+	div.ttbm_add_icon_popup .popupIconMenu li strong {background-color: #C3CBD6A3;color: #202A33;padding: 0px 5px;border-radius: 10px;margin-left: 10px;}
+	div.ttbm_add_icon_popup .popupIconMenu li.active {background-color: #202A33;}
+	div.ttbm_add_icon_popup .popupIconMenu li:hover {color: #C3CBD6;background-color: #202A33;}
+	div.ttbm_add_icon_popup .popupIconMenu li.active:hover {color: #C3CBD6;}
+	div.ttbm_add_icon_popup .popup_all_icon { width: 100%;padding: 10px;background-color: #FFF; max-height: calc(100vh - var(--ttbm_mp) - var(--ttbm_mp) - 60px); overflow: hidden auto; }
+	div.ttbm_add_icon_popup .popup_all_icon .popupTabItem {width: 100%;}
+	div.ttbm_add_icon_popup .popup_all_icon .itemIconArea { width: 100%; display: -webkit-flex;display: flex; -webkit-flex-wrap: wrap;flex-wrap: wrap; }
+	div.ttbm_add_icon_popup .iconItem { width: 51px; height: 51px; font-size: 25px; margin: 5px; cursor: pointer; color: #777777; border: 1px solid #DBDBDB; border-radius: 5px; }
+	div.ttbm_add_icon_popup .iconItem.active,
+	div.ttbm_add_icon_popup .iconItem:hover { background-color: var(--color_theme); color: var(--color_theme_alter); border: 1px solid var(--color_theme); }
+	/************* font***************/
+	div.ttbm_add_icon_popup .iconItem,
+	div.ttbm_add_icon_popup .popupIconMenu li { -webkit-transition: 350ms ease-in-out; -moz-transition: 350ms ease-in-out; -o-transition: 350ms ease-in-out; transition: 350ms ease-in-out; }
+}
+/******************************************************************** ************************************************/
+@media only screen and (min-width: 10px) {
+	div.ttbm_style .adminLayout,
+	div.ttbm_style [class*="_adminLayout"] {padding: 50px;max-width: 1000px;margin: 100px auto;background-color: #FFF;border: 1px solid var(--color_border);border-radius: var(--dbrl);}
+	div.ttbm_style .adminLayout th,
+	div.ttbm_style .adminLayout td,
+	div.ttbm_style [class*="_adminLayout"] th,
+	div.ttbm_style [class*="_adminLayout"] td {text-align: left;}
+	/********Info Text******************/
+	div.ttbm_style .info_text {display: block;font-weight: normal;color: #666;width: 100%;margin: 5px 0 0 0;font-size: 12px;}
+	div.ttbm_style .info_text span {margin: 0 5px 0 0;}
+}
+/********************************************************************  ************************************************/
+@media only screen and (min-width: 10px) {
+	div.ttbm_welcome_page { margin: 20px 20px 20px 0;}
+	div.ttbm_welcome_page h1 { color: #FFF;}
+	div.ttbm_welcome_page .tabsContent {background-color: #FFF;padding: 15px;}
+	div.unlimited_section {background-color: #F2F2F2;margin: 15px 0 0 0;padding: 50px 0;}
+	.unlimited_section .textContent {padding: 0 0 0 30px;}
+	.unlimited_section .textContent h4 {margin: 0 0 10px 0;}
+	.unlimited_section .content_area {padding: 25px 15px 0 0;}
+	div.unlimited_section .content_area img {width: auto;max-width: 100px;}
+}
+/********************************************************************  ************************************************/
+@media only screen and (min-width: 10px) {
+}
+/********************************************************************  ************************************************/
+@media only screen and (min-width: 10px) {
+}
+/********************************************************************  ************************************************/
+@media only screen and (min-width: 10px) {
+}
+
+/*************************/
 /***********************************/
 div.ttbm_settings table {table-layout: auto;}
 div.ttbm_settings table tr:nth-child(even) {background-color: #0CB32612;}
@@ -23,7 +159,6 @@ div.ttbm_settings table th,
 div.ttbm_settings table td {border: 0;}
 div.ttbm_settings table tbody th {text-align: left;font-size: var(--fs);}
 div.ttbm_settings table tbody thead th {text-align: center;}
-div.ttbm_settings .formControl {min-width: 80px;box-shadow: none;padding: 5px var(--ttbm_mp_xs);max-width: 250px;}
 div.ttbm_settings span.dropdown-wrapper {margin: 0 !important;}
 div.ttbm_settings p.ttbm_description {display: block;font-weight: normal;font-size: var(--fs_small) !important;color: #666;}
 div.ttbm_settings p.ttbm_description span {margin: 0 5px 0 0;}
@@ -41,8 +176,6 @@ div.ttbm_settings .ttbm_popup .popupMainArea {width: 100%;}
 .sec label { font-size: 16px; font-weight: bold;}
 .inside .sec input { border: 1px solid #DDD; padding: 5px; width: 100%; color: #000;}
 .inside .sec label { font-weight: normal;}
-/* Always set the map height explicitly to define the size of the div
- * element that contains the map. */
 #map { height: 250px;}
 #infowindow-content .title { font-weight: bold;}
 #infowindow-content { display: none;}
@@ -66,14 +199,7 @@ span.textSuccess { color: var(--color_success); font-size: var(--fs);}
 /***************/
 #mep_disable_ticket_time {margin: 0 10px 0 0;}
 /***************************************/
-div.ttbm_welcome_page { margin: 20px 20px 20px 0;}
-div.ttbm_welcome_page h1 { color: #FFF;}
-div.ttbm_welcome_page .tabsContent {background-color: #FFF;padding: 15px;}
-div.unlimited_section {background-color: #F2F2F2;margin: 15px 0 0 0;padding: 50px 0;}
-.unlimited_section .textContent {padding: 0 0 0 30px;}
-.unlimited_section .textContent h4 {margin: 0 0 10px 0;}
-.unlimited_section .content_area {padding: 25px 15px 0 0;}
-div.unlimited_section .content_area img {width: auto;max-width: 100px;}
+
 /****/
 .ttbm_style a[class*="customButton"] {
 	width: auto;height: 45px;font-size: 20px;font-weight: 500;position: relative;border-radius: 5px;margin: 20px 0 0 0;padding: 0 20px; color: #FFF;min-width: 170px;
@@ -90,7 +216,6 @@ div.unlimited_section .content_area img {width: auto;max-width: 100px;}
 .ttbm_settings_pricing input[name="ticket_type_description[]"] {width: 10em !important;}
 .ttbm_settings_pricing input.medium.ttbm_price_validation {width: 100% !important;}
 .ttbm_settings_pricing select.medium.formControl {height: 40px !important;}
-.ttbm_settings_pricing div.ttbm_add_icon_image_area { border: 1px solid var(--mpl-gray) !important; margin-top: 1px !important; padding: 7px 10px !important; border-radius: 5px !important;}
 button._mpBtn_xs.ttbm_icon_add {border: none !important;}
 input[name="extra_service_description[]"].formControl {width: 100% !important;}
 table.form-table tr td, table.form-table tr th {border: 1px solid #EFEAEA !important; }
@@ -451,28 +576,9 @@ select#mep_ticket_offdays {height: 200px !important;}
 }
 /* =====================main_settings=============== */
 @media only screen and (min-width: 10px) {
-	#ttbm_meta_box_panel label input,
-	.travel-list label input {
-		font-weight: normal;
-	}
-	#ttbm_meta_box_panel select,
-	#ttbm_meta_box_panel input[type=text],
-	#ttbm_meta_box_panel input[type=email],
-	#ttbm_meta_box_panel input[type=search],
-	#ttbm_meta_box_panel input[type=tel],
-	#ttbm_meta_box_panel input[type=url],
-	#ttbm_meta_box_panel input[type=password],
-	#ttbm_meta_box_panel input[type=file],
-	#ttbm_meta_box_panel input[type=color],
-	#ttbm_meta_box_panel input[type=number],
-	#ttbm_meta_box_panel input[type=range],
-	#ttbm_meta_box_panel input[type=date],
-	#ttbm_meta_box_panel input[type=month],
-	#ttbm_meta_box_panel input[type=week],
-	#ttbm_meta_box_panel input[type=time],
-	#ttbm_meta_box_panel input[type=datetime],
-	#ttbm_meta_box_panel input[type=datetime-local],
-	.travel-list select, .travel-list input[type=text],
+	.travel-list label input { font-weight: normal; }
+	.travel-list select,
+	.travel-list input[type=text],
 	.travel-list input[type=email],
 	.travel-list input[type=search],
 	.travel-list input[type=tel],
@@ -487,14 +593,7 @@ select#mep_ticket_offdays {height: 200px !important;}
 	.travel-list input[type=week],
 	.travel-list input[type=time],
 	.travel-list input[type=datetime],
-	.travel-list input[type=datetime-local] {
-		width: 14em;
-		border: 1px solid var(--mpl-gray);
-		color: var(--mpl-secondary);
-		font-weight: normal;
-		font-size: 14px;
-		background-color: #F5F8FF;
-	}
+	.travel-list input[type=datetime-local] { width: 14em; border: 1px solid var(--mpl-gray); color: var(--mpl-secondary); font-weight: normal; font-size: 14px; background-color: #F5F8FF; }
 	#ttbm_meta_box_panel select.small,
 	#ttbm_meta_box_panel input[type=text].small,
 	#ttbm_meta_box_panel input[type=email].small,
@@ -527,9 +626,7 @@ select#mep_ticket_offdays {height: 200px !important;}
 	.travel-list input[type=week].small,
 	.travel-list input[type=time].small,
 	.travel-list input[type=datetime].small,
-	.travel-list input[type=datetime-local].small {
-		width: 4.6666666667em;
-	}
+	.travel-list input[type=datetime-local].small { width: 4.6666666667em; }
 	#ttbm_meta_box_panel select.medium,
 	#ttbm_meta_box_panel input[type=text].medium,
 	#ttbm_meta_box_panel input[type=email].medium,
@@ -635,518 +732,118 @@ select#mep_ticket_offdays {height: 200px !important;}
 	#ttbm_meta_box_panel textarea, .travel-list textarea { background-color: #F5F8FF; font-weight: normal; line-height: 1.5rem;}
 	#ttbm_meta_box_panel input[type=search], .travel-list input[type=search] { border: 0px solid var(--mpl-dark); background-color: #F5F8FF;}
 	#ttbm_meta_box_panel .tool-tips, .travel-list .tool-tips { color: var(--mpl-gray); position: relative; padding-left: 0.25em;}
-	#ttbm_meta_box_panel .tool-tips span, .travel-list .tool-tips span {
-		position: absolute;
-		z-index: 1;
-		bottom: 130%;
-		left: 50%;
-		transform: translate(-50%);
-		visibility: hidden;
-		font-size: 0.9rem;
-		text-align: center;
-		background-color: var(--mpl-black);
-		color: var(--mpl-white);
-		border-radius: 0.25rem;
-		padding: 0.5em 0.75em;
-		width: max-content;
-		max-width: 350px;
-		font-weight: normal;
-	}
-	#ttbm_meta_box_panel .tool-tips span:after, .travel-list .tool-tips span:after {
-		content: " ";
-		position: absolute;
-		top: 100%; /* At the bottom of the tooltip */
-		left: 50%;
-		transform: translate(-50%);
-		border: 5px solid var(--mpl-black);
-		border-color: var(--mpl-black) transparent transparent transparent;
-		margin-left: 0.18em;
-	}
-	#ttbm_meta_box_panel .tool-tips:hover, .travel-list .tool-tips:hover {
-		color: var(--mpl-primary);
-	}
-	#ttbm_meta_box_panel .tool-tips:hover span, .travel-list .tool-tips:hover span {
-		visibility: visible;
-	}
-	#ttbm_meta_box_panel .switch, .travel-list .switch {
-		position: relative;
-		display: inline-block;
-		width: 50px;
-		height: 24px;
-		margin-bottom: 0;
-	}
-	#ttbm_meta_box_panel .switch input, .travel-list .switch input {
-		opacity: 0;
-		width: 0;
-		height: 0;
-		border: 1px solid var(--mpl-primary);
-		background-color: var(--mpl-light);
-	}
-	#ttbm_meta_box_panel .slider, .travel-list .slider {
-		position: absolute;
-		cursor: pointer;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		border-radius: 50px;
-		border: 1px solid var(--mpl-dark);
-		background-color: var(--mpl-gray);
-		transition: 0.5s;
-		margin-right: 0;
-	}
-	#ttbm_meta_box_panel .slider:before, .travel-list .slider:before {
-		position: absolute;
-		content: "";
-		height: 20px;
-		width: 20px;
-		left: 1px;
-		bottom: 1px;
-		border-radius: 50%;
-		border: 1px solid var(--mpl-light);
-		background-color: var(--mpl-white);
-		transition: 0.4s;
-		box-shadow: 0 0 1px var(--mpl-dark);
-	}
-	#ttbm_meta_box_panel input:checked + .slider, .travel-list input:checked + .slider {
-		background-color: var(--mpl-primary);
-		border: 1px solid var(--mpl-primary);
-		margin-right: 0;
-	}
-	#ttbm_meta_box_panel input:checked + .slider:before, .travel-list input:checked + .slider:before {
-		transform: translateX(26px);
-	}
-	#ttbm_meta_box_panel input:focus + .slider, .travel-list input:focus + .slider {
-		box-shadow: inset 0 0 1px var(--mpl-dark);
-	}
-	.ttbm-tour-list-page {
-		padding: 20px;
-		background: #FFF;
-	}
-	.ttbm-tour-list-page .page-title {
-		padding: 0;
-		margin-bottom: 10px;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list-header {
-		display: flex;
-		gap: 20px;
-		justify-content: space-between;
-		align-items: center;
-	}
+	#ttbm_meta_box_panel .tool-tips span, .travel-list .tool-tips span { position: absolute; z-index: 1; bottom: 130%; left: 50%; transform: translate(-50%); visibility: hidden; font-size: 0.9rem; text-align: center; background-color: var(--mpl-black); color: var(--mpl-white); border-radius: 0.25rem; padding: 0.5em 0.75em; width: max-content; max-width: 350px; font-weight: normal; }
+	#ttbm_meta_box_panel .tool-tips span:after, .travel-list .tool-tips span:after { content: " "; position: absolute; top: 100%; /* At the bottom of the tooltip */ left: 50%; transform: translate(-50%); border: 5px solid var(--mpl-black); border-color: var(--mpl-black) transparent transparent transparent; margin-left: 0.18em; }
+	#ttbm_meta_box_panel .tool-tips:hover, .travel-list .tool-tips:hover { color: var(--mpl-primary); }
+	#ttbm_meta_box_panel .tool-tips:hover span, .travel-list .tool-tips:hover span { visibility: visible; }
+	#ttbm_meta_box_panel .switch, .travel-list .switch { position: relative; display: inline-block; width: 50px; height: 24px; margin-bottom: 0; }
+	#ttbm_meta_box_panel .switch input, .travel-list .switch input { opacity: 0; width: 0; height: 0; border: 1px solid var(--mpl-primary); background-color: var(--mpl-light); }
+	#ttbm_meta_box_panel .slider, .travel-list .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; border-radius: 50px; border: 1px solid var(--mpl-dark); background-color: var(--mpl-gray); transition: 0.5s; margin-right: 0; }
+	#ttbm_meta_box_panel .slider:before, .travel-list .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 1px; bottom: 1px; border-radius: 50%; border: 1px solid var(--mpl-light); background-color: var(--mpl-white); transition: 0.4s; box-shadow: 0 0 1px var(--mpl-dark); }
+	#ttbm_meta_box_panel input:checked + .slider, .travel-list input:checked + .slider { background-color: var(--mpl-primary); border: 1px solid var(--mpl-primary); margin-right: 0; }
+	#ttbm_meta_box_panel input:checked + .slider:before, .travel-list input:checked + .slider:before { transform: translateX(26px); }
+	#ttbm_meta_box_panel input:focus + .slider, .travel-list input:focus + .slider { box-shadow: inset 0 0 1px var(--mpl-dark); }
+	.ttbm-tour-list-page { padding: 20px; background: #FFF; }
+	.ttbm-tour-list-page .page-title { padding: 0; margin-bottom: 10px; }
+	.ttbm-tour-list-page .ttbm-tour-list-header { display: flex; gap: 20px; justify-content: space-between; align-items: center; }
 	@media (max-width: 1024px) {
-		.ttbm-tour-list-page .ttbm-tour-list-header {
-			flex-direction: column;
-		}
+		.ttbm-tour-list-page .ttbm-tour-list-header { flex-direction: column; }
 	}
-	.ttbm-tour-list-page .ttbm-tour-list-header input {
-		width: 50%;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list-header h1.ttbm_tour_page-title {
-		padding: 0;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list-header .page-title-action {
-		position: inherit;
-		margin: 0;
-		background-color: var(--mpl-primary);
-		color: #FFF;
-		border: var(--mpl-primary) solid 1px;
-		font-weight: bold;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list {
-		display: flex;
-		flex-wrap: wrap;
-		margin-top: 10px;
-		gap: 36px;
-	}
+	.ttbm-tour-list-page .ttbm-tour-list-header input { width: 50%; }
+	.ttbm-tour-list-page .ttbm-tour-list-header h1.ttbm_tour_page-title { padding: 0; }
+	.ttbm-tour-list-page .ttbm-tour-list-header .page-title-action { position: inherit; margin: 0; background-color: var(--mpl-primary); color: #FFF; border: var(--mpl-primary) solid 1px; font-weight: bold; }
+	.ttbm-tour-list-page .ttbm-tour-list { display: flex; flex-wrap: wrap; margin-top: 10px; gap: 36px; }
 	@media (min-width: 1024px) {
-		.ttbm-tour-list-page .ttbm-tour-list {
-			gap: 10px;
-		}
+		.ttbm-tour-list-page .ttbm-tour-list { gap: 10px; }
 	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
-		padding: 10px;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		width: 100%;
-		gap: 10px;
-		border: 1px solid #DFD6D6;
-		margin-bottom: 6px;
-		border-radius: 10px;
-		transition: all 0.5s;
-		position: relative;
-	}
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card { padding: 10px; display: flex; flex-direction: column; justify-content: space-between; width: 100%; gap: 10px; border: 1px solid #DFD6D6; margin-bottom: 6px; border-radius: 10px; transition: all 0.5s; position: relative; }
 	@media (min-width: 1024px) {
-		.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
-			flex-direction: row;
-		}
+		.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card { flex-direction: row; }
 	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card:hover {
-		cursor: pointer;
-		transform: translateY(-3px);
-		box-shadow: 0 2px 5px #DDD;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card:hover .meta-action {
-		display: block;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-thumb {
-		position: relative;
-		width: 100%;
-		max-height: 200px;
-	}
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card:hover { cursor: pointer; transform: translateY(-3px); box-shadow: 0 2px 5px #DDD; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card:hover .meta-action { display: block; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-thumb { position: relative; width: 100%; max-height: 200px; }
 	@media (min-width: 1024px) {
-		.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-thumb {
-			width: 10%;
-		}
+		.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-thumb { width: 10%; }
 	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-thumb img {
-		width: 100%;
-		height: 100%;
-		border-radius: 5px;
-		object-fit: cover;
-		display: block;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-icon {
-		position: absolute;
-		bottom: 10px;
-		left: 10px;
-		background: #FF4081;
-		color: #FFF;
-		padding: 5px 10px;
-		border-radius: 6px;
-		font-size: 14px;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content {
-		width: 100%;
-	}
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-thumb img { width: 100%; height: 100%; border-radius: 5px; object-fit: cover; display: block; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-icon { position: absolute; bottom: 10px; left: 10px; background: #FF4081; color: #FFF; padding: 5px 10px; border-radius: 6px; font-size: 14px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content { width: 100%; }
 	@media (min-width: 1024px) {
-		.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content {
-			width: 90%;
-		}
+		.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content { width: 90%; }
 	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content h3 {
-		margin: 0;
-		font-size: 18px;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content h3 a {
-		text-decoration: none;
-		color: var(--mpl-black);
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .location {
-		color: var(--mpl-primary);
-		font-size: 14px;
-		margin: 6px 0;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details {
-		display: flex;
-		justify-content: space-between;
-		align-items: start;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-info .description {
-		font-size: 13px;
-		color: #555;
-		margin-bottom: 6px;
-	}
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content h3 { margin: 0; font-size: 18px; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content h3 a { text-decoration: none; color: var(--mpl-black); }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .location { color: var(--mpl-primary); font-size: 14px; margin: 6px 0; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details { display: flex; justify-content: space-between; align-items: start; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-info .description { font-size: 13px; color: #555; margin-bottom: 6px; }
 	@media (min-width: 1024px) {
-		.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-info {
-			width: 80%;
-		}
+		.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-info { width: 80%; }
 	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		flex-direction: column;
-		gap: 10px;
-		width: 100%;
-		box-sizing: border-box;
-	}
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta { display: flex; align-items: center; justify-content: space-between; flex-direction: column; gap: 10px; width: 100%; box-sizing: border-box; }
 	@media (min-width: 1024px) {
-		.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta {
-			width: 15%;
-		}
+		.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta { width: 15%; }
 	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status {
-		padding: 5px 10px;
-		font-weight: bold;
-		text-transform: capitalize;
-		border-radius: 5px;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.publish {
-		border: 1px solid #D4F4E0;
-		background-color: #E8F5E8;
-		color: #368336;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.draft {
-		border: 1px solid #F0F0F0;
-		background-color: #F8F8F8;
-		color: #777;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.pending {
-		border: 1px solid #FFF4CC;
-		background-color: #FFF8E1;
-		color: #B58B00;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.scheduled {
-		border: 1px solid #D6ECFF;
-		background-color: #EBF4FF;
-		color: #1C6DB3;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.trash {
-		border: 1px solid #FFE3E3;
-		background-color: #FFF0F0;
-		color: #D9534F;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .tour-stats {
-		display: flex;
-		justify-content: space-between;
-		gap: 20px;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .tour-stats .stat {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .tour-stats .stat .value {
-		font-weight: bold;
-		color: #000;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action {
-		display: none;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links {
-		position: absolute;
-		right: 5px;
-		top: 5px;
-		display: flex;
-		align-items: center;
-		justify-content: space-evenly;
-		gap: 5px;
-		padding: 5px 10px;
-		flex-direction: row;
-		color: var(--mpl-dark);
-		border-radius: 0 10px 10px 0;
-		margin: 0;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a {
-		font-size: 12px;
-		text-decoration: none;
-		padding: 5px 10px;
-		border-radius: 5px;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_view_post {
-		border: 1px solid #3498DB;
-		background-color: #D8F0FF;
-		color: #3498DB;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_edit_post {
-		border: 1px solid #F1C40F;
-		background-color: #FEF5D2;
-		color: #F1C40F;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_duplicate_post {
-		border: 1px solid #2271B1;
-		background-color: #CFE9FF;
-		color: #2271B1;
-	}
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_trash_post {
-		border: 1px solid #E74C3C;
-		background-color: #FCD5D0;
-		color: #E74C3C;
-	}
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status { padding: 5px 10px; font-weight: bold; text-transform: capitalize; border-radius: 5px; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.publish { border: 1px solid #D4F4E0; background-color: #E8F5E8; color: #368336; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.draft { border: 1px solid #F0F0F0; background-color: #F8F8F8; color: #777; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.pending { border: 1px solid #FFF4CC; background-color: #FFF8E1; color: #B58B00; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.scheduled { border: 1px solid #D6ECFF; background-color: #EBF4FF; color: #1C6DB3; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.trash { border: 1px solid #FFE3E3; background-color: #FFF0F0; color: #D9534F; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .tour-stats { display: flex; justify-content: space-between; gap: 20px; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .tour-stats .stat { display: flex; flex-direction: column; align-items: center; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .tour-stats .stat .value { font-weight: bold; color: #000; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action { display: none; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links { position: absolute; right: 5px; top: 5px; display: flex; align-items: center; justify-content: space-evenly; gap: 5px; padding: 5px 10px; flex-direction: row; color: var(--mpl-dark); border-radius: 0 10px 10px 0; margin: 0; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a { font-size: 12px; text-decoration: none; padding: 5px 10px; border-radius: 5px; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_view_post { border: 1px solid #3498DB; background-color: #D8F0FF; color: #3498DB; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_edit_post { border: 1px solid #F1C40F; background-color: #FEF5D2; color: #F1C40F; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_duplicate_post { border: 1px solid #2271B1; background-color: #CFE9FF; color: #2271B1; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_trash_post { border: 1px solid #E74C3C; background-color: #FCD5D0; color: #E74C3C; }
 	@media (max-width: 600px) {
-		.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card {
-			width: 100%;
-		}
+		.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card { width: 100%; }
 	}
-	.ttbm-tour-list-page .ttbm-load-more-wrap {
-		text-align: center;
-		margin: 10px auto;
-	}
-	.ttbm-tour-list-page .ttbm-load-more-wrap .button {
-		background-color: var(--mpl-primary);
-		color: #FFF;
-		border: var(--mpl-primary) solid 1px;
-		font-weight: bold;
-	}
-	.ttbm-faq-section .ttbm-faq-item {
-		background-color: #FFF;
-		cursor: grabbing;
-	}
-	.ttbm-faq-section .ttbm-faq-item.ui-sortable-helper {
-		background: var(--mpl-light);
-		visibility: visible;
-		cursor: grabbing;
-	}
-	.ttbm-faq-section .faq-header {
-		position: relative;
-		z-index: 0;
-		background-color: var(--mpl-light);
-		border: 1px solid #DDD;
-		border-radius: 10px;
-		margin-top: 20px;
-	}
-	.ttbm-faq-section .faq-header.mActive {
-		border-radius: 15px 15px 0 0;
-	}
-	.ttbm-faq-section .faq-header .faq-action {
-		position: absolute;
-		top: 50%;
-		right: 15px;
-		transform: translateY(-50%);
-		z-index: 1;
-	}
-	.ttbm-faq-section .faq-header .faq-action span {
-		padding: 5px 10px;
-		background-color: var(--mpl-light);
-		color: var(--mpl-primary);
-		border-radius: 2px;
-	}
-	.ttbm-faq-section .faq-content {
-		display: none;
-		border: 1px solid #DDD;
-		border-radius: 0;
-		padding: 10px;
-	}
-	.ttbm-faq-section .faq-content.mActive {
-		border-radius: 0 0 15px 15px;
-	}
-	.ttbm-daywise-section .ttbm-daywise-item {
-		background-color: #FFF;
-		cursor: grabbing;
-	}
-	.ttbm-daywise-section .ttbm-daywise-item.ui-sortable-helper {
-		background: var(--mpl-light);
-		visibility: visible;
-		cursor: grabbing;
-	}
-	.ttbm-daywise-section .daywise-header {
-		position: relative;
-		z-index: 0;
-		background-color: var(--mpl-light);
-		border: 1px solid #DDD;
-		margin-top: 20px;
-		border-radius: 10px;
-	}
-	.ttbm-daywise-section .daywise-header.mActive {
-		border-radius: 15px 15px 0 0;
-	}
-	.ttbm-daywise-section .daywise-header .daywise-action {
-		position: absolute;
-		top: 50%;
-		right: 15px;
-		transform: translateY(-50%);
-		z-index: 1;
-	}
-	.ttbm-daywise-section .daywise-header .daywise-action span {
-		padding: 5px 10px;
-		background-color: var(--mpl-light);
-		color: var(--mpl-primary);
-		border-radius: 2px;
-	}
-	.ttbm-daywise-section .daywise-content {
-		display: none;
-		border: 1px solid #DDD;
-		padding: 10px;
-		border-radius: 0 0 15px 15px;
-	}
-	.ttbm-daywise-section .daywise-content.mActive {
-		border-radius: 0 0 15px 15px;
-	}
-	.ttbm-modal-container {
-		position: fixed;
-		right: -100%; /* Initially hidden off-screen */
-		top: 0;
-		width: 100%; /* Width of the sidebar */
-		height: 100%; /* Full height */
-		background-color: rgba(0, 0, 0, 0.1725490196); /* Background color */
-		transition: right 0.3s ease; /* Animation effect */
-		z-index: 1000; /* Ensure it's above other content */
-	}
-	.ttbm-modal-container.open {
-		right: 0; /* Slide in */
-	}
-	.ttbm-modal-content {
-		background-color: #FFF;
-		width: 800px;
-		height: 100%;
-		position: absolute;
-		top: 0;
-		right: 0;
-		padding: 70px 0px;
-	}
-	.ttbm-modal-content .title {
-		padding-left: 40px;
-	}
-	.ttbm-modal-content .ttbm-modal-close {
-		position: absolute;
-		top: 40px;
-		right: 15px;
-		font-size: 20px;
-		cursor: pointer;
-	}
-	.ttbm-modal-content .content {
-		height: 100%;
-		overflow-y: scroll;
-		padding: 0 40px;
-		padding-bottom: 40px;
-	}
-	.ttbm-modal-content p {
-		margin: 15px 0;
-	}
-	.ttbm-modal-content h3 {
-		font-size: 18px;
-		padding: 0;
-		margin: 5px 0;
-		margin-bottom: 30px;
-	}
-	.ttbm-modal-content input[type=text], .ttbm-modal-content input[type=number], .ttbm-modal-content textarea, .ttbm-modal-content select {
-		width: 100%;
-		display: block;
-		font-weight: normal;
-		padding: 10px;
-		font-size: 18px;
-		border: 1px solid #DFDFDF;
-		background-color: #FFF;
-	}
-	.ttbm-modal-content label {
-		display: flex;
-		justify-content: start;
-		align-items: start;
-		flex-direction: column;
-		font-weight: normal;
-		font-size: 18px;
-		gap: 15px;
-		margin: 25px 0;
-	}
+	.ttbm-tour-list-page .ttbm-load-more-wrap { text-align: center; margin: 10px auto; }
+	.ttbm-tour-list-page .ttbm-load-more-wrap .button { background-color: var(--mpl-primary); color: #FFF; border: var(--mpl-primary) solid 1px; font-weight: bold; }
+	.ttbm-faq-section .ttbm-faq-item { background-color: #FFF; cursor: grabbing; }
+	.ttbm-faq-section .ttbm-faq-item.ui-sortable-helper { background: var(--mpl-light); visibility: visible; cursor: grabbing; }
+	.ttbm-faq-section .faq-header { position: relative; z-index: 0; background-color: var(--mpl-light); border: 1px solid #DDD; border-radius: 10px; margin-top: 20px; }
+	.ttbm-faq-section .faq-header.mActive { border-radius: 15px 15px 0 0; }
+	.ttbm-faq-section .faq-header .faq-action { position: absolute; top: 50%; right: 15px; transform: translateY(-50%); z-index: 1; }
+	.ttbm-faq-section .faq-header .faq-action span { padding: 5px 10px; background-color: var(--mpl-light); color: var(--mpl-primary); border-radius: 2px; }
+	.ttbm-faq-section .faq-content { display: none; border: 1px solid #DDD; border-radius: 0; padding: 10px; }
+	.ttbm-faq-section .faq-content.mActive { border-radius: 0 0 15px 15px; }
+	.ttbm-daywise-section .ttbm-daywise-item { background-color: #FFF; cursor: grabbing; }
+	.ttbm-daywise-section .ttbm-daywise-item.ui-sortable-helper { background: var(--mpl-light); visibility: visible; cursor: grabbing; }
+	.ttbm-daywise-section .daywise-header { position: relative; z-index: 0; background-color: var(--mpl-light); border: 1px solid #DDD; margin-top: 20px; border-radius: 10px; }
+	.ttbm-daywise-section .daywise-header.mActive { border-radius: 15px 15px 0 0; }
+	.ttbm-daywise-section .daywise-header .daywise-action { position: absolute; top: 50%; right: 15px; transform: translateY(-50%); z-index: 1; }
+	.ttbm-daywise-section .daywise-header .daywise-action span { padding: 5px 10px; background-color: var(--mpl-light); color: var(--mpl-primary); border-radius: 2px; }
+	.ttbm-daywise-section .daywise-content { display: none; border: 1px solid #DDD; padding: 10px; border-radius: 0 0 15px 15px; }
+	.ttbm-daywise-section .daywise-content.mActive { border-radius: 0 0 15px 15px; }
+	.ttbm-modal-container { position: fixed; right: -100%; /* Initially hidden off-screen */ top: 0; width: 100%; /* Width of the sidebar */ height: 100%; /* Full height */ background-color: rgba(0, 0, 0, 0.1725490196); /* Background color */ transition: right 0.3s ease; /* Animation effect */ z-index: 1000; /* Ensure it's above other content */ }
+	.ttbm-modal-container.open { right: 0; /* Slide in */ }
+	.ttbm-modal-content { background-color: #FFF; width: 800px; height: 100%; position: absolute; top: 0; right: 0; padding: 70px 0px; }
+	.ttbm-modal-content .title { padding-left: 40px; }
+	.ttbm-modal-content .ttbm-modal-close { position: absolute; top: 40px; right: 15px; font-size: 20px; cursor: pointer; }
+	.ttbm-modal-content .content { height: 100%; overflow-y: scroll; padding: 0 40px; padding-bottom: 40px; }
+	.ttbm-modal-content p { margin: 15px 0; }
+	.ttbm-modal-content h3 { font-size: 18px; padding: 0; margin: 5px 0; margin-bottom: 30px; }
+	.ttbm-modal-content input[type=text],
+	.ttbm-modal-content input[type=number],
+	.ttbm-modal-content textarea,
+	.ttbm-modal-content select { width: 100%; display: block; font-weight: normal; padding: 10px; font-size: 18px; border: 1px solid #DFDFDF; background-color: #FFF; }
+	.ttbm-modal-content label { display: flex; justify-content: start; align-items: start; flex-direction: column; font-weight: normal; font-size: 18px; gap: 15px; margin: 25px 0; }
 	.ttbm-modal-content .ttbm_add_icon_image_area { position: relative; max-width: 202px; margin: 10px 0;}
 	.ttbm-modal-content .ttbm_add_icon_image_button_area { display: flex; flex-direction: row; justify-content: start; border: 1px solid #8C8F94; width: 100%; border-radius: 3px;}
 	.ttbm-modal-content .ttbm_add_icon_image_button_area .ttbm_image_add,
 	.ttbm-modal-content .ttbm_add_icon_image_button_area .ttbm_icon_add { padding: 10px 26px; border-radius: 0; margin: 1px;}
 	body.ttbm_settings_page { font-size: 16px; background-color: #FFF;}
-	body.ttbm_settings_page .ttbm_global_settings { padding-top: 50px;}
-	div.ttbm_global_settings .tabLists { border-right: 0;}
 	div.ttbm_style .ttbmPanelBody { background-color: #FFF;}
-	div.ttbm_global_settings .ttbmTabs { display: flex;}
-	div.ttbm_global_settings { max-width: 1600px; margin: auto;}
-	div.ttbm_global_settings select.formControl,
-	div.ttbm_global_settings input.formControl { background-color: #F5F8FF; height: 2.5em;}
-	div.ttbm_global_settings .ttbm_license_settings table { margin-top: 20px;}
-	.ttbm_style button:hover span, .ttbm_style button:focus span { color: var(--mpl-dark);}
-	div.ttbm_global_settings .ttbmPanelHeader { background: var(--mpl-primary);}
+	.ttbm_style button:hover span,
+	.ttbm_style button:focus span { color: var(--mpl-dark);}
 	.ttbm_style [data-tabs-target].active { border-left: 2px solid var(--mpl-primary);}
-	div.ttbm_style select.formControl:focus { border: 1px solid var(--mpl-dark); box-shadow: none;}
 	.ttbm_style [data-tabs-target]:hover { border-left: 2px solid var(--mpl-primary);}
-	div.ttbm_global_settings .ttbm-setting-field { display: flex; justify-content: space-between; border: 1px solid #ECECEC; align-items: center; padding: 10px; margin-top: -1px;}
-	div.ttbm_global_settings .ttbm-setting-field .label,
-	div.ttbm_global_settings .ttbm-setting-field label { width: 49%;}
-	div.ttbm_global_settings .ttbm-setting-field fieldset { padding: 10px;}
-	div.ttbm_global_settings .ttbm-setting-field .tooltips { position: relative; display: inline-block; cursor: pointer; color: var(--mpl-gray);}
-	div.ttbm_global_settings .ttbm-setting-field .tooltips::before { content: ""; position: absolute; bottom: 95%; left: 50%; transform: translateX(-50%); border-width: 6px; border-style: solid; border-color: #000 transparent transparent transparent; visibility: hidden; transition: 0s; z-index: 99;}
-	div.ttbm_global_settings .ttbm-setting-field .tooltips::after { content: attr(data-tooltip); visibility: hidden; width: max-content; max-width: 350px; background-color: #000; color: #FFF; text-align: center; padding: 6px 10px; border-radius: 5px; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); white-space: normal; z-index: 999; transition: opacity 0s ease-in-out; font-weight: normal;}
-	div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after,
-	div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::before { visibility: visible; opacity: 1;}
 	#ttbm_meta_box_panel .postbox-header, .travel-list .postbox-header { background: var(--mpl-gradient); padding: 5px;}
 	#ttbm_meta_box_panel .postbox-header .handle-actions, .travel-list .postbox-header .handle-actions { margin-top: 0;}
 	#ttbm_meta_box_panel .postbox-header .handle-actions .handle-order-higher,
@@ -1158,7 +855,7 @@ select#mep_ticket_offdays {height: 200px !important;}
 	#ttbm_meta_box_panel .ttbm_settings,
 	.travel-list .ttbm_settings { background-color: #FFF;}
 	#ttbm_meta_box_panel .ttbm_settings .tabLists,
-	.travel-list .ttbm_settings .tabLists { width: 20%; padding: 0; background-color: var(--mpl-white); border-right: 1px solid var(--mpl-gray); font-size: 16px;}
+	.travel-list .ttbm_settings .tabLists { width: 20%; background-color: var(--mpl-white); font-size: 16px;}
 	#ttbm_meta_box_panel .ttbm_settings .tabLists li, .travel-list .ttbm_settings .tabLists li { border-left: 0; border-right: 0; padding: 15px; color: var(--mpl-secondary); border-left: 2px solid transparent;}
 	#ttbm_meta_box_panel .ttbm_settings .tabLists li i,
 	.travel-list .ttbm_settings .tabLists li i { margin-right: 25px; color: #757575;}
@@ -1170,7 +867,6 @@ select#mep_ticket_offdays {height: 200px !important;}
 	.travel-list .ttbm_settings .tabLists li.active i { color: var(--mpl-primary);}
 	#ttbm_meta_box_panel .ttbm_settings .tabLists li:hover,
 	.travel-list .ttbm_settings .tabLists li:hover { background-color: var(--mpl-light); color: var(--mpl-primary);}
-	#ttbm_meta_box_panel .ttbm_settings .tabsContent,
 	.travel-list .ttbm_settings .tabsContent { width: 80%; padding: 2% 5%; background-color: var(--mpl-light);}
 	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem > h2,
 	.travel-list .ttbm_settings .tabsContent .tabsItem > h2 { padding: 0; color: var(--mpl-secondary); margin-bottom: 10px; font-size: 22px; font-weight: bold;}
@@ -1192,10 +888,6 @@ select#mep_ticket_offdays {height: 200px !important;}
 	}
 	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label p,
 	.travel-list .ttbm_settings .tabsContent .tabsItem section .label p { font-size: 14px; font-weight: 500; margin-bottom: 5px; color: var(--mpl-secondary);}
-	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label span,
-	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label a,
-	.travel-list .ttbm_settings .tabsContent .tabsItem section .label span,
-	.travel-list .ttbm_settings .tabsContent .tabsItem section .label a { line-height: 20px;}
 	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label .text,
 	.travel-list .ttbm_settings .tabsContent .tabsItem section .label .text { font-weight: normal; line-height: 20px; font-size: 13px;}
 	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section textarea,
@@ -1229,17 +921,14 @@ select#mep_ticket_offdays {height: 200px !important;}
 	.auto-search-wrapper.loupe::before { margin: 10px 0;}
 	.auto-search-wrapper.loupe button { display: none;}
 	.ttbm-avg-review-header { align-items: center !important;}
-	div.ttbm_style select.formControl { border-radius: 5px;}
 	.ttbm_style [data-tabs-target].active { background-color: var(--mpl-white); color: var(--d_color); border-left: 2px solid var(--mpl-primary);}
 	.ttbm_style [data-tabs-target]:hover { border-left: 2px solid var(--mpl-primary); background-color: var(--mpl-white);}
 	.ttbm_style .themeButton, .ttbm_style [class*=_themeButton] { background-color: var(--mpl-primary); color: var(--mpl-white); padding: 10px; border: 1px solid var(--mpl-primary);}
 	.ttbm_style .themeButton i, .ttbm_style [class*=_themeButton] i { color: #FFF;}
 	@media only screen and (min-width: 0px) {
-		#ttbm_meta_box_panel .tabLists { border-right: 0px solid var(--mpl-light); }
-		.leftTabs [data-tabs-target] { border-bottom: 0px solid var(--mpl-light); }
-		div.ttbm_global_settings label .info_text { line-height: 18px; }
+		#ttbm_meta_box_panel .tabLists { border-right: 0; }
+		.leftTabs [data-tabs-target] { border-bottom: 0; }
 		div.ttbm_style [data-tabs-target] { color: var(--mpl-secondary); }
-		.ttbm_style .tabsContent { overflow: scroll; }
 		code { line-height: 24px; }
 		.tab-content-ttbm_date_config_meta_boxs tr th label { line-height: 14px; }
 		.ttbm_style .navy_blueButton,
@@ -1254,8 +943,6 @@ select#mep_ticket_offdays {height: 200px !important;}
 		.ttbm_style [class*=_warningButton]:hover { background-color: var(--mpl-white); color: var(--mpl-yellow); }
 		.ttbm_style .warningButton:hover span,
 		.ttbm_style [class*=_warningButton]:hover span { color: var(--mpl-yellow); }
-		div.ttbm_style select.formControl:focus { background-color: var(--mpl-white); }
-		.ttbm_style .ttbm_remove_icon { position: absolute; top: -8px; right: -8px; width: 20px; height: 20px; cursor: pointer; opacity: 1; font-size: 10px; }
 		.ttbm_settings_panel_header { background: var(--mpl-secondary); padding: 1em 0.5em; color: var(--mpl-white); font-size: 20px; margin-top: 30px; }
 		.ttbm_settings_panel { padding-bottom: 0.5em; }
 		.ttbm_settings_panel .nav-tab-wrapper { background: var(---mpl-sky-light); border: 5px solid var(---mpl-sky-light); }

@@ -20,8 +20,8 @@
 				$ttbm_label = TTBM_Function::get_name();
 				?>
 				<?php wp_nonce_field( 'ttbm_ticket_type_nonce', 'ttbm_ticket_type_nonce' ); ?>
-                <div id="ttbm-settings-page">
-                    <div class="ttbm_style ttbm_settings">
+                <div id="ttbm-settings-page" class="ttbm_configuration">
+                    <div class="ttbm_style ttbm_settings ">
                         <div class="ttbmTabs leftTabs d-flex justify-content-between">
                             <ul class="tabLists">
                                 <li data-tabs-target="#ttbm_general_info"><i class="fas fa-tools"></i><?php esc_html_e('General Info', 'tour-booking-manager'); ?> </li>
@@ -238,7 +238,7 @@
 			public function save_settings($tour_id) {
 				//echo '<pre>';print_r($_POST);echo '</pre>';die();
 				if (!isset($_POST['ttbm_ticket_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_ticket_type_nonce'])), 'ttbm_ticket_type_nonce') && defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && !current_user_can('edit_post', $tour_id)) {
-					echo '<pre>';print_r($_POST['ttbm_ticket_type_nonce']);echo '</pre>';die();
+					//echo '<pre>';print_r($_POST['ttbm_ticket_type_nonce']);echo '</pre>';die();
                     return;
 				}
 				//echo '<pre>';print_r($_POST);echo '</pre>';die();

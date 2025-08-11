@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH')) {
+	if (!defined('ABSPATH')) {
     die;
 } // Cannot access pages directly.
 if (!class_exists('TTBM_Travel_List_Tab_Details')) {

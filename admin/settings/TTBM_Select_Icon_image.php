@@ -26,7 +26,7 @@
                             <div class="allCenter">
                                 <span class="<?php echo esc_attr($icon); ?>" data-add-icon></span>
                             </div>
-                            <span class="fas fa-times ttbm_icon_remove" title="<?php esc_html_e('Remove Icon', 'tour-booking-manager'); ?>"></span>
+                            <span class="fas fa-times ttbm_icon_remove" title="<?php esc_attr_e('Remove Icon', 'tour-booking-manager'); ?>"></span>
                         </div>
                         <div class="ttbm_add_icon_image_button_area <?php echo esc_attr($button_active_class); ?>">
                             <div class="flexEqual">
@@ -39,7 +39,6 @@
 				<?php
 				add_action('admin_footer', array($this, 'icon_popup'));
 			}
-
 			public function icon_popup() {
 				if (!$GLOBALS['ttbm_icon_popup_exit']) {
 					$GLOBALS['ttbm_icon_popup_exit'] = true;
@@ -47,7 +46,7 @@
                     <div class="ttbm_add_icon_popup ttbm_popup ttbm_style" data-popup="#ttbm_add_icon_popup">
                         <div class="popupMainArea fullWidth">
                             <div class="popupHeader allCenter">
-                                <?php self::disaply_icon_header_in_popup(); ?>
+								<?php self::disaply_icon_header_in_popup(); ?>
                             </div>
                             <div class="popupBody">
 								<?php self::disaply_icon_in_popup(); ?>
@@ -59,11 +58,11 @@
 			}
 			public static function disaply_icon_header_in_popup() {
 				?>
-					<h2 class="_mR"><?php esc_html_e('Select Icon', 'tour-booking-manager'); ?></h2>
-					<label class="min_300">
-						<input type="text" id="searchInputIcon" class="formControl ttbm_name_validation" name="ttbm_select_icon_name" placeholder="<?php esc_attr_e('Icon/class name....', 'tour-booking-manager'); ?>"/>
-					</label>
-					<span class="fas fa-times popupClose"></span>
+                <h2 class="_mR"><?php esc_html_e('Select Icon', 'tour-booking-manager'); ?></h2>
+                <label class="min_300">
+                    <input type="text" id="searchInputIcon" class="formControl ttbm_name_validation" name="ttbm_select_icon_name" placeholder="<?php esc_attr_e('Icon/class name....', 'tour-booking-manager'); ?>"/>
+                </label>
+                <span class="fas fa-times popupClose"></span>
 				<?php
 			}
 			public static function disaply_icon_in_popup() {
@@ -74,52 +73,52 @@
 						$total_icon += sizeof($icon['icon']);
 					}
 					?>
-					<div class="dFlex">
-						<ul class="popupIconMenu">
-							<li class="active" data-icon-menu="all_item" data-icon-title="all_item">
+                    <div class="dFlex">
+                        <ul class="popupIconMenu">
+                            <li class="active" data-icon-menu="all_item" data-icon-title="all_item">
 								<?php esc_html_e('All Icon', 'tour-booking-manager'); ?> <strong><?php echo esc_html($total_icon); ?></strong>
-							</li>
+                            </li>
 							<?php foreach ($icons as $key => $icon) { ?>
-								<li data-icon-menu="<?php echo esc_attr($key); ?>">
+                                <li data-icon-menu="<?php echo esc_attr($key); ?>">
 									<?php
 										printf(
-											/* translators: %1$s: title, %2$s: number of icons */
-											wp_kses_post( __( '%1$s&nbsp; <strong>%2$s</strong>', 'tour-booking-manager' ) ),
-											esc_html( $icon['title'] ),
-											esc_html( sizeof( $icon['icon'] ) )
+										/* translators: %1$s: title, %2$s: number of icons */
+											wp_kses_post(__('%1$s&nbsp; <strong>%2$s</strong>', 'tour-booking-manager')),
+											esc_html($icon['title']),
+											esc_html(sizeof($icon['icon']))
 										);
 									?>
-								</li>
+                                </li>
 							<?php } ?>
-						</ul>
-						<div class="popup_all_icon">
+                        </ul>
+                        <div class="popup_all_icon">
 							<?php foreach ($icons as $key => $icon) { ?>
-								<div class="popupTabItem" data-icon-list="<?php echo esc_attr($key); ?>" data-icon-title="<?php echo esc_attr($icon['title']); ?>">
-									<h3>
+                                <div class="popupTabItem" data-icon-list="<?php echo esc_attr($key); ?>" data-icon-title="<?php echo esc_attr($icon['title']); ?>">
+                                    <h3>
 										<?php
-										echo wp_kses_post(
-											sprintf(
+											echo wp_kses_post(
+												sprintf(
 												/* translators: %1$s is the title, %2$s is the count */
-												__( '%1$s&nbsp;(<strong>%2$s</strong>)', 'tour-booking-manager' ),
-												esc_html( $icon['title'] ),
-												esc_html( sizeof( $icon['icon'] ) )
-											)
-										);
+													__('%1$s&nbsp;(<strong>%2$s</strong>)', 'tour-booking-manager'),
+													esc_html($icon['title']),
+													esc_html(sizeof($icon['icon']))
+												)
+											);
 										?>
-									</h3>
-									<div class="divider"></div>
-									<div class="itemIconArea">
+                                    </h3>
+                                    <div class="divider"></div>
+                                    <div class="itemIconArea">
 										<?php foreach ($icon['icon'] as $icon => $item) { ?>
-											<div class="iconItem allCenter" data-icon-class="<?php echo esc_attr($icon); ?>" data-icon-name="<?php echo esc_attr($item); ?>" title="<?php echo esc_attr($item); ?>">
-												<span class="<?php echo esc_attr($icon); ?>"></span>
-											</div>
+                                            <div class="iconItem allCenter" data-icon-class="<?php echo esc_attr($icon); ?>" data-icon-name="<?php echo esc_attr($item); ?>" title="<?php echo esc_attr($item); ?>">
+                                                <span class="<?php echo esc_attr($icon); ?>"></span>
+                                            </div>
 										<?php } ?>
-									</div>
-								</div>
+                                    </div>
+                                </div>
 							<?php } ?>
-						</div>
-					</div>
-				<?php } 
+                        </div>
+                    </div>
+				<?php }
 			}
 			//======image========//
 			public function add_single_image($name, $image_id = '') {
@@ -196,21 +195,20 @@
 				add_action('admin_footer', array($this, 'icon_popup'));
 			}
 			//========Mage Icon library get Icon names======//
-			public static function mi_icon($icon_type="fi") {
+			public static function mi_icon($icon_type = "fi") {
 				$mi_icon_json = file_get_contents(TTBM_PLUGIN_URL . '/assets/mage-icon/data.json');
 				$mi_icons = json_decode($mi_icon_json, true);
 				$all_icon = [];
-				foreach($mi_icons as $mi_icon){
+				foreach ($mi_icons as $mi_icon) {
 					$all_icon["{$icon_type} mi-{$mi_icon}"] = $mi_icon;
 				}
 				return $all_icon;
 			}
-
-			public static function all_icon_array(): array {				
+			public static function all_icon_array(): array {
 				return [
 					[
 						'title' => 'Mage icon',
-						'icon' 	=> self::mi_icon('mi'),
+						'icon' => self::mi_icon('mi'),
 					],
 					[
 						'title' => 'Accessibility',
@@ -1951,7 +1949,6 @@
 						]
 					]
 				];
-
 			}
 		}
 		new TTBM_Select_Icon_image();

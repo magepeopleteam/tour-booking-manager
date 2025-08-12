@@ -20,7 +20,7 @@
 				$ttbm_label = TTBM_Function::get_name();
 				?>
 				<?php wp_nonce_field( 'ttbm_ticket_type_nonce', 'ttbm_ticket_type_nonce' ); ?>
-                <div id="ttbm-settings-page" class="ttbm_configuration">
+                <div id="ttbm_content" class="ttbm_configuration">
                     <div class="ttbm_style ttbm_settings ">
                         <div class="ttbmTabs leftTabs d-flex justify-content-between">
                             <ul class="tabLists">

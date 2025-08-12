@@ -27,7 +27,7 @@
 			}
 			public function settings_page() {
 				?>
-                <div class="ttbm_style ttbm_global_settings ttbm_configuration">
+                <div id="ttbm_content" class="ttbm_style ttbm_global_settings ttbm_configuration">
                     <div class="ttbmPanel">
                         <div class="ttbmPanelHeader"><?php esc_html_e(' Global Settings', 'tour-booking-manager'); ?></div>
                         <div class="ttbmPanelBody mp_zero">

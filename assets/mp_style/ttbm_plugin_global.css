@@ -167,6 +167,7 @@
 }
 /******************************************************************** Font Size & Font weight ************************************************/
 @media only screen and (min-width: 10px) {
+
 	div.ttbm_style,
 	div.ttbm_style h1,
 	div.ttbm_style h2,
@@ -176,11 +177,14 @@
 	div.ttbm_style h6 { margin: 0; padding: 0; line-height: 1.25; }
 	div.ttbm_style strong { font-weight: var(--fw-bold); }
 	div.ttbm_style .extraBold { font-weight: 900; }
-	div.ttbm_style h1, div.ttbm_style [class*="_fs_h1"] { font-weight: var(--fw-bold);font-size: var(--fs_h1) }
-	div.ttbm_style h2, div.ttbm_style [class*="_fs_h2"] { font-weight: var(--fw-bold); }
-	div.ttbm_style h4, div.ttbm_style [class*="_fs_h4"] { font-weight: var(--fw-medium); text-transform: inherit; }
-	div.ttbm_style h5, div.ttbm_style [class*="_fs_h5"] { font-weight: var(--fw-medium); text-transform: inherit; }
-	div.ttbm_style h6, div.ttbm_style [class*="_fs_h6"] { font-weight: var(--fw-normal); text-transform: inherit; }
+	div#ttbm_content h1, div#ttbm_content [class*="_fs_h1"],
+	div.ttbm_style h1, div.ttbm_style [class*="_fs_h1"] { font-weight: var(--fw-bold);font-size: var(--ttbm_fs_h1); }
+	div#ttbm_content h2, div#ttbm_content [class*="_fs_h2"],
+	div.ttbm_style h2, div.ttbm_style [class*="_fs_h2"] { font-weight: var(--fw-bold);font-size: var(--ttbm_fs_h2); }
+	div.ttbm_style h3, div.ttbm_style [class*="_fs_h3"] { font-weight: var(--fw-bold);font-size: var(--ttbm_fs_h3); }
+	div.ttbm_style h4, div.ttbm_style [class*="_fs_h4"] { font-weight: var(--fw-medium); text-transform: inherit;font-size: var(--ttbm_fs_h4); }
+	div.ttbm_style h5, div.ttbm_style [class*="_fs_h5"] { font-weight: var(--fw-medium); text-transform: inherit;font-size: var(--ttbm_fs_h5); }
+	div.ttbm_style h6, div.ttbm_style [class*="_fs_h6"] { font-weight: var(--fw-normal); text-transform: inherit;font-size: var(--ttbm_fs_h6); }
 	div.ttbm_style .fs_50, div.ttbm_style [class*="_fs_50"] { font-size: 50px; font-weight: var(--fw-medium); }
 }
 /******************************************************************** Flex Section ************************************************/
@@ -1429,7 +1433,7 @@
 	.ttbm_style textarea:focus { box-shadow: none; outline: 0; border-color: var(--color_theme); }
 	div.ttbm_style form { margin: 0; padding: 0; line-height: 1.25; }
 	div.ttbm_style label,
-	div.ttbm_style [class*="_fs_label"] {font-weight: var(--fw-medium);font-size: var(--fs_label);position: relative;text-transform: capitalize;display: -webkit-inline-flex;display: inline-flex;}
+	div.ttbm_style [class*="_fs_label"] {font-weight: var(--fw-medium);font-size: var(--ttbm_fs_label);position: relative;text-transform: capitalize;display: -webkit-inline-flex;display: inline-flex;}
 	.ttbm_style label span { white-space: nowrap; }
 	/***************************/
 	.ttbm_style .formControl::placeholder { color: #0005; }
@@ -3120,13 +3124,8 @@
 }
 /******************************************************************** Load More************************************************/
 @media only screen and (min-width: 10px) {
-	div.ttbm_style .ttbm_load_more_text_area {
-		color: var(--d_color);
-	}
-	div.ttbm_style [data-read] {
-		color: var(--color_theme);
-		cursor: pointer;
-	}
+	div.ttbm_style .ttbm_load_more_text_area {		color: var(--d_color);	}
+	div.ttbm_style [data-read] {		color: var(--color_theme);		cursor: pointer;	}
 }
 /******************************************************************** Woocommerce cart ************************************************/
 @media only screen and (min-width: 10px) {

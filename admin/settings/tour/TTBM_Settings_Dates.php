@@ -13,11 +13,11 @@
 				$date_type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_type', 'fixed');
 				?>
                 <div class="tabsItem ttbm_settings_dates" data-tabs="#ttbm_settings_dates">
+                    <div class="settings_header">
+                        <h1><?php esc_html_e('Date Configuration', 'tour-booking-manager'); ?></h1>
+                        <span class="info_text"><?php esc_html_e('Tour type and date time can be easily configured here, providing a crucial feature for recurring, fixed, or specific date tours.', 'tour-booking-manager') ?></span>
+                    </div>
                     <div class="gptLayout">
-                        <div class="gpt_header">
-                            <h3><?php esc_html_e('Date Configuration', 'tour-booking-manager'); ?></h3>
-                            <span class="info_text"><?php esc_html_e('Tour type and date time can be easily configured here, providing a crucial feature for recurring, fixed, or specific date tours.', 'tour-booking-manager') ?></span>
-                        </div>
                         <div class="gpt_content">
                             <div class="groupRadioBox">
                                 <input type="hidden" value="<?php echo esc_attr($date_type); ?>" name="ttbm_travel_type"/>

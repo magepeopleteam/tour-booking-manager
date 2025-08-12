@@ -17,6 +17,11 @@
 }
 /********************************************************************  ************************************************/
 @media only screen and (min-width: 10px) {
+	div.settings_header { background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%); color: white; padding: 3rem; text-align: center; }
+	div.settings_header .info_text {opacity: 0.9; font-size: 1.125rem; line-height: 1.6; max-width: 600px; margin: 0 auto;}
+}
+/********************************************************************  ************************************************/
+@media only screen and (min-width: 10px) {
 	div.ttbm_configuration .formControl {font-weight: normal; border: 1px solid var(--mpl-gray); color: var(--mpl-secondary); font-size: 14px; background-color: #F5F8FF; min-width: 80px;padding: 5px var(--ttbm_mp_xs);max-width: 250px;}
 }
 /******************************************************************** Global settings ************************************************/
@@ -140,8 +145,9 @@
 	.unlimited_section .content_area {padding: 25px 15px 0 0;}
 	div.unlimited_section .content_area img {width: auto;max-width: 100px;}
 }
-/********************************************************************  ************************************************/
+/******************************************************************** Date configuration  ************************************************/
 @media only screen and (min-width: 10px) {
+	div.ttbm_settings_dates {}
 }
 /********************************************************************  ************************************************/
 @media only screen and (min-width: 10px) {
@@ -149,7 +155,6 @@
 /********************************************************************  ************************************************/
 @media only screen and (min-width: 10px) {
 }
-
 /*************************/
 /***********************************/
 div.ttbm_settings table {table-layout: auto;}
@@ -157,10 +162,10 @@ div.ttbm_settings table tr:nth-child(even) {background-color: #0CB32612;}
 div.ttbm_settings table tr:nth-child(odd) {background-color: #FFF;}
 div.ttbm_settings table th,
 div.ttbm_settings table td {border: 0;}
-div.ttbm_settings table tbody th {text-align: left;font-size: var(--fs);}
+div.ttbm_settings table tbody th {text-align: left;font-size: var(--ttbm_fs);}
 div.ttbm_settings table tbody thead th {text-align: center;}
 div.ttbm_settings span.dropdown-wrapper {margin: 0 !important;}
-div.ttbm_settings p.ttbm_description {display: block;font-weight: normal;font-size: var(--fs_small) !important;color: #666;}
+div.ttbm_settings p.ttbm_description {display: block;font-weight: normal;font-size: var(--ttbm_fs_small) !important;color: #666;}
 div.ttbm_settings p.ttbm_description span {margin: 0 5px 0 0;}
 div.ttbm_settings .ttbm_popup .popupMainArea {width: 100%;}
 /************Custom Pick Plugin**************************/
@@ -194,12 +199,11 @@ div.ttbm_settings .ttbm_popup .popupMainArea {width: 100%;}
 /************************************/
 #ttbm_status_page table th {text-align: left;}
 /************************************/
-span.textWarning { color: #FFF; background: #E10B0B; padding: 0 5px 4px 5px; border-radius: 5px; font-size: var(--fs);font-weight: var(--fw-bold);}
-span.textSuccess { color: var(--color_success); font-size: var(--fs);}
+span.textWarning { color: #FFF; background: #E10B0B; padding: 0 5px 4px 5px; border-radius: 5px; font-size: var(--ttbm_fs);font-weight: var(--fw-bold);}
+span.textSuccess { color: var(--color_success); font-size: var(--ttbm_fs);}
 /***************/
 #mep_disable_ticket_time {margin: 0 10px 0 0;}
 /***************************************/
-
 /****/
 .ttbm_style a[class*="customButton"] {
 	width: auto;height: 45px;font-size: 20px;font-weight: 500;position: relative;border-radius: 5px;margin: 20px 0 0 0;padding: 0 20px; color: #FFF;min-width: 170px;

@@ -9,7 +9,7 @@ div.ttbm_viator_theme {width: 100%;}
 div.ttbm_wraper {max-width: 100%; width: 100%;margin: var(--ttbm_mp) auto;position: relative;}
 div.ttbm_container {width: 100%;max-width: var(--dcontainer_width);margin: 0 auto;padding: var(--ttbm_mp);background-color: var(--color_white);}
 .ttbm_wraper table {table-layout: fixed;margin: 0; width: 100%;}
-.ttbm_wraper table th {font-size: var(--fs_label);}
+.ttbm_wraper table th {font-size: var(--ttbm_fs_label);}
 .ttbm_wraper table th,
 div.ttbm_faq_item .ttbm_faq_title {-webkit-transition: 350ms ease-in-out;transition: 350ms ease-in-out;}
 .ttbm-rating-stars { margin-top: 15px;}
@@ -52,7 +52,7 @@ div.ttbm_details_page div.ttbm_description {
 div.ttbm_details_page div.ttbm_description .ttbm_description_title { background: rgba(var(--color_theme_rbg), 0.1); padding: 12px var(--ttbm_mp); font-weight: bold; border-radius: 10px 10px 0 0; margin: 0; font-size: 22px;}
 div.ttbm_details_page div.ttbm_description .ttbm_content { padding: 20px 25px;}
 /*********/
-div.ttbm_details_page .location_name {font-size: var(--fs_h5);margin: 0 0 var(--ttbm_mp) 0;}
+div.ttbm_details_page .location_name {font-size: var(--ttbm_fs_h5);margin: 0 0 var(--ttbm_mp) 0;}
 /*********/
 .section_item {display: -webkit-flex;display: flex;-webkit-flex-direction: column;flex-direction: column;width: 33.333%;overflow: hidden;margin: 0;position: relative;}
 /***********/
@@ -92,7 +92,7 @@ div.item_section .ttbm_short_list_more {
 	color: var(--color_theme);
 	margin: 0 0 0 var(--ttbm_mp_xs);
 	font-weight: var(--fw-medium);
-	font-size: var(--fs_h4);
+	font-size: var(--ttbm_fs_h4);
 	margin-top: var(--ttbm_mp_xs);
 	padding: var(--ttbm_mp_xs) var(--ttbm_mp_xs);
 	display: inline-block;
@@ -135,7 +135,7 @@ div.bg_image_area .group_item .ttbm_list_info { -webkit-justify-content: center;
 div.include_service ul li[title]:hover::before { position: absolute; content: ""; left: calc(50% - 9px); top: -11px; border: 8px solid transparent; border-bottom-color: #333; transform: rotate(180deg);}
 div.include_service ul li[title]:hover::after { content: attr(title); position: absolute; top: -122%; left: 0; background-color: #333; padding: 5px var(--dbr); color: #FFF; border-radius: 5px; white-space: nowrap; font-size: 12px; line-height: 20px;}
 div.include_service ul {display: -webkit-flex;display: flex;}
-div.include_service ul li, .ttbm_widget_content .ttbm_list_details .include_service ul li { display: flex; align-items: center; position: relative; margin: 0 7px 0 0 !important; border: 1px solid var(--color_border); border-radius: 5px; transition: all 0.3s ease-in-out; color: var(--color_theme) !important; font-size: var(--fs); height: 30px; width: 30px !important; padding: 0 !important; line-height: 35px; text-align: center; padding-top: 10px;}
+div.include_service ul li, .ttbm_widget_content .ttbm_list_details .include_service ul li { display: flex; align-items: center; position: relative; margin: 0 7px 0 0 !important; border: 1px solid var(--color_border); border-radius: 5px; transition: all 0.3s ease-in-out; color: var(--color_theme) !important; font-size: var(--ttbm_fs); height: 30px; width: 30px !important; padding: 0 !important; line-height: 35px; text-align: center; padding-top: 10px;}
 div.include_service ul li .circleIcon_xs { height: auto; width: 100%;}
 div.include_service ul li span, .ttbm_widget_content div.ttbm_list_details .include_service ul li span { display: inline-block !important; margin: 0 !important;}
 div.include_service ul li:hover,
@@ -150,7 +150,7 @@ div.ttbm_description ul.ttbm-activities { padding: 20px;}
 .ttbm-activities .ttbm-items { width: 49%; margin-bottom: 10px;}
 .get-enquiry-form { display: flex; flex-direction: column; justify-content: start; align-items: start; gap: 10px; padding: 20px 10px;}
 .ttbm_style .get-enquiry-form input, .get-enquiry-form textarea { width: 100%; margin-bottom: 20px;}
-div.filter_top_bar button {background-color: #FFF;color: var(--color_theme);font-size: var(--fs_h2);padding: 6px; border-radius: 5px !important;}
+div.filter_top_bar button {background-color: #FFF;color: var(--color_theme);font-size: var(--ttbm_fs_h2);padding: 6px; border-radius: 5px !important;}
 /**************Availability theme***********************************/
 div.ttbm_viator_theme .ttbm_content__left {width: calc(100% - 400px - var(--ttbm_mp));}
 div.ttbm_viator_theme .ttbm_content__right {width: calc(380px + var(--ttbm_mp));}
@@ -158,10 +158,10 @@ div.ttbm_viator_theme .viator_top_section .ttbm_content__left {width: calc(100% 
 div.ttbm_viator_theme .viator_top_section .ttbm_content__right {width: 380px;background-color: #F5F5F5;padding: 10px;border-radius: 10px;overflow: auto;height: 500px;}
 div.ttbm_viator_theme div.superSlider {margin: 0;}
 div.ttbm_viator_theme div.small_box {width: 100%; padding: 0; border: none;border-radius: 0;margin: var(--ttbm_mp_xs) 0 0 0;background-color: transparent; -webkit-flex-direction: initial;flex-direction: initial; -webkit-justify-content: initial;justify-content: initial;}
-div.ttbm_viator_theme .item_icon {margin: 0 var(--ttbm_mp_xs) 0 0;font-size: var(--fs_h5);}
+div.ttbm_viator_theme .item_icon {margin: 0 var(--ttbm_mp_xs) 0 0;font-size: var(--ttbm_fs_h5);}
 div.viator_top_section .ttbm_booking_panel { position: initial;top: 100%;left: var(--ttbm_mp_negetive);right: var(--ttbm_mp_negetive); padding: var(--ttbm_mp_xs);z-index: 11;background-color: #F5F5F5;}
 div.ttbm_date_time_select span.date_time_label {font-size: 20px;}
-div.viator_top_section .ttbm_booking_panel h3 {font-size: var(--fs_h5);}
+div.viator_top_section .ttbm_booking_panel h3 {font-size: var(--ttbm_fs_h5);}
 div.viator_top_section .ttbm_booking_panel .addonGroupContent {min-width: 25px;}
 div.viator_top_section .ttbm_booking_panel .qtyIncDec {max-width: 100%;}
 div.viator_top_section .ttbm_booking_panel .formControl {padding: 5px;}
@@ -179,19 +179,19 @@ div.viator_top_section .ttbm_book_now {margin: var(--ttbm_mp_xs) 0 0 0;}
 /******************day wise details********************************/
 div.ttbm_day_wise_details div.superSlider {min-width: 300px;max-width: 50%; margin: 0 var(--ttbm_mp) var(--ttbm_mp) 0;float: left;}
 div.day_wise_details_item .day_wise_details_item_details {margin: var(--ttbm_mp_xs) 0 0 0;overflow: hidden;}
-div.ttbm_day_wise_details .day_wise_details_item_title { padding: 0 var(--ttbm_mp_xs) var(--ttbm_mp_xs) 0; border-bottom: 1px solid #DDD; font-size: var(--fs_h4); font-weight: var(--fw-medium);}
+div.ttbm_day_wise_details .day_wise_details_item_title { padding: 0 var(--ttbm_mp_xs) var(--ttbm_mp_xs) 0; border-bottom: 1px solid #DDD; font-size: var(--ttbm_fs_h4); font-weight: var(--fw-medium);}
 div.day_wise_details_item { border-left: 1px solid var(--color_theme); position: relative; margin: 0;padding: 0 0 var(--ttbm_mp) 25px;}
 div.day_wise_details_item:before { content: "";width: 15px; height: 15px;top: 0;left: -8px;position: absolute; background-color: var(--color_theme); border: 1px solid var(--color_theme); -webkit-box-shadow: 3px 3px 0 #BAB5F8; box-shadow: 3px 3px 0 #BAB5F8; border-radius: 50%;}
 div.day_wise_details_item:last-child {padding-bottom: 0;border: none;}
 div.day_wise_details_item img {width: initial;}
 /*************F.A.Q*************************************/
 div.ttbm_faq_item {margin: 0 0 var(--ttbm_mp_xs) 0;}
-div.ttbm_faq_item .ttbm_faq_title {background-color: #FFF;border-bottom: 1px solid #DDD;border-radius: 0;font-weight: normal;text-transform: none; padding: 5px; font-size: var(--fs_h5)}
+div.ttbm_faq_item .ttbm_faq_title {background-color: #FFF;border-bottom: 1px solid #DDD;border-radius: 0;font-weight: normal;text-transform: none; padding: 5px; font-size: var(--ttbm_fs_h5)}
 div.ttbm_faq_item .ttbm_faq_title.active {border-color: #F5F5F5;border-radius: 5px 5px 0 0;background-color: #F5F5F5; color: var(--color_black); }
 div.ttbm_faq_item .ttbm_faq_title span {padding: 5px 0;font-size: 14px; font-weight: bold;}
 div.ttbm_faq_content {background-color: #FFF;padding: var(--ttbm_mp);border-radius: 10px;overflow: hidden;}
 div.ttbm_faq_content p { margin-top: 0;}
-.ttbm_registration_area div[class*="simpleSpinner"] { position: absolute; z-index: 11111; left: 0; right: 0; top: 50%; font-size: var(--fs_h1); width: 100%; padding: var(--ttbm_mp); color: var(--color_theme);}
+.ttbm_registration_area div[class*="simpleSpinner"] { position: absolute; z-index: 11111; left: 0; right: 0; top: 50%; font-size: var(--ttbm_fs_h1); width: 100%; padding: var(--ttbm_mp); color: var(--color_theme);}
 div.ttbm_faq_content p:last-child { margin-bottom: 0;}
 div.ttbm_faq_item div.superSlider {min-width: 300px;max-width: 50%; margin: 0 var(--ttbm_mp_xs) var(--ttbm_mp_xs) 0;float: left;}
 /*****************dynamic sidebar*********************************/
@@ -340,7 +340,7 @@ div.ttbm_viator_theme .item_icon { width: auto;}
 .ttbm_default__title h1 {font-size: 34px;}
 div.ttbm_default_widget {
 	display: block;
-	font-size: var(--fs);
+	font-size: var(--ttbm_fs);
 	color: var(--d_color);
 	position: relative;
 	margin: 0 0 var(--ttbm_mp) 0;
@@ -395,7 +395,7 @@ div.ttbm_default_widget .ttbm_title_style_2 {
 	padding: 2px 0;
 	border-bottom: 1px solid #F3F3F3;
 	position: relative;
-	font-size: var(--fs);
+	font-size: var(--ttbm_fs);
 	display: -webkit-flex;
 	display: flex;-webkit-align-items: center;
 	align-items: center;
@@ -921,7 +921,7 @@ div.filter_item {
 
 .ttbm_widget_content [class*="_mT"] {
 	margin-top: var(--ttbm_mp_xs);
-	font-size: var(--fs_h4);
+	font-size: var(--ttbm_fs_h4);
 	font-weight: 600;
 }
 
@@ -970,15 +970,15 @@ div.left_filter {display: -webkit-flex;display: flex;}
 }
 
 .ttbm_filter span {
-	font-size: var(--fs);
+	font-size: var(--ttbm_fs);
 }
 /***************************************/
 div.search_result_empty {
-	display: none;font-weight: var(--fw-medium); font-size: var(--fs_h3); color: var(--color_warning);text-align: center;
+	display: none;font-weight: var(--fw-medium); font-size: var(--ttbm_fs_h3); color: var(--color_warning);text-align: center;
 	width: 100%;background-color: #FFF;padding: var(--ttbm_mp);margin: var(--ttbm_mp) 0;
 }
-div.filter_top_bar {font-size: var(--fs_h3); width: 100%;background-color: #FFF;padding: var(--ttbm_mp_xs);margin: 0 0 var(--ttbm_mp_xs) 0;}
-div.filter_short_result { font-size: var(--fs_small); font-weight: 500; color: var(--d_color);text-align: center;margin: var(--ttbm_mpl) 0 0 0;}
+div.filter_top_bar {font-size: var(--ttbm_fs_h3); width: 100%;background-color: #FFF;padding: var(--ttbm_mp_xs);margin: 0 0 var(--ttbm_mp_xs) 0;}
+div.filter_short_result { font-size: var(--ttbm_fs_small); font-weight: 500; color: var(--d_color);text-align: center;margin: var(--ttbm_mpl) 0 0 0;}
 /***************************************/
 div.all_filter_item > div {margin: var(--ttbm_mp_xs_negative);}
 div.all_filter_item > div.modern {margin: 0;}
@@ -1091,7 +1091,7 @@ div.ttbm_list_title {margin-top: var(--ttbm_mp_xs);}
 }
 
 div.modern .ttbm_list_title,
-div.modern .ttbm_list_title > * {margin: 0;font-size: var(--fs_h4);font-weight: bold;}
+div.modern .ttbm_list_title > * {margin: 0;font-size: var(--ttbm_fs_h4);font-weight: bold;}
 
 .ttbm_list_info i{
 	color: var(--color_theme);
@@ -1110,7 +1110,7 @@ div.superSlider .sliderShowcaseItem:last-child{
 
 /***************************************/
 div.ttbm_list_info {display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;margin: var(--dbr) 0 0 0;overflow: hidden;}
-div.ttbm_list_info span {font-size: var(--fs_h6); color: var(--color_theme);}
+div.ttbm_list_info span {font-size: var(--ttbm_fs_h6); color: var(--color_theme);}
 div.ttbm_list_info > span:first-child {margin: 0 var(--dbr) 0 0;}
 
 .filter_item.grid_4 .ttbm_list_info_wrapper, .filter_item.grid_3 .ttbm_list_info_wrapper {
@@ -1150,14 +1150,14 @@ div.ttbm_list_inline div.ttbm_list_info {margin: 0 var(--ttbm_mp_xs) 0 0;}
 }
 
 .filter_item.grid_4 div.ttbm_list_inline ul li {
-	font-size: var(--fs_small);
+	font-size: var(--ttbm_fs_small);
 }
 
 /***************************************/
 .placeholderLoader div.absolute_item[data-placeholder] {position: absolute;}
 div.absolute_item {position: absolute;z-index: 20;max-width: calc(100% - var(--ttbm_mp_xs) - var(--ttbm_mp_xs));}
 .absolute_item .ttbm_list_info {
-	color: var(--color_theme_alter); background-color: var(--color_theme); font-size: var(--fs_small);padding: 5px var(--ttbm_mp_xs);margin: 0;
+	color: var(--color_theme_alter); background-color: var(--color_theme); font-size: var(--ttbm_fs_small);padding: 5px var(--ttbm_mp_xs);margin: 0;
 	-webkit-justify-content: center;justify-content: center;
 	border-radius: 0 5px 5px 0;
 	box-shadow: 0px 0px 2px 0 rgba(0, 0, 0, 0.4);
@@ -1165,12 +1165,12 @@ div.absolute_item {position: absolute;z-index: 20;max-width: calc(100% - var(--t
 div.absolute_item.bottom {
 	text-align: center;bottom: var(--ttbm_mp_xs);right: var(--ttbm_mp_xs);top: initial;left: var(--ttbm_mp_xs);
 	padding: 5px;
-	font-size: var(--fs_h6);
+	font-size: var(--ttbm_fs_h6);
 	background-color: #0007;
 	border-radius: 0 0 8px 8px;
 }
 div.absolute_item * {color: var(--color_theme_alter);font-size: inherit;}
-div.absolute_item span {font-size: var(--fs);color: var(--color_theme_alter); }
+div.absolute_item span {font-size: var(--ttbm_fs);color: var(--color_theme_alter); }
 /**********List************/
 div.modern .bg_image_area {width: 300px;}
 div.ttbm_list_details {
@@ -1295,7 +1295,7 @@ button.scroll-left, button.scroll-right {
 	width: 200px;
 	max-width: inherit;
 	border: 1px solid var(--color_border);
-	font-size: var(--fs);
+	font-size: var(--ttbm_fs);
 	color: var(--d_color);
 	background-color: #fff;
 	border-radius: 6px;

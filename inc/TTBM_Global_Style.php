@@ -19,15 +19,6 @@
 				$theme_color_rgb = $this->hexToRgb($theme_color);
 				$alternate_color = TTBM_Global_Function::get_style_settings('theme_alternate_color', '#fff');
 				$warning_color = TTBM_Global_Function::get_style_settings('warning_color', '#E67C30');
-				 $default_fs      = TTBM_Global_Function::get_style_settings( 'default_font_size', '16' ) . 'px';
-				 $fs_h1           = TTBM_Global_Function::get_style_settings( 'font_size_h1', '35' ) . 'px';
-				 $fs_h2           = TTBM_Global_Function::get_style_settings( 'font_size_h2', '30' ) . 'px';
-				 $fs_h3           = TTBM_Global_Function::get_style_settings( 'font_size_h3', '25' ) . 'px';
-				 $fs_h4           = TTBM_Global_Function::get_style_settings( 'font_size_h4', '22' ) . 'px';
-				 $fs_h5           = TTBM_Global_Function::get_style_settings( 'font_size_h5', '18' ) . 'px';
-				 $fs_h6           = TTBM_Global_Function::get_style_settings( 'font_size_h6', '16' ) . 'px';
-				 $fs_label        = TTBM_Global_Function::get_style_settings( 'font_size_label', '14' ) . 'px';
-				 $button_fs       = TTBM_Global_Function::get_style_settings( 'button_font_size', '14' ) . 'px';
 				$button_color = TTBM_Global_Function::get_style_settings('button_color', $alternate_color);
 				$button_bg = TTBM_Global_Function::get_style_settings('button_bg', '#ea8125');
 				$section_bg = TTBM_Global_Function::get_style_settings('section_bg', '#FAFCFE');
@@ -50,13 +41,20 @@
 					}
 					/*****Font size********/
 					:root {
+						--ttbm_fs_small: 12px;
+						--ttbm_fs: 14px;
+						--ttbm_fs_label: 16;
+						--ttbm_fs_h6: 16px;
+						--ttbm_fs_h5: 18px;
+						--ttbm_fs_h4: 22px;
+						--ttbm_fs_h3: 25px;
+						--ttbm_fs_h2: 30px;
+						--ttbm_fs_h1: 35px;
 						--fw: normal;
-						--fs_small: 14px;
 						--fw-thin: 300; /*font weight medium*/
 						--fw-normal: 500; /*font weight medium*/
 						--fw-medium: 600; /*font weight medium*/
 						--fw-bold: bold; /*font weight bold*/
-						--fs_label:<?php echo esc_attr($fs_label); ?>;
 					}
 					/*****Button********/
 					:root {
@@ -106,13 +104,15 @@
 					}
 					@media only screen and (max-width: 1024px) {
 						:root {
-							--fs: 16px;
-							--fs_small: 14px;
-							--fs_label: 15px;
-							--fs_h4: 20px;
-							--fs_h3: 22px;
-							--fs_h2: 25px;
-							--fs_h1: 30px;
+							--ttbm_fs_small: 11px;
+							--ttbm_fs: 13px;
+							--ttbm_fs_label: 15px;
+							--ttbm_fs_h6: 15px;
+							--ttbm_fs_h5: 16px;
+							--ttbm_fs_h4: 20px;
+							--ttbm_fs_h3: 22px;
+							--ttbm_fs_h2: 25px;
+							--ttbm_fs_h1: 30px;
 							--ttbm_mpl: 32px;
 							--ttbm_mp: 16px;
 							--ttbm_mp_negetive: -16px;
@@ -122,19 +122,19 @@
 					}
 					@media only screen and (max-width: 700px) {
 						:root {
-							--fs: 12px;
-							--fs_small: 10px;
-							--fs_label: 13px;
-							--fs_h6: 15px;
-							--fs_h5: 16px;
-							--fs_h4: 18px;
-							--fs_h3: 20px;
-							--fs_h2: 22px;
-							--fs_h1: 24px;
+							--ttbm_fs_small: 10px;
+							--ttbm_fs: 12px;
+							--ttbm_fs_label: 13px;
+							--ttbm_fs_h6: 15px;
+							--ttbm_fs_h5: 16px;
+							--ttbm_fs_h4: 18px;
+							--ttbm_fs_h3: 20px;
+							--ttbm_fs_h2: 22px;
+							--ttbm_fs_h1: 24px;
 							--ttbm_mp: 10px;
 							--ttbm_mp_xs: 5px;
 							--ttbm_mp_xs_negative: -5px;
-							--button_fs: 14px;
+							--ttbm_buttton_fs: 14px;
 						}
 					}
                 </style>

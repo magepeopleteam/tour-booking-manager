@@ -333,13 +333,7 @@ div.particular_date_item {
 	font-size: 14px;
 }
 div.particular_date_area .mp_tour_ticket_form {margin: var(--ttbm_mp_xs)  0 0 0;}
-div.ttbm_hotel_area {margin: 0 0 var(--dmp) 0;}
-div.ttbm_hotel_item {
-	border: 1px solid #C6C6C6;
-	padding: 16px;margin: 16px 0;
-	background-color: #FFF;
-	border-radius: var(--dbr_d);
-}
+
 div.ttbm_hotel_details_item {
 	position: relative;
 	display: -webkit-flex;

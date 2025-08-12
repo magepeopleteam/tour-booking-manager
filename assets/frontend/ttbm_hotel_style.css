@@ -1,111 +1,168 @@
-.ttbm_hotel_container {
-    font-family: Arial, sans-serif;
-    /*max-width: 400px;*/
-    flex: 1;
-    padding: 15px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    background-color: #fff;
-    color: #666666;
+.ttbm-hotel-area{
+margin: 50px auto;
+background-color: #fff;
+padding:10px;
 }
 
-.ttbm_hotel_rating {
+.ttbm-hotel-area .ttbm-hero-header{
     display: flex;
+    justify-content: space-between;
+}
+
+.title-section{
+    display: flex;
+    flex-direction: column;
+}
+.title-section .title{
+    margin: 8px 0;
+    font-size:32px;
+    font-weight: bold;
+}
+.review-star{
+    font-size: 12px;
+    color: #ffb700;
+}
+.ttbm-hotel-area .ttbm-hero-header p.location-info{
+        color: #555;
+}
+.location-info i{
+    color: var(--color_theme);
+}
+.sharing-meta{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: end;
+    align-items: end;
+    gap:10px;
+}
+
+.sharing-info{
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
-    font-weight: bold;
+    gap:10px;
+
 }
 
-.ttbm_hotel_star {
-    color: #FFD700;
-    margin-right: 8px;
-    font-size: 18px;
-}
-
-.ttbm_hotel_location {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 10px;
-}
-
-.ttbm_hotel_location_icon {
-    margin-right: 8px;
-    font-size: 18px;
-}
-
-.ttbm_hotel_location_text {
-    font-size: 14px;
-}
-
-.ttbm_hotel_nearby_title {
-    font-weight: bold;
-    margin: 20px 0 10px 0;
-}
-
-.ttbm_hotel_nearby_item {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 12px;
-}
-
-.ttbm_hotel_nearby_icon {
-    margin-right: 8px;
-    font-size: 18px;
-}
-
-.ttbm_hotel_nearby_text {
-    font-size: 14px;
-}
-
-.ttbm_hotel_distance {
-    font-weight: normal;
-}
-
-.ttbm_hotel_highlight {
-    cursor: pointer;
-}
-
-/* Prefixing all styles with ttbm_hotel_ */
-.ttbm_hotel_ordered_room_list {
-    display: flex !important;
-    gap: 15px;
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.ttbm_hotel_room {
-    margin-bottom: 20px;
+.sharing-info i{
     padding: 15px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    color:var(--color_theme);
 }
 
-.ttbm_hotel_room_name {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 5px;
+.sharing-info i:hover{
+    background-color: #dfecfb;
 }
 
-.ttbm_hotel_qty,
-.ttbm_hotel_price {
-    font-size: 1em;
-    color: #555;
-    margin-bottom: 5px;
+.sharing-info button{
+    padding: 8px 10px;
+    border: none;
+    border-radius: 4px;
+    font-weight: normal;
+    background-color:var(--color_theme);
+    color:#fff;
 }
 
-.ttbm_hotel_qty {
+.price-match button{
+    padding: 8px 10px;
+    border: none;
+    border-radius: 4px;
+    background: none;
+    box-shadow: none;
+    color:var(--color_theme);
     font-weight: normal;
 }
 
-.ttbm_hotel_price {
-    font-weight: bold;
-    color: #007cba; /* Change this to match your theme's accent color */
+.price-match button i{
+    margin-right: 5px;
 }
 
+.price-match button:hover{
+    color:var(--color_theme);
+    background:#dfecfb;
+}
 
+/* ttbm-hero-area */
+.ttbm-hero-area{
+    display:flex;
+    align-items: start;
+    justify-content: center;
+    margin: 20px 0;
+    gap: 20px;
+}
+.slider-area{
+    width: 80%;
+}
+.review-map-container{
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.review-container{
+    border: 1px solid #ddd;
+}   
+.review-rating{
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.review-rating .review{
+    text-align: right;
+}
+.review-rating .review h3{
+    font-size: 16px;
+    font-weight: normal;
+}
+.review-container .review-rating .review p{
+    font-size: 10px;
+    color:#666;
+    line-height: 12px;
+}
+.review-rate{
+    background-color: var(--color_theme);
+    color: #fff;
+    font-size: 19px;
+    font-weight: bold;
+    padding: 10px;
+    padding: 5px;
+    border-radius: 3px;
+}
 
+.review-testimonial{
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.review-testimonial h2{
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.review-testimonial .testimonial{
+    font-size: 12px;
+    margin: 10px 0;
+}
+
+.service-rating{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+.service-rating h3{
+    font-size: 16px;
+    font-weight: bold;
+}
+.service-rating .service-rate{
+    color: #000;
+    font-size: 19px;
+    font-weight: normal;
+    padding: 10px;
+    padding: 5px;
+    border: 1px solid #666;
+    border-radius: 3px;
+}

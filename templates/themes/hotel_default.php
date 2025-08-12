@@ -74,7 +74,17 @@ $class_location = $class_location ?? '';
                     </div>
                 </div>
             </div>
-            <div class="ttbm-content-area"></div>
+            <div class="ttbm-content-area">
+                <div class="ttbm-content-left">
+                    <?php do_action( 'ttbm_description' ); ?>
+                    <?php do_action( 'ttbm_make_hotel_booking', $ttbm_post_id );?>
+                </div>
+                <div class="ttbm-content-right">
+                    <?php do_action( 'ttbm_hotel_location_details' ); ?>
+                    <?php do_action( 'ttbm_include_feature' ); ?>
+                    <?php do_action( 'ttbm_exclude_service' ); ?>
+                </div>
+            </div>
             <div class="ttbm-facilities-area"></div>
             <div class="ttbm-booking-area"></div>
             <div class="ttbm-review-area"></div>

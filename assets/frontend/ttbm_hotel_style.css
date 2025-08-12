@@ -166,3 +166,15 @@ padding:10px;
     border: 1px solid #666;
     border-radius: 3px;
 }
+/* =========ttbm-content-area======== */
+.ttbm-content-area{
+    display: flex;
+    justify-content: space-between;
+    gap:10px;
+}
+.ttbm-content-left{
+    width: 75%;
+}
+.ttbm-content-right{
+    width: 25%;
+}

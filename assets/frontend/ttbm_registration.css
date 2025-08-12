@@ -4,6 +4,10 @@ body.theme-twentytwentyone div.ttbm_wraper,
 body.theme-twentytwentytwo div.ttbm_wraper {max-width: 1200px !important;}
 .ast-separate-container .ast-article-single {padding: var(--ttbm_mp);}
 /**************************************************/
+@media (min-width: 10px) {
+	div.ttbm_default_widget { border: 1px solid var(--color_border); border-radius: 10px; box-shadow: 0 2px 10px #0000001B;display: block;	font-size: var(--ttbm_fs);	color: var(--d_color);	position: relative;	margin: 0 0 var(--ttbm_mp) 0;	background: #FFF;}
+}
+/**************************************************/
 div.ttbm_default_theme,
 div.ttbm_viator_theme {width: 100%;}
 div.ttbm_wraper {max-width: 100%; width: 100%;margin: var(--ttbm_mp) auto;position: relative;}
@@ -16,20 +20,6 @@ div.ttbm_faq_item .ttbm_faq_title {-webkit-transition: 350ms ease-in-out;transit
 /**********Shadow content****************************/
 #ttbm_related_tour div.filter_item { border: 1px solid var(--color_border); padding: 0;}
 #ttbm_related_tour div.filter_item .ttbm-rating-stars { margin: 0;}
-.shadow_one {
-	background-color: var(--color_white);padding: var(--ttbm_mp);
-	-webkit-box-shadow: 0 5px 10px rgba(0, 44, 102, 0.2);
-	-moz-box-shadow: 0 5px 10px rgba(0, 44, 102, 0.2);
-	-o-box-shadow: 0 5px 10px rgba(0, 44, 102, 0.2);
-	box-shadow: 0 5px 10px rgba(0, 44, 102, 0.2);
-}
-.shadow_two, [class*="_shadow_two"] {
-	background-color: var(--color_white);padding: var(--ttbm_mp);border-radius: 9px;
-	-webkit-box-shadow: 0 1px 2px rgb(3 54 63 / 40%), 0 -1px 2px rgb(3 54 63 / 4%);
-	-moz-box-shadow: 0 1px 2px rgb(3 54 63 / 40%), 0 -1px 2px rgb(3 54 63 / 4%);
-	-o-box-shadow: 0 1px 2px rgb(3 54 63 / 40%), 0 -1px 2px rgb(3 54 63 / 4%);
-	box-shadow: 0 1px 2px rgb(3 54 63 / 40%), 0 -1px 2px rgb(3 54 63 / 4%);
-}
 /*****************Details page*********************************/
 div.ttbm_details_page {display: block;position: relative;}
 div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-webkit-flex-wrap: wrap;flex-wrap: wrap;-webkit-justify-content: space-between;justify-content: space-between;padding-top: 5px}
@@ -66,6 +56,7 @@ div.ttbm_map_area #gmap_canvas {max-width: 100%;width: 100%;min-height: 320px;}
 div.ttbm_location_list div.filter_item {padding: 0;}
 /**************************************************/
 div.ttbm_style .mp_tour_ticket_form { border-radius: 8px; margin-top: 0px; padding: 0px;}
+
 @media (min-width: 540px) {
 	div.ttbm_style .mp_tour_ticket_form { border-radius: 8px; margin-top: 10px; padding: 20px; }
 }
@@ -114,7 +105,7 @@ div.ttbm_style [data-bg-image] { transform: scale(1);}
 	div.item_section { border-radius: 10px; }
 	div.item_section .item_icon { padding: 5px 10px; }
 }
-.ttbm_default_widget { border: 1px solid var(--color_border); border-radius: 10px; box-shadow: 0 2px 10px #0000001B;}
+
 #ttbm_related_tour .ttbm_default_widget .ttbm_widget_content { padding: 10px;}
 .ttbm_extra_service_area table.mp_tour_ticket_extra { box-shadow: 0 0 1px #DDD; border-radius: 12px 12px 0 0;}
 .ttbm_extra_service_area table.mp_tour_ticket_extra thead { border: 0;}
@@ -296,7 +287,6 @@ div.ttbm_viator_theme .item_icon { width: auto;}
 .ttbm_viator_theme .ttbm_content__right { padding: 0;}
 .ttbm_viator_theme .ttbm_registration_area { margin-bottom: 0;}
 .ttbm_viator_theme .ttbm_booking_panel .ttbm_ticket_area .ttbm_default_widget { padding: 0;}
-.ttbm_viator_theme .ttbm_booking_panel .mp_tour_ticket_type .inputIncDec { width: 35px; height: 35px;}
 .ttbm_viator_theme .ttbm_booking_panel .ttbm_book_now_area { background-color: transparent; border: 0; border-top: 1px solid var(--color_border); border-radius: 0;}
 /* ==========smart theme============= */
 .ttbm_smart_theme .booking-button,
@@ -337,24 +327,11 @@ div.ttbm_viator_theme .item_icon { width: auto;}
 /*****************content & Title*********************************/
 .site-content .ast-container { display: block; }
 .ttbm_default__title {margin: 0;padding: 0 0 5px 0;}
-.ttbm_default__title h1 {font-size: 34px;}
-div.ttbm_default_widget {
-	display: block;
-	font-size: var(--ttbm_fs);
-	color: var(--d_color);
-	position: relative;
-	margin: 0 0 var(--ttbm_mp) 0;
-	background: #FFF;
-}
+
+
+
 div > div.ttbm_default_widget:last-child {margin: 0;}
-div.ttbm_default_widget .ttbm_widget_title {
-	padding: var(--ttbm_mp_xs) var(--ttbm_mp);
-	text-align: center;margin: 0;
-	background-color: var(--color_theme);
-	color: var(--color_theme_alter);
-	font-size: 22px;
-	border-radius: 10px 10px 0 0;
-}
+div.ttbm_default_widget .ttbm_widget_title {	padding: var(--ttbm_mp_xs) var(--ttbm_mp);	text-align: center;margin: 0;	background-color: var(--color_theme);	color: var(--color_theme_alter);	border-radius: 10px 10px 0 0;}
 .ttbm_widget_content {padding: var(--ttbm_mp_xs); border-radius: 0 0 10px 10px;}
 div.ttbm_default_widget .ttbm_widget_content {background-color: var(--color_section);border: 1px solid #DDD;}
 /*div.ttbm_default_widget .ttbm_widget_content a {margin: 0 0 7px 0;}*/
@@ -362,14 +339,8 @@ div.ttbm_default_widget .ttbm_title_style_3,
 div.ttbm_default_widget .ttbm_title_style_2 {padding: 0 0 var(--ttbm_mp_xs) 0;}
 div.ttbm_default_widget .ttbm_title_style_2 ~ .ttbm_widget_content,
 div.ttbm_default_widget .ttbm_title_style_3 ~ .ttbm_widget_content {border: none;background-color: transparent;padding: 0;}
-div.ttbm_default_widget .ttbm_title_style_2 ~ .ttbm_widget_content.ttbm_day_wise_details {
-	padding-left: 7px;
-	padding: 20px;
-}
-div.ttbm_default_widget .ttbm_title_style_3 {
-	padding: 10px 10px;
-	font-size: 22px;
-}
+div.ttbm_default_widget .ttbm_title_style_2 ~ .ttbm_widget_content.ttbm_day_wise_details {	padding: 20px;}
+div.ttbm_default_widget .ttbm_title_style_3 {	padding: 10px 10px;	font-size: 22px;}
 div.ttbm_default_widget .ttbm_title_style_3::before {
 	content: "";
 	position: absolute;
@@ -379,13 +350,7 @@ div.ttbm_default_widget .ttbm_title_style_3::before {
 	border-bottom: 3px solid var(--color_theme);
 }
 div.ttbm_default_widget .ttbm_widget_content.ttbm_day_wise_details {padding: 20px;}
-div.ttbm_default_widget .ttbm_title_style_2 {
-	background: rgba(var(--color_theme_rbg), 0.1);
-	padding: 12px var(--ttbm_mp);
-	font-weight: bold;
-	border-radius: 10px 10px 0 0;
-	font-size: 22px;
-}
+div.ttbm_default_widget .ttbm_title_style_2 {	background: rgba(var(--color_theme_rbg), 0.1);	padding: 12px var(--ttbm_mp);	font-weight: bold;	border-radius: 10px 10px 0 0;	font-size: 22px;}
 /*****************List*********************************/
 .ttbm_widget_content ul li:not(.ttbm_wp_editor li) {width: 100%;}
 .ttbm_widget_content ul li i,
@@ -558,10 +523,7 @@ div.ttbm_select_date_area {
 .date-picker-icon {
 	position: relative;
 }
-div.ttbm_style #ttbm_select_date.formControl {
-	padding: 20px;
-	padding-left: 20px;
-}
+div.ttbm_style #ttbm_select_date.formControl {	padding: 20px;}
 .date-picker-icon i {
 	position: absolute;
 	top: 10px;

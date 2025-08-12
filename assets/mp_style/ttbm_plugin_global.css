@@ -84,6 +84,7 @@
 	.groupRadioCheck [data-radio-check].mpActive,
 	div.ttbm_style .dShadow_1,
 	div.ttbm_style [class*="_dShadow_1"] {
+		background-color: var(--color_white);padding: var(--ttbm_mp);
 		-webkit-box-shadow: 0 5px 10px rgba(0, 44, 102, 0.2);
 		-moz-box-shadow: 0 5px 10px rgba(0, 44, 102, 0.2);
 		-o-box-shadow: 0 5px 10px rgba(0, 44, 102, 0.2);
@@ -91,8 +92,8 @@
 	}
 	div.ttbm_style .dShadow_2,
 	div.ttbm_style [class*="_dShadow_2"] {
-		-webkit-box-shadow: 0 1px 2px rgb(3 54 63 / 40%),
-		0 -1px 2px rgb(3 54 63 / 4%);
+		background-color: var(--color_white);padding: var(--ttbm_mp);
+		-webkit-box-shadow: 0 1px 2px rgb(3 54 63 / 40%),		0 -1px 2px rgb(3 54 63 / 4%);
 		-moz-box-shadow: 0 1px 2px rgb(3 54 63 / 40%), 0 -1px 2px rgb(3 54 63 / 4%);
 		-o-box-shadow: 0 1px 2px rgb(3 54 63 / 40%), 0 -1px 2px rgb(3 54 63 / 4%);
 		box-shadow: 0 1px 2px rgb(3 54 63 / 40%), 0 -1px 2px rgb(3 54 63 / 4%);
@@ -167,25 +168,20 @@
 }
 /******************************************************************** Font Size & Font weight ************************************************/
 @media only screen and (min-width: 10px) {
-
-	div.ttbm_style,
-	div.ttbm_style h1,
-	div.ttbm_style h2,
-	div.ttbm_style h3,
-	div.ttbm_style h4,
-	div.ttbm_style h5,
-	div.ttbm_style h6 { margin: 0; padding: 0; line-height: 1.25; }
-	div.ttbm_style strong { font-weight: var(--fw-bold); }
-	div.ttbm_style .extraBold { font-weight: 900; }
-	div#ttbm_content h1, div#ttbm_content [class*="_fs_h1"],
-	div.ttbm_style h1, div.ttbm_style [class*="_fs_h1"] { font-weight: var(--fw-bold);font-size: var(--ttbm_fs_h1); }
-	div#ttbm_content h2, div#ttbm_content [class*="_fs_h2"],
-	div.ttbm_style h2, div.ttbm_style [class*="_fs_h2"] { font-weight: var(--fw-bold);font-size: var(--ttbm_fs_h2); }
-	div.ttbm_style h3, div.ttbm_style [class*="_fs_h3"] { font-weight: var(--fw-bold);font-size: var(--ttbm_fs_h3); }
-	div.ttbm_style h4, div.ttbm_style [class*="_fs_h4"] { font-weight: var(--fw-medium); text-transform: inherit;font-size: var(--ttbm_fs_h4); }
-	div.ttbm_style h5, div.ttbm_style [class*="_fs_h5"] { font-weight: var(--fw-medium); text-transform: inherit;font-size: var(--ttbm_fs_h5); }
-	div.ttbm_style h6, div.ttbm_style [class*="_fs_h6"] { font-weight: var(--fw-normal); text-transform: inherit;font-size: var(--ttbm_fs_h6); }
-	div.ttbm_style .fs_50, div.ttbm_style [class*="_fs_50"] { font-size: 50px; font-weight: var(--fw-medium); }
+	#ttbm_content h1,
+	#ttbm_content h2,
+	#ttbm_content h3,
+	#ttbm_content h4,
+	#ttbm_content h5,
+	#ttbm_content h6 { margin: 0; padding: 0; line-height: 1.25; }
+	#ttbm_content strong { font-weight: var(--fw-bold); }
+	#ttbm_content .extraBold { font-weight: 900; }
+	#ttbm_content h1, div#ttbm_content [class*="_fs_h1"]{ font-weight: var(--fw-bold);font-size: var(--ttbm_fs_h1); }
+	#ttbm_content h2, div#ttbm_content [class*="_fs_h2"]{ font-weight: var(--fw-bold);font-size: var(--ttbm_fs_h2); }
+	#ttbm_content h3, div#ttbm_content [class*="_fs_h3"] { font-weight: var(--fw-bold);font-size: var(--ttbm_fs_h3); }
+	#ttbm_content h4, div#ttbm_content [class*="_fs_h4"] { font-weight: var(--fw-medium); text-transform: inherit;font-size: var(--ttbm_fs_h4); }
+	#ttbm_content h5, div#ttbm_content [class*="_fs_h5"] { font-weight: var(--fw-medium); text-transform: inherit;font-size: var(--ttbm_fs_h5); }
+	#ttbm_content h6, div#ttbm_content [class*="_fs_h6"] { font-weight: var(--fw-normal); text-transform: inherit;font-size: var(--ttbm_fs_h6); }
 }
 /******************************************************************** Flex Section ************************************************/
 @media only screen and (min-width: 10px) {
@@ -1249,7 +1245,7 @@
 	}
 	/*****Remove icon******/
 	.ttbm_style .ttbm_remove_area { position: relative; }
-	.ttbm_style [class*="_remove_icon"],.ttbm_style [class*="_icon_remove"] {
+	.ttbm_style [class*="_remove_icon"], .ttbm_style [class*="_icon_remove"] {
 		position: absolute; top: -5px; right: -5px; width: 20px; height: 20px; cursor: pointer; opacity: 0;
 		background-color: var(--color_danger); color: var(--color_theme_alter); font-size: 10px;
 		-webkit-border-radius: 50%; border-radius: 50%;
@@ -1770,51 +1766,28 @@
 		border-color: var(--d_color);
 		color: #F2F2F2;
 	}
-	.ttbm_style
-	.groupContent
-	.select2-container--default
-	.select2-selection--single {
-		border: none;
-		border-radius: 0;
-	}
+	.ttbm_style .groupContent .select2-container--default .select2-selection--single { border: none; border-radius: 0; }
 	/************/
 	div.ttbm_style .formControl.xs {height: 30px;}
 	/*****Form Qty inc dec*******/
-	.ttbm_style .qtyIncDec {
-		max-width: 110px;
-	}
+	#ttbm_content .qtyIncDec { max-width: 110px; }
+	#ttbm_content .qtyIncDec .formControl{min-width: 50px;text-align: center;}
 	/**********Responsive*********/
 	@media only screen and (max-width: 1250px) {
-		.ttbm_style .inputInline .inputList {
-			max-width: calc(25% - 10px);
-		}
+		.ttbm_style .inputInline .inputList { max-width: calc(25% - 10px); }
 	}
 	@media only screen and (max-width: 1050px) {
-		.ttbm_style .inputInline .mpForm {
-			-webkit-flex-wrap: wrap;
-			flex-wrap: wrap;
-		}
-		.ttbm_style .inputInline .inputList {
-			max-width: calc(33.33% - 10px);
-			-webkit-flex: inherit;
-			flex: inherit;
-		}
+		.ttbm_style .inputInline .mpForm { -webkit-flex-wrap: wrap; flex-wrap: wrap; }
+		.ttbm_style .inputInline .inputList { max-width: calc(33.33% - 10px); -webkit-flex: inherit; flex: inherit; }
 	}
 	@media only screen and (max-width: 850px) {
-		.ttbm_style .inputInline .inputList {
-			max-width: calc(50% - 10px);
-		}
+		.ttbm_style .inputInline .inputList { max-width: calc(50% - 10px); }
 	}
 	@media only screen and (max-width: 600px) {
-		.ttbm_style .inputInline .inputList {
-			max-width: 100%;
-			min-width: 100%;
-		}
+		.ttbm_style .inputInline .inputList { max-width: 100%; min-width: 100%; }
 	}
 	@media only screen and (max-width: 450px) {
-		.ttbm_style .addonGroupContent {
-			min-width: 25px;
-		}
+		.ttbm_style .addonGroupContent { min-width: 25px; }
 	}
 }
 /******************************************************************** List section ************************************************/
@@ -3124,8 +3097,8 @@
 }
 /******************************************************************** Load More************************************************/
 @media only screen and (min-width: 10px) {
-	div.ttbm_style .ttbm_load_more_text_area {		color: var(--d_color);	}
-	div.ttbm_style [data-read] {		color: var(--color_theme);		cursor: pointer;	}
+	div.ttbm_style .ttbm_load_more_text_area { color: var(--d_color); }
+	div.ttbm_style [data-read] { color: var(--color_theme); cursor: pointer; }
 }
 /******************************************************************** Woocommerce cart ************************************************/
 @media only screen and (min-width: 10px) {

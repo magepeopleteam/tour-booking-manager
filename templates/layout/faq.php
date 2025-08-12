@@ -22,7 +22,7 @@
 							</h2>
 							<div data-collapse="#ttbm_faq_datails_<?php echo esc_attr( $key ); ?>">
 								<div class="ttbm_faq_content ttbm_wp_editor">
-									<?php echo wp_kses_post($faq['ttbm_faq_content']); ?>
+									<?php echo wp_kses_post(html_entity_decode($faq['ttbm_faq_content'])); ?>
 								</div>
 							</div>
 						</div>

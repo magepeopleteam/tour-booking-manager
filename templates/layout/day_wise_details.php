@@ -22,7 +22,7 @@
 							</h5>
 							<div data-collapse="#ttbm_day_datails_<?php echo esc_attr( $key ); ?>">
 								<div class="day_wise_details_item_details ttbm_wp_editor">
-									<?php echo wp_kses_post( $day['ttbm_day_content']); ?>
+									<?php echo wp_kses_post( html_entity_decode($day['ttbm_day_content'])); ?>
 								</div>
 							</div>
 						</div>

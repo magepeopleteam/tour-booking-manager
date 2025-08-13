@@ -12,30 +12,30 @@
 				$travel_type = TTBM_Function::travel_type_array();
 				$date_type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_type', 'fixed');
 				?>
-                <div class="tabsItem" data-tabs="#ttbm_settings_dates">
-                    <div class="ttbm_settings_dates">
-                        <div class="settings_header">
-                            <h2><?php esc_html_e('Date Configuration', 'tour-booking-manager'); ?></h2>
-                            <span class="info_text"><?php esc_html_e('Tour type and date time can be easily configured here, providing a crucial feature for recurring, fixed, or specific date tours.', 'tour-booking-manager') ?></span>
+                <div class="tabsItem ttbm_settings_dates" data-tabs="#ttbm_settings_dates">
+                    <h3><?php esc_html_e('Date Configuration', 'tour-booking-manager'); ?></h3>
+                    <span class="info_text"><?php esc_html_e('Tour type and date time can be easily configured here, providing a crucial feature for recurring, fixed, or specific date tours.', 'tour-booking-manager') ?></span>
+                    <div class="gptLayout">
+                        <div class="gpt_header">
+                            <h4><?php esc_html_e('Essential Tour Configuration', 'tour-booking-manager'); ?></h4>
+                            <span class="info_text"><?php esc_html_e('Configure the core settings for your tour - all fields below are required for proper tour setup', 'tour-booking-manager') ?></span>
                         </div>
-                        <div class="gptLayout">
-                            <div class="gpt_content">
-                                <div class="groupRadioBox">
-                                    <input type="hidden" value="<?php echo esc_attr($date_type); ?>" name="ttbm_travel_type"/>
-                                    <h3><?php echo esc_html($tour_label) . ' ' . esc_html__('Type', 'tour-booking-manager'); ?></h3>
-                                    <div class="_dFlex_mT_xs">
-										<?php foreach ($travel_type as $key => $value) { ?>
-                                            <button data-collapse-radio="<?php echo esc_attr('#ttbm_' . $key); ?>" class="_mpBtn_mR <?php echo esc_attr($key == $date_type ? 'active' : ''); ?>" type="button" data-group-radio="<?php echo esc_attr($key); ?>"><?php echo esc_html($value); ?></button>
-										<?php } ?>
-                                    </div>
+                        <div class="dLayout">
+                            <div class="groupRadioBox">
+                                <input type="hidden" value="<?php echo esc_attr($date_type); ?>" name="ttbm_travel_type"/>
+                                <h3><?php echo esc_html($tour_label) . ' ' . esc_html__('Type', 'tour-booking-manager'); ?></h3>
+                                <div class="_dFlex_mT_xs">
+									<?php foreach ($travel_type as $key => $value) { ?>
+                                        <button data-collapse-radio="<?php echo esc_attr('#ttbm_' . $key); ?>" class="_mpBtn_mR <?php echo esc_attr($key == $date_type ? 'active' : ''); ?>" type="button" data-group-radio="<?php echo esc_attr($key); ?>"><?php echo esc_html($value); ?></button>
+									<?php } ?>
                                 </div>
-                                <div class="_dividerL"></div>
-								<?php $this->fixed_date($tour_id, $date_type); ?>
-								<?php $this->particular_dates($tour_id, $date_type); ?>
-								<?php $this->repeat_dates($tour_id, $date_type); ?>
                             </div>
+							<?php $this->fixed_date($tour_id, $date_type); ?>
+							<?php $this->particular_dates($tour_id, $date_type); ?>
                         </div>
+						<?php $this->repeat_dates($tour_id, $date_type); ?>
                     </div>
+					<?php $this->repeat_optional($tour_id, $date_type); ?>
                 </div>
 				<?php
 			}
@@ -56,36 +56,38 @@
 				$reg_end_time = TTBM_Global_Function::get_post_info($tour_id, 'reg_end_time');
 				?>
                 <div data-target-radio="#ttbm_fixed" class="<?php echo esc_attr($date_type == 'fixed' ? 'mActive' : ''); ?>">
-                    <div class="flexEqual">
-                        <div class="fdColumn">
-                            <label><?php esc_html_e('Start Date & Time', 'tour-booking-manager'); ?></label>
-                            <label class="_mT_xs">
-                                <input type="hidden" name="ttbm_travel_start_date" value="<?php echo esc_attr($hidden_start_date); ?>"/>
-                                <input value="<?php echo esc_attr($visible_start_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
-                            </label>
-                            <label class="_mT_xs">
-                                <input type="time" name="ttbm_travel_start_date_time" class="formControl" value="<?php echo esc_attr($start_time); ?>"/>
-                            </label>
-                        </div>
-                        <div class="fdColumn">
-                            <label><?php esc_html_e('End Date & Time', 'tour-booking-manager'); ?></label>
-                            <label class="_mT_xs">
-                                <input type="hidden" name="ttbm_travel_end_date" value="<?php echo esc_attr($hidden_end_date); ?>"/>
-                                <input value="<?php echo esc_attr($visible_end_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
-                            </label>
-                            <label class="_mT_xs">
-                                <input type="time" name="ttbm_travel_end_time" class="formControl" value="<?php echo esc_attr($end_time); ?>"/>
-                            </label>
-                        </div>
-                        <div class="fdColumn">
-                            <label><?php esc_html_e('Reg. End Date & Time', 'tour-booking-manager'); ?></label>
-                            <label class="_mT_xs">
-                                <input type="hidden" name="ttbm_travel_reg_end_date" value="<?php echo esc_attr($hidden_reg_end_date); ?>"/>
-                                <input value="<?php echo esc_attr($visible_reg_end_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
-                            </label>
-                            <label class="_mT_xs">
-                                <input type="time" name="reg_end_time" class="formControl" value="<?php echo esc_attr($reg_end_time); ?>"/>
-                            </label>
+                    <div class="gptLayout">
+                        <div class="flexEqual">
+                            <div class="fdColumn dLayout">
+                                <label><?php esc_html_e('Start Date & Time', 'tour-booking-manager'); ?></label>
+                                <label class="_mT_xs">
+                                    <input type="hidden" name="ttbm_travel_start_date" value="<?php echo esc_attr($hidden_start_date); ?>"/>
+                                    <input value="<?php echo esc_attr($visible_start_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
+                                </label>
+                                <label class="_mT_xs">
+                                    <input type="time" name="ttbm_travel_start_date_time" class="formControl" value="<?php echo esc_attr($start_time); ?>"/>
+                                </label>
+                            </div>
+                            <div class="fdColumn dLayout">
+                                <label><?php esc_html_e('End Date & Time', 'tour-booking-manager'); ?></label>
+                                <label class="_mT_xs">
+                                    <input type="hidden" name="ttbm_travel_end_date" value="<?php echo esc_attr($hidden_end_date); ?>"/>
+                                    <input value="<?php echo esc_attr($visible_end_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
+                                </label>
+                                <label class="_mT_xs">
+                                    <input type="time" name="ttbm_travel_end_time" class="formControl" value="<?php echo esc_attr($end_time); ?>"/>
+                                </label>
+                            </div>
+                            <div class="fdColumn dLayout">
+                                <label><?php esc_html_e('Reg. End Date & Time', 'tour-booking-manager'); ?></label>
+                                <label class="_mT_xs">
+                                    <input type="hidden" name="ttbm_travel_reg_end_date" value="<?php echo esc_attr($hidden_reg_end_date); ?>"/>
+                                    <input value="<?php echo esc_attr($visible_reg_end_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
+                                </label>
+                                <label class="_mT_xs">
+                                    <input type="time" name="reg_end_time" class="formControl" value="<?php echo esc_attr($reg_end_time); ?>"/>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -95,26 +97,28 @@
 				$particular_date_lists = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_particular_dates', array());
 				?>
                 <div data-target-radio="#ttbm_particular" class="ttbm_settings_area _mT <?php echo esc_attr($date_type == 'particular' ? 'mActive' : ''); ?>">
-                    <div class="ttbm_item_insert ttbm_sortable_area">
-                        <div class="_dFlex_mT_xs">
-                            <label class="_w_300"><?php esc_html_e('Check in Date & Time', 'tour-booking-manager') ?></label>
-                            <label class="_w_200"><?php esc_html_e('Check Out Date', 'tour-booking-manager') ?></label>
-                            <label class="_w_100"><?php esc_html_e('Action', 'tour-booking-manager') ?></label>
-                        </div>
-						<?php
-							if (sizeof($particular_date_lists)) {
-								foreach ($particular_date_lists as $particular_date) {
-									if ($particular_date) {
-										self::particular_date_item($particular_date);
+                    <div class="gptLayout">
+                        <div class="ttbm_item_insert ttbm_sortable_area">
+                            <div class="_dFlex_mT_xs">
+                                <label class="_w_300"><?php esc_html_e('Check in Date & Time', 'tour-booking-manager') ?></label>
+                                <label class="_w_200"><?php esc_html_e('Check Out Date', 'tour-booking-manager') ?></label>
+                                <label class="_w_100"><?php esc_html_e('Action', 'tour-booking-manager') ?></label>
+                            </div>
+							<?php
+								if (sizeof($particular_date_lists)) {
+									foreach ($particular_date_lists as $particular_date) {
+										if ($particular_date) {
+											self::particular_date_item($particular_date);
+										}
 									}
 								}
-							}
-						?>
-                    </div>
-					<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Particular date', 'tour-booking-manager')); ?>
-                    <div class="ttbm_hidden_content">
-                        <div class="ttbm_hidden_item">
-							<?php self::particular_date_item(); ?>
+							?>
+                        </div>
+						<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Particular date', 'tour-booking-manager')); ?>
+                        <div class="ttbm_hidden_content">
+                            <div class="ttbm_hidden_item">
+								<?php self::particular_date_item(); ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -124,6 +128,7 @@
 				$date_format = TTBM_Global_Function::date_picker_format();
 				$now = date_i18n($date_format, strtotime(current_time('Y-m-d')));
 				$start_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_date');
+				$start_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_time');
 				$hidden_start_date = $start_date ? gmdate('Y-m-d', strtotime($start_date)) : '';
 				$visible_start_date = $start_date ? date_i18n($date_format, strtotime($start_date)) : '';
 				$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_end_date');
@@ -133,183 +138,191 @@
 				$repeat_type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_repeat_type', 'fixed');
 				$repeat_number = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_repeat_number', 1);
 				$repeat_array = TTBM_Function::travel_repeat_array();
+				?>
+                <div data-target-radio="#ttbm_repeated" class="_mT <?php echo esc_attr($date_type == 'repeated' ? 'mActive' : ''); ?>">
+                    <div class="dLayout">
+                        <h5><?php esc_html_e('Tour Start Date & Time', 'tour-booking-manager'); ?></h5>
+                        <label class="_mT_xs">
+                            <input type="hidden" name="ttbm_travel_repeated_start_date" value="<?php echo esc_attr($hidden_start_date); ?>"/>
+                            <input value="<?php echo esc_attr($visible_start_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
+                        </label>
+                        <label class="_mT_xs">
+                            <input type="time" name="ttbm_travel_repeated_start_time" class="formControl" value="<?php echo esc_attr($start_time); ?>"/>
+                        </label>
+                        <div class="_mT">
+                            <h5><?php esc_html_e('Tour Repeat Pattern', 'tour-booking-manager'); ?></h5>
+                            <span class="info_text"><?php esc_html_e('Configure how often this tour repeats', 'tour-booking-manager'); ?></span>
+                            <div class="groupRadioBox">
+                                <div class="_dFlex_mT">
+									<?php foreach ($repeat_array as $key => $value) { ?>
+                                        <button class="_mpBtn_mR <?php echo esc_attr($key == $repeated_after ? 'active' : ''); ?>" type="button" data-group-radio="<?php echo esc_attr($key); ?>"><?php echo esc_html($value); ?></button>
+									<?php } ?>
+                                    <button class="_mpBtn_mR input_active <?php echo esc_attr((1 == $repeated_after || 7 == $repeated_after || 30 == $repeated_after) ? '' : 'active'); ?>" type="button" data-group-radio="<?php echo esc_attr($repeated_after); ?>">
+                                        <label class="allCenter">
+                                            <span class="_mR_xs"><?php esc_html_e('Custom', 'tour-booking-manager'); ?></span>
+                                            <input type="number" class="formControl xs _w_75 ttbm_number_validation <?php echo esc_attr((1 == $repeated_after || 7 == $repeated_after || 30 == $repeated_after) ? 'dNone' : ''); ?>" value="<?php echo esc_attr($repeated_after); ?>" name="ttbm_travel_repeated_after"/>
+                                        </label>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="_mT">
+                            <h5><?php esc_html_e('End Repeat', 'tour-booking-manager'); ?></h5>
+                            <div class="groupRadioBox">
+                                <input type="hidden" value="<?php echo esc_attr($repeat_type); ?>" name="ttbm_repeat_type"/>
+                                <div class="_dFlex_mT">
+                                    <button class="_mpBtn_mR  <?php echo esc_attr('continue' == $repeat_type ? 'active' : ''); ?>" type="button" data-group-radio="fixed"><?php esc_html_e('Never', 'tour-booking-manager'); ?></button>
+                                    <button class="_mpBtn_mR input_active <?php echo esc_attr('occurrence' == $repeat_type ? 'active' : ''); ?>" type="button" data-group-radio="occurrence">
+                                        <label class="allCenter">
+                                            <span class="_mR_xs"><?php esc_html_e('After occurrence', 'tour-booking-manager'); ?></span>
+                                            <input type="number" class="formControl xs _w_75 ttbm_number_validation <?php echo esc_attr('occurrence' == $repeat_type ? '' : 'dNone'); ?>" value="<?php echo esc_attr($repeat_number); ?>" name="ttbm_repeat_number"/>
+                                        </label>
+                                    </button>
+                                    <button class="_mpBtn_mR input_active <?php echo esc_attr('fixed' == $repeat_type ? 'active' : ''); ?>" type="button" data-group-radio="fixed">
+                                        <label class="allCenter">
+                                            <span class="_mR_xs"><?php esc_html_e('On', 'tour-booking-manager'); ?></span>
+                                            <input type="hidden" name="ttbm_travel_repeated_end_date" value="<?php echo esc_attr($hidden_end_date); ?>"/>
+                                            <input value="<?php echo esc_attr($visible_end_date); ?>" class="formControl xs date_type <?php echo esc_attr('fixed' == $repeat_type ? '' : 'dNone'); ?>" placeholder="<?php echo esc_attr($now); ?>"/>
+                                        </label>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<?php
+			}
+			public function repeat_optional($tour_id, $date_type) {
 				$display_time = TTBM_Global_Function::get_post_info($tour_id, 'mep_disable_ticket_time', 'no');
 				$active_time = $display_time == 'no' ? '' : 'mActive';
 				$checked_time = $display_time == 'no' ? '' : 'checked';
 				?>
                 <div data-target-radio="#ttbm_repeated" class="<?php echo esc_attr($date_type == 'repeated' ? 'mActive' : ''); ?>">
-                    <div class="_fdColumn_mT">
-                        <label><span><?php esc_html_e('Tour Start Date & Time', 'tour-booking-manager'); ?></span></label>
-                        <label class="_mT_xs">
-                            <input type="hidden" name="ttbm_travel_repeated_start_date" value="<?php echo esc_attr($hidden_start_date); ?>"/>
-                            <input value="<?php echo esc_attr($visible_start_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
-                        </label>
-                    </div>
-                    <div class="_mT">
-                        <label><?php esc_html_e('Tour Repeat Pattern', 'tour-booking-manager'); ?></label>
-                        <span class="info_text"><?php esc_html_e('Configure how often this tour repeats', 'tour-booking-manager'); ?></span>
-                        <div class="groupRadioBox">
-                            <div class="_dFlex_mT">
-								<?php foreach ($repeat_array as $key => $value) { ?>
-                                    <button class="_mpBtn_mR <?php echo esc_attr($key == $repeated_after ? 'active' : ''); ?>" type="button" data-group-radio="<?php echo esc_attr($key); ?>"><?php echo esc_html($value); ?></button>
-								<?php } ?>
-                                <button class="_mpBtn_mR input_active <?php echo esc_attr((1 == $repeated_after || 7 == $repeated_after || 30 == $repeated_after) ? '' : 'active'); ?>" type="button" data-group-radio="<?php echo esc_attr($repeated_after); ?>">
-                                    <label class="allCenter">
-                                        <span class="_mR_xs"><?php esc_html_e('Custom', 'tour-booking-manager'); ?></span>
-                                        <input type="number" class="formControl xs _w_75 ttbm_number_validation <?php echo esc_attr((1 == $repeated_after || 7 == $repeated_after || 30 == $repeated_after) ? 'dNone' : ''); ?>" value="<?php echo esc_attr($repeated_after); ?>" name="ttbm_travel_repeated_after"/>
-                                    </label>
-                                </button>
-                            </div>
+                    <div class="gptLayout">
+                        <div class="gpt_header">
+                            <h4><?php esc_html_e('Optional Tour Configuration', 'tour-booking-manager'); ?></h4>
+                            <span class="info_text"><?php esc_html_e('Configure additional tour settings - these can be enabled or disabled based on your needs', 'tour-booking-manager') ?></span>
                         </div>
-                    </div>
-                    <div class="_mT">
-                        <label><?php esc_html_e('End Repeat', 'tour-booking-manager'); ?></label>
-                        <div class="groupRadioBox">
-                            <input type="hidden" value="<?php echo esc_attr($repeat_type); ?>" name="ttbm_repeat_type"/>
-                            <div class="_dFlex_mT">
-                                <button class="_mpBtn_mR  <?php echo esc_attr('continue' == $repeat_type ? 'active' : ''); ?>" type="button" data-group-radio="fixed"><?php esc_html_e('Never', 'tour-booking-manager'); ?></button>
-                                <button class="_mpBtn_mR input_active <?php echo esc_attr('occurrence' == $repeat_type ? 'active' : ''); ?>" type="button" data-group-radio="occurrence">
-                                    <label class="allCenter">
-                                        <span class="_mR_xs"><?php esc_html_e('After occurrence', 'tour-booking-manager'); ?></span>
-                                        <input type="number" class="formControl xs _w_75 ttbm_number_validation <?php echo esc_attr('occurrence' == $repeat_type ? '' : 'dNone'); ?>" value="<?php echo esc_attr($repeat_number); ?>" name="ttbm_repeat_number"/>
-                                    </label>
-                                </button>
-                                <button class="_mpBtn_mR input_active <?php echo esc_attr('fixed' == $repeat_type ? 'active' : ''); ?>" type="button" data-group-radio="fixed">
-                                    <label class="allCenter">
-                                        <span class="_mR_xs"><?php esc_html_e('On', 'tour-booking-manager'); ?></span>
-                                        <input type="hidden" name="ttbm_travel_repeated_end_date" value="<?php echo esc_attr($hidden_end_date); ?>"/>
-                                        <input value="<?php echo esc_attr($visible_end_date); ?>" class="formControl xs date_type <?php echo esc_attr('fixed' == $repeat_type ? '' : 'dNone'); ?>" placeholder="<?php echo esc_attr($now); ?>"/>
-                                    </label>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="_mT">
-                        <label><span class="fas fa-clock _mR_xs"></span><?php esc_html_e('Tour Time Slots Configuration', 'tour-booking-manager'); ?></label>
-                        <span class="info_text"><?php esc_html_e('Configure available tour time slots for booking', 'tour-booking-manager'); ?></span>
-                        <div class="_alignCenter_mT">
-                            <label class="_mR"><?php esc_html_e('Enable Tour Time Slots', 'tour-booking-manager'); ?></label>
-							<?php TTBM_Custom_Layout::switch_button('mep_disable_ticket_time', $checked_time); ?>
-                        </div>
-                        <div data-collapse="#mep_disable_ticket_time" class="<?php echo esc_attr($active_time); ?>">
-							<?php
-								$all_time_slot_infos = self::time_slot_array();
-								if (sizeof($all_time_slot_infos) > 0) {
-									?>
-                                    <div class="ttbmTabs _mT">
-                                        <ul class="tabLists">
-											<?php foreach ($all_time_slot_infos as $key => $value) { ?>
-                                                <li data-tabs-target="#<?php echo esc_attr($key); ?>"><?php echo esc_html(array_key_exists('type', $value) && $value['type'] ? $value['type'] : ''); ?></li>
-											<?php } ?>
-                                        </ul>
-                                        <div class="tabsContent">
-											<?php
-												foreach ($all_time_slot_infos as $key => $value) {
-													$default_times = TTBM_Global_Function::get_post_info($tour_id, $key, array());
-													// echo '<pre>';print_r($key);echo '</pre>';
-													// echo '<pre>';print_r($default_times);echo '</pre>';
-													$title = array_key_exists('title', $value) && $value['title'] ? $value['title'] : '';
-													$des = array_key_exists('des', $value) && $value['des'] ? $value['des'] : '';
-													$label_key = array_key_exists('label_key', $value) && $value['label_key'] ? $value['label_key'] : '';
-													$time_key = array_key_exists('time_key', $value) && $value['time_key'] ? $value['time_key'] : '';
-													?>
-                                                    <div class="tabsItem" data-tabs="#<?php echo esc_attr($key); ?>">
-                                                        <label><span class="fas fa-clock _mR_xs"></span><?php echo esc_html($title); ?></label>
-                                                        <span class="info_text"><?php echo esc_html($des); ?></span>
-                                                        <div class="ttbm_settings_area">
-                                                            <div class="ttbm_item_insert ttbm_sortable_area">
-                                                                <div class="_dFlex">
-                                                                    <label class="_w_200_mR_xs"><?php esc_html_e('Time Slot Label', 'tour-booking-manager') ?></label>
-                                                                    <label class="_w_100_mR_xs"><?php esc_html_e('Time', 'tour-booking-manager') ?></label>
-                                                                    <label class="_w_100"><?php esc_html_e('Action', 'tour-booking-manager') ?></label>
-                                                                </div>
-																<?php
-																	if (sizeof($default_times)) {
-																		foreach ($default_times as $default_time) {
-																			if (is_array($default_time) && sizeof($default_time) > 0) {
-																				self::time_slot_item($label_key, $time_key, $default_time);
+                        <div class="dLayout">
+                            <h5><span class="fas fa-clock _mR_xs"></span><?php esc_html_e('Tour Time Slots Configuration', 'tour-booking-manager'); ?><?php TTBM_Custom_Layout::switch_button('mep_disable_ticket_time', $checked_time); ?></h5>
+                            <span class="info_text"><?php esc_html_e('Configure available tour time slots for booking', 'tour-booking-manager'); ?></span>
+                            <div data-collapse="#mep_disable_ticket_time" class="_mT <?php echo esc_attr($active_time); ?>">
+								<?php
+									$all_time_slot_infos = self::time_slot_array();
+									if (sizeof($all_time_slot_infos) > 0) {
+										?>
+                                        <div class="ttbmTabs _mT">
+                                            <ul class="tabLists">
+												<?php foreach ($all_time_slot_infos as $key => $value) { ?>
+                                                    <li data-tabs-target="#<?php echo esc_attr($key); ?>"><?php echo esc_html(array_key_exists('type', $value) && $value['type'] ? $value['type'] : ''); ?></li>
+												<?php } ?>
+                                                <?php do_action('ttbm_time_slot_tab'); ?>
+                                            </ul>
+                                            <div class="tabsContent">
+												<?php
+													foreach ($all_time_slot_infos as $key => $value) {
+														$default_times = TTBM_Global_Function::get_post_info($tour_id, $key, array());
+														$title = array_key_exists('title', $value) && $value['title'] ? $value['title'] : '';
+														$des = array_key_exists('des', $value) && $value['des'] ? $value['des'] : '';
+														$label_key = array_key_exists('label_key', $value) && $value['label_key'] ? $value['label_key'] : '';
+														$time_key = array_key_exists('time_key', $value) && $value['time_key'] ? $value['time_key'] : '';
+														?>
+                                                        <div class="tabsItem" data-tabs="#<?php echo esc_attr($key); ?>">
+                                                            <h5><span class="fas fa-clock _mR_xs"></span><?php echo esc_html($title); ?></h5>
+                                                            <span class="info_text"><?php echo esc_html($des); ?></span>
+                                                            <div class="ttbm_settings_area">
+                                                                <div class="ttbm_item_insert ttbm_sortable_area">
+                                                                    <div class="_dFlex">
+                                                                        <label class="_w_200_mR_xs"><?php esc_html_e('Time Slot Label', 'tour-booking-manager') ?></label>
+                                                                        <label class="_w_100_mR_xs"><?php esc_html_e('Time', 'tour-booking-manager') ?></label>
+                                                                        <label class="_w_100"><?php esc_html_e('Action', 'tour-booking-manager') ?></label>
+                                                                    </div>
+																	<?php
+																		if (sizeof($default_times)) {
+																			foreach ($default_times as $default_time) {
+																				if (is_array($default_time) && sizeof($default_time) > 0) {
+																					self::time_slot_item($label_key, $time_key, $default_time);
+																				}
 																			}
 																		}
-																	}
-																?>
-                                                            </div>
-															<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add Slot', 'tour-booking-manager')); ?>
-                                                            <div class="ttbm_hidden_content">
-                                                                <div class="ttbm_hidden_item">
-																	<?php self::time_slot_item($label_key, $time_key); ?>
+																	?>
+                                                                </div>
+																<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add Slot', 'tour-booking-manager')); ?>
+                                                                <div class="ttbm_hidden_content">
+                                                                    <div class="ttbm_hidden_item">
+																		<?php self::time_slot_item($label_key, $time_key); ?>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="_divider"></div>
-														<?php if ($key == 'mep_ticket_times_global') {
-															do_action('ttbm_after_date_settings', $tour_id);
-														} ?>
-                                                    </div>
-												<?php } ?>
+													<?php } ?>
+	                                            <?php do_action('ttbm_time_slot_content',$tour_id); ?>
+                                            </div>
+                                        </div>
+									<?php } ?>
+                            </div>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="dLayout ">
+                            <h5><?php esc_html_e('Tour Off Days And Dates', 'tour-booking-manager'); ?></h5>
+                            <span class="info_text"><?php esc_html_e('Configure Tour Off Days And Dates', 'tour-booking-manager'); ?></span>
+                            <div class="ttbmTabs">
+                                <ul class="tabLists">
+                                    <li data-tabs-target="#ttbm_off_days"><?php esc_html_e('Off Days ', 'tour-booking-manager'); ?></li>
+                                    <li data-tabs-target="#ttbm_off_dates"><?php esc_html_e('Off Dates ', 'tour-booking-manager'); ?></li>
+                                </ul>
+                                <div class="tabsContent">
+                                    <div class="tabsItem" data-tabs="#ttbm_off_days">
+                                        <h6><?php esc_html_e('Select Off Days ', 'tour-booking-manager'); ?></h6>
+                                        <span class="info_text"><?php esc_html_e('Configure Tour Off Days ', 'tour-booking-manager'); ?></span>
+										<?php
+											$off_day_array = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_offdays');
+											if (!is_array($off_day_array)) {
+												$maybe_unserialized = @unserialize($off_day_array);
+												if (is_array($maybe_unserialized)) {
+													$off_day_array = $maybe_unserialized;
+												} else {
+													$off_day_array = explode(',', (string)$off_day_array);
+												}
+											}
+											$off_days = $off_day_array ? implode(',', $off_day_array) : '';
+											$days = TTBM_Global_Function::week_day();
+										?>
+                                        <div class="groupCheckBox _mT">
+                                            <input type="hidden" name="mep_ticket_offdays" value="<?php echo esc_attr($off_days); ?>"/>
+											<?php foreach ($days as $key => $day) { ?>
+                                                <label class="customCheckboxLabel ">
+                                                    <input type="checkbox" <?php echo esc_attr(in_array($key, $off_day_array) ? 'checked' : ''); ?> data-checked="<?php echo esc_attr($key); ?>"/>
+                                                    <span class="customCheckbox"><?php echo esc_html($day); ?></span>
+                                                </label>
+											<?php } ?>
                                         </div>
                                     </div>
-								<?php } ?>
-                        </div>
-                    </div>
-                    <div class="_mT">
-                        <label><?php esc_html_e('Tour Off Days And Dates', 'tour-booking-manager'); ?></label>
-                        <span class="info_text"><?php esc_html_e('Configure Tour Off Days And Dates', 'tour-booking-manager'); ?></span>
-                        <div class="ttbmTabs">
-                            <ul class="tabLists">
-                                <li data-tabs-target="#ttbm_off_days"><?php esc_html_e('Off Days ', 'tour-booking-manager'); ?></li>
-                                <li data-tabs-target="#ttbm_off_dates"><?php esc_html_e('Off Dates ', 'tour-booking-manager'); ?></li>
-                            </ul>
-                            <div class="tabsContent">
-                                <div class="tabsItem" data-tabs="#ttbm_off_days">
-                                    <label><?php esc_html_e('Select Off Days ', 'tour-booking-manager'); ?></label>
-                                    <span class="info_text"><?php esc_html_e('Configure Tour Off Days ', 'tour-booking-manager'); ?></span>
-									<?php
-										$off_day_array = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_offdays');
-										if (!is_array($off_day_array)) {
-											$maybe_unserialized = @unserialize($off_day_array);
-											if (is_array($maybe_unserialized)) {
-												$off_day_array = $maybe_unserialized;
-											} else {
-												$off_day_array = explode(',', (string)$off_day_array);
-											}
-										}
-										$off_days = $off_day_array ? implode(',', $off_day_array) : '';
-										$days = TTBM_Global_Function::week_day();
-									?>
-                                    <div class="groupCheckBox _mT">
-                                        <input type="hidden" name="mep_ticket_offdays" value="<?php echo esc_attr($off_days); ?>"/>
-										<?php foreach ($days as $key => $day) { ?>
-                                            <label class="customCheckboxLabel ">
-                                                <input type="checkbox" <?php echo esc_attr(in_array($key, $off_day_array) ? 'checked' : ''); ?> data-checked="<?php echo esc_attr($key); ?>"/>
-                                                <span class="customCheckbox"><?php echo esc_html($day); ?></span>
-                                            </label>
-										<?php } ?>
-                                    </div>
-                                </div>
-                                <div class="tabsItem" data-tabs="#ttbm_off_dates">
-                                    <label><?php esc_html_e('Select Off Dates ', 'tour-booking-manager'); ?></label>
-                                    <span class="info_text"><?php esc_html_e('Configure Tour Off Dates ', 'tour-booking-manager'); ?></span>
-                                    <div class="ttbm_settings_area">
-                                        <div class="ttbm_item_insert ttbm_sortable_area">
-											<?php
-												$all_off_dates = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_off_dates', array());
-												$off_dates = array();
-												foreach ($all_off_dates as $off_date) {
-													$off_dates[] = $off_date['mep_ticket_off_date'];
-												}
-												if (sizeof($off_dates)) {
-													foreach ($off_dates as $off_date) {
-														if ($off_date) {
-															self::off_date_item($off_date);
+                                    <div class="tabsItem" data-tabs="#ttbm_off_dates">
+                                        <label><?php esc_html_e('Select Off Dates ', 'tour-booking-manager'); ?></label>
+                                        <span class="info_text"><?php esc_html_e('Configure Tour Off Dates ', 'tour-booking-manager'); ?></span>
+                                        <div class="ttbm_settings_area">
+                                            <div class="ttbm_item_insert ttbm_sortable_area">
+												<?php
+													$all_off_dates = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_off_dates', array());
+													$off_dates = array();
+													foreach ($all_off_dates as $off_date) {
+														$off_dates[] = $off_date['mep_ticket_off_date'];
+													}
+													if (sizeof($off_dates)) {
+														foreach ($off_dates as $off_date) {
+															if ($off_date) {
+																self::off_date_item($off_date);
+															}
 														}
 													}
-												}
-											?>
-                                        </div>
-										<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add Off Date', 'tour-booking-manager')); ?>
-                                        <div class="ttbm_hidden_content">
-                                            <div class="ttbm_hidden_item">
-												<?php self::off_date_item(); ?>
+												?>
+                                            </div>
+											<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add Off Date', 'tour-booking-manager')); ?>
+                                            <div class="ttbm_hidden_content">
+                                                <div class="ttbm_hidden_item">
+													<?php self::off_date_item(); ?>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -375,10 +388,10 @@
                 <div class="ttbm_remove_area _mT_xs">
                     <div class="_dFlex">
                         <label class="_w_200_mR_xs">
-                            <input type="text" name="<?php echo esc_attr($label_key . '[]'); ?>" value="<?php echo esc_attr($label); ?>" class="formControl ttbm_name_validation" placeholder="<?php esc_attr_e('Add New Time Slot Label', 'tour-booking-manager'); ?>"/>
+                            <input type="text" name="<?php echo esc_attr($label_key . '[]'); ?>" value="<?php echo esc_attr($label); ?>" class="formControl ttbm_name_validation" placeholder="<?php esc_attr_e('Time Slot Label', 'tour-booking-manager'); ?>"/>
                         </label>
                         <label class="_w_100_mR_xs">
-                            <input type="time" name="<?php echo esc_attr($time_key . '[]'); ?>" class="formControl" value="<?php echo esc_attr($time); ?>"/>
+                            <input type="time" name="<?php echo esc_attr($time_key . '[]'); ?>" class="formControl" value="<?php echo esc_attr($time); ?>" placeholder="00:00"/>
                         </label>
                         <div class="allCenter_w_100 "><?php TTBM_Custom_Layout::move_remove_button(); ?></div>
                     </div>

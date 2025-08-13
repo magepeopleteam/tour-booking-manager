@@ -19,11 +19,11 @@
 				$tour_id = get_the_id();
 				$ttbm_label = TTBM_Function::get_name();
 				?>
-				<?php wp_nonce_field( 'ttbm_ticket_type_nonce', 'ttbm_ticket_type_nonce' ); ?>
+				<?php wp_nonce_field('ttbm_ticket_type_nonce', 'ttbm_ticket_type_nonce'); ?>
                 <div id="ttbm_content" class="ttbm_configuration">
                     <div class="ttbm_style ttbm_settings ">
                         <div class="ttbmTabs leftTabs d-flex justify-content-between">
-                            <ul class="tabLists">
+                            <ul class="tabLists _mL">
                                 <li data-tabs-target="#ttbm_general_info"><i class="fas fa-tools"></i><?php esc_html_e('General Info', 'tour-booking-manager'); ?> </li>
                                 <li data-tabs-target="#ttbm_settings_location" class="ttbm_settings_location"><i class="fas fa-map-marker-alt"></i><?php esc_html_e(' Location', 'tour-booking-manager'); ?></li>
                                 <li data-tabs-target="#ttbm_settings_dates"><i class="far fa-calendar-plus"></i><?php esc_html_e(' Date Configuration', 'tour-booking-manager'); ?></li>
@@ -239,11 +239,10 @@
 				//echo '<pre>';print_r($_POST);echo '</pre>';die();
 				if (!isset($_POST['ttbm_ticket_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_ticket_type_nonce'])), 'ttbm_ticket_type_nonce') && defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && !current_user_can('edit_post', $tour_id)) {
 					//echo '<pre>';print_r($_POST['ttbm_ticket_type_nonce']);echo '</pre>';die();
-                    return;
+					return;
 				}
 				//echo '<pre>';print_r($_POST);echo '</pre>';die();
 				/*******Genarel********/
-
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
 					$ttbm_travel_duration = isset($_POST['ttbm_travel_duration']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_duration'])) : '';
 					$ttbm_travel_duration_type = isset($_POST['ttbm_travel_duration_type']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_duration_type'])) : 'day';
@@ -364,27 +363,28 @@
 					/***************/
 					$ttbm_travel_repeated_start_date = isset($_POST['ttbm_travel_repeated_start_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_start_date'])) : '';
 					update_post_meta($tour_id, 'ttbm_travel_repeated_start_date', $ttbm_travel_repeated_start_date);
+					$ttbm_travel_repeated_start_time = isset($_POST['ttbm_travel_repeated_start_time']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_start_time'])) : '';
+					update_post_meta($tour_id, 'ttbm_travel_repeated_start_time', $ttbm_travel_repeated_start_time);
 					$ttbm_travel_repeated_after = isset($_POST['ttbm_travel_repeated_after']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_after'])) : 1;
 					update_post_meta($tour_id, 'ttbm_travel_repeated_after', $ttbm_travel_repeated_after);
-
 					$ttbm_repeat_type = isset($_POST['ttbm_repeat_type']) ? sanitize_text_field(wp_unslash($_POST['ttbm_repeat_type'])) : '';
 					update_post_meta($tour_id, 'ttbm_repeat_type', $ttbm_repeat_type);
-                    $ttbm_repeat_number = isset($_POST['ttbm_repeat_number']) ? sanitize_text_field(wp_unslash($_POST['ttbm_repeat_number'])) : '';
+					$ttbm_repeat_number = isset($_POST['ttbm_repeat_number']) ? sanitize_text_field(wp_unslash($_POST['ttbm_repeat_number'])) : '';
 					update_post_meta($tour_id, 'ttbm_repeat_number', $ttbm_repeat_number);
 					$ttbm_travel_repeated_end_date = isset($_POST['ttbm_travel_repeated_end_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_end_date'])) : '';
-                    if($ttbm_repeat_type=='occurrence' && $ttbm_travel_repeated_end_date){
-                        $day_count=$ttbm_repeat_number*$ttbm_travel_repeated_after;
-	                    $ttbm_travel_repeated_end_date=gmdate('Y-m-d', strtotime($ttbm_travel_repeated_start_date.' +'.$day_count.' day'));
-                    }
+					if ($ttbm_repeat_type == 'occurrence' && $ttbm_travel_repeated_end_date) {
+						$day_count = $ttbm_repeat_number * $ttbm_travel_repeated_after;
+						$ttbm_travel_repeated_end_date = gmdate('Y-m-d', strtotime($ttbm_travel_repeated_start_date . ' +' . $day_count . ' day'));
+					}
 					update_post_meta($tour_id, 'ttbm_travel_repeated_end_date', $ttbm_travel_repeated_end_date);
 					$display_time = isset($_POST['mep_disable_ticket_time']) && sanitize_text_field(wp_unslash($_POST['mep_disable_ticket_time'])) ? 'yes' : 'no';
 					update_post_meta($tour_id, 'mep_disable_ticket_time', $display_time);
-					$all_time_slot_infos=TTBM_Settings_Dates::time_slot_array();
+					$all_time_slot_infos = TTBM_Settings_Dates::time_slot_array();
 					//echo '<pre>';print_r($all_time_slot_infos);echo '</pre>';die();
-					if(sizeof($all_time_slot_infos)>0) {
+					if (sizeof($all_time_slot_infos) > 0) {
 						foreach ($all_time_slot_infos as $meta_key => $value) {
-							$label_key=array_key_exists('label_key',$value) && $value['label_key']? $value['label_key'] : '';
-							$time_key=array_key_exists('time_key',$value) && $value['time_key']? $value['time_key'] : '';
+							$label_key = array_key_exists('label_key', $value) && $value['label_key'] ? $value['label_key'] : '';
+							$time_key = array_key_exists('time_key', $value) && $value['time_key'] ? $value['time_key'] : '';
 							$default_time_info = [];
 							$default_labels = isset($_POST[$label_key]) ? array_map('sanitize_text_field', wp_unslash($_POST[$label_key])) : [];
 							$default_times = isset($_POST[$time_key]) ? array_map('sanitize_text_field', wp_unslash($_POST[$time_key])) : [];
@@ -400,21 +400,20 @@
 							update_post_meta($tour_id, $meta_key, $default_time_info);
 						}
 					}
-
 					/***************/
-					$off_days= isset($_POST['mep_ticket_offdays']) ? sanitize_text_field(wp_unslash($_POST['mep_ticket_offdays'])) : '';
-					$off_days = $off_days ? explode( ',', $off_days ) : '';
-					update_post_meta( $tour_id, 'mep_ticket_offdays', $off_days );
+					$off_days = isset($_POST['mep_ticket_offdays']) ? sanitize_text_field(wp_unslash($_POST['mep_ticket_offdays'])) : '';
+					$off_days = $off_days ? explode(',', $off_days) : '';
+					update_post_meta($tour_id, 'mep_ticket_offdays', $off_days);
 					$all_off_dates = [];
 					$off_dates = isset($_POST['mep_ticket_off_dates']) ? array_map('sanitize_text_field', wp_unslash($_POST['mep_ticket_off_dates'])) : [];
-					if ( sizeof( $off_dates ) > 0 ) {
-						foreach ( $off_dates as $key => $off_date ) {
-							if ( $off_date ) {
-								$all_off_dates[ $key ]['mep_ticket_off_date'] = $off_date;
+					if (sizeof($off_dates) > 0) {
+						foreach ($off_dates as $key => $off_date) {
+							if ($off_date) {
+								$all_off_dates[$key]['mep_ticket_off_date'] = $off_date;
 							}
 						}
 					}
-					update_post_meta( $tour_id, 'mep_ticket_off_dates', $all_off_dates );
+					update_post_meta($tour_id, 'mep_ticket_off_dates', $all_off_dates);
 				}
 				//*********Display**************//
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {

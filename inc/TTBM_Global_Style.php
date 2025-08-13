@@ -43,7 +43,7 @@
 					:root {
 						--ttbm_fs_small: 12px;
 						--ttbm_fs: 14px;
-						--ttbm_fs_label: 16;
+						--ttbm_fs_label: 16px;
 						--ttbm_fs_h6: 16px;
 						--ttbm_fs_h5: 18px;
 						--ttbm_fs_h4: 22px;

@@ -170,11 +170,60 @@ padding:10px;
 .ttbm-content-area{
     display: flex;
     justify-content: space-between;
+    align-items: start;
     gap:10px;
 }
+
 .ttbm-content-left{
     width: 75%;
 }
+
+.ttbm-content-left .content-details{
+    margin-bottom: 20px;
+}
+.ttbm-content-left div.content-details p{
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #333;
+}
+/* right sidebar */
 .ttbm-content-right{
     width: 25%;
+    background-color: #f0f6ff;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.ttbm-content-right .widgets{
+    margin:0 0 20px 0;
+}
+
+.ttbm-content-right .widgets h2{
+    font-size: 14px;
+    margin: 15px 0;
+    font-weight: bold;
+    color: #000;
+}
+.ttbm-content-right .widgets .widgets-text {
+    font-size: 14px;
+    color: #333;
+    display: flex;
+    gap: 10px;
+}
+.ttbm-content-right .widgets .widgets-text i {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.ttbm-content-right .activities-info .widgets-text{
+    flex-direction: column;
+    gap: 10px 0;
+}
+.ttbm-content-right .widgets-button{
+    width: 100%;
+    padding: 10px;
+    font-weight: normal;
+    background-color: var(--color_theme);
+    margin-top: 30px;
 }

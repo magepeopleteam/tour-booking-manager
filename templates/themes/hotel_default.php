@@ -76,13 +76,45 @@ $class_location = $class_location ?? '';
             </div>
             <div class="ttbm-content-area">
                 <div class="ttbm-content-left">
-                    <?php do_action( 'ttbm_description' ); ?>
+                    <div class="content-details">
+                        <?php the_content(); ?>
+                    </div>
                     <?php do_action( 'ttbm_make_hotel_booking', $ttbm_post_id );?>
-                </div>
-                <div class="ttbm-content-right">
                     <?php do_action( 'ttbm_hotel_location_details' ); ?>
                     <?php do_action( 'ttbm_include_feature' ); ?>
-                    <?php do_action( 'ttbm_exclude_service' ); ?>
+                </div>
+                <div class="ttbm-content-right">
+                    <div class="widgets property-highlights">
+                        <h2>Property highlights</h2>
+                        <div class="widgets-text">
+                            <i class="mi mi-marker"></i>
+                            Top Location: Highly rated by recent guests (8.9)
+                        </div>
+                    </div>
+                    <div class="widgets breakfast-info">
+                        <h2>Breakfast info</h2>
+                        <div class="widgets-text">
+                            <i class="mi mi-burger-glass"></i>
+                            American, Buffet
+                        </div>
+                    </div>
+                    <div class="widgets parking-info">
+                        <h2>Parking info</h2>
+                        <div class="widgets-text">
+                            <i class="mi mi-parking-circle"></i>
+                            Free Parking Available On Site
+                        </div>
+                    </div>
+                    <div class="widgets activities-info">
+                        <h2>activities</h2>
+                        <ul class="widgets-text">
+                            <li>Hiking</li>
+                            <li>Jumping</li>
+                            <li>Running</li>
+                            <li>Swimming</li>
+                        </ul>
+                    </div>
+                    <button class="widgets-button">Reserve</button>
                 </div>
             </div>
             <div class="ttbm-facilities-area"></div>

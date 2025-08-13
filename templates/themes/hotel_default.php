@@ -79,9 +79,32 @@ $class_location = $class_location ?? '';
                     <div class="content-details">
                         <?php the_content(); ?>
                     </div>
+                    <div class="popular-facilities">
+                        <h2>Popular Facilities</h2>
+                        <ul>
+                            <li>
+                                <i class="mi mi-swimmer"></i>
+                                2 swimming pools
+                            </li>
+                            <li>
+                                <i class="mi mi-parking"></i>
+                                Free parking
+                            </li>
+                            <li>
+                                <i class="mi mi-wifi"></i>
+                                Free Wifi
+                            </li>
+                            <li>
+                                <i class="mi mi-family"></i>
+                                Family rooms
+                            </li>
+                            <li>
+                                <i class="mi mi-flower-tulip"></i>
+                                Spa
+                            </li>
+                        </ul>
+                    </div>
                     <?php do_action( 'ttbm_make_hotel_booking', $ttbm_post_id );?>
-                    <?php do_action( 'ttbm_hotel_location_details' ); ?>
-                    <?php do_action( 'ttbm_include_feature' ); ?>
                 </div>
                 <div class="ttbm-content-right">
                     <div class="widgets property-highlights">

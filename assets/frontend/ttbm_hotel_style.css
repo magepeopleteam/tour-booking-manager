@@ -186,6 +186,34 @@ padding:10px;
     font-size: 14px;
     color: #333;
 }
+div.ttbm-content-left h2{
+    font-size: 20px;
+    color: #000;
+    margin:10px 0;
+}
+.ttbm-content-left .popular-facilities{
+    margin-bottom: 20px;
+}
+
+.ttbm-content-left .popular-facilities ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.ttbm-content-left .popular-facilities li{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 5px;
+    margin:0 15px 15px 0;
+}
+.ttbm-content-left .popular-facilities i{
+    font-size: 20px;
+    color: var(--color_theme);
+}
 /* right sidebar */
 .ttbm-content-right{
     width: 25%;

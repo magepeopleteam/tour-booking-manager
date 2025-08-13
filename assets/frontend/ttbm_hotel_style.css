@@ -292,8 +292,11 @@ padding:10px;
     font-size: 14px;
     display: flex;
     justify-content: start;
-    align-items: start;
-    gap:5px;
+    align-items: center;
+    gap:10px;
+}
+.ttbm-hotel-area .faq-area .faq-question i{
+    font-size: 20px;
 }
 .ttbm-hotel-area .faq-area .faq-item:last-child{
     border-bottom: 0 solid #ddd;

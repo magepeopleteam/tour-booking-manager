@@ -222,7 +222,7 @@ $class_location = $class_location ?? '';
                         ?>
                             <div class="faq-item" data-faq="<?php echo $faq['id']; ?>">
                                 <div class="faq-question">
-                                    <i class="mi mi-speech-bubble-story"></i>
+                                    <i class="mi mi-chat"></i>
                                     <span><?php echo $faq['question']; ?></span>
                                 </div>
                             </div>

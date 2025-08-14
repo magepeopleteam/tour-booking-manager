@@ -6,7 +6,7 @@
 		class TTBM_Setting_API {
 			protected $settings_sections = array();
 			protected $settings_fields = array();
-			public function __construct() {}
+			public function __construct() { }
 			function set_sections($sections) {
 				$this->settings_sections = $sections;
 				return $this;
@@ -39,13 +39,11 @@
 					if (isset($section['desc']) && !empty($section['desc'])) {
 						$section['desc'] = '<div class="inside">' . $section['desc'] . '</div>';
 						$callback = function () use ($section) {
-							echo esc_html( str_replace( '"', '\"', $section['desc'] ) );
+							echo esc_html(str_replace('"', '\"', $section['desc']));
 						};
-					}
-					else if (isset($section['callback'])) {
+					} else if (isset($section['callback'])) {
 						$callback = $section['callback'];
-					}
-					else {
+					} else {
 						$callback = null;
 					}
 					add_settings_section($section['id'], $section['title'], $callback, $section['id']);
@@ -86,8 +84,7 @@
 			public function get_field_description($args) {
 				if (!empty($args['desc'])) {
 					$desc = sprintf('<br/><i class="info_text"><span class="fas fa-info-circle"></span>%s</i>', $args['desc']);
-				}
-				else {
+				} else {
 					$desc = '';
 				}
 				return $desc;
@@ -119,7 +116,6 @@
 			function callback_ttbm_select2($args) {
 				$value = TTBM_Global_Function::get_settings($args['section'], $args['id'], $args['std']);
 				$name = $args['section'] . '[' . $args['id'] . ']';
-
 				?>
                 <label>
                     <select name="<?php echo esc_attr($name); ?>" class="formControl ttbm_select2">
@@ -134,7 +130,7 @@
 				global $wp_roles;
 				$value = TTBM_Global_Function::get_settings($args['section'], $args['id'], $args['std']);
 				$name = $args['section'] . '[' . $args['id'] . '][]';
-				$value=is_array($value)?$value:[$value];
+				$value = is_array($value) ? $value : [$value];
 				?>
                 <label>
                     <select name="<?php echo esc_attr($name); ?>" class="formControl ttbm_select2" multiple>
@@ -279,10 +275,8 @@
 				$value = TTBM_Global_Function::get_settings($args['section'], $args['id'], $args['std']);
 				$name = $args['section'] . '[' . $args['id'] . ']';
 				$placeholder = empty($args['placeholder']) ? '' : $args['placeholder'];
-
-				$label = $args['options']['button_label'] ?? esc_html__('Choose File','tour-booking-manager');
-
-				do_action('ttbm_add_single_image',$name,$value);
+				$label = $args['options']['button_label'] ?? esc_html__('Choose File', 'tour-booking-manager');
+				do_action('ttbm_add_single_image', $name, $value);
 			}
 			function callback_password($args) {
 				$value = TTBM_Global_Function::get_settings($args['section'], $args['id'], $args['std']);
@@ -311,8 +305,8 @@
 					'echo' => 0
 				);
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  
-				$dropdown = wp_dropdown_pages( $dropdown_args );
-				echo wp_kses_post( $dropdown );
+				$dropdown = wp_dropdown_pages($dropdown_args);
+				echo wp_kses_post($dropdown);
 			}
 			function sanitize_options($options) {
 				if (!$options) {
@@ -351,7 +345,7 @@
                     <ul class="tabLists bgLight">
 						<?php foreach ($this->settings_sections as $tab) { ?>
                             <li data-tabs-target="#<?php echo esc_attr($tab['id']); ?>">
-                                <span class="<?php echo esc_attr(array_key_exists('icon',$tab)?$tab['icon']:''); ?>"></span><?php echo esc_html($tab['title']); ?>
+                                <span class="<?php echo esc_attr(array_key_exists('icon', $tab) ? $tab['icon'] : ''); ?>"></span><?php echo esc_html($tab['title']); ?>
                             </li>
 						<?php } ?>
                     </ul>
@@ -359,11 +353,10 @@
 				}
 			}
 			function show_forms() {
-				
 				?>
-					<?php foreach ($this->settings_sections as $form) { ?>
-						<div class="tabsItem" data-tabs="#<?php echo esc_attr($form['id']); ?>">
-						<form method="post" action="options.php">
+				<?php foreach ($this->settings_sections as $form) { ?>
+                    <div class="tabsItem" data-tabs="#<?php echo esc_attr($form['id']); ?>">
+                        <form method="post" action="options.php">
 							<?php
 								do_action('wsa_form_top_' . $form['id'], $form);
 								settings_fields($form['id']);
@@ -372,77 +365,63 @@
 								do_action('wsa_form_bottom_' . $form['id'], $form);
 								if (isset($this->settings_fields[$form['id']])):
 									?>
-									<div class="justifyBetween _mT">
-										<div></div>
+                                    <div class="justifyBetween _mT">
+                                        <div></div>
 										<?php submit_button(); ?>
-									</div>
-							<?php endif; ?>
-							</form>
-                    	</div>
+                                    </div>
+								<?php endif; ?>
+                        </form>
+                    </div>
 				<?php } ?>
 				<?php
 				$this->script();
 			}
-
 			public function get_settings_sections($form_id) {
 				global $wp_settings_sections, $wp_settings_fields;
-				
-				if ( ! isset( $wp_settings_sections[ $form_id ] ) ) {
+				if (!isset($wp_settings_sections[$form_id])) {
 					return;
 				}
-
-				foreach ($wp_settings_sections[ $form_id ] as $section ) {
-					
-					if ( '' !== $section['before_section'] ) {
-						if ( '' !== $section['section_class'] ) {
-							echo wp_kses_post( sprintf( $section['before_section'], esc_attr( $section['section_class'] ) ) );
+				foreach ($wp_settings_sections[$form_id] as $section) {
+					if ('' !== $section['before_section']) {
+						if ('' !== $section['section_class']) {
+							echo wp_kses_post(sprintf($section['before_section'], esc_attr($section['section_class'])));
 						} else {
-							echo wp_kses_post( $section['before_section'] );
+							echo wp_kses_post($section['before_section']);
 						}
 					}
-			
-					if ( $section['title'] ) {
+					if ($section['title']) {
 						echo "<h3>" . esc_html($section['title']) . "</h3>\n";
 					}
-			
-					if ( $section['callback'] ) {
-						call_user_func( $section['callback'], $section );
+					if ($section['callback']) {
+						call_user_func($section['callback'], $section);
 					}
-					
-					if ( isset( $wp_settings_fields[ $form_id ][ $section['id'] ] ) ) {
+					if (isset($wp_settings_fields[$form_id][$section['id']])) {
 						echo '<section>';
-						$this->get_settings_fields( $form_id, $section['id'] );
+						$this->get_settings_fields($form_id, $section['id']);
 						echo '</section>';
 					}
-
-					if ( '' !== $section['after_section'] ) {
-						echo wp_kses_post( $section['after_section'] );
+					if ('' !== $section['after_section']) {
+						echo wp_kses_post($section['after_section']);
 					}
 				}
 			}
-
-			public function get_settings_fields( $form_id, $section ) {
+			public function get_settings_fields($form_id, $section) {
 				global $wp_settings_fields;
-			
-				if ( ! isset( $wp_settings_fields[ $form_id ][ $section ] ) ) {
+				if (!isset($wp_settings_fields[$form_id][$section])) {
 					return;
 				}
-				
-				foreach ( $wp_settings_fields[ $form_id ][ $section ] as $data ) {
+				foreach ($wp_settings_fields[$form_id][$section] as $data) {
 					?>
-					
-					<div class="ttbm-setting-field">
-						<div class="label">
+                    <div class="ttbm-setting-field">
+                        <div class="label">
 							<?php echo esc_html($data['title']); ?>
-							<span class="tooltips" data-tooltip="<?php echo esc_attr($data['args']['desc']); ?>"><i class="fa fa-info-circle"></i></span>
-						</div>
-						<?php call_user_func( $data['callback'], $data['args'] ); ?>
-					</div>
+                            <span class="tooltips" data-tooltip="<?php echo esc_attr($data['args']['desc']); ?>"><i class="fa fa-info-circle"></i></span>
+                        </div>
+						<?php call_user_func($data['callback'], $data['args']); ?>
+                    </div>
 					<?php
 				}
 			}
-			
-
 			function script() {
 				?>
                 <script>

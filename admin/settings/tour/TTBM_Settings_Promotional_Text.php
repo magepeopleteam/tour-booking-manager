@@ -13,7 +13,7 @@
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
-                <div class="tabsItem ttbm_settings_area ttbm_settings_why_chose_us" data-tabs="#ttbm_settings_why_chose_us">
+                <div class="tabsItem  ttbm_settings_why_chose_us" data-tabs="#ttbm_settings_why_chose_us">
                     <h2 class=""><?php esc_html_e('Why Book With Us?', 'tour-booking-manager'); ?></h2>
                     <p><?php TTBM_Settings::des_p('why_book_settings_description'); ?></p>
                     <section>
@@ -21,7 +21,7 @@
                             <h4><i class="fas fa-info-circle"></i><?php esc_html_e('Promotional Text', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_why_choose_us', $checked); ?>
                         </div>
-                        <div data-collapse="#ttbm_display_why_choose_us" class="<?php echo esc_attr($active); ?>">
+                        <div data-collapse="#ttbm_display_why_choose_us" class="ttbm_settings_area <?php echo esc_attr($active); ?>">
 							<?php $this->why_chose_us($tour_id); ?>
                         </div>
                     </section>

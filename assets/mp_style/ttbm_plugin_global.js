@@ -144,8 +144,9 @@ function ttbm_loadBgImage() {
                     bg_url = ttbm_empty_image_url;
                 }
                 ttbm_resize_bg_image_area(target, bg_url);
+
                 target.css('background-image', 'url("' + bg_url + '")').promise().done(function () {
-                    dLoaderRemove(jQuery(this));
+                    dLoaderRemove(target);
                 });
             }
         }
@@ -156,7 +157,6 @@ function ttbm_loadBgImage() {
     });
     return true;
 }
-
 function ttbm_resize_bg_image_area(target, bg_url) {
     let tmpImg = new Image();
     tmpImg.src = bg_url;
@@ -165,6 +165,7 @@ function ttbm_resize_bg_image_area(target, bg_url) {
         let imgHeight = tmpImg.height;
         let height = target.outerWidth() * imgHeight / imgWidth;
         target.css({"min-height": height});
+        dLoaderRemove(target);
     });
 }
 (function ($) {
@@ -308,22 +309,18 @@ function ttbm_all_content_change($this) {
 }(jQuery));
 //==============================================================================Qty inc dec================//
 (function ($) {
-    function ttbm_calculateTotalQtyPrice(){
+    function ttbm_calculateTotalQtyPrice() {
         let totalQty = 0;
         let totalPrice = 0;
-
         $('.ttbm_hotel_room_incDec').each(function () {
             const $input = $(this).find('.inputIncDec');
             const qty = parseInt($input.val()) || 0;
             const price = parseFloat($input.data('price')) || 0;
-
             totalQty += qty;
             totalPrice += qty * price;
-
-            $(".tour_qty").text( totalQty );
-            $(".tour_price").text( totalPrice );
+            $(".tour_qty").text(totalQty);
+            $(".tour_price").text(totalPrice);
         });
-
     }
     "use strict";
     $(document).on("click", "div.ttbm_style .decQty ,div.ttbm_style .incQty", function () {
@@ -633,15 +630,34 @@ function ttbm_sticky_management() {
         target.find('input').val(value).trigger('change');
     });
     $(document).on('click', '.ttbm_style .groupRadioBox [data-group-radio]', function () {
+
         let parent = $(this).closest('.groupRadioBox');
         let $this = $(this);
-        let value = $this.data('group-radio');
-        parent.find('[data-group-radio]').each(function () {
-            $(this).removeClass('active');
-        }).promise().done(function () {
-            $this.addClass('active');
-            parent.find('input').val(value);
-        });
+        if(!$this.hasClass('active')) {
+            let target_id = $this.data('collapse-radio');
+            //alert(target_id);
+            let value = $this.data('group-radio');
+            //$('body').find('[data-close="' + close_id + '"]:not([data-collapse="' + target_id + '"])').slideUp(250);
+            parent.find('[data-group-radio]').each(function () {
+                let close_id = $(this).data('collapse-radio');
+                // alert(close_id);
+                if (target_id === close_id) {
+                    $('body').find('[data-target-radio="' + close_id + '"]').slideDown(250);
+                } else {
+                    $('body').find('[data-target-radio="' + close_id + '"]').slideUp(250);
+                }
+            });
+            parent.find('[data-group-radio]').each(function () {
+                $(this).removeClass('active').find('input').slideUp('fast');
+            }).promise().done(function () {
+                $this.addClass('active').find('input').slideDown('fast');
+                if (parent.find('>input[type="hidden"]').length > 0) {
+                    parent.find('>input[type="hidden"]').val(value);
+                } else {
+                    parent.find('input').val(value);
+                }
+            });
+        }
     });
     //Group radio like checkbox
     $(document).on('click', '.ttbm_style .groupRadioCheck [data-radio-check]', function () {
@@ -696,9 +712,7 @@ function mp_check_required(input) {
     $(document).on('keyup change', '.ttbm_style [required]', function () {
         mp_check_required($(this));
     });
-    
 }(jQuery));
-
 //==========================================================pagination==========//
 function ttbm_pagination_page_management(parent, pagination_page, total_item) {
     let per_page_item = parseInt(parent.find('input[name="pagination_per_page"]').val());
@@ -958,14 +972,12 @@ function ttbm_slider_resize(target) {
         }
     });
 }(jQuery));
-
 //==== Live search icon======
 const searchInputIcon = document.getElementById('searchInputIcon');
 if (searchInputIcon) {
     searchInputIcon.addEventListener('input', function () {
         const filter = this.value.toLowerCase();
         const items = document.querySelectorAll('.popupTabItem .itemIconArea .iconItem');
-
         items.forEach(item => {
             const text = item.getAttribute('title')?.toLowerCase() || '';
             item.style.display = text.includes(filter) ? '' : 'none';

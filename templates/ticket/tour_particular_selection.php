@@ -10,7 +10,7 @@
 	$template_name = $template_name ?? TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_theme_file', 'default.php' );
 	if ( sizeof( $all_dates ) > 0 && $tour_type == 'general' && $travel_type == 'particular' ) {
 		?>
-		<div class="_shadow_two_dFlex ttbm_particular_date_area">
+		<div class="_dShadow_2_dFlex ttbm_particular_date_area">
 			<?php if ( $template_name == 'default.php' ) { ?>
 				<h3 class="mR">
 					<?php include( TTBM_Function::template_path( 'layout/start_price.php' ) ); ?><br/>

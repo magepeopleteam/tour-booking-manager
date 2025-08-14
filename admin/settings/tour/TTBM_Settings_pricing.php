@@ -85,7 +85,7 @@
                                 </select>
 							<?php } ?>
                         </label>
-                        <div>
+                        <div class="ttbm_settings_area">
                             <div style="overflow-x:auto;">
                                 <table class="price_config_table">
                                     <thead>

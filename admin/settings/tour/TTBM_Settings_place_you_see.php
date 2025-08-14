@@ -14,12 +14,11 @@
 				/******************************/
 			}
 			public function place_you_see_settings($tour_id) {
-				$ttbm_label = TTBM_Function::get_name();
 				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_hiphop', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
-                <div class="tabsItem ttbm_settings_area ttbm_settings_place_you_see" data-tabs="#ttbm_settings_place_you_see">
+                <div class="tabsItem  ttbm_settings_place_you_see" data-tabs="#ttbm_settings_place_you_see">
                     <h2><?php esc_html_e('Places You\'ll Visit', 'tour-booking-manager'); ?></h2>
                     <p><?php TTBM_Settings::des_p('places_visit_description'); ?> </p>
                     <section>
@@ -27,7 +26,7 @@
                             <h4><i class="fas fa-map-marker-alt"></i><?php esc_html_e('Places You\'ll Visit', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_hiphop', $checked); ?>
                         </div>
-                        <div data-collapse="#ttbm_display_hiphop" class="ttbm_place_you_see_area <?php echo esc_attr($active); ?>">
+                        <div data-collapse="#ttbm_display_hiphop" class="ttbm_settings_area ttbm_place_you_see_area <?php echo esc_attr($active); ?>">
 							<?php $this->place_you_see($tour_id); ?>
                         </div>
                     </section>

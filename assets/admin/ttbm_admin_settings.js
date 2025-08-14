@@ -28,11 +28,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
     "use strict";
     $(document).ready(function () {
         //=========Short able==============//
-        $(document)
-            .find(".ttbm_sortable_area")
-            .sortable({
-                handle: $(this).find(".ttbm_sortable_button"),
-            });
+        $(document).find(".ttbm_sortable_area").sortable({handle: $(this).find(".ttbm_sortable_button"),});
     });
     //=========upload image==============//
     $(document).on("click", ".ttbm_add_single_image", function () {
@@ -72,7 +68,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
         all_img_ids = all_img_ids.replace(img_id, "");
         parent.find(".ttbm_multi_image_value").val(all_img_ids);
     });
-    $(document).on("click", ".add_multi_image", function () {
+    $(document).on("click", ".ttbm_add_multi_image", function () {
         let parent = $(this).closest(".ttbm_multi_image_area");
         wp.media.editor.send.attachment = function (props, attachment) {
             let attachment_id = attachment.id;
@@ -92,68 +88,23 @@ function ttbm_load_sortable_datepicker(parent, item) {
         return false;
     });
     //=========Remove Setting Item ==============//
-    $(document).on("click", ".ttbm_item_remove", function (e) {
+    $(document).on("click", ".ttbm_item_remove,.ttbm_remove_icon", function (e) {
         e.preventDefault();
-        if (
-            confirm(
-                "Are You Sure , Remove this row ? \n\n 1. Ok : To Remove . \n 2. Cancel : To Cancel ."
-            )
-        ) {
+        if (confirm("Are You Sure , Remove this row ? \n\n 1. Ok : To Remove . \n 2. Cancel : To Cancel .")) {
             $(this).closest(".ttbm_remove_area").slideUp(250).remove();
             return true;
         } else {
             return false;
         }
     });
-    // ==================
-    $(document).ready(function () {
-        addCollapseId();
-    });
-    function addCollapseId() {
-        let collapseId = 0;
-        $(".wbtm_stop_item").each(function (i) {
-            $(this)
-                .find(".wbtm_stop_item_header")
-                .attr("data-collapse-target", "d" + i);
-            $(this)
-                .find(".wbtm_stop_item_content")
-                .attr("data-collapse", "d" + i);
-            collapseId = i++;
-        });
-        $(".ttbm_hidden_item .wbtm_stop_item")
-            .find(".wbtm_stop_item_header")
-            .attr("data-collapse-target", "d" + collapseId);
-        $(".ttbm_hidden_item .wbtm_stop_item")
-            .find(".wbtm_stop_item_content")
-            .attr("data-collapse", "d" + collapseId);
-        // input field uncollapse for last element
-        // ====
-    }
     //=========Add Setting Item==============//
     $(document).on("click", ".ttbm_add_item", function () {
-        // on click event. add collpase id for last child
-        addCollapseId();
-        $(".wbtm_stop_item:last-child .wbtm_stop_item_content").css(
-            "display",
-            "block"
-        );
-        let parent = $(this).closest(".ttbm_settings_area");
-        let item = $(this)
-            .next($(".ttbm_hidden_content"))
-            .find(" .ttbm_hidden_item")
-            .html();
-        if (!item || item === "undefined" || item === " ") {
-            item = parent
-                .find(".ttbm_hidden_content")
-                .first()
-                .find(".ttbm_hidden_item")
-                .html();
-        }
+        let parent = $(this).closest('.ttbm_settings_area');
+        let item = parent.find('>.ttbm_hidden_content').first().find('.ttbm_hidden_item').html();
         ttbm_load_sortable_datepicker(parent, item);
-        parent.find(".ttbm_item_insert").find(".add_ttbm_select2").select2({});
+        parent.find('.ttbm_item_insert').find('.add_ttbm_select2').select2({});
         return true;
     });
-
 })(jQuery);
 (function ($) {
     "use strict";

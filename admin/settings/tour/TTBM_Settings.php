@@ -19,13 +19,14 @@
 				$tour_id = get_the_id();
 				$ttbm_label = TTBM_Function::get_name();
 				?>
-                <div id="ttbm-settings-page">
-                    <div class="ttbm_style ttbm_settings">
+				<?php wp_nonce_field('ttbm_ticket_type_nonce', 'ttbm_ticket_type_nonce'); ?>
+                <div id="ttbm_content" class="ttbm_configuration">
+                    <div class="ttbm_style ttbm_settings ">
                         <div class="ttbmTabs leftTabs d-flex justify-content-between">
-                            <ul class="tabLists">
+                            <ul class="tabLists _mL">
                                 <li data-tabs-target="#ttbm_general_info"><i class="fas fa-tools"></i><?php esc_html_e('General Info', 'tour-booking-manager'); ?> </li>
                                 <li data-tabs-target="#ttbm_settings_location" class="ttbm_settings_location"><i class="fas fa-map-marker-alt"></i><?php esc_html_e(' Location', 'tour-booking-manager'); ?></li>
-<!--                                <li data-tabs-target="#ttbm_settings_dates"><i class="far fa-calendar-plus"></i>--><?php //esc_html_e(' Date Configuration', 'tour-booking-manager'); ?><!--</li>-->
+                                <li data-tabs-target="#ttbm_settings_dates"><i class="far fa-calendar-plus"></i><?php esc_html_e(' Date Configuration', 'tour-booking-manager'); ?></li>
 								<?php do_action('ttbm_meta_box_tab_name', $tour_id); ?>
                                 <li data-tabs-target="#ttbm_settings_pricing"><i class="fas fa-hand-holding-usd"></i><?php esc_html_e(' Pricing', 'tour-booking-manager'); ?> </li>
                                 <li data-tabs-target="#ttbm_settings_extra_service"><i class="fas fa-parachute-box"></i><?php esc_html_e(' Extra Service', 'tour-booking-manager'); ?> </li>
@@ -62,212 +63,6 @@
 			//************************//
 			public function tour_settings_meta_box() {
 				$tour_label = TTBM_Function::get_name();
-				$ttbm_date_info_boxs = [
-					'page_nav' => esc_html__('Date Configuration', 'tour-booking-manager'),
-					'priority' => 10,
-					'sections' => [
-						'section_2' => [
-							'title' => esc_html__('Date Configuration', 'tour-booking-manager'),
-							'description' => esc_html__('Tour type and date time can be easily configured here, providing a crucial feature for recurring, fixed, or specific date tours.', 'tour-booking-manager'),
-							'options' => apply_filters('ttbm_date_info_boxs_meta_box', [
-								[
-									'id' => 'ttbm_travel_type',
-									'title' => $tour_label . esc_html__(' Type', 'tour-booking-manager'),
-									'details' => esc_html__('Please Select the Type', 'tour-booking-manager'),
-									'type' => 'select',
-									'class' => 'omg',
-									'default' => 'fixed',
-									'args' => TTBM_Function::travel_type_array(),
-								],
-								[
-									'id' => 'ttbm_travel_start_date',
-									'title' => esc_html__(' Check In Date', 'tour-booking-manager'),
-									'details' => esc_html__('Please Select the Start Date', 'tour-booking-manager'),
-									'date_format' => 'yy-mm-dd',
-									'placeholder' => 'yy-mm-dd',
-									'default' => '', // today date
-									'type' => 'datepicker',
-								],
-								[
-									'id' => 'ttbm_travel_start_date_time',
-									'title' => esc_html__(' Check in Time', 'tour-booking-manager'),
-									'details' => esc_html__('Please Select the Start Time', 'tour-booking-manager'),
-									'date_format' => 'yy-mm-dd',
-									'placeholder' => 'yy-mm-dd',
-									'default' => '', // today date
-									'type' => 'time',
-								],
-								[
-									'id' => 'ttbm_travel_end_date',
-									'title' => esc_html__(' Check out Date', 'tour-booking-manager'),
-									'details' => esc_html__('Please Enter the End Date', 'tour-booking-manager'),
-									'type' => 'datepicker',
-									'date_format' => 'yy-mm-dd',
-									'placeholder' => 'yy-mm-dd',
-									'default' => '', // today date
-								],
-								[
-									'id' => 'ttbm_travel_reg_end_date',
-									'title' => esc_html__(' Registration End Date', 'tour-booking-manager'),
-									'details' => esc_html__('Please Select the Registration End Date', 'tour-booking-manager'),
-									'date_format' => 'yy-mm-dd',
-									'placeholder' => 'yy-mm-dd',
-									'default' => '', // today date
-									'type' => 'datepicker',
-								],
-								[
-									'id' => 'ttbm_particular_dates',
-									'title' => esc_html__('Dates', 'tour-booking-manager') . TTBM_Layout::pro_text(),
-									'details' => esc_html__('Please Enter All Dates', 'tour-booking-manager'),
-									'collapsible' => true,
-									'type' => 'repeatable',
-									'title_field' => 'ttbm_particular_start_date',
-									'btn_text' => esc_html__('Add New Particular Date & Time', 'tour-booking-manager'),
-									'fields' => array(array('type' => 'date', 'args' => '', 'default' => 'option_1', 'item_id' => 'ttbm_particular_start_date', 'name' => esc_html__('Check in Date', 'tour-booking-manager'),), array('type' => 'time', 'args' => '', 'default' => 'option_1', 'item_id' => 'ttbm_particular_start_time', 'name' => __('Check in Time', 'tour-booking-manager'),), array('type' => 'date', 'args' => '', 'default' => 'option_1', 'item_id' => 'ttbm_particular_end_date', 'name' => __('Check out Date', 'tour-booking-manager'),)),
-								],
-								[
-									'id' => 'ttbm_travel_repeated_start_date',
-									'title' => __(' First Tour Date of Recurring Tour', 'tour-booking-manager'),
-									'details' => __('Please Select the First Tour Date of Recurring Tour span', 'tour-booking-manager'),
-									'date_format' => 'yy-mm-dd',
-									'placeholder' => 'yy-mm-dd',
-									'default' => '',
-									// today date
-									'type' => 'datepicker',
-								],
-								[
-									'id' => 'ttbm_travel_repeated_end_date',
-									'title' => __(' Last Tour Date of Recurring Tour', 'tour-booking-manager'),
-									'details' => __('Please Select the Last Tour Date of Recurring Tour span', 'tour-booking-manager'),
-									'date_format' => 'yy-mm-dd',
-									'placeholder' => 'yy-mm-dd',
-									'default' => '',
-									// today date
-									'type' => 'datepicker',
-								],
-								array(
-									'id' => 'ttbm_travel_repeated_after',
-									'title' => __(' Repeated After', 'tour-booking-manager'),
-									'details' => __('Please Enter the Duration of Repeat', 'tour-booking-manager'),
-									'type' => 'text',
-									'default' => '',
-									'placeholder' => __('3', 'tour-booking-manager'),
-								),
-								array(
-									'id' => 'mep_disable_ticket_time',
-									'title' => __('Display Time?', 'tour-booking-manager') . TTBM_Layout::pro_text(),
-									'details' => __('If you want to display time please check this Yes', 'tour-booking-manager'),
-									'type' => 'checkbox',
-									'default' => '',
-									'args' => array('yes' => __('Yes', 'tour-booking-manager')),
-								),
-								array(
-									'id' => 'mep_ticket_times_global',
-									'title' => __('Default Times', 'tour-booking-manager') . TTBM_Layout::pro_text(),
-									'details' => __('Please Enter Add Ticket Times', 'tour-booking-manager'),
-									'collapsible' => true,
-									'type' => 'repeatable',
-									'title_field' => 'mep_ticket_time_name',
-									'btn_text' => 'Add New Time Default/Global Time',
-									'fields' => array(array('type' => 'text', 'args' => '', 'default' => '', 'item_id' => 'mep_ticket_time_name', 'name' => 'Time Slot Label',), array('type' => 'time', 'args' => '', 'default' => 'option_1', 'item_id' => 'mep_ticket_time', 'name' => 'Time',)),
-								),
-								array(
-									'id' => 'mep_ticket_times_sat',
-									'title' => __('Saturday Ticket Time', 'tour-booking-manager') . TTBM_Layout::pro_text(),
-									'details' => __('Please Enter Add Ticket Times', 'tour-booking-manager'),
-									'collapsible' => true,
-									'type' => 'repeatable',
-									'title_field' => 'mep_ticket_time_name',
-									'btn_text' => 'Add New Time Fro Saturday',
-									'fields' => array(array('type' => 'text', 'args' => '', 'default' => '', 'item_id' => 'mep_ticket_time_name', 'name' => 'Time Slot Label',), array('type' => 'time', 'args' => '', 'default' => 'option_1', 'item_id' => 'mep_ticket_time', 'name' => 'Time',),),
-								),
-								array(
-									'id' => 'mep_ticket_times_sun',
-									'title' => __('Sunday Ticket Time', 'tour-booking-manager') . TTBM_Layout::pro_text(),
-									'details' => __('Please Enter Add Ticket Times', 'tour-booking-manager'),
-									'collapsible' => true,
-									'type' => 'repeatable',
-									'title_field' => 'mep_ticket_time_name',
-									'btn_text' => 'Add New Time Fro Sunday',
-									'fields' => array(array('type' => 'text', 'args' => '', 'default' => '', 'item_id' => 'mep_ticket_time_name', 'name' => 'Time Slot Label',), array('type' => 'time', 'args' => '', 'default' => 'option_1', 'item_id' => 'mep_ticket_time', 'name' => 'Time',)),
-								),
-								array(
-									'id' => 'mep_ticket_times_mon',
-									'title' => __('Monday Ticket Time', 'tour-booking-manager') . TTBM_Layout::pro_text(),
-									'details' => __('Please Enter Add Ticket Times', 'tour-booking-manager'),
-									'collapsible' => true,
-									'type' => 'repeatable',
-									'title_field' => 'mep_ticket_time_name',
-									'btn_text' => 'Add New Time For Monday',
-									'fields' => array(array('type' => 'text', 'args' => '', 'default' => '', 'item_id' => 'mep_ticket_time_name', 'name' => 'Time Slot Label',), array('type' => 'time', 'args' => '', 'default' => 'option_1', 'item_id' => 'mep_ticket_time', 'name' => 'Time',)),
-								),
-								array(
-									'id' => 'mep_ticket_times_tue',
-									'title' => __('Tuesday Ticket Time', 'tour-booking-manager') . TTBM_Layout::pro_text(),
-									'details' => __('Please Enter Add Ticket Times', 'tour-booking-manager'),
-									'collapsible' => true,
-									'type' => 'repeatable',
-									'title_field' => 'mep_ticket_time_name',
-									'btn_text' => 'Add New Time For Tuesday',
-									'fields' => array(array('type' => 'text', 'args' => '', 'default' => '', 'item_id' => 'mep_ticket_time_name', 'name' => 'Time Slot Label',), array('type' => 'time', 'default' => 'option_1', 'args' => '', 'item_id' => 'mep_ticket_time', 'name' => 'Time',)),
-								),
-								array(
-									'id' => 'mep_ticket_times_wed',
-									'title' => __('Wednesday Ticket Time', 'tour-booking-manager') . TTBM_Layout::pro_text(),
-									'details' => __('Please Enter Add Ticket Times', 'tour-booking-manager'),
-									'collapsible' => true,
-									'type' => 'repeatable',
-									'title_field' => 'mep_ticket_time_name',
-									'btn_text' => 'Add New Time For Wednesday',
-									'fields' => array(array('type' => 'text', 'args' => '', 'default' => '', 'item_id' => 'mep_ticket_time_name', 'name' => 'Time Slot Label',), array('type' => 'time', 'default' => 'option_1', 'args' => '', 'item_id' => 'mep_ticket_time', 'name' => 'Time',)),
-								),
-								array(
-									'id' => 'mep_ticket_times_thu',
-									'title' => __('Thursday Ticket Time', 'tour-booking-manager') . TTBM_Layout::pro_text(),
-									'details' => __('Please Enter Add Ticket Times', 'tour-booking-manager'),
-									'collapsible' => true,
-									'type' => 'repeatable',
-									'title_field' => 'mep_ticket_time_name',
-									'btn_text' => 'Add New Time For Thursday',
-									'fields' => array(array('type' => 'text', 'args' => '', 'default' => '', 'item_id' => 'mep_ticket_time_name', 'name' => 'Time Slot Label',), array('type' => 'time', 'default' => 'option_1', 'args' => '', 'item_id' => 'mep_ticket_time', 'name' => 'Time',)),
-								),
-								array(
-									'id' => 'mep_ticket_times_fri',
-									'title' => __('Friday Ticket Time', 'tour-booking-manager') . TTBM_Layout::pro_text(),
-									'details' => __('Please Enter Add Ticket Times', 'tour-booking-manager'),
-									'collapsible' => true,
-									'type' => 'repeatable',
-									'title_field' => 'mep_ticket_time_name',
-									'btn_text' => 'Add New Time for Friday',
-									'fields' => array(array('type' => 'text', 'args' => '', 'default' => '', 'item_id' => 'mep_ticket_time_name', 'name' => 'Time Slot Label',), array('type' => 'time', 'default' => '', 'args' => '', 'item_id' => 'mep_ticket_time', 'name' => 'Time',)),
-								),
-								array(
-									'id' => 'mep_ticket_offdays',
-									'title' => __('Ticket Offdays', 'tour-booking-manager') . TTBM_Layout::pro_text(),
-									'details' => __('Please select the offday days. Ticket will be not available on the selected days', 'tour-booking-manager'),
-									'type' => 'select2',
-									'class' => 'ttbm_select2',
-									'default' => '',
-									'multiple' => true,
-									'args' => array('sun' => __('Sunday', 'tour-booking-manager'), 'mon' => __('Monday', 'tour-booking-manager'), 'tue' => __('Tuesday', 'tour-booking-manager'), 'wed' => __('Wednesday', 'tour-booking-manager'), 'thu' => __('Thursday', 'tour-booking-manager'), 'fri' => __('Friday', 'tour-booking-manager'), 'sat' => __('Saturday', 'tour-booking-manager'),),
-								),
-								array(
-									'id' => 'mep_ticket_off_dates',
-									'title' => __('Ticket Off Dates List', 'tour-booking-manager') . TTBM_Layout::pro_text(),
-									'details' => __('If you want to off selling ticket on particular dates please select them', 'tour-booking-manager'),
-									'collapsible' => true,
-									'type' => 'repeatable',
-									'title_field' => 'mep_ticket_off_date',
-									'btn_text' => 'Add New Off Date',
-									'fields' => array(array('type' => 'date', 'default' => 'option_1', 'args' => '', 'item_id' => 'mep_ticket_off_date', 'name' => 'OffDate',)),
-								)
-							])
-						],
-					],
-				];
-				$ttbm_date_config_boxs_args = ['meta_box_id' => 'ttbm_travel_date_config_meta_boxes',
-					'meta_box_title' => '<i class="far fa-calendar-plus"></i>' . __('Date Configuration', 'tour-booking-manager'), 'screen' => [TTBM_Function::get_cpt_name()], 'context' => 'normal', 'priority' => 'high', 'callback_args' => [], 'nav_position' => 'none', 'item_name' => "MagePeople", 'item_version' => "2.0", 'panels' => ['ttbm_date_config_meta_boxs' => $ttbm_date_info_boxs]];
-				new TtbmAddMetaBox($ttbm_date_config_boxs_args);
 				$ttbm_tax_meta_boxs = [
 					'page_nav' => $tour_label . __('Tax', 'tour-booking-manager'),
 					'priority' => 10,
@@ -441,9 +236,12 @@
 			}
 			//********************//
 			public function save_settings($tour_id) {
+				//echo '<pre>';print_r($_POST);echo '</pre>';die();
 				if (!isset($_POST['ttbm_ticket_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_ticket_type_nonce'])), 'ttbm_ticket_type_nonce') && defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && !current_user_can('edit_post', $tour_id)) {
+					//echo '<pre>';print_r($_POST['ttbm_ticket_type_nonce']);echo '</pre>';die();
 					return;
 				}
+				//echo '<pre>';print_r($_POST);echo '</pre>';die();
 				/*******Genarel********/
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
 					$ttbm_travel_duration = isset($_POST['ttbm_travel_duration']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_duration'])) : '';
@@ -527,6 +325,96 @@
 					update_post_meta($tour_id, 'ttbm_map_latitude', $map_latitude);
 					update_post_meta($tour_id, 'ttbm_map_longitude', $map_longitude);
 				}
+				//*********Date**************//
+				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
+					$ttbm_travel_type = isset($_POST['ttbm_travel_type']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_type'])) : '';
+					update_post_meta($tour_id, 'ttbm_travel_type', $ttbm_travel_type);
+					/***************/
+					$ttbm_travel_start_date = isset($_POST['ttbm_travel_start_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_start_date'])) : '';
+					$ttbm_travel_start_date_time = isset($_POST['ttbm_travel_start_date_time']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_start_date_time'])) : '';
+					$ttbm_travel_start_date = $ttbm_travel_start_date ? gmdate('Y-m-d', strtotime($ttbm_travel_start_date)) : '';
+					update_post_meta($tour_id, 'ttbm_travel_start_date', $ttbm_travel_start_date);
+					update_post_meta($tour_id, 'ttbm_travel_start_date_time', $ttbm_travel_start_date_time);
+					$ttbm_travel_end_time = isset($_POST['ttbm_travel_end_time']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_end_time'])) : '';
+					$ttbm_travel_end_date = isset($_POST['ttbm_travel_end_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_end_date'])) : '';
+					$ttbm_travel_end_date = $ttbm_travel_end_date ? gmdate('Y-m-d', strtotime($ttbm_travel_end_date)) : '';
+					update_post_meta($tour_id, 'ttbm_travel_end_date', $ttbm_travel_end_date);
+					update_post_meta($tour_id, 'ttbm_travel_end_time', $ttbm_travel_end_time);
+					$reg_end_time = isset($_POST['reg_end_time']) ? sanitize_text_field(wp_unslash($_POST['reg_end_time'])) : '';
+					$ttbm_travel_reg_end_date = isset($_POST['ttbm_travel_reg_end_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_reg_end_date'])) : '';
+					$ttbm_travel_reg_end_date = $ttbm_travel_reg_end_date ? gmdate('Y-m-d', strtotime($ttbm_travel_reg_end_date)) : '';
+					update_post_meta($tour_id, 'ttbm_travel_reg_end_date', $ttbm_travel_reg_end_date);
+					update_post_meta($tour_id, 'reg_end_time', $reg_end_time);
+					/***************/
+					$particular_dates = [];
+					$checkin_dates = isset($_POST['ttbm_particular_start_date']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_particular_start_date'])) : [];
+					$checkout_dates = isset($_POST['ttbm_particular_end_date']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_particular_end_date'])) : [];
+					$checkin_times = isset($_POST['ttbm_particular_start_time']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_particular_start_time'])) : [];
+					if (sizeof($checkin_dates) > 0) {
+						foreach ($checkin_dates as $key => $checkin_date) {
+							if ($checkin_date) {
+								$particular_dates[$key]['ttbm_particular_start_date'] = gmdate('Y-m-d', strtotime($checkin_date));
+								$particular_dates[$key]['ttbm_particular_end_date'] = array_key_exists($key, $checkout_dates) && $checkout_dates[$key] ? gmdate('Y-m-d', strtotime($checkout_dates[$key])) : '';
+								$particular_dates[$key]['ttbm_particular_start_time'] = array_key_exists($key, $checkin_times) && $checkin_times[$key] ? $checkin_times[$key] : '';
+							}
+						}
+					}
+					update_post_meta($tour_id, 'ttbm_particular_dates', $particular_dates);
+					/***************/
+					$ttbm_travel_repeated_start_date = isset($_POST['ttbm_travel_repeated_start_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_start_date'])) : '';
+					update_post_meta($tour_id, 'ttbm_travel_repeated_start_date', $ttbm_travel_repeated_start_date);
+					$ttbm_travel_repeated_start_time = isset($_POST['ttbm_travel_repeated_start_time']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_start_time'])) : '';
+					update_post_meta($tour_id, 'ttbm_travel_repeated_start_time', $ttbm_travel_repeated_start_time);
+					$ttbm_travel_repeated_after = isset($_POST['ttbm_travel_repeated_after']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_after'])) : 1;
+					update_post_meta($tour_id, 'ttbm_travel_repeated_after', $ttbm_travel_repeated_after);
+					$ttbm_repeat_type = isset($_POST['ttbm_repeat_type']) ? sanitize_text_field(wp_unslash($_POST['ttbm_repeat_type'])) : '';
+					update_post_meta($tour_id, 'ttbm_repeat_type', $ttbm_repeat_type);
+					$ttbm_repeat_number = isset($_POST['ttbm_repeat_number']) ? sanitize_text_field(wp_unslash($_POST['ttbm_repeat_number'])) : '';
+					update_post_meta($tour_id, 'ttbm_repeat_number', $ttbm_repeat_number);
+					$ttbm_travel_repeated_end_date = isset($_POST['ttbm_travel_repeated_end_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_end_date'])) : '';
+					if ($ttbm_repeat_type == 'occurrence' && $ttbm_travel_repeated_end_date) {
+						$day_count = $ttbm_repeat_number * $ttbm_travel_repeated_after;
+						$ttbm_travel_repeated_end_date = gmdate('Y-m-d', strtotime($ttbm_travel_repeated_start_date . ' +' . $day_count . ' day'));
+					}
+					update_post_meta($tour_id, 'ttbm_travel_repeated_end_date', $ttbm_travel_repeated_end_date);
+					$display_time = isset($_POST['mep_disable_ticket_time']) && sanitize_text_field(wp_unslash($_POST['mep_disable_ticket_time'])) ? 'yes' : 'no';
+					update_post_meta($tour_id, 'mep_disable_ticket_time', $display_time);
+					$all_time_slot_infos = TTBM_Settings_Dates::time_slot_array();
+					//echo '<pre>';print_r($all_time_slot_infos);echo '</pre>';die();
+					if (sizeof($all_time_slot_infos) > 0) {
+						foreach ($all_time_slot_infos as $meta_key => $value) {
+							$label_key = array_key_exists('label_key', $value) && $value['label_key'] ? $value['label_key'] : '';
+							$time_key = array_key_exists('time_key', $value) && $value['time_key'] ? $value['time_key'] : '';
+							$default_time_info = [];
+							$default_labels = isset($_POST[$label_key]) ? array_map('sanitize_text_field', wp_unslash($_POST[$label_key])) : [];
+							$default_times = isset($_POST[$time_key]) ? array_map('sanitize_text_field', wp_unslash($_POST[$time_key])) : [];
+							if (sizeof($default_times) > 0) {
+								foreach ($default_times as $key => $default_time) {
+									if ($default_time) {
+										$default_time_info[$key]['mep_ticket_time_name'] = array_key_exists($key, $default_labels) && $default_labels[$key] ? $default_labels[$key] : '';
+										$default_time_info[$key]['mep_ticket_time'] = $default_time;
+									}
+								}
+							}
+							//echo '<pre>';print_r($default_time_info);echo '</pre>';die();
+							update_post_meta($tour_id, $meta_key, $default_time_info);
+						}
+					}
+					/***************/
+					$off_days = isset($_POST['mep_ticket_offdays']) ? sanitize_text_field(wp_unslash($_POST['mep_ticket_offdays'])) : '';
+					$off_days = $off_days ? explode(',', $off_days) : '';
+					update_post_meta($tour_id, 'mep_ticket_offdays', $off_days);
+					$all_off_dates = [];
+					$off_dates = isset($_POST['mep_ticket_off_dates']) ? array_map('sanitize_text_field', wp_unslash($_POST['mep_ticket_off_dates'])) : [];
+					if (sizeof($off_dates) > 0) {
+						foreach ($off_dates as $key => $off_date) {
+							if ($off_date) {
+								$all_off_dates[$key]['mep_ticket_off_date'] = $off_date;
+							}
+						}
+					}
+					update_post_meta($tour_id, 'mep_ticket_off_dates', $all_off_dates);
+				}
 				//*********Display**************//
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
 					$content_title_style = isset($_POST['ttbm_section_title_style']) ? sanitize_text_field(wp_unslash($_POST['ttbm_section_title_style'])) : 'style_1';
@@ -554,10 +442,9 @@
 					//*********FAQ**************//
 					$faq = isset($_POST['ttbm_display_faq']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_faq'])) ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_faq', $faq);
-                    $display_activities = isset($_POST['ttbm_display_activities']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_activities'])) ? 'on' : 'off';
-
-                    $display_top_picks_deals = isset($_POST['ttbm_display_top_picks_deals']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_top_picks_deals'])) ? 'on' : 'off';
-                    $top_picks_deals = isset($_POST['ttbm_top_picks_deals']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_top_picks_deals'])) : [];
+					$display_activities = isset($_POST['ttbm_display_activities']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_activities'])) ? 'on' : 'off';
+					$display_top_picks_deals = isset($_POST['ttbm_display_top_picks_deals']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_top_picks_deals'])) ? 'on' : 'off';
+					$top_picks_deals = isset($_POST['ttbm_top_picks_deals']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_top_picks_deals'])) : [];
 					//*********Activities**************//
 					update_post_meta($tour_id, 'ttbm_display_activities', $display_activities);
 					update_post_meta($tour_id, 'ttbm_display_top_picks_deals', $display_top_picks_deals);
@@ -697,17 +584,16 @@
 					update_post_meta($tour_id, 'ttbm_display_related', $related);
 					update_post_meta($tour_id, 'ttbm_related_tour', $related_tours);
 				}
-                //*********features**************//
+				//*********features**************//
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
 					$display_feature = isset($_POST['ttbm_display_include_service']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_include_service'])) ? 'on' : 'off';
-					$feature = isset($_POST['ttbm_service_included_in_price']) ? sanitize_text_field(wp_unslash($_POST['ttbm_service_included_in_price'])) :'';
-					$feature_info=TTBM_Function::feature_id_to_array($feature);
+					$feature = isset($_POST['ttbm_service_included_in_price']) ? sanitize_text_field(wp_unslash($_POST['ttbm_service_included_in_price'])) : '';
+					$feature_info = TTBM_Function::feature_id_to_array($feature);
 					update_post_meta($tour_id, 'ttbm_display_include_service', $display_feature);
 					update_post_meta($tour_id, 'ttbm_service_included_in_price', $feature_info);
-
 					$display_ex_feature = isset($_POST['ttbm_display_exclude_service']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_exclude_service'])) ? 'on' : 'off';
-					$feature_ex = isset($_POST['ttbm_service_excluded_in_price']) ? sanitize_text_field(wp_unslash($_POST['ttbm_service_excluded_in_price'])) :'';
-					$feature_info_ex=TTBM_Function::feature_id_to_array($feature_ex);
+					$feature_ex = isset($_POST['ttbm_service_excluded_in_price']) ? sanitize_text_field(wp_unslash($_POST['ttbm_service_excluded_in_price'])) : '';
+					$feature_info_ex = TTBM_Function::feature_id_to_array($feature_ex);
 					update_post_meta($tour_id, 'ttbm_display_exclude_service', $display_ex_feature);
 					update_post_meta($tour_id, 'ttbm_service_excluded_in_price', $feature_info_ex);
 				}

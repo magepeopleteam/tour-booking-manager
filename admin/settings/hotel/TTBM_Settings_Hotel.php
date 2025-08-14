@@ -15,7 +15,7 @@
 			public function hotel_settings() {
 				$hotel_id = get_the_id();
 				?>
-                <div class="ttbm_style ttbm_settings">
+                <div id="ttbm_content" class="ttbm_style ttbm_settings">
                     <div class="ttbmTabs leftTabs">
                         <ul class="tabLists">
                             <li data-tabs-target="#ttbm_general_info">

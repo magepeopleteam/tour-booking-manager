@@ -1,27 +1,6 @@
 (function ($) {
     "use strict";
-    $(document).on('click', '.ttbm_add_item', function () {
-        let parent = $(this).closest('.ttbm_settings_area');
-        let item = parent.find('>.ttbm_hidden_content').first().find('.ttbm_hidden_item').html();
-        ttbm_load_sortable_datepicker(parent, item);
-        parent.find('.ttbm_item_insert').find('.add_ttbm_select2').select2({});
-        return true;
-    });
-    $(document).on("click", ".ttbm_remove_icon", function (e) {
-        e.preventDefault();
-        if (
-            confirm(
-                "Are You Sure , Remove this row ? \n\n 1. Ok : To Remove . \n 2. Cancel : To Cancel ."
-            )
-        ) {
-            $(this).closest(".ttbm_remove_area").slideUp(250).remove();
-            return true;
-        } else {
-            return false;
-        }
-    });
-
-    $(document).on( 'click' ,'.ttbm_copy_btn', function( e ) {
+    $(document).on('click', '.ttbm_copy_btn', function (e) {
         e.preventDefault();
         var shortcodeText = $(this).siblings('.ttbm_shortcode_text').text();
         var tempInput = $('<input>');
@@ -29,12 +8,11 @@
         tempInput.val(shortcodeText).select();
         document.execCommand('copy');
         tempInput.remove();
-        $(this).text('Copied!').delay(1500).queue(function(next){
+        $(this).text('Copied!').delay(1500).queue(function (next) {
             $(this).text('Copy');
             next();
         });
     });
-
 }(jQuery));
 (function ($) {
     "use strict";
@@ -68,7 +46,7 @@
         if (form_id) {
             $.ajax({
                 type: 'POST', url: ttbm_ajax_url, data: {
-                    "action": "get_ttbm_insert_ticket_type", "form_id": form_id, "post_id": post_id,nonce: ttbm_admin_ajax.nonce,
+                    "action": "get_ttbm_insert_ticket_type", "form_id": form_id, "post_id": post_id, nonce: ttbm_admin_ajax.nonce,
                 }, beforeSend: function () {
                     dLoader(parent);
                 }, success: function (data) {
@@ -78,7 +56,6 @@
             });
         }
     });
-    
     //*********Day wise details************//
     $(document).on('click', '.ttbm_add_day_wise_details', function () {
         let $this = $(this);
@@ -86,7 +63,7 @@
         let dt = new Date();
         let time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
         $.ajax({
-            type: 'POST', url: ttbm_ajax_url, data: {"action": "get_ttbm_add_day_wise_details", "id": time,nonce: ttbm_admin_ajax.nonce,}, beforeSend: function () {
+            type: 'POST', url: ttbm_ajax_url, data: {"action": "get_ttbm_add_day_wise_details", "id": time, nonce: ttbm_admin_ajax.nonce,}, beforeSend: function () {
                 dLoader(parent);
             }, success: function (data) {
                 $this.before(data);
@@ -142,7 +119,7 @@
         if (name && image) {
             $.ajax({
                 type: 'POST', url: ttbm_ajax_url, data: {
-                    "action": "ttbm_new_location_save", "name": name, "description": description, "address": address, "country": country, "image": image, "_wp_nonce": parent.find('[name="ttbm_add_new_location_popup"]').val(),nonce: ttbm_admin_ajax.nonce
+                    "action": "ttbm_new_location_save", "name": name, "description": description, "address": address, "country": country, "image": image, "_wp_nonce": parent.find('[name="ttbm_add_new_location_popup"]').val(), nonce: ttbm_admin_ajax.nonce
                 }, beforeSend: function () {
                     dLoader(parent);
                 }, success: function () {
@@ -171,7 +148,7 @@
         let parent = $('.ttbm_location_select_area');
         $.ajax({
             type: 'POST', url: ttbm_ajax_url, data: {
-                "action": "ttbm_reload_location_list", "ttbm_id": ttbm_id,nonce: ttbm_admin_ajax.nonce
+                "action": "ttbm_reload_location_list", "ttbm_id": ttbm_id, nonce: ttbm_admin_ajax.nonce
             }, beforeSend: function () {
                 dLoader(parent);
             }, success: function (data) {
@@ -271,7 +248,7 @@
             url: ttbm_ajax_url,
             data: {
                 "action": "ttbm_reload_feature_list",
-                "ttbm_id": ttbm_id,nonce: ttbm_admin_ajax.nonce
+                "ttbm_id": ttbm_id, nonce: ttbm_admin_ajax.nonce
             },
             beforeSend: function () {
                 dLoader(parent);
@@ -336,7 +313,7 @@
         if (activity_name && activity_icon) {
             $.ajax({
                 type: 'POST', url: ttbm_ajax_url, data: {
-                    "action": "ttbm_new_activity_save", "activity_name": activity_name, "activity_description": activity_description, "activity_icon": activity_icon,"_wp_nonce": parent.find('[name="ttbm_add_new_activity_popup"]').val(),
+                    "action": "ttbm_new_activity_save", "activity_name": activity_name, "activity_description": activity_description, "activity_icon": activity_icon, "_wp_nonce": parent.find('[name="ttbm_add_new_activity_popup"]').val(),
                 }, beforeSend: function () {
                     dLoader(parent);
                 }, success: function () {
@@ -349,7 +326,7 @@
                     dLoaderRemove(parent);
                     if ($(this).hasClass('ttbm_new_activity_save_close')) {
                         $this.closest('.popupMainArea').find('.popupClose').trigger('click');
-                        setTimeout(function() {
+                        setTimeout(function () {
                             ttbm_reload_activity_list();
                         }, 300);
                     }
@@ -364,16 +341,14 @@
     var ttbm_checked_activities = [];
     function updateCheckedActivitiesHolder() {
         var checked = [];
-        $('.ttbm_activities_table input[name="ttbm_tour_activities[]"]:checked').each(function() {
+        $('.ttbm_activities_table input[name="ttbm_tour_activities[]"]:checked').each(function () {
             checked.push($(this).val());
         });
         $('#ttbm_checked_activities_holder').val(checked.join(','));
     }
-
-    $(document).on('change', '.ttbm_activities_table input[name="ttbm_tour_activities[]"]', function() {
+    $(document).on('change', '.ttbm_activities_table input[name="ttbm_tour_activities[]"]', function () {
         updateCheckedActivitiesHolder();
     });
-
     function ttbm_reload_activity_list() {
         var ttbm_id = $('[name="post_id"]').val();
         var parent = $('.ttbm_activities_table');
@@ -382,7 +357,7 @@
             url: ttbm_ajax_url,
             data: {
                 "action": "ttbm_reload_activity_list",
-                "ttbm_id": ttbm_id,nonce: ttbm_admin_ajax.nonce
+                "ttbm_id": ttbm_id, nonce: ttbm_admin_ajax.nonce
             },
             beforeSend: function () {
                 dLoader(parent);
@@ -392,7 +367,7 @@
                     parent.find('.ttbm_select2').select2({});
                     // Restore checked state from hidden field
                     var checked = $('#ttbm_checked_activities_holder').val().split(',');
-                    parent.find('input[name="ttbm_tour_activities[]"]').each(function() {
+                    parent.find('input[name="ttbm_tour_activities[]"]').each(function () {
                         if (checked.includes($(this).val())) {
                             $(this).prop('checked', true);
                         }
@@ -426,64 +401,10 @@
             $(this).closest('.ttbm_settings_place_you_see').find('.ttbm_place_you_see_form_area').html('');
         }
     });
-    function ttbm_reload_place_you_see() {
-        let ttbm_id = $('[name="post_id"]').val();
-        let parent = $('.ttbm_place_you_see_table');
-        $.ajax({
-            type: 'POST', url: ttbm_ajax_url, data: {
-                "action": "ttbm_reload_place_you_see_list", "ttbm_id": ttbm_id,nonce: ttbm_admin_ajax.nonce
-            }, beforeSend: function () {
-                dLoader(parent);
-            }, success: function (data) {
-                parent.empty().append(data);
-                return true;
-            }, error: function (response) {
-                console.log(response);
-            }
-        });
-    }
 }(jQuery));
 //====================//
 (function ($) {
     "use strict";
-    $(document).ready(function () {
-        ttbm_travel_type_change();
-    });
-    $(document).on('change', '#ttbm_travel_type', function () {
-        ttbm_travel_type_change();
-    });
-    function ttbm_travel_type_change() {
-        let ticket_type = $('#ttbm_travel_type').val();
-        let fixed = {
-            0: '#mage_row_ttbm_travel_reg_end_date', 1: '#mage_row_ttbm_travel_start_date', 2: '#mage_row_ttbm_travel_start_date_time', 3: '#mage_row_ttbm_travel_end_date'
-        };
-        let particular = {
-            0: '#mage_row_ttbm_particular_dates'
-        };
-        let repeated = {
-            0: '#mage_row_ttbm_travel_repeated_after', 1: '#mage_row_mep_disable_ticket_time', 2: '#mage_row_mep_ticket_times_global', 3: '#mage_row_mep_ticket_times_sat', 4: '#mage_row_mep_ticket_times_sun', 5: '#mage_row_mep_ticket_times_mon', 6: '#mage_row_mep_ticket_times_tue', 7: '#mage_row_mep_ticket_times_wed', 8: '#mage_row_mep_ticket_times_thu', 9: '#mage_row_mep_ticket_times_fri', 10: '#mage_row_mep_ticket_offdays', 11: '#mage_row_mep_ticket_off_dates', 12: '#mage_row_ttbm_travel_repeated_start_date', 13: '#mage_row_ttbm_travel_repeated_end_date', 14: '.ttbm_special_on_dates_setting',
-        };
-        if (ticket_type === 'fixed') {
-            ttbm_travel_type(fixed, particular, repeated)
-        }
-        if (ticket_type === 'particular') {
-            ttbm_travel_type(particular, fixed, repeated)
-        }
-        if (ticket_type === 'repeated') {
-            ttbm_travel_type(repeated, particular, fixed)
-        }
-    }
-    function ttbm_travel_type(visible, hidden_1, hidden_2) {
-        for (let id in hidden_1) {
-            $(hidden_1[id]).slideUp('fast');
-        }
-        for (let id in hidden_2) {
-            $(hidden_2[id]).slideUp('fast');
-        }
-        for (let id in visible) {
-            $(visible[id]).slideDown('fast');
-        }
-    }
     // =====================sidebar modal open close=============
     $(document).on('click', '[data-modal]', function (e) {
         const modalTarget = $(this).data('modal');
@@ -628,13 +549,12 @@
             }
         });
     }
-
     // faq sorting
-    $(document).on("ready", function(e) {
+    $(document).on("ready", function (e) {
         $(".ttbm-faq-items").sortable({
-            update: function(event, ui) {
+            update: function (event, ui) {
                 event.preventDefault();
-                var sortedIDs = $(this).sortable("toArray", { attribute: "data-id" });
+                var sortedIDs = $(this).sortable("toArray", {attribute: "data-id"});
                 $.ajax({
                     url: ttbm_admin_ajax.ajax_url,
                     type: 'POST',
@@ -655,7 +575,6 @@
             }
         });
     });
-
     // ================daywise sidebar modal=================//
     $(document).on('click', '.ttbm-daywise-item-new', function (e) {
         $('#ttbm-daywise-msg').html('');
@@ -792,13 +711,12 @@
             }
         });
     }
-
     // daywise sorting
-    $(document).on("ready", function(e) {
+    $(document).on("ready", function (e) {
         $(".ttbm-daywise-items").sortable({
-            update: function(event, ui) {
+            update: function (event, ui) {
                 event.preventDefault();
-                var sortedIDs = $(this).sortable("toArray", { attribute: "data-id" });
+                var sortedIDs = $(this).sortable("toArray", {attribute: "data-id"});
                 $.ajax({
                     url: ttbm_admin_ajax.ajax_url,
                     type: 'POST',
@@ -819,17 +737,14 @@
             }
         });
     });
-
-   //=================== tour lists load more===========================
-   $(document).on('click','#ttbm-load-more', function(e) {
+    //=================== tour lists load more===========================
+    $(document).on('click', '#ttbm-load-more', function (e) {
         e.preventDefault();
         const button = $(this);
         const paged = parseInt(button.attr('data-paged'));
         const postPerPage = button.data('posts-per-page');
         const nonce = button.data('nonce');
-
         let load_more_count = $(this).children('.ttbm_load_more_remaining_travel').text().trim();
-
         $.ajax({
             url: ttbm_admin_ajax.ajax_url,
             type: 'POST',
@@ -839,10 +754,10 @@
                 post_per_page: postPerPage,
                 nonce: nonce,
             },
-            beforeSend: function() {
+            beforeSend: function () {
                 button.text('Loading...');
             },
-            success: function(response) {
+            success: function (response) {
                 if (response.success && response.data.html) {
                     $('.ttbm-tour-list').append(response.data.html);
                     if (paged >= response.data.max_pages) {
@@ -850,7 +765,7 @@
                     } else {
                         let remainig_travel = load_more_count - response.data.count_travels;
                         button.attr('data-paged', paged + 1).text('Load More');
-                        let remaining_span = '(<span class="ttbm_load_more_remaining_travel">'+remainig_travel+'</span>)';
+                        let remaining_span = '(<span class="ttbm_load_more_remaining_travel">' + remainig_travel + '</span>)';
                         button.append(remaining_span);
                     }
                 } else {
@@ -859,11 +774,10 @@
             }
         });
     });
-
     //=================== tour lists search===========================
-    $(document).on('input','#ttbm-tour-search', function() {
+    $(document).on('input', '#ttbm-tour-search', function () {
         var search = $(this).val();
-        var nonce =  $(this).data('nonce');
+        var nonce = $(this).data('nonce');
         $.ajax({
             url: ttbm_admin_ajax.ajax_url,
             type: 'POST',
@@ -872,10 +786,10 @@
                 search_term: search,
                 nonce: ttbm_admin_ajax.nonce
             },
-            beforeSend: function() {
+            beforeSend: function () {
                 $('.ttbm-tour-list').text('Loading...');
             },
-            success: function(response) {
+            success: function (response) {
                 if (response.success && response.data.html) {
                     $('.ttbm-tour-list').html('');
                     $('.ttbm-tour-list').append(response.data.html);
@@ -890,7 +804,6 @@
             }
         });
     });
-
 }(jQuery));
 //==========search tour list page=================//
 (function ($) {
@@ -954,19 +867,16 @@
         }
         return false;
     });
-
     // ================Get Enquiry=================//
     $(document).ready(function ($) {
         // Only run tab logic on our plugin's settings page
         if ($('#ttbm-settings-page').length) {
             const tabs = $('#ttbm-settings-page .nav-tab');
             const contents = $('#ttbm-settings-page .tab-content');
-
             tabs.on('click', function (e) {
                 e.preventDefault();
                 tabs.removeClass('nav-tab-active');
                 contents.hide();
-
                 $(this).addClass('nav-tab-active');
                 const target = $(this).attr('href');
                 if (target && target.startsWith('#')) {
@@ -1022,11 +932,11 @@
         var formData = $(this).serialize();
         $.ajax({
             type: "POST",
-            url: ttbm_admin_ajax.ajax_url, 
+            url: ttbm_admin_ajax.ajax_url,
             data: {
                 action: 'ttbm_reply_enquiry',
                 nonce: ttbm_admin_ajax.nonce,
-                data:formData
+                data: formData
             },
             success: function (response) {
                 console.log(response);
@@ -1067,47 +977,38 @@
             }
         });
     });
-
     $(document).on('click', '#ttbm-enquiry-modal .modal-close', function () {
         $('#ttbm-enquiry-modal').removeClass('open');
     });
 }(jQuery));
-
 // =================Open Street map location search==================
-(function($) {
+(function ($) {
     // OpenStreetMap setup
     let osmMap, osmMarker, osmAutocomplete, osmGeocoder;
-    
     function initOSMMap() {
         let lati = parseFloat(document.getElementById('map_latitude')?.value) || 23.8103; // Default to Dhaka
         let longdi = parseFloat(document.getElementById('map_longitude')?.value) || 90.4125; // Default to Dhaka
-        
-        osmMap = L.map("osmap_canvas", { minZoom: 1, maxZoom: 20 }).setView([lati, longdi], 12);
-        
+        osmMap = L.map("osmap_canvas", {minZoom: 1, maxZoom: 20}).setView([lati, longdi], 12);
         // Add OSM tile layer
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(osmMap);
-    
         // Initialize the marker for OpenStreetMap (draggable)
-        osmMarker = L.marker([lati, longdi], { title: "Tour Location", draggable: true }).addTo(osmMap);
-    
+        osmMarker = L.marker([lati, longdi], {title: "Tour Location", draggable: true}).addTo(osmMap);
         // When the marker is dragged, update the latitude and longitude values
         osmMarker.on("dragend", function (e) {
             let newLatLng = osmMarker.getLatLng(); // Get new latitude and longitude
             document.getElementById('map_latitude').value = newLatLng.lat;
             document.getElementById('map_longitude').value = newLatLng.lng;
         });
-    
         // Initialize Autocomplete for OpenStreetMap search
         new Autocomplete("ttbm_osmap_location", {
             selectFirst: true,
             insertToInput: true,
             cache: true,
             howManyCharacters: 2,
-    
             // onSearch
-            onSearch: ({ currentValue }) => {
+            onSearch: ({currentValue}) => {
                 const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&city=${encodeURI(currentValue)}`;
                 return new Promise((resolve) => {
                     fetch(api)
@@ -1116,9 +1017,8 @@
                         .catch((error) => console.error(error));
                 });
             },
-    
             // onResults
-            onResults: ({ currentValue, matches, template }) => {
+            onResults: ({currentValue, matches, template}) => {
                 const regex = new RegExp(currentValue, "gi");
                 return matches.length === 0
                     ? template(`<li>No results found: "${currentValue}"</li>`)
@@ -1128,43 +1028,33 @@
                         </li>`
                     ).join("");
             },
-    
             // onSubmit
-            onSubmit: ({ object }) => {
-                const { display_name } = object.properties;
+            onSubmit: ({object}) => {
+                const {display_name} = object.properties;
                 const [lng, lat] = object.geometry.coordinates;
-    
                 // Set new marker position
                 osmMarker.setLatLng([lat, lng]);
-    
                 // Update input fields
                 document.getElementById('map_latitude').value = lat;
                 document.getElementById('map_longitude').value = lng;
-    
                 // Move map to new location
                 osmMap.setView([lat, lng], 12);
             },
-    
             // onSelectedItem
-            onSelectedItem: ({ index, element, object }) => {
-                console.log("onSelectedItem:", { index, element, object });
+            onSelectedItem: ({index, element, object}) => {
+                console.log("onSelectedItem:", {index, element, object});
             },
-    
             // noResults
-            noResults: ({ currentValue, template }) => template(`<li>No results found: "${currentValue}"</li>`),
+            noResults: ({currentValue, template}) => template(`<li>No results found: "${currentValue}"</li>`),
         });
-    
         // Add fullscreen control
         const fsControl = L.control.fullscreen();
         osmMap.addControl(fsControl);
-    
         osmMap.on("enterFullscreen", () => console.log("Enter Fullscreen"));
         osmMap.on("exitFullscreen", () => console.log("Exit Fullscreen"));
     }
-    
     // ===========Google Map setup=============
     let gmap, gmapMarker, gmapAutocomplete, gmapGeocoder;
-
     $(document).on('click', '.ttbm_settings_location,[data-collapse-target="#ttbm_display_map"]', function () {
         if (gmap) {
             gmap = null;
@@ -1181,55 +1071,45 @@
             initOSMMap();
         }
     });
-
-
     function initGMap() {
         const latitudeEl = document.getElementById('map_latitude');
         const longitudeEl = document.getElementById('map_longitude');
         const gmapCanvas = document.getElementById('gmap_canvas');
-        
         // Check if required elements exist before proceeding
         if (!latitudeEl || !longitudeEl || !gmapCanvas) {
             return;
         }
-        
         let lati = parseFloat(latitudeEl.value);
         let longdi = parseFloat(longitudeEl.value);
-
         // Initialize Google Map
         gmap = new google.maps.Map(gmapCanvas, {
-            center: { lat: lati, lng: longdi },
+            center: {lat: lati, lng: longdi},
             zoom: 12,
             zoomControl: true,
             streetViewControl: false,
             mapTypeControl: false,
             scaleControl: true
         });
-
         // Initialize Google Marker
         gmapMarker = new google.maps.Marker({
-            position: { lat: lati, lng: longdi },
+            position: {lat: lati, lng: longdi},
             map: gmap,
             title: "Selected Location",
             draggable: true
         });
-
         // Initialize Google geocoder for reverse geocoding
         gmapGeocoder = new google.maps.Geocoder();
-
         // Update latitude and longitude when the marker is dragged
-        gmapMarker.addListener("dragend", function(event) {
+        gmapMarker.addListener("dragend", function (event) {
             document.getElementById('map_latitude').value = event.latLng.lat();
             document.getElementById('map_longitude').value = event.latLng.lng();
             reverseGeocode(event.latLng); // Update location name when dragging the marker
         });
-
         // Initialize Autocomplete for Google address input field
         gmapAutocomplete = new google.maps.places.Autocomplete(document.getElementById("ttbm_map_location"));
         gmapAutocomplete.addListener("place_changed", onPlaceChanged);
-
         // Add a click event listener to Google Map
-        gmap.addListener("click", function(event) {
+        gmap.addListener("click", function (event) {
             let clickedLatLng = event.latLng;
             gmapMarker.setPosition(clickedLatLng);
             document.getElementById('map_latitude').value = clickedLatLng.lat();
@@ -1237,10 +1117,9 @@
             reverseGeocode(clickedLatLng);
         });
     }
-
     // Reverse geocoding for Google Map
     function reverseGeocode(latLng) {
-        gmapGeocoder.geocode({ 'location': latLng }, function(results, status) {
+        gmapGeocoder.geocode({'location': latLng}, function (results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
                 if (results[0]) {
                     document.getElementById('ttbm_map_location').value = results[0].formatted_address;
@@ -1252,16 +1131,13 @@
             }
         });
     }
-
     // Handle place change for Google Map
     function onPlaceChanged() {
         let place = gmapAutocomplete.getPlace();
-
         if (!place.geometry) {
             console.error("No details available for the selected place.");
             return;
         }
-
         let location = place.geometry.location;
         gmap.setCenter(location);
         gmapMarker.setPosition(location);
@@ -1270,31 +1146,26 @@
         reverseGeocode(location);
     }
 })(jQuery);
-
 // New Activity Popup Logic
-(function($){
+(function ($) {
     "use strict";
-
     // Open popup and load form
-    $(document).on('click', '.open-activity-popup', function(e) {
+    $(document).on('click', '.open-activity-popup', function (e) {
         e.preventDefault();
         var $popup = $('[data-popup="add_new_activity_popup"]');
         var $formArea = $popup.find('.ttbm_activity_form_area');
         $formArea.html('<div class="loading">Loading...</div>');
         $popup.show();
-
-        $.post(ttbm_ajax_url, { action: 'load_ttbm_activity_form' }, function(data) {
+        $.post(ttbm_ajax_url, {action: 'load_ttbm_activity_form'}, function (data) {
             $formArea.html(data);
         });
     });
-
     // Close popup
-    $(document).on('click', '[data-popup="add_new_activity_popup"] .popupClose', function() {
+    $(document).on('click', '[data-popup="add_new_activity_popup"] .popupClose', function () {
         $(this).closest('[data-popup="add_new_activity_popup"]').hide();
     });
-
     // Save activity
-    $(document).on('click', '.ttbm_new_activity_save, .ttbm_new_activity_save_close', function(event) {
+    $(document).on('click', '.ttbm_new_activity_save, .ttbm_new_activity_save_close', function (event) {
         var $popup = $('[data-popup="add_new_activity_popup"]');
         var $formArea = $popup.find('.ttbm_activity_form_area');
         var $parent = $popup.find('.popupMainArea');
@@ -1302,7 +1173,6 @@
         var description = $parent.find('[name="ttbm_activity_description"]').val();
         var icon = $parent.find('[name="ttbm_activity_icon"]').val();
         var nonce = $parent.find('[name="ttbm_add_new_activity_popup"]').val();
-
         // Simple validation
         if (!name) {
             $parent.find('[data-required="ttbm_activity_name"]').slideDown('fast');
@@ -1316,7 +1186,6 @@
         } else {
             $parent.find('[data-required="ttbm_activity_icon"]').slideUp('fast');
         }
-
         // Save via AJAX
         $.post(ttbm_ajax_url, {
             action: 'ttbm_new_activity_save',
@@ -1324,7 +1193,7 @@
             activity_description: description,
             activity_icon: icon,
             _wp_nonce: nonce
-        }, function(response) {
+        }, function (response) {
             // Optionally handle response
             $parent.find('[name="ttbm_activity_name"]').val('');
             $parent.find('[name="ttbm_activity_description"]').val('');
@@ -1333,22 +1202,19 @@
             ttbm_reload_activity_list();
             if ($(event.target).hasClass('ttbm_new_activity_save_close')) {
                 $popup.hide();
-                setTimeout(function() {
+                setTimeout(function () {
                     ttbm_reload_activity_list();
                 }, 300);
             }
         });
-
         return false;
     });
-
     // Reload activity list
-    window.ttbm_reload_activity_list = function() {
+    window.ttbm_reload_activity_list = function () {
         var ttbm_id = $('[name="post_id"]').val();
         var $parent = $('.ttbm_activities_table');
-        $.post(ttbm_ajax_url, { action: 'ttbm_reload_activity_list', ttbm_id: ttbm_id }, function(data) {
+        $.post(ttbm_ajax_url, {action: 'ttbm_reload_activity_list', ttbm_id: ttbm_id}, function (data) {
             $parent.empty().append(data);
         });
     };
-
 })(jQuery);

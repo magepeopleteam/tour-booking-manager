@@ -10,22 +10,27 @@ $class_location = $class_location ?? '';
 ?>
 <div class="ttbm_default_theme">
     <div class='ttbm_style'>
-        <div class="ttbm-hotel-area ">
+        <div class="ttbm-hotel-area ttbm_hotel_item">
             <div class="ttbm-hero-header">
                 <div class="title-section">
-                    <span class="review-star">
-                        <i class="mi mi-star"></i>
-                        <i class="mi mi-star"></i>
-                        <i class="mi mi-star"></i>
-                        <i class="mi mi-star"></i>
-                        <i class="mi mi-star"></i>
-                    </span>
-                    <h1 class="title"><?php the_title(); ?></h1>
+                    <?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
+                    <h1 class="title"><?php do_action( 'ttbm_details_title' ); ?></h1>
                     <p class="location-info">
                         <i class="mi mi-marker"></i> 
                         <?php echo __('197/2 Moo 1, Tambol Pongyang, Amphur Mae Rim, 50180 Mae Rim, Thailand','tour-booking-manager'); ?>
                         <a href="#"><?php echo __('Great location - show map','tour-booking-manager'); ?></a>
                     </p>
+                    
+                    <?php
+                    if ( is_plugin_active( 'tour-booking-manager-pro/tour-booking-manager-pro.php' ) ):
+                        $location = TTBM_Function::get_full_location( $ttbm_post_id );
+                        if ( $location && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_hotel_location', 'on' ) != 'off' ) {
+                            ?>
+                            <span class="pL_xs pR_xs">|</span>
+                        <?php }
+                    endif;
+                    ?>
+                    <?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
                 </div>
                 <div class="sharing-meta">
                     <div class="sharing-info">
@@ -143,7 +148,10 @@ $class_location = $class_location ?? '';
                             </li>
                         </ul>
                     </div>
-                    <?php do_action( 'ttbm_make_hotel_booking', $ttbm_post_id );?>
+                    <div class="ttbm_hotel_content_area">
+                        <input type="hidden" id="ttbm_booking_hotel_id" value="<?php echo esc_attr( $ttbm_post_id )?>">
+                        <?php do_action('ttbm_make_hotel_booking', $ttbm_post_id );?>
+                    </div>
                     <?php 
                         $faqs = 
                         [

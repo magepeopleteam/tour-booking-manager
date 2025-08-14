@@ -202,8 +202,6 @@
 	div.ttbm_style .info_text {display: block;font-weight: normal;color: #666;width: 100%;margin: 5px 0 0 0;font-size: 12px;}
 	div.ttbm_style .info_text span {margin: 0 5px 0 0;}
 	/**************************/
-	span.textWarning { color: #FFF; background: #E10B0B; padding: 0 5px 4px 5px; border-radius: 5px; font-size: var(--ttbm_fs);font-weight: var(--fw-bold);}
-	span.textSuccess { color: var(--color_success); font-size: var(--ttbm_fs);}
 	.ttbm_style a[class*="customButton"] {
 		width: auto;height: 45px;font-size: 20px;font-weight: 500;position: relative;border-radius: 5px;margin: 20px 0 0 0;padding: 0 20px; color: #FFF;min-width: 170px;
 		background-image: -webkit-linear-gradient(#FF8F8E, #FF8787, #FF7B7D, #FF6369, #FF575F, #FF515A);

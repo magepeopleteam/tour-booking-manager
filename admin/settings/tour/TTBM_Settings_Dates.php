@@ -115,10 +115,10 @@
 							?>
                         </div>
 						<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Particular date', 'tour-booking-manager')); ?>
-                        <div class="ttbm_hidden_content">
-                            <div class="ttbm_hidden_item">
-								<?php self::particular_date_item(); ?>
-                            </div>
+                    </div>
+                    <div class="ttbm_hidden_content">
+                        <div class="ttbm_hidden_item">
+							<?php self::particular_date_item(); ?>
                         </div>
                     </div>
                 </div>
@@ -216,7 +216,7 @@
 												<?php foreach ($all_time_slot_infos as $key => $value) { ?>
                                                     <li data-tabs-target="#<?php echo esc_attr($key); ?>"><?php echo esc_html(array_key_exists('type', $value) && $value['type'] ? $value['type'] : ''); ?></li>
 												<?php } ?>
-                                                <?php do_action('ttbm_time_slot_tab'); ?>
+												<?php do_action('ttbm_time_slot_tab'); ?>
                                             </ul>
                                             <div class="tabsContent">
 												<?php
@@ -256,7 +256,7 @@
                                                             </div>
                                                         </div>
 													<?php } ?>
-	                                            <?php do_action('ttbm_time_slot_content',$tour_id); ?>
+												<?php do_action('ttbm_time_slot_content', $tour_id); ?>
                                             </div>
                                         </div>
 									<?php } ?>

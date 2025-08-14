@@ -160,7 +160,6 @@ if ( ! class_exists( 'TtbmAddMetaBox' ) ) {
 					?>
 					<div class="tab-content <?php echo esc_attr($current_page == 1 ? 'active':'');  ?>  tab-content-<?php echo esc_html($panelsIndex); ?>" id="<?php echo esc_html($panelsIndex); ?>">
 						<?php
-						wp_nonce_field('ttbm_ticket_type_nonce', 'ttbm_ticket_type_nonce');
 						foreach ( $panel['sections'] as $sectionIndex => $section ):
 							?>
 								<h2 class="date-configeration"><?php echo esc_html($section['title']); ?></h2>

@@ -55,7 +55,7 @@
 			</div>
 			
 		</div>
-		<div data-popup="include-exclude-popup" class="ttbm_popup ttbm_style">
+		<div data-popup="include-exclude-popup" class="ttbm_popup">
 			<div class="popupMainArea">
 				<div class="popupHeader allCenter">
 					<h2 class="ttbm_description_title _mR"><?php esc_html_e('What\'s Included','tour-booking-manager'); ?></h2>

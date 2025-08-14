@@ -60,7 +60,7 @@
 						?>
                     </div>
                     <div class="">
-						<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add Image', 'tour-booking-manager'), 'add_multi_image', '_themeButton_xs'); ?>
+						<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add Image', 'tour-booking-manager'), 'ttbm_add_multi_image', '_themeButton_xs'); ?>
                     </div>
                 </div>
 				<?php

@@ -24,7 +24,7 @@ if (!class_exists('TTBM_Promotional_Deals')) {
                         <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Top Picks Deals Setting', 'tour-booking-manager'); ?></h4>
                         <?php TTBM_Custom_Layout::switch_button('ttbm_display_top_picks_deals', $checked); ?>
                     </div>
-                    <div data-collapse="#ttbm_add_promotional_setting" class="ttbm_activities_area <?php echo esc_attr($active); ?>">
+                    <div data-collapse="#ttbm_display_top_picks_deals" class="ttbm_activities_area <?php echo esc_attr($active); ?>">
                         <div class="ttbm_activities_table">
                             <div class="includedd-features-section">
                                 <div class="groupCheckBox">

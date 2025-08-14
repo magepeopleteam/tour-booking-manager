@@ -11,7 +11,7 @@
 ?>
 <div class="ttbm_viator_theme">
 	<div class='ttbm_style ttbm_wraper viator_top_section'>
-		<div class="ttbm_container shadow_one">
+		<div class="ttbm_container _dShadow_1">
 			<div class="ttbm_details_page">
 				<?php do_action( 'ttbm_details_title' ); ?>
 				<?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>

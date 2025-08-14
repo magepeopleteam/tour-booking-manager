@@ -90,7 +90,12 @@
 					$now_date = strtotime(current_time('Y-m-d'));
 					$start_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_date');
 					$start_date = $start_date ? gmdate('Y-m-d', strtotime($start_date)) : '';
+					$ttbm_repeat_type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_repeat_type');
 					$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_end_date');
+					if($ttbm_repeat_type=='continue'){
+						$end_date=$start_date ? gmdate('Y-m-d', strtotime($start_date.' +365 day')):'';
+					}
+
 					$end_date = $end_date ? gmdate('Y-m-d', strtotime($end_date)) : '';
 					$off_days = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_offdays', array());
 					$all_off_dates = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_off_dates', array());
@@ -480,6 +485,9 @@
 			}
 			public static function travel_type_array(): array {
 				return array('fixed' => __('Fixed Dates', 'tour-booking-manager'), 'particular' => __('Particular Dates', 'tour-booking-manager'), 'repeated' => __('Repeated Dates', 'tour-booking-manager'));
+			}
+			public static function travel_repeat_array(): array {
+				return array('1' => __('Daily', 'tour-booking-manager'), '7' => __('Weekly', 'tour-booking-manager'), '30' => __('Monthly', 'tour-booking-manager'));
 			}
 			public static function get_tour_status($tour_id, $status = 'active') {
 				$tour_type = self::get_tour_type($tour_id);

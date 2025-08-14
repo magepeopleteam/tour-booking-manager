@@ -438,213 +438,58 @@
 /******************************************************************** Helper Section************************************************/
 @media only screen and (min-width: 10px) {
 	/********Helper Class***********/
-	.ttbm_style .divider,
-	.ttbm_style [class*="_divider"],
-	.ttbm_style hr {
-		margin: var(--ttbm_mp_xs) 0;
-		line-height: 1;
-		border-color: var(--color_border);
-		display: block;
-		height: 1px;
-		background-color: var(--color_border);
-		width: 100%;
-	}
-	.ttbm_style .divider_3,
-	.ttbm_style [class*="_divider_3"] {
-		margin: var(--ttbm_mp_xs) 0;
-		line-height: 1;
-		border-color: var(--color_border);
-		display: block;
-		height: 3px;
-		background-color: var(--color_border);
-		width: 100%;
-	}
-	.ttbm_style .dividerL,
-	.ttbm_style [class*="_dividerL"] {
-		margin: var(--ttbm_mp) 0;
-		line-height: 1;
-		border-color: var(--color_border);
-		display: block;
-		height: 1px;
-		background-color: var(--color_border);
-		width: 100%;
-	}
-	.ttbm_style .separatorRight > *,
-	.ttbm_style [class*="_separatorRight"] > * {
-		border-right: 2px solid var(--color_border);
-	}
-	.ttbm_style .separatorRight > *,
-	.ttbm_style [class*="_separatorRight"] > :last-child {
-		border-right: none;
-	}
-	div.ttbm_style .mpDisabled {
-		cursor: no-drop;
-		opacity: 0.7;
-		pointer-events: none;
-	}
-	.ttbm_style .strikeLine {
-		position: relative;
-		padding: 0 var(--ttbm_mp_xs);
-		color: var(--color_warning);
-	}
-	.ttbm_style .strikeLine:before {
-		content: " ";
-		display: block;
-		width: 100%;
-		border-top: 1px solid #8B0000AA;
-		position: absolute;
-		left: 0;
-		right: 0;
-		top: 11px;
-		transform: rotate(-11deg);
-	}
+	#ttbm_content .divider, #ttbm_content [class*="_divider"], #ttbm_content hr { margin: var(--ttbm_mp_xs) 0; line-height: 1; border-color: var(--color_border); display: block; height: 1px; background-color: var(--color_border); width: 100%; }
+	.ttbm_style .separatorRight > *, .ttbm_style [class*="_separatorRight"] > * { border-right: 2px solid var(--color_border); }
+	.ttbm_style .separatorRight > *, .ttbm_style [class*="_separatorRight"] > :last-child { border-right: none; }
+	div.ttbm_style .mpDisabled { cursor: no-drop; opacity: 0.7; pointer-events: none; }
+	.ttbm_style .strikeLine { position: relative; padding: 0 var(--ttbm_mp_xs); color: var(--color_warning); }
+	.ttbm_style .strikeLine:before { content: " "; display: block; width: 100%; border-top: 1px solid #8B0000AA; position: absolute; left: 0; right: 0; top: 11px; transform: rotate(-11deg); }
 	/**************/
-	.ttbm_style .rotate_90,
-	.ttbm_style [class*="_rotate_90"] {
-		transform: rotate(90deg);
-	}
+	.ttbm_style .rotate_90, .ttbm_style [class*="_rotate_90"] { transform: rotate(90deg); }
 	/**************/
 	div.ttbm_style .ttbm_hidden_content,
-	.ttbm_style .dNone,
-	.ttbm_style [class*="_dNone"] {
-		display: none;
-	}
-	.ttbm_style .dBlock,
-	.ttbm_style [class*="_dBlock"] {
-		display: block;
-	}
+	.ttbm_style .dNone, .ttbm_style [class*="_dNone"] { display: none; }
+	.ttbm_style .dBlock, .ttbm_style [class*="_dBlock"] { display: block; }
 	.ttbm_style .dInlineBlock,
 	.ttbm_style [class*="_dInlineBlock"],
 	.ttbm_style small,
 	.ttbm_style span,
-	.ttbm_style strong {
-		display: inline-block;
-	}
+	.ttbm_style strong { display: inline-block; }
 	/**************/
-	.ttbm_style .fLeft,
-	.ttbm_style [class*="_fLeft"] {
-		float: left;
-	}
-	.ttbm_style .fRight,
-	.ttbm_style [class*="_fRight"] {
-		float: right;
-	}
+	.ttbm_style .fLeft, .ttbm_style [class*="_fLeft"] { float: left; }
+	.ttbm_style .fRight, .ttbm_style [class*="_fRight"] { float: right; }
 	/**************/
+	.ttbm_style .textLeft, .ttbm_style [class*="_textLeft"] { text-align: left; }
+	.ttbm_style .textCenter, .ttbm_style [class*="_textCenter"] { text-align: center; }
+	.ttbm_style .textRight, .ttbm_style [class*="_textRight"] { text-align: right; }
+	.ttbm_style .textCapitalize, .ttbm_style [class*="_textCapitalize"] { text-transform: capitalize; }
+	.ttbm_style .textNowrap, .ttbm_style [class*="_textNowrap"] { white-space: nowrap; }
 	/**************/
-	.ttbm_style .textLeft,
-	.ttbm_style [class*="_textLeft"] {
-		text-align: left;
-	}
-	.ttbm_style .textCenter,
-	.ttbm_style [class*="_textCenter"] {
-		text-align: center;
-	}
-	.ttbm_style .textRight,
-	.ttbm_style [class*="_textRight"] {
-		text-align: right;
-	}
-	.ttbm_style .textCapitalize,
-	.ttbm_style [class*="_textCapitalize"] {
-		text-transform: capitalize;
-	}
-	.ttbm_style .textNowrap,
-	.ttbm_style [class*="_textNowrap"] {
-		white-space: nowrap;
-	}
+	.ttbm_style [class*="_dotted"] { border-style: dotted; }
+	.ttbm_style [class*="_border"] { border: 1px solid var(--color_border); }
+	.ttbm_style .bT, .ttbm_style [class*="_bT"] { border-top: 1px solid var(--color_border); }
+	.ttbm_style [class*="_bDot"] { border: 1px dotted var(--color_border); }
+	.ttbm_style [class*="_bDash"] { border: 1px dashed var(--color_border); }
+	.ttbm_style [class*="_bR"] { border-right: 1px solid var(--color_border); }
+	.ttbm_style [class*="_bR_dash"] { border-right: 1px dashed var(--color_border); }
+	.ttbm_style [class*="_bR_dot"] { border-right: 1px dotted var(--color_border); }
+	.ttbm_style [class*="_bB"], .ttbm_style .borB { border-bottom: 1px solid var(--color_border); }
+	.ttbm_style [class*="_bB_dot"] { border-bottom: 1px dotted var(--color_border); }
+	.ttbm_style .zeroBorder, .ttbm_style [class*="_zeroBorder"] { border: none; }
 	/**************/
-	.ttbm_style [class*="_dotted"] {
-		border-style: dotted;
-	}
-	.ttbm_style [class*="_border"] {
-		border: 1px solid var(--color_border);
-	}
-	.ttbm_style .bT,
-	.ttbm_style [class*="_bT"] {
-		border-top: 1px solid var(--color_border);
-	}
-	.ttbm_style [class*="_bDot"] {
-		border: 1px dotted var(--color_border);
-	}
-	.ttbm_style [class*="_bDash"] {
-		border: 1px dashed var(--color_border);
-	}
-	.ttbm_style [class*="_bR"] {
-		border-right: 1px solid var(--color_border);
-	}
-	.ttbm_style [class*="_bR_dash"] {
-		border-right: 1px dashed var(--color_border);
-	}
-	.ttbm_style [class*="_bR_dot"] {
-		border-right: 1px dotted var(--color_border);
-	}
-	.ttbm_style [class*="_bB"],
-	.ttbm_style .borB {
-		border-bottom: 1px solid var(--color_border);
-	}
-	.ttbm_style [class*="_bB_dot"] {
-		border-bottom: 1px dotted var(--color_border);
-	}
-	.ttbm_style .zeroBorder,
-	.ttbm_style [class*="_zeroBorder"] {
-		border: none;
-	}
-	/**************/
-	.ttbm_style .padZero,
-	.ttbm_style span.padZero,
-	.ttbm_style [class*="_pad_zero"] {
-		padding: 0;
-	}
-	.ttbm_style .padding,
-	.ttbm_style [class*="_padding"] {
-		padding: var(--ttbm_mp);
-	}
-	.ttbm_style .padding_xs,
-	.ttbm_style [class*="_padding_xs"] {
-		padding: var(--ttbm_mp_xs);
-	}
-	.ttbm_style .pad_25,
-	.ttbm_style [class*="_pad_25"] {
-		padding: 25px;
-	}
-	.ttbm_style .pT,
-	.ttbm_style [class*="_pT"] {
-		padding-top: var(--ttbm_mp);
-	}
-	.ttbm_style .pT_xs,
-	.ttbm_style [class*="_pT_xs"] {
-		padding-top: var(--ttbm_mp_xs);
-	}
-	.ttbm_style .pR,
-	.ttbm_style [class*="_pR"] {
-		padding-right: var(--ttbm_mp);
-	}
-	.ttbm_style .pR_xs,
-	.ttbm_style [class*="_pR_xs"] {
-		padding-right: var(--ttbm_mp_xs);
-	}
-	.ttbm_style .pR_5,
-	.ttbm_style [class*="_pR_5"] {
-		padding-right: 5%;
-	}
-	.ttbm_style .pr_15 {
-		padding-right: 15%;
-	}
-	.ttbm_style .pB,
-	.ttbm_style [class*="_pB"] {
-		padding-bottom: var(--ttbm_mp);
-	}
+	.ttbm_style .padZero, .ttbm_style span.padZero, .ttbm_style [class*="_pad_zero"] { padding: 0; }
+	.ttbm_style .padding, .ttbm_style [class*="_padding"] { padding: var(--ttbm_mp); }
+	.ttbm_style .padding_xs, .ttbm_style [class*="_padding_xs"] { padding: var(--ttbm_mp_xs); }
+	.ttbm_style .pad_25, .ttbm_style [class*="_pad_25"] { padding: 25px; }
+	.ttbm_style .pT, .ttbm_style [class*="_pT"] { padding-top: var(--ttbm_mp); }
+	.ttbm_style .pT_xs, .ttbm_style [class*="_pT_xs"] { padding-top: var(--ttbm_mp_xs); }
+	.ttbm_style .pR, .ttbm_style [class*="_pR"] { padding-right: var(--ttbm_mp); }
+	.ttbm_style .pR_xs, .ttbm_style [class*="_pR_xs"] { padding-right: var(--ttbm_mp_xs); }
+	.ttbm_style .pB, .ttbm_style [class*="_pB"] { padding-bottom: var(--ttbm_mp); }
 	.ttbm_style .pB_xs,
-	.ttbm_style [class*="_pB_xs"] {
-		padding-bottom: var(--ttbm_mp_xs);
-	}
-	.ttbm_style .pL,
-	.ttbm_style [class*="_pL"] {
-		padding-left: var(--ttbm_mp);
-	}
-	.ttbm_style .pL_xs,
-	.ttbm_style [class*="_pL_xs"] {
-		padding-left: var(--ttbm_mp_xs);
-	}
+	.ttbm_style [class*="_pB_xs"] { padding-bottom: var(--ttbm_mp_xs); }
+	.ttbm_style .pL, .ttbm_style [class*="_pL"] { padding-left: var(--ttbm_mp); }
+	.ttbm_style .pL_xs, .ttbm_style [class*="_pL_xs"] { padding-left: var(--ttbm_mp_xs); }
 	.ttbm_style .pTB,
 	.ttbm_style [class*="_pTB"] {
 		padding: var(--ttbm_mp) 0;
@@ -687,18 +532,8 @@
 	.ttbm_style [class*="_mT_40"] {
 		margin-top: 40px;
 	}
-	.ttbm_style .mR,
-	.ttbm_style [class*="_mR"] {
-		margin-right: var(--ttbm_mp);
-	}
-	.ttbm_style .mR_xs,
-	.ttbm_style [class*="_mR_xs"] {
-		margin-right: var(--ttbm_mp_xs);
-	}
-	.ttbm_style .mR_5,
-	.ttbm_style [class*="_mR_5"] {
-		margin-right: 5%;
-	}
+	#ttbm_content .mR, #ttbm_content [class*="_mR"] { margin-right: var(--ttbm_mp); }
+	#ttbm_content .mR_xs, #ttbm_content [class*="_mR_xs"] { margin-right: var(--ttbm_mp_xs); }
 	.ttbm_style .mB,
 	.ttbm_style [class*="_mB"] {
 		margin-bottom: var(--ttbm_mp);

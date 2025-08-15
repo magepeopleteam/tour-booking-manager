@@ -106,10 +106,10 @@
 					$exclude_service = isset($_POST['ttbm_display_exclude_service']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_exclude_service'])) ? 'on' : 'off';
 					update_post_meta($post_id, 'ttbm_display_include_service', $include_service);
 					update_post_meta($post_id, 'ttbm_display_exclude_service', $exclude_service);
-					$include = isset($_POST['ttbm_service_included_in_price']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_service_included_in_price'])) : [];
+					$include = isset($_POST['ttbm_service_included_in_price']) ? sanitize_text_field(wp_unslash($_POST['ttbm_service_included_in_price'])) : [];
 					$new_include = TTBM_Function::feature_id_to_array($include);
 					update_post_meta($post_id, 'ttbm_service_included_in_price', $new_include);
-					$exclude = isset($_POST['ttbm_service_excluded_in_price']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_service_excluded_in_price'])) : [];
+					$exclude = isset($_POST['ttbm_service_excluded_in_price']) ? sanitize_text_field(wp_unslash($_POST['ttbm_service_excluded_in_price'])) : [];
 					$new_exclude = TTBM_Function::feature_id_to_array($exclude);
 					update_post_meta($post_id, 'ttbm_service_excluded_in_price', $new_exclude);
 				}

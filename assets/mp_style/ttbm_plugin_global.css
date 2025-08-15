@@ -1275,7 +1275,6 @@
 	div.ttbm_style .formControl { width: 100%; max-width: inherit; border: 1px solid var(--color_border); color: var(--d_color); background-color: #FFF; padding: 10px 15px; font-weight: 500; height: 40px; border-radius: 6px; }
 	div.ttbm_style #ttbm_select_date.formControl { height: 30px; }
 	.ttbm_style .formControl:focus { outline: 0; background-color: #FFF; border-color: #80BDFF; }
-	div.ttbm_style select.formControl { height: 42px !important; border-radius: 8px !important; }
 	div.ttbm_style select.formControl:focus { border: 1px solid var(--color_theme); box-shadow: none; }
 	div.ttbm_style .formControl.date_type_without_year,
 	div.ttbm_style .formControl.date_type,

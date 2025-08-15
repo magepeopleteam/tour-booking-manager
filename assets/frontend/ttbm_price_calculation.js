@@ -27,6 +27,16 @@ function mpTourTotalPrice(parent) {
             }
         }
         total = total + (unitPrice * qty > 0 ? unitPrice * qty : 0);
+        if (parent.find('.ttbm_tier_price_chart').length > 0) {
+            parent.find('[data-discount]').each(function () {
+                let start_qty = parseInt(jQuery(this).data('start-qty'));
+                let end_qty = parseInt(jQuery(this).data('end-qty'));
+                if (start_qty <= qty && end_qty >= qty) {
+                    let discount = parseInt(jQuery(this).data('discount'));
+                    total = total - total * discount / 100;
+                }
+            });
+        }
     });
     if (totalQty > 0) {
         currentTarget.removeClass('error');
@@ -121,11 +131,11 @@ function ttbm_multi_attendee_form(parentTr, qty) {
                                     current_item.append(clone_form);
                                 }
                             }
-							let item_count=1;
-							current_item.find('.ttbm_group_title').each(function (){
-								jQuery(this).html(item_count);
-								item_count++;
-							});
+                            let item_count = 1;
+                            current_item.find('.ttbm_group_title').each(function () {
+                                jQuery(this).html(item_count);
+                                item_count++;
+                            });
                         }
                         target_tr.find(".date_type").removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind().promise().done(function () {
                             ttbm_load_date_picker(target_tr);
@@ -187,9 +197,8 @@ function ttbm_partial_payment_job(parent, total) {
     });
     $(document).on("click", ".ttbm_book_now", function (e) {
         e.preventDefault();
-
         if (mp_tour_ticket_qty($(this).closest('.ttbm_registration_area')) > 0) {
-            let error_exit=0;
+            let error_exit = 0;
             let parent = $(this).closest('.mp_tour_ticket_form');
             parent.find('.formControl').each(function () {
                 if ($(this).is(':required') && $(this).val() === '') {
@@ -199,18 +208,16 @@ function ttbm_partial_payment_job(parent, total) {
                     $(this).closest('.ttbm_form_item').removeClass('mage_error');
                 }
             });
-            if(error_exit>0){
+            if (error_exit > 0) {
                 return false;
-            }else{
-                let book_now_area=$(this).closest('.ttbm_book_now_area');
-                if(book_now_area.find('[name="ttbm_direct_order_product_id"]').length>0){
-
-                    book_now_area.find('.ttbm_add_to_cart').attr('name','').trigger('click');
-                }else {
+            } else {
+                let book_now_area = $(this).closest('.ttbm_book_now_area');
+                if (book_now_area.find('[name="ttbm_direct_order_product_id"]').length > 0) {
+                    book_now_area.find('.ttbm_add_to_cart').attr('name', '').trigger('click');
+                } else {
                     book_now_area.find('.ttbm_add_to_cart').trigger('click');
                 }
             }
-
         } else {
             alert('Please Select Ticket Type');
             let currentTarget = $(this).closest('.ttbm_registration_area').find('.mp_tour_ticket_type .formControl[data-price]');

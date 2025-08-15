@@ -27,6 +27,7 @@
                                 <?php foreach ($travel_type as $key => $value) { ?>
                                     <button data-collapse-radio="<?php echo esc_attr('#ttbm_' . $key); ?>" class="_mpBtn_mR <?php echo esc_attr($key == $date_type ? 'active' : ''); ?>" type="button" data-group-radio="<?php echo esc_attr($key); ?>"><?php echo esc_html($value); ?></button>
                                 <?php } ?>
+
                             </div>
                         </div>
                         <?php $this->fixed_date($tour_id, $date_type); ?>

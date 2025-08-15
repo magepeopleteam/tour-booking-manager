@@ -18,6 +18,8 @@
 /********************************************************************  ************************************************/
 @media only screen and (min-width: 10px) {
 	#ttbm_content .formControl {font-weight: normal; border: 1px solid var(--mpl-gray); color: var(--mpl-secondary); font-size: 14px; min-width: 80px;max-width: 250px;}
+	#ttbm_content select.formControl{min-width: 200px;}
+	#ttbm_content input[type="number"].formControl{min-width: 80px;}
 	#ttbm_content div.settings_header { background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%); padding: var(--ttbm_mp); text-align: center; }
 	#ttbm_content div.settings_header h2 {color: white;}
 	#ttbm_content div.settings_header .info_text {opacity: 0.9; max-width: 600px; margin: 0 auto;color: white;}

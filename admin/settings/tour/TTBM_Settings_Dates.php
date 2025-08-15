@@ -13,7 +13,7 @@
 				$date_type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_type', 'fixed');
 				?>
                 <div class="tabsItem ttbm_settings_dates" data-tabs="#ttbm_settings_dates">
-                    <h3><?php esc_html_e('Date Configuration', 'tour-booking-manager'); ?></h3>
+                    <h4><?php esc_html_e('Date Configuration', 'tour-booking-manager'); ?></h4>
                     <span class="info_text"><?php esc_html_e('Tour type and date time can be easily configured here, providing a crucial feature for recurring, fixed, or specific date tours.', 'tour-booking-manager') ?></span>
                     <div class="gptLayout">
                         <div class="gpt_header">
@@ -23,7 +23,7 @@
                         <div class="dLayout">
                             <div class="groupRadioBox">
                                 <input type="hidden" value="<?php echo esc_attr($date_type); ?>" name="ttbm_travel_type"/>
-                                <h3><?php echo esc_html($tour_label) . ' ' . esc_html__('Type', 'tour-booking-manager'); ?></h3>
+                                <h4><?php echo esc_html($tour_label) . ' ' . esc_html__('Type', 'tour-booking-manager'); ?></h4>
                                 <div class="_dFlex_mT_xs">
 									<?php foreach ($travel_type as $key => $value) { ?>
                                         <button data-collapse-radio="<?php echo esc_attr('#ttbm_' . $key); ?>" class="_mpBtn_mR <?php echo esc_attr($key == $date_type ? 'active' : ''); ?>" type="button" data-group-radio="<?php echo esc_attr($key); ?>"><?php echo esc_html($value); ?></button>

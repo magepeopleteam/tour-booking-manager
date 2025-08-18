@@ -349,7 +349,7 @@
 /******************************************************************** Button Section ************************************************/
 @media only screen and (min-width: 10px) {
 	.ttbm_style .mpBtn, .ttbm_style [class*="_mpBtn"],
-	.ttbm_style button { position: relative; font-weight: var(--fw-medium); line-height: 1; cursor: pointer; overflow: visible; border: none; -webkit-appearance: button; text-transform: capitalize; }
+	.ttbm_style button { position: relative; font-weight: var(--fw-normal); line-height: 1; cursor: pointer; overflow: visible; border: none; -webkit-appearance: button; text-transform: capitalize; }
 	.ttbm_style button[disabled] { cursor: not-allowed; opacity: 0.8; background-color: #DDD; }
 	.ttbm_style button:hover, .ttbm_style button:focus { text-decoration: none; opacity: 0.8; background-color: var(--color_theme); color: var(--color_white); }
 	.ttbm_style button:hover span, .ttbm_style button:focus span { color: var(--color_white); }
@@ -992,13 +992,15 @@
 	.ttbm_style [class*="_dLayout"]:last-child { border-bottom: 1px solid var(--color_border); }
 	.ttbm_style .dLayout_xs,
 	.ttbm_style [class*="_dLayout_xs"] { padding: var(--ttbm_mp_xs); background-color: var(--color_white); border: 1px solid var(--color_border); }
+	.ttbm_style .tLayout,
+	.ttbm_style [class*="_tLayout"] { background-color: transparent; border: 0; border-radius: 0; }
 	/***********info***********/
 	.ttbm_style .infoLayout,
 	.ttbm_style [class*="_infoLayout"] { padding: var(--ttbm_mp); background-color: var(--color_light); margin-bottom: var(--ttbm_mp); }
 	.ttbm_style .infoLayout_xs,
 	.ttbm_style [class*="_infoLayout_xs"] { padding: var(--ttbm_mp_xs); margin-bottom: var(--ttbm_mp_xs); }
 	/***********Gpt layout***********/
-	.ttbm_style .gptLayout { background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%); padding: var(--ttbm_mp);; border-radius: 20px; border: 2px solid #E2E8F0; box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1); margin-top: var(--ttbm_mp); }
+	.ttbm_style .gptLayout { background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%); padding: var(--ttbm_mp);; border-radius:10px; border: 1px solid #E2E8F0; margin-top: var(--ttbm_mp); }
 	.gptLayout .gpt_header { color: #1E293B; margin-bottom: 0.5rem; text-align: center; }
 	.gptLayout .gpt_header .info_text {text-align: center;}
 	.gptLayout .gpt_content { padding: 24px; }
@@ -3030,4 +3032,35 @@ div.ttbm_location_info h2 {
 }
 .ttbm_location_info p {
 	color: #FFF;
+}
+
+.groupRadioBox button label{
+	font-weight: normal;
+}
+
+.groupRadioBox button.input_active{
+	padding:0 10px;
+	cursor: pointer;
+}
+
+.ttbm_settings_dates .tabLists{
+	border-bottom: 1px solid #ddd;
+	
+}
+.ttbm_settings_dates .tabsContent{
+	background-color: transparent;
+	padding: 5px 0;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbmTabs .tabLists li{
+	border: 1px solid #ddd;
+	transition:all 0;
+	font-weight: bold;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbmTabs .tabLists li.active,
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbmTabs .tabLists li:hover{
+	font-weight: bold;
+	border:0;
+	border: 1px solid var(--mpl-primary);
 }

@@ -1328,7 +1328,7 @@
 	}
 	/**********Checkbox Custom*********/
 	.ttbm_style .customCheckbox {
-		padding: 3px 0 0 28px;
+		padding: 3px 0 0 24px;
 		position: relative;
 		line-height: 1;
 		min-width: auto;
@@ -1355,6 +1355,9 @@
 	.ttbm_style .customCheckboxLabel input:checked ~ .customCheckbox::before {
 		background: var(--color_theme);
 		border-color: var(--color_theme);
+	}
+	.ttbm_style .customCheckbox span{
+		margin-right: 5px;
 	}
 	/*******************/
 	div.ttbm_style .selectCheckbox {

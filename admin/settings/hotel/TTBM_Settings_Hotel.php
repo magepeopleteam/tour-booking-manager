@@ -30,6 +30,9 @@
                             <li data-tabs-target="#ttbm_settings_gallery">
                                 <span class="fas fa-images"></span><?php esc_html_e(' Hotel Gallery', 'tour-booking-manager'); ?>
                             </li>
+                            <li data-tabs-target="#ttbm_settings_hotel_faq">
+                                <span class="fas fa-question-circle "></span><?php esc_html_e(' FAQ Settgins', 'tour-booking-manager'); ?>
+                            </li>
                         </ul>
                         <div class="tabsContent tab-content">
 							<?php

@@ -63,6 +63,7 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_Ajax.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_General.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Gallery_Hotel.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_FAQ.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_Price.php';
 				//**********//
 			}

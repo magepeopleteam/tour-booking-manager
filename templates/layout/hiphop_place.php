@@ -45,7 +45,7 @@
 											</div>
 										<?php } ?>
 								</div>
-								<h6 class="_dFlex_mT"><span class="circleIcon_xs"><?php echo esc_html( $count ); ?></span><?php echo esc_html( $place_name ); ?></h6>
+								<h6 class="_dFlex_mT"><?php echo esc_html($count.'.  '. $place_name ); ?></h6>
 							</div>
 							<?php
 							$count ++;

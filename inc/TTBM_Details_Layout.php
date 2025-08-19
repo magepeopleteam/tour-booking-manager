@@ -90,7 +90,7 @@
                             <li><?php esc_html_e('Reserve Now and Pay Later - Secure your spot while staying flexible', 'tour-booking-manager'); ?></li>
                         </ul>
                         <input type="hidden" class="registration_popup" data-target-popup="registration-popup">
-                        <div class="mpPopup mpStyle" data-popup="registration-popup">
+                        <div class="ttbm_popup ttbm_style" data-popup="registration-popup">
                             <div class="popupMainArea">
                                 <span class="fas fa-times popupCloseBtn"></span>
                                 <div class="popupBody">

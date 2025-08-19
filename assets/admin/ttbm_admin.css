@@ -1,0 +1,777 @@
+@charset "utf-8";
+:root {
+	--mpl-primary: #F12971;
+	--mpl-primary-rgba: rgba(241, 41, 113, 0.08);
+	--mpl-secondary: #1D2327;
+	--mpl-sky: #F38FB3;
+	--mpl-sky-light: #EFFAFF;
+	--mpl-dark: #A4A4A4;
+	--mpl-gray: #E0E0E0;
+	--mpl-light: #F5F5F5;
+	--mpl-white: #FFFFFF;
+	--mpl-black: #000000;
+	--mpl-yellow: #FFCB00;
+	--mpl-red: #D91E1E;
+	--mpl-red-light: #F6DADA;
+	--mpl-gradient: linear-gradient(135deg, #F12971, #C4185B);
+}
+/********************************************************************  ************************************************/
+@media only screen and (min-width: 10px) {
+	#ttbm_content .formControl {font-weight: normal; border: 1px solid var(--mpl-gray); color: var(--mpl-secondary); font-size: 14px; min-width: 80px;max-width: 250px;}
+	#ttbm_content select.formControl{min-width: 200px;}
+	#ttbm_content input[type="number"].formControl{min-width: 80px;}
+	#ttbm_content div.settings_header { background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%); padding: var(--ttbm_mp); text-align: center; }
+	#ttbm_content div.settings_header h2 {color: white;}
+	#ttbm_content div.settings_header .info_text {opacity: 0.9; max-width: 600px; margin: 0 auto;color: white;}
+	div.ttbm_settings table {table-layout: auto;}
+	div.ttbm_settings table tr:nth-child(even) {background-color: #0CB32612;}
+	div.ttbm_settings table tr:nth-child(odd) {background-color: #FFF;}
+	div.ttbm_settings table th,
+	div.ttbm_settings table td {border: 0;}
+	div.ttbm_settings table tbody th {text-align: left;font-size: var(--ttbm_fs);}
+	div.ttbm_settings table tbody thead th {text-align: center;}
+	div.ttbm_settings span.dropdown-wrapper {margin: 0 !important;}
+	div.ttbm_settings p.ttbm_description {display: block;font-weight: normal;font-size: var(--ttbm_fs_small) !important;color: #666;}
+	div.ttbm_settings p.ttbm_description span {margin: 0 5px 0 0;}
+	div.ttbm_settings .ttbm_popup .popupMainArea {width: 100%;}
+}
+/******************************************************************** Global settings ************************************************/
+@media only screen and (min-width: 10px) {
+	div.ttbm_global_settings {max-width: 1700px; margin: 30px 30px 30px 15px; width: calc(100% - 30px);padding-top: 50px;}
+	div.ttbm_global_settings .button-primary {min-width: 200px;font-weight: var(--fw-medium);padding: var(--ttbm_mp_xs); }
+	div.ttbm_global_settings .ttbmPanelHeader {background: var(--color_theme); color: #FFF;padding: var(--ttbm_mp_xs);font-weight: var(--fw-medium); }
+	div.ttbm_global_settings .tabLists {border-right: 1px solid var(--color_border);}
+	div.ttbm_global_settings form > h2 {display: none;}
+	div.ttbm_global_settings table {table-layout: fixed;margin: 0;}
+	div.ttbm_global_settings table tr:nth-child(even) { background-color: var(--color_light);}
+	div.ttbm_global_settings table tr:nth-child(odd) { background-color: #FFF;}
+	div.ttbm_global_settings table th {width: 40%;min-width: 300px;}
+	div.ttbm_global_settings th label {-webkit-flex-wrap: wrap;flex-wrap: wrap;}
+	div.ttbm_global_settings .ttbmPanel .ttbmPanelBody .ttbmTabs .tabLists { padding: 25px 0 25px 25px; }
+	div.ttbm_license_settings table th {width: inherit;min-width: inherit; }
+	div.ttbm_global_settings .ttbm-setting-field { display: flex; justify-content: space-between; border: 1px solid #ECECEC; align-items: center; padding: 10px; margin-top: -1px;}
+	div.ttbm_global_settings .ttbm-setting-field .label,
+	div.ttbm_global_settings .ttbm-setting-field label { width: 49%;}
+	div.ttbm_global_settings .ttbm-setting-field fieldset { padding: 10px;}
+	div.ttbm_global_settings .ttbm-setting-field .tooltips { position: relative; display: inline-block; cursor: pointer; color: var(--mpl-gray);}
+	div.ttbm_global_settings .ttbm-setting-field .tooltips::before { content: ""; position: absolute; bottom: 95%; left: 50%; transform: translateX(-50%); border-width: 6px; border-style: solid; border-color: #000 transparent transparent transparent; visibility: hidden; transition: 0s; z-index: 99;}
+	div.ttbm_global_settings .ttbm-setting-field .tooltips::after { content: attr(data-tooltip); visibility: hidden; width: max-content; max-width: 350px; background-color: #000; color: #FFF; text-align: center; padding: 6px 10px; border-radius: 5px; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); white-space: normal; z-index: 999; transition: opacity 0s ease-in-out; font-weight: normal;}
+	div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after,
+	div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::before { visibility: visible; opacity: 1;}
+	div.ttbm_global_settings .tabLists { border-right: 0;}
+	div.ttbm_global_settings .ttbmTabs { display: flex;}
+	div.ttbm_global_settings { max-width: 1600px; margin: auto;}
+	div.ttbm_global_settings .ttbm_license_settings table { margin-top: 20px;}
+	div.ttbm_global_settings .ttbmPanelHeader { background: var(--mpl-primary);}
+}
+/******************************************************************** Meta tab settings ************************************************/
+@media only screen and (min-width: 10px) {
+	#ttbm_meta_box_panel {margin: 15px 0;}
+	#ttbm_meta_box_panel table {table-layout: auto;border-collapse: collapse;border: 1px solid #F5F5F5;margin-bottom: 20px;}
+	#ttbm_meta_box_panel table tr:nth-child(even) {background-color: var(--color_light);}
+	#ttbm_meta_box_panel table tr:nth-child(odd) {background-color: #FFF;}
+	#ttbm_meta_box_panel table th,
+	#ttbm_meta_box_panel table td {border: 0;vertical-align: top;padding: 10px 3px; border-right: 1px solid #E5D4D4; }
+	#ttbm_meta_box_panel table th {text-align: left; font-weight: 500;padding: 15px 10px;}
+	#ttbm_meta_box_panel table th.mActive,
+	#ttbm_meta_box_panel table td.mActive {display: table-cell;}
+	#ttbm_meta_box_panel table tbody th {text-align: left;}
+	#ttbm_meta_box_panel table tbody thead th {text-align: center;}
+	/************************************/
+	#ttbm_meta_box_panel .ttbm_style .roundSwitch { min-width: 53px;}
+	#ttbm_meta_box_panel .inside,
+	#ttbm_meta_box_panel .form-section {margin: 0;padding: 0;}
+	#ttbm_meta_box_panel .postbox-header { background-color: var(--color_theme);}
+	#ttbm_meta_box_panel .postbox-header .handle-actions .handle-order-higher,
+	#ttbm_meta_box_panel .postbox-header .handle-actions .handle-order-lower,
+	#ttbm_meta_box_panel .postbox-header .handle-actions .toggle-indicator { color: var(--color_theme_alter);}
+	#ttbm_meta_box_panel .postbox-header h2 {color: #FFF;font-size: 18px;-webkit-justify-content: flex-start;justify-content: flex-start;}
+	#ttbm_meta_box_panel .postbox-header h2 span {margin: 0 7px 0 0;}
+	#ttbm_meta_box_panel .wp-editor-wrap {width: 100%;}
+	#ttbm_meta_box_panel textarea { background-color: #F5F8FF; font-weight: normal; line-height: 1.5rem;}
+	#ttbm_meta_box_panel input[type=search] { border: 0px solid var(--mpl-dark); background-color: #F5F8FF;}
+	#ttbm_meta_box_panel .tool-tips { color: var(--mpl-gray); position: relative; padding-left: 0.25em;}
+	#ttbm_meta_box_panel .tool-tips span { position: absolute; z-index: 1; bottom: 130%; left: 50%; transform: translate(-50%); visibility: hidden; font-size: 0.9rem; text-align: center; background-color: var(--mpl-black); color: var(--mpl-white); border-radius: 0.25rem; padding: 0.5em 0.75em; width: max-content; max-width: 350px; font-weight: normal; }
+	#ttbm_meta_box_panel .tool-tips span:after { content: " "; position: absolute; top: 100%; left: 50%; transform: translate(-50%); border: 5px solid var(--mpl-black); border-color: var(--mpl-black) transparent transparent transparent; margin-left: 0.18em; }
+	#ttbm_meta_box_panel .tool-tips:hover { color: var(--mpl-primary); }
+	#ttbm_meta_box_panel .tool-tips:hover span { visibility: visible; }
+	#ttbm_meta_box_panel .switch { position: relative; display: inline-block; width: 50px; height: 24px; margin-bottom: 0; }
+	#ttbm_meta_box_panel .switch input { opacity: 0; width: 0; height: 0; border: 1px solid var(--mpl-primary); background-color: var(--mpl-light); }
+	#ttbm_meta_box_panel .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; border-radius: 50px; border: 1px solid var(--mpl-dark); background-color: var(--mpl-gray); transition: 0.5s; margin-right: 0; }
+	#ttbm_meta_box_panel .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 1px; bottom: 1px; border-radius: 50%; border: 1px solid var(--mpl-light); background-color: var(--mpl-white); transition: 0.4s; box-shadow: 0 0 1px var(--mpl-dark); }
+	#ttbm_meta_box_panel input:checked + .slider { background-color: var(--mpl-primary); border: 1px solid var(--mpl-primary); margin-right: 0; }
+	#ttbm_meta_box_panel input:checked + .slider:before { transform: translateX(26px); }
+	#ttbm_meta_box_panel input:focus + .slider { box-shadow: inset 0 0 1px var(--mpl-dark); }
+	#ttbm_meta_box_panel .postbox-header .handle-actions .handle-order-higher,
+	#ttbm_meta_box_panel .postbox-header .handle-actions .handle-order-lower,
+	#ttbm_meta_box_panel .postbox-header .handle-actions .toggle-indicator { color: var(--mpl-white);}
+	#ttbm_meta_box_panel .ttbm_settings .tabLists li i { margin: 0 var(--ttbm_mp) 0 0; color: #757575;}
+	#ttbm_meta_box_panel .ttbm_settings .tabLists li::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 0;}
+	#ttbm_meta_box_panel .ttbm_settings .tabLists li.active { background-color: var(--mpl-primary-rgba); color: var(--mpl-primary); font-weight: normal; border-left: 2px solid var(--mpl-primary);}
+	#ttbm_meta_box_panel .ttbm_settings .tabLists li.active i { color: var(--mpl-primary);}
+	#ttbm_meta_box_panel .ttbm_settings .tabLists li:hover { background-color: var(--mpl-light); color: var(--mpl-primary);}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem > h2 { padding: 0; color: var(--mpl-secondary); margin-bottom: 10px; font-size: 22px; font-weight: bold;}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem > p { color: var(--mpl-secondary); margin: 0; font-weight: normal; line-height: 24px; margin-bottom: 30px;}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section { border-radius: 8px; background-color: #FFF; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1019607843); padding: 24px; margin-bottom: 24px; transition: transform 0.2s, box-shadow 0.2s; width: 100%;}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .ttbm-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--mpl-gray);}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .ttbm-header h4 { margin: 0; font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 8px;}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label { display: flex; justify-content: space-between; align-items: center; flex-direction: row; cursor: pointer; margin: 10px 0; padding: 10px;}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label p { font-size: 14px; font-weight: 500; margin-bottom: 5px; color: var(--mpl-secondary);}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label .text { font-weight: normal; line-height: 20px; font-size: 13px;}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section textarea { width: 100%;}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .roundSwitchLabel { margin: 0 10px;}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .roundSwitchLabel input:checked + .roundSwitch { background-color: var(--mpl-primary);}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .customCheckboxLabel input:checked ~ .customCheckbox::before { background: var(--mpl-primary); border-color: var(--mpl-primary);}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem .col-left { width: 50%;}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem .col-right { width: 50%;}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent th[scope=row] label { display: block; margin-bottom: 5px;}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent th[scope=row] label h6 { margin-top: 10px;}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .span-row { color: #6B7280; font-size: 13px; font-weight: normal;}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .long-input { width: 80%;}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .wp-switch-editor { height: auto;}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .wp-editor-area { width: 100%; border: 0;}
+	#ttbm_meta_box_panel .fullscreen-icon { background-size: 22px 30px; background-position: 4px 0px;}
+	#ttbm_meta_box_panel .leaflet-touch .fullscreen-icon.leaflet-fullscreen-on { background-position: 4px 0px;}
+	#ttbm_meta_box_panel .tabLists { border-right: 0; }
+	#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table { border-collapse: collapse; border-spacing: 0; border: 0; margin: 0;}
+	#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th { text-align: left;}
+	#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr th,
+	#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td { background-color: var(--mpl-white); padding: 15px; width: 50%; border: 1px solid var(--mpl-gray);}
+	#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td { text-align: right;}
+	#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td label { display: block; text-align: right;}
+	#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input { border-radius: 0.25rem;}
+	#ttbm_meta_box_panel .tab-content-ttbm_tax_meta_boxs table.form-table tr td input.select2-search__field { border: 0;}
+	#ttbm_meta_box_panel .form-wrap.form-builder .frmb .form-elements label { line-height: inherit;}
+	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li { padding-bottom: 1.5em; border: 1px dashed var(--mpl-gray); box-shadow: 0 0 0px var(--mpl-light); background-color: var(--mpl-light); margin-bottom: 0.5em;}
+	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li.frmb-placeholder,
+	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li.ui-state-highlight { padding: 2.5em; background: var(---mpl-sky-light); border: 1px dashed var(--mpl-primary); clip-path: none; margin-bottom: 0.5em;}
+	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li:hover { border: 1px dashed var(--mpl-primary); box-shadow: 0 0 10px var(--mpl-light); background-color: var(---mpl-sky-light);}
+	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li.delete:hover { border: 1px dashed var(--mpl-red); background-color: var(--mpl-red) -light;}
+	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .btn { min-width: 0; padding: 0; color: var(--mpl-white); border-radius: 0;}
+	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .del-button { background-color: var(--mpl-red); color: var(--mpl-white);}
+	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .toggle-form { background-color: var(--mpl-yellow);}
+	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .copy-button { background-color: var(--mpl-primary); color: var(--mpl-white);}
+}
+/********************************************************************Icon  Image upload  ************************************************/
+@media only screen and (min-width: 10px) {
+	div.ttbm_multi_image { display: -webkit-flex; display: flex; -webkit-flex-wrap: wrap; flex-wrap: wrap;}
+	div.ttbm_multi_image_item { position: relative; width: calc(25% - var(--ttbm_mp_xs)); min-width: 150px;margin: 0 var(--ttbm_mp_xs) var(--ttbm_mp_xs) 0;}
+	span.ttbm_remove_single_image,
+	div.ttbm_style span.ttbm_remove_multi_image { cursor: pointer; position: absolute; top: 0; right: 0; background-color: var(--color_danger);margin: 0; opacity: 0;}
+	div.ttbm_single_image_item:hover span.ttbm_remove_single_image,
+	div.ttbm_single_image_item:hover span.ttbm_remove_single_image:hover,
+	div.ttbm_multi_image_item:hover span.ttbm_remove_multi_image {opacity: 0.9;}
+	div.ttbm_add_single_image {max-width: 150px;width: 100%;}
+	div.ttbm_single_image_item {position: relative; width: 100%;}
+	/******************************************************************** add Icon image ************************************************/
+	div.ttbm_add_icon_image_area {position: relative;max-width: 120px;}
+	div.ttbm_add_icon_image_area img {max-height: 100px;}
+	div.ttbm_style div.ttbm_add_icon_image_area button {padding: 5px;font-size: 12px;}
+	div.ttbm_add_icon_image_area button span {margin: 0 5px 0 0;}
+	div.ttbm_style div.ttbm_add_icon_image_area img {border-radius: 0;}
+	div.ttbm_add_icon_image_area div.ttbm_icon_item {padding: var(--ttbm_mp_xs);background-color: var(--color_light);font-size: 16px;}
+	div.ttbm_icon_item:hover [class*="_icon_remove"],
+	div.ttbm_image_item:hover .ttbm_remove_icon {opacity: 1;}
+	div.ttbm_add_icon_popup .popupHeader { color: #FFF;height: 60px; margin: 0 auto;width: 100%; background-color: #032C53; position: relative; border-bottom: 0px solid #FFF; }
+	div.ttbm_add_icon_popup .popupHeader h2 { color: #FFF;text-align: center; font-size: 20px !important; }
+	div.ttbm_add_icon_popup .popupBody {padding: 0;}
+	div.ttbm_add_icon_popup ul.popupIconMenu { padding: 10px; min-width: 270px;background-color: #34424F;margin: 0; max-height: calc(100vh - var(--ttbm_mp) - var(--ttbm_mp) - 60px); overflow: hidden auto; }
+	div.ttbm_add_icon_popup .popupIconMenu li { padding: 10px; margin: 5px 0; border-radius: 5px; color: #FFF;font-size: 16px;display: block;cursor: pointer; position: relative; font-weight: 500; }
+	div.ttbm_add_icon_popup .popupIconMenu li strong {background-color: #C3CBD6A3;color: #202A33;padding: 0px 5px;border-radius: 10px;margin-left: 10px;}
+	div.ttbm_add_icon_popup .popupIconMenu li.active {background-color: #202A33;}
+	div.ttbm_add_icon_popup .popupIconMenu li:hover {color: #C3CBD6;background-color: #202A33;}
+	div.ttbm_add_icon_popup .popupIconMenu li.active:hover {color: #C3CBD6;}
+	div.ttbm_add_icon_popup .popup_all_icon { width: 100%;padding: 10px;background-color: #FFF; max-height: calc(100vh - var(--ttbm_mp) - var(--ttbm_mp) - 60px); overflow: hidden auto; }
+	div.ttbm_add_icon_popup .popup_all_icon .popupTabItem {width: 100%;}
+	div.ttbm_add_icon_popup .popup_all_icon .itemIconArea { width: 100%; display: -webkit-flex;display: flex; -webkit-flex-wrap: wrap;flex-wrap: wrap; }
+	div.ttbm_add_icon_popup .iconItem { width: 51px; height: 51px; font-size: 25px; margin: 5px; cursor: pointer; color: #777777; border: 1px solid #DBDBDB; border-radius: 5px; }
+	div.ttbm_add_icon_popup .iconItem.active,
+	div.ttbm_add_icon_popup .iconItem:hover { background-color: var(--color_theme); color: var(--color_theme_alter); border: 1px solid var(--color_theme); }
+	/************* font***************/
+	div.ttbm_add_icon_popup .iconItem,
+	div.ttbm_add_icon_popup .popupIconMenu li { -webkit-transition: 350ms ease-in-out; -moz-transition: 350ms ease-in-out; -o-transition: 350ms ease-in-out; transition: 350ms ease-in-out; }
+}
+/********************************************************************Helping ************************************************/
+@media only screen and (min-width: 10px) {
+	div.ttbm_style .adminLayout,
+	div.ttbm_style [class*="_adminLayout"] {padding: 50px;max-width: 1000px;margin: 100px auto;background-color: #FFF;border: 1px solid var(--color_border);border-radius: var(--dbrl);}
+	div.ttbm_style .adminLayout th,
+	div.ttbm_style .adminLayout td,
+	div.ttbm_style [class*="_adminLayout"] th,
+	div.ttbm_style [class*="_adminLayout"] td {text-align: left;}
+	/********Info Text******************/
+	div.ttbm_style .info_text {display: block;font-weight: normal;color: #666;width: 100%;margin: 5px 0 0 0;font-size: 12px;}
+	div.ttbm_style .info_text span {margin: 0 5px 0 0;}
+	/**************************/
+	.ttbm_style a[class*="customButton"] {
+		width: auto;height: 45px;font-size: 20px;font-weight: 500;position: relative;border-radius: 5px;margin: 20px 0 0 0;padding: 0 20px; color: #FFF;min-width: 170px;
+		background-image: -webkit-linear-gradient(#FF8F8E, #FF8787, #FF7B7D, #FF6369, #FF575F, #FF515A);
+		background-image: -moz-linear-gradient(#FF8F8E, #FF8787, #FF7B7D, #FF6369, #FF575F, #FF515A);
+		background-image: linear-gradient(#FF8F8E, #FF8787, #FF7B7D, #FF6369, #FF575F, #FF515A);
+		display: -webkit-inline-flex;display: inline-flex;-webkit-align-items: center;align-items: center;
+	}
+	.ttbm_style a[class*="customButton"]:hover {color: #F2F2F2;}
+	.ttbm_style .buttonOutline { min-width: 160px;min-height: 60px;border: 2px solid #FF555D;color: #FF555D;font-size: 16px;font-weight: 500; display: -webkit-inline-flex;display: inline-flex; margin: 30px 0 0 0;padding: 0 15px;}
+	.ttbm_style .buttonOutline:hover {background-color: #FF555D;color: #FFF;}
+}
+/* =====================quick setup=============== */
+@media only screen and (min-width: 10px) {
+	.ttbm-quick-setup .ttbmTabsNext .tabsContentNext p { margin-bottom: 5px;}
+	.ttbm_promotional_shortcode_holder { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-around; margin: 30px 0;}
+	.ttbm_shortcode_box { background: #FFFFFF; border: 1px solid #DDD; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); border-radius: 8px; padding: 15px 20px; width: 320px; position: relative; transition: box-shadow 0.3s ease;}
+	.ttbm_shortcode_box:hover { box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);}
+	.ttbm_shortcode_text { font-size: 14px; color: #333; background: #F8F8F8; padding: 12px; border-radius: 5px; margin-bottom: 10px; word-break: break-word;}
+	.ttbm_copy_btn { background-color: #0073AA; color: white; border: none; padding: 8px 14px; font-size: 14px; border-radius: 4px; cursor: pointer; float: right; transition: background-color 0.3s ease;}
+	.ttbm_copy_btn:hover { background-color: #005177;}
+	.ttbm_shortcode_section { margin: 40px 0; padding: 0 15px;}
+	.ttbm_shortcode_title { font-size: 24px; font-weight: 600; margin-bottom: 20px; color: #222; text-align: center; position: relative;}
+	.ttbm_shortcode_title::after { content: ""; display: block; width: 60px; height: 3px; background-color: #0073AA; margin: 10px auto 0; border-radius: 2px;}
+	.ttbm_shortcode_item_title { font-size: 18px; font-weight: 600; margin: 0 0 10px 0; color: #333;}
+}
+/********************************************************************Welcome Page  ************************************************/
+@media only screen and (min-width: 10px) {
+	div.ttbm_welcome_page { margin: 20px 20px 20px 0;}
+	div.ttbm_welcome_page h1 { color: #FFF;}
+	div.ttbm_welcome_page .tabsContent {background-color: #FFF;padding: 15px;}
+	div.unlimited_section {background-color: #F2F2F2;margin: 15px 0 0 0;padding: 50px 0;}
+	.unlimited_section .textContent {padding: 0 0 0 30px;}
+	.unlimited_section .textContent h4 {margin: 0 0 10px 0;}
+	.unlimited_section .content_area {padding: 25px 15px 0 0;}
+	div.unlimited_section .content_area img {width: auto;max-width: 100px;}
+	#ttbm_status_page table th {text-align: left;}
+	.postDash::after { position: absolute;content: ""; top: 23px;width: 45px; height: 2px;background-color: #F26E26;}
+	.postDash::after {right: -65px;}
+}
+/******************************************************************** Date configuration  ************************************************/
+@media only screen and (min-width: 10px) {
+	div.ttbm_settings_dates { }
+}
+/******************************************************************** Tour list pag ************************************************/
+@media only screen and (min-width: 10px) {
+	#ttbm_list_page table tbody tr:nth-of-type(odd) td,
+	#ttbm_list_page table tbody tr:nth-of-type(even) th:first-child {background-color: var(--color_light);}
+	#ttbm_list_page table tbody tr:nth-of-type(odd) td {padding: 0;}
+	#ttbm_list_page table tbody th a {color: var(--d_color);}
+	#ttbm_list_page table thead th {background-color: var(--color_6);color: var(--color_theme_alter);}
+	#ttbm_list_page table table thead th {background-color: var(--color_theme_alter);color: var(--color_6);}
+	#ttbm_list_page table tbody td {vertical-align: top;}
+	#ttbm_list_page table th,
+	#ttbm_list_page table td {border-color: #F7EFEF;}
+	#ttbm_list_page .ttbm_list_attendee_area,
+	#ttbm_list_page table tbody tr:nth-of-type(odd) td table th,
+	#ttbm_list_page table tbody tr:nth-of-type(odd) td table td {padding: var(--ttbm_mp_xs);border-color: var(--color_border);}
+}
+/********************************************************************  ************************************************/
+@media only screen and (min-width: 10px) {
+	.pickPluginInputItem:first-child { border-top: 1px dashed #0C5460;}
+	.pickPluginInputItem {padding: 10px 0;border-bottom: 1px dashed #0C5460;}
+	.ttbm_style .ppof-button { width: auto; display: inline-block; text-align: center; height: auto; font-size: 15px; background-color: #0C5460; color: #FFF;}
+	.ttbm_style .ppof-button.clear { background-color: #7C1337;}
+	.ttbm_style .pickPluginInputItem select { min-width: 150px;}
+	.ttbm_style .pickPluginInputItem textarea { padding: 10px;}
+	.ttbm_style .select2-search__field { min-width: 320px;}
+	.inside .sec { display: block; font-size: 15px; font-weight: normal; margin: 0;}
+	.sec label { font-size: 16px; font-weight: bold;}
+	.inside .sec input { border: 1px solid #DDD; padding: 5px; width: 100%; color: #000;}
+	.inside .sec label { font-weight: normal;}
+	#map { height: 250px;}
+	#infowindow-content .title { font-weight: bold;}
+	#infowindow-content { display: none;}
+	#map #infowindow-content { display: inline;}
+	.pac-card { margin: 10px 10px 0 0; border-radius: 2px 0 0 2px; outline: none; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); background-color: #FFF;}
+	#pac-container { padding-bottom: 12px; margin-right: 12px;}
+	.pac-controls { display: inline-block; padding: 5px 11px;}
+	.pac-controls label { font-size: 13px; font-weight: 300;}
+	#pac-input { background-color: #FFF; font-size: 15px; font-weight: 300; margin-left: 12px; padding: 0 11px 0 13px; text-overflow: ellipsis; width: 400px;}
+	#pac-input:focus { border-color: #4D90FE;}
+	.tab-content.active.tab-content-ttbm_list_template_meta_box table tr th,
+	.tab-content.active.tab-content-ttbm_list_template_meta_box table tr td { display: block; overflow: hidden; width: 100%;}
+	.tab-content.active.tab-content-ttbm_list_template_meta_box table tr td select { width: 100%;}
+	.ttbm_tour_page_ttbm_welcome_page .notice { display: none;}
+	#wp-mep_event_cc_email_text-media-buttons button { width: auto !important;}
+	.ttbm_settings_pricing input[name="ticket_type_description[]"] {width: 10em !important;}
+	.ttbm_settings_pricing input.medium.ttbm_price_validation {width: 100% !important;}
+	.ttbm_settings_pricing select.medium.formControl {height: 40px !important;}
+	button._mpBtn_xs.ttbm_icon_add {border: none !important;}
+	input[name="extra_service_description[]"].formControl {width: 100% !important;}
+	table.form-table tr td, table.form-table tr th {border: 1px solid #EFEAEA !important; }
+	div.ttbm_style span.select2-container span {min-height: 40px;}
+	.ttbm_place_you_see_table input.ttbm_name_validation {width: 97% !important; margin-left: 5px; border-radius: 5px; }
+	label.ttbm_id_select {height: 100%;}
+	.ttbm_style .ttbm_search_on {display: block;}
+	.ttbm_style tr.ttbm_search_on {display: table-row;}
+	.ttbm_style .ttbm_search_off {display: none;}
+	select#mep_ticket_offdays {height: 200px !important;}
+	#submit { background-color: var(--mpl-white); color: var(--mpl-primary); border: 1px solid var(--mpl-primary);}
+	#submit:hover { background-color: var(--mpl-primary); color: var(--mpl-white); border: 1px solid var(--mpl-primary);}
+}
+/********************************************************************  ************************************************/
+@media only screen and (min-width: 10px) {
+}
+/* =====================hotel_booking.css=============== */
+@media only screen and (min-width: 10px) {
+	/* Main Container */
+	.ttbm_total_booking_wrapper { max-width: 100%; margin: 0 auto; padding: 10px;}
+	.ttbm_total_booking_title { color: #666666; font-size: 20px; margin-top: 5px;}
+	/* Filter Section */
+	.ttbm_total_booking_filter_section { display: flex; align-items: center; padding: 15px; background-color: #F9F9F9; border: 1px solid #DDD; border-top: none;}
+	.ttbm_total_booking_filter_label { margin-right: 15px; font-weight: bold;}
+	.ttbm_total_booking_filter_options { display: flex; margin-right: 20px;}
+	.ttbm_total_booking_radio_container { margin-right: 15px; display: flex; align-items: center;}
+	.ttbm_total_booking_radio_text { margin-left: 5px;}
+	.ttbm_total_booking_filter_controls { display: flex; align-items: center;}
+	.ttbm_total_booking_select { padding: 8px; border: 1px solid #CCC; border-radius: 4px; margin-right: 10px; min-width: 200px;}
+	.ttbm_total_booking_filter_btn, .ttbm_hotel_filter_btn { padding: 8px 15px; background-color: #3174D0; color: white; border: none; border-radius: 4px; cursor: pointer;}
+	.ttbm_total_booking_reset_btn { padding: 8px 15px; background-color: #F0C14B; color: black; border: none; border-radius: 4px; margin-left: 5px; cursor: pointer;}
+	/* Order Summary */
+	.ttbm_total_booking_summary { display: flex; justify-content: space-between; padding: 15px; background-color: #F3F3F3; border: 1px solid #DDD; border-top: none;}
+	.ttbm_total_booking_found,
+	.ttbm_total_booking_showing { font-weight: bold;}
+	.ttbm_total_booking_per_page { display: flex; align-items: center;}
+	.ttbm_total_booking_page_input { width: 60px; padding: 5px; margin-left: 10px; border: 1px solid #CCC; border-radius: 4px;}
+	/* Table Styles */
+	.ttbm_total_booking_table { width: 100%; border-collapse: collapse; border: 1px solid #DDD;}
+	.ttbm_total_booking_thead { background-color: #F5F5F5;}
+	.ttbm_total_booking_th { padding: 12px 8px; text-align: left; border-bottom: 2px solid #DDD; font-weight: bold;}
+	.ttbm_total_booking_tr:nth-child(even) { background-color: #F9F9F9;}
+	.ttbm_total_booking_td { padding: 8px; border: 1px solid #DDD; vertical-align: middle;}
+	.ttbm_total_booking_view_more { display: block; background-color: #3174D0; color: white; border: none; border-radius: 4px; padding: 4px 8px; margin-top: 5px; cursor: pointer; font-size: 12px;}
+	.ttbm_total_booking_attendee_btn { background-color: #3174D0; color: white; border: none; border-radius: 4px; padding: 8px 10px; cursor: pointer;}
+	.ttbm_total_booking_status { color: #FF8C00;}
+	.ttbm_total_booking_action_btn { background-color: transparent; border: none; color: #3174D0; cursor: pointer;}
+	.ttbm_total_booking_icon:before { content: "📄";}
+	.ttbm_booking_user_more_info { display: none; border: 1px solid #B9B4B4; padding: 5px; width: 200px; border-radius: 5px; background-color: #F6F6F6;}
+	.ttbm_hotel_booking_load_more_holder,
+	.ttbm_hotel_list_load_more_btn_holder { display: flex; padding: 10px; width: 100%; justify-content: center;}
+	.ttbm_hotel_booking_load_more_btn, .ttbm_hotel_list_load_more_btn { padding: 10px 20px; border: 1px solid #C3BFBF; border-radius: 3px; font-size: 16px; display: flex; justify-content: center; min-width: 150px;}
+	.ttbm_hotel_booking_load_more_btn:hover { cursor: pointer; background-color: #0A7AFF; color: #F6F6F6;}
+	.ttbm_hotel_list_load_more_btn:hover { cursor: pointer; background-color: #0A7AFF; color: #F6F6F6;}
+	.ttbm_hotel_tab_holder { width: 100%; margin: 20px auto; border: 1px solid #DDD; background-color: #F5F7FA; border-radius: 8px; overflow: hidden;box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);}
+	.ttbm_hotel_tab_menu { display: flex; margin: 0; padding: 0; list-style: none; background: #F5F5F5;}
+	.ttbm_hotel_tab_item { padding: 12px 20px; text-align: center; cursor: pointer; font-weight: bold; color: #333; transition: background 0.3s, color 0.3s;}
+	.ttbm_hotel_tab_item:hover { background: #EAEAEA;}
+	.ttbm_hotel_tab_item.active { background: rgba(66, 133, 244, 0.1); width: 200px; color: #4285F4;}
+	.ttbm_hotel_tab_content_holder { padding: 10px; background: #FFF; margin-top: 15px;}
+	.ttbm_hotel_tab_content { display: none;}
+	.ttbm_hotel_tab_content.active { display: block;}
+	.ttbm_hotel_lists_listview { display: flex; flex-direction: column; gap: 15px;}
+	.ttbm_hotel_lists_list_item { display: flex; border: 1px solid #DDD; border-radius: 6px; padding: 15px; background: #FFF; align-items: flex-start; gap: 15px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);}
+	.ttbm_hotel_lists_list_image img { width: 100px; height: 100px; object-fit: cover; border-radius: 4px;}
+	.ttbm_hotel_lists_list_image_placeholder { width: 100px; height: 100px; background: #EEE; display: flex; justify-content: center; align-items: center; color: #888; font-size: 14px; border-radius: 4px;}
+	.ttbm_hotel_lists_list_content { flex: 1;}
+	li.ttbm_hotel_tab_item { margin-bottom: 0px; width: 200px; border: 1px solid #E1E1E1;}
+	.ttbm_hotel_lists_list_title { font-size: 18px; margin: 0 0 5px;}
+	.ttbm_hotel_lists_list_desc { font-size: 14px; color: #444; line-height: 1.4em; max-height: 4.2em; /* 3 lines */ overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; margin-bottom: 10px;}
+	.ttbm_hotel_lists_list_actions { display: flex; gap: 10px;}
+	.ttbm_hotel_lists_btn { padding: 6px 12px; font-size: 13px; border-radius: 4px; text-decoration: none; color: #FFF; transition: background 0.2s ease;}
+	.ttbm_hotel_lists_btn.view { background: #0073AA; }
+	.ttbm_hotel_lists_btn.edit { background: #28A745; }
+	.ttbm_hotel_lists_btn.delete { background: #DC3545; }
+	.ttbm_hotel_lists_btn:hover { opacity: 0.85;}
+	.ttbm_hotel_details_icon { padding-right: 5px;}
+	.ttbm_hotel_search_addHolder { display: flex; justify-content: end; gap: 20px; align-items: center;}
+	.ttbm_hotel_list_header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;}
+	#ttbm_hotel_title_SearchBox:focus { box-shadow: 0 0 0 0;}
+	.ttbm_add_new_hotel_header { padding: 7px 15px; border: 1px solid #5342BB; background-color: #5342BB; border-radius: 5px;}
+	.ttbm_add_new_hotel_text { color: #F6F6F6; text-decoration: none;}
+	.ttbm_hotel_titleSearchContainer { display: flex;}
+	#ttbm_hotel_title_SearchBox { background: none; outline: none; font-size: 1em; margin: 2px; padding: 4px 5px; vertical-align: middle; border: 1px solid rgb(224, 224, 224); border-radius: 5px; min-width: 220px;}
+	/*New List Design*/
+	.ttbm-hotel-list-table { border-spacing: 0; width: 100%; clear: both;}
+	.hotel-list-container { background-color: white; border: 1px solid rgb(238, 238, 238); border-radius: 4px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); overflow: hidden;}
+	.ttbm-hotel-list-table thead th { border-bottom: 1px solid #E2E8F0; padding: 10px; text-align: left; line-height: 1.3em; font-size: 14px; font-weight: 600; color: #3C434A; background-color: #F8FAFC;}
+	.ttbm-hotel-list-table .ttbm-hotel-list-column-image { width: 80px; text-align: center;}
+	.ttbm-hotel-list-table .column-actions { width: 130px; text-align: right; vertical-align: middle;}
+	.ttbm-hotel-list-table td { padding: 12px 10px; vertical-align: top; border-bottom: 1px solid #F0F0F1;}
+	.ttbm-hotel-list-table .ttbm-hotel-list-column-image { width: 80px; text-align: center;}
+	.ttbm-hotel-list-image-placeholder { width: 60px; height: 60px; background-color: #F0F0F1; border: 1px solid #C3C4C7; border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);}
+	.ttbm-hotel-list-hotel-title { font-size: 15px; font-weight: 600; margin-bottom: 5px; color: #0073AA; transition: color 0.2s ease;}
+	.ttbm-hotel-list-hotel-location { font-size: 13px; color: #666; margin-bottom: 8px; display: flex; align-items: center; gap: 5px;}
+	.ttbm-hotel-list-hotel-location .fas { color: rgb(255, 109, 0);}
+	.ttbm-hotel-list-hotel-description { font-size: 13px; color: #555; margin-bottom: 10px; line-height: 1.4em; max-height: 4.2em; /* 3 lines */ overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;}
+	.ttbm-hotel-list-hotel-features { display: flex; flex-wrap: wrap; gap: 10px;}
+	.ttbm-hotel-list-table .ttbm-hotel-list-column-actions { width: 130px; text-align: right; vertical-align: middle;}
+	.ttbm-hotel-list-action-buttons { display: flex; justify-content: flex-end; gap: 8px;}
+	.ttbm_hotel_count_holder { display: flex; gap: 10px; height: 30px;}
+	.ttbm_hotel_duplicate_post { border: 1px solid #FEF5D2; background-color: #F1C40F; color: #6F5F1F;}
+	.ttbm-hotel-lists-status { display: flex; justify-content: flex-start; gap: 5px;}
+	.ttbm-hotel-list-action-btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px; border-radius: 4px; color: white; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); transition: all 0.2s ease; border: none; cursor: pointer; width: 20px; height: 20px;}
+	.ttbm-hotel-list-feature-tag { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 50px; font-size: 12px; color: white; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);}
+	.first-tag { background: #EAE7FF; color: #5342BB;}
+	.first-tag:hover { background: #5342BB; color: #FFF;}
+	.second-tag { background: #DBF7E8; color: #2DC78A; border: 1px solid #CCF1E3;}
+	.second-tag:hover { background: #2DC78A; color: #FFF;}
+	.third-tag { background: #FFE1E2; color: #FF383C;}
+	.third-tag:hover { background: #FF383C; color: #FFF;}
+	.ttbm-hotel-list-view-btn { background: #EAE7FF; color: #5342BB;}
+	.ttbm-hotel-list-view-btn:hover { background: #5342BB; color: #FFF;}
+	.ttbm-hotel-list-edit-btn { background: #DBF7E8; color: #2DC78A;}
+	.ttbm-hotel-list-edit-btn:hover { background: #2DC78A; color: #FFF;}
+	.ttbm-hotel-list-delete-btn { background: #FFE1E2; color: #FF383C;}
+	.ttbm-hotel-list-delete-btn:hover { background: #FF383C; color: #FFF;}
+	/*Header Analytics*/
+	.ttbm_hotel_list_header_stats-container { display: flex; flex-wrap: wrap; gap: 15px; padding: 15px;}
+	.ttbm_hotel_list_header_blue-card { border-left-color: #007CBA;}
+	.ttbm_hotel_list_header_green-card { border-left-color: #46B450;}
+	.ttbm_hotel_list_header_purple-card { border-left-color: #826EB4;}
+	.ttbm_hotel_list_header_orange-card { border-left-color: #FFB900;}
+	.ttbm_hotel_list_header_stat-card { flex: 1; min-width: 200px; background-color: white; border-radius: 4px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); padding: 15px; display: flex; align-items: center; gap: 15px; border-left: 4px solid transparent; transition: transform 0.2s ease, box-shadow 0.2s ease;}
+	.ttbm_hotel_list_header_blue-bg { background: rgb(30, 136, 229);}
+	.ttbm_hotel_list_header_green-bg { background: rgb(38, 166, 154);}
+	.ttbm_hotel_list_header_purple-bg { background: linear-gradient(135deg, #826EB4, #9C7EDA);}
+	.ttbm_hotel_list_header_orange-bg { background: linear-gradient(135deg, #FFB900, #FFC93A);}
+	.ttbm_hotel_list_header_stat-icon { width: 44px; height: 44px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);}
+	.ttbm_hotel_list_header_stat-info { display: flex; flex-direction: column;}
+	.ttbm-location-card,
+	.ttbm-places-card { display: flex; gap: 15px;}
+	.ttbm-card-left img { width: 100px; height: auto; object-fit: cover; border-radius: 8px;}
+	.ttbm_travel_content_loader { display: flex; padding: 10px 20px; margin-top: 10px; color: #999900; width: 150px;}
+	.ttbm_hotel_status_items {
+		display: flex; align-items: center; gap: 5px; flex-direction: column; justify-content: center;
+		.meta-icon { background-color: #E3F2FD; color: #4D96DD; padding: 13px; width: 60px; height: 60px; border-radius: 50%; font-size: 25px; box-sizing: border-box; text-align: center; }
+		.meta-label { color: var(--mpl-black); }
+	}
+	.ttbm_hotel_tab_menu { display: flex; position: relative; list-style: none; background: linear-gradient(to right, #F5F7FA, #F8FAFC); border-radius: 12px 12px 0 0; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); overflow: hidden; border-bottom: 1px solid rgba(0, 0, 0, 0.05); margin-left: 2px;}
+	.ttbm_hotel_tab_item { padding: 10px 25px; font-size: 15px; font-weight: 600; color: #718096; background: transparent; cursor: pointer; position: relative; transition: all 0.3s ease; z-index: 1; flex: 1; text-align: center; max-width: 250px; display: flex; align-items: center; justify-content: center; gap: 8px;}
+	/* Add icons before text */
+	.ttbm_hotel_tab_item:nth-child(1)::before { content: ""; display: inline-block; width: 16px; height: 16px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'%3E%3C/path%3E%3Cpolyline points='9 22 9 12 15 12 15 22'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; margin-right: 8px;}
+	.ttbm_hotel_tab_item:nth-child(2)::before { content: ""; display: inline-block; width: 16px; height: 16px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='black' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M4 7a2 2 0 012-2h12a2 2 0 012 2v2H4V7zM3 10h18v8a2 2 0 01-2 2H5a2 2 0 01-2-2v-8zM9 17h6'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; margin-right: 8px;}
+	.ttbm_hotel_tab_item:hover { color: #4A5568; background-color: rgba(30, 136, 229, 0.05);}
+	.ttbm_hotel_tab_item.active { color: #1E88E5; font-weight: 700;}
+	.ttbm_hotel_tab_item.active::after { width: 100%; box-shadow: 0 0 8px rgba(30, 136, 229, 0.5);}
+	/* Tab indicator - will be controlled by JS */
+	.ttbm_tab_indicator { position: absolute; bottom: 0; height: 3px; background: linear-gradient(to right, #1E88E5, #42A5F5); transition: all 0.3s ease; border-radius: 3px 3px 0 0; box-shadow: 0 0 8px rgba(30, 136, 229, 0.5);}
+	/* Add subtle hover animation */
+	@keyframes tab-hover {
+		0% { transform: translateY(0); }
+		50% { transform: translateY(-2px); }
+		100% { transform: translateY(0); }
+	}
+	.ttbm_hotel_tab_item:hover::before { animation: tab-hover 0.5s ease;}
+	/* Tab content containers */
+	.ttbm_tab_content { display: none; padding: 20px; background-color: #FFF; border-radius: 0 0 12px 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);}
+	.ttbm_tab_content.active { display: block;}
+	#ttbm_order_list_result .billing-value {float: left;}
+	#ttbm_order_list_result ._warningButtons_show {float: right; font-size: 12px !important; padding: 2px 4px !important; margin-top: 0px !important;}
+	#ttbm_order_list_result ._themeButton {padding: 5px;}
+	#ttbm_order_list_result h6 {font-size: 18px;}
+	#ttbm_attendee_list_result ._justifyBetween_alignCenter {background: #EFEFEF;}
+	#ttbm_attendee_list_result .buttonGroup { margin-right: 10px; border-radius: 15px;}
+	#ttbm_attendee_list_result input.formControl.max_100.pagination_input { margin: 0px 20px; border-radius: 15px;}
+	#ttbm_attendee_list_result button._navy_blueButton_xs.ttbm_download_selected_attendee_pdf { border-radius: 10px !important;}
+	#ttbm_attendee_list_result select[name="ttbm_attendee_list_theme"] { margin: 0 10px; border-radius: 15px;}
+	div.attendee_filter_list h5,
+	#ttbm_booking_attendee_list_result h6 { margin: 0 20px 0 0; font-size: 18px;}
+	#ttbm_booking_attendee_list_result table#ttbm_attendee_short_info { margin-bottom: 15px;}
+	#ttbm_booking_attendee_list_result label.justifyCenter {display: inline; font-size: 18px;}
+	.ttbm_hotel_tab_menu { display: flex; gap: 12px; padding: 2px 12px; background: #F9F9F9; border-radius: 12px; list-style: none; margin: 0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);}
+	.ttbm_hotel_tab_item { background: #FFF; border: none; border-radius: 8px; padding: 10px 20px; font-size: 16px; font-weight: 500; color: #333; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); user-select: none;}
+	.ttbm_hotel_tab_item:hover { background-color: #EAF6FF; color: #0077CC; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 119, 204, 0.15);}
+	.ttbm_hotel_tab_item.active { background-color: #0077CC; color: #FFF; box-shadow: 0 4px 10px rgba(0, 119, 204, 0.3);}
+	.ttbm_tour_list_text_header { display: flex; gap: 20px; width: 60%;}
+	.ttbm_tour_search_add_holder { display: flex; gap: 20px; justify-content: end; align-items: center; width: 40%;}
+	.ttbm_tour_count_holder { display: flex; gap: 10px; margin-top: 0; align-items: center; justify-content: start;}
+	.ttbm_total_travel_display { color: #EF17C9;}
+	.ttbm_total_publish_display { color: #1793EF;}
+	.ttbm_total_trash_display { background-color: #FCD5D0; color: #E74C3C; padding: 6px 10px; cursor: pointer; border-radius: 5px;}
+	.ttbm_trash_link { text-decoration: none;}
+	.ttbm_travel_list_page_title_bg { padding: 8px 0; border-radius: 5px;}
+	.ttbm_tab_header_shortcode_title { display: flex; gap: 10px;}
+}
+/* =====================travel_list_header=============== */
+@media only screen and (min-width: 10px) {
+	.ttbm_travel_analytics-container { margin: 1rem auto; border-radius: 0.5rem; overflow: hidden;}
+	.ttbm_travel_analytics-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem;}
+	.ttbm_travel_metrics-group { display: flex; flex-wrap: wrap; gap: 0.75rem; width: 49%; flex: 1;}
+	.ttbm_travel_blue-bg { background-color: #DBEAFE;}
+	.ttbm_travel_blue-text { color: #006EFF;}
+	.ttbm_travel_icon-circle { width: 66px; height: 66px; border-radius: 100%; display: flex; align-items: center; justify-content: center;}
+	.ttbm_travel_icon-circle i { font-size: 1.3rem;}
+	.ttbm_travel_metric-label { font-size: 1rem; color: #6B7280; margin: 0;}
+	.ttbm_travel_metric-value { font-size: 1.5rem; font-weight: 700; margin: 10px 0;}
+	.ttbm_travel_metric-card { background: white; border-radius: 0.5rem; display: flex; align-items: center; flex: 1; gap: 15px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); padding: 10px;}
+	.ttbm_travel_green-bg { background-color: #D1FAE5;}
+	.ttbm_travel_green-text { color: #059669;}
+	.ttbm_travel_purple-bg { background-color: #EDE9FE;}
+	.ttbm_travel_purple-text { color: #7C3AED;}
+	.ttbm_travel_pink-text { color: #DB2777;}
+	.ttbm_travel_indigo-text { color: #6366F1;}
+	.ttbm_travel_amber-bg { background-color: #FDE68A;}
+	.ttbm_travel_amber-text { color: #D97706;}
+	.ttbm_travel_info-card { background: white; border-radius: 0.5rem; padding: 15px; display: flex; align-items: center; gap: 25px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); flex: 1;}
+	.ttbm_travel_info-section:not(:last-child) { border-right: 1px solid #F3F4F6;}
+	.ttbm_travel_info-section { text-align: left; padding-right: 20px;}
+	.ttbm_travel_status-card { background: white; border-radius: 0.5rem; padding: 0.5rem 0.75rem; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); flex: 1;}
+	.ttbm_travel_status-indicators { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.25rem;}
+	.ttbm_travel_dot-active { background-color: #10B981;}
+	.ttbm_travel_status-dot { width: 0.5rem; height: 0.5rem; border-radius: 9999px; display: inline-block;}
+	.ttbm_travel_status-text { font-size: 0.875rem; font-weight: 500;}
+	.ttbm_travel_dot-expired { background-color: #EF4444;}
+	/*Travel Tabs*/
+	.ttbm_trvel_lists_tab_holder { width: 100%; box-sizing: border-box;}
+	.ttbm_trvel_lists_tabs { flex-wrap: wrap; width: 100%; box-sizing: border-box;}
+	.ttbm_trvel_lists_tabs button { flex: 1 1 auto; width: 100%; max-width: 11%; /* 100% / 7 tabs */ background: #F1F1F1; border: none; outline: none; padding: 10px 15px; cursor: pointer; transition: background 0.3s; font-size: 16px; box-sizing: border-box;}
+	.ttbm_trvel_lists_tabs button.active { background: #0073AA; color: #FFF;}
+	.ttbm_trvel_lists_content { display: none; padding: 20px 0; border-top: none; background-color: #FFF; width: 100%; box-sizing: border-box; margin: 10px 0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); border-radius: 8px;}
+	.ttbm_trvel_lists_content.active { display: block; background: #FFF; padding: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);}
+	/* Responsive for small screens */
+	@media (max-width: 768px) {
+		.ttbm_trvel_lists_tabs { flex-direction: column; }
+		.ttbm_trvel_lists_tabs button { max-width: 100%; }
+	}
+	/*Location tab display*/
+	.ttbm-locations-list { display: flex; flex-direction: column; gap: 15px; margin-top: 20px;}
+	.ttbm-location-card { display: flex; border: 1px solid #DDD; border-radius: 6px; overflow: hidden; padding: 10px; background: #FFF; position: relative; transition: box-shadow 0.3s ease; align-items: flex-start;}
+	.ttbm-location-card:hover { box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);}
+	.ttbm-card-left img { width: 70px; height: 70px; object-fit: cover; border-radius: 4px;}
+	.ttbm-card-left { margin-right: 15px; flex-shrink: 0;}
+	.ttbm-card-right { flex-grow: 1; position: relative;}
+	.ttbm-title { font-size: 16px; font-weight: normal; margin: 0 0 5px;}
+	.ttbm-title i { margin-right: 10px; font-size: 25px; color: var(--mpl-primary);}
+	.ttbm-description { font-size: 13px; color: #555; padding-right: 60px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;}
+	.ttbm-popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 9999;}
+	.ttbm-popup-box { background: #FFF; padding: 20px 25px; width: 500px; max-width: 95%; border-radius: 8px; position: relative; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);}
+	.ttbm-popup-box h3 { margin-top: 0; font-size: 20px; margin-bottom: 15px;}
+	.ttbm-popup-box input[type="text"],
+	.ttbm-popup-box textarea,
+	.ttbm-popup-box select { width: 100%; padding: 8px 10px; margin-bottom: 15px; border: 1px solid #CCC; border-radius: 4px; box-sizing: border-box; font-size: 14px;}
+	#ttbm-image-preview img { margin-top: 10px; max-width: 100px; border: 1px solid #DDD; border-radius: 4px;}
+	.ttbm-popup-buttons { display: flex; justify-content: flex-end; gap: 10px;}
+	.ttbm-popup-buttons button { padding: 8px 16px; border: none; font-size: 14px; border-radius: 4px; cursor: pointer;}
+	.ttbm-save-location { background-color: #0073AA; color: white;}
+	#ttbm-close-popup { background-color: #CCC; color: #333;}
+	.ttbm-save-location:hover { background-color: #005A87;}
+	#ttbm-close-popup:hover { background-color: #BBB;}
+	.ttbm-taxonomy-list-holder { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 10px 0;}
+	.ttbm-taxonomy-card { background: #F9F9F9; border: 1px solid #DDD; border-radius: 8px; padding: 15px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); transition: box-shadow 0.3s ease;}
+	.ttbm-taxonomy-card:hover { box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);}
+	.ttbm-taxonomy-card .ttbm-title { display: flex; align-items: center;}
+	.ttbm-card-actions { display: flex; justify-content: space-between; margin-top: 15px; gap: 10px; width: 100px;}
+	.ttbm-location-card-actions { flex-direction: column; align-items: flex-start;}
+	.ttbm-btn { padding: 5px 4px; font-size: 13px; border: none; border-radius: 4px; cursor: pointer; text-align: center; width: 25px;}
+	.ttbm-view-btn { background: #EAE7FF; color: #5342BB;}
+	.ttbm-view-btn:hover { background: #5342BB; color: #FFF;}
+	.ttbm-edit-btn { background: #DBF7E8; color: #2DC78A;}
+	.ttbm-edit-btn:hover { background: #2DC78A; color: #FFF;}
+	.ttbm-delete-btn { background: #FFE1E2; color: #FF383C;}
+	.ttbm-delete-btn:hover { background: #E9252C; color: #FFF;}
+	.ttbm-btn:hover { opacity: 0.9;}
+	.ttbm-title-row { display: flex; justify-content: left; align-items: center; gap: 20px;}
+	.ttbm-taxonomy-card-actions { display: none; gap: 8px;}
+	.ttbm-taxonomy-card:hover .ttbm-taxonomy-card-actions { display: flex;}
+	.ttbm_places_load_more_holder,
+	.ttbm_plocation_load_more_holder { display: flex; padding: 10px; justify-content: center;}
+	.ttbm_places_load_more_btn,
+	.ttbm-location-load-more { cursor: pointer; padding: 7px 25px; border: 1px solid #CFC9C9; border-radius: 3px;}
+	.ttbm_places_load_more_btn:hover { background-color: #1972B9; color: #FFF;}
+	.ttbm_show_location_shortcode { padding: 5px 0; color: #B3AF0F; background-color: #DDD;}
+	.ttbm_trvel_lists_tabs { flex-wrap: wrap; gap: 12px; padding: 5px; background: #FFF; border-radius: 8px; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);}
+	.ttbm_trvel_lists_tabs button { border-radius: 5px; padding: 10px 15px; font-size: 16px; font-weight: 500; color: #333; cursor: pointer; transition: all 0.3s ease; position: relative; border: 1px solid #DDD; margin: 5px;}
+	.ttbm_trvel_lists_tabs button .icon-wrap { display: flex; align-items: center;}
+	.ttbm_trvel_lists_tabs button i { margin-right: 5px;}
+	.ttbm_trvel_lists_tabs button:hover { background-color: #EAF6FF; color: #0077CC; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 119, 204, 0.15);}
+	.ttbm_trvel_lists_tabs button.active { background-color: #006EFF; color: #FFF; box-shadow: 0 4px 10px rgba(0, 119, 204, 0.15);}
+	.ttbm_travel_lists_tour-features { display: flex; gap: 10px;}
+	.ttbm_travel_lists_tour-feature { padding: 5px 10px; background-color: #F5F5F5; border-radius: 4px; font-size: 0.75rem; color: #555; text-align: center;}
+	.ttbm_travel_lists_tour-feature.ttbm_travel_lists_first_feature { background-color: #E3F2FD; color: #1976D2;}
+	.ttbm_travel_lists_tour-feature.ttbm_travel_lists_second_feature { background-color: #E8F5E9; color: #2E7D32;}
+	.ttbm_travel_lists_tour-feature.ttbm_travel_lists_third_feature { background-color: #FFF3E0; color: #E65100;}
+	.ttbm_travel_filter_holder { display: flex; justify-content: flex-start; gap: 10px; padding: 5px;}
+	.ttbm_travel_filter_item { padding: 7px 10px; cursor: pointer; border-radius: 5px;}
+	.ttbm_filter_btn_bg_color { background-color: #E3F2FD; color: #333;}
+	.ttbm_filter_btn_active_bg_color { background-color: #006EFF; color: #FFF;}
+	.ttbm_travel_filter_item:hover { background-color: #006EFF; color: #FFF;}
+	.ttbm-tour-list-page, .ttbm_trvel_lists_content {background: linear-gradient(to right, #EFF6FF, #F5F3FF)}
+	.ttbm-tour-list-page .ttbm-tour-card { background: #FFF; }
+	@media screen and (max-width: 768px) {
+		.ttbm_trvel_lists_tabs { flex-direction: column; align-items: stretch; }
+		.ttbm_trvel_lists_tabs button { width: 100%; text-align: center; }
+	}
+}
+/* =====================main_settings=============== */
+@media only screen and (min-width: 10px) {
+	.ttbm-tour-list-page { padding: 20px; background: #FFF; }
+	.ttbm-tour-list-page .page-title { padding: 0; margin-bottom: 10px; }
+	.ttbm-tour-list-page .ttbm-tour-list-header { display: flex; gap: 20px; justify-content: space-between; align-items: center; }
+	.ttbm-tour-list-page .ttbm-tour-list-header input { width: 50%; }
+	.ttbm-tour-list-page .ttbm-tour-list-header h1.ttbm_tour_page-title { padding: 0; }
+	.ttbm-tour-list-page .ttbm-tour-list-header .page-title-action { position: inherit; margin: 0; background-color: var(--mpl-primary); color: #FFF; border: var(--mpl-primary) solid 1px; font-weight: bold; }
+	.ttbm-tour-list-page .ttbm-tour-list { display: flex; flex-wrap: wrap; margin-top: 10px; gap: 36px; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card { padding: 10px; display: flex; flex-direction: column; justify-content: space-between; width: 100%; gap: 10px; border: 1px solid #DFD6D6; margin-bottom: 6px; border-radius: 10px; transition: all 0.5s; position: relative; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card:hover { cursor: pointer; transform: translateY(-3px); box-shadow: 0 2px 5px #DDD; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card:hover .meta-action { display: block; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-thumb { position: relative; width: 100%; max-height: 200px; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-thumb img { width: 100%; height: 100%; border-radius: 5px; object-fit: cover; display: block; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-icon { position: absolute; bottom: 10px; left: 10px; background: #FF4081; color: #FFF; padding: 5px 10px; border-radius: 6px; font-size: 14px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content { width: 100%; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content h3 { margin: 0; font-size: 18px; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content h3 a { text-decoration: none; color: var(--mpl-black); }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .location { color: var(--mpl-primary); font-size: 14px; margin: 6px 0; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details { display: flex; justify-content: space-between; align-items: start; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-info .description { font-size: 13px; color: #555; margin-bottom: 6px; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta { display: flex; align-items: center; justify-content: space-between; flex-direction: column; gap: 10px; width: 100%; box-sizing: border-box; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status { padding: 5px 10px; font-weight: bold; text-transform: capitalize; border-radius: 5px; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.publish { border: 1px solid #D4F4E0; background-color: #E8F5E8; color: #368336; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.draft { border: 1px solid #F0F0F0; background-color: #F8F8F8; color: #777; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.pending { border: 1px solid #FFF4CC; background-color: #FFF8E1; color: #B58B00; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.scheduled { border: 1px solid #D6ECFF; background-color: #EBF4FF; color: #1C6DB3; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .ttbm_travel_status.trash { border: 1px solid #FFE3E3; background-color: #FFF0F0; color: #D9534F; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .tour-stats { display: flex; justify-content: space-between; gap: 20px; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .tour-stats .stat { display: flex; flex-direction: column; align-items: center; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta .tour-stats .stat .value { font-weight: bold; color: #000; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action { display: none; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links { position: absolute; right: 5px; top: 5px; display: flex; align-items: center; justify-content: space-evenly; gap: 5px; padding: 5px 10px; flex-direction: row; color: var(--mpl-dark); border-radius: 0 10px 10px 0; margin: 0; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a { font-size: 12px; text-decoration: none; padding: 5px 10px; border-radius: 5px; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_view_post { border: 1px solid #3498DB; background-color: #D8F0FF; color: #3498DB; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_edit_post { border: 1px solid #F1C40F; background-color: #FEF5D2; color: #F1C40F; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_duplicate_post { border: 1px solid #2271B1; background-color: #CFE9FF; color: #2271B1; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_trash_post { border: 1px solid #E74C3C; background-color: #FCD5D0; color: #E74C3C; }
+	.ttbm-tour-list-page .ttbm-load-more-wrap { text-align: center; margin: 10px auto; }
+	.ttbm-tour-list-page .ttbm-load-more-wrap .button { background-color: var(--mpl-primary); color: #FFF; border: var(--mpl-primary) solid 1px; font-weight: bold; }
+	.ttbm-faq-section .ttbm-faq-item { background-color: #FFF; cursor: grabbing; }
+	.ttbm-faq-section .ttbm-faq-item.ui-sortable-helper { background: var(--mpl-light); visibility: visible; cursor: grabbing; }
+	.ttbm-faq-section .faq-header { position: relative; z-index: 0; background-color: var(--mpl-light); border: 1px solid #DDD; border-radius: 10px; margin-top: 20px; }
+	.ttbm-faq-section .faq-header.mActive { border-radius: 15px 15px 0 0; }
+	.ttbm-faq-section .faq-header .faq-action { position: absolute; top: 50%; right: 15px; transform: translateY(-50%); z-index: 1; }
+	.ttbm-faq-section .faq-header .faq-action span { padding: 5px 10px; background-color: var(--mpl-light); color: var(--mpl-primary); border-radius: 2px; }
+	.ttbm-faq-section .faq-content { display: none; border: 1px solid #DDD; border-radius: 0; padding: 10px; }
+	.ttbm-faq-section .faq-content.mActive { border-radius: 0 0 15px 15px; }
+	.ttbm-daywise-section .ttbm-daywise-item { background-color: #FFF; cursor: grabbing; }
+	.ttbm-daywise-section .ttbm-daywise-item.ui-sortable-helper { background: var(--mpl-light); visibility: visible; cursor: grabbing; }
+	.ttbm-daywise-section .daywise-header { position: relative; z-index: 0; background-color: var(--mpl-light); border: 1px solid #DDD; margin-top: 20px; border-radius: 10px; }
+	.ttbm-daywise-section .daywise-header.mActive { border-radius: 15px 15px 0 0; }
+	.ttbm-daywise-section .daywise-header .daywise-action { position: absolute; top: 50%; right: 15px; transform: translateY(-50%); z-index: 1; }
+	.ttbm-daywise-section .daywise-header .daywise-action span { padding: 5px 10px; background-color: var(--mpl-light); color: var(--mpl-primary); border-radius: 2px; }
+	.ttbm-daywise-section .daywise-content { display: none; border: 1px solid #DDD; padding: 10px; border-radius: 0 0 15px 15px; }
+	.ttbm-daywise-section .daywise-content.mActive { border-radius: 0 0 15px 15px; }
+	.ttbm-modal-container { position: fixed; right: -100%; /* Initially hidden off-screen */ top: 0; width: 100%; /* Width of the sidebar */ height: 100%; /* Full height */ background-color: rgba(0, 0, 0, 0.1725490196); /* Background color */ transition: right 0.3s ease; /* Animation effect */ z-index: 1000; /* Ensure it's above other content */ }
+	.ttbm-modal-container.open { right: 0; /* Slide in */ }
+	.ttbm-modal-content { background-color: #FFF; width: 800px; height: 100%; position: absolute; top: 0; right: 0; padding: 70px 0px; }
+	.ttbm-modal-content .title { padding-left: 40px; }
+	.ttbm-modal-content .ttbm-modal-close { position: absolute; top: 40px; right: 15px; font-size: 20px; cursor: pointer; }
+	.ttbm-modal-content .content { height: 100%; overflow-y: scroll; padding: 0 40px; padding-bottom: 40px; }
+	.ttbm-modal-content p { margin: 15px 0; }
+	.ttbm-modal-content h3 { font-size: 18px; padding: 0; margin: 5px 0; margin-bottom: 30px; }
+	.ttbm-modal-content input[type=text],
+	.ttbm-modal-content input[type=number],
+	.ttbm-modal-content textarea,
+	.ttbm-modal-content select { width: 100%; display: block; font-weight: normal; padding: 10px; font-size: 18px; border: 1px solid #DFDFDF; background-color: #FFF; }
+	.ttbm-modal-content label { display: flex; justify-content: start; align-items: start; flex-direction: column; font-weight: normal; font-size: 18px; gap: 15px; margin: 25px 0; }
+	.ttbm-modal-content .ttbm_add_icon_image_area { position: relative; max-width: 202px; margin: 10px 0;}
+	.ttbm-modal-content .ttbm_add_icon_image_button_area { display: flex; flex-direction: row; justify-content: start; border: 1px solid #8C8F94; width: 100%; border-radius: 3px;}
+	.ttbm-modal-content .ttbm_add_icon_image_button_area .ttbm_image_add,
+	.ttbm-modal-content .ttbm_add_icon_image_button_area .ttbm_icon_add { padding: 10px 26px; border-radius: 0; margin: 1px;}
+	body.ttbm_settings_page { font-size: 16px; background-color: #FFF;}
+	div.ttbm_style .ttbmPanelBody { background-color: #FFF;}
+	.ttbm_style button:hover span,
+	.ttbm_style button:focus span { color: var(--mpl-dark);}
+	.ttbm_style [data-tabs-target].active { border-left: 2px solid var(--mpl-primary);}
+	.ttbm_style [data-tabs-target]:hover { border-left: 2px solid var(--mpl-primary);}
+	.auto-search-wrapper.loupe::before { margin: 10px 0;}
+	.auto-search-wrapper.loupe button { display: none;}
+	.ttbm-avg-review-header { align-items: center !important;}
+	.ttbm_style [data-tabs-target].active { background-color: var(--mpl-white); color: var(--d_color); border-left: 2px solid var(--mpl-primary);}
+	.ttbm_style [data-tabs-target]:hover { border-left: 2px solid var(--mpl-primary); background-color: var(--mpl-white);}
+	.ttbm_style .themeButton, .ttbm_style [class*=_themeButton] { background-color: var(--mpl-primary); color: var(--mpl-white); padding: 10px; border: 1px solid var(--mpl-primary);}
+	.ttbm_style .themeButton i, .ttbm_style [class*=_themeButton] i { color: #FFF;}
+	.leftTabs [data-tabs-target] { border-bottom: 0; }
+	div.ttbm_style [data-tabs-target] { color: var(--mpl-secondary); }
+	code { line-height: 24px; }
+	.ttbm_style .navy_blueButton,
+	.ttbm_style [class*=_navy_blueButton] { background-color: var(--mpl-primary); color: var(--mpl-white); padding: 0.75em; border: 2px solid var(--mpl-primary); }
+	.ttbm_style .navy_blueButton:hover,
+	.ttbm_style [class*=_navy_blueButton]:hover { background-color: var(--mpl-white); color: var(--mpl-primary); border-color: var(--mpl-primary); }
+	.ttbm_style .navy_blueButton:hover span,
+	.ttbm_style [class*=_navy_blueButton]:hover span { color: var(--mpl-primary); }
+	.ttbm_style .warningButton,
+	.ttbm_style [class*=_warningButton] { background-color: var(--mpl-yellow); color: var(--mpl-white); padding: 0.75em; border: 2px solid var(--mpl-yellow); }
+	.ttbm_style .warningButton:hover,
+	.ttbm_style [class*=_warningButton]:hover { background-color: var(--mpl-white); color: var(--mpl-yellow); }
+	.ttbm_style .warningButton:hover span,
+	.ttbm_style [class*=_warningButton]:hover span { color: var(--mpl-yellow); }
+	.ttbm_settings_panel_header { background: var(--mpl-secondary); padding: 1em 0.5em; color: var(--mpl-white); font-size: 20px; margin-top: 30px; }
+	.ttbm_settings_panel { padding-bottom: 0.5em; }
+	.ttbm_settings_panel .nav-tab-wrapper { background: var(---mpl-sky-light); border: 5px solid var(---mpl-sky-light); }
+	.ttbm_settings_panel .nav-tab-wrapper .nav-tab { box-sizing: border-box; background: var(--mpl-white); color: var(--mpl-secondary); margin-bottom: 0.5em; border-radius: 0.25rem; }
+	.ttbm_settings_panel .nav-tab-wrapper .nav-tab:hover { background: var(--mpl-primary); color: var(--mpl-white); }
+	.ttbm_settings_panel .nav-tab-wrapper .nav-tab.nav-tab-active { background: var(--mpl-primary); color: var(--mpl-white); }
+	.ttbm_settings_panel .metabox-holder { padding: 0; margin: 0; width: calc(100% - 300px); border: 15px solid var(---mpl-sky-light); background-color: var(---mpl-sky-light); }
+	.ttbm_settings_panel .metabox-holder h2 { border-bottom: 0px solid var(--mpl-white); font-size: 1.625rem; line-height: 1.4; padding: 0.5em 0; margin: 0; font-weight: 300; background: var(---mpl-sky-light); color: var(--mpl-primary) !important; }
+	.ttbm_settings_panel .metabox-holder table { border-collapse: separate; border-spacing: 0 0.1em; margin: 0; background-color: var(---mpl-sky-light); border-radius: 0.25rem; }
+	.ttbm_settings_panel .metabox-holder table tr:nth-child(2n) { background-color: var(--mpl-white); }
+	.ttbm_settings_panel p.submit input { font-size: 16px; padding: 5px 30px; border-radius: 0.25rem; background: var(--mpl-primary); border-color: var(--mpl-primary); transition: 0.2s; }
+	.ttbm_settings_panel p.submit input:hover { background: var(--mpl-primary); border-color: var(--mpl-primary); }
+	#wpbody-content .metabox-holder { padding-top: 0px; padding-bottom: 0.5em; }
+	.ppof-settings .form-wrapper { margin-left: 250px; background: transparent;}
+	div > .ppof-metabox { background: transparent;}
+	.ttbm_style .ppof-button { width: 320px; border: 0px solid; box-shadow: none; background-color: var(--mpl-primary); border-radius: 0.25rem; padding: 0.5em 0.75em; color: var(--mpl-white); font-size: 1rem; transition: all 0.5s ease-in-out; min-width: 100px;}
+	div.ttbm_multi_image { display: flex; flex-wrap: wrap; justify-content: start; align-items: stretch; gap: 0.5em; margin-bottom: 0.5em; }
+	div.ttbm_multi_image div.ttbm_multi_image_item { width: calc(25% - 16px); }
+	div.ttbm_multi_image div.ttbm_multi_image_item img { width: 100%; height: 150px; object-fit: cover; }
+	div.ttbm_style .description { font-size: 1rem !important; color: var(--mpl-secondary); }
+	div.ttbm_style span.ttbm_remove_multi_image { background-color: var(--mpl-black); color: var(--mpl-white); box-shadow: 0 0 5px var(--mpl-white);}
+	div.ttbm_style span.ttbm_remove_multi_image { top: -7px; right: -7px;}
+	.select2-container--default .select2-selection--multiple .select2-selection__choice { background-color: var(--mpl-gray); border: 5px solid var(--mpl-light); border-radius: 0.25rem; cursor: default; float: left; margin-right: 5px; margin-top: 5px; padding: 5px 10px;}
+	.select2-container--default .select2-selection--multiple .select2-selection__choice__remove { padding: 5px;}
+	.includedd-features-section { margin-top: 15px;}
+	.includedd-features-section .groupCheckBox { overflow: hidden; margin-bottom: 5px;}
+	.includedd-features-section .customCheckboxLabel { float: left; margin-right: 10px; padding: 7px 7px; width: 225px; border-radius: 5px; font-weight: normal; font-size: 14px;}
+	.includedd-features-section .customCheckboxLabel .customCheckbox { padding: 2px; padding-left: 20px;}
+	.includedd-features-section .customCheckboxLabel .customCheckbox i { color: #000;}
+	.includedd-features-section .customCheckboxLabel .customCheckbox::before { content: ""; position: absolute; left: 0; top: 0 !important; height: 15px; width: 15px; background-color: var(--mpl-white); border: 1px solid var(--mpl-primary); border-radius: 2px;}
+	.input-fullwidth { width: 100%; border-radius: 5px;}
+	div.ttbm_style .customCheckboxLabel input:checked ~ .customCheckbox::after { content: ""; position: absolute; height: 5px; width: 10px; border: 2px solid var(--mpl-white); border-top: none; border-right: none; z-index: 11; background-color: transparent; -ms-transform: rotate(-45deg); transform: rotate(-45deg); left: 3px; top: 4px !important;}
+	.reply-enquiry-form { display: flex; flex-direction: column; justify-content: start; align-items: start; gap: 10px; padding: 20px 10px;}
+	.reply-enquiry-form input[type=text], .reply-enquiry-form input[type=email], .ttbm-reply-message { width: 100%; margin-bottom: 20px; max-width: 400px;}
+	.ttbm-enquiry-list td:first-child.new { font-weight: bold;}
+	.ttbm-enquiry-list .new { color: green;}
+	.ttbm-enquiry-list .viewed { color: skyblue;}
+	.ttbm-enquiry-list .replied { color: rgb(255, 162, 162);}
+}
+/* =====================Responsive=============== */
+@media only screen and (max-width: 1100px) {
+	.unlimited_section .textContent {padding: 0 0 0 20px;}
+	.unlimited_section .content_area {padding: 15px 10px 0 0;}
+	.unlimited_section .textContent h4 {margin: 0 0 7px 0;font-size: 18px;}
+	.ttbm_style .buttonOutline {min-height: 50px;font-size: 15px;margin: 20px 0 0 0;}
+	.ttbm_style [class*="customButton"] {font-size: 18px;}
+}
+@media only screen and (min-width: 1024px) {
+	.ttbm-tour-list-page .ttbm-tour-list-header { flex-direction: column; }
+	.ttbm-tour-list-page .ttbm-tour-list { gap: 10px; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card { flex-direction: row; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-thumb { width: 10%; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content { width: 90%; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-info { width: 80%; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta { width: 15%; }
+}
+@media only screen and (max-width: 900px) {
+	.unlimited_section {padding: 40px 0;}
+	.ttbm_style section h1 {margin: 0 0 20px 0;font-size: 40px;}
+	.unlimited_section .textContent {padding: 0 0 0 15px;}
+	.unlimited_section .content_area {padding: 10px 7px 0 0;}
+	.unlimited_section .textContent h4 {font-size: 16px;}
+	.ttbm_style .buttonOutline {min-height: 45px;font-size: 15px;margin: 15px 0 0 0;}
+}
+@media only screen and (max-width: 768px) {
+	.ttbm_hotel_tab_menu { flex-direction: column; align-items: stretch; }
+	.ttbm_hotel_tab_item { width: 100%; text-align: center; }
+	.ttbm_tour_count_holder { flex-direction: column; align-items: center; }
+	.ttbm_tour_list_text_header { flex-direction: column; }
+	.ttbm_tour_search_add_holder,
+	.ttbm_tour_list_text_header { width: 100%; }
+	.unlimited_section {padding: 30px 0;}
+	.ttbm_style [class*="extraBold"] {font-weight: 500;}
+	.ttbm_style [class*="customButton"] {height: 30px;font-size: 14px;margin: 0 0 10px 0;}
+	.postDash::after {top: 15px;width: 40px;height: 1px;}
+	.postDash::after {right: -50px;}
+	.unlimited_section .textContent {padding: 0 0 0 10px;}
+	.ttbm_style .buttonOutline {min-height: 40px;font-size: 14px;margin: 10px 0 0 0;}
+}
+@media only screen and (max-width: 600px) {
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card { width: 100%; }
+}
+@media only screen and (max-width: 500px) {
+	.unlimited_section {padding: 25px 0;}
+}

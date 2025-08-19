@@ -527,6 +527,7 @@
 			}
 			public function get_cart_total_price($tour_id) {
 				$total_price = 0;
+				$total_qty = 0;
 				if (isset($_POST['ttbm_form_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_form_nonce'])), 'ttbm_form_nonce')) {
 					$names = isset($_POST['ticket_name']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_name'])) : [];
 					$qty = isset($_POST['ticket_qty']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_qty'])) : [];
@@ -537,6 +538,7 @@
 					if (sizeof($names) > 0) {
 						for ($i = 0; $i < $count; $i++) {
 							if ($qty[$i] > 0) {
+								$total_qty=$total_qty+$qty[$i] ;
 								$price = TTBM_Function::get_price_by_name($names[$i], $tour_id, $hotel_id, $qty[$i], $start_date) * $qty[$i];
 								if ($hotel_id > 0) {
 									$price = $price * $ttbm_hotel_num_of_day;
@@ -544,6 +546,9 @@
 								$total_price = $total_price + $price;
 							}
 						}
+                        if($total_qty>0){
+                            $total_price=apply_filters('ttbm_total_price_filter',$total_price,$tour_id,$total_qty);
+                        }
 					}
 					$service_name = isset($_POST['service_name']) ? array_map('sanitize_text_field', wp_unslash($_POST['service_name'])) : [];
 					$service_qty = isset($_POST['service_qty']) ? array_map('sanitize_text_field', wp_unslash($_POST['service_qty'])) : [];

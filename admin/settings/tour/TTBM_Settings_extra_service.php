@@ -22,8 +22,8 @@
 			public function ttbm_extra_service_config($post_id) {
 				$ttbm_extra_service_data = TTBM_Global_Function::get_post_info($post_id, 'ttbm_extra_service_data', array());
 				?>
-                <div class="ttbm_settings_area mt-2">
-                    <section>
+                <div class=" mt-2">
+                    <section class="ttbm_settings_area">
                         <div class="ttbm-header">
                             <h4><i class="fas fa-parachute-box"></i><?php esc_html_e('Extra Service', 'tour-booking-manager'); ?></h4>
                         </div>

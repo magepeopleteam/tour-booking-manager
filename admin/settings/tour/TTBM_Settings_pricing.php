@@ -18,31 +18,34 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
                 <div class="tabsItem ttbm_settings_pricing" data-tabs="#ttbm_settings_pricing">
-                    <h2><?php esc_html_e('Pricing Settings', 'tour-booking-manager'); ?></h2>
-                    <p><?php TTBM_Settings::des_p('price_settings_description'); ?> </p>
-                    <section>
-                        <div class="ttbm-header">
-                            <h4><i class="fas fa-dollar-sign"></i><?php esc_html_e('Pricing Settings', 'tour-booking-manager'); ?></h4>
+                    <div class="gptLayout">
+                        <div class="alignCenter justifyBetween">
+                            <h5><?php esc_html_e('Pricing Settings', 'tour-booking-manager'); ?></h5>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_registration', $checked); ?>
                         </div>
+                        <span class="info_text"><?php TTBM_Settings::des_p('price_settings_description'); ?> </span>
                         <div data-collapse="#ttbm_display_registration" class="<?php echo esc_attr($active); ?>">
-                            <label class="label">
-                                <div>
-                                    <p><?php esc_html_e('Tour Type', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_registration'); ?></span></i></p>
+                            <div class="divider"></div>
+                            <div class="dLayout">
+                                <div class="alignCenter justifyBetween">
+                                    <h6><?php esc_html_e('Tour Type', 'tour-booking-manager'); ?></h6>
+                                    <label>
+                                        <select class="formControl" name="ttbm_type">
+											<?php foreach ($all_types as $key => $type) { ?>
+                                                <option value="<?php echo esc_attr($key) ?>" <?php echo esc_attr($ttbm_type == $key ? 'selected' : ''); ?>><?php echo esc_html($type) ?></option>
+											<?php } ?>
+                                        </select>
+                                    </label>
                                 </div>
-                                <select class="" name="ttbm_type">
-									<?php foreach ($all_types as $key => $type) { ?>
-                                        <option value="<?php echo esc_attr($key) ?>" <?php echo esc_attr($ttbm_type == $key ? 'selected' : ''); ?>><?php echo esc_html($type) ?></option>
-									<?php } ?>
-                                </select>
-                            </label>
-							<?php do_action('ttbm_hotel_pricing_before', $tour_id); ?>
-							<?php do_action('ttbm_tour_pricing_before', $tour_id); ?>
-							<?php $this->ttbm_hotel_config($tour_id); ?>
-							<?php do_action('ttbm_hotel_pricing_after', $tour_id); ?>
-							<?php $this->ttbm_ticket_config($tour_id); ?>
+                                <span class="info_text"><?php TTBM_Settings::des_p('ttbm_display_registration'); ?></span>
+								<?php do_action('ttbm_hotel_pricing_before', $tour_id); ?>
+								<?php do_action('ttbm_tour_pricing_before', $tour_id); ?>
+								<?php $this->ttbm_hotel_config($tour_id); ?>
+								<?php do_action('ttbm_hotel_pricing_after', $tour_id); ?>
+								<?php $this->ttbm_ticket_config($tour_id); ?>
+                            </div>
                         </div>
-                    </section>
+                    </div>
 					<?php do_action('ttbm_tour_pricing_inner', $tour_id); ?>
                     <div style="margin-bottom: 20px;">
 						<?php $this->advertise_addon(); ?>
@@ -72,21 +75,24 @@
                 <div class="ttbm_ticket_config  <?php echo esc_html($type_class); ?>">
                     <div class="ttbm_settings_area ttbm_price_config">
 						<?php do_action('ttbm_ticket_type_before', $tour_id); ?>
-                        <label class="label">
-                            <p><?php esc_html_e('Import Ticket type', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('get_ticket_type'); ?></span></i></p>
-							<?php if ($all_forms->post_count > 0) { ?>
-                                <select style="width:70%" name="ticket_type_import">
-                                    <option value="" selected><?php esc_html_e('Select a Import Ticket type', 'tour-booking-manager'); ?></option>
-									<?php foreach ($all_forms->posts as $form) { ?>
-                                        <option value="<?php echo esc_attr($form->ID) ?>">
-											<?php echo esc_html(get_the_title($form->ID)); ?>
-                                        </option>
-									<?php } ?>
-                                </select>
-							<?php } ?>
-                        </label>
-                        <div>
-                            <div style="overflow-x:auto;">
+						<?php if ($all_forms->post_count > 0) { ?>
+                            <div class="alignCenter justifyBetween _mT">
+                                <h6><?php esc_html_e('Import Ticket type', 'tour-booking-manager'); ?></h6>
+                                <label>
+                                    <select class="formControl" name="ticket_type_import">
+                                        <option value="" selected><?php esc_html_e('Select a Import Ticket type', 'tour-booking-manager'); ?></option>
+										<?php foreach ($all_forms->posts as $form) { ?>
+                                            <option value="<?php echo esc_attr($form->ID) ?>">
+												<?php echo esc_html(get_the_title($form->ID)); ?>
+                                            </option>
+										<?php } ?>
+                                    </select>
+                                </label>
+                            </div>
+                            <span class="info_text"><?php TTBM_Settings::des_p('get_ticket_type'); ?></span>
+						<?php } ?>
+                        <div class="ttbm_settings_area _mT_xs">
+                            <div class="ovAuto">
                                 <table class="price_config_table">
                                     <thead>
                                     <tr>
@@ -124,9 +130,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="d-flex justify-content-end ">
-								<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Ticket Type', 'tour-booking-manager')); ?>
-                            </div>
+							<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Ticket Type', 'tour-booking-manager')); ?>
 							<?php do_action('add_ttbm_hidden_table', 'ttbm_price_item'); ?>
                         </div>
                     </div>

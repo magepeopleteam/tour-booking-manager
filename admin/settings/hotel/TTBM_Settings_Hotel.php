@@ -50,9 +50,11 @@
 				}
 				if (get_post_type($post_id) == 'ttbm_hotel') {
 					$slider = isset($_POST['ttbm_display_slider_hotel']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_slider_hotel'])) ? 'on' : 'off';
+					$hotel_faq_status = isset($_POST['ttbm_hotel_faq_status']) && sanitize_text_field(wp_unslash($_POST['ttbm_hotel_faq_status'])) ? 'on' : 'off';
 					$images = isset($_POST['ttbm_gallery_images_hotel']) ? sanitize_text_field(wp_unslash($_POST['ttbm_gallery_images_hotel'])) : '';
 					$all_images = explode(',', $images);
 					update_post_meta($post_id, 'ttbm_display_slider_hotel', $slider);
+					update_post_meta($post_id, 'ttbm_hotel_faq_status', $hotel_faq_status);
 					update_post_meta($post_id, 'ttbm_gallery_images_hotel', $all_images);
 				}
 				if (get_post_type($post_id) == 'ttbm_hotel') {

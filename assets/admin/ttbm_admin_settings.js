@@ -180,3 +180,166 @@ function ttbm_load_sortable_datepicker(parent, item) {
         }
     );
 })(jQuery);
+
+
+// ============= Faq sidebar modal ======================
+(function ($) {
+    $(document).on('click', '.ttbm-faq-item-new', function (e) {
+        $('#ttbm-faq-msg').html('');
+        $('.ttbm_faq_save_buttons').show();
+        $('.ttbm_faq_update_buttons').hide();
+        empty_faq_form();
+    });
+    function close_sidebar_modal(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('.ttbm-modal-container').removeClass('open');
+    }
+    $(document).on('click', '.ttbm-faq-item-edit', function (e) {
+        $('#ttbm-faq-msg').html('');
+        $('.ttbm_faq_save_buttons').hide();
+        $('.ttbm_faq_update_buttons').show();
+        var itemId = $(this).closest('.ttbm-faq-item').data('id');
+        var parent = $(this).closest('.ttbm-faq-item');
+        var headerText = parent.find('.faq-header p').text().trim();
+        var faqContentId = parent.find('.faq-content').text().trim();
+        var editorId = 'ttbm_faq_content';
+        $('input[name="ttbm_faq_title"]').val(headerText);
+        $('input[name="ttbm_faq_item_id"]').val(itemId);
+        if (tinymce.get(editorId)) {
+            tinymce.get(editorId).setContent(faqContentId);
+        } else {
+            $('#' + editorId).val(faqContentId);
+        }
+    });
+    $(document).on('click', '.ttbm-faq-item-delete', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var itemId = $(this).closest('.ttbm-faq-item').data('id');
+        var isConfirmed = confirm('Are you sure you want to delete this row?');
+        if (isConfirmed) {
+            delete_faq_item(itemId);
+        } else {
+            console.log('Deletion canceled.' + itemId);
+        }
+    });
+    function empty_faq_form() {
+        $('input[name="ttbm_faq_title"]').val('');
+        tinyMCE.get('ttbm_faq_content').setContent('');
+        $('input[name="ttbm_faq_item_id"]').val('');
+    }
+    $(document).on('click', '#ttbm_faq_update', function (e) {
+        e.preventDefault();
+        update_faq();
+    });
+    $(document).on('click', '#ttbm_faq_save', function (e) {
+        e.preventDefault();
+        save_faq();
+    });
+    $(document).on('click', '#ttbm_faq_save_close', function (e) {
+        e.preventDefault();
+        save_faq();
+        close_sidebar_modal(e);
+    });
+    function update_faq() {
+        var title = $('input[name="ttbm_faq_title"]');
+        var content = tinyMCE.get('ttbm_faq_content').getContent();
+        var postID = $('input[name="ttbm_post_id"]');
+        var itemId = $('input[name="ttbm_faq_item_id"]');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_faq_data_update',
+                ttbm_faq_title: title.val(),
+                ttbm_faq_content: content,
+                ttbm_faq_postID: postID.val(),
+                ttbm_faq_itemID: itemId.val(),
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                $('#ttbm-faq-msg').html(response.data.message);
+                $('.ttbm-faq-items').html('');
+                $('.ttbm-faq-items').append(response.data.html);
+                setTimeout(function () {
+                    $('.ttbm-modal-container').removeClass('open');
+                    empty_faq_form();
+                }, 1000);
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+    function save_faq() {
+        var title = $('input[name="ttbm_faq_title"]');
+        var content = tinyMCE.get('ttbm_faq_content').getContent();
+        var postID = $('input[name="ttbm_post_id"]');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_faq_data_save',
+                ttbm_faq_title: title.val(),
+                ttbm_faq_content: content,
+                ttbm_faq_postID: postID.val(),
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                $('#ttbm-faq-msg').html(response.data.message);
+                $('.ttbm-faq-items').html('');
+                $('.ttbm-faq-items').append(response.data.html);
+                empty_faq_form();
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+    function delete_faq_item(itemId) {
+        var postID = $('input[name="ttbm_post_id"]');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_faq_delete_item',
+                ttbm_faq_postID: postID.val(),
+                itemId: itemId,
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                $('.ttbm-faq-items').html('');
+                $('.ttbm-faq-items').append(response.data.html);
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+});
+// faq sorting
+$(document).on("ready", function(e) {
+    $(".ttbm-faq-items").sortable({
+        update: function(event, ui) {
+            event.preventDefault();
+            var sortedIDs = $(this).sortable("toArray", { attribute: "data-id" });
+            $.ajax({
+                url: ttbm_admin_ajax.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'ttbm_sort_faq',
+                    postID: $('input[name="ttbm_post_id"]').val(),
+                    sortedIDs: sortedIDs,
+                    nonce: ttbm_admin_ajax.nonce
+                },
+                success: function (response) {
+                    $('.ttbm-faq-items').html('');
+                    $('.ttbm-faq-items').append(response.data.html);
+                },
+                error: function (error) {
+                    console.log('Error:', error);
+                }
+            })
+        }
+    });
+});

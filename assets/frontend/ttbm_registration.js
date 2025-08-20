@@ -244,4 +244,14 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
     $(document).on('click', '.ttbm_go_particular_booking', function () {
         pageScrollTo($('#particular_item_area'));
     });
+    //=== sidebar modal========
+    $(document).on('click', '[data-ttbm-modal]', function (e) {
+        const modalTarget = $(this).data('ttbm-modal');
+        $(`[data-ttbm-modal-target="${modalTarget}"]`).addClass('open');
+    });
+    $(document).on('click', '[data-ttbm-modal-target] .ttbm-modal-close', function (e) {
+        $(this).closest('[data-ttbm-modal-target]').removeClass('open');
+    });
+
+
 }(jQuery));

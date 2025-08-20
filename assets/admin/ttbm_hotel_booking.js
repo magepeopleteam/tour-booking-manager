@@ -769,6 +769,187 @@
         alert('Copied to clipboard: ' + textToCopy);
     });
 
+   // =====================sidebar modal open close=============
+   // this script updated version for conflict ttbm-modal
+    $(document).on('click', '[data-ttbm-modal]', function (e) {
+        const modalTarget = $(this).data('ttbm-modal');
+        $(`[data-ttbm-modal-target="${modalTarget}"]`).addClass('open');
+    });
+    $(document).on('click', '[data-ttbm-modal-target] .ttbm-modal-close', function (e) {
+        $(this).closest('[data-ttbm-modal-target]').removeClass('open');
+    });
 
+    function close_sidebar_modal(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('.ttbm-modal-container').removeClass('open');
+    }
+    //==============FAQ==================
+    $(document).on('click', '.ttbm-hotel-faq-new', function (e) {
+        $('#ttbm-hotel-faq-msg').html('');
+        $('.ttbm_hotel_faq_save').show();
+        $('.ttbm_hotel_faq_update').hide();
+        empty_faq_form();
+    });
+
+    $(document).on('click', '.ttbm-hotel-faq-edit', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('#ttbm-hotel-faq-msg').html('');
+        $('.ttbm_hotel_faq_save').hide();
+        $('.ttbm_hotel_faq_update').show();
+        var itemId = $(this).closest('.ttbm-faq-item').data('id');
+        var parent = $(this).closest('.ttbm-faq-item');
+        var headerText = parent.find('.faq-header p').text().trim();
+        var faqContentId = parent.find('.faq-content').text().trim();
+        var editorId = 'ttbm_hotel_faq_content';
+        $('input[name="ttbm_hotel_faq_title"]').val(headerText);
+        $('input[name="ttbm_faq_item_id"]').val(itemId);
+        if (tinymce.get(editorId)) {
+            tinymce.get(editorId).setContent(faqContentId);
+        } else {
+            $('#' + editorId).val(faqContentId);
+        }
+    });
+
+    $(document).on('click', '.ttbm-hotel-faq-delete', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var itemId = $(this).closest('.ttbm-faq-item').data('id');
+        var isConfirmed = confirm('Are you sure you want to delete this row?');
+        if (isConfirmed) {
+            delete_faq_item(itemId);
+        } else {
+            console.log('Deletion canceled.' + itemId);
+        }
+    });
+
+    function empty_faq_form() {
+        $('input[name="ttbm_hotel_faq_title"]').val('');
+        tinyMCE.get('ttbm_hotel_faq_content').setContent('');
+        $('input[name="ttbm_faq_item_id"]').val('');
+    }
+
+    $(document).on('click', '#ttbm_hotel_faq_update_btn', function (e) {
+        e.preventDefault();
+        update_faq();
+    });
+
+    $(document).on('click', '#ttbm_hotel_faq_save', function (e) {
+        e.preventDefault();
+        save_faq();
+    });
+
+    $(document).on('click', '#ttbm_hotel_faq_save_close', function (e) {
+        e.preventDefault();
+        save_faq();
+        close_sidebar_modal(e);
+    });
+
+    function update_faq() {
+        var title = $('input[name="ttbm_hotel_faq_title"]');
+        var content = tinyMCE.get('ttbm_hotel_faq_content').getContent();
+        var postID = $('input[name="ttbm_post_id"]');
+        var itemId = $('input[name="ttbm_faq_item_id"]');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_hotel_faq_update',
+                ttbm_hotel_faq_title: title.val(),
+                ttbm_hotel_faq_content: content,
+                ttbm_faq_postID: postID.val(),
+                ttbm_faq_itemID: itemId.val(),
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                $('#ttbm-hotel-faq-msg').html(response.data.message);
+                $('.ttbm-hotel-faq-items').html('');
+                $('.ttbm-hotel-faq-items').append(response.data.html);
+                setTimeout(function () {
+                    $('.ttbm-modal-container').removeClass('open');
+                    empty_faq_form();
+                }, 1000);
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+
+    function save_faq() {
+        var title = $('input[name="ttbm_hotel_faq_title"]');
+        var content = tinyMCE.get('ttbm_hotel_faq_content').getContent();
+        var postID = $('input[name="ttbm_post_id"]');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_hotel_faq_save',
+                ttbm_hotel_faq_title: title.val(),
+                ttbm_hotel_faq_content: content,
+                ttbm_faq_postID: postID.val(),
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                $('#ttbm-hotel-faq-msg').html(response.data.message);
+                $('.ttbm-hotel-faq-items').html('');
+                $('.ttbm-hotel-faq-items').append(response.data.html);
+                empty_faq_form();
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+
+    function delete_faq_item(itemId) {
+        var postID = $('input[name="ttbm_post_id"]');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_hotel_faq_delete',
+                ttbm_faq_postID: postID.val(),
+                itemId: itemId,
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                $('.ttbm-hotel-faq-items').html('');
+                $('.ttbm-hotel-faq-items').append(response.data.html);
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+    // sort faq
+    $(document).on("ready", function(e) {
+        $(".ttbm-hotel-faq-items").sortable({
+            update: function(event, ui) {
+                event.preventDefault();
+                var sortedIDs = $(this).sortable("toArray", { attribute: "data-id" });
+                $.ajax({
+                    url: ttbm_admin_ajax.ajax_url,
+                    type: 'POST',
+                    data: {
+                        action: 'ttbm_hotel_ttbm_faq_sort',
+                        postID: $('input[name="ttbm_post_id"]').val(),
+                        sortedIDs: sortedIDs,
+                        nonce: ttbm_admin_ajax.nonce
+                    },
+                    success: function (response) {
+                        $('.ttbm-hotel-faq-items').html('');
+                        $('.ttbm-hotel-faq-items').append(response.data.html);
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                })
+            }
+        });
+    });
 
 })(jQuery);
+
+

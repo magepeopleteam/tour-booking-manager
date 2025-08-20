@@ -8411,7 +8411,7 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
                             <div class="item-wrap <?php if($collapsible) echo 'collapsible'; ?>">
                                 <?php if($collapsible):?>
                                 <div class="header">
-                                    <?php endif; ?>                                  
+                                    <?php endif; ?>
                                     <?php if($sortable):?>
                                         <span class="button sort"><i class="fas fa-arrows-alt"></i></span>
                                     <?php endif; ?>
@@ -8568,7 +8568,7 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
                         ?>
                     <?php
                     endif;
-                    ?>                    
+                    ?>
                 </div>
                 <div class="error-mgs"></div>
                 <div class="ppof-button add-item"><i class="fas fa-plus-square"></i> <?php echo esc_html($btntext); ?></div>

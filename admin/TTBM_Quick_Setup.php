@@ -6,7 +6,8 @@
 	function ttbm_quick_setup_exit() {
 		if (isset($_REQUEST['ttbm_skip_quick_setup'])) {
 			update_option('ttbm_quick_setup_done', 'exit');
-			exit(esc_url(wp_redirect(admin_url('index.php'))));
+			wp_redirect(admin_url('index.php'));
+			exit;
 		}
 	}
 	if (!class_exists('TTBM_Quick_Setup')) {

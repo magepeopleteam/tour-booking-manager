@@ -11,13 +11,13 @@
 				<i class="mi mi-coins"></i>
 				<?php
 				if ( $start_price && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) != 'off' ) {
-					?> 
+					?>
 					<?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
 					echo wc_price($start_price); ?>
 				<?php } ?>
 			</div>
 		<?php
-		$count ++; 
+		$count++;
 	}
 ?>

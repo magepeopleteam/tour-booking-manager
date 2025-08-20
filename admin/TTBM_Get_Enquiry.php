@@ -152,7 +152,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             <div class="get-enquiry-popup">
                 <button type="button" class="_dButton_fullWidth" data-target-popup="get-enquiry-popup">
                     <span class="far fa-envelope"></span>
-                    <?php esc_html_e('Get Enquiry','tour-booking-manager'); ?>				
+                    <?php esc_html_e('Get Enquiry','tour-booking-manager'); ?>
                 </button>
             </div>
             <?php

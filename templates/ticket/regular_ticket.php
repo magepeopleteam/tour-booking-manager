@@ -1,11 +1,12 @@
 <?php
-	/*
+// FIXED: Removed leading tab before PHP opening tag - 2025-01-21 by Shahnur Alam
+/*
 * @Author 		engr.sumonazma@gmail.com
 * Copyright: 	mage-people.com
 */
-	if (!defined('ABSPATH')) {
-		die;
-	}
+if (!defined('ABSPATH')) {
+	die;
+}
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
 	$tour_id = $tour_id ?? TTBM_Function::post_id_multi_language($ttbm_post_id);
 	$tour_date = $tour_date ?? current(TTBM_Function::get_date($tour_id));

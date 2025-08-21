@@ -66,21 +66,12 @@ if ( ! defined('ABSPATH')) exit;  // if direct access
  *
  * Typography
  * Spinner
+ */
 
-
-*/
-
-
-
-
-
-
+// FIXED: Removed excessive blank lines - 2025-01-21 by Shahnur Alam
 if( ! class_exists( 'FormFieldsGenerator' ) ) {
 
     class FormFieldsGenerator {
-
-
-
 
         public function field_post_objects( $option ){
 
@@ -2787,12 +2778,7 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
 
 
             ob_start();
-
-
-
-
             ?>
-
 
             <div <?php if(!empty($depends)) {?> data-depends="[<?php echo esc_attr($depends); ?>]" <?php } ?>
                     id="field-wrapper-<?php echo esc_attr($id); ?>" class="<?php if(!empty($depends)) echo 'dependency-field'; ?> field-wrapper field-text-wrapper

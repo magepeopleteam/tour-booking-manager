@@ -11,7 +11,7 @@
 			public function __construct() {
 				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'naearest_area_settings']);
 
-				add_action('ttbm_single_faq', [$this, 'show_faq_frontend']);
+				//add_action('ttbm_single_faq', [$this, 'show_faq_frontend']);
 
 				add_action('admin_enqueue_scripts', [$this, 'my_custom_editor_enqueue']);
 				// save faq data

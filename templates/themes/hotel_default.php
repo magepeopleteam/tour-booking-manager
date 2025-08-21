@@ -188,7 +188,9 @@ $class_location = $class_location ?? '';
                     <button class="widgets-button">Reserve</button>
                 </div>
             </div>
+            <!-- FAQ Section -->
             <?php do_action( 'ttbm_single_faq' ); ?>
+            <!-- FAQ Section -->
         </div>
     </div>
     <?php do_action( 'ttbm_single_tour_after' ); ?>

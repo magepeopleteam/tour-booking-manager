@@ -48,12 +48,12 @@
 												<?php echo apply_filters( 'the_content', $des ); ?>
 											</div>
 										<?php } ?>
-									<?php } ?>
+								<?php } ?>
 							</div>
-						<?php } ?>					
-					</div>							
+						<?php } ?>
+					</div>
 				</div>
 			</div>
 		</div>
-		
-	<?php } ?>
+		<?php
+	}

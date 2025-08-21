@@ -40,19 +40,19 @@
 				?>
                 <div class="tabsItem ttbm_settings_hotel_faq" data-tabs="#ttbm_settings_hotel_faq">
                     
-                    <h2><?php esc_html_e('FAQ Settings', 'service-booking-manager'); ?></h2>
-                    <p><?php esc_html_e('FAQ Settings will be here.', 'service-booking-manager'); ?></p>
+                    <h2><?php esc_html_e('FAQ Settings', 'tour-booking-manager'); ?></h2>
+                    <p><?php esc_html_e('FAQ Settings will be here.', 'tour-booking-manager'); ?></p>
                     
                     <section>
                         <div class="ttbm-header">
-                            <h4><i class="fas fa-question-circle"></i><?php esc_html_e('Enable FAQ Section', 'service-booking-manager'); ?></h4>
+                            <h4><i class="fas fa-question-circle"></i><?php esc_html_e('Enable FAQ Section', 'tour-booking-manager'); ?></h4>
                             <?php TTBM_Custom_Layout::switch_button('ttbm_hotel_faq_status', $ttbm_faq_active_checked); ?>
                         </div>
 						<div class="ttbm-faq-section <?php echo esc_attr($active_class); ?>" data-collapse="#ttbm_hotel_faq_status">
 							<div class="ttbm-hotel-faq-items mB">
 								<?php $this->show_faq_data($post_id); ?>
 							</div>
-							<button class="button ttbm-hotel-faq-new" data-ttbm-modal="ttbm-hotel-faq-new" type="button"><?php esc_html_e('Add FAQ', 'service-booking-manager'); ?></button>
+							<button class="button ttbm-hotel-faq-new" data-ttbm-modal="ttbm-hotel-faq-new" type="button"><?php esc_html_e('Add FAQ', 'tour-booking-manager'); ?></button>
 						</div>
                     </section>
                     <!-- sidebar collapse open -->
@@ -60,18 +60,18 @@
                         <div class="ttbm-modal-content">
                             <span class="ttbm-modal-close"><i class="fas fa-times"></i></span>
                             <div class="title">
-                                <h3><?php esc_html_e('Add F.A.Q.', 'service-booking-manager'); ?></h3>
+                                <h3><?php esc_html_e('Add F.A.Q.', 'tour-booking-manager'); ?></h3>
                                 <div id="ttbm-hotel-faq-msg"></div>
                             </div>
                             <div class="content">
                                 <label>
-									<?php esc_html_e('Add Title', 'service-booking-manager'); ?>
+									<?php esc_html_e('Add Title', 'tour-booking-manager'); ?>
                                     <input type="hidden" name="ttbm_post_id" value="<?php echo esc_attr($post_id); ?>">
                                     <input type="text" name="ttbm_hotel_faq_title">
                                     <input type="hidden" name="ttbm_faq_item_id">
                                 </label>
                                 <label>
-									<?php esc_html_e('Add Content', 'service-booking-manager'); ?>
+									<?php esc_html_e('Add Content', 'tour-booking-manager'); ?>
                                 </label>
 								<?php
 									$content = '';
@@ -86,13 +86,13 @@
                                 <div class="mT"></div>
                                 <div class="ttbm_hotel_faq_save">
                                     <p>
-                                        <button id="ttbm_hotel_faq_save" class="button button-primary button-large"><?php esc_html_e('Save', 'service-booking-manager'); ?></button>
+                                        <button id="ttbm_hotel_faq_save" class="button button-primary button-large"><?php esc_html_e('Save', 'tour-booking-manager'); ?></button>
                                         <button id="ttbm_hotel_faq_save_close" class="button button-primary button-large">save close</button>
                                     <p>
                                 </div>
                                 <div class="ttbm_hotel_faq_update" style="display: none;">
                                     <p>
-                                        <button id="ttbm_hotel_faq_update_btn" class="button button-primary button-large"><?php esc_html_e('Update and Close', 'service-booking-manager'); ?></button>
+                                        <button id="ttbm_hotel_faq_update_btn" class="button button-primary button-large"><?php esc_html_e('Update and Close', 'tour-booking-manager'); ?></button>
                                     <p>
                                 </div>
                             </div>
@@ -145,7 +145,7 @@
 				}
 				update_post_meta($post_id, 'ttbm_hotel_faq', $ttbm_faq);
 				ob_start();
-				$resultMessage = esc_html__('Data Updated Successfully', 'service-booking-manager');
+				$resultMessage = esc_html__('Data Updated Successfully', 'tour-booking-manager');
 				$this->show_faq_data($post_id);
 				$html_output = ob_get_clean();
 				wp_send_json_success([
@@ -173,7 +173,7 @@
 				$result = update_post_meta($post_id, 'ttbm_hotel_faq', $ttbm_faq);
 				if ($result) {
 					ob_start();
-					$resultMessage = esc_html__('Data Added Successfully', 'service-booking-manager');
+					$resultMessage = esc_html__('Data Added Successfully', 'tour-booking-manager');
 					$this->show_faq_data($post_id);
 					$html_output = ob_get_clean();
 					wp_send_json_success([
@@ -205,7 +205,7 @@
 				$result = update_post_meta($post_id, 'ttbm_hotel_faq', $ttbm_faq);
 				if ($result) {
 					ob_start();
-					$resultMessage = esc_html__('Data Deleted Successfully', 'service-booking-manager');
+					$resultMessage = esc_html__('Data Deleted Successfully', 'tour-booking-manager');
 					$this->show_faq_data($post_id);
 					$html_output = ob_get_clean();
 					wp_send_json_success([
@@ -236,7 +236,7 @@
 				}
 				update_post_meta($post_id, 'ttbm_hotel_faq', $new_ordered);
 				ob_start();
-				$resultMessage = esc_html__('Data Updated Successfully', 'service-booking-manager');
+				$resultMessage = esc_html__('Data Updated Successfully', 'tour-booking-manager');
 				$this->show_faq_data($post_id);
 				$html_output = ob_get_clean();
 				wp_send_json_success([
@@ -269,8 +269,8 @@
 									<div class="ttbm-modal-content">
 										<span class="ttbm-modal-close"><i class="fas fa-times"></i></span>
 										<div class="title">
-											<h2><?php esc_html_e('Your Question', 'service-booking-manager'); ?></h2>
-											<p><strong><?php esc_html_e('About:', 'service-booking-manager'); ?></strong> <?php echo the_title(); ?></p>
+											<h2><?php esc_html_e('Your Question', 'tour-booking-manager'); ?></h2>
+											<p><strong><?php esc_html_e('About:', 'tour-booking-manager'); ?></strong> <?php echo the_title(); ?></p>
 										</div>
 										<div class="content">
 											<div class="faq-question">

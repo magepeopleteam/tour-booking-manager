@@ -19,19 +19,22 @@
                     <div class="ttbmTabs leftTabs">
                         <ul class="tabLists">
                             <li data-tabs-target="#ttbm_general_info">
-                                <span class="fas fa-cog"></span><?php esc_html_e('General Info', 'tour-booking-manager'); ?>
+                                <span class="mi mi-settings"></span><?php esc_html_e('General Info', 'tour-booking-manager'); ?>
                             </li>
                             <li data-tabs-target="#ttbm_settings_pricing">
-                                <span class="fas fa-money-bill"></span><?php esc_html_e(' Pricing', 'tour-booking-manager'); ?>
+                                <span class="mi mi-coins"></span><?php esc_html_e(' Pricing', 'tour-booking-manager'); ?>
                             </li>
                             <li data-tabs-target="#ttbm_settings_feature">
-                                <span class="fas fa-tasks"></span><?php esc_html_e(' Features', 'tour-booking-manager'); ?>
+                                <span class="mi mi-features"></span><?php esc_html_e(' Features', 'tour-booking-manager'); ?>
                             </li>
                             <li data-tabs-target="#ttbm_settings_gallery">
-                                <span class="fas fa-images"></span><?php esc_html_e(' Hotel Gallery', 'tour-booking-manager'); ?>
+                                <span class="mi mi-gallery"></span><?php esc_html_e(' Hotel Gallery', 'tour-booking-manager'); ?>
                             </li>
                             <li data-tabs-target="#ttbm_settings_hotel_faq">
-                                <span class="fas fa-question-circle "></span><?php esc_html_e(' FAQ Settgins', 'tour-booking-manager'); ?>
+                                <span class="mi mi-messages-question "></span><?php esc_html_e(' FAQ Settgins', 'tour-booking-manager'); ?>
+                            </li>
+                            <li data-tabs-target="#ttbm_settings_hotel_area_info">
+                                <span class="mi mi-search-location "></span><?php esc_html_e(' Hotel area info', 'tour-booking-manager'); ?>
                             </li>
                         </ul>
                         <div class="tabsContent tab-content">

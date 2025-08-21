@@ -10,6 +10,9 @@
 		class TTBM_Hotel_Faq {
 			public function __construct() {
 				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'faq_settings']);
+
+				add_action('ttbm_single_faq', [$this, 'show_faq_frontend']);
+
 				add_action('admin_enqueue_scripts', [$this, 'my_custom_editor_enqueue']);
 				// save faq data
 				add_action('wp_ajax_ttbm_hotel_faq_save', [$this, 'save_faq_data_settings']);
@@ -241,6 +244,55 @@
 					'html' => $html_output,
 				]);
 				die;
+			}
+
+			public function show_faq_frontend(){
+				?>
+				<div class="faq-area">
+					<h2>Travelers are asking</h2>
+					<div class="faq-groups">
+						<?php 
+							$faqs = get_post_meta(get_the_ID(),'ttbm_hotel_faq',true);
+							$counter = 0;
+							foreach ($faqs as $key => $faq) {
+								if ($counter % 5 === 0) {
+									echo '<div class="faq-group">';
+								}
+							?>
+								<div class="faq-item" data-faq="<?php echo $key; ?>" data-ttbm-modal="ttbm-hotel-faq-<?php echo $key; ?>">
+									<div class="faq-question">
+										<i class="mi mi-chat"></i>
+										<span><?php echo $faq['title']; ?></span>
+									</div>
+								</div>
+								<div class="ttbm-modal-container" data-ttbm-modal-target="ttbm-hotel-faq-<?php echo $key; ?>">
+									<div class="ttbm-modal-content">
+										<span class="ttbm-modal-close"><i class="fas fa-times"></i></span>
+										<div class="title">
+											<h2><?php esc_html_e('Your Question', 'service-booking-manager'); ?></h2>
+											<p><strong><?php esc_html_e('About:', 'service-booking-manager'); ?></strong> <?php echo the_title(); ?></p>
+										</div>
+										<div class="content">
+											<div class="faq-question">
+												<i class="mi mi-chat"></i>
+												<?php echo $faq['title']; ?>
+											</div>
+											<div class="faq-anwser">
+												<?php echo $faq['content']; ?>
+											</div>
+										</div>
+									</div>
+								</div>
+							<?php
+							$counter++;
+							if ($counter % 5 === 0 || $counter === count($faqs)) {
+								echo '</div>';
+							}
+							}
+						?>
+					</div>
+				</div>
+				<?php
 			}
 		}
 		new TTBM_Hotel_Faq();

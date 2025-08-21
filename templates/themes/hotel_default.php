@@ -188,44 +188,7 @@ $class_location = $class_location ?? '';
                     <button class="widgets-button">Reserve</button>
                 </div>
             </div>
-            <div class="faq-area">
-                <h2>Travelers are asking</h2>
-                <div class="faq-groups">
-                    <?php 
-                        $faqs = get_post_meta($ttbm_post_id,'ttbm_hotel_faq',true);
-                        $counter = 0;
-                        foreach ($faqs as $key => $faq) {
-                            if ($counter % 5 === 0) {
-                                echo '<div class="faq-group">';
-                            }
-                        ?>
-                            <div class="faq-item" data-faq="<?php echo $key; ?>" data-ttbm-modal="ttbm-hotel-faq-<?php echo $key; ?>">
-                                <div class="faq-question">
-                                    <i class="mi mi-chat"></i>
-                                    <span><?php echo $faq['title']; ?></span>
-                                </div>
-                            </div>
-                            <div class="ttbm-modal-container" data-ttbm-modal-target="ttbm-hotel-faq-<?php echo $key; ?>">
-                                <div class="ttbm-modal-content">
-                                    <span class="ttbm-modal-close"><i class="fas fa-times"></i></span>
-                                    <div class="title">
-                                        <h3><?php esc_html_e('F.A.Q.', 'service-booking-manager'); ?></h3>
-                                    </div>
-                                    <div class="content">
-                                        <?php echo $faq['content']; ?>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php
-                        $counter++;
-                        if ($counter % 5 === 0 || $counter === count($faqs)) {
-                            echo '</div>';
-                        }
-                        }
-                    ?>
-                </div>
-               
-            </div>
+            <?php do_action( 'ttbm_single_faq' ); ?>
         </div>
     </div>
     <?php do_action( 'ttbm_single_tour_after' ); ?>

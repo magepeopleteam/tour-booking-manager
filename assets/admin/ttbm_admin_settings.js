@@ -100,9 +100,18 @@ function ttbm_load_sortable_datepicker(parent, item) {
     //=========Add Setting Item==============//
     $(document).on("click", ".ttbm_add_item", function () {
         let parent = $(this).closest('.ttbm_settings_area');
-        let item = parent.find('>.ttbm_hidden_content').first().find('.ttbm_hidden_item').html();
-        ttbm_load_sortable_datepicker(parent, item);
-        parent.find('.ttbm_item_insert').find('.add_ttbm_select2').select2({});
+        let target=parent.find('>.ttbm_hidden_content').first().find('.ttbm_hidden_item');
+        target.find('[data-collapse-target]').each(function (){
+            let current_id=$(this).attr('data-collapse-target');
+            let unique_id = '#unique_id_' + Math.floor((Math.random() * 9999) + 999);
+            target.find('[data-collapse-target="'+current_id+'"]').attr('data-collapse-target',  unique_id);
+            target.find('[data-collapse="'+current_id+'"]').attr('data-collapse',  unique_id);
+        }).promise().done(function(){
+            let item = target.html();
+            ttbm_load_sortable_datepicker(parent, item);
+            parent.find('.ttbm_item_insert').find('.add_ttbm_select2').select2({});
+
+        });
         return true;
     });
 })(jQuery);

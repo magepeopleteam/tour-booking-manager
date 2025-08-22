@@ -1063,13 +1063,12 @@
                     }
                 }
 
+                // FIXED: Removed excessive blank lines - 2025-01-21 by Shahnur Alam
                 $activity_ids = array_unique($activity_ids);
-
 
                 if ( $num_of_ids > 0 ) {
                     $activity_ids = array_slice( $activity_ids, 0, $num_of_ids, true );
                 }
-
 
                 return $activity_ids;
             }
@@ -1164,7 +1163,6 @@
 
                 $activity_posts = [];
 
-
                 foreach ($query->posts as $post_id) {
 
                     $meta_value = get_post_meta( $post_id, $taxonomy, true);
@@ -1204,7 +1202,6 @@
                 return $terms_data;
             }
 
-
             public static function ttbm_get_term_data( $term_type, $term_ids = [] ) {
                 $args = [
                     'taxonomy'   => $term_type,
@@ -1217,7 +1214,6 @@
 
                 return get_terms( $args );
             }
-
 
         }
 		new TTBM_Function();

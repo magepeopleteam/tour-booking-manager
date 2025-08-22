@@ -146,12 +146,9 @@ jQuery(document).ready(function($) {
             jQuery(".field-option-group-tabs-wrapper .tab-content-"+index).addClass('active');
         }
 
-
-
     })
 
-
-
+    // FIXED: Removed excessive blank lines - 2025-01-21 by Shahnur Alam
     jQuery(document).on('click', '.field-color-sets-wrapper .color-srick', function() {
 
         jQuery('.field-color-sets-wrapper label').removeClass('checked');
@@ -287,13 +284,7 @@ jQuery(document).ready(function($) {
             });
         }
 
-
-
-
-
     })
-
-
 
     // $(document).on('click','.ppof-settings .nav-items .child-nav-icon',function(event){
     //     event.preventDefault()

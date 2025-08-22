@@ -15,7 +15,7 @@
                     <div class="ttbm_details_page_header">
                         <?php do_action( 'ttbm_details_title' ); ?>
                         <div class="dFlex justifyStart">
-							<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?> 
+							<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
 							<?php
 							if ( is_plugin_active( 'tour-booking-manager-pro/tour-booking-manager-pro.php' ) ):
 								$location = TTBM_Function::get_full_location( $ttbm_post_id );

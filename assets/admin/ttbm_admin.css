@@ -626,7 +626,17 @@
 	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_view_post { border: 1px solid #3498DB; background-color: #D8F0FF; color: #3498DB; }
 	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_edit_post { border: 1px solid #F1C40F; background-color: #FEF5D2; color: #F1C40F; }
 	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_duplicate_post { border: 1px solid #2271B1; background-color: #CFE9FF; color: #2271B1; }
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_trash_post { border: 1px solid #E74C3C; background-color: #FCD5D0; color: #E74C3C; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_trash_post { border: 1px solid #E74C3C; background-color: #FCD5D0; color: #E74C3C; transition: all 0.3s ease; }
+	/* Enhanced delete button styles - Added by Shahnur Alam */
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_trash_post:hover { background-color: #E74C3C; color: #FFF; transform: scale(1.05); }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_trash_post:disabled,
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_trash_post.deleting { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a.ttbm_trash_post.deleting::after { content: ''; display: inline-block; width: 12px; height: 12px; margin-left: 5px; border: 2px solid #E74C3C; border-top: 2px solid transparent; border-radius: 50%; animation: ttbm-spin 1s linear infinite; }
+	/* Tour card fade out animation - Added by Shahnur Alam */
+	.ttbm-tour-card.deleting { opacity: 0.5; transform: scale(0.95); transition: all 0.3s ease; }
+	.ttbm-tour-card.deleted { opacity: 0; transform: scale(0.9) translateY(-20px); transition: all 0.5s ease; }
+	/* Loading spinner animation - Added by Shahnur Alam */
+	@keyframes ttbm-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 	.ttbm-tour-list-page .ttbm-load-more-wrap { text-align: center; margin: 10px auto; }
 	.ttbm-tour-list-page .ttbm-load-more-wrap .button { background-color: var(--mpl-primary); color: #FFF; border: var(--mpl-primary) solid 1px; font-weight: bold; }
 	.ttbm-faq-section .ttbm-faq-item { background-color: #FFF; cursor: grabbing; }

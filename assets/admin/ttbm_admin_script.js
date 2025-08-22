@@ -846,25 +846,106 @@
             }
         });
     }
-    $(document).on('click', '.ttbm-tour-card .ttbm_trash_post', function () {
-        let alert_text = $(this).data('alert');
-        if (confirm(alert_text + '\n\n 1. Ok : To Remove . \n 2. Cancel : To Cancel .')) {
-            let target = $(this).closest('.ttbm-tour-card');
-            let post_id = $(this).data('post-id');
-            $.ajax({
-                type: 'POST', url: ttbm_ajax_url, data: {
-                    "action": "ttbm_trash_post",
-                    "post_id": post_id,
-                    "nonce": $(this).closest('.ttbm-tour-card').find('#edd_sample_nonce').val(),
-                }, beforeSend: function () {
-                    dLoader(target);
-                }, success: function (data) {
-                    dLoaderRemove(target);
-                    window.location.reload();
-                }
-            });
-            return true;
+    // FIXED: Professional delete functionality with proper error handling - 2025-01-27 by Shahnur Alam
+    $(document).on('click', '.ttbm-tour-card .ttbm_trash_post', function (e) {
+        e.preventDefault();
+        
+        let $this = $(this);
+        let alert_text = $this.data('alert');
+        let post_id = $this.data('post-id');
+        let nonce = $this.data('nonce');
+        let target = $this.closest('.ttbm-tour-card');
+        let post_title = target.find('h3 a').text().trim();
+        
+        // Step 1: Validate required data
+        if (!post_id || !nonce) {
+            alert('Error: Missing required data. Please refresh the page and try again.');
+            return false;
         }
+        
+        // Step 2: Show professional confirmation dialog
+        let confirmMessage = alert_text + '\n\n' +
+            'This action will move the tour to trash. You can restore it later from the trash if needed.\n\n' +
+            'Click OK to continue or Cancel to abort.';
+            
+        if (!confirm(confirmMessage)) {
+            return false;
+        }
+        
+        // Step 3: Disable button to prevent double-clicks
+        $this.prop('disabled', true).addClass('ttbm-deleting');
+        
+        // Step 4: Send AJAX request
+        $.ajax({
+            type: 'POST',
+            url: ttbm_ajax_url,
+            data: {
+                'action': 'ttbm_trash_post',
+                'post_id': post_id,
+                'nonce': nonce
+            },
+            beforeSend: function () {
+                // Show loading state
+                dLoader(target);
+                $this.find('i').removeClass('fa-trash').addClass('fa-spinner fa-spin');
+            },
+            success: function (response) {
+                dLoaderRemove(target);
+                
+                if (response.success) {
+                    // Step 5: Show success message and remove card with animation
+                    target.addClass('ttbm-deleting-success');
+                    
+                    // Show success notification
+                    if (typeof response.data.message !== 'undefined') {
+                        // Create a temporary success message
+                        let successMsg = $('<div class="ttbm-success-message">' + response.data.message + '</div>');
+                        target.prepend(successMsg);
+                        
+                        setTimeout(function() {
+                            successMsg.fadeOut(300);
+                        }, 2000);
+                    }
+                    
+                    // Animate card removal
+                    setTimeout(function() {
+                        target.fadeOut(500, function() {
+                            $(this).remove();
+                            
+                            // Check if no more tours exist
+                            if ($('.ttbm-tour-card').length === 0) {
+                                $('.ttbm-tour-list').html('<p>' + 'No tours found.' + '</p>');
+                            }
+                        });
+                    }, 1000);
+                    
+                } else {
+                    // Step 6: Handle error response
+                    let errorMessage = 'An error occurred while deleting the tour.';
+                    if (typeof response.data.message !== 'undefined') {
+                        errorMessage = response.data.message;
+                    }
+                    
+                    alert('Error: ' + errorMessage);
+                    
+                    // Reset button state
+                    $this.prop('disabled', false).removeClass('ttbm-deleting');
+                    $this.find('i').removeClass('fa-spinner fa-spin').addClass('fa-trash');
+                }
+            },
+            error: function (xhr, status, error) {
+                dLoaderRemove(target);
+                
+                // Step 7: Handle AJAX error
+                console.error('AJAX Error:', error);
+                alert('Network error occurred. Please check your connection and try again.');
+                
+                // Reset button state
+                $this.prop('disabled', false).removeClass('ttbm-deleting');
+                $this.find('i').removeClass('fa-spinner fa-spin').addClass('fa-trash');
+            }
+        });
+        
         return false;
     });
     // ================Get Enquiry=================//

@@ -23,11 +23,12 @@
 
 				<?php do_action( 'ttbm_hotel_select', $tour_id, $check_ability ); ?>
 
-				<?php
-					if ( $template_name == 'viator.php' ) {
-						TTBM_Layout::availability_button( $tour_id );
-					}
-				?>
+<?php
+// FIXED: Removed indentation before PHP tags to prevent whitespace output - 2025-01-21 by Shahnur Alam
+if ( $template_name == 'viator.php' ) {
+	TTBM_Layout::availability_button( $tour_id );
+}
+?>
 				<div class="ttbm_booking_panel placeholder_area">
 					<?php if ( $check_ability == 'regular_ticket' || $travel_type == 'fixed' ) { ?>
 						<?php do_action( 'ttbm_booking_panel', $tour_id, $date, '', $check_ability); ?>

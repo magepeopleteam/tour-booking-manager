@@ -1,21 +1,21 @@
 <?php
-	/**
-	 * Plugin Name: WpTravelly – Tour & Travel Booking Manager for WooCommerce | Tour & Hotel Booking Solution
-	 * Plugin URI: http://mage-people.com
-	 * Description: A Complete Tour and Travel Solution for WordPress by MagePeople.
-	 * Version: 2.0.7
-	 * Author: MagePeople Team
-	 * Author URI: http://www.mage-people.com/
-	 * Text Domain: tour-booking-manager
-	 * License: GPL v2 or later
-	 * License URI: https://www.gnu.org/licenses/gpl-2.0.html
-	 * Domain Path: /languages/
-	 */
-	if (!defined('ABSPATH')) {
-		die;
-	} // Cannot access pages directly.
-	if (!class_exists('TTBM_Woocommerce_Plugin')) {
-		class TTBM_Woocommerce_Plugin {
+/**
+ * Plugin Name: WpTravelly – Tour & Travel Booking Manager for WooCommerce | Tour & Hotel Booking Solution
+ * Plugin URI: http://mage-people.com
+ * Description: A Complete Tour and Travel Solution for WordPress by MagePeople.
+ * Version: 2.0.6
+ * Author: MagePeople Team
+ * Author URI: http://www.mage-people.com/
+ * Text Domain: tour-booking-manager
+ * License: GPL v2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Domain Path: /languages/
+ */
+if (!defined('ABSPATH')) {
+	die;
+} // Cannot access pages directly.
+if (!class_exists('TTBM_Woocommerce_Plugin')) {
+	class TTBM_Woocommerce_Plugin {
 			public function __construct() {
 				$this->load_ttbm_plugin();
 				add_action('init', array($this, 'load_blocks'));

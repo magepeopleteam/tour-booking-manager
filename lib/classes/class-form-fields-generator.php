@@ -66,21 +66,12 @@ if ( ! defined('ABSPATH')) exit;  // if direct access
  *
  * Typography
  * Spinner
+ */
 
-
-*/
-
-
-
-
-
-
+// FIXED: Removed excessive blank lines - 2025-01-21 by Shahnur Alam
 if( ! class_exists( 'FormFieldsGenerator' ) ) {
 
     class FormFieldsGenerator {
-
-
-
 
         public function field_post_objects( $option ){
 
@@ -2787,12 +2778,7 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
 
 
             ob_start();
-
-
-
-
             ?>
-
 
             <div <?php if(!empty($depends)) {?> data-depends="[<?php echo esc_attr($depends); ?>]" <?php } ?>
                     id="field-wrapper-<?php echo esc_attr($id); ?>" class="<?php if(!empty($depends)) echo 'dependency-field'; ?> field-wrapper field-text-wrapper
@@ -8411,7 +8397,7 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
                             <div class="item-wrap <?php if($collapsible) echo 'collapsible'; ?>">
                                 <?php if($collapsible):?>
                                 <div class="header">
-                                    <?php endif; ?>                                  
+                                    <?php endif; ?>
                                     <?php if($sortable):?>
                                         <span class="button sort"><i class="fas fa-arrows-alt"></i></span>
                                     <?php endif; ?>
@@ -8568,7 +8554,7 @@ if( ! class_exists( 'FormFieldsGenerator' ) ) {
                         ?>
                     <?php
                     endif;
-                    ?>                    
+                    ?>
                 </div>
                 <div class="error-mgs"></div>
                 <div class="ppof-button add-item"><i class="fas fa-plus-square"></i> <?php echo esc_html($btntext); ?></div>

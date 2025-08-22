@@ -36,7 +36,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             if ($post && $post->post_type === 'ttbm_enquiry') {
                 $response = [
                     'title'   => esc_html($post->post_title),
-                    'content' => esc_html($post->post_content),
+                    'content' => wpautop(wp_kses_post($post->post_content)),
                     'date'    => get_the_date('F j, Y', $post),
                     'time'    => get_the_time('g:i a', $post),
                     'name'    => esc_html(get_post_meta($enquiry_id, 'name', true)),
@@ -67,7 +67,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                     </tr>
                     <tr>
                         <th><?php esc_html_e('Message:', 'tour-booking-manager'); ?></th>
-                        <td><?php echo esc_html($response['content']); ?></td>
+                        <td><?php echo wp_kses_post($response['content']); ?></td>
                     </tr>
                 </table>
                 <?php
@@ -103,9 +103,13 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             $postId=sanitize_text_field($form_data['ttbm_post_id'] ?? '');
             $to = sanitize_email($form_data['ttbm-reply-to'] ?? '');
             $subject = sanitize_text_field($form_data['ttbm-reply-subject'] ?? '');
-            $message = sanitize_textarea_field($form_data['ttbm-reply-message'] ?? '');
+            $message = wp_kses_post($form_data['ttbm-reply-message'] ?? '');
             $headers = ['Content-Type: text/html; charset=UTF-8'];
-            if (wp_mail($to, $subject, $message, $headers)) {
+            
+            // Format reply message with proper HTML structure
+            $email_message = '<html><body>' . wpautop($message) . '</body></html>';
+            
+            if (wp_mail($to, $subject, $email_message, $headers)) {
                 update_post_meta($postId, 'status', 'replied');
                 wp_send_json_success(['message' => __('Message sent successfully!','tour-booking-manager')]);
             } else {
@@ -118,13 +122,24 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 wp_send_json_error(['message' => __('Failed to submit enquiry. Please try again.', 'tour-booking-manager')]);
 			}
             $form_data = [];
-	        $data = isset($_POST['data']) ? sanitize_text_field(wp_unslash($_POST['data'] )): '';
+	        $data = isset($_POST['data']) ? wp_unslash($_POST['data']) : '';
             parse_str($data, $form_data);
             $name = sanitize_text_field($form_data['name'] ?? '');
             $email = sanitize_email($form_data['email'] ?? '');
             $subject = sanitize_text_field($form_data['subject'] ?? '');
             $message = sanitize_textarea_field($form_data['message'] ?? '');
             $headers = ['Content-Type: text/html; charset=UTF-8'];
+            
+            // Format message for email with proper HTML structure
+            $email_message = '<html><body>';
+            $email_message .= '<h3>' . esc_html__('New Enquiry Received', 'tour-booking-manager') . '</h3>';
+            $email_message .= '<p><strong>' . esc_html__('Name:', 'tour-booking-manager') . '</strong> ' . esc_html($name) . '</p>';
+            $email_message .= '<p><strong>' . esc_html__('Email:', 'tour-booking-manager') . '</strong> ' . esc_html($email) . '</p>';
+            $email_message .= '<p><strong>' . esc_html__('Subject:', 'tour-booking-manager') . '</strong> ' . esc_html($subject) . '</p>';
+            $email_message .= '<p><strong>' . esc_html__('Message:', 'tour-booking-manager') . '</strong></p>';
+            $email_message .= '<div>' . wpautop($message) . '</div>';
+            $email_message .= '</body></html>';
+            
             $enquiry_id = wp_insert_post([
                 'post_title'   => $subject,
                 'post_content' => $message,
@@ -137,7 +152,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 ],
             ]);
             $to = get_option('admin_email', 'admin@' . wp_parse_url(get_site_url(), PHP_URL_HOST));
-            wp_mail($to, $subject, $message, $headers);
+            wp_mail($to, $subject, $email_message, $headers);
             if ($enquiry_id) {
                 wp_send_json_success(['message' => __('Enquiry submitted successfully.', 'tour-booking-manager')]);
             } else {
@@ -152,7 +167,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             <div class="get-enquiry-popup">
                 <button type="button" class="_dButton_fullWidth" data-target-popup="get-enquiry-popup">
                     <span class="far fa-envelope"></span>
-                    <?php esc_html_e('Get Enquiry','tour-booking-manager'); ?>				
+                    <?php esc_html_e('Get Enquiry','tour-booking-manager'); ?>
                 </button>
             </div>
             <?php

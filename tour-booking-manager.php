@@ -87,8 +87,7 @@ if (!class_exists('TTBM_Woocommerce_Plugin')) {
 						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						$page_id = wp_insert_post($page);
 						if (is_wp_error($page_id)) {
-							// Store error for later display instead of outputting during activation
-							update_option('ttbm_activation_error', $page_id->get_error_message());
+							printf('<div class="notice notice-error"><p>%s</p></div>', esc_html($page_id->get_error_message()));
 						} else {
 							update_option($page_data['option_key'], true);
 						}

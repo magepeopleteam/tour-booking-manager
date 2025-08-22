@@ -34,7 +34,7 @@
 			}
 
 			public function naearest_area_settings($post_id) {
-				$faq_status = get_post_meta($post_id, 'ttbm_hotel_faq_status', 'off');
+				$faq_status = get_post_meta($post_id, 'ttbm_hotel_area_status', 'off');
 				$active_class = $faq_status == 'on' ? 'mActive' : '';
 				$ttbm_faq_active_checked = $faq_status == 'on' ? 'checked' : '';
 				?>
@@ -43,22 +43,7 @@
                     <h2><?php esc_html_e('Hotel area info', 'tour-booking-manager'); ?></h2>
                     <p><?php esc_html_e('Hotel area info Settings will be here.', 'tour-booking-manager'); ?></p>
                     <style>
-						* {
-							margin: 0;
-							padding: 0;
-							box-sizing: border-box;
-						}
 
-						body {
-							font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-							background-color: #f5f5f5;
-							padding: 20px;
-						}
-
-						.container {
-							max-width: 800px;
-							margin: 0 auto;
-						}
 
 						.category-section {
 							background: white;
@@ -204,8 +189,12 @@
                             <h4><i class="fas fa-question-circle"></i><?php esc_html_e('Enable FAQ Section', 'tour-booking-manager'); ?></h4>
                             <?php TTBM_Custom_Layout::switch_button('ttbm_hotel_faq_status', $ttbm_faq_active_checked); ?>
                         </div>
+						<?php 
+							$this->show_area_category($post_id);
+						?>
 						<div class="container">
 							<div id="categories-container"></div>
+
 							<button class="btn btn-add-category" onclick="addCategory()">
 								<span class="icon-plus"></span>
 								Add New Feature Category
@@ -356,6 +345,120 @@
 						</script>
                     </section>
                 </div>
+				<?php
+			}
+
+			public function show_area_category($post_id) {
+				$ttbm_hotel_area_info = get_post_meta($post_id,'ttbm_hotel_area_info',true);
+				$ttbm_hotel_area_info = !empty($ttbm_hotel_area_info)? $ttbm_hotel_area_info :[];
+				$ttbm_hotel_area_info =[
+					[
+						'cat_icon'=>'mi mi-home',
+						'cat_title'=>'What\'s nearby',
+						'cat_sub'=>[
+							[
+								'cat_icon'=>'mi mi-home',
+								'cat_title'=>'Národný park Nízke Tatry',
+								'cat_distance'=>12,
+								'cat_dist_type'=>'km',
+							],
+							[
+								'cat_icon'=>'mi mi-home',
+								'cat_title'=>'Národný park Nízke Tatry',
+								'cat_distance'=>12,
+								'cat_dist_type'=>'km',
+
+							],
+						],
+						
+					],
+					[
+						'cat_icon'=>'mi mi-restaurants',
+						'cat_title'=>'Restaurants & cafes',
+						'cat_sub'=>[
+							[
+								'cat_icon'=>'mi mi-home',
+								'cat_title'=>'Národný park Nízke Tatry',
+								'cat_distance'=>12,
+								'cat_dist_type'=>'km',
+							],
+							[
+								'cat_icon'=>'mi mi-home',
+								'cat_title'=>'Národný park Nízke Tatry',
+								'cat_distance'=>12,
+								'cat_dist_type'=>'km',
+
+							],
+						],
+						
+					],
+					[
+						'cat_icon'=>'mi mi-spa',
+						'cat_title'=>'Natural Beauty',
+						'cat_sub'=>[
+							[
+								'cat_icon'=>'mi mi-home',
+								'cat_title'=>'Národný park Nízke Tatry',
+								'cat_distance'=>12,
+								'cat_dist_type'=>'km',
+							],
+							[
+								'cat_icon'=>'mi mi-home',
+								'cat_title'=>'Národný park Nízke Tatry',
+								'cat_distance'=>12,
+								'cat_dist_type'=>'km',
+
+							],
+						],
+						
+					]
+				];
+				?>
+				<div class="category-section">
+					<?php foreach($ttbm_hotel_area_info as $value):?>
+						<div class="category-header">
+							<input type="text" class="category-title-input" 
+								value="" 
+								onchange="updateCategoryTitle()"
+								placeholder="Feature Category Title">
+							<input type="text" class="category-label-input" 
+								value="" 
+								onchange=""
+								placeholder="Feature Category Label">
+							<div class="feature-icons">
+								<button class="btn btn-icon btn-add" onclick="">
+									<span class="icon-plus"></span>
+								</button>
+								<button class="btn btn-icon btn-delete" onclick="deleteCategory()">
+									<span class="icon-trash"></span>
+								</button>
+							</div>
+						</div>
+						<div class="features-list">
+							<?php foreach($value['cat_sub'] as $value):?>
+								<div class="feature-item">
+									<div class="feature-icon icon-${feature.icon}"></div>
+									<input type="text" class="feature-input" 
+										value="${feature.name}" 
+										onchange="updateFeatureName()"
+										placeholder="Feature Name">
+									<div class="action-buttons">
+										<button class="btn btn-icon btn-add" onclick="addFeature()">
+											<span class="icon-plus"></span>
+										</button>
+										<button class="btn btn-icon btn-delete" onclick="deleteFeature()">
+											<span class="icon-trash"></span>
+										</button>
+									</div>
+								</div>
+							<?php  endforeach; ?>
+						</div>
+					<?php  endforeach; ?>
+				</div>
+				<button class="btn btn-add-feature" onclick="addFeature()">
+					<span class="icon-plus"></span>
+					Add New Feature
+				</button>
 				<?php
 			}
 

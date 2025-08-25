@@ -901,6 +901,8 @@
 	
 	.ttbm-htl-area-items{
 		margin-left:50px;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.ttbm-htl-area-item {
@@ -918,7 +920,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: white;
+		background-color: white;
 		font-size: 18px;
 		flex-shrink: 0;
 	}

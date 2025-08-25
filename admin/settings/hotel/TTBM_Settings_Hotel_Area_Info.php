@@ -70,8 +70,8 @@
 							'area_title' => __("What's nearby", 'tour-booking-manager'),
 							'area_items' => [
 								[
-									'item_title' => 'Národný park Nízke Tatry',
-									'item_distance' => 12,
+									'item_title' => '',
+									'item_distance' => 0,
 									'item_type' => 'km',
 								],
 							],
@@ -257,7 +257,7 @@
 				}
 
 				if (get_post_type($post_id) == 'ttbm_hotel') {
-					if (isset($_POST['ttbm_hotel_area_info']) && is_array($_POST['ttbm_hotel_area_info'])) {
+					if (!empty($_POST['ttbm_hotel_area_info']) && is_array($_POST['ttbm_hotel_area_info'])) {
 						$area_info = $_POST['ttbm_hotel_area_info'];
 						
 						$sanitized = [];
@@ -279,15 +279,17 @@
 								'area_title' => $area_title,
 								'area_items' => $area_items,
 							];
+							$sanitized = !empty($sanitized)?$sanitized:[];
 						}
-						$hotel_faq_status = isset($_POST['ttbm_hotel_area_status']) && sanitize_text_field(wp_unslash($_POST['ttbm_hotel_area_status'])) ? 'on' : 'off';
-						update_post_meta($post_id, 'ttbm_hotel_area_status', $hotel_faq_status);
-						update_post_meta($post_id, 'ttbm_hotel_area_info', $sanitized);
+						$hotel_area_status = isset($_POST['ttbm_hotel_area_status']) && sanitize_text_field(wp_unslash($_POST['ttbm_hotel_area_status'])) ? 'on' : 'off';
+						update_post_meta($post_id, 'ttbm_hotel_area_status', $hotel_area_status);
+						update_post_meta($post_id, 'ttbm_hotel_area_info',$sanitized);
+					}
+					else{
+						update_post_meta($post_id, 'ttbm_hotel_area_info', []);
 					}
 				}
-
 			}
-
 		}
 		new TTBM_hotel_area_info();
 	}

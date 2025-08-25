@@ -91,10 +91,10 @@
 									value="<?php echo esc_attr($area_info['area_title']); ?>"
 									placeholder="<?php esc_attr_e("What's nearby", 'tour-booking-manager'); ?>">
 								<div class="action-buttons">
-									<button type="button" class="btn icon btn-add ttbm-add-area" data-area-index="<?php echo esc_attr($area_index); ?>">
+									<button type="button" class="btn icon ttbm-add-area" data-area-index="<?php echo esc_attr($area_index); ?>">
 										<i class="mi mi-plus"></i>
 									</button>
-									<button type="button" class="btn icon btn-delete ttbm-delete-area" data-area-index="<?php echo esc_attr($area_index); ?>">
+									<button type="button" class="btn icon ttbm-delete-area" data-area-index="<?php echo esc_attr($area_index); ?>">
 										<i class="mi mi-trash"></i>
 									</button>
 								</div>
@@ -104,35 +104,31 @@
 								if (!empty($area_info['area_items'])):
 									foreach ($area_info['area_items'] as $item_index => $info_items): ?>
 									<div class="ttbm-htl-area-item" data-item-index="<?php echo esc_attr($item_index); ?>">
-										<input type="text" name="ttbm_hotel_area_info[<?php echo esc_attr($area_index); ?>][area_items][<?php echo esc_attr($item_index); ?>][item_title]"
-											class="ttbm-htl-area-item-title"
+										<input type="text" class="ttbm-htl-area-item-title" name="ttbm_hotel_area_info[<?php echo esc_attr($area_index); ?>][area_items][<?php echo esc_attr($item_index); ?>][item_title]"
+											
 											value="<?php echo esc_attr($info_items['item_title']); ?>"
-											placeholder="<?php esc_attr_e('Feature name', 'tour-booking-manager'); ?>">
+											placeholder="<?php esc_attr_e('Area name', 'tour-booking-manager'); ?>">
 										<input type="number" step="any" min="0"
 											name="ttbm_hotel_area_info[<?php echo esc_attr($area_index); ?>][area_items][<?php echo esc_attr($item_index); ?>][item_distance]"
-											class="ttbm-htl-area-item-distance"
+											
 											value="<?php echo esc_attr($info_items['item_distance']); ?>"
 											placeholder="<?php esc_attr_e('Distance', 'tour-booking-manager'); ?>">
 										<input type="text"
 											name="ttbm_hotel_area_info[<?php echo esc_attr($area_index); ?>][area_items][<?php echo esc_attr($item_index); ?>][item_type]"
-											class="ttbm-htl-area-item-type"
+											
 											value="<?php echo esc_attr($info_items['item_type']); ?>"
 											placeholder="<?php esc_attr_e('Type (e.g. km, m)', 'tour-booking-manager'); ?>">
 										<div class="action-buttons">
-											<button type="button" class="icon btn-add ttbm-add-feature" data-area-index="<?php echo esc_attr($area_index); ?>" data-item-index="<?php echo esc_attr($item_index); ?>">
+											<button type="button" class="icon ttbm-add-area-item" data-area-index="<?php echo esc_attr($area_index); ?>" data-item-index="<?php echo esc_attr($item_index); ?>">
 												<i class="mi mi-plus"></i>
 											</button>
-											<button type="button" class="icon btn-delete ttbm-delete-feature" data-area-index="<?php echo esc_attr($area_index); ?>" data-item-index="<?php echo esc_attr($item_index); ?>">
+											<button type="button" class="icon ttbm-delete-feature" data-area-index="<?php echo esc_attr($area_index); ?>" data-item-index="<?php echo esc_attr($item_index); ?>">
 												<i class="mi mi-trash"></i>
 											</button>
 										</div>
 									</div>
 								<?php endforeach;
 								endif; ?>
-								<button type="button" class="_themeButton_xs btn-add-feature ttbm-add-feature" data-area-index="<?php echo esc_attr($area_index); ?>">
-									<span class="icon-plus"></span>
-									<?php _e('Add New Feature', 'tour-booking-manager'); ?>
-								</button>
 							</div>
 						</div>
 					<?php endforeach; ?>
@@ -183,10 +179,6 @@
 							</div>
 							<div class="ttbm-htl-area-items">
 								${itemTemplate(areaIndex, 0)}
-								<button type="button" class="_themeButton_xs btn-add-feature ttbm-add-feature" data-area-index="${areaIndex}">
-									<span class="icon-plus"></span>
-									<?php echo esc_js(__('Add New Feature', 'tour-booking-manager')); ?>
-								</button>
 							</div>
 						</div>`;
 					}
@@ -205,10 +197,10 @@
 								class="ttbm-htl-area-item-type"
 								value="" placeholder="<?php echo esc_attr__('Type (e.g. km, m)', 'tour-booking-manager'); ?>">
 							<div class="action-buttons">
-								<button type="button" class="icon btn-add ttbm-add-feature" data-area-index="${areaIndex}" data-item-index="${itemIndex}">
+								<button type="button" class="icon ttbm-add-area-item" data-area-index="${areaIndex}" data-item-index="${itemIndex}">
 									<i class="mi mi-plus"></i>
 								</button>
-								<button type="button" class="icon btn-delete ttbm-delete-feature" data-area-index="${areaIndex}" data-item-index="${itemIndex}">
+								<button type="button" class="icon ttbm-delete-feature" data-area-index="${areaIndex}" data-item-index="${itemIndex}">
 									<i class="mi mi-trash"></i>
 								</button>
 							</div>
@@ -231,12 +223,19 @@
 						}
 					});
 					// Add feature/item
-					$('#ttbm-hotel-area-info-wrapper').on('click', '.ttbm-add-feature', function() {
+					$('#ttbm-hotel-area-info-wrapper').on('click', '.ttbm-add-area-item', function() {
 						const $areaSection = $(this).closest('.ttbm-htl-area-section');
 						const areaIndex = $areaSection.attr('data-area-index');
-						const itemIndex = getNextItemIndex($areaSection);
-						// Insert before the "Add New Feature" button
-						$(this).closest('.ttbm-htl-area-items').find('button.ttbm-add-feature').before(itemTemplate(areaIndex, itemIndex));
+						let itemIndex = getNextItemIndex($areaSection);
+
+						// If clicked from inside an item, insert after that item
+						const $item = $(this).closest('.ttbm-htl-area-item');
+						if ($item.length) {
+							$item.after(itemTemplate(areaIndex, itemIndex));
+						} else {
+							// Otherwise, add before the "Add New Feature" button at the end
+							$(this).closest('.ttbm-htl-area-items').find('button.ttbm-add-feature').before(itemTemplate(areaIndex, itemIndex));
+						}
 					});
 					// Delete feature/item
 					$('#ttbm-hotel-area-info-wrapper').on('click', '.ttbm-delete-feature', function() {

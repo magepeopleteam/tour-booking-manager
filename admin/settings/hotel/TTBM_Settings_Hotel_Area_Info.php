@@ -11,7 +11,7 @@
 			public function __construct() {
 				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'naearest_area_settings']);
 
-				//add_action('ttbm_single_faq', [$this, 'show_faq_frontend']);
+				add_action('save_post', [$this, 'save_hotel_area_info']);
 
 				add_action('admin_enqueue_scripts', [$this, 'my_custom_editor_enqueue']);
 				// save faq data
@@ -42,424 +42,146 @@
                     
                     <h2><?php esc_html_e('Hotel area info', 'tour-booking-manager'); ?></h2>
                     <p><?php esc_html_e('Hotel area info Settings will be here.', 'tour-booking-manager'); ?></p>
-                    <style>
-
-
-						.category-section {
-							background: white;
-							border-radius: 12px;
-							padding: 24px;
-							margin-bottom: 20px;
-							box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-						}
-
-						.category-header {
-							display: flex;
-							gap: 16px;
-							margin-bottom: 20px;
-						}
-
-						.category-title-input {
-							flex: 1;
-							padding: 12px 16px;
-							border: 2px solid #e1e5e9;
-							border-radius: 8px;
-							font-size: 14px;
-							font-weight: 600;
-							background-color: #f8f9fa;
-						}
-
-						.category-label-input {
-							flex: 1;
-							padding: 12px 16px;
-							border: 2px solid #e1e5e9;
-							border-radius: 8px;
-							font-size: 14px;
-							color: #6c757d;
-						}
-
-						.feature-item {
-							display: flex;
-							align-items: center;
-							gap: 12px;
-							margin-bottom: 12px;
-						}
-
-						.feature-icon {
-							width: 40px;
-							height: 40px;
-							background: linear-gradient(135deg, #e91e63, #ad1457);
-							border-radius: 8px;
-							display: flex;
-							align-items: center;
-							justify-content: center;
-							color: white;
-							font-size: 18px;
-							flex-shrink: 0;
-						}
-
-						.feature-input {
-							flex: 1;
-							padding: 12px 16px;
-							border: 2px solid #e1e5e9;
-							border-radius: 8px;
-							font-size: 14px;
-						}
-
-						.action-buttons {
-							display: flex;
-							gap: 8px;
-						}
-
-						.btn {
-							border: none;
-							border-radius: 8px;
-							cursor: pointer;
-							display: flex;
-							align-items: center;
-							justify-content: center;
-							font-size: 14px;
-							font-weight: 500;
-							transition: all 0.2s;
-						}
-
-						.btn-icon {
-							width: 36px;
-							height: 36px;
-						}
-
-						.btn-add {
-							background: linear-gradient(135deg, #e91e63, #ad1457);
-							color: white;
-						}
-
-						.btn-delete {
-							background: linear-gradient(135deg, #e91e63, #ad1457);
-							color: white;
-						}
-
-						.btn-add-feature {
-							background: linear-gradient(135deg, #17a2b8, #138496);
-							color: white;
-							padding: 12px 20px;
-							margin-top: 16px;
-						}
-
-						.btn-add-category {
-							background: linear-gradient(135deg, #e91e63, #ad1457);
-							color: white;
-							padding: 16px 32px;
-							font-size: 16px;
-							margin: 20px auto;
-							display: block;
-						}
-
-						.btn:hover {
-							transform: translateY(-1px);
-							box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-						}
-
-						.feature-icons {
-							display: grid;
-							grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
-							gap: 8px;
-							max-width: 200px;
-						}
-
-						.floating-actions {
-							position: fixed;
-							right: 24px;
-							top: 50%;
-							transform: translateY(-50%);
-							display: flex;
-							flex-direction: column;
-							gap: 8px;
-						}
-
-						/* Icon styles */
-						.icon-brake::before { content: "🔧"; }
-						.icon-shock::before { content: "🔩"; }
-						.icon-light::before { content: "💡"; }
-						.icon-generic::before { content: "⚙️"; }
-						.icon-plus::before { content: "+"; }
-						.icon-trash::before { content: "🗑️"; }
-					</style>
+                    
                     <section>
                         <div class="ttbm-header">
                             <h4><i class="fas fa-question-circle"></i><?php esc_html_e('Enable FAQ Section', 'tour-booking-manager'); ?></h4>
-                            <?php TTBM_Custom_Layout::switch_button('ttbm_hotel_faq_status', $ttbm_faq_active_checked); ?>
+                            <?php TTBM_Custom_Layout::switch_button('ttbm_hotel_area_status', $ttbm_faq_active_checked); ?>
                         </div>
-						<?php 
-							$this->show_area_category($post_id);
-						?>
-						<div class="container">
-							<div id="categories-container"></div>
-
-							<button class="btn btn-add-category" onclick="addCategory()">
-								<span class="icon-plus"></span>
-								Add New Feature Category
-							</button>
+						<div class="ttbm-htl-area <?php echo esc_attr($active_class); ?>" data-collapse="#ttbm_hotel_area_status">
+							<?php 
+								$this->show_hotel_area_info($post_id);
+							?>
 						</div>
-						<script>
-							let categoryData = [
-								{
-									id: 1,
-									title: "Feature Category Title",
-									label: "Bike Features",
-									features: [
-										{ id: 1, name: "Disc Brakes", icon: "brake" },
-										{ id: 2, name: "Shock Absorbers", icon: "shock" },
-										{ id: 3, name: "Headlight and Taillight", icon: "light" }
-									]
-								},
-								{
-									id: 2,
-									title: "Feature Category Title",
-									label: "Feature Category Label",
-									features: [
-										{ id: 4, name: "Features Name", icon: "generic" }
-									]
-								}
-							];
-
-							let nextCategoryId = 3;
-							let nextFeatureId = 5;
-
-							function renderCategories() {
-								const container = document.getElementById('categories-container');
-								container.innerHTML = '';
-
-								categoryData.forEach(category => {
-									const categoryDiv = document.createElement('div');
-									categoryDiv.className = 'category-section';
-									categoryDiv.innerHTML = `
-										<div class="category-header">
-											<input type="text" class="category-title-input" 
-												value="${category.title}" 
-												onchange="updateCategoryTitle(${category.id}, this.value)"
-												placeholder="Feature Category Title">
-											<input type="text" class="category-label-input" 
-												value="${category.label}" 
-												onchange="updateCategoryLabel(${category.id}, this.value)"
-												placeholder="Feature Category Label">
-											<div class="feature-icons">
-												<button class="btn btn-icon btn-add" onclick="addFeature(${category.id})">
-													<span class="icon-plus"></span>
-												</button>
-												<button class="btn btn-icon btn-delete" onclick="deleteCategory(${category.id})">
-													<span class="icon-trash"></span>
-												</button>
-											</div>
-										</div>
-										<div class="features-list">
-											${category.features.map(feature => `
-												<div class="feature-item">
-													<div class="feature-icon icon-${feature.icon}"></div>
-													<input type="text" class="feature-input" 
-														value="${feature.name}" 
-														onchange="updateFeatureName(${category.id}, ${feature.id}, this.value)"
-														placeholder="Feature Name">
-													<div class="action-buttons">
-														<button class="btn btn-icon btn-add" onclick="addFeature(${category.id})">
-															<span class="icon-plus"></span>
-														</button>
-														<button class="btn btn-icon btn-delete" onclick="deleteFeature(${category.id}, ${feature.id})">
-															<span class="icon-trash"></span>
-														</button>
-													</div>
-												</div>
-											`).join('')}
-										</div>
-										<button class="btn btn-add-feature" onclick="addFeature(${category.id})">
-											<span class="icon-plus"></span>
-											Add New Feature
-										</button>
-									`;
-									container.appendChild(categoryDiv);
-								});
-							}
-
-							function addCategory() {
-								const newCategory = {
-									id: nextCategoryId++,
-									title: "Feature Category Title",
-									label: "Feature Category Label",
-									features: []
-								};
-								categoryData.push(newCategory);
-								renderCategories();
-							}
-
-							function deleteCategory(categoryId) {
-								categoryData = categoryData.filter(cat => cat.id !== categoryId);
-								renderCategories();
-							}
-
-							function updateCategoryTitle(categoryId, newTitle) {
-								const category = categoryData.find(cat => cat.id === categoryId);
-								if (category) {
-									category.title = newTitle;
-								}
-							}
-
-							function updateCategoryLabel(categoryId, newLabel) {
-								const category = categoryData.find(cat => cat.id === categoryId);
-								if (category) {
-									category.label = newLabel;
-								}
-							}
-
-							function addFeature(categoryId) {
-								const category = categoryData.find(cat => cat.id === categoryId);
-								if (category) {
-									const newFeature = {
-										id: nextFeatureId++,
-										name: "New Feature",
-										icon: "generic"
-									};
-									category.features.push(newFeature);
-									renderCategories();
-								}
-							}
-
-							function deleteFeature(categoryId, featureId) {
-								const category = categoryData.find(cat => cat.id === categoryId);
-								if (category) {
-									category.features = category.features.filter(feature => feature.id !== featureId);
-									renderCategories();
-								}
-							}
-
-							function updateFeatureName(categoryId, featureId, newName) {
-								const category = categoryData.find(cat => cat.id === categoryId);
-								if (category) {
-									const feature = category.features.find(f => f.id === featureId);
-									if (feature) {
-										feature.name = newName;
-									}
-								}
-							}
-
-							// Initialize the app
-							renderCategories();
-						</script>
                     </section>
                 </div>
 				<?php
 			}
 
-			public function show_area_category($post_id) {
-				$ttbm_hotel_area_info = get_post_meta($post_id,'ttbm_hotel_area_info',true);
-				$ttbm_hotel_area_info = !empty($ttbm_hotel_area_info)? $ttbm_hotel_area_info :[];
-				$ttbm_hotel_area_info =[
-					[
-						'cat_icon'=>'mi mi-home',
-						'cat_title'=>'What\'s nearby',
-						'cat_sub'=>[
-							[
-								'cat_icon'=>'mi mi-home',
-								'cat_title'=>'Národný park Nízke Tatry',
-								'cat_distance'=>12,
-								'cat_dist_type'=>'km',
-							],
-							[
-								'cat_icon'=>'mi mi-home',
-								'cat_title'=>'Národný park Nízke Tatry',
-								'cat_distance'=>12,
-								'cat_dist_type'=>'km',
+			public function show_hotel_area_info($post_id) {
+				$ttbm_hotel_area_info = get_post_meta($post_id, 'ttbm_hotel_area_info', true);
+				$ttbm_hotel_area_info = !empty($ttbm_hotel_area_info) ? $ttbm_hotel_area_info : [];
 
+				// Example default if empty
+				if (empty($ttbm_hotel_area_info)) {
+					$ttbm_hotel_area_info = [
+						[
+							'area_icon' => 'mi mi-home',
+							'area_title' => __("What's nearby", 'tour-booking-manager'),
+							'area_items' => [
+								[
+									'item_title' => 'Národný park Nízke Tatry',
+									'item_distance' => 12,
+									'item_type' => 'km',
+								],
 							],
 						],
-						
-					],
-					[
-						'cat_icon'=>'mi mi-restaurants',
-						'cat_title'=>'Restaurants & cafes',
-						'cat_sub'=>[
-							[
-								'cat_icon'=>'mi mi-home',
-								'cat_title'=>'Národný park Nízke Tatry',
-								'cat_distance'=>12,
-								'cat_dist_type'=>'km',
-							],
-							[
-								'cat_icon'=>'mi mi-home',
-								'cat_title'=>'Národný park Nízke Tatry',
-								'cat_distance'=>12,
-								'cat_dist_type'=>'km',
-
-							],
-						],
-						
-					],
-					[
-						'cat_icon'=>'mi mi-spa',
-						'cat_title'=>'Natural Beauty',
-						'cat_sub'=>[
-							[
-								'cat_icon'=>'mi mi-home',
-								'cat_title'=>'Národný park Nízke Tatry',
-								'cat_distance'=>12,
-								'cat_dist_type'=>'km',
-							],
-							[
-								'cat_icon'=>'mi mi-home',
-								'cat_title'=>'Národný park Nízke Tatry',
-								'cat_distance'=>12,
-								'cat_dist_type'=>'km',
-
-							],
-						],
-						
-					]
-				];
+					];
+				}
 				?>
-				<div class="category-section">
-					<?php foreach($ttbm_hotel_area_info as $value):?>
-						<div class="category-header">
-							<input type="text" class="category-title-input" 
-								value="" 
-								onchange="updateCategoryTitle()"
-								placeholder="Feature Category Title">
-							<input type="text" class="category-label-input" 
-								value="" 
-								onchange=""
-								placeholder="Feature Category Label">
-							<div class="feature-icons">
-								<button class="btn btn-icon btn-add" onclick="">
-									<span class="icon-plus"></span>
+				<div id="ttbm-hotel-area-info-wrapper">
+				<?php foreach ($ttbm_hotel_area_info as $area_index => $area_info): ?>
+					<div class="ttbm-htl-area-section" data-area-index="<?php echo esc_attr($area_index); ?>">
+						<div class="ttbm-htl-area-header">
+							<input type="hidden" name="ttbm_hotel_area_info[<?php echo esc_attr($area_index); ?>][area_icon]" value="<?php echo esc_attr($area_info['area_icon']); ?>">
+							<div class="icon">
+								<i class="<?php echo esc_attr($area_info['area_icon']); ?>"></i>
+							</div>
+							<input type="text" name="ttbm_hotel_area_info[<?php echo esc_attr($area_index); ?>][area_title]" class="ttbm-htl-area-title"
+								value="<?php echo esc_attr($area_info['area_title']); ?>"
+								placeholder="<?php esc_attr_e("What's nearby", 'tour-booking-manager'); ?>">
+							<div class="action-buttons">
+								<button type="button" class="btn icon btn-add ttbm-add-area" data-area-index="<?php echo esc_attr($area_index); ?>">
+									<i class="mi mi-plus"></i>
 								</button>
-								<button class="btn btn-icon btn-delete" onclick="deleteCategory()">
-									<span class="icon-trash"></span>
+								<button type="button" class="btn icon btn-delete ttbm-delete-area" data-area-index="<?php echo esc_attr($area_index); ?>">
+									<i class="mi mi-trash"></i>
 								</button>
 							</div>
 						</div>
-						<div class="features-list">
-							<?php foreach($value['cat_sub'] as $value):?>
-								<div class="feature-item">
-									<div class="feature-icon icon-${feature.icon}"></div>
-									<input type="text" class="feature-input" 
-										value="${feature.name}" 
-										onchange="updateFeatureName()"
-										placeholder="Feature Name">
+						<div class="ttbm-htl-area-items">
+							<?php
+							if (!empty($area_info['area_items'])):
+								foreach ($area_info['area_items'] as $item_index => $info_items): ?>
+								<div class="ttbm-htl-area-item" data-item-index="<?php echo esc_attr($item_index); ?>">
+									<input type="text" name="ttbm_hotel_area_info[<?php echo esc_attr($area_index); ?>][area_items][<?php echo esc_attr($item_index); ?>][item_title]"
+										class="ttbm-htl-area-item-title"
+										value="<?php echo esc_attr($info_items['item_title']); ?>"
+										placeholder="<?php esc_attr_e('Feature name', 'tour-booking-manager'); ?>">
+									<input type="number" step="any" min="0"
+										name="ttbm_hotel_area_info[<?php echo esc_attr($area_index); ?>][area_items][<?php echo esc_attr($item_index); ?>][item_distance]"
+										class="ttbm-htl-area-item-distance"
+										value="<?php echo esc_attr($info_items['item_distance']); ?>"
+										placeholder="<?php esc_attr_e('Distance', 'tour-booking-manager'); ?>">
+									<input type="text"
+										name="ttbm_hotel_area_info[<?php echo esc_attr($area_index); ?>][area_items][<?php echo esc_attr($item_index); ?>][item_type]"
+										class="ttbm-htl-area-item-type"
+										value="<?php echo esc_attr($info_items['item_type']); ?>"
+										placeholder="<?php esc_attr_e('Type (e.g. km, m)', 'tour-booking-manager'); ?>">
 									<div class="action-buttons">
-										<button class="btn btn-icon btn-add" onclick="addFeature()">
-											<span class="icon-plus"></span>
+										<button type="button" class="icon btn-add ttbm-add-feature" data-area-index="<?php echo esc_attr($area_index); ?>" data-item-index="<?php echo esc_attr($item_index); ?>">
+											<i class="mi mi-plus"></i>
 										</button>
-										<button class="btn btn-icon btn-delete" onclick="deleteFeature()">
-											<span class="icon-trash"></span>
+										<button type="button" class="icon btn-delete ttbm-delete-feature" data-area-index="<?php echo esc_attr($area_index); ?>" data-item-index="<?php echo esc_attr($item_index); ?>">
+											<i class="mi mi-trash"></i>
 										</button>
 									</div>
 								</div>
-							<?php  endforeach; ?>
+							<?php endforeach;
+							endif; ?>
+							<button type="button" class="_themeButton_xs btn-add-feature ttbm-add-feature" data-area-index="<?php echo esc_attr($area_index); ?>">
+								<span class="icon-plus"></span>
+								<?php _e('Add New Feature', 'tour-booking-manager'); ?>
+							</button>
 						</div>
-					<?php  endforeach; ?>
+					</div>
+				<?php endforeach; ?>
 				</div>
-				<button class="btn btn-add-feature" onclick="addFeature()">
-					<span class="icon-plus"></span>
-					Add New Feature
+				<button type="button" class="_themeButton_xs ttbm-add-area-info">
+					<i class="mi mi-plus"></i>
+					<?php _e('Add New Area Info', 'tour-booking-manager'); ?>
 				</button>
 				<?php
+			}
+
+			/**
+			 * Save hotel area info data on post save
+			 */
+			public function save_hotel_area_info($post_id) {
+				if (!isset($_POST['ttbm_hotel_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_hotel_type_nonce'])), 'ttbm_hotel_type_nonce') && defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && !current_user_can('edit_post', $post_id)) {
+					return;
+				}
+
+				if (get_post_type($post_id) == 'ttbm_hotel') {
+					if (isset($_POST['ttbm_hotel_area_info']) && is_array($_POST['ttbm_hotel_area_info'])) {
+						$area_info = $_POST['ttbm_hotel_area_info'];
+						
+						$sanitized = [];
+						foreach ($area_info as $area) {
+							$area_icon = isset($area['area_icon']) ? sanitize_text_field($area['area_icon']) : '';
+							$area_title = isset($area['area_title']) ? sanitize_text_field($area['area_title']) : '';
+							$area_items = [];
+							if (isset($area['area_items']) && is_array($area['area_items'])) {
+								foreach ($area['area_items'] as $item) {
+									$area_items[] = [
+										'item_title'    => isset($item['item_title']) ? sanitize_text_field($item['item_title']) : '',
+										'item_distance' => isset($item['item_distance']) ? floatval($item['item_distance']) : '',
+										'item_type'     => isset($item['item_type']) ? sanitize_text_field($item['item_type']) : '',
+									];
+								}
+							}
+							$sanitized[] = [
+								'area_icon'  => $area_icon,
+								'area_title' => $area_title,
+								'area_items' => $area_items,
+							];
+						}
+						$hotel_faq_status = isset($_POST['ttbm_hotel_area_status']) && sanitize_text_field(wp_unslash($_POST['ttbm_hotel_area_status'])) ? 'on' : 'off';
+						update_post_meta($post_id, 'ttbm_hotel_area_status', $hotel_faq_status);
+						update_post_meta($post_id, 'ttbm_hotel_area_info', $sanitized);
+					}
+				}
+
 			}
 
 		}

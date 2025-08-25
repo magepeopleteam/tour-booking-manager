@@ -10,6 +10,7 @@
 		class TTBM_hotel_area_info {
 			public function __construct() {
 				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'naearest_area_settings']);
+				add_action('ttbm_single_hotel_area', [$this, 'frontend_hotel_area_info']);
 
 				add_action('save_post', [$this, 'save_hotel_area_info']);
 
@@ -34,9 +35,9 @@
 			}
 
 			public function naearest_area_settings($post_id) {
-				$faq_status = get_post_meta($post_id, 'ttbm_hotel_area_status', 'off');
-				$active_class = $faq_status == 'on' ? 'mActive' : '';
-				$ttbm_faq_active_checked = $faq_status == 'on' ? 'checked' : '';
+				$area_status = get_post_meta($post_id, 'ttbm_hotel_area_status', 'off');
+				$active_class = $area_status == 'on' ? 'mActive' : '';
+				$ttbm_faq_active_checked = $area_status == 'on' ? 'checked' : '';
 				?>
                 <div class="tabsItem ttbm_settings_hotel_area_info" data-tabs="#ttbm_settings_hotel_area_info">
                     
@@ -142,6 +143,39 @@
 					<?php _e('Add New Area Info', 'tour-booking-manager'); ?>
 				</button>
 				<?php
+			}
+
+			public function frontend_hotel_area_info($post_id) {
+				$area_status = get_post_meta($post_id, 'ttbm_hotel_area_status', 'off');
+				$ttbm_hotel_area_info = get_post_meta($post_id, 'ttbm_hotel_area_info', true);
+				$ttbm_hotel_area_info = !empty($ttbm_hotel_area_info) ? $ttbm_hotel_area_info : [];
+				if($area_status == 'on' && !empty($ttbm_hotel_area_info)):?>
+					<h2><?php _e("Hotel Area Info",'tour-booking-manager'); ?></h2>	
+					<?php foreach($ttbm_hotel_area_info as $hotel_area): ?>
+						<div class="ttbm-hotel-area-section">
+							<ul class="ttbm-hotel-area-items">
+								<?php if(!empty($hotel_area['area_items'])): foreach($hotel_area['area_items'] as $area_item): ?>
+									<li>
+										<?php 
+											$item_title = !empty($area_item['item_title']) ? $area_item['item_title'] : '';
+											$item_distance = !empty($area_item['item_distance']) ? $area_item['item_distance'] : '';
+											$item_type = !empty($area_item['item_type']) ? $area_item['item_type'] : '';
+											if(!empty($item_title)){
+												echo esc_html($item_title);
+											}
+											if(!empty($item_distance)){
+												echo ' - '.esc_html($item_distance);
+											}
+											if(!empty($item_type)){
+												echo ' '.esc_html($item_type);
+											}
+										?>
+									</li>
+								<?php endforeach; endif; ?>
+							</ul>
+						</div>
+					<?php endforeach; ?>
+				<?php endif; 
 			}
 
 			/**

@@ -191,6 +191,7 @@ $class_location = $class_location ?? '';
             <!-- FAQ Section -->
             <?php do_action( 'ttbm_single_faq' ); ?>
             <!-- FAQ Section -->
+             <?php do_action( 'ttbm_single_hotel_area' ); ?>
         </div>
     </div>
     <?php do_action( 'ttbm_single_tour_after' ); ?>

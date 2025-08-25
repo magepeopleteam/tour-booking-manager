@@ -931,6 +931,9 @@
 	.ttbm-htl-area-section .icon i{
 		color:var(--mpl-primary);
 	}
+	.ttbm-htl-area-section .icon:hover i{
+		color:var(--mpl-white);
+	}
 
 	.ttbm-htl-area-item-title {
 		flex: 1;

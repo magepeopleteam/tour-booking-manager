@@ -949,6 +949,129 @@
             }
         });
     });
+    
+    // hotel-area-info.js
+    $(document).ready(function($) {
+        // Helper: get next area index
+        function getNextAreaIndex() {
+            let max = -1;
+            $('#ttbm-hotel-area-info-wrapper .ttbm-htl-area-section').each(function() {
+                const idx = parseInt($(this).attr('data-area-index'), 10);
+                if (!isNaN(idx) && idx > max) max = idx;
+            });
+            return max + 1;
+        }
+        // Helper: get next item index for area
+        function getNextItemIndex($areaSection) {
+            let max = -1;
+            $areaSection.find('.ttbm-htl-area-item').each(function() {
+                const idx = parseInt($(this).attr('data-item-index'), 10);
+                if (!isNaN(idx) && idx > max) max = idx;
+            });
+            return max + 1;
+        }
+        // Area template
+        function areaTemplate(areaIndex) {
+            return `<div class="ttbm-htl-area-section" data-area-index="${areaIndex}">
+                <div class="ttbm-htl-area-header">
+                    <input type="hidden" name="ttbm_hotel_area_info[${areaIndex}][area_icon]" value="mi mi-home">
+                    <div class="icon">
+                        <div class="ttbm_style">
+                            <div class="ttbm_add_icon_image_area fdColumn">
+                                <input type="hidden" name="ttbm_hotel_area_info[0][area_icon]" value="mi mi-apartment">
+                                <div class="ttbm_icon_item ">
+                                    <div class="allCenter">
+                                        <span class="mi mi-restaurants" data-add-icon=""></span>
+                                    </div>
+                                    <span class="mi mi-x ttbm_icon_remove" title="Remove Icon"></span>
+                                </div>
+                                <div class="ttbm_add_icon_image_button_area dNone">
+                                    <div class="flexEqual">
+                                        <button class="_mpBtn_xs ttbm_icon_add" type="button" data-target-popup="#ttbm_add_icon_popup">
+                                            <span class="mi mi-plus"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" name="ttbm_hotel_area_info[${areaIndex}][area_title]" class="ttbm-htl-area-title"
+                        value="" placeholder="What's nearby">
+                    <div class="action-buttons">
+                        <button type="button" class="btn icon btn-add ttbm-add-area" data-area-index="${areaIndex}">
+                            <i class="mi mi-plus"></i>
+                        </button>
+                        <button type="button" class="btn icon btn-delete ttbm-delete-area" data-area-index="${areaIndex}">
+                            <i class="mi mi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="ttbm-htl-area-items">
+                    ${itemTemplate(areaIndex, 0)}
+                </div>
+            </div>`;
+        }
+        // Item template
+        function itemTemplate(areaIndex, itemIndex) {
+            return `<div class="ttbm-htl-area-item" data-item-index="${itemIndex}">
+                <input type="text" name="ttbm_hotel_area_info[${areaIndex}][area_items][${itemIndex}][item_title]"
+                    class="ttbm-htl-area-item-title"
+                    value="" placeholder="Feature name">
+                <input type="number" step="any" min="0"
+                    name="ttbm_hotel_area_info[${areaIndex}][area_items][${itemIndex}][item_distance]"
+                    class="ttbm-htl-area-item-distance"
+                    value="" placeholder="Distance">
+                <input type="text"
+                    name="ttbm_hotel_area_info[${areaIndex}][area_items][${itemIndex}][item_type]"
+                    class="ttbm-htl-area-item-type"
+                    value="" placeholder="Type (e.g. km, m)">
+                <div class="action-buttons">
+                    <button type="button" class="icon ttbm-add-area-item" data-area-index="${areaIndex}" data-item-index="${itemIndex}">
+                        <i class="mi mi-plus"></i>
+                    </button>
+                    <button type="button" class="icon ttbm-delete-feature" data-area-index="${areaIndex}" data-item-index="${itemIndex}">
+                        <i class="mi mi-trash"></i>
+                    </button>
+                </div>
+            </div>`;
+        }
+        // Add new area
+        $('.ttbm-add-area-info').on('click', function() {
+            const areaIndex = getNextAreaIndex();
+            $('#ttbm-hotel-area-info-wrapper').append(areaTemplate(areaIndex));
+        });
+        // Add area from plus button in header
+        $('#ttbm-hotel-area-info-wrapper').on('click', '.ttbm-add-area', function() {
+            const areaIndex = getNextAreaIndex();
+            $('#ttbm-hotel-area-info-wrapper').append(areaTemplate(areaIndex));
+        });
+        // Delete area
+        $('#ttbm-hotel-area-info-wrapper').on('click', '.ttbm-delete-area', function() {
+            if (confirm('Are you sure you want to delete this area?')) {
+                $(this).closest('.ttbm-htl-area-section').remove();
+            }
+        });
+        // Add feature/item
+        $('#ttbm-hotel-area-info-wrapper').on('click', '.ttbm-add-area-item', function() {
+            const $areaSection = $(this).closest('.ttbm-htl-area-section');
+            const areaIndex = $areaSection.attr('data-area-index');
+            let itemIndex = getNextItemIndex($areaSection);
+
+            // If clicked from inside an item, insert after that item
+            const $item = $(this).closest('.ttbm-htl-area-item');
+            if ($item.length) {
+                $item.after(itemTemplate(areaIndex, itemIndex));
+            } else {
+                // Otherwise, add before the "Add New Feature" button at the end
+                $(this).closest('.ttbm-htl-area-items').find('button.ttbm-add-feature').before(itemTemplate(areaIndex, itemIndex));
+            }
+        });
+        // Delete feature/item
+        $('#ttbm-hotel-area-info-wrapper').on('click', '.ttbm-delete-feature', function() {
+            if (confirm('Are you sure you want to delete this feature?')) {
+                $(this).closest('.ttbm-htl-area-item').remove();
+            }
+        });
+    });
 
 })(jQuery);
 

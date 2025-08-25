@@ -880,6 +880,10 @@
 		margin-bottom: 20px;
 	}
 
+	div.ttbm-htl-area-header div.ttbm_icon_item{
+		background:none;
+	}
+
 	.ttbm-htl-area-title {
 		flex: 1;
 		padding: 12px 16px;

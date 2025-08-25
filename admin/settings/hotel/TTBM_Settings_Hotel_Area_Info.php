@@ -45,7 +45,7 @@
                     
                     <section>
                         <div class="ttbm-header">
-                            <h4><i class="fas fa-question-circle"></i><?php esc_html_e('Enable FAQ Section', 'tour-booking-manager'); ?></h4>
+                            <h4><i class="fas fa-question-circle"></i><?php esc_html_e('Enable Area Info Section', 'tour-booking-manager'); ?></h4>
                             <?php TTBM_Custom_Layout::switch_button('ttbm_hotel_area_status', $ttbm_faq_active_checked); ?>
                         </div>
 						<div class="ttbm-htl-area <?php echo esc_attr($active_class); ?>" data-collapse="#ttbm_hotel_area_status">
@@ -66,7 +66,7 @@
 				if (empty($ttbm_hotel_area_info)) {
 					$ttbm_hotel_area_info = [
 						[
-							'area_icon' => 'mi mi-home',
+							'area_icon' => 'mi mi-restaurants',
 							'area_title' => __("What's nearby", 'tour-booking-manager'),
 							'area_items' => [
 								[
@@ -84,8 +84,12 @@
 						<div class="ttbm-htl-area-section" data-area-index="<?php echo esc_attr($area_index); ?>">
 							<div class="ttbm-htl-area-header">
 								<input type="hidden" name="ttbm_hotel_area_info[<?php echo esc_attr($area_index); ?>][area_icon]" value="<?php echo esc_attr($area_info['area_icon']); ?>">
+								
 								<div class="icon">
-									<i class="<?php echo esc_attr($area_info['area_icon']); ?>"></i>
+									<?php 
+									$area_icon_name = 'ttbm_hotel_area_info['.$area_index.'][area_icon]';
+									do_action('ttbm_input_add_icon', $area_icon_name, $area_info['area_icon']); 
+									?>
 								</div>
 								<input type="text" name="ttbm_hotel_area_info[<?php echo esc_attr($area_index); ?>][area_title]" class="ttbm-htl-area-title"
 									value="<?php echo esc_attr($area_info['area_title']); ?>"
@@ -164,7 +168,23 @@
 							<div class="ttbm-htl-area-header">
 								<input type="hidden" name="ttbm_hotel_area_info[${areaIndex}][area_icon]" value="mi mi-home">
 								<div class="icon">
-									<i class="mi mi-home"></i>
+									<div class="ttbm_style">
+										<div class="ttbm_add_icon_image_area fdColumn">
+											<input type="hidden" name="ttbm_hotel_area_info[0][area_icon]" value="mi mi-apartment">
+											<div class="ttbm_icon_item ">
+												<div class="allCenter">
+													<span class="mi mi-restaurants" data-add-icon=""></span>
+												</div>
+												<span class="mi mi-x ttbm_icon_remove" title="Remove Icon"></span>
+											</div>
+											<div class="ttbm_add_icon_image_button_area dNone">
+												<div class="flexEqual">
+													<button class="_mpBtn_xs ttbm_icon_add" type="button" data-target-popup="#ttbm_add_icon_popup">
+														<span class="mi mi-plus"></span></button>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 								<input type="text" name="ttbm_hotel_area_info[${areaIndex}][area_title]" class="ttbm-htl-area-title"
 									value="" placeholder="<?php echo esc_attr__("What's nearby", 'tour-booking-manager'); ?>">

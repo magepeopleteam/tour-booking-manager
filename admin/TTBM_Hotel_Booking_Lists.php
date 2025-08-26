@@ -212,114 +212,146 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                     </div>
                 </div>
 
-
-                <ul class="ttbm_hotel_tab_menu">
-                    <li class="ttbm_hotel_tab_item active" data-tab="ttbm_hotel_list_tab"><?php echo esc_attr__( 'Hotel Lists', 'tour-booking-manager' )?></li>
-                    <li class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_booking_tab"><?php echo esc_attr__( 'Hotel Booking Lists', 'tour-booking-manager' )?></li>
-                </ul>
-                <div class="ttbm_hotel_tab_content_holder">
-
-                    <div id="ttbm_hotel_list_tab" class="ttbm_hotel_tab_content active">
-                        <div class="ttbm_total_booking_wrapper" style="display: block">
-
-                            <div class="ttbm_hotel_list_header">
-
-
-                                <div class="ttbm_tour_list_text_header">
-
-                                    <div class="ttbm_travel_list_header_text">
-                                        <h2 class="ttbm_total_booking_title"><?php echo esc_attr__( 'Hotel List', 'tour-booking-manager' )?></h2>
-                                    </div>
-
-                                    <div class="ttbm_hotel_count_holder">
-                                        <div class="ttbm_travel_filter_item ttbm_filter_btn_active_bg_color" data-filter-item="all">All (<?php echo esc_attr( $total_count )?>)</div>
-                                        <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="publish">Publish (<?php echo esc_attr( $published_count )?>)</div>
-                                        <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="draft">Draft (<?php echo esc_attr( $draft_count )?>)</div>
-
-                                        <a class="ttbm_trash_link" href="<?php echo esc_url( $trash_link )?>" target="_blank">
-                                            <div class="ttbm_total_trash_display">Trash Tour (<?php echo esc_attr( $trash_count )?>) </div>
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div class="ttbm_hotel_search_addHolder">
-                                    <div class="ttbm_add_new_hotel_header">
-                                        <a href="<?php echo esc_url(admin_url('post-new.php?post_type=ttbm_hotel')); ?>" class="ttbm_add_new_hotel_text">
-                                            <i class="fas fa-plus"></i> <?php echo esc_attr__( 'Add New', 'tour-booking-manager' )?></a>
-                                    </div>
-                                    <div class="ttbm_hotel_titleSearchContainer">
-                                        <input type="text" class="ttbm_hotel_title_SearchBox" id="ttbm_hotel_title_SearchBox" placeholder="Hotel Name Search...">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <?php echo wp_kses_post( self::ttbm_display_Hotel_lists( $hotel_list_query, $posts_per_page ) )?>
-                        </div>
+                <div class="ttbm-hotel-tabs">
+                    <div class="ttbm_hotel_tab_menu">
+                        <div class="ttbm_hotel_tab_item active" data-tab="ttbm_hotel_list_tab"><?php echo esc_attr__( 'Hotel Lists', 'tour-booking-manager' )?></div>
+                        <div class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_booking_tab"><?php echo esc_attr__( 'Hotel Booking Lists', 'tour-booking-manager' )?></div>
+                        <div class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_features_tab"><?php echo esc_attr__( 'Hotel Features', 'tour-booking-manager' )?></div>
                     </div>
+                    <div class="ttbm_hotel_tab_content_holder">
+
+                        <div id="ttbm_hotel_list_tab" class="ttbm_hotel_tab_content active">
+                            <div class="ttbm_total_booking_wrapper" style="display: block">
+
+                                <div class="ttbm_hotel_list_header">
 
 
-                    <!--Booking List Display-->
-                    <div id="ttbm_hotel_booking_tab" class="ttbm_hotel_tab_content">
-                        <div class="ttbm_total_booking_wrapper" style="display: block">
-                            <h2 class="ttbm_total_booking_title"><?php echo esc_attr__( 'Hotel Booking List', 'tour-booking-manager' )?></h2>
+                                    <div class="ttbm_tour_list_text_header">
 
-                            <div class="ttbm_total_booking_filter_section">
-                                <span class="ttbm_total_booking_filter_label"><?php echo esc_attr__( 'Filter List By:', 'tour-booking-manager' )?></span>
-                                <div class="ttbm_total_booking_filter_options">
-                                    <label class="ttbm_total_booking_radio_container">
-                                        <input type="radio" name="filter_type" value="travel" checked>
-                                        <span class="ttbm_total_booking_radio_text"><?php echo esc_attr__( 'Hotel', 'tour-booking-manager' )?></span>
-                                    </label>
-                                </div>
-                                <div class="ttbm_total_booking_filter_controls">
+                                        <div class="ttbm_travel_list_header_text">
+                                            <h2 class="ttbm_total_booking_title"><?php echo esc_attr__( 'Hotel List', 'tour-booking-manager' )?></h2>
+                                        </div>
 
-                                    <div data-collapse="#ttbm_list_id" class="mActive">
-                                        <?php TTBM_Layout::hotel_list_in_select( 'all_hotel_list' ); ?>
+                                        <div class="ttbm_hotel_count_holder">
+                                            <div class="ttbm_travel_filter_item ttbm_filter_btn_active_bg_color" data-filter-item="all">All (<?php echo esc_attr( $total_count )?>)</div>
+                                            <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="publish">Publish (<?php echo esc_attr( $published_count )?>)</div>
+                                            <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="draft">Draft (<?php echo esc_attr( $draft_count )?>)</div>
+
+                                            <a class="ttbm_trash_link" href="<?php echo esc_url( $trash_link )?>" target="_blank">
+                                                <div class="ttbm_total_trash_display">Trash Tour (<?php echo esc_attr( $trash_count )?>) </div>
+                                            </a>
+                                        </div>
                                     </div>
 
-                                    <input type="text" name="ttbm_booking_date_filter" id="ttbm_booking_date_filter" class="ttbm_booking_date_filter" placeholder="Select date">
-                                    <button class="ttbm_total_booking_filter_btn"><?php  esc_html_e( 'Filter', 'tour-booking-manager' )?></button>
-                                    <button class="ttbm_total_booking_reset_btn"><?php  esc_html_e( 'Reset', 'tour-booking-manager' )?></button>
+                                    <div class="ttbm_hotel_search_addHolder">
+                                        <div class="ttbm_add_new_hotel_header">
+                                            <a href="<?php echo esc_url(admin_url('post-new.php?post_type=ttbm_hotel')); ?>" class="ttbm_add_new_hotel_text">
+                                                <i class="fas fa-plus"></i> <?php echo esc_attr__( 'Add New', 'tour-booking-manager' )?></a>
+                                        </div>
+                                        <div class="ttbm_hotel_titleSearchContainer">
+                                            <input type="text" class="ttbm_hotel_title_SearchBox" id="ttbm_hotel_title_SearchBox" placeholder="Hotel Name Search...">
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <?php echo wp_kses_post( self::ttbm_display_Hotel_lists( $hotel_list_query, $posts_per_page ) )?>
                             </div>
-
-                            <div class="ttbm_total_booking_summary">
-                                <div class="ttbm_total_booking_found"><?php echo esc_attr__( 'Total ', 'tour-booking-manager' )?> <span class="ttbm_total_posts"><?php echo esc_attr( $query->found_posts ); ?></span><?php echo esc_attr__( ' Order Found', 'tour-booking-manager' )?></div>
-                                <div class="ttbm_total_booking_showing"><?php echo esc_attr__( 'Showing ', 'tour-booking-manager' )?>  <span class="ttbm_showing_items"><?php echo esc_attr( $query->post_count ) ; ?></span><?php echo esc_attr__( ' Order', 'tour-booking-manager' )?> </div>
-                                <div class="ttbm_total_booking_per_page">
-                                    <span><?php echo esc_attr__( 'Guest Per Page', 'tour-booking-manager' )?></span>
-                                    <input type="number" value="<?php echo esc_attr( $posts_per_page )?>" class="ttbm_total_booking_page_input" readonly>
-                                </div>
-                            </div>
-
-                            <table class="ttbm_total_booking_table" >
-                                <thead class="ttbm_total_booking_thead">
-                                <tr>
-                                    <th class="ttbm_total_booking_th"><?php echo esc_attr__('Order ID', 'tour-booking-manager'); ?></th>
-                                    <th class="ttbm_total_booking_th"><?php echo esc_attr__('Billing Information', 'tour-booking-manager'); ?></th>
-                                    <th class="ttbm_total_booking_th"><?php echo esc_attr__('Hotel', 'tour-booking-manager'); ?></th>
-                                    <th class="ttbm_total_booking_th"><?php echo esc_attr__('Total Days', 'tour-booking-manager'); ?></th>
-                                    <th class="ttbm_total_booking_th"><?php echo esc_attr__('Rooms', 'tour-booking-manager'); ?></th>
-                                    <th class="ttbm_total_booking_th"><?php echo esc_attr__('Check In Date', 'tour-booking-manager'); ?></th>
-                                    <th class="ttbm_total_booking_th"><?php echo esc_attr__('Check Out Date', 'tour-booking-manager'); ?></th>
-                                    <th class="ttbm_total_booking_th"><?php echo esc_attr__('Order Date', 'tour-booking-manager'); ?></th>
-                                    <th class="ttbm_total_booking_th"><?php echo esc_attr__('Order Status', 'tour-booking-manager'); ?></th>
-                                    <th class="ttbm_total_booking_th"><?php echo esc_attr__('Paid Amount', 'tour-booking-manager'); ?></th>
-                                    <th class="ttbm_total_booking_th"><?php echo esc_attr__('Payment Method', 'tour-booking-manager'); ?></th>
-                                </tr>
-                                </thead>
-                                <tbody class="ttbm_total_booking_tbody" id="ttbm_total_booking_tbody">
-                                <?php echo wp_kses_post( self::ttbm_display_booking_lists( $query ) )?>
-                                </tbody>
-                            </table>
-
-                            <?php if( $query->found_posts > $posts_per_page ){?>
-                                <div class="ttbm_hotel_booking_load_more_holder">
-                                    <button class="ttbm_hotel_booking_load_more_btn"><?php esc_attr_e( 'Load More', 'tour-booking-manager');?></button>
-                                </div>
-                            <?php }?>
-
                         </div>
+
+
+                        <!--Booking List Display-->
+                        <div id="ttbm_hotel_booking_tab" class="ttbm_hotel_tab_content">
+                            <div class="ttbm_total_booking_wrapper" style="display: block">
+                                <h2 class="ttbm_total_booking_title"><?php echo esc_attr__( 'Hotel Booking List', 'tour-booking-manager' )?></h2>
+
+                                <div class="ttbm_total_booking_filter_section">
+                                    <span class="ttbm_total_booking_filter_label"><?php echo esc_attr__( 'Filter List By:', 'tour-booking-manager' )?></span>
+                                    <div class="ttbm_total_booking_filter_options">
+                                        <label class="ttbm_total_booking_radio_container">
+                                            <input type="radio" name="filter_type" value="travel" checked>
+                                            <span class="ttbm_total_booking_radio_text"><?php echo esc_attr__( 'Hotel', 'tour-booking-manager' )?></span>
+                                        </label>
+                                    </div>
+                                    <div class="ttbm_total_booking_filter_controls">
+
+                                        <div data-collapse="#ttbm_list_id" class="mActive">
+                                            <?php TTBM_Layout::hotel_list_in_select( 'all_hotel_list' ); ?>
+                                        </div>
+
+                                        <input type="text" name="ttbm_booking_date_filter" id="ttbm_booking_date_filter" class="ttbm_booking_date_filter" placeholder="Select date">
+                                        <button class="ttbm_total_booking_filter_btn"><?php  esc_html_e( 'Filter', 'tour-booking-manager' )?></button>
+                                        <button class="ttbm_total_booking_reset_btn"><?php  esc_html_e( 'Reset', 'tour-booking-manager' )?></button>
+                                    </div>
+                                </div>
+
+                                <div class="ttbm_total_booking_summary">
+                                    <div class="ttbm_total_booking_found"><?php echo esc_attr__( 'Total ', 'tour-booking-manager' )?> <span class="ttbm_total_posts"><?php echo esc_attr( $query->found_posts ); ?></span><?php echo esc_attr__( ' Order Found', 'tour-booking-manager' )?></div>
+                                    <div class="ttbm_total_booking_showing"><?php echo esc_attr__( 'Showing ', 'tour-booking-manager' )?>  <span class="ttbm_showing_items"><?php echo esc_attr( $query->post_count ) ; ?></span><?php echo esc_attr__( ' Order', 'tour-booking-manager' )?> </div>
+                                    <div class="ttbm_total_booking_per_page">
+                                        <span><?php echo esc_attr__( 'Guest Per Page', 'tour-booking-manager' )?></span>
+                                        <input type="number" value="<?php echo esc_attr( $posts_per_page )?>" class="ttbm_total_booking_page_input" readonly>
+                                    </div>
+                                </div>
+
+                                <table class="ttbm_total_booking_table" >
+                                    <thead class="ttbm_total_booking_thead">
+                                    <tr>
+                                        <th class="ttbm_total_booking_th"><?php echo esc_attr__('Order ID', 'tour-booking-manager'); ?></th>
+                                        <th class="ttbm_total_booking_th"><?php echo esc_attr__('Billing Information', 'tour-booking-manager'); ?></th>
+                                        <th class="ttbm_total_booking_th"><?php echo esc_attr__('Hotel', 'tour-booking-manager'); ?></th>
+                                        <th class="ttbm_total_booking_th"><?php echo esc_attr__('Total Days', 'tour-booking-manager'); ?></th>
+                                        <th class="ttbm_total_booking_th"><?php echo esc_attr__('Rooms', 'tour-booking-manager'); ?></th>
+                                        <th class="ttbm_total_booking_th"><?php echo esc_attr__('Check In Date', 'tour-booking-manager'); ?></th>
+                                        <th class="ttbm_total_booking_th"><?php echo esc_attr__('Check Out Date', 'tour-booking-manager'); ?></th>
+                                        <th class="ttbm_total_booking_th"><?php echo esc_attr__('Order Date', 'tour-booking-manager'); ?></th>
+                                        <th class="ttbm_total_booking_th"><?php echo esc_attr__('Order Status', 'tour-booking-manager'); ?></th>
+                                        <th class="ttbm_total_booking_th"><?php echo esc_attr__('Paid Amount', 'tour-booking-manager'); ?></th>
+                                        <th class="ttbm_total_booking_th"><?php echo esc_attr__('Payment Method', 'tour-booking-manager'); ?></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="ttbm_total_booking_tbody" id="ttbm_total_booking_tbody">
+                                    <?php echo wp_kses_post( self::ttbm_display_booking_lists( $query ) )?>
+                                    </tbody>
+                                </table>
+
+                                <?php if( $query->found_posts > $posts_per_page ){?>
+                                    <div class="ttbm_hotel_booking_load_more_holder">
+                                        <button class="ttbm_hotel_booking_load_more_btn"><?php esc_attr_e( 'Load More', 'tour-booking-manager');?></button>
+                                    </div>
+                                <?php }?>
+
+                            </div>
+                        </div>
+                        <!--Features List Display-->
+                        <div id="ttbm_hotel_features_tab" class="ttbm_hotel_tab_content">
+                            <div class="" style="display: block">
+                                <h2 class="ttbm_total_booking_title"><?php echo esc_attr__( 'Hotel Features List', 'tour-booking-manager' )?></h2>
+                                <?php
+                                $features = get_terms(array(
+                                    'taxonomy'   => 'ttbm_hotel_features_list',
+                                    'hide_empty' => false,
+                                ));
+
+                                if (!empty($features) && !is_wp_error($features)) {
+                                    echo '<table class="ttbm-hotel-features-table">';
+                                    echo '<thead><tr><th>' . esc_html__('Feature Name', 'tour-booking-manager') . '</th><th>' . esc_html__('Icon', 'tour-booking-manager') . '</th></tr></thead>';
+                                    echo '<tbody>';
+                                    foreach ($features as $feature) {
+                                        $icon = get_term_meta($feature->term_id, 'ttbm_feature_icon', true);
+                                        $icon_html = $icon ? '<i class="' . esc_attr($icon) . '"></i>' : '';
+                                        echo '<tr>';
+                                        echo '<td>' . esc_html($feature->name) . '</td>';
+                                        echo '<td>' . $icon_html . '</td>';
+                                        echo '</tr>';
+                                    }
+                                    echo '</tbody></table>';
+                                } else {
+                                    echo '<p>' . esc_html__('No features found.', 'tour-booking-manager') . '</p>';
+                                }
+                                ?>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

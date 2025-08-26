@@ -1562,7 +1562,7 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	border-bottom: 1px solid #ddd;
 }
 
-.ttbm-hotel-details .review-testimonial h2{
+.ttbm-hotel-details div.review-testimonial h2{
 	font-size: 12px;
 	font-weight: normal;
 }

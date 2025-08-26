@@ -10,7 +10,7 @@ $class_location = $class_location ?? '';
 ?>
 <div class="ttbm_default_theme">
     <div class='ttbm_style'>
-        <div class="ttbm-hotel-area ttbm_hotel_item">
+        <div class="ttbm-hotel-details ttbm_hotel_item">
             <div class="ttbm-hero-header">
                 <div class="title-section">
                     <?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
@@ -191,7 +191,7 @@ $class_location = $class_location ?? '';
             <!-- FAQ Section -->
             <?php do_action( 'ttbm_single_faq' ); ?>
             <!-- FAQ Section -->
-             <?php do_action( 'ttbm_single_hotel_area' ); ?>
+             <?php do_action( 'ttbm_single_hotel_area'); ?>
         </div>
     </div>
     <?php do_action( 'ttbm_single_tour_after' ); ?>

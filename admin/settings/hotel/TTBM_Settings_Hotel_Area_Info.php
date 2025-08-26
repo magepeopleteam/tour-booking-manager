@@ -145,36 +145,28 @@
 				<?php
 			}
 
-			public function frontend_hotel_area_info($post_id) {
-				$area_status = get_post_meta($post_id, 'ttbm_hotel_area_status', 'off');
+			public function frontend_hotel_area_info() {
+				$post_id = get_the_id();
+				$area_status = get_post_meta($post_id, 'ttbm_hotel_area_status', true);
 				$ttbm_hotel_area_info = get_post_meta($post_id, 'ttbm_hotel_area_info', true);
 				$ttbm_hotel_area_info = !empty($ttbm_hotel_area_info) ? $ttbm_hotel_area_info : [];
 				if($area_status == 'on' && !empty($ttbm_hotel_area_info)):?>
-					<h2><?php _e("Hotel Area Info",'tour-booking-manager'); ?></h2>	
-					<?php foreach($ttbm_hotel_area_info as $hotel_area): ?>
-						<div class="ttbm-hotel-area-section">
-							<ul class="ttbm-hotel-area-items">
-								<?php if(!empty($hotel_area['area_items'])): foreach($hotel_area['area_items'] as $area_item): ?>
-									<li>
-										<?php 
-											$item_title = !empty($area_item['item_title']) ? $area_item['item_title'] : '';
-											$item_distance = !empty($area_item['item_distance']) ? $area_item['item_distance'] : '';
-											$item_type = !empty($area_item['item_type']) ? $area_item['item_type'] : '';
-											if(!empty($item_title)){
-												echo esc_html($item_title);
-											}
-											if(!empty($item_distance)){
-												echo ' - '.esc_html($item_distance);
-											}
-											if(!empty($item_type)){
-												echo ' '.esc_html($item_type);
-											}
-										?>
-									</li>
-								<?php endforeach; endif; ?>
-							</ul>
+					<div class="ttbm-hotel-area-info">
+						<h2><?php _e("Hotel Area Info",'tour-booking-manager'); ?></h2>	
+						<div class="ttbm-area-section">
+							<?php foreach($ttbm_hotel_area_info as $hotel_area): ?>
+								<div class="ttbm-area-items">
+									<h2><i class="<?php echo esc_attr($hotel_area['area_icon']) ?>"></i> <?php echo esc_html($hotel_area['area_title']) ?></h2>
+									<?php if(!empty($hotel_area['area_items'])): foreach($hotel_area['area_items'] as $area_item): ?>
+										<div class="ttbm-area-item">
+											<p><?php echo esc_html($area_item['item_title']); ?></p>
+											<p><?php echo esc_html($area_item['item_distance']); ?> <span><?php echo esc_html($area_item['item_type']); ?></span></p>
+										</div>
+									<?php endforeach; endif; ?>
+								</div>
+							<?php endforeach; ?>
 						</div>
-					<?php endforeach; ?>
+					</div>
 				<?php endif; 
 			}
 

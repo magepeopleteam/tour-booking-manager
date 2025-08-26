@@ -1747,11 +1747,11 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	flex-wrap: wrap;
 	align-items: center;
 	gap:10px;
-	margin: 60px 0;
+	margin:20px 0;
 }
 
 .ttbm-hotel-details .ttbm-feature-list .feature-items{
-	padding: 15px 30px;
+	padding:10px 15px;
 	border: 1px solid #ddd;
 	border-radius: 4px;
 	display: flex;

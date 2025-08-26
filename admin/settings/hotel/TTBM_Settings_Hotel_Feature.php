@@ -2,11 +2,10 @@
 	if (!defined('ABSPATH')) {
 		die;
 	} // Cannot access pages directly.
-	if (!class_exists('TTBM_Settings_Feature')) {
-		class TTBM_Settings_Feature {
+	if (!class_exists('TTBM_Settings_Hoted_Feature')) {
+		class TTBM_Settings_Hoted_Feature {
 			public function __construct() {
-				add_action('ttbm_meta_box_tab_content', [$this, 'ttbm_settings_feature'], 10, 1);
-				//add_action('add_ttbm_settings_hotel_tab_content', [$this, 'ttbm_settings_feature'], 10, 1);
+				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'ttbm_settings_feature'], 10, 1);
 				//********Add New Feature************//
 				add_action('wp_ajax_load_ttbm_feature_form', [$this, 'load_ttbm_feature_form']);
 				add_action('wp_ajax_nopriv_load_ttbm_feature_form', [$this, 'load_ttbm_feature_form']);
@@ -18,7 +17,7 @@
 			}
 			public function ttbm_settings_feature($tour_id) {
 				?>
-                <div class="tabsItem ttbm_settings_feature" data-tabs="#ttbm_settings_feature">
+                <div class="tabsItem ttbm_settings_hotel_feature" data-tabs="#ttbm_settings_hotel_feature">
                     <h2 class="h4 px-0 text-primary"><?php esc_html_e('Features Settings', 'tour-booking-manager'); ?></h2>
                     <p><?php TTBM_Settings::des_p('featrue_settings_description') ?></p>
                     <div class="mtb ttbm_features_table">
@@ -39,7 +38,7 @@
 				if (sizeof($features) > 0) { ?>
                     <section>
                         <div class="ttbm-header">
-                            <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Included Feature', 'tour-booking-manager'); ?></h4>
+                            <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Included Features', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_include_service', $in_checked); ?>
                         </div>
                         <div data-collapse="#ttbm_display_include_service" class="includedd-features-section <?php echo esc_attr($include_active); ?>">
@@ -49,7 +48,7 @@
                     </section>
                     <section>
                         <div class="ttbm-header">
-                            <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Excluded Feature', 'tour-booking-manager'); ?></h4>
+                            <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Popular Features', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_exclude_service', $ex_checked); ?>
                         </div>
                         <div data-collapse="#ttbm_display_exclude_service" class="includedd-features-section <?php echo esc_attr($include_active); ?>">
@@ -173,5 +172,5 @@
 				die();
 			}
 		}
-		new TTBM_Settings_Feature();
+		new TTBM_Settings_Hoted_Feature();
 	}

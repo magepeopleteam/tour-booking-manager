@@ -24,7 +24,7 @@
                             <li data-tabs-target="#ttbm_settings_pricing">
                                 <span class="mi mi-coins"></span><?php esc_html_e(' Pricing', 'tour-booking-manager'); ?>
                             </li>
-                            <li data-tabs-target="#ttbm_settings_feature">
+                            <li data-tabs-target="#ttbm_settings_hotel_feature">
                                 <span class="mi mi-features"></span><?php esc_html_e(' Features', 'tour-booking-manager'); ?>
                             </li>
                             <li data-tabs-target="#ttbm_settings_gallery">

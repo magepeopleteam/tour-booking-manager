@@ -11,8 +11,40 @@ if (!class_exists('TTBM_Hotel_Features')) {
             add_action('ttbm_hotel_dashboard_tabs', [$this, 'dashbaord_features']);
             add_action('ttbm_hotel_dashboard_content', [$this, 'dashbaord_features_content']);
 			add_action('wp_ajax_ttbm_hotel_feature_save', [$this, 'hotel_feature_save']);
+            // ttbm_delete_faq_data
+			add_action('wp_ajax_ttbm_hotel_feature_delete', [$this, 'feature_delete_item']);
         }
 
+        public function feature_delete_item() {
+            // Check nonce for security
+            if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
+                wp_send_json_error('Invalid nonce!');
+            }
+
+            $item_id = isset($_POST['itemId']) ? intval($_POST['itemId']) : 0;
+
+            if ($item_id > 0 && taxonomy_exists('ttbm_hotel_features_list')) {
+                $deleted = wp_delete_term($item_id, 'ttbm_hotel_features_list');
+            } else {
+                $deleted = false;
+            }
+            if ($deleted) {
+                ob_start();
+                $resultMessage = esc_html__('Data Deleted Successfully', 'tour-booking-manager');
+                $this->show_features_lists();
+                $html_output = ob_get_clean();
+                wp_send_json_success([
+                    'message' => $resultMessage,
+                    'html' => $html_output,
+                ]);
+            } else {
+                wp_send_json_success([
+                    'message' => 'Data not inserted',
+                    'html' => '',
+                ]);
+            }
+            die;
+        }
         
         public function dashbaord_features(){
             ?>
@@ -120,7 +152,14 @@ if (!class_exists('TTBM_Hotel_Features')) {
             $feature_description = isset($_POST['ttbm_hotel_feature_description']) ? sanitize_textarea_field(wp_unslash($_POST['ttbm_hotel_feature_description'])) : '';
 
             if (empty($feature_title)) {
-                wp_send_json_error(__('Feature title is required.', 'tour-booking-manager'));
+                ob_start();
+                $resultMessage = esc_html__('Feature title is required.', 'tour-booking-manager');
+                $this->show_features_lists();
+                $html_output = ob_get_clean();
+                wp_send_json_success([
+                    'message' => $resultMessage,
+                    'html' => $html_output,
+                ]);
             }
 
             $args = array(

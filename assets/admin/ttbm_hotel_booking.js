@@ -1072,6 +1072,7 @@
             }
         });
     });
+
     //      =================hotel-area-info.js=============
     $(document).on('click', '.ttbm-hotel-new-feature', function (e) {
         $('#ttbm-hotel-feature-msg').html('');
@@ -1098,6 +1099,18 @@
         close_sidebar_modal(e);
     });
 
+    $(document).on('click', '.ttbm-hotel-delete-feature', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var itemId = $(this).closest('.ttbm-features-item').data('id');
+        var isConfirmed = confirm('Are you sure you want to delete this row?');
+        if (isConfirmed) {
+            ttbm_hotel_feature_delete(itemId);
+        } else {
+            console.log('Deletion canceled.');
+        }
+    });
+
     function ttbm_hotel_feature_save() {
         var formData = {};
         $('#ttbm-hotel-feature-form').find('input, textarea').each(function() {
@@ -1118,6 +1131,26 @@
                 $('.ttbm-hotel-feature-items').html('');
                 $('.ttbm-hotel-feature-items').append(response.data.html);
                 empty_feature_form();
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+
+    function ttbm_hotel_feature_delete(itemId) {
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_hotel_feature_delete',
+                itemId: itemId,
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                $('#ttbm-hotel-feature-msg').html(response.data.message);
+                $('.ttbm-hotel-feature-items').html('');
+                $('.ttbm-hotel-feature-items').append(response.data.html);
             },
             error: function (error) {
                 console.log('Error:', error);

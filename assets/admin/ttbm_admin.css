@@ -871,7 +871,7 @@
 		width: 100%;
 		display: block;
 		font-weight: normal;
-		padding: 10px;
+		padding:2px;
 		font-size: 18px;
 		border: 1px solid #dfdfdf;
 		}
@@ -1002,6 +1002,7 @@
 	display: flex;
 	justify-content: start;
 	gap:10px;
+	flex-wrap: wrap;
 }
 .ttbm_hotel_tab_content .ttbm-features-item{
 	display: flex;
@@ -1011,4 +1012,5 @@
 	border-radius: 5px;
 	border: 1px solid #e1e5e9;
 	background-color: #f8f8f8;
+	width: calc(18.46% - 10px);
 }

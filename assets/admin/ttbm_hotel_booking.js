@@ -950,7 +950,7 @@
         });
     });
     
-    // hotel-area-info.js
+    // ==========hotel-area-info.js=============
     $(document).ready(function($) {
         // Helper: get next area index
         function getNextAreaIndex() {
@@ -1072,6 +1072,62 @@
             }
         });
     });
+    //      =================hotel-area-info.js=============
+    $(document).on('click', '.ttbm-hotel-new-feature', function (e) {
+        $('#ttbm-hotel-feature-msg').html('');
+        $('.ttbm_hotel_feature_save').show();
+        $('.ttbm_hotel_feature_update').hide();
+        empty_feature_form();
+    });
+
+    function empty_feature_form() {
+        $('input[name="ttbm_hotel_feature_title"]').val('');
+        $('input[name="ttbm_hotel_feature_slug"]').val('');
+        $('input[name="ttbm_hotel_feature_icon"]').val('');
+        $('textarea[name="ttbm_hotel_feature_description"]').val('');
+    }
+
+    $(document).on('click', '#ttbm_hotel_feature_save', function (e) {
+        e.preventDefault();
+        ttbm_hotel_feature_save();
+    });
+
+    $(document).on('click', '#ttbm_hotel_feature_save_close', function (e) {
+        e.preventDefault();
+        ttbm_hotel_feature_save();
+        close_sidebar_modal(e);
+    });
+
+    function ttbm_hotel_feature_save() {
+        var feature_title = $('input[name="ttbm_hotel_feature_title"]');
+        var feature_slug = $('input[name="ttbm_hotel_feature_slug"]');
+        var feature_icon = $('input[name="ttbm_hotel_feature_icon"]');
+        var feature_description = $('textarea[name="ttbm_hotel_feature_description"]');
+
+        var postID = $('input[name="ttbm_post_id"]');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_hotel_feature_save',
+                feature_title: feature_title.val(),
+                feature_slug: feature_slug.val(),
+                feature_icon: feature_icon.val(),
+                feature_description: feature_description.val(),
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                console.log(response);
+                $('#ttbm-hotel-feature-msg').html(response.data.message);
+                $('.ttbm-hotel-feature-items').html('');
+                $('.ttbm-hotel-feature-items').append(response.data.html);
+                empty_feature_form();
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
 
 })(jQuery);
 

@@ -1094,7 +1094,7 @@
         var slug = parent.data('slug') || '';
         var icon = parent.data('icon') || '';
         var description = parent.data('description') || '';
-
+        parent.find('.ttbm_icon_item .allCenter span').attr('class', icon );
         var $form = $('#ttbm-hotel-feature-form');
         $form.find('input[name="ttbm_hotel_feature_title"]').val(title);
         $form.find('input[name="ttbm_hotel_feature_slug"]').val(slug);

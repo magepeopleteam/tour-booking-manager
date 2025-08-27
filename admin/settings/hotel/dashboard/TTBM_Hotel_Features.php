@@ -17,72 +17,6 @@ if (!class_exists('TTBM_Hotel_Features')) {
 			add_action('wp_ajax_ttbm_hotel_feature_delete', [$this, 'feature_delete_item']);
         }
 
-        public function feature_update_item() {
-            if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
-                wp_send_json_error('Invalid nonce!');
-            }
-
-            $feature_id = isset($_POST['ttbm_hotel_feature_id']) ? intval($_POST['ttbm_hotel_feature_id']) : 0;
-            $feature_title = isset($_POST['ttbm_hotel_feature_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_feature_title'])) : '';
-            $feature_slug = isset($_POST['ttbm_hotel_feature_slug']) ? sanitize_title(wp_unslash($_POST['ttbm_hotel_feature_slug'])) : '';
-            $feature_icon = isset($_POST['ttbm_hotel_feature_icon']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_feature_icon'])) : '';
-            $feature_description = isset($_POST['ttbm_hotel_feature_description']) ? sanitize_textarea_field(wp_unslash($_POST['ttbm_hotel_feature_description'])) : '';
-           
-            if ($feature_id > 0 && !empty($feature_title) && taxonomy_exists('ttbm_hotel_features_list')) {
-                $args = array(
-                    'name' => $feature_title,
-                    'slug'        => $feature_slug,
-                    'description' => $feature_description,
-                );
-                // Update the term name separately
-                wp_update_term($feature_id, 'ttbm_hotel_features_list', $args);
-
-                if (!empty($feature_icon)) {
-                    update_term_meta($feature_id, 'ttbm_feature_icon', $feature_icon);
-                }
-            }
-            ob_start();
-            $resultMessage = esc_html__('Data Updated Successfully', 'tour-booking-manager');
-            $this->show_features_lists();
-            $html_output = ob_get_clean();
-            wp_send_json_success([
-                'message' => $resultMessage,
-                'html' => $html_output,
-            ]);
-            die;
-        }
-
-        public function feature_delete_item() {
-            // Check nonce for security
-            if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
-                wp_send_json_error('Invalid nonce!');
-            }
-
-            $item_id = isset($_POST['itemId']) ? intval($_POST['itemId']) : 0;
-
-            if ($item_id > 0 && taxonomy_exists('ttbm_hotel_features_list')) {
-                $deleted = wp_delete_term($item_id, 'ttbm_hotel_features_list');
-            } else {
-                $deleted = false;
-            }
-            if ($deleted) {
-                ob_start();
-                $resultMessage = esc_html__('Data Deleted Successfully', 'tour-booking-manager');
-                $this->show_features_lists();
-                $html_output = ob_get_clean();
-                wp_send_json_success([
-                    'message' => $resultMessage,
-                    'html' => $html_output,
-                ]);
-            } else {
-                wp_send_json_success([
-                    'message' => 'Data not inserted',
-                    'html' => '',
-                ]);
-            }
-            die;
-        }
-        
         public function dashbaord_features(){
             ?>
             <div class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_features_tab"><?php echo esc_attr__( 'Hotel Features', 'tour-booking-manager' )?></div>
@@ -117,7 +51,7 @@ if (!class_exists('TTBM_Hotel_Features')) {
             if (!empty($features)) :?>
             <div class="ttbm-features">
                 <?php foreach ($features as $feature): ?>
-                    <?php $icon = get_term_meta($feature->term_id, 'ttbm_feature_icon', true); ?>
+                    <?php $icon = get_term_meta($feature->term_id, 'ttbm_hotel_feature_icon', true); ?>
                     <div class="ttbm-features-item" data-id="<?php echo esc_attr($feature->term_id); ?>" data-name="<?php echo esc_attr($feature->name); ?>" data-slug="<?php echo esc_attr($feature->slug); ?>" data-icon="<?php echo esc_attr($icon); ?>" data-description="<?php echo esc_attr($feature->description); ?>">
                         <i class="<?php echo esc_attr($icon); ?>"></i>
                         <span><?php echo esc_html($feature->name); ?></span>
@@ -156,6 +90,7 @@ if (!class_exists('TTBM_Hotel_Features')) {
                             <label>
                                 <?php esc_html_e('Add Features Icon', 'tour-booking-manager'); ?>
                                 <input type="hidden" name="ttbm_hotel_feature_icon">
+                                <?php do_action('ttbm_input_add_icon', 'ttbm_hotel_feature_icon', '');  ?>
                             </label>
                             <label>
                                 <?php esc_html_e('Add Features Description', 'tour-booking-manager'); ?>
@@ -178,6 +113,72 @@ if (!class_exists('TTBM_Hotel_Features')) {
                 </div>
             </div>
             <?php
+        }
+
+        public function feature_delete_item() {
+            // Check nonce for security
+            if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
+                wp_send_json_error('Invalid nonce!');
+            }
+
+            $item_id = isset($_POST['itemId']) ? intval($_POST['itemId']) : 0;
+
+            if ($item_id > 0 && taxonomy_exists('ttbm_hotel_features_list')) {
+                $deleted = wp_delete_term($item_id, 'ttbm_hotel_features_list');
+            } else {
+                $deleted = false;
+            }
+            if ($deleted) {
+                ob_start();
+                $resultMessage = esc_html__('Data Deleted Successfully', 'tour-booking-manager');
+                $this->show_features_lists();
+                $html_output = ob_get_clean();
+                wp_send_json_success([
+                    'message' => $resultMessage,
+                    'html' => $html_output,
+                ]);
+            } else {
+                wp_send_json_success([
+                    'message' => 'Data not inserted',
+                    'html' => '',
+                ]);
+            }
+            die;
+        }
+
+        public function feature_update_item() {
+            if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
+                wp_send_json_error('Invalid nonce!');
+            }
+
+            $feature_id = isset($_POST['ttbm_hotel_feature_id']) ? intval($_POST['ttbm_hotel_feature_id']) : 0;
+            $feature_title = isset($_POST['ttbm_hotel_feature_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_feature_title'])) : '';
+            $feature_slug = isset($_POST['ttbm_hotel_feature_slug']) ? sanitize_title(wp_unslash($_POST['ttbm_hotel_feature_slug'])) : '';
+            $feature_icon = isset($_POST['ttbm_hotel_feature_icon']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_feature_icon'])) : '';
+            $feature_description = isset($_POST['ttbm_hotel_feature_description']) ? sanitize_textarea_field(wp_unslash($_POST['ttbm_hotel_feature_description'])) : '';
+           
+            if ($feature_id > 0 && !empty($feature_title) && taxonomy_exists('ttbm_hotel_features_list')) {
+                $args = array(
+                    'name' => $feature_title,
+                    'slug'        => $feature_slug,
+                    'description' => $feature_description,
+                );
+                // Update the term name separately
+                wp_update_term($feature_id, 'ttbm_hotel_features_list', $args);
+
+                if (!empty($feature_icon)) {
+                    update_term_meta($feature_id, 'ttbm_hotel_feature_icon', $feature_icon);
+                }
+            }
+            ob_start();
+            $resultMessage = esc_html__('Data Updated Successfully', 'tour-booking-manager');
+            $this->show_features_lists();
+            $html_output = ob_get_clean();
+            wp_send_json_success([
+                'message' => $resultMessage,
+                'html' => $html_output,
+            ]);
+            die;
         }
 
         public function hotel_feature_save() {	
@@ -209,7 +210,7 @@ if (!class_exists('TTBM_Hotel_Features')) {
 
             if (!is_wp_error($result) && isset($result['term_id'])) {
                 if (!empty($feature_icon)) {
-                    update_term_meta($result['term_id'], 'ttbm_feature_icon', $feature_icon);
+                    update_term_meta($result['term_id'], 'ttbm_hotel_feature_icon', $feature_icon);
                 }
                 $result = true;
             } else {

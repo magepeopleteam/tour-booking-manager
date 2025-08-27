@@ -2,8 +2,8 @@
 	if (!defined('ABSPATH')) {
 		die;
 	} // Cannot access pages directly.
-	if (!class_exists('TTBM_Settings_Hoted_Feature')) {
-		class TTBM_Settings_Hoted_Feature {
+	if (!class_exists('TTBM_Settings_Hotel_Feature')) {
+		class TTBM_Settings_Hotel_Feature {
 			public function __construct() {
 				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'ttbm_settings_feature'], 10, 1);
 				//********Add New Feature************//
@@ -172,5 +172,5 @@
 				die();
 			}
 		}
-		new TTBM_Settings_Hoted_Feature();
+		new TTBM_Settings_Hotel_Feature();
 	}

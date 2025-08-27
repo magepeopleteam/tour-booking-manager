@@ -991,3 +991,24 @@
 	}
 
 }
+/* ttbm_hotel_features_tab */
+.features_header{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+}
+.ttbm_hotel_tab_content .ttbm-features{
+	display: flex;
+	justify-content: start;
+	gap:10px;
+}
+.ttbm_hotel_tab_content .ttbm-features-item{
+	display: flex;
+	justify-content: space-between;
+	gap:10px;
+	padding:10px;
+	border-radius: 5px;
+	border: 1px solid #e1e5e9;
+	background-color: #f8f8f8;
+}

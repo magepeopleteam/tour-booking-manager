@@ -219,7 +219,7 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                         <div class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_features_tab"><?php echo esc_attr__( 'Hotel Features', 'tour-booking-manager' )?></div>
                     </div>
                     <div class="ttbm_hotel_tab_content_holder">
-
+                        <!--Hotel List Tab-->
                         <div id="ttbm_hotel_list_tab" class="ttbm_hotel_tab_content active">
                             <div class="ttbm_total_booking_wrapper" style="display: block">
 
@@ -257,8 +257,6 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                                 <?php echo wp_kses_post( self::ttbm_display_Hotel_lists( $hotel_list_query, $posts_per_page ) )?>
                             </div>
                         </div>
-
-
                         <!--Booking List Display-->
                         <div id="ttbm_hotel_booking_tab" class="ttbm_hotel_tab_content">
                             <div class="ttbm_total_booking_wrapper" style="display: block">
@@ -324,39 +322,91 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                         </div>
                         <!--Features List Display-->
                         <div id="ttbm_hotel_features_tab" class="ttbm_hotel_tab_content">
-                            <div class="" style="display: block">
-                                <h2 class="ttbm_total_booking_title"><?php echo esc_attr__( 'Hotel Features List', 'tour-booking-manager' )?></h2>
+                            <div>
+                                <div class="ttbm_style features_header">
+                                    <h2 class="ttbm_total_booking_title">
+                                        <?php echo esc_attr__( 'Hotel Features List', 'tour-booking-manager' )?>
+                                    </h2>
+                                    <button class="_themeButton_xs ttbm-hotel-new-feature" data-ttbm-modal="ttbm-hotel-new-feature"> <?php echo esc_attr__( 'Add new feature', 'tour-booking-manager' )?></button>
+                                </div>
                                 <?php
                                 $features = get_terms(array(
                                     'taxonomy'   => 'ttbm_hotel_features_list',
                                     'hide_empty' => false,
                                 ));
 
-                                if (!empty($features) && !is_wp_error($features)) {
-                                    echo '<table class="ttbm-hotel-features-table">';
-                                    echo '<thead><tr><th>' . esc_html__('Feature Name', 'tour-booking-manager') . '</th><th>' . esc_html__('Icon', 'tour-booking-manager') . '</th></tr></thead>';
-                                    echo '<tbody>';
-                                    foreach ($features as $feature) {
-                                        $icon = get_term_meta($feature->term_id, 'ttbm_feature_icon', true);
-                                        $icon_html = $icon ? '<i class="' . esc_attr($icon) . '"></i>' : '';
-                                        echo '<tr>';
-                                        echo '<td>' . esc_html($feature->name) . '</td>';
-                                        echo '<td>' . $icon_html . '</td>';
-                                        echo '</tr>';
-                                    }
-                                    echo '</tbody></table>';
-                                } else {
-                                    echo '<p>' . esc_html__('No features found.', 'tour-booking-manager') . '</p>';
-                                }
-                                ?>
+                                if (!empty($features)) :?>
+                                <div class="ttbm-features">
+                                    <?php foreach ($features as $feature): ?>
+                                        <?php $icon = get_term_meta($feature->term_id, 'ttbm_feature_icon', true); ?>
+                                        <div class="ttbm-features-item">
+                                            <i class="<?php echo esc_attr($icon); ?>"></i>
+                                            <span><?php echo esc_html($feature->name); ?></span>
+                                            <div class="ttbm-hotel-feature-action">
+                                                <button class="ttbm-hotel-edit-feature"><i class="mi mi-edit"></i></button>
+                                                <button class="ttbm-hotel-delete-feature"><i class="mi mi-trash"></i></button>
+                                            </div>
+                                        </div>
+                                    <?php endforeach;?>
+                                </div>
+                                <?php else: ?>
+                                    <p><?php esc_html__('No features found.', 'tour-booking-manager'); ?></p>
+                                <?php endif; ?>
                             </div>
                         </div>
-
+                        <!-- sidebar collapse open -->
+                        <?php $this->display_sidebar_modal(); ?>
+                        <!-- sidear collapse end -->
                     </div>
                 </div>
             </div>
 
             <?php
+        }
+        
+        public static function display_sidebar_modal( ) {
+            ?>
+            <div class="ttbm-modal-container" data-ttbm-modal-target="ttbm-hotel-new-feature">
+                <div class="ttbm-modal-content">
+                    <span class="ttbm-modal-close"><i class="fas fa-times"></i></span>
+                    <div class="title">
+                        <h3><?php esc_html_e('Add New Features', 'tour-booking-manager'); ?></h3>
+                        <div id="ttbm-hotel-faq-msg"></div>
+                    </div>
+                    <div class="content">
+                        <label>
+                            <?php esc_html_e('Add Features Title', 'tour-booking-manager'); ?>
+                            <input type="hidden" name="ttbm_post_id" value="<?php echo esc_attr('9'); ?>">
+                            <input type="text" name="ttbm_hotel_feature_title">
+                        </label>
+                        <label>
+                            <?php esc_html_e('Add Features Slug', 'tour-booking-manager'); ?>
+                            <input type="text" name="ttbm_hotel_feature_slug">
+                        </label>
+                        <label>
+                            <?php esc_html_e('Add Features Icon', 'tour-booking-manager'); ?>
+                            <input type="text" name="ttbm_hotel_feature_icon">
+                        </label>
+                        <label>
+                            <?php esc_html_e('Add Features Description', 'tour-booking-manager'); ?>
+                        </label>
+                        <textarea name="ttbm_hotel_feature_description" id="" rows="10" cols="10"></textarea>
+                        <div class="mT"></div>
+                        <div class="ttbm_hotel_feature_save">
+                            <p>
+                                <button id="ttbm_hotel_feature_save" class="button button-primary button-large"><?php esc_html_e('Save', 'tour-booking-manager'); ?></button>
+                                <button id="ttbm_hotel_feature_save_close" class="button button-primary button-large">save close</button>
+                            <p>
+                        </div>
+                        <div class="ttbm_hotel_feature_update" style="display: none;">
+                            <p>
+                                <button id="ttbm_hotel_feature_update_btn" class="button button-primary button-large"><?php esc_html_e('Update and Close', 'tour-booking-manager'); ?></button>
+                            <p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php
         }
 
         public static function ttbm_display_booking_lists( $query, $load_more='' ) {

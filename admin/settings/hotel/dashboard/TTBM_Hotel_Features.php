@@ -74,34 +74,36 @@ if (!class_exists('TTBM_Hotel_Features')) {
                         <div id="ttbm-hotel-feature-msg"></div>
                     </div>
                     <div class="content">
-                        <label>
-                            <?php esc_html_e('Add Features Title', 'tour-booking-manager'); ?>
-                            <input type="text" name="ttbm_hotel_feature_title">
-                        </label>
-                        <label>
-                            <?php esc_html_e('Add Features Slug', 'tour-booking-manager'); ?>
-                            <input type="text" name="ttbm_hotel_feature_slug">
-                        </label>
-                        <label>
-                            <?php esc_html_e('Add Features Icon', 'tour-booking-manager'); ?>
-                            <input type="hidden" name="ttbm_hotel_feature_icon">
-                        </label>
-                        <label>
-                            <?php esc_html_e('Add Features Description', 'tour-booking-manager'); ?>
-                        </label>
-                        <textarea name="ttbm_hotel_feature_description" id="" rows="10" cols="10"></textarea>
-                        <div class="mT"></div>
-                        <div class="ttbm_hotel_feature_save">
-                            <p>
-                                <button id="ttbm_hotel_feature_save" class="button button-primary button-large"><?php esc_html_e('Save', 'tour-booking-manager'); ?></button>
-                                <button id="ttbm_hotel_feature_save_close" class="button button-primary button-large">save close</button>
-                            <p>
-                        </div>
-                        <div class="ttbm_hotel_feature_update" style="display: none;">
-                            <p>
-                                <button id="ttbm_hotel_feature_update_btn" class="button button-primary button-large"><?php esc_html_e('Update and Close', 'tour-booking-manager'); ?></button>
-                            <p>
-                        </div>
+                        <form action="#" method="post" id="ttbm-hotel-feature-form" autocomplete="off">
+                            <label>
+                                <?php esc_html_e('Add Features Title', 'tour-booking-manager'); ?>
+                                <input type="text" name="ttbm_hotel_feature_title">
+                            </label>
+                            <label>
+                                <?php esc_html_e('Add Features Slug', 'tour-booking-manager'); ?>
+                                <input type="text" name="ttbm_hotel_feature_slug">
+                            </label>
+                            <label>
+                                <?php esc_html_e('Add Features Icon', 'tour-booking-manager'); ?>
+                                <input type="hidden" name="ttbm_hotel_feature_icon">
+                            </label>
+                            <label>
+                                <?php esc_html_e('Add Features Description', 'tour-booking-manager'); ?>
+                            </label>
+                            <textarea name="ttbm_hotel_feature_description" id="" rows="10" cols="10"></textarea>
+                            <div class="mT"></div>
+                            <div class="ttbm_hotel_feature_save">
+                                <p>
+                                    <button id="ttbm_hotel_feature_save" class="button button-primary button-large"><?php esc_html_e('Save', 'tour-booking-manager'); ?></button>
+                                    <button id="ttbm_hotel_feature_save_close" class="button button-primary button-large">save close</button>
+                                <p>
+                            </div>
+                            <div class="ttbm_hotel_feature_update" style="display: none;">
+                                <p>
+                                    <button id="ttbm_hotel_feature_update_btn" class="button button-primary button-large"><?php esc_html_e('Update and Close', 'tour-booking-manager'); ?></button>
+                                <p>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -112,10 +114,10 @@ if (!class_exists('TTBM_Hotel_Features')) {
             if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
                 wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
             }
-            $feature_title = isset($_POST['feature_title']) ? sanitize_text_field(wp_unslash($_POST['feature_title'])) : '';
-            $feature_slug = isset($_POST['feature_slug']) ? sanitize_title(wp_unslash($_POST['feature_slug'])) : '';
-            $feature_icon = isset($_POST['feature_icon']) ? sanitize_text_field(wp_unslash($_POST['feature_icon'])) : '';
-            $feature_description = isset($_POST['feature_description']) ? sanitize_textarea_field(wp_unslash($_POST['feature_description'])) : '';
+            $feature_title = isset($_POST['ttbm_hotel_feature_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_feature_title'])) : '';
+            $feature_slug = isset($_POST['ttbm_hotel_feature_slug']) ? sanitize_title(wp_unslash($_POST['ttbm_hotel_feature_slug'])) : '';
+            $feature_icon = isset($_POST['ttbm_hotel_feature_icon']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_feature_icon'])) : '';
+            $feature_description = isset($_POST['ttbm_hotel_feature_description']) ? sanitize_textarea_field(wp_unslash($_POST['ttbm_hotel_feature_description'])) : '';
 
             if (empty($feature_title)) {
                 wp_send_json_error(__('Feature title is required.', 'tour-booking-manager'));

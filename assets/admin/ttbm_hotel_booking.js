@@ -1099,25 +1099,21 @@
     });
 
     function ttbm_hotel_feature_save() {
-        var feature_title = $('input[name="ttbm_hotel_feature_title"]');
-        var feature_slug = $('input[name="ttbm_hotel_feature_slug"]');
-        var feature_icon = $('input[name="ttbm_hotel_feature_icon"]');
-        var feature_description = $('textarea[name="ttbm_hotel_feature_description"]');
+        var formData = {};
+        $('#ttbm-hotel-feature-form').find('input, textarea').each(function() {
+            var name = $(this).attr('name');
+            if (name) {
+                formData[name] = $(this).val();
+            }
+        });
+        formData.action = 'ttbm_hotel_feature_save';
+        formData.nonce = ttbm_admin_ajax.nonce;
 
-        var postID = $('input[name="ttbm_post_id"]');
         $.ajax({
             url: ttbm_admin_ajax.ajax_url,
             type: 'POST',
-            data: {
-                action: 'ttbm_hotel_feature_save',
-                feature_title: feature_title.val(),
-                feature_slug: feature_slug.val(),
-                feature_icon: feature_icon.val(),
-                feature_description: feature_description.val(),
-                nonce: ttbm_admin_ajax.nonce
-            },
+            data: formData,
             success: function (response) {
-                console.log(response);
                 $('#ttbm-hotel-feature-msg').html(response.data.message);
                 $('.ttbm-hotel-feature-items').html('');
                 $('.ttbm-hotel-feature-items').append(response.data.html);

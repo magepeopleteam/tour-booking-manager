@@ -1073,12 +1073,34 @@
         });
     });
 
-    //      =================hotel-area-info.js=============
+    // =================hotel-feature js=============
     $(document).on('click', '.ttbm-hotel-new-feature', function (e) {
         $('#ttbm-hotel-feature-msg').html('');
         $('.ttbm_hotel_feature_save').show();
         $('.ttbm_hotel_feature_update').hide();
         empty_feature_form();
+    });
+
+    $(document).on('click', '.ttbm-hotel-edit-feature', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('#ttbm-hotel-faq-msg').html('');
+        $('.ttbm_hotel_feature_save').hide();
+        $('.ttbm_hotel_feature_update').show();
+
+        var itemId = $(this).closest('.ttbm-features-item').data('id');
+        var parent = $(this).closest('.ttbm-features-item');
+        var title = parent.data('name') || '';
+        var slug = parent.data('slug') || '';
+        var icon = parent.data('icon') || '';
+        var description = parent.data('description') || '';
+
+        var $form = $('#ttbm-hotel-feature-form');
+        $form.find('input[name="ttbm_hotel_feature_title"]').val(title);
+        $form.find('input[name="ttbm_hotel_feature_slug"]').val(slug);
+        $form.find('input[name="ttbm_hotel_feature_icon"]').val(icon);
+        $form.find('textarea[name="ttbm_hotel_feature_description"]').val(description);
+        $form.find('input[name="ttbm_hotel_feature_id"]').val(itemId);
     });
 
     function empty_feature_form() {
@@ -1110,6 +1132,43 @@
             console.log('Deletion canceled.');
         }
     });
+
+    $(document).on('click', '#ttbm_hotel_feature_update_btn', function (e) {
+        e.preventDefault();
+        ttbm_hotel_feature_update();
+    });
+
+    function ttbm_hotel_feature_update() {
+        var $form = $('#ttbm-hotel-feature-form');
+        console.log($form);
+        var formData = {};
+        $form.find('input, textarea').each(function() {
+            var name = $(this).attr('name');
+            if (name) {
+                formData[name] = $(this).val();
+            }
+        });
+        formData.action = 'ttbm_hotel_feature_update';
+        formData.nonce = ttbm_admin_ajax.nonce;
+
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                $('#ttbm-hotel-feature-msg').html(response.data.message);
+                $('.ttbm-hotel-feature-items').html('');
+                $('.ttbm-hotel-feature-items').append(response.data.html);
+                empty_feature_form();
+                setTimeout(function () {
+                    $('.ttbm-modal-container').removeClass('open');
+                }, 1000);
+            },
+            error: function (error) {
+                console.log('Error:d', error);
+            }
+        });
+    }
 
     function ttbm_hotel_feature_save() {
         var formData = {};

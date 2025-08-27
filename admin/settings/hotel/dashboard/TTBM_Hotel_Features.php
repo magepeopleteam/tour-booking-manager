@@ -11,8 +11,45 @@ if (!class_exists('TTBM_Hotel_Features')) {
             add_action('ttbm_hotel_dashboard_tabs', [$this, 'dashbaord_features']);
             add_action('ttbm_hotel_dashboard_content', [$this, 'dashbaord_features_content']);
 			add_action('wp_ajax_ttbm_hotel_feature_save', [$this, 'hotel_feature_save']);
+            // ttbm_update_faq_data
+			add_action('wp_ajax_ttbm_hotel_feature_update', [$this, 'feature_update_item']);
             // ttbm_delete_faq_data
 			add_action('wp_ajax_ttbm_hotel_feature_delete', [$this, 'feature_delete_item']);
+        }
+
+        public function feature_update_item() {
+            if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
+                wp_send_json_error('Invalid nonce!');
+            }
+
+            $feature_id = isset($_POST['ttbm_hotel_feature_id']) ? intval($_POST['ttbm_hotel_feature_id']) : 0;
+            $feature_title = isset($_POST['ttbm_hotel_feature_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_feature_title'])) : '';
+            $feature_slug = isset($_POST['ttbm_hotel_feature_slug']) ? sanitize_title(wp_unslash($_POST['ttbm_hotel_feature_slug'])) : '';
+            $feature_icon = isset($_POST['ttbm_hotel_feature_icon']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_feature_icon'])) : '';
+            $feature_description = isset($_POST['ttbm_hotel_feature_description']) ? sanitize_textarea_field(wp_unslash($_POST['ttbm_hotel_feature_description'])) : '';
+           
+            if ($feature_id > 0 && !empty($feature_title) && taxonomy_exists('ttbm_hotel_features_list')) {
+                $args = array(
+                    'name' => $feature_title,
+                    'slug'        => $feature_slug,
+                    'description' => $feature_description,
+                );
+                // Update the term name separately
+                wp_update_term($feature_id, 'ttbm_hotel_features_list', $args);
+
+                if (!empty($feature_icon)) {
+                    update_term_meta($feature_id, 'ttbm_feature_icon', $feature_icon);
+                }
+            }
+            ob_start();
+            $resultMessage = esc_html__('Data Updated Successfully', 'tour-booking-manager');
+            $this->show_features_lists();
+            $html_output = ob_get_clean();
+            wp_send_json_success([
+                'message' => $resultMessage,
+                'html' => $html_output,
+            ]);
+            die;
         }
 
         public function feature_delete_item() {
@@ -107,6 +144,7 @@ if (!class_exists('TTBM_Hotel_Features')) {
                     </div>
                     <div class="content">
                         <form action="#" method="post" id="ttbm-hotel-feature-form" autocomplete="off">
+                            <input type="hidden" name="ttbm_hotel_feature_id">
                             <label>
                                 <?php esc_html_e('Add Features Title', 'tour-booking-manager'); ?>
                                 <input type="text" name="ttbm_hotel_feature_title">
@@ -122,7 +160,7 @@ if (!class_exists('TTBM_Hotel_Features')) {
                             <label>
                                 <?php esc_html_e('Add Features Description', 'tour-booking-manager'); ?>
                             </label>
-                            <textarea name="ttbm_hotel_feature_description" id="" rows="10" cols="10"></textarea>
+                            <textarea name="ttbm_hotel_feature_description" rows="10" cols="10"></textarea>
                             <div class="mT"></div>
                             <div class="ttbm_hotel_feature_save">
                                 <p>

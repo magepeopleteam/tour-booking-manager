@@ -1005,15 +1005,48 @@
 	flex-wrap: wrap;
 }
 .ttbm_hotel_tab_content .ttbm-features-item{
+	position: relative;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	gap:10px;
-	padding:10px;
+	padding:5px;
 	border-radius: 5px;
 	border: 1px solid #e1e5e9;
 	background-color: #f8f8f8;
-	width: calc(18.46% - 10px);
+	width: calc(15.46% - 10px);
+}
+.ttbm_hotel_tab_content .ttbm-features-item:hover .ttbm-hotel-feature-action{
+	display: block;
+}
+.ttbm_hotel_tab_content .features-item-info i{
+	font-size: 30px;
+	color:var(--mpl-primary);
+}
+.ttbm_hotel_tab_content .ttbm-hotel-feature-action{
+	position: absolute;
+	display: none;
+	right: 5px;
+}
+.ttbm_hotel_tab_content .ttbm-hotel-feature-action i{
+	font-size: 16px;
+}
+.ttbm_hotel_tab_content .ttbm-features-item .features-item-info{
+	display: flex;
+	align-items: center;
+	gap:10px;
 }
 .ttbm-modal-container .ttbm-modal-content .ttbm_add_icon_image_area{
 	max-width: 95px;
+}
+.ttbm-hotel-feature-action button{
+	background: none;
+	border:1px solid transparent;
+	border-radius: 5px;
+	color:var(--mpl-primary);
+	cursor: pointer;
+}
+.ttbm-hotel-feature-action button:hover{
+	background: #fff;
+	border:1px solid #ddd;
 }

@@ -53,10 +53,12 @@ if (!class_exists('TTBM_Hotel_Features')) {
                 <?php foreach ($features as $feature): ?>
                     <?php $icon = get_term_meta($feature->term_id, 'ttbm_hotel_feature_icon', true); ?>
                     <div class="ttbm-features-item" data-id="<?php echo esc_attr($feature->term_id); ?>" data-name="<?php echo esc_attr($feature->name); ?>" data-slug="<?php echo esc_attr($feature->slug); ?>" data-icon="<?php echo esc_attr($icon); ?>" data-description="<?php echo esc_attr($feature->description); ?>">
-                        <i class="<?php echo esc_attr($icon); ?>"></i>
-                        <span><?php echo esc_html($feature->name); ?></span>
+                        <div class="features-item-info">
+                            <i class="<?php echo esc_attr($icon); ?>"></i>
+                            <span><?php echo esc_html($feature->name); ?></span>
+                        </div>
                         <div class="ttbm-hotel-feature-action">
-                            <button class="ttbm-hotel-edit-feature" data-ttbm-modal="ttbm-hotel-feature-modal"><i class="mi mi-edit"></i></button>
+                            <button class="ttbm-hotel-edit-feature" data-ttbm-modal="ttbm-hotel-feature-modal"><i class="mi mi-pencil"></i></button>
                             <button class="ttbm-hotel-delete-feature"><i class="mi mi-trash"></i></button>
                         </div>
                     </div>

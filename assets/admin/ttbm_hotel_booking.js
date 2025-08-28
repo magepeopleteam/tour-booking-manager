@@ -1122,6 +1122,8 @@
         $('input[name="ttbm_hotel_feature_slug"]').val('');
         $('input[name="ttbm_hotel_feature_icon"]').val('');
         $('textarea[name="ttbm_hotel_feature_description"]').val('');
+        $('#ttbm-hotel-feature-form').find('.ttbm_icon_item').addClass('dNone').hide();
+        $('#ttbm-hotel-feature-form').find('.ttbm_add_icon_image_button_area').show();
     }
 
     $(document).on('click', '#ttbm_hotel_feature_save', function (e) {

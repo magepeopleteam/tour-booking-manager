@@ -6,6 +6,7 @@
 		class TTBM_Settings_Hotel_Feature {
 			public function __construct() {
 				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'ttbm_settings_feature'], 10, 1);
+				add_action('ttbm_single_features', [$this, 'show_feature_in_frontend'], 10, 1);
 				add_action('save_post', [$this, 'features_save']);
 				//********Add New Feature************//
 				// add_action('wp_ajax_load_ttbm_feature_form', [$this, 'load_ttbm_feature_form']);
@@ -72,6 +73,31 @@
 					<?php
 				}
 			}
+
+			public function show_feature_in_frontend() {
+				$tour_id = get_the_ID();
+
+				$selected_features = TTBM_Function::get_feature_list($tour_id, 'ttbm_hotel_feat_selection');
+				$selected_features = is_array($selected_features) ? $selected_features : [];
+				$all_features = TTBM_Global_Function::get_taxonomy('ttbm_hotel_features_list');
+				$features_status = get_post_meta($tour_id, 'ttbm_hotel_features_status', true);
+				if (!empty($selected_features) && $features_status === 'on') { ?>
+					<div class="ttbm-feature-list">
+						<?php foreach ($all_features as $feature) : ?>
+							<?php if (in_array($feature->term_id, $selected_features)) : 
+								$icon = get_term_meta($feature->term_id, 'ttbm_hotel_feature_icon', true);
+								$icon = $icon ? $icon : 'mi mi-forward';
+							?>
+								<div class="feature-items">
+									<i class="<?php echo esc_attr($icon); ?>"></i>
+									<span><?php echo esc_html($feature->name); ?></span>
+								</div>
+							<?php endif; ?>
+						<?php endforeach; ?>
+					</div>
+				<?php }
+			}
+
 
 			public function features_save($post_id){
 				if (!isset($_POST['ttbm_hotel_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_hotel_type_nonce'])), 'ttbm_hotel_type_nonce') && defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && !current_user_can('edit_post', $post_id)) {

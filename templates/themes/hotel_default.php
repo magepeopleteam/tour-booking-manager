@@ -79,45 +79,7 @@ $class_location = $class_location ?? '';
                     </div>
                 </div>
             </div>
-            <div class="ttbm-feature-list">
-                <div class="feature-items">
-                    <i class="mi mi-house"></i>
-                    <span>Apartments</span>
-                </div>
-                <div class="feature-items">
-                    <i class="mi mi-deck"></i>
-                    <span>Balcony</span>
-                </div>
-                <div class="feature-items">
-                    <i class="mi mi-cup"></i>
-                    <span>Very Good Breakfast</span>
-                </div>
-                <div class="feature-items">
-                    <i class="mi mi-eye"></i>
-                    <span>View</span>
-                </div>
-                <div class="feature-items">
-                    <i class="mi mi-wifi"></i>
-                    <span>Free Wifi</span>
-                </div>
-                <div class="feature-items">
-                    <i class="mi mi-food-service"></i>
-                    <span>Room Service</span>
-                </div>
-                <div class="feature-items">
-                    <i class="mi mi-restaurants"></i>
-                    <span>Restaurants</span>
-                </div>
-                
-                <div class="feature-items">
-                    <i class="mi mi-airport-shuttle"></i>
-                    <span>Airport Shuttle</span>
-                </div>
-                <div class="feature-items">
-                    <i class="mi mi-bath-taking"></i>
-                    <span>Bath</span>
-                </div>
-            </div>
+            <?php do_action( 'ttbm_single_features'); ?>
             <div class="ttbm-content-area">
                 <div class="ttbm-content-left">
                     <div class="content-details">

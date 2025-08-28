@@ -6,14 +6,15 @@
 		class TTBM_Settings_Hotel_Feature {
 			public function __construct() {
 				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'ttbm_settings_feature'], 10, 1);
+				add_action('save_post', [$this, 'features_save']);
 				//********Add New Feature************//
-				add_action('wp_ajax_load_ttbm_feature_form', [$this, 'load_ttbm_feature_form']);
-				add_action('wp_ajax_nopriv_load_ttbm_feature_form', [$this, 'load_ttbm_feature_form']);
-				add_action('wp_ajax_ttbm_reload_feature_list', [$this, 'ttbm_reload_feature_list']);
-				add_action('wp_ajax_nopriv_ttbm_reload_feature_list', [$this, 'ttbm_reload_feature_list']);
-				/************add New Feature********************/
-				add_action('wp_ajax_ttbm_new_feature_save', [$this, 'ttbm_new_feature_save']);
-				add_action('wp_ajax_nopriv_ttbm_new_feature_save', [$this, 'ttbm_new_feature_save']);
+				// add_action('wp_ajax_load_ttbm_feature_form', [$this, 'load_ttbm_feature_form']);
+				// add_action('wp_ajax_nopriv_load_ttbm_feature_form', [$this, 'load_ttbm_feature_form']);
+				// add_action('wp_ajax_ttbm_reload_feature_list', [$this, 'ttbm_reload_feature_list']);
+				// add_action('wp_ajax_nopriv_ttbm_reload_feature_list', [$this, 'ttbm_reload_feature_list']);
+				// /************add New Feature********************/
+				// add_action('wp_ajax_ttbm_new_feature_save', [$this, 'ttbm_new_feature_save']);
+				// add_action('wp_ajax_nopriv_ttbm_new_feature_save', [$this, 'ttbm_new_feature_save']);
 			}
 			public function ttbm_settings_feature($tour_id) {
 				?>
@@ -21,56 +22,45 @@
                     <h2 class="h4 px-0 text-primary"><?php esc_html_e('Features Settings', 'tour-booking-manager'); ?></h2>
                     <p><?php TTBM_Settings::des_p('featrue_settings_description') ?></p>
                     <div class="mtb ttbm_features_table">
-						<?php $this->feature($tour_id); ?>
+						<?php $this->feature_section($tour_id); ?>
                     </div>
-					<?php $this->add_new_feature_popup(); ?>
                 </div>
 				<?php
 			}
-			public function feature($tour_id) {
-				$features = TTBM_Global_Function::get_taxonomy('ttbm_tour_features_list');
-				$include_display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_include_service', 'on');
-				$include_active = $include_display == 'off' ? '' : 'mActive';
-				$exclude_display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_exclude_service', 'on');
-				$exclude_active = $exclude_display == 'off' ? '' : 'mActive';
-				$in_checked = $include_display == 'off' ? '' : 'checked';
-				$ex_checked = $exclude_display == 'off' ? '' : 'checked';
+
+			public function feature_section($tour_id) {
+				$features = TTBM_Global_Function::get_taxonomy('ttbm_hotel_features_list');
+				$features_status = get_post_meta($tour_id, 'ttbm_hotel_features_status', 'on');
+				$features_active = $features_status == 'off' ? '' : 'mActive';
+				$features_checked = $features_status == 'off' ? '' : 'checked';
 				if (sizeof($features) > 0) { ?>
                     <section>
                         <div class="ttbm-header">
                             <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Included Features', 'tour-booking-manager'); ?></h4>
-							<?php TTBM_Custom_Layout::switch_button('ttbm_display_include_service', $in_checked); ?>
+							<?php TTBM_Custom_Layout::switch_button('ttbm_hotel_features_status', $features_checked); ?>
                         </div>
-                        <div data-collapse="#ttbm_display_include_service" class="includedd-features-section <?php echo esc_attr($include_active); ?>">
-							<?php $this->feature_list($tour_id, 'ttbm_service_included_in_price'); ?>
-							<?php TTBM_Custom_Layout::popup_button('add_new_feature_popup', esc_html__('Create New', 'tour-booking-manager')); ?>
-                        </div>
-                    </section>
-                    <section>
-                        <div class="ttbm-header">
-                            <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Popular Features', 'tour-booking-manager'); ?></h4>
-							<?php TTBM_Custom_Layout::switch_button('ttbm_display_exclude_service', $ex_checked); ?>
-                        </div>
-                        <div data-collapse="#ttbm_display_exclude_service" class="includedd-features-section <?php echo esc_attr($include_active); ?>">
-							<?php $this->feature_list($tour_id, 'ttbm_service_excluded_in_price'); ?>
+                        <div data-collapse="#ttbm_hotel_features_status" class="includedd-features-section <?php echo esc_attr($features_active); ?>">
+							<?php $this->feature_lists($tour_id); ?>
 							<?php TTBM_Custom_Layout::popup_button('add_new_feature_popup', esc_html__('Create New', 'tour-booking-manager')); ?>
                         </div>
                     </section>
 					<?php
 				}
 			}
-			public function feature_list($tour_id, $feature_name) {
-				$all_features = TTBM_Global_Function::get_taxonomy('ttbm_tour_features_list');
-				$features = TTBM_Function::get_feature_list($tour_id, $feature_name);
-				$feature_ids = TTBM_Function::feature_array_to_string($features);
+
+			public function feature_lists($tour_id) {
+				$all_features = TTBM_Global_Function::get_taxonomy('ttbm_hotel_features_list');
+				$features = TTBM_Function::get_feature_list($tour_id, 'ttbm_hotel_feat_selection');
+				$feature_ids = is_array($features) ? implode(',', $features) : '';
+
 				if (sizeof($all_features) > 0) {
 					?>
                     <div class="groupCheckBox">
-                        <input type="hidden" name="<?php echo esc_attr($feature_name); ?>" value="<?php echo esc_attr($feature_ids); ?>"/>
+                        <input type="hidden" name="ttbm_hotel_feat_selection" value="<?php echo esc_attr($feature_ids); ?>"/>
 						<?php foreach ($all_features as $feature_list) { ?>
-							<?php $icon = get_term_meta($feature_list->term_id, 'ttbm_feature_icon', true) ? get_term_meta($feature_list->term_id, 'ttbm_feature_icon', true) : 'fas fa-forward'; ?>
+							<?php $icon = get_term_meta($feature_list->term_id, 'ttbm_hotel_feature_icon', true) ? get_term_meta($feature_list->term_id, 'ttbm_hotel_feature_icon', true) : 'mi mi-forward'; ?>
                             <label class="customCheckboxLabel">
-                                <input type="checkbox" <?php echo TTBM_Function::check_exit_feature($features, $feature_list->name) ? 'checked' : ''; ?> data-checked="<?php echo esc_attr($feature_list->term_id); ?>"/>
+								<input type="checkbox" <?php echo in_array($feature_list->term_id, $features) ? 'checked' : ''; ?> data-checked="<?php echo esc_attr($feature_list->term_id); ?>"/>
                                 <span class="customCheckbox">
 									<i class="<?php echo esc_attr($icon); ?>"></i>
 									<?php echo esc_html($feature_list->name); ?>
@@ -81,96 +71,27 @@
 					<?php
 				}
 			}
-			public function add_new_feature_popup() {
-				?>
-                <div class="ttbm_popup" data-popup="add_new_feature_popup">
-                    <div class="popupMainArea">
-                        <div class="popupHeader">
-                            <h4>
-								<?php esc_html_e('Add New Feature', 'tour-booking-manager'); ?>
-                                <p class="_textSuccess_ml_dNone ttbm_success_info"><span class="fas fa-check-circle mR_xs"></span><?php esc_html_e('Feature is added successfully.', 'tour-booking-manager') ?></p>
-                            </h4>
-                            <span class="fas fa-times popupClose"></span>
-                        </div>
-                        <div class="popupBody ttbm_feature_form_area">
-                        </div>
-                        <div class="popupFooter">
-                            <div class="buttonGroup">
-                                <button class="_themeButton ttbm_new_feature_save" type="button"><?php esc_html_e('Save', 'tour-booking-manager'); ?></button>
-                                <button class="_warningButton ttbm_new_feature_save_close" type="button"><?php esc_html_e('Save & Close', 'tour-booking-manager'); ?></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-				<?php
-			}
-			public function load_ttbm_feature_form() {
-				wp_nonce_field('ttbm_add_new_feature_popup', 'ttbm_add_new_feature_popup');
-				?>
-                <label class="flexEqual">
-                    <span><?php esc_html_e('Feature Name : ', 'tour-booking-manager'); ?><sup class="textRequired">*</sup></span> <input type="text" name="ttbm_feature_name" class="formControl" required>
-                </label>
-                <p class="textRequired" data-required="ttbm_feature_name">
-                    <span class="fas fa-info-circle"></span>
-					<?php esc_html_e('Feature name is required!', 'tour-booking-manager'); ?>
-                </p>
-				<?php TTBM_Settings::des_p('ttbm_feature_name'); ?>
-                <div class="divider"></div>
-                <label class="flexEqual">
-                    <span><?php esc_html_e('Feature Description : ', 'tour-booking-manager'); ?></span> <textarea name="ttbm_feature_description" class="formControl" rows="3"></textarea>
-                </label>
-				<?php TTBM_Settings::des_p('ttbm_feature_description'); ?>
-                <div class="divider"></div>
-                <div class="flexEqual">
-                    <span><?php esc_html_e('Feature Icon : ', 'tour-booking-manager'); ?><sup class="textRequired">*</sup></span>
-					<?php do_action('ttbm_input_add_icon', 'ttbm_feature_icon'); ?>
-                </div>
-                <p class="textRequired" data-required="ttbm_feature_icon">
-                    <span class="fas fa-info-circle"></span>
-					<?php esc_html_e('Feature icon is required!', 'tour-booking-manager'); ?>
-                </p>
-				<?php
-				die();
-			}
-			public function ttbm_reload_feature_list() {
-				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
-					wp_send_json_error(['message' => 'Invalid nonce']);
-					die;
+
+			public function features_save($post_id){
+				if (!isset($_POST['ttbm_hotel_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_hotel_type_nonce'])), 'ttbm_hotel_type_nonce') && defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && !current_user_can('edit_post', $post_id)) {
+					return;
 				}
-				$ttbm_id = isset($_POST['ttbm_id']) ? sanitize_text_field(wp_unslash($_POST['ttbm_id'])) : 0;
-				// Load the included and excluded features sections
-				ob_start();
-				$this->feature($ttbm_id);
-				$included_features_html = ob_get_clean();
-				ob_start();
-				$this->feature($ttbm_id);
-				$excluded_features_html = ob_get_clean();
-				// Return the HTML content of both sections
-				wp_send_json_success(array(
-					'included_features_html' => $included_features_html,
-					'excluded_features_html' => $excluded_features_html
-				));
+				if (get_post_type($post_id) == 'ttbm_hotel') {
+					$features_status = isset($_POST['ttbm_hotel_features_status']) && sanitize_text_field(wp_unslash($_POST['ttbm_hotel_features_status'])) ? 'on' : 'off';
+					update_post_meta($post_id, 'ttbm_hotel_features_status', $features_status);
+					
+					$feat_selection = isset($_POST['ttbm_hotel_feat_selection']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_feat_selection'])) : [];
+					if (!empty($feat_selection)) {
+						$feat_selection = array_map('trim', explode(',', $feat_selection));
+					} else {
+						$feat_selection = [];
+					}
+					update_post_meta($post_id, 'ttbm_hotel_feat_selection', $feat_selection);
+
+				}
+				
 			}
 			/************************/
-			public function ttbm_new_feature_save() {
-				if (!current_user_can('manage_options')) {
-					wp_send_json_error('You do not have sufficient permissions to perform this action.');
-				}
-				if (!isset($_POST['_wp_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wp_nonce'])), 'ttbm_add_new_feature_popup')) {
-					die();
-				}
-				$feature_name = isset($_POST['feature_name']) ? sanitize_text_field(wp_unslash($_POST['feature_name'])) : '';
-				$feature_description = isset($_POST['feature_description']) ? sanitize_text_field(wp_unslash($_POST['feature_description'])) : '';
-				$feature_icon = isset($_POST['feature_icon']) ? sanitize_text_field(wp_unslash($_POST['feature_icon'])) : '';
-				$query = wp_insert_term($feature_name,   // the term
-					'ttbm_tour_features_list', // the taxonomy
-					array('description' => $feature_description));
-				if (is_array($query) && $query['term_id'] != '') {
-					$term_id = $query['term_id'];
-					update_term_meta($term_id, 'ttbm_feature_icon', $feature_icon);
-				}
-				die();
-			}
 		}
 		new TTBM_Settings_Hotel_Feature();
 	}

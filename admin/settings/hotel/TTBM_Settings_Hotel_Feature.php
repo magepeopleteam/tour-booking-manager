@@ -41,8 +41,9 @@
                         </div>
                         <div data-collapse="#ttbm_hotel_features_status" class="includedd-features-section <?php echo esc_attr($features_active); ?>">
 							<?php $this->feature_lists($tour_id); ?>
-							<?php TTBM_Custom_Layout::popup_button('add_new_feature_popup', esc_html__('Create New', 'tour-booking-manager')); ?>
-                        </div>
+							<a class="btn" target="_blank" href="edit.php?post_type=ttbm_tour&page=ttbm_hotel_booking_lists"> Add new feature</a>
+							
+						</div>
                     </section>
 					<?php
 				}

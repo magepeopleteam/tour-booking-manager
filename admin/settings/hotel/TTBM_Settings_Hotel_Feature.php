@@ -32,8 +32,14 @@
 			public function feature_section($tour_id) {
 				$features = TTBM_Global_Function::get_taxonomy('ttbm_hotel_features_list');
 				$features_status = get_post_meta($tour_id, 'ttbm_hotel_features_status', 'on');
+				$popu_feat_status = get_post_meta($tour_id, 'ttbm_hotel_popular_feat_status', 'on');
+				
 				$features_active = $features_status == 'off' ? '' : 'mActive';
 				$features_checked = $features_status == 'off' ? '' : 'checked';
+				
+				$popu_feat_active = $popu_feat_status == 'off' ? '' : 'mActive';
+				$popu_feat_checked = $popu_feat_status == 'off' ? '' : 'checked';
+
 				if (sizeof($features) > 0) { ?>
                     <section>
                         <div class="ttbm-header">
@@ -41,24 +47,34 @@
 							<?php TTBM_Custom_Layout::switch_button('ttbm_hotel_features_status', $features_checked); ?>
                         </div>
                         <div data-collapse="#ttbm_hotel_features_status" class="includedd-features-section <?php echo esc_attr($features_active); ?>">
-							<?php $this->feature_lists($tour_id); ?>
+							<?php $this->feature_lists($tour_id,'ttbm_hotel_feat_selection'); ?>
 							<a class="btn" target="_blank" href="edit.php?post_type=ttbm_tour&page=ttbm_hotel_booking_lists"> Add new feature</a>
-							
+						</div>
+                    </section>
+
+					<section>
+                        <div class="ttbm-header">
+                            <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Popular Features', 'tour-booking-manager'); ?></h4>
+							<?php TTBM_Custom_Layout::switch_button('ttbm_hotel_popular_feat_status', $popu_feat_checked); ?>
+                        </div>
+                        <div data-collapse="#ttbm_hotel_popular_feat_status" class="includedd-features-section <?php echo esc_attr($popu_feat_active); ?>">
+							<?php $this->feature_lists($tour_id,'ttbm_hotel_popu_feat_selection'); ?>
+							<a class="btn" target="_blank" href="edit.php?post_type=ttbm_tour&page=ttbm_hotel_booking_lists"> Add new feature</a>
 						</div>
                     </section>
 					<?php
 				}
 			}
 
-			public function feature_lists($tour_id) {
+			public function feature_lists($tour_id,$term_key_name) {
 				$all_features = TTBM_Global_Function::get_taxonomy('ttbm_hotel_features_list');
-				$features = TTBM_Function::get_feature_list($tour_id, 'ttbm_hotel_feat_selection');
+				$features = TTBM_Function::get_feature_list($tour_id, $term_key_name);
 				$feature_ids = is_array($features) ? implode(',', $features) : '';
 
 				if (sizeof($all_features) > 0) {
 					?>
                     <div class="groupCheckBox">
-                        <input type="hidden" name="ttbm_hotel_feat_selection" value="<?php echo esc_attr($feature_ids); ?>"/>
+                        <input type="hidden" name="<?php echo esc_html($term_key_name); ?>" value="<?php echo esc_attr($feature_ids); ?>"/>
 						<?php foreach ($all_features as $feature_list) { ?>
 							<?php $icon = get_term_meta($feature_list->term_id, 'ttbm_hotel_feature_icon', true) ? get_term_meta($feature_list->term_id, 'ttbm_hotel_feature_icon', true) : 'mi mi-forward'; ?>
                             <label class="customCheckboxLabel">
@@ -98,6 +114,14 @@
 				<?php }
 			}
 
+			public function array_to_string($feat_selection){
+				if (!empty($feat_selection)) {
+					$feat_selection = array_map('trim', explode(',', $feat_selection));
+				} else {
+					$feat_selection = [];
+				}
+				return $feat_selection;
+			}
 
 			public function features_save($post_id){
 				if (!isset($_POST['ttbm_hotel_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_hotel_type_nonce'])), 'ttbm_hotel_type_nonce') && defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && !current_user_can('edit_post', $post_id)) {
@@ -108,13 +132,13 @@
 					update_post_meta($post_id, 'ttbm_hotel_features_status', $features_status);
 					
 					$feat_selection = isset($_POST['ttbm_hotel_feat_selection']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_feat_selection'])) : [];
-					if (!empty($feat_selection)) {
-						$feat_selection = array_map('trim', explode(',', $feat_selection));
-					} else {
-						$feat_selection = [];
-					}
-					update_post_meta($post_id, 'ttbm_hotel_feat_selection', $feat_selection);
+					$popu_feat_selection = isset($_POST['ttbm_hotel_popu_feat_selection']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_popu_feat_selection'])) : [];
+					
+					$feat_selection = $this->array_to_string($feat_selection);
+					$popu_feat_selection = $this->array_to_string($popu_feat_selection);
 
+					update_post_meta($post_id, 'ttbm_hotel_feat_selection', $feat_selection);
+					update_post_meta($post_id, 'ttbm_hotel_popu_feat_selection', $popu_feat_selection);
 				}
 				
 			}

@@ -79,6 +79,7 @@ $class_location = $class_location ?? '';
                     </div>
                 </div>
             </div>
+            <!-- show features -->
             <?php do_action( 'ttbm_single_features'); ?>
             <div class="ttbm-content-area">
                 <div class="ttbm-content-left">

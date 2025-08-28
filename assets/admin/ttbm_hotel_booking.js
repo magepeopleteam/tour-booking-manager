@@ -1094,7 +1094,21 @@
         var slug = parent.data('slug') || '';
         var icon = parent.data('icon') || '';
         var description = parent.data('description') || '';
-        parent.find('.ttbm_icon_item .allCenter span').attr('class', icon );
+        // Hide or show icon/image button area based on icon value
+        
+        var $iconItem = $('#ttbm-hotel-feature-form').find('.ttbm_icon_item');
+        var $iconButtonArea = $('#ttbm-hotel-feature-form').find('.ttbm_add_icon_image_button_area');
+        if (icon) {
+            $iconItem.removeClass('dNone').show();
+            $iconButtonArea.addClass('dNone').hide();
+        } else {
+            $iconItem.addClass('dNone').hide();
+            $iconButtonArea.removeClass('dNone').show();
+        }
+        $('#ttbm-hotel-feature-form').find('.ttbm_icon_item .allCenter span[data-add-icon]')
+            .attr('class', icon)
+            .attr('data-add-icon', '');
+
         var $form = $('#ttbm-hotel-feature-form');
         $form.find('input[name="ttbm_hotel_feature_title"]').val(title);
         $form.find('input[name="ttbm_hotel_feature_slug"]').val(slug);

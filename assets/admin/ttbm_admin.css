@@ -1014,3 +1014,6 @@
 	background-color: #f8f8f8;
 	width: calc(18.46% - 10px);
 }
+.ttbm-modal-container .ttbm-modal-content .ttbm_add_icon_image_area{
+	max-width: 95px;
+}

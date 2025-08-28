@@ -87,11 +87,12 @@ if (!class_exists('TTBM_Hotel_Features')) {
                                 <?php esc_html_e('Add Features Slug', 'tour-booking-manager'); ?>
                                 <input type="text" name="ttbm_hotel_feature_slug">
                             </label>
-                            <label>
-                                <?php esc_html_e('Add Features Icon', 'tour-booking-manager'); ?>
-                                <input type="hidden" name="ttbm_hotel_feature_icon">
+                            <div class="feature-icon">
+                                <label>
+                                    <?php esc_html_e('Add Features Icon', 'tour-booking-manager'); ?>
+                                </label>
                                 <?php do_action('ttbm_input_add_icon', 'ttbm_hotel_feature_icon', '');  ?>
-                            </label>
+                            </div>
                             <label>
                                 <?php esc_html_e('Add Features Description', 'tour-booking-manager'); ?>
                             </label>

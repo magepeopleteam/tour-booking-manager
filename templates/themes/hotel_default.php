@@ -86,36 +86,11 @@ $class_location = $class_location ?? '';
                     <div class="content-details">
                         <?php the_content(); ?>
                     </div>
-                    <div class="popular-facilities">
-                        <h2>Popular Facilities</h2>
-                        <ul>
-                            <li>
-                                <i class="mi mi-swimmer"></i>
-                                2 swimming pools
-                            </li>
-                            <li>
-                                <i class="mi mi-parking"></i>
-                                Free parking
-                            </li>
-                            <li>
-                                <i class="mi mi-wifi"></i>
-                                Free Wifi
-                            </li>
-                            <li>
-                                <i class="mi mi-family"></i>
-                                Family rooms
-                            </li>
-                            <li>
-                                <i class="mi mi-flower-tulip"></i>
-                                Spa
-                            </li>
-                        </ul>
-                    </div>
+                    <?php do_action( 'ttbm_single_popular_features'); ?>
                     <div class="ttbm_hotel_content_area">
                         <input type="hidden" id="ttbm_booking_hotel_id" value="<?php echo esc_attr( $ttbm_post_id )?>">
                         <?php do_action('ttbm_make_hotel_booking', $ttbm_post_id );?>
                     </div>
-                   
                 </div>
                 <div class="ttbm-content-right">
                     <div class="widgets property-highlights">

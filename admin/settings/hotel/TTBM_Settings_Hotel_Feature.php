@@ -7,6 +7,7 @@
 			public function __construct() {
 				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'ttbm_settings_feature'], 10, 1);
 				add_action('ttbm_single_features', [$this, 'show_feature_in_frontend'], 10, 1);
+				add_action('ttbm_single_popular_features', [$this, 'show_popular_feature_in_frontend'], 10, 1);
 				add_action('save_post', [$this, 'features_save']);
 				//********Add New Feature************//
 				// add_action('wp_ajax_load_ttbm_feature_form', [$this, 'load_ttbm_feature_form']);
@@ -76,7 +77,7 @@
                     <div class="groupCheckBox">
                         <input type="hidden" name="<?php echo esc_html($term_key_name); ?>" value="<?php echo esc_attr($feature_ids); ?>"/>
 						<?php foreach ($all_features as $feature_list) { ?>
-							<?php $icon = get_term_meta($feature_list->term_id, 'ttbm_hotel_feature_icon', true) ? get_term_meta($feature_list->term_id, 'ttbm_hotel_feature_icon', true) : 'mi mi-forward'; ?>
+							<?php $icon = get_term_meta($feature_list->term_id, 'ttbm_hotel_feature_icon', true) ? get_term_meta($feature_list->term_id, 'ttbm_hotel_feature_icon', true) : ''; ?>
                             <label class="customCheckboxLabel">
 								<input type="checkbox" <?php echo in_array($feature_list->term_id, $features) ? 'checked' : ''; ?> data-checked="<?php echo esc_attr($feature_list->term_id); ?>"/>
                                 <span class="customCheckbox">
@@ -114,6 +115,32 @@
 				<?php }
 			}
 
+			public function show_popular_feature_in_frontend() {
+				$tour_id = get_the_ID();
+
+				$selected_features = TTBM_Function::get_feature_list($tour_id, 'ttbm_hotel_popu_feat_selection');
+				$selected_features = is_array($selected_features) ? $selected_features : [];
+				$all_features = TTBM_Global_Function::get_taxonomy('ttbm_hotel_features_list');
+				$features_status = get_post_meta($tour_id, 'ttbm_hotel_popular_feat_status', true);
+				if (!empty($selected_features) && $features_status === 'on') { ?>
+					<div class="popular-facilities">
+						<h2>Popular Facilities</h2>
+						<ul>
+							<?php foreach ($all_features as $feature) : ?>
+								<?php if (in_array($feature->term_id, $selected_features)) : 
+									$icon = get_term_meta($feature->term_id, 'ttbm_hotel_feature_icon', true);
+								?>
+									<li>
+										<i class="<?php echo esc_attr($icon); ?>"></i>
+										<span><?php echo esc_html($feature->name); ?></span>
+									</li>
+								<?php endif; ?>
+							<?php endforeach; ?>
+						</ul>
+					</div>
+				<?php }
+			}
+
 			public function array_to_string($feat_selection){
 				if (!empty($feat_selection)) {
 					$feat_selection = array_map('trim', explode(',', $feat_selection));
@@ -129,7 +156,9 @@
 				}
 				if (get_post_type($post_id) == 'ttbm_hotel') {
 					$features_status = isset($_POST['ttbm_hotel_features_status']) && sanitize_text_field(wp_unslash($_POST['ttbm_hotel_features_status'])) ? 'on' : 'off';
+					$popular_feat_status = isset($_POST['ttbm_hotel_popular_feat_status']) && sanitize_text_field(wp_unslash($_POST['ttbm_hotel_popular_feat_status'])) ? 'on' : 'off';
 					update_post_meta($post_id, 'ttbm_hotel_features_status', $features_status);
+					update_post_meta($post_id, 'ttbm_hotel_popular_feat_status', $popular_feat_status);
 					
 					$feat_selection = isset($_POST['ttbm_hotel_feat_selection']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_feat_selection'])) : [];
 					$popu_feat_selection = isset($_POST['ttbm_hotel_popu_feat_selection']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_popu_feat_selection'])) : [];

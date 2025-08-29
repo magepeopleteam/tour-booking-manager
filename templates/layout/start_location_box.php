@@ -7,14 +7,15 @@
 	$tour_type = TTBM_Function::get_tour_type( $ttbm_post_id );
 	$count = $count ?? 0;
 	if ( $start_place && $tour_type == 'general' && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_start_location', 'on' ) != 'off' ) {
-		?>
-		
-			<div class="item_icon" title="<?php esc_html_e( 'Start Location', 'tour-booking-manager' ); ?>">
-				<i class="mi mi-marker"></i>
-				<?php echo esc_html( $start_place ); ?>
-			</div>
+?>
+	
+<div class="item_icon" title="<?php esc_html_e( 'Start Location', 'tour-booking-manager' ); ?>">
+	<i class="mi mi-marker"></i>
+	<?php echo esc_html( $start_place ); ?>
+</div>
 
-		<?php
-		$count ++;
-	}
+<?php
+// FIXED: Removed indentation before PHP tags to prevent whitespace output - 2025-01-21 by Shahnur Alam
+$count ++;
+}
 	?>

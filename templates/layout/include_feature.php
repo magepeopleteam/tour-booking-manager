@@ -1,1 +1,18 @@
-<?php	if ( ! defined( 'ABSPATH' ) ) {		die;	}	$ttbm_post_id          = $ttbm_post_id ?? get_the_id();	$include_services = TTBM_Function::get_feature_list( $ttbm_post_id, 'ttbm_service_included_in_price' );	$term_name        = $term_name ?? true;	if ( sizeof( $include_services ) > 0 && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_include_service', 'on' ) != 'off' ) {        $list_view_task=true;		?>		<div class="ttbm_default_widget">			<?php do_action( 'ttbm_section_title', 'ttbm_string_include_price_list', esc_html__( "What's Included", 'tour-booking-manager' ) ); ?>			<div class='ttbm_widget_content'>				<?php include( TTBM_Function::template_path( 'layout/include_feature_list.php' ) ); ?>			</div>		</div>	<?php } ?>
+<?php
+	if ( ! defined( 'ABSPATH' ) ) {
+		die;
+	}
+	$ttbm_post_id          = $ttbm_post_id ?? get_the_id();
+	$include_services = TTBM_Function::get_feature_list( $ttbm_post_id, 'ttbm_service_included_in_price' );
+	$term_name        = $term_name ?? true;
+	if ( sizeof( $include_services ) > 0 && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_include_service', 'on' ) != 'off' ) {
+        $list_view_task=true;
+		?>
+		<div class="ttbm_default_widget">
+			<?php do_action( 'ttbm_section_title', 'ttbm_string_include_price_list', esc_html__( "What's Included", 'tour-booking-manager' ) ); ?>
+			<div class='ttbm_widget_content'>
+				<?php include( TTBM_Function::template_path( 'layout/include_feature_list.php' ) ); ?>
+			</div>
+		</div>
+		<?php
+	}

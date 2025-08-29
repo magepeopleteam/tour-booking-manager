@@ -1,1 +1,18 @@
-<?php	if ( ! defined( 'ABSPATH' ) ) {		die;	}	$ttbm_post_id   = $ttbm_post_id ?? get_the_id();	$tour_tags = $tour_tags ?? wp_get_post_terms( $ttbm_post_id, 'ttbm_tour_tag', array( "fields" => "all" ) );	if ( $tour_tags ) { ?>		<div class="ttbm_list_inline ttbm_list_info" data-placeholder>			<span class="fas fa-tags"></span>			<ul>				<?php foreach ( $tour_tags as $tag ) { ?>					<li><?php echo esc_html( $tag->name ) ?></li>				<?php } ?>			</ul>		</div>	<?php } ?>
+<?php
+	if ( ! defined( 'ABSPATH' ) ) {
+		die;
+	}
+	$ttbm_post_id   = $ttbm_post_id ?? get_the_id();
+	$tour_tags = $tour_tags ?? wp_get_post_terms( $ttbm_post_id, 'ttbm_tour_tag', array( "fields" => "all" ) );
+	if ( $tour_tags ) {
+		?>
+		<div class="ttbm_list_inline ttbm_list_info" data-placeholder>
+			<span class="fas fa-tags"></span>
+			<ul>
+				<?php foreach ( $tour_tags as $tag ) { ?>
+					<li><?php echo esc_html( $tag->name ) ?></li>
+				<?php } ?>
+			</ul>
+		</div>
+		<?php
+	}

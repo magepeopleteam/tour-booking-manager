@@ -216,7 +216,10 @@
                                     <?php endif; ?>
                                     <div class="meta-action">
                                         <div class="action-links">
-                                            <?php wp_nonce_field('edd_sample_nonce', 'edd_sample_nonce');  ?>
+                                            <?php 
+                                            // FIXED: Proper nonce for delete functionality - 2025-01-27 by Shahnur Alam
+                                            $delete_nonce = wp_create_nonce('ttbm_delete_post_' . $post_id);
+                                            ?>
                                             <a title="<?php echo esc_attr__('View ', 'tour-booking-manager') . ' : ' . esc_attr(get_the_title($post_id)); ?>" class="ttbm_view_post" href="<?php  the_permalink($post_id); ?>" target="_blank"><i class="fa fa-eye"></i></a>
                                             <a title="<?php echo esc_attr__('Edit ', 'tour-booking-manager') . ' : ' . esc_attr(get_the_title($post_id)); ?>" class="ttbm_edit_post" href="<?php echo esc_url(get_edit_post_link($post_id)); ?>"><i class="fa fa-edit"></i></a>
                                             <a title="<?php echo esc_attr__('Duplicate Post ', 'tour-booking-manager') . ' : ' . esc_url(get_the_title($post_id)); ?>" class="ttbm_duplicate_post" href="<?php echo esc_url(wp_nonce_url(
@@ -225,7 +228,11 @@
                                             )); ?>">
                                                 <i class="fa fa-clone"></i>
                                             </a>
-                                            <a class="ttbm_trash_post" data-alert="<?php echo esc_attr__('Are you sure ? To trash : ', 'tour-booking-manager') . ' ' . esc_attr(get_the_title($post_id)); ?>" data-post-id="<?php echo esc_attr($post_id); ?>" title="<?php echo esc_attr__('Trash ', 'tour-booking-manager') . ' : ' . esc_attr(get_the_title($post_id)); ?>">
+                                            <a class="ttbm_trash_post" 
+                                               data-alert="<?php echo esc_attr__('Are you sure you want to move this to trash: ', 'tour-booking-manager') . ' ' . esc_attr(get_the_title($post_id)); ?>" 
+                                               data-post-id="<?php echo esc_attr($post_id); ?>" 
+                                               data-nonce="<?php echo esc_attr($delete_nonce); ?>"
+                                               title="<?php echo esc_attr__('Move to Trash: ', 'tour-booking-manager') . ' ' . esc_attr(get_the_title($post_id)); ?>">
                                                 <i class="fa fa-trash"></i> 
                                             </a>
                                         </div>
@@ -287,27 +294,81 @@
                 }
             }
 
+			/**
+			 * Handle AJAX request to move post to trash
+			 * FIXED: Proper nonce verification and parameter handling - 2025-01-27 by Shahnur Alam
+			 * 
+			 * @since 1.0.0
+			 */
 			public function ttbm_trash_post() {
-				if ( ! isset( $_REQUEST['nonce'] ) || ! wp_verify_nonce(sanitize_text_field(wp_unslash( $_REQUEST['nonce'])), 'edd_sample_nonce' ) ) {
-					die();
+				// Step 1: Verify nonce for security
+				$post_id = isset($_POST['post_id']) ? intval(wp_unslash($_POST['post_id'])) : 0;
+				$nonce = isset($_POST['nonce']) ? sanitize_text_field(wp_unslash($_POST['nonce'])) : '';
+				
+				if ( ! wp_verify_nonce($nonce, 'ttbm_delete_post_' . $post_id) ) {
+					wp_send_json_error(array(
+						'message' => esc_html__('Security check failed. Please refresh the page and try again.', 'tour-booking-manager')
+					));
+					wp_die();
 				}
-				if (current_user_can('administrator')) {
-					$post_id = isset($_POST['ttbm_id']) ? sanitize_text_field(wp_unslash($_POST['ttbm_id'])) : 0;
-					if (get_post_type($post_id) == TTBM_Function::get_cpt_name()) {
-						if ($post_id > 0) {
-							$args = array('post_type' => array('ttbm_tour'), 'posts_per_page' => -1, 'p' => $post_id, 'post_status' => 'publish');
-							$loop = new WP_Query($args);
-							if ($loop->found_posts) {
-								$current_post = get_post($post_id, 'ARRAY_A');
-								$current_post['post_status'] = 'trash';
-								wp_update_post($current_post);
-							}
-						}
-					}
+
+				// Step 2: Check user permissions
+				if (!current_user_can('delete_posts') && !current_user_can('administrator')) {
+					wp_send_json_error(array(
+						'message' => esc_html__('You do not have permission to delete posts.', 'tour-booking-manager')
+					));
+					wp_die();
+				}
+
+				// Step 3: Validate post ID and post type
+				if ($post_id <= 0) {
+					wp_send_json_error(array(
+						'message' => esc_html__('Invalid post ID.', 'tour-booking-manager')
+					));
+					wp_die();
+				}
+
+				if (get_post_type($post_id) !== TTBM_Function::get_cpt_name()) {
+					wp_send_json_error(array(
+						'message' => esc_html__('Invalid post type.', 'tour-booking-manager')
+					));
+					wp_die();
+				}
+
+				// Step 4: Check if post exists and is not already in trash
+				$post = get_post($post_id);
+				if (!$post) {
+					wp_send_json_error(array(
+						'message' => esc_html__('Post not found.', 'tour-booking-manager')
+					));
+					wp_die();
+				}
+
+				if ($post->post_status === 'trash') {
+					wp_send_json_error(array(
+						'message' => esc_html__('Post is already in trash.', 'tour-booking-manager')
+					));
+					wp_die();
+				}
+
+				// Step 5: Move post to trash
+				$result = wp_trash_post($post_id);
+				
+				if ($result) {
+					wp_send_json_success(array(
+						'message' => sprintf(
+							esc_html__('Post "%s" has been moved to trash successfully.', 'tour-booking-manager'),
+							esc_html($post->post_title)
+						),
+						'post_id' => $post_id
+					));
 				} else {
-					echo "You don't have the permissions to delete the post";
+					wp_send_json_error(array(
+						'message' => esc_html__('Failed to move post to trash. Please try again.', 'tour-booking-manager')
+					));
 				}
-				die();
+				
+				wp_die();
 			}
 		}
 		new TTBM_Admin_Tour_List();

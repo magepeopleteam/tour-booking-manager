@@ -1,19 +1,9 @@
 'use strict';
 
-
-
-
-
+// FIXED: Removed excessive blank lines - 2025-01-21 by Shahnur Alam
 (function ($) {
 
-
-
-
     $.fn.formFieldDependency = function (options) {
-
-
-
-
 
         /**
          * Plugin Settings
@@ -24,10 +14,6 @@
             'rules'     : {}
         }, options);
 
-
-
-
-
         /**
          * Check array exists on array
          * @param needleArray
@@ -36,12 +22,6 @@
          * @returns {boolean}
          */
         var arrayInArraysHelper = function (needleArray, haystackArray, strict) {
-
-
-
-
-
-
 
             if (typeof strict == 'undefined') {
                 strict = false;

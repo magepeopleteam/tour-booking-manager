@@ -1,11 +1,11 @@
 <?php
-if (!class_exists('TTBM_Hotel_Booking')) {
-    class TTBM_Hotel_Booking{
+if (!class_exists('TTBM_Hotel_Booking_Dashbaord')) {
+    class TTBM_Hotel_Booking_Dashbaord{
         public function __construct() {
 
             // save feature data
-            add_action('ttbm_hotel_dashboard_tabs', [$this, 'dashbaord_hotel_lists']);
-            add_action('ttbm_hotel_dashboard_content', [$this, 'dashbaord_hotel_lists_content']);
+            //add_action('ttbm_hotel_dashboard_tabs', [$this, 'dashbaord_hotel_lists']);
+            //add_action('ttbm_hotel_dashboard_content', [$this, 'dashbaord_hotel_lists_content']);
         }
 
         public function dashbaord_hotel_lists(){
@@ -213,5 +213,5 @@ if (!class_exists('TTBM_Hotel_Booking')) {
             return ob_get_clean();
         }
     }
-    new TTBM_Hotel_Booking();
+    new TTBM_Hotel_Booking_Dashbaord();
 }

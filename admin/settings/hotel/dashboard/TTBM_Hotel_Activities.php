@@ -43,7 +43,7 @@ if (!class_exists('TTBM_Hotel_Activities')) {
 
         public function show_activities_lists() {	
             $features = get_terms(array(
-                'taxonomy'   => 'ttbm_hotel_features_list',
+                'taxonomy'   => 'ttbm_hotel_activities_list',
                 'hide_empty' => false,
             ));
             if (!empty($features)) :?>

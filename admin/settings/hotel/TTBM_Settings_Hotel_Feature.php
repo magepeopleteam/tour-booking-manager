@@ -22,7 +22,10 @@
 				?>
                 <div class="tabsItem ttbm_settings_hotel_feature" data-tabs="#ttbm_settings_hotel_feature">
                     <h2 class="h4 px-0 text-primary"><?php esc_html_e('Features Settings', 'tour-booking-manager'); ?></h2>
-                    <p><?php TTBM_Settings::des_p('featrue_settings_description') ?></p>
+                    <p>
+						<?php TTBM_Settings::des_p('featrue_settings_description') ?>
+						<a class="btn" target="_blank" href="edit.php?post_type=ttbm_tour&page=ttbm_hotel_booking_lists"> Add new feature</a>
+					</p>
                     <div class="mtb ttbm_features_table">
 						<?php $this->feature_section($tour_id); ?>
                     </div>
@@ -49,7 +52,6 @@
                         </div>
                         <div data-collapse="#ttbm_hotel_features_status" class="includedd-features-section <?php echo esc_attr($features_active); ?>">
 							<?php $this->feature_lists($tour_id,'ttbm_hotel_feat_selection'); ?>
-							<a class="btn" target="_blank" href="edit.php?post_type=ttbm_tour&page=ttbm_hotel_booking_lists"> Add new feature</a>
 						</div>
                     </section>
 
@@ -60,7 +62,6 @@
                         </div>
                         <div data-collapse="#ttbm_hotel_popular_feat_status" class="includedd-features-section <?php echo esc_attr($popu_feat_active); ?>">
 							<?php $this->feature_lists($tour_id,'ttbm_hotel_popu_feat_selection'); ?>
-							<a class="btn" target="_blank" href="edit.php?post_type=ttbm_tour&page=ttbm_hotel_booking_lists"> Add new feature</a>
 						</div>
                     </section>
 					<?php

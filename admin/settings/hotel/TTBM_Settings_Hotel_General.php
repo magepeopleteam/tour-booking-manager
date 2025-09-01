@@ -6,7 +6,8 @@
 		class TTBM_Settings_Hotel_General {
 			public function __construct() {
 				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'hotel_general_settings']);
-			}
+                add_action('ttbm_single_location', [$this, 'show_location_frontend']);
+            }
 			public function hotel_general_settings($tour_id) {
 				?>
                 <div class="tabsItem ttbm_settings_general" data-tabs="#ttbm_general_info">
@@ -22,6 +23,7 @@
                 </div>
 				<?php
 			}
+
 			public function location($tour_id) {
 				$display_name = 'ttbm_display_hotel_location';
 				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
@@ -41,6 +43,7 @@
 				<?php
 				TTBM_Settings_Location::add_new_location_popup();
 			}
+
 			public function distance_description($tour_id) {
 				$display_name = 'ttbm_display_hotel_distance';
 				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
@@ -64,6 +67,7 @@
                 </tr>
 				<?php
 			}
+
 			public function rating($tour_id) {
 				$display_name = 'ttbm_display_hotel_rating';
 				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
@@ -94,6 +98,22 @@
                 </tr>
 				<?php
 			}
+
+            public function show_location_frontend(){
+                $display =  get_post_meta(get_the_ID(), 'ttbm_display_hotel_location', true);
+                $hotel_location =  get_post_meta(get_the_ID(), 'ttbm_hotel_location', true);
+				$checked = $display == 'on' ? $display : 'off';
+                if($checked=='on'):
+                ?>
+                    <p class="location-info">
+                        <i class="mi mi-marker"></i> 
+                        <?php echo esc_html($hotel_location); ?>
+                        <a href="#"><?php echo __('Great location - show map','tour-booking-manager'); ?></a>
+                    </p>
+                <?php
+                endif;
+            }
+
 		}
 		new TTBM_Settings_Hotel_General();
 	}

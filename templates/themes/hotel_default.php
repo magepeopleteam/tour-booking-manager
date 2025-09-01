@@ -15,11 +15,7 @@ $class_location = $class_location ?? '';
                 <div class="title-section">
                     <?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
                     <h1 class="title"><?php do_action( 'ttbm_details_title' ); ?></h1>
-                    <p class="location-info">
-                        <i class="mi mi-marker"></i> 
-                        <?php echo __('197/2 Moo 1, Tambol Pongyang, Amphur Mae Rim, 50180 Mae Rim, Thailand','tour-booking-manager'); ?>
-                        <a href="#"><?php echo __('Great location - show map','tour-booking-manager'); ?></a>
-                    </p>
+                    <?php do_action('ttbm_single_location'); ?>
                     
                     <?php
                     if ( is_plugin_active( 'tour-booking-manager-pro/tour-booking-manager-pro.php' ) ):

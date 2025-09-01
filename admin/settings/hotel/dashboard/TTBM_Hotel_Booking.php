@@ -4,8 +4,8 @@ if (!class_exists('TTBM_Hotel_Booking_Dashbaord')) {
         public function __construct() {
 
             // save feature data
-            //add_action('ttbm_hotel_dashboard_tabs', [$this, 'dashbaord_hotel_lists']);
-            //add_action('ttbm_hotel_dashboard_content', [$this, 'dashbaord_hotel_lists_content']);
+            add_action('ttbm_hotel_dashboard_tabs', [$this, 'dashbaord_hotel_lists']);
+            add_action('ttbm_hotel_dashboard_content', [$this, 'dashbaord_hotel_lists_content']);
         }
 
         public function dashbaord_hotel_lists(){

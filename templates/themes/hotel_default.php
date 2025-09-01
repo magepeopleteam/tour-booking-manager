@@ -28,18 +28,8 @@ $class_location = $class_location ?? '';
                     ?>
                     <?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
                 </div>
-                <div class="sharing-meta">
-                    <div class="sharing-info">
-                        <span>
-                            <i class="mi mi-heart"></i>
-                            <i class="mi mi-share"></i>
-                        </span>
-                        <button><?php echo __('Reserve','tour-booking-manager'); ?></button>
-                    </div>
-                    <div class="price-match">
-                        <button><i class="mi mi-tags"></i> <?php echo __('We Price Match','tour-booking-manager'); ?></button>
-                    </div>
-                </div>
+                <?php do_action('show_sharing_meta'); ?>
+                
             </div>
             <div class="ttbm-hero-area">
                 <div class="slider-area">
@@ -83,7 +73,7 @@ $class_location = $class_location ?? '';
                         <?php the_content(); ?>
                     </div>
                     <?php do_action( 'ttbm_single_popular_features'); ?>
-                    <div class="ttbm_hotel_content_area">
+                    <div class="ttbm_hotel_content_area" id="ttbm_hotel_content_area">
                         <input type="hidden" id="ttbm_booking_hotel_id" value="<?php echo esc_attr( $ttbm_post_id )?>">
                         <?php do_action('ttbm_make_hotel_booking', $ttbm_post_id );?>
                     </div>

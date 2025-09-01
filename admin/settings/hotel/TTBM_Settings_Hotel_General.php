@@ -7,6 +7,7 @@
 			public function __construct() {
 				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'hotel_general_settings']);
                 add_action('ttbm_single_location', [$this, 'show_location_frontend']);
+                add_action('show_sharing_meta', [$this, 'show_sharing_meta']);
             }
 			public function hotel_general_settings($tour_id) {
 				?>
@@ -100,6 +101,7 @@
 			}
 
             public function show_location_frontend(){
+                $distance_des =  get_post_meta(get_the_ID(), 'ttbm_hotel_distance_des', true);
                 $display =  get_post_meta(get_the_ID(), 'ttbm_display_hotel_location', true);
                 $hotel_location =  get_post_meta(get_the_ID(), 'ttbm_hotel_location', true);
 				$checked = $display == 'on' ? $display : 'off';
@@ -108,12 +110,28 @@
                     <p class="location-info">
                         <i class="mi mi-marker"></i> 
                         <?php echo esc_html($hotel_location); ?>
-                        <a href="#"><?php echo __('Great location - show map','tour-booking-manager'); ?></a>
+                        <a href="#"><?php echo esc_html($distance_des); ?></a>
                     </p>
                 <?php
                 endif;
             }
 
+            public function show_sharing_meta(){
+                ?>
+                <div class="sharing-meta">
+                    <div class="sharing-info">
+                        <span>
+                            <!-- <i class="mi mi-heart"></i> -->
+                            <!-- <i class="mi mi-share"></i> -->
+                        </span>
+                        <a class="button" href="#ttbm_hotel_content_area"><?php echo __('Reserve','tour-booking-manager'); ?></a>
+                    </div>
+                    <!-- <div class="price-match">
+                        <button><i class="mi mi-tags"></i> <?php echo __('We Price Match','tour-booking-manager'); ?></button>
+                    </div> -->
+                </div>
+                <?php
+            }
 		}
 		new TTBM_Settings_Hotel_General();
 	}

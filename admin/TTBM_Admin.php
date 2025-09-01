@@ -70,6 +70,7 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Lists.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Booking.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Features.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Activities.php';
 				//**********//
 			}
 			public function ttbm_widgets_init() {

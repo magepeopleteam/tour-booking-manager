@@ -123,4 +123,11 @@ jQuery(document).ready(function ($) {
             }
         });
     });
+   
+    $(document).on('click','.ttbm-hotel-share',function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        $('#ttbm-share-tooltip').toggle();
+        
+    });
 }(jQuery));

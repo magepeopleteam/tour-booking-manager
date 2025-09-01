@@ -1480,7 +1480,7 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	background-color: #dfecfb;
 }
 
-.ttbm-hotel-details .sharing-info button{
+.ttbm-hotel-details .sharing-info .button{
 	padding: 8px 10px;
 	border: none;
 	border-radius: 4px;
@@ -1489,7 +1489,7 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	color:#fff;
 }
 
-.ttbm-hotel-details .price-match button{
+.ttbm-hotel-details .price-match .button{
 	padding: 8px 10px;
 	border: none;
 	border-radius: 4px;

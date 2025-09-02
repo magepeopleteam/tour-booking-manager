@@ -5,9 +5,8 @@
 	if (!class_exists('TTBM_Settings_Hotel_Activity')) {
 		class TTBM_Settings_Hotel_Activity {
 			public function __construct() {
-				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'ttbm_settings_feature'], 10, 1);
-				add_action('ttbm_single_features', [$this, 'show_feature_in_frontend'], 10, 1);
-				add_action('ttbm_single_popular_features', [$this, 'show_popular_feature_in_frontend'], 10, 1);
+				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'settings_activity'], 10, 1);
+				add_action('ttbm_single_activity', [$this, 'show_activity_in_frontend'], 10, 1);
 				add_action('save_post', [$this, 'features_save']);
 				//********Add New Feature************//
 				// add_action('wp_ajax_load_ttbm_feature_form', [$this, 'load_ttbm_feature_form']);
@@ -18,7 +17,7 @@
 				// add_action('wp_ajax_ttbm_new_feature_save', [$this, 'ttbm_new_feature_save']);
 				// add_action('wp_ajax_nopriv_ttbm_new_feature_save', [$this, 'ttbm_new_feature_save']);
 			}
-			public function ttbm_settings_feature($tour_id) {
+			public function settings_activity($tour_id) {
 				?>
                 <div class="tabsItem ttbm_settings_hotel_activity" data-tabs="#ttbm_settings_hotel_activity">
                     <h2 class="h4 px-0 text-primary"><?php esc_html_e('Activity Settings', 'tour-booking-manager'); ?></h2>
@@ -27,13 +26,13 @@
 						<a class="btn" target="_blank" href="edit.php?post_type=ttbm_tour&page=ttbm_hotel_booking_lists"> Add new activity</a>
 					</p>
                     <div class="mtb ttbm_features_table">
-						<?php $this->feature_section($tour_id); ?>
+						<?php $this->activity_section($tour_id); ?>
                     </div>
                 </div>
 				<?php
 			}
 
-			public function feature_section($tour_id) {
+			public function activity_section($tour_id) {
 				$features = TTBM_Global_Function::get_taxonomy('ttbm_hotel_activities_list');
 				$features_status = get_post_meta($tour_id, 'ttbm_hotel_activity_status', 'on');
 				
@@ -47,13 +46,13 @@
 							<?php TTBM_Custom_Layout::switch_button('ttbm_hotel_activity_status', $features_checked); ?>
                         </div>
                         <div data-collapse="#ttbm_hotel_activity_status" class="includedd-features-section <?php echo esc_attr($features_active); ?>">
-							<?php $this->feature_lists($tour_id,'ttbm_hotel_activity_selection'); ?>
+							<?php $this->activity_lists($tour_id,'ttbm_hotel_activity_selection'); ?>
                     </section>
 					<?php
 				}
 			}
 
-			public function feature_lists($tour_id,$term_key_name) {
+			public function activity_lists($tour_id,$term_key_name) {
 				$all_features = TTBM_Global_Function::get_taxonomy('ttbm_hotel_activities_list');
 				$features = TTBM_Function::get_feature_list($tour_id, $term_key_name);
 				$feature_ids = is_array($features) ? implode(',', $features) : '';
@@ -77,52 +76,26 @@
 				}
 			}
 
-			public function show_feature_in_frontend() {
+			public function show_activity_in_frontend() {
 				$tour_id = get_the_ID();
 
-				$selected_features = TTBM_Function::get_feature_list($tour_id, 'ttbm_hotel_feat_selection');
+				$selected_features = TTBM_Function::get_feature_list($tour_id, 'ttbm_hotel_activity_selection');
 				$selected_features = is_array($selected_features) ? $selected_features : [];
-				$all_features = TTBM_Global_Function::get_taxonomy('ttbm_hotel_features_list');
-				$features_status = get_post_meta($tour_id, 'ttbm_hotel_features_status', true);
+				$all_features = TTBM_Global_Function::get_taxonomy('ttbm_hotel_activities_list');
+				$features_status = get_post_meta($tour_id, 'ttbm_hotel_activity_status', true);
 				if (!empty($selected_features) && $features_status === 'on') { ?>
-					<div class="ttbm-feature-list">
+					<div class="widgets activities-info">
+                        <h2>Activities</h2>
 						<?php foreach ($all_features as $feature) : ?>
 							<?php if (in_array($feature->term_id, $selected_features)) : 
-								$icon = get_term_meta($feature->term_id, 'ttbm_hotel_feature_icon', true);
+								$icon = get_term_meta($feature->term_id, 'ttbm_hotel_activity_icon', true);
 								$icon = $icon ? $icon : 'mi mi-forward';
 							?>
-								<div class="feature-items">
-									<i class="<?php echo esc_attr($icon); ?>"></i>
+								<ul class="widgets-text">
 									<span><?php echo esc_html($feature->name); ?></span>
-								</div>
+                                </ul>
 							<?php endif; ?>
 						<?php endforeach; ?>
-					</div>
-				<?php }
-			}
-
-			public function show_popular_feature_in_frontend() {
-				$tour_id = get_the_ID();
-
-				$selected_features = TTBM_Function::get_feature_list($tour_id, 'ttbm_hotel_popu_feat_selection');
-				$selected_features = is_array($selected_features) ? $selected_features : [];
-				$all_features = TTBM_Global_Function::get_taxonomy('ttbm_hotel_features_list');
-				$features_status = get_post_meta($tour_id, 'ttbm_hotel_popular_feat_status', true);
-				if (!empty($selected_features) && $features_status === 'on') { ?>
-					<div class="popular-facilities">
-						<h2>Popular Facilities</h2>
-						<ul>
-							<?php foreach ($all_features as $feature) : ?>
-								<?php if (in_array($feature->term_id, $selected_features)) : 
-									$icon = get_term_meta($feature->term_id, 'ttbm_hotel_feature_icon', true);
-								?>
-									<li>
-										<i class="<?php echo esc_attr($icon); ?>"></i>
-										<span><?php echo esc_html($feature->name); ?></span>
-									</li>
-								<?php endif; ?>
-							<?php endforeach; ?>
-						</ul>
 					</div>
 				<?php }
 			}

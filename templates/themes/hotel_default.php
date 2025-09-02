@@ -100,15 +100,8 @@ $class_location = $class_location ?? '';
                             Free Parking Available On Site
                         </div>
                     </div>
-                    <div class="widgets activities-info">
-                        <h2>activities</h2>
-                        <ul class="widgets-text">
-                            <li>Hiking</li>
-                            <li>Jumping</li>
-                            <li>Running</li>
-                            <li>Swimming</li>
-                        </ul>
-                    </div>
+                    <?php do_action( 'ttbm_single_activity' ); ?>
+                    
                     <button class="widgets-button">Reserve</button>
                 </div>
             </div>

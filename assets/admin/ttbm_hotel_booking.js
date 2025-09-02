@@ -1233,6 +1233,166 @@
         });
     }
 
+    // =================hotel-feature js=============
+    $(document).on('click', '.ttbm-hotel-new-activity', function (e) {
+        $('#ttbm-hotel-activity-msg').html('');
+        $('.ttbm_hotel_activity_save').show();
+        $('.ttbm_hotel_activity_update').hide();
+        empty_activity_form();
+    });
+
+    function empty_feature_form() {
+        $('input[name="ttbm_hotel_activity_title"]').val('');
+        $('input[name="ttbm_hotel_activity_slug"]').val('');
+        $('input[name="ttbm_hotel_activity_icon"]').val('');
+        $('textarea[name="ttbm_hotel_activity_description"]').val('');
+        $('#ttbm-hotel-activity-form').find('.ttbm_icon_item').addClass('dNone').hide();
+        $('#ttbm-hotel-activity-form').find('.ttbm_add_icon_image_button_area').show();
+    }
+
+    $(document).on('click', '#ttbm_hotel_activity_save', function (e) {
+        e.preventDefault();
+        ttbm_hotel_activity_save();
+    });
+
+    $(document).on('click', '#ttbm_hotel_activity_save_close', function (e) {
+        e.preventDefault();
+        ttbm_hotel_activity_save();
+        close_sidebar_modal(e);
+    });
+
+    function ttbm_hotel_activity_save() {
+        var formData = {};
+        $('#ttbm-hotel-activity-form').find('input, textarea').each(function() {
+            var name = $(this).attr('name');
+            if (name) {
+                formData[name] = $(this).val();
+            }
+        });
+        formData.action = 'ttbm_hotel_activity_save';
+        formData.nonce = ttbm_admin_ajax.nonce;
+
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                $('#ttbm-hotel-activity-msg').html(response.data.message);
+                $('.ttbm-hotel-activity-items').html('');
+                $('.ttbm-hotel-activity-items').append(response.data.html);
+                empty_feature_form();
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+
+    $(document).on('click', '.ttbm-hotel-edit-activity', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('#ttbm-hotel-activity-msg').html('');
+        $('.ttbm_hotel_activity_save').hide();
+        $('.ttbm_hotel_activity_update').show();
+
+        var itemId = $(this).closest('.ttbm-features-item').data('id');
+        var parent = $(this).closest('.ttbm-features-item');
+        var title = parent.data('name') || '';
+        var slug = parent.data('slug') || '';
+        var icon = parent.data('icon') || '';
+        var description = parent.data('description') || '';
+        // Hide or show icon/image button area based on icon value
+        
+        var $iconItem = $('#ttbm-hotel-activity-form').find('.ttbm_icon_item');
+        var $iconButtonArea = $('#ttbm-hotel-activity-form').find('.ttbm_add_icon_image_button_area');
+        if (icon) {
+            $iconItem.removeClass('dNone').show();
+            $iconButtonArea.addClass('dNone').hide();
+        } else {
+            $iconItem.addClass('dNone').hide();
+            $iconButtonArea.removeClass('dNone').show();
+        }
+        $('#ttbm-hotel-activity-form').find('.ttbm_icon_item .allCenter span[data-add-icon]')
+            .attr('class', icon)
+            .attr('data-add-icon', '');
+
+        var $form = $('#ttbm-hotel-activity-form');
+        $form.find('input[name="ttbm_hotel_activity_title"]').val(title);
+        $form.find('input[name="ttbm_hotel_activity_slug"]').val(slug);
+        $form.find('input[name="ttbm_hotel_activity_icon"]').val(icon);
+        $form.find('textarea[name="ttbm_hotel_activity_description"]').val(description);
+        $form.find('input[name="ttbm_hotel_activity_id"]').val(itemId);
+    });
+
+    $(document).on('click', '#ttbm_hotel_activity_update_btn', function (e) {
+        e.preventDefault();
+        ttbm_hotel_activity_update();
+    });
+
+    function ttbm_hotel_activity_update() {
+        var $form = $('#ttbm-hotel-activity-form');
+        console.log($form);
+        var formData = {};
+        $form.find('input, textarea').each(function() {
+            var name = $(this).attr('name');
+            if (name) {
+                formData[name] = $(this).val();
+            }
+        });
+        formData.action = 'ttbm_hotel_activity_update';
+        formData.nonce = ttbm_admin_ajax.nonce;
+
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                $('#ttbm-hotel-activity-msg').html(response.data.message);
+                $('.ttbm-hotel-activity-items').html('');
+                $('.ttbm-hotel-activity-items').append(response.data.html);
+                empty_feature_form();
+                setTimeout(function () {
+                    $('.ttbm-modal-container').removeClass('open');
+                }, 1000);
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+
+    $(document).on('click', '.ttbm-hotel-delete-activity', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var itemId = $(this).closest('.ttbm-features-item').data('id');
+        var isConfirmed = confirm('Are you sure you want to delete this row?');
+        if (isConfirmed) {
+            ttbm_hotel_activity_delete(itemId);
+        } else {
+            console.log('Deletion canceled.');
+        }
+    });
+
+    function ttbm_hotel_activity_delete(itemId) {
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_hotel_activity_delete',
+                itemId: itemId,
+                nonce: ttbm_admin_ajax.nonce
+            },
+            success: function (response) {
+                $('#ttbm-hotel-activity-msg').html(response.data.message);
+                $('.ttbm-hotel-activity-items').html('');
+                $('.ttbm-hotel-activity-items').append(response.data.html);
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+
 })(jQuery);
 
 

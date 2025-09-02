@@ -84,16 +84,17 @@
 				$all_features = TTBM_Global_Function::get_taxonomy('ttbm_hotel_activities_list');
 				$features_status = get_post_meta($tour_id, 'ttbm_hotel_activity_status', true);
 				if (!empty($selected_features) && $features_status === 'on') { ?>
-					<div class="widgets activities-info">
+					<div class="widgets parking-info">
                         <h2>Activities</h2>
 						<?php foreach ($all_features as $feature) : ?>
 							<?php if (in_array($feature->term_id, $selected_features)) : 
 								$icon = get_term_meta($feature->term_id, 'ttbm_hotel_activity_icon', true);
 								$icon = $icon ? $icon : 'mi mi-forward';
 							?>
-								<ul class="widgets-text">
+								<div class="widgets-text">
+                                    <!-- <i class="<?php echo esc_attr($icon); ?>"></i> -->
 									<span><?php echo esc_html($feature->name); ?></span>
-                                </ul>
+                                </div>
 							<?php endif; ?>
 						<?php endforeach; ?>
 					</div>

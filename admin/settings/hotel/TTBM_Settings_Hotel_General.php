@@ -25,6 +25,7 @@
 						<?php $this->parking_info($tour_id); ?>
 						<?php $this->breakfast_info($tour_id); ?>
 						<?php $this->review_info($tour_id); ?>
+						<?php $this->service_info($tour_id); ?>
                         
                         </tbody>
                     </table>
@@ -115,6 +116,29 @@
                         <label data-collapse="#<?php echo esc_attr($display_name); ?>" class="<?php echo esc_attr($active); ?>">
                             <input type="text" class="formControl" placeholder="<?php echo esc_html__('Excellant','tour-booking-manager');  ?>" name="ttbm_hotel_review_title" value="<?php echo esc_attr($review_title);  ?>"/>
                             <input type="number" class="formControl" placeholder="<?php echo esc_html__('7.8','tour-booking-manager');  ?>" name="ttbm_hotel_review_rating" value="<?php echo esc_attr($review_rating);  ?>"/>
+                        </label>
+                    </td>
+                </tr>
+				<?php
+			}
+
+            public function service_info($tour_id) {
+				$display_name = 'ttbm_display_service_review';
+				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
+				$checked = $display == 'off' ? '' : 'checked';
+				$active = $display == 'off' ? '' : 'mActive';
+				$review_title = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_hotel_service_review');
+				$review_rating = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_hotel_service_rating');
+				?>
+                <tr>
+                    <th colspan="3">
+						<?php esc_html_e('Service Review and Rating ', 'tour-booking-manager'); ?>
+                    </th>
+                    <td><?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?></td>
+                    <td >
+                        <label data-collapse="#<?php echo esc_attr($display_name); ?>" class="<?php echo esc_attr($active); ?>">
+                            <input type="text" class="formControl" placeholder="<?php echo esc_html__('Wifi','tour-booking-manager');  ?>" name="ttbm_hotel_service_review" value="<?php echo esc_attr($review_title);  ?>"/>
+                            <input type="text" class="formControl" placeholder="<?php echo esc_html__('7.8','tour-booking-manager');  ?>" name="ttbm_hotel_service_rating" value="<?php echo esc_attr($review_rating);  ?>"/>
                         </label>
                     </td>
                 </tr>
@@ -245,8 +269,13 @@
                 $review_title =  get_post_meta(get_the_ID(), 'ttbm_hotel_review_title', true);
                 $review_rating =  get_post_meta(get_the_ID(), 'ttbm_hotel_review_rating', true);
 				$display_hotel_review = $display_hotel_review == 'on' ? $display_hotel_review : 'off';
-                if($display_hotel_review=='on'):
+                
+                $display_service_review = get_post_meta(get_the_ID(), 'ttbm_display_service_review', true);
+                $display_service_review = $display_service_review = 'on' ? $display_service_review : 'off';
+                $service_review =  get_post_meta(get_the_ID(), 'ttbm_hotel_service_review', true);
+                $service_rating =  get_post_meta(get_the_ID(), 'ttbm_hotel_service_rating', true);
                 ?>
+                <?php if($display_hotel_review=='on'): ?>
                     <div class="review-rating">
                         <div class="review">
                             <h3><?php echo esc_html($review_title); ?></h3>
@@ -256,6 +285,7 @@
                             <?php echo esc_html(number_format($review_rating / 100, 1)); ?>
                         </div>
                     </div>
+                <?php endif; ?>
                     <div class="review-testimonial">
                         <h2>Guests who stayed here loved</h2>
                         <div class="testimonial">
@@ -263,17 +293,16 @@
                             Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         </div>
                     </div>
+                <?php if($display_service_review=='on'): ?>
                     <div class="service-rating">
-                        <h3>Wifi</h3>
+                        <h3><?php echo esc_html($service_review); ?></h3>
                         <div class="service-rate">
-                            7.8
+                            <?php echo esc_html($service_rating); ?>
                         </div>
                     </div>
                 <?php
                 endif;
             }
-
-
 
             public function show_sharing_meta(){
                 ?>

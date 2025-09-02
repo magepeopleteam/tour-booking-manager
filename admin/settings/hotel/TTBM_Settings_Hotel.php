@@ -71,6 +71,14 @@
 					$ttbm_hotel_review_title = isset($_POST['ttbm_hotel_review_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_review_title'])) : '';
 					$ttbm_hotel_review_rating = isset($_POST['ttbm_hotel_review_rating']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_review_rating'])) : '';
 					
+					$ttbm_display_hotel_testimonial = isset($_POST['ttbm_display_hotel_testimonial']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hotel_testimonial'])) ? 'on' : 'off';
+					$ttbm_hotel_testimonial_title = isset($_POST['ttbm_hotel_testimonial_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_testimonial_title'])) : '';
+					$ttbm_hotel_testimonial_text = isset($_POST['ttbm_hotel_testimonial_text']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_testimonial_text'])) : '';
+
+					update_post_meta($post_id, 'ttbm_display_hotel_testimonial', $ttbm_display_hotel_testimonial);
+					update_post_meta($post_id, 'ttbm_hotel_testimonial_title', $ttbm_hotel_testimonial_title);
+					update_post_meta($post_id, 'ttbm_hotel_testimonial_text', $ttbm_hotel_testimonial_text);
+					
 					update_post_meta($post_id, 'ttbm_display_hotel_review', $ttbm_display_hotel_review);
 					update_post_meta($post_id, 'ttbm_display_service_review', $ttbm_display_service_review);
 					update_post_meta($post_id, 'ttbm_hotel_service_review', $ttbm_hotel_service_review);

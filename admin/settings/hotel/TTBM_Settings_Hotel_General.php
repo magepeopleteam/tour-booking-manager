@@ -26,6 +26,7 @@
 						<?php $this->breakfast_info($tour_id); ?>
 						<?php $this->review_info($tour_id); ?>
 						<?php $this->service_info($tour_id); ?>
+						<?php $this->testimonial_info($tour_id); ?>
                         
                         </tbody>
                     </table>
@@ -139,6 +140,29 @@
                         <label data-collapse="#<?php echo esc_attr($display_name); ?>" class="<?php echo esc_attr($active); ?>">
                             <input type="text" class="formControl" placeholder="<?php echo esc_html__('Wifi','tour-booking-manager');  ?>" name="ttbm_hotel_service_review" value="<?php echo esc_attr($review_title);  ?>"/>
                             <input type="text" class="formControl" placeholder="<?php echo esc_html__('7.8','tour-booking-manager');  ?>" name="ttbm_hotel_service_rating" value="<?php echo esc_attr($review_rating);  ?>"/>
+                        </label>
+                    </td>
+                </tr>
+				<?php
+			}
+
+            public function testimonial_info($tour_id) {
+				$display_name = 'ttbm_display_hotel_testimonial';
+				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
+				$checked = $display == 'off' ? '' : 'checked';
+				$active = $display == 'off' ? '' : 'mActive';
+				$review_title = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_hotel_testimonial_title');
+				$review_rating = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_hotel_testimonial_text');
+				?>
+                <tr>
+                    <th colspan="3">
+						<?php esc_html_e('Display Testimonail', 'tour-booking-manager'); ?>
+                    </th>
+                    <td><?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?></td>
+                    <td >
+                        <label data-collapse="#<?php echo esc_attr($display_name); ?>" class="<?php echo esc_attr($active); ?>">
+                            <input type="text" class="formControl" placeholder="<?php echo esc_html__('Guests who stayed here loved','tour-booking-manager');  ?>" name="ttbm_hotel_testimonial_title" value="<?php echo esc_attr($review_title);  ?>"/>
+                            <textarea class="formControl" placeholder="<?php echo esc_html__('Write testimonail...','tour-booking-manager');  ?>" name="ttbm_hotel_testimonial_text"><?php echo esc_attr($review_rating);  ?></textarea>
                         </label>
                     </td>
                 </tr>
@@ -265,6 +289,10 @@
             }
 
             public function show_review_testimonial_frontend(){
+                $testimonial_status = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_display_hotel_testimonial', 'off');
+                $testimonial_title = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_hotel_testimonial_title');
+				$testimonial_text = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_hotel_testimonial_text');
+                
                 $display_hotel_review =  get_post_meta(get_the_ID(), 'ttbm_display_hotel_review', true);
                 $review_title =  get_post_meta(get_the_ID(), 'ttbm_hotel_review_title', true);
                 $review_rating =  get_post_meta(get_the_ID(), 'ttbm_hotel_review_rating', true);
@@ -286,13 +314,14 @@
                         </div>
                     </div>
                 <?php endif; ?>
+                <?php if($testimonial_status=='on'): ?>
                     <div class="review-testimonial">
-                        <h2>Guests who stayed here loved</h2>
+                        <h2><?php echo esc_html($testimonial_title); ?></h2>
                         <div class="testimonial">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            <?php echo esc_html($testimonial_text); ?>
                         </div>
                     </div>
+                <?php endif; ?>
                 <?php if($display_service_review=='on'): ?>
                     <div class="service-rating">
                         <h3><?php echo esc_html($service_review); ?></h3>

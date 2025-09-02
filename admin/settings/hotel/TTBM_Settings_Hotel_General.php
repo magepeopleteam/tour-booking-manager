@@ -8,6 +8,7 @@
 				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'hotel_general_settings']);
                 add_action('ttbm_single_location', [$this, 'show_location_frontend']);
                 add_action('ttbm_single_sidebar', [$this, 'show_breakfast_parking_frontend']);
+                add_action('ttbm_single_review_testimonial', [$this, 'show_review_testimonial_frontend']);
                 add_action('show_sharing_meta', [$this, 'show_sharing_meta']);
             }
 			public function hotel_general_settings($tour_id) {
@@ -20,8 +21,10 @@
 						<?php $this->location($tour_id); ?>
 						<?php $this->distance_description($tour_id); ?>
 						<?php $this->rating($tour_id); ?>
+						<?php $this->property_highlights($tour_id); ?>
 						<?php $this->parking_info($tour_id); ?>
 						<?php $this->breakfast_info($tour_id); ?>
+						<?php $this->review_info($tour_id); ?>
                         
                         </tbody>
                     </table>
@@ -35,15 +38,12 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
                 <tr>
-                    <th colspan="3">
+                    <th colspan="2">
 						<?php esc_html_e('Hotel Location', 'tour-booking-manager'); ?>
-						<?php TTBM_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__('Create New Location', 'tour-booking-manager')); ?>
                     </th>
+                    <td><?php TTBM_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__('Create New Location', 'tour-booking-manager')); ?></td>
                     <td><?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?></td>
-                    <td colspan="3" class="ttbm_location_select_area"><?php TTBM_Settings_Location::location_select($tour_id); ?></td>
-                </tr>
-                <tr>
-                    <td colspan="7"><?php TTBM_Settings::des_p('location'); ?></td>
+                    <td class="ttbm_location_select_area"><?php TTBM_Settings_Location::location_select($tour_id); ?></td>
                 </tr>
 				<?php
 				TTBM_Settings_Location::add_new_location_popup();
@@ -59,16 +59,13 @@
 				$active = $display == 'off' ? '' : 'mActive';
 				?>
                 <tr>
-                    <th colspan="3"><?php esc_html_e('Distance Description', 'tour-booking-manager'); ?></th>
+                    <th colspan="3"><?php esc_html_e('Distance From Tour Location', 'tour-booking-manager'); ?></th>
                     <td><?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?></td>
                     <td colspan="3">
                         <label data-collapse="#<?php echo esc_attr($display_name); ?>" class="<?php echo esc_attr($active); ?>">
                             <input class="formControl" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
                         </label>
                     </td>
-                </tr>
-                <tr>
-                    <td colspan="7"><?php TTBM_Settings::des_p('ttbm_display_hotel_distance'); ?></td>
                 </tr>
 				<?php
 			}
@@ -85,7 +82,7 @@
 						<?php esc_html_e('Hotel Rating ', 'tour-booking-manager'); ?>
                     </th>
                     <td><?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?></td>
-                    <td colspan="3">
+                    <td >
                         <label data-collapse="#<?php echo esc_attr($display_name); ?>" class="<?php echo esc_attr($active); ?>">
                             <select class="formControl" name="ttbm_hotel_rating">
                                 <option value="" selected><?php esc_html_e('please select hotel rating', 'tour-booking-manager'); ?></option>
@@ -98,8 +95,47 @@
                         </label>
                     </td>
                 </tr>
+				<?php
+			}
+
+            public function review_info($tour_id) {
+				$display_name = 'ttbm_display_hotel_review';
+				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
+				$checked = $display == 'off' ? '' : 'checked';
+				$active = $display == 'off' ? '' : 'mActive';
+				$review_title = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_hotel_review_title');
+				$review_rating = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_hotel_review_rating');
+				?>
                 <tr>
-                    <td colspan="7"><?php TTBM_Settings::des_p('ttbm_display_hotel_rating'); ?></td>
+                    <th colspan="3">
+						<?php esc_html_e('Hotel Review and Rating ', 'tour-booking-manager'); ?>
+                    </th>
+                    <td><?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?></td>
+                    <td >
+                        <label data-collapse="#<?php echo esc_attr($display_name); ?>" class="<?php echo esc_attr($active); ?>">
+                            <input type="text" class="formControl" placeholder="<?php echo esc_html__('Excellant','tour-booking-manager');  ?>" name="ttbm_hotel_review_title" value="<?php echo esc_attr($review_title);  ?>"/>
+                            <input type="number" class="formControl" placeholder="<?php echo esc_html__('7.8','tour-booking-manager');  ?>" name="ttbm_hotel_review_rating" value="<?php echo esc_attr($review_rating);  ?>"/>
+                        </label>
+                    </td>
+                </tr>
+				<?php
+			}
+
+			public function property_highlights($tour_id) {
+				$display_name = 'ttbm_display_property_highlights';
+				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
+				$checked = $display == 'off' ? '' : 'checked';
+				$property_highlights =  get_post_meta($tour_id, 'ttbm_hotel_property_highlights', true);
+				
+				?>
+                <tr>
+                    <th colspan="3">
+						<?php esc_html_e('Property highlights ', 'tour-booking-manager'); ?>
+                    </th>
+                    <td><?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?></td>
+                    <td>
+						<input type="text" class="formControl" placeholder="<?php echo esc_html__('Property highlights','tour-booking-manager');  ?>" name="ttbm_hotel_property_highlights" value="<?php echo esc_attr($property_highlights);  ?>"/>
+                    </td>
                 </tr>
 				<?php
 			}
@@ -113,12 +149,12 @@
 				?>
                 <tr>
                     <th colspan="3">
-						<?php esc_html_e('Hotel Parking ', 'tour-booking-manager'); ?>
+						<?php esc_html_e('Parking Availability', 'tour-booking-manager'); ?>
                     </th>
                     <td><?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?></td>
-                    <th>
+                    <td>
 						<input type="text" class="formControl" placeholder="<?php echo esc_html__('Free Parking Available On Site','tour-booking-manager');  ?>" name="ttbm_hotel_parking" value="<?php echo esc_attr($hotel_parking);  ?>"/>
-                    </th>
+                    </td>
                 </tr>
 				<?php
 			}
@@ -132,25 +168,41 @@
 				?>
                 <tr>
                     <th colspan="3">
-						<?php esc_html_e('Hotel Breakfast ', 'tour-booking-manager'); ?>
+						<?php esc_html_e('Breakfast Availability', 'tour-booking-manager'); ?>
                     </th>
                     <td><?php TTBM_Custom_Layout::switch_button($breakfast, $breakfast_checked); ?></td>
-                    <th>
+                    <td>
 						<input type="text" class="formControl" placeholder="<?php echo esc_html__('American, Buffet ','tour-booking-manager');  ?>" name="ttbm_hotel_breakfast" value="<?php echo esc_attr($hotel_breakfast);  ?>"/>
-                    </th>
+                    </td>
                 </tr>
 				<?php
 			}
 
             public function show_breakfast_parking_frontend(){
+				$display_property = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_display_property_highlights', 'on');
+                $display_property = $display_property == 'on' ? $display_property : 'off';
+				$property_highlights =  get_post_meta(get_the_ID(), 'ttbm_hotel_property_highlights', true);
+				
+
                 $hotel_parking =  get_post_meta(get_the_ID(), 'ttbm_display_hotel_parking', true);
                 $ttbm_hotel_parking =  get_post_meta(get_the_ID(), 'ttbm_hotel_parking', true);
                 $hotel_parking = $hotel_parking == 'on' ? $hotel_parking : 'off';
+                
                 $hotel_breakfast =  get_post_meta(get_the_ID(), 'ttbm_display_hotel_breakfast', true);
                 $hotel_breakfast = $hotel_breakfast == 'on' ? $hotel_breakfast : 'off';
                 $ttbm_hotel_breakfast =  get_post_meta(get_the_ID(), 'ttbm_hotel_breakfast', true);
-                if($hotel_breakfast=='on'):
                 ?>
+                <?php if($display_property=='on'): ?>
+                    <div class="widgets property-highlights">
+                        <h2><?php echo esc_html__('Property highlights','tour-booking-manager'); ?></h2>
+                        <div class="widgets-text">
+                            <i class="mi mi-marker"></i>                            
+                            <?php echo esc_html($property_highlights); ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+                <?php if($hotel_breakfast=='on'): ?>
                     <div class="widgets breakfast-info">
                         <h2><?php echo esc_html__('Breakfast info','tour-booking-manager'); ?></h2>
                         <div class="widgets-text">
@@ -167,8 +219,9 @@
                             <?php echo esc_html($ttbm_hotel_parking); ?>
                         </div>
                     </div>
+                <?php endif;?>
+                
                 <?php
-                endif;
             }
 
             public function show_location_frontend(){
@@ -186,6 +239,41 @@
                 <?php
                 endif;
             }
+
+            public function show_review_testimonial_frontend(){
+                $display_hotel_review =  get_post_meta(get_the_ID(), 'ttbm_display_hotel_review', true);
+                $review_title =  get_post_meta(get_the_ID(), 'ttbm_hotel_review_title', true);
+                $review_rating =  get_post_meta(get_the_ID(), 'ttbm_hotel_review_rating', true);
+				$display_hotel_review = $display_hotel_review == 'on' ? $display_hotel_review : 'off';
+                if($display_hotel_review=='on'):
+                ?>
+                    <div class="review-rating">
+                        <div class="review">
+                            <h3><?php echo esc_html($review_title); ?></h3>
+                            <p><?php echo esc_html($review_rating)." ".__('reviews','tour-booking-manger'); ?> </p>
+                        </div>
+                        <div class="review-rate">
+                            <?php echo esc_html(number_format($review_rating / 100, 1)); ?>
+                        </div>
+                    </div>
+                    <div class="review-testimonial">
+                        <h2>Guests who stayed here loved</h2>
+                        <div class="testimonial">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        </div>
+                    </div>
+                    <div class="service-rating">
+                        <h3>Wifi</h3>
+                        <div class="service-rate">
+                            7.8
+                        </div>
+                    </div>
+                <?php
+                endif;
+            }
+
+
 
             public function show_sharing_meta(){
                 ?>

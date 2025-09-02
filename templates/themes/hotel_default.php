@@ -37,28 +37,7 @@ $class_location = $class_location ?? '';
                 </div>
                 <div class="review-map-container">
                     <div class="review-container">
-                        <div class="review-rating">
-                            <div class="review">
-                                <h3>Excellant</h3>
-                                <p>787 reviews</p>
-                            </div>
-                            <div class="review-rate">
-                                7.8
-                            </div>
-                        </div>
-                        <div class="review-testimonial">
-                            <h2>Guests who stayed here loved</h2>
-                            <div class="testimonial">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            </div>
-                        </div>
-                        <div class="service-rating">
-                            <h3>Wifi</h3>
-                            <div class="service-rate">
-                                7.8
-                            </div>
-                        </div>
+                        <?php do_action('ttbm_single_review_testimonial'); ?>
                     </div>
                     <div class="map-container">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d116833.97311724129!2d90.33711639865318!3d23.780818544256658!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b087026b81%3A0x8fa563bbdd5904c2!2sDhaka!5e0!3m2!1sen!2sbd!4v1754986559961!5m2!1sen!2sbd" width="100%" height="250px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -79,13 +58,6 @@ $class_location = $class_location ?? '';
                     </div>
                 </div>
                 <div class="ttbm-content-right">
-                    <div class="widgets property-highlights">
-                        <h2>Property highlights</h2>
-                        <div class="widgets-text">
-                            <i class="mi mi-marker"></i>
-                            Top Location: Highly rated by recent guests (8.9)
-                        </div>
-                    </div>
                     <?php do_action( 'ttbm_single_sidebar' ); ?>
                     <?php do_action( 'ttbm_single_activity' ); ?>
                     

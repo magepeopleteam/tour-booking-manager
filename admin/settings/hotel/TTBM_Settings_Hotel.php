@@ -65,9 +65,17 @@
 				}
 				if (get_post_type($post_id) == 'ttbm_hotel') {
 					$ttbm_display_location = isset($_POST['ttbm_display_hotel_location']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hotel_location'])) ? 'on' : 'off';
+					$ttbm_display_hotel_parking = isset($_POST['ttbm_display_hotel_parking']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hotel_parking'])) ? 'on' : 'off';
+					$ttbm_hotel_parking = isset($_POST['ttbm_hotel_parking']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_parking'])) : '';
+					$ttbm_hotel_breakfast = isset($_POST['ttbm_hotel_breakfast']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_breakfast'])) : '';
+					$ttbm_display_hotel_breakfast = isset($_POST['ttbm_display_hotel_breakfast']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hotel_breakfast'])) ? 'on' : 'off';
 					$ttbm_location_name = isset($_POST['ttbm_hotel_location']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_location'])) : '';
 					update_post_meta($post_id, 'ttbm_display_hotel_location', $ttbm_display_location);
 					update_post_meta($post_id, 'ttbm_hotel_location', $ttbm_location_name);
+					update_post_meta($post_id, 'ttbm_display_hotel_parking', $ttbm_display_hotel_parking);
+					update_post_meta($post_id, 'ttbm_hotel_parking', $ttbm_hotel_parking);
+					update_post_meta($post_id, 'ttbm_display_hotel_breakfast', $ttbm_display_hotel_breakfast);
+					update_post_meta($post_id, 'ttbm_hotel_breakfast', $ttbm_hotel_breakfast);
 					/***************/
 					$ttbm_display_distance = isset($_POST['ttbm_display_hotel_distance']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hotel_distance'])) ? 'on' : 'off';
 					$ttbm_hotel_distance_des = isset($_POST['ttbm_hotel_distance_des']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_distance_des'])) : '';

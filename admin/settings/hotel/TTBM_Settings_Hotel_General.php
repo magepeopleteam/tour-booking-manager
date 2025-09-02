@@ -7,6 +7,7 @@
 			public function __construct() {
 				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'hotel_general_settings']);
                 add_action('ttbm_single_location', [$this, 'show_location_frontend']);
+                add_action('ttbm_single_sidebar', [$this, 'show_breakfast_parking_frontend']);
                 add_action('show_sharing_meta', [$this, 'show_sharing_meta']);
             }
 			public function hotel_general_settings($tour_id) {
@@ -19,6 +20,9 @@
 						<?php $this->location($tour_id); ?>
 						<?php $this->distance_description($tour_id); ?>
 						<?php $this->rating($tour_id); ?>
+						<?php $this->parking_info($tour_id); ?>
+						<?php $this->breakfast_info($tour_id); ?>
+                        
                         </tbody>
                     </table>
                 </div>
@@ -99,6 +103,73 @@
                 </tr>
 				<?php
 			}
+
+			public function parking_info($tour_id) {
+				$display_name = 'ttbm_display_hotel_parking';
+				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
+				$checked = $display == 'off' ? '' : 'checked';
+				$hotel_parking =  get_post_meta($tour_id, 'ttbm_hotel_parking', true);
+				
+				?>
+                <tr>
+                    <th colspan="3">
+						<?php esc_html_e('Hotel Parking ', 'tour-booking-manager'); ?>
+                    </th>
+                    <td><?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?></td>
+                    <th>
+						<input type="text" class="formControl" placeholder="<?php echo esc_html__('Free Parking Available On Site','tour-booking-manager');  ?>" name="ttbm_hotel_parking" value="<?php echo esc_attr($hotel_parking);  ?>"/>
+                    </th>
+                </tr>
+				<?php
+			}
+
+			public function breakfast_info($tour_id) {
+
+                $breakfast = 'ttbm_display_hotel_breakfast';
+				$breakfast_display = TTBM_Global_Function::get_post_info($tour_id, $breakfast, 'on');
+				$hotel_breakfast =  get_post_meta($tour_id, 'ttbm_hotel_breakfast', true);
+				$breakfast_checked = $breakfast_display == 'off' ? '' : 'checked';
+				?>
+                <tr>
+                    <th colspan="3">
+						<?php esc_html_e('Hotel Breakfast ', 'tour-booking-manager'); ?>
+                    </th>
+                    <td><?php TTBM_Custom_Layout::switch_button($breakfast, $breakfast_checked); ?></td>
+                    <th>
+						<input type="text" class="formControl" placeholder="<?php echo esc_html__('American, Buffet ','tour-booking-manager');  ?>" name="ttbm_hotel_breakfast" value="<?php echo esc_attr($hotel_breakfast);  ?>"/>
+                    </th>
+                </tr>
+				<?php
+			}
+
+            public function show_breakfast_parking_frontend(){
+                $hotel_parking =  get_post_meta(get_the_ID(), 'ttbm_display_hotel_parking', true);
+                $ttbm_hotel_parking =  get_post_meta(get_the_ID(), 'ttbm_hotel_parking', true);
+                $hotel_parking = $hotel_parking == 'on' ? $hotel_parking : 'off';
+                $hotel_breakfast =  get_post_meta(get_the_ID(), 'ttbm_display_hotel_breakfast', true);
+                $hotel_breakfast = $hotel_breakfast == 'on' ? $hotel_breakfast : 'off';
+                $ttbm_hotel_breakfast =  get_post_meta(get_the_ID(), 'ttbm_hotel_breakfast', true);
+                if($hotel_breakfast=='on'):
+                ?>
+                    <div class="widgets breakfast-info">
+                        <h2><?php echo esc_html__('Breakfast info','tour-booking-manager'); ?></h2>
+                        <div class="widgets-text">
+                            <i class="mi mi-burger-glass"></i>
+                            <?php echo esc_html($ttbm_hotel_breakfast); ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <?php if($hotel_parking=='on'): ?>
+                    <div class="widgets parking-info">
+                        <h2><?php echo esc_html__('Parking info','tour-booking-manager'); ?></h2>
+                        <div class="widgets-text">
+                            <i class="mi mi-parking-circle"></i>
+                            <?php echo esc_html($ttbm_hotel_parking); ?>
+                        </div>
+                    </div>
+                <?php
+                endif;
+            }
 
             public function show_location_frontend(){
                 $distance_des =  get_post_meta(get_the_ID(), 'ttbm_hotel_distance_des', true);

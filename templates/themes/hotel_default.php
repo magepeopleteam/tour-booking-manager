@@ -86,20 +86,7 @@ $class_location = $class_location ?? '';
                             Top Location: Highly rated by recent guests (8.9)
                         </div>
                     </div>
-                    <div class="widgets breakfast-info">
-                        <h2>Breakfast info</h2>
-                        <div class="widgets-text">
-                            <i class="mi mi-burger-glass"></i>
-                            American, Buffet
-                        </div>
-                    </div>
-                    <div class="widgets parking-info">
-                        <h2>Parking info</h2>
-                        <div class="widgets-text">
-                            <i class="mi mi-parking-circle"></i>
-                            Free Parking Available On Site
-                        </div>
-                    </div>
+                    <?php do_action( 'ttbm_single_sidebar' ); ?>
                     <?php do_action( 'ttbm_single_activity' ); ?>
                     
                     <button class="widgets-button">Reserve</button>

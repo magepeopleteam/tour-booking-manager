@@ -1691,6 +1691,8 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	font-weight: normal;
 	background-color: var(--color_theme);
 	margin-top: 30px;
+	text-align: center;
+  	color: #fff;
 }
 .ttbm-hotel-details div.ttbm_registration_area{
 	box-shadow: 0 0px 1px #aaa;

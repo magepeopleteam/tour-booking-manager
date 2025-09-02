@@ -89,7 +89,7 @@ $class_location = $class_location ?? '';
                     <?php do_action( 'ttbm_single_sidebar' ); ?>
                     <?php do_action( 'ttbm_single_activity' ); ?>
                     
-                    <button class="widgets-button">Reserve</button>
+                    <a class="widgets-button button" href="#ttbm_hotel_content_area"><?php echo esc_html__('Reserve','tour-booking-manager'); ?></a>
                 </div>
             </div>
             <!-- FAQ Section -->

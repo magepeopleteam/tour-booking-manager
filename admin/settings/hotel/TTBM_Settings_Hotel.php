@@ -31,10 +31,13 @@
                                 <span class="mi mi-gallery"></span><?php esc_html_e(' Hotel Gallery', 'tour-booking-manager'); ?>
                             </li>
                             <li data-tabs-target="#ttbm_settings_hotel_faq">
-                                <span class="mi mi-messages-question "></span><?php esc_html_e(' FAQ Settgins', 'tour-booking-manager'); ?>
+                                <span class="mi mi-messages-question"></span><?php esc_html_e(' FAQ Settgins', 'tour-booking-manager'); ?>
                             </li>
                             <li data-tabs-target="#ttbm_settings_hotel_area_info">
-                                <span class="mi mi-search-location "></span><?php esc_html_e(' Hotel area info', 'tour-booking-manager'); ?>
+                                <span class="mi mi-search-location"></span><?php esc_html_e(' Hotel area info', 'tour-booking-manager'); ?>
+                            </li>
+                            <li data-tabs-target="#ttbm_settings_hotel_activity">
+                                <span class="mi mi-practice"></span><?php esc_html_e(' Activities', 'tour-booking-manager'); ?>
                             </li>
                         </ul>
                         <div class="tabsContent tab-content">

@@ -67,6 +67,7 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_Activity.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_Area_Info.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_Price.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_Location.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Dashboard.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Lists.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Booking.php';

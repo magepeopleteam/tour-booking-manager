@@ -220,10 +220,10 @@
 @media only screen and (min-width: 10px) {
 	.ttbm-quick-setup .ttbmTabsNext .tabsContentNext p { margin-bottom: 5px;}
 	.ttbm_promotional_shortcode_holder { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-around; margin: 30px 0;}
-	.ttbm_shortcode_box { background: #FFFFFF; border: 1px solid #DDD; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); border-radius: 8px; padding: 15px 20px; width: 320px; position: relative; transition: box-shadow 0.3s ease;}
+	.ttbm_shortcode_box {background: #FFFFFF; border: 1px solid #DDD; margin-bottom: 20px;box-shadow: 0 0px 5px rgba(0, 0, 0, 0.05); border-radius: 8px; padding:5px; width: auto; position: relative; transition: box-shadow 0.3s ease;}
 	.ttbm_shortcode_box:hover { box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);}
-	.ttbm_shortcode_text { font-size: 14px; color: #333; background: #F8F8F8; padding: 12px; border-radius: 5px; margin-bottom: 10px; word-break: break-word;}
-	.ttbm_copy_btn { background-color: #0073AA; color: white; border: none; padding: 8px 14px; font-size: 14px; border-radius: 4px; cursor: pointer; float: right; transition: background-color 0.3s ease;}
+	.ttbm_shortcode_text { font-size: 14px; color: #333; background: #F8F8F8; padding: 12px; border-radius: 5px; word-break: break-word;}
+	.ttbm_copy_btn {position:absolute;top:10px;right:10px;background-color: #0073AA; color: white; border: none; padding: 8px 14px; font-size: 14px; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease;}
 	.ttbm_copy_btn:hover { background-color: #005177;}
 	.ttbm_shortcode_section { margin: 40px 0; padding: 0 15px;}
 	.ttbm_shortcode_title { font-size: 24px; font-weight: 600; margin-bottom: 20px; color: #222; text-align: center; position: relative;}
@@ -513,7 +513,7 @@
 	.ttbm_trvel_lists_tab_holder { width: 100%; box-sizing: border-box;}
 	.ttbm_trvel_lists_tabs { flex-wrap: wrap; width: 100%; box-sizing: border-box;}
 	.ttbm_trvel_lists_content { display: none; padding: 20px 0; border-top: none; background-color: #FFF; width: 100%; box-sizing: border-box; margin: 10px 0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); border-radius: 8px;}
-	.ttbm_trvel_lists_content.active { display: block; background: #FFF; padding: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);}
+	.ttbm_trvel_lists_content.active { display: flex;flex-direction: column; background: #FFF; padding: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);}
 	/* Responsive for small screens */
 	.ttbm-tour-dashboard{
 		display: flex;
@@ -789,7 +789,6 @@
 	.ttbm_style [class*="customButton"] {font-size: 18px;}
 }
 @media only screen and (min-width: 1024px) {
-	.ttbm-tour-list-page .ttbm-tour-list-header { flex-direction: column; }
 	.ttbm-tour-list-page .ttbm-tour-list { gap: 10px; }
 	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card { flex-direction: row; }
 	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-thumb { width: 10%; }

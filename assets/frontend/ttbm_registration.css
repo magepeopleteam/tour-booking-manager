@@ -58,7 +58,7 @@ div.ttbm_location_list div.filter_item {padding: 0;}
 div.ttbm_style .mp_tour_ticket_form { border-radius: 8px; margin-top: 0px; padding: 0px;}
 
 @media (min-width: 540px) {
-	div.ttbm_style .mp_tour_ticket_form { border-radius: 8px; margin-top: 10px; padding: 20px; }
+	div.ttbm_style .mp_tour_ticket_form { border-radius: 8px; }
 }
 .person-description { font-size: 12px; color: #666;}
 .ttbm_spring_theme .ttbm_booking_panel table,
@@ -113,7 +113,7 @@ div.ttbm_style [data-bg-image] { transform: scale(1);}
 .ttbm_extra_service_area table.mp_tour_ticket_extra thead th:last-child { border-radius: 0 12px 0 0;}
 .ttbm_extra_service_area table.mp_tour_ticket_extra tbody tr { border-bottom: 1px solid #F5F5F5;}
 .ttbm_extra_service_area table.mp_tour_ticket_extra tbody tr:last-child { border-bottom: 0;}
-.ttbm_extra_service_area h2.extra_service_title { padding: 20px 0; font-weight: bold; font-size: 18px;}
+#ttbm_content .ttbm_extra_service_area h2.extra_service_title { margin-top: 20px;padding:10px; font-weight: bold; font-size: 18px;}
 table div.ttbm_attendee_form_item { padding: 15px;}
 /**************************************************/
 .ttbm_wraper button.ttbm_book_now {margin: 0 var(--ttbm_mp_xs) 0 0;}
@@ -385,7 +385,7 @@ div.ttbm_booking_panel table tbody tr td .ttbm_attendee_form_item:not(:last-chil
 div.ttbm_booking_panel table thead th,
 div.ttbm_booking_panel table td:last-child {text-align: center;padding: 8px;}
 div.ttbm_booking_panel table thead th:first-child {text-align: left;padding: 10px;}
-div.ttbm_booking_panel table td:last-child > div {display: inline-block;min-width: 100px;}
+div.ttbm_booking_panel table td:last-child > div {display: inline-block;min-width: 100px;width:150px;}
 div.ttbm_booking_panel table th {
 	background-color: #FFF;
 	text-align: left;
@@ -406,17 +406,19 @@ div.ttbm_booking_panel table thead th {
 	border: 0;
 	padding: 20px 0;
 }
-div.ttbm_booking_panel table tr .ttbm-person-info .person-info {
-	font-weight: bold;
+div.ttbm_booking_panel table tr .ttbm-person-info .person-info, div.ttbm_booking_panel table .extra-service-title {
+	font-weight: normal;
 	font: 16px;
+	text-transform: capitalize;
 }
 div.ttbm_booking_panel table tr .ttbm_load_more_text_area {
 	color: #8B8B8B;
 }
-div.ttbm_booking_panel table tr th.ttbm-regular-price {
+div.ttbm_booking_panel table tr th.ttbm-regular-price,div.ttbm_booking_panel table .extra-service-price{
 	font-weight: bold;
 	font-size: 18px;
 	text-align: center;
+	
 }
 div.ttbm_booking_panel table .ttbm-hotel-room-info i {
 	color: #A9A9A9;
@@ -438,7 +440,7 @@ div.ttbm_booking_panel .ttbm_book_now_area .tour_price {
 }
 div.ttbm_booking_panel .ttbm_attendee_form_area {
 	border-radius: 10px;
-	margin: 10px 0;
+	margin: 10px;
 	background: #ECECEC;
 }
 div.ttbm_booking_panel .ttbm_attendee_form_item {

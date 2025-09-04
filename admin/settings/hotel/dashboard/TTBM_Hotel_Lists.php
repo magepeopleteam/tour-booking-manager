@@ -117,18 +117,15 @@ if (!class_exists('TTBM_Hotel_Lists')) {
                     $title     = get_the_title();
                     $desc      = get_the_excerpt();
                     $image     = get_the_post_thumbnail_url( $post_id, 'thumbnail' );
-                    $image     = $image ? $image : esc_url( includes_url( 'images/media/default.png' ) ); // fallback WP default
-                    $services  = get_post_meta( $post_id, 'ttbm_service_included_in_price', true );
+                    $image     = $image ? $image : esc_url( includes_url( 'images/media/default.png' ) ); 
                     $location  = get_post_meta( $post_id, 'ttbm_hotel_location', true );
-
+                    
+                    $selected_features = TTBM_Function::get_feature_list($post_id, 'ttbm_hotel_feat_selection');
+				    $selected_features = is_array($selected_features) ? $selected_features : [];
+                    $all_features = TTBM_Global_Function::get_taxonomy('ttbm_hotel_features_list');
+                    
                     $post_status = get_post_status();
-                    if( $post_status === 'publish' ){
-                        $status_background = '#b7f1ba';
-                        $status_icon = 'far fa-paper-plane';
-                    }else{
-                        $status_background = '#ede2b4';
-                        $status_icon = 'far fa-file-alt';
-                    }
+                   
 
                     ?>
                     <tr id="hotel_<?php echo esc_attr( $post_id ); ?>" class="ttbm-tour-card" data-travel-type="<?php echo esc_attr( $post_status )?>">
@@ -153,26 +150,22 @@ if (!class_exists('TTBM_Hotel_Lists')) {
                             <?php endif; ?>
                             <?php
                             $icon = '';
-                            if ( ! empty( $services ) && is_array( $services ) ) : ?>
+                            if ( ! empty( $all_features ) && is_array( $all_features ) ) : ?>
                                 <div class="ttbm-hotel-list-hotel-features">
                                     <?php
                                     $count = 0;
-                                    foreach ( $services as $key => $service ) {
-                                        $term = get_term_by('name', $service, 'ttbm_tour_features_list');
-                                        if ($term) {
-                                            $icon = get_term_meta($term->term_id, 'ttbm_feature_icon', true);
-                                            $icon = $icon ?: 'fas fa-forward';
-                                        }
-                                        if( $count < 3){
+                                    foreach ($all_features as $feature) :?>
+                                        <?php if (in_array($feature->term_id, $selected_features)) : 
+                                            $icon = get_term_meta($feature->term_id, 'ttbm_hotel_feature_icon', true);
+                                            $icon = $icon ? $icon : 'mi mi-home';
                                         ?>
+                                        <?php if( $count < 3): ?>
                                         <span class="ttbm-hotel-list-feature-tag <?php echo esc_attr( $tag_color[$count] );?>">
-                                            <i class=" <?php echo esc_attr( $icon )?>"></i>
-                                            <?php echo esc_html( $service ); ?>
+                                            <i class="<?php echo esc_attr($icon); ?>"></i>
+									        <span><?php echo esc_html($feature->name); ?></span>
                                         </span>
-                                    <?php }
-                                        $count++;
-                                    }
-                                    ?>
+                                    <?php endif; $count++; endif;?>
+                                    <?php endforeach; ?>
                                 </div>
                             <?php endif; ?>
                         </td>

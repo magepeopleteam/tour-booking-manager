@@ -247,9 +247,13 @@
 			}
 
 			public function show_faq_frontend(){
+				$faqs = get_post_meta(get_the_ID(),'ttbm_hotel_faq',true);
+				$faqs = !empty($faqs) ? $faqs : [];
 				?>
+				<?php if(!empty($faqs)) : ?>
 				<div class="faq-area">
-					<h2>Travelers are asking</h2>
+					
+					<h2><?php _e('Travelers are asking','tour-booking-manager') ?></h2>
 					<div class="faq-groups">
 						<?php 
 							$faqs = get_post_meta(get_the_ID(),'ttbm_hotel_faq',true);
@@ -293,6 +297,7 @@
 					</div>
 				</div>
 				<?php
+				endif;
 			}
 		}
 		new TTBM_Hotel_Faq();

@@ -70,9 +70,9 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_Location.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Dashboard.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Lists.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Booking.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Features.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Activities.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Booking.php';
 				//**********//
 			}
 			public function ttbm_widgets_init() {

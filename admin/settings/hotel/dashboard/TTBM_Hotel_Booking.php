@@ -11,7 +11,7 @@ if (!class_exists('TTBM_Hotel_Booking_Dashbaord')) {
         public function dashbaord_hotel_lists(){
             ?>
             
-            <div class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_booking_tab"><?php echo esc_attr__( 'Hotel Booking Lists', 'tour-booking-manager' )?></div>
+            <div class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_booking_tab"><i class="mi mi-calendar-days"></i> <?php echo esc_attr__( 'Hotel Booking Lists', 'tour-booking-manager' )?></div>
             <?php
         }
         public function dashbaord_hotel_lists_content(){

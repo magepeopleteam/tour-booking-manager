@@ -19,7 +19,7 @@ if (!class_exists('TTBM_Hotel_Features')) {
 
         public function dashbaord_features(){
             ?>
-            <div class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_features_tab"><?php echo esc_attr__( 'Hotel Features', 'tour-booking-manager' )?></div>
+            <div class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_features_tab"><i class="mi mi-features"></i>  <?php echo esc_attr__( 'Hotel Features', 'tour-booking-manager' )?></div>
             <?php
         }
 

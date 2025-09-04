@@ -17,7 +17,7 @@ if (!class_exists('TTBM_Hotel_Activities')) {
         }
         public function dashbaord_activity(){
             ?>
-            <div class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_activities_tab"><?php echo esc_attr__( 'Hotel Activities', 'tour-booking-manager' )?></div>
+            <div class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_activities_tab"><i class="mi mi-practice"></i> <?php echo esc_attr__( 'Hotel Activities', 'tour-booking-manager' )?></div>
             <?php
         }
 

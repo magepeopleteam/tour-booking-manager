@@ -10,7 +10,7 @@ if (!class_exists('TTBM_Hotel_Lists')) {
 
         public function dashbaord_hotel_lists(){
             ?>
-            <div class="ttbm_hotel_tab_item active" data-tab="ttbm_hotel_list_tab"><?php echo esc_attr__( 'Hotel Lists', 'tour-booking-manager' )?></div>
+            <div class="ttbm_hotel_tab_item active" data-tab="ttbm_hotel_list_tab"><i class="mi mi-hotel"></i> <?php echo esc_attr__( 'Hotel Lists', 'tour-booking-manager' )?></div>
             <?php
         }
         
@@ -134,7 +134,7 @@ if (!class_exists('TTBM_Hotel_Lists')) {
                     <tr id="hotel_<?php echo esc_attr( $post_id ); ?>" class="ttbm-tour-card" data-travel-type="<?php echo esc_attr( $post_status )?>">
                         <td class="ttbm-hotel-list-column-image">
                             <div class="ttbm-hotel-list-image-placeholder">
-                                <img src="<?php echo esc_url( $image ); ?>" alt="<?php echo esc_attr( $title ); ?>" width="60" height="60" />
+                                <img src="<?php echo esc_url( $image ); ?>" alt="<?php echo esc_attr( $title ); ?>"/>
                             </div>
                         </td>
                         <td class="ttbm-hotel-list-column-hotel">
@@ -179,7 +179,6 @@ if (!class_exists('TTBM_Hotel_Lists')) {
                         <td class="ttbm-hotel-list-column-actions">
                             <div class="ttbm-hotel-lists-status">
                                 <div class="ttbm_hotel_status_items" >
-                                    <div class="meta-icon" style="background-color: <?php echo esc_attr( $status_background );?>"><i class="<?php echo esc_attr( $status_icon )?>"></i></div>
                                     <div class="ttbm_travel_status"><?php echo esc_attr( $post_status )?></div>
                                 </div>
                             </div>

@@ -151,7 +151,7 @@ div.ttbm_viator_theme div.superSlider {margin: 0;}
 div.ttbm_viator_theme div.small_box {width: 100%; padding: 0; border: none;border-radius: 0;margin: var(--ttbm_mp_xs) 0 0 0;background-color: transparent; -webkit-flex-direction: initial;flex-direction: initial; -webkit-justify-content: initial;justify-content: initial;}
 div.ttbm_viator_theme .item_icon {margin: 0 var(--ttbm_mp_xs) 0 0;font-size: var(--ttbm_fs_h5);}
 div.viator_top_section .ttbm_booking_panel { position: initial;top: 100%;left: var(--ttbm_mp_negetive);right: var(--ttbm_mp_negetive); padding: var(--ttbm_mp_xs);z-index: 11;background-color: #F5F5F5;}
-div.ttbm_date_time_select span.date_time_label {font-size: 20px;}
+div.ttbm_date_time_select span.date_time_label {font-size: 20px; color: #fff; margin-right: 20px;}
 div.viator_top_section .ttbm_booking_panel h3 {font-size: var(--ttbm_fs_h5);}
 div.viator_top_section .ttbm_booking_panel .addonGroupContent {min-width: 25px;}
 div.viator_top_section .ttbm_booking_panel .qtyIncDec {max-width: 100%;}

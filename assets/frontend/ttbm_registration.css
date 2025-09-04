@@ -1754,8 +1754,8 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 
 .ttbm-hotel-details .ttbm-feature-list .feature-items{
 	padding:5px 15px;
-	border: 1px solid #ddd;
-	border-radius: 4px;
+	background: #efefef;
+	border-radius: 5px;
 	display: flex;
 	justify-content:space-evenly;
 	align-items: center;

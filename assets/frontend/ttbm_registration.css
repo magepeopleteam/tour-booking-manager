@@ -1753,7 +1753,7 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 }
 
 .ttbm-hotel-details .ttbm-feature-list .feature-items{
-	padding:10px 15px;
+	padding:5px 15px;
 	border: 1px solid #ddd;
 	border-radius: 4px;
 	display: flex;
@@ -1763,6 +1763,7 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 }
 .ttbm-hotel-details .ttbm-feature-list .feature-items i{
 	font-size: 20px;
+	color: red;
 }
 /* .ttbm-hotel-details */
 .ttbm-hotel-area-info{

@@ -442,7 +442,7 @@
 								$zdata[$count]['ttbm_ticket_name'] = $_ticket['ticket_name'];
 								$zdata[$count]['ttbm_ticket_price'] = $_ticket['ticket_price'] * $num_of_day;
 								$zdata[$count]['ttbm_ticket_total_price'] = ($_ticket['ticket_price'] * $qty) * $num_of_day;
-								$zdata[$count]['ttbm_date'] = $_ticket['ttbm_date'];
+								$zdata[$count]['ttbm_date'] = isset($_ticket['ttbm_date']) ? $_ticket['ttbm_date'] : '';
 								$zdata[$count]['ttbm_ticket_qty'] = $_ticket['ticket_qty'];
 								$zdata[$count]['ttbm_group_id'] = $group_id;
 								$zdata[$count]['ttbm_hotel_id'] = $hotel_id;

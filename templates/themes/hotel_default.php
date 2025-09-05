@@ -11,7 +11,7 @@ $ttbm_post_id = $ttbm_post_id ?? get_the_id();
         <div class="ttbm-hotel-details ttbm_hotel_item">
             <div class="ttbm-hero-header">
                 <div class="title-section">
-                    <?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
+                    <?php //do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
                     <h1 class="title"><?php do_action( 'ttbm_details_title' ); ?></h1>
                     <?php do_action('ttbm_single_location'); ?>
                 </div>

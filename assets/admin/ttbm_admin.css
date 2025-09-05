@@ -18,7 +18,7 @@
 }
 /********************************************************************  ************************************************/
 @media only screen and (min-width: 10px) {
-	#ttbm_content .formControl {font-weight: normal; border: 1px solid var(--mpl-gray); color: var(--mpl-secondary); font-size: 14px; min-width: 80px;max-width: 250px;}
+	#ttbm_content .formControl {font-weight: normal; border: 1px solid var(--mpl-gray); color: var(--mpl-secondary); font-size: 14px; min-width: 80px;}
 	#ttbm_content select.formControl{min-width: 200px;}
 	#ttbm_content input[type="number"].formControl{min-width: 80px;}
 	#ttbm_content div.settings_header { background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%); padding: var(--ttbm_mp); text-align: center; }
@@ -153,6 +153,7 @@
 	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .del-button { background-color: var(--mpl-red); color: var(--mpl-white);}
 	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .toggle-form { background-color: var(--mpl-yellow);}
 	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .copy-button { background-color: var(--mpl-primary); color: var(--mpl-white);}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent{background-color: var(--mpl-light);}
 }
 /********************************************************************Icon  Image upload  ************************************************/
 @media only screen and (min-width: 10px) {
@@ -1104,4 +1105,8 @@
 .ttbm-hotel-feature-action button:hover{
 	background: #fff;
 	border:1px solid #ddd;
+}
+
+.auto-search-wrapper input{
+	font-size: 14px;
 }

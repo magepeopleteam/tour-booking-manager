@@ -7,7 +7,6 @@
 	body { margin: 0; padding: 0; }
 	body.noScroll { overflow: hidden; }
 	/******/
-	#ttbm_content {font-size: var(--ttbm_fs);}
 	.ttbm_style { font-weight: var(--fw); color: var(--d_color); line-height: 1.5; width: 100%; }
 	.ttbm_style,
 	.ttbm_style [data-target-radio].mActive,
@@ -142,7 +141,7 @@
 	#ttbm_content .extraBold { font-weight: 900; }
 	#ttbm_content h1, div#ttbm_content [class*="_fs_h1"] { font-weight: var(--fw-bold);font-size: var(--ttbm_fs_h1); }
 	#ttbm_content h2, div#ttbm_content [class*="_fs_h2"] { font-weight: var(--fw-bold);font-size: var(--ttbm_fs_h2); }
-	#ttbm_content h3, div#ttbm_content [class*="_fs_h3"] { font-weight: var(--fw-bold);font-size: var(--ttbm_fs_h3); }
+	#ttbm_content h3, div#ttbm_content [class*="_fs_h3"] { font-weight: var(--fw-bold); }
 	#ttbm_content h4, div#ttbm_content [class*="_fs_h4"] { font-weight: var(--fw-medium); text-transform: inherit;font-size: var(--ttbm_fs_h4); }
 	#ttbm_content h5, div#ttbm_content [class*="_fs_h5"] { font-weight: var(--fw-medium); text-transform: inherit;font-size: var(--ttbm_fs_h5); }
 	#ttbm_content h6, div#ttbm_content [class*="_fs_h6"] { font-weight: var(--fw-normal); text-transform: inherit;font-size: var(--ttbm_fs_h6); }
@@ -1642,7 +1641,7 @@
 	.ttbm_style .leftTabs { display: -webkit-flex; display: flex; }
 	.ttbm_style .tabLists { width: 100%; }
 	.ttbm_style .tabLists span { margin: 0 var(--ttbm_mp_xs) 0 0; color: var(--color_theme); }
-	.leftTabs > .tabLists { -webkit-flex-flow: column; flex-flow: column; min-width: 200px; max-width: 250px; background-color: var(--color_white); padding: var(--ttbm_mp_xs);font-size: var(--ttbm_fs_label); }
+	.leftTabs > .tabLists { -webkit-flex-flow: column; flex-flow: column; min-width: 250px; max-width: 250px; background-color: var(--color_white); padding: var(--ttbm_mp_xs);font-size: var(--ttbm_fs_label); }
 	div.ttbm_style [data-tabs-target] {
 		display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; -webkit-flex-wrap: nowrap; flex-wrap: nowrap;
 		position: relative; text-align: left; cursor: pointer; padding: 15px; color: var(--d_color); border-left: 2px solid transparent; }
@@ -1654,7 +1653,7 @@
 	.ttbm_style [data-tabs-target]:hover::after { width: 100%; }
 	.leftTabs [data-tabs-target] { position: relative; }
 	.leftTabs [data-tabs-target]::after { width: 90%; height: 100%; content: ""; position: absolute; left: 0; bottom: 0; border-bottom: 1px solid var(--color_border); }
-	.ttbm_style .tabsContent { position: relative; overflow: auto; width: 100%; padding: var(--ttbm_mp); background-color: var(--mpl-light); }
+	.ttbm_style .tabsContent { position: relative; overflow: auto; width: 100%; padding: 2% 5%; background-color: #fff; }
 	.tabsContent [data-tabs] { display: none; }
 	/**************/
 	.ttbmTabs.tabBorder { border: 1px solid var(--color_border); }

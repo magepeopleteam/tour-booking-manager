@@ -387,7 +387,7 @@
                 <div class="ttbm_remove_area _mT_xs">
                     <div class="_dFlex">
                         <label class="_w_200_mR_xs">
-                            <input type="text" name="<?php echo esc_attr($label_key . '[]'); ?>" value="<?php echo esc_attr($label); ?>" class="formControl ttbm_name_validation" placeholder="<?php esc_attr_e('Time Slot Label', 'tour-booking-manager'); ?>"/>
+                            <input type="text" name="<?php echo esc_attr($label_key . '[]'); ?>" value="<?php echo esc_attr($label); ?>" class="formControl" placeholder="<?php esc_attr_e('Time Slot Label', 'tour-booking-manager'); ?>"/>
                         </label>
                         <label class="_w_100_mR_xs">
                             <input type="time" name="<?php echo esc_attr($time_key . '[]'); ?>" class="formControl" value="<?php echo esc_attr($time); ?>" placeholder="00:00"/>

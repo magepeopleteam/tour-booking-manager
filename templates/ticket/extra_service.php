@@ -32,7 +32,7 @@
 							$description = array_key_exists('extra_service_description', $service) ? $service['extra_service_description'] : '';
 							?>
 							<tr>
-								<th>
+								<th class="extra-service-title">
 									<?php if ($service_icon) { ?>
 										<span class="<?php echo esc_attr($service_icon); ?>"></span>
 									<?php } ?>
@@ -41,7 +41,7 @@
 									    <div class="mT_xs person-description"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
                                     <?php } ?>
 								</th>
-								<td class="textCenter"><?php 
+								<td class="textCenter extra-service-price"><?php 
 								// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								echo mep_esc_html($service_price); ?></td>
 								<td><?php TTBM_Layout::qty_input($service_name, $available, $input_type, $default_qty, $min_qty, $max_qty, $service_price_raw, 'service_qty[]'); ?></td>

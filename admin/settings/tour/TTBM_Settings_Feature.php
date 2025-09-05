@@ -6,7 +6,7 @@
 		class TTBM_Settings_Feature {
 			public function __construct() {
 				add_action('ttbm_meta_box_tab_content', [$this, 'ttbm_settings_feature'], 10, 1);
-				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'ttbm_settings_feature'], 10, 1);
+				//add_action('add_ttbm_settings_hotel_tab_content', [$this, 'ttbm_settings_feature'], 10, 1);
 				//********Add New Feature************//
 				add_action('wp_ajax_load_ttbm_feature_form', [$this, 'load_ttbm_feature_form']);
 				add_action('wp_ajax_nopriv_load_ttbm_feature_form', [$this, 'load_ttbm_feature_form']);

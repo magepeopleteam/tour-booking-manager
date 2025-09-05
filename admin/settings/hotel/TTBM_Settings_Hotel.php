@@ -19,16 +19,28 @@
                     <div class="ttbmTabs leftTabs">
                         <ul class="tabLists">
                             <li data-tabs-target="#ttbm_general_info">
-                                <span class="fas fa-cog"></span><?php esc_html_e('General Info', 'tour-booking-manager'); ?>
+                                <span class="mi mi-settings"></span><?php esc_html_e('General Info', 'tour-booking-manager'); ?>
+                            </li>
+							<li data-tabs-target="#ttbm_settings_hotel_location" class="ttbm_hotel_map_location">
+                                <span class="mi mi-marker"></span><?php esc_html_e('Location', 'tour-booking-manager'); ?>
                             </li>
                             <li data-tabs-target="#ttbm_settings_pricing">
-                                <span class="fas fa-money-bill"></span><?php esc_html_e(' Pricing', 'tour-booking-manager'); ?>
+                                <span class="mi mi-coins"></span><?php esc_html_e(' Pricing', 'tour-booking-manager'); ?>
                             </li>
-                            <li data-tabs-target="#ttbm_settings_feature">
-                                <span class="fas fa-tasks"></span><?php esc_html_e(' Features', 'tour-booking-manager'); ?>
+                            <li data-tabs-target="#ttbm_settings_hotel_feature">
+                                <span class="mi mi-features"></span><?php esc_html_e(' Features', 'tour-booking-manager'); ?>
                             </li>
                             <li data-tabs-target="#ttbm_settings_gallery">
-                                <span class="fas fa-images"></span><?php esc_html_e(' Hotel Gallery', 'tour-booking-manager'); ?>
+                                <span class="mi mi-gallery"></span><?php esc_html_e(' Hotel Gallery', 'tour-booking-manager'); ?>
+                            </li>
+                            <li data-tabs-target="#ttbm_settings_hotel_faq">
+                                <span class="mi mi-messages-question"></span><?php esc_html_e(' FAQ Settgins', 'tour-booking-manager'); ?>
+                            </li>
+                            <li data-tabs-target="#ttbm_settings_hotel_area_info">
+                                <span class="mi mi-search-location"></span><?php esc_html_e(' Hotel area info', 'tour-booking-manager'); ?>
+                            </li>
+                            <li data-tabs-target="#ttbm_settings_hotel_activity">
+                                <span class="mi mi-practice"></span><?php esc_html_e(' Activities', 'tour-booking-manager'); ?>
                             </li>
                         </ul>
                         <div class="tabsContent tab-content">
@@ -47,16 +59,64 @@
 				}
 				if (get_post_type($post_id) == 'ttbm_hotel') {
 					$slider = isset($_POST['ttbm_display_slider_hotel']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_slider_hotel'])) ? 'on' : 'off';
+					$hotel_faq_status = isset($_POST['ttbm_hotel_faq_status']) && sanitize_text_field(wp_unslash($_POST['ttbm_hotel_faq_status'])) ? 'on' : 'off';
 					$images = isset($_POST['ttbm_gallery_images_hotel']) ? sanitize_text_field(wp_unslash($_POST['ttbm_gallery_images_hotel'])) : '';
 					$all_images = explode(',', $images);
 					update_post_meta($post_id, 'ttbm_display_slider_hotel', $slider);
+					update_post_meta($post_id, 'ttbm_hotel_faq_status', $hotel_faq_status);
 					update_post_meta($post_id, 'ttbm_gallery_images_hotel', $all_images);
 				}
 				if (get_post_type($post_id) == 'ttbm_hotel') {
+					$ttbm_display_hotel_review = isset($_POST['ttbm_display_hotel_review']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hotel_review'])) ? 'on' : 'off';
+					$ttbm_display_service_review = isset($_POST['ttbm_display_service_review']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_service_review'])) ? 'on' : 'off';
+					$ttbm_hotel_service_review = isset($_POST['ttbm_hotel_service_review']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_service_review'])) : '';
+					$ttbm_hotel_service_rating = isset($_POST['ttbm_hotel_service_rating']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_service_rating'])) : '';
+					$ttbm_hotel_review_title = isset($_POST['ttbm_hotel_review_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_review_title'])) : '';
+					$ttbm_hotel_review_rating = isset($_POST['ttbm_hotel_review_rating']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_review_rating'])) : '';
+					
+					$ttbm_display_hotel_testimonial = isset($_POST['ttbm_display_hotel_testimonial']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hotel_testimonial'])) ? 'on' : 'off';
+					$ttbm_hotel_testimonial_title = isset($_POST['ttbm_hotel_testimonial_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_testimonial_title'])) : '';
+					$ttbm_hotel_testimonial_text = isset($_POST['ttbm_hotel_testimonial_text']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_testimonial_text'])) : '';
+
+					$ttbm_display_hotel_map 	= isset($_POST['ttbm_display_hotel_map']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hotel_map'])) ? 'on' : 'off';
+					$ttbm_hotel_map_location 	= isset($_POST['ttbm_hotel_map_location']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_map_location'])) : '';
+					$ttbm_map_latitude 	= isset($_POST['ttbm_map_latitude']) ? sanitize_text_field(wp_unslash($_POST['ttbm_map_latitude'])) : '';
+					$ttbm_map_longitude 	= isset($_POST['ttbm_map_longitude']) ? sanitize_text_field(wp_unslash($_POST['ttbm_map_longitude'])) : '';
+					
+					update_post_meta($post_id, 'ttbm_display_hotel_testimonial', $ttbm_display_hotel_testimonial);
+					update_post_meta($post_id, 'ttbm_hotel_testimonial_title', $ttbm_hotel_testimonial_title);
+					update_post_meta($post_id, 'ttbm_hotel_testimonial_text', $ttbm_hotel_testimonial_text);
+					
+					update_post_meta($post_id, 'ttbm_display_hotel_review', $ttbm_display_hotel_review);
+					update_post_meta($post_id, 'ttbm_display_service_review', $ttbm_display_service_review);
+					update_post_meta($post_id, 'ttbm_hotel_service_review', $ttbm_hotel_service_review);
+					update_post_meta($post_id, 'ttbm_hotel_service_rating', $ttbm_hotel_service_rating);
+					update_post_meta($post_id, 'ttbm_hotel_review_title', $ttbm_hotel_review_title);
+					update_post_meta($post_id, 'ttbm_hotel_review_rating', $ttbm_hotel_review_rating);
+					
+					update_post_meta($post_id, 'ttbm_display_hotel_map', $ttbm_display_hotel_map);
+					update_post_meta($post_id, 'ttbm_hotel_map_location', $ttbm_hotel_map_location);
+					update_post_meta($post_id, 'ttbm_map_latitude', $ttbm_map_latitude);
+					update_post_meta($post_id, 'ttbm_map_longitude', $ttbm_map_longitude);
+				
+				}
+				if (get_post_type($post_id) == 'ttbm_hotel') {
 					$ttbm_display_location = isset($_POST['ttbm_display_hotel_location']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hotel_location'])) ? 'on' : 'off';
+					$ttbm_display_property_highlights = isset($_POST['ttbm_display_property_highlights']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_property_highlights'])) ? 'on' : 'off';
+					$ttbm_display_hotel_parking = isset($_POST['ttbm_display_hotel_parking']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hotel_parking'])) ? 'on' : 'off';
+					$ttbm_hotel_property_highlights = isset($_POST['ttbm_hotel_property_highlights']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_property_highlights'])) : '';
+					$ttbm_hotel_parking = isset($_POST['ttbm_hotel_parking']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_parking'])) : '';
+					$ttbm_hotel_breakfast = isset($_POST['ttbm_hotel_breakfast']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_breakfast'])) : '';
+					$ttbm_display_hotel_breakfast = isset($_POST['ttbm_display_hotel_breakfast']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hotel_breakfast'])) ? 'on' : 'off';
 					$ttbm_location_name = isset($_POST['ttbm_hotel_location']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_location'])) : '';
+					update_post_meta($post_id, 'ttbm_display_property_highlights', $ttbm_display_property_highlights);
+					update_post_meta($post_id, 'ttbm_hotel_property_highlights', $ttbm_hotel_property_highlights);
 					update_post_meta($post_id, 'ttbm_display_hotel_location', $ttbm_display_location);
 					update_post_meta($post_id, 'ttbm_hotel_location', $ttbm_location_name);
+					update_post_meta($post_id, 'ttbm_display_hotel_parking', $ttbm_display_hotel_parking);
+					update_post_meta($post_id, 'ttbm_hotel_parking', $ttbm_hotel_parking);
+					update_post_meta($post_id, 'ttbm_display_hotel_breakfast', $ttbm_display_hotel_breakfast);
+					update_post_meta($post_id, 'ttbm_hotel_breakfast', $ttbm_hotel_breakfast);
 					/***************/
 					$ttbm_display_distance = isset($_POST['ttbm_display_hotel_distance']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hotel_distance'])) ? 'on' : 'off';
 					$ttbm_hotel_distance_des = isset($_POST['ttbm_hotel_distance_des']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_distance_des'])) : '';
@@ -101,18 +161,7 @@
 						delete_post_meta($post_id, 'ttbm_room_details', $old_ticket_type);
 					}
 				}
-				if (get_post_type($post_id) == 'ttbm_hotel') {
-					$include_service = isset($_POST['ttbm_display_include_service']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_include_service'])) ? 'on' : 'off';
-					$exclude_service = isset($_POST['ttbm_display_exclude_service']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_exclude_service'])) ? 'on' : 'off';
-					update_post_meta($post_id, 'ttbm_display_include_service', $include_service);
-					update_post_meta($post_id, 'ttbm_display_exclude_service', $exclude_service);
-					$include = isset($_POST['ttbm_service_included_in_price']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_service_included_in_price'])) : [];
-					$new_include = TTBM_Function::feature_id_to_array($include);
-					update_post_meta($post_id, 'ttbm_service_included_in_price', $new_include);
-					$exclude = isset($_POST['ttbm_service_excluded_in_price']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_service_excluded_in_price'])) : [];
-					$new_exclude = TTBM_Function::feature_id_to_array($exclude);
-					update_post_meta($post_id, 'ttbm_service_excluded_in_price', $new_exclude);
-				}
+				
 			}
 		}
 		new TTBM_Settings_Hotel();

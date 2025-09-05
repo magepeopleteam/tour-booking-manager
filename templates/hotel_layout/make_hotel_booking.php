@@ -19,5 +19,5 @@ if ( ! defined( 'ABSPATH' ) ) {
             <?php wp_nonce_field('ttbm_check_availability_action', 'ttbm_nonce'); ?>
         </div>
     </div>
-    <div class="ttbm_booking_panel placeholder_area"></div>
+    <div class="ttbm_booking_panel placeholder_area pRelative"></div>
 </div>

@@ -138,6 +138,7 @@
 					'rest_base' => 'location',
 				];
 				register_taxonomy('ttbm_tour_location', 'ttbm_tour', $args_location);
+				
 				$labels_feature = [
 					'name' => __('Features List', 'tour-booking-manager'),
 					'singular_name' => __('Features List', 'tour-booking-manager'),
@@ -158,6 +159,54 @@
 					'rest_base' => 'features_list',
 				];
 				register_taxonomy('ttbm_tour_features_list', 'ttbm_tour', $args_feature);
+				// hotel features list
+				$hotel_feature_labels = [
+					'name' => __('Hotel Features', 'tour-booking-manager'),
+					'singular_name' => __('Hotel Features', 'tour-booking-manager'),
+					'menu_name' => __('Hotel Features', 'tour-booking-manager'),
+				];
+
+				$hotel_features = [
+					'hierarchical' => true,
+					"public" => true,
+					'labels' => $hotel_feature_labels,
+					'show_ui' => true,
+					'show_in_menu' => true,
+					'show_admin_column' => true,
+					'update_count_callback' => '_update_post_term_count',
+					'query_var' => true,
+					'rewrite' => ['slug' => 'hotel-features-list'],
+					'show_in_rest' => true,
+					'meta_box_cb' => false,
+					'rest_base' => 'ttbm_hotel_features_list',
+				];
+				// If you want hotel features to be for hotels, use 'ttbm_hotel' as the post type:
+				register_taxonomy('ttbm_hotel_features_list', 'ttbm_hotel', $hotel_features);
+
+				$hotel_activity_labels = [
+					'name' => __('Hotel Activities', 'tour-booking-manager'),
+					'singular_name' => __('Hotel Activities', 'tour-booking-manager'),
+					'menu_name' => __('Hotel Activities', 'tour-booking-manager'),
+				];
+
+				$hotel_activities = [
+					'hierarchical' => true,
+					"public" => true,
+					'labels' => $hotel_activity_labels,
+					'show_ui' => true,
+					'show_in_menu' => true,
+					'show_admin_column' => true,
+					'update_count_callback' => '_update_post_term_count',
+					'query_var' => true,
+					'rewrite' => ['slug' => 'hotel-activity-list'],
+					'show_in_rest' => true,
+					'meta_box_cb' => false,
+					'rest_base' => 'ttbm_hotel_activity_list',
+				];
+				// If you want hotel activities to be for hotels, use 'ttbm_hotel' as the post type:
+				register_taxonomy('ttbm_hotel_activities_list', 'ttbm_hotel', $hotel_activities);
+
+
 				$labels_tags = [
 					'name' => __('Tags', 'tour-booking-manager'),
 					'singular_name' => __('Tags', 'tour-booking-manager'),

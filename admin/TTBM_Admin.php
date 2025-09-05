@@ -29,7 +29,6 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Hotel_Template.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin_Tour_List.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Travel_Tab_Data_Add_Display_Ajax.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Hotel_Booking_Lists.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Welcome.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Status.php';
@@ -63,7 +62,17 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_Ajax.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_General.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Gallery_Hotel.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_FAQ.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_Feature.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_Activity.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_Area_Info.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_Price.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/TTBM_Settings_Hotel_Location.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Dashboard.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Lists.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Features.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Activities.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/settings/hotel/dashboard/TTBM_Hotel_Booking.php';
 				//**********//
 			}
 			public function ttbm_widgets_init() {

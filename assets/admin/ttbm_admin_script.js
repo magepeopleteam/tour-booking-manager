@@ -1152,6 +1152,24 @@
             initOSMMap();
         }
     });
+    // for hotel trigger
+    $(document).on('click', '.ttbm_hotel_map_location,[data-collapse-target="#ttbm_display_hotel_map"]', function () {
+        if (gmap) {
+            gmap = null;
+            $('#gmap_canvas').empty();
+        }
+        if (osmMap) {
+            osmMap.remove();
+            osmMap = null;
+            $('#osmap_canvas').empty();
+        }
+        if (ttbm_map.api_key) {
+            initGMap();
+        } else {
+            initOSMMap();
+        }
+    });
+
     function initGMap() {
         const latitudeEl = document.getElementById('map_latitude');
         const longitudeEl = document.getElementById('map_longitude');

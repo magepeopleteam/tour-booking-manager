@@ -118,35 +118,40 @@
 
                 ?>
                 <div class="wrap ttbm-tour-list-page ">
-
-
-
                     <!--Here Analytics-->
                     <?php do_action('ttbm_travel_analytics_display', $posts_query->found_posts, $analytics_Data )?>
-
-                    <?php do_action('ttbm_travel_lists_tab_display', $label, $analytics_Data, $posts_query )?>
-
-                    <!--<div class="ttbm_travel_filter_holder">
-                        <div class="ttbm_travel_filter_item ttbm_filter_btn_active_bg_color" data-filter-item="all">All</div>
-                        <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="publish">Publish</div>
-                        <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="draft">Draft</div>
-                    </div>-->
-                    <div class="ttbm-tour-list_holder">
-                        <div class="ttbm-tour-list">
-                            <?php
-                            $this->tour_list($posts_query);
-                            ?>
+                    <div class="ttbm-tour-dashboard">
+                        <div class="ttbm_trvel_lists_tabs">
+                            <button class="active" data-target="ttbm_trvel_lists_tour" data-tab-type="Add New Tour"><span class="icon-wrap"><i class="mi mi-box"></i><?php  esc_html_e(' Tour Package','tour-booking-manager'); ?></span></button>
+                            <button data-target="ttbm_trvel_lists_tour_category" data-tab-type="Add New Category"><span class="icon-wrap"><i class="mi mi-category"></i><?php  esc_html_e('Tour Category','tour-booking-manager'); ?></span></button>
+                            <button data-target="ttbm_trvel_lists_places" data-tab-type="Add New Places"><span class="icon-wrap"><i class="mi mi-magnet"></i><?php  esc_html_e('Tourist Attraction','tour-booking-manager'); ?></span></button>
+                            <button data-target="ttbm_trvel_lists_organiser" data-tab-type="Add New Organiser"><span class="icon-wrap"><i class="mi mi-introduction-handshake"></i><?php  esc_html_e('Trip Organiser','tour-booking-manager'); ?></span></button>
+                            <button data-target="ttbm_trvel_lists_location" data-tab-type="Add New Locations"><span class="icon-wrap"><i class="mi mi-land-layer-location"></i><?php  esc_html_e('Trip Location','tour-booking-manager'); ?></span></button>
+                            <button data-target="ttbm_trvel_lists_features" data-tab-type="Add New Feature"><span class="icon-wrap"><i class="mi mi-list"></i><?php  esc_html_e('Features','tour-booking-manager'); ?></span></button>
+                            <button data-target="ttbm_trvel_lists_tag" data-tab-type="Add New Tag"><span class="icon-wrap"><i class="mi mi-tags"></i> <?php  esc_html_e('Tags','tour-booking-manager'); ?></span></button>
+                            <button data-target="ttbm_trvel_lists_activities" data-tab-type="Add New Activities"><span class="icon-wrap"><i class="mi mi-practice"></i><?php  esc_html_e('Activities','tour-booking-manager'); ?></span></button>
                         </div>
-                        <?php if ($posts_query->max_num_pages > $paged) : ?>
-                            <div class="ttbm-load-more-wrap">
-                                <button id="ttbm-load-more" class="button"
-                                        data-paged="<?php echo esc_attr($paged + 1); ?>"
-                                        data-posts-per-page="<?php echo esc_attr($post_per_page); ?>"
-                                        data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_load_more')); ?>">
-                                    <i class="fas fa-sync-alt"></i> <?php esc_html_e('Load More', 'tour-booking-manager'); ?> (<span class="ttbm_load_more_remaining_travel"><?php echo esc_attr( $remaining_travel );?></span>)
-                                </button>
+                        
+                        <div class="ttbm-tour-dashboard-content">
+                            <?php do_action('ttbm_travel_lists_tab_display', $label, $analytics_Data, $posts_query )?>
+                            <div class="ttbm-tour-list_holder">
+                                <div class="ttbm-tour-list">
+                                    <?php
+                                    $this->tour_list($posts_query);
+                                    ?>
+                                </div>
+                                <?php if ($posts_query->max_num_pages > $paged) : ?>
+                                    <div class="ttbm-load-more-wrap">
+                                        <button id="ttbm-load-more" class="button"
+                                                data-paged="<?php echo esc_attr($paged + 1); ?>"
+                                                data-posts-per-page="<?php echo esc_attr($post_per_page); ?>"
+                                                data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_load_more')); ?>">
+                                            <i class="fas fa-sync-alt"></i> <?php esc_html_e('Load More', 'tour-booking-manager'); ?> (<span class="ttbm_load_more_remaining_travel"><?php echo esc_attr( $remaining_travel );?></span>)
+                                        </button>
+                                    </div>
+                                <?php endif; ?>
                             </div>
-                        <?php endif; ?>
+                        </div>
                     </div>
                 </div>
 				<?php

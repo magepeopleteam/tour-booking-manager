@@ -153,6 +153,7 @@
 	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .del-button { background-color: var(--mpl-red); color: var(--mpl-white);}
 	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .toggle-form { background-color: var(--mpl-yellow);}
 	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .copy-button { background-color: var(--mpl-primary); color: var(--mpl-white);}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent{background-color: var(--mpl-light);}
 }
 /********************************************************************Icon  Image upload  ************************************************/
 @media only screen and (min-width: 10px) {
@@ -824,4 +825,7 @@
 }
 @media only screen and (max-width: 500px) {
 	.unlimited_section {padding: 25px 0;}
+}
+.auto-search-wrapper input{
+	font-size: 14px;
 }

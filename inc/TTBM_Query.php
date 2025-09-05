@@ -128,14 +128,14 @@
 			public static function ttbm_query_for_top_Search($show, $sort, $sort_by, $status, $organizer_filter, $location, $activity, $date_filter = ''): WP_Query {
 				if (is_array($date_filter)) {
 					if (!empty($date_filter['start_date'])) {
-						$start_date = DateTime::createFromFormat('F d, Y', $date_filter['start_date']);
-						$start_date = $start_date->format('Y-m-d');
+						$start_date_obj = DateTime::createFromFormat('F d, Y', $date_filter['start_date']);
+						$start_date = ($start_date_obj !== false) ? $start_date_obj->format('Y-m-d') : '';
 					} else {
 						$start_date = '';
 					}
 					if (!empty($date_filter['end_date'])) {
-						$end_date = DateTime::createFromFormat('F d, Y', $date_filter['end_date']);
-						$end_date = $end_date->format('Y-m-d');
+						$end_date_obj = DateTime::createFromFormat('F d, Y', $date_filter['end_date']);
+						$end_date = ($end_date_obj !== false) ? $end_date_obj->format('Y-m-d') : '';
 					} else {
 						$end_date = '';
 					}

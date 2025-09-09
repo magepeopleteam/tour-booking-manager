@@ -1,35 +1,44 @@
 <?php
-	if (!defined('ABSPATH')) {
-		die;
-	} // Cannot access pages directly.
-	if (wp_is_block_theme()) {
-		?>
-        <!DOCTYPE html>
-        <html <?php language_attributes(); ?>>
-        <head>
-            <meta charset="<?php bloginfo('charset'); ?>">
-			<?php
-				$block_content = do_blocks('
-			<!-- wp:group {"layout":{"type":"constrained"}} -->
-			<div class="wp-block-group">
-			<!-- wp:post-content /-->
-			</div>
-			<!-- /wp:group -->'
-				);
-				wp_head(); ?>
-        </head>
-        <body <?php body_class(); ?>>
-		<?php wp_body_open(); ?>
-        <div class="wp-site-blocks">
-            <header class="wp-block-template-part site-header">
-				<?php block_header_area(); ?>
-            </header>
-        </div>
-		<?php
-	} else {
-		get_header();
-		the_post();
-	}
+/**
+ * Template for Single Tour Details
+ * @author Sahahdat <raselsha@gmail.com>
+ * @version 1.0.0
+ * @since 2.0.6
+ */
+defined('ABSPATH')  || exit;
+// ==============================
+// HEADER
+// ==============================
+if ( wp_is_block_theme() ) {
+    if ( function_exists( 'block_header_area' ) ) {
+        // Try rendering block header
+        ob_start();
+        block_header_area();
+        $header_html = trim( ob_get_clean() );
+
+        if ( $header_html ) {
+            // If the block theme has a header part, print it
+            wp_head();
+            wp_body_open();
+            echo '<div class="wp-site-blocks">';
+            echo '<header class="wp-block-template-part site-header">';
+            echo $header_html;
+            echo '</header>';
+        } else {
+            // Fallback → if no header part is defined in theme
+            get_header();
+        }
+    } else {
+        // Fallback if function doesn't exist (older WP)
+        get_header();
+    }
+} else {
+    get_header();
+}
+// ==============================
+// MAIN CONTENT
+// ==============================
+	the_post();
 	do_action('ttbm_single_page_before_wrapper');
 	if (post_password_required()) {
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
@@ -54,15 +63,16 @@
 		<?php
 	}
 	do_action('ttbm_single_page_after_wrapper');
-	if (wp_is_block_theme()) {
-		// Code for block themes goes here.
-		?>
-        <footer class="wp-block-template-part">
-			<?php block_footer_area(); ?>
-        </footer>
-		<?php wp_footer(); ?>
-        </body>
-		<?php
-	} else {
-		get_footer();
-	}
+
+// ==============================
+// FOOTER
+// ==============================
+if ( function_exists( 'block_footer_area' ) && wp_is_block_theme() ) {
+    echo '<footer class="wp-block-template-part site-footer">';
+    block_footer_area();
+    echo '</footer>';
+    wp_footer();
+    echo '</div></body></html>';
+} else {
+    get_footer();
+}

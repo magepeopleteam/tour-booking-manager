@@ -72,30 +72,12 @@ if ( post_password_required() ) {
 
 do_action( 'ttbm_single_page_after_wrapper' );
 
-
 // ==============================
 // FOOTER
 // ==============================
-$theme = wp_get_theme();
-if ( 'Twenty Twenty-Four' === $theme->get('Name') ):
-?>
-<style>
-	.site-footer .wp-block-column-is-layout-flow .wp-block-group-is-layout-flex{
-		justify-content: space-between;
-		align-items: center;
-	}
-	.site-footer .wp-block-group-is-layout-flex .wp-block-group{
-		display:flex;
-		flex-direction: column;
-		align-items: start;
-	}
-</style>
-<?php
-endif;
-
 if ( function_exists( 'block_footer_area' ) && wp_is_block_theme() ) {
-    echo '<footer class="wp-block-template-part site-footer">';
-    block_footer_area();
+    echo '<footer class="wp-block-template-part mep-site-footer">';
+        block_footer_area();
     echo '</footer>';
     wp_footer();
 } else {

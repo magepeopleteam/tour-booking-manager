@@ -78,7 +78,7 @@
 					$particular_dates = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_particular_dates', array());
 					if (sizeof($particular_dates) > 0) {
 						foreach ($particular_dates as $date) {
-							$time = $date['ttbm_particular_start_time'] ?: '23.59.59';
+							$time = $date['ttbm_particular_start_time'] ?: '23:59:59';
 							$full_date = TTBM_Function::reduce_stop_sale_hours($date['ttbm_particular_start_date'] . ' ' . $time);
 							if ($expire || $now <= strtotime($full_date)) {
 								$tour_date[] = $date['ttbm_particular_start_date'];
@@ -134,10 +134,10 @@
 					$date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date');
 					if ($date) {
 						$time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
-						$full_date = $time ? $date . ' ' . $time : $date . ' ' . '23.59.59';
+						$full_date = $time ? $date . ' ' . $time : $date . ' ' . '23:59:59';
 						$tour_status = self::get_tour_status($tour_id);
 						$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_reg_end_date');
-						$end_date_time = $end_date . ' ' . '23.59.59';
+						$end_date_time = $end_date . ' ' . '23:59:59';
 						$full_date = self::reduce_stop_sale_hours($end_date ? $end_date_time : $full_date);
 						if ($expire || ($now <= strtotime($full_date) && $tour_status == 'active')) {
 							$tour_date['date'] = $date;
@@ -157,14 +157,15 @@
 				$times = TTBM_Function::get_time($tour_id, $date, true);
 				if (is_array($times) && sizeof($times) > 0) {
 					foreach ($times as $time) {
-						$full_date = $time['time'] ? $date . ' ' . $time['time'] : $date . ' ' . '23.59.59';
+						$single_time = is_array($time) ? ($time['time'] ?? '') : $time;
+						$full_date = $single_time ? $date . ' ' . $single_time : $date . ' ' . '23:59:59';
 						$full_date = TTBM_Function::reduce_stop_sale_hours($full_date);
 						if ($expire || $now <= strtotime($full_date)) {
 							$tour_date = $date;
 						}
 					}
 				} else {
-					$full_date = TTBM_Function::reduce_stop_sale_hours($date . ' ' . '23.59.59');
+					$full_date = TTBM_Function::reduce_stop_sale_hours($date . ' ' . '23:59:59');
 					if ($expire || $now <= strtotime($full_date)) {
 						$tour_date = $date;
 					}
@@ -178,6 +179,27 @@
 			public static function get_time($tour_id, $date = '', $expire = '') {
 				$date = $date ? gmdate('Y-m-d', strtotime($date)) : '';
 				if ($date) {
+					$travel_type = self::get_travel_type($tour_id);
+					if ($travel_type === 'particular') {
+						$result_times = array();
+						$particular_dates = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_particular_dates', array());
+						if (is_array($particular_dates) && sizeof($particular_dates) > 0) {
+							foreach ($particular_dates as $p) {
+								if (!empty($p['ttbm_particular_start_date']) && gmdate('Y-m-d', strtotime($p['ttbm_particular_start_date'])) === $date) {
+									if (!empty($p['ttbm_particular_start_time'])) {
+										$result_times[] = $p['ttbm_particular_start_time'];
+									}
+								}
+							}
+						}
+						if (sizeof($result_times) === 0) {
+							$fallback = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
+							if ($fallback) {
+								$result_times[] = $fallback;
+							}
+						}
+						return apply_filters('ttbm_get_time', $result_times, $tour_id, $date, $expire);
+					}
 					$time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
 					return apply_filters('ttbm_get_time', $time, $tour_id, $date, $expire);
 				}

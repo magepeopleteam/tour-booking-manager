@@ -385,7 +385,6 @@ div.ttbm_booking_panel table tbody tr td .ttbm_attendee_form_item:not(:last-chil
 div.ttbm_booking_panel table thead th,
 div.ttbm_booking_panel table td:last-child {text-align: center;padding: 8px;}
 div.ttbm_booking_panel table thead th:first-child {text-align: left;padding: 10px;}
-div.ttbm_booking_panel table td:last-child > div {display: inline-block;min-width: 100px;width:150px;}
 div.ttbm_booking_panel table th {
 	background-color: #FFF;
 	text-align: left;

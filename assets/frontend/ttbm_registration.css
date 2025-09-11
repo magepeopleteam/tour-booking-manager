@@ -444,16 +444,14 @@ div.ttbm_booking_panel .ttbm_attendee_form_area {
 }
 div.ttbm_booking_panel .ttbm_attendee_form_item {
 	border-radius: 10px;
-	margin: 10px 0;
+	margin: 10px;
 }
 div.ttbm_booking_panel .ttbm-attendee-form .ttbm_form_header {
 	background: none;
 	padding: 0;
 	margin-bottom: 10px;
 }
-div.ttbm_booking_panel .ttbm-attendee-form {
-	padding: 10px;
-}
+
 div.ttbm_booking_panel .ttbm-attendee-form .groupCheckBox.ttbm_form_item,
 div.ttbm_booking_panel .ttbm-attendee-form .groupRadioBox.ttbm_form_item {
 	margin-bottom: 15px;
@@ -901,6 +899,7 @@ div.left_filter {display: -webkit-flex;display: flex;}
 }
 .leftSidebar .filter-top-label h4{
 	color: var(--color_theme_alter);
+	margin: 0;
 }
 .leftSidebar div.ttbm_filter {
 	width: 100%;

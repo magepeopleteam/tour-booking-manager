@@ -28,6 +28,7 @@ if (!defined('ABSPATH')) {
                                         <div class="flexColumn">
 											<h6><?php echo esc_html( TTBM_Global_Function::date_format( $full_date, 'l' ) ); ?></h6>
 											<h6><?php echo esc_html( TTBM_Global_Function::date_format( $full_date ) ); ?></h6>
+											<h6><?php echo esc_html( TTBM_Global_Function::date_format( $full_date, 'time' ) ); ?></h6>
                                         </div>
                                         <h4><span class="far fa-arrow-alt-circle-right"></span></h4>
 										<?php

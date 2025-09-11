@@ -899,6 +899,7 @@ div.left_filter {display: -webkit-flex;display: flex;}
 }
 .leftSidebar .filter-top-label h4{
 	color: var(--color_theme_alter);
+	margin: 0;
 }
 .leftSidebar div.ttbm_filter {
 	width: 100%;

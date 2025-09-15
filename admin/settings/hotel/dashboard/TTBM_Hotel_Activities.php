@@ -63,7 +63,7 @@ if (!class_exists('TTBM_Hotel_Activities')) {
                 <?php endforeach;?>
             </div>
             <?php else: ?>
-                <p><?php esc_html__('No features found.', 'tour-booking-manager'); ?></p>
+                <p><?php esc_html_e('No features found.', 'tour-booking-manager'); ?></p>
             <?php endif;
         }
 

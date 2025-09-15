@@ -14,7 +14,8 @@ jQuery(document).ready(function ($) {
     let tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
 
-    let hotel_id = $("#ttbm_booking_hotel_id").val().trim();
+    let hotel_id = $("#ttbm_booking_hotel_id").val();
+    hotel_id = hotel_id ? hotel_id.trim() : '';
     let date_range = `${formatDate(today)}    -    ${formatDate(tomorrow)}`;
     $('[name="ttbm_hotel_date_range"]').val(date_range);
     if ($('[name="ttbm_hotel_date_range"]').length > 1) {
@@ -51,7 +52,8 @@ jQuery(document).ready(function ($) {
         let current = $(this).closest('.ttbm_hotel_item');
         
         // let hotel_id = current.find('[name="ttbm_tour_hotel_list"]').val();
-        let hotel_id = $("#ttbm_booking_hotel_id").val().trim();
+        let hotel_id = $("#ttbm_booking_hotel_id").val();
+        hotel_id = hotel_id ? hotel_id.trim() : '';
         let date_range = $('[name="ttbm_hotel_date_range"]').val();
         if ($('[name="ttbm_hotel_date_range"]').length > 1) {
             date_range = $(this).closest('.particular_date_area').find('[name="ttbm_hotel_date_range"]').val();
@@ -83,7 +85,8 @@ jQuery(document).ready(function ($) {
     });
     $(document).on('click', '.ttbm_hotel_book_now', function (e) {
         e.preventDefault();
-        let hotel_id = $("#ttbm_booking_hotel_id").val().trim();
+        let hotel_id = $("#ttbm_booking_hotel_id").val();
+        hotel_id = hotel_id ? hotel_id.trim() : '';
         let date_range = $('[name="ttbm_hotel_date_range"]').val();
         if ($('[name="ttbm_hotel_date_range"]').length > 1) {
             date_range = $(this).closest('.particular_date_area').find('[name="ttbm_hotel_date_range"]').val();

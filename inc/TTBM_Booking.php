@@ -57,29 +57,38 @@
 			}
 			public function booking_panel($tour_id, $tour_date = '', $hotel_id = '') {
 				$tour_date = $tour_date ?: current(TTBM_Function::get_date($tour_id));
-				$action = apply_filters('ttbm_form_submit_path', '', $tour_id);
-				?>
-                <form action="<?php echo esc_attr($action); ?>" method='post' class="mp_tour_ticket_form">
-	                <?php wp_nonce_field('ttbm_form_nonce', 'ttbm_form_nonce'); ?>
-                    <input type="hidden" name='ttbm_start_date' id='ttbm_tour_datetime' value='<?php echo esc_attr($tour_date); ?>'/>
-                    <input type="hidden" name='ttbm_total_price' id="ttbm_total_price" value='0'/>
-					<?php do_action('ttbm_booking_panel_inside_form', $tour_id, $hotel_id); ?>
-					<?php
-						$ttbm_type = TTBM_Function::get_tour_type($tour_id);
-						if ($ttbm_type == 'general') {
-							$file = TTBM_Function::template_path('ticket/regular_ticket.php');
-							$file = apply_filters('ttbm_regular_ticket_file', $file, $tour_id);
-							require_once $file;
-						}
-						if ($ttbm_type == 'hotel') {
-							$file = TTBM_Function::template_path('ticket/hotel_ticket.php');
-							$file = apply_filters('ttbm_hotel_ticket_file', $file, $tour_id);
-							require_once $file;
-						}
+				$tour_date = TTBM_Function::get_date_by_time_check($tour_id, $tour_date, '');
+				if ($tour_date) {
+					$action = apply_filters('ttbm_form_submit_path', '', $tour_id);
 					?>
-                </form>
-				<?php do_action('ttbm_tour_reg_form_hidden', $tour_id, $hotel_id); ?>
-				<?php
+                    <form action="<?php echo esc_attr($action); ?>" method='post' class="mp_tour_ticket_form">
+						<?php wp_nonce_field('ttbm_form_nonce', 'ttbm_form_nonce'); ?>
+                        <input type="hidden" name='ttbm_start_date' id='ttbm_tour_datetime' value='<?php echo esc_attr($tour_date); ?>'/>
+                        <input type="hidden" name='ttbm_total_price' id="ttbm_total_price" value='0'/>
+						<?php do_action('ttbm_booking_panel_inside_form', $tour_id, $hotel_id); ?>
+						<?php
+							$ttbm_type = TTBM_Function::get_tour_type($tour_id);
+							if ($ttbm_type == 'general') {
+								$file = TTBM_Function::template_path('ticket/regular_ticket.php');
+								$file = apply_filters('ttbm_regular_ticket_file', $file, $tour_id);
+								require_once $file;
+							}
+							if ($ttbm_type == 'hotel') {
+								$file = TTBM_Function::template_path('ticket/hotel_ticket.php');
+								$file = apply_filters('ttbm_hotel_ticket_file', $file, $tour_id);
+								require_once $file;
+							}
+						?>
+                    </form>
+					<?php do_action('ttbm_tour_reg_form_hidden', $tour_id, $hotel_id); ?>
+					<?php
+				} else {
+					?>
+                    <div class="dLayout allCenter bgWarning">
+                        <h3 class="textWhite"><?php esc_html_e('Expired ! ', 'tour-booking-manager') ?></h3>
+                    </div>
+					<?php
+				}
 			}
 		}
 		new TTBM_Booking();

@@ -309,7 +309,7 @@
                     <div class="review-rating">
                         <div class="review">
                             <h3><?php echo esc_html($review_title); ?></h3>
-                            <p><?php echo esc_html($review_rating)." ".__('reviews','tour-booking-manger'); ?> </p>
+                            <p><?php echo esc_html($review_rating)." ".__('reviews','tour-booking-manager'); ?> </p>
                         </div>
                         <div class="review-rate">
                             <?php echo esc_html(number_format($review_rating / 100, 1)); ?>

@@ -561,13 +561,13 @@
 			//***********************************//
 			public static function week_day(): array {
 				return [
-					'mon' => esc_html__( 'Monday', 'mage-eventpress' ),
-					'tue' => esc_html__( 'Tuesday', 'mage-eventpress' ),
-					'wed' => esc_html__( 'Wednesday', 'mage-eventpress' ),
-					'thu' => esc_html__( 'Thursday', 'mage-eventpress' ),
-					'fri' => esc_html__( 'Friday', 'mage-eventpress' ),
-					'sat' => esc_html__( 'Saturday', 'mage-eventpress' ),
-					'sun' => esc_html__( 'Sunday', 'mage-eventpress' ),
+					'mon' => esc_html__( 'Monday', 'tour-booking-manager' ),
+					'tue' => esc_html__( 'Tuesday', 'tour-booking-manager' ),
+					'wed' => esc_html__( 'Wednesday', 'tour-booking-manager' ),
+					'thu' => esc_html__( 'Thursday', 'tour-booking-manager' ),
+					'fri' => esc_html__( 'Friday', 'tour-booking-manager' ),
+					'sat' => esc_html__( 'Saturday', 'tour-booking-manager' ),
+					'sun' => esc_html__( 'Sunday', 'tour-booking-manager' ),
 				];
 			}
 			//***********************************//

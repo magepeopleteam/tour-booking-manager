@@ -98,6 +98,13 @@
 							$tour = $tour_data['tour'];
 							$ttbm_post_id = $tour->ID;
 							$tour_id = TTBM_Function::post_id_multi_language($ttbm_post_id);
+							
+							// Set the global post context to the current tour
+							global $post;
+							$original_post = $post;
+							$post = $tour;
+							setup_postdata($post);
+							
 							//if ($ttbm_post_id == $tour_id) {
 							$active_class = $count < $per_page ? $grid_class : $grid_class . ' dNone';
 							$count++;
@@ -160,7 +167,13 @@
 										include(TTBM_Function::template_path('list/grid_list.php'));
 									} else {
 										include(TTBM_Function::template_path('list/default.php'));
-									}
+								}
+								
+								// Restore the original post context
+								$post = $original_post;
+								if ($original_post) {
+									setup_postdata($original_post);
+								}
 								?>
                             </div>
 							<?php //} ?>

@@ -510,7 +510,7 @@
 									'ttbm_location_name' => 'Coxbazar',
 									'ttbm_display_map' => 'off',
 									'ttbm_display_description' => 'on',
-									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
+									'ttbm_short_description' => 'Discover the breathtaking beauty of Naples and the stunning Amalfi Coast on this unforgettable Italian adventure. Explore historic cities, charming coastal villages, and enjoy authentic Mediterranean cuisine along dramatic clifftop roads.',
 									//date_settings
 									'ttbm_travel_type' => 'fixed',
 									'ttbm_travel_start_date' => gmdate('Y-m-d', strtotime(' +35 day')),
@@ -665,7 +665,7 @@
 									'ttbm_location_name' => 'Las Vegas',
 									'ttbm_display_map' => 'off',
 									'ttbm_display_description' => 'on',
-									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
+									'ttbm_short_description' => 'Embark on an exciting deep-sea exploration aboard a traditional Shampan boat. Experience the thrill of discovering marine life and underwater wonders in crystal-clear waters with expert guides.',
 									//date_settings
 									'ttbm_travel_type' => 'repeated',
 									'ttbm_travel_repeated_after' => '4',
@@ -821,7 +821,7 @@
 									'ttbm_location_name' => 'Naples Italy',
 									'ttbm_display_map' => 'off',
 									'ttbm_display_description' => 'on',
-									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
+									'ttbm_short_description' => 'Experience the ultimate beach hopping adventure visiting the pristine beaches of Inani, Himchari, and Patuartek. Enjoy sun, sand, and sea with opportunities for swimming, beach activities, and local seafood.',
 									//date_settings
 									'ttbm_travel_type' => 'repeated',
 									'ttbm_travel_repeated_after' => '7',
@@ -977,7 +977,7 @@
 									'ttbm_location_name' => 'Rangamati',
 									'ttbm_display_map' => 'off',
 									'ttbm_display_description' => 'on',
-									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
+									'ttbm_short_description' => 'Escape to the serene beauty of Boga Lake on this relaxing gateway tour. Enjoy peaceful boat rides, stunning mountain views, and the tranquil atmosphere of one of nature\'s most beautiful hidden gems.',
 									//date_settings
 									'ttbm_travel_type' => 'repeated',
 									'ttbm_travel_repeated_after' => '15',

@@ -1937,7 +1937,7 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
 
 .ttbm_price_container {
     position: relative;
-    text-align: left;
+    text-align: center;
 }
 
 .ttbm_ticket_area .ttbm_price_container{

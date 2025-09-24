@@ -1851,3 +1851,602 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
 		padding:0 20px;
 	}
 }
+/* Enhanced Ticket Availability Styles */
+.ttbm_enhanced_ticket_area {
+    margin: 20px 0;
+}
+
+.ttbm_enhanced_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+.ttbm_table_header {
+    background: #f8f9fa;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.ttbm_table_header th {
+    padding: 16px 20px;
+    font-weight: 600;
+    text-align: left;
+    color: #495057;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ttbm_ticket_row {
+    border-bottom: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.ttbm_ticket_row:hover {
+    background: #f8f9fa;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.ttbm_ticket_row td {
+    padding: 20px;
+    vertical-align: middle;
+    position: relative;
+}
+
+.ttbm_ticket_row td:first-child {
+    padding: 20px;
+    vertical-align: middle;
+    position: relative;
+}
+
+.person-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ttbm_hidden_inputs {
+    display: none;
+}
+
+.ttbm_ticket_icon {
+    font-size: 24px;
+    color: #667eea;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+.ttbm_ticket_details {
+    display: block;
+}
+
+.ttbm_ticket_details h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.ttbm_ticket_description {
+    font-size: 13px;
+    color: #6c757d;
+    line-height: 1.4;
+}
+
+.ttbm_price_container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    text-align: left;
+}
+
+.ttbm_regular_price.strikeLine {
+    font-size: 14px;
+    color: #6c757d;
+    text-decoration: line-through;
+    display: inline-block;
+    margin: 0;
+}
+
+.ttbm_sale_price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #28a745;
+    display: inline-block;
+    margin: 0;
+}
+
+.ttbm_discount_badge {
+    background: #dc3545;
+    color: white;
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    animation: bounce 2s infinite;
+    z-index: 10;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-6px); }
+    60% { transform: translateY(-3px); }
+}
+
+.ttbm_availability_container {
+    padding: 5px 0;
+    min-width: 150px;
+}
+
+.ttbm_stock_info {
+    display: block;
+}
+
+.ttbm_remaining_count {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.ttbm_available_number {
+    font-size: 18px;
+    font-weight: 700;
+    color: #28a745;
+    margin-right: 5px;
+}
+
+.ttbm_available_label {
+    font-size: 12px;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.ttbm_urgency_message {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #dc3545;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 10px;
+    background: rgba(220, 53, 69, 0.1);
+    border-radius: 15px;
+    animation: urgency-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes urgency-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.ttbm_capacity_info {
+    margin-top: 5px;
+}
+
+.ttbm_capacity_text {
+    font-size: 10px;
+    color: #6c757d;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.ttbm_progress_bar {
+    width: 100%;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #dee2e6;
+}
+
+.ttbm_progress_fill {
+    height: 100%;
+    transition: width 0.5s ease, background-color 0.3s ease;
+    border-radius: 3px;
+    min-width: 2px;
+}
+
+.ttbm_progress_in_stock {
+    background: linear-gradient(90deg, #28a745, #20c997);
+}
+
+.ttbm_progress_medium_stock {
+    background: linear-gradient(90deg, #ffc107, #fd7e14);
+}
+
+.ttbm_progress_low_stock {
+    background: linear-gradient(90deg, #dc3545, #e83e8c);
+}
+
+.ttbm_progress_sold_out {
+    background: #6c757d;
+}
+
+.ttbm_stock_status.sold_out {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #dc3545;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 15px;
+    background: rgba(220, 53, 69, 0.1);
+    border-radius: 20px;
+    border: 2px solid rgba(220, 53, 69, 0.2);
+}
+
+.ttbm_sold_out {
+    background: rgba(220, 53, 69, 0.02) !important;
+    opacity: 0.7;
+}
+
+.ttbm_sold_out td::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #dc3545;
+}
+
+.ttbm_low_stock {
+    background: rgba(255, 193, 7, 0.05) !important;
+    animation: low-stock-glow 3s ease-in-out infinite;
+}
+
+@keyframes low-stock-glow {
+    0%, 100% { box-shadow: 0 0 0 rgba(255, 193, 7, 0); }
+    50% { box-shadow: 0 0 20px rgba(255, 193, 7, 0.3); }
+}
+
+.ttbm_low_stock td::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #ffc107;
+}
+
+.ttbm_not_available {
+    color: #6c757d;
+    font-style: italic;
+    font-size: 14px;
+    padding: 8px 16px;
+    background: #f8f9fa;
+    border-radius: 15px;
+    border: 1px dashed #dee2e6;
+}
+
+/* Desktop column centering */
+.ttbm_enhanced_table .ttbm-select-quantity {
+    text-align: center;
+}
+
+.ttbm_enhanced_table .ttbm-select-quantity .qtyIncDec {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.ttbm_enhanced_table .ttbm-select-quantity .ttbm_sold_out_message {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Availability column centering */
+.ttbm_enhanced_table .ttbm-availability-info {
+    text-align: center;
+}
+
+.ttbm_enhanced_table .ttbm_availability_container {
+    display: inline-block;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.ttbm_enhanced_table .ttbm_stock_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.ttbm_enhanced_table .ttbm_availability_details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.ttbm_enhanced_table .ttbm_remaining_count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 8px;
+}
+
+.ttbm_enhanced_table .ttbm_urgency_message {
+    margin: 5px auto 0;
+    display: inline-flex;
+}
+
+.ttbm_enhanced_table .ttbm_capacity_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.ttbm_enhanced_table .ttbm_stock_status.sold_out {
+    margin: 0 auto;
+    display: inline-flex;
+}
+
+@media (max-width: 768px) {
+    .ttbm_enhanced_ticket_area {
+        padding: 10px 0;
+    }
+    
+    .ttbm_enhanced_table {
+        font-size: 14px;
+        display: block;
+        width: 100%;
+        margin: 0;
+        border-collapse: separate;
+        border-spacing: 0 15px;
+    }
+    
+    .ttbm_table_header {
+        display: none;
+    }
+    
+    .ttbm_ticket_row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .ttbm_ticket_row td {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 15px;
+        width: 100%;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .ttbm_ticket_row td:last-child {
+        border-bottom: none;
+    }
+    
+    /* Left column for labels */
+    .ttbm_ticket_row td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        font-size: 13px;
+        color: #495057;
+        min-width: 90px;
+        margin-right: 10px;
+    }
+    
+    .ttbm_ticket_row td.ttbm-person-info::before {
+        content: 'Ticket Type';
+    }
+    
+    .ttbm_ticket_row td.ttbm-regular-price::before {
+        content: 'Price';
+    }
+    
+    .ttbm_ticket_row td.ttbm-availability-info::before {
+        content: 'Availability';
+    }
+    
+    .ttbm_ticket_row td.ttbm-select-quantity::before {
+        content: 'Quantity';
+    }
+    
+    /* Special handling for ticket type cell */
+    .ttbm_ticket_row td.ttbm-person-info {
+        background-color: #f8f9fa;
+        border-radius: 8px 8px 0 0;
+        border-left: 4px solid #667eea;
+    }
+    
+    /* Right column for content */
+    .person-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: auto;
+    }
+    
+    .ttbm_ticket_icon {
+        width: 28px;
+        height: 28px;
+        font-size: 18px;
+        background-color: #f0f4ff;
+        border-radius: 50%;
+    }
+    
+    .ttbm_ticket_details h4 {
+        font-size: 14px;
+        font-weight: 600;
+        margin: 0;
+    }
+    
+    .ttbm_ticket_description {
+        display: none; /* Hide on mobile for cleaner look */
+    }
+    
+    /* Price styling */
+    .ttbm_price_container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: auto;
+    }
+    
+    .ttbm_regular_price.strikeLine {
+        font-size: 12px;
+        color: #6c757d;
+    }
+    
+    .ttbm_sale_price {
+        font-size: 16px;
+        font-weight: 700;
+        color: #28a745;
+    }
+    
+    .ttbm_discount_badge {
+        font-size: 9px;
+        padding: 2px 6px;
+        background: #dc3545;
+        color: white;
+        border-radius: 20px;
+        margin-left: 5px;
+    }
+    
+    /* Availability styling */
+    .ttbm_availability_container {
+        margin-left: auto;
+    }
+    
+    .ttbm_remaining_count {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .ttbm_available_number {
+        font-size: 16px;
+        font-weight: 700;
+        color: #28a745;
+    }
+    
+    .ttbm_available_label {
+        font-size: 12px;
+        color: #6c757d;
+    }
+    
+    .ttbm_urgency_message {
+        font-size: 11px;
+        padding: 3px 8px;
+        background: rgba(220, 53, 69, 0.1);
+        color: #dc3545;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 5px;
+    }
+    
+    .ttbm_capacity_info {
+        display: none; /* Hide on mobile for cleaner look */
+    }
+    
+    /* Quantity section */
+    .ttbm-select-quantity .qtyIncDec {
+        margin-left: auto;
+        min-width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ttbm_enhanced_ticket_area {
+        padding: 5px 0;
+        margin: 10px 0;
+    }
+    
+    .ttbm_ticket_row {
+        margin-bottom: 12px;
+        border-radius: 6px;
+        box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    }
+    
+    .ttbm_ticket_row td {
+        padding: 10px 12px;
+    }
+    
+    .ttbm_ticket_row td::before {
+        font-size: 12px;
+        min-width: 80px;
+    }
+    
+    .person-info {
+        gap: 6px;
+    }
+    
+    .ttbm_ticket_icon {
+        width: 24px;
+        height: 24px;
+        font-size: 16px;
+    }
+    
+    .ttbm_ticket_details h4 {
+        font-size: 13px;
+    }
+    
+    .ttbm_price_container {
+        gap: 4px;
+    }
+    
+    .ttbm_regular_price.strikeLine {
+        font-size: 11px;
+    }
+    
+    .ttbm_sale_price {
+        font-size: 14px;
+    }
+    
+    .ttbm_discount_badge {
+        font-size: 8px;
+        padding: 1px 4px;
+    }
+    
+    .ttbm_available_number {
+        font-size: 14px;
+    }
+    
+    .ttbm_available_label {
+        font-size: 10px;
+    }
+    
+    .ttbm_urgency_message {
+        font-size: 10px;
+        padding: 2px 6px;
+        gap: 3px;
+    }
+    
+    .ttbm-select-quantity .qtyIncDec {
+        min-width: 100px;
+    }
+}

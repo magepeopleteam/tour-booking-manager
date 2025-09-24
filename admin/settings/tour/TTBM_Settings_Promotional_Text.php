@@ -68,14 +68,10 @@
 				?>
                 <tr class="ttbm_remove_area">
                     <td class="">
-                        <label>
-                            <input class="input-fullwidth" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
-                        </label>
-                    </td>
-                    <td>
-                        <div class="textRight">
-							<?php TTBM_Custom_Layout::move_remove_button(); ?>
-                        </div>
+                            <div class="dFlex align-items-center">
+								<input class="input-fullwidth" name="ttbm_why_choose_us_texts[]" value="<?php echo esc_attr($why_choose); ?>"/>
+                        		<?php TTBM_Custom_Layout::move_remove_button(); ?>
+							</div>
                     </td>
                 </tr>
 				<?php

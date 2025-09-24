@@ -29,7 +29,7 @@
                         <div data-collapse="#ttbm_display_registration" class="<?php echo esc_attr($active); ?>">
                             <div class="dLayout">
                                 <div class="alignCenter justifyBetween">
-                                    <h6><?php esc_html_e('Tour Type', 'tour-booking-manager'); ?></h6>
+                                    <p><?php esc_html_e('Tour Type', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_registration'); ?></span></i></p>
                                     <label>
                                         <select class="formControl" name="ttbm_type">
 											<?php foreach ($all_types as $key => $type) { ?>
@@ -38,7 +38,6 @@
                                         </select>
                                     </label>
                                 </div>
-                                <span class="info_text"><?php TTBM_Settings::des_p('ttbm_display_registration'); ?></span>
 								<?php do_action('ttbm_hotel_pricing_before', $tour_id); ?>
 								<?php do_action('ttbm_tour_pricing_before', $tour_id); ?>
 								<?php $this->ttbm_hotel_config($tour_id); ?>
@@ -78,7 +77,7 @@
 						<?php do_action('ttbm_ticket_type_before', $tour_id); ?>
 						<?php if ($all_forms->post_count > 0) { ?>
                             <div class="label">
-                                <p><?php esc_html_e('Import Ticket type', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('get_ticket_type'); ?></span></i></p>
+                                <p><?php esc_html_e('Import Ticket type', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('You can import ticket types here . Create new ticket types', 'tour-booking-manager'); ?><a href="post-new.php?post_type=ttbm_ticket_types"> <?php esc_html_e('Click Me', 'tour-booking-manager'); ?></a></span></i></p>
                                 <label>
                                     <select class="formControl" name="ticket_type_import">
                                         <option value="" selected><?php esc_html_e('Select a Import Ticket type', 'tour-booking-manager'); ?></option>

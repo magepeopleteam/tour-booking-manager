@@ -31,35 +31,41 @@
                                 <div>
                                     <p><?php esc_html_e('Guide Description Style', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_guide_description_style'); ?></span></i></p>
                                 </div>
-                                <select name="ttbm_guide_description_style" class=''>
+                                <div class="dFlex align-items-center">
+                                <select name="ttbm_guide_description_style" class='w-50 formControl'>
                                     <option value="short" <?php echo esc_attr($ttbm_guide_description_style == 'short' ? 'selected' : ''); ?>><?php esc_html_e('Short', 'tour-booking-manager'); ?></option>
                                     <option value="full" <?php echo esc_attr($ttbm_guide_description_style == 'full' ? 'selected' : ''); ?>><?php esc_html_e('Full', 'tour-booking-manager'); ?></option>
                                 </select>
+                                </div>
                             </label>
                             <label class="label">
                                 <div>
                                     <p><?php esc_html_e('Guide Style', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_guide_style'); ?></span></i></p>
                                 </div>
-                                <select name="ttbm_guide_style" class=''>
+                                <div class="dFlex align-items-center">
+                                <select name="ttbm_guide_style" class='w-50 formControl'>
                                     <option value="all" <?php echo esc_attr($ttbm_guide_style == 'all' ? 'selected' : ''); ?>><?php esc_html_e('All Visible', 'tour-booking-manager'); ?></option>
                                     <option value="carousel" <?php echo esc_attr($ttbm_guide_style == 'carousel' ? 'selected' : ''); ?>><?php esc_html_e('Carousel', 'tour-booking-manager'); ?></option>
                                 </select>
+                                 </div>
                             </label>
                             <label class="label">
                                 <div>
                                     <p><?php esc_html_e('Guide Image Style', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_guide_image_style'); ?></span></i></p>
                                 </div>
-                                <select name="ttbm_guide_image_style" class=''>
+                                <div class="dFlex align-items-center">
+                                <select name="ttbm_guide_image_style" class='w-50 formControl'>
                                     <option value="circle" <?php echo esc_attr($ttbm_guide_image_style == 'circle' ? 'selected' : ''); ?>><?php esc_html_e('Circle', 'tour-booking-manager'); ?></option>
                                     <option value="squire" <?php echo esc_attr($ttbm_guide_image_style == 'squire' ? 'selected' : ''); ?>><?php esc_html_e('Squire', 'tour-booking-manager'); ?></option>
                                 </select>
+                                </div>
                             </label>
                             <label class="label">
                                 <div>
                                     <p><?php echo esc_html__('Select ', 'tour-booking-manager') . '  ' . esc_html($ttbm_label) . '  ' . esc_html__('guide', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_tour_guide'); ?></span></i></p>
                                 </div>
                                 <div style="max-width: 70%;">
-                                    <select name="ttbm_tour_guide[]" multiple='multiple' class='ttbm_select2 w-50' data-placeholder="<?php echo esc_html__('Please Select Guide', 'tour-booking-manager'); ?>">
+                                    <select name="ttbm_tour_guide[]" multiple='multiple' class='ttbm_select2 w-50 formControl' data-placeholder="<?php echo esc_html__('Please Select Guide', 'tour-booking-manager'); ?>">
 										<?php
 											if ($all_guides->post_count > 0) {
 												foreach ($all_guides->posts as $guide) {

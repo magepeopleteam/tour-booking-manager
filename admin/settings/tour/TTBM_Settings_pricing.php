@@ -18,14 +18,15 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
                 <div class="tabsItem ttbm_settings_pricing" data-tabs="#ttbm_settings_pricing">
-                    <div class="gptLayout">
-                        <div class="alignCenter justifyBetween">
-                            <h5><?php esc_html_e('Pricing Settings', 'tour-booking-manager'); ?></h5>
+                    <h2><?php esc_html_e('Price Settings', 'tour-booking-manager'); ?></h2>
+                    <p><?php esc_html_e('You have the flexibility to configure your tour pricing or disable registration by toggling the options. This will ensure that all necessary tour information is accurately displayed.', 'tour-booking-manager'); ?></p>
+                    
+                    <section>
+                        <div class="ttbm-header">
+                            <h4><i class="fas fa-tools"></i><?php esc_html_e('Genearl Information', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_registration', $checked); ?>
                         </div>
-                        <span class="info_text"><?php TTBM_Settings::des_p('price_settings_description'); ?> </span>
                         <div data-collapse="#ttbm_display_registration" class="<?php echo esc_attr($active); ?>">
-                            <div class="divider"></div>
                             <div class="dLayout">
                                 <div class="alignCenter justifyBetween">
                                     <h6><?php esc_html_e('Tour Type', 'tour-booking-manager'); ?></h6>
@@ -45,7 +46,7 @@
 								<?php $this->ttbm_ticket_config($tour_id); ?>
                             </div>
                         </div>
-                    </div>
+                    </section>
 					<?php do_action('ttbm_tour_pricing_inner', $tour_id); ?>
                     <div style="margin-bottom: 20px;">
 						<?php $this->advertise_addon(); ?>

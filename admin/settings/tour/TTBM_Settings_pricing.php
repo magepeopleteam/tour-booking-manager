@@ -77,20 +77,19 @@
                     <div class="ttbm_settings_area ttbm_price_config">
 						<?php do_action('ttbm_ticket_type_before', $tour_id); ?>
 						<?php if ($all_forms->post_count > 0) { ?>
-                            <div class="alignCenter justifyBetween _mT">
-                                <h6><?php esc_html_e('Import Ticket type', 'tour-booking-manager'); ?></h6>
+                            <div class="label">
+                                <p><?php esc_html_e('Import Ticket type', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('get_ticket_type'); ?></span></i></p>
                                 <label>
                                     <select class="formControl" name="ticket_type_import">
                                         <option value="" selected><?php esc_html_e('Select a Import Ticket type', 'tour-booking-manager'); ?></option>
-										<?php foreach ($all_forms->posts as $form) { ?>
+                                        <?php foreach ($all_forms->posts as $form) { ?>
                                             <option value="<?php echo esc_attr($form->ID) ?>">
-												<?php echo esc_html(get_the_title($form->ID)); ?>
+                                                <?php echo esc_html(get_the_title($form->ID)); ?>
                                             </option>
-										<?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </label>
                             </div>
-                            <span class="info_text"><?php TTBM_Settings::des_p('get_ticket_type'); ?></span>
 						<?php } ?>
                         <div class="ttbm_settings_area _mT_xs">
                             <div class="ovAuto">

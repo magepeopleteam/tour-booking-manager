@@ -92,7 +92,7 @@
 	#ttbm_meta_box_panel textarea { background-color: #F5F8FF; font-weight: normal; line-height: 1.5rem;}
 	#ttbm_meta_box_panel input[type=search] { border: 0px solid var(--mpl-dark); background-color: #F5F8FF;}
 	#ttbm_meta_box_panel .tool-tips { color: var(--mpl-gray); position: relative; padding-left: 0.25em;}
-	#ttbm_meta_box_panel .tool-tips span { position: absolute; z-index: 1; bottom: 130%; left: 50%; transform: translate(-50%); visibility: hidden; font-size: 0.9rem; text-align: center; background-color: var(--mpl-black); color: var(--mpl-white); border-radius: 0.25rem; padding: 0.5em 0.75em; width: max-content; max-width: 350px; font-weight: normal; }
+	#ttbm_meta_box_panel .tool-tips span { position: absolute; z-index: 1; bottom: 130%; left: 50%; transform: translate(-50%); visibility: hidden; font-size: 0.9rem; text-align: center; background-color: var(--mpl-black); color: var(--mpl-white); border-radius: 0.25rem; padding: 0.5em 0.75em; width: max-content; max-width: 350px; font-weight: normal; font-family: sans-serif;}
 	#ttbm_meta_box_panel .tool-tips span:after { content: " "; position: absolute; top: 100%; left: 50%; transform: translate(-50%); border: 5px solid var(--mpl-black); border-color: var(--mpl-black) transparent transparent transparent; margin-left: 0.18em; }
 	#ttbm_meta_box_panel .tool-tips:hover { color: var(--mpl-primary); }
 	#ttbm_meta_box_panel .tool-tips:hover span { visibility: visible; }

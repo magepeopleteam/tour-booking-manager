@@ -79,7 +79,7 @@ if (!defined('ABSPATH')) {
 												<span class="ttbm_ticket_icon <?php echo esc_attr($ticket_type_icon); ?>"></span>
 											<?php } ?>
 											<div class="ttbm_ticket_details">
-												<h4 class="ttbm_ticket_name"><?php echo esc_html($ticket_name); ?></h4>
+												<p class="ttbm_ticket_name"><?php echo esc_html($ticket_name); ?></p>
 												<?php if ($description) { ?>
 													<div class="ttbm_ticket_description"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
 												<?php } ?>

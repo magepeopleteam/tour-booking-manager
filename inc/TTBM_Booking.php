@@ -9,8 +9,10 @@
 				add_action('wp_ajax_nopriv_get_ttbm_ticket', array($this, 'get_ttbm_ticket'));
 				add_action('wp_ajax_get_ttbm_sold_ticket', array($this, 'get_ttbm_sold_ticket'));
 				add_action('wp_ajax_nopriv_get_ttbm_sold_ticket', array($this, 'get_ttbm_sold_ticket'));
-				add_action('wp_ajax_get_ttbm_hotel_room_list', array($this, 'get_ttbm_hotel_room_list'));
-				add_action('wp_ajax_nopriv_get_ttbm_hotel_room_list', array($this, 'get_ttbm_hotel_room_list'));
+			add_action('wp_ajax_get_ttbm_hotel_room_list', array($this, 'get_ttbm_hotel_room_list'));
+			add_action('wp_ajax_nopriv_get_ttbm_hotel_room_list', array($this, 'get_ttbm_hotel_room_list'));
+			add_action('wp_ajax_get_ticket_availability', array($this, 'get_ticket_availability'));
+			add_action('wp_ajax_nopriv_get_ticket_availability', array($this, 'get_ticket_availability'));
 				add_action('ttbm_booking_panel', array($this, 'booking_panel'), 10, 4);
 			}
 			public function get_ttbm_ticket() {
@@ -53,9 +55,32 @@
 				$date = explode("    -    ", $date_range);
 				$start_date = gmdate('Y-m-d', strtotime($date[0]));
 				do_action('ttbm_booking_panel', $tour_id, $start_date, $hotel_id);
-				die();
+			die();
+		}
+		public function get_ticket_availability() {
+			if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_frontend_nonce')) {
+				wp_send_json_error(['message' => 'Invalid nonce']);
+				die;
 			}
-			public function booking_panel($tour_id, $tour_date = '', $hotel_id = '') {
+			
+			$tour_id = isset($_REQUEST['tour_id']) ? intval($_REQUEST['tour_id']) : 0;
+			$tour_date = isset($_REQUEST['tour_date']) ? sanitize_text_field($_REQUEST['tour_date']) : '';
+			$tour_time = isset($_REQUEST['tour_time']) ? sanitize_text_field($_REQUEST['tour_time']) : '';
+			
+			if (!$tour_id) {
+				wp_send_json_error(['message' => 'Invalid tour ID']);
+				die;
+			}
+			
+			$availability_info = TTBM_Function::get_ticket_availability_info($tour_id, $tour_date);
+			
+			wp_send_json_success([
+				'availability' => $availability_info,
+				'tour_date' => $tour_date,
+				'tour_time' => $tour_time
+			]);
+		}
+		public function booking_panel($tour_id, $tour_date = '', $hotel_id = '') {
 				$tour_date = $tour_date ?: current(TTBM_Function::get_date($tour_id));
 				$tour_date = TTBM_Function::get_date_by_time_check($tour_id, $tour_date, '');
 				if ($tour_date) {

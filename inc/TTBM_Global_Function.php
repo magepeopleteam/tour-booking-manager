@@ -672,7 +672,17 @@
 				return $ticket_info;
 			}
 			public static function pa_add_multiple_room_type_booking($hotel_id, $booking_request, $check_in, $check_out) {
-				$bookings = get_post_meta($hotel_id, 'ttbm_hotel_bookings', true);
+                $all_bookings = get_post_meta($hotel_id, 'ttbm_hotel_bookings', true);
+                $bookings = [];
+                if( is_array( $all_bookings ) && !empty( $all_bookings ) ){
+                    $today = date("Y-m-d");
+                    foreach ( $all_bookings as $all_booking ) {
+                        if ( $all_booking['check_out'] >= $today ) {
+                            $bookings[] = $all_booking;
+                        }
+                    }
+                }
+
 				if (!is_array($bookings))
 					$bookings = [];
 				foreach ($booking_request as $room_type => $rooms_booked) {

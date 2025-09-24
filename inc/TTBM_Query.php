@@ -15,7 +15,6 @@
 				return new WP_Query($args);
 			}
 			public static function ttbm_query($show, $sort = '', $cat = '', $org = '', $city = '', $country = '', $status = '', $tour_type = '', $activity = '', $sort_by = '', $attraction = '', $feature = '' ): WP_Query {
-                error_log( print_r( [ '$feature' => $feature ], true ) );
 				TTBM_Function::update_all_upcoming_date_month();
 				$sort_by = $sort_by ?: 'meta_value';
 				if (get_query_var('paged')) {

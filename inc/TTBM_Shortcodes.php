@@ -17,6 +17,7 @@
 				add_shortcode('ttbm-top-attractions', array($this, 'top_attractions'));
 				add_shortcode('ttbm-activity_browse', array($this, 'activity_browse'));
 				add_shortcode('ttbm-texonomy-display', array($this, 'texonomy_display'));
+                add_shortcode('wptravelly-hotel-list', array($this, 'hotel_list_with_left_filter'));
 			}
 			public function static_filter($attribute) {
 				$defaults = $this->default_attribute();
@@ -357,6 +358,171 @@
 				}
 				return ob_get_clean();
 			}
+
+            public static function ttbm__get_booked_hotels( $start_date, $end_date ) {
+
+                $args = array(
+                    'post_type'      => 'ttbm_hotel_booking', // Replace with your CPT
+                    'posts_per_page' => -1,
+                    'meta_query'     => array(
+                        'relation' => 'AND',
+                        array(
+                            'key'     => '_ttbm_hotel_booking_checkin_date',
+                            'value'   => $end_date,       // check-in should be <= filter end
+                            'compare' => '<=',
+                            'type'    => 'DATE',
+                        ),
+                        array(
+                            'key'     => '_ttbm_hotel_booking_checkout_date',
+                            'value'   => $start_date,     // check-out should be >= filter start
+                            'compare' => '>=',
+                            'type'    => 'DATE',
+                        ),
+                    ),
+                );
+
+                $query = new WP_Query($args);
+
+                $bookings = array();
+                if ( $query->have_posts() ) {
+                    foreach ( $query->posts as $booking ) {
+                        $hotel_id   = get_post_meta( $booking->ID, '_ttbm_hotel_id', true );
+                        $room_info  = get_post_meta( $booking->ID, '_ttbm_hotel_booking_room_info', true );
+                        $bookings[] = array(
+                            'hotel_id'  => intval( $hotel_id ),
+                            'room_info' => maybe_unserialize( $room_info ),
+                        );
+                    }
+                }
+                wp_reset_postdata();
+
+                return $bookings;
+            }
+            public static function ttbm_get_available_hotels_in_date( $start_date, $end_date, $location = '' ) {
+                $booked_data = self::ttbm__get_booked_hotels( $start_date, $end_date );
+
+                $booked_summary = array();
+                foreach ( $booked_data as $booking ) {
+                    $hotel_id = $booking['hotel_id'];
+                    foreach ( $booking['room_info'] as $room_name => $room ) {
+                        $qty  = isset( $room['quantity'] ) ? intval( $room['quantity'] ) : 0;
+                        $booked_summary[$hotel_id][$room_name] =
+                            ( $booked_summary[$hotel_id][$room_name] ?? 0 ) + $qty;
+                    }
+                }
+
+                $location_search = !empty( $location ) ? array(
+                    'key'     => 'ttbm_hotel_location',
+                    'value'   => $location,
+                    'compare' => '=',
+                ) : '';
+
+                $args = array(
+                    'post_type'      => 'ttbm_hotel',
+                    'post_status'    => 'publish',
+                    'posts_per_page' => -1,
+                    'fields'         => 'ids',
+                    'meta_query'     => array(
+                        $location_search,
+                    ),
+                );
+
+                $query   = new WP_Query( $args );
+                $results = array();
+
+                if ( $query->have_posts() ) {
+                    foreach ( $query->posts as $hotel_id ) {
+                        $room_info = maybe_unserialize( get_post_meta( $hotel_id, 'ttbm_room_details', true ) );
+
+                        $available_rooms = array();
+                        foreach ( $room_info as $room ) {
+                            $name     = $room['ttbm_hotel_room_name'];
+                            $capacity = intval( $room['ttbm_hotel_room_qty'] );
+                            $reserved = $booked_summary[$hotel_id][$name] ?? 0;
+
+                            $available_qty = $capacity - $reserved;
+                            if ( $available_qty > 0 ) {
+                                $room['available_qty'] = $available_qty;
+                                $available_rooms[]     = $room;
+                            }
+                        }
+
+                        if ( ! empty( $available_rooms ) ) {
+                            $results[] = array(
+                                'hotel_id' => $hotel_id,
+                                'rooms'    => $available_rooms,
+                            );
+                        }
+                    }
+                }
+                wp_reset_postdata();
+
+                return $results;
+            }
+
+
+
+
+            public function hotel_list_with_left_filter( $attribute, $month_filter = 'yes') {
+                $tour_type = 'ttbm_hotel';
+                $start = '2025-09-27';
+                $end   = '2025-09-30';
+                $location = 'Coxbazar';
+                $available_hotels = self::ttbm_get_available_hotels_in_date( $start, $end, $location );
+
+
+
+
+                $defaults = $this->default_attribute('modern', 12, 'no', 'yes', 'yes', 'yes', $month_filter, $tour_type);
+                $params = shortcode_atts($defaults, $attribute);
+                $show = $params['show'];
+                $pagination = $params['pagination'];
+                $search = $params['sidebar-filter'];
+                $show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
+
+                $location_search = '';
+                $args = array(
+                    'post_type'      => 'ttbm_hotel',
+                    'post_status'    => 'publish',
+                    'posts_per_page' => -1,
+                    'meta_query'     => array(
+                        $location_search,  // your meta query for location
+                    ),
+                );
+
+                $loop = new WP_Query($args);
+                ob_start();
+                ?>
+                <div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
+                    <div class="mpContainer">
+                        <?php
+                        if ($params['sidebar-filter'] == 'yes') {
+                            ?>
+                            <div class="left_filter">
+                                <div class="leftSidebar placeholder_area">
+                                    <?php do_action('ttbm_hotel_left_filter', $params); ?>
+                                </div>
+                                <div class="mainSection">
+                                    <?php do_action('ttbm_hotel_filter_top_bar', $loop, $params); ?>
+                                    <?php do_action('ttbm_all_hotel_list_item', $loop, $params); ?>
+                                    <?php do_action('ttbm_hotel_sort_result', $loop, $params); ?>
+                                    <?php do_action('ttbm_hotel_pagination', $params, $loop->post_count); ?>
+                                </div>
+                            </div>
+                            <?php
+                        } else {
+                            include( TTBM_Function::template_path( 'layout/filter_hidden.php' ) );
+                            do_action('ttbm_all_hotel_list_item', $loop, $params);
+                            do_action('ttbm_hotel_sort_result', $loop, $params);
+                            do_action('ttbm_hotel_pagination', $params, $loop->post_count);
+                        }
+                        ?>
+                    </div>
+                </div>
+                <?php
+                return ob_get_clean();
+            }
+
 			//***************************//
 			public function default_attribute($style = 'grid', $show = 9, $search_filter = 'yes', $sidebar_filter = 'no', $feature_filter = 'no', $tag_filter = 'no', $month_filter = 'yes', $tour_type = '', $sort_by = '', $shuffle = 'no'): array {
 			return array(

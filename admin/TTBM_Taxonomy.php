@@ -58,7 +58,7 @@
 					"public" => true,
 					'labels' => $labels,
 					'show_ui' => true,
-					'show_in_menu' => true, // THIS hides it from the admin menu
+					'show_in_menu' => false, // THIS hides it from the admin menu
 					'show_admin_column' => true,
 					'update_count_callback' => '_update_post_term_count',
 					'query_var' => true,

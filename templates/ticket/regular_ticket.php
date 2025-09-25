@@ -153,7 +153,7 @@ if (!defined('ABSPATH')) {
 									</td>
 								</tr>
 
-								<tr class="ttbm_hidden_inputs">
+								<tr>
 									<td colspan="4">
 										<?php do_action('ttbm_input_data',$ticket_name,$tour_id); ?>
 										<input type="hidden" name='tour_id[]' value='<?php echo esc_html($tour_id); ?>'>

@@ -49,9 +49,12 @@ if (!defined('ABSPATH')) {
 								$default_qty = array_key_exists('ticket_type_default_qty', $ticket) && $ticket['ticket_type_default_qty'] > 0 ? $ticket['ticket_type_default_qty'] : 0;
 								$min_qty = apply_filters('ttbm_ticket_type_min_qty', 0);
 								$max_qty = apply_filters('ttbm_ticket_type_max_qty', 0);
-								$sold_type = TTBM_Function::get_total_sold($tour_id, $tour_date, $ticket_name);
+                                $sold_type = TTBM_Function::get_total_sold($tour_id, $tour_date, $ticket_name);
+                                // Allow addons (e.g., Buy X Get Y) to include extra sold quantities like free tickets
+                                $sold_type = apply_filters('ttbm_sold_qty', $sold_type, $tour_id, $tour_date, $ticket_name);
 								$available = (int)$ticket_qty - ($sold_type + (int)$reserve);
 								$available = apply_filters('ttbm_group_ticket_qty', $available,$tour_id,$ticket_name);
+								$available = max(0, floor($available)); // Ensure availability is always a whole number
 								$ticket_type_icon = array_key_exists('ticket_type_icon', $ticket) ? $ticket['ticket_type_icon'] : '';
 								$description = array_key_exists('ticket_type_description', $ticket) ? $ticket['ticket_type_description'] : '';
 								
@@ -153,7 +156,7 @@ if (!defined('ABSPATH')) {
 									</td>
 								</tr>
 
-								<tr>
+								<tr class="ttbm_hidden_inputs">
 									<td colspan="4">
 										<?php do_action('ttbm_input_data',$ticket_name,$tour_id); ?>
 										<input type="hidden" name='tour_id[]' value='<?php echo esc_html($tour_id); ?>'>

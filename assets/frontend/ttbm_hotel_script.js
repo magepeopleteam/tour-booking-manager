@@ -133,4 +133,194 @@ jQuery(document).ready(function ($) {
         $('#ttbm-share-tooltip').toggle();
         
     });
+
+
+    $(document).on("click", ".ttbm_list_view", function(){
+        $(".ttbm_hotel_lists_wrapper")
+            .removeClass("grid-view")
+            .addClass("list-view");
+    });
+
+    $(document).on("click", ".ttbm_grid_view ", function(){
+        $(".ttbm_hotel_lists_wrapper")
+            .removeClass("list-view")
+            .addClass("grid-view");
+    });
+
+    let ttbmMinRange = $("#ttbm_min_range");
+    let ttbmMaxRange = $("#ttbm_max_range");
+    let ttbmMinPrice = $("#ttbm_min_price");
+    let ttbmMaxPrice = $("#ttbm_max_price");
+    let ttbmMinGap = 100; // minimum difference allowed
+
+    function updateSlider() {
+        let minVal = parseInt(ttbmMinRange.val());
+        let maxVal = parseInt(ttbmMaxRange.val());
+
+        if (maxVal - minVal <= ttbmMinGap ) {
+            if ($(this).attr("id") === "ttbm_min_range") {
+                ttbmMinRange.val(maxVal - ttbmMinGap);
+                minVal = maxVal - ttbmMinGap;
+            } else {
+                ttbmMaxRange.val(minVal + ttbmMinGap);
+                maxVal = minVal + ttbmMinGap;
+            }
+        }
+
+        ttbmMinPrice.text(minVal);
+        ttbmMaxPrice.text(maxVal);
+
+        // Update track fill
+        let percent1 = (minVal / ttbmMinRange.attr("max")) * 100;
+        let percent2 = (maxVal / ttbmMaxRange.attr("max")) * 100;
+        $(".ttbm_hotel_slider_track::before").css({
+            left: percent1 + "%",
+            right: (100 - percent2) + "%"
+        });
+    }
+
+    ttbmMinRange.on("input", updateSlider);
+    ttbmMaxRange.on("input", updateSlider);
+
+    updateSlider();
+
+
+    function filterHotels_old() {
+        // Get Price Range
+        let minPrice = parseInt($('#ttbm_min_range').val());
+        let maxPrice = parseInt($('#ttbm_max_range').val());
+
+        // Get selected Locations
+        let selectedLocations = [];
+        $('#ttbm_locationList input:checked').each(function() {
+            selectedLocations.push($(this).next('span').text().trim());
+        });
+
+        let selectedActivities = [];
+        $('#ttbm_hotelActivityList input:checked').each(function() {
+            selectedActivities.push($(this).attr('data-checked'));
+        });
+
+        let selectedFeatures = [];
+        $('#ttbm_hotelFeatureList input:checked').each(function() {
+            selectedFeatures.push($(this).attr('data-checked'));
+        });
+        $('.ttbm_hotel_lists_card').each(function() {
+            let price = parseInt($(this).data('hotel-price'));
+            let location = $(this).data('hotel-location');
+            let features = ($(this).data('hotel-feature') + '').split(',');
+            let activities = ($(this).data('hotel-activity') + '').split(',');
+
+            let show = true;
+
+            if (price < minPrice || price > maxPrice) {
+                show = false;
+            }
+            if (selectedLocations.length > 0 && !selectedLocations.includes(location)) {
+                show = false;
+            }
+
+            if (selectedActivities.length > 0 && !selectedActivities.some(val => activities.includes(val))) {
+                show = false;
+            }
+            if (selectedFeatures.length > 0 && !selectedFeatures.some(val => features.includes(val))) {
+                show = false;
+            }
+            if (show) {
+                $(this).fadeIn();
+            } else {
+                $(this).fadeOut();
+            }
+        });
+    }
+
+    function filterHotels() {
+        let minPrice = parseInt($('#ttbm_min_range').val());
+        let maxPrice = parseInt($('#ttbm_max_range').val());
+
+        let selectedLocations = [];
+        $('#ttbm_locationList input:checked').each(function () {
+            selectedLocations.push($(this).next('span').text().trim());
+        });
+
+        let selectedActivities = [];
+        $('#ttbm_hotelActivityList input:checked').each(function () {
+            selectedActivities.push($(this).attr('data-checked'));
+        });
+
+        let selectedFeatures = [];
+        $('#ttbm_hotelFeatureList input:checked').each(function () {
+            selectedFeatures.push($(this).attr('data-checked'));
+        });
+
+        let $matchedHotels = $();
+
+        $('.ttbm_hotel_lists_card').each(function () {
+            let $card = $(this);
+            let price = parseInt($card.data('hotel-price'));
+            let location = $card.data('hotel-location');
+            let features = ($card.data('hotel-feature') + '').split(',');
+            let activities = ($card.data('hotel-activity') + '').split(',');
+
+            let show = true;
+
+            if (price < minPrice || price > maxPrice) show = false;
+            if (selectedLocations.length > 0 && !selectedLocations.includes(location)) show = false;
+            if (selectedActivities.length > 0 && !selectedActivities.some(val => activities.includes(val))) show = false;
+            if (selectedFeatures.length > 0 && !selectedFeatures.some(val => features.includes(val))) show = false;
+
+            if ( show ) {
+                $matchedHotels = $matchedHotels.add( $card );
+            }
+
+            $card.hide();
+        });
+
+        // Show first 5 matched
+        let itemsToShow = 5;
+        $matchedHotels.slice(0, itemsToShow).fadeIn();
+
+        // Toggle Load More button
+        if ($matchedHotels.length > itemsToShow) {
+            $('#ttbm_loadMoreHotels').show();
+        } else {
+            $('#ttbm_loadMoreHotels').hide();
+        }
+
+        // Save matched hotels for "Load More" to use
+        window.ttbm_totalHotelItems = $matchedHotels;
+        window.ttbm_itemsToShow = itemsToShow;
+    }
+
+
+    $('#ttbm_min_range, #ttbm_max_range').on('input change', function() {
+        $('#ttbm_min_price').text($('#ttbm_min_range').val());
+        $('#ttbm_max_price').text($('#ttbm_max_range').val());
+        filterHotels();
+    });
+
+    $('#ttbm_locationList input, #ttbm_hotelActivityList input, #ttbm_hotelFeatureList input').on('change', function() {
+        filterHotels();
+    });
+    // Initial call to show correct hotels on page load
+    filterHotels();
+
+    let ttbm_itemsToShow = 5;
+    let itemsIncrement = 5;
+    let ttbmHotelCards = $(".ttbm_hotel_lists_card");
+    let ttbm_totalHotelItems = ttbmHotelCards.length;
+    ttbmHotelCards.hide();
+    ttbmHotelCards.slice(0, ttbm_itemsToShow).show();
+    $(document).on( 'click' ,"#ttbm_loadMoreHotels", function () {
+        ttbm_itemsToShow += itemsIncrement;
+        ttbmHotelCards.slice(0, ttbm_itemsToShow).fadeIn();
+        if (ttbm_itemsToShow >= ttbm_totalHotelItems) {
+            $(this).hide();
+        }
+    });
+
+    if (ttbm_itemsToShow >= ttbm_totalHotelItems) {
+        $("#ttbm_loadMoreHotels").hide();
+    }
+
 }(jQuery));

@@ -511,7 +511,7 @@
                             </div>
                             <?php
                         } else {
-                            include( TTBM_Function::template_path( 'layout/filter_hidden.php' ) );
+                            do_action('ttbm_hotel_filter_top_bar', $loop, $params);
                             do_action('ttbm_all_hotel_list_item', $loop, $params);
                             do_action('ttbm_hotel_sort_result', $loop, $params);
                             do_action('ttbm_hotel_pagination', $params, $loop->post_count);
@@ -557,6 +557,7 @@
 				'type-filter' => 'no',
 				'shuffle' => $shuffle,
 				'filter_by_activity' => 'yes',
+				'price-filter' => 'yes',
 			);
 		}
 

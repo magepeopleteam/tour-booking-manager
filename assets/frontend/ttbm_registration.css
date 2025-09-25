@@ -1901,10 +1901,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
     gap: 12px;
 }
 
-.ttbm_hidden_inputs {
-    display: none;
-}
-
 .ttbm_ticket_icon {
     font-size: 24px;
     color: #667eea;

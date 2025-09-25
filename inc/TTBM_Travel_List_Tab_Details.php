@@ -214,7 +214,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
 
         public static function add_icon( $taxonomy_type, $taxonomy_name, $icon_class = '' ){ ?>
             <div class="flexEqual">
-                <span><?php esc_html( $taxonomy_type ); ?><sup class="textRequired">*</sup></span>
+                <span><?php echo esc_html( $taxonomy_type ); ?><sup class="textRequired">*</sup></span>
                 <?php do_action('ttbm_input_add_icon', $taxonomy_name, $icon_class ); ?>
             </div>
         <?php }

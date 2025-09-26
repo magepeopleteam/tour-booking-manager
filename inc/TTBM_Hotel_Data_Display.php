@@ -10,6 +10,7 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
             add_action('ttbm_hotel_left_filter', array($this, 'hotel_left_filter'), 10, 1);
             add_action('ttbm_hotel_filter_top_bar', array($this, 'filter_top_bar'), 10, 2);
             add_action('ttbm_all_hotel_list_item', array($this, 'all_hotel_list_item'), 10, 2);
+            add_action('ttbm_search_hotel_list_item', array($this, 'ttbm_search_hotel_list_item'), 10, 2);
         }
         public function hotel_left_filter( $params ) {
             ?>
@@ -177,10 +178,9 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
         }
 
 
-
-        public function all_hotel_list_item( $loop, $params ){
-            $currency = get_woocommerce_currency();
-            $hotel_data = self::all_hotel_list_data( $loop ); ?>
+        public static function display_hotel_list( $hotel_data, $currency ){
+            ob_start();
+            ?>
             <div class="ttbm_hotel_lists_wrapper list-view">
                 <?php
                 foreach ( $hotel_data as $key => $hotel ){
@@ -202,13 +202,15 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                     if( is_array( $hotel_activities ) && !empty( $hotel_activities ) ){
                         $hotel_activities_str = implode( ',',$hotel_activities  );
                     }
+
+
                     ?>
                     <div class="ttbm_hotel_lists_card"
-                    id="<?php echo esc_attr(  $hotel['id']);?>"
-                    data-hotel-location = "<?php echo esc_attr( $hotel['hotel_location'] );?>"
-                    data-hotel-feature = "<?php echo esc_attr( $hotel_hotel_feature_str )?>"
-                    data-hotel-activity = "<?php echo esc_attr( $hotel_activities_str )?>"
-                    data-hotel-price = "<?php echo esc_attr( $lowest_price )?>"
+                         id="<?php echo esc_attr(  $hotel['id']);?>"
+                         data-hotel-location = "<?php echo esc_attr( $hotel['hotel_location'] );?>"
+                         data-hotel-feature = "<?php echo esc_attr( $hotel_hotel_feature_str )?>"
+                         data-hotel-activity = "<?php echo esc_attr( $hotel_activities_str )?>"
+                         data-hotel-price = "<?php echo esc_attr( $lowest_price )?>"
                     >
                         <div class="ttbm_hotel_lists_image">
                             <img src="<?php echo esc_attr( $hotel['hotel_featured_image'] );?>" alt="<?php echo esc_attr( $hotel['title'] );?>">
@@ -235,7 +237,7 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                                     <span class="ttbm_hotel_lists_nights"><?php esc_attr_e( '1 nights, 2 adults', 'tour-booking-manager' );?></span>
                                     <?php
                                     foreach ( $hotel_room_details as $room_details ){
-                                    ?>
+                                        ?>
                                         <div class="ttbm_hotel_lists_price">
                                             <div class="ttbm_hotel_lists_room">
                                                 <i class="<?php echo esc_attr($room_details['room_type_icon']); ?>"></i>
@@ -262,6 +264,24 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                     <?php
                 } ?>
             </div>
+            <?php
+            return ob_get_clean();
+        }
+
+        public function all_hotel_list_item( $loop, $params ){
+            $currency = get_woocommerce_currency();
+            $hotel_data = self::all_hotel_list_data( $loop );
+            echo self::display_hotel_list( $hotel_data, $currency );
+            ?>
+
+            <button id="ttbm_loadMoreHotels" class="ttbm_hotel_load_more_btn">Load More</button>
+        <?php
+
+        }
+        public function ttbm_search_hotel_list_item( $hotel_data, $params ){
+            $currency = get_woocommerce_currency();
+            echo self::display_hotel_list( $hotel_data, $currency );
+            ?>
 
             <button id="ttbm_loadMoreHotels" class="ttbm_hotel_load_more_btn">Load More</button>
         <?php

@@ -323,4 +323,16 @@ jQuery(document).ready(function ($) {
         $("#ttbm_loadMoreHotels").hide();
     }
 
+
+    let startDate, endDate;
+
+    $('#ttbm_date_range').daterangepicker({
+        autoApply: true,
+        minDate: moment(), // 🚫 disables previous dates
+        locale: {
+            format: 'YYYY-MM-DD',
+            separator: ' - '
+        }
+    });
+
 }(jQuery));

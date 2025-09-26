@@ -335,4 +335,20 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    let $input = $("#ttbm_location_input");
+    let $dropdown = $(".ttbm_location_dropdown");
+    $input.on("focus", function(){
+        $dropdown.show();
+    });
+    $(document).on("click", function(e){
+        if (!$(e.target).closest(".ttbm_location_wrapper").length) {
+            $dropdown.hide();
+        }
+    });
+    $dropdown.on("click", "li", function(){
+        let value = $(this).text();
+        $input.val(value);
+        $dropdown.hide();
+    });
+
 }(jQuery));

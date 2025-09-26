@@ -28,6 +28,10 @@
                 $date_range = !empty($_GET['search_date_range']) ? strip_tags($_GET['search_date_range']) : '';
                 $search_person = !empty($_GET['hotel_search_person']) ? strip_tags($_GET['hotel_search_person']) : '';
 
+                $locations = TTBM_Function::get_meta_values('ttbm_hotel_location', 'ttbm_hotel');
+
+                $exist_locations = array_unique( $locations );
+
                 ob_start();
                 ?>
                 <!-- Hotel Search Bar -->
@@ -35,23 +39,41 @@
                     <form class="rbfw_search_form_new" action="<?php echo get_home_url() . '/hotel-find/';  ?>" method="GET">
                     <div class="ttbm_hotel_search_box">
 
-                            <div class="ttbm_hotel_search_field">
-                                <span class="ttbm_hotel_search_icon">🛏️</span>
-                                <input type="text" name="hotel_location_search" class="ttbm_hotel_search_input" value="<?php echo esc_attr( $location );?>" placeholder="Where are you going?">
-                            </div>
+                        <!--<div class="ttbm_hotel_search_field">
+                            <span class="ttbm_hotel_search_icon">🛏️</span>
+                            <input type="text" name="hotel_location_search" class="ttbm_hotel_search_input" value="<?php /*echo esc_attr( $location );*/?>" placeholder="Where are you going?">
+                        </div>-->
+                        <div class="ttbm_hotel_search_field ttbm_location_wrapper">
+                            <span class="ttbm_hotel_search_icon">🛏️</span>
+                            <input type="text"
+                                   name="hotel_location_search"
+                                   id="ttbm_location_input"
+                                   class="ttbm_hotel_search_input"
+                                   value="<?php echo esc_attr($location); ?>"
+                                   placeholder="Where are you going?"
+                                   autocomplete="off">
 
-                            <div class="ttbm_hotel_search_field">
-                                <span class="ttbm_hotel_search_icon">📅</span>
-                                <input type="text" name="search_date_range" id="ttbm_date_range" class="ttbm_date_input" value="<?php echo esc_attr( $date_range );?>" placeholder="Select date range" readonly>
-                            </div>
+                            <!-- Dropdown -->
+                            <ul class="ttbm_location_dropdown" style="display:none;">
+                                <?php foreach ($exist_locations as $loc) : ?>
+                                    <li><?php echo esc_html($loc); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
 
 
-                            <div class="ttbm_hotel_search_field">
-                                <span class="ttbm_hotel_search_icon">👤</span>
-                                <input name="hotel_search_person" type="text" class="ttbm_hotel_search_input" value="<?php echo esc_attr( $search_person );?>" placeholder="Number of 1 room">
-                            </div>
+                        <div class="ttbm_hotel_search_field">
+                            <span class="ttbm_hotel_search_icon">📅</span>
+                            <input type="text" name="search_date_range" id="ttbm_date_range" class="ttbm_date_input" value="<?php echo esc_attr( $date_range );?>" placeholder="Select date range" readonly>
+                        </div>
 
-                            <button class="ttbm_hotel_search_btn">Search</button>
+
+                        <div class="ttbm_hotel_search_field">
+                            <span class="ttbm_hotel_search_icon">👤</span>
+                            <input name="hotel_search_person" type="number" class="ttbm_hotel_search_input" value="<?php echo esc_attr( $search_person );?>" placeholder="Number of 1 room">
+                        </div>
+
+                        <button class="ttbm_hotel_search_btn">Search</button>
 
 
                     </div>
@@ -544,10 +566,17 @@
                 $date_range = !empty($_GET['search_date_range']) ? strip_tags($_GET['search_date_range']) : '';
                 $search_room_num = !empty($_GET['hotel_search_person']) ? strip_tags($_GET['hotel_search_person']) : 0;
 
-                list( $start_date, $end_date ) = explode(" - ", $date_range);
-                $start_date = trim($start_date);
-                $end_date   = trim($end_date);
+                if( $date_range !== '' ){
+                    list( $start_date, $end_date ) = explode(" - ", $date_range);
+                    $start_date = trim($start_date);
+                    $end_date   = trim($end_date);
+                }else{
+                    $start_date =$end_date = date( 'Y-m-d');
+                }
+
                 $available_hotels = self::ttbm_get_available_hotels_in_date( $start_date, $end_date, $location, $search_room_num );
+
+                $count_result = count( $available_hotels );
 
 
                 $defaults = $this->default_attribute('modern', 12, 'no', 'yes', 'yes', 'yes', $month_filter, $tour_type);
@@ -557,17 +586,6 @@
                 $search = $params['sidebar-filter'];
                 $show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
 
-                $location_search = '';
-                $args = array(
-                    'post_type'      => 'ttbm_hotel',
-                    'post_status'    => 'publish',
-                    'posts_per_page' => -1,
-                    'meta_query'     => array(
-                        $location_search,  // your meta query for location
-                    ),
-                );
-
-                $loop = new WP_Query($args);
                 ob_start();
                 ?>
                 <div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
@@ -580,13 +598,13 @@
                                     <?php do_action('ttbm_hotel_left_filter', $params ); ?>
                                 </div>
                                 <div class="mainSection">
-                                    <?php do_action('ttbm_hotel_filter_top_bar', $loop, $params); ?>
+                                    <?php do_action('ttbm_filter_hotel_search_top_bar', $count_result, $params); ?>
                                     <?php do_action('ttbm_search_hotel_list_item', $available_hotels, $params); ?>
                                 </div>
                             </div>
                             <?php
                         } else {
-                            do_action('ttbm_hotel_filter_top_bar', $loop, $params );
+                            do_action('ttbm_filter_hotel_search_top_bar', $count_result, $params );
                             do_action('ttbm_all_hotel_list_item', $loop, $params);
                         }
                         ?>

@@ -11,6 +11,31 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
             add_action('ttbm_hotel_filter_top_bar', array($this, 'filter_top_bar'), 10, 2);
             add_action('ttbm_all_hotel_list_item', array($this, 'all_hotel_list_item'), 10, 2);
             add_action('ttbm_search_hotel_list_item', array($this, 'ttbm_search_hotel_list_item'), 10, 2);
+            add_action('ttbm_filter_hotel_search_top_bar', array($this, 'filter_hotel_search_top_bar'), 10, 2);
+        }
+
+        public function filter_hotel_search_top_bar( $post_count, $params ) {
+            $style = $params['style'] ?: 'modern';
+            $style = $style == 'list' ? 'modern' : $style;
+            ?>
+            <div class="placeholder_area filter_top_bar justifyBetween">
+                    <span>
+                        <?php esc_html_e(' Total ', 'tour-booking-manager'); ?>
+                        <strong class="total_hotel_qty"><?php echo esc_html( $post_count ); ?></strong>
+                        <?php esc_html_e(' Hotel ', 'tour-booking-manager'); ?>
+<!--                        --><?php //esc_html_e(' Hotel match your search criteria', 'tour-booking-manager'); ?>
+                    </span>
+                <div class="dFlex">
+                    <button class="ttbm_grid_view " type="button" <?php echo esc_attr($style == 'grid' ? 'disabled' : ''); ?> title="<?php esc_attr_e('Grid view', 'tour-booking-manager'); ?>">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button class="ttbm_list_view" type="button" <?php echo esc_attr($style == 'modern' ? 'disabled' : ''); ?> title="<?php esc_attr_e('LIst view', 'tour-booking-manager'); ?>">
+                        <i class="fas fa-th-list"></i>
+                    </button>
+                </div>
+            </div>
+            <?php
+
         }
         public function hotel_left_filter( $params ) {
             ?>

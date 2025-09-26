@@ -307,3 +307,27 @@
 .ttbm_hotel_search_btn:hover {
     background: #005fa3;
 }
+
+.ttbm_location_wrapper { position: relative; }
+.ttbm_location_dropdown {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #ddd;
+    max-height: 200px;
+    overflow-y: auto;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    z-index: 99;
+    border-radius: 10px;
+}
+.ttbm_location_dropdown li {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+.ttbm_location_dropdown li:hover {
+    background: #f0f0f0;
+}

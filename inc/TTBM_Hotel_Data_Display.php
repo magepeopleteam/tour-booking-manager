@@ -22,8 +22,8 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                     <span>
                         <?php esc_html_e(' Total ', 'tour-booking-manager'); ?>
                         <strong class="total_hotel_qty"><?php echo esc_html( $post_count ); ?></strong>
-                        <?php esc_html_e(' Hotel ', 'tour-booking-manager'); ?>
-<!--                        --><?php //esc_html_e(' Hotel match your search criteria', 'tour-booking-manager'); ?>
+<!--                        --><?php //esc_html_e(' Hotel ', 'tour-booking-manager'); ?>
+                        <?php esc_html_e(' Hotel match your search criteria', 'tour-booking-manager'); ?>
                     </span>
                 <div class="dFlex">
                     <button class="ttbm_grid_view " type="button" <?php echo esc_attr($style == 'grid' ? 'disabled' : ''); ?> title="<?php esc_attr_e('Grid view', 'tour-booking-manager'); ?>">

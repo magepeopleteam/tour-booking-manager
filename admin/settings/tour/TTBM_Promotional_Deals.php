@@ -42,43 +42,45 @@ if (!class_exists('TTBM_Promotional_Deals')) {
                                         </div>
                                     <?php /*} */?>
                                 </div>-->
-                                <div class="ttbm_shortcode_section">
-                                    <h2 class="ttbm_shortcode_title">🎯 <?php esc_attr_e( 'Promotional Shortcodes', 'tour-booking-manager' );?></h2>
-                                    <div class="ttbm_promotional_shortcode_holder">
-                                        <div class="ttbm_promotional_shortcode">
-                                            <h3 class="ttbm_shortcode_item_title">🌟 <?php esc_attr_e( 'Feature Tours', 'tour-booking-manager' );?></h3>
-                                            <div class="ttbm_shortcode_box">
-                                                <div class="ttbm_shortcode_text">[wptravelly-tour-list type='feature' column=2 show=4 carousel='no']</div>
-                                                <button class="ttbm_copy_btn"><?php esc_attr_e( 'Copy', 'tour-booking-manager' );?></button>
-                                            </div>
-                                        </div>
-                                        <div class="ttbm_promotional_shortcode">
-                                            <h3 class="ttbm_shortcode_item_title">🔥 <?php esc_attr_e( 'Popular Tours', 'tour-booking-manager' );?></h3>
-                                            <div class="ttbm_shortcode_box">
-                                                <div class="ttbm_shortcode_text">[wptravelly-tour-list type='popular' column=2 show=4 carousel='no']</div>
-                                                <button class="ttbm_copy_btn"><?php esc_attr_e( 'Copy', 'tour-booking-manager' );?></button>
-                                            </div>
-                                        </div>
-                                        <div class="ttbm_promotional_shortcode">
-                                            <h3 class="ttbm_shortcode_item_title">📈 <?php esc_attr_e( 'Trending Tours', 'tour-booking-manager' );?></h3>
-                                            <div class="ttbm_shortcode_box">
-                                                <div class="ttbm_shortcode_text">[wptravelly-tour-list type='trending' column=2 show=4 carousel='no']</div>
-                                                <button class="ttbm_copy_btn"><?php esc_attr_e( 'Copy', 'tour-booking-manager' );?></button>
-                                            </div>
-                                        </div>
-                                        <div class="ttbm_promotional_shortcode">
-                                            <h3 class="ttbm_shortcode_item_title">💸 <?php esc_attr_e( 'Deal & Discounts', 'tour-booking-manager' );?></h3>
-                                            <div class="ttbm_shortcode_box">
-                                                <div class="ttbm_shortcode_text">[wptravelly-tour-list type='deal-discount' column=2 show=2 carousel='no']</div>
-                                                <button class="ttbm_copy_btn"><?php esc_attr_e( 'Copy', 'tour-booking-manager' );?></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
                     <input type="hidden" id="ttbm_checked_top_picks_deals_holder" name="ttbm_checked_top_picks_deals_holder" value="<?php echo esc_attr(implode(',', TTBM_Global_Function::get_post_info($tour_id, 'ttbm_checked_top_picks_deals_holder', []))); ?>"/>
+                </section>
+                <section>
+                    <div class="ttbm-header">
+                        <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Promotional Shortcodes', 'tour-booking-manager'); ?></h4>
+                    </div>
+                    
+                    <div class="ttbm_promotional_shortcode">
+                        <h3 class="ttbm_shortcode_item_title"><?php esc_attr_e( 'Feature Tours', 'tour-booking-manager' );?></h3>
+                        <div class="ttbm_shortcode_box">
+                            <div class="ttbm_shortcode_text">[wptravelly-tour-list type='feature' column=2 show=4 carousel='no']</div>
+                            <button class="ttbm_copy_btn"><?php esc_attr_e( 'Copy', 'tour-booking-manager' );?></button>
+                        </div>
+                    </div>
+                    <div class="ttbm_promotional_shortcode">
+                        <h3 class="ttbm_shortcode_item_title"><?php esc_attr_e( 'Popular Tours', 'tour-booking-manager' );?></h3>
+                        <div class="ttbm_shortcode_box">
+                            <div class="ttbm_shortcode_text">[wptravelly-tour-list type='popular' column=2 show=4 carousel='no']</div>
+                            <button class="ttbm_copy_btn"><?php esc_attr_e( 'Copy', 'tour-booking-manager' );?></button>
+                        </div>
+                    </div>
+                    <div class="ttbm_promotional_shortcode">
+                        <h3 class="ttbm_shortcode_item_title"><?php esc_attr_e( 'Trending Tours', 'tour-booking-manager' );?></h3>
+                        <div class="ttbm_shortcode_box">
+                            <div class="ttbm_shortcode_text">[wptravelly-tour-list type='trending' column=2 show=4 carousel='no']</div>
+                            <button class="ttbm_copy_btn"><?php esc_attr_e( 'Copy', 'tour-booking-manager' );?></button>
+                        </div>
+                    </div>
+                    <div class="ttbm_promotional_shortcode">
+                        <h3 class="ttbm_shortcode_item_title"><?php esc_attr_e( 'Deal & Discounts', 'tour-booking-manager' );?></h3>
+                        <div class="ttbm_shortcode_box">
+                            <div class="ttbm_shortcode_text">[wptravelly-tour-list type='deal-discount' column=2 show=2 carousel='no']</div>
+                            <button class="ttbm_copy_btn"><?php esc_attr_e( 'Copy', 'tour-booking-manager' );?></button>
+                        </div>
+                    </div>
                 </section>
             </div>
             <?php

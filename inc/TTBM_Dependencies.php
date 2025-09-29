@@ -43,7 +43,7 @@
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Details_Layout.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Booking.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Booking.php';
-					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
+require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
 				}
 			}
 			public function appsero_init_tracker_ttbm() {
@@ -115,13 +115,17 @@
 				wp_enqueue_script('ttbm_date_range_picker_js', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.js', array('jquery', 'moment'), '1', true);
 				wp_enqueue_style('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.css', array(), time());
 				wp_enqueue_script('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.js', array('jquery'), time(), true);
-				wp_enqueue_script('ttbm_price_calculation', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_price_calculation.js', array('jquery'), time(), true);
-				wp_enqueue_script('ttbm_hotel_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_script.js', array('jquery'), time(), true);
-				wp_enqueue_script('ttbm_filter_pagination_script', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.js', array('jquery'), time(), true);
-				wp_localize_script('ttbm_registration', 'ttbm_ajax', array(
-					'ajax_url' => admin_url('admin-ajax.php'),
-					'nonce' => wp_create_nonce('ttbm_frontend_nonce')
-				));
+			wp_enqueue_script('ttbm_price_calculation', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_price_calculation.js', array('jquery'), time(), true);
+			wp_enqueue_script('ttbm_hotel_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_script.js', array('jquery'), time(), true);
+			wp_enqueue_script('ttbm_filter_pagination_script', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.js', array('jquery'), time(), true);
+			wp_localize_script('ttbm_registration', 'ttbm_ajax', array(
+				'ajax_url' => admin_url('admin-ajax.php'),
+				'nonce' => wp_create_nonce('ttbm_frontend_nonce')
+			));
+			wp_localize_script('ttbm_price_calculation', 'ttbm_price_calc_vars', array(
+				'ajax_url' => admin_url('admin-ajax.php'),
+				'nonce' => wp_create_nonce('ttbm_frontend_nonce')
+			));
 				do_action('add_ttbm_registration_enqueue');
 			}
 			public function ttbm_upgrade() {

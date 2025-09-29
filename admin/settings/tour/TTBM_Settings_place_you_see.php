@@ -91,12 +91,12 @@
 				?>
                 <tr class="ttbm_remove_area">
                     <td>
-                        <label>
+                        <div class="dFlex align-items-center">
                             <input class="ttbm_name_validation" name="ttbm_place_label[]" value="<?php echo esc_attr($place_name); ?>" placeholder="Place name"/>
-                        </label>
+                        </div>
                     </td>
                     <td>
-                        <label>
+                        <div class="dFlex align-items-center">
                             <select class=" <?php echo esc_attr(is_array($hiphop_place) && sizeof($hiphop_place) > 0 ? 'ttbm_select2' : 'add_ttbm_select2'); ?>" name="ttbm_city_place_id[]">
                                 <option value="" selected disabled>
 									<?php esc_html_e('Please Select a Place', 'tour-booking-manager'); ?>
@@ -110,7 +110,7 @@
                                         </option>
 									<?php } ?>
                             </select>
-                        </label>
+						</div>
                     </td>
                     <td class="textRight"><?php TTBM_Custom_Layout::move_remove_button(); ?></td>
                 </tr>

@@ -62,6 +62,7 @@
                                     </div>
 									<?php TTBM_Custom_Layout::switch_button('ttbm_display_enquiry', $enquiry_checked); ?>
                                 </label>
+                                 <?php do_action('add_ttbm_display_settings_left', $tour_id); ?>
                             </div>
                             <div class="col-right">
                                 <label class="label">
@@ -99,8 +100,9 @@
 									<?php TTBM_Custom_Layout::switch_button('ttbm_display_sidebar', $sidebar_checked); ?>
                                 </div>
 								<?php $this->rank_tour($tour_id); ?>
+                                <?php do_action('add_ttbm_display_settings', $tour_id); ?>
                             </div>
-							<?php do_action('add_ttbm_display_settings', $tour_id); ?>
+							
                         </div>
                     </section>
                 </div>

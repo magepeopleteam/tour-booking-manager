@@ -492,9 +492,123 @@
 					$tickets = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticket_type', array());
 					$tickets = apply_filters('ttbm_ticket_type_filter', $tickets, $tour_id);
 				}
-				return $tickets;
+			return $tickets;
+		}
+		
+		//******* Enhanced Availability Functions *******//
+		public static function get_ticket_availability_info($tour_id, $tour_date = '', $ticket_type_name = '') {
+			if (!$tour_date) {
+				$tour_date = current(self::get_date($tour_id));
 			}
-			//*********************************//
+			
+			$tour_date = gmdate('Y-m-d', strtotime($tour_date));
+			$ticket_types = self::get_ticket_type($tour_id);
+			$availability_info = array();
+			
+			foreach ($ticket_types as $ticket) {
+				$type_name = $ticket['ticket_type_name'];
+				
+				// Skip if specific ticket type requested and this isn't it
+				if ($ticket_type_name && $ticket_type_name !== $type_name) {
+					continue;
+				}
+				
+				$total_capacity = intval($ticket['ticket_type_qty']);
+				$reserved_qty = intval($ticket['ticket_type_resv_qty'] ?? 0);
+				$sold_qty = self::get_total_sold($tour_id, $tour_date, $type_name);
+				$available_qty = max(0, $total_capacity - ($reserved_qty + $sold_qty));
+				
+				$percentage_sold = $total_capacity > 0 ? round(($sold_qty / $total_capacity) * 100, 2) : 0;
+				$stock_status = self::get_stock_status($available_qty, $total_capacity);
+				
+				$availability_info[$type_name] = array(
+					'ticket_type_name' => $type_name,
+					'total_capacity' => $total_capacity,
+					'reserved_qty' => $reserved_qty,
+					'sold_qty' => $sold_qty,
+					'available_qty' => $available_qty,
+					'percentage_sold' => $percentage_sold,
+					'is_sold_out' => $available_qty <= 0,
+					'is_low_stock' => $available_qty > 0 && $available_qty <= ($total_capacity * 0.1),
+					'stock_status' => $stock_status,
+					'tour_date' => $tour_date,
+					'price' => self::get_price_by_name($type_name, $tour_id, '', '', $tour_date),
+					'regular_price' => self::check_discount_price_exit($tour_id, $type_name, '', '', $tour_date)
+				);
+			}
+			
+			return apply_filters('ttbm_ticket_availability_info', $availability_info, $tour_id, $tour_date, $ticket_type_name);
+		}
+		
+		public static function get_stock_status($available_qty, $total_capacity) {
+			if ($available_qty <= 0) {
+				return 'sold_out';
+			} elseif ($available_qty <= ($total_capacity * 0.1)) {
+				return 'low_stock';
+			} elseif ($available_qty <= ($total_capacity * 0.3)) {
+				return 'medium_stock';
+			} else {
+				return 'in_stock';
+			}
+		}
+		
+		public static function get_ticket_availability_for_date_range($tour_id, $start_date, $end_date) {
+			$travel_type = self::get_travel_type($tour_id);
+			$availability_data = array();
+			
+			if ($travel_type === 'repeated') {
+				$current_date = strtotime($start_date);
+				$end_timestamp = strtotime($end_date);
+				
+				while ($current_date <= $end_timestamp) {
+					$date_string = date('Y-m-d', $current_date);
+					$availability_data[$date_string] = self::get_ticket_availability_info($tour_id, $date_string);
+					$current_date = strtotime('+1 day', $current_date);
+				}
+			} else {
+				$availability_data[$start_date] = self::get_ticket_availability_info($tour_id, $start_date);
+			}
+			
+			return $availability_data;
+		}
+		
+		public static function format_availability_display($availability_info) {
+			if (empty($availability_info)) {
+				return '';
+			}
+			
+			$output = '<div class="ttbm_availability_display">';
+			
+			foreach ($availability_info as $ticket_name => $info) {
+				$status_class = 'ttbm_status_' . $info['stock_status'];
+				$urgency_class = $info['is_low_stock'] ? 'ttbm_low_stock' : '';
+				
+				$output .= '<div class="ttbm_ticket_availability ' . $status_class . ' ' . $urgency_class . '">';
+				$output .= '<span class="ttbm_ticket_name">' . esc_html($ticket_name) . '</span>';
+				
+				if ($info['is_sold_out']) {
+					$output .= '<span class="ttbm_sold_out_badge">' . esc_html__('Sold Out', 'tour-booking-manager') . '</span>';
+				} else {
+					$output .= '<span class="ttbm_available_count">';
+					$output .= '<strong>' . $info['available_qty'] . '</strong> ';
+					$output .= ($info['available_qty'] == 1) ? 
+						esc_html__('ticket left', 'tour-booking-manager') : 
+						esc_html__('tickets left', 'tour-booking-manager');
+					$output .= '</span>';
+					
+					if ($info['is_low_stock']) {
+						$output .= '<span class="ttbm_urgency_text">' . esc_html__('Almost sold out!', 'tour-booking-manager') . '</span>';
+					}
+				}
+				
+				$output .= '</div>';
+			}
+			
+			$output .= '</div>';
+			return $output;
+		}
+		
+		//*********************************//
 			public static function tour_type() {
 				$type = array('general' => __('General Tour', 'tour-booking-manager'), 'hotel' => __('Hotel Base Tour', 'tour-booking-manager'));
 				return apply_filters('add_ttbm_tour_type', $type);

@@ -331,3 +331,16 @@
 .ttbm_location_dropdown li:hover {
     background: #f0f0f0;
 }
+.ttbm_available_room{
+    display: inline-block;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: linear-gradient(135deg,#1db954,#1aa34a);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,.12);
+    line-height: 1;
+    min-width: 36px;
+    text-align: center;
+}

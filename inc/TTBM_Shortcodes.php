@@ -451,15 +451,21 @@
                 $bookings = array();
                 if ( $query->have_posts() ) {
                     foreach ( $query->posts as $booking ) {
-                        $hotel_id   = get_post_meta( $booking->ID, '_ttbm_hotel_id', true );
-                        $room_info  = get_post_meta( $booking->ID, '_ttbm_hotel_booking_room_info', true );
+                        $hotel_id       = get_post_meta( $booking->ID, '_ttbm_hotel_id', true );
+                        $room_info      = get_post_meta( $booking->ID, '_ttbm_hotel_booking_room_info', true );
+                        $checkin_date   = get_post_meta( $booking->ID, '_ttbm_hotel_booking_checkin_date', true );
+                        $checkout_date  = get_post_meta( $booking->ID, '_ttbm_hotel_booking_checkout_date', true );
                         $bookings[] = array(
                             'hotel_id'  => intval( $hotel_id ),
+                            'checkin_date'  =>  $checkin_date ,
+                            'checkout_date'  =>  $checkout_date ,
                             'room_info' => maybe_unserialize( $room_info ),
                         );
                     }
                 }
                 wp_reset_postdata();
+
+//                error_log( print_r( [ '$bookings' => $bookings ], true ) );
 
                 return $bookings;
             }
@@ -467,8 +473,8 @@
 
                 $booked_data = self::ttbm__get_booked_hotels( $start_date, $end_date );
 
-                $booked_summary = array();
-                foreach ( $booked_data as $booking ) {
+                $booked_summary = $hotel_booked = array();
+                /*foreach ( $booked_data as $booking ) {
                     $hotel_id = $booking['hotel_id'];
                     foreach ( $booking['room_info'] as $room_name => $room ) {
                         $room_name = preg_replace('/[^A-Za-z0-9\-]/', '', $room_name );
@@ -476,9 +482,21 @@
                         $booked_summary[$hotel_id][$room_name] =
                             ( $booked_summary[$hotel_id][$room_name] ?? 0 ) + $qty;
                     }
+                }*/
+
+                foreach ( $booked_data as $booking ) {
+                    $hotel_id = $booking['hotel_id'];
+
+                    // check date overlap
+                    if ($booking['checkin_date'] < $end_date && $booking['checkout_date'] > $start_date ) {
+                        foreach ($booking['room_info'] as $room_type => $room) {
+                            if (!isset($hotel_booked[$hotel_id][$room_type])) {
+                                $hotel_booked[$hotel_id][$room_type] = 0;
+                            }
+                            $hotel_booked[$hotel_id][$room_type] += $room['quantity'];
+                        }
+                    }
                 }
-
-
 
                 $location_search = !empty( $location ) ? array(
                     'key'     => 'ttbm_hotel_location',
@@ -512,7 +530,8 @@
                             $name     = $room['ttbm_hotel_room_name'];
                             $name = preg_replace('/[^A-Za-z0-9\-]/', '', $name );
                             $capacity = intval( $room['ttbm_hotel_room_qty'] );
-                            $reserved = $booked_summary[$hotel_id][$name] ?? 0;
+//                            $reserved = $booked_summary[$hotel_id][$name] ?? 0;
+                            $reserved = $hotel_booked[$hotel_id][$name] ?? 0;
 
                             $available_qty = $capacity - $reserved;
                             if( $search_room_num > 0 ){
@@ -605,7 +624,7 @@
                             <?php
                         } else {
                             do_action('ttbm_filter_hotel_search_top_bar', $count_result, $params );
-                            do_action('ttbm_all_hotel_list_item', $loop, $params);
+                            do_action('ttbm_search_hotel_list_item', $available_hotels, $params);
                         }
                         ?>
                     </div>

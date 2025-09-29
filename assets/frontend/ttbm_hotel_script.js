@@ -83,6 +83,58 @@ jQuery(document).ready(function ($) {
             });
         }
     });
+
+    $(document).on('click', '.ttbm_multiple_hotel_book_now', function (e) {
+        e.preventDefault();
+
+        let hotelCard = $(this).closest('.ttbm_hotel_lists_card');
+
+        let hotel_id = hotelCard.attr('id');
+        hotel_id = hotel_id ? hotel_id.trim() : '';
+
+        let date_range = hotelCard.attr('data-date-range');
+
+        let roomDataInfo = {};
+        let total_price = 0;
+
+        let parentTable = $(this).closest('.ttbm_hotel_lists_content');
+
+
+        parentTable.find('.ttbm_hotel_room_incDec').each(function () {
+            const roomDiv = $(this).find('.qtyIncDec');
+            let roomName = roomDiv.data('ticket-type-name');
+            if (!roomName) return;
+            // Remove all spaces from room name
+            roomName = roomName.replace(/\s+/g, '');
+            const quantity = parseInt(roomDiv.find('.inputIncDec').val()) || 0;
+            const price = parseFloat(roomDiv.find('.inputIncDec').data('price')) || 0;
+            // Only include if quantity is greater than 0
+            if (quantity > 0) {
+                roomDataInfo[roomName] = {
+                    quantity: quantity,
+                    price: price
+                };
+                total_price += quantity * price;
+            }
+        });
+
+        roomDataInfo = JSON.stringify(roomDataInfo);
+        jQuery.ajax({
+            type: 'POST',
+            url: ttbm_ajax_url,
+            data: {
+                "action": "ttbm_hotel_room_booking",
+                "hotel_id": hotel_id,
+                "date_range": date_range,
+                "room_data_info": roomDataInfo,
+                "price": total_price, nonce: ttbm_ajax.nonce
+            },
+            success: function (data) {
+                window.location.href = ttbm_site_url + '/index.php/checkout/';
+            }
+        });
+    });
+
     $(document).on('click', '.ttbm_hotel_book_now', function (e) {
         e.preventDefault();
         let hotel_id = $("#ttbm_booking_hotel_id").val();

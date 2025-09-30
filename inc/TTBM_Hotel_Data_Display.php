@@ -9,7 +9,7 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
         public function __construct(){
             add_action('ttbm_hotel_left_filter', array($this, 'hotel_left_filter'), 10, 1);
             add_action('ttbm_hotel_filter_top_bar', array($this, 'filter_top_bar'), 10, 2);
-            add_action('ttbm_all_hotel_list_item', array($this, 'all_hotel_list_item'), 10, 3 );
+            add_action('ttbm_all_hotel_list_item', array($this, 'all_hotel_list_item'), 10, 2 );
             add_action('ttbm_search_hotel_list_item', array($this, 'ttbm_search_hotel_list_item'), 10, 2);
             add_action('ttbm_filter_hotel_search_top_bar', array($this, 'filter_hotel_search_top_bar'), 10, 2);
         }
@@ -307,10 +307,11 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
             return ob_get_clean();
         }
 
-        public function all_hotel_list_item( $loop, $params, $list = '' ){
+        public function all_hotel_list_item( $loop, $params ){
             $currency = get_woocommerce_currency();
             $hotel_data = self::all_hotel_list_data( $loop );
             $date_range = '' ;
+            $list = 'hotel_list';
             echo self::display_hotel_list( $hotel_data, $currency, $date_range, $list );
             ?>
 

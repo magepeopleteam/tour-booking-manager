@@ -62,7 +62,7 @@ if (!class_exists('TTBM_Woocommerce_Plugin')) {
 					'find-hotel' => [
 						'slug' => 'hotel-find',
 						'title' => 'Hotel Search Result',
-						'content' => '[wptravelly-hotel-list]',
+						'content' => '[wptravelly-hotel-search-list]',
 						'option_key' => 'ttbm_page_hotel_find_created',
 					],
 					'lotus-grid' => [

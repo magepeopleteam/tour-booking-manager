@@ -326,7 +326,7 @@ div.ttbm_viator_theme .item_icon { width: auto;}
 .ttbm_carousel_holder { position: absolute; right: 0; z-index: 99; background-color: bisque;}
 /*****************content & Title*********************************/
 .site-content .ast-container { display: block; }
-.ttbm_default__title {margin: 0;padding: 0 0 5px 0;}
+.ttbm_default__title h1{margin:10px 0;padding: 0 0 5px 0;font-size: 30px;padding: 0;}
 
 
 
@@ -493,6 +493,7 @@ div.ttbm_select_date_area {
 	color: var(--color_white);
 	font-weight: bold;
 	font-size: 20px;
+	margin: 0;
 }
 .ttbm_select_date_area .date-picker {
 	display: flex;
@@ -1486,6 +1487,8 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	font-weight: normal;
 	background-color:var(--color_theme);
 	color:#fff;
+	font-size: 14px;
+	margin: 0;
 }
 
 .ttbm-hotel-details .price-match .button{
@@ -1533,6 +1536,7 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	gap: 10px;
 	padding: 10px;
 	border-bottom: 1px solid #ddd;
+	align-items: start;
 }
 .ttbm-hotel-details .review-rating .review{
 	text-align: right;
@@ -1631,6 +1635,11 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	margin-bottom: 20px;
 }
 
+.ttbm-hotel-details  h2{
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+
 .ttbm-hotel-details .ttbm-content-left .popular-facilities ul{
 	list-style: none;
 	margin: 0;
@@ -1644,12 +1653,12 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	justify-content: start;
 	align-items: center;
 	gap: 5px;
-	margin:0 15px 15px 0;
+	margin:10px 10px 10px 0;
 	background: #f0f6ff;
     border: 1px solid #e1e3e7;
     padding: 2px 5px;
     border-radius: 5px;
-	
+	font-size: 14px;
 }
 .ttbm-hotel-details .ttbm-content-left .popular-facilities i{
 	font-size: 20px;

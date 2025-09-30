@@ -282,7 +282,6 @@
                     <p class="location-info">
                         <i class="mi mi-marker"></i> 
                         <?php echo esc_html($hotel_location); ?>
-                        <a href="#"><?php echo esc_html($distance_des); ?></a>
                     </p>
                 <?php
                 endif;

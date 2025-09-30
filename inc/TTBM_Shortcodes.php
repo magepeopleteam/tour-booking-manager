@@ -648,11 +648,12 @@
                     'post_status'    => 'publish',
                     'posts_per_page' => -1,
                     'meta_query'     => array(
-                        $location_search,  // your meta query for location
+                        $location_search,
                     ),
                 );
 
                 $loop = new WP_Query($args);
+                $list = 'hotel_list';
                 ob_start();
                 ?>
                 <div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
@@ -662,21 +663,17 @@
                             ?>
                             <div class="left_filter">
                                 <div class="leftSidebar placeholder_area">
-                                    <?php do_action('ttbm_hotel_left_filter', $params); ?>
+                                    <?php do_action('ttbm_hotel_left_filter', $params ); ?>
                                 </div>
                                 <div class="mainSection">
-                                    <?php do_action('ttbm_hotel_filter_top_bar', $loop, $params); ?>
-                                    <?php do_action('ttbm_all_hotel_list_item', $loop, $params); ?>
-                                    <?php do_action('ttbm_hotel_sort_result', $loop, $params); ?>
-                                    <?php do_action('ttbm_hotel_pagination', $params, $loop->post_count); ?>
+                                    <?php do_action('ttbm_hotel_filter_top_bar', $loop, $params ); ?>
+                                    <?php do_action('ttbm_all_hotel_list_item', $loop, $params, $list ); ?>
                                 </div>
                             </div>
                             <?php
                         } else {
                             do_action('ttbm_hotel_filter_top_bar', $loop, $params);
-                            do_action('ttbm_all_hotel_list_item', $loop, $params);
-                            do_action('ttbm_hotel_sort_result', $loop, $params);
-                            do_action('ttbm_hotel_pagination', $params, $loop->post_count);
+                            do_action('ttbm_all_hotel_list_item', $loop, $params,  $list );
                         }
                         ?>
                     </div>

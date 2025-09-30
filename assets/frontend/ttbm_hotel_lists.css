@@ -344,3 +344,12 @@
     min-width: 36px;
     text-align: center;
 }
+
+.ttbm_see_available_hotel{
+    cursor: pointer;
+}
+
+.ttbm_hotel_book_cancel_btn{
+    display: flex;
+    gap: 10px;
+}

@@ -236,56 +236,6 @@ jQuery(document).ready(function ($) {
 
     updateSlider();
 
-
-    function filterHotels_old() {
-        // Get Price Range
-        let minPrice = parseInt($('#ttbm_min_range').val());
-        let maxPrice = parseInt($('#ttbm_max_range').val());
-
-        // Get selected Locations
-        let selectedLocations = [];
-        $('#ttbm_locationList input:checked').each(function() {
-            selectedLocations.push($(this).next('span').text().trim());
-        });
-
-        let selectedActivities = [];
-        $('#ttbm_hotelActivityList input:checked').each(function() {
-            selectedActivities.push($(this).attr('data-checked'));
-        });
-
-        let selectedFeatures = [];
-        $('#ttbm_hotelFeatureList input:checked').each(function() {
-            selectedFeatures.push($(this).attr('data-checked'));
-        });
-        $('.ttbm_hotel_lists_card').each(function() {
-            let price = parseInt($(this).data('hotel-price'));
-            let location = $(this).data('hotel-location');
-            let features = ($(this).data('hotel-feature') + '').split(',');
-            let activities = ($(this).data('hotel-activity') + '').split(',');
-
-            let show = true;
-
-            if (price < minPrice || price > maxPrice) {
-                show = false;
-            }
-            if (selectedLocations.length > 0 && !selectedLocations.includes(location)) {
-                show = false;
-            }
-
-            if (selectedActivities.length > 0 && !selectedActivities.some(val => activities.includes(val))) {
-                show = false;
-            }
-            if (selectedFeatures.length > 0 && !selectedFeatures.some(val => features.includes(val))) {
-                show = false;
-            }
-            if (show) {
-                $(this).fadeIn();
-            } else {
-                $(this).fadeOut();
-            }
-        });
-    }
-
     function filterHotels() {
         let minPrice = parseInt($('#ttbm_min_range').val());
         let maxPrice = parseInt($('#ttbm_max_range').val());
@@ -401,6 +351,24 @@ jQuery(document).ready(function ($) {
         let value = $(this).text();
         $input.val(value);
         $dropdown.hide();
+    });
+
+    $(document).on('click', '.ttbm_see_available_hotel', function (e) {
+
+        $('.ttbm_hotel_inline_booking').fadeOut();
+        $('.ttbm_see_available_hotel').fadeIn();
+        $(this).hide();
+        let parent  = $(this).closest('.ttbm_hotel_lists_card');
+        parent.find('.ttbm_hotel_inline_booking').fadeIn();
+
+    });
+
+    $(document).on('click', '.ttbm_cancel_hotel_book', function (e) {
+
+        let parent  = $(this).closest('.ttbm_hotel_lists_card');
+        parent.find('.ttbm_see_available_hotel').fadeIn();
+        parent.find('.ttbm_hotel_inline_booking').fadeOut();
+
     });
 
 }(jQuery));

@@ -309,9 +309,11 @@ function ttbm_all_content_change($this) {
 }(jQuery));
 //==============================================================================Qty inc dec================//
 (function ($) {
-    function ttbm_calculateTotalQtyPrice() {
+    function ttbm_calculateTotalQtyPrice( current ) {
         let totalQty = 0;
         let totalPrice = 0;
+        let terget = current.closest('.qtyIncDec').find('.ttbm_hotel_room_incDec')
+
         $('.ttbm_hotel_room_incDec').each(function () {
             const $input = $(this).find('.inputIncDec');
             const qty = parseInt($input.val()) || 0;
@@ -322,6 +324,29 @@ function ttbm_all_content_change($this) {
             $(".tour_price").text(totalPrice);
         });
     }
+
+    function ttbm_calculateTotalQtyPrice_new(current) {
+        let totalQty = 0;
+        let totalPrice = 0;
+
+        // Find the parent table (mp_tour_ticket_type)
+        let table = current.closest('.ttbm_hotel_lists_content');
+
+        // Loop only inside that table
+        table.find('.ttbm_hotel_room_incDec').each(function () {
+            const $input = $(this).find('.inputIncDec');
+            const qty = parseInt($input.val()) || 0;
+            const price = parseFloat($input.data('price')) || 0;
+
+            totalQty += qty;
+            totalPrice += qty * price;
+        });
+
+        // Update only inside this table
+        table.find(".tour_qty").text(totalQty);
+        table.find(".tour_price").text(totalPrice);
+    }
+
     "use strict";
     $(document).on("click", "div.ttbm_style .decQty ,div.ttbm_style .incQty", function () {
         let current = $(this);
@@ -340,7 +365,7 @@ function ttbm_all_content_change($this) {
             target.parents('.qtyIncDec').find('.incQty').addClass('mpDisabled');
         }
         target.val(value).trigger('change').trigger('input');
-        ttbm_calculateTotalQtyPrice();
+        ttbm_calculateTotalQtyPrice_new( current );
     });
 }(jQuery));
 //==============================================================================Input use as select================//

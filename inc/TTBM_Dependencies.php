@@ -36,6 +36,7 @@
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Query.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Shortcodes.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Filter_Pagination.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Data_Display.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Tour_List.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Details_Layout.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Travel_List_Tab_Details.php';
@@ -73,6 +74,8 @@ require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
 				wp_enqueue_script('jquery-ui-accordion');
 				wp_enqueue_script('ttbm_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_script.js', array('jquery'), time(), true);
 				wp_enqueue_script('ttbm_shortcode', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_shortcode.js', array('jquery'), time(), true);
+                wp_enqueue_style('ttbm_hotel_lists', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_lists.css', array(), time());
+
 				wp_localize_script('ttbm_script', 'ttbm_ajax', array(
 					'ajax_url' => admin_url('admin-ajax.php'),
 					'nonce' => wp_create_nonce('ttbm_frontend_nonce')

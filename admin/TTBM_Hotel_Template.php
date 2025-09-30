@@ -30,7 +30,7 @@ if (!class_exists('TTBM_Hotel_Template')) {
 //            error_log( print_r($thumbnail_url, true));
             if ( has_post_thumbnail() ) : ?>
                 <header class="mptrs-header-baner">
-                    <img alt="<?php esc_attr( get_the_title() );?>" src=" <?php  echo esc_attr( $thumbnail_url );?>">
+                    <img alt="<?php echo esc_attr( get_the_title() );?>" src="<?php echo esc_attr( $thumbnail_url );?>">
                 </header>
             <?php endif; ?>
             <?php

@@ -9,7 +9,7 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
         public function __construct(){
             add_action('ttbm_hotel_left_filter', array($this, 'hotel_left_filter'), 10, 1);
             add_action('ttbm_hotel_filter_top_bar', array($this, 'filter_top_bar'), 10, 2);
-            add_action('ttbm_all_hotel_list_item', array($this, 'all_hotel_list_item'), 10, 2);
+            add_action('ttbm_all_hotel_list_item', array($this, 'all_hotel_list_item'), 10, 3 );
             add_action('ttbm_search_hotel_list_item', array($this, 'ttbm_search_hotel_list_item'), 10, 2);
             add_action('ttbm_filter_hotel_search_top_bar', array($this, 'filter_hotel_search_top_bar'), 10, 2);
         }
@@ -203,9 +203,8 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
         }
 
 
-        public static function display_hotel_list( $hotel_data, $currency, $date_range = '' ){
+        public static function display_hotel_list( $hotel_data, $currency, $date_range, $list ){
 
-//            error_log( print_r( [ '$hotel_data' => $hotel_data ], true ) );
             ob_start();
             ?>
             <div class="ttbm_hotel_lists_wrapper list-view">
@@ -230,9 +229,10 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                         $hotel_activities_str = implode( ',',$hotel_activities  );
                     }
 
-                   $inline_booking = self::inline_room_book( $hotel['id'], $date_range );
-//                    error_log( print_r( [ '$inline_booking' => $inline_booking ], true ) );
-
+                    $inline_booking = '';
+                    if( $list === 'search_list' ){
+                        $inline_booking = self::inline_room_book( $hotel['id'], $date_range );
+                    }
 
                     ?>
                     <div class="ttbm_hotel_lists_card"
@@ -249,7 +249,7 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                         </div>
                         <div class="ttbm_hotel_lists_content">
                             <div class="ttbm_hotel_lists_header">
-                                <h3 class="ttbm_hotel_lists_title"><?php echo esc_attr( $hotel['title'] );?></h3>
+                                <a href="<?php echo esc_attr( $hotel['permalink'])?>"><h3 class="ttbm_hotel_lists_title"><?php echo esc_attr( $hotel['title'] );?></h3></a>
                                 <div class="ttbm_hotel_lists_rating_box">
                                     <span class="ttbm_hotel_lists_rating_text"><?php esc_attr_e( 'Rating', 'tour-booking-manager' );?></span>
                                     <span class="ttbm_hotel_lists_rating"><?php echo $hotel['hotel_rating'];?></span>
@@ -286,12 +286,17 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                                                 </span>
                                             </div>
                                         </div>
-                                    <?php }
-                                    echo $inline_booking;;
-                                    ?>
+                                    <?php } ?>
+                                    <div class="ttbm_hotel_inline_booking"  style="display: none">
+                                        <?php echo $inline_booking; ?>
+                                    </div>
                                     <span class="ttbm_hotel_lists_note"><?php esc_attr_e( 'Additional charges may apply', 'tour-booking-manager' );?></span>
                                 </div>
-<!--                                <a href="--><?php //echo esc_attr( $hotel['permalink'])?><!--" class="ttbm_hotel_lists_button">--><?php //esc_attr_e( 'See availability', 'tour-booking-manager' );?><!--</a>-->
+                                <?php if( $list === 'search_list' ){?>
+                                    <div class="ttbm_hotel_lists_button ttbm_see_available_hotel"><?php esc_attr_e( 'See availability', 'tour-booking-manager' );?></div>
+                                <?php }else{ ?>
+                                    <a href="<?php echo esc_attr( $hotel['permalink'])?>" class="ttbm_hotel_lists_button"><?php esc_attr_e( 'See availability', 'tour-booking-manager' );?></a>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
@@ -302,10 +307,11 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
             return ob_get_clean();
         }
 
-        public function all_hotel_list_item( $loop, $params ){
+        public function all_hotel_list_item( $loop, $params, $list = '' ){
             $currency = get_woocommerce_currency();
             $hotel_data = self::all_hotel_list_data( $loop );
-            echo self::display_hotel_list( $hotel_data, $currency );
+            $date_range = '' ;
+            echo self::display_hotel_list( $hotel_data, $currency, $date_range, $list );
             ?>
 
             <button id="ttbm_loadMoreHotels" class="ttbm_hotel_load_more_btn">Load More</button>
@@ -317,8 +323,9 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
             $date_range = isset( $_GET['search_date_range'] ) ? $_GET['search_date_range'] : '';
 //            error_log( print_r( [ '$date_rang' => $date_rang], true ) );
 
+            $list = 'search_list';
             $currency = get_woocommerce_currency();
-            echo self::display_hotel_list( $hotel_data, $currency, $date_range );
+            echo self::display_hotel_list( $hotel_data, $currency, $date_range, $list );
             ?>
 
             <button id="ttbm_loadMoreHotels" class="ttbm_hotel_load_more_btn">Load More</button>
@@ -479,10 +486,16 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                             <p><strong> <?php esc_html_e( 'Quantity : ', 'tour-booking-manager' ); ?></strong>&nbsp;<span class="tour_qty"></span></p>
                             <p><strong> <?php esc_html_e( 'Total : ', 'tour-booking-manager' ); ?></strong>&nbsp;<span class="tour_price"></span></p>
                         </div>
-                        <button class="dButton ttbm_multiple_hotel_book_now"  type="button">
-                            <span class="fas fa-cart-plus"></span>
-                            <?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?>
-                        </button>
+                        <div class=" justifyBetween ttbm_hotel_book_cancel_btn">
+                            <button class="dButton ttbm_multiple_hotel_book_now"  type="button">
+                                <span class="fas fa-cart-plus"></span>
+                                <?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?>
+                            </button>
+                            <button class="dButton ttbm_cancel_hotel_book"  type="button">
+                                <span class="fas fa-times"></span>
+                                <?php esc_html_e( 'Cancel', 'tour-booking-manager' ); ?>
+                            </button>
+                        </div>
                     </div>
                 <?php
 //                include( TTBM_Function::template_path( 'ticket/hotel_book_now.php' ) );

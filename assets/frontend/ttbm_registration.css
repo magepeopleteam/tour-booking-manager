@@ -443,7 +443,7 @@ div.ttbm_booking_panel .ttbm_attendee_form_area {
 }
 div.ttbm_booking_panel .ttbm_attendee_form_item {
 	border-radius: 10px;
-	margin: 10px;
+	padding: 10px;
 }
 div.ttbm_booking_panel .ttbm-attendee-form .ttbm_form_header {
 	background: none;

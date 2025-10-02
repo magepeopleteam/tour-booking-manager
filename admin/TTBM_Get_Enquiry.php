@@ -161,8 +161,6 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             die;
         }
         public function get_enquiry_button(){
-            $display_enquiry = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_display_enquiry', 'on');
-            if($display_enquiry == 'on'):
             ?>
             <div class="get-enquiry-popup">
                 <button type="button" class="_dButton_fullWidth" data-target-popup="get-enquiry-popup">
@@ -171,7 +169,6 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 </button>
             </div>
             <?php
-            endif;
         }
 
         public function get_enquiry_admin_menu()
@@ -282,8 +279,6 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                         <div class="popupBody">
                             <div class="ajax-response"></div>
                             <form method="post" id="ttbm-enquiry-form">
-                                <fieldset>
-                                <legend><?php esc_html_e('Enquiry', 'tour-booking-manager'); ?></legend>
                                 <div class="get-enquiry-form">
                                     <label for="name"><?php esc_html_e('Name:', 'tour-booking-manager'); ?></label>
                                     <input type="text" name="name" id="name" placeholder="<?php esc_attr_e('Your Name', 'tour-booking-manager'); ?>" required>
@@ -299,7 +294,6 @@ if (! class_exists('TTBM_Get_Enquiry')) {
 
                                     <button class="_dButton_fullWidth" id="ttbm-enquiry-form-submit"><?php esc_html_e('Send Message', 'tour-booking-manager'); ?></button>
                                 </div>
-                                </fieldset>
                             </form>
                         </div>
                     </div>

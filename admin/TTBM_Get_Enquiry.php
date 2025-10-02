@@ -161,6 +161,8 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             die;
         }
         public function get_enquiry_button(){
+            $display_enquiry = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_display_enquiry', 'on');
+            if($display_enquiry == 'on'):
             ?>
             <div class="get-enquiry-popup">
                 <button type="button" class="_dButton_fullWidth" data-target-popup="get-enquiry-popup">
@@ -169,6 +171,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 </button>
             </div>
             <?php
+            endif;
         }
 
         public function get_enquiry_admin_menu()

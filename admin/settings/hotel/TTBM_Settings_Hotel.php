@@ -109,6 +109,8 @@
 					$ttbm_hotel_breakfast = isset($_POST['ttbm_hotel_breakfast']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_breakfast'])) : '';
 					$ttbm_display_hotel_breakfast = isset($_POST['ttbm_display_hotel_breakfast']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hotel_breakfast'])) ? 'on' : 'off';
 					$ttbm_location_name = isset($_POST['ttbm_hotel_location']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_location'])) : '';
+					$ttbm_hotel_rating = isset($_POST['ttbm_hotel_rating']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_rating'])) : '';
+					update_post_meta($post_id, 'ttbm_hotel_rating', $ttbm_hotel_rating);
 					update_post_meta($post_id, 'ttbm_display_property_highlights', $ttbm_display_property_highlights);
 					update_post_meta($post_id, 'ttbm_hotel_property_highlights', $ttbm_hotel_property_highlights);
 					update_post_meta($post_id, 'ttbm_display_hotel_location', $ttbm_display_location);

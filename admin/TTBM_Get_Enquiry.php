@@ -282,8 +282,6 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                         <div class="popupBody">
                             <div class="ajax-response"></div>
                             <form method="post" id="ttbm-enquiry-form">
-                                <fieldset>
-                                <legend><?php esc_html_e('Enquiry', 'tour-booking-manager'); ?></legend>
                                 <div class="get-enquiry-form">
                                     <label for="name"><?php esc_html_e('Name:', 'tour-booking-manager'); ?></label>
                                     <input type="text" name="name" id="name" placeholder="<?php esc_attr_e('Your Name', 'tour-booking-manager'); ?>" required>
@@ -299,7 +297,6 @@ if (! class_exists('TTBM_Get_Enquiry')) {
 
                                     <button class="_dButton_fullWidth" id="ttbm-enquiry-form-submit"><?php esc_html_e('Send Message', 'tour-booking-manager'); ?></button>
                                 </div>
-                                </fieldset>
                             </form>
                         </div>
                     </div>

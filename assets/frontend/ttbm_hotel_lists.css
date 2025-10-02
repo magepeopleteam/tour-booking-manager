@@ -2,9 +2,56 @@
 /* Default List View */
 .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_card {
     display: flex;
+    flex-direction: column;
+}
+.ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_card_content{
+    display: flex;
     flex-direction: row;
+    padding: 7px;
+}
+.ttbm_hotel_lists_wrapper.grid-view  .ttbm_hotel_lists_card_content{
+    display: block;
+}
+.ttbm_hotel_inline_booking{
+    padding: 7px;
+}
+.ttbm_hotel_inline_booking .booking_form_wrapper h5{
+    margin:0;
+    margin-bottom:8px;
+}
+.ttbm_hotel_inline_booking .ttbm_widget_content{
+    padding: 0;
+}
+.mp_tour_ticket_type{
+    
+    border: 1px solid var(--color_border)  ;
+    border-radius: 5px;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+.mp_tour_ticket_item{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.mp_tour_ticket_type .mp_tour_ticket_item:last-child {
+    border: none !important;
 }
 
+.ttbm-hotel-room-info h6{
+    margin-bottom: 3px;
+    font-size: 15px;
+}
+.ttbm-hotel-room-info .seat-count{
+    background-color: #f3f3f3;
+    color: #666;
+    padding: 0 8px;
+    border-radius:50px;
+    font-size: 14px;
+}
 /* Grid View */
 .ttbm_hotel_lists_wrapper.grid-view {
     display: grid;
@@ -35,7 +82,7 @@
 .ttbm_hotel_lists_image {
     position: relative;
     flex: 0 0 240px;
-    height: 240px;
+    height: 196px;
     overflow: hidden;
 }
 .ttbm_hotel_lists_image img {
@@ -68,7 +115,7 @@
     justify-content: space-between;
     align-items: center;
 }
-.ttbm_hotel_lists_title {
+.ttbm_hotel_lists_header .ttbm_hotel_lists_title {
     font-size: 18px;
     font-weight: bold;
     color: #0056b3;

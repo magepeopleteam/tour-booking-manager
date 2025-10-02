@@ -72,11 +72,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 									// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  
 									wc_price( TTBM_Function::get_hotel_room_min_price( $hotel_id ) ); ?></h4>
 									<?php
-										$ttbm_hotel_des = get_post_field( 'post_content', $tour_id );
+										$ttbm_hotel_des = get_post_field( 'post_content', $hotel_id );
 										if ( $ttbm_hotel_des ) {
 											?>
-											<div class="ttbm_wp_editor hotel_list_middle_left" data-collapse-target="#show_descripton">
-												<?php echo esc_html(TTBM_Custom_Layout::load_more_text($ttbm_hotel_des,190)); ?>
+											<div class="ttbm_wp_editor hotel_list_middle_left">
+												<?php TTBM_Custom_Layout::load_more_text($ttbm_hotel_des,190); ?>
 											</div>
 										<?php } ?>
 									<div class="hotel_list_middle_right justifyEnd ">

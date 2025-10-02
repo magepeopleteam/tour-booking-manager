@@ -697,7 +697,19 @@ span.load_more_text {cursor: pointer;color: var(--color_theme_cc);}
 @media only screen and (max-width: 600px) {
 	div.ttbm_booking_panel table td:last-child > div {min-width: auto;}
 }
-div.ttbm_smart_theme div.ttbm_date_time_select label {margin: 0 0 10px 0;width: 100%;display: block;}
+div.ttbm_smart_theme div.ttbm_date_time_select label {margin: 0 0 10px 0;width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+div.ttbm_smart_theme .time_select_box .customRadio.button_type{
+	border: 1px solid var(--color_theme);
+    color: var(--color_theme);
+    background-color: var(--color_theme_alter);
+    border-radius: 50px;
+}
+
 div.ttbm_smart_theme .ttbm-rating-stars {padding: 0 20px 0 0; margin: 0;border-right: 2px solid #DDD;}
 div.ttbm_smart_theme div.ttbm_details_page .location_name {padding: 0 20px; margin: 0;}
 div.ttbm_smart_theme .ttbm_load_popup_reg {

@@ -338,7 +338,17 @@ if (!class_exists('TTBM_Quick_Setup')) {
 						<button class="ttbm-btn ttbm-btn-primary" id="ttbm-next-step">
 							<?php esc_html_e('Next', 'tour-booking-manager'); ?>
 						</button>
-						<a href="<?php echo esc_url(admin_url('edit.php?post_type=ttbm_tour')); ?>" class="ttbm-skip-setup">
+						<?php 
+						// Show Skip Setup button - different URLs based on WooCommerce status
+						if ($woo_status != 1): 
+							// WooCommerce not active - go to Dashboard
+							$skip_url = admin_url('index.php');
+						else: 
+							// WooCommerce active - go to tour list page
+							$skip_url = admin_url('edit.php?post_type=ttbm_tour&page=ttbm_list');
+						endif;
+						?>
+						<a href="<?php echo esc_url($skip_url); ?>" class="ttbm-skip-setup">
 							<?php esc_html_e('Skip Setup', 'tour-booking-manager'); ?>
 						</a>
 					</div>
@@ -383,6 +393,13 @@ if (!class_exists('TTBM_Quick_Setup')) {
 				// Run again after a short delay to catch any late renders
 				setTimeout(hideNavButtons, 100);
 				setTimeout(hideNavButtons, 500);
+				
+				// Hide Skip Setup button after WooCommerce is activated
+				$(document).on('click', '#ttbm-activate-woo', function() {
+					setTimeout(function() {
+						$('.ttbm-skip-setup').fadeOut();
+					}, 2000);
+				});
 			});
 			</script>
 			<?php
@@ -501,7 +518,7 @@ if (!class_exists('TTBM_Quick_Setup')) {
 
 			wp_send_json_success(array(
 				'message' => esc_html__('Setup completed successfully!', 'tour-booking-manager'),
-				'redirect_url' => admin_url('edit.php?post_type=ttbm_tour')
+				'redirect_url' => admin_url('edit.php?post_type=ttbm_tour&page=ttbm_list')
 			));
 		}
 	}

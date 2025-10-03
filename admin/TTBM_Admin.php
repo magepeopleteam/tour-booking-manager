@@ -21,6 +21,7 @@
 				require_once TTBM_PLUGIN_DIR . '/lib/classes/class-meta-box.php';
 				require_once TTBM_PLUGIN_DIR . '/lib/classes/class-taxonomy-edit.php';
 				//**************//
+				// Quick Setup is loaded in TTBM_Dependencies.php
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Dummy_Import.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_CPT.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Taxonomy.php';
@@ -30,7 +31,6 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin_Tour_List.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Travel_Tab_Data_Add_Display_Ajax.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Welcome.php';
-				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Status.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_License.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Get_Enquiry.php';

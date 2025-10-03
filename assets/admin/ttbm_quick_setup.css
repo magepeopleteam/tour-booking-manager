@@ -1,0 +1,438 @@
+/* Tour Booking Manager - Quick Setup Wizard Styles */
+
+/* Reset conflicting WooCommerce/WordPress styles */
+.ttbm-quick-setup-wrapper *,
+.ttbm-quick-setup-container * {
+    box-sizing: border-box;
+}
+
+.ttbm-quick-setup-wrapper button,
+.ttbm-quick-setup-container button {
+    font-family: inherit !important;
+}
+
+.ttbm-quick-setup-wrapper {
+    background: #f0f0f1;
+    min-height: 100vh;
+    padding: 20px;
+    margin-left: -20px;
+}
+
+.ttbm-quick-setup-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Header */
+.ttbm-setup-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    padding: 40px 30px;
+    text-align: center;
+}
+
+.ttbm-setup-header h1 {
+    margin: 0 0 10px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.ttbm-setup-header p {
+    margin: 0;
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* Progress Steps */
+.ttbm-setup-progress {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 50px;
+    background: #f9f9f9;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.ttbm-step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.ttbm-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    right: -50%;
+    width: 100%;
+    height: 2px;
+    background: #ddd;
+    z-index: 0;
+}
+
+.ttbm-step.active:not(:last-child)::after,
+.ttbm-step.completed:not(:last-child)::after {
+    background: #667eea;
+}
+
+.ttbm-step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ddd;
+    color: #666;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.ttbm-step.active .ttbm-step-number {
+    background: #667eea;
+    color: #fff;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+}
+
+.ttbm-step.completed .ttbm-step-number {
+    background: #28a745;
+    color: #fff;
+}
+
+.ttbm-step.completed .ttbm-step-number::before {
+    content: '\f147';
+    font-family: dashicons;
+    font-size: 20px;
+}
+
+.ttbm-step-title {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.ttbm-step.active .ttbm-step-title {
+    color: #333;
+    font-weight: 600;
+}
+
+/* Step Content */
+.ttbm-setup-content {
+    padding: 40px 50px;
+    min-height: 400px;
+}
+
+.ttbm-step-content {
+    display: none;
+}
+
+.ttbm-step-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ttbm-step-content h2 {
+    margin: 0 0 15px;
+    font-size: 24px;
+    color: #333;
+}
+
+.ttbm-step-content > p {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* Status Box */
+.ttbm-status-box {
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.ttbm-status-box.success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.ttbm-status-box.warning {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+}
+
+.ttbm-status-box .dashicons {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.ttbm-status-box p {
+    margin: 0;
+    flex: 1;
+}
+
+/* Form */
+.ttbm-form-group {
+    margin-bottom: 25px;
+}
+
+.ttbm-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.ttbm-form-group input[type="text"] {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.ttbm-form-group input[type="text"]:focus {
+    border-color: #667eea;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.ttbm-form-group small {
+    display: block;
+    margin-top: 5px;
+    color: #666;
+    font-size: 13px;
+}
+
+/* Buttons */
+.ttbm-quick-setup-wrapper .ttbm-btn,
+.ttbm-quick-setup-container .ttbm-btn {
+    padding: 12px 30px !important;
+    border: none !important;
+    border-radius: 4px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    width: auto !important;
+    height: auto !important;
+    box-sizing: border-box !important;
+}
+
+.ttbm-quick-setup-wrapper .ttbm-btn-primary,
+.ttbm-quick-setup-container .ttbm-btn-primary {
+    background: #667eea !important;
+    background-color: #667eea !important;
+    color: #fff !important;
+    border-color: #667eea !important;
+}
+
+.ttbm-quick-setup-wrapper .ttbm-btn-primary:hover,
+.ttbm-quick-setup-container .ttbm-btn-primary:hover {
+    background: #5568d3 !important;
+    background-color: #5568d3 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3) !important;
+    color: #fff !important;
+}
+
+.ttbm-quick-setup-wrapper .ttbm-btn-secondary,
+.ttbm-quick-setup-container .ttbm-btn-secondary {
+    background: #f0f0f1 !important;
+    background-color: #f0f0f1 !important;
+    color: #333 !important;
+    border-color: #ddd !important;
+}
+
+.ttbm-quick-setup-wrapper .ttbm-btn-secondary:hover,
+.ttbm-quick-setup-container .ttbm-btn-secondary:hover {
+    background: #e0e0e0 !important;
+    background-color: #e0e0e0 !important;
+    color: #333 !important;
+}
+
+.ttbm-quick-setup-wrapper .ttbm-btn:disabled,
+.ttbm-quick-setup-container .ttbm-btn:disabled {
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+}
+
+/* Loading */
+.ttbm-loading {
+    text-align: center;
+    padding: 20px;
+}
+
+.ttbm-loading .spinner {
+    float: none;
+    margin: 0 auto 10px;
+}
+
+.ttbm-loading-text {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Footer */
+.ttbm-setup-footer {
+    padding: 20px 50px;
+    background: #f9f9f9;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Hide navigation buttons on final step */
+.ttbm-step-content[data-step="3"].active ~ .ttbm-setup-footer #ttbm-next-step,
+.ttbm-step-content[data-step="3"].active ~ .ttbm-setup-footer #ttbm-prev-step {
+    display: none !important;
+}
+
+/* Specific button fixes */
+#ttbm-next-step,
+#ttbm-prev-step,
+#ttbm-install-woo,
+#ttbm-activate-woo,
+#ttbm-finish-setup {
+    min-width: 120px !important;
+    text-overflow: clip !important;
+}
+
+.ttbm-skip-setup {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.ttbm-skip-setup:hover {
+    color: #333;
+    text-decoration: underline;
+}
+
+/* Finish Content */
+.ttbm-finish-content {
+    text-align: center;
+}
+
+.ttbm-success-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #28a745;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 30px;
+}
+
+.ttbm-success-icon .dashicons {
+    font-size: 50px;
+    width: 50px;
+    height: 50px;
+}
+
+.ttbm-next-steps {
+    text-align: left;
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 6px;
+    margin: 30px 0;
+}
+
+.ttbm-next-steps h3 {
+    margin: 0 0 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+.ttbm-next-steps ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.ttbm-next-steps li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ttbm-next-steps li:last-child {
+    margin-bottom: 0;
+}
+
+.ttbm-next-steps .dashicons {
+    color: #667eea;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.ttbm-next-steps a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.ttbm-next-steps a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .ttbm-setup-progress {
+        padding: 20px 20px;
+    }
+
+    .ttbm-setup-content {
+        padding: 30px 20px;
+    }
+
+    .ttbm-setup-footer {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .ttbm-step-title {
+        font-size: 12px;
+    }
+
+    .ttbm-step:not(:last-child)::after {
+        display: none;
+    }
+}
+

@@ -26,6 +26,7 @@
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Custom_Slider.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/TTBM_Select_Icon_image.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/TTBM_Setting_API.php';
+				// Always load Quick Setup (needed even when WooCommerce is not active)
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
 				if (TTBM_Global_Function::check_woocommerce() == 1) {
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Function.php';

@@ -218,19 +218,7 @@
 	.ttbm_style .buttonOutline:hover {background-color: #FF555D;color: #FFF;}
 }
 /* =====================quick setup=============== */
-@media only screen and (min-width: 10px) {
-	.ttbm-quick-setup .ttbmTabsNext .tabsContentNext p { margin-bottom: 5px;}
-	.ttbm_promotional_shortcode_holder { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-around; margin: 30px 0;}
-	.ttbm_shortcode_box {background: #FFFFFF; border: 1px solid #DDD; margin-bottom: 20px;box-shadow: 0 0px 5px rgba(0, 0, 0, 0.05); border-radius: 8px; padding:5px; width: auto; position: relative; transition: box-shadow 0.3s ease;}
-	.ttbm_shortcode_box:hover { box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);}
-	.ttbm_shortcode_text { font-size: 14px; color: #333; background: #fff9d5; padding: 12px; border-radius: 5px; word-break: break-word;}
-	.ttbm_copy_btn {position:absolute;top:10px;right:10px;background-color: #0073AA; color: white; border: none; padding: 8px 14px; font-size: 14px; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease;}
-	.ttbm_copy_btn:hover { background-color: #005177;}
-	.ttbm_shortcode_section { margin: 40px 0; padding: 0 15px;}
-	.ttbm_shortcode_title { font-size: 24px; font-weight: 600; margin-bottom: 20px; color: #222; text-align: center; position: relative;}
-	.ttbm_shortcode_title::after { content: ""; display: block; width: 60px; height: 3px; background-color: #0073AA; margin: 10px auto 0; border-radius: 2px;}
-	.ttbm_shortcode_item_title { font-size: 18px; font-weight: 600; margin: 0 0 10px 0; color: #333;}
-}
+
 /********************************************************************Welcome Page  ************************************************/
 @media only screen and (min-width: 10px) {
 	div.ttbm_welcome_page { margin: 20px 20px 20px 0;}

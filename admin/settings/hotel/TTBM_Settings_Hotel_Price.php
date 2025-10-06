@@ -15,14 +15,13 @@
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
                 <div class="tabsItem" data-tabs="#ttbm_settings_pricing">
-                    <div class="_mT_dLayout_xs ttbm_settings_area">
-                        <h5><?php esc_html_e(' Price Configuration :', 'tour-booking-manager'); ?></h5>
-                        <div class="divider"></div>
-                        <h5 class="dFlex">
-                            <span class="mR"><?php esc_html_e('Show advance columns', 'tour-booking-manager'); ?></span>
-							<?php TTBM_Custom_Layout::switch_button('ttbm_display_advance', $checked); ?>
-                        </h5>
-						<?php TTBM_Settings::des_p('ttbm_display_advance'); ?>
+                    <h2><?php esc_html_e('Price Configuration :', 'tour-booking-manager'); ?></h2>
+                    <p><?php TTBM_Settings::des_p('gallery_settings_description'); ?></p>
+                    <section class="ttbm_settings_area">
+                        <div class="ttbm-header">
+                            <h4><?php esc_html_e(' Show advance columns', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_advance'); ?></span></i></h4>
+                            <?php TTBM_Custom_Layout::switch_button('ttbm_display_advance', $checked); ?>
+                        </div>
                         <div class="ovAuto _mT">
                             <table>
                                 <thead>
@@ -63,7 +62,7 @@
                         </div>
 						<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Room', 'tour-booking-manager')); ?>
 						<?php do_action('add_ttbm_hidden_table', 'ttbm_room_item'); ?>
-                    </div>
+                    </section>
                 </div>
 				<?php
 			}

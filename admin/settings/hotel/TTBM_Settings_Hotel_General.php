@@ -14,22 +14,27 @@
 			public function hotel_general_settings($tour_id) {
 				?>
                 <div class="tabsItem ttbm_settings_general" data-tabs="#ttbm_general_info">
-                    <h5><?php esc_html_e('General Information Settings', 'tour-booking-manager'); ?></h5>
-                    <div class="divider"></div>
-                    <table class="layoutFixed">
-                        <tbody>
-						<?php $this->location($tour_id); ?>
-						<?php $this->distance_description($tour_id); ?>
-						<?php $this->rating($tour_id); ?>
-						<?php $this->property_highlights($tour_id); ?>
-						<?php $this->parking_info($tour_id); ?>
-						<?php $this->breakfast_info($tour_id); ?>
-						<?php $this->review_info($tour_id); ?>
-						<?php $this->service_info($tour_id); ?>
-						<?php $this->testimonial_info($tour_id); ?>
-                        
-                        </tbody>
-                    </table>
+                    <h2><?php esc_html_e('General Information Settings', 'tour-booking-manager'); ?></h2>
+                    <p><?php esc_html_e('Here you can configure basic configureateion for hotel.','tour-booking-manager'); ?></p>
+                    <section>
+                        <div class="ttbm-header">
+                            <h4><i class="mi mi-settings"></i><?php esc_html_e('General Settings', 'tour-booking-manager'); ?></h4>
+                        </div>
+                        <table class="layoutFixed">
+                            <tbody>
+                            <?php $this->location($tour_id); ?>
+                            <?php $this->distance_description($tour_id); ?>
+                            <?php $this->rating($tour_id); ?>
+                            <?php $this->property_highlights($tour_id); ?>
+                            <?php $this->parking_info($tour_id); ?>
+                            <?php $this->breakfast_info($tour_id); ?>
+                            <?php $this->review_info($tour_id); ?>
+                            <?php $this->service_info($tour_id); ?>
+                            <?php $this->testimonial_info($tour_id); ?>
+                            
+                            </tbody>
+                        </table>
+                    </section>
                 </div>
 				<?php
 			}

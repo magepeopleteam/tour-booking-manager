@@ -233,7 +233,7 @@
 
             public function show_breakfast_parking_frontend(){
 				$display_property = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_display_property_highlights', 'on');
-                $display_property = $display_property == 'on' ? $display_property : 'off';
+                
 				$property_highlights =  get_post_meta(get_the_ID(), 'ttbm_hotel_property_highlights', true);
 				
 
@@ -279,8 +279,9 @@
 
             public function show_location_frontend(){
                 $distance_des =  get_post_meta(get_the_ID(), 'ttbm_hotel_distance_des', true);
-                $display =  get_post_meta(get_the_ID(), 'ttbm_display_hotel_location', true);
-                $hotel_location =  get_post_meta(get_the_ID(), 'ttbm_hotel_location', true);
+                $display =  get_post_meta(get_the_ID(), 'ttbm_display_hotel_map', true);
+                $hotel_location =  get_post_meta(get_the_ID(), 'ttbm_hotel_map_location', true);
+                $hotel_location =  !empty($hotel_location) ? $hotel_location : '650 Manchester Road, New York, NY 10007, USA';
 				$checked = $display == 'on' ? $display : 'off';
                 if($checked=='on'):
                 ?>

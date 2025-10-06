@@ -1311,8 +1311,10 @@
                                 ',
 								'post_data' => [
 									'ttbm_hotel_distance_des'=>'0.5 km from center',
-									'ttbm_hotel_property_highlights'=>'0.5',
+									'ttbm_hotel_property_highlights'=>'Top Location: Highly rated by recent guests (9.0)',
+									'ttbm_display_hotel_parking'=>'on',
 									'ttbm_hotel_parking'=>'Free Parking Available On Site',
+									'ttbm_display_hotel_breakfast'=>'on',
 									'ttbm_hotel_breakfast'=>'American, Buffet',
 									'ttbm_hotel_review_title'=>'Excellant',
 									'ttbm_hotel_review_rating'=>'7.8',
@@ -1324,6 +1326,7 @@
 									'ttbm_hotel_testimonial_title'=>'Guests who stayed here loved',
 									'ttbm_hotel_testimonial_text'=>'We loved this hotel',
 									'ttbm_display_hotel_map'=>'on',
+									'ttbm_hotel_rating'=>5,
 									'ttbm_room_details'=>[
 										[
 											'ttbm_hotel_room_name'=>'Standard Room',
@@ -1446,8 +1449,10 @@
                                 ',
 								'post_data' => [
 									'ttbm_hotel_distance_des'=>'0.5 km from center',
-									'ttbm_hotel_property_highlights'=>'0.5',
+									'ttbm_hotel_property_highlights'=>'Top Location: Highly rated by recent guests (9.0)',
+									'ttbm_display_hotel_parking'=>'on',
 									'ttbm_hotel_parking'=>'Free Parking Available On Site',
+									'ttbm_display_hotel_breakfast'=>'on',
 									'ttbm_hotel_breakfast'=>'American, Buffet',
 									'ttbm_hotel_review_title'=>'Excellant',
 									'ttbm_hotel_review_rating'=>'7.8',
@@ -1459,6 +1464,7 @@
 									'ttbm_hotel_testimonial_title'=>'Guests who stayed here loved',
 									'ttbm_hotel_testimonial_text'=>'We loved this hotel',
 									'ttbm_display_hotel_map'=>'on',
+									'ttbm_hotel_rating'=>5,
 									'ttbm_room_details'=>[
 										[
 											'ttbm_hotel_room_name'=>'Standard Room',
@@ -1581,8 +1587,10 @@
                                 ',
 								'post_data' => [
 									'ttbm_hotel_distance_des'=>'0.5 km from center',
-									'ttbm_hotel_property_highlights'=>'0.5',
+									'ttbm_hotel_property_highlights'=>'Top Location: Highly rated by recent guests (9.0)',
+									'ttbm_display_hotel_parking'=>'on',
 									'ttbm_hotel_parking'=>'Free Parking Available On Site',
+									'ttbm_display_hotel_breakfast'=>'on',
 									'ttbm_hotel_breakfast'=>'American, Buffet',
 									'ttbm_hotel_review_title'=>'Excellant',
 									'ttbm_hotel_review_rating'=>'7.8',
@@ -1594,6 +1602,7 @@
 									'ttbm_hotel_testimonial_title'=>'Guests who stayed here loved',
 									'ttbm_hotel_testimonial_text'=>'We loved this hotel',
 									'ttbm_display_hotel_map'=>'on',
+									'ttbm_hotel_rating'=>5,
 									'ttbm_room_details'=>[
 										[
 											'ttbm_hotel_room_name'=>'Standard Room',

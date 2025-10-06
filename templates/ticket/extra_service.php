@@ -13,6 +13,14 @@
 			<h2 class="extra_service_title"><?php echo esc_html__('Available Extra Service List ', 'tour-booking-manager'); ?></h2>
 			<div class="ttbm_widget_content" data-placeholder>
 				<table class="mp_tour_ticket_extra">
+					<thead>
+						<tr>
+							<th class="extra-service-title-header"><?php esc_html_e('Service', 'tour-booking-manager'); ?></th>
+							<th class="extra-service-price-header"><?php esc_html_e('Price', 'tour-booking-manager'); ?></th>
+							<th class="extra-service-availability-header"><?php esc_html_e('Availability', 'tour-booking-manager'); ?></th>
+							<th class="extra-service-quantity-header"><?php esc_html_e('Quantity', 'tour-booking-manager'); ?></th>
+						</tr>
+					</thead>
 					<tbody>
 					<?php
 						foreach ($extra_services as $service) {
@@ -31,6 +39,14 @@
 							$service_icon = array_key_exists('service_icon', $service) ? $service['service_icon'] : '';
 							$description = array_key_exists('extra_service_description', $service) ? $service['extra_service_description'] : '';
 							?>
+							<?php
+							// Calculate availability status and display logic
+							$is_sold_out = $available <= 0;
+							$is_low_stock = $available > 0 && $available <= ($service_qty * 0.2); // Low stock if 20% or less remaining
+							$stock_status = $is_sold_out ? 'sold_out' : ($is_low_stock ? 'low_stock' : 'in_stock');
+							$percentage_sold = $service_qty > 0 ? round((($service_qty - $available) / $service_qty) * 100) : 0;
+							$sold_qty = $service_qty - $available;
+							?>
 							<tr>
 								<th class="extra-service-title">
 									<?php if ($service_icon) { ?>
@@ -44,10 +60,47 @@
 								<td class="textCenter extra-service-price"><?php 
 								// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								echo mep_esc_html($service_price); ?></td>
+								<td class="ttbm-availability-info">
+									<div class="ttbm_availability_container">
+										<div class="ttbm_stock_info ttbm_stock_<?php echo esc_attr($stock_status); ?>">
+											<?php if ($is_sold_out) { ?>
+												<span class="ttbm_stock_status sold_out">
+													<i class="fas fa-times-circle"></i>
+													<?php esc_html_e('Sold Out', 'tour-booking-manager'); ?>
+												</span>
+											<?php } else { ?>
+												<div class="ttbm_availability_details">
+													<div class="ttbm_remaining_count">
+														<span class="ttbm_available_number"><?php echo esc_html($available); ?></span>
+														<span class="ttbm_available_label">
+															<?php echo $available === 1 ? esc_html__('service left', 'tour-booking-manager') : esc_html__('services left', 'tour-booking-manager'); ?>
+														</span>
+													</div>
+													
+													<?php if ($is_low_stock) { ?>
+														<div class="ttbm_urgency_message">
+															<i class="fas fa-exclamation-triangle"></i>
+															<span><?php esc_html_e('Almost sold out!', 'tour-booking-manager'); ?></span>
+														</div>
+													<?php } ?>
+													
+													<div class="ttbm_capacity_info">
+														<span class="ttbm_capacity_text">
+															<?php printf(esc_html__('%1$d of %2$d sold', 'tour-booking-manager'), $sold_qty, $service_qty); ?>
+														</span>
+														<div class="ttbm_progress_bar">
+															<div class="ttbm_progress_fill ttbm_progress_<?php echo esc_attr($stock_status); ?>" style="width: <?php echo esc_attr($percentage_sold); ?>%"></div>
+														</div>
+													</div>
+												</div>
+											<?php } ?>
+										</div>
+									</div>
+								</td>
 								<td><?php TTBM_Layout::qty_input($service_name, $available, $input_type, $default_qty, $min_qty, $max_qty, $service_price_raw, 'service_qty[]'); ?></td>
 							</tr>
 							<tr>
-								<td colspan=3>
+								<td colspan=4>
 									<input type="hidden" name='tour_id[]' value='<?php echo esc_html($tour_id); ?>'>
 									<input type="hidden" name='service_name[]' value='<?php echo esc_html($service_name); ?>'>
 									<input type="hidden" name='service_max_qty[]' value='<?php echo esc_html($max_qty); ?>'>

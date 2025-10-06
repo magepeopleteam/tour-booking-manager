@@ -73,11 +73,17 @@ if (!class_exists('TTBM_Woocommerce_Plugin')) {
 						'content' => '[ttbm-search-result]',
 						'option_key' => 'ttbm_page_find_created',
 					],
-					'find-hotel' => [
-						'slug' => 'hotel-find',
+					'hotel-search' => [
+						'slug' => 'hotel-search',
 						'title' => 'Hotel Search Result',
-						'content' => '[wptravelly-hotel-list]',
-						'option_key' => 'ttbm_page_hotel_find_created',
+						'content' => '[wptravelly-hotel-search]',
+						'option_key' => 'ttbm_page_hotel_search_created',
+					],
+					'hotel-search-result' => [
+						'slug' => 'hotel-search-result',
+						'title' => 'Hotel Search Result',
+						'content' => '[wptravelly-hotel-search-list]',
+						'option_key' => 'ttbm_page_hotel_search_result_created',
 					],
 					'lotus-grid' => [
 						'slug' => 'lotus-grid',

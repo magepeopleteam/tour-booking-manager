@@ -30,12 +30,12 @@ if (!class_exists('TTBM_Quick_Setup')) {
 			// Always add main menu if setup is not done OR WooCommerce is not active
 			if ($setup_done == 'no' || $woo_status != 1) {
 				add_menu_page(
-					esc_html__('Tour Booking Setup', 'tour-booking-manager'),
-					esc_html__('Tour Booking Setup', 'tour-booking-manager'),
+					esc_html__('Tour Booking', 'tour-booking-manager'),
+					esc_html__('Tour Booking', 'tour-booking-manager'),
 					'manage_options',
 					'ttbm_quick_setup',
 					array($this, 'render_quick_setup_page'),
-					'dashicons-calendar-alt',
+					'dashicons-admin-site-alt2',
 					30
 				);
 			}

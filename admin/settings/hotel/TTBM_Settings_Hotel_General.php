@@ -31,10 +31,11 @@
                             <?php $this->review_info($tour_id); ?>
                             <?php $this->service_info($tour_id); ?>
                             <?php $this->testimonial_info($tour_id); ?>
-                            
+                           
                             </tbody>
                         </table>
                     </section>
+                     <?php TTBM_Settings_Location::add_new_location_popup(); ?>
                 </div>
 				<?php
 			}
@@ -53,7 +54,6 @@
                     <td class="ttbm_location_select_area"><?php TTBM_Settings_Location::location_select($tour_id); ?></td>
                 </tr>
 				<?php
-				TTBM_Settings_Location::add_new_location_popup();
 			}
 
 			public function distance_description($tour_id) {

@@ -52,8 +52,9 @@ $ttbm_post_id = $ttbm_post_id ?? get_the_id();
             <?php do_action( 'ttbm_single_faq' ); ?>
             <!-- FAQ Section -->
              <?php do_action( 'ttbm_single_hotel_area'); ?>
+             <!-- Related Section -->
+             <?php do_action( 'ttbm_related_tour' ); ?>
         </div>
     </div>
     <?php do_action( 'ttbm_single_tour_after' ); ?>
 </div>
-<?php do_action( 'ttbm_related_tour' ); ?>

@@ -293,7 +293,7 @@
             }
 
             public function show_review_testimonial_frontend(){
-                $testimonial_status = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_display_hotel_testimonial', 'off');
+                $testimonial_status = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_display_hotel_testimonial', 'on');
                 $testimonial_title = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_hotel_testimonial_title');
 				$testimonial_text = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_hotel_testimonial_text');
                 
@@ -302,7 +302,7 @@
                 $review_title = $review_title ? $review_title:'Excellant';
                 $review_rating =  get_post_meta(get_the_ID(), 'ttbm_hotel_review_rating', true);
                 $review_rating = $review_rating ? $review_rating:0;
-				$display_hotel_review = $display_hotel_review == 'on' ? $display_hotel_review : 'off';
+				$display_hotel_review = $display_hotel_review == 'on' ? $display_hotel_review : 'on';
                 
                 $display_service_review = get_post_meta(get_the_ID(), 'ttbm_display_service_review', true);
                 $display_service_review = $display_service_review = 'on' ? $display_service_review : 'off';

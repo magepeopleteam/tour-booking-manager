@@ -12,7 +12,6 @@ if (!class_exists('TTBM_Quick_Setup')) {
 		public function __construct() {
 			add_action('admin_menu', array($this, 'register_quick_setup_menu'));
 			add_action('admin_enqueue_scripts', array($this, 'enqueue_quick_setup_assets'));
-			add_action('admin_head', array($this, 'add_quick_setup_menu_styles'));
 			add_action('admin_notices', array($this, 'show_setup_notice'));
 			add_action('wp_ajax_ttbm_install_woocommerce', array($this, 'ajax_install_woocommerce'));
 			add_action('wp_ajax_ttbm_activate_woocommerce', array($this, 'ajax_activate_woocommerce'));
@@ -54,36 +53,6 @@ if (!class_exists('TTBM_Quick_Setup')) {
 			}
 		}
 
-		/**
-		 * Add Quick Setup menu styles to admin head
-		 */
-		public function add_quick_setup_menu_styles() {
-			// Only show green color if setup is not completed
-			if (get_option('ttbm_quick_setup_done', 'no') == 'no') {
-				?>
-				<style type="text/css">
-				/* Quick Setup menu item green color */
-				#adminmenu .wp-submenu a[href*="ttbm_quick_setup"],
-				#adminmenu .wp-menu-name a[href*="ttbm_quick_setup"],
-				#adminmenu li.menu-top a[href*="ttbm_quick_setup"] {
-					color: #00a32a !important;
-					font-weight: 600 !important;
-				}
-				#adminmenu .wp-submenu a[href*="ttbm_quick_setup"]:hover,
-				#adminmenu .wp-menu-name a[href*="ttbm_quick_setup"]:hover,
-				#adminmenu li.menu-top a[href*="ttbm_quick_setup"]:hover {
-					color: #008a20 !important;
-				}
-				/* Add a small indicator icon */
-				#adminmenu a[href*="ttbm_quick_setup"]::before {
-					content: "● ";
-					color: #00a32a;
-					font-weight: bold;
-				}
-				</style>
-				<?php
-			}
-		}
 
 		/**
 		 * Show admin notice for quick setup

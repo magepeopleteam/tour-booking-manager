@@ -1318,10 +1318,11 @@
 									'ttbm_hotel_review_rating'=>'7.8',
 									'ttbm_hotel_service_review'=>'Wifi',
 									'ttbm_hotel_service_rating'=>'7.8',
-									'ttbm_display_hotel_testimonial'=>'yes',
+									'ttbm_display_hotel_testimonial'=>'on',
+									'ttbm_display_hotel_review'=>'on',
 									'ttbm_hotel_testimonial_title'=>'Guests who stayed here loved',
 									'ttbm_hotel_testimonial_text'=>'We loved this hotel',
-									'ttbm_display_hotel_map'=>'yes',
+									'ttbm_display_hotel_map'=>'on',
 									'ttbm_room_details'=>[
 										[
 											'ttbm_hotel_room_name'=>'Standard Room',
@@ -1451,10 +1452,11 @@
 									'ttbm_hotel_review_rating'=>'7.8',
 									'ttbm_hotel_service_review'=>'Wifi',
 									'ttbm_hotel_service_rating'=>'7.8',
-									'ttbm_display_hotel_testimonial'=>'yes',
+									'ttbm_display_hotel_testimonial'=>'on',
+									'ttbm_display_hotel_review'=>'on',
 									'ttbm_hotel_testimonial_title'=>'Guests who stayed here loved',
 									'ttbm_hotel_testimonial_text'=>'We loved this hotel',
-									'ttbm_display_hotel_map'=>'yes',
+									'ttbm_display_hotel_map'=>'on',
 									'ttbm_room_details'=>[
 										[
 											'ttbm_hotel_room_name'=>'Standard Room',
@@ -1584,10 +1586,11 @@
 									'ttbm_hotel_review_rating'=>'7.8',
 									'ttbm_hotel_service_review'=>'Wifi',
 									'ttbm_hotel_service_rating'=>'7.8',
-									'ttbm_display_hotel_testimonial'=>'yes',
+									'ttbm_display_hotel_testimonial'=>'on',
+									'ttbm_display_hotel_review'=>'on',
 									'ttbm_hotel_testimonial_title'=>'Guests who stayed here loved',
 									'ttbm_hotel_testimonial_text'=>'We loved this hotel',
-									'ttbm_display_hotel_map'=>'yes',
+									'ttbm_display_hotel_map'=>'on',
 									'ttbm_room_details'=>[
 										[
 											'ttbm_hotel_room_name'=>'Standard Room',

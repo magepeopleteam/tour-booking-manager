@@ -426,7 +426,8 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                                             <?php echo esc_html($child_qty); ?>
                                         </span>
                                     </div>
-                                    <div style="text-align: right;">
+                                    <p style="text-align: right;">
+                                        
                                         <?php if ($sale_price) { ?>
                                             <span class="strikeLine"><?php
                                                 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -435,7 +436,8 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                                         <?php echo wp_kses_post( $price ); ?>/
                                         <?php esc_html_e( 'Night ', 'tour-booking-manager' ); ?>&nbsp;X
                                         <?php echo esc_html( $days->days ); ?>
-                                    </div>
+                                        
+                                    </p>
                                     <div style="text-align: right;" class="ttbm_hotel_room_incDec"><?php TTBM_Layout::qty_input( $room_name, $available, 'inputbox', 0, $min_qty, $max_qty, $ticket_price_raw, 'ticket_qty[]' ); ?></div>
                                 </div>
                                 <div>

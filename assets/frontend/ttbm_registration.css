@@ -18,7 +18,7 @@ div.ttbm_container {width: 100%;max-width: var(--dcontainer_width);margin: 0 aut
 div.ttbm_faq_item .ttbm_faq_title {-webkit-transition: 350ms ease-in-out;transition: 350ms ease-in-out;}
 .ttbm-rating-stars { margin-top: 15px;}
 /**********Shadow content****************************/
-#ttbm_related_tour div.filter_item { border: 1px solid var(--color_border); padding: 0;}
+#ttbm_related_tour div.filter_item { border: 1px solid var(--color_border); padding: 0;margin: 10px 10px 10px 0;}
 #ttbm_related_tour div.filter_item .ttbm-rating-stars { margin: 0;}
 /*****************Details page*********************************/
 div.ttbm_details_page {display: block;position: relative;}
@@ -1765,6 +1765,15 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	align-items: center;
 	gap:10px;
 }
+.badge-gray{
+	background-color: #f8f8f8;
+	color: #000;
+	padding: 3px 8px;
+	border-radius: 3px;
+	font-size: 12px;
+	font-weight: normal;
+}
+
 .ttbm-hotel-details .faq-area .faq-question i{
 	font-size: 20px;
 }
@@ -1797,7 +1806,7 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 }
 .ttbm-hotel-details .ttbm-feature-list .feature-items i{
 	font-size: 20px;
-	color: red;
+	color: var(--color_theme);
 }
 /* .ttbm-hotel-details */
 .ttbm-hotel-area-info{

@@ -22,7 +22,7 @@
                                 <span class="mi mi-settings"></span><?php esc_html_e('General Info', 'tour-booking-manager'); ?>
                             </li>
 							<li data-tabs-target="#ttbm_settings_hotel_location" class="ttbm_hotel_map_location">
-                                <span class="mi mi-marker"></span><?php esc_html_e('Location', 'tour-booking-manager'); ?>
+                                <span class="mi mi-marker"></span><?php esc_html_e('Map Location', 'tour-booking-manager'); ?>
                             </li>
                             <li data-tabs-target="#ttbm_settings_pricing">
                                 <span class="mi mi-coins"></span><?php esc_html_e(' Pricing', 'tour-booking-manager'); ?>

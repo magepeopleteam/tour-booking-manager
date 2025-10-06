@@ -44,16 +44,15 @@ $ttbm_post_id = $ttbm_post_id ?? get_the_id();
                 <div class="ttbm-content-right">
                     <?php do_action( 'ttbm_single_sidebar' ); ?>
                     <?php do_action( 'ttbm_single_activity' ); ?>
-                    
-                    <a class="widgets-button button" href="#ttbm_hotel_content_area"><?php echo esc_html__('Reserve','tour-booking-manager'); ?></a>
                 </div>
             </div>
             <!-- FAQ Section -->
             <?php do_action( 'ttbm_single_faq' ); ?>
             <!-- FAQ Section -->
              <?php do_action( 'ttbm_single_hotel_area'); ?>
+             <!-- Related Section -->
+             <?php do_action( 'ttbm_related_tour' ); ?>
         </div>
     </div>
     <?php do_action( 'ttbm_single_tour_after' ); ?>
 </div>
-<?php do_action( 'ttbm_related_tour' ); ?>

@@ -173,7 +173,7 @@ To display search form of hotel use this shortcode
 [wptravelly-hotel-search] 
 `
 ### Display Hotel Search Result 
-if you did not create hotel find page then create page wth slug hotel-find and use this shortcode 
+if you did not create hotel search result page then create page wth slug hotel-search-result and use this shortcode 
 `
 [wptravelly-hotel-search-list]
 `

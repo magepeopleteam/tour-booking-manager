@@ -167,8 +167,21 @@ To Show the deal-discount Tour list only, we  use the shortcode below. example ð
 `
 [wptravelly-tour-list type='deal-discount' column=2 show=2 carousel='no']
 `
-
-
+### Display Hotel Search form 
+To display search form of hotel use this shortcode
+`
+[wptravelly-hotel-search] 
+`
+### Display Hotel Search Result 
+if you did not create hotel find page then create page wth slug hotel-find and use this shortcode 
+`
+[wptravelly-hotel-search-list]
+`
+### Display Hotel list with left sidebar 
+To disply hotel list with sidebar use this shortcode. 
+`
+[wptravelly-hotel-list sidebar-filter='yes' price-filter = 'yes'] 
+`
 
 
 == Tour Page Templates ==

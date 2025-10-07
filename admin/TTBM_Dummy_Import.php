@@ -50,6 +50,7 @@
 					$dummy_cpt = $this->dummy_cpt();
 					if (array_key_exists('custom_post', $dummy_cpt)) {
 						$dummy_images = self::dummy_images();
+						$hotel_dummy_images = self::hotel_dummy_images();
 						foreach ($dummy_cpt['custom_post'] as $custom_post => $dummy_post) {
 							unset($args);
 							$args = array(
@@ -93,6 +94,26 @@
 											} else {
 												update_post_meta($post_id, $meta_key, $data);
 											}
+
+											if ($meta_key == 'ttbm_gallery_images_hotel') {
+												if (is_array($data)) {
+													$thumnail_ids = array();
+													foreach ($data as $url_index) {
+														if (isset($hotel_dummy_images[$url_index])) {
+															$thumnail_ids[] = $hotel_dummy_images[$url_index];
+														}
+													}
+													update_post_meta($post_id, 'ttbm_gallery_images_hotel', $thumnail_ids);
+													if (count($thumnail_ids)) {
+														set_post_thumbnail($post_id, $thumnail_ids[0]);
+													}
+												} else {
+													update_post_meta($post_id, 'ttbm_gallery_images_hotel', array(isset($hotel_dummy_images[$data]) ? $hotel_dummy_images[$data] : ''));
+												}
+											} else {
+												update_post_meta($post_id, $meta_key, $data);
+											}
+
 											if ($meta_key == 'ttbm_category') {
 												wp_set_object_terms($post_id, $data, 'ttbm_tour_cat');
 											}
@@ -103,6 +124,36 @@
 												$term_ids = [];
 												foreach ((array) $data as $item) {
 													$term = get_term_by('name', $item, 'ttbm_tour_activities');
+													if ($term && !is_wp_error($term)) {
+														$term_ids[] = (int) $term->term_id;
+													}
+												}
+												update_post_meta($post_id, $meta_key, $term_ids);
+											}
+											if ($meta_key == 'ttbm_hotel_feat_selection') {
+												$term_ids = [];
+												foreach ($data as $item) {
+													$term = get_term_by('name', $item, 'ttbm_hotel_features_list');
+													if ($term && !is_wp_error($term)) {
+														$term_ids[] = (int) $term->term_id;
+													}
+												}
+												update_post_meta($post_id, $meta_key, $term_ids);
+											}
+											if ($meta_key == 'ttbm_hotel_popu_feat_selection') {
+												$term_ids = [];
+												foreach ($data as $item) {
+													$term = get_term_by('name', $item, 'ttbm_hotel_features_list');
+													if ($term && !is_wp_error($term)) {
+														$term_ids[] = (int) $term->term_id;
+													}
+												}
+												update_post_meta($post_id, $meta_key, $term_ids);
+											}
+											if ($meta_key == 'ttbm_hotel_activity_selection') {
+												$term_ids = [];
+												foreach ($data as $item) {
+													$term = get_term_by('name', $item, 'ttbm_hotel_activities_list');
 													if ($term && !is_wp_error($term)) {
 														$term_ids[] = (int) $term->term_id;
 													}
@@ -145,6 +196,23 @@
 				}
 				return $image_ids;
 			}
+
+			public static function hotel_dummy_images() {
+				$urls = array(
+					'https://img.freepik.com/free-photo/type-entertainment-complex-popular-resort-with-pools-water-parks-turkey-with-more-than-5-million-visitors-year-amara-dolce-vita-luxury-hotel-resort-tekirova-kemer_146671-18728.jpg',
+					'https://img.freepik.com/free-photo/modern-studio-apartment-design-with-bedroom-living-space_1262-12375.jpg',
+					'https://img.freepik.com/free-photo/full-shot-man-carrying-baggage_23-2149963942.jpg',
+					'https://img.freepik.com/premium-photo/luxury-tropical-bedroom-suite-resort-hotel-with-wardrobe_105762-1853.jpg',
+					'https://img.freepik.com/premium-photo/high-end-clean-atmospheric-hotel-rooms_149197-85.jpg',
+				);
+				unset($image_ids);
+				$image_ids = array();
+				foreach ($urls as $url) {
+					$image_ids[] = media_sideload_image($url, '0', $url, 'id');
+				}
+				return $image_ids;
+			}
+
 			public function dummy_taxonomy(): array {
 				return [
 					'taxonomy' => [
@@ -296,6 +364,132 @@
 								)
 							]
 						],
+						'ttbm_hotel_features_list' =>[
+							[
+								'name' => 'Accommodation',
+								'meta_data' => array(
+									'ttbm_hotel_feature_icon' => 'mi mi-bed-alt'
+								),
+							],
+							[
+								'name' => 'Additional Services',
+								'meta_data' => array(
+									'ttbm_hotel_feature_icon' => 'mi mi-checklist-task-budget'
+								),
+							],
+							[
+								'name' => 'Airport Transfer',
+								'meta_data' => array(
+									'ttbm_hotel_feature_icon' => 'mi mi-plane-alt'
+								),
+							],
+							[
+								'name' => 'BBQ Night',
+								'meta_data' => array(
+									'ttbm_hotel_feature_icon' => 'mi mi-grill'
+								),
+							],
+							[
+								'name' => 'Breakfast',
+								'meta_data' => array(
+									'ttbm_hotel_feature_icon' => 'mi mi-burger-fries'
+								),
+							],
+							[
+								'name' => 'Concert Ticket',
+								'meta_data' => array(
+									'ttbm_hotel_feature_icon' => 'mi mi-ticket'
+								),
+							],
+							[
+								'name' => 'Flights',
+								'meta_data' => array(
+									'ttbm_hotel_feature_icon' => 'mi mi-plane-alt'
+								),
+							],
+							[
+								'name' => 'Guide',
+								'meta_data' => array(
+									'ttbm_hotel_feature_icon' => 'mi mi-guide'
+								),
+							],
+							[
+								'name' => 'Hotel Rent',
+								'meta_data' => array(
+									'ttbm_hotel_feature_icon' => 'mi mi-hotel'
+								),
+							],
+							[
+								'name' => 'Insurance',
+								'meta_data' => array(
+									'ttbm_hotel_feature_icon' => 'mi mi-hand-holding-seeding'
+								),
+							],
+							[
+								'name' => 'Lunch',
+								'meta_data' => array(
+									'ttbm_hotel_feature_icon' => 'mi mi-bowl-rice'
+								),
+							],
+							[
+								'name' => 'Meals',
+								'meta_data' => array(
+									'ttbm_hotel_feature_icon' => 'mi mi-burger-glass'
+								),
+							],
+							[
+								'name' => 'Newspaper',
+								'meta_data' => array(
+									'ttbm_hotel_feature_icon' => 'mi mi-newspaper'
+								),
+							],
+							[
+								'name' => 'Outing Ticket',
+								'meta_data' => array(
+									'ttbm_hotel_feature_icon' => 'mi mi-ticket'
+								),
+							],
+							[
+								'name' => 'Transport',
+								'meta_data' => array(
+									'ttbm_hotel_feature_icon' => 'mi mi-bus'
+								),
+							],
+							[
+								'name' => 'Welcome Drinks',
+								'meta_data' => array(
+									'ttbm_hotel_feature_icon' => 'mi mi-drink-alt'
+								),
+							],
+						],
+						'ttbm_hotel_activities_list'=>[
+							[
+								'name' => 'Beach',
+								'meta_data' => array(
+									'ttbm_hotel_activity_icon' => 'mi mi-umbrella-beach'
+								)
+							],
+							['name' => 'City Tours',
+								'meta_data' => array(
+									'ttbm_hotel_activity_icon' => 'mi mi-taxi-bus'
+								)
+							],
+							['name' => 'Hiking',
+								'meta_data' => array(
+									'ttbm_hotel_activity_icon' => 'mi mi-hiking'
+								)
+							],
+							['name' => 'Rural',
+								'meta_data' => array(
+									'ttbm_hotel_activity_icon' => 'mi mi-water'
+								)
+							],
+							['name' => 'Snow & Ice',
+								'meta_data' => array(
+									'ttbm_hotel_activity_icon' => 'mi mi-snowflakes'
+								)
+							]
+						]
 					],
 				];
 			}
@@ -1105,6 +1299,422 @@
 									'ttbm_display_tour_type' => 'on',
 									'ttbm_display_hotels' => 'on',
 									'ttbm_display_duration' => 'on',
+								]
+							],
+						],
+						'ttbm_hotel' => [
+							[
+								'name' => 'The Mentalist Hotel: Las Vegas',
+								'content' => '
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
+                                ',
+								'post_data' => [
+									'ttbm_hotel_distance_des'=>'0.5 km from center',
+									'ttbm_hotel_property_highlights'=>'Top Location: Highly rated by recent guests (9.0)',
+									'ttbm_display_hotel_parking'=>'on',
+									'ttbm_hotel_parking'=>'Free Parking Available On Site',
+									'ttbm_display_hotel_breakfast'=>'on',
+									'ttbm_hotel_breakfast'=>'American, Buffet',
+									'ttbm_hotel_review_title'=>'Excellant',
+									'ttbm_hotel_review_rating'=>'7.8',
+									'ttbm_hotel_service_review'=>'Wifi',
+									'ttbm_hotel_service_rating'=>'7.8',
+									'ttbm_display_hotel_testimonial'=>'on',
+									'ttbm_display_hotel_review'=>'on',
+									'ttbm_display_service_review'=>'on',
+									'ttbm_hotel_testimonial_title'=>'Guests who stayed here loved',
+									'ttbm_hotel_testimonial_text'=>'We loved this hotel',
+									'ttbm_display_hotel_map'=>'on',
+									'ttbm_hotel_rating'=>5,
+									'ttbm_room_details'=>[
+										[
+											'ttbm_hotel_room_name'=>'Standard Room',
+											'ttbm_hotel_room_price'=>150,
+											'ttbm_hotel_room_qty'=>25,
+											'ttbm_hotel_room_capacity_adult'=>15,
+											'ttbm_hotel_room_capacity_child'=>10,
+											'room_qty_type'=>'inputbox',
+											'room_type_icon'=>'mi mi-air-conditioner',
+										],
+										[
+											'ttbm_hotel_room_name'=>'Standard Room',
+											'ttbm_hotel_room_price'=>150,
+											'ttbm_hotel_room_qty'=>25,
+											'ttbm_hotel_room_capacity_adult'=>15,
+											'ttbm_hotel_room_capacity_child'=>10,
+											'room_qty_type'=>'inputbox',
+											'room_type_icon'=>'mi mi-air-conditioner',
+										],
+										[
+											'ttbm_hotel_room_name'=>'Standard Room',
+											'ttbm_hotel_room_price'=>150,
+											'ttbm_hotel_room_qty'=>25,
+											'ttbm_hotel_room_capacity_adult'=>15,
+											'ttbm_hotel_room_capacity_child'=>10,
+											'room_qty_type'=>'inputbox',
+											'room_type_icon'=>'mi mi-air-conditioner',
+										],
+									],
+									'ttbm_hotel_area_status' => 'on',
+									'ttbm_hotel_area_info' => [
+										[
+											'area_icon'=>'mi mi-restaurants',
+											'area_title'=>'What\'s nearby',
+											'area_items' => [
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												],
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												],
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												]
+											],
+										],
+										[
+											'area_icon'=>'mi mi-restaurants',
+											'area_title'=>'What\'s nearby',
+											'area_items' => [
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												],
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												],
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												]
+											],
+										]
+									],
+
+									'ttbm_hotel_faq_status' => 'on',
+									'ttbm_hotel_faq' => [
+										[
+											'title' => 'What is the check-in and check-out time?',
+											'content' => 'Check-in is from 3:00 PM to 12:00 AM. Check-out is from 7:00 AM to 11:00 AM.',
+										],
+										[
+											'title' => 'Is parking available at the hotel?',
+											'content' => 'Yes, we offer free parking for our guests.',
+										],
+										[
+											'title' => 'Does the hotel offer free Wi-Fi?',
+											'content' => 'Yes, complimentary Wi-Fi is available throughout the hotel.',
+										]
+									],
+
+									'ttbm_hotel_features_status' => 'on',
+									'ttbm_hotel_feat_selection' => [
+										'Accommodation ',
+										'Flights',
+										'Guide',
+									],
+									'ttbm_hotel_popular_feat_status' => 'on',
+									'ttbm_hotel_popu_feat_selection' => [
+										'Hotel Rent',
+										'Transport',
+										'Welcome Drinks',
+									],
+									'ttbm_hotel_activity_status' => 'on',
+									'ttbm_hotel_activity_selection' => [
+										'Beach',
+										'City Tours',
+										'Hiking',
+										'Rural',
+									],
+									'ttbm_display_slider_hotel' => 'on',
+									'ttbm_gallery_images_hotel' => array(0,1, 2, 3, 4),
+								]
+							],
+							[
+								'name' => 'The Mentalist Hotel: Las Vegas',
+								'content' => '
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
+                                ',
+								'post_data' => [
+									'ttbm_hotel_distance_des'=>'0.5 km from center',
+									'ttbm_hotel_property_highlights'=>'Top Location: Highly rated by recent guests (9.0)',
+									'ttbm_display_hotel_parking'=>'on',
+									'ttbm_hotel_parking'=>'Free Parking Available On Site',
+									'ttbm_display_hotel_breakfast'=>'on',
+									'ttbm_hotel_breakfast'=>'American, Buffet',
+									'ttbm_hotel_review_title'=>'Excellant',
+									'ttbm_hotel_review_rating'=>'7.8',
+									'ttbm_hotel_service_review'=>'Wifi',
+									'ttbm_hotel_service_rating'=>'7.8',
+									'ttbm_display_hotel_testimonial'=>'on',
+									'ttbm_display_hotel_review'=>'on',
+									'ttbm_display_service_review'=>'on',
+									'ttbm_hotel_testimonial_title'=>'Guests who stayed here loved',
+									'ttbm_hotel_testimonial_text'=>'We loved this hotel',
+									'ttbm_display_hotel_map'=>'on',
+									'ttbm_hotel_rating'=>5,
+									'ttbm_room_details'=>[
+										[
+											'ttbm_hotel_room_name'=>'Standard Room',
+											'ttbm_hotel_room_price'=>150,
+											'ttbm_hotel_room_qty'=>25,
+											'ttbm_hotel_room_capacity_adult'=>15,
+											'ttbm_hotel_room_capacity_child'=>10,
+											'room_qty_type'=>'inputbox',
+											'room_type_icon'=>'mi mi-air-conditioner',
+										],
+										[
+											'ttbm_hotel_room_name'=>'Standard Room',
+											'ttbm_hotel_room_price'=>150,
+											'ttbm_hotel_room_qty'=>25,
+											'ttbm_hotel_room_capacity_adult'=>15,
+											'ttbm_hotel_room_capacity_child'=>10,
+											'room_qty_type'=>'inputbox',
+											'room_type_icon'=>'mi mi-air-conditioner',
+										],
+										[
+											'ttbm_hotel_room_name'=>'Standard Room',
+											'ttbm_hotel_room_price'=>150,
+											'ttbm_hotel_room_qty'=>25,
+											'ttbm_hotel_room_capacity_adult'=>15,
+											'ttbm_hotel_room_capacity_child'=>10,
+											'room_qty_type'=>'inputbox',
+											'room_type_icon'=>'mi mi-air-conditioner',
+										],
+									],
+									'ttbm_hotel_area_status' => 'on',
+									'ttbm_hotel_area_info' => [
+										[
+											'area_icon'=>'mi mi-restaurants',
+											'area_title'=>'What\'s nearby',
+											'area_items' => [
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												],
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												],
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												]
+											],
+										],
+										[
+											'area_icon'=>'mi mi-restaurants',
+											'area_title'=>'What\'s nearby',
+											'area_items' => [
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												],
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												],
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												]
+											],
+										]
+									],
+
+									'ttbm_hotel_faq_status' => 'on',
+									'ttbm_hotel_faq' => [
+										[
+											'title' => 'What is the check-in and check-out time?',
+											'content' => 'Check-in is from 3:00 PM to 12:00 AM. Check-out is from 7:00 AM to 11:00 AM.',
+										],
+										[
+											'title' => 'Is parking available at the hotel?',
+											'content' => 'Yes, we offer free parking for our guests.',
+										],
+										[
+											'title' => 'Does the hotel offer free Wi-Fi?',
+											'content' => 'Yes, complimentary Wi-Fi is available throughout the hotel.',
+										]
+									],
+
+									'ttbm_hotel_features_status' => 'on',
+									'ttbm_hotel_feat_selection' => [
+										'Accommodation ',
+										'Flights',
+										'Guide',
+									],
+									'ttbm_hotel_popular_feat_status' => 'on',
+									'ttbm_hotel_popu_feat_selection' => [
+										'Hotel Rent',
+										'Transport',
+										'Welcome Drinks',
+									],
+									'ttbm_hotel_activity_status' => 'on',
+									'ttbm_hotel_activity_selection' => [
+										'Beach',
+										'City Tours',
+										'Hiking',
+										'Rural',
+									],
+									'ttbm_display_slider_hotel' => 'on',
+									'ttbm_gallery_images_hotel' => array(0,1, 2, 3, 4),
+								]
+							],
+							[
+								'name' => 'The Mentalist Hotel: Las Vegas',
+								'content' => '
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
+                                ',
+								'post_data' => [
+									'ttbm_hotel_distance_des'=>'0.5 km from center',
+									'ttbm_hotel_property_highlights'=>'Top Location: Highly rated by recent guests (9.0)',
+									'ttbm_display_hotel_parking'=>'on',
+									'ttbm_hotel_parking'=>'Free Parking Available On Site',
+									'ttbm_display_hotel_breakfast'=>'on',
+									'ttbm_hotel_breakfast'=>'American, Buffet',
+									'ttbm_hotel_review_title'=>'Excellant',
+									'ttbm_hotel_review_rating'=>'7.8',
+									'ttbm_hotel_service_review'=>'Wifi',
+									'ttbm_hotel_service_rating'=>'7.8',
+									'ttbm_display_hotel_testimonial'=>'on',
+									'ttbm_display_hotel_review'=>'on',
+									'ttbm_display_service_review'=>'on',
+									'ttbm_hotel_testimonial_title'=>'Guests who stayed here loved',
+									'ttbm_hotel_testimonial_text'=>'We loved this hotel',
+									'ttbm_display_hotel_map'=>'on',
+									'ttbm_hotel_rating'=>5,
+									'ttbm_room_details'=>[
+										[
+											'ttbm_hotel_room_name'=>'Standard Room',
+											'ttbm_hotel_room_price'=>150,
+											'ttbm_hotel_room_qty'=>25,
+											'ttbm_hotel_room_capacity_adult'=>15,
+											'ttbm_hotel_room_capacity_child'=>10,
+											'room_qty_type'=>'inputbox',
+											'room_type_icon'=>'mi mi-air-conditioner',
+										],
+										[
+											'ttbm_hotel_room_name'=>'Standard Room',
+											'ttbm_hotel_room_price'=>150,
+											'ttbm_hotel_room_qty'=>25,
+											'ttbm_hotel_room_capacity_adult'=>15,
+											'ttbm_hotel_room_capacity_child'=>10,
+											'room_qty_type'=>'inputbox',
+											'room_type_icon'=>'mi mi-air-conditioner',
+										],
+										[
+											'ttbm_hotel_room_name'=>'Standard Room',
+											'ttbm_hotel_room_price'=>150,
+											'ttbm_hotel_room_qty'=>25,
+											'ttbm_hotel_room_capacity_adult'=>15,
+											'ttbm_hotel_room_capacity_child'=>10,
+											'room_qty_type'=>'inputbox',
+											'room_type_icon'=>'mi mi-air-conditioner',
+										],
+									],
+									'ttbm_hotel_area_status' => 'on',
+									'ttbm_hotel_area_info' => [
+										[
+											'area_icon'=>'mi mi-restaurants',
+											'area_title'=>'What\'s nearby',
+											'area_items' => [
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												],
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												],
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												]
+											],
+										],
+										[
+											'area_icon'=>'mi mi-restaurants',
+											'area_title'=>'What\'s nearby',
+											'area_items' => [
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												],
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												],
+												[
+													'item_title'=>'The Strip',
+													'item_distance'=>1.5,
+													'item_type'=>'The Strip',
+												]
+											],
+										]
+									],
+
+									'ttbm_hotel_faq_status' => 'on',
+									'ttbm_hotel_faq' => [
+										[
+											'title' => 'What is the check-in and check-out time?',
+											'content' => 'Check-in is from 3:00 PM to 12:00 AM. Check-out is from 7:00 AM to 11:00 AM.',
+										],
+										[
+											'title' => 'Is parking available at the hotel?',
+											'content' => 'Yes, we offer free parking for our guests.',
+										],
+										[
+											'title' => 'Does the hotel offer free Wi-Fi?',
+											'content' => 'Yes, complimentary Wi-Fi is available throughout the hotel.',
+										]
+									],
+
+									'ttbm_hotel_features_status' => 'on',
+									'ttbm_hotel_feat_selection' => [
+										'Accommodation ',
+										'Flights',
+										'Guide',
+									],
+									'ttbm_hotel_popular_feat_status' => 'on',
+									'ttbm_hotel_popu_feat_selection' => [
+										'Hotel Rent',
+										'Transport',
+										'Welcome Drinks',
+									],
+									'ttbm_hotel_activity_status' => 'on',
+									'ttbm_hotel_activity_selection' => [
+										'Beach',
+										'City Tours',
+										'Hiking',
+										'Rural',
+									],
+									'ttbm_display_slider_hotel' => 'on',
+									'ttbm_gallery_images_hotel' => array(0,1, 2, 3, 4),
 								]
 							],
 						]

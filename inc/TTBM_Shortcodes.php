@@ -36,7 +36,7 @@
                 ?>
                 <!-- Hotel Search Bar -->
                 <div class="mpContainer">
-                    <form class="rbfw_search_form_new" action="<?php echo get_home_url() . '/hotel-find/';  ?>" method="GET">
+                    <form class="rbfw_search_form_new" action="<?php echo get_home_url() . '/hotel-search-result/';  ?>" method="GET">
                     <div class="ttbm_hotel_search_box">
 
                         <!--<div class="ttbm_hotel_search_field">

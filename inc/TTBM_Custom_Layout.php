@@ -174,12 +174,13 @@
 				if ($text && $text_length > $length) {
 					?>
                     <div class="ttbm_load_more_text_area">
-                        <span data-read-close><?php echo esc_html(substr($text, 0, $length)); ?> ....</span>
-                        <span data-read-open class="dNone"><?php echo esc_html($text); ?></span>
+                        <span data-read-close><?php echo wp_kses_post(substr($text, 0, $length)); ?> ....</span>
+                        <span data-read-open class="dNone"><?php echo wp_kses_post($text); ?></span>
                         <div data-read data-open-text="<?php esc_attr_e('Load More', 'tour-booking-manager'); ?>" data-close-text="<?php esc_attr_e('Less More', 'tour-booking-manager'); ?>">
-                            <span data-text><?php esc_html_e('Load More', 'tour-booking-manager'); ?></span>
-                        </div>
+							<span data-text><?php esc_html_e('Load More', 'tour-booking-manager'); ?></span>
+						</div>
                     </div>
+					
 					<?php
 				} else {
 					?>

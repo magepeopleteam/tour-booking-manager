@@ -79,7 +79,7 @@
 				$longitude = !empty($longitude) ? $longitude : '-74.005974';
 				$map_settings = get_option('ttbm_google_map_settings');
 				$gmap_api_key = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
-				$display_map = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_hotel_map', 'off');
+				$display_map = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_hotel_map', 'on');
 				if ($display_map == 'on'):
 					?>
                     <div class="map-container" style="width: 100%; height: 250px;">

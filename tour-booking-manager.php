@@ -19,6 +19,7 @@ if (!class_exists('TTBM_Woocommerce_Plugin')) {
 			public function __construct() {
 				$this->load_ttbm_plugin();
 				add_action('init', array($this, 'load_blocks'));
+				register_activation_hook(__FILE__, array($this, 'plugin_activation'));
 			}
 			private function load_ttbm_plugin() {
 				include_once(ABSPATH . 'wp-admin/includes/plugin.php');
@@ -31,23 +32,36 @@ if (!class_exists('TTBM_Woocommerce_Plugin')) {
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Dependencies.php';
 				add_action('admin_init', array($this, 'activation_redirect_setup'), 90);
 			}
+			public function plugin_activation() {
+				// Set transient to trigger redirect
+				set_transient('ttbm_activation_redirect', true, 30);
+			}
 			public function activation_redirect_setup($plugin) {
+				// Create pages if WooCommerce is active
 				if (TTBM_Global_Function::check_woocommerce() == 1) {
 					self::on_activation_page_create();
 				}
-				$ttbm_quick_setup_done = get_option('ttbm_quick_setup_done') ? get_option('ttbm_quick_setup_done') : 'no';
-				// Only redirect if not already on the quick setup page and setup is not done
-				if ($ttbm_quick_setup_done == 'no' &&
-					(!isset($_GET['page']) || $_GET['page'] !== 'ttbm_quick_setup')) {
-					// Check WooCommerce status to determine correct redirect URL
-					$woo_status = TTBM_Global_Function::check_woocommerce();
-					if ($woo_status == 1) {
-						// WooCommerce is active - redirect to submenu under ttbm_tour post type
-						wp_redirect(admin_url('edit.php?post_type=ttbm_tour&page=ttbm_quick_setup'));
-					} else {
-						// WooCommerce is not active - redirect to main menu
-						wp_redirect(admin_url('admin.php?page=ttbm_quick_setup'));
-					}
+				
+				// Check if we should redirect to quick setup
+				if (!get_transient('ttbm_activation_redirect')) {
+					return;
+				}
+				
+				// Delete the transient so we don't redirect again
+				delete_transient('ttbm_activation_redirect');
+				
+				// Don't redirect if activating multiple plugins or if doing AJAX
+				if (is_network_admin() || isset($_GET['activate-multi']) || wp_doing_ajax()) {
+					return;
+				}
+				
+				$ttbm_quick_setup_done = get_option('ttbm_quick_setup_done', 'no');
+				
+				// Only redirect if setup is not done
+				if ($ttbm_quick_setup_done == 'no') {
+					// Always redirect to main menu quick setup page
+					// This ensures the page exists regardless of WooCommerce status
+					wp_safe_redirect(admin_url('admin.php?page=ttbm_quick_setup'));
 					exit();
 				}
 			}
@@ -59,11 +73,17 @@ if (!class_exists('TTBM_Woocommerce_Plugin')) {
 						'content' => '[ttbm-search-result]',
 						'option_key' => 'ttbm_page_find_created',
 					],
-					'find-hotel' => [
-						'slug' => 'hotel-find',
+					'hotel-search' => [
+						'slug' => 'hotel-search',
+						'title' => 'Hotel Search Result',
+						'content' => '[wptravelly-hotel-search]',
+						'option_key' => 'ttbm_page_hotel_search_created',
+					],
+					'hotel-search-result' => [
+						'slug' => 'hotel-search-result',
 						'title' => 'Hotel Search Result',
 						'content' => '[wptravelly-hotel-search-list]',
-						'option_key' => 'ttbm_page_hotel_find_created',
+						'option_key' => 'ttbm_page_hotel_search_result_created',
 					],
 					'lotus-grid' => [
 						'slug' => 'lotus-grid',

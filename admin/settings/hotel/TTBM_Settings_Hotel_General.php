@@ -14,22 +14,28 @@
 			public function hotel_general_settings($tour_id) {
 				?>
                 <div class="tabsItem ttbm_settings_general" data-tabs="#ttbm_general_info">
-                    <h5><?php esc_html_e('General Information Settings', 'tour-booking-manager'); ?></h5>
-                    <div class="divider"></div>
-                    <table class="layoutFixed">
-                        <tbody>
-						<?php $this->location($tour_id); ?>
-						<?php $this->distance_description($tour_id); ?>
-						<?php $this->rating($tour_id); ?>
-						<?php $this->property_highlights($tour_id); ?>
-						<?php $this->parking_info($tour_id); ?>
-						<?php $this->breakfast_info($tour_id); ?>
-						<?php $this->review_info($tour_id); ?>
-						<?php $this->service_info($tour_id); ?>
-						<?php $this->testimonial_info($tour_id); ?>
-                        
-                        </tbody>
-                    </table>
+                    <h2><?php esc_html_e('General Information Settings', 'tour-booking-manager'); ?></h2>
+                    <p><?php esc_html_e('Here you can configure basic configureateion for hotel.','tour-booking-manager'); ?></p>
+                    <section>
+                        <div class="ttbm-header">
+                            <h4><i class="mi mi-settings"></i><?php esc_html_e('General Settings', 'tour-booking-manager'); ?></h4>
+                        </div>
+                        <table class="layoutFixed">
+                            <tbody>
+                            <?php $this->location($tour_id); ?>
+                            <?php $this->distance_description($tour_id); ?>
+                            <?php $this->rating($tour_id); ?>
+                            <?php $this->property_highlights($tour_id); ?>
+                            <?php $this->parking_info($tour_id); ?>
+                            <?php $this->breakfast_info($tour_id); ?>
+                            <?php $this->review_info($tour_id); ?>
+                            <?php $this->service_info($tour_id); ?>
+                            <?php $this->testimonial_info($tour_id); ?>
+                           
+                            </tbody>
+                        </table>
+                    </section>
+                     <?php TTBM_Settings_Location::add_new_location_popup(); ?>
                 </div>
 				<?php
 			}
@@ -48,7 +54,6 @@
                     <td class="ttbm_location_select_area"><?php TTBM_Settings_Location::location_select($tour_id); ?></td>
                 </tr>
 				<?php
-				TTBM_Settings_Location::add_new_location_popup();
 			}
 
 			public function distance_description($tour_id) {
@@ -228,7 +233,7 @@
 
             public function show_breakfast_parking_frontend(){
 				$display_property = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_display_property_highlights', 'on');
-                $display_property = $display_property == 'on' ? $display_property : 'off';
+                
 				$property_highlights =  get_post_meta(get_the_ID(), 'ttbm_hotel_property_highlights', true);
 				
 
@@ -274,22 +279,22 @@
 
             public function show_location_frontend(){
                 $distance_des =  get_post_meta(get_the_ID(), 'ttbm_hotel_distance_des', true);
-                $display =  get_post_meta(get_the_ID(), 'ttbm_display_hotel_location', true);
-                $hotel_location =  get_post_meta(get_the_ID(), 'ttbm_hotel_location', true);
+                $display =  get_post_meta(get_the_ID(), 'ttbm_display_hotel_map', true);
+                $hotel_location =  get_post_meta(get_the_ID(), 'ttbm_hotel_map_location', true);
+                $hotel_location =  !empty($hotel_location) ? $hotel_location : '650 Manchester Road, New York, NY 10007, USA';
 				$checked = $display == 'on' ? $display : 'off';
                 if($checked=='on'):
                 ?>
                     <p class="location-info">
                         <i class="mi mi-marker"></i> 
                         <?php echo esc_html($hotel_location); ?>
-                        <a href="#"><?php echo esc_html($distance_des); ?></a>
                     </p>
                 <?php
                 endif;
             }
 
             public function show_review_testimonial_frontend(){
-                $testimonial_status = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_display_hotel_testimonial', 'off');
+                $testimonial_status = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_display_hotel_testimonial', 'on');
                 $testimonial_title = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_hotel_testimonial_title');
 				$testimonial_text = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_hotel_testimonial_text');
                 
@@ -298,7 +303,7 @@
                 $review_title = $review_title ? $review_title:'Excellant';
                 $review_rating =  get_post_meta(get_the_ID(), 'ttbm_hotel_review_rating', true);
                 $review_rating = $review_rating ? $review_rating:0;
-				$display_hotel_review = $display_hotel_review == 'on' ? $display_hotel_review : 'off';
+				$display_hotel_review = $display_hotel_review == 'on' ? $display_hotel_review : 'on';
                 
                 $display_service_review = get_post_meta(get_the_ID(), 'ttbm_display_service_review', true);
                 $display_service_review = $display_service_review = 'on' ? $display_service_review : 'off';

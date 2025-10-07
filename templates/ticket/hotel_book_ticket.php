@@ -52,21 +52,9 @@ if ( isset($_POST['nonce']) && wp_verify_nonce( sanitize_text_field( wp_unslash(
                                 <?php
                                 $adult_qty = array_key_exists( 'ttbm_hotel_room_capacity_adult', $ticket ) ? $ticket['ttbm_hotel_room_capacity_adult'] : 0;
                                 $child_qty = array_key_exists( 'ttbm_hotel_room_capacity_child', $ticket ) ? $ticket['ttbm_hotel_room_capacity_child'] : 0;
-                                if ( $adult_qty > 0 ) {
-                                    for ( $i = 0; $i < $adult_qty; $i ++ ) {
-                                        ?>
-                                        <i class="fas fa-user-alt"></i>
-                                        <?php
-                                    }
-                                }
-                                if ( $child_qty > 0 ) {
-                                    for ( $i = 0; $i < $child_qty; $i ++ ) {
-                                        ?>
-                                        <i class="fas fa-child-dress"></i>
-                                        <?php
-                                    }
-                                }
                                 ?>
+                                <span class="badge-gray"><i class="fas fa-user-alt"></i><?php echo esc_html( $adult_qty ); ?></span>
+                                <span class="badge-gray"><i class="fas fa-child-dress"></i> <?php echo esc_html( $adult_qty ); ?></span>
                             </td>
                             <td style="text-align: right;">
                                 <?php if ($sale_price) { ?>

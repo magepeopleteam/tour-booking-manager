@@ -1158,7 +1158,6 @@
 
     function ttbm_hotel_feature_update() {
         var $form = $('#ttbm-hotel-feature-form');
-        console.log($form);
         var formData = {};
         $form.find('input, textarea').each(function() {
             var name = $(this).attr('name');
@@ -1333,7 +1332,6 @@
 
     function ttbm_hotel_activity_update() {
         var $form = $('#ttbm-hotel-activity-form');
-        console.log($form);
         var formData = {};
         $form.find('input, textarea').each(function() {
             var name = $(this).attr('name');

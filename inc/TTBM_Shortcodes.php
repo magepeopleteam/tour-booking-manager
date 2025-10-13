@@ -526,26 +526,28 @@
 
 
                         $available_rooms = array();
-                        foreach ( $room_info as $room ) {
-                            $name     = $room['ttbm_hotel_room_name'];
-                            $name = preg_replace('/[^A-Za-z0-9\-]/', '', $name );
-                            $capacity = intval( $room['ttbm_hotel_room_qty'] );
+                        if( is_array( $room_info ) && !empty( $room_info ) ) {
+                            foreach ($room_info as $room) {
+                                $name = $room['ttbm_hotel_room_name'];
+                                $name = preg_replace('/[^A-Za-z0-9\-]/', '', $name);
+                                $capacity = intval($room['ttbm_hotel_room_qty']);
 //                            $reserved = $booked_summary[$hotel_id][$name] ?? 0;
-                            $reserved = $hotel_booked[$hotel_id][$name] ?? 0;
+                                $reserved = $hotel_booked[$hotel_id][$name] ?? 0;
 
-                            $available_qty = $capacity - $reserved;
-                            if( $search_room_num > 0 ){
-                                if ( $available_qty >= $search_room_num ) {
-                                    $room['available_qty'] = $available_qty;
-                                    $available_rooms[]     = $room;
+                                $available_qty = $capacity - $reserved;
+                                if ($search_room_num > 0) {
+                                    if ($available_qty >= $search_room_num) {
+                                        $room['available_qty'] = $available_qty;
+                                        $available_rooms[] = $room;
+                                    }
+                                } else {
+                                    if ($available_qty > $search_room_num) {
+                                        $room['available_qty'] = $available_qty;
+                                        $available_rooms[] = $room;
+                                    }
                                 }
-                            }else{
-                                if ( $available_qty > $search_room_num ) {
-                                    $room['available_qty'] = $available_qty;
-                                    $available_rooms[]     = $room;
-                                }
+
                             }
-
                         }
 
                         if ( ! empty( $available_rooms ) ) {

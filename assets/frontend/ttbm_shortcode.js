@@ -2,7 +2,6 @@
 
     function ttbm_promotional_tour_carousal( id ){
         let target_related_tour = $("#"+id+" .owl-carousel");
-        console.log( target_related_tour );
         let trt_num = target_related_tour.data('show');
         let trt_num_600 = Math.min(trt_num - 2, 2)
         trt_num_600 = Math.max(trt_num_600, 1)

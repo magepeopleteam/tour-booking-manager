@@ -1219,6 +1219,11 @@
 				}
 				update_post_meta($hotel_id, 'ttbm_hotel_bookings', $bookings);
 			}
+			//***********************************//
+			public static function get_submit_info($key, $default = '') {
+			    return self::data_sanitize($_POST[$key] ?? $default);
+			}
+
 		}
 		new MP_Global_Function();
 	}

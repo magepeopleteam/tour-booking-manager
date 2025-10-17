@@ -1644,15 +1644,13 @@
 	.leftTabs > .tabLists { -webkit-flex-flow: column; flex-flow: column; min-width: 250px; max-width: 250px; background-color: var(--color_white); padding: var(--ttbm_mp_xs);font-size: var(--ttbm_fs_label); }
 	div.ttbm_style [data-tabs-target] {
 		display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; -webkit-flex-wrap: nowrap; flex-wrap: nowrap;
-		position: relative; text-align: left; cursor: pointer; padding: 15px; color: var(--d_color); border-left: 2px solid transparent; }
-	.ttbm_style [data-tabs-target]:hover { border-left: 2px solid var(--color_theme); background-color: var(--color_theme_alter); }
-	.ttbm_style [data-tabs-target].active { background-color: var(--color_theme_alter); color: var(--d_color); border-left: 2px solid var(--color_theme); }
+		position: relative; text-align: left; cursor: pointer; padding:10px; color: var(--d_color); }
+	.ttbm_style [data-tabs-target]:hover {  background-color: var(--color_theme_alter); }
+	.ttbm_style [data-tabs-target].active { background-color: var(--color_theme_alter); color: var(--d_color);  }
 	.topTabs [data-tabs-target] { border-right: 1px solid var(--color_border); -webkit-justify-content: center; justify-content: center; }
 	.topTabs [data-tabs-target]:last-child { border-right: none; }
-	.ttbm_style [data-tabs-target].active::after,
-	.ttbm_style [data-tabs-target]:hover::after { width: 100%; }
+
 	.leftTabs [data-tabs-target] { position: relative; }
-	.leftTabs [data-tabs-target]::after { width: 90%; height: 100%; content: ""; position: absolute; left: 0; bottom: 0; border-bottom: 1px solid var(--color_border); }
 	.ttbm_style .tabsContent { position: relative; overflow: auto; width: 100%; padding: 2% 5%; background-color: #fff; }
 	.tabsContent [data-tabs] { display: none; }
 	/**************/

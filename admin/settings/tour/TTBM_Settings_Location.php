@@ -264,7 +264,7 @@
                             <input style="padding-left:30px" id="<?php echo esc_attr($gmap_api_key ? 'ttbm_map_location' : 'ttbm_osmap_location'); ?>" name="ttbm_full_location_name" placeholder="<?php esc_html_e('Please type location...', 'tour-booking-manager'); ?>" value="<?php echo esc_attr($location_name); ?>">
                         </div>
                     </label>
-                    <div class="label">
+                    <div >
 						<?php if (!$gmap_api_key): ?>
                             <div class="label-inner">
                                 <p><?php esc_html_e('To use google map, you have to add google map API key from', 'tour-booking-manager'); ?>
@@ -273,16 +273,18 @@
                             </div>
 						<?php endif; ?>
                     </div>
-                    <div class="label">
-                        <div style="width: 100%;">
+					<div style="width: 100%;">
                             <div id="<?php echo esc_attr($gmap_api_key ? 'gmap_canvas' : 'osmap_canvas'); ?>" style="width: 100%; height: 400px;"></div>
-                            <div style="margin-top: 10px;">
-								<?php esc_html_e('Latitude ', 'tour-booking-manager'); ?>
-                                <input type="text" id="map_latitude" name="ttbm_map_latitude" value="<?php echo esc_attr($latitude); ?>">
-								<?php esc_html_e('Longitude ', 'tour-booking-manager'); ?>
-                                <input type="text" id="map_longitude" name="ttbm_map_longitude" value="<?php echo esc_attr($longitude); ?>">
-                            </div>
-                        </div>
+                    </div>
+					<div class="label">
+                        
+						<div style="margin-top: 10px;">
+							<?php esc_html_e('Latitude ', 'tour-booking-manager'); ?>
+							<input type="text" id="map_latitude" name="ttbm_map_latitude" value="<?php echo esc_attr($latitude); ?>">
+							<?php esc_html_e('Longitude ', 'tour-booking-manager'); ?>
+							<input type="text" id="map_longitude" name="ttbm_map_longitude" value="<?php echo esc_attr($longitude); ?>">
+						</div>
+                        
                     </div>
                 </div>
 				<?php

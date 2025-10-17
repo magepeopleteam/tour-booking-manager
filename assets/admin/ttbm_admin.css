@@ -115,7 +115,7 @@
 	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem > p { color: var(--mpl-secondary); margin: 0; font-weight: normal; line-height: 24px; margin-bottom: 30px;}
 	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section { border-radius: 8px; background-color: #FFF; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1019607843); padding: 24px; margin-bottom: 24px; transition: transform 0.2s, box-shadow 0.2s; width: 100%;}
 	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);}
-	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .ttbm-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--mpl-gray);}
+	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .ttbm-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 16px; border-bottom: 1px solid var(--mpl-gray);}
 	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .ttbm-header h4 { margin: 0; font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 8px;}
 	#ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem section .label { display: flex; justify-content: space-between; align-items: center; flex-direction: row; cursor: pointer; margin: 10px 0; padding: 10px;background: #f1f1f1;
     border: 1px solid #ddd;

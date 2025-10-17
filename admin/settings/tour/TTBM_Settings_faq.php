@@ -130,14 +130,14 @@
 						?>
                         <div class="ttbm-faq-item" data-id="<?php echo esc_attr($key); ?>">
                             <div class="faq-header" data-collapse-target="#faq-content-<?php echo esc_attr($key); ?>">
-                                <label class="label">
+                                <div class="dFlex">
                                     <p><?php echo esc_html($value['ttbm_faq_title']); ?></p>
                                     <div class="faq-action">
                                         <span class=""><i class="fas fa-eye"></i></span>
                                         <span class="ttbm-faq-item-edit" data-modal="ttbm-faq-item-new"><i class="fas fa-edit"></i></span>
                                         <span class="ttbm-faq-item-delete"><i class="fas fa-trash"></i></span>
                                     </div>
-                                </label>
+                                </div>
                             </div>
                             <div class="faq-content" data-collapse="#faq-content-<?php echo esc_attr($key); ?>">
 								<?php echo wp_kses_post($value['ttbm_faq_content']); ?>

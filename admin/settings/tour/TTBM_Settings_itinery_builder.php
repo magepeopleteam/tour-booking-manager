@@ -130,14 +130,14 @@
 						?>
                         <div class="ttbm-daywise-item" data-id="<?php echo esc_attr($key); ?>">
                             <div class="daywise-header" data-collapse-target="#daywise-content-<?php echo esc_attr($key); ?>">
-                                <label class="label">
+                                <div class="dFlex">
                                     <p><?php echo esc_html($value['ttbm_day_title']); ?></p>
                                     <div class="daywise-action">
                                         <span class=""><i class="fas fa-eye"></i></span>
                                         <span class="ttbm-daywise-item-edit" data-modal="ttbm-daywise-item-new"><i class="fas fa-edit"></i></span>
                                         <span class="ttbm-daywise-item-delete"><i class="fas fa-trash"></i></span>
                                     </div>
-                                </label>
+                                </div>
                             </div>
                             <div class="daywise-content mB" data-collapse="#daywise-content-<?php echo esc_attr($key); ?>">
 								<?php echo wp_kses_post($value['ttbm_day_content']); ?>

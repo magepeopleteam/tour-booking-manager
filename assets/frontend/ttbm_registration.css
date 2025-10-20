@@ -965,7 +965,8 @@ div.filter_item {
 	color: var(--d_color);
 	margin: var(--ttbm_mp_xs);
 	position: relative;
-	overflow: hidden;width: calc(25% - var(--ttbm_mp));
+	overflow: hidden;
+	width: auto;
 	justify-content: space-between;
 }
 

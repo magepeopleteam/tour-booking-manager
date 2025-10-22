@@ -109,6 +109,17 @@
 							)
 						),
 						array(
+							'name' => 'ttbm_hide_availability_column',
+							'label' => esc_html__('Hide Availability Column', 'tour-booking-manager'),
+							'desc' => esc_html__('Hide the availability column in ticket and extra service tables to simplify the booking interface.', 'tour-booking-manager'),
+							'type' => 'select',
+							'default' => 'off',
+							'options' => array(
+								'off' => esc_html__('Show Availability Column', 'tour-booking-manager'),
+								'on' => esc_html__('Hide Availability Column', 'tour-booking-manager')
+							)
+						),
+						array(
 							'name' => 'ttbm_travel_label',
 							'label' => esc_html__('Travel Label', 'tour-booking-manager'),
 							'desc' => esc_html__('If you like to change the travel label in the dashboard menu, you can change it here.', 'tour-booking-manager'),

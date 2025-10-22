@@ -13,6 +13,9 @@ if (!defined('ABSPATH')) {
 	$ticket_lists = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticket_type', array());
 	$available_seat = TTBM_Function::get_total_available($tour_id, $tour_date);
 	$availability_info = TTBM_Function::get_ticket_availability_info($tour_id, $tour_date);
+	
+	// Check if availability column should be hidden (global setting)
+	$hide_availability_column = TTBM_Function::get_general_settings('ttbm_hide_availability_column', 'off');
 	if ($available_seat > 0 && sizeof($ticket_lists) > 0) {
 		do_action('ttbm_before_ticket_type_area', $tour_id, $tour_date);
 		?>
@@ -31,7 +34,9 @@ if (!defined('ABSPATH')) {
 							<tr>
 								<th class="ttbm_ticket_info"><?php esc_html_e('Ticket Type', 'tour-booking-manager'); ?></th>
 								<th class="ttbm_price_info"><?php esc_html_e('Price', 'tour-booking-manager'); ?></th>
-								<th class="ttbm_availability_info"><?php esc_html_e('Availability', 'tour-booking-manager'); ?></th>
+								<?php if ($hide_availability_column !== 'on') { ?>
+									<th class="ttbm_availability_info"><?php esc_html_e('Availability', 'tour-booking-manager'); ?></th>
+								<?php } ?>
 								<th class="ttbm_quantity_info"><?php esc_html_e('Quantity', 'tour-booking-manager'); ?></th>
 							</tr>
 						</thead>
@@ -107,43 +112,45 @@ if (!defined('ABSPATH')) {
 										</div>
 									</td>
 									
-									<td class="ttbm-availability-info">
-										<div class="ttbm_availability_container">
-											<div class="ttbm_stock_info ttbm_stock_<?php echo esc_attr($stock_status); ?>">
-												<?php if ($is_sold_out) { ?>
-													<span class="ttbm_stock_status sold_out">
-														<i class="fas fa-times-circle"></i>
-														<?php esc_html_e('Sold Out', 'tour-booking-manager'); ?>
-													</span>
-												<?php } else { ?>
-													<div class="ttbm_availability_details">
-														<div class="ttbm_remaining_count">
-															<span class="ttbm_available_number"><?php echo esc_html($available); ?></span>
-															<span class="ttbm_available_label">
-																<?php echo $available === 1 ? esc_html__('ticket left', 'tour-booking-manager') : esc_html__('tickets left', 'tour-booking-manager'); ?>
-															</span>
-														</div>
-														
-														<?php if ($is_low_stock) { ?>
-															<div class="ttbm_urgency_message">
-																<i class="fas fa-exclamation-triangle"></i>
-																<span><?php esc_html_e('Almost sold out!', 'tour-booking-manager'); ?></span>
+									<?php if ($hide_availability_column !== 'on') { ?>
+										<td class="ttbm-availability-info">
+											<div class="ttbm_availability_container">
+												<div class="ttbm_stock_info ttbm_stock_<?php echo esc_attr($stock_status); ?>">
+													<?php if ($is_sold_out) { ?>
+														<span class="ttbm_stock_status sold_out">
+															<i class="fas fa-times-circle"></i>
+															<?php esc_html_e('Sold Out', 'tour-booking-manager'); ?>
+														</span>
+													<?php } else { ?>
+														<div class="ttbm_availability_details">
+															<div class="ttbm_remaining_count">
+																<span class="ttbm_available_number"><?php echo esc_html($available); ?></span>
+																<span class="ttbm_available_label">
+																	<?php echo $available === 1 ? esc_html__('ticket left', 'tour-booking-manager') : esc_html__('tickets left', 'tour-booking-manager'); ?>
+																</span>
 															</div>
-														<?php } ?>
-														
-														<div class="ttbm_capacity_info">
-															<span class="ttbm_capacity_text">
-																<?php printf(esc_html__('%1$d of %2$d sold', 'tour-booking-manager'), $sold_qty, $total_capacity); ?>
-															</span>
-															<div class="ttbm_progress_bar">
-																<div class="ttbm_progress_fill ttbm_progress_<?php echo esc_attr($stock_status); ?>" style="width: <?php echo esc_attr($percentage_sold); ?>%"></div>
+															
+															<?php if ($is_low_stock) { ?>
+																<div class="ttbm_urgency_message">
+																	<i class="fas fa-exclamation-triangle"></i>
+																	<span><?php esc_html_e('Almost sold out!', 'tour-booking-manager'); ?></span>
+																</div>
+															<?php } ?>
+															
+															<div class="ttbm_capacity_info">
+																<span class="ttbm_capacity_text">
+																	<?php printf(esc_html__('%1$d of %2$d sold', 'tour-booking-manager'), $sold_qty, $total_capacity); ?>
+																</span>
+																<div class="ttbm_progress_bar">
+																	<div class="ttbm_progress_fill ttbm_progress_<?php echo esc_attr($stock_status); ?>" style="width: <?php echo esc_attr($percentage_sold); ?>%"></div>
+																</div>
 															</div>
 														</div>
-													</div>
-												<?php } ?>
+													<?php } ?>
+												</div>
 											</div>
-										</div>
-									</td>
+										</td>
+									<?php } ?>
 									
 									<td class="ttbm-select-quantity">
 										<?php if (!$is_sold_out) { ?>
@@ -157,7 +164,7 @@ if (!defined('ABSPATH')) {
 								</tr>
 
 								<tr class="ttbm_hidden_inputs">
-									<td colspan="4">
+									<td colspan="<?php echo $hide_availability_column === 'on' ? '3' : '4'; ?>">
 										<?php do_action('ttbm_input_data',$ticket_name,$tour_id); ?>
 										<input type="hidden" name='tour_id[]' value='<?php echo esc_html($tour_id); ?>'>
 										<input type="hidden" name='ticket_name[]' value='<?php echo esc_html($ticket_name); ?>'>

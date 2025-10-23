@@ -188,5 +188,13 @@ function ttbm_load_sortable_datepicker(parent, item) {
             parent.find(".ttbm_add_icon_image_button_area").slideDown("fast");
         }
     );
+
+    // ================ Template slection ===============
+    $(document).on('click', '.ttbm-template img', function (e) {
+        $('[name="ttbm_theme_file"]').val($(this).data('ttbm-template'));
+        $('.ttbm-template ').removeClass('active')
+        $(this).parent('.ttbm-template ').addClass('active');
+    });
+
 })(jQuery);
 

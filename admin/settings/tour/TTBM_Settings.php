@@ -33,7 +33,8 @@
 								<?php do_action('ttbm_meta_box_tab_after_pricing'); ?>
                                 <li data-tabs-target="#ttbm_settings_gallery"><i class="mi mi-images"></i><?php esc_html_e('Gallery ', 'tour-booking-manager'); ?></li>
                                 <li data-tabs-target="#ttbm_settings_feature"><i class="mi mi-features"></i><?php esc_html_e(' Features', 'tour-booking-manager'); ?></li>
-                                <li data-tabs-target="#ttbm_settings_guide"><i class="mi mi-hiking"></i><?php echo esc_html($ttbm_label) . '  ' . esc_html__('Guide ', 'tour-booking-manager'); ?></li>
+                                <li data-tabs-target="#ttbm_settings_template"><i class="mi mi-table-layout"></i><?php esc_html_e(' Template settings', 'tour-booking-manager'); ?></li>
+								<li data-tabs-target="#ttbm_settings_guide"><i class="mi mi-hiking"></i><?php echo esc_html($ttbm_label) . '  ' . esc_html__('Guide ', 'tour-booking-manager'); ?></li>
                                 <li data-tabs-target="#ttbm_settings_activies"><i class="mi mi-practice"></i><?php esc_html_e(' Activities', 'tour-booking-manager'); ?></li>
                                 <li data-tabs-target="#ttbm_settings_place_you_see"><i class="mi mi-map-marker"></i><?php esc_html_e(' Places You\'ll Visit', 'tour-booking-manager'); ?></li>
                                 <li data-tabs-target="#ttbm_daywise_settings"><i class="fas fa-list-ul"></i><?php esc_html_e('Itinerary Builder', 'tour-booking-manager'); ?></li>

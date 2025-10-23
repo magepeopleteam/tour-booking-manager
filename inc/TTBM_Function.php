@@ -69,6 +69,16 @@
 				$file_path = $dir . $file_name;
 				return locate_template(array('ttbm_templates/' . $file_name)) ? $file_path : $default_dir . $file_name;
 			}
+
+			public static function  template_file_url( $file_name ) {
+				$template_path = get_stylesheet_directory_uri(). '/ttbm_templates/';
+				$default_path  = TTBM_PLUGIN_URL . '/templates/';
+				$thedir        = is_dir( $template_path ) ? $template_path : $default_path;
+				$themedir      = $thedir . $file_name;
+				$the_file_path = locate_template( array( 'ttbm_templates/' . $file_name ) ) ? $themedir : $default_path . $file_name;
+
+				return $the_file_path;
+			}
 			//*********Date and Time**********************//
 			public static function get_date($tour_id, $expire = '') {
 				$tour_date = [];

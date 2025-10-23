@@ -12,8 +12,8 @@
 				$tour_type_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_tour_type', 'on') == 'off' ? '' : 'checked';
 				$hotel_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_hotels', 'on') == 'off' ? '' : 'checked';
 				$sidebar_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_sidebar', 'off') == 'off' ? '' : 'checked';
-				$template_name = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_theme_file', 'default.php');
-				$template_lists = TTBM_Function::all_details_template();
+
+
 				$display_enquiry = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_enquiry', 'on');
 				$enquiry_checked = $display_enquiry == 'off' ? '' : 'checked';
 				?>
@@ -65,19 +65,6 @@
                                  <?php do_action('add_ttbm_display_settings_left', $tour_id); ?>
                             </div>
                             <div class="col-right">
-                                <label class="label">
-                                    <div>
-                                        <p><?php esc_html_e('Template', 'tour-booking-manager'); ?></p>
-                                    </div>
-                                    <select class="" name="ttbm_theme_file">
-                                        <option><?php esc_html_e('Please select ...', 'tour-booking-manager'); ?></option>
-										<?php foreach ($template_lists as $key => $value): ?>
-											<?php if ($key != 'hotel_default.php'): ?>
-                                                <option value="<?php echo esc_attr($key); ?>" <?php echo esc_attr($template_name == $key ? 'selected' : ''); ?>><?php echo esc_attr($value); ?></option>
-											<?php endif; ?>
-										<?php endforeach; ?>
-                                    </select>
-                                </label>
                                 <label class="label">
                                     <div>
                                         <p><?php esc_html_e('Ticket Purchase', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_ticketing_system'); ?></span></i></p>

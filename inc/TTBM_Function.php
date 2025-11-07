@@ -105,7 +105,17 @@
 					if ($ttbm_repeat_type == 'continue') {
 						$end_date = $start_date ? gmdate('Y-m-d', strtotime($start_date . ' +365 day')) : '';
 					}
-					$end_date = $end_date ? gmdate('Y-m-d', strtotime($end_date)) : '';
+					// Format end date to Y-m-d, but validate it first
+					if ($end_date) {
+						$parsed_end_date = strtotime($end_date);
+						if ($parsed_end_date !== false) {
+							$end_date = gmdate('Y-m-d', $parsed_end_date);
+						} else {
+							$end_date = '';
+						}
+					} else {
+						$end_date = '';
+					}
 					$off_days = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_offdays', array());
 					$all_off_dates = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_off_dates', array());
 					$off_dates = array();
@@ -163,26 +173,117 @@
 			public static function get_date_by_time_check($tour_id, $date, $expire) {
 				$tour_date = '';
 				$now = strtotime(current_time('Y-m-d H:i:s'));
-				if (TTBM_Global_Function::check_time_exit_date($date)) {
-					$full_date = TTBM_Function::reduce_stop_sale_hours($date);
-					if ($expire || $now <= strtotime($full_date)) {
-						$tour_date = $date;
+				
+				// Normalize the date format to Y-m-d
+				$date_normalized = $date ? gmdate('Y-m-d', strtotime($date)) : '';
+				if (!$date_normalized) {
+					return $tour_date;
+				}
+				
+				// For repeated dates, validate directly without calling get_date to avoid recursion
+				$travel_type = self::get_travel_type($tour_id);
+				if ($travel_type == 'repeated') {
+					$now_date = strtotime(current_time('Y-m-d'));
+					$start_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_date');
+					$start_date = $start_date ? gmdate('Y-m-d', strtotime($start_date)) : '';
+					$ttbm_repeat_type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_repeat_type');
+					$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_end_date');
+					if ($ttbm_repeat_type == 'continue') {
+						$end_date = $start_date ? gmdate('Y-m-d', strtotime($start_date . ' +365 day')) : '';
 					}
-				} else {
-					$times = TTBM_Function::get_time($tour_id, $date, true);
-					if (is_array($times) && sizeof($times) > 0) {
-						foreach ($times as $time) {
-							$single_time = is_array($time) ? ($time['time'] ?? '') : $time;
-							$full_date = $single_time ? $date . ' ' . $single_time : $date . ' ' . '23:59:59';
-							$full_date = TTBM_Function::reduce_stop_sale_hours($full_date);
-							if ($expire || $now <= strtotime($full_date)) {
-								$tour_date = $date;
-							}
+					// Format end date to Y-m-d, but validate it first
+					if ($end_date) {
+						$parsed_end_date = strtotime($end_date);
+						if ($parsed_end_date !== false) {
+							$end_date = gmdate('Y-m-d', $parsed_end_date);
+						} else {
+							$end_date = '';
 						}
 					} else {
-						$full_date = TTBM_Function::reduce_stop_sale_hours($date . ' ' . '23:59:59');
+						$end_date = '';
+					}
+					
+					// Check if date is within range
+					if ($start_date && $end_date && $date_normalized >= $start_date && $date_normalized <= $end_date) {
+						// Check off days and off dates
+						$off_days = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_offdays', array());
+						$all_off_dates = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_off_dates', array());
+						$off_dates = array();
+						foreach ($all_off_dates as $off_date) {
+							$off_dates[] = $off_date['mep_ticket_off_date'];
+						}
+						$day = strtolower(gmdate('D', strtotime($date_normalized)));
+						
+						// Check if date matches interval pattern
+						$interval = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_after', 1);
+						$all_dates = TTBM_Global_Function::date_separate_period($start_date, $end_date, $interval);
+						$date_in_pattern = false;
+						foreach ($all_dates as $pattern_date) {
+							$pattern_date_str = $pattern_date->format('Y-m-d');
+							if ($pattern_date_str === $date_normalized) {
+								$date_in_pattern = true;
+								break;
+							}
+						}
+						
+						// Validate date is not expired and matches pattern
+						if ($date_in_pattern && ($expire || $now_date <= strtotime($date_normalized))) {
+							if (!in_array($day, (array)$off_days) && !in_array($date_normalized, (array)$off_dates)) {
+								// Date is valid, now check time
+								if (TTBM_Global_Function::check_time_exit_date($date)) {
+									$full_date = TTBM_Function::reduce_stop_sale_hours($date);
+									if ($expire || $now <= strtotime($full_date)) {
+										$tour_date = $date;
+									}
+								} else {
+									$times = TTBM_Function::get_time($tour_id, $date_normalized, true);
+									if (is_array($times) && sizeof($times) > 0) {
+										foreach ($times as $time) {
+											$single_time = is_array($time) ? ($time['time'] ?? '') : $time;
+											$full_date = $single_time ? $date_normalized . ' ' . $single_time : $date_normalized . ' ' . '23:59:59';
+											$full_date = TTBM_Function::reduce_stop_sale_hours($full_date);
+											if ($expire || $now <= strtotime($full_date)) {
+												if (!$expire && $single_time) {
+													$tour_date = $date_normalized . ' ' . $single_time;
+												} else {
+													$tour_date = $date_normalized;
+												}
+												break;
+											}
+										}
+									} else {
+										$full_date = TTBM_Function::reduce_stop_sale_hours($date_normalized . ' ' . '23:59:59');
+										if ($expire || $now <= strtotime($full_date)) {
+											$tour_date = $date_normalized;
+										}
+									}
+								}
+							}
+						}
+					}
+				} else {
+					// For fixed and particular dates, use original logic
+					if (TTBM_Global_Function::check_time_exit_date($date)) {
+						$full_date = TTBM_Function::reduce_stop_sale_hours($date);
 						if ($expire || $now <= strtotime($full_date)) {
 							$tour_date = $date;
+						}
+					} else {
+						$times = TTBM_Function::get_time($tour_id, $date_normalized, true);
+						if (is_array($times) && sizeof($times) > 0) {
+							foreach ($times as $time) {
+								$single_time = is_array($time) ? ($time['time'] ?? '') : $time;
+								$full_date = $single_time ? $date_normalized . ' ' . $single_time : $date_normalized . ' ' . '23:59:59';
+								$full_date = TTBM_Function::reduce_stop_sale_hours($full_date);
+								if ($expire || $now <= strtotime($full_date)) {
+									$tour_date = $date_normalized;
+								}
+							}
+						} else {
+							$full_date = TTBM_Function::reduce_stop_sale_hours($date_normalized . ' ' . '23:59:59');
+							if ($expire || $now <= strtotime($full_date)) {
+								$tour_date = $date_normalized;
+							}
 						}
 					}
 				}

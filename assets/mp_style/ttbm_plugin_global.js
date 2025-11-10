@@ -118,6 +118,37 @@ function ttbm_load_date_picker(parent = jQuery('.ttbm_style')) {
             }
         });
     });
+    // Clear hidden field when visible date field is cleared - using event delegation for better reliability
+    parent.off('input.ttbm_clear_date change.ttbm_clear_date blur.ttbm_clear_date', '.date_type, .date_type_without_year');
+    parent.on('input.ttbm_clear_date change.ttbm_clear_date blur.ttbm_clear_date', '.date_type, .date_type_without_year', function() {
+        let $this = jQuery(this);
+        let currentValue = $this.val();
+        if (!currentValue || currentValue.trim() === '') {
+            let $hiddenField = $this.closest('label').find('input[type="hidden"]');
+            if ($hiddenField.length) {
+                $hiddenField.val('').trigger('change');
+            }
+        }
+    });
+    // Ensure cleared dates are saved before form submission
+    let $form = parent.closest('form');
+    if ($form.length === 0) {
+        $form = jQuery('#post, #post-form, form[name="post"]');
+    }
+    if ($form.length > 0) {
+        $form.off('submit.ttbm_clear_dates').on('submit.ttbm_clear_dates', function() {
+            parent.find('.date_type, .date_type_without_year').each(function() {
+                let $this = jQuery(this);
+                let currentValue = $this.val();
+                if (!currentValue || currentValue.trim() === '') {
+                    let $hiddenField = $this.closest('label').find('input[type="hidden"]');
+                    if ($hiddenField.length && $hiddenField.val()) {
+                        $hiddenField.val('');
+                    }
+                }
+            });
+        });
+    }
 }
 //========================================================Alert==============//
 function ttbm_alert($this, attr = 'alert') {
@@ -129,6 +160,25 @@ function ttbm_alert($this, attr = 'alert') {
     $(document).ready(function () {
         ttbm_load_date_picker();
         $('.ttbm_select2').select2({});
+        
+        // Clear hidden date fields when visible fields are cleared - global handler for WordPress admin
+        function clearEmptyDateFields() {
+            $('.date_type, .date_type_without_year').each(function() {
+                let $this = $(this);
+                let currentValue = $this.val();
+                if (!currentValue || currentValue.trim() === '') {
+                    let $hiddenField = $this.closest('label').find('input[type="hidden"]');
+                    if ($hiddenField.length && $hiddenField.val()) {
+                        $hiddenField.val('');
+                    }
+                }
+            });
+        }
+        
+        // Clear dates before WordPress save/update
+        $(document).on('click', '#publish, #save-post, input[name="save"], input[name="publish"]', function() {
+            clearEmptyDateFields();
+        });
     });
 }(jQuery));
 //====================================================================Load Bg Image=================//

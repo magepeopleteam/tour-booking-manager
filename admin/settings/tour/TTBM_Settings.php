@@ -376,6 +376,14 @@
 					if ($ttbm_repeat_type == 'occurrence' && $ttbm_travel_repeated_end_date) {
 						$day_count = $ttbm_repeat_number * $ttbm_travel_repeated_after;
 						$ttbm_travel_repeated_end_date = gmdate('Y-m-d', strtotime($ttbm_travel_repeated_start_date . ' +' . $day_count . ' day'));
+					} elseif ($ttbm_repeat_type == 'fixed' && $ttbm_travel_repeated_end_date) {
+						// Format the end date to Y-m-d when repeat type is 'fixed' (On)
+						$parsed_date = strtotime($ttbm_travel_repeated_end_date);
+						if ($parsed_date !== false) {
+							$ttbm_travel_repeated_end_date = gmdate('Y-m-d', $parsed_date);
+						} else {
+							$ttbm_travel_repeated_end_date = '';
+						}
 					}
 					update_post_meta($tour_id, 'ttbm_travel_repeated_end_date', $ttbm_travel_repeated_end_date);
 					$display_time = isset($_POST['mep_disable_ticket_time']) && sanitize_text_field(wp_unslash($_POST['mep_disable_ticket_time'])) ? 'yes' : 'no';

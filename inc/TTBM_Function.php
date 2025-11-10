@@ -70,15 +70,17 @@
 				return locate_template(array('ttbm_templates/' . $file_name)) ? $file_path : $default_dir . $file_name;
 			}
 
-			public static function  template_file_url( $file_name ) {
-				$template_path = get_stylesheet_directory_uri(). '/ttbm_templates/';
-				$default_path  = TTBM_PLUGIN_URL . '/templates/';
-				$thedir        = is_dir( $template_path ) ? $template_path : $default_path;
-				$themedir      = $thedir . $file_name;
-				$the_file_path = locate_template( array( 'ttbm_templates/' . $file_name ) ) ? $themedir : $default_path . $file_name;
-
-				return $the_file_path;
+			public static function template_screenshot_url() {
+				$theme_path   = get_stylesheet_directory_uri() . '/ttbm_templates/screenshot/';
+				$plugin_path  = TTBM_PLUGIN_URL . '/templates/screenshot/';
+				$theme_dir    = get_stylesheet_directory() . '/ttbm_templates/screenshot/'; 
+				if (is_dir($theme_dir)) {
+					return $theme_path; 
+				} else {
+					return $plugin_path; 
+				}
 			}
+
 			//*********Date and Time**********************//
 			public static function get_date($tour_id, $expire = '') {
 				$tour_date = [];

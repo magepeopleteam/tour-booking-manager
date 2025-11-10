@@ -37,7 +37,7 @@
 								?>
 								<?php  if ($key != 'hotel_default.php'and $key != 'viator.php' ): ?>
 								<div class="ttbm-template <?php echo $current_template == $key ? 'active' : ''; ?>">
-									<img src="<?php  echo TTBM_Function::template_file_url( 'screenshot/' ) . $image; ?>" data-ttbm-template="<?php echo $key; ?>">
+									<img src="<?php  echo TTBM_Function::template_screenshot_url() . $image; ?>" data-ttbm-template="<?php echo $key; ?>">
 									<h5><?php echo $template; ?></h5>
 								</div>
 								<?php endif; ?>

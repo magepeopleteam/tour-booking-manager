@@ -2038,24 +2038,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
     letter-spacing: 0.3px;
 }
 
-.ttbm_urgency_message {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: #dc3545;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 6px 10px;
-    background: rgba(220, 53, 69, 0.1);
-    border-radius: 15px;
-    animation: urgency-pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes urgency-pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
 .ttbm_capacity_info {
     margin-top: 5px;
 }
@@ -2092,10 +2074,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
     background: linear-gradient(90deg, #ffc107, #fd7e14);
 }
 
-.ttbm_progress_low_stock {
-    background: linear-gradient(90deg, #dc3545, #e83e8c);
-}
-
 .ttbm_progress_sold_out {
     background: #6c757d;
 }
@@ -2126,26 +2104,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
     width: 4px;
     height: 100%;
     background: #dc3545;
-}
-
-.ttbm_low_stock {
-    background: rgba(255, 193, 7, 0.05) !important;
-    animation: low-stock-glow 3s ease-in-out infinite;
-}
-
-@keyframes low-stock-glow {
-    0%, 100% { box-shadow: 0 0 0 rgba(255, 193, 7, 0); }
-    50% { box-shadow: 0 0 20px rgba(255, 193, 7, 0.3); }
-}
-
-.ttbm_low_stock td::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: #ffc107;
 }
 
 .ttbm_not_available {
@@ -2207,11 +2165,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
     align-items: center;
     justify-content: center;
     gap: 5px;
-}
-
-.ttbm_enhanced_table .ttbm_urgency_message {
-    margin: 5px auto 0;
-    display: inline-flex;
 }
 
 .ttbm_enhanced_table .ttbm_capacity_info {
@@ -2378,18 +2331,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
         color: #6c757d;
     }
     
-    .ttbm_urgency_message {
-        font-size: 11px;
-        padding: 3px 8px;
-        background: rgba(220, 53, 69, 0.1);
-        color: #dc3545;
-        border-radius: 20px;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        margin-top: 5px;
-    }
-    
     .ttbm_capacity_info {
         display: none; /* Hide on mobile for cleaner look */
     }
@@ -2461,12 +2402,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
         font-size: 10px;
     }
     
-    .ttbm_urgency_message {
-        font-size: 10px;
-        padding: 2px 6px;
-        gap: 3px;
-    }
-    
     .ttbm-select-quantity .qtyIncDec {
         min-width: 100px;
     }
@@ -2514,23 +2449,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
     letter-spacing: 0.5px;
 }
 
-.ttbm_extra_service_area .ttbm_urgency_message {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: #fff3cd;
-    color: #856404;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 500;
-    border: 1px solid #ffeaa7;
-}
-
-.ttbm_extra_service_area .ttbm_urgency_message i {
-    color: #f39c12;
-}
-
 .ttbm_extra_service_area .ttbm_capacity_info {
     display: flex;
     flex-direction: column;
@@ -2563,10 +2481,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
 
 .ttbm_extra_service_area .ttbm_progress_in_stock {
     background: linear-gradient(90deg, #28a745, #20c997);
-}
-
-.ttbm_extra_service_area .ttbm_progress_low_stock {
-    background: linear-gradient(90deg, #ffc107, #fd7e14);
 }
 
 .ttbm_extra_service_area .ttbm_progress_sold_out {
@@ -2676,14 +2590,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
         color: #6c757d;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-    }
-    
-    .ttbm_extra_service_area .ttbm_urgency_message {
-        font-size: 10px;
-        padding: 6px 10px;
-        gap: 4px;
-        margin: 8px 0;
-        text-align: center;
     }
     
     .ttbm_extra_service_area .ttbm_capacity_info {

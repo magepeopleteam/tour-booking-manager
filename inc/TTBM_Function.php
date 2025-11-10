@@ -640,7 +640,6 @@
 					'available_qty' => $available_qty,
 					'percentage_sold' => $percentage_sold,
 					'is_sold_out' => $available_qty <= 0,
-					'is_low_stock' => $available_qty > 0 && $available_qty <= ($total_capacity * 0.1),
 					'stock_status' => $stock_status,
 					'tour_date' => $tour_date,
 					'price' => self::get_price_by_name($type_name, $tour_id, '', '', $tour_date),
@@ -654,10 +653,6 @@
 		public static function get_stock_status($available_qty, $total_capacity) {
 			if ($available_qty <= 0) {
 				return 'sold_out';
-			} elseif ($available_qty <= ($total_capacity * 0.1)) {
-				return 'low_stock';
-			} elseif ($available_qty <= ($total_capacity * 0.3)) {
-				return 'medium_stock';
 			} else {
 				return 'in_stock';
 			}
@@ -692,9 +687,8 @@
 			
 			foreach ($availability_info as $ticket_name => $info) {
 				$status_class = 'ttbm_status_' . $info['stock_status'];
-				$urgency_class = $info['is_low_stock'] ? 'ttbm_low_stock' : '';
 				
-				$output .= '<div class="ttbm_ticket_availability ' . $status_class . ' ' . $urgency_class . '">';
+				$output .= '<div class="ttbm_ticket_availability ' . $status_class . '">';
 				$output .= '<span class="ttbm_ticket_name">' . esc_html($ticket_name) . '</span>';
 				
 				if ($info['is_sold_out']) {
@@ -706,10 +700,6 @@
 						esc_html__('ticket left', 'tour-booking-manager') : 
 						esc_html__('tickets left', 'tour-booking-manager');
 					$output .= '</span>';
-					
-					if ($info['is_low_stock']) {
-						$output .= '<span class="ttbm_urgency_text">' . esc_html__('Almost sold out!', 'tour-booking-manager') . '</span>';
-					}
 				}
 				
 				$output .= '</div>';

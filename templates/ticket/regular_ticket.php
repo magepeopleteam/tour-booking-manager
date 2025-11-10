@@ -70,14 +70,11 @@ if (!defined('ABSPATH')) {
 								$stock_status = $ticket_info['stock_status'] ?? 'in_stock';
 								$percentage_sold = $ticket_info['percentage_sold'] ?? 0;
 								$is_sold_out = $ticket_info['is_sold_out'] ?? ($available <= 0);
-								$is_low_stock = $ticket_info['is_low_stock'] ?? ($available <= 5 && $available > 0);
 								
 								// Set row classes based on stock status
 								$row_classes = array('ttbm_ticket_row', 'ttbm_stock_' . $stock_status);
 								if ($is_sold_out) {
 									$row_classes[] = 'ttbm_sold_out';
-								} elseif ($is_low_stock) {
-									$row_classes[] = 'ttbm_low_stock';
 								}
 								?>
 								<tr class="<?php echo esc_attr(implode(' ', $row_classes)); ?>" data-ticket-name="<?php echo esc_attr($ticket_name); ?>">
@@ -129,13 +126,6 @@ if (!defined('ABSPATH')) {
 																	<?php echo $available === 1 ? esc_html__('ticket left', 'tour-booking-manager') : esc_html__('tickets left', 'tour-booking-manager'); ?>
 																</span>
 															</div>
-															
-															<?php if ($is_low_stock) { ?>
-																<div class="ttbm_urgency_message">
-																	<i class="fas fa-exclamation-triangle"></i>
-																	<span><?php esc_html_e('Almost sold out!', 'tour-booking-manager'); ?></span>
-																</div>
-															<?php } ?>
 															
 															<div class="ttbm_capacity_info">
 																<span class="ttbm_capacity_text">

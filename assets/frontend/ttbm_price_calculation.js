@@ -288,7 +288,7 @@ function ttbm_partial_payment_job(parent, total) {
 			var progressBar = row.find('.ttbm_progress_fill');
 			if (progressBar.length > 0) {
 				progressBar.css('width', info.percentage_sold + '%');
-				progressBar.removeClass('ttbm_progress_in_stock ttbm_progress_medium_stock ttbm_progress_low_stock ttbm_progress_sold_out');
+				progressBar.removeClass('ttbm_progress_in_stock ttbm_progress_sold_out');
 				progressBar.addClass('ttbm_progress_' + info.stock_status);
 			}
 			
@@ -299,7 +299,7 @@ function ttbm_partial_payment_job(parent, total) {
 			}
 			
 			// Update row classes
-			row.removeClass('ttbm_stock_in_stock ttbm_stock_medium_stock ttbm_stock_low_stock ttbm_stock_sold_out ttbm_sold_out ttbm_low_stock');
+			row.removeClass('ttbm_stock_in_stock ttbm_stock_sold_out ttbm_sold_out');
 			row.addClass('ttbm_stock_' + info.stock_status);
 			
 			if (info.available_qty <= 0) {
@@ -311,12 +311,6 @@ function ttbm_partial_payment_job(parent, total) {
 				}
 				// Disable quantity input
 				row.find('.formControl[data-price]').prop('disabled', true).val(0);
-			} else if (info.available_qty <= 5) {
-				row.addClass('ttbm_low_stock');
-				// Add urgency message if not exists
-				if (row.find('.ttbm_urgency_message').length === 0) {
-					row.find('.ttbm_availability_details').append('<div class="ttbm_urgency_message"><i class="fas fa-exclamation-triangle"></i><span>Almost sold out!</span></div>');
-				}
 			} else {
 				// Remove urgency message if exists
 				row.find('.ttbm_urgency_message').remove();

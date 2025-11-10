@@ -47,8 +47,7 @@
 							<?php
 							// Calculate availability status and display logic
 							$is_sold_out = $available <= 0;
-							$is_low_stock = $available > 0 && $available <= ($service_qty * 0.2); // Low stock if 20% or less remaining
-							$stock_status = $is_sold_out ? 'sold_out' : ($is_low_stock ? 'low_stock' : 'in_stock');
+							$stock_status = $is_sold_out ? 'sold_out' : 'in_stock';
 							$percentage_sold = $service_qty > 0 ? round((($service_qty - $available) / $service_qty) * 100) : 0;
 							$sold_qty = $service_qty - $available;
 							?>
@@ -82,13 +81,6 @@
 																<?php echo $available === 1 ? esc_html__('service left', 'tour-booking-manager') : esc_html__('services left', 'tour-booking-manager'); ?>
 															</span>
 														</div>
-														
-														<?php if ($is_low_stock) { ?>
-															<div class="ttbm_urgency_message">
-																<i class="fas fa-exclamation-triangle"></i>
-																<span><?php esc_html_e('Almost sold out!', 'tour-booking-manager'); ?></span>
-															</div>
-														<?php } ?>
 														
 														<div class="ttbm_capacity_info">
 															<span class="ttbm_capacity_text">

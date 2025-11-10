@@ -28,7 +28,7 @@
 				$product_id = is_string(get_post_status($linked_ttbm_id)) ? $linked_ttbm_id : $product_id;
 				$product_id = TTBM_Function::post_id_multi_language($product_id);
 				if (get_post_type($product_id) == TTBM_Function::get_cpt_name() && (isset($_POST['ttbm_form_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_form_nonce'])), 'ttbm_form_nonce'))) {
-					$total_price = $this->get_cart_total_price($product_id);
+					$total_price = self::get_cart_total_price($product_id);
 					$hotel_info = self::cart_hotel_info();
 					$cart_item_data['ttbm_hotel_info'] = apply_filters('ttbm_hotel_info_filter', $hotel_info, $product_id);
 					$cart_item_data['ttbm_date'] = isset($_POST['ttbm_start_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_start_date'])) : '';
@@ -525,7 +525,7 @@
 				}
 				return $extra_service;
 			}
-			public function get_cart_total_price($tour_id) {
+			public static function get_cart_total_price($tour_id) {
 				$total_price = 0;
 				$total_qty = 0;
 				if (isset($_POST['ttbm_form_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_form_nonce'])), 'ttbm_form_nonce')) {
@@ -573,7 +573,7 @@
 					'post_status' => $status,
 					'post_type' => $cpt_name
 				);
-				wp_reset_postdata();
+				//wp_reset_postdata();
 				$post_id = wp_insert_post($new_post);
 				if (sizeof($meta_data) > 0) {
 					foreach ($meta_data as $key => $value) {

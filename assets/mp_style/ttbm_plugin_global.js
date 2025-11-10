@@ -158,6 +158,9 @@ function ttbm_alert($this, attr = 'alert') {
 (function ($) {
     "use strict";
     $(document).ready(function () {
+        $(".ttbm_style .date_type,.ttbm_style .date_type_without_year").on("keydown", function(e) {
+            e.preventDefault();
+        });
         ttbm_load_date_picker();
         $('.ttbm_select2').select2({});
         

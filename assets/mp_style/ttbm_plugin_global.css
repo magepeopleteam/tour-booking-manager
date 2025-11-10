@@ -2893,6 +2893,8 @@ div.ttbm_popup .popupMainArea { min-width:650px;}
 		border-collapse: collapse;
 	}
 	#ui-datepicker-div {
+		width: 342px;
+		border-color: var(--color_theme);
 		padding: 2px;
 		background-color: #FFF;
 		box-shadow: 0 0 5px #DDD;

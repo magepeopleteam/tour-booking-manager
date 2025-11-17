@@ -3,7 +3,7 @@
 	$(document).ready(function () {
 		load_pagination_initial_item();
 
-		$("#ttbm_date-input_from").datepicker({
+		/*$("#ttbm_date-input_from").datepicker({
 			dateFormat: "MM d, yy", // Custom date format: March 20, 2024
 			minDate: 0, // Disable past dates
 			showAnim: "fadeIn"
@@ -22,7 +22,39 @@
 		// Open the datepicker when clicking the icon
 		$("#ttbm_calendar-icon").on("click", function () {
 			$("#ttbm_date-input_to").datepicker("show");
+		});*/
+
+
+
+
+		let rangePicker = $("#ttbm_date-input_from").flatpickr({
+			mode: "range",
+			dateFormat: "F j, Y",
+			minDate: "today",
+			onChange: function(selectedDates, dateStr, instance) {
+				if (selectedDates.length === 2) {
+					$("#ttbm_date-input_from").val(
+						instance.formatDate(selectedDates[0], "F j, Y")
+					);
+					$("#ttbm_date-input_to").val(
+						instance.formatDate(selectedDates[1], "F j, Y")
+					);
+				}
+			}
 		});
+
+		$("#ttbm_date-input_from").on("focus click", function () {
+			rangePicker.open();
+		});
+
+		$("#ttbm_date-input_to").on("focus click", function () {
+			rangePicker.open();
+		});
+
+		$("#ttbm_calendar-icon").on("click", function () {
+			rangePicker.open();
+		});
+
 
 		$(document).on('click', '.ttbm_item_filter_by_activity', function () {
 			$(this).toggleClass('ttbm_item_activity_active');

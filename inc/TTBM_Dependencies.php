@@ -69,6 +69,8 @@ require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
 				$this->registration_enqueue();
 				do_action('ttbm_common_script');
 				wp_enqueue_style('mage-icons', TTBM_PLUGIN_URL . '/assets/mage-icon/css/mage-icon.css', array(), time());
+
+                $this->myplugin_enqueue_flatpickr();
 			}
 			public function frontend_script() {
 				$this->global_enqueue();
@@ -180,6 +182,35 @@ require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
 					update_option('ttbm_upgrade_global', 'completed');
 				}
 			}
+
+            function myplugin_enqueue_flatpickr() {
+
+                // Flatpickr CSS
+                wp_enqueue_style(
+                    'flatpickr-css',
+                    'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css',
+                    [],
+                    null
+                );
+
+                // Flatpickr JS
+                wp_enqueue_script(
+                    'flatpickr-js',
+                    'https://cdn.jsdelivr.net/npm/flatpickr',
+                    ['jquery'],
+                    null,
+                    true
+                );
+
+                // Your custom script that initializes Flatpickr
+                wp_enqueue_script(
+                    'myplugin-flatpickr-init',
+                    plugin_dir_url(__FILE__) . 'assets/js/flatpickr-init.js',
+                    ['flatpickr-js'],
+                    false,
+                    true
+                );
+            }
 			public function js_constant() {
 				?>
                 <script type="text/javascript">

@@ -125,6 +125,7 @@
 				}
 			}
 			public static function ttbm_query_for_top_search($show, $sort, $sort_by, $status, $organizer_filter, $location, $activity, $date_filter = ''): WP_Query {
+
                 if (is_array($date_filter)) {
 					if (!empty($date_filter['start_date'])) {
 						$start_date_obj = DateTime::createFromFormat('F d, Y', $date_filter['start_date']);
@@ -204,8 +205,6 @@
                     'value'   => '"' . $activity . '"',
                     'compare' => 'LIKE'
                 ) : '';
-                error_log( print_r( [ '$activity' => $activity, '$activity_filter' =>$activity_filter ], true ) );
-
 
 				$location = $location ? get_term_by('id', $location, 'ttbm_tour_location')->name : '';
 				$city_filter = !empty($location) ? array(

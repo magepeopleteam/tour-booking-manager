@@ -80,7 +80,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 										// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  
 										echo wc_price($tour_id, $sale_price); ?></span>
 									<?php } ?>
-									<?php echo esc_html( $price ); ?>/
+									<?php echo wp_kses_post( $price ); ?>/
 									<?php esc_html_e( 'Night ', 'tour-booking-manager' ); ?>&nbsp;X
 									<?php echo esc_html( $days->days ); ?>
 								</td>

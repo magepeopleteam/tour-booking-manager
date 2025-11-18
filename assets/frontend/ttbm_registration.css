@@ -1265,6 +1265,9 @@ button.scroll-left, button.scroll-right {
 	align-items: center;
 	position: relative;
 }
+.ttbm_filter_input_radius{
+	border-radius: 5px !important;
+}
 .ttbm_date-picker-input {
 	width: 200px;
 	max-width: inherit;
@@ -1272,8 +1275,8 @@ button.scroll-left, button.scroll-right {
 	font-size: var(--ttbm_fs);
 	color: var(--d_color);
 	background-color: #fff;
-	border-radius: 6px;
-	padding: 13px 15px !important;
+	border-radius: 5px;
+	padding: 10px 15px !important;
 	font-weight: var(--fw-medium);
 }
 .ttbm_calendar-icon {

@@ -49,11 +49,14 @@
 					wp_send_json_error(['message' => 'Invalid nonce']);
 					die;
 				}
+
 				$tour_id = isset($_REQUEST['tour_id']) ? sanitize_text_field(wp_unslash($_REQUEST['tour_id'])) : '';
 				$hotel_id = isset($_REQUEST['hotel_id']) ? sanitize_text_field(wp_unslash($_REQUEST['hotel_id'])) : '';
 				$date_range = isset($_REQUEST['date_range']) ? sanitize_text_field(wp_unslash($_REQUEST['date_range'])) : '';
-				$date = explode("    -    ", $date_range);
-				$start_date = gmdate('Y-m-d', strtotime($date[0]));
+//				$date = explode("    -    ", $date_range);
+                $date = preg_split('/\s*-\s*/', trim($date_range));
+                $start_date = gmdate('Y-m-d', strtotime($date[0]));
+//				$start_date = gmdate('Y-m-d', strtotime($date[0]));
 				do_action('ttbm_booking_panel', $tour_id, $start_date, $hotel_id);
 			die();
 		}

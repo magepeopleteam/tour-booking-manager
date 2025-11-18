@@ -440,7 +440,7 @@
 				$start_price = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_price');
 				$ticket_list = self::get_ticket_type($tour_id);
 				$ticket_price = [];
-				if (!$start_price && sizeof($ticket_list) > 0) {
+				if (!$start_price && !empty( $ticket_list ) && sizeof($ticket_list) > 0) {
 					if (!$start_date) {
 						$all_dates = TTBM_Function::get_date($tour_id);
 						$start_date = sizeof($all_dates) > 0 ? current($all_dates) : $start_date;
@@ -459,11 +459,17 @@
 			}
 			public static function get_hotel_room_min_price($hotel_id) {
 				$room_lists = TTBM_Global_Function::get_post_info($hotel_id, 'ttbm_room_details', array());
-				$price = array();
-				foreach ($room_lists as $room_list) {
-					$price[] = $room_list['ttbm_hotel_room_price'];
-				}
-				return min($price);
+                $price = 0;
+                if( !empty( $room_lists ) ) {
+                    $price = array();
+                    foreach ($room_lists as $room_list) {
+                        $price[] = $room_list['ttbm_hotel_room_price'];
+                    }
+
+                    return min($price);
+                }
+
+                return $price;
 			}
 			public static function get_price_by_name($ticket_name, $tour_id, $hotel_id = '', $qty = '', $start_date = '') {
 				$ttbm_type = self::get_tour_type($tour_id);

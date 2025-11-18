@@ -44,12 +44,19 @@
 			}
 			public static function details_template_path(): string {
 				$tour_id = get_the_id();
-				$template_name = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_theme_file', 'default.php');
-				$file_name = 'themes/' . $template_name;
-				$dir = TTBM_PLUGIN_DIR . '/templates/' . $file_name;
+				// Getting the saved template name
+				$template_name  = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_theme_file', 'default.php');
+				$file_name      = 'themes/' . $template_name;
+				// Getting the Folder name of Theme and Plugin
+				$theme_folder_template_dir     = get_stylesheet_directory() . '/ttbm_templates/themes/';
+				$plugin_folder_template_dir    = TTBM_PLUGIN_DIR . '/templates/themes/';
+				// Now checking the theme folder first then plugin folder for template file which is existis
+				$dir        = is_dir( $theme_folder_template_dir ) ? $theme_folder_template_dir : $plugin_folder_template_dir;
+				// Checking the file exists or not
 				if (!file_exists($dir)) {
 					$file_name = 'themes/default.php';
 				}
+				// return the template path
 				return self::template_path($file_name);
 			}
 			public static function details_template_file_path($post_id = ''): string {

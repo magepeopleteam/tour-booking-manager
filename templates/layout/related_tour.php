@@ -3,11 +3,35 @@
 		die;
 	}
 	$ttbm_post_id       = $ttbm_post_id ?? get_the_id();
+    $related_tours = [];
 	$related_tours = TTBM_Global_Function::get_post_info($ttbm_post_id, 'ttbm_related_tour', array());
-	$related_tour_count=sizeof( $related_tours );
+    $related_tour_count=sizeof( $related_tours );
+
+    if( $related_tour_count < 1 ){
+        $location_name = TTBM_Global_Function::get_post_info($ttbm_post_id, 'ttbm_location_name' );
+        $related_tours = get_posts([
+            'post_type' => 'ttbm_tour',
+            'posts_per_page' => -1,
+            'fields' => 'ids',
+            'meta_query' => [
+                [
+                    'key' => 'ttbm_location_name',
+                    'value' => $location_name,
+                    'compare' => '='
+                ]
+            ]
+        ]);
+    }
+    $related_tour_count=sizeof( $related_tours );
+    if ( $related_tour_count > 1 &&  ( $key = array_search($ttbm_post_id, $related_tours ) ) !== false) {
+        unset( $related_tours[$key] );
+    }
+
+    $related_tour_count=sizeof( $related_tours );
 	$num_of_tour=$num_of_tour??'';
-	if ( $related_tour_count > 0 && (TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_related', 'on' ) != 'off' || $num_of_tour>0)) {
-		$num_of_tour=$num_of_tour>0?$num_of_tour:4;
+	if ( $related_tour_count > 0 ) {
+
+        $num_of_tour=$num_of_tour>0?$num_of_tour:4;
 		$num_of_tour=min($num_of_tour,$related_tour_count);
 		$grid_class=$related_tour_count <= $num_of_tour?'grid_'.$num_of_tour:'';
 		$div_class=$related_tour_count==1?'flexWrap modern':'flexWrap grid';
@@ -25,6 +49,7 @@
 						<?php include( TTBM_Function::template_path( 'list/grid_list.php' ) ); ?>
 					</div>
 				<?php } ?>
+
 			</div>
 		</div>
 	<?php } ?>

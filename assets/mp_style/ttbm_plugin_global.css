@@ -799,7 +799,7 @@
 	}
 	.ttbm_style div.superSlider .sliderShowcase.bottom .sliderShowcaseItem {margin: 0 10px 0 0;width: auto;max-width: 25%;-webkit-flex: 1;flex: 1;}
 	.ttbm_style div.superSlider .sliderShowcase.bottom .sliderShowcaseItem:last-child {margin: 0;}
-	.ttbm_style div.superSlider .sliderShowcaseItem {margin: 0 0 10px 0; position: relative; overflow: hidden; height: 118px; }
+	.ttbm_style div.superSlider .sliderShowcaseItem {margin: 0 0 10px 0; position: relative; overflow: hidden;}
 	.ttbm_style div.superSlider .area_column .sliderShowcaseItem { width: calc(25% - var(--ttbm_mp_xs)); }
 	.ttbm_style div.superSlider .sliderShowcase div.superSlider .area_column {
 		margin: 0 0 var(--ttbm_mp_xs) 0;

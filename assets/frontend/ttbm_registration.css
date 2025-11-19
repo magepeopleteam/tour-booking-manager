@@ -2505,6 +2505,11 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
     color: #dc3545;
 }
 
+.ttbm_smart_theme  .ttbm_popup .popupMainArea {
+	max-height: 95vh;
+	min-width: 850px;
+}
+
 /* Mobile responsive adjustments for extra service table */
 @media (max-width: 768px) {
     .ttbm_extra_service_area .mp_tour_ticket_extra {

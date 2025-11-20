@@ -102,9 +102,25 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             parse_str($data, $form_data);
             $postId=sanitize_text_field($form_data['ttbm_post_id'] ?? '');
             $to = sanitize_email($form_data['ttbm-reply-to'] ?? '');
+            $from = sanitize_email($form_data['ttbm-reply-from'] ?? '');
             $subject = sanitize_text_field($form_data['ttbm-reply-subject'] ?? '');
             $message = wp_kses_post($form_data['ttbm-reply-message'] ?? '');
-            $headers = ['Content-Type: text/html; charset=UTF-8'];
+            
+            // Get configured from email if not provided
+            if (empty($from)) {
+                $from = get_option('ttbm_enquiry_from_email');
+                if (empty($from)) {
+                    $from = get_option('admin_email', 'admin@' . wp_parse_url(get_site_url(), PHP_URL_HOST));
+                }
+                $from = sanitize_email($from);
+            }
+            
+            // Set proper email headers with From address
+            $headers = [
+                'Content-Type: text/html; charset=UTF-8',
+                'From: ' . $from,
+                'Reply-To: ' . $from
+            ];
             
             // Format reply message with proper HTML structure
             $email_message = '<html><body>' . wpautop($message) . '</body></html>';
@@ -128,7 +144,20 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             $email = sanitize_email($form_data['email'] ?? '');
             $subject = sanitize_text_field($form_data['subject'] ?? '');
             $message = sanitize_textarea_field($form_data['message'] ?? '');
-            $headers = ['Content-Type: text/html; charset=UTF-8'];
+            
+            // Get configured recipient email (where enquiries should be sent)
+            $to = get_option('ttbm_enquiry_from_email');
+            if (empty($to)) {
+                $to = get_option('admin_email', 'admin@' . wp_parse_url(get_site_url(), PHP_URL_HOST));
+            }
+            $to = sanitize_email($to);
+            
+            // Set proper email headers with customer's email as Reply-To
+            $headers = [
+                'Content-Type: text/html; charset=UTF-8',
+                'From: ' . $to,
+                'Reply-To: ' . $email
+            ];
             
             // Format message for email with proper HTML structure
             $email_message = '<html><body>';
@@ -151,7 +180,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                     'status' => 'new',
                 ],
             ]);
-            $to = get_option('admin_email', 'admin@' . wp_parse_url(get_site_url(), PHP_URL_HOST));
+            
             wp_mail($to, $subject, $email_message, $headers);
             if ($enquiry_id) {
                 wp_send_json_success(['message' => __('Enquiry submitted successfully.', 'tour-booking-manager')]);

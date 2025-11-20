@@ -27,17 +27,13 @@
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_registration', $checked); ?>
                         </div>
                         <div data-collapse="#ttbm_display_registration" class="<?php echo esc_attr($active); ?>">
+                            <div class="ttbm-pricing-types">
+                                <input type="hidden" name="ttbm_type" value="<?php echo esc_attr($ttbm_type); ?>"/>
+                                <?php foreach ($all_types as $key => $type) { ?>
+                                    <div data-price-type="<?php echo esc_attr($key) ?>" class="ttbm-pricing-type <?php echo esc_attr($ttbm_type == $key ? 'active' : ''); ?>" ><?php echo esc_html($type) ?></div>
+                                <?php } ?>
+                            </div>
                             <div class="dLayout">
-                                <div class="alignCenter justifyBetween">
-                                    <p><?php esc_html_e('Tour Type', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_registration'); ?></span></i></p>
-                                    <label>
-                                        <select class="formControl" name="ttbm_type">
-											<?php foreach ($all_types as $key => $type) { ?>
-                                                <option value="<?php echo esc_attr($key) ?>" <?php echo esc_attr($ttbm_type == $key ? 'selected' : ''); ?>><?php echo esc_html($type) ?></option>
-											<?php } ?>
-                                        </select>
-                                    </label>
-                                </div>
 								<?php do_action('ttbm_hotel_pricing_before', $tour_id); ?>
 								<?php do_action('ttbm_tour_pricing_before', $tour_id); ?>
 								<?php $this->ttbm_hotel_config($tour_id); ?>

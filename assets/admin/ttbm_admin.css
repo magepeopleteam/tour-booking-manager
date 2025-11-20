@@ -1160,3 +1160,30 @@
   border-color: var(--color_theme);
   box-shadow: 0 0 10px var(--color_theme);
 }
+.ttbm-pricing-types{
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	gap:10px;
+	margin-bottom: 10px;
+}
+.ttbm-pricing-type{
+  padding: 10px;
+  border-radius:5px;
+  border: 1px solid #ddd;
+  width: 163px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  text-align: center;
+}
+
+.ttbm-pricing-type.active {
+  background-color: #efefef;
+  border: 2px solid var(--color_theme);
+  color: var(--color_theme);
+  font-size: 16px;
+}

@@ -28,6 +28,23 @@
             parent.find('.ttbm_tour_hotel_setting').slideUp(250);
         }
     });
+    $(document).on('click', '.ttbm-pricing-type', function (e) {
+        e.preventDefault();
+        $('.ttbm-pricing-type').removeClass('active');
+        $(this).addClass('active');
+        
+        let ttbm_type = $(this).data('price-type');
+        $(this).closest('.ttbm-pricing-types').find('input[name="ttbm_type"]').val(ttbm_type);
+
+        let parent = $(this).closest('.ttbm_settings');
+        if (ttbm_type === 'hotel') {
+            parent.find('.ttbm_ticket_config').slideUp(250);
+            parent.find('.ttbm_tour_hotel_setting').slideDown(250);
+        } else {
+            parent.find('.ttbm_ticket_config').slideDown(250);
+            parent.find('.ttbm_tour_hotel_setting').slideUp(250);
+        }
+    });
     //*********Pricing************//
     $(document).on('click', '.ttbm_price_config  .ttbm_add_item', function (e) {
         if (e.result) {

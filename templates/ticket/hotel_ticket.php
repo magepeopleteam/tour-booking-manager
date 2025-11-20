@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	if (isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_frontend_nonce')) {
 		$date_range = isset( $_REQUEST['date_range'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_range'] ) ) : '';
 	}
+//    $hotel_booking_data = TTBM_Global_Function::get_hotel_bookings($hotel_id, $check_in, $check_out);
 	if ( sizeof( $room_lists ) > 0 && $hotel_id && $date_range ) {
 		$hotel_date = explode( "-", $date_range );
 		$date1      = gmdate( 'Y-m-d', strtotime( $hotel_date[0] ) );
@@ -51,6 +52,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							$max_qty          = apply_filters( 'ttbm_ticket_type_max_qty', 0 );
 							$sold_type        = TTBM_Function::get_total_sold( $tour_id, $tour_date, $room_name, $hotel_id );
 							$available        = $ticket_qty - ( $sold_type + $reserve );
+
 							?>
 							<tr>
 								<td>

@@ -7,16 +7,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
 	$tour_date  = $tour_date ?? TTBM_Function::get_date( $tour_id )[0];
 	$hotel_id   = $hotel_id ?? current( TTBM_Function::get_hotel_list( $tour_id ) );
-	$room_lists = TTBM_Global_Function::get_post_info( $hotel_id, 'ttbm_room_details', array() );
+//	$room_lists = TTBM_Global_Function::get_post_info( $hotel_id, 'ttbm_room_details', array() );
 	$date_range ='';
 	if (isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_frontend_nonce')) {
 		$date_range = isset( $_REQUEST['date_range'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_range'] ) ) : '';
 	}
+//    $hotel_booking_data = TTBM_Global_Function::get_hotel_bookings($hotel_id, $check_in, $check_out);
+    $hotel_date = explode( "-", $date_range );
+    $date1      = gmdate( 'Y-m-d', strtotime( $hotel_date[0] ) );
+    $date2      = gmdate( 'Y-m-d', strtotime( $hotel_date[1] ) );
+    $days       = date_diff( date_create( $date1 ), date_create( $date2 ) );
+    $room_lists = TTBM_Global_Function::ttbm_get_full_room_ticket_info( $hotel_id, $date1, $date2 );
+
 	if ( sizeof( $room_lists ) > 0 && $hotel_id && $date_range ) {
-		$hotel_date = explode( "-", $date_range );
-		$date1      = gmdate( 'Y-m-d', strtotime( $hotel_date[0] ) );
-		$date2      = gmdate( 'Y-m-d', strtotime( $hotel_date[1] ) );
-		$days       = date_diff( date_create( $date1 ), date_create( $date2 ) );
+
 		?>
 		<input type="hidden" name='ttbm_tour_hotel_list' value='<?php echo esc_attr( $hotel_id ); ?>'>
 		<input type="hidden" name='ttbm_hotel_num_of_day' value='<?php echo esc_attr( $days->days ); ?>'>
@@ -42,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						foreach ( $room_lists as $ticket ) {
 							$room_name        = array_key_exists( 'ttbm_hotel_room_name', $ticket ) ? $ticket['ttbm_hotel_room_name'] : '';
 							$price            = array_key_exists( 'ttbm_hotel_room_price', $ticket ) ? $ticket['ttbm_hotel_room_price'] : 0;
-							$sale_price            = array_key_exists( 'sale_price', $ticket ) ? $ticket['sale_price'] : '';
+							$sale_price       = array_key_exists( 'sale_price', $ticket ) ? $ticket['sale_price'] : '';
 							$price            = TTBM_Global_Function::wc_price( $tour_id, $price );
 							$ticket_price_raw = TTBM_Global_Function::price_convert_raw( $price );
 							$ticket_qty       = array_key_exists( 'ttbm_hotel_room_qty', $ticket ) ? $ticket['ttbm_hotel_room_qty'] : 0;
@@ -50,7 +54,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 							$min_qty          = apply_filters( 'ttbm_ticket_type_min_qty', 0 );
 							$max_qty          = apply_filters( 'ttbm_ticket_type_max_qty', 0 );
 							$sold_type        = TTBM_Function::get_total_sold( $tour_id, $tour_date, $room_name, $hotel_id );
-							$available        = $ticket_qty - ( $sold_type + $reserve );
+//							$available        = $ticket_qty - ( $sold_type + $reserve );
+							$available        = $ticket['available'] + $reserve;
+
 							?>
 							<tr>
 								<td>

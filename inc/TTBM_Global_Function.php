@@ -642,9 +642,74 @@
 				return $languages;
 			}
 			//***********************************//
-			public static function pa_get_full_room_ticket_info($hotel_id, $check_in, $check_out) {
-				$room_details = get_post_meta($hotel_id, 'ttbm_room_details', true); // Serialized room details
-				$bookings = get_post_meta($hotel_id, 'ttbm_hotel_bookings', true);
+
+            public static function get_hotel_bookings($hotel_id, $check_in, $check_out) {
+
+                $args = [
+                    'post_type'      => 'ttbm_hotel_booking',
+                    'post_status'    => 'publish',
+                    'posts_per_page' => -1,
+                    'meta_query'     => [
+                        'relation' => 'AND',
+                        [
+                            'key'     => '_ttbm_hotel_id',
+                            'value'   => $hotel_id,
+                            'compare' => '=',
+                        ],
+                        [
+                            'relation' => 'AND',
+                            [
+                                'key'     => '_ttbm_hotel_booking_checkin_date',
+                                'value'   => $check_out,
+                                'compare' => '<',
+                                'type'    => 'DATE',
+                            ],
+                            [
+                                'key'     => '_ttbm_hotel_booking_checkout_date',
+                                'value'   => $check_in,
+                                'compare' => '>',
+                                'type'    => 'DATE',
+                            ],
+                        ],
+                    ],
+                ];
+
+                $query = new WP_Query($args);
+                if (!$query->have_posts()) {
+                    return [];
+                }
+                $bookings = [];
+                while ($query->have_posts()) {
+                    $query->the_post();
+                    $post_id = get_the_ID();
+                    $room_info = get_post_meta($post_id, '_ttbm_hotel_booking_room_info', true);
+                    if (empty($room_info)) {
+                        continue;
+                    }
+                    $room_info = maybe_unserialize($room_info);
+
+                    foreach ($room_info as $room_type => $data) {
+                        $clean_key = preg_replace('/[^A-Za-z0-9]/', '', $room_type);
+                        $bookings[] = [
+                            'room_type'    => $clean_key,
+                            'check_in'     => $check_in,
+                            'check_out'    => $check_out,
+                            'rooms_booked' => isset($data['quantity']) ? intval($data['quantity']) : 0,
+                        ];
+                    }
+                }
+                wp_reset_postdata();
+
+                return $bookings;
+            }
+
+
+            public static function ttbm_get_full_room_ticket_info($hotel_id, $check_in, $check_out) {
+				$room_details = get_post_meta($hotel_id, 'ttbm_room_details', true);
+
+//                $bookings = get_post_meta( $hotel_id, 'ttbm_hotel_bookings', true);
+                $bookings = self::get_hotel_bookings($hotel_id, $check_in, $check_out);
+
 				if (!is_array($bookings))
 					$bookings = [];
 				$ticket_info = [];
@@ -694,7 +759,7 @@
 						'rooms_booked' => $rooms_booked
 					];
 				}
-				update_post_meta($hotel_id, 'ttbm_hotel_bookings', $bookings);
+//				update_post_meta($hotel_id, 'ttbm_hotel_bookings', $bookings);
 			}
 		}
 		new TTBM_Global_Function();
@@ -1173,51 +1238,6 @@
 					'vi_VN' => 'Vietnamese'
 				);
 				return $languages;
-			}
-			//***********************************//
-			public static function pa_get_full_room_ticket_info($hotel_id, $check_in, $check_out) {
-				$room_details = get_post_meta($hotel_id, 'ttbm_room_details', true); // Serialized room details
-				$bookings = get_post_meta($hotel_id, 'ttbm_hotel_bookings', true);
-				if (!is_array($bookings))
-					$bookings = [];
-				$ticket_info = [];
-				if (is_array($room_details)) {
-					foreach ($room_details as $room) {
-						$room_name_raw = $room['ttbm_hotel_room_name'];
-						$room_name = str_replace(' ', '', $room_name_raw); // Remove spaces
-						$total_rooms = isset($room['ttbm_hotel_room_qty']) ? (int)$room['ttbm_hotel_room_qty'] : 0;
-						$booked = 0;
-						foreach ($bookings as $booking) {
-							if (
-								$booking['room_type'] === $room_name &&
-								$booking['check_out'] > $check_in &&
-								$booking['check_in'] < $check_out
-							) {
-								$booked += (int)$booking['rooms_booked'];
-							}
-						}
-						$room['room_type_key'] = $room_name; // Optional: add normalized key
-						$room['booked'] = $booked;
-						$room['available'] = max(0, $total_rooms - $booked);
-						$ticket_info[] = $room;
-					}
-				}
-				return $ticket_info;
-			}
-			public static function pa_add_multiple_room_type_booking($hotel_id, $booking_request, $check_in, $check_out) {
-				$bookings = get_post_meta($hotel_id, 'ttbm_hotel_bookings', true);
-				if (!is_array($bookings))
-					$bookings = [];
-				foreach ($booking_request as $room_type => $rooms_booked) {
-					$room_type_normalized = str_replace(' ', '', $room_type);
-					$bookings[] = [
-						'room_type' => $room_type_normalized,
-						'check_in' => $check_in,
-						'check_out' => $check_out,
-						'rooms_booked' => $rooms_booked
-					];
-				}
-				update_post_meta($hotel_id, 'ttbm_hotel_bookings', $bookings);
 			}
 			//***********************************//
 			public static function get_submit_info($key, $default = '') {

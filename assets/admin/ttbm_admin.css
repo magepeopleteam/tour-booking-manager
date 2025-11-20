@@ -1165,13 +1165,13 @@
 	justify-content: start;
 	align-items: center;
 	gap:10px;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 .ttbm-pricing-type{
   padding: 10px;
   border-radius:5px;
+  width: 50%;
   border: 1px solid #ddd;
-  width: 163px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -1186,4 +1186,22 @@
   border: 2px solid var(--color_theme);
   color: var(--color_theme);
   font-size: 16px;
+}
+.ttbm-pricing-type i{
+	font-size: 50px;
+}
+.ttbm-pricing-type p{
+	color: #666;
+}
+.ttbm-pricing-type.active::after {
+  content: "";
+  position: absolute;
+  bottom: -11px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 20px;
+  height: 20px;
+  border-bottom: 2px solid var(--color_theme);
+  border-right: 2px solid var(--color_theme);
+  background: #efefef;
 }

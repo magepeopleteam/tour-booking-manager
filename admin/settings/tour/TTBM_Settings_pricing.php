@@ -16,6 +16,7 @@
 				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_registration', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
+                
 				?>
                 <div class="tabsItem ttbm_settings_pricing" data-tabs="#ttbm_settings_pricing">
                     <h2><?php esc_html_e('Price Settings', 'tour-booking-manager'); ?></h2>
@@ -30,15 +31,21 @@
                             <div class="ttbm-pricing-types">
                                 <input type="hidden" name="ttbm_type" value="<?php echo esc_attr($ttbm_type); ?>"/>
                                 <?php foreach ($all_types as $key => $type) { ?>
-                                    <div data-price-type="<?php echo esc_attr($key) ?>" class="ttbm-pricing-type <?php echo esc_attr($ttbm_type == $key ? 'active' : ''); ?>" ><?php echo esc_html($type) ?></div>
+                                    <div data-price-type="<?php echo esc_attr($key) ?>" class="ttbm-pricing-type <?php echo esc_attr($ttbm_type == $key ? 'active' : ''); ?>" >
+                                        <i class="<?php echo esc_html($type['icon']) ?>"></i>
+                                        <h6><?php echo esc_html($type['title']) ?></h6>
+                                        <p><?php echo esc_html($type['description']) ?></p>
+                                    </div>
                                 <?php } ?>
                             </div>
                             <div class="dLayout">
-								<?php do_action('ttbm_hotel_pricing_before', $tour_id); ?>
+								
 								<?php do_action('ttbm_tour_pricing_before', $tour_id); ?>
+                                <?php $this->ttbm_ticket_config($tour_id); ?>
+                                <?php do_action('ttbm_hotel_pricing_before', $tour_id); ?>
 								<?php $this->ttbm_hotel_config($tour_id); ?>
 								<?php do_action('ttbm_hotel_pricing_after', $tour_id); ?>
-								<?php $this->ttbm_ticket_config($tour_id); ?>
+								
                             </div>
                         </div>
                     </section>

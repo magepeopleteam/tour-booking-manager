@@ -13,7 +13,8 @@ if ( isset($_POST['nonce']) && wp_verify_nonce( sanitize_text_field( wp_unslash(
         $date2      = gmdate( 'Y-m-d', strtotime( $hotel_date[1] ) );
         $days       = date_diff( date_create( $date1 ), date_create( $date2 ) );
 
-        $room_lists_new = TTBM_Global_Function::pa_get_full_room_ticket_info( $hotel_id, $date1, $date2 );
+
+        $room_lists_new = TTBM_Global_Function::ttbm_get_full_room_ticket_info( $hotel_id, $date1, $date2 );
 
         ?>
         <input type="hidden" name='ttbm_tour_hotel_list' value='<?php echo esc_attr( $hotel_id ); ?>'>
@@ -32,6 +33,7 @@ if ( isset($_POST['nonce']) && wp_verify_nonce( sanitize_text_field( wp_unslash(
                     <tbody>
                     <?php
                     foreach ( $room_lists_new as $ticket ) {
+
                         $room_name        = array_key_exists( 'ttbm_hotel_room_name', $ticket ) ? $ticket['ttbm_hotel_room_name'] : '';
                         $price            = array_key_exists( 'ttbm_hotel_room_price', $ticket ) ? $ticket['ttbm_hotel_room_price'] : 0;
                         $sale_price            = array_key_exists( 'sale_price', $ticket ) ? $ticket['sale_price'] : '';
@@ -54,7 +56,12 @@ if ( isset($_POST['nonce']) && wp_verify_nonce( sanitize_text_field( wp_unslash(
                                 $child_qty = array_key_exists( 'ttbm_hotel_room_capacity_child', $ticket ) ? $ticket['ttbm_hotel_room_capacity_child'] : 0;
                                 ?>
                                 <span class="badge-gray"><i class="fas fa-user-alt"></i><?php echo esc_html( $adult_qty ); ?></span>
-                                <span class="badge-gray"><i class="fas fa-child-dress"></i> <?php echo esc_html( $adult_qty ); ?></span>
+                                <?php if( $child_qty > 0 ){?>
+                                    <span class="badge-gray"><i class="fas fa-child-dress"></i> <?php echo esc_html( $child_qty ); ?></span>
+                                <?php }?>
+                                <?php if( $available > 0 ) { ?>
+                                    <span class="badge-gray"><i class="fas fa-circle" style="color:green;"></i> <?php echo esc_attr( $available );?></span>
+                                <?php }?>
                             </td>
                             <td style="text-align: right;">
                                 <?php if ($sale_price) { ?>

@@ -657,16 +657,21 @@
                             'compare' => '=',
                         ],
                         [
-                            'key'     => '_ttbm_hotel_booking_checkin_date',
-                            'value'   => $check_in,
-                            'compare' => '='
+                            'relation' => 'AND',
+                            [
+                                'key'     => '_ttbm_hotel_booking_checkin_date',
+                                'value'   => $check_out,
+                                'compare' => '<',
+                                'type'    => 'DATE',
+                            ],
+                            [
+                                'key'     => '_ttbm_hotel_booking_checkout_date',
+                                'value'   => $check_in,
+                                'compare' => '>',
+                                'type'    => 'DATE',
+                            ],
                         ],
-                        [
-                            'key'     => '_ttbm_hotel_booking_checkout_date',
-                            'value'   => $check_out,
-                            'compare' => '='
-                        ],
-                    ]
+                    ],
                 ];
 
                 $query = new WP_Query($args);
@@ -699,7 +704,7 @@
             }
 
 
-            public static function pa_get_full_room_ticket_info($hotel_id, $check_in, $check_out) {
+            public static function ttbm_get_full_room_ticket_info($hotel_id, $check_in, $check_out) {
 				$room_details = get_post_meta($hotel_id, 'ttbm_room_details', true);
 
 //                $bookings = get_post_meta( $hotel_id, 'ttbm_hotel_bookings', true);

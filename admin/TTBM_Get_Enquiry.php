@@ -182,6 +182,38 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             ]);
             
             wp_mail($to, $subject, $email_message, $headers);
+            
+            // Send confirmation email to customer
+            if ($enquiry_id && !empty($email)) {
+                $customer_subject = sprintf(
+                    __('Thank you for your enquiry - %s', 'tour-booking-manager'),
+                    $subject
+                );
+                
+                $customer_headers = [
+                    'Content-Type: text/html; charset=UTF-8',
+                    'From: ' . $to,
+                    'Reply-To: ' . $to
+                ];
+                
+                $customer_message = '<html><body>';
+                $customer_message .= '<h3>' . esc_html__('Thank you for contacting us!', 'tour-booking-manager') . '</h3>';
+                $customer_message .= '<p>' . sprintf(
+                    esc_html__('Dear %s,', 'tour-booking-manager'),
+                    esc_html($name)
+                ) . '</p>';
+                $customer_message .= '<p>' . esc_html__('We have received your enquiry and will get back to you as soon as possible.', 'tour-booking-manager') . '</p>';
+                $customer_message .= '<h4>' . esc_html__('Your Enquiry Details:', 'tour-booking-manager') . '</h4>';
+                $customer_message .= '<p><strong>' . esc_html__('Subject:', 'tour-booking-manager') . '</strong> ' . esc_html($subject) . '</p>';
+                $customer_message .= '<p><strong>' . esc_html__('Message:', 'tour-booking-manager') . '</strong></p>';
+                $customer_message .= '<div>' . wpautop($message) . '</div>';
+                $customer_message .= '<hr>';
+                $customer_message .= '<p style="color: #666; font-size: 12px;">' . esc_html__('This is an automated confirmation email. Please do not reply to this email.', 'tour-booking-manager') . '</p>';
+                $customer_message .= '</body></html>';
+                
+                // Send confirmation to customer
+                wp_mail($email, $customer_subject, $customer_message, $customer_headers);
+            }
             if ($enquiry_id) {
                 wp_send_json_success(['message' => __('Enquiry submitted successfully.', 'tour-booking-manager')]);
             } else {

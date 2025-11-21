@@ -1216,11 +1216,15 @@
 }
 
 /* =============Tour admin responsive======== */
-@media (max-width: 1400px) {
+@media (max-width: 1680px) {
 	 #ttbm_meta_box_panel .tabLists.meta-sidebar{
 		min-width: 50px;
 		max-width: 50px;
+		background-color: #6f6f6f;
 	}
+	  #ttbm_meta_box_panel .ttbm_style .tabsContent{
+		 padding:10px;
+	 }
 	#ttbm_meta_box_panel .ttbm_settings .tabLists li{
 		padding: 5px;
 	}
@@ -1229,5 +1233,17 @@
 	}
 	#ttbm_meta_box_panel .ttbm_settings .tabLists li span{ 
 		display: none;
+	}
+}
+@media (max-width: 1400px) {
+	.tabsItem section .dFlex{
+		flex-direction: column;
+	}
+	.tabsItem section .label .dFlex{
+		flex-direction: row;
+	}
+	 #ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem .col-left,
+	  #ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem .col-right{
+		width:100%;
 	}
 }

@@ -64,21 +64,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 									<?php
 										$adult_qty = array_key_exists( 'ttbm_hotel_room_capacity_adult', $ticket ) ? $ticket['ttbm_hotel_room_capacity_adult'] : 0;
 										$child_qty = array_key_exists( 'ttbm_hotel_room_capacity_child', $ticket ) ? $ticket['ttbm_hotel_room_capacity_child'] : 0;
-										if ( $adult_qty > 0 ) {
-											for ( $i = 0; $i < $adult_qty; $i ++ ) {
-												?>
-												<span class="fas fa-user-alt"></span>
-												<?php
-											}
-										}
-										if ( $child_qty > 0 ) {
-											for ( $i = 0; $i < $child_qty; $i ++ ) {
-												?>
-												<span class="fas fa-child"></span>
-												<?php
-											}
-										}
 									?>
+                                    <span class="badge-gray"><i class="fas fa-user-alt"></i><?php echo esc_html( $adult_qty ); ?></span>
+                                    <?php if( $child_qty > 0 ){?>
+                                        <span class="badge-gray"><i class="fas fa-child-dress"></i> <?php echo esc_html( $child_qty ); ?></span>
+                                    <?php }?>
+                                    <?php if( $available > 0 ) { ?>
+                                        <span class="badge-gray"><i class="fas fa-circle" style="color:green;"></i> <?php echo esc_attr( $available );?></span>
+                                    <?php }?>
 								</td>
 								<td>
 									<?php if ($sale_price) { ?>

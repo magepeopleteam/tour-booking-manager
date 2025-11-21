@@ -1845,7 +1845,7 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	border-bottom: 1px dotted #ddd999;
 }
 .ttbm_style .mp_tour_ticket_type .groupContent{
-	justify-content: end;
+	justify-content: center;
 }
 div.ttbm_style .ttbm_hotel_room_incDec .formControl{
 		width: 60px;

@@ -102,9 +102,25 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             parse_str($data, $form_data);
             $postId=sanitize_text_field($form_data['ttbm_post_id'] ?? '');
             $to = sanitize_email($form_data['ttbm-reply-to'] ?? '');
+            $from = sanitize_email($form_data['ttbm-reply-from'] ?? '');
             $subject = sanitize_text_field($form_data['ttbm-reply-subject'] ?? '');
             $message = wp_kses_post($form_data['ttbm-reply-message'] ?? '');
-            $headers = ['Content-Type: text/html; charset=UTF-8'];
+            
+            // Get configured from email if not provided
+            if (empty($from)) {
+                $from = get_option('ttbm_enquiry_from_email');
+                if (empty($from)) {
+                    $from = get_option('admin_email', 'admin@' . wp_parse_url(get_site_url(), PHP_URL_HOST));
+                }
+                $from = sanitize_email($from);
+            }
+            
+            // Set proper email headers with From address
+            $headers = [
+                'Content-Type: text/html; charset=UTF-8',
+                'From: ' . $from,
+                'Reply-To: ' . $from
+            ];
             
             // Format reply message with proper HTML structure
             $email_message = '<html><body>' . wpautop($message) . '</body></html>';
@@ -128,7 +144,20 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             $email = sanitize_email($form_data['email'] ?? '');
             $subject = sanitize_text_field($form_data['subject'] ?? '');
             $message = sanitize_textarea_field($form_data['message'] ?? '');
-            $headers = ['Content-Type: text/html; charset=UTF-8'];
+            
+            // Get configured recipient email (where enquiries should be sent)
+            $to = get_option('ttbm_enquiry_from_email');
+            if (empty($to)) {
+                $to = get_option('admin_email', 'admin@' . wp_parse_url(get_site_url(), PHP_URL_HOST));
+            }
+            $to = sanitize_email($to);
+            
+            // Set proper email headers with customer's email as Reply-To
+            $headers = [
+                'Content-Type: text/html; charset=UTF-8',
+                'From: ' . $to,
+                'Reply-To: ' . $email
+            ];
             
             // Format message for email with proper HTML structure
             $email_message = '<html><body>';
@@ -151,8 +180,40 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                     'status' => 'new',
                 ],
             ]);
-            $to = get_option('admin_email', 'admin@' . wp_parse_url(get_site_url(), PHP_URL_HOST));
+            
             wp_mail($to, $subject, $email_message, $headers);
+            
+            // Send confirmation email to customer
+            if ($enquiry_id && !empty($email)) {
+                $customer_subject = sprintf(
+                    __('Thank you for your enquiry - %s', 'tour-booking-manager'),
+                    $subject
+                );
+                
+                $customer_headers = [
+                    'Content-Type: text/html; charset=UTF-8',
+                    'From: ' . $to,
+                    'Reply-To: ' . $to
+                ];
+                
+                $customer_message = '<html><body>';
+                $customer_message .= '<h3>' . esc_html__('Thank you for contacting us!', 'tour-booking-manager') . '</h3>';
+                $customer_message .= '<p>' . sprintf(
+                    esc_html__('Dear %s,', 'tour-booking-manager'),
+                    esc_html($name)
+                ) . '</p>';
+                $customer_message .= '<p>' . esc_html__('We have received your enquiry and will get back to you as soon as possible.', 'tour-booking-manager') . '</p>';
+                $customer_message .= '<h4>' . esc_html__('Your Enquiry Details:', 'tour-booking-manager') . '</h4>';
+                $customer_message .= '<p><strong>' . esc_html__('Subject:', 'tour-booking-manager') . '</strong> ' . esc_html($subject) . '</p>';
+                $customer_message .= '<p><strong>' . esc_html__('Message:', 'tour-booking-manager') . '</strong></p>';
+                $customer_message .= '<div>' . wpautop($message) . '</div>';
+                $customer_message .= '<hr>';
+                $customer_message .= '<p style="color: #666; font-size: 12px;">' . esc_html__('This is an automated confirmation email. Please do not reply to this email.', 'tour-booking-manager') . '</p>';
+                $customer_message .= '</body></html>';
+                
+                // Send confirmation to customer
+                wp_mail($email, $customer_subject, $customer_message, $customer_headers);
+            }
             if ($enquiry_id) {
                 wp_send_json_success(['message' => __('Enquiry submitted successfully.', 'tour-booking-manager')]);
             } else {

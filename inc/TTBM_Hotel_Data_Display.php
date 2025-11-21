@@ -303,7 +303,6 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
         public function ttbm_search_hotel_list_item( $hotel_data, $params ){
 
             $date_range = isset( $_GET['search_date_range'] ) ? $_GET['search_date_range'] : '';
-//            error_log( print_r( [ '$date_rang' => $date_rang], true ) );
 
             $list = 'search_list';
             $currency = get_woocommerce_currency();
@@ -381,7 +380,7 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                 $date2      = gmdate( 'Y-m-d', strtotime( $hotel_date[1] ) );
                 $days       = date_diff( date_create( $date1 ), date_create( $date2 ) );
 
-                $room_lists_new = TTBM_Global_Function::pa_get_full_room_ticket_info( $hotel_id, $date1, $date2 );
+                $room_lists_new = TTBM_Global_Function::ttbm_get_full_room_ticket_info( $hotel_id, $date1, $date2 );
 
 
                 ?>

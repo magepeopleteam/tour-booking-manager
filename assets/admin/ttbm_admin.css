@@ -107,7 +107,7 @@
 	#ttbm_meta_box_panel .postbox-header .handle-actions .handle-order-lower,
 	#ttbm_meta_box_panel .postbox-header .handle-actions .toggle-indicator { color: var(--mpl-white);}
 	#ttbm_meta_box_panel .ttbm_settings .tabLists li i { margin: 0 var(--ttbm_mp) 0 0; color: var(--color_theme);}
-	#ttbm_meta_box_panel .ttbm_settings .tabLists li.active::after {
+	#ttbm_meta_box_panel .tabLists.meta-sidebar li.active::after {
 		content: '';
 		position: absolute;
 		top: 50%;
@@ -1159,4 +1159,49 @@
 .ttbm-template-section .ttbm-template.active img {
   border-color: var(--color_theme);
   box-shadow: 0 0 10px var(--color_theme);
+}
+.ttbm-pricing-types{
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	gap:10px;
+	margin-bottom: 20px;
+}
+.ttbm-pricing-type{
+  padding: 10px;
+  border-radius:5px;
+  width: 50%;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  text-align: center;
+}
+
+.ttbm-pricing-type.active {
+  background-color: #efefef;
+  border: 2px solid var(--color_theme);
+  color: var(--color_theme);
+  font-size: 16px;
+}
+.ttbm-pricing-type i{
+	font-size: 50px;
+}
+.ttbm-pricing-type p{
+	color: #666;
+}
+.ttbm-pricing-type.active::after {
+  content: "";
+  position: absolute;
+  bottom: -11px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 20px;
+  height: 20px;
+  border-bottom: 2px solid var(--color_theme);
+  border-right: 2px solid var(--color_theme);
+  background: #efefef;
 }

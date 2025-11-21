@@ -54,8 +54,12 @@
 						</div>
 					</div>
 				</div>
+				<div class="mT">
+					<?php do_action( 'ttbm_related_tour' ); ?>
+				</div>
+				
 			</div>
 		</div>
 		<?php do_action( 'ttbm_single_tour_after' ); ?>
+		
 	</div>
-<?php do_action( 'ttbm_related_tour' ); ?>

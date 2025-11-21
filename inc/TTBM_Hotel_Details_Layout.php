@@ -7,11 +7,16 @@ if (!class_exists('TTBM_Hotel_Details_Layout')) {
 
         public function __construct() {
             add_action('ttbm_hotel_slider', array($this, 'hotel_slider'));
+            add_action('ttbm_hotel_slider_shortcode', array( $this, 'hotel_slider_shortcode' ) );
             add_action('ttbm_make_hotel_booking', array($this, 'make_hotel_booking'));
             add_action('ttbm_hotel_location_details', array($this, 'hotel_location_details'));
 
         }
         public function hotel_slider() {
+            include(TTBM_Function::template_path('hotel_layout/hotel_slider.php'));
+        }
+        public function hotel_slider_shortcode( $ttbm_post_id ) {
+
             include(TTBM_Function::template_path('hotel_layout/hotel_slider.php'));
         }
         public function make_hotel_booking() {

@@ -203,11 +203,10 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
         }
 
 
-        public static function display_hotel_list( $hotel_data, $currency, $date_range, $list ){
-
+        public static function display_hotel_list( $hotel_data, $currency, $date_range, $list, $params ){
             ob_start();
             ?>
-            <div class="ttbm_hotel_lists_wrapper list-view">
+            <div class="ttbm_hotel_lists_wrapper <?php echo esc_attr( $params['list_grid'] );?>-view">
                 <?php
                 foreach ( $hotel_data as $key => $hotel ){
                     $hotel_room_details = $hotel[ 'hotel_room_details' ];
@@ -293,10 +292,10 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
             $hotel_data = self::all_hotel_list_data( $loop );
             $date_range = '' ;
             $list = 'hotel_list';
-            echo self::display_hotel_list( $hotel_data, $currency, $date_range, $list );
+            echo self::display_hotel_list( $hotel_data, $currency, $date_range, $list, $params );
             ?>
 
-            <button id="ttbm_loadMoreHotels" class="ttbm_hotel_load_more_btn">Load More</button>
+            <button id="ttbm_loadMoreHotels" class="ttbm_hotel_load_more_btn" style="display: none"><?php esc_attr_e( 'Load More', 'tour-booking-manager' );?></button>
         <?php
 
         }
@@ -306,10 +305,10 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
 
             $list = 'search_list';
             $currency = get_woocommerce_currency();
-            echo self::display_hotel_list( $hotel_data, $currency, $date_range, $list );
+            echo self::display_hotel_list( $hotel_data, $currency, $date_range, $list, $params );
             ?>
 
-            <button id="ttbm_loadMoreHotels" class="ttbm_hotel_load_more_btn">Load More</button>
+            <button id="ttbm_loadMoreHotels" class="ttbm_hotel_load_more_btn" style="display: none"><?php esc_attr_e( 'Load More', 'tour-booking-manager' );?></button>
         <?php
 
         }

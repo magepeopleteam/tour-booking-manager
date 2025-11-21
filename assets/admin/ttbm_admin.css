@@ -1217,9 +1217,6 @@
 
 /* =============Tour admin responsive======== */
 @media (max-width: 1400px) {
-	body{
-		background-color: rgb(255, 180, 4);
-	}
 	 #ttbm_meta_box_panel .tabLists.meta-sidebar{
 		min-width: 50px;
 		max-width: 50px;

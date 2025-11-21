@@ -726,7 +726,18 @@
 		
 		//*********************************//
 			public static function tour_type() {
-				$type = array('general' => __('General Tour', 'tour-booking-manager'), 'hotel' => __('Hotel Base Tour', 'tour-booking-manager'));
+				$type = array(
+					'general' => [
+						'icon'=>'mi mi-settings',
+						'title'=> __('General Tour', 'tour-booking-manager'),
+						'description'=> __('A standard tour package with all regular features, including full itinerary, pricing, and descriptive options.', 'tour-booking-manager'),
+					], 
+					'hotel' => [
+						'icon'=>'mi mi-hotel',
+						'title'=> __('Hotel-Based Tour Package', 'tour-booking-manager'),
+						'description'=> __('A special pricing option where the same tour destination can have multiple packages based on different hotel categories or room types.', 'tour-booking-manager'),
+					]
+				);
 				return apply_filters('add_ttbm_tour_type', $type);
 			}
 			public static function get_tour_type($tour_id) {

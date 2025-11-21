@@ -16,6 +16,8 @@
 	--mpl-red-light: #F6DADA;
 	--mpl-gradient: linear-gradient(135deg, #F12971, #C4185B);
 }
+
+
 /********************************************************************  ************************************************/
 @media only screen and (min-width: 10px) {
 	#ttbm_content .formControl {font-weight: normal; border: 1px solid var(--mpl-gray); color: var(--mpl-secondary); font-size: 14px; min-width: 80px;}
@@ -119,8 +121,15 @@
 		border-bottom: 10px solid transparent;
 		border-left: 8px solid var(--color_theme);
 	}
-	#ttbm_meta_box_panel .ttbm_settings .tabLists li.active { background-color: var(--color_theme); color: #fff; font-weight: normal;}
-	#ttbm_meta_box_panel .ttbm_settings .tabLists li.active i { color:#fff;}
+	#ttbm_meta_box_panel .ttbm_settings .tabLists li.active{
+		background-color: var(--color_theme); 
+		color: #fff; 
+		font-weight: normal;
+	}
+	#ttbm_meta_box_panel .ttbm_settings .tabLists li.active span, 
+	#ttbm_meta_box_panel .ttbm_settings .tabLists li.active i { 
+	color:#fff;
+	}
 	
 	
 	#ttbm_meta_box_panel .ttbm_settings .tabLists li.active:hover  { background-color: var(--color_theme);color:#fff;}
@@ -1171,7 +1180,7 @@
   padding: 10px;
   border-radius:5px;
   width: 50%;
-  border: 1px solid #ddd;
+  border: 1px solid #999;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -1204,4 +1213,24 @@
   border-bottom: 2px solid var(--color_theme);
   border-right: 2px solid var(--color_theme);
   background: #efefef;
+}
+
+/* =============Tour admin responsive======== */
+@media (max-width: 1400px) {
+	body{
+		background-color: rgb(255, 180, 4);
+	}
+	 #ttbm_meta_box_panel .tabLists.meta-sidebar{
+		min-width: 50px;
+		max-width: 50px;
+	}
+	#ttbm_meta_box_panel .ttbm_settings .tabLists li{
+		padding: 5px;
+	}
+	#ttbm_meta_box_panel .ttbm_settings .tabLists li i{ 
+	margin: 0;
+	}
+	#ttbm_meta_box_panel .ttbm_settings .tabLists li span{ 
+		display: none;
+	}
 }

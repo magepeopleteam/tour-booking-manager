@@ -421,6 +421,7 @@ div.ttbm_booking_panel table tr th.ttbm-regular-price,div.ttbm_booking_panel tab
 div.ttbm_booking_panel table .ttbm-hotel-room-info i {
 	color: #A9A9A9;
 	font-size: 12px;
+	margin-right: 10px;
 }
 div.ttbm_booking_panel table tbody th, div.ttbm_booking_panel table tbody td {
 	border: 0 !important;

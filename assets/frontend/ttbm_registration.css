@@ -1674,13 +1674,14 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	display: flex;
 	justify-content: start;
 	align-items: center;
-	gap: 5px;
-	margin:10px 10px 10px 0;
+	gap: 10px;
+	margin:5px;
 	background: #f0f6ff;
     border: 1px solid #e1e3e7;
     padding: 2px 5px;
     border-radius: 5px;
 	font-size: 14px;
+	width:32%;
 }
 .ttbm-hotel-details .ttbm-content-left .popular-facilities i{
 	font-size: 20px;

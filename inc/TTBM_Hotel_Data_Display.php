@@ -9,7 +9,7 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
         public function __construct(){
             add_action('ttbm_hotel_left_filter', array($this, 'hotel_left_filter'), 10, 1);
             add_action('ttbm_hotel_filter_top_bar', array($this, 'filter_top_bar'), 10, 2);
-            add_action('ttbm_all_hotel_list_item', array($this, 'all_hotel_list_item'), 10, 2 );
+            add_action('ttbm_all_hotel_list_item', array($this, 'all_hotel_list_item'), 10, 4 );
             add_action('ttbm_search_hotel_list_item', array($this, 'ttbm_search_hotel_list_item'), 10, 2);
             add_action('ttbm_filter_hotel_search_top_bar', array($this, 'filter_hotel_search_top_bar'), 10, 2);
         }
@@ -203,8 +203,16 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
         }
 
 
-        public static function display_hotel_list( $hotel_data, $currency, $date_range, $list, $params ){
+        public static function display_hotel_list( $hotel_data, $currency, $date_range, $list, $params, $popular_feature = '' ){
             ob_start();
+
+            if( $popular_feature === 'yes' ){
+                $hotel_card_class = 'ttbm_hotel_lists_popular_card';
+            }else if( $popular_feature === 'location' ){
+                $hotel_card_class = 'ttbm_hotel_location_lists_card';
+            }else{
+                $hotel_card_class = 'ttbm_hotel_lists_card';
+            }
             ?>
             <div class="ttbm_hotel_lists_wrapper <?php echo esc_attr( $params['list_grid'] );?>-view">
                 <?php
@@ -234,7 +242,7 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                     }
 
                     ?>
-                    <div class="ttbm_hotel_lists_card"
+                    <div class="<?php echo esc_attr( $hotel_card_class );?>"
                          id="<?php echo esc_attr(  $hotel['id']);?>"
                          data-hotel-location = "<?php echo esc_attr( $hotel['hotel_location'] );?>"
                          data-hotel-feature = "<?php echo esc_attr( $hotel_hotel_feature_str )?>"
@@ -287,16 +295,21 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
             return ob_get_clean();
         }
 
-        public function all_hotel_list_item( $loop, $params ){
+        public function all_hotel_list_item( $loop, $params, $list, $popular_feature ){
             $currency = get_woocommerce_currency();
             $hotel_data = self::all_hotel_list_data( $loop );
             $date_range = '' ;
             $list = 'hotel_list';
-            echo self::display_hotel_list( $hotel_data, $currency, $date_range, $list, $params );
-            ?>
 
-            <button id="ttbm_loadMoreHotels" class="ttbm_hotel_load_more_btn" style="display: none"><?php esc_attr_e( 'Load More', 'tour-booking-manager' );?></button>
-        <?php
+            echo self::display_hotel_list( $hotel_data, $currency, $date_range, $list, $params, $popular_feature );
+            ?>
+            <input type="hidden" name="ttbm_number_of_show" id="ttbm_number_of_show" value="<?php echo esc_attr( $params['show'] );?>">
+            <?php
+            if( $popular_feature !== 'yes' && count( $hotel_data ) >= $params['show'] ){
+            ?>
+                <button id="ttbm_loadMoreHotels" class="ttbm_hotel_load_more_btn" style="display: block"><?php esc_attr_e( 'Load More', 'tour-booking-manager' );?></button>
+            <?php
+            }
 
         }
         public function ttbm_search_hotel_list_item( $hotel_data, $params ){

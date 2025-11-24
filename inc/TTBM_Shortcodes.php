@@ -18,6 +18,7 @@
 				add_shortcode('ttbm-activity_browse', array($this, 'activity_browse'));
 				add_shortcode('ttbm-texonomy-display', array($this, 'texonomy_display'));
                 add_shortcode('wptravelly-hotel-list', array($this, 'hotel_list_with_left_filter'));
+                add_shortcode('ttbm-hotel-location-list', array($this, 'hotel_location_list_with_left_filter'));
                 add_shortcode('ttbm-feature-hotel', array($this, 'feature_hotel_list_with'));
                 add_shortcode('ttbm-popular-hotel', array($this, 'popular_hotel_list_with'));
                 add_shortcode('wptravelly-hotel-search-list', array($this, 'hotel_search_list_with_left_filter'));
@@ -727,16 +728,9 @@
 
             public function hotel_list_with_left_filter( $attribute, $month_filter = 'yes') {
                 $tour_type = 'ttbm_hotel';
-                $defaults = $this->default_attribute('modern', 12, 'no', 'yes', 'yes', 'yes', $month_filter, $tour_type);
+                $defaults = $this->default_attribute('modern', 15, 'no', 'yes', 'yes', 'yes', $month_filter, $tour_type);
                 $params = shortcode_atts($defaults, $attribute);
-                $show = $params['show'];
-                $pagination = $params['pagination'];
-                $search = $params['sidebar-filter'];
                 $city = $params['city'];
-                $show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
-
-
-
                 $city_search = !empty( $city ) ? array(
                     'key'     => 'ttbm_hotel_location',
                     'value'   => $city,
@@ -754,6 +748,7 @@
 
                 $loop = new WP_Query($args);
                 $list = 'hotel_list';
+                $popular_feature = 'no';
                 ob_start();
                 ?>
                 <div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
@@ -767,13 +762,76 @@
                                 </div>
                                 <div class="mainSection">
                                     <?php do_action('ttbm_hotel_filter_top_bar', $loop, $params ); ?>
-                                    <?php do_action('ttbm_all_hotel_list_item', $loop, $params, $list ); ?>
+                                    <?php do_action('ttbm_all_hotel_list_item', $loop, $params, $list, $popular_feature ); ?>
                                 </div>
                             </div>
                             <?php
                         } else {
                             do_action('ttbm_hotel_filter_top_bar', $loop, $params);
-                            do_action('ttbm_all_hotel_list_item', $loop, $params,  $list );
+                            do_action('ttbm_all_hotel_list_item', $loop, $params,  $list, $popular_feature );
+                        }
+                        ?>
+                    </div>
+                </div>
+                <?php
+                return ob_get_clean();
+            }
+
+            public function hotel_location_list_with_left_filter( $attribute, $month_filter = 'yes') {
+                $tour_type = 'ttbm_hotel';
+                $top_bar = 'no';
+//                $defaults = $this->default_attribute('modern', 12, 'no', 'no', 'yes', 'yes', $month_filter, $tour_type, $top_bar );
+                $defaults = $this->default_attribute( 'modern', $show = 12, $search_filter = 'no', $sidebar_filter = 'no', $feature_filter = 'no', $tag_filter = 'no', $month_filter, $tour_type = '', $sort_by = '', $shuffle = 'no', $top_bar = 'yes' );
+                $params = shortcode_atts($defaults, $attribute);
+                $show =  isset(  $params['show'] ) ? sanitize_text_field( wp_unslash( $params['show'] ) ) : 'no';
+                $pagination = isset(  $params['pagination'] ) ? sanitize_text_field( wp_unslash( $params['pagination'] ) ) : 'no';
+                $search = isset(  $params['sidebar-filter'] ) ? sanitize_text_field( wp_unslash( $params['sidebar-filter'] ) ) : 'no';
+                $city = isset(  $params['city'] ) ? sanitize_text_field( wp_unslash( $params['city'] ) ) : 'no';
+                $top_bar = isset(  $params['top-bar'] ) ? sanitize_text_field( wp_unslash( $params['top-bar'] ) ) : 'no';
+
+                $city_search = !empty( $city ) ? array(
+                    'key'     => 'ttbm_hotel_location',
+                    'value'   => $city,
+                    'compare' => '=',
+                ) : '';
+                $args = array(
+                    'post_type'      => 'ttbm_hotel',
+                    'post_status'    => 'publish',
+                    'posts_per_page' => -1,
+                    'meta_query'     => array(
+                        $city_search,
+                    ),
+                );
+
+                $loop = new WP_Query($args);
+                $list = 'hotel_list';
+                $location_list = 'location';
+                ob_start();
+                ?>
+                <div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
+                    <div class="mpContainer">
+                        <?php
+                        if ($params['sidebar-filter'] == 'yes') {
+                            ?>
+                            <div class="left_filter">
+                                <div class="leftSidebar placeholder_area">
+                                    <?php do_action('ttbm_hotel_left_filter', $params ); ?>
+                                </div>
+                                <div class="mainSection">
+                                    <?php
+                                    if( $top_bar === 'yes' ){
+                                        do_action('ttbm_hotel_filter_top_bar', $loop, $params );
+                                    }
+                                    ?>
+                                    <?php do_action('ttbm_all_hotel_list_item', $loop, $params, $list, $location_list ); ?>
+                                </div>
+                            </div>
+                            <?php
+                        } else {
+                            if( $top_bar === 'yes' ){
+                                do_action('ttbm_hotel_filter_top_bar', $loop, $params );
+                            }
+                            do_action('ttbm_all_hotel_list_item', $loop, $params,  $list, $location_list );
                         }
                         ?>
                     </div>
@@ -786,6 +844,7 @@
                 $defaults = $this->default_attribute('modern', 12, );
                 $params = shortcode_atts($defaults, $attribute);
                 $limit = $params['limit'];
+                $popular_feature = 'yes';
 
                 $popular =  array(
                     'key'     => 'ttbm_display_hotel_popular',
@@ -809,7 +868,7 @@
                 <div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
                     <div class="mpContainer">
                         <div class="mainSection">
-                            <?php do_action('ttbm_all_hotel_list_item', $loop, $params, $list ); ?>
+                            <?php do_action('ttbm_all_hotel_list_item', $loop, $params, $list, $popular_feature ); ?>
                         </div>
                     </div>
                 </div>
@@ -822,6 +881,8 @@
                 $defaults = $this->default_attribute('modern', 12, );
                 $params = shortcode_atts($defaults, $attribute);
                 $limit = $params['limit'];
+
+                $popular_feature = 'yes';
 
                 $feature = array(
                     'key'     => 'ttbm_display_hotel_feature',
@@ -845,7 +906,7 @@
                 <div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
                     <div class="mpContainer">
                         <div class="mainSection">
-                            <?php do_action('ttbm_all_hotel_list_item', $loop, $params, $list ); ?>
+                            <?php do_action('ttbm_all_hotel_list_item', $loop, $params, $list, $popular_feature ); ?>
                         </div>
                     </div>
                 </div>
@@ -854,7 +915,7 @@
             }
 
 			//***************************//
-			public function default_attribute( $style = 'grid', $show = 9, $search_filter = 'yes', $sidebar_filter = 'no', $feature_filter = 'no', $tag_filter = 'no', $month_filter = 'yes', $tour_type = '', $sort_by = '', $shuffle = 'no'): array {
+			public function default_attribute( $style = 'grid', $show = 9, $search_filter = 'yes', $sidebar_filter = 'no', $feature_filter = 'no', $tag_filter = 'no', $month_filter = 'yes', $tour_type = '', $sort_by = '', $shuffle = 'no', $top_bar = 'yes' ): array {
 			return array(
 				"style" => $style,
 				"show" => $show,
@@ -890,6 +951,7 @@
 				'price-filter' => 'yes',
 				'limit' => $show,
 				'list_grid' => 'list',
+				'top-bar' => $top_bar,
 			);
 		}
 

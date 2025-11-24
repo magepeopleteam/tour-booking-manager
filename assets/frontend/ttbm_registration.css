@@ -472,6 +472,7 @@ div.ttbm_booking_panel table.mp_tour_ticket_type tbody td, table.mp_tour_ticket_
 div.ttbm_booking_panel .qtyIncDec .decQty,
 div.ttbm_booking_panel .qtyIncDec .incQty {
 	border-radius: 100px;
+	border:1px solid #ddd;
 }
 div.ttbm_booking_panel .qtyIncDec label {
 	border: 0;

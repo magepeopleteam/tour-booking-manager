@@ -278,7 +278,6 @@ jQuery(document).ready(function ($) {
         });
 
         let itemsToShow = $("#ttbm_number_of_show").val();
-        alert( itemsToShow );
         $matchedHotels.slice(0, itemsToShow).fadeIn();
 
         // Toggle Load More button

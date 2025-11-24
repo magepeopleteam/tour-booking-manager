@@ -162,6 +162,7 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
         public function feature_filter_multiple($params) {
             if ($params['feature-filter'] == 'yes') {
                 $features = TTBM_Function::get_meta_values('ttbm_hotel_feat_selection', 'ttbm_hotel');
+
                 $exist_feature = [];
                 for ($i = 0; $i < count($features); $i++) {
                     $exist_feature = array_unique(array_merge($exist_feature, $features[$i]));

@@ -1673,17 +1673,17 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	flex-wrap: wrap;
 }
 .ttbm-hotel-details .ttbm-content-left .popular-facilities li{
-	display: flex;
-	justify-content: start;
-	align-items: center;
-	gap: 10px;
-	margin:2px;
-	background: #f0f6ff;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    margin: 5px;
+    background: #f0f6ff;
     border: 1px solid #e1e3e7;
-    padding: 2px 5px;
+    padding: 5px 5px;
     border-radius: 5px;
-	font-size: 14px;
-	width:32.5%;
+    font-size: 14px;
+    width: 32%;
 }
 .ttbm-hotel-details .ttbm-content-left .popular-facilities i{
 	font-size: 20px;

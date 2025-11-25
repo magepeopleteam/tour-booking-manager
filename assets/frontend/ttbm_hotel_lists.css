@@ -64,7 +64,7 @@
 /* Grid View */
 .ttbm_hotel_lists_wrapper.grid-view {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    /*grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));*/
     gap: 20px;
 }
 .ttbm_hotel_lists_wrapper.grid-view .ttbm_hotel_lists_card {
@@ -113,6 +113,27 @@
     margin: 10px 0;
     background: #fff;
 }
+.ttbm_hotel_lists_wrapper.grid-view {
+    display: grid;
+    gap: 20px;
+}
+
+.ttbm-grid-columns-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.ttbm-grid-columns-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.ttbm-grid-columns-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.ttbm-grid-columns-1 {
+    grid-template-columns: repeat(1, 1fr);
+}
+
 
 .ttbm_hotel_lists_image {
     position: relative;
@@ -434,4 +455,15 @@
 .ttbm_hotel_book_cancel_btn{
     display: flex;
     gap: 10px;
+}
+
+@media(max-width: 768px){
+    .ttbm_hotel_lists_wrapper.grid-view{
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+@media(max-width: 480px){
+    .ttbm_hotel_lists_wrapper.grid-view{
+        grid-template-columns: repeat(1, 1fr) !important;
+    }
 }

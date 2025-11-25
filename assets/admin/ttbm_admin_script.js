@@ -1266,6 +1266,7 @@
 // ==============metabox sidebar collapse==============
 (function($){
     $(document).on('click', '.meta-sidebar-toggle', function() {
+        $('.meta-sidebar-toggle i').toggleClass('mi-angle-right mi-angle-left');
         $('.tabLists.meta-sidebar').closest('.leftTabs').toggleClass('leftTabs-collapsed');
         $('.tabLists.meta-sidebar').toggleClass('meta-sidebar-collapsed');
     });

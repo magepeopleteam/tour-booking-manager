@@ -24,6 +24,7 @@
                     <div class="ttbm_style ttbm_settings ">
                         <div class="ttbmTabs leftTabs d-flex justify-content-between">
                             <ul class="tabLists meta-sidebar _mL">
+								<div class="meta-sidebar-toggle"><i class="mi mi-angle-right"></i></div>
                                 <li data-tabs-target="#ttbm_general_info" title="<?php esc_html_e('General Info', 'tour-booking-manager'); ?>"><i class="mi mi-settings"></i> <span><?php esc_html_e('General Info', 'tour-booking-manager'); ?></span> </li>
                                 <li data-tabs-target="#ttbm_settings_location" class="ttbm_settings_location"><i class="mi mi-marker"></i> <span><?php esc_html_e(' Location', 'tour-booking-manager'); ?></span> </li>
                                 <li data-tabs-target="#ttbm_settings_dates"><i class="mi mi-calendar"></i> <span><?php esc_html_e(' Date Configuration', 'tour-booking-manager'); ?></span> </li>

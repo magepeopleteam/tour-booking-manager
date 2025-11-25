@@ -188,13 +188,13 @@
 	}
 
 
-	// ttbm_left_filter_see_more_button( 'ttbm_featureList', 'ttbm_feature_checkBoxLevel', 'ttbm_show_feature_seeMoreBtn' );
-	// ttbm_left_filter_see_more_button('ttbm_activityList', 'ttbm_activity_checkBoxLevel', 'ttbm_show_activity_seeMoreBtn' );
-	// ttbm_left_filter_see_more_button( 'ttbm_locationList', 'ttbm_location_checkBoxLevel', 'ttbm_show_location_seeMoreBtn' );
+	ttbm_left_filter_see_more_button( 'ttbm_featureList', 'ttbm_feature_checkBoxLevel', 'ttbm_show_feature_seeMoreBtn' );
+	ttbm_left_filter_see_more_button('ttbm_activityList', 'ttbm_activity_checkBoxLevel', 'ttbm_show_activity_seeMoreBtn' );
+	ttbm_left_filter_see_more_button( 'ttbm_locationList', 'ttbm_location_checkBoxLevel', 'ttbm_show_location_seeMoreBtn' );
 
-	ttbm_hotel_left_filter_see_more_button('ttbm_hotelActivityList', 'ttbm_activity_checkBoxLevel', 'ttbm_show_activity_seeMoreBtn');
-	ttbm_hotel_left_filter_see_more_button('ttbm_hotelFeatureList', 'ttbm_feature_checkBoxLevel', 'ttbm_show_feature_seeMoreBtn');
-	ttbm_hotel_left_filter_see_more_button('ttbm_locationList', 'ttbm_location_checkBoxLevel', 'ttbm_show_location_seeMoreBtn');
+	ttbm_hotel_left_filter_see_more_button('ttbm_hotelActivityList', 'ttbm_activity_checkBoxLevel', 'ttbm_hotel_show_activity_seeMoreBtn');
+	ttbm_hotel_left_filter_see_more_button('ttbm_hotelFeatureList', 'ttbm_feature_checkBoxLevel', 'ttbm_show_hotel_feature_seeMoreBtn');
+	ttbm_hotel_left_filter_see_more_button('ttbm_hotelLocationList', 'ttbm_location_checkBoxLevel', 'ttbm_show_hotel_location_seeMoreBtn');
 
 
 	//========= google map load=========

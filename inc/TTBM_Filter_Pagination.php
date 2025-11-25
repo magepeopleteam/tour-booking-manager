@@ -663,16 +663,23 @@
 			public function select_month_filter($params) {
 				if ($params['month-filter'] == 'yes') {
 					?>
-                    <label data-placeholder>
+                    <!--<label data-placeholder>
                         <div class="ttbm_date-picker-container">
-                            <input name="date_filter_start" type="text" id="ttbm_date-input_from" class="ttbm_date-picker-input" placeholder="<?php esc_html_e('From Date', 'tour-booking-manager'); ?>">
+                            <input name="date_filter_start" type="text" id="ttbm_date-input_from" class="ttbm_date-picker-input" placeholder="<?php /*esc_html_e('From Date', 'tour-booking-manager'); */?>">
                             <div id="ttbm_calendar-icon" class="ttbm_calendar-icon"></div>
                         </div>
                     </label>
                     <label data-placeholder>
                         <div class="ttbm_date-picker-container">
-                            <input name="date_filter_end" type="text" id="ttbm_date-input_to" class="ttbm_date-picker-input" placeholder="<?php esc_html_e('To Date', 'tour-booking-manager'); ?>">
+                            <input name="date_filter_end" type="text" id="ttbm_date-input_to" class="ttbm_date-picker-input" placeholder="<?php /*esc_html_e('To Date', 'tour-booking-manager'); */?>">
                             <div id="ttbm_calendar-icon" class="ttbm_calendar-icon"></div>
+                        </div>
+                    </label>-->
+
+                    <label data-placeholder>
+                        <div class="ttbm_date-picker-container">
+                            <input name="ttbm_date_start_end_input" type="text" id="ttbm_date_start_end_input" class="ttbm_date-picker-input" placeholder="<?php esc_html_e('Check-in date  —  Check-out date', 'tour-booking-manager'); ?>">
+                            <div id="ttbm_start_end_calendar_icon" class="ttbm_calendar-icon"></div>
                         </div>
                     </label>
 					<?php

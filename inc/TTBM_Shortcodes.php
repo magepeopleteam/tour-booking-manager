@@ -204,7 +204,7 @@
 								<div class="leftSidebar placeholder_area">
 									<?php do_action('ttbm_left_filter', $params); ?>
 								</div>
-								<div class="mainSection">
+								<div class="mainHotelSection">
 									<?php do_action('ttbm_filter_top_bar', $loop, $params); ?>
 									<?php do_action('ttbm_all_list_item', $loop, $params); ?>
 									<?php do_action('ttbm_sort_result', $loop, $params); ?>
@@ -765,7 +765,7 @@
                                 <div class="leftSidebar placeholder_area">
                                     <?php do_action('ttbm_hotel_left_filter', $params ); ?>
                                 </div>
-                                <div class="mainSection">
+                                <div class="mainHotelSection">
                                     <?php do_action('ttbm_hotel_filter_top_bar', $loop, $params ); ?>
                                     <?php do_action('ttbm_all_hotel_list_item', $loop, $params, $list, $popular_feature ); ?>
                                 </div>
@@ -822,7 +822,7 @@
                                 <div class="leftSidebar placeholder_area">
                                     <?php do_action('ttbm_hotel_left_filter', $params ); ?>
                                 </div>
-                                <div class="mainSection">
+                                <div class="mainHotelSection">
                                     <?php
                                     if( $top_bar === 'yes' ){
                                         do_action('ttbm_hotel_filter_top_bar', $loop, $params );
@@ -872,7 +872,7 @@
                 ?>
                 <div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
                     <div class="mpContainer">
-                        <div class="mainSection">
+                        <div class="mainHotelSection">
                             <?php do_action('ttbm_all_hotel_list_item', $loop, $params, $list, $popular_feature ); ?>
                         </div>
                     </div>
@@ -910,7 +910,7 @@
                 ?>
                 <div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
                     <div class="mpContainer">
-                        <div class="mainSection">
+                        <div class="mainHotelSection">
                             <?php do_action('ttbm_all_hotel_list_item', $loop, $params, $list, $popular_feature ); ?>
                         </div>
                     </div>

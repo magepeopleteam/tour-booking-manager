@@ -413,7 +413,7 @@
 	.ttbm-hotel-list-table td { padding: 12px 10px; vertical-align: top; border-bottom: 1px solid #F0F0F1;}
 	.ttbm-hotel-list-table .ttbm-hotel-list-column-image { width: 120px; text-align: center;}
 	.ttbm-tour-card .ttbm-hotel-list-column-image{height: 100px;}
-	.ttbm-hotel-list-image-placeholder { width:120px; height:100%; object-fit: cover; border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);}
+	.ttbm-hotel-list-image-placeholder { width:120px; height:120px; object-fit: cover; object-position: center; border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);}
 	.ttbm-hotel-list-hotel-title { font-size: 15px; font-weight: 600; margin-bottom: 5px; color: #0073AA; transition: color 0.2s ease;}
 	.ttbm-hotel-list-hotel-location { font-size: 13px; color: #666; margin-bottom: 8px; display: flex; align-items: center; gap: 5px;}
 	.ttbm-hotel-list-hotel-location .fas { color: rgb(255, 109, 0);}
@@ -1249,6 +1249,7 @@
 	#ttbm_meta_box_panel .meta-sidebar{
 		min-width: 55px;
 		max-width: 55px;
+		border-right: 1px solid #ccc;
 	}
 	#ttbm_meta_box_panel .ttbmTabs.leftTabs{
 		position: relative;
@@ -1256,6 +1257,7 @@
 	#ttbm_meta_box_panel .meta-sidebar.meta-sidebar-collapsed{
 		min-width: 250px;
 		max-width: 250px;
+		
 		/* position: absolute;
 		top: 0;
 		left:0;

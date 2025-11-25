@@ -1800,6 +1800,8 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	margin:20px 0;
 	background: #fffafa;
 	border: 1px solid #f3efef;
+	padding:10px;
+	border-radius:10px;
 }
 
 .ttbm-hotel-details .ttbm-feature-list .feature-items{

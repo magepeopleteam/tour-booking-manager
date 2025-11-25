@@ -117,7 +117,7 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                             }
                             if( $activity_count > 6 ){
                             ?>
-                                <button id="ttbm_show_activity_seeMoreBtn" class="ttbm_see-more-button"><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
+                                <button id="ttbm_hotel_show_activity_seeMoreBtn" class="ttbm_see-more-button"><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
                             <?php }?>
                         </div>
                     </div>
@@ -145,7 +145,7 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                     </h5>
                     <div class="divider"></div>
                     <div class="mActive" data-collapse="#ttbm_location_filter_multiple" data-placeholder>
-                        <div class="groupCheckBox _dFlex flexColumn" id="ttbm_locationList">
+                        <div class="groupCheckBox _dFlex flexColumn" id="ttbm_hotelLocationList">
                             <input type="hidden" name="location_filter_multiple" value="<?php echo esc_attr($current_location); ?>"/>
                             <?php foreach ($exist_locations as $location) { ?>
                                 <?php
@@ -159,7 +159,7 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                             <?php }
                             if( $location_count > 6 ){
                             ?>
-                                <button id="ttbm_show_location_seeMoreBtn" class="ttbm_see-more-button"><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
+                                <button id="ttbm_show_hotel_location_seeMoreBtn" class="ttbm_see-more-button"><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
                             <?php }?>
                         </div>
                     </div>
@@ -205,7 +205,7 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                                 </label>
                             <?php }
                             if( $feature_count > 6 ){ ?>
-                                <button id="ttbm_show_feature_seeMoreBtn" class="ttbm_see-more-button"><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
+                                <button id="ttbm_show_hotel_feature_seeMoreBtn" class="ttbm_see-more-button"><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
                             <?php }?>
                         </div>
                     </div>

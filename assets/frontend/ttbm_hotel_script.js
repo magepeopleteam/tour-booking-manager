@@ -331,7 +331,8 @@ jQuery(document).ready(function ($) {
         autoApply: true,
         minDate: moment(), // 🚫 disables previous dates
         locale: {
-            format: 'YYYY-MM-DD',
+            // format: 'YYYY-MM-DD',
+            format: 'MMM D, YYYY',
             separator: ' - '
         }
     });

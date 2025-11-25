@@ -421,6 +421,7 @@ div.ttbm_booking_panel table tr th.ttbm-regular-price,div.ttbm_booking_panel tab
 div.ttbm_booking_panel table .ttbm-hotel-room-info i {
 	color: #A9A9A9;
 	font-size: 12px;
+	margin-right: 10px;
 }
 div.ttbm_booking_panel table tbody th, div.ttbm_booking_panel table tbody td {
 	border: 0 !important;
@@ -471,6 +472,7 @@ div.ttbm_booking_panel table.mp_tour_ticket_type tbody td, table.mp_tour_ticket_
 div.ttbm_booking_panel .qtyIncDec .decQty,
 div.ttbm_booking_panel .qtyIncDec .incQty {
 	border-radius: 100px;
+	border:1px solid #ddd;
 }
 div.ttbm_booking_panel .qtyIncDec label {
 	border: 0;
@@ -1155,6 +1157,7 @@ div.ttbm_list_details {
 	flex: auto;
 	text-align: left;
 	justify-content: space-between;
+	padding: var(--ttbm_mp_xs);
 
 }
 #ttbm_related_tour div.ttbm_list_details{
@@ -1180,6 +1183,7 @@ div.ttbm_list_details {
 div.modern div.ttbm_list_details {
 	max-width: calc(100% - 300px);
 	min-width: 60%;padding: 0 0 0 var(--ttbm_mp);
+	padding:10px;
 }
 
 .modern .filter_item .ttbm_list_details .ttbm-rating-stars {
@@ -1207,7 +1211,6 @@ div.modern div.ttbm_list_details {
 	border-radius: 20px;
 	color: #4f4c4c;
 	font-size: 14px;
-	font-weight: bold;
 	cursor: pointer;
 }
 .ttbm_item_filter_by_activity:hover{
@@ -1671,16 +1674,17 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	flex-wrap: wrap;
 }
 .ttbm-hotel-details .ttbm-content-left .popular-facilities li{
-	display: flex;
-	justify-content: start;
-	align-items: center;
-	gap: 5px;
-	margin:10px 10px 10px 0;
-	background: #f0f6ff;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    margin: 5px;
+    background: #f0f6ff;
     border: 1px solid #e1e3e7;
-    padding: 2px 5px;
+    padding: 5px 5px;
     border-radius: 5px;
-	font-size: 14px;
+    font-size: 14px;
+    width: 32%;
 }
 .ttbm-hotel-details .ttbm-content-left .popular-facilities i{
 	font-size: 20px;
@@ -1793,20 +1797,23 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	justify-content:start;
 	flex-wrap: wrap;
 	align-items: center;
-	gap:10px;
+	gap:15px;
 	margin:20px 0;
+	background: #fffafa;
+	border: 1px solid #f3efef;
+	padding:10px;
+	border-radius:10px;
 }
 
 .ttbm-hotel-details .ttbm-feature-list .feature-items{
 	padding:5px 15px;
-	background: #efefef;
 	border-radius: 5px;
 	display: flex;
-	justify-content:space-evenly;
+	width:24%;
 	align-items: center;
 	gap:10px;
 	font-size:14px;
-	border:1px solid #ddd;
+	border:1px solid #ededed
 }
 .ttbm-hotel-details .ttbm-feature-list .feature-items i{
 	font-size: 20px;
@@ -1845,10 +1852,11 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	border-bottom: 1px dotted #ddd999;
 }
 .ttbm_style .mp_tour_ticket_type .groupContent{
-	justify-content: center;
+	justify-content: right;
 }
 div.ttbm_style .ttbm_hotel_room_incDec .formControl{
 		width: 60px;
+	    text-align: center;
 	}
 
 @media (max-width:1024px){

@@ -16,6 +16,8 @@
 	--mpl-red-light: #F6DADA;
 	--mpl-gradient: linear-gradient(135deg, #F12971, #C4185B);
 }
+
+
 /********************************************************************  ************************************************/
 @media only screen and (min-width: 10px) {
 	#ttbm_content .formControl {font-weight: normal; border: 1px solid var(--mpl-gray); color: var(--mpl-secondary); font-size: 14px; min-width: 80px;}
@@ -106,7 +108,12 @@
 	#ttbm_meta_box_panel .postbox-header .handle-actions .handle-order-higher,
 	#ttbm_meta_box_panel .postbox-header .handle-actions .handle-order-lower,
 	#ttbm_meta_box_panel .postbox-header .handle-actions .toggle-indicator { color: var(--mpl-white);}
-	#ttbm_meta_box_panel .ttbm_settings .tabLists li i { margin: 0 var(--ttbm_mp) 0 0; color: var(--color_theme);}
+	#ttbm_meta_box_panel .ttbm_settings .tabLists li i { margin: 0 10px 0 0; color: var(--color_theme);}
+	
+	#ttbm_meta_box_panel .tabLists.meta-sidebar li  span{
+		color: #333;
+	}
+
 	#ttbm_meta_box_panel .tabLists.meta-sidebar li.active::after {
 		content: '';
 		position: absolute;
@@ -119,8 +126,15 @@
 		border-bottom: 10px solid transparent;
 		border-left: 8px solid var(--color_theme);
 	}
-	#ttbm_meta_box_panel .ttbm_settings .tabLists li.active { background-color: var(--color_theme); color: #fff; font-weight: normal;}
-	#ttbm_meta_box_panel .ttbm_settings .tabLists li.active i { color:#fff;}
+	#ttbm_meta_box_panel .ttbm_settings .tabLists li.active{
+		background-color: var(--color_theme); 
+		color: #fff; 
+		font-weight: normal;
+	}
+	#ttbm_meta_box_panel .ttbm_settings .tabLists li.active span, 
+	#ttbm_meta_box_panel .ttbm_settings .tabLists li.active i { 
+	color:#fff;
+	}
 	
 	
 	#ttbm_meta_box_panel .ttbm_settings .tabLists li.active:hover  { background-color: var(--color_theme);color:#fff;}
@@ -399,7 +413,7 @@
 	.ttbm-hotel-list-table td { padding: 12px 10px; vertical-align: top; border-bottom: 1px solid #F0F0F1;}
 	.ttbm-hotel-list-table .ttbm-hotel-list-column-image { width: 120px; text-align: center;}
 	.ttbm-tour-card .ttbm-hotel-list-column-image{height: 100px;}
-	.ttbm-hotel-list-image-placeholder { width:120px; height:100%; object-fit: cover; border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);}
+	.ttbm-hotel-list-image-placeholder { width:120px; height:120px; object-fit: cover; object-position: center; border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);}
 	.ttbm-hotel-list-hotel-title { font-size: 15px; font-weight: 600; margin-bottom: 5px; color: #0073AA; transition: color 0.2s ease;}
 	.ttbm-hotel-list-hotel-location { font-size: 13px; color: #666; margin-bottom: 8px; display: flex; align-items: center; gap: 5px;}
 	.ttbm-hotel-list-hotel-location .fas { color: rgb(255, 109, 0);}
@@ -1171,7 +1185,7 @@
   padding: 10px;
   border-radius:5px;
   width: 50%;
-  border: 1px solid #ddd;
+  border: 1px solid #999;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -1204,4 +1218,85 @@
   border-bottom: 2px solid var(--color_theme);
   border-right: 2px solid var(--color_theme);
   background: #efefef;
+}
+
+/* =============Tour admin responsive======== */
+#ttbm_meta_box_panel .meta-sidebar{
+	position: relative;
+}
+
+.meta-sidebar-toggle{
+	display: none;
+	position: absolute;
+	top: 100px;
+	right: -20px;
+	background-color: #fff;
+	transform: translateY(-50%);
+	z-index: 1;
+	color: #444;
+	border: 1px solid #ccc;
+	border-radius:0 4px 4px 0; 
+	border-left: 0;
+	padding:10px 2px;
+	cursor: pointer;
+}
+
+@media (max-width: 1680px) {
+	.meta-sidebar-toggle{
+		display: block;
+	}
+
+	#ttbm_meta_box_panel .meta-sidebar{
+		min-width: 55px;
+		max-width: 55px;
+		border-right: 1px solid #ccc;
+	}
+	#ttbm_meta_box_panel .ttbmTabs.leftTabs{
+		position: relative;
+	}
+	#ttbm_meta_box_panel .meta-sidebar.meta-sidebar-collapsed{
+		min-width: 250px;
+		max-width: 250px;
+		
+		/* position: absolute;
+		top: 0;
+		left:0;
+		z-index: 2; */
+		z-index: 2;
+	}
+	.leftTabs-collapsed::after{
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0,0,0,0.2);
+		z-index: 1;
+	}
+	#ttbm_meta_box_panel .ttbm_style .tabsContent{
+		padding: 20px 40px;
+	}
+
+	#ttbm_meta_box_panel .meta-sidebar li i{ 
+		margin: 0;
+	}
+	#ttbm_meta_box_panel .meta-sidebar li span{ 
+		display: none;
+	}
+	#ttbm_meta_box_panel .meta-sidebar-collapsed li span{ 
+		display: block;
+	}
+}
+@media (max-width: 1400px) {
+	.tabsItem section .dFlex{
+		flex-direction: column;
+	}
+	.tabsItem section .label .dFlex{
+		flex-direction: row;
+	}
+	 #ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem .col-left,
+	  #ttbm_meta_box_panel .ttbm_settings .tabsContent .tabsItem .col-right{
+		width:100%;
+	}
 }

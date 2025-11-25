@@ -1262,6 +1262,15 @@
         reverseGeocode(location);
     }
 })(jQuery);
+
+// ==============metabox sidebar collapse==============
+(function($){
+    $(document).on('click', '.meta-sidebar-toggle', function() {
+        $('.tabLists.meta-sidebar').closest('.leftTabs').toggleClass('leftTabs-collapsed');
+        $('.tabLists.meta-sidebar').toggleClass('meta-sidebar-collapsed');
+    });
+})(jQuery);
+
 // New Activity Popup Logic
 (function ($) {
     "use strict";

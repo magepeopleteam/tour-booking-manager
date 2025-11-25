@@ -1001,6 +1001,7 @@ div.ttbm_list_title {margin-top: var(--ttbm_mp_xs);}
 	margin-bottom: 10px;
 	line-height: 20px;
 	font-size: 16px;
+	font-weight: normal;
 }
 .filter_item .bg_image_area{
 	border-radius: 0;
@@ -1067,7 +1068,7 @@ div.ttbm_list_title {margin-top: var(--ttbm_mp_xs);}
 }
 
 div.modern .ttbm_list_title,
-div.modern .ttbm_list_title > * {margin: 0;font-size: var(--ttbm_fs_h4);font-weight: bold;}
+div.modern .ttbm_list_title > * {margin: 0;font-size: var(--ttbm_fs_h4);font-weight: normal;}
 
 .ttbm_list_info i{
 	color: var(--color_theme);
@@ -1085,7 +1086,7 @@ div.superSlider .sliderShowcaseItem:last-child{
 }
 
 /***************************************/
-div.ttbm_list_info {display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;margin: var(--dbr) 0 0 0;overflow: hidden;}
+div.ttbm_list_info {display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;margin: 10px 0;overflow: hidden;}
 div.ttbm_list_info span {font-size: var(--ttbm_fs_h6); color: var(--color_theme);}
 div.ttbm_list_info > span:first-child {margin: 0 var(--dbr) 0 0;}
 

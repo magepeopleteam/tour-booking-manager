@@ -240,7 +240,7 @@ jQuery(document).ready(function ($) {
         let maxPrice = parseInt($('#ttbm_max_range').val());
 
         let selectedLocations = [];
-        $('#ttbm_locationList input:checked').each(function () {
+        $('#ttbm_hotelLocationList input:checked').each(function () {
             selectedLocations.push($(this).next('span').text().trim());
         });
 
@@ -299,7 +299,7 @@ jQuery(document).ready(function ($) {
         filterHotels();
     });
 
-    $('#ttbm_locationList input, #ttbm_hotelActivityList input, #ttbm_hotelFeatureList input').on('change', function() {
+    $('#ttbm_hotelLocationList input, #ttbm_hotelActivityList input, #ttbm_hotelFeatureList input').on('change', function() {
         filterHotels();
     });
     // Initial call to show correct hotels on page load

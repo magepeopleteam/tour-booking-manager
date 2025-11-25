@@ -61,6 +61,7 @@
     border-radius:50px;
     font-size: 14px;
 }
+
 /* Grid View */
 .ttbm_hotel_lists_wrapper.grid-view {
     display: grid;
@@ -196,6 +197,10 @@
     font-size: 14px;
 }
 
+.ttbm_location_separator{
+    color: #555;
+}
+
 .ttbm_hotel_lists_location {
     font-size: 14px;
     margin: 6px 0;
@@ -283,10 +288,15 @@
 }
 
 
+/*Price Slide*/
 .ttbm_hotel_price_slider {
-    width: 250px;
+    width: 100%;
     font-family: Arial, sans-serif;
     text-align: left;
+}
+
+.ttbm_hotel_taxonomy_top{
+    margin-top: 1px;
 }
 
 .ttbm_slider_inputs {

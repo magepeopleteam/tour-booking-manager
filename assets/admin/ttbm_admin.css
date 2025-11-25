@@ -1249,6 +1249,7 @@
 	#ttbm_meta_box_panel .meta-sidebar{
 		min-width: 55px;
 		max-width: 55px;
+		border-right: 1px solid #ccc;
 	}
 	#ttbm_meta_box_panel .ttbmTabs.leftTabs{
 		position: relative;
@@ -1256,6 +1257,7 @@
 	#ttbm_meta_box_panel .meta-sidebar.meta-sidebar-collapsed{
 		min-width: 250px;
 		max-width: 250px;
+		
 		/* position: absolute;
 		top: 0;
 		left:0;

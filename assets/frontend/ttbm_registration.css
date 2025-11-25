@@ -1001,6 +1001,7 @@ div.ttbm_list_title {margin-top: var(--ttbm_mp_xs);}
 	margin-bottom: 10px;
 	line-height: 20px;
 	font-size: 16px;
+	font-weight: normal;
 }
 .filter_item .bg_image_area{
 	border-radius: 0;
@@ -1037,7 +1038,8 @@ div.ttbm_list_title {margin-top: var(--ttbm_mp_xs);}
 }
 
 .flora .filter_item .ttbm_list_title {
-	margin-bottom: 0;
+	padding: 10px;
+	margin: 0;
 }
 
 .lotus .ttbm_list_info_header .ttbm_list_title a{
@@ -1067,7 +1069,7 @@ div.ttbm_list_title {margin-top: var(--ttbm_mp_xs);}
 }
 
 div.modern .ttbm_list_title,
-div.modern .ttbm_list_title > * {margin: 0;font-size: var(--ttbm_fs_h4);font-weight: bold;}
+div.modern .ttbm_list_title > * {margin: 0;font-size: var(--ttbm_fs_h4);font-weight: normal;}
 
 .ttbm_list_info i{
 	color: var(--color_theme);
@@ -1085,7 +1087,7 @@ div.superSlider .sliderShowcaseItem:last-child{
 }
 
 /***************************************/
-div.ttbm_list_info {display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;margin: var(--dbr) 0 0 0;overflow: hidden;}
+div.ttbm_list_info {display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;margin: 10px 0;overflow: hidden;}
 div.ttbm_list_info span {font-size: var(--ttbm_fs_h6); color: var(--color_theme);}
 div.ttbm_list_info > span:first-child {margin: 0 var(--dbr) 0 0;}
 
@@ -1147,6 +1149,7 @@ div.absolute_item.bottom {
 }
 div.absolute_item * {color: var(--color_theme_alter);font-size: inherit;}
 div.absolute_item span {font-size: var(--ttbm_fs);color: var(--color_theme_alter); }
+
 /**********List************/
 div.modern .bg_image_area {width: 300px;}
 div.ttbm_list_details {
@@ -1302,6 +1305,12 @@ button.scroll-right {
 /**********Grid******************************/
 /**********Orchid Grid******************************/
 div.bg_image_area {margin: 0;border-radius: 5px;}
+.orchid .ttbm_list_content_wrapper{
+	padding: 10px;
+}
+.orchid .ttbm_list_title{
+	padding: 10px;
+}
 /**********Location list******************************/
 [data-bg-image] .ttbm_list_title {color: #FFF;}
 /****************************************/

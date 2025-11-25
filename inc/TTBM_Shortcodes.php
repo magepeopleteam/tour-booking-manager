@@ -122,6 +122,7 @@
 
                 $exist_locations = array_unique( $locations );
 
+                $wp_date_format = get_option('date_format');
                 ob_start();
                 ?>
                 <!-- Hotel Search Bar -->
@@ -153,6 +154,7 @@
 
 
                         <div class="ttbm_hotel_search_field">
+                            <input type="hidden" name="ttbm_hotel_search_date_format" id="ttbm_hotel_search_date_format" value="<?php echo esc_attr($wp_date_format);?>">
                             <span class="ttbm_hotel_search_icon">📅</span>
                             <input type="text" name="search_date_range" id="ttbm_date_range" class="ttbm_date_input" value="<?php echo esc_attr( $date_range );?>" placeholder="Select date range" readonly>
                         </div>
@@ -682,8 +684,11 @@
                     list( $start_date, $end_date ) = explode(" - ", $date_range);
                     $start_date = trim($start_date);
                     $end_date   = trim($end_date);
+
+                    $start_date  = date('Y-m-d', strtotime($start_date));
+                    $end_date    = date('Y-m-d', strtotime($end_date));
                 }else{
-                    $start_date =$end_date = date( 'Y-m-d');
+                    $start_date = $end_date = date( 'Y-m-d');
                 }
 
                 $available_hotels = self::ttbm_get_available_hotels_in_date( $start_date, $end_date, $location, $search_room_num );

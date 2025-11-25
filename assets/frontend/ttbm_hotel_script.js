@@ -277,8 +277,7 @@ jQuery(document).ready(function ($) {
             $card.hide();
         });
 
-        // Show first 5 matched
-        let itemsToShow = 5;
+        let itemsToShow = $("#ttbm_number_of_show").val();
         $matchedHotels.slice(0, itemsToShow).fadeIn();
 
         // Toggle Load More button
@@ -306,10 +305,11 @@ jQuery(document).ready(function ($) {
     // Initial call to show correct hotels on page load
     filterHotels();
 
-    let ttbm_itemsToShow = 5;
-    let itemsIncrement = 5;
+    let ttbm_itemsToShow = parseInt($("#ttbm_number_of_show").val(), 10);
+    let itemsIncrement = ttbm_itemsToShow;
     let ttbmHotelCards = $(".ttbm_hotel_lists_card");
     let ttbm_totalHotelItems = ttbmHotelCards.length;
+
     ttbmHotelCards.hide();
     ttbmHotelCards.slice(0, ttbm_itemsToShow).show();
     $(document).on( 'click' ,"#ttbm_loadMoreHotels", function () {
@@ -371,3 +371,45 @@ jQuery(document).ready(function ($) {
     });
 
 }(jQuery));
+
+jQuery(window).on('load', function () {
+    jQuery(function ($) {
+        let current = $('.ttbm_hotel_item').first();
+        let hotel_id = $("#ttbm_booking_hotel_id").val();
+        hotel_id = hotel_id ? hotel_id.trim() : '';
+        let date_range = $('[name="ttbm_hotel_date_range"]').val();
+        if ($('[name="ttbm_hotel_date_range"]').length > 1) {
+            date_range = $('.particular_date_area')
+                .find('[name="ttbm_hotel_date_range"]')
+                .val();
+        }
+        let target = current.find('.ttbm_booking_panel');
+        let target_form = target.find('.mp_tour_ticket_form');
+        if (date_range) {
+            $('.ttbm_hotel_area')
+                .find('.ttbm_booking_panel')
+                .slideUp('fast');
+
+            $.ajax({
+                type: 'POST',
+                url: ttbm_ajax_url,
+                data: {
+                    action: "ttbm_get_hotel_room_list",
+                    hotel_id: hotel_id,
+                    date_range: date_range,
+                    nonce: ttbm_ajax.nonce
+                },
+                beforeSend: function () {
+                    target.slideDown('fast');
+                    simpleSpinner(target);
+                },
+                success: function (data) {
+                    target.html(data).promise().done(function () {
+                        ttbm_price_calculation(target);
+                    });
+                }
+            });
+        }
+
+    });
+});

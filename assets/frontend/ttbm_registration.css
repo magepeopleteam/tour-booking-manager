@@ -421,6 +421,7 @@ div.ttbm_booking_panel table tr th.ttbm-regular-price,div.ttbm_booking_panel tab
 div.ttbm_booking_panel table .ttbm-hotel-room-info i {
 	color: #A9A9A9;
 	font-size: 12px;
+	margin-right: 10px;
 }
 div.ttbm_booking_panel table tbody th, div.ttbm_booking_panel table tbody td {
 	border: 0 !important;
@@ -471,6 +472,7 @@ div.ttbm_booking_panel table.mp_tour_ticket_type tbody td, table.mp_tour_ticket_
 div.ttbm_booking_panel .qtyIncDec .decQty,
 div.ttbm_booking_panel .qtyIncDec .incQty {
 	border-radius: 100px;
+	border:1px solid #ddd;
 }
 div.ttbm_booking_panel .qtyIncDec label {
 	border: 0;
@@ -1674,13 +1676,14 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	display: flex;
 	justify-content: start;
 	align-items: center;
-	gap: 5px;
-	margin:10px 10px 10px 0;
+	gap: 10px;
+	margin:2px;
 	background: #f0f6ff;
     border: 1px solid #e1e3e7;
     padding: 2px 5px;
     border-radius: 5px;
 	font-size: 14px;
+	width:32.5%;
 }
 .ttbm-hotel-details .ttbm-content-left .popular-facilities i{
 	font-size: 20px;
@@ -1744,7 +1747,7 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	border: 1px solid #ddd;
 	padding:0 20px;
 	border-radius: 5px;
-	width: 33%;
+	width: 49%;
 }
 .ttbm-hotel-details .faq-area .faq-item{
 	font-size:18px;
@@ -1793,16 +1796,16 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	justify-content:start;
 	flex-wrap: wrap;
 	align-items: center;
-	gap:10px;
+	gap:5px;
 	margin:20px 0;
 }
 
 .ttbm-hotel-details .ttbm-feature-list .feature-items{
-	padding:5px 15px;
+	padding:2px 15px;
 	background: #efefef;
 	border-radius: 5px;
 	display: flex;
-	justify-content:space-evenly;
+	width:24.5%;
 	align-items: center;
 	gap:10px;
 	font-size:14px;
@@ -1845,10 +1848,11 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	border-bottom: 1px dotted #ddd999;
 }
 .ttbm_style .mp_tour_ticket_type .groupContent{
-	justify-content: end;
+	justify-content: right;
 }
 div.ttbm_style .ttbm_hotel_room_incDec .formControl{
 		width: 60px;
+	    text-align: center;
 	}
 
 @media (max-width:1024px){

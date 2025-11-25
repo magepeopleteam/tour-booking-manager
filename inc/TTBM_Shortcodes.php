@@ -18,13 +18,103 @@
 				add_shortcode('ttbm-activity_browse', array($this, 'activity_browse'));
 				add_shortcode('ttbm-texonomy-display', array($this, 'texonomy_display'));
                 add_shortcode('wptravelly-hotel-list', array($this, 'hotel_list_with_left_filter'));
+                add_shortcode('ttbm-hotel-location-list', array($this, 'hotel_location_list_with_left_filter'));
+                add_shortcode('ttbm-feature-hotel', array($this, 'feature_hotel_list_with'));
+                add_shortcode('ttbm-popular-hotel', array($this, 'popular_hotel_list_with'));
                 add_shortcode('wptravelly-hotel-search-list', array($this, 'hotel_search_list_with_left_filter'));
                 add_shortcode('wptravelly-hotel-search', array($this, 'ttbm_hotel_top_search'));
+
+                add_shortcode('ttbm-hotel-rooms', array($this, 'ttbm_hotel_rooms_by_id') );
+                add_shortcode('ttbm-hotel-map',  array( $this, 'ttbm_hotel_map_shortcode') );
+                add_shortcode('ttbm-hotel-slider',  array( $this, 'ttbm_hotel_slider_shortcode') );
 			}
+
+            public function ttbm_hotel_slider_shortcode( $atts ){
+                $params = shortcode_atts([
+                    'hotel_id'  => '',
+                ], $atts);
+
+                 $hotel_id = isset( $params['hotel_id'] ) ? sanitize_text_field( wp_unslash( $params['hotel_id'] ) ) : '';
+                 ob_start();
+                ?>
+                <div class="ttbm_default_theme">
+                    <div class='ttbm_style'>
+                        <div class="ttbm-hotel-details ttbm_hotel_item">
+                        <div class="ttbm-hero-area">
+                            <div class="slider-area">
+                                <?php do_action( 'ttbm_hotel_slider_shortcode', $hotel_id ); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php
+
+            return ob_get_clean();
+            }
+
+            function ttbm_hotel_map_shortcode( $atts ) {
+
+                $atts = shortcode_atts([
+                    'city'  => '',
+                    'zoom'  => 12,
+                    'width' => '100%',
+                    'height'=> '400px'
+                ], $atts);
+
+                if(empty($atts['city'])) {
+                    return '<p style="color:red;">City name not provided.</p>';
+                }
+
+                $city = urlencode($atts['city']);
+
+                $map = '<div class="mp-hotel-map">
+                            <iframe 
+                                width="'.$atts['width'].'" 
+                                height="'.$atts['height'].'" 
+                                frameborder="0" 
+                                style="border:0"
+                                loading="lazy"
+                                allowfullscreen
+                                src="https://www.google.com/maps?q='.$city.'&z='.$atts['zoom'].'&output=embed">
+                            </iframe>
+                        </div>';
+
+                return $map;
+            }
+            public function ttbm_hotel_rooms_by_id( $attribute ){
+                $defaults = array(
+                    "hotel_id" => '',
+                );
+                $params = shortcode_atts( $defaults, $attribute );
+                $hotel_id = isset( $params['hotel_id'] ) ? sanitize_text_field( wp_unslash( $params['hotel_id'] ) ) : '';
+
+                ob_start();
+                if( $hotel_id ){
+                ?>
+                <div class="ttbm_default_theme">
+                    <div class='ttbm_style'>
+                        <div class="ttbm-hotel-details ttbm_hotel_item">
+
+                            <div class="ttbm-content-area">
+                                <div class="ttbm-content-left">
+                                    <div class="ttbm_hotel_content_area" id="ttbm_hotel_content_area">
+                                        <input type="hidden" id="ttbm_booking_hotel_id" value="<?php echo esc_attr( $hotel_id )?>">
+                                        <?php do_action('ttbm_make_hotel_booking', $hotel_id );?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php
+                }
+
+                return ob_get_clean();
+            }
 
             public function ttbm_hotel_top_search(){
 
-                $location = !empty($_GET['hotel_location_search']) ? strip_tags($_GET['hotel_location_search']) : '';
+                $location = !empty($_GET['ttbm_hotel_location_search']) ? strip_tags($_GET['ttbm_hotel_location_search']) : '';
                 $date_range = !empty($_GET['search_date_range']) ? strip_tags($_GET['search_date_range']) : '';
                 $search_person = !empty($_GET['hotel_search_person']) ? strip_tags($_GET['hotel_search_person']) : '';
 
@@ -41,12 +131,12 @@
 
                         <!--<div class="ttbm_hotel_search_field">
                             <span class="ttbm_hotel_search_icon">🛏️</span>
-                            <input type="text" name="hotel_location_search" class="ttbm_hotel_search_input" value="<?php /*echo esc_attr( $location );*/?>" placeholder="Where are you going?">
+                            <input type="text" name="ttbm_hotel_location_search" class="ttbm_hotel_search_input" value="<?php /*echo esc_attr( $location );*/?>" placeholder="Where are you going?">
                         </div>-->
                         <div class="ttbm_hotel_search_field ttbm_location_wrapper">
                             <span class="ttbm_hotel_search_icon">🛏️</span>
                             <input type="text"
-                                   name="hotel_location_search"
+                                   name="ttbm_hotel_location_search"
                                    id="ttbm_location_input"
                                    class="ttbm_hotel_search_input"
                                    value="<?php echo esc_attr($location); ?>"
@@ -464,8 +554,6 @@
                 }
                 wp_reset_postdata();
 
-//                error_log( print_r( [ '$bookings' => $bookings ], true ) );
-
                 return $bookings;
             }
             public static function ttbm_get_available_hotels_in_date( $start_date, $end_date, $location, $search_room_num ) {
@@ -485,14 +573,18 @@
 
                 foreach ( $booked_data as $booking ) {
                     $hotel_id = $booking['hotel_id'];
-
                     // check date overlap
                     if ($booking['checkin_date'] < $end_date && $booking['checkout_date'] > $start_date ) {
-                        foreach ($booking['room_info'] as $room_type => $room) {
-                            if (!isset($hotel_booked[$hotel_id][$room_type])) {
-                                $hotel_booked[$hotel_id][$room_type] = 0;
+
+                        if( is_array( $booking['room_info'] ) && !empty( $booking['room_info'] ) ) {
+                            foreach ($booking['room_info'] as $room_type => $room) {
+                                if (!isset($hotel_booked[$hotel_id][$room_type])) {
+                                    $hotel_booked[$hotel_id][$room_type] = 0;
+                                }
+
+                                $quantity = isset( $room['quantity'] ) ? $room['quantity'] : 0;
+                                $hotel_booked[$hotel_id][$room_type] += $quantity;
                             }
-                            $hotel_booked[$hotel_id][$room_type] += $room['quantity'];
                         }
                     }
                 }
@@ -582,7 +674,7 @@
 
             public function hotel_search_list_with_left_filter( $attribute, $month_filter = 'yes') {
                 $tour_type = 'ttbm_hotel';
-                $location = !empty($_GET['hotel_location_search']) ? strip_tags($_GET['hotel_location_search']) : '';
+                $location = !empty($_GET['ttbm_hotel_location_search']) ? strip_tags($_GET['ttbm_hotel_location_search']) : '';
                 $date_range = !empty($_GET['search_date_range']) ? strip_tags($_GET['search_date_range']) : '';
                 $search_room_num = !empty($_GET['hotel_search_person']) ? strip_tags($_GET['hotel_search_person']) : 0;
 
@@ -636,25 +728,27 @@
 
             public function hotel_list_with_left_filter( $attribute, $month_filter = 'yes') {
                 $tour_type = 'ttbm_hotel';
-                $defaults = $this->default_attribute('modern', 12, 'no', 'yes', 'yes', 'yes', $month_filter, $tour_type);
+                $defaults = $this->default_attribute('modern', 15, 'no', 'yes', 'yes', 'yes', $month_filter, $tour_type);
                 $params = shortcode_atts($defaults, $attribute);
-                $show = $params['show'];
-                $pagination = $params['pagination'];
-                $search = $params['sidebar-filter'];
-                $show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
+                $city = $params['city'];
+                $city_search = !empty( $city ) ? array(
+                    'key'     => 'ttbm_hotel_location',
+                    'value'   => $city,
+                    'compare' => '=',
+                ) : '';
 
-                $location_search = '';
                 $args = array(
                     'post_type'      => 'ttbm_hotel',
                     'post_status'    => 'publish',
                     'posts_per_page' => -1,
                     'meta_query'     => array(
-                        $location_search,
+                        $city_search,
                     ),
                 );
 
                 $loop = new WP_Query($args);
                 $list = 'hotel_list';
+                $popular_feature = 'no';
                 ob_start();
                 ?>
                 <div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
@@ -668,13 +762,13 @@
                                 </div>
                                 <div class="mainSection">
                                     <?php do_action('ttbm_hotel_filter_top_bar', $loop, $params ); ?>
-                                    <?php do_action('ttbm_all_hotel_list_item', $loop, $params, $list ); ?>
+                                    <?php do_action('ttbm_all_hotel_list_item', $loop, $params, $list, $popular_feature ); ?>
                                 </div>
                             </div>
                             <?php
                         } else {
                             do_action('ttbm_hotel_filter_top_bar', $loop, $params);
-                            do_action('ttbm_all_hotel_list_item', $loop, $params,  $list );
+                            do_action('ttbm_all_hotel_list_item', $loop, $params,  $list, $popular_feature );
                         }
                         ?>
                     </div>
@@ -683,8 +777,145 @@
                 return ob_get_clean();
             }
 
+            public function hotel_location_list_with_left_filter( $attribute, $month_filter = 'yes') {
+                $tour_type = 'ttbm_hotel';
+                $top_bar = 'no';
+//                $defaults = $this->default_attribute('modern', 12, 'no', 'no', 'yes', 'yes', $month_filter, $tour_type, $top_bar );
+                $defaults = $this->default_attribute( 'modern', $show = 12, $search_filter = 'no', $sidebar_filter = 'no', $feature_filter = 'no', $tag_filter = 'no', $month_filter, $tour_type = '', $sort_by = '', $shuffle = 'no', $top_bar = 'yes' );
+                $params = shortcode_atts($defaults, $attribute);
+                $show =  isset(  $params['show'] ) ? sanitize_text_field( wp_unslash( $params['show'] ) ) : 'no';
+                $pagination = isset(  $params['pagination'] ) ? sanitize_text_field( wp_unslash( $params['pagination'] ) ) : 'no';
+                $search = isset(  $params['sidebar-filter'] ) ? sanitize_text_field( wp_unslash( $params['sidebar-filter'] ) ) : 'no';
+                $city = isset(  $params['city'] ) ? sanitize_text_field( wp_unslash( $params['city'] ) ) : 'no';
+                $top_bar = isset(  $params['top-bar'] ) ? sanitize_text_field( wp_unslash( $params['top-bar'] ) ) : 'no';
+
+                $city_search = !empty( $city ) ? array(
+                    'key'     => 'ttbm_hotel_location',
+                    'value'   => $city,
+                    'compare' => '=',
+                ) : '';
+                $args = array(
+                    'post_type'      => 'ttbm_hotel',
+                    'post_status'    => 'publish',
+                    'posts_per_page' => -1,
+                    'meta_query'     => array(
+                        $city_search,
+                    ),
+                );
+
+                $loop = new WP_Query($args);
+                $list = 'hotel_list';
+                $location_list = 'location';
+                ob_start();
+                ?>
+                <div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
+                    <div class="mpContainer">
+                        <?php
+                        if ($params['sidebar-filter'] == 'yes') {
+                            ?>
+                            <div class="left_filter">
+                                <div class="leftSidebar placeholder_area">
+                                    <?php do_action('ttbm_hotel_left_filter', $params ); ?>
+                                </div>
+                                <div class="mainSection">
+                                    <?php
+                                    if( $top_bar === 'yes' ){
+                                        do_action('ttbm_hotel_filter_top_bar', $loop, $params );
+                                    }
+                                    ?>
+                                    <?php do_action('ttbm_all_hotel_list_item', $loop, $params, $list, $location_list ); ?>
+                                </div>
+                            </div>
+                            <?php
+                        } else {
+                            if( $top_bar === 'yes' ){
+                                do_action('ttbm_hotel_filter_top_bar', $loop, $params );
+                            }
+                            do_action('ttbm_all_hotel_list_item', $loop, $params,  $list, $location_list );
+                        }
+                        ?>
+                    </div>
+                </div>
+                <?php
+                return ob_get_clean();
+            }
+            public function popular_hotel_list_with( $attribute ) {
+                $tour_type = 'ttbm_hotel';
+                $defaults = $this->default_attribute('modern', 12, );
+                $params = shortcode_atts($defaults, $attribute);
+                $limit = $params['limit'];
+                $popular_feature = 'yes';
+
+                $popular =  array(
+                    'key'     => 'ttbm_display_hotel_popular',
+                    'value'   => 'on',
+                    'compare' => '=',
+                ) ;
+
+                $args = array(
+                    'post_type'      => $tour_type,
+                    'post_status'    => 'publish',
+                    'posts_per_page' => $limit,
+                    'meta_query'     => array(
+                        $popular,
+                    ),
+                );
+
+                $loop = new WP_Query($args);
+                $list = 'hotel_list';
+                ob_start();
+                ?>
+                <div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
+                    <div class="mpContainer">
+                        <div class="mainSection">
+                            <?php do_action('ttbm_all_hotel_list_item', $loop, $params, $list, $popular_feature ); ?>
+                        </div>
+                    </div>
+                </div>
+                <?php
+                return ob_get_clean();
+            }
+
+            public function feature_hotel_list_with( $attribute ) {
+                $tour_type = 'ttbm_hotel';
+                $defaults = $this->default_attribute('modern', 12, );
+                $params = shortcode_atts($defaults, $attribute);
+                $limit = $params['limit'];
+
+                $popular_feature = 'yes';
+
+                $feature = array(
+                    'key'     => 'ttbm_display_hotel_feature',
+                    'value'   => 'on',
+                    'compare' => '=',
+                );
+
+                $args = array(
+                    'post_type'      => $tour_type,
+                    'post_status'    => 'publish',
+                    'posts_per_page' => $limit,
+                    'meta_query'     => array(
+                        $feature,
+                    ),
+                );
+
+                $loop = new WP_Query($args);
+                $list = 'hotel_list';
+                ob_start();
+                ?>
+                <div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
+                    <div class="mpContainer">
+                        <div class="mainSection">
+                            <?php do_action('ttbm_all_hotel_list_item', $loop, $params, $list, $popular_feature ); ?>
+                        </div>
+                    </div>
+                </div>
+                <?php
+                return ob_get_clean();
+            }
+
 			//***************************//
-			public function default_attribute($style = 'grid', $show = 9, $search_filter = 'yes', $sidebar_filter = 'no', $feature_filter = 'no', $tag_filter = 'no', $month_filter = 'yes', $tour_type = '', $sort_by = '', $shuffle = 'no'): array {
+			public function default_attribute( $style = 'grid', $show = 9, $search_filter = 'yes', $sidebar_filter = 'no', $feature_filter = 'no', $tag_filter = 'no', $month_filter = 'yes', $tour_type = '', $sort_by = '', $shuffle = 'no', $top_bar = 'yes' ): array {
 			return array(
 				"style" => $style,
 				"show" => $show,
@@ -718,6 +949,9 @@
 				'shuffle' => $shuffle,
 				'filter_by_activity' => 'yes',
 				'price-filter' => 'yes',
+				'limit' => $show,
+				'list_grid' => 'list',
+				'top-bar' => $top_bar,
 			);
 		}
 

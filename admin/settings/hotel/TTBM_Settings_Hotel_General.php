@@ -11,7 +11,7 @@
                 add_action('ttbm_single_review_testimonial', [$this, 'show_review_testimonial_frontend']);
                 add_action('show_sharing_meta', [$this, 'show_sharing_meta']);
             }
-			public function hotel_general_settings($tour_id) {
+			public function hotel_general_settings($hotel_id) {
 				?>
                 <div class="tabsItem ttbm_settings_general" data-tabs="#ttbm_general_info">
                     <h2><?php esc_html_e('General Information Settings', 'tour-booking-manager'); ?></h2>
@@ -22,16 +22,18 @@
                         </div>
                         <table class="layoutFixed">
                             <tbody>
-                            <?php $this->location($tour_id); ?>
-                            <?php $this->distance_description($tour_id); ?>
-                            <?php $this->rating($tour_id); ?>
-                            <?php $this->property_highlights($tour_id); ?>
-                            <?php $this->parking_info($tour_id); ?>
-                            <?php $this->breakfast_info($tour_id); ?>
-                            <?php $this->review_info($tour_id); ?>
-                            <?php $this->service_info($tour_id); ?>
-                            <?php $this->testimonial_info($tour_id); ?>
-                           
+                            <?php $this->location($hotel_id); ?>
+                            <?php $this->distance_description($hotel_id); ?>
+                            <?php $this->rating($hotel_id); ?>
+                            <?php $this->property_highlights($hotel_id); ?>
+                            <?php $this->parking_info($hotel_id); ?>
+                            <?php $this->breakfast_info($hotel_id); ?>
+                            <?php $this->review_info($hotel_id); ?>
+                            <?php $this->service_info($hotel_id); ?>
+                            <?php $this->testimonial_info($hotel_id); ?>
+                            <?php $this->popular_info($hotel_id); ?>
+                            <?php $this->make_feature_info($hotel_id); ?>
+
                             </tbody>
                         </table>
                     </section>
@@ -169,6 +171,41 @@
                             <input type="text" class="formControl" placeholder="<?php echo esc_html__('Guests who stayed here loved','tour-booking-manager');  ?>" name="ttbm_hotel_testimonial_title" value="<?php echo esc_attr($review_title);  ?>"/>
                             <textarea class="formControl" placeholder="<?php echo esc_html__('Write testimonail...','tour-booking-manager');  ?>" name="ttbm_hotel_testimonial_text"><?php echo esc_attr($review_rating);  ?></textarea>
                         </label>
+                    </td>
+                </tr>
+				<?php
+			}
+            public function popular_info($tour_id) {
+				$display_name = 'ttbm_display_hotel_popular';
+				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'off');
+				$checked = $display == 'off' ? '' : 'checked';
+				$review_title = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_display_hotel_popular_text' );
+				?>
+                <tr>
+                    <th colspan="3">
+						<?php esc_html_e('Make Popular', 'tour-booking-manager'); ?>
+                    </th>
+                    <td><?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?></td>
+                    <td >
+                        <input type="text" class="formControl" placeholder="<?php echo esc_html__('Popular','tour-booking-manager');  ?>" name="ttbm_display_hotel_popular_text" value="<?php echo esc_attr($review_title);  ?>"/>
+                    </td>
+                </tr>
+				<?php
+			}
+
+            public function make_feature_info($tour_id) {
+				$display_name = 'ttbm_display_hotel_feature';
+				$display = TTBM_Global_Function::get_post_info( $tour_id, $display_name, 'off' );
+				$checked = $display == 'off' ? '' : 'checked';
+				$review_title = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_display_hotel_feature_text' );
+				?>
+                <tr>
+                    <th colspan="3">
+						<?php esc_html_e('Make Feature', 'tour-booking-manager'); ?>
+                    </th>
+                    <td><?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?></td>
+                    <td >
+                        <input type="text" class="formControl" placeholder="<?php echo esc_html__('Feature','tour-booking-manager');  ?>" name="ttbm_display_hotel_feature_text" value="<?php echo esc_attr($review_title);  ?>"/>
                     </td>
                 </tr>
 				<?php

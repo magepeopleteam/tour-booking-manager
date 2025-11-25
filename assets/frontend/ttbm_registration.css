@@ -1796,20 +1796,21 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	justify-content:start;
 	flex-wrap: wrap;
 	align-items: center;
-	gap:5px;
+	gap:15px;
 	margin:20px 0;
+	background: #fffafa;
+	border: 1px solid #f3efef;
 }
 
 .ttbm-hotel-details .ttbm-feature-list .feature-items{
 	padding:2px 15px;
-	background: #efefef;
 	border-radius: 5px;
 	display: flex;
-	width:24.5%;
+	width:24%;
 	align-items: center;
 	gap:10px;
 	font-size:14px;
-	border:1px solid #ddd;
+	border:1px solid #ededed
 }
 .ttbm-hotel-details .ttbm-feature-list .feature-items i{
 	font-size: 20px;

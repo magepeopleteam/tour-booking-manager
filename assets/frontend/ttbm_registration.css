@@ -1183,6 +1183,7 @@ div.ttbm_list_details {
 div.modern div.ttbm_list_details {
 	max-width: calc(100% - 300px);
 	min-width: 60%;padding: 0 0 0 var(--ttbm_mp);
+	padding:10px;
 }
 
 .modern .filter_item .ttbm_list_details .ttbm-rating-stars {

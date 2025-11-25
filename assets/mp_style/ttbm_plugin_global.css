@@ -1123,7 +1123,7 @@
 		/*padding: 0 0 10px 0;*/
 		margin-bottom: 10px;
 		cursor: pointer;
-		font-weight: var(--fw-medium);
+		font-weight: normal;
 	}
 	.ttbm_style .customCheckboxLabel input:checked ~ .customCheckbox::before {
 		background: var(--color_theme);
@@ -1565,6 +1565,16 @@
 	}
 }
 /******************************************************************** Grid Section************************************************/
+.ttbm_style .grid .ttbm_description{
+	display: none;
+}
+.ttbm_style .grid .ttbm_list_title{
+	font-weight: normal;
+}
+.ttbm_style .grid .ttbm_list_info{
+	margin: 10px 0;
+	margin-top: 0;
+}
 @media only screen and (min-width: 10px) {
 	/********Sidebar Content**************/
 	.ttbm_style .leftSidebar,
@@ -1786,52 +1796,43 @@
 	/**********************/
 	div.ttbm_style div.grid_1 {
 		width: 100%;
-		padding: var(--ttbm_mp_xs);
 	}
 	div.ttbm_style div.grid_2 {
 		width: calc(50% - var(--ttbm_mp));
 		margin: var(--ttbm_mp_xs);
-		padding: var(--ttbm_mp_xs);
 	}
 	div.ttbm_style div.grid_3 {
 		width: calc(33.333333% - var(--ttbm_mp));
 		margin: var(--ttbm_mp_xs);
-		padding: var(--ttbm_mp_xs);
 	}
 	div.ttbm_style div.grid_4 {
 		width: calc(25% - var(--ttbm_mp));
 		margin: 10px auto;
-		padding: var(--ttbm_mp_xs);
 	}
 	div.ttbm_style div.grid_5 {
 		width: calc(20% - var(--ttbm_mp));
 		margin: var(--ttbm_mp_xs);
-		padding: var(--ttbm_mp_xs);
 	}
 	div.ttbm_style div.grid_6 {
 		width: calc(16.66666667% - var(--ttbm_mp));
 		margin: var(--ttbm_mp_xs);
-		padding: var(--ttbm_mp_xs);
 	}
 	div.ttbm_style div.grid_7 {
 		width: calc(14.285715% - var(--ttbm_mp));
 		margin: var(--ttbm_mp_xs);
-		padding: var(--ttbm_mp_xs);
 	}
 	div.ttbm_style div.grid_8 {
 		width: calc(12.5% - var(--ttbm_mp));
 		margin: var(--ttbm_mp_xs);
-		padding: var(--ttbm_mp_xs);
 	}
 	div.ttbm_style div.grid_9 {
 		width: calc(11.1111111111% - var(--ttbm_mp));
 		margin: var(--ttbm_mp_xs);
-		padding: var(--ttbm_mp_xs);
 	}
 	div.ttbm_style div.grid_10 {
 		width: calc(10% - var(--ttbm_mp));
 		margin: var(--ttbm_mp_xs);
-		padding: var(--ttbm_mp_xs);
+		
 	}
 	@media only screen and (max-width: 1000px) {
 		div.ttbm_style div.grid_2,

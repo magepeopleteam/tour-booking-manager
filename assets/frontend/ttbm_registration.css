@@ -1157,6 +1157,7 @@ div.ttbm_list_details {
 	flex: auto;
 	text-align: left;
 	justify-content: space-between;
+	padding: var(--ttbm_mp_xs);
 
 }
 #ttbm_related_tour div.ttbm_list_details{
@@ -1209,7 +1210,6 @@ div.modern div.ttbm_list_details {
 	border-radius: 20px;
 	color: #4f4c4c;
 	font-size: 14px;
-	font-weight: bold;
 	cursor: pointer;
 }
 .ttbm_item_filter_by_activity:hover{

@@ -1581,6 +1581,11 @@
 		max-width: var(--mainsection);
 		margin: 0 0 0 var(--ttbm_mp);
 	}
+	.ttbm_style .mainHotelSection {
+		width: 100%;
+		/*max-width: var(--mainsection);*/
+		margin: 0 0 0 var(--ttbm_mp);
+	}
 	/**************************************/
 	body.theme-astra div.mpContainer,
 	body.theme-twentytwenty div.mpContainer,

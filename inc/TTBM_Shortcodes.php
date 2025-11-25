@@ -372,12 +372,11 @@
 					if (isset($_GET['date_filter_end']) && !empty($_GET['date_filter_end'])) {
 						$date_filter['end_date'] = sanitize_text_field(wp_unslash($_GET['date_filter_end']));
 					}*/
+
 					if (isset($_GET['ttbm_date_start_end_input']) && !empty($_GET['ttbm_date_start_end_input'])) {
 						$date_range = sanitize_text_field($_GET['ttbm_date_start_end_input']);
                         $dates = explode(' - ', $date_range);
                         if(count($dates) === 2){
-
-
                             $date_filter['start_date'] = $dates[0] ;
                             $date_filter['end_date']   = $dates[1] ;
                         }

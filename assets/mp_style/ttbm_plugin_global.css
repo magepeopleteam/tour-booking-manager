@@ -32,6 +32,7 @@
 	div.ttbm_popup, div.ttbm_popup .popupClose,
 	div.ttbm_popup .popupCloseBtn,
 	div.ttbm_style .customCheckbox,
+	div.ttbm_style .hotelCustomCheckbox,
 	div.ttbm_style .mpTransition,
 	div.ttbm_style [class*="_mpTransition"] { -webkit-transition: all 350ms ease-in-out; -moz-transition: all 350ms ease-in-out; -o-transition: all 350ms ease-in-out; transition: all 350ms ease-in-out; }
 }
@@ -1101,14 +1102,40 @@
 	}
 	/**********Checkbox Custom*********/
 	.ttbm_style .customCheckbox {
-		padding: 3px 0 0 24px;
+		padding: 0px 0 0 24px;
 		position: relative;
-		line-height: 1;
+		line-height: 17px;
 		min-width: auto;
 		white-space: wrap;
 		margin-right: 5px;
+		color: #555;
+	}
+	.ttbm_style .hotelCustomCheckbox {
+		padding: 0px 0 0 24px;
+		position: relative;
+		line-height: 17px;
+		min-width: auto;
+		white-space: wrap;
+		margin-right: 5px;
+		color: #555;
+	}
+	.ttbm_taxonomy_text{
+		line-height: 17px;
+		color: #555;
+		font-size: var(--ttbm_fs);
 	}
 	.ttbm_style .customCheckbox::before {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0 !important;
+		height: 18px;
+		width: 18px;
+		background-color: var(--color_theme_alter);
+		border: 1.5px solid var(--color_black);
+		border-radius: 2px;
+	}
+	.ttbm_style .hotelCustomCheckbox::before {
 		content: "";
 		position: absolute;
 		left: 0;
@@ -1130,6 +1157,9 @@
 		border-color: var(--color_theme);
 	}
 	.ttbm_style .customCheckbox span {
+		margin-right: 5px;
+	}
+	.ttbm_style .hotelCustomCheckbox span {
 		margin-right: 5px;
 	}
 	/*******************/

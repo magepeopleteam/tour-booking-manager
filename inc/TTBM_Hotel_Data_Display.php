@@ -260,6 +260,15 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                         $inline_booking = self::inline_room_book( $hotel['id'], $date_range );
                     }
 
+                    $dot_separator = '';
+                    $hori_separator = '';
+                    if( $hotel['hotel_map_location'] && $hotel['hotel_location']){
+                        $dot_separator = '.';
+                    }
+                    if( $hotel['hotel_map_location'] && $hotel['hotel_distance_description'] ){
+                        $hori_separator = ' | ';
+                    }
+
                     ?>
                     <div class="<?php echo esc_attr( $hotel_card_class );?>"
                          id="<?php echo esc_attr(  $hotel['id']);?>"
@@ -283,8 +292,8 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                                     </div>
                                 </div>
                                 <div class="ttbm_hotel_lists_location">
-                                    <a href="#"><?php echo esc_attr( $hotel['hotel_location'] );?></a> ·
-                                    <a href="#"><?php echo esc_attr( $hotel['hotel_map_location'] );?></a>
+                                    <a class="ttbm_location_separator" href="#" style="color: #555"><?php echo esc_attr( $hotel['hotel_location'] );?></a> <?php echo esc_attr( $dot_separator );?>
+                                    <a class="ttbm_location_separator" href="#" style="color: #555"><?php echo esc_attr( $hotel['hotel_map_location'] );?></a> <?php echo esc_attr( $hori_separator );?>
                                     <span><?php echo esc_attr( $hotel['hotel_distance_description'] );?></span>
                                 </div>
                                 <div class="ttbm_hotel_lists_offer">

@@ -109,6 +109,11 @@
 	#ttbm_meta_box_panel .postbox-header .handle-actions .handle-order-lower,
 	#ttbm_meta_box_panel .postbox-header .handle-actions .toggle-indicator { color: var(--mpl-white);}
 	#ttbm_meta_box_panel .ttbm_settings .tabLists li i { margin: 0 10px 0 0; color: var(--color_theme);}
+	
+	#ttbm_meta_box_panel .tabLists.meta-sidebar li  span{
+		color: #333;
+	}
+
 	#ttbm_meta_box_panel .tabLists.meta-sidebar li.active::after {
 		content: '';
 		position: absolute;

@@ -959,7 +959,7 @@ div.filter_short_result { font-size: var(--ttbm_fs_small); font-weight: 500; col
 	color: #666;
 }
 /***************************************/
-div.all_filter_item > div {margin: var(--ttbm_mp_xs_negative);}
+div.all_filter_item > div {margin: 0;}
 div.all_filter_item > div.modern {
 	margin: 0;
 	margin-top: 20px;
@@ -1035,6 +1035,27 @@ div.ttbm_list_title {margin-top: var(--ttbm_mp_xs);}
 	-webkit-line-clamp: 2;
 	font-size: 18px;
 	height: 52px;
+}
+
+.flora div.filter_item{
+	justify-content:start;
+}
+
+.blossom .ttbm_list_details{
+	padding: 0;
+}
+
+.blossom .ttbm_list_title {
+	padding:0 10px; 
+}
+
+.blossom .ttbm_list_content_wrapper {
+	padding:10px; 
+	padding-top:0; 
+}
+.blossom .ttbm_list_info {
+	margin: 0;
+	margin-bottom: 10px;
 }
 
 @media(max-width: 767px) {
@@ -1263,7 +1284,7 @@ div.modern div.ttbm_list_details {
 	scroll-behavior: smooth; /* Smooth scrolling for modern browsers */
 	width: 100%;
 	gap: 5px;
-	padding: 5px 10px 5px 10px;
+	padding:0;
 	/*margin-bottom: 5px;*/
 }
 .ttbm_all_item_activities_holder::-webkit-scrollbar {
@@ -1331,9 +1352,17 @@ button.scroll-right {
 div.bg_image_area {margin: 0;border-radius: 5px;}
 .orchid .ttbm_list_content_wrapper{
 	padding: 10px;
+	padding-top: 0;
 }
 .orchid .ttbm_list_title{
 	padding: 10px;
+}
+
+.orchid .ttbm_list_title{
+	padding:0 10px;
+}
+.orchid .ttbm_list_info {
+	margin-top: 0;
 }
 /**********Location list******************************/
 [data-bg-image] .ttbm_list_title {color: #FFF;}

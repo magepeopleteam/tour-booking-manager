@@ -13,4 +13,5 @@
 			<?php echo esc_html( $title ); ?>
 		</a>
 	</h3>
+
     <?php do_action( 'ttbm_title_after', $ttbm_post_id ); ?>

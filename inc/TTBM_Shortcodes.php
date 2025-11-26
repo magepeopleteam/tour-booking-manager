@@ -361,17 +361,27 @@
 				return ob_get_clean();
 			}
 			public function search_result($attribute) {
+
 				ob_start();
-				
 				// Process search parameters from GET request
 				$date_filter = array();
 				if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
-					if (isset($_GET['date_filter_start']) && !empty($_GET['date_filter_start'])) {
+					/*if (isset($_GET['date_filter_start']) && !empty($_GET['date_filter_start'])) {
 						$date_filter['start_date'] = sanitize_text_field(wp_unslash($_GET['date_filter_start']));
 					}
 					if (isset($_GET['date_filter_end']) && !empty($_GET['date_filter_end'])) {
 						$date_filter['end_date'] = sanitize_text_field(wp_unslash($_GET['date_filter_end']));
-					}
+					}*/
+
+					if (isset($_GET['ttbm_date_start_end_input']) && !empty($_GET['ttbm_date_start_end_input'])) {
+						$date_range = sanitize_text_field($_GET['ttbm_date_start_end_input']);
+                        $dates = explode(' - ', $date_range);
+                        if(count($dates) === 2){
+                            $date_filter['start_date'] = $dates[0] ;
+                            $date_filter['end_date']   = $dates[1] ;
+                        }
+                    }
+
 				}
 				
 				echo $this->list_with_left_filter_for_search( $attribute, $date_filter );

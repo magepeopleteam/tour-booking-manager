@@ -139,6 +139,7 @@
 					} else {
 						$end_date = '';
 					}
+
 					if ($end_date === '' && $start_date === '') {
 						$date = '';
 						$compare = '';

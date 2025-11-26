@@ -27,7 +27,7 @@
 
 
 
-		let rangePicker = $("#ttbm_date-input_from").flatpickr({
+		/*let rangePicker = $("#ttbm_date-input_from").flatpickr({
 			mode: "range",
 			dateFormat: "F j, Y",
 			minDate: "today",
@@ -42,17 +42,38 @@
 				}
 			}
 		});
-
 		$("#ttbm_date-input_from").on("focus click", function () {
 			rangePicker.open();
 		});
-
 		$("#ttbm_date-input_to").on("focus click", function () {
 			rangePicker.open();
 		});
-
 		$("#ttbm_calendar-icon").on("click", function () {
 			rangePicker.open();
+		});*/
+
+
+		let rangeDatePicker = $("#ttbm_date_start_end_input").flatpickr({
+			mode: "range",
+			dateFormat: "F j, Y",
+			showMonths: 2,
+			minDate: "today",
+			onChange: function(selectedDates, dateStr, instance) {
+
+				if (selectedDates.length === 2) {
+					let startDate = instance.formatDate(selectedDates[0], "F j, Y");
+					let endDate   = instance.formatDate(selectedDates[1], "F j, Y");
+
+					$("#ttbm_date_start_end_input").val(startDate + " - " + endDate);
+				}
+
+			}
+		});
+		$("#ttbm_date_start_end_input").on("focus click", function () {
+			rangeDatePicker.open();
+		});
+		$("#ttbm_start_end_calendar_icon").on("click", function () {
+			rangeDatePicker.open();
 		});
 
 

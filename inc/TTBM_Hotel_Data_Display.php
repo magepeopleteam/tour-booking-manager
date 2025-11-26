@@ -216,13 +216,7 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
 
 
         public static function display_hotel_list( $hotel_data, $currency, $date_range, $list, $params, $popular_feature = '' ){
-
-            if( $params['list_grid'] === 'grid' ){
-                $number_of_column_class = 'ttbm-grid-columns-'.$params['column'];
-            }else{
-                $number_of_column_class = '';
-            }
-
+            $number_of_column_class = 'ttbm-grid-columns-'.$params['column'];
             ob_start();
             if( $popular_feature === 'yes' ){
                 $hotel_card_class = 'ttbm_hotel_lists_popular_card';

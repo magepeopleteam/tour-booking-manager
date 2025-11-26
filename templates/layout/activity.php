@@ -4,7 +4,8 @@
 	}
 	$ttbm_post_id         = $ttbm_post_id ?? get_the_id();
 	$tour_activities = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_tour_activities', array() );
-	if ( sizeof( $tour_activities ) > 0 && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_activities', 'on' ) != 'off' ) {
+	$display_activities = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_activities', 'on' );
+	if ( sizeof( $tour_activities ) > 0 &&  $display_activities != 'off' ) {
 		?>
 		<div class='ttbm_default_widget'>
 			<?php do_action( 'ttbm_section_title', 'ttbm_string_activities', esc_html__( 'Activities ', 'tour-booking-manager' ) ); ?>

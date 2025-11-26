@@ -1364,6 +1364,18 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 .orchid .ttbm_list_info {
 	margin-top: 0;
 }
+#ttbm_related_tour{
+	position: relative;
+}
+#ttbm_related_tour .ttbm_list_title {
+	font-weight: normal;
+}
+#ttbm_related_tour .owl-carousel{
+	margin-top: 20px;
+}
+#ttbm_related_tour .ttbm_description{
+	display: none;
+}
 /**********Location list******************************/
 [data-bg-image] .ttbm_list_title {color: #FFF;}
 /****************************************/

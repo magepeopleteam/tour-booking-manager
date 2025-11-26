@@ -98,7 +98,7 @@ div.small_box {
 div .item_icon { padding: 5px 20px; text-align: center; position: relative; white-space: nowrap; display: flex; align-items: center; line-height: 1.5;}
 div .item_icon::after { content: ""; position: absolute; top: 50%; right: 0; display: block; width: 2px; height: 10px; background-color: rgba(var(--color_theme_rgb), 0.4); transform: translateY(-50%);}
 div .item_icon:last-child:after { width: 0; height: 0;}
-div .item_icon i {color: var(--color_theme);font-size: 28px;margin-right: 6px;}
+div .item_icon i {color: var(--color_theme);font-size: 20px;margin-right: 6px;}
 div.ttbm_style [data-bg-image] { transform: scale(1);}
 @media (max-width: 600px) {
 	.booking-button { flex-direction: column; }
@@ -493,7 +493,6 @@ div.ttbm_select_date_area {
 }
 .ttbm_select_date_area .ttbm-title {
 	color: var(--color_white);
-	font-weight: bold;
 	font-size: 20px;
 	margin: 0;
 }
@@ -1383,6 +1382,15 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 #ttbm_related_tour .ttbm_list_info{
 	margin-top: 0;
 }
+#place_you_see .filter_item  h6{
+	margin: 5px 0;
+}
+#ttbm_content .day_wise_details_item_title{
+	padding-bottom: 5px;
+}
+.ttbm_review_container h4.ttbm-review-title{
+	font-weight: normal;
+}
 /**********Location list******************************/
 [data-bg-image] .ttbm_list_title {color: #FFF;}
 /****************************************/
@@ -1994,11 +2002,11 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
 
 .ttbm_table_header th {
     padding: 16px 20px;
-    font-weight: 600;
+    font-weight: normal;
     text-align: left;
     color: #495057;
     font-size: 14px;
-    text-transform: uppercase;
+    text-transform: capitalize;
     letter-spacing: 0.5px;
 }
 

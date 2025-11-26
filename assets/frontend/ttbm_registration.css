@@ -23,7 +23,13 @@ div.ttbm_faq_item .ttbm_faq_title {-webkit-transition: 350ms ease-in-out;transit
 /*****************Details page*********************************/
 div.ttbm_details_page {display: block;position: relative;}
 div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-webkit-flex-wrap: wrap;flex-wrap: wrap;-webkit-justify-content: space-between;justify-content: space-between;padding-top: 5px}
-.ttbm_details_page_header .ttbm-rating-stars { margin: 0 0 10px 0 !important;}
+.ttbm_details_page_header .ttbm-rating-stars { 
+	margin:0;
+	margin-top: 3px;
+}
+.ttbm_details_page .ttbm_details_page_header .location_name { 
+	margin:0;
+}
 .ttbm_content__left {width: calc(100% - 346px);}
 .hip_hop_hotel_theme .ttbm_content__left,
 .ttbm_spring_theme .ttbm_content__left {width: calc(50% - 20px);}
@@ -1113,7 +1119,7 @@ div.ttbm_list_title {margin-top: var(--ttbm_mp_xs);}
 }
 
 div.modern .ttbm_list_title,
-div.modern .ttbm_list_title > * {margin: 0;font-size: var(--ttbm_fs_h4);font-weight: normal;}
+div.modern .ttbm_list_title > * {margin: 0;font-size: 20px;font-weight: normal;}
 
 .ttbm_list_info i{
 	color: var(--color_theme);

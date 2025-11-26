@@ -924,12 +924,12 @@
 }
 /******************************************************************** Form section ************************************************/
 @media only screen and (min-width: 10px) {
-	.ttbm_style input:not[type="submit"] { width: 100%; max-width: inherit; border: 1px solid var(--color_border); color: var(--d_color); background-color: #FFF; padding: 10px 15px; font-weight: 500; height: 40px; border-radius: 6px; }
+	.ttbm_style input:not[type="submit"] { width: 100%; max-width: inherit; border: 1px solid var(--color_border); color: var(--d_color); background-color: #FFF; padding: 10px 15px; font-weight: normal; height: 40px; border-radius: 6px; }
 	.ttbm_style input:not(.checkbox),
 	.ttbm_style input:not([type=submit]),
 	.ttbm_style optgroup,
 	.ttbm_style select,
-	.ttbm_style textarea { font-family: inherit; line-height: initial; margin: 0; max-width: inherit; border: 1px solid var(--color_border); color: var(--d_color); background-color: #FFF; padding: 10px 10px; font-weight: 500; }
+	.ttbm_style textarea { font-family: inherit; line-height: initial; margin: 0; max-width: inherit; border: 1px solid var(--color_border); color: var(--d_color); background-color: #FFF; padding: 10px 10px; font-weight: normal; }
 	.ttbm_style .formControl:-webkit-autofill,
 	.ttbm_style .formControl:-webkit-autofill:hover,
 	.ttbm_style .formControl:-webkit-autofill:focus,
@@ -940,7 +940,7 @@
 	.ttbm_style textarea:focus { box-shadow: none; outline: 0; border-color: var(--color_theme); }
 	div.ttbm_style form { margin: 0; padding: 0; line-height: 1.25; }
 	div.ttbm_style label,
-	div.ttbm_style [class*="_fs_label"] {font-weight: var(--fw-medium);font-size: var(--ttbm_fs_label);position: relative;text-transform: capitalize;display: -webkit-inline-flex;display: inline-flex;}
+	div.ttbm_style [class*="_fs_label"] {font-weight: normal;font-size: var(--ttbm_fs_label);position: relative;text-transform: capitalize;display: -webkit-inline-flex;display: inline-flex;}
 	.ttbm_style label span { white-space: nowrap; }
 	/***************************/
 	.ttbm_style .formControl::placeholder { color: #0005; }

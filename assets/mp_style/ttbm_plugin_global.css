@@ -774,7 +774,7 @@
 	.ttbm_style .infoLayout_xs,
 	.ttbm_style [class*="_infoLayout_xs"] { padding: var(--ttbm_mp_xs); margin-bottom: var(--ttbm_mp_xs); }
 	/***********Gpt layout***********/
-	.ttbm_style .gptLayout { background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%); padding: var(--ttbm_mp);; border-radius: 10px; border: 1px solid #E2E8F0; margin-top: var(--ttbm_mp); }
+	.ttbm_style .gptLayout { background:#fff; padding: var(--ttbm_mp);box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); border-radius: 10px; border: 1px solid #E2E8F0; margin-top: var(--ttbm_mp); }
 	.gptLayout .gpt_header { color: #1E293B; margin-bottom: 0.5rem; text-align: center; }
 	.gptLayout .gpt_header .info_text {text-align: center;}
 	.gptLayout .gpt_content { padding: 24px; }

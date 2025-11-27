@@ -10,7 +10,7 @@
 	) );
 	if ( $all_place->post_count > 0 && sizeof( $places ) > 0 && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_hiphop', 'on' ) != 'off' ) {
 		?>
-		<div class="ttbm_default_widget" id="place_you_see">
+		<div class="place_you_see" id="place_you_see">
 
 			<?php do_action( 'ttbm_section_title', 'ttbm_string_hiphop_heading', esc_html__( 'Places You’ll See : ', 'tour-booking-manager' ) ); ?>
 

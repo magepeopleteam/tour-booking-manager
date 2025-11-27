@@ -37,7 +37,9 @@
 		$div_class=$related_tour_count==1?'flexWrap modern':'flexWrap grid';
 		?>
 		<div class='ttbm_style related-hotel' id="ttbm_related_tour">
-			<h2><?php esc_html_e( 'You may like ', 'tour-booking-manager' ) ?></h2>
+			<div class="ttbm_title_style_2">
+				<h2><?php esc_html_e( 'You may like ', 'tour-booking-manager' ) ?></h2>
+			</div>
 			<?php
 				if ( sizeof( $related_tours ) > $num_of_tour ) {
 					include( TTBM_Function::template_path( 'layout/carousel_indicator.php' ) );

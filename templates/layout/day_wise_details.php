@@ -9,7 +9,7 @@
 
 	if( !empty($daywise) && $display_daywise == 'on' ){
 		?>
-		<div class='ttbm_default_widget'>
+		<div class='day-wise-details-area'>
 			<?php do_action( 'ttbm_section_title', 'ttbm_string_schedule_details', esc_html__( 'Schedule Details ', 'tour-booking-manager' ) ); ?>
 			<div class='ttbm_widget_content ttbm_day_wise_details'>
 				<?php

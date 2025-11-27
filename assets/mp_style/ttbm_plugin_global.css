@@ -140,7 +140,7 @@
 	#ttbm_content h6 { margin: 0; padding: 0; line-height: 1.25; }
 	#ttbm_content strong { font-weight: var(--fw-bold); }
 	#ttbm_content .extraBold { font-weight: 900; }
-	#ttbm_content h1, div#ttbm_content [class*="_fs_h1"] { font-weight: normal;font-size: var(--ttbm_fs_h1); }
+	#ttbm_content h1, div#ttbm_content [class*="_fs_h1"] { font-weight: normal; }
 	#ttbm_content h2, div#ttbm_content [class*="_fs_h2"] { font-weight: normal;font-size: var(--ttbm_fs_h2); }
 	#ttbm_content h3, div#ttbm_content [class*="_fs_h3"] { font-weight: normal; }
 	#ttbm_content h4, div#ttbm_content [class*="_fs_h4"] { font-weight: normal; text-transform: inherit;font-size: var(--ttbm_fs_h4); }

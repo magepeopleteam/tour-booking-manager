@@ -36,10 +36,12 @@ div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-w
 .ttbm_details_page_header .ttbm-rating-stars { 
 	margin:0;
 	margin-top: 3px;
+	font-size: 16px;
 }
 .ttbm_details_page .ttbm_details_page_header .location_name { 
 	margin:0;
 	margin-bottom:10px;
+	font-size: 16px;
 }
 .ttbm_content__left {width: calc(100% - 346px);}
 .hip_hop_hotel_theme .ttbm_content__left,

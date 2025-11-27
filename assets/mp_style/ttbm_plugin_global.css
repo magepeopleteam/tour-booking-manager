@@ -1517,6 +1517,56 @@
 	.tabsContentNext [data-tabs-next].active { display: block; }
 	.nextTab_prev_link { cursor: pointer; }
 }
+
+	/***********Cart Bg Image (outside ttbm_style)****************/
+	.woocommerce-cart .bg_image_area,
+	.woocommerce-mini-cart .bg_image_area,
+	.wc-block-mini-cart .bg_image_area {
+		width: 100%;
+		overflow: hidden;
+		position: relative;
+		height: 150px;
+		min-height: 150px;
+	}
+	.woocommerce-cart .bg_image_area [data-bg-image],
+	.woocommerce-mini-cart .bg_image_area [data-bg-image],
+	.wc-block-mini-cart .bg_image_area [data-bg-image] {
+		background-size: cover;
+		background-position: center center;
+		position: relative;
+		height: 100%;
+		width: 100%;
+		min-height: 150px;
+		display: block;
+	}
+	.woocommerce-cart .bg_image_area [data-bg-image]:before,
+	.woocommerce-mini-cart .bg_image_area [data-bg-image]:before,
+	.wc-block-mini-cart .bg_image_area [data-bg-image]:before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		background-image: linear-gradient(170deg, transparent, Black);
+		opacity: .4;
+	}
+	.woocommerce-cart .bg_image_area[data-href],
+	.woocommerce-mini-cart .bg_image_area[data-href],
+	.wc-block-mini-cart .bg_image_area[data-href] {
+		cursor: pointer;
+	}
+	.woocommerce-cart .bg_image_area:hover [data-bg-image],
+	.woocommerce-mini-cart .bg_image_area:hover [data-bg-image],
+	.wc-block-mini-cart .bg_image_area:hover [data-bg-image],
+	.woocommerce-cart .bg_image_area [data-bg-image]:hover,
+	.woocommerce-mini-cart .bg_image_area [data-bg-image]:hover,
+	.wc-block-mini-cart .bg_image_area [data-bg-image]:hover {
+		-ms-transform: scale(1.05);
+		transform: scale(1.05);
+		-webkit-transition: all 0.5s ease-in-out;
+		transition: all 0.5s ease-in-out;
+	}
 /******************************************************************** Panel section ************************************************/
 @media only screen and (min-width: 10px) {
 	div.ttbm_style .ttbmPanel,

@@ -223,8 +223,10 @@
 				$display_map = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'off');
 				if ($display_map == 'on'):
 					?>
-                    <div class="ttbm_default_widget" style="width: 100%; height: 400px;">
-                        <div id="<?php echo esc_attr($gmap_api_key ? 'gmap_canvas' : 'osmap_canvas'); ?>" style="width: 100%; height:100%;" data-lati="<?php echo esc_attr($latitude); ?>" data-longdi="<?php echo esc_attr($longitude); ?>" data-location="<?php echo esc_attr($location_name); ?>"></div>
+					<h2 class="content-title"><?php esc_html_e( "Location", 'tour-booking-manager' ); ?></h2>
+
+                    <div style="width: 100%; height: 400px;margin:20px 0;">
+                        <div  id="<?php echo esc_attr($gmap_api_key ? 'gmap_canvas' : 'osmap_canvas'); ?>" style="width: 100%; height:100%;" data-lati="<?php echo esc_attr($latitude); ?>" data-longdi="<?php echo esc_attr($longitude); ?>" data-location="<?php echo esc_attr($location_name); ?>"></div>
                     </div>
 				<?php
 				endif;

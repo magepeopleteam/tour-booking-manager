@@ -111,7 +111,7 @@
 				$data_ticket_name = preg_replace('/[^A-Za-z0-9\-]/', '', $name);
 				if ($available_seat > $min_qty) {
 					?>
-                    <div data-ticket-type-name="<?php echo esc_attr($data_ticket_name); ?>">
+                    <div class="ticket-type-name"  data-ticket-type-name="<?php echo esc_attr($data_ticket_name); ?>">
 						<?php
 							if ($ticket_qty_type == 'inputbox') {
 								?>

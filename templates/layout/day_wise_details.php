@@ -9,8 +9,9 @@
 
 	if( !empty($daywise) && $display_daywise == 'on' ){
 		?>
-		<div class='ttbm_default_widget'>
-			<?php do_action( 'ttbm_section_title', 'ttbm_string_schedule_details', esc_html__( 'Schedule Details ', 'tour-booking-manager' ) ); ?>
+		<div class='day-wise-details-area'>
+			<h2 class="content-title"><?php esc_html_e( "Schedule Details", 'tour-booking-manager' ); ?></h2>
+
 			<div class='ttbm_widget_content ttbm_day_wise_details'>
 				<?php
 					foreach ( $daywise as $key => $day ) {

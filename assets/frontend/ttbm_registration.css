@@ -434,8 +434,11 @@ div.ttbm_booking_panel table th {
 .ttbm_default_theme div.ttbm_default_widget .ttbm_widget_title {
 	text-align: left;
 }
-div.ttbm-attendee-form h3 {
+#ttbm_content div.ttbm-attendee-form h3 {
 	margin: 0;
+	margin-bottom: 10px;
+	font-size: 21px;
+  	font-weight: 500;
 }
 label.time_select_box {
 	text-align: center;
@@ -480,7 +483,7 @@ div.ttbm_booking_panel .ttbm_book_now_area .tour_price {
 }
 div.ttbm_booking_panel .ttbm_attendee_form_area {
 	border-radius: 10px;
-	margin: 10px 0;
+	margin: 10px;
 	background: #ECECEC;
 }
 div.ttbm_booking_panel .ttbm_attendee_form_item {

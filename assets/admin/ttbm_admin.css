@@ -162,7 +162,6 @@
 	#ttbm_meta_box_panel  .tabsItem section .label p { font-size: 14px; font-weight: normal; margin-bottom: 5px; color: var(--mpl-secondary);}
 	#ttbm_meta_box_panel  .tabsItem section .label .text { font-weight: normal; line-height: 20px; font-size: 13px;}
 	#ttbm_meta_box_panel  .tabsItem section textarea { width: 100%;}
-	#ttbm_meta_box_panel  .tabsItem section .roundSwitchLabel { margin: 0 10px;}
 	#ttbm_meta_box_panel  .tabsItem section .roundSwitchLabel input:checked + .roundSwitch { background-color: var(--mpl-primary);}
 	#ttbm_meta_box_panel  .tabsItem section .customCheckboxLabel input:checked ~ .customCheckbox::before { background: var(--mpl-primary); border-color: var(--mpl-primary);}
 	#ttbm_meta_box_panel  .tabsItem .col-left { width: 50%;}

@@ -1075,6 +1075,12 @@
 	}
 
 }
+.auto-search-wrapper input{
+	border-radius: 5px;
+}
+#map-desc{
+	margin:10px 0; 
+}
 /* ttbm_hotel_features_tab */
 .features_header{
 	display: flex;

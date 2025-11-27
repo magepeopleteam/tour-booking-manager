@@ -24,7 +24,7 @@
                     
                     <section>
                         <div class="ttbm-header">
-                            <h4><i class="fas fa-tools"></i><?php esc_html_e('Genearl Information', 'tour-booking-manager'); ?></h4>
+                            <h4><i class="mi mi-coins"></i><?php esc_html_e('Price Settings', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_registration', $checked); ?>
                         </div>
                         <div data-collapse="#ttbm_display_registration" class="<?php echo esc_attr($active); ?>">

@@ -126,10 +126,12 @@ div.ttbm_style [data-bg-image] { transform: scale(1);}
 }
 
 #ttbm_related_tour .ttbm_default_widget .ttbm_widget_content { padding: 10px;}
-.ttbm_extra_service_area table.mp_tour_ticket_extra { box-shadow: 0 0 1px #DDD; border-radius: 12px 12px 0 0;}
+.ttbm_extra_service_area table.mp_tour_ticket_extra {
+	border-left: 0;
+}
 .ttbm_extra_service_area table.mp_tour_ticket_extra thead { border: 0;}
 
-.ttbm_extra_service_area table.mp_tour_ticket_extra tbody tr { border-bottom: 1px solid #F5F5F5;}
+.ttbm_extra_service_area table.mp_tour_ticket_extra tbody tr { border-bottom: 1px solid #DADADA;}
 .ttbm_extra_service_area table.mp_tour_ticket_extra tbody tr:last-child { border-bottom: 0;}
 #ttbm_content .ttbm_extra_service_area h2.extra_service_title { margin-top: 20px;padding:10px; font-weight: bold; font-size: 18px;color:#666}
 table div.ttbm_attendee_form_item { padding: 15px;}

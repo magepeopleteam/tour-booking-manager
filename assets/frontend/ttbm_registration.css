@@ -5,7 +5,17 @@ body.theme-twentytwentytwo div.ttbm_wraper {max-width: 1200px !important;}
 .ast-separate-container .ast-article-single {padding: var(--ttbm_mp);}
 /**************************************************/
 @media (min-width: 10px) {
-	div.ttbm_default_widget { border: 1px solid var(--color_border); border-radius: 10px; box-shadow: 0 2px 10px #0000001B;display: block;	font-size: var(--ttbm_fs);	color: var(--d_color);	position: relative;	margin: 0 0 var(--ttbm_mp) 0;	background: #FFF;}
+	div.ttbm_default_widget { 
+		
+		border-radius: 10px; 
+		
+		display: block;	
+		font-size: var(--ttbm_fs);	
+		color: var(--d_color);	
+		position: relative;	
+		margin: 0 0 var(--ttbm_mp) 0;	
+		background: #FFF;
+	}
 }
 /**************************************************/
 div.ttbm_default_theme,
@@ -29,6 +39,7 @@ div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-w
 }
 .ttbm_details_page .ttbm_details_page_header .location_name { 
 	margin:0;
+	margin-bottom:10px;
 }
 .ttbm_content__left {width: calc(100% - 346px);}
 .hip_hop_hotel_theme .ttbm_content__left,
@@ -332,9 +343,19 @@ div.ttbm_viator_theme .item_icon { width: auto;}
 .ttbm_carousel_holder { position: absolute; right: 0; z-index: 99; background-color: bisque;}
 /*****************content & Title*********************************/
 .site-content .ast-container { display: block; }
-.ttbm_default__title h1{margin:10px 0;padding: 0 0 5px 0;font-size: 30px;padding: 0;}
-
-
+.ttbm_default__title h1{
+	margin:10px 0;
+	padding: 0 0 5px 0;
+	
+	padding: 0;
+}
+#ttbm_content h1{
+	margin-bottom:10px;
+	font-size: 25px;
+}
+.ttbm_style table thead th{
+	font-weight: normal;
+}
 
 div > div.ttbm_default_widget:last-child {margin: 0;}
 div.ttbm_default_widget .ttbm_widget_title {	padding: var(--ttbm_mp_xs) var(--ttbm_mp);	text-align: center;margin: 0;	background-color: var(--color_theme);	color: var(--color_theme_alter);	border-radius: 10px 10px 0 0;}
@@ -356,7 +377,19 @@ div.ttbm_default_widget .ttbm_title_style_3::before {
 	border-bottom: 3px solid var(--color_theme);
 }
 div.ttbm_default_widget .ttbm_widget_content.ttbm_day_wise_details {padding: 20px;}
-div.ttbm_default_widget .ttbm_title_style_2 {	background: rgba(var(--color_theme_rbg), 0.1);	padding: 12px var(--ttbm_mp);	font-weight: bold;	border-radius: 10px 10px 0 0;	font-size: 22px;}
+div.ttbm_default_widget .ttbm_title_style_2 {		
+	padding: 12px var(--ttbm_mp);	
+	font-size: 22px;
+}
+#ttbm_content .ttbm_title_style_2 h5{
+	font-weight: bold;
+}
+.ttbm_widget_content [data-bg-image]{
+	border-radius: 10px;
+}
+.ttbm_widget_content [data-bg-image]::before{
+	border-radius: 10px;
+}
 /*****************List*********************************/
 .ttbm_widget_content ul li:not(.ttbm_wp_editor li) {width: 100%;}
 .ttbm_widget_content ul li i,
@@ -379,7 +412,7 @@ div.ttbm_default_widget .ttbm_title_style_2 {	background: rgba(var(--color_theme
 /*************************************************/
 div.ttbm_registration_area {position: relative;margin: 0 0 var(--ttbm_mp) 0;
 	background-color: #FFF;
-	box-shadow: 0 5px 15px #DDD;
+	border: 1px solid #DDD;
 	border-radius: 12px;
 }
 /***/
@@ -2131,15 +2164,15 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
 }
 
 .ttbm_available_number {
-    font-size: 18px;
+    font-size: 12px;
     font-weight: 700;
-    color: #28a745;
+	color: #333;
     margin-right: 5px;
 }
 
 .ttbm_available_label {
     font-size: 12px;
-    color: #6c757d;
+    color: #333;
     text-transform: uppercase;
     letter-spacing: 0.3px;
 }
@@ -2150,7 +2183,7 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
 
 .ttbm_capacity_text {
     font-size: 10px;
-    color: #6c757d;
+    color: #333;
     display: block;
     margin-bottom: 4px;
 }

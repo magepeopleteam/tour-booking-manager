@@ -267,7 +267,7 @@
                     <div >
 						<?php if (!$gmap_api_key): ?>
                             <div class="label-inner">
-                                <p><?php esc_html_e('To use google map, you have to add google map API key from', 'tour-booking-manager'); ?>
+                                <p id="map-desc"><?php esc_html_e('To use google map, you have to add google map API key from', 'tour-booking-manager'); ?>
                                     <a href="<?php echo esc_url(admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page')); ?>"><?Php esc_html_e('settings.', 'tour-booking-manager'); ?></a>
                                 </p>
                             </div>

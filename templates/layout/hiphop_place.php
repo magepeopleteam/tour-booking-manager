@@ -12,7 +12,7 @@
 		?>
 		<div class="place_you_see" id="place_you_see">
 
-			<?php do_action( 'ttbm_section_title', 'ttbm_string_hiphop_heading', esc_html__( 'Places You’ll See : ', 'tour-booking-manager' ) ); ?>
+			<h2 class="content-title"><?php esc_html_e( "Places You’ll See :", 'tour-booking-manager' ); ?></h2>
 
 			<?php
 				if ( sizeof( $places ) > 3 ) {

@@ -75,7 +75,10 @@ div.ttbm_map_area #gmap_canvas {max-width: 100%;width: 100%;min-height: 320px;}
 div.ttbm_location_list div.filter_item {padding: 0;}
 /**************************************************/
 div.ttbm_style .mp_tour_ticket_form { border-radius: 8px; margin-top: 0px; padding: 0px;}
-
+#ttbm_content .content-title{
+	font-weight: 500;
+	font-size: 20px;
+}
 @media (min-width: 540px) {
 	div.ttbm_style .mp_tour_ticket_form { border-radius: 8px; }
 }

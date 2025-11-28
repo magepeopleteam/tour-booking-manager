@@ -1264,6 +1264,16 @@
 })(jQuery);
 //=================title style switcher==================
 (function($){
+    $(document).on('click', '.ttbm-title-styles .title-style', function(){
+       var parent = $(this).closest('.ttbm-title-styles');
+        $(parent).find('.title-style').removeClass('active');
+        $(this).addClass('active');
+        var titleStyle = $(this).data('title-style');
+        $('#ttbm-title-style').val(titleStyle);
+    });
+})(jQuery);
+
+(function($){
     $(document).on('click', '.ttbm-booking-styles .booking-style', function(){
        var parent = $(this).closest('.ttbm-booking-styles');
         $(parent).find('.booking-style').removeClass('active');

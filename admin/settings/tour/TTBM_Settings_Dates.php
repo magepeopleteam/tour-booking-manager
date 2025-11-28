@@ -206,7 +206,7 @@
                         <div class="ttbm-header">
                             <h4><i class="fas fa-calendar-days"></i><?php esc_html_e('Optional Tour Configuration', 'tour-booking-manager'); ?></h4>
                         </div>
-                        <div class="gptLayout">
+                        <div class="gptLayout ttbm-ticket-time">
                             <h6><?php esc_html_e('Tour Time Slots Configuration', 'tour-booking-manager'); ?><?php TTBM_Custom_Layout::switch_button('mep_disable_ticket_time', $checked_time); ?></h6>
                             <div data-collapse="#mep_disable_ticket_time" class="_mT <?php echo esc_attr($active_time); ?>">
 								<?php

@@ -1136,6 +1136,18 @@
 	background-color: #006EFF;
 	color:#fff;
 }
+ #ttbm_meta_box_panel  .ttbm_settings_dates .tabLists{
+	padding-left: 0;
+ }
+.ttbm_settings_dates .tabLists{
+	padding:0;
+}
+.ttbm_settings_dates .tabLists li{
+	margin: 5px;
+}
+.ttbm_settings_dates .tabsContent{
+	padding:10px;
+}
 /* ttbm_hotel_features_tab */
 .features_header{
 	display: flex;

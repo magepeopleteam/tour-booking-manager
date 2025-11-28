@@ -21,7 +21,7 @@
                     <h2><?php esc_html_e('Display Settings', 'tour-booking-manager'); ?></h2>
                     <p><?php TTBM_Settings::des_p('display_settings_description'); ?> </p>
 					<?php $content_title_style = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_section_title_style') ?: 'ttbm_title_style_2'; ?>
-					<?php $ticketing_system = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'availability_section'); ?>
+					<?php $ticketing_system = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'regular_ticket'); ?>
                     <section>
                         <div class="ttbm-header">
                             <h4><i class="fas fa-chalkboard"></i><?php esc_html_e('Display Settings', 'tour-booking-manager'); ?></h4>

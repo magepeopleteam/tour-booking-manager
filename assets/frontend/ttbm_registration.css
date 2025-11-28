@@ -2441,11 +2441,7 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
         font-weight: 600;
         margin: 0;
     }
-    
-    .ttbm_ticket_description {
-        display: none; /* Hide on mobile for cleaner look */
-    }
-    
+
     /* Price styling */
     .ttbm_price_container {
         display: flex;

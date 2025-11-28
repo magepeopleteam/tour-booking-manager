@@ -1262,6 +1262,16 @@
         reverseGeocode(location);
     }
 })(jQuery);
+//=================title style switcher==================
+(function($){
+    $(document).on('click', '.ttbm-title-styles .title-style', function(){
+       var parent = $(this).closest('.ttbm-title-styles');
+        $(parent).find('.title-style').removeClass('active');
+        $(this).addClass('active');
+        var titleStyle = $(this).data('title-style');
+        $('#ttbm-title-style').val(titleStyle);
+    });
+})(jQuery);
 
 // ==============metabox sidebar collapse==============
 (function($){

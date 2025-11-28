@@ -1081,6 +1081,32 @@
 #map-desc{
 	margin:10px 0; 
 }
+.ttbm-title-styles{
+	display: flex;
+	gap:10px;
+	flex-wrap: wrap;
+}
+.title-style{
+	width: calc(33.33% - 10px);
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background-color: #fff;
+	box-shadow: 0 0 5px rgba(0,0,0,0.1);
+	text-align: center;
+	cursor: pointer;
+}
+.title-style p{
+	font-weight: 500;
+	margin: 5px 0;
+	padding:5px;
+}
+.title-style.active{
+	border: 2px solid #006EFF;
+}
+.title-style.active p{
+	background-color: #006EFF;
+	color:#fff;
+}
 /* ttbm_hotel_features_tab */
 .features_header{
 	display: flex;

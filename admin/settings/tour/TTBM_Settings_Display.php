@@ -92,6 +92,40 @@
 							
                         </div>
                     </section>
+
+                    <section>
+                        <div class="ttbm-header">
+                            <h4><i class="mi mi-blog-text"></i><?php esc_html_e('Section Title Settings', 'tour-booking-manager'); ?></h4>
+                        </div>
+                        <?php
+                            $styles = [
+                                [
+                                    'id'=>'style_1',
+                                    'img'=>TTBM_PLUGIN_URL.'/assets/images/style-1.png',
+                                    'title'=> 'Style 1'
+                                ],
+                                [
+                                    'id'=>'ttbm_title_style_2',
+                                    'img'=>TTBM_PLUGIN_URL.'/assets/images/style-2.png',
+                                    'title'=> 'Style 2'
+                                ],
+                                [
+                                    'id'=>'ttbm_title_style_3',
+                                    'img'=>TTBM_PLUGIN_URL.'/assets/images/style-3.png',
+                                    'title'=> 'Style 3'
+                                ],
+                            ];
+                        ?>
+                        <div class="ttbm-title-styles">
+                            <input type="hidden" id="ttbm-title-style" name="ttbm_section_title_style" value="<?php echo esc_attr( $content_title_style ); ?>" />
+                            <?php foreach( $styles as  $value): ?>
+                                <div class="title-style <?php echo ($content_title_style==$value['id'])?'active':''; ?>" data-title-style="<?php echo $value['id']; ?>">
+                                    <img src="<?php echo  $value['img']; ?>" alt="">
+                                    <p><?php echo $value['title']; ?></p>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </section>
                 </div>
 				<?php
 			}

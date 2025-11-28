@@ -28,16 +28,6 @@
                         </div>
                         <div class="dFlex">
                             <div class="col-left">
-                                <label class="label">
-                                    <div>
-                                        <p><?php esc_html_e('Section Title Style', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_section_title_style'); ?></span></i></p>
-                                    </div>
-                                    <select class="" name="ttbm_section_title_style">
-                                        <option value="style_1" <?php echo esc_attr($content_title_style == 'style_1' ? 'selected' : ''); ?>><?php esc_html_e('Style One', 'tour-booking-manager'); ?></option>
-                                        <option value="ttbm_title_style_2" <?php echo esc_attr($content_title_style == 'ttbm_title_style_2' ? 'selected' : ''); ?>><?php esc_html_e('Style Two', 'tour-booking-manager'); ?></option>
-                                        <option value="ttbm_title_style_3" <?php echo esc_attr($content_title_style == 'ttbm_title_style_3' ? 'selected' : ''); ?>><?php esc_html_e('Style Three', 'tour-booking-manager'); ?></option>
-                                    </select>
-                                </label>
                                 <div class="label">
                                     <div>
                                         <p><?php esc_html_e('Display Seat Count', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_seat_details'); ?></span></i></p>
@@ -65,15 +55,6 @@
                                  <?php do_action('add_ttbm_display_settings_left', $tour_id); ?>
                             </div>
                             <div class="col-right">
-                                <label class="label">
-                                    <div>
-                                        <p><?php esc_html_e('Ticket Purchase', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_ticketing_system'); ?></span></i></p>
-                                    </div>
-                                    <select name="ttbm_ticketing_system">
-                                        <option value="regular_ticket" <?php echo esc_attr(!$ticketing_system ? 'selected' : ''); ?>><?php esc_html_e('Ticket Open', 'tour-booking-manager'); ?></option>
-                                        <option value="availability_section" <?php echo esc_attr($ticketing_system == 'availability_section' ? 'selected' : ''); ?>><?php esc_html_e('Ticket Collapse System', 'tour-booking-manager'); ?></option>
-                                    </select>
-                                </label>
                                 <div class="label">
                                     <div>
                                         <p><?php esc_html_e('Display Tour Type', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_tour_type'); ?></span></i></p>
@@ -89,7 +70,6 @@
 								<?php $this->rank_tour($tour_id); ?>
                                 <?php do_action('add_ttbm_display_settings', $tour_id); ?>
                             </div>
-							
                         </div>
                     </section>
 
@@ -120,6 +100,35 @@
                             <input type="hidden" id="ttbm-title-style" name="ttbm_section_title_style" value="<?php echo esc_attr( $content_title_style ); ?>" />
                             <?php foreach( $styles as  $value): ?>
                                 <div class="title-style <?php echo ($content_title_style==$value['id'])?'active':''; ?>" data-title-style="<?php echo $value['id']; ?>">
+                                    <img src="<?php echo  $value['img']; ?>" alt="">
+                                    <p><?php echo $value['title']; ?></p>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="ttbm-header">
+                            <h4><i class="mi mi-blog-text"></i><?php esc_html_e('Booking Form Style', 'tour-booking-manager'); ?></h4>
+                        </div>
+                        <?php 
+                        $booking_form = [
+                                [
+                                    'id'=>'regular_ticket',
+                                    'img'=>TTBM_PLUGIN_URL.'/assets/images/booking-style-1.png',
+                                    'title'=> 'Booking Form Open'
+                                ],
+                                [
+                                    'id'=>'availability_section',
+                                    'img'=>TTBM_PLUGIN_URL.'/assets/images/booking-style-2.png',
+                                    'title'=> 'Booking Form Collapse'
+                                ],
+                            ];
+                        ?>
+                        <div class="ttbm-booking-styles">
+                            <input type="hidden" id="ttbm-booking-style" name="ttbm_ticketing_system" value="<?php echo esc_attr( $ticketing_system ); ?>" />
+                            <?php foreach( $booking_form as  $value): ?>
+                                <div class="booking-style <?php echo ($ticketing_system==$value['id'])?'active':''; ?>" data-booking-style="<?php echo $value['id']; ?>">
                                     <img src="<?php echo  $value['img']; ?>" alt="">
                                     <p><?php echo $value['title']; ?></p>
                                 </div>

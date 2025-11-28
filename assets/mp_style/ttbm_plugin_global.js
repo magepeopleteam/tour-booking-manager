@@ -210,6 +210,34 @@ function ttbm_loadBgImage() {
     });
     return true;
 }
+//====================================================================Load Cart Bg Image=================//
+function ttbm_loadCartBgImage() {
+    jQuery('body').find('.bg_image_area [data-bg-image]:visible').each(function () {
+        let target = jQuery(this);
+        // Skip if already inside ttbm_style (handled by ttbm_loadBgImage)
+        if (target.closest('.ttbm_style').length > 0) {
+            return;
+        }
+        // Skip if inside slider
+        if (target.closest('.sliderAllItem').length === 0) {
+            let width = target.outerWidth();
+            let height = target.outerHeight();
+            if (!target.css('background-image') || target.css('background-image') === 'none' || target.css('background-image') === 'rgba(0, 0, 0, 0)' || width === 0 || height === 0) {
+                let bg_url = target.data('bg-image');
+                if (!bg_url || bg_url === '' || bg_url === 'undefined') {
+                    bg_url = typeof ttbm_empty_image_url !== 'undefined' ? ttbm_empty_image_url : '';
+                }
+                if (bg_url) {
+                    ttbm_resize_bg_image_area(target, bg_url);
+                    target.css('background-image', 'url("' + bg_url + '")').promise().done(function () {
+                        dLoaderRemove(target);
+                    });
+                }
+            }
+        }
+    });
+    return true;
+}
 function ttbm_resize_bg_image_area(target, bg_url) {
     let tmpImg = new Image();
     tmpImg.src = bg_url;
@@ -258,6 +286,8 @@ function ttbm_resize_bg_image_area(target, bg_url) {
             let target = jQuery(this);
             ttbm_slider_resize(target)
         });
+        // Load cart images
+        ttbm_loadCartBgImage();
     });
     function load_initial() {
         if (!bg_image_load) {
@@ -266,7 +296,34 @@ function ttbm_resize_bg_image_area(target, bg_url) {
                 placeholderLoaderRemove($('.ttbm_style.placeholderLoader'))
             }
         }
+        // Always load cart images
+        ttbm_loadCartBgImage();
     }
+    // Load cart images on document ready
+    $(document).ready(function () {
+        setTimeout(function() {
+            ttbm_loadCartBgImage();
+        }, 100);
+    });
+    // Load cart images when WooCommerce cart is updated
+    $(document.body).on('updated_cart_totals updated_wc_div', function() {
+        setTimeout(function() {
+            ttbm_loadCartBgImage();
+        }, 100);
+    });
+    // Load cart images when mini cart is updated
+    $(document.body).on('wc_fragment_refresh wc_fragments_refreshed', function() {
+        setTimeout(function() {
+            ttbm_loadCartBgImage();
+        }, 100);
+    });
+    // Handle click events for cart bg_image_area
+    $(document).on('click', '.bg_image_area[data-href]:not(.ttbm_style .bg_image_area)', function () {
+        let href = $(this).data('href');
+        if (href) {
+            window.location.href = href;
+        }
+    });
 }(jQuery));
 //=============================================================================Change icon and text=================//
 function ttbm_content_icon_change(currentTarget) {

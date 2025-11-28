@@ -5,7 +5,17 @@ body.theme-twentytwentytwo div.ttbm_wraper {max-width: 1200px !important;}
 .ast-separate-container .ast-article-single {padding: var(--ttbm_mp);}
 /**************************************************/
 @media (min-width: 10px) {
-	div.ttbm_default_widget { border: 1px solid var(--color_border); border-radius: 10px; box-shadow: 0 2px 10px #0000001B;display: block;	font-size: var(--ttbm_fs);	color: var(--d_color);	position: relative;	margin: 0 0 var(--ttbm_mp) 0;	background: #FFF;}
+	div.ttbm_default_widget { 
+		
+		border-radius: 10px; 
+		
+		display: block;	
+		font-size: var(--ttbm_fs);	
+		color: var(--d_color);	
+		position: relative;	
+		margin: 0 0 var(--ttbm_mp) 0;	
+		background: #FFF;
+	}
 }
 /**************************************************/
 div.ttbm_default_theme,
@@ -23,7 +33,16 @@ div.ttbm_faq_item .ttbm_faq_title {-webkit-transition: 350ms ease-in-out;transit
 /*****************Details page*********************************/
 div.ttbm_details_page {display: block;position: relative;}
 div.ttbm_content_area {position: relative;display: -webkit-flex;display: flex;-webkit-flex-wrap: wrap;flex-wrap: wrap;-webkit-justify-content: space-between;justify-content: space-between;padding-top: 5px}
-.ttbm_details_page_header .ttbm-rating-stars { margin: 0 0 10px 0 !important;}
+.ttbm_details_page_header .ttbm-rating-stars { 
+	margin:0;
+	margin-top: 3px;
+	font-size: 16px;
+}
+.ttbm_details_page .ttbm_details_page_header .location_name { 
+	margin:0;
+	margin-bottom:10px;
+	font-size: 16px;
+}
 .ttbm_content__left {width: calc(100% - 346px);}
 .hip_hop_hotel_theme .ttbm_content__left,
 .ttbm_spring_theme .ttbm_content__left {width: calc(50% - 20px);}
@@ -55,8 +74,17 @@ div.ttbm_map_area #gmap_canvas {max-width: 100%;width: 100%;min-height: 320px;}
 /*********************Location list*****************************/
 div.ttbm_location_list div.filter_item {padding: 0;}
 /**************************************************/
+.col-left .roundSwitchLabel{
+	margin-right: 5px;
+}
+.col-right .roundSwitchLabel{
+	margin-right: 5px;
+}
 div.ttbm_style .mp_tour_ticket_form { border-radius: 8px; margin-top: 0px; padding: 0px;}
-
+#ttbm_content .content-title{
+	font-weight: 500;
+	font-size: 20px;
+}
 @media (min-width: 540px) {
 	div.ttbm_style .mp_tour_ticket_form { border-radius: 8px; }
 }
@@ -98,7 +126,7 @@ div.small_box {
 div .item_icon { padding: 5px 20px; text-align: center; position: relative; white-space: nowrap; display: flex; align-items: center; line-height: 1.5;}
 div .item_icon::after { content: ""; position: absolute; top: 50%; right: 0; display: block; width: 2px; height: 10px; background-color: rgba(var(--color_theme_rgb), 0.4); transform: translateY(-50%);}
 div .item_icon:last-child:after { width: 0; height: 0;}
-div .item_icon i {color: var(--color_theme);font-size: 28px;margin-right: 6px;}
+div .item_icon i {color: var(--color_theme);font-size: 20px;margin-right: 6px;}
 div.ttbm_style [data-bg-image] { transform: scale(1);}
 @media (max-width: 600px) {
 	.booking-button { flex-direction: column; }
@@ -107,13 +135,14 @@ div.ttbm_style [data-bg-image] { transform: scale(1);}
 }
 
 #ttbm_related_tour .ttbm_default_widget .ttbm_widget_content { padding: 10px;}
-.ttbm_extra_service_area table.mp_tour_ticket_extra { box-shadow: 0 0 1px #DDD; border-radius: 12px 12px 0 0;}
+.ttbm_extra_service_area table.mp_tour_ticket_extra {
+	border-left: 0;
+}
 .ttbm_extra_service_area table.mp_tour_ticket_extra thead { border: 0;}
-.ttbm_extra_service_area table.mp_tour_ticket_extra thead th:first-child { border-radius: 12px 0 0 0;}
-.ttbm_extra_service_area table.mp_tour_ticket_extra thead th:last-child { border-radius: 0 12px 0 0;}
-.ttbm_extra_service_area table.mp_tour_ticket_extra tbody tr { border-bottom: 1px solid #F5F5F5;}
+
+.ttbm_extra_service_area table.mp_tour_ticket_extra tbody tr { border-bottom: 1px solid #DADADA;}
 .ttbm_extra_service_area table.mp_tour_ticket_extra tbody tr:last-child { border-bottom: 0;}
-#ttbm_content .ttbm_extra_service_area h2.extra_service_title { margin-top: 20px;padding:10px; font-weight: bold; font-size: 18px;}
+#ttbm_content .ttbm_extra_service_area h2.extra_service_title { margin-top: 20px;padding:10px; font-weight: bold; font-size: 18px;color:#666}
 table div.ttbm_attendee_form_item { padding: 15px;}
 /**************************************************/
 .ttbm_wraper button.ttbm_book_now {margin: 0 var(--ttbm_mp_xs) 0 0;}
@@ -180,7 +209,7 @@ div.ttbm_faq_item {margin: 0 0 var(--ttbm_mp_xs) 0;}
 div.ttbm_faq_item .ttbm_faq_title {background-color: #FFF;border-bottom: 1px solid #DDD;border-radius: 0;font-weight: normal;text-transform: none; padding: 5px; font-size: var(--ttbm_fs_h5)}
 div.ttbm_faq_item .ttbm_faq_title.active {border-color: #F5F5F5;border-radius: 5px 5px 0 0;background-color: #F5F5F5; color: var(--color_black); }
 div.ttbm_faq_item .ttbm_faq_title span {padding: 5px 0;font-size: 14px; font-weight: bold;}
-div.ttbm_faq_content {background-color: #FFF;padding: var(--ttbm_mp);border-radius: 10px;overflow: hidden;}
+div.ttbm_faq_content {background-color: #FFF;padding: var(--ttbm_mp) 0;border-radius: 10px;overflow: hidden;}
 div.ttbm_faq_content p { margin-top: 0;}
 .ttbm_registration_area div[class*="simpleSpinner"] { position: absolute; z-index: 11111; left: 0; right: 0; top: 50%; font-size: var(--ttbm_fs_h1); width: 100%; padding: var(--ttbm_mp); color: var(--color_theme);}
 div.ttbm_faq_content p:last-child { margin-bottom: 0;}
@@ -224,7 +253,7 @@ div.ttbm_wraper .owl-theme .owl-nav {display: none;}
 #ttbm_related_tour div.filter_item:not([class*="grid_"]) {margin: 0;}
 #place_you_see .filter_item {box-shadow: none !important;padding: 0 !important;border-radius: 0 !important;}
 .ttbm_tour_guide [data-bg-image].circle {max-width: 100%;border: 2px solid var(--color_theme);margin: var(--ttbm_mp_xs) auto;width: 170px;}
-#place_you_see .ttbm_widget_content { padding: 0 15px;}
+
 .get-enquiry-popup { padding: 10px;}
 /**************Responsive***********************************/
 @media only screen and (max-width: 1100px) {
@@ -326,10 +355,28 @@ div.ttbm_viator_theme .item_icon { width: auto;}
 .ttbm_carousel_holder { position: absolute; right: 0; z-index: 99; background-color: bisque;}
 /*****************content & Title*********************************/
 .site-content .ast-container { display: block; }
-.ttbm_default__title h1{margin:10px 0;padding: 0 0 5px 0;font-size: 30px;padding: 0;}
+.ttbm_default__title h1{
+	margin:10px 0;
+	padding: 0 0 5px 0;
+	
+	padding: 0;
+}
+#ttbm_content h1{
+	margin-bottom:10px;
+	font-size: 25px;
+}
+.ttbm_style table thead th{
+	font-weight: normal;
+}
 
-
-
+.place_you_see{
+	position: relative;
+	padding-top: 12px;
+}
+.place_you_see .ttbm_widget_content { 
+	padding:15px;
+	padding-left: 0;
+}
 div > div.ttbm_default_widget:last-child {margin: 0;}
 div.ttbm_default_widget .ttbm_widget_title {	padding: var(--ttbm_mp_xs) var(--ttbm_mp);	text-align: center;margin: 0;	background-color: var(--color_theme);	color: var(--color_theme_alter);	border-radius: 10px 10px 0 0;}
 .ttbm_widget_content {padding: var(--ttbm_mp_xs); border-radius: 0 0 10px 10px;}
@@ -350,7 +397,19 @@ div.ttbm_default_widget .ttbm_title_style_3::before {
 	border-bottom: 3px solid var(--color_theme);
 }
 div.ttbm_default_widget .ttbm_widget_content.ttbm_day_wise_details {padding: 20px;}
-div.ttbm_default_widget .ttbm_title_style_2 {	background: rgba(var(--color_theme_rbg), 0.1);	padding: 12px var(--ttbm_mp);	font-weight: bold;	border-radius: 10px 10px 0 0;	font-size: 22px;}
+div.ttbm_default_widget .ttbm_title_style_2 {		
+	padding: 12px var(--ttbm_mp);	
+	font-size: 22px;
+}
+#ttbm_content .ttbm_title_style_2 h5{
+	font-weight: bold;
+}
+.ttbm_widget_content [data-bg-image]{
+	border-radius: 10px;
+}
+.ttbm_widget_content [data-bg-image]::before{
+	border-radius: 10px;
+}
 /*****************List*********************************/
 .ttbm_widget_content ul li:not(.ttbm_wp_editor li) {width: 100%;}
 .ttbm_widget_content ul li i,
@@ -373,7 +432,7 @@ div.ttbm_default_widget .ttbm_title_style_2 {	background: rgba(var(--color_theme
 /*************************************************/
 div.ttbm_registration_area {position: relative;margin: 0 0 var(--ttbm_mp) 0;
 	background-color: #FFF;
-	box-shadow: 0 5px 15px #DDD;
+	border: 1px solid #DDD;
 	border-radius: 12px;
 }
 /***/
@@ -386,15 +445,21 @@ div.ttbm_booking_panel table thead th,
 div.ttbm_booking_panel table td:last-child {text-align: center;padding: 8px;}
 div.ttbm_booking_panel table thead th:first-child {text-align: left;padding: 10px;}
 div.ttbm_booking_panel table th {
-	background-color: #FFF;
+
 	text-align: left;
 	vertical-align: middle;
 }
 .ttbm_default_theme div.ttbm_default_widget .ttbm_widget_title {
 	text-align: left;
 }
-div.ttbm-attendee-form h3 {
+#ttbm_content div.ttbm-attendee-form h3 {
 	margin: 0;
+	margin-bottom: 10px;
+	font-size: 21px;
+  	font-weight: 500;
+}
+.ttbm_day_wise_details{
+	margin:10px 0;
 }
 label.time_select_box {
 	text-align: center;
@@ -439,7 +504,7 @@ div.ttbm_booking_panel .ttbm_book_now_area .tour_price {
 }
 div.ttbm_booking_panel .ttbm_attendee_form_area {
 	border-radius: 10px;
-	margin: 10px 0;
+	margin: 10px;
 	background: #ECECEC;
 }
 div.ttbm_booking_panel .ttbm_attendee_form_item {
@@ -493,7 +558,6 @@ div.ttbm_select_date_area {
 }
 .ttbm_select_date_area .ttbm-title {
 	color: var(--color_white);
-	font-weight: bold;
 	font-size: 20px;
 	margin: 0;
 }
@@ -952,11 +1016,18 @@ div.search_result_empty {
 	display: none;font-weight: var(--fw-medium); font-size: var(--ttbm_fs_h3); color: var(--color_warning);text-align: center;
 	width: 100%;background-color: #FFF;padding: var(--ttbm_mp);margin: var(--ttbm_mp) 0;
 }
-div.filter_top_bar {font-size: var(--ttbm_fs_h3); width: 100%;background-color: #FFF;padding: var(--ttbm_mp_xs);margin: 0 0 var(--ttbm_mp_xs) 0;}
+div.filter_top_bar {font-size: 22px; width: 100%;background-color: #FFF;padding: var(--ttbm_mp_xs);margin: 0 0 var(--ttbm_mp_xs) 0;}
 div.filter_short_result { font-size: var(--ttbm_fs_small); font-weight: 500; color: var(--d_color);text-align: center;margin: var(--ttbm_mpl) 0 0 0;}
+.filter_top_bar{
+	align-items: center;
+	color: #666;
+}
 /***************************************/
-div.all_filter_item > div {margin: var(--ttbm_mp_xs_negative);}
-div.all_filter_item > div.modern {margin: 0;}
+div.all_filter_item > div {margin: 0;}
+div.all_filter_item > div.modern {
+	margin: 0;
+	margin-top: 20px;
+}
 /****************/
 div.filter_item {
 	display: -webkit-flex;
@@ -1001,6 +1072,7 @@ div.ttbm_list_title {margin-top: var(--ttbm_mp_xs);}
 	margin-bottom: 10px;
 	line-height: 20px;
 	font-size: 16px;
+	font-weight: normal;
 }
 .filter_item .bg_image_area{
 	border-radius: 0;
@@ -1029,6 +1101,27 @@ div.ttbm_list_title {margin-top: var(--ttbm_mp_xs);}
 	height: 52px;
 }
 
+.flora div.filter_item{
+	justify-content:start;
+}
+
+.blossom .ttbm_list_details{
+	padding: 0;
+}
+
+.blossom .ttbm_list_title {
+	padding:0 10px; 
+}
+
+.blossom .ttbm_list_content_wrapper {
+	padding:10px; 
+	padding-top:0; 
+}
+.blossom .ttbm_list_info {
+	margin: 0;
+	margin-bottom: 10px;
+}
+
 @media(max-width: 767px) {
 	.flora .filter_item.grid_4 .ttbm_list_title a {
 		height: auto;
@@ -1037,11 +1130,29 @@ div.ttbm_list_title {margin-top: var(--ttbm_mp_xs);}
 }
 
 .flora .filter_item .ttbm_list_title {
-	margin-bottom: 0;
+	padding: 10px;
+	margin: 0;
 }
 
 .lotus .ttbm_list_info_header .ttbm_list_title a{
 	text-decoration: none !important;
+}
+.lotus .ttbm_list_details{
+	padding:0;
+}
+.lotus .filter_item .ttbm_list_title {
+	padding:0 10px;
+}
+.lotus .ttbm_list_info{
+	margin-top: 0;
+}
+.lotus .ttbm_description{
+	display: none;
+}
+.lotus .ttbm_list_content_wrapper{
+	padding: 10px;
+	padding-top: 0;
+	margin: 0;
 }
 
 .filter_item.grid_3 .ttbm_list_title a {
@@ -1067,7 +1178,7 @@ div.ttbm_list_title {margin-top: var(--ttbm_mp_xs);}
 }
 
 div.modern .ttbm_list_title,
-div.modern .ttbm_list_title > * {margin: 0;font-size: var(--ttbm_fs_h4);font-weight: bold;}
+div.modern .ttbm_list_title > * {margin: 0;font-size: 20px;font-weight: normal;}
 
 .ttbm_list_info i{
 	color: var(--color_theme);
@@ -1085,7 +1196,7 @@ div.superSlider .sliderShowcaseItem:last-child{
 }
 
 /***************************************/
-div.ttbm_list_info {display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;margin: var(--dbr) 0 0 0;overflow: hidden;}
+div.ttbm_list_info {display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;margin: 10px 0;overflow: hidden;}
 div.ttbm_list_info span {font-size: var(--ttbm_fs_h6); color: var(--color_theme);}
 div.ttbm_list_info > span:first-child {margin: 0 var(--dbr) 0 0;}
 
@@ -1147,6 +1258,7 @@ div.absolute_item.bottom {
 }
 div.absolute_item * {color: var(--color_theme_alter);font-size: inherit;}
 div.absolute_item span {font-size: var(--ttbm_fs);color: var(--color_theme_alter); }
+
 /**********List************/
 div.modern .bg_image_area {width: 300px;}
 div.ttbm_list_details {
@@ -1236,7 +1348,7 @@ div.modern div.ttbm_list_details {
 	scroll-behavior: smooth; /* Smooth scrolling for modern browsers */
 	width: 100%;
 	gap: 5px;
-	padding: 5px 10px 5px 10px;
+	padding:0;
 	/*margin-bottom: 5px;*/
 }
 .ttbm_all_item_activities_holder::-webkit-scrollbar {
@@ -1302,6 +1414,48 @@ button.scroll-right {
 /**********Grid******************************/
 /**********Orchid Grid******************************/
 div.bg_image_area {margin: 0;border-radius: 5px;}
+.orchid .ttbm_list_content_wrapper{
+	padding: 10px;
+	padding-top: 0;
+}
+.orchid .ttbm_list_title{
+	padding: 10px;
+}
+
+.orchid .ttbm_list_title{
+	padding:0 10px;
+}
+.orchid .ttbm_list_info {
+	margin-top: 0;
+}
+#ttbm_related_tour{
+	position: relative;
+}
+#ttbm_related_tour .ttbm_list_title {
+	font-weight: normal;
+	margin-bottom: 10px;
+}
+#ttbm_related_tour .owl-carousel{
+	margin-top: 20px;
+}
+#ttbm_related_tour .ttbm_description{
+	display: none;
+}
+#ttbm_related_tour .divider{
+	display: none;
+}
+#ttbm_related_tour .ttbm_list_info{
+	margin-top: 0;
+}
+#place_you_see .filter_item  h6{
+	margin: 5px 0;
+}
+#ttbm_content .day_wise_details_item_title{
+	padding-bottom: 5px;
+}
+.ttbm_review_container h4.ttbm-review-title{
+	font-weight: normal;
+}
 /**********Location list******************************/
 [data-bg-image] .ttbm_list_title {color: #FFF;}
 /****************************************/
@@ -1913,11 +2067,11 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
 
 .ttbm_table_header th {
     padding: 16px 20px;
-    font-weight: 600;
+    font-weight: normal;
     text-align: left;
     color: #495057;
     font-size: 14px;
-    text-transform: uppercase;
+    text-transform: capitalize;
     letter-spacing: 0.5px;
 }
 
@@ -2036,15 +2190,15 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
 }
 
 .ttbm_available_number {
-    font-size: 18px;
+    font-size: 12px;
     font-weight: 700;
-    color: #28a745;
+	color: #333;
     margin-right: 5px;
 }
 
 .ttbm_available_label {
     font-size: 12px;
-    color: #6c757d;
+    color: #333;
     text-transform: uppercase;
     letter-spacing: 0.3px;
 }
@@ -2055,7 +2209,7 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
 
 .ttbm_capacity_text {
     font-size: 10px;
-    color: #6c757d;
+    color: #333;
     display: block;
     margin-bottom: 4px;
 }
@@ -2436,25 +2590,24 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
 }
 
 .ttbm_extra_service_area .ttbm_remaining_count {
     display: flex;
     align-items: center;
     gap: 5px;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 12px;
+	color: #333;
 }
 
 .ttbm_extra_service_area .ttbm_available_number {
-    color: #28a745;
-    font-size: 18px;
+    color: #333;
+    font-size: 12px;
     font-weight: 700;
 }
 
 .ttbm_extra_service_area .ttbm_available_label {
-    color: #6c757d;
+    color: #333;
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -2470,7 +2623,7 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
 
 .ttbm_extra_service_area .ttbm_capacity_text {
     font-size: 11px;
-    color: #6c757d;
+    color: #333;
     text-align: center;
 }
 
@@ -2482,7 +2635,9 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
     overflow: hidden;
     border: 1px solid #dee2e6;
 }
-
+.extra-service-price .amount{
+	color:#28a745;
+}
 .ttbm_extra_service_area .ttbm_progress_fill {
     height: 100%;
     transition: width 0.5s ease, background-color 0.3s ease;

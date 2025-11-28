@@ -27,8 +27,9 @@
 
 
 <div class="fdColumn ttbm_list_details">
-    <?php include( TTBM_Function::template_path( 'layout/list_title.php' ) ); ?>
     <?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
+    <?php include( TTBM_Function::template_path( 'layout/list_title.php' ) ); ?>
+    
     <div class="divider"></div>
     <?php include( TTBM_Function::template_path( 'layout/description_short.php' ) ); ?>
     <div class="divider"></div>

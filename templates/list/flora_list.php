@@ -1,1 +1,14 @@
-<?php	if ( ! defined( 'ABSPATH' ) ) {		die;	}	$ttbm_post_id = $ttbm_post_id ?? get_the_id();	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);	$class_title = 'absolute_item bottom';	include( TTBM_Function::template_path( 'layout/list_thumbnail.php' ) );	include( TTBM_Function::template_path( 'layout/list_title.php' ) );?><?php include( TTBM_Function::template_path( 'layout/sale_price.php' ) ); ?><div class="absolute_item">	<?php include( TTBM_Function::template_path( 'layout/expire_msg.php' ) ); ?></div>
+<?php
+	if ( ! defined( 'ABSPATH' ) ) {
+		die;
+	}
+	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
+	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
+	$class_title = 'absolute_item bottom';
+	include( TTBM_Function::template_path( 'layout/list_thumbnail.php' ) );
+	include( TTBM_Function::template_path( 'layout/list_title.php' ) );
+?>
+<?php include( TTBM_Function::template_path( 'layout/sale_price.php' ) ); ?>
+<div class="absolute_item">
+	<?php include( TTBM_Function::template_path( 'layout/expire_msg.php' ) ); ?>
+</div>

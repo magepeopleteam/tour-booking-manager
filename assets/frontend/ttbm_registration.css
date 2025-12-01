@@ -340,13 +340,14 @@ div.ttbm_viator_theme .item_icon { width: auto;}
 .ttbm_activity_item { display: flex; align-items: center; flex-direction: column; justify-content: center; text-align: center; gap: 15px; padding: 10px; margin-left: 10px; border-radius: 8px; transition: background 0.3s ease;}
 .ttbm_activity_item .ttbm-title { font-size: 50px; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; flex-direction: column; color: #707070;}
 .ttbm_activity_item .ttbm-title iframe { color: #707070;}
-.placeholder_area .ttbm_activity_item h4 a { font-size: 22px;}
+.placeholder_area .ttbm_activity_item h4{ font-weight: normal;}
+.placeholder_area .ttbm_activity_item h4{ font-size: 20px;}
 #ttbm_feature_placeholder_area { justify-content: start; gap: 15px;}
 #ttbm_feature_placeholder_area .ttbm_term_display_shortcode { margin: 0;}
 .ttbm_attraction_item:hover { background-color: #F5F5F5;}
 .ttbm_attraction_title { text-align: center;}
 .ttbm_attraction_item img { width: 90px !important; height: 80px !important; object-fit: cover; border-radius: 8px;}
-.ttbm_attraction_item h4 { margin: 0; font-weight: bold; font-size: 22px;}
+.ttbm_attraction_item h4 { margin: 0; font-weight: normal; font-size:16px;}
 .ttbm_attraction_item p { margin: 3px 0 0; font-size: 14px; color: #555;}
 .ttbm_shortcode_load_more_holder,
 .ttbm_attraction_load_more_holder { display: flex; justify-content: center; margin: 10px 10px; padding: 10px;}
@@ -968,7 +969,7 @@ div.filter_item {
 div.ttbm_top_filter {margin: 0 0 var(--ttbm_mp) 0;}
 div.ttbm_top_filter .dButton,
 div.ttbm_top_filter label {margin:10px 5px;font-weight: var(--fw-bold);}
-div.ttbm_top_filter .formControl { border-radius: 0;min-width: 200px; font-weight: var(--fw-medium);}
+div.ttbm_top_filter .formControl { border-radius: 0;min-width: 200px; font-weight: normal;}
 /*div.ttbm_top_filter .formControl:focus {background-color: var(--color_theme_cc);}*/
 div.ttbm_top_filter .formControl::placeholder {color: var(--color_theme_alter);}
 div.ttbm_top_filter.ttbm_filter .formControl {background-color: #FFF;color: inherit;border: 1px solid var(--color_border);}
@@ -1306,7 +1307,7 @@ div.modern div.ttbm_list_details {
 .ttbm_style .ribbon{
 	box-shadow: 0px 0px 2px 0 rgba(0, 0, 0, 0.4);
 	border-radius:0 5px 5px 0;
-	left: 10px;
+	left:placeholder_area0px;
 	padding: 5px;
 	background-color: var(--color_danger);
 }
@@ -1835,7 +1836,7 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
     margin: 5px;
     background: #f0f6ff;
     border: 1px solid #e1e3e7;
-    padding: 5px 5px;
+    padding: 10px 5px;
     border-radius: 5px;
     font-size: 14px;
     width: 32%;
@@ -1850,7 +1851,7 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	background-color: #f0f6ff;
 	padding: 20px;
 	border-radius: 4px;
-	box-shadow: 0 4px 12px rgb(74 73 73 / 22%);
+	/* box-shadow: 0 4px 12px rgb(74 73 73 / 22%); */
 }
 
 .ttbm-hotel-details .ttbm-content-right .widgets{
@@ -1953,7 +1954,7 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	align-items: center;
 	gap:15px;
 	margin:20px 0;
-	background: #fffafa;
+	/* background: #e9eced; */
 	border: 1px solid #f3efef;
 	padding:10px;
 	border-radius:10px;
@@ -1967,7 +1968,6 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	align-items: center;
 	gap:10px;
 	font-size:14px;
-	border:1px solid #ededed
 }
 .ttbm-hotel-details .ttbm-feature-list .feature-items i{
 	font-size: 20px;

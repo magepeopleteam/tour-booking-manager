@@ -86,14 +86,25 @@
 				register_post_type( 'ttbm_ticket_types', $args );
 			
 				$args = [
-					'public' => true,
-					'label' => esc_html__('Hotel', 'tour-booking-manager'),
-					'supports' => ['title', 'thumbnail', 'editor'],
-					// 'show_in_menu' => 'edit.php?post_type=ttbm_tour',
-					'show_in_menu' => true,
-					'capability_type' => 'post',
-				];
-				register_post_type('ttbm_hotel', $args);
+    'public'            => true,
+    'label'             => esc_html__('Hotel', 'tour-booking-manager'),
+    'supports'          => ['title', 'thumbnail', 'editor'],
+
+    // Hide from WP Admin Sidebar
+    'show_in_menu'      => false,
+
+    // Still show in UI (for editing single posts)
+    'show_ui'           => true,
+
+    // Needed so "Edit Post" shows in admin bar
+    'show_in_admin_bar' => true,
+
+    // Keep REST API support (needed for Gutenberg / admin bar)
+    'show_in_rest'      => true,
+];
+
+register_post_type('ttbm_hotel', $args);
+
 				
 				$args = [
 					'public' => true,

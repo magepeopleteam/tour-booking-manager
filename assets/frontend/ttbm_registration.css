@@ -1836,7 +1836,7 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
     margin: 5px;
     background: #f0f6ff;
     border: 1px solid #e1e3e7;
-    padding: 5px 5px;
+    padding: 10px 5px;
     border-radius: 5px;
     font-size: 14px;
     width: 32%;
@@ -1851,7 +1851,7 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	background-color: #f0f6ff;
 	padding: 20px;
 	border-radius: 4px;
-	box-shadow: 0 4px 12px rgb(74 73 73 / 22%);
+	/* box-shadow: 0 4px 12px rgb(74 73 73 / 22%); */
 }
 
 .ttbm-hotel-details .ttbm-content-right .widgets{
@@ -1954,7 +1954,7 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	align-items: center;
 	gap:15px;
 	margin:20px 0;
-	background: #fffafa;
+	/* background: #e9eced; */
 	border: 1px solid #f3efef;
 	padding:10px;
 	border-radius:10px;
@@ -1968,7 +1968,6 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	align-items: center;
 	gap:10px;
 	font-size:14px;
-	border:1px solid #ededed
 }
 .ttbm-hotel-details .ttbm-feature-list .feature-items i{
 	font-size: 20px;

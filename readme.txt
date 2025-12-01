@@ -1,4 +1,4 @@
-=== WpTravelly – Tour & Travel Booking Manager for WooCommerce | Tour & Hotel Booking Solution ===
+=== Travelly – Tour & Travel Booking Manager for WooCommerce | Tour & Hotel Booking Solution ===
 Contributors: magepeopleteam, aamahin
 Plugin link: https://mage-people.com/
 Tags: tour-booking, tour-operator, travel, travel-booking, travel-agency
@@ -13,14 +13,14 @@ Enhance and manage travel bookings effortlessly with WPTravelly—your complete 
 
 == Description ==
 
-**WPTravelly** is the ultimate [tour and travel booking solution](https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/) for WordPress websites. Ideal for travel agencies and tour operators, this plugin enables you to create and manage customized packages effortlessly.
+**Travelly** is the ultimate [tour and travel booking solution](https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/) for WordPress websites. Ideal for travel agencies and tour operators, this plugin enables you to create and manage customized packages effortlessly.
 
 Launch your travel booking site in under five minutes using the most feature-rich booking plugin available.
 
 === Explore the Demo: ===  
 🌐 [Live Demo](https://wptravelly.com/)  
 📘 [Online Documentation](https://docs.mage-people.com/tour-travel-booking-manager/)  
-🛍️ [Install WPTravelly](https://downloads.wordpress.org/plugin/tour-booking-manager.zip)  
+🛍️ [Install Travelly](https://downloads.wordpress.org/plugin/tour-booking-manager.zip)  
 
 ### 🏆 The #1 WordPress Booking Plugin With 1000+ Installations
 
@@ -66,7 +66,7 @@ Sell travel packages independently from other WooCommerce products.
 = Ready to upgrade your tour booking experience? View our live PRO Version Demo now. =
 Let's go ahead and install the Plugin and find out what is waiting for you.
 
-###  [Try WpTravelly Pro Plugin](https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/)
+###  [Try Travelly Pro Plugin](https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/)
 
 ### Shortcodes included with Tour & Travel Booking  Manager
 

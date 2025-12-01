@@ -594,10 +594,17 @@
 		color: var(--color_theme);
 	}
 	/******/
+	.placeholderLoader .filter-top-label{
+		display: none;
+	}
+	.placeholderLoader .ribbon{
+		display: none;
+	}
 	.placeholderLoader .placeholder_area {
-		background-color: #FFF;
+		background-color: #f8f8f8;
 		position: relative;
 		padding: var(--ttbm_mp_xs);
+		z-index: 1;
 	}
 	.placeholderLoader .placeholder_area::before {
 		position: absolute;
@@ -605,14 +612,12 @@
 		right: 0;
 		top: 0;
 		bottom: 0;
-		z-index: 111;
+		z-index: 99999;
 		content: "";
-		/*background: #f6f7f8;*/
-		/*background: linear-gradient(to right, rgba(255, 255, 255, 0) 46%, rgba(255, 255, 255, 0.35) 50%, rgba(255, 255, 255, 0) 54%) 50% 50%;*/
 		background: linear-gradient(
 			to right,
 			rgba(255, 255, 255, 0) 2%,
-			rgba(255, 255, 255, 0.4) 18%,
+			rgba(246, 246, 246, 0.4) 18%,
 			rgba(255, 255, 255, 0) 33%
 		);
 		-webkit-animation: placeholderAnimate 3s linear infinite;
@@ -628,9 +633,9 @@
 		right: 0;
 		top: 0;
 		bottom: 0;
-		z-index: 11;
+		z-index: 9999;
 		content: "";
-		background: #DDD;
+		background: #ddd;
 	}
 	@-webkit-keyframes placeholderAnimate {
 		0% {

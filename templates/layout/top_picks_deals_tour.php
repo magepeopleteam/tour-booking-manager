@@ -32,7 +32,7 @@ if ( $related_tour_count > 0 && (TTBM_Global_Function::get_post_info( $ttbm_post
         <?php if( $carousel == 'no' ){ ?>
             <input type="hidden" id="ttbm_<?php echo esc_attr( $type_tour );?>_load_more_tour_shortcode" value="<?php echo esc_attr( $show )?>">
         <?php }?>
-        <div class="ttbm_container">
+        <div class="">
             <div class=''>
 <!--                --><?php //do_action( 'ttbm_section_title', 'ttbm_string_related_tour', esc_html__( ' '.ucfirst( $type_tour ).' Tour ', 'tour-booking-manager' ) ); ?>
                 <div class="ttbm_carousel_holder">

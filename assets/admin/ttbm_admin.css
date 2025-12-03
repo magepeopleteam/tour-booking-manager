@@ -1345,6 +1345,7 @@
 		height: 100%;
 		background-color: rgba(0,0,0,0.2);
 		z-index: 1;
+		pointer-events: none;
 	}
 	#ttbm_meta_box_panel .ttbm_style .tabsContent{
 		padding: 20px 40px;
@@ -1358,6 +1359,13 @@
 	}
 	#ttbm_meta_box_panel .meta-sidebar-collapsed li span{ 
 		display: block;
+	}
+	/* Ensure right sidebar meta boxes are above overlays */
+	#postbox-container-2,
+	#side-sortables,
+	.postbox-container-right {
+		position: relative;
+		z-index: 10;
 	}
 }
 @media (max-width: 1400px) {

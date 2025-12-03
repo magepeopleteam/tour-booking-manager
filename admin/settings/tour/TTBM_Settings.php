@@ -508,12 +508,16 @@
 					$description = isset($_POST['ticket_type_description']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_type_description'])) : [];
 					$count = count($names);
 					for ($i = 0; $i < $count; $i++) {
-						if ($names[$i] && $ticket_price[$i] >= 0 && $qty[$i] > 0) {
+						// Allow saving if name and price are provided, even if capacity is empty
+						if ($names[$i] && $ticket_price[$i] >= 0) {
+							// Set default capacity to 0 if empty or not provided
+							$capacity_value = !empty($qty[$i]) ? $qty[$i] : 0;
+							
 							$new_ticket_type[$i]['ticket_type_icon'] = $icon[$i] ?? '';
 							$new_ticket_type[$i]['ticket_type_name'] = $names[$i];
 							$new_ticket_type[$i]['ticket_type_price'] = $ticket_price[$i];
 							$new_ticket_type[$i]['sale_price'] = $sale_price[$i];
-							$new_ticket_type[$i]['ticket_type_qty'] = $qty[$i];
+							$new_ticket_type[$i]['ticket_type_qty'] = $capacity_value;
 							$new_ticket_type[$i]['ticket_type_default_qty'] = $default_qty[$i] ?? 0;
 							$new_ticket_type[$i]['ticket_type_resv_qty'] = $rsv[$i] ?? 0;
 							$new_ticket_type[$i]['ticket_type_qty_type'] = $qty_type[$i] ?? 'inputbox';

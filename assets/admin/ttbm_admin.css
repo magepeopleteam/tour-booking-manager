@@ -1356,6 +1356,15 @@
 	/* Previously added dark overlay over the content when the sidebar was expanded.
 	   This was making the main settings area look disabled, so we neutralize it. */
 	.leftTabs-collapsed::after{
+
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0,0,0,0.2);
+		z-index: 1;
+		pointer-events: none;
 		content: none;
 	}
 	#ttbm_meta_box_panel .ttbm_style .tabsContent{

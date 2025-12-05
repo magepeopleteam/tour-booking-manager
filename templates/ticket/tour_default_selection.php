@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
 	$template_name = $template_name ?? TTBM_Global_Function::get_post_info($tour_id, 'ttbm_theme_file', 'default.php');
 	if (sizeof($all_dates) > 0 && $tour_type == 'general' && $travel_type != 'particular') {
 		$date = current($all_dates);
-		$date=gmdate('Y-m-d', strtotime($date));
+		$date=$current_date=gmdate('Y-m-d', strtotime($date));
 		$check_ability = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'regular_ticket');
 		$time = TTBM_Function::get_time($tour_id, $date);
 		$time = is_array($time) ? $time[0]['time'] : $time;
@@ -27,7 +27,7 @@ if (!defined('ABSPATH')) {
             <input type="hidden" name="ttbm_id" value="<?php echo esc_attr($tour_id); ?>"/>
 			<?php
 				if ($travel_type == 'repeated') {
-					$time_slots = TTBM_Function::get_time($tour_id, $all_dates[0]);
+					$time_slots = TTBM_Function::get_time($tour_id, $current_date);
 					?>
                     <div class=" ttbm_date_time_select">
                         <div class="ttbm_select_date_area">
@@ -50,14 +50,14 @@ if (!defined('ABSPATH')) {
                             </div>
 							<?php if (is_array($time_slots) && sizeof($time_slots) > 0 && $check_ability == 'regular_ticket' && $template_name != 'viator.php') { ?>
                                 <div class="flexWrap ttbm_select_time_area">
-									<?php do_action('ttbm_time_select', $tour_id, $all_dates[0]); ?>
+									<?php do_action('ttbm_time_select', $tour_id, $current_date); ?>
                                 </div>
 							<?php } ?>
                         </div>
 						<?php if (is_array($time_slots) && sizeof($time_slots) > 0 && ($template_name == 'viator.php' || $check_ability == 'availability_section')) { ?>
                             <div class="flexWrap ttbm_select_time_area">
 								<?php if ($check_ability == 'regular_ticket') { ?>
-									<?php do_action('ttbm_time_select', $tour_id, $all_dates[0]); ?>
+									<?php do_action('ttbm_time_select', $tour_id, $current_date); ?>
 								<?php } ?>
                             </div>
 						<?php } ?>

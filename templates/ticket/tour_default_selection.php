@@ -11,6 +11,7 @@ if (!defined('ABSPATH')) {
 	$template_name = $template_name ?? TTBM_Global_Function::get_post_info($tour_id, 'ttbm_theme_file', 'default.php');
 	if (sizeof($all_dates) > 0 && $tour_type == 'general' && $travel_type != 'particular') {
 		$date = current($all_dates);
+		$date=gmdate('Y-m-d', strtotime($date));
 		$check_ability = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'regular_ticket');
 		$time = TTBM_Function::get_time($tour_id, $date);
 		$time = is_array($time) ? $time[0]['time'] : $time;

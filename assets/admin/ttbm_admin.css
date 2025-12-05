@@ -1356,7 +1356,6 @@
 	/* Previously added dark overlay over the content when the sidebar was expanded.
 	   This was making the main settings area look disabled, so we neutralize it. */
 	.leftTabs-collapsed::after{
-
 		position: absolute;
 		top: 0;
 		left: 0;

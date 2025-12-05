@@ -28,12 +28,15 @@ if (!defined('ABSPATH')) {
 			<?php
 				if ($travel_type == 'repeated') {
 					$time_slots = TTBM_Function::get_time($tour_id, $all_dates[0]);
+					$ticketing_system = get_post_meta($tour_id, 'ttbm_ticketing_system', true);
 					?>
                     <div class=" ttbm_date_time_select">
                         <div class="ttbm_select_date_area">
+                            <?php if (is_array($time_slots) && sizeof($time_slots) > 0 && $ticketing_system != 'regular_ticket'): ?>
                             <div class="ttbm-title" data-placeholder>
 								<?php esc_html_e('Make your booking', 'tour-booking-manager'); ?>
                             </div>
+							<?php endif; ?>
                             <div class="booking-button">
                                 <div class="date-picker">
                                     <div class="date_time_label ttbm-title"><?php echo is_array($time_slots) && sizeof($time_slots) > 0 ? esc_html__('Select Date & Time : ', 'tour-booking-manager') : esc_html__('Select Date  : ', 'tour-booking-manager'); ?></div>

@@ -339,6 +339,12 @@
 /********************************************************************  ************************************************/
 @media only screen and (min-width: 10px) {
 }
+input.small{
+	width: 50px;
+}
+input.medium{
+	width: 90px;
+}
 /* =====================hotel_booking.css=============== */
 @media only screen and (min-width: 10px) {
 	/* Main Container */

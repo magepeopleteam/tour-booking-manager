@@ -305,6 +305,7 @@
 				) : '';
 				$args = array(
 					'post_type' => 'ttbm_booking',
+					'post_status' => 'publish',
 					'posts_per_page' => -1,
 					'meta_query' => array(
 						'relation' => 'AND',
@@ -340,6 +341,7 @@
 				) : '';
 				$args = array(
 					'post_type' => 'ttbm_service_booking',
+					'post_status' => 'publish',
 					'posts_per_page' => -1,
 					'meta_query' => array(
 						'relation' => 'AND',
@@ -375,6 +377,7 @@
 				$seat_booked_status = !empty($_seat_booked_status) ? $_seat_booked_status : [];
 				$args = array(
 					'post_type' => 'ttbm_booking',
+					'post_status' => 'publish',
 					'posts_per_page' => -1,
 					'meta_query' => array(
 						'relation' => 'AND',

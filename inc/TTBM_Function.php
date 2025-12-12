@@ -576,7 +576,17 @@
 				$tour_date = $tour_date ?: TTBM_Global_Function::get_post_info($tour_id, 'ttbm_upcoming_date');
 				$type = apply_filters('ttbm_type_filter', $type, $tour_id);
 				$sold_query = TTBM_Query::query_all_sold($tour_id, $tour_date, $type, $hotel_id);
-				return $sold_query->post_count;
+				// Sum ticket quantities from booking posts instead of just counting posts
+				// This handles cases where booking posts may have quantities > 1
+				$total_sold = 0;
+				if ($sold_query->have_posts()) {
+					foreach ($sold_query->posts as $booking_post) {
+						$ticket_qty = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_ticket_qty', 1);
+						$total_sold += max(1, intval($ticket_qty)); // Minimum 1 ticket per booking post
+					}
+				}
+				wp_reset_postdata();
+				return $total_sold;
 			}
 			public static function get_total_available($tour_id, $tour_date = '') {
 				$total = self::get_total_seat($tour_id);

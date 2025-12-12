@@ -69,7 +69,8 @@ if (!defined('ABSPATH')) {
 								$sold_qty = $ticket_info['sold_qty'] ?? $sold_type;
 								$stock_status = $ticket_info['stock_status'] ?? 'in_stock';
 								$percentage_sold = $ticket_info['percentage_sold'] ?? 0;
-								$is_sold_out = $ticket_info['is_sold_out'] ?? ($available <= 0);
+								// Use the locally calculated $available value to ensure consistency
+								$is_sold_out = ($available <= 0);
 								
 								// Set row classes based on stock status
 								$row_classes = array('ttbm_ticket_row', 'ttbm_stock_' . $stock_status);

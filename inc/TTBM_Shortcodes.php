@@ -235,6 +235,8 @@
 				$organizer_filter = '';
 				$location_filter = '';
 				$activity_filter = '';
+                $flexible_dates = isset($_GET['flexible_dates']) ? sanitize_text_field(wp_unslash($_GET['flexible_dates'])) : 'no';
+                $person_filter = isset($_GET['person_filter']) ? intval($_GET['person_filter']) : 0;
 				
 				if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
 					$organizer_filter = isset($_GET['organizer_filter']) ? sanitize_text_field(wp_unslash($_GET['organizer_filter'])) : '';
@@ -243,8 +245,8 @@
 				}
 				
 				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
-
-				$loop = TTBM_Query::ttbm_query_for_top_search($show, $params['sort'], $params['sort_by'], $params['status'], $organizer_filter, $location_filter, $activity_filter, $date_filter );
+ 
+				$loop = TTBM_Query::ttbm_query_for_top_search($show, $params['sort'], $params['sort_by'], $params['status'], $organizer_filter, $location_filter, $activity_filter, $date_filter, $flexible_dates, $person_filter );
 				?>
 				<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
 					<div class="mpContainer">
@@ -967,6 +969,8 @@
 				'limit' => $show,
 				'list_grid' => 'list',
 				'top-bar' => $top_bar,
+				'flexible_dates' => 'no',
+                'person-filter' => 'no',
 			);
 		}
 

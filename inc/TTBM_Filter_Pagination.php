@@ -19,11 +19,19 @@
                 <div class="ttbm_style placeholderLoader ttbm_wraper ttbm_top_filter">
                     <form method="get" action="<?php echo esc_url(home_url('/find/')); ?>">
 						<?php wp_nonce_field('ttbm_search_nonce', 'ttbm_search_nonce'); ?>
+						<?php if (isset($params['flexible_dates']) && $params['flexible_dates'] === 'yes') { ?>
+							<input type="hidden" name="flexible_dates" value="yes" />
+						<?php } ?>
                         <div class="flexWrap justifyCenter">
 							<?php $this->title_filter($params); ?>
 							<?php $this->type_filter($params); ?>
 							<?php $this->duration_filter($params); ?>
 							<?php $this->category_filter($params); ?>
+                            <?php if (isset($params['person-filter']) && $params['person-filter'] === 'yes') { ?>
+                            <div class="filter_item">
+                                <input type="number" name="person_filter" placeholder="<?php esc_html_e('Person', 'tour-booking-manager'); ?>" value="<?php echo isset($_GET['person_filter']) ? esc_attr($_GET['person_filter']) : ''; ?>" min="1" style="min-width: 100px; padding: 10px;">
+                            </div>
+                            <?php } ?>
 							<?php $this->organizer_filter($params); ?>
 							<?php $this->location_filter($params); ?>
 							<?php $this->country_filter($params); ?>

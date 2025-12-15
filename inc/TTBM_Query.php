@@ -124,7 +124,10 @@
 					return new WP_Query($args);
 				}
 			}
-			public static function ttbm_query_for_top_search($show, $sort, $sort_by, $status, $organizer_filter, $location, $activity, $date_filter = ''): WP_Query {
+			public static function ttbm_query_for_top_search($show, $sort, $sort_by, $status, $organizer_filter, $location, $activity, $date_filter = '', $flexible_dates = 'no', $person_filter = 0): WP_Query {
+				
+				$post_in_ids = null; // Default null means no ID restriction from date logic
+                $selected_date_filter = '';
 
                 if (is_array($date_filter)) {
 					if (!empty($date_filter['start_date'])) {
@@ -153,16 +156,79 @@
 						$date = [$start_date, $end_date];
 						$compare = 'BETWEEN';
 					}
-					$selected_date_filter = $start_date ? array(
-						'key' => 'ttbm_upcoming_date',
-						'value' => $date,
-						'compare' => $compare,
-						'type' => 'DATE',
-					) : '';
+					
+					if ($flexible_dates === 'yes' && $compare === 'BETWEEN') {
+                        // Use Raw SQL for performance to avoid execution timeout on complex meta queries
+                        global $wpdb;
+                        $cpt = TTBM_Function::get_cpt_name();
+                        
+                        // Calculate Search Duration (in days, inclusive)
+                        $start_ts = strtotime($start_date);
+                        $end_ts = strtotime($end_date);
+                        $search_duration = round(($end_ts - $start_ts) / (60 * 60 * 24)) + 1;
+                        
+                        // 1. Get IDs of Repeated Tours that overlap AND fit in duration
+                        $repeated_sql = $wpdb->prepare(
+                            "SELECT DISTINCT p.ID 
+                            FROM {$wpdb->posts} p
+                            INNER JOIN {$wpdb->postmeta} pm_type ON (p.ID = pm_type.post_id AND pm_type.meta_key = 'ttbm_travel_type' AND pm_type.meta_value = 'repeated')
+                            INNER JOIN {$wpdb->postmeta} pm_start ON (p.ID = pm_start.post_id AND pm_start.meta_key = 'ttbm_travel_repeated_start_date')
+                            LEFT JOIN {$wpdb->postmeta} pm_end ON (p.ID = pm_end.post_id AND pm_end.meta_key = 'ttbm_travel_repeated_end_date')
+                            LEFT JOIN {$wpdb->postmeta} pm_dur ON (p.ID = pm_dur.post_id AND pm_dur.meta_key = 'ttbm_travel_duration')
+                            WHERE p.post_type = %s AND p.post_status = 'publish'
+                            AND pm_start.meta_value <= %s
+                            AND (pm_end.meta_value >= %s OR pm_end.meta_value IS NULL OR pm_end.meta_value = '')
+                            AND (pm_dur.meta_value IS NULL OR CAST(pm_dur.meta_value AS UNSIGNED) <= %d)",
+                            $cpt, 
+                            $end_date, 
+                            $start_date,
+                            $search_duration
+                        );
+                        
+                        $repeated_ids = $wpdb->get_col($repeated_sql);
+                        
+                        // 2. Get IDs of Standard Tours (between dates) AND fit in duration
+                        $standard_sql = $wpdb->prepare(
+                            "SELECT DISTINCT p.ID
+                            FROM {$wpdb->posts} p
+                            INNER JOIN {$wpdb->postmeta} pm_upcoming ON (p.ID = pm_upcoming.post_id AND pm_upcoming.meta_key = 'ttbm_upcoming_date')
+                            LEFT JOIN {$wpdb->postmeta} pm_dur ON (p.ID = pm_dur.post_id AND pm_dur.meta_key = 'ttbm_travel_duration')
+                            WHERE p.post_type = %s AND p.post_status = 'publish'
+                            AND pm_upcoming.meta_value BETWEEN %s AND %s
+                            AND (pm_dur.meta_value IS NULL OR CAST(pm_dur.meta_value AS UNSIGNED) <= %d)",
+                            $cpt,
+                            $start_date,
+                            $end_date,
+                            $search_duration
+                        );
+                        
+                        $standard_ids = $wpdb->get_col($standard_sql);
+                        
+                        // Merge IDs
+                        $merged_ids = array_unique(array_merge($repeated_ids, $standard_ids));
+                        
+                        if (empty($merged_ids)) {
+                            $post_in_ids = array(0); // Force no results
+                        } else {
+                            $post_in_ids = $merged_ids;
+                        }
+                        
+                        $selected_date_filter = ''; // Clear meta query since we used IDs
+
+					} else {
+						$selected_date_filter = $start_date ? array(
+							'key' => 'ttbm_upcoming_date',
+							'value' => $date,
+							'compare' => $compare,
+							'type' => 'DATE',
+						) : '';
+					}
+
 				} else {
 					$selected_date_filter = '';
 				}
-				TTBM_Function::update_all_upcoming_date_month();
+
+				// TTBM_Function::update_all_upcoming_date_month();
 				$sort_by = $sort_by ?: 'meta_value';
 				if (get_query_var('paged')) {
 					$paged = get_query_var('paged');
@@ -194,19 +260,12 @@
 					'field' => 'term_id',
 					'terms' => $organizer_filter
 				) : '';
-
-               /* $activity_filter = !empty($activity) ? array(
-                    'key' => 'ttbm_tour_activities',
-                    'value' => array($activity),
-                    'compare' => 'IN'
-                ) : '';*/
-
+                
                 $activity_filter = !empty($activity) ? array(
                     'key'     => 'ttbm_tour_activities',
                     'value'   => '"' . $activity . '"',
                     'compare' => 'LIKE'
                 ) : '';
-
 				$location = $location ? get_term_by('id', $location, 'ttbm_tour_location')->name : '';
 				$city_filter = !empty($location) ? array(
 					'key' => 'ttbm_location_name',
@@ -223,6 +282,7 @@
 					'value' => $tour_type,
 					'compare' => 'LIKE'
 				) : '';
+                
 				$args = array(
 					'post_type' => array(TTBM_Function::get_cpt_name()),
 					'paged' => $paged,
@@ -244,10 +304,108 @@
 						$org_filter
 					)
 				);
+                
+                if ($post_in_ids !== null) {
+                    $args['post__in'] = $post_in_ids;
+                }
+                
+                // Filter by Person (Seat Availability)
+                if ($person_filter > 0) {
+                    $args_all = $args;
+                    $args_all['posts_per_page'] = -1;
+                    $args_all['fields'] = 'ids'; // Only fetch IDs
+                    
+                    $all_posts = get_posts($args_all);
+                    $available_ids = [];
+                    
+                    foreach ($all_posts as $post_id) {
+                        $match_found = false;
+                        
+                        if (!empty($start_date) && !empty($end_date)) {
+                            // Check availability within the selected date range
+                            // We need to check if ANY valid date in the range has enough seats
+                            $range_availability = TTBM_Function::get_ticket_availability_for_date_range($post_id, $start_date, $end_date);
+                            
+                            if (is_array($range_availability)) {
+                                foreach ($range_availability as $date_info) {
+                                    // Extract available quantity from the info array
+                                    // Structure depends on get_ticket_availability_info return
+                                    // Usually it returns an array of ticket types. Need to sum or check max?
+                                    // get_ticket_availability_info returns detailed array of ticket types.
+                                    // We need to sum the available_qty across ticket types if the user just wants "spots"
+                                    // OR check if any single ticket type has enough seats.
+                                    // Usually "Person" means "Can I book X tickets?". 
+                                    // If tickets are "Adult", "Child", they share capacity or have separate?
+                                    // TTBM usually sums capacity.
+                                    
+                                    // Let's rely on `available_qty` from the first ticket type or sum them?
+                                    // A safer bet given the previous `get_total_available` logic is to check the max available for that day.
+                                    
+                                    $day_available = 0;
+                                    foreach($date_info as $ticket){
+                                         if(isset($ticket['available_qty'])){
+                                             $day_available += $ticket['available_qty'];
+                                         }
+                                    }
+                                    
+                                    if ($day_available >= $person_filter) {
+                                        $match_found = true;
+                                        break; 
+                                    }
+                                }
+                            }
+                        } else {
+                            // No date selected: Check if ANY future date has enough seats
+                            // We must iterate all future dates to find if at least one has capacity >= filter.
+                            // The previous `get_any_date_seat_available` simply returned the first one with > 0 seats, which is incorrect for filtering.
+                            
+                            $travel_type = TTBM_Function::get_travel_type($post_id);
+                            
+                            if ($travel_type == 'fixed') {
+                                $avail = TTBM_Function::get_total_available($post_id);
+                                if ($avail >= $person_filter) {
+                                    $match_found = true;
+                                }
+                            } else {
+                                $all_dates = TTBM_Function::get_date($post_id);
+                                $max_avail_found = 0;
+                                
+                                if (is_array($all_dates)) {
+                                    foreach ($all_dates as $date) {
+                                        // Handle if get_date returns complex array or simple list (usually simple list for repeated/particular)
+                                        // If associative (fixed keys), this loop might be wrong, but we handled fixed above.
+                                        // Repeated/Particular return list of date strings.
+                                        if (is_string($date)) {
+                                            $avail = TTBM_Function::get_total_available($post_id, $date);
+                                            if ($avail > $max_avail_found) {
+                                                $max_avail_found = $avail;
+                                            }
+                                            
+                                            if ($avail >= $person_filter) {
+                                                $match_found = true;
+                                                break; // Found a valid date
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        if ($match_found) {
+                            $available_ids[] = $post_id;
+                        }
+                    }
+                    
+                    if (empty($available_ids)) {
+                         $args['post__in'] = array(0); // Force no results
+                    } else {
+                         $args['post__in'] = $available_ids;
+                    }
+                }
+                
 				if ($status == 'active') {
 					return TTBM_Function::get_active_tours($args);
 				} else {
-					//return TTBM_Function::get_active_tours($args);
 					return new WP_Query($args);
 				}
 			}

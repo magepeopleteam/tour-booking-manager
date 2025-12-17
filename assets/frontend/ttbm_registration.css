@@ -21,7 +21,7 @@ body.theme-twentytwentytwo div.ttbm_wraper {max-width: 1400px !important;}
 div.ttbm_default_theme,
 div.ttbm_viator_theme {width: 100%;max-width: 1400px;margin: auto;}
 div.ttbm_wraper {max-width: 100%; width: 100%;margin: var(--ttbm_mp) auto;position: relative;}
-div.ttbm_container {width: 100%;max-width: var(--dcontainer_width);margin: 0 auto;padding: var(--ttbm_mp);background-color: var(--color_white);}
+div.ttbm_container {width: 100%;max-width: 1400px;margin: 0 auto;padding: var(--ttbm_mp);background-color: var(--color_white);}
 .ttbm_wraper table {table-layout: fixed;margin: 0; width: 100%;}
 .ttbm_wraper table th {font-size: var(--ttbm_fs_label);}
 .ttbm_wraper table th,
@@ -1912,6 +1912,9 @@ div.bg_image_area {margin: 0;border-radius: 5px;}
 	position: relative;
 	cursor: pointer;
 	
+}
+.ttbm_style.related-hotel div.grid_4 {
+	width: calc(25% - 10px);
 }
 .ttbm-hotel-details .faq-area .faq-item::after{
 	content: '\f043';

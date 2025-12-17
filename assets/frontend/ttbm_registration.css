@@ -2171,7 +2171,7 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
     position: absolute;
     top: -20px;
   	right: 40px;
-    z-index: 10;
+    z-index:0;
 }
 
 

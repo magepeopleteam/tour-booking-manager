@@ -615,8 +615,34 @@ function ttbm_sticky_management() {
     $(document).ready(function () {
         $('.ttbm_style .ttbmTabs').each(function () {
             let tabLists = $(this).find('.tabLists:first');
-            let activeTab = tabLists.find('[data-tabs-target].active');
-            let targetTab = activeTab.length > 0 ? activeTab : tabLists.find('[data-tabs-target]').first();
+            let postId = $('input[name="post_ID"]').val();
+            let savedTab = '';
+            
+            // Try to get saved tab from localStorage first
+            if (postId) {
+                savedTab = localStorage.getItem('ttbm_active_tab_' + postId);
+            }
+            
+            // Check URL hash second
+            if (!savedTab && window.location.hash) {
+                savedTab = window.location.hash;
+            }
+            
+            let targetTab;
+            if (savedTab) {
+                // Find tab by saved target
+                let savedTabElement = tabLists.find('[data-tabs-target="' + savedTab + '"]');
+                if (savedTabElement.length > 0) {
+                    targetTab = savedTabElement;
+                } else {
+                    // Fallback to active or first tab
+                    let activeTab = tabLists.find('[data-tabs-target].active');
+                    targetTab = activeTab.length > 0 ? activeTab : tabLists.find('[data-tabs-target]').first();
+                }
+            } else {
+                let activeTab = tabLists.find('[data-tabs-target].active');
+                targetTab = activeTab.length > 0 ? activeTab : tabLists.find('[data-tabs-target]').first();
+            }
             targetTab.trigger('click');
         });
         $('.ttbm_style .ttbmTabsNext').each(function () {
@@ -636,6 +662,19 @@ function ttbm_sticky_management() {
             parent.height(parent.height());
             let tabLists = $(this).closest('.tabLists');
             let tabsContent = parent.find('.tabsContent:first');
+            
+            // Save active tab to localStorage and URL hash
+            let postId = $('input[name="post_ID"]').val();
+            if (postId) {
+                localStorage.setItem('ttbm_active_tab_' + postId, tabsTarget);
+            }
+            // Update URL hash without scrolling
+            if (history.pushState) {
+                history.pushState(null, null, tabsTarget);
+            } else {
+                window.location.hash = tabsTarget;
+            }
+            
             tabLists.find('[data-tabs-target].active').each(function () {
                 $(this).removeClass('active').promise().done(function () {
                     ttbm_all_content_change($(this))

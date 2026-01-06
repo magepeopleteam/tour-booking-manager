@@ -72,6 +72,12 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             if ( ! isset($_POST['nonce']) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_admin_nonce') ) {
                 wp_send_json_error(['message' => 'Invalid nonce']);
             }
+            
+            // SECURITY: Verify user has admin capabilities
+            if ( ! current_user_can( 'manage_options' ) ) {
+                wp_send_json_error( [ 'message' => 'Unauthorized access' ] );
+                die;
+            }
 
             $post_name   = isset($_POST['post_name'])?sanitize_text_field( wp_unslash( $_POST['post_name'] ) ):'';
             $post_id   = isset($_POST['post_id'])?sanitize_text_field(  wp_unslash( $_POST['post_id'] ) ):'';
@@ -121,6 +127,12 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
             if ( ! isset($_POST['nonce']) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_admin_nonce') ) {
                 wp_send_json_error(['message' => 'Invalid nonce']);
+            }
+            
+            // SECURITY: Verify user has admin capabilities
+            if ( ! current_user_can( 'manage_options' ) ) {
+                wp_send_json_error( [ 'message' => 'Unauthorized access' ] );
+                die;
             }
 
             $terms = self::ttbm_get_term_data( 'ttbm_tour_location' );
@@ -178,6 +190,12 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             if ( ! isset($_POST['nonce']) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_admin_nonce') ) {
                 wp_send_json_error(['message' => 'Invalid nonce']);
             }
+            
+            // SECURITY: Verify user has admin capabilities
+            if ( ! current_user_can( 'manage_options' ) ) {
+                wp_send_json_error( [ 'message' => 'Unauthorized access' ] );
+                die;
+            }
 
             $terms = self::ttbm_get_term_data( 'ttbm_tour_org' );
 
@@ -196,7 +214,8 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 //                        error_log( print_r( $term_link, true ) );
 
                         $search_class = 'ttbm_search_from_organiser';
-                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $term_link );
+                        $shortcode = "[travel-list org='$term_id']";
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $term_link, '', $shortcode );
                         ?>
 
                     <?php endforeach; ?>
@@ -218,6 +237,12 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             if ( ! isset($_POST['nonce']) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_admin_nonce') ) {
                 wp_send_json_error(['message' => 'Invalid nonce']);
             }
+            
+            // SECURITY: Verify user has admin capabilities
+            if ( ! current_user_can( 'manage_options' ) ) {
+                wp_send_json_error( [ 'message' => 'Unauthorized access' ] );
+                die;
+            }
 
             $terms = self::ttbm_get_term_data( 'ttbm_tour_cat' );
 
@@ -236,7 +261,8 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                         $term_link = get_term_link( (int) $term_id, 'ttbm_tour_cat' );
 
                         $search_class = 'ttbm_search_from_category';
-                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $term_link, $get_feature_icon );
+                        $shortcode = "[travel-list cat='$term_id']";
+                        self::ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $term_link, $get_feature_icon, $shortcode );
                         ?>
 
                     <?php endforeach; ?>
@@ -258,6 +284,12 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
             if ( ! isset($_POST['nonce']) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_admin_nonce') ) {
                 wp_send_json_error(['message' => 'Invalid nonce']);
+            }
+            
+            // SECURITY: Verify user has admin capabilities
+            if ( ! current_user_can( 'manage_options' ) ) {
+                wp_send_json_error( [ 'message' => 'Unauthorized access' ] );
+                die;
             }
 
             $terms = self::ttbm_get_term_data( 'ttbm_tour_features_list' );
@@ -300,6 +332,12 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             if ( ! isset($_POST['nonce']) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_admin_nonce') ) {
                 wp_send_json_error(['message' => 'Invalid nonce']);
             }
+            
+            // SECURITY: Verify user has admin capabilities
+            if ( ! current_user_can( 'manage_options' ) ) {
+                wp_send_json_error( [ 'message' => 'Unauthorized access' ] );
+                die;
+            }
 
             $terms = self::ttbm_get_term_data( 'ttbm_tour_tag' );
 
@@ -338,6 +376,12 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             if ( ! isset($_POST['nonce']) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_admin_nonce') ) {
                 wp_send_json_error(['message' => 'Invalid nonce']);
             }
+            
+            // SECURITY: Verify user has admin capabilities
+            if ( ! current_user_can( 'manage_options' ) ) {
+                wp_send_json_error( [ 'message' => 'Unauthorized access' ] );
+                die;
+            }
             $terms = self::ttbm_get_term_data( 'ttbm_tour_activities' );
 
             ob_start();
@@ -372,13 +416,13 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             ]);
         }
 
-        public static function ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $term_link, $icon='' ){
+        public static function ttbm_display_taxonomy_data( $term_id, $term_name, $description, $search_class, $term_link, $icon='', $shortcode='' ){
             ?>
 
-            <div class="ttbm-taxonomy-card <?php echo esc_attr( $search_class )?>" data-taxonomy="<?php echo esc_attr( $term_name )?>">
+            <div class="ttbm-taxonomy-card <?php echo esc_attr( $search_class )?>", data-taxonomy="<?php echo esc_attr( $term_name )?>">
                 <div class="ttbm-card-right">
                     <div class="ttbm-title-row">
-                        <h3 class="ttbm-title"><i class="<?php echo esc_attr( $icon )?> "></i> <?php echo esc_attr( $term_name ) ?></h3>
+                        <h3 class="ttbm-title"><i class="<?php echo esc_attr( $icon )?> "></i> <?php echo esc_attr( $term_name ) ?> <span class="ttbm-term-id-badge">(ID: <?php echo esc_attr( $term_id ) ?>)</span></h3>
                         <div class="ttbm-taxonomy-card-actions" ttbm-data-location-id="<?php echo esc_attr( $term_id )?>">
 <!--                            <button class="ttbm-btn ttbm-view-btn"><i class="fas fa-eye"></i></button>-->
                             <?php if( $term_link !== '' ){?>
@@ -391,6 +435,9 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                     <?php if($description): ?>
                         <p class="ttbm-description"><?php echo esc_attr( $description ) ?></p>
                     <?php endif; ?>
+                    <?php if($shortcode): ?>
+                        <span class="ttbm_show_location_shortcode"><?php echo esc_attr( $shortcode )?></span>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -401,6 +448,12 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
             if ( ! isset($_POST['nonce']) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_admin_nonce') ) {
                 wp_send_json_error(['message' => 'Invalid nonce']);
+            }
+            
+            // SECURITY: Verify user has admin capabilities
+            if ( ! current_user_can( 'manage_options' ) ) {
+                wp_send_json_error( [ 'message' => 'Unauthorized access' ] );
+                die;
             }
 
             $loaded_post_ids_str = isset( $_POST['loaded_post_ids_str'] ) ? sanitize_text_field( wp_unslash( $_POST['loaded_post_ids_str'] ) ) : '';
@@ -482,6 +535,12 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             if ( ! isset($_POST['nonce']) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_admin_nonce') ) {
                 wp_send_json_error(['message' => 'Invalid nonce']);
             }
+            
+            // SECURITY: Verify user has admin capabilities
+            if ( ! current_user_can( 'manage_options' ) ) {
+                wp_send_json_error( [ 'message' => 'Unauthorized access' ] );
+                die;
+            }
 
             $img_url = '';
             $name = isset( $_POST['name'] ) ? sanitize_text_field(wp_unslash($_POST['name'])) : '';
@@ -557,6 +616,12 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             if ( ! isset($_POST['nonce']) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_admin_nonce') ) {
                 wp_send_json_error(['message' => 'Invalid nonce']);
             }
+            
+            // SECURITY: Verify user has admin capabilities
+            if ( ! current_user_can( 'manage_options' ) ) {
+                wp_send_json_error( [ 'message' => 'Unauthorized access' ] );
+                die;
+            }
 
             $term_id = '';
             $add_popup = '';
@@ -584,6 +649,12 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             if ( ! isset($_POST['nonce']) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_admin_nonce') ) {
                 wp_send_json_error(['message' => 'Invalid nonce']);
             }
+            
+            // SECURITY: Verify user has admin capabilities
+            if ( ! current_user_can( 'manage_options' ) ) {
+                wp_send_json_error( [ 'message' => 'Unauthorized access' ] );
+                die;
+            }
 
             $term_id = isset($_POST['term_id'])?absint(wp_unslash($_POST['term_id'])):'';
             $edit_popup = '';
@@ -606,6 +677,12 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
 
             if ( ! isset($_POST['nonce']) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_admin_nonce') ) {
                 wp_send_json_error(['message' => 'Invalid nonce']);
+            }
+            
+            // SECURITY: Verify user has admin capabilities
+            if ( ! current_user_can( 'manage_options' ) ) {
+                wp_send_json_error( [ 'message' => 'Unauthorized access' ] );
+                die;
             }
 
 	        $term_id = isset($_POST['term_id'])?absint(wp_unslash($_POST['term_id'])):'';

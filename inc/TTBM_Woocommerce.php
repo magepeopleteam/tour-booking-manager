@@ -232,7 +232,7 @@
 							<?php if (!empty($location) && TTBM_Global_Function::get_post_info($ttbm_id, 'ttbm_display_location', 'on') != 'off') { ?>
                                 <li>
                                     <span class="fas fa-map-marker-alt"></span>&nbsp;
-                                    <h6><?php echo esc_html($tour_name . ' ' . esc_html__('Location', 'tour-booking-manager')); ?> :&nbsp;</h6>
+                                    <h6><?php echo esc_html($tour_name) . ' ' . esc_html__('Location', 'tour-booking-manager'); ?> :&nbsp;</h6>
                                     <span><?php echo esc_html($location); ?></span>
                                 </li>
 							<?php } ?>

@@ -1393,6 +1393,32 @@
         });
     }
 
+    // Copy shortcode to clipboard when clicked
+    $(document).on('click', '.ttbm_show_location_shortcode', function(e) {
+        e.preventDefault();
+        var shortcode = $(this).text().trim();
+        var $this = $(this);
+        
+        // Create temporary input element
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val(shortcode).select();
+        document.execCommand("copy");
+        $temp.remove();
+        
+        // Show feedback
+        var originalText = $this.html();
+        $this.html('✓ Copied!');
+        $this.css('background-color', '#4CAF50');
+        $this.css('color', 'white');
+        
+        setTimeout(function() {
+            $this.html(originalText);
+            $this.css('background-color', '');
+            $this.css('color', '');
+        }, 2000);
+    });
+
 })(jQuery);
 
 

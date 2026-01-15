@@ -39,6 +39,8 @@
 				));
 			}
 			public function location_tab_content($tour_id) {
+				$display_map = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_hotel_map', 'on');
+				$active = $display_map == 'off' ? '' : 'mActive';
 				?>
                 <div class="tabsItem ttbm_settings_general contentTab" data-tabs="#ttbm_settings_hotel_location">
                     <h2><?php esc_html_e('Location Settings', 'tour-booking-manager'); ?></h2>
@@ -48,8 +50,9 @@
                             <h4><i class="fas fa-map-marker-alt"></i><?php esc_html_e('Location Settings', 'tour-booking-manager'); ?></h4>
 							<?php $this->map_enable($tour_id); ?>
 						</div>
-                        
-						<?php $this->map_display($tour_id); ?>
+                        <div class="<?php echo esc_attr($active); ?>" data-collapse="#<?php echo esc_attr('ttbm_display_hotel_map'); ?>">
+							<?php $this->map_display($tour_id); ?>
+						</div>
                     </section>
                 </div>
 				<?php
@@ -104,10 +107,9 @@
 				$longitude = !empty($longitude) ? $longitude : '-74.005974';
 				$map_settings = get_option('ttbm_google_map_settings');
 				$gmap_api_key = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
-				$display_map = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_hotel_map', 'on');
-				$active = $display_map == 'off' ? '' : 'mActive';
+				
 				?>
-                <div class="<?php echo esc_attr($active); ?>" data-collapse="#<?php echo esc_attr('ttbm_display_hotel_map'); ?>">
+                <div>
                     <label class="label">
                         <div class="label-inner">
                             <p><?php $gmap_api_key ? esc_html_e('Google Map Location', 'tour-booking-manager') : esc_html_e('OSMap Location', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i></p>
@@ -125,7 +127,7 @@
                             </div>
 						<?php endif; ?>
                     </div>
-                    <div class="label">
+                    <div class="">
                         <div style="width: 100%;">
                             <div id="<?php echo esc_attr($gmap_api_key ? 'gmap_canvas' : 'osmap_canvas'); ?>" style="width: 100%; height: 400px;"></div>
                             <div style="margin-top: 10px;">

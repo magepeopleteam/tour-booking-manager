@@ -139,6 +139,10 @@ function ttbm_multi_attendee_form(parentTr, qty) {
                         }
                         target_tr.find(".date_type").removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind().promise().done(function () {
                             ttbm_load_date_picker(target_tr);
+                            // Initialize autocomplete for attendee fields
+                            if (typeof ttbm_init_attendee_autocomplete === 'function') {
+                                ttbm_init_attendee_autocomplete(target_tr);
+                            }
                         });
                     });
                 }
@@ -156,6 +160,10 @@ function ttbm_single_attendee_form(parent, totalQty) {
             parent.find('.ttbm_attendee_form_area').append(form_copy).promise().done(function () {
                 parent.find('.ttbm_attendee_form_area').find(".date_type").removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind().promise().done(function () {
                     ttbm_load_date_picker(parent.find('.ttbm_attendee_form_area'));
+                    // Initialize autocomplete for attendee fields
+                    if (typeof ttbm_init_attendee_autocomplete === 'function') {
+                        ttbm_init_attendee_autocomplete(parent.find('.ttbm_attendee_form_area'));
+                    }
                 });
             });
         }
@@ -224,125 +232,125 @@ function ttbm_partial_payment_job(parent, total) {
             currentTarget.addClass('error');
             return false;
         }
-	});
-	
-	// Enhanced Availability Updates
-	if ($('.ttbm_enhanced_ticket_area').length > 0) {
-		// Update availability every 30 seconds
-		setInterval(function() {
-			updateTicketAvailability();
-		}, 30000);
-		
-		// Update on date change
-		$(document).on('change', '#ttbm_select_date, input[name="ttbm_date"]', function() {
-			setTimeout(updateTicketAvailability, 500);
-		});
-	}
-	
-	function updateTicketAvailability() {
-		var tourId = $('input[name="ttbm_id"]').val() || $('.ttbm_last_updated').data('tour-id');
-		var tourDate = $('input[name="ttbm_date"]').val() || $('.ttbm_last_updated').data('tour-date');
-		
-		if (!tourId) return;
-		
-		$.ajax({
-			url: (typeof ttbm_price_calc_vars !== 'undefined' && ttbm_price_calc_vars.ajax_url) || ttbm_ajax_url || ajaxurl,
-			type: 'POST',
-			data: {
-				action: 'get_ticket_availability',
-				nonce: (typeof ttbm_price_calc_vars !== 'undefined' && ttbm_price_calc_vars.nonce) || (typeof ttbm_ajax !== 'undefined' && ttbm_ajax.nonce) || $('#ttbm_nonce_field').val(),
-				tour_id: tourId,
-				tour_date: tourDate
-			},
-			success: function(response) {
-				if (response.success && response.data.availability) {
-					updateTicketDisplay(response.data.availability);
-					updateLastRefreshTime();
-				}
-			},
-			error: function() {
-				console.log('Failed to update availability');
-			}
-		});
-	}
-	
-	function updateTicketDisplay(availability) {
-		$.each(availability, function(ticketName, info) {
-			var row = $('[data-ticket-name="' + ticketName + '"]');
-			if (row.length === 0) return;
-			
-			// Update available count
-			var availableSpan = row.find('.ttbm_available_number');
-			if (availableSpan.length > 0) {
-				availableSpan.text(info.available_qty);
-			}
-			
-			// Update available label
-			var availableLabel = row.find('.ttbm_available_label');
-			if (availableLabel.length > 0) {
-				var labelText = info.available_qty === 1 ? 'ticket left' : 'tickets left';
-				availableLabel.text(labelText);
-			}
-			
-			// Update progress bar
-			var progressBar = row.find('.ttbm_progress_fill');
-			if (progressBar.length > 0) {
-				progressBar.css('width', info.percentage_sold + '%');
-				progressBar.removeClass('ttbm_progress_in_stock ttbm_progress_sold_out');
-				progressBar.addClass('ttbm_progress_' + info.stock_status);
-			}
-			
-			// Update capacity text
-			var capacityText = row.find('.ttbm_capacity_text');
-			if (capacityText.length > 0) {
-				capacityText.text(info.sold_qty + ' of ' + info.total_capacity + ' sold');
-			}
-			
-			// Update row classes
-			row.removeClass('ttbm_stock_in_stock ttbm_stock_sold_out ttbm_sold_out');
-			row.addClass('ttbm_stock_' + info.stock_status);
-			
-			if (info.available_qty <= 0) {
-				row.addClass('ttbm_sold_out');
-				// Show sold out state
-				var stockInfo = row.find('.ttbm_stock_info');
-				if (stockInfo.find('.ttbm_stock_status.sold_out').length === 0) {
-					stockInfo.html('<span class="ttbm_stock_status sold_out"><i class="fas fa-times-circle"></i> Sold Out</span>');
-				}
-				// Disable quantity input
-				row.find('.formControl[data-price]').prop('disabled', true).val(0);
-			} else {
-				// Remove urgency message if exists
-				row.find('.ttbm_urgency_message').remove();
-				row.find('.formControl[data-price]').prop('disabled', false);
-			}
-			
-			// Update quantity input max value
-			var quantityInput = row.find('.formControl[data-price]');
-			if (quantityInput.length > 0) {
-				var currentValue = parseInt(quantityInput.val()) || 0;
-				quantityInput.attr('max', info.available_qty);
-				
-				// If current value exceeds available, reset to available
-				if (currentValue > info.available_qty) {
-					quantityInput.val(info.available_qty);
-					quantityInput.trigger('change');
-				}
-			}
-		});
-		
-		// Update total availability
-		var totalAvailable = 0;
-		$.each(availability, function(ticketName, info) {
-			totalAvailable += parseInt(info.available_qty) || 0;
-		});
-		$('#ttbm_total_available').text(totalAvailable);
-	}
-	
-	function updateLastRefreshTime() {
-		var now = new Date();
-		var timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-		$('.ttbm_last_updated').html('<i class="far fa-clock"></i> Updated at ' + timeString);
-	}
-	
+    });
+
+    // Enhanced Availability Updates
+    if ($('.ttbm_enhanced_ticket_area').length > 0) {
+        // Update availability every 30 seconds
+        setInterval(function () {
+            updateTicketAvailability();
+        }, 30000);
+
+        // Update on date change
+        $(document).on('change', '#ttbm_select_date, input[name="ttbm_date"]', function () {
+            setTimeout(updateTicketAvailability, 500);
+        });
+    }
+
+    function updateTicketAvailability() {
+        var tourId = $('input[name="ttbm_id"]').val() || $('.ttbm_last_updated').data('tour-id');
+        var tourDate = $('input[name="ttbm_date"]').val() || $('.ttbm_last_updated').data('tour-date');
+
+        if (!tourId) return;
+
+        $.ajax({
+            url: (typeof ttbm_price_calc_vars !== 'undefined' && ttbm_price_calc_vars.ajax_url) || ttbm_ajax_url || ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'get_ticket_availability',
+                nonce: (typeof ttbm_price_calc_vars !== 'undefined' && ttbm_price_calc_vars.nonce) || (typeof ttbm_ajax !== 'undefined' && ttbm_ajax.nonce) || $('#ttbm_nonce_field').val(),
+                tour_id: tourId,
+                tour_date: tourDate
+            },
+            success: function (response) {
+                if (response.success && response.data.availability) {
+                    updateTicketDisplay(response.data.availability);
+                    updateLastRefreshTime();
+                }
+            },
+            error: function () {
+                console.log('Failed to update availability');
+            }
+        });
+    }
+
+    function updateTicketDisplay(availability) {
+        $.each(availability, function (ticketName, info) {
+            var row = $('[data-ticket-name="' + ticketName + '"]');
+            if (row.length === 0) return;
+
+            // Update available count
+            var availableSpan = row.find('.ttbm_available_number');
+            if (availableSpan.length > 0) {
+                availableSpan.text(info.available_qty);
+            }
+
+            // Update available label
+            var availableLabel = row.find('.ttbm_available_label');
+            if (availableLabel.length > 0) {
+                var labelText = info.available_qty === 1 ? 'ticket left' : 'tickets left';
+                availableLabel.text(labelText);
+            }
+
+            // Update progress bar
+            var progressBar = row.find('.ttbm_progress_fill');
+            if (progressBar.length > 0) {
+                progressBar.css('width', info.percentage_sold + '%');
+                progressBar.removeClass('ttbm_progress_in_stock ttbm_progress_sold_out');
+                progressBar.addClass('ttbm_progress_' + info.stock_status);
+            }
+
+            // Update capacity text
+            var capacityText = row.find('.ttbm_capacity_text');
+            if (capacityText.length > 0) {
+                capacityText.text(info.sold_qty + ' of ' + info.total_capacity + ' sold');
+            }
+
+            // Update row classes
+            row.removeClass('ttbm_stock_in_stock ttbm_stock_sold_out ttbm_sold_out');
+            row.addClass('ttbm_stock_' + info.stock_status);
+
+            if (info.available_qty <= 0) {
+                row.addClass('ttbm_sold_out');
+                // Show sold out state
+                var stockInfo = row.find('.ttbm_stock_info');
+                if (stockInfo.find('.ttbm_stock_status.sold_out').length === 0) {
+                    stockInfo.html('<span class="ttbm_stock_status sold_out"><i class="fas fa-times-circle"></i> Sold Out</span>');
+                }
+                // Disable quantity input
+                row.find('.formControl[data-price]').prop('disabled', true).val(0);
+            } else {
+                // Remove urgency message if exists
+                row.find('.ttbm_urgency_message').remove();
+                row.find('.formControl[data-price]').prop('disabled', false);
+            }
+
+            // Update quantity input max value
+            var quantityInput = row.find('.formControl[data-price]');
+            if (quantityInput.length > 0) {
+                var currentValue = parseInt(quantityInput.val()) || 0;
+                quantityInput.attr('max', info.available_qty);
+
+                // If current value exceeds available, reset to available
+                if (currentValue > info.available_qty) {
+                    quantityInput.val(info.available_qty);
+                    quantityInput.trigger('change');
+                }
+            }
+        });
+
+        // Update total availability
+        var totalAvailable = 0;
+        $.each(availability, function (ticketName, info) {
+            totalAvailable += parseInt(info.available_qty) || 0;
+        });
+        $('#ttbm_total_available').text(totalAvailable);
+    }
+
+    function updateLastRefreshTime() {
+        var now = new Date();
+        var timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        $('.ttbm_last_updated').html('<i class="far fa-clock"></i> Updated at ' + timeString);
+    }
+
 }(jQuery));

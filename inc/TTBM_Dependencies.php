@@ -117,8 +117,10 @@ require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
 				wp_enqueue_style('ttbm_date_range_picker', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.min.css', array(), '1');
 				wp_enqueue_script('ttbm_date_range_picker_js', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.js', array('jquery', 'moment'), '1', true);
 				wp_enqueue_style('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.css', array(), time());
-				wp_enqueue_script('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.js', array('jquery'), time(), true);
-			wp_enqueue_script('ttbm_price_calculation', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_price_calculation.js', array('jquery'), time(), true);
+				wp_enqueue_script('jquery-ui-autocomplete');
+				wp_enqueue_script('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.js', array('jquery', 'jquery-ui-autocomplete'), time(), true);
+				wp_enqueue_script('ttbm_attendee_autocomplete', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_attendee_autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), time(), true);
+				wp_enqueue_script('ttbm_price_calculation', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_price_calculation.js', array('jquery'), time(), true);
 			wp_enqueue_script('ttbm_hotel_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_script.js', array('jquery'), time(), true);
 			wp_enqueue_script('ttbm_filter_pagination_script', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.js', array('jquery'), time(), true);
 			wp_localize_script('ttbm_registration', 'ttbm_ajax', array(
@@ -199,15 +201,6 @@ require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
                     'https://cdn.jsdelivr.net/npm/flatpickr',
                     ['jquery'],
                     null,
-                    true
-                );
-
-                // Your custom script that initializes Flatpickr
-                wp_enqueue_script(
-                    'myplugin-flatpickr-init',
-                    plugin_dir_url(__FILE__) . 'assets/js/flatpickr-init.js',
-                    ['flatpickr-js'],
-                    false,
                     true
                 );
             }

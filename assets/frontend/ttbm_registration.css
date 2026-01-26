@@ -19,7 +19,7 @@ body.theme-twentytwentytwo div.ttbm_wraper {max-width: 1400px !important;}
 }
 /**************************************************/
 div.ttbm_default_theme,
-div.ttbm_viator_theme {width: 100%;max-width: 1400px;margin: auto;}
+div.ttbm_viator_theme {width: 100%;max-width: 1400px;margin: auto;background: #fff;}
 div.ttbm_wraper {max-width: 100%; width: 100%;margin: var(--ttbm_mp) auto;position: relative;}
 div.ttbm_container {width: 100%;max-width: 1400px;margin: 0 auto;padding: var(--ttbm_mp);background-color: var(--color_white);}
 .ttbm_wraper table {table-layout: fixed;margin: 0; width: 100%;}

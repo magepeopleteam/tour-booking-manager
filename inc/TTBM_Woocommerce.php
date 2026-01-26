@@ -51,7 +51,7 @@
 					$ttbm_id = array_key_exists('ttbm_id', $value) ? $value['ttbm_id'] : 0;
 					$ttbm_id = TTBM_Function::post_id_multi_language($ttbm_id);
 					if (get_post_type($ttbm_id) == TTBM_Function::get_cpt_name()) {
-						$total_price = $value['ttbm_tp'];
+						$total_price = array_key_exists('ttbm_tp', $value) ? $value['ttbm_tp'] : 0;
 						$value['data']->set_price($total_price);
 						$value['data']->set_regular_price($total_price);
 						$value['data']->set_sale_price($total_price);
@@ -232,7 +232,7 @@
 							<?php if (!empty($location) && TTBM_Global_Function::get_post_info($ttbm_id, 'ttbm_display_location', 'on') != 'off') { ?>
                                 <li>
                                     <span class="fas fa-map-marker-alt"></span>&nbsp;
-                                    <h6><?php echo esc_html($tour_name . ' ' . esc_html__('Location', 'tour-booking-manager')); ?> :&nbsp;</h6>
+                                    <h6><?php echo esc_html($tour_name) . ' ' . esc_html__('Location', 'tour-booking-manager'); ?> :&nbsp;</h6>
                                     <span><?php echo esc_html($location); ?></span>
                                 </li>
 							<?php } ?>

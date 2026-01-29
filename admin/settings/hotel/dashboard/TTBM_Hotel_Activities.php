@@ -30,7 +30,7 @@ if (!class_exists('TTBM_Hotel_Activities')) {
                         <h2 class="ttbm_total_booking_title">
                             <?php echo esc_attr__( 'Hotel Activities List', 'tour-booking-manager' )?>
                         </h2>
-                        <button class="_themeButton_xs ttbm-hotel-new-activity" data-ttbm-modal="ttbm-hotel-activity-modal"> <?php echo esc_attr__( 'Add new feature', 'tour-booking-manager' )?></button>
+                        <button class="_themeButton_xs ttbm-hotel-new-activity" data-ttbm-modal="ttbm-hotel-activity-modal"> <?php echo esc_attr__( 'Add new activity', 'tour-booking-manager' )?></button>
                     </div>
                     <div class="ttbm-hotel-activity-items">
                         <?php $this->show_activities_lists(); ?>

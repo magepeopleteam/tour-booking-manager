@@ -645,7 +645,11 @@ input.medium{
 	.ttbm-btn:hover { opacity: 0.9;}
 	.ttbm-title-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;}
 	.ttbm-taxonomy-card-actions { display: none; gap: 8px; flex-shrink: 0;}
-	.ttbm-taxonomy-card:hover .ttbm-taxonomy-card-actions { display: flex;}
+	.ttbm-taxonomy-card:hover .ttbm-taxonomy-card-actions { display: flex;
+		position: absolute;
+    	top: 0;
+    	right: 0;
+	}
 	.ttbm_places_load_more_holder,
 	.ttbm_plocation_load_more_holder { display: flex; padding: 10px; justify-content: center;}
 	.ttbm_places_load_more_btn,
@@ -1408,8 +1412,8 @@ input.medium{
 
 /******************************************************************** Organizer ID Badge & Shortcode Display ************************************************/
 .ttbm-term-id-badge {
-	background-color: var(--mpl-primary);
-	color: var(--mpl-white);
+	/* background-color: var(--mpl-primary); */
+	color:  var(--mpl-dark);
 	padding: 3px 8px;
 	font-size: 11px;
 	font-weight: 500;

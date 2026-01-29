@@ -649,6 +649,7 @@ input.medium{
 		position: absolute;
     	top: 0;
     	right: 0;
+		z-index: 1;
 	}
 	.ttbm_places_load_more_holder,
 	.ttbm_plocation_load_more_holder { display: flex; padding: 10px; justify-content: center;}
@@ -1414,16 +1415,11 @@ input.medium{
 .ttbm-term-id-badge {
 	/* background-color: var(--mpl-primary); */
 	color:  var(--mpl-dark);
-	padding: 3px 8px;
-	font-size: 11px;
-	font-weight: 500;
-	border-radius: 3px;
-	margin-left: 6px;
+	padding: 5px;
+	font-size: 12px;
 	display: inline-block;
 	vertical-align: middle;
 	white-space: nowrap;
-	position: relative;
-	z-index: 1;
 }
 
 .ttbm_show_location_shortcode {

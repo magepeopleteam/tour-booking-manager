@@ -96,11 +96,12 @@
 				$ttbm_id = TTBM_Function::post_id_multi_language($ttbm_id);
 				//echo '<pre>';print_r($values);echo '</pre>';die();
 				if (get_post_type($ttbm_id) == TTBM_Function::get_cpt_name()) {
-					$hotel_info = $values['ttbm_hotel_info'] ?: [];
-					$ticket_type = $values['ttbm_ticket_info'] ?: [];
-					$extra_service = $values['ttbm_extra_service_info'] ?: [];
-					$user_info = $values['ttbm_user_info'] ?: [];
-					$date = $values['ttbm_date'] ?: '';
+					$hotel_info = array_key_exists('ttbm_hotel_info', $values) ?:[];
+					$ticket_type = array_key_exists('ttbm_ticket_info', $values) ? : [];
+					$extra_service = array_key_exists('ttbm_extra_service_info', $values) ?: [];
+					$user_info = array_key_exists('ttbm_user_info', $values) ? : [];
+					$date = array_key_exists('ttbm_date', $values) ? : '';
+
 					$data_format = TTBM_Global_Function::check_time_exit_date($date) ? 'full' : 'date';
 					$start_date = TTBM_Global_Function::date_format($date, $data_format);
 					$location = TTBM_Global_Function::get_post_info($ttbm_id, 'ttbm_location_name');

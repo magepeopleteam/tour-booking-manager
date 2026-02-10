@@ -994,6 +994,12 @@
 			public static function service_qty_text() {
 				return self::get_translation_settings('ttbm_string_service_qty', esc_html__('Qty', 'tour-booking-manager'));
 			}
+			public static function cancellation_policy_text() {
+				return self::get_translation_settings('ttbm_string_cancellation_policy', esc_html__('Free cancellation up to 24 hours before the experience starts (local time)', 'tour-booking-manager'));
+			}
+			public static function reserve_pay_later_text() {
+				return self::get_translation_settings('ttbm_string_reserve_pay_later', esc_html__('Reserve Now and Pay Later - Secure your spot while staying flexible', 'tour-booking-manager'));
+			}
 			//*****************//
 			public static function get_cpt_name(): string {
 				return 'ttbm_tour';

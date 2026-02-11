@@ -637,7 +637,14 @@
 				$tour_date = current(self::get_date($tour_id));
 			}
 			
-			$tour_date = gmdate('Y-m-d', strtotime($tour_date));
+			// Preserve time component if present for time-slot specific availability
+			$has_time = TTBM_Global_Function::check_time_exit_date($tour_date);
+			if ($has_time) {
+				$tour_date = gmdate('Y-m-d H:i', strtotime($tour_date));
+			} else {
+				$tour_date = gmdate('Y-m-d', strtotime($tour_date));
+			}
+			
 			$ticket_types = self::get_ticket_type($tour_id);
 			$availability_info = array();
 			
@@ -993,6 +1000,12 @@
 			}
 			public static function service_qty_text() {
 				return self::get_translation_settings('ttbm_string_service_qty', esc_html__('Qty', 'tour-booking-manager'));
+			}
+			public static function cancellation_policy_text() {
+				return self::get_translation_settings('ttbm_string_cancellation_policy', esc_html__('Free cancellation up to 24 hours before the experience starts (local time)', 'tour-booking-manager'));
+			}
+			public static function reserve_pay_later_text() {
+				return self::get_translation_settings('ttbm_string_reserve_pay_later', esc_html__('Reserve Now and Pay Later - Secure your spot while staying flexible', 'tour-booking-manager'));
 			}
 			//*****************//
 			public static function get_cpt_name(): string {

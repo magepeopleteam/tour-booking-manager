@@ -826,7 +826,12 @@
 
     function empty_faq_form() {
         $('input[name="ttbm_hotel_faq_title"]').val('');
-        tinyMCE.get('ttbm_hotel_faq_content').setContent('');
+        var editorId = 'ttbm_hotel_faq_content';
+        if (typeof tinyMCE !== 'undefined' && tinyMCE.get(editorId)) {
+            tinyMCE.get(editorId).setContent('');
+        } else {
+            $('#' + editorId).val('');
+        }
         $('input[name="ttbm_faq_item_id"]').val('');
     }
 
@@ -848,7 +853,7 @@
 
     function update_faq() {
         var title = $('input[name="ttbm_hotel_faq_title"]');
-        var content = tinyMCE.get('ttbm_hotel_faq_content').getContent();
+        var content = (typeof tinyMCE !== 'undefined' && tinyMCE.get('ttbm_hotel_faq_content')) ? tinyMCE.get('ttbm_hotel_faq_content').getContent() : $('#ttbm_hotel_faq_content').val();
         var postID = $('input[name="ttbm_post_id"]');
         var itemId = $('input[name="ttbm_faq_item_id"]');
         $.ajax({
@@ -879,7 +884,7 @@
 
     function save_faq() {
         var title = $('input[name="ttbm_hotel_faq_title"]');
-        var content = tinyMCE.get('ttbm_hotel_faq_content').getContent();
+        var content = (typeof tinyMCE !== 'undefined' && tinyMCE.get('ttbm_hotel_faq_content')) ? tinyMCE.get('ttbm_hotel_faq_content').getContent() : $('#ttbm_hotel_faq_content').val();
         var postID = $('input[name="ttbm_post_id"]');
         $.ajax({
             url: ttbm_admin_ajax.ajax_url,

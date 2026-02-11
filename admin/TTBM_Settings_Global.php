@@ -373,6 +373,20 @@
 							'type' => 'text',
 							'default' => ''
 						),
+						array(
+							'name' => 'ttbm_string_cancellation_policy',
+							'label' => esc_html__('Cancellation Policy', 'tour-booking-manager'),
+							'desc' => esc_html__('Enter the translated text of: ', 'tour-booking-manager') . '<strong>' . esc_html__('Free cancellation up to 24 hours before the experience starts (local time)', 'tour-booking-manager') . '</stong>',
+							'type' => 'text',
+							'default' => esc_html__('Free cancellation up to 24 hours before the experience starts (local time)', 'tour-booking-manager'),
+						),
+						array(
+							'name' => 'ttbm_string_reserve_pay_later',
+							'label' => esc_html__('Reserve Now Pay Later', 'tour-booking-manager'),
+							'desc' => esc_html__('Enter the translated text of: ', 'tour-booking-manager') . '<strong>' . esc_html__('Reserve Now and Pay Later - Secure your spot while staying flexible', 'tour-booking-manager') . '</stong>',
+							'type' => 'text',
+							'default' => esc_html__('Reserve Now and Pay Later - Secure your spot while staying flexible', 'tour-booking-manager'),
+						),
 					)),
 					'ttbm_slider_settings' => array(
 						array(

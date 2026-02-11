@@ -95,13 +95,12 @@
 				$ttbm_id = array_key_exists('ttbm_id', $values) ? $values['ttbm_id'] : 0;
 				$ttbm_id = TTBM_Function::post_id_multi_language($ttbm_id);
 				//echo '<pre>';print_r($values);echo '</pre>';die();
-				if (get_post_type($ttbm_id) == TTBM_Function::get_cpt_name()) {
-					$hotel_info = array_key_exists('ttbm_hotel_info', $values) ?:[];
-					$ticket_type = array_key_exists('ttbm_ticket_info', $values) ? : [];
-					$extra_service = array_key_exists('ttbm_extra_service_info', $values) ?: [];
-					$user_info = array_key_exists('ttbm_user_info', $values) ? : [];
-					$date = array_key_exists('ttbm_date', $values) ? : '';
-
+			if (get_post_type($ttbm_id) == TTBM_Function::get_cpt_name()) {
+				$hotel_info = isset($values['ttbm_hotel_info']) ? $values['ttbm_hotel_info'] : [];
+				$ticket_type = isset($values['ttbm_ticket_info']) ? $values['ttbm_ticket_info'] : [];
+				$extra_service = isset($values['ttbm_extra_service_info']) ? $values['ttbm_extra_service_info'] : [];
+				$user_info = isset($values['ttbm_user_info']) ? $values['ttbm_user_info'] : [];
+				$date = isset($values['ttbm_date']) ? $values['ttbm_date'] : '';
 					$data_format = TTBM_Global_Function::check_time_exit_date($date) ? 'full' : 'date';
 					$start_date = TTBM_Global_Function::date_format($date, $data_format);
 					$location = TTBM_Global_Function::get_post_info($ttbm_id, 'ttbm_location_name');
@@ -217,14 +216,14 @@
 				}
 			}
 			//**************************//
-			public function show_cart_item($cart_item, $ttbm_id) {
-				$ticket_type = $cart_item['ttbm_ticket_info'] ?: [];
-				$extra_service = $cart_item['ttbm_extra_service_info'] ?: [];
-				$tour_name = TTBM_Function::get_name();
-				$location = TTBM_Global_Function::get_post_info($ttbm_id, 'ttbm_location_name');
-				$date = $cart_item['ttbm_date'];
-				$data_format = TTBM_Global_Function::check_time_exit_date($date) ? 'full' : 'date';
-				$hotel_info = $cart_item['ttbm_hotel_info'] ?: array();
+		public function show_cart_item($cart_item, $ttbm_id) {
+			$ticket_type = isset($cart_item['ttbm_ticket_info']) ? $cart_item['ttbm_ticket_info'] : [];
+			$extra_service = isset($cart_item['ttbm_extra_service_info']) ? $cart_item['ttbm_extra_service_info'] : [];
+			$tour_name = TTBM_Function::get_name();
+			$location = TTBM_Global_Function::get_post_info($ttbm_id, 'ttbm_location_name');
+			$date = isset($cart_item['ttbm_date']) ? $cart_item['ttbm_date'] : '';
+			$data_format = TTBM_Global_Function::check_time_exit_date($date) ? 'full' : 'date';
+			$hotel_info = isset($cart_item['ttbm_hotel_info']) ? $cart_item['ttbm_hotel_info'] : array();
 				?>
                 <div class="ttbm_style">
 					<?php do_action('ttbm_before_cart_item_display', $cart_item, $ttbm_id); ?>

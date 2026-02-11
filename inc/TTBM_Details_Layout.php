@@ -86,8 +86,8 @@
 							<?php esc_html_e('Check Availability', 'tour-booking-manager'); ?>
                         </button>
                         <ul class="ttbm-registration-info">
-                            <li><?php esc_html_e('Free cancellation up to 24 hours before the experience starts (local time)', 'tour-booking-manager'); ?></li>
-                            <li><?php esc_html_e('Reserve Now and Pay Later - Secure your spot while staying flexible', 'tour-booking-manager'); ?></li>
+                            <li><?php echo TTBM_Function::cancellation_policy_text(); ?></li>
+                            <li><?php echo TTBM_Function::reserve_pay_later_text(); ?></li>
                         </ul>
                         <input type="hidden" class="registration_popup" data-target-popup="registration-popup">
                         <div class="ttbm_popup ttbm_style" data-popup="registration-popup">

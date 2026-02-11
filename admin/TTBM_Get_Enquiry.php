@@ -115,10 +115,17 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 $from = sanitize_email($from);
             }
             
+            // Get configured sender name
+            $from_name = get_option('ttbm_enquiry_from_name');
+            if (empty($from_name)) {
+                $from_name = get_bloginfo('name');
+            }
+            $from_name = sanitize_text_field($from_name);
+            
             // Set proper email headers with From address
             $headers = [
                 'Content-Type: text/html; charset=UTF-8',
-                'From: ' . $from,
+                'From: ' . $from_name . ' <' . $from . '>',
                 'Reply-To: ' . $from
             ];
             
@@ -152,10 +159,17 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             }
             $to = sanitize_email($to);
             
+            // Get configured sender name
+            $from_name = get_option('ttbm_enquiry_from_name');
+            if (empty($from_name)) {
+                $from_name = get_bloginfo('name');
+            }
+            $from_name = sanitize_text_field($from_name);
+            
             // Set proper email headers with customer's email as Reply-To
             $headers = [
                 'Content-Type: text/html; charset=UTF-8',
-                'From: ' . $to,
+                'From: ' . $from_name . ' <' . $to . '>',
                 'Reply-To: ' . $email
             ];
             
@@ -192,7 +206,7 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 
                 $customer_headers = [
                     'Content-Type: text/html; charset=UTF-8',
-                    'From: ' . $to,
+                    'From: ' . $from_name . ' <' . $to . '>',
                     'Reply-To: ' . $to
                 ];
                 
@@ -372,7 +386,9 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 
                 if (wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_enquiry_nonce'])), 'ttbm_enquiry_nonce')) {
                     $ttbm_enquiry_from_email=isset($_POST['ttbm_enquiry_from_email'])?sanitize_email(wp_unslash($_POST['ttbm_enquiry_from_email'])):'';
+                    $ttbm_enquiry_from_name=isset($_POST['ttbm_enquiry_from_name'])?sanitize_text_field(wp_unslash($_POST['ttbm_enquiry_from_name'])):'';
                     update_option('ttbm_enquiry_from_email', $ttbm_enquiry_from_email);
+                    update_option('ttbm_enquiry_from_name', $ttbm_enquiry_from_name);
                     
                 } else {
                     wp_die(esc_html__('Nonce verification failed', 'tour-booking-manager'));
@@ -382,7 +398,13 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             if (empty($from_email)) {
                 $from_email = get_option('admin_email', 'admin@' . wp_parse_url(get_site_url(), PHP_URL_HOST));
             }
-            $from_email = sanitize_email($from_email);        
+            $from_email = sanitize_email($from_email);
+            
+            $from_name = get_option('ttbm_enquiry_from_name');
+            if (empty($from_name)) {
+                $from_name = get_bloginfo('name');
+            }
+            $from_name = sanitize_text_field($from_name);        
         ?>
             <div id="ttbm-settings-page">
             <div class="wrap ">
@@ -537,6 +559,11 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                                 <h2><?php esc_html_e('Enquiry Settings', 'tour-booking-manager'); ?></h2>
                                 <form method="post" action="">
                                     <input type="hidden" name="ttbm_enquiry_nonce" value="<?php echo esc_attr(wp_create_nonce('ttbm_enquiry_nonce')); ?>">
+                                    <div class="form-field term-name-wrap">
+                                        <label><?php esc_html_e('From Name', 'tour-booking-manager'); ?></label>
+                                        <input name="ttbm_enquiry_from_name" type="text" value="<?php echo esc_attr($from_name); ?>" size="40" aria-required="true">
+                                        <p class="description"><?php esc_html_e('The sender name that will appear in enquiry emails. Defaults to site name.', 'tour-booking-manager'); ?></p>
+                                    </div>
                                     <div class="form-field term-name-wrap">
                                         <label><?php esc_html_e('From Email', 'tour-booking-manager'); ?></label>
                                         <input name="ttbm_enquiry_from_email" type="email" value="<?php echo esc_attr($from_email); ?>" size="40" aria-required="true">

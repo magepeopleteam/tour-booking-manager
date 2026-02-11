@@ -285,47 +285,68 @@
 					return new WP_Query($args);
 				}
 			}
-			public static function query_all_sold($tour_id, $tour_date, $type = '', $hotel_id = ''): WP_Query {
-				$_seat_booked_status = TTBM_Function::get_general_settings('ttbm_set_book_status', array('processing', 'completed'));
-				$seat_booked_status = !empty($_seat_booked_status) ? $_seat_booked_status : [];
-				$type_filter = !empty($type) && !is_array($type) ? array(
-					'key' => 'ttbm_ticket_name',
-					'value' => $type,
-					'compare' => '='
-				) : '';
-				$date_filter = !empty($tour_date) ? array(
-					'key' => 'ttbm_date',
-					'value' => $tour_date,
-					'compare' => 'LIKE'
-				) : '';
-				$hotel_filter = !empty($hotel_id) ? array(
-					'key' => 'ttbm_hotel_id',
-					'value' => $hotel_id,
-					'compare' => '='
-				) : '';
-				$args = array(
-					'post_type' => 'ttbm_booking',
-					'post_status' => 'publish',
-					'posts_per_page' => -1,
-					'meta_query' => array(
-						'relation' => 'AND',
-						array(
-							'key' => 'ttbm_id',
-							'value' => $tour_id,
-							'compare' => '='
-						),
-						array(
-							'key' => 'ttbm_order_status',
-							'value' => $seat_booked_status,
-							'compare' => 'IN'
-						),
-						$type_filter,
-						$hotel_filter,
-						$date_filter
-					)
-				);
-				return new WP_Query($args);
+		public static function query_all_sold($tour_id, $tour_date, $type = '', $hotel_id = ''): WP_Query {
+			$_seat_booked_status = TTBM_Function::get_general_settings('ttbm_set_book_status', array('processing', 'completed'));
+			$seat_booked_status = !empty($_seat_booked_status) ? $_seat_booked_status : [];
+			$type_filter = !empty($type) && !is_array($type) ? array(
+				'key' => 'ttbm_ticket_name',
+				'value' => $type,
+				'compare' => '='
+			) : '';
+			
+			// Fix: Use exact match for date+time to ensure time-slot specific availability
+			// If tour_date contains time (e.g., "2026-02-21 10:00"), match exactly
+			// If tour_date is date only (e.g., "2026-02-21"), use LIKE for backward compatibility
+			$date_filter = '';
+			if (!empty($tour_date)) {
+				// Check if the date contains time component
+				$has_time = TTBM_Global_Function::check_time_exit_date($tour_date);
+				if ($has_time) {
+					// Exact match for date with time - ensures time-slot specific counting
+					$date_filter = array(
+						'key' => 'ttbm_date',
+						'value' => $tour_date,
+						'compare' => '='
+					);
+				} else {
+					// For date-only queries, match the date portion only
+					// This handles backward compatibility for tours without time slots
+					$date_filter = array(
+						'key' => 'ttbm_date',
+						'value' => $tour_date,
+						'compare' => 'LIKE'
+					);
+				}
 			}
+			
+			$hotel_filter = !empty($hotel_id) ? array(
+				'key' => 'ttbm_hotel_id',
+				'value' => $hotel_id,
+				'compare' => '='
+			) : '';
+			$args = array(
+				'post_type' => 'ttbm_booking',
+				'post_status' => 'publish',
+				'posts_per_page' => -1,
+				'meta_query' => array(
+					'relation' => 'AND',
+					array(
+						'key' => 'ttbm_id',
+						'value' => $tour_id,
+						'compare' => '='
+					),
+					array(
+						'key' => 'ttbm_order_status',
+						'value' => $seat_booked_status,
+						'compare' => 'IN'
+					),
+					$type_filter,
+					$hotel_filter,
+					$date_filter
+				)
+			);
+			return new WP_Query($args);
+		}
 			public static function query_all_service_sold($tour_id, $tour_date, $type = '') {
 				$_seat_booked_status = TTBM_Function::get_general_settings('ttbm_set_book_status', array('processing', 'completed'));
 				$seat_booked_status = !empty($_seat_booked_status) ? $_seat_booked_status : [];
@@ -334,11 +355,25 @@
 					'value' => $type,
 					'compare' => '='
 				) : '';
-				$date_filter = !empty($tour_date) ? array(
-					'key' => 'ttbm_date',
-					'value' => $tour_date,
-					'compare' => 'LIKE'
-				) : '';
+				
+				// Fix: Use exact match for date+time to ensure time-slot specific availability
+				$date_filter = '';
+				if (!empty($tour_date)) {
+					$has_time = TTBM_Global_Function::check_time_exit_date($tour_date);
+					if ($has_time) {
+						$date_filter = array(
+							'key' => 'ttbm_date',
+							'value' => $tour_date,
+							'compare' => '='
+						);
+					} else {
+						$date_filter = array(
+							'key' => 'ttbm_date',
+							'value' => $tour_date,
+							'compare' => 'LIKE'
+						);
+					}
+				}
 				$args = array(
 					'post_type' => 'ttbm_service_booking',
 					'post_status' => 'publish',

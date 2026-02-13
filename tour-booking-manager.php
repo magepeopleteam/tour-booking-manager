@@ -54,6 +54,10 @@ if (!class_exists('TTBM_Woocommerce_Plugin')) {
 				if (is_network_admin() || isset($_GET['activate-multi']) || wp_doing_ajax()) {
 					return;
 				}
+				// Avoid interfering with REST requests (e.g., Gutenberg saves)
+				if (defined('REST_REQUEST') && REST_REQUEST) {
+					return;
+				}
 				
 				$ttbm_quick_setup_done = get_option('ttbm_quick_setup_done', 'no');
 				

@@ -3,6 +3,7 @@
 		die;
 	} // Cannot access pages directly.
 	if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+		$title_filter = isset($_GET['title_filter']) ? sanitize_text_field(wp_unslash($_GET['title_filter'])) : '';
 		$location_filter = isset($_GET['location_filter']) ? sanitize_text_field(wp_unslash($_GET['location_filter'])) : '';
 		$type_filter = isset($_GET['type_filter']) ? sanitize_text_field(wp_unslash($_GET['type_filter'])) : '';
 		$category_filter = isset($_GET['category_filter']) ? sanitize_text_field(wp_unslash($_GET['category_filter'])) : '';
@@ -11,6 +12,11 @@
 		$duration_filter = isset($_GET['duration_filter']) ? sanitize_text_field(wp_unslash($_GET['duration_filter'])) : '';
 		$activity_filter = isset($_GET['activity_filter']) ? sanitize_text_field(wp_unslash($_GET['activity_filter'])) : '';
 		$month_filter = isset($_GET['month_filter']) ? sanitize_text_field(wp_unslash($_GET['month_filter'])) : '';
+		if ($title_filter) {
+			?>
+            <input type="hidden" name="title_filter" value="<?php echo esc_attr($title_filter); ?>"/>
+			<?php
+		}
 		if ($location_filter) {
 			?>
             <input type="hidden" name="location_filter" value="<?php echo esc_attr($location_filter); ?>"/>

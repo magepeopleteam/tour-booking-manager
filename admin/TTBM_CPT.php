@@ -82,6 +82,7 @@
 					'supports' => array( 'title' ),
 					'show_in_menu' => 'edit.php?post_type=ttbm_tour',
 					'capability_type' => 'post',
+					'show_in_rest' => true,
 				);
 				register_post_type( 'ttbm_ticket_types', $args );
 			
@@ -113,6 +114,7 @@ register_post_type('ttbm_hotel', $args);
 					// 'show_in_menu' => 'edit.php?post_type=ttbm_tour',
 					'show_in_menu' => false,
 					'capability_type' => 'post',
+					'show_in_rest' => true,
 				];
 				register_post_type('ttbm_places', $args);
 				$args = [
@@ -121,6 +123,7 @@ register_post_type('ttbm_hotel', $args);
 					'supports' => ['title', 'thumbnail', 'editor'],
 					'show_in_menu' => 'edit.php?post_type=ttbm_tour',
 					'capability_type' => 'post',
+					'show_in_rest' => true,
 				];
 				register_post_type('ttbm_guide', $args);
 

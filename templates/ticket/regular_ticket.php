@@ -157,11 +157,11 @@ if (!defined('ABSPATH')) {
 								<tr class="ttbm_hidden_inputs">
 									<td colspan="<?php echo $hide_availability_column === 'on' ? '3' : '4'; ?>">
 										<?php do_action('ttbm_input_data',$ticket_name,$tour_id); ?>
-										<input type="hidden" name='tour_id[]' value='<?php echo esc_html($tour_id); ?>'>
-										<input type="hidden" name='ticket_name[]' value='<?php echo esc_html($ticket_name); ?>'>
-										<input type="hidden" name='ticket_max_qty[]' value='<?php echo esc_html($max_qty); ?>'>
-										<input type="hidden" name='ticket_available_qty[]' value='<?php echo esc_html($available); ?>'>
-										<input type="hidden" name='ticket_capacity[]' value='<?php echo esc_html($total_capacity); ?>'>
+										<input type="hidden" name='tour_id[<?php echo $index; ?>]' value='<?php echo esc_html($tour_id); ?>'>
+										<input type="hidden" name='ticket_name[<?php echo $index; ?>]' value='<?php echo esc_html($ticket_name); ?>'>
+										<input type="hidden" name='ticket_max_qty[<?php echo $index; ?>]' value='<?php echo esc_html($max_qty); ?>'>
+										<input type="hidden" name='ticket_available_qty[<?php echo $index; ?>]' value='<?php echo esc_html($available); ?>'>
+										<input type="hidden" name='ticket_capacity[<?php echo $index; ?>]' value='<?php echo esc_html($total_capacity); ?>'>
 									</td>
 								</tr>
 								<?php do_action('ttbm_after_ticket_type_item', $tour_id, $ticket); ?>

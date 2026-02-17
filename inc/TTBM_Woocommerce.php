@@ -597,10 +597,10 @@
 					$ttbm_hotel_num_of_day = isset($_POST['ttbm_hotel_num_of_day']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_num_of_day'])) : 0;
 					$count = count($names);
 					if (sizeof($names) > 0) {
-						for ($i = 0; $i < $count; $i++) {
+						foreach ($names as $i => $name) {
 							if (isset($qty[$i]) && $qty[$i] > 0) {
 								$total_qty = $total_qty + $qty[$i];
-								$price = TTBM_Function::get_price_by_name($names[$i], $tour_id, $hotel_id, $qty[$i], $start_date) * $qty[$i];
+								$price = TTBM_Function::get_price_by_name($name, $tour_id, $hotel_id, $qty[$i], $start_date) * $qty[$i];
 								if ($hotel_id > 0) {
 									$price = $price * $ttbm_hotel_num_of_day;
 								}

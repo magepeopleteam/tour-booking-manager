@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
 	
 	// Check if availability column should be hidden (global setting)
 	$hide_availability_column = TTBM_Function::get_general_settings('ttbm_hide_availability_column', 'off');
-	if ($available_seat > 0 && sizeof($ticket_lists) > 0) {
+	if (sizeof($ticket_lists) > 0) {
 		do_action('ttbm_before_ticket_type_area', $tour_id, $tour_date);
 		?>
 		<div class="ttbm_ticket_area ttbm_enhanced_ticket_area">
@@ -42,7 +42,7 @@ if (!defined('ABSPATH')) {
 						</thead>
 						<tbody>
 						<?php
-							foreach ($ticket_lists as $ticket) {
+							foreach ($ticket_lists as $index => $ticket) {
 								$ticket_name = array_key_exists('ticket_type_name', $ticket) ? $ticket['ticket_type_name'] : '';
 								$price = TTBM_Function::get_price_by_name($ticket_name, $tour_id, '', '', $tour_date);
 								$regular_price = TTBM_Function::check_discount_price_exit($tour_id, $ticket_name, '', '', $tour_date);
@@ -145,7 +145,7 @@ if (!defined('ABSPATH')) {
 									
 									<td class="ttbm-select-quantity">
 										<?php if (!$is_sold_out) { ?>
-											<?php TTBM_Layout::qty_input($ticket_name, $available, $ticket_qty_type, $default_qty, $min_qty, $max_qty, $ticket_price_raw, 'ticket_qty[]', $tour_id); ?>
+											<?php TTBM_Layout::qty_input($ticket_name, $available, $ticket_qty_type, $default_qty, $min_qty, $max_qty, $ticket_price_raw, 'ticket_qty['.$index.']', $tour_id); ?>
 										<?php } else { ?>
 											<div class="ttbm_sold_out_message">
 												<span class="ttbm_not_available"><?php esc_html_e('Not Available', 'tour-booking-manager'); ?></span>

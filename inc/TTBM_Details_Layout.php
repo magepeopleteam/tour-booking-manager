@@ -41,21 +41,32 @@
                         <input type="hidden" name="ttbm_id" value="<?php echo esc_attr($tour_id); ?>"/>
 						<?php
 							$all_dates = $all_dates ?? TTBM_Function::get_date($tour_id);
-							$date = current($all_dates);
+							$date = ''; // Do not default to first date
 							$tour_type = $tour_type ?? TTBM_Function::get_tour_type($tour_id);
 							$travel_type = $travel_type ?? TTBM_Function::get_travel_type($tour_id);
 							if (sizeof($all_dates) > 0 && $tour_type == 'general' && $travel_type != 'particular') {
-								$time = TTBM_Function::get_time($tour_id, $date);
-								$time = is_array($time) ? $time[0]['time'] : $time;
-								$date = $time ? $date . ' ' . $time : $date;
-								$date = $time ? gmdate('Y-m-d H:i', strtotime($date)) : gmdate('Y-m-d', strtotime($date));
+								$check_ability = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'regular_ticket');
+								if ($date && strtotime($date) !== false) {
+									$time = TTBM_Function::get_time($tour_id, $date);
+									$time = is_array($time) ? $time[0]['time'] : $time;
+									$date = $time ? $date . ' ' . $time : $date;
+									// Check again after appending time
+									if (strtotime($date) !== false) {
+										$date = $time ? gmdate('Y-m-d H:i', strtotime($date)) : gmdate('Y-m-d', strtotime($date));
+									} else {
+										$date = '';
+									}
+								} else {
+									$date = '';
+								}
 								/************/
 								$date_format = TTBM_Global_Function::date_picker_format();
 								$now = date_i18n($date_format, strtotime(current_time('Y-m-d')));
-								$hidden_date = $date ? gmdate('Y-m-d', strtotime($date)) : '';
-								$visible_date = $date ? date_i18n($date_format, strtotime($date)) : '';
+								$hidden_date = ($date && strtotime($date) !== false) ? gmdate('Y-m-d', strtotime($date)) : '';
+								$visible_date = ($date && strtotime($date) !== false) ? date_i18n($date_format, strtotime($date)) : '';
 								if ($travel_type == 'repeated') {
-									$time_slots = TTBM_Function::get_time($tour_id, $all_dates[0]);
+                                    // Use first date to check for time slots existence/structure
+                                    $time_slots = TTBM_Function::get_time($tour_id, $all_dates[0] ?? '');
 									?>
                                     <div class="ttbm_date_time_select _fullWidth_mp_zero">
                                         <label>
@@ -67,8 +78,11 @@
                                         </label>
 										<?php //TTBM_Layout::availability_button($tour_id); ?>
 
-										<?php if (is_array($time_slots) && sizeof($time_slots) > 0) { ?>
-                                            <div class="flexWrap ttbm_select_time_area">
+										<?php if (is_array($time_slots) && sizeof($time_slots) > 0) { 
+                                            // Hide initially if no date selected
+                                            $style = $visible_date ? '' : 'display:none;';
+                                            ?>
+                                            <div class="flexWrap ttbm_select_time_area" style="<?php echo esc_attr($style); ?>">
 												<?php do_action('ttbm_time_select', $tour_id, $all_dates[0]); ?>
                                             </div>
 										<?php } ?>

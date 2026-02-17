@@ -598,8 +598,8 @@
 					$count = count($names);
 					if (sizeof($names) > 0) {
 						for ($i = 0; $i < $count; $i++) {
-							if ($qty[$i] > 0) {
-								$total_qty=$total_qty+$qty[$i] ;
+							if (isset($qty[$i]) && $qty[$i] > 0) {
+								$total_qty = $total_qty + $qty[$i];
 								$price = TTBM_Function::get_price_by_name($names[$i], $tour_id, $hotel_id, $qty[$i], $start_date) * $qty[$i];
 								if ($hotel_id > 0) {
 									$price = $price * $ttbm_hotel_num_of_day;

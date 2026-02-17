@@ -589,6 +589,28 @@
 				return $total_sold;
 			}
 			public static function get_total_available($tour_id, $tour_date = '') {
+				$tour_type = self::get_tour_type($tour_id);
+				
+				if ($tour_type == 'general') {
+					$ticket_lists = self::get_ticket_type($tour_id);
+					if (sizeof($ticket_lists) > 0) {
+						$total_available = 0;
+						foreach ($ticket_lists as $ticket) {
+							$ticket_name = array_key_exists('ticket_type_name', $ticket) ? $ticket['ticket_type_name'] : '';
+							$ticket_qty = array_key_exists('ticket_type_qty', $ticket) && $ticket['ticket_type_qty'] > 0 ? $ticket['ticket_type_qty'] : 0;
+							$reserve = array_key_exists('ticket_type_resv_qty', $ticket) && $ticket['ticket_type_resv_qty'] > 0 ? $ticket['ticket_type_resv_qty'] : 0;
+							
+							$sold_type = self::get_total_sold($tour_id, $tour_date, $ticket_name);
+							$sold_type = apply_filters('ttbm_sold_qty', $sold_type, $tour_id, $tour_date, $ticket_name);
+							
+							$available = (int)$ticket_qty - ($sold_type + (int)$reserve);
+							$available = apply_filters('ttbm_group_ticket_qty', $available, $tour_id, $ticket_name);
+							$total_available += max(0, floor($available));
+						}
+						return $total_available;
+					}
+				}
+
 				$total = self::get_total_seat($tour_id);
 				$reserve = self::get_total_reserve($tour_id);
 				$sold = self::get_total_sold($tour_id, $tour_date);

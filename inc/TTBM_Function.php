@@ -576,15 +576,32 @@
 				$tour_date = $tour_date ?: TTBM_Global_Function::get_post_info($tour_id, 'ttbm_upcoming_date');
 				$type = apply_filters('ttbm_type_filter', $type, $tour_id);
 				$sold_query = TTBM_Query::query_all_sold($tour_id, $tour_date, $type, $hotel_id);
-				// Sum ticket quantities from booking posts instead of just counting posts
-				// This handles cases where booking posts may have quantities > 1
+				// Booking rows can be duplicated per attendee while storing the same line quantity.
+				// Count each order/ticket/date/hotel line once to avoid over-counting.
 				$total_sold = 0;
+				$line_qty_map = array();
 				if ($sold_query->have_posts()) {
 					foreach ($sold_query->posts as $booking_post) {
 						$ticket_qty = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_ticket_qty', 1);
-						$total_sold += max(1, intval($ticket_qty)); // Minimum 1 ticket per booking post
+						$ticket_qty = max(1, intval($ticket_qty));
+						$order_id = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_order_id');
+						$ticket_name = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_ticket_name');
+						$booked_date = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_date');
+						$booked_hotel = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_hotel_id');
+
+						$key = $order_id ? $order_id . '|' . $ticket_name . '|' . $booked_date . '|' . $booked_hotel : '';
+						if ($key) {
+							if (!array_key_exists($key, $line_qty_map)) {
+								$line_qty_map[$key] = $ticket_qty;
+							} else {
+								$line_qty_map[$key] = max($line_qty_map[$key], $ticket_qty);
+							}
+						} else {
+							$total_sold += $ticket_qty;
+						}
 					}
 				}
+				$total_sold += array_sum($line_qty_map);
 				wp_reset_postdata();
 				return $total_sold;
 			}

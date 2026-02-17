@@ -79,6 +79,7 @@ if (!defined('ABSPATH')) {
 								
 								// Use the locally calculated $available value to ensure consistency
 								$is_sold_out = ($available <= 0);
+								$stock_status = $is_sold_out ? 'sold_out' : 'in_stock';
 								
 								// Set row classes based on stock status
 								$row_classes = array('ttbm_ticket_row', 'ttbm_stock_' . $stock_status);

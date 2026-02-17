@@ -37,7 +37,8 @@ if (!defined('ABSPATH')) {
             <input type="hidden" name="ttbm_id" value="<?php echo esc_attr($tour_id); ?>"/>
 			<?php
 				if ($travel_type == 'repeated') {
-          $time_slots = TTBM_Function::get_time($tour_id, $current_date);
+					$slot_check_date = $current_date ? $current_date : current($all_dates);
+					$time_slots = TTBM_Function::get_time($tour_id, $slot_check_date);
 $ticketing_system = get_post_meta($tour_id, 'ttbm_ticketing_system', true);
 					?>
                     <div class=" ttbm_date_time_select">
@@ -73,9 +74,7 @@ $ticketing_system = get_post_meta($tour_id, 'ttbm_ticketing_system', true);
                             $style = $visible_date ? '' : 'display:none;';
                             ?>
                             <div class="flexWrap ttbm_select_time_area" style="<?php echo esc_attr($style); ?>">
-								<?php if ($check_ability == 'regular_ticket') { ?>
-									<?php do_action('ttbm_time_select', $tour_id, $current_date ? $current_date : current($all_dates)); ?>
-								<?php } ?>
+								<?php do_action('ttbm_time_select', $tour_id, $current_date ? $current_date : current($all_dates)); ?>
                             </div>
 						<?php } ?>
                     </div>

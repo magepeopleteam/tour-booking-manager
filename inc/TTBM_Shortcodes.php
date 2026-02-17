@@ -796,7 +796,7 @@
                 $tour_type = 'ttbm_hotel';
                 $top_bar = 'no';
 //                $defaults = $this->default_attribute('modern', 12, 'no', 'no', 'yes', 'yes', $month_filter, $tour_type, $top_bar );
-                $defaults = $this->default_attribute( 'modern', $show = 12, $search_filter = 'no', $sidebar_filter = 'no', $feature_filter = 'no', $tag_filter = 'no', $month_filter, $tour_type = '', $sort_by = '', $shuffle = 'no', $top_bar = 'yes' );
+                $defaults = $this->default_attribute( 'modern', 12, 'no', 'no', 'no', 'no', $month_filter, $tour_type, '', 'no', 'yes' );
                 $params = shortcode_atts($defaults, $attribute);
                 $show =  isset(  $params['show'] ) ? sanitize_text_field( wp_unslash( $params['show'] ) ) : 'no';
                 $pagination = isset(  $params['pagination'] ) ? sanitize_text_field( wp_unslash( $params['pagination'] ) ) : 'no';

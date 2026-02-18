@@ -239,13 +239,6 @@ function ttbm_partial_payment_job(parent, total) {
         updateTicketAvailability();
     }, 30000);
 
-    $(document).on('change', '.ttbm_registration_area #ttbm_select_date, .ttbm_registration_area input[name="ttbm_date"], .ttbm_registration_area [name="ttbm_select_time"]', function () {
-        var parent = $(this).closest('.ttbm_registration_area');
-        setTimeout(function () {
-            updateTicketAvailability(parent);
-        }, 500);
-    });
-
     function updateTicketAvailability(contextArea) {
         var parent = contextArea && contextArea.length ? contextArea : $('.ttbm_registration_area:has(.ttbm_enhanced_ticket_area):first');
         if (!parent || parent.length === 0) return;
@@ -354,6 +347,13 @@ function ttbm_partial_payment_job(parent, total) {
             totalAvailable += parseInt(info.available_qty) || 0;
         });
         scope.find('#ttbm_total_available').text(totalAvailable);
+
+        var detailsPage = scope.closest('.ttbm_details_page');
+        if (detailsPage.length > 0) {
+            detailsPage.find('.ttbm_available_seat_area .ttbm_available_seat').first().text(totalAvailable);
+        } else {
+            $('.ttbm_available_seat_area .ttbm_available_seat').first().text(totalAvailable);
+        }
     }
 
     function updateLastRefreshTime(ticketArea) {

@@ -8,7 +8,7 @@ function get_ttbm_ticket(current, date = '') {
         tour_time = parent.find('[name="ttbm_select_time"]').val();
         tour_date = tour_time ? tour_time : repeat_target.val();
     }
-    let target = jQuery('.ttbm_booking_panel');
+    let target = parent.find('.ttbm_booking_panel').first();
     jQuery.ajax({
         type: 'POST',
         url: ttbm_ajax_url,
@@ -19,7 +19,7 @@ function get_ttbm_ticket(current, date = '') {
             nonce: ttbm_ajax.nonce
         },
         beforeSend: function () {
-            if (jQuery('.mp_tour_ticket_form').length > 0) {
+            if (parent.find('.mp_tour_ticket_form').length > 0) {
                 placeholderLoader(parent);
             } else {
                 simpleSpinner(parent);
@@ -27,16 +27,30 @@ function get_ttbm_ticket(current, date = '') {
         },
         success: function (data) {
             target.html(data).slideDown('fast').promise().done(function () {
-                // parent.find('.ttbm_check_ability').slideUp('fast').promise().done(function () {
-                // ttbm_price_calculation(parent);
-                // });
                 ttbm_price_calculation(parent);
                 placeholderLoaderRemove(parent);
                 simpleSpinnerRemove(parent);
-                get_ttbm_sold_ticket(parent, tour_id, tour_date);
+                ttbm_sync_available_seat(parent);
+                parent.trigger('ttbm:ticket-refreshed');
             });
+        },
+        error: function () {
+            placeholderLoaderRemove(parent);
+            simpleSpinnerRemove(parent);
         }
     });
+}
+function ttbm_sync_available_seat(parent) {
+    let totalAvailable = parseInt(parent.find('#ttbm_total_available').first().text(), 10);
+    if (isNaN(totalAvailable)) {
+        return;
+    }
+    let detailsPage = parent.closest('.ttbm_details_page');
+    if (detailsPage.length > 0) {
+        detailsPage.find('.ttbm_available_seat_area .ttbm_available_seat').first().text(totalAvailable);
+    } else {
+        jQuery('.ttbm_available_seat_area .ttbm_available_seat').first().text(totalAvailable);
+    }
 }
 function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
     let target = jQuery('.ttbm_available_seat_area');
@@ -111,12 +125,12 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
                 success: function (data) {
                     target.html(data).promise().done(function () {
                         ttbm_price_calculation(target);
-                        get_ttbm_sold_ticket(parent, tour_id, tour_date);
+                        ttbm_sync_available_seat(parent);
                     });
                 }
             });
         } else {
-            get_ttbm_sold_ticket(parent, tour_id, tour_date);
+            ttbm_sync_available_seat(parent);
             if (target.is(':visible')) {
                 target.slideUp('fast');
             } else {

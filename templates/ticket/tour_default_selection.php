@@ -10,24 +10,35 @@ if (!defined('ABSPATH')) {
 	$tour_type = $tour_type ?? TTBM_Function::get_tour_type($tour_id);
 	$template_name = $template_name ?? TTBM_Global_Function::get_post_info($tour_id, 'ttbm_theme_file', 'default.php');
 	if (sizeof($all_dates) > 0 && $tour_type == 'general' && $travel_type != 'particular') {
-		$date = current($all_dates);
-		$date=$current_date=gmdate('Y-m-d', strtotime($date));
+		$date = ''; // Do not default to first date
 		$check_ability = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'regular_ticket');
-		$time = TTBM_Function::get_time($tour_id, $date);
-		$time = is_array($time) ? $time[0]['time'] : $time;
-		$date = $time ? $date . ' ' . $time : $date;
-		$date = $time ? gmdate('Y-m-d H:i', strtotime($date)) : gmdate('Y-m-d', strtotime($date));
+		if ($date && strtotime($date) !== false) {
+            $date = $current_date = gmdate('Y-m-d', strtotime($date));
+			$time = TTBM_Function::get_time($tour_id, $date);
+			$time = is_array($time) ? $time[0]['time'] : $time;
+			$date = $time ? $date . ' ' . $time : $date;
+			if (strtotime($date) !== false) {
+				$date = $time ? gmdate('Y-m-d H:i', strtotime($date)) : gmdate('Y-m-d', strtotime($date));
+			} else {
+				$date = '';
+				$current_date = '';
+			}
+		} else {
+            $current_date = '';
+			$date = '';
+        }
 		/************/
 		$date_format = TTBM_Global_Function::date_picker_format();
 		$now = date_i18n($date_format, strtotime(current_time('Y-m-d')));
-		$hidden_date = $date ? gmdate('Y-m-d', strtotime($date)) : '';
-		$visible_date = $date ? gmdate($date_format, strtotime($date)) : '';
+		$hidden_date = ($date && strtotime($date) !== false) ? gmdate('Y-m-d', strtotime($date)) : '';
+		$visible_date = ($date && strtotime($date) !== false) ? gmdate($date_format, strtotime($date)) : '';
 		?>
         <div class="ttbm_registration_area <?php echo esc_attr($check_ability); ?>">
             <input type="hidden" name="ttbm_id" value="<?php echo esc_attr($tour_id); ?>"/>
 			<?php
 				if ($travel_type == 'repeated') {
-          $time_slots = TTBM_Function::get_time($tour_id, $current_date);
+					$slot_check_date = $current_date ? $current_date : current($all_dates);
+					$time_slots = TTBM_Function::get_time($tour_id, $slot_check_date);
 $ticketing_system = get_post_meta($tour_id, 'ttbm_ticketing_system', true);
 					?>
                     <div class=" ttbm_date_time_select">
@@ -51,17 +62,19 @@ $ticketing_system = get_post_meta($tour_id, 'ttbm_ticketing_system', true);
 									TTBM_Layout::availability_button($tour_id);
 								?>
                             </div>
-							<?php if (is_array($time_slots) && sizeof($time_slots) > 0 && $check_ability == 'regular_ticket' && $template_name != 'viator.php') { ?>
-                                <div class="flexWrap ttbm_select_time_area">
-									<?php do_action('ttbm_time_select', $tour_id, $current_date); ?>
+							<?php if (is_array($time_slots) && sizeof($time_slots) > 0 && $check_ability == 'regular_ticket' && $template_name != 'viator.php') { 
+                                $style = $visible_date ? '' : 'display:none;';
+                                ?>
+                                <div class="flexWrap ttbm_select_time_area" style="<?php echo esc_attr($style); ?>">
+									<?php do_action('ttbm_time_select', $tour_id, $current_date ? $current_date : current($all_dates)); ?>
                                 </div>
 							<?php } ?>
                         </div>
-						<?php if (is_array($time_slots) && sizeof($time_slots) > 0 && ($template_name == 'viator.php' || $check_ability == 'availability_section')) { ?>
-                            <div class="flexWrap ttbm_select_time_area">
-								<?php if ($check_ability == 'regular_ticket') { ?>
-									<?php do_action('ttbm_time_select', $tour_id, $current_date); ?>
-								<?php } ?>
+						<?php if (is_array($time_slots) && sizeof($time_slots) > 0 && ($template_name == 'viator.php' || $check_ability == 'availability_section')) { 
+                            $style = $visible_date ? '' : 'display:none;';
+                            ?>
+                            <div class="flexWrap ttbm_select_time_area" style="<?php echo esc_attr($style); ?>">
+								<?php do_action('ttbm_time_select', $tour_id, $current_date ? $current_date : current($all_dates)); ?>
                             </div>
 						<?php } ?>
                     </div>

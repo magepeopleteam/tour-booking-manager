@@ -552,6 +552,23 @@ function ttbm_sticky_management() {
 //============================================================================Tabs================//
 (function ($) {
     "use strict";
+    function ttbm_get_post_id_for_tabs() {
+        return $('input[name="post_ID"], #post_ID').first().val() || 'global';
+    }
+    function ttbm_get_tab_storage_key(parent) {
+        if (!parent || parent.length < 1) {
+            return '';
+        }
+        let bodyId = ($('body').attr('id') || 'ttbm_admin').replace(/[^a-zA-Z0-9_-]/g, '');
+        let postId = ttbm_get_post_id_for_tabs();
+        let tabIndex = $('.ttbm_style .ttbmTabs').index(parent);
+        let firstTarget = parent.find('.tabLists:first [data-tabs-target]').first().data('tabs-target') || '';
+        let keyPart = firstTarget.toString().replace(/[^a-zA-Z0-9_-]/g, '');
+        if (!keyPart) {
+            keyPart = 'tabs';
+        }
+        return 'ttbm_active_tab_' + bodyId + '_' + postId + '_' + keyPart + '_' + tabIndex;
+    }
     function active_next_tab(parent, targetTab) {
         parent.height(parent.height());
         let tabsContent = parent.find('.tabsContentNext:first');
@@ -614,20 +631,32 @@ function ttbm_sticky_management() {
     });
     $(document).ready(function () {
         $('.ttbm_style .ttbmTabs').each(function () {
-            let tabLists = $(this).find('.tabLists:first');
-            let postId = $('input[name="post_ID"]').val();
+            let tabsParent = $(this);
+            let tabLists = tabsParent.find('.tabLists:first');
+            let tabStorageKey = ttbm_get_tab_storage_key(tabsParent);
             let savedTab = '';
-            
-            // Try to get saved tab from localStorage first
-            if (postId) {
-                savedTab = localStorage.getItem('ttbm_active_tab_' + postId);
+
+            // Try to get saved tab from localStorage first (per tab container)
+            try {
+                if (tabStorageKey) {
+                    savedTab = localStorage.getItem(tabStorageKey);
+                }
+                // Backward compatibility with previous single-key storage
+                if (!savedTab) {
+                    let postId = ttbm_get_post_id_for_tabs();
+                    if (postId && postId !== 'global') {
+                        savedTab = localStorage.getItem('ttbm_active_tab_' + postId);
+                    }
+                }
+            } catch (e) {
+                savedTab = '';
             }
-            
-            // Check URL hash second
-            if (!savedTab && window.location.hash) {
+
+            // Check URL hash second, only if this tab group contains the hash target
+            if (!savedTab && window.location.hash && tabLists.find('[data-tabs-target="' + window.location.hash + '"]').length > 0) {
                 savedTab = window.location.hash;
             }
-            
+
             let targetTab;
             if (savedTab) {
                 // Find tab by saved target
@@ -662,17 +691,24 @@ function ttbm_sticky_management() {
             parent.height(parent.height());
             let tabLists = $(this).closest('.tabLists');
             let tabsContent = parent.find('.tabsContent:first');
-            
-            // Save active tab to localStorage and URL hash
-            let postId = $('input[name="post_ID"]').val();
-            if (postId) {
-                localStorage.setItem('ttbm_active_tab_' + postId, tabsTarget);
+
+            // Save active tab to localStorage per tab container
+            let tabStorageKey = ttbm_get_tab_storage_key(parent);
+            try {
+                if (tabStorageKey) {
+                    localStorage.setItem(tabStorageKey, tabsTarget);
+                }
+            } catch (e) {
+                // localStorage may be unavailable in some environments
             }
-            // Update URL hash without scrolling
-            if (history.pushState) {
-                history.pushState(null, null, tabsTarget);
-            } else {
-                window.location.hash = tabsTarget;
+
+            // Update URL hash only for primary left sidebar tabs
+            if (parent.hasClass('leftTabs')) {
+                if (history.pushState) {
+                    history.pushState(null, null, tabsTarget);
+                } else {
+                    window.location.hash = tabsTarget;
+                }
             }
             
             tabLists.find('[data-tabs-target].active').each(function () {

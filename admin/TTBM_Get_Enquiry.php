@@ -140,6 +140,20 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             }
             die;
         }
+        private function is_spam_enquiry_submission($form_data){
+            $honeypot = sanitize_text_field($form_data['ttbm_website'] ?? '');
+            if (!empty($honeypot)) {
+                return true;
+            }
+
+            $enquiry_time = isset($form_data['ttbm_enquiry_time']) ? absint($form_data['ttbm_enquiry_time']) : 0;
+            if (!$enquiry_time) {
+                return true;
+            }
+
+            $elapsed = current_time('timestamp') - $enquiry_time;
+            return $elapsed < 3;
+        }
         public function enquiry_form_submit(){
             if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_frontend_nonce')) {
                 wp_send_json_error(['message' => __('Failed to submit enquiry. Please try again.', 'tour-booking-manager')]);
@@ -147,10 +161,21 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             $form_data = [];
 	        $data = isset($_POST['data']) ? wp_unslash($_POST['data']) : '';
             parse_str($data, $form_data);
+
+            $is_spam = $this->is_spam_enquiry_submission($form_data);
+            $is_spam = apply_filters('ttbm_enquiry_is_spam', $is_spam, $form_data);
+            if ($is_spam) {
+                wp_send_json_error(['message' => __('Failed to submit enquiry. Please try again.', 'tour-booking-manager')]);
+            }
+
             $name = sanitize_text_field($form_data['name'] ?? '');
             $email = sanitize_email($form_data['email'] ?? '');
             $subject = sanitize_text_field($form_data['subject'] ?? '');
             $message = sanitize_textarea_field($form_data['message'] ?? '');
+
+            if (empty($name) || empty($subject) || empty($message) || !is_email($email)) {
+                wp_send_json_error(['message' => __('Please complete all required fields with valid information.', 'tour-booking-manager')]);
+            }
             
             // Get configured recipient email (where enquiries should be sent)
             $to = get_option('ttbm_enquiry_from_email');
@@ -358,6 +383,12 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                             <div class="ajax-response"></div>
                             <form method="post" id="ttbm-enquiry-form">
                                 <div class="get-enquiry-form">
+                                    <div class="ttbm-honeypot-field" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+                                        <label for="ttbm_website"><?php esc_html_e('Website', 'tour-booking-manager'); ?></label>
+                                        <input type="text" name="ttbm_website" id="ttbm_website" tabindex="-1" autocomplete="off">
+                                    </div>
+                                    <input type="hidden" name="ttbm_enquiry_time" id="ttbm-enquiry-time" value="<?php echo esc_attr(current_time('timestamp')); ?>">
+
                                     <label for="name"><?php esc_html_e('Name:', 'tour-booking-manager'); ?></label>
                                     <input type="text" name="name" id="name" placeholder="<?php esc_attr_e('Your Name', 'tour-booking-manager'); ?>" required>
 

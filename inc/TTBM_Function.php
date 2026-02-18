@@ -679,9 +679,9 @@
 			// Preserve time component if present for time-slot specific availability
 			$has_time = TTBM_Global_Function::check_time_exit_date($tour_date);
 			if ($has_time) {
-				$tour_date = gmdate('Y-m-d H:i', strtotime($tour_date));
+				$tour_date = date('Y-m-d H:i', strtotime($tour_date));
 			} else {
-				$tour_date = gmdate('Y-m-d', strtotime($tour_date));
+				$tour_date = date('Y-m-d', strtotime($tour_date));
 			}
 			
 			$ticket_types = self::get_ticket_type($tour_id);

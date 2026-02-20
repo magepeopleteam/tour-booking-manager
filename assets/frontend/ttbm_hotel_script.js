@@ -129,7 +129,27 @@ jQuery(document).ready(function ($) {
                 "price": total_price, nonce: ttbm_ajax.nonce
             },
             success: function (data) {
+                let response = data;
+                if (typeof response === 'string') {
+                    try {
+                        response = JSON.parse(response);
+                    } catch (err) {
+                        response = null;
+                    }
+                }
+                if (response && typeof response === 'object' && response.success === false) {
+                    const message = response.data && response.data.message ? response.data.message : 'Unable to complete booking for selected dates.';
+                    alert(message);
+                    return;
+                }
                 window.location.href = ttbm_site_url + '/index.php/checkout/';
+            },
+            error: function (xhr) {
+                let message = 'Unable to complete booking for selected dates.';
+                if (xhr && xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message) {
+                    message = xhr.responseJSON.data.message;
+                }
+                alert(message);
             }
         });
     });
@@ -173,7 +193,27 @@ jQuery(document).ready(function ($) {
                 "price": total_price, nonce: ttbm_ajax.nonce
             },
             success: function (data) {
+                let response = data;
+                if (typeof response === 'string') {
+                    try {
+                        response = JSON.parse(response);
+                    } catch (err) {
+                        response = null;
+                    }
+                }
+                if (response && typeof response === 'object' && response.success === false) {
+                    const message = response.data && response.data.message ? response.data.message : 'Unable to complete booking for selected dates.';
+                    alert(message);
+                    return;
+                }
                 window.location.href = ttbm_site_url + '/index.php/checkout/';
+            },
+            error: function (xhr) {
+                let message = 'Unable to complete booking for selected dates.';
+                if (xhr && xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message) {
+                    message = xhr.responseJSON.data.message;
+                }
+                alert(message);
             }
         });
     });

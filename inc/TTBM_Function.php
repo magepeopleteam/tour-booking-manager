@@ -1793,6 +1793,7 @@
 			"Norway",
 			"Oman",
 			"Pakistan",
+            "Palestine",
 			"Palau",
 			"Panama",
 			"Papua New Guinea",

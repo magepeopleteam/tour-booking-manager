@@ -184,8 +184,7 @@ require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
 					update_option('ttbm_upgrade_global', 'completed');
 				}
 			}
-
-            function myplugin_enqueue_flatpickr() {
+			public function myplugin_enqueue_flatpickr() {
 
                 // Flatpickr CSS
                 wp_enqueue_style(
@@ -200,6 +199,15 @@ require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
                     'flatpickr-js',
                     'https://cdn.jsdelivr.net/npm/flatpickr',
                     ['jquery'],
+                    null,
+                    true
+                );
+
+                // Flatpickr Polish locale (for translated month names in search calendar)
+                wp_enqueue_script(
+                    'flatpickr-pl',
+                    'https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pl.js',
+                    ['flatpickr-js'],
                     null,
                     true
                 );

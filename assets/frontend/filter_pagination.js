@@ -58,6 +58,7 @@
 			dateFormat: "F j, Y",
 			showMonths: 2,
 			minDate: "today",
+			locale: "pl",
 			onChange: function(selectedDates, dateStr, instance) {
 
 				if (selectedDates.length === 2) {

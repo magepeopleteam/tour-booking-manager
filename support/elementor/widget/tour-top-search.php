@@ -123,6 +123,30 @@ class TTBMTourTopSearchWidget extends Widget_Base {
                 ],
             ]
         );
+        $this->add_control(
+            'person-filter',
+            [
+                'label' => esc_html__('Person Filter', 'tour-booking-manager'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'no',
+                'options' => [
+                    'yes' => esc_html__('Yes', 'tour-booking-manager'),
+                    'no' => esc_html__('No', 'tour-booking-manager'),
+                ],
+            ]
+        );
+        $this->add_control(
+            'flexible_dates',
+            [
+                'label' => esc_html__('Flexible Dates', 'tour-booking-manager'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'yes',
+                'options' => [
+                    'yes' => esc_html__('Yes', 'tour-booking-manager'),
+                    'no' => esc_html__('No', 'tour-booking-manager'),
+                ],
+            ]
+        );
 
         $this->add_control(
             'tag-filter',
@@ -180,6 +204,8 @@ class TTBMTourTopSearchWidget extends Widget_Base {
             'country-filter',
             'activity-filter',
             'month-filter',
+            'person-filter',
+            'flexible_dates',
             'tag-filter',
             'feature-filter',
             'duration-filter'

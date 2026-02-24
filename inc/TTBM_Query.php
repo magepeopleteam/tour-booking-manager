@@ -124,22 +124,13 @@
 					return new WP_Query($args);
 				}
 			}
-			public static function ttbm_query_for_top_search($show, $sort, $sort_by, $status, $organizer_filter, $location, $activity, $date_filter = ''): WP_Query {
+			public static function ttbm_query_for_top_search($show, $sort, $sort_by, $status, $organizer_filter, $location, $activity, $date_filter = '', $people_filter = 0): WP_Query {
 
-                if (is_array($date_filter)) {
-					if (!empty($date_filter['start_date'])) {
-						$start_date_obj = DateTime::createFromFormat('F d, Y', $date_filter['start_date']);
-						$start_date = ($start_date_obj !== false) ? $start_date_obj->format('Y-m-d') : '';
-					} else {
-						$start_date = '';
-					}
-					if (!empty($date_filter['end_date'])) {
-						$end_date_obj = DateTime::createFromFormat('F d, Y', $date_filter['end_date']);
-						$end_date = ($end_date_obj !== false) ? $end_date_obj->format('Y-m-d') : '';
-					} else {
-						$end_date = '';
-					}
-
+				$start_date = '';
+				$end_date = '';
+				if (is_array($date_filter)) {
+					$start_date = !empty($date_filter['start_date']) ? self::normalize_top_search_date($date_filter['start_date']) : '';
+					$end_date = !empty($date_filter['end_date']) ? self::normalize_top_search_date($date_filter['end_date']) : '';
 					if ($end_date === '' && $start_date === '') {
 						$date = '';
 						$compare = '';
@@ -153,7 +144,7 @@
 						$date = [$start_date, $end_date];
 						$compare = 'BETWEEN';
 					}
-					$selected_date_filter = $start_date ? array(
+					$selected_date_filter = ($start_date || $end_date) ? array(
 						'key' => 'ttbm_upcoming_date',
 						'value' => $date,
 						'compare' => $compare,
@@ -184,6 +175,9 @@
 					'value' => $now,
 					'compare' => $compare
 				) : '';
+				$cat = '';
+				$country = '';
+				$tour_type = '';
 				$cat_filter = !empty($cat) ? array(
 					'taxonomy' => 'ttbm_tour_cat',
 					'field' => 'term_id',
@@ -244,12 +238,120 @@
 						$org_filter
 					)
 				);
-				if ($status == 'active') {
-					return TTBM_Function::get_active_tours($args);
-				} else {
-					//return TTBM_Function::get_active_tours($args);
-					return new WP_Query($args);
+				$query = $status == 'active' ? TTBM_Function::get_active_tours($args) : new WP_Query($args);
+				if ((int)$people_filter > 0 || ($start_date && $end_date)) {
+					$query = self::filter_top_search_by_people($query, (int)$people_filter, $start_date, $end_date);
 				}
+				return $query;
+			}
+			private static function normalize_top_search_date($date_value): string {
+				$date_value = is_string($date_value) ? trim($date_value) : '';
+				if (!$date_value) {
+					return '';
+				}
+				$formats = array('F j, Y', 'F d, Y', 'Y-m-d');
+				foreach ($formats as $format) {
+					$date_obj = DateTime::createFromFormat($format, $date_value);
+					if ($date_obj !== false) {
+						return $date_obj->format('Y-m-d');
+					}
+				}
+				$timestamp = strtotime($date_value);
+				return $timestamp ? gmdate('Y-m-d', $timestamp) : '';
+			}
+			private static function filter_top_search_by_people(WP_Query $query, int $requested_people, string $start_date = '', string $end_date = ''): WP_Query {
+				if (($requested_people < 1 && !($start_date && $end_date)) || empty($query->posts) || !is_array($query->posts)) {
+					return $query;
+				}
+				$filtered_posts = array();
+				foreach ($query->posts as $post) {
+					$tour_id = isset($post->ID) ? (int)$post->ID : 0;
+					if (!$tour_id) {
+						continue;
+					}
+					if (self::tour_matches_top_search_constraints($tour_id, $requested_people, $start_date, $end_date)) {
+						$filtered_posts[] = $post;
+					}
+				}
+				$query->posts = array_values($filtered_posts);
+				$query->post_count = count($query->posts);
+				$query->found_posts = $query->post_count;
+				$query->max_num_pages = 1;
+				return $query;
+			}
+			private static function tour_matches_top_search_constraints(int $tour_id, int $requested_people, string $start_date = '', string $end_date = ''): bool {
+				$has_date_range = $start_date && $end_date;
+				if (!$has_date_range) {
+					if ($requested_people < 1) {
+						return true;
+					}
+					return (int)TTBM_Function::get_any_date_seat_available($tour_id) >= $requested_people;
+				}
+				$range_start_ts = strtotime($start_date . ' 00:00:00');
+				$range_end_ts = strtotime($end_date . ' 00:00:00');
+				if ($range_start_ts === false || $range_end_ts === false || $range_end_ts <= $range_start_ts) {
+					return false;
+				}
+				$candidate_dates = self::get_candidate_search_dates_for_tour($tour_id, $start_date, $end_date);
+				if (empty($candidate_dates)) {
+					return false;
+				}
+				$duration_seconds = self::get_tour_duration_seconds($tour_id);
+				foreach ($candidate_dates as $date) {
+					$departure_ts = strtotime($date . ' 00:00:00');
+					if ($departure_ts === false || $departure_ts < $range_start_ts || $departure_ts >= $range_end_ts) {
+						continue;
+					}
+					if ($duration_seconds > 0 && ($departure_ts + $duration_seconds) > $range_end_ts) {
+						continue;
+					}
+					if ($requested_people > 0 && (int)TTBM_Function::get_total_available($tour_id, $date) < $requested_people) {
+						continue;
+					}
+					return true;
+				}
+				return false;
+			}
+			private static function get_tour_duration_seconds(int $tour_id): int {
+				$duration = (float)TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration', 0);
+				$duration_type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_type', 'day');
+				if ($duration <= 0) {
+					return 0;
+				}
+				if ($duration_type === 'hour') {
+					return (int)ceil($duration * HOUR_IN_SECONDS);
+				}
+				if ($duration_type === 'min') {
+					return (int)ceil($duration * MINUTE_IN_SECONDS);
+				}
+				return (int)ceil($duration * DAY_IN_SECONDS);
+			}
+			private static function get_candidate_search_dates_for_tour(int $tour_id, string $start_date = '', string $end_date = ''): array {
+				$start = $start_date ?: $end_date;
+				$end = $end_date ?: $start_date;
+				if (!$start || !$end) {
+					return array();
+				}
+				$candidate_dates = array();
+				$all_dates = TTBM_Function::get_date($tour_id, true);
+				if (is_array($all_dates) && array_key_exists('date', $all_dates)) {
+					$all_dates = array($all_dates['date']);
+				}
+				if (is_array($all_dates)) {
+					foreach ($all_dates as $date_value) {
+						if (!is_string($date_value) || !$date_value) {
+							continue;
+						}
+						$normalized = self::normalize_top_search_date($date_value);
+						if (!$normalized) {
+							continue;
+						}
+						if ($normalized >= $start && $normalized <= $end) {
+							$candidate_dates[$normalized] = $normalized;
+						}
+					}
+				}
+				return array_values($candidate_dates);
 			}
 			public static function get_all_tour_in_location($location, $status = ''): WP_Query {
 				$compare = '>=';

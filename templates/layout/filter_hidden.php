@@ -12,6 +12,7 @@
 		$duration_filter = isset($_GET['duration_filter']) ? sanitize_text_field(wp_unslash($_GET['duration_filter'])) : '';
 		$activity_filter = isset($_GET['activity_filter']) ? sanitize_text_field(wp_unslash($_GET['activity_filter'])) : '';
 		$month_filter = isset($_GET['month_filter']) ? sanitize_text_field(wp_unslash($_GET['month_filter'])) : '';
+		$people_filter = isset($_GET['people_filter']) ? absint(wp_unslash($_GET['people_filter'])) : 0;
 		if ($title_filter) {
 			?>
             <input type="hidden" name="title_filter" value="<?php echo esc_attr($title_filter); ?>"/>
@@ -55,6 +56,11 @@
 		if ($month_filter) {
 			?>
             <input type="hidden" name="month_filter" value="<?php echo esc_attr($month_filter); ?>"/>
+			<?php
+		}
+		if ($people_filter > 0) {
+			?>
+            <input type="hidden" name="people_filter" value="<?php echo esc_attr($people_filter); ?>"/>
 			<?php
 		}
 	}

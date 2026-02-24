@@ -28,6 +28,7 @@
 							<?php $this->location_filter($params); ?>
 							<?php $this->country_filter($params); ?>
 							<?php $this->activity_filter($params); ?>
+							<?php $this->person_filter($params); ?>
 							<?php $this->select_month_filter($params); ?>
                             <button type="submit" class="dButton min_200" data-placeholder><?php esc_html_e('Find Tours', 'tour-booking-manager'); ?></button>
                         </div>
@@ -681,6 +682,26 @@
                             <input name="ttbm_date_start_end_input" type="text" id="ttbm_date_start_end_input" class="ttbm_date-picker-input" placeholder="<?php esc_html_e('Check-in date  —  Check-out date', 'tour-booking-manager'); ?>">
                             <div id="ttbm_start_end_calendar_icon" class="ttbm_calendar-icon"></div>
                         </div>
+                    </label>
+					<?php
+				}
+			}
+			public function person_filter($params) {
+				if (($params['person-filter'] ?? 'no') == 'yes') {
+					$people_filter = '';
+					if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						$people_filter = isset($_GET['people_filter']) ? absint(wp_unslash($_GET['people_filter'])) : 0;
+						$people_filter = $people_filter > 0 ? $people_filter : '';
+					}
+					?>
+                    <label data-placeholder>
+                        <input type="number"
+                               min="1"
+                               step="1"
+                               name="people_filter"
+                               value="<?php echo esc_attr($people_filter); ?>"
+                               placeholder="<?php esc_attr_e('How many people?', 'tour-booking-manager'); ?>"
+                               class="formControl ttbm_filter_input_radius"/>
                     </label>
 					<?php
 				}

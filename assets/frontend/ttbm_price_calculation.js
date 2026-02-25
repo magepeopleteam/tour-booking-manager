@@ -189,6 +189,8 @@ function ttbm_partial_payment_job(parent, total) {
 }
 (function ($) {
     "use strict";
+    var availabilityRequestState = {};
+
     $(document).ready(function () {
         $('body').find('.ttbm_registration_area').each(function () {
             ttbm_price_calculation($(this));
@@ -239,6 +241,10 @@ function ttbm_partial_payment_job(parent, total) {
         updateTicketAvailability();
     }, 30000);
 
+    $(document).on('ttbm:ticket-refreshed', '.ttbm_registration_area', function () {
+        updateTicketAvailability($(this));
+    });
+
     function updateTicketAvailability(contextArea) {
         var parent = contextArea && contextArea.length ? contextArea : $('.ttbm_registration_area:has(.ttbm_enhanced_ticket_area):first');
         if (!parent || parent.length === 0) return;
@@ -254,7 +260,21 @@ function ttbm_partial_payment_job(parent, total) {
 
         if (!tourId || !tourDate) return;
 
-        $.ajax({
+        var areaKey = parent.data('ttbmAvailabilityKey');
+        if (!areaKey) {
+            areaKey = 'ttbm_av_' + Date.now().toString(36) + Math.random().toString(36).slice(2);
+            parent.data('ttbmAvailabilityKey', areaKey);
+        }
+        if (availabilityRequestState[areaKey] && availabilityRequestState[areaKey].xhr && availabilityRequestState[areaKey].xhr.readyState !== 4) {
+            availabilityRequestState[areaKey].xhr.abort();
+        }
+        var requestToken = Date.now().toString() + Math.random().toString(36).slice(2);
+        availabilityRequestState[areaKey] = {
+            token: requestToken,
+            xhr: null
+        };
+
+        var xhr = $.ajax({
             url: (typeof ttbm_price_calc_vars !== 'undefined' && ttbm_price_calc_vars.ajax_url) || ttbm_ajax_url || ajaxurl,
             type: 'POST',
             data: {
@@ -264,15 +284,27 @@ function ttbm_partial_payment_job(parent, total) {
                 tour_date: tourDate
             },
             success: function (response) {
+                if (!availabilityRequestState[areaKey] || availabilityRequestState[areaKey].token !== requestToken) {
+                    return;
+                }
                 if (response.success && response.data.availability) {
                     updateTicketDisplay(response.data.availability, ticketArea);
                     updateLastRefreshTime(ticketArea);
                 }
             },
-            error: function () {
+            error: function (xhrObj, textStatus) {
+                if (textStatus === 'abort') {
+                    return;
+                }
                 console.log('Failed to update availability');
+            },
+            complete: function () {
+                if (availabilityRequestState[areaKey] && availabilityRequestState[areaKey].token === requestToken) {
+                    delete availabilityRequestState[areaKey];
+                }
             }
         });
+        availabilityRequestState[areaKey].xhr = xhr;
     }
 
     function updateTicketDisplay(availability, ticketArea) {

@@ -9,7 +9,13 @@ function get_ttbm_ticket(current, date = '') {
         tour_date = tour_time ? tour_time : repeat_target.val();
     }
     let target = parent.find('.ttbm_booking_panel').first();
-    jQuery.ajax({
+    let currentRequest = parent.data('ttbmTicketRequest');
+    if (currentRequest && currentRequest.readyState !== 4) {
+        currentRequest.abort();
+    }
+    let requestToken = Date.now().toString() + Math.random().toString(36).slice(2);
+    parent.data('ttbmTicketRequestToken', requestToken);
+    let ajaxRequest = jQuery.ajax({
         type: 'POST',
         url: ttbm_ajax_url,
         data: {
@@ -26,6 +32,9 @@ function get_ttbm_ticket(current, date = '') {
             }
         },
         success: function (data) {
+            if (parent.data('ttbmTicketRequestToken') !== requestToken) {
+                return;
+            }
             target.html(data).slideDown('fast').promise().done(function () {
                 ttbm_price_calculation(parent);
                 placeholderLoaderRemove(parent);
@@ -34,11 +43,23 @@ function get_ttbm_ticket(current, date = '') {
                 parent.trigger('ttbm:ticket-refreshed');
             });
         },
-        error: function () {
+        error: function (xhr, textStatus) {
+            if (textStatus === 'abort') {
+                return;
+            }
             placeholderLoaderRemove(parent);
             simpleSpinnerRemove(parent);
+        },
+        complete: function () {
+            if (parent.data('ttbmTicketRequestToken') === requestToken) {
+                parent.removeData('ttbmTicketRequestToken');
+            }
+            if (parent.data('ttbmTicketRequest') === ajaxRequest) {
+                parent.removeData('ttbmTicketRequest');
+            }
         }
     });
+    parent.data('ttbmTicketRequest', ajaxRequest);
 }
 function ttbm_sync_available_seat(parent) {
     let totalAvailable = parseInt(parent.find('#ttbm_total_available').first().text(), 10);

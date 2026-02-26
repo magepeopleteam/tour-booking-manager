@@ -618,6 +618,7 @@
 						foreach ($ticket_lists as $ticket) {
 							$ticket_name = array_key_exists('ticket_type_name', $ticket) ? $ticket['ticket_type_name'] : '';
 							$ticket_qty = array_key_exists('ticket_type_qty', $ticket) && $ticket['ticket_type_qty'] > 0 ? $ticket['ticket_type_qty'] : 0;
+							$ticket_qty = apply_filters('ttbm_ticket_capacity', intval($ticket_qty), $tour_id, $tour_date, $ticket_name);
 							$reserve = array_key_exists('ticket_type_resv_qty', $ticket) && $ticket['ticket_type_resv_qty'] > 0 ? $ticket['ticket_type_resv_qty'] : 0;
 							
 							$sold_type = self::get_total_sold($tour_id, $tour_date, $ticket_name);
@@ -699,8 +700,10 @@
 				}
 				
 				$total_capacity = intval($ticket['ticket_type_qty']);
+				$total_capacity = apply_filters('ttbm_ticket_capacity', $total_capacity, $tour_id, $tour_date, $type_name);
 				$reserved_qty = intval($ticket['ticket_type_resv_qty'] ?? 0);
 				$sold_qty = self::get_total_sold($tour_id, $tour_date, $type_name);
+				$sold_qty = apply_filters('ttbm_sold_qty', $sold_qty, $tour_id, $tour_date, $type_name);
 				$available_qty = max(0, $total_capacity - ($reserved_qty + $sold_qty));
 				
 				$percentage_sold = $total_capacity > 0 ? round(($sold_qty / $total_capacity) * 100, 2) : 0;

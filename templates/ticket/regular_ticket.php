@@ -49,6 +49,7 @@ if (!defined('ABSPATH')) {
 								$ticket_price = TTBM_Global_Function::wc_price($tour_id, $price);
 								$ticket_price_raw = TTBM_Global_Function::price_convert_raw($ticket_price);
 								$ticket_qty = array_key_exists('ticket_type_qty', $ticket) && $ticket['ticket_type_qty'] > 0 ? $ticket['ticket_type_qty'] : 0;
+								$ticket_qty = apply_filters('ttbm_ticket_capacity', intval($ticket_qty), $tour_id, $tour_date, $ticket_name);
 								$reserve = array_key_exists('ticket_type_resv_qty', $ticket) && $ticket['ticket_type_resv_qty'] > 0 ? $ticket['ticket_type_resv_qty'] : 0;
 								$ticket_qty_type = array_key_exists('ticket_type_qty_type', $ticket) ? $ticket['ticket_type_qty_type'] : 'inputbox';
 								$default_qty = array_key_exists('ticket_type_default_qty', $ticket) && $ticket['ticket_type_default_qty'] > 0 ? $ticket['ticket_type_default_qty'] : 0;

@@ -53,16 +53,21 @@
 		});*/
 
 
+		let ttbm_flatpickr_locale = (typeof ttbm_flatpickr_vars !== 'undefined' && ttbm_flatpickr_vars.locale)
+			? ttbm_flatpickr_vars.locale
+			: 'default';
+
 		let rangeDatePicker = $("#ttbm_date_start_end_input").flatpickr({
 			mode: "range",
 			dateFormat: "F j, Y",
 			showMonths: 2,
 			minDate: "today",
-			onChange: function(selectedDates, dateStr, instance) {
+			locale: ttbm_flatpickr_locale,
+			onChange: function (selectedDates, dateStr, instance) {
 
 				if (selectedDates.length === 2) {
 					let startDate = instance.formatDate(selectedDates[0], "F j, Y");
-					let endDate   = instance.formatDate(selectedDates[1], "F j, Y");
+					let endDate = instance.formatDate(selectedDates[1], "F j, Y");
 
 					$("#ttbm_date_start_end_input").val(startDate + " - " + endDate);
 				}
@@ -87,7 +92,7 @@
 				}
 			});
 			if (activeIds.length === 0) {
-				 // Show all items
+				// Show all items
 				$('.filter_item').each(function () {
 					$(this).fadeIn('fast');
 					$(this).removeClass('search_off').addClass('search_on');
@@ -115,8 +120,8 @@
 
 			function filter_qty_palace() {
 				let countSearchOn = $('.search_on').length;
-				let show = ' Showing <strong class="qty_count">' +countSearchOn+ '</strong> of <strong class="total_filter_qty">' +countSearchOn+ '</strong>';
-				$('.filter_short_result').html( show );
+				let show = ' Showing <strong class="qty_count">' + countSearchOn + '</strong> of <strong class="total_filter_qty">' + countSearchOn + '</strong>';
+				$('.filter_short_result').html(show);
 			}
 			filter_qty_palace();
 
@@ -376,7 +381,7 @@
 			start_item = 0;
 		} else {
 			let all_item_height = all_item.outerHeight();
-			all_item.css({"height": all_item_height, "overflow": "hidden"});
+			all_item.css({ "height": all_item_height, "overflow": "hidden" });
 		}
 		parent.find(items_class).each(function () {
 			if (item >= start_item && item < end_item) {
@@ -388,7 +393,7 @@
 			}
 			item++;
 		}).promise().done(function () {
-			all_item.css({"height": "auto", "overflow": "inherit"}).promise().done(function () {
+			all_item.css({ "height": "auto", "overflow": "inherit" }).promise().done(function () {
 				ttbm_loadBgImage();
 				filter_qty_palace(parent, items_class);
 				pagination_management(parent, pagination_page);

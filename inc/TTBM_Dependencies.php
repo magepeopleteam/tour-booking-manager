@@ -184,8 +184,7 @@ require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
 					update_option('ttbm_upgrade_global', 'completed');
 				}
 			}
-
-            function myplugin_enqueue_flatpickr() {
+			public function myplugin_enqueue_flatpickr() {
 
                 // Flatpickr CSS
                 wp_enqueue_style(
@@ -203,6 +202,26 @@ require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
                     null,
                     true
                 );
+
+                // Detect WordPress locale dynamically (e.g. 'pl_PL' -> 'pl', 'de_DE' -> 'de')
+                $wp_locale    = get_locale();                          // e.g. 'pl_PL'
+                $lang_code    = strtolower( substr( $wp_locale, 0, 2 ) ); // e.g. 'pl'
+
+                // Enqueue the flatpickr locale JS only when the site is NOT in English
+                if ( ! empty( $lang_code ) && $lang_code !== 'en' ) {
+                    wp_enqueue_script(
+                        'flatpickr-locale',
+                        'https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/' . $lang_code . '.js',
+                        [ 'flatpickr-js' ],
+                        null,
+                        true
+                    );
+                }
+
+                // Pass the locale code to JS so filter_pagination.js can use it dynamically
+                wp_localize_script( 'flatpickr-js', 'ttbm_flatpickr_vars', array(
+                    'locale' => ( $lang_code !== 'en' ) ? $lang_code : 'default',
+                ) );
             }
 			public function js_constant() {
 				?>

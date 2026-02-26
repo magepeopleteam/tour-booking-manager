@@ -65,8 +65,9 @@
 								$hidden_date = ($date && strtotime($date) !== false) ? gmdate('Y-m-d', strtotime($date)) : '';
 								$visible_date = ($date && strtotime($date) !== false) ? date_i18n($date_format, strtotime($date)) : '';
 								if ($travel_type == 'repeated') {
-                                    // Use first date to check for time slots existence/structure
-                                    $time_slots = TTBM_Function::get_time($tour_id, $all_dates[0] ?? '');
+									$time_slots_enabled = TTBM_Global_Function::get_post_info($tour_id, 'mep_disable_ticket_time', 'no') != 'no';
+									$slot_check_date = $all_dates[0] ?? '';
+									$time_slots = TTBM_Function::get_time($tour_id, $slot_check_date);
 									?>
                                     <div class="ttbm_date_time_select _fullWidth_mp_zero">
                                         <label>
@@ -78,12 +79,12 @@
                                         </label>
 										<?php //TTBM_Layout::availability_button($tour_id); ?>
 
-										<?php if (is_array($time_slots) && sizeof($time_slots) > 0) { 
+										<?php if ($time_slots_enabled) {
                                             // Hide initially if no date selected
                                             $style = $visible_date ? '' : 'display:none;';
                                             ?>
                                             <div class="flexWrap ttbm_select_time_area" style="<?php echo esc_attr($style); ?>">
-												<?php do_action('ttbm_time_select', $tour_id, $all_dates[0]); ?>
+												<?php do_action('ttbm_time_select', $tour_id, $slot_check_date); ?>
                                             </div>
 										<?php } ?>
                                     </div>

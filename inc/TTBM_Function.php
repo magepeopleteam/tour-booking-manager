@@ -582,10 +582,13 @@
 				$line_qty_map = array();
 				if ($sold_query->have_posts()) {
 					foreach ($sold_query->posts as $booking_post) {
-						$ticket_qty = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_ticket_qty', 1);
-						$ticket_qty = max(1, intval($ticket_qty));
 						$order_id = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_order_id');
 						$ticket_name = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_ticket_name');
+						$ticket_qty = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_ticket_qty', 1);
+						$ticket_qty = max(1, intval($ticket_qty));
+						// Convert purchased group count to actual seat count when group tickets are enabled.
+						$ticket_qty = apply_filters('ttbm_group_ticket_qty_actual', $ticket_qty, $tour_id, $ticket_name);
+						$ticket_qty = max(1, intval($ticket_qty));
 						$booked_date = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_date');
 						$booked_hotel = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_hotel_id');
 

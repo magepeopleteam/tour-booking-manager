@@ -450,7 +450,7 @@
 						$price = $ticket['ticket_type_price'];
 						$price = array_key_exists('sale_price', $ticket) && $ticket['sale_price'] ? $ticket['sale_price'] : $price;
 						$price = apply_filters('ttbm_filter_ticket_price', $price, $tour_id, $start_date, $ticket_name);
-						$price = apply_filters('ttbm_price_by_name_filter', $price, $tour_id, 1, $start_date);
+						$price = apply_filters('ttbm_price_by_name_filter', $price, $tour_id, 1, $start_date, $ticket_name);
 						$ticket_price[] = $price;
 					}
 					$start_price = min($ticket_price);
@@ -481,7 +481,7 @@
 							$price = $ticket_type['ticket_type_price'];
 							$price = array_key_exists('sale_price', $ticket_type) && $ticket_type['sale_price'] ? $ticket_type['sale_price'] : $price;
 							$price = apply_filters('ttbm_filter_ticket_price', $price, $tour_id, $start_date, $ticket_name);
-							$price = apply_filters('ttbm_price_by_name_filter', $price, $tour_id, $qty, $start_date);
+							$price = apply_filters('ttbm_price_by_name_filter', $price, $tour_id, $qty, $start_date, $ticket_name);
 						}
 					}
 				}

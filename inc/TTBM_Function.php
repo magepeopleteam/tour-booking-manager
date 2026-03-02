@@ -326,6 +326,21 @@
 						}
 						return apply_filters('ttbm_get_time', $result_times, $tour_id, $date, $expire);
 					}
+					if ($travel_type === 'repeated') {
+						$time_slots_enabled = TTBM_Global_Function::get_post_info($tour_id, 'mep_disable_ticket_time', 'no') !== 'no';
+						if ($time_slots_enabled && class_exists('TTBM_Easy_Planner')) {
+							$resolved_slots = TTBM_Easy_Planner::get_slots_for_date($tour_id, $date);
+							if (!empty($resolved_slots)) {
+								return apply_filters('ttbm_get_time', $resolved_slots, $tour_id, $date, $expire);
+							}
+						}
+
+						$repeated_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_time');
+						if (!$repeated_time) {
+							$repeated_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
+						}
+						return apply_filters('ttbm_get_time', $repeated_time, $tour_id, $date, $expire);
+					}
 					$time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
 					return apply_filters('ttbm_get_time', $time, $tour_id, $date, $expire);
 				}

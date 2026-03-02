@@ -30,6 +30,7 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Quick_Setup.php';
 				if (TTBM_Global_Function::check_woocommerce() == 1) {
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Function.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Easy_Planner.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Layout.php';
 					require_once TTBM_PLUGIN_DIR . '/support/elementor/elementor-support.php';
 					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin.php';

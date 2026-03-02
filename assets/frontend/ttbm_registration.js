@@ -93,6 +93,35 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         }
     });
 }
+function load_ttbm_time_slots(parent) {
+    let tourId = parent.find('[name="ttbm_id"]').val();
+    let tourDate = parent.find('[name="ttbm_date"]').val();
+    let timeSlotArea = parent.find('.ttbm_select_time_area').first();
+
+    if (!tourId || !tourDate || timeSlotArea.length < 1) {
+        return;
+    }
+
+    jQuery.ajax({
+        type: 'POST',
+        url: ttbm_ajax_url,
+        data: {
+            action: 'get_ttbm_time_slots',
+            tour_id: tourId,
+            tour_date: tourDate,
+            nonce: ttbm_ajax.nonce
+        },
+        beforeSend: function () {
+            timeSlotArea.css('opacity', '0.5');
+        },
+        success: function (data) {
+            timeSlotArea.html(data).slideDown('fast');
+        },
+        complete: function () {
+            timeSlotArea.css('opacity', '1');
+        }
+    });
+}
 (function ($) {
     "use strict";
     $(document).on('change', '.ttbm_registration_area [name="ttbm_date"]', function () {
@@ -107,6 +136,8 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         parent.find('.ttbm_booking_panel').html('');
         // Show time slots if date is selected
         if (time_slot.length > 0) {
+            parent.find('[name="ttbm_select_time"]').val('');
+            load_ttbm_time_slots(parent);
             time_slot.slideDown();
             return true;
         } else {
@@ -119,6 +150,23 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         let parent = $(this).closest('.ttbm_select_time_area');
         parent.css('border', '');
         parent.find('.ttbm-time-error').remove();
+    });
+    $(document).on('click', '.ttbm_select_time_area [data-role="ttbm-time-choice"]', function () {
+        let current = $(this);
+        let parent = current.closest('.ttbm_registration_area');
+        let timeArea = current.closest('.ttbm_select_time_area');
+        let hiddenInput = timeArea.find('[name="ttbm_select_time"]').first();
+        let selectedDateTime = current.data('date-time');
+
+        timeArea.find('[data-role="ttbm-time-choice"]').removeClass('active');
+        current.addClass('active');
+        hiddenInput.val(selectedDateTime);
+        timeArea.css('border', '');
+        timeArea.find('.ttbm-time-error').remove();
+
+        if (parent.find('.ttbm_check_ability').length < 1) {
+            get_ttbm_ticket(current, selectedDateTime);
+        }
     });
 
     $(document).on('click', '.get_particular_ticket', function () {

@@ -375,9 +375,21 @@ function ttbm_partial_payment_job(parent, total) {
 
         // Update total availability
         var totalAvailable = 0;
+        var sharedCapacityEnabled = false;
+        var sharedAvailableQty = null;
         $.each(availability, function (ticketName, info) {
+            if (info.shared_capacity_enabled) {
+                sharedCapacityEnabled = true;
+                if (sharedAvailableQty === null) {
+                    sharedAvailableQty = parseInt(info.available_qty) || 0;
+                }
+                return;
+            }
             totalAvailable += parseInt(info.available_qty) || 0;
         });
+        if (sharedCapacityEnabled) {
+            totalAvailable = sharedAvailableQty === null ? 0 : sharedAvailableQty;
+        }
         scope.find('#ttbm_total_available').text(totalAvailable);
 
         var detailsPage = scope.closest('.ttbm_details_page');

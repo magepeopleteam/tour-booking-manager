@@ -13,6 +13,9 @@
 				add_action('wp_ajax_nopriv_ttbm_reload_place_you_see_list', [$this, 'ttbm_reload_place_you_see_list']);
 				/******************************/
 			}
+			private function current_user_can_edit_tour($tour_id) {
+				return $tour_id > 0 && current_user_can('edit_post', $tour_id);
+			}
 			public function place_you_see_settings($tour_id) {
 				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_hiphop', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
@@ -117,6 +120,9 @@
 				<?php
 			}
 			public function load_ttbm_place_you_see_form() {
+				if (!current_user_can('edit_posts')) {
+					wp_die(esc_html__('You do not have permission to access this form.', 'tour-booking-manager'), '', ['response' => 403]);
+				}
 				?>
                 <label class="flexEqual">
                     <span><?php esc_html_e('Place Name : ', 'tour-booking-manager'); ?><sup class="textRequired">*</sup></span> <input type="text" name="ttbm_place_name" class="formControl" required>
@@ -149,7 +155,10 @@
 					wp_send_json_error(['message' => 'Invalid nonce']);
 					die;
 				}
-				$ttbm_id = isset($_POST['ttbm_id']) ? sanitize_text_field(wp_unslash($_POST['ttbm_id'])) : 0;
+				$ttbm_id = isset($_POST['ttbm_id']) ? absint(wp_unslash($_POST['ttbm_id'])) : 0;
+				if (!$this->current_user_can_edit_tour($ttbm_id)) {
+					wp_send_json_error(['message' => esc_html__('You do not have permission to access this tour.', 'tour-booking-manager')], 403);
+				}
 				$this->place_you_see($ttbm_id);
 				die();
 			}

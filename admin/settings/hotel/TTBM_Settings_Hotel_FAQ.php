@@ -24,6 +24,10 @@
 				add_action('wp_ajax_ttbm_hotel_ttbm_faq_sort', [$this, 'sort_faq']);
 			}
 
+			private function current_user_can_edit_hotel($post_id) {
+				return $post_id > 0 && current_user_can('edit_post', $post_id);
+			}
+
 			public function my_custom_editor_enqueue() {
 				// Enqueue necessary scripts
 				wp_enqueue_script('jquery');
@@ -132,7 +136,10 @@
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 				}
-				$post_id = isset($_POST['ttbm_faq_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_faq_postID'])) : '';
+				$post_id = isset($_POST['ttbm_faq_postID']) ? absint(wp_unslash($_POST['ttbm_faq_postID'])) : 0;
+				if (!$this->current_user_can_edit_hotel($post_id)) {
+					wp_send_json_error('Permission denied!', 403);
+				}
 				$ttbm_hotel_faq_title = isset($_POST['ttbm_hotel_faq_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_faq_title'])) : '';
 				$ttbm_hotel_faq_content = isset($_POST['ttbm_hotel_faq_content']) ? wp_kses_post(wp_unslash($_POST['ttbm_hotel_faq_content'])) : '';
 				$ttbm_faq = get_post_meta($post_id, 'ttbm_hotel_faq', true);
@@ -160,7 +167,10 @@
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 				}
-				$post_id = isset($_POST['ttbm_faq_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_faq_postID'])) : '';
+				$post_id = isset($_POST['ttbm_faq_postID']) ? absint(wp_unslash($_POST['ttbm_faq_postID'])) : 0;
+				if (!$this->current_user_can_edit_hotel($post_id)) {
+					wp_send_json_error('Permission denied!', 403);
+				}
 				update_post_meta($post_id, 'ttbm_hotel_faq_status', 'on');
 				$ttbm_hotel_faq_title = isset($_POST['ttbm_hotel_faq_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_faq_title'])) : '';
 				$ttbm_hotel_faq_content = isset($_POST['ttbm_hotel_faq_content']) ? wp_kses_post(wp_unslash($_POST['ttbm_hotel_faq_content'])) : '';
@@ -193,7 +203,10 @@
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 				}
-				$post_id = isset($_POST['ttbm_faq_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_faq_postID'])) : '';
+				$post_id = isset($_POST['ttbm_faq_postID']) ? absint(wp_unslash($_POST['ttbm_faq_postID'])) : 0;
+				if (!$this->current_user_can_edit_hotel($post_id)) {
+					wp_send_json_error('Permission denied!', 403);
+				}
 				$ttbm_faq = get_post_meta($post_id, 'ttbm_hotel_faq', true);
 				$ttbm_faq = !empty($ttbm_faq) ? $ttbm_faq : [];
 				if (!empty($ttbm_faq)) {
@@ -225,8 +238,11 @@
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 				}
-				$post_id = isset($_POST['postID']) ? sanitize_text_field(wp_unslash($_POST['postID'])) : '';
-				$sorted_ids = isset($_POST['sortedIDs']) ? array_map('intval', $_POST['sortedIDs']) : [];
+				$post_id = isset($_POST['postID']) ? absint(wp_unslash($_POST['postID'])) : 0;
+				if (!$this->current_user_can_edit_hotel($post_id)) {
+					wp_send_json_error('Permission denied!', 403);
+				}
+				$sorted_ids = isset($_POST['sortedIDs']) ? array_map('absint', (array) wp_unslash($_POST['sortedIDs'])) : [];
 				$ttbm_faq = get_post_meta($post_id, 'ttbm_hotel_faq', true);;
 				$new_ordered = [];
 				foreach ($sorted_ids as $id) {

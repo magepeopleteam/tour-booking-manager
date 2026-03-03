@@ -54,7 +54,13 @@
 				<?php
 			}
 			public function save_hotel($post_id) {
-				if (!isset($_POST['ttbm_hotel_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_hotel_type_nonce'])), 'ttbm_hotel_type_nonce') && defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && !current_user_can('edit_post', $post_id)) {
+				if (!isset($_POST['ttbm_hotel_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_hotel_type_nonce'])), 'ttbm_hotel_type_nonce')) {
+					return;
+				}
+				if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+					return;
+				}
+				if (!current_user_can('edit_post', $post_id)) {
 					return;
 				}
 				if (get_post_type($post_id) == 'ttbm_hotel') {

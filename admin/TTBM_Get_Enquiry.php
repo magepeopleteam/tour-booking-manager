@@ -25,15 +25,40 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             add_action('wp_ajax_ttbm_reply_enquiry', [$this, 'reply_enquiry']);
         }
 
+        private function user_can_manage_enquiries() {
+            return current_user_can('manage_options');
+        }
+
+        private function get_authorized_enquiry($enquiry_id, $delete = false) {
+            if (!$this->user_can_manage_enquiries()) {
+                wp_send_json_error(['message' => __('You do not have permission to access enquiries.', 'tour-booking-manager')], 403);
+            }
+
+            $post = get_post($enquiry_id);
+            if (!$post || $post->post_type !== 'ttbm_enquiry') {
+                wp_send_json_error(['message' => __('Enquiry not found.', 'tour-booking-manager')], 404);
+            }
+
+            if ($delete && !current_user_can('delete_post', $enquiry_id)) {
+                wp_send_json_error(['message' => __('You do not have permission to delete this enquiry.', 'tour-booking-manager')], 403);
+            }
+
+            if (!$delete && !current_user_can('edit_post', $enquiry_id)) {
+                wp_send_json_error(['message' => __('You do not have permission to access this enquiry.', 'tour-booking-manager')], 403);
+            }
+
+            return $post;
+        }
+
         public function view_enquiry(){
 	        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field(wp_unslash($_POST['nonce'] )), 'ttbm_admin_nonce' ) ) {
 		        wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
 		        die;
 	        }
-	        $enquiry_id = isset($_POST['enquiry_id']) ? intval(wp_unslash($_POST['enquiry_id'] )): '';
-            $post = get_post($enquiry_id);
+	        $enquiry_id = isset($_POST['enquiry_id']) ? absint(wp_unslash($_POST['enquiry_id'] )) : 0;
+            $post = $this->get_authorized_enquiry($enquiry_id);
 
-            if ($post && $post->post_type === 'ttbm_enquiry') {
+            if ($post) {
                 $response = [
                     'title'   => esc_html($post->post_title),
                     'content' => wpautop(wp_kses_post($post->post_content)),
@@ -84,9 +109,9 @@ if (! class_exists('TTBM_Get_Enquiry')) {
 		        wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
 		        die;
 	        }
-	        $enquiry_id = isset($_POST['enquiry_id']) ? intval(wp_unslash($_POST['enquiry_id'] )): '';
-            $post = get_post($enquiry_id);
-            if ($post && $post->post_type === 'ttbm_enquiry' && wp_delete_post($enquiry_id, true)) {
+	        $enquiry_id = isset($_POST['enquiry_id']) ? absint(wp_unslash($_POST['enquiry_id'] )) : 0;
+            $post = $this->get_authorized_enquiry($enquiry_id, true);
+            if ($post && wp_delete_post($enquiry_id, true)) {
                 wp_send_json_success(['message' => __('Enquiry deleted successfully.', 'tour-booking-manager')]);
             } else {
                 wp_send_json_error(['message' => __('Failed to delete enquiry. Please try again.', 'tour-booking-manager')]);
@@ -100,11 +125,16 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             $form_data = [];
 	        $data = isset($_POST['data']) ? sanitize_text_field(wp_unslash($_POST['data'] )): '';
             parse_str($data, $form_data);
-            $postId=sanitize_text_field($form_data['ttbm_post_id'] ?? '');
+            $postId = isset($form_data['ttbm_post_id']) ? absint($form_data['ttbm_post_id']) : 0;
+            $this->get_authorized_enquiry($postId);
             $to = sanitize_email($form_data['ttbm-reply-to'] ?? '');
             $from = sanitize_email($form_data['ttbm-reply-from'] ?? '');
             $subject = sanitize_text_field($form_data['ttbm-reply-subject'] ?? '');
             $message = wp_kses_post($form_data['ttbm-reply-message'] ?? '');
+
+            if (!is_email($to) || empty($subject) || empty(wp_strip_all_tags($message))) {
+                wp_send_json_error(['message' => __('Please provide a valid recipient, subject, and message.', 'tour-booking-manager')]);
+            }
             
             // Get configured from email if not provided
             if (empty($from)) {
@@ -299,17 +329,18 @@ if (! class_exists('TTBM_Get_Enquiry')) {
 
             $args = [
                 'labels'             => $labels,
-                'public'             => true,
-                'publicly_queryable' => true,
+                'public'             => false,
+                'publicly_queryable' => false,
                 'show_ui'            => false,
-                'show_in_menu'       => true,
+                'show_in_menu'       => false,
                 'query_var'          => true,
-                'rewrite'            => ['slug' => 'ttbm_enquiry'],
+                'rewrite'            => false,
                 'capability_type'    => 'post',
-                'has_archive'        => true,
+                'has_archive'        => false,
                 'hierarchical'       => false,
                 'menu_position'      => null,
                 'supports'           => ['title', 'editor', 'custom-fields'],
+                'exclude_from_search'=> true,
                 'capabilities'       => [
                     'create_posts' => 'do_not_allow',
                 ],

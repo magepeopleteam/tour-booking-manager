@@ -2,7 +2,15 @@
 if ( ! defined( 'ABSPATH' ) ) {
     die;
 }
-if ( isset($_POST['nonce']) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_hotel_nonce') || 1 ){
+$has_valid_nonce = (
+    isset($_POST['nonce']) &&
+    wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_frontend_nonce')
+) || (
+    isset($_POST['ttbm_hotel_nonce']) &&
+    wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_hotel_nonce'])), 'ttbm_hotel_nonce')
+);
+
+if ( $has_valid_nonce ) {
 	$hotel_id = $hotel_id ?? '';
     $ttbm_post_id = $ttbm_post_id ?? get_the_id();
     //$room_lists = TTBM_Global_Function::get_post_info( $hotel_id, 'ttbm_room_details', array() );

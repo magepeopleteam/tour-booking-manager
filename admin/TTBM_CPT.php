@@ -132,10 +132,14 @@ register_post_type('ttbm_hotel', $args);
 						'name' => __('Hotel Bookings', 'tour-booking-manager'),
                         'singular_name' => __('Hotel Booking', 'tour-booking-manager'),
                     ),
-                    'public' => true,
-                    'has_archive' => true,
+                    'public' => false,
+                    'publicly_queryable' => false,
+                    'has_archive' => false,
                     'show_ui' => false,
-                    'show_in_menu' => true, // Ensure it's visible in the admin menu
+                    'show_in_menu' => false,
+                    'exclude_from_search' => true,
+                    'rewrite' => false,
+                    'map_meta_cap' => true,
                     'supports' => array('title', 'editor', 'custom-fields'),
                 ));
 

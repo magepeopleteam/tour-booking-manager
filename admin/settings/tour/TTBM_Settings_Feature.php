@@ -16,6 +16,12 @@
 				add_action('wp_ajax_ttbm_new_feature_save', [$this, 'ttbm_new_feature_save']);
 				add_action('wp_ajax_nopriv_ttbm_new_feature_save', [$this, 'ttbm_new_feature_save']);
 			}
+			private function current_user_can_manage_feature_terms() {
+				return current_user_can('manage_options');
+			}
+			private function current_user_can_edit_tour($tour_id) {
+				return $tour_id > 0 && current_user_can('edit_post', $tour_id);
+			}
 			public function ttbm_settings_feature($tour_id) {
 				?>
                 <div class="tabsItem ttbm_settings_feature" data-tabs="#ttbm_settings_feature">
@@ -106,6 +112,9 @@
 				<?php
 			}
 			public function load_ttbm_feature_form() {
+				if (!$this->current_user_can_manage_feature_terms()) {
+					wp_die(esc_html__('You do not have permission to access this form.', 'tour-booking-manager'), '', ['response' => 403]);
+				}
 				wp_nonce_field('ttbm_add_new_feature_popup', 'ttbm_add_new_feature_popup');
 				?>
                 <label class="flexEqual">
@@ -138,7 +147,10 @@
 					wp_send_json_error(['message' => 'Invalid nonce']);
 					die;
 				}
-				$ttbm_id = isset($_POST['ttbm_id']) ? sanitize_text_field(wp_unslash($_POST['ttbm_id'])) : 0;
+				$ttbm_id = isset($_POST['ttbm_id']) ? absint(wp_unslash($_POST['ttbm_id'])) : 0;
+				if (!$this->current_user_can_edit_tour($ttbm_id)) {
+					wp_send_json_error(['message' => esc_html__('You do not have permission to access this tour.', 'tour-booking-manager')], 403);
+				}
 				// Load the included and excluded features sections
 				ob_start();
 				$this->feature($ttbm_id);

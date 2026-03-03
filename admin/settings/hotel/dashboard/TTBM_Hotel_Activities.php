@@ -15,6 +15,9 @@ if (!class_exists('TTBM_Hotel_Activities')) {
             // ttbm_delete_faq_data
 			add_action('wp_ajax_ttbm_hotel_activity_delete', [$this, 'activity_delete_item']);
         }
+        private function user_can_manage_hotel_activities() {
+            return current_user_can('manage_options');
+        }
         public function dashbaord_activity(){
             ?>
             <div class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_activities_tab"><i class="mi mi-practice"></i> <?php echo esc_attr__( 'Hotel Activities', 'tour-booking-manager' )?></div>
@@ -120,6 +123,9 @@ if (!class_exists('TTBM_Hotel_Activities')) {
             if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
                 wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
             }
+            if (!$this->user_can_manage_hotel_activities()) {
+                wp_send_json_error('Permission denied!', 403);
+            }
             $feature_title = isset($_POST['ttbm_hotel_activity_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_activity_title'])) : '';
             $feature_slug = isset($_POST['ttbm_hotel_activity_slug']) ? sanitize_title(wp_unslash($_POST['ttbm_hotel_activity_slug'])) : '';
             $feature_icon = isset($_POST['ttbm_hotel_activity_icon']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_activity_icon'])) : '';
@@ -173,6 +179,9 @@ if (!class_exists('TTBM_Hotel_Activities')) {
             if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
                 wp_send_json_error('Invalid nonce!');
             }
+            if (!$this->user_can_manage_hotel_activities()) {
+                wp_send_json_error('Permission denied!', 403);
+            }
 
             $feature_id = isset($_POST['ttbm_hotel_activity_id']) ? intval($_POST['ttbm_hotel_activity_id']) : 0;
             $feature_title = isset($_POST['ttbm_hotel_activity_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_activity_title'])) : '';
@@ -209,6 +218,9 @@ if (!class_exists('TTBM_Hotel_Activities')) {
             // Check nonce for security
             if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
                 wp_send_json_error('Invalid nonce!');
+            }
+            if (!$this->user_can_manage_hotel_activities()) {
+                wp_send_json_error('Permission denied!', 403);
             }
 
             $item_id = isset($_POST['itemId']) ? intval($_POST['itemId']) : 0;

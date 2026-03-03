@@ -277,7 +277,7 @@
 										<?php
 											$off_day_array = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_offdays');
 											if (!is_array($off_day_array)) {
-												$maybe_unserialized = @unserialize($off_day_array);
+												$maybe_unserialized = @unserialize($off_day_array, ['allowed_classes' => false]);
 												if (is_array($maybe_unserialized)) {
 													$off_day_array = $maybe_unserialized;
 												} else {

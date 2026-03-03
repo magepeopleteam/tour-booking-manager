@@ -25,12 +25,18 @@
 				// FAQ sort_faq
 				add_action('wp_ajax_ttbm_sort_faq', [$this, 'sort_faq']);
 			}
+			private function current_user_can_edit_faq_post($post_id) {
+				return $post_id > 0 && current_user_can('edit_post', $post_id);
+			}
 			public function sort_faq() {
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 				}
-				$post_id = isset($_POST['postID']) ? sanitize_text_field(wp_unslash($_POST['postID'])) : '';
-				$sorted_ids = isset($_POST['sortedIDs']) ? array_map('intval', $_POST['sortedIDs']) : [];
+				$post_id = isset($_POST['postID']) ? absint(wp_unslash($_POST['postID'])) : 0;
+				if (!$this->current_user_can_edit_faq_post($post_id)) {
+					wp_send_json_error('Permission denied!', 403);
+				}
+				$sorted_ids = isset($_POST['sortedIDs']) ? array_map('absint', (array) wp_unslash($_POST['sortedIDs'])) : [];
 				$ttbm_faq = get_post_meta($post_id, 'mep_event_faq', true);
 				$new_ordered = [];
 				foreach ($sorted_ids as $id) {
@@ -151,7 +157,10 @@
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 				}
-				$post_id = isset($_POST['ttbm_faq_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_faq_postID'])) : '';
+				$post_id = isset($_POST['ttbm_faq_postID']) ? absint(wp_unslash($_POST['ttbm_faq_postID'])) : 0;
+				if (!$this->current_user_can_edit_faq_post($post_id)) {
+					wp_send_json_error('Permission denied!', 403);
+				}
 				$ttbm_faq_title = isset($_POST['ttbm_faq_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_faq_title'])) : '';
 				$allowed_tags = wp_kses_allowed_html('post');
 				$ttbm_faq_content = isset($_POST['ttbm_faq_content']) ? wp_kses(wp_unslash($_POST['ttbm_faq_content']), $allowed_tags) : '';
@@ -178,7 +187,10 @@
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 				}
-				$post_id = isset($_POST['ttbm_faq_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_faq_postID'])) : '';
+				$post_id = isset($_POST['ttbm_faq_postID']) ? absint(wp_unslash($_POST['ttbm_faq_postID'])) : 0;
+				if (!$this->current_user_can_edit_faq_post($post_id)) {
+					wp_send_json_error('Permission denied!', 403);
+				}
 				update_post_meta($post_id, 'ttbm_faq_active', 'on');
 				$ttbm_faq_title = isset($_POST['ttbm_faq_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_faq_title'])) : '';
 				$allowed_tags = wp_kses_allowed_html('post');
@@ -211,7 +223,10 @@
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 				}
-				$post_id = isset($_POST['ttbm_faq_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_faq_postID'])) : '';
+				$post_id = isset($_POST['ttbm_faq_postID']) ? absint(wp_unslash($_POST['ttbm_faq_postID'])) : 0;
+				if (!$this->current_user_can_edit_faq_post($post_id)) {
+					wp_send_json_error('Permission denied!', 403);
+				}
 				$ttbm_faq = get_post_meta($post_id, 'mep_event_faq', true);
 				$ttbm_faq = !empty($ttbm_faq) ? $ttbm_faq : [];
 				if (!empty($ttbm_faq)) {

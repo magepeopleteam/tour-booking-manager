@@ -180,7 +180,7 @@
 			}
 			public static function data_sanitize($array) {
 				if (is_serialized($array)) {
-					$array = unserialize($array);
+					$array = @unserialize($array, ['allowed_classes' => false]);
 				}
 				if (is_string($array) && is_array(json_decode($array, true))) {
 					$array = json_decode($array, true);
@@ -837,7 +837,7 @@
 			//***********************************//
 			public static function data_sanitize($array) {
 				if (is_serialized($array)) {
-					$array = unserialize($array);
+					$array = @unserialize($array, ['allowed_classes' => false]);
 				}
 				if (is_string($array) && is_array(json_decode($array, true))) {
 					$array = json_decode($array, true);

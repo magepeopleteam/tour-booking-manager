@@ -47,7 +47,7 @@
 					return;
 				$option['field_name'] = $id;
 				$option_value = get_term_meta($term_id, $id, true);
-				$option['value'] = is_serialized($option_value) ? unserialize($option_value) : $option_value;
+				$option['value'] = is_serialized($option_value) ? @unserialize($option_value, ['allowed_classes' => false]) : $option_value;
 				if (sizeof($option) > 0 && isset($option['type'])) {
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo mep_field_generator($option['type'], $option);

@@ -10,6 +10,9 @@
 				add_action('wp_ajax_get_ttbm_insert_ticket_type', array($this, 'ticket_table'));
 				add_action('wp_ajax_nopriv_get_ttbm_insert_ticket_type', array($this, 'ticket_table'));
 			}
+			private function current_user_can_edit_ticket_context($post_id, $form_id) {
+				return $post_id > 0 && $form_id > 0 && current_user_can('edit_post', $post_id) && current_user_can('edit_post', $form_id);
+			}
 			public function pricing_tab_content($tour_id) {
 				$all_types = TTBM_Function::tour_type();
 				$ttbm_type = TTBM_Function::get_tour_type($tour_id);
@@ -144,8 +147,11 @@
 					wp_send_json_error(['message' => 'Invalid nonce']);
 					die;
 				}
-				$form_id = isset($_POST['form_id']) ? sanitize_text_field(wp_unslash($_POST['form_id'])) : '';
-				$post_id = isset($_POST['post_id']) ? sanitize_text_field(wp_unslash($_POST['post_id'])) : '';
+				$form_id = isset($_POST['form_id']) ? absint(wp_unslash($_POST['form_id'])) : 0;
+				$post_id = isset($_POST['post_id']) ? absint(wp_unslash($_POST['post_id'])) : 0;
+				if (!$this->current_user_can_edit_ticket_context($post_id, $form_id)) {
+					wp_send_json_error(['message' => esc_html__('You do not have permission to access this ticket configuration.', 'tour-booking-manager')], 403);
+				}
 				$ticket_type = TTBM_Global_Function::get_post_info($form_id, 'ttbm_ticket_type', array());
 				if (sizeof($ticket_type) > 0) {
 					foreach ($ticket_type as $field) {

@@ -25,6 +25,12 @@
 				add_action('ttbm_hiphop_place_map', [$this, 'show_map_frontend']);
 				add_action('ttbm_common_script', [$this, 'osmap_script']);
 			}
+			private function current_user_can_manage_locations() {
+				return current_user_can('manage_options');
+			}
+			private function current_user_can_edit_location_post($post_id) {
+				return $post_id > 0 && current_user_can('edit_post', $post_id);
+			}
 			public function osmap_script() {
 				//openstreet map css
 				wp_enqueue_style('ttbm_leaflet_style', TTBM_PLUGIN_URL . '/assets/osmap/leaflet.css', array(), time());
@@ -156,6 +162,9 @@
 				<?php
 			}
 			public function load_ttbm_location_form() {
+				if (!$this->current_user_can_manage_locations()) {
+					wp_die(esc_html__('You do not have permission to access this form.', 'tour-booking-manager'), '', ['response' => 403]);
+				}
 				$all_countries = ttbm_get_coutnry_arr();
 				?>
                 <label class="flexEqual">
@@ -207,7 +216,10 @@
 					wp_send_json_error(['message' => 'Invalid nonce']);
 					die;
 				}
-				$ttbm_id = isset($_POST['ttbm_id']) ? sanitize_text_field(wp_unslash($_POST['ttbm_id'])) : 0;
+				$ttbm_id = isset($_POST['ttbm_id']) ? absint(wp_unslash($_POST['ttbm_id'])) : 0;
+				if (!$this->current_user_can_edit_location_post($ttbm_id)) {
+					wp_send_json_error(['message' => esc_html__('You do not have permission to access this location.', 'tour-booking-manager')], 403);
+				}
 				self::location_select($ttbm_id);
 				die();
 			}
@@ -295,6 +307,9 @@
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error(['message' => 'Invalid nonce']);
 					die;
+				}
+				if (!$this->current_user_can_manage_locations()) {
+					wp_send_json_error(['message' => esc_html__('You do not have permission to create locations.', 'tour-booking-manager')], 403);
 				}
 				$name = isset($_POST['name']) ? sanitize_text_field(wp_unslash($_POST['name'])) : '';
 				$description = isset($_POST['description']) ? sanitize_text_field(wp_unslash($_POST['description'])) : '';

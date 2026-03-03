@@ -240,8 +240,14 @@
 			//********************//
 			public function save_settings($tour_id) {
 				//echo '<pre>';print_r($_POST);echo '</pre>';die();
-				if (!isset($_POST['ttbm_ticket_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_ticket_type_nonce'])), 'ttbm_ticket_type_nonce') && defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && !current_user_can('edit_post', $tour_id)) {
+				if (!isset($_POST['ttbm_ticket_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_ticket_type_nonce'])), 'ttbm_ticket_type_nonce')) {
 					//echo '<pre>';print_r($_POST['ttbm_ticket_type_nonce']);echo '</pre>';die();
+					return;
+				}
+				if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+					return;
+				}
+				if (!current_user_can('edit_post', $tour_id)) {
 					return;
 				}
 				//echo '<pre>';print_r($_POST);echo '</pre>';die();

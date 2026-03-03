@@ -625,10 +625,10 @@
 							$sold_type = apply_filters('ttbm_sold_qty', $sold_type, $tour_id, $tour_date, $ticket_name);
 							
 							$available = (int)$ticket_qty - ($sold_type + (int)$reserve);
-							$available = apply_filters('ttbm_group_ticket_qty', $available, $tour_id, $ticket_name);
+							$available = apply_filters('ttbm_group_ticket_qty', $available, $tour_id, $ticket_name, $tour_date);
 							$total_available += max(0, floor($available));
 						}
-						return $total_available;
+						return apply_filters('ttbm_total_available_qty', $total_available, $tour_id, $tour_date, $ticket_lists);
 					}
 				}
 

@@ -112,6 +112,7 @@
 				// Show quantity input if available seats >= minimum quantity required
 				// This allows booking when tickets are available (e.g., 1 available with min_qty 0 or 1)
 				if ($available_seat >= $min_qty && $available_seat > 0) {
+					$effective_max = $max_qty > 0 ? min((int)$max_qty, (int)$available_seat) : (int)$available_seat;
 					?>
                     <div class="ticket-type-name"  data-ticket-type-name="<?php echo esc_attr($data_ticket_name); ?>">
 						<?php
@@ -128,7 +129,7 @@
                                                name="<?php echo esc_attr($input_name); ?>"
                                                value="<?php echo esc_attr(max(0, $default_qty)); ?>"
                                                min="<?php echo esc_attr($min_qty); ?>"
-                                               max="<?php echo esc_attr($max_qty > 0 ? $max_qty : $available_seat); ?>"
+                                               max="<?php echo esc_attr($effective_max); ?>"
                                         />
                                     </label>
                                     <div class="incQty addonGroupContent">
@@ -139,10 +140,16 @@
                                 <label data-ticket-type-name="<?php echo esc_html($data_ticket_name); ?>">
                                     <select name="<?php echo esc_attr($input_name); ?>" data-price="<?php echo esc_html($ticket_price_raw); ?>" class="formControl">
 										<?php
-											$max_total = $max_qty > 0 ? $max_qty : $available_seat;
+											$max_total = $effective_max;
+											$selected_qty = max(0, $default_qty);
+											if ($min_qty > 0) {
+												?>
+                                                <option value="0" <?php selected($selected_qty, 0); ?>> <?php echo esc_html(0); ?> </option>
+												<?php
+											}
 											for ($i = $min_qty; $i <= $max_total; $i++) {
 												?>
-                                                <option value="<?php echo esc_html($i); ?>"> <?php echo esc_html($i); ?> </option>
+                                                <option value="<?php echo esc_html($i); ?>" <?php selected($selected_qty, $i); ?>> <?php echo esc_html($i); ?> </option>
 											<?php } ?>
                                     </select>
                                 </label>

@@ -53,8 +53,8 @@ if (!defined('ABSPATH')) {
 								$reserve = array_key_exists('ticket_type_resv_qty', $ticket) && $ticket['ticket_type_resv_qty'] > 0 ? $ticket['ticket_type_resv_qty'] : 0;
 								$ticket_qty_type = array_key_exists('ticket_type_qty_type', $ticket) ? $ticket['ticket_type_qty_type'] : 'inputbox';
 								$default_qty = array_key_exists('ticket_type_default_qty', $ticket) && $ticket['ticket_type_default_qty'] > 0 ? $ticket['ticket_type_default_qty'] : 0;
-								$min_qty = apply_filters('ttbm_ticket_type_min_qty', 0);
-								$max_qty = apply_filters('ttbm_ticket_type_max_qty', 0);
+								$min_qty = apply_filters('ttbm_ticket_type_min_qty', 0, $tour_id, $ticket);
+								$max_qty = apply_filters('ttbm_ticket_type_max_qty', 0, $tour_id, $ticket);
                                 $sold_type = TTBM_Function::get_total_sold($tour_id, $tour_date, $ticket_name);
 								// Enhanced availability info
 								$ticket_info = isset($availability_info[$ticket_name]) ? $availability_info[$ticket_name] : array();
@@ -73,7 +73,7 @@ if (!defined('ABSPATH')) {
                                     $available = (int)$ticket_qty - ($sold_type + (int)$reserve);
                                 }
                                 
-								$available = apply_filters('ttbm_group_ticket_qty', $available,$tour_id,$ticket_name);
+								$available = apply_filters('ttbm_group_ticket_qty', $available, $tour_id, $ticket_name, $tour_date);
 								$available = max(0, floor($available)); // Ensure availability is always a whole number
 								$ticket_type_icon = array_key_exists('ticket_type_icon', $ticket) ? $ticket['ticket_type_icon'] : '';
 								$description = array_key_exists('ticket_type_description', $ticket) ? $ticket['ticket_type_description'] : '';

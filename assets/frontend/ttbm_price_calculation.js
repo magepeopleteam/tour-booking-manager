@@ -67,21 +67,72 @@ function mpTourTicketQtyValidation(target, value) {
         });
     }
 }
+function ttbm_get_shared_ticket_limit(parent) {
+    let sharedQtyField = parent.find('[name="ttbm_gq_max_qty"]').first();
+    if (!sharedQtyField.length) {
+        return 0;
+    }
+    return Math.max(0, parseInt(sharedQtyField.val(), 10) || 0);
+}
+function ttbm_update_qty_control_state(target) {
+    let value = parseInt(target.val(), 10) || 0;
+    let min = parseInt(target.attr('min'), 10);
+    let max = parseInt(target.attr('max'), 10);
+    let control = target.closest('.qtyIncDec');
+    let decButton = control.find('.decQty');
+    let incButton = control.find('.incQty');
+
+    decButton.removeClass('mage_disabled mpDisabled');
+    incButton.removeClass('mage_disabled mpDisabled');
+
+    if (isNaN(min) || value <= min) {
+        decButton.addClass('mage_disabled mpDisabled');
+    }
+    if (isNaN(max) || value >= max) {
+        incButton.addClass('mage_disabled mpDisabled');
+    }
+}
+function ttbm_update_shared_ticket_input_limits(parent) {
+    let sharedLimit = ttbm_get_shared_ticket_limit(parent);
+    if (sharedLimit < 1) {
+        return;
+    }
+
+    let ticketInputs = parent.find('.mp_tour_ticket_type .formControl[data-price]');
+    let totalQty = 0;
+
+    ticketInputs.each(function () {
+        totalQty += Math.max(0, parseInt(jQuery(this).val(), 10) || 0);
+    });
+
+    ticketInputs.each(function () {
+        let input = jQuery(this);
+        let ownQty = Math.max(0, parseInt(input.val(), 10) || 0);
+        let min = Math.max(0, parseInt(input.attr('min'), 10) || 0);
+        let dynamicMax = Math.max(min, sharedLimit - (totalQty - ownQty));
+
+        input.attr('max', dynamicMax);
+        if (ownQty > dynamicMax) {
+            input.val(dynamicMax);
+        }
+
+        ttbm_update_qty_control_state(input);
+    });
+}
 function mpTourTicketQty(target, value) {
     let min = parseInt(target.attr('min'));
     let max = parseInt(target.attr('max'));
-    target.parents('.qtyIncDec').find('.incQty , .decQty').removeClass('mage_disabled');
     if (value < min || isNaN(value) || value === 0) {
         value = min;
-        target.parents('.qtyIncDec').find('.decQty').addClass('mage_disabled');
     }
     if (value > max) {
         value = max;
-        target.parents('.qtyIncDec').find('.incQty').addClass('mage_disabled');
     }
     target.val(value);
     let parent = target.closest('.ttbm_registration_area');
     ttbm_price_calculation(parent);
+    ttbm_update_shared_ticket_input_limits(parent);
+    ttbm_update_qty_control_state(target);
 }
 function mp_tour_ticket_qty(parent) {
     let totalQty = 0;
@@ -193,7 +244,9 @@ function ttbm_partial_payment_job(parent, total) {
 
     $(document).ready(function () {
         $('body').find('.ttbm_registration_area').each(function () {
-            ttbm_price_calculation($(this));
+            let parent = $(this);
+            ttbm_price_calculation(parent);
+            ttbm_update_shared_ticket_input_limits(parent);
         });
     });
     $(document).on("change", ".ttbm_registration_area .formControl[data-price]", function (e) {
@@ -242,7 +295,7 @@ function ttbm_partial_payment_job(parent, total) {
     }, 30000);
 
     $(document).on('ttbm:ticket-refreshed', '.ttbm_registration_area', function () {
-        updateTicketAvailability($(this));
+        ttbm_update_shared_ticket_input_limits($(this));
     });
 
     function updateTicketAvailability(contextArea) {
@@ -370,6 +423,7 @@ function ttbm_partial_payment_job(parent, total) {
                     quantityInput.val(info.available_qty);
                     quantityInput.trigger('change');
                 }
+                ttbm_update_qty_control_state(quantityInput);
             }
         });
 
@@ -391,6 +445,12 @@ function ttbm_partial_payment_job(parent, total) {
             totalAvailable = sharedAvailableQty === null ? 0 : sharedAvailableQty;
         }
         scope.find('#ttbm_total_available').text(totalAvailable);
+
+        var registrationArea = scope.closest('.ttbm_registration_area');
+        if (registrationArea.length > 0 && sharedCapacityEnabled) {
+            registrationArea.find('[name="ttbm_gq_max_qty"]').val(totalAvailable);
+            ttbm_update_shared_ticket_input_limits(registrationArea);
+        }
 
         var detailsPage = scope.closest('.ttbm_details_page');
         if (detailsPage.length > 0) {

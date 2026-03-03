@@ -109,10 +109,14 @@
 			public static function qty_input($name, $available_seat, $ticket_qty_type, $default_qty, $min_qty, $max_qty, $ticket_price_raw, $input_name, $tour_id = '') {
 				$min_qty = max($default_qty, $min_qty);
 				$data_ticket_name = preg_replace('/[^A-Za-z0-9\-]/', '', $name);
+				$shared_capacity_enabled = false;
+				if ($tour_id) {
+					$shared_capacity_enabled = TTBM_Function::get_tour_type($tour_id) === 'general' && TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_global_qty', 'off') === 'on';
+				}
 				// Show quantity input if available seats >= minimum quantity required
 				// This allows booking when tickets are available (e.g., 1 available with min_qty 0 or 1)
 				if ($available_seat >= $min_qty && $available_seat > 0) {
-					$effective_max = $max_qty > 0 ? min((int)$max_qty, (int)$available_seat) : (int)$available_seat;
+					$effective_max = $shared_capacity_enabled ? (int)$available_seat : ($max_qty > 0 ? min((int)$max_qty, (int)$available_seat) : (int)$available_seat);
 					?>
                     <div class="ticket-type-name"  data-ticket-type-name="<?php echo esc_attr($data_ticket_name); ?>">
 						<?php

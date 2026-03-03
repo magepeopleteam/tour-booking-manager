@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
 		if ($date && strtotime($date) !== false) {
             $date = $current_date = gmdate('Y-m-d', strtotime($date));
 			$time = TTBM_Function::get_time($tour_id, $date);
-			$time = is_array($time) ? $time[0]['time'] : $time;
+			$time = is_array($time) ? TTBM_Schedule_Planner::extract_time_value($time[0] ?? '') : $time;
 			$date = $time ? $date . ' ' . $time : $date;
 			if (strtotime($date) !== false) {
 				$date = $time ? gmdate('Y-m-d H:i', strtotime($date)) : gmdate('Y-m-d', strtotime($date));

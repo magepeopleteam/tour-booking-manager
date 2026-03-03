@@ -245,7 +245,23 @@ div.ttbm_faq_item .ttbm_faq_title.active {border-color: #F5F5F5;border-radius: 5
 div.ttbm_faq_item .ttbm_faq_title span {padding: 5px 0;font-size: 14px; font-weight: bold;}
 div.ttbm_faq_content {background-color: #FFF;padding: var(--ttbm_mp) 0;border-radius: 10px;overflow: hidden;}
 div.ttbm_faq_content p { margin-top: 0;}
-.ttbm_registration_area div[class*="simpleSpinner"] { position: absolute; z-index: 11111; left: 0; right: 0; top: 50%; font-size: var(--ttbm_fs_h1); width: 100%; padding: var(--ttbm_mp); color: var(--color_theme);}
+.ttbm_registration_area div[class*="simpleSpinner"] {
+	position: absolute;
+	z-index: 11111;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+}
+.ttbm_registration_area .ttbm_select_time_area div[class*="simpleSpinner"] {
+	align-items: flex-start;
+	padding-top: 8px;
+}
+.ttbm_registration_area .ttbm_booking_panel div[class*="simpleSpinner"] .ttbm-spinner-chip {
+	background: rgba(255, 255, 255, 0.98);
+}
 div.ttbm_faq_content p:last-child { margin-bottom: 0;}
 div.ttbm_faq_item div.superSlider {min-width: 300px;: 50%; margin: 0 var(--ttbm_mp_xs) var(--ttbm_mp_xs) 0;float: left;}
 /*****************dynamic sidebar*********************************/

@@ -19,6 +19,10 @@ if (!defined('ABSPATH')) {
 						$times = TTBM_Function::get_time($tour_id, $date);
 						if (is_array($times) && sizeof($times) > 0) {
 							foreach ($times as $time) {
+								$time = TTBM_Schedule_Planner::extract_time_value($time);
+								if (!$time) {
+									continue;
+								}
 								$full_date = $date . ' ' . $time;
 								?>
                                 <div class="fdColumn particular_date_area ttbm_registration_area">

@@ -31,6 +31,8 @@
 				if (TTBM_Global_Function::check_woocommerce() == 1) {
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Function.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Layout.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Schedule_Planner.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Ticket_Capacity_Override.php';
 					require_once TTBM_PLUGIN_DIR . '/support/elementor/elementor-support.php';
 					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Frontend.php';
@@ -105,6 +107,8 @@ require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
 				wp_enqueue_script('ttbm_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_settings.js', array('jquery'), time(), true);
 				//===================//
 				wp_enqueue_script('ttbm_admin_script', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_script.js', array('jquery'), time(), true);
+				wp_enqueue_script('ttbm_schedule_planner', TTBM_PLUGIN_URL . '/assets/admin/ttbm_schedule_planner.js', array('jquery', 'jquery-ui-datepicker'), time(), true);
+				wp_enqueue_script('ttbm_capacity_override', TTBM_PLUGIN_URL . '/assets/admin/ttbm_capacity_override.js', array('jquery', 'jquery-ui-datepicker'), time(), true);
 				wp_enqueue_script('ttbm_hotel_booking', TTBM_PLUGIN_URL . '/assets/admin/ttbm_hotel_booking.js', array('jquery'), time(), true);
 				wp_enqueue_style('ttbm_admin', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin.css', array(), time());
 				wp_localize_script('ttbm_admin_script', 'ttbm_admin_ajax', array(

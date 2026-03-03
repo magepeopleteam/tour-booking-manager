@@ -32,7 +32,7 @@ function dLoader_xs(target) {
 }
 function simpleSpinner(target) {
     if (target.find('div[class*="simpleSpinner"]').length < 1) {
-        target.addClass('pRelative').append('<div class="simpleSpinner"><span class="fas fa-spinner fa-pulse"></span></div>');
+        target.addClass('pRelative').append('<div class="simpleSpinner" aria-live="polite" aria-busy="true"><div class="ttbm-spinner-chip"><span class="ttbm-spinner-ring"></span><span class="ttbm-spinner-text">Loading</span></div></div>');
     }
 }
 function simpleSpinnerRemove(target = jQuery('body')) {

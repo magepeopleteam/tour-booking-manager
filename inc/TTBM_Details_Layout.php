@@ -48,7 +48,7 @@
 								$check_ability = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'regular_ticket');
 								if ($date && strtotime($date) !== false) {
 									$time = TTBM_Function::get_time($tour_id, $date);
-									$time = is_array($time) ? $time[0]['time'] : $time;
+									$time = is_array($time) ? TTBM_Schedule_Planner::extract_time_value($time[0] ?? '') : $time;
 									$date = $time ? $date . ' ' . $time : $date;
 									// Check again after appending time
 									if (strtotime($date) !== false) {

@@ -431,6 +431,10 @@
 						}
 					}
 					update_post_meta($tour_id, 'mep_ticket_off_dates', $all_off_dates);
+					$schedule_rules = isset($_POST[TTBM_Settings_Schedule_Planner::meta_key()]) ? TTBM_Settings_Schedule_Planner::sanitize_rules(wp_unslash($_POST[TTBM_Settings_Schedule_Planner::meta_key()])) : [];
+					update_post_meta($tour_id, TTBM_Settings_Schedule_Planner::meta_key(), $schedule_rules);
+					$capacity_override_rules = isset($_POST[TTBM_Settings_Capacity_Override::meta_key()]) ? TTBM_Settings_Capacity_Override::sanitize_rules(wp_unslash($_POST[TTBM_Settings_Capacity_Override::meta_key()])) : [];
+					update_post_meta($tour_id, TTBM_Settings_Capacity_Override::meta_key(), $capacity_override_rules);
 				}
 				//*********Display**************//
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {

@@ -304,10 +304,7 @@
 				$query = wp_insert_term($name,   // the term
 					'ttbm_tour_location', // the taxonomy
 					array('description' => $description));
-
-                echo '<pre>';print_r($query);echo '<pre>';
-
-
+                
 				if (is_array($query) && $query['term_id'] != '') {
 					$term_id = $query['term_id'];
 					update_term_meta($term_id, 'ttbm_location_address', $address);

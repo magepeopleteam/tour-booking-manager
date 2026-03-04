@@ -450,7 +450,7 @@
 						$price = $ticket['ticket_type_price'];
 						$price = array_key_exists('sale_price', $ticket) && $ticket['sale_price'] ? $ticket['sale_price'] : $price;
 						$price = apply_filters('ttbm_filter_ticket_price', $price, $tour_id, $start_date, $ticket_name);
-						$price = apply_filters('ttbm_price_by_name_filter', $price, $tour_id, 1, $start_date);
+						$price = apply_filters('ttbm_price_by_name_filter', $price, $tour_id, 1, $start_date, $ticket_name);
 						$ticket_price[] = $price;
 					}
 					$start_price = min($ticket_price);
@@ -481,7 +481,7 @@
 							$price = $ticket_type['ticket_type_price'];
 							$price = array_key_exists('sale_price', $ticket_type) && $ticket_type['sale_price'] ? $ticket_type['sale_price'] : $price;
 							$price = apply_filters('ttbm_filter_ticket_price', $price, $tour_id, $start_date, $ticket_name);
-							$price = apply_filters('ttbm_price_by_name_filter', $price, $tour_id, $qty, $start_date);
+							$price = apply_filters('ttbm_price_by_name_filter', $price, $tour_id, $qty, $start_date, $ticket_name);
 						}
 					}
 				}
@@ -576,19 +576,62 @@
 				$tour_date = $tour_date ?: TTBM_Global_Function::get_post_info($tour_id, 'ttbm_upcoming_date');
 				$type = apply_filters('ttbm_type_filter', $type, $tour_id);
 				$sold_query = TTBM_Query::query_all_sold($tour_id, $tour_date, $type, $hotel_id);
-				// Sum ticket quantities from booking posts instead of just counting posts
-				// This handles cases where booking posts may have quantities > 1
+				// Booking rows can be duplicated per attendee while storing the same line quantity.
+				// Count each order/ticket/date/hotel line once to avoid over-counting.
 				$total_sold = 0;
+				$line_qty_map = array();
 				if ($sold_query->have_posts()) {
 					foreach ($sold_query->posts as $booking_post) {
+						$order_id = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_order_id');
+						$ticket_name = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_ticket_name');
 						$ticket_qty = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_ticket_qty', 1);
-						$total_sold += max(1, intval($ticket_qty)); // Minimum 1 ticket per booking post
+						$ticket_qty = max(1, intval($ticket_qty));
+						// Convert purchased group count to actual seat count when group tickets are enabled.
+						$ticket_qty = apply_filters('ttbm_group_ticket_qty_actual', $ticket_qty, $tour_id, $ticket_name);
+						$ticket_qty = max(1, intval($ticket_qty));
+						$booked_date = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_date');
+						$booked_hotel = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_hotel_id');
+
+						$key = $order_id ? $order_id . '|' . $ticket_name . '|' . $booked_date . '|' . $booked_hotel : '';
+						if ($key) {
+							if (!array_key_exists($key, $line_qty_map)) {
+								$line_qty_map[$key] = $ticket_qty;
+							} else {
+								$line_qty_map[$key] = max($line_qty_map[$key], $ticket_qty);
+							}
+						} else {
+							$total_sold += $ticket_qty;
+						}
 					}
 				}
+				$total_sold += array_sum($line_qty_map);
 				wp_reset_postdata();
 				return $total_sold;
 			}
 			public static function get_total_available($tour_id, $tour_date = '') {
+				$tour_type = self::get_tour_type($tour_id);
+				
+				if ($tour_type == 'general') {
+					$ticket_lists = self::get_ticket_type($tour_id);
+					if (sizeof($ticket_lists) > 0) {
+						$total_available = 0;
+						foreach ($ticket_lists as $ticket) {
+							$ticket_name = array_key_exists('ticket_type_name', $ticket) ? $ticket['ticket_type_name'] : '';
+							$ticket_qty = array_key_exists('ticket_type_qty', $ticket) && $ticket['ticket_type_qty'] > 0 ? $ticket['ticket_type_qty'] : 0;
+							$ticket_qty = apply_filters('ttbm_ticket_capacity', intval($ticket_qty), $tour_id, $tour_date, $ticket_name);
+							$reserve = array_key_exists('ticket_type_resv_qty', $ticket) && $ticket['ticket_type_resv_qty'] > 0 ? $ticket['ticket_type_resv_qty'] : 0;
+							
+							$sold_type = self::get_total_sold($tour_id, $tour_date, $ticket_name);
+							$sold_type = apply_filters('ttbm_sold_qty', $sold_type, $tour_id, $tour_date, $ticket_name);
+							
+							$available = (int)$ticket_qty - ($sold_type + (int)$reserve);
+							$available = apply_filters('ttbm_group_ticket_qty', $available, $tour_id, $ticket_name, $tour_date);
+							$total_available += max(0, floor($available));
+						}
+						return apply_filters('ttbm_total_available_qty', $total_available, $tour_id, $tour_date, $ticket_lists);
+					}
+				}
+
 				$total = self::get_total_seat($tour_id);
 				$reserve = self::get_total_reserve($tour_id);
 				$sold = self::get_total_sold($tour_id, $tour_date);
@@ -640,9 +683,9 @@
 			// Preserve time component if present for time-slot specific availability
 			$has_time = TTBM_Global_Function::check_time_exit_date($tour_date);
 			if ($has_time) {
-				$tour_date = gmdate('Y-m-d H:i', strtotime($tour_date));
+				$tour_date = date('Y-m-d H:i', strtotime($tour_date));
 			} else {
-				$tour_date = gmdate('Y-m-d', strtotime($tour_date));
+				$tour_date = date('Y-m-d', strtotime($tour_date));
 			}
 			
 			$ticket_types = self::get_ticket_type($tour_id);
@@ -657,8 +700,10 @@
 				}
 				
 				$total_capacity = intval($ticket['ticket_type_qty']);
+				$total_capacity = apply_filters('ttbm_ticket_capacity', $total_capacity, $tour_id, $tour_date, $type_name);
 				$reserved_qty = intval($ticket['ticket_type_resv_qty'] ?? 0);
 				$sold_qty = self::get_total_sold($tour_id, $tour_date, $type_name);
+				$sold_qty = apply_filters('ttbm_sold_qty', $sold_qty, $tour_id, $tour_date, $type_name);
 				$available_qty = max(0, $total_capacity - ($reserved_qty + $sold_qty));
 				
 				$percentage_sold = $total_capacity > 0 ? round(($sold_qty / $total_capacity) * 100, 2) : 0;
@@ -1754,6 +1799,7 @@
 			"Norway",
 			"Oman",
 			"Pakistan",
+            "Palestine",
 			"Palau",
 			"Panama",
 			"Papua New Guinea",

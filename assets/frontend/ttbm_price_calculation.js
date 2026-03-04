@@ -189,6 +189,8 @@ function ttbm_partial_payment_job(parent, total) {
 }
 (function ($) {
     "use strict";
+    var availabilityRequestState = {};
+
     $(document).ready(function () {
         $('body').find('.ttbm_registration_area').each(function () {
             ttbm_price_calculation($(this));
@@ -235,25 +237,44 @@ function ttbm_partial_payment_job(parent, total) {
     });
 
     // Enhanced Availability Updates
-    if ($('.ttbm_enhanced_ticket_area').length > 0) {
-        // Update availability every 30 seconds
-        setInterval(function () {
-            updateTicketAvailability();
-        }, 30000);
+    setInterval(function () {
+        updateTicketAvailability();
+    }, 30000);
 
-        // Update on date change
-        $(document).on('change', '#ttbm_select_date, input[name="ttbm_date"]', function () {
-            setTimeout(updateTicketAvailability, 500);
-        });
-    }
+    $(document).on('ttbm:ticket-refreshed', '.ttbm_registration_area', function () {
+        updateTicketAvailability($(this));
+    });
 
-    function updateTicketAvailability() {
-        var tourId = $('input[name="ttbm_id"]').val() || $('.ttbm_last_updated').data('tour-id');
-        var tourDate = $('input[name="ttbm_date"]').val() || $('.ttbm_last_updated').data('tour-date');
+    function updateTicketAvailability(contextArea) {
+        var parent = contextArea && contextArea.length ? contextArea : $('.ttbm_registration_area:has(.ttbm_enhanced_ticket_area):first');
+        if (!parent || parent.length === 0) return;
 
-        if (!tourId) return;
+        var ticketArea = parent.find('.ttbm_enhanced_ticket_area').first();
+        if (ticketArea.length === 0) return;
 
-        $.ajax({
+        var tourId = parent.find('input[name="ttbm_id"]').first().val() || ticketArea.find('.ttbm_last_updated').data('tour-id');
+        var selectedTime = parent.find('[name="ttbm_select_time"]').first().val();
+        var selectedDate = parent.find('input[name="ttbm_date"]').first().val();
+        var fallbackDate = ticketArea.find('.ttbm_last_updated').data('tour-date');
+        var tourDate = selectedTime || selectedDate || fallbackDate;
+
+        if (!tourId || !tourDate) return;
+
+        var areaKey = parent.data('ttbmAvailabilityKey');
+        if (!areaKey) {
+            areaKey = 'ttbm_av_' + Date.now().toString(36) + Math.random().toString(36).slice(2);
+            parent.data('ttbmAvailabilityKey', areaKey);
+        }
+        if (availabilityRequestState[areaKey] && availabilityRequestState[areaKey].xhr && availabilityRequestState[areaKey].xhr.readyState !== 4) {
+            availabilityRequestState[areaKey].xhr.abort();
+        }
+        var requestToken = Date.now().toString() + Math.random().toString(36).slice(2);
+        availabilityRequestState[areaKey] = {
+            token: requestToken,
+            xhr: null
+        };
+
+        var xhr = $.ajax({
             url: (typeof ttbm_price_calc_vars !== 'undefined' && ttbm_price_calc_vars.ajax_url) || ttbm_ajax_url || ajaxurl,
             type: 'POST',
             data: {
@@ -263,20 +284,33 @@ function ttbm_partial_payment_job(parent, total) {
                 tour_date: tourDate
             },
             success: function (response) {
+                if (!availabilityRequestState[areaKey] || availabilityRequestState[areaKey].token !== requestToken) {
+                    return;
+                }
                 if (response.success && response.data.availability) {
-                    updateTicketDisplay(response.data.availability);
-                    updateLastRefreshTime();
+                    updateTicketDisplay(response.data.availability, ticketArea);
+                    updateLastRefreshTime(ticketArea);
                 }
             },
-            error: function () {
+            error: function (xhrObj, textStatus) {
+                if (textStatus === 'abort') {
+                    return;
+                }
                 console.log('Failed to update availability');
+            },
+            complete: function () {
+                if (availabilityRequestState[areaKey] && availabilityRequestState[areaKey].token === requestToken) {
+                    delete availabilityRequestState[areaKey];
+                }
             }
         });
+        availabilityRequestState[areaKey].xhr = xhr;
     }
 
-    function updateTicketDisplay(availability) {
+    function updateTicketDisplay(availability, ticketArea) {
+        var scope = ticketArea && ticketArea.length ? ticketArea : $(document);
         $.each(availability, function (ticketName, info) {
-            var row = $('[data-ticket-name="' + ticketName + '"]');
+            var row = scope.find('[data-ticket-name="' + ticketName + '"]');
             if (row.length === 0) return;
 
             // Update available count
@@ -341,16 +375,39 @@ function ttbm_partial_payment_job(parent, total) {
 
         // Update total availability
         var totalAvailable = 0;
+        var sharedCapacityEnabled = false;
+        var sharedAvailableQty = null;
         $.each(availability, function (ticketName, info) {
+            if (info.shared_capacity_enabled) {
+                sharedCapacityEnabled = true;
+                if (sharedAvailableQty === null) {
+                    sharedAvailableQty = parseInt(info.available_qty) || 0;
+                }
+                return;
+            }
             totalAvailable += parseInt(info.available_qty) || 0;
         });
-        $('#ttbm_total_available').text(totalAvailable);
+        if (sharedCapacityEnabled) {
+            totalAvailable = sharedAvailableQty === null ? 0 : sharedAvailableQty;
+        }
+        scope.find('#ttbm_total_available').text(totalAvailable);
+
+        var detailsPage = scope.closest('.ttbm_details_page');
+        if (detailsPage.length > 0) {
+            detailsPage.find('.ttbm_available_seat_area .ttbm_available_seat').first().text(totalAvailable);
+        } else {
+            $('.ttbm_available_seat_area .ttbm_available_seat').first().text(totalAvailable);
+        }
     }
 
-    function updateLastRefreshTime() {
+    function updateLastRefreshTime(ticketArea) {
         var now = new Date();
         var timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        $('.ttbm_last_updated').html('<i class="far fa-clock"></i> Updated at ' + timeString);
+        if (ticketArea && ticketArea.length) {
+            ticketArea.find('.ttbm_last_updated').html('<i class="far fa-clock"></i> Updated at ' + timeString);
+        } else {
+            $('.ttbm_last_updated').html('<i class="far fa-clock"></i> Updated at ' + timeString);
+        }
     }
 
 }(jQuery));

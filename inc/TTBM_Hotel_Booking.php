@@ -18,6 +18,79 @@
 				add_action('woocommerce_new_order', [$this, 'mptrs_woocommerce_new_order'], 10, 1);
 				add_action('woocommerce_order_status_changed', [$this, 'custom_function_on_order_status_change'], 10, 4);
 			}
+			private function parse_date_range($date_range) {
+				$date_parts = explode(' - ', (string) $date_range);
+				if (count($date_parts) !== 2) {
+					return false;
+				}
+
+				$check_in_timestamp = strtotime($date_parts[0]);
+				$check_out_timestamp = strtotime($date_parts[1]);
+				if ($check_in_timestamp === false || $check_out_timestamp === false || $check_out_timestamp <= $check_in_timestamp) {
+					return false;
+				}
+				$check_in = gmdate('Y-m-d', $check_in_timestamp);
+				$check_out = gmdate('Y-m-d', $check_out_timestamp);
+
+				$interval = date_create($check_in)->diff(date_create($check_out));
+				return [
+					'check_in' => $check_in,
+					'check_out' => $check_out,
+					'days' => (int) $interval->days,
+				];
+			}
+			private function build_hotel_booking_request($hotel_id, $date_range, $room_data_info) {
+				$date_info = $this->parse_date_range($date_range);
+				if (!$date_info || !is_array($room_data_info)) {
+					return new WP_Error('invalid_booking_request', __('Invalid booking request.', 'tour-booking-manager'));
+				}
+
+				$available_rooms = TTBM_Global_Function::ttbm_get_full_room_ticket_info($hotel_id, $date_info['check_in'], $date_info['check_out']);
+				$rooms_by_key = [];
+				foreach ($available_rooms as $room) {
+					$key = isset($room['room_type_key']) ? $room['room_type_key'] : preg_replace('/[^A-Za-z0-9]/', '', (string) ($room['ttbm_hotel_room_name'] ?? ''));
+					if ($key) {
+						$rooms_by_key[$key] = $room;
+					}
+				}
+
+				$sanitized_rooms = [];
+				$total_price = 0.0;
+				foreach ($room_data_info as $room_key => $room_request) {
+					$room_key = preg_replace('/[^A-Za-z0-9]/', '', (string) $room_key);
+					$quantity = isset($room_request['quantity']) ? absint($room_request['quantity']) : 0;
+					if (!$room_key || $quantity < 1) {
+						continue;
+					}
+					if (!isset($rooms_by_key[$room_key])) {
+						return new WP_Error('invalid_room', __('One or more selected rooms are invalid.', 'tour-booking-manager'));
+					}
+
+					$room = $rooms_by_key[$room_key];
+					$available = isset($room['available']) ? absint($room['available']) : 0;
+					if ($quantity > $available) {
+						return new WP_Error('room_unavailable', __('One or more selected rooms are no longer available.', 'tour-booking-manager'));
+					}
+
+					$nightly_price = isset($room['ttbm_hotel_room_price']) ? (float) $room['ttbm_hotel_room_price'] : 0.0;
+					$sanitized_rooms[$room_key] = [
+						'quantity' => $quantity,
+						'price' => $nightly_price,
+						'name' => $room['ttbm_hotel_room_name'] ?? $room_key,
+					];
+					$total_price += $nightly_price * $quantity * $date_info['days'];
+				}
+
+				if (empty($sanitized_rooms) || $total_price < 0) {
+					return new WP_Error('empty_booking', __('Please select at least one available room.', 'tour-booking-manager'));
+				}
+
+				return [
+					'rooms' => $sanitized_rooms,
+					'total_price' => $total_price,
+					'date_info' => $date_info,
+				];
+			}
 			function custom_function_on_order_status_change( $order_id, $old_status, $new_status, $order) {
 				if ($new_status === 'processing') {
 					$orderPostId = '';
@@ -139,7 +212,7 @@
 					wp_send_json_error(['message' => 'Invalid nonce']);
 					die;
 				}
-				$hotel_id = isset($_REQUEST['hotel_id']) ? sanitize_text_field(wp_unslash($_REQUEST['hotel_id'])) : '';
+				$hotel_id = isset($_REQUEST['hotel_id']) ? absint(wp_unslash($_REQUEST['hotel_id'])) : 0;
 				$date_range = isset($_REQUEST['date_range']) ? sanitize_text_field(wp_unslash($_REQUEST['date_range'])) : '';
 				$date = explode(" - ", $date_range);
 				$start_date = gmdate('Y-m-d', strtotime($date[0]));
@@ -153,37 +226,40 @@
 					die;
 				}
 
-				$hotel_id = isset($_REQUEST['hotel_id']) ? sanitize_text_field(wp_unslash($_REQUEST['hotel_id'])) : '';
+				$hotel_id = isset($_REQUEST['hotel_id']) ? absint(wp_unslash($_REQUEST['hotel_id'])) : 0;
 				$date_range = isset($_REQUEST['date_range']) ? sanitize_text_field(wp_unslash($_REQUEST['date_range'])) : '';
-				$room_data_info = isset($_REQUEST['room_data_info']) ? json_decode(sanitize_text_field(wp_unslash($_REQUEST['room_data_info'])), true) : [];
+				$room_data_info = isset($_REQUEST['room_data_info']) ? json_decode(wp_unslash($_REQUEST['room_data_info']), true) : [];
+				$booking_request = $this->build_hotel_booking_request($hotel_id, $date_range, $room_data_info);
+				if (is_wp_error($booking_request)) {
+					wp_send_json_error(['message' => $booking_request->get_error_message()]);
+				}
+
+				$room_data_info = $booking_request['rooms'];
+				$price = $booking_request['total_price'];
+				$check_in = $booking_request['date_info']['check_in'];
+				$check_out = $booking_request['date_info']['check_out'];
+				$days = $booking_request['date_info']['days'];
 				$room_output = "Room List\n\n";
 				$currency_symbol = get_woocommerce_currency_symbol();
 				$room_output .= '<div class="ttbm_hotel_ordered_room_list">';
 				foreach ($room_data_info as $roomName => $info) {
 					$qty = $info['quantity'];
 					$price = $info['price'];
-					$total = $price * $qty * 1;
+					$total = $price * $qty * $days;
 					// Format room name: insert space before capital letters except first
-					$formattedRoomName = preg_replace('/(?<!^)([A-Z])/', ' $1', $roomName);
+					$formattedRoomName = isset($info['name']) ? $info['name'] : preg_replace('/(?<!^)([A-Z])/', ' $1', $roomName);
 					// Build the output
 					$room_output .= " <div class='ttbm_hotel_room'>";
 					$room_output .= " <div class='ttbm_hotel_room_name'> Room Name: {$formattedRoomName}</div> ";
 					$room_output .= " <div class='ttbm_hotel_qty'>Qty: {$qty}</div> ";
-					$room_output .= " <div class='ttbm_hotel_price'>Price: ( " . number_format($price, 2) . " {$currency_symbol} x {$qty} x 1 ) = " . number_format($total, 2) . " {$currency_symbol}</div> ";
+					$room_output .= " <div class='ttbm_hotel_price'>Price: ( " . number_format($price, 2) . " {$currency_symbol} x {$qty} x {$days} ) = " . number_format($total, 2) . " {$currency_symbol}</div> ";
 					$room_output .= " </div> ";
 				}
 				$room_output .= '</div>';
-				$date = explode(" - ", $date_range);
-				$check_in = gmdate('Y-m-d', strtotime($date[0]));
-				$check_out = gmdate('Y-m-d', strtotime($date[1]));
-				$check_in_date = gmdate('Y-m-d', strtotime($date[0]));
-				$check_out_date = gmdate('Y-m-d', strtotime($date[1]));
-				$datetime1 = new DateTime($check_in_date);
-				$datetime2 = new DateTime($check_out_date);
-				$interval = $datetime1->diff($datetime2);
-				$days = $interval->days;
-				$post_id = get_post_meta($hotel_id, 'link_wc_product', true);
-				$price = isset($_REQUEST['price']) ? sanitize_text_field(wp_unslash($_REQUEST['price'])) : 0;
+				$post_id = absint(get_post_meta($hotel_id, 'link_wc_product', true));
+				if (!$post_id || !wc_get_product($post_id)) {
+					wp_send_json_error(['message' => __('The selected hotel is not linked to a purchasable product.', 'tour-booking-manager')]);
+				}
 				$quantity = intval(wp_unslash(20));
 				$hotel_info = array();
 				$hotel_info['hotel_id'] = $hotel_id;
@@ -196,6 +272,7 @@
 					'description_order' => $room_output,
 					'room_ordered_data_info' => $room_data_info,
 					'price' => $price,
+					'custom_price' => $price,
 					'ttbm_tp' => $price,
 					'line_total' => $price,
 					'line_subtotal' => $price,
@@ -265,7 +342,15 @@
 			public function set_custom_price_cart_item( $cart_item_data, $product_id) {
 
 				if (isset($cart_item_data['ttbm_hotel_booking']) && (isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_frontend_nonce'))) {
-                    $cart_item_data['custom_price'] = isset($_POST['price']) ? floatval(sanitize_text_field(wp_unslash($_POST['price']))) :0;
+					if (empty($cart_item_data['custom_price'])) {
+						$hotel_id = isset($_POST['hotel_id']) ? absint(wp_unslash($_POST['hotel_id'])) : 0;
+						$date_range = isset($_POST['date_range']) ? sanitize_text_field(wp_unslash($_POST['date_range'])) : '';
+						$room_data_info = isset($_POST['room_data_info']) ? json_decode(wp_unslash($_POST['room_data_info']), true) : [];
+						$booking_request = $this->build_hotel_booking_request($hotel_id, $date_range, $room_data_info);
+						if (!is_wp_error($booking_request)) {
+							$cart_item_data['custom_price'] = $booking_request['total_price'];
+						}
+					}
 
 				}
 				return $cart_item_data;

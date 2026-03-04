@@ -2701,9 +2701,50 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
     color: #dc3545;
 }
 
-.ttbm_smart_theme  .ttbm_popup .popupMainArea {
-	max-height: 95vh;
-	min-width: 850px;
+.ttbm_smart_theme .ttbm_popup .popupMainArea {
+    max-height: 95vh;
+    min-width: 850px;
+    background: #fff;
+    border-radius: 8px;
+    position: relative;
+    overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+    .ttbm_smart_theme .ttbm_popup .popupMainArea {
+        min-width: 90%;
+        max-width: 95%;
+        margin: 20px auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .ttbm_smart_theme .ttbm_popup .popupMainArea {
+        min-width: 95%;
+        width: 95%;
+        margin: 10px auto;
+        padding: 15px;
+        max-height: 90vh;
+    }
+    
+    .ttbm_smart_theme .ttbm_popup .popupMainArea .ttbm_booking_panel {
+        padding: 0;
+    }
+    
+    /* Ensure close button is visible and tappable */
+    .ttbm_smart_theme .ttbm_popup .closePopup {
+        top: 10px;
+        right: 10px;
+        z-index: 1000;
+        background: #fff;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
 }
 
 /* Mobile responsive adjustments for extra service table */

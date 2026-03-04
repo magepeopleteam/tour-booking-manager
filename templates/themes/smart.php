@@ -21,6 +21,7 @@
 					<?php do_action( 'ttbm_slider' ); ?>
 					<?php do_action( 'ttbm_short_details' ); ?>
 					<?php do_action( 'ttbm_details_particular_area' ); ?>
+					<div class="ttbm-smart-overview-anchor"></div>
 					<?php do_action( 'ttbm_description' ); ?>
 					<?php do_action( 'ttbm_include_exclude' ); ?>
 					<?php do_action( 'ttbm_smart_activity' ); ?>
@@ -32,6 +33,7 @@
 					<?php do_action('ttbm_enquery_popup'); ?>
 				</div>
 				<div class="ttbm_content__right">
+					<div class="ttbm-smart-booking-origin"></div>
 					<?php do_action( 'ttbm_registration' ); ?>
 					<?php do_action( 'ttbm_why_choose_us' ); ?>
 					<?php do_action( 'ttbm_get_a_question' ); ?>

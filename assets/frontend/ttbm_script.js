@@ -75,7 +75,10 @@
 	});
 	// ==========Tour Guide Carousel End============
 	$(document).on('click', '[data-target-popup="get-enquiry-popup"]', function () {
-		$('#ttbm-enquiry-form')[0].reset();
+		const form = $('#ttbm-enquiry-form');
+		form[0].reset();
+		form.find('#ttbm_website').val('');
+		form.find('#ttbm-enquiry-time').val(Math.floor(Date.now() / 1000));
 		$('.ajax-response').html('');
 	});
 
@@ -102,6 +105,29 @@
 			}
 		});
 	});
+
+	function ttbm_smart_theme_mobile_booking_position() {
+		const isMobile = window.matchMedia('(max-width: 767px)').matches;
+		$('.ttbm_smart_theme').each(function () {
+			const theme = $(this);
+			const bookingArea = theme.find('.ttbm-sidebar-booking.ttbm_registration_area').first();
+			const overviewAnchor = theme.find('.ttbm-smart-overview-anchor').first();
+			const bookingOrigin = theme.find('.ttbm-smart-booking-origin').first();
+
+			if (!bookingArea.length || !overviewAnchor.length || !bookingOrigin.length) {
+				return;
+			}
+
+			if (isMobile) {
+				bookingArea.insertAfter(overviewAnchor);
+			} else {
+				bookingArea.insertAfter(bookingOrigin);
+			}
+		});
+	}
+
+	ttbm_smart_theme_mobile_booking_position();
+	$(window).on('resize load', ttbm_smart_theme_mobile_booking_position);
 
 	function ttbm_display_promotional_tour_load_more( load_more_btn, load_more_btn_show, tour_type ) {
 

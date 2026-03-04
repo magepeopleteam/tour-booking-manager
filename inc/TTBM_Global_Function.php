@@ -180,7 +180,7 @@
 			}
 			public static function data_sanitize($array) {
 				if (is_serialized($array)) {
-					$array = unserialize($array);
+					$array = @unserialize($array, ['allowed_classes' => false]);
 				}
 				if (is_string($array) && is_array(json_decode($array, true))) {
 					$array = json_decode($array, true);
@@ -498,13 +498,22 @@
 				}
 			}
 			public static function get_order_item_meta( $item_id, $key ): string {
+				$value = wc_get_order_item_meta( $item_id, $key, true );
+				if ( is_array( $value ) ) {
+					return maybe_serialize( $value );
+				}
+				if ( is_string( $value ) ) {
+					return $value;
+				}
+				if ( ! empty( $value ) || $value === 0 || $value === '0' ) {
+					return (string) $value;
+				}
 				global $wpdb;
 				$table_name = $wpdb->prefix . "woocommerce_order_itemmeta";
 				$results    = $wpdb->get_results( $wpdb->prepare( "SELECT meta_value FROM $table_name WHERE order_item_id = %d AND meta_key = %s", $item_id, $key ) );
 				foreach ( $results as $result ) {
 					$value = $result->meta_value;
 				}
-
 				return $value ?? '';
 			}
 			public static function wc_product_sku($product_id) {
@@ -828,7 +837,7 @@
 			//***********************************//
 			public static function data_sanitize($array) {
 				if (is_serialized($array)) {
-					$array = unserialize($array);
+					$array = @unserialize($array, ['allowed_classes' => false]);
 				}
 				if (is_string($array) && is_array(json_decode($array, true))) {
 					$array = json_decode($array, true);
@@ -1093,13 +1102,22 @@
 				}
 			}
 			public static function get_order_item_meta( $item_id, $key ): string {
+				$value = wc_get_order_item_meta( $item_id, $key, true );
+				if ( is_array( $value ) ) {
+					return maybe_serialize( $value );
+				}
+				if ( is_string( $value ) ) {
+					return $value;
+				}
+				if ( ! empty( $value ) || $value === 0 || $value === '0' ) {
+					return (string) $value;
+				}
 				global $wpdb;
 				$table_name = $wpdb->prefix . "woocommerce_order_itemmeta";
 				$results    = $wpdb->get_results( $wpdb->prepare( "SELECT meta_value FROM $table_name WHERE order_item_id = %d AND meta_key = %s", $item_id, $key ) );
 				foreach ( $results as $result ) {
 					$value = $result->meta_value;
 				}
-
 				return $value ?? '';
 			}
 			public static function wc_product_sku($product_id) {

@@ -19,11 +19,18 @@ if (!class_exists('TTBM_Settings_Hotel_Ajax')) {
             add_action('wp_ajax_nopriv_ttbm_load_more_hotel_lists_admin', [$this, 'ttbm_load_more_hotel_lists_admin']);
         }
 
+        private function user_can_manage_hotel_admin() {
+            return current_user_can('manage_options');
+        }
+
         public function get_ttbm_hotel_search_by_title() {
 	        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field(wp_unslash($_POST['nonce'] )), 'ttbm_admin_nonce' ) ) {
 		        wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
 		        die;
 	        }
+            if (!$this->user_can_manage_hotel_admin()) {
+                wp_send_json_error(['message' => esc_html__('You do not have permission to view hotel data.', 'tour-booking-manager')], 403);
+            }
             $search_term = isset( $_POST['search_term'] ) ? sanitize_text_field( wp_unslash( $_POST['search_term'] ) ) : '';
             $display_limit = 20;
             $success = false;
@@ -63,6 +70,9 @@ if (!class_exists('TTBM_Settings_Hotel_Ajax')) {
             $result = $post_count = $found_posts = 0;
             $result_data = '';
             $message = 'Something went wrong';
+            if (!$this->user_can_manage_hotel_admin()) {
+                wp_send_json_error(['message' => esc_html__('You do not have permission to view booking data.', 'tour-booking-manager')], 403);
+            }
             if( isset( $_POST ) ){
                 if( isset( $_POST['action'] ) &&sanitize_text_field(wp_unslash($_POST['action'] ))== 'get_ttbm_hotel_booking_all_lists' ){
                     if (isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
@@ -99,6 +109,9 @@ if (!class_exists('TTBM_Settings_Hotel_Ajax')) {
             $result = $post_count = $found_posts = 0;
             $result_data = '';
             $message = 'Something went wrong';
+            if (!$this->user_can_manage_hotel_admin()) {
+                wp_send_json_error(['message' => esc_html__('You do not have permission to view booking data.', 'tour-booking-manager')], 403);
+            }
             if( isset( $_POST ) ){
                 if( isset( $_POST['action'] ) && sanitize_text_field(wp_unslash($_POST['action'] )) == 'get_ttbm_hotel_booking_load_more_lists' ){
                     if ( isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
@@ -134,6 +147,9 @@ if (!class_exists('TTBM_Settings_Hotel_Ajax')) {
             $result = $post_count = $found_posts = 0;
             $result_data = '';
             $message = 'Something went wrong';
+            if (!$this->user_can_manage_hotel_admin()) {
+                wp_send_json_error(['message' => esc_html__('You do not have permission to view hotel data.', 'tour-booking-manager')], 403);
+            }
             if( isset( $_POST ) ){
                 if( isset( $_POST['action'] ) && sanitize_text_field(wp_unslash($_POST['action'] ))== 'ttbm_load_more_hotel_lists_admin' ){
 

@@ -24,7 +24,7 @@
 				$tag_filter = '';
 				$duration_filter = '';
 				$activity_filter = '';
-				if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+				if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
 					$category_filter = isset($_GET['category_filter']) ? sanitize_text_field(wp_unslash($_GET['category_filter'])) : '';
 					$title_filter = isset($_GET['title_filter']) ? sanitize_text_field(wp_unslash($_GET['title_filter'])) : '';
 					$type_filter = isset($_GET['type_filter']) ? sanitize_text_field(wp_unslash($_GET['type_filter'])) : '';

@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: WpTravelly – Tour & Travel Booking Manager for WooCommerce | Tour & Hotel Booking Solution
+ * Plugin Name: Tour & Travel Booking Manager for WooCommerce | Tour & Hotel Booking Solution
  * Plugin URI: http://mage-people.com
  * Description: A Complete Tour and Travel Solution for WordPress by MagePeople.
- * Version: 2.1.5
+ * Version: 2.1.7
  * Author: MagePeople Team
  * Author URI: http://www.mage-people.com/
  * Text Domain: tour-booking-manager
@@ -52,6 +52,10 @@ if (!class_exists('TTBM_Woocommerce_Plugin')) {
 				
 				// Don't redirect if activating multiple plugins or if doing AJAX
 				if (is_network_admin() || isset($_GET['activate-multi']) || wp_doing_ajax()) {
+					return;
+				}
+				// Avoid interfering with REST requests (e.g., Gutenberg saves)
+				if (defined('REST_REQUEST') && REST_REQUEST) {
 					return;
 				}
 				

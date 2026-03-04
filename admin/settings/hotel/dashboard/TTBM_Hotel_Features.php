@@ -14,7 +14,11 @@ if (!class_exists('TTBM_Hotel_Features')) {
             // ttbm_update_faq_data
 			add_action('wp_ajax_ttbm_hotel_feature_update', [$this, 'feature_update_item']);
             // ttbm_delete_faq_data
-			add_action('wp_ajax_ttbm_hotel_feature_delete', [$this, 'feature_delete_item']);
+            add_action('wp_ajax_ttbm_hotel_feature_delete', [$this, 'feature_delete_item']);
+        }
+
+        private function user_can_manage_hotel_features() {
+            return current_user_can('manage_options');
         }
 
         public function dashbaord_features(){
@@ -123,6 +127,9 @@ if (!class_exists('TTBM_Hotel_Features')) {
             if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
                 wp_send_json_error('Invalid nonce!');
             }
+            if (!$this->user_can_manage_hotel_features()) {
+                wp_send_json_error('Permission denied!', 403);
+            }
 
             $item_id = isset($_POST['itemId']) ? intval($_POST['itemId']) : 0;
 
@@ -152,6 +159,9 @@ if (!class_exists('TTBM_Hotel_Features')) {
         public function feature_update_item() {
             if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
                 wp_send_json_error('Invalid nonce!');
+            }
+            if (!$this->user_can_manage_hotel_features()) {
+                wp_send_json_error('Permission denied!', 403);
             }
 
             $feature_id = isset($_POST['ttbm_hotel_feature_id']) ? intval($_POST['ttbm_hotel_feature_id']) : 0;
@@ -187,6 +197,9 @@ if (!class_exists('TTBM_Hotel_Features')) {
         public function hotel_feature_save() {	
             if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
                 wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
+            }
+            if (!$this->user_can_manage_hotel_features()) {
+                wp_send_json_error('Permission denied!', 403);
             }
             $feature_title = isset($_POST['ttbm_hotel_feature_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_feature_title'])) : '';
             $feature_slug = isset($_POST['ttbm_hotel_feature_slug']) ? sanitize_title(wp_unslash($_POST['ttbm_hotel_feature_slug'])) : '';

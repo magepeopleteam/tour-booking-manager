@@ -179,6 +179,9 @@
 			public function static_filter($attribute) {
 				$defaults = $this->default_attribute();
 				$params = shortcode_atts($defaults, $attribute);
+				if (is_array($attribute) && array_key_exists('flexible_dates', $attribute) && in_array($params['flexible_dates'], array('yes', 'no'), true)) {
+					$params['month-filter'] = $params['flexible_dates'];
+				}
 				ob_start();
 				do_action('ttbm_top_filter_static', $params);
 				return ob_get_clean();
@@ -235,16 +238,18 @@
 				$organizer_filter = '';
 				$location_filter = '';
 				$activity_filter = '';
+				$people_filter = 0;
 				
 				if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
 					$organizer_filter = isset($_GET['organizer_filter']) ? sanitize_text_field(wp_unslash($_GET['organizer_filter'])) : '';
 					$location_filter = isset($_GET['location_filter']) ? sanitize_text_field(wp_unslash($_GET['location_filter'])) : '';
 					$activity_filter = isset($_GET['activity_filter']) ? sanitize_text_field(wp_unslash($_GET['activity_filter'])) : '';
+					$people_filter = isset($_GET['people_filter']) ? absint(wp_unslash($_GET['people_filter'])) : 0;
 				}
 				
 				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
 
-				$loop = TTBM_Query::ttbm_query_for_top_search($show, $params['sort'], $params['sort_by'], $params['status'], $organizer_filter, $location_filter, $activity_filter, $date_filter );
+				$loop = TTBM_Query::ttbm_query_for_top_search($show, $params['sort'], $params['sort_by'], $params['status'], $organizer_filter, $location_filter, $activity_filter, $date_filter, $people_filter);
 				?>
 				<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
 					<div class="mpContainer">
@@ -796,7 +801,7 @@
                 $tour_type = 'ttbm_hotel';
                 $top_bar = 'no';
 //                $defaults = $this->default_attribute('modern', 12, 'no', 'no', 'yes', 'yes', $month_filter, $tour_type, $top_bar );
-                $defaults = $this->default_attribute( 'modern', $show = 12, $search_filter = 'no', $sidebar_filter = 'no', $feature_filter = 'no', $tag_filter = 'no', $month_filter, $tour_type = '', $sort_by = '', $shuffle = 'no', $top_bar = 'yes' );
+                $defaults = $this->default_attribute( 'modern', 12, 'no', 'no', 'no', 'no', $month_filter, $tour_type, '', 'no', 'yes' );
                 $params = shortcode_atts($defaults, $attribute);
                 $show =  isset(  $params['show'] ) ? sanitize_text_field( wp_unslash( $params['show'] ) ) : 'no';
                 $pagination = isset(  $params['pagination'] ) ? sanitize_text_field( wp_unslash( $params['pagination'] ) ) : 'no';
@@ -957,6 +962,8 @@
 				'country-filter' => 'no',
 				'activity-filter' => 'yes',
 				'month-filter' => $month_filter,
+				'person-filter' => 'no',
+				'flexible_dates' => $month_filter,
 				'tag-filter' => $tag_filter,
 				'feature-filter' => $feature_filter,
 				'duration-filter' => 'no',

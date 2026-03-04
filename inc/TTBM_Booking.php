@@ -15,6 +15,25 @@
 			    add_action('wp_ajax_nopriv_get_ticket_availability', array($this, 'get_ticket_availability'));
 				add_action('ttbm_booking_panel', array($this, 'booking_panel'), 10, 4);
 			}
+			private function normalize_tour_date($tour_id, $date): string {
+				$date = str_replace('/', '-', (string)$date);
+				if (!$date || strtotime($date) === false) {
+					return '';
+				}
+				if (TTBM_Global_Function::check_time_exit_date($date)) {
+					return date('Y-m-d H:i', strtotime($date));
+				}
+
+				$date_only = date('Y-m-d', strtotime($date));
+				$times = TTBM_Function::get_time($tour_id, $date_only, 'yes');
+				if (is_array($times) && !empty($times)) {
+					$first_time = is_array($times[0]) ? ($times[0]['time'] ?? '') : $times[0];
+					if ($first_time) {
+						return date('Y-m-d H:i', strtotime($date_only . ' ' . $first_time));
+					}
+				}
+				return $date_only;
+			}
 			public function get_ttbm_ticket() {
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_frontend_nonce')) {
 					wp_send_json_error(['message' => 'Invalid nonce']);
@@ -23,10 +42,7 @@
 				$tour_id = isset($_REQUEST['tour_id']) ? sanitize_text_field(wp_unslash($_REQUEST['tour_id'])) : '';
 				$hotel_id = isset($_REQUEST['hotel_id']) ? sanitize_text_field(wp_unslash($_REQUEST['hotel_id'])) : '';
 				$date = isset($_REQUEST['tour_date']) ? sanitize_text_field(wp_unslash($_REQUEST['tour_date'])) : '';
-				$date = str_replace('/', '-', $date);
-				$time = TTBM_Function::get_time($tour_id, gmdate('Y-m-d', strtotime($date)));
-				$date_format = $time ? 'Y-m-d H:i' : 'Y-m-d';
-				$date = $date ? gmdate($date_format, strtotime($date)) : $date;
+				$date = $this->normalize_tour_date($tour_id, $date);
 				do_action('ttbm_booking_panel', $tour_id, $date, $hotel_id);
 				die();
 			}
@@ -37,10 +53,7 @@
 				}
 				$tour_id = isset($_REQUEST['tour_id']) ? sanitize_text_field(wp_unslash($_REQUEST['tour_id'])) : '';
 				$date = isset($_REQUEST['tour_date']) ? sanitize_text_field(wp_unslash($_REQUEST['tour_date'])) : '';
-				$date = str_replace('/', '-', $date);
-				$time = TTBM_Function::get_time($tour_id, gmdate('Y-m-d', strtotime($date)));
-				$date_format = $time ? 'Y-m-d H:i' : 'Y-m-d';
-				$date = $date ? gmdate($date_format, strtotime($date)) : $date;
+				$date = $this->normalize_tour_date($tour_id, $date);
 				echo esc_html(TTBM_Function::get_total_available($tour_id, $date));
 				die();
 			}
@@ -74,6 +87,8 @@
 				wp_send_json_error(['message' => 'Invalid tour ID']);
 				die;
 			}
+
+			$tour_date = $this->normalize_tour_date($tour_id, $tour_date);
 			
 			$availability_info = TTBM_Function::get_ticket_availability_info($tour_id, $tour_date);
 			

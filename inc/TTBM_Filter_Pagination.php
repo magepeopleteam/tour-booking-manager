@@ -28,6 +28,7 @@
 							<?php $this->location_filter($params); ?>
 							<?php $this->country_filter($params); ?>
 							<?php $this->activity_filter($params); ?>
+							<?php $this->person_filter($params); ?>
 							<?php $this->select_month_filter($params); ?>
                             <button type="submit" class="dButton min_200" data-placeholder><?php esc_html_e('Find Tours', 'tour-booking-manager'); ?></button>
                         </div>
@@ -79,7 +80,7 @@
 			public function title_filter($params) {
 				if ($params['title-filter'] == 'yes') {
 					$title_filter = '';
-					if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+					if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
 						$title_filter = isset($_GET['title_filter']) ? sanitize_text_field(wp_unslash($_GET['title_filter'])) : '';
 					}
 					?>
@@ -107,7 +108,7 @@
 			public function type_filter($params) {
 				if ($params['type-filter'] == 'yes') {
 					$url = '';
-					if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+					if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
 						$url = isset($_GET['type_filter']) ? sanitize_text_field(wp_unslash($_GET['type_filter'])) : '';
 					}
 					?>
@@ -141,7 +142,7 @@
 					$categories = is_array($categories) ? $categories : TTBM_Global_Function::get_taxonomy('ttbm_tour_cat');
 					if (is_array($categories) && sizeof($categories) > 0) {
 						$category_filter = '';
-						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
 							$category_filter = isset($_GET['category_filter']) ? sanitize_text_field(wp_unslash($_GET['category_filter'])) : '';
 						}
 						$url = $category_filter;
@@ -182,7 +183,7 @@
 					$organizers = sizeof($organizers) > 0 ? $organizers : TTBM_Global_Function::get_taxonomy('ttbm_tour_org', 'ttbm_tour');
 					if (sizeof($organizers) > 0) {
 						$organizer_filter = '';
-						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
 							$organizer_filter = isset($_GET['organizer_filter']) ? sanitize_text_field(wp_unslash($_GET['organizer_filter'])) : '';
 						}
 						$url = $organizer_filter;
@@ -231,7 +232,7 @@
 					$locations = TTBM_Global_Function::get_taxonomy('ttbm_tour_location');
 					if (sizeof($locations) > 0) {
 						$location_filter = '';
-						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
 							$location_filter = isset($_GET['location_filter']) ? sanitize_text_field(wp_unslash($_GET['location_filter'])) : '';
 						}
 						$url = $location_filter;
@@ -271,7 +272,7 @@
 					$exist_locations = array_unique($exist_locations);
 					if (sizeof($exist_locations) > 0) {
 						$url_location = '';
-						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
 							$url_location = isset($_GET['location_filter']) ? sanitize_text_field(wp_unslash($_GET['location_filter'])) : '';
 						}
 						$current_location = $url_location ? (($term = get_term_by('id', $url_location, 'ttbm_tour_location')) ? $term->term_id : '') : '';
@@ -307,7 +308,7 @@
 					$countries = is_array($countries) ? $countries : TTBM_Function::get_all_country();
 					if (sizeof($countries) > 0) {
 						$url = '';
-						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
 							$url = isset($_GET['country_filter']) ? sanitize_text_field(wp_unslash($_GET['country_filter'])) : '';
 						}
 						?>
@@ -347,7 +348,7 @@
 					$durations = TTBM_Function::get_all_duration();
 					if (sizeof($durations) > 0) {
 						$url = '';
-						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
 							$url = isset($_GET['duration_filter']) ? sanitize_text_field(wp_unslash($_GET['duration_filter'])) : '';
 						}
 						?>
@@ -378,7 +379,7 @@
 					$durations = TTBM_Function::get_all_duration();
 					if (sizeof($durations) > 0) {
 						$url = '';
-						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
 							$url = isset($_GET['duration_filter']) ? sanitize_text_field(wp_unslash($_GET['duration_filter'])) : '';
 						}
 						?>
@@ -432,7 +433,7 @@
 					}
 					if (sizeof($exist_feature) > 0) {
 						$url = '';
-						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
 							$url = isset($_GET['feature_filter']) ? sanitize_text_field(wp_unslash($_GET['feature_filter'])) : '';
 						}
 						?>
@@ -467,7 +468,7 @@
 					$activities = TTBM_Global_Function::get_taxonomy('ttbm_tour_activities');
 					if (sizeof($activities) > 0) {
 						$url_activity = '';
-						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
 							$url_activity = isset($_GET['activity_filter']) ? sanitize_text_field(wp_unslash($_GET['activity_filter'])) : '';
 						}
 						$current_activity = $url_activity ? (($term = get_term_by('id', $url_activity, 'ttbm_tour_activities')) ? $term->term_id : '') : '';
@@ -501,7 +502,7 @@
 					}
 					if (sizeof($exist_activities) > 0) {
 						$url_activity = '';
-						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
 							$url_activity = isset($_GET['activity_filter']) ? sanitize_text_field(wp_unslash($_GET['activity_filter'])) : '';
 						}
 						$current_activity = $url_activity ? (($term = get_term_by('id', $url_activity, 'ttbm_tour_activities')) ? $term->term_id : '') : '';
@@ -558,7 +559,7 @@
 					}
 					if (sizeof($unique_activities) > 0) {
 						$url_activity = '';
-						if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
 							$url_activity = isset($_GET['activity_filter']) ? sanitize_text_field(wp_unslash($_GET['activity_filter'])) : '';
 						}
 						$current_activity = $url_activity ? (($term = get_term_by('id', $url_activity, 'ttbm_tour_activities')) ? $term->term_id : '') : '';
@@ -632,7 +633,7 @@
 			public function month_filter($params) {
 				if ($params['month-filter'] == 'yes') {
 					$url_month = '';
-					if (isset($_POST['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+					if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
 						$url_month = isset($_GET['month_filter']) ? sanitize_text_field(wp_unslash($_GET['month_filter'])) : '';
 					}
 					$first_date = gmdate('Y-m-01');
@@ -681,6 +682,26 @@
                             <input name="ttbm_date_start_end_input" type="text" id="ttbm_date_start_end_input" class="ttbm_date-picker-input" placeholder="<?php esc_html_e('Check-in date  —  Check-out date', 'tour-booking-manager'); ?>">
                             <div id="ttbm_start_end_calendar_icon" class="ttbm_calendar-icon"></div>
                         </div>
+                    </label>
+					<?php
+				}
+			}
+			public function person_filter($params) {
+				if (($params['person-filter'] ?? 'no') == 'yes') {
+					$people_filter = '';
+					if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						$people_filter = isset($_GET['people_filter']) ? absint(wp_unslash($_GET['people_filter'])) : 0;
+						$people_filter = $people_filter > 0 ? $people_filter : '';
+					}
+					?>
+                    <label data-placeholder>
+                        <input type="number"
+                               min="1"
+                               step="1"
+                               name="people_filter"
+                               value="<?php echo esc_attr($people_filter); ?>"
+                               placeholder="<?php esc_attr_e('How many people?', 'tour-booking-manager'); ?>"
+                               class="formControl ttbm_filter_input_radius"/>
                     </label>
 					<?php
 				}

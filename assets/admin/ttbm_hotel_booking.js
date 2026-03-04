@@ -235,6 +235,18 @@
 
     $(document).on('click', '.ttbm_trvel_lists_tabs button', function() {
         var targetId = $(this).data('target');
+        let tabStorageKey = '';
+        try {
+            let bodyId = ($('body').attr('id') || 'ttbm_tour_page_ttbm_list').replace(/[^a-zA-Z0-9_-]/g, '');
+            tabStorageKey = 'ttbm_active_tab_' + bodyId + '_travel_list';
+            localStorage.setItem(tabStorageKey, targetId);
+        } catch (e) {}
+
+        if (history.pushState) {
+            history.pushState(null, null, '#' + targetId);
+        } else {
+            window.location.hash = targetId;
+        }
 
         let tabParam = '';
 
@@ -284,6 +296,10 @@
 
         $(this).addClass('active');
         $('#' + targetId).addClass('active');
+
+        if (!action) {
+            return;
+        }
 
         let nonce = ttbm_admin_ajax.nonce;
 
@@ -337,6 +353,37 @@
         });
 
 
+    });
+
+    $(document).ready(function () {
+        let tabs = $('.ttbm_trvel_lists_tabs button');
+        if (!tabs.length) {
+            return;
+        }
+
+        let hashTarget = (window.location.hash || '').replace('#', '');
+        let savedTarget = '';
+        try {
+            let bodyId = ($('body').attr('id') || 'ttbm_tour_page_ttbm_list').replace(/[^a-zA-Z0-9_-]/g, '');
+            let tabStorageKey = 'ttbm_active_tab_' + bodyId + '_travel_list';
+            savedTarget = localStorage.getItem(tabStorageKey) || '';
+        } catch (e) {}
+
+        let initialTarget = '';
+        if (hashTarget && $('.ttbm_trvel_lists_tabs button[data-target="' + hashTarget + '"]').length) {
+            initialTarget = hashTarget;
+        } else if (savedTarget && $('.ttbm_trvel_lists_tabs button[data-target="' + savedTarget + '"]').length) {
+            initialTarget = savedTarget;
+        }
+
+        if (!initialTarget) {
+            return;
+        }
+
+        let activeTarget = $('.ttbm_trvel_lists_tabs button.active').data('target') || '';
+        if (activeTarget !== initialTarget) {
+            $('.ttbm_trvel_lists_tabs button[data-target="' + initialTarget + '"]').first().trigger('click');
+        }
     });
 
 

@@ -17,6 +17,10 @@
 
             }
 
+            private function user_can_manage_tours() {
+                return current_user_can('manage_options');
+            }
+
             public function remove_default_menu(){
                 remove_submenu_page('edit.php?post_type=ttbm_tour', 'edit.php?post_type=ttbm_tour');
                 remove_submenu_page('edit.php?post_type=ttbm_tour', 'post-new.php?post_type=ttbm_tour');
@@ -29,6 +33,9 @@
 		            wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
 		            die;
 	            }
+                if (!$this->user_can_manage_tours()) {
+                    wp_send_json_error(['message' => esc_html__('You do not have permission to view tour data.', 'tour-booking-manager')], 403);
+                }
                 $paged = isset($_POST['paged']) ? intval(wp_unslash($_POST['paged'])) : 1;
                 $post_per_page = isset($_POST['post_per_page']) ? intval(wp_unslash($_POST['post_per_page'])) : 10;
                 $search = isset($_POST['search_term']) ? sanitize_text_field(wp_unslash($_POST['search_term'])) : '';
@@ -63,6 +70,10 @@
 
             public  function load_more_callback() {
                 check_ajax_referer('ttbm_load_more', 'nonce');
+
+                if (!$this->user_can_manage_tours()) {
+                    wp_send_json_error(['message' => esc_html__('You do not have permission to view tour data.', 'tour-booking-manager')], 403);
+                }
             
                 $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
                 $post_per_page = isset($_POST['post_per_page']) ? intval($_POST['post_per_page']) : 10;
@@ -211,7 +222,21 @@
                         
                         <div class="ttbm-tour-card" data-travel-type="<?php echo esc_attr( $post_status )?>" data-expire-tour="<?php echo esc_attr( $is_expire );?>">
                             <div class="ttbm-tour-thumb">
-                                <?php echo get_the_post_thumbnail($post_id, 'full'); ?>
+
+                                <?php
+
+                                if ( has_post_thumbnail($post_id) ) {
+                                    echo get_the_post_thumbnail($post_id, 'full');
+                                }else{
+                                    $image_ids = TTBM_Global_Function::get_post_info($post_id, 'ttbm_gallery_images', array());
+                                    if($image_ids[0]){
+                                        $thumbnail = TTBM_Global_Function::get_image_url('', $image_ids[0]);
+                                        ?>
+                                        <img width="626" height="418" src="<?php echo $thumbnail; ?>" class="attachment-full size-full wp-post-image" alt="" decoding="async" loading="lazy">
+                                        <?php
+                                    }
+                                }
+                                ?>
                             </div>
                             <div class="ttbm-tour-card-content">
                                 <div>

@@ -158,7 +158,7 @@ div.small_box {
 	-webkit-justify-content: center;justify-content: center;
 }
 div .item_icon { padding: 5px 20px; text-align: center; position: relative; white-space: nowrap; display: flex; align-items: center; line-height: 1.5;}
-div .item_icon::after { content: ""; position: absolute; top: 50%; right: 0; display: block; width: 2px; height: 10px; background-color: rgba(var(--color_theme_rgb), 0.4); transform: translateY(-50%);}
+div .item_icon::after { content: ""; position: absolute; top: 50%; inset-inline-end: 0; display: block; width: 2px; height: 10px; background-color: rgba(var(--color_theme_rgb), 0.4); transform: translateY(-50%);}
 div .item_icon:last-child:after { width: 0; height: 0;}
 div .item_icon i {color: var(--color_theme);font-size: 20px;margin-right: 6px;}
 div.ttbm_style [data-bg-image] { transform: scale(1);}

@@ -14,7 +14,10 @@
 				$sidebar_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_sidebar', 'off') == 'off' ? '' : 'checked';
 
 
-				$display_enquiry = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_enquiry', 'on');
+				$ttbm_display_duration = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_duration', 'on');
+				$ttbm_display_duration = $ttbm_display_duration == 'off' ? '' : 'checked';
+				
+                $display_enquiry = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_enquiry', 'on');
 				$enquiry_checked = $display_enquiry == 'off' ? '' : 'checked';
 				?>
                 <div class="tabsItem ttbm_display_settings" data-tabs="#ttbm_display_settings">
@@ -44,7 +47,7 @@
                                     <div>
                                         <p><?php esc_html_e('Display Duration', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_duration'); ?></span></i></p>
                                     </div>
-									<?php TTBM_Custom_Layout::switch_button('ttbm_display_duration', $display_enquiry); ?>
+									<?php TTBM_Custom_Layout::switch_button('ttbm_display_duration', $ttbm_display_duration); ?>
                                 </div>
                                 <label class="label">
                                     <div>

@@ -161,9 +161,69 @@
 				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
 				$language = 'ttbm_travel_language';
 				$language = TTBM_Global_Function::get_post_info($tour_id, $language);
+				$selected_languages = is_array($language) ? $language : (!empty($language) ? array($language) : array());
 				$checked = $display == 'off' ? '' : 'checked';
 				$active = $display == 'off' ? '' : 'mActive';
-				$language_lists = TTBM_Global_Function::get_languages();
+				$language_lists = array();
+				$build_language_label = static function ($locale, $fallback = '') {
+					$label = $fallback;
+					if (class_exists('Locale')) {
+						$english_name = \Locale::getDisplayLanguage($locale, 'en');
+						$native_name = \Locale::getDisplayLanguage($locale, $locale);
+						if ($english_name && $native_name && strtolower($english_name) !== strtolower($native_name)) {
+							$label = $english_name . ' (' . $native_name . ')';
+						} elseif ($english_name) {
+							$label = $english_name;
+						} elseif ($native_name) {
+							$label = $native_name;
+						}
+					}
+					return $label ? $label : $locale;
+				};
+
+				// Try to load all WordPress language packs dynamically.
+				if (!function_exists('wp_get_available_translations')) {
+					require_once ABSPATH . 'wp-admin/includes/translation-install.php';
+				}
+				if (function_exists('wp_get_available_translations')) {
+					$translations = wp_get_available_translations();
+					if (is_array($translations) && !empty($translations)) {
+						foreach ($translations as $locale => $translation) {
+							$native_name = $translation['native_name'] ?? '';
+							$english_name = $translation['english_name'] ?? '';
+							if ($native_name && $english_name && strtolower($native_name) !== strtolower($english_name)) {
+								$language_lists[$locale] = $english_name . ' (' . $native_name . ')';
+							} else {
+								$language_lists[$locale] = $build_language_label($locale, $native_name ? $native_name : $english_name);
+							}
+						}
+					}
+				}
+
+				// Fallback to installed languages if translation list is unavailable.
+				if (empty($language_lists)) {
+					$installed_locales = get_available_languages();
+					foreach ($installed_locales as $locale) {
+						$language_lists[$locale] = $build_language_label($locale);
+					}
+				}
+
+				// Ensure active/current locales exist and sort by label.
+				if (!isset($language_lists['en_US'])) {
+					$language_lists['en_US'] = $build_language_label('en_US', 'English (United States)');
+				}
+				$current_locale = get_locale();
+				if ($current_locale && !isset($language_lists[$current_locale])) {
+					$language_lists[$current_locale] = $build_language_label($current_locale);
+				}
+				if (!empty($selected_languages)) {
+					foreach ($selected_languages as $selected_language) {
+						if ($selected_language && !isset($language_lists[$selected_language])) {
+							$language_lists[$selected_language] = $build_language_label($selected_language);
+						}
+					}
+				}
+				asort($language_lists, SORT_NATURAL | SORT_FLAG_CASE);
 				?>
                 <div>
                     <div class="label">
@@ -172,9 +232,9 @@
                         </div>
                         <div class="_dFlex_alignCenter_justifyBetween">
 							<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
-                            <select class="rounded ms-2 <?php echo esc_attr($active); ?>" name="ttbm_travel_language" data-collapse="#<?php echo esc_attr($display_name); ?>">
+                            <select class="rounded ms-2 ttbm_select2 <?php echo esc_attr($active); ?>" name="ttbm_travel_language[]" multiple data-collapse="#<?php echo esc_attr($display_name); ?>" data-placeholder="<?php esc_attr_e('Select languages', 'tour-booking-manager'); ?>">
 								<?php foreach ($language_lists as $key => $value): ?>
-                                    <option value="<?php echo esc_html($key); ?>" <?php echo esc_attr($key == $language ? 'selected' : ''); ?>><?php echo esc_html($value); ?></option>
+                                    <option value="<?php echo esc_html($key); ?>" <?php echo esc_attr(in_array($key, $selected_languages, true) ? 'selected' : ''); ?>><?php echo esc_html($value); ?></option>
 								<?php endforeach; ?>
                             </select>
                         </div>

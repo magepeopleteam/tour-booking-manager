@@ -7,6 +7,7 @@
 			public function __construct() {
 				add_action('add_meta_boxes', array($this, 'ticket_type_meta'));
 				add_action('ttbm_ticket_item', array($this, 'pricing_item'));
+				add_action('save_post_ttbm_ticket_types', array($this, 'save_ticket_types'));
 			}
 			public function ticket_type_meta() {
 				$label = TTBM_Function::get_name();
@@ -97,6 +98,49 @@
                     <td><?php TTBM_Custom_Layout::move_remove_button(); ?></td>
                 </tr>
 				<?php
+			}
+			public function save_ticket_types($post_id) {
+				if (!isset($_POST['ttbm_ticket_item_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_ticket_item_nonce'])), 'ttbm_ticket_item_nonce')) {
+					return;
+				}
+				if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+					return;
+				}
+				if (wp_is_post_revision($post_id)) {
+					return;
+				}
+				if (!current_user_can('edit_post', $post_id)) {
+					return;
+				}
+				$new_ticket_type = array();
+				$icon = isset($_POST['ticket_type_icon']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_type_icon'])) : array();
+				$names = isset($_POST['ticket_type_name']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_type_name'])) : array();
+				$ticket_price = isset($_POST['ticket_type_price']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_type_price'])) : array();
+				$sale_price = isset($_POST['ticket_type_sale_price']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_type_sale_price'])) : array();
+				$qty = isset($_POST['ticket_type_qty']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_type_qty'])) : array();
+				$qty = apply_filters('ttbm_ticket_type_qty', $qty, $post_id);
+				$default_qty = isset($_POST['ticket_type_default_qty']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_type_default_qty'])) : array();
+				$rsv = isset($_POST['ticket_type_resv_qty']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_type_resv_qty'])) : array();
+				$rsv = apply_filters('ttbm_ticket_type_resv_qty', $rsv, $post_id);
+				$qty_type = isset($_POST['ticket_type_qty_type']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_type_qty_type'])) : array();
+				$description = isset($_POST['ticket_type_description']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_type_description'])) : array();
+				$count = count($names);
+				for ($i = 0; $i < $count; $i++) {
+					if ($names[$i] && isset($ticket_price[$i]) && $ticket_price[$i] >= 0) {
+						$capacity_value = !empty($qty[$i]) ? $qty[$i] : 0;
+						$new_ticket_type[$i]['ticket_type_icon'] = $icon[$i] ?? '';
+						$new_ticket_type[$i]['ticket_type_name'] = $names[$i];
+						$new_ticket_type[$i]['ticket_type_price'] = $ticket_price[$i];
+						$new_ticket_type[$i]['sale_price'] = $sale_price[$i] ?? '';
+						$new_ticket_type[$i]['ticket_type_qty'] = $capacity_value;
+						$new_ticket_type[$i]['ticket_type_default_qty'] = $default_qty[$i] ?? 0;
+						$new_ticket_type[$i]['ticket_type_resv_qty'] = $rsv[$i] ?? 0;
+						$new_ticket_type[$i]['ticket_type_qty_type'] = $qty_type[$i] ?? 'inputbox';
+						$new_ticket_type[$i]['ticket_type_description'] = $description[$i] ?? '';
+					}
+				}
+				$new_ticket_type = apply_filters('ttbm_ticket_type_arr_save', $new_ticket_type);
+				update_post_meta($post_id, 'ttbm_ticket_type', $new_ticket_type);
 			}
 		}
 		new TTBM_Ticket_Types();

@@ -299,7 +299,7 @@
 					update_post_meta($tour_id, 'ttbm_short_description', $description);
 					/***************/
 					$language_status = isset($_POST['ttbm_travel_language_status']) && sanitize_text_field(wp_unslash($_POST['ttbm_travel_language_status'])) ? 'on' : 'off';
-					$language = isset($_POST['ttbm_travel_language']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_language'])) : 'en_US';
+					$language = isset($_POST['ttbm_travel_language']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_travel_language'])) : array('en_US');
 					update_post_meta($tour_id, 'ttbm_travel_language_status', $language_status);
 					update_post_meta($tour_id, 'ttbm_travel_language', $language);
 					/***************/

@@ -152,6 +152,14 @@
                     if (($this).hasClass('ttbm_new_location_save_close')) {
                         $this.closest('.popupMainArea').find('.popupClose').trigger('click');
                     }
+                    $('select[name="ttbm_location_name"]')
+                        .append('<option value="'+name+'">'+name+'</option>')
+                        .val('test 5');
+                    $('select[name="ttbm_location_name"] option')
+                        .filter(function() {
+                            return $(this).text() === name;
+                        })
+                        .prop('selected', true);
                     return true;
                 }, error: function (response) {
                     console.log(response);

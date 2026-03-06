@@ -403,8 +403,8 @@
 							$label_key = array_key_exists('label_key', $value) && $value['label_key'] ? $value['label_key'] : '';
 							$time_key = array_key_exists('time_key', $value) && $value['time_key'] ? $value['time_key'] : '';
 							$default_time_info = [];
-							$default_labels = isset($_POST[$label_key]) ? array_map('sanitize_text_field', wp_unslash($_POST[$label_key])) : [];
-							$default_times = isset($_POST[$time_key]) ? array_map('sanitize_text_field', wp_unslash($_POST[$time_key])) : [];
+							$default_labels = isset($_POST[$label_key]) && is_array($_POST[$label_key]) ? array_map('sanitize_text_field', wp_unslash($_POST[$label_key])) : [];
+							$default_times = isset($_POST[$time_key]) && is_array($_POST[$time_key]) ? array_map('sanitize_text_field', wp_unslash($_POST[$time_key])) : [];
 							if (sizeof($default_times) > 0) {
 								foreach ($default_times as $key => $default_time) {
 									if ($default_time) {
@@ -413,7 +413,6 @@
 									}
 								}
 							}
-							//echo '<pre>';print_r($default_time_info);echo '</pre>';die();
 							update_post_meta($tour_id, $meta_key, $default_time_info);
 						}
 					}

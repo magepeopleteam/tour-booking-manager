@@ -137,7 +137,7 @@ if (!defined('ABSPATH')) {
 																	<?php echo $available === 1 ? esc_html__('ticket left', 'tour-booking-manager') : esc_html__('tickets left', 'tour-booking-manager'); ?>
 																</span>
 															</div>
-															
+
 															<div class="ttbm_capacity_info">
 																<span class="ttbm_capacity_text">
 																	<?php printf(esc_html__('%1$d of %2$d sold', 'tour-booking-manager'), $sold_qty, $total_capacity); ?>

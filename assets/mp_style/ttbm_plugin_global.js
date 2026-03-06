@@ -729,6 +729,13 @@ function ttbm_sticky_management() {
             });
         }
     });
+    // Ensure all Tour Time Slots Configuration tab contents are visible on submit so all inputs are included
+    $(document).on('submit', '#post', function () {
+        var $timeSlotTabsContent = $('.ttbm_settings_dates .ttbm-ticket-time .ttbmTabs .tabsContent');
+        if ($timeSlotTabsContent.length) {
+            $timeSlotTabsContent.find('[data-tabs]').css({ display: 'block', visibility: 'visible' });
+        }
+    });
 }(jQuery));
 //======================================================================Collapse=================//
 (function ($) {

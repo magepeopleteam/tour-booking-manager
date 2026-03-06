@@ -340,6 +340,7 @@ function ttbm_partial_payment_job(parent, total) {
                 capacityText.text(info.sold_qty + ' of ' + info.total_capacity + ' sold');
             }
 
+
             // Update row classes
             row.removeClass('ttbm_stock_in_stock ttbm_stock_sold_out ttbm_sold_out');
             row.addClass('ttbm_stock_' + info.stock_status);
@@ -349,7 +350,7 @@ function ttbm_partial_payment_job(parent, total) {
                 // Show sold out state
                 var stockInfo = row.find('.ttbm_stock_info');
                 if (stockInfo.find('.ttbm_stock_status.sold_out').length === 0) {
-                    stockInfo.html('<span class="ttbm_stock_status sold_out"><i class="fas fa-times-circle"></i> Sold Out</span>');
+                    stockInfo.html('<span class="ttbm_stock_status sold_out"><i class="fas fa-times-circle"></i> Sold Out h</span>');
                 }
                 // Disable quantity input
                 row.find('.formControl[data-price]').prop('disabled', true).val(0);

@@ -27,7 +27,9 @@
 				$config = [
 					'rules' => is_array($rules) ? array_values($rules) : [],
 					'globalTimes' => $this->get_global_times($tour_id),
+					'configuredGlobalTimes' => $this->get_configured_global_times($tour_id),
 					'weekdayTimes' => $this->get_weekday_times($tour_id),
+					'specialDateTimes' => $this->get_special_date_times($tour_id),
 					'availableDates' => $available_dates,
 					'labels' => [
 						'days' => ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
@@ -74,13 +76,24 @@
                 </div>
 				<?php
 			}
-			private function get_global_times($tour_id): array {
+			private function get_configured_global_times($tour_id): array {
 				$times = $this->extract_times(TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_times_global', []));
-				$fallback = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
-				if ($fallback) {
-					$times[] = $fallback;
+				return !empty($times) ? array_values(array_unique(array_filter($times))) : [];
+			}
+			private function get_global_times($tour_id): array {
+				$times = $this->get_configured_global_times($tour_id);
+				if (!empty($times)) {
+					return $times;
 				}
-				return array_values(array_unique(array_filter($times)));
+				$travel_type = TTBM_Function::get_travel_type($tour_id);
+				$fallback = '';
+				if ($travel_type === 'repeated') {
+					$fallback = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_time');
+				}
+				if (!$fallback) {
+					$fallback = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
+				}
+				return $fallback ? [sanitize_text_field($fallback)] : [];
 			}
 			private function get_weekday_times($tour_id): array {
 				$map = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
@@ -89,6 +102,30 @@
 					$data[$index] = $this->extract_times(TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_times_' . $suffix, []));
 				}
 				return $data;
+			}
+			private function get_special_date_times($tour_id): array {
+				$special_dates = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_special_date_info', []);
+				$formatted = [];
+				if (!is_array($special_dates)) {
+					return $formatted;
+				}
+				foreach ($special_dates as $special_date) {
+					if (!is_array($special_date)) {
+						continue;
+					}
+					$start = !empty($special_date['start_date']) ? gmdate('Y-m-d', strtotime($special_date['start_date'])) : '';
+					$end = !empty($special_date['end_date']) ? gmdate('Y-m-d', strtotime($special_date['end_date'])) : '';
+					$times = $this->extract_times($special_date['time'] ?? []);
+					if (!$start || !$end || empty($times)) {
+						continue;
+					}
+					$formatted[] = [
+						'start' => $start,
+						'end' => $end,
+						'times' => $times,
+					];
+				}
+				return $formatted;
 			}
 			private function get_available_dates($tour_id): array {
 				$dates = TTBM_Function::get_date($tour_id, 'yes');
@@ -178,12 +215,14 @@
 								}
 							}
 						}
+						$dates = self::sanitize_dates($rule['dates'] ?? []);
 						$sanitized[] = [
 							'id' => sanitize_text_field($rule['id'] ?? uniqid('bulk_', true)),
 							'type' => 'bulk',
 							'start' => $start,
 							'end' => $end,
 							'days' => array_values(array_unique($days)),
+							'dates' => $dates,
 							'bulk_mode' => $mode,
 							'selected_times' => $mode === 'cancel' ? [] : self::sanitize_times($rule['selected_times'] ?? []),
 							'added_times' => $mode === 'add' ? self::sanitize_times($rule['added_times'] ?? []) : [],
@@ -200,6 +239,21 @@
 				}
 				$normalized = gmdate('Y-m-d', $timestamp);
 				return $normalized === $date ? $normalized : '';
+			}
+			private static function sanitize_dates($dates): array {
+				$clean = [];
+				if (!is_array($dates)) {
+					return $clean;
+				}
+				foreach ($dates as $date) {
+					$normalized = self::sanitize_date($date);
+					if ($normalized) {
+						$clean[] = $normalized;
+					}
+				}
+				$clean = array_values(array_unique($clean));
+				sort($clean);
+				return $clean;
 			}
 			private static function sanitize_times($times): array {
 				$clean = [];
@@ -452,6 +506,45 @@
                         gap: 8px;
                         align-items: center;
                     }
+                    .ttbm-schedule-date-pills {
+                        display: flex;
+                        gap: 10px;
+                        flex-wrap: wrap;
+                        max-height: 220px;
+                        overflow-y: auto;
+                        padding: 4px 2px 2px;
+                    }
+                    .ttbm-schedule-date-pills button {
+                        min-width: 132px;
+                        border: 1px solid var(--sp-border);
+                        border-radius: 14px;
+                        padding: 10px 12px;
+                        background: var(--sp-surface);
+                        color: var(--sp-text);
+                        cursor: pointer;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 2px;
+                    }
+                    .ttbm-schedule-date-pills button span {
+                        font-weight: 700;
+                    }
+                    .ttbm-schedule-date-pills button small {
+                        font-size: 11px;
+                        font-weight: 600;
+                        color: var(--sp-muted);
+                        text-transform: uppercase;
+                        letter-spacing: 0.04em;
+                    }
+                    .ttbm-schedule-date-pills button.active {
+                        border-color: rgba(29, 78, 216, 0.28);
+                        background: var(--sp-primary-soft);
+                    }
+                    .ttbm-schedule-date-pills button.active span,
+                    .ttbm-schedule-date-pills button.active small {
+                        color: var(--sp-primary);
+                    }
                     .ttbm-schedule-draft-pills button {
                         border: 0;
                         background: transparent;
@@ -520,6 +613,12 @@
                         letter-spacing: 0.06em;
                         color: var(--sp-muted);
                     }
+                    .ttbm-schedule-preview-meta {
+                        margin: -4px 0 14px;
+                        color: var(--sp-muted);
+                        font-size: 12px;
+                        font-weight: 600;
+                    }
                     .ttbm-schedule-preview-item {
                         display: flex;
                         gap: 12px;
@@ -535,6 +634,17 @@
                         min-width: 130px;
                         font-weight: 700;
                         color: var(--sp-primary);
+                        display: flex;
+                        flex-direction: column;
+                        gap: 2px;
+                        line-height: 1.3;
+                    }
+                    .ttbm-schedule-preview-day {
+                        font-size: 11px;
+                        font-weight: 600;
+                        color: var(--sp-muted);
+                        text-transform: uppercase;
+                        letter-spacing: 0.04em;
                     }
                     .ttbm-schedule-badge {
                         display: inline-flex;
@@ -560,6 +670,20 @@
                         color: var(--sp-danger);
                         background: var(--sp-danger-soft);
                         border-color: rgba(220, 38, 38, 0.22);
+                    }
+                    .ttbm-schedule-preview-footer {
+                        margin-top: 14px;
+                        padding-top: 14px;
+                        border-top: 1px solid var(--sp-border);
+                        display: flex;
+                        justify-content: flex-end;
+                        gap: 10px;
+                        flex-wrap: wrap;
+                    }
+                    .ttbm-schedule-preview-actions {
+                        display: flex;
+                        gap: 10px;
+                        flex-wrap: wrap;
                     }
                     .ttbm-schedule-actions {
                         margin-top: 18px;
@@ -660,7 +784,16 @@
                         existingSlotsShort: <?php echo wp_json_encode(__('Existing slots', 'tour-booking-manager')); ?>,
                         noBaseSlotsConfigured: <?php echo wp_json_encode(__('No base slots are configured yet.', 'tour-booking-manager')); ?>,
                         addCustomSlots: <?php echo wp_json_encode(__('Add custom slots', 'tour-booking-manager')); ?>,
+                        chooseDates: <?php echo wp_json_encode(__('Choose Dates', 'tour-booking-manager')); ?>,
+                        selectedRangeDates: <?php echo wp_json_encode(__('Selected {selected} of {total} matching dates', 'tour-booking-manager')); ?>,
+                        noRangeDates: <?php echo wp_json_encode(__('Select a valid range to load dates.', 'tour-booking-manager')); ?>,
+                        noMatchingDates: <?php echo wp_json_encode(__('No dates match the selected weekdays.', 'tour-booking-manager')); ?>,
+                        noSelectedDates: <?php echo wp_json_encode(__('Select at least one date from the range.', 'tour-booking-manager')); ?>,
                         affectedDatesPreview: <?php echo wp_json_encode(__('Affected dates preview', 'tour-booking-manager')); ?>,
+                        showingPreviewDates: <?php echo wp_json_encode(__('Showing {visible} of {total} affected dates', 'tour-booking-manager')); ?>,
+                        specificDatesSummary: <?php echo wp_json_encode(__('{count} specific dates', 'tour-booking-manager')); ?>,
+                        loadMoreDates: <?php echo wp_json_encode(__('Load More', 'tour-booking-manager')); ?>,
+                        showLessDates: <?php echo wp_json_encode(__('Show Less', 'tour-booking-manager')); ?>,
                         selectRangePreview: <?php echo wp_json_encode(__('Select a range to preview matching dates.', 'tour-booking-manager')); ?>,
                         saveBulkRule: <?php echo wp_json_encode(__('Save Bulk Rule', 'tour-booking-manager')); ?>,
                         noRulesYet: <?php echo wp_json_encode(__('No planner rules yet. Save a single-date or bulk rule and it will appear here.', 'tour-booking-manager')); ?>,

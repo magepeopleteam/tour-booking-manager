@@ -8,6 +8,16 @@
         return Object.prototype.hasOwnProperty.call(strings, key) ? strings[key] : fallback;
     }
 
+    function textWithTokens(key, fallback, replacements) {
+        var message = text(key, fallback);
+        Object.keys(replacements || {}).forEach(function (token) {
+            message = message.replace(new RegExp('\\{' + token + '\\}', 'g'), String(replacements[token]));
+        });
+        return message;
+    }
+
+    var BULK_PREVIEW_PAGE_SIZE = 10;
+
     function parseConfig(root) {
         var node = root.querySelector('[data-planner-config]');
         if (!node) {
@@ -61,6 +71,7 @@
                 start: rule.start || '',
                 end: rule.end || '',
                 days: sortNumbers(Array.isArray(rule.days) ? rule.days : []),
+                dates: uniqueDates(rule.dates || rule.selectedDates || []),
                 bulk_mode: mode,
                 selected_times: uniqueTimes(rule.selected_times || rule.selectedTimes || []),
                 added_times: uniqueTimes(rule.added_times || rule.addedTimes || [])
@@ -77,6 +88,25 @@
         return Array.from(new Set(items || [])).sort(function (a, b) {
             return a - b;
         });
+    }
+
+    function uniqueDates(dates) {
+        return Array.from(new Set((dates || []).map(function (date) {
+            return String(date || '').trim();
+        }).filter(function (date) {
+            return /^\d{4}-\d{2}-\d{2}$/.test(date);
+        }))).sort();
+    }
+
+    function getDayIndex(date) {
+        if (!date) {
+            return -1;
+        }
+        var current = new Date(date + 'T00:00:00');
+        if (Number.isNaN(current.getTime())) {
+            return -1;
+        }
+        return current.getDay();
     }
 
     function formatDay(date, labels) {
@@ -101,6 +131,40 @@
         return jQuery.datepicker.formatDate(window.ttbm_date_format || 'yy-mm-dd', current);
     }
 
+    function renderPreviewDate(date, labels) {
+        if (!date) {
+            return '';
+        }
+        var displayDate = formatDisplayDate(date) || date;
+        var dayName = formatDay(date, labels || []);
+        if (!dayName) {
+            return displayDate;
+        }
+        return '<span>' + displayDate + '</span><span class="ttbm-schedule-preview-day">' + dayName + '</span>';
+    }
+
+    function renderSelectableDate(date, labels) {
+        var displayDate = formatDisplayDate(date) || date;
+        var dayName = formatDay(date, labels || []);
+        return '<span>' + displayDate + '</span>' + (dayName ? '<small>' + dayName + '</small>' : '');
+    }
+
+    function formatSpecificDateMeta(dates) {
+        var normalizedDates = uniqueDates(dates);
+        if (!normalizedDates.length) {
+            return '';
+        }
+        var preview = normalizedDates.slice(0, 3).map(function (date) {
+            return formatDisplayDate(date) || date;
+        }).join(', ');
+        if (normalizedDates.length > 3) {
+            preview += ' +' + (normalizedDates.length - 3);
+        }
+        return textWithTokens('specificDatesSummary', '{count} specific dates', {
+            count: normalizedDates.length
+        }) + ' - ' + preview;
+    }
+
     function syncPlannerDateState(state, stateKey, isoDate) {
         if (!isoDate) {
             return false;
@@ -113,10 +177,16 @@
         }
         if (stateKey === 'bulk-start') {
             state.bulk.start = isoDate;
+            state.bulk.dates = [];
+            state.bulk.manualDates = false;
+            state.bulk.previewLimit = BULK_PREVIEW_PAGE_SIZE;
             return true;
         }
         if (stateKey === 'bulk-end') {
             state.bulk.end = isoDate;
+            state.bulk.dates = [];
+            state.bulk.manualDates = false;
+            state.bulk.previewLimit = BULK_PREVIEW_PAGE_SIZE;
             return true;
         }
         return false;
@@ -171,6 +241,10 @@
     function matchesBulkRule(rule, date) {
         if (!rule || rule.type !== 'bulk' || !date || !rule.start || !rule.end) {
             return false;
+        }
+        var selectedDates = uniqueDates(rule.dates || []);
+        if (selectedDates.length) {
+            return selectedDates.indexOf(date) !== -1;
         }
         if (date < rule.start || date > rule.end) {
             return false;
@@ -233,17 +307,18 @@
         };
     }
 
-    function renderPreview(date, outcome) {
+    function renderPreview(date, outcome, labels) {
         if (!date) {
             return '<div class="ttbm-schedule-empty">' + text('noDatePreview', 'Select a date to preview the final schedule.') + '</div>';
         }
+        var previewDate = renderPreviewDate(date, labels);
         if (outcome.cancelled) {
-            return '<div class="ttbm-schedule-preview-item"><div class="ttbm-schedule-preview-date">' + date + '</div><div><span class="ttbm-schedule-badge cancel">' + text('fullDayCancelled', 'Full day cancelled') + '</span></div></div>';
+            return '<div class="ttbm-schedule-preview-item"><div class="ttbm-schedule-preview-date">' + previewDate + '</div><div><span class="ttbm-schedule-badge cancel">' + text('fullDayCancelled', 'Full day cancelled') + '</span></div></div>';
         }
         if (!outcome.times.length) {
-            return '<div class="ttbm-schedule-preview-item"><div class="ttbm-schedule-preview-date">' + date + '</div><div><span class="ttbm-schedule-badge remove">' + text('noActiveSlots', 'No active slots') + '</span></div></div>';
+            return '<div class="ttbm-schedule-preview-item"><div class="ttbm-schedule-preview-date">' + previewDate + '</div><div><span class="ttbm-schedule-badge remove">' + text('noActiveSlots', 'No active slots') + '</span></div></div>';
         }
-        return '<div class="ttbm-schedule-preview-item"><div class="ttbm-schedule-preview-date">' + date + '</div><div class="ttbm-schedule-preview-times">' + outcome.times.map(function (time) {
+        return '<div class="ttbm-schedule-preview-item"><div class="ttbm-schedule-preview-date">' + previewDate + '</div><div class="ttbm-schedule-preview-times">' + outcome.times.map(function (time) {
             return '<span class="ttbm-schedule-badge keep">' + time + '</span>';
         }).join('') + '</div></div>';
     }
@@ -262,8 +337,13 @@
         };
     }
 
-    function buildBulkRule(bulkState) {
+    function buildBulkRule(bulkState, effectiveDays) {
         if (!bulkState.start || !bulkState.end) {
+            return null;
+        }
+        var selectedDays = sortNumbers(Array.isArray(effectiveDays) ? effectiveDays : bulkState.days);
+        var selectedDates = uniqueDates(bulkState.dates || []);
+        if (!selectedDates.length) {
             return null;
         }
         return {
@@ -271,7 +351,8 @@
             type: 'bulk',
             start: bulkState.start <= bulkState.end ? bulkState.start : bulkState.end,
             end: bulkState.start <= bulkState.end ? bulkState.end : bulkState.start,
-            days: sortNumbers(bulkState.days),
+            days: selectedDays,
+            dates: bulkState.manualDates ? selectedDates : [],
             bulk_mode: bulkState.mode,
             selected_times: bulkState.mode === 'cancel' ? [] : uniqueTimes(bulkState.selected),
             added_times: bulkState.mode === 'add' ? uniqueTimes(bulkState.added) : []
@@ -295,7 +376,9 @@
                 tab: 'single',
                 labels: config.labels || { days: [], fullDays: [] },
                 globalTimes: uniqueTimes(config.globalTimes || []),
+                configuredGlobalTimes: uniqueTimes(config.configuredGlobalTimes || []),
                 weekdayTimes: config.weekdayTimes || {},
+                specialDateTimes: Array.isArray(config.specialDateTimes) ? config.specialDateTimes : [],
                 availableDates: Array.isArray(config.availableDates) ? config.availableDates : [],
                 single: {
                     date: (Array.isArray(config.availableDates) && config.availableDates.length ? config.availableDates[0] : (config.today || '')),
@@ -307,9 +390,13 @@
                     start: (Array.isArray(config.availableDates) && config.availableDates.length ? config.availableDates[0] : (config.today || '')),
                     end: (Array.isArray(config.availableDates) && config.availableDates.length ? config.availableDates[config.availableDates.length - 1] : (config.today || '')),
                     days: [],
+                    autoDays: true,
+                    dates: [],
+                    manualDates: false,
                     mode: 'add',
                     selected: [],
-                    added: []
+                    added: [],
+                    previewLimit: BULK_PREVIEW_PAGE_SIZE
                 }
             };
 
@@ -320,9 +407,79 @@
                 }
             }
 
+            function getSpecialTimesForDate(date) {
+                if (!date) {
+                    return [];
+                }
+                var matched = (state.specialDateTimes || []).find(function (item) {
+                    if (!item || !item.start || !item.end) {
+                        return false;
+                    }
+                    return date >= item.start && date <= item.end;
+                });
+                return matched ? uniqueTimes(matched.times || []) : [];
+            }
+
+            function getBulkRangeDates() {
+                if (!state.bulk.start || !state.bulk.end) {
+                    return [];
+                }
+                var start = state.bulk.start <= state.bulk.end ? state.bulk.start : state.bulk.end;
+                var end = state.bulk.start <= state.bulk.end ? state.bulk.end : state.bulk.start;
+                return state.availableDates.filter(function (date) {
+                    return date >= start && date <= end;
+                });
+            }
+
+            function getBulkRangeWeekdays() {
+                var weekdays = [];
+                getBulkRangeDates().forEach(function (date) {
+                    var current = new Date(date + 'T00:00:00');
+                    if (!Number.isNaN(current.getTime())) {
+                        weekdays.push(current.getDay());
+                    }
+                });
+                return sortNumbers(weekdays);
+            }
+
+            function getAutoBulkDays() {
+                var rangeWeekdays = getBulkRangeWeekdays();
+                if (state.configuredGlobalTimes.length) {
+                    return rangeWeekdays;
+                }
+                var configuredWeekdays = rangeWeekdays.filter(function (day) {
+                    var weekdayTimes = state.weekdayTimes[String(day)] || [];
+                    return Array.isArray(weekdayTimes) && weekdayTimes.length;
+                });
+                // Prefer explicit time-slot config over fallback preview times when auto-selecting weekdays.
+                if (configuredWeekdays.length) {
+                    return configuredWeekdays;
+                }
+                var autoDays = [];
+                getBulkRangeDates().forEach(function (date) {
+                    var resolved = getResolvedSchedule(date);
+                    if (resolved.cancelled || !Array.isArray(resolved.times) || !resolved.times.length) {
+                        return;
+                    }
+                    var current = new Date(date + 'T00:00:00');
+                    if (!Number.isNaN(current.getTime())) {
+                        autoDays.push(current.getDay());
+                    }
+                });
+                return sortNumbers(autoDays);
+            }
+
+            function getEffectiveBulkDays() {
+                return state.bulk.autoDays ? getAutoBulkDays() : sortNumbers(state.bulk.days);
+            }
+
             function getBaseTimesForDate(date) {
                 if (!date) {
                     return state.globalTimes;
+                }
+                var specialTimes = getSpecialTimesForDate(date);
+                if (specialTimes.length) {
+                    return specialTimes;
                 }
                 var current = new Date(date + 'T00:00:00');
                 if (Number.isNaN(current.getTime())) {
@@ -340,41 +497,46 @@
                 return uniqueTimes(allTimes);
             }
             function getBulkMatchedDates() {
-                if (!state.bulk.start || !state.bulk.end) {
-                    return [];
-                }
-                var start = state.bulk.start <= state.bulk.end ? state.bulk.start : state.bulk.end;
-                var end = state.bulk.start <= state.bulk.end ? state.bulk.end : state.bulk.start;
-                return state.availableDates.filter(function (date) {
-                    if (date < start || date > end) {
-                        return false;
-                    }
-                    if (!state.bulk.days.length) {
+                var effectiveDays = getEffectiveBulkDays();
+                return getBulkRangeDates().filter(function (date) {
+                    if (!effectiveDays.length) {
                         return true;
                     }
                     var current = new Date(date + 'T00:00:00');
-                    return !Number.isNaN(current.getTime()) && state.bulk.days.indexOf(current.getDay()) !== -1;
+                    return !Number.isNaN(current.getTime()) && effectiveDays.indexOf(current.getDay()) !== -1;
                 });
             }
             function getBulkEnabledWeekdays() {
                 var enabled = {};
-                if (!state.bulk.start || !state.bulk.end) {
-                    return enabled;
-                }
-                var start = state.bulk.start <= state.bulk.end ? state.bulk.start : state.bulk.end;
-                var end = state.bulk.start <= state.bulk.end ? state.bulk.end : state.bulk.start;
-                state.availableDates.forEach(function (date) {
-                    if (date < start || date > end) {
-                        return;
-                    }
-                    var current = new Date(date + 'T00:00:00');
-                    if (!Number.isNaN(current.getTime())) {
-                        enabled[current.getDay()] = true;
-                    }
+                getBulkRangeWeekdays().forEach(function (day) {
+                    enabled[day] = true;
                 });
                 return enabled;
             }
+
+            function syncBulkDatesWithFilters() {
+                var matchingDates = getBulkMatchedDates();
+                var matchingLookup = {};
+                matchingDates.forEach(function (date) {
+                    matchingLookup[date] = true;
+                });
+                if (!state.bulk.manualDates) {
+                    state.bulk.dates = matchingDates;
+                    return;
+                }
+                state.bulk.dates = uniqueDates((state.bulk.dates || []).filter(function (date) {
+                    return !!matchingLookup[date];
+                }));
+            }
+
+            function getBulkSelectedDates() {
+                return uniqueDates(state.bulk.dates || []);
+            }
+
             function syncBulkDaysWithAvailability() {
+                if (state.bulk.autoDays) {
+                    return;
+                }
                 var enabled = getBulkEnabledWeekdays();
                 state.bulk.days = state.bulk.days.filter(function (day) {
                     return !!enabled[day];
@@ -382,7 +544,7 @@
             }
             function getBulkSelectableTimes() {
                 var allTimes = [];
-                getBulkMatchedDates().forEach(function (date) {
+                getBulkSelectedDates().forEach(function (date) {
                     var resolved = getResolvedSchedule(date);
                     if (!resolved.cancelled) {
                         allTimes = allTimes.concat(resolved.times || []);
@@ -444,7 +606,7 @@
                     + '</div>'
                     + '<div class="ttbm-schedule-preview">'
                     + '<h4>' + text('previewTitle', 'Preview - Final Schedule') + '</h4>'
-                    + renderPreview(state.single.date, outcome)
+                    + renderPreview(state.single.date, outcome, state.labels.fullDays)
                     + '</div>'
                     + '<div class="ttbm-schedule-actions">'
                     + '<button type="button" class="ttbm-schedule-action primary" data-single-save>' + text('saveRule', 'Save Rule') + '</button>'
@@ -456,9 +618,15 @@
             function renderBulkPanel() {
                 var panel = root.querySelector('[data-planner-panel="bulk"]');
                 syncBulkDaysWithAvailability();
-                var matchedDates = getBulkMatchedDates();
+                var matchingDates = getBulkMatchedDates();
+                syncBulkDatesWithFilters();
+                var selectedDates = getBulkSelectedDates();
                 var availableTimes = getBulkSelectableTimes();
-                var previewDates = matchedDates.slice(0, 8);
+                var effectiveDays = getEffectiveBulkDays();
+                var previewLimit = Math.max(BULK_PREVIEW_PAGE_SIZE, parseInt(state.bulk.previewLimit || BULK_PREVIEW_PAGE_SIZE, 10));
+                var previewDates = selectedDates.slice(0, previewLimit);
+                var hasMorePreviewDates = selectedDates.length > previewDates.length;
+                var canCollapsePreviewDates = previewDates.length > BULK_PREVIEW_PAGE_SIZE;
                 var enabledWeekdays = getBulkEnabledWeekdays();
                 panel.innerHTML = ''
                     + '<div class="ttbm-schedule-card">'
@@ -469,7 +637,7 @@
                     + '</div>'
                     + '<div class="ttbm-schedule-note-label" style="margin-top:18px;">' + text('appliesToWeekdays', 'Applies to weekdays') + '</div>'
                     + '<div class="ttbm-schedule-days">' + state.labels.days.map(function (label, index) {
-                        var active = state.bulk.days.indexOf(index) !== -1 ? 'active' : '';
+                        var active = effectiveDays.indexOf(index) !== -1 ? 'active' : '';
                         var disabled = !enabledWeekdays[index];
                         return '<button type="button" data-bulk-day="' + index + '" class="' + active + (disabled ? ' disabled' : '') + '"' + (disabled ? ' disabled' : '') + '>' + label + '</button>';
                     }).join('') + '</div>'
@@ -479,12 +647,21 @@
                     + '<button type="button" data-bulk-mode="remove" class="' + (state.bulk.mode === 'remove' ? 'active-remove' : '') + '">' + text('removeSlots', 'Remove Slots') + '</button>'
                     + '<button type="button" data-bulk-mode="cancel" class="' + (state.bulk.mode === 'cancel' ? 'active-cancel' : '') + '">' + text('cancelDays', 'Cancel Days') + '</button>'
                     + '</div>'
+                    + '<div class="ttbm-schedule-note-label" style="margin-top:18px;">' + text('chooseDates', 'Choose Dates') + '</div>'
+                    + (matchingDates.length ? '<div class="ttbm-schedule-preview-meta" style="margin:-4px 0 12px;">' + textWithTokens('selectedRangeDates', 'Selected {selected} of {total} matching dates', {
+                        selected: selectedDates.length,
+                        total: matchingDates.length
+                    }) + '</div>' : '')
+                    + '<div class="ttbm-schedule-date-pills">' + (matchingDates.length ? matchingDates.map(function (date) {
+                        var active = selectedDates.indexOf(date) !== -1 ? ' active' : '';
+                        return '<button type="button" data-bulk-date="' + date + '" class="' + active.trim() + '">' + renderSelectableDate(date, state.labels.fullDays) + '</button>';
+                    }).join('') : '<span class="ttbm-schedule-empty">' + text('noMatchingDates', 'No dates match the selected weekdays.') + '</span>') + '</div>'
                     + '<div style="margin-top:18px;' + (state.bulk.mode === 'cancel' ? 'display:none;' : '') + '">'
                     + '<div class="ttbm-schedule-note-label">' + text('existingSlotsShort', 'Existing slots') + '</div>'
                     + '<div class="ttbm-schedule-pills">' + (availableTimes.length ? availableTimes.map(function (time) {
                         var active = state.bulk.selected.indexOf(time) !== -1 ? (state.bulk.mode === 'remove' ? 'active-remove' : 'active-add') : '';
                         return '<button type="button" data-bulk-select="' + time + '" class="' + active + '">' + time + '</button>';
-                    }).join('') : '<span class="ttbm-schedule-empty">' + text('selectRangePreview', 'Select a range to preview matching dates.') + '</span>') + '</div>'
+                    }).join('') : '<span class="ttbm-schedule-empty">' + (selectedDates.length ? text('noBaseSlotsConfigured', 'No base slots are configured yet.') : text('noSelectedDates', 'Select at least one date from the range.')) + '</span>') + '</div>'
                     + '<div class="ttbm-schedule-card-title" style="margin-top:18px;">' + text('addCustomSlots', 'Add custom slots') + '</div>'
                     + '<div class="ttbm-schedule-row"><div class="ttbm-schedule-field" style="max-width:180px;"><input type="time" data-bulk-new-time></div><button type="button" class="ttbm-schedule-action" data-bulk-add>' + text('addSlot', 'Add Slot') + '</button></div>'
                     + '<div class="ttbm-schedule-draft-pills" style="margin-top:12px;">' + state.bulk.added.map(function (time) {
@@ -493,13 +670,18 @@
                     + '</div>'
                     + '<div class="ttbm-schedule-preview">'
                     + '<h4>' + text('affectedDatesPreview', 'Affected dates preview') + '</h4>'
+                    + (selectedDates.length ? '<div class="ttbm-schedule-preview-meta">' + textWithTokens('showingPreviewDates', 'Showing {visible} of {total} affected dates', {
+                        visible: previewDates.length,
+                        total: selectedDates.length
+                    }) + '</div>' : '')
                     + (previewDates.length ? previewDates.map(function (date) {
                         var resolved = getResolvedSchedule(date);
                         var baseTimes = resolved.cancelled ? [] : resolved.times;
-                        var previewRule = buildBulkRule(state.bulk);
+                        var previewRule = buildBulkRule(state.bulk, effectiveDays);
                         var outcome = resolved.cancelled && (!previewRule || previewRule.bulk_mode !== 'add') ? resolved : applyRules(baseTimes, previewRule ? [previewRule] : [], date);
-                        return renderPreview(date, outcome);
-                    }).join('') : '<div class="ttbm-schedule-empty">' + text('selectRangePreview', 'Select a range to preview matching dates.') + '</div>')
+                        return renderPreview(date, outcome, state.labels.fullDays);
+                    }).join('') : '<div class="ttbm-schedule-empty">' + text('noSelectedDates', 'Select at least one date from the range.') + '</div>')
+                    + ((hasMorePreviewDates || canCollapsePreviewDates) ? '<div class="ttbm-schedule-preview-footer"><div class="ttbm-schedule-preview-actions">' + (hasMorePreviewDates ? '<button type="button" class="ttbm-schedule-action" data-bulk-preview-more>' + text('loadMoreDates', 'Load More') + '</button>' : '') + (canCollapsePreviewDates ? '<button type="button" class="ttbm-schedule-action" data-bulk-preview-less>' + text('showLessDates', 'Show Less') + '</button>' : '') + '</div></div>' : '')
                     + '</div>'
                     + '<div class="ttbm-schedule-actions"><button type="button" class="ttbm-schedule-action primary" data-bulk-save>' + text('saveBulkRule', 'Save Bulk Rule') + '</button><button type="button" class="ttbm-schedule-action" data-bulk-reset>' + text('reset', 'Reset') + '</button></div>'
                     + '</div>';
@@ -529,13 +711,19 @@
                         }
                     } else {
                         title = rule.bulk_mode === 'cancel' ? text('bulkDayCancel', 'Bulk Day Cancel') : (rule.bulk_mode === 'remove' ? text('bulkSlotRemoval', 'Bulk Slot Removal') : text('bulkSlotAddition', 'Bulk Slot Addition'));
-                        meta = (rule.start || '') + ' - ' + (rule.end || '');
-                        if (Array.isArray(rule.days) && rule.days.length) {
-                            meta += ' - ' + rule.days.map(function (dayIndex) {
-                                return state.labels.days[dayIndex] || '';
-                            }).join(', ');
+                        if (Array.isArray(rule.dates) && rule.dates.length) {
+                            meta = formatSpecificDateMeta(rule.dates);
                         } else {
-                            meta += ' - ' + text('allDays', 'All days');
+                            meta = (rule.start || '') + ' - ' + (rule.end || '');
+                        }
+                        if (!rule.dates || !rule.dates.length) {
+                            if (Array.isArray(rule.days) && rule.days.length) {
+                                meta += ' - ' + rule.days.map(function (dayIndex) {
+                                    return state.labels.days[dayIndex] || '';
+                                }).join(', ');
+                            } else {
+                                meta += ' - ' + text('allDays', 'All days');
+                            }
                         }
                         badges = (rule.selected_times || []).map(function (time) {
                             return '<span class="ttbm-schedule-badge ' + (rule.bulk_mode === 'remove' ? 'remove' : 'add') + '">' + (rule.bulk_mode === 'remove' ? '-' : '+') + time + '</span>';
@@ -620,17 +808,41 @@
                     rerender(root, state);
                     return;
                 }
+                if (target.hasAttribute('data-bulk-date')) {
+                    var bulkDate = target.getAttribute('data-bulk-date');
+                    if (!state.bulk.manualDates) {
+                        state.bulk.manualDates = true;
+                        state.bulk.dates = [bulkDate];
+                    } else {
+                        var bulkDateIndex = state.bulk.dates.indexOf(bulkDate);
+                        if (bulkDateIndex === -1) {
+                            state.bulk.dates.push(bulkDate);
+                        } else {
+                            state.bulk.dates.splice(bulkDateIndex, 1);
+                        }
+                    }
+                    state.bulk.dates = uniqueDates(state.bulk.dates);
+                    state.bulk.previewLimit = BULK_PREVIEW_PAGE_SIZE;
+                    rerender(root, state);
+                    return;
+                }
                 if (target.hasAttribute('data-bulk-day')) {
                     if (target.disabled) {
                         return;
                     }
                     var dayValue = parseInt(target.getAttribute('data-bulk-day'), 10);
-                    var dayIndex = state.bulk.days.indexOf(dayValue);
+                    var manualDays = state.bulk.autoDays ? getEffectiveBulkDays().slice() : state.bulk.days.slice();
+                    var dayIndex = manualDays.indexOf(dayValue);
+                    state.bulk.autoDays = false;
+                    state.bulk.manualDates = false;
                     if (dayIndex === -1) {
-                        state.bulk.days.push(dayValue);
+                        manualDays.push(dayValue);
                     } else {
-                        state.bulk.days.splice(dayIndex, 1);
+                        manualDays.splice(dayIndex, 1);
                     }
+                    state.bulk.days = sortNumbers(manualDays);
+                    state.bulk.dates = [];
+                    state.bulk.previewLimit = BULK_PREVIEW_PAGE_SIZE;
                     rerender(root, state);
                     return;
                 }
@@ -667,23 +879,41 @@
                     return;
                 }
                 if (target.hasAttribute('data-bulk-save')) {
-                    var bulkRule = buildBulkRule(state.bulk);
+                    var bulkRule = buildBulkRule(state.bulk, getEffectiveBulkDays());
                     if (bulkRule) {
                         state.rules.push(bulkRule);
                         state.tab = 'rules';
                         state.bulk.days = [];
+                        state.bulk.autoDays = true;
+                        state.bulk.dates = [];
+                        state.bulk.manualDates = false;
                         state.bulk.mode = 'add';
                         state.bulk.selected = [];
                         state.bulk.added = [];
+                        state.bulk.previewLimit = BULK_PREVIEW_PAGE_SIZE;
                         rerender();
                     }
                     return;
                 }
                 if (target.hasAttribute('data-bulk-reset')) {
                     state.bulk.days = [];
+                    state.bulk.autoDays = true;
+                    state.bulk.dates = [];
+                    state.bulk.manualDates = false;
                     state.bulk.mode = 'add';
                     state.bulk.selected = [];
                     state.bulk.added = [];
+                    state.bulk.previewLimit = BULK_PREVIEW_PAGE_SIZE;
+                    rerender(root, state);
+                    return;
+                }
+                if (target.hasAttribute('data-bulk-preview-more')) {
+                    state.bulk.previewLimit = previewLimitOrDefault(state.bulk.previewLimit) + BULK_PREVIEW_PAGE_SIZE;
+                    rerender(root, state);
+                    return;
+                }
+                if (target.hasAttribute('data-bulk-preview-less')) {
+                    state.bulk.previewLimit = BULK_PREVIEW_PAGE_SIZE;
                     rerender(root, state);
                     return;
                 }
@@ -717,6 +947,11 @@
             });
         });
     };
+
+    function previewLimitOrDefault(limit) {
+        var parsed = parseInt(limit || BULK_PREVIEW_PAGE_SIZE, 10);
+        return Number.isNaN(parsed) ? BULK_PREVIEW_PAGE_SIZE : Math.max(BULK_PREVIEW_PAGE_SIZE, parsed);
+    }
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function () {

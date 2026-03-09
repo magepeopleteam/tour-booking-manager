@@ -114,10 +114,17 @@
 				$travel_type = TTBM_Function::get_travel_type($tour_id);
 				$current_time = TTBM_Function::get_time($tour_id, $date, 'yes');
 				if (!$time_slots_enabled && $travel_type !== 'particular') {
-					return !empty($current_time) || !empty(TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time'));
+					return !empty($current_time) || !empty($this->get_fallback_time($tour_id, $travel_type));
 				}
 				$slots = $this->get_renderable_slots($tour_id, $date);
-				return !empty($slots);
+				if (!empty($slots)) {
+					return true;
+				}
+				// Preserve repeated-date availability when no slot source is configured for this weekday.
+				if ($travel_type === 'repeated' && !$this->date_uses_slot_rules($tour_id, $date)) {
+					return true;
+				}
+				return false;
 			}
 			private function get_renderable_slots($tour_id, $date): array {
 				$raw = TTBM_Function::get_time($tour_id, $date, 'yes');
@@ -133,6 +140,10 @@
 						return $slots;
 					}
 				}
+				$special_date_slots = $this->normalize_slots($this->get_special_date_slots($tour_id, $date));
+				if (!empty($special_date_slots)) {
+					return $special_date_slots;
+				}
 				$weekday_slots = $this->normalize_slots($this->get_weekday_slots($tour_id, $date));
 				if (!empty($weekday_slots)) {
 					return $weekday_slots;
@@ -145,13 +156,46 @@
 				if (!empty($slots)) {
 					return $slots;
 				}
-				$fallback = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
+				$fallback = $this->get_fallback_time($tour_id, $travel_type);
 				return $fallback ? [['label' => $fallback, 'time' => $fallback]] : [];
+			}
+			private function date_uses_slot_rules($tour_id, $date): bool {
+				if (!empty($this->get_special_date_slots($tour_id, $date))) {
+					return true;
+				}
+				if (!empty($this->get_weekday_slots($tour_id, $date))) {
+					return true;
+				}
+				if (!empty(TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_times_global', []))) {
+					return true;
+				}
+				foreach (self::get_rules($tour_id) as $rule) {
+					if ($this->rule_matches($rule, $date)) {
+						return true;
+					}
+				}
+				return false;
+			}
+			private function get_special_date_slots($tour_id, $date): array {
+				if (class_exists('TTBM_Function_PRO') && method_exists('TTBM_Function_PRO', 'get_sd_time_slot')) {
+					$special_slots = TTBM_Function_PRO::get_sd_time_slot($tour_id, $date);
+					return is_array($special_slots) ? $special_slots : [];
+				}
+				return [];
 			}
 			private function get_weekday_slots($tour_id, $date) {
 				$days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 				$index = (int)gmdate('w', strtotime($date));
 				return TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_times_' . $days[$index], []);
+			}
+			private function get_fallback_time($tour_id, $travel_type): string {
+				if ($travel_type === 'repeated') {
+					$repeated_start_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_time');
+					if ($repeated_start_time) {
+						return $repeated_start_time;
+					}
+				}
+				return TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
 			}
 			private function apply_rules(array $slots, array $rules, string $date): array {
 				$lookup = [];
@@ -198,6 +242,19 @@
 				}
 				if ($rule['type'] === 'single') {
 					return !empty($rule['date']) && $rule['date'] === $date;
+				}
+				$selected_dates = [];
+				if (!empty($rule['dates']) && is_array($rule['dates'])) {
+					foreach ($rule['dates'] as $selected_date) {
+						$normalized_date = $this->normalize_date($selected_date);
+						if ($normalized_date) {
+							$selected_dates[] = $normalized_date;
+						}
+					}
+					$selected_dates = array_values(array_unique($selected_dates));
+				}
+				if (!empty($selected_dates)) {
+					return in_array($date, $selected_dates, true);
 				}
 				if ($rule['type'] !== 'bulk' || empty($rule['start']) || empty($rule['end'])) {
 					return false;

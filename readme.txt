@@ -467,7 +467,7 @@ Bug Fixed
 = 2.1.8 =
 Forntend settings fixed.
 Language setting issue fixed.
-- 23 Aug 2024*
+- 11 Mar 2026*
 
 ### Customer Dashboard & Cancellations
 

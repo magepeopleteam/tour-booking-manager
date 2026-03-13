@@ -583,6 +583,7 @@
                     + '</div>'
                     + '</div>'
                     + (state.single.date ? '<div class="ttbm-schedule-notice">' + (dayName ? dayName + ' - ' : '') + text('baseScheduleLoaded', 'Base schedule loaded for this date.') + '</div>' : '')
+                    + '<div class="ttbm-schedule-preview-meta" style="margin:12px 0 0;">' + text('overrideHelp', 'Use Add / Override Slots to reopen off dates or off weekdays and assign time slots for them.') + '</div>'
                     + '<div class="ttbm-schedule-toggle">'
                     + '<div><strong>' + text('cancelEntireDay', 'Cancel entire day') + '</strong><p>' + text('cancelHelp', 'Use this when the whole date should disappear from booking.') + '</p></div>'
                     + '<button type="button" data-single-cancel class="' + (state.single.fullCancel ? 'active' : '') + '"></button>'
@@ -635,6 +636,7 @@
                     + '<div class="ttbm-schedule-field"><label>' + text('startDate', 'Start Date') + '</label><label><input type="hidden" data-planner-hidden-date data-state-key="bulk-start" value="' + (state.bulk.start || '') + '"><input type="text" class="formControl date_type" readonly value="' + formatDisplayDate(state.bulk.start || '') + '"></label></div>'
                     + '<div class="ttbm-schedule-field"><label>' + text('endDate', 'End Date') + '</label><label><input type="hidden" data-planner-hidden-date data-state-key="bulk-end" value="' + (state.bulk.end || '') + '"><input type="text" class="formControl date_type" readonly value="' + formatDisplayDate(state.bulk.end || '') + '"></label></div>'
                     + '</div>'
+                    + '<div class="ttbm-schedule-preview-meta" style="margin:14px 0 0;">' + text('overrideHelp', 'Use Add / Override Slots to reopen off dates or off weekdays and assign time slots for them.') + '</div>'
                     + '<div class="ttbm-schedule-note-label" style="margin-top:18px;">' + text('appliesToWeekdays', 'Applies to weekdays') + '</div>'
                     + '<div class="ttbm-schedule-days">' + state.labels.days.map(function (label, index) {
                         var active = effectiveDays.indexOf(index) !== -1 ? 'active' : '';
@@ -750,6 +752,27 @@
             root.addEventListener('click', function (event) {
                 var target = event.target.closest('button');
                 if (!target) {
+                    var helpModalBackdrop = event.target.closest('[data-planner-help-modal]');
+                    if (helpModalBackdrop && event.target === helpModalBackdrop) {
+                        helpModalBackdrop.classList.remove('active');
+                        helpModalBackdrop.setAttribute('aria-hidden', 'true');
+                    }
+                    return;
+                }
+                if (target.hasAttribute('data-planner-help-open')) {
+                    var helpModal = root.querySelector('[data-planner-help-modal]');
+                    if (helpModal) {
+                        helpModal.classList.add('active');
+                        helpModal.setAttribute('aria-hidden', 'false');
+                    }
+                    return;
+                }
+                if (target.hasAttribute('data-planner-help-close')) {
+                    var closeModal = root.querySelector('[data-planner-help-modal]');
+                    if (closeModal) {
+                        closeModal.classList.remove('active');
+                        closeModal.setAttribute('aria-hidden', 'true');
+                    }
                     return;
                 }
                 if (target.hasAttribute('data-planner-tab')) {
@@ -934,6 +957,16 @@
                     rerender(root, state);
                 }
             }, 250);
+            document.addEventListener('keydown', function (event) {
+                if (event.key !== 'Escape') {
+                    return;
+                }
+                var helpModal = root.querySelector('[data-planner-help-modal]');
+                if (helpModal) {
+                    helpModal.classList.remove('active');
+                    helpModal.setAttribute('aria-hidden', 'true');
+                }
+            });
             document.addEventListener('click', function (event) {
                 var tabButton = event.target.closest('[data-tabs-target="#ttbm_settings_schedule_planner"]');
                 if (!tabButton) {

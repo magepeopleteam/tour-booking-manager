@@ -54,6 +54,7 @@
                                 <div class="ttbm-schedule-summary">
                                     <span><?php esc_html_e('Rules saved with this tour', 'tour-booking-manager'); ?></span>
                                     <strong data-planner-count>0</strong>
+                                    <button type="button" class="ttbm-schedule-help-button" data-planner-help-open><?php esc_html_e('How Override Works', 'tour-booking-manager'); ?></button>
                                 </div>
                             </div>
                             <div class="ttbm-schedule-tabs" role="tablist">
@@ -64,6 +65,20 @@
                             <div class="ttbm-schedule-panel active" data-planner-panel="single"></div>
                             <div class="ttbm-schedule-panel" data-planner-panel="bulk"></div>
                             <div class="ttbm-schedule-panel" data-planner-panel="rules"></div>
+                            <div class="ttbm-schedule-help-modal" data-planner-help-modal aria-hidden="true">
+                                <div class="ttbm-schedule-help-dialog" role="dialog" aria-modal="true" aria-labelledby="ttbm-schedule-help-title">
+                                    <button type="button" class="ttbm-schedule-help-close" data-planner-help-close aria-label="<?php esc_attr_e('Close', 'tour-booking-manager'); ?>">×</button>
+                                    <h4 id="ttbm-schedule-help-title"><?php esc_html_e('Override Guide', 'tour-booking-manager'); ?></h4>
+                                    <p><?php esc_html_e('Short way to reopen a day that is marked off.', 'tour-booking-manager'); ?></p>
+                                    <ol>
+                                        <li><?php esc_html_e('Keep Off Days or Off Dates in Date Configuration.', 'tour-booking-manager'); ?></li>
+                                        <li><?php esc_html_e('Open Schedule Planner.', 'tour-booking-manager'); ?></li>
+                                        <li><?php esc_html_e('Choose the off date or weekday.', 'tour-booking-manager'); ?></li>
+                                        <li><?php esc_html_e('Use Add / Override Slots and add time.', 'tour-booking-manager'); ?></li>
+                                        <li><?php esc_html_e('Update the tour.', 'tour-booking-manager'); ?></li>
+                                    </ol>
+                                </div>
+                            </div>
                             <div class="ttbm-schedule-footer">
                                 <span><?php esc_html_e('Rules are stored when you update the tour.', 'tour-booking-manager'); ?></span>
                                 <div class="ttbm-schedule-footer-actions">
@@ -128,6 +143,9 @@
 				return $formatted;
 			}
 			private function get_available_dates($tour_id): array {
+				if (TTBM_Function::get_travel_type($tour_id) === 'repeated') {
+					return $this->get_repeated_candidate_dates($tour_id);
+				}
 				$dates = TTBM_Function::get_date($tour_id, 'yes');
 				if (isset($dates['date'])) {
 					return !empty($dates['date']) ? [sanitize_text_field($dates['date'])] : [];
@@ -145,6 +163,38 @@
 				$normalized = array_values(array_unique($normalized));
 				sort($normalized);
 				return $normalized;
+			}
+			private function get_repeated_candidate_dates($tour_id): array {
+				$start_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_date');
+				$start_date = $start_date ? gmdate('Y-m-d', strtotime($start_date)) : '';
+				if (!$start_date) {
+					return [];
+				}
+				$repeat_type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_repeat_type');
+				$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_end_date');
+				if ($repeat_type === 'continue') {
+					$end_date = gmdate('Y-m-d', strtotime($start_date . ' +365 day'));
+				} elseif ($end_date) {
+					$end_date = gmdate('Y-m-d', strtotime($end_date));
+				}
+				if (!$end_date) {
+					$end_date = $start_date;
+				}
+				$interval = absint(TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_after', 1));
+				$interval = $interval > 0 ? $interval : 1;
+				$dates = [];
+				if ($start_date === $end_date) {
+					$dates[] = $start_date;
+				} else {
+					foreach (TTBM_Global_Function::date_separate_period($start_date, $end_date, $interval) as $date) {
+						if ($date instanceof DateTimeInterface) {
+							$dates[] = $date->format('Y-m-d');
+						}
+					}
+				}
+				$dates = array_values(array_unique(array_filter($dates)));
+				sort($dates);
+				return $dates;
 			}
 			private function extract_times($items): array {
 				$times = [];
@@ -340,6 +390,17 @@
                         font-size: 28px;
                         line-height: 1;
                         color: var(--sp-text);
+                    }
+                    .ttbm-schedule-help-button {
+                        margin-top: 6px;
+                        border: 1px solid rgba(29, 78, 216, 0.18);
+                        background: rgba(29, 78, 216, 0.08);
+                        color: var(--sp-primary);
+                        border-radius: 999px;
+                        padding: 8px 12px;
+                        font-size: 12px;
+                        font-weight: 700;
+                        cursor: pointer;
                     }
                     .ttbm-schedule-tabs {
                         display: flex;
@@ -743,6 +804,58 @@
                         align-items: center;
                         color: var(--sp-muted);
                     }
+                    .ttbm-schedule-help-modal {
+                        position: fixed;
+                        inset: 0;
+                        background: rgba(15, 23, 42, 0.46);
+                        display: none;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 24px;
+                        z-index: 999999;
+                    }
+                    .ttbm-schedule-help-modal.active {
+                        display: flex;
+                    }
+                    .ttbm-schedule-help-dialog {
+                        width: min(520px, 100%);
+                        border-radius: 18px;
+                        background: #ffffff;
+                        border: 1px solid var(--sp-border);
+                        box-shadow: 0 20px 50px rgba(15, 23, 42, 0.24);
+                        padding: 24px;
+                        position: relative;
+                    }
+                    .ttbm-schedule-help-dialog h4 {
+                        margin: 0 0 10px;
+                        color: var(--sp-text);
+                    }
+                    .ttbm-schedule-help-dialog p {
+                        margin: 0 0 12px;
+                        color: var(--sp-muted);
+                    }
+                    .ttbm-schedule-help-dialog ol {
+                        margin: 0;
+                        padding-left: 18px;
+                        color: var(--sp-text);
+                    }
+                    .ttbm-schedule-help-dialog li + li {
+                        margin-top: 8px;
+                    }
+                    .ttbm-schedule-help-close {
+                        position: absolute;
+                        top: 12px;
+                        right: 12px;
+                        width: 34px;
+                        height: 34px;
+                        border-radius: 999px;
+                        border: 1px solid var(--sp-border);
+                        background: #f8fbff;
+                        color: var(--sp-text);
+                        cursor: pointer;
+                        font-size: 22px;
+                        line-height: 1;
+                    }
                     @media (max-width: 782px) {
                         .ttbm-schedule-header,
                         .ttbm-schedule-footer,
@@ -754,11 +867,14 @@
                         .ttbm-schedule-summary {
                             min-width: 0;
                         }
+                        .ttbm-schedule-help-modal {
+                            padding: 16px;
+                        }
                     }
                 </style>
                 <script>
-                    window.TTBMSchedulePlannerStrings = {
-                        noDatePreview: <?php echo wp_json_encode(__('Select a date to preview the final schedule.', 'tour-booking-manager')); ?>,
+					window.TTBMSchedulePlannerStrings = {
+						noDatePreview: <?php echo wp_json_encode(__('Select a date to preview the final schedule.', 'tour-booking-manager')); ?>,
                         fullDayCancelled: <?php echo wp_json_encode(__('Full day cancelled', 'tour-booking-manager')); ?>,
                         noActiveSlots: <?php echo wp_json_encode(__('No active slots', 'tour-booking-manager')); ?>,
                         pickDate: <?php echo wp_json_encode(__('Pick a Date', 'tour-booking-manager')); ?>,
@@ -777,11 +893,12 @@
                         startDate: <?php echo wp_json_encode(__('Start Date', 'tour-booking-manager')); ?>,
                         endDate: <?php echo wp_json_encode(__('End Date', 'tour-booking-manager')); ?>,
                         appliesToWeekdays: <?php echo wp_json_encode(__('Applies to weekdays', 'tour-booking-manager')); ?>,
-                        actionType: <?php echo wp_json_encode(__('Action type', 'tour-booking-manager')); ?>,
-                        addSlots: <?php echo wp_json_encode(__('Add Slots', 'tour-booking-manager')); ?>,
-                        removeSlots: <?php echo wp_json_encode(__('Remove Slots', 'tour-booking-manager')); ?>,
-                        cancelDays: <?php echo wp_json_encode(__('Cancel Days', 'tour-booking-manager')); ?>,
-                        existingSlotsShort: <?php echo wp_json_encode(__('Existing slots', 'tour-booking-manager')); ?>,
+						actionType: <?php echo wp_json_encode(__('Action type', 'tour-booking-manager')); ?>,
+						addSlots: <?php echo wp_json_encode(__('Add / Override Slots', 'tour-booking-manager')); ?>,
+						removeSlots: <?php echo wp_json_encode(__('Remove Slots', 'tour-booking-manager')); ?>,
+						cancelDays: <?php echo wp_json_encode(__('Cancel Days', 'tour-booking-manager')); ?>,
+						overrideHelp: <?php echo wp_json_encode(__('Use Add / Override Slots to reopen off dates or off weekdays and assign time slots for them.', 'tour-booking-manager')); ?>,
+						existingSlotsShort: <?php echo wp_json_encode(__('Existing slots', 'tour-booking-manager')); ?>,
                         noBaseSlotsConfigured: <?php echo wp_json_encode(__('No base slots are configured yet.', 'tour-booking-manager')); ?>,
                         addCustomSlots: <?php echo wp_json_encode(__('Add custom slots', 'tour-booking-manager')); ?>,
                         chooseDates: <?php echo wp_json_encode(__('Choose Dates', 'tour-booking-manager')); ?>,
@@ -796,13 +913,13 @@
                         showLessDates: <?php echo wp_json_encode(__('Show Less', 'tour-booking-manager')); ?>,
                         selectRangePreview: <?php echo wp_json_encode(__('Select a range to preview matching dates.', 'tour-booking-manager')); ?>,
                         saveBulkRule: <?php echo wp_json_encode(__('Save Bulk Rule', 'tour-booking-manager')); ?>,
-                        noRulesYet: <?php echo wp_json_encode(__('No planner rules yet. Save a single-date or bulk rule and it will appear here.', 'tour-booking-manager')); ?>,
-                        singleDateCancel: <?php echo wp_json_encode(__('Single Date Cancel', 'tour-booking-manager')); ?>,
-                        singleDateOverride: <?php echo wp_json_encode(__('Single Date Override', 'tour-booking-manager')); ?>,
-                        bulkDayCancel: <?php echo wp_json_encode(__('Bulk Day Cancel', 'tour-booking-manager')); ?>,
-                        bulkSlotRemoval: <?php echo wp_json_encode(__('Bulk Slot Removal', 'tour-booking-manager')); ?>,
-                        bulkSlotAddition: <?php echo wp_json_encode(__('Bulk Slot Addition', 'tour-booking-manager')); ?>,
-                        cancelled: <?php echo wp_json_encode(__('Cancelled', 'tour-booking-manager')); ?>,
+						noRulesYet: <?php echo wp_json_encode(__('No planner rules yet. Save a single-date or bulk rule and it will appear here.', 'tour-booking-manager')); ?>,
+						singleDateCancel: <?php echo wp_json_encode(__('Single Date Cancel', 'tour-booking-manager')); ?>,
+						singleDateOverride: <?php echo wp_json_encode(__('Single Date Override', 'tour-booking-manager')); ?>,
+						bulkDayCancel: <?php echo wp_json_encode(__('Bulk Day Cancel', 'tour-booking-manager')); ?>,
+						bulkSlotRemoval: <?php echo wp_json_encode(__('Bulk Slot Removal', 'tour-booking-manager')); ?>,
+						bulkSlotAddition: <?php echo wp_json_encode(__('Bulk Slot Addition / Override', 'tour-booking-manager')); ?>,
+						cancelled: <?php echo wp_json_encode(__('Cancelled', 'tour-booking-manager')); ?>,
                         allDays: <?php echo wp_json_encode(__('All days', 'tour-booking-manager')); ?>,
                         remove: <?php echo wp_json_encode(__('Remove', 'tour-booking-manager')); ?>
                     };

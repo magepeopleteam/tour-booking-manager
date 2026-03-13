@@ -135,7 +135,8 @@
 					if ($start_date == $end_date) {
 						$date = $start_date;
 						$day = strtolower(gmdate('D', strtotime($date)));
-						if (!in_array($day, $off_days) && !in_array($date, $off_dates)) {
+						$override_off_restriction = class_exists('TTBM_Schedule_Planner') && TTBM_Schedule_Planner::date_overrides_off_restrictions($tour_id, $date);
+						if ((!in_array($day, $off_days) && !in_array($date, $off_dates)) || $override_off_restriction) {
 							$current_date = self::get_date_by_time_check($tour_id, $date, $expire);
 							if ($current_date) {
 								$tour_date[] = $current_date;
@@ -148,8 +149,9 @@
 							$date = $date->format('Y-m-d'); // Convert DateTime object to string
 							if ($expire || $now_date <= strtotime($date)) {
 								$day = strtolower(gmdate('D', strtotime($date))); // Get the day in lowercase
+								$override_off_restriction = class_exists('TTBM_Schedule_Planner') && TTBM_Schedule_Planner::date_overrides_off_restrictions($tour_id, $date);
 								// Ensure $off_days and $off_dates are arrays before using in_array()
-								if (!in_array($day, (array)$off_days) && !in_array($date, (array)$off_dates)) {
+								if ((!in_array($day, (array)$off_days) && !in_array($date, (array)$off_dates)) || $override_off_restriction) {
 									$current_date = self::get_date_by_time_check($tour_id, $date, $expire);
 									if ($current_date) {
 										$tour_date[] = $current_date;
@@ -222,6 +224,7 @@
 							$off_dates[] = $off_date['mep_ticket_off_date'];
 						}
 						$day = strtolower(gmdate('D', strtotime($date_normalized)));
+						$override_off_restriction = class_exists('TTBM_Schedule_Planner') && TTBM_Schedule_Planner::date_overrides_off_restrictions($tour_id, $date_normalized);
 						
 						// Check if date matches interval pattern
 						$interval = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_after', 1);
@@ -237,7 +240,7 @@
 						
 						// Validate date is not expired and matches pattern
 						if ($date_in_pattern && ($expire || $now_date <= strtotime($date_normalized))) {
-							if (!in_array($day, (array)$off_days) && !in_array($date_normalized, (array)$off_dates)) {
+							if ((!in_array($day, (array)$off_days) && !in_array($date_normalized, (array)$off_dates)) || $override_off_restriction) {
 								// Date is valid, now check time
 								if (TTBM_Global_Function::check_time_exit_date($date)) {
 									$full_date = TTBM_Function::reduce_stop_sale_hours($date);

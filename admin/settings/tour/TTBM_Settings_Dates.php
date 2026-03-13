@@ -266,6 +266,7 @@
                         <div class="divider"></div>
                         <div class="gptLayout">
                             <h6><?php esc_html_e('Tour Off Days And Dates', 'tour-booking-manager'); ?></h6>
+                            <p class="info_text"><?php esc_html_e('Need to reopen an off day or off date for a few tour slots? Use Schedule Planner -> Date Range and Weekdays to add an override for that day or date.', 'tour-booking-manager'); ?></p>
                             <div class="ttbmTabs _mT">
                                 <ul class="tabLists">
                                     <li data-tabs-target="#ttbm_off_days"><?php esc_html_e('Off Days ', 'tour-booking-manager'); ?></li>

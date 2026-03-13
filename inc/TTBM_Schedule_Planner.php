@@ -4,7 +4,9 @@
 	}
 	if (!class_exists('TTBM_Schedule_Planner')) {
 		class TTBM_Schedule_Planner {
+			private static $instance = null;
 			public function __construct() {
+				self::$instance = $this;
 				add_filter('ttbm_get_time', [$this, 'filter_time'], 20, 4);
 				add_filter('ttbm_get_date', [$this, 'filter_date'], 20, 3);
 				add_action('ttbm_time_select', [$this, 'render_time_select'], 10, 2);
@@ -36,6 +38,9 @@
 			public static function get_rules($tour_id): array {
 				$rules = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_schedule_planner_rules', []);
 				return is_array($rules) ? array_values($rules) : [];
+			}
+			public static function date_overrides_off_restrictions($tour_id, $date): bool {
+				return self::$instance ? self::$instance->has_off_restriction_override($tour_id, $date) : false;
 			}
 			public function filter_time($time, $tour_id, $date, $expire) {
 				$date_only = $this->normalize_date($date);
@@ -196,6 +201,33 @@
 					}
 				}
 				return TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
+			}
+			private function has_off_restriction_override($tour_id, $date): bool {
+				$date_only = $this->normalize_date($date);
+				if (!$date_only) {
+					return false;
+				}
+				$matched_opening_rule = false;
+				foreach (self::get_rules($tour_id) as $rule) {
+					if (!$this->rule_matches($rule, $date_only)) {
+						continue;
+					}
+					$type = $rule['type'] ?? '';
+					if ($type === 'single' && empty($rule['full_cancel']) && !empty($rule['added'])) {
+						$matched_opening_rule = true;
+						break;
+					}
+					if ($type === 'bulk' && ($rule['bulk_mode'] ?? '') === 'add' && (!empty($rule['selected_times']) || !empty($rule['added_times']))) {
+						$matched_opening_rule = true;
+						break;
+					}
+				}
+				if (!$matched_opening_rule) {
+					return false;
+				}
+				$base_slots = $this->build_base_slots($tour_id, $date_only, [], TTBM_Function::get_travel_type($tour_id));
+				$result = $this->apply_rules($base_slots, self::get_rules($tour_id), $date_only);
+				return !$result['cancelled'] && !empty($result['slots']);
 			}
 			private function apply_rules(array $slots, array $rules, string $date): array {
 				$lookup = [];

@@ -464,6 +464,11 @@ Style fixing.
 Bug Fixed
 - 23 Aug 2024*
 
+= 2.1.8 =
+Forntend settings fixed.
+Language setting issue fixed.
+- 11 Mar 2026*
+
 ### Customer Dashboard & Cancellations
 
 Allow your customers to view their bookings and request cancellations directly from a modern dashboard.

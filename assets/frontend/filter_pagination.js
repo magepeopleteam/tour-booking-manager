@@ -56,12 +56,13 @@
 		let ttbm_flatpickr_locale = (typeof ttbm_flatpickr_vars !== 'undefined' && ttbm_flatpickr_vars.locale)
 			? ttbm_flatpickr_vars.locale
 			: 'default';
-
+		let isMobile = window.innerWidth < 768
 		let rangeDatePicker = $("#ttbm_date_start_end_input").flatpickr({
 			mode: "range",
 			dateFormat: "F j, Y",
-			showMonths: 2,
+			showMonths: isMobile ? 1 : 2,
 			minDate: "today",
+			disableMobile: true,
 			locale: ttbm_flatpickr_locale,
 			onChange: function (selectedDates, dateStr, instance) {
 

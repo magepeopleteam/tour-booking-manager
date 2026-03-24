@@ -20,6 +20,66 @@
             private function user_can_manage_tours() {
                 return current_user_can('manage_options');
             }
+			private function get_listable_post_statuses(): array {
+				return array('publish', 'draft', 'pending', 'future', 'private');
+			}
+            private function is_expired_tour(int $post_id): bool {
+                $upcoming_date = TTBM_Global_Function::get_post_info($post_id, 'ttbm_upcoming_date');
+                if (!$upcoming_date) {
+                    $all_dates = TTBM_Function::get_date($post_id);
+                    $upcoming_date = TTBM_Function::get_upcoming_date_month($post_id, true, $all_dates);
+                }
+                return $upcoming_date === '';
+            }
+            private function get_filtered_tour_ids(string $selected_filter = 'all', string $search = ''): array {
+                $listable_statuses = $this->get_listable_post_statuses();
+                $query_status = in_array($selected_filter, $listable_statuses, true) ? array($selected_filter) : $listable_statuses;
+                $args = array(
+                    'post_type' => 'ttbm_tour',
+                    'post_status' => $query_status,
+                    'posts_per_page' => -1,
+                    'fields' => 'ids',
+                    'orderby' => 'date',
+                    'order' => 'DESC',
+                    's' => $search,
+                    'no_found_rows' => true,
+                    'cache_results' => false,
+                );
+                $post_ids = get_posts($args);
+                if (!is_array($post_ids) || empty($post_ids)) {
+                    return array();
+                }
+                if ($selected_filter === 'expired_tour') {
+                    // Expired tab should show only live tours that are expired.
+                    $post_ids = array_values(array_filter($post_ids, function ($post_id) {
+                        return get_post_status((int)$post_id) === 'publish';
+                    }));
+                    $post_ids = array_values(array_filter($post_ids, function ($post_id) {
+                        return $this->is_expired_tour((int)$post_id);
+                    }));
+                }
+                return $post_ids;
+            }
+            private function get_paginated_tour_query(array $tour_ids, int $paged, int $post_per_page): WP_Query {
+                $total = count($tour_ids);
+                $paged = max(1, $paged);
+                $post_per_page = max(1, $post_per_page);
+                $offset = ($paged - 1) * $post_per_page;
+                $page_ids = array_slice($tour_ids, $offset, $post_per_page);
+                $query_args = array(
+                    'post_type' => 'ttbm_tour',
+                    'post_status' => 'any',
+                    'posts_per_page' => $post_per_page,
+                    'post__in' => !empty($page_ids) ? $page_ids : array(0),
+                    'orderby' => 'post__in',
+                    'ignore_sticky_posts' => true,
+                    'no_found_rows' => true,
+                );
+                $posts_query = new WP_Query($query_args);
+                $posts_query->found_posts = $total;
+                $posts_query->max_num_pages = (int)ceil($total / $post_per_page);
+                return $posts_query;
+            }
 
             public function remove_default_menu(){
                 remove_submenu_page('edit.php?post_type=ttbm_tour', 'edit.php?post_type=ttbm_tour');
@@ -39,23 +99,16 @@
                 $paged = isset($_POST['paged']) ? intval(wp_unslash($_POST['paged'])) : 1;
                 $post_per_page = isset($_POST['post_per_page']) ? intval(wp_unslash($_POST['post_per_page'])) : 10;
                 $search = isset($_POST['search_term']) ? sanitize_text_field(wp_unslash($_POST['search_term'])) : '';
-                $args = array(
-                    'post_type'      => 'ttbm_tour',
-//                    'post_status'    => 'publish',
-                    'paged'          => $paged,
-                    'posts_per_page' => $post_per_page,
-                    's'              => $search,
-                    'orderby'        => 'date',
-                    'order'          => 'DESC',
-                );
-
-                $posts_query = new WP_Query($args);
+                $selected_filter = isset($_POST['selected_filter']) ? sanitize_key(wp_unslash($_POST['selected_filter'])) : 'all';
+                $tour_ids = $this->get_filtered_tour_ids($selected_filter, $search);
+                $posts_query = $this->get_paginated_tour_query($tour_ids, $paged, $post_per_page);
                 ob_start();
                 $this->tour_list($posts_query);
                 $html = ob_get_clean();
                 wp_send_json_success(array(
                     'html' => $html,
-                    'max_pages' => $posts_query->max_num_pages
+                    'max_pages' => $posts_query->max_num_pages,
+                    'found_posts' => (int)$posts_query->found_posts
                 ));
                 wp_die();
             }
@@ -77,17 +130,10 @@
             
                 $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
                 $post_per_page = isset($_POST['post_per_page']) ? intval($_POST['post_per_page']) : 10;
-            
-                $args = array(
-                    'post_type'      => 'ttbm_tour',
-//                    'post_status'    => 'publish',
-                    'paged'          => $paged,
-                    'posts_per_page' => $post_per_page,
-                    'orderby'        => 'date',
-                    'order'          => 'DESC',
-                );
-
-                $posts_query = new WP_Query($args);
+                $search = isset($_POST['search_term']) ? sanitize_text_field(wp_unslash($_POST['search_term'])) : '';
+                $selected_filter = isset($_POST['selected_filter']) ? sanitize_key(wp_unslash($_POST['selected_filter'])) : 'all';
+                $tour_ids = $this->get_filtered_tour_ids($selected_filter, $search);
+                $posts_query = $this->get_paginated_tour_query($tour_ids, $paged, $post_per_page);
                 ob_start();
                 $this->tour_list($posts_query);
                 $html = ob_get_clean();
@@ -95,7 +141,8 @@
                 wp_send_json_success(array(
                     'html' => $html,
                     'count_travels' => $posts_query->post_count,
-                    'max_pages' => $posts_query->max_num_pages
+                    'max_pages' => $posts_query->max_num_pages,
+                    'found_posts' => (int)$posts_query->found_posts
                 ));
             }
 
@@ -115,7 +162,7 @@
                 }
                 $args = array(
                     'post_type'      => 'ttbm_tour',
-//                    'post_status'    => 'publish',
+                    'post_status'    => $this->get_listable_post_statuses(),
                     'paged'          => $paged,
                     'posts_per_page' => $post_per_page,
                     'orderby'        => 'date',

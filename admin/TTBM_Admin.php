@@ -12,6 +12,7 @@
 				add_action('admin_action_ttbm_duplicate', [$this, 'ttbm_duplicate']);
 				add_filter('post_row_actions', [$this, 'post_duplicator'], 10, 2);
 				add_filter('wp_mail_content_type', array($this, 'email_content_type'));
+				add_action('admin_init', [$this, 'repair_missed_tour_schedules'], 20);
 			}
 			public function flush_rewrite() {
 				update_option('rewrite_rules', '');
@@ -179,6 +180,47 @@
 			//*************************//
 			public function email_content_type() {
 				return "text/html";
+			}
+			/**
+			 * Publish overdue future tours when WP-Cron misses schedule events.
+			 *
+			 * Runs at most once every 10 minutes per site to keep admin requests light.
+			 */
+			public function repair_missed_tour_schedules(): void {
+				if (wp_doing_ajax() || (defined('REST_REQUEST') && REST_REQUEST)) {
+					return;
+				}
+				if (!current_user_can('edit_posts')) {
+					return;
+				}
+				$lock_key = 'ttbm_missed_schedule_repair_lock';
+				if (get_transient($lock_key)) {
+					return;
+				}
+				set_transient($lock_key, 1, 10 * MINUTE_IN_SECONDS);
+				$args = array(
+					'post_type' => TTBM_Function::get_cpt_name(),
+					'post_status' => 'future',
+					'posts_per_page' => 100,
+					'date_query' => array(
+						array(
+							'column' => 'post_date_gmt',
+							'before' => current_time('mysql', true),
+							'inclusive' => true,
+						),
+					),
+					'fields' => 'ids',
+					'no_found_rows' => true,
+					'cache_results' => false,
+				);
+				$overdue_post_ids = get_posts($args);
+				if (!empty($overdue_post_ids)) {
+					foreach ($overdue_post_ids as $overdue_post_id) {
+						wp_publish_post((int)$overdue_post_id);
+					}
+				}
+				// Keep upcoming/expire metadata in sync after status corrections.
+				TTBM_Function::update_all_upcoming_date_month();
 			}
 		}
 		new TTBM_Admin();

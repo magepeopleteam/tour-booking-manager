@@ -12,6 +12,8 @@
 				add_filter('woocommerce_add_cart_item_data', array($this, 'add_cart_item_data'), 90, 3);
 				add_action('woocommerce_before_calculate_totals', array($this, 'before_calculate_totals'), 90, 1);
 				add_filter('woocommerce_cart_item_thumbnail', array($this, 'cart_item_thumbnail'), 90, 3);
+				add_filter('woocommerce_cart_item_price', array($this, 'cart_item_price'), 90, 3);
+				add_filter('woocommerce_cart_item_subtotal', array($this, 'cart_item_subtotal'), 90, 3);
 				add_filter('woocommerce_get_item_data', array($this, 'get_item_data'), 90, 2);
 				//************//
 				add_action('woocommerce_after_checkout_validation', array($this, 'after_checkout_validation'));
@@ -46,19 +48,74 @@
 				// echo '<pre>';print_r($cart_item_data);echo '</pre>';die();
 				return $cart_item_data;
 			}
-			public function before_calculate_totals($cart_object) {
-				foreach ($cart_object->cart_contents as $value) {
-					$ttbm_id = array_key_exists('ttbm_id', $value) ? $value['ttbm_id'] : 0;
-					$ttbm_id = TTBM_Function::post_id_multi_language($ttbm_id);
-					if (get_post_type($ttbm_id) == TTBM_Function::get_cpt_name()) {
-						$total_price = array_key_exists('ttbm_tp', $value) ? $value['ttbm_tp'] : 0;
-						$value['data']->set_price($total_price);
-						$value['data']->set_regular_price($total_price);
-						$value['data']->set_sale_price($total_price);
-						$value['data']->set_sold_individually('yes');
-						$value['data']->get_price();
+			private function get_ttbm_cart_total($cart_item) {
+				$ttbm_id = array_key_exists('ttbm_id', $cart_item) ? $cart_item['ttbm_id'] : 0;
+				$ttbm_id = TTBM_Function::post_id_multi_language($ttbm_id);
+				if (get_post_type($ttbm_id) != TTBM_Function::get_cpt_name()) {
+					return null;
+				}
+				foreach (array('ttbm_tp', 'custom_price') as $price_key) {
+					if (array_key_exists($price_key, $cart_item) && $cart_item[$price_key] !== '') {
+						return (float) wc_format_decimal($cart_item[$price_key]);
 					}
 				}
+				$total_price = 0.0;
+				$has_price_data = false;
+				$hotel_info = isset($cart_item['ttbm_hotel_info']) && is_array($cart_item['ttbm_hotel_info']) ? $cart_item['ttbm_hotel_info'] : array();
+				$hotel_days = !empty($hotel_info['ttbm_hotel_num_of_day']) ? max(1, absint($hotel_info['ttbm_hotel_num_of_day'])) : 1;
+				$ticket_type = isset($cart_item['ttbm_ticket_info']) && is_array($cart_item['ttbm_ticket_info']) ? $cart_item['ttbm_ticket_info'] : array();
+				foreach ($ticket_type as $ticket) {
+					$ticket_price = isset($ticket['ticket_price']) ? (float) wc_format_decimal($ticket['ticket_price']) : 0.0;
+					$ticket_qty = isset($ticket['ticket_qty']) ? absint($ticket['ticket_qty']) : 0;
+					if ($ticket_qty < 1) {
+						continue;
+					}
+					$has_price_data = true;
+					$total_price += $ticket_price * $ticket_qty * $hotel_days;
+				}
+				$extra_service = isset($cart_item['ttbm_extra_service_info']) && is_array($cart_item['ttbm_extra_service_info']) ? $cart_item['ttbm_extra_service_info'] : array();
+				foreach ($extra_service as $service) {
+					$service_price = isset($service['service_price']) ? (float) wc_format_decimal($service['service_price']) : 0.0;
+					$service_qty = isset($service['service_qty']) ? absint($service['service_qty']) : 0;
+					if ($service_qty < 1) {
+						continue;
+					}
+					$has_price_data = true;
+					$total_price += $service_price * $service_qty;
+				}
+				return $has_price_data ? $total_price : null;
+			}
+			private function format_ttbm_cart_total($cart_item, $total_price) {
+				if (function_exists('WC') && WC()->cart && isset($cart_item['data'])) {
+					if (WC()->cart->display_prices_including_tax()) {
+						$total_price = wc_get_price_including_tax($cart_item['data'], array('qty' => 1, 'price' => $total_price));
+					} else {
+						$total_price = wc_get_price_excluding_tax($cart_item['data'], array('qty' => 1, 'price' => $total_price));
+					}
+				}
+				return wc_price($total_price);
+			}
+			public function before_calculate_totals($cart_object) {
+				foreach ($cart_object->cart_contents as $cart_item_key => $value) {
+					$total_price = $this->get_ttbm_cart_total($value);
+					if ($total_price === null) {
+						continue;
+					}
+					$cart_object->cart_contents[$cart_item_key]['ttbm_tp'] = $total_price;
+					$cart_object->cart_contents[$cart_item_key]['data']->set_price($total_price);
+					$cart_object->cart_contents[$cart_item_key]['data']->set_regular_price($total_price);
+					$cart_object->cart_contents[$cart_item_key]['data']->set_sale_price($total_price);
+					$cart_object->cart_contents[$cart_item_key]['data']->set_sold_individually('yes');
+					$cart_object->cart_contents[$cart_item_key]['data']->get_price();
+				}
+			}
+			public function cart_item_price($price, $cart_item) {
+				$total_price = $this->get_ttbm_cart_total($cart_item);
+				return $total_price === null ? $price : $this->format_ttbm_cart_total($cart_item, $total_price);
+			}
+			public function cart_item_subtotal($subtotal, $cart_item) {
+				$total_price = $this->get_ttbm_cart_total($cart_item);
+				return $total_price === null ? $subtotal : $this->format_ttbm_cart_total($cart_item, $total_price);
 			}
 			public function cart_item_thumbnail($thumbnail, $cart_item) {
 				$ttbm_id = array_key_exists('ttbm_id', $cart_item) ? $cart_item['ttbm_id'] : 0;

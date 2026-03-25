@@ -14,6 +14,14 @@
 				add_action('init', [$this, 'get_all_hidden_product_id']);
 				add_filter('wpseo_exclude_from_sitemap_by_post_ids', [$this, 'get_all_hidden_product_id']);
 			}
+			private function sync_hidden_product_price($product_id) {
+				update_post_meta($product_id, '_price', 0);
+				update_post_meta($product_id, '_regular_price', 0);
+				update_post_meta($product_id, '_sale_price', '');
+				if (function_exists('wc_delete_product_transients')) {
+					wc_delete_product_transients($product_id);
+				}
+			}
 			public function create_hidden_wc_product($post_id, $title) {
 				$new_post = array(
 					'post_title' => $title,
@@ -27,7 +35,7 @@
 				$pid = wp_insert_post($new_post);
 				update_post_meta($post_id, 'link_wc_product', $pid);
 				update_post_meta($pid, 'link_ttbm_id', $post_id);
-				update_post_meta($pid, '_price', 0.01);
+				$this->sync_hidden_product_price($pid);
 				update_post_meta($pid, '_sold_individually', 'yes');
 				update_post_meta($pid, '_virtual', 'yes');
 				$terms = array('exclude-from-catalog', 'exclude-from-search');
@@ -49,7 +57,7 @@
 					$product_type = 'yes';
 					update_post_meta($post_id, 'link_wc_product', $pid);
 					update_post_meta($pid, 'link_ttbm_id', $post_id);
-					update_post_meta($pid, '_price', 0.01);
+					$this->sync_hidden_product_price($pid);
 					update_post_meta($pid, '_sold_individually', 'yes');
 					update_post_meta($pid, '_virtual', $product_type);
 					$terms = array('exclude-from-catalog', 'exclude-from-search');
@@ -99,6 +107,7 @@
 					update_post_meta($product_id, '_manage_stock', 'no');
 					update_post_meta($product_id, '_virtual', $product_type);
 					update_post_meta($product_id, '_sold_individually', 'yes');
+					$this->sync_hidden_product_price($product_id);
 					$my_post = array(
 						'ID' => $product_id,
 						'post_title' => $event_name,

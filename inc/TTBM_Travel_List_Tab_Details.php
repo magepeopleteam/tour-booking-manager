@@ -410,18 +410,26 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
             $trash_count     = isset($counts->trash) ? $counts->trash : 0;
             $draft_count     = isset($counts->draft) ? $counts->draft : 0;*/
 
-
             $expire_count = 0;
-            if ($posts_query->have_posts()) {
-                while ($posts_query->have_posts()) {
-                    $posts_query->the_post();
-                    $post_id = get_the_ID();
-                    $upcoming_date = TTBM_Global_Function::get_post_info( $post_id, 'ttbm_upcoming_date' );
-                    if( !$upcoming_date ){
-                        $all_dates     = TTBM_Function::get_date( $post_id );
-                        $upcoming_date = TTBM_Function::get_upcoming_date_month( $post_id,true, $all_dates );
+            $all_tour_ids = get_posts(array(
+                'post_type' => 'ttbm_tour',
+                'post_status' => array('publish', 'draft', 'pending', 'future', 'private'),
+                'posts_per_page' => -1,
+                'fields' => 'ids',
+                'no_found_rows' => true,
+                'cache_results' => false,
+            ));
+            if (!empty($all_tour_ids)) {
+                foreach ($all_tour_ids as $post_id) {
+                    if (get_post_status((int)$post_id) !== 'publish') {
+                        continue;
                     }
-                    if( $upcoming_date === '' ){
+                    $upcoming_date = TTBM_Global_Function::get_post_info((int)$post_id, 'ttbm_upcoming_date');
+                    if (!$upcoming_date) {
+                        $all_dates = TTBM_Function::get_date((int)$post_id);
+                        $upcoming_date = TTBM_Function::get_upcoming_date_month((int)$post_id, true, $all_dates);
+                    }
+                    if ($upcoming_date === '') {
                         $expire_count++;
                     }
                 }
@@ -430,7 +438,10 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
             $published_count = isset($counts->publish) ? $counts->publish : 0;
             $trash_count     = isset($counts->trash) ? $counts->trash : 0;
             $draft_count     = isset($counts->draft) ? $counts->draft : 0;
-            $total_count = $published_count + $trash_count + $draft_count;
+            $pending_count   = isset($counts->pending) ? $counts->pending : 0;
+            $future_count    = isset($counts->future) ? $counts->future : 0;
+            $private_count   = isset($counts->private) ? $counts->private : 0;
+            $total_count = $published_count + $trash_count + $draft_count + $pending_count + $future_count + $private_count;
 
             $trash_link = add_query_arg([
                 'post_status' => 'trash',

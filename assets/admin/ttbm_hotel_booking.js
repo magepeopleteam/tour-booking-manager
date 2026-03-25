@@ -724,19 +724,78 @@
             expired_find = 'expire';
         }
         ttbm_function_filter_by_post_type( searchText, 'ttbm-tour-card', expired_find );
+        ttbm_reload_tour_list_by_filter(searchText);
     });
+    function ttbm_reload_tour_list_by_filter(selected_filter) {
+        let $loadMore = $('#ttbm-load-more');
+        if (!$loadMore.length) {
+            const loadMoreHtml = '<button id="ttbm-load-more" class="button" data-paged="2" data-posts-per-page="10" data-nonce="' + ttbm_admin_ajax.nonce + '"><i class="fas fa-sync-alt"></i> Load More (<span class="ttbm_load_more_remaining_travel">0</span>)</button>';
+            if ($('.ttbm-load-more-wrap').length) {
+                $('.ttbm-load-more-wrap').html(loadMoreHtml).show();
+            } else {
+                $('.ttbm-tour-list_holder').append('<div class="ttbm-load-more-wrap">' + loadMoreHtml + '</div>');
+            }
+            $loadMore = $('#ttbm-load-more');
+        }
+        let postPerPage = parseInt($loadMore.data('posts-per-page'), 10);
+        if (!postPerPage || postPerPage < 1) {
+            postPerPage = 10;
+        }
+        let searchText = $('#ttbm-tour-search').val() || '';
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'ttbm_search_tours',
+                paged: 1,
+                post_per_page: postPerPage,
+                selected_filter: selected_filter,
+                search_term: searchText,
+                nonce: ttbm_admin_ajax.nonce
+            },
+            beforeSend: function () {
+                $('.ttbm-tour-list').text('Loading...');
+            },
+            success: function (response) {
+                if (!(response && response.success && response.data && typeof response.data.html !== 'undefined')) {
+                    $('.ttbm-tour-list').html('<p>No tours found.</p>');
+                    $('#ttbm-load-more').hide();
+                    return;
+                }
+                $('.ttbm-tour-list').html(response.data.html);
+                let foundPosts = parseInt(response.data.found_posts || 0, 10);
+                let loadedPosts = $('.ttbm-tour-list .ttbm-tour-card').length;
+                let remaining = Math.max(foundPosts - loadedPosts, 0);
+                if ($loadMore.length) {
+                    if (remaining > 0) {
+                        $loadMore.attr('data-paged', 2);
+                        $loadMore.attr('data-posts-per-page', postPerPage);
+                        $loadMore.html('<i class="fas fa-sync-alt"></i> Load More (<span class="ttbm_load_more_remaining_travel">' + remaining + '</span>)');
+                        $loadMore.show();
+                    } else {
+                        $loadMore.hide();
+                    }
+                }
+            }
+        });
+    }
     function ttbm_function_filter_by_post_type( searchText, class_name, expired_find='' ){
         $('.'+class_name).each(function() {
             let by_filter = '';
+            let post_status = ($(this).data('travel-type') || '').toLowerCase();
             if( expired_find === 'expire' ){
                 by_filter = $(this).data('expire-tour').toLowerCase();
             }else{
-                by_filter = $(this).data('travel-type').toLowerCase();
+                by_filter = post_status;
             }
 
             if( searchText === 'all' ){
                 $(this).fadeIn();
             }else{
+                if (expired_find === 'expire' && post_status !== 'publish') {
+                    $(this).fadeOut();
+                    return;
+                }
                 if ( by_filter.includes( searchText ) ) {
                     $(this).fadeIn();
                 } else {

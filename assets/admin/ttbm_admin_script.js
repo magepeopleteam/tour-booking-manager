@@ -769,6 +769,8 @@
         const paged = parseInt(button.attr('data-paged'));
         const postPerPage = button.data('posts-per-page');
         const nonce = button.data('nonce');
+        const activeFilter = $('.ttbm_travel_filter_item.ttbm_filter_btn_active_bg_color').attr('data-filter-item') || 'all';
+        const searchTerm = $('#ttbm-tour-search').val() || '';
         let load_more_count = $(this).children('.ttbm_load_more_remaining_travel').text().trim();
         $.ajax({
             url: ttbm_admin_ajax.ajax_url,
@@ -778,6 +780,8 @@
                 paged: paged,
                 post_per_page: postPerPage,
                 nonce: nonce,
+                selected_filter: activeFilter,
+                search_term: searchTerm
             },
             beforeSend: function () {
                 button.text('Loading...');
@@ -786,15 +790,17 @@
                 if (response.success && response.data.html) {
                     $('.ttbm-tour-list').append(response.data.html);
                     if (paged >= response.data.max_pages) {
-                        button.remove();
+                        button.hide();
                     } else {
-                        let remainig_travel = load_more_count - response.data.count_travels;
-                        button.attr('data-paged', paged + 1).text('Load More');
+                        let foundPosts = parseInt(response.data.found_posts || 0, 10);
+                        let loadedPosts = $('.ttbm-tour-list .ttbm-tour-card').length;
+                        let remainig_travel = Math.max(foundPosts - loadedPosts, 0);
+                        button.attr('data-paged', paged + 1).show().text('Load More');
                         let remaining_span = '(<span class="ttbm_load_more_remaining_travel">' + remainig_travel + '</span>)';
                         button.append(remaining_span);
                     }
                 } else {
-                    button.remove();
+                    button.hide();
                 }
             }
         });
@@ -803,12 +809,14 @@
     $(document).on('input', '#ttbm-tour-search', function () {
         var search = $(this).val();
         var nonce = $(this).data('nonce');
+        const activeFilter = $('.ttbm_travel_filter_item.ttbm_filter_btn_active_bg_color').attr('data-filter-item') || 'all';
         $.ajax({
             url: ttbm_admin_ajax.ajax_url,
             type: 'POST',
             data: {
                 action: 'ttbm_search_tours',
                 search_term: search,
+                selected_filter: activeFilter,
                 nonce: ttbm_admin_ajax.nonce
             },
             beforeSend: function () {
@@ -818,13 +826,20 @@
                 if (response.success && response.data.html) {
                     $('.ttbm-tour-list').html('');
                     $('.ttbm-tour-list').append(response.data.html);
-                    if (paged >= response.data.max_pages) {
-                        button.remove();
+
+                    const $loadMoreButton = $('#ttbm-load-more');
+                    if ($loadMoreButton.length) {
+                        if (response.data.max_pages > 1) {
+                            $loadMoreButton.attr('data-paged', 2).show();
+                        } else {
+                            $loadMoreButton.hide();
+                        }
                     } else {
-                        button.attr('data-paged', paged + 1).text('Load More');
+                        // No button found in DOM, nothing to update.
                     }
                 } else {
-                    button.remove();
+                    $('.ttbm-tour-list').html('<p>No tours found.</p>');
+                    $('#ttbm-load-more').hide();
                 }
             }
         });

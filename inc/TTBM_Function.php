@@ -438,9 +438,11 @@
 			//*************Price*********************************//
 			public static function get_tour_start_price($tour_id, $start_date = ''): string {
 				$start_price = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_price');
+				$ttbm_display_price_start = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_price_start');
+
 				$ticket_list = self::get_ticket_type($tour_id);
 				$ticket_price = [];
-				if (!$start_price && !empty( $ticket_list ) && sizeof($ticket_list) > 0) {
+				if ((!$start_price || $ttbm_display_price_start=='off')  && !empty( $ticket_list ) && sizeof($ticket_list) > 0) {
 					if (!$start_date) {
 						$all_dates = TTBM_Function::get_date($tour_id);
 						$start_date = sizeof($all_dates) > 0 ? current($all_dates) : $start_date;

@@ -126,6 +126,8 @@ if (!class_exists('TTBM_Woocommerce_Plugin')) {
 				// Update repeated fields
 				self::update_repeated_fields();
 			}
+
+			
 			public function load_blocks() {
 				// Add block editor support
 				require_once TTBM_PLUGIN_DIR . '/support/blocks/index.php';

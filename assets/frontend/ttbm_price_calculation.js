@@ -70,6 +70,13 @@ function mpTourTicketQtyValidation(target, value) {
 function mpTourTicketQty(target, value) {
     let min = parseInt(target.attr('min'));
     let max = parseInt(target.attr('max'));
+    let parent = target.closest('.ttbm_registration_area');
+    let isSharedCapacity = target.closest('.ttbm_ticket_row').attr('data-shared-capacity-enabled') === '1';
+    value = ttbmConstrainSharedCapacity(target, value, parent);
+    max = parseInt(target.attr('max'));
+    if (isSharedCapacity && !isNaN(max) && max < min) {
+        min = 0;
+    }
     target.parents('.qtyIncDec').find('.incQty , .decQty').removeClass('mage_disabled');
     if (value < min || isNaN(value) || value === 0) {
         value = min;
@@ -80,8 +87,8 @@ function mpTourTicketQty(target, value) {
         target.parents('.qtyIncDec').find('.incQty').addClass('mage_disabled');
     }
     target.val(value);
-    let parent = target.closest('.ttbm_registration_area');
     ttbm_price_calculation(parent);
+    ttbmSyncSharedCapacityInputs(parent);
 }
 function mp_tour_ticket_qty(parent) {
     let totalQty = 0;
@@ -187,13 +194,111 @@ function ttbm_partial_payment_job(parent, total) {
         parent.find('.mep-pp-payment-terms .mep-pp-user-amountinput').attr('max', total);
     }
 }
+
+function ttbmGetSharedCapacityRows(parent) {
+    return parent.find('.ttbm_ticket_row[data-shared-capacity-enabled="1"]');
+}
+
+function ttbmGetSharedCapacityAvailable(parent) {
+    let totalAvailable = null;
+    ttbmGetSharedCapacityRows(parent).each(function () {
+        let rowAvailable = parseInt(jQuery(this).attr('data-shared-available-qty'));
+        if (!isNaN(rowAvailable)) {
+            totalAvailable = totalAvailable === null ? rowAvailable : Math.min(totalAvailable, rowAvailable);
+        }
+    });
+    return totalAvailable;
+}
+
+function ttbmGetSharedSelectedQty(parent, currentRow) {
+    let totalSelected = 0;
+    ttbmGetSharedCapacityRows(parent).each(function () {
+        if (currentRow && this === currentRow.get(0)) {
+            return;
+        }
+        let input = jQuery(this).find('.formControl[data-price]').first();
+        if (!input.length) {
+            return;
+        }
+        totalSelected += parseInt(input.val()) || 0;
+    });
+    return totalSelected;
+}
+
+function ttbmConstrainSharedCapacity(target, value, parent) {
+    let row = target.closest('.ttbm_ticket_row');
+    if (!row.length || row.attr('data-shared-capacity-enabled') !== '1') {
+        return value;
+    }
+
+    let totalAvailable = ttbmGetSharedCapacityAvailable(parent);
+    if (totalAvailable === null) {
+        return value;
+    }
+
+    let selectedOthers = ttbmGetSharedSelectedQty(parent, row);
+    let sharedMax = Math.max(0, totalAvailable - selectedOthers);
+    target.attr('max', sharedMax);
+
+    return value > sharedMax ? sharedMax : value;
+}
+
+function ttbmSyncSharedCapacityInputs(parent) {
+    let sharedRows = ttbmGetSharedCapacityRows(parent);
+    if (!sharedRows.length) {
+        return;
+    }
+
+    let totalAvailable = ttbmGetSharedCapacityAvailable(parent);
+    if (totalAvailable === null) {
+        return;
+    }
+
+    let hasCorrection = false;
+    sharedRows.each(function () {
+        let row = jQuery(this);
+        let input = row.find('.formControl[data-price]').first();
+        if (!input.length) {
+            return;
+        }
+
+        let min = parseInt(input.attr('min')) || 0;
+        let currentValue = parseInt(input.val()) || 0;
+        let selectedOthers = ttbmGetSharedSelectedQty(parent, row);
+        let sharedMax = Math.max(0, totalAvailable - selectedOthers);
+        let effectiveMin = sharedMax < min ? 0 : min;
+        let nextValue = currentValue > sharedMax ? sharedMax : currentValue;
+
+        input.attr('max', sharedMax);
+        if (nextValue !== currentValue) {
+            input.val(nextValue);
+            hasCorrection = true;
+        }
+
+        let controls = input.closest('.qtyIncDec');
+        controls.find('.incQty, .decQty').removeClass('mpDisabled mage_disabled');
+        if (nextValue <= effectiveMin) {
+            controls.find('.decQty').addClass('mpDisabled');
+        }
+        if (nextValue >= sharedMax) {
+            controls.find('.incQty').addClass('mpDisabled');
+        }
+    });
+
+    if (hasCorrection) {
+        ttbm_price_calculation(parent);
+    }
+}
+
 (function ($) {
     "use strict";
     var availabilityRequestState = {};
 
     $(document).ready(function () {
         $('body').find('.ttbm_registration_area').each(function () {
-            ttbm_price_calculation($(this));
+            let currentArea = $(this);
+            ttbm_price_calculation(currentArea);
+            ttbmSyncSharedCapacityInputs(currentArea);
         });
     });
     $(document).on("change", ".ttbm_registration_area .formControl[data-price]", function (e) {
@@ -312,6 +417,8 @@ function ttbm_partial_payment_job(parent, total) {
         $.each(availability, function (ticketName, info) {
             var row = scope.find('[data-ticket-name="' + ticketName + '"]');
             if (row.length === 0) return;
+            row.attr('data-shared-capacity-enabled', info.shared_capacity_enabled ? '1' : '0');
+            row.attr('data-shared-available-qty', info.shared_capacity_enabled ? info.available_qty : '');
 
             // Update available count
             var availableSpan = row.find('.ttbm_available_number');
@@ -398,6 +505,8 @@ function ttbm_partial_payment_job(parent, total) {
         } else {
             $('.ttbm_available_seat_area .ttbm_available_seat').first().text(totalAvailable);
         }
+
+        ttbmSyncSharedCapacityInputs(scope.closest('.ttbm_registration_area'));
     }
 
     function updateLastRefreshTime(ticketArea) {

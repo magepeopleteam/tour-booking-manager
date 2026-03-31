@@ -131,10 +131,6 @@ class TTBMTourTopFilterWidget extends Widget_Base {
     }
 
     protected function _content_template() {
-        ?>
-        <div class="elementor-ttbm-top-filter">
-            <?php esc_html_e('Tour Top Filter will be displayed here', 'tour-booking-manager'); ?>
-        </div>
-        <?php
+        // Keep Elementor preview on the server-rendered shortcode output.
     }
 } 

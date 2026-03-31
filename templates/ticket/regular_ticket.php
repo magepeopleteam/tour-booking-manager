@@ -88,7 +88,10 @@ if (!defined('ABSPATH')) {
 									$row_classes[] = 'ttbm_sold_out';
 								}
 								?>
-								<tr class="<?php echo esc_attr(implode(' ', $row_classes)); ?>" data-ticket-name="<?php echo esc_attr($ticket_name); ?>">
+								<tr class="<?php echo esc_attr(implode(' ', $row_classes)); ?>"
+									data-ticket-name="<?php echo esc_attr($ticket_name); ?>"
+									data-shared-capacity-enabled="<?php echo !empty($ticket_info['shared_capacity_enabled']) ? '1' : '0'; ?>"
+									data-shared-available-qty="<?php echo !empty($ticket_info['shared_capacity_enabled']) ? esc_attr($available) : ''; ?>">
 									<td class="ttbm-person-info">
 										<div class="person-info">
 											<?php if ($ticket_type_icon) { ?>

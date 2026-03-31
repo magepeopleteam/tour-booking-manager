@@ -161,8 +161,7 @@ function ttbm_alert($this, attr = 'alert') {
         $(".ttbm_style .date_type,.ttbm_style .date_type_without_year").on("keydown", function(e) {
             e.preventDefault();
         });
-        ttbm_load_date_picker();
-        $('.ttbm_select2').select2({});
+        ttbm_init_dynamic_ui(jQuery(document));
         
         // Clear hidden date fields when visible fields are cleared - global handler for WordPress admin
         function clearEmptyDateFields() {
@@ -237,6 +236,33 @@ function ttbm_loadCartBgImage() {
         }
     });
     return true;
+}
+function ttbm_init_dynamic_ui(scope = jQuery(document)) {
+    let $scope = scope && scope.jquery ? scope : jQuery(scope);
+    if (!$scope.length) {
+        return;
+    }
+
+    let $ttbmScope = $scope.filter('.ttbm_style');
+    if (!$ttbmScope.length) {
+        $ttbmScope = $scope.find('.ttbm_style');
+    }
+
+    if ($ttbmScope.length) {
+        ttbm_load_date_picker($ttbmScope);
+    }
+
+    if (jQuery.fn.select2) {
+        $scope.find('.ttbm_select2').each(function () {
+            let $select = jQuery(this);
+            if (!$select.hasClass('select2-hidden-accessible')) {
+                $select.select2({});
+            }
+        });
+    }
+
+    ttbm_loadBgImage();
+    ttbm_loadCartBgImage();
 }
 function ttbm_resize_bg_image_area(target, bg_url) {
     let tmpImg = new Image();
@@ -323,6 +349,35 @@ function ttbm_resize_bg_image_area(target, bg_url) {
         if (href) {
             window.location.href = href;
         }
+    });
+}(jQuery));
+(function ($) {
+    "use strict";
+
+    function initElementorWidget($scope) {
+        ttbm_init_dynamic_ui($scope);
+        setTimeout(function () {
+            ttbm_init_dynamic_ui($scope);
+        }, 150);
+    }
+
+    $(window).on('elementor/frontend/init', function () {
+        if (typeof elementorFrontend === 'undefined' || !elementorFrontend.hooks) {
+            return;
+        }
+
+        [
+            'ttbm-tour-list-widget',
+            'ttbm-tour-top-search-widget',
+            'ttbm-tour-top-filter-widget',
+            'ttbm-tour-location-list-widget',
+            'ttbm-tour-search-result-widget',
+            'ttbm-tour-hotel-list-widget',
+            'ttbm-tour-registration-widget',
+            'ttbm-tour-related-widget'
+        ].forEach(function (widgetName) {
+            elementorFrontend.hooks.addAction('frontend/element_ready/' + widgetName + '.default', initElementorWidget);
+        });
     });
 }(jQuery));
 //=============================================================================Change icon and text=================//

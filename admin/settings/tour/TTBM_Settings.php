@@ -4,10 +4,16 @@
 	} // Cannot access pages directly.
 	if (!class_exists('TTBM_Settings')) {
 		class TTBM_Settings {
+			private static $date_migration_snapshots = array();
+			private static $date_migration_notice_key = 'ttbm_date_migration_notice_';
+
 			public function __construct() {
 				add_action('add_meta_boxes', [$this, 'settings_meta']);
 				add_action('admin_init', [$this, 'tour_settings_meta_box'], 10);
+				add_action('save_post', [$this, 'capture_date_migration_snapshot'], 5, 1);
 				add_action('save_post', array($this, 'save_settings'), 99, 1);
+				add_action('save_post', [$this, 'sync_bookings_after_date_change'], 120, 1);
+				add_action('admin_notices', [$this, 'render_date_migration_notice']);
 			}
 			//************************//
 			public function settings_meta() {
@@ -236,6 +242,463 @@
 			}
 			public static function des_p($key) {
 				echo esc_html(self::des_array($key));
+			}
+
+			private function is_tour_settings_save_request($tour_id): bool {
+				if (!$tour_id || get_post_type($tour_id) != TTBM_Function::get_cpt_name()) {
+					return false;
+				}
+				if (!isset($_POST['ttbm_ticket_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_ticket_type_nonce'])), 'ttbm_ticket_type_nonce')) {
+					return false;
+				}
+				if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+					return false;
+				}
+				if (wp_is_post_revision($tour_id)) {
+					return false;
+				}
+				return current_user_can('edit_post', $tour_id);
+			}
+
+			public function capture_date_migration_snapshot($tour_id): void {
+				if (!$this->is_tour_settings_save_request($tour_id)) {
+					return;
+				}
+				self::$date_migration_snapshots[$tour_id] = $this->get_date_migration_snapshot($tour_id);
+			}
+
+			private function get_date_migration_snapshot($tour_id): array {
+				return array(
+					'tour_type' => TTBM_Function::get_tour_type($tour_id),
+					'ttbm_travel_type' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_type', 'fixed'),
+					'ttbm_travel_start_date' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date'),
+					'ttbm_travel_start_date_time' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time'),
+					'ttbm_travel_end_date' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_date'),
+					'ttbm_travel_end_time' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_time'),
+					'ttbm_travel_reg_end_date' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_reg_end_date'),
+					'reg_end_time' => TTBM_Global_Function::get_post_info($tour_id, 'reg_end_time'),
+					'ttbm_particular_dates' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_particular_dates', array()),
+					'ttbm_travel_repeated_start_date' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_date'),
+					'ttbm_travel_repeated_start_time' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_time'),
+					'ttbm_travel_repeated_after' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_after', 1),
+					'ttbm_repeat_type' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_repeat_type'),
+					'ttbm_repeat_number' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_repeat_number'),
+					'ttbm_travel_repeated_end_date' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_end_date'),
+					'mep_disable_ticket_time' => TTBM_Global_Function::get_post_info($tour_id, 'mep_disable_ticket_time', 'no'),
+					'mep_ticket_offdays' => TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_offdays', array()),
+					'mep_ticket_off_dates' => TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_off_dates', array()),
+				);
+			}
+
+			public function sync_bookings_after_date_change($tour_id): void {
+				if (!$this->is_tour_settings_save_request($tour_id)) {
+					return;
+				}
+				$before = self::$date_migration_snapshots[$tour_id] ?? array();
+				unset(self::$date_migration_snapshots[$tour_id]);
+				if (empty($before)) {
+					return;
+				}
+				$after = $this->get_date_migration_snapshot($tour_id);
+				$migration_map = $this->build_date_migration_map($tour_id, $before, $after);
+				if (empty($migration_map)) {
+					return;
+				}
+				$validation = $this->validate_booking_date_migration($tour_id, $migration_map);
+				if (is_wp_error($validation)) {
+					$this->restore_date_migration_snapshot($tour_id, $before);
+					TTBM_Function::update_upcoming_date_month($tour_id, true);
+					$this->set_date_migration_notice('error', $validation->get_error_message());
+					return;
+				}
+				$this->migrate_bookings_for_date_changes($tour_id, $migration_map);
+				TTBM_Function::update_upcoming_date_month($tour_id, true);
+			}
+
+			private function build_date_migration_map(int $tour_id, array $before, array $after): array {
+				if (($before['tour_type'] ?? '') !== 'general' || ($after['tour_type'] ?? '') !== 'general') {
+					return array();
+				}
+				$before_travel_type = $before['ttbm_travel_type'] ?? 'fixed';
+				$after_travel_type = $after['ttbm_travel_type'] ?? 'fixed';
+				if ($before_travel_type !== $after_travel_type) {
+					return array();
+				}
+				$migration_map = array();
+				if ($after_travel_type === 'fixed') {
+					$old_date = $this->build_fixed_booking_date($before);
+					$new_date = $this->build_fixed_booking_date($after);
+					if ($old_date && $new_date && $old_date !== $new_date) {
+						$migration_map[] = array(
+							'old_date' => $old_date,
+							'new_date' => $new_date,
+						);
+					}
+				}
+				if ($after_travel_type === 'particular') {
+					$old_rows = is_array($before['ttbm_particular_dates'] ?? null) ? $before['ttbm_particular_dates'] : array();
+					$new_rows = is_array($after['ttbm_particular_dates'] ?? null) ? $after['ttbm_particular_dates'] : array();
+					$row_count = min(count($old_rows), count($new_rows));
+					for ($i = 0; $i < $row_count; $i++) {
+						$old_date = $this->build_particular_booking_date($old_rows[$i] ?? array());
+						$new_date = $this->build_particular_booking_date($new_rows[$i] ?? array());
+						if ($old_date && $new_date && $old_date !== $new_date) {
+							$migration_map[] = array(
+								'old_date' => $old_date,
+								'new_date' => $new_date,
+							);
+						}
+					}
+				}
+				if ($after_travel_type === 'repeated') {
+					$migration_map = array_merge($migration_map, $this->build_repeated_date_migration_map($tour_id, $before, $after));
+				}
+				$unique_map = array();
+				foreach ($migration_map as $migration) {
+					$key = $migration['old_date'] . '|' . $migration['new_date'];
+					$unique_map[$key] = $migration;
+				}
+				return array_values($unique_map);
+			}
+
+			private function build_repeated_date_migration_map(int $tour_id, array $before, array $after): array {
+				$before_start = $before['ttbm_travel_repeated_start_date'] ?? '';
+				$after_start = $after['ttbm_travel_repeated_start_date'] ?? '';
+				if (!$before_start || !$after_start || strtotime($before_start) === false || strtotime($after_start) === false) {
+					return array();
+				}
+				$delta_seconds = strtotime($after_start . ' 00:00:00') - strtotime($before_start . ' 00:00:00');
+				if ($delta_seconds === 0) {
+					return array();
+				}
+				$stable_keys = array(
+					'ttbm_travel_repeated_after',
+					'ttbm_repeat_type',
+					'ttbm_repeat_number',
+					'mep_disable_ticket_time',
+				);
+				foreach ($stable_keys as $key) {
+					if (($before[$key] ?? '') !== ($after[$key] ?? '')) {
+						return array();
+					}
+				}
+				if (($before['mep_ticket_offdays'] ?? array()) !== ($after['mep_ticket_offdays'] ?? array())) {
+					return array();
+				}
+				if (($before['mep_ticket_off_dates'] ?? array()) !== ($after['mep_ticket_off_dates'] ?? array())) {
+					return array();
+				}
+				$migration_map = array();
+				foreach ($this->get_distinct_booking_dates_for_tour($tour_id) as $old_date) {
+					$new_date = $this->shift_booking_date_by_seconds($old_date, $delta_seconds);
+					if ($new_date && $new_date !== $old_date) {
+						$migration_map[] = array(
+							'old_date' => $old_date,
+							'new_date' => $new_date,
+						);
+					}
+				}
+				return $migration_map;
+			}
+
+			private function build_fixed_booking_date(array $snapshot): string {
+				$date = $snapshot['ttbm_travel_start_date'] ?? '';
+				if (!$date || strtotime($date) === false) {
+					return '';
+				}
+				return gmdate('Y-m-d', strtotime($date));
+			}
+
+			private function build_particular_booking_date(array $particular_date): string {
+				$date = $particular_date['ttbm_particular_start_date'] ?? '';
+				if (!$date || strtotime($date) === false) {
+					return '';
+				}
+				$date = gmdate('Y-m-d', strtotime($date));
+				$time = trim((string)($particular_date['ttbm_particular_start_time'] ?? ''));
+				if ($time) {
+					return gmdate('Y-m-d H:i', strtotime($date . ' ' . $time));
+				}
+				return $date;
+			}
+
+			private function get_distinct_booking_dates_for_tour(int $tour_id): array {
+				$args = array(
+					'post_type' => 'ttbm_booking',
+					'post_status' => 'publish',
+					'posts_per_page' => -1,
+					'fields' => 'ids',
+					'meta_query' => array(
+						array(
+							'key' => 'ttbm_id',
+							'value' => $tour_id,
+							'compare' => '=',
+						),
+					),
+				);
+				$booking_ids = get_posts($args);
+				$dates = array();
+				foreach ($booking_ids as $booking_id) {
+					$booking_date = TTBM_Global_Function::get_post_info($booking_id, 'ttbm_date');
+					if ($booking_date) {
+						$dates[$booking_date] = $booking_date;
+					}
+				}
+				return array_values($dates);
+			}
+
+			private function shift_booking_date_by_seconds(string $date, int $delta_seconds): string {
+				if (!$date || strtotime($date) === false || $delta_seconds === 0) {
+					return '';
+				}
+				$timestamp = strtotime($date) + $delta_seconds;
+				if (TTBM_Global_Function::check_time_exit_date($date)) {
+					return gmdate('Y-m-d H:i', $timestamp);
+				}
+				return gmdate('Y-m-d', $timestamp);
+			}
+
+			private function validate_booking_date_migration($tour_id, array $migration_map) {
+				$ticket_types = TTBM_Function::get_ticket_type($tour_id);
+				if (!is_array($ticket_types) || empty($ticket_types)) {
+					return true;
+				}
+				$date_deltas = array();
+				foreach ($migration_map as $migration) {
+					foreach ($ticket_types as $ticket_type) {
+						$ticket_name = $ticket_type['ticket_type_name'] ?? '';
+						if (!$ticket_name) {
+							continue;
+						}
+						$moved_qty = TTBM_Function::get_total_sold($tour_id, $migration['old_date'], $ticket_name);
+						if ($moved_qty < 1) {
+							continue;
+						}
+						$date_deltas[$migration['old_date']][$ticket_name] = ($date_deltas[$migration['old_date']][$ticket_name] ?? 0) - $moved_qty;
+						$date_deltas[$migration['new_date']][$ticket_name] = ($date_deltas[$migration['new_date']][$ticket_name] ?? 0) + $moved_qty;
+					}
+				}
+				foreach ($date_deltas as $date => $ticket_deltas) {
+					$availability = TTBM_Function::get_ticket_availability_info($tour_id, $date);
+					foreach ($ticket_deltas as $ticket_name => $delta) {
+						if ($delta <= 0) {
+							continue;
+						}
+						$available_qty = (int)($availability[$ticket_name]['available_qty'] ?? 0);
+						if ($delta > $available_qty) {
+							$formatted_date = $this->format_admin_migration_date($date);
+							return new WP_Error(
+								'ttbm_date_migration_capacity_conflict',
+								sprintf(
+									/* translators: 1: date, 2: ticket name */
+									__('Cannot move booked seats to %1$s. Not enough stock is available for ticket type "%2$s".', 'tour-booking-manager'),
+									$formatted_date,
+									$ticket_name
+								)
+							);
+						}
+					}
+				}
+				return true;
+			}
+
+			private function migrate_bookings_for_date_changes($tour_id, array $migration_map): void {
+				foreach ($migration_map as $migration) {
+					$order_ids = $this->get_order_ids_for_date_migration($tour_id, $migration['old_date']);
+					foreach ($order_ids as $order_id) {
+						$this->update_order_items_for_date_migration((int)$order_id, $tour_id, $migration['old_date'], $migration['new_date']);
+					}
+					$this->update_booking_posts_for_date_migration('ttbm_booking', $tour_id, $migration['old_date'], $migration['new_date']);
+					$this->update_booking_posts_for_date_migration('ttbm_service_booking', $tour_id, $migration['old_date'], $migration['new_date']);
+				}
+			}
+
+			private function get_order_ids_for_date_migration($tour_id, string $old_date): array {
+				$args = array(
+					'post_type' => 'ttbm_booking',
+					'post_status' => 'publish',
+					'posts_per_page' => -1,
+					'fields' => 'ids',
+					'meta_query' => array(
+						'relation' => 'AND',
+						array(
+							'key' => 'ttbm_id',
+							'value' => $tour_id,
+							'compare' => '=',
+						),
+						$this->get_date_meta_query_clause($old_date),
+					),
+				);
+				$order_ids = array();
+				$booking_ids = get_posts($args);
+				foreach ($booking_ids as $booking_id) {
+					$order_id = TTBM_Global_Function::get_post_info($booking_id, 'ttbm_order_id');
+					if ($order_id) {
+						$order_ids[] = (int)$order_id;
+					}
+				}
+				return array_values(array_unique(array_filter($order_ids)));
+			}
+
+			private function update_order_items_for_date_migration(int $order_id, int $tour_id, string $old_date, string $new_date): void {
+				$order = wc_get_order($order_id);
+				if (!$order) {
+					return;
+				}
+				$label_date_key = TTBM_Function::get_name() . ' ' . esc_html__('Date', 'tour-booking-manager');
+				$new_display_date = TTBM_Global_Function::date_format($new_date, TTBM_Global_Function::check_time_exit_date($new_date) ? 'full' : 'date');
+				foreach ($order->get_items() as $item) {
+					$item_tour_id = (int)TTBM_Global_Function::data_sanitize(TTBM_Global_Function::get_order_item_meta($item->get_id(), '_ttbm_id'));
+					$item_tour_id = (int)TTBM_Function::post_id_multi_language($item_tour_id);
+					if ($item_tour_id !== (int)TTBM_Function::post_id_multi_language($tour_id)) {
+						continue;
+					}
+					$item_date = TTBM_Global_Function::get_order_item_meta($item->get_id(), '_ttbm_date');
+					if (!$this->booking_dates_match($item_date, $old_date)) {
+						continue;
+					}
+					$item->update_meta_data('_ttbm_date', $new_date);
+					$ticket_info = TTBM_Global_Function::data_sanitize(TTBM_Global_Function::get_order_item_meta($item->get_id(), '_ttbm_ticket_info'));
+					if (is_array($ticket_info)) {
+						foreach ($ticket_info as $key => $ticket) {
+							if (is_array($ticket) && array_key_exists('ttbm_date', $ticket)) {
+								$ticket_info[$key]['ttbm_date'] = $new_date;
+							}
+						}
+						$item->update_meta_data('_ttbm_ticket_info', $ticket_info);
+					}
+					$service_info = TTBM_Global_Function::data_sanitize(TTBM_Global_Function::get_order_item_meta($item->get_id(), '_ttbm_service_info'));
+					if (is_array($service_info)) {
+						foreach ($service_info as $key => $service) {
+							if (is_array($service) && array_key_exists('ttbm_date', $service)) {
+								$service_info[$key]['ttbm_date'] = $new_date;
+							}
+						}
+						$item->update_meta_data('_ttbm_service_info', $service_info);
+					}
+					if ($item->get_meta($label_date_key, true) !== '') {
+						$item->update_meta_data($label_date_key, $new_display_date);
+					}
+					$item->save();
+				}
+				$order->save();
+			}
+
+			private function update_booking_posts_for_date_migration(string $post_type, int $tour_id, string $old_date, string $new_date): void {
+				$args = array(
+					'post_type' => $post_type,
+					'post_status' => 'publish',
+					'posts_per_page' => -1,
+					'fields' => 'ids',
+					'meta_query' => array(
+						'relation' => 'AND',
+						array(
+							'key' => 'ttbm_id',
+							'value' => $tour_id,
+							'compare' => '=',
+						),
+						$this->get_date_meta_query_clause($old_date),
+					),
+				);
+				$post_ids = get_posts($args);
+				foreach ($post_ids as $post_id) {
+					update_post_meta($post_id, 'ttbm_date', $new_date);
+				}
+			}
+
+			private function get_date_meta_query_clause(string $date): array {
+				if (TTBM_Global_Function::check_time_exit_date($date)) {
+					return array(
+						'key' => 'ttbm_date',
+						'value' => $date,
+						'compare' => '=',
+					);
+				}
+				return array(
+					'key' => 'ttbm_date',
+					'value' => gmdate('Y-m-d', strtotime($date)),
+					'compare' => 'LIKE',
+				);
+			}
+
+			private function booking_dates_match(string $stored_date, string $expected_date): bool {
+				if (!$stored_date || !$expected_date || strtotime($stored_date) === false || strtotime($expected_date) === false) {
+					return false;
+				}
+				if (TTBM_Global_Function::check_time_exit_date($expected_date)) {
+					return gmdate('Y-m-d H:i', strtotime($stored_date)) === gmdate('Y-m-d H:i', strtotime($expected_date));
+				}
+				return gmdate('Y-m-d', strtotime($stored_date)) === gmdate('Y-m-d', strtotime($expected_date));
+			}
+
+			private function restore_date_migration_snapshot(int $tour_id, array $snapshot): void {
+				$date_keys = array(
+					'ttbm_travel_type',
+					'ttbm_travel_start_date',
+					'ttbm_travel_start_date_time',
+					'ttbm_travel_end_date',
+					'ttbm_travel_end_time',
+					'ttbm_travel_reg_end_date',
+					'reg_end_time',
+					'ttbm_particular_dates',
+					'ttbm_travel_repeated_start_date',
+					'ttbm_travel_repeated_start_time',
+					'ttbm_travel_repeated_after',
+					'ttbm_repeat_type',
+					'ttbm_repeat_number',
+					'ttbm_travel_repeated_end_date',
+					'mep_disable_ticket_time',
+					'mep_ticket_offdays',
+					'mep_ticket_off_dates',
+				);
+				foreach ($date_keys as $key) {
+					update_post_meta($tour_id, $key, $snapshot[$key] ?? '');
+				}
+				clean_post_cache($tour_id);
+			}
+
+			private function format_admin_migration_date(string $date): string {
+				if (!$date || strtotime($date) === false) {
+					return $date;
+				}
+				$format = TTBM_Global_Function::check_time_exit_date($date) ? 'full' : 'date';
+				return TTBM_Global_Function::date_format($date, $format);
+			}
+
+			private function set_date_migration_notice(string $type, string $message): void {
+				$user_id = get_current_user_id();
+				if (!$user_id) {
+					return;
+				}
+				set_transient(self::$date_migration_notice_key . $user_id, array(
+					'type' => $type,
+					'message' => $message,
+				), 5 * MINUTE_IN_SECONDS);
+			}
+
+			public function render_date_migration_notice(): void {
+				if (!is_admin()) {
+					return;
+				}
+				$screen = function_exists('get_current_screen') ? get_current_screen() : null;
+				if ($screen && $screen->post_type !== TTBM_Function::get_cpt_name()) {
+					return;
+				}
+				$user_id = get_current_user_id();
+				if (!$user_id) {
+					return;
+				}
+				$notice = get_transient(self::$date_migration_notice_key . $user_id);
+				if (!$notice || empty($notice['message'])) {
+					return;
+				}
+				delete_transient(self::$date_migration_notice_key . $user_id);
+				$type = ($notice['type'] ?? 'error') === 'success' ? 'updated' : 'error';
+				?>
+				<div class="notice notice-<?php echo esc_attr($type); ?> is-dismissible">
+					<p><?php echo esc_html($notice['message']); ?></p>
+				</div>
+				<?php
 			}
 			//********************//
 			public function save_settings($tour_id) {

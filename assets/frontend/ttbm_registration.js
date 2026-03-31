@@ -162,21 +162,24 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
     });
     $(document).on("click", ".ttbm_registration_area .ttbm_check_ability", function () {
         let parent = $(this).closest('.ttbm_registration_area');
-        let date_val = parent.find('[name="ttbm_date"]').val();
+        let date_target = parent.find('[name="ttbm_date"]').first();
+        let has_date_field = date_target.length > 0;
+        let date_val = has_date_field ? date_target.val() : '';
         let time_slot = parent.find('.ttbm_select_time_area');
         let date_input = parent.find('#ttbm_select_date');
+        let date_field = date_input.length > 0 ? date_input : date_target;
 
         // Validation: Date is required
-        if (!date_val) {
+        if (has_date_field && !date_val) {
             // alert('Please Select Date');
-            date_input.css('border', '1px solid red');
+            date_field.css('border', '1px solid red');
             if (parent.find('.ttbm-date-error').length === 0) {
-                date_input.after('<span class="ttbm-date-error" style="color:red; font-size:12px; display:block; margin-top:5px;">Please Select Date</span>');
+                date_field.after('<span class="ttbm-date-error" style="color:red; font-size:12px; display:block; margin-top:5px;">Please Select Date</span>');
             }
-            date_input.trigger('focus');
+            date_field.trigger('focus');
             return;
-        } else {
-            date_input.css('border', '');
+        } else if (has_date_field) {
+            date_field.css('border', '');
             parent.find('.ttbm-date-error').remove();
         }
 
@@ -211,20 +214,23 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
     });
     $(document).on("click", ".ttbm_registration_area .ttbm_load_popup_reg", function () {
         let parent = $(this).closest('.ttbm_registration_area');
-        let date_val = parent.find('[name="ttbm_date"]').val();
+        let date_target = parent.find('[name="ttbm_date"]').first();
+        let has_date_field = date_target.length > 0;
+        let date_val = has_date_field ? date_target.val() : '';
         let time_slot = parent.find('.ttbm_select_time_area');
         let date_input = parent.find('#ttbm_select_date');
+        let date_field = date_input.length > 0 ? date_input : date_target;
 
         // Validation: Date is required
-        if (!date_val) {
-            date_input.css('border', '1px solid red');
+        if (has_date_field && !date_val) {
+            date_field.css('border', '1px solid red');
             if (parent.find('.ttbm-date-error').length === 0) {
-                date_input.after('<span class="ttbm-date-error" style="color:red; font-size:12px; display:block; margin-top:5px;">Please Select Date</span>');
+                date_field.after('<span class="ttbm-date-error" style="color:red; font-size:12px; display:block; margin-top:5px;">Please Select Date</span>');
             }
-            date_input.trigger('focus');
+            date_field.trigger('focus');
             return;
-        } else {
-            date_input.css('border', '');
+        } else if (has_date_field) {
+            date_field.css('border', '');
             parent.find('.ttbm-date-error').remove();
         }
 
@@ -245,7 +251,8 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
             }
         } else {
             parent.find('.registration_popup').trigger('click');
-            if (parent.find('#ttbm_select_date').length > 0 && parent.find('#ttbm_select_date').val()) {
+            let selected_date = has_date_field ? date_target.val() : '';
+            if (!has_date_field || selected_date) {
                 get_ttbm_ticket($(this));
             }
         }

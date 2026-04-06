@@ -115,7 +115,7 @@ if (!defined('ABSPATH')) {
 											<?php if ($regular_price) { ?>
 												<span class="ttbm_discount_badge">
 													<?php 
-													$discount_percentage = round((($regular_price - $price) / $regular_price) * 100);
+													$discount_percentage = round(((float)$regular_price - (float)$price) / (float)$regular_price * 100);
 													echo esc_html($discount_percentage . '% OFF');
 													?>
 												</span>

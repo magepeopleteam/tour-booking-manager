@@ -4,8 +4,42 @@ function formatDate(date) {
     let day = ('0' + date.getDate()).slice(-2);
     return `${year}/${month}/${day}`;
 }
+function ttbmHotelListInit(scope = jQuery(document)) {
+    let $scope = scope && scope.jquery ? scope : jQuery(scope);
+    if (!$scope.length) {
+        return;
+    }
+
+    let $containers = $scope.filter('.ttbm_filter_area').add($scope.find('.ttbm_filter_area')).filter(function () {
+        return jQuery(this).find('.ttbm_hotel_lists_wrapper').length > 0;
+    });
+
+    if (!$containers.length && $scope.find('.ttbm_hotel_lists_wrapper').length) {
+        $containers = $scope.find('.ttbm_hotel_lists_wrapper').closest('.ttbm_filter_area');
+    }
+
+    $containers.each(function () {
+        let $container = jQuery(this);
+        let $hotelCards = $container.find('.ttbm_hotel_lists_card');
+        let $loadMoreButton = $container.find('#ttbm_loadMoreHotels').first();
+        let itemsToShow = parseInt($container.find('#ttbm_number_of_show').first().val(), 10) || $hotelCards.length;
+
+        if (!$hotelCards.length) {
+            placeholderLoaderRemove($container.filter('.placeholderLoader').add($container.find('.placeholderLoader')));
+            return;
+        }
+
+        $hotelCards.hide().slice(0, itemsToShow).show();
+        $loadMoreButton.data('ttbmItemsToShow', itemsToShow);
+        $loadMoreButton.data('ttbmItemsIncrement', itemsToShow);
+        $loadMoreButton.toggle($hotelCards.length > itemsToShow);
+        placeholderLoaderRemove($container.filter('.placeholderLoader').add($container.find('.placeholderLoader')));
+    });
+}
+window.ttbmHotelListInit = ttbmHotelListInit;
 // hotel booking form will display 
 jQuery(document).ready(function ($) {
+    window.ttbmHotelListInit($(document));
     // $('.ttbm_hotel_room_check_availability').click();
     /*let current = $('.ttbm_hotel_room_check_availability').closest('.ttbm_hotel_item');
 
@@ -345,24 +379,19 @@ jQuery(document).ready(function ($) {
     // Initial call to show correct hotels on page load
     filterHotels();
 
-    let ttbm_itemsToShow = parseInt($("#ttbm_number_of_show").val(), 10);
-    let itemsIncrement = ttbm_itemsToShow;
-    let ttbmHotelCards = $(".ttbm_hotel_lists_card");
-    let ttbm_totalHotelItems = ttbmHotelCards.length;
-
-    ttbmHotelCards.hide();
-    ttbmHotelCards.slice(0, ttbm_itemsToShow).show();
     $(document).on( 'click' ,"#ttbm_loadMoreHotels", function () {
+        let parent = $(this).closest('.ttbm_filter_area');
+        let ttbm_itemsToShow = parseInt($(this).data('ttbmItemsToShow'), 10) || parseInt(parent.find("#ttbm_number_of_show").val(), 10) || 0;
+        let itemsIncrement = parseInt($(this).data('ttbmItemsIncrement'), 10) || ttbm_itemsToShow;
+        let ttbmHotelCards = parent.find(".ttbm_hotel_lists_card");
+        let ttbm_totalHotelItems = ttbmHotelCards.length;
         ttbm_itemsToShow += itemsIncrement;
+        $(this).data('ttbmItemsToShow', ttbm_itemsToShow);
         ttbmHotelCards.slice(0, ttbm_itemsToShow).fadeIn();
         if (ttbm_itemsToShow >= ttbm_totalHotelItems) {
             $(this).hide();
         }
     });
-
-    if (ttbm_itemsToShow >= ttbm_totalHotelItems) {
-        $("#ttbm_loadMoreHotels").hide();
-    }
 
 
     let startDate, endDate;

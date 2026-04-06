@@ -355,9 +355,31 @@ function ttbm_resize_bg_image_area(target, bg_url) {
     "use strict";
 
     function initElementorWidget($scope) {
+        let $target = $scope && $scope.jquery ? $scope : jQuery($scope);
+        let $placeholders = $target.filter('.ttbm_style.placeholderLoader').add($target.find('.ttbm_style.placeholderLoader'));
         ttbm_init_dynamic_ui($scope);
+        if (typeof window.ttbmShortcodeInit === 'function') {
+            window.ttbmShortcodeInit($scope);
+        }
+        if (typeof window.ttbmFilterPaginationInit === 'function') {
+            window.ttbmFilterPaginationInit($scope);
+        }
+        if (typeof window.ttbmHotelListInit === 'function') {
+            window.ttbmHotelListInit($scope);
+        }
+        placeholderLoaderRemove($placeholders);
         setTimeout(function () {
             ttbm_init_dynamic_ui($scope);
+            if (typeof window.ttbmShortcodeInit === 'function') {
+                window.ttbmShortcodeInit($scope);
+            }
+            if (typeof window.ttbmFilterPaginationInit === 'function') {
+                window.ttbmFilterPaginationInit($scope);
+            }
+            if (typeof window.ttbmHotelListInit === 'function') {
+                window.ttbmHotelListInit($scope);
+            }
+            placeholderLoaderRemove($placeholders);
         }, 150);
     }
 

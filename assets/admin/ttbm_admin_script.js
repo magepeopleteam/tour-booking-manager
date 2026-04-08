@@ -39,11 +39,15 @@
         let parent = $(this).closest('.ttbm_settings');
         if (ttbm_type === 'hotel') {
             parent.find('.ttbm_ticket_config').slideUp(250);
+            parent.find('.ttbma_group_price').slideUp(250);
+            parent.find('.ttbma_group_price_config').slideUp(250);
             parent.find('.ttbm_tour_hotel_setting').slideDown(250);
         } else {
             parent.find('.ttbm_ticket_config').slideDown(250);
+            parent.find('.ttbma_group_price').slideDown(250);
             parent.find('.ttbm_tour_hotel_setting').slideUp(250);
         }
+        parent.find('[name="ttbm_pricing_type"]').trigger('change');
     });
     //*********Pricing************//
     $(document).on('click', '.ttbm_price_config  .ttbm_add_item', function (e) {

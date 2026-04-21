@@ -61,6 +61,22 @@ function get_ttbm_ticket(current, date = '') {
     });
     parent.data('ttbmTicketRequest', ajaxRequest);
 }
+function ttbm_toggle_book_now_by_date(parent) {
+    if (!parent || parent.length < 1) {
+        return;
+    }
+    let dateTarget = parent.find('[name="ttbm_date"]').first();
+    if (dateTarget.length < 1) {
+        return;
+    }
+    let hasDate = !!dateTarget.val();
+    parent.find('.ttbm_book_now').each(function () {
+        jQuery(this)
+            .prop('disabled', !hasDate)
+            .toggleClass('mpDisabled', !hasDate)
+            .attr('aria-disabled', !hasDate ? 'true' : 'false');
+    });
+}
 function ttbm_sync_available_seat(parent) {
     let totalAvailable = parseInt(parent.find('#ttbm_total_available').first().text(), 10);
     if (isNaN(totalAvailable)) {
@@ -95,6 +111,11 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
 }
 (function ($) {
     "use strict";
+    $(document).ready(function () {
+        $('.ttbm_registration_area').each(function () {
+            ttbm_toggle_book_now_by_date($(this));
+        });
+    });
     $(document).on('change', '.ttbm_registration_area [name="ttbm_date"]', function () {
         let parent = $(this).closest('.ttbm_registration_area');
 
@@ -108,10 +129,15 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         // Show time slots if date is selected
         if (time_slot.length > 0) {
             time_slot.slideDown();
+            ttbm_toggle_book_now_by_date(parent);
             return true;
         } else {
             get_ttbm_ticket($(this));
         }
+        ttbm_toggle_book_now_by_date(parent);
+    });
+    $(document).on('ttbm:ticket-refreshed', '.ttbm_registration_area', function () {
+        ttbm_toggle_book_now_by_date($(this));
     });
 
     // Clear time validation error on selection

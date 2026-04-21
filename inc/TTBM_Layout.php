@@ -107,7 +107,7 @@
 				<?php
 			}
 			public static function qty_input($name, $available_seat, $ticket_qty_type, $default_qty, $min_qty, $max_qty, $ticket_price_raw, $input_name, $tour_id = '') {
-				$min_qty = max($default_qty, $min_qty);
+                $default_qty = max($default_qty, $min_qty);
 				$data_ticket_name = preg_replace('/[^A-Za-z0-9\-]/', '', $name);
 				// Show quantity input if available seats >= minimum quantity required
 				// This allows booking when tickets are available (e.g., 1 available with min_qty 0 or 1)

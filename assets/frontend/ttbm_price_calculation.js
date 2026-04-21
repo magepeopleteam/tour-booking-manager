@@ -342,15 +342,15 @@ function ttbmSyncSharedCapacityInputs(parent) {
     });
 
     // Enhanced Availability Updates
-    setInterval(function () {
+    /*setInterval(function () {
         updateTicketAvailability();
-    }, 30000);
+    }, 30000);*/
 
-    $(document).on('ttbm:ticket-refreshed', '.ttbm_registration_area', function () {
+    /*$(document).on('ttbm:ticket-refreshed', '.ttbm_registration_area', function () {
         updateTicketAvailability($(this));
-    });
+    });*/
 
-    function updateTicketAvailability(contextArea) {
+  /*  function updateTicketAvailability(contextArea) {
         var parent = contextArea && contextArea.length ? contextArea : $('.ttbm_registration_area:has(.ttbm_enhanced_ticket_area):first');
         if (!parent || parent.length === 0) return;
 
@@ -410,7 +410,7 @@ function ttbmSyncSharedCapacityInputs(parent) {
             }
         });
         availabilityRequestState[areaKey].xhr = xhr;
-    }
+    }*/
 
     function updateTicketDisplay(availability, ticketArea) {
         var scope = ticketArea && ticketArea.length ? ticketArea : $(document);

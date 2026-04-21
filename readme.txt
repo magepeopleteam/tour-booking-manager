@@ -469,6 +469,13 @@ Forntend settings fixed.
 Language setting issue fixed.
 - 11 Mar 2026*
 
+= Version 2.1.9 =
+- Removed unnecessary code
+- Resolved starting price issue
+- Improved performance and speed optimization
+
+Released on: 21 April 2026
+
 ### Customer Dashboard & Cancellations
 
 Allow your customers to view their bookings and request cancellations directly from a modern dashboard.

@@ -113,6 +113,7 @@
 				// This allows booking when tickets are available (e.g., 1 available with min_qty 0 or 1)
 				if ($available_seat >= $min_qty && $available_seat > 0) {
 					$effective_max = $max_qty > 0 ? min((int)$max_qty, (int)$available_seat) : (int)$available_seat;
+
 					?>
                     <div class="ticket-type-name"  data-ticket-type-name="<?php echo esc_attr($data_ticket_name); ?>">
 						<?php

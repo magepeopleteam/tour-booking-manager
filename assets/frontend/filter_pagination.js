@@ -1,7 +1,7 @@
 (function ($) {
 	"use strict";
 	$(document).ready(function () {
-		load_pagination_initial_item();
+		window.ttbmFilterPaginationInit(jQuery(document));
 
 		/*$("#ttbm_date-input_from").datepicker({
 			dateFormat: "MM d, yy", // Custom date format: March 20, 2024
@@ -363,9 +363,17 @@
 		let target = parent.find(item_class + ':nth-child(' + (start_item + 1) + ')');
 		pageScrollTo(target);
 	}
-	function load_pagination_initial_item() {
-		$('.ttbm_filter_area').each(function () {
-			list_filter($(this))
+	function load_pagination_initial_item(scope = jQuery(document)) {
+		let $scope = scope && scope.jquery ? scope : jQuery(scope);
+		let $areas = $scope.filter('.ttbm_filter_area');
+		if (!$areas.length) {
+			$areas = $scope.find('.ttbm_filter_area');
+		}
+		if (!$areas.length && !$scope.is(jQuery(document))) {
+			$areas = $('.ttbm_filter_area');
+		}
+		$areas.each(function () {
+			list_filter($(this));
 		});
 	}
 	function load_pagination(parent, pagination_page) {
@@ -429,6 +437,9 @@
 		parent.find('.qty_count').html($(parent).find(item_class + ':visible').length);
 		parent.find('.total_filter_qty').html($(parent).find(item_class).length);
 	}
+	window.ttbmFilterPaginationInit = function (scope) {
+		load_pagination_initial_item(scope);
+	};
 }(jQuery));
 function ttbm_pagination_page_management(parent, pagination_page, total_item) {
 	let per_page_item = parseInt(parent.find('input[name="pagination_per_page"]').val());

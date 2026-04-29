@@ -65,7 +65,7 @@
                                     <input value="<?php echo esc_attr($visible_start_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
                                 </label>
                                 <label class="_mT_xs">
-                                    <input type="time" name="ttbm_travel_start_time" class="formControl" value="<?php echo esc_attr($start_time); ?>"/>
+                                    <input type="time" name="ttbm_travel_start_time" class="formControl ttbm_travel_start_time" value="<?php echo esc_attr($start_time); ?>" onclick="document.querySelectorAll('.ttbm_travel_repeated_start_time').forEach(function(input){input.removeAttribute('name');});"/>
                                 </label>
                             </div>
                             <div class="fdColumn tLayout">
@@ -165,7 +165,7 @@
                                     <input value="<?php echo esc_attr($visible_start_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
                                 </label>
                                 <label class="_mT_xs">
-                                    <input type="time" name="ttbm_travel_start_time" class="formControl" value="<?php echo esc_attr($start_time); ?>"/>
+                                    <input type="time" name="" class="formControl ttbm_travel_repeated_start_time" value="<?php echo esc_attr($start_time); ?>" onclick="this.setAttribute('name', 'ttbm_travel_start_time');"/>
                                 </label>
                             </div>
 

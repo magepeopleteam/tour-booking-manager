@@ -18,14 +18,14 @@
 							<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
 							<?php
 							if ( is_plugin_active( 'tour-booking-manager-pro/tour-booking-manager-pro.php' ) ):
-								$location = TTBM_Function::get_full_location( $ttbm_post_id );
-								if ( $location && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_location', 'on' ) != 'off' ) {
-									?>
-								<span class="pL_xs pR_xs">|</span>
-							<?php }
-							endif; 
-							?>
-							<?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
+                                $location = TTBM_Function::get_full_location( $ttbm_post_id );
+                            if ( $location && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_location', 'on' ) != 'off' ) {
+                                ?>
+                                <span class="pL_xs pR_xs">|</span>
+                            <?php }
+                            endif;
+                            ?>
+                            <?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
 						</div>
                     </div>
 					<div class="ttbm_content_area">

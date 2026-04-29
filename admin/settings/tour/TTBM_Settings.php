@@ -272,7 +272,7 @@
 					'tour_type' => TTBM_Function::get_tour_type($tour_id),
 					'ttbm_travel_type' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_type', 'fixed'),
 					'ttbm_travel_start_date' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date'),
-					'ttbm_travel_start_date_time' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time'),
+					'ttbm_travel_start_time' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_time'),
 					'ttbm_travel_end_date' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_date'),
 					'ttbm_travel_end_time' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_time'),
 					'ttbm_travel_reg_end_date' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_reg_end_date'),
@@ -635,7 +635,7 @@
 				$date_keys = array(
 					'ttbm_travel_type',
 					'ttbm_travel_start_date',
-					'ttbm_travel_start_date_time',
+					'ttbm_travel_start_time',
 					'ttbm_travel_end_date',
 					'ttbm_travel_end_time',
 					'ttbm_travel_reg_end_date',
@@ -803,10 +803,10 @@
 					update_post_meta($tour_id, 'ttbm_travel_type', $ttbm_travel_type);
 					/***************/
 					$ttbm_travel_start_date = isset($_POST['ttbm_travel_start_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_start_date'])) : '';
-					$ttbm_travel_start_date_time = isset($_POST['ttbm_travel_start_date_time']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_start_date_time'])) : '';
+					$ttbm_travel_start_time = isset($_POST['ttbm_travel_start_time']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_start_time'])) : '';
 					$ttbm_travel_start_date = $ttbm_travel_start_date ? gmdate('Y-m-d', strtotime($ttbm_travel_start_date)) : '';
 					update_post_meta($tour_id, 'ttbm_travel_start_date', $ttbm_travel_start_date);
-					update_post_meta($tour_id, 'ttbm_travel_start_date_time', $ttbm_travel_start_date_time);
+					update_post_meta($tour_id, 'ttbm_travel_start_time', $ttbm_travel_start_time);
 					$ttbm_travel_end_time = isset($_POST['ttbm_travel_end_time']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_end_time'])) : '';
 					$ttbm_travel_end_date = isset($_POST['ttbm_travel_end_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_end_date'])) : '';
 					$ttbm_travel_end_date = $ttbm_travel_end_date ? gmdate('Y-m-d', strtotime($ttbm_travel_end_date)) : '';

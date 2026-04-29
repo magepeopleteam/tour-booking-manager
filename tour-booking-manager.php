@@ -18,7 +18,7 @@ if (!class_exists('TTBM_Woocommerce_Plugin')) {
 
 
 	class TTBM_Woocommerce_Plugin {
-        
+
 			public function __construct() {
 				$this->load_ttbm_plugin();
 				add_action('init', array($this, 'load_blocks'));

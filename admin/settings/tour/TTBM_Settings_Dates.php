@@ -45,7 +45,7 @@
 				$start_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date');
 				$hidden_start_date = $start_date ? gmdate('Y-m-d', strtotime($start_date)) : '';
 				$visible_start_date = $start_date ? date_i18n($date_format, strtotime($start_date)) : '';
-				$start_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
+				$start_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_time');
 				$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_date');
 				$end_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_time');
 				$hidden_end_date = $end_date ? gmdate('Y-m-d', strtotime($end_date)) : '';
@@ -65,7 +65,7 @@
                                     <input value="<?php echo esc_attr($visible_start_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
                                 </label>
                                 <label class="_mT_xs">
-                                    <input type="time" name="ttbm_travel_start_date_time" class="formControl" value="<?php echo esc_attr($start_time); ?>"/>
+                                    <input type="time" name="ttbm_travel_start_time" class="formControl" value="<?php echo esc_attr($start_time); ?>"/>
                                 </label>
                             </div>
                             <div class="fdColumn tLayout">
@@ -128,7 +128,7 @@
 				$date_format = TTBM_Global_Function::date_picker_format();
 				$now = date_i18n($date_format, strtotime(current_time('Y-m-d')));
 				$start_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_date');
-				$start_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_time');
+				$start_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_time');
 				$hidden_start_date = $start_date ? gmdate('Y-m-d', strtotime($start_date)) : '';
 				$visible_start_date = $start_date ? date_i18n($date_format, strtotime($start_date)) : '';
 				$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_end_date');
@@ -165,7 +165,7 @@
                                     <input value="<?php echo esc_attr($visible_start_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
                                 </label>
                                 <label class="_mT_xs">
-                                    <input type="time" name="ttbm_travel_repeated_start_time" class="formControl" value="<?php echo esc_attr($start_time); ?>"/>
+                                    <input type="time" name="ttbm_travel_start_time" class="formControl" value="<?php echo esc_attr($start_time); ?>"/>
                                 </label>
                             </div>
 

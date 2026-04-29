@@ -161,7 +161,7 @@
 				} else {
 					$date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date');
 					if ($date) {
-						$time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
+						$time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_time');
 						$full_date = $time ? $date . ' ' . $time : $date . ' ' . '23:59:59';
 						$tour_status = self::get_tour_status($tour_id);
 						$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_reg_end_date');
@@ -319,14 +319,14 @@
 							}
 						}
 						if (sizeof($result_times) === 0) {
-							$fallback = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
+							$fallback = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_time');
 							if ($fallback) {
 								$result_times[] = $fallback;
 							}
 						}
 						return apply_filters('ttbm_get_time', $result_times, $tour_id, $date, $expire);
 					}
-					$time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
+					$time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_time');
 					return apply_filters('ttbm_get_time', $time, $tour_id, $date, $expire);
 				}
 				return false;

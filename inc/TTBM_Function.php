@@ -553,7 +553,7 @@
 					$ticket_list = self::get_ticket_type($tour_id);
 					if (sizeof($ticket_list) > 0) {
 						foreach ($ticket_list as $_ticket_list) {
-							$total_seat = $_ticket_list['ticket_type_qty'] + $total_seat;
+							$total_seat = (int)$_ticket_list['ticket_type_qty'] + $total_seat;
 						}
 					}
 				}
@@ -567,7 +567,7 @@
 					if (sizeof($ticket_list) > 0) {
 						foreach ($ticket_list as $_ticket_list) {
 							if (array_key_exists('ticket_type_resv_qty', $_ticket_list) && $_ticket_list['ticket_type_resv_qty'] > 0) {
-								$reserve = $_ticket_list['ticket_type_resv_qty'] + $reserve;
+								$reserve = (int)$_ticket_list['ticket_type_resv_qty'] + $reserve;
 							}
 						}
 					}

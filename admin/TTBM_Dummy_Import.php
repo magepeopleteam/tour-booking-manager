@@ -183,11 +183,11 @@
 
 			public static function dummy_images() {
 				$urls = array(
-					'https://img.freepik.com/free-photo/blue-villa-beautiful-sea-hotel_1203-5316.jpg',
-					'https://img.freepik.com/free-photo/beautiful-mountains-ratchaprapha-dam-khao-sok-national-park-surat-thani-province-thailand_335224-851.jpg',
-					'https://img.freepik.com/free-photo/photographer-taking-picture-ocean-coast_657883-287.jpg',
-					'https://img.freepik.com/free-photo/pileh-blue-lagoon-phi-phi-island-thailand_231208-1487.jpg',
-					'https://img.freepik.com/free-photo/godafoss-waterfall-sunset-winter-iceland-guy-red-jacket-looks-godafoss-waterfall_335224-673.jpg',
+					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/image-1.jpg',
+					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/image-2.jpg',
+					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/image-3.jpg',
+					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/image-4.jpg',
+					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/image-5.jpg',
 				);
 				unset($image_ids);
 				$image_ids = array();
@@ -199,11 +199,11 @@
 
 			public static function hotel_dummy_images() {
 				$urls = array(
-					'https://img.freepik.com/free-photo/type-entertainment-complex-popular-resort-with-pools-water-parks-turkey-with-more-than-5-million-visitors-year-amara-dolce-vita-luxury-hotel-resort-tekirova-kemer_146671-18728.jpg',
-					'https://img.freepik.com/free-photo/modern-studio-apartment-design-with-bedroom-living-space_1262-12375.jpg',
-					'https://img.freepik.com/free-photo/full-shot-man-carrying-baggage_23-2149963942.jpg',
-					'https://img.freepik.com/premium-photo/luxury-tropical-bedroom-suite-resort-hotel-with-wardrobe_105762-1853.jpg',
-					'https://img.freepik.com/premium-photo/high-end-clean-atmospheric-hotel-rooms_149197-85.jpg',
+					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-1.jpg',
+					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-2.jpg',
+					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-3.jpg',
+					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-4.jpg',
+					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/hotel/image-5.jpg',
 				);
 				unset($image_ids);
 				$image_ids = array();
@@ -1576,7 +1576,7 @@
 										'Rural',
 									],
 									'ttbm_display_slider_hotel' => 'on',
-									'ttbm_gallery_images_hotel' => array(0,1, 2, 3, 4),
+									'ttbm_gallery_images_hotel' => array(1, 2, 3, 4, 0),
 								]
 							],
 							[
@@ -1714,7 +1714,7 @@
 										'Rural',
 									],
 									'ttbm_display_slider_hotel' => 'on',
-									'ttbm_gallery_images_hotel' => array(0,1, 2, 3, 4),
+									'ttbm_gallery_images_hotel' => array(2, 3, 4, 1, 0),
 								]
 							],
 						]

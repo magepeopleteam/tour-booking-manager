@@ -318,11 +318,7 @@
 												} else {
 													update_post_meta($post_id, 'ttbm_gallery_images', array(isset($dummy_images[$data]) ? $dummy_images[$data] : ''));
 												}
-											} else {
-												update_post_meta($post_id, $meta_key, $data);
-											}
-
-											if ($meta_key == 'ttbm_gallery_images_hotel') {
+											} elseif ($meta_key == 'ttbm_gallery_images_hotel') {
 												if (is_array($data)) {
 													$thumnail_ids = array();
 													foreach ($data as $url_index) {
@@ -430,7 +426,9 @@
 					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-2.jpg',
 					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-3.jpg',
 					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-4.jpg',
-					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/hotel/image-5.jpg',
+					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/hotel/hotel-5.jpg',
+					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/hotel/hotel-6.jpg',
+					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/hotel/hotel-7.jpg',
 				);
 				unset($image_ids);
 				$image_ids = array();
@@ -1665,7 +1663,7 @@
 										'Rural',
 									],
 									'ttbm_display_slider_hotel' => 'on',
-									'ttbm_gallery_images_hotel' => array(0,1, 2, 3, 4),
+									'ttbm_gallery_images_hotel' => array( 0, 1, 2, 3, 4, 5),
 								]
 							],
 							[
@@ -1803,7 +1801,7 @@
 										'Rural',
 									],
 									'ttbm_display_slider_hotel' => 'on',
-									'ttbm_gallery_images_hotel' => array(1, 2, 3, 4, 0),
+									'ttbm_gallery_images_hotel' => array(1,2,3,4,5,0),
 								]
 							],
 							[
@@ -1941,7 +1939,7 @@
 										'Rural',
 									],
 									'ttbm_display_slider_hotel' => 'on',
-									'ttbm_gallery_images_hotel' => array(2, 3, 4, 1, 0),
+									'ttbm_gallery_images_hotel' => array( 2,3,4,5,0,1),
 								]
 							],
 						]

@@ -11,22 +11,31 @@
 	if ( sizeof( $all_dates ) > 0 && $travel_type == 'fixed' ) {
 		$start_date = $all_dates['date'];
 		$end_date   = $all_dates['checkout_date'];
+		$start_time = TTBM_Function::get_time( $tour_id, $start_date );
+		if ( is_array( $start_time ) ) {
+			$start_time = sizeof( $start_time ) > 0 ? current( $start_time ) : '';
+		}
+		$start_date_time = $start_time ? $start_date . ' ' . $start_time : $start_date;
+		$end_time = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_travel_end_time' );
+		$end_date_time = $end_time ? $end_date . ' ' . $end_time : $end_date;
 		?>
 		<div class="allCenter ttbm_date_time_select">
 			<div class="justifyCenter ttbm_select_date_area">
 				<h5 class="textWhite">
 					<?php
-						echo esc_html( TTBM_Function::get_name() ) . '&nbsp;' 
+						echo esc_html( TTBM_Function::get_name() ) . '&nbsp;'
 						. esc_html__( 'Date : ', 'tour-booking-manager' ) . '&nbsp;' 
-						. esc_html( TTBM_Global_Function::date_format( $start_date ) );
+						. esc_html( TTBM_Global_Function::date_format( $start_date_time, 'full' ) );
 
 						if ( array_key_exists( 'checkout_date', $all_dates ) && $all_dates['checkout_date'] ) {
 							echo '&nbsp;' . esc_html__( '-', 'tour-booking-manager' ) . '&nbsp;' 
-							. esc_html( TTBM_Global_Function::date_format( $end_date ) );
+							. esc_html( TTBM_Global_Function::date_format( $end_date_time, 'full' ) );
 						}
 						if ( $tour_type == 'hotel' && $start_date && $end_date ) {
+							$hidden_start_date_time = $start_time ? $start_date . ' ' . $start_time : $start_date;
+							$hidden_end_date_time = $end_time ? $end_date . ' ' . $end_time : $end_date;
 							?>
-							<input type="hidden" name="ttbm_hotel_date_range" value="<?php echo esc_attr( gmdate( 'Y/m/d', strtotime( $start_date ) ) ) . '    -     ' . esc_attr( gmdate( 'Y/m/d', strtotime( $end_date ) ) ); ?>"/>
+							<input type="hidden" name="ttbm_hotel_date_range" value="<?php echo esc_attr( gmdate( 'Y/m/d H:i', strtotime( $hidden_start_date_time ) ) ) . '    -     ' . esc_attr( gmdate( 'Y/m/d H:i', strtotime( $hidden_end_date_time ) ) ); ?>"/>
 							<?php
 						}
 					?>

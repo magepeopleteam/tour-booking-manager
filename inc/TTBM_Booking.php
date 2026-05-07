@@ -26,11 +26,14 @@
 
 				$date_only = date('Y-m-d', strtotime($date));
 				$times = TTBM_Function::get_time($tour_id, $date_only, 'yes');
+				$first_time = '';
 				if (is_array($times) && !empty($times)) {
 					$first_time = is_array($times[0]) ? ($times[0]['time'] ?? '') : $times[0];
-					if ($first_time) {
-						return date('Y-m-d H:i', strtotime($date_only . ' ' . $first_time));
-					}
+				} elseif (!is_array($times) && !empty($times)) {
+					$first_time = $times;
+				}
+				if ($first_time) {
+					return date('Y-m-d H:i', strtotime($date_only . ' ' . $first_time));
 				}
 				return $date_only;
 			}
@@ -101,12 +104,18 @@
 		public function booking_panel($tour_id, $tour_date = '', $hotel_id = '') {
 				$tour_date = $tour_date ?: current(TTBM_Function::get_date($tour_id));
 				$tour_date = TTBM_Function::get_date_by_time_check($tour_id, $tour_date, '');
+				$tour_start_datetime = $this->normalize_tour_date($tour_id, $tour_date);
+				$tour_start_datetime = $tour_start_datetime ?: $tour_date;
+				$tour_end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_date');
+				$tour_end_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_time');
+				$tour_end_datetime = $tour_end_date ? $tour_end_date . ( $tour_end_time ? ' ' . $tour_end_time : '' ) : '';
 				if ($tour_date) {
 					$action = apply_filters('ttbm_form_submit_path', '', $tour_id);
 					?>
                     <form action="<?php echo esc_attr($action); ?>" method='post' class="mp_tour_ticket_form">
 						<?php wp_nonce_field('ttbm_form_nonce', 'ttbm_form_nonce'); ?>
-                        <input type="hidden" name='ttbm_start_date' id='ttbm_tour_datetime' value='<?php echo esc_attr($tour_date); ?>'/>
+                        <input type="hidden" name='ttbm_start_date' id='ttbm_tour_datetime' value='<?php echo esc_attr($tour_start_datetime); ?>'/>
+                        <input type="hidden" name='ttbm_end_date' id='ttbm_tour_end_datetime' value='<?php echo esc_attr($tour_end_datetime); ?>'/>
                         <input type="hidden" name='ttbm_total_price' id="ttbm_total_price" value='0'/>
 						<?php do_action('ttbm_booking_panel_inside_form', $tour_id, $hotel_id); ?>
 						<?php

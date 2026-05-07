@@ -5,7 +5,7 @@ Tags: tour-booking, tour-operator, travel, travel-booking, travel-agency
 Requires at least: 4.4.0
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2.0.0
+Stable tag: 2.2.0
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -468,6 +468,21 @@ Bug Fixed
 Forntend settings fixed.
 Language setting issue fixed.
 - 11 Mar 2026*
+
+= Version 2.1.9 =
+- Removed unnecessary code
+- Resolved starting price issue
+- Improved performance and speed optimization
+
+Released on: 21 April 2026
+
+
+= Version 2.2.0 =
+- Tour start date and end date, time added in checkout and order details.
+- Hide other add-on code.
+
+
+
 
 ### Customer Dashboard & Cancellations
 

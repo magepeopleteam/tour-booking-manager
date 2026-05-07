@@ -161,7 +161,7 @@
 				} else {
 					$date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date');
 					if ($date) {
-						$time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
+						$time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_time');
 						$full_date = $time ? $date . ' ' . $time : $date . ' ' . '23:59:59';
 						$tour_status = self::get_tour_status($tour_id);
 						$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_reg_end_date');
@@ -319,14 +319,14 @@
 							}
 						}
 						if (sizeof($result_times) === 0) {
-							$fallback = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
+							$fallback = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_time');
 							if ($fallback) {
 								$result_times[] = $fallback;
 							}
 						}
 						return apply_filters('ttbm_get_time', $result_times, $tour_id, $date, $expire);
 					}
-					$time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
+					$time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_time');
 					return apply_filters('ttbm_get_time', $time, $tour_id, $date, $expire);
 				}
 				return false;
@@ -438,9 +438,11 @@
 			//*************Price*********************************//
 			public static function get_tour_start_price($tour_id, $start_date = ''): string {
 				$start_price = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_price');
+				$ttbm_display_price_start = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_price_start');
+
 				$ticket_list = self::get_ticket_type($tour_id);
 				$ticket_price = [];
-				if (!$start_price && !empty( $ticket_list ) && sizeof($ticket_list) > 0) {
+				if ((!$start_price || $ttbm_display_price_start=='off')  && !empty( $ticket_list ) && sizeof($ticket_list) > 0) {
 					if (!$start_date) {
 						$all_dates = TTBM_Function::get_date($tour_id);
 						$start_date = sizeof($all_dates) > 0 ? current($all_dates) : $start_date;

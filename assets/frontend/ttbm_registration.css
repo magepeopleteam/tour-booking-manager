@@ -2933,3 +2933,10 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
         font-size: 16px;
     }
 }
+
+.ttbm-seasonal-price-info {
+	display: flex;
+	flex-direction: column;
+	margin-top: 5px;
+	font-size: 12px;
+}

@@ -15,47 +15,48 @@ if (!defined('ABSPATH')) {
         <div id="particular_item_area">
 			<?php
 				if ($tour_type == 'general') {
-					foreach ($all_dates as $date) {
-						$times = TTBM_Function::get_time($tour_id, $date);
-						if (is_array($times) && sizeof($times) > 0) {
-							foreach ($times as $time) {
-								$full_date = $date . ' ' . $time;
-								?>
-                                <div class="fdColumn particular_date_area ttbm_registration_area">
-                                    <input type="hidden" name="ttbm_id" value="<?php echo esc_attr($tour_id); ?>"/>
-                                    <input type="hidden" name="ttbm_particular_date" value="<?php echo esc_attr(gmdate('Y-m-d H:i', strtotime($full_date))); ?>"/>
-                                    <div class="particular_date_item">
-                                        <div class="flexColumn">
-											<h6><?php echo esc_html( TTBM_Global_Function::date_format( $full_date, 'l' ) ); ?></h6>
-											<h6><?php echo esc_html( TTBM_Global_Function::date_format( $full_date ) ); ?></h6>
-											<h6><?php echo esc_html( TTBM_Global_Function::date_format( $full_date, 'time' ) ); ?></h6>
-                                        </div>
-                                        <h4><span class="far fa-arrow-alt-circle-right"></span></h4>
-										<?php
-											foreach ($particular_dates as $particular_date) {
-												if (strtotime($particular_date['ttbm_particular_start_date']) == strtotime($date)) {
-													?>
-                                                    <div class="flexColumn">
-                                                        <h6><?php echo esc_html(TTBM_Global_Function::date_format($particular_date['ttbm_particular_end_date'], 'l')); ?></h6>
-                                                        <h6><?php echo esc_html(TTBM_Global_Function::date_format($particular_date['ttbm_particular_end_date'])); ?></h6>
-                                                    </div>
-													<?php
-												}
-											}
-										?>
-                                        <h4><?php 
-										// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  
-										echo wc_price(TTBM_Function::get_tour_start_price($tour_id, $full_date)); ?></h4>
-                                        <button type="button" class="dButton_xs get_particular_ticket">
-											<?php esc_html_e('Confirm Dates', 'tour-booking-manager'); ?>
-                                        </button>
-                                    </div>
-                                    <div class="ttbm_booking_panel">
-                                    </div>
-                                </div>
-								<?php
-							}
+					foreach ($particular_dates as $particular_date) {
+						$start_date = $particular_date['ttbm_particular_start_date'] ?? '';
+						$end_date = $particular_date['ttbm_particular_end_date'] ?? '';
+						$start_time = $particular_date['ttbm_particular_start_time'] ?? '';
+						if (!$start_date) {
+							continue;
 						}
+						$booking_date = $start_time ? $start_date . ' ' . $start_time : $start_date;
+						$normalized_booking_date = TTBM_Function::get_date_by_time_check($tour_id, $booking_date, '');
+						if (!$normalized_booking_date) {
+							continue;
+						}
+						?>
+                        <div class="fdColumn particular_date_area ttbm_registration_area">
+                            <input type="hidden" name="ttbm_id" value="<?php echo esc_attr($tour_id); ?>"/>
+                            <input type="hidden" name="ttbm_particular_date" value="<?php echo esc_attr($normalized_booking_date); ?>"/>
+                            <div class="particular_date_item">
+                                <div class="flexColumn">
+									<h6><?php echo esc_html(TTBM_Global_Function::date_format($booking_date, 'l')); ?></h6>
+									<h6><?php echo esc_html(TTBM_Global_Function::date_format($booking_date)); ?></h6>
+									<?php if ($start_time) { ?>
+                                        <h6><?php echo esc_html(TTBM_Global_Function::date_format($booking_date, 'time')); ?></h6>
+									<?php } ?>
+                                </div>
+                                <h4><span class="far fa-arrow-alt-circle-right"></span></h4>
+								<?php if ($end_date) { ?>
+                                    <div class="flexColumn">
+                                        <h6><?php echo esc_html(TTBM_Global_Function::date_format($end_date, 'l')); ?></h6>
+                                        <h6><?php echo esc_html(TTBM_Global_Function::date_format($end_date)); ?></h6>
+                                    </div>
+								<?php } ?>
+                                <h4><?php
+								// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								echo wc_price(TTBM_Function::get_tour_start_price($tour_id, $normalized_booking_date)); ?></h4>
+                                <button type="button" class="dButton_xs get_particular_ticket">
+									<?php esc_html_e('Confirm Dates', 'tour-booking-manager'); ?>
+                                </button>
+                            </div>
+                            <div class="ttbm_booking_panel">
+                            </div>
+                        </div>
+						<?php
 					}
 				}
 				if ($tour_type == 'hotel') {

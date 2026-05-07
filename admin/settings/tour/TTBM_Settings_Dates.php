@@ -45,7 +45,7 @@
 				$start_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date');
 				$hidden_start_date = $start_date ? gmdate('Y-m-d', strtotime($start_date)) : '';
 				$visible_start_date = $start_date ? date_i18n($date_format, strtotime($start_date)) : '';
-				$start_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date_time');
+				$start_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_time');
 				$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_date');
 				$end_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_time');
 				$hidden_end_date = $end_date ? gmdate('Y-m-d', strtotime($end_date)) : '';
@@ -65,7 +65,7 @@
                                     <input value="<?php echo esc_attr($visible_start_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
                                 </label>
                                 <label class="_mT_xs">
-                                    <input type="time" name="ttbm_travel_start_date_time" class="formControl" value="<?php echo esc_attr($start_time); ?>"/>
+                                    <input type="time" name="ttbm_travel_start_time" class="formControl ttbm_travel_start_time" value="<?php echo esc_attr($start_time); ?>" onclick="document.querySelectorAll('.ttbm_travel_repeated_start_time').forEach(function(input){input.removeAttribute('name');});"/>
                                 </label>
                             </div>
                             <div class="fdColumn tLayout">
@@ -128,7 +128,7 @@
 				$date_format = TTBM_Global_Function::date_picker_format();
 				$now = date_i18n($date_format, strtotime(current_time('Y-m-d')));
 				$start_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_date');
-				$start_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_time');
+				$start_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_time');
 				$hidden_start_date = $start_date ? gmdate('Y-m-d', strtotime($start_date)) : '';
 				$visible_start_date = $start_date ? date_i18n($date_format, strtotime($start_date)) : '';
 				$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_end_date');
@@ -165,7 +165,7 @@
                                     <input value="<?php echo esc_attr($visible_start_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
                                 </label>
                                 <label class="_mT_xs">
-                                    <input type="time" name="ttbm_travel_repeated_start_time" class="formControl" value="<?php echo esc_attr($start_time); ?>"/>
+                                    <input type="time" name="" class="formControl ttbm_travel_repeated_start_time" value="<?php echo esc_attr($start_time); ?>" onclick="this.setAttribute('name', 'ttbm_travel_start_time');"/>
                                 </label>
                             </div>
 
@@ -206,31 +206,33 @@
                         <div class="ttbm-header">
                             <h4><i class="fas fa-calendar-days"></i><?php esc_html_e('Optional Tour Configuration', 'tour-booking-manager'); ?></h4>
                         </div>
-                        <div class="gptLayout ttbm-ticket-time">
-                            <h6><?php esc_html_e('Tour Time Slots Configuration', 'tour-booking-manager'); ?><?php TTBM_Custom_Layout::switch_button('mep_disable_ticket_time', $checked_time); ?></h6>
-                            <div data-collapse="#mep_disable_ticket_time" class="_mT <?php echo esc_attr($active_time); ?>">
-								<?php
-									$all_time_slot_infos = self::time_slot_array();
-									if (sizeof($all_time_slot_infos) > 0) {
-										?>
+
+                        <?php if ( is_plugin_active( 'tour-booking-manager-pro/tour-booking-manager-pro.php' ) ){ ?>
+                            <div class="gptLayout ttbm-ticket-time">
+                                <h6><?php esc_html_e('Tour Time Slots Configuration', 'tour-booking-manager'); ?><?php TTBM_Custom_Layout::switch_button('mep_disable_ticket_time', $checked_time); ?></h6>
+                                <div data-collapse="#mep_disable_ticket_time" class="_mT <?php echo esc_attr($active_time); ?>">
+                                    <?php
+                                    $all_time_slot_infos = self::time_slot_array();
+                                    if (sizeof($all_time_slot_infos) > 0) {
+                                        ?>
                                         <div class="ttbmTabs _mT">
                                             <ul class="tabLists">
-												<?php foreach ($all_time_slot_infos as $key => $value) { ?>
+                                                <?php foreach ($all_time_slot_infos as $key => $value) { ?>
                                                     <li data-tabs-target="#<?php echo esc_attr($key); ?>"><?php echo esc_html(array_key_exists('type', $value) && $value['type'] ? $value['type'] : ''); ?></li>
-												<?php } ?>
-												<?php do_action('ttbm_time_slot_tab'); ?>
+                                                <?php } ?>
+                                                <?php do_action('ttbm_time_slot_tab'); ?>
                                             </ul>
                                             <div class="tabsContent">
-												<?php
-													foreach ($all_time_slot_infos as $key => $value) {
-														$default_times = TTBM_Global_Function::get_post_info($tour_id, $key, array());
-														$title = array_key_exists('title', $value) && $value['title'] ? $value['title'] : '';
-														$des = array_key_exists('des', $value) && $value['des'] ? $value['des'] : '';
-														$label_key = array_key_exists('label_key', $value) && $value['label_key'] ? $value['label_key'] : '';
-														$time_key = array_key_exists('time_key', $value) && $value['time_key'] ? $value['time_key'] : '';
-														?>
+                                                <?php
+                                                    foreach ($all_time_slot_infos as $key => $value) {
+                                                        $default_times = TTBM_Global_Function::get_post_info($tour_id, $key, array());
+                                                        $title = array_key_exists('title', $value) && $value['title'] ? $value['title'] : '';
+                                                        $des = array_key_exists('des', $value) && $value['des'] ? $value['des'] : '';
+                                                        $label_key = array_key_exists('label_key', $value) && $value['label_key'] ? $value['label_key'] : '';
+                                                        $time_key = array_key_exists('time_key', $value) && $value['time_key'] ? $value['time_key'] : '';
+                                                        ?>
                                                         <div class="tabsItem _mT" data-tabs="#<?php echo esc_attr($key); ?>">
-                                                           
+
                                                             <div class="ttbm_settings_area">
                                                                 <div class="ttbm_item_insert ttbm_sortable_area">
                                                                     <div class="_dFlex">
@@ -238,32 +240,34 @@
                                                                         <h6 class="_w_100_mR_xs"><?php esc_html_e('Time', 'tour-booking-manager') ?></h6>
                                                                         <h6 class="_w_100"><?php esc_html_e('Action', 'tour-booking-manager') ?></h6>
                                                                     </div>
-																	<?php
-																		if (sizeof($default_times)) {
-																			foreach ($default_times as $default_time) {
-																				if (is_array($default_time) && sizeof($default_time) > 0) {
-																					self::time_slot_item($label_key, $time_key, $default_time);
-																				}
-																			}
-																		}
-																	?>
+                                                                    <?php
+                                                                        if (sizeof($default_times)) {
+                                                                            foreach ($default_times as $default_time) {
+                                                                                if (is_array($default_time) && sizeof($default_time) > 0) {
+                                                                                    self::time_slot_item($label_key, $time_key, $default_time);
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ?>
                                                                 </div>
-																<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add Slot', 'tour-booking-manager')); ?>
+                                                                <?php TTBM_Custom_Layout::add_new_button(esc_html__('Add Slot', 'tour-booking-manager')); ?>
                                                                 <div class="ttbm_hidden_content">
                                                                     <div class="ttbm_hidden_item">
-																		<?php self::time_slot_item($label_key, $time_key); ?>
+                                                                        <?php self::time_slot_item($label_key, $time_key); ?>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-													<?php } ?>
-												<?php do_action('ttbm_time_slot_content', $tour_id); ?>
+                                                    <?php } ?>
+                                                <?php do_action('ttbm_time_slot_content', $tour_id); ?>
                                             </div>
                                         </div>
-									<?php } ?>
+                                    <?php } ?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="divider"></div>
+                            <div class="divider"></div>
+                        <?php } ?>
+
                         <div class="gptLayout">
                             <h6><?php esc_html_e('Tour Off Days And Dates', 'tour-booking-manager'); ?></h6>
                             <div class="ttbmTabs _mT">

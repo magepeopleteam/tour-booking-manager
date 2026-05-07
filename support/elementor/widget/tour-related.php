@@ -114,10 +114,6 @@ class TTBMTourRelatedWidget extends Widget_Base {
     }
 
     protected function _content_template() {
-        ?>
-        <div class="elementor-ttbm-related">
-            <?php esc_html_e('Related Tours will be displayed here', 'tour-booking-manager'); ?>
-        </div>
-        <?php
+        // Keep Elementor preview on the server-rendered shortcode output.
     }
 } 

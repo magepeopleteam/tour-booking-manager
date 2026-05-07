@@ -7,9 +7,17 @@
 		require_once ABSPATH . 'wp-admin/includes/file.php';
 		require_once ABSPATH . 'wp-admin/includes/image.php';
 		class TTBM_Dummy_Import {
+			private static $instance = null;
+
 			public function __construct() {
-				//update_option('ttbm_dummy_already_inserted','no');exit;
-				add_action('admin_init', array($this, 'dummy_import'), 99);
+				if (self::$instance !== null) {
+					return; // Prevent duplicate instantiation
+				}
+				self::$instance = $this;
+				add_action('admin_enqueue_scripts', array($this, 'enqueue_assets'));
+				add_action('admin_footer', array($this, 'render_popup'));
+				add_action('wp_ajax_ttbm_import_dummy_data', array($this, 'ajax_import_dummy_data'));
+				add_action('wp_ajax_ttbm_dismiss_dummy_import', array($this, 'ajax_dismiss_dummy_import'));
 			}
 			public static function check_plugin($plugin_dir_name, $plugin_file): int {
 				include_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -22,6 +30,225 @@
 					return 0;
 				}
 			}
+			public function is_eligible() {
+				$dummy_post_inserted = get_option('ttbm_dummy_already_inserted', 'no');
+				if ($dummy_post_inserted == 'yes') {
+					return false;
+				}
+				$count_posts = wp_count_posts('ttbm_tour');
+				$count_existing_event = isset($count_posts->publish) ? $count_posts->publish : 0;
+				$plugin_active = self::check_plugin('tour-booking-manager', 'tour-booking-manager.php');
+				if (empty($count_existing_event) && $plugin_active == 1) {
+					return true;
+				}
+				return false;
+			}
+
+			private function should_auto_show_popup() {
+				if (!$this->is_eligible()) {
+					return false;
+				}
+				$dismissed = get_option('ttbm_dummy_import_dismissed', 'no');
+				if ($dismissed == 'yes') {
+					return false;
+				}
+				return true;
+			}
+
+			public function enqueue_assets() {
+				if (!$this->is_eligible()) {
+					return;
+				}
+				wp_enqueue_style(
+					'ttbm-dummy-installer',
+					TTBM_PLUGIN_URL . '/assets/admin/ttbm_woo_installer.css',
+					array(),
+					filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_woo_installer.css')
+				);
+			}
+
+			public function render_popup() {
+				if (!$this->is_eligible()) {
+					return;
+				}
+				$display_style = $this->should_auto_show_popup() ? '' : 'display: none;';
+				?>
+				<div id="ttbm-woo-overlay" class="ttbm-woo-overlay ttbm-dummy-overlay" style="<?php echo esc_attr($display_style); ?>">
+					<div class="ttbm-woo-popup">
+						<div class="ttbm-woo-header">
+							<div class="ttbm-woo-header-icon">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+							</div>
+							<span class="ttbm-woo-header-text"><?php esc_html_e('Tour Booking Manager', 'tour-booking-manager'); ?></span>
+						</div>
+
+						<div class="ttbm-woo-icon-wrapper">
+							<div class="ttbm-woo-icon">
+								<svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+									<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+									<path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+								</svg>
+							</div>
+						</div>
+
+						<div class="ttbm-woo-content">
+							<h2 class="ttbm-woo-title"><?php esc_html_e('Import Dummy Tours?', 'tour-booking-manager'); ?></h2>
+							<p class="ttbm-woo-desc">
+								<?php esc_html_e('Would you like to import dummy tours, hotels, categories, and settings to see how Tour Booking Manager works?', 'tour-booking-manager'); ?>
+							</p>
+						</div>
+
+						<div id="ttbm-woo-progress" class="ttbm-woo-progress" style="display:none;">
+							<div class="ttbm-woo-progress-bar">
+								<div id="ttbm-woo-progress-fill" class="ttbm-woo-progress-fill"></div>
+							</div>
+							<p id="ttbm-woo-status-text" class="ttbm-woo-status-text"></p>
+						</div>
+
+						<div class="ttbm-woo-actions">
+							<button type="button" id="ttbm-dummy-install-btn" class="ttbm-woo-btn ttbm-woo-btn-primary">
+								<span class="ttbm-woo-btn-icon">
+									<svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+										<path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+									</svg>
+								</span>
+								<span class="ttbm-woo-btn-text"><?php esc_html_e('Yes, Import Data', 'tour-booking-manager'); ?></span>
+							</button>
+							<button type="button" id="ttbm-dummy-dismiss-btn" class="ttbm-woo-btn ttbm-woo-btn-secondary">
+								<?php esc_html_e('No, Skip', 'tour-booking-manager'); ?>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<script>
+				(function($) {
+					$(document).ready(function() {
+						var $overlay = $('#ttbm-woo-overlay.ttbm-dummy-overlay');
+						var $popup = $overlay.find('.ttbm-woo-popup');
+						var $btn = $('#ttbm-dummy-install-btn');
+						var $dismissBtn = $('#ttbm-dummy-dismiss-btn');
+						var $progress = $('#ttbm-woo-progress');
+						var $fill = $('#ttbm-woo-progress-fill');
+						var $status = $('#ttbm-woo-status-text');
+						var $actions = $overlay.find('.ttbm-woo-actions');
+						var isWorking = false;
+
+						if (!$overlay.length) return;
+
+						// Manual trigger from tour list page
+						$(document).on('click', '#ttbm-trigger-dummy-import-btn', function(e) {
+							e.preventDefault();
+							$overlay.css('display', 'flex').hide().fadeIn(300);
+						});
+
+						$btn.on('click', function(e) {
+							e.preventDefault();
+							if (isWorking) return;
+							isWorking = true;
+							$btn.prop('disabled', true);
+							$dismissBtn.prop('disabled', true);
+
+							$actions.slideUp(250);
+							$progress.slideDown(300);
+
+							$fill.css('width', '50%');
+							$status.text('<?php echo esc_js(__("Importing dummy data. This may take a moment...", "tour-booking-manager")); ?>').removeClass('ttbm-success ttbm-error');
+
+							$.ajax({
+								url: ajaxurl,
+								type: 'POST',
+								data: {
+									action: 'ttbm_import_dummy_data',
+									nonce: '<?php echo wp_create_nonce("ttbm_import_dummy"); ?>'
+								},
+								success: function(response) {
+									if (response.success) {
+										$fill.css('width', '100%');
+										$status.text('<?php echo esc_js(__("Import complete!", "tour-booking-manager")); ?>').addClass('ttbm-success');
+										$popup.addClass('ttbm-state-success');
+										$popup.find('.ttbm-woo-icon').html(
+											'<svg width="40" height="40" viewBox="0 0 24 24" fill="none">' +
+											'<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>' +
+											'<path d="M8 12l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+											'</svg>'
+										);
+										$popup.find('.ttbm-woo-title').text('<?php echo esc_js(__("Success", "tour-booking-manager")); ?>');
+										$popup.find('.ttbm-woo-desc').text('<?php echo esc_js(__("Dummy data imported successfully. Reloading page...", "tour-booking-manager")); ?>');
+										setTimeout(function() {
+											window.location.reload();
+										}, 1500);
+									} else {
+										showError(response.data && response.data.message ? response.data.message : '<?php echo esc_js(__("Failed to import.", "tour-booking-manager")); ?>');
+									}
+								},
+								error: function() {
+									showError('<?php echo esc_js(__("Failed to import. Please try again.", "tour-booking-manager")); ?>');
+								}
+							});
+						});
+
+						$dismissBtn.on('click', function(e) {
+							e.preventDefault();
+							if (isWorking) return;
+							isWorking = true;
+							$overlay.css('opacity', '0.5');
+							$.ajax({
+								url: ajaxurl,
+								type: 'POST',
+								data: {
+									action: 'ttbm_dismiss_dummy_import',
+								nonce: '<?php echo wp_create_nonce("ttbm_dismiss_dummy"); ?>'
+								},
+								success: function() {
+									$overlay.fadeOut(300, function() { $(this).remove(); });
+								},
+								error: function() {
+									$overlay.fadeOut(300, function() { $(this).remove(); });
+								}
+							});
+						});
+
+						function showError(message) {
+							isWorking = false;
+							$popup.addClass('ttbm-state-error');
+							$status.text(message).addClass('ttbm-error');
+							$fill.css('width', '100%');
+							$btn.prop('disabled', false);
+							$dismissBtn.prop('disabled', false);
+							$actions.slideDown(250);
+							setTimeout(function() {
+								$popup.removeClass('ttbm-state-error');
+								$progress.slideUp(250);
+								$fill.css('width', '0%');
+							}, 3000);
+						}
+					});
+				})(jQuery);
+				</script>
+				<?php
+			}
+
+			public function ajax_import_dummy_data() {
+				check_ajax_referer('ttbm_import_dummy', 'nonce');
+				if (!current_user_can('manage_options')) {
+					wp_send_json_error(array('message' => 'Permission denied.'));
+				}
+				$this->dummy_import();
+				wp_send_json_success();
+			}
+
+			public function ajax_dismiss_dummy_import() {
+				check_ajax_referer('ttbm_dismiss_dummy', 'nonce');
+				if (!current_user_can('manage_options')) {
+					wp_send_json_error(array('message' => 'Permission denied.'));
+				}
+				update_option('ttbm_dummy_import_dismissed', 'yes');
+				wp_send_json_success();
+			}
+
 			public function dummy_import() {
 				$dummy_post_inserted = get_option('ttbm_dummy_already_inserted', 'no');
 				$count_existing_event = wp_count_posts('ttbm_tour')->publish;

@@ -213,7 +213,9 @@
 		title_filter: 'data-title',
 		type_filter: 'data-type',
 		category_filter: 'data-category',
+		category_filter_multiple: 'data-category',
 		organizer_filter: 'data-organizer',
+		organizer_filter_multiple: 'data-organizer',
 		location_filter: 'data-location',
 		location_filter_multiple: 'data-location',
 		country_filter: 'data-country',
@@ -251,7 +253,9 @@
 		active = active > 0 ? Math.min(active, filter_text(parent, item, 'title_filter', active)) : active;
 		active = active > 0 ? Math.min(active, filter_text(parent, item, 'type_filter', active)) : active;
 		active = active > 0 ? Math.min(active, filter_single_in_multi(parent, item, 'category_filter', active)) : active;
+		active = active > 0 ? Math.min(active, filter_multi_in_multi(parent, item, 'category_filter_multiple', active)) : active;
 		active = active > 0 ? Math.min(active, filter_single_in_multi(parent, item, 'organizer_filter', active)) : active;
+		active = active > 0 ? Math.min(active, filter_multi_in_multi(parent, item, 'organizer_filter_multiple', active)) : active;
 		active = active > 0 ? Math.min(active, filter_text(parent, item, 'location_filter', active)) : active;
 		active = active > 0 ? Math.min(active, filter_multi_in_single(parent, item, 'location_filter_multiple', active)) : active;
 		active = active > 0 ? Math.min(active, filter_text(parent, item, 'country_filter', active)) : active;

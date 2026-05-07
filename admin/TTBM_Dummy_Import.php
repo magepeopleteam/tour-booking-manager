@@ -391,6 +391,7 @@
 					}
 					//$this->craete_pages();
 					$this->update_related_products($custom_post);
+					TTBM_Function::update_all_upcoming_date_month();
 					update_option('ttbm_dummy_already_inserted', 'yes');
 				}
 			}
@@ -903,6 +904,12 @@
 									'ttbm_display_tour_type' => 'on',
 									'ttbm_display_hotels' => 'on',
 									'ttbm_display_duration' => 'on',
+								],
+								'taxonomy_terms' => [
+									['taxonomy_name' => 'ttbm_tour_cat', 'terms' => ['flexible-tour']],
+									['taxonomy_name' => 'ttbm_tour_org', 'terms' => ['autotour']],
+									['taxonomy_name' => 'ttbm_tour_location', 'terms' => ['Bandarban']],
+									['taxonomy_name' => 'ttbm_tour_activities', 'terms' => ['Beach', 'Hiking']],
 								]
 							],
 							1 => [
@@ -1057,6 +1064,12 @@
 									'ttbm_display_tour_type' => 'on',
 									'ttbm_display_hotels' => 'on',
 									'ttbm_display_duration' => 'on',
+								],
+								'taxonomy_terms' => [
+									['taxonomy_name' => 'ttbm_tour_cat', 'terms' => ['flexible-tour']],
+									['taxonomy_name' => 'ttbm_tour_org', 'terms' => ['zayman']],
+									['taxonomy_name' => 'ttbm_tour_location', 'terms' => ['Coxbazar']],
+									['taxonomy_name' => 'ttbm_tour_activities', 'terms' => ['City Tours', 'Rural']],
 								]
 							],
 							2 => [
@@ -1213,6 +1226,12 @@
 									'ttbm_display_tour_type' => 'on',
 									'ttbm_display_hotels' => 'on',
 									'ttbm_display_duration' => 'on',
+								],
+								'taxonomy_terms' => [
+									['taxonomy_name' => 'ttbm_tour_cat', 'terms' => ['fixed-tour']],
+									['taxonomy_name' => 'ttbm_tour_org', 'terms' => ['zayman']],
+									['taxonomy_name' => 'ttbm_tour_location', 'terms' => ['Las Vegas']],
+									['taxonomy_name' => 'ttbm_tour_activities', 'terms' => ['Snow & Ice', 'Hiking']],
 								]
 							],
 							3 => [
@@ -1369,6 +1388,12 @@
 									'ttbm_display_tour_type' => 'on',
 									'ttbm_display_hotels' => 'on',
 									'ttbm_display_duration' => 'on',
+								],
+								'taxonomy_terms' => [
+									['taxonomy_name' => 'ttbm_tour_cat', 'terms' => ['flexible-tour']],
+									['taxonomy_name' => 'ttbm_tour_org', 'terms' => ['holiday-partner']],
+									['taxonomy_name' => 'ttbm_tour_location', 'terms' => ['Naples Italy']],
+									['taxonomy_name' => 'ttbm_tour_activities', 'terms' => ['City Tours', 'Beach']],
 								]
 							],
 							4 => [
@@ -1524,6 +1549,12 @@
 									'ttbm_display_tour_type' => 'on',
 									'ttbm_display_hotels' => 'on',
 									'ttbm_display_duration' => 'on',
+								],
+								'taxonomy_terms' => [
+									['taxonomy_name' => 'ttbm_tour_cat', 'terms' => ['fixed-tour']],
+									['taxonomy_name' => 'ttbm_tour_org', 'terms' => ['autotour']],
+									['taxonomy_name' => 'ttbm_tour_location', 'terms' => ['Rangamati']],
+									['taxonomy_name' => 'ttbm_tour_activities', 'terms' => ['Hiking', 'Rural']],
 								]
 							],
 						],
@@ -1535,6 +1566,7 @@
                                     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
                                 ',
 								'post_data' => [
+									'ttbm_hotel_location' => 'Bandarban',
 									'ttbm_hotel_distance_des'=>'0.5 km from center',
 									'ttbm_hotel_property_highlights'=>'Top Location: Highly rated by recent guests (9.0)',
 									'ttbm_display_hotel_parking'=>'on',
@@ -1673,6 +1705,7 @@
                                     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
                                 ',
 								'post_data' => [
+									'ttbm_hotel_location' => 'Coxbazar',
 									'ttbm_hotel_distance_des'=>'0.5 km from center',
 									'ttbm_hotel_property_highlights'=>'Top Location: Highly rated by recent guests (9.0)',
 									'ttbm_display_hotel_parking'=>'on',
@@ -1811,6 +1844,7 @@
                                     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
                                 ',
 								'post_data' => [
+									'ttbm_hotel_location' => 'Las Vegas',
 									'ttbm_hotel_distance_des'=>'0.5 km from center',
 									'ttbm_hotel_property_highlights'=>'Top Location: Highly rated by recent guests (9.0)',
 									'ttbm_display_hotel_parking'=>'on',

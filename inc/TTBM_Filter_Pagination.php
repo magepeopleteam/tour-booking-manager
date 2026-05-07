@@ -12,9 +12,13 @@
 				add_action('ttbm_pagination', array($this, 'pagination'), 10, 3);
 				add_action('ttbm_filter_top_bar', array($this, 'filter_top_bar'), 10, 2);
 				add_action('ttbm_sort_result', array($this, 'sort_result'), 10, 2);
+				$this->refresh_upcoming_dates();
+			}
+			public function refresh_upcoming_dates() {
 				$this->upcomming_date = array_reverse(TTBM_Function::get_meta_values('ttbm_upcoming_date', 'ttbm_tour'));
 			}
 			public function top_filter_static($params) {
+				$this->refresh_upcoming_dates();
 				?>
                 <div class="ttbm_style placeholderLoader ttbm_wraper ttbm_top_filter">
                     <form method="get" action="<?php echo esc_url(home_url('/find/')); ?>">
@@ -37,6 +41,7 @@
 				<?php
 			}
 			public function top_filter($params) {
+				$this->refresh_upcoming_dates();
 				//ob_start();
 				$filter = $params['search-filter'];
 				if ($filter == 'yes') {
@@ -57,6 +62,7 @@
 				//echo ob_get_clean();
 			}
 			public function left_filter($params) {
+				$this->refresh_upcoming_dates();
 				?>
                 <div class="filter-top-label">
                     <h4 data-placeholder><span class="mR_xs fas fa-filter"></span><?php esc_html_e('Filters', 'tour-booking-manager'); ?></h4>
@@ -84,8 +90,9 @@
 						$title_filter = isset($_GET['title_filter']) ? sanitize_text_field(wp_unslash($_GET['title_filter'])) : '';
 					}
 					?>
-                    <label data-placeholder>
-                        <input name="title_filter" value="<?php echo esc_attr($title_filter); ?>" placeholder="<?php esc_attr_e('Search ....', 'tour-booking-manager'); ?>" class="formControl"/>
+                    <label data-placeholder class="ttbm_filter_icon_container">
+                        <span class="mR_xs mi mi-search ttbm_filter_icon"></span>
+                        <input name="title_filter" value="<?php echo esc_attr($title_filter); ?>" placeholder="<?php esc_attr_e('Search ....', 'tour-booking-manager'); ?>" class="formControl ttbm_filter_input_with_icon"/>
                     </label>
 					<?php
 				}
@@ -171,7 +178,18 @@
                         </h5>
                         <div class="divider"></div>
                         <div class="mActive" data-collapse="#ttbm_category_filter_left" data-placeholder>
-							<?php $this->category_filter($params, $categories); ?>
+                            <div class="groupCheckBox _dFlex flexColumn">
+                                <input type="hidden" name="category_filter_multiple" value=""/>
+								<?php foreach ($categories as $category) {
+									$icon = get_term_meta($category->term_id, 'ttbm_feature_icon', true) ?: 'mi mi-folder';
+									$checked = (isset($_GET['category_filter']) && $_GET['category_filter'] == $category->term_id) ? 'checked' : '';
+									?>
+                                    <label class="customCheckboxLabel">
+                                        <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($category->term_id); ?>" <?php echo esc_attr($checked); ?>/>
+                                        <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php echo esc_html($category->name); ?></span>
+                                    </label>
+								<?php } ?>
+                            </div>
                         </div>
 						<?php
 					}
@@ -220,7 +238,20 @@
                         </h5>
                         <div class="divider"></div>
                         <div class="mActive" data-collapse="#ttbm_organizer_filter_left" data-placeholder>
-							<?php $this->organizer_filter($params, $organizers); ?>
+                            <div class="groupCheckBox _dFlex flexColumn">
+                                <input type="hidden" name="organizer_filter_multiple" value=""/>
+								<?php foreach ($organizers as $organizer) {
+									if (get_term($organizer->term_id, 'ttbm_tour_org')->count) {
+										$icon = get_term_meta($organizer->term_id, 'ttbm_organizer_icon', true) ?: 'mi mi-user';
+										$checked = (isset($_GET['organizer_filter']) && $_GET['organizer_filter'] == $organizer->term_id) ? 'checked' : '';
+										?>
+                                        <label class="customCheckboxLabel">
+                                            <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($organizer->term_id); ?>" <?php echo esc_attr($checked); ?>/>
+                                            <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php echo esc_html($organizer->name); ?></span>
+                                        </label>
+									<?php }
+								} ?>
+                            </div>
                         </div>
 						<?php
 					}
@@ -237,8 +268,9 @@
 						}
 						$url = $location_filter;
 						?>
-                        <label data-placeholder>
-                            <select class="formControl ttbm_filter_input_radius" name="location_filter">
+                        <label data-placeholder class="ttbm_filter_icon_container">
+                            <span class="mR_xs mi mi-marker ttbm_filter_icon"></span>
+                            <select class="formControl ttbm_filter_input_radius ttbm_filter_input_with_icon" name="location_filter">
                                 <option selected value=""><?php esc_html_e('All Location', 'tour-booking-manager'); ?></option>
 								<?php foreach ($locations as $location) { ?>
 									<?php $name = get_term_meta($location->term_id, 'ttbm_country_location'); ?>
@@ -289,10 +321,11 @@
 									<?php
 									$term = get_term_by('name', $location, 'ttbm_tour_location');
 									$term_id = $term ? $term->term_id : 0;
+									$icon = $term_id ? (get_term_meta($term_id, 'ttbm_location_icon', true) ? get_term_meta($term_id, 'ttbm_location_icon', true) : 'mi mi-marker') : 'mi mi-marker';
 									$checked = $current_location == $term_id ? 'checked' : ''; ?>
                                     <label class="customCheckboxLabel ttbm_location_checkBoxLevel">
                                         <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($term_id); ?>" <?php echo esc_attr($checked); ?> />
-                                        <span class="customCheckbox"><?php echo esc_html($location); ?></span>
+                                        <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php echo esc_html($location); ?></span>
                                     </label>
 								<?php } ?>
                                 <button id="ttbm_show_location_seeMoreBtn" class="ttbm_see-more-button"><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
@@ -312,8 +345,9 @@
 							$url = isset($_GET['country_filter']) ? sanitize_text_field(wp_unslash($_GET['country_filter'])) : '';
 						}
 						?>
-                        <label data-placeholder>
-                            <select class="formControl" name="country_filter">
+                        <label data-placeholder class="ttbm_filter_icon_container">
+                            <span class="mR_xs mi mi-globe ttbm_filter_icon"></span>
+                            <select class="formControl ttbm_filter_input_with_icon" name="country_filter">
                                 <option value="" selected><?php esc_html_e('All Country', 'tour-booking-manager'); ?></option>
 								<?php foreach ($countries as $country) { ?>
 									<?php $selected = $country == $url ? 'selected' : ''; ?>
@@ -352,8 +386,9 @@
 							$url = isset($_GET['duration_filter']) ? sanitize_text_field(wp_unslash($_GET['duration_filter'])) : '';
 						}
 						?>
-                        <label data-placeholder>
-                            <select class="formControl" name="duration_filter">
+                        <label data-placeholder class="ttbm_filter_icon_container">
+                            <span class="mR_xs mi mi-clock ttbm_filter_icon"></span>
+                            <select class="formControl ttbm_filter_input_with_icon" name="duration_filter">
                                 <option value="" selected><?php esc_html_e('All Duration', 'tour-booking-manager'); ?></option>
 								<?php foreach ($durations as $duration) { ?>
 									<?php if ($duration > 0) { ?>
@@ -397,7 +432,7 @@
                                         <label class="customCheckboxLabel">
                                             <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($duration); ?>" <?php echo esc_attr($checked); ?>/>
                                             <span class="customCheckbox">
-
+                                                <span class="mR_xs mi mi-clock"></span>
 											<?php echo esc_html($duration); ?>&nbsp;
 
 											<?php if ($duration == 1) {
@@ -449,7 +484,7 @@
 									<?php
 									$term = get_term_by('name', $feature_item, 'ttbm_tour_features_list');
 									$term_id = $term ? $term->term_id : 0;
-									$icon = $term_id ? (get_term_meta($term_id, 'ttbm_feature_icon', true) ? get_term_meta($term_id, 'ttbm_feature_icon', true) : 'fas fa-forward') : 'fas fa-forward'; ?>
+									$icon = $term_id ? (get_term_meta($term_id, 'ttbm_feature_icon', true) ? get_term_meta($term_id, 'ttbm_feature_icon', true) : 'mi mi-checklist-task-budget') : 'mi mi-checklist-task-budget'; ?>
                                     <label class="customCheckboxLabel ttbm_feature_checkBoxLevel">
                                         <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($term_id); ?>"/>
                                         <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php echo esc_html($feature_item); ?></span>
@@ -520,11 +555,12 @@
 									$term = get_term_by('name', $activity, 'ttbm_tour_activities');
 
 									$term_id = $term ? $term->term_id : 0;
+									$icon = $term_id ? (get_term_meta($term_id, 'ttbm_activities_icon', true) ? get_term_meta($term_id, 'ttbm_activities_icon', true) : 'fas fa-running') : 'fas fa-running';
 									$checked = $current_activity == $term_id ? 'checked' : '';
 									?>
                                     <label class="customCheckboxLabel">
                                         <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($term_id); ?>" <?php echo esc_attr($checked); ?>/>
-                                        <span class="customCheckbox"><?php echo esc_html($activity); ?></span>
+                                        <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php echo esc_html($activity); ?></span>
                                     </label>
 								<?php }
                                 } ?>
@@ -584,7 +620,9 @@
 									?>
                                     <label class="customCheckboxLabel ttbm_activity_checkBoxLevel">
                                         <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($term_id); ?>" <?php echo esc_attr($checked); ?>/>
-                                        <span class="customCheckbox"><?php echo esc_html($term_name); ?></span>
+                                        <span class="customCheckbox"><?php 
+                                            $icon = $term_id ? (get_term_meta($term_id, 'ttbm_activities_icon', true) ?: 'mi mi-hiking') : 'mi mi-hiking';
+                                        ?><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php echo esc_html($term_name); ?></span>
                                     </label>
 								<?php } }
                                 } ?>
@@ -616,10 +654,12 @@
                             <div class="groupCheckBox _dFlex flexColumn">
                                 <input type="hidden" name="tag_filter_multiple" value=""/>
 								<?php foreach ($tags as $tag) {
-									if (get_term($tag->term_id, 'ttbm_tour_tag')->count) { ?>
+									if (get_term($tag->term_id, 'ttbm_tour_tag')->count) {
+										$icon = get_term_meta($tag->term_id, 'ttbm_tag_icon', true) ?: 'mi mi-tag';
+										?>
                                         <label class="customCheckboxLabel">
                                             <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($tag->term_id); ?>"/>
-                                            <span class="customCheckbox"><?php echo esc_html($tag->name); ?></span>
+                                            <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php echo esc_html($tag->name); ?></span>
                                         </label>
 									<?php }
 								} ?>
@@ -642,8 +682,9 @@
 					$selected = $url_month == $month ? 'selected' : '';
 					$date_format = TTBM_Global_Function::get_settings('ttbm_global_settings', 'date_format_short', 'M , Y');
 					?>
-                    <label data-placeholder>
-                        <select class="formControl" name="month_filter">
+                    <label data-placeholder class="ttbm_filter_icon_container">
+                        <span class="mR_xs mi mi-calendar ttbm_filter_icon"></span>
+                        <select class="formControl ttbm_filter_input_with_icon" name="month_filter">
                             <option selected value=""><?php esc_html_e('All Month', 'tour-booking-manager'); ?></option>
                             <option value="<?php echo esc_attr($month); ?>" <?php echo esc_attr($selected); ?>><?php echo esc_html(date_i18n($date_format, strtotime($current_date))); ?></option>
 							<?php
@@ -694,14 +735,15 @@
 						$people_filter = $people_filter > 0 ? $people_filter : '';
 					}
 					?>
-                    <label data-placeholder>
+                    <label data-placeholder class="ttbm_filter_icon_container">
+                        <span class="mR_xs mi mi-users ttbm_filter_icon"></span>
                         <input type="number"
                                min="1"
                                step="1"
                                name="people_filter"
                                value="<?php echo esc_attr($people_filter); ?>"
                                placeholder="<?php esc_attr_e('How many people?', 'tour-booking-manager'); ?>"
-                               class="formControl ttbm_filter_input_radius"/>
+                               class="formControl ttbm_filter_input_radius ttbm_filter_input_with_icon"/>
                     </label>
 					<?php
 				}

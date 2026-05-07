@@ -2940,3 +2940,21 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
 	margin-top: 5px;
 	font-size: 12px;
 }
+
+/* TTBM Filter Icon Styles */
+.ttbm_filter_icon_container {
+    position: relative;
+    display: block;
+}
+.ttbm_filter_icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.6;
+}
+.ttbm_filter_input_with_icon {
+    padding-left: 30px !important;
+}

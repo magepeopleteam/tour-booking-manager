@@ -426,9 +426,9 @@
 					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-2.jpg',
 					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-3.jpg',
 					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-4.jpg',
-					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/hotel/hotel-5.jpg',
-					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/hotel/hotel-6.jpg',
-					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/hotel/hotel-7.jpg',
+					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-5.jpg',
+					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-6.jpg',
+					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-7.jpg',
 				);
 				unset($image_ids);
 				$image_ids = array();

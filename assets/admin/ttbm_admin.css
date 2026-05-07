@@ -937,8 +937,8 @@ input.medium{
 @media only screen and (min-width: 1024px) {
 	.ttbm-tour-list-page .ttbm-tour-list { gap: 10px; }
 	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card { flex-direction: row; }
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-thumb { width: 10%; }
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content { width: 90%; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-thumb { width: 20%; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content { width: 80%; }
 	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-info { width: 80%; }
 	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta { width: 15%; }
 }

@@ -7,6 +7,7 @@
 			public function __construct() {
 				add_shortcode('ttbm-top-search', array($this, 'static_filter'));
 				add_shortcode('travel-list', array($this, 'list_with_left_filter'));
+				add_shortcode('ttbm-tour-style', array($this, 'tour_style_with_filter'));
 				add_shortcode('ttbm-top-filter', array($this, 'list_with_top_filter'));
 				add_shortcode('travel-location-list', array($this, 'location_list'));
 				add_shortcode('ttbm-search-result', array($this, 'search_result'));
@@ -199,6 +200,47 @@
 				ob_start();
 				?>
 				<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
+					<div class="mpContainer">
+					<?php
+						if ($params['sidebar-filter'] == 'yes') {
+							?>
+							<div class="left_filter">
+								<div class="leftSidebar placeholder_area">
+									<?php do_action('ttbm_left_filter', $params); ?>
+								</div>
+								<div class="mainSection">
+									<?php do_action('ttbm_filter_top_bar', $loop, $params); ?>
+									<?php do_action('ttbm_all_list_item', $loop, $params); ?>
+									<?php do_action('ttbm_sort_result', $loop, $params); ?>
+									<?php do_action('ttbm_pagination', $params, $loop->post_count); ?>
+								</div>
+							</div>
+							<?php
+						} else {
+							include( TTBM_Function::template_path( 'layout/filter_hidden.php' ) );
+							do_action('ttbm_all_list_item', $loop, $params);
+							do_action('ttbm_sort_result', $loop, $params);
+							do_action('ttbm_pagination', $params, $loop->post_count);
+						}
+					?>
+					</div>
+				</div>
+				<?php
+				return ob_get_clean();
+			}
+            public function tour_style_with_filter($attribute, $tour_type = '', $month_filter = 'yes') {
+
+
+				$defaults = $this->default_attribute('modern', 12, 'no', 'yes', 'yes', 'yes', $month_filter, $tour_type);
+				$params = shortcode_atts($defaults, $attribute);
+				$show = $params['show'];
+                $pagination = $params['pagination'];
+				$search = $params['sidebar-filter'];
+				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
+				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'],$params['sort_by'], $params['attraction'], $params['feature']);
+				ob_start();
+				?>
+				<div class="ttbm_style tour-style-shortcode ttbm_wraper placeholderLoader ttbm_filter_area">
 					<div class="mpContainer">
 					<?php
 						if ($params['sidebar-filter'] == 'yes') {

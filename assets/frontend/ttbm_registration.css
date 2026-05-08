@@ -2958,3 +2958,154 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl{
 .ttbm_filter_input_with_icon {
     padding-left: 30px !important;
 }
+
+/* ===============================
+   LEFT SIDEBAR FILTER (TOUR STYLE)
+   =============================== */
+
+   /* ===============================
+   LEFT SIDEBAR FILTER WRAPPER
+   =============================== */
+
+.tour-style-shortcode .leftSidebar{
+  width: 100%;
+  display: block;
+  background-color: #f4f7ff;
+  position: sticky;
+  top: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(20, 40, 120, 0.06);
+  overflow-y: auto;
+}
+.tour-style-shortcode .leftSidebar div.ttbm_filter{
+	background-color: transparent;
+}
+
+.tour-style-shortcode .leftSidebar .filter-top-label{
+	background-color:transparent;
+	border: none;
+}
+.tour-style-shortcode .leftSidebar .filter-top-label h4{
+	background-color: transparent;
+	color: #333;
+	border: none;
+	font-size: 16px;
+	font-weight: bold;
+}
+.tour-style-shortcode .leftSidebar .ttbm_filter .groupCheckBox{
+  margin: 10px 0;
+  padding: 10px;
+}
+.tour-style-shortcode .leftSidebar .ttbm_filter .mActive{
+	margin:10px 0;
+}
+/* Scrollbar */
+.tour-style-shortcode .leftSidebar div.ttbm_filter::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tour-style-shortcode .leftSidebar div.ttbm_filter::-webkit-scrollbar-thumb {
+  background: #c9d4ff;
+  border-radius: 10px;
+}
+
+/* ===============================
+   FILTER TITLE (if exists)
+   =============================== */
+
+.tour-style-shortcode .leftSidebar div.ttbm_filter h3,
+.tour-style-shortcode .leftSidebar div.ttbm_filter .filter-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e2a4a;
+  margin-bottom: 6px;
+}
+
+.tour-style-shortcode .leftSidebar div.ttbm_filter .subtitle {
+  font-size: 13px;
+  color: #6b7aa5;
+  margin-bottom: 16px;
+}
+
+/* ===============================
+   FILTER SECTIONS (ACCORDION)
+   =============================== */
+
+.tour-style-shortcode .leftSidebar div.ttbm_filter .filter-section {
+  background: #ffffff;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(120, 140, 200, 0.15);
+}
+
+/* Section header */
+.tour-style-shortcode .leftSidebar div.ttbm_filter .filter-section .section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: #2a3b6f;
+  background: #eef3ff;
+  transition: all 0.25s ease;
+}
+
+.tour-style-shortcode .leftSidebar div.ttbm_filter .filter-section .section-title:hover {
+  background: #e6edff;
+}
+
+/* Arrow */
+.tour-style-shortcode .leftSidebar div.ttbm_filter .filter-section .arrow {
+  transition: transform 0.3s ease;
+  color: #4b63ff;
+  font-size: 12px;
+}
+
+/* Open state */
+.tour-style-shortcode .leftSidebar div.ttbm_filter .filter-section.active .arrow {
+  transform: rotate(180deg);
+}
+
+/* ===============================
+   OPTIONS AREA
+   =============================== */
+
+.tour-style-shortcode .leftSidebar div.ttbm_filter .filter-options {
+  padding: 10px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Checkbox row */
+.tour-style-shortcode .leftSidebar div.ttbm_filter .filter-options label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #2d3a5a;
+  cursor: pointer;
+}
+
+.tour-style-shortcode .ttbm_filter h5 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 10px 14px;
+  margin: 0 0 10px 0;
+
+  border-radius: 5px;
+  background: linear-gradient(90deg, #e9f0ff 0%, #dbe7ff 100%);
+
+
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  color: #4b63ff;
+}

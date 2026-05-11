@@ -249,7 +249,7 @@
 								</div>
 								<div class="mainSection">
 									<?php do_action('ttbm_filter_top_bar', $loop, $params); ?>
-									<?php do_action('ttbm_all_list_item', $loop, $params); ?>
+									<?php do_action('ttbm_all_grid_list', $loop, $params); ?>
 									<?php do_action('ttbm_sort_result', $loop, $params); ?>
 									<?php do_action('ttbm_pagination', $params, $loop->post_count); ?>
 								</div>

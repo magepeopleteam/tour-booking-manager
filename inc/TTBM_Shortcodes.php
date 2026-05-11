@@ -7,6 +7,7 @@
 			public function __construct() {
 				add_shortcode('ttbm-top-search', array($this, 'static_filter'));
 				add_shortcode('travel-list', array($this, 'list_with_left_filter'));
+                // new grid list style shortcode
 				add_shortcode('ttbm-tour-list', array($this, 'tour_style_with_filter'));
 				add_shortcode('ttbm-top-filter', array($this, 'list_with_top_filter'));
 				add_shortcode('travel-location-list', array($this, 'location_list'));

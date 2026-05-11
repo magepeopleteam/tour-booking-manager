@@ -73,27 +73,27 @@
 				$activities = TTBM_Global_Function::get_taxonomy('ttbm_tour_activities');
 				?>
                 <div class="all_filter_item">
-					<?php if ($params['filter_by_activity'] === 'yes') { ?>
+						<?php if ($params['filter_by_activity'] === 'yes') { ?>
                         <div class="ttbm_all_item_activities_wrapper">
                             <button class="scroll-left">←</button>
                             <div class="ttbm_all_item_activities_holder">
-								<?php
+							<?php
 									if (is_array($activities) && count($activities) > 0) {
 										foreach ($activities as $activitie) {
 											if (in_array($activitie->term_id, $terms_id_array)) {
-												?>
-                                                <div class="ttbm_item_activity">
+										?>
+										<div class="ttbm_item_activity">
                                                     <div class="ttbm_item_filter_by_activity" id="<?php echo esc_attr($activitie->term_id); ?>">
 														<?php echo esc_attr($activitie->name); ?>
-                                                    </div>
-                                                </div>
+											</div>
+										</div>
 											<?php }
-										}
-									}
-								?>
-                            </div>
+								}
+							}
+							?>
+					</div>
                             <button class="scroll-right">→</button>
-                        </div>
+				</div>
 					<?php } ?>
                     <div class="flexWrap <?php echo esc_attr($style); ?>">
 						<?php foreach ($sortable_tours as $tour_data) {
@@ -236,28 +236,73 @@
 				$activities = TTBM_Global_Function::get_taxonomy('ttbm_tour_activities');
 				?>
                 <div class="all_filter_item <?php //echo esc_attr($style); ?>">
-					<?php if ($params['filter_by_activity'] === 'yes') { ?>
-                        <div class="ttbm_all_item_activities_wrapper">
-                            <button class="scroll-left">←</button>
-                            <div class="ttbm_all_item_activities_holder">
+					<!-- ═══ Modern Filter Bar ═══════════════════════════════════════ -->
+					<div class="ttbm-filter-bar">
+
+						<!-- Left: date-range tab pills -->
+						<div class="ttbm-filter-tabs">
+							<button type="button" class="ttbm-tab-btn ttbm-tab-active" data-filter-tab="all">
+								<?php esc_html_e( 'All Tours', 'tour-booking-manager' ); ?>
+							</button>
+							<button type="button" class="ttbm-tab-btn" data-filter-tab="week">
+								<?php esc_html_e( 'This Week', 'tour-booking-manager' ); ?>
+							</button>
+							<button type="button" class="ttbm-tab-btn" data-filter-tab="month">
+								<?php esc_html_e( 'This Month', 'tour-booking-manager' ); ?>
+							</button>
+							<button type="button" class="ttbm-tab-btn" data-filter-tab="year">
+								<?php esc_html_e( 'This Year', 'tour-booking-manager' ); ?>
+							</button>
+
+							<?php if (isset($params['filter_by_activity']) && $params['filter_by_activity'] === 'yes') { ?>
+							<?php /* Hidden scrollable activity pills (still functional via JS) */ ?>
+							<div class="ttbm_all_item_activities_holder ttbm-activity-pills-hidden">
 								<?php
-									if (is_array($activities) && count($activities) > 0) {
-										foreach ($activities as $activitie) {
-											if (in_array($activitie->term_id, $terms_id_array)) {
-												?>
-                                                <div class="ttbm_item_activity">
-                                                    <div class="ttbm_item_filter_by_activity" id="<?php echo esc_attr($activitie->term_id); ?>">
-														<?php echo esc_attr($activitie->name); ?>
-                                                    </div>
-                                                </div>
-											<?php }
+								if ( is_array( $activities ) && count( $activities ) > 0 ) {
+									foreach ( $activities as $activitie ) {
+										if ( in_array( $activitie->term_id, $terms_id_array ) ) {
+											?>
+											<div class="ttbm_item_activity">
+												<div class="ttbm_item_filter_by_activity" id="<?php echo esc_attr( $activitie->term_id ); ?>">
+													<?php echo esc_html( $activitie->name ); ?>
+												</div>
+											</div>
+											<?php
 										}
 									}
+								}
 								?>
-                            </div>
-                            <button class="scroll-right">→</button>
-                        </div>
-					<?php } ?>
+							</div>
+							<?php } ?>
+						</div>
+
+						<!-- Right: Sort + View switcher -->
+						<div class="ttbm-filter-controls">
+
+							<!-- Sort dropdown -->
+							<div class="ttbm-sort-dropdown">
+								<select class="ttbm-sort-select formControl" name="sort_by_filter" aria-label="<?php esc_attr_e( 'Sort tours', 'tour-booking-manager' ); ?>">
+									<option value=""><?php esc_html_e( 'Sort by: Most Popular', 'tour-booking-manager' ); ?></option>
+									<option value="price_asc"><?php esc_html_e( 'Price: Low to High', 'tour-booking-manager' ); ?></option>
+									<option value="price_desc"><?php esc_html_e( 'Price: High to Low', 'tour-booking-manager' ); ?></option>
+									<option value="date_desc"><?php esc_html_e( 'Newest First', 'tour-booking-manager' ); ?></option>
+									<option value="title_asc"><?php esc_html_e( 'Title: A–Z', 'tour-booking-manager' ); ?></option>
+								</select>
+							</div>
+
+							<!-- View switcher -->
+							<div class="ttbm-view-switcher" role="group" aria-label="<?php esc_attr_e( 'View mode', 'tour-booking-manager' ); ?>">
+								<button type="button" class="ttbm-view-btn ttbm_grid_view ttbm-view-active" title="<?php esc_attr_e( 'Grid View', 'tour-booking-manager' ); ?>" aria-pressed="true">
+									<span class="mi mi-grid"></span>
+								</button>
+								<button type="button" class="ttbm-view-btn ttbm_list_view" title="<?php esc_attr_e( 'List View', 'tour-booking-manager' ); ?>" aria-pressed="false">
+									<span class="mi mi-list"></span>
+								</button>
+							</div>
+
+						</div>
+					</div>
+					<!-- ═══════════════════════════════════════════════════════════ -->
                     <div class="flexWrap">
 						<?php foreach ($sortable_tours as $tour_data) {
 							$tour = $tour_data['tour'];
@@ -310,6 +355,9 @@
 								<?php if ($params['activity-filter'] == 'yes' || $activity_filter) { ?>
                                     data-activity="<?php echo esc_attr(TTBM_Function::get_taxonomy_name_to_id_string($tour_id, 'ttbm_tour_activities', 'ttbm_tour_activities')); ?>"
 								<?php } ?>
+
+								data-price="<?php echo esc_attr(get_post_meta($tour_id, 'ttbm_price', true)); ?>"
+								data-date="<?php echo esc_attr(get_the_date('Y-m-d', $tour_id)); ?>"
                             >
                                 <input type="hidden" name="ttbm_item_activities" value="<?php echo esc_attr(TTBM_Function::get_taxonomy_name_to_id_string($tour_id, 'ttbm_tour_activities', 'ttbm_tour_activities')); ?>"/>
 								<?php

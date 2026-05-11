@@ -65,8 +65,9 @@
 				$this->refresh_upcoming_dates();
 				?>
                 <div class="filter-top-label">
-                    <h4 data-placeholder><span class="mR_xs fas fa-filter"></span><?php esc_html_e('Filters', 'tour-booking-manager'); ?></h4>
-                </div>
+                    <h4 data-placeholder><?php echo esc_html(apply_filters('tbm_filter_top_label_title',__('Filters', 'tour-booking-manager'))); ?></h4>
+					<p class="filter-subtitle"><?php echo esc_html( apply_filters('tbm_filter_top_label_subtitle',__('Refine your luxury journey', 'tour-booking-manager'))); ?></p>
+				</div>
                 <div class="ttbm_filter">
 					<?php $this->location_filter_multiple($params); ?>
 					<?php $this->country_filter_left($params); ?>
@@ -309,8 +310,8 @@
 						}
 						$current_location = $url_location ? (($term = get_term_by('id', $url_location, 'ttbm_tour_location')) ? $term->term_id : '') : '';
 						?>
-                        <h5 class="justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_location_filter_multiple" data-placeholder>
-							<?php esc_html_e('Filters By Location', 'tour-booking-manager'); ?>
+                        <h5 class="_alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_location_filter_multiple" data-placeholder>
+							<span><i class="mi mi-marker"></i> <?php esc_html_e('Filters By Location', 'tour-booking-manager'); ?></span>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
                         <div class="divider"></div>
@@ -365,7 +366,7 @@
 					if (sizeof($countries) > 0) {
 						?>
                         <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#country_filter" data-placeholder>
-							<?php esc_html_e('Filters By Country', 'tour-booking-manager'); ?>
+							<span><i class="mi mi-map"></i><?php esc_html_e('Filters By Country', 'tour-booking-manager'); ?></span>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
                         <div class="divider"></div>
@@ -472,8 +473,8 @@
 							$url = isset($_GET['feature_filter']) ? sanitize_text_field(wp_unslash($_GET['feature_filter'])) : '';
 						}
 						?>
-                        <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#feature_filter_multiple" data-placeholder>
-							<?php esc_html_e('Filters By Feature', 'tour-booking-manager'); ?>
+                        <h5 class="" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#feature_filter_multiple" data-placeholder>
+							<span><i class="mi mi-star"></i> <?php esc_html_e('Filters By Feature', 'tour-booking-manager'); ?></span>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
                         <div class="divider"></div>
@@ -600,8 +601,8 @@
 						}
 						$current_activity = $url_activity ? (($term = get_term_by('id', $url_activity, 'ttbm_tour_activities')) ? $term->term_id : '') : '';
 						?>
-                        <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#activity_filter_multiple" data-placeholder>
-							<?php esc_html_e('Filter By Activity', 'tour-booking-manager'); ?>
+                        <h5 class="" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#activity_filter_multiple" data-placeholder>
+							<span><i class="mi mi-hiking"></i> <?php esc_html_e('Filter By Activity', 'tour-booking-manager'); ?></span>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
                         <div class="divider"></div>

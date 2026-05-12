@@ -1689,7 +1689,7 @@
 	body.theme-twentytwentyone div.mpContainer,
 	body.theme-twentytwentytwo div.mpContainer,
 	div.mpContainer {
-		max-width: var(--dcontainer_width);
+		max-width:1460px;
 		width: 100%;
 		margin: 0 auto;
 	}
@@ -1891,39 +1891,30 @@
 	}
 	div.ttbm_style div.grid_2 {
 		width: calc(50% - var(--ttbm_mp));
-		margin: var(--ttbm_mp_xs);
 	}
 	div.ttbm_style div.grid_3 {
 		width: calc(33.333333% - var(--ttbm_mp));
-		margin: var(--ttbm_mp_xs);
 	}
 	div.ttbm_style div.grid_4 {
 		width: calc(25% - var(--ttbm_mp));
-		margin: 10px auto;
 	}
 	div.ttbm_style div.grid_5 {
 		width: calc(20% - var(--ttbm_mp));
-		margin: var(--ttbm_mp_xs);
 	}
 	div.ttbm_style div.grid_6 {
 		width: calc(16.66666667% - var(--ttbm_mp));
-		margin: var(--ttbm_mp_xs);
 	}
 	div.ttbm_style div.grid_7 {
 		width: calc(14.285715% - var(--ttbm_mp));
-		margin: var(--ttbm_mp_xs);
 	}
 	div.ttbm_style div.grid_8 {
 		width: calc(12.5% - var(--ttbm_mp));
-		margin: var(--ttbm_mp_xs);
 	}
 	div.ttbm_style div.grid_9 {
 		width: calc(11.1111111111% - var(--ttbm_mp));
-		margin: var(--ttbm_mp_xs);
 	}
 	div.ttbm_style div.grid_10 {
 		width: calc(10% - var(--ttbm_mp));
-		margin: var(--ttbm_mp_xs);
 		
 	}
 	@media only screen and (max-width: 1000px) {

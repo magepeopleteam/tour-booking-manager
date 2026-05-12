@@ -65,7 +65,13 @@
 				$this->refresh_upcoming_dates();
 				?>
                 <div class="filter-top-label">
-                    <h4 data-placeholder><?php echo esc_html(apply_filters('tbm_filter_top_label_title',__('Filters', 'tour-booking-manager'))); ?></h4>
+                    <div class="ttbm-filter-top-title">
+                        <h4 data-placeholder><?php echo esc_html(apply_filters('tbm_filter_top_label_title',__('Filters', 'tour-booking-manager'))); ?></h4>
+                        <button type="button" class="ttbm-mobile-filter-toggle" aria-expanded="false" data-show-label="<?php esc_attr_e('Show filters', 'tour-booking-manager'); ?>" data-hide-label="<?php esc_attr_e('Hide filters', 'tour-booking-manager'); ?>">
+                            <span class="ttbm-mobile-filter-toggle-text"><?php esc_html_e('Show filters', 'tour-booking-manager'); ?></span>
+                            <span class="fas fa-chevron-down" aria-hidden="true"></span>
+                        </button>
+                    </div>
 					<p class="filter-subtitle"><?php echo esc_html( apply_filters('tbm_filter_top_label_subtitle',__('Refine your luxury journey', 'tour-booking-manager'))); ?></p>
 				</div>
                 <div class="ttbm_filter">

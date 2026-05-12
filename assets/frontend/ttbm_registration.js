@@ -563,5 +563,68 @@ $(document).on('change', '.ttbm-sort-select', function () {
 
         });
 
+        // =========================================================
+        // Mobile Left Filter Toggle
+        // =========================================================
+        function ttbmSetupMobileFilterToggle() {
+            $('.ttbm_filter_area .leftSidebar').each(function () {
+                let sidebar = $(this);
+                let filterBody = sidebar.children('.ttbm_filter').first();
+                let toggle = sidebar.find('.ttbm-mobile-filter-toggle').first();
+                let showLabel = toggle.data('show-label') || 'Show filters';
+
+                if (filterBody.length < 1 || toggle.length < 1) {
+                    return;
+                }
+
+                if (window.matchMedia('(max-width: 767px)').matches) {
+                    if (!sidebar.hasClass('ttbm-mobile-filter-ready')) {
+                        filterBody.hide();
+                        toggle
+                            .removeClass('is-open')
+                            .attr('aria-expanded', 'false')
+                            .find('.ttbm-mobile-filter-toggle-text')
+                            .text(showLabel);
+                        sidebar.addClass('ttbm-mobile-filter-ready');
+                    }
+                } else {
+                    filterBody.show();
+                    toggle
+                        .removeClass('is-open')
+                        .attr('aria-expanded', 'true')
+                        .find('.ttbm-mobile-filter-toggle-text')
+                        .text(showLabel);
+                    sidebar.removeClass('ttbm-mobile-filter-ready');
+                }
+            });
+        }
+
+        ttbmSetupMobileFilterToggle();
+
+        $(window).on('resize', function () {
+            ttbmSetupMobileFilterToggle();
+        });
+
+        $(document).on('click', '.ttbm_filter_area .ttbm-mobile-filter-toggle', function () {
+            if (!window.matchMedia('(max-width: 767px)').matches) {
+                return;
+            }
+
+            let toggle = $(this);
+            let sidebar = toggle.closest('.leftSidebar');
+            let filterBody = sidebar.children('.ttbm_filter').first();
+            let isOpen = toggle.hasClass('is-open');
+            let showLabel = toggle.data('show-label') || 'Show filters';
+            let hideLabel = toggle.data('hide-label') || 'Hide filters';
+
+            toggle
+                .toggleClass('is-open', !isOpen)
+                .attr('aria-expanded', !isOpen ? 'true' : 'false')
+                .find('.ttbm-mobile-filter-toggle-text')
+                .text(!isOpen ? hideLabel : showLabel);
+
+            filterBody.stop(true, true).slideToggle(220);
+        });
+
     });
 }(jQuery));

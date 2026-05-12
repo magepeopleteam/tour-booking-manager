@@ -502,7 +502,8 @@ input.medium{
 	.ttbm-hotel-list-table td { padding: 12px 10px; vertical-align: top; border-bottom: 1px solid #F0F0F1;}
 	.ttbm-hotel-list-table .ttbm-hotel-list-column-image { width: 120px; text-align: center;}
 	.ttbm-tour-card .ttbm-hotel-list-column-image{height: 100px;}
-	.ttbm-hotel-list-image-placeholder { width:120px; height:120px; object-fit: cover; object-position: center; border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);}
+	.ttbm-hotel-list-image-placeholder { width:220px; height:120px; object-fit: cover; object-position: center; border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);}
+	.ttbm-hotel-list-image-placeholder img{width: 100%;}
 	.ttbm-hotel-list-hotel-title { font-size: 15px; font-weight: 600; margin-bottom: 5px; color: #0073AA; transition: color 0.2s ease;}
 	.ttbm-hotel-list-hotel-location { font-size: 13px; color: #666; margin-bottom: 8px; display: flex; align-items: center; gap: 5px;}
 	.ttbm-hotel-list-hotel-location .fas { color: rgb(255, 109, 0);}
@@ -729,7 +730,12 @@ input.medium{
 	.ttbm-btn:hover { opacity: 0.9;}
 	.ttbm-title-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;}
 	.ttbm-taxonomy-card-actions { display: none; gap: 8px; flex-shrink: 0;}
-	.ttbm-taxonomy-card:hover .ttbm-taxonomy-card-actions { display: flex;}
+	.ttbm-taxonomy-card:hover .ttbm-taxonomy-card-actions { display: flex;
+		position: absolute;
+    	top: 0;
+    	right: 0;
+		z-index: 1;
+	}
 	.ttbm_places_load_more_holder,
 	.ttbm_plocation_load_more_holder { display: flex; padding: 10px; justify-content: center;}
 	.ttbm_places_load_more_btn,
@@ -931,8 +937,8 @@ input.medium{
 @media only screen and (min-width: 1024px) {
 	.ttbm-tour-list-page .ttbm-tour-list { gap: 10px; }
 	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card { flex-direction: row; }
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-thumb { width: 10%; }
-	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content { width: 90%; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-thumb { width: 20%; }
+	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content { width: 80%; }
 	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-info { width: 80%; }
 	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content .ttbm-tour-details .ttbm-tour-meta { width: 15%; }
 }
@@ -1492,18 +1498,13 @@ input.medium{
 
 /******************************************************************** Organizer ID Badge & Shortcode Display ************************************************/
 .ttbm-term-id-badge {
-	background-color: var(--mpl-primary);
-	color: var(--mpl-white);
-	padding: 3px 8px;
-	font-size: 11px;
-	font-weight: 500;
-	border-radius: 3px;
-	margin-left: 6px;
+	/* background-color: var(--mpl-primary); */
+	color:  var(--mpl-dark);
+	padding: 5px;
+	font-size: 12px;
 	display: inline-block;
 	vertical-align: middle;
 	white-space: nowrap;
-	position: relative;
-	z-index: 1;
 }
 
 .ttbm_show_location_shortcode {

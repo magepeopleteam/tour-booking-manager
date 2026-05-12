@@ -12,7 +12,7 @@
 		?>
 		<div class="place_you_see" id="place_you_see">
 
-			<h2 class="content-title"><?php esc_html_e( "Places You’ll See :", 'tour-booking-manager' ); ?></h2>
+			<h2 class="content-title"><?php esc_html_e( "Places You'll See :", 'tour-booking-manager' ); ?></h2>
 
 			<?php
 				if ( sizeof( $places ) > 3 ) {

@@ -8,28 +8,32 @@ $thumbnail    = TTBM_Global_Function::get_image_url( $tour_id );
 $term_count   = 3;
 ?>
 
-<?php /* ── LEFT: Image column ─────────────────────────────── */ ?>
-<div class="ttbm-lv-image-col" data-href="<?php echo esc_url( get_the_permalink( $tour_id ) ); ?>" data-placeholder>
+<div class="ttbm-gc-image-wrap" data-href="<?php echo esc_url( get_the_permalink( $tour_id ) ); ?>" data-placeholder>
 
-	<?php /* Sale badge */ ?>
+	<?php /* Sale ribbon badge */ ?>
 	<?php
 	$regular_price = TTBM_Function::check_discount_price_exit( $tour_id );
 	if ( $regular_price ) : ?>
 		<div class="ttbm-gc-badge-sale" data-placeholder><?php esc_html_e( 'ON SALE!', 'tour-booking-manager' ); ?></div>
 	<?php endif; ?>
 
-	<?php /* Wishlist button */ ?>
+	<?php /* Wishlist / favourite button */ ?>
 	<button type="button" class="ttbm-gc-wishlist" aria-label="<?php esc_attr_e( 'Add to wishlist', 'tour-booking-manager' ); ?>" data-placeholder>
 		<span class="mi mi-heart"></span>
 	</button>
 
-	<?php /* Thumbnail */ ?>
-	<div class="ttbm-lv-thumb" data-bg-image="<?php echo esc_attr( $thumbnail ); ?>"></div>
+	<?php /* Tour thumbnail */ ?>
+	<div class="ttbm-gc-thumb" data-bg-image="<?php echo esc_attr( $thumbnail ); ?>"></div>
+
+	<?php /* Duration badge overlaid at bottom of image */ ?>
+	<div class="ttbm-gc-duration-badge fdColumn" data-placeholder>
+		<?php include( TTBM_Function::template_path( 'layout/list_duration.php' ) ); ?>
+		<?php include( TTBM_Function::template_path( 'layout/expire_msg.php' ) ); ?>
+	</div>
 
 </div>
 
-<?php /* ── RIGHT: Content column ───────────────────────────── */ ?>
-<div class="ttbm-lv-content-col">
+<div class="ttbm-gc-body fdColumn">
 
 	<?php /* Location */ ?>
 	<?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
@@ -40,7 +44,7 @@ $term_count   = 3;
 	<?php /* Short description */ ?>
 	<?php include( TTBM_Function::template_path( 'layout/description_short.php' ) ); ?>
 
-	<?php /* Feature tags */ ?>
+	<?php /* Feature tags (included services) — set $term_name=true to show labels */ ?>
 	<div class="ttbm-gc-tags" data-placeholder>
 		<?php $term_name = true; include( TTBM_Function::template_path( 'layout/include_feature_list.php' ) ); ?>
 	</div>
@@ -48,7 +52,7 @@ $term_count   = 3;
 	<?php /* Divider */ ?>
 	<hr class="ttbm-gc-divider">
 
-	<?php /* Footer: price + explore */ ?>
+	<?php /* Footer: duration + price + explore */ ?>
 	<?php include( TTBM_Function::template_path( 'layout/gc_card_footer.php' ) ); ?>
 
 </div>

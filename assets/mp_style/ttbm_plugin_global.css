@@ -693,8 +693,8 @@
 	.ttbm_style div.superSlider .sliderShowcase.style_2 > div { width: calc(50% - 5px); margin: 0 var(--ttbm_mp_xs) 0 0; }
 	.ttbm_style div.superSlider .sliderShowcase.style_2 > div:first-child { width: 100%; margin: 0 0 var(--ttbm_mp_xs) 0; }
 	.ttbm_style div.superSlider .sliderShowcase.style_2 > div:last-child { margin: 0; }
-	.ttbm_style div.superSlider .sliderShowcase.left { margin: 0 var(--ttbm_mp_xs) 0 0; gap:var(--ttbm_mp_xs);}
-	.ttbm_style div.superSlider .sliderShowcase.right { margin: 0 0 0 var(--ttbm_mp_xs); gap:var(--ttbm_mp_xs); }
+	.ttbm_style div.superSlider .sliderShowcase.left { margin-inline-start: var(--ttbm_mp_xs); gap:var(--ttbm_mp_xs);}
+	.ttbm_style div.superSlider .sliderShowcase.right { margin-inline-start:var(--ttbm_mp_xs); gap:var(--ttbm_mp_xs); }
 	.ttbm_style div.superSlider .area_column .sliderShowcase { width: 100%; min-width: 100%; }
 	.ttbm_style div.superSlider .sliderShowcase.top { margin: 0 0 var(--ttbm_mp_xs) 0; }
 	.ttbm_style div.superSlider .sliderShowcase.bottom { margin: var(--ttbm_mp_xs) 0 0 0; }

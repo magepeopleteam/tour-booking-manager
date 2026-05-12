@@ -165,7 +165,6 @@
 		$(this).attr('disabled', '');
 		all_item.find('.modern').toggleClass('grid modern').promise().done(function () {
 			parent.find('.ttbm_list_view').removeAttr('disabled');
-			parent.find('.ttbm_explore_button').slideToggle(250);
 			placeholderLoaderRemove(all_item);
 		});
 	});
@@ -176,7 +175,6 @@
 		$(this).attr('disabled', '');
 		all_item.find('.grid').toggleClass('grid modern').promise().done(function () {
 			parent.find('.ttbm_grid_view').removeAttr('disabled');
-			parent.find('.ttbm_explore_button').slideToggle(250);
 			placeholderLoaderRemove(all_item);
 		});
 	});

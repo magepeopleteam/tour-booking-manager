@@ -5376,7 +5376,7 @@ div.modern div.filter_item:hover {
 	justify-content: space-between;
 	flex-wrap: nowrap;
 	gap: 10px;
-	padding-top: 12px;
+	padding: 10px 0;
 	margin-top: auto;
 }
 
@@ -5439,7 +5439,6 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 	}
 
 	button.ttbm_explore_button {
-		width: 100%;
 		text-align: center;
 	}
 }

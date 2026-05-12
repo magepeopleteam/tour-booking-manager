@@ -71,7 +71,7 @@ if ( $show_duration && ( $duration || $night ) && $tour_type === 'general' ) {
 	</div>
 
 	<button type="button" class="ttbm_explore_button" data-href="<?php echo esc_url( get_the_permalink( $ttbm_post_id ) ); ?>">
-		<?php esc_html_e( 'Explore Experience', 'tour-booking-manager' ); ?>
+		<?php esc_html_e( 'Explore', 'tour-booking-manager' ); ?>
 	</button>
 
 </div>

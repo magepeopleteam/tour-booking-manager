@@ -4924,29 +4924,8 @@ div.filter_item.ttbm-grid-card:hover,
 }
 
 /* --- Duration badge on image ---------------------------------------------- */
-.ttbm-gc-duration-badge {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	padding: 0;
-	pointer-events: none;
-}
-
-.ttbm-gc-duration-badge .ttbm_list_info {
-	margin: 0;
-	background: rgba(0, 0, 0, 0.48);
-	color: #fff;
-	font-size: 11px;
-	padding: 5px 12px;
-	border-radius: 0;
-	justify-content: flex-start;
-}
-
-.ttbm-gc-duration-badge .ttbm_list_info span {
-	color: #fff;
-	margin-right: 5px;
-	font-size: 12px;
+div.ttbm-tour-list-shortcode .ttbm-gc-duration-badge {
+	display: none;
 }
 
 /* --- Card body ------------------------------------------------------------ */
@@ -5515,10 +5494,12 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
   transition: transform 0.2s ease;
 }
 
-.ttbm-tab-btn:hover {
-  color: #374151;
+  .ttbm_style button.ttbm-tab-btn:hover,
+  .ttbm_style button.ttbm-tab-btn:focus {
+	background: none;
+	color: var(--color_theme, #6c47ff);
+	outline:0;
 }
-
 .ttbm-tab-btn.ttbm-tab-active {
   color: var(--color_theme, #6c47ff);
   font-weight: 600;
@@ -5648,6 +5629,227 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
   }
 }
 
-/* .all_filter_item .ttbm-list-mode div.filter_item{
-	flex-direction: row;
-} */
+/* =====================================================
+   LIST MODE
+   ===================================================== */
+
+.all_filter_item .flexWrap.ttbm-list-mode {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	width: 100%;
+}
+
+/* Main list card */
+.all_filter_item .flexWrap.ttbm-list-mode .filter_item {
+	display: flex !important;
+	flex-direction: row !important;
+	align-items: stretch;
+	width: 100% !important;
+	max-width: 100%;
+	border-radius: 18px;
+	overflow: hidden;
+	background: #fff;
+	box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+	padding: 0;
+	margin: 0;
+}
+
+/* =====================================================
+   IMAGE AREA (LEFT)
+   Works with existing grid template
+   ===================================================== */
+
+.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-image-wrap {
+	width: 340px;
+	min-width: 340px;
+	max-width: 340px;
+	height: auto;
+	border-radius: 0;
+	flex-shrink: 0;
+	position: relative;
+	overflow: hidden;
+}
+
+.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-thumb {
+	width: 100%;
+	height: 100%;
+	min-height: 100%;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	border-radius: 0;
+}
+
+/* keep image full height */
+.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-image-wrap img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+/* =====================================================
+   CONTENT AREA (RIGHT)
+   ===================================================== */
+
+.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-body {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	padding: 22px;
+	min-width: 0;
+}
+
+/* Title */
+.all_filter_item .flexWrap.ttbm-list-mode .ttbm_list_title {
+	font-size: 24px;
+	margin-bottom: 10px;
+	line-height: 1.3;
+}
+
+/* Description */
+.all_filter_item .flexWrap.ttbm-list-mode .ttbm_description > div {
+	-webkit-line-clamp: 3;
+	font-size: 14px;
+	line-height: 1.7;
+}
+
+/* Tags */
+.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-tags {
+	margin-top: 10px;
+	margin-bottom: 14px;
+}
+
+/* Footer */
+.all_filter_item .flexWrap.ttbm-list-mode .filter_item_footer,
+.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-footer {
+	margin-top: auto;
+	padding-top: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+
+/* Price */
+.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-price-current {
+	font-size: 26px;
+}
+
+/* Button */
+.all_filter_item .flexWrap.ttbm-list-mode .ttbm_explore_button {
+	padding: 12px 24px;
+	font-size: 15px;
+}
+
+/* =====================================================
+   TABLET RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 991px) {
+
+	.all_filter_item .flexWrap.ttbm-list-mode .filter_item {
+		flex-direction: column !important;
+	}
+
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-image-wrap {
+		width: 100%;
+		max-width: 100%;
+		min-width: 100%;
+		height: 240px;
+	}
+
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-thumb {
+		height: 240px;
+	}
+
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-body {
+		padding: 18px;
+	}
+
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm_list_title {
+		font-size: 22px;
+	}
+}
+
+/* =====================================================
+   MOBILE RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 767px) {
+
+	/* Grid cards */
+	.all_filter_item .flexWrap.ttbm-grid-mode .filter_item {
+		width: 100% !important;
+	}
+
+	/* List mode */
+	.all_filter_item .flexWrap.ttbm-list-mode .filter_item {
+		border-radius: 14px;
+	}
+
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-image-wrap {
+		height: 220px;
+	}
+
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-thumb {
+		height: 220px;
+	}
+
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-body {
+		padding: 16px;
+	}
+
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm_list_title {
+		font-size: 20px;
+	}
+
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm_description > div {
+		font-size: 13px;
+		-webkit-line-clamp: 2;
+	}
+
+	.all_filter_item .flexWrap.ttbm-list-mode .filter_item_footer,
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-footer {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm_explore_button {
+		width: 100%;
+		text-align: center;
+	}
+}
+
+/* =====================================================
+   SMALL MOBILE
+   ===================================================== */
+
+@media (max-width: 480px) {
+
+	.all_filter_item .flexWrap {
+		gap: 16px;
+	}
+
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-image-wrap {
+		height: 200px;
+	}
+
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-thumb {
+		height: 200px;
+	}
+
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-body {
+		padding: 14px;
+	}
+
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm_list_title {
+		font-size: 18px;
+	}
+
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-price-current {
+		font-size: 22px;
+	}
+}

@@ -311,7 +311,7 @@
 						$current_location = $url_location ? (($term = get_term_by('id', $url_location, 'ttbm_tour_location')) ? $term->term_id : '') : '';
 						?>
                         <h5 class="_alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_location_filter_multiple" data-placeholder>
-							<span><i class="mi mi-marker"></i> <?php esc_html_e('Filters By Location', 'tour-booking-manager'); ?></span>
+							<span><i class="mi mi-marker"></i> <?php esc_html_e('Location', 'tour-booking-manager'); ?></span>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
                         <div class="divider"></div>
@@ -474,7 +474,7 @@
 						}
 						?>
                         <h5 class="" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#feature_filter_multiple" data-placeholder>
-							<span><i class="mi mi-star"></i> <?php esc_html_e('Filters By Feature', 'tour-booking-manager'); ?></span>
+							<span><i class="mi mi-star"></i> <?php esc_html_e('Feature', 'tour-booking-manager'); ?></span>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
                         <div class="divider"></div>
@@ -544,7 +544,7 @@
 						$current_activity = $url_activity ? (($term = get_term_by('id', $url_activity, 'ttbm_tour_activities')) ? $term->term_id : '') : '';
 						?>
                         <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#activity_filter_multiple" data-placeholder>
-							<?php esc_html_e('Filter By Activity', 'tour-booking-manager'); ?>
+							<span><i class="mi mi-hiking"></i> <?php esc_html_e('Activity', 'tour-booking-manager'); ?></span>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
                         <div class="divider"></div>
@@ -602,7 +602,7 @@
 						$current_activity = $url_activity ? (($term = get_term_by('id', $url_activity, 'ttbm_tour_activities')) ? $term->term_id : '') : '';
 						?>
                         <h5 class="" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#activity_filter_multiple" data-placeholder>
-							<span><i class="mi mi-hiking"></i> <?php esc_html_e('Filter By Activity', 'tour-booking-manager'); ?></span>
+							<span><i class="mi mi-hiking"></i> <?php esc_html_e('Activity', 'tour-booking-manager'); ?></span>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
                         <div class="divider"></div>
@@ -752,7 +752,7 @@
 			public function month_filter_left($params) {
 				if ($params['month-filter'] == 'yes') { ?>
                     <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#month_filter_left" data-placeholder>
-						<?php esc_html_e('Filters By Month', 'tour-booking-manager'); ?>
+						<span><i class="mi mi-calendar"></i> <?php esc_html_e('Month', 'tour-booking-manager'); ?></span>
                         <span data-icon class="fas fa-chevron-down"></span>
                     </h5>
                     <div class="divider"></div>

@@ -5008,37 +5008,38 @@ div.ttbm-tour-list-shortcode .ttbm-gc-duration-badge {
 }
 
 .ttbm-gc-tags ul li {
-	display: inline-flex !important;
-	flex-direction: row !important;
+	display: inline-flex ;
+	flex-direction: row ;
 	/* icon + text always horizontal */
-	align-items: center !important;
-	justify-content: flex-start !important;
+	align-items: center ;
+	justify-content: flex-start ;
 	gap: 5px;
-	border: 1px solid #e5e7eb !important;
-	border-radius: 50px !important;
-	padding: 4px 12px !important;
-	font-size: 12px !important;
-	color: #374151 !important;
+	border: 1px solid #e5e7eb ;
+	border-radius:5px ;
+	padding:5px 7px;
+	font-size: 12px;
+	color: #374151;
 	background: #f9fafb;
-	height: auto !important;
-	width: auto !important;
-	line-height: 1.5 !important;
+	height: auto ;
+	width: auto ;
+	line-height: 1.5 ;
 	transition: background 0.18s ease, border-color 0.18s ease;
 	white-space: nowrap;
-	margin: 0 !important;
+	margin: 0 ;
 	vertical-align: middle;
 }
 
 .ttbm-gc-tags ul li:hover {
-	background: rgba(var(--color_theme_rgb, 108, 71, 255), 0.06) !important;
-	border-color: var(--color_theme, #6c47ff) !important;
-	color: var(--color_theme, #6c47ff) !important;
+	background: rgba(var(--color_theme_rgb, 108, 71, 255), 0.06) ;
+	border-color: var(--color_theme, #6c47ff) ;
+	color: var(--color_theme, #6c47ff) ;
 }
 
 .ttbm-gc-tags ul li .circleIcon_xs {
 	font-size: 13px;
 	color: var(--color_theme, #6c47ff);
-	width: auto;
+	width: 16px;
+	min-width: 16px;
 	height: auto;
 	margin: 0;
 	display: inline-flex;

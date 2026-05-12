@@ -422,46 +422,52 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         // =========================================================
         // Sort Tours
         // =========================================================
-        $('.ttbm-sort-select').on('change', function () {
+        // =========================================================
+// Sort Tours
+// =========================================================
+$(document).on('change', '.ttbm-sort-select', function () {
 
-            let sortValue = $(this).val();
-            let container = $('.all_filter_item .flexWrap');
-            let items = container.find('.filter_item').get();
+    let sortValue = $(this).val();
 
-            items.sort(function (a, b) {
+    let container = $('.all_filter_item .flexWrap');
 
-                let priceA = parseFloat($(a).attr('data-price')) || 0;
-                let priceB = parseFloat($(b).attr('data-price')) || 0;
+    let items = container.children('.filter_item').get();
 
-                let titleA = ($(a).attr('data-title') || '').toLowerCase();
-                let titleB = ($(b).attr('data-title') || '').toLowerCase();
+    items.sort(function (a, b) {
 
-                let dateA = new Date($(a).attr('data-date')) || 0;
-                let dateB = new Date($(b).attr('data-date')) || 0;
+        let priceA = parseFloat($(a).data('price')) || 0;
+        let priceB = parseFloat($(b).data('price')) || 0;
 
-                switch (sortValue) {
+        let titleA = ($(a).data('title') || '').toString().toLowerCase();
+        let titleB = ($(b).data('title') || '').toString().toLowerCase();
 
-                    case 'price_asc':
-                        return priceA - priceB;
+        let dateA = new Date($(a).data('date')).getTime() || 0;
+        let dateB = new Date($(b).data('date')).getTime() || 0;
 
-                    case 'price_desc':
-                        return priceB - priceA;
+        switch (sortValue) {
 
-                    case 'title_asc':
-                        return titleA.localeCompare(titleB);
+            case 'price_asc':
+                return priceA - priceB;
 
-                    case 'date_desc':
-                        return dateB - dateA;
+            case 'price_desc':
+                return priceB - priceA;
 
-                    default:
-                        return 0;
-                }
-            });
+            case 'title_asc':
+                return titleA.localeCompare(titleB);
 
-            $.each(items, function (index, item) {
-                container.append(item);
-            });
-        });
+            case 'date_desc':
+                return dateB - dateA;
+
+            default:
+                return 0;
+        }
+    });
+
+    $.each(items, function (index, item) {
+        container.append(item);
+    });
+
+});
 
         // =========================================================
         // Top Filter Tabs

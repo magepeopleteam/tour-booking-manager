@@ -282,10 +282,8 @@
 							<!-- Sort dropdown -->
 							<div class="ttbm-sort-dropdown">
 								<select class="ttbm-sort-select formControl" name="sort_by_filter" aria-label="<?php esc_attr_e( 'Sort tours', 'tour-booking-manager' ); ?>">
-									<option value=""><?php esc_html_e( 'Sort by: Most Popular', 'tour-booking-manager' ); ?></option>
 									<option value="price_asc"><?php esc_html_e( 'Price: Low to High', 'tour-booking-manager' ); ?></option>
 									<option value="price_desc"><?php esc_html_e( 'Price: High to Low', 'tour-booking-manager' ); ?></option>
-									<option value="date_desc"><?php esc_html_e( 'Newest First', 'tour-booking-manager' ); ?></option>
 									<option value="title_asc"><?php esc_html_e( 'Title: A–Z', 'tour-booking-manager' ); ?></option>
 								</select>
 							</div>
@@ -314,8 +312,9 @@
 							?>
                             <div class="filter_item placeholder_area <?php echo esc_attr($active_class); ?>"
 								<?php if ($params['title-filter'] == 'yes' || $title_filter) { ?>
-                                    data-title="<?php echo esc_attr(get_the_title($tour_id)); ?>"
+                                    
 								<?php } ?>
+								data-title="<?php echo esc_attr(get_the_title($tour_id)); ?>"
 								<?php if ($params['type-filter'] == 'yes' || $type_filter) { ?>
                                     data-type="<?php echo esc_attr(TTBM_Function::get_tour_type($tour_id)); ?>"
 								<?php } ?>
@@ -356,8 +355,9 @@
                                     data-activity="<?php echo esc_attr(TTBM_Function::get_taxonomy_name_to_id_string($tour_id, 'ttbm_tour_activities', 'ttbm_tour_activities')); ?>"
 								<?php } ?>
 
-								data-price="<?php echo esc_attr(get_post_meta($tour_id, 'ttbm_price', true)); ?>"
+								data-price="<?php echo esc_attr(TTBM_Function::get_tour_start_price( $ttbm_post_id )); ?>"
 								data-date="<?php echo esc_attr(get_the_date('Y-m-d', $tour_id)); ?>"
+								
                             >
                                 <input type="hidden" name="ttbm_item_activities" value="<?php echo esc_attr(TTBM_Function::get_taxonomy_name_to_id_string($tour_id, 'ttbm_tour_activities', 'ttbm_tour_activities')); ?>"/>
 								<?php

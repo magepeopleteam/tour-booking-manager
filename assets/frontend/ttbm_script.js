@@ -284,4 +284,75 @@
     }
 
 
+	// ═══ Wishlist Toggle ═══════════════════════════════════════════
+	$(document).on('click', '.ttbm-gc-wishlist', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		e.stopImmediatePropagation();
+
+		var btn = $(this);
+		var tourId = btn.data('tour-id');
+
+		if (!tourId) return;
+
+		$.ajax({
+			type: 'POST',
+			url: ttbm_ajax.ajax_url,
+			data: {
+				action: 'ttbm_wishlist_toggle',
+				nonce: ttbm_ajax.nonce,
+				tour_id: tourId
+			},
+			success: function(response) {
+				if (response.success) {
+					var icon = btn.find('.mi');
+					if (response.data.in_wishlist) {
+						btn.addClass('active');
+						icon.removeClass('mi-heart').addClass('mi-wishlist-heart');
+					} else {
+						btn.removeClass('active');
+						icon.removeClass('mi-wishlist-heart').addClass('mi-heart');
+					}
+				} else if (response.data && response.data.need_login) {
+					// Show login modal
+					$('#ttbm-wishlist-login-modal').addClass('ttbm-modal-active');
+				}
+			},
+			error: function() {
+				// Fallback: show modal for any AJAX failure when not logged in
+				if (!ttbm_ajax_is_logged_in) {
+					$('#ttbm-wishlist-login-modal').addClass('ttbm-modal-active');
+				}
+			}
+		});
+	});
+
+	// Close modal
+	$(document).on('click', '.ttbm-modal-close, .ttbm-modal-overlay', function() {
+		$(this).closest('.ttbm-modal-wrap').removeClass('ttbm-modal-active');
+	});
+
+	// ═══ Wishlist Remove (My Account page) ══════════════════════════
+	$(document).on('click', '.ttbm-wishlist-remove', function(e) {
+		e.preventDefault();
+		var btn = $(this);
+		var tourId = btn.data('tour-id');
+		if (!tourId) return;
+
+		$.ajax({
+			type: 'POST',
+			url: ttbm_ajax.ajax_url,
+			data: {
+				action: 'ttbm_wishlist_toggle',
+				nonce: ttbm_ajax.nonce,
+				tour_id: tourId
+			},
+			success: function(response) {
+				if (response.success && !response.data.in_wishlist) {
+					btn.closest('.ttbm-wishlist-item').fadeOut(300, function() { $(this).remove(); });
+				}
+			}
+		});
+	});
+
 }(jQuery));

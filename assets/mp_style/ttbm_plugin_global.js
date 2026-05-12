@@ -291,7 +291,8 @@ function ttbm_resize_bg_image_area(target, bg_url) {
             });
         }
     });
-    $(document).on('click', 'div.ttbm_style [data-href]', function () {
+    $(document).on('click', 'div.ttbm_style [data-href]', function (e) {
+        if ($(e.target).closest('.ttbm-gc-wishlist').length) return;
         let href = $(this).data('href');
         if (href) {
             window.location.href = href;

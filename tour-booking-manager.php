@@ -68,14 +68,20 @@ if (!class_exists('TTBM_Woocommerce_Plugin')) {
 					'lotus-grid' => [
 						'slug' => 'lotus-grid',
 						'title' => 'Tour Lotus Grid View',
-						'content' => "[travel-list style='lotus' column=4 show='12' pagination='yes']",
+						'content' => "[travel-list style='lotus' column= show='12' pagination='yes']",
 						'option_key' => 'ttbm_page_lotus_grid_created',
 					],
 					'orchid-grid' => [
 						'slug' => 'orchid-grid',
 						'title' => 'Tour Orchid Grid View',
-						'content' => "[travel-list style='orchid' column=4 pagination='yes' show=12]",
+						'content' => "[travel-list style='orchid' column= pagination='yes' show=12]",
 						'option_key' => 'ttbm_page_orchid_grid_created',
+					],
+					'ttbm-tour-list' => [
+						'slug' => 'ttbm-tour-list',
+						'title' => 'Tour New Style',
+						'content' => "[ttbm-tour-list column='3' pagination='yes' show=12]",
+						'option_key' => 'ttbm_page_ttbm_tour_list_grid_created',
 					],
 				];
 				foreach ($pages_to_create as $page_data) {

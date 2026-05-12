@@ -4657,6 +4657,12 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 	color: #333;
 }
 
+.ttbm-tour-list-shortcode .left_filter {
+	background: #fff;
+	padding: 15px;
+	border-radius: 10px;
+}
+
 .ttbm-tour-list-shortcode .leftSidebar {
 	width: 100%;
 	display: block;
@@ -4667,6 +4673,7 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 	box-shadow: 0 10px 30px rgba(20, 40, 120, 0.06);
 	overflow-y: auto;
 	padding: 10px;
+	z-index: 2222;
 }
 
 .ttbm-tour-list-shortcode .leftSidebar div.ttbm_filter {
@@ -4783,6 +4790,15 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 	cursor: pointer;
 }
 
+.ttbm-tour-list-shortcode input[type="checkbox"] {
+	border-radius: 4px;
+}
+
+.ttbm-tour-list-shortcode .customCheckbox::before {
+	border-color: #9ca3af;
+	border-radius: 4px;
+}
+
 .ttbm-tour-list-shortcode .ttbm_filter h5 {
 	display: flex;
 	align-items: center;
@@ -4797,7 +4813,7 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 	font-weight: 500;
 	text-transform: uppercase;
 	letter-spacing: 0.5px;
-	color: #4b63ff;
+	color: var(--color_theme, #6c47ff);
 }
 
 .ttbm_filter h5 {
@@ -4943,8 +4959,7 @@ div.ttbm-tour-list-shortcode .ttbm-gc-duration-badge {
 	align-items: center;
 	gap: 5px;
 	margin: 0 0 6px 0;
-	font-size: 13px;
-	font-style: italic;
+	font-size: 16px;
 	font-weight: 500;
 	color: var(--color_theme, #6c47ff);
 	overflow: visible;
@@ -5037,7 +5052,6 @@ div.ttbm-tour-list-shortcode .ttbm-gc-duration-badge {
 
 .ttbm-gc-tags ul li .circleIcon_xs {
 	font-size: 13px;
-	color: var(--color_theme, #6c47ff);
 	width: 16px;
 	min-width: 16px;
 	height: auto;
@@ -5164,7 +5178,7 @@ div.filter_item .ttbm-gc-image-wrap .group_item {
 }
 
 .ttbm-gc-duration-label {
-	font-size: 10px;
+	font-size: 13px;
 	font-weight: 700;
 	letter-spacing: 0.6px;
 	color: #6b7280;
@@ -5203,6 +5217,7 @@ div.filter_item .ttbm-gc-image-wrap .group_item {
 .ttbm-gc-price-original bdi {
 	font-size: inherit;
 	color: inherit;
+	text-decoration: line-through;
 }
 
 /* Explore button final override */
@@ -5396,10 +5411,7 @@ div.modern div.filter_item .ttbm-lv-content-col {
 	box-shadow: none;
 }
 
-/* Hide old list_details inside modern list view */
-div.modern div.filter_item .ttbm_list_details {
-	display: none;
-}
+
 
 /* Also hide old bg_image_area if card uses new template classes */
 div.modern div.filter_item .ttbm-lv-image-col~.ttbm_list_details,

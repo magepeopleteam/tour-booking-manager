@@ -4931,7 +4931,6 @@ div.filter_item.ttbm-grid-card,
 	transition: transform 0.28s ease, box-shadow 0.28s ease;
 	flex-direction: column;
 	justify-content: flex-start;
-	margin: var(--ttbm_mp_xs);
 }
 
 div.filter_item.ttbm-grid-card:hover,

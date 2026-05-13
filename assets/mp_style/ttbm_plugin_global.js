@@ -884,7 +884,7 @@ function ttbm_sticky_management() {
                 value = value + (value ? separator : '') + currentValue;
             }
         }).promise().done(function () {
-            parent.find('input[type="hidden"]').val(value);
+            parent.find('input[type="hidden"]').val(value).trigger('change');
         });
     });
     // radio

@@ -5809,8 +5809,8 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 
 /* Main list card */
 .all_filter_item .flexWrap.ttbm-list-mode .filter_item {
-	display: flex !important;
-	flex-direction: row !important;
+	display: flex;
+	flex-direction: row;
 	align-items: stretch;
 	width: 100% !important;
 	max-width: 100%;
@@ -5918,7 +5918,7 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 @media (max-width: 991px) {
 
 	.all_filter_item .flexWrap.ttbm-list-mode .filter_item {
-		flex-direction: column !important;
+		flex-direction: column;
 	}
 
 	.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-image-wrap {

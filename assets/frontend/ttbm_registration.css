@@ -760,7 +760,7 @@ div.ttbm_day_wise_details .day_wise_details_item_title {
 }
 
 div.day_wise_details_item {
-	border-left: 1px solid var(--color_theme);
+	border-left: 1px solid #ddd;
 	position: relative;
 	margin: 0;
 	padding: 0 0 var(--ttbm_mp) 25px;
@@ -773,10 +773,8 @@ div.day_wise_details_item:before {
 	top: 0;
 	left: -8px;
 	position: absolute;
-	background-color: var(--color_theme);
-	border: 1px solid var(--color_theme);
-	-webkit-box-shadow: 3px 3px 0 #BAB5F8;
-	box-shadow: 3px 3px 0 #BAB5F8;
+	background-color: #333;
+	border: 1px solid #333;
 	border-radius: 50%;
 }
 

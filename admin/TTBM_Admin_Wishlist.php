@@ -52,6 +52,13 @@ if ( ! class_exists( 'TTBM_Admin_Wishlist' ) ) {
 		private function get_wishlist_data( $search = '', $tour_id = 0, $paged = 1, $per_page = 20 ) {
 			global $wpdb;
 
+			// Only get non-admin users who have a wishlist
+			$admin_ids = get_users( array(
+				'capability' => array( 'manage_options' ),
+				'fields'     => 'ID',
+			) );
+			$exclude = array_map( 'intval', (array) $admin_ids );
+
 			$user_ids = $wpdb->get_col( $wpdb->prepare(
 				"SELECT user_id FROM {$wpdb->usermeta} WHERE meta_key = %s",
 				'ttbm_wishlist'
@@ -61,6 +68,10 @@ if ( ! class_exists( 'TTBM_Admin_Wishlist' ) ) {
 
 			if ( ! empty( $user_ids ) ) {
 				foreach ( $user_ids as $uid ) {
+					// Skip admin users — only show real customers
+					if ( in_array( intval( $uid ), $exclude, true ) ) {
+						continue;
+					}
 					$list = get_user_meta( $uid, 'ttbm_wishlist', true );
 					if ( ! is_array( $list ) || empty( $list ) ) {
 						continue;

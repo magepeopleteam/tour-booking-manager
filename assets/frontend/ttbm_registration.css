@@ -5084,6 +5084,13 @@ div.filter_item.ttbm-grid-card:hover,
 .ttbm-gc-wishlist.active .mi {
 	color: #e84c6a;
 }
+.ttbm-gc-wishlist.active .mi-wishlist-heart {
+	color: #fff;
+}
+.ttbm-gc-wishlist.active {
+	background: #e84c6a;
+	border-color: #e84c6a;
+}
 
 /* --- Duration badge on image ---------------------------------------------- */
 div.ttbm-tour-list-shortcode .ttbm-gc-duration-badge {

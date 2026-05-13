@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 $ttbm_post_id = $ttbm_post_id ?? get_the_id();
 ?>
+
 <div class="ttbm_default_theme">
     <div class='ttbm_style'>
         <div class="ttbm-hotel-details ttbm_hotel_item">

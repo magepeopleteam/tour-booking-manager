@@ -459,8 +459,16 @@
 			//***********************************//
 			public static function get_image_url($post_id = '', $image_id = '', $size = 'full') {
 				if ($post_id) {
+					// Prefer the featured image ID first
 					$image_id = get_post_thumbnail_id($post_id);
-					$image_id = $image_id ?: self::get_post_info($post_id, 'mp_thumbnail');
+					// Fallback to tour-specific meta used elsewhere
+					if ( ! $image_id ) {
+						$image_id = self::get_post_info($post_id, 'ttbm_list_thumbnail');
+					}
+					// Older code or other templates may use 'mp_thumbnail'
+					if ( ! $image_id ) {
+						$image_id = self::get_post_info($post_id, 'mp_thumbnail');
+					}
 				}
 				return wp_get_attachment_image_url($image_id, $size);
 			}

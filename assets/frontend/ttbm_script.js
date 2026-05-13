@@ -355,4 +355,24 @@
 		});
 	});
 
+	// ═══ Wishlist View Toggle (Grid / List) ══════════════════════════
+	$(document).on('click', '.ttbm-wishlist-view-btn', function(e) {
+		e.preventDefault();
+		var btn = $(this);
+		var view = btn.data('view');
+		var container = btn.closest('.ttbm-myaccount-wishlist');
+		var grid = container.find('.ttbm-wishlist-grid');
+
+		// Toggle active state on buttons
+		container.find('.ttbm-wishlist-view-btn').removeClass('ttbm-wishlist-view-active').attr('aria-pressed', 'false');
+		btn.addClass('ttbm-wishlist-view-active').attr('aria-pressed', 'true');
+
+		// Switch view class on grid container
+		if (view === 'list') {
+			grid.removeClass('ttbm-wishlist-view-grid').addClass('ttbm-wishlist-view-list');
+		} else {
+			grid.removeClass('ttbm-wishlist-view-list').addClass('ttbm-wishlist-view-grid');
+		}
+	});
+
 }(jQuery));

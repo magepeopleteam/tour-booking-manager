@@ -180,12 +180,24 @@ if ( ! class_exists( 'TTBM_Wishlist' ) ) {
 
 			?>
 			<div class="ttbm-myaccount-wishlist">
-				<h2><?php esc_html_e( 'My Wishlist', 'tour-booking-manager' ); ?></h2>
+				<div class="ttbm-wishlist-header">
+					<h2><?php esc_html_e( 'My Wishlist', 'tour-booking-manager' ); ?></h2>
+					<?php if ( ! empty( $tour_ids ) ) : ?>
+					<div class="ttbm-wishlist-view-toggle">
+						<button type="button" class="ttbm-wishlist-view-btn ttbm-wishlist-view-active" data-view="grid" aria-pressed="true" title="<?php esc_attr_e( 'Grid view', 'tour-booking-manager' ); ?>">
+							<span class="mi mi-grid"></span>
+						</button>
+						<button type="button" class="ttbm-wishlist-view-btn" data-view="list" aria-pressed="false" title="<?php esc_attr_e( 'List view', 'tour-booking-manager' ); ?>">
+							<span class="mi mi-list"></span>
+						</button>
+					</div>
+					<?php endif; ?>
+				</div>
 
 				<?php if ( empty( $tour_ids ) ) : ?>
 					<p class="ttbm-wishlist-empty"><?php esc_html_e( 'Your wishlist is empty.', 'tour-booking-manager' ); ?></p>
 				<?php else : ?>
-					<div class="ttbm-wishlist-grid">
+					<div class="ttbm-wishlist-grid ttbm-wishlist-view-grid">
 						<?php foreach ( $tour_ids as $tour_id ) :
 							$tour = get_post( $tour_id );
 							if ( ! $tour || $tour->post_status !== 'publish' ) {
@@ -225,8 +237,8 @@ if ( ! class_exists( 'TTBM_Wishlist' ) ) {
 									<a href="<?php echo esc_url( get_permalink( $tour_id ) ); ?>">
 										<img src="<?php echo esc_url( $thumbnail ); ?>" alt="<?php echo esc_attr( get_the_title( $tour_id ) ); ?>" />
 									</a>
-									<button type="button" class="ttbm-wishlist-remove" data-tour-id="<?php echo esc_attr( $tour_id ); ?>" title="<?php esc_attr_e( 'Remove from wishlist', 'tour-booking-manager' ); ?>">
-										<span class="mi mi-heart"></span>
+									<button type="button" class="ttbm-wishlist-remove ttbm-wishlist-in-list" data-tour-id="<?php echo esc_attr( $tour_id ); ?>" title="<?php esc_attr_e( 'Remove from wishlist', 'tour-booking-manager' ); ?>">
+										<span class="mi mi-wishlist-heart"></span>
 									</button>
 								</div>
 								<div class="ttbm-wishlist-item-info">
@@ -296,27 +308,77 @@ if ( ! class_exists( 'TTBM_Wishlist' ) ) {
 			.ttbm-modal-btn{display:inline-block;background:#6c47ff;color:#fff;padding:10px 28px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;transition:background .2s;}
 			.ttbm-modal-btn:hover{background:#5a3be0;color:#fff;}
 
-			/* ── My Account Wishlist ──────────────────────────────── */
+			/* ── Wishlist Header & View Toggle ──────────────────── */
+			.ttbm-wishlist-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-wrap:wrap;gap:10px;}
+			.ttbm-wishlist-header h2{margin:0;}
+			.ttbm-wishlist-view-toggle{display:flex;gap:4px;background:#f1f1f5;border-radius:8px;padding:3px;}
+			.ttbm-wishlist-view-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border:none;border-radius:6px;background:transparent;color:#9ca3af;cursor:pointer;transition:background .18s ease,color .18s ease;font-size:16px;padding:0;line-height:1;}
+			.ttbm-wishlist-view-btn .mi{font-size:16px;color:inherit;}
+			.ttbm-wishlist-view-btn:hover{background:#e8e8ef;color:#374151;}
+			.ttbm-wishlist-view-btn.ttbm-wishlist-view-active,
+			.ttbm-wishlist-view-btn[aria-pressed="true"]{background:#6c47ff;color:#fff;}
+			.ttbm-wishlist-view-btn.ttbm-wishlist-view-active .mi,
+			.ttbm-wishlist-view-btn[aria-pressed="true"] .mi{color:#fff;}
+
+			/* ── My Account Wishlist Grid ────────────────────────── */
 			.ttbm-myaccount-wishlist{margin-top:10px;}
 			.ttbm-wishlist-empty{color:#888;font-size:15px;}
-			.ttbm-wishlist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-top:16px;}
-			.ttbm-wishlist-item{background:#fff;border:1px solid #eee;border-radius:12px;overflow:hidden;transition:box-shadow .2s;}
-			.ttbm-wishlist-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);}
-			.ttbm-wishlist-item-thumb{position:relative;}
-			.ttbm-wishlist-item-thumb img{width:100%;height:180px;object-fit:cover;display:block;}
-			.ttbm-wishlist-remove{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.92);border:none;border-radius:50%;width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.15);transition:background .2s,transform .2s;padding:0;}
-			.ttbm-wishlist-remove .mi{font-size:16px;color:#e84c6a;}
-			.ttbm-wishlist-remove:hover{background:#fff;transform:scale(1.12);}
-			.ttbm-wishlist-item-info{padding:14px 16px;}
-			.ttbm-wishlist-item-info h3{margin:0 0 10px;font-size:16px;font-weight:600;line-height:1.4;}
-			.ttbm-wishlist-item-info h3 a{color:#222;text-decoration:none;}
-			.ttbm-wishlist-item-info h3 a:hover{color:#6c47ff;}
-			.ttbm-wishlist-meta{display:flex;align-items:center;gap:4px;font-size:13px;color:#666;margin-bottom:6px;}
-			.ttbm-wishlist-meta .mi{font-size:13px;color:#999;}
-			.ttbm-wishlist-price{font-size:16px;font-weight:700;color:#6c47ff;margin-top:4px;margin-bottom:10px;}
-			.ttbm-wishlist-price .woocommerce-Price-amount{font-size:16px;}
-			.ttbm-wishlist-explore-btn{display:inline-block;background:#6c47ff;color:#fff !important;padding:8px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600;transition:background .2s;}
-			.ttbm-wishlist-explore-btn:hover{background:#5a3be0;color:#fff !important;}
+
+			/* ── GRID VIEW (default) ─────────────────────────────── */
+			.ttbm-wishlist-grid.ttbm-wishlist-view-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-top:16px;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-item{background:#fff;border:1px solid #eee;border-radius:12px;overflow:hidden;transition:box-shadow .2s;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-item-thumb{position:relative;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-item-thumb img{width:100%;height:180px;object-fit:cover;display:block;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-remove{position:absolute;top:10px;right:10px;background:#e84c6a;border:none;border-radius:50%;width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(232,76,106,.35);transition:background .2s,transform .2s;padding:0;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-remove .mi{font-size:16px;color:#fff;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-remove:hover{background:#d63d5e;transform:scale(1.15);}.ttbm-wishlist-view-grid .ttbm-wishlist-remove:hover .mi{color:#fff;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-item-info{padding:14px 16px;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-item-info h3{margin:0 0 10px;font-size:16px;font-weight:600;line-height:1.4;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-item-info h3 a{color:#222;text-decoration:none;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-item-info h3 a:hover{color:#6c47ff;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-meta{display:flex;align-items:center;gap:4px;font-size:13px;color:#666;margin-bottom:6px;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-meta .mi{font-size:13px;color:#999;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-price{font-size:16px;font-weight:700;color:#6c47ff;margin-top:4px;margin-bottom:10px;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-price .woocommerce-Price-amount{font-size:16px;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-explore-btn{display:inline-block;background:#6c47ff;color:#fff !important;padding:8px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600;transition:background .2s;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-explore-btn:hover{background:#5a3be0;color:#fff !important;}
+
+			/* ── LIST VIEW ────────────────────────────────────────── */
+			.ttbm-wishlist-grid.ttbm-wishlist-view-list{display:flex;flex-direction:column;gap:16px;margin-top:16px;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-item{display:flex;flex-direction:row;align-items:stretch;background:#fff;border:1px solid #eee;border-radius:14px;overflow:hidden;transition:box-shadow .2s;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);}
+			.ttbm-wishlist-view-list .ttbm-wishlist-item-thumb{position:relative;width:300px;min-width:300px;max-width:300px;flex-shrink:0;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-item-thumb img{width:100%;height:100%;min-height:100%;object-fit:cover;display:block;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-remove{position:absolute;top:10px;right:10px;background:#e84c6a;border:none;border-radius:50%;width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(232,76,106,.35);transition:background .2s,transform .2s;padding:0;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-remove .mi{font-size:16px;color:#fff;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-remove:hover{background:#d63d5e;transform:scale(1.15);}.ttbm-wishlist-view-list .ttbm-wishlist-remove:hover .mi{color:#fff;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-item-info{flex:1;display:flex;flex-direction:column;padding:20px 24px;min-width:0;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-item-info h3{margin:0 0 10px;font-size:20px;font-weight:600;line-height:1.3;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-item-info h3 a{color:#222;text-decoration:none;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-item-info h3 a:hover{color:#6c47ff;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-meta{display:flex;align-items:center;gap:4px;font-size:13px;color:#666;margin-bottom:6px;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-meta .mi{font-size:13px;color:#999;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-price{font-size:22px;font-weight:700;color:#6c47ff;margin-top:auto;margin-bottom:12px;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-price .woocommerce-Price-amount{font-size:22px;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-explore-btn{display:inline-block;background:#6c47ff;color:#fff !important;padding:10px 24px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;transition:background .2s;align-self:flex-start;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-explore-btn:hover{background:#5a3be0;color:#fff !important;}
+
+			/* ── List View Responsive ─────────────────────────────── */
+			@media (max-width:767px) {
+			.ttbm-wishlist-view-list .ttbm-wishlist-item{flex-direction:column !important;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-item-thumb{width:100%;max-width:100%;min-width:100%;height:220px;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-item-thumb img{height:220px;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-item-info{padding:16px;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-item-info h3{font-size:18px;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-explore-btn{width:100%;text-align:center;}
+			}
+			@media (max-width:480px) {
+			.ttbm-wishlist-view-list .ttbm-wishlist-item-thumb{height:200px;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-item-thumb img{height:200px;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-item-info{padding:14px;}
+			.ttbm-wishlist-view-list .ttbm-wishlist-item-info h3{font-size:16px;}
+			}
 			</style>
 			<?php
 		}

@@ -129,8 +129,18 @@ div.ttbm_content_area {
 	top: 30px;
 	z-index: 0;
 	margin-top: 20px;
+	border: 1px solid #e7e7e7;
+	border-radius: 12px;
 }
 
+
+.ttbm_content__right .ttbm_default_widget h5{
+	text-transform: uppercase;
+}
+
+.ttbm_smart_theme .ttbm_content__right {
+	border: none;
+}
 @media (min-width:960px) {
 	div.ttbm_content_area {
 		justify-content: space-between;
@@ -1266,7 +1276,6 @@ div.ttbm_viator_theme .item_icon {
 	/*: 1000px;*/
 	margin: 0 auto;
 	padding: 20px;
-	font-family: Arial, sans-serif;
 }
 
 .ttbm_top_attraction .ttbm_title {
@@ -2258,7 +2267,6 @@ div.ttbm_viator_theme .viator_top_section .ttbm_extra_service_area h2.extra_serv
 .ttbm_hotel_ordered_room_list {
 	display: flex !important;
 	gap: 15px;
-	font-family: Arial, sans-serif;
 	padding: 20px;
 	background-color: #F9F9F9;
 	border-radius: 8px;
@@ -4951,7 +4959,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 	margin: 0 0 10px 0;
 	border-radius: 5px;
 	background: linear-gradient(90deg, #e9f0ff 0%, #dbe7ff 100%);
-	font-family: inherit;
 	font-size: 15px;
 	font-weight: 700;
 	text-transform: none;

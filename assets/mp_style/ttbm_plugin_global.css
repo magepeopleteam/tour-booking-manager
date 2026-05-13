@@ -143,9 +143,9 @@
 	#ttbm_content h1, div#ttbm_content [class*="_fs_h1"] { font-weight: normal; }
 	#ttbm_content h2, div#ttbm_content [class*="_fs_h2"] { font-weight: normal;font-size: var(--ttbm_fs_h2); }
 	#ttbm_content h3, div#ttbm_content [class*="_fs_h3"] { font-weight: normal; }
-	#ttbm_content h4, div#ttbm_content [class*="_fs_h4"] { font-weight: normal; text-transform: inherit;font-size: var(--ttbm_fs_h4); }
-	#ttbm_content h5, div#ttbm_content [class*="_fs_h5"] { font-weight: normal; text-transform: inherit;font-size: var(--ttbm_fs_h5); }
-	#ttbm_content h6, div#ttbm_content [class*="_fs_h6"] { font-weight: normal; text-transform: inherit;font-size: var(--ttbm_fs_h6); }
+	#ttbm_content h4, div#ttbm_content [class*="_fs_h4"] { font-weight: normal; font-size: var(--ttbm_fs_h4); }
+	#ttbm_content h5, div#ttbm_content [class*="_fs_h5"] { font-weight: normal; font-size: var(--ttbm_fs_h5); }
+	#ttbm_content h6, div#ttbm_content [class*="_fs_h6"] { font-weight: normal; font-size: var(--ttbm_fs_h6); }
 }
 /******************************************************************** Flex Section ************************************************/
 @media only screen and (min-width: 10px) {
@@ -350,7 +350,7 @@
 @media only screen and (min-width: 10px) {
 	.ttbm_style .mpBtn, .ttbm_style [class*="_mpBtn"],
 	.ttbm_style button { position: relative; font-weight: normal; line-height: 1; cursor: pointer; overflow: visible; border: none; -webkit-appearance: button; text-transform: capitalize; }
-	.ttbm_style button[disabled] { cursor: not-allowed; opacity: 0.8; background-color: #DDD; }
+	.ttbm_style button[disabled] { cursor: not-allowed; opacity: 0.8; background-color: #888; }
 	.ttbm_style button:hover, .ttbm_style button:focus { text-decoration: none; opacity: 0.8; background-color: var(--color_theme); color: var(--color_white); }
 	.ttbm_style button:hover span, .ttbm_style button:focus span { color: var(--color_white); }
 	.ttbm_style .mpBtn, .ttbm_style [class*="_mpBtn"] { padding: var(--ttbm_mp_xs) var(--ttbm_mp); color: var(--d_color); background-color: #FFF; border: 1px solid var(--color_border); }
@@ -934,7 +934,7 @@
 	.ttbm_style input:not([type=submit]),
 	.ttbm_style optgroup,
 	.ttbm_style select,
-	.ttbm_style textarea { font-family: inherit; line-height: initial; margin: 0; max-width: inherit; border: 1px solid var(--color_border); color: var(--d_color); background-color: #FFF; padding: 10px 10px; font-weight: normal; }
+	.ttbm_style textarea { line-height: initial; margin: 0; max-width: inherit; border: 1px solid var(--color_border); color: var(--d_color); background-color: #FFF; padding: 10px 10px; font-weight: normal; }
 	.ttbm_style .formControl:-webkit-autofill,
 	.ttbm_style .formControl:-webkit-autofill:hover,
 	.ttbm_style .formControl:-webkit-autofill:focus,

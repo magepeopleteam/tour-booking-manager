@@ -201,6 +201,7 @@
                             <button data-target="ttbm_trvel_lists_features" data-tab-type="Add New Feature"><span class="icon-wrap"><i class="mi mi-list"></i><?php  esc_html_e('Features','tour-booking-manager'); ?></span></button>
                             <button data-target="ttbm_trvel_lists_tag" data-tab-type="Add New Tag"><span class="icon-wrap"><i class="mi mi-tags"></i> <?php  esc_html_e('Tags','tour-booking-manager'); ?></span></button>
                             <button data-target="ttbm_trvel_lists_activities" data-tab-type="Add New Activities"><span class="icon-wrap"><i class="mi mi-practice"></i><?php  esc_html_e('Activities','tour-booking-manager'); ?></span></button>
+                            <?php do_action('ttbm_travel_lists_tab_button', $label); ?>
                         </div>
                         
                         <div class="ttbm-tour-dashboard-content">

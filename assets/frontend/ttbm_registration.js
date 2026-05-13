@@ -472,21 +472,23 @@ $(document).on('change', '.ttbm-sort-select', function () {
         // =========================================================
         // Top Filter Tabs
         // =========================================================
-        $('.ttbm-tab-btn').on('click', function () {
+        $(document).on('click', '.ttbm-tab-btn', function () {
 
             $('.ttbm-tab-btn').removeClass('ttbm-tab-active');
             $(this).addClass('ttbm-tab-active');
 
             let filter = $(this).data('filter-tab');
+            let parent = $(this).closest('.ttbm_filter_area');
 
-            // Example filtering logic
-            // You can customize using your own date field
+            let now = new Date();
+            now.setHours(0, 0, 0, 0);
 
-            $('.filter_item').each(function () {
+            let weekEnd = new Date(now);
+            weekEnd.setDate(weekEnd.getDate() + 7);
+
+            parent.find('.filter_item').each(function () {
 
                 let item = $(this);
-
-                // if no data-date exists then show all
                 let itemDate = item.attr('data-date');
 
                 if (!itemDate || filter === 'all') {
@@ -494,22 +496,15 @@ $(document).on('change', '.ttbm-sort-select', function () {
                     return;
                 }
 
-                let now = new Date();
-                let tourDate = new Date(itemDate);
-
-                let diffTime = tourDate - now;
-                let diffDays = diffTime / (1000 * 60 * 60 * 24);
+                let tourDate = new Date(itemDate + 'T00:00:00');
 
                 if (filter === 'week') {
-
-                    if (diffDays <= 7 && diffDays >= 0) {
+                    if (tourDate >= now && tourDate <= weekEnd) {
                         item.show();
                     } else {
                         item.hide();
                     }
-
                 } else if (filter === 'month') {
-
                     if (
                         tourDate.getMonth() === now.getMonth() &&
                         tourDate.getFullYear() === now.getFullYear()
@@ -518,9 +513,7 @@ $(document).on('change', '.ttbm-sort-select', function () {
                     } else {
                         item.hide();
                     }
-
                 } else if (filter === 'year') {
-
                     if (tourDate.getFullYear() === now.getFullYear()) {
                         item.show();
                     } else {
@@ -528,6 +521,21 @@ $(document).on('change', '.ttbm-sort-select', function () {
                     }
                 }
             });
+
+            // Update "Showing X of Y" count after tab filter
+            let visibleCount = parent.find('.filter_item:visible').length;
+            let totalCount   = parent.find('.filter_item').length;
+            parent.find('.qty_count').html(visibleCount);
+            parent.find('.total_filter_qty').html(totalCount);
+
+            // Show/hide the empty-result notice
+            if (visibleCount === 0) {
+                parent.find('.search_result_empty').slideDown('fast');
+                parent.find('.filter_short_result').slideUp('fast');
+            } else {
+                parent.find('.search_result_empty').slideUp('fast');
+                parent.find('.filter_short_result').slideDown('fast');
+            }
         });
 
         // =========================================================
@@ -552,16 +560,6 @@ $(document).on('change', '.ttbm-sort-select', function () {
             });
         });
 
-        // =========================================================
-        // Reset Filter When Clicking "All Tours"
-        // =========================================================
-        $('[data-filter-tab="all"]').on('click', function () {
-
-            $('.filter_item').show();
-
-            $('.ttbm_item_filter_by_activity').removeClass('active');
-
-        });
 
         // =========================================================
         // Mobile Left Filter Toggle

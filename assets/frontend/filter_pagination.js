@@ -227,7 +227,7 @@
 		date_range_filter: 'data-date',
 	};
 	//************Filter*************//
-	$(document).on('change', '.ttbm_filter .formControl', function (e) {
+	$(document).on('change', '.ttbm_filter .formControl:not([type="checkbox"]):not([type="radio"]), .ttbm_filter input[type="hidden"]', function (e) {
 		e.preventDefault();
 		let parent = $(this).closest('.ttbm_filter_area');
 		list_filter(parent);

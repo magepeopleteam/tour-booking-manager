@@ -284,11 +284,95 @@
     }
 
 
-	$(document).on('click', '.ttbm-view-more-features-btn', function(e) {
+	// ═══ Wishlist Toggle ═══════════════════════════════════════════
+	$(document).on('click', '.ttbm-gc-wishlist', function(e) {
 		e.preventDefault();
-		const list = $(this).closest('ul');
-		list.find('.ttbm-feature-hidden').removeClass('ttbm-feature-hidden').hide().slideDown();
-		$(this).closest('li').remove();
+		e.stopPropagation();
+		e.stopImmediatePropagation();
+
+		var btn = $(this);
+		var tourId = btn.data('tour-id');
+
+		if (!tourId) return;
+
+		$.ajax({
+			type: 'POST',
+			url: ttbm_ajax.ajax_url,
+			data: {
+				action: 'ttbm_wishlist_toggle',
+				nonce: ttbm_ajax.nonce,
+				tour_id: tourId
+			},
+			success: function(response) {
+				if (response.success) {
+					var icon = btn.find('.mi');
+					if (response.data.in_wishlist) {
+						btn.addClass('active');
+						icon.removeClass('mi-heart').addClass('mi-wishlist-heart');
+					} else {
+						btn.removeClass('active');
+						icon.removeClass('mi-wishlist-heart').addClass('mi-heart');
+					}
+				} else if (response.data && response.data.need_login) {
+					// Show login modal
+					$('#ttbm-wishlist-login-modal').addClass('ttbm-modal-active');
+				}
+			},
+			error: function() {
+				// Fallback: show modal for any AJAX failure when not logged in
+				if (!ttbm_ajax_is_logged_in) {
+					$('#ttbm-wishlist-login-modal').addClass('ttbm-modal-active');
+				}
+			}
+		});
+	});
+
+	// Close modal
+	$(document).on('click', '.ttbm-modal-close, .ttbm-modal-overlay', function() {
+		$(this).closest('.ttbm-modal-wrap').removeClass('ttbm-modal-active');
+	});
+
+	// ═══ Wishlist Remove (My Account page) ══════════════════════════
+	$(document).on('click', '.ttbm-wishlist-remove', function(e) {
+		e.preventDefault();
+		var btn = $(this);
+		var tourId = btn.data('tour-id');
+		if (!tourId) return;
+
+		$.ajax({
+			type: 'POST',
+			url: ttbm_ajax.ajax_url,
+			data: {
+				action: 'ttbm_wishlist_toggle',
+				nonce: ttbm_ajax.nonce,
+				tour_id: tourId
+			},
+			success: function(response) {
+				if (response.success && !response.data.in_wishlist) {
+					btn.closest('.ttbm-wishlist-item').fadeOut(300, function() { $(this).remove(); });
+				}
+			}
+		});
+	});
+
+	// ═══ Wishlist View Toggle (Grid / List) ══════════════════════════
+	$(document).on('click', '.ttbm-wishlist-view-btn', function(e) {
+		e.preventDefault();
+		var btn = $(this);
+		var view = btn.data('view');
+		var container = btn.closest('.ttbm-myaccount-wishlist');
+		var grid = container.find('.ttbm-wishlist-grid');
+
+		// Toggle active state on buttons
+		container.find('.ttbm-wishlist-view-btn').removeClass('ttbm-wishlist-view-active').attr('aria-pressed', 'false');
+		btn.addClass('ttbm-wishlist-view-active').attr('aria-pressed', 'true');
+
+		// Switch view class on grid container
+		if (view === 'list') {
+			grid.removeClass('ttbm-wishlist-view-grid').addClass('ttbm-wishlist-view-list');
+		} else {
+			grid.removeClass('ttbm-wishlist-view-list').addClass('ttbm-wishlist-view-grid');
+		}
 	});
 
 }(jQuery));

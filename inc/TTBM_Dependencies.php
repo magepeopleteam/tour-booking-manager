@@ -44,7 +44,9 @@
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Details_Layout.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Booking.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Booking.php';
-require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Wishlist.php';
+					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin_Wishlist.php';
 				}
 			}
 			public function appsero_init_tracker_ttbm() {
@@ -236,6 +238,7 @@ require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
                     let ttbm_empty_image_url = "<?php echo esc_attr(TTBM_PLUGIN_URL . '/assets/images/no_image.png'); ?>";
                     let ttbm_date_format = "<?php echo esc_attr(TTBM_Global_Function::get_settings('ttbm_global_settings', 'date_format', 'D d M , yy')); ?>";
                     let ttbm_date_format_without_year = "<?php echo esc_attr(TTBM_Global_Function::get_settings('ttbm_global_settings', 'date_format_without_year', 'D d M')); ?>";
+                    let ttbm_ajax_is_logged_in = <?php echo is_user_logged_in() ? 'true' : 'false'; ?>;
                 </script>
 				<?php
 				if (TTBM_Global_Function::check_woocommerce() == 1) {

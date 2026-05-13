@@ -31,6 +31,10 @@
 				}
 			}
 			public function is_eligible() {
+				// Only show after WooCommerce is active — prevents popup appearing over the woo-installer screen
+				if ( TTBM_Global_Function::check_woocommerce() != 1 ) {
+					return false;
+				}
 				$dummy_post_inserted = get_option('ttbm_dummy_already_inserted', 'no');
 				if ($dummy_post_inserted == 'yes') {
 					return false;
@@ -47,6 +51,11 @@
 			private function should_auto_show_popup() {
 				if (!$this->is_eligible()) {
 					return false;
+				}
+				// Force-show after WooCommerce was just activated via the installer popup
+				if ( get_transient( 'ttbm_woo_just_activated' ) ) {
+					delete_transient( 'ttbm_woo_just_activated' );
+					return true;
 				}
 				$dismissed = get_option('ttbm_dummy_import_dismissed', 'no');
 				if ($dismissed == 'yes') {

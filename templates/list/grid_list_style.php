@@ -18,8 +18,9 @@ $term_count   = 3;
 	<?php endif; ?>
 
 	<?php /* Wishlist / favourite button */ ?>
-	<button type="button" class="ttbm-gc-wishlist" aria-label="<?php esc_attr_e( 'Add to wishlist', 'tour-booking-manager' ); ?>" data-placeholder>
-		<span class="mi mi-heart"></span>
+	<?php $in_wishlist = is_user_logged_in() && TTBM_Wishlist::is_in_wishlist( $tour_id ); ?>
+	<button type="button" class="ttbm-gc-wishlist<?php echo $in_wishlist ? ' active' : ''; ?>" data-tour-id="<?php echo esc_attr( $tour_id ); ?>" aria-label="<?php esc_attr_e( 'Add to wishlist', 'tour-booking-manager' ); ?>">
+		<span class="mi <?php echo $in_wishlist ? 'mi-wishlist-heart' : 'mi-heart'; ?>"></span>
 	</button>
 
 	<?php /* Tour thumbnail */ ?>

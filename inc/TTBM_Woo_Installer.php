@@ -59,6 +59,7 @@ if ( ! class_exists( 'TTBM_Woo_Installer' ) ) {
 			// WooCommerce is active → redirect immediately
 			if ( $this->is_woo_active() ) {
 				delete_transient( 'ttbm_plugin_activated' );
+				set_transient( 'ttbm_woo_just_activated', true, 300 );
 				wp_safe_redirect( admin_url( 'edit.php?post_type=ttbm_tour&page=ttbm_list' ) );
 				exit;
 			}
@@ -275,6 +276,9 @@ if ( ! class_exists( 'TTBM_Woo_Installer' ) ) {
 			if ( is_wp_error( $result ) ) {
 				wp_send_json_error( array( 'message' => $result->get_error_message() ) );
 			}
+
+			// Signal the demo import popup to auto-show on the next page load (tour list)
+			set_transient( 'ttbm_woo_just_activated', true, 300 );
 
 			wp_send_json_success( array( 'message' => __( 'WooCommerce activated successfully!', 'tour-booking-manager' ) ) );
 		}

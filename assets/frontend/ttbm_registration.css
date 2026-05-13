@@ -758,7 +758,13 @@ div.ttbm_day_wise_details .day_wise_details_item_title {
 	font-size: var(--ttbm_fs_h4);
 	font-weight: var(--fw-medium);
 }
-
+.get-enquiry-popup button[class^='_dButton']{
+    background-color: #333;
+    color: #fff;
+}
+.details-meta {
+	margin-bottom: 10px;
+}
 div.day_wise_details_item {
 	border-left: 1px solid #ddd;
 	position: relative;

@@ -14,7 +14,7 @@
 				<div class="ttbm_details_page">
                     <div class="ttbm_details_page_header">
                         <?php do_action( 'ttbm_details_title' ); ?>
-                        <div class="dFlex justifyStart">
+                        <div class="dFlex justifyStart details-meta">
 							<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
 							<?php
 							if ( is_plugin_active( 'tour-booking-manager-pro/tour-booking-manager-pro.php' ) ):

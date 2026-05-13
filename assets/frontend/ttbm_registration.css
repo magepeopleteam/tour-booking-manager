@@ -6020,3 +6020,7 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 		font-size: 22px;
 	}
 }
+
+.ttbm-feature-hidden {
+	display: none !important;
+}

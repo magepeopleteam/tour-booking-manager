@@ -25,6 +25,24 @@ $term_count   = 3;
 
 	<?php /* Tour thumbnail */ ?>
 	<div class="ttbm-gc-thumb" data-bg-image="<?php echo esc_attr( $thumbnail ); ?>"></div>
+	<?php /* Fallback img shown only when JS/CSS background fails */ ?>
+	<img class="ttbm-gc-thumb-fallback" src="<?php echo esc_url( $thumbnail ); ?>" alt="" style="display:none;width:100%;height:220px;object-fit:cover;border-radius:0;" />
+	<script type="text/javascript">(function($){
+		$(function(){
+			var $thumb = $(this).closest && $(this).closest('.ttbm-gc-image-wrap') ? $(this) : null;
+			$('.ttbm-gc-image-wrap').each(function(){
+				var $wrap = $(this);
+				var $bg = $wrap.find('.ttbm-gc-thumb');
+				var $fb = $wrap.find('.ttbm-gc-thumb-fallback');
+				if ($bg.length && $fb.length) {
+					var bgImage = $bg.css('background-image');
+					if (!bgImage || bgImage === 'none' || bgImage === 'initial' || bgImage.indexOf('url(') === -1) {
+						$fb.show();
+					}
+				}
+			});
+		});
+	})(jQuery);</script>
 
 	<?php /* Duration badge overlaid at bottom of image */ ?>
 	<div class="ttbm-gc-duration-badge fdColumn" data-placeholder>

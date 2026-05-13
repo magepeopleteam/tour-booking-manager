@@ -1,4 +1,5 @@
 /* Default List View */
+
 .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_card {
     display: flex;
     flex-direction: column;

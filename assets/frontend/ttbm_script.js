@@ -375,4 +375,11 @@
 		}
 	});
 
+	$(document).on('click', '.ttbm-view-more-features-btn', function(e) {
+		e.preventDefault();
+		const list = $(this).closest('ul');
+		list.find('.ttbm-feature-hidden').removeClass('ttbm-feature-hidden').hide().slideDown();
+		$(this).closest('li').remove();
+	});
+
 }(jQuery));

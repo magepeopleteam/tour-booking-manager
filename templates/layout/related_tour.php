@@ -23,7 +23,7 @@
         ]);
     }
     $related_tour_count=sizeof( $related_tours );
-    if ( $related_tour_count > 1 &&  ( $key = array_search($ttbm_post_id, $related_tours ) ) !== false) {
+    if ( $related_tour_count > 0 &&  ( $key = array_search($ttbm_post_id, $related_tours ) ) !== false) {
         unset( $related_tours[$key] );
     }
 

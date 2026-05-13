@@ -1530,6 +1530,40 @@
         }, 2000);
     });
 
+    // ─── Wishlist Tab Filtering & Pagination ─────────────────
+    $(document).on('click', '#ttbm-wishlist-filter-btn', function() {
+        ttbm_wishlist_load(1);
+    });
+    $(document).on('keypress', '#ttbm-wishlist-search', function(e) {
+        if (e.which === 13) { e.preventDefault(); ttbm_wishlist_load(1); }
+    });
+    $(document).on('click', '#ttbm-wishlist-reset-btn', function() {
+        $('#ttbm-wishlist-search').val('');
+        $('#ttbm-wishlist-tour-filter').val('0');
+        ttbm_wishlist_load(1);
+    });
+    $(document).on('click', '#ttbm-wishlist-pagination .button[data-page]', function() {
+        ttbm_wishlist_load($(this).data('page'));
+    });
+
+    function ttbm_wishlist_load(page) {
+        var search  = $('#ttbm-wishlist-search').val();
+        var tourId  = $('#ttbm-wishlist-tour-filter').val();
+        var $wrap   = $('#ttbm_trvel_lists_wishlist .ttbm-wishlist-admin-wrap');
+        $wrap.css('opacity', 0.5);
+        $.post(ttbm_admin_ajax.ajax_url, {
+            action: 'ttbm_wishlist_admin_data',
+            nonce: ttbm_admin_ajax.nonce,
+            search: search,
+            tour_id: tourId,
+            paged: page
+        }, function(res) {
+            if (res.success) {
+                $wrap.replaceWith(res.data.html);
+            }
+        });
+    }
+
 })(jQuery);
 
 

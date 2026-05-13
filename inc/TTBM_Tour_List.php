@@ -356,7 +356,10 @@
 								<?php } ?>
 
 								data-price="<?php echo esc_attr(TTBM_Function::get_tour_start_price( $ttbm_post_id )); ?>"
-								data-date="<?php echo esc_attr(get_the_date('Y-m-d', $tour_id)); ?>"
+								data-date="<?php
+									$upcoming = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_upcoming_date');
+									echo esc_attr($upcoming ? gmdate('Y-m-d', strtotime($upcoming)) : get_the_date('Y-m-d', $tour_id));
+								?>"
 								
                             >
                                 <input type="hidden" name="ttbm_item_activities" value="<?php echo esc_attr(TTBM_Function::get_taxonomy_name_to_id_string($tour_id, 'ttbm_tour_activities', 'ttbm_tour_activities')); ?>"/>

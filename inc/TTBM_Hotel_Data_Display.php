@@ -281,34 +281,71 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                         <div class="ttbm_hotel_lists_card_content">
                             <div class="ttbm_hotel_lists_image">
                                 <img src="<?php echo esc_attr( $hotel['hotel_featured_image'] );?>" alt="<?php echo esc_attr( $hotel['title'] );?>">
-                                <button class="ttbm_hotel_lists_wishlist">♥</button>
                             </div>
                             <div class="ttbm_hotel_lists_content">
                                 <div class="ttbm_hotel_lists_header">
-                                    <a href="<?php echo esc_attr( $hotel['permalink'])?>"><h3 class="ttbm_hotel_lists_title"><?php echo esc_attr( $hotel['title'] );?></h3></a>
-                                    <div class="ttbm_hotel_lists_rating_box">
-                                        <span class="ttbm_hotel_lists_rating_text"><?php esc_attr_e( 'Rating', 'tour-booking-manager' );?></span>
-                                        <span class="ttbm_hotel_lists_rating"><?php echo $hotel['hotel_rating'];?></span>
+                                    <a href="<?php echo esc_attr( $hotel['permalink'])?>" class="ttbm_hotel_lists_title_link"><h3 class="ttbm_hotel_lists_title"><?php echo esc_html( $hotel['title'] );?></h3></a>
+                                    <?php if( $hotel['hotel_rating'] ): ?>
+                                    <div class="ttbm_hotel_rating_badge">
+                                        <?php esc_html_e( 'Rating', 'tour-booking-manager' ); ?> <?php echo esc_html( $hotel['hotel_rating'] );?>
                                     </div>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="ttbm_hotel_lists_location">
-                                    <a class="ttbm_location_separator" href="#" style="color: #555"><?php echo esc_attr( $hotel['hotel_location'] );?></a> <?php echo esc_attr( $dot_separator );?>
-                                    <a class="ttbm_location_separator" href="#" style="color: #555"><?php echo esc_attr( $hotel['hotel_map_location'] );?></a> <?php echo esc_attr( $hori_separator );?>
-                                    <span><?php echo esc_attr( $hotel['hotel_distance_description'] );?></span>
+                                    <span class="ttbm_hotel_pin_icon">&#x1F4CD;</span>
+                                    <span class="ttbm_hotel_location_text">
+                                        <?php
+                                        $loc_parts = array();
+                                        if( $hotel['hotel_location'] ) $loc_parts[] = esc_html( $hotel['hotel_location'] );
+                                        if( $hotel['hotel_distance_description'] ) $loc_parts[] = esc_html( $hotel['hotel_distance_description'] );
+                                        echo implode( ' ', $loc_parts );
+                                        ?>
+                                    </span>
                                 </div>
                                 <div class="ttbm_hotel_lists_offer">
-                                    <p class="ttbm_hotel_lists_room_description"><?php echo esc_attr( $hotel['excerpt'] );?></p>
+                                    <p class="ttbm_hotel_lists_room_description"><?php echo esc_html( $hotel['excerpt'] );?></p>
                                 </div>
+                                <?php
+                                // Feature tag pills
+                                $feat_ids = is_array( $hotel['hotel_features'] ) ? $hotel['hotel_features'] : array();
+                                if( !empty( $feat_ids ) ):
+                                ?>
+                                <div class="ttbm_hotel_feature_tags">
+                                    <?php foreach( $feat_ids as $feat_id ):
+                                        $term = get_term( $feat_id, 'ttbm_hotel_features_list' );
+                                        if( $term && !is_wp_error( $term ) ):
+                                            $icon = get_term_meta( $term->term_id, 'ttbm_hotel_feature_icon', true );
+                                            $icon = $icon ? $icon : 'fas fa-check';
+                                    ?>
+                                        <span class="ttbm_hotel_feat_tag">
+                                            <i class="<?php echo esc_attr( $icon );?>"></i>
+                                            <?php echo esc_html( $term->name ); ?>
+                                        </span>
+                                    <?php endif; endforeach; ?>
+                                </div>
+                                <?php endif; ?>
+                                <div class="ttbm_hotel_lists_divider"></div>
                                 <div class="ttbm_hotel_lists_footer">
                                     <div class="ttbm_hotel_lists_price_box">
-                                        <span class="ttbm_hotel_lists_nights"><?php esc_attr_e( '1 nights, 2 adults', 'tour-booking-manager' );?></span>
-                                        <span class="ttbm_hotel_lists_note"><?php esc_attr_e( 'Additional charges may apply', 'tour-booking-manager' );?></span>
+                                        <span class="ttbm_hotel_lists_nights"><?php esc_html_e( '1 nights, 2 adults', 'tour-booking-manager' );?></span>
+                                        <span class="ttbm_hotel_lists_note"><?php esc_html_e( 'Additional charges may apply', 'tour-booking-manager' );?></span>
                                     </div>
-                                    <?php if( $list === 'search_list' ){?>
-                                        <div class="ttbm_hotel_lists_button ttbm_see_available_hotel"><?php esc_attr_e( 'See availability', 'tour-booking-manager' );?></div>
-                                    <?php }else{ ?>
-                                        <a href="<?php echo esc_attr( $hotel['permalink'])?>" class="ttbm_hotel_lists_button"><?php esc_attr_e( 'See availability', 'tour-booking-manager' );?></a>
-                                    <?php } ?>
+                                    <div class="ttbm_hotel_lists_price_right">
+                                        <span class="ttbm_hotel_lists_price">
+                                            <?php
+                                            if( $lowest_price > 0 ){
+                                                echo wp_kses_post( wc_price( $lowest_price ) );
+                                            } else {
+                                                echo esc_html__( 'N/A', 'tour-booking-manager' );
+                                            }
+                                            ?>
+                                        </span>
+                                        <?php if( $list === 'search_list' ){?>
+                                            <div class="ttbm_hotel_lists_button ttbm_see_available_hotel"><?php esc_html_e( 'See availability', 'tour-booking-manager' );?></div>
+                                        <?php }else{ ?>
+                                            <a href="<?php echo esc_attr( $hotel['permalink'])?>" class="ttbm_hotel_lists_button"><?php esc_html_e( 'See availability', 'tour-booking-manager' );?></a>
+                                        <?php } ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>

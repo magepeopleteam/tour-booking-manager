@@ -284,6 +284,48 @@
     }
 
 
+	// ═══ Toast Notification ════════════════════════════════════════
+	function ttbmShowToast(message, type, duration, html) {
+		type = type || 'info';
+		duration = duration || 3500;
+		var wrap = $('#ttbm-toast-wrap');
+		if (!wrap.length) {
+			wrap = $('<div id="ttbm-toast-wrap" class="ttbm-toast-wrap"></div>');
+			$('body').append(wrap);
+		}
+		var item = $('<div class="ttbm-toast-item ttbm-toast-' + type + '"></div>');
+		if (html) {
+			item.html(message);
+		} else {
+			item.text(message);
+		}
+		var closeBtn = $('<button type="button" class="ttbm-toast-close">&times;</button>');
+		item.append(closeBtn);
+		wrap.append(item);
+		// Force reflow for transition
+		void wrap[0].offsetWidth;
+		wrap.addClass('ttbm-toast-visible');
+
+		var timer = setTimeout(function() {
+			item.fadeOut(250, function() {
+				$(this).remove();
+				if (!wrap.children().length) {
+					wrap.removeClass('ttbm-toast-visible');
+				}
+			});
+		}, duration);
+
+		closeBtn.on('click', function() {
+			clearTimeout(timer);
+			item.fadeOut(200, function() {
+				$(this).remove();
+				if (!wrap.children().length) {
+					wrap.removeClass('ttbm-toast-visible');
+				}
+			});
+		});
+	}
+
 	// ═══ Wishlist Toggle ═══════════════════════════════════════════
 	$(document).on('click', '.ttbm-gc-wishlist', function(e) {
 		e.preventDefault();
@@ -309,6 +351,11 @@
 					if (response.data.in_wishlist) {
 						btn.addClass('active');
 						icon.removeClass('mi-heart').addClass('mi-wishlist-heart');
+						var toastMsg = 'This tour added in wishlist. For check go to my-account wishlist section';
+						if (ttbm_ajax.wishlist_url) {
+							toastMsg = 'This tour added in wishlist. <a href="' + ttbm_ajax.wishlist_url + '">Go to Wishlist</a>';
+						}
+						ttbmShowToast(toastMsg, 'success', 4000, true);
 					} else {
 						btn.removeClass('active');
 						icon.removeClass('mi-wishlist-heart').addClass('mi-heart');
@@ -350,6 +397,7 @@
 			success: function(response) {
 				if (response.success && !response.data.in_wishlist) {
 					btn.closest('.ttbm-wishlist-item').fadeOut(300, function() { $(this).remove(); });
+					ttbmShowToast('Removed from wishlist.', 'info', 3000, false);
 				}
 			}
 		});

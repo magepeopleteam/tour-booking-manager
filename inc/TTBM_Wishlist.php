@@ -364,6 +364,17 @@ if ( ! class_exists( 'TTBM_Wishlist' ) ) {
 			.ttbm-wishlist-view-list .ttbm-wishlist-explore-btn{display:inline-block;background:#6c47ff;color:#fff !important;padding:10px 24px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;transition:background .2s;align-self:flex-start;}
 			.ttbm-wishlist-view-list .ttbm-wishlist-explore-btn:hover{background:#5a3be0;color:#fff !important;}
 
+			/* ── Toast Notification ─────────────────────────────── */
+			.ttbm-toast-wrap{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);z-index:999999;display:flex;flex-direction:column;gap:10px;align-items:center;pointer-events:none;transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .35s ease;opacity:0;}
+			.ttbm-toast-wrap.ttbm-toast-visible{transform:translateX(-50%) translateY(0);opacity:1;}
+			.ttbm-toast-item{background:#222;color:#fff;padding:14px 22px;border-radius:10px;font-size:14px;font-weight:500;line-height:1.5;box-shadow:0 8px 28px rgba(0,0,0,.25);display:flex;align-items:center;gap:10px;pointer-events:auto;max-width:420px;text-align:center;}
+			.ttbm-toast-item.ttbm-toast-success{background:#1a7a3e;}
+			.ttbm-toast-item.ttbm-toast-info{background:#6c47ff;}
+			.ttbm-toast-item a{color:#ffd700;text-decoration:underline;font-weight:600;}
+			.ttbm-toast-item a:hover{color:#fff;}
+			.ttbm-toast-item .ttbm-toast-close{background:none;border:none;color:#fff;font-size:16px;line-height:1;cursor:pointer;padding:0 0 0 6px;opacity:.7;}
+			.ttbm-toast-item .ttbm-toast-close:hover{opacity:1;}
+
 			/* ── List View Responsive ─────────────────────────────── */
 			@media (max-width:767px) {
 			.ttbm-wishlist-view-list .ttbm-wishlist-item{flex-direction:column !important;}

@@ -44,8 +44,9 @@
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Details_Layout.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Booking.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Booking.php';
-require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Wishlist.php';
+					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin_Wishlist.php';
 				}
 			}
 			public function appsero_init_tracker_ttbm() {

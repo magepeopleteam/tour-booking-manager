@@ -45,8 +45,8 @@
 			?>
 			<div class="_mZero  <?php echo esc_attr($related_tour_count >$num_of_tour?'owl-theme owl-carousel':$div_class); ?>" data-show="<?php echo esc_attr($num_of_tour); ?>">
 				<?php foreach ( $related_tours as $ttbm_post_id ) { ?>
-					<div class="filter_item <?php echo esc_attr($grid_class); ?>">
-						<?php include( TTBM_Function::template_path( 'list/grid_list.php' ) ); ?>
+					<div class="filter_item placeholder_area <?php echo esc_attr($grid_class); ?>">
+						<?php include( TTBM_Function::template_path( 'list/grid_list_style.php' ) ); ?>
 					</div>
 				<?php } ?>
 

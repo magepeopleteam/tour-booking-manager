@@ -11,7 +11,7 @@
 		loop: true,
 		margin: 10,
 		nav: true,
-		rtl: true,
+		rtl: false,
 		responsive: {
 			0: {
 				items: 1

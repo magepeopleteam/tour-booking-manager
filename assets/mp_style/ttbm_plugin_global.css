@@ -2888,6 +2888,7 @@ div.ttbm_location_info h2 {
 	color: #FFF;
 	font-size: 18px;
 	font-weight: var(--fw-bold);
+	margin-bottom: 0;
 }
 .ttbm_location_info p {
 	color: #FFF;

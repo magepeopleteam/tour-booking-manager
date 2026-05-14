@@ -2864,11 +2864,6 @@ div.ttbm_list_inline div.ttbm_list_info {
 	color: #374151 !important;
 }
 
-.filter_item_footer .include_service ul li span,
-.filter_item_footer .include_service ul li .mi,
-.filter_item_footer .include_service ul li .circleIcon_xs {
-	color: inherit !important;
-}
 
 .filter_item_footer .include_service ul li:hover {
 	background: var(--color_theme, #6c47ff) !important;

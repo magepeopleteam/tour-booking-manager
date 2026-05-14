@@ -134,13 +134,14 @@ div.ttbm_content_area {
 }
 
 
-.ttbm_content__right .ttbm_default_widget h5{
+.ttbm_content__right .ttbm_default_widget h5 {
 	text-transform: uppercase;
 }
 
 .ttbm_smart_theme .ttbm_content__right {
 	border: none;
 }
+
 @media (min-width:960px) {
 	div.ttbm_content_area {
 		justify-content: space-between;
@@ -758,13 +759,16 @@ div.ttbm_day_wise_details .day_wise_details_item_title {
 	font-size: var(--ttbm_fs_h4);
 	font-weight: var(--fw-medium);
 }
-.get-enquiry-popup button[class^='_dButton']{
-    background-color: #333;
-    color: #fff;
+
+.get-enquiry-popup button[class^='_dButton'] {
+	background-color: #333;
+	color: #fff;
 }
+
 .details-meta {
 	margin-bottom: 10px;
 }
+
 div.day_wise_details_item {
 	border-left: 1px solid #ddd;
 	position: relative;
@@ -1623,7 +1627,6 @@ label.time_select_box {
 
 div.ttbm_booking_panel table thead th {
 	border: 0;
-	padding: 20px 0;
 }
 
 div.ttbm_booking_panel table tr .ttbm-person-info .person-info,
@@ -1710,6 +1713,7 @@ div.ttbm_booking_panel table.mp_tour_ticket_type thead tr th:last-child {
 div.ttbm_booking_panel table.mp_tour_ticket_type tbody td,
 table.mp_tour_ticket_type tbody th {
 	border-bottom: 1px dotted #DDD;
+	padding: 15px;
 }
 
 div.ttbm_booking_panel .qtyIncDec .decQty,
@@ -3905,7 +3909,7 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 }
 
 .ttbm_ticket_row td:first-child {
-	padding: 20px;
+	padding: 10px;
 	vertical-align: middle;
 	position: relative;
 }
@@ -3919,8 +3923,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 .ttbm_ticket_icon {
 	font-size: 24px;
 	color: #667eea;
-	width: 32px;
-	height: 32px;
 	text-align: center;
 	display: flex;
 	align-items: center;
@@ -3954,7 +3956,7 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 .ttbm_ticket_area .ttbm_price_container {}
 
 
-.ttbm_regular_price.strikeLine {
+.ttbm_regular_price.strikeLine .woocommerce-Price-amount {
 	font-size: 14px;
 	color: #6c757d;
 	text-decoration: line-through;
@@ -3973,7 +3975,7 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 .ttbm_discount_badge {
 	background: #dc3545;
 	color: white;
-	font-size: 9px;
+	font-size:11px;
 	font-weight: 600;
 	padding: 2px 6px;
 	border-radius: 8px;
@@ -3985,12 +3987,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 	z-index: 0;
 }
 
-
-
-.ttbm_availability_container {
-	padding: 5px 0;
-	min-width: 150px;
-}
 
 .ttbm_stock_info {
 	display: block;
@@ -4019,7 +4015,7 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 }
 
 .ttbm_capacity_text {
-	font-size: 10px;
+	font-size: 13px;
 	color: #333;
 	display: block;
 	margin-bottom: 4px;
@@ -4119,7 +4115,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 .ttbm_enhanced_table .ttbm_availability_container {
 	display: inline-block;
 	text-align: center;
-	margin: 0 auto;
 }
 
 .ttbm_enhanced_table .ttbm_stock_info {
@@ -4132,8 +4127,8 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 .ttbm_enhanced_table .ttbm_availability_details {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	text-align: center;
+	align-items: end;
+	text-align: right;
 }
 
 .ttbm_enhanced_table .ttbm_remaining_count {
@@ -4204,7 +4199,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 		font-weight: 600;
 		font-size: 13px;
 		color: #495057;
-		min-width: 90px;
 		margin-right: 10px;
 	}
 
@@ -4240,11 +4234,7 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 	}
 
 	.ttbm_ticket_icon {
-		width: 28px;
-		height: 28px;
 		font-size: 18px;
-		background-color: #f0f4ff;
-		border-radius: 50%;
 	}
 
 	.ttbm_ticket_details h4 {
@@ -4259,6 +4249,7 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 		align-items: center;
 		gap: 8px;
 		margin-left: auto;
+		flex-direction: row;
 	}
 
 	.ttbm_regular_price.strikeLine {
@@ -4273,12 +4264,16 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 	}
 
 	.ttbm_discount_badge {
-		font-size: 9px;
 		padding: 2px 6px;
 		background: #dc3545;
 		color: white;
 		border-radius: 20px;
 		margin-left: 5px;
+		position: relative;
+		top: auto;
+		right: auto;
+		
+		
 	}
 
 	/* Availability styling */
@@ -4313,6 +4308,10 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 		margin-left: auto;
 		min-width: 120px;
 	}
+	div.ttbm_booking_panel table.mp_tour_ticket_type tbody td.ttbm-availability-info{
+		background-color: #f8f9fa;
+		padding: 5px 15px;
+	}
 }
 
 @media (max-width: 480px) {
@@ -4333,7 +4332,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 
 	.ttbm_ticket_row td::before {
 		font-size: 12px;
-		min-width: 80px;
 	}
 
 	.person-info {
@@ -4341,8 +4339,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 	}
 
 	.ttbm_ticket_icon {
-		width: 24px;
-		height: 24px;
 		font-size: 16px;
 	}
 
@@ -4363,8 +4359,10 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 	}
 
 	.ttbm_discount_badge {
-		font-size: 8px;
-		padding: 1px 4px;
+		font-weight: 600;
+		position: relative;
+		top: auto;
+		right: auto;
 	}
 
 	.ttbm_available_number {
@@ -4375,9 +4373,7 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 		font-size: 10px;
 	}
 
-	.ttbm-select-quantity .qtyIncDec {
-		min-width: 100px;
-	}
+
 }
 
 /* Extra Service Availability Styling */
@@ -5097,9 +5093,11 @@ div.filter_item.ttbm-grid-card:hover,
 .ttbm-gc-wishlist.active .mi {
 	color: #e84c6a;
 }
+
 .ttbm-gc-wishlist.active .mi-wishlist-heart {
 	color: #fff;
 }
+
 .ttbm-gc-wishlist.active {
 	background: #e84c6a;
 	border-color: #e84c6a;
@@ -5189,31 +5187,31 @@ div.ttbm-tour-list-shortcode .ttbm-gc-duration-badge {
 }
 
 .ttbm-gc-tags ul li {
-	display: inline-flex ;
-	flex-direction: row ;
+	display: inline-flex;
+	flex-direction: row;
 	/* icon + text always horizontal */
-	align-items: center ;
-	justify-content: flex-start ;
+	align-items: center;
+	justify-content: flex-start;
 	gap: 5px;
-	border: 1px solid #e5e7eb ;
-	border-radius:5px ;
-	padding:5px 7px;
+	border: 1px solid #e5e7eb;
+	border-radius: 5px;
+	padding: 5px 7px;
 	font-size: 12px;
 	color: #374151;
 	background: #f9fafb;
-	height: auto ;
-	width: auto ;
-	line-height: 1.5 ;
+	height: auto;
+	width: auto;
+	line-height: 1.5;
 	transition: background 0.18s ease, border-color 0.18s ease;
 	white-space: nowrap;
-	margin: 0 ;
+	margin: 0;
 	vertical-align: middle;
 }
 
 .ttbm-gc-tags ul li:hover {
-	background: rgba(var(--color_theme_rgb, 108, 71, 255), 0.06) ;
-	border-color: var(--color_theme, #6c47ff) ;
-	color: var(--color_theme, #6c47ff) ;
+	background: rgba(var(--color_theme_rgb, 108, 71, 255), 0.06);
+	border-color: var(--color_theme, #6c47ff);
+	color: var(--color_theme, #6c47ff);
 }
 
 .ttbm-gc-tags ul li .circleIcon_xs {
@@ -5627,184 +5625,185 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
    ===================================================== */
 
 .ttbm-filter-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 14px 0 18px;
-  width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 12px;
+	padding: 14px 0 18px;
+	width: 100%;
 }
 
 /* ── Left: tab buttons ─────────────────────────────── */
 .ttbm-filter-tabs {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 4px;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 4px;
 }
 
 .ttbm-tab-btn {
-  background: none;
-  border: none;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #6b7280;
-  cursor: pointer;
-  border-radius: 4px;
-  position: relative;
-  transition: color 0.18s ease;
-  white-space: nowrap;
-  line-height: 1.4;
+	background: none;
+	border: none;
+	padding: 8px 16px;
+	font-size: 14px;
+	font-weight: 500;
+	color: #6b7280;
+	cursor: pointer;
+	border-radius: 4px;
+	position: relative;
+	transition: color 0.18s ease;
+	white-space: nowrap;
+	line-height: 1.4;
 }
 
 .ttbm-tab-btn::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--color_theme, #6c47ff);
-  border-radius: 2px 2px 0 0;
-  transform: scaleX(0);
-  transition: transform 0.2s ease;
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 2px;
+	background: var(--color_theme, #6c47ff);
+	border-radius: 2px 2px 0 0;
+	transform: scaleX(0);
+	transition: transform 0.2s ease;
 }
 
-  .ttbm_style button.ttbm-tab-btn:hover,
-  .ttbm_style button.ttbm-tab-btn:focus {
+.ttbm_style button.ttbm-tab-btn:hover,
+.ttbm_style button.ttbm-tab-btn:focus {
 	background: none;
 	color: var(--color_theme, #6c47ff);
-	outline:0;
+	outline: 0;
 }
+
 .ttbm-tab-btn.ttbm-tab-active {
-  color: var(--color_theme, #6c47ff);
-  font-weight: 600;
+	color: var(--color_theme, #6c47ff);
+	font-weight: 600;
 }
 
 .ttbm-tab-btn.ttbm-tab-active::after {
-  transform: scaleX(1);
+	transform: scaleX(1);
 }
 
 /* Hide the old activity pills holder (still in DOM for JS) */
 .ttbm-activity-pills-hidden {
-  display: none !important;
+	display: none !important;
 }
 
 /* ── Right: controls ───────────────────────────────── */
 .ttbm-filter-controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: nowrap;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex-wrap: nowrap;
 }
 
 /* Sort dropdown */
 .ttbm-sort-dropdown {
-  position: relative;
+	position: relative;
 }
 
 .ttbm-sort-select {
-  appearance: none;
-  -webkit-appearance: none;
-  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center;
-  border: 1px solid #e5e7eb !important;
-  border-radius: 8px !important;
-  padding: 8px 36px 8px 14px !important;
-  font-size: 13px !important;
-  font-weight: 500;
-  color: #374151;
-  cursor: pointer;
-  min-width: 180px;
-  transition: border-color 0.18s ease, box-shadow 0.18s ease;
-  box-shadow: none !important;
-  height: auto !important;
+	appearance: none;
+	-webkit-appearance: none;
+	background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center;
+	border: 1px solid #e5e7eb !important;
+	border-radius: 8px !important;
+	padding: 8px 36px 8px 14px !important;
+	font-size: 13px !important;
+	font-weight: 500;
+	color: #374151;
+	cursor: pointer;
+	min-width: 180px;
+	transition: border-color 0.18s ease, box-shadow 0.18s ease;
+	box-shadow: none !important;
+	height: auto !important;
 }
 
 .ttbm-sort-select:focus {
-  border-color: var(--color_theme, #6c47ff) !important;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(108, 71, 255, 0.12) !important;
+	border-color: var(--color_theme, #6c47ff) !important;
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(108, 71, 255, 0.12) !important;
 }
 
 /* View switcher group */
 .ttbm-view-switcher {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 3px;
-  background: #fff;
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	border: 1px solid #e5e7eb;
+	border-radius: 8px;
+	padding: 3px;
+	background: #fff;
 }
 
 .ttbm-view-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border: none;
-  border-radius: 6px;
-  background: transparent;
-  color: #9ca3af;
-  cursor: pointer;
-  transition: background 0.18s ease, color 0.18s ease;
-  font-size: 16px;
-  padding: 0;
-  line-height: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	border: none;
+	border-radius: 6px;
+	background: transparent;
+	color: #9ca3af;
+	cursor: pointer;
+	transition: background 0.18s ease, color 0.18s ease;
+	font-size: 16px;
+	padding: 0;
+	line-height: 1;
 }
 
 .ttbm-view-btn .mi {
-  font-size: 16px;
-  color: inherit;
+	font-size: 16px;
+	color: inherit;
 }
 
 .ttbm-view-btn:hover {
-  background: #f3f4f6;
-  color: #374151;
+	background: #f3f4f6;
+	color: #374151;
 }
 
 .ttbm-view-btn.ttbm-view-active,
 .ttbm-view-btn[aria-pressed="true"] {
-  background: rgba(var(--color_theme_rgb, 108, 71, 255), 0.10);
-  color: var(--color_theme, #6c47ff);
+	background: rgba(var(--color_theme_rgb, 108, 71, 255), 0.10);
+	color: var(--color_theme, #6c47ff);
 }
 
 .ttbm-view-btn.ttbm-view-active .mi,
 .ttbm-view-btn[aria-pressed="true"] .mi {
-  color: var(--color_theme, #6c47ff);
+	color: var(--color_theme, #6c47ff);
 }
 
 /* ── Responsive ─────────────────────────────────────── */
 @media (max-width: 767px) {
-  .ttbm-filter-bar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
+	.ttbm-filter-bar {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+	}
 
-  .ttbm-filter-controls {
-    width: 100%;
-    justify-content: space-between;
-  }
+	.ttbm-filter-controls {
+		width: 100%;
+		justify-content: space-between;
+	}
 
-  .ttbm-sort-select {
-    min-width: 0;
-    width: 100%;
-  }
+	.ttbm-sort-select {
+		min-width: 0;
+		width: 100%;
+	}
 
-  .ttbm-sort-dropdown {
-    flex: 1;
-  }
+	.ttbm-sort-dropdown {
+		flex: 1;
+	}
 }
 
 @media (max-width: 480px) {
-  .ttbm-tab-btn {
-    padding: 6px 10px;
-    font-size: 13px;
-  }
+	.ttbm-tab-btn {
+		padding: 6px 10px;
+		font-size: 13px;
+	}
 }
 
 /* =====================================================
@@ -5828,7 +5827,7 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 	border-radius: 18px;
 	overflow: hidden;
 	background: #fff;
-	box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+	box-shadow: 0 6px 28px rgba(0, 0, 0, 0.08);
 	padding: 0;
 	margin: 0;
 }
@@ -5887,7 +5886,7 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 }
 
 /* Description */
-.all_filter_item .flexWrap.ttbm-list-mode .ttbm_description > div {
+.all_filter_item .flexWrap.ttbm-list-mode .ttbm_description>div {
 	-webkit-line-clamp: 3;
 	font-size: 14px;
 	line-height: 1.7;
@@ -5984,7 +5983,7 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 		font-size: 20px;
 	}
 
-	.all_filter_item .flexWrap.ttbm-list-mode .ttbm_description > div {
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm_description>div {
 		font-size: 13px;
 		-webkit-line-clamp: 2;
 	}

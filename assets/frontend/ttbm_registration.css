@@ -1309,10 +1309,15 @@ div.ttbm_viator_theme .item_icon {
 }
 
 .ttbm_attraction_item .ttbm-title-icon {
-	font-size: 50px;
 	width: 50px;
 	height: 50px;
-	color: #707070;
+	color: var(--color_theme);
+	font-size: 20px;
+	background: #f0f4ff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
 }
 
 .ttbm_activity_item {
@@ -1321,35 +1326,58 @@ div.ttbm_viator_theme .item_icon {
 	flex-direction: column;
 	justify-content: center;
 	text-align: center;
-	gap: 15px;
-	padding: 10px;
-	margin-left: 10px;
-	border-radius: 8px;
-	transition: background 0.3s ease;
+	gap: 8px;
+	padding: 40px 20px;
+	margin: 0;
+	background: #f0f4ff;
+	border-radius: 16px;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+	border: 1px solid transparent;
+}
+
+.ttbm_activity_item:hover {
+	transform: translateY(-5px);
+	background: #fff;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+	border-color: #eef2ff;
 }
 
 .ttbm_activity_item .ttbm-title {
-	font-size: 50px;
-	width: 50px;
-	height: 50px;
+	font-size: 24px;
+	width: 60px;
+	height: 60px;
+	background: #d3e4fe;
 	border-radius: 50%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex-direction: column;
-	color: #707070;
+	color: #333;
+	margin: 0 0 10px 0 !important;
 }
 
-.ttbm_activity_item .ttbm-title iframe {
-	color: #707070;
+.ttbm_activity_item h4 {
+	margin: 0 !important;
+	padding: 0 !important;
 }
 
-.placeholder_area .ttbm_activity_item h4 {
-	font-weight: normal;
+.ttbm_activity_item h4 a {
+	font-size: 18px !important;
+	font-weight: 700 !important;
+	color: #1e293b !important;
+	text-decoration: none;
+	transition: color 0.2s;
 }
 
-.placeholder_area .ttbm_activity_item h4 {
-	font-size: 20px;
+.ttbm_activity_item h4 a:hover {
+	color: #3b82f6 !important;
+}
+
+.ttbm_activity_item p {
+	font-size: 13px !important;
+	color: #64748b !important;
+	margin: 0 !important;
+	font-weight: 500;
 }
 
 #ttbm_feature_placeholder_area {
@@ -1397,16 +1425,62 @@ div.ttbm_viator_theme .item_icon {
 }
 
 .ttbm_load_more_text {
+	display: inline-block;
+	padding: 12px 35px;
+	border: 2px solid var(--color_theme);
+	color: var(--color_theme);
+	border-radius: 30px;
+	font-size: 14px;
+	font-weight: 700;
 	cursor: pointer;
-	padding: 8px 20px;
-	border: 1px solid #EDE8E8;
-	border-radius: 5px;
+	background: #fff;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.ttbm_load_more_text:hover {
+	background: var(--color_theme);
+	color: var(--color_theme_alter);
+	box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
+	transform: scale(1.02);
 }
 
 .ttbm_term_display_shortcode {
-	background-color: #F2F2F2;
-	margin: 10px;
-	border: 1px solid #EAE6E6;
+	background: #fff;
+  	border: 1px solid #f8f8f8;
+}
+
+#ttbm_activities_placeholder_area {
+	display: flex;
+	flex-wrap: wrap;
+	gap:10px;
+	justify-content: start;
+}
+
+#ttbm_activities_placeholder_area .ttbm_activity_item {
+	width: calc(25% - 18px); /* 4 columns on desktop */
+	min-width: 250px;
+	background-color: #f0f4ff;
+}
+
+@media (max-width: 991px) {
+	#ttbm_activities_placeholder_area .ttbm_activity_item {
+		width: calc(50% - 12px); /* 2 columns on tablet */
+	}
+}
+
+@media (max-width: 575px) {
+	#ttbm_activities_placeholder_area .ttbm_activity_item {
+		width: 100%; /* 1 column on mobile */
+	}
+}
+
+.ttbm_attraction_load_more_holder {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin-top: 40px;
 }
 
 .ttbm_carousel_holder {
@@ -2733,7 +2807,6 @@ div.ttbm_list_info {
 
 div.ttbm_list_info span {
 	font-size: var(--ttbm_fs_h6);
-	color: var(--color_theme);
 }
 
 div.ttbm_list_info>span:first-child {
@@ -2821,11 +2894,6 @@ div.ttbm_list_inline div.ttbm_list_info {
 	color: #374151 !important;
 }
 
-.filter_item_footer .include_service ul li span,
-.filter_item_footer .include_service ul li .mi,
-.filter_item_footer .include_service ul li .circleIcon_xs {
-	color: inherit !important;
-}
 
 .filter_item_footer .include_service ul li:hover {
 	background: var(--color_theme, #6c47ff) !important;

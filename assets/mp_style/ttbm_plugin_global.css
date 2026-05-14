@@ -2879,7 +2879,6 @@
 .ttbm_location_info {
 	position: absolute;
 	color: #FFF;
-	background-color: #00000075;
 	left: 5px;
 	bottom: 5px;
 	padding: 5px;
@@ -2888,6 +2887,7 @@ div.ttbm_location_info h2 {
 	color: #FFF;
 	font-size: 18px;
 	font-weight: var(--fw-bold);
+	margin-bottom: 0;
 }
 .ttbm_location_info p {
 	color: #FFF;

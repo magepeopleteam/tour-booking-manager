@@ -1435,8 +1435,8 @@ div.ttbm_viator_theme .item_icon {
 }
 
 .ttbm_load_more_text:hover {
-	background: #7c3aed;
-	color: #fff;
+	background: var(--color_theme);
+	color: var(--color_theme_alter);
 	box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
 	transform: scale(1.02);
 }

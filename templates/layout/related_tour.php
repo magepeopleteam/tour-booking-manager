@@ -31,10 +31,9 @@
 	$num_of_tour=$num_of_tour??'';
 	if ( $related_tour_count > 0 ) {
 
-        $num_of_tour=$num_of_tour>0?$num_of_tour:4;
-		$num_of_tour=min($num_of_tour,$related_tour_count);
-		$grid_class=$related_tour_count <= $num_of_tour?'grid_'.$num_of_tour:'';
-		$div_class=$related_tour_count==1?'flexWrap modern':'flexWrap grid';
+        $num_of_tour = (isset($num_of_tour) && $num_of_tour > 0) ? $num_of_tour : 4;
+		$grid_class  = $related_tour_count <= $num_of_tour ? 'grid_' . $num_of_tour : '';
+		$div_class   = 'flexWrap grid';
 		?>
 			<div class='ttbm_style related-hotel' id="ttbm_related_tour">
 			<h2 class="content-title"><?php esc_html_e( 'You may like ', 'tour-booking-manager' ) ?></h2>

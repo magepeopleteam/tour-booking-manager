@@ -1449,8 +1449,7 @@ div.ttbm_viator_theme .item_icon {
 	display: flex;
 	flex-wrap: wrap;
 	gap:10px;
-	justify-content: center;
-	margin-top: 30px;
+	justify-content: start;
 }
 
 #ttbm_activities_placeholder_area .ttbm_activity_item {

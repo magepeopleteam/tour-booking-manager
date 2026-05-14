@@ -3975,7 +3975,7 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 .ttbm_discount_badge {
 	background: #dc3545;
 	color: white;
-	font-size:11px;
+	font-size: 11px;
 	font-weight: 600;
 	padding: 2px 6px;
 	border-radius: 8px;
@@ -4272,8 +4272,8 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 		position: relative;
 		top: auto;
 		right: auto;
-		
-		
+
+
 	}
 
 	/* Availability styling */
@@ -4308,7 +4308,8 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 		margin-left: auto;
 		min-width: 120px;
 	}
-	div.ttbm_booking_panel table.mp_tour_ticket_type tbody td.ttbm-availability-info{
+
+	div.ttbm_booking_panel table.mp_tour_ticket_type tbody td.ttbm-availability-info {
 		background-color: #f8f9fa;
 		padding: 5px 15px;
 	}
@@ -4440,9 +4441,7 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 	border: 1px solid #dee2e6;
 }
 
-.extra-service-price .amount {
-	color: #28a745;
-}
+
 
 .ttbm_extra_service_area .ttbm_progress_fill {
 	height: 100%;
@@ -4520,192 +4519,6 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 	}
 }
 
-/* Mobile responsive adjustments for extra service table */
-@media (max-width: 768px) {
-	.ttbm_extra_service_area .mp_tour_ticket_extra {
-		display: block;
-		width: 100%;
-		overflow-x: auto;
-		-webkit-overflow-scrolling: touch;
-	}
-
-	.ttbm_extra_service_area .mp_tour_ticket_extra thead {
-		display: none;
-	}
-
-	.ttbm_extra_service_area .mp_tour_ticket_extra tbody {
-		display: block;
-		width: 100%;
-	}
-
-	.ttbm_extra_service_area .mp_tour_ticket_extra tr {
-		display: block;
-		width: 100%;
-		margin-bottom: 15px;
-		border: 1px solid #e9ecef;
-		border-radius: 8px;
-		padding: 15px;
-		background: #fff;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	}
-
-	.ttbm_extra_service_area .mp_tour_ticket_extra th,
-	.ttbm_extra_service_area .mp_tour_ticket_extra td {
-		display: block;
-		width: 100%;
-		padding: 8px 0;
-		border: none;
-		text-align: left;
-	}
-
-	/* Service title styling */
-	.ttbm_extra_service_area .extra-service-title {
-		font-weight: 600;
-		font-size: 16px;
-		color: #333;
-		margin-bottom: 10px;
-		padding-bottom: 10px;
-		border-bottom: 1px solid #e9ecef;
-	}
-
-	/* Price styling */
-	.ttbm_extra_service_area .extra-service-price {
-		font-size: 18px;
-		font-weight: 700;
-		color: #28a745;
-		margin-bottom: 10px;
-	}
-
-	/* Availability container mobile styling */
-	.ttbm_extra_service_area .ttbm_availability_container {
-		min-width: auto;
-		padding: 10px 0;
-		margin-bottom: 15px;
-		background: #f8f9fa;
-		border-radius: 6px;
-		padding: 12px;
-	}
-
-	.ttbm_extra_service_area .ttbm_availability_details {
-		gap: 6px;
-	}
-
-	.ttbm_extra_service_area .ttbm_remaining_count {
-		flex-direction: column;
-		align-items: center;
-		gap: 3px;
-		margin-bottom: 8px;
-	}
-
-	.ttbm_extra_service_area .ttbm_available_number {
-		font-size: 20px;
-		font-weight: 700;
-		color: #28a745;
-	}
-
-	.ttbm_extra_service_area .ttbm_available_label {
-		font-size: 11px;
-		color: #6c757d;
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-	}
-
-	.ttbm_extra_service_area .ttbm_capacity_info {
-		margin-top: 8px;
-	}
-
-	.ttbm_extra_service_area .ttbm_capacity_text {
-		font-size: 10px;
-		text-align: center;
-		margin-bottom: 4px;
-	}
-
-	.ttbm_extra_service_area .ttbm_progress_bar {
-		height: 6px;
-		margin-top: 4px;
-	}
-
-	/* Quantity input mobile styling */
-	.ttbm_extra_service_area .qtyIncDec {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 10px;
-		margin-top: 10px;
-	}
-
-	.ttbm_extra_service_area .qtyIncDec input {
-		width: 60px;
-		text-align: center;
-		font-size: 16px;
-		font-weight: 600;
-		border: 2px solid #e9ecef;
-		border-radius: 6px;
-		padding: 8px;
-	}
-
-	.ttbm_extra_service_area .qtyIncDec button {
-		width: 40px;
-		height: 40px;
-		border-radius: 50%;
-		border: 2px solid #007cba;
-		background: #fff;
-		color: #007cba;
-		font-size: 18px;
-		font-weight: 600;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-		transition: all 0.3s ease;
-	}
-
-	.ttbm_extra_service_area .qtyIncDec button:hover {
-		background: #007cba;
-		color: #fff;
-	}
-
-	.ttbm_extra_service_area .qtyIncDec button:disabled {
-		opacity: 0.5;
-		cursor: not-allowed;
-	}
-}
-
-/* Extra small mobile devices (400px and below) */
-@media (max-width: 400px) {
-	.ttbm_extra_service_area .mp_tour_ticket_extra tr {
-		padding: 12px;
-		margin-bottom: 12px;
-	}
-
-	.ttbm_extra_service_area .extra-service-title {
-		font-size: 15px;
-	}
-
-	.ttbm_extra_service_area .extra-service-price {
-		font-size: 16px;
-	}
-
-	.ttbm_extra_service_area .ttbm_available_number {
-		font-size: 18px;
-	}
-
-	.ttbm_extra_service_area .ttbm_available_label {
-		font-size: 10px;
-	}
-
-	.ttbm_extra_service_area .qtyIncDec input {
-		width: 50px;
-		font-size: 14px;
-		padding: 6px;
-	}
-
-	.ttbm_extra_service_area .qtyIncDec button {
-		width: 35px;
-		height: 35px;
-		font-size: 16px;
-	}
-}
 
 .ttbm-seasonal-price-info {
 	display: flex;

@@ -402,7 +402,7 @@ div.ttbm_style [data-bg-image] {
 	transform: scale(1);
 }
 
-@media (: 600px) {
+@media (max-width: 600px) {
 	.booking-button {
 		flex-direction: column;
 	}
@@ -1794,16 +1794,45 @@ div.ttbm_style #ttbm_select_date.formControl {
 	font-size: 20px;
 }
 
-@media (: 767px) {
+/**
+ * FIX: Broken media-query syntax `@media (: 767px)` and inadequate hotel-booking-bar mobile styles.
+ * AUTHOR: Kimi
+ * ISSUE: Hotel-based tour details booking bar crushed on mobile
+ * SOLVED: 2026-05-14
+ * CONTEXT: Corrected syntax; added vertical stacking, full-width input/button for hotel booking bar.
+ */
+@media (max-width: 767px) {
 	div.ttbm_select_date_area {
 		flex-direction: column;
-		align-items: center;
+		align-items: stretch;
+		gap: 12px;
+	}
+
+	.ttbm_select_date_area .ttbm-title {
+		font-size: 18px;
+		text-align: center;
 	}
 
 	.ttbm_select_date_area .booking-button {
 		flex-direction: column;
-		justify-content: end;
-		align-items: center;
+		align-items: stretch;
+		width: 100%;
+		gap: 12px;
+	}
+
+	.ttbm_select_date_area .booking-button label {
+		width: 100%;
+	}
+
+	.ttbm_select_date_area .booking-button label input.formControl {
+		width: 100%;
+		min-width: unset;
+	}
+
+	.ttbm_select_date_area .ttbm_check_ability,
+	.ttbm_select_date_area .navy_blueButton.ttbm_check_ability {
+		width: 100%;
+		justify-content: center;
 	}
 
 	.ttbm_select_date_area .date-picker {
@@ -1959,7 +1988,7 @@ div.ttbm_hotel_list_details {
 	width: calc(100% - 216px);
 }
 
-@media (: 991px) {
+@media (max-width: 991px) {
 	div.ttbm_hotel_details_item {
 		-webkit-flex-direction: column;
 		flex-direction: column;

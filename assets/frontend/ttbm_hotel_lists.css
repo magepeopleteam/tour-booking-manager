@@ -979,8 +979,78 @@
     background: #4a31a0;
 }
 
-/* Responsive */
+/**
+ * FIX: List view mobile responsiveness — cards were horizontal with fixed 280px image,
+ *      causing content to be crushed on narrow screens.
+ * AUTHOR: Kimi
+ * ISSUE: Hotel search result list view mobile layout broken
+ * SOLVED: 2026-05-14
+ * CONTEXT: Added responsive breakpoint for list-view cards to stack vertically on mobile.
+ */
 @media (max-width: 768px) {
+    /* ---- Hotel list cards (list view) ---- */
+    .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_card,
+    .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_location_lists_card,
+    .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_popular_card {
+        flex-direction: column;
+    }
+
+    .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_card_content {
+        flex-direction: column;
+    }
+
+    .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_image {
+        flex: none;
+        width: 100%;
+        height: 200px;
+        min-height: unset;
+    }
+
+    .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_content {
+        padding: 14px 16px;
+        gap: 10px;
+    }
+
+    .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_header {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_title {
+        font-size: 18px;
+    }
+
+    .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_price_right {
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_price {
+        font-size: 22px;
+    }
+
+    .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_price .woocommerce-Price-amount,
+    .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_price .woocommerce-Price-currencySymbol {
+        font-size: 22px;
+    }
+
+    .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* ---- Grid view fallback (existing) ---- */
+    .ttbm_hotel_lists_wrapper.grid-view {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    /* ---- Hotel details cards (ttbm_hdc_*) ---- */
     .ttbm_hdc_card {
         flex-direction: column;
     }
@@ -1004,5 +1074,19 @@
 
     .ttbm_hdc_btn {
         width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .ttbm_hotel_lists_wrapper.grid-view {
+        grid-template-columns: repeat(1, 1fr) !important;
+    }
+
+    .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_image {
+        height: 180px;
+    }
+
+    .ttbm_hotel_lists_wrapper.list-view .ttbm_hotel_lists_title {
+        font-size: 16px;
     }
 }

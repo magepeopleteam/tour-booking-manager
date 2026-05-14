@@ -94,11 +94,14 @@ if (!defined('ABSPATH')) {
 									data-shared-available-qty="<?php echo !empty($ticket_info['shared_capacity_enabled']) ? esc_attr($available) : ''; ?>">
 									<td class="ttbm-person-info">
 										<div class="person-info">
-											<?php if ($ticket_type_icon) { ?>
-												<span class="ttbm_ticket_icon <?php echo esc_attr($ticket_type_icon); ?>"></span>
-											<?php } ?>
+											
 											<div class="ttbm_ticket_details">
-												<p class="ttbm_ticket_name"><?php echo esc_html($ticket_name); ?></p>
+												<p class="ttbm_ticket_name">
+													<?php if ($ticket_type_icon) { ?>
+														<span class="ttbm_ticket_icon <?php echo esc_attr($ticket_type_icon); ?>"></span>
+													<?php } ?> 
+													<?php echo esc_html($ticket_name); ?>
+												</p>
 												<?php if ($description) { ?>
 													<div class="ttbm_ticket_description"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
 												<?php } ?>

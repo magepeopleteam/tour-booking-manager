@@ -352,7 +352,6 @@
 	.ttbm_style button { position: relative; font-weight: normal; line-height: 1; cursor: pointer; overflow: visible; border: none; -webkit-appearance: button; text-transform: capitalize; }
 	.ttbm_style button[disabled] { cursor: not-allowed; opacity: 0.8; background-color: #888; }
 	.ttbm_style button:hover, .ttbm_style button:focus { text-decoration: none; opacity: 0.8; background-color: var(--color_theme); color: var(--color_white); }
-	.ttbm_style button:hover span, .ttbm_style button:focus span { color: var(--color_white); }
 	.ttbm_style .mpBtn, .ttbm_style [class*="_mpBtn"] { padding: var(--ttbm_mp_xs) var(--ttbm_mp); color: var(--d_color); background-color: #FFF; border: 1px solid var(--color_border); }
 	.ttbm_style .mpBtn_xs, .ttbm_style [class*="_mpBtn_xs"] { padding: 7px var(--ttbm_mp_xs); }
 	.ttbm_style .mpBtn.mpActive,
@@ -406,7 +405,7 @@
 	.ttbm_style .separatorRight > *, .ttbm_style [class*="_separatorRight"] > :last-child { border-right: none; }
 	div.ttbm_style .mpDisabled { cursor: no-drop; opacity: 0.7; pointer-events: none; }
 	.ttbm_style .strikeLine { position: relative; padding: 0 var(--ttbm_mp_xs); color: var(--color_warning); }
-	.ttbm_style .strikeLine:before { content: " "; display: block; width: 100%; border-top: 1px solid #8B0000AA; position: absolute; left: 0; right: 0; top: 11px; transform: rotate(-11deg); }
+	
 	/**************/
 	.ttbm_style .rotate_90, .ttbm_style [class*="_rotate_90"] { transform: rotate(90deg); }
 	/**************/
@@ -1333,9 +1332,7 @@
 	@media only screen and (max-width: 600px) {
 		.ttbm_style .inputInline .inputList { max-width: 100%; min-width: 100%; }
 	}
-	@media only screen and (max-width: 450px) {
-		.ttbm_style .addonGroupContent { min-width: 25px; }
-	}
+
 }
 /******************************************************************** List section ************************************************/
 @media only screen and (min-width: 10px) {

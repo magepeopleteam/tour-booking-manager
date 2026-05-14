@@ -1324,7 +1324,7 @@ div.ttbm_viator_theme .item_icon {
 	gap: 8px;
 	padding: 40px 20px;
 	margin: 0;
-	background: #f8fbff;
+	background: #f0f4ff;
 	border-radius: 16px;
 	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
@@ -1448,7 +1448,7 @@ div.ttbm_viator_theme .item_icon {
 #ttbm_activities_placeholder_area {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 24px;
+	gap:10px;
 	justify-content: center;
 	margin-top: 30px;
 }

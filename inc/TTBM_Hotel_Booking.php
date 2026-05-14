@@ -244,15 +244,15 @@
 				$room_output .= '<div class="ttbm_hotel_ordered_room_list">';
 				foreach ($room_data_info as $roomName => $info) {
 					$qty = $info['quantity'];
-					$price = $info['price'];
-					$total = $price * $qty * $days;
+					$room_price = $info["price"];
+					$total = $room_price * $qty * $days;
 					// Format room name: insert space before capital letters except first
 					$formattedRoomName = isset($info['name']) ? $info['name'] : preg_replace('/(?<!^)([A-Z])/', ' $1', $roomName);
 					// Build the output
 					$room_output .= " <div class='ttbm_hotel_room'>";
 					$room_output .= " <div class='ttbm_hotel_room_name'> Room Name: {$formattedRoomName}</div> ";
 					$room_output .= " <div class='ttbm_hotel_qty'>Qty: {$qty}</div> ";
-					$room_output .= " <div class='ttbm_hotel_price'>Price: ( " . number_format($price, 2) . " {$currency_symbol} x {$qty} x {$days} ) = " . number_format($total, 2) . " {$currency_symbol}</div> ";
+					$room_output .= " <div class='ttbm_hotel_price'>Price: ( " . number_format($room_price, 2) . " {$currency_symbol} x {$qty} x {$days} ) = " . number_format($total, 2) . " {$currency_symbol}</div> ";
 					$room_output .= " </div> ";
 				}
 				$room_output .= '</div>';
@@ -260,7 +260,7 @@
 				if (!$post_id || !wc_get_product($post_id)) {
 					wp_send_json_error(['message' => __('The selected hotel is not linked to a purchasable product.', 'tour-booking-manager')]);
 				}
-				$quantity = intval(wp_unslash(20));
+				$quantity = 1;
 				$hotel_info = array();
 				$hotel_info['hotel_id'] = $hotel_id;
 				$hotel_info['ttbm_checkin_date'] = $check_in;

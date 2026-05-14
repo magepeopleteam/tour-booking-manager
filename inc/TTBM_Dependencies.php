@@ -83,7 +83,8 @@
 
 				wp_localize_script('ttbm_script', 'ttbm_ajax', array(
 					'ajax_url' => admin_url('admin-ajax.php'),
-					'nonce' => wp_create_nonce('ttbm_frontend_nonce')
+					'nonce' => wp_create_nonce('ttbm_frontend_nonce'),
+					'wishlist_url' => wc_get_account_endpoint_url('ttbm-wishlist')
 				));
 				do_action('ttbm_frontend_script');
 			}

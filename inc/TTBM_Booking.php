@@ -103,7 +103,10 @@
 		}
 		public function booking_panel($tour_id, $tour_date = '', $hotel_id = '') {
 				$tour_date = $tour_date ?: current(TTBM_Function::get_date($tour_id));
-				$tour_date = TTBM_Function::get_date_by_time_check($tour_id, $tour_date, '');
+				$ttbm_type = TTBM_Function::get_tour_type($tour_id);
+				if ($ttbm_type != 'hotel') {
+					$tour_date = TTBM_Function::get_date_by_time_check($tour_id, $tour_date, '');
+				}
 				$tour_start_datetime = $this->normalize_tour_date($tour_id, $tour_date);
 				$tour_start_datetime = $tour_start_datetime ?: $tour_date;
 				$tour_end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_date');

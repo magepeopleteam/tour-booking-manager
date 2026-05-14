@@ -36,14 +36,6 @@
 		$grid_class=$related_tour_count <= $num_of_tour?'grid_'.$num_of_tour:'';
 		$div_class=$related_tour_count==1?'flexWrap modern':'flexWrap grid';
 		?>
-			<?php
-				// Debug: output first related item's ID and thumbnail URL as an HTML comment (non-visible)
-				$first_related_id = is_array($related_tours) && ! empty( $related_tours ) ? reset( $related_tours ) : '';
-				if ( $first_related_id ) {
-					$first_thumb = TTBM_Global_Function::get_image_url( $first_related_id );
-					echo '<!-- TTBM DEBUG: first related id=' . esc_html( $first_related_id ) . ' thumb=' . esc_url( $first_thumb ) . ' -->';
-				}
-			?>
 			<div class='ttbm_style related-hotel' id="ttbm_related_tour">
 			<h2 class="content-title"><?php esc_html_e( 'You may like ', 'tour-booking-manager' ) ?></h2>
 			<?php

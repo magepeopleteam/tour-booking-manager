@@ -352,7 +352,6 @@
 	.ttbm_style button { position: relative; font-weight: normal; line-height: 1; cursor: pointer; overflow: visible; border: none; -webkit-appearance: button; text-transform: capitalize; }
 	.ttbm_style button[disabled] { cursor: not-allowed; opacity: 0.8; background-color: #888; }
 	.ttbm_style button:hover, .ttbm_style button:focus { text-decoration: none; opacity: 0.8; background-color: var(--color_theme); color: var(--color_white); }
-	.ttbm_style button:hover span, .ttbm_style button:focus span { color: var(--color_white); }
 	.ttbm_style .mpBtn, .ttbm_style [class*="_mpBtn"] { padding: var(--ttbm_mp_xs) var(--ttbm_mp); color: var(--d_color); background-color: #FFF; border: 1px solid var(--color_border); }
 	.ttbm_style .mpBtn_xs, .ttbm_style [class*="_mpBtn_xs"] { padding: 7px var(--ttbm_mp_xs); }
 	.ttbm_style .mpBtn.mpActive,

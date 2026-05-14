@@ -1461,6 +1461,7 @@ div.ttbm_viator_theme .item_icon {
 #ttbm_activities_placeholder_area .ttbm_activity_item {
 	width: calc(25% - 18px); /* 4 columns on desktop */
 	min-width: 250px;
+	background-color: #f0f4ff;
 }
 
 @media (max-width: 991px) {

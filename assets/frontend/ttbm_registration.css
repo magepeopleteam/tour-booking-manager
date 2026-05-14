@@ -1313,7 +1313,7 @@ div.ttbm_viator_theme .item_icon {
 	height: 50px;
 	color: var(--color_theme);
 	font-size: 20px;
-	background: #ddd;
+	background: #d3e4fe;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -2777,7 +2777,6 @@ div.ttbm_list_info {
 
 div.ttbm_list_info span {
 	font-size: var(--ttbm_fs_h6);
-	color: var(--color_theme);
 }
 
 div.ttbm_list_info>span:first-child {

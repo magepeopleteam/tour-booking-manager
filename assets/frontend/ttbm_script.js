@@ -294,11 +294,13 @@
 			$('body').append(wrap);
 		}
 		var item = $('<div class="ttbm-toast-item ttbm-toast-' + type + '"></div>');
+		var content = $('<span class="ttbm-toast-content"></span>');
 		if (html) {
-			item.html(message);
+			content.html(message);
 		} else {
-			item.text(message);
+			content.text(message);
 		}
+		item.append(content);
 		var closeBtn = $('<button type="button" class="ttbm-toast-close">&times;</button>');
 		item.append(closeBtn);
 		wrap.append(item);
@@ -326,6 +328,23 @@
 		});
 	}
 
+	function ttbmSetWishlistButtonState(btn, inWishlist) {
+		var icon = btn.find('.mi');
+		var label = inWishlist ? 'Remove from wishlist' : 'Add to wishlist';
+
+		btn.toggleClass('active', !!inWishlist);
+		btn.attr('aria-label', label);
+		btn.attr('title', label);
+		icon.toggleClass('mi-wishlist-heart', !!inWishlist);
+		icon.toggleClass('mi-heart', !inWishlist);
+	}
+
+	function ttbmSyncWishlistButtons(tourId, inWishlist) {
+		$('.ttbm-gc-wishlist[data-tour-id="' + tourId + '"]').each(function() {
+			ttbmSetWishlistButtonState($(this), inWishlist);
+		});
+	}
+
 	// ═══ Wishlist Toggle ═══════════════════════════════════════════
 	$(document).on('click', '.ttbm-gc-wishlist', function(e) {
 		e.preventDefault();
@@ -347,18 +366,16 @@
 			},
 			success: function(response) {
 				if (response.success) {
-					var icon = btn.find('.mi');
+					ttbmSetWishlistButtonState(btn, response.data.in_wishlist);
+					ttbmSyncWishlistButtons(tourId, response.data.in_wishlist);
 					if (response.data.in_wishlist) {
-						btn.addClass('active');
-						icon.removeClass('mi-heart').addClass('mi-wishlist-heart');
-						var toastMsg = 'This tour added in wishlist. For check go to my-account wishlist section';
+						var toastMsg = 'Added to wishlist.';
 						if (ttbm_ajax.wishlist_url) {
-							toastMsg = 'This tour added in wishlist. <a href="' + ttbm_ajax.wishlist_url + '">Go to Wishlist</a>';
+							toastMsg = 'Added to wishlist. <a href="' + ttbm_ajax.wishlist_url + '">Open wishlist</a>';
 						}
 						ttbmShowToast(toastMsg, 'success', 4000, true);
 					} else {
-						btn.removeClass('active');
-						icon.removeClass('mi-wishlist-heart').addClass('mi-heart');
+						ttbmShowToast('Removed from wishlist.', 'info', 3000, false);
 					}
 				} else if (response.data && response.data.need_login) {
 					// Show login modal
@@ -396,6 +413,7 @@
 			},
 			success: function(response) {
 				if (response.success && !response.data.in_wishlist) {
+					ttbmSyncWishlistButtons(tourId, false);
 					btn.closest('.ttbm-wishlist-item').fadeOut(300, function() { $(this).remove(); });
 					ttbmShowToast('Removed from wishlist.', 'info', 3000, false);
 				}

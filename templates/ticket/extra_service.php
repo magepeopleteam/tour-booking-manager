@@ -15,8 +15,8 @@
 			<?php do_action('ttbm_before_extra_service_list_table', $tour_id); ?>
 			<h2 class="extra_service_title"><?php echo esc_html__('Available Extra Service List ', 'tour-booking-manager'); ?></h2>
 			<div class="ttbm_widget_content" data-placeholder>
-				<table class="mp_tour_ticket_extra">
-					<thead>
+				<table class="mp_tour_ticket_extra ttbm_enhanced_table">
+					<thead class="ttbm_table_header">
 						<tr>
 							<th class="extra-service-title-header"><?php esc_html_e('Service', 'tour-booking-manager'); ?></th>
 							<th class="extra-service-price-header"><?php esc_html_e('Price', 'tour-booking-manager'); ?></th>
@@ -51,21 +51,29 @@
 							$percentage_sold = $service_qty > 0 ? round((($service_qty - $available) / $service_qty) * 100) : 0;
 							$sold_qty = $service_qty - $available;
 							?>
-							<tr>
-								<th class="extra-service-title">
-									<?php if ($service_icon) { ?>
-										<span class="<?php echo esc_attr($service_icon); ?>"></span>
-									<?php } ?>
-									<?php echo esc_html($service_name); ?>
-                                    <?php if ($description) { ?>
-									    <div class="mT_xs person-description"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
-                                    <?php } ?>
-								</th>
-								<td class="textCenter extra-service-price"><?php 
-								// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-								echo mep_esc_html($service_price); ?></td>
+							<tr class="ttbm_ticket_row ttbm_extra_service_row ttbm_stock_<?php echo esc_attr($stock_status); ?>">
+								<td class="ttbm-person-info extra-service-title" data-label="<?php esc_attr_e('Service', 'tour-booking-manager'); ?>">
+									<div class="person-info">
+										
+										<div class="ttbm_ticket_details">
+											<p class="extra_service_title">
+												<?php if ($service_icon) { ?>
+												<span class="<?php echo esc_attr($service_icon); ?> ttbm_ticket_icon"></span>
+											<?php } ?>
+												<?php echo esc_html($service_name); ?></h4>
+											<?php if ($description) { ?>
+												<div class="mT_xs ttbm_ticket_description"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
+											<?php } ?>
+										</div>
+									</div>
+								</td>
+								<td class="ttbm-regular-price extra-service-price" data-label="<?php esc_attr_e('Price', 'tour-booking-manager'); ?>">
+									<div class="ttbm_price_container">
+										<span class="ttbm_sale_price"><?php echo mep_esc_html($service_price); ?></span>
+									</div>
+								</td>
 								<?php if ($hide_availability_column !== 'on') { ?>
-									<td class="ttbm-availability-info">
+									<td class="ttbm-availability-info" data-label="<?php esc_attr_e('Availability', 'tour-booking-manager'); ?>">
 										<div class="ttbm_availability_container">
 											<div class="ttbm_stock_info ttbm_stock_<?php echo esc_attr($stock_status); ?>">
 												<?php if ($is_sold_out) { ?>
@@ -96,9 +104,11 @@
 										</div>
 									</td>
 								<?php } ?>
-								<td><?php TTBM_Layout::qty_input($service_name, $available, $input_type, $default_qty, $min_qty, $max_qty, $service_price_raw, 'service_qty[]'); ?></td>
+								<td class="ttbm-select-quantity" data-label="<?php esc_attr_e('Quantity', 'tour-booking-manager'); ?>">
+									<?php TTBM_Layout::qty_input($service_name, $available, $input_type, $default_qty, $min_qty, $max_qty, $service_price_raw, 'service_qty[]'); ?>
+								</td>
 							</tr>
-							<tr>
+							<tr class="ttbm_hidden_inputs">
 								<td colspan="<?php echo $hide_availability_column === 'on' ? '3' : '4'; ?>">
 									<input type="hidden" name='tour_id[]' value='<?php echo esc_html($tour_id); ?>'>
 									<input type="hidden" name='service_name[]' value='<?php echo esc_html($service_name); ?>'>

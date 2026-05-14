@@ -4306,10 +4306,10 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 	/* Quantity section */
 	.ttbm-select-quantity .qtyIncDec {
 		margin-left: auto;
-		min-width: 120px;
+		min-width: 150px;
 	}
 
-	div.ttbm_booking_panel table.mp_tour_ticket_type tbody td.ttbm-availability-info {
+	div.ttbm_booking_panel td.ttbm-availability-info {
 		background-color: #f8f9fa;
 		padding: 5px 15px;
 	}

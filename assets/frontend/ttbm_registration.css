@@ -1448,7 +1448,7 @@ div.ttbm_viator_theme .item_icon {
 
 .ttbm_term_display_shortcode {
 	background: #fff;
-  	border: 1px solid #f8f8f8;
+  	border: 1px solid #e5e5e5;
 }
 
 #ttbm_activities_placeholder_area {
@@ -1821,7 +1821,9 @@ div.ttbm_select_date_area {
 	align-items: center;
 	gap: 10px;
 }
-
+div.ttbm_select_date_area {
+	color: #fff;
+}
 .ttbm_select_date_area .ttbm-title {
 	color: var(--color_white);
 	font-size: 20px;
@@ -5075,8 +5077,8 @@ div.ttbm-tour-list-shortcode .ttbm-gc-duration-badge {
 	gap: 5px;
 	border: 1px solid #e5e7eb;
 	border-radius: 5px;
-	padding: 5px 7px;
-	font-size: 12px;
+	padding: 5px;
+	font-size: 10px;
 	color: #374151;
 	background: #f9fafb;
 	height: auto;

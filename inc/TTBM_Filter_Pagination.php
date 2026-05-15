@@ -497,7 +497,7 @@
                                         <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php echo esc_html($feature_item); ?></span>
                                     </label>
 								<?php } ?>
-                                <button id="ttbm_show_feature_seeMoreBtn" class="ttbm_see-more-button"><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
+                                <button id="ttbm_show_feature_seeMoreBtn" class="ttbm_see-more-button" data-placeholder><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
                             </div>
                         </div>
 						<?php
@@ -633,7 +633,7 @@
                                     </label>
 								<?php } }
                                 } ?>
-                                <button id="ttbm_show_activity_seeMoreBtn" class="ttbm_see-more-button"><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
+                                <button id="ttbm_show_activity_seeMoreBtn" class="ttbm_see-more-button" data-placeholder><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
                             </div>
                         </div>
 						<?php

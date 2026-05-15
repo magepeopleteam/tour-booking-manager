@@ -602,7 +602,7 @@
 	.placeholderLoader .placeholder_area {
 		background-color: #f8f8f8;
 		position: relative;
-		padding: var(--ttbm_mp_xs);
+		padding: 0;
 		z-index: 1;
 	}
 	.placeholderLoader .placeholder_area::before {

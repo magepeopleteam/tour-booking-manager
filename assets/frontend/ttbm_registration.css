@@ -1362,15 +1362,15 @@ div.ttbm_viator_theme .item_icon {
 }
 
 .ttbm_activity_item h4 a {
-	font-size: 18px !important;
-	font-weight: 700 !important;
-	color: #1e293b !important;
+	font-size: 18px;
+	font-weight: 500;
+	color: #1e293b;
 	text-decoration: none;
 	transition: color 0.2s;
 }
 
 .ttbm_activity_item h4 a:hover {
-	color: #3b82f6 !important;
+	color: #3b82f6;
 }
 
 .ttbm_activity_item p {
@@ -2491,9 +2491,8 @@ div.left_filter {
 /***************************************/
 div.search_result_empty {
 	display: none;
-	font-weight: var(--fw-medium);
-	font-size: var(--ttbm_fs_h3);
-	color: var(--color_warning);
+	font-size: 16px;
+	color:#333;
 	text-align: center;
 	width: 100%;
 	background-color: #FFF;

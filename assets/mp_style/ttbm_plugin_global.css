@@ -602,7 +602,7 @@
 	.placeholderLoader .placeholder_area {
 		background-color: #f8f8f8;
 		position: relative;
-		padding: var(--ttbm_mp_xs);
+		padding: 0;
 		z-index: 1;
 	}
 	.placeholderLoader .placeholder_area::before {
@@ -751,7 +751,7 @@
 		width: 30px;
 		height: 30px;
 		min-width: 30px;
-		font-size: 20px;
+		font-size: 16px;
 		color: #4C4A4A;
 		margin: 0 var(--ttbm_mp_xs) 0 0;
 	}

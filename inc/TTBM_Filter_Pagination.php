@@ -65,14 +65,14 @@
 				$this->refresh_upcoming_dates();
 				?>
                 <div class="filter-top-label">
-                    <div class="ttbm-filter-top-title">
+                    <div class="ttbm-filter-top-title" >
                         <h4 data-placeholder><?php echo esc_html(apply_filters('tbm_filter_top_label_title',__('Filters', 'tour-booking-manager'))); ?></h4>
                         <button type="button" class="ttbm-mobile-filter-toggle" aria-expanded="false" data-show-label="<?php esc_attr_e('Show filters', 'tour-booking-manager'); ?>" data-hide-label="<?php esc_attr_e('Hide filters', 'tour-booking-manager'); ?>">
                             <span class="ttbm-mobile-filter-toggle-text"><?php esc_html_e('Show filters', 'tour-booking-manager'); ?></span>
                             <span class="fas fa-chevron-down" aria-hidden="true"></span>
                         </button>
                     </div>
-					<p class="filter-subtitle"><?php echo esc_html( apply_filters('tbm_filter_top_label_subtitle',__('Refine your luxury journey', 'tour-booking-manager'))); ?></p>
+					<p class="filter-subtitle" data-placeholder><?php echo esc_html( apply_filters('tbm_filter_top_label_subtitle',__('Refine your luxury journey', 'tour-booking-manager'))); ?></p>
 				</div>
                 <div class="ttbm_filter">
 					<?php $this->location_filter_multiple($params); ?>
@@ -321,21 +321,21 @@
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
                         <div class="divider"></div>
-                        <div class="mActive" data-collapse="#ttbm_location_filter_multiple" data-placeholder>
+                        <div class="mActive" data-collapse="#ttbm_location_filter_multiple" >
                             <div class="groupCheckBox _dFlex flexColumn" id="ttbm_locationList">
-                                <input type="hidden" name="location_filter_multiple" value="<?php echo esc_attr($current_location); ?>"/>
+                                <input data-placeholder type="hidden" name="location_filter_multiple" value="<?php echo esc_attr($current_location); ?>"/>
 								<?php foreach ($exist_locations as $location) { ?>
 									<?php
 									$term = get_term_by('name', $location, 'ttbm_tour_location');
 									$term_id = $term ? $term->term_id : 0;
 									$icon = $term_id ? (get_term_meta($term_id, 'ttbm_location_icon', true) ? get_term_meta($term_id, 'ttbm_location_icon', true) : 'mi mi-marker') : 'mi mi-marker';
 									$checked = $current_location == $term_id ? 'checked' : ''; ?>
-                                    <label class="customCheckboxLabel ttbm_location_checkBoxLevel">
+                                    <label class="customCheckboxLabel ttbm_location_checkBoxLevel"  data-placeholder>
                                         <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($term_id); ?>" <?php echo esc_attr($checked); ?> />
                                         <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php echo esc_html($location); ?></span>
                                     </label>
 								<?php } ?>
-                                <button id="ttbm_show_location_seeMoreBtn" class="ttbm_see-more-button"><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
+                                <button id="ttbm_show_location_seeMoreBtn" class="ttbm_see-more-button" data-placeholder><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
                             </div>
                         </div>
 						<?php
@@ -484,7 +484,7 @@
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
                         <div class="divider"></div>
-                        <div class="mActive" data-collapse="#feature_filter_multiple" data-placeholder>
+                        <div class="mActive" data-collapse="#feature_filter_multiple" >
                             <div class="groupCheckBox _dFlex flexColumn" id="ttbm_featureList">
                                 <input type="hidden" name="feature_filter_multiple" value="<?php echo esc_attr($url); ?>"/>
 								<?php foreach ($exist_feature as $feature_item) { ?>
@@ -492,12 +492,12 @@
 									$term = get_term_by('name', $feature_item, 'ttbm_tour_features_list');
 									$term_id = $term ? $term->term_id : 0;
 									$icon = $term_id ? (get_term_meta($term_id, 'ttbm_feature_icon', true) ? get_term_meta($term_id, 'ttbm_feature_icon', true) : 'mi mi-checklist-task-budget') : 'mi mi-checklist-task-budget'; ?>
-                                    <label class="customCheckboxLabel ttbm_feature_checkBoxLevel">
+                                    <label class="customCheckboxLabel ttbm_feature_checkBoxLevel" data-placeholder>
                                         <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($term_id); ?>"/>
                                         <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php echo esc_html($feature_item); ?></span>
                                     </label>
 								<?php } ?>
-                                <button id="ttbm_show_feature_seeMoreBtn" class="ttbm_see-more-button"><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
+                                <button id="ttbm_show_feature_seeMoreBtn" class="ttbm_see-more-button" data-placeholder><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
                             </div>
                         </div>
 						<?php
@@ -554,7 +554,7 @@
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
                         <div class="divider"></div>
-                        <div class="mActive" data-collapse="#activity_filter_multiple" data-placeholder>
+                        <div class="mActive" data-collapse="#activity_filter_multiple" >
                             <div class="groupCheckBox _dFlex flexColumn">
                                 <input type="hidden" name="activity_filter_multiple" value="<?php echo esc_attr($current_activity); ?>"/>
 								<?php foreach ($exist_activities as $activity) {
@@ -565,7 +565,7 @@
 									$icon = $term_id ? (get_term_meta($term_id, 'ttbm_activities_icon', true) ? get_term_meta($term_id, 'ttbm_activities_icon', true) : 'fas fa-running') : 'fas fa-running';
 									$checked = $current_activity == $term_id ? 'checked' : '';
 									?>
-                                    <label class="customCheckboxLabel">
+                                    <label class="customCheckboxLabel" data-placeholder>
                                         <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($term_id); ?>" <?php echo esc_attr($checked); ?>/>
                                         <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php echo esc_html($activity); ?></span>
                                     </label>
@@ -612,7 +612,7 @@
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
                         <div class="divider"></div>
-                        <div class="mActive" data-collapse="#activity_filter_multiple" data-placeholder>
+                        <div class="mActive" data-collapse="#activity_filter_multiple" >
                             <div class="groupCheckBox _dFlex flexColumn" id="ttbm_activityList">
                                 <input type="hidden" name="activity_filter_multiple" value="<?php echo esc_attr($current_activity); ?>"/>
 								<?php foreach ($exist_activities as $activity) {
@@ -625,7 +625,7 @@
 									$checked = $current_activity == $term_id ? 'checked' : '';
                                     if( $term_id > 0 ){
 									?>
-                                    <label class="customCheckboxLabel ttbm_activity_checkBoxLevel">
+                                    <label class="customCheckboxLabel ttbm_activity_checkBoxLevel" data-placeholder>
                                         <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($term_id); ?>" <?php echo esc_attr($checked); ?>/>
                                         <span class="customCheckbox"><?php 
                                             $icon = $term_id ? (get_term_meta($term_id, 'ttbm_activities_icon', true) ?: 'mi mi-hiking') : 'mi mi-hiking';
@@ -633,7 +633,7 @@
                                     </label>
 								<?php } }
                                 } ?>
-                                <button id="ttbm_show_activity_seeMoreBtn" class="ttbm_see-more-button"><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
+                                <button id="ttbm_show_activity_seeMoreBtn" class="ttbm_see-more-button" data-placeholder><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
                             </div>
                         </div>
 						<?php
@@ -657,14 +657,14 @@
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
                         <div class="divider"></div>
-                        <div class="mActive" data-collapse="#tag_filter_multiple" data-placeholder>
+                        <div class="mActive" data-collapse="#tag_filter_multiple" >
                             <div class="groupCheckBox _dFlex flexColumn">
                                 <input type="hidden" name="tag_filter_multiple" value=""/>
 								<?php foreach ($tags as $tag) {
 									if (get_term($tag->term_id, 'ttbm_tour_tag')->count) {
 										$icon = get_term_meta($tag->term_id, 'ttbm_tag_icon', true) ?: 'mi mi-tag';
 										?>
-                                        <label class="customCheckboxLabel">
+                                        <label class="customCheckboxLabel" data-placeholder>
                                             <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($tag->term_id); ?>"/>
                                             <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php echo esc_html($tag->name); ?></span>
                                         </label>

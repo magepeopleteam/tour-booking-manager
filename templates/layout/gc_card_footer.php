@@ -43,9 +43,9 @@ if ( $show_duration && ( $duration || $night ) && $tour_type === 'general' ) {
 	}
 }
 ?>
-<div class="ttbm-gc-footer" data-placeholder>
+<div class="ttbm-gc-footer" >
 
-	<div class="ttbm-gc-price-block">
+	<div class="ttbm-gc-price-block" data-placeholder>
 		<?php if ( $duration_label ) : ?>
 			<span class="ttbm-gc-duration-label"><?php echo wp_kses_post( $duration_label ); ?></span>
 		<?php endif; ?>
@@ -70,7 +70,7 @@ if ( $show_duration && ( $duration || $night ) && $tour_type === 'general' ) {
 		<?php endif; ?>
 	</div>
 
-	<button type="button" class="ttbm_explore_button" data-href="<?php echo esc_url( get_the_permalink( $ttbm_post_id ) ); ?>">
+	<button type="button" class="ttbm_explore_button" data-href="<?php echo esc_url( get_the_permalink( $ttbm_post_id ) ); ?>" data-placeholder>
 		<?php esc_html_e( 'Explore', 'tour-booking-manager' ); ?>
 	</button>
 

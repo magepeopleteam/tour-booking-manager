@@ -15,9 +15,9 @@
 	if ( $description ) 
 	{
 	?>
-	<div class="ttbm_description ttbm_wp_editor" data-placeholder>
-		<div>
-<?php echo esc_html($description,'tour-booking-manager'); ?>
+	<div class="ttbm_description ttbm_wp_editor" >
+		<div data-placeholder>
+			<?php echo esc_html($description,'tour-booking-manager'); ?>
 		</div>
 	</div>
 	<?php 

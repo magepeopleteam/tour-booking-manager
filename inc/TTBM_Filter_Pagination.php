@@ -657,14 +657,14 @@
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
                         <div class="divider"></div>
-                        <div class="mActive" data-collapse="#tag_filter_multiple" data-placeholder>
+                        <div class="mActive" data-collapse="#tag_filter_multiple" >
                             <div class="groupCheckBox _dFlex flexColumn">
                                 <input type="hidden" name="tag_filter_multiple" value=""/>
 								<?php foreach ($tags as $tag) {
 									if (get_term($tag->term_id, 'ttbm_tour_tag')->count) {
 										$icon = get_term_meta($tag->term_id, 'ttbm_tag_icon', true) ?: 'mi mi-tag';
 										?>
-                                        <label class="customCheckboxLabel">
+                                        <label class="customCheckboxLabel" data-placeholder>
                                             <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($tag->term_id); ?>"/>
                                             <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php echo esc_html($tag->name); ?></span>
                                         </label>

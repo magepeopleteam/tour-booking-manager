@@ -32,9 +32,8 @@
 							<?php echo esc_html($display_name); ?>
                         </li>
 					<?php
+						$count++;
 					}
-					//}
-					$count++;
 				}
 				if (!$list_view_task && $hidden_count > 0) {
 					?>

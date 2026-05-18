@@ -5952,3 +5952,4 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 .ttbm_hotel_item .ttbm_booking_panel {
     margin-top: 10px;
 }
+.ttbm_booking_panel table.mp_tour_ticket_type .badge-gray i{padding-right:10px; }

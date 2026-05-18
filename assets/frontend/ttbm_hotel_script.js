@@ -415,6 +415,10 @@ jQuery(document).ready(function ($) {
 
 jQuery(window).on('load', function () {
     jQuery(function ($) {
+        // Only auto-load rooms on standalone hotel detail pages (not tour pages)
+        if ($('#ttbm_booking_hotel_id').length < 1) {
+            return;
+        }
         let current = $('.ttbm_hotel_item').first();
         let hotel_id = $("#ttbm_booking_hotel_id").val();
         hotel_id = hotel_id ? hotel_id.trim() : '';

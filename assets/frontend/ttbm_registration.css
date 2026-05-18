@@ -5960,3 +5960,6 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
     display: block;
     text-align: left;
 }
+.ttbm-hotel-room-info p {
+    margin-bottom: 10px !important;
+}

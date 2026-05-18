@@ -907,6 +907,31 @@
     font-size: 12px;
 }
 
+.ttbm_hdc_tag_hidden {
+    display: none !important;
+}
+
+.ttbm_hdc_tags.ttbm_show_all .ttbm_hdc_tag_hidden {
+    display: inline-flex !important;
+}
+
+.ttbm_hdc_tag_more {
+    cursor: pointer;
+    background: #5b3cbe;
+    color: #fff;
+    border-color: #5b3cbe;
+    font-weight: 600;
+}
+
+.ttbm_hdc_tag_more:hover {
+    background: #4a2fa8;
+    border-color: #4a2fa8;
+}
+
+.ttbm_hdc_tags.ttbm_show_all .ttbm_hdc_tag_more {
+    display: none !important;
+}
+
 /* Divider */
 .ttbm_hdc_divider {
     border: none;

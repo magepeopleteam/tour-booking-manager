@@ -83,17 +83,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<!-- Row 4: feature tag pills -->
 								<?php if ( ! empty( $hotel_feat_ids ) ) : ?>
 								<div class="ttbm_hdc_tags">
-									<?php foreach ( $hotel_feat_ids as $feat_id ) :
+									<?php 
+									$feat_count = 0;
+									$total_feats = count( $hotel_feat_ids );
+									foreach ( $hotel_feat_ids as $feat_id ) :
 										$term = get_term( intval( $feat_id ), 'ttbm_hotel_features_list' );
 										if ( $term && ! is_wp_error( $term ) ) :
 											$icon = get_term_meta( $term->term_id, 'ttbm_hotel_feature_icon', true );
 											$icon = $icon ? $icon : 'fas fa-check';
+											$feat_count++;
+											$hidden_class = $feat_count > 5 ? ' ttbm_hdc_tag_hidden' : '';
 									?>
-										<span class="ttbm_hdc_tag">
+										<span class="ttbm_hdc_tag<?php echo esc_attr( $hidden_class ); ?>">
 											<i class="<?php echo esc_attr( $icon ); ?>"></i>
 											<?php echo esc_html( $term->name ); ?>
 										</span>
 									<?php endif; endforeach; ?>
+									<?php if ( $total_feats > 5 ) : ?>
+										<span class="ttbm_hdc_tag ttbm_hdc_tag_more" onclick="this.parentElement.classList.add('ttbm_show_all'); this.style.display='none';">
+											+<?php echo esc_html( $total_feats - 5 ); ?>
+										</span>
+									<?php endif; ?>
 								</div>
 								<?php endif; ?>
 

@@ -5963,3 +5963,4 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 .ttbm-hotel-room-info p {
     margin-bottom: 10px !important;
 }
+.ttbm_widget_content h2, .ttbm_widget_content h3, .ttbm_widget_content h4, .ttbm_widget_content h5, .ttbm_widget_content h6{margin-bottom:10px;}

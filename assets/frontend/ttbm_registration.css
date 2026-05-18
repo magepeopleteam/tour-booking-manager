@@ -5944,3 +5944,8 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 .ttbm-feature-hidden {
 	display: none !important;
 }
+
+.ttbm_details_page .ttbm_date_time_select
+ {
+    margin-bottom: 20px;
+ }

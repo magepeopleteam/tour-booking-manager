@@ -2649,7 +2649,7 @@ div.ttbm_list_title {
 .filter_item h3.ttbm_list_title a:focus {
 	color: var(--color_black);
 	font-size: inherit;
-	font-weight: inherit;
+	font-weight: 500;
 	outline: 0;
 	display: block;
 }

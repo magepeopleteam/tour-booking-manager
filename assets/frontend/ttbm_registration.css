@@ -5602,6 +5602,24 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 	display: none !important;
 }
 
+/* ── Middle: Showing X of Y count ──────────────────── */
+.ttbm-filter-bar-count {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	font-size: 13px;
+	color: #6b7280;
+	font-weight: 500;
+	white-space: nowrap;
+	flex-shrink: 0;
+	margin: 0 auto;
+}
+
+.ttbm-filter-bar-count strong {
+	color: var(--color_theme, #6c47ff);
+	font-weight: 600;
+}
+
 /* ── Right: controls ───────────────────────────────── */
 .ttbm-filter-controls {
 	display: flex;
@@ -5688,16 +5706,51 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 }
 
 /* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 991px) {
+	.ttbm-filter-bar-count {
+		margin-left: 0;
+	}
+}
+
 @media (max-width: 767px) {
 	.ttbm-filter-bar {
 		flex-direction: column;
-		align-items: flex-start;
-		gap: 10px;
+		align-items: stretch;
+		gap: 12px;
+		padding: 12px 0 14px;
+	}
+
+	.ttbm-filter-tabs {
+		width: 100%;
+		overflow-x: auto;
+		overflow-y: hidden;
+		flex-wrap: nowrap;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none;
+		padding-bottom: 4px;
+	}
+
+	.ttbm-filter-tabs::-webkit-scrollbar {
+		display: none;
+	}
+
+	.ttbm-tab-btn {
+		flex-shrink: 0;
+	}
+
+	.ttbm-filter-bar-count {
+		order: 3;
+		justify-content: center;
+		width: 100%;
+		margin: 0;
+		font-size: 12px;
 	}
 
 	.ttbm-filter-controls {
+		order: 2;
 		width: 100%;
 		justify-content: space-between;
+		gap: 8px;
 	}
 
 	.ttbm-sort-select {
@@ -5707,6 +5760,11 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 
 	.ttbm-sort-dropdown {
 		flex: 1;
+		min-width: 0;
+	}
+
+	.ttbm-view-switcher {
+		flex-shrink: 0;
 	}
 }
 
@@ -5714,6 +5772,21 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 	.ttbm-tab-btn {
 		padding: 6px 10px;
 		font-size: 13px;
+	}
+
+	.ttbm-view-btn {
+		width: 30px;
+		height: 30px;
+		font-size: 14px;
+	}
+
+	.ttbm-view-btn .mi {
+		font-size: 14px;
+	}
+
+	.ttbm-sort-select {
+		font-size: 12px !important;
+		padding: 7px 32px 7px 12px !important;
 	}
 }
 

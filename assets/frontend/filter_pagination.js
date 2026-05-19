@@ -401,6 +401,7 @@
 				filter_qty_palace(parent, items_class);
 				pagination_management(parent, pagination_page);
 				placeholderLoaderRemove(all_item);
+				parent.find('.filter_item.ttbm-tab-hidden').stop(true, true).hide();
 			});
 		});
 	}

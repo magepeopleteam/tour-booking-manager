@@ -472,6 +472,20 @@ $(document).on('change', '.ttbm-sort-select', function () {
         // =========================================================
         // Top Filter Tabs
         // =========================================================
+        // Re-assert tab-filter hiding after pagination actions. Some flows
+        // (Load More click handler in filter_pagination.js) iterate cards
+        // and call slideDown, which can re-show .ttbm-tab-hidden items.
+        function ttbmEnforceTabFilter(parent) {
+            if (!parent || !parent.length) parent = $(document);
+            parent.find('.filter_item.ttbm-tab-hidden').stop(true, true).hide();
+        }
+        $(document).on('click', '.ttbm_filter_area .pagination_area .pagination_load_more, .ttbm_filter_area .pagination_area [data-pagination]', function () {
+            let p = $(this).closest('.ttbm_filter_area');
+            // Run after the original handler's slideDown/slideUp animations complete
+            setTimeout(function () { ttbmEnforceTabFilter(p); }, 50);
+            setTimeout(function () { ttbmEnforceTabFilter(p); }, 300);
+        });
+
         $(document).on('click', '.ttbm-tab-btn', function () {
 
             $('.ttbm-tab-btn').removeClass('ttbm-tab-active');
@@ -542,9 +556,9 @@ $(document).on('change', '.ttbm-sort-select', function () {
             parent.find('[data-pagination="0"]').addClass('active_pagination');
 
             if (totalMatched <= perPage) {
-                parent.find('.pagination_area').slideUp(150);
+                parent.find('.pagination_area').hide();
             } else {
-                parent.find('.pagination_area').slideDown(150);
+                parent.find('.pagination_area').show();
             }
 
             // Step 4: update "Showing X of Y" + empty-state notice

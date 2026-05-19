@@ -422,7 +422,10 @@
 		}
 	}
 	function get_item_class(parent, items = '.filter_item') {
-		if (parent.find('.filter_item.search_on').length > 0 || parent.find('.filter_item.search_of').length > 0) {
+		if (parent.find('.filter_item.ttbm-tab-hidden').length > 0) {
+			items = '.filter_item:not(.ttbm-tab-hidden)';
+			parent.find('.filter_item.ttbm-tab-hidden').hide();
+		} else if (parent.find('.filter_item.search_on').length > 0 || parent.find('.filter_item.search_of').length > 0) {
 			items = '.filter_item.search_on';
 			parent.find('.filter_item.search_of').slideUp('fast');
 		}

@@ -478,58 +478,81 @@ $(document).on('change', '.ttbm-sort-select', function () {
             $(this).addClass('ttbm-tab-active');
 
             let filter = $(this).data('filter-tab');
+
             let parent = $(this).closest('.ttbm_filter_area');
+            if (!parent.length) parent = $(this).closest('.all_filter_item').parent();
+            if (!parent.find('.filter_item').length) parent = $(document);
+
+            let perPage = parseInt(parent.find('input[name="pagination_per_page"]').val(), 10);
+            if (isNaN(perPage) || perPage < 1) perPage = parent.find('.filter_item').length;
 
             let now = new Date();
             now.setHours(0, 0, 0, 0);
 
-            let weekEnd = new Date(now);
-            weekEnd.setDate(weekEnd.getDate() + 7);
+            // Calendar week: Monday (start) to Sunday (end)
+            let dayOfWeek = now.getDay(); // 0 = Sun, 1 = Mon, ... 6 = Sat
+            let daysSinceMonday = (dayOfWeek + 6) % 7;
+            let weekStart = new Date(now);
+            weekStart.setDate(weekStart.getDate() - daysSinceMonday);
+            let weekEnd = new Date(weekStart);
+            weekEnd.setDate(weekEnd.getDate() + 6);
 
+            // Step 1: classify every card — match vs. not match
             parent.find('.filter_item').each(function () {
 
                 let item = $(this);
                 let itemDate = item.attr('data-date');
+                let matches = false;
 
-                if (!itemDate || filter === 'all') {
-                    item.show();
-                    return;
+                if (filter === 'all' || !itemDate) {
+                    matches = true;
+                } else {
+                    let tourDate = new Date(itemDate + 'T00:00:00');
+                    if (filter === 'week') {
+                        matches = (tourDate >= weekStart && tourDate <= weekEnd);
+                    } else if (filter === 'month') {
+                        matches = (tourDate.getMonth() === now.getMonth() &&
+                                   tourDate.getFullYear() === now.getFullYear());
+                    } else if (filter === 'year') {
+                        matches = (tourDate.getFullYear() === now.getFullYear());
+                    }
                 }
 
-                let tourDate = new Date(itemDate + 'T00:00:00');
+                item.toggleClass('ttbm-tab-hidden', !matches);
+            });
 
-                if (filter === 'week') {
-                    if (tourDate >= now && tourDate <= weekEnd) {
-                        item.show();
-                    } else {
-                        item.hide();
-                    }
-                } else if (filter === 'month') {
-                    if (
-                        tourDate.getMonth() === now.getMonth() &&
-                        tourDate.getFullYear() === now.getFullYear()
-                    ) {
-                        item.show();
-                    } else {
-                        item.hide();
-                    }
-                } else if (filter === 'year') {
-                    if (tourDate.getFullYear() === now.getFullYear()) {
-                        item.show();
-                    } else {
-                        item.hide();
-                    }
+            // Step 2: paginate within the matched set (first perPage visible, rest hidden)
+            let matched = parent.find('.filter_item').not('.ttbm-tab-hidden');
+            let totalMatched = matched.length;
+
+            parent.find('.filter_item.ttbm-tab-hidden').hide();
+            matched.each(function (idx) {
+                let item = $(this);
+                if (idx < perPage) {
+                    item.removeClass('dNone').show();
+                } else {
+                    item.hide();
                 }
             });
 
-            // Update "Showing X of Y" count after tab filter
-            let visibleCount = parent.find('.filter_item:visible').length;
-            let totalCount   = parent.find('.filter_item').length;
-            parent.find('.qty_count').html(visibleCount);
-            parent.find('.total_filter_qty').html(totalCount);
+            // Step 3: reset & toggle Load More / pagination area
+            let loadMoreBtn = parent.find('.pagination_load_more');
+            loadMoreBtn.attr('data-load-more', '0').removeAttr('disabled');
+            parent.find('[data-pagination]').removeClass('active_pagination');
+            parent.find('[data-pagination="0"]').addClass('active_pagination');
 
-            // Show/hide the empty-result notice
-            if (visibleCount === 0) {
+            if (totalMatched <= perPage) {
+                parent.find('.pagination_area').slideUp(150);
+            } else {
+                parent.find('.pagination_area').slideDown(150);
+            }
+
+            // Step 4: update "Showing X of Y" + empty-state notice
+            let visibleCount = Math.min(perPage, totalMatched);
+            parent.find('.qty_count').html(visibleCount);
+            parent.find('.total_filter_qty').html(totalMatched);
+
+            if (totalMatched === 0) {
                 parent.find('.search_result_empty').slideDown('fast');
                 parent.find('.filter_short_result').slideUp('fast');
             } else {

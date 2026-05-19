@@ -472,19 +472,62 @@ $(document).on('change', '.ttbm-sort-select', function () {
         // =========================================================
         // Top Filter Tabs
         // =========================================================
-        // Re-assert tab-filter hiding after pagination actions. Some flows
-        // (Load More click handler in filter_pagination.js) iterate cards
-        // and call slideDown, which can re-show .ttbm-tab-hidden items.
-        function ttbmEnforceTabFilter(parent) {
-            if (!parent || !parent.length) parent = $(document);
-            parent.find('.filter_item.ttbm-tab-hidden').stop(true, true).hide();
-        }
-        $(document).on('click', '.ttbm_filter_area .pagination_area .pagination_load_more, .ttbm_filter_area .pagination_area [data-pagination]', function () {
-            let p = $(this).closest('.ttbm_filter_area');
-            // Run after the original handler's slideDown/slideUp animations complete
-            setTimeout(function () { ttbmEnforceTabFilter(p); }, 50);
-            setTimeout(function () { ttbmEnforceTabFilter(p); }, 300);
-        });
+        // When a tab filter is active, completely take over Load More and
+        // page-number clicks so the legacy filter_pagination.js handler
+        // cannot iterate and slideDown the hidden cards.
+        document.addEventListener('click', function (evt) {
+            let target = evt.target.closest('.pagination_load_more, [data-pagination]');
+            if (!target) return;
+            let area = target.closest('.ttbm_filter_area');
+            if (!area) return;
+            if (!area.querySelector('.filter_item.ttbm-tab-hidden')) return;
+
+            evt.stopImmediatePropagation();
+            evt.preventDefault();
+
+            let $area = $(area);
+            let matched = $area.find('.filter_item').not('.ttbm-tab-hidden');
+            let totalMatched = matched.length;
+            let pp = parseInt($area.find('input[name="pagination_per_page"]').val(), 10);
+            if (isNaN(pp) || pp < 1) pp = totalMatched;
+
+            let page;
+            if (target.classList.contains('pagination_load_more')) {
+                page = parseInt(target.getAttribute('data-load-more'), 10) || 0;
+                let hiddenInMatched = matched.filter(':hidden').length;
+                page = hiddenInMatched > 0 ? page + 1 : 0;
+                target.setAttribute('data-load-more', String(page));
+            } else {
+                page = parseInt(target.getAttribute('data-pagination'), 10) || 0;
+                $area.find('[data-pagination]').removeClass('active_pagination');
+                $(target).addClass('active_pagination');
+            }
+
+            let style = $area.find('input[name="pagination_style"]').val();
+            let startIdx = (style === 'load_more') ? 0 : page * pp;
+            let endIdx = (style === 'load_more') ? (page + 1) * pp : (page + 1) * pp;
+
+            matched.each(function (idx) {
+                if (idx >= startIdx && idx < endIdx) {
+                    $(this).removeClass('dNone').show();
+                } else {
+                    $(this).hide();
+                }
+            });
+            $area.find('.filter_item.ttbm-tab-hidden').hide();
+
+            let visibleNow = matched.filter(':visible').length;
+            $area.find('.qty_count').html(visibleNow);
+            $area.find('.total_filter_qty').html(totalMatched);
+
+            if (style === 'load_more') {
+                if (matched.filter(':hidden').length === 0) {
+                    $area.find('.pagination_load_more').attr('disabled', 'disabled');
+                } else {
+                    $area.find('.pagination_load_more').removeAttr('disabled');
+                }
+            }
+        }, true);
 
         $(document).on('click', '.ttbm-tab-btn', function () {
 

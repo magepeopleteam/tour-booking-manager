@@ -53,9 +53,50 @@
 	div.ttbm_global_settings .ttbmPanel .ttbmPanelBody .ttbmTabs .tabLists { padding: 25px 0 25px 25px; }
 	div.ttbm_license_settings table th {width: inherit;min-width: inherit; }
 	div.ttbm_global_settings .ttbm-setting-field { display: flex; justify-content: space-between; border: 1px solid #ECECEC; align-items: center; padding: 10px; margin-top: -1px;}
-	div.ttbm_global_settings .ttbm-setting-field .label,
-	div.ttbm_global_settings .ttbm-setting-field label { width: 49%;}
-	div.ttbm_global_settings .ttbm-setting-field fieldset { padding: 10px;}
+	div.ttbm_global_settings .ttbm-setting-field > .label,
+	div.ttbm_global_settings .ttbm-setting-field > label:first-of-type {
+		width: 48% !important;
+		display: inline-block !important;
+	}
+	div.ttbm_global_settings .ttbm-setting-field > fieldset,
+	div.ttbm_global_settings .ttbm-setting-field > label:not(:first-of-type) {
+		width: 50% !important;
+		display: inline-block !important;
+		padding: 5px !important;
+		margin: 0 !important;
+		border: none !important;
+		background: transparent !important;
+		position: relative !important;
+		z-index: 10 !important;
+	}
+	div.ttbm_global_settings .ttbm-setting-field fieldset label,
+	div.ttbm_global_settings .ttbm-setting-field fieldset label._min_200 {
+		display: inline-flex !important;
+		align-items: center !important;
+		width: auto !important;
+		min-width: 120px !important;
+		margin: 5px 10px 5px 0 !important;
+		padding: 5px !important;
+		cursor: pointer !important;
+		position: relative !important;
+		z-index: 20 !important;
+		pointer-events: auto !important;
+	}
+	div.ttbm_global_settings .ttbm-setting-field fieldset input[type="checkbox"],
+	div.ttbm_global_settings .ttbm-setting-field fieldset input.checkbox {
+		display: inline-block !important;
+		opacity: 1 !important;
+		visibility: visible !important;
+		pointer-events: auto !important;
+		cursor: pointer !important;
+		position: relative !important;
+		z-index: 30 !important;
+		margin: 0 6px 0 0 !important;
+		-webkit-appearance: checkbox !important;
+		appearance: checkbox !important;
+		width: 16px !important;
+		height: 16px !important;
+	}
 	div.ttbm_global_settings .ttbm-setting-field .tooltips { position: relative; display: inline-block; cursor: pointer; color: var(--mpl-gray);}
 	div.ttbm_global_settings .ttbm-setting-field .tooltips::before { content: ""; position: absolute; bottom: 95%; left: 50%; transform: translateX(-50%); border-width: 6px; border-style: solid; border-color: #000 transparent transparent transparent; visibility: hidden; transition: 0s; z-index: 99;}
 	div.ttbm_global_settings .ttbm-setting-field .tooltips::after { content: attr(data-tooltip); visibility: hidden; width: max-content; max-width: 350px; background-color: #000; color: #FFF; text-align: center; padding: 6px 10px; border-radius: 5px; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); white-space: normal; z-index: 999; transition: opacity 0s ease-in-out; font-weight: normal;}

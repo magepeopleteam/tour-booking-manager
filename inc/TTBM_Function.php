@@ -370,10 +370,16 @@
 				return $date;
 			}
 			public static function update_all_upcoming_date_month(): void {
+				$cache_key = 'ttbm_last_upcoming_update';
+				$last_update = get_transient($cache_key);
+				if ($last_update) {
+					return;
+				}
 				$tour_ids = TTBM_Global_Function::get_all_post_id(TTBM_Function::get_cpt_name());
 				foreach ($tour_ids as $tour_id) {
 					self::update_upcoming_date_month($tour_id);
 				}
+				set_transient($cache_key, true, DAY_IN_SECONDS);
 			}
 			public static function update_month_list($tour_id, $dates): void {
 				$month = '';
@@ -536,6 +542,11 @@
 				return apply_filters('ttbm_tour_duration', $duration, $tour_id);
 			}
 			public static function get_all_duration(): array {
+				$cache_key = 'ttbm_all_durations';
+				$cached = get_transient($cache_key);
+				if ($cached !== false) {
+					return $cached;
+				}
 				$tour_ids = TTBM_Global_Function::get_all_post_id(TTBM_Function::get_cpt_name());
 				$duration = array();
 				foreach ($tour_ids as $tour_id) {
@@ -543,6 +554,7 @@
 				}
 				$duration = array_unique($duration);
 				natsort($duration);
+				set_transient($cache_key, $duration, HOUR_IN_SECONDS);
 				return $duration;
 			}
 			//************Seat***********************//
@@ -1164,14 +1176,8 @@
 					}
 					wp_reset_postdata();
 					if (count($tours)) {
-						unset($args);
-						$args = array(
-							'post_type' => array(TTBM_Function::get_cpt_name()),
-							'posts_per_page' => -1,
-							'order' => 'ASC',
-							'orderby' => 'meta_value',
-							'post__in' => $tours,
-						);
+						$args['post__in'] = $tours;
+						$args['orderby'] = 'post__in';
 						return new WP_Query($args);
 					}
 					return $query;
@@ -1212,32 +1218,20 @@
 				if (empty($meta_key) || !is_string($meta_key)) {
 					return false;
 				}
-				// Use WP_Query to get posts with the specified criteria
-				$args = [
-					'post_type' => $post_type,
-					'post_status' => $post_status,
-					'posts_per_page' => -1, // Get all posts
-					'fields' => 'ids', // Only get post IDs for better performance
-					'meta_query' => [
-						[
-							'key' => $meta_key,
-							'compare' => 'EXISTS', // Posts that have this meta key
-						]
-					]
-				];
-				$query = new WP_Query($args);
-				$meta_values = [];
-				if ($query->have_posts()) {
-					foreach ($query->posts as $post_id) {
-						$value = get_post_meta($post_id, $meta_key, true);
-						if ($value !== '') { // Skip empty values
-							$meta_values[] = $value;
-						}
-					}
-					// Return only unique values
-					// $meta_values = array_unique($meta_values);
-				}
-				return $meta_values;
+				global $wpdb;
+				$values = $wpdb->get_col($wpdb->prepare(
+					"SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm
+					INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+					WHERE pm.meta_key = %s
+					AND p.post_type = %s
+					AND p.post_status = %s
+					AND pm.meta_value IS NOT NULL
+					AND pm.meta_value != ''",
+					$meta_key,
+					$post_type,
+					$post_status
+				));
+				return $values ? $values : [];
 			}
 			public static function get_travel_analytical_data() {
 				$result_date = array();
@@ -1387,39 +1381,52 @@
 				return $activity_ids;
 			}
 			public static function get_all_category_with_assign_post($taxonomy) {
+				$cache_key = 'ttbm_cat_posts_' . $taxonomy;
+				$cached = get_transient($cache_key);
+				if ($cached !== false) {
+					return $cached;
+				}
 				$terms = get_terms([
 					'taxonomy' => $taxonomy,
 					'hide_empty' => true,
 				]);
 				$result = [];
 				if (!is_wp_error($terms) && !empty($terms)) {
+					$term_map = [];
 					foreach ($terms as $term) {
-						// Get post IDs for each term
-						$query = new WP_Query([
-							'post_type' => 'ttbm_tour',
-							'post_status' => 'publish',
-							'posts_per_page' => -1,
-							'fields' => 'ids',
-							'tax_query' => [
-								[
-									'taxonomy' => $taxonomy,
-									'field' => 'term_id',
-									'terms' => $term->term_id,
-								],
-							],
-						]);
-						if (!empty($query->posts)) {
+						$term_map[$term->term_id] = $term;
+					}
+					global $wpdb;
+					$term_ids = array_keys($term_map);
+					$term_ids_placeholders = implode(',', array_fill(0, count($term_ids), '%d'));
+					$posts = $wpdb->get_results($wpdb->prepare(
+						"SELECT p.ID as post_id, t.term_id FROM {$wpdb->posts} p
+						INNER JOIN {$wpdb->term_relationships} tr ON tr.object_id = p.ID
+						INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
+						WHERE p.post_type = 'ttbm_tour'
+						AND p.post_status = 'publish'
+						AND tt.taxonomy = %s
+						AND tt.term_id IN ($term_ids_placeholders)",
+						$taxonomy,
+						...$term_ids
+					));
+					$term_posts = [];
+					foreach ($posts as $row) {
+						$term_posts[$row->term_id][] = $row->post_id;
+					}
+					foreach ($term_map as $term_id => $term) {
+						if (!empty($term_posts[$term_id])) {
 							$result[] = [
 								'term_id' => $term->term_id,
 								'term_name' => $term->name,
 								'term_slug' => $term->slug,
 								'term_description' => $term->description,
-								'post_ids' => $query->posts,
+								'post_ids' => $term_posts[$term_id],
 							];
 						}
-						wp_reset_postdata();
 					}
 				}
+				set_transient($cache_key, $result, HOUR_IN_SECONDS);
 				return $result;
 			}
 			public static function get_all_activity_ids_from_posts($num_of_ids = 0) {

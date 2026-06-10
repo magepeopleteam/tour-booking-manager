@@ -473,14 +473,7 @@
 				return wp_get_attachment_image_url($image_id, $size);
 			}
 			public static function get_page_by_slug($slug) {
-				if ($pages = get_pages()) {
-					foreach ($pages as $page) {
-						if ($slug === $page->post_name) {
-							return $page;
-						}
-					}
-				}
-				return false;
+				return get_page_by_path($slug, OBJECT, 'page');
 			}
 			//***********************************//
 			public static function check_plugin($plugin_dir_name, $plugin_file): int {
@@ -1077,14 +1070,7 @@
 				return wp_get_attachment_image_url($image_id, $size);
 			}
 			public static function get_page_by_slug($slug) {
-				if ($pages = get_pages()) {
-					foreach ($pages as $page) {
-						if ($slug === $page->post_name) {
-							return $page;
-						}
-					}
-				}
-				return false;
+				return get_page_by_path($slug, OBJECT, 'page');
 			}
 			//***********************************//
 			public static function check_plugin($plugin_dir_name, $plugin_file): int {

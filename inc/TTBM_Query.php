@@ -153,7 +153,6 @@
 				} else {
 					$selected_date_filter = '';
 				}
-				TTBM_Function::update_all_upcoming_date_month();
 				$sort_by = $sort_by ?: 'meta_value';
 				if (get_query_var('paged')) {
 					$paged = get_query_var('paged');

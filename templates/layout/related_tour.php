@@ -11,7 +11,7 @@
         $location_name = TTBM_Global_Function::get_post_info($ttbm_post_id, 'ttbm_location_name' );
         $related_tours = get_posts([
             'post_type' => 'ttbm_tour',
-            'posts_per_page' => -1,
+            'posts_per_page' => 12,
             'fields' => 'ids',
             'meta_query' => [
                 [

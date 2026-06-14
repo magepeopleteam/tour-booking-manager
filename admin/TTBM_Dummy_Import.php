@@ -259,6 +259,16 @@
 			}
 
 			public function dummy_import() {
+				// Demo import downloads ~12 remote images and then generates every WP image
+				// sub-size via Imagick. On default hosting this exceeds the 30s
+				// max_execution_time and fatals in class-wp-image-editor-imagick.php.
+				// Lift the time/memory limits for this one-time, admin-triggered operation.
+				if (function_exists('set_time_limit')) {
+					@set_time_limit(0);
+				}
+				if (function_exists('wp_raise_memory_limit')) {
+					wp_raise_memory_limit('admin');
+				}
 				$dummy_post_inserted = get_option('ttbm_dummy_already_inserted', 'no');
 				$count_existing_event = wp_count_posts('ttbm_tour')->publish;
 				$plugin_active = self::check_plugin('tour-booking-manager', 'tour-booking-manager.php');
@@ -425,7 +435,13 @@
 				unset($image_ids);
 				$image_ids = array();
 				foreach ($urls as $url) {
-					$image_ids[] = media_sideload_image($url, '0', $url, 'id');
+					if (function_exists('set_time_limit')) {
+						@set_time_limit(60);
+					}
+					$attachment_id = media_sideload_image($url, '0', $url, 'id');
+					if (!is_wp_error($attachment_id) && $attachment_id) {
+						$image_ids[] = $attachment_id;
+					}
 				}
 				return $image_ids;
 			}
@@ -443,7 +459,13 @@
 				unset($image_ids);
 				$image_ids = array();
 				foreach ($urls as $url) {
-					$image_ids[] = media_sideload_image($url, '0', $url, 'id');
+					if (function_exists('set_time_limit')) {
+						@set_time_limit(60);
+					}
+					$attachment_id = media_sideload_image($url, '0', $url, 'id');
+					if (!is_wp_error($attachment_id) && $attachment_id) {
+						$image_ids[] = $attachment_id;
+					}
 				}
 				return $image_ids;
 			}

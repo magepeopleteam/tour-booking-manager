@@ -1,7 +1,8 @@
 /**
  * TTBM WooCommerce Installer
- * Handles AJAX installation & activation of WooCommerce
- * with smooth progress animations.
+ * Drives a server-directed, multi-step install/activate flow.
+ * Each AJAX request performs ONE small unit of work (download → extract →
+ * activate → setup) and returns the next step, keeping peak memory/time low.
  * Popup shows on every admin page when WooCommerce is not active.
  */
 (function ($) {
@@ -46,62 +47,60 @@
 		$actions.slideUp(250);
 		$progress.slideDown(300);
 
-		if (config.woo_installed === 'yes') {
-			setProgress(30, config.i18n.activating);
-			activateWooCommerce();
-		} else {
-			setProgress(10, config.i18n.installing);
-			installWooCommerce();
-		}
+		var firstStep = config.first_step || 'download';
+		var firstText = firstStep === 'activate'
+			? config.i18n.activating
+			: config.i18n.downloading;
+
+		setProgress(15, firstText);
+		runStep(firstStep);
 	}
 
-	function installWooCommerce() {
+	/**
+	 * Run a single server step, then chain to whatever step the server returns
+	 * until it reports 'done'.
+	 */
+	function runStep(step) {
 		$.ajax({
 			url:      config.ajax_url,
 			type:     'POST',
 			dataType: 'json',
 			data: {
-				action: 'ttbm_install_woocommerce',
-				nonce:  config.install_nonce
+				action: 'ttbm_woo_step',
+				nonce:  config.step_nonce,
+				step:   step
 			},
 			success: function (response) {
-				if (response.success) {
-					setProgress(60, config.i18n.activating);
-					activateWooCommerce();
-				} else {
-					showError(response.data && response.data.message
-						? response.data.message
-						: config.i18n.install_error);
+				if (!response || !response.success || !response.data) {
+					showError(stepError(step));
+					return;
 				}
-			},
-			error: function () {
-				showError(config.i18n.install_error);
-			}
-		});
-	}
 
-	function activateWooCommerce() {
-		$.ajax({
-			url:      config.ajax_url,
-			type:     'POST',
-			dataType: 'json',
-			data: {
-				action: 'ttbm_activate_woocommerce',
-				nonce:  config.activate_nonce
-			},
-			success: function (response) {
-				if (response.success) {
+				var data    = response.data;
+				var percent = typeof data.percent === 'number' ? data.percent : null;
+				if (percent !== null) {
+					setProgress(percent, data.message || '');
+				} else if (data.message) {
+					$status.text(data.message);
+				}
+
+				if (data.next && data.next !== 'done') {
+					runStep(data.next);
+				} else {
 					showSuccess();
-				} else {
-					showError(response.data && response.data.message
-						? response.data.message
-						: config.i18n.activate_error);
 				}
 			},
 			error: function () {
-				showError(config.i18n.activate_error);
+				showError(stepError(step));
 			}
 		});
+	}
+
+	function stepError(step) {
+		if (step === 'activate' || step === 'setup') {
+			return config.i18n.activate_error;
+		}
+		return config.i18n.install_error;
 	}
 
 	function setProgress(percent, text) {

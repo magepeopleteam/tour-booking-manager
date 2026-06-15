@@ -161,8 +161,15 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             
             // Format reply message with proper HTML structure
             $email_message = '<html><body>' . wpautop($message) . '</body></html>';
-            
-            if (wp_mail($to, $subject, $email_message, $headers)) {
+
+            // Let an email-builder addon take over (and log) this email.
+            $ttbm_enquiry_ctx = array('type' => 'enquiry_reply', 'to' => $to, 'subject' => $subject, 'message' => $message, 'enquiry_id' => $postId);
+            $sent = true;
+            if (apply_filters('ttbm_enquiry_use_default', true, $ttbm_enquiry_ctx)) {
+                $sent = wp_mail($to, $subject, $email_message, $headers);
+            }
+            do_action('ttbm_enquiry_email', $ttbm_enquiry_ctx);
+            if ($sent) {
                 update_post_meta($postId, 'status', 'replied');
                 wp_send_json_success(['message' => __('Message sent successfully!','tour-booking-manager')]);
             } else {
@@ -250,8 +257,13 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 ],
             ]);
             
-            wp_mail($to, $subject, $email_message, $headers);
-            
+            // Admin notification — let an email-builder addon take over (and log).
+            $ttbm_enquiry_admin_ctx = array('type' => 'enquiry_admin', 'to' => $to, 'name' => $name, 'email' => $email, 'subject' => $subject, 'message' => $message, 'enquiry_id' => $enquiry_id);
+            if (apply_filters('ttbm_enquiry_use_default', true, $ttbm_enquiry_admin_ctx)) {
+                wp_mail($to, $subject, $email_message, $headers);
+            }
+            do_action('ttbm_enquiry_email', $ttbm_enquiry_admin_ctx);
+
             // Send confirmation email to customer
             if ($enquiry_id && !empty($email)) {
                 $customer_subject = sprintf(
@@ -280,8 +292,12 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 $customer_message .= '<p style="color: #666; font-size: 12px;">' . esc_html__('This is an automated confirmation email. Please do not reply to this email.', 'tour-booking-manager') . '</p>';
                 $customer_message .= '</body></html>';
                 
-                // Send confirmation to customer
-                wp_mail($email, $customer_subject, $customer_message, $customer_headers);
+                // Send confirmation to customer — let an addon take over (and log).
+                $ttbm_enquiry_cust_ctx = array('type' => 'enquiry_customer', 'to' => $email, 'name' => $name, 'email' => $email, 'subject' => $subject, 'message' => $message, 'enquiry_id' => $enquiry_id);
+                if (apply_filters('ttbm_enquiry_use_default', true, $ttbm_enquiry_cust_ctx)) {
+                    wp_mail($email, $customer_subject, $customer_message, $customer_headers);
+                }
+                do_action('ttbm_enquiry_email', $ttbm_enquiry_cust_ctx);
             }
             if ($enquiry_id) {
                 wp_send_json_success(['message' => __('Enquiry submitted successfully.', 'tour-booking-manager')]);

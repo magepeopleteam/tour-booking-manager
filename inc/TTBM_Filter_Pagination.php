@@ -461,8 +461,17 @@
 			//****************************************/
 			public function feature_filter_multiple($params) {
 				if ($params['feature-filter'] == 'yes') {
-					$features = TTBM_Function::get_meta_values('ttbm_service_included_in_price', 'ttbm_tour');
-                    //echo '<pre>';print_r($features);echo '</pre>';
+					$raw_features = TTBM_Function::get_meta_values('ttbm_service_included_in_price', 'ttbm_tour');
+                    // get_meta_values() returns raw rows; array-typed meta is stored
+                    // serialized, so unserialize each one. Skipping non-array rows keeps
+                    // array_merge() below from receiving a string and fataling.
+                    $features = [];
+                    foreach ($raw_features as $feature_group) {
+                        $unserialized = maybe_unserialize($feature_group);
+                        if (is_array($unserialized)) {
+                            $features[] = $unserialized;
+                        }
+                    }
 					$upcomming_date = $this->upcomming_date;
 					$exist_feature = [];
 					for ($i = 0; $i < count($features); $i++) {

@@ -196,7 +196,7 @@
 				$show = $params['show'];
                 $pagination = $params['pagination'];
 				$search = $params['sidebar-filter'];
-				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
+				$show = ($search == 'yes' || $pagination == 'yes') ? TTBM_Function::get_list_render_cap() : $show;
 				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'],$params['sort_by'], $params['attraction'], $params['feature']);
 				ob_start();
 				?>
@@ -235,7 +235,7 @@
 				$show = $params['show'];
                 $pagination = $params['pagination'];
 				$search = $params['sidebar-filter'];
-				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
+				$show = ($search == 'yes' || $pagination == 'yes') ? TTBM_Function::get_list_render_cap() : $show;
 				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'],$params['sort_by'], $params['attraction'], $params['feature']);
 				ob_start();
 				?>
@@ -288,7 +288,7 @@
 					$people_filter = isset($_GET['people_filter']) ? absint(wp_unslash($_GET['people_filter'])) : 0;
 				}
 				
-				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
+				$show = ($search == 'yes' || $pagination == 'yes') ? TTBM_Function::get_list_render_cap() : $show;
 
 				$loop = TTBM_Query::ttbm_query_for_top_search($show, $params['sort'], $params['sort_by'], $params['status'], $organizer_filter, $location_filter, $activity_filter, $date_filter, $people_filter);
 				?>
@@ -329,7 +329,7 @@
 				$pagination = $params['pagination'];
 				$search = $params['search-filter'];
 				$show = $params['show'];
-				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
+				$show = ($search == 'yes' || $pagination == 'yes') ? TTBM_Function::get_list_render_cap() : $show;
 				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'], $params['sort_by']);
 				if (isset($params['shuffle']) && $params['shuffle'] == 'yes') {
 					$posts = $loop->posts;
@@ -757,7 +757,7 @@
                 $show = $params['show'];
                 $pagination = $params['pagination'];
                 $search = $params['sidebar-filter'];
-                $show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
+                $show = ($search == 'yes' || $pagination == 'yes') ? TTBM_Function::get_list_render_cap() : $show;
 
                 ob_start();
                 ?>

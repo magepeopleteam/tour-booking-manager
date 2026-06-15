@@ -96,7 +96,15 @@
 					$orderPostId = '';
 					foreach ($order->get_items() as $item_id => $item) {
 						$product = $item->get_product();
+						// Skip line items without a backing product (manual lines,
+						// deleted products) to avoid a fatal on get_id() of false.
+						if (!$product) {
+							continue;
+						}
 						$orderPostId = $product->get_id();
+					}
+					if (!$orderPostId) {
+						return;
 					}
 					$ttbm_booking_data = maybe_unserialize(get_post_meta($orderPostId, '_ttbm_hotel_booking_data', true));
 					if (isset($ttbm_booking_data['hotel_booking'])) {

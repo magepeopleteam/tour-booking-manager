@@ -16,7 +16,8 @@
 			}
 			public static function ttbm_query($show, $sort = '', $cat = '', $org = '', $city = '', $country = '', $status = '', $tour_type = '', $activity = '', $sort_by = '', $attraction = '', $feature = '' ): WP_Query {
 				TTBM_Function::update_all_upcoming_date_month();
-				$sort_by = $sort_by ?: 'meta_value';
+				$sort_by = $sort_by ?: 'date';
+				$meta_order = in_array($sort_by, array('meta_value', 'meta_value_num'), true);
 				if (get_query_var('paged')) {
 					$paged = get_query_var('paged');
 				} elseif (get_query_var('page')) {
@@ -96,7 +97,7 @@
 					'posts_per_page' => $show,
 					'order' => $sort,
 					'orderby' => $sort_by,
-					'meta_key' => 'ttbm_upcoming_date',
+					'meta_key' => $meta_order ? 'ttbm_upcoming_date' : '',
 					'meta_query' => array(
 						'relation' => 'AND',
 						array(
@@ -153,7 +154,8 @@
 				} else {
 					$selected_date_filter = '';
 				}
-				$sort_by = $sort_by ?: 'meta_value';
+				$sort_by = $sort_by ?: 'date';
+				$meta_order = in_array($sort_by, array('meta_value', 'meta_value_num'), true);
 				if (get_query_var('paged')) {
 					$paged = get_query_var('paged');
 				} elseif (get_query_var('page')) {
@@ -222,7 +224,7 @@
 					'posts_per_page' => $show,
 					'order' => $sort,
 					'orderby' => $sort_by,
-					'meta_key' => 'ttbm_upcoming_date',
+					'meta_key' => $meta_order ? 'ttbm_upcoming_date' : '',
 					'meta_query' => array(
 						'relation' => 'AND',
 						$expire_filter,

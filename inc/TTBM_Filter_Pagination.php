@@ -468,7 +468,8 @@
 					for ($i = 0; $i < count($features); $i++) {
                         if( isset( $upcomming_date[$i] ) ){
                             if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $features[$i]) {
-                                $exist_feature = array_unique(array_merge($exist_feature, $features[$i]));
+                                $features_i = $this->ensure_array($features[$i]);
+                                $exist_feature = array_unique(array_merge($exist_feature, $features_i));
                             }
                         }
 
@@ -538,7 +539,8 @@
                         if( isset( $upcomming_date[$i] ) ) {
                             if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $activities[$i]) {
 //						    if ($upcomming_date[$i] && is_array($activities[$i])) {
-                                $exist_activities = array_unique(array_merge($exist_activities, $activities[$i]));
+                                $activities_i = $this->ensure_array($activities[$i]);
+                                $exist_activities = array_unique(array_merge($exist_activities, $activities_i));
                             }
                         }
 					}
@@ -584,7 +586,8 @@
                     $all_activities = [];
 
                     foreach ($activities as $activity_group) {
-                        $all_activities = array_merge($all_activities, $activity_group);
+                        $activities_array = $this->ensure_array($activity_group);
+                        $all_activities = array_merge($all_activities, $activities_array);
                     }
 
                     $unique_activities = array_values(array_unique($all_activities));
@@ -596,7 +599,8 @@
                         if( isset( $upcomming_date[$i] ) ) {
                             if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $activities[$i]) {
 //						    if ($upcomming_date[$i] && is_array($activities[$i])) {
-                                $exist_activities = array_unique(array_merge($exist_activities, $activities[$i]));
+                                $activities_i = $this->ensure_array($activities[$i]);
+                                $exist_activities = array_unique(array_merge($exist_activities, $activities_i));
                             }
                         }
 					}
@@ -855,6 +859,21 @@
                     <strong class="total_filter_qty"><?php echo esc_html($loop->post_count); ?></strong>
                 </div>
 				<?php
+			}
+			private function ensure_array($value) {
+				if (is_array($value)) {
+					return $value;
+				}
+				if (is_serialized($value)) {
+					$unserialized = maybe_unserialize($value);
+					if (is_array($unserialized)) {
+						return $unserialized;
+					}
+				}
+				if (is_string($value) && strpos($value, ',') !== false) {
+					return array_map('trim', explode(',', $value));
+				}
+				return array($value);
 			}
 			//**************************************//
 		}

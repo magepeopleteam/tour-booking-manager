@@ -13,8 +13,18 @@
 		$button_type=apply_filters('ttbm_book_now_button_type','button',$tour_id);
 		?>
 		<div class="dLayout_xs justifyBetween ttbm_book_now_area" title="<?php esc_attr_e( 'Select Date First', 'tour-booking-manager' ); ?>" data-placeholder>
-			<div class="fdColumn">
-				<p><?php esc_html_e( 'Quantity : ', 'tour-booking-manager' ); ?> <b class="tour_qty"></b> | <?php esc_html_e( 'Total : ', 'tour-booking-manager' ); ?><b class="tour_price"></b></p>
+			<div class="fdColumn ttbm_order_summary">
+				<span class="ttbm_summary_heading"><?php esc_html_e( 'Order Summary', 'tour-booking-manager' ); ?></span>
+				<div class="ttbm_summary_values">
+					<div class="ttbm_summary_item">
+						<span class="ttbm_summary_label"><?php esc_html_e( 'Quantity', 'tour-booking-manager' ); ?></span>
+						<b class="tour_qty">0</b>
+					</div>
+					<div class="ttbm_summary_item">
+						<span class="ttbm_summary_label"><?php esc_html_e( 'Total Amount', 'tour-booking-manager' ); ?></span>
+						<b class="tour_price"></b>
+					</div>
+				</div>
 			</div>
 			<?php do_action('ttbm_before_add_cart_btn', $ttbm_product_id,$tour_id); ?>
 			<?php if(class_exists('TTBMA_Seat_Plan') && $display == 'on' && sizeof($seat_infos)>0 && $display_front_end=='on'){ ?>

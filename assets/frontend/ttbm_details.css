@@ -1,0 +1,562 @@
+/* =====================================================================
+   Tour Details Page — modern typography & section design
+   Scoped to #ttbm_content so it only affects the single tour details page.
+   Accent colours reuse the plugin theme vars (--color_theme) so the site's
+   brand colour is respected.
+   ===================================================================== */
+
+#ttbm_content .ttbm_details_page {
+	--ttbm_d_text: #3a4250;
+	--ttbm_d_heading: #1d2430;
+	--ttbm_d_muted: #6b7280;
+	--ttbm_d_border: #e9ebf0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+	color: var(--ttbm_d_text);
+	-webkit-font-smoothing: antialiased;
+}
+
+/* ---------- page title ---------- */
+#ttbm_content .ttbm_details_page .ttbm_default__title h1 {
+	font-size: 34px;
+	line-height: 1.2;
+	font-weight: 800;
+	letter-spacing: -.02em;
+	color: var(--ttbm_d_heading);
+	margin: 0 0 6px;
+}
+#ttbm_content .ttbm_details_page .ttbm_details_page_header .details-meta {
+	font-size: 14px;
+	color: var(--ttbm_d_muted);
+	gap: 6px;
+	align-items: center;
+}
+
+/* ---------- readable body text ---------- */
+#ttbm_content .ttbm_details_page .ttbm_widget_content,
+#ttbm_content .ttbm_details_page .ttbm_wp_editor,
+#ttbm_content .ttbm_details_page .ttbm_description {
+	font-size: 16px;
+	line-height: 1.78;
+	color: var(--ttbm_d_text);
+}
+#ttbm_content .ttbm_details_page .ttbm_widget_content p,
+#ttbm_content .ttbm_details_page .ttbm_wp_editor p,
+#ttbm_content .ttbm_details_page .ttbm_description p {
+	font-size: 16px;
+	line-height: 1.78;
+	margin: 0 0 1.05em;
+	color: var(--ttbm_d_text);
+}
+#ttbm_content .ttbm_details_page .ttbm_widget_content p:last-child,
+#ttbm_content .ttbm_details_page .ttbm_wp_editor p:last-child { margin-bottom: 0; }
+
+#ttbm_content .ttbm_details_page .ttbm_widget_content ul,
+#ttbm_content .ttbm_details_page .ttbm_widget_content ol,
+#ttbm_content .ttbm_details_page .ttbm_wp_editor ul,
+#ttbm_content .ttbm_details_page .ttbm_wp_editor ol {
+	margin: 0 0 1.1em;
+	padding-left: 1.35em;
+}
+#ttbm_content .ttbm_details_page .ttbm_widget_content li,
+#ttbm_content .ttbm_details_page .ttbm_wp_editor li {
+	font-size: 16px;
+	line-height: 1.7;
+	margin: .45em 0;
+}
+#ttbm_content .ttbm_details_page .ttbm_widget_content a,
+#ttbm_content .ttbm_details_page .ttbm_wp_editor a {
+	color: var(--color_theme);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+/* headings inside rich content */
+#ttbm_content .ttbm_details_page .ttbm_widget_content h2,
+#ttbm_content .ttbm_details_page .ttbm_widget_content h3,
+#ttbm_content .ttbm_details_page .ttbm_widget_content h4,
+#ttbm_content .ttbm_details_page .ttbm_wp_editor h3,
+#ttbm_content .ttbm_details_page .ttbm_wp_editor h4 {
+	color: var(--ttbm_d_heading);
+	font-weight: 700;
+	line-height: 1.3;
+	margin: 1.5em 0 .5em;
+}
+
+/* ---------- section headings (.content-title) ---------- */
+#ttbm_content .ttbm_details_page .content-title {
+	position: relative;
+	font-size: 22px;
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: -.01em;
+	color: var(--ttbm_d_heading);
+	margin: 0 0 18px;
+	padding-bottom: 12px;
+}
+#ttbm_content .ttbm_details_page .content-title::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 46px;
+	height: 3px;
+	border-radius: 3px;
+	background: var(--color_theme);
+}
+
+/* breathing room between left-column sections */
+#ttbm_content .ttbm_details_page .ttbm_content__left > div,
+#ttbm_content .ttbm_details_page .ttbm_content__left > section {
+	margin-bottom: 30px;
+}
+
+/* ---------- accordions: FAQ + Schedule (day wise) ---------- */
+#ttbm_content .ttbm_details_page .ttbm_faq_item,
+#ttbm_content .ttbm_details_page .day_wise_details_item {
+	margin: 0 0 12px;
+	border: 1px solid var(--ttbm_d_border);
+	border-radius: 12px;
+	background: #fff;
+	overflow: hidden;
+	transition: box-shadow .2s ease, border-color .2s ease;
+}
+#ttbm_content .ttbm_details_page .ttbm_faq_item:hover,
+#ttbm_content .ttbm_details_page .day_wise_details_item:hover {
+	box-shadow: 0 8px 22px rgba(17, 24, 39, .07);
+	border-color: #dfe3ec;
+}
+/* the FAQ list container should not add its own box */
+#ttbm_content .ttbm_details_page .ttbm_wp_editor > .ttbm_faq_content {
+	background: transparent;
+	padding: 0;
+	border-radius: 0;
+}
+
+/* question / day title row */
+#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title,
+#ttbm_content .ttbm_details_page .day_wise_details_item .day_wise_details_item_title {
+	background: #fff;
+	border: 0;
+	border-radius: 0;
+	margin: 0;
+	padding: 15px 18px;
+	cursor: pointer;
+	align-items: center;
+	gap: 14px;
+	transition: background .2s ease, color .2s ease;
+}
+#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title h5,
+#ttbm_content .ttbm_details_page .day_wise_details_item .day_wise_details_item_title {
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 1.45;
+	color: var(--ttbm_d_heading);
+	margin: 0;
+}
+#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title span {
+	font-size: 16px;
+	font-weight: 600;
+	padding: 0;
+}
+/* active question highlight */
+#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title.active {
+	background: rgba(var(--color_theme_rgb), .06);
+	border-radius: 0;
+	color: var(--color_theme);
+}
+#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title.active h5,
+#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title.active span {
+	color: var(--color_theme);
+}
+
+/* the +/- and chevron icon as a round chip */
+#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title span[data-icon],
+#ttbm_content .ttbm_details_page .day_wise_details_item .day_wise_details_item_title span[data-icon] {
+	flex-shrink: 0;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: #eef1f6;
+	color: var(--ttbm_d_heading);
+	font-size: 11px;
+	transition: background .2s ease, color .2s ease;
+}
+#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title.active span[data-icon] {
+	background: var(--color_theme);
+	color: #fff;
+}
+
+/* answer / day content */
+#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_content,
+#ttbm_content .ttbm_details_page .day_wise_details_item .day_wise_details_item_details {
+	background: #fff;
+	padding: 2px 18px 18px;
+	border-radius: 0;
+	font-size: 15px;
+	line-height: 1.75;
+	color: var(--ttbm_d_text);
+}
+#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_content p,
+#ttbm_content .ttbm_details_page .day_wise_details_item .day_wise_details_item_details p {
+	font-size: 15px;
+	line-height: 1.75;
+}
+
+/* ---------- right-column widget headings ---------- */
+#ttbm_content .ttbm_details_page .ttbm_content__right .ttbm_title_style_3,
+#ttbm_content .ttbm_details_page .ttbm_content__right h4 {
+	font-size: 18px;
+	font-weight: 700;
+	color: var(--ttbm_d_heading);
+}
+
+/* small responsive nudge */
+@media (max-width: 768px) {
+	#ttbm_content .ttbm_details_page .ttbm_default__title h1 { font-size: 27px; }
+	#ttbm_content .ttbm_details_page .content-title { font-size: 20px; }
+	#ttbm_content .ttbm_details_page .ttbm_widget_content,
+	#ttbm_content .ttbm_details_page .ttbm_wp_editor,
+	#ttbm_content .ttbm_details_page .ttbm_description { font-size: 15.5px; }
+}
+
+/* =====================================================================
+   Hero: full-image slider with left-aligned overlay content + Book Now
+   (matches the requested reference). Scoped to the default theme.
+   ===================================================================== */
+#ttbm_content .ttbm_default_theme .ttbm_hero { position: relative; border-radius: 16px; overflow: hidden; background: #ffffff; }
+
+/* turn the slider into a single full-bleed image (hide thumbnails, kill the
+   white frame, give a fixed cinematic height) */
+#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider { border-radius: 16px; background: #ffffff; }
+/* fixed cinematic height; the right-side thumbnail strip is kept */
+#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider,
+#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .ttbm_slider-wrapper,
+#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .sliderAllItem,
+#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .sliderAllItem .sliderItem { height: 590px; }
+.sliderPopup.in .superSlider {
+    height: 100% !important;
+}
+#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .sliderAllItem .sliderItem img {
+	width: 100% !important; height: 100% !important; max-height: none !important; object-fit: cover !important;
+}
+#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .sliderShowcaseItem img { height: 100% !important; object-fit: cover; }
+/* keep nav arrows + dots above the scrim and clickable */
+#ttbm_content .ttbm_default_theme .ttbm_hero .iconIndicator,
+#ttbm_content .ttbm_default_theme .ttbm_hero .slideIndicator { z-index: 6; }
+
+/* left-to-right dark scrim, content vertically centred on the left */
+#ttbm_content .ttbm_default_theme .ttbm_hero_overlay {
+	position: absolute; top: 0; bottom: 0; left: 0; right: 20%; z-index: 5;
+	display: flex; align-items: center;
+	padding: 0 0 0 6%;
+	background: linear-gradient(to right, rgb(53 62 81 / 78%) -11%, rgb(8 12 20 / 52%) 6%, rgb(8 12 20 / 13%) 75%, #00000000 100%);
+	pointer-events: none;
+}
+#ttbm_content .ttbm_default_theme .ttbm_hero_overlay_inner { max-width: 88%; pointer-events: none;     margin-top: 300px;}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_overlay .ttbm_default__title h1 {
+	color: #fff; font-size: 36px; line-height: 1.14; font-weight: 800; letter-spacing: -.02em;
+	margin: 0 0 12px; text-shadow: 0 2px 16px rgba(0,0,0,.5);
+}
+#ttbm_content .ttbm_default_theme .ttbm_hero_meta { align-items: center; gap: 14px; flex-wrap: wrap; margin: 0 0 20px; }
+#ttbm_content .ttbm_default_theme .ttbm_hero_meta .location_name {
+	color: rgba(255,255,255,.92); font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 7px; margin: 0;
+}
+#ttbm_content .ttbm_default_theme .ttbm_hero_meta .location_name span { color: var(--color_theme); }
+
+/* stats panel: Location + Days + Age + Stock on one frosted line */
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats {
+	display: inline-flex; flex-wrap: wrap; align-items: center; gap: 16px 30px; margin: 4px 0 0;
+	padding: 14px 24px; border-radius: 16px;
+	background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+	-webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+/* dissolve the inner .item_section box so its chips share the panel's flex row */
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_section { display: contents; }
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon {
+	display: inline-flex; align-items: center; gap: 11px; margin: 0; padding: 0;
+	background: none; border: 0; color: #fff; font-size: 13.5px; font-weight: 600; line-height: 1.25; max-width: 230px;
+}
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon i {
+	flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
+	display: inline-flex; align-items: center; justify-content: center; font-size: 18px; color: #fff;
+	background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.3);
+}
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon span { color: #fff; }
+/* price is shown in the CTA block, so hide the price chip here */
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon:has(.mi-coins) { display: none; }
+
+/* price + Book Now */
+#ttbm_content .ttbm_default_theme .ttbm_hero_cta { margin-top: 24px; pointer-events: auto; display: inline-flex; align-items: center; gap: 26px; flex-wrap: wrap; }
+#ttbm_content .ttbm_default_theme .ttbm_hero_price { margin-bottom: 0; }
+#ttbm_content .ttbm_default_theme .ttbm_hero_price_label { display: block; color: rgba(255,255,255,.78); font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+#ttbm_content .ttbm_default_theme .ttbm_hero_price_value,
+#ttbm_content .ttbm_default_theme .ttbm_hero_price_value .amount { color: #fff; font-size: 30px; font-weight: 800; line-height: 1; }
+#ttbm_content .ttbm_default_theme .ttbm_hero_book_now {
+	display: inline-flex; align-items: center; gap: 11px; pointer-events: auto;
+	background: linear-gradient(135deg, var(--color_theme), var(--color_theme_secondary));
+	color: #fff; border: 0; border-radius: 14px; padding: 17px 42px; font-size: 17px; font-weight: 800; letter-spacing: .01em; cursor: pointer;
+	box-shadow: 0 14px 30px rgba(var(--color_theme_rgb), .5);
+	transition: transform .2s ease, box-shadow .2s ease;
+	animation: ttbmBookPulse 2.4s ease-in-out infinite;
+}
+@keyframes ttbmBookPulse {
+	0%, 100% { box-shadow: 0 14px 30px rgba(var(--color_theme_rgb), .5), 0 0 0 0 rgba(var(--color_theme_rgb), .4); }
+	50%      { box-shadow: 0 16px 38px rgba(var(--color_theme_rgb), .6), 0 0 0 12px rgba(var(--color_theme_rgb), 0); }
+}
+#ttbm_content .ttbm_default_theme .ttbm_hero_book_now span { color: #fff; font-size: 13px; }
+#ttbm_content .ttbm_default_theme .ttbm_hero_book_now:hover { transform: translateY(-3px) scale(1.02); animation: none; box-shadow: 0 20px 44px rgba(var(--color_theme_rgb), .62); }
+@media (prefers-reduced-motion: reduce) { #ttbm_content .ttbm_default_theme .ttbm_hero_book_now { animation: none; } }
+
+/* mobile: overlay drops to a readable stacked card under a shorter image */
+@media (max-width: 768px) {
+	#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider,
+	#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .ttbm_slider-wrapper,
+	#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .sliderAllItem,
+	#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .sliderAllItem .sliderItem { height: 240px !important; }
+	#ttbm_content .ttbm_default_theme .ttbm_hero_overlay { position: static; display: block; padding: 16px 2px 2px; background: none; }
+	#ttbm_content .ttbm_default_theme .ttbm_hero_overlay_inner { max-width: 100%; margin-top: 0; }
+	#ttbm_content .ttbm_default_theme .ttbm_hero_overlay .ttbm_default__title h1 { color: var(--ttbm_d_heading); font-size: 24px; text-shadow: none; }
+	#ttbm_content .ttbm_default_theme .ttbm_hero_stats { background: #f4f6fa; border-color: #e3e6ee; -webkit-backdrop-filter: none; backdrop-filter: none; gap: 14px 20px; padding: 14px 16px; }
+	#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon { color: var(--ttbm_d_heading); }
+	#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon i { color: var(--color_theme); background: rgba(var(--color_theme_rgb), .1); border-color: rgba(var(--color_theme_rgb), .25); }
+	#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon span { color: var(--ttbm_d_heading); }
+	#ttbm_content .ttbm_default_theme .ttbm_hero_price_label { color: var(--ttbm_d_muted); }
+	#ttbm_content .ttbm_default_theme .ttbm_hero_price_value,
+	#ttbm_content .ttbm_default_theme .ttbm_hero_price_value .amount { color: var(--ttbm_d_heading); }
+}
+
+/* booking section hidden until "Book Now" is clicked */
+#ttbm_content .ttbm_default_theme .ttbm_booking_section { display: none; }
+#ttbm_content .ttbm_default_theme .ttbm_booking_section.ttbm-show { display: block; animation: ttbmBookingReveal .4s ease both; }
+@keyframes ttbmBookingReveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+/* =====================================================================
+   Sidebar widgets (incl. "Got a Question")
+   ===================================================================== */
+#ttbm_content .ttbm_details_page .ttbm_content__right .ttbm_default_widget {
+	background: #fff; border: 1px solid var(--ttbm_d_border); border-radius: 14px;
+	padding: 20px; margin-bottom: 22px; box-shadow: 0 4px 16px rgba(17,24,39,.05);
+}
+#ttbm_content .ttbm_content__right .ttbm_default_widget .ttbm_widget_content ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+#ttbm_content .ttbm_content__right .ttbm_default_widget .ttbm_widget_content ul li { font-size: 15px; line-height: 1.5; color: var(--ttbm_d_text); }
+#ttbm_content .ttbm_content__right .ttbm_default_widget .ttbm_widget_content ul li a { display: flex; align-items: center; gap: 12px; color: var(--ttbm_d_heading); font-weight: 600; }
+#ttbm_content .ttbm_content__right .ttbm_default_widget .ttbm_widget_content ul li a .circleIcon_xs {
+	width: 40px; height: 40px; min-width: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+	background: rgba(var(--color_theme_rgb), .1); color: var(--color_theme); font-size: 16px; transition: background .2s ease, color .2s ease;
+}
+#ttbm_content .ttbm_content__right .ttbm_default_widget .ttbm_widget_content ul li a:hover .circleIcon_xs { background: var(--color_theme); color: #fff; }
+/* enquiry trigger button */
+#ttbm_content .get-enquiry-popup { margin-top: 16px; }
+#ttbm_content .get-enquiry-popup button {
+	width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+	background: linear-gradient(135deg, var(--color_theme), var(--color_theme_secondary));
+	color: #fff; border: 0; border-radius: 11px; padding: 13px 18px; font-size: 15px; font-weight: 700; cursor: pointer;
+	box-shadow: 0 8px 18px rgba(var(--color_theme_rgb), .28); transition: transform .2s ease, box-shadow .2s ease;
+}
+#ttbm_content .get-enquiry-popup button:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(var(--color_theme_rgb), .38); }
+#ttbm_content .get-enquiry-popup button span { color: #fff; }
+
+/* =====================================================================
+   Enquiry popup — beautiful animated modal
+   ===================================================================== */
+.ttbm_popup[data-popup="get-enquiry-popup"] { background: rgba(15,20,30,.6); -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); }
+.ttbm_popup[data-popup="get-enquiry-popup"].in { animation: ttbmEnqFade .25s ease both; }
+.ttbm_popup[data-popup="get-enquiry-popup"] .popupMainArea {
+	min-width: 0; width: 92%; max-width: 480px; min-height: 0; max-height: 88vh;
+	border: 0; border-radius: 18px; overflow: hidden; box-shadow: 0 30px 70px rgba(0,0,0,.45);
+}
+.ttbm_popup[data-popup="get-enquiry-popup"].in .popupMainArea { animation: ttbmEnqIn .38s cubic-bezier(.2,.9,.3,1.25) both; }
+@keyframes ttbmEnqFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ttbmEnqIn { from { opacity: 0; transform: translateY(26px) scale(.95); } to { opacity: 1; transform: none; } }
+
+.ttbm_popup[data-popup="get-enquiry-popup"] .popupHeader {
+	border: 0; padding: 20px 22px; position: relative; justify-content: flex-start;
+	background: linear-gradient(135deg, var(--color_theme), var(--color_theme_secondary));
+}
+.ttbm_popup[data-popup="get-enquiry-popup"] .popupHeader h2 { color: #fff; font-size: 20px; font-weight: 700; margin: 0; text-align: left; }
+.ttbm_popup[data-popup="get-enquiry-popup"] .popupClose {
+	top: 15px; right: 15px; width: 34px; height: 34px; border-radius: 50%;
+	background: rgba(255,255,255,.22); color: #fff; font-size: 15px; transition: background .2s ease;
+}
+.ttbm_popup[data-popup="get-enquiry-popup"] .popupClose:hover { background: rgba(255,255,255,.4); color: #fff; }
+.ttbm_popup[data-popup="get-enquiry-popup"] .popupBody { padding: 22px; }
+.ttbm_popup[data-popup="get-enquiry-popup"] .get-enquiry-form label {
+	display: block; font-size: 13px; font-weight: 600; color: #3a4250; margin: 14px 0 6px;
+}
+.ttbm_popup[data-popup="get-enquiry-popup"] .get-enquiry-form label:first-of-type { margin-top: 0; }
+.ttbm_popup[data-popup="get-enquiry-popup"] .get-enquiry-form input,
+.ttbm_popup[data-popup="get-enquiry-popup"] .get-enquiry-form textarea {
+	width: 100%; box-sizing: border-box; padding: 11px 14px; border: 1px solid #dfe3ea; border-radius: 10px;
+	font-size: 14px; background: #f8fafc; color: #1d2430; transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.ttbm_popup[data-popup="get-enquiry-popup"] .get-enquiry-form input:focus,
+.ttbm_popup[data-popup="get-enquiry-popup"] .get-enquiry-form textarea:focus {
+	outline: 0; border-color: var(--color_theme); background: #fff; box-shadow: 0 0 0 3px rgba(var(--color_theme_rgb), .15);
+}
+.ttbm_popup[data-popup="get-enquiry-popup"] #ttbm-enquiry-form-submit {
+	width: 100%; margin-top: 20px; background: linear-gradient(135deg, var(--color_theme), var(--color_theme_secondary));
+	color: #fff; border: 0; border-radius: 11px; padding: 13px; font-size: 15px; font-weight: 700; cursor: pointer;
+	transition: transform .2s ease, box-shadow .2s ease;
+}
+.ttbm_popup[data-popup="get-enquiry-popup"] #ttbm-enquiry-form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(var(--color_theme_rgb), .32); }
+
+/* =====================================================================
+   Tour booking date picker (jQuery UI) — modern restyle.
+   The widget is appended to <body>, so these selectors are intentionally
+   NOT scoped under #ttbm_content. Accent uses the global theme vars.
+   ===================================================================== */
+.ui-datepicker.ui-widget {
+	width: 304px; padding: 14px; margin-top: 6px;
+	border: 1px solid #e6e9f0; border-radius: 16px; background: #fff;
+	box-shadow: 0 20px 48px rgba(17, 24, 39, .2);
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+	font-size: 13px; z-index: 1000000 !important;
+}
+/* header */
+.ui-datepicker .ui-datepicker-header { background: transparent; border: 0; padding: 2px 0 12px; margin-bottom: 6px; border-bottom: 1px solid #eef1f6; position: relative; }
+.ui-datepicker .ui-datepicker-title { font-size: 15px; font-weight: 800; letter-spacing: -.01em; color: #1d2430; line-height: 32px; }
+.ui-datepicker .ui-datepicker-title select.ui-datepicker-month,
+.ui-datepicker .ui-datepicker-title select.ui-datepicker-year {
+	font-size: 13px; font-weight: 600; color: #1d2430; padding: 4px 8px; margin: 0 3px;
+	border: 1px solid #e2e6ee; border-radius: 8px; background: #fff;
+}
+.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next {
+	top: 0; width: 32px; height: 32px; border-radius: 50%; background: #f1f3f8; cursor: pointer;
+	border: 0; transition: background .2s ease;
+}
+.ui-datepicker .ui-datepicker-prev { left: 0; }
+.ui-datepicker .ui-datepicker-next { right: 0; }
+.ui-datepicker .ui-datepicker-prev:hover, .ui-datepicker .ui-datepicker-next:hover { background: var(--color_theme); }
+.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span { display: none; } /* hide sprite arrows */
+.ui-datepicker .ui-datepicker-prev::after, .ui-datepicker .ui-datepicker-next::after {
+	position: absolute; top: 0; left: 0; right: 0; bottom: 0; line-height: 32px; text-align: center;
+	font-size: 17px; color: #3a4250; font-family: Arial, sans-serif;
+}
+.ui-datepicker .ui-datepicker-prev::after { content: "\2039"; }
+.ui-datepicker .ui-datepicker-next::after { content: "\203A"; }
+.ui-datepicker .ui-datepicker-prev:hover::after, .ui-datepicker .ui-datepicker-next:hover::after { color: #fff; }
+/* calendar grid */
+.ui-datepicker table.ui-datepicker-calendar { width: 100%; border-collapse: collapse; margin: 0; font-size: 13px; }
+.ui-datepicker .ui-datepicker-calendar th { padding: 8px 0; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; color: #98a0ad; }
+.ui-datepicker .ui-datepicker-calendar td { padding: 2px; text-align: center; border: 0; }
+.ui-datepicker .ui-datepicker-calendar td a,
+.ui-datepicker .ui-datepicker-calendar td span {
+	display: block; width: 34px; height: 34px; line-height: 34px; margin: 0 auto; padding: 0;
+	border: 0; border-radius: 50%; background: transparent; color: #3a4250; font-weight: 600;
+	text-align: center; text-decoration: none; transition: background .15s ease, color .15s ease;
+}
+/* selectable (available) days get a soft accent tint */
+.ui-datepicker .ui-datepicker-calendar td a.ui-state-default { background: rgba(var(--color_theme_rgb), .1); color: var(--color_theme); }
+.ui-datepicker .ui-datepicker-calendar td a.ui-state-default:hover,
+.ui-datepicker .ui-datepicker-calendar td a.ui-state-hover { background: var(--color_theme); color: #fff; }
+/* today */
+.ui-datepicker .ui-datepicker-calendar td.ui-datepicker-today a { box-shadow: inset 0 0 0 2px var(--color_theme); }
+/* selected */
+.ui-datepicker .ui-datepicker-calendar td a.ui-state-active,
+.ui-datepicker .ui-datepicker-calendar td a.ui-state-highlight { background: var(--color_theme); color: #fff; box-shadow: 0 4px 10px rgba(var(--color_theme_rgb), .4); }
+/* disabled / unavailable days — clearly greyed + struck through */
+.ui-datepicker .ui-datepicker-calendar td.ui-datepicker-unselectable span,
+.ui-datepicker .ui-datepicker-calendar td.ui-state-disabled span,
+.ui-datepicker .ui-datepicker-calendar td.ttbm-date-unavailable span {
+	color: #c4c9d4; background: transparent; text-decoration: line-through; opacity: .65; cursor: not-allowed;
+}
+
+/* =====================================================================
+   Booking section — exact mockup match
+   Lavender card background with white floating row-cards.
+   Scoped to #ttbm_content .ttbm_booking_section.
+   ===================================================================== */
+#ttbm_content .ttbm_booking_section { margin-top: 30px; }
+#ttbm_content .ttbm_booking_section .ttbm_registration_area {
+	background: linear-gradient(160deg, rgba(var(--color_theme_rgb), .045) 0%, rgba(var(--color_theme_rgb), .1) 100%);
+	border: 1px solid rgba(var(--color_theme_rgb), .12); border-radius: 22px; overflow: hidden; padding: 0;
+	box-shadow: 0 16px 44px rgba(17, 24, 39, .1);
+}
+
+/* ---- date section (on the lavender card) ---- */
+#ttbm_content .ttbm_booking_section .ttbm_date_time_select { background: transparent; border: 0; border-radius: 0; box-shadow: none; padding: 24px 26px; margin: 0; }
+#ttbm_content .ttbm_booking_section .ttbm_select_date_area { display: block; background: transparent; color: var(--ttbm_d_text); width: auto; padding: 0; border-radius: 0; }
+#ttbm_content .ttbm_booking_section .booking-button { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+#ttbm_content .ttbm_booking_section .date-picker { display: flex; flex-direction: column; gap: 10px; flex: 1 1 280px; }
+#ttbm_content .ttbm_booking_section .date_time_label,
+#ttbm_content .ttbm_booking_section .ttbm-title { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--ttbm_d_muted); }
+#ttbm_content .ttbm_booking_section .date-picker-icon { display: flex; align-items: center; gap: 13px; width: 100%; height: 60px; box-sizing: border-box; background: #fff; border: 1px solid #e7e7f2; border-radius: 14px; padding: 0 16px 0 9px; cursor: pointer; box-shadow: 0 2px 8px rgba(17, 24, 39, .04); transition: border-color .2s ease, box-shadow .2s ease; }
+#ttbm_content .ttbm_booking_section .date-picker-icon:hover { border-color: var(--color_theme); box-shadow: 0 0 0 4px rgba(var(--color_theme_rgb), .1); }
+#ttbm_content .ttbm_booking_section .date-picker-icon i { position: static; flex-shrink: 0; width: 42px; height: 42px; border-radius: 12px; font-size: 17px; line-height: 1; top: auto; left: auto; background: rgba(var(--color_theme_rgb), .1); color: var(--color_theme); display: inline-flex; align-items: center; justify-content: center; }
+#ttbm_content .ttbm_booking_section #ttbm_select_date { border: 0; background: transparent; min-width: 120px; flex: 1; padding: 0; height: auto; box-shadow: none; cursor: pointer; font-weight: 700; font-size: 16px; color: var(--ttbm_d_heading); }
+#ttbm_content .ttbm_booking_section #ttbm_select_date::placeholder { color: var(--ttbm_d_muted); font-weight: 600; }
+/* outline check-availability button */
+#ttbm_content .ttbm_booking_section .ttbm_check_ability { display: inline-flex; align-items: center; justify-content: center; height: 60px; box-sizing: border-box; background: #fff; color: var(--color_theme); border: 1.5px solid rgba(var(--color_theme_rgb), .4); border-radius: 14px; padding: 0 28px; font-weight: 700; font-size: 14px; white-space: nowrap; cursor: pointer; box-shadow: 0 2px 8px rgba(17, 24, 39, .04); transition: all .2s ease; }
+#ttbm_content .ttbm_booking_section .ttbm_check_ability:hover { background: var(--color_theme); color: #fff; border-color: var(--color_theme); transform: translateY(-1px); box-shadow: 0 10px 22px rgba(var(--color_theme_rgb), .3); }
+#ttbm_content .ttbm_booking_section .ttbm_check_ability span { color: inherit; }
+
+/* ---- ticket / extra-service area ---- */
+#ttbm_content .ttbm_booking_section .ttbm_booking_panel { padding: 0; }
+#ttbm_content .ttbm_booking_section .mp_tour_ticket_form { margin: 0; padding: 0; }
+#ttbm_content .ttbm_booking_section .ttbm_ticket_area { padding: 4px 24px 10px; border-top: 1px solid rgba(var(--color_theme_rgb), .12); }
+#ttbm_content .ttbm_booking_section .ttbm_extra_service_area { padding: 0; }
+#ttbm_content .ttbm_booking_section .ttbm_ticket_list_title,
+#ttbm_content .ttbm_booking_section .ttbm_extra_service_area h2.extra_service_title { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--ttbm_d_muted); margin: 14px 2px 0; padding: 0; }
+/* service name (<p class="extra_service_title">) must match the ticket name */
+#ttbm_content .ttbm_booking_section p.extra_service_title { display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 16px; color: var(--ttbm_d_heading); text-transform: none; letter-spacing: normal; margin: 0; }
+/* ticket / service subtitle (e.g. "Ages 12 - 64", description) */
+#ttbm_content .ttbm_booking_section .ttbm_ticket_description { font-size: 12px; color: var(--ttbm_d_muted); margin-top: 4px; line-height: 1.4; }
+
+/* table -> spaced white card rows */
+#ttbm_content .ttbm_booking_section .ttbm_enhanced_table { width: 100%; border-collapse: separate; border-spacing: 0 14px; margin: 0; border: 0; }
+#ttbm_content .ttbm_booking_section .ttbm_enhanced_table thead th { background: transparent; color: var(--ttbm_d_muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; font-weight: 800; padding: 6px 18px 0; text-align: left; border: 0; opacity: .75; }
+#ttbm_content .ttbm_booking_section .ttbm_enhanced_table thead th.ttbm_quantity_info,
+#ttbm_content .ttbm_booking_section .ttbm-select-quantity { text-align: right; }
+#ttbm_content .ttbm_booking_section .ttbm_ticket_row { box-shadow: 0 6px 18px rgba(17, 24, 39, .07); transition: box-shadow .2s ease; }
+#ttbm_content .ttbm_booking_section .ttbm_ticket_row td { background: #fff; padding: 20px 18px; border: 0; vertical-align: middle; }
+#ttbm_content .ttbm_booking_section .ttbm_ticket_row td:first-child { border-radius: 16px 0 0 16px; }
+#ttbm_content .ttbm_booking_section .ttbm_ticket_row td:last-child { border-radius: 0 16px 16px 0; }
+#ttbm_content .ttbm_booking_section .ttbm_ticket_row:hover { box-shadow: 0 12px 28px rgba(17, 24, 39, .12); }
+
+/* ticket name + squircle avatar */
+#ttbm_content .ttbm_booking_section .ttbm_ticket_name { display: flex; align-items: center; gap: 14px; font-weight: 700; color: var(--ttbm_d_heading); font-size: 16px; margin: 0; }
+#ttbm_content .ttbm_booking_section .ttbm_ticket_icon { flex-shrink: 0; width: 46px; height: 46px; border-radius: 14px; margin: 0; font-size: 19px; background: rgba(var(--color_theme_rgb), .12); color: var(--color_theme); display: inline-flex; align-items: center; justify-content: center; }
+
+/* price */
+#ttbm_content .ttbm_booking_section .ttbm_price_container { position: static; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: flex-start; gap: 5px 9px; text-align: left; }
+#ttbm_content .ttbm_booking_section .ttbm_regular_price.strikeLine { order: 1; color: #9aa1ad; text-decoration: line-through; font-size: 13px; margin: 0; }
+#ttbm_content .ttbm_booking_section .ttbm_regular_price.strikeLine .woocommerce-Price-amount { font-size: 13px; color: #9aa1ad; }
+#ttbm_content .ttbm_booking_section .ttbm_discount_badge { order: 2; position: static; top: auto; right: auto; align-self: center; display: inline-block; background: rgba(var(--color_theme_rgb), .12); color: var(--color_theme); font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px; margin: 0; text-transform: uppercase; letter-spacing: .02em; }
+#ttbm_content .ttbm_booking_section .ttbm_sale_price { order: 3; flex-basis: 100%; display: block; color: var(--color_theme); font-weight: 800; font-size: 20px; margin: 3px 0 0; }
+
+/* availability + progress */
+#ttbm_content .ttbm_booking_section .ttbm_availability_details { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+#ttbm_content .ttbm_booking_section .ttbm_remaining_count { display: flex; align-items: baseline; gap: 5px; }
+#ttbm_content .ttbm_booking_section .ttbm_available_number { font-weight: 800; color: var(--ttbm_d_heading); font-size: 15px; }
+#ttbm_content .ttbm_booking_section .ttbm_available_label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; color: var(--ttbm_d_heading); }
+#ttbm_content .ttbm_booking_section .ttbm_capacity_text { color: #9aa1ad; font-size: 12px; white-space: nowrap; }
+#ttbm_content .ttbm_booking_section .ttbm_progress_bar { background: #e9eaf4; border-radius: 20px; height: 7px; overflow: hidden; margin-top: 10px; }
+#ttbm_content .ttbm_booking_section .ttbm_progress_fill { background: var(--color_theme); height: 100%; border-radius: 20px; }
+
+/* quantity box */
+#ttbm_content .ttbm_booking_section .qtyIncDec { display: inline-flex; align-items: center; gap: 0; padding: 4px; background: #fff; border: 1px solid #e4e5f0; border-radius: 12px; box-shadow: 0 1px 3px rgba(17, 24, 39, .05); }
+#ttbm_content .ttbm_booking_section .qtyIncDec .decQty,
+#ttbm_content .ttbm_booking_section .qtyIncDec .incQty { width: 32px; height: 32px; border: 0; border-radius: 8px; background: transparent; color: #6b7280; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; transition: background .2s ease, color .2s ease; }
+#ttbm_content .ttbm_booking_section .qtyIncDec .decQty:hover,
+#ttbm_content .ttbm_booking_section .qtyIncDec .incQty:hover { background: var(--color_theme); color: #fff; }
+#ttbm_content .ttbm_booking_section .qtyIncDec label { margin: 0; padding: 0; display: inline-flex; }
+#ttbm_content .ttbm_booking_section .qtyIncDec input.inputIncDec,
+#ttbm_content .ttbm_booking_section .qtyIncDec .formControl { width: 40px; min-width: 40px; height: auto; padding: 4px 2px; margin: 0; border: 0; background: transparent; box-shadow: none; border-radius: 0; text-align: center; font-weight: 800; font-size: 16px; color: var(--ttbm_d_heading); -moz-appearance: textfield; }
+#ttbm_content .ttbm_booking_section .qtyIncDec input::-webkit-outer-spin-button,
+#ttbm_content .ttbm_booking_section .qtyIncDec input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* ---- order summary footer ---- */
+#ttbm_content .ttbm_booking_section .ttbm_book_now_area { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin: 0; padding: 20px 26px; background: rgba(255, 255, 255, .55); border: 0; border-top: 1px solid rgba(var(--color_theme_rgb), .12); border-radius: 0; }
+#ttbm_content .ttbm_booking_section .ttbm_order_summary { display: flex; flex-direction: column; gap: 9px; }
+#ttbm_content .ttbm_booking_section .ttbm_summary_heading { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--ttbm_d_muted); }
+#ttbm_content .ttbm_booking_section .ttbm_summary_values { display: flex; align-items: flex-start; gap: 34px; }
+#ttbm_content .ttbm_booking_section .ttbm_summary_item { display: flex; flex-direction: column; gap: 2px; }
+#ttbm_content .ttbm_booking_section .ttbm_summary_label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ttbm_d_muted); }
+#ttbm_content .ttbm_booking_section .ttbm_summary_item .tour_qty { font-size: 18px; font-weight: 800; color: var(--ttbm_d_heading); }
+#ttbm_content .ttbm_booking_section .ttbm_summary_item .tour_price { font-size: 18px; font-weight: 800; color: var(--color_theme); }
+#ttbm_content .ttbm_booking_section .ttbm_book_now { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, var(--color_theme), var(--color_theme_secondary)); color: #fff; border: 0; border-radius: 14px; padding: 15px 34px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 12px 26px rgba(var(--color_theme_rgb), .4); transition: transform .2s ease, box-shadow .2s ease; }
+#ttbm_content .ttbm_booking_section .ttbm_book_now:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(var(--color_theme_rgb), .5); color: #fff; }
+#ttbm_content .ttbm_booking_section .ttbm_book_now span { color: #fff; }

@@ -23,6 +23,7 @@ if (!defined('ABSPATH')) {
 			<!-- Hidden elements for JavaScript functionality -->
 			<span class="ttbm_last_updated" data-tour-id="<?php echo esc_attr($tour_id); ?>" data-tour-date="<?php echo esc_attr($tour_date); ?>" style="display: none;"></span>
 			<span id="ttbm_total_available" style="display: none;"><?php echo esc_html($available_seat); ?></span>
+			<h2 class="ttbm_ticket_list_title"><?php esc_html_e('Available Tickets', 'tour-booking-manager'); ?></h2>
 			<div class="">
 				<?php
 					$option_name = 'ttbm_string_availabe_ticket_list';

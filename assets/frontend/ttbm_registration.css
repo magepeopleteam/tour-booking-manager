@@ -334,7 +334,7 @@ div.ttbm_style .mp_tour_ticket_form {
 /*****************/
 div.item_section {
 	display: inline-flex;
-	border: 1px solid #E6E6E6;
+	border: 0px solid #E6E6E6;
 	padding: 10px;
 	border-radius: 50px;
 	margin-bottom: 15px;
@@ -3974,11 +3974,13 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 	width: 100%;
 	border-collapse: collapse;
 	margin: 0;
+	
 }
 
 .ttbm_table_header {
 	background: #f8f9fa;
 	border-bottom: 2px solid #e9ecef;
+	display: none;
 }
 
 .ttbm_table_header th {

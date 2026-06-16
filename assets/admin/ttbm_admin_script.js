@@ -1390,4 +1390,45 @@
             $parent.empty().append(data);
         });
     };
+
+    // Tour list layout switcher (classic / compact / modern). The design class
+    // lives on .ttbm-tour-list-page, which AJAX never replaces, so load-more /
+    // search cards inherit the active layout automatically. Persisted per user.
+    $(document).on('click', '.ttbm-design-opt', function () {
+        var design = String($(this).data('design'));
+        if (['classic', 'compact', 'modern'].indexOf(design) === -1) {
+            return;
+        }
+        var $page = $('.ttbm-tour-list-page');
+        $page.removeClass('ttbm-design-classic ttbm-design-compact ttbm-design-modern').addClass('ttbm-design-' + design);
+        $(this).addClass('active').siblings('.ttbm-design-opt').removeClass('active');
+        if (typeof ttbm_admin_ajax !== 'undefined') {
+            $.post(ttbm_admin_ajax.ajax_url, {
+                action: 'ttbm_save_list_design',
+                design: design,
+                nonce: ttbm_admin_ajax.nonce
+            });
+        }
+    });
+
+    // Hotel list layout switcher (classic / compact / modern). Mirrors the tour
+    // switcher above. The class lives on .ttbm-hotel-listing, which AJAX never
+    // replaces (it only appends rows into the table body), so load-more / search
+    // / filter results inherit the active layout. Persisted per user.
+    $(document).on('click', '.ttbm-hdesign-opt', function () {
+        var design = String($(this).data('design'));
+        if (['classic', 'compact', 'modern'].indexOf(design) === -1) {
+            return;
+        }
+        var $wrap = $('.ttbm-hotel-listing');
+        $wrap.removeClass('ttbm-hdesign-classic ttbm-hdesign-compact ttbm-hdesign-modern').addClass('ttbm-hdesign-' + design);
+        $(this).addClass('active').siblings('.ttbm-hdesign-opt').removeClass('active');
+        if (typeof ttbm_admin_ajax !== 'undefined') {
+            $.post(ttbm_admin_ajax.ajax_url, {
+                action: 'ttbm_save_hotel_list_design',
+                design: design,
+                nonce: ttbm_admin_ajax.nonce
+            });
+        }
+    });
 })(jQuery);

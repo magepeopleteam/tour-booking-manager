@@ -129,7 +129,7 @@ div.ttbm_content_area {
 	top: 30px;
 	z-index: 0;
 	margin-top: 20px;
-	border: 1px solid #e7e7e7;
+	border: 0px solid #e7e7e7;
 	border-radius: 12px;
 }
 
@@ -3982,7 +3982,9 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 	border-bottom: 2px solid #e9ecef;
 	display: none;
 }
-
+tr.ttbm_hidden_inputs {
+    display: none;
+}
 .ttbm_table_header th {
 	padding: 16px 20px;
 	font-weight: normal;
@@ -6043,4 +6045,10 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 	text-transform: uppercase;
     text-decoration: underline;
     text-underline-offset: 10px;
+}
+
+/* Custom: Reduce gap between ticket type and extra service items in booking panel */
+div.ttbm_booking_panel table.mp_tour_ticket_type tbody tr.ttbm_ticket_row td,
+div.ttbm_booking_panel table.mp_tour_ticket_extra tbody tr.ttbm_ticket_row td {
+	padding: 10px 12px;
 }

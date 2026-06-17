@@ -334,6 +334,74 @@
 @keyframes ttbmBookingReveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
 /* =====================================================================
+   Inclusions row — What's Included / Excluded / Activities
+   Moved out of the sidebar into the left column and shown as a compact,
+   space-saving card grid that keeps the same design language.
+   ===================================================================== */
+#ttbm_content .ttbm_details_page .ttbm_inclusions_grid {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+/* each section is a full-width card */
+#ttbm_content .ttbm_inclusions_grid .ttbm_default_widget {
+	background: #fff;
+	border: 1px solid var(--ttbm_d_border);
+	border-radius: 16px;
+	padding: 18px 22px 20px;
+	margin: 0;
+	box-shadow: 0 4px 16px rgba(17, 24, 39, .05);
+	transition: box-shadow .2s ease, border-color .2s ease;
+}
+#ttbm_content .ttbm_inclusions_grid .ttbm_default_widget:hover {
+	box-shadow: 0 10px 26px rgba(17, 24, 39, .08);
+	border-color: #dfe3ec;
+}
+/* uppercase section label */
+#ttbm_content .ttbm_inclusions_grid .ttbm_default_widget h5 {
+	font-size: 13px;
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: .05em;
+	color: var(--ttbm_d_muted);
+	margin: 0 0 16px;
+}
+/* items flow horizontally in a responsive multi-column grid */
+#ttbm_content .ttbm_inclusions_grid .ttbm_widget_content ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+	gap: 16px 14px;
+}
+#ttbm_content .ttbm_inclusions_grid .ttbm_widget_content ul li {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	font-size: 14px;
+	line-height: 1.4;
+	font-weight: 500;
+	color: var(--ttbm_d_heading);
+	margin: 0;
+	border: 0;
+}
+/* squircle icon chip */
+#ttbm_content .ttbm_inclusions_grid .ttbm_widget_content ul li .circleIcon_xs {
+	flex-shrink: 0;
+	width: 34px;
+	height: 34px;
+	min-width: 34px;
+	border-radius: 10px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 14px;
+	background: rgba(var(--color_theme_rgb), .1);
+	color: var(--color_theme);
+}
+
+/* =====================================================================
    Sidebar widgets (incl. "Got a Question")
    ===================================================================== */
 #ttbm_content .ttbm_details_page .ttbm_content__right .ttbm_default_widget {
@@ -497,7 +565,7 @@
 #ttbm_content .ttbm_booking_section .ttbm_booking_panel { padding: 0; }
 #ttbm_content .ttbm_booking_section .mp_tour_ticket_form { margin: 0; padding: 0; }
 #ttbm_content .ttbm_booking_section .ttbm_ticket_area { padding: 4px 24px 10px; border-top: 1px solid rgba(var(--color_theme_rgb), .12); }
-#ttbm_content .ttbm_booking_section .ttbm_extra_service_area { padding: 0; }
+#ttbm_content .ttbm_booking_section .ttbm_extra_service_area { padding: 0; margin-top: -14px; }
 #ttbm_content .ttbm_booking_section .ttbm_ticket_list_title,
 #ttbm_content .ttbm_booking_section .ttbm_extra_service_area h2.extra_service_title { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--ttbm_d_muted); margin: 14px 2px 0; padding: 0; }
 /* service name (<p class="extra_service_title">) must match the ticket name */
@@ -511,7 +579,7 @@
 #ttbm_content .ttbm_booking_section .ttbm_enhanced_table thead th.ttbm_quantity_info,
 #ttbm_content .ttbm_booking_section .ttbm-select-quantity { text-align: right; }
 #ttbm_content .ttbm_booking_section .ttbm_ticket_row { box-shadow: 0 6px 18px rgba(17, 24, 39, .07); transition: box-shadow .2s ease; }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_row td { background: #fff; padding: 20px 18px; border: 0; vertical-align: middle; }
+#ttbm_content .ttbm_booking_section .ttbm_ticket_row td { background: #fff; padding: 10px 18px; border: 0; vertical-align: middle; }
 #ttbm_content .ttbm_booking_section .ttbm_ticket_row td:first-child { border-radius: 16px 0 0 16px; }
 #ttbm_content .ttbm_booking_section .ttbm_ticket_row td:last-child { border-radius: 0 16px 16px 0; }
 #ttbm_content .ttbm_booking_section .ttbm_ticket_row:hover { box-shadow: 0 12px 28px rgba(17, 24, 39, .12); }

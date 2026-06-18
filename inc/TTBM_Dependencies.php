@@ -74,7 +74,56 @@
 
                 $this->myplugin_enqueue_flatpickr();
 			}
+			/**
+			 * Decide whether the tour/hotel frontend assets are needed on the
+			 * current request, so they are not loaded on every page site-wide.
+			 *
+			 * Page builders (Elementor) and any edge case (widgets, theme-builder
+			 * headers/footers, third-party builders) can force loading with:
+			 *     add_filter('ttbm_load_assets', '__return_true');
+			 * or force-disable by returning false from that filter.
+			 *
+			 * @return bool
+			 */
+			private function should_load_frontend_assets() {
+				// Explicit override: a non-null return forces assets on/off.
+				$override = apply_filters('ttbm_load_assets', null);
+				if (null !== $override) {
+					return (bool) $override;
+				}
+				$post_types = array('ttbm_tour', 'ttbm_hotel', 'ttbm_hotel_booking', 'ttbm_places', 'ttbm_guide');
+				if (is_singular($post_types) || is_post_type_archive($post_types)) {
+					return true;
+				}
+				$taxonomies = array('ttbm_tour_cat', 'ttbm_tour_org', 'ttbm_tour_location', 'ttbm_tour_features_list', 'ttbm_hotel_features_list', 'ttbm_hotel_activities_list', 'ttbm_tour_tag', 'ttbm_tour_activities');
+				if (is_tax($taxonomies)) {
+					return true;
+				}
+				// Wishlist lives under the WooCommerce My Account page.
+				if (function_exists('is_account_page') && is_account_page()) {
+					return true;
+				}
+				// Shortcode or Elementor widget embedded in the current content.
+				$post = get_post();
+				if ($post instanceof WP_Post) {
+					if ($post->post_content && (
+						false !== strpos($post->post_content, '[ttbm-') ||
+						false !== strpos($post->post_content, '[travel-') ||
+						false !== strpos($post->post_content, '[wptravelly-')
+					)) {
+						return true;
+					}
+					$elementor_data = get_post_meta($post->ID, '_elementor_data', true);
+					if (is_string($elementor_data) && false !== strpos($elementor_data, 'ttbm-tour-')) {
+						return true;
+					}
+				}
+				return false;
+			}
 			public function frontend_script() {
+				if (!$this->should_load_frontend_assets()) {
+					return;
+				}
 				$this->global_enqueue();
 				wp_enqueue_script('jquery-ui-accordion');
 				wp_enqueue_script('ttbm_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_script.js', array('jquery'), TTBM_PLUGIN_VERSION, true);

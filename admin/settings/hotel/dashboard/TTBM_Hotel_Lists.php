@@ -6,6 +6,30 @@ if (!class_exists('TTBM_Hotel_Lists')) {
             // save feature data
             add_action('ttbm_hotel_dashboard_tabs', [$this, 'dashbaord_hotel_lists']);
             add_action('ttbm_hotel_dashboard_content', [$this, 'dashbaord_hotel_lists_content']);
+            add_action('wp_ajax_ttbm_save_hotel_list_design', [$this, 'save_hotel_list_design']);
+        }
+
+        /** Available hotel-list layouts (mirrors the tour list page). */
+        public static function get_hotel_list_designs(): array {
+            return array('classic', 'compact', 'modern');
+        }
+        /** Current user's preferred hotel-list layout. Defaults to 'compact'. */
+        public static function get_current_hotel_list_design(): string {
+            $design = get_user_meta(get_current_user_id(), 'ttbm_hotel_list_design', true);
+            return in_array($design, self::get_hotel_list_designs(), true) ? $design : 'compact';
+        }
+        /** Persist the chosen layout (the UI also toggles instantly client side). */
+        public function save_hotel_list_design() {
+            if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
+                wp_send_json_error(array('message' => 'Invalid nonce'), 403);
+            }
+            if (!current_user_can('manage_options')) {
+                wp_send_json_error(array('message' => esc_html__('You do not have permission to do this.', 'tour-booking-manager')), 403);
+            }
+            $design = isset($_POST['design']) ? sanitize_key(wp_unslash($_POST['design'])) : 'classic';
+            $design = in_array($design, self::get_hotel_list_designs(), true) ? $design : 'classic';
+            update_user_meta(get_current_user_id(), 'ttbm_hotel_list_design', $design);
+            wp_send_json_success(array('design' => $design));
         }
 
         public function dashbaord_hotel_lists(){
@@ -15,19 +39,28 @@ if (!class_exists('TTBM_Hotel_Lists')) {
         }
         
         public function dashbaord_hotel_lists_content(){
+            $counts          = wp_count_posts('ttbm_hotel');
             $published_count = isset($counts->publish) ? $counts->publish : 0;
             $trash_count     = isset($counts->trash) ? $counts->trash : 0;
             $draft_count     = isset($counts->draft) ? $counts->draft : 0;
-            $total_count = $published_count + $trash_count + $draft_count;
+            // "All" reflects the hotels shown in the list (publish + draft); trash is
+            // surfaced separately via the Trash link.
+            $total_count = $published_count + $draft_count;
             $posts_per_page = 10;
             $hotel_list_query = self::ttbm_hotel_list_query( $posts_per_page );
             $trash_link = add_query_arg([
                 'post_status' => 'trash',
                 'post_type'   => 'ttbm_hotel',
             ], admin_url('edit.php'));
+            $design = self::get_current_hotel_list_design();
+            $design_options = array(
+                'classic' => array('label' => esc_html__('Classic', 'tour-booking-manager'), 'icon' => 'dashicons-list-view'),
+                'compact' => array('label' => esc_html__('Compact', 'tour-booking-manager'), 'icon' => 'dashicons-menu-alt'),
+                'modern'  => array('label' => esc_html__('Modern', 'tour-booking-manager'),  'icon' => 'dashicons-grid-view'),
+            );
             ?>
             <!--Hotel List Tab-->
-            <div id="ttbm_hotel_list_tab" class="ttbm_hotel_tab_content active">
+            <div id="ttbm_hotel_list_tab" class="ttbm_hotel_tab_content active ttbm-hotel-listing ttbm-hdesign-<?php echo esc_attr($design); ?>">
                 <div class="ttbm_total_booking_wrapper" style="display: block">
 
                     <div class="ttbm_hotel_list_header">
@@ -58,6 +91,20 @@ if (!class_exists('TTBM_Hotel_Lists')) {
                             <div class="ttbm_hotel_titleSearchContainer">
                                 <input type="text" class="ttbm_hotel_title_SearchBox" id="ttbm_hotel_title_SearchBox" placeholder="Hotel Name Search...">
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="ttbm-hdesign-switch-bar">
+                        <span class="ttbm-hdesign-switch-caption"><?php esc_html_e('View', 'tour-booking-manager'); ?></span>
+                        <div class="ttbm-hdesign-switch" role="group" aria-label="<?php esc_attr_e('Choose hotel list layout', 'tour-booking-manager'); ?>">
+                            <?php foreach ($design_options as $design_key => $design_opt) : ?>
+                                <button type="button" class="ttbm-hdesign-opt<?php echo $design === $design_key ? ' active' : ''; ?>"
+                                        data-design="<?php echo esc_attr($design_key); ?>"
+                                        title="<?php echo esc_attr($design_opt['label']); ?>">
+                                    <span class="dashicons <?php echo esc_attr($design_opt['icon']); ?>" aria-hidden="true"></span>
+                                    <span class="ttbm-hdesign-opt-label"><?php echo esc_html($design_opt['label']); ?></span>
+                                </button>
+                            <?php endforeach; ?>
                         </div>
                     </div>
 

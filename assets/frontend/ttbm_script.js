@@ -448,4 +448,22 @@
 		$(this).closest('li').remove();
 	});
 
+	// Hero "Book Now" reveals the (hidden) booking section, scrolls to it, and
+	// auto-opens the date picker once it's in view.
+	$(document).on('click', '[data-ttbm-book-now]', function (e) {
+		e.preventDefault();
+		var $section = $('#ttbm_booking_section');
+		if (!$section.length) { return; }
+		$section.addClass('ttbm-show');
+		$('html, body').animate({ scrollTop: $section.offset().top - 40 }, 450, function () {
+			var picker = $section.find('#ttbm_select_date').first();
+			if (!picker.length) { return; }
+			if (picker[0]._flatpickr) {
+				picker[0]._flatpickr.open();
+			} else {
+				picker.trigger('focus').trigger('click');
+			}
+		});
+	});
+
 }(jQuery));

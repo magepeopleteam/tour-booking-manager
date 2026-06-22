@@ -370,16 +370,46 @@
 				return $date;
 			}
 			public static function update_all_upcoming_date_month(): void {
-				$cache_key = 'ttbm_last_upcoming_update';
-				$last_update = get_transient($cache_key);
-				if ($last_update) {
+				$done_key = 'ttbm_last_upcoming_update';
+				// Already rebuilt successfully today -- nothing to do.
+				if (get_transient($done_key)) {
 					return;
 				}
+				// Short-lived lock so concurrent requests don't all rebuild at once
+				// (stampede protection) and so a request that dies mid-rebuild doesn't
+				// re-run on EVERY subsequent hit. The lock expires quickly, so a
+				// genuinely interrupted pass is retried within minutes instead of
+				// being locked out for a full day. Critically, the long "done for the
+				// day" flag is only set AFTER a complete pass -- the tour list filters
+				// on the ttbm_upcoming_date meta this writes, so we must never mark the
+				// day done while that meta is still empty/partial.
+				$lock_key = 'ttbm_upcoming_update_lock';
+				if (get_transient($lock_key)) {
+					return;
+				}
+				set_transient($lock_key, true, 2 * MINUTE_IN_SECONDS);
 				$tour_ids = TTBM_Global_Function::get_all_post_id(TTBM_Function::get_cpt_name());
 				foreach ($tour_ids as $tour_id) {
 					self::update_upcoming_date_month($tour_id);
 				}
-				set_transient($cache_key, true, DAY_IN_SECONDS);
+				set_transient($done_key, true, DAY_IN_SECONDS);
+				delete_transient($lock_key);
+			}
+			/**
+			 * Upper bound on how many tour/hotel cards a list shortcode renders in a
+			 * single request.
+			 *
+			 * The list shortcodes paginate and filter entirely client-side, so every
+			 * item is rendered up-front (overflow hidden with CSS). With an uncapped
+			 * "show all" (-1) query a large catalog renders thousands of cards on one
+			 * PHP request and times out. Capping the server-side render keeps the page
+			 * responsive while leaving the existing Load More / filter UX intact.
+			 * Raise it with the `ttbm_list_render_cap` filter if a site genuinely needs
+			 * to surface more items at once.
+			 */
+			public static function get_list_render_cap(): int {
+				$cap = (int) apply_filters('ttbm_list_render_cap', 300);
+				return $cap > 0 ? $cap : 300;
 			}
 			public static function update_month_list($tour_id, $dates): void {
 				$month = '';

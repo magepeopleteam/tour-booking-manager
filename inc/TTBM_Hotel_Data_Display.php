@@ -180,7 +180,9 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
 
                 $exist_feature = [];
                 for ($i = 0; $i < count($features); $i++) {
-                    $exist_feature = array_unique(array_merge($exist_feature, $features[$i]));
+                    // Meta rows come back raw and serialized; cast defensively so a
+                    // string row can't fatal array_merge().
+                    $exist_feature = array_unique(array_merge($exist_feature, (array) maybe_unserialize($features[$i])));
                 }
 
                 $feature_count = sizeof( $exist_feature);

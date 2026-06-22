@@ -118,52 +118,61 @@ function ttbm_load_sortable_datepicker(parent, item) {
 (function ($) {
     "use strict";
     //=================select icon=========================//
-    $(document).on("click", ".ttbm_add_icon_image_area button.ttbm_icon_add", function () {
-            let target_popup = $(".ttbm_add_icon_popup");
-            target_popup.find(".iconItem").click(function () {
-                let parent = $("[data-active-popup]").closest(".ttbm_add_icon_image_area");
-                let icon_class = $(this).data("icon-class");
-                if (icon_class) {
-                    parent.find('input[type="hidden"]').val(icon_class);
-                    parent.find(".ttbm_add_icon_image_button_area").slideUp("fast");
-                    parent.find(".ttbm_image_item").slideUp("fast");
-                    parent.find(".ttbm_icon_item").slideDown("fast");
-                    parent.find("[data-add-icon]").removeAttr("class").addClass(icon_class);
-                    target_popup.find(".iconItem").removeClass("active");
-                    target_popup.find(".popupClose").trigger("click");
+    // Select/replace icon from popup (event delegation so it works for both add button and existing icon click)
+    $(document).on("click", ".ttbm_add_icon_popup .iconItem", function () {
+        let parent = $("[data-active-popup]").closest(".ttbm_add_icon_image_area");
+        let icon_class = $(this).data("icon-class");
+        let target_popup = $(this).closest(".ttbm_add_icon_popup");
+        if (icon_class) {
+            parent.find('input[type="hidden"]').val(icon_class);
+            parent.find(".ttbm_add_icon_image_button_area").slideUp("fast");
+            parent.find(".ttbm_image_item").slideUp("fast");
+            parent.find(".ttbm_icon_item").slideDown("fast");
+            parent.find("[data-add-icon]").removeAttr("class").addClass(icon_class);
+            target_popup.find(".iconItem").removeClass("active");
+            target_popup.find(".popupClose").trigger("click");
+        }
+    });
+    // Icon category tabs in popup (event delegation)
+    $(document).on("click", ".ttbm_add_icon_popup [data-icon-menu]", function () {
+        if (!$(this).hasClass("active")) {
+            let target = $(this);
+            let tabsTarget = target.data("icon-menu");
+            let target_popup = target.closest(".ttbm_add_icon_popup");
+            target_popup.find("[data-icon-menu]").removeClass("active");
+            target.addClass("active");
+            target_popup.find("[data-icon-list]").each(function () {
+                let targetItem = $(this).data("icon-list");
+                if (tabsTarget === "all_item" || targetItem === tabsTarget) {
+                    $(this).slideDown(250);
+                } else {
+                    $(this).slideUp(250);
                 }
-            });
-            target_popup.find("[data-icon-menu]").click(function () {
-                if (!$(this).hasClass("active")) {
-                    let target = $(this);
-                    let tabsTarget = target.data("icon-menu");
-                    target_popup.find("[data-icon-menu]").removeClass("active");
-                    target.addClass("active");
-                    target_popup.find("[data-icon-list]").each(function () {
-                        let targetItem = $(this).data("icon-list");
-                        if (tabsTarget === "all_item" || targetItem === tabsTarget) {
-                            $(this).slideDown(250);
-                        } else {
-                            $(this).slideUp(250);
-                        }
-                    });
-                }
-                return false;
-            });
-            target_popup.find(".popupClose").click(function () {
-                target_popup.find('[data-icon-menu="all_item"]').trigger("click");
-                target_popup.find(".iconItem").removeClass("active");
             });
         }
-    );
+        return false;
+    });
+    // Reset popup state when closed (event delegation)
+    $(document).on("click", ".ttbm_add_icon_popup .popupClose", function () {
+        let target_popup = $(this).closest(".ttbm_add_icon_popup");
+        target_popup.find('[data-icon-menu="all_item"]').trigger("click");
+        target_popup.find(".iconItem").removeClass("active");
+    });
+    // Click existing icon to replace it (open popup via the add button)
+    $(document).on("click", ".ttbm_add_icon_image_area .ttbm_icon_item", function (e) {
+        if ($(e.target).closest(".ttbm_icon_remove").length) {
+            return;
+        }
+        $(this).closest(".ttbm_add_icon_image_area").find(".ttbm_icon_add").trigger("click");
+    });
+    // Remove icon
     $(document).on("click", ".ttbm_add_icon_image_area .ttbm_icon_remove", function () {
-            let parent = $(this).closest(".ttbm_add_icon_image_area");
-            parent.find('input[type="hidden"]').val("");
-            parent.find("[data-add-icon]").removeAttr("class");
-            parent.find(".ttbm_icon_item").slideUp("fast");
-            parent.find(".ttbm_add_icon_image_button_area").slideDown("fast");
-        }
-    );
+        let parent = $(this).closest(".ttbm_add_icon_image_area");
+        parent.find('input[type="hidden"]').val("");
+        parent.find("[data-add-icon]").removeAttr("class");
+        parent.find(".ttbm_icon_item").slideUp("fast");
+        parent.find(".ttbm_add_icon_image_button_area").slideDown("fast");
+    });
     //=================select Single image=========================//
     $(document).on("click", "button.ttbm_image_add", function () {
         let $this = $(this);

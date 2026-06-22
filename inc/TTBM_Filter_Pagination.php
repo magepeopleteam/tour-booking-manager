@@ -461,8 +461,17 @@
 			//****************************************/
 			public function feature_filter_multiple($params) {
 				if ($params['feature-filter'] == 'yes') {
-					$features = TTBM_Function::get_meta_values('ttbm_service_included_in_price', 'ttbm_tour');
-                    //echo '<pre>';print_r($features);echo '</pre>';
+					$raw_features = TTBM_Function::get_meta_values('ttbm_service_included_in_price', 'ttbm_tour');
+                    // get_meta_values() returns raw rows; array-typed meta is stored
+                    // serialized, so unserialize each one. Skipping non-array rows keeps
+                    // array_merge() below from receiving a string and fataling.
+                    $features = [];
+                    foreach ($raw_features as $feature_group) {
+                        $unserialized = maybe_unserialize($feature_group);
+                        if (is_array($unserialized)) {
+                            $features[] = $unserialized;
+                        }
+                    }
 					$upcomming_date = $this->upcomming_date;
 					$exist_feature = [];
 					for ($i = 0; $i < count($features); $i++) {
@@ -529,21 +538,28 @@
 					}
 				}
 			}
-			public function activity_filter_multiple_old($params) {
-				if ($params['activity-filter'] == 'yes') {
-					$activities = TTBM_Function::get_meta_values('ttbm_tour_activities', 'ttbm_tour');
-					$upcomming_date = $this->upcomming_date;
-					$exist_activities = [];
+		public function activity_filter_multiple_old($params) {
+			if ($params['activity-filter'] == 'yes') {
+				$raw_activities = TTBM_Function::get_meta_values('ttbm_tour_activities', 'ttbm_tour');
+				$activities = [];
+				foreach ($raw_activities as $activity_group) {
+					$unserialized = maybe_unserialize($activity_group);
+					if (is_array($unserialized)) {
+						$activities[] = $unserialized;
+					}
+				}
+				$upcomming_date = $this->upcomming_date;
+				$exist_activities = [];
 
-					for ($i = 0; $i < count($activities); $i++) {
+				for ($i = 0; $i < count($activities); $i++) {
                         if( isset( $upcomming_date[$i] ) ) {
                             if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $activities[$i]) {
 //						    if ($upcomming_date[$i] && is_array($activities[$i])) {
                                 $activities_i = $this->ensure_array($activities[$i]);
                                 $exist_activities = array_unique(array_merge($exist_activities, $activities_i));
-                            }
+                            }.
                         }
-					}
+				}
 					if (sizeof($exist_activities) > 0) {
 						$url_activity = '';
 						if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
@@ -579,11 +595,12 @@
 					}
 				}
 			}
-			public function activity_filter_multiple($params) {
-				if ($params['activity-filter'] == 'yes') {
-					$activities = TTBM_Function::get_meta_values('ttbm_tour_activities', 'ttbm_tour');
+		public function activity_filter_multiple($params) {
+			if ($params['activity-filter'] == 'yes') {
+				$raw_activities = TTBM_Function::get_meta_values('ttbm_tour_activities', 'ttbm_tour');
 
                     $all_activities = [];
+                    $activities = [];
 
                     foreach ($activities as $activity_group) {
                         $activities_array = $this->ensure_array($activity_group);
@@ -592,10 +609,10 @@
 
                     $unique_activities = array_values(array_unique($all_activities));
 
-					$upcomming_date = $this->upcomming_date;
-					$exist_activities = [];
+				$upcomming_date = $this->upcomming_date;
+				$exist_activities = [];
 
-					for ($i = 0; $i < count($activities); $i++) {
+				for ($i = 0; $i < count($activities); $i++) {
                         if( isset( $upcomming_date[$i] ) ) {
                             if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $activities[$i]) {
 //						    if ($upcomming_date[$i] && is_array($activities[$i])) {
@@ -603,7 +620,7 @@
                                 $exist_activities = array_unique(array_merge($exist_activities, $activities_i));
                             }
                         }
-					}
+				}
 					if (sizeof($unique_activities) > 0) {
 						$url_activity = '';
 						if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {

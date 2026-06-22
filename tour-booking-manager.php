@@ -32,6 +32,9 @@ if (!class_exists('TTBM_Woocommerce_Plugin')) {
 				if (!defined('TTBM_PLUGIN_URL')) {
 					define('TTBM_PLUGIN_URL', plugins_url() . '/' . plugin_basename(dirname(__FILE__)));
 				}
+				if (!defined('TTBM_PLUGIN_VERSION')) {
+					define('TTBM_PLUGIN_VERSION', '2.1.9');
+				}
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Dependencies.php';
 				add_action('admin_init', array($this, 'activation_redirect_setup'), 90);
 			}

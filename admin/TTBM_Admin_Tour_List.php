@@ -11,6 +11,7 @@
 
                 add_action('wp_ajax_ttbm_load_more', array($this, 'load_more_callback') );
                 add_action('wp_ajax_ttbm_search_tours', array($this, 'search_tours_callback'));
+                add_action('wp_ajax_ttbm_save_list_design', array($this, 'save_list_design'));
 
                 add_action('admin_head', [$this,'remove_admin_notice']);
                 add_action('admin_menu', [$this,'remove_default_menu'],0);
@@ -19,6 +20,37 @@
 
             private function user_can_manage_tours() {
                 return current_user_can('manage_options');
+            }
+            /**
+             * The two available layouts for the admin tour list. 'classic' is the
+             * original detailed card view; 'compact' is the minimal dense view.
+             */
+            private function get_available_designs(): array {
+                return array('classic', 'compact', 'modern');
+            }
+            /**
+             * Read the current user's preferred tour list layout (per-user, so it
+             * persists across sessions/devices). Defaults to 'compact'.
+             */
+            private function get_current_list_design(): string {
+                $design = get_user_meta(get_current_user_id(), 'ttbm_tour_list_design', true);
+                return in_array($design, $this->get_available_designs(), true) ? $design : 'compact';
+            }
+            /**
+             * Persist the user's chosen layout. The UI also toggles instantly client
+             * side, so this just records the preference for the next page load.
+             */
+            public function save_list_design() {
+                if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
+                    wp_send_json_error(array('message' => 'Invalid nonce'), 403);
+                }
+                if (!$this->user_can_manage_tours()) {
+                    wp_send_json_error(array('message' => esc_html__('You do not have permission to do this.', 'tour-booking-manager')), 403);
+                }
+                $design = isset($_POST['design']) ? sanitize_key(wp_unslash($_POST['design'])) : 'classic';
+                $design = in_array($design, $this->get_available_designs(), true) ? $design : 'classic';
+                update_user_meta(get_current_user_id(), 'ttbm_tour_list_design', $design);
+                wp_send_json_success(array('design' => $design));
             }
 			private function get_listable_post_statuses(): array {
 				return array('publish', 'draft', 'pending', 'future', 'private');
@@ -174,8 +206,14 @@
 
                 $analytics_Data = TTBM_Function::get_travel_analytical_data();
 
+                $design = $this->get_current_list_design();
+                $design_options = array(
+                    'classic' => array('label' => esc_html__('Classic', 'tour-booking-manager'), 'icon' => 'dashicons-list-view'),
+                    'compact' => array('label' => esc_html__('Compact', 'tour-booking-manager'), 'icon' => 'dashicons-menu-alt'),
+                    'modern'  => array('label' => esc_html__('Modern', 'tour-booking-manager'),  'icon' => 'dashicons-grid-view'),
+                );
                 ?>
-                <div class="wrap ttbm-tour-list-page ">
+                <div class="wrap ttbm-tour-list-page ttbm-design-<?php echo esc_attr($design); ?>">
                     <!--Here Analytics-->
                     <?php do_action('ttbm_travel_analytics_display', $posts_query->found_posts, $analytics_Data )?>
                     <?php
@@ -207,6 +245,19 @@
                         <div class="ttbm-tour-dashboard-content">
                             <?php do_action('ttbm_travel_lists_tab_display', $label, $analytics_Data, $posts_query )?>
                             <div class="ttbm-tour-list_holder">
+                                <div class="ttbm-design-switch-bar">
+                                    <span class="ttbm-design-switch-caption"><?php esc_html_e('View', 'tour-booking-manager'); ?></span>
+                                    <div class="ttbm-design-switch" role="group" aria-label="<?php esc_attr_e('Choose list layout', 'tour-booking-manager'); ?>">
+                                        <?php foreach ($design_options as $design_key => $design_opt) : ?>
+                                            <button type="button" class="ttbm-design-opt<?php echo $design === $design_key ? ' active' : ''; ?>"
+                                                    data-design="<?php echo esc_attr($design_key); ?>"
+                                                    title="<?php echo esc_attr($design_opt['label']); ?>">
+                                                <span class="dashicons <?php echo esc_attr($design_opt['icon']); ?>" aria-hidden="true"></span>
+                                                <span class="ttbm-design-opt-label"><?php echo esc_html($design_opt['label']); ?></span>
+                                            </button>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
                                 <div class="ttbm-tour-list">
                                     <?php
                                     $this->tour_list($posts_query);

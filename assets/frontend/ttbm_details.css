@@ -824,7 +824,7 @@
 #ttbm_content .ttbm_booking_section .ttbm_booking_panel { padding: 0; }
 #ttbm_content .ttbm_booking_section .mp_tour_ticket_form { margin: 0; padding: 0; }
 #ttbm_content .ttbm_booking_section .ttbm_ticket_area {
-	padding-top: 0;
+	padding: 5px 20px !important;
 	padding-bottom: 8px;
 	border-top: 1px solid var(--ttbm_d_border);
 	text-align: left;

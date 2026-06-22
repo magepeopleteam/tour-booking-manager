@@ -448,21 +448,23 @@
 		$(this).closest('li').remove();
 	});
 
-	// Hero "Book Now" reveals the (hidden) booking section, scrolls to it, and
-	// auto-opens the date picker once it's in view.
+	// Hero "Book Now" reveals the (hidden) booking section, scrolls to it,
+	// auto-selects the next available date and opens the ticket section.
 	$(document).on('click', '[data-ttbm-book-now]', function (e) {
 		e.preventDefault();
 		var $section = $('#ttbm_booking_section');
 		if (!$section.length) { return; }
 		$section.addClass('ttbm-show');
 		$('html, body').animate({ scrollTop: $section.offset().top - 40 }, 450, function () {
-			var picker = $section.find('#ttbm_select_date').first();
-			if (!picker.length) { return; }
-			if (picker[0]._flatpickr) {
-				picker[0]._flatpickr.open();
-			} else {
-				picker.trigger('focus').trigger('click');
-			}
+			var $picker = $section.find('#ttbm_select_date').first();
+			if (!$picker.length) { return; }
+			if ($picker.val()) { return; } // date already chosen by user — do nothing
+			var firstDate = $picker.data('ttbm-first-date');
+			if (!firstDate) { return; }
+			// Set the visible formatted text via the datepicker (no calendar popup)
+			$picker.datepicker('setDate', new Date(firstDate + 'T00:00:00'));
+			// Set the hidden date input and trigger ticket loading
+			$picker.closest('label').find('input[name="ttbm_date"]').val(firstDate).trigger('change');
 		});
 	});
 

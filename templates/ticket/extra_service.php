@@ -19,6 +19,7 @@
 					<thead class="ttbm_table_header">
 						<tr>
 							<th class="extra-service-title-header"><?php esc_html_e('Service', 'tour-booking-manager'); ?></th>
+							<th class="ttbm-ticket-badge-col"></th>
 							<th class="extra-service-price-header"><?php esc_html_e('Price', 'tour-booking-manager'); ?></th>
 							<?php if ($hide_availability_column !== 'on') { ?>
 								<th class="extra-service-availability-header"><?php esc_html_e('Availability', 'tour-booking-manager'); ?></th>
@@ -30,9 +31,16 @@
 					<?php
 						foreach ($extra_services as $service) {
 							$service_name = array_key_exists('service_name', $service) ? $service['service_name'] : '';
-							$service_price = array_key_exists('service_price', $service) ? $service['service_price'] : 0;
-							$service_price = TTBM_Global_Function::wc_price($tour_id, $service_price);
-							$service_price_raw = TTBM_Global_Function::price_convert_raw($service_price);
+							$service_price_value = array_key_exists('service_price', $service) ? $service['service_price'] : 0;
+							$service_sale_price_value = array_key_exists('service_sale_price', $service) ? $service['service_sale_price'] : '';
+							$has_sale = $service_sale_price_value !== '' && floatval($service_sale_price_value) > 0;
+							// Use sale price for calculation when set, otherwise regular price
+							$active_price_value = $has_sale ? $service_sale_price_value : $service_price_value;
+							$service_price = TTBM_Global_Function::wc_price($tour_id, $service_price_value);
+							$service_sale_price_formatted = $has_sale ? TTBM_Global_Function::wc_price($tour_id, $service_sale_price_value) : '';
+							$service_price_raw = TTBM_Global_Function::price_convert_raw(
+								TTBM_Global_Function::wc_price($tour_id, $active_price_value)
+							);
 							$service_qty = array_key_exists('service_qty', $service) ? $service['service_qty'] : 0;
 							$reserve = apply_filters('ttbm_service_reserve_qty', 0);
 							$input_type = array_key_exists('service_qty_type', $service) ? $service['service_qty_type'] : 'inputbox';
@@ -67,9 +75,21 @@
 										</div>
 									</div>
 								</td>
+								<td class="ttbm-ticket-badge-col">
+									<?php if ($has_sale && floatval($service_price_value) > 0) {
+										$discount_pct = round((floatval($service_price_value) - floatval($service_sale_price_value)) / floatval($service_price_value) * 100);
+										?>
+										<span class="ttbm_discount_badge"><?php echo esc_html($discount_pct . '% off'); ?></span>
+									<?php } ?>
+								</td>
 								<td class="ttbm-regular-price extra-service-price" data-label="<?php esc_attr_e('Price', 'tour-booking-manager'); ?>">
 									<div class="ttbm_price_container">
-										<span class="ttbm_sale_price"><?php echo mep_esc_html($service_price); ?></span>
+										<span class="ttbm_sale_price"><?php echo mep_esc_html($has_sale ? $service_sale_price_formatted : $service_price); ?></span>
+										<div class="ttbm_price_meta">
+											<?php if ($has_sale) { ?>
+												<span class="ttbm_regular_price strikeLine"><?php echo mep_esc_html($service_price); ?></span>
+											<?php } ?>
+										</div>
 									</div>
 								</td>
 								<?php if ($hide_availability_column !== 'on') { ?>
@@ -109,7 +129,7 @@
 								</td>
 							</tr>
 							<tr class="ttbm_hidden_inputs">
-								<td colspan="<?php echo $hide_availability_column === 'on' ? '3' : '4'; ?>">
+								<td colspan="<?php echo $hide_availability_column === 'on' ? '4' : '5'; ?>">
 									<input type="hidden" name='tour_id[]' value='<?php echo esc_html($tour_id); ?>'>
 									<input type="hidden" name='service_name[]' value='<?php echo esc_html($service_name); ?>'>
 									<input type="hidden" name='service_max_qty[]' value='<?php echo esc_html($max_qty); ?>'>

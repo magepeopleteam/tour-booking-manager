@@ -35,6 +35,7 @@
                                     <th><?php esc_html_e('Service Name', 'tour-booking-manager'); ?></th>
                                     <th><?php esc_html_e('Short description', 'tour-booking-manager'); ?></th>
                                     <th><?php esc_html_e('Price', 'tour-booking-manager'); ?></th>
+                                    <th><?php esc_html_e('Sales Price', 'tour-booking-manager'); ?></th>
                                     <th><?php esc_html_e('Available Qty', 'tour-booking-manager'); ?></th>
                                     <th><?php esc_html_e('Qty Box Type', 'tour-booking-manager'); ?></th>
                                     <th><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
@@ -65,6 +66,7 @@
 				$service_icon = array_key_exists('service_icon', $field) ? $field['service_icon'] : '';
 				$service_name = array_key_exists('service_name', $field) ? $field['service_name'] : '';
 				$service_price = array_key_exists('service_price', $field) ? $field['service_price'] : '';
+				$service_sale_price = array_key_exists('service_sale_price', $field) ? $field['service_sale_price'] : '';
 				$service_qty = array_key_exists('service_qty', $field) ? $field['service_qty'] : '';
 				$input_type = array_key_exists('service_qty_type', $field) ? $field['service_qty_type'] : 'inputbox';
 				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_extra_advance', 'off');
@@ -87,6 +89,11 @@
                     <td>
                         <label>
                             <input type="number" pattern="[0-9]*" step="0.01" class="small ttbm_price_validation" name="service_price[]" placeholder="Ex: 10" value="<?php echo esc_attr($service_price); ?>"/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="number" pattern="[0-9]*" step="0.01" class="small" name="service_sale_price[]" placeholder="Ex: 8" value="<?php echo esc_attr($service_sale_price); ?>"/>
                         </label>
                     </td>
                     <td>

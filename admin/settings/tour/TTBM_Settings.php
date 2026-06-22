@@ -1090,12 +1090,14 @@
 					$extra_qty = isset($_POST['service_qty']) ? array_map('sanitize_text_field', wp_unslash($_POST['service_qty'])) : [];
 					$extra_qty_type = isset($_POST['service_qty_type']) ? array_map('sanitize_text_field', wp_unslash($_POST['service_qty_type'])) : [];
 					$extra_service_description = isset($_POST['extra_service_description']) ? array_map('sanitize_text_field', wp_unslash($_POST['extra_service_description'])) : [];
+					$extra_sale_price = isset($_POST['service_sale_price']) ? array_map('sanitize_text_field', wp_unslash($_POST['service_sale_price'])) : [];
 					$extra_count = count($extra_names);
 					for ($i = 0; $i < $extra_count; $i++) {
 						if ($extra_names[$i] && $extra_price[$i] >= 0 && $extra_qty[$i] > 0) {
 							$new_extra_service[$i]['service_icon'] = $extra_icon[$i] ?? '';
 							$new_extra_service[$i]['service_name'] = $extra_names[$i];
 							$new_extra_service[$i]['service_price'] = $extra_price[$i];
+							$new_extra_service[$i]['service_sale_price'] = $extra_sale_price[$i] ?? '';
 							$new_extra_service[$i]['service_qty'] = $extra_qty[$i];
 							$new_extra_service[$i]['service_qty_type'] = $extra_qty_type[$i] ?? 'inputbox';
 							$new_extra_service[$i]['extra_service_description'] = $extra_service_description[$i] ?? '';

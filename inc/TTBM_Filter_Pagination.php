@@ -557,7 +557,7 @@
 //						    if ($upcomming_date[$i] && is_array($activities[$i])) {
                                 $activities_i = $this->ensure_array($activities[$i]);
                                 $exist_activities = array_unique(array_merge($exist_activities, $activities_i));
-                            }.
+                            }
                         }
 				}
 					if (sizeof($exist_activities) > 0) {

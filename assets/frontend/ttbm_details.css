@@ -334,71 +334,157 @@
 @keyframes ttbmBookingReveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
 /* =====================================================================
-   Inclusions row — What's Included / Excluded / Activities
-   Moved out of the sidebar into the left column and shown as a compact,
-   space-saving card grid that keeps the same design language.
+   Inclusions — merged Included/Excluded + Activities card
    ===================================================================== */
 #ttbm_content .ttbm_details_page .ttbm_inclusions_grid {
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
+	gap: 20px;
 }
-/* each section is a full-width card */
-#ttbm_content .ttbm_inclusions_grid .ttbm_default_widget {
-	background: #fff;
-	border: 1px solid var(--ttbm_d_border);
-	border-radius: 16px;
-	padding: 18px 22px 20px;
+
+/* merged Included / Excluded — title outside, content in card */
+#ttbm_content .ttbm_include_exclude_section {
 	margin: 0;
-	box-shadow: 0 4px 16px rgba(17, 24, 39, .05);
-	transition: box-shadow .2s ease, border-color .2s ease;
+	padding: 4px 0 0;
 }
-#ttbm_content .ttbm_inclusions_grid .ttbm_default_widget:hover {
-	box-shadow: 0 10px 26px rgba(17, 24, 39, .08);
-	border-color: #dfe3ec;
+#ttbm_content .ttbm_include_exclude_box {
+	background: #fff;
+	border-radius: 16px;
+	padding: 24px 0 22px;
+	margin: 0;
 }
-/* uppercase section label */
-#ttbm_content .ttbm_inclusions_grid .ttbm_default_widget h5 {
-	font-size: 13px;
-	font-weight: 800;
-	text-transform: uppercase;
-	letter-spacing: .05em;
-	color: var(--ttbm_d_muted);
-	margin: 0 0 16px;
+#ttbm_content .ttbm_include_exclude_section .ttbm-include-exclude {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 24px 48px;
+	padding: 0;
+	margin: 0;
 }
-/* items flow horizontally in a responsive multi-column grid */
-#ttbm_content .ttbm_inclusions_grid .ttbm_widget_content ul {
+#ttbm_content .ttbm_ie_col ul {
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-	gap: 16px 14px;
 }
-#ttbm_content .ttbm_inclusions_grid .ttbm_widget_content ul li {
+#ttbm_content .ttbm_ie_col li {
 	display: flex;
 	align-items: center;
 	gap: 12px;
-	font-size: 14px;
-	line-height: 1.4;
+	font-size: 15px;
+	line-height: 1.45;
 	font-weight: 500;
+	margin: 0 0 16px;
 	color: var(--ttbm_d_heading);
+}
+#ttbm_content .ttbm_ie_excluded li {
+	color: var(--ttbm_d_muted);
+}
+#ttbm_content .ttbm_ie_col li:last-child {
+	margin-bottom: 0;
+}
+#ttbm_content .ttbm_ie_icon {
+	flex-shrink: 0;
+	width: 20px;
+	height: 20px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 12px;
+	line-height: 1;
+}
+#ttbm_content .ttbm_ie_check {
+	color: var(--color_theme);
+}
+#ttbm_content .ttbm_ie_cross {
+	color: #e53e3e;
+}
+
+/* Planned Activities — horizontal pill tags */
+#ttbm_content .ttbm_planned_activities_section {
+	margin: 0;
+	padding: 4px 0 0;
+}
+#ttbm_content .ttbm_pa_heading {
+	font-size: 13px;
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: .06em;
+	color: var(--ttbm_d_muted);
+	margin: 0 0 16px;
+	line-height: 1.3;
+}
+#ttbm_content .ttbm_activity_pills {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#ttbm_content .ttbm_activity_pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	background: #fff;
+	border-radius: 999px;
+	padding: 6px 20px 6px 6px;
+	box-shadow: 0 2px 14px rgba(17, 24, 39, .08);
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: .05em;
+	color: var(--ttbm_d_heading);
+	line-height: 1.3;
 	margin: 0;
 	border: 0;
+	transition: box-shadow .2s ease, transform .2s ease;
 }
-/* squircle icon chip */
-#ttbm_content .ttbm_inclusions_grid .ttbm_widget_content ul li .circleIcon_xs {
+#ttbm_content .ttbm_activity_pill:hover {
+	box-shadow: 0 6px 20px rgba(17, 24, 39, .12);
+	transform: translateY(-1px);
+}
+#ttbm_content .ttbm_activity_pill_icon {
 	flex-shrink: 0;
 	width: 34px;
 	height: 34px;
 	min-width: 34px;
-	border-radius: 10px;
+	border-radius: 50%;
+	background: var(--color_theme);
+	color: #fff;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	font-size: 14px;
-	background: rgba(var(--color_theme_rgb), .1);
-	color: var(--color_theme);
+	line-height: 1;
+}
+#ttbm_content .ttbm_activity_pill_label {
+	white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+	#ttbm_content .ttbm_activity_pills {
+		gap: 10px;
+	}
+	#ttbm_content .ttbm_activity_pill {
+		font-size: 11px;
+		padding: 5px 16px 5px 5px;
+	}
+	#ttbm_content .ttbm_activity_pill_icon {
+		width: 30px;
+		height: 30px;
+		min-width: 30px;
+		font-size: 12px;
+	}
+}
+
+@media (max-width: 640px) {
+	#ttbm_content .ttbm_include_exclude_section .ttbm-include-exclude {
+		grid-template-columns: 1fr;
+		gap: 20px;
+	}
+	#ttbm_content .ttbm_include_exclude_box {
+		padding: 20px 0 18px;
+	}
 }
 
 /* =====================================================================

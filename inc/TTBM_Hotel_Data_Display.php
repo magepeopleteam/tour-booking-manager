@@ -86,9 +86,8 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
                 $all_activities = [];
 
                 foreach ($activities as $activity_group) {
-                    // Meta rows come back raw and serialized; cast defensively so a
-                    // string row can't fatal array_merge().
-                    $all_activities = array_merge($all_activities, (array) maybe_unserialize($activity_group));
+                    $activities_array = $this->ensure_array($activity_group);
+                    $all_activities = array_merge($all_activities, $activities_array);
                 }
                 $unique_activities = array_values(array_unique($all_activities));
                 $activity_count = sizeof($unique_activities);
@@ -565,6 +564,21 @@ if (!class_exists('TTBM_Hotel_Data_Display')) {
             return ob_get_clean();
         }
 
+        private function ensure_array($value) {
+            if (is_array($value)) {
+                return $value;
+            }
+            if (is_serialized($value)) {
+                $unserialized = maybe_unserialize($value);
+                if (is_array($unserialized)) {
+                    return $unserialized;
+                }
+            }
+            if (is_string($value) && strpos($value, ',') !== false) {
+                return array_map('trim', explode(',', $value));
+            }
+            return array($value);
+        }
 
     }
 

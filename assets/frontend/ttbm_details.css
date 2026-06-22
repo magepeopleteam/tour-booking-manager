@@ -304,10 +304,23 @@
 /* price is shown in the CTA block, so hide the price chip here */
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon:has(.mi-coins) { display: none; }
 
-/* price + Book Now */
-#ttbm_content .ttbm_default_theme .ttbm_hero_cta { margin-top: 24px; pointer-events: auto; display: inline-flex; align-items: center; gap: 26px; flex-wrap: wrap; }
+/* price + Book Now — white card overlaid at the bottom of the hero */
+#ttbm_content .ttbm_default_theme .ttbm_hero_cta {
+	margin-top: 24px;
+	pointer-events: auto;
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	flex-wrap: wrap;
+	background: rgba(255, 255, 255, 0.95);
+	border-radius: 14px;
+	padding: 14px 18px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+}
 #ttbm_content .ttbm_default_theme .ttbm_hero_price { margin-bottom: 0; }
-#ttbm_content .ttbm_default_theme .ttbm_hero_price_label { display: block; color: rgba(255,255,255,.78); font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+#ttbm_content .ttbm_default_theme .ttbm_hero_price_label { display: block; color: #6b7280; font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 3px; }
 #ttbm_content .ttbm_default_theme .ttbm_hero_price_value,
 #ttbm_content .ttbm_default_theme .ttbm_hero_price_value .amount { color: #e03248; font-size: 24px; font-weight: 800; line-height: 1; }
 #ttbm_content .ttbm_default_theme .ttbm_hero_book_now {

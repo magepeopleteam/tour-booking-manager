@@ -45,8 +45,9 @@
 #ttbm_content .ttbm_details_page .ttbm_description p {
 	font-size: 16px;
 	line-height: 1.65;
-	margin: 0 0 1em;
+	margin: 0;
 	color: var(--ttbm_d_text);
+	text-align: justify;
 }
 #ttbm_content .ttbm_details_page .ttbm_widget_content p:last-child,
 #ttbm_content .ttbm_details_page .ttbm_wp_editor p:last-child { margin-bottom: 0; }
@@ -640,6 +641,10 @@
    Booking section — clean row layout (attachment mockup)
    Scoped to #ttbm_content .ttbm_booking_section.
    ===================================================================== */
+/* fixed travel_type: date_selection.php renders .allCenter.ttbm_date_time_select —
+   hide it completely with no leftover blank space. */
+#ttbm_content .ttbm_booking_section .allCenter.ttbm_date_time_select { display: none; }
+
 #ttbm_content .ttbm_booking_section { margin-top: 30px; }
 #ttbm_content .ttbm_booking_section .ttbm_registration_area {
 	background: #fff;
@@ -846,6 +851,21 @@
 	width: 100%;
 }
 
+/* availability_section: ticket area title */
+
+/* Section heading — matches .ttbm_section_title typography.
+   First child of .ttbm_booking_section, outside the registration area card. */
+#ttbm_content .ttbm-ticket-section-title {
+	font-size: 24px;
+	font-weight: 700;
+	line-height: 1.25;
+	letter-spacing: -.01em;
+	color: var(--ttbm_d_heading, #1a1a2e);
+	margin: 0 0 16px;
+	padding: 0;
+	text-transform: none;
+}
+
 /* table -> horizontal rows */
 #ttbm_content .ttbm_booking_section .ttbm_enhanced_table,
 #ttbm_content .ttbm_booking_section .ttbm_enhanced_table tbody {
@@ -974,7 +994,7 @@
 #ttbm_content .ttbm_booking_section .ttbm_ticket_description {
 	font-size: 13px;
 	color: var(--ttbm_d_muted);
-	margin: 6px 0 0;
+	margin: 0;
 	line-height: 1.5;
 	max-width: 420px;
 }
@@ -995,7 +1015,7 @@
 #ttbm_content .ttbm_booking_section .ttbm_sale_price {
 	display: block !important;
 	color: var(--color_theme, #7241ff) !important;
-	font-weight: 700 !important;
+	font-weight: 600 !important;
 	font-size: 18px !important;
 	margin: 0 !important;
 	line-height: 1.2;
@@ -1156,7 +1176,7 @@
 }
 #ttbm_content .ttbm_booking_section .ttbm_summary_item .tour_price {
 	font-size: 22px;
-	font-weight: 800;
+	font-weight: 600;
 	color: var(--color_theme, #7241ff);
 	line-height: 1.1;
 	order: 1;

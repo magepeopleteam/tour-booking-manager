@@ -54,6 +54,7 @@
 								<?php do_action( 'ttbm_short_details' ); ?>
 							</div>
 							<div class="ttbm_booking_section" id="ttbm_booking_section">
+								<h3 class="ttbm-ticket-section-title"><?php esc_html_e( 'Choose the Ticket That Fits Your Journey', 'tour-booking-manager' ); ?></h3>
 								<?php include( TTBM_Function::template_path( 'ticket/registration.php' ) ); ?>
 								<?php include( TTBM_Function::template_path( 'ticket/particular_item_area.php' ) ); ?>
 							</div>

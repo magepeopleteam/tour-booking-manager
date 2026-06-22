@@ -20,18 +20,6 @@
 									<div class="ttbm_hero_overlay_inner">
 										<?php do_action( 'ttbm_details_title' ); ?>
 										<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
-										<div class="ttbm_hero_stats">
-											<?php
-												$ttbm_hero_loc = TTBM_Function::get_full_location( $ttbm_post_id );
-												if ( $ttbm_hero_loc && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_location', 'on' ) != 'off' ) :
-											?>
-												<div class="item_icon ttbm_hero_loc" title="<?php esc_attr_e( 'Location', 'tour-booking-manager' ); ?>">
-													<i class="mi mi-marker"></i>
-													<span><?php echo esc_html( $ttbm_hero_loc ); ?></span>
-												</div>
-											<?php endif; ?>
-											<?php do_action( 'ttbm_short_details' ); ?>
-										</div>
 										<?php
 											$ttbm_hero_display_reg = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_registration', 'on' );
 											$ttbm_hero_price       = TTBM_Function::get_tour_start_price( $ttbm_post_id );
@@ -52,6 +40,18 @@
 										<?php endif; ?>
 									</div>
 								</div>
+							</div>
+							<div class="ttbm_hero_stats">
+								<?php
+									$ttbm_hero_loc = TTBM_Function::get_full_location( $ttbm_post_id );
+									if ( $ttbm_hero_loc && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_location', 'on' ) != 'off' ) :
+								?>
+									<div class="item_icon ttbm_hero_loc" title="<?php esc_attr_e( 'Location', 'tour-booking-manager' ); ?>">
+										<i class="mi mi-marker"></i>
+										<span><?php echo esc_html( $ttbm_hero_loc ); ?></span>
+									</div>
+								<?php endif; ?>
+								<?php do_action( 'ttbm_short_details' ); ?>
 							</div>
 							<div class="ttbm_booking_section" id="ttbm_booking_section">
 								<?php include( TTBM_Function::template_path( 'ticket/registration.php' ) ); ?>

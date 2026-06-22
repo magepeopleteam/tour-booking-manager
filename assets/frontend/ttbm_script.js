@@ -461,10 +461,25 @@
 			if ($picker.val()) { return; } // date already chosen by user — do nothing
 			var firstDate = $picker.data('ttbm-first-date');
 			if (!firstDate) { return; }
-			// Set the visible formatted text via the datepicker (no calendar popup)
-			$picker.datepicker('setDate', new Date(firstDate + 'T00:00:00'));
-			// Set the hidden date input and trigger ticket loading
-			$picker.closest('label').find('input[name="ttbm_date"]').val(firstDate).trigger('change');
+			// Format and set the visible date input directly, bypassing datepicker('setDate')
+			// which can fire onSelect internally and cause a duplicate AJAX call.
+			var formattedDate = $.datepicker.formatDate(ttbm_date_format, new Date(firstDate + 'T00:00:00'));
+			$picker.val(formattedDate);
+			var $regArea   = $section.find('.ttbm_registration_area').first();
+			var $hiddenDate = $picker.closest('label').find('input[name="ttbm_date"]');
+			// For regular_ticket the PHP has already pre-rendered the ticket form for
+			// the first available date. Clearing + reloading the exact same content
+			// causes a visible double-load. If the form is already there for this date,
+			// just sync the hidden input and enable the Book Now button — no AJAX needed.
+			var loadedDate = $regArea.find('.ttbm_last_updated').data('tour-date');
+			if ($regArea.find('.mp_tour_ticket_form').length > 0
+					&& (!loadedDate || String(loadedDate) === String(firstDate))) {
+				$hiddenDate.val(firstDate);
+				ttbm_toggle_book_now_by_date($regArea);
+				return;
+			}
+			// Form not yet loaded (e.g. availability_section) — trigger AJAX load.
+			$hiddenDate.val(firstDate).trigger('change');
 		});
 	});
 

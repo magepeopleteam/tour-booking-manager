@@ -260,13 +260,14 @@
 
 /* left-to-right dark scrim, content vertically centred on the left */
 #ttbm_content .ttbm_default_theme .ttbm_hero_overlay {
-	position: absolute; top: 0; bottom: 0; left: 0; right: 20%; z-index: 5;
+	position: absolute; top: 6px; bottom: 16px; left: 1px; right: 20%; z-index: 5;
+	border-radius: 20px;
 	display: flex; align-items: center;
 	padding: 0 0 0 6%;
 	background: linear-gradient(to right, rgb(53 62 81 / 78%) -11%, rgb(8 12 20 / 52%) 6%, rgb(8 12 20 / 13%) 75%, #00000000 100%);
 	pointer-events: none;
 }
-#ttbm_content .ttbm_default_theme .ttbm_hero_overlay_inner { max-width: 88%; pointer-events: none;     margin-top: 300px;}
+#ttbm_content .ttbm_default_theme .ttbm_hero_overlay_inner { max-width: 88%; pointer-events: none; margin-top: 300px; }
 
 #ttbm_content .ttbm_default_theme .ttbm_hero_overlay .ttbm_default__title h1 {
 	color: #fff; font-size: 36px; line-height: 1.14; font-weight: 800; letter-spacing: -.02em;
@@ -278,25 +279,27 @@
 }
 #ttbm_content .ttbm_default_theme .ttbm_hero_meta .location_name span { color: var(--color_theme); }
 
-/* stats panel: Location + Days + Age + Stock on one frosted line */
+/* stats bar: sits below the hero image as a clean info strip */
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats {
-	display: inline-flex; flex-wrap: wrap; align-items: center; gap: 16px 30px; margin: 4px 0 0;
-	padding: 14px 24px; border-radius: 16px;
-	background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
-	-webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+	display: flex; flex-wrap: wrap; align-items: center; gap: 8px 28px;
+	padding: 12px 0; margin: 16px 0 20px;
+	background: transparent;
+	border-top: 1px solid var(--ttbm_d_border);
+	border-bottom: 1px solid var(--ttbm_d_border);
+	border-radius: 0;
 }
-/* dissolve the inner .item_section box so its chips share the panel's flex row */
+/* dissolve the inner .item_section box so its chips share the bar's flex row */
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_section { display: contents; }
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon {
-	display: inline-flex; align-items: center; gap: 11px; margin: 0; padding: 0;
-	background: none; border: 0; color: #fff; font-size: 13.5px; font-weight: 600; line-height: 1.25; max-width: 230px;
+	display: inline-flex; align-items: center; gap: 8px; margin: 0; padding: 0;
+	background: none; border: 0; color: var(--ttbm_d_text); font-size: 13.5px; font-weight: 500; line-height: 1.25; max-width: 260px;
 }
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon i {
-	flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
-	display: inline-flex; align-items: center; justify-content: center; font-size: 18px; color: #fff;
-	background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.3);
+	flex-shrink: 0; font-size: 16px; color: var(--color_theme);
+	width: auto; height: auto; background: none; border: none; border-radius: 0;
+	display: inline-flex; align-items: center; justify-content: center;
 }
-#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon span { color: #fff; }
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon span { color: var(--ttbm_d_text); }
 /* price is shown in the CTA block, so hide the price chip here */
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon:has(.mi-coins) { display: none; }
 
@@ -305,22 +308,16 @@
 #ttbm_content .ttbm_default_theme .ttbm_hero_price { margin-bottom: 0; }
 #ttbm_content .ttbm_default_theme .ttbm_hero_price_label { display: block; color: rgba(255,255,255,.78); font-size: 13px; font-weight: 500; margin-bottom: 2px; }
 #ttbm_content .ttbm_default_theme .ttbm_hero_price_value,
-#ttbm_content .ttbm_default_theme .ttbm_hero_price_value .amount { color: #fff; font-size: 30px; font-weight: 800; line-height: 1; }
+#ttbm_content .ttbm_default_theme .ttbm_hero_price_value .amount { color: #e03248; font-size: 24px; font-weight: 800; line-height: 1; }
 #ttbm_content .ttbm_default_theme .ttbm_hero_book_now {
-	display: inline-flex; align-items: center; gap: 11px; pointer-events: auto;
-	background: linear-gradient(135deg, var(--color_theme), var(--color_theme_secondary));
-	color: #fff; border: 0; border-radius: 14px; padding: 17px 42px; font-size: 17px; font-weight: 800; letter-spacing: .01em; cursor: pointer;
-	box-shadow: 0 14px 30px rgba(var(--color_theme_rgb), .5);
-	transition: transform .2s ease, box-shadow .2s ease;
-	animation: ttbmBookPulse 2.4s ease-in-out infinite;
-}
-@keyframes ttbmBookPulse {
-	0%, 100% { box-shadow: 0 14px 30px rgba(var(--color_theme_rgb), .5), 0 0 0 0 rgba(var(--color_theme_rgb), .4); }
-	50%      { box-shadow: 0 16px 38px rgba(var(--color_theme_rgb), .6), 0 0 0 12px rgba(var(--color_theme_rgb), 0); }
+	display: inline-flex; align-items: center; gap: 9px; pointer-events: auto;
+	background: #e03248;
+	color: #fff !important; border: none; border-radius: 30px; padding: 12px 26px; font-size: 20px; font-weight: 600; cursor: pointer;
+	text-decoration: none !important; opacity: 1 !important; width: fit-content;
+	transition: background 0.2s, transform 0.15s;
 }
 #ttbm_content .ttbm_default_theme .ttbm_hero_book_now span { color: #fff; font-size: 13px; }
-#ttbm_content .ttbm_default_theme .ttbm_hero_book_now:hover { transform: translateY(-3px) scale(1.02); animation: none; box-shadow: 0 20px 44px rgba(var(--color_theme_rgb), .62); }
-@media (prefers-reduced-motion: reduce) { #ttbm_content .ttbm_default_theme .ttbm_hero_book_now { animation: none; } }
+#ttbm_content .ttbm_default_theme .ttbm_hero_book_now:hover { background: #c42a3e; transform: translateY(-2px); }
 
 /* mobile: overlay drops to a readable stacked card under a shorter image */
 @media (max-width: 768px) {
@@ -331,10 +328,7 @@
 	#ttbm_content .ttbm_default_theme .ttbm_hero_overlay { position: static; display: block; padding: 16px 2px 2px; background: none; }
 	#ttbm_content .ttbm_default_theme .ttbm_hero_overlay_inner { max-width: 100%; margin-top: 0; }
 	#ttbm_content .ttbm_default_theme .ttbm_hero_overlay .ttbm_default__title h1 { color: var(--ttbm_d_heading); font-size: 24px; text-shadow: none; }
-	#ttbm_content .ttbm_default_theme .ttbm_hero_stats { background: #f4f6fa; border-color: #e3e6ee; -webkit-backdrop-filter: none; backdrop-filter: none; gap: 14px 20px; padding: 14px 16px; }
-	#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon { color: var(--ttbm_d_heading); }
-	#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon i { color: var(--color_theme); background: rgba(var(--color_theme_rgb), .1); border-color: rgba(var(--color_theme_rgb), .25); }
-	#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon span { color: var(--ttbm_d_heading); }
+	#ttbm_content .ttbm_default_theme .ttbm_hero_stats { gap: 8px 12px; padding: 10px 0; margin: 12px 0 16px; }
 	#ttbm_content .ttbm_default_theme .ttbm_hero_price_label { color: var(--ttbm_d_muted); }
 	#ttbm_content .ttbm_default_theme .ttbm_hero_price_value,
 	#ttbm_content .ttbm_default_theme .ttbm_hero_price_value .amount { color: var(--ttbm_d_heading); }

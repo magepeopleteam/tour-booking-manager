@@ -1581,7 +1581,7 @@ div.ttbm_default_widget .ttbm_widget_content.ttbm_day_wise_details {
 }
 
 div.ttbm_default_widget .ttbm_title_style_2 {
-	padding: 12px var(--ttbm_mp);
+	padding: 12px 0 var(--ttbm_mp);
 	font-size: 22px;
 }
 

@@ -195,7 +195,13 @@ function ttbm_loadBgImage() {
                 if (!bg_url || bg_url.width === 0 || bg_url.width === 'undefined') {
                     bg_url = ttbm_empty_image_url;
                 }
-                ttbm_resize_bg_image_area(target, bg_url);
+                // Only use JS to calculate height when CSS provides no height.
+                // Elements like .ttbm-gc-thumb already have height:220px — skipping
+                // the extra Image() download eliminates the layout shift and the
+                // duplicate network request.
+                if (height === 0) {
+                    ttbm_resize_bg_image_area(target, bg_url);
+                }
 
                 target.css('background-image', 'url("' + bg_url + '")').promise().done(function () {
                     dLoaderRemove(target);
@@ -267,13 +273,22 @@ function ttbm_init_dynamic_ui(scope = jQuery(document)) {
 function ttbm_resize_bg_image_area(target, bg_url) {
     let tmpImg = new Image();
     tmpImg.src = bg_url;
-    jQuery(tmpImg).one('load', function () {
-        let imgWidth = tmpImg.width;
-        let imgHeight = tmpImg.height;
-        let height = target.outerWidth() * imgHeight / imgWidth;
-        target.css({"min-height": height});
+
+    function applyHeight() {
+        if (tmpImg.naturalWidth > 0) {
+            let height = target.outerWidth() * tmpImg.naturalHeight / tmpImg.naturalWidth;
+            target.attr('data-ttbm-resized', 'true');
+            target.css({"min-height": height});
+        }
         dLoaderRemove(target);
-    });
+    }
+
+    // If the browser already has the image in cache, resolve immediately (no network wait).
+    if (tmpImg.complete && tmpImg.naturalWidth > 0) {
+        applyHeight();
+        return;
+    }
+    jQuery(tmpImg).one('load error', applyHeight);
 }
 (function ($) {
     let bg_image_load = false;
@@ -298,8 +313,35 @@ function ttbm_resize_bg_image_area(target, bg_url) {
             window.location.href = href;
         }
     });
-    $(window).on('load , resize', function () {
+    $(window).on('load', function () {
+        // Elements with a CSS-defined height don't need a JS measurement — skip
+        // ttbm_resize_bg_image_area to avoid redundant Image() downloads and layout
+        // shifts, but always call dLoaderRemove so the spinner never gets stuck.
         $('body').find('div.ttbm_style [data-bg-image]:visible').each(function () {
+            let target = $(this);
+            if (target.closest('.sliderAllItem').length === 0) {
+                let bg_url = target.data('bg-image');
+                if (!bg_url || bg_url.width === 0 || bg_url.width === 'undefined') {
+                    bg_url = ttbm_empty_image_url;
+                }
+                if (target.outerHeight() === 0) {
+                    // No CSS height — let JS calculate from image dimensions.
+                    ttbm_resize_bg_image_area(target, bg_url);
+                } else {
+                    // Has CSS height — skip the extra Image() download, just clear loader.
+                    dLoaderRemove(target);
+                }
+            }
+        });
+        jQuery('body').find('div.ttbm_style .sliderAllItem:visible').each(function () {
+            ttbm_slider_resize(jQuery(this));
+        });
+        ttbm_loadCartBgImage();
+    });
+    $(window).on('resize', function () {
+        // On resize, recalculate only elements that were previously JS-sized (data-ttbm-resized).
+        // Elements with fixed CSS heights are intentionally excluded to avoid layout jank.
+        $('body').find('div.ttbm_style [data-bg-image][data-ttbm-resized]:visible').each(function () {
             let target = $(this);
             if (target.closest('.sliderAllItem').length === 0) {
                 let bg_url = target.data('bg-image');
@@ -310,10 +352,8 @@ function ttbm_resize_bg_image_area(target, bg_url) {
             }
         });
         jQuery('body').find('div.ttbm_style .sliderAllItem:visible').each(function () {
-            let target = jQuery(this);
-            ttbm_slider_resize(target)
+            ttbm_slider_resize(jQuery(this));
         });
-        // Load cart images
         ttbm_loadCartBgImage();
     });
     function load_initial() {

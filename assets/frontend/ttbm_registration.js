@@ -25,11 +25,7 @@ function get_ttbm_ticket(current, date = '') {
             nonce: ttbm_ajax.nonce
         },
         beforeSend: function () {
-            if (parent.find('.mp_tour_ticket_form').length > 0) {
-                placeholderLoader(parent);
-            } else {
-                simpleSpinner(parent);
-            }
+            placeholderLoader(parent);
         },
         success: function (data) {
             if (parent.data('ttbmTicketRequestToken') !== requestToken) {

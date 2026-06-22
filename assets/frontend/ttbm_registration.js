@@ -122,6 +122,9 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
 
         let time_slot = parent.find('.ttbm_select_time_area');
         parent.find('.ttbm_booking_panel').html('');
+        // Show placeholder immediately after date selection so the panel
+        // never appears blank — removed when tickets load via AJAX.
+        placeholderLoader(parent);
         // Show time slots if date is selected
         if (time_slot.length > 0) {
             time_slot.slideDown();

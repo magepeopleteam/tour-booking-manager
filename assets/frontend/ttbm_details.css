@@ -645,6 +645,45 @@
    hide it completely with no leftover blank space. */
 #ttbm_content .ttbm_booking_section .allCenter.ttbm_date_time_select { display: none; }
 
+/* Skeleton loader: 3 solid grey bars on white, shimmer sweeps via ::after */
+#ttbm_content .ttbm_booking_section .placeholderLoader .ttbm_booking_panel.placeholder_area {
+	min-height: 148px;
+	position: relative !important;
+	overflow: hidden !important;
+	background-color: #fff !important;
+	background-image:
+		linear-gradient(#d6d6d6, #d6d6d6),
+		linear-gradient(#d6d6d6, #d6d6d6),
+		linear-gradient(#d6d6d6, #d6d6d6) !important;
+	background-size:
+		100% 36px,
+		100% 36px,
+		100% 36px !important;
+	background-repeat: no-repeat !important;
+	background-position:
+		0 10px,
+		0 56px,
+		0 102px !important;
+	animation: none !important;
+}
+/* suppress global ::before shimmer */
+#ttbm_content .ttbm_booking_section .placeholderLoader .ttbm_booking_panel.placeholder_area::before {
+	display: none !important;
+}
+/* sliding white highlight that sweeps across the bars */
+#ttbm_content .ttbm_booking_section .placeholderLoader .ttbm_booking_panel.placeholder_area::after {
+	content: '';
+	position: absolute;
+	top: 0; left: -100%; bottom: 0;
+	width: 60%;
+	background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.75) 50%, transparent 100%);
+	animation: ttbmShimmerSlide 1.4s ease-in-out infinite;
+}
+@keyframes ttbmShimmerSlide {
+	0%   { left: -100%; }
+	100% { left: 160%; }
+}
+
 #ttbm_content .ttbm_booking_section { margin-top: 30px; }
 #ttbm_content .ttbm_booking_section .ttbm_registration_area {
 	background: #fff;

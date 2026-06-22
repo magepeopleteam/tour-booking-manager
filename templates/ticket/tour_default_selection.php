@@ -51,11 +51,12 @@ if (!defined('ABSPATH')) {
 							<?php endif; ?>
                             <div class="booking-button">
                                 <div class="date-picker">
-                                    <div class="date_time_label ttbm-title"><?php echo $time_slots_enabled ? esc_html__('Select Date & Time : ', 'tour-booking-manager') : esc_html__('Select Date  : ', 'tour-booking-manager'); ?></div>
+                                    <div class="date_time_label ttbm-title"><?php echo $time_slots_enabled ? esc_html__( 'Select Date & Time', 'tour-booking-manager' ) : esc_html__( 'Select Date', 'tour-booking-manager' ); ?></div>
                                     <label class="date-picker-icon">
                                         <i class="far fa-calendar-alt"></i>
                                         <input type="hidden" name="ttbm_date" value="<?php echo esc_attr($hidden_date); ?>" required/>
                                         <input id="ttbm_select_date" type="text" value="<?php echo esc_attr($visible_date); ?>" class="formControl mb-0 " placeholder="<?php echo esc_attr($now); ?>" readonly required/>
+                                        <span class="ttbm_date_chevron fas fa-chevron-down" aria-hidden="true"></span>
                                     </label>
                                 </div>
 								<?php

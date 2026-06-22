@@ -14,15 +14,14 @@
 		?>
 		<div class="dLayout_xs justifyBetween ttbm_book_now_area" title="<?php esc_attr_e( 'Select Date First', 'tour-booking-manager' ); ?>" data-placeholder>
 			<div class="fdColumn ttbm_order_summary">
-				<span class="ttbm_summary_heading"><?php esc_html_e( 'Order Summary', 'tour-booking-manager' ); ?></span>
 				<div class="ttbm_summary_values">
 					<div class="ttbm_summary_item">
-						<span class="ttbm_summary_label"><?php esc_html_e( 'Quantity', 'tour-booking-manager' ); ?></span>
 						<b class="tour_qty">0</b>
+						<span class="ttbm_summary_label"><?php esc_html_e( 'Tickets', 'tour-booking-manager' ); ?></span>
 					</div>
 					<div class="ttbm_summary_item">
-						<span class="ttbm_summary_label"><?php esc_html_e( 'Total Amount', 'tour-booking-manager' ); ?></span>
 						<b class="tour_price"></b>
+						<span class="ttbm_summary_label"><?php esc_html_e( 'Total', 'tour-booking-manager' ); ?></span>
 					</div>
 				</div>
 			</div>
@@ -33,8 +32,8 @@
 				</button>
 			<?php } ?>
 			<button class="dButton ttbm_book_now <?php echo esc_attr($seat_plan); ?>" type="<?php echo esc_attr($button_type); ?>">
-				<span class="fas fa-cart-plus"></span>
-				<?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?>
+				<span class="fas fa-shopping-cart"></span>
+				<?php esc_html_e( 'Book now', 'tour-booking-manager' ); ?>
 			</button>
 			<button type="submit" name="add-to-cart" value="<?php echo esc_attr( $ttbm_product_id ); ?>" class="dNone ttbm_add_to_cart">
 				<?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?>

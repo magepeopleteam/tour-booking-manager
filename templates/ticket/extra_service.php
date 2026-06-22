@@ -13,7 +13,7 @@
 		?>
 		<div class="ttbm_extra_service_area">
 			<?php do_action('ttbm_before_extra_service_list_table', $tour_id); ?>
-			<h2 class="extra_service_title"><?php echo esc_html__('Available Extra Service List ', 'tour-booking-manager'); ?></h2>
+			<h2 class="extra_service_title"><?php echo esc_html__( 'Extra Services', 'tour-booking-manager' ); ?></h2>
 			<div class="ttbm_widget_content" data-placeholder>
 				<table class="mp_tour_ticket_extra ttbm_enhanced_table">
 					<thead class="ttbm_table_header">

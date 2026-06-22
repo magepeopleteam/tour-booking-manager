@@ -9,7 +9,7 @@
 	if ( sizeof( $tour_activities ) > 0 && $display_activities != 'off' ) {
 		?>
 		<section class="ttbm_planned_activities_section">
-			<h2 class="ttbm_pa_heading">
+			<h2 class="ttbm_section_title">
 				<?php TTBM_Function::translation_settings( 'ttbm_string_activities', esc_html__( 'Planned Activities', 'tour-booking-manager' ) ); ?>
 			</h2>
 			<ul class="ttbm_activity_pills">

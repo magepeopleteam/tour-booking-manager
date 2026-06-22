@@ -6043,8 +6043,6 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 #ttbm_content .ttbm_widget_content h2, #ttbm_content .ttbm_widget_content h3, #ttbm_content .ttbm_widget_content h4, #ttbm_content .ttbm_widget_content h5, #ttbm_content .ttbm_widget_content h6{margin-bottom:10px;}
 .ttbm_wp_editor .content-title{
 	text-transform: uppercase;
-    text-decoration: underline;
-    text-underline-offset: 10px;
 }
 
 /* Custom: Reduce gap between ticket type and extra service items in booking panel */

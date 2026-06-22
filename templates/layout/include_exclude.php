@@ -15,7 +15,7 @@
 	}
 	?>
 	<section class="ttbm_include_exclude_section">
-		<h2 class="ttbm_pa_heading">
+		<h2 class="ttbm_section_title">
 			<?php TTBM_Function::translation_settings( 'ttbm_string_include_exclude', esc_html__( 'Included / Exclude', 'tour-booking-manager' ) ); ?>
 		</h2>
 		<div class="ttbm_include_exclude_box">

@@ -72,7 +72,8 @@
 				// if ($check_ability == 'availability_section' && $travel_type != 'fixed') { 
 				?>
                 <button class="navy_blueButton ttbm_check_ability" type="button">
-					<?php esc_html_e('Check  Availability', 'tour-booking-manager'); ?>
+					<span class="fas fa-search"></span>
+					<?php esc_html_e( 'Check availability', 'tour-booking-manager' ); ?>
                 </button>
 				<?php // }
 			}

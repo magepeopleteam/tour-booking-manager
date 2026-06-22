@@ -525,12 +525,14 @@
 #ttbm_content .get-enquiry-popup { margin-top: 16px; }
 #ttbm_content .get-enquiry-popup button {
 	width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-	background: linear-gradient(135deg, var(--color_theme), var(--color_theme_secondary));
-	color: #fff; border: 0; border-radius: 11px; padding: 13px 18px; font-size: 15px; font-weight: 700; cursor: pointer;
-	box-shadow: 0 8px 18px rgba(var(--color_theme_rgb), .28); transition: transform .2s ease, box-shadow .2s ease;
+	background: #fafafa !important;
+	color: var(--ttbm_d_heading) !important;
+	border: 1px solid #c9c9d4 !important;
+	border-radius: 11px; padding: 13px 18px; font-size: 15px; font-weight: 700; cursor: pointer;
+	transform: none; box-shadow: none; transition: transform .2s ease, box-shadow .2s ease;
 }
 #ttbm_content .get-enquiry-popup button:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(var(--color_theme_rgb), .38); }
-#ttbm_content .get-enquiry-popup button span { color: #fff; }
+#ttbm_content .get-enquiry-popup button span { color: var(--ttbm_d_heading) !important; }
 
 /* =====================================================================
    Enquiry popup — beautiful animated modal
@@ -1224,8 +1226,8 @@
 	display: inline-flex;
 	align-items: center;
 	gap: 8px;
-	background: #fff !important;
-	color: var(--ttbm_d_heading) !important;
+	background: var(--color_theme) !important;
+	color: #fff !important;
 	border: 1px solid #e0e0e0 !important;
 	border-radius: 12px;
 	padding: 12px 22px;
@@ -1237,12 +1239,12 @@
 }
 #ttbm_content .ttbm_booking_section .ttbm_book_now:hover {
 	transform: none;
-	background: #fafafa !important;
+	background: #5019cf !important;
 	border-color: #c9c9d4 !important;
 	box-shadow: none;
-	color: var(--ttbm_d_heading) !important;
+	color: #fff !important;
 }
-#ttbm_content .ttbm_booking_section .ttbm_book_now span { color: var(--ttbm_d_muted); font-size: 14px; }
+#ttbm_content .ttbm_booking_section .ttbm_book_now span { color: #fff; font-size: 14px; }
 
 /* override global registration.css ticket table styles */
 #ttbm_content .ttbm_booking_section .ttbm_ticket_row {

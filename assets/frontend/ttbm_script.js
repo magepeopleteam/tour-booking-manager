@@ -35,7 +35,7 @@
 	});
 	$("#place_you_see .owl-carousel").owlCarousel({
 		loop: true,
-		margin: 10,
+		margin: 20,
 		nav: true,
 		rtl: true,
 		responsive: {

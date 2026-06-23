@@ -22,16 +22,25 @@
 										<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
 										<?php
 											$ttbm_hero_display_reg = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_registration', 'on' );
-											$ttbm_hero_price       = TTBM_Function::get_tour_start_price( $ttbm_post_id );
+											$ttbm_hero_price       = TTBM_Function::get_tour_start_price( $tour_id );
+											$ttbm_hero_next_date   = TTBM_Function::get_next_tour_date_display( $tour_id );
 											if ( $ttbm_hero_display_reg != 'off' ) :
 										?>
 											<div class="ttbm_hero_cta">
-												<?php if ( $ttbm_hero_price ) : ?>
-													<div class="ttbm_hero_price">
-														<span class="ttbm_hero_price_label"><?php esc_html_e( 'Prices Start At', 'tour-booking-manager' ); ?></span>
-														<span class="ttbm_hero_price_value"><?php echo wp_kses_post( wc_price( $ttbm_hero_price ) ); ?></span>
-													</div>
-												<?php endif; ?>
+												<div class="ttbm_hero_cta_meta">
+													<?php if ( $ttbm_hero_price && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) != 'off' ) : ?>
+														<div class="ttbm_hero_price">
+															<span class="ttbm_hero_price_label"><?php esc_html_e( 'Prices Start At', 'tour-booking-manager' ); ?></span>
+															<span class="ttbm_hero_price_value"><?php echo wp_kses_post( wc_price( $ttbm_hero_price ) ); ?></span>
+														</div>
+													<?php endif; ?>
+													<?php if ( $ttbm_hero_next_date ) : ?>
+														<div class="ttbm_hero_date">
+															<span class="ttbm_hero_date_label"><?php echo esc_html( TTBM_Function::get_next_tour_date_label( $tour_id ) ); ?></span>
+															<span class="ttbm_hero_date_value"><?php echo esc_html( $ttbm_hero_next_date ); ?></span>
+														</div>
+													<?php endif; ?>
+												</div>
 												<button type="button" class="ttbm_hero_book_now" data-ttbm-book-now>
 													<?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?>
 													<span class="fas fa-chevron-right"></span>
@@ -72,6 +81,7 @@
 						</div>
 						<div class="ttbm_content__right">
 							<?php //do_action( 'ttbm_hotel_list' ); ?>
+							<?php do_action( 'ttbm_sidebar_cta' ); ?>
 							<?php do_action( 'ttbm_why_choose_us' ); ?>
 							<?php do_action( 'ttbm_get_a_question' ); ?>
 							<?php do_action( 'ttbm_tour_guide' ); ?>

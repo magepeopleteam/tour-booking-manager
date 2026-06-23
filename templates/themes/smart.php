@@ -35,6 +35,7 @@
 				<div class="ttbm_content__right">
 					<div class="ttbm-smart-booking-origin"></div>
 					<?php do_action( 'ttbm_registration' ); ?>
+					<?php do_action( 'ttbm_sidebar_cta' ); ?>
 					<?php do_action( 'ttbm_why_choose_us' ); ?>
 					<?php do_action( 'ttbm_get_a_question' ); ?>
 					<?php do_action( 'ttbm_tour_guide' ); ?>

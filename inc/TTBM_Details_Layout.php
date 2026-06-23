@@ -22,6 +22,7 @@
 				add_action('ttbm_day_wise_details', array($this, 'day_wise_details'));
 				add_action('ttbm_faq', array($this, 'faq'));
 				add_action('ttbm_why_choose_us', array($this, 'why_choose_us'));
+				add_action('ttbm_sidebar_cta', array($this, 'sidebar_cta'));
 				add_action('ttbm_get_a_question', array($this, 'get_a_question'));
 				add_action('ttbm_tour_guide', array($this, 'tour_guide'));
 				add_action('ttbm_details_particular_area', array($this, 'particular_area'));
@@ -245,6 +246,9 @@
 			}
 			public function why_choose_us() {
 				include(TTBM_Function::template_path('layout/why_choose_us.php'));
+			}
+			public function sidebar_cta() {
+				include(TTBM_Function::template_path('layout/sidebar_cta.php'));
 			}
 			public function get_a_question() {
 				include(TTBM_Function::template_path('layout/get_a_question.php'));

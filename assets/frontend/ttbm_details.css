@@ -474,7 +474,7 @@
 
 /* left-to-right dark scrim, content vertically centred on the left */
 #ttbm_content .ttbm_default_theme .ttbm_hero_overlay {
-	position: absolute; top: 6px; bottom: 16px; left: 1px; right: 20%; z-index: 5;
+	position: absolute; top: 0; left: 0; bottom: 16px; right: 20%; z-index: 5;
 	border-radius: 20px;
 	display: flex; align-items: center;
 	padding: 0 0 0 6%;
@@ -517,53 +517,75 @@
 /* price is shown in the CTA block, so hide the price chip here */
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon:has(.mi-coins) { display: none; }
 
-/* price + Book Now — white card overlaid at the bottom of the hero */
+/* price + date + Book Now — 3-column single-line card */
 #ttbm_content .ttbm_default_theme .ttbm_hero_cta {
 	margin-top: 24px;
 	pointer-events: auto;
-	display: inline-flex;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
 	align-items: center;
-	gap: 16px;
-	flex-wrap: wrap;
+	gap: 12px 20px;
+	flex-wrap: nowrap;
 	background: rgba(255, 255, 255, 0.95);
 	border-radius: 14px;
-	padding: 14px 18px;
+	padding: 12px 18px;
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 	backdrop-filter: blur(6px);
 	-webkit-backdrop-filter: blur(6px);
 }
 #ttbm_content .ttbm_default_theme .ttbm_hero_cta_meta {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	min-width: 0;
+	display: contents;
 }
-#ttbm_content .ttbm_default_theme .ttbm_hero_price { margin-bottom: 0; }
-#ttbm_content .ttbm_default_theme .ttbm_hero_date { margin-bottom: 0; }
+#ttbm_content .ttbm_default_theme .ttbm_hero_price,
+#ttbm_content .ttbm_default_theme .ttbm_hero_date {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+	min-width: 0;
+	white-space: nowrap;
+}
 #ttbm_content .ttbm_default_theme .ttbm_hero_price_label,
 #ttbm_content .ttbm_default_theme .ttbm_hero_date_label {
-	display: block;
+	display: inline;
 	color: #6b7280;
 	font-size: 11px;
 	font-weight: 600;
-	letter-spacing: .05em;
+	letter-spacing: .04em;
 	text-transform: uppercase;
-	margin-bottom: 3px;
+	margin: 0;
+	white-space: nowrap;
+	flex-shrink: 0;
 }
 #ttbm_content .ttbm_default_theme .ttbm_hero_date_value {
-	display: block;
+	display: inline;
 	color: var(--ttbm_d_heading, #111827);
 	font-size: 14px;
 	font-weight: 600;
-	line-height: 1.35;
+	line-height: 1.25;
+	white-space: nowrap;
+}
+#ttbm_content .ttbm_default_theme .ttbm_hero_price_value {
+	display: inline;
+	line-height: 1;
+	white-space: nowrap;
 }
 #ttbm_content .ttbm_default_theme .ttbm_hero_price_value,
-#ttbm_content .ttbm_default_theme .ttbm_hero_price_value .amount { color: #e03248; font-size: 24px; font-weight: 800; line-height: 1; }
+#ttbm_content .ttbm_default_theme .ttbm_hero_price_value .amount { color: #e03248; font-size: 22px; font-weight: 800; line-height: 1; }
 #ttbm_content .ttbm_default_theme .ttbm_hero_book_now {
-	display: inline-flex; align-items: center; gap: 9px; pointer-events: auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 9px;
+	pointer-events: auto;
+	flex-shrink: 0;
+	white-space: nowrap;
+	grid-column: -1;
 	background: #e03248;
-	color: #fff !important; border: none; border-radius: 30px; padding: 12px 26px; font-size: 20px; font-weight: 600; cursor: pointer;
-	text-decoration: none !important; opacity: 1 !important; width: fit-content;
+	color: #fff !important; border: none; border-radius: 30px; padding: 11px 22px; font-size: 18px; font-weight: 600; cursor: pointer;
+	text-decoration: none !important; opacity: 1 !important; width: auto;
 	transition: background 0.2s, transform 0.15s;
 }
 #ttbm_content .ttbm_default_theme .ttbm_hero_book_now span { color: #fff; font-size: 13px; }
@@ -579,11 +601,28 @@
 	#ttbm_content .ttbm_default_theme .ttbm_hero_overlay_inner { max-width: 100%; margin-top: 0; }
 	#ttbm_content .ttbm_default_theme .ttbm_hero_overlay .ttbm_default__title h1 { color: var(--ttbm_d_heading); font-size: 24px; text-shadow: none; }
 	#ttbm_content .ttbm_default_theme .ttbm_hero_stats { gap: 8px 12px; padding: 10px 0; margin: 12px 0 16px; }
-	#ttbm_content .ttbm_default_theme .ttbm_hero_price_label,
-	#ttbm_content .ttbm_default_theme .ttbm_hero_date_label { color: var(--ttbm_d_muted); }
-	#ttbm_content .ttbm_default_theme .ttbm_hero_date_value { color: var(--ttbm_d_heading); }
-	#ttbm_content .ttbm_default_theme .ttbm_hero_price_value,
-	#ttbm_content .ttbm_default_theme .ttbm_hero_price_value .amount { color: var(--ttbm_d_heading); }
+	#ttbm_content .ttbm_default_theme .ttbm_hero_cta {
+		grid-template-columns: 1fr;
+		gap: 10px;
+	}
+	#ttbm_content .ttbm_default_theme .ttbm_hero_cta_meta {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+	#ttbm_content .ttbm_default_theme .ttbm_hero_price,
+	#ttbm_content .ttbm_default_theme .ttbm_hero_date {
+		flex-wrap: wrap;
+		white-space: normal;
+	}
+	#ttbm_content .ttbm_default_theme .ttbm_hero_date_value,
+	#ttbm_content .ttbm_default_theme .ttbm_hero_price_value {
+		white-space: normal;
+	}
+	#ttbm_content .ttbm_default_theme .ttbm_hero_book_now {
+		grid-column: auto;
+		width: 100%;
+	}
 }
 
 /* booking section hidden until "Book Now" is clicked */
@@ -847,7 +886,7 @@
 }
 
 #ttbm_content .ttbm_details_page .ttbm_sidebar_cta_amount strong {
-	font-size: 28px;
+	font-size: 24px;
 	font-weight: 800;
 	line-height: 1.1;
 	color: var(--ttbm_d_heading, #111827);
@@ -916,12 +955,6 @@
 
 #ttbm_content .ttbm_details_page .ttbm_sidebar_cta_link:hover {
 	text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-	#ttbm_content .ttbm_details_page .ttbm_sidebar_cta_amount strong {
-		font-size: 24px;
-	}
 }
 
 /* =====================================================================

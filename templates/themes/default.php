@@ -23,27 +23,34 @@
 										?>
 										<div class="ttbm_hero_overlay">
 											<div class="ttbm_hero_overlay_inner">
-												<?php do_action( 'ttbm_details_title' ); ?>
-												<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
+												<div class="ttbm_hero_overlay_head">
+													<?php do_action( 'ttbm_details_title' ); ?>
+													<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
+												</div>
 												<?php if ( $ttbm_hero_display_reg != 'off' ) : ?>
 													<div class="ttbm_hero_cta">
 														<div class="ttbm_hero_cta_meta">
 															<?php if ( $ttbm_hero_price && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) != 'off' ) : ?>
-																<div class="ttbm_hero_price">
-																	<span class="ttbm_hero_price_label"><?php esc_html_e( 'Prices Start At', 'tour-booking-manager' ); ?></span>
-																	<span class="ttbm_hero_price_value"><?php echo wp_kses_post( wc_price( $ttbm_hero_price ) ); ?></span>
+																<div class="ttbm_hero_price ttbm_hero_stat">
+																	<span class="ttbm_hero_stat_icon" aria-hidden="true"><i class="mi mi-coins"></i></span>
+																	<span class="ttbm_hero_stat_body">
+																		<span class="ttbm_hero_price_label"><?php esc_html_e( 'Prices Start At', 'tour-booking-manager' ); ?></span>
+																		<span class="ttbm_hero_price_value"><?php echo wp_kses_post( wc_price( $ttbm_hero_price ) ); ?></span>
+																	</span>
 																</div>
 															<?php endif; ?>
 															<?php if ( $ttbm_hero_next_date ) : ?>
-																<div class="ttbm_hero_date">
-																	<span class="ttbm_hero_date_label"><?php echo esc_html( TTBM_Function::get_next_tour_date_label( $tour_id ) ); ?></span>
-																	<span class="ttbm_hero_date_value"><?php echo esc_html( $ttbm_hero_next_date ); ?></span>
+																<div class="ttbm_hero_date ttbm_hero_stat">
+																	<span class="ttbm_hero_stat_icon" aria-hidden="true"><i class="mi mi-calendar-check"></i></span>
+																	<span class="ttbm_hero_stat_body">
+																		<span class="ttbm_hero_date_label"><?php echo esc_html( TTBM_Function::get_next_tour_date_label( $tour_id ) ); ?></span>
+																		<span class="ttbm_hero_date_value"><?php echo esc_html( $ttbm_hero_next_date ); ?></span>
+																	</span>
 																</div>
 															<?php endif; ?>
 														</div>
 														<button type="button" class="ttbm_hero_book_now" data-ttbm-book-now>
-															<?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?>
-															<span class="fas fa-chevron-right"></span>
+															<span class="ttbm_hero_book_now_text"><?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?></span>
 														</button>
 													</div>
 												<?php endif; ?>

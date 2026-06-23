@@ -849,17 +849,17 @@
 				$style = $style == 'list' ? 'modern' : $style;
 				if (is_page('find')) {
 					?>
-                    <div class="placeholder_area filter_top_bar justifyBetween">
-						<span>
-							<strong class="total_filter_qty"><?php echo esc_html($loop->post_count); ?></strong>
-							<?php esc_html_e(' Trips match your search criteria', 'tour-booking-manager'); ?>
-						</span>
-                        <div class="dFlex">
-                            <button class="ttbm_grid_view " type="button" <?php echo esc_attr($style == 'grid' ? 'disabled' : ''); ?> title="<?php esc_attr_e('Grid view', 'tour-booking-manager'); ?>">
-                                <i class="fas fa-th-large"></i>
+                    <div class="placeholder_area filter_top_bar ttbm-search-top-bar justifyBetween">
+						<div class="ttbm-search-top-bar-text">
+							<span class="ttbm-search-top-bar-count total_filter_qty"><?php echo esc_html($loop->post_count); ?></span>
+							<span class="ttbm-search-top-bar-label"><?php esc_html_e('Trips match your search criteria', 'tour-booking-manager'); ?></span>
+						</div>
+                        <div class="ttbm-search-view-switcher dFlex">
+                            <button class="ttbm_grid_view" type="button" <?php echo esc_attr($style == 'grid' ? 'disabled' : ''); ?> title="<?php esc_attr_e('Grid view', 'tour-booking-manager'); ?>" aria-label="<?php esc_attr_e('Grid view', 'tour-booking-manager'); ?>">
+                                <i class="fas fa-th-large" aria-hidden="true"></i>
                             </button>
-                            <button class="ttbm_list_view" type="button" <?php echo esc_attr($style == 'modern' ? 'disabled' : ''); ?> title="<?php esc_attr_e('LIst view', 'tour-booking-manager'); ?>">
-                                <i class="fas fa-th-list"></i>
+                            <button class="ttbm_list_view" type="button" <?php echo esc_attr($style == 'modern' ? 'disabled' : ''); ?> title="<?php esc_attr_e('List view', 'tour-booking-manager'); ?>" aria-label="<?php esc_attr_e('List view', 'tour-booking-manager'); ?>">
+                                <i class="fas fa-th-list" aria-hidden="true"></i>
                             </button>
                         </div>
                     </div>
@@ -868,12 +868,14 @@
 			}
 			public function sort_result($loop, $params) {
 				?>
-                <div class="search_result_empty" data-placeholder><?php esc_html_e('No Match Result Found!', 'tour-booking-manager'); ?></div>
-                <div class="filter_short_result" data-placeholder>
+                <div class="search_result_empty ttbm-search-empty" data-placeholder><?php esc_html_e('No Match Result Found!', 'tour-booking-manager'); ?></div>
+                <div class="filter_short_result ttbm-search-result-count" data-placeholder>
 					<?php esc_html_e('Showing', 'tour-booking-manager'); ?>
-                    <strong class="qty_count"><?php echo esc_html($params['show']); ?></strong>
-					<?php esc_html_e('of', 'tour-booking-manager'); ?>
-                    <strong class="total_filter_qty"><?php echo esc_html($loop->post_count); ?></strong>
+                    <span class="ttbm-search-count-highlight">
+                        <strong class="qty_count"><?php echo esc_html($params['show']); ?></strong>
+                        <?php esc_html_e('of', 'tour-booking-manager'); ?>
+                        <strong class="total_filter_qty"><?php echo esc_html($loop->post_count); ?></strong>
+                    </span>
                 </div>
 				<?php
 			}

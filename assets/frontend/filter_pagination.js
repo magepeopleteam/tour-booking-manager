@@ -132,8 +132,8 @@
 
 			function filter_qty_palace() {
 				let countSearchOn = $('.search_on').length;
-				let show = ' Showing <strong class="qty_count">' + countSearchOn + '</strong> of <strong class="total_filter_qty">' + countSearchOn + '</strong>';
-				$('.filter_short_result').html(show);
+				$('.filter_short_result .qty_count').text(countSearchOn);
+				$('.filter_short_result .total_filter_qty').text(countSearchOn);
 			}
 			filter_qty_palace();
 		});

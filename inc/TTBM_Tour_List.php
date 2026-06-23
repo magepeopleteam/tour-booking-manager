@@ -73,10 +73,11 @@
 				$activities = TTBM_Global_Function::get_taxonomy('ttbm_tour_activities');
 				$tour_pill_styles = array( 'orchid', 'lotus' );
 				$use_tour_activity_pills = in_array( $params['style'], $tour_pill_styles, true );
+				$use_activity_pills = $params['filter_by_activity'] === 'yes';
 				?>
                 <div class="all_filter_item<?php echo $use_tour_activity_pills ? ' ttbm-' . esc_attr( $params['style'] ) . '-list' : ''; ?>">
-						<?php if ($params['filter_by_activity'] === 'yes') { ?>
-                        <div class="ttbm_all_item_activities_wrapper<?php echo $use_tour_activity_pills ? ' ttbm-tour-activity-pills' : ''; ?>">
+						<?php if ($use_activity_pills) { ?>
+                        <div class="ttbm_all_item_activities_wrapper<?php echo $use_activity_pills ? ' ttbm-tour-activity-pills' : ''; ?>">
                             <button class="scroll-left">←</button>
                             <div class="ttbm_all_item_activities_holder">
 							<div class="ttbm_item_activity">

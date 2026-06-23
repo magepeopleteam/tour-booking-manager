@@ -2856,6 +2856,10 @@ div.ttbm_list_info>span:first-child {
 	margin: 0 var(--dbr) 0 0;
 }
 
+.ttbm_list_info.location_name {
+	font-size: 16px;
+}
+
 .filter_item.grid_4 .ttbm_list_info_wrapper,
 .filter_item.grid_3 .ttbm_list_info_wrapper {
 	height: auto;
@@ -3070,9 +3074,8 @@ div.ttbm_list_details {
 }
 
 div.modern div.ttbm_list_details {
-	: calc(100% - 300px);
+	max-width: calc(100% - 300px);
 	min-width: 60%;
-	padding: 0 0 0 var(--ttbm_mp);
 	padding: 10px;
 }
 
@@ -3416,7 +3419,7 @@ div.bg_image_area {
 .orchid .ttbm-orchid-body .location_name {
 	margin: 0 0 14px;
 	padding: 0;
-	font-size: 13px;
+	font-size: 16px;
 	font-weight: 500;
 	color: #6b7280;
 }
@@ -3653,7 +3656,7 @@ div.bg_image_area {
 	grid-column: 1 / -1;
 	margin: 0;
 	padding: 0;
-	font-size: 13px;
+	font-size: 16px;
 	font-weight: 500;
 	line-height: 1.4;
 	color: #6b7280;
@@ -6037,6 +6040,7 @@ tr.ttbm_hidden_inputs {
 
 .ttbm_filter_area .leftSidebar .ttbm_filter .formControl,
 .ttbm-tour-list-shortcode .leftSidebar .ttbm_filter .formControl {
+	margin-top: 10px;
 	border: 1px solid rgba(120, 140, 200, 0.22);
 	border-radius: 8px;
 	background: #f8faff;
@@ -6514,6 +6518,365 @@ button.ttbm_explore_button:hover {
 }
 
 /* =====================================================
+   TTBM Search Results Page  (.ttbm-search-results)
+   ===================================================== */
+
+.ttbm_filter_area .mainSection.ttbm-search-results,
+.ttbm_filter_area .mainSection {
+	font-family: inherit;
+	color: #334155;
+}
+
+/* Top bar: trip count + view switcher */
+.ttbm_filter_area .mainSection .ttbm-search-top-bar,
+.ttbm_filter_area .mainSection .filter_top_bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	width: 100%;
+	margin: 0 0 20px;
+	padding: 0 0 18px;
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid #e8edf5;
+	border-radius: 0;
+	box-shadow: none;
+	font-size: 15px;
+	font-weight: 500;
+	line-height: 1.5;
+	color: #64748b;
+}
+
+.ttbm-search-top-bar-text {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 8px;
+	min-width: 0;
+}
+
+.ttbm-search-top-bar-count,
+.ttbm_filter_area .mainSection .filter_top_bar .total_filter_qty {
+	font-size: 32px;
+	font-weight: 700;
+	line-height: 1.1;
+	color: #0f172a;
+	letter-spacing: -0.02em;
+}
+
+.ttbm-search-top-bar-label {
+	font-size: 15px;
+	font-weight: 500;
+	line-height: 1.45;
+	color: #64748b;
+}
+
+.ttbm-search-view-switcher {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px;
+	background: #f0f4ff;
+	border-radius: 10px;
+	flex-shrink: 0;
+}
+
+.ttbm_filter_area .mainSection .filter_top_bar button,
+.ttbm-search-view-switcher button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 38px;
+	height: 38px;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	border: none;
+	border-radius: 8px;
+	color: #64748b;
+	font-size: 16px;
+	line-height: 1;
+	cursor: pointer;
+	transition: background 0.2s ease, color 0.2s ease;
+}
+
+.ttbm_filter_area .mainSection .filter_top_bar button:hover:not(:disabled),
+.ttbm-search-view-switcher button:hover:not(:disabled) {
+	background: #fff;
+	color: var(--color_theme, #5a56e0);
+}
+
+.ttbm_filter_area .mainSection .filter_top_bar button:disabled,
+.ttbm-search-view-switcher button:disabled {
+	background: #fff;
+	color: var(--color_theme, #5a56e0);
+	box-shadow: 0 2px 8px rgba(90, 86, 224, 0.12);
+	cursor: default;
+}
+
+/* Activity pills in search results */
+.ttbm-search-results .ttbm-tour-activity-pills,
+.ttbm_filter_area .mainSection .ttbm-tour-activity-pills {
+	margin-bottom: 20px;
+}
+
+.ttbm-search-results .ttbm_all_item_activities_wrapper,
+.ttbm_filter_area .mainSection .ttbm_all_item_activities_wrapper {
+	margin-bottom: 4px;
+}
+
+/* Result count footer */
+.ttbm_filter_area .mainSection .ttbm-search-result-count,
+.ttbm_filter_area .mainSection .filter_short_result {
+	display: block;
+	margin: 28px 0 0;
+	padding: 0;
+	background: transparent;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 1.5;
+	color: #64748b;
+	text-align: left;
+}
+
+.ttbm-search-count-highlight {
+	font-weight: 500;
+	color: #64748b;
+}
+
+.ttbm-search-count-highlight .qty_count,
+.ttbm-search-count-highlight .total_filter_qty,
+.ttbm_filter_area .mainSection .filter_short_result strong {
+	font-weight: 700;
+	color: var(--color_theme, #5a56e0);
+}
+
+.ttbm_filter_area .mainSection .ttbm-search-empty,
+.ttbm_filter_area .mainSection .search_result_empty {
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 1.5;
+	color: #64748b;
+	border-radius: 12px;
+	border: 1px dashed #cbd5e1;
+	background: #f8fafc;
+}
+
+/* Modern list cards (default.php layout) */
+.ttbm-search-results .flexWrap.modern,
+.ttbm_filter_area .mainSection .flexWrap.modern {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin: 0;
+}
+
+.ttbm-search-results div.modern div.filter_item,
+.ttbm_filter_area .mainSection div.modern div.filter_item {
+	flex-direction: row;
+	align-items: stretch;
+	width: 100%;
+	min-height: 220px;
+	margin: 0;
+	padding: 0;
+	border: none !important;
+	border-radius: 16px;
+	overflow: hidden;
+	background: #fff;
+	box-shadow: 0 4px 20px rgba(20, 30, 60, 0.08);
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ttbm-search-results div.modern div.filter_item:hover,
+.ttbm_filter_area .mainSection div.modern div.filter_item:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 10px 28px rgba(20, 30, 60, 0.12);
+}
+
+.ttbm-search-results div.modern div.filter_item .bg_image_area,
+.ttbm_filter_area .mainSection div.modern div.filter_item .bg_image_area {
+	position: relative;
+	flex-shrink: 0;
+	width: 280px;
+	min-width: 280px;
+	max-width: 280px;
+	margin: 0;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.ttbm-search-results div.modern div.filter_item .bg_image_area > div[data-bg-image],
+.ttbm_filter_area .mainSection div.modern div.filter_item .bg_image_area > div[data-bg-image] {
+	width: 100%;
+	min-height: 220px;
+	height: 100%;
+	background-size: cover !important;
+	background-position: center !important;
+	transition: transform 0.35s ease;
+}
+
+.ttbm-search-results div.modern div.filter_item:hover .bg_image_area > div[data-bg-image],
+.ttbm_filter_area .mainSection div.modern div.filter_item:hover .bg_image_area > div[data-bg-image] {
+	transform: scale(1.04);
+}
+
+.ttbm-search-results div.modern div.ttbm_list_details,
+.ttbm_filter_area .mainSection div.modern div.ttbm_list_details {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+	max-width: none;
+	min-width: 0;
+	padding: 20px 24px 18px;
+}
+
+.ttbm-search-results div.modern .ttbm_list_title,
+.ttbm_filter_area .mainSection div.modern .ttbm_list_title {
+	margin: 0 0 8px;
+	font-size: 22px;
+	font-weight: 700;
+	line-height: 1.35;
+	color: #0f172a;
+}
+
+.ttbm-search-results div.modern .ttbm_list_title a,
+.ttbm_filter_area .mainSection div.modern .ttbm_list_title a {
+	color: inherit;
+	font-weight: inherit;
+	text-decoration: none;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.ttbm-search-results div.modern .ttbm_list_title a:hover,
+.ttbm_filter_area .mainSection div.modern .ttbm_list_title a:hover {
+	color: var(--color_theme, #5a56e0);
+}
+
+.ttbm-search-results div.modern .ttbm_list_info.location_name,
+.ttbm_filter_area .mainSection div.modern .ttbm_list_info.location_name {
+	margin: 0 0 12px;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 1.4;
+	color: #64748b;
+	font-style: normal;
+}
+
+.ttbm-search-results div.modern .ttbm_list_info.location_name .mi,
+.ttbm_filter_area .mainSection div.modern .ttbm_list_info.location_name .mi {
+	color: var(--color_theme, #5a56e0);
+	font-size: 13px;
+	margin-right: 4px;
+}
+
+.ttbm-search-results div.modern .ttbm_list_details > .divider,
+.ttbm_filter_area .mainSection div.modern .ttbm_list_details > .divider {
+	border: none;
+	border-top: 1px solid #eef2f7;
+	margin: 0 0 12px;
+}
+
+.ttbm-search-results div.modern .ttbm_description,
+.ttbm_filter_area .mainSection div.modern .ttbm_description {
+	margin: 0 0 14px;
+	flex: 1 1 auto;
+}
+
+.ttbm-search-results div.modern .ttbm_description > div,
+.ttbm_filter_area .mainSection div.modern .ttbm_description > div {
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.65;
+	color: #64748b;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	max-height: none;
+}
+
+.ttbm-search-results div.modern .filter_item_footer,
+.ttbm_filter_area .mainSection div.modern .filter_item_footer {
+	align-items: center;
+	gap: 12px;
+	margin-top: auto;
+	padding-top: 4px;
+}
+
+.ttbm-search-results div.modern .filter_item_footer .ttbm_explore_button,
+.ttbm_filter_area .mainSection div.modern .filter_item_footer .ttbm_explore_button {
+	border-radius: 10px;
+	padding: 10px 22px;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.ttbm-search-results div.modern .bg_image_area .ttbm_list_info,
+.ttbm_filter_area .mainSection div.modern .bg_image_area .ttbm_list_info {
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.3;
+}
+
+.ttbm-search-results div.modern .absolute_item .ttbm_list_info,
+.ttbm_filter_area .mainSection div.modern .absolute_item .ttbm_list_info {
+	font-size: 12px;
+	font-weight: 600;
+}
+
+@media only screen and (max-width: 991px) {
+	.ttbm-search-results div.modern div.filter_item .bg_image_area,
+	.ttbm_filter_area .mainSection div.modern div.filter_item .bg_image_area {
+		width: 220px;
+		min-width: 220px;
+		max-width: 220px;
+	}
+}
+
+@media only screen and (max-width: 767px) {
+	.ttbm_filter_area .mainSection .ttbm-search-top-bar,
+	.ttbm_filter_area .mainSection .filter_top_bar {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.ttbm-search-top-bar-count,
+	.ttbm_filter_area .mainSection .filter_top_bar .total_filter_qty {
+		font-size: 26px;
+	}
+
+	.ttbm-search-results div.modern div.filter_item,
+	.ttbm_filter_area .mainSection div.modern div.filter_item {
+		flex-direction: column;
+		min-height: 0;
+	}
+
+	.ttbm-search-results div.modern div.filter_item .bg_image_area,
+	.ttbm_filter_area .mainSection div.modern div.filter_item .bg_image_area {
+		width: 100%;
+		min-width: 0;
+		max-width: none;
+	}
+
+	.ttbm-search-results div.modern div.filter_item .bg_image_area > div[data-bg-image],
+	.ttbm_filter_area .mainSection div.modern div.filter_item .bg_image_area > div[data-bg-image] {
+		min-height: 200px;
+	}
+
+	.ttbm-search-results div.modern div.ttbm_list_details,
+	.ttbm_filter_area .mainSection div.modern div.ttbm_list_details {
+		padding: 16px;
+	}
+
+	.ttbm-search-results div.modern .ttbm_list_title,
+	.ttbm_filter_area .mainSection div.modern .ttbm_list_title {
+		font-size: 18px;
+	}
+}
+
+/* =====================================================
    TTBM Premium List Card  (grid_list.php — horizontal)
    ===================================================== */
 
@@ -6579,7 +6942,7 @@ div.modern div.filter_item:hover {
 	align-items: center;
 	gap: 5px;
 	margin: 0 0 5px 0;
-	font-size: 13px;
+	font-size: 16px;
 	font-style: italic;
 	font-weight: 500;
 	color: var(--color_theme, #6c47ff);

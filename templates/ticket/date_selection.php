@@ -11,10 +11,7 @@
 	if ( sizeof( $all_dates ) > 0 && $travel_type == 'fixed' ) {
 		$start_date = $all_dates['date'];
 		$end_date   = $all_dates['checkout_date'];
-		$start_time = TTBM_Function::get_time( $tour_id, $start_date );
-		if ( is_array( $start_time ) ) {
-			$start_time = sizeof( $start_time ) > 0 ? current( $start_time ) : '';
-		}
+		$start_time = TTBM_Function::normalize_time_value( TTBM_Function::get_time( $tour_id, $start_date ) );
 		$start_date_time = $start_time ? $start_date . ' ' . $start_time : $start_date;
 		$end_time = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_travel_end_time' );
 		$end_date_time = $end_time ? $end_date . ' ' . $end_time : $end_date;

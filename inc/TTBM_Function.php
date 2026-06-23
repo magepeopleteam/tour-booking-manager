@@ -287,7 +287,7 @@
 									$times = TTBM_Function::get_time($tour_id, $date_normalized, true);
 									if (is_array($times) && sizeof($times) > 0) {
 										foreach ($times as $time) {
-											$single_time = is_array($time) ? ($time['time'] ?? '') : $time;
+											$single_time = self::normalize_time_value( $time );
 											$full_date = $single_time ? $date_normalized . ' ' . $single_time : $date_normalized . ' ' . '23:59:59';
 											$full_date = TTBM_Function::reduce_stop_sale_hours($full_date);
 											if ($expire || $now <= strtotime($full_date)) {
@@ -320,7 +320,7 @@
 						$times = TTBM_Function::get_time($tour_id, $date_normalized, true);
 						if (is_array($times) && sizeof($times) > 0) {
 							foreach ($times as $time) {
-								$single_time = is_array($time) ? ($time['time'] ?? '') : $time;
+								$single_time = self::normalize_time_value( $time );
 								$full_date = $single_time ? $date_normalized . ' ' . $single_time : $date_normalized . ' ' . '23:59:59';
 								$full_date = TTBM_Function::reduce_stop_sale_hours($full_date);
 								if ($expire || $now <= strtotime($full_date)) {
@@ -365,10 +365,71 @@
 						}
 						return apply_filters('ttbm_get_time', $result_times, $tour_id, $date, $expire);
 					}
+					if ($travel_type === 'repeated') {
+						$time_status = TTBM_Global_Function::get_post_info($tour_id, 'mep_disable_ticket_time', 'no');
+						if ($time_status !== 'no') {
+							$slot_times = self::get_repeated_time_slots($tour_id, $date, $expire);
+							if (!empty($slot_times)) {
+								return apply_filters('ttbm_get_time', $slot_times, $tour_id, $date, $expire);
+							}
+						}
+					}
 					$time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_time');
 					return apply_filters('ttbm_get_time', $time, $tour_id, $date, $expire);
 				}
 				return false;
+			}
+			public static function get_repeated_time_slots( $tour_id, $date, $expire = '' ) {
+				$current_time = current_time( 'Y-m-d H:i' );
+				$day_name     = strtolower( gmdate( 'D', strtotime( $date ) ) );
+				$day_slot     = TTBM_Global_Function::get_post_info( $tour_id, 'mep_ticket_times_' . $day_name, array() );
+				$default_slot = TTBM_Global_Function::get_post_info( $tour_id, 'mep_ticket_times_global', array() );
+				$time_slots   = ( is_array( $day_slot ) && count( $day_slot ) > 0 ) ? $day_slot : $default_slot;
+				if ( ! is_array( $time_slots ) || empty( $time_slots ) ) {
+					return array();
+				}
+				$tour_time = array();
+				$count     = 0;
+				foreach ( $time_slots as $slot ) {
+					if ( ! is_array( $slot ) ) {
+						continue;
+					}
+					$slot_time = $slot['mep_ticket_time'] ?? '';
+					if ( ! $slot_time ) {
+						continue;
+					}
+					$full_date = gmdate( 'Y-m-d H:i', strtotime( $date . ' ' . $slot_time ) );
+					if ( strtotime( $full_date ) >= strtotime( $current_time ) || $expire ) {
+						$tour_time[ $count ]['label'] = $slot['mep_ticket_time_name'] ?? $slot_time;
+						$tour_time[ $count ]['time']  = $slot_time;
+						$count++;
+					}
+				}
+				return $tour_time;
+			}
+			/**
+			 * Reduce a time value (string, slot array, or list of slots) to a single time string.
+			 */
+			public static function normalize_time_value( $time ) {
+				if ( $time === null || $time === false || $time === '' ) {
+					return '';
+				}
+				if ( is_string( $time ) || is_numeric( $time ) ) {
+					return (string) $time;
+				}
+				if ( ! is_array( $time ) ) {
+					return '';
+				}
+				if ( isset( $time['time'] ) && $time['time'] !== '' ) {
+					return (string) $time['time'];
+				}
+				if ( isset( $time['mep_ticket_time'] ) && $time['mep_ticket_time'] !== '' ) {
+					return (string) $time['mep_ticket_time'];
+				}
+				if ( empty( $time ) ) {
+					return '';
+				}
+				return self::normalize_time_value( reset( $time ) );
 			}
 			public static function update_upcoming_date_month($tour_id, $update = '', $all_date = array()): void {
 				$now = strtotime(current_time('Y-m-d'));
@@ -538,10 +599,7 @@
 
 				if ( ! empty( $all_dates['date'] ) ) {
 					$start_date      = $all_dates['date'];
-					$start_time      = self::get_time( $tour_id, $start_date );
-					if ( is_array( $start_time ) ) {
-						$start_time = ! empty( $start_time ) ? current( $start_time ) : '';
-					}
+					$start_time      = self::normalize_time_value( self::get_time( $tour_id, $start_date ) );
 					$start_date_time = $start_time ? $start_date . ' ' . $start_time : $start_date;
 					$display         = TTBM_Global_Function::date_format( $start_date_time, 'full' );
 					$checkout        = $all_dates['checkout_date'] ?? '';
@@ -560,10 +618,7 @@
 					return '';
 				}
 
-				$start_time = self::get_time( $tour_id, $next_date );
-				if ( is_array( $start_time ) ) {
-					$start_time = ! empty( $start_time ) ? current( $start_time ) : '';
-				}
+				$start_time = self::normalize_time_value( self::get_time( $tour_id, $next_date ) );
 				$date_time = $start_time ? $next_date . ' ' . $start_time : $next_date;
 
 				return TTBM_Global_Function::date_format( $date_time, 'full' );

@@ -122,17 +122,15 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
 
         let time_slot = parent.find('.ttbm_select_time_area');
         parent.find('.ttbm_booking_panel').html('');
-        // Show placeholder immediately after date selection so the panel
-        // never appears blank — removed when tickets load via AJAX.
-        placeholderLoader(parent);
-        // Show time slots if date is selected
+        // With time slots, wait for a slot (or Check Availability) before loading tickets.
         if (time_slot.length > 0) {
+            placeholderLoaderRemove(parent);
             time_slot.slideDown();
+            parent.find('.ttbm_booking_panel').hide();
             ttbm_toggle_book_now_by_date(parent);
             return true;
-        } else {
-            get_ttbm_ticket($(this));
         }
+        get_ttbm_ticket($(this));
         ttbm_toggle_book_now_by_date(parent);
     });
     $(document).on('ttbm:ticket-refreshed', '.ttbm_registration_area', function () {
@@ -210,6 +208,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
 
         if (time_slot.length > 0) {
             if (parent.find('[name="ttbm_select_time"]').val()) {
+                parent.find('.ttbm_booking_panel').show();
                 get_ttbm_ticket($(this));
             } else if (parent.find('[name="ttbm_select_time"]').length > 0) {
                 // alert('Please Select Time');

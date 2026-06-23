@@ -1446,6 +1446,16 @@
    hide it completely with no leftover blank space. */
 #ttbm_content .ttbm_booking_section .allCenter.ttbm_date_time_select { display: none; }
 
+#ttbm_content .ttbm_booking_section .ttbm_registration_area .ttbm_booking_panel.placeholder_area:empty {
+	display: none;
+	min-height: 0;
+	background: none !important;
+	background-image: none !important;
+}
+#ttbm_content .ttbm_booking_section .ttbm_registration_area .ttbm_booking_panel.placeholder_area:empty::after {
+	display: none !important;
+	content: none !important;
+}
 /* Skeleton loader: 3 solid grey bars on white, shimmer sweeps via ::after */
 #ttbm_content .ttbm_booking_section .placeholderLoader .ttbm_booking_panel.placeholder_area {
 	min-height: 148px;

@@ -6,6 +6,7 @@
 		class TTBM_Layout {
 			public function __construct() {
 				add_action('ttbm_hidden_item_table', array($this, 'hidden_item_table'), 10, 2);
+				add_action('ttbm_time_select', array($this, 'time_select'), 20, 2);
 			}
 			/****************************/
 			public function hidden_item_table($hook_name, $data = array()) {
@@ -65,7 +66,6 @@
                 </div>
 				<?php
 			}
-			/*****************************/
 			public static function availability_button($tour_id) {
 				$travel_type = TTBM_Function::get_travel_type($tour_id);
 				$check_ability = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'availability_section');
@@ -76,6 +76,65 @@
 					<?php esc_html_e( 'Check availability', 'tour-booking-manager' ); ?>
                 </button>
 				<?php // }
+			}
+			public static function time_select( $tour_id, $date ) {
+				if ( class_exists( 'TTBM_Layout_Pro' ) ) {
+					return;
+				}
+				$time_slots     = TTBM_Function::get_time( $tour_id, $date );
+				$check_ability  = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_ticketing_system', 'availability_section' );
+				$base_timestamp = strtotime( $date );
+				$base_date      = $base_timestamp ? gmdate( 'Y-m-d', $base_timestamp ) : $date;
+				if ( ! is_array( $time_slots ) || empty( $time_slots ) ) {
+					return;
+				}
+				if ( $check_ability === 'availability_section' ) {
+					?>
+					<label class="time_select_box">
+						<strong><?php esc_html_e( 'Select Time', 'tour-booking-manager' ); ?></strong>
+						<input type="text" data-radio-value name="ttbm_select_time" class="dNone formControl" value=""/>
+						<?php
+						foreach ( $time_slots as $time_slot ) {
+							$slot_time  = TTBM_Function::normalize_time_value( $time_slot );
+							$slot_label = is_array( $time_slot ) ? ( $time_slot['label'] ?? $time_slot['mep_ticket_time_name'] ?? $slot_time ) : $slot_time;
+							$slot_timestamp = $slot_time ? strtotime( $base_date . ' ' . $slot_time ) : false;
+							if ( ! $slot_timestamp ) {
+								continue;
+							}
+							$check_slot_date = gmdate( 'Y-m-d H:i', $slot_timestamp );
+							?>
+							<span class="customRadio button_type" data-radio="<?php echo esc_attr( $check_slot_date ); ?>">
+								<?php echo esc_html( $slot_label ); ?>
+							</span>
+							<?php
+						}
+						?>
+					</label>
+					<?php
+				} else {
+					?>
+					<label>
+						<select class="formControl" name="ttbm_select_time">
+							<?php
+							foreach ( $time_slots as $time_slot ) {
+								$slot_time  = TTBM_Function::normalize_time_value( $time_slot );
+								$slot_label = is_array( $time_slot ) ? ( $time_slot['label'] ?? $time_slot['mep_ticket_time_name'] ?? $slot_time ) : $slot_time;
+								$slot_timestamp = $slot_time ? strtotime( $base_date . ' ' . $slot_time ) : false;
+								if ( ! $slot_timestamp ) {
+									continue;
+								}
+								$check_slot_date = gmdate( 'Y-m-d H:i', $slot_timestamp );
+								?>
+								<option value="<?php echo esc_attr( $check_slot_date ); ?>">
+									<?php echo esc_html( $slot_label ); ?>
+								</option>
+								<?php
+							}
+							?>
+						</select>
+					</label>
+					<?php
+				}
 			}
 			public static function ttbm_add_button($button_text, $class = 'ttbm_add_item', $button_class = '_themeButton_xs ', $icon_class = 'fas fa-plus-square') {
 				?>

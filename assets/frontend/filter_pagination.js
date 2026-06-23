@@ -90,7 +90,7 @@
 			if (clickedId === 'all') {
 				$('.ttbm_item_filter_by_activity').removeClass('ttbm_item_activity_active');
 				$clicked.addClass('ttbm_item_activity_active');
-				$('.filter_item').not('.ttbm-orchid-concierge').each(function () {
+				$('.filter_item').each(function () {
 					$(this).fadeIn('fast');
 					$(this).removeClass('search_off').addClass('search_on');
 				});
@@ -106,12 +106,12 @@
 				});
 				if (activeIds.length === 0) {
 					$('.ttbm_item_filter_by_activity#all').addClass('ttbm_item_activity_active');
-					$('.filter_item').not('.ttbm-orchid-concierge').each(function () {
+					$('.filter_item').each(function () {
 						$(this).fadeIn('fast');
 						$(this).removeClass('search_off').addClass('search_on');
 					});
 				} else {
-					$('.filter_item').not('.ttbm-orchid-concierge').each(function () {
+					$('.filter_item').each(function () {
 						let activities = $(this).find('input[name="ttbm_item_activities"]').val();
 						if (activities) {
 							let activityArray = activities.split(',');

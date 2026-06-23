@@ -2789,48 +2789,7 @@ div.ttbm_list_title {
 	text-decoration: none !important;
 }
 
-.lotus .ttbm_list_details {
-	padding: 0;
-}
-
-.lotus .filter_item .ttbm_list_title,
-.orchid .filter_item .ttbm_list_title {
-	margin: 0;
-	padding: 12px 12px 8px;
-	font-size: 19px;
-	font-weight: 700;
-	line-height: 1.32;
-	color: #1a1a2e;
-}
-
-.lotus .filter_item .ttbm_list_title a,
-.orchid .filter_item .ttbm_list_title a {
-	color: inherit;
-	display: -webkit-box;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
-	overflow: hidden;
-	text-decoration: none;
-}
-
-.lotus .filter_item .ttbm_list_title a:hover,
-.orchid .filter_item .ttbm_list_title a:hover {
-	color: var(--color_theme, #6c47ff);
-}
-
-.lotus .ttbm_list_info {
-	margin-top: 0;
-}
-
-.lotus .ttbm_description {
-	display: none;
-}
-
-.lotus .ttbm_list_content_wrapper {
-	padding: 10px;
-	padding-top: 0;
-	margin: 0;
-}
+/* Lotus styles — see full block below Orchid section */
 
 .filter_item.grid_3 .ttbm_list_title a {
 	display: -webkit-box;
@@ -3263,19 +3222,1154 @@ button.scroll-right {
 }
 
 /**********Grid******************************/
-/**********Orchid Grid******************************/
 div.bg_image_area {
 	margin: 0;
 	border-radius: 5px;
 }
 
-.orchid .ttbm_list_content_wrapper {
-	padding: 10px;
-	padding-top: 0;
+/**********Orchid Grid******************************/
+.orchid.flexWrap {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: stretch;
+	gap: 20px;
+	margin: 0;
 }
 
-.orchid .ttbm_list_info {
-	margin-top: 0;
+.ttbm-orchid-list .ttbm_all_item_activities_wrapper,
+.ttbm-tour-activity-pills {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	width: 100%;
+	margin: 0 0 28px;
+	padding: 0;
+	clear: both;
+	overflow: hidden;
+	min-height: 44px;
+	position: relative;
+}
+
+.ttbm-tour-activity-pills .scroll-left,
+.ttbm-tour-activity-pills .scroll-right {
+	display: none !important;
+}
+
+.ttbm-tour-activity-pills .ttbm_all_item_activities_holder {
+	display: flex;
+	flex: 1 1 100%;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+	overflow: visible;
+	white-space: normal;
+	width: 100%;
+	min-height: 44px;
+	margin-bottom: 20px;
+}
+
+.ttbm-tour-activity-pills .ttbm_item_activity {
+	display: block;
+	float: none;
+	margin: 0;
+}
+
+.ttbm-tour-activity-pills .ttbm_item_filter_by_activity {
+	float: none !important;
+	display: inline-block;
+	padding: 10px 20px;
+	border-radius: 999px;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.2;
+	background: #eef1f8;
+	color: #4b5563;
+	border: none;
+	transition: background 0.2s ease, color 0.2s ease;
+}
+
+.ttbm-lotus-list > .flexWrap,
+.ttbm-orchid-list > .flexWrap {
+	clear: both;
+	width: 100%;
+}
+
+.ttbm-tour-activity-pills .ttbm_item_filter_by_activity:hover {
+	background: #e4e8f5;
+	color: var(--color_theme, #4f29b7);
+}
+
+.ttbm-tour-activity-pills .ttbm_item_filter_by_activity.ttbm_item_activity_active,
+.ttbm-tour-activity-pills .ttbm_item_filter_by_activity#all.ttbm_item_activity_active {
+	background: var(--color_theme, #4f29b7);
+	color: #fff;
+}
+
+.orchid .filter_item,
+.orchid .filter_item.grid_3 {
+	width: calc(33.333333% - 14px);
+	min-width: 280px;
+	margin: 0;
+	padding: 0;
+	border: none;
+	border-radius: 12px;
+	overflow: hidden;
+	background: #fff;
+	box-shadow: 0 4px 18px rgba(20, 30, 60, 0.08);
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-self: stretch;
+}
+
+.orchid .filter_item:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 10px 28px rgba(20, 30, 60, 0.12);
+}
+
+.orchid .ttbm-orchid-image-wrap {
+	position: relative;
+	display: block;
+	height: 210px;
+	overflow: hidden;
+	border-radius: 12px 12px 0 0;
+	cursor: pointer;
+}
+
+.orchid .ttbm-orchid-thumb {
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	transition: transform 0.35s ease;
+}
+
+.orchid .ttbm-orchid-thumb[data-bg-image]::before {
+	display: none;
+}
+
+.orchid .ttbm-orchid-thumb[data-bg-image]:hover {
+	transform: none;
+}
+
+.orchid .ttbm-orchid-image-wrap:hover .ttbm-orchid-thumb {
+	transform: scale(1.05);
+}
+
+.orchid .ttbm-orchid-badge-sale {
+	position: absolute;
+	top: 14px;
+	left: 14px;
+	z-index: 2;
+	background: #ef4444;
+	color: #fff;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	padding: 5px 12px;
+	border-radius: 999px;
+	text-transform: uppercase;
+	pointer-events: none;
+}
+
+.orchid .ttbm-orchid-body {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+	padding: 16px 16px 18px;
+	min-height: 0;
+}
+
+.orchid .ttbm-orchid-footer {
+	display: flex;
+	flex-direction: column;
+	margin-top: auto;
+	width: 100%;
+}
+
+.orchid .filter_item .ttbm_list_title {
+	margin: 0 0 8px;
+	padding: 0;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.35;
+	color: #0f172a;
+	min-height: calc(1.35em * 2);
+}
+
+.orchid .filter_item .ttbm_list_title a {
+	color: inherit;
+	font-weight: inherit;
+	text-decoration: none;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.orchid .filter_item .ttbm_list_title a:hover {
+	color: var(--color_theme, #4f29b7);
+}
+
+.orchid .ttbm-orchid-body .location_name {
+	margin: 0 0 14px;
+	padding: 0;
+	font-size: 13px;
+	font-weight: 500;
+	color: #6b7280;
+}
+
+.orchid .ttbm-orchid-body .location_name .mi {
+	color: var(--color_theme, #4f29b7);
+	font-size: 13px;
+	margin-right: 4px;
+}
+
+.orchid .ttbm-orchid-divider {
+	border: none;
+	border-top: 1px solid #e8ecf4;
+	margin: 0 0 14px;
+}
+
+.orchid .ttbm-orchid-meta-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+.orchid .ttbm-orchid-from {
+	display: block;
+	font-size: 12px;
+	color: #9ca3af;
+	font-weight: 500;
+	line-height: 1.2;
+}
+
+.orchid .ttbm-orchid-price-value,
+.orchid .ttbm-orchid-price-value .woocommerce-Price-amount {
+	font-size: 22px;
+	font-weight: 700;
+	color: var(--color_theme, #4f29b7);
+	line-height: 1.2;
+}
+
+.orchid .ttbm-orchid-duration .ttbm_list_info {
+	margin: 0;
+	padding: 0;
+	font-size: 13px;
+	font-weight: 500;
+	color: #6b7280;
+	text-align: right;
+	white-space: nowrap;
+}
+
+.orchid .ttbm-orchid-duration .ttbm_list_info .mi {
+	color: #9ca3af;
+	font-size: 13px;
+	margin-right: 4px;
+}
+
+.orchid .ttbm-orchid-explore {
+	width: 100%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	background: var(--color_theme, #4f29b7) !important;
+	color: #fff !important;
+	border: none;
+	border-radius: 10px;
+	padding: 12px 18px;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.orchid .ttbm-orchid-explore:hover {
+	background: #3d1f96 !important;
+	transform: none;
+}
+
+.orchid .ttbm-orchid-explore-arrow {
+	font-size: 16px;
+	line-height: 1;
+}
+
+.orchid .ttbm_list_content_wrapper,
+.orchid .ttbm_list_info_header,
+.orchid .ttbm-location-overlay,
+.orchid .ribbon {
+	display: none !important;
+}
+
+@media only screen and (max-width: 991px) {
+	.orchid .filter_item,
+	.orchid .filter_item.grid_3 {
+		width: calc(50% - 10px);
+	}
+}
+
+@media only screen and (max-width: 767px) {
+	.orchid .filter_item,
+	.orchid .filter_item.grid_3 {
+		width: 100%;
+		min-width: 0;
+	}
+}
+
+/* =====================================================
+   TTBM Lotus Grid  (.flexWrap.lotus)
+   ===================================================== */
+
+.lotus.flexWrap {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: stretch;
+	gap: 20px;
+	margin: 0;
+}
+
+.lotus .filter_item,
+.lotus .filter_item.grid_3 {
+	width: calc(33.333333% - 14px);
+	min-width: 280px;
+	margin: 0;
+	padding: 0;
+	border: none;
+	border-radius: 12px;
+	overflow: hidden;
+	background: #fff;
+	box-shadow: 0 4px 18px rgba(20, 30, 60, 0.08);
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-self: stretch;
+	position: relative;
+}
+
+.lotus .filter_item:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 10px 28px rgba(20, 30, 60, 0.12);
+}
+
+.lotus .ribbon {
+	top: 14px;
+	left: 14px;
+	background: #ef4444;
+	color: #fff;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	padding: 5px 12px;
+	border-radius: 999px;
+	text-transform: uppercase;
+	box-shadow: none;
+}
+
+.lotus .ttbm_list_details {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+	padding: 0;
+	min-height: 0;
+}
+
+.lotus .ttbm_list_info_header {
+	display: flex;
+	flex-direction: column;
+}
+
+.lotus .bg_image_area {
+	margin: 0;
+	border-radius: 0;
+	overflow: hidden;
+}
+
+.lotus .bg_image_area > div[data-bg-image] {
+	height: 210px;
+	min-height: 210px;
+	background-size: cover !important;
+	background-position: center !important;
+	border-radius: 0;
+}
+
+.lotus .bg_image_area > div[data-bg-image]::before {
+	display: none;
+}
+
+.lotus .bg_image_area:hover > div[data-bg-image] {
+	transform: scale(1.05);
+	transition: transform 0.35s ease;
+}
+
+.lotus .filter_item .ttbm_list_title {
+	margin: 0;
+	padding: 16px 16px 8px;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.35;
+	color: #0f172a;
+	min-height: calc(1.35em * 2);
+}
+
+.lotus .filter_item .ttbm_list_title a {
+	color: inherit;
+	font-weight: inherit;
+	text-decoration: none;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.lotus .filter_item .ttbm_list_title a:hover {
+	color: var(--color_theme, #4f29b7);
+}
+
+.lotus .ttbm_list_content_wrapper {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+	padding: 0 16px 18px;
+	margin: 0;
+	min-height: 0;
+}
+
+.lotus .ttbm_list_info_wrapper {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 6px 12px;
+	margin: 0 0 14px;
+	align-items: center;
+}
+
+.lotus .ttbm_list_info_wrapper .location_name {
+	grid-column: 1 / -1;
+	margin: 0;
+	padding: 0;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1.4;
+	color: #6b7280;
+}
+
+.lotus .ttbm_list_info_wrapper .location_name .mi {
+	color: var(--color_theme, #4f29b7);
+	font-size: 13px;
+	margin-right: 4px;
+}
+
+.lotus .ttbm_list_info_wrapper .ttbm_list_info:not(.location_name) {
+	margin: 0;
+	padding: 0;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1.4;
+	color: #6b7280;
+}
+
+.lotus .ttbm_list_info_wrapper .ttbm_list_info .mi-money-bill-wave {
+	display: none;
+}
+
+.lotus .ttbm_list_info_wrapper .ttbm_list_info:not(.location_name):has(.mi-money-bill-wave) {
+	grid-column: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	color: #9ca3af;
+	font-size: 12px;
+}
+
+.lotus .ttbm_list_info_wrapper .ttbm_list_info:not(.location_name):has(.mi-money-bill-wave) .woocommerce-Price-amount,
+.lotus .ttbm_list_info_wrapper .ttbm_list_info:not(.location_name):has(.mi-money-bill-wave) bdi {
+	font-size: 22px;
+	font-weight: 700;
+	color: var(--color_theme, #4f29b7);
+	line-height: 1.2;
+}
+
+.lotus .ttbm_list_info_wrapper .ttbm_list_info:not(.location_name):has(.mi-clock-three) {
+	grid-column: 2;
+	justify-content: flex-end;
+	text-align: right;
+	white-space: nowrap;
+}
+
+.lotus .ttbm_list_info_wrapper .ttbm_list_info:not(.location_name):has(.mi-clock-three) .mi {
+	color: #9ca3af;
+	font-size: 13px;
+	margin-right: 4px;
+}
+
+.lotus .ttbm_list_content_wrapper > .divider {
+	border: none;
+	border-top: 1px solid #e8ecf4;
+	margin: 0 0 12px;
+	height: 0;
+}
+
+.lotus .ttbm_description {
+	display: block;
+	margin: 0 0 12px;
+	flex: 0 0 auto;
+}
+
+.lotus .ttbm_description > div {
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.65;
+	color: #6b7280;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	max-height: none;
+	margin: 0;
+}
+
+.lotus .filter_item_footer {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 14px;
+	margin-top: auto;
+	padding-top: 4px;
+}
+
+.lotus .filter_item_footer .include_service ul {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.lotus .filter_item_footer .include_service ul li {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	margin: 0;
+	padding: 0;
+	border-radius: 8px;
+	background: #f3f4f6;
+	border: 1px solid #e5e7eb;
+	color: #4b5563 !important;
+}
+
+.lotus .filter_item_footer .include_service ul li:hover {
+	background: var(--color_theme, #4f29b7) !important;
+	border-color: var(--color_theme, #4f29b7) !important;
+	color: #fff !important;
+}
+
+.lotus .filter_item_footer .include_service .circleIcon_xs {
+	font-size: 15px;
+}
+
+.lotus .filter_item_footer .ttbm_explore_button {
+	width: 100%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-height: 44px;
+	padding: 12px 18px;
+	border: none;
+	border-radius: 10px;
+	background: var(--color_theme, #4f29b7) !important;
+	color: #fff !important;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.2;
+	cursor: pointer;
+	transition: background 0.2s ease;
+}
+
+.lotus .filter_item_footer .ttbm_explore_button:hover {
+	background: #3d1f96 !important;
+	transform: none;
+}
+
+.lotus .filter_item_footer .ttbm_explore_button::after {
+	content: '\2192';
+	font-size: 16px;
+	line-height: 1;
+}
+
+.lotus .absolute_item {
+	display: none;
+}
+
+/* =====================================================
+   TTBM Unified Placeholder Loaders (all shortcodes)
+   ===================================================== */
+
+.placeholderLoader {
+	--ttbm-skeleton-bar: #dce1ea;
+	--ttbm-skeleton-card: #fff;
+	--ttbm-skeleton-shell: #f0f4ff;
+}
+
+/* Suppress broken per-element grey overlays */
+.placeholderLoader .leftSidebar.placeholder_area [data-placeholder]::before,
+.placeholderLoader .filter_item.placeholder_area [data-placeholder]::before,
+.placeholderLoader .filter_item[data-placeholder]::before,
+.placeholderLoader .placeholder_area.flexWrap [data-placeholder]::before,
+.placeholderLoader .filter_top_bar.placeholder_area [data-placeholder]::before,
+.placeholderLoader .ttbm_top_filter [data-placeholder]::before,
+.placeholderLoader .ttbm-filter-bar [data-placeholder]::before,
+.placeholderLoader .ttbm_activity_item[data-placeholder]::before,
+.placeholderLoader .ttbm_attraction_item[data-placeholder]::before,
+.placeholderLoader .ttbm_term_display_shortcode[data-placeholder]::before,
+.placeholderLoader .superSlider.placeholder_area [data-placeholder]::before,
+.placeholderLoader .search_result_empty[data-placeholder]::before,
+.placeholderLoader .filter_short_result[data-placeholder]::before {
+	display: none !important;
+	content: none !important;
+	background: none !important;
+}
+
+@keyframes ttbmGridCardShimmer {
+	0% {
+		left: -100%;
+	}
+
+	100% {
+		left: 160%;
+	}
+}
+
+/* --- Left sidebar (travel-list, ttbm-tour-list, hotel, search) ---------- */
+.placeholderLoader .leftSidebar.placeholder_area {
+	position: relative !important;
+	flex: 0 0 280px;
+	width: 280px;
+	max-width: 280px;
+	min-width: 280px;
+	height: 520px;
+	min-height: 520px;
+	max-height: 520px;
+	padding: 16px !important;
+	overflow: hidden !important;
+	background-color: var(--ttbm-skeleton-shell) !important;
+	border-radius: 16px;
+	box-shadow: 0 10px 30px rgba(20, 40, 120, 0.06);
+	animation: none !important;
+	background-image:
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-card), var(--ttbm-skeleton-card)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-card), var(--ttbm-skeleton-card)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-card), var(--ttbm-skeleton-card)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-card), var(--ttbm-skeleton-card)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar));
+	background-size:
+		52% 18px,
+		72% 12px,
+		100% 54px,
+		calc(100% - 32px) 10px,
+		calc(100% - 32px) 10px,
+		calc(100% - 32px) 10px,
+		100% 54px,
+		calc(100% - 32px) 10px,
+		calc(100% - 32px) 10px,
+		calc(100% - 32px) 10px,
+		100% 54px,
+		calc(100% - 32px) 10px,
+		calc(100% - 32px) 10px,
+		calc(100% - 32px) 10px,
+		100% 54px,
+		calc(100% - 32px) 10px,
+		calc(100% - 32px) 10px,
+		calc(100% - 32px) 10px;
+	background-position:
+		16px 16px,
+		16px 42px,
+		16px 68px,
+		32px 86px,
+		32px 102px,
+		32px 118px,
+		16px 138px,
+		32px 156px,
+		32px 172px,
+		32px 188px,
+		16px 208px,
+		32px 226px,
+		32px 242px,
+		32px 258px,
+		16px 278px,
+		32px 296px,
+		32px 312px,
+		32px 328px;
+	background-repeat: no-repeat;
+}
+
+.placeholderLoader .leftSidebar.placeholder_area .filter-top-label,
+.placeholderLoader .leftSidebar.placeholder_area .ttbm_filter {
+	display: none !important;
+}
+
+.placeholderLoader .leftSidebar.placeholder_area::before {
+	display: none !important;
+}
+
+.placeholderLoader .leftSidebar.placeholder_area::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	bottom: 0;
+	width: 60%;
+	background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.55) 50%, transparent 100%);
+	animation: ttbmGridCardShimmer 1.4s ease-in-out infinite;
+	pointer-events: none;
+	z-index: 5;
+}
+
+/* --- Lotus & Orchid grid cards ------------------------------------------ */
+.placeholderLoader .flexWrap.lotus .filter_item.placeholder_area,
+.placeholderLoader .flexWrap.orchid .filter_item.placeholder_area {
+	overflow: hidden !important;
+	background-color: var(--ttbm-skeleton-card) !important;
+	box-shadow: 0 4px 18px rgba(20, 30, 60, 0.08);
+	animation: none !important;
+}
+
+.placeholderLoader .flexWrap.lotus .filter_item.placeholder_area > *,
+.placeholderLoader .flexWrap.orchid .filter_item.placeholder_area > * {
+	opacity: 0 !important;
+	visibility: hidden !important;
+	pointer-events: none !important;
+}
+
+.placeholderLoader .flexWrap.lotus .filter_item.placeholder_area::before,
+.placeholderLoader .flexWrap.orchid .filter_item.placeholder_area::before {
+	display: none !important;
+}
+
+.placeholderLoader .flexWrap.lotus .filter_item.placeholder_area::after,
+.placeholderLoader .flexWrap.orchid .filter_item.placeholder_area::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	bottom: 0;
+	width: 60%;
+	background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.72) 50%, transparent 100%);
+	animation: ttbmGridCardShimmer 1.4s ease-in-out infinite;
+	pointer-events: none;
+	z-index: 5;
+}
+
+.placeholderLoader .flexWrap.orchid .filter_item.placeholder_area {
+	min-height: 400px;
+	background-image:
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar));
+	background-size:
+		100% 210px,
+		calc(100% - 32px) 16px,
+		calc(65% - 16px) 16px,
+		calc(45% - 16px) 12px,
+		calc(42% - 16px) 14px,
+		28% 14px,
+		120px 36px;
+	background-position:
+		0 0,
+		16px 226px,
+		16px 248px,
+		16px 272px,
+		16px 304px,
+		calc(100% - 16px - 28%) 304px,
+		16px 346px;
+	background-repeat: no-repeat;
+}
+
+.placeholderLoader .flexWrap.lotus .filter_item.placeholder_area {
+	min-height: 440px;
+	background-image:
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar));
+	background-size:
+		100% 210px,
+		calc(100% - 32px) 16px,
+		calc(65% - 16px) 16px,
+		calc(50% - 16px) 12px,
+		calc(40% - 16px) 14px,
+		28% 14px,
+		calc(100% - 32px) 10px,
+		calc(75% - 16px) 10px,
+		110px 36px;
+	background-position:
+		0 0,
+		16px 226px,
+		16px 248px,
+		16px 278px,
+		16px 306px,
+		calc(100% - 16px - 28%) 306px,
+		16px 338px,
+		16px 354px,
+		16px 390px;
+	background-repeat: no-repeat;
+}
+
+/* --- Default tour cards (modern, grid, blossom, flora, premium) --------- */
+.placeholderLoader .flexWrap:not(.lotus):not(.orchid) .filter_item.placeholder_area {
+	min-height: 360px;
+	overflow: hidden !important;
+	background-color: var(--ttbm-skeleton-card) !important;
+	box-shadow: 0 4px 18px rgba(20, 30, 60, 0.08);
+	animation: none !important;
+	background-image:
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar));
+	background-size:
+		100% 180px,
+		calc(100% - 32px) 16px,
+		calc(70% - 16px) 14px,
+		calc(50% - 16px) 12px,
+		100px 32px;
+	background-position:
+		0 0,
+		16px 196px,
+		16px 220px,
+		16px 244px,
+		16px 280px;
+	background-repeat: no-repeat;
+}
+
+.placeholderLoader .flexWrap:not(.lotus):not(.orchid) .filter_item.placeholder_area > * {
+	opacity: 0 !important;
+	visibility: hidden !important;
+	pointer-events: none !important;
+}
+
+.placeholderLoader .flexWrap:not(.lotus):not(.orchid) .filter_item.placeholder_area::before {
+	display: none !important;
+}
+
+.placeholderLoader .flexWrap:not(.lotus):not(.orchid) .filter_item.placeholder_area::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	bottom: 0;
+	width: 60%;
+	background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.72) 50%, transparent 100%);
+	animation: ttbmGridCardShimmer 1.4s ease-in-out infinite;
+	pointer-events: none;
+	z-index: 5;
+}
+
+/* --- Location list & flexWrap grids ------------------------------------- */
+.placeholderLoader .placeholder_area.flexWrap {
+	background: transparent !important;
+	animation: none !important;
+}
+
+.placeholderLoader .placeholder_area.flexWrap::before {
+	display: none !important;
+}
+
+.placeholderLoader .placeholder_area.flexWrap > .filter_item,
+.placeholderLoader .placeholder_area.flexWrap > .filter_item[data-placeholder] {
+	position: relative;
+	min-height: 260px;
+	overflow: hidden !important;
+	background-color: var(--ttbm-skeleton-card) !important;
+	animation: none !important;
+	background-image:
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar));
+	background-size:
+		100% 180px,
+		calc(100% - 32px) 18px,
+		calc(55% - 16px) 12px;
+	background-position:
+		0 0,
+		16px 196px,
+		16px 224px;
+	background-repeat: no-repeat;
+}
+
+.placeholderLoader .placeholder_area.flexWrap > .filter_item > *,
+.placeholderLoader .placeholder_area.flexWrap > .filter_item[data-placeholder] > * {
+	opacity: 0 !important;
+	visibility: hidden !important;
+	pointer-events: none !important;
+}
+
+.placeholderLoader .placeholder_area.flexWrap > .filter_item::before,
+.placeholderLoader .placeholder_area.flexWrap > .filter_item[data-placeholder]::before {
+	display: none !important;
+}
+
+.placeholderLoader .placeholder_area.flexWrap > .filter_item::after,
+.placeholderLoader .placeholder_area.flexWrap > .filter_item[data-placeholder]::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	bottom: 0;
+	width: 60%;
+	background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.72) 50%, transparent 100%);
+	animation: ttbmGridCardShimmer 1.4s ease-in-out infinite;
+	pointer-events: none;
+	z-index: 5;
+}
+
+/* --- Activity / taxonomy / attraction term cards ------------------------ */
+.placeholderLoader .ttbm_activity_item[data-placeholder],
+.placeholderLoader .ttbm_attraction_item[data-placeholder],
+.placeholderLoader .ttbm_term_display_shortcode[data-placeholder] {
+	position: relative;
+	overflow: hidden !important;
+	background-color: var(--ttbm-skeleton-shell) !important;
+	animation: none !important;
+	background-image:
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar));
+	background-size:
+		60px 60px,
+		calc(100% - 40px) 16px,
+		calc(70% - 40px) 12px;
+	background-position:
+		center 36px,
+		center 112px,
+		center 136px;
+	background-repeat: no-repeat;
+}
+
+.placeholderLoader .ttbm_activity_item[data-placeholder] > *,
+.placeholderLoader .ttbm_attraction_item[data-placeholder] > *,
+.placeholderLoader .ttbm_term_display_shortcode[data-placeholder] > * {
+	opacity: 0 !important;
+	visibility: hidden !important;
+	pointer-events: none !important;
+}
+
+.placeholderLoader .ttbm_activity_item[data-placeholder]::after,
+.placeholderLoader .ttbm_attraction_item[data-placeholder]::after,
+.placeholderLoader .ttbm_term_display_shortcode[data-placeholder]::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	bottom: 0;
+	width: 60%;
+	background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.55) 50%, transparent 100%);
+	animation: ttbmGridCardShimmer 1.4s ease-in-out infinite;
+	pointer-events: none;
+	z-index: 5;
+}
+
+/* --- Filter top bar (find page, hotel lists) ---------------------------- */
+.placeholderLoader .filter_top_bar.placeholder_area {
+	position: relative;
+	min-height: 48px;
+	overflow: hidden !important;
+	background-color: var(--ttbm-skeleton-card) !important;
+	animation: none !important;
+	background-image:
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar));
+	background-size:
+		180px 14px,
+		72px 32px;
+	background-position:
+		16px center,
+		calc(100% - 88px) center;
+	background-repeat: no-repeat;
+}
+
+.placeholderLoader .filter_top_bar.placeholder_area > * {
+	opacity: 0 !important;
+	visibility: hidden !important;
+	pointer-events: none !important;
+}
+
+.placeholderLoader .filter_top_bar.placeholder_area::before {
+	display: none !important;
+}
+
+.placeholderLoader .filter_top_bar.placeholder_area::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	bottom: 0;
+	width: 60%;
+	background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.55) 50%, transparent 100%);
+	animation: ttbmGridCardShimmer 1.4s ease-in-out infinite;
+	pointer-events: none;
+	z-index: 5;
+}
+
+/* --- Top search filter shortcode (ttbm-top-search) ---------------------- */
+.placeholderLoader.ttbm_top_filter .flexWrap > * {
+	position: relative;
+	overflow: hidden !important;
+	color: transparent !important;
+	background-color: var(--ttbm-skeleton-shell) !important;
+	border-color: transparent !important;
+	min-height: 44px;
+	min-width: 160px;
+	border-radius: 8px;
+}
+
+.placeholderLoader.ttbm_top_filter .flexWrap > *::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	bottom: 0;
+	width: 60%;
+	background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.55) 50%, transparent 100%);
+	animation: ttbmGridCardShimmer 1.4s ease-in-out infinite;
+	pointer-events: none;
+	z-index: 5;
+}
+
+.placeholderLoader.ttbm_top_filter .flexWrap > label,
+.placeholderLoader.ttbm_top_filter .flexWrap > button {
+	flex: 0 0 auto;
+}
+
+/* --- Modern filter bar count -------------------------------------------- */
+.placeholderLoader .ttbm-filter-bar-count[data-placeholder] {
+	position: relative;
+	overflow: hidden;
+	color: transparent !important;
+	min-width: 120px;
+	min-height: 20px;
+	border-radius: 4px;
+	background-color: transparent !important;
+	background-image: linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar));
+	background-size: 100px 14px;
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+.placeholderLoader .ttbm-filter-bar-count[data-placeholder] > * {
+	opacity: 0 !important;
+	visibility: hidden !important;
+}
+
+/* --- Sort result / empty state lines ------------------------------------ */
+.placeholderLoader .filter_short_result[data-placeholder],
+.placeholderLoader .search_result_empty[data-placeholder] {
+	color: transparent !important;
+	background-image: linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar));
+	background-size: 140px 12px;
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+/* --- Image slider placeholder ------------------------------------------- */
+.placeholderLoader .superSlider.placeholder_area {
+	position: relative;
+	min-height: 320px;
+	overflow: hidden !important;
+	background-color: var(--ttbm-skeleton-shell) !important;
+	animation: none !important;
+}
+
+.placeholderLoader .superSlider.placeholder_area > * {
+	opacity: 0 !important;
+	visibility: hidden !important;
+}
+
+.placeholderLoader .superSlider.placeholder_area::before {
+	display: none !important;
+}
+
+.placeholderLoader .superSlider.placeholder_area::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	bottom: 0;
+	width: 60%;
+	background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.55) 50%, transparent 100%);
+	animation: ttbmGridCardShimmer 1.4s ease-in-out infinite;
+	pointer-events: none;
+	z-index: 5;
+}
+
+@media only screen and (max-width: 767px) {
+	.placeholderLoader .leftSidebar.placeholder_area {
+		flex: 1 1 auto;
+		width: 100%;
+		max-width: 100%;
+		min-width: 0;
+		height: 360px;
+		min-height: 360px;
+		max-height: 360px;
+	}
+}
+
+@media only screen and (max-width: 991px) {
+	.lotus .filter_item,
+	.lotus .filter_item.grid_3 {
+		width: calc(50% - 10px);
+	}
+}
+
+@media only screen and (max-width: 767px) {
+	.lotus .filter_item,
+	.lotus .filter_item.grid_3 {
+		width: 100%;
+		min-width: 0;
+	}
+
+	.lotus .ttbm_list_info_wrapper {
+		grid-template-columns: 1fr;
+	}
+
+	.lotus .ttbm_list_info_wrapper .ttbm_list_info:not(.location_name):has(.mi-clock-three) {
+		grid-column: 1;
+		text-align: left;
+		justify-content: flex-start;
+	}
 }
 
 #ttbm_related_tour {

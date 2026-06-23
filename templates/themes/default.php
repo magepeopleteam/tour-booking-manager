@@ -15,40 +15,46 @@
 					<div class="ttbm_content_area">
 						<div class="ttbm_content__left">
 							<div class="ttbm_hero">
-								<?php do_action( 'ttbm_slider' ); ?>
-								<div class="ttbm_hero_overlay">
-									<div class="ttbm_hero_overlay_inner">
-										<?php do_action( 'ttbm_details_title' ); ?>
-										<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
-										<?php
-											$ttbm_hero_display_reg = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_registration', 'on' );
-											$ttbm_hero_price       = TTBM_Function::get_tour_start_price( $tour_id );
-											$ttbm_hero_next_date   = TTBM_Function::get_next_tour_date_display( $tour_id );
-											if ( $ttbm_hero_display_reg != 'off' ) :
+								<?php
+									$ttbm_hero_display_reg = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_registration', 'on' );
+									$ttbm_hero_price       = TTBM_Function::get_tour_start_price( $tour_id );
+									$ttbm_hero_next_date   = TTBM_Function::get_next_tour_date_display( $tour_id );
+									$ttbm_hero_overlay_cb  = function () use ( $ttbm_post_id, $tour_id, $ttbm_hero_display_reg, $ttbm_hero_price, $ttbm_hero_next_date ) {
 										?>
-											<div class="ttbm_hero_cta">
-												<div class="ttbm_hero_cta_meta">
-													<?php if ( $ttbm_hero_price && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) != 'off' ) : ?>
-														<div class="ttbm_hero_price">
-															<span class="ttbm_hero_price_label"><?php esc_html_e( 'Prices Start At', 'tour-booking-manager' ); ?></span>
-															<span class="ttbm_hero_price_value"><?php echo wp_kses_post( wc_price( $ttbm_hero_price ) ); ?></span>
+										<div class="ttbm_hero_overlay">
+											<div class="ttbm_hero_overlay_inner">
+												<?php do_action( 'ttbm_details_title' ); ?>
+												<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
+												<?php if ( $ttbm_hero_display_reg != 'off' ) : ?>
+													<div class="ttbm_hero_cta">
+														<div class="ttbm_hero_cta_meta">
+															<?php if ( $ttbm_hero_price && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) != 'off' ) : ?>
+																<div class="ttbm_hero_price">
+																	<span class="ttbm_hero_price_label"><?php esc_html_e( 'Prices Start At', 'tour-booking-manager' ); ?></span>
+																	<span class="ttbm_hero_price_value"><?php echo wp_kses_post( wc_price( $ttbm_hero_price ) ); ?></span>
+																</div>
+															<?php endif; ?>
+															<?php if ( $ttbm_hero_next_date ) : ?>
+																<div class="ttbm_hero_date">
+																	<span class="ttbm_hero_date_label"><?php echo esc_html( TTBM_Function::get_next_tour_date_label( $tour_id ) ); ?></span>
+																	<span class="ttbm_hero_date_value"><?php echo esc_html( $ttbm_hero_next_date ); ?></span>
+																</div>
+															<?php endif; ?>
 														</div>
-													<?php endif; ?>
-													<?php if ( $ttbm_hero_next_date ) : ?>
-														<div class="ttbm_hero_date">
-															<span class="ttbm_hero_date_label"><?php echo esc_html( TTBM_Function::get_next_tour_date_label( $tour_id ) ); ?></span>
-															<span class="ttbm_hero_date_value"><?php echo esc_html( $ttbm_hero_next_date ); ?></span>
-														</div>
-													<?php endif; ?>
-												</div>
-												<button type="button" class="ttbm_hero_book_now" data-ttbm-book-now>
-													<?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?>
-													<span class="fas fa-chevron-right"></span>
-												</button>
+														<button type="button" class="ttbm_hero_book_now" data-ttbm-book-now>
+															<?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?>
+															<span class="fas fa-chevron-right"></span>
+														</button>
+													</div>
+												<?php endif; ?>
 											</div>
-										<?php endif; ?>
-									</div>
-								</div>
+										</div>
+										<?php
+									};
+									add_action( 'ttbm_slider_all_item_overlay', $ttbm_hero_overlay_cb );
+									do_action( 'ttbm_slider' );
+									remove_action( 'ttbm_slider_all_item_overlay', $ttbm_hero_overlay_cb );
+								?>
 							</div>
 							<div class="ttbm_hero_stats">
 								<?php

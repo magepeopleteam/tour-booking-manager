@@ -117,6 +117,7 @@
 								$this->icon_indicator($popup_slider_icon);
 							}
 						?>
+						<?php do_action( 'ttbm_slider_all_item_overlay' ); ?>
                     </div>
 					<?php
 				}

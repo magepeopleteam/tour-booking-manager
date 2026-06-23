@@ -195,8 +195,8 @@
 					if ($input_type != 'dropdown') {
 						?>
                         <div class="groupContent qtyIncDec">
-                            <div class="decQty addonGroupContent">
-                                <span class="fas fa-minus"></span>
+                            <div class="decQty addonGroupContent" aria-label="<?php esc_attr_e( 'Decrease quantity', 'tour-booking-manager' ); ?>">
+                                <span class="qty-btn-icon" aria-hidden="true"></span>
                             </div>
                             <label>
                                 <input type="text"
@@ -208,8 +208,8 @@
                                        max="<?php echo esc_attr($max_qty > 0 ? $max_qty : $available_seat); ?>"
                                 />
                             </label>
-                            <div class="incQty addonGroupContent">
-                                <span class="fas fa-plus"></span>
+                            <div class="incQty addonGroupContent" aria-label="<?php esc_attr_e( 'Increase quantity', 'tour-booking-manager' ); ?>">
+                                <span class="qty-btn-icon" aria-hidden="true"></span>
                             </div>
                         </div>
 						<?php
@@ -439,8 +439,8 @@
 					if ($input_type != 'dropdown') {
 						?>
                         <div class="groupContent qtyIncDec">
-                            <div class="decQty addonGroupContent">
-                                <span class="fas fa-minus"></span>
+                            <div class="decQty addonGroupContent" aria-label="<?php esc_attr_e( 'Decrease quantity', 'tour-booking-manager' ); ?>">
+                                <span class="qty-btn-icon" aria-hidden="true"></span>
                             </div>
                             <label>
                                 <input type="text"
@@ -452,8 +452,8 @@
                                        max="<?php echo esc_attr($max_qty > 0 ? $max_qty : $available_seat); ?>"
                                 />
                             </label>
-                            <div class="incQty addonGroupContent">
-                                <span class="fas fa-plus"></span>
+                            <div class="incQty addonGroupContent" aria-label="<?php esc_attr_e( 'Increase quantity', 'tour-booking-manager' ); ?>">
+                                <span class="qty-btn-icon" aria-hidden="true"></span>
                             </div>
                         </div>
 						<?php

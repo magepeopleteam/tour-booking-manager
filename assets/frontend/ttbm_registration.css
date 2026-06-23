@@ -1824,6 +1824,12 @@ div.ttbm_booking_panel .qtyIncDec .incQty {
 	border: 1px solid #ddd;
 }
 
+#ttbm_content .ttbm_booking_section .qtyIncDec .decQty,
+#ttbm_content .ttbm_booking_section .qtyIncDec .incQty {
+	border: 0 !important;
+	border-radius: 50%;
+}
+
 div.ttbm_booking_panel .qtyIncDec label {
 	border: 0;
 	font-weight: bold;

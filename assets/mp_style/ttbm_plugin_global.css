@@ -1316,8 +1316,29 @@
 	/************/
 	div.ttbm_style .formControl.xs {height: 30px;}
 	/*****Form Qty inc dec*******/
-	#ttbm_content .qtyIncDec { max-width: 110px; }
+	#ttbm_content .qtyIncDec { max-width: 120px; }
+	#ttbm_content .ttbm_booking_section .qtyIncDec { max-width: none; }
 	#ttbm_content .qtyIncDec .formControl {min-width: 50px;text-align: center;}
+	.ttbm_style .qtyIncDec .decQty > span,
+	.ttbm_style .qtyIncDec .incQty > span {
+		display: none !important;
+	}
+	.ttbm_style .qtyIncDec .decQty::before {
+		content: "";
+		display: block;
+		width: 10px;
+		height: 2px;
+		background: currentColor;
+		border-radius: 1px;
+	}
+	.ttbm_style .qtyIncDec .incQty::before {
+		content: "+";
+		display: block;
+		font-family: inherit;
+		font-size: 18px;
+		font-weight: 400;
+		line-height: 1;
+	}
 	/**********Responsive*********/
 	@media only screen and (max-width: 1250px) {
 		.ttbm_style .inputInline .inputList { max-width: calc(25% - 10px); }

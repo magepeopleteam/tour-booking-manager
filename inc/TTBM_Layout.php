@@ -121,8 +121,8 @@
 							if ($ticket_qty_type == 'inputbox') {
 								?>
                                 <div class="groupContent qtyIncDec" data-ticket-type-name="<?php echo esc_html($data_ticket_name); ?>">
-                                    <div class="decQty addonGroupContent">
-                                        <span class="fas fa-minus"></span>
+                                    <div class="decQty addonGroupContent" aria-label="<?php esc_attr_e( 'Decrease quantity', 'tour-booking-manager' ); ?>">
+                                        <span class="qty-btn-icon" aria-hidden="true"></span>
                                     </div>
                                     <label>
                                         <input type="text"
@@ -134,8 +134,8 @@
                                                max="<?php echo esc_attr($effective_max); ?>"
                                         />
                                     </label>
-                                    <div class="incQty addonGroupContent">
-                                        <span class="fas fa-plus"></span>
+                                    <div class="incQty addonGroupContent" aria-label="<?php esc_attr_e( 'Increase quantity', 'tour-booking-manager' ); ?>">
+                                        <span class="qty-btn-icon" aria-hidden="true"></span>
                                     </div>
                                 </div>
 							<?php } elseif ($ticket_qty_type == 'dropdown') { ?>

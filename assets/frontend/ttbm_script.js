@@ -245,7 +245,7 @@
 		var location = map_canvas.getAttribute("data-location") || 'Tour Location';
 	
 		// Initialize the map with Leaflet (OpenStreetMap)
-		var osmMap = L.map(map_canvas, { minZoom: 4, maxZoom: 18 }).setView([lati, longdi], 12);
+		var osmMap = L.map(map_canvas, { minZoom: 4, maxZoom: 18, scrollWheelZoom: false }).setView([lati, longdi], 12);
 	
 		// Add OpenStreetMap tile layer
 		L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -272,8 +272,9 @@
 
 		// Create a new map instance
 		var map = new google.maps.Map(gmap_canvas, {
-			zoom: 12, // Zoom level
-			center: location // Set center of the map
+			zoom: 12,
+			center: location,
+			scrollwheel: false
 		});
 
 		// Add a marker at the center
@@ -481,6 +482,16 @@
 			// Form not yet loaded (e.g. availability_section) — trigger AJAX load.
 			$hiddenDate.val(firstDate).trigger('change');
 		});
+	});
+
+	// Daily Schedule timeline — sync active day marker with accordion state.
+	$(document).on('click', '.ttbm_day_wise_timeline .day_wise_details_item_title[data-collapse-target]', function () {
+		var $title = $(this);
+		setTimeout(function () {
+			var $item = $title.closest('.day_wise_details_item');
+			var isOpen = $title.hasClass('mActive');
+			$item.toggleClass('is-active', isOpen);
+		}, 260);
 	});
 
 }(jQuery));

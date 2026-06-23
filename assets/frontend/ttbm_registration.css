@@ -766,6 +766,14 @@ div.ttbm_day_wise_details .day_wise_details_item_title {
 	font-weight: var(--fw-medium);
 }
 
+div.ttbm_day_wise_timeline .day_wise_details_item_title,
+#ttbm_content .ttbm_day_wise_timeline .day_wise_details_item_title {
+	padding: 20px 22px;
+	border-bottom: 0;
+	font-size: inherit;
+	font-weight: inherit;
+}
+
 .get-enquiry-popup button[class^='_dButton'] {
 	background-color: #333;
 	color: #fff;
@@ -780,6 +788,19 @@ div.day_wise_details_item {
 	position: relative;
 	margin: 0;
 	padding: 0 0 var(--ttbm_mp) 25px;
+}
+
+div.ttbm_day_wise_timeline .day_wise_details_item,
+#ttbm_content .ttbm_day_wise_timeline .day_wise_details_item {
+	border-left: 0;
+	padding: 0;
+	margin: 0 0 18px;
+}
+
+div.ttbm_day_wise_timeline .day_wise_details_item:before,
+#ttbm_content .ttbm_day_wise_timeline .day_wise_details_item:before {
+	content: none;
+	display: none;
 }
 
 div.day_wise_details_item:before {
@@ -3233,6 +3254,10 @@ div.bg_image_area {
 
 #ttbm_content .day_wise_details_item_title {
 	padding-bottom: 5px;
+}
+
+#ttbm_content .ttbm_day_wise_timeline .day_wise_details_item_title {
+	padding-bottom: 20px;
 }
 
 .ttbm_review_container h4.ttbm-review-title {

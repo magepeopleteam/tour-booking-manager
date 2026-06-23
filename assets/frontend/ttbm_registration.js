@@ -25,12 +25,15 @@ function get_ttbm_ticket(current, date = '') {
             nonce: ttbm_ajax.nonce
         },
         beforeSend: function () {
+            simpleSpinnerRemove(parent);
+            target.empty().show().addClass('ttbm-ticket-loading');
             placeholderLoader(parent);
         },
         success: function (data) {
             if (parent.data('ttbmTicketRequestToken') !== requestToken) {
                 return;
             }
+            target.removeClass('ttbm-ticket-loading');
             target.html(data).slideDown('fast').promise().done(function () {
                 ttbm_price_calculation(parent);
                 placeholderLoaderRemove(parent);
@@ -43,6 +46,7 @@ function get_ttbm_ticket(current, date = '') {
             if (textStatus === 'abort') {
                 return;
             }
+            target.removeClass('ttbm-ticket-loading');
             placeholderLoaderRemove(parent);
             simpleSpinnerRemove(parent);
         },
@@ -137,11 +141,34 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         ttbm_toggle_book_now_by_date($(this));
     });
 
-    // Clear time validation error on selection
+    // Clear time validation error; ensure hidden input syncs when markup has no label wrapper.
     $(document).on('click', '.ttbm_select_time_area .customRadio', function () {
-        let parent = $(this).closest('.ttbm_select_time_area');
+        let $slot = $(this);
+        let parent = $slot.closest('.ttbm_select_time_area');
+        let regArea = parent.closest('.ttbm_registration_area');
         parent.css('border', '');
         parent.find('.ttbm-time-error').remove();
+
+        let value = $slot.attr('data-radio');
+        let timeInput = regArea.find('[name="ttbm_select_time"]').first();
+        if (timeInput.length && value && timeInput.val() !== value) {
+            parent.find('.customRadio[data-radio]').removeClass('active');
+            $slot.addClass('active');
+            timeInput.val(value).trigger('change');
+        }
+    });
+    // Load tickets on time selection (Pro handles this when ttbm_ajax_url_pro is present).
+    $(document).on('change', '.ttbm_registration_area [name="ttbm_select_time"]', function () {
+        if (typeof ttbm_ajax_url_pro !== 'undefined') {
+            return;
+        }
+        let parent = $(this).closest('.ttbm_registration_area');
+        if (!parent.find('.ttbm_select_time_area').length) {
+            return;
+        }
+        parent.find('.ttbm_check_ability').slideUp('fast');
+        parent.find('.ttbm_booking_panel').show();
+        get_ttbm_ticket($(this));
     });
 
     $(document).on('click', '.get_particular_ticket', function () {

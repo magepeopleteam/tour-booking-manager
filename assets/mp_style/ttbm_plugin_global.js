@@ -69,9 +69,7 @@ function placeholderLoader(target) {
     target.addClass('placeholderLoader');
 }
 function placeholderLoaderRemove(target) {
-    target.each(function () {
-        target.removeClass('placeholderLoader');
-    })
+    target.removeClass('placeholderLoader');
 }
 //======================================================Page Scroll==============//
 function pageScrollTo(target) {
@@ -929,11 +927,24 @@ function ttbm_sticky_management() {
     });
     // radio
     $(document).on('click', '.ttbm_style [data-radio]', function () {
-        let target = $(this).closest('label');
-        let value = $(this).attr('data-radio');
-        target.find('.customRadio').removeClass('active');
-        $(this).addClass('active');
-        target.find('input').val(value).trigger('change');
+        let $this = $(this);
+        let value = $this.attr('data-radio');
+        let target = $this.closest('label');
+        if (!target.length) {
+            target = $this.closest('.ttbm-time-slots__list, .time_select_box');
+        }
+        if (!target.length) {
+            target = $this.parent();
+        }
+        target.find('.customRadio[data-radio]').removeClass('active');
+        $this.addClass('active');
+        let input = target.find('[data-radio-value], [name="ttbm_select_time"]').first();
+        if (!input.length) {
+            input = target.find('input').first();
+        }
+        if (input.length) {
+            input.val(value).trigger('change');
+        }
     });
     $(document).on('click', '.ttbm_style .groupRadioBox [data-group-radio]', function () {
 

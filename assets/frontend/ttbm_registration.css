@@ -3824,6 +3824,51 @@ div.bg_image_area {
 	--ttbm-skeleton-shell: #f0f4ff;
 }
 
+/* Ticket panel skeleton while AJAX loads ticket types */
+.ttbm_style .ttbm_registration_area:not(.placeholderLoader) .ttbm_booking_panel.placeholder_area:empty {
+	display: none;
+}
+.ttbm_style .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.placeholder_area,
+.ttbm_style .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.ttbm-ticket-loading {
+	display: block !important;
+	min-height: 148px;
+	position: relative;
+	overflow: hidden;
+	padding: 0 20px 16px;
+	box-sizing: border-box;
+	background-color: #fff !important;
+	background-image:
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)),
+		linear-gradient(var(--ttbm-skeleton-bar), var(--ttbm-skeleton-bar)) !important;
+	background-size: 100% 36px, 100% 36px, 100% 36px !important;
+	background-repeat: no-repeat !important;
+	background-position: 0 10px, 0 56px, 0 102px !important;
+	background-origin: content-box !important;
+	background-clip: content-box !important;
+	border-top: 1px solid #e5e7eb;
+}
+.ttbm_style .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.placeholder_area::before,
+.ttbm_style .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.ttbm-ticket-loading::before {
+	display: none !important;
+}
+.ttbm_style .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.placeholder_area::after,
+.ttbm_style .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.ttbm-ticket-loading::after {
+	content: '' !important;
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: -100%;
+	bottom: 0;
+	width: 60%;
+	background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.75) 50%, transparent 100%);
+	animation: ttbmTicketShimmer 1.4s ease-in-out infinite;
+}
+@keyframes ttbmTicketShimmer {
+	0% { left: -100%; }
+	100% { left: 160%; }
+}
+
 /* Suppress broken per-element grey overlays */
 .placeholderLoader .leftSidebar.placeholder_area [data-placeholder]::before,
 .placeholderLoader .filter_item.placeholder_area [data-placeholder]::before,

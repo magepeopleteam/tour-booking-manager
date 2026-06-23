@@ -42,40 +42,42 @@ if (!defined('ABSPATH')) {
 					$time_slots_enabled = TTBM_Global_Function::get_post_info($tour_id, 'mep_disable_ticket_time', 'no') != 'no';
 					$ticketing_system = get_post_meta($tour_id, 'ttbm_ticketing_system', true);
 					?>
-                    <div class=" ttbm_date_time_select">
+                    <div class="ttbm_date_time_select">
                         <div class="ttbm_select_date_area">
-                            <?php if ($time_slots_enabled && $ticketing_system != 'regular_ticket'): ?>
-                            <div class="ttbm-title" data-placeholder>
-								<?php esc_html_e('Make your booking', 'tour-booking-manager'); ?>
+							<?php if ($time_slots_enabled && $ticketing_system != 'regular_ticket') { ?>
+                            <div class="ttbm-booking-intro">
+								<span class="ttbm-booking-intro__brand"><?php esc_html_e('Make', 'tour-booking-manager'); ?></span><?php esc_html_e(' your booking', 'tour-booking-manager'); ?>
                             </div>
-							<?php endif; ?>
-                            <div class="booking-button">
+							<?php } ?>
+                            <div class="ttbm-date-time-toolbar booking-button">
                                 <div class="date-picker">
-                                    <div class="date_time_label ttbm-title"><?php echo $time_slots_enabled ? esc_html__( 'Select Date & Time', 'tour-booking-manager' ) : esc_html__( 'Select Date', 'tour-booking-manager' ); ?></div>
-                                    <label class="date-picker-icon">
-                                        <i class="far fa-calendar-alt"></i>
-                                        <input type="hidden" name="ttbm_date" value="<?php echo esc_attr($hidden_date); ?>" required/>
-                                        <input id="ttbm_select_date" type="text" value="<?php echo esc_attr($visible_date); ?>" class="formControl mb-0 " placeholder="<?php echo esc_attr($now); ?>" readonly required/>
-                                        <span class="ttbm_date_chevron fas fa-chevron-down" aria-hidden="true"></span>
-                                    </label>
+                                    <div class="date_time_label ttbm-title">
+										<i class="far fa-calendar-alt" aria-hidden="true"></i>
+										<span><?php echo $time_slots_enabled ? esc_html__('Select Date & Time', 'tour-booking-manager') : esc_html__('Select Date', 'tour-booking-manager'); ?></span>
+                                    </div>
+									<label class="date-picker-icon">
+										<input type="hidden" name="ttbm_date" value="<?php echo esc_attr($hidden_date); ?>" required/>
+										<input id="ttbm_select_date" type="text" value="<?php echo esc_attr($visible_date); ?>" class="formControl mb-0" placeholder="<?php echo esc_attr($now); ?>" readonly required/>
+										<span class="ttbm_date_chevron fas fa-chevron-down" aria-hidden="true"></span>
+									</label>
                                 </div>
 								<?php
 									$template_name = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_theme_file', 'default.php');
-									TTBM_Layout::availability_button($tour_id);
+									TTBM_Layout::availability_button($tour_id, $time_slots_enabled);
 								?>
                             </div>
-							<?php if ($time_slots_enabled && $check_ability == 'regular_ticket' && $template_name != 'viator.php') { 
+							<?php if ($time_slots_enabled && $check_ability == 'regular_ticket' && $template_name != 'viator.php') {
                                 $style = $visible_date ? '' : 'display:none;';
                                 ?>
-                                <div class="flexWrap ttbm_select_time_area" style="<?php echo esc_attr($style); ?>">
+                                <div class="ttbm_select_time_area" style="<?php echo esc_attr($style); ?>">
 									<?php do_action('ttbm_time_select', $tour_id, $current_date ? $current_date : current($all_dates)); ?>
                                 </div>
 							<?php } ?>
                         </div>
-						<?php if ($time_slots_enabled && ($template_name == 'viator.php' || $check_ability == 'availability_section')) { 
+						<?php if ($time_slots_enabled && ($template_name == 'viator.php' || $check_ability == 'availability_section')) {
                             $style = $visible_date ? '' : 'display:none;';
                             ?>
-                            <div class="flexWrap ttbm_select_time_area" style="<?php echo esc_attr($style); ?>">
+                            <div class="ttbm_select_time_area" style="<?php echo esc_attr($style); ?>">
 								<?php do_action('ttbm_time_select', $tour_id, $current_date ? $current_date : current($all_dates)); ?>
                             </div>
 						<?php } ?>

@@ -182,29 +182,71 @@ function ttbm_alert($this, attr = 'alert') {
     });
 }(jQuery));
 //====================================================================Load Bg Image=================//
+function ttbm_normalize_bg_url(bg_url) {
+    if (!bg_url || bg_url.width === 0 || bg_url === 'undefined') {
+        return typeof ttbm_empty_image_url !== 'undefined' ? ttbm_empty_image_url : '';
+    }
+    return bg_url;
+}
+function ttbm_apply_bg_image(target, bg_url) {
+    target = target && target.jquery ? target : jQuery(target);
+    if (!target.length) {
+        return;
+    }
+    bg_url = ttbm_normalize_bg_url(bg_url);
+    if (!bg_url) {
+        dLoaderRemove(target);
+        return;
+    }
+    let currentBg = target.css('background-image') || '';
+    if (currentBg !== 'none' && currentBg.indexOf(bg_url) !== -1) {
+        dLoaderRemove(target);
+        return;
+    }
+    let finished = false;
+    function finish() {
+        if (finished) {
+            return;
+        }
+        finished = true;
+        target.css({
+            'background-image': 'url("' + bg_url + '")',
+            'background-size': 'cover',
+            'background-position': 'center',
+            'background-repeat': 'no-repeat'
+        });
+        dLoaderRemove(target);
+    }
+    let img = new Image();
+    img.onload = finish;
+    img.onerror = finish;
+    img.src = bg_url;
+    if (img.complete && img.naturalWidth > 0) {
+        finish();
+    }
+}
+function ttbm_should_skip_details_loader(target) {
+    return target.closest('.ttbm_details_page .superSlider').length > 0;
+}
 function ttbm_loadBgImage() {
     jQuery('body').find('div.ttbm_style [data-bg-image]:visible').each(function () {
         let target = jQuery(this);
         if (target.closest('.sliderAllItem').length === 0) {
-            let width = target.outerWidth();
-            let height = target.outerHeight();
-            if (target.css('background-image') === 'none' || width === 0 || height === 0) {
-                let bg_url = target.data('bg-image');
-                if (!bg_url || bg_url.width === 0 || bg_url.width === 'undefined') {
-                    bg_url = ttbm_empty_image_url;
-                }
-                // Only use JS to calculate height when CSS provides no height.
-                // Elements like .ttbm-gc-thumb already have height:220px — skipping
-                // the extra Image() download eliminates the layout shift and the
-                // duplicate network request.
-                if (height === 0) {
-                    ttbm_resize_bg_image_area(target, bg_url);
-                }
-
-                target.css('background-image', 'url("' + bg_url + '")').promise().done(function () {
-                    dLoaderRemove(target);
-                });
+            let bg_url = ttbm_normalize_bg_url(target.data('bg-image'));
+            let currentBg = target.css('background-image') || '';
+            if (!bg_url) {
+                dLoaderRemove(target);
+                return;
             }
+            if (currentBg !== 'none' && currentBg.indexOf(bg_url) !== -1) {
+                dLoaderRemove(target);
+                return;
+            }
+            let height = target.outerHeight();
+            if (height === 0) {
+                ttbm_resize_bg_image_area(target, bg_url);
+            }
+            ttbm_apply_bg_image(target, bg_url);
         }
     });
     jQuery('body').find('div.ttbm_style .sliderAllItem').each(function () {
@@ -231,10 +273,12 @@ function ttbm_loadCartBgImage() {
                     bg_url = typeof ttbm_empty_image_url !== 'undefined' ? ttbm_empty_image_url : '';
                 }
                 if (bg_url) {
-                    ttbm_resize_bg_image_area(target, bg_url);
-                    target.css('background-image', 'url("' + bg_url + '")').promise().done(function () {
-                        dLoaderRemove(target);
-                    });
+                    if (target.outerHeight() === 0) {
+                        ttbm_resize_bg_image_area(target, bg_url);
+                    }
+                    ttbm_apply_bg_image(target, bg_url);
+                } else {
+                    dLoaderRemove(target);
                 }
             }
         }
@@ -292,17 +336,31 @@ function ttbm_resize_bg_image_area(target, bg_url) {
     let bg_image_load = false;
     $(document).ready(function () {
         $('body').find('div.ttbm_style [data-bg-image]').each(function () {
-            dLoader($(this));
+            let target = $(this);
+            if (ttbm_should_skip_details_loader(target)) {
+                return;
+            }
+            let bg_url = ttbm_normalize_bg_url(target.data('bg-image'));
+            let currentBg = target.css('background-image') || '';
+            if (currentBg !== 'none' && bg_url && currentBg.indexOf(bg_url) !== -1) {
+                return;
+            }
+            dLoader(target);
+        });
+        $('body').find('div.ttbm_style .superSlider .sliderAllItem:visible').each(function () {
+            ttbm_slider_resize(jQuery(this));
         });
         $(window).on('load', function () {
             load_initial();
         });
-        if (!bg_image_load) {
-            load_initial();
-            $(document).scroll(function () {
-                load_initial();
-            });
-        }
+        let loadInitialTimer = null;
+        $(document).on('scroll', function () {
+            if (loadInitialTimer) {
+                clearTimeout(loadInitialTimer);
+            }
+            loadInitialTimer = setTimeout(load_initial, 150);
+        });
+        load_initial();
     });
     $(document).on('click', 'div.ttbm_style [data-href]', function (e) {
         if ($(e.target).closest('.ttbm-gc-wishlist').length) return;
@@ -312,29 +370,30 @@ function ttbm_resize_bg_image_area(target, bg_url) {
         }
     });
     $(window).on('load', function () {
-        // Elements with a CSS-defined height don't need a JS measurement — skip
-        // ttbm_resize_bg_image_area to avoid redundant Image() downloads and layout
-        // shifts, but always call dLoaderRemove so the spinner never gets stuck.
         $('body').find('div.ttbm_style [data-bg-image]:visible').each(function () {
             let target = $(this);
-            if (target.closest('.sliderAllItem').length === 0) {
-                let bg_url = target.data('bg-image');
-                if (!bg_url || bg_url.width === 0 || bg_url.width === 'undefined') {
-                    bg_url = ttbm_empty_image_url;
-                }
-                if (target.outerHeight() === 0) {
-                    // No CSS height — let JS calculate from image dimensions.
-                    ttbm_resize_bg_image_area(target, bg_url);
-                } else {
-                    // Has CSS height — skip the extra Image() download, just clear loader.
-                    dLoaderRemove(target);
-                }
+            if (target.closest('.sliderAllItem').length > 0) {
+                return;
+            }
+            let bg_url = ttbm_normalize_bg_url(target.data('bg-image'));
+            let currentBg = target.css('background-image') || '';
+            if (currentBg !== 'none' && bg_url && currentBg.indexOf(bg_url) !== -1) {
+                dLoaderRemove(target);
+                return;
+            }
+            if (target.outerHeight() === 0 && bg_url) {
+                ttbm_resize_bg_image_area(target, bg_url);
+            } else {
+                ttbm_apply_bg_image(target, bg_url);
             }
         });
         jQuery('body').find('div.ttbm_style .sliderAllItem:visible').each(function () {
             ttbm_slider_resize(jQuery(this));
         });
         ttbm_loadCartBgImage();
+        $('body').find('.ttbm_details_page [data-bg-image]').each(function () {
+            dLoaderRemove($(this));
+        });
     });
     $(window).on('resize', function () {
         // On resize, recalculate only elements that were previously JS-sized (data-ttbm-resized).
@@ -355,13 +414,14 @@ function ttbm_resize_bg_image_area(target, bg_url) {
         ttbm_loadCartBgImage();
     });
     function load_initial() {
+        ttbm_loadBgImage();
+        jQuery('body').find('div.ttbm_style .sliderAllItem:visible').each(function () {
+            ttbm_slider_resize(jQuery(this));
+        });
         if (!bg_image_load) {
-            if (ttbm_loadBgImage()) {
-                bg_image_load = true;
-                placeholderLoaderRemove($('.ttbm_style.placeholderLoader'))
-            }
+            bg_image_load = true;
+            placeholderLoaderRemove($('.ttbm_style.placeholderLoader'));
         }
-        // Always load cart images
         ttbm_loadCartBgImage();
     }
     // Load cart images on document ready
@@ -1146,41 +1206,36 @@ function ttbm_slider_resize(target) {
     //console.log(main_div_width);
     let item_count = target.find('.sliderItem').length;
     target.find('[data-bg-image]').each(function () {
-        let width = jQuery(this).outerWidth();
-        let height = jQuery(this).outerHeight();
-        // if (jQuery(this).css('background-image') === 'none' || width === 0 || height === 0) {
-        let bg_url = jQuery(this).data('bg-image');
-        if (!bg_url || bg_url.width === 0 || bg_url.width === 'undefined') {
-            bg_url = ttbm_empty_image_url;
+        let $bgTarget = jQuery(this);
+        let bg_url = ttbm_normalize_bg_url($bgTarget.data('bg-image'));
+        let imgWidth = $bgTarget.data('width');
+        let imgHeight = $bgTarget.data('height');
+        if (imgHeight) {
+            all_height.push(imgHeight);
+            totalHeight = totalHeight + (imgHeight * main_div_width) / (imgWidth || 1);
         }
-        let imgWidth = jQuery(this).data('width');
-        let imgHeight = jQuery(this).data('height');
-        all_height.push(imgHeight);
-        totalHeight = totalHeight + (imgHeight * main_div_width) / imgWidth;
         imgCount++;
         if (imgCount === item_count) {
             let slider_height_type = target.closest('.superSlider').find('input[name="slider_height_type"]').val();
-            let height_content = totalHeight / imgCount;
-            if (slider_height_type === 'min') {
+            let height_content = item_count > 0 ? totalHeight / imgCount : 0;
+            if (slider_height_type === 'min' && all_height.length) {
                 height_content = Math.min(...all_height);
                 target.find('.sliderItem').css({"min-height": height_content});
                 target.find('.sliderItem').css({"max-height": height_content});
-            } else if (slider_height_type === 'max') {
+            } else if (slider_height_type === 'max' && all_height.length) {
                 height_content = Math.max(...all_height);
                 target.find('.sliderItem').css({"min-height": height_content});
                 target.find('.sliderItem').css({"max-height": height_content});
-            } else {
+            } else if (height_content > 0) {
                 target.find('.sliderItem').css({"min-height": height_content});
                 target.find('.sliderItem').css({"max-height": height_content});
             }
-            target.css({"max-height": height_content});
-            target.siblings('.sliderShowcase').css({"max-height": height_content});
+            if (height_content > 0) {
+                target.css({"max-height": height_content});
+                target.siblings('.sliderShowcase').css({"max-height": height_content});
+            }
         }
-        //dLoaderRemove(jQuery(this));
-        jQuery(this).css('background-image', 'url("' + bg_url + '")').promise().done(function () {
-            dLoaderRemove(jQuery(this));
-        });
-        // }
+        ttbm_apply_bg_image($bgTarget, bg_url);
     });
 }
 (function ($) {

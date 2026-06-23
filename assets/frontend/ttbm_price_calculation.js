@@ -71,7 +71,7 @@ function mpTourTicketQty(target, value) {
     let min = parseInt(target.attr('min'));
     let max = parseInt(target.attr('max'));
     let parent = target.closest('.ttbm_registration_area');
-    let isSharedCapacity = target.closest('.ttbm_ticket_row').attr('data-shared-capacity-enabled') === '1';
+    let isSharedCapacity = target.closest('.ttbm_ticket_row, .ttbm_smart_ticket_card').attr('data-shared-capacity-enabled') === '1';
     value = ttbmConstrainSharedCapacity(target, value, parent);
     max = parseInt(target.attr('max'));
     if (isSharedCapacity && !isNaN(max) && max < min) {
@@ -93,31 +93,55 @@ function mpTourTicketQty(target, value) {
 function mp_tour_ticket_qty(parent) {
     let totalQty = 0;
     let single_attendee = parent.find('[name="ttbm_single_attendee_display"]').val();
-    parent.find('.mp_tour_ticket_type').find('.formControl[data-price]').each(function () {
+    parent.find('.mp_tour_ticket_type .formControl[data-price], .ttbm_smart_ticket_list .formControl[data-price]').each(function () {
         let qty = parseInt(jQuery(this).val());
         qty = qty > 0 ? qty : 0;
         totalQty += qty;
         if (single_attendee === 'off') {
-            ttbm_multi_attendee_form(jQuery(this).closest('tr'), qty);
+            ttbm_multi_attendee_form(ttbm_get_ticket_item_row(this), qty);
         }
     });
     totalQty = totalQty > 0 ? totalQty : 0;
     if (single_attendee === 'on') {
         ttbm_single_attendee_form(parent, totalQty);
     }
-    if (totalQty > 0) {
-        parent.find('.ttbm_extra_service_area').slideDown(250);
+    let extraArea = parent.find('.ttbm_extra_service_area');
+    if (parent.hasClass('ttbm_smart_inline_booking') || parent.find('.ttbm_smart_inline_booking').length) {
+        if (totalQty > 0) {
+            extraArea.show();
+        } else {
+            extraArea.hide();
+        }
+    } else if (totalQty > 0) {
+        extraArea.slideDown(250);
     } else {
-        parent.find('.ttbm_extra_service_area').slideUp(250);
+        extraArea.slideUp(250);
     }
     return totalQty;
 }
+function ttbm_get_ticket_item_row(input) {
+    let $input = jQuery(input);
+    let row = $input.closest('tr.ttbm_ticket_row');
+    if (row.length) {
+        return row;
+    }
+    return $input.closest('.ttbm_smart_ticket_card');
+}
 function ttbm_get_attendee_form_row(parentTr) {
+    if (parentTr.hasClass('ttbm_smart_ticket_card')) {
+        return parentTr.find('.ttbm_attendee_form_row').first();
+    }
     let target_tr = parentTr.next('tr');
     while (target_tr.length && target_tr.hasClass('ttbm_hidden_inputs')) {
         target_tr = target_tr.next('tr');
     }
     return target_tr;
+}
+function ttbm_get_attendee_append_target(targetRow) {
+    if (targetRow.length && !targetRow.is('tr')) {
+        return targetRow;
+    }
+    return targetRow.find('td').first();
 }
 function ttbm_get_attendee_form_template(parent) {
     let template = parent.find('[data-form-type]').first();
@@ -143,7 +167,9 @@ function ttbm_multi_attendee_form(parentTr, qty) {
                     target_tr.find('.ttbm_attendee_form_item:last-child').slideUp(250).remove();
                 }
             } else {
-                let name = parentTr.next('tr.ttbm_hidden_inputs').find('input[name^="ticket_name"]').val();
+                let name = parentTr.hasClass('ttbm_smart_ticket_card')
+                    ? parentTr.find('input[name^="ticket_name"]').first().val()
+                    : parentTr.next('tr.ttbm_hidden_inputs').find('input[name^="ticket_name"]').val();
                 if (!name) {
                     name = target_tr.find('input[name^="ticket_name"], [name="ticket_name[]"]').first().val();
                 }
@@ -151,9 +177,10 @@ function ttbm_multi_attendee_form(parentTr, qty) {
                 if (!form_copy) {
                     return;
                 }
+                let appendTarget = ttbm_get_attendee_append_target(target_tr);
                 for (let i = formLength; i < qty; i++) {
-                    target_tr.find('td').append(form_copy).find('.ttbm_attendee_form_item:last-child').slideDown(250).promise().done(function () {
-                        let current_item = target_tr.find('td').find('.ttbm_attendee_form_item:last-child');
+                    appendTarget.append(form_copy).find('.ttbm_attendee_form_item:last-child').slideDown(250).promise().done(function () {
+                        let current_item = appendTarget.find('.ttbm_attendee_form_item:last-child');
                         current_item.find('.form_title_text').html(name);
                         current_item.find('.ttbm_attendee_title').html(i + 1);
                         if (target_tr.find('[name="ticket_qroup_qty[]"]').length > 0) {

@@ -310,16 +310,16 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         $('body').removeClass('noScroll').find('[data-active-popup]').removeAttr('data-active-popup');
         return true;
     });
-    $(document).on("click", ".ttbm_registration_area .ttbm_load_popup_reg", function () {
-        let parent = $(this).closest('.ttbm_registration_area');
+    function ttbm_load_popup_or_inline_ticket(trigger) {
+        let parent = trigger.closest('.ttbm_registration_area');
         let date_target = parent.find('[name="ttbm_date"]').first();
         let has_date_field = date_target.length > 0;
         let date_val = has_date_field ? date_target.val() : '';
         let time_slot = parent.find('.ttbm_select_time_area');
         let date_input = parent.find('#ttbm_select_date');
         let date_field = date_input.length > 0 ? date_input : date_target;
+        let inline_panel = parent.hasClass('ttbm_smart_inline_booking');
 
-        // Validation: Date is required
         if (has_date_field && !date_val) {
             date_field.css('border', '1px solid red');
             if (parent.find('.ttbm-date-error').length === 0) {
@@ -334,10 +334,13 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
 
         if (time_slot.length > 0) {
             if (parent.find('[name="ttbm_select_time"]').val()) {
-                parent.find('.registration_popup').trigger('click');
-                get_ttbm_ticket($(this));
+                if (!inline_panel) {
+                    parent.find('.registration_popup').trigger('click');
+                } else {
+                    parent.find('.ttbm_booking_panel').show();
+                }
+                get_ttbm_ticket(trigger);
             } else if (parent.find('[name="ttbm_select_time"]').length > 0) {
-                // alert('Please Select Time');
                 time_slot.css('border', '1px solid red');
                 time_slot.css('padding', '10px');
                 time_slot.css('border-radius', '5px');
@@ -348,12 +351,19 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
                 parent.find('#ttbm_select_date').trigger('focus');
             }
         } else {
-            parent.find('.registration_popup').trigger('click');
+            if (!inline_panel) {
+                parent.find('.registration_popup').trigger('click');
+            } else {
+                parent.find('.ttbm_booking_panel').show();
+            }
             let selected_date = has_date_field ? date_target.val() : '';
             if (!has_date_field || selected_date) {
-                get_ttbm_ticket($(this));
+                get_ttbm_ticket(trigger);
             }
         }
+    }
+    $(document).on("click", ".ttbm_registration_area .ttbm_load_popup_reg", function () {
+        ttbm_load_popup_or_inline_ticket($(this));
     });
     $(document).on('change', '.ttbm_registration_area [name="ttbm_tour_hotel_list"]', function () {
         let parent = $(this).closest('.ttbm_registration_area');

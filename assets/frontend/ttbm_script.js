@@ -225,8 +225,26 @@
 	ttbm_hotel_left_filter_see_more_button('ttbm_hotelLocationList', 'ttbm_location_checkBoxLevel', 'ttbm_show_hotel_location_seeMoreBtn');
 
 
+	// Hero stats "Load more" — bind early so a later script error cannot skip it.
+	function initHeroStatsLoadMore() {
+		$(document).off('click.ttbmHeroStats', '.ttbm_hero_stats_load_more').on('click.ttbmHeroStats', '.ttbm_hero_stats_load_more', function (e) {
+			e.preventDefault();
+			var $btn = $(this);
+			var $grid = $btn.closest('.ttbm_hero_stats_grid');
+			if (!$grid.length) {
+				return;
+			}
+			var labelMore = $btn.attr('data-label-more') || 'Load more';
+			var labelLess = $btn.attr('data-label-less') || 'Show less';
+			var collapsed = $grid.toggleClass('ttbm_hero_stats_grid--collapsed').hasClass('ttbm_hero_stats_grid--collapsed');
+			$btn.attr('aria-expanded', collapsed ? 'false' : 'true').text(collapsed ? labelMore : labelLess);
+		});
+	}
+
+	$(initHeroStatsLoadMore);
+
 	//========= google map load=========
-	if(ttbm_map.api_key){
+	if (typeof ttbm_map !== 'undefined' && ttbm_map.api_key) {
         initGMap();
     }else{
         initOSMMap();
@@ -448,25 +466,6 @@
 		list.find('.ttbm-feature-hidden').removeClass('ttbm-feature-hidden').prop('hidden', false).hide().slideDown();
 		$(this).closest('li').remove();
 	});
-
-	function initHeroStatsLoadMore() {
-		$('.ttbm_default_theme .ttbm_hero_stats_load_more').each(function () {
-			var $btn = $(this);
-			var $grid = $btn.closest('.ttbm_hero_stats_grid');
-			if (!$grid.length) {
-				return;
-			}
-			var labelMore = $btn.attr('data-label-more') || 'Load more';
-			var labelLess = $btn.attr('data-label-less') || 'Show less';
-			$btn.off('click.ttbmHeroStats').on('click.ttbmHeroStats', function (e) {
-				e.preventDefault();
-				var collapsed = $grid.toggleClass('ttbm_hero_stats_grid--collapsed').hasClass('ttbm_hero_stats_grid--collapsed');
-				$btn.attr('aria-expanded', collapsed ? 'false' : 'true').text(collapsed ? labelMore : labelLess);
-			});
-		});
-	}
-
-	$(initHeroStatsLoadMore);
 
 	// Hero "Book Now" reveals the (hidden) booking section, scrolls to it,
 	// auto-selects the next available date and opens the ticket section.

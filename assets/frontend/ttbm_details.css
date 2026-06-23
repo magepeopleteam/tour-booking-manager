@@ -461,6 +461,26 @@
 #ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .ttbm_slider-wrapper,
 #ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .sliderAllItem,
 #ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .sliderAllItem .sliderItem { height: 590px; }
+#ttbm_content .ttbm_details_page .superSlider [data-bg-image] {
+	width: 100%;
+	height: 100%;
+	background-color: #e8edf2;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+#ttbm_content .ttbm_details_page .superSlider [class*="dLoader"],
+#ttbm_content .ttbm_details_page .superSlider [class*="simpleSpinner"] {
+	display: none !important;
+}
+#ttbm_content .ttbm_details_page .superSlider.placeholder_area > * {
+	opacity: 1 !important;
+	visibility: visible !important;
+}
+#ttbm_content .ttbm_details_page .superSlider.placeholder_area::after {
+	display: none !important;
+	content: none !important;
+}
 .sliderPopup.in .superSlider {
     height: 100% !important;
 }

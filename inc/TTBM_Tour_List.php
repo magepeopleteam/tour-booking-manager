@@ -77,6 +77,11 @@
                         <div class="ttbm_all_item_activities_wrapper">
                             <button class="scroll-left">←</button>
                             <div class="ttbm_all_item_activities_holder">
+							<div class="ttbm_item_activity">
+								<div class="ttbm_item_filter_by_activity ttbm_item_activity_active" id="all">
+									<?php esc_html_e( 'All Tours', 'tour-booking-manager' ); ?>
+								</div>
+							</div>
 							<?php
 									if (is_array($activities) && count($activities) > 0) {
 										foreach ($activities as $activitie) {
@@ -167,6 +172,9 @@
                             </div>
 							<?php //} ?>
 						<?php } ?>
+						<?php if ( $params['style'] === 'orchid' ) {
+							include TTBM_Function::template_path( 'layout/orchid_concierge_card.php' );
+						} ?>
                     </div>
                 </div>
 				<?php
@@ -279,9 +287,11 @@
 						<!-- Middle: Showing X of Y -->
 						<div class="ttbm-filter-bar-count" data-placeholder>
 							<?php esc_html_e( 'Showing', 'tour-booking-manager' ); ?>
-							<strong class="qty_count"><?php echo esc_html( min( (int) $params['show'], (int) $loop->post_count ) ); ?></strong>
-							<?php esc_html_e( 'of', 'tour-booking-manager' ); ?>
-							<strong class="total_filter_qty"><?php echo esc_html( $loop->post_count ); ?></strong>
+							<span class="ttbm-filter-count-highlight">
+								<strong class="qty_count"><?php echo esc_html( min( (int) $params['show'], (int) $loop->post_count ) ); ?></strong>
+								<?php esc_html_e( 'of', 'tour-booking-manager' ); ?>
+								<strong class="total_filter_qty"><?php echo esc_html( $loop->post_count ); ?></strong>
+							</span>
 						</div>
 
 						<!-- Right: Sort + View switcher -->

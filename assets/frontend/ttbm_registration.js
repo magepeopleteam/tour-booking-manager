@@ -617,29 +617,7 @@ $(document).on('change', '.ttbm-sort-select', function () {
             }
         });
 
-        // =========================================================
-        // Activity Filter
-        // =========================================================
-        $('.ttbm_item_filter_by_activity').on('click', function () {
-
-            $('.ttbm_item_filter_by_activity').removeClass('active');
-            $(this).addClass('active');
-
-            let activityID = $(this).attr('id');
-
-            $('.filter_item').hide();
-
-            $('.filter_item').each(function () {
-
-                let activities = ($(this).attr('data-activity') || '').split(',');
-
-                if (activities.includes(activityID)) {
-                    $(this).show();
-                }
-            });
-        });
-
-
+        // Activity filter is handled in filter_pagination.js (.ttbm_item_filter_by_activity).
         // =========================================================
         // Mobile Left Filter Toggle
         // =========================================================

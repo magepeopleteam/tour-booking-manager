@@ -36,6 +36,7 @@
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Frontend.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Query.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Shortcodes.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Theme_Align.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Filter_Pagination.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Data_Display.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Tour_List.php';

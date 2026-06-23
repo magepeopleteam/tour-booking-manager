@@ -1,0 +1,114 @@
+/**
+ * Center TTBM shortcode pages on a shared shell; title and plugin share the same left edge inside it.
+ * Active when body has .ttbm-page-with-shortcode (see TTBM_Theme_Align).
+ */
+body.ttbm-page-with-shortcode {
+	--ttbm-theme-shell-width: 1460px;
+	--ttbm-theme-shell-gutter: var(--ttbm_mp, 20px);
+	--wp--style--global--content-size: var(--ttbm-theme-shell-width);
+	--wp--style--global--wide-size: var(--ttbm-theme-shell-width);
+}
+
+/* One centered column: title, excerpt, and shortcode stack with matching left edges. */
+body.ttbm-page-with-shortcode main,
+body.ttbm-page-with-shortcode .site-main,
+body.ttbm-page-with-shortcode #primary > article,
+body.ttbm-page-with-shortcode #primary > .site-main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+body.ttbm-page-with-shortcode main > .wp-block-group,
+body.ttbm-page-with-shortcode .site-main > .entry-header,
+body.ttbm-page-with-shortcode .site-main > .entry-content,
+body.ttbm-page-with-shortcode .site-main > .wp-block-post-title,
+body.ttbm-page-with-shortcode .site-main > .wp-block-post-excerpt,
+body.ttbm-page-with-shortcode .site-main > .wp-block-post-content,
+body.ttbm-page-with-shortcode article > .entry-header,
+body.ttbm-page-with-shortcode article > .entry-content,
+body.ttbm-page-with-shortcode .wp-block-post-title,
+body.ttbm-page-with-shortcode .wp-block-post-excerpt,
+body.ttbm-page-with-shortcode .entry-header,
+body.ttbm-page-with-shortcode .entry-content,
+body.ttbm-page-with-shortcode .wp-block-post-content {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: var(--ttbm-theme-shell-width);
+	margin-left: auto !important;
+	margin-right: auto !important;
+	padding-left: var(--ttbm-theme-shell-gutter);
+	padding-right: var(--ttbm-theme-shell-gutter);
+	text-align: left;
+}
+
+/* Nested block-theme groups that wrap title + content. */
+body.ttbm-page-with-shortcode main .wp-block-group.is-layout-constrained,
+body.ttbm-page-with-shortcode main .wp-block-group__inner-container.is-layout-constrained {
+	width: 100%;
+	max-width: var(--ttbm-theme-shell-width);
+	margin-left: auto !important;
+	margin-right: auto !important;
+	padding-left: var(--ttbm-theme-shell-gutter);
+	padding-right: var(--ttbm-theme-shell-gutter);
+	box-sizing: border-box;
+}
+
+body.ttbm-page-with-shortcode .entry-title,
+body.ttbm-page-with-shortcode .wp-block-post-title {
+	text-align: left;
+}
+
+body.ttbm-page-with-shortcode h1.wp-block-post-title {
+	font-weight: 700;
+}
+
+body.ttbm-page-with-shortcode p.wp-block-paragraph {
+	font-size: 16px;
+	color: #6b7280;
+}
+
+body.ttbm-page-with-shortcode .entry-header .has-text-align-center,
+body.ttbm-page-with-shortcode .wp-block-post-title.has-text-align-center,
+body.ttbm-page-with-shortcode .wp-block-post-excerpt.has-text-align-center {
+	text-align: left !important;
+}
+
+/* Block themes: allow constrained children to use the full shell width. */
+body.ttbm-page-with-shortcode .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
+	max-width: var(--ttbm-theme-shell-width);
+}
+
+body.ttbm-page-with-shortcode main.is-layout-constrained,
+body.ttbm-page-with-shortcode .site-main.is-layout-constrained {
+	max-width: var(--ttbm-theme-shell-width) !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+
+/* Astra and similar themes. */
+body.ttbm-page-with-shortcode.ast-plain-container .site-content > .ast-container,
+body.ttbm-page-with-shortcode.ast-separate-container .site-content > .ast-container {
+	max-width: var(--ttbm-theme-shell-width);
+	margin-left: auto;
+	margin-right: auto;
+}
+
+body.ttbm-page-with-shortcode.ast-separate-container .ast-article-single,
+body.ttbm-page-with-shortcode.ast-plain-container .ast-article-single {
+	padding-left: var(--ttbm-theme-shell-gutter);
+	padding-right: var(--ttbm-theme-shell-gutter);
+}
+
+/* Plugin output fills the centered shell (shell already defines width). */
+body.ttbm-page-with-shortcode .entry-content .ttbm_wraper,
+body.ttbm-page-with-shortcode .wp-block-post-content .ttbm_wraper,
+body.ttbm-page-with-shortcode .entry-content .mpContainer,
+body.ttbm-page-with-shortcode .wp-block-post-content .mpContainer {
+	width: 100%;
+	max-width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}

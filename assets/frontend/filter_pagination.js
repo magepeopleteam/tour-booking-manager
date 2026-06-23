@@ -84,39 +84,50 @@
 
 
 		$(document).on('click', '.ttbm_item_filter_by_activity', function () {
-			$(this).toggleClass('ttbm_item_activity_active');
-			let activeIds = [];
-			$('.ttbm_item_activity_active').each(function () {
-				let id = $(this).attr('id'); // Get the ID of the current element
-				if (id) {
-					activeIds.push(id);
-				}
-			});
-			if (activeIds.length === 0) {
-				// Show all items
-				$('.filter_item').each(function () {
+			let $clicked = $(this);
+			let clickedId = $clicked.attr('id');
+
+			if (clickedId === 'all') {
+				$('.ttbm_item_filter_by_activity').removeClass('ttbm_item_activity_active');
+				$clicked.addClass('ttbm_item_activity_active');
+				$('.filter_item').not('.ttbm-orchid-concierge').each(function () {
 					$(this).fadeIn('fast');
 					$(this).removeClass('search_off').addClass('search_on');
 				});
 			} else {
-				$('.filter_item').each(function () {
-					let activities = $(this).find('input[name="ttbm_item_activities"]').val();
-					if (activities) {
-						let activityArray = activities.split(',');
-						if (activeIds.some(id => activityArray.includes(id))) {
-							$(this).fadeIn('fast');
-							$(this).removeClass('search_off').addClass('search_on');
+				$('.ttbm_item_filter_by_activity#all').removeClass('ttbm_item_activity_active');
+				$clicked.toggleClass('ttbm_item_activity_active');
+				let activeIds = [];
+				$('.ttbm_item_activity_active').each(function () {
+					let id = $(this).attr('id');
+					if (id && id !== 'all') {
+						activeIds.push(id);
+					}
+				});
+				if (activeIds.length === 0) {
+					$('.ttbm_item_filter_by_activity#all').addClass('ttbm_item_activity_active');
+					$('.filter_item').not('.ttbm-orchid-concierge').each(function () {
+						$(this).fadeIn('fast');
+						$(this).removeClass('search_off').addClass('search_on');
+					});
+				} else {
+					$('.filter_item').not('.ttbm-orchid-concierge').each(function () {
+						let activities = $(this).find('input[name="ttbm_item_activities"]').val();
+						if (activities) {
+							let activityArray = activities.split(',');
+							if (activeIds.some(id => activityArray.includes(id))) {
+								$(this).fadeIn('fast');
+								$(this).removeClass('search_off').addClass('search_on');
+							} else {
+								$(this).fadeOut('fast');
+								$(this).removeClass('search_on').addClass('search_off');
+							}
 						} else {
 							$(this).fadeOut('fast');
 							$(this).removeClass('search_on').addClass('search_off');
 						}
-					} else {
-						$('.filter_item').each(function () {
-							$(this).removeClass('search_off').addClass('search_on');
-						});
-						$(this).fadeOut('fast');
-					}
-				});
+					});
+				}
 			}
 
 			function filter_qty_palace() {
@@ -125,8 +136,6 @@
 				$('.filter_short_result').html(show);
 			}
 			filter_qty_palace();
-
-			// $('.filter_short_result').text(`Visible items: ${countSearchOn}`);
 		});
 
 		const holder = $('.ttbm_all_item_activities_holder');

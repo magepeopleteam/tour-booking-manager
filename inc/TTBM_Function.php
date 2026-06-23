@@ -1120,6 +1120,201 @@
 				}
 				return array_unique($country);
 			}
+			public static function filter_valid_tour_ids( $tour_ids, $exclude_id = 0 ) {
+				$exclude_id = (int) $exclude_id;
+				$tour_ids   = array_filter( array_map( 'absint', (array) $tour_ids ) );
+				$valid      = array();
+				foreach ( $tour_ids as $id ) {
+					if ( ! $id || $id === $exclude_id ) {
+						continue;
+					}
+					if ( get_post_type( $id ) === self::get_cpt_name() && get_post_status( $id ) === 'publish' ) {
+						$valid[] = $id;
+					}
+				}
+				return array_values( array_unique( $valid ) );
+			}
+			public static function get_auto_related_tour_ids( $tour_id, $limit = 12 ) {
+				$tour_id = (int) $tour_id;
+				if ( ! $tour_id ) {
+					return array();
+				}
+				$limit     = max( 1, (int) $limit );
+				$base_args = array(
+					'post_type'      => self::get_cpt_name(),
+					'posts_per_page' => -1,
+					'fields'         => 'ids',
+					'post_status'    => 'publish',
+					'post__not_in'   => array( $tour_id ),
+					'orderby'        => 'date',
+					'order'          => 'DESC',
+					'no_found_rows'  => true,
+				);
+				$related_ids = array();
+
+				$location_name = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_location_name' );
+				if ( $location_name ) {
+					$related_ids = self::merge_unique_ids(
+						$related_ids,
+						self::filter_valid_tour_ids(
+							get_posts(
+								array_merge(
+									$base_args,
+									array(
+										'meta_query' => array(
+											array(
+												'key'     => 'ttbm_location_name',
+												'value'   => $location_name,
+												'compare' => 'LIKE',
+											),
+										),
+									)
+								),
+								$tour_id
+							)
+						)
+					);
+				}
+				$location_term_ids = wp_get_post_terms( $tour_id, 'ttbm_tour_location', array( 'fields' => 'ids' ) );
+				if ( ( empty( $location_term_ids ) || is_wp_error( $location_term_ids ) ) && $location_name ) {
+					$location_term = get_term_by( 'name', $location_name, 'ttbm_tour_location' );
+					if ( $location_term && ! is_wp_error( $location_term ) ) {
+						$location_term_ids = array( (int) $location_term->term_id );
+					}
+				}
+				if ( ! empty( $location_term_ids ) && ! is_wp_error( $location_term_ids ) ) {
+					$related_ids = self::merge_unique_ids(
+						$related_ids,
+						self::filter_valid_tour_ids(
+							get_posts(
+								array_merge(
+									$base_args,
+									array(
+										'tax_query' => array(
+											array(
+												'taxonomy' => 'ttbm_tour_location',
+												'field'    => 'term_id',
+												'terms'    => $location_term_ids,
+											),
+										),
+									)
+								),
+								$tour_id
+							)
+						)
+					);
+				}
+
+				$activity_ids = array_filter(
+					array_map(
+						'absint',
+						(array) TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_tour_activities', array() )
+					)
+				);
+				$activity_terms = wp_get_post_terms( $tour_id, 'ttbm_tour_activities', array( 'fields' => 'ids' ) );
+				if ( ! empty( $activity_terms ) && ! is_wp_error( $activity_terms ) ) {
+					$activity_ids = array_unique( array_merge( $activity_ids, array_map( 'absint', $activity_terms ) ) );
+				}
+				if ( ! empty( $activity_ids ) ) {
+					$activity_meta_query = array( 'relation' => 'OR' );
+					foreach ( $activity_ids as $activity_id ) {
+						$activity_meta_query[] = array(
+							'key'     => 'ttbm_tour_activities',
+							'value'   => '"' . $activity_id . '"',
+							'compare' => 'LIKE',
+						);
+					}
+					$related_ids = self::merge_unique_ids(
+						$related_ids,
+						self::filter_valid_tour_ids(
+							get_posts(
+								array_merge(
+									$base_args,
+									array(
+										'meta_query' => $activity_meta_query,
+									)
+								)
+							),
+							$tour_id
+						)
+					);
+					$related_ids = self::merge_unique_ids(
+						$related_ids,
+						self::filter_valid_tour_ids(
+							get_posts(
+								array_merge(
+									$base_args,
+									array(
+										'tax_query' => array(
+											array(
+												'taxonomy' => 'ttbm_tour_activities',
+												'field'    => 'term_id',
+												'terms'    => $activity_ids,
+											),
+										),
+									)
+								)
+							),
+							$tour_id
+						)
+					);
+				}
+
+				$category_ids = wp_get_post_terms( $tour_id, 'ttbm_tour_cat', array( 'fields' => 'ids' ) );
+				if ( ! empty( $category_ids ) && ! is_wp_error( $category_ids ) ) {
+					$related_ids = self::merge_unique_ids(
+						$related_ids,
+						self::filter_valid_tour_ids(
+							get_posts(
+								array_merge(
+									$base_args,
+									array(
+										'tax_query' => array(
+											array(
+												'taxonomy' => 'ttbm_tour_cat',
+												'field'    => 'term_id',
+												'terms'    => $category_ids,
+											),
+										),
+									)
+								),
+								$tour_id
+							)
+						)
+					);
+				}
+
+				return array_slice( $related_ids, 0, $limit );
+			}
+			public static function merge_unique_ids( ...$lists ) {
+				$merged = array();
+				foreach ( $lists as $list ) {
+					foreach ( (array) $list as $id ) {
+						$id = (int) $id;
+						if ( $id && ! in_array( $id, $merged, true ) ) {
+							$merged[] = $id;
+						}
+					}
+				}
+				return $merged;
+			}
+			public static function get_related_tour_ids( $tour_id, $limit = 12 ) {
+				$tour_id = (int) self::post_id_multi_language( $tour_id );
+				if ( ! $tour_id || TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_display_related', 'on' ) === 'off' ) {
+					return array();
+				}
+				$assigned = self::filter_valid_tour_ids(
+					TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_related_tour', array() ),
+					$tour_id
+				);
+				if ( ! empty( $assigned ) ) {
+					return array_slice( $assigned, 0, (int) $limit );
+				}
+				if ( TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_auto_related_tour', 'on' ) === 'off' ) {
+					return array();
+				}
+				return self::get_auto_related_tour_ids( $tour_id, $limit );
+			}
 			//*******************************//
 			public static function get_hotel_list($tour_id) {
 				$type = self::get_tour_type($tour_id);

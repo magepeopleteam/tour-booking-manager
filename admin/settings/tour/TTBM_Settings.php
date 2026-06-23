@@ -170,6 +170,7 @@
 					'ttbm_activity_name' => esc_html__('The name is how it appears on your site.', 'tour-booking-manager'),
 					'ttbm_activity_description' => esc_html__('The description is not prominent by default; however, some themes may show it.', 'tour-booking-manager'),
 					'ttbm_display_related' => esc_html__('Please select a related tour from this list.', 'tour-booking-manager'),
+					'ttbm_auto_related_tour' => esc_html__('If no related tour is assigned, automatically show tours from the same location, activities, or categories. Default is ON.', 'tour-booking-manager'),
 					'ttbm_display_slider' => esc_html__('By default slider is ON but you can keep it off by switching this option', 'tour-booking-manager'),
 					'ttbm_display_slider_hotel' => esc_html__('By default slider is ON but you can keep it off by switching this option', 'tour-booking-manager'),
 					'ttbm_section_title_style' => esc_html__('By default Section title is style one', 'tour-booking-manager'),
@@ -907,6 +908,7 @@
 					$duration = isset($_POST['ttbm_display_duration']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_duration'])) ? 'on' : 'off';
 					$ttbm_display_rank = isset($_POST['ttbm_display_order_tour']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_order_tour'])) ? 'on' : 'off';
 					$display_enquiry = isset($_POST['ttbm_display_enquiry']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_enquiry'])) ? 'on' : 'off';
+					$auto_related_tour = isset($_POST['ttbm_auto_related_tour']) && sanitize_text_field(wp_unslash($_POST['ttbm_auto_related_tour'])) ? 'on' : 'off';
 					$ttbm_template = isset($_POST['ttbm_theme_file']) ? sanitize_file_name(wp_unslash($_POST['ttbm_theme_file'])) : 'default.php';
 					update_post_meta($tour_id, 'ttbm_travel_rank_tour', $ttbm_travel_rank_tour);
 					update_post_meta($tour_id, 'ttbm_display_order_tour', $ttbm_display_rank);
@@ -919,6 +921,7 @@
 					update_post_meta($tour_id, 'ttbm_display_duration', $duration);
 					update_post_meta($tour_id, 'ttbm_theme_file', $ttbm_template);
 					update_post_meta($tour_id, 'ttbm_display_enquiry', $display_enquiry);
+					update_post_meta($tour_id, 'ttbm_auto_related_tour', $auto_related_tour);
 					//*********FAQ**************//
 					$faq = isset($_POST['ttbm_display_faq']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_faq'])) ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_faq', $faq);

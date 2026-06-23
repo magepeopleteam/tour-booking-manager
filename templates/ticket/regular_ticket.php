@@ -191,7 +191,11 @@ if (!defined('ABSPATH')) {
 										<input type="hidden" name='ticket_capacity[<?php echo $index; ?>]' value='<?php echo esc_html($total_capacity); ?>'>
 									</td>
 								</tr>
-								<?php do_action('ttbm_after_ticket_type_item', $tour_id, $ticket); ?>
+								<tr class="ttbm_attendee_form_row">
+									<td colspan="<?php echo $hide_availability_column === 'on' ? '4' : '5'; ?>">
+										<?php do_action('ttbm_after_ticket_type_item', $tour_id, $ticket); ?>
+									</td>
+								</tr>
 							<?php } ?>
 						</tbody>
 					</table>

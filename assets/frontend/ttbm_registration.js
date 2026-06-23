@@ -1,3 +1,31 @@
+function ttbm_sync_time_slot_selection(parent) {
+    parent = parent && parent.jquery ? parent : jQuery(parent);
+    if (!parent || parent.length < 1) {
+        return;
+    }
+    let timeArea = parent.find('.ttbm_select_time_area').first();
+    if (timeArea.length < 1) {
+        return;
+    }
+    let timeInput = timeArea.find('[name="ttbm_select_time"], [data-radio-value]').first();
+    let selectedTime = timeInput.length ? timeInput.val() : '';
+    if (!selectedTime) {
+        selectedTime = parent.data('ttbmSelectedTime') || '';
+        if (selectedTime && timeInput.length) {
+            timeInput.val(selectedTime);
+        }
+    } else {
+        parent.data('ttbmSelectedTime', selectedTime);
+    }
+    if (!selectedTime) {
+        timeArea.find('.customRadio[data-radio].active').removeClass('active');
+        return;
+    }
+    timeArea.find('.customRadio[data-radio]').each(function () {
+        jQuery(this).toggleClass('active', jQuery(this).attr('data-radio') === selectedTime);
+    });
+    timeArea.find('select[name="ttbm_select_time"]').val(selectedTime);
+}
 function get_ttbm_ticket(current, date = '') {
     let parent = current.closest('.ttbm_registration_area');
     let tour_id = parent.find('[name="ttbm_id"]').val();
@@ -26,6 +54,11 @@ function get_ttbm_ticket(current, date = '') {
         },
         beforeSend: function () {
             simpleSpinnerRemove(parent);
+            let selectedTime = parent.find('.ttbm_select_time_area [name="ttbm_select_time"], .ttbm_select_time_area [data-radio-value]').first().val();
+            if (selectedTime) {
+                parent.data('ttbmSelectedTime', selectedTime);
+            }
+            parent.data('ttbmTicketLoading', true);
             target.empty().show().addClass('ttbm-ticket-loading');
             placeholderLoader(parent);
         },
@@ -39,6 +72,7 @@ function get_ttbm_ticket(current, date = '') {
                 placeholderLoaderRemove(parent);
                 simpleSpinnerRemove(parent);
                 ttbm_sync_available_seat(parent);
+                ttbm_sync_time_slot_selection(parent);
                 parent.trigger('ttbm:ticket-refreshed');
             });
         },
@@ -49,10 +83,12 @@ function get_ttbm_ticket(current, date = '') {
             target.removeClass('ttbm-ticket-loading');
             placeholderLoaderRemove(parent);
             simpleSpinnerRemove(parent);
+            ttbm_sync_time_slot_selection(parent);
         },
         complete: function () {
             if (parent.data('ttbmTicketRequestToken') === requestToken) {
                 parent.removeData('ttbmTicketRequestToken');
+                parent.removeData('ttbmTicketLoading');
             }
             if (parent.data('ttbmTicketRequest') === ajaxRequest) {
                 parent.removeData('ttbmTicketRequest');
@@ -142,18 +178,26 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
     });
 
     // Clear time validation error; ensure hidden input syncs when markup has no label wrapper.
-    $(document).on('click', '.ttbm_select_time_area .customRadio', function () {
+    $(document).on('click', '.ttbm_select_time_area .customRadio[data-radio]', function (e) {
+        e.stopImmediatePropagation();
         let $slot = $(this);
-        let parent = $slot.closest('.ttbm_select_time_area');
-        let regArea = parent.closest('.ttbm_registration_area');
-        parent.css('border', '');
-        parent.find('.ttbm-time-error').remove();
+        let timeArea = $slot.closest('.ttbm_select_time_area');
+        let regArea = timeArea.closest('.ttbm_registration_area');
+        timeArea.css('border', '');
+        timeArea.find('.ttbm-time-error').remove();
 
         let value = $slot.attr('data-radio');
-        let timeInput = regArea.find('[name="ttbm_select_time"]').first();
-        if (timeInput.length && value && timeInput.val() !== value) {
-            parent.find('.customRadio[data-radio]').removeClass('active');
-            $slot.addClass('active');
+        let timeInput = timeArea.find('[name="ttbm_select_time"], [data-radio-value]').first();
+        if (!timeInput.length) {
+            timeInput = regArea.find('[name="ttbm_select_time"]').first();
+        }
+        timeArea.find('.customRadio[data-radio]').removeClass('active');
+        $slot.addClass('active');
+        if (!timeInput.length || !value) {
+            return;
+        }
+        regArea.data('ttbmSelectedTime', value);
+        if (timeInput.val() !== value) {
             timeInput.val(value).trigger('change');
         }
     });

@@ -112,8 +112,28 @@ function mp_tour_ticket_qty(parent) {
     }
     return totalQty;
 }
-function ttbm_multi_attendee_form(parentTr, qty) {
+function ttbm_get_attendee_form_row(parentTr) {
     let target_tr = parentTr.next('tr');
+    while (target_tr.length && target_tr.hasClass('ttbm_hidden_inputs')) {
+        target_tr = target_tr.next('tr');
+    }
+    return target_tr;
+}
+function ttbm_get_attendee_form_template(parent) {
+    let template = parent.find('[data-form-type]').first();
+    if (!template.length) {
+        template = jQuery(parent.closest('.ttbm_registration_area').find('[data-form-type]')).first();
+    }
+    if (!template.length) {
+        template = jQuery('[data-form-type]').first();
+    }
+    return template.length ? template.html() : '';
+}
+function ttbm_multi_attendee_form(parentTr, qty) {
+    let target_tr = ttbm_get_attendee_form_row(parentTr);
+    if (!target_tr.length) {
+        return;
+    }
     let target_form = target_tr.find('.ttbm_attendee_form_item');
     let formLength = target_form.length;
     if (qty > 0) {
@@ -123,13 +143,19 @@ function ttbm_multi_attendee_form(parentTr, qty) {
                     target_tr.find('.ttbm_attendee_form_item:last-child').slideUp(250).remove();
                 }
             } else {
-                let name = target_tr.find('[name="ticket_name[]"]').val();
-                let form_copy = jQuery('[data-form-type]').html();
+                let name = parentTr.next('tr.ttbm_hidden_inputs').find('input[name^="ticket_name"]').val();
+                if (!name) {
+                    name = target_tr.find('input[name^="ticket_name"], [name="ticket_name[]"]').first().val();
+                }
+                let form_copy = ttbm_get_attendee_form_template(parentTr.closest('.ttbm_registration_area'));
+                if (!form_copy) {
+                    return;
+                }
                 for (let i = formLength; i < qty; i++) {
                     target_tr.find('td').append(form_copy).find('.ttbm_attendee_form_item:last-child').slideDown(250).promise().done(function () {
                         let current_item = target_tr.find('td').find('.ttbm_attendee_form_item:last-child');
                         current_item.find('.form_title_text').html(name);
-                        current_item.find('.ttbm_attendee_title').html(qty);
+                        current_item.find('.ttbm_attendee_title').html(i + 1);
                         if (target_tr.find('[name="ticket_qroup_qty[]"]').length > 0) {
                             let group_qty = parseInt(target_tr.find('[name="ticket_qroup_qty[]"]').val());
                             if (current_item.find('.ttbm_guest_item').length !== group_qty) {
@@ -163,7 +189,10 @@ function ttbm_single_attendee_form(parent, totalQty) {
     let target_form = parent.find('.ttbm_attendee_form_area').find('.ttbm_attendee_form_item');
     if (totalQty > 0) {
         if (target_form.length === 0) {
-            let form_copy = parent.find('[data-form-type]').html();
+            let form_copy = ttbm_get_attendee_form_template(parent);
+            if (!form_copy) {
+                return;
+            }
             parent.find('.ttbm_attendee_form_area').append(form_copy).promise().done(function () {
                 parent.find('.ttbm_attendee_form_area').find(".date_type").removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind().promise().done(function () {
                     ttbm_load_date_picker(parent.find('.ttbm_attendee_form_area'));

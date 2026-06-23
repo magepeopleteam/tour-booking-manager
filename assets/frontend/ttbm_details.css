@@ -1935,6 +1935,36 @@
 	margin-left: auto;
 }
 
+/* attendee form — full width below ticket row */
+#ttbm_content .ttbm_booking_section .ttbm_enhanced_table tr.ttbm_hidden_inputs {
+	display: none !important;
+}
+#ttbm_content .ttbm_booking_section .ttbm_enhanced_table tr.ttbm_attendee_form_row {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	border-bottom: 1px solid var(--ttbm_d_border);
+}
+#ttbm_content .ttbm_booking_section .ttbm_enhanced_table tr.ttbm_attendee_form_row td {
+	display: block;
+	width: 100% !important;
+	max-width: 100%;
+	flex: none;
+	box-sizing: border-box;
+	padding: 0 0 16px !important;
+	text-align: left !important;
+}
+#ttbm_content .ttbm_booking_section .ttbm_attendee_form_row .ttbm_attendee_form_item,
+#ttbm_content .ttbm_booking_section .ttbm_attendee_form_row .ttbm-attendee-form {
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+#ttbm_content .ttbm_booking_section .ttbm-attendee-form .max_200 {
+	max-width: none;
+	width: 100%;
+}
+
 /* ticket info */
 #ttbm_content .ttbm_booking_section .person-info { display: block; text-align: left; }
 #ttbm_content .ttbm_booking_section .ttbm_ticket_details { text-align: left; }

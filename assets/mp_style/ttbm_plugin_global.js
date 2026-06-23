@@ -927,6 +927,9 @@ function ttbm_sticky_management() {
     });
     // radio
     $(document).on('click', '.ttbm_style [data-radio]', function () {
+        if ($(this).closest('.ttbm_select_time_area').length) {
+            return;
+        }
         let $this = $(this);
         let value = $this.attr('data-radio');
         let target = $this.closest('label');

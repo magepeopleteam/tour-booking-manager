@@ -452,7 +452,7 @@ div.ttbm_style [data-bg-image] {
 }
 
 table div.ttbm_attendee_form_item {
-	padding: 15px;
+	padding: 0;
 }
 
 /**************************************************/
@@ -1682,7 +1682,7 @@ div.ttbm_booking_panel table tbody tr:nth-of-type(even) td {
 }
 
 div.ttbm_booking_panel table tbody tr td .ttbm_attendee_form_item:not(:last-child) {
-	border-bottom: 1px solid #DDD;
+	border-bottom: 0;
 }
 
 .ttbm_style table th,
@@ -1711,11 +1711,12 @@ div.ttbm_booking_panel table th {
 	text-align: left;
 }
 
-#ttbm_content div.ttbm-attendee-form h3 {
+#ttbm_content div.ttbm-attendee-form h3,
+#ttbm_content div.ttbm-attendee-form .ttbm-attendee-form__title {
 	margin: 0;
-	margin-bottom: 10px;
-	font-size: 21px;
-	font-weight: 500;
+	margin-bottom: 0;
+	font-size: inherit;
+	font-weight: inherit;
 }
 
 .ttbm_day_wise_details {
@@ -1778,14 +1779,14 @@ div.ttbm_booking_panel .ttbm_book_now_area .tour_price {
 }
 
 div.ttbm_booking_panel .ttbm_attendee_form_area {
-	border-radius: 10px;
-	margin: 10px;
-	background: #ECECEC;
+	border-radius: 0;
+	margin: 0;
+	background: transparent;
 }
 
 div.ttbm_booking_panel .ttbm_attendee_form_item {
-	border-radius: 10px;
-	padding: 10px;
+	border-radius: 0;
+	padding: 0;
 }
 
 div.ttbm_booking_panel .ttbm-attendee-form .ttbm_form_header {
@@ -5212,6 +5213,24 @@ div.ttbm_style .ttbm_hotel_room_incDec .formControl {
 }
 tr.ttbm_hidden_inputs {
     display: none;
+}
+tr.ttbm_attendee_form_row {
+	display: block;
+	width: 100%;
+}
+tr.ttbm_attendee_form_row td {
+	display: block;
+	width: 100% !important;
+	max-width: 100%;
+	box-sizing: border-box;
+	padding: 8px 0 16px;
+	border-bottom: 0;
+	text-align: left !important;
+}
+tr.ttbm_attendee_form_row .ttbm_attendee_form_item,
+tr.ttbm_attendee_form_row .ttbm-attendee-form {
+	width: 100%;
+	max-width: 100%;
 }
 .ttbm_table_header th {
 	padding: 16px 20px;

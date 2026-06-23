@@ -154,6 +154,9 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
     });
     $(document).on('change', '.ttbm_registration_area [name="ttbm_date"]', function () {
         let parent = $(this).closest('.ttbm_registration_area');
+        if (parent.data('ttbmTicketLoading')) {
+            return;
+        }
 
         // Clear Validation Error
         let date_input = parent.find('#ttbm_select_date');

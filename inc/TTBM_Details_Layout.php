@@ -214,6 +214,7 @@
 					$count = 0;
 					?>
                     <div class="item_section">
+						<?php do_action( 'ttbm_short_details_before', $ttbm_post_id ); ?>
 						<?php include(TTBM_Function::template_path('layout/duration_box.php')); ?>
 						<?php include(TTBM_Function::template_path('layout/start_price_box.php')); ?>
 						<?php include(TTBM_Function::template_path('layout/max_people_box.php')); ?>

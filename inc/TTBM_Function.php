@@ -8,6 +8,45 @@
 	} // Cannot access pages directly.
 	if (!class_exists('TTBM_Function')) {
 		class TTBM_Function {
+			private static $hero_stat_render_index = 0;
+			private static $hero_stat_limit_enabled = false;
+
+			public static function enable_hero_stat_limit() {
+				self::$hero_stat_limit_enabled  = true;
+				self::$hero_stat_render_index   = 0;
+			}
+
+			public static function disable_hero_stat_limit() {
+				self::$hero_stat_limit_enabled = false;
+			}
+
+			public static function reset_hero_stat_render_index() {
+				self::$hero_stat_render_index = 0;
+			}
+
+			public static function get_hero_stat_render_count() {
+				return self::$hero_stat_render_index;
+			}
+
+			/**
+			 * Extra class for hero stat chips beyond the first five visible items.
+			 *
+			 * @param bool $counts_toward_limit Pass false for chips hidden in hero (e.g. price).
+			 */
+			public static function hero_stat_item_class( $counts_toward_limit = true ) {
+				if ( ! self::$hero_stat_limit_enabled ) {
+					return '';
+				}
+				$extra = '';
+				if ( $counts_toward_limit ) {
+					if ( self::$hero_stat_render_index >= 5 ) {
+						$extra = ' ttbm_hero_stat_item--extra';
+					}
+					self::$hero_stat_render_index++;
+				}
+				return $extra;
+			}
+
 			public function __construct() {
 			}
 			//**************Support multi Language*********************//
@@ -561,6 +600,48 @@
 
 				return $start_price;
 			}
+
+			/**
+			 * Regular price for the ticket that provides get_tour_start_price(), when that ticket is on sale.
+			 */
+			public static function get_tour_start_regular_price( $tour_id, $start_date = '' ): string {
+				$ticket_list = self::get_ticket_type( $tour_id );
+				if ( empty( $ticket_list ) ) {
+					return '';
+				}
+
+				if ( ! $start_date ) {
+					$all_dates  = self::get_date( $tour_id );
+					$start_date = self::get_first_booking_date( $all_dates );
+				}
+
+				$start_price = self::get_tour_start_price( $tour_id, $start_date );
+				if ( $start_price === '' ) {
+					return '';
+				}
+
+				$start_price_f = floatval( $start_price );
+
+				foreach ( $ticket_list as $ticket ) {
+					$ticket_name = $ticket['ticket_type_name'];
+					$regular     = isset( $ticket['ticket_type_price'] ) ? floatval( $ticket['ticket_type_price'] ) : 0;
+					$sale        = ! empty( $ticket['sale_price'] ) ? floatval( $ticket['sale_price'] ) : 0;
+
+					if ( ! $sale || $sale >= $regular ) {
+						continue;
+					}
+
+					$effective = apply_filters( 'ttbm_filter_ticket_price', $sale, $tour_id, $start_date, $ticket_name );
+					$effective = apply_filters( 'ttbm_price_by_name_filter', $effective, $tour_id, 1, $start_date, $ticket_name );
+
+					if ( floatval( $effective ) === $start_price_f ) {
+						return (string) $regular;
+					}
+				}
+
+				return '';
+			}
+
 			public static function get_hotel_room_min_price($hotel_id) {
 				$room_lists = TTBM_Global_Function::get_post_info($hotel_id, 'ttbm_room_details', array());
                 $price = 0;

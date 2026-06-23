@@ -11,9 +11,9 @@
 	if ( ( $day || $night ) && $tour_type == 'general' && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_duration', 'on' ) != 'off' ) {
 		?>
 
-			<div class="item_icon" title="<?php esc_html_e( 'Duration', 'tour-booking-manager' ); ?>">
+			<div class="item_icon<?php echo esc_attr( TTBM_Function::hero_stat_item_class() ); ?>" title="<?php esc_html_e( 'Duration', 'tour-booking-manager' ); ?>">
 				<i class="mi mi-clock-three"></i>
-					<?php
+				<span><?php
 						if ( $day && $day > 1 ) {
 							echo esc_html( $day ) . ' ';
 							if ($duration_type == 'day' ) {
@@ -42,7 +42,7 @@
 								echo esc_html( $night ) . ' ' . esc_html__( 'Night ', 'tour-booking-manager' );
 							}
 						}
-					?>
+					?></span>
 				
 			</div>
 		<?php

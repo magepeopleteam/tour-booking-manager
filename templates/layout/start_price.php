@@ -6,7 +6,5 @@
 	$start_price = $start_price ?? TTBM_Function::get_tour_start_price( $ttbm_post_id );
 	if ( $start_price && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) != 'off' ) {
 		?>
-		<strong><?php 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
-		echo wc_price($start_price); ?></strong>
+		<strong><?php include TTBM_Function::template_path( 'layout/start_price_display.php' ); ?></strong>
 	<?php } ?>

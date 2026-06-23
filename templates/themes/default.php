@@ -35,7 +35,14 @@
 																	<span class="ttbm_hero_stat_icon" aria-hidden="true"><i class="mi mi-coins"></i></span>
 																	<span class="ttbm_hero_stat_body">
 																		<span class="ttbm_hero_price_label"><?php esc_html_e( 'Prices Start At', 'tour-booking-manager' ); ?></span>
-																		<span class="ttbm_hero_price_value"><?php echo wp_kses_post( wc_price( $ttbm_hero_price ) ); ?></span>
+																		<span class="ttbm_hero_price_value">
+																			<?php
+																			$wrapper_class  = 'ttbm_hero_price_values';
+																			$original_class = 'ttbm_hero_price_regular ttbm_regular_price strikeLine';
+																			$current_class  = 'ttbm_hero_price_sale';
+																			include TTBM_Function::template_path( 'layout/start_price_display.php' );
+																			?>
+																		</span>
 																	</span>
 																</div>
 															<?php endif; ?>
@@ -65,15 +72,38 @@
 							</div>
 							<div class="ttbm_hero_stats">
 								<?php
-									$ttbm_hero_loc = TTBM_Function::get_full_location( $ttbm_post_id );
-									if ( $ttbm_hero_loc && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_location', 'on' ) != 'off' ) :
+									TTBM_Function::enable_hero_stat_limit();
+									ob_start();
+									$ttbm_hero_loc_cb = static function ( $hero_post_id ) use ( $ttbm_post_id ) {
+										$ttbm_post_id = $hero_post_id ?: $ttbm_post_id;
+										include TTBM_Function::template_path( 'layout/hero_location_box.php' );
+									};
+									add_action( 'ttbm_short_details_before', $ttbm_hero_loc_cb, 10, 1 );
+									do_action( 'ttbm_short_details' );
+									remove_action( 'ttbm_short_details_before', $ttbm_hero_loc_cb, 10 );
+									$ttbm_hero_stats_html  = ob_get_clean();
+									$ttbm_hero_stat_count  = TTBM_Function::get_hero_stat_render_count();
+									TTBM_Function::disable_hero_stat_limit();
 								?>
-									<div class="item_icon ttbm_hero_loc" title="<?php esc_attr_e( 'Location', 'tour-booking-manager' ); ?>">
-										<i class="mi mi-marker"></i>
-										<span><?php echo esc_html( $ttbm_hero_loc ); ?></span>
-									</div>
+								<?php if ( $ttbm_hero_stat_count > 5 ) : ?>
+								<style>
+									.ttbm_default_theme .ttbm_hero_stats_grid--collapsed .item_icon.ttbm_hero_stat_item--extra { display: none !important; }
+								</style>
 								<?php endif; ?>
-								<?php do_action( 'ttbm_short_details' ); ?>
+								<div class="ttbm_hero_stats_grid ttbm_hero_stats_grid--collapsed">
+								<?php echo $ttbm_hero_stats_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								<?php if ( $ttbm_hero_stat_count > 5 ) : ?>
+								<div class="ttbm_hero_stats_more is-visible">
+									<button
+										type="button"
+										class="ttbm_hero_stats_load_more"
+										aria-expanded="false"
+										data-label-more="<?php esc_attr_e( 'Load more', 'tour-booking-manager' ); ?>"
+										data-label-less="<?php esc_attr_e( 'Show less', 'tour-booking-manager' ); ?>"
+									><?php esc_html_e( 'Load more', 'tour-booking-manager' ); ?></button>
+								</div>
+								<?php endif; ?>
+								</div>
 							</div>
 							<div class="ttbm_booking_section" id="ttbm_booking_section">
 								<h3 class="ttbm-ticket-section-title"><?php esc_html_e( 'Choose the Ticket That Fits Your Journey', 'tour-booking-manager' ); ?></h3>

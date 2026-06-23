@@ -45,9 +45,9 @@
 
 	if ( $tour_type == 'general' && $status != 'off' && !empty($language_labels)) {
 		?>
-       <div class="item_icon" title="<?php echo esc_attr( __('Language', 'tour-booking-manager') ); ?>">
+       <div class="item_icon<?php echo esc_attr( TTBM_Function::hero_stat_item_class() ); ?>" title="<?php echo esc_attr( __('Language', 'tour-booking-manager') ); ?>">
             <i class="mi mi-language"></i>
-            <?php echo esc_html( $language_label_text ); ?>
+            <span><?php echo esc_html( $language_label_text ); ?></span>
         </div>
 	<?php
 	}

@@ -621,8 +621,25 @@
 	white-space: nowrap;
 }
 
+#ttbm_content .ttbm_default_theme .ttbm_hero_price_values {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 6px;
+	flex-wrap: wrap;
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_price_regular .woocommerce-Price-amount,
+#ttbm_content .ttbm_default_theme .ttbm_hero_price_regular .woocommerce-Price-amount .amount {
+	color: #94a3b8;
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration: line-through;
+}
+
 #ttbm_content .ttbm_default_theme .ttbm_hero_price_value,
-#ttbm_content .ttbm_default_theme .ttbm_hero_price_value .amount {
+#ttbm_content .ttbm_default_theme .ttbm_hero_price_value .amount,
+#ttbm_content .ttbm_default_theme .ttbm_hero_price_sale .woocommerce-Price-amount,
+#ttbm_content .ttbm_default_theme .ttbm_hero_price_sale .woocommerce-Price-amount .amount {
 	color: #e03248;
 	font-size: 22px;
 	font-weight: 800;
@@ -681,29 +698,188 @@
 }
 #ttbm_content .ttbm_default_theme .ttbm_hero_meta .location_name span { color: var(--color_theme); }
 
-/* stats bar: sits below the hero image as a clean info strip */
+/* hero stats — modern chip grid below slider */
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats {
-	display: flex; flex-wrap: wrap; align-items: center; gap: 8px 28px;
-	padding: 12px 0; margin: 16px 0 20px;
+	padding: 0;
+	margin: 18px 0 22px;
 	background: transparent;
-	border-top: 1px solid var(--ttbm_d_border);
-	border-bottom: 1px solid var(--ttbm_d_border);
+	border: none;
 	border-radius: 0;
 }
-/* dissolve the inner .item_section box so its chips share the bar's flex row */
-#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_section { display: contents; }
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats_grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+	gap: 10px;
+	padding: 16px;
+	background: linear-gradient(145deg, #f8fafc 0%, #f1f5f9 100%);
+	border: 1px solid var(--ttbm_d_border, #e2e8f0);
+	border-radius: 16px;
+	box-shadow: 0 6px 24px rgba(15, 23, 42, 0.06);
+}
+
+@media (min-width: 1100px) {
+	#ttbm_content .ttbm_default_theme .ttbm_hero_stats_grid {
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+	}
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_section {
+	display: contents;
+}
+
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon {
-	display: inline-flex; align-items: center; gap: 8px; margin: 0; padding: 0;
-	background: none; border: 0; color: var(--ttbm_d_text); font-size: 13.5px; font-weight: 500; line-height: 1.25; max-width: 260px;
+	display: grid;
+	grid-template-columns: 40px minmax(0, 1fr);
+	grid-template-rows: auto auto;
+	column-gap: 12px;
+	row-gap: 3px;
+	align-items: start;
+	margin: 0;
+	padding: 12px 14px;
+	min-height: 64px;
+	max-width: none;
+	background: #fff;
+	border: 1px solid #e8edf5;
+	border-radius: 12px;
+	box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+	color: var(--ttbm_d_heading, #0f172a);
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1.35;
+	text-align: left;
+	white-space: normal;
+	position: relative;
+	overflow: hidden;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
+
+/* kill global divider pseudo from ttbm_registration.css */
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon::after {
+	display: none !important;
+	content: none !important;
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon:hover {
+	border-color: rgba(var(--color_theme_rgb, 90, 86, 224), 0.28);
+	box-shadow: 0 6px 18px rgba(var(--color_theme_rgb, 90, 86, 224), 0.1);
+}
+
+/* title — right of icon, top row */
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon::before {
+	content: attr(title);
+	grid-column: 2;
+	grid-row: 1;
+	align-self: end;
+	text-align: left;
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.07em;
+	text-transform: uppercase;
+	color: #94a3b8;
+	line-height: 1.2;
+}
+
+/* icon — left, vertically centered */
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon i {
-	flex-shrink: 0; font-size: 16px; color: var(--color_theme);
-	width: auto; height: auto; background: none; border: none; border-radius: 0;
-	display: inline-flex; align-items: center; justify-content: center;
+	grid-column: 1;
+	grid-row: 1 / -1;
+	align-self: center;
+	justify-self: start;
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	margin: 0;
+	font-size: 18px;
+	color: var(--color_theme, #5a56e0);
+	background: linear-gradient(135deg, rgba(var(--color_theme_rgb, 90, 86, 224), 0.14) 0%, rgba(var(--color_theme_rgb, 90, 86, 224), 0.05) 100%);
+	border: none;
+	border-radius: 10px;
 }
-#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon span { color: var(--ttbm_d_text); }
+
+/* value — right of icon, under title */
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon > span,
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon > .woocommerce-Price-amount,
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon > .ttbm_start_price_display {
+	grid-column: 2;
+	grid-row: 2;
+	align-self: start;
+	justify-self: start;
+	text-align: left;
+	color: var(--ttbm_d_heading, #0f172a);
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1.35;
+	min-width: 0;
+	word-break: break-word;
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon > .ttbm_start_price_display {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 4px;
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon .ttbm_regular_price.strikeLine .woocommerce-Price-amount {
+	font-size: 11px;
+	font-weight: 600;
+	color: #94a3b8;
+	text-decoration: line-through;
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon.ttbm_hero_loc {
+	background: #fff;
+	border-color: #e8edf5;
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon.ttbm_available_seat_area .ttbm_available_seat {
+	color: var(--color_theme, #5a56e0);
+	font-weight: 800;
+}
+
 /* price is shown in the CTA block, so hide the price chip here */
-#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon:has(.mi-coins) { display: none; }
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon:has(.mi-coins) {
+	display: none;
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats_grid--collapsed .item_icon.ttbm_hero_stat_item--extra {
+	display: none;
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats_more {
+	display: none;
+	grid-column: 1 / -1;
+	justify-content: flex-end;
+	align-items: center;
+	padding: 2px 2px 0;
+	margin-top: 2px;
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats_more.is-visible {
+	display: flex;
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats_load_more {
+	padding: 0;
+	border: none;
+	background: none;
+	color: var(--color_theme, #5a56e0);
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.4;
+	cursor: pointer;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+	transition: color 0.2s ease;
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats_load_more:hover {
+	color: #4338ca;
+}
 
 /* mobile: bottom overlay on shorter hero */
 @media (max-width: 768px) {
@@ -733,7 +909,32 @@
 	#ttbm_content .ttbm_default_theme .ttbm_hero_overlay_inner {
 		gap: 12px;
 	}
-	#ttbm_content .ttbm_default_theme .ttbm_hero_stats { gap: 8px 12px; padding: 10px 0; margin: 12px 0 16px; }
+	#ttbm_content .ttbm_default_theme .ttbm_hero_stats {
+		margin: 14px 0 18px;
+	}
+	#ttbm_content .ttbm_default_theme .ttbm_hero_stats_grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 8px;
+		padding: 12px;
+		border-radius: 14px;
+	}
+	#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon {
+		min-height: 58px;
+		padding: 10px 12px;
+		font-size: 12px;
+		grid-template-columns: 36px minmax(0, 1fr);
+		column-gap: 10px;
+	}
+	#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon i {
+		width: 36px;
+		height: 36px;
+		font-size: 16px;
+		border-radius: 8px;
+	}
+	#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon > span,
+	#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon > .woocommerce-Price-amount {
+		font-size: 12px;
+	}
 	#ttbm_content .ttbm_default_theme .ttbm_hero_cta {
 		flex-direction: column;
 		border-radius: 14px;
@@ -1007,16 +1208,21 @@
 }
 
 #ttbm_content .ttbm_details_page .ttbm_sidebar_cta_regular {
-	display: block;
-	margin-bottom: 2px;
+	display: inline-block;
+	margin: 0;
 	font-size: 14px;
 	line-height: 1.2;
-	color: #ef4444;
+	color: #9ca3af;
 	text-decoration: line-through;
 }
 
-#ttbm_content .ttbm_details_page .ttbm_sidebar_cta_regular .woocommerce-Price-amount {
+#ttbm_content .ttbm_details_page .ttbm_sidebar_cta_regular .woocommerce-Price-amount,
+#ttbm_content .ttbm_details_page .ttbm_sidebar_cta_regular .woocommerce-Price-amount .amount,
+#ttbm_content .ttbm_details_page .ttbm_sidebar_cta_regular bdi {
 	color: inherit;
+	font-size: inherit;
+	font-weight: 600;
+	text-decoration: line-through;
 }
 
 #ttbm_content .ttbm_details_page .ttbm_sidebar_cta_amount {
@@ -1024,7 +1230,7 @@
 	flex-wrap: wrap;
 	align-items: baseline;
 	justify-content: center;
-	gap: 4px;
+	gap: 6px;
 }
 
 #ttbm_content .ttbm_details_page .ttbm_sidebar_cta_amount strong {

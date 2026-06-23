@@ -79,10 +79,10 @@
 			}
 			public function post_thumbnail($image_id = '') {
 				$thumbnail = TTBM_Global_Function::get_image_url('', $image_id);
-				if ($thumbnail) {
+				if ($thumbnail && $image_id) {
 					?>
-                    <div class="superSlider">
-						<?php self::render_bg_layer($thumbnail); ?>
+                    <div class="superSlider placeholder_area">
+						<?php $this->slider_all_item(array($image_id)); ?>
                     </div>
 					<?php
 				}

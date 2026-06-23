@@ -9,12 +9,12 @@
 	$class_location = $class_location ?? '';
 ?>
 	<div class="ttbm_default_theme">
-		<div class='ttbm_style ttbm_wraper'>
+		<div class='ttbm_style ttbm_wraper placeholderLoader ttbm_details_page_loader'>
 			<div class="ttbm_container">
 				<div class="ttbm_details_page">
 					<div class="ttbm_content_area">
 						<div class="ttbm_content__left">
-							<div class="ttbm_hero">
+							<div class="ttbm_hero placeholder_area">
 								<?php
 									$ttbm_hero_display_reg = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_registration', 'on' );
 									$ttbm_hero_price       = TTBM_Function::get_tour_start_price( $tour_id );
@@ -70,7 +70,7 @@
 									remove_action( 'ttbm_slider_all_item_overlay', $ttbm_hero_overlay_cb );
 								?>
 							</div>
-							<div class="ttbm_hero_stats">
+							<div class="ttbm_hero_stats placeholder_area">
 								<?php
 									TTBM_Function::enable_hero_stat_limit();
 									ob_start();
@@ -105,13 +105,13 @@
 								<?php endif; ?>
 								</div>
 							</div>
-							<div class="ttbm_booking_section" id="ttbm_booking_section">
+							<div class="ttbm_booking_section placeholder_area" id="ttbm_booking_section">
 								<h3 class="ttbm-ticket-section-title"><?php esc_html_e( 'Choose the Ticket That Fits Your Journey', 'tour-booking-manager' ); ?></h3>
 								<?php include( TTBM_Function::template_path( 'ticket/registration.php' ) ); ?>
 								<?php include( TTBM_Function::template_path( 'ticket/particular_item_area.php' ) ); ?>
 							</div>
 							<?php do_action( 'ttbm_description' ); ?>
-							<div class="ttbm_inclusions_grid">
+							<div class="ttbm_inclusions_grid placeholder_area">
 								<?php do_action( 'ttbm_include_exclude' ); ?>
 								<?php do_action( 'ttbm_activity' ); ?>
 							</div>
@@ -122,7 +122,7 @@
                             <?php do_action( 'ttbm_review' ); ?>
 							<?php do_action('ttbm_enquery_popup'); ?>
 						</div>
-						<div class="ttbm_content__right">
+						<div class="ttbm_content__right placeholder_area">
 							<?php //do_action( 'ttbm_hotel_list' ); ?>
 							<?php do_action( 'ttbm_sidebar_cta' ); ?>
 							<?php do_action( 'ttbm_why_choose_us' ); ?>
@@ -132,7 +132,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="mT">
+				<div class="mT placeholder_area">
 					<?php do_action( 'ttbm_related_tour' ); ?>
 				</div>
 				

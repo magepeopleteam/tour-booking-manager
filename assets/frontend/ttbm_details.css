@@ -473,6 +473,17 @@
 #ttbm_content .ttbm_details_page .superSlider [class*="simpleSpinner"] {
 	display: none !important;
 }
+/* Keep slider content visible after load; skeleton only while .placeholderLoader is active */
+.placeholderLoader.ttbm_details_page_loader #ttbm_content .ttbm_details_page .superSlider.placeholder_area > *,
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_gallery .superSlider.placeholder_area > * {
+	opacity: 0 !important;
+	visibility: hidden !important;
+}
+.placeholderLoader.ttbm_details_page_loader #ttbm_content .ttbm_details_page .superSlider.placeholder_area::after,
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_gallery .superSlider.placeholder_area::after {
+	display: block !important;
+	content: '' !important;
+}
 #ttbm_content .ttbm_details_page .superSlider.placeholder_area > * {
 	opacity: 1 !important;
 	visibility: visible !important;
@@ -2394,5 +2405,178 @@
 	#ttbm_content .ttbm_booking_section .ttbm-time-slot.customRadio.button_type {
 		flex: 1 1 calc(50% - 8px);
 		min-width: 0;
+	}
+}
+
+/* =====================================================
+   Tour details page — initial skeleton loaders
+   ===================================================== */
+.placeholderLoader.ttbm_details_page_loader {
+	--ttbm-d-skeleton-bar: #dce1ea;
+	--ttbm-d-skeleton-shell: #eef2f8;
+	--ttbm-d-skeleton-card: #fff;
+}
+
+@keyframes ttbmDetailsShimmer {
+	0% { left: -100%; }
+	100% { left: 160%; }
+}
+
+.placeholderLoader.ttbm_details_page_loader .placeholder_area > * {
+	opacity: 0 !important;
+	visibility: hidden !important;
+	pointer-events: none !important;
+}
+
+.placeholderLoader.ttbm_details_page_loader .placeholder_area::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	bottom: 0;
+	width: 60%;
+	background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.55) 50%, transparent 100%);
+	animation: ttbmDetailsShimmer 1.4s ease-in-out infinite;
+	pointer-events: none;
+	z-index: 5;
+}
+
+/* Hero / gallery */
+.placeholderLoader.ttbm_details_page_loader .ttbm_hero.placeholder_area,
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_gallery.placeholder_area {
+	position: relative;
+	overflow: hidden;
+	border-radius: 12px;
+	min-height: 320px;
+	background-color: var(--ttbm-d-skeleton-shell) !important;
+}
+
+.placeholderLoader.ttbm_details_page_loader .ttbm_default_theme .ttbm_hero.placeholder_area {
+	min-height: 590px;
+}
+
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_gallery.placeholder_area {
+	min-height: 520px;
+	margin-bottom: 28px;
+}
+
+/* Hero stats grid */
+.placeholderLoader.ttbm_details_page_loader .ttbm_hero_stats.placeholder_area {
+	position: relative;
+	overflow: hidden;
+	min-height: 96px;
+	margin: 0 0 22px;
+	padding: 16px;
+	border-radius: 16px;
+	background-color: var(--ttbm-d-skeleton-shell) !important;
+	background-image:
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar)),
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar)),
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar)),
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar));
+	background-size: calc(25% - 12px) 64px, calc(25% - 12px) 64px, calc(25% - 12px) 64px, calc(25% - 12px) 64px;
+	background-repeat: no-repeat;
+	background-position: 0 0, calc(33.33% + 4px) 0, calc(66.66% + 8px) 0, calc(100% - 25% + 12px) 0;
+}
+
+/* Booking section */
+.placeholderLoader.ttbm_details_page_loader .ttbm_booking_section.placeholder_area {
+	position: relative;
+	overflow: hidden;
+	min-height: 220px;
+	padding: 24px;
+	border-radius: 16px;
+	background-color: var(--ttbm-d-skeleton-card) !important;
+	border: 1px solid #e2e8f0;
+	background-image:
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar)),
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar)),
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar)),
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar));
+	background-size: 55% 22px, 100% 44px, 100% 44px, 38% 44px;
+	background-repeat: no-repeat;
+	background-position: 24px 24px, 24px 58px, 24px 114px, 24px 170px;
+}
+
+/* Inclusions / overview content */
+.placeholderLoader.ttbm_details_page_loader .ttbm_inclusions_grid.placeholder_area,
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_overview.placeholder_area {
+	position: relative;
+	overflow: hidden;
+	min-height: 200px;
+	padding: 24px 0;
+	background-color: transparent !important;
+	background-image:
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar)),
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar)),
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar)),
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar)),
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar));
+	background-size: 42% 20px, 100% 14px, 100% 14px, 72% 14px, 100% 120px;
+	background-repeat: no-repeat;
+	background-position: 0 0, 0 36px, 0 58px, 0 80px, 0 108px;
+}
+
+/* Sidebar booking card */
+.placeholderLoader.ttbm_details_page_loader .ttbm_content__right.placeholder_area {
+	position: relative;
+	overflow: hidden;
+	min-height: 320px;
+	padding: 20px;
+	border-radius: 16px;
+	background-color: var(--ttbm-d-skeleton-card) !important;
+	border: 1px solid #e2e8f0;
+	box-shadow: 0 8px 28px rgba(17, 24, 39, 0.06);
+	background-image:
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar)),
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar)),
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar)),
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar)),
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar));
+	background-size: 68% 18px, 100% 14px, 100% 42px, 100% 42px, 100% 48px;
+	background-repeat: no-repeat;
+	background-position: 20px 20px, 20px 48px, 20px 76px, 20px 128px, 20px 188px;
+}
+
+/* Related tours */
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_related.placeholder_area,
+.placeholderLoader.ttbm_details_page_loader .mT.placeholder_area {
+	position: relative;
+	overflow: hidden;
+	min-height: 280px;
+	margin-top: 28px;
+	padding-top: 8px;
+	background-color: transparent !important;
+	background-image:
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar)),
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar)),
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar)),
+		linear-gradient(var(--ttbm-d-skeleton-bar), var(--ttbm-d-skeleton-bar));
+	background-size: 34% 22px, calc(33.33% - 14px) 200px, calc(33.33% - 14px) 200px, calc(33.33% - 14px) 200px;
+	background-repeat: no-repeat;
+	background-position: 0 0, 0 40px, calc(33.33% + 7px) 40px, calc(66.66% + 14px) 40px;
+}
+
+@media (max-width: 959px) {
+	.placeholderLoader.ttbm_details_page_loader .ttbm_default_theme .ttbm_hero.placeholder_area,
+	.placeholderLoader.ttbm_details_page_loader .ttbm_smart_gallery.placeholder_area {
+		min-height: 280px;
+	}
+
+	.placeholderLoader.ttbm_details_page_loader .ttbm_hero_stats.placeholder_area {
+		background-size: calc(50% - 8px) 64px, calc(50% - 8px) 64px;
+		background-position: 0 0, calc(50% + 8px) 0;
+		min-height: 80px;
+	}
+
+	.placeholderLoader.ttbm_details_page_loader .ttbm_content__right.placeholder_area {
+		min-height: 260px;
+	}
+
+	.placeholderLoader.ttbm_details_page_loader .ttbm_smart_related.placeholder_area,
+	.placeholderLoader.ttbm_details_page_loader .mT.placeholder_area {
+		background-size: 50% 22px, 100% 180px;
+		background-position: 0 0, 0 40px;
+		min-height: 240px;
 	}
 }

@@ -352,6 +352,7 @@ function ttbm_resize_bg_image_area(target, bg_url) {
         });
         $(window).on('load', function () {
             load_initial();
+            ttbm_details_placeholder_remove();
         });
         let loadInitialTimer = null;
         $(document).on('scroll', function () {
@@ -361,6 +362,7 @@ function ttbm_resize_bg_image_area(target, bg_url) {
             loadInitialTimer = setTimeout(load_initial, 150);
         });
         load_initial();
+        setTimeout(ttbm_details_placeholder_remove, 4500);
     });
     $(document).on('click', 'div.ttbm_style [data-href]', function (e) {
         if ($(e.target).closest('.ttbm-gc-wishlist').length) return;
@@ -394,6 +396,7 @@ function ttbm_resize_bg_image_area(target, bg_url) {
         $('body').find('.ttbm_details_page [data-bg-image]').each(function () {
             dLoaderRemove($(this));
         });
+        ttbm_details_placeholder_remove();
     });
     $(window).on('resize', function () {
         // On resize, recalculate only elements that were previously JS-sized (data-ttbm-resized).
@@ -420,9 +423,12 @@ function ttbm_resize_bg_image_area(target, bg_url) {
         });
         if (!bg_image_load) {
             bg_image_load = true;
-            placeholderLoaderRemove($('.ttbm_style.placeholderLoader'));
+            placeholderLoaderRemove($('.ttbm_style.placeholderLoader').not('.ttbm_details_page_loader'));
         }
         ttbm_loadCartBgImage();
+    }
+    function ttbm_details_placeholder_remove() {
+        placeholderLoaderRemove($('.ttbm_style.ttbm_details_page_loader'));
     }
     // Load cart images on document ready
     $(document).ready(function () {

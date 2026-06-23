@@ -10,24 +10,37 @@ $class_location   = $class_location ?? '';
 $ttbm_display_reg = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_registration', 'on' );
 ?>
 <div class="ttbm_smart_theme">
-	<div class="ttbm_style ttbm_wraper">
+	<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_details_page_loader">
 		<div class="ttbm_container">
-			<header class="ttbm_smart_header">
-				<?php do_action( 'ttbm_details_title' ); ?>
-				<div class="ttbm-review-location-area">
-					<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
-					<?php do_action( 'ttbm_details_location' ); ?>
-				</div>
-			</header>
-
-			<div class="ttbm_smart_gallery">
-				<?php do_action( 'ttbm_slider' ); ?>
+			<div class="ttbm_smart_gallery placeholder_area">
+				<?php
+				$ttbm_smart_overlay_cb = static function () use ( $ttbm_post_id ) {
+					?>
+					<div class="ttbm_smart_hero_overlay">
+						<div class="ttbm_smart_hero_overlay_inner">
+							<div class="ttbm_smart_hero_overlay_head">
+								<?php do_action( 'ttbm_details_title' ); ?>
+							</div>
+							<div class="ttbm_smart_hero_meta">
+								<div class="ttbm-review-location-area">
+									<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
+									<?php do_action( 'ttbm_details_location' ); ?>
+								</div>
+							</div>
+						</div>
+					</div>
+					<?php
+				};
+				add_action( 'ttbm_slider_all_item_overlay', $ttbm_smart_overlay_cb );
+				do_action( 'ttbm_slider' );
+				remove_action( 'ttbm_slider_all_item_overlay', $ttbm_smart_overlay_cb );
+				?>
 			</div>
 
 			<div class="ttbm_details_page">
 				<div class="ttbm_content_area">
 					<div class="ttbm_content__left">
-						<div class="ttbm_hero_stats ttbm_smart_hero_stats">
+						<div class="ttbm_hero_stats ttbm_smart_hero_stats placeholder_area">
 							<?php
 							TTBM_Function::enable_hero_stat_limit();
 							ob_start();
@@ -66,7 +79,7 @@ $ttbm_display_reg = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_di
 
 						<div class="ttbm-smart-overview-anchor" id="ttbm_smart_overview_anchor"></div>
 
-						<div class="ttbm_smart_overview">
+						<div class="ttbm_smart_overview placeholder_area">
 							<?php do_action( 'ttbm_description' ); ?>
 							<div class="ttbm_smart_inclusions">
 								<?php do_action( 'ttbm_include_exclude' ); ?>
@@ -81,7 +94,7 @@ $ttbm_display_reg = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_di
 						</div>
 					</div>
 
-					<aside class="ttbm_content__right" id="ttbm_booking_section" aria-label="<?php esc_attr_e( 'Tour booking', 'tour-booking-manager' ); ?>">
+					<aside class="ttbm_content__right placeholder_area" id="ttbm_booking_section" aria-label="<?php esc_attr_e( 'Tour booking', 'tour-booking-manager' ); ?>">
 						<div class="ttbm-smart-booking-origin"></div>
 						<?php if ( $ttbm_display_reg !== 'off' ) : ?>
 							<div class="ttbm-sidebar-booking ttbm_registration_area ttbm_smart_inline_booking">
@@ -99,7 +112,7 @@ $ttbm_display_reg = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_di
 				</div>
 			</div>
 
-			<div class="ttbm_smart_related mT">
+			<div class="ttbm_smart_related mT placeholder_area">
 				<?php do_action( 'ttbm_related_tour' ); ?>
 			</div>
 		</div>

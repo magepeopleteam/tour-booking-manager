@@ -6,12 +6,25 @@
 		class TTBM_Settings_General {
 			public function __construct() {
 				add_action('ttbm_meta_box_tab_content', [$this, 'general_settings']);
+				add_action('init', [$this, 'remove_default_title_editor']);
+			}
+			public function remove_default_title_editor() {
+				$cpt = TTBM_Function::get_cpt_name();
+				remove_post_type_support($cpt, 'title');
+				remove_post_type_support($cpt, 'editor');
 			}
 			public function general_settings($tour_id) {
 				?>
                 <div class="tabsItem ttbm_settings_general contentTab" data-tabs="#ttbm_general_info">
                     <h2><?php esc_html_e('General Information Settings', 'tour-booking-manager'); ?></h2>
                     <p><?php TTBM_Settings::des_p('general_settings_description'); ?></p>
+                    <section>
+                        <div class="ttbm-header">
+                            <h4><i class="fas fa-edit"></i><?php esc_html_e('Tour Title & Content', 'tour-booking-manager'); ?></h4>
+                        </div>
+						<?php $this->post_title_field($tour_id); ?>
+						<?php $this->post_content_field($tour_id); ?>
+                    </section>
                     <section>
                         <div class="ttbm-header">
                             <h4><i class="fas fa-tools"></i><?php esc_html_e('Genearl Information', 'tour-booking-manager'); ?></h4>
@@ -252,6 +265,88 @@
                         </div>
                     </div>
                     <textarea class="ms-2 rounded" cols="50" rows="5" name="<?php echo esc_attr($value_name); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_attr($value); ?></textarea>
+                </div>
+				<?php
+			}
+		public function post_title_field($tour_id) {
+				$title = get_the_title($tour_id);
+				?>
+                <div class="label ttbm-title-wrap" style="margin-bottom:12px; flex-direction:column; align-items:flex-start; gap:6px;">
+                    <div class="label-inner" style="width:100%; display:flex; align-items:center; gap:6px;">
+                        <p style="margin:0;"><?php esc_html_e('Tour Title', 'tour-booking-manager'); ?></p>
+                        <span style="color:#dc2626; font-size:13px; font-weight:700;" title="<?php esc_attr_e('Required', 'tour-booking-manager'); ?>">*</span>
+                    </div>
+                    <input
+                        type="text"
+                        id="ttbm_post_title"
+                        name="post_title"
+                        class="rounded ttbm-title-input"
+                        style="width:100%; padding:8px 12px; box-sizing:border-box;"
+                        value="<?php echo esc_attr($title); ?>"
+                        placeholder="<?php esc_attr_e('Enter tour title (required)...', 'tour-booking-manager'); ?>"
+                        autocomplete="off"
+                    />
+                    <p class="ttbm-title-error" style="display:none; margin:0; font-size:12px; color:#dc2626; font-weight:500;">
+                        <span style="margin-right:4px;">&#9888;</span><?php esc_html_e('Tour title is required before saving.', 'tour-booking-manager'); ?>
+                    </p>
+                </div>
+                <script>
+                (function($){
+                    function ttbmValidateTitle() {
+                        var val = $('#ttbm_post_title').val().trim();
+                        var input = $('#ttbm_post_title');
+                        var err   = $('.ttbm-title-error');
+                        if (!val) {
+                            input.css({'border-color':'#dc2626','box-shadow':'0 0 0 2px rgba(220,38,38,.15)'});
+                            err.show();
+                            return false;
+                        }
+                        input.css({'border-color':'','box-shadow':''});
+                        err.hide();
+                        return true;
+                    }
+
+                    /* Validate on blur */
+                    $(document).on('blur', '#ttbm_post_title', function(){
+                        ttbmValidateTitle();
+                    });
+
+                    /* Clear error while typing */
+                    $(document).on('input', '#ttbm_post_title', function(){
+                        if ($(this).val().trim()) {
+                            $(this).css({'border-color':'','box-shadow':''});
+                            $('.ttbm-title-error').hide();
+                        }
+                    });
+
+                    /* Block Publish / Update / Save Draft on empty title */
+                    $(document).on('click', '.ttbm-sb-btn-publish, .ttbm-btn-save, [name="publish"], [name="save"]', function(e){
+                        if (!ttbmValidateTitle()) {
+                            e.preventDefault();
+                            e.stopImmediatePropagation();
+                            /* Scroll to the title field */
+                            $('html, body').animate({ scrollTop: $('#ttbm_post_title').offset().top - 80 }, 250);
+                            $('#ttbm_post_title').focus();
+                        }
+                    });
+                })(jQuery);
+                </script>
+				<?php
+			}
+			public function post_content_field($tour_id) {
+				$content = get_post_field('post_content', $tour_id);
+				?>
+                <div style="margin-top:16px;">
+                    <div class="label-inner" style="margin-bottom:6px;">
+                        <p><strong><?php esc_html_e('Tour Content', 'tour-booking-manager'); ?></strong></p>
+                    </div>
+					<?php
+					wp_editor($content, 'ttbm_post_content_editor', [
+						'textarea_name' => 'post_content',
+						'media_buttons' => true,
+						'textarea_rows' => 15,
+					]);
+					?>
                 </div>
 				<?php
 			}

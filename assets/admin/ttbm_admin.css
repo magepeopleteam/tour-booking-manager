@@ -323,7 +323,20 @@
 	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .del-button { background-color: var(--mpl-red); color: var(--mpl-white);}
 	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .toggle-form { background-color: var(--mpl-yellow);}
 	#ttbm_meta_box_panel .form-wrap.form-builder .frmb li .field-actions .copy-button { background-color: var(--mpl-primary); color: var(--mpl-white);}
-	#ttbm_meta_box_panel  .tabsContent{background-color: var(--mpl-light);}
+	#ttbm_meta_box_panel  .tabsContent{background-color: var(--mpl-light); flex: 1; min-width: 0;}
+
+	/* Right sidebar inside the tab panel */
+	#ttbm_meta_box_panel .ttbm-right-sidebar {
+		width: 290px;
+		min-width: 290px;
+		flex-shrink: 0;
+		padding: 20px 16px 20px 0;
+		background-color: var(--mpl-light);
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
 
 	/* Tour add/edit meta box typography */
 	#ttbm_meta_box_panel #ttbm_content h1,
@@ -1643,6 +1656,13 @@ input.medium{
 		z-index: 10;
 	}
 }
+@media (max-width: 1200px) {
+	#ttbm_meta_box_panel .ttbm-right-sidebar {
+		width: 100%;
+		min-width: 100%;
+		padding: 0 20px 20px;
+	}
+}
 @media (max-width: 1400px) {
 	.tabsItem section .dFlex{
 		flex-direction: column;
@@ -1654,6 +1674,12 @@ input.medium{
 	#ttbm_meta_box_panel .tabsItem .col-right{
 		width:100%;
 	}
+}
+
+/* Hide WP meta box handle actions (move up/down + collapse toggle) for the main panel */
+#ttbm_meta_box_panel .handle-actions,
+#ttbm_meta_box_panel .handlediv {
+	display: none !important;
 }
 
 /******************************************************************** Organizer ID Badge & Shortcode Display ************************************************/

@@ -14,6 +14,8 @@
 				add_action('save_post', array($this, 'save_settings'), 99, 1);
 				add_action('save_post', [$this, 'sync_bookings_after_date_change'], 120, 1);
 				add_action('admin_notices', [$this, 'render_date_migration_notice']);
+				add_action('admin_notices', [$this, 'render_title_required_notice']);
+				add_action('admin_notices', [$this, 'render_location_required_notice']);
 			}
 			//************************//
 			public function settings_meta() {
@@ -63,6 +65,9 @@
 									do_action('ttbm_meta_box_tab_content', $tour_id);
 									$this->partial_payment_settings($tour_id);
 								?>
+                            </div>
+                            <div class="ttbm-right-sidebar">
+								<?php do_action('ttbm_right_sidebar_content', $tour_id); ?>
                             </div>
                         </div>
                     </div>
@@ -704,6 +709,28 @@
 				</div>
 				<?php
 			}
+			public function render_title_required_notice(): void {
+				$user_id = get_current_user_id();
+				if (!get_transient('ttbm_title_required_' . $user_id)) return;
+				delete_transient('ttbm_title_required_' . $user_id);
+				?>
+				<div class="notice notice-error is-dismissible">
+					<p><strong><?php esc_html_e('Tour title is required.', 'tour-booking-manager'); ?></strong>
+					<?php esc_html_e('The post was kept as a draft. Please enter a title and save again.', 'tour-booking-manager'); ?></p>
+				</div>
+				<?php
+			}
+			public function render_location_required_notice(): void {
+				$user_id = get_current_user_id();
+				if (!get_transient('ttbm_location_required_' . $user_id)) return;
+				delete_transient('ttbm_location_required_' . $user_id);
+				?>
+				<div class="notice notice-error is-dismissible">
+					<p><strong><?php esc_html_e('Tour location is required.', 'tour-booking-manager'); ?></strong>
+					<?php esc_html_e('The post was kept as a draft. Please select a location and save again.', 'tour-booking-manager'); ?></p>
+				</div>
+				<?php
+			}
 			//********************//
 			public function save_settings($tour_id) {
 				//echo '<pre>';print_r($_POST);echo '</pre>';die();
@@ -717,7 +744,23 @@
 				if (!current_user_can('edit_post', $tour_id)) {
 					return;
 				}
-				//echo '<pre>';print_r($_POST);echo '</pre>';die();
+				// Block save if post_title is empty or location missing when enabled
+				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
+					$submitted_title = isset($_POST['post_title']) ? trim(sanitize_text_field(wp_unslash($_POST['post_title']))) : '';
+					if ($submitted_title === '') {
+						wp_update_post(['ID' => $tour_id, 'post_status' => 'draft']);
+						set_transient('ttbm_title_required_' . get_current_user_id(), 1, 60);
+						return;
+					}
+					// Block save if location is enabled but none selected
+					$location_enabled = isset($_POST['ttbm_display_location']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_location'])) ? true : false;
+					$location_value   = isset($_POST['ttbm_location_name']) ? sanitize_text_field(wp_unslash($_POST['ttbm_location_name'])) : '';
+					if ($location_enabled && $location_value === '') {
+						wp_update_post(['ID' => $tour_id, 'post_status' => 'draft']);
+						set_transient('ttbm_location_required_' . get_current_user_id(), 1, 60);
+						return;
+					}
+				}
 				/*******Genarel********/
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
 					$ttbm_travel_duration = isset($_POST['ttbm_travel_duration']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_duration'])) : '';

@@ -97,10 +97,17 @@
                 <div class="<?php echo esc_attr($active); ?>" data-collapse="#ttbm_display_location">
                     <div class="label">
                         <div class="label-inner">
-                            <p><?php esc_html_e('Select Location', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Select Tour Location from this list', 'tour-booking-manager'); ?></span></i></p>
+                            <p>
+								<?php esc_html_e('Select Location', 'tour-booking-manager'); ?>
+								<span style="color:#dc2626;font-weight:700;margin-left:3px;" title="<?php esc_attr_e('Required', 'tour-booking-manager'); ?>">*</span>
+								<i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Select Tour Location from this list', 'tour-booking-manager'); ?></span></i>
+							</p>
                         </div>
 						<?php self::location_select($tour_id); ?>
                     </div>
+					<p id="ttbm_location_error" style="display:none;color:#dc2626;font-size:12px;font-weight:500;margin:6px 0 0;">
+						<span style="margin-right:4px;">&#9888;</span><?php esc_html_e('Please select a location before saving.', 'tour-booking-manager'); ?>
+					</p>
                 </div>
 				<?php
 			}
@@ -128,7 +135,8 @@
 				$value = TTBM_Global_Function::get_post_info($tour_id, $location_key, array());
 				$all_location = TTBM_Function::get_all_location();
 				?>
-                <select style="width: 70%;" name="<?php echo esc_attr($location_key); ?>">
+                <select id="ttbm_location_select" style="width: 70%;" name="<?php echo esc_attr($location_key); ?>">
+					<option value=""><?php esc_html_e('— Select Location —', 'tour-booking-manager'); ?></option>
 					<?php foreach ($all_location as $key => $location) : ?>
                         <option value="<?php echo esc_attr($key); ?>" <?php echo esc_attr($key == $value ? 'selected' : ''); ?>><?php echo esc_html($location); ?></option>
 					<?php endforeach; ?>

@@ -1045,6 +1045,10 @@ function ttbm_sticky_management() {
                 } else {
                     parent.find('input').val(value);
                 }
+                if ($this.hasClass('ttbm-date-type-card')) {
+                    parent.find('.ttbm-date-type-connector').attr('data-active-type', value);
+                    parent.attr('data-active-type', value);
+                }
             });
         }
     });

@@ -764,6 +764,27 @@
 				}
 				return $price;
 			}
+			public static function get_extra_service_available($tour_id, $tour_date, $service_name) {
+				$extra_services = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_extra_service_data', array());
+				if (!is_array($extra_services) || empty($extra_services) || $service_name === '') {
+					return 0;
+				}
+				foreach ($extra_services as $service) {
+					if (($service['service_name'] ?? '') !== $service_name) {
+						continue;
+					}
+					$service_inventory = max(0, (int) ($service['service_qty'] ?? 0));
+					if ($service_inventory <= 0) {
+						return 0;
+					}
+					$reserve = (int) apply_filters('ttbm_service_reserve_qty', 0);
+					$sold = (int) TTBM_Query::query_all_service_sold($tour_id, $tour_date, $service_name);
+					$per_order_max = (int) apply_filters('ttbm_service_type_max_qty', 0);
+					$available = max(0, $service_inventory - ($sold + $reserve));
+					return $per_order_max > 0 ? min($per_order_max, $available) : $available;
+				}
+				return 0;
+			}
 			//************************************//
 			public static function get_submit_info($key, $default = '') {
 				return self::data_sanitize($_POST[$key] ?? $default);

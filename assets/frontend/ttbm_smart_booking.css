@@ -2,16 +2,48 @@
 
 #ttbm_content .ttbm_smart_theme .ttbm_smart_booking_card {
 	background: #ffffff;
-	border: 1px solid #e6ebf1;
+	border: none;
 	border-radius: 14px;
 	box-shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
 	padding: 22px 20px;
 }
 
-#ttbm_content .ttbm_smart_theme .ttbm_content__right {
+/* Reset sidebar chrome once skeleton loader is removed */
+#ttbm_content .ttbm_smart_theme .ttbm_style:not(.placeholderLoader) .ttbm_content__right {
 	border: none;
 	background: transparent;
 	padding: 0;
+}
+
+/* Skeleton while .placeholderLoader is active */
+.placeholderLoader.ttbm_details_page_loader #ttbm_content .ttbm_smart_theme .ttbm_content__right.placeholder_area {
+	position: relative;
+	overflow: hidden;
+	height: 256px;
+	min-height: 0;
+	max-height: 256px;
+	padding: 20px;
+	border-radius: 16px;
+	background-color: var(--ttbm-d-skeleton-card, #fff) !important;
+	border: 1px solid #e2e8f0;
+	box-shadow: 0 8px 28px rgba(17, 24, 39, 0.06);
+	background-image:
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea));
+	background-size: 68% 18px, 100% 14px, 100% 42px, 100% 42px, 100% 48px;
+	background-repeat: no-repeat;
+	background-position: 20px 20px, 20px 48px, 20px 76px, 20px 128px, 20px 188px;
+}
+
+@media (max-width: 959px) {
+	.placeholderLoader.ttbm_details_page_loader #ttbm_content .ttbm_smart_theme .ttbm_content__right.placeholder_area {
+		height: 256px;
+		min-height: 0;
+		max-height: 256px;
+	}
 }
 
 #ttbm_content .ttbm_smart_theme .ttbm_smart_booking_badges {
@@ -90,21 +122,34 @@
 	border: 1px solid #dbe3ee;
 	border-radius: 10px;
 	background: #f8fafc;
+	position: relative;
 }
 
 #ttbm_content .ttbm_smart_theme .ttbm_smart_date_field .date-picker-icon i {
+	position: static;
+	top: auto;
+	left: auto;
+	flex-shrink: 0;
+	line-height: 1;
 	color: #0b74de;
 	font-size: 16px;
 }
 
-#ttbm_content .ttbm_smart_theme .ttbm_smart_date_field .formControl {
+#ttbm_content .ttbm_smart_theme .ttbm_smart_date_field .formControl,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_date_field .date-picker-icon #ttbm_select_date.formControl,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_date_field .date-picker-icon select.formControl {
 	flex: 1;
+	min-width: 0;
+	width: auto;
 	border: 0;
 	background: transparent;
 	padding: 0;
+	margin: 0;
 	font-size: 14px;
 	font-weight: 500;
+	line-height: 1.4;
 	color: #0f172a;
+	text-align: left;
 	box-shadow: none;
 }
 
@@ -399,11 +444,20 @@
 	overflow: hidden;
 }
 
-#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_label {
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_row {
 	display: flex;
 	align-items: center;
 	gap: 10px;
 	padding: 12px 14px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_label {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex: 1;
+	min-width: 0;
+	padding: 0;
 	margin: 0;
 	cursor: pointer;
 }
@@ -449,9 +503,19 @@
 
 #ttbm_content .ttbm_smart_theme .ttbm_smart_addon_name {
 	flex: 1;
+	min-width: 0;
 	font-size: 14px;
 	font-weight: 600;
 	color: #0f172a;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_end {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 12px;
+	margin-left: auto;
+	flex-shrink: 0;
 }
 
 #ttbm_content .ttbm_smart_theme .ttbm_smart_addon_price {
@@ -463,6 +527,75 @@
 
 #ttbm_content .ttbm_smart_theme .ttbm_smart_addon_qty {
 	display: none;
+	align-items: center;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_card.is-selected .ttbm_smart_addon_qty {
+	display: flex;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_qty .qtyIncDec {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_qty .qtyIncDec label {
+	margin: 0;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_qty .qtyIncDec .formControl,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_qty .qtyIncDec select.formControl {
+	width: 28px;
+	min-width: 28px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	text-align: center;
+	font-size: 14px;
+	font-weight: 700;
+	color: #0f172a;
+	box-shadow: none;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_qty--dropdown select.formControl {
+	width: auto;
+	min-width: 52px;
+	padding: 4px 8px;
+	border: 1px solid #dbe3ee;
+	border-radius: 8px;
+	background: #fff;
+	text-align: center;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_qty .qtyIncDec .decQty,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_qty .qtyIncDec .incQty {
+	width: 28px;
+	height: 28px;
+	min-width: 28px;
+	border-radius: 50%;
+	border: 1px solid #cbd5e1;
+	background: #ffffff;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_card.is-selected .ttbm_smart_addon_qty .qtyIncDec .decQty,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_card.is-selected .ttbm_smart_addon_qty .qtyIncDec .incQty {
+	border-color: #0b74de;
+	color: #0b74de;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_status {
+	padding: 0 14px 12px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_sold_out {
+	font-size: 12px;
+	font-weight: 600;
+	color: #dc2626;
 }
 
 #ttbm_content .ttbm_smart_theme .ttbm_smart_addon_card .ttbm_hidden_inputs {

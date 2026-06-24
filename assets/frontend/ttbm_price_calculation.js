@@ -67,24 +67,56 @@ function mpTourTicketQtyValidation(target, value) {
         });
     }
 }
+function ttbm_resolve_smart_addon_max(target) {
+    let addonCard = target.closest('.ttbm_smart_addon_card');
+    if (!addonCard.length) {
+        return null;
+    }
+    let candidates = [
+        parseInt(addonCard.attr('data-available'), 10),
+        parseInt(target.attr('data-available'), 10),
+        parseInt(target.attr('max'), 10)
+    ];
+    for (let i = 0; i < candidates.length; i++) {
+        if (!isNaN(candidates[i]) && candidates[i] > 0) {
+            return candidates[i];
+        }
+    }
+    return null;
+}
 function mpTourTicketQty(target, value) {
-    let min = parseInt(target.attr('min'));
-    let max = parseInt(target.attr('max'));
+    let addonCard = target.closest('.ttbm_smart_addon_card');
+    let addonMax = ttbm_resolve_smart_addon_max(target);
+    let min = parseInt(target.attr('min'), 10);
+    let max = parseInt(target.attr('max'), 10);
     let parent = target.closest('.ttbm_registration_area');
     let isSharedCapacity = target.closest('.ttbm_ticket_row, .ttbm_smart_ticket_card').attr('data-shared-capacity-enabled') === '1';
     value = ttbmConstrainSharedCapacity(target, value, parent);
-    max = parseInt(target.attr('max'));
+    max = parseInt(target.attr('max'), 10);
+    if (addonMax !== null) {
+        max = addonMax;
+        min = addonCard.find('.ttbm_smart_addon_check').is(':checked') ? 1 : 0;
+    }
     if (isSharedCapacity && !isNaN(max) && max < min) {
         min = 0;
     }
-    target.parents('.qtyIncDec').find('.incQty , .decQty').removeClass('mage_disabled');
-    if (value < min || isNaN(value) || value === 0) {
+    target.parents('.qtyIncDec').find('.incQty , .decQty').removeClass('mage_disabled mpDisabled');
+    if (addonCard.length && addonCard.find('.ttbm_smart_addon_check').is(':checked')) {
+        if (isNaN(value) || value < 1) {
+            value = 1;
+        }
+    } else if (value < min || isNaN(value) || value === 0) {
         value = min;
-        target.parents('.qtyIncDec').find('.decQty').addClass('mage_disabled');
+        target.parents('.qtyIncDec').find('.decQty').addClass('mage_disabled mpDisabled');
     }
-    if (value > max) {
+    if (!isNaN(max) && max > 0 && value > max) {
         value = max;
-        target.parents('.qtyIncDec').find('.incQty').addClass('mage_disabled');
+    }
+    target.parents('.qtyIncDec').find('.incQty').toggleClass('mage_disabled mpDisabled', !isNaN(max) && max > 0 && value >= max);
+    if (addonCard.length && addonCard.find('.ttbm_smart_addon_check').is(':checked')) {
+        target.parents('.qtyIncDec').find('.decQty').toggleClass('mage_disabled mpDisabled', value <= 1);
+    } else if (value <= min || isNaN(value) || value === 0) {
+        target.parents('.qtyIncDec').find('.decQty').addClass('mage_disabled mpDisabled');
     }
     target.val(value);
     ttbm_price_calculation(parent);

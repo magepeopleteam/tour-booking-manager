@@ -8,6 +8,8 @@ $ttbm_post_id     = $ttbm_post_id ?? get_the_id();
 $tour_id          = $tour_id ?? TTBM_Function::post_id_multi_language( $ttbm_post_id );
 $class_location   = $class_location ?? '';
 $ttbm_display_reg = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_registration', 'on' );
+$travel_type      = TTBM_Function::get_travel_type( $tour_id );
+$ttbm_auto_date   = in_array( $travel_type, array( 'repeated', 'particular' ), true );
 ?>
 <div class="ttbm_smart_theme">
 	<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_details_page_loader">
@@ -97,7 +99,7 @@ $ttbm_display_reg = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_di
 					<aside class="ttbm_content__right placeholder_area" id="ttbm_booking_section" aria-label="<?php esc_attr_e( 'Tour booking', 'tour-booking-manager' ); ?>">
 						<div class="ttbm-smart-booking-origin"></div>
 						<?php if ( $ttbm_display_reg !== 'off' ) : ?>
-							<div class="ttbm-sidebar-booking ttbm_registration_area ttbm_smart_inline_booking">
+							<div class="ttbm-sidebar-booking ttbm_registration_area ttbm_smart_inline_booking"<?php echo $ttbm_auto_date ? ' data-ttbm-auto-date="1"' : ''; ?>>
 								<div class="ttbm_smart_booking_card">
 									<?php do_action( 'ttbm_smart_registration_controls', $ttbm_post_id ); ?>
 									<?php do_action( 'ttbm_smart_registration_panel', $ttbm_post_id ); ?>

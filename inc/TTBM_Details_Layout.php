@@ -79,6 +79,38 @@
 				$first_date = reset($all_dates);
 				return $first_date ? (string) $first_date : '';
 			}
+			private function get_smart_default_date($tour_id, $all_dates, $travel_type) {
+				if (!is_array($all_dates) || empty($all_dates)) {
+					return '';
+				}
+				if ($travel_type === 'particular') {
+					$particular_dates = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_particular_dates', array());
+					if (!is_array($particular_dates) || empty($particular_dates)) {
+						return '';
+					}
+					foreach ($particular_dates as $particular_date) {
+						$start_date = $particular_date['ttbm_particular_start_date'] ?? '';
+						$start_time = $particular_date['ttbm_particular_start_time'] ?? '';
+						if (!$start_date) {
+							continue;
+						}
+						$option_date = $start_time ? $start_date . ' ' . $start_time : $start_date;
+						$normalized_option_date = TTBM_Function::get_date_by_time_check($tour_id, $option_date, '');
+						if ($normalized_option_date) {
+							return $normalized_option_date;
+						}
+					}
+					return '';
+				}
+				if ($travel_type === 'repeated') {
+					$first_date = $this->get_first_tour_date($all_dates);
+					if ($first_date === '') {
+						return '';
+					}
+					return TTBM_Function::get_date_by_time_check($tour_id, $first_date, '') ?: $first_date;
+				}
+				return '';
+			}
 			private function smart_tour_has_discount($tour_id, $all_dates) {
 				$ticket_lists = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticket_type', array());
 				$sample_date = $this->get_first_tour_date($all_dates);
@@ -117,6 +149,9 @@
 				$tour_type = $context['tour_type'];
 				$travel_type = $context['travel_type'];
 				$date = $context['date'];
+				if (in_array($travel_type, array('repeated', 'particular'), true)) {
+					$date = $this->get_smart_default_date($tour_id, $all_dates, $travel_type);
+				}
 				$badges = $this->smart_booking_badges($tour_id, $all_dates);
 				?>
 				<div class="ttbm_smart_registration_controls">
@@ -156,7 +191,7 @@
 						$visible_date = ($date && strtotime($date) !== false) ? date_i18n($date_format, strtotime($date)) : '';
 						if ($travel_type == 'repeated') {
 							$time_slots_enabled = TTBM_Global_Function::get_post_info($tour_id, 'mep_disable_ticket_time', 'no') != 'no';
-							$slot_check_date = $this->get_first_tour_date($all_dates);
+							$slot_check_date = $hidden_date ? gmdate('Y-m-d', strtotime($hidden_date)) : $this->get_first_tour_date($all_dates);
 							?>
 							<div class="ttbm_date_time_select ttbm_smart_date_time_select _fullWidth_mp_zero">
 								<label class="ttbm_smart_date_field">
@@ -186,9 +221,10 @@
 								<span class="date-picker-icon _fullWidth_mp_zero">
 									<i class="far fa-calendar-alt" aria-hidden="true"></i>
 									<select class="formControl mb-0" name="ttbm_date" required>
-										<option value="" selected disabled><?php esc_html_e('Select Date', 'tour-booking-manager'); ?></option>
+										<option value="" disabled><?php esc_html_e('Select Date', 'tour-booking-manager'); ?></option>
 										<?php
 										$particular_dates = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_particular_dates', array());
+										$default_particular_date = $date;
 										if (is_array($particular_dates) && !empty($particular_dates)) {
 											foreach ($particular_dates as $particular_date) {
 												$start_date = $particular_date['ttbm_particular_start_date'] ?? '';
@@ -202,8 +238,9 @@
 													continue;
 												}
 												$option_label = $start_time ? TTBM_Global_Function::date_format($option_date, 'full') : TTBM_Global_Function::date_format($option_date);
+												$is_selected = $default_particular_date && $normalized_option_date === $default_particular_date;
 												?>
-												<option value="<?php echo esc_attr($normalized_option_date); ?>">
+												<option value="<?php echo esc_attr($normalized_option_date); ?>"<?php echo $is_selected ? ' selected' : ''; ?>>
 													<?php echo esc_html($option_label); ?>
 												</option>
 												<?php
@@ -230,6 +267,15 @@
 				$tour_type = $context['tour_type'];
 				$travel_type = $context['travel_type'];
 				$date = $context['date'];
+				if (in_array($travel_type, array('repeated', 'particular'), true)) {
+					$date = $this->get_smart_default_date($tour_id, $all_dates, $travel_type);
+				}
+				$check_ability = $context['check_ability'];
+				$time_slots_enabled = ($travel_type === 'repeated') && TTBM_Global_Function::get_post_info($tour_id, 'mep_disable_ticket_time', 'no') != 'no';
+				$prerender_tickets = $date
+					&& in_array($travel_type, array('repeated', 'particular'), true)
+					&& $check_ability === 'regular_ticket'
+					&& !$time_slots_enabled;
 				?>
 				<div class="ttbm_smart_registration_panel">
 					<div class="ttbm_smart_tickets_placeholder">
@@ -239,6 +285,8 @@
 						if ($tour_type == 'general') { ?>
 							<div class="ttbm_booking_panel placeholder_area">
 								<?php if ($travel_type == 'fixed') {
+									do_action('ttbm_booking_panel', $tour_id, $date);
+								} elseif ($prerender_tickets) {
 									do_action('ttbm_booking_panel', $tour_id, $date);
 								} ?>
 							</div>

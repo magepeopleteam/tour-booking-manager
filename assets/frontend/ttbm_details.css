@@ -2423,6 +2423,7 @@
 }
 
 .placeholderLoader.ttbm_details_page_loader .placeholder_area > * {
+	display: none !important;
 	opacity: 0 !important;
 	visibility: hidden !important;
 	pointer-events: none !important;
@@ -2521,7 +2522,9 @@
 .placeholderLoader.ttbm_details_page_loader .ttbm_content__right.placeholder_area {
 	position: relative;
 	overflow: hidden;
-	min-height: 320px;
+	height: 256px;
+	min-height: 0;
+	max-height: 256px;
 	padding: 20px;
 	border-radius: 16px;
 	background-color: var(--ttbm-d-skeleton-card) !important;
@@ -2570,7 +2573,9 @@
 	}
 
 	.placeholderLoader.ttbm_details_page_loader .ttbm_content__right.placeholder_area {
-		min-height: 260px;
+		height: 256px;
+		min-height: 0;
+		max-height: 256px;
 	}
 
 	.placeholderLoader.ttbm_details_page_loader .ttbm_smart_related.placeholder_area,

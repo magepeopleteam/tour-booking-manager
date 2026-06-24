@@ -620,6 +620,9 @@ function ttbm_all_content_change($this) {
     "use strict";
     $(document).on("click", "div.ttbm_style .decQty ,div.ttbm_style .incQty", function () {
         let current = $(this);
+        if (current.closest('.ttbm_smart_addon_qty').length) {
+            return;
+        }
         let target = current.closest('.qtyIncDec').find('input');
         let currentValue = parseInt(target.val());
         let value = current.hasClass('incQty') ? (currentValue + 1) : ((currentValue - 1) > 0 ? (currentValue - 1) : 0);
@@ -630,7 +633,7 @@ function ttbm_all_content_change($this) {
             value = min;
             target.parents('.qtyIncDec').find('.decQty').addClass('mpDisabled');
         }
-        if (value > max) {
+        if (!isNaN(max) && max > 0 && value > max) {
             value = max;
             target.parents('.qtyIncDec').find('.incQty').addClass('mpDisabled');
         }

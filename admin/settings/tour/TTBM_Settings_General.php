@@ -40,7 +40,7 @@
 				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'off');
 				$checked = ($display == 'off') ? '' : 'checked';
 				$active = ($display == 'off') ? '' : 'mActive';
-				$placeholder = '';
+				$placeholder = esc_html__('Ex: 3', 'tour-booking-manager');
 				?>
                 <div>
                     <div class="label">
@@ -64,7 +64,7 @@
                 <label class="label">
                     <p><?php esc_html_e('Duration', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('duration'); ?></span></i></p>
                     <div class="dFlex">
-                        <input style="margin-right: 10px;" class="small" min="0.1" step="0.1" type="number" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+                        <input class="small" min="0.1" step="0.1" type="number" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
                         <select class="rounded" name="ttbm_travel_duration_type">
                             <option value="day" <?php echo esc_attr($duration_type == 'day' ? 'selected' : ''); ?>><?php esc_html_e('Days', 'tour-booking-manager'); ?></option>
                             <option value="hour" <?php echo esc_attr($duration_type == 'hour' ? 'selected' : ''); ?>><?php esc_html_e('Hours', 'tour-booking-manager'); ?></option>

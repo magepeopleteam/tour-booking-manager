@@ -15,6 +15,20 @@
 	padding: 0;
 }
 
+#ttbm_content .ttbm_smart_theme .ttbm-sidebar-booking.ttbm_registration_area {
+	border: none;
+	background: transparent;
+	box-shadow: none;
+}
+
+/* Booking block may be moved outside the sidebar on mobile — keep it hidden during page skeleton */
+.placeholderLoader.ttbm_details_page_loader #ttbm_content .ttbm_smart_theme .ttbm-sidebar-booking.ttbm_registration_area {
+	display: none !important;
+	border: none !important;
+	background: transparent !important;
+	box-shadow: none !important;
+}
+
 /* Skeleton while .placeholderLoader is active */
 .placeholderLoader.ttbm_details_page_loader #ttbm_content .ttbm_smart_theme .ttbm_content__right.placeholder_area {
 	position: relative;
@@ -43,6 +57,73 @@
 		height: 256px;
 		min-height: 0;
 		max-height: 256px;
+	}
+}
+
+/* Smart template — section-wise skeleton loaders */
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_description_area.placeholder_area {
+	margin-top: 0;
+}
+
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_particular_area.placeholder_area {
+	position: relative;
+	overflow: hidden;
+	min-height: 200px;
+	padding: 20px;
+	border-radius: 16px;
+	background-color: var(--ttbm-d-skeleton-card, #fff) !important;
+	border: 1px solid #e2e8f0;
+	background-image:
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea));
+	background-size: 42% 18px, 100% 44px, 100% 44px, 38% 40px;
+	background-repeat: no-repeat;
+	background-position: 20px 20px, 20px 52px, 20px 104px, 20px 160px;
+}
+
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_smart_inclusions_area.placeholder_area {
+	position: relative;
+	overflow: hidden;
+	min-height: 280px;
+	padding: 8px 0;
+	background-color: transparent !important;
+	background-image:
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea));
+	background-size: 38% 20px, 100% 12px, 72% 12px, 38% 20px, 100% 12px, 40% 20px, calc(33.33% - 10px) 34px, calc(33.33% - 10px) 34px, calc(33.33% - 10px) 34px;
+	background-repeat: no-repeat;
+	background-position: 0 0, 0 30px, 0 50px, 0 88px, 0 118px, 0 168px, 0 202px, 0 202px, calc(33.33% + 5px) 202px, calc(66.66% + 10px) 202px;
+}
+
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_hiphop_area.placeholder_area,
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_day_wise_area.placeholder_area,
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_faq_area.placeholder_area,
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_review_area.placeholder_area,
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_registration_before_area.placeholder_area {
+	margin-top: 0;
+}
+
+@media (max-width: 959px) {
+	.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_smart_inclusions_area.placeholder_area {
+		background-size: 50% 20px, 100% 12px, 72% 12px, 50% 20px, 100% 12px, 50% 20px, calc(50% - 8px) 32px, calc(50% - 8px) 32px;
+		background-position: 0 0, 0 30px, 0 50px, 0 88px, 0 118px, 0 168px, 0 202px, calc(50% + 8px) 202px;
+		min-height: 250px;
+	}
+
+	.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_particular_area.placeholder_area {
+		min-height: 180px;
+		background-size: 55% 18px, 100% 40px, 100% 40px, 50% 36px;
+		background-position: 16px 16px, 16px 46px, 16px 94px, 16px 144px;
+		padding: 16px;
 	}
 }
 
@@ -98,6 +179,95 @@
 
 #ttbm_content .ttbm_smart_theme .ttbm_smart_date_time_select {
 	margin-bottom: 0;
+}
+
+/* Select Time — header + pill slot buttons */
+#ttbm_content .ttbm_smart_theme .ttbm_select_time_area {
+	margin-top: 16px;
+	width: 100%;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slots {
+	width: 100%;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slots__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 12px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slots__title {
+	font-size: 13px;
+	font-weight: 600;
+	color: #334155;
+	line-height: 1.3;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slots__count {
+	display: inline-flex;
+	align-items: center;
+	padding: 4px 10px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.3;
+	color: #0369a1;
+	background: #e0f2fe;
+	border-radius: 999px;
+	white-space: nowrap;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slots__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: center;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slot.customRadio.button_type {
+	margin: 0;
+	min-width: 0;
+	padding: 10px 15px;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.2;
+	text-align: center;
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	color: #475569;
+	background: #fff;
+	cursor: pointer;
+	transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slot.customRadio.button_type:hover:not(.active):not(.mage_disabled):not(.is-disabled) {
+	border-color: #cbd5e1;
+	background: #f8fafc;
+	color: #334155;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slot.customRadio.button_type.active {
+	border-color: #0b74de;
+	background: #0b74de;
+	color: #fff;
+	box-shadow: 0 4px 12px rgba(11, 116, 222, 0.25);
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slot.customRadio.button_type.mage_disabled,
+#ttbm_content .ttbm_smart_theme .ttbm-time-slot.customRadio.button_type.is-disabled {
+	border-color: #e2e8f0;
+	background: #f1f5f9;
+	color: #94a3b8;
+	cursor: not-allowed;
+	pointer-events: none;
+	opacity: 1;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slot.customRadio.button_type::before,
+#ttbm_content .ttbm_smart_theme .ttbm-time-slot.customRadio.button_type::after {
+	display: none;
 }
 
 #ttbm_content .ttbm_smart_theme .ttbm_smart_date_field {
@@ -527,6 +697,8 @@ body:has(.ttbm_smart_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-un
 
 #ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card.has-qty .ttbm_attendee_form_row {
 	display: block;
+	border-top: 1px solid #efefef;
+	padding-top: 10px;
 }
 
 #ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card .ttbm-attendee-form {
@@ -591,7 +763,7 @@ body:has(.ttbm_smart_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-un
 	width: 100%;
 	min-height: 46px;
 	padding: 12px 14px;
-	border: 0;
+	border: 1px solid #e8e8e9;
 	border-radius: 10px;
 	background: #f0f2f5;
 	font-size: 14px;

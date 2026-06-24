@@ -933,7 +933,7 @@
 	.ttbm_style input:not([type=submit]),
 	.ttbm_style optgroup,
 	.ttbm_style select,
-	.ttbm_style textarea { line-height: initial; margin: 0; max-width: inherit; border: 1px solid var(--color_border); color: var(--d_color); background-color: #FFF; padding: 10px 10px; font-weight: normal; }
+	.ttbm_style textarea { line-height: initial; margin: 0; max-width: inherit; border: 1px solid var(--color_border); color: var(--d_color); background-color: #FFF; padding: 10px 10px; font-weight: normal; border-radius: 8px; }
 	.ttbm_style .formControl:-webkit-autofill,
 	.ttbm_style .formControl:-webkit-autofill:hover,
 	.ttbm_style .formControl:-webkit-autofill:focus,

@@ -110,17 +110,29 @@
 								<?php include( TTBM_Function::template_path( 'ticket/registration.php' ) ); ?>
 								<?php include( TTBM_Function::template_path( 'ticket/particular_item_area.php' ) ); ?>
 							</div>
-							<?php do_action( 'ttbm_description' ); ?>
+							<div class="ttbm_description_area placeholder_area">
+								<?php do_action( 'ttbm_description' ); ?>
+							</div>
 							<div class="ttbm_inclusions_grid placeholder_area">
 								<?php do_action( 'ttbm_include_exclude' ); ?>
 								<?php do_action( 'ttbm_activity' ); ?>
 							</div>
-							<?php do_action( 'ttbm_registration_before', $ttbm_post_id ); ?>
-							<?php do_action( 'ttbm_hiphop_place' ); ?>
-							<?php do_action( 'ttbm_day_wise_details' ); ?>
-							<?php do_action( 'ttbm_faq' ); ?>
-                            <?php do_action( 'ttbm_review' ); ?>
-							<?php do_action('ttbm_enquery_popup'); ?>
+							<div class="ttbm_registration_before_area placeholder_area">
+								<?php do_action( 'ttbm_registration_before', $ttbm_post_id ); ?>
+							</div>
+							<div class="ttbm_hiphop_area placeholder_area">
+								<?php do_action( 'ttbm_hiphop_place' ); ?>
+							</div>
+							<div class="ttbm_day_wise_area placeholder_area">
+								<?php do_action( 'ttbm_day_wise_details' ); ?>
+							</div>
+							<div class="ttbm_faq_area placeholder_area">
+								<?php do_action( 'ttbm_faq' ); ?>
+							</div>
+							<div class="ttbm_review_area placeholder_area">
+								<?php do_action( 'ttbm_review' ); ?>
+							</div>
+                            <?php do_action('ttbm_enquery_popup'); ?>
 						</div>
 						<div class="ttbm_content__right placeholder_area">
 							<?php //do_action( 'ttbm_hotel_list' ); ?>

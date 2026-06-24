@@ -452,7 +452,9 @@ div.ttbm_style [data-bg-image] {
 }
 
 table div.ttbm_attendee_form_item {
-	padding: 0;
+	border-top: 1px solid #ebe8e8;
+	padding-top: 10px;
+	padding-bottom: 20px;
 }
 
 /**************************************************/
@@ -1784,7 +1786,9 @@ div.ttbm_booking_panel .ttbm_attendee_form_area {
 
 div.ttbm_booking_panel .ttbm_attendee_form_item {
 	border-radius: 0;
-	padding: 0;
+	border-top: 1px solid #ebe8e8;
+	padding-top: 10px;
+	padding-bottom: 20px;
 }
 
 div.ttbm_booking_panel .ttbm-attendee-form .ttbm_form_header {

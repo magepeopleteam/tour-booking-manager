@@ -77,21 +77,37 @@ $ttbm_auto_date   = in_array( $travel_type, array( 'repeated', 'particular' ), t
 								<?php endif; ?>
 							</div>
 						</div>
-						<?php do_action( 'ttbm_details_particular_area' ); ?>
+						<div class="ttbm_particular_area placeholder_area">
+							<?php do_action( 'ttbm_details_particular_area' ); ?>
+						</div>
 
 						<div class="ttbm-smart-overview-anchor" id="ttbm_smart_overview_anchor"></div>
 
-						<div class="ttbm_smart_overview placeholder_area">
-							<?php do_action( 'ttbm_description' ); ?>
-							<div class="ttbm_smart_inclusions">
-								<?php do_action( 'ttbm_include_exclude' ); ?>
-								<?php do_action( 'ttbm_smart_activity' ); ?>
+						<div class="ttbm_smart_overview">
+							<div class="ttbm_description_area placeholder_area">
+								<?php do_action( 'ttbm_description' ); ?>
 							</div>
-							<?php do_action( 'ttbm_registration_before', $ttbm_post_id ); ?>
-							<?php do_action( 'ttbm_hiphop_place' ); ?>
-							<?php do_action( 'ttbm_day_wise_details' ); ?>
-							<?php do_action( 'ttbm_faq' ); ?>
-							<?php do_action( 'ttbm_review' ); ?>
+							<div class="ttbm_smart_inclusions_area placeholder_area">
+								<div class="ttbm_smart_inclusions">
+									<?php do_action( 'ttbm_include_exclude' ); ?>
+									<?php do_action( 'ttbm_smart_activity' ); ?>
+								</div>
+							</div>
+							<div class="ttbm_registration_before_area placeholder_area">
+								<?php do_action( 'ttbm_registration_before', $ttbm_post_id ); ?>
+							</div>
+							<div class="ttbm_hiphop_area placeholder_area">
+								<?php do_action( 'ttbm_hiphop_place' ); ?>
+							</div>
+							<div class="ttbm_day_wise_area placeholder_area">
+								<?php do_action( 'ttbm_day_wise_details' ); ?>
+							</div>
+							<div class="ttbm_faq_area placeholder_area">
+								<?php do_action( 'ttbm_faq' ); ?>
+							</div>
+							<div class="ttbm_review_area placeholder_area">
+								<?php do_action( 'ttbm_review' ); ?>
+							</div>
 							<?php do_action( 'ttbm_enquery_popup' ); ?>
 						</div>
 					</div>

@@ -97,11 +97,13 @@
 		width: 16px !important;
 		height: 16px !important;
 	}
-	div.ttbm_global_settings .ttbm-setting-field .tooltips { position: relative; display: inline-block; cursor: pointer; color: var(--mpl-gray);}
-	div.ttbm_global_settings .ttbm-setting-field .tooltips::before { content: ""; position: absolute; bottom: 95%; left: 50%; transform: translateX(-50%); border-width: 6px; border-style: solid; border-color: #000 transparent transparent transparent; visibility: hidden; transition: 0s; z-index: 99;}
-	div.ttbm_global_settings .ttbm-setting-field .tooltips::after { content: attr(data-tooltip); visibility: hidden; width: max-content; max-width: 350px; background-color: #000; color: #FFF; text-align: center; padding: 6px 10px; border-radius: 5px; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); white-space: normal; z-index: 999; transition: opacity 0s ease-in-out; font-weight: normal;}
+	div.ttbm_global_settings .ttbm-setting-field .tooltips { position: relative; display: inline-flex; align-items: center; justify-content: center; cursor: help; color: #94a3b8; font-size: 14px; vertical-align: middle; transition: color 0.2s ease; }
+	div.ttbm_global_settings .ttbm-setting-field .tooltips::before { content: ""; position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #1e293b; visibility: hidden; opacity: 0; transition: opacity 0.2s ease, visibility 0.2s ease; z-index: 999; }
+	div.ttbm_global_settings .ttbm-setting-field .tooltips::after { content: attr(data-tooltip); visibility: hidden; opacity: 0; width: max-content; max-width: 280px; background-color: #1e293b; color: #f8fafc; text-align: left; text-transform: none; letter-spacing: normal; line-height: 1.5; padding: 10px 12px; border-radius: 8px; position: absolute; bottom: calc(100% + 14px); left: 50%; transform: translateX(-50%) translateY(4px); white-space: normal; z-index: 1000; transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease; font-size: 12px; font-weight: 400; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.18); pointer-events: none; }
+	div.ttbm_global_settings .ttbm-setting-field .tooltips:hover { color: var(--mpl-primary); }
 	div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::after,
-	div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::before { visibility: visible; opacity: 1;}
+	div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::before { visibility: visible; opacity: 1; transform: translateX(-50%) translateY(0); }
+	div.ttbm_global_settings .ttbm-setting-field .tooltips:hover::before { transform: translateX(-50%); }
 	div.ttbm_global_settings .tabLists { border-right: 0;}
 	div.ttbm_global_settings .ttbmTabs { display: flex;}
 	div.ttbm_global_settings { max-width: 1600px; margin: auto;}
@@ -134,11 +136,13 @@
 	#ttbm_meta_box_panel .wp-editor-wrap {width: 100%;}
 	#ttbm_meta_box_panel textarea { background-color: #F5F8FF; font-weight: normal; line-height: 1.5rem;}
 	#ttbm_meta_box_panel input[type=search] { border: 0px solid var(--mpl-dark); background-color: #F5F8FF;}
-	#ttbm_meta_box_panel .tool-tips { color:#999; position: relative; padding-left: 0.25em;}
-	#ttbm_meta_box_panel .tool-tips span {text-wrap: wrap; position: absolute; z-index: 1; bottom: 130%; left: 50%; transform: translate(-50%); visibility: hidden; font-size: 0.9rem; text-align: center; background-color: var(--mpl-black); color: var(--mpl-white); border-radius: 0.25rem; padding: 0.5em 0.75em; width: max-content; max-width: 350px; font-weight: normal;}
-	#ttbm_meta_box_panel .tool-tips span:after { content: " "; position: absolute; top: 100%; left: 50%; transform: translate(-50%); border: 5px solid var(--mpl-black); border-color: var(--mpl-black) transparent transparent transparent; margin-left: 0.18em; }
+	#ttbm_meta_box_panel .tool-tips { color: #94a3b8; position: relative; display: inline-flex; align-items: center; justify-content: center; margin-left: 6px; font-size: 14px; cursor: help; vertical-align: middle; transition: color 0.2s ease; }
+	#ttbm_meta_box_panel .tool-tips span { text-wrap: wrap; position: absolute; z-index: 1000; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(4px); visibility: hidden; opacity: 0; font-size: 12px; line-height: 1.5; text-align: left; text-transform: none; letter-spacing: normal; background-color: #1e293b; color: #f8fafc; border-radius: 8px; padding: 10px 12px; width: max-content; max-width: 280px; font-weight: 400; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.18); pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease; }
+	#ttbm_meta_box_panel .tool-tips span a { color: #93c5fd; text-decoration: underline; }
+	#ttbm_meta_box_panel .tool-tips span a:hover { color: #bfdbfe; }
+	#ttbm_meta_box_panel .tool-tips span:after { content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #1e293b; margin-left: 0; }
 	#ttbm_meta_box_panel .tool-tips:hover { color: var(--mpl-primary); }
-	#ttbm_meta_box_panel .tool-tips:hover span { visibility: visible; }
+	#ttbm_meta_box_panel .tool-tips:hover span { visibility: visible; opacity: 1; transform: translateX(-50%) translateY(0); }
 	#ttbm_meta_box_panel .switch { position: relative; display: inline-block; width: 50px; height: 24px; margin-bottom: 0; }
 	#ttbm_meta_box_panel .switch input { opacity: 0; width: 0; height: 0; border: 1px solid var(--mpl-primary); background-color: var(--mpl-light); }
 	#ttbm_meta_box_panel .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; border-radius: 50px; border: 1px solid var(--mpl-dark); background-color: var(--mpl-gray); transition: 0.5s; margin-right: 0; }
@@ -577,6 +581,10 @@
 }
 input.small{
 	width: 50px;
+}
+input.small[name="ttbm_travel_duration"] {
+	width: 80px;
+	margin-right: 10px;
 }
 input.medium{
 	width: 90px;

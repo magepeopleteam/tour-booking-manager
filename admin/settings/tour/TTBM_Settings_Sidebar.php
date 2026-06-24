@@ -670,7 +670,7 @@ jQuery(function($){
 	var addNewLabel = <?php echo wp_json_encode(sprintf(__('Add New %s', 'tour-booking-manager'), TTBM_Function::get_name())); ?>;
 	var addNewUrl   = <?php echo wp_json_encode(admin_url('post-new.php?post_type=' . TTBM_Function::get_cpt_name())); ?>;
 
-	var backUrl   = <?php echo wp_json_encode(admin_url('edit.php?post_type=' . TTBM_Function::get_cpt_name())); ?>;
+	var backUrl   = <?php echo wp_json_encode(admin_url('edit.php?post_type=' . TTBM_Function::get_cpt_name() . '&page=ttbm_list')); ?>;
 	var backLabel = <?php echo wp_json_encode(sprintf(__('← Back to %s', 'tour-booking-manager'), TTBM_Function::get_name() . 's')); ?>;
 
 	var arrowSvg = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';

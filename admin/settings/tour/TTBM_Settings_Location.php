@@ -370,18 +370,10 @@
 						<?php endif; ?>
                     </div>
 
-                    <!-- Lat / Lng fields -->
-                    <div class="label" style="margin-top:12px;">
-                        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-                            <label style="font-size:13px;color:#374151;display:flex;align-items:center;gap:6px;">
-                                <?php esc_html_e('Latitude', 'tour-booking-manager'); ?>
-                                <input type="text" id="map_latitude" name="ttbm_map_latitude" value="<?php echo esc_attr($latitude); ?>" style="width:130px;">
-                            </label>
-                            <label style="font-size:13px;color:#374151;display:flex;align-items:center;gap:6px;">
-                                <?php esc_html_e('Longitude', 'tour-booking-manager'); ?>
-                                <input type="text" id="map_longitude" name="ttbm_map_longitude" value="<?php echo esc_attr($longitude); ?>" style="width:130px;">
-                            </label>
-                        </div>
+                    <!-- Lat / Lng fields — hidden, values preserved for saving -->
+                    <div style="display:none;">
+                        <input type="text" id="map_latitude" name="ttbm_map_latitude" value="<?php echo esc_attr($latitude); ?>">
+                        <input type="text" id="map_longitude" name="ttbm_map_longitude" value="<?php echo esc_attr($longitude); ?>">
                     </div>
 
                 </div>

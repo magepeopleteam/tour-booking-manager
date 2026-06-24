@@ -257,8 +257,8 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 /* ─── Form rows (labels) ─── */
 #ttbm_meta_box_panel .tabsItem section .label,
 #ttbm_content.ttbm_configuration .tabsItem section .label {
-	background: var(--ttbm-a-surface);
-	border: 1px solid var(--ttbm-a-border);
+	background: #fff;
+	border: 1px solid #c3d2e5;
 	border-radius: var(--ttbm-a-radius);
 	padding: 14px 16px;
 	margin: 0 0 12px;
@@ -1033,7 +1033,7 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 	border-collapse: separate;
 	border-spacing: 0;
 	width: 100%;
-	border: 1px solid var(--ttbm-a-border);
+	border: none;
 	border-radius: var(--ttbm-a-radius);
 	overflow: hidden;
 	background: var(--ttbm-a-surface);
@@ -1114,11 +1114,11 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 #ttbm_meta_box_panel .ttbm-booking-styles,
 #ttbm_meta_box_panel .ttbm-title-styles {
 	display: flex;
-	flex-wrap: nowrap;
+	flex-wrap: wrap;
 	gap: 16px;
+	margin-bottom: 20px;
 }
 
-#ttbm_meta_box_panel .ttbm-pricing-type,
 #ttbm_meta_box_panel .ttbm-template,
 #ttbm_meta_box_panel .booking-style,
 #ttbm_meta_box_panel .title-style {
@@ -1129,7 +1129,6 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 	transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-#ttbm_meta_box_panel .ttbm-pricing-type.active,
 #ttbm_meta_box_panel .ttbm-template.active,
 #ttbm_meta_box_panel .booking-style.active,
 #ttbm_meta_box_panel .title-style.active {
@@ -1137,7 +1136,6 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
-#ttbm_meta_box_panel .ttbm-pricing-type h6,
 #ttbm_meta_box_panel .ttbm-template h5 {
 	font-size: 15px;
 	font-weight: 600;
@@ -1145,16 +1143,129 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 	margin: 10px 0 6px;
 }
 
+/* ─── Pricing type selector cards ─── */
+#ttbm_meta_box_panel .ttbm-pricing-types {
+	align-items: stretch;
+}
+
+#ttbm_meta_box_panel .ttbm-pricing-type {
+	position: relative;
+	flex: 1;
+	min-width: 200px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 16px;
+	text-align: left;
+	background: #fff;
+	border: 1.5px solid #cee1f5;
+	border-radius: 16px;
+	padding: 18px 44px 18px 18px;
+	cursor: pointer;
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+	transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+#ttbm_meta_box_panel .ttbm-pricing-type:not(.active):hover {
+	border-color: #a5b4fc;
+	box-shadow: 0 4px 18px rgba(99, 102, 241, 0.12);
+}
+
+#ttbm_meta_box_panel .ttbm-pricing-type.active {
+	background: #6366f1;
+	border-color: #6366f1;
+	box-shadow: 0 8px 28px rgba(99, 102, 241, 0.38);
+}
+
+#ttbm_meta_box_panel .ttbm-pricing-type.active::before {
+	content: '';
+	position: absolute;
+	bottom: -10px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 0;
+	height: 0;
+	border-left: 11px solid transparent;
+	border-right: 11px solid transparent;
+	border-top: 11px solid #6366f1;
+	z-index: 2;
+}
+
+#ttbm_meta_box_panel .ttbm-pricing-type.active::after {
+	content: '\2713';
+	display: block;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	bottom: auto;
+	left: auto;
+	width: 22px;
+	height: 22px;
+	background: #fff;
+	color: #6366f1;
+	border-radius: 50%;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 22px;
+	text-align: center;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+	z-index: 3;
+}
+
+#ttbm_meta_box_panel .ttbm-pricing-type__icon {
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 52px;
+	height: 52px;
+	border-radius: 13px;
+	background: #eef2ff;
+	color: #6366f1;
+	font-size: 22px;
+	transition: background 0.2s ease, color 0.2s ease;
+}
+
+#ttbm_meta_box_panel .ttbm-pricing-type.active .ttbm-pricing-type__icon {
+	background: #6366f1;
+	color: #fff;
+}
+
+#ttbm_meta_box_panel .ttbm-pricing-type__content {
+	flex: 1;
+	min-width: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-pricing-type h6 {
+	font-size: 14px;
+	font-weight: 700;
+	color: var(--ttbm-a-text);
+	margin: 0 0 5px;
+	font-family: var(--ttbm-a-font);
+	line-height: 1.35;
+	transition: color 0.2s ease;
+}
+
+#ttbm_meta_box_panel .ttbm-pricing-type.active h6 {
+	color: #fff;
+}
+
 #ttbm_meta_box_panel .ttbm-pricing-type p {
-	font-size: 13px;
+	font-size: 12px;
 	color: var(--ttbm-a-muted);
-	line-height: var(--ttbm-a-lh);
+	line-height: 1.55;
+	margin: 0;
+	transition: color 0.2s ease;
+}
+
+#ttbm_meta_box_panel .ttbm-pricing-type.active p {
+	color: rgba(255, 255, 255, 0.8);
 }
 
 /* ─── Ticket types table ─── */
 #ttbm_meta_box_panel .ttbm-ticket-types-panel {
 	background: #fff;
-	border: 1px solid #e2e8f0;
+	border: none;
 	border-radius: 10px;
 	overflow: hidden;
 }
@@ -1365,23 +1476,33 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 	display: inline-flex;
 	align-items: center;
 	gap: 8px;
-	margin-top: 14px;
-	padding: 0;
-	border: 0;
-	background: transparent;
-	box-shadow: none;
-	color: #2563eb;
-	font-size: 14px;
+	margin-top: 16px;
+	padding: 14px 18px;
+	border: none;
+	border-radius: var(--ttbm-a-radius);
+	background: #2563eb;
+	color: #fff;
+	font-size: 16px;
 	font-weight: 600;
-	line-height: 1.4;
+	font-family: var(--ttbm-a-font);
+	line-height: 1;
 	cursor: pointer;
+	box-shadow: 0 1px 3px rgba(37, 99, 235, 0.25), 0 4px 12px rgba(37, 99, 235, 0.15);
+	transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-types-add-btn:hover,
 #ttbm_meta_box_panel .ttbm-ticket-types-add-btn:focus {
-	color: #1d4ed8;
-	background: transparent;
+	background: #1d4ed8;
+	color: #fff;
 	text-decoration: none;
+	box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3), 0 6px 18px rgba(37, 99, 235, 0.2);
+	transform: translateY(-1px);
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-add-btn:active {
+	transform: translateY(0);
+	box-shadow: 0 1px 3px rgba(37, 99, 235, 0.2);
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-types-add-btn .fas {
@@ -1404,22 +1525,139 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 	}
 }
 
-/* ─── Promo / notice banners ─── */
-#ttbm_meta_box_panel ._dLayout_bgYellow_77,
-#ttbm_meta_box_panel ._dLayout_bgColor_3 {
+/* ─── Addon promo cards ─── */
+#ttbm_meta_box_panel .ttbm-addon-promos {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+#ttbm_meta_box_panel .ttbm-addon-promo {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	padding: 14px 18px;
 	border-radius: var(--ttbm-a-radius);
-	padding: 14px 16px;
 	border: 1px solid var(--ttbm-a-border);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
-#ttbm_meta_box_panel ._dLayout_bgYellow_77 {
-	background: var(--ttbm-a-warning-soft);
-	border-color: #fde68a;
+#ttbm_meta_box_panel .ttbm-addon-promo--amber {
+	background: #ffffff;
 }
 
-#ttbm_meta_box_panel ._dLayout_bgColor_3 {
-	background: var(--ttbm-a-primary-soft);
-	border-color: #bfdbfe;
+#ttbm_meta_box_panel .ttbm-addon-promo--blue {
+	background: #ffffff;
+}
+
+#ttbm_meta_box_panel .ttbm-addon-promo__icon {
+	flex-shrink: 0;
+	width: 42px;
+	height: 42px;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 17px;
+}
+
+#ttbm_meta_box_panel .ttbm-addon-promo--amber .ttbm-addon-promo__icon {
+	background: #fef3c7;
+	color: #d97706;
+}
+
+#ttbm_meta_box_panel .ttbm-addon-promo--blue .ttbm-addon-promo__icon {
+	background: #dbeafe;
+	color: #2563eb;
+}
+
+#ttbm_meta_box_panel .ttbm-addon-promo__content {
+	flex: 1;
+	min-width: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-addon-promo__badge {
+	display: inline-block;
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	padding: 2px 8px;
+	border-radius: 100px;
+	margin-bottom: 4px;
+	font-family: var(--ttbm-a-font);
+}
+
+#ttbm_meta_box_panel .ttbm-addon-promo--amber .ttbm-addon-promo__badge {
+	background: #fde68a;
+	color: #92400e;
+}
+
+#ttbm_meta_box_panel .ttbm-addon-promo--blue .ttbm-addon-promo__badge {
+	background: #bfdbfe;
+	color: #1e40af;
+}
+
+#ttbm_meta_box_panel .ttbm-addon-promo__title {
+	display: block;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--ttbm-a-text);
+	margin-bottom: 2px;
+	font-family: var(--ttbm-a-font);
+}
+
+#ttbm_meta_box_panel .ttbm-addon-promo__desc {
+	font-size: 12px;
+	color: var(--ttbm-a-muted);
+	margin: 0;
+	line-height: 1.5;
+	font-family: var(--ttbm-a-font);
+}
+
+#ttbm_meta_box_panel .ttbm-addon-promo__btn {
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 8px 14px;
+	border-radius: var(--ttbm-a-radius);
+	font-size: 12px;
+	font-weight: 600;
+	text-decoration: none !important;
+	transition: background 0.15s ease, transform 0.1s ease;
+	white-space: nowrap;
+	font-family: var(--ttbm-a-font);
+}
+
+#ttbm_meta_box_panel .ttbm-addon-promo--amber .ttbm-addon-promo__btn {
+	background: #f59e0b;
+	color: #fff !important;
+}
+
+#ttbm_meta_box_panel .ttbm-addon-promo--amber .ttbm-addon-promo__btn:hover {
+	background: #d97706;
+	transform: translateY(-1px);
+}
+
+#ttbm_meta_box_panel .ttbm-addon-promo--blue .ttbm-addon-promo__btn {
+	background: #3b82f6;
+	color: #fff !important;
+}
+
+#ttbm_meta_box_panel .ttbm-addon-promo--blue .ttbm-addon-promo__btn:hover {
+	background: #2563eb;
+	transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+	#ttbm_meta_box_panel .ttbm-addon-promo {
+		flex-wrap: wrap;
+	}
+	#ttbm_meta_box_panel .ttbm-addon-promo__btn {
+		width: 100%;
+		justify-content: center;
+	}
 }
 
 /* ─── Modals / popups ─── */
@@ -2056,8 +2294,8 @@ div.ttbm_global_settings .button-primary {
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-type-card:not(.active):hover {
-	border-color: #c7d2fe;
-	box-shadow: 0 6px 20px rgba(91, 93, 245, 0.12);
+	border-color: #a5b4fc;
+	box-shadow: 0 4px 18px rgba(99, 102, 241, 0.12);
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-type-card:focus-visible {
@@ -2111,7 +2349,7 @@ div.ttbm_global_settings .button-primary {
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-type-card__title {
 	grid-column: 2;
 	grid-row: 1;
-	font-size: 16px;
+	font-size: 18px;
 	font-weight: 600;
 	line-height: 1.35;
 	margin: 0;
@@ -2170,6 +2408,7 @@ div.ttbm_global_settings .button-primary {
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-target-panel.mActive .ttbm-date-config-panel {
 	position: relative;
 	z-index: 1;
+	background: #fff;
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-tour-type-selector + .ttbm-date-target-panel {

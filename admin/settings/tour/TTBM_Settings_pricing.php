@@ -34,10 +34,14 @@
                             <div class="ttbm-pricing-types">
                                 <input type="hidden" name="ttbm_type" value="<?php echo esc_attr($ttbm_type); ?>"/>
                                 <?php foreach ($all_types as $key => $type) { ?>
-                                    <div data-price-type="<?php echo esc_attr($key) ?>" class="ttbm-pricing-type <?php echo esc_attr($ttbm_type == $key ? 'active' : ''); ?>" >
-                                        <i class="<?php echo esc_html($type['icon']) ?>"></i>
-                                        <h6><?php echo esc_html($type['title']) ?></h6>
-                                        <p><?php echo esc_html($type['description']) ?></p>
+                                    <div data-price-type="<?php echo esc_attr($key) ?>" class="ttbm-pricing-type <?php echo esc_attr($ttbm_type == $key ? 'active' : ''); ?>">
+                                        <div class="ttbm-pricing-type__icon">
+                                            <i class="<?php echo esc_html($type['icon']) ?>"></i>
+                                        </div>
+                                        <div class="ttbm-pricing-type__content">
+                                            <h6><?php echo esc_html($type['title']) ?></h6>
+                                            <p><?php echo esc_html($type['description']) ?></p>
+                                        </div>
                                     </div>
                                 <?php } ?>
                             </div>
@@ -136,7 +140,7 @@
                                 </table>
                                 </div>
                             </div>
-							<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Ticket Type', 'tour-booking-manager'), 'ttbm_add_item', 'ttbm-ticket-types-add-btn', 'fas fa-plus'); ?>
+							<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add Ticket Type', 'tour-booking-manager'), 'ttbm_add_item', 'ttbm-ticket-types-add-btn', 'fas fa-plus'); ?>
 							<?php do_action('add_ttbm_hidden_table', 'ttbm_price_item'); ?>
                         </div>
                     </div>
@@ -260,30 +264,47 @@
 			}
 			/*******************************/
 			public function advertise_addon() {
-				if (!class_exists('TTBMA_Seasonal_Pricing')) {
-					?>
-                    <div class="_dLayout_bgYellow_77">
-                        <div class="textColor_1 alignCenter d-flex align-items-center">
-                            <span class="fas fa-dollar-sign fa-2x"></span> &nbsp;&nbsp;
-                            <strong>
-								<?php esc_html_e('Seasonal pricing addon allow different pricing  based on  date range, time slot etc..  ', 'tour-booking-manager'); ?>&nbsp;
-                                <a href="https://mage-people.com/product/seasonal-pricing-addon-for-woocommerce-tour-plugin/" target="_blank"><?php esc_html_e('Get your Seasonal price addon now', 'tour-booking-manager'); ?></a> </strong>
-                        </div>
-                    </div>
-					<?php
+				$show_seasonal = ! class_exists( 'TTBMA_Seasonal_Pricing' );
+				$show_group    = ! class_exists( 'TTBMA_Group_Pricing' );
+				if ( ! $show_seasonal && ! $show_group ) {
+					return;
 				}
-				if (!class_exists('TTBMA_Group_Pricing')) {
-					?>
-                    <div class="_dLayout_bgColor_3">
-                        <div class="textColor_1 alignCenter d-flex align-items-center">
-                            <span class="fas fa-fill-drip fa-2x"></span> &nbsp;&nbsp;
-                            <strong>
-								<?php esc_html_e('Group price allow different pricing during buying based on quantity .', 'tour-booking-manager'); ?>&nbsp;
-                                <a href="https://mage-people.com/product/group-pricing-or-bulk-qty-discount-addon-for-tour-plugin/" target="_blank"><?php esc_html_e('Get your Group pricing addon now', 'tour-booking-manager'); ?></a> </strong>
-                        </div>
-                    </div>
-					<?php
-				}
+				?>
+				<div class="ttbm-addon-promos">
+					<?php if ( $show_seasonal ) { ?>
+					<div class="ttbm-addon-promo ttbm-addon-promo--amber">
+						<div class="ttbm-addon-promo__icon">
+							<i class="fas fa-calendar-alt"></i>
+						</div>
+						<div class="ttbm-addon-promo__content">
+							<span class="ttbm-addon-promo__badge"><?php esc_html_e( 'Addon', 'tour-booking-manager' ); ?></span>
+							<strong class="ttbm-addon-promo__title"><?php esc_html_e( 'Seasonal Pricing', 'tour-booking-manager' ); ?></strong>
+							<p class="ttbm-addon-promo__desc"><?php esc_html_e( 'Set different prices based on date ranges, time slots, and seasons — perfect for peak & off-peak management.', 'tour-booking-manager' ); ?></p>
+						</div>
+						<a href="https://mage-people.com/product/seasonal-pricing-addon-for-woocommerce-tour-plugin/" target="_blank" class="ttbm-addon-promo__btn">
+							<?php esc_html_e( 'Get Addon', 'tour-booking-manager' ); ?>
+							<i class="fas fa-arrow-right"></i>
+						</a>
+					</div>
+					<?php } ?>
+					<?php if ( $show_group ) { ?>
+					<div class="ttbm-addon-promo ttbm-addon-promo--blue">
+						<div class="ttbm-addon-promo__icon">
+							<i class="fas fa-users"></i>
+						</div>
+						<div class="ttbm-addon-promo__content">
+							<span class="ttbm-addon-promo__badge"><?php esc_html_e( 'Addon', 'tour-booking-manager' ); ?></span>
+							<strong class="ttbm-addon-promo__title"><?php esc_html_e( 'Group Pricing', 'tour-booking-manager' ); ?></strong>
+							<p class="ttbm-addon-promo__desc"><?php esc_html_e( 'Offer quantity-based pricing for group bookings — ideal for bulk discounts and party rates.', 'tour-booking-manager' ); ?></p>
+						</div>
+						<a href="https://mage-people.com/product/group-pricing-or-bulk-qty-discount-addon-for-tour-plugin/" target="_blank" class="ttbm-addon-promo__btn">
+							<?php esc_html_e( 'Get Addon', 'tour-booking-manager' ); ?>
+							<i class="fas fa-arrow-right"></i>
+						</a>
+					</div>
+					<?php } ?>
+				</div>
+				<?php
 			}
 		}
 		new TTBM_Settings_pricing();

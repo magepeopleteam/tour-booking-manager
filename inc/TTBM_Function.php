@@ -1065,9 +1065,9 @@
 			public static function tour_type() {
 				$type = array(
 					'general' => [
-						'icon'=>'mi mi-settings',
-						'title'=> __('General Tour', 'tour-booking-manager'),
-						'description'=> __('A standard tour package with all regular features, including full itinerary, pricing, and descriptive options.', 'tour-booking-manager'),
+						'icon'=>'fas fa-route',
+						'title'=> __('General Tour (Ticket-Based)', 'tour-booking-manager'),
+						'description'=> __('Set ticket types and pricing for your tour. Visitors purchase tickets to join the tour.', 'tour-booking-manager'),
 					], 
 					'hotel' => [
 						'icon'=>'mi mi-hotel',

@@ -113,7 +113,7 @@
 /******************************************************************** Meta tab settings ************************************************/
 @media only screen and (min-width: 10px) {
 	#ttbm_meta_box_panel {margin: 15px 0;}
-	#ttbm_meta_box_panel table {table-layout: auto;border-collapse: collapse;border: 1px solid #F5F5F5;margin-bottom: 20px;}
+	#ttbm_meta_box_panel table {table-layout: auto;border-collapse: collapse;border: none;margin-bottom: 20px;}
 	#ttbm_meta_box_panel table tr:nth-child(even) {background-color: var(--color_light);}
 	#ttbm_meta_box_panel table tr:nth-child(odd) {background-color: #FFF;}
 	#ttbm_meta_box_panel table th,

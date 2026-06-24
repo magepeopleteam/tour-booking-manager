@@ -325,7 +325,7 @@
 					if ($name == 'mep_ticket_times_tue' || $name == 'mep_ticket_times_wed' || $name == 'mep_ticket_times_thu') {
 						$text = 'disabled';
 					}
-					if ($name == 'mep_ticket_times_fri' || $name == 'mep_ticket_off_dates' || $name == 'mep_ticket_offdays') {
+					if ($name == 'mep_ticket_times_fri' || $name == 'mep_ticket_off_dates' || $name == 'mep_ticket_offdays' || $name == 'ttbm_enable_off_schedule') {
 						$text = 'disabled';
 					}
 				}

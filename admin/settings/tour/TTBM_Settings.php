@@ -286,6 +286,7 @@
 					'ttbm_repeat_number' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_repeat_number'),
 					'ttbm_travel_repeated_end_date' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_end_date'),
 					'mep_disable_ticket_time' => TTBM_Global_Function::get_post_info($tour_id, 'mep_disable_ticket_time', 'no'),
+					'ttbm_enable_off_schedule' => TTBM_Global_Function::get_post_info($tour_id, 'ttbm_enable_off_schedule', 'no'),
 					'mep_ticket_offdays' => TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_offdays', array()),
 					'mep_ticket_off_dates' => TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_off_dates', array()),
 				);
@@ -377,6 +378,7 @@
 					'ttbm_repeat_type',
 					'ttbm_repeat_number',
 					'mep_disable_ticket_time',
+					'ttbm_enable_off_schedule',
 				);
 				foreach ($stable_keys as $key) {
 					if (($before[$key] ?? '') !== ($after[$key] ?? '')) {
@@ -649,6 +651,7 @@
 					'ttbm_repeat_number',
 					'ttbm_travel_repeated_end_date',
 					'mep_disable_ticket_time',
+					'ttbm_enable_off_schedule',
 					'mep_ticket_offdays',
 					'mep_ticket_off_dates',
 				);
@@ -860,6 +863,8 @@
 					update_post_meta($tour_id, 'ttbm_travel_repeated_end_date', $ttbm_travel_repeated_end_date);
 					$display_time = isset($_POST['mep_disable_ticket_time']) && sanitize_text_field(wp_unslash($_POST['mep_disable_ticket_time'])) ? 'yes' : 'no';
 					update_post_meta($tour_id, 'mep_disable_ticket_time', $display_time);
+					$enable_off_schedule = isset($_POST['ttbm_enable_off_schedule']) && sanitize_text_field(wp_unslash($_POST['ttbm_enable_off_schedule'])) ? 'yes' : 'no';
+					update_post_meta($tour_id, 'ttbm_enable_off_schedule', $enable_off_schedule);
 					$all_time_slot_infos = TTBM_Settings_Dates::time_slot_array();
 					//echo '<pre>';print_r($all_time_slot_infos);echo '</pre>';die();
 					if (sizeof($all_time_slot_infos) > 0) {

@@ -44,6 +44,10 @@ body.ttbm_settings_page {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.ttbm_style .gptLayout {
+	margin-top: 0;
+}
+
 /* ─── Typography scale ─── */
 #ttbm_meta_box_panel .tabsItem > h2,
 #ttbm_content.ttbm_configuration .tabsItem > h2,
@@ -461,9 +465,9 @@ div.ttbm_global_settings.ttbm_configuration .roundSwitchLabel {
 
 /* ─── Checkboxes / feature pills ─── */
 #ttbm_meta_box_panel .includedd-features-section .customCheckboxLabel,
-#ttbm_meta_box_panel .groupCheckBox .customCheckboxLabel,
-#ttbm_content.ttbm_configuration .groupCheckBox .customCheckboxLabel,
-div.ttbm_global_settings.ttbm_configuration .groupCheckBox .customCheckboxLabel {
+#ttbm_meta_box_panel .groupCheckBox:not(.ttbm-off-days-grid) .customCheckboxLabel,
+#ttbm_content.ttbm_configuration .groupCheckBox:not(.ttbm-off-days-grid) .customCheckboxLabel,
+div.ttbm_global_settings.ttbm_configuration .groupCheckBox:not(.ttbm-off-days-grid) .customCheckboxLabel {
 	float: none;
 	display: inline-flex;
 	align-items: center;
@@ -482,10 +486,10 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox .customCheckboxLabel 
 	transition: border-color 0.15s ease, background 0.15s ease;
 }
 
-#ttbm_meta_box_panel .groupCheckBox .customCheckbox,
+#ttbm_meta_box_panel .groupCheckBox:not(.ttbm-off-days-grid) .customCheckbox,
 #ttbm_meta_box_panel .includedd-features-section .customCheckbox,
-#ttbm_content.ttbm_configuration .groupCheckBox .customCheckbox,
-div.ttbm_global_settings.ttbm_configuration .groupCheckBox .customCheckbox {
+#ttbm_content.ttbm_configuration .groupCheckBox:not(.ttbm-off-days-grid) .customCheckbox,
+div.ttbm_global_settings.ttbm_configuration .groupCheckBox:not(.ttbm-off-days-grid) .customCheckbox {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
@@ -510,9 +514,9 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox .customCheckbox {
 }
 
 #ttbm_meta_box_panel .includedd-features-section .customCheckboxLabel .customCheckbox::before,
-#ttbm_meta_box_panel .groupCheckBox .customCheckbox::before,
-#ttbm_content.ttbm_configuration .groupCheckBox .customCheckbox::before,
-div.ttbm_global_settings.ttbm_configuration .groupCheckBox .customCheckbox::before {
+#ttbm_meta_box_panel .groupCheckBox:not(.ttbm-off-days-grid) .customCheckbox::before,
+#ttbm_content.ttbm_configuration .groupCheckBox:not(.ttbm-off-days-grid) .customCheckbox::before,
+div.ttbm_global_settings.ttbm_configuration .groupCheckBox:not(.ttbm-off-days-grid) .customCheckbox::before {
 	content: "";
 	position: absolute;
 	left: 0;
@@ -555,10 +559,10 @@ div.ttbm_global_settings.ttbm_configuration .customCheckboxLabel input:checked ~
 	box-sizing: border-box;
 }
 
-#ttbm_meta_box_panel .customCheckboxLabel input:checked ~ .customCheckbox,
+#ttbm_meta_box_panel .groupCheckBox:not(.ttbm-off-days-grid) .customCheckboxLabel input:checked ~ .customCheckbox,
 #ttbm_meta_box_panel .includedd-features-section .customCheckboxLabel:has(input:checked),
-#ttbm_meta_box_panel .groupCheckBox .customCheckboxLabel:has(input:checked),
-#ttbm_content.ttbm_configuration .groupCheckBox .customCheckboxLabel:has(input:checked) {
+#ttbm_meta_box_panel .groupCheckBox:not(.ttbm-off-days-grid) .customCheckboxLabel:has(input:checked),
+#ttbm_content.ttbm_configuration .groupCheckBox:not(.ttbm-off-days-grid) .customCheckboxLabel:has(input:checked) {
 	border-color: #93c5fd;
 	background: var(--ttbm-a-primary-soft);
 }
@@ -572,56 +576,350 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 	gap: 8px;
 }
 
-/* Off days — card grid (checkbox top-left, day label centered) */
-#ttbm_meta_box_panel .ttbm-off-days-grid {
-	display: grid;
-	grid-template-columns: repeat(7, minmax(0, 1fr));
+/* ─── Off schedule (Off Days / Off Dates) ─── */
+#ttbm_meta_box_panel .ttbm-off-schedule-panel {
+	padding: 0;
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+}
+
+#ttbm_meta_box_panel .ttbm-off-schedule-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	margin-bottom: 20px;
+}
+
+#ttbm_meta_box_panel .ttbm-off-schedule-header__title {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	margin: 0;
+	font-size: 18px;
+	font-weight: 600;
+	color: var(--ttbm-a-text);
+}
+
+#ttbm_meta_box_panel .ttbm-off-schedule-header__title i {
+	color: #4a55a2;
+	font-size: 18px;
+}
+
+#ttbm_meta_box_panel .ttbm-off-schedule-header__toggle {
+	display: inline-flex;
+	align-items: center;
 	gap: 10px;
 }
 
-#ttbm_meta_box_panel .ttbm-off-days-grid .customCheckboxLabel {
+#ttbm_meta_box_panel .ttbm-off-schedule-header__toggle-label {
+	font-size: 14px;
+	font-weight: 500;
+	color: #64748b;
+}
+
+#ttbm_meta_box_panel .ttbm-off-schedule-header .roundSwitchLabel input:checked + .roundSwitch {
+	background: #4a55a2;
+}
+
+#ttbm_meta_box_panel .ttbm-off-schedule-tabs {
+	background: transparent;
+	border: 0;
+	overflow: visible;
+}
+
+#ttbm_meta_box_panel .ttbm-off-schedule-tablists {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	margin: 0 0 16px;
+	padding: 6px;
+	list-style: none;
+	background: #e4edf5;
+	border-radius: 12px;
+	border: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-off-schedule-tablists li {
+	flex: 0 0 auto;
+	margin: 0 !important;
+	padding: 10px 18px !important;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.3;
+	color: #64748b;
+	text-align: center;
+	white-space: nowrap;
+	border: 1px solid transparent !important;
+	border-radius: 10px !important;
+	background: transparent;
+	box-shadow: none;
+	cursor: pointer;
+	transition: color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+#ttbm_meta_box_panel .ttbm-off-schedule-tablists li:hover {
+	color: #4a55a2;
+	background: rgba(255, 255, 255, 0.55);
+	border-color: transparent !important;
+}
+
+#ttbm_meta_box_panel .ttbm-off-schedule-tablists li.active,
+#ttbm_meta_box_panel .ttbm-off-schedule-tablists li.active:hover {
+	color: #1e293b;
+	background: #fff;
+	border-color: #e2e8f0 !important;
+	box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+#ttbm_meta_box_panel .ttbm-off-schedule-tab-content {
+	padding: 0 !important;
+	background: transparent;
+}
+
+#ttbm_meta_box_panel .ttbm-off-schedule-tip {
 	display: flex;
-	flex-direction: column;
-	align-items: stretch;
-	justify-content: center;
-	width: 100%;
-	min-height: 72px;
+	align-items: flex-start;
+	gap: 12px;
+	margin-bottom: 18px;
+	padding: 14px 16px 14px 18px;
+	border: 1px solid #dbeafe;
+	border-radius: 12px;
+	background: #f0f4ff;
+}
+
+#ttbm_meta_box_panel .ttbm-off-schedule-tip__icon {
+	flex: 0 0 auto;
+	color: #4a55a2;
+	font-size: 18px;
+	line-height: 1.2;
+	margin-top: 2px;
+}
+
+#ttbm_meta_box_panel .ttbm-off-schedule-tip__title {
+	display: block;
+	margin: 0 0 4px;
+	font-size: 14px;
+	font-weight: 700;
+	color: #1e293b;
+}
+
+#ttbm_meta_box_panel .ttbm-off-schedule-tip__text {
 	margin: 0;
-	padding: 12px;
+	font-size: 13px;
+	line-height: 1.55;
+	color: #64748b;
+}
+
+/* Off days — centered checkbox cards */
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid {
+	display: grid;
+	grid-template-columns: repeat(7, minmax(0, 1fr));
+	gap: 10px;
+	align-items: stretch;
+}
+
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card {
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: center !important;
+	justify-content: center !important;
+	gap: 10px;
+	width: 100%;
+	min-height: 96px;
+	margin: 0 !important;
+	padding: 16px 8px !important;
 	text-align: center;
 	position: relative;
+	border: 2px solid #e2e8f0;
+	border-radius: 12px;
+	background: #fff;
+	cursor: pointer;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
 }
 
-#ttbm_meta_box_panel .ttbm-off-days-grid .customCheckbox {
-	display: block;
-	width: 100%;
-	padding: 24px 6px 0;
-	margin: 0;
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card:hover {
+	border-color: #c7d2fe;
+}
+
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card__mark {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	border: 2px solid #d1d5db;
+	border-radius: 4px;
+	background: #fff;
+	box-sizing: border-box;
+	flex-shrink: 0;
+}
+
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card:has(input:checked) {
+	border-color: #4a55a2;
+	box-shadow: 0 0 0 1px rgba(74, 85, 162, 0.08);
+}
+
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card:has(input:checked) .ttbm-off-day-card__mark {
+	background: #4a55a2;
+	border-color: #4a55a2;
+}
+
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card:has(input:checked) .ttbm-off-day-card__mark::after {
+	content: "";
+	width: 9px;
+	height: 5px;
+	border: 2px solid #fff;
+	border-top: none;
+	border-right: none;
+	transform: rotate(-45deg);
+	box-sizing: border-box;
+}
+
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card__label,
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card .customCheckbox {
+	display: block !important;
+	width: auto;
+	min-height: 0;
+	padding: 0 !important;
+	margin: 0 !important;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.2;
+	color: #334155;
 	text-align: center;
-	line-height: 1.35;
+	white-space: nowrap;
 }
 
-#ttbm_meta_box_panel .ttbm-off-days-grid .customCheckbox::before {
-	left: 12px !important;
-	top: 12px !important;
-	transform: none !important;
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card:has(input:checked) .ttbm-off-day-card__label {
+	color: #1e293b;
 }
 
-#ttbm_meta_box_panel .ttbm-off-days-grid .customCheckboxLabel input:checked ~ .customCheckbox::after {
-	left: 15px !important;
-	top: 15px !important;
-	transform: rotate(-45deg) !important;
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card::before,
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card::after,
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card .customCheckbox::before,
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card .customCheckbox::after {
+	display: none !important;
+	content: none !important;
+}
+
+/* Off dates list */
+#ttbm_meta_box_panel .ttbm-off-dates-list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+#ttbm_meta_box_panel .ttbm-off-date-card {
+	margin: 0;
+	padding: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-off-date-card__inner {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px 14px;
+	background: #f8f9fc;
+	border: 1px solid var(--ttbm-a-border);
+	border-radius: 12px;
+}
+
+#ttbm_meta_box_panel .ttbm-off-date-card__field {
+	flex: 1 1 auto;
+	min-width: 0;
+	margin: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-off-date-card__field .formControl.date_type {
+	min-height: 44px;
+	height: 44px;
+	padding: 10px 14px 10px 44px;
+	border-radius: 10px;
+	background-image: none;
+}
+
+#ttbm_meta_box_panel .ttbm-off-date-card__actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex: 0 0 auto;
+}
+
+#ttbm_meta_box_panel .ttbm-off-date-card__delete,
+#ttbm_meta_box_panel .ttbm-off-date-card__sort {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	min-width: 40px;
+	min-height: 40px;
+	margin: 0;
+	padding: 0;
+	border-radius: 10px;
+	box-sizing: border-box;
+	opacity: 1;
+}
+
+#ttbm_meta_box_panel .ttbm-off-date-card__delete {
+	border: 1px solid #fecaca;
+	background: #fff;
+	color: #ef4444;
+	cursor: pointer;
+}
+
+#ttbm_meta_box_panel .ttbm-off-date-card__sort {
+	border: 1px solid var(--ttbm-a-border);
+	background: #fff;
+	color: #64748b;
+	cursor: grab;
+}
+
+#ttbm_meta_box_panel .ttbm-off-dates-add-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	width: 100%;
+	margin-top: 14px;
+	padding: 14px 16px;
+	border: 2px dashed #c7d2fe;
+	border-radius: 12px;
+	background: #fff;
+	color: #4a55a2;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+#ttbm_meta_box_panel .ttbm-off-dates-add-btn:hover,
+#ttbm_meta_box_panel .ttbm-off-dates-add-btn:focus {
+	background: #f0f4ff;
+	border-color: #a5b4fc;
+	color: #4a55a2;
+	opacity: 1;
 }
 
 @media (max-width: 1100px) {
-	#ttbm_meta_box_panel .ttbm-off-days-grid {
+	#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid {
 		grid-template-columns: repeat(4, minmax(0, 1fr));
 	}
 }
 
 @media (max-width: 640px) {
-	#ttbm_meta_box_panel .ttbm-off-days-grid {
+	#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	#ttbm_meta_box_panel .ttbm-off-schedule-tablists {
+		display: flex;
+		width: 100%;
+	}
+
+	#ttbm_meta_box_panel .ttbm-off-schedule-tablists li {
+		flex: 1 1 50%;
 	}
 }
 
@@ -944,12 +1242,15 @@ div.ttbm_global_settings .button-primary {
 }
 
 /* ─── Nested tabs (date config) ─── */
+#ttbm_meta_box_panel .ttbm_settings_dates .tabLists {
+	padding-left: 10px;
+}
+
 #ttbm_meta_box_panel .ttbm_settings_dates .tabLists:not(.ttbm-time-slots-tablists) li,
 #ttbm_meta_box_panel .ttbmTabs:not(.ttbm-time-slots-tabs) .tabLists li[data-tabs-target] {
 	font-size: 13px;
 	padding: 8px 14px;
 	border-radius: var(--ttbm-a-radius-sm);
-	margin-left: 20px;
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .tabsContent:not(.ttbm-time-slots-tab-content),
@@ -1133,7 +1434,7 @@ div.ttbm_global_settings .button-primary {
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-time-slots-tabs.ttbmTabs .tabLists.ttbm-time-slots-tablists {
 	border-bottom: 0;
 	margin-left: 0;
-	padding-left: 0;
+	padding-left: 20px;
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-time-slots-tabs.ttbmTabs .tabLists.ttbm-time-slots-tablists li,
@@ -1431,12 +1732,21 @@ div.ttbm_global_settings .button-primary {
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-tour-type-selector__label {
-	font-size: 12px;
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	margin: 0 0 20px;
+	font-size: 18px;
 	font-weight: 600;
-	letter-spacing: 0.06em;
-	text-transform: uppercase;
-	color: var(--ttbm-date-muted);
-	margin: 0 0 14px;
+	line-height: 1.3;
+	letter-spacing: normal;
+	text-transform: none;
+	color: #0f172a;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-tour-type-selector__label i {
+	color: #2563eb;
+	font-size: 18px;
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-type-cards {
@@ -1444,6 +1754,7 @@ div.ttbm_global_settings .button-primary {
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 	gap: 16px;
 	overflow: visible;
+	padding-bottom: 10px;
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-tour-type-selector {
@@ -1587,90 +1898,20 @@ div.ttbm_global_settings .button-primary {
 	display: inline-flex;
 }
 
-/* Connector: active tour type card → config panel (pyramid bridge) */
+/* Active card — downward diamond pointer */
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-type-card.active::after {
 	content: "";
 	position: absolute;
 	left: 50%;
-	bottom: -18px;
-	transform: translateX(-50%);
-	width: 2px;
+	bottom: -9px;
+	width: 18px;
 	height: 18px;
-	background: linear-gradient(180deg, var(--ttbm-date-primary) 0%, rgba(91, 93, 245, 0.45) 100%);
+	background: var(--ttbm-date-primary);
+	transform: translateX(-50%) rotate(45deg);
+	border-radius: 2px;
+	box-shadow: 3px 3px 6px rgba(91, 93, 245, 0.2);
 	pointer-events: none;
 	z-index: 3;
-}
-
-#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-type-connector {
-	--connector-x: 50%;
-	--pyramid-apex: 5px;
-	--pyramid-half: 17%;
-	position: relative;
-	height: 48px;
-	margin: 10px 0 -2px;
-	padding: 0;
-	pointer-events: none;
-	z-index: 2;
-	overflow: visible;
-}
-
-#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-type-connector[data-active-type="fixed"] {
-	--connector-x: 16.666%;
-}
-
-#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-type-connector[data-active-type="particular"] {
-	--connector-x: 50%;
-}
-
-#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-type-connector[data-active-type="repeated"] {
-	--connector-x: 83.333%;
-}
-
-#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-type-connector__pyramid {
-	position: absolute;
-	inset: 0;
-	display: block;
-	clip-path: polygon(
-		calc(var(--connector-x) - var(--pyramid-apex)) 0%,
-		calc(var(--connector-x) + var(--pyramid-apex)) 0%,
-		calc(var(--connector-x) + var(--pyramid-half)) 100%,
-		calc(var(--connector-x) - var(--pyramid-half)) 100%
-	);
-}
-
-#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-type-connector__pyramid--border {
-	--pyramid-apex: 6px;
-	--pyramid-half: 18%;
-	background: var(--ttbm-date-border);
-}
-
-#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-type-connector__pyramid--fill {
-	top: 1px;
-	bottom: 0;
-	--pyramid-apex: 4px;
-	--pyramid-half: calc(18% - 1px);
-	background: linear-gradient(
-		180deg,
-		rgba(91, 93, 245, 0.1) 0%,
-		var(--ttbm-date-panel-bg) 55%,
-		var(--ttbm-date-panel-bg) 100%
-	);
-}
-
-#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-type-connector__spine {
-	position: absolute;
-	left: var(--connector-x);
-	top: 0;
-	bottom: 4px;
-	width: 2px;
-	transform: translateX(-50%);
-	background: linear-gradient(
-		180deg,
-		var(--ttbm-date-primary) 0%,
-		rgba(91, 93, 245, 0.35) 72%,
-		transparent 100%
-	);
-	border-radius: 1px;
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-target-panel.mActive .ttbm-date-config-panel {
@@ -1678,29 +1919,8 @@ div.ttbm_global_settings .button-primary {
 	z-index: 1;
 }
 
-#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-tour-type-selector[data-active-type="fixed"] ~ [data-target-radio="#ttbm_fixed"].mActive .ttbm-date-config-panel::before,
-#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-tour-type-selector[data-active-type="particular"] ~ [data-target-radio="#ttbm_particular"].mActive .ttbm-date-config-panel::before,
-#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-tour-type-selector[data-active-type="repeated"] ~ [data-target-radio="#ttbm_repeated"].mActive .ttbm-date-config-panel::before {
-	content: "";
-	position: absolute;
-	top: -1px;
-	left: 16.666%;
-	width: calc(36% + 2px);
-	max-width: calc(100% - 24px);
-	height: 3px;
-	background: var(--ttbm-date-panel-bg);
-	border-top: 1px solid var(--ttbm-date-border);
-	transform: translateX(-50%);
-	z-index: 2;
-	pointer-events: none;
-}
-
-#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-tour-type-selector[data-active-type="particular"] ~ [data-target-radio="#ttbm_particular"].mActive .ttbm-date-config-panel::before {
-	left: 50%;
-}
-
-#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-tour-type-selector[data-active-type="repeated"] ~ [data-target-radio="#ttbm_repeated"].mActive .ttbm-date-config-panel::before {
-	left: 83.333%;
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-tour-type-selector + .ttbm-date-target-panel {
+	margin-top: 10px;
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-config-panel {
@@ -1807,6 +2027,82 @@ div.ttbm_global_settings .button-primary {
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+/* ─── Fixed dates (Date Management grid) ─── */
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-fixed-dates-panel {
+	padding-top: 22px;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-fixed-dates-header {
+	margin-bottom: 20px;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-fixed-dates-header__title {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	margin: 0;
+	font-size: 16px;
+	font-weight: 600;
+	color: var(--ttbm-date-text);
+	line-height: 1.3;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-fixed-dates-header__title i {
+	color: var(--ttbm-date-primary);
+	font-size: 16px;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-fixed-date-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 20px 24px;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-fixed-date-field .ttbm-field-label {
+	margin-bottom: 8px;
+	font-size: 12px;
+	font-weight: 600;
+	color: #475569;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-fixed-date-field .ttbm-input-icon .formControl {
+	min-height: 46px;
+	padding: 11px 40px 11px 44px;
+	border-radius: 8px;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-fixed-date-field .ttbm-input-icon--trail-chevron::after,
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-fixed-date-field .ttbm-input-icon--trail-reset::after {
+	content: "";
+	position: absolute;
+	right: 14px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 16px;
+	height: 16px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	pointer-events: none;
+	z-index: 1;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-fixed-date-field .ttbm-input-icon--trail-chevron::after {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-fixed-date-field .ttbm-input-icon--trail-reset::after {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='1 4 1 10 7 10'/%3E%3Cpath d='M3.51 15a9 9 0 1 0 2.13-9.36L1 10'/%3E%3C/svg%3E");
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-fixed-date-field .ttbm-input-icon--time-end::before {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235b5df5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='12' r='8'/%3E%3Cpolyline points='11 8 11 12 14 14'/%3E%3Cline x1='18' y1='8' x2='18' y2='14'/%3E%3Cline x1='15' y1='11' x2='21' y2='11'/%3E%3C/svg%3E");
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-fixed-date-field .ttbm-input-icon--time-reg::before {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235b5df5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='12' r='8'/%3E%3Cpolyline points='11 8 11 12 14 14'/%3E%3Crect x='16' y='9' width='5' height='4' rx='1'/%3E%3C/svg%3E");
+}
+
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-input-icon {
 	display: block;
 	position: relative;
@@ -1852,6 +2148,307 @@ div.ttbm_global_settings .button-primary {
 	border-color: var(--ttbm-date-primary);
 	box-shadow: 0 0 0 3px rgba(91, 93, 245, 0.15);
 	outline: none;
+}
+
+/* ─── Particular dates (Date Management cards) ─── */
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-particular-dates-panel {
+	padding-top: 22px;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-particular-dates-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	margin-bottom: 18px;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-particular-dates-header__title {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 16px;
+	font-weight: 600;
+	color: var(--ttbm-date-text);
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-particular-dates-header__title i {
+	color: var(--ttbm-date-primary);
+	font-size: 16px;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-particular-dates-header__badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 12px;
+	border-radius: 999px;
+	background: #eef0ff;
+	color: #5b5df5;
+	font-size: 12px;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-particular-dates-list {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin-bottom: 4px;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card {
+	margin: 0;
+	padding: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card.ttbm_remove_area {
+	position: static;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__inner {
+	display: grid;
+	grid-template-columns: 24px minmax(0, 1.1fr) minmax(0, 0.9fr) minmax(0, 1.1fr) auto;
+	grid-template-rows: auto 48px;
+	align-items: center;
+	column-gap: 14px;
+	row-gap: 6px;
+	padding: 16px 18px;
+	background: #f8f9fc;
+	border: 1px solid var(--ttbm-date-border);
+	border-radius: 12px;
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__field {
+	display: contents;
+	min-width: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__drag {
+	grid-column: 1;
+	grid-row: 1 / 3;
+	align-self: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 44px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: #94a3b8;
+	cursor: grab;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__drag-icon {
+	display: block;
+	width: 12px;
+	height: 18px;
+	background:
+		radial-gradient(circle, #94a3b8 2px, transparent 2.5px) 0 0 / 12px 6px repeat-y,
+		radial-gradient(circle, #94a3b8 2px, transparent 2.5px) 6px 0 / 12px 6px repeat-y;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-field-label {
+	display: block;
+	margin: 0;
+	min-height: 14px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--ttbm-date-muted);
+	line-height: 1.2;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__field--checkin-date .ttbm-particular-date-field-label {
+	grid-column: 2;
+	grid-row: 1;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__field--checkin-date .ttbm-input-icon {
+	grid-column: 2;
+	grid-row: 2;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__field--checkin-time .ttbm-particular-date-field-label {
+	grid-column: 3;
+	grid-row: 1;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__field--checkin-time .ttbm-input-icon {
+	grid-column: 3;
+	grid-row: 2;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__field--checkout-date .ttbm-particular-date-field-label {
+	grid-column: 4;
+	grid-row: 1;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__field--checkout-date .ttbm-input-icon {
+	grid-column: 4;
+	grid-row: 2;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__field .ttbm-input-icon .formControl {
+	min-height: 44px;
+	height: 44px;
+	padding: 10px 14px 10px 44px;
+	border-radius: 10px;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__field .ttbm-input-icon--date .formControl.date_type {
+	background-image: none;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__actions {
+	grid-column: 5;
+	grid-row: 2;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	height: 44px;
+	margin: 0;
+	padding: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__delete,
+#ttbm_meta_box_panel .ttbm-particular-date-card__sort {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	min-width: 40px;
+	min-height: 40px;
+	margin: 0;
+	padding: 0;
+	border-radius: 10px;
+	box-sizing: border-box;
+	opacity: 1;
+	text-transform: none;
+	overflow: visible;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__delete {
+	border: 1px solid #fecaca;
+	background: #fff;
+	color: #ef4444;
+	cursor: pointer;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__sort {
+	border: 1px solid var(--ttbm-date-border);
+	background: #fff;
+	color: #64748b;
+	cursor: grab;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__delete:hover,
+#ttbm_meta_box_panel .ttbm-particular-date-card__delete:focus {
+	background: #fef2f2;
+	border-color: #fca5a5;
+	color: #dc2626;
+	opacity: 1;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__sort:hover,
+#ttbm_meta_box_panel .ttbm-particular-date-card__sort:focus {
+	background: #eef0ff;
+	border-color: #c7d2fe;
+	color: #5b5df5;
+	opacity: 1;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-date-card__delete span,
+#ttbm_meta_box_panel .ttbm-particular-date-card__sort span {
+	color: inherit;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-dates-add-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	width: 100%;
+	margin-top: 14px;
+	padding: 14px 16px;
+	border: 2px dashed #c7d2fe;
+	border-radius: 12px;
+	background: #fff;
+	color: #5b5df5;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-dates-add-btn:hover,
+#ttbm_meta_box_panel .ttbm-particular-dates-add-btn:focus {
+	background: #eef0ff;
+	border-color: #a5b4fc;
+	color: #5b5df5;
+	opacity: 1;
+}
+
+#ttbm_meta_box_panel .ttbm-particular-dates-add-btn i {
+	color: inherit;
+	margin: 0;
+}
+
+@media (max-width: 1100px) {
+	#ttbm_meta_box_panel .ttbm-particular-date-card__inner {
+		grid-template-columns: 24px 1fr 1fr;
+		grid-template-rows: auto 48px auto 48px auto 48px;
+	}
+
+	#ttbm_meta_box_panel .ttbm-particular-date-card__drag {
+		grid-row: 1 / 7;
+	}
+
+	#ttbm_meta_box_panel .ttbm-particular-date-card__field--checkin-date .ttbm-particular-date-field-label {
+		grid-column: 2 / 4;
+		grid-row: 1;
+	}
+
+	#ttbm_meta_box_panel .ttbm-particular-date-card__field--checkin-date .ttbm-input-icon {
+		grid-column: 2 / 4;
+		grid-row: 2;
+	}
+
+	#ttbm_meta_box_panel .ttbm-particular-date-card__field--checkin-time .ttbm-particular-date-field-label {
+		grid-column: 2 / 4;
+		grid-row: 3;
+	}
+
+	#ttbm_meta_box_panel .ttbm-particular-date-card__field--checkin-time .ttbm-input-icon {
+		grid-column: 2 / 4;
+		grid-row: 4;
+	}
+
+	#ttbm_meta_box_panel .ttbm-particular-date-card__field--checkout-date .ttbm-particular-date-field-label {
+		grid-column: 2 / 4;
+		grid-row: 5;
+	}
+
+	#ttbm_meta_box_panel .ttbm-particular-date-card__field--checkout-date .ttbm-input-icon {
+		grid-column: 2 / 4;
+		grid-row: 6;
+	}
+
+	#ttbm_meta_box_panel .ttbm-particular-date-card__actions {
+		grid-column: 3;
+		grid-row: 2 / 7;
+		flex-direction: column;
+		height: auto;
+		align-self: center;
+	}
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-repeat-end {
@@ -1913,26 +2510,9 @@ div.ttbm_global_settings .button-primary {
 		grid-template-columns: 1fr;
 	}
 
-	#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-type-connector[data-active-type] {
-		--connector-x: 50%;
-		--pyramid-half: 42%;
-	}
-
-	#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-type-connector__pyramid--border {
-		--pyramid-half: 44%;
-	}
-
-	#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-type-connector__pyramid--fill {
-		--pyramid-half: calc(44% - 1px);
-	}
-
-	#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-tour-type-selector[data-active-type] ~ [data-target-radio].mActive .ttbm-date-config-panel::before {
-		left: 50%;
-		width: calc(88% + 2px);
-	}
-
 	#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-datetime-grid,
-	#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-datetime-grid--three {
+	#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-datetime-grid--three,
+	#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-fixed-date-grid {
 		grid-template-columns: 1fr;
 	}
 }
@@ -2104,4 +2684,461 @@ body.ttbm_settings_page .ttbm_settings_panel p.submit input {
 	border-radius: var(--ttbm-a-radius-sm);
 	font-weight: 600;
 	padding: 8px 24px;
+}
+
+/* ─── Admin jQuery UI datepicker (match modern backend sections) ─── */
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div.ui-datepicker,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div.ui-datepicker,
+body.ttbm_settings_page #ui-datepicker-div.ui-datepicker,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div.ui-datepicker,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div.ui-datepicker,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div.ui-datepicker,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div.ui-datepicker {
+	--ttbm-dp-primary: #2563eb;
+	--ttbm-dp-primary-soft: #eff6ff;
+	--ttbm-dp-border: #e2e8f0;
+	--ttbm-dp-text: #0f172a;
+	--ttbm-dp-muted: #64748b;
+	width: 304px;
+	padding: 14px;
+	margin-top: 6px;
+	border: 1px solid var(--ttbm-dp-border);
+	border-radius: 14px;
+	background: #fff;
+	box-shadow: 0 16px 40px rgba(15, 23, 42, 0.14);
+	font-family: var(--ttbm-a-font, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+	font-size: 13px;
+	z-index: 1000000 !important;
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-header,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-header,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-header,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-header,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-header,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-header,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-header {
+	background: #e4edf5;
+	background-image: none;
+	border: 0;
+	border-radius: 10px;
+	padding: 10px 12px;
+	margin-bottom: 10px;
+	position: relative;
+	display: block;
+	color: var(--ttbm-dp-text);
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-title,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-title,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-title,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-title,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-title,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-title,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-title {
+	background: transparent;
+	background-image: none;
+	color: var(--ttbm-dp-text);
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 32px;
+	margin: 0;
+	display: block;
+	text-align: center;
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-title select,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-title select,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-title select,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-title select,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-title select,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-title select,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-title select {
+	min-width: auto;
+	height: 32px;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--ttbm-dp-text);
+	padding: 0 10px;
+	margin: 0 4px;
+	border: 1px solid var(--ttbm-dp-border);
+	border-radius: 8px;
+	background: #fff;
+	text-align: left;
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-prev,
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-next,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-prev,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-next,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-prev,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-next,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-prev,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-next,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-prev,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-next,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-prev,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-next,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-prev,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-next {
+	top: 10px;
+	width: 32px;
+	height: 32px;
+	border-radius: 8px;
+	background: #fff;
+	border: 1px solid var(--ttbm-dp-border);
+	box-shadow: none;
+	transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-prev,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-prev,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-prev,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-prev,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-prev,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-prev,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-prev {
+	left: 10px;
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-next,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-next,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-next,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-next,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-next,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-next,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-next {
+	right: 10px;
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-prev:hover,
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-prev:focus,
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-next:hover,
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-next:focus,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-prev:hover,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-prev:focus,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-next:hover,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-next:focus,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-prev:hover,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-prev:focus,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-next:hover,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-next:focus,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-prev:hover,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-prev:focus,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-next:hover,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-next:focus,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-prev:hover,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-prev:focus,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-next:hover,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-next:focus,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-prev:hover,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-prev:focus,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-next:hover,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-next:focus,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-prev:hover,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-prev:focus,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-next:hover,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-next:focus {
+	background: var(--ttbm-dp-primary);
+	border-color: var(--ttbm-dp-primary);
+	box-shadow: none;
+	outline: none;
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-header .ui-state-hover,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-header .ui-state-hover,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-header .ui-state-hover,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-header .ui-state-hover,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-header .ui-state-hover,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-header .ui-state-hover,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-header .ui-state-hover {
+	background-color: var(--ttbm-dp-primary);
+	background-image: none;
+	border-color: var(--ttbm-dp-primary);
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-header .ui-icon,
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-prev span,
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-next span,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-header .ui-icon,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-prev span,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-next span,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-header .ui-icon,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-prev span,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-next span,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-header .ui-icon,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-prev span,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-next span,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-header .ui-icon,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-prev span,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-next span,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-header .ui-icon,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-prev span,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-next span,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-header .ui-icon,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-prev span,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-next span {
+	display: none;
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-prev::before,
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-next::before,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-prev::before,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-next::before,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-prev::before,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-next::before,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-prev::before,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-next::before,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-prev::before,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-next::before,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-prev::before,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-next::before,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-prev::before,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-next::before {
+	display: none;
+	content: none;
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-prev::after,
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-next::after,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-prev::after,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-next::after,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-prev::after,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-next::after,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-prev::after,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-next::after,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-prev::after,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-next::after,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-prev::after,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-next::after,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-prev::after,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-next::after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	line-height: 30px;
+	text-align: center;
+	font-size: 17px;
+	color: var(--ttbm-dp-muted);
+	font-family: Arial, sans-serif;
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-prev::after,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-prev::after,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-prev::after,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-prev::after,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-prev::after,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-prev::after,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-prev::after {
+	content: "\2039";
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-next::after,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-next::after,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-next::after,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-next::after,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-next::after,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-next::after,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-next::after {
+	content: "\203A";
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-prev:hover::after,
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-next:hover::after,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-prev:hover::after,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-next:hover::after,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-prev:hover::after,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-next:hover::after,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-prev:hover::after,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-next:hover::after,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-prev:hover::after,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-next:hover::after,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-prev:hover::after,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-next:hover::after,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-prev:hover::after,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-next:hover::after {
+	color: #fff;
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div table.ui-datepicker-calendar,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div table.ui-datepicker-calendar,
+body.ttbm_settings_page #ui-datepicker-div table.ui-datepicker-calendar,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div table.ui-datepicker-calendar,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div table.ui-datepicker-calendar,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div table.ui-datepicker-calendar,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div table.ui-datepicker-calendar {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 0;
+	font-size: 13px;
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div table.ui-datepicker-calendar th,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div table.ui-datepicker-calendar th,
+body.ttbm_settings_page #ui-datepicker-div table.ui-datepicker-calendar th,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div table.ui-datepicker-calendar th,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div table.ui-datepicker-calendar th,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div table.ui-datepicker-calendar th,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div table.ui-datepicker-calendar th {
+	padding: 8px 0;
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--ttbm-dp-muted);
+	background: transparent;
+	border: 0;
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div.ui-datepicker td,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div.ui-datepicker td,
+body.ttbm_settings_page #ui-datepicker-div.ui-datepicker td,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div.ui-datepicker td,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div.ui-datepicker td,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div.ui-datepicker td,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div.ui-datepicker td {
+	background-color: transparent;
+	border: 0;
+	padding: 2px;
+	text-align: center;
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-calendar td a,
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-calendar td span,
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-state-default,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-calendar td a,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-calendar td span,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-state-default,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-calendar td a,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-calendar td span,
+body.ttbm_settings_page #ui-datepicker-div .ui-state-default,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-calendar td a,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-calendar td span,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-state-default,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-calendar td a,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-calendar td span,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-state-default,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-calendar td a,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-calendar td span,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-state-default,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td a,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td span,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-state-default {
+	display: block;
+	width: 34px;
+	height: 34px;
+	line-height: 34px;
+	margin: 0 auto;
+	padding: 0;
+	border: 0;
+	border-radius: 8px;
+	background: transparent;
+	background-image: none;
+	color: var(--ttbm-dp-text);
+	font-weight: 600;
+	text-align: center;
+	text-decoration: none;
+	transition: background 0.15s ease, color 0.15s ease;
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default,
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div a.ui-state-default,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div a.ui-state-default,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default,
+body.ttbm_settings_page #ui-datepicker-div a.ui-state-default,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div a.ui-state-default,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div a.ui-state-default,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div a.ui-state-default,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div a.ui-state-default {
+	background: var(--ttbm-dp-primary-soft);
+	color: var(--ttbm-dp-primary);
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default:hover,
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-hover,
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div a.ui-state-default:hover,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default:hover,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-hover,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div a.ui-state-default:hover,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default:hover,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-hover,
+body.ttbm_settings_page #ui-datepicker-div a.ui-state-default:hover,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default:hover,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-hover,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div a.ui-state-default:hover,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default:hover,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-hover,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div a.ui-state-default:hover,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default:hover,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-hover,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div a.ui-state-default:hover,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default:hover,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-hover,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div a.ui-state-default:hover {
+	background: var(--ttbm-dp-primary);
+	color: #fff;
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-today a,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-today a,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-today a,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-today a,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-today a,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-today a,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-today a {
+	box-shadow: inset 0 0 0 2px var(--ttbm-dp-primary);
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-active,
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-highlight,
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-state-active,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-active,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-highlight,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-state-active,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-active,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-highlight,
+body.ttbm_settings_page #ui-datepicker-div .ui-state-active,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-active,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-highlight,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-state-active,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-active,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-highlight,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-state-active,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-active,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-highlight,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-state-active,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-active,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-highlight,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-state-active {
+	background: var(--ttbm-dp-primary);
+	color: #fff;
+	box-shadow: 0 4px 10px rgba(37, 99, 235, 0.28);
+	background-image: none;
+}
+
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-unselectable span,
+body.wp-admin:has(#ttbm_meta_box_panel) #ui-datepicker-div .ui-datepicker-calendar td.ui-state-disabled span,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-unselectable span,
+body.wp-admin:has(.ttbm_global_settings.ttbm_configuration) #ui-datepicker-div .ui-datepicker-calendar td.ui-state-disabled span,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-unselectable span,
+body.ttbm_settings_page #ui-datepicker-div .ui-datepicker-calendar td.ui-state-disabled span,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-unselectable span,
+body.wp-admin.post-type-ttbm_tour #ui-datepicker-div .ui-datepicker-calendar td.ui-state-disabled span,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-unselectable span,
+body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div .ui-datepicker-calendar td.ui-state-disabled span,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-unselectable span,
+body.wp-admin.post-type-ttbm_places #ui-datepicker-div .ui-datepicker-calendar td.ui-state-disabled span,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-unselectable span,
+body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td.ui-state-disabled span {
+	color: #cbd5e1;
+	background: transparent;
+	border: 0;
+	opacity: 1;
 }

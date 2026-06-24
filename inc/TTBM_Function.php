@@ -128,6 +128,24 @@
 			}
 
 			//*********Date and Time**********************//
+			public static function get_tour_off_schedule_data($tour_id) {
+				if (TTBM_Global_Function::get_post_info($tour_id, 'ttbm_enable_off_schedule', 'no') !== 'yes') {
+					return array(array(), array());
+				}
+				$off_days = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_offdays', array());
+				if (!is_array($off_days)) {
+					$off_days = $off_days ? explode(',', (string) $off_days) : array();
+				}
+				$all_off_dates = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_off_dates', array());
+				$off_dates = array();
+				foreach ((array) $all_off_dates as $off_date) {
+					if (is_array($off_date) && !empty($off_date['mep_ticket_off_date'])) {
+						$off_dates[] = $off_date['mep_ticket_off_date'];
+					}
+				}
+				return array((array) $off_days, $off_dates);
+			}
+
 			public static function get_date($tour_id, $expire = '') {
 				$tour_date = [];
 				$travel_type = TTBM_Function::get_travel_type($tour_id);
@@ -164,12 +182,7 @@
 					} else {
 						$end_date = '';
 					}
-					$off_days = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_offdays', array());
-					$all_off_dates = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_off_dates', array());
-					$off_dates = array();
-					foreach ($all_off_dates as $off_date) {
-						$off_dates[] = $off_date['mep_ticket_off_date'];
-					}
+					list($off_days, $off_dates) = self::get_tour_off_schedule_data($tour_id);
 					$tour_date = array();
 					if ($start_date == $end_date) {
 						$date = $start_date;
@@ -254,12 +267,7 @@
 					// Check if date is within range
 					if ($start_date && $end_date && $date_normalized >= $start_date && $date_normalized <= $end_date) {
 						// Check off days and off dates
-						$off_days = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_offdays', array());
-						$all_off_dates = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_off_dates', array());
-						$off_dates = array();
-						foreach ($all_off_dates as $off_date) {
-							$off_dates[] = $off_date['mep_ticket_off_date'];
-						}
+						list($off_days, $off_dates) = self::get_tour_off_schedule_data($tour_id);
 						$day = strtolower(gmdate('D', strtotime($date_normalized)));
 						
 						// Check if date matches interval pattern

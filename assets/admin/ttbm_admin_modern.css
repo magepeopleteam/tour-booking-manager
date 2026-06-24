@@ -1114,7 +1114,7 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 #ttbm_meta_box_panel .ttbm-booking-styles,
 #ttbm_meta_box_panel .ttbm-title-styles {
 	display: flex;
-	flex-wrap: wrap;
+	flex-wrap: nowrap;
 	gap: 16px;
 }
 
@@ -1149,6 +1149,259 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 	font-size: 13px;
 	color: var(--ttbm-a-muted);
 	line-height: var(--ttbm-a-lh);
+}
+
+/* ─── Ticket types table ─── */
+#ttbm_meta_box_panel .ttbm-ticket-types-panel {
+	background: #fff;
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-table thead th {
+	padding: 12px 14px;
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: #475569;
+	text-align: left;
+	white-space: nowrap;
+	background: #f1f5f9;
+	border-bottom: 1px solid #e2e8f0;
+	vertical-align: middle;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td {
+	padding: 12px 14px;
+	border-bottom: 1px solid #eef2f7;
+	vertical-align: middle;
+	background: #fff;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody tr:last-child td {
+	border-bottom: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--qty-type {
+	display: none;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-table .formControl,
+#ttbm_meta_box_panel .ttbm-ticket-types-table input[type="text"],
+#ttbm_meta_box_panel .ttbm-ticket-types-table input[type="number"],
+#ttbm_meta_box_panel .ttbm-ticket-types-table select {
+	width: 100%;
+	min-height: 40px;
+	padding: 8px 12px;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	background: #fff;
+	font-size: 14px;
+	color: #0f172a;
+	box-sizing: border-box;
+	box-shadow: none;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--name .formControl {
+	font-weight: 600;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--cap .formControl,
+#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--default .formControl,
+#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--reserve .formControl {
+	min-width: 72px;
+	max-width: 96px;
+	text-align: center;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-name-field {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-width: 160px;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-name-field__icon {
+	flex: 0 0 auto;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_style,
+#ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_add_icon_image_area {
+	margin: 0;
+	padding: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_icon_item {
+	position: relative;
+	width: 36px;
+	height: 36px;
+	margin: 0;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	background: #f8fafc;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_icon_item .allCenter {
+	width: 100%;
+	height: 100%;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_icon_item [data-add-icon] {
+	font-size: 18px;
+	color: #2563eb;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_icon_remove {
+	position: absolute;
+	top: -6px;
+	right: -6px;
+	width: 16px;
+	height: 16px;
+	font-size: 9px;
+	line-height: 16px;
+	text-align: center;
+	border-radius: 50%;
+	background: #fff;
+	border: 1px solid #e2e8f0;
+	color: #94a3b8;
+	cursor: pointer;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_add_icon_image_button_area {
+	margin: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_icon_add {
+	min-height: 36px;
+	padding: 6px 10px;
+	border-radius: 8px;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-name-field__input {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-input-prefix {
+	display: block;
+	position: relative;
+	margin: 0;
+	min-width: 100px;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-input-prefix__symbol {
+	position: absolute;
+	left: 12px;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 14px;
+	font-weight: 500;
+	color: #94a3b8;
+	pointer-events: none;
+	z-index: 1;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-input-prefix .formControl {
+	padding-left: 28px;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-row__actions {
+	display: inline-flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-row__delete,
+#ttbm_meta_box_panel .ttbm-ticket-row__sort {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 8px;
+	background: transparent;
+	color: #94a3b8;
+	cursor: pointer;
+	transition: color 0.15s ease, background 0.15s ease;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-row__delete:hover,
+#ttbm_meta_box_panel .ttbm-ticket-row__delete:focus {
+	color: #ef4444;
+	background: #fef2f2;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-row__sort {
+	color: #64748b;
+	cursor: grab;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-row__sort:hover,
+#ttbm_meta_box_panel .ttbm-ticket-row__sort:focus {
+	color: #2563eb;
+	background: #eff6ff;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-row__delete span,
+#ttbm_meta_box_panel .ttbm-ticket-row__sort span {
+	font-size: 14px;
+	line-height: 1;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-add-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 14px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	box-shadow: none;
+	color: #2563eb;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.4;
+	cursor: pointer;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-add-btn:hover,
+#ttbm_meta_box_panel .ttbm-ticket-types-add-btn:focus {
+	color: #1d4ed8;
+	background: transparent;
+	text-decoration: none;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-add-btn .fas {
+	font-size: 12px;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-table .tool-tips {
+	margin-left: 4px;
+	color: #94a3b8;
+	font-size: 12px;
+}
+
+@media (max-width: 1200px) {
+	#ttbm_meta_box_panel .ttbm-ticket-types-panel .ovAuto {
+		overflow-x: auto;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table {
+		min-width: 980px;
+	}
 }
 
 /* ─── Promo / notice banners ─── */

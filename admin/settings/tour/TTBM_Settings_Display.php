@@ -80,7 +80,7 @@ if (!class_exists('TTBM_Settings_Display')) {
                     </div>
                 </section>
 
-                <section>
+                <section style="display:none;">
                     <div class="ttbm-header">
                         <h4><i class="mi mi-blog-text"></i><?php esc_html_e('Section Title Settings', 'tour-booking-manager'); ?></h4>
                     </div>
@@ -114,7 +114,7 @@ if (!class_exists('TTBM_Settings_Display')) {
                     </div>
                 </section>
 
-                <section>
+                <section style="display:none;">
                     <div class="ttbm-header">
                         <h4><i class="mi mi-blog-text"></i><?php esc_html_e('Booking Form Style', 'tour-booking-manager'); ?></h4>
                     </div>

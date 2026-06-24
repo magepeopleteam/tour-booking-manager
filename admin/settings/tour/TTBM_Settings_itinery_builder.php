@@ -77,47 +77,78 @@
                             <button class="button ttbm-daywise-item-new" data-modal="ttbm-daywise-item-new" type="button"><?php esc_html_e('Add Itinerary', 'tour-booking-manager'); ?></button>
                         </div>
                     </section>
-                    <!-- sidebar collapse open -->
+                    <!-- Itinerary slide-in modal -->
                     <div class="ttbm-modal-container" data-modal-target="ttbm-daywise-item-new">
                         <div class="ttbm-modal-content">
-                            <span class="ttbm-modal-close"><i class="fas fa-times"></i></span>
-                            <div class="title">
-                                <h3><?php esc_html_e('Add New Itinerary', 'tour-booking-manager'); ?></h3>
+
+                            <!-- Header -->
+                            <div class="ttbm-modal-header">
+                                <div class="ttbm-modal-header__inner">
+                                    <div class="ttbm-modal-header__icon">
+                                        <i class="fas fa-map-signs"></i>
+                                    </div>
+                                    <div>
+                                        <h3><?php esc_html_e('Add New Itinerary', 'tour-booking-manager'); ?></h3>
+                                        <p><?php esc_html_e('Describe what happens on this day of the tour.', 'tour-booking-manager'); ?></p>
+                                    </div>
+                                </div>
+                                <span class="ttbm-modal-close" title="<?php esc_attr_e('Close', 'tour-booking-manager'); ?>">
+                                    <i class="fas fa-times"></i>
+                                </span>
+                            </div>
+
+                            <!-- Body -->
+                            <div class="ttbm-modal-body">
                                 <div id="ttbm-service-msg"></div>
-                            </div>
-                            <div class="content">
-                                <label>
-									<?php esc_html_e('Add Title', 'tour-booking-manager'); ?>
+
+                                <div class="ttbm-modal-field">
+                                    <label class="ttbm-modal-label" for="ttbm_day_title_input">
+                                        <?php esc_html_e('Day Title', 'tour-booking-manager'); ?>
+                                        <span class="ttbm-modal-required">*</span>
+                                    </label>
                                     <input type="hidden" name="ttbm_post_id" value="<?php echo esc_attr($post_id); ?>">
-                                    <input type="text" name="ttbm_day_title">
                                     <input type="hidden" name="ttbm_daywise_item_id">
-                                </label>
-                                <label>
-									<?php esc_html_e('Add Content', 'tour-booking-manager'); ?>
-                                </label>
-								<?php
-									$content = '';
-									$editor_id = 'ttbm_day_content';
-									$settings = array(
-										'textarea_name' => 'ttbm_day_content',
-										'media_buttons' => true,
-										'textarea_rows' => 10,
-									);
-									wp_editor($content, $editor_id, $settings);
-								?>
-                                <div class="mT"></div>
-                                <div class="ttbm_daywise_save_buttons">
-                                    <p>
-                                        <button id="ttbm_daywise_save" class="button button-primary button-large"><?php esc_html_e('Save', 'tour-booking-manager'); ?></button>
-                                        <button id="ttbm_daywise_save_close" class="button button-primary button-large">save close</button>
-                                    <p>
+                                    <input type="text" id="ttbm_day_title_input" name="ttbm_day_title"
+                                           placeholder="<?php esc_attr_e('e.g. Day 1: Arrival in Paris', 'tour-booking-manager'); ?>">
                                 </div>
-                                <div class="ttbm_daywise_update_buttons" style="display: none;">
-                                    <p>
-                                        <button id="ttbm_daywise_update" class="button button-primary button-large"><?php esc_html_e('Update and Close', 'tour-booking-manager'); ?></button>
-                                    <p>
+
+                                <div class="ttbm-modal-field">
+                                    <label class="ttbm-modal-label">
+                                        <?php esc_html_e('Day Description', 'tour-booking-manager'); ?>
+                                    </label>
+                                    <?php
+                                        $content    = '';
+                                        $editor_id  = 'ttbm_day_content';
+                                        $settings   = array(
+                                            'textarea_name' => 'ttbm_day_content',
+                                            'media_buttons' => true,
+                                            'textarea_rows' => 10,
+                                        );
+                                        wp_editor( $content, $editor_id, $settings );
+                                    ?>
                                 </div>
                             </div>
+
+                            <!-- Footer -->
+                            <div class="ttbm-modal-footer">
+                                <div class="ttbm_daywise_save_buttons ttbm-modal-footer__group">
+                                    <button id="ttbm_daywise_save" class="ttbm-modal-btn ttbm-modal-btn--secondary" type="button">
+                                        <i class="fas fa-save"></i>
+                                        <?php esc_html_e('Save & Continue', 'tour-booking-manager'); ?>
+                                    </button>
+                                    <button id="ttbm_daywise_save_close" class="ttbm-modal-btn ttbm-modal-btn--primary" type="button">
+                                        <i class="fas fa-check"></i>
+                                        <?php esc_html_e('Save & Close', 'tour-booking-manager'); ?>
+                                    </button>
+                                </div>
+                                <div class="ttbm_daywise_update_buttons ttbm-modal-footer__group" style="display:none;">
+                                    <button id="ttbm_daywise_update" class="ttbm-modal-btn ttbm-modal-btn--primary" type="button">
+                                        <i class="fas fa-sync-alt"></i>
+                                        <?php esc_html_e('Update & Close', 'tour-booking-manager'); ?>
+                                    </button>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>

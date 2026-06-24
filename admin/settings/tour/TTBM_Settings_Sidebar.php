@@ -694,7 +694,8 @@ jQuery(function($){
 	header.find('.ttbm-header-preview').attr('href', previewUrl).html(eyeSvg + <?php echo wp_json_encode(__('Preview', 'tour-booking-manager')); ?>);
 	header.find('.ttbm-header-publish').text(btnLabel);
 
-	$('#wpbody-content').prepend(header);
+	/* Inject inside form#post so the submit button is part of the form */
+	$('form#post').prepend(header);
 
 	/* Keep header title in sync with the title input */
 	$(document).on('input', '#ttbm_post_title', function(){
@@ -728,18 +729,30 @@ jQuery(function($){
 		}
 	});
 
-	/* Intercept all publish/save buttons */
+	/* ── Single consolidated submit interceptor ── */
 	$(document).on('click', '.ttbm-header-publish, [name="publish"], [name="save"]', function(e){
-		if (!ttbmValidateLocation()) {
+		var valid = true;
+
+		/* 1. Title required */
+		if (typeof ttbmValidateTitle === 'function' && !ttbmValidateTitle()) {
 			e.preventDefault();
-			e.stopImmediatePropagation();
-			/* Switch to Location tab */
+			$('html,body').animate({ scrollTop: Math.max(0, ($('#ttbm_post_title').offset().top - 120)) }, 250);
+			$('#ttbm_post_title').focus();
+			valid = false;
+		}
+
+		/* 2. Location required (only when Location tab is enabled) */
+		if (valid && !ttbmValidateLocation()) {
+			e.preventDefault();
 			$('[data-tabs-target="#ttbm_settings_location"]').trigger('click');
 			setTimeout(function(){
-				$('html,body').animate({ scrollTop: ($('#ttbm_location_select').offset().top - 120) }, 250);
+				$('html,body').animate({ scrollTop: Math.max(0, ($('#ttbm_location_select').offset().top - 120)) }, 250);
 				$('#ttbm_location_select').focus();
-			}, 150);
+			}, 180);
+			valid = false;
 		}
+
+		/* All good — let the form submit normally */
 	});
 });</script>
 			<?php

@@ -319,16 +319,7 @@
                         }
                     });
 
-                    /* Block Publish / Update / Save Draft on empty title */
-                    $(document).on('click', '.ttbm-sb-btn-publish, .ttbm-btn-save, [name="publish"], [name="save"]', function(e){
-                        if (!ttbmValidateTitle()) {
-                            e.preventDefault();
-                            e.stopImmediatePropagation();
-                            /* Scroll to the title field */
-                            $('html, body').animate({ scrollTop: $('#ttbm_post_title').offset().top - 80 }, 250);
-                            $('#ttbm_post_title').focus();
-                        }
-                    });
+                    /* Validation on submit is handled centrally in TTBM_Settings_Sidebar output_styles */
                 })(jQuery);
                 </script>
 				<?php

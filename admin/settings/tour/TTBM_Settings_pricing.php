@@ -199,13 +199,13 @@
                     </td>
                     <td class="ttbm-ticket-col--price">
                         <label class="ttbm-ticket-input-prefix">
-                            <span class="ttbm-ticket-input-prefix__symbol" aria-hidden="true">$</span>
+                            <span class="ttbm-ticket-input-prefix__symbol" aria-hidden="true"><?php echo function_exists('get_woocommerce_currency_symbol') ? esc_html(get_woocommerce_currency_symbol()) : '$'; ?></span>
                             <input type="text" class="formControl ttbm_price_validation" name="ticket_type_price[]" placeholder="0.00" value="<?php echo esc_attr($price); ?>"/>
                         </label>
                     </td>
                     <td class="ttbm-ticket-col--sale">
                         <label class="ttbm-ticket-input-prefix">
-                            <span class="ttbm-ticket-input-prefix__symbol" aria-hidden="true">$</span>
+                            <span class="ttbm-ticket-input-prefix__symbol" aria-hidden="true"><?php echo function_exists('get_woocommerce_currency_symbol') ? esc_html(get_woocommerce_currency_symbol()) : '$'; ?></span>
                             <input type="text" class="formControl ttbm_price_validation" name="ticket_type_sale_price[]" placeholder="0.00" value="<?php echo esc_attr($sale_price); ?>"/>
                         </label>
                     </td>

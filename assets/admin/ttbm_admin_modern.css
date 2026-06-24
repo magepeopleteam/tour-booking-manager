@@ -1411,7 +1411,7 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 
 #ttbm_meta_box_panel .ttbm-ticket-input-prefix__symbol {
 	position: absolute;
-	left: 12px;
+	left: -15px;
 	top: 50%;
 	transform: translateY(-50%);
 	font-size: 14px;
@@ -1422,7 +1422,7 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-input-prefix .formControl {
-	padding-left: 28px;
+	padding-left: 28px !important;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-row__actions {

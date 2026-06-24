@@ -32,23 +32,22 @@
 				return $post_id > 0 && current_user_can('edit_post', $post_id);
 			}
 			public function osmap_script() {
-				//openstreet map css
-				wp_enqueue_style('ttbm_leaflet_style', TTBM_PLUGIN_URL . '/assets/osmap/leaflet.css', array(), TTBM_PLUGIN_VERSION);
-				wp_enqueue_style('fullScreen_style', TTBM_PLUGIN_URL . '/assets/osmap/Control.FullScreen.css', array(), TTBM_PLUGIN_VERSION);
-				wp_enqueue_style('autocomplete_style', TTBM_PLUGIN_URL . '/assets/osmap/autocomplete.min.css', array(), TTBM_PLUGIN_VERSION);
-				//openstreet map js
-				wp_enqueue_script('ttbm_leaflet_script', TTBM_PLUGIN_URL . '/assets/osmap/leaflet.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
-				wp_enqueue_script('autocomplete_script', TTBM_PLUGIN_URL . '/assets/osmap/autocomplete.min.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
-				wp_enqueue_script('fullScreen_script', TTBM_PLUGIN_URL . '/assets/osmap/Control.FullScreen.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
-				$pro_key = TTBM_Function::get_general_settings('ttbm_gmap_api_key');
 				$free_key = get_option('ttbm_google_map_settings');
-				$api_key = $free_key ? $free_key['ttbm_gmap_api_key'] : $pro_key;
+				$pro_key  = TTBM_Function::get_general_settings('ttbm_gmap_api_key');
+				$api_key  = (!empty($free_key['ttbm_gmap_api_key'])) ? $free_key['ttbm_gmap_api_key'] : $pro_key;
+
 				if (!empty($api_key)) {
-					wp_enqueue_script('google-maps-api', 'https://maps.googleapis.com/maps/api/js?key=' . esc_attr($api_key) . '&libraries=places&callback=initMap', [], null, true);
+					// Google Maps JavaScript API (with key) — autocomplete + JS map
+					wp_enqueue_script(
+						'google-maps-api',
+						'https://maps.googleapis.com/maps/api/js?key=' . esc_attr($api_key) . '&libraries=places&callback=initMap',
+						[],
+						null,
+						true
+					);
 				}
-				wp_localize_script('ttbm_leaflet_script', 'ttbm_map', array(
-					'api_key' => esc_attr($api_key),
-				));
+				// OSMap assets only needed when no API key AND osmap_canvas is still used
+				// (now the frontend falls back to iframe, so OSMap is only used in admin)
 			}
 			public function location_tab_content($tour_id) {
 				?>
@@ -234,22 +233,45 @@
 			public function show_map_frontend($tour_id) {
 				$location_name = get_post_meta($tour_id, 'ttbm_full_location_name', true);
 				$location_name = !empty($location_name) ? $location_name : '650 Manchester Road, New York, NY 10007, USA';
-				$latitude = get_post_meta($tour_id, 'ttbm_map_latitude', true);
-				$latitude = !empty($latitude) ? $latitude : '40.712776'; // Default Latitude for New York
-				$longitude = get_post_meta($tour_id, 'ttbm_map_longitude', true);
-				$longitude = !empty($longitude) ? $longitude : '-74.005974';
-				$map_settings = get_option('ttbm_google_map_settings');
-				$gmap_api_key = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
-				$display_map = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'off');
-				if ($display_map == 'on'):
-					?>
-					<h2 class="content-title"><?php esc_html_e( "Location", 'tour-booking-manager' ); ?></h2>
+				$latitude      = get_post_meta($tour_id, 'ttbm_map_latitude', true);
+				$latitude      = !empty($latitude)  ? $latitude  : '40.712776';
+				$longitude     = get_post_meta($tour_id, 'ttbm_map_longitude', true);
+				$longitude     = !empty($longitude) ? $longitude : '-74.005974';
+				$map_settings  = get_option('ttbm_google_map_settings');
+				$gmap_api_key  = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
+				$display_map   = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'off');
 
-                    <div style="width: 100%; height: 400px;margin:20px 0;">
-                        <div  id="<?php echo esc_attr($gmap_api_key ? 'gmap_canvas' : 'osmap_canvas'); ?>" style="width: 100%; height:100%;" data-lati="<?php echo esc_attr($latitude); ?>" data-longdi="<?php echo esc_attr($longitude); ?>" data-location="<?php echo esc_attr($location_name); ?>"></div>
-                    </div>
+				if ($display_map !== 'on') return;
+				?>
+				<h2 class="content-title"><?php esc_html_e('Location', 'tour-booking-manager'); ?></h2>
+
+				<div style="width:100%;height:400px;margin:20px 0;border-radius:10px;overflow:hidden;">
+					<?php if ($gmap_api_key) : ?>
+						<!-- Google Maps JavaScript API (API key available) -->
+						<div id="gmap_canvas"
+							style="width:100%;height:100%;"
+							data-lati="<?php echo esc_attr($latitude); ?>"
+							data-longdi="<?php echo esc_attr($longitude); ?>"
+							data-location="<?php echo esc_attr($location_name); ?>">
+						</div>
+					<?php else : ?>
+						<!-- Google Maps iframe fallback (no API key required) -->
+						<iframe
+							src="<?php echo esc_url('https://maps.google.com/maps?q=' . rawurlencode($location_name) . '&z=13&ie=UTF8&iwloc=&output=embed'); ?>"
+							width="100%"
+							height="100%"
+							frameborder="0"
+							scrolling="no"
+							marginheight="0"
+							marginwidth="0"
+							loading="lazy"
+							referrerpolicy="no-referrer-when-downgrade"
+							allowfullscreen
+							style="border:0;display:block;">
+						</iframe>
+					<?php endif; ?>
+				</div>
 				<?php
-				endif;
 			}
 			public function map_enable($tour_id) {
 				$display_map = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'on');
@@ -268,46 +290,100 @@
 			public function map_display($tour_id) {
 				$location_name = get_post_meta($tour_id, 'ttbm_full_location_name', true);
 				$location_name = !empty($location_name) ? $location_name : '650 Manchester Road, New York, NY 10007, USA';
-				$latitude = get_post_meta($tour_id, 'ttbm_map_latitude', true);
-				$latitude = !empty($latitude) ? $latitude : '40.712776'; // Default Latitude for New York
-				$longitude = get_post_meta($tour_id, 'ttbm_map_longitude', true);
-				$longitude = !empty($longitude) ? $longitude : '-74.005974';
-				$map_settings = get_option('ttbm_google_map_settings');
-				$gmap_api_key = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
-				$display_map = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'on');
-				$active = $display_map == 'off' ? '' : 'mActive';
+				$latitude      = get_post_meta($tour_id, 'ttbm_map_latitude', true);
+				$latitude      = !empty($latitude)  ? $latitude  : '40.712776';
+				$longitude     = get_post_meta($tour_id, 'ttbm_map_longitude', true);
+				$longitude     = !empty($longitude) ? $longitude : '-74.005974';
+				$map_settings  = get_option('ttbm_google_map_settings');
+				$gmap_api_key  = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
+				$display_map   = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'on');
+				$active        = $display_map == 'off' ? '' : 'mActive';
+				$settings_url  = admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page');
+				$iframe_src    = 'https://maps.google.com/maps?q=' . rawurlencode($location_name) . '&z=14&output=embed';
 				?>
-                <div class="<?php echo esc_attr($active); ?>" data-collapse="#<?php echo esc_attr('ttbm_display_map'); ?>">
+                <div class="<?php echo esc_attr($active); ?>" data-collapse="#ttbm_display_map">
+
+                    <!-- Address input -->
                     <label class="label">
                         <div class="label-inner">
-                            <p><?php $gmap_api_key ? esc_html_e('Google Map Location', 'tour-booking-manager') : esc_html_e('OSMap Location', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i></p>
+                            <p>
+								<?php esc_html_e('Google Map Location', 'tour-booking-manager'); ?>
+								<i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i>
+							</p>
                         </div>
-                        <div style="width: 80%;" class="auto-search-wrapper loupe">
-                            <input style="padding-left:30px" id="<?php echo esc_attr($gmap_api_key ? 'ttbm_map_location' : 'ttbm_osmap_location'); ?>" name="ttbm_full_location_name" placeholder="<?php esc_html_e('Please type location...', 'tour-booking-manager'); ?>" value="<?php echo esc_attr($location_name); ?>">
+                        <div style="width:80%;" class="auto-search-wrapper loupe">
+                            <input
+                                style="padding-left:30px"
+                                id="<?php echo esc_attr($gmap_api_key ? 'ttbm_map_location' : 'ttbm_iframe_location'); ?>"
+                                name="ttbm_full_location_name"
+                                placeholder="<?php esc_attr_e('Please type location...', 'tour-booking-manager'); ?>"
+                                value="<?php echo esc_attr($location_name); ?>"
+                            >
                         </div>
                     </label>
-                    <div >
-						<?php if (!$gmap_api_key): ?>
-                            <div class="label-inner">
-                                <p id="map-desc"><?php esc_html_e('To use google map, you have to add google map API key from', 'tour-booking-manager'); ?>
-                                    <a href="<?php echo esc_url(admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page')); ?>"><?Php esc_html_e('settings.', 'tour-booking-manager'); ?></a>
-                                </p>
+
+                    <!-- Map display -->
+                    <div style="width:100%;margin-top:12px;">
+						<?php if ($gmap_api_key) : ?>
+                            <!-- Google Maps JavaScript API -->
+                            <div id="gmap_canvas" style="width:100%;height:400px;border-radius:8px;overflow:hidden;"></div>
+						<?php else : ?>
+                            <!-- Google Maps iframe fallback (no API key) -->
+                            <div style="border-radius:8px;overflow:hidden;border:1px solid #e5e7eb;">
+                                <iframe
+                                    id="ttbm_gmap_iframe"
+                                    width="100%"
+                                    height="400"
+                                    frameborder="0"
+                                    scrolling="no"
+                                    marginheight="0"
+                                    marginwidth="0"
+                                    src="<?php echo esc_url($iframe_src); ?>"
+                                    style="border:0;display:block;"
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    allowfullscreen>
+                                </iframe>
                             </div>
+                            <p style="font-size:12px;color:#6b7280;margin:8px 0 0;line-height:1.6;">
+                                <span style="color:#2271b1;margin-right:4px;">&#9432;</span>
+								<?php esc_html_e('Showing Google Maps for this address.', 'tour-booking-manager'); ?>
+                                <a href="<?php echo esc_url($settings_url); ?>" style="color:#2271b1;font-weight:500;">
+									<?php esc_html_e('Add a Google Maps API key', 'tour-booking-manager'); ?>
+                                </a>
+								<?php esc_html_e('to enable address autocomplete and precise coordinates.', 'tour-booking-manager'); ?>
+                            </p>
+                            <script>
+                            (function($){
+                                var ttbmIframeTimer;
+                                $(document).on('input', '#ttbm_iframe_location', function(){
+                                    clearTimeout(ttbmIframeTimer);
+                                    var address = $(this).val().trim();
+                                    ttbmIframeTimer = setTimeout(function(){
+                                        if (!address) return;
+                                        var src = 'https://maps.google.com/maps?q=' + encodeURIComponent(address) + '&z=14&output=embed';
+                                        $('#ttbm_gmap_iframe').attr('src', src);
+                                    }, 900);
+                                });
+                            })(jQuery);
+                            </script>
 						<?php endif; ?>
                     </div>
-					<div style="width: 100%;">
-                            <div id="<?php echo esc_attr($gmap_api_key ? 'gmap_canvas' : 'osmap_canvas'); ?>" style="width: 100%; height: 400px;"></div>
+
+                    <!-- Lat / Lng fields -->
+                    <div class="label" style="margin-top:12px;">
+                        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+                            <label style="font-size:13px;color:#374151;display:flex;align-items:center;gap:6px;">
+                                <?php esc_html_e('Latitude', 'tour-booking-manager'); ?>
+                                <input type="text" id="map_latitude" name="ttbm_map_latitude" value="<?php echo esc_attr($latitude); ?>" style="width:130px;">
+                            </label>
+                            <label style="font-size:13px;color:#374151;display:flex;align-items:center;gap:6px;">
+                                <?php esc_html_e('Longitude', 'tour-booking-manager'); ?>
+                                <input type="text" id="map_longitude" name="ttbm_map_longitude" value="<?php echo esc_attr($longitude); ?>" style="width:130px;">
+                            </label>
+                        </div>
                     </div>
-					<div class="label">
-                        
-						<div style="margin-top: 10px;">
-							<?php esc_html_e('Latitude ', 'tour-booking-manager'); ?>
-							<input type="text" id="map_latitude" name="ttbm_map_latitude" value="<?php echo esc_attr($latitude); ?>">
-							<?php esc_html_e('Longitude ', 'tour-booking-manager'); ?>
-							<input type="text" id="map_longitude" name="ttbm_map_longitude" value="<?php echo esc_attr($longitude); ?>">
-						</div>
-                        
-                    </div>
+
                 </div>
 				<?php
 			}

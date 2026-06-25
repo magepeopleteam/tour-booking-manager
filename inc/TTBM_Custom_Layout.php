@@ -83,7 +83,7 @@
 			public static function switch_button($name, $checked = '') {
 				?>
                 <label class="roundSwitchLabel">
-                    <input type="checkbox" name="<?php echo esc_attr($name); ?>" <?php echo esc_attr($checked); ?>>
+                    <input type="checkbox" name="<?php echo esc_attr($name); ?>" value="on" <?php echo esc_attr($checked); ?>>
                     <span class="roundSwitch" data-collapse-target="#<?php echo esc_attr($name); ?>"></span>
                 </label>
 				<?php
@@ -327,7 +327,7 @@
 			public static function switch_button($name, $checked = '') {
 				?>
                 <label class="roundSwitchLabel">
-                    <input type="checkbox" name="<?php echo esc_attr($name); ?>" <?php echo esc_attr($checked); ?>>
+                    <input type="checkbox" name="<?php echo esc_attr($name); ?>" value="on" <?php echo esc_attr($checked); ?>>
                     <span class="roundSwitch" data-collapse-target="#<?php echo esc_attr($name); ?>"></span>
                 </label>
 				<?php

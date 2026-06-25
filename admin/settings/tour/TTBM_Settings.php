@@ -1073,15 +1073,13 @@
 				}
 				//*********Slider**************//
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
-					$slider = isset($_POST['ttbm_display_slider']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_slider'])) ? 'on' : 'off';
-					if ( ! isset( $_POST['ttbm_display_slider'] ) ) {
-						$existing_slider = get_post_meta( $tour_id, 'ttbm_display_slider', true );
-						$slider          = ( $existing_slider === 'on' ) ? 'on' : 'off';
-					}
-					$images = isset($_POST['ttbm_gallery_images']) ? sanitize_text_field(wp_unslash($_POST['ttbm_gallery_images'])) : '';
-					$all_images = explode(',', $images);
+					$slider = ( isset( $_POST['ttbm_display_slider'] ) && 'on' === sanitize_text_field( wp_unslash( $_POST['ttbm_display_slider'] ) ) ) ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_slider', $slider);
-					update_post_meta($tour_id, 'ttbm_gallery_images', $all_images);
+					if ( isset( $_POST['ttbm_gallery_images'] ) ) {
+						$images     = sanitize_text_field( wp_unslash( $_POST['ttbm_gallery_images'] ) );
+						$all_images = array_values( array_filter( array_map( 'absint', explode( ',', $images ) ) ) );
+						update_post_meta( $tour_id, 'ttbm_gallery_images', $all_images );
+					}
 				}
 				//*********Place you see**************//
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {

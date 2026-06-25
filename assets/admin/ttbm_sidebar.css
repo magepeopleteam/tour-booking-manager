@@ -135,6 +135,63 @@
 .ttbm-sb-img-actions a:hover { text-decoration: underline !important; }
 .ttbm-sb-img-actions a.ttbm-sb-remove { color: #ef4444 !important; }
 
+/* ── Gallery (right sidebar) ── */
+.ttbm-sb-gallery-card .ttbm-sb-gallery-toggle-row {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: space-between !important;
+	gap: 10px !important;
+	margin-bottom: 0 !important;
+}
+.ttbm-sb-gallery-toggle-label {
+	font-size: 13px !important;
+	font-weight: 600 !important;
+	color: #1e293b !important;
+	line-height: 1.4 !important;
+}
+.ttbm-sb-gallery-body {
+	margin-top: 14px !important;
+	padding-top: 14px !important;
+	border-top: 1px solid #f1f5f9 !important;
+}
+.ttbm-sb-gallery-images-label {
+	margin: 0 0 10px 0 !important;
+	font-size: 13px !important;
+	font-weight: 600 !important;
+	color: #374151 !important;
+	display: flex !important;
+	align-items: center !important;
+	gap: 6px !important;
+}
+.ttbm-sb-gallery-tip {
+	font-size: 12px !important;
+	color: #94a3b8 !important;
+	cursor: help !important;
+}
+.ttbm-sb-gallery-card .ttbm_multi_image {
+	display: flex !important;
+	flex-wrap: wrap !important;
+	gap: 8px !important;
+	margin-bottom: 10px !important;
+}
+.ttbm-sb-gallery-card .ttbm_multi_image_item {
+	width: calc(50% - 4px) !important;
+	min-width: 0 !important;
+	margin: 0 !important;
+	position: relative !important;
+}
+.ttbm-sb-gallery-card .ttbm_multi_image_item img {
+	width: 100% !important;
+	height: 72px !important;
+	object-fit: cover !important;
+	border-radius: 6px !important;
+	display: block !important;
+}
+.ttbm-sb-gallery-card .ttbm_remove_multi_image {
+	top: -5px !important;
+	right: -5px !important;
+}
+
 /* ── Taxonomy checklist — neutralise all WP admin defaults ── */
 .ttbm-sb-tax-list {
 	max-height: 200px !important;

@@ -22,10 +22,11 @@
 			}
 			/*****************************/
 			public static function switch_button($name, $checked = '') {
+				$active_class = $checked ? ' mActive' : '';
 				?>
                 <label class="roundSwitchLabel">
                     <input type="checkbox" name="<?php echo esc_attr($name); ?>" <?php echo esc_attr($checked); ?>>
-                    <span class="roundSwitch" data-collapse-target="#<?php echo esc_attr($name); ?>"></span>
+                    <span class="roundSwitch<?php echo esc_attr($active_class); ?>" data-collapse-target="#<?php echo esc_attr($name); ?>"></span>
                 </label>
 				<?php
 			}

@@ -494,6 +494,15 @@
 	width: 100% !important; height: 100% !important; max-height: none !important; object-fit: cover !important;
 }
 #ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .sliderShowcaseItem img { height: 100% !important; object-fit: cover; }
+
+/* Gallery disabled: featured image only, full width */
+#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider.ttbm-featured-only,
+#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider.ttbm-featured-only .sliderAllItem,
+#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider.ttbm-featured-only .sliderAllItem .sliderItem {
+	width: 100%;
+	max-width: 100%;
+}
+
 /* keep nav arrows + dots above the scrim and clickable */
 #ttbm_content .ttbm_default_theme .ttbm_hero .iconIndicator,
 #ttbm_content .ttbm_default_theme .ttbm_hero .slideIndicator { z-index: 6; }
@@ -596,6 +605,11 @@
 	min-width: 0;
 	padding: 14px 18px;
 	background: rgba(255, 255, 255, 0.92);
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_price.ttbm_hero_stat {
+	flex: 0 1 auto;
+	min-width: 132px;
 }
 
 #ttbm_content .ttbm_default_theme .ttbm_hero_stat + .ttbm_hero_stat {

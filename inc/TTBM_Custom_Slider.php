@@ -13,6 +13,7 @@
 				add_action('add_ttbm_custom_slider', array($this, 'super_slider'), 10, 2);
 				add_action('add_ttbm_custom_slider_only', array($this, 'super_slider_only'));
 				add_action('add_ttbm_custom_slider_icon_indicator', array($this, 'icon_indicator'));
+				add_action('add_ttbm_featured_image_slider', array($this, 'featured_image_slider'), 10, 1);
 			}
 			public function super_slider($post_id = '', $meta_key = '') {
 				$type = TTBM_Global_Function::get_slider_settings('slider_type', 'slider');
@@ -36,6 +37,18 @@
                     </div>
 					<?php
 				}
+			}
+			public function featured_image_slider($post_id = '') {
+				$post_id = $post_id > 0 ? $post_id : get_the_id();
+				$thumb_id = get_post_thumbnail_id($post_id);
+				if (!$thumb_id) {
+					return;
+				}
+				?>
+				<div class="superSlider placeholder_area ttbm-featured-only">
+					<?php $this->slider_all_item(array($thumb_id)); ?>
+				</div>
+				<?php
 			}
 			public function slider($post_id, $image_ids) {
 				if (is_array($image_ids) && sizeof($image_ids) > 0) {

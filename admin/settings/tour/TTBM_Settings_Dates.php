@@ -16,10 +16,6 @@
                     <h2><?php esc_html_e('Date Configuration', 'tour-booking-manager'); ?></h2>
                     <p class="info_text"><?php esc_html_e('Tour type and date time can be easily configured here, providing a crucial feature for recurring, fixed, or specific date tours.', 'tour-booking-manager') ?></p>
                     <section>
-                        <div class="ttbm-header">
-                            <h4><i class="fas fa-calendar-days"></i><?php esc_html_e('Essential Date Configuration', 'tour-booking-manager'); ?></h4>
-                        </div>
-                        
                         <?php
                         $travel_type_cards = array(
                             'fixed' => array(
@@ -91,42 +87,54 @@
                         <div class="ttbm-fixed-date-grid">
                             <div class="ttbm-fixed-date-field">
                                 <span class="ttbm-field-label"><?php esc_html_e('Start Date', 'tour-booking-manager'); ?></span>
-                                <label class="ttbm-input-icon ttbm-input-icon--date ttbm-input-icon--trail-chevron">
+								<?php self::datetime_clear_wrap_open(); ?>
+                                <label class="ttbm-input-icon ttbm-input-icon--date">
                                     <input type="hidden" name="ttbm_travel_start_date" value="<?php echo esc_attr($hidden_start_date); ?>"/>
-                                    <input value="<?php echo esc_attr($visible_start_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
+                                    <input value="<?php echo esc_attr($visible_start_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>" autocomplete="off"/>
                                 </label>
+								<?php self::datetime_clear_wrap_close(); ?>
                             </div>
                             <div class="ttbm-fixed-date-field">
                                 <span class="ttbm-field-label"><?php esc_html_e('End Date', 'tour-booking-manager'); ?></span>
-                                <label class="ttbm-input-icon ttbm-input-icon--date ttbm-input-icon--trail-chevron">
+								<?php self::datetime_clear_wrap_open(); ?>
+                                <label class="ttbm-input-icon ttbm-input-icon--date">
                                     <input type="hidden" name="ttbm_travel_end_date" value="<?php echo esc_attr($hidden_end_date); ?>"/>
-                                    <input value="<?php echo esc_attr($visible_end_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
+                                    <input value="<?php echo esc_attr($visible_end_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>" autocomplete="off"/>
                                 </label>
+								<?php self::datetime_clear_wrap_close(); ?>
                             </div>
                             <div class="ttbm-fixed-date-field">
                                 <span class="ttbm-field-label"><?php esc_html_e('Registration End Date', 'tour-booking-manager'); ?></span>
-                                <label class="ttbm-input-icon ttbm-input-icon--date ttbm-input-icon--trail-chevron">
+								<?php self::datetime_clear_wrap_open(); ?>
+                                <label class="ttbm-input-icon ttbm-input-icon--date">
                                     <input type="hidden" name="ttbm_travel_reg_end_date" value="<?php echo esc_attr($hidden_reg_end_date); ?>"/>
-                                    <input value="<?php echo esc_attr($visible_reg_end_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
+                                    <input value="<?php echo esc_attr($visible_reg_end_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>" autocomplete="off"/>
                                 </label>
+								<?php self::datetime_clear_wrap_close(); ?>
                             </div>
                             <div class="ttbm-fixed-date-field">
                                 <span class="ttbm-field-label"><?php esc_html_e('Start Time', 'tour-booking-manager'); ?></span>
-                                <label class="ttbm-input-icon ttbm-input-icon--time ttbm-input-icon--trail-reset">
+								<?php self::datetime_clear_wrap_open(); ?>
+                                <label class="ttbm-input-icon ttbm-input-icon--time">
                                     <input type="time" name="ttbm_travel_start_time" class="formControl ttbm_travel_start_time" value="<?php echo esc_attr($start_time); ?>" onclick="document.querySelectorAll('.ttbm_travel_repeated_start_time').forEach(function(input){input.removeAttribute('name');});"/>
                                 </label>
+								<?php self::datetime_clear_wrap_close(); ?>
                             </div>
                             <div class="ttbm-fixed-date-field">
                                 <span class="ttbm-field-label"><?php esc_html_e('End Time', 'tour-booking-manager'); ?></span>
-                                <label class="ttbm-input-icon ttbm-input-icon--time ttbm-input-icon--time-end ttbm-input-icon--trail-reset">
+								<?php self::datetime_clear_wrap_open(); ?>
+                                <label class="ttbm-input-icon ttbm-input-icon--time ttbm-input-icon--time-end">
                                     <input type="time" name="ttbm_travel_end_time" class="formControl" value="<?php echo esc_attr($end_time); ?>"/>
                                 </label>
+								<?php self::datetime_clear_wrap_close(); ?>
                             </div>
                             <div class="ttbm-fixed-date-field">
                                 <span class="ttbm-field-label"><?php esc_html_e('Registration End Time', 'tour-booking-manager'); ?></span>
-                                <label class="ttbm-input-icon ttbm-input-icon--time ttbm-input-icon--time-reg ttbm-input-icon--trail-reset">
+								<?php self::datetime_clear_wrap_open(); ?>
+                                <label class="ttbm-input-icon ttbm-input-icon--time ttbm-input-icon--time-reg">
                                     <input type="time" name="reg_end_time" class="formControl" value="<?php echo esc_attr($reg_end_time); ?>"/>
                                 </label>
+								<?php self::datetime_clear_wrap_close(); ?>
                             </div>
                         </div>
                     </div>
@@ -222,13 +230,13 @@
                                             <?php echo esc_html($value); ?>
                                         </button>
 									<?php } ?>
-                                    <button class="ttbm-pill-btn input_active <?php echo esc_attr((1 == $repeated_after || 7 == $repeated_after || 30 == $repeated_after) ? '' : 'active'); ?>" type="button" data-group-radio="<?php echo esc_attr($repeated_after); ?>">
-                                        <span class="ttbm-pill-btn__check" aria-hidden="true"><i class="fas fa-check"></i></span>
-                                        <label class="ttbm-pill-btn__custom">
-                                            <span><?php esc_html_e('Custom', 'tour-booking-manager'); ?></span>
-                                            <input type="number" class="formControl xs _w_75 ttbm_number_validation <?php echo esc_attr((1 == $repeated_after || 7 == $repeated_after || 30 == $repeated_after) ? 'dNone' : ''); ?>" value="<?php echo esc_attr($repeated_after); ?>" name="ttbm_travel_repeated_after"/>
-                                        </label>
-                                    </button>
+                                    <span class="ttbm-pill-custom-wrap">
+                                        <button class="ttbm-pill-btn input_active <?php echo esc_attr((1 == $repeated_after || 7 == $repeated_after || 30 == $repeated_after) ? '' : 'active'); ?>" type="button" data-group-radio="<?php echo esc_attr($repeated_after); ?>" data-pill-custom="1">
+                                            <span class="ttbm-pill-btn__check" aria-hidden="true"><i class="fas fa-check"></i></span>
+                                            <span class="ttbm-pill-btn__label"><?php esc_html_e('Custom', 'tour-booking-manager'); ?></span>
+                                        </button>
+                                        <input type="number" min="1" class="formControl xs _w_75 ttbm_number_validation ttbm-pill-custom-input <?php echo esc_attr((1 == $repeated_after || 7 == $repeated_after || 30 == $repeated_after) ? 'dNone' : ''); ?>" value="<?php echo esc_attr($repeated_after); ?>" name="ttbm_travel_repeated_after"/>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -236,16 +244,20 @@
                         <div class="ttbm-date-datetime-grid">
                             <div class="ttbm-datetime-col">
                                 <span class="ttbm-field-label"><?php esc_html_e('Start Date', 'tour-booking-manager'); ?></span>
+								<?php self::datetime_clear_wrap_open(); ?>
                                 <label class="ttbm-input-icon ttbm-input-icon--date">
                                     <input type="hidden" name="ttbm_travel_repeated_start_date" value="<?php echo esc_attr($hidden_start_date); ?>"/>
-                                    <input value="<?php echo esc_attr($visible_start_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
+                                    <input value="<?php echo esc_attr($visible_start_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>" autocomplete="off"/>
                                 </label>
+								<?php self::datetime_clear_wrap_close(); ?>
                             </div>
                             <div class="ttbm-datetime-col">
                                 <span class="ttbm-field-label"><?php esc_html_e('Start Time', 'tour-booking-manager'); ?></span>
+								<?php self::datetime_clear_wrap_open(); ?>
                                 <label class="ttbm-input-icon ttbm-input-icon--time">
                                     <input type="time" name="" class="formControl ttbm_travel_repeated_start_time" value="<?php echo esc_attr($start_time); ?>" onclick="this.setAttribute('name', 'ttbm_travel_start_time');"/>
                                 </label>
+								<?php self::datetime_clear_wrap_close(); ?>
                             </div>
                         </div>
 
@@ -261,8 +273,10 @@
                                     </button>
                                     <button class="ttbm-radio-btn input_active <?php echo esc_attr('fixed' == $repeat_type ? 'active' : ''); ?>" type="button" data-group-radio="fixed">
                                         <span class="ttbm-radio-btn__label"><?php esc_html_e('On Date', 'tour-booking-manager'); ?></span>
-                                        <input type="hidden" name="ttbm_travel_repeated_end_date" value="<?php echo esc_attr($hidden_end_date); ?>"/>
-                                        <input value="<?php echo esc_attr($visible_end_date); ?>" class="formControl date_type ttbm-radio-btn__input <?php echo esc_attr('fixed' == $repeat_type ? '' : 'dNone'); ?>" placeholder="<?php echo esc_attr($now); ?>"/>
+										<?php self::datetime_clear_wrap_open( 'ttbm-repeat-end-date-field' ); ?>
+                                            <input type="hidden" name="ttbm_travel_repeated_end_date" value="<?php echo esc_attr($hidden_end_date); ?>"/>
+                                            <input value="<?php echo esc_attr($visible_end_date); ?>" class="formControl date_type ttbm-radio-btn__input <?php echo esc_attr('fixed' == $repeat_type ? '' : 'dNone'); ?>" placeholder="<?php echo esc_attr($now); ?>" autocomplete="off"/>
+										<?php self::datetime_clear_wrap_close(); ?>
                                     </button>
                                 </div>
                             </div>
@@ -462,14 +476,13 @@
 				?>
                 <div class="ttbm_remove_area ttbm-off-date-card _mT_xs">
                     <div class="ttbm-off-date-card__inner">
-                        <label class="ttbm-input-icon ttbm-input-icon--date ttbm-off-date-card__field">
+                        <?php self::datetime_clear_wrap_open( 'ttbm-off-date-card__field' ); ?>
+                        <label class="ttbm-input-icon ttbm-input-icon--date">
                             <input type="hidden" name="mep_ticket_off_dates[]" value="<?php echo esc_attr($hidden_date); ?>"/>
-                            <input value="<?php echo esc_attr($visible_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
+                            <input value="<?php echo esc_attr($visible_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>" autocomplete="off"/>
                         </label>
+						<?php self::datetime_clear_wrap_close(); ?>
                         <div class="ttbm-off-date-card__actions">
-                            <button class="ttbm-off-date-card__delete ttbm_item_remove _whiteButton_xs" type="button" title="<?php esc_attr_e('Remove date', 'tour-booking-manager'); ?>">
-                                <span class="fas fa-trash-alt mp_zero" aria-hidden="true"></span>
-                            </button>
                             <div class="ttbm-off-date-card__sort ttbm_sortable_button" type="" title="<?php esc_attr_e('Drag to reorder', 'tour-booking-manager'); ?>">
                                 <span class="fas fa-expand-arrows-alt mp_zero" aria-hidden="true"></span>
                             </div>
@@ -496,28 +509,31 @@
                         </div>
                         <div class="ttbm-particular-date-card__field ttbm-particular-date-card__field--checkin-date">
                             <span class="ttbm-particular-date-field-label"><?php esc_html_e('Check in Date', 'tour-booking-manager'); ?></span>
+							<?php self::datetime_clear_wrap_open(); ?>
                             <label class="ttbm-input-icon ttbm-input-icon--date">
                                 <input type="hidden" name="ttbm_particular_start_date[]" value="<?php echo esc_attr($hidden_date); ?>"/>
-                                <input value="<?php echo esc_attr($visible_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
+                                <input value="<?php echo esc_attr($visible_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>" autocomplete="off"/>
                             </label>
+							<?php self::datetime_clear_wrap_close(); ?>
                         </div>
                         <div class="ttbm-particular-date-card__field ttbm-particular-date-card__field--checkin-time">
                             <span class="ttbm-particular-date-field-label"><?php esc_html_e('Check in Time', 'tour-booking-manager'); ?></span>
+							<?php self::datetime_clear_wrap_open(); ?>
                             <label class="ttbm-input-icon ttbm-input-icon--time">
                                 <input type="time" name="ttbm_particular_start_time[]" class="formControl" value="<?php echo esc_attr($time); ?>"/>
                             </label>
+							<?php self::datetime_clear_wrap_close(); ?>
                         </div>
                         <div class="ttbm-particular-date-card__field ttbm-particular-date-card__field--checkout-date">
                             <span class="ttbm-particular-date-field-label"><?php esc_html_e('Check Out Date', 'tour-booking-manager'); ?></span>
+							<?php self::datetime_clear_wrap_open(); ?>
                             <label class="ttbm-input-icon ttbm-input-icon--date">
                                 <input type="hidden" name="ttbm_particular_end_date[]" value="<?php echo esc_attr($hidden_end_date); ?>"/>
-                                <input value="<?php echo esc_attr($visible_end_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>"/>
+                                <input value="<?php echo esc_attr($visible_end_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>" autocomplete="off"/>
                             </label>
+							<?php self::datetime_clear_wrap_close(); ?>
                         </div>
                         <div class="ttbm-particular-date-card__actions">
-                            <button class="ttbm-particular-date-card__delete ttbm_item_remove _whiteButton_xs" type="button" title="<?php esc_attr_e('Remove date', 'tour-booking-manager'); ?>">
-                                <span class="fas fa-trash-alt mp_zero" aria-hidden="true"></span>
-                            </button>
                             <div class="ttbm-particular-date-card__sort ttbm_sortable_button" type="" title="<?php esc_attr_e('Drag to reorder', 'tour-booking-manager'); ?>">
                                 <span class="fas fa-expand-arrows-alt mp_zero" aria-hidden="true"></span>
                             </div>
@@ -544,20 +560,37 @@
                         </div>
                         <div class="ttbm-time-slot-card__field ttbm-time-slot-card__field--time">
                             <span class="ttbm-time-slot-field-label"><?php esc_html_e('Start Time', 'tour-booking-manager'); ?></span>
-                            <label class="ttbm-time-slot-time-wrap">
+							<?php self::datetime_clear_wrap_open( 'ttbm-time-slot-time-wrap' ); ?>
+                            <label class="ttbm-time-slot-time-field">
                                 <input type="time" name="<?php echo esc_attr($time_key . '[]'); ?>" class="formControl" value="<?php echo esc_attr($time); ?>" placeholder="00:00"/>
                             </label>
+							<?php self::datetime_clear_wrap_close(); ?>
                         </div>
                         <div class="ttbm-time-slot-card__actions">
-                            <button class="ttbm-time-slot-card__delete ttbm_item_remove _whiteButton_xs" type="button" title="<?php esc_attr_e('Remove slot', 'tour-booking-manager'); ?>">
-                                <span class="fas fa-trash-alt mp_zero" aria-hidden="true"></span>
-                            </button>
                             <div class="ttbm-time-slot-card__sort ttbm_sortable_button" type="" title="<?php esc_attr_e('Drag to reorder', 'tour-booking-manager'); ?>">
                                 <span class="fas fa-expand-arrows-alt mp_zero" aria-hidden="true"></span>
                             </div>
                         </div>
                     </div>
                 </div>
+				<?php
+			}
+			private static function datetime_clear_wrap_open( $extra_class = '' ) {
+				$class = 'ttbm-datetime-clear-wrap ttbm-input-icon--has-clear';
+				if ( $extra_class ) {
+					$class .= ' ' . $extra_class;
+				}
+				echo '<span class="' . esc_attr( $class ) . '">';
+			}
+			private static function datetime_clear_wrap_close() {
+				self::field_clear_button();
+				echo '</span>';
+			}
+			private static function field_clear_button() {
+				?>
+				<span role="button" tabindex="0" class="ttbm-field-clear" title="<?php esc_attr_e( 'Clear', 'tour-booking-manager' ); ?>" aria-label="<?php esc_attr_e( 'Clear', 'tour-booking-manager' ); ?>">
+					<i class="fas fa-times" aria-hidden="true"></i>
+				</span>
 				<?php
 			}
 			public static function time_slot_array() {

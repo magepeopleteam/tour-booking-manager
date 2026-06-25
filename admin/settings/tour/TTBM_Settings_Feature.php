@@ -25,11 +25,12 @@
 			public function ttbm_settings_feature($tour_id) {
 				?>
                 <div class="tabsItem ttbm_settings_feature" data-tabs="#ttbm_settings_feature">
-                    <h2 class="h4 px-0 text-primary"><?php esc_html_e('Features Settings', 'tour-booking-manager'); ?></h2>
+                    <h2 class="h4 px-0 text-primary"><?php esc_html_e('Features & Activities Settings', 'tour-booking-manager'); ?></h2>
                     <p><?php TTBM_Settings::des_p('featrue_settings_description') ?></p>
                     <div class="mtb ttbm_features_table">
 						<?php $this->feature($tour_id); ?>
                     </div>
+					<?php do_action('ttbm_tour_feature_inner', $tour_id); ?>
 					<?php $this->add_new_feature_popup(); ?>
                 </div>
 				<?php

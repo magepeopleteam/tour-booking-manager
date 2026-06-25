@@ -594,6 +594,48 @@
 				}
 				return '';
 			}
+
+			/**
+			 * Resolve the booking date used for price filters (repeated/particular time slots, fixed date, etc.).
+			 */
+			public static function get_effective_booking_date( $tour_id, $all_dates = null ) {
+				$all_dates = ( null === $all_dates ) ? self::get_date( $tour_id ) : $all_dates;
+				if ( empty( $all_dates ) || ! is_array( $all_dates ) ) {
+					return '';
+				}
+
+				$travel_type = self::get_travel_type( $tour_id );
+
+				if ( $travel_type === 'particular' ) {
+					$particular_dates = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_particular_dates', array() );
+					if ( ! is_array( $particular_dates ) || empty( $particular_dates ) ) {
+						return '';
+					}
+					foreach ( $particular_dates as $particular_date ) {
+						$start_date = $particular_date['ttbm_particular_start_date'] ?? '';
+						$start_time = $particular_date['ttbm_particular_start_time'] ?? '';
+						if ( ! $start_date ) {
+							continue;
+						}
+						$option_date            = $start_time ? $start_date . ' ' . $start_time : $start_date;
+						$normalized_option_date = self::get_date_by_time_check( $tour_id, $option_date, '' );
+						if ( $normalized_option_date ) {
+							return $normalized_option_date;
+						}
+					}
+					return '';
+				}
+
+				if ( $travel_type === 'repeated' ) {
+					$first_date = self::get_first_booking_date( $all_dates );
+					if ( $first_date === '' ) {
+						return '';
+					}
+					return self::get_date_by_time_check( $tour_id, $first_date, '' ) ?: $first_date;
+				}
+
+				return self::get_first_booking_date( $all_dates );
+			}
 			public static function get_next_tour_date_label( $tour_id ) {
 				return self::get_travel_type( $tour_id ) === 'fixed'
 					? __( 'Tour Date', 'tour-booking-manager' )
@@ -639,7 +681,7 @@
 				if ( ! empty( $ticket_list ) && sizeof( $ticket_list ) > 0 ) {
 					if ( ! $start_date ) {
 						$all_dates  = self::get_date( $tour_id );
-						$start_date = self::get_first_booking_date( $all_dates );
+						$start_date = self::get_effective_booking_date( $tour_id, $all_dates );
 					}
 					$ticket_price = [];
 					foreach ( $ticket_list as $ticket ) {
@@ -675,7 +717,7 @@
 
 				if ( ! $start_date ) {
 					$all_dates  = self::get_date( $tour_id );
-					$start_date = self::get_first_booking_date( $all_dates );
+					$start_date = self::get_effective_booking_date( $tour_id, $all_dates );
 				}
 
 				$start_price = self::get_tour_start_price( $tour_id, $start_date );
@@ -1110,7 +1152,7 @@
 			//***********Location & Place*************************//
 			public static function get_all_location(): array {
 				$locations = TTBM_Global_Function::get_taxonomy('ttbm_tour_location');
-				$arr = array('' => esc_html__('--Select a city--', 'tour-booking-manager'));
+				$arr = array();
 				foreach ($locations as $_terms) {
 					$arr[$_terms->name] = $_terms->name;
 				}

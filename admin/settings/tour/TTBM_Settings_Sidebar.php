@@ -5,7 +5,8 @@ if (!defined('ABSPATH')) {
 if (!class_exists('TTBM_Settings_Sidebar')) {
 	class TTBM_Settings_Sidebar {
 		public function __construct() {
-			add_action('ttbm_right_sidebar_content', [$this, 'render_sidebar']);
+			add_action('ttbm_right_sidebar_content', [$this, 'render_featured_sidebar'], 10);
+			add_action('ttbm_right_sidebar_content', [$this, 'render_taxonomy_sidebar'], 20);
 			add_action('admin_enqueue_scripts', [$this, 'enqueue_assets']);
 			add_action('admin_head', [$this, 'output_styles']);
 			add_action('admin_notices', [$this, 'output_skeleton_loader']);
@@ -703,24 +704,47 @@ jQuery(function($){
 	});
 
 	/* ── Location required validation (only when Location is enabled) ── */
+	window.ttbmSyncLocationRequiredState = function () {
+		var $toggle = $('#ttbm_meta_box_panel input[name="ttbm_display_location"]');
+		var locationEnabled = $toggle.length > 0 && $toggle.is(':checked');
+		var $mark = $('.ttbm-location-required-mark');
+		var $select = $('#ttbm_location_select');
+		var $err = $('#ttbm_location_error');
+
+		if (locationEnabled) {
+			$mark.show();
+		} else {
+			$mark.hide();
+			$err.hide();
+			if ($select.length) {
+				$select.css({'border-color': '', 'box-shadow': ''});
+			}
+		}
+		return locationEnabled;
+	};
+
 	function ttbmValidateLocation() {
-		var $toggle = $('input[name="ttbm_display_location"]');
-		var locationEnabled = $toggle.length ? $toggle.is(':checked') : true;
-		if (!locationEnabled) return true; // not required when disabled
+		if (!window.ttbmSyncLocationRequiredState()) {
+			return true;
+		}
 
 		var $select = $('#ttbm_location_select');
-		var $err    = $('#ttbm_location_error');
-		if (!$select.length) return true;
+		var $err = $('#ttbm_location_error');
+		if (!$select.length) {
+			return true;
+		}
 
 		if (!$select.val()) {
-			$select.css({'border-color':'#dc2626','box-shadow':'0 0 0 2px rgba(220,38,38,.15)'});
+			$select.css({'border-color': '#dc2626', 'box-shadow': '0 0 0 2px rgba(220,38,38,.15)'});
 			$err.show();
 			return false;
 		}
-		$select.css({'border-color':'','box-shadow':''});
+		$select.css({'border-color': '', 'box-shadow': ''});
 		$err.hide();
 		return true;
 	}
+
+	window.ttbmSyncLocationRequiredState();
 
 	$(document).on('change', '#ttbm_location_select', function(){
 		if ($(this).val()) {
@@ -728,6 +752,20 @@ jQuery(function($){
 			$('#ttbm_location_error').hide();
 		}
 	});
+
+	function ttbmValidateFeaturedImage() {
+		var thumbId = parseInt($('#ttbm_thumb_id').val(), 10) || 0;
+		var $card = $('#ttbm_featured_image_card');
+		var $err  = $('#ttbm_featured_image_error');
+		if (thumbId > 0) {
+			$card.css({'border-color':'','box-shadow':''});
+			$err.hide();
+			return true;
+		}
+		$card.css({'border-color':'#dc2626','box-shadow':'0 0 0 2px rgba(220,38,38,.15)'});
+		$err.show();
+		return false;
+	}
 
 	/* ── Single consolidated submit interceptor ── */
 	$(document).on('click', '.ttbm-header-publish, [name="publish"], [name="save"]', function(e){
@@ -749,6 +787,13 @@ jQuery(function($){
 				$('html,body').animate({ scrollTop: Math.max(0, ($('#ttbm_location_select').offset().top - 120)) }, 250);
 				$('#ttbm_location_select').focus();
 			}, 180);
+			valid = false;
+		}
+
+		/* 3. Featured image required */
+		if (valid && !ttbmValidateFeaturedImage()) {
+			e.preventDefault();
+			$('html,body').animate({ scrollTop: Math.max(0, ($('#ttbm_featured_image_card').offset().top - 120)) }, 250);
 			valid = false;
 		}
 
@@ -937,11 +982,19 @@ jQuery(function($){
 			');
 		}
 
-		public function render_sidebar($tour_id) {
+		public function render_featured_sidebar($tour_id) {
 			$post = get_post($tour_id);
-			if (!$post) return;
-			// Publish section is now in the page header bar
+			if (!$post) {
+				return;
+			}
 			$this->render_featured_image_section($post);
+		}
+
+		public function render_taxonomy_sidebar($tour_id) {
+			$post = get_post($tour_id);
+			if (!$post) {
+				return;
+			}
 			$this->render_category_section($post);
 			$this->render_organizer_section($post);
 		}
@@ -972,8 +1025,11 @@ jQuery(function($){
 			$thumb_id  = get_post_thumbnail_id($post->ID);
 			$thumb_url = $thumb_id ? wp_get_attachment_image_url($thumb_id, 'large') : '';
 			?>
-			<div class="ttbm-sb-card">
-				<p class="ttbm-sb-card-title"><?php esc_html_e('Featured Image', 'tour-booking-manager'); ?></p>
+			<div class="ttbm-sb-card" id="ttbm_featured_image_card">
+				<p class="ttbm-sb-card-title">
+					<?php esc_html_e('Featured Image', 'tour-booking-manager'); ?>
+					<span style="color:#dc2626;font-weight:700;margin-left:3px;" title="<?php esc_attr_e('Required', 'tour-booking-manager'); ?>">*</span>
+				</p>
 
 				<div id="ttbm_upload_area" class="ttbm-sb-upload-area"<?php echo $thumb_url ? ' style="display:none;"' : ''; ?>>
 					<div class="ttbm-sb-upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
@@ -991,6 +1047,9 @@ jQuery(function($){
 					<a id="ttbm_change_thumb"><?php esc_html_e('Change image', 'tour-booking-manager'); ?></a>
 					<a id="ttbm_remove_thumb" class="ttbm-sb-remove"><?php esc_html_e('Remove', 'tour-booking-manager'); ?></a>
 				</div>
+				<p id="ttbm_featured_image_error" style="display:none;color:#dc2626;font-size:12px;font-weight:500;margin:8px 0 0;">
+					<span style="margin-right:4px;">&#9888;</span><?php esc_html_e('Please upload a featured image before saving.', 'tour-booking-manager'); ?>
+				</p>
 			</div>
 			<script>
 			(function($){
@@ -1014,6 +1073,8 @@ jQuery(function($){
 						}
 						$('#ttbm_upload_area').hide();
 						$('#ttbm_img_actions_wrap').show();
+						$('#ttbm_featured_image_error').hide();
+						$('#ttbm_upload_area, #ttbm_featured_image_card').css({'border-color':'','box-shadow':''});
 					});
 					ttbmFrame.open();
 				}

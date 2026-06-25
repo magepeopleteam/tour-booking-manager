@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$ttbm_hotels = TTBM_Function::get_hotel_list( $tour_id );
 		if ( sizeof( $ttbm_hotels ) > 0 ) {
 			?>
-			<div class="ttbm_hotel_area <?php echo esc_attr( $travel_type == 'fixed' ? '' : 'dNone' ); ?>">
+			<div class="ttbm_hotel_area ttbm_hotel_booking_cards <?php echo esc_attr( $travel_type == 'fixed' ? '' : 'dNone' ); ?>">
 				<?php foreach ( $ttbm_hotels as $hotel_id ) {
 					// Gather hotel data
 					$hotel_title     = get_the_title( $hotel_id );

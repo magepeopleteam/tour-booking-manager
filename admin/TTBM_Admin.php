@@ -84,7 +84,7 @@
 			//************Disable Gutenberg************************//
 			public function disable_gutenberg($current_status, $post_type) {
 				$user_status = TTBM_Global_Function::get_settings('ttbm_global_settings', 'disable_block_editor', 'yes');
-				if ($post_type === TTBM_Function::get_cpt_name() && $user_status == 'yes') {
+				if ($user_status == 'yes' && ($post_type === TTBM_Function::get_cpt_name() || $post_type === 'ttbm_hotel')) {
 					return false;
 				}
 				return $current_status;

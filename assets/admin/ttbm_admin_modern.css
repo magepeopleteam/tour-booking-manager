@@ -2440,6 +2440,30 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 	vertical-align: middle;
 }
 
+#ttbm_meta_box_panel .ttbm-hotel-details-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#ttbm_meta_box_panel .ttbm-hotel-details-table th,
+#ttbm_meta_box_panel .ttbm-hotel-details-table td {
+	padding: 10px 8px;
+	vertical-align: middle;
+	border-bottom: 1px solid #eef2f7;
+}
+
+#ttbm_meta_box_panel .ttbm-hotel-details-table tr:last-child th,
+#ttbm_meta_box_panel .ttbm-hotel-details-table tr:last-child td {
+	border-bottom: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-hotel-details-table th {
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--ttbm-a-text-secondary);
+	text-align: left;
+}
+
 /* ─── Hotel select (pricing tab) ─── */
 #ttbm_meta_box_panel .ttbm-hotel-select-wrap {
 	display: flex;

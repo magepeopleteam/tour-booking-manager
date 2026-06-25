@@ -7,23 +7,30 @@ if (!class_exists('TTBM_Settings_Sidebar')) {
 		public function __construct() {
 			add_action('ttbm_right_sidebar_content', [$this, 'render_featured_sidebar'], 10);
 			add_action('ttbm_right_sidebar_content', [$this, 'render_taxonomy_sidebar'], 20);
+			add_action('ttbm_hotel_right_sidebar_content', [$this, 'render_featured_sidebar'], 10);
 			add_action('admin_enqueue_scripts', [$this, 'enqueue_assets']);
 			add_action('admin_head', [$this, 'output_styles']);
 			add_action('admin_notices', [$this, 'output_skeleton_loader']);
 			add_action('add_meta_boxes', [$this, 'remove_default_side_boxes'], 20);
 			add_filter('get_user_option_screen_layout_' . TTBM_Function::get_cpt_name(), [$this, 'force_one_column_on_edit']);
+			add_filter('get_user_option_screen_layout_ttbm_hotel', [$this, 'force_one_column_on_edit']);
 			add_filter('admin_body_class', [$this, 'add_edit_body_class']);
 		}
 
 		public function force_one_column_on_edit() {
-			return $this->is_tour_edit_screen() ? 1 : null;
+			return $this->is_modern_edit_screen() ? 1 : null;
 		}
 
-		/** Adds `ttbm-tour-edit-page` to <body> only on the tour post edit/new screen. */
+		/** Adds edit-page body classes for tour and hotel post screens. */
 		public function add_edit_body_class($classes) {
 			$screen = get_current_screen();
-			if ($screen && $screen->post_type === TTBM_Function::get_cpt_name() && $screen->base === 'post') {
-				$classes .= ' ttbm-tour-edit-page';
+			if (!$screen || $screen->base !== 'post') {
+				return $classes;
+			}
+			if ($screen->post_type === TTBM_Function::get_cpt_name()) {
+				$classes .= ' ttbm-tour-edit-page ttbm-modern-edit-page';
+			} elseif ($screen->post_type === 'ttbm_hotel') {
+				$classes .= ' ttbm-hotel-edit-page ttbm-modern-edit-page';
 			}
 			return $classes;
 		}
@@ -35,47 +42,69 @@ if (!class_exists('TTBM_Settings_Sidebar')) {
 				&& $screen->base === 'post';
 		}
 
-		public function output_styles() {
-			if (!$this->is_tour_edit_screen()) return;
+		private function is_hotel_edit_screen(): bool {
+			$screen = get_current_screen();
+			return $screen
+				&& $screen->post_type === 'ttbm_hotel'
+				&& $screen->base === 'post';
+		}
 
-			$post_id    = isset($_GET['post']) ? intval($_GET['post']) : 0; // phpcs:ignore
-			$tour_title = $post_id ? get_the_title($post_id) : '';
+		private function is_modern_edit_screen(): bool {
+			return $this->is_tour_edit_screen() || $this->is_hotel_edit_screen();
+		}
+
+		public function output_styles() {
+			if (!$this->is_modern_edit_screen()) {
+				return;
+			}
+
+			$post_id     = isset($_GET['post']) ? intval($_GET['post']) : 0; // phpcs:ignore
+			$page_title  = $post_id ? get_the_title($post_id) : '';
+			$is_tour     = $this->is_tour_edit_screen();
+			$is_hotel    = $this->is_hotel_edit_screen();
+			if ($is_tour) {
+				$back_url   = admin_url('edit.php?post_type=' . TTBM_Function::get_cpt_name() . '&page=ttbm_list');
+				$back_label = sprintf(__('← Back to %s', 'tour-booking-manager'), TTBM_Function::get_name() . 's');
+			} else {
+				$back_url   = admin_url('edit.php?post_type=' . TTBM_Function::get_cpt_name() . '&page=ttbm_hotel_booking_lists');
+				$back_label = __('← Back to Hotels', 'tour-booking-manager');
+			}
 			?>
 <style id="ttbm-sidebar-css">
 /*
- * All rules below are prefixed with body.ttbm-tour-edit-page (or use
+ * All rules below are prefixed with body.ttbm-modern-edit-page (or use
  * unique plugin class names) so they ONLY apply on the tour edit/add page
  * and cannot leak to any other WordPress admin page.
  */
 
 /* ── Hide Screen Options + Help tabs ── */
-body.ttbm-tour-edit-page #screen-meta-links,
-body.ttbm-tour-edit-page #contextual-help-link-wrap,
-body.ttbm-tour-edit-page #screen-options-link-wrap { display: none !important; }
+body.ttbm-modern-edit-page #screen-meta-links,
+body.ttbm-modern-edit-page #contextual-help-link-wrap,
+body.ttbm-modern-edit-page #screen-options-link-wrap { display: none !important; }
 
 /* ── 1-column layout: collapse empty WP side container ── */
-body.ttbm-tour-edit-page #postbox-container-1 { display: none !important; }
-body.ttbm-tour-edit-page #postbox-container-2 {
+body.ttbm-modern-edit-page #postbox-container-1 { display: none !important; }
+body.ttbm-modern-edit-page #postbox-container-2 {
 	margin-right: 0 !important;
 	float: none !important;
 	width: 100% !important;
 	padding: 0 !important;
 }
-body.ttbm-tour-edit-page #post-body.columns-2 #postbox-container-2 { float: none !important; width: 100% !important; }
-body.ttbm-tour-edit-page #postbox-container-1 .postbox { display: none !important; }
+body.ttbm-modern-edit-page #post-body.columns-2 #postbox-container-2 { float: none !important; width: 100% !important; }
+body.ttbm-modern-edit-page #postbox-container-1 .postbox { display: none !important; }
 
 /* ── Post-body spacing ── */
-body.ttbm-tour-edit-page #poststuff { padding-top: 10px !important; }
-body.ttbm-tour-edit-page #post-body-content { margin-bottom: 0 !important; }
+body.ttbm-modern-edit-page #poststuff { padding-top: 10px !important; }
+body.ttbm-modern-edit-page #post-body-content { margin-bottom: 0 !important; }
 
 /* ── Page background ── */
-body.ttbm-tour-edit-page #wpcontent,
-body.ttbm-tour-edit-page #wpbody-content { background: #f4f6f9 !important; }
-body.ttbm-tour-edit-page #wpcontent { padding-left: 0 !important; }
+body.ttbm-modern-edit-page #wpcontent,
+body.ttbm-modern-edit-page #wpbody-content { background: #f4f6f9 !important; }
+body.ttbm-modern-edit-page #wpcontent { padding-left: 0 !important; }
 /* No left/right padding on the outer container — header fills 100% width.
    The .wrap inside handles content padding. */
-body.ttbm-tour-edit-page #wpbody-content { padding: 0 !important; }
-body.ttbm-tour-edit-page .wrap { padding: 0 20px 20px !important; margin: 0 auto !important; max-width: 90% !important; background: #fff !important; }
+body.ttbm-modern-edit-page #wpbody-content { padding: 0 !important; }
+body.ttbm-modern-edit-page .wrap { padding: 0 20px 20px !important; margin: 0 auto !important; max-width: 90% !important; background: #fff !important; }
 
 /* ══════════════════════════════════════════════
    SKELETON / PAGE LOADER
@@ -208,31 +237,31 @@ body.ttbm-tour-edit-page .wrap { padding: 0 20px 20px !important; margin: 0 auto
 /* Loader is a fixed overlay; do not hide page siblings or tab content stays invisible. */
 
 /* ── Hide original WP page title row (replaced by our header) ── */
-body.ttbm-tour-edit-page .wrap > h1.wp-heading-inline,
-body.ttbm-tour-edit-page .wrap > .page-title-action,
-body.ttbm-tour-edit-page .ttbm-page-tour-title { display: none !important; }
+body.ttbm-modern-edit-page .wrap > h1.wp-heading-inline,
+body.ttbm-modern-edit-page .wrap > .page-title-action,
+body.ttbm-modern-edit-page .ttbm-page-tour-title { display: none !important; }
 
 /* ── Main panel postbox: strip WP chrome ── */
-body.ttbm-tour-edit-page #ttbm_meta_box_panel {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel {
 	border: none !important;
 	box-shadow: none !important;
 	background: transparent !important;
 	margin-top: 0 !important;
 }
-body.ttbm-tour-edit-page #ttbm_meta_box_panel > .postbox-header { display: none !important; }
-body.ttbm-tour-edit-page #ttbm_meta_box_panel > .inside { margin: 0 !important; padding: 0 !important; }
+body.ttbm-modern-edit-page #ttbm_meta_box_panel > .postbox-header { display: none !important; }
+body.ttbm-modern-edit-page #ttbm_meta_box_panel > .inside { margin: 0 !important; padding: 0 !important; }
 
 /* ── Tab layout ── */
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .ttbm_configuration { padding: 0 !important; }
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .ttbm_settings { background: transparent !important; }
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm_configuration { padding: 0 !important; }
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm_settings { background: transparent !important; }
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs {
 	gap: 0 !important;
 	align-items: flex-start !important;
 	min-height: calc(100vh - 120px) !important;
 }
 
 /* ── Left tab navigation ── */
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar {
 	background: #ffffff !important;
 	border-right: 1px solid #e5e7eb !important;
 	min-height: calc(100vh - 120px) !important;
@@ -244,7 +273,7 @@ body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar {
 }
 
 /* Nav items */
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li {
 	display: flex !important;
 	align-items: center !important;
 	gap: 9px !important;
@@ -263,14 +292,14 @@ body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li {
 }
 
 /* Hover state */
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li:hover {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li:hover {
 	background: #f3f4f6 !important;
 	color: #111827 !important;
 	transform: translateX(3px) !important;
 }
 
 /* Active state */
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li.active {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li.active {
 	background: linear-gradient(135deg, #eff6ff 0%, #e0edff 100%) !important;
 	color: #1d4ed8 !important;
 	font-weight: 600 !important;
@@ -279,7 +308,7 @@ body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li.active {
 }
 
 /* Active indicator bar */
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li.active::before {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li.active::before {
 	content: "" !important;
 	position: absolute !important;
 	left: 0 !important;
@@ -291,7 +320,7 @@ body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li.active::
 }
 
 /* Icons */
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li i {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li i {
 	font-size: 15px !important;
 	width: 18px !important;
 	text-align: center !important;
@@ -299,15 +328,15 @@ body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li i {
 	color: #9ca3af !important;
 	transition: color .18s ease !important;
 }
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li:hover i {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li:hover i {
 	color: #374151 !important;
 }
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li.active i {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li.active i {
 	color: #2271b1 !important;
 }
 
 /* Label */
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li span {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li span {
 	transition: color .18s ease !important;
 	white-space: nowrap !important;
 	overflow: hidden !important;
@@ -315,7 +344,7 @@ body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li span {
 }
 
 /* Ripple on click */
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li::after {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li::after {
 	content: "" !important;
 	position: absolute !important;
 	inset: 0 !important;
@@ -324,17 +353,17 @@ body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li::after {
 	transition: opacity .2s ease !important;
 	border-radius: 8px !important;
 }
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li:active::after {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li:active::after {
 	opacity: 1 !important;
 }
 
 /* Sidebar toggle button */
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .meta-sidebar-toggle {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .meta-sidebar-toggle {
 	display: none !important;
 }
 
 /* ── Tab content panel ── */
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabsContent {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsContent {
 	flex: 1 !important;
 	min-width: 0 !important;
 	background: #f4f6f9 !important;
@@ -342,40 +371,40 @@ body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabsContent {
 }
 
 /* ── Section cards ── */
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabsItem > h2 {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem > h2 {
 	font-size: 18px !important;
 	font-weight: 700 !important;
 	color: #111827 !important;
 	margin: 0 0 6px !important;
 }
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabsItem > p {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem > p {
 	color: #6b7280 !important;
 	font-size: 13px !important;
 	margin-bottom: 18px !important;
 }
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabsItem section {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section {
 	border-radius: 10px !important;
 	background: #fff !important;
 	box-shadow: 0 1px 6px rgba(0,0,0,.07) !important;
 	padding: 20px 24px !important;
 	margin-bottom: 16px !important;
 }
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header h4 {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header h4 {
 	font-size: 14px !important;
 	font-weight: 600 !important;
 	color: #111827 !important;
 }
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header h4 i { color: #2271b1 !important; }
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header { border-bottom-color: #f3f4f6 !important; }
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header h4 i { color: #2271b1 !important; }
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header { border-bottom-color: #f3f4f6 !important; }
 
 /* ── Right sidebar column ── */
-body.ttbm-tour-edit-page #ttbm_meta_box_panel .ttbm-right-sidebar {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-right-sidebar {
 	background: #f4f6f9 !important;
 	padding: 20px 16px 20px 0 !important;
 }
 
 /* ── Hide sidebar publish card ── */
-body.ttbm-tour-edit-page .ttbm-sb-publish-card { display: none !important; }
+body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 
 /* =====================================================
    TTBM Right Sidebar
@@ -656,22 +685,20 @@ body.ttbm-tour-edit-page .ttbm-sb-publish-card { display: none !important; }
 .ttbm-header-publish:hover { background: #135e96 !important; }
 
 /* Hide original WP title / action / old badge — scoped to tour page */
-body.ttbm-tour-edit-page .wrap > h1.wp-heading-inline,
-body.ttbm-tour-edit-page .wrap > .page-title-action,
-body.ttbm-tour-edit-page .ttbm-page-tour-title { display: none !important; }
+body.ttbm-modern-edit-page .wrap > h1.wp-heading-inline,
+body.ttbm-modern-edit-page .wrap > .page-title-action,
+body.ttbm-modern-edit-page .ttbm-page-tour-title { display: none !important; }
 </style>
 <script>
 jQuery(function($){
-	var tourTitle   = <?php echo wp_json_encode($tour_title); ?>;
+	var pageTitle   = <?php echo wp_json_encode($page_title); ?>;
+	var isHotelEdit = <?php echo $is_hotel ? 'true' : 'false'; ?>;
 	var isPublished = <?php echo ($post_id && get_post_status($post_id) === 'publish') ? 'true' : 'false'; ?>;
 	var previewUrl  = <?php echo wp_json_encode($post_id ? get_preview_post_link(get_post($post_id)) : '#'); ?>;
 	var btnLabel    = isPublished ? <?php echo wp_json_encode(__('Update Post', 'tour-booking-manager')); ?> : <?php echo wp_json_encode(__('Publish', 'tour-booking-manager')); ?>;
-	var editLabel   = <?php echo wp_json_encode(sprintf(__('Edit %s', 'tour-booking-manager'), TTBM_Function::get_name())); ?>;
-	var addNewLabel = <?php echo wp_json_encode(sprintf(__('Add New %s', 'tour-booking-manager'), TTBM_Function::get_name())); ?>;
-	var addNewUrl   = <?php echo wp_json_encode(admin_url('post-new.php?post_type=' . TTBM_Function::get_cpt_name())); ?>;
 
-	var backUrl   = <?php echo wp_json_encode(admin_url('edit.php?post_type=' . TTBM_Function::get_cpt_name() . '&page=ttbm_list')); ?>;
-	var backLabel = <?php echo wp_json_encode(sprintf(__('← Back to %s', 'tour-booking-manager'), TTBM_Function::get_name() . 's')); ?>;
+	var backUrl   = <?php echo wp_json_encode($back_url); ?>;
+	var backLabel = <?php echo wp_json_encode($back_label); ?>;
 
 	var arrowSvg = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 	var eyeSvg   = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -690,7 +717,7 @@ jQuery(function($){
 	);
 
 	header.find('.ttbm-header-back').attr('href', backUrl).html(arrowSvg + backLabel);
-	header.find('.ttbm-header-tour-title').text(tourTitle || '');
+	header.find('.ttbm-header-tour-title').text(pageTitle || '');
 	header.find('.ttbm-header-preview').attr('href', previewUrl).html(eyeSvg + <?php echo wp_json_encode(__('Preview', 'tour-booking-manager')); ?>);
 	header.find('.ttbm-header-publish').text(btnLabel);
 
@@ -702,7 +729,8 @@ jQuery(function($){
 		$('.ttbm-header-tour-title').text($(this).val().trim());
 	});
 
-	/* ── Location required validation (only when Location is enabled) ── */
+	/* ── Location required validation (tour only) ── */
+	if (!isHotelEdit) {
 	window.ttbmSyncLocationRequiredState = function () {
 		var $toggle = $('#ttbm_meta_box_panel input[name="ttbm_display_location"]');
 		var locationEnabled = $toggle.length > 0 && $toggle.is(':checked');
@@ -751,6 +779,7 @@ jQuery(function($){
 			$('#ttbm_location_error').hide();
 		}
 	});
+	}
 
 	function ttbmValidateFeaturedImage() {
 		var thumbId = parseInt($('#ttbm_thumb_id').val(), 10) || 0;
@@ -781,21 +810,15 @@ jQuery(function($){
 			valid = false;
 		}
 
+		if (!isHotelEdit) {
 		/* 2. Location required (only when Location tab is enabled) */
-		if (valid && !ttbmValidateLocation()) {
+		if (valid && typeof ttbmValidateLocation === 'function' && !ttbmValidateLocation()) {
 			e.preventDefault();
 			$('[data-tabs-target="#ttbm_settings_location"]').trigger('click');
 			setTimeout(function(){
 				$('html,body').animate({ scrollTop: Math.max(0, ($('#ttbm_location_select').offset().top - 120)) }, 250);
 				$('#ttbm_location_select').focus();
 			}, 180);
-			valid = false;
-		}
-
-		/* 3. Featured image required */
-		if (valid && !ttbmValidateFeaturedImage()) {
-			e.preventDefault();
-			$('html,body').animate({ scrollTop: Math.max(0, ($('#ttbm_featured_image_card').offset().top - 120)) }, 250);
 			valid = false;
 		}
 
@@ -825,6 +848,14 @@ jQuery(function($){
 			}, 180);
 			valid = false;
 		}
+		}
+
+		/* Featured image required */
+		if (valid && !ttbmValidateFeaturedImage()) {
+			e.preventDefault();
+			$('html,body').animate({ scrollTop: Math.max(0, ($('#ttbm_featured_image_card').offset().top - 120)) }, 250);
+			valid = false;
+		}
 
 		/* All good — let the form submit normally */
 	});
@@ -833,7 +864,9 @@ jQuery(function($){
 		}
 
 		public function output_skeleton_loader() {
-			if (!$this->is_tour_edit_screen()) return;
+			if (!$this->is_modern_edit_screen()) {
+				return;
+			}
 			?>
 <div id="ttbm-page-loader" role="status" aria-label="<?php esc_attr_e('Loading…', 'tour-booking-manager'); ?>">
 
@@ -957,10 +990,15 @@ jQuery(function($){
 			remove_meta_box('ttbm_tour_orgdiv',      $cpt, 'side');
 			remove_meta_box('tagsdiv-ttbm_tour_tag', $cpt, 'side');
 			remove_meta_box('postexcerpt',           $cpt, 'normal');
+			remove_meta_box('submitdiv',             'ttbm_hotel', 'side');
+			remove_meta_box('postimagediv',          'ttbm_hotel', 'side');
+			remove_meta_box('postexcerpt',           'ttbm_hotel', 'normal');
 		}
 
 		public function enqueue_assets($hook) {
-			if (!$this->is_tour_edit_screen()) return;
+			if (!$this->is_modern_edit_screen()) {
+				return;
+			}
 
 			wp_enqueue_media();
 

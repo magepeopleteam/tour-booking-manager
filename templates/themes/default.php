@@ -7,6 +7,7 @@
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
 	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
 	$class_location = $class_location ?? '';
+	$ttbm_booking_tour_type = TTBM_Function::get_tour_type( $tour_id );
 ?>
 	<div class="ttbm_default_theme">
 		<div class='ttbm_style ttbm_wraper placeholderLoader ttbm_details_page_loader'>
@@ -74,6 +75,7 @@
 									remove_action( 'ttbm_slider_all_item_overlay', $ttbm_hero_overlay_cb );
 								?>
 							</div>
+							<?php if ( $ttbm_booking_tour_type !== 'hotel' ) : ?>
 							<div class="ttbm_hero_stats placeholder_area">
 								<?php
 									TTBM_Function::enable_hero_stat_limit();
@@ -109,8 +111,17 @@
 								<?php endif; ?>
 								</div>
 							</div>
-							<div class="ttbm_booking_section placeholder_area" id="ttbm_booking_section">
-								<h3 class="ttbm-ticket-section-title"><?php esc_html_e( 'Choose the Ticket That Fits Your Journey', 'tour-booking-manager' ); ?></h3>
+							<?php endif; ?>
+							<?php
+							$ttbm_booking_section_cls = 'ttbm_booking_section placeholder_area';
+							if ( $ttbm_booking_tour_type === 'hotel' ) {
+								$ttbm_booking_section_cls .= ' ttbm_booking_section--hotel';
+							}
+							?>
+							<div class="<?php echo esc_attr( $ttbm_booking_section_cls ); ?>" id="ttbm_booking_section">
+								<?php if ( $ttbm_booking_tour_type !== 'hotel' ) : ?>
+									<h3 class="ttbm-ticket-section-title"><?php esc_html_e( 'Choose the Ticket That Fits Your Journey', 'tour-booking-manager' ); ?></h3>
+								<?php endif; ?>
 								<?php include( TTBM_Function::template_path( 'ticket/registration.php' ) ); ?>
 								<?php include( TTBM_Function::template_path( 'ticket/particular_item_area.php' ) ); ?>
 							</div>

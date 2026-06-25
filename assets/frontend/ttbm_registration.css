@@ -1973,67 +1973,67 @@ button.ttbm_hotel_open_room_list {
 	padding: 10px 20px;
 }
 
-div.daterangepicker select.monthselect,
-div.daterangepicker select.yearselect {
+div.daterangepicker:not(.ttbm-hotel-daterange) select.monthselect,
+div.daterangepicker:not(.ttbm-hotel-daterange) select.yearselect {
 	display: inline-block !important;
 }
 
-div.daterangepicker .calendar-table table {
+div.daterangepicker:not(.ttbm-hotel-daterange) .calendar-table table {
 	border: none;
 	box-shadow: none;
 }
 
-div.daterangepicker .drp-calendar {
-	: 100%;
+div.daterangepicker:not(.ttbm-hotel-daterange) .drp-calendar {
+	width: 100%;
 }
 
-div.drp-calendar .calendar-table .table-condensed thead {
+div.daterangepicker:not(.ttbm-hotel-daterange) .drp-calendar .calendar-table .table-condensed thead {
 	color: #FFF;
 	background-color: var(--color_theme);
 }
 
-div.drp-calendar .calendar-table .table-condensed thead th {
+div.daterangepicker:not(.ttbm-hotel-daterange) .drp-calendar .calendar-table .table-condensed thead th {
 	border-color: var(--color_theme);
 }
 
-div.drp-calendar .calendar-table .table-condensed tbody {
+div.daterangepicker:not(.ttbm-hotel-daterange) .drp-calendar .calendar-table .table-condensed tbody {
 	background-color: #FFF;
 }
 
-div.daterangepicker {
+div.daterangepicker:not(.ttbm-hotel-daterange) {
 	border: none;
 	background-color: var(--color_theme);
 }
 
-div.daterangepicker .drp-calendar .calendar-table {
+div.daterangepicker:not(.ttbm-hotel-daterange) .drp-calendar .calendar-table {
 	padding: 0 !important;
 	border: none !important;
 	background-color: var(--color_theme);
 	border-radius: 0;
 }
 
-div.daterangepicker th.month {
+div.daterangepicker:not(.ttbm-hotel-daterange) th.month {
 	font-size: 22px;
 }
 
-div.daterangepicker .calendar-table .prev span,
-div.daterangepicker .calendar-table .next span {
+div.daterangepicker:not(.ttbm-hotel-daterange) .calendar-table .prev span,
+div.daterangepicker:not(.ttbm-hotel-daterange) .calendar-table .next span {
 	border-width: 0 4px 4px 0;
 	padding: 5px;
 	border-color: #FFF;
 }
 
-div.daterangepicker .calendar-table .prev span:hover,
-div.daterangepicker .calendar-table .next span:hover {
+div.daterangepicker:not(.ttbm-hotel-daterange) .calendar-table .prev span:hover,
+div.daterangepicker:not(.ttbm-hotel-daterange) .calendar-table .next span:hover {
 	border-color: var(--button_bg);
 }
 
-div.daterangepicker th.available:hover {
+div.daterangepicker:not(.ttbm-hotel-daterange) th.available:hover {
 	background-color: transparent;
 }
 
-div.daterangepicker .calendar-table td,
-div.daterangepicker .calendar-table th {
+div.daterangepicker:not(.ttbm-hotel-daterange) .calendar-table td,
+div.daterangepicker:not(.ttbm-hotel-daterange) .calendar-table th {
 	font-size: 16px;
 	border-radius: 0;
 	width: 40px;

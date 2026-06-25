@@ -234,6 +234,46 @@
 				$date_format = $format == 'M d , yy' ? 'M  j, Y' : $date_format;
 				return $format == 'D M d , yy' ? 'D M  j, Y' : $date_format;
 			}
+			/**
+			 * Convert WordPress Settings > General date format to Moment.js format (daterangepicker).
+			 */
+			public static function wp_date_format_to_moment( $php_format = '' ) {
+				if ( ! $php_format ) {
+					$php_format = get_option( 'date_format' );
+				}
+				$map = array(
+					'd' => 'DD',
+					'D' => 'ddd',
+					'j' => 'D',
+					'l' => 'dddd',
+					'F' => 'MMMM',
+					'm' => 'MM',
+					'M' => 'MMM',
+					'n' => 'M',
+					'Y' => 'YYYY',
+					'y' => 'YY',
+				);
+				$moment  = '';
+				$length  = strlen( $php_format );
+				for ( $i = 0; $i < $length; $i++ ) {
+					$char = $php_format[ $i ];
+					if ( '\\' === $char && ( $i + 1 ) < $length ) {
+						$moment .= '[' . $php_format[ $i + 1 ] . ']';
+						$i++;
+						continue;
+					}
+					if ( array_key_exists( $char, $map ) ) {
+						$moment .= $map[ $char ];
+					} elseif ( ',' === $char ) {
+						$moment .= '[,]';
+					} elseif ( preg_match( '/\s/u', $char ) ) {
+						$moment .= $char;
+					} else {
+						$moment .= '[' . $char . ']';
+					}
+				}
+				return $moment;
+			}
 			public function date_picker_js($selector, $dates) {
 				//echo '<pre>';print_r($dates);echo '</pre>';
 				$start_date = $dates[0];

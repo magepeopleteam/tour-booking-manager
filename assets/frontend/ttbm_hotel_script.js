@@ -48,14 +48,28 @@ jQuery(document).ready(function ($) {
 
 (function ($) {
 
+    function ttbmGetHotelDateRange($context) {
+        const $scope = $context && $context.length ? $context : $(document);
+        const $input = $scope.find('input.ttbm_hotel_date_input[name="ttbm_hotel_date_range"]').first();
+        if (!$input.length) {
+            return $scope.find('[name="ttbm_hotel_date_range"]').first().val() || '';
+        }
+        const checkin = $input.attr('data-checkin');
+        const checkout = $input.attr('data-checkout');
+        if (checkin && checkout) {
+            return String(checkin).replace(/-/g, '/') + '    -    ' + String(checkout).replace(/-/g, '/');
+        }
+        return $input.val() || '';
+    }
+
     $(document).on('click', '.ttbm_hotel_room_check_availability', function () {
         let current = $(this).closest('.ttbm_hotel_item');
         
         // let hotel_id = current.find('[name="ttbm_tour_hotel_list"]').val();
         let hotel_id = $("#ttbm_booking_hotel_id").val();
         hotel_id = hotel_id ? hotel_id.trim() : '';
-        let date_range = $('[name="ttbm_hotel_date_range"]').val();
-        if ($('[name="ttbm_hotel_date_range"]').length > 1) {
+        let date_range = ttbmGetHotelDateRange(current);
+        if (!date_range && $('[name="ttbm_hotel_date_range"]').length > 1) {
             date_range = $(this).closest('.particular_date_area').find('[name="ttbm_hotel_date_range"]').val();
         }
         let target = current.find('.ttbm_booking_panel');
@@ -411,25 +425,20 @@ jQuery(document).ready(function ($) {
 
     });
 
-}(jQuery));
-
-jQuery(window).on('load', function () {
-    jQuery(function ($) {
-        // Only auto-load rooms on standalone hotel detail pages (not tour pages)
+    $(window).on('load', function () {
         if ($('#ttbm_booking_hotel_id').length < 1) {
             return;
         }
         let current = $('.ttbm_hotel_item').first();
         let hotel_id = $("#ttbm_booking_hotel_id").val();
         hotel_id = hotel_id ? hotel_id.trim() : '';
-        let date_range = $('[name="ttbm_hotel_date_range"]').val();
-        if ($('[name="ttbm_hotel_date_range"]').length > 1) {
+        let date_range = ttbmGetHotelDateRange(current);
+        if (!date_range && $('[name="ttbm_hotel_date_range"]').length > 1) {
             date_range = $('.particular_date_area')
                 .find('[name="ttbm_hotel_date_range"]')
                 .val();
         }
         let target = current.find('.ttbm_booking_panel');
-        let target_form = target.find('.mp_tour_ticket_form');
         if (date_range) {
             $('.ttbm_hotel_area')
                 .find('.ttbm_booking_panel')
@@ -455,6 +464,6 @@ jQuery(window).on('load', function () {
                 }
             });
         }
-
     });
-});
+
+}(jQuery));

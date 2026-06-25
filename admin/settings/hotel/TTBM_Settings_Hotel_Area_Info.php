@@ -147,27 +147,60 @@
 
 			public function frontend_hotel_area_info() {
 				$post_id = get_the_id();
-				$area_status = get_post_meta($post_id, 'ttbm_hotel_area_status', true);
-				$ttbm_hotel_area_info = get_post_meta($post_id, 'ttbm_hotel_area_info', true);
-				$ttbm_hotel_area_info = !empty($ttbm_hotel_area_info) ? $ttbm_hotel_area_info : [];
-				if($area_status == 'on' && !empty($ttbm_hotel_area_info)):?>
-					<div class="ttbm-hotel-area-info">
-						<h2><?php _e("Hotel Area Info",'tour-booking-manager'); ?></h2>	
-						<div class="ttbm-area-section">
-							<?php foreach($ttbm_hotel_area_info as $hotel_area): ?>
-								<div class="ttbm-area-items">
-									<h2><i class="<?php echo esc_attr($hotel_area['area_icon']) ?>"></i> <?php echo esc_html($hotel_area['area_title']) ?></h2>
-									<?php if(!empty($hotel_area['area_items'])): foreach($hotel_area['area_items'] as $area_item): ?>
-										<div class="ttbm-area-item">
-											<p><?php echo esc_html($area_item['item_title']); ?></p>
-											<p><?php echo esc_html($area_item['item_distance']); ?> <span><?php echo esc_html($area_item['item_type']); ?></span></p>
-										</div>
-									<?php endforeach; endif; ?>
-								</div>
-							<?php endforeach; ?>
-						</div>
+				$area_status = get_post_meta( $post_id, 'ttbm_hotel_area_status', true );
+				$ttbm_hotel_area_info = get_post_meta( $post_id, 'ttbm_hotel_area_info', true );
+				$ttbm_hotel_area_info = ! empty( $ttbm_hotel_area_info ) ? $ttbm_hotel_area_info : array();
+				if ( 'on' !== $area_status || empty( $ttbm_hotel_area_info ) ) {
+					return;
+				}
+				?>
+				<div class="ttbm-hotel-area-info ttbm_hotel_area_section">
+					<h2 class="ttbm_hotel_area_heading"><?php esc_html_e( 'Hotel Area Info', 'tour-booking-manager' ); ?></h2>
+					<div class="ttbm-area-section">
+						<?php foreach ( $ttbm_hotel_area_info as $hotel_area ) : ?>
+							<?php
+							$area_icon  = isset( $hotel_area['area_icon'] ) ? $hotel_area['area_icon'] : 'mi mi-marker';
+							$area_title = isset( $hotel_area['area_title'] ) ? $hotel_area['area_title'] : '';
+							$area_items = isset( $hotel_area['area_items'] ) && is_array( $hotel_area['area_items'] ) ? $hotel_area['area_items'] : array();
+							if ( empty( $area_title ) && empty( $area_items ) ) {
+								continue;
+							}
+							?>
+							<div class="ttbm-area-items">
+								<h3 class="ttbm-area-items__title">
+									<span class="ttbm-area-items__icon" aria-hidden="true"><i class="<?php echo esc_attr( $area_icon ); ?>"></i></span>
+									<span class="ttbm-area-items__label"><?php echo esc_html( $area_title ); ?></span>
+								</h3>
+								<?php if ( ! empty( $area_items ) ) : ?>
+									<ul class="ttbm-area-items__list">
+										<?php foreach ( $area_items as $area_item ) : ?>
+											<?php
+											$item_title    = isset( $area_item['item_title'] ) ? $area_item['item_title'] : '';
+											$item_distance = isset( $area_item['item_distance'] ) ? $area_item['item_distance'] : '';
+											$item_type     = isset( $area_item['item_type'] ) ? $area_item['item_type'] : '';
+											if ( '' === $item_title && '' === $item_distance && '' === $item_type ) {
+												continue;
+											}
+											?>
+											<li class="ttbm-area-item">
+												<span class="ttbm-area-item__name"><?php echo esc_html( $item_title ); ?></span>
+												<span class="ttbm-area-item__meta">
+													<?php if ( '' !== $item_distance && null !== $item_distance ) : ?>
+														<span class="ttbm-area-item__distance"><?php echo esc_html( $item_distance ); ?></span>
+													<?php endif; ?>
+													<?php if ( $item_type ) : ?>
+														<span class="ttbm-area-item__type"><?php echo esc_html( $item_type ); ?></span>
+													<?php endif; ?>
+												</span>
+											</li>
+										<?php endforeach; ?>
+									</ul>
+								<?php endif; ?>
+							</div>
+						<?php endforeach; ?>
 					</div>
-				<?php endif; 
+				</div>
+				<?php
 			}
 
 			/**

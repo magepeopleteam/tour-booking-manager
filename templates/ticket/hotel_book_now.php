@@ -17,8 +17,8 @@ if ( ! empty( $ttbm_product_id ) ) {
     ?>
     <div class="dLayout_xs justifyBetween ttbm_book_now_area" data-placeholder>
         <div class="fdColumn">
-            <p><strong> <?php esc_html_e( 'Quantity : ', 'tour-booking-manager' ); ?></strong>&nbsp;<span class="tour_qty"></span></p>
-            <p><strong> <?php esc_html_e( 'Total : ', 'tour-booking-manager' ); ?></strong>&nbsp;<span class="tour_price"></span></p>
+            <p><strong><?php esc_html_e( 'Quantity:', 'tour-booking-manager' ); ?></strong>&nbsp;<span class="tour_qty"></span></p>
+            <p><strong><?php esc_html_e( 'Total:', 'tour-booking-manager' ); ?></strong>&nbsp;<span class="tour_price"></span></p>
         </div>
         <?php do_action('ttbm_before_add_cart_btn', $ttbm_product_id,$tour_id); ?>
         <?php if(class_exists('TTBMA_Seat_Plan') && $display == 'on' && sizeof($seat_infos)>0 && $display_front_end=='on'){ ?>

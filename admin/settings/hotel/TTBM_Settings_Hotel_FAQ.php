@@ -263,57 +263,52 @@
 			}
 
 			public function show_faq_frontend(){
-				$faqs = get_post_meta(get_the_ID(),'ttbm_hotel_faq',true);
-				$faqs = !empty($faqs) ? $faqs : [];
+				$faqs = get_post_meta( get_the_ID(), 'ttbm_hotel_faq', true );
+				$faqs = ! empty( $faqs ) ? $faqs : array();
+				if ( empty( $faqs ) ) {
+					return;
+				}
 				?>
-				<?php if(!empty($faqs)) : ?>
-				<div class="faq-area">
-					
-					<h2><?php _e('Travelers are asking','tour-booking-manager') ?></h2>
+				<div class="faq-area ttbm_hotel_faq_section">
+					<h2 class="ttbm_hotel_faq_heading"><?php esc_html_e( 'Travelers are asking', 'tour-booking-manager' ); ?></h2>
 					<div class="faq-groups">
-						<?php 
-							$faqs = get_post_meta(get_the_ID(),'ttbm_hotel_faq',true);
-							$counter = 0;
-							foreach ($faqs as $key => $faq) {
-								if ($counter % 5 === 0) {
-									echo '<div class="faq-group">';
-								}
-							?>
-								<div class="faq-item" data-faq="<?php echo $key; ?>" data-ttbm-modal="ttbm-hotel-faq-<?php echo $key; ?>">
+						<div class="faq-group">
+							<?php foreach ( $faqs as $key => $faq ) : ?>
+								<?php
+								$faq_title   = isset( $faq['title'] ) ? $faq['title'] : '';
+								$faq_content = isset( $faq['content'] ) ? $faq['content'] : '';
+								$modal_id    = 'ttbm-hotel-faq-' . $key;
+								?>
+								<div class="faq-item" data-faq="<?php echo esc_attr( $key ); ?>" data-ttbm-modal="<?php echo esc_attr( $modal_id ); ?>">
 									<div class="faq-question">
-										<i class="mi mi-chat"></i>
-										<span><?php echo $faq['title']; ?></span>
+										<span class="faq-question__icon" aria-hidden="true"><i class="mi mi-chat"></i></span>
+										<span class="faq-question__text"><?php echo esc_html( $faq_title ); ?></span>
+										<span class="faq-question__arrow" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
 									</div>
 								</div>
-								<div class="ttbm-modal-container" data-ttbm-modal-target="ttbm-hotel-faq-<?php echo $key; ?>">
+								<div class="ttbm-modal-container ttbm_hotel_faq_modal" data-ttbm-modal-target="<?php echo esc_attr( $modal_id ); ?>">
 									<div class="ttbm-modal-content">
-										<span class="ttbm-modal-close"><i class="fas fa-times"></i></span>
+										<span class="ttbm-modal-close" role="button" tabindex="0" aria-label="<?php esc_attr_e( 'Close', 'tour-booking-manager' ); ?>"><i class="fas fa-times"></i></span>
 										<div class="title">
-											<h2><?php esc_html_e('Your Question', 'tour-booking-manager'); ?></h2>
-											<p><strong><?php esc_html_e('About:', 'tour-booking-manager'); ?></strong> <?php echo the_title(); ?></p>
+											<h2><?php esc_html_e( 'Your Question', 'tour-booking-manager' ); ?></h2>
+											<p><strong><?php esc_html_e( 'About:', 'tour-booking-manager' ); ?></strong> <?php the_title(); ?></p>
 										</div>
 										<div class="content">
 											<div class="faq-question">
 												<i class="mi mi-chat"></i>
-												<?php echo $faq['title']; ?>
+												<?php echo esc_html( $faq_title ); ?>
 											</div>
 											<div class="faq-anwser">
-												<?php echo $faq['content']; ?>
+												<?php echo wp_kses_post( $faq_content ); ?>
 											</div>
 										</div>
 									</div>
 								</div>
-							<?php
-							$counter++;
-							if ($counter % 5 === 0 || $counter === count($faqs)) {
-								echo '</div>';
-							}
-							}
-						?>
+							<?php endforeach; ?>
+						</div>
 					</div>
 				</div>
 				<?php
-				endif;
 			}
 		}
 		new TTBM_Hotel_Faq();

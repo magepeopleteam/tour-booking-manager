@@ -1021,7 +1021,7 @@ input.medium{
 	.ttbm_style button:focus span { color: var(--mpl-dark);}
 	.ttbm_style [data-tabs-target].active {}
 	.ttbm_style [data-tabs-target]:hover { }
-	.auto-search-wrapper.loupe::before { margin: 10px 0;}
+	.auto-search-wrapper.loupe::before { margin: 15px 0;}
 	.auto-search-wrapper.loupe button { display: none;}
 	.ttbm-avg-review-header { align-items: center !important;}
 	.ttbm_style [data-tabs-target].active { background-color: var(--mpl-white); color: var(--d_color);}

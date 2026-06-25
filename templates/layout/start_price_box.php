@@ -2,9 +2,9 @@
 	if ( ! defined( 'ABSPATH' ) ) {
 		die;
 	}
-	$ttbm_post_id     = $ttbm_post_id ?? get_the_id();
-	$tour_id          = $tour_id ?? TTBM_Function::post_id_multi_language( $ttbm_post_id );
-	$start_price = TTBM_Function::get_tour_start_price( $ttbm_post_id );
+	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
+	$tour_id      = $tour_id ?? TTBM_Function::post_id_multi_language( $ttbm_post_id );
+	$start_price  = TTBM_Function::get_tour_start_price( $tour_id );
 	$count       = $count ?? 0;
 	if ( $start_price && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) != 'off' ) {
 		?>

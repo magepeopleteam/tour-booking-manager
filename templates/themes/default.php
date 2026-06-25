@@ -30,17 +30,21 @@
 												<?php if ( $ttbm_hero_display_reg != 'off' ) : ?>
 													<div class="ttbm_hero_cta">
 														<div class="ttbm_hero_cta_meta">
-															<?php if ( $ttbm_hero_price && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) != 'off' ) : ?>
+															<?php if ( $ttbm_hero_price ) : ?>
 																<div class="ttbm_hero_price ttbm_hero_stat">
 																	<span class="ttbm_hero_stat_icon" aria-hidden="true"><i class="mi mi-coins"></i></span>
 																	<span class="ttbm_hero_stat_body">
 																		<span class="ttbm_hero_price_label"><?php esc_html_e( 'Prices Start At', 'tour-booking-manager' ); ?></span>
 																		<span class="ttbm_hero_price_value">
 																			<?php
-																			$wrapper_class  = 'ttbm_hero_price_values';
-																			$original_class = 'ttbm_hero_price_regular ttbm_regular_price strikeLine';
-																			$current_class  = 'ttbm_hero_price_sale';
+																			$start_price                 = $ttbm_hero_price;
+																			$regular_price               = TTBM_Function::get_tour_start_regular_price( $tour_id );
+																			$ttbm_force_hero_price       = true;
+																			$wrapper_class               = 'ttbm_hero_price_values';
+																			$original_class              = 'ttbm_hero_price_regular ttbm_regular_price strikeLine';
+																			$current_class               = 'ttbm_hero_price_sale';
 																			include TTBM_Function::template_path( 'layout/start_price_display.php' );
+																			unset( $ttbm_force_hero_price );
 																			?>
 																		</span>
 																	</span>

@@ -5,13 +5,23 @@
 
 	$ttbm_post_id   = $ttbm_post_id ?? get_the_id();
 	$tour_id        = $tour_id ?? TTBM_Function::post_id_multi_language( $ttbm_post_id );
-	$start_price    = $start_price ?? TTBM_Function::get_tour_start_price( $tour_id );
-	$regular_price  = $regular_price ?? TTBM_Function::get_tour_start_regular_price( $tour_id );
+
+	if ( empty( $start_price ) ) {
+		$start_price = TTBM_Function::get_tour_start_price( $tour_id );
+	}
+	if ( empty( $regular_price ) ) {
+		$regular_price = TTBM_Function::get_tour_start_regular_price( $tour_id );
+	}
 	$wrapper_class  = $wrapper_class ?? '';
 	$current_class  = $current_class ?? '';
 	$original_class = $original_class ?? 'ttbm_regular_price strikeLine';
 
-	if ( ! $start_price || TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) === 'off' ) {
+	if ( ! $start_price ) {
+		return;
+	}
+
+	$show_price_start = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) !== 'off';
+	if ( ! $show_price_start && empty( $ttbm_force_hero_price ) ) {
 		return;
 	}
 

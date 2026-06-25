@@ -50,44 +50,30 @@
 				// (now the frontend falls back to iframe, so OSMap is only used in admin)
 			}
 			public function location_tab_content($tour_id) {
+				$display_name = 'ttbm_display_location';
+				$display      = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
+				$checked      = $display === 'off' ? '' : 'checked';
 				?>
                 <div class="tabsItem ttbm_settings_general contentTab" data-tabs="#ttbm_settings_location">
                     <h2><?php esc_html_e('Location Settings', 'tour-booking-manager'); ?></h2>
                     <p><?php esc_html_e('Here you can set your tour locatoin Settings', 'tour-booking-manager'); ?></p>
                     <section>
-                        <div class="ttbm-header">
+                        <div class="ttbm-header ttbm-header--with-switch">
                             <h4><i class="fas fa-map-marker-alt"></i><?php esc_html_e('Location Settings', 'tour-booking-manager'); ?></h4>
+							<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
                         </div>
-                        <div class="dFlex">
-                            <div class="col-left">
-								<?php $this->location_enable($tour_id); ?>
-								<?php $this->create_location($tour_id); ?>
-                            </div>
-                            <div class="col-right">
-								<?php $this->map_enable($tour_id); ?>
-								<?php $this->location($tour_id); ?>
-                            </div>
+                        <div class="ttbm-location-settings-body">
+							<?php $this->location($tour_id); ?>
+							<?php $this->map_enable($tour_id); ?>
                         </div>
 						<?php $this->map_display($tour_id); ?>
                     </section>
+					<?php do_action('ttbm_location_tab_bottom', $tour_id); ?>
 					<?php self::add_new_location_popup(); ?>
                 </div>
 				<?php
 			}
 			//*************location setup***********//
-			public function location_enable($tour_id) {
-				$display_name = 'ttbm_display_location';
-				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
-				$checked = $display == 'off' ? '' : 'checked';
-				?>
-                <div class="label">
-                    <div class="label-inner">
-                        <p><?php esc_html_e('Location Enable/Disable', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Show/Hide location in frontend', 'tour-booking-manager'); ?></span></i></p>
-                    </div>
-					<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
-                </div>
-				<?php
-			}
 			public function location($tour_id) {
 				$display_name = 'ttbm_display_location';
 				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
@@ -102,26 +88,14 @@
 								<i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Select Tour Location from this list', 'tour-booking-manager'); ?></span></i>
 							</p>
                         </div>
-						<?php self::location_select($tour_id); ?>
+						<div class="ttbm-location-select-wrap">
+							<?php self::location_select($tour_id); ?>
+							<p class="ttbm-location-hint"><?php esc_html_e("If your location isn't listed,", 'tour-booking-manager'); ?> <button type="button" class="ttbm-location-add-link" data-target-popup="add_new_location_popup"><?php esc_html_e('Add location', 'tour-booking-manager'); ?></button></p>
+						</div>
                     </div>
 					<p id="ttbm_location_error" style="display:none;color:#dc2626;font-size:12px;font-weight:500;margin:6px 0 0;">
 						<span style="margin-right:4px;">&#9888;</span><?php esc_html_e('Please select a location before saving.', 'tour-booking-manager'); ?>
 					</p>
-                </div>
-				<?php
-			}
-			public function create_location($tour_id) {
-				$display_name = 'ttbm_display_location';
-				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
-				$active = ($display == 'off') ? '' : 'mActive';
-				?>
-                <div class="<?php echo esc_attr($active); ?>" data-collapse="#ttbm_display_location">
-                    <div class="label">
-                        <div class="label-inner">
-                            <p><?php esc_html_e('Create New Location', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Create Tour Location if not exits', 'tour-booking-manager'); ?></span></i></p>
-                        </div>
-						<?php TTBM_Custom_Layout::popup_button_xs('add_new_location_popup', esc_html__('Create New Location', 'tour-booking-manager')); ?>
-                    </div>
                 </div>
 				<?php
 			}
@@ -134,7 +108,7 @@
 				$value = TTBM_Global_Function::get_post_info($tour_id, $location_key, array());
 				$all_location = TTBM_Function::get_all_location();
 				?>
-                <select id="ttbm_location_select" style="width: 70%;" name="<?php echo esc_attr($location_key); ?>">
+                <select id="ttbm_location_select" name="<?php echo esc_attr($location_key); ?>">
 					<option value=""><?php esc_html_e('— Select Location —', 'tour-booking-manager'); ?></option>
 					<?php foreach ($all_location as $key => $location) : ?>
                         <option value="<?php echo esc_attr($key); ?>" <?php echo esc_attr($key == $value ? 'selected' : ''); ?>><?php echo esc_html($location); ?></option>
@@ -144,23 +118,27 @@
 			}
 			public static function add_new_location_popup() {
 				?>
-                <div class="ttbm_popup" data-popup="add_new_location_popup">
+                <div class="ttbm_popup ttbm-location-popup" data-popup="add_new_location_popup">
                     <div class="popupMainArea">
-                        <div class="popupHeader">
-                            <h4 class="text-primary">
-								<?php esc_html_e('Add New Location', 'tour-booking-manager'); ?>
-                                <p class="_textSuccess_ml_dNone ttbm_success_info">
-                                    <span class="fas fa-check-circle mR_xs text-primary"></span>
-									<?php esc_html_e('Location is added successfully.', 'tour-booking-manager') ?>
-                                </p>
-                            </h4>
-                            <span class="fas fa-times popupClose"></span>
+                        <div class="popupHeader ttbm-location-popup__header">
+							<div class="ttbm-location-popup__title-wrap">
+								<h4>
+									<i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+									<?php esc_html_e('Add New Location', 'tour-booking-manager'); ?>
+								</h4>
+								<p class="ttbm-location-popup__success ttbm_success_info _textSuccess_ml_dNone">
+									<span class="fas fa-check-circle" aria-hidden="true"></span>
+									<?php esc_html_e('Location is added successfully.', 'tour-booking-manager'); ?>
+								</p>
+							</div>
+                            <button type="button" class="ttbm-location-popup__close popupClose" aria-label="<?php esc_attr_e('Close', 'tour-booking-manager'); ?>">
+								<span class="fas fa-times" aria-hidden="true"></span>
+							</button>
                         </div>
-                        <div class="popupBody ttbm_location_form_area">
-                        </div>
-                        <div class="popupFooter">
+                        <div class="popupBody ttbm_location_form_area"></div>
+                        <div class="popupFooter ttbm-location-popup__footer">
                             <div class="buttonGroup">
-                                <button class="btn ttbm_new_location_save" type="button"><?php esc_html_e('Save', 'tour-booking-manager'); ?></button>
+                                <button class="_themeButton ttbm_new_location_save" type="button"><?php esc_html_e('Save', 'tour-booking-manager'); ?></button>
                                 <button class="_warningButton ttbm_new_location_save_close" type="button"><?php esc_html_e('Save & Close', 'tour-booking-manager'); ?></button>
                             </div>
                         </div>
@@ -168,54 +146,110 @@
                 </div>
 				<?php
 			}
+			private static function location_popup_field( string $label, string $content, array $args = [] ): void {
+				$required = ! empty( $args['required'] );
+				$hint_key = $args['hint_key'] ?? '';
+				$error_key = $args['error_key'] ?? '';
+				$error_msg = $args['error_msg'] ?? '';
+				?>
+				<div class="ttbm-location-popup-field<?php echo $required ? ' ttbm-location-popup-field--required' : ''; ?>">
+					<label class="ttbm-location-popup-label">
+						<?php echo esc_html( $label ); ?>
+						<?php if ( $required ) : ?>
+							<span class="ttbm-location-popup-required" aria-hidden="true">*</span>
+						<?php endif; ?>
+					</label>
+					<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted field markup ?>
+					<?php if ( $hint_key ) : ?>
+						<p class="ttbm-location-popup-hint"><?php TTBM_Settings::des_p( $hint_key ); ?></p>
+					<?php endif; ?>
+					<?php if ( $error_key && $error_msg ) : ?>
+						<p class="textRequired ttbm-location-popup-error" data-required="<?php echo esc_attr( $error_key ); ?>">
+							<span class="fas fa-info-circle" aria-hidden="true"></span>
+							<?php echo esc_html( $error_msg ); ?>
+						</p>
+					<?php endif; ?>
+				</div>
+				<?php
+			}
 			public function load_ttbm_location_form() {
 				if (!$this->current_user_can_manage_locations()) {
 					wp_die(esc_html__('You do not have permission to access this form.', 'tour-booking-manager'), '', ['response' => 403]);
 				}
 				$all_countries = ttbm_get_coutnry_arr();
+				wp_nonce_field('ttbm_add_new_location_popup', 'ttbm_add_new_location_popup');
+				ob_start();
 				?>
-                <label class="flexEqual">
-                    <span><?php esc_html_e('Location Name : ', 'tour-booking-manager'); ?><sup class="textRequired">*</sup></span>
-                    <input type="text" name="ttbm_new_location_name" class="formControl" required>
-                </label>
-                <p class="textRequired" data-required="ttbm_new_location_name">
-                    <span class="fas fa-info-circle"></span>
-					<?php esc_html_e('Location name is required!', 'tour-booking-manager'); ?>
-                </p>
-				<?php TTBM_Settings::des_p('ttbm_new_location_name'); ?>
-                <div class="divider"></div>
-                <label class="flexEqual">
-                    <span><?php esc_html_e('Location Description : ', 'tour-booking-manager'); ?></span>
-                    <textarea name="ttbm_location_description" class="formControl" rows="3"></textarea>
-                </label>
-				<?php TTBM_Settings::des_p('ttbm_location_description'); ?>
-                <div class="divider"></div>
-                <label class="flexEqual">
-                    <span><?php esc_html_e('Location Address : ', 'tour-booking-manager'); ?></span>
-                    <textarea name="ttbm_location_address" class="formControl" rows="3"></textarea>
-                </label>
-				<?php TTBM_Settings::des_p('ttbm_location_address'); ?>
-                <div class="divider"></div>
-                <label class="flexEqual">
-                    <span><?php esc_html_e('Location Country : ', 'tour-booking-manager'); ?></span>
-                    <select class="formControl" name="ttbm_location_country>">
-						<?php foreach ($all_countries as $key => $country) { ?>
-                            <option value="<?php echo esc_attr($key); ?>"><?php echo esc_html($country); ?></option>
-						<?php } ?>
-                    </select>
-                </label>
-				<?php TTBM_Settings::des_p('ttbm_location_country'); ?>
-                <div class="divider"></div>
-                <div class="flexEqual">
-                    <span><?php esc_html_e('Location Image : ', 'tour-booking-manager'); ?><sup class="textRequired">*</sup></span>
-					<?php TTBM_Layout::single_image_button('ttbm_location_image'); ?>
-                </div>
-                <p class="textRequired" data-required="ttbm_location_image">
-                    <span class="fas fa-info-circle"></span>
-					<?php esc_html_e('Location image is required!', 'tour-booking-manager'); ?>
-                </p>
-				<?php TTBM_Settings::des_p('ttbm_location_image'); ?>
+				<div class="ttbm-location-popup-fields">
+					<?php
+					ob_start();
+					?>
+					<input type="text" name="ttbm_new_location_name" class="formControl" required>
+					<?php
+					self::location_popup_field(
+						esc_html__('Location Name', 'tour-booking-manager'),
+						ob_get_clean(),
+						[
+							'required'   => true,
+							'hint_key'   => 'ttbm_new_location_name',
+							'error_key'  => 'ttbm_new_location_name',
+							'error_msg'  => esc_html__('Location name is required!', 'tour-booking-manager'),
+						]
+					);
+
+					ob_start();
+					?>
+					<textarea name="ttbm_location_description" class="formControl" rows="3"></textarea>
+					<?php
+					self::location_popup_field(
+						esc_html__('Location Description', 'tour-booking-manager'),
+						ob_get_clean(),
+						[ 'hint_key' => 'ttbm_location_description' ]
+					);
+
+					ob_start();
+					?>
+					<textarea name="ttbm_location_address" class="formControl" rows="3"></textarea>
+					<?php
+					self::location_popup_field(
+						esc_html__('Location Address', 'tour-booking-manager'),
+						ob_get_clean(),
+						[ 'hint_key' => 'ttbm_location_address' ]
+					);
+
+					ob_start();
+					?>
+					<select class="formControl" name="ttbm_location_country">
+						<option value=""><?php esc_html_e('Please Select a Country', 'tour-booking-manager'); ?></option>
+						<?php foreach ($all_countries as $key => $country) : ?>
+							<option value="<?php echo esc_attr($key); ?>"><?php echo esc_html($country); ?></option>
+						<?php endforeach; ?>
+					</select>
+					<?php
+					self::location_popup_field(
+						esc_html__('Location Country', 'tour-booking-manager'),
+						ob_get_clean(),
+						[ 'hint_key' => 'ttbm_location_country' ]
+					);
+
+					ob_start();
+					TTBM_Layout::single_image_button('ttbm_location_image');
+					?>
+					<?php
+					self::location_popup_field(
+						esc_html__('Location Image', 'tour-booking-manager'),
+						ob_get_clean(),
+						[
+							'required'  => true,
+							'hint_key'  => 'ttbm_location_image',
+							'error_key' => 'ttbm_location_image',
+							'error_msg' => esc_html__('Location image is required!', 'tour-booking-manager'),
+						]
+					);
+					?>
+				</div>
 				<?php
+				echo ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				die();
 			}
 			public function ttbm_reload_location_list() {
@@ -239,7 +273,7 @@
 				$longitude     = !empty($longitude) ? $longitude : '-74.005974';
 				$map_settings  = get_option('ttbm_google_map_settings');
 				$gmap_api_key  = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
-				$display_map   = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'off');
+				$display_map   = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'on');
 
 				if ($display_map !== 'on') return;
 				?>
@@ -274,10 +308,12 @@
 				<?php
 			}
 			public function map_enable($tour_id) {
-				$display_map = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'on');
-				$checked = $display_map == 'off' ? '' : 'checked';
+				$display_location = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_location', 'on');
+				$display_map      = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'on');
+				$checked          = ( $display_map === 'off' ) ? '' : 'checked';
+				$hidden_style     = ( $display_location === 'off' ) ? ' style="display:none;"' : '';
 				?>
-                <div>
+                <div class="ttbm-map-enable-wrap"<?php echo $hidden_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
                     <label class="label">
                         <div class="label-inner">
                             <p><?php esc_html_e('Enable/Disable Map Location', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('To show Tour Location on Map enable It.', 'tour-booking-manager'); ?></span></i></p>

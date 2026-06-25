@@ -411,25 +411,220 @@
         });
     }
     //*****Place you see****************//
-    $(document).on('click', '.ttbm_settings_place_you_see [data-target-popup]', function () {
-        let target = $(this).closest('.ttbm_settings_place_you_see').find('.ttbm_place_you_see_form_area');
+    function ttbm_get_place_popup() {
+        return $('[data-popup="add_new_place_popup"]');
+    }
+    function ttbm_get_place_popup_form_area() {
+        return ttbm_get_place_popup().find('.ttbm_place_you_see_form_area');
+    }
+    function ttbm_parse_place_save_response(response) {
+        if (response && typeof response === 'object') {
+            return response;
+        }
+        if (typeof response === 'string' && response.trim()) {
+            try {
+                return JSON.parse(response);
+            } catch (error) {
+                return null;
+            }
+        }
+        return null;
+    }
+    function ttbm_reinit_place_select($select) {
+        if (!$select || !$select.length || !$.fn.select2) {
+            return;
+        }
+        if ($select.hasClass('select2-hidden-accessible')) {
+            $select.select2('destroy');
+        }
+        $select.removeClass('add_ttbm_select2').addClass('ttbm_select2');
+        $select.select2({});
+    }
+    function ttbm_refresh_place_dropdowns(selectedPlaceId, placeName) {
+        let $area = $('.ttbm_settings_place_you_see .ttbm_place_you_see_table');
+        let $targetSelect = $('.ttbm_settings_place_you_see').data('ttbm-place-target-select');
+        if (typeof ttbm_admin_ajax === 'undefined') {
+            return;
+        }
         $.ajax({
-            type: 'POST', url: ttbm_ajax_url, data: {
-                "action": "load_ttbm_place_you_see_form"
-            }, beforeSend: function () {
-                dLoader(target);
-            }, success: function (data) {
-                target.html(data).slideDown('fast').promise().done(function () {
-                    dLoaderRemove(target);
+            type: 'POST',
+            url: ttbm_ajax_url,
+            data: {
+                action: 'ttbm_reload_place_dropdown_options',
+                nonce: ttbm_admin_ajax.nonce
+            },
+            beforeSend: function () {
+                if ($area.length) {
+                    dLoader($area);
+                }
+            },
+            success: function (response) {
+                let parsed = ttbm_parse_place_save_response(response);
+                let optionsHtml = parsed && parsed.success && parsed.data ? parsed.data.options : '';
+                if (!optionsHtml) {
+                    dLoaderRemove($area);
+                    return;
+                }
+                let $selects = $('.ttbm_settings_place_you_see').find('select[name="ttbm_city_place_id[]"]');
+                $selects.each(function () {
+                    let $select = $(this);
+                    let preserveVal = '';
+                    if ($targetSelect && $targetSelect.length && $select.is($targetSelect) && selectedPlaceId) {
+                        preserveVal = String(selectedPlaceId);
+                    } else if ($select.val()) {
+                        preserveVal = String($select.val());
+                    }
+                    $select.html(optionsHtml);
+                    if (preserveVal && $select.find('option[value="' + preserveVal + '"]').length) {
+                        $select.val(preserveVal);
+                    }
+                    ttbm_reinit_place_select($select);
+                    if (preserveVal) {
+                        $select.trigger('change');
+                    }
                 });
+                if ($targetSelect && $targetSelect.length && selectedPlaceId) {
+                    let $row = $targetSelect.closest('tr');
+                    if (placeName) {
+                        $row.find('input[name="ttbm_place_label[]"]').val(placeName);
+                    }
+                }
+                dLoaderRemove($area);
+            },
+            error: function (response) {
+                dLoaderRemove($area);
+                console.log(response);
             }
         });
-    });
-    $(document).on('click', '.ttbm_settings_place_you_see  .popupClose', function (e) {
-        if (e.result) {
-            $(this).closest('.ttbm_settings_place_you_see').find('.ttbm_place_you_see_form_area').html('');
+    }
+    function ttbm_show_place_save_error($popup, message) {
+        let $error = $popup.find('.ttbm-place-save-error');
+        if (!$error.length) {
+            return;
         }
+        if (message) {
+            $error.text(message).show();
+        } else {
+            $error.hide().text('');
+        }
+    }
+    function ttbm_load_place_popup_form() {
+        let $popup = ttbm_get_place_popup();
+        let target = $popup.find('.ttbm_place_you_see_form_area');
+        if (!target.length) {
+            return;
+        }
+        ttbm_show_place_save_error($popup, '');
+        $.ajax({
+            type: 'POST',
+            url: ttbm_ajax_url,
+            data: {
+                action: 'load_ttbm_place_you_see_form',
+                nonce: (typeof ttbm_admin_ajax !== 'undefined') ? ttbm_admin_ajax.nonce : ''
+            },
+            beforeSend: function () {
+                dLoader(target);
+            },
+            success: function (data) {
+                target.html(data).show();
+                dLoaderRemove(target);
+            },
+            error: function (response) {
+                dLoaderRemove(target);
+                ttbm_show_place_save_error($popup, 'Could not load the form. Please try again.');
+                console.log(response);
+            }
+        });
+    }
+    $(document).on('click', '.ttbm_settings_place_you_see [data-target-popup="add_new_place_popup"]', function (e) {
+        e.preventDefault();
+        $('.ttbm_settings_place_you_see').data('ttbm-place-target-select', $(this).closest('.ttbm-place-select-wrap').find('select'));
+        ttbm_load_place_popup_form();
     });
+    $(document).on('click', '.ttbm-place-popup .popupClose', function () {
+        let $popup = $(this).closest('[data-popup="add_new_place_popup"]');
+        ttbm_get_place_popup_form_area().empty();
+        ttbm_show_place_save_error($popup, '');
+        $popup.find('.ttbm_success_info').removeClass('is-visible').hide();
+    });
+    $(document).on('click', '.ttbm-place-popup .ttbm_new_place_save_close', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        ttbm_get_place_popup_form_area().empty();
+        ttbm_show_place_save_error($(this).closest('[data-popup="add_new_place_popup"]'), '');
+        $(this).closest('[data-popup]').find('.popupClose').trigger('click');
+    });
+    $(document).on('click', '.ttbm-place-popup .ttbm_new_place_save', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        ttbm_new_place_save($(this));
+    });
+    function ttbm_new_place_save($this) {
+        let $popup = $this.closest('[data-popup="add_new_place_popup"]');
+        let parent = $this.closest('.popupMainArea');
+        ttbm_show_place_save_error($popup, '');
+        parent.find('.ttbm_success_info').removeClass('is-visible').hide();
+        parent.find('[data-required]').hide();
+        let name = $.trim(parent.find('[name="ttbm_place_name"]').val() || '');
+        let description = parent.find('[name="ttbm_place_description"]').val() || '';
+        let image = parent.find('[name="ttbm_place_image"]').val() || '';
+        let isValid = true;
+        if (!name) {
+            parent.find('[data-required="ttbm_place_name"]').show();
+            isValid = false;
+        }
+        if (!image) {
+            parent.find('[data-required="ttbm_place_image"]').show();
+            isValid = false;
+        }
+        if (!isValid) {
+            ttbm_show_place_save_error($popup, 'Please fill in all required fields.');
+            parent.find('.popupBody').scrollTop(0);
+            return false;
+        }
+        if (!parent.find('[name="ttbm_add_new_place_popup"]').val()) {
+            ttbm_show_place_save_error($popup, 'Form is not ready. Please close and reopen the popup.');
+            return false;
+        }
+        $.ajax({
+            type: 'POST',
+            url: ttbm_ajax_url,
+            data: {
+                action: 'ttbm_new_place_save',
+                name: name,
+                description: description,
+                image: image,
+                _wp_nonce: parent.find('[name="ttbm_add_new_place_popup"]').val()
+            },
+            beforeSend: function () {
+                dLoader(parent);
+            },
+            success: function (response) {
+                dLoaderRemove(parent);
+                let parsed = ttbm_parse_place_save_response(response);
+                if (!parsed || !parsed.success) {
+                    let message = (parsed && parsed.data && parsed.data.message) ? parsed.data.message : 'Could not save place. Please try again.';
+                    ttbm_show_place_save_error($popup, message);
+                    return;
+                }
+                let postId = parsed.data ? parsed.data.post_id : 0;
+                let placeName = parsed.data ? parsed.data.name : name;
+                parent.find('[name="ttbm_place_name"]').val('');
+                parent.find('[name="ttbm_place_description"]').val('');
+                parent.find('[name="ttbm_place_image"]').val('');
+                parent.find('.ttbm_image_remove, .ttbm_remove_single_image').trigger('click');
+                parent.find('.ttbm_success_info').addClass('is-visible').show();
+                ttbm_refresh_place_dropdowns(postId, placeName);
+                return true;
+            },
+            error: function (response) {
+                dLoaderRemove(parent);
+                ttbm_show_place_save_error($popup, 'Could not save place. Please try again.');
+                console.log(response);
+            }
+        });
+        return false;
+    }
     $(document).on('change', '.ttbm_settings_place_you_see select[name="ttbm_city_place_id[]"]', function () {
         let $select = $(this);
         let placeId = $select.val();

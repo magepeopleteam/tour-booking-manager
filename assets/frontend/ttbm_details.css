@@ -603,6 +603,11 @@
 	background: rgba(255, 255, 255, 0.92);
 }
 
+#ttbm_content .ttbm_default_theme .ttbm_hero_price.ttbm_hero_stat {
+	flex: 0 1 auto;
+	min-width: 132px;
+}
+
 #ttbm_content .ttbm_default_theme .ttbm_hero_stat + .ttbm_hero_stat {
 	border-left: 1px solid rgba(15, 23, 42, 0.08);
 }

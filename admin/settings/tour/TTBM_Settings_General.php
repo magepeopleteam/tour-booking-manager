@@ -32,7 +32,6 @@
                         <div class="dFlex">
                             <div class="col-left">
 								<?php $this->tour_duration($tour_id); ?>
-								<?php $this->starting_price($tour_id); ?>
 								<?php $this->age_range($tour_id); ?>
 								<?php $this->starting_place($tour_id); ?>
 								<?php $this->short_description_toggle($tour_id); ?>
@@ -108,6 +107,24 @@
 				<?php
 			}
 			public function starting_price($tour_id) {
+				$display_name = 'ttbm_display_price_start';
+				$display      = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
+				$value_name   = 'ttbm_travel_start_price';
+				$value        = TTBM_Global_Function::get_post_info($tour_id, $value_name);
+				$placeholder  = esc_html__('Type Start Price', 'tour-booking-manager');
+				$checked      = $display === 'off' ? '' : 'checked';
+				$active       = $display === 'off' ? '' : 'mActive';
+				?>
+                <div class="label">
+                    <div class="label-inner">
+                        <p><?php esc_html_e('Tour Start Price', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('start_price'); ?></span></i></p>
+                    </div>
+                    <div class="_dFlex_alignCenter_justifyBetween">
+						<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
+                        <input type="number" min="0" step="0.01" data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+                    </div>
+                </div>
+				<?php
 			}
 			public function starting_place($tour_id) {
 				$status_field_name = 'ttbm_display_start_location';

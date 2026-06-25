@@ -29,6 +29,31 @@ function ttbm_load_sortable_datepicker(parent, item) {
     $(document).ready(function () {
         //=========Short able==============//
         $(document).find(".ttbm_sortable_area").sortable({handle: $(this).find(".ttbm_sortable_button"),});
+        ttbmSyncPillCustomInput($(".ttbm_settings_dates .ttbm-pill-group"));
+    });
+    function ttbmSyncPillCustomInput($pillGroup) {
+        if (!$pillGroup || !$pillGroup.length) {
+            return;
+        }
+        let $customBtn = $pillGroup.find("[data-pill-custom]");
+        let $customInput = $pillGroup.find(".ttbm-pill-custom-input");
+        if (!$customBtn.length || !$customInput.length) {
+            return;
+        }
+        if ($customBtn.hasClass("active")) {
+            $customInput.removeClass("dNone").show().focus();
+        } else {
+            $customInput.addClass("dNone").hide();
+        }
+    }
+    $(document).on("click", ".ttbm_settings_dates .ttbm-pill-group [data-group-radio]", function () {
+        let $pillGroup = $(this).closest(".ttbm-pill-group");
+        window.setTimeout(function () {
+            ttbmSyncPillCustomInput($pillGroup);
+        }, 0);
+    });
+    $(document).on("click focus", ".ttbm_settings_dates .ttbm-pill-custom-input", function (e) {
+        e.stopPropagation();
     });
     //=========upload image==============//
     $(document).on("click", ".ttbm_add_single_image", function () {
@@ -87,6 +112,45 @@ function ttbm_load_sortable_datepicker(parent, item) {
         wp.media.editor.open($(this));
         return false;
     });
+    //=========Clear date/time field ==============//
+    function ttbmClearDateTimeField($trigger) {
+        let $clear = $trigger.closest(".ttbm-field-clear");
+        let $wrap = $clear.closest(".ttbm-datetime-clear-wrap");
+        if (!$wrap.length) {
+            return;
+        }
+        $wrap.find('input[type="hidden"]').each(function () {
+            this.value = "";
+        });
+        $wrap.find('input[type="time"], input.date_type, input.date_type_without_year, .formControl').each(function () {
+            if (this.type === "hidden") {
+                return;
+            }
+            let $input = $(this);
+            this.value = "";
+            $input.val("");
+            if ($input.hasClass("hasDatepicker")) {
+                try {
+                    $input.datepicker("setDate", null);
+                } catch (err) {}
+            }
+            $input.trigger("change").trigger("input").trigger("blur");
+        });
+    }
+    $(document).on("click", ".ttbm_settings_dates .ttbm-field-clear, .ttbm_settings_dates .ttbm-field-clear *", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        ttbmClearDateTimeField($(e.target));
+        return false;
+    });
+    $(document).on("keydown", ".ttbm_settings_dates .ttbm-field-clear", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            e.stopPropagation();
+            ttbmClearDateTimeField($(this));
+        }
+    });
     //=========Remove Setting Item ==============//
     $(document).on("click", ".ttbm_item_remove,.ttbm_remove_icon", function (e) {
         e.preventDefault();
@@ -98,21 +162,36 @@ function ttbm_load_sortable_datepicker(parent, item) {
         }
     });
     //=========Add Setting Item==============//
-    $(document).on("click", ".ttbm_add_item", function () {
-        let parent = $(this).closest('.ttbm_settings_area');
-        let target=parent.find('>.ttbm_hidden_content').first().find('.ttbm_hidden_item');
-        target.find('[data-collapse-target]').each(function (){
-            let current_id=$(this).attr('data-collapse-target');
+    $(document).on("click", ".ttbm_add_item", function (e) {
+        e.preventDefault();
+        let parent = $(this).closest('.ttbm_settings_area, .ttbm_settings_place_you_see');
+        if (!parent.length) {
+            return false;
+        }
+        let target = parent.find('>.ttbm_hidden_content').first().find('.ttbm_hidden_item');
+        if (!target.length) {
+            return false;
+        }
+        target.find('[data-collapse-target]').each(function () {
+            let current_id = $(this).attr('data-collapse-target');
             let unique_id = '#unique_id_' + Math.floor((Math.random() * 9999) + 999);
-            target.find('[data-collapse-target="'+current_id+'"]').attr('data-collapse-target',  unique_id);
-            target.find('[data-collapse="'+current_id+'"]').attr('data-collapse',  unique_id);
-        }).promise().done(function(){
+            target.find('[data-collapse-target="' + current_id + '"]').attr('data-collapse-target', unique_id);
+            target.find('[data-collapse="' + current_id + '"]').attr('data-collapse', unique_id);
+        }).promise().done(function () {
             let item = target.html();
             ttbm_load_sortable_datepicker(parent, item);
-            parent.find('.ttbm_item_insert').find('.add_ttbm_select2').select2({});
-
+            let $newSelect = parent.find('.ttbm_item_insert tr').last().find('select[name="ttbm_city_place_id[]"]');
+            if ($newSelect.length && $.fn.select2) {
+                if ($newSelect.hasClass('select2-hidden-accessible')) {
+                    $newSelect.select2('destroy');
+                }
+                $newSelect.removeClass('add_ttbm_select2').addClass('ttbm_select2');
+                $newSelect.select2({});
+            } else {
+                parent.find('.ttbm_item_insert').find('.add_ttbm_select2').select2({});
+            }
         });
-        return true;
+        return false;
     });
 })(jQuery);
 (function ($) {
@@ -203,6 +282,80 @@ function ttbm_load_sortable_datepicker(parent, item) {
         $('[name="ttbm_theme_file"]').val($(this).data('ttbm-template'));
         $('.ttbm-template ').removeClass('active')
         $(this).parent('.ttbm-template ').addClass('active');
+    });
+
+    // Location off cascades to map; map can be off while location stays on.
+    var ttbmLocationMapSyncing = false;
+
+    function ttbmSetCollapseState($panel, targetId, isOn) {
+        var $sections = $panel.find('[data-collapse="' + targetId + '"]');
+        var $switches = $panel.find('[data-collapse-target="' + targetId + '"]');
+        if (isOn) {
+            $sections.addClass('mActive').stop(true, true).slideDown(250);
+            $switches.addClass('mActive');
+        } else {
+            $sections.removeClass('mActive').stop(true, true).slideUp(250);
+            $switches.removeClass('mActive');
+        }
+    }
+
+    function ttbmOnLocationToggleChanged(isOn) {
+        var $panel = $('#ttbm_meta_box_panel');
+        var $mapInput = $panel.find('input[name="ttbm_display_map"]');
+        if (!$panel.find('input[name="ttbm_display_location"]').length) {
+            return;
+        }
+
+        ttbmLocationMapSyncing = true;
+        ttbmSetCollapseState($panel, '#ttbm_display_location', isOn);
+
+        var $mapEnableWrap = $panel.find('.ttbm-map-enable-wrap');
+        if (isOn) {
+            $mapEnableWrap.stop(true, true).slideDown(250);
+            if ($mapInput.length) {
+                $mapInput.prop('checked', true);
+                ttbmSetCollapseState($panel, '#ttbm_display_map', true);
+            }
+        } else if ($mapInput.length) {
+            $mapInput.prop('checked', false);
+            ttbmSetCollapseState($panel, '#ttbm_display_map', false);
+            $mapEnableWrap.stop(true, true).slideUp(250);
+        }
+
+        ttbmLocationMapSyncing = false;
+
+        if (isOn && typeof ensureLocationMap === 'function') {
+            setTimeout(ensureLocationMap, 400);
+        }
+    }
+
+    function ttbmOnMapToggleChanged(isOn) {
+        var $panel = $('#ttbm_meta_box_panel');
+        if (!$panel.find('input[name="ttbm_display_map"]').length) {
+            return;
+        }
+
+        ttbmLocationMapSyncing = true;
+        ttbmSetCollapseState($panel, '#ttbm_display_map', isOn);
+        ttbmLocationMapSyncing = false;
+
+        if (isOn && typeof ensureLocationMap === 'function') {
+            setTimeout(ensureLocationMap, 400);
+        }
+    }
+
+    $(document).on('change', '#ttbm_meta_box_panel input[name="ttbm_display_location"]', function () {
+        if (ttbmLocationMapSyncing) {
+            return;
+        }
+        ttbmOnLocationToggleChanged($(this).is(':checked'));
+    });
+
+    $(document).on('change', '#ttbm_meta_box_panel input[name="ttbm_display_map"]', function () {
+        if (ttbmLocationMapSyncing) {
+            return;
+        }
+        ttbmOnMapToggleChanged($(this).is(':checked'));
     });
 
 })(jQuery);

@@ -36,7 +36,7 @@
 			$start_date = '';
 			$all_dates  = TTBM_Function::get_date( $tour_id );
 			if ( ! empty( $all_dates ) ) {
-				$start_date = current( $all_dates );
+				$start_date = TTBM_Function::get_effective_booking_date( $tour_id, $all_dates );
 			}
 
 			foreach ( $tickets as $ticket ) {
@@ -67,10 +67,6 @@
 	$tour_id      = $tour_id ?? TTBM_Function::post_id_multi_language( $ttbm_post_id );
 
 	if ( TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_display_registration', 'on' ) === 'off' ) {
-		return;
-	}
-
-	if ( TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_display_price_start', 'on' ) === 'off' ) {
 		return;
 	}
 

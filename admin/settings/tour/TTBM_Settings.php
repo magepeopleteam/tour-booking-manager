@@ -16,6 +16,7 @@
 				add_action('admin_notices', [$this, 'render_date_migration_notice']);
 				add_action('admin_notices', [$this, 'render_title_required_notice']);
 				add_action('admin_notices', [$this, 'render_location_required_notice']);
+				add_action('admin_notices', [$this, 'render_featured_image_required_notice']);
 			}
 			//************************//
 			public function settings_meta() {
@@ -40,12 +41,10 @@
                                 <li data-tabs-target="#ttbm_settings_pricing"><i class="mi mi-coins"></i> <span><?php esc_html_e(' Pricing', 'tour-booking-manager'); ?></span>  </li>
                                 <li data-tabs-target="#ttbm_settings_extra_service"><i class="mi mi-apps-add"></i> <span><?php esc_html_e(' Extra Service', 'tour-booking-manager'); ?></span>  </li>
 								<?php do_action('ttbm_meta_box_tab_after_pricing'); ?>
-                                <li data-tabs-target="#ttbm_settings_gallery"><i class="mi mi-images"></i> <span><?php esc_html_e('Gallery ', 'tour-booking-manager'); ?></span> </li>
                                 <li data-tabs-target="#ttbm_settings_feature"><i class="mi mi-features"></i> <span><?php esc_html_e(' Features', 'tour-booking-manager'); ?></span> </li>
                                 <li data-tabs-target="#ttbm_settings_template"><i class="mi mi-table-layout"></i> <span><?php esc_html_e(' Template settings', 'tour-booking-manager'); ?></span> </li>
 								<li data-tabs-target="#ttbm_settings_guide"><i class="mi mi-hiking"></i> <span><?php echo esc_html($ttbm_label) . '  ' . esc_html__('Guide ', 'tour-booking-manager'); ?></span> </li>
                                 <li data-tabs-target="#ttbm_settings_activies"><i class="mi mi-practice"></i> <span><?php esc_html_e(' Activities', 'tour-booking-manager'); ?></span> </li>
-                                <li data-tabs-target="#ttbm_settings_place_you_see"><i class="mi mi-map-marker"></i> <span><?php esc_html_e(' Places You\'ll Visit', 'tour-booking-manager'); ?></span> </li>
                                 <li data-tabs-target="#ttbm_daywise_settings"><i class="fas fa-list-ul"></i> <span><?php esc_html_e('Itinerary Builder', 'tour-booking-manager'); ?></span> </li>
                                 <li data-tabs-target="#ttbm_faq_settings"><i class="mi mi-messages-question"></i> <span><?php esc_html_e('F.A.Q', 'tour-booking-manager'); ?></span> </li>
                                 <li data-tabs-target="#ttbm_settings_related_tour"><i class="mi mi-link"></i> <span><?php esc_html_e('Related ', 'tour-booking-manager') . esc_html($ttbm_label); ?></span> </li>
@@ -731,6 +730,17 @@
 				</div>
 				<?php
 			}
+			public function render_featured_image_required_notice(): void {
+				$user_id = get_current_user_id();
+				if (!get_transient('ttbm_featured_image_required_' . $user_id)) return;
+				delete_transient('ttbm_featured_image_required_' . $user_id);
+				?>
+				<div class="notice notice-error is-dismissible">
+					<p><strong><?php esc_html_e('Featured image is required.', 'tour-booking-manager'); ?></strong>
+					<?php esc_html_e('The post was kept as a draft. Please upload a featured image and save again.', 'tour-booking-manager'); ?></p>
+				</div>
+				<?php
+			}
 			//********************//
 			public function save_settings($tour_id) {
 				//echo '<pre>';print_r($_POST);echo '</pre>';die();
@@ -760,6 +770,12 @@
 						set_transient('ttbm_location_required_' . get_current_user_id(), 1, 60);
 						return;
 					}
+					$thumb_id = isset($_POST['_thumbnail_id']) ? (int) $_POST['_thumbnail_id'] : 0;
+					if ($thumb_id <= 0) {
+						wp_update_post(['ID' => $tour_id, 'post_status' => 'draft']);
+						set_transient('ttbm_featured_image_required_' . get_current_user_id(), 1, 60);
+						return;
+					}
 				}
 				/*******Genarel********/
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
@@ -773,7 +789,14 @@
 					update_post_meta($tour_id, 'ttbm_display_duration_night', $ttbm_display_duration);
 					/***************/
 					$ttbm_display_price_start = isset($_POST['ttbm_display_price_start']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_price_start'])) ? 'on' : 'off';
+					if ( ! isset( $_POST['ttbm_display_price_start'] ) ) {
+						$existing_display_price_start = get_post_meta( $tour_id, 'ttbm_display_price_start', true );
+						$ttbm_display_price_start     = $existing_display_price_start ? $existing_display_price_start : 'on';
+					}
 					$ttbm_travel_start_price = isset($_POST['ttbm_travel_start_price']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_start_price'])) : '';
+					if ( ! isset( $_POST['ttbm_travel_start_price'] ) ) {
+						$ttbm_travel_start_price = get_post_meta( $tour_id, 'ttbm_travel_start_price', true );
+					}
 					update_post_meta($tour_id, 'ttbm_display_price_start', $ttbm_display_price_start);
 					update_post_meta($tour_id, 'ttbm_travel_start_price', $ttbm_travel_start_price);
 					/***************/
@@ -825,6 +848,10 @@
 					/************************************/
 					$ttbm_display_location = isset($_POST['ttbm_display_location']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_location'])) ? 'on' : 'off';
 					$ttbm_location_name = isset($_POST['ttbm_location_name']) ? sanitize_text_field(wp_unslash($_POST['ttbm_location_name'])) : '';
+					$ttbm_display_map = isset($_POST['ttbm_display_map']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_map'])) ? 'on' : 'off';
+					if ( $ttbm_display_location === 'off' ) {
+						$ttbm_display_map = 'off';
+					}
 					update_post_meta($tour_id, 'ttbm_display_location', $ttbm_display_location);
 					update_post_meta($tour_id, 'ttbm_location_name', $ttbm_location_name);
 					$location = get_term_by('name', $ttbm_location_name, 'ttbm_tour_location');
@@ -834,7 +861,6 @@
 					}
 					update_post_meta($tour_id, 'ttbm_country_name', $ttbm_country_name);
 					/***************/
-					$ttbm_display_map = isset($_POST['ttbm_display_map']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_map'])) ? 'on' : 'off';
 					$ttbm_full_location_name = isset($_POST['ttbm_full_location_name']) ? sanitize_text_field(wp_unslash($_POST['ttbm_full_location_name'])) : '';
 					update_post_meta($tour_id, 'ttbm_display_map', $ttbm_display_map);
 					update_post_meta($tour_id, 'ttbm_full_location_name', $ttbm_full_location_name);
@@ -1050,6 +1076,10 @@
 				//*********Slider**************//
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
 					$slider = isset($_POST['ttbm_display_slider']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_slider'])) ? 'on' : 'off';
+					if ( ! isset( $_POST['ttbm_display_slider'] ) ) {
+						$existing_slider = get_post_meta( $tour_id, 'ttbm_display_slider', true );
+						$slider          = ( $existing_slider === 'on' ) ? 'on' : 'off';
+					}
 					$images = isset($_POST['ttbm_gallery_images']) ? sanitize_text_field(wp_unslash($_POST['ttbm_gallery_images'])) : '';
 					$all_images = explode(',', $images);
 					update_post_meta($tour_id, 'ttbm_display_slider', $slider);
@@ -1058,20 +1088,26 @@
 				//*********Place you see**************//
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
 					$place_info = array();
-					$hiphop = isset($_POST['ttbm_display_hiphop']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hiphop'])) ? 'on' : 'off';
-					$place_labels = isset($_POST['ttbm_place_label']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_place_label'])) : [];
-					$place_ids = isset($_POST['ttbm_city_place_id']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_city_place_id'])) : [];
+					$hiphop     = isset($_POST['ttbm_display_hiphop']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hiphop'])) ? 'on' : 'off';
+					if ( ! isset( $_POST['ttbm_display_hiphop'] ) ) {
+						$existing_hiphop = get_post_meta( $tour_id, 'ttbm_display_hiphop', true );
+						$hiphop          = ( $existing_hiphop === 'on' ) ? 'on' : 'off';
+					}
 					update_post_meta($tour_id, 'ttbm_display_hiphop', $hiphop);
-					if (sizeof($place_ids) > 0) {
-						foreach ($place_ids as $key => $place_id) {
-							if ($place_id && $place_id > 0) {
-								$place_name = $place_labels[$key];
-								$place_info[$key]['ttbm_city_place_id'] = $place_id;
-								$place_info[$key]['ttbm_place_label'] = $place_name ?: get_the_title($place_id);
+					if ( isset( $_POST['ttbm_place_label'] ) || isset( $_POST['ttbm_city_place_id'] ) ) {
+						$place_labels = isset($_POST['ttbm_place_label']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_place_label'])) : [];
+						$place_ids    = isset($_POST['ttbm_city_place_id']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_city_place_id'])) : [];
+						if (sizeof($place_ids) > 0) {
+							foreach ($place_ids as $key => $place_id) {
+								if ($place_id && $place_id > 0) {
+									$place_name = $place_labels[$key];
+									$place_info[$key]['ttbm_city_place_id'] = $place_id;
+									$place_info[$key]['ttbm_place_label']   = $place_name ?: get_the_title($place_id);
+								}
 							}
 						}
+						update_post_meta($tour_id, 'ttbm_hiphop_places', $place_info);
 					}
-					update_post_meta($tour_id, 'ttbm_hiphop_places', $place_info);
 				}
 				//*********get a Question**************//
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {

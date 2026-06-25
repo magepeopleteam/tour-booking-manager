@@ -17,6 +17,7 @@
 				add_action('admin_notices', [$this, 'render_title_required_notice']);
 				add_action('admin_notices', [$this, 'render_location_required_notice']);
 				add_action('admin_notices', [$this, 'render_featured_image_required_notice']);
+				add_action('admin_notices', [$this, 'render_dates_required_notice']);
 			}
 			//************************//
 			public function settings_meta() {
@@ -739,6 +740,105 @@
 				</div>
 				<?php
 			}
+			public function render_dates_required_notice(): void {
+				$user_id = get_current_user_id();
+				$message = get_transient('ttbm_dates_required_' . $user_id);
+				if (!$message) {
+					return;
+				}
+				delete_transient('ttbm_dates_required_' . $user_id);
+				?>
+				<div class="notice notice-error is-dismissible">
+					<p><strong><?php esc_html_e('Date configuration is incomplete.', 'tour-booking-manager'); ?></strong>
+					<?php echo esc_html($message); ?></p>
+				</div>
+				<?php
+			}
+			private function validate_date_fields(): ?string {
+				$travel_type = isset($_POST['ttbm_travel_type']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_type'])) : 'fixed';
+
+				if ($travel_type === 'fixed') {
+					$required_fields = array(
+						'ttbm_travel_start_date' => __('Start Date', 'tour-booking-manager'),
+						'ttbm_travel_end_date'   => __('End Date', 'tour-booking-manager'),
+						'ttbm_travel_start_time' => __('Start Time', 'tour-booking-manager'),
+						'ttbm_travel_end_time'   => __('End Time', 'tour-booking-manager'),
+					);
+					$missing = array();
+					foreach ($required_fields as $field_key => $label) {
+						$value = isset($_POST[ $field_key ]) ? trim(sanitize_text_field(wp_unslash($_POST[ $field_key ]))) : '';
+						if ($value === '') {
+							$missing[] = $label;
+						}
+					}
+					if (!empty($missing)) {
+						return sprintf(
+							/* translators: %s: comma-separated field labels */
+							__('Fixed tour dates require: %s.', 'tour-booking-manager'),
+							implode(', ', $missing)
+						);
+					}
+				} elseif ($travel_type === 'particular') {
+					$checkin_dates  = isset($_POST['ttbm_particular_start_date']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['ttbm_particular_start_date'])) : array();
+					$checkout_dates = isset($_POST['ttbm_particular_end_date']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['ttbm_particular_end_date'])) : array();
+					$checkin_times  = isset($_POST['ttbm_particular_start_time']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['ttbm_particular_start_time'])) : array();
+					$row_count      = max(count($checkin_dates), count($checkout_dates), count($checkin_times));
+					$has_complete   = false;
+
+					for ($index = 0; $index < $row_count; $index++) {
+						$start_date = trim($checkin_dates[ $index ] ?? '');
+						$start_time = trim($checkin_times[ $index ] ?? '');
+						$end_date   = trim($checkout_dates[ $index ] ?? '');
+
+						if ($start_date === '' && $start_time === '' && $end_date === '') {
+							continue;
+						}
+
+						if ($start_date === '' || $start_time === '' || $end_date === '') {
+							return __('Each particular date entry must include check-in date, check-in time, and check-out date.', 'tour-booking-manager');
+						}
+
+						$has_complete = true;
+					}
+
+					if (!$has_complete) {
+						return __('At least one particular date entry with check-in date, check-in time, and check-out date is required.', 'tour-booking-manager');
+					}
+				} elseif ($travel_type === 'repeated') {
+					$missing = array();
+					$start_date = isset($_POST['ttbm_travel_repeated_start_date']) ? trim(sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_start_date']))) : '';
+					$start_time = isset($_POST['ttbm_travel_repeated_start_time']) ? trim(sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_start_time']))) : '';
+					if ($start_time === '' && isset($_POST['ttbm_travel_start_time'])) {
+						$start_time = trim(sanitize_text_field(wp_unslash($_POST['ttbm_travel_start_time'])));
+					}
+					$repeat_type = isset($_POST['ttbm_repeat_type']) ? trim(sanitize_text_field(wp_unslash($_POST['ttbm_repeat_type']))) : '';
+
+					if ($start_date === '') {
+						$missing[] = __('Start Date', 'tour-booking-manager');
+					}
+					if ($start_time === '') {
+						$missing[] = __('Start Time', 'tour-booking-manager');
+					}
+					if ($repeat_type === '') {
+						$missing[] = __('End Repeat Logic', 'tour-booking-manager');
+					} elseif ($repeat_type === 'fixed') {
+						$end_date = isset($_POST['ttbm_travel_repeated_end_date']) ? trim(sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_end_date']))) : '';
+						if ($end_date === '') {
+							$missing[] = __('End Date', 'tour-booking-manager');
+						}
+					}
+
+					if (!empty($missing)) {
+						return sprintf(
+							/* translators: %s: comma-separated field labels */
+							__('Repeated tour dates require: %s.', 'tour-booking-manager'),
+							implode(', ', $missing)
+						);
+					}
+				}
+
+				return null;
+			}
 			//********************//
 			public function save_settings($tour_id) {
 				//echo '<pre>';print_r($_POST);echo '</pre>';die();
@@ -772,6 +872,12 @@
 					if ($thumb_id <= 0) {
 						wp_update_post(['ID' => $tour_id, 'post_status' => 'draft']);
 						set_transient('ttbm_featured_image_required_' . get_current_user_id(), 1, 60);
+						return;
+					}
+					$date_error = $this->validate_date_fields();
+					if ($date_error) {
+						wp_update_post(['ID' => $tour_id, 'post_status' => 'draft']);
+						set_transient('ttbm_dates_required_' . get_current_user_id(), $date_error, 60);
 						return;
 					}
 				}
@@ -915,17 +1021,20 @@
 					$ttbm_repeat_number = isset($_POST['ttbm_repeat_number']) ? sanitize_text_field(wp_unslash($_POST['ttbm_repeat_number'])) : '';
 					update_post_meta($tour_id, 'ttbm_repeat_number', $ttbm_repeat_number);
 					$ttbm_travel_repeated_end_date = isset($_POST['ttbm_travel_repeated_end_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_end_date'])) : '';
-					if ($ttbm_repeat_type == 'occurrence' && $ttbm_travel_repeated_end_date) {
-						$day_count = $ttbm_repeat_number * $ttbm_travel_repeated_after;
-						$ttbm_travel_repeated_end_date = gmdate('Y-m-d', strtotime($ttbm_travel_repeated_start_date . ' +' . $day_count . ' day'));
-					} elseif ($ttbm_repeat_type == 'fixed' && $ttbm_travel_repeated_end_date) {
-						// Format the end date to Y-m-d when repeat type is 'fixed' (On)
-						$parsed_date = strtotime($ttbm_travel_repeated_end_date);
-						if ($parsed_date !== false) {
-							$ttbm_travel_repeated_end_date = gmdate('Y-m-d', $parsed_date);
+					if ($ttbm_repeat_type === 'occurrence') {
+						if ($ttbm_travel_repeated_start_date) {
+							$day_count = max(1, (int) $ttbm_repeat_number) * max(1, (int) $ttbm_travel_repeated_after);
+							$ttbm_travel_repeated_end_date = gmdate('Y-m-d', strtotime($ttbm_travel_repeated_start_date . ' +' . $day_count . ' day'));
 						} else {
 							$ttbm_travel_repeated_end_date = '';
 						}
+					} elseif ($ttbm_repeat_type === 'fixed') {
+						if ($ttbm_travel_repeated_end_date) {
+							$parsed_date = strtotime($ttbm_travel_repeated_end_date);
+							$ttbm_travel_repeated_end_date = ($parsed_date !== false) ? gmdate('Y-m-d', $parsed_date) : '';
+						}
+					} elseif ($ttbm_repeat_type === 'continue') {
+						$ttbm_travel_repeated_end_date = '';
 					}
 					update_post_meta($tour_id, 'ttbm_travel_repeated_end_date', $ttbm_travel_repeated_end_date);
 					$display_time = isset($_POST['mep_disable_ticket_time']) && sanitize_text_field(wp_unslash($_POST['mep_disable_ticket_time'])) ? 'yes' : 'no';

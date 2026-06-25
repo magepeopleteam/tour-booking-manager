@@ -3583,6 +3583,22 @@ div.ttbm_global_settings .button-primary {
 	margin: 0 0 10px;
 }
 
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-panel-error {
+	margin: 0 0 16px;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-field-error .formControl,
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-field-error input[type="time"],
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-field-error .ttbm-input-icon {
+	border-color: #dc2626 !important;
+	box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.12);
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-particular-date-card.ttbm-date-field-error,
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-particular-date-card__field.ttbm-date-field-error {
+	border-color: #dc2626;
+}
+
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-field-label--sub {
 	margin-top: 14px;
 }

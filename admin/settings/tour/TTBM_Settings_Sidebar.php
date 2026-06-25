@@ -205,8 +205,7 @@ body.ttbm-tour-edit-page .wrap { padding: 0 20px 20px !important; margin: 0 auto
 .ttbm-sk-cb { width: 14px; height: 14px; flex-shrink: 0; border-radius: 3px !important; }
 .ttbm-sk-cb-label { height: 10px; flex: 1; max-width: 120px; }
 
-/* hide actual page while skeleton visible */
-#ttbm-page-loader ~ * { visibility: hidden !important; }
+/* Loader is a fixed overlay; do not hide page siblings or tab content stays invisible. */
 
 /* ── Hide original WP page title row (replaced by our header) ── */
 body.ttbm-tour-edit-page .wrap > h1.wp-heading-inline,
@@ -769,6 +768,9 @@ jQuery(function($){
 
 	/* ── Single consolidated submit interceptor ── */
 	$(document).on('click', '.ttbm-header-publish, [name="publish"], [name="save"]', function(e){
+		if (typeof ttbm_sync_visible_dates_to_hidden === 'function') {
+			ttbm_sync_visible_dates_to_hidden();
+		}
 		var valid = true;
 
 		/* 1. Title required */
@@ -794,6 +796,18 @@ jQuery(function($){
 		if (valid && !ttbmValidateFeaturedImage()) {
 			e.preventDefault();
 			$('html,body').animate({ scrollTop: Math.max(0, ($('#ttbm_featured_image_card').offset().top - 120)) }, 250);
+			valid = false;
+		}
+
+		/* 4. Date fields required by travel type */
+		if (valid && typeof ttbmValidateDates === 'function' && !ttbmValidateDates()) {
+			e.preventDefault();
+			setTimeout(function () {
+				var $target = $('#ttbm_fixed_dates_error:visible, #ttbm_particular_dates_error:visible, #ttbm_repeated_dates_error:visible').first();
+				if ($target.length) {
+					$('html,body').animate({ scrollTop: Math.max(0, ($target.offset().top - 120)) }, 250);
+				}
+			}, 180);
 			valid = false;
 		}
 

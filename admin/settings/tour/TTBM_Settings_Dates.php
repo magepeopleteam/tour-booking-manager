@@ -84,9 +84,10 @@
                                 <?php esc_html_e('Date Management', 'tour-booking-manager'); ?>
                             </h6>
                         </div>
+                        <p id="ttbm_fixed_dates_error" class="textRequired ttbm-date-panel-error" style="display:none;"></p>
                         <div class="ttbm-fixed-date-grid">
                             <div class="ttbm-fixed-date-field">
-                                <span class="ttbm-field-label"><?php esc_html_e('Start Date', 'tour-booking-manager'); ?></span>
+                                <span class="ttbm-field-label"><?php esc_html_e('Start Date', 'tour-booking-manager'); ?><sup class="textRequired ttbm-date-required-mark" data-ttbm-date-required="fixed">*</sup></span>
 								<?php self::datetime_clear_wrap_open(); ?>
                                 <label class="ttbm-input-icon ttbm-input-icon--date">
                                     <input type="hidden" name="ttbm_travel_start_date" value="<?php echo esc_attr($hidden_start_date); ?>"/>
@@ -95,7 +96,7 @@
 								<?php self::datetime_clear_wrap_close(); ?>
                             </div>
                             <div class="ttbm-fixed-date-field">
-                                <span class="ttbm-field-label"><?php esc_html_e('End Date', 'tour-booking-manager'); ?></span>
+                                <span class="ttbm-field-label"><?php esc_html_e('End Date', 'tour-booking-manager'); ?><sup class="textRequired ttbm-date-required-mark" data-ttbm-date-required="fixed">*</sup></span>
 								<?php self::datetime_clear_wrap_open(); ?>
                                 <label class="ttbm-input-icon ttbm-input-icon--date">
                                     <input type="hidden" name="ttbm_travel_end_date" value="<?php echo esc_attr($hidden_end_date); ?>"/>
@@ -113,7 +114,7 @@
 								<?php self::datetime_clear_wrap_close(); ?>
                             </div>
                             <div class="ttbm-fixed-date-field">
-                                <span class="ttbm-field-label"><?php esc_html_e('Start Time', 'tour-booking-manager'); ?></span>
+                                <span class="ttbm-field-label"><?php esc_html_e('Start Time', 'tour-booking-manager'); ?><sup class="textRequired ttbm-date-required-mark" data-ttbm-date-required="fixed">*</sup></span>
 								<?php self::datetime_clear_wrap_open(); ?>
                                 <label class="ttbm-input-icon ttbm-input-icon--time">
                                     <input type="time" name="ttbm_travel_start_time" class="formControl ttbm_travel_start_time" value="<?php echo esc_attr($start_time); ?>" onclick="document.querySelectorAll('.ttbm_travel_repeated_start_time').forEach(function(input){input.removeAttribute('name');});"/>
@@ -121,7 +122,7 @@
 								<?php self::datetime_clear_wrap_close(); ?>
                             </div>
                             <div class="ttbm-fixed-date-field">
-                                <span class="ttbm-field-label"><?php esc_html_e('End Time', 'tour-booking-manager'); ?></span>
+                                <span class="ttbm-field-label"><?php esc_html_e('End Time', 'tour-booking-manager'); ?><sup class="textRequired ttbm-date-required-mark" data-ttbm-date-required="fixed">*</sup></span>
 								<?php self::datetime_clear_wrap_open(); ?>
                                 <label class="ttbm-input-icon ttbm-input-icon--time ttbm-input-icon--time-end">
                                     <input type="time" name="ttbm_travel_end_time" class="formControl" value="<?php echo esc_attr($end_time); ?>"/>
@@ -180,6 +181,7 @@
 								?>
                             </span>
                         </div>
+                        <p id="ttbm_particular_dates_error" class="textRequired ttbm-date-panel-error" style="display:none;"></p>
                         <div class="ttbm_item_insert ttbm_sortable_area ttbm-particular-dates-list">
 							<?php
 							if ($has_saved_rows) {
@@ -207,7 +209,10 @@
 				$date_format = TTBM_Global_Function::date_picker_format();
 				$now = date_i18n($date_format, strtotime(current_time('Y-m-d')));
 				$start_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_date');
-				$start_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_time');
+				$start_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_time');
+				if ($start_time === '') {
+					$start_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_time');
+				}
 				$hidden_start_date = $start_date ? gmdate('Y-m-d', strtotime($start_date)) : '';
 				$visible_start_date = $start_date ? date_i18n($date_format, strtotime($start_date)) : '';
 				$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_end_date');
@@ -220,6 +225,7 @@
 				?>
                 <div data-target-radio="#ttbm_repeated" class="ttbm-date-target-panel _mT <?php echo esc_attr($date_type == 'repeated' ? 'mActive' : ''); ?>">
                     <div class="gptLayout ttbm-date-config-panel">
+                        <p id="ttbm_repeated_dates_error" class="textRequired ttbm-date-panel-error" style="display:none;"></p>
                         <div class="ttbm-repeat-pattern">
                             <span class="ttbm-field-label"><?php esc_html_e('Tour Repeat Pattern', 'tour-booking-manager'); ?></span>
                             <div class="groupRadioBox ttbm-pill-group">
@@ -242,27 +248,27 @@
                         </div>
 
                         <div class="ttbm-date-datetime-grid">
-                            <div class="ttbm-datetime-col">
-                                <span class="ttbm-field-label"><?php esc_html_e('Start Date', 'tour-booking-manager'); ?></span>
+                            <div class="ttbm-datetime-col ttbm-repeated-date-field">
+                                <span class="ttbm-field-label"><?php esc_html_e('Start Date', 'tour-booking-manager'); ?><sup class="textRequired ttbm-date-required-mark" data-ttbm-date-required="repeated">*</sup></span>
 								<?php self::datetime_clear_wrap_open(); ?>
                                 <label class="ttbm-input-icon ttbm-input-icon--date">
                                     <input type="hidden" name="ttbm_travel_repeated_start_date" value="<?php echo esc_attr($hidden_start_date); ?>"/>
-                                    <input value="<?php echo esc_attr($visible_start_date); ?>" class="formControl date_type" placeholder="<?php echo esc_attr($now); ?>" autocomplete="off"/>
+                                    <input value="<?php echo esc_attr($visible_start_date); ?>" class="formControl date_type ttbm-repeated-start-date" placeholder="<?php echo esc_attr($now); ?>" autocomplete="off"/>
                                 </label>
 								<?php self::datetime_clear_wrap_close(); ?>
                             </div>
-                            <div class="ttbm-datetime-col">
-                                <span class="ttbm-field-label"><?php esc_html_e('Start Time', 'tour-booking-manager'); ?></span>
+                            <div class="ttbm-datetime-col ttbm-repeated-date-field">
+                                <span class="ttbm-field-label"><?php esc_html_e('Start Time', 'tour-booking-manager'); ?><sup class="textRequired ttbm-date-required-mark" data-ttbm-date-required="repeated">*</sup></span>
 								<?php self::datetime_clear_wrap_open(); ?>
                                 <label class="ttbm-input-icon ttbm-input-icon--time">
-                                    <input type="time" name="" class="formControl ttbm_travel_repeated_start_time" value="<?php echo esc_attr($start_time); ?>" onclick="this.setAttribute('name', 'ttbm_travel_start_time');"/>
+                                    <input type="time" name="ttbm_travel_repeated_start_time" class="formControl ttbm_travel_repeated_start_time" value="<?php echo esc_attr($start_time); ?>" onclick="document.querySelectorAll('input.ttbm_travel_start_time[name=&quot;ttbm_travel_start_time&quot;]').forEach(function(input){input.removeAttribute('name');});"/>
                                 </label>
 								<?php self::datetime_clear_wrap_close(); ?>
                             </div>
                         </div>
 
-                        <div class="ttbm-repeat-end">
-                            <span class="ttbm-field-label"><?php esc_html_e('End Repeat Logic', 'tour-booking-manager'); ?></span>
+                        <div class="ttbm-repeat-end ttbm-repeated-date-field">
+                            <span class="ttbm-field-label"><?php esc_html_e('End Repeat Logic', 'tour-booking-manager'); ?><sup class="textRequired ttbm-date-required-mark" data-ttbm-date-required="repeated">*</sup></span>
                             <div class="groupRadioBox ttbm-radio-group">
                                 <input type="hidden" value="<?php echo esc_attr($repeat_type); ?>" name="ttbm_repeat_type"/>
                                 <div class="ttbm-radio-row">
@@ -272,10 +278,10 @@
                                         <input type="number" class="formControl xs ttbm_number_validation ttbm-radio-btn__input <?php echo esc_attr('occurrence' == $repeat_type ? '' : 'dNone'); ?>" value="<?php echo esc_attr($repeat_number); ?>" name="ttbm_repeat_number" placeholder="1"/>
                                     </button>
                                     <button class="ttbm-radio-btn input_active <?php echo esc_attr('fixed' == $repeat_type ? 'active' : ''); ?>" type="button" data-group-radio="fixed">
-                                        <span class="ttbm-radio-btn__label"><?php esc_html_e('On Date', 'tour-booking-manager'); ?></span>
+                                        <span class="ttbm-radio-btn__label"><?php esc_html_e('On Date', 'tour-booking-manager'); ?><sup class="textRequired ttbm-date-required-mark ttbm-repeated-end-date-required" data-ttbm-date-required="repeated">*</sup></span>
 										<?php self::datetime_clear_wrap_open( 'ttbm-repeat-end-date-field' ); ?>
                                             <input type="hidden" name="ttbm_travel_repeated_end_date" value="<?php echo esc_attr($hidden_end_date); ?>"/>
-                                            <input value="<?php echo esc_attr($visible_end_date); ?>" class="formControl date_type ttbm-radio-btn__input <?php echo esc_attr('fixed' == $repeat_type ? '' : 'dNone'); ?>" placeholder="<?php echo esc_attr($now); ?>" autocomplete="off"/>
+                                            <input value="<?php echo esc_attr($visible_end_date); ?>" class="formControl date_type ttbm-radio-btn__input ttbm-repeated-end-date <?php echo esc_attr('fixed' == $repeat_type ? '' : 'dNone'); ?>" placeholder="<?php echo esc_attr($now); ?>" autocomplete="off"/>
 										<?php self::datetime_clear_wrap_close(); ?>
                                     </button>
                                 </div>
@@ -508,7 +514,7 @@
                             <span class="ttbm-particular-date-card__drag-icon" aria-hidden="true"></span>
                         </div>
                         <div class="ttbm-particular-date-card__field ttbm-particular-date-card__field--checkin-date">
-                            <span class="ttbm-particular-date-field-label"><?php esc_html_e('Check in Date', 'tour-booking-manager'); ?></span>
+                            <span class="ttbm-particular-date-field-label"><?php esc_html_e('Check in Date', 'tour-booking-manager'); ?><sup class="textRequired ttbm-date-required-mark" data-ttbm-date-required="particular">*</sup></span>
 							<?php self::datetime_clear_wrap_open(); ?>
                             <label class="ttbm-input-icon ttbm-input-icon--date">
                                 <input type="hidden" name="ttbm_particular_start_date[]" value="<?php echo esc_attr($hidden_date); ?>"/>
@@ -517,7 +523,7 @@
 							<?php self::datetime_clear_wrap_close(); ?>
                         </div>
                         <div class="ttbm-particular-date-card__field ttbm-particular-date-card__field--checkin-time">
-                            <span class="ttbm-particular-date-field-label"><?php esc_html_e('Check in Time', 'tour-booking-manager'); ?></span>
+                            <span class="ttbm-particular-date-field-label"><?php esc_html_e('Check in Time', 'tour-booking-manager'); ?><sup class="textRequired ttbm-date-required-mark" data-ttbm-date-required="particular">*</sup></span>
 							<?php self::datetime_clear_wrap_open(); ?>
                             <label class="ttbm-input-icon ttbm-input-icon--time">
                                 <input type="time" name="ttbm_particular_start_time[]" class="formControl" value="<?php echo esc_attr($time); ?>"/>
@@ -525,7 +531,7 @@
 							<?php self::datetime_clear_wrap_close(); ?>
                         </div>
                         <div class="ttbm-particular-date-card__field ttbm-particular-date-card__field--checkout-date">
-                            <span class="ttbm-particular-date-field-label"><?php esc_html_e('Check Out Date', 'tour-booking-manager'); ?></span>
+                            <span class="ttbm-particular-date-field-label"><?php esc_html_e('Check Out Date', 'tour-booking-manager'); ?><sup class="textRequired ttbm-date-required-mark" data-ttbm-date-required="particular">*</sup></span>
 							<?php self::datetime_clear_wrap_open(); ?>
                             <label class="ttbm-input-icon ttbm-input-icon--date">
                                 <input type="hidden" name="ttbm_particular_end_date[]" value="<?php echo esc_attr($hidden_end_date); ?>"/>

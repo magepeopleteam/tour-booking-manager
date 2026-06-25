@@ -491,9 +491,9 @@
     height: 100% !important;
 }
 #ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .sliderAllItem .sliderItem img {
-	width: 100% !important; height: 100% !important; max-height: none !important; object-fit: cover !important;
+	width: 100% !important; height: auto !important; max-height: none !important; object-fit: cover !important;
 }
-#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .sliderShowcaseItem img { height: 100% !important; object-fit: cover; }
+#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .sliderShowcaseItem img { height: auto !important; object-fit: cover; }
 
 /* Gallery disabled: featured image only, full width */
 #ttbm_content .ttbm_default_theme .ttbm_hero .superSlider.ttbm-featured-only,
@@ -923,10 +923,6 @@
 
 /* mobile: bottom overlay on shorter hero */
 @media (max-width: 768px) {
-	#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider,
-	#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .ttbm_slider-wrapper,
-	#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .sliderAllItem,
-	#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .sliderAllItem .sliderItem { height: 240px !important; }
 	#ttbm_content .ttbm_default_theme .ttbm_hero .sliderAllItem .ttbm_hero_overlay {
 		padding: 0 12px 14px;
 		background: linear-gradient(
@@ -2673,7 +2669,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 }
 
 .placeholderLoader.ttbm_details_page_loader .ttbm_default_theme .ttbm_hero.placeholder_area {
-	min-height: 590px;
+	min-height: 320px;
 }
 
 .placeholderLoader.ttbm_details_page_loader .ttbm_smart_gallery.placeholder_area {

@@ -27,7 +27,7 @@
                     
                     <section>
                         <div class="ttbm-header">
-                            <h4><i class="mi mi-coins"></i><?php esc_html_e('Price Settings', 'tour-booking-manager'); ?></h4>
+                            <h4><i class="mi mi-coins"></i><?php esc_html_e('Tour Ticket Price Settings', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_registration', $checked); ?>
                         </div>
                         <div data-collapse="#ttbm_display_registration" class="<?php echo esc_attr($active); ?>">
@@ -102,7 +102,7 @@
 						<?php } ?>
                         <div class="ttbm_settings_area _mT_xs ttbm-ticket-types-area">
                             <div class="ttbm-ticket-types-panel">
-                                <div class="ovAuto">
+                                <div class="ttbm-ticket-types-table-wrap">
                                 <table class="price_config_table ttbm-ticket-types-table">
                                     <thead>
                                     <tr>
@@ -130,10 +130,12 @@
                                     </thead>
                                     <tbody class="ttbm_sortable_area ttbm_item_insert ttbm_insert_ticket_type">
 									<?php
-										if (sizeof($ticket_type) > 0) {
+										if (!empty($ticket_type)) {
 											foreach ($ticket_type as $field) {
-												$this->pricing_item($field);
+												$this->pricing_item($field, $tour_id);
 											}
+										} else {
+											$this->pricing_item(array(), $tour_id);
 										}
 									?>
                                     </tbody>
@@ -158,10 +160,12 @@
 					wp_send_json_error(['message' => esc_html__('You do not have permission to access this ticket configuration.', 'tour-booking-manager')], 403);
 				}
 				$ticket_type = TTBM_Global_Function::get_post_info($form_id, 'ttbm_ticket_type', array());
-				if (sizeof($ticket_type) > 0) {
+				if (!empty($ticket_type)) {
 					foreach ($ticket_type as $field) {
 						$this->pricing_item($field, $post_id);
 					}
+				} else {
+					$this->pricing_item(array(), $post_id);
 				}
 				die();
 			}
@@ -176,7 +180,7 @@
 				$price = array_key_exists('ticket_type_price', $field) ? $field['ticket_type_price'] : '';
 				$sale_price = array_key_exists('sale_price', $field) ? $field['sale_price'] : '';
 				$qty = array_key_exists('ticket_type_qty', $field) ? $field['ticket_type_qty'] : '';
-				$default_qty = array_key_exists('ticket_type_default_qty', $field) ? $field['ticket_type_default_qty'] : '';
+				$default_qty = array_key_exists('ticket_type_default_qty', $field) && $field['ticket_type_default_qty'] !== '' ? $field['ticket_type_default_qty'] : '1';
 				$reserve_qty = array_key_exists('ticket_type_resv_qty', $field) ? $field['ticket_type_resv_qty'] : '';
 				$input_type = array_key_exists('ticket_type_qty_type', $field) ? $field['ticket_type_qty_type'] : 'inputbox';
 				$description = array_key_exists('ticket_type_description', $field) ? $field['ticket_type_description'] : '';

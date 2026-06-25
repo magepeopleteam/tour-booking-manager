@@ -63,8 +63,8 @@
 				$active = $daywise_active == 'off' ? '' : 'mActive';
 				?>
                 <div class="tabsItem ttbm_settings_daywise" data-tabs="#ttbm_daywise_settings">
-                    <h2><?php esc_html_e('Itinerary Builder Settings', 'tour-booking-manager'); ?></h2>
-                    <p><?php esc_html_e('Itinerary Builder Settings', 'tour-booking-manager'); ?></p>
+                    <h2><?php esc_html_e('Itinerary & F.A.Q Settings', 'tour-booking-manager'); ?></h2>
+                    <p><?php esc_html_e('Build your tour itinerary and manage frequently asked questions in one place.', 'tour-booking-manager'); ?></p>
                     <section>
                         <div class="ttbm-header">
                             <h4><i class="fas fa-list-ul"></i><?php esc_html_e('Itinerary Builder', 'tour-booking-manager'); ?></h4>
@@ -77,6 +77,7 @@
                             <button class="button ttbm-daywise-item-new" data-modal="ttbm-daywise-item-new" type="button"><?php esc_html_e('Add Itinerary', 'tour-booking-manager'); ?></button>
                         </div>
                     </section>
+					<?php do_action('ttbm_tour_itinerary_inner', $post_id); ?>
                     <!-- Itinerary slide-in modal -->
                     <div class="ttbm-modal-container" data-modal-target="ttbm-daywise-item-new">
                         <div class="ttbm-modal-content">

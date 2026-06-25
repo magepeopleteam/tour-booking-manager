@@ -84,7 +84,7 @@
                         <div class="label-inner">
                             <p>
 								<?php esc_html_e('Select Location', 'tour-booking-manager'); ?>
-								<span style="color:#dc2626;font-weight:700;margin-left:3px;" title="<?php esc_attr_e('Required', 'tour-booking-manager'); ?>">*</span>
+								<span class="ttbm-location-required-mark" style="color:#dc2626;font-weight:700;margin-left:3px;<?php echo $active ? '' : 'display:none;'; ?>" title="<?php esc_attr_e('Required', 'tour-booking-manager'); ?>">*</span>
 								<i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Select Tour Location from this list', 'tour-booking-manager'); ?></span></i>
 							</p>
                         </div>

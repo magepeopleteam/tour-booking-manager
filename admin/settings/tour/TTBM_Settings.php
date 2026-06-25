@@ -34,21 +34,18 @@
                         <div class="ttbmTabs leftTabs d-flex justify-content-between">
                             <ul class="tabLists meta-sidebar _mL">
 								<div class="meta-sidebar-toggle"><i class="mi mi-angle-right"></i></div>
-                                <li data-tabs-target="#ttbm_general_info" title="<?php esc_html_e('General Info', 'tour-booking-manager'); ?>"><i class="mi mi-settings"></i> <span><?php esc_html_e('General Info', 'tour-booking-manager'); ?></span> </li>
-                                <li data-tabs-target="#ttbm_settings_location" class="ttbm_settings_location"><i class="mi mi-marker"></i> <span><?php esc_html_e(' Location', 'tour-booking-manager'); ?></span> </li>
-                                <li data-tabs-target="#ttbm_settings_dates"><i class="mi mi-calendar"></i> <span><?php esc_html_e(' Date Configuration', 'tour-booking-manager'); ?></span> </li>
+                                <li data-tabs-target="#ttbm_general_info" title="<?php esc_attr_e('Overview', 'tour-booking-manager'); ?>"><i class="mi mi-settings"></i> <span><?php esc_html_e('Overview', 'tour-booking-manager'); ?></span> </li>
+                                <li data-tabs-target="#ttbm_settings_location" class="ttbm_settings_location"><i class="mi mi-marker"></i> <span><?php esc_html_e('Destination', 'tour-booking-manager'); ?></span> </li>
+                                <li data-tabs-target="#ttbm_settings_dates"><i class="mi mi-calendar"></i> <span><?php esc_html_e('Schedule', 'tour-booking-manager'); ?></span> </li>
 								<?php do_action('ttbm_meta_box_tab_name', $tour_id); ?>
-                                <li data-tabs-target="#ttbm_settings_pricing"><i class="mi mi-coins"></i> <span><?php esc_html_e(' Pricing', 'tour-booking-manager'); ?></span>  </li>
-                                <li data-tabs-target="#ttbm_settings_extra_service"><i class="mi mi-apps-add"></i> <span><?php esc_html_e(' Extra Service', 'tour-booking-manager'); ?></span>  </li>
+                                <li data-tabs-target="#ttbm_settings_pricing"><i class="mi mi-coins"></i> <span><?php esc_html_e(' Pricing & Services', 'tour-booking-manager'); ?></span>  </li>
 								<?php do_action('ttbm_meta_box_tab_after_pricing'); ?>
-                                <li data-tabs-target="#ttbm_settings_feature"><i class="mi mi-features"></i> <span><?php esc_html_e(' Features', 'tour-booking-manager'); ?></span> </li>
-                                <li data-tabs-target="#ttbm_settings_template"><i class="mi mi-table-layout"></i> <span><?php esc_html_e(' Template settings', 'tour-booking-manager'); ?></span> </li>
+                                <li data-tabs-target="#ttbm_settings_feature"><i class="mi mi-features"></i> <span><?php esc_html_e(' Features & Activities', 'tour-booking-manager'); ?></span> </li>
+                                <li data-tabs-target="#ttbm_settings_template"><i class="mi mi-table-layout"></i> <span><?php esc_html_e('Layout', 'tour-booking-manager'); ?></span> </li>
 								<li data-tabs-target="#ttbm_settings_guide"><i class="mi mi-hiking"></i> <span><?php echo esc_html($ttbm_label) . '  ' . esc_html__('Guide ', 'tour-booking-manager'); ?></span> </li>
-                                <li data-tabs-target="#ttbm_settings_activies"><i class="mi mi-practice"></i> <span><?php esc_html_e(' Activities', 'tour-booking-manager'); ?></span> </li>
-                                <li data-tabs-target="#ttbm_daywise_settings"><i class="fas fa-list-ul"></i> <span><?php esc_html_e('Itinerary Builder', 'tour-booking-manager'); ?></span> </li>
-                                <li data-tabs-target="#ttbm_faq_settings"><i class="mi mi-messages-question"></i> <span><?php esc_html_e('F.A.Q', 'tour-booking-manager'); ?></span> </li>
-                                <li data-tabs-target="#ttbm_settings_related_tour"><i class="mi mi-link"></i> <span><?php esc_html_e('Related ', 'tour-booking-manager') . esc_html($ttbm_label); ?></span> </li>
-                                <li data-tabs-target="#ttbm_settings_extras"><i class="mi mi-envelope"></i> <span><?php esc_html_e('Contact ', 'tour-booking-manager'); ?></span> </li>
+                                <li data-tabs-target="#ttbm_daywise_settings"><i class="fas fa-list-ul"></i> <span><?php esc_html_e('Itinerary & F.A.Q', 'tour-booking-manager'); ?></span> </li>
+                                <li data-tabs-target="#ttbm_settings_related_tour"><i class="mi mi-link"></i> <span><?php esc_html_e('Related Tour', 'tour-booking-manager'); ?></span> </li>
+                                <li data-tabs-target="#ttbm_settings_extras"><i class="mi mi-envelope"></i> <span><?php esc_html_e('Contact info', 'tour-booking-manager'); ?></span> </li>
                                 <li data-tabs-target="#ttbm_settings_why_chose_us"><i class="mi mi-improve-user"></i> <span><?php esc_html_e('Promotional Text', 'tour-booking-manager'); ?></span> </li>
                                 <li data-tabs-target="#ttbm_settings_admin_note"><i class="mi mi-comment-user"></i> <span><?php esc_html_e('Admin Note', 'tour-booking-manager'); ?></span> </li>
                                 <li data-tabs-target="#ttbm_display_settings"><i class="mi mi-dashboard-monitor"></i> <span><?php esc_html_e(' Display settings', 'tour-booking-manager'); ?></span> </li>
@@ -146,6 +143,7 @@
 					'full_location' => esc_html__('Please Type Full Address of the location, it will use for the google map', 'tour-booking-manager'),
 					'short_des' => esc_html__('For a Tour short description, toggle this switching option.', 'tour-booking-manager'),
 					'duration' => esc_html__('Please enter the number of days and nights for your tour package.', 'tour-booking-manager'),
+					'stay_night' => esc_html__('Turn on toggle for overnight stay.', 'tour-booking-manager'),
 					'ttbm_new_location_name' => esc_html__('Please add the new location to the location list when creating a tour.', 'tour-booking-manager'),
 					'ttbm_location_description' => esc_html__('The description is not always visible by default, but some themes may display it.', 'tour-booking-manager'),
 					'ttbm_location_address' => esc_html__('Please Enter the Full Address of Your Location', 'tour-booking-manager'),
@@ -763,7 +761,7 @@
 						return;
 					}
 					// Block save if location is enabled but none selected
-					$location_enabled = isset($_POST['ttbm_display_location']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_location'])) ? true : false;
+					$location_enabled = isset($_POST['ttbm_display_location']) && in_array(sanitize_text_field(wp_unslash($_POST['ttbm_display_location'])), ['on', '1', 'yes', 'true'], true);
 					$location_value   = isset($_POST['ttbm_location_name']) ? sanitize_text_field(wp_unslash($_POST['ttbm_location_name'])) : '';
 					if ($location_enabled && $location_value === '') {
 						wp_update_post(['ID' => $tour_id, 'post_status' => 'draft']);

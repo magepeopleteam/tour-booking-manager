@@ -704,24 +704,47 @@ jQuery(function($){
 	});
 
 	/* ── Location required validation (only when Location is enabled) ── */
+	window.ttbmSyncLocationRequiredState = function () {
+		var $toggle = $('#ttbm_meta_box_panel input[name="ttbm_display_location"]');
+		var locationEnabled = $toggle.length > 0 && $toggle.is(':checked');
+		var $mark = $('.ttbm-location-required-mark');
+		var $select = $('#ttbm_location_select');
+		var $err = $('#ttbm_location_error');
+
+		if (locationEnabled) {
+			$mark.show();
+		} else {
+			$mark.hide();
+			$err.hide();
+			if ($select.length) {
+				$select.css({'border-color': '', 'box-shadow': ''});
+			}
+		}
+		return locationEnabled;
+	};
+
 	function ttbmValidateLocation() {
-		var $toggle = $('input[name="ttbm_display_location"]');
-		var locationEnabled = $toggle.length ? $toggle.is(':checked') : true;
-		if (!locationEnabled) return true; // not required when disabled
+		if (!window.ttbmSyncLocationRequiredState()) {
+			return true;
+		}
 
 		var $select = $('#ttbm_location_select');
-		var $err    = $('#ttbm_location_error');
-		if (!$select.length) return true;
+		var $err = $('#ttbm_location_error');
+		if (!$select.length) {
+			return true;
+		}
 
 		if (!$select.val()) {
-			$select.css({'border-color':'#dc2626','box-shadow':'0 0 0 2px rgba(220,38,38,.15)'});
+			$select.css({'border-color': '#dc2626', 'box-shadow': '0 0 0 2px rgba(220,38,38,.15)'});
 			$err.show();
 			return false;
 		}
-		$select.css({'border-color':'','box-shadow':''});
+		$select.css({'border-color': '', 'box-shadow': ''});
 		$err.hide();
 		return true;
 	}
+
+	window.ttbmSyncLocationRequiredState();
 
 	$(document).on('change', '#ttbm_location_select', function(){
 		if ($(this).val()) {

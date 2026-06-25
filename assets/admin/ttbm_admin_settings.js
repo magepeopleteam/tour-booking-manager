@@ -30,6 +30,8 @@ function ttbm_load_sortable_datepicker(parent, item) {
         //=========Short able==============//
         $(document).find(".ttbm_sortable_area").sortable({handle: $(this).find(".ttbm_sortable_button"),});
         ttbmSyncPillCustomInput($(".ttbm_settings_dates .ttbm-pill-group"));
+        ttbmInitGeneralInfoToggles();
+        ttbmInitTourContentMediaButton();
     });
     function ttbmSyncPillCustomInput($pillGroup) {
         if (!$pillGroup || !$pillGroup.length) {
@@ -154,14 +156,22 @@ function ttbm_load_sortable_datepicker(parent, item) {
     //=========Remove Setting Item ==============//
     $(document).on("click", ".ttbm_item_remove,.ttbm_remove_icon", function (e) {
         e.preventDefault();
+        let $row = $(this).closest(".ttbm_remove_area");
+        let $ticketRows = $row.closest(".ttbm_insert_ticket_type");
+        let $extraRows = $row.closest(".ttbm_insert_extra_service");
+        if ($ticketRows.length && $ticketRows.find("> tr.ttbm_remove_area").length <= 1) {
+            return false;
+        }
+        if ($extraRows.length && $extraRows.find("> tr.ttbm_remove_area").length <= 1) {
+            return false;
+        }
         if (confirm("Are You Sure , Remove this row ? \n\n 1. Ok : To Remove . \n 2. Cancel : To Cancel .")) {
-            $(this).closest(".ttbm_remove_area").slideUp(250).remove();
+            $row.slideUp(250).remove();
             return true;
         } else {
             return false;
         }
     });
-    //=========Add Setting Item==============//
     $(document).on("click", ".ttbm_add_item", function (e) {
         e.preventDefault();
         let parent = $(this).closest('.ttbm_settings_area, .ttbm_settings_place_you_see');
@@ -192,6 +202,37 @@ function ttbm_load_sortable_datepicker(parent, item) {
             }
         });
         return false;
+    });
+    function ttbmUpdateShortDescCharCount($textarea) {
+        let $wrap = $textarea.closest('.ttbm-gen-short-desc');
+        if (!$wrap.length) {
+            return;
+        }
+        let max = parseInt($wrap.find('.ttbm-gen-char-count').data('max'), 10) || 500;
+        let len = ($textarea.val() || '').length;
+        $wrap.find('.ttbm-gen-char-count').text(len + ' / ' + max);
+    }
+    $(document).on('input', '.ttbm-gen-short-desc__textarea', function () {
+        ttbmUpdateShortDescCharCount($(this));
+    });
+    $(document).ready(function () {
+        $('.ttbm-gen-short-desc__textarea').each(function () {
+            ttbmUpdateShortDescCharCount($(this));
+        });
+        ttbmFixTourLanguageSelect2SearchWidth();
+    });
+
+    function ttbmFixTourLanguageSelect2SearchWidth() {
+        $('#ttbm_meta_box_panel select[name="ttbm_travel_language[]"]').each(function () {
+            var $field = $(this).next('.select2-container').find('.select2-search__field');
+            if ($field.length) {
+                $field.css('width', '');
+            }
+        });
+    }
+
+    $(document).on('select2:open select2:close select2:select select2:unselect', '#ttbm_meta_box_panel select[name="ttbm_travel_language[]"]', function () {
+        window.setTimeout(ttbmFixTourLanguageSelect2SearchWidth, 0);
     });
 })(jQuery);
 (function ($) {
@@ -324,6 +365,10 @@ function ttbm_load_sortable_datepicker(parent, item) {
 
         ttbmLocationMapSyncing = false;
 
+        if (typeof window.ttbmSyncLocationRequiredState === 'function') {
+            window.ttbmSyncLocationRequiredState();
+        }
+
         if (isOn && typeof ensureLocationMap === 'function') {
             setTimeout(ensureLocationMap, 400);
         }
@@ -351,11 +396,345 @@ function ttbm_load_sortable_datepicker(parent, item) {
         ttbmOnLocationToggleChanged($(this).is(':checked'));
     });
 
+    $(document).on('click', '#ttbm_meta_box_panel [data-collapse-target="#ttbm_display_location"]', function () {
+        window.setTimeout(function () {
+            if (typeof window.ttbmSyncLocationRequiredState === 'function') {
+                window.ttbmSyncLocationRequiredState();
+            }
+        }, 0);
+    });
+
     $(document).on('change', '#ttbm_meta_box_panel input[name="ttbm_display_map"]', function () {
         if (ttbmLocationMapSyncing) {
             return;
         }
         ttbmOnMapToggleChanged($(this).is(':checked'));
+    });
+
+    // General Information inline toggles: keep fields visible, enable/disable by toggle state.
+    function ttbmSetInlineToggleFieldState($field, isOn) {
+        var $cb = $field.find('.roundSwitchLabel input[type="checkbox"]').first();
+        if (!$cb.length) {
+            return;
+        }
+
+        var targetId = '#' + $cb.attr('name');
+        var $switch = $cb.siblings('[data-collapse-target="' + targetId + '"]');
+        var $controls = $field.find('[data-ttbm-toggle-field="' + targetId + '"]');
+
+        $switch.toggleClass('mActive', isOn);
+        $field.toggleClass('is-toggle-off', !isOn);
+
+        $controls.each(function () {
+            var $control = $(this);
+            var $inputs = $control.is('input, select, textarea') ? $control : $control.find('input, select, textarea');
+            $inputs.prop('disabled', !isOn);
+            $control.find('select.ttbm_select2').each(function () {
+                var $select = $(this);
+                if ($select.data('select2')) {
+                    $select.trigger('change.select2');
+                }
+            });
+        });
+    }
+
+    function ttbmSyncGeneralInfoInlineToggle($checkbox) {
+        var $field = $($checkbox).closest('.ttbm-gen-field--inline');
+        if (!$field.length) {
+            return false;
+        }
+        ttbmSetInlineToggleFieldState($field, $($checkbox).is(':checked'));
+        return true;
+    }
+
+    function ttbmSyncGeneralInfoToggle($checkbox, animate) {
+        if (ttbmSyncGeneralInfoInlineToggle($checkbox)) {
+            return;
+        }
+
+        var $cb = $($checkbox);
+        var $card = $cb.closest('.ttbm-general-info-card');
+        if (!$card.length) {
+            return;
+        }
+
+        var targetId = '#' + $cb.attr('name');
+        var $sections = $card.find('[data-collapse="' + targetId + '"]');
+        var $switch = $cb.siblings('[data-collapse-target="' + targetId + '"]');
+        var $field = $cb.closest('.ttbm-gen-short-desc');
+        var isOn = $cb.is(':checked');
+        var useAnimation = animate !== false;
+
+        if (isOn) {
+            $switch.addClass('mActive');
+            $sections.addClass('mActive');
+            if (useAnimation) {
+                $sections.stop(true, true).slideDown(250);
+            } else {
+                $sections.show();
+            }
+            $sections.find('input, select, textarea').filter(function () {
+                return $(this).attr('type') !== 'checkbox';
+            }).prop('disabled', false);
+            $field.removeClass('is-toggle-off');
+        } else {
+            $switch.removeClass('mActive');
+            $sections.removeClass('mActive');
+            if (useAnimation) {
+                $sections.stop(true, true).slideUp(250);
+            } else {
+                $sections.hide();
+            }
+            $sections.find('input, select, textarea').filter(function () {
+                return $(this).attr('type') !== 'checkbox';
+            }).prop('disabled', true);
+            $field.addClass('is-toggle-off');
+        }
+    }
+
+    function ttbmInitGeneralInfoToggles() {
+        $('#ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-field--inline').each(function () {
+            var $cb = $(this).find('.roundSwitchLabel input[type="checkbox"]').first();
+            ttbmSetInlineToggleFieldState($(this), $cb.is(':checked'));
+        });
+
+        $('#ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-short-desc .roundSwitchLabel input[type="checkbox"]').each(function () {
+            ttbmSyncGeneralInfoToggle(this, false);
+        });
+    }
+
+    $(document).on('change', '#ttbm_meta_box_panel .ttbm-general-info-card .roundSwitchLabel input[type="checkbox"]', function () {
+        ttbmSyncGeneralInfoToggle(this, true);
+    });
+
+    // Prevent global collapse handler from re-toggling the same targets.
+    $(document).on('click', '#ttbm_meta_box_panel .ttbm-general-info-card [data-collapse-target]', function (e) {
+        e.stopImmediatePropagation();
+    });
+
+    var ttbmTourContentEditorId = 'ttbm_post_content_editor';
+    var ttbmTourContentAutosaveAt = null;
+    var ttbmTourContentAutosaveTimer = null;
+
+    function ttbmGetTourContentEditorWrap() {
+        return $('#wp-' + ttbmTourContentEditorId + '-wrap');
+    }
+
+    function ttbmGetTourDescriptionField() {
+        return $('#ttbm_meta_box_panel .ttbm-tour-description-field');
+    }
+
+    function ttbmValidateTitle() {
+        var $input = $('#ttbm_post_title');
+        var $err = $('.ttbm-title-error');
+        if (!$input.length) {
+            return true;
+        }
+
+        if (!$input.val().trim()) {
+            $input.addClass('is-invalid');
+            $err.show();
+            return false;
+        }
+
+        $input.removeClass('is-invalid');
+        $err.hide();
+        return true;
+    }
+
+    window.ttbmValidateTitle = ttbmValidateTitle;
+
+    function ttbmTourContentFormatAutosaveLabel(mins) {
+        var $field = ttbmGetTourDescriptionField();
+        if (!$field.length) {
+            return '';
+        }
+
+        if (mins <= 0) {
+            return $field.data('autosave-just-now') || 'just now';
+        }
+
+        var template = mins === 1
+            ? ($field.data('autosave-min') || '%d min')
+            : ($field.data('autosave-mins') || '%d mins');
+
+        return template.replace('%d', String(mins));
+    }
+
+    function ttbmTourContentUpdateAutosaveLabel() {
+        var $field = ttbmGetTourDescriptionField();
+        var $label = $field.find('.ttbm-tour-description-field__autosave');
+        if (!$field.length || !$label.length) {
+            return;
+        }
+
+        if (!ttbmTourContentAutosaveAt) {
+            $label.text($label.data('default-text') || 'Ready to save');
+            return;
+        }
+
+        var mins = Math.max(0, Math.floor((Date.now() - ttbmTourContentAutosaveAt) / 60000));
+        var ago = ttbmTourContentFormatAutosaveLabel(mins);
+        var template = $field.data('autosave-label') || 'Auto-saved %s ago';
+        $label.text(template.replace('%s', ago));
+    }
+
+    function ttbmTourContentMarkAutosaved() {
+        ttbmTourContentAutosaveAt = Date.now();
+        ttbmTourContentUpdateAutosaveLabel();
+    }
+
+    function ttbmTourContentBindAutosave() {
+        var $field = ttbmGetTourDescriptionField();
+        if (!$field.length || $field.data('autosave-bound')) {
+            return;
+        }
+
+        $field.data('autosave-bound', true);
+
+        $(document).on('input keyup change', '#' + ttbmTourContentEditorId, ttbmTourContentMarkAutosaved);
+
+        if (ttbmTourContentAutosaveTimer) {
+            window.clearInterval(ttbmTourContentAutosaveTimer);
+        }
+
+        ttbmTourContentAutosaveTimer = window.setInterval(ttbmTourContentUpdateAutosaveLabel, 30000);
+        ttbmTourContentUpdateAutosaveLabel();
+    }
+
+    function ttbmTourContentBindTitleValidation() {
+        $(document).on('blur', '#ttbm_post_title', ttbmValidateTitle);
+        $(document).on('input', '#ttbm_post_title', function () {
+            if ($(this).val().trim()) {
+                $(this).removeClass('is-invalid');
+                $('.ttbm-title-error').hide();
+            }
+        });
+    }
+
+    function ttbmMarkTourContentMediaPlaced($wrap, $mediaBtn) {
+        $wrap.find('.wp-media-buttons').addClass('ttbm-media-buttons-moved');
+        $wrap.addClass('ttbm-media-placement-ready');
+        if ($mediaBtn && $mediaBtn.length) {
+            $mediaBtn.addClass('ttbm-tour-media-btn');
+        }
+    }
+
+    function ttbmMoveTourContentMediaAfterCloseTags(retryCount) {
+        var retry = typeof retryCount === 'number' ? retryCount : 0;
+        var $wrap = ttbmGetTourContentEditorWrap();
+        if (!$wrap.length || !$wrap.hasClass('html-active')) {
+            return;
+        }
+
+        var $mediaBtn = $wrap.find('#insert-media-button');
+        var $closeBtn = $wrap.find('#qt_' + ttbmTourContentEditorId + '_close');
+        if (!$mediaBtn.length) {
+            if (retry < 30) {
+                window.setTimeout(function () {
+                    ttbmMoveTourContentMediaAfterCloseTags(retry + 1);
+                }, 50);
+            }
+            return;
+        }
+
+        if ($closeBtn.length) {
+            if (!$mediaBtn.prev().is($closeBtn)) {
+                $closeBtn.after($mediaBtn);
+            }
+        } else {
+            var $quicktags = $wrap.find('.quicktags-toolbar');
+            if ($quicktags.length && !$mediaBtn.parent().is($quicktags)) {
+                $quicktags.append($mediaBtn);
+            } else if (retry < 30) {
+                window.setTimeout(function () {
+                    ttbmMoveTourContentMediaAfterCloseTags(retry + 1);
+                }, 50);
+                return;
+            }
+        }
+
+        ttbmMarkTourContentMediaPlaced($wrap, $mediaBtn);
+    }
+
+    function ttbmMoveTourContentMediaAfterAdv(retryCount) {
+        var retry = typeof retryCount === 'number' ? retryCount : 0;
+        var $wrap = ttbmGetTourContentEditorWrap();
+        if (!$wrap.length || !$wrap.hasClass('tmce-active')) {
+            return;
+        }
+
+        if (typeof tinymce === 'undefined' || !tinymce.get(ttbmTourContentEditorId)) {
+            if (retry < 30) {
+                window.setTimeout(function () {
+                    ttbmMoveTourContentMediaAfterAdv(retry + 1);
+                }, 50);
+            }
+            return;
+        }
+
+        var $mediaBtn = $wrap.find('#insert-media-button');
+        var $advBtn = $wrap.find('.mce-toolbar-grp .mce-i-wp_adv').first().closest('.mce-btn');
+        if (!$mediaBtn.length || !$advBtn.length) {
+            if (retry < 30) {
+                window.setTimeout(function () {
+                    ttbmMoveTourContentMediaAfterAdv(retry + 1);
+                }, 50);
+            }
+            return;
+        }
+
+        var $toolbar = $advBtn.closest('.mce-toolbar');
+        if ($toolbar.length && !$mediaBtn.parent().is($toolbar)) {
+            $toolbar.append($mediaBtn);
+        } else if (!$mediaBtn.prev().is($advBtn)) {
+            $advBtn.after($mediaBtn);
+        }
+
+        ttbmMarkTourContentMediaPlaced($wrap, $mediaBtn);
+    }
+
+    function ttbmInitTourContentMediaPlacement() {
+        var $wrap = ttbmGetTourContentEditorWrap();
+        if (!$wrap.length) {
+            return;
+        }
+
+        $wrap.find('.mce-tinymce').css('visibility', 'visible');
+
+        if ($wrap.hasClass('tmce-active')) {
+            ttbmMoveTourContentMediaAfterAdv(0);
+        } else if ($wrap.hasClass('html-active')) {
+            ttbmMoveTourContentMediaAfterCloseTags(0);
+        }
+    }
+
+    function ttbmInitTourContentMediaButton() {
+        ttbmInitTourContentMediaPlacement();
+        ttbmTourContentBindTitleValidation();
+        ttbmTourContentBindAutosave();
+    }
+
+    $(document).on('tinymce-editor-init', function (event, editor) {
+        if (editor.id === ttbmTourContentEditorId) {
+            editor.on('change keyup', ttbmTourContentMarkAutosaved);
+            if (editor.theme && typeof editor.theme.resizeTo === 'function') {
+                editor.theme.resizeTo(null, 200);
+            }
+            ttbmMoveTourContentMediaAfterAdv(0);
+        }
+    });
+
+    $(document).on('click', '#wp-' + ttbmTourContentEditorId + '-wrap .wp-switch-editor', function () {
+        var $wrap = ttbmGetTourContentEditorWrap();
+        $wrap.removeClass('ttbm-media-placement-ready');
+        window.setTimeout(ttbmInitTourContentMediaPlacement, 0);
+    });
+
+    $(document).on('click', '#wp-' + ttbmTourContentEditorId + '-wrap .mce-i-wp_adv', function () {
+        window.setTimeout(function () {
+            ttbmMoveTourContentMediaAfterAdv(0);
+        }, 0);
     });
 
 })(jQuery);

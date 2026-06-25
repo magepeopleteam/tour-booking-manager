@@ -71,7 +71,14 @@
                 }, beforeSend: function () {
                     dLoader(parent);
                 }, success: function (data) {
-                    target.html(data);
+                    if ($.trim(data)) {
+                        target.html(data);
+                    } else {
+                        let fallback = parent.find('>.ttbm_hidden_content .ttbm_hidden_item').html();
+                        if (fallback) {
+                            target.html(fallback);
+                        }
+                    }
                     dLoaderRemove(parent);
                 }
             });

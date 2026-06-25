@@ -251,20 +251,27 @@
 				$hotel_class = $ttbm_type == 'hotel' ? 'dBlock' : 'dNone';
 				?>
                 <div class="ttbm_tour_hotel_setting <?php echo esc_attr($hotel_class); ?>">
-                    <label class="label">
-                        <div>
-                            <p><?php esc_html_e('Hotel Configuration', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_hotel_config') ?></span></i></p>
-                            <span class="text"><?php TTBM_Settings::des_p('hotel_config'); ?><a href="<?php echo esc_url(admin_url('post-new.php?post_type=ttbm_hotel')); ?>"><?php TTBM_Settings::des_p('hotel_config_click') ?></a></span>
+                    <div class="ttbm-hotel-select-wrap">
+                        <label class="ttbm-hotel-select-label" for="ttbm_hotel_select">
+							<?php esc_html_e('Select active hotels for this tour', 'tour-booking-manager'); ?>
+                            <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_hotel_config'); ?></span></i>
+                        </label>
+                        <div class="ttbm-hotel-select-field">
+                            <select id="ttbm_hotel_select" name="ttbm_hotels[]" multiple="multiple" class="formControl ttbm_select2 ttbm-hotel-select" data-placeholder="<?php esc_attr_e('Search hotels...', 'tour-booking-manager'); ?>">
+								<?php
+									foreach ($hotel_lists->posts as $hotel) {
+										$hotel_id = $hotel->ID;
+										?>
+                                        <option value="<?php echo esc_attr($hotel_id); ?>" <?php echo esc_attr(in_array($hotel_id, $ttbm_hotels) ? 'selected' : ''); ?>><?php echo esc_html(get_the_title($hotel_id)); ?></option>
+									<?php } ?>
+                            </select>
+                            <span class="ttbm-hotel-select-icon" aria-hidden="true"><i class="fas fa-search"></i></span>
                         </div>
-                    </label>
-                    <select name="ttbm_hotels[]" multiple='multiple' class='formControl ttbm_select2' data-placeholder="<?php esc_html_e('Please Select Hotel', 'tour-booking-manager'); ?>">
-						<?php
-							foreach ($hotel_lists->posts as $hotel) {
-								$hotel_id = $hotel->ID;
-								?>
-                                <option value="<?php echo esc_attr($hotel_id) ?>" <?php echo esc_attr(in_array($hotel_id, $ttbm_hotels) ? 'selected' : ''); ?>><?php echo esc_html(get_the_title($hotel_id)); ?></option>
-							<?php } ?>
-                    </select>
+                        <p class="ttbm-hotel-hint">
+							<?php TTBM_Settings::des_p('hotel_config'); ?>
+                            <a href="<?php echo esc_url(admin_url('post-new.php?post_type=ttbm_hotel')); ?>" class="ttbm-hotel-add-link" target="_blank" rel="noopener noreferrer"><?php TTBM_Settings::des_p('hotel_config_click'); ?></a>
+                        </p>
+                    </div>
                 </div>
 				<?php
 			}

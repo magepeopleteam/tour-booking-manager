@@ -1842,7 +1842,7 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 #ttbm_meta_box_panel table tbody th,
 #ttbm_content.ttbm_configuration table tbody td,
 #ttbm_content.ttbm_configuration table tbody th {
-	padding: 12px 14px;
+	padding: 12px 5px;
 	font-size: 13px;
 	vertical-align: middle;
 	border-bottom: 1px solid var(--ttbm-a-border);
@@ -2088,16 +2088,24 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--desc {
-	width: 18%;
+	width: 16%;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--price,
 #ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--sale {
-	width: 13%;
+	width: 10%;
+	min-width: 120px;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--cap {
-	width: 9%;
+	width: 10%;
+	min-width: 72px;
+	display: table-cell !important;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-table th.ttbm-ticket-col--cap[data-collapse],
+#ttbm_meta_box_panel .ttbm-ticket-types-table td.ttbm-ticket-col--cap[data-collapse] {
+	display: table-cell !important;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--default,
@@ -2122,6 +2130,19 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 	background: #f1f5f9;
 	border-bottom: 1px solid #e2e8f0;
 	vertical-align: middle;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-table thead th .ttbm-ticket-th-label {
+	display: inline-flex;
+	align-items: center;
+	flex-wrap: nowrap;
+	gap: 4px;
+	max-width: 100%;
+	white-space: nowrap;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-table thead th:has(.tool-tips) {
+	white-space: nowrap;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-types-table tbody td {
@@ -2171,39 +2192,52 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 
 #ttbm_meta_box_panel .ttbm-ticket-name-field {
 	display: flex;
-	align-items: center;
+	align-items: stretch;
 	gap: 8px;
 	min-width: 0;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-name-field__icon {
-	flex: 0 0 auto;
+	flex: 0 0 38px;
+	width: 38px;
+	max-width: 38px;
+	align-self: stretch;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_style,
 #ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_add_icon_image_area {
-	margin: 0;
-	padding: 0;
+	margin: 0 !important;
+	padding: 0 !important;
+	max-width: 38px !important;
+	width: 38px;
+	height: 100%;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_icon_item {
 	position: relative;
-	width: 36px;
-	height: 36px;
+	width: 38px;
+	height: 38px;
 	margin: 0;
+	padding: 0 !important;
 	border: 1px solid #e2e8f0;
 	border-radius: 8px;
-	background: #f8fafc;
+	background: #fff;
+	box-sizing: border-box;
+	cursor: pointer;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_icon_item .allCenter {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	width: 100%;
 	height: 100%;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_icon_item [data-add-icon] {
-	font-size: 18px;
+	font-size: 16px;
 	color: #2563eb;
+	line-height: 1;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_icon_remove {
@@ -2220,21 +2254,72 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 	border: 1px solid #e2e8f0;
 	color: #94a3b8;
 	cursor: pointer;
+	z-index: 1;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_add_icon_image_button_area {
-	margin: 0;
+	margin: 0 !important;
+	padding: 0 !important;
+	border: 0 !important;
+	width: 38px;
+	height: 38px;
+	background: transparent;
 }
 
+#ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_add_icon_image_button_area .flexEqual {
+	display: block;
+	width: 38px;
+	height: 38px;
+	margin: 0;
+	padding: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_add_icon_image_area button,
 #ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_icon_add {
-	min-height: 36px;
-	padding: 6px 10px;
-	border-radius: 8px;
+	width: 38px !important;
+	min-width: 38px !important;
+	height: 38px !important;
+	min-height: 38px !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	border: 1px solid #e2e8f0 !important;
+	border-radius: 8px !important;
+	background: #f8fafc !important;
+	color: #64748b !important;
+	font-size: 0 !important;
+	line-height: 1 !important;
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	box-shadow: none;
+	cursor: pointer;
+	transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_add_icon_image_area button:hover,
+#ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_icon_add:hover {
+	border-color: #cbd5e1 !important;
+	background: #fff !important;
+	color: #2563eb !important;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_add_icon_image_area button span,
+#ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_icon_add .fas {
+	margin: 0 !important;
+	font-size: 14px !important;
+	line-height: 1 !important;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-name-field__input {
 	flex: 1 1 auto;
 	min-width: 0;
+	display: flex;
+	align-items: stretch;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-name-field__input .formControl {
+	height: 38px;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-input-prefix {
@@ -2345,9 +2430,14 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-types-table .tool-tips {
-	margin-left: 4px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	margin-left: 0;
 	color: #94a3b8;
 	font-size: 12px;
+	vertical-align: middle;
 }
 
 /* ─── Extra service table ─── */
@@ -3597,6 +3687,15 @@ div.ttbm_global_settings .button-primary {
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-particular-date-card.ttbm-date-field-error,
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-particular-date-card__field.ttbm-date-field-error {
 	border-color: #dc2626;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_pricing .ttbm-ticket-panel-error {
+	margin: 12px 0 0;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_pricing .ttbm-ticket-field-error .formControl {
+	border-color: #dc2626 !important;
+	box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.12);
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-field-label--sub {

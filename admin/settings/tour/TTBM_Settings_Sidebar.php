@@ -811,6 +811,21 @@ jQuery(function($){
 			valid = false;
 		}
 
+		/* 5. Ticket types required when registration is enabled */
+		if (valid && typeof ttbmSyncTicketHiddenText === 'function') {
+			ttbmSyncTicketHiddenText();
+		}
+		if (valid && typeof ttbmValidateTickets === 'function' && !ttbmValidateTickets()) {
+			e.preventDefault();
+			setTimeout(function () {
+				var $target = $('#ttbm_ticket_types_error:visible').first();
+				if ($target.length) {
+					$('html,body').animate({ scrollTop: Math.max(0, ($target.offset().top - 120)) }, 250);
+				}
+			}, 180);
+			valid = false;
+		}
+
 		/* All good — let the form submit normally */
 	});
 });</script>

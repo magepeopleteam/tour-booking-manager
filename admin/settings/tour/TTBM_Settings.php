@@ -18,6 +18,7 @@
 				add_action('admin_notices', [$this, 'render_location_required_notice']);
 				add_action('admin_notices', [$this, 'render_featured_image_required_notice']);
 				add_action('admin_notices', [$this, 'render_dates_required_notice']);
+				add_action('admin_notices', [$this, 'render_tickets_required_notice']);
 			}
 			//************************//
 			public function settings_meta() {
@@ -839,6 +840,95 @@
 
 				return null;
 			}
+			public function render_tickets_required_notice(): void {
+				$user_id = get_current_user_id();
+				$message = get_transient('ttbm_tickets_required_' . $user_id);
+				if (!$message) {
+					return;
+				}
+				delete_transient('ttbm_tickets_required_' . $user_id);
+				?>
+				<div class="notice notice-error is-dismissible">
+					<p><strong><?php esc_html_e('Ticket configuration is incomplete.', 'tour-booking-manager'); ?></strong>
+					<?php echo esc_html($message); ?></p>
+				</div>
+				<?php
+			}
+			private function validate_ticket_fields(): ?string {
+				$registration = isset($_POST['ttbm_display_registration']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_registration'])) ? 'on' : 'off';
+				if ($registration !== 'on') {
+					return null;
+				}
+				$tour_type = isset($_POST['ttbm_type']) ? sanitize_text_field(wp_unslash($_POST['ttbm_type'])) : 'general';
+				if ($tour_type !== 'general') {
+					return null;
+				}
+
+				$names         = isset($_POST['ticket_type_name']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['ticket_type_name'])) : array();
+				$hidden_texts  = isset($_POST['ttbm_hidden_ticket_text']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['ttbm_hidden_ticket_text'])) : array();
+				$ticket_price  = isset($_POST['ticket_type_price']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['ticket_type_price'])) : array();
+				$qty           = isset($_POST['ticket_type_qty']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['ticket_type_qty'])) : array();
+				$row_count     = max(count($names), count($hidden_texts), count($ticket_price), count($qty));
+				$has_complete  = false;
+
+				for ($index = 0; $index < $row_count; $index++) {
+					$name     = trim($names[ $index ] ?? '');
+					$hidden   = trim($hidden_texts[ $index ] ?? '');
+					$price    = trim($ticket_price[ $index ] ?? '');
+					$capacity = trim($qty[ $index ] ?? '');
+
+					if ($name === '' && $hidden === '' && $price === '' && $capacity === '') {
+						continue;
+					}
+
+					$missing = array();
+					if ($hidden === '') {
+						$missing[] = __('Ticket ID', 'tour-booking-manager');
+					}
+					if ($price === '') {
+						$missing[] = __('Reg. Price', 'tour-booking-manager');
+					}
+					if ($capacity === '') {
+						$missing[] = __('Capacity', 'tour-booking-manager');
+					}
+					if ($name === '') {
+						$missing[] = __('Ticket Name', 'tour-booking-manager');
+					}
+
+					if (!empty($missing)) {
+						return sprintf(
+							/* translators: 1: row number, 2: comma-separated field labels */
+							__('Ticket type row %1$d is incomplete. Required: %2$s.', 'tour-booking-manager'),
+							$index + 1,
+							implode(', ', $missing)
+						);
+					}
+
+					if (!is_numeric($price) || (float) $price < 0) {
+						return sprintf(
+							/* translators: %d: row number */
+							__('Ticket type row %d: Reg. Price must be a valid number.', 'tour-booking-manager'),
+							$index + 1
+						);
+					}
+
+					if (!is_numeric($capacity) || (int) $capacity < 0) {
+						return sprintf(
+							/* translators: %d: row number */
+							__('Ticket type row %d: Capacity must be a valid number.', 'tour-booking-manager'),
+							$index + 1
+						);
+					}
+
+					$has_complete = true;
+				}
+
+				if (!$has_complete) {
+					return __('At least one ticket type with Ticket Name, Reg. Price, and Capacity is required when registration is enabled.', 'tour-booking-manager');
+				}
+
+				return null;
+			}
 			//********************//
 			public function save_settings($tour_id) {
 				//echo '<pre>';print_r($_POST);echo '</pre>';die();
@@ -878,6 +968,12 @@
 					if ($date_error) {
 						wp_update_post(['ID' => $tour_id, 'post_status' => 'draft']);
 						set_transient('ttbm_dates_required_' . get_current_user_id(), $date_error, 60);
+						return;
+					}
+					$ticket_error = $this->validate_ticket_fields();
+					if ($ticket_error) {
+						wp_update_post(['ID' => $tour_id, 'post_status' => 'draft']);
+						set_transient('ttbm_tickets_required_' . get_current_user_id(), $ticket_error, 60);
 						return;
 					}
 				}
@@ -1161,10 +1257,16 @@
 					$description = isset($_POST['ticket_type_description']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_type_description'])) : [];
 					$count = count($names);
 					for ($i = 0; $i < $count; $i++) {
-						// Allow saving if name and price are provided, even if capacity is empty
-						if ($names[$i] && $ticket_price[$i] >= 0) {
-							// Set default capacity to 0 if empty or not provided
-							$capacity_value = !empty($qty[$i]) ? $qty[$i] : 0;
+						$price_value = trim($ticket_price[ $i ] ?? '');
+						$capacity_value = trim($qty[ $i ] ?? '');
+						$requires_capacity = ($registration === 'on' && $tour_type === 'general');
+						if ($requires_capacity && ($price_value === '' || $capacity_value === '')) {
+							continue;
+						}
+						if ($names[$i] && $price_value !== '' && is_numeric($price_value) && (float) $price_value >= 0) {
+							if ($capacity_value === '') {
+								$capacity_value = 0;
+							}
 							
 							$new_ticket_type[$i]['ticket_type_icon'] = $icon[$i] ?? '';
 							$new_ticket_type[$i]['ticket_type_name'] = $names[$i];

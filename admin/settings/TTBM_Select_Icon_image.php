@@ -30,8 +30,9 @@
                         </div>
                         <div class="ttbm_add_icon_image_button_area <?php echo esc_attr($button_active_class); ?>">
                             <div class="flexEqual">
-                                <button class="_mpBtn_xs ttbm_icon_add" type="button" data-target-popup="#ttbm_add_icon_popup">
-                                    <span class="fas fa-plus"></span><?php esc_html_e('Icon', 'tour-booking-manager'); ?></button>
+                                <button class="_mpBtn_xs ttbm_icon_add" type="button" data-target-popup="#ttbm_add_icon_popup" title="<?php esc_attr_e('Add Icon', 'tour-booking-manager'); ?>" aria-label="<?php esc_attr_e('Add Icon', 'tour-booking-manager'); ?>">
+                                    <span class="fas fa-plus" aria-hidden="true"></span>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -186,8 +187,9 @@
                         <div class="flexEqual">
                             <button class="_mpBtn_xs ttbm_image_add" type="button">
                                 <span class="fas fa-images"></span><?php esc_html_e('Image', 'tour-booking-manager'); ?></button>
-                            <button class="_mpBtn_xs ttbm_icon_add" type="button" data-target-popup="#ttbm_add_icon_popup">
-                                <span class="fas fa-plus"></span><?php esc_html_e('Icon', 'tour-booking-manager'); ?></button>
+                            <button class="_mpBtn_xs ttbm_icon_add" type="button" data-target-popup="#ttbm_add_icon_popup" title="<?php esc_attr_e('Add Icon', 'tour-booking-manager'); ?>" aria-label="<?php esc_attr_e('Add Icon', 'tour-booking-manager'); ?>">
+                                <span class="fas fa-plus" aria-hidden="true"></span>
+                            </button>
                         </div>
                     </div>
                 </div>

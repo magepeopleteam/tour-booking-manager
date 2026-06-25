@@ -454,13 +454,8 @@
 #ttbm_content .ttbm_default_theme .ttbm_hero { position: relative; border-radius: 16px; overflow: hidden; background: #ffffff; }
 
 /* turn the slider into a single full-bleed image (hide thumbnails, kill the
-   white frame, give a fixed cinematic height) */
+   white frame) */
 #ttbm_content .ttbm_default_theme .ttbm_hero .superSlider { border-radius: 16px; background: #ffffff; }
-/* fixed cinematic height; the right-side thumbnail strip is kept */
-#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider,
-#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .ttbm_slider-wrapper,
-#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .sliderAllItem,
-#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .sliderAllItem .sliderItem { height: 590px; }
 #ttbm_content .ttbm_details_page .superSlider [data-bg-image] {
 	width: 100%;
 	height: 100%;

@@ -765,7 +765,7 @@
 	}
 	/**************Default************************/
 	.ttbm_style .dLayout,
-	.ttbm_style [class*="_dLayout"] { padding: var(--ttbm_mp); background-color: var(--color_white); border: 1px solid var(--color_border); margin-top: -1px; border-radius: 0; }
+	.ttbm_style [class*="_dLayout"] { padding: var(--ttbm_mp); background-color: var(--color_white); border: 1px solid var(--color_border); margin-top: -1px; border-radius: 10px; }
 	.ttbm_style .dLayout:last-child,
 	.ttbm_style [class*="_dLayout"]:last-child { border-bottom: 1px solid var(--color_border); }
 	.ttbm_style .dLayout_xs,
@@ -933,7 +933,7 @@
 	.ttbm_style input:not([type=submit]),
 	.ttbm_style optgroup,
 	.ttbm_style select,
-	.ttbm_style textarea { line-height: initial; margin: 0; max-width: inherit; border: 1px solid var(--color_border); color: var(--d_color); background-color: #FFF; padding: 10px 10px; font-weight: normal; }
+	.ttbm_style textarea { line-height: initial; margin: 0; max-width: inherit; border: 1px solid var(--color_border); color: var(--d_color); background-color: #FFF; padding: 10px 10px; font-weight: normal; border-radius: 8px; }
 	.ttbm_style .formControl:-webkit-autofill,
 	.ttbm_style .formControl:-webkit-autofill:hover,
 	.ttbm_style .formControl:-webkit-autofill:focus,
@@ -1316,8 +1316,29 @@
 	/************/
 	div.ttbm_style .formControl.xs {height: 30px;}
 	/*****Form Qty inc dec*******/
-	#ttbm_content .qtyIncDec { max-width: 110px; }
+	#ttbm_content .qtyIncDec { max-width: 120px; }
+	#ttbm_content .ttbm_booking_section .qtyIncDec { max-width: none; }
 	#ttbm_content .qtyIncDec .formControl {min-width: 50px;text-align: center;}
+	.ttbm_style .qtyIncDec .decQty > span,
+	.ttbm_style .qtyIncDec .incQty > span {
+		display: none !important;
+	}
+	.ttbm_style .qtyIncDec .decQty::before {
+		content: "";
+		display: block;
+		width: 10px;
+		height: 2px;
+		background: currentColor;
+		border-radius: 1px;
+	}
+	.ttbm_style .qtyIncDec .incQty::before {
+		content: "+";
+		display: block;
+		font-family: inherit;
+		font-size: 18px;
+		font-weight: 400;
+		line-height: 1;
+	}
 	/**********Responsive*********/
 	@media only screen and (max-width: 1250px) {
 		.ttbm_style .inputInline .inputList { max-width: calc(25% - 10px); }
@@ -1412,9 +1433,12 @@
 	.ttbm_style table[class*="_layoutFixed"] {
 		table-layout: fixed;
 	}
-	.ttbm_style table th,
-	.ttbm_style table td {
+	.ttbm_style table th {
 		border: 1px solid var(--color_border);
+		padding: var(--ttbm_mp_xs);
+	}
+	.ttbm_style table td {
+		border: none;
 		padding: var(--ttbm_mp_xs);
 	}
 	.ttbm_style table thead th {
@@ -1437,7 +1461,7 @@
 		line-height: 1.25;
 		color: var(--d_color);
 		vertical-align: middle;
-		border: 1px solid #8080804A !important;
+		border: none;
 	}
 	/**************/
 }

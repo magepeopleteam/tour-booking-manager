@@ -649,11 +649,19 @@
 					$extra_service = array();
 					if (sizeof($service_name) > 0) {
 						for ($i = 0; $i < count($service_name); $i++) {
-							if ($service_qty[$i] > 0) {
+							$requested_qty = isset($service_qty[$i]) ? absint($service_qty[$i]) : 0;
+							if ($requested_qty > 0) {
 								$name = $service_name[$i] ?? '';
+								$available = TTBM_Function::get_extra_service_available($tour_id, $start_date, $name);
+								if ($available < 1) {
+									continue;
+								}
+								if ($requested_qty > $available) {
+									$requested_qty = $available;
+								}
 								$extra_service[$i]['service_name'] = $name;
 								$extra_service[$i]['service_price'] = TTBM_Function::get_extra_service_price_by_name($tour_id, $name);
-								$extra_service[$i]['service_qty'] = $service_qty[$i];
+								$extra_service[$i]['service_qty'] = $requested_qty;
 								$extra_service[$i]['ttbm_date'] = $start_date ?? '';
 							}
 						}
@@ -690,9 +698,17 @@
 					$service_qty = isset($_POST['service_qty']) ? array_map('sanitize_text_field', wp_unslash($_POST['service_qty'])) : [];
 					if (sizeof($service_name) > 0) {
 						for ($i = 0; $i < count($service_name); $i++) {
-							if ($service_qty[$i] > 0) {
+							$requested_qty = isset($service_qty[$i]) ? absint($service_qty[$i]) : 0;
+							if ($requested_qty > 0) {
 								$name = $service_name[$i] ?? '';
-								$price = TTBM_Function::get_extra_service_price_by_name($tour_id, $name) * $service_qty[$i];
+								$available = TTBM_Function::get_extra_service_available($tour_id, $start_date, $name);
+								if ($available < 1) {
+									continue;
+								}
+								if ($requested_qty > $available) {
+									$requested_qty = $available;
+								}
+								$price = TTBM_Function::get_extra_service_price_by_name($tour_id, $name) * $requested_qty;
 								$total_price = $total_price + $price;
 							}
 						}

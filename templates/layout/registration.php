@@ -8,8 +8,7 @@
 		$all_dates = TTBM_Function::get_date( $tour_id );
 		if ( sizeof( $all_dates ) > 0 ) {
 			$date          = current( $all_dates );
-			$time          = TTBM_Function::get_time( $tour_id, $date );
-			$time          = is_array( $time ) ? $time[0]['time'] : $time;
+			$time          = TTBM_Function::normalize_time_value( TTBM_Function::get_time( $tour_id, $date ) );
 			$date          = $time ? $date . ' ' . $time : $date;
 			$date		   = $time?gmdate( 'Y-m-d H:i', strtotime( $date) ):gmdate( 'Y-m-d', strtotime( $date) );
 			$check_ability = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_ticketing_system', 'availability_section' );

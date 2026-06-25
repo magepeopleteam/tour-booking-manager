@@ -12,9 +12,9 @@
 		$available_seat = $available_seat??TTBM_Function::get_total_available( $tour_id );
 		?>
 
-		<div class="item_icon ttbm_available_seat_area" title="<?php esc_html_e( 'Available seat', 'tour-booking-manager' ); ?>">
+		<div class="item_icon ttbm_available_seat_area<?php echo esc_attr( TTBM_Function::hero_stat_item_class() ); ?>" title="<?php esc_html_e( 'Available seat', 'tour-booking-manager' ); ?>">
 			<i class="mi mi-couch"></i>
-			<span class="ttbm_available_seat"><?php echo esc_html( $available_seat); ?></span>/<?php echo esc_html(  $total_seat ); ?>
+			<span><span class="ttbm_available_seat"><?php echo esc_html( $available_seat); ?></span>/<?php echo esc_html(  $total_seat ); ?></span>
 		</div>
 
 		<?php

@@ -46,9 +46,11 @@ $term_count   = 3;
 	<?php include( TTBM_Function::template_path( 'layout/description_short.php' ) ); ?>
 
 	<?php /* Feature tags (included services) — set $term_name=true to show labels */ ?>
+	<?php if ( empty( $hide_gc_tags ) ) { ?>
 	<div class="ttbm-gc-tags" >
 		<?php $term_name = true; include( TTBM_Function::template_path( 'layout/include_feature_list.php' ) ); ?>
 	</div>
+	<?php } ?>
 
 	<?php /* Divider */ ?>
 	<hr class="ttbm-gc-divider">

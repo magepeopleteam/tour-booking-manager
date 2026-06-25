@@ -6,6 +6,7 @@
 		class TTBM_Layout {
 			public function __construct() {
 				add_action('ttbm_hidden_item_table', array($this, 'hidden_item_table'), 10, 2);
+				add_action('ttbm_time_select', array($this, 'time_select'), 20, 2);
 			}
 			/****************************/
 			public function hidden_item_table($hook_name, $data = array()) {
@@ -21,10 +22,11 @@
 			}
 			/*****************************/
 			public static function switch_button($name, $checked = '') {
+				$active_class = $checked ? ' mActive' : '';
 				?>
                 <label class="roundSwitchLabel">
                     <input type="checkbox" name="<?php echo esc_attr($name); ?>" <?php echo esc_attr($checked); ?>>
-                    <span class="roundSwitch" data-collapse-target="#<?php echo esc_attr($name); ?>"></span>
+                    <span class="roundSwitch<?php echo esc_attr($active_class); ?>" data-collapse-target="#<?php echo esc_attr($name); ?>"></span>
                 </label>
 				<?php
 			}
@@ -65,16 +67,89 @@
                 </div>
 				<?php
 			}
-			/*****************************/
-			public static function availability_button($tour_id) {
-				$travel_type = TTBM_Function::get_travel_type($tour_id);
-				$check_ability = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticketing_system', 'availability_section');
-				// if ($check_ability == 'availability_section' && $travel_type != 'fixed') { 
+			public static function availability_button( $tour_id, $compact = false ) {
 				?>
                 <button class="navy_blueButton ttbm_check_ability" type="button">
-					<?php esc_html_e('Check  Availability', 'tour-booking-manager'); ?>
+					<span class="fas fa-search" aria-hidden="true"></span>
+					<span class="ttbm_check_ability__label">
+						<?php
+						if ( $compact ) {
+							esc_html_e( 'Check', 'tour-booking-manager' );
+						} else {
+							esc_html_e( 'Check availability', 'tour-booking-manager' );
+						}
+						?>
+					</span>
                 </button>
-				<?php // }
+				<?php
+			}
+			public static function render_time_slots( $tour_id, $date, $time_slots, $check_ability = '' ) {
+				if ( ! is_array( $time_slots ) || empty( $time_slots ) ) {
+					return;
+				}
+				$check_ability  = $check_ability ?: TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_ticketing_system', 'availability_section' );
+				$base_timestamp = strtotime( $date );
+				$base_date      = $base_timestamp ? gmdate( 'Y-m-d', $base_timestamp ) : $date;
+				$slots          = array();
+				foreach ( $time_slots as $time_slot ) {
+					$slot_time = TTBM_Function::normalize_time_value( $time_slot );
+					if ( ! $slot_time ) {
+						continue;
+					}
+					$slot_label = is_array( $time_slot ) ? ( $time_slot['label'] ?? $time_slot['mep_ticket_time_name'] ?? $slot_time ) : $slot_time;
+					$slot_timestamp = strtotime( $base_date . ' ' . $slot_time );
+					if ( ! $slot_timestamp ) {
+						continue;
+					}
+					$slots[] = array(
+						'value' => gmdate( 'Y-m-d H:i', $slot_timestamp ),
+						'label' => $slot_label,
+					);
+				}
+				if ( empty( $slots ) ) {
+					return;
+				}
+				$slot_count = count( $slots );
+				?>
+				<div class="ttbm-time-slots">
+					<div class="ttbm-time-slots__header">
+						<span class="ttbm-time-slots__title"><?php esc_html_e( 'Select Time', 'tour-booking-manager' ); ?></span>
+						<span class="ttbm-time-slots__count">
+							<?php
+							printf(
+								esc_html( _n( '%d slot available', '%d slots available', $slot_count, 'tour-booking-manager' ) ),
+								(int) $slot_count
+							);
+							?>
+						</span>
+					</div>
+					<?php if ( $check_ability === 'availability_section' ) { ?>
+						<div class="ttbm-time-slots__list" role="group" aria-label="<?php esc_attr_e( 'Select Time', 'tour-booking-manager' ); ?>">
+							<input type="text" data-radio-value name="ttbm_select_time" class="dNone formControl" value=""/>
+							<?php foreach ( $slots as $slot ) { ?>
+								<span class="customRadio button_type ttbm-time-slot" data-radio="<?php echo esc_attr( $slot['value'] ); ?>">
+									<?php echo esc_html( $slot['label'] ); ?>
+								</span>
+							<?php } ?>
+						</div>
+					<?php } else { ?>
+						<label class="ttbm-time-slots__select">
+							<select class="formControl" name="ttbm_select_time">
+								<?php foreach ( $slots as $slot ) { ?>
+									<option value="<?php echo esc_attr( $slot['value'] ); ?>"><?php echo esc_html( $slot['label'] ); ?></option>
+								<?php } ?>
+							</select>
+						</label>
+					<?php } ?>
+				</div>
+				<?php
+			}
+			public static function time_select( $tour_id, $date ) {
+				if ( class_exists( 'TTBM_Layout_Pro' ) ) {
+					return;
+				}
+				$time_slots = TTBM_Function::get_time( $tour_id, $date );
+				self::render_time_slots( $tour_id, $date, $time_slots );
 			}
 			public static function ttbm_add_button($button_text, $class = 'ttbm_add_item', $button_class = '_themeButton_xs ', $icon_class = 'fas fa-plus-square') {
 				?>
@@ -120,8 +195,8 @@
 							if ($ticket_qty_type == 'inputbox') {
 								?>
                                 <div class="groupContent qtyIncDec" data-ticket-type-name="<?php echo esc_html($data_ticket_name); ?>">
-                                    <div class="decQty addonGroupContent">
-                                        <span class="fas fa-minus"></span>
+                                    <div class="decQty addonGroupContent" aria-label="<?php esc_attr_e( 'Decrease quantity', 'tour-booking-manager' ); ?>">
+                                        <span class="qty-btn-icon" aria-hidden="true"></span>
                                     </div>
                                     <label>
                                         <input type="text"
@@ -133,8 +208,8 @@
                                                max="<?php echo esc_attr($effective_max); ?>"
                                         />
                                     </label>
-                                    <div class="incQty addonGroupContent">
-                                        <span class="fas fa-plus"></span>
+                                    <div class="incQty addonGroupContent" aria-label="<?php esc_attr_e( 'Increase quantity', 'tour-booking-manager' ); ?>">
+                                        <span class="qty-btn-icon" aria-hidden="true"></span>
                                     </div>
                                 </div>
 							<?php } elseif ($ticket_qty_type == 'dropdown') { ?>
@@ -251,7 +326,7 @@
 					if ($name == 'mep_ticket_times_tue' || $name == 'mep_ticket_times_wed' || $name == 'mep_ticket_times_thu') {
 						$text = 'disabled';
 					}
-					if ($name == 'mep_ticket_times_fri' || $name == 'mep_ticket_off_dates' || $name == 'mep_ticket_offdays') {
+					if ($name == 'mep_ticket_times_fri' || $name == 'mep_ticket_off_dates' || $name == 'mep_ticket_offdays' || $name == 'ttbm_enable_off_schedule') {
 						$text = 'disabled';
 					}
 				}

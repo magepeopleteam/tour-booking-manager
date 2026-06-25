@@ -71,12 +71,20 @@
 					$terms_id_array = array_unique(explode(',', $term_ids));
 				}
 				$activities = TTBM_Global_Function::get_taxonomy('ttbm_tour_activities');
+				$tour_pill_styles = array( 'orchid', 'lotus' );
+				$use_tour_activity_pills = in_array( $params['style'], $tour_pill_styles, true );
+				$use_activity_pills = $params['filter_by_activity'] === 'yes';
 				?>
-                <div class="all_filter_item">
-						<?php if ($params['filter_by_activity'] === 'yes') { ?>
-                        <div class="ttbm_all_item_activities_wrapper">
+                <div class="all_filter_item<?php echo $use_tour_activity_pills ? ' ttbm-' . esc_attr( $params['style'] ) . '-list' : ''; ?>">
+						<?php if ($use_activity_pills) { ?>
+                        <div class="ttbm_all_item_activities_wrapper<?php echo $use_activity_pills ? ' ttbm-tour-activity-pills' : ''; ?>">
                             <button class="scroll-left">←</button>
                             <div class="ttbm_all_item_activities_holder">
+							<div class="ttbm_item_activity">
+								<div class="ttbm_item_filter_by_activity ttbm_item_activity_active" id="all">
+									<?php esc_html_e( 'All Tours', 'tour-booking-manager' ); ?>
+								</div>
+							</div>
 							<?php
 									if (is_array($activities) && count($activities) > 0) {
 										foreach ($activities as $activitie) {
@@ -279,9 +287,11 @@
 						<!-- Middle: Showing X of Y -->
 						<div class="ttbm-filter-bar-count" data-placeholder>
 							<?php esc_html_e( 'Showing', 'tour-booking-manager' ); ?>
-							<strong class="qty_count"><?php echo esc_html( min( (int) $params['show'], (int) $loop->post_count ) ); ?></strong>
-							<?php esc_html_e( 'of', 'tour-booking-manager' ); ?>
-							<strong class="total_filter_qty"><?php echo esc_html( $loop->post_count ); ?></strong>
+							<span class="ttbm-filter-count-highlight">
+								<strong class="qty_count"><?php echo esc_html( min( (int) $params['show'], (int) $loop->post_count ) ); ?></strong>
+								<?php esc_html_e( 'of', 'tour-booking-manager' ); ?>
+								<strong class="total_filter_qty"><?php echo esc_html( $loop->post_count ); ?></strong>
+							</span>
 						</div>
 
 						<!-- Right: Sort + View switcher -->

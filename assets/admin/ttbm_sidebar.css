@@ -1,0 +1,335 @@
+/* ===================================================
+   TTBM Right Sidebar — tour edit screen
+   =================================================== */
+
+/* Sidebar wrapper */
+#ttbm_meta_box_panel .ttbm-right-sidebar {
+	width: 280px;
+	min-width: 280px;
+	flex-shrink: 0;
+	padding: 20px 0 20px 16px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+/* ── Card ── */
+.ttbm-sb-card {
+	background: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+	padding: 16px 18px;
+	box-sizing: border-box;
+}
+
+/* Publish card: no background, no shadow */
+.ttbm-sb-card.ttbm-sb-publish-card {
+	background: transparent;
+	box-shadow: none;
+	padding: 0 0 4px;
+}
+
+/* ── Card title ── */
+.ttbm-sb-card p.ttbm-sb-card-title {
+	font-size: 14px !important;
+	font-weight: 600 !important;
+	color: #0f172a !important;
+	margin: 0 0 12px 0 !important;
+	padding: 0 0 10px 0 !important;
+	border-bottom: 1px solid #f1f5f9 !important;
+	line-height: 1.3 !important;
+}
+
+/* ── Publish buttons ── */
+.ttbm-sb-btn-row {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: space-between !important;
+	gap: 10px !important;
+}
+.ttbm-sb-btn-preview {
+	font-size: 13px !important;
+	font-weight: 500 !important;
+	color: #64748b !important;
+	text-decoration: none !important;
+	background: none !important;
+	border: none !important;
+	padding: 0 !important;
+	cursor: pointer !important;
+	line-height: 1.4 !important;
+	box-shadow: none !important;
+}
+.ttbm-sb-btn-preview:hover {
+	color: #1e293b !important;
+	text-decoration: underline !important;
+}
+.ttbm-sb-btn-publish {
+	font-size: 13px !important;
+	font-weight: 600 !important;
+	color: #fff !important;
+	background: var(--mpl-primary, #2271b1) !important;
+	border: none !important;
+	padding: 9px 22px !important;
+	border-radius: 8px !important;
+	cursor: pointer !important;
+	line-height: 1.4 !important;
+	box-shadow: none !important;
+	transition: opacity .15s !important;
+}
+.ttbm-sb-btn-publish:hover { opacity: 0.88 !important; }
+
+/* ── Featured image ── */
+.ttbm-sb-upload-area {
+	border: 2px dashed #cbd5e1 !important;
+	border-radius: 10px !important;
+	padding: 20px 14px 16px !important;
+	text-align: center !important;
+	cursor: pointer !important;
+	transition: border-color .2s, background .2s !important;
+	margin-bottom: 12px !important;
+	background: #f8fafc !important;
+	box-sizing: border-box !important;
+}
+.ttbm-sb-upload-area:hover {
+	border-color: var(--mpl-primary, #2271b1) !important;
+	background: #eff6ff !important;
+}
+.ttbm-sb-upload-icon {
+	font-size: 26px !important;
+	color: var(--mpl-primary, #2271b1) !important;
+	display: block !important;
+	margin-bottom: 8px !important;
+}
+.ttbm-sb-upload-area p {
+	margin: 0 0 3px 0 !important;
+	font-size: 12px !important;
+	color: #64748b !important;
+	font-weight: 500 !important;
+	line-height: 1.5 !important;
+}
+.ttbm-sb-upload-area span {
+	font-size: 11px !important;
+	color: #94a3b8 !important;
+	display: block !important;
+}
+.ttbm-sb-thumb-preview {
+	width: 100% !important;
+	height: 155px !important;
+	object-fit: cover !important;
+	border-radius: 8px !important;
+	display: block !important;
+	margin-bottom: 10px !important;
+}
+.ttbm-sb-img-actions {
+	display: flex !important;
+	gap: 14px !important;
+}
+.ttbm-sb-img-actions a {
+	font-size: 12px !important;
+	font-weight: 500 !important;
+	color: var(--mpl-primary, #2271b1) !important;
+	cursor: pointer !important;
+	text-decoration: none !important;
+}
+.ttbm-sb-img-actions a:hover { text-decoration: underline !important; }
+.ttbm-sb-img-actions a.ttbm-sb-remove { color: #ef4444 !important; }
+
+/* ── Gallery (right sidebar) ── */
+.ttbm-sb-gallery-card .ttbm-sb-gallery-toggle-row {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: space-between !important;
+	gap: 10px !important;
+	margin-bottom: 0 !important;
+}
+.ttbm-sb-gallery-toggle-label {
+	font-size: 13px !important;
+	font-weight: 600 !important;
+	color: #1e293b !important;
+	line-height: 1.4 !important;
+}
+.ttbm-sb-gallery-body {
+	margin-top: 14px !important;
+	padding-top: 14px !important;
+	border-top: 1px solid #f1f5f9 !important;
+}
+.ttbm-sb-gallery-images-label {
+	margin: 0 0 10px 0 !important;
+	font-size: 13px !important;
+	font-weight: 600 !important;
+	color: #374151 !important;
+	display: flex !important;
+	align-items: center !important;
+	gap: 6px !important;
+}
+.ttbm-sb-gallery-tip {
+	font-size: 12px !important;
+	color: #94a3b8 !important;
+	cursor: help !important;
+}
+.ttbm-sb-gallery-card .ttbm_multi_image {
+	display: flex !important;
+	flex-wrap: wrap !important;
+	gap: 8px !important;
+	margin-bottom: 10px !important;
+}
+.ttbm-sb-gallery-card .ttbm_multi_image_item {
+	width: calc(50% - 4px) !important;
+	min-width: 0 !important;
+	margin: 0 !important;
+	position: relative !important;
+}
+.ttbm-sb-gallery-card .ttbm_multi_image_item img {
+	width: 100% !important;
+	height: 72px !important;
+	object-fit: cover !important;
+	border-radius: 6px !important;
+	display: block !important;
+}
+.ttbm-sb-gallery-card .ttbm_remove_multi_image {
+	top: -5px !important;
+	right: -5px !important;
+}
+
+/* ── Taxonomy checklist — neutralise all WP admin defaults ── */
+.ttbm-sb-tax-list {
+	max-height: 200px !important;
+	overflow-y: auto !important;
+	margin: 0 0 12px 0 !important;
+	padding: 0 !important;
+}
+.ttbm-sb-tax-list ul {
+	margin: 0 !important;
+	padding: 0 !important;
+	list-style: none !important;
+	border: none !important;
+	background: none !important;
+}
+.ttbm-sb-tax-list ul.children {
+	padding-left: 14px !important;
+}
+.ttbm-sb-tax-list li {
+	margin: 0 !important;
+	padding: 5px 0 !important;
+	list-style: none !important;
+	border: none !important;
+	background: none !important;
+	float: none !important;
+}
+.ttbm-sb-tax-list li label.selectit,
+.ttbm-sb-tax-list li label {
+	display: flex !important;
+	align-items: center !important;
+	gap: 9px !important;
+	font-size: 13px !important;
+	font-weight: 400 !important;
+	color: #374151 !important;
+	cursor: pointer !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	text-indent: 0 !important;
+	background: none !important;
+	box-shadow: none !important;
+	line-height: 1.5 !important;
+}
+
+/* Custom checkbox */
+.ttbm-sb-tax-list li input[type="checkbox"] {
+	-webkit-appearance: none !important;
+	-moz-appearance: none !important;
+	appearance: none !important;
+	width: 17px !important;
+	height: 17px !important;
+	min-width: 17px !important;
+	border: 2px solid #d1d5db !important;
+	border-radius: 4px !important;
+	background: #fff !important;
+	cursor: pointer !important;
+	flex-shrink: 0 !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	float: none !important;
+	vertical-align: middle !important;
+	position: relative !important;
+	transition: border-color .15s, background .15s !important;
+	box-shadow: none !important;
+	outline: none !important;
+}
+.ttbm-sb-tax-list li input[type="checkbox"]:checked {
+	background-color: var(--mpl-primary, #2271b1) !important;
+	border-color: var(--mpl-primary, #2271b1) !important;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3E%3Cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3E%3C/svg%3E") !important;
+	background-size: 12px !important;
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+}
+
+/* ── Add-new link ── */
+.ttbm-sb-add-link {
+	display: inline-block !important;
+	font-size: 12px !important;
+	font-weight: 500 !important;
+	color: var(--mpl-primary, #2271b1) !important;
+	cursor: pointer !important;
+	text-decoration: none !important;
+}
+.ttbm-sb-add-link:hover { text-decoration: underline !important; }
+
+/* ── Add-new form — HIDDEN by default ── */
+.ttbm-sb-add-new-form {
+	display: none !important;
+	margin-top: 12px !important;
+	padding-top: 12px !important;
+	border-top: 1px solid #f1f5f9 !important;
+}
+.ttbm-sb-add-new-form.ttbm-sb-open {
+	display: block !important;
+}
+.ttbm-sb-add-new-form input[type="text"] {
+	width: 100% !important;
+	padding: 8px 10px !important;
+	border: 1px solid #d1d5db !important;
+	border-radius: 7px !important;
+	font-size: 13px !important;
+	margin: 0 0 8px 0 !important;
+	box-sizing: border-box !important;
+	outline: none !important;
+	box-shadow: none !important;
+	color: #374151 !important;
+	background: #fff !important;
+	display: block !important;
+}
+.ttbm-sb-add-new-form input[type="text"]:focus {
+	border-color: var(--mpl-primary, #2271b1) !important;
+	box-shadow: 0 0 0 3px rgba(34,113,177,.12) !important;
+}
+.ttbm-sb-form-actions {
+	display: flex !important;
+	gap: 6px !important;
+	align-items: center !important;
+}
+.ttbm-sb-submit-term {
+	background: var(--mpl-primary, #2271b1) !important;
+	color: #fff !important;
+	border: none !important;
+	padding: 7px 16px !important;
+	border-radius: 7px !important;
+	font-size: 12px !important;
+	font-weight: 600 !important;
+	cursor: pointer !important;
+	line-height: 1.4 !important;
+	box-shadow: none !important;
+}
+.ttbm-sb-submit-term:hover { opacity: .88 !important; }
+.ttbm-sb-cancel-term {
+	background: none !important;
+	border: none !important;
+	color: #9ca3af !important;
+	font-size: 12px !important;
+	cursor: pointer !important;
+	padding: 7px 6px !important;
+	line-height: 1.4 !important;
+	box-shadow: none !important;
+}
+.ttbm-sb-cancel-term:hover { color: #6b7280 !important; }

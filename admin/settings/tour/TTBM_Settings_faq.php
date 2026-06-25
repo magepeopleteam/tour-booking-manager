@@ -14,7 +14,7 @@
 	if (!class_exists('TTBM_Settings_faq')) {
 		class TTBM_Settings_faq {
 			public function __construct() {
-				add_action('ttbm_meta_box_tab_content', [$this, 'tab_content'], 10, 1);
+				add_action('ttbm_tour_itinerary_inner', [$this, 'render_faq_section'], 10, 1);
 				add_action('admin_enqueue_scripts', [$this, 'my_custom_editor_enqueue']);
 				// save faq data
 				add_action('wp_ajax_ttbm_faq_data_save', [$this, 'save_faq_data_settings']);
@@ -63,15 +63,12 @@
 				wp_enqueue_script('thickbox');
 				wp_enqueue_style('thickbox');
 			}
-			public function tab_content($post_id) {
+			public function render_faq_section($post_id) {
 				$faq_active = TTBM_Global_Function::get_post_info($post_id, 'ttbm_display_faq', 'off');
 				$active_class = $faq_active == 'on' ? 'mActive' : '';
 				$checked = $faq_active == 'on' ? 'checked' : '';
 				?>
-                <div class="tabsItem ttbm_settings_faq" data-tabs="#ttbm_faq_settings">
-                    <h2><?php esc_html_e('F.A.Q Settings', 'tour-booking-manager'); ?></h2>
-                    <p><?php TTBM_Settings::des_p('faq_settings_description'); ?></p>
-                    <section>
+                    <section class="ttbm_settings_faq">
                         <div class="ttbm-header">
                             <h4><i class="fas fa-question-circle"></i><?php esc_html_e('Frequently Asked Question', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_faq', $checked); ?>
@@ -83,7 +80,6 @@
                             <button class="button ttbm-faq-item-new" data-modal="ttbm-faq-item-new" type="button"><?php esc_html_e('Add FAQ', 'tour-booking-manager'); ?></button>
                         </div>
                     </section>
-                    <!-- sidebar collapse open -->
                     <div class="ttbm-modal-container" data-modal-target="ttbm-faq-item-new">
                         <div class="ttbm-modal-content">
                             <span class="ttbm-modal-close"><i class="fas fa-times"></i></span>
@@ -126,7 +122,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
 				<?php
 			}
 			public function show_faq_data($post_id) {

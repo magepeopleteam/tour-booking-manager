@@ -16,6 +16,7 @@ if (!class_exists('TTBM_Settings_Display')) {
             $display_enquiry = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_enquiry', 'off') == 'off' ? '' : 'checked';
 
             $enquiry_checked = $display_enquiry == 'off' ? '' : 'checked';
+            $auto_related_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_auto_related_tour', 'on') == 'off' ? '' : 'checked';
             ?>
             <div class="tabsItem ttbm_display_settings" data-tabs="#ttbm_display_settings">
                 <h2><?php esc_html_e('Display Settings', 'tour-booking-manager'); ?></h2>
@@ -52,6 +53,12 @@ if (!class_exists('TTBM_Settings_Display')) {
                                 </div>
                                 <?php TTBM_Custom_Layout::switch_button('ttbm_display_enquiry', $enquiry_checked); ?>
                             </label>
+                            <div class="label">
+                                <div>
+                                    <p><?php esc_html_e('Enable Auto Related Tour', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_auto_related_tour'); ?></span></i></p>
+                                </div>
+                                <?php TTBM_Custom_Layout::switch_button('ttbm_auto_related_tour', $auto_related_checked); ?>
+                            </div>
                             <?php do_action('add_ttbm_display_settings_left', $tour_id); ?>
                         </div>
                         <div class="col-right">
@@ -73,7 +80,7 @@ if (!class_exists('TTBM_Settings_Display')) {
                     </div>
                 </section>
 
-                <section>
+                <section style="display:none;">
                     <div class="ttbm-header">
                         <h4><i class="mi mi-blog-text"></i><?php esc_html_e('Section Title Settings', 'tour-booking-manager'); ?></h4>
                     </div>
@@ -107,7 +114,7 @@ if (!class_exists('TTBM_Settings_Display')) {
                     </div>
                 </section>
 
-                <section>
+                <section style="display:none;">
                     <div class="ttbm-header">
                         <h4><i class="mi mi-blog-text"></i><?php esc_html_e('Booking Form Style', 'tour-booking-manager'); ?></h4>
                     </div>

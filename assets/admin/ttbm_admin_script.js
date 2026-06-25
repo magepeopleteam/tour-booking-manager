@@ -71,7 +71,14 @@
                 }, beforeSend: function () {
                     dLoader(parent);
                 }, success: function (data) {
-                    target.html(data);
+                    if ($.trim(data)) {
+                        target.html(data);
+                    } else {
+                        let fallback = parent.find('>.ttbm_hidden_content .ttbm_hidden_item').html();
+                        if (fallback) {
+                            target.html(fallback);
+                        }
+                    }
                     dLoaderRemove(parent);
                 }
             });
@@ -411,24 +418,228 @@
         });
     }
     //*****Place you see****************//
-    $(document).on('click', '.ttbm_settings_place_you_see [data-target-popup]', function () {
-        let target = $(this).closest('.ttbm_settings_place_you_see').find('.ttbm_place_you_see_form_area');
+    function ttbm_get_place_popup() {
+        return $('[data-popup="add_new_place_popup"]');
+    }
+    function ttbm_get_place_popup_form_area() {
+        return ttbm_get_place_popup().find('.ttbm_place_you_see_form_area');
+    }
+    function ttbm_parse_place_save_response(response) {
+        if (response && typeof response === 'object') {
+            return response;
+        }
+        if (typeof response === 'string' && response.trim()) {
+            try {
+                return JSON.parse(response);
+            } catch (error) {
+                return null;
+            }
+        }
+        return null;
+    }
+    function ttbm_reinit_place_select($select) {
+        if (!$select || !$select.length || !$.fn.select2) {
+            return;
+        }
+        if ($select.hasClass('select2-hidden-accessible')) {
+            $select.select2('destroy');
+        }
+        $select.removeClass('add_ttbm_select2').addClass('ttbm_select2');
+        $select.select2({});
+    }
+    function ttbm_refresh_place_dropdowns(selectedPlaceId, placeName) {
+        let $area = $('.ttbm_settings_place_you_see .ttbm_place_you_see_table');
+        let $targetSelect = $('.ttbm_settings_place_you_see').data('ttbm-place-target-select');
+        if (typeof ttbm_admin_ajax === 'undefined') {
+            return;
+        }
         $.ajax({
-            type: 'POST', url: ttbm_ajax_url, data: {
-                "action": "load_ttbm_place_you_see_form"
-            }, beforeSend: function () {
-                dLoader(target);
-            }, success: function (data) {
-                target.html(data).slideDown('fast').promise().done(function () {
-                    dLoaderRemove(target);
+            type: 'POST',
+            url: ttbm_ajax_url,
+            data: {
+                action: 'ttbm_reload_place_dropdown_options',
+                nonce: ttbm_admin_ajax.nonce
+            },
+            beforeSend: function () {
+                if ($area.length) {
+                    dLoader($area);
+                }
+            },
+            success: function (response) {
+                let parsed = ttbm_parse_place_save_response(response);
+                let optionsHtml = parsed && parsed.success && parsed.data ? parsed.data.options : '';
+                if (!optionsHtml) {
+                    dLoaderRemove($area);
+                    return;
+                }
+                let $selects = $('.ttbm_settings_place_you_see').find('select[name="ttbm_city_place_id[]"]');
+                $selects.each(function () {
+                    let $select = $(this);
+                    let preserveVal = '';
+                    if ($targetSelect && $targetSelect.length && $select.is($targetSelect) && selectedPlaceId) {
+                        preserveVal = String(selectedPlaceId);
+                    } else if ($select.val()) {
+                        preserveVal = String($select.val());
+                    }
+                    $select.html(optionsHtml);
+                    if (preserveVal && $select.find('option[value="' + preserveVal + '"]').length) {
+                        $select.val(preserveVal);
+                    }
+                    ttbm_reinit_place_select($select);
+                    if (preserveVal) {
+                        $select.trigger('change');
+                    }
                 });
+                if ($targetSelect && $targetSelect.length && selectedPlaceId) {
+                    let $row = $targetSelect.closest('tr');
+                    if (placeName) {
+                        $row.find('input[name="ttbm_place_label[]"]').val(placeName);
+                    }
+                }
+                dLoaderRemove($area);
+            },
+            error: function (response) {
+                dLoaderRemove($area);
+                console.log(response);
             }
         });
-    });
-    $(document).on('click', '.ttbm_settings_place_you_see  .popupClose', function (e) {
-        if (e.result) {
-            $(this).closest('.ttbm_settings_place_you_see').find('.ttbm_place_you_see_form_area').html('');
+    }
+    function ttbm_show_place_save_error($popup, message) {
+        let $error = $popup.find('.ttbm-place-save-error');
+        if (!$error.length) {
+            return;
         }
+        if (message) {
+            $error.text(message).show();
+        } else {
+            $error.hide().text('');
+        }
+    }
+    function ttbm_load_place_popup_form() {
+        let $popup = ttbm_get_place_popup();
+        let target = $popup.find('.ttbm_place_you_see_form_area');
+        if (!target.length) {
+            return;
+        }
+        ttbm_show_place_save_error($popup, '');
+        $.ajax({
+            type: 'POST',
+            url: ttbm_ajax_url,
+            data: {
+                action: 'load_ttbm_place_you_see_form',
+                nonce: (typeof ttbm_admin_ajax !== 'undefined') ? ttbm_admin_ajax.nonce : ''
+            },
+            beforeSend: function () {
+                dLoader(target);
+            },
+            success: function (data) {
+                target.html(data).show();
+                dLoaderRemove(target);
+            },
+            error: function (response) {
+                dLoaderRemove(target);
+                ttbm_show_place_save_error($popup, 'Could not load the form. Please try again.');
+                console.log(response);
+            }
+        });
+    }
+    $(document).on('click', '.ttbm_settings_place_you_see [data-target-popup="add_new_place_popup"]', function (e) {
+        e.preventDefault();
+        $('.ttbm_settings_place_you_see').data('ttbm-place-target-select', $(this).closest('.ttbm-place-select-wrap').find('select'));
+        ttbm_load_place_popup_form();
+    });
+    $(document).on('click', '.ttbm-place-popup .popupClose', function () {
+        let $popup = $(this).closest('[data-popup="add_new_place_popup"]');
+        ttbm_get_place_popup_form_area().empty();
+        ttbm_show_place_save_error($popup, '');
+        $popup.find('.ttbm_success_info').removeClass('is-visible').hide();
+    });
+    $(document).on('click', '.ttbm-place-popup .ttbm_new_place_save_close', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        ttbm_get_place_popup_form_area().empty();
+        ttbm_show_place_save_error($(this).closest('[data-popup="add_new_place_popup"]'), '');
+        $(this).closest('[data-popup]').find('.popupClose').trigger('click');
+    });
+    $(document).on('click', '.ttbm-place-popup .ttbm_new_place_save', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        ttbm_new_place_save($(this));
+    });
+    function ttbm_new_place_save($this) {
+        let $popup = $this.closest('[data-popup="add_new_place_popup"]');
+        let parent = $this.closest('.popupMainArea');
+        ttbm_show_place_save_error($popup, '');
+        parent.find('.ttbm_success_info').removeClass('is-visible').hide();
+        parent.find('[data-required]').hide();
+        let name = $.trim(parent.find('[name="ttbm_place_name"]').val() || '');
+        let description = parent.find('[name="ttbm_place_description"]').val() || '';
+        let image = parent.find('[name="ttbm_place_image"]').val() || '';
+        let isValid = true;
+        if (!name) {
+            parent.find('[data-required="ttbm_place_name"]').show();
+            isValid = false;
+        }
+        if (!image) {
+            parent.find('[data-required="ttbm_place_image"]').show();
+            isValid = false;
+        }
+        if (!isValid) {
+            ttbm_show_place_save_error($popup, 'Please fill in all required fields.');
+            parent.find('.popupBody').scrollTop(0);
+            return false;
+        }
+        if (!parent.find('[name="ttbm_add_new_place_popup"]').val()) {
+            ttbm_show_place_save_error($popup, 'Form is not ready. Please close and reopen the popup.');
+            return false;
+        }
+        $.ajax({
+            type: 'POST',
+            url: ttbm_ajax_url,
+            data: {
+                action: 'ttbm_new_place_save',
+                name: name,
+                description: description,
+                image: image,
+                _wp_nonce: parent.find('[name="ttbm_add_new_place_popup"]').val()
+            },
+            beforeSend: function () {
+                dLoader(parent);
+            },
+            success: function (response) {
+                dLoaderRemove(parent);
+                let parsed = ttbm_parse_place_save_response(response);
+                if (!parsed || !parsed.success) {
+                    let message = (parsed && parsed.data && parsed.data.message) ? parsed.data.message : 'Could not save place. Please try again.';
+                    ttbm_show_place_save_error($popup, message);
+                    return;
+                }
+                let postId = parsed.data ? parsed.data.post_id : 0;
+                let placeName = parsed.data ? parsed.data.name : name;
+                parent.find('[name="ttbm_place_name"]').val('');
+                parent.find('[name="ttbm_place_description"]').val('');
+                parent.find('[name="ttbm_place_image"]').val('');
+                parent.find('.ttbm_image_remove, .ttbm_remove_single_image').trigger('click');
+                parent.find('.ttbm_success_info').addClass('is-visible').show();
+                ttbm_refresh_place_dropdowns(postId, placeName);
+                return true;
+            },
+            error: function (response) {
+                dLoaderRemove(parent);
+                ttbm_show_place_save_error($popup, 'Could not save place. Please try again.');
+                console.log(response);
+            }
+        });
+        return false;
+    }
+    $(document).on('change', '.ttbm_settings_place_you_see select[name="ttbm_city_place_id[]"]', function () {
+        let $select = $(this);
+        let placeId = $select.val();
+        if (!placeId) {
+            return;
+        }
+        let placeName = $select.find('option:selected').text().trim();
+        $select.closest('tr').find('input[name="ttbm_place_label[]"]').val(placeName);
     });
 }(jQuery));
 //====================//
@@ -1108,118 +1319,229 @@
 }(jQuery));
 // =================Open Street map location search==================
 (function ($) {
-    // OpenStreetMap setup
-    let osmMap, osmMarker, osmAutocomplete, osmGeocoder;
-    function initOSMMap() {
-        let lati = parseFloat(document.getElementById('map_latitude')?.value) || 23.8103; // Default to Dhaka
-        let longdi = parseFloat(document.getElementById('map_longitude')?.value) || 90.4125; // Default to Dhaka
-        osmMap = L.map("osmap_canvas", {minZoom: 1, maxZoom: 20}).setView([lati, longdi], 12);
-        // Add OSM tile layer
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        }).addTo(osmMap);
-        // Initialize the marker for OpenStreetMap (draggable)
-        osmMarker = L.marker([lati, longdi], {title: "Tour Location", draggable: true}).addTo(osmMap);
-        // When the marker is dragged, update the latitude and longitude values
-        osmMarker.on("dragend", function (e) {
-            let newLatLng = osmMarker.getLatLng(); // Get new latitude and longitude
-            document.getElementById('map_latitude').value = newLatLng.lat;
-            document.getElementById('map_longitude').value = newLatLng.lng;
+    let osmMap, osmMarker, osmGeocodeTimer, lastGeocodedAddress = '';
+    const nominatimHeaders = {'Accept-Language': document.documentElement.lang || 'en'};
+
+    function updateOSMPosition(lat, lng, zoom) {
+        if (!osmMap || !osmMarker || isNaN(lat) || isNaN(lng)) {
+            return;
+        }
+        osmMarker.setLatLng([lat, lng]);
+        osmMap.setView([lat, lng], zoom || 12);
+        const latEl = document.getElementById('map_latitude');
+        const lngEl = document.getElementById('map_longitude');
+        if (latEl) {
+            latEl.value = lat;
+        }
+        if (lngEl) {
+            lngEl.value = lng;
+        }
+    }
+
+    function applyOSMGeoFeature(feature) {
+        if (!feature || !feature.geometry || !feature.geometry.coordinates) {
+            return;
+        }
+        const [lng, lat] = feature.geometry.coordinates;
+        updateOSMPosition(lat, lng);
+        const displayName = feature.properties && feature.properties.display_name;
+        const input = document.getElementById('ttbm_osmap_location');
+        if (displayName && input) {
+            input.value = displayName;
+            lastGeocodedAddress = displayName;
+        }
+    }
+
+    function geocodeOSMAddress(address) {
+        if (!address || address.trim().length < 2) {
+            return Promise.resolve(null);
+        }
+        const api = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(address.trim())}`;
+        return fetch(api, {headers: nominatimHeaders})
+            .then((response) => response.json())
+            .then((data) => (data && data.length > 0 ? data[0] : null))
+            .catch((error) => {
+                console.error(error);
+                return null;
+            });
+    }
+
+    function applyOSMGeoJsonResult(result) {
+        if (!result) {
+            return;
+        }
+        updateOSMPosition(parseFloat(result.lat), parseFloat(result.lon));
+        if (result.display_name) {
+            const input = document.getElementById('ttbm_osmap_location');
+            if (input) {
+                input.value = result.display_name;
+                lastGeocodedAddress = result.display_name;
+            }
+        }
+    }
+
+    function geocodeOSMInputValue(address) {
+        const query = (address || '').trim();
+        if (!query || query === lastGeocodedAddress) {
+            return;
+        }
+        geocodeOSMAddress(query).then((result) => {
+            if (result) {
+                applyOSMGeoJsonResult(result);
+            }
         });
-        // Initialize Autocomplete for OpenStreetMap search
-        new Autocomplete("ttbm_osmap_location", {
+    }
+
+    function bindOSMLocationInput() {
+        const locationInput = document.getElementById('ttbm_osmap_location');
+        if (!locationInput || locationInput.dataset.osmBound === '1') {
+            return;
+        }
+        locationInput.dataset.osmBound = '1';
+        lastGeocodedAddress = locationInput.value.trim();
+
+        new Autocomplete('ttbm_osmap_location', {
             selectFirst: true,
             insertToInput: true,
             cache: true,
             howManyCharacters: 2,
-            // onSearch
             onSearch: ({currentValue}) => {
-                const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&city=${encodeURI(currentValue)}`;
-                return new Promise((resolve) => {
-                    fetch(api)
-                        .then((response) => response.json())
-                        .then((data) => resolve(data.features))
-                        .catch((error) => console.error(error));
-                });
+                const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&q=${encodeURIComponent(currentValue)}`;
+                return fetch(api, {headers: nominatimHeaders})
+                    .then((response) => response.json())
+                    .then((data) => data.features || [])
+                    .catch((error) => {
+                        console.error(error);
+                        return [];
+                    });
             },
-            // onResults
             onResults: ({currentValue, matches, template}) => {
-                const regex = new RegExp(currentValue, "gi");
+                const regex = new RegExp(currentValue, 'gi');
                 return matches.length === 0
                     ? template(`<li>No results found: "${currentValue}"</li>`)
                     : matches.map((element) => `
                         <li>
                             <p>${element.properties.display_name.replace(regex, (str) => `<b>${str}</b>`)}</p>
                         </li>`
-                    ).join("");
+                    ).join('');
             },
-            // onSubmit
             onSubmit: ({object}) => {
-                const {display_name} = object.properties;
-                const [lng, lat] = object.geometry.coordinates;
-                // Set new marker position
-                osmMarker.setLatLng([lat, lng]);
-                // Update input fields
-                document.getElementById('map_latitude').value = lat;
-                document.getElementById('map_longitude').value = lng;
-                // Move map to new location
-                osmMap.setView([lat, lng], 12);
+                applyOSMGeoFeature(object);
             },
-            // onSelectedItem
-            onSelectedItem: ({index, element, object}) => {
-                console.log("onSelectedItem:", {index, element, object});
+            onSelectedItem: ({object}) => {
+                if (object) {
+                    applyOSMGeoFeature(object);
+                }
             },
-            // noResults
             noResults: ({currentValue, template}) => template(`<li>No results found: "${currentValue}"</li>`),
         });
-        // Add fullscreen control
+
+        $(locationInput).on('input', function () {
+            clearTimeout(osmGeocodeTimer);
+            const value = this.value.trim();
+            if (value.length < 3 || value === lastGeocodedAddress) {
+                return;
+            }
+            osmGeocodeTimer = setTimeout(() => {
+                if (locationInput.getAttribute('aria-expanded') === 'true') {
+                    return;
+                }
+                geocodeOSMInputValue(value);
+            }, 800);
+        });
+
+        $(locationInput).on('blur', function () {
+            clearTimeout(osmGeocodeTimer);
+            geocodeOSMInputValue(this.value);
+        });
+
+        $(locationInput).on('keydown', function (e) {
+            if (e.key !== 'Enter' && e.keyCode !== 13) {
+                return;
+            }
+            if (this.getAttribute('aria-expanded') === 'true') {
+                return;
+            }
+            e.preventDefault();
+            clearTimeout(osmGeocodeTimer);
+            geocodeOSMInputValue(this.value);
+        });
+    }
+
+    function initOSMMap() {
+        const osmapCanvas = document.getElementById('osmap_canvas');
+        if (!osmapCanvas) {
+            return;
+        }
+        if (osmMap) {
+            setTimeout(() => osmMap.invalidateSize(), 350);
+            return;
+        }
+
+        const lati = parseFloat(document.getElementById('map_latitude')?.value) || 40.712776;
+        const longdi = parseFloat(document.getElementById('map_longitude')?.value) || -74.005974;
+
+        osmMap = L.map('osmap_canvas', {minZoom: 1, maxZoom: 20}).setView([lati, longdi], 12);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(osmMap);
+
+        osmMarker = L.marker([lati, longdi], {title: 'Tour Location', draggable: true}).addTo(osmMap);
+        osmMarker.on('dragend', function () {
+            const newLatLng = osmMarker.getLatLng();
+            document.getElementById('map_latitude').value = newLatLng.lat;
+            document.getElementById('map_longitude').value = newLatLng.lng;
+        });
+
+        osmMap.on('click', function (event) {
+            updateOSMPosition(event.latlng.lat, event.latlng.lng);
+        });
+
+        bindOSMLocationInput();
+
         const fsControl = L.control.fullscreen();
         osmMap.addControl(fsControl);
-        osmMap.on("enterFullscreen", () => console.log("Enter Fullscreen"));
-        osmMap.on("exitFullscreen", () => console.log("Exit Fullscreen"));
+
+        setTimeout(() => osmMap.invalidateSize(), 350);
     }
+
+    function ensureLocationMap() {
+        if (typeof ttbm_map === 'undefined') {
+            return;
+        }
+        if (ttbm_map.api_key) {
+            initGMap();
+        } else {
+            initOSMMap();
+        }
+    }
+
     // ===========Google Map setup=============
     let gmap, gmapMarker, gmapAutocomplete, gmapGeocoder;
-    $(document).on('click', '.ttbm_settings_location,[data-collapse-target="#ttbm_display_map"]', function () {
-        if (gmap) {
-            gmap = null;
-            $('#gmap_canvas').empty();
-        }
-        if (osmMap) {
-            osmMap.remove();
-            osmMap = null;
-            $('#osmap_canvas').empty();
-        }
-        if (ttbm_map.api_key) {
-            initGMap();
-        } else {
-            initOSMMap();
-        }
+
+    $(document).ready(function () {
+        setTimeout(ensureLocationMap, 500);
     });
+
+    $(document).on('click', '.ttbm_settings_location,[data-collapse-target="#ttbm_display_map"],[data-tabs-target="#ttbm_settings_location"]', function () {
+        setTimeout(ensureLocationMap, 400);
+    });
+
     // for hotel trigger
-    $(document).on('click', '.ttbm_hotel_map_location,[data-collapse-target="#ttbm_display_hotel_map"]', function () {
-        if (gmap) {
-            gmap = null;
-            $('#gmap_canvas').empty();
-        }
-        if (osmMap) {
-            osmMap.remove();
-            osmMap = null;
-            $('#osmap_canvas').empty();
-        }
-        if (ttbm_map.api_key) {
-            initGMap();
-        } else {
-            initOSMMap();
-        }
+    $(document).on('click', '.ttbm_hotel_map_location,[data-collapse-target="#ttbm_display_hotel_map"],[data-tabs-target="#ttbm_settings_hotel_location"]', function () {
+        setTimeout(ensureLocationMap, 400);
     });
 
     function initGMap() {
         const latitudeEl = document.getElementById('map_latitude');
         const longitudeEl = document.getElementById('map_longitude');
         const gmapCanvas = document.getElementById('gmap_canvas');
-        // Check if required elements exist before proceeding
         if (!latitudeEl || !longitudeEl || !gmapCanvas) {
+            return;
+        }
+        if (gmap) {
+            google.maps.event.trigger(gmap, 'resize');
+            gmap.setCenter(gmapMarker.getPosition());
             return;
         }
         let lati = parseFloat(latitudeEl.value);

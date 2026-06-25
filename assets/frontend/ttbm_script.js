@@ -35,7 +35,7 @@
 	});
 	$("#place_you_see .owl-carousel").owlCarousel({
 		loop: true,
-		margin: 10,
+		margin: 20,
 		nav: true,
 		rtl: true,
 		responsive: {
@@ -225,8 +225,26 @@
 	ttbm_hotel_left_filter_see_more_button('ttbm_hotelLocationList', 'ttbm_location_checkBoxLevel', 'ttbm_show_hotel_location_seeMoreBtn');
 
 
+	// Hero stats "Load more" — bind early so a later script error cannot skip it.
+	function initHeroStatsLoadMore() {
+		$(document).off('click.ttbmHeroStats', '.ttbm_hero_stats_load_more').on('click.ttbmHeroStats', '.ttbm_hero_stats_load_more', function (e) {
+			e.preventDefault();
+			var $btn = $(this);
+			var $grid = $btn.closest('.ttbm_hero_stats_grid');
+			if (!$grid.length) {
+				return;
+			}
+			var labelMore = $btn.attr('data-label-more') || 'Load more';
+			var labelLess = $btn.attr('data-label-less') || 'Show less';
+			var collapsed = $grid.toggleClass('ttbm_hero_stats_grid--collapsed').hasClass('ttbm_hero_stats_grid--collapsed');
+			$btn.attr('aria-expanded', collapsed ? 'false' : 'true').text(collapsed ? labelMore : labelLess);
+		});
+	}
+
+	$(initHeroStatsLoadMore);
+
 	//========= google map load=========
-	if(ttbm_map.api_key){
+	if (typeof ttbm_map !== 'undefined' && ttbm_map.api_key) {
         initGMap();
     }else{
         initOSMMap();
@@ -245,7 +263,7 @@
 		var location = map_canvas.getAttribute("data-location") || 'Tour Location';
 	
 		// Initialize the map with Leaflet (OpenStreetMap)
-		var osmMap = L.map(map_canvas, { minZoom: 4, maxZoom: 18 }).setView([lati, longdi], 12);
+		var osmMap = L.map(map_canvas, { minZoom: 4, maxZoom: 18, scrollWheelZoom: false }).setView([lati, longdi], 12);
 	
 		// Add OpenStreetMap tile layer
 		L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -272,8 +290,9 @@
 
 		// Create a new map instance
 		var map = new google.maps.Map(gmap_canvas, {
-			zoom: 12, // Zoom level
-			center: location // Set center of the map
+			zoom: 12,
+			center: location,
+			scrollwheel: false
 		});
 
 		// Add a marker at the center
@@ -444,26 +463,53 @@
 	$(document).on('click', '.ttbm-view-more-features-btn', function(e) {
 		e.preventDefault();
 		const list = $(this).closest('ul');
-		list.find('.ttbm-feature-hidden').removeClass('ttbm-feature-hidden').hide().slideDown();
+		list.find('.ttbm-feature-hidden').removeClass('ttbm-feature-hidden').prop('hidden', false).hide().slideDown();
 		$(this).closest('li').remove();
 	});
 
-	// Hero "Book Now" reveals the (hidden) booking section, scrolls to it, and
-	// auto-opens the date picker once it's in view.
+	// Hero "Book Now" reveals the (hidden) booking section, scrolls to it,
+	// auto-selects the next available date and opens the ticket section.
 	$(document).on('click', '[data-ttbm-book-now]', function (e) {
 		e.preventDefault();
 		var $section = $('#ttbm_booking_section');
 		if (!$section.length) { return; }
 		$section.addClass('ttbm-show');
 		$('html, body').animate({ scrollTop: $section.offset().top - 40 }, 450, function () {
-			var picker = $section.find('#ttbm_select_date').first();
-			if (!picker.length) { return; }
-			if (picker[0]._flatpickr) {
-				picker[0]._flatpickr.open();
-			} else {
-				picker.trigger('focus').trigger('click');
+			var $picker = $section.find('#ttbm_select_date').first();
+			if (!$picker.length) { return; }
+			if ($picker.val()) { return; } // date already chosen by user — do nothing
+			var firstDate = $picker.data('ttbm-first-date');
+			if (!firstDate) { return; }
+			// Format and set the visible date input directly, bypassing datepicker('setDate')
+			// which can fire onSelect internally and cause a duplicate AJAX call.
+			var formattedDate = $.datepicker.formatDate(ttbm_date_format, new Date(firstDate + 'T00:00:00'));
+			$picker.val(formattedDate);
+			var $regArea   = $section.find('.ttbm_registration_area').first();
+			var $hiddenDate = $picker.closest('label').find('input[name="ttbm_date"]');
+			// For regular_ticket the PHP has already pre-rendered the ticket form for
+			// the first available date. Clearing + reloading the exact same content
+			// causes a visible double-load. If the form is already there for this date,
+			// just sync the hidden input and enable the Book Now button — no AJAX needed.
+			var loadedDate = $regArea.find('.ttbm_last_updated').data('tour-date');
+			if ($regArea.find('.mp_tour_ticket_form').length > 0
+					&& (!loadedDate || String(loadedDate) === String(firstDate))) {
+				$hiddenDate.val(firstDate);
+				ttbm_toggle_book_now_by_date($regArea);
+				return;
 			}
+			// Form not yet loaded (e.g. availability_section) — trigger AJAX load.
+			$hiddenDate.val(firstDate).trigger('change');
 		});
+	});
+
+	// Daily Schedule timeline — sync active day marker with accordion state.
+	$(document).on('click', '.ttbm_day_wise_timeline .day_wise_details_item_title[data-collapse-target]', function () {
+		var $title = $(this);
+		setTimeout(function () {
+			var $item = $title.closest('.day_wise_details_item');
+			var isOpen = $title.hasClass('mActive');
+			$item.toggleClass('is-active', isOpen);
+		}, 260);
 	});
 
 }(jQuery));

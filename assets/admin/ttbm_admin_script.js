@@ -1505,19 +1505,232 @@
         setTimeout(() => osmMap.invalidateSize(), 350);
     }
 
+    let iframeMapTimer = null;
+
+    function resolveIframeLocationInput() {
+        return document.querySelector('input[name="ttbm_hotel_map_location"]')
+            || document.getElementById('ttbm_hotel_map_location')
+            || document.getElementById('ttbm_iframe_location');
+    }
+
+    function updateIframeMapPointer(address) {
+        const iframe = document.getElementById('ttbm_gmap_iframe');
+        const query = (address || '').trim();
+        if (!query || !iframe) {
+            return;
+        }
+        iframe.src = 'https://maps.google.com/maps?q=' + encodeURIComponent(query) + '&z=14&output=embed';
+    }
+
+    function updateIframeMapCoords(address) {
+        const query = (address || '').trim();
+        if (!query) {
+            return;
+        }
+        geocodeOSMAddress(query).then((result) => {
+            if (result) {
+                const latEl = document.getElementById('map_latitude');
+                const lngEl = document.getElementById('map_longitude');
+                if (latEl) {
+                    latEl.value = result.lat;
+                }
+                if (lngEl) {
+                    lngEl.value = result.lon;
+                }
+            }
+        });
+    }
+
+    function updateIframeMapLocation(address, displayName) {
+        const locationInput = resolveIframeLocationInput();
+        const query = (address || '').trim();
+        if (!query) {
+            return;
+        }
+        updateIframeMapPointer(query);
+        if (displayName && locationInput) {
+            locationInput.value = displayName;
+            lastGeocodedAddress = displayName;
+        }
+        updateIframeMapCoords(query);
+    }
+
+    function bindIframeLocationInput() {
+        const iframe = document.getElementById('ttbm_gmap_iframe');
+        if (!iframe || iframe.dataset.iframeBound === '1') {
+            return;
+        }
+        iframe.dataset.iframeBound = '1';
+
+        const locationInput = resolveIframeLocationInput();
+        if (locationInput) {
+            lastGeocodedAddress = locationInput.value.trim();
+        }
+
+        $(document).on('input.ttbmHotelIframeMap', 'input[name="ttbm_hotel_map_location"], #ttbm_hotel_map_location, #ttbm_iframe_location', function () {
+            clearTimeout(iframeMapTimer);
+            clearTimeout(osmGeocodeTimer);
+            const value = this.value.trim();
+            if (value.length < 2) {
+                return;
+            }
+            if (this.getAttribute('aria-expanded') === 'true') {
+                return;
+            }
+            iframeMapTimer = setTimeout(() => {
+                updateIframeMapPointer(value);
+            }, 250);
+            osmGeocodeTimer = setTimeout(() => {
+                if (value !== lastGeocodedAddress) {
+                    updateIframeMapCoords(value);
+                }
+            }, 700);
+        });
+
+        $(document).on('blur.ttbmHotelIframeMap', 'input[name="ttbm_hotel_map_location"], #ttbm_hotel_map_location, #ttbm_iframe_location', function () {
+            clearTimeout(iframeMapTimer);
+            clearTimeout(osmGeocodeTimer);
+            const value = this.value.trim();
+            if (!value) {
+                return;
+            }
+            updateIframeMapLocation(value);
+            lastGeocodedAddress = value;
+        });
+
+        $(document).on('keydown.ttbmHotelIframeMap', 'input[name="ttbm_hotel_map_location"], #ttbm_hotel_map_location, #ttbm_iframe_location', function (e) {
+            if (e.key !== 'Enter' && e.keyCode !== 13) {
+                return;
+            }
+            if (this.getAttribute('aria-expanded') === 'true') {
+                return;
+            }
+            e.preventDefault();
+            clearTimeout(iframeMapTimer);
+            clearTimeout(osmGeocodeTimer);
+            const value = this.value.trim();
+            updateIframeMapLocation(value);
+            lastGeocodedAddress = value;
+        });
+
+        if (!locationInput || typeof Autocomplete === 'undefined' || locationInput.dataset.acBound === '1') {
+            return;
+        }
+
+        locationInput.dataset.acBound = '1';
+        new Autocomplete(locationInput.id, {
+            selectFirst: true,
+            insertToInput: true,
+            cache: true,
+            howManyCharacters: 2,
+            onSearch: ({currentValue}) => {
+                const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&q=${encodeURIComponent(currentValue)}`;
+                return fetch(api, {headers: nominatimHeaders})
+                    .then((response) => response.json())
+                    .then((data) => data.features || [])
+                    .catch(() => []);
+            },
+            onResults: ({currentValue, matches, template}) => {
+                const regex = new RegExp(currentValue, 'gi');
+                return matches.length === 0
+                    ? template(`<li>No results found: "${currentValue}"</li>`)
+                    : matches.map((element) => `
+                        <li>
+                            <p>${element.properties.display_name.replace(regex, (str) => `<b>${str}</b>`)}</p>
+                        </li>`
+                    ).join('');
+            },
+            onSubmit: ({object}) => {
+                if (object && object.properties) {
+                    updateIframeMapLocation(object.properties.display_name, object.properties.display_name);
+                }
+            },
+            onSelectedItem: ({object}) => {
+                if (object && object.properties) {
+                    updateIframeMapLocation(object.properties.display_name, object.properties.display_name);
+                }
+            },
+            noResults: ({currentValue, template}) => template(`<li>No results found: "${currentValue}"</li>`),
+        });
+    }
+
     function ensureLocationMap() {
         if (typeof ttbm_map === 'undefined') {
             return;
         }
         if (ttbm_map.api_key) {
             initGMap();
-        } else {
+        } else if (document.getElementById('ttbm_gmap_iframe')) {
+            bindIframeLocationInput();
+        } else if (document.getElementById('osmap_canvas')) {
             initOSMMap();
         }
     }
 
+    window.initMap = function () {
+        ensureLocationMap();
+    };
+
     // ===========Google Map setup=============
-    let gmap, gmapMarker, gmapAutocomplete, gmapGeocoder;
+    let gmap, gmapMarker, gmapAutocomplete, gmapGeocoder, gmapInputTimer = null;
+
+    function resolveGmapLocationInput() {
+        return document.getElementById('ttbm_hotel_map_location')
+            || document.getElementById('ttbm_map_location')
+            || document.querySelector('input[name="ttbm_hotel_map_location"]');
+    }
+
+    function setGmapLocationInputValue(value) {
+        const locationInput = resolveGmapLocationInput();
+        if (locationInput) {
+            locationInput.value = value;
+        }
+    }
+
+    function geocodeGmapAddress(address) {
+        const query = (address || '').trim();
+        if (!query || !gmapGeocoder || !gmap || !gmapMarker) {
+            return;
+        }
+        gmapGeocoder.geocode({address: query}, function (results, status) {
+            if (status !== google.maps.GeocoderStatus.OK || !results[0]) {
+                return;
+            }
+            const location = results[0].geometry.location;
+            gmap.setCenter(location);
+            gmapMarker.setPosition(location);
+            document.getElementById('map_latitude').value = location.lat();
+            document.getElementById('map_longitude').value = location.lng();
+        });
+    }
+
+    function bindGmapLocationInput() {
+        const locationInput = resolveGmapLocationInput();
+        if (!locationInput || locationInput.dataset.gmapBound === '1') {
+            return;
+        }
+        locationInput.dataset.gmapBound = '1';
+        $(locationInput).on('input.ttbmGmapLive', function () {
+            clearTimeout(gmapInputTimer);
+            const value = this.value.trim();
+            if (value.length < 2) {
+                return;
+            }
+            if (this.getAttribute('aria-expanded') === 'true') {
+                return;
+            }
+            gmapInputTimer = setTimeout(() => {
+                geocodeGmapAddress(value);
+            }, 350);
+        });
+        $(locationInput).on('blur.ttbmGmapLive', function () {
+            clearTimeout(gmapInputTimer);
+            const value = this.value.trim();
+            if (value) {
+                geocodeGmapAddress(value);
+            }
+        });
+    }
 
     $(document).ready(function () {
         setTimeout(ensureLocationMap, 500);
@@ -1542,6 +1755,7 @@
         if (gmap) {
             google.maps.event.trigger(gmap, 'resize');
             gmap.setCenter(gmapMarker.getPosition());
+            bindGmapLocationInput();
             return;
         }
         let lati = parseFloat(latitudeEl.value);
@@ -1571,8 +1785,13 @@
             reverseGeocode(event.latLng); // Update location name when dragging the marker
         });
         // Initialize Autocomplete for Google address input field
-        gmapAutocomplete = new google.maps.places.Autocomplete(document.getElementById("ttbm_map_location"));
+        const locationInput = resolveGmapLocationInput();
+        if (!locationInput) {
+            return;
+        }
+        gmapAutocomplete = new google.maps.places.Autocomplete(locationInput);
         gmapAutocomplete.addListener("place_changed", onPlaceChanged);
+        bindGmapLocationInput();
         // Add a click event listener to Google Map
         gmap.addListener("click", function (event) {
             let clickedLatLng = event.latLng;
@@ -1587,7 +1806,7 @@
         gmapGeocoder.geocode({'location': latLng}, function (results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
                 if (results[0]) {
-                    document.getElementById('ttbm_map_location').value = results[0].formatted_address;
+                    setGmapLocationInputValue(results[0].formatted_address);
                 } else {
                     console.error("No results found for the given location.");
                 }

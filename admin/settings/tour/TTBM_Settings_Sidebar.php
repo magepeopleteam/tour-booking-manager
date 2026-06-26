@@ -76,6 +76,15 @@ if (!class_exists('TTBM_Settings_Sidebar')) {
 			$page_title  = $post_id ? get_the_title($post_id) : '';
 			$is_tour     = $this->is_tour_edit_screen();
 			$is_hotel    = $this->is_hotel_edit_screen();
+			$post_status_slug  = 'draft';
+			$post_status_label = __('Draft', 'tour-booking-manager');
+			if ($post_id) {
+				$post_status_slug = get_post_status($post_id) ?: 'draft';
+				$status_obj       = get_post_status_object($post_status_slug);
+				if ($status_obj && !empty($status_obj->label)) {
+					$post_status_label = $status_obj->label;
+				}
+			}
 			if ($is_tour) {
 				$back_url   = admin_url('edit.php?post_type=' . TTBM_Function::get_cpt_name() . '&page=ttbm_list');
 				$back_label = sprintf(__('← Back to %s', 'tour-booking-manager'), TTBM_Function::get_name() . 's');
@@ -158,8 +167,9 @@ body.ttbm-modern-edit-page .wrap { padding: 0 20px 20px !important; margin: 0 au
 .ttbm-sk-header-left .ttbm-sk { width: 120px; height: 14px; }
 .ttbm-sk-header-center .ttbm-sk { width: 260px; height: 18px; }
 .ttbm-sk-header-right { display: flex; align-items: center; gap: 10px; }
-.ttbm-sk-header-right .ttbm-sk:first-child { width: 90px; height: 34px; border-radius: 7px !important; }
-.ttbm-sk-header-right .ttbm-sk:last-child  { width: 110px; height: 34px; border-radius: 7px !important; }
+.ttbm-sk-header-right .ttbm-sk:nth-child(1) { width: 72px; height: 28px; border-radius: 6px !important; }
+.ttbm-sk-header-right .ttbm-sk:nth-child(2) { width: 90px; height: 34px; border-radius: 7px !important; }
+.ttbm-sk-header-right .ttbm-sk:nth-child(3) { width: 110px; height: 34px; border-radius: 7px !important; }
 
 /* Body skeleton */
 .ttbm-sk-body {
@@ -688,7 +698,7 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 	letter-spacing: -.01em !important;
 }
 
-/* ── Header right: outlined preview + solid publish ── */
+/* ── Header right: status, preview, split publish ── */
 .ttbm-header-right {
 	display: flex !important;
 	align-items: center !important;
@@ -697,6 +707,42 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 	flex: 1 !important;
 	justify-content: flex-end !important;
 }
+
+.ttbm-header-status {
+	display: inline-flex !important;
+	align-items: center !important;
+	font-size: 12px !important;
+	font-weight: 600 !important;
+	line-height: 1.3 !important;
+	color: #50575e !important;
+	background: #f6f7f7 !important;
+	border: 1px solid #dcdcde !important;
+	border-radius: 4px !important;
+	padding: 7px 10px !important;
+	white-space: nowrap !important;
+	text-transform: capitalize !important;
+}
+
+.ttbm-header-status.is-status-publish {
+	color: #1d6f42 !important;
+	background: #edfaef !important;
+	border-color: #b8e6c1 !important;
+}
+
+.ttbm-header-status.is-status-draft,
+.ttbm-header-status.is-status-auto-draft,
+.ttbm-header-status.is-status-pending {
+	color: #646970 !important;
+	background: #f6f7f7 !important;
+	border-color: #dcdcde !important;
+}
+
+.ttbm-header-status.is-status-private {
+	color: #8c4b00 !important;
+	background: #fcf9e8 !important;
+	border-color: #f0e6b8 !important;
+}
+
 .ttbm-header-preview {
 	display: inline-flex !important;
 	align-items: center !important;
@@ -713,26 +759,109 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 	line-height: 1.4 !important;
 	white-space: nowrap !important;
 }
+
 .ttbm-header-preview:hover {
 	background: #f9fafb !important;
 	border-color: #9ca3af !important;
 	color: #111827 !important;
 	text-decoration: none !important;
 }
-.ttbm-header-publish {
-	font-size: 13px !important;
-	font-weight: 600 !important;
-	color: #fff !important;
+
+.ttbm-header-preview svg {
+	flex-shrink: 0 !important;
+}
+
+.ttbm-split-publish {
+	position: relative !important;
+	display: inline-flex !important;
+	align-items: stretch !important;
+}
+
+.ttbm-split-publish__main,
+.ttbm-split-publish__toggle {
 	background: #2271b1 !important;
-	border: none !important;
-	padding: 9px 22px !important;
-	border-radius: 7px !important;
+	color: #fff !important;
+	border: 1px solid #2271b1 !important;
 	cursor: pointer !important;
 	line-height: 1.4 !important;
-	white-space: nowrap !important;
 	box-shadow: none !important;
+	transition: background .15s ease, border-color .15s ease !important;
 }
-.ttbm-header-publish:hover { background: #135e96 !important; }
+
+.ttbm-split-publish__main {
+	font-size: 13px !important;
+	font-weight: 600 !important;
+	padding: 8px 16px !important;
+	border-radius: 4px 0 0 4px !important;
+	border-right: none !important;
+	white-space: nowrap !important;
+}
+
+.ttbm-split-publish__toggle {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	padding: 0 10px !important;
+	border-radius: 0 4px 4px 0 !important;
+	border-left: 1px solid rgba(255, 255, 255, .28) !important;
+}
+
+.ttbm-split-publish__main:hover,
+.ttbm-split-publish__toggle:hover,
+.ttbm-split-publish.is-open .ttbm-split-publish__main,
+.ttbm-split-publish.is-open .ttbm-split-publish__toggle {
+	background: #135e96 !important;
+	border-color: #135e96 !important;
+}
+
+.ttbm-split-publish__menu {
+	display: none !important;
+	position: absolute !important;
+	top: calc(100% + 4px) !important;
+	right: 0 !important;
+	min-width: 168px !important;
+	background: #fff !important;
+	border: 1px solid #dcdcde !important;
+	border-radius: 4px !important;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, .08) !important;
+	padding: 4px 0 !important;
+	z-index: 100001 !important;
+}
+
+.ttbm-split-publish.is-open .ttbm-split-publish__menu {
+	display: block !important;
+}
+
+.ttbm-split-publish__item {
+	display: flex !important;
+	align-items: center !important;
+	gap: 8px !important;
+	width: 100% !important;
+	padding: 8px 12px !important;
+	font-size: 13px !important;
+	font-weight: 400 !important;
+	color: #1d2327 !important;
+	background: transparent !important;
+	border: none !important;
+	text-decoration: none !important;
+	cursor: pointer !important;
+	text-align: left !important;
+	box-sizing: border-box !important;
+	line-height: 1.4 !important;
+}
+
+.ttbm-split-publish__item:hover,
+.ttbm-split-publish__item:focus {
+	background: #f6f7f7 !important;
+	color: #1d2327 !important;
+	text-decoration: none !important;
+	outline: none !important;
+}
+
+.ttbm-split-publish__item svg {
+	flex-shrink: 0 !important;
+	color: #50575e !important;
+}
 
 /* Hide original WP title / action / old badge — scoped to tour page */
 body.ttbm-modern-edit-page .wrap > h1.wp-heading-inline,
@@ -745,13 +874,19 @@ jQuery(function($){
 	var isHotelEdit = <?php echo $is_hotel ? 'true' : 'false'; ?>;
 	var isPublished = <?php echo ($post_id && get_post_status($post_id) === 'publish') ? 'true' : 'false'; ?>;
 	var previewUrl  = <?php echo wp_json_encode($post_id ? get_preview_post_link(get_post($post_id)) : '#'); ?>;
-	var btnLabel    = isPublished ? <?php echo wp_json_encode(__('Update Post', 'tour-booking-manager')); ?> : <?php echo wp_json_encode(__('Publish', 'tour-booking-manager')); ?>;
+	var postStatusSlug  = <?php echo wp_json_encode($post_status_slug); ?>;
+	var postStatusLabel = <?php echo wp_json_encode($post_status_label); ?>;
+	var btnLabel    = isPublished ? <?php echo wp_json_encode(__('Update', 'tour-booking-manager')); ?> : <?php echo wp_json_encode(__('Publish', 'tour-booking-manager')); ?>;
+	var saveDraftLabel = <?php echo wp_json_encode(__('Save Draft', 'tour-booking-manager')); ?>;
+	var previewLabel   = <?php echo wp_json_encode(__('Preview', 'tour-booking-manager')); ?>;
 
 	var backUrl   = <?php echo wp_json_encode($back_url); ?>;
 	var backLabel = <?php echo wp_json_encode($back_label); ?>;
 
 	var arrowSvg = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 	var eyeSvg   = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+	var chevronSvg = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+	var checkSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
 	var header = $(
 		'<div class="ttbm-admin-page-header" id="ttbm-admin-page-header" style="position:relative;">' +
@@ -760,19 +895,48 @@ jQuery(function($){
 			'</div>' +
 			'<h1 class="ttbm-header-tour-title"></h1>' +
 			'<div class="ttbm-header-right">' +
+				'<span class="ttbm-header-status"></span>' +
 				'<a class="ttbm-header-preview" target="_blank"></a>' +
-				'<button type="submit" name="publish" value="publish" class="ttbm-header-publish"></button>' +
+				'<div class="ttbm-split-publish">' +
+					'<button type="submit" name="publish" value="publish" class="ttbm-split-publish__main"></button>' +
+					'<button type="button" class="ttbm-split-publish__toggle" aria-expanded="false" aria-haspopup="true" aria-label="' + <?php echo wp_json_encode(__('Toggle publish options', 'tour-booking-manager')); ?> + '">' + chevronSvg + '</button>' +
+					'<div class="ttbm-split-publish__menu" role="menu">' +
+						'<button type="submit" name="save" class="ttbm-split-publish__item ttbm-split-publish__draft" role="menuitem"></button>' +
+					'</div>' +
+				'</div>' +
 			'</div>' +
 		'</div>'
 	);
 
 	header.find('.ttbm-header-back').attr('href', backUrl).html(arrowSvg + backLabel);
 	header.find('.ttbm-header-tour-title').text(pageTitle || '');
-	header.find('.ttbm-header-preview').attr('href', previewUrl).html(eyeSvg + <?php echo wp_json_encode(__('Preview', 'tour-booking-manager')); ?>);
-	header.find('.ttbm-header-publish').text(btnLabel);
+	header.find('.ttbm-header-status')
+		.addClass('is-status-' + String(postStatusSlug).replace(/[^a-z0-9_-]/gi, ''))
+		.text(postStatusLabel);
+	header.find('.ttbm-header-preview').attr('href', previewUrl).html(eyeSvg + previewLabel);
+	header.find('.ttbm-split-publish__main').text(btnLabel);
+	header.find('.ttbm-split-publish__draft').attr('value', saveDraftLabel).html(checkSvg + saveDraftLabel);
 
 	/* Inject inside form#post so the submit button is part of the form */
 	$('form#post').prepend(header);
+
+	$(document).on('click', '.ttbm-split-publish__toggle', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		var $wrap = $(this).closest('.ttbm-split-publish');
+		var isOpen = $wrap.hasClass('is-open');
+		$('.ttbm-split-publish').removeClass('is-open').find('.ttbm-split-publish__toggle').attr('aria-expanded', 'false');
+		if (!isOpen) {
+			$wrap.addClass('is-open');
+			$(this).attr('aria-expanded', 'true');
+		}
+	});
+
+	$(document).on('click', function(e) {
+		if (!$(e.target).closest('.ttbm-split-publish').length) {
+			$('.ttbm-split-publish').removeClass('is-open').find('.ttbm-split-publish__toggle').attr('aria-expanded', 'false');
+		}
+	});
 
 	/* Keep header title in sync with the title input */
 	$(document).on('input', '#ttbm_post_title', function(){
@@ -836,7 +1000,7 @@ jQuery(function($){
 	}
 
 	/* ── Single consolidated submit interceptor ── */
-	$(document).on('click', '.ttbm-header-publish, [name="publish"], [name="save"]', function(e){
+	$(document).on('click', '.ttbm-split-publish__main, .ttbm-sb-btn-publish, [name="publish"], [name="save"]', function(e){
 		if (typeof ttbm_sync_visible_dates_to_hidden === 'function') {
 			ttbm_sync_visible_dates_to_hidden();
 		}
@@ -873,6 +1037,7 @@ jQuery(function($){
 			<div class="ttbm-sk"></div>
 		</div>
 		<div class="ttbm-sk-header-right">
+			<div class="ttbm-sk"></div>
 			<div class="ttbm-sk"></div>
 			<div class="ttbm-sk"></div>
 		</div>

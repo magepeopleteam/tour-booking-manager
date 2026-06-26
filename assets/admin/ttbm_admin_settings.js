@@ -372,8 +372,8 @@ function ttbm_load_sortable_datepicker(parent, item) {
             window.ttbmSyncLocationRequiredState();
         }
 
-        if (isOn && typeof ensureLocationMap === 'function') {
-            setTimeout(ensureLocationMap, 400);
+        if (isOn && typeof window.ensureLocationMap === 'function') {
+            setTimeout(window.ensureLocationMap, 400);
         }
     }
 
@@ -387,8 +387,8 @@ function ttbm_load_sortable_datepicker(parent, item) {
         ttbmSetCollapseState($panel, '#ttbm_display_map', isOn);
         ttbmLocationMapSyncing = false;
 
-        if (isOn && typeof ensureLocationMap === 'function') {
-            setTimeout(ensureLocationMap, 400);
+        if (isOn && typeof window.ensureLocationMap === 'function') {
+            setTimeout(window.ensureLocationMap, 400);
         }
     }
 

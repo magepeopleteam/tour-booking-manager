@@ -311,7 +311,8 @@
 	align-items: center !important;
 }
 .ttbm-sb-submit-term {
-	background: var(--mpl-primary, #2271b1) !important;
+	background: #2271b1 !important;
+	background-color: #2271b1 !important;
 	color: #fff !important;
 	border: none !important;
 	padding: 7px 16px !important;

@@ -1559,11 +1559,10 @@
                 return;
             }
             osmGeocodeTimer = setTimeout(() => {
-                if (locationInput.getAttribute('aria-expanded') === 'true') {
-                    return;
+                if (value !== lastGeocodedAddress) {
+                    geocodeOSMInputValue(value);
                 }
-                geocodeOSMInputValue(value);
-            }, 800);
+            }, 500);
         });
 
         $(locationInput).on('blur', function () {
@@ -1623,10 +1622,14 @@
 
     let iframeMapTimer = null;
 
+    const LOCATION_INPUT_SELECTOR = 'input[name="ttbm_hotel_map_location"], #ttbm_hotel_map_location, #ttbm_iframe_location, #ttbm_map_location, input[name="ttbm_full_location_name"]';
+
     function resolveIframeLocationInput() {
         return document.querySelector('input[name="ttbm_hotel_map_location"]')
             || document.getElementById('ttbm_hotel_map_location')
-            || document.getElementById('ttbm_iframe_location');
+            || document.getElementById('ttbm_iframe_location')
+            || document.getElementById('ttbm_map_location')
+            || document.querySelector('input[name="ttbm_full_location_name"]');
     }
 
     function updateIframeMapPointer(address) {
@@ -1683,14 +1686,11 @@
             lastGeocodedAddress = locationInput.value.trim();
         }
 
-        $(document).on('input.ttbmHotelIframeMap', 'input[name="ttbm_hotel_map_location"], #ttbm_hotel_map_location, #ttbm_iframe_location', function () {
+        $(document).on('input.ttbmHotelIframeMap', LOCATION_INPUT_SELECTOR, function () {
             clearTimeout(iframeMapTimer);
             clearTimeout(osmGeocodeTimer);
             const value = this.value.trim();
             if (value.length < 2) {
-                return;
-            }
-            if (this.getAttribute('aria-expanded') === 'true') {
                 return;
             }
             iframeMapTimer = setTimeout(() => {
@@ -1703,7 +1703,7 @@
             }, 700);
         });
 
-        $(document).on('blur.ttbmHotelIframeMap', 'input[name="ttbm_hotel_map_location"], #ttbm_hotel_map_location, #ttbm_iframe_location', function () {
+        $(document).on('blur.ttbmHotelIframeMap', LOCATION_INPUT_SELECTOR, function () {
             clearTimeout(iframeMapTimer);
             clearTimeout(osmGeocodeTimer);
             const value = this.value.trim();
@@ -1714,7 +1714,7 @@
             lastGeocodedAddress = value;
         });
 
-        $(document).on('keydown.ttbmHotelIframeMap', 'input[name="ttbm_hotel_map_location"], #ttbm_hotel_map_location, #ttbm_iframe_location', function (e) {
+        $(document).on('keydown.ttbmHotelIframeMap', LOCATION_INPUT_SELECTOR, function (e) {
             if (e.key !== 'Enter' && e.keyCode !== 13) {
                 return;
             }
@@ -1775,7 +1775,10 @@
             return;
         }
         if (ttbm_map.api_key) {
-            initGMap();
+            bindGmapLocationInputLive();
+            if (typeof google !== 'undefined' && google.maps) {
+                initGMap();
+            }
         } else if (document.getElementById('ttbm_gmap_iframe')) {
             bindIframeLocationInput();
         } else if (document.getElementById('osmap_canvas')) {
@@ -1783,17 +1786,22 @@
         }
     }
 
+    window.ensureLocationMap = ensureLocationMap;
+
     window.initMap = function () {
         ensureLocationMap();
     };
 
     // ===========Google Map setup=============
     let gmap, gmapMarker, gmapAutocomplete, gmapGeocoder, gmapInputTimer = null;
+    let gmapLiveBound = false;
+    let lastGmapGeocodedQuery = '';
 
     function resolveGmapLocationInput() {
         return document.getElementById('ttbm_hotel_map_location')
             || document.getElementById('ttbm_map_location')
-            || document.querySelector('input[name="ttbm_hotel_map_location"]');
+            || document.querySelector('input[name="ttbm_hotel_map_location"]')
+            || document.querySelector('input[name="ttbm_full_location_name"]');
     }
 
     function setGmapLocationInputValue(value) {
@@ -1808,44 +1816,81 @@
         if (!query || !gmapGeocoder || !gmap || !gmapMarker) {
             return;
         }
+        if (query === lastGmapGeocodedQuery) {
+            return;
+        }
         gmapGeocoder.geocode({address: query}, function (results, status) {
             if (status !== google.maps.GeocoderStatus.OK || !results[0]) {
                 return;
             }
+            lastGmapGeocodedQuery = query;
             const location = results[0].geometry.location;
             gmap.setCenter(location);
             gmapMarker.setPosition(location);
-            document.getElementById('map_latitude').value = location.lat();
-            document.getElementById('map_longitude').value = location.lng();
+            const latEl = document.getElementById('map_latitude');
+            const lngEl = document.getElementById('map_longitude');
+            if (latEl) {
+                latEl.value = location.lat();
+            }
+            if (lngEl) {
+                lngEl.value = location.lng();
+            }
         });
     }
 
-    function bindGmapLocationInput() {
-        const locationInput = resolveGmapLocationInput();
-        if (!locationInput || locationInput.dataset.gmapBound === '1') {
+    function bindGmapLocationInputLive() {
+        if (gmapLiveBound) {
             return;
         }
-        locationInput.dataset.gmapBound = '1';
-        $(locationInput).on('input.ttbmGmapLive', function () {
+        gmapLiveBound = true;
+
+        $(document).on('input.ttbmGmapLive', LOCATION_INPUT_SELECTOR, function () {
             clearTimeout(gmapInputTimer);
             const value = this.value.trim();
             if (value.length < 2) {
                 return;
             }
-            if (this.getAttribute('aria-expanded') === 'true') {
-                return;
-            }
+            const self = this;
             gmapInputTimer = setTimeout(() => {
-                geocodeGmapAddress(value);
-            }, 350);
+                geocodeGmapAddress(self.value.trim());
+            }, 300);
         });
-        $(locationInput).on('blur.ttbmGmapLive', function () {
+
+        $(document).on('blur.ttbmGmapLive', LOCATION_INPUT_SELECTOR, function () {
             clearTimeout(gmapInputTimer);
             const value = this.value.trim();
             if (value) {
                 geocodeGmapAddress(value);
             }
         });
+
+        $(document).on('keydown.ttbmGmapLive', LOCATION_INPUT_SELECTOR, function (e) {
+            if (e.key !== 'Enter' && e.keyCode !== 13) {
+                return;
+            }
+            if (this.getAttribute('aria-expanded') === 'true') {
+                return;
+            }
+            e.preventDefault();
+            clearTimeout(gmapInputTimer);
+            const value = this.value.trim();
+            if (value) {
+                geocodeGmapAddress(value);
+            }
+        });
+    }
+
+    function initGmapPlacesAutocomplete() {
+        const locationInput = resolveGmapLocationInput();
+        if (!locationInput || locationInput.dataset.gmapAcBound === '1') {
+            return;
+        }
+        if (typeof google === 'undefined' || !google.maps || !google.maps.places) {
+            return;
+        }
+        locationInput.dataset.gmapAcBound = '1';
+        gmapAutocomplete = new google.maps.places.Autocomplete(locationInput);
+        gmapAutocomplete.addListener('place_changed', onPlaceChanged);
     }
 
     $(document).ready(function () {
@@ -1883,7 +1928,9 @@
         if (gmap) {
             google.maps.event.trigger(gmap, 'resize');
             gmap.setCenter(gmapMarker.getPosition());
-            bindGmapLocationInput();
+            initGmapPlacesAutocomplete();
+            setTimeout(() => google.maps.event.trigger(gmap, 'resize'), 350);
+            syncGmapToCurrentInput();
             return;
         }
         let lati = parseFloat(latitudeEl.value);
@@ -1906,20 +1953,17 @@
         });
         // Initialize Google geocoder for reverse geocoding
         gmapGeocoder = new google.maps.Geocoder();
+        const locationInput = resolveGmapLocationInput();
+        if (locationInput) {
+            lastGmapGeocodedQuery = locationInput.value.trim();
+        }
         // Update latitude and longitude when the marker is dragged
         gmapMarker.addListener("dragend", function (event) {
             document.getElementById('map_latitude').value = event.latLng.lat();
             document.getElementById('map_longitude').value = event.latLng.lng();
             reverseGeocode(event.latLng); // Update location name when dragging the marker
         });
-        // Initialize Autocomplete for Google address input field
-        const locationInput = resolveGmapLocationInput();
-        if (!locationInput) {
-            return;
-        }
-        gmapAutocomplete = new google.maps.places.Autocomplete(locationInput);
-        gmapAutocomplete.addListener("place_changed", onPlaceChanged);
-        bindGmapLocationInput();
+        initGmapPlacesAutocomplete();
         // Add a click event listener to Google Map
         gmap.addListener("click", function (event) {
             let clickedLatLng = event.latLng;
@@ -1929,17 +1973,24 @@
             reverseGeocode(clickedLatLng);
         });
     }
+    function syncGmapToCurrentInput() {
+        const locationInput = resolveGmapLocationInput();
+        if (!locationInput || !gmapGeocoder) {
+            return;
+        }
+        const value = locationInput.value.trim();
+        if (value && value !== lastGmapGeocodedQuery) {
+            geocodeGmapAddress(value);
+        }
+    }
+
     // Reverse geocoding for Google Map
     function reverseGeocode(latLng) {
         gmapGeocoder.geocode({'location': latLng}, function (results, status) {
-            if (status === google.maps.GeocoderStatus.OK) {
-                if (results[0]) {
-                    setGmapLocationInputValue(results[0].formatted_address);
-                } else {
-                    console.error("No results found for the given location.");
-                }
-            } else {
-                console.error("Geocoder failed due to: " + status);
+            if (status === google.maps.GeocoderStatus.OK && results[0]) {
+                const addr = results[0].formatted_address;
+                setGmapLocationInputValue(addr);
+                lastGmapGeocodedQuery = addr;
             }
         });
     }
@@ -1947,7 +1998,6 @@
     function onPlaceChanged() {
         let place = gmapAutocomplete.getPlace();
         if (!place.geometry) {
-            console.error("No details available for the selected place.");
             return;
         }
         let location = place.geometry.location;
@@ -1955,7 +2005,11 @@
         gmapMarker.setPosition(location);
         document.getElementById("map_latitude").value = location.lat();
         document.getElementById("map_longitude").value = location.lng();
-        reverseGeocode(location);
+        const formatted = place.formatted_address || '';
+        if (formatted) {
+            setGmapLocationInputValue(formatted);
+            lastGmapGeocodedQuery = formatted;
+        }
     }
 })(jQuery);
 //=================title style switcher==================

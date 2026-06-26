@@ -17,8 +17,8 @@ body.ttbm_settings_page {
 	--ttbm-a-border-strong: #cbd5e1;
 	--ttbm-a-bg: #f1f5f9;
 	--ttbm-a-surface: #ffffff;
-	--ttbm-a-primary: #2563eb;
-	--ttbm-a-primary-hover: #1d4ed8;
+	--ttbm-a-primary: #2271b1;
+	--ttbm-a-primary-hover: #135e96;
 	--ttbm-a-primary-soft: #eff6ff;
 	--ttbm-a-success: #059669;
 	--ttbm-a-success-soft: #ecfdf5;
@@ -1131,6 +1131,9 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	align-items: center;
 	justify-content: center;
 	gap: 4px;
+	background: #2271b1 !important;
+	border-color: #2271b1 !important;
+	color: #fff !important;
 }
 
 #ttbm_meta_box_panel .ttbm-hotel-details-card .ttbm-hotel-field--location.is-toggle-off .ttbm-hotel-location-controls__new {
@@ -2100,10 +2103,10 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 	width: 100%;
 	margin-top: 14px;
 	padding: 14px 16px;
-	border: 2px dashed #c7d2fe;
+	border: 2px dashed #9ec2e0;
 	border-radius: 12px;
 	background: #fff;
-	color: #4a55a2;
+	color: #2271b1;
 	font-size: 14px;
 	font-weight: 600;
 	cursor: pointer;
@@ -2111,9 +2114,9 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 
 #ttbm_meta_box_panel .ttbm-off-dates-add-btn:hover,
 #ttbm_meta_box_panel .ttbm-off-dates-add-btn:focus {
-	background: #f0f4ff;
-	border-color: #a5b4fc;
-	color: #4a55a2;
+	background: #f0f6fc;
+	border-color: #72aee6;
+	color: #2271b1;
 	opacity: 1;
 }
 
@@ -2152,9 +2155,11 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 	font-size: 13px;
 	font-weight: 600;
 	line-height: 1.2;
-	color: #fff;
-	background: var(--ttbm-a-primary);
-	border: 1px solid var(--ttbm-a-primary);
+	color: #fff !important;
+	background: #2271b1 !important;
+	background-color: #2271b1 !important;
+	border: 1px solid #2271b1 !important;
+	border-color: #2271b1 !important;
 	border-radius: var(--ttbm-a-radius-sm);
 	box-shadow: var(--ttbm-a-shadow-sm);
 	transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
@@ -2164,17 +2169,39 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 #ttbm_meta_box_panel .ttbm_style [class*="_themeButton"]:hover,
 #ttbm_content.ttbm_configuration .ttbm_style .themeButton:hover,
 #ttbm_content.ttbm_configuration .ttbm_style [class*="_themeButton"]:hover {
-	background: var(--ttbm-a-primary-hover);
-	border-color: var(--ttbm-a-primary-hover);
-	color: #fff;
+	background: #135e96 !important;
+	background-color: #135e96 !important;
+	border-color: #135e96 !important;
+	color: #fff !important;
 	box-shadow: var(--ttbm-a-shadow);
 }
 
 #ttbm_meta_box_panel .ttbm_style .themeButton span,
 #ttbm_meta_box_panel .ttbm_style [class*="_themeButton"] span,
 #ttbm_meta_box_panel .ttbm_style .themeButton i,
-#ttbm_meta_box_panel .ttbm_style [class*="_themeButton"] i {
-	color: inherit;
+#ttbm_meta_box_panel .ttbm_style [class*="_themeButton"] i,
+#ttbm_content.ttbm_configuration .ttbm_style .themeButton span,
+#ttbm_content.ttbm_configuration .ttbm_style [class*="_themeButton"] span,
+#ttbm_content.ttbm_configuration .ttbm_style .themeButton i,
+#ttbm_content.ttbm_configuration .ttbm_style [class*="_themeButton"] i {
+	color: #fff !important;
+}
+
+/* Solid add buttons — unified WP admin blue */
+#ttbm_meta_box_panel .ttbm_style .ttbm_add_item[class*="themeButton"],
+#ttbm_meta_box_panel .ttbm_style button.ttbm_add_item:not(.ttbm-off-dates-add-btn):not(.ttbm-time-slots-add-btn):not(.ttbm-particular-dates-add-btn):not(.ttbm-ticket-types-add-btn) {
+	background: #2271b1 !important;
+	background-color: #2271b1 !important;
+	border-color: #2271b1 !important;
+	color: #fff !important;
+}
+
+#ttbm_meta_box_panel .ttbm_style .ttbm_add_item[class*="themeButton"]:hover,
+#ttbm_meta_box_panel .ttbm_style button.ttbm_add_item:not(.ttbm-off-dates-add-btn):not(.ttbm-time-slots-add-btn):not(.ttbm-particular-dates-add-btn):not(.ttbm-ticket-types-add-btn):hover {
+	background: #135e96 !important;
+	background-color: #135e96 !important;
+	border-color: #135e96 !important;
+	color: #fff !important;
 }
 
 #ttbm_meta_box_panel .ttbm_style .mpBtn,
@@ -2734,7 +2761,7 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 #ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_icon_add:hover {
 	border-color: #cbd5e1 !important;
 	background: #fff !important;
-	color: #2563eb !important;
+	color: #2271b1 !important;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-name-field__icon .ttbm_add_icon_image_area button span,
@@ -2833,29 +2860,33 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 	padding: 14px 18px;
 	border: none;
 	border-radius: var(--ttbm-a-radius);
-	background: #2563eb;
-	color: #fff;
+	background: #2271b1 !important;
+	background-color: #2271b1 !important;
+	border-color: #2271b1 !important;
+	color: #fff !important;
 	font-size: 16px;
 	font-weight: 600;
 	font-family: var(--ttbm-a-font);
 	line-height: 1;
 	cursor: pointer;
-	box-shadow: 0 1px 3px rgba(37, 99, 235, 0.25), 0 4px 12px rgba(37, 99, 235, 0.15);
+	box-shadow: 0 1px 3px rgba(34, 113, 177, 0.25), 0 4px 12px rgba(34, 113, 177, 0.15);
 	transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-types-add-btn:hover,
 #ttbm_meta_box_panel .ttbm-ticket-types-add-btn:focus {
-	background: #1d4ed8;
-	color: #fff;
+	background: #135e96 !important;
+	background-color: #135e96 !important;
+	border-color: #135e96 !important;
+	color: #fff !important;
 	text-decoration: none;
-	box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3), 0 6px 18px rgba(37, 99, 235, 0.2);
+	box-shadow: 0 2px 6px rgba(34, 113, 177, 0.3), 0 6px 18px rgba(34, 113, 177, 0.2);
 	transform: translateY(-1px);
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-types-add-btn:active {
 	transform: translateY(0);
-	box-shadow: 0 1px 3px rgba(37, 99, 235, 0.2);
+	box-shadow: 0 1px 3px rgba(34, 113, 177, 0.2);
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-types-add-btn .fas {
@@ -3694,7 +3725,7 @@ div.ttbm_global_settings .button-primary {
 
 /* ─── Tour Time Slots panel (Optional Tour Configuration) ─── */
 #ttbm_meta_box_panel .ttbm-time-slots-panel {
-	--ttbm-slot-primary: #2563eb;
+	--ttbm-slot-primary: #2271b1;
 	--ttbm-slot-primary-soft: #eff6ff;
 	--ttbm-slot-border: #e2e8f0;
 	--ttbm-slot-bg: #f8fafc;
@@ -4099,7 +4130,7 @@ div.ttbm_global_settings .button-primary {
 	width: 100%;
 	margin-top: 14px;
 	padding: 14px 16px;
-	border: 2px dashed #bfdbfe;
+	border: 2px dashed #9ec2e0;
 	border-radius: 12px;
 	background: #fff;
 	color: var(--ttbm-slot-primary);
@@ -4111,8 +4142,8 @@ div.ttbm_global_settings .button-primary {
 
 #ttbm_meta_box_panel .ttbm-time-slots-add-btn:hover,
 #ttbm_meta_box_panel .ttbm-time-slots-add-btn:focus {
-	background: var(--ttbm-slot-primary-soft);
-	border-color: #93c5fd;
+	background: #f0f6fc;
+	border-color: #72aee6;
 	color: var(--ttbm-slot-primary);
 	opacity: 1;
 }
@@ -4167,8 +4198,8 @@ div.ttbm_global_settings .button-primary {
 
 /* ─── Essential Date Configuration (mockup-style) ─── */
 #ttbm_meta_box_panel .ttbm_settings_dates {
-	--ttbm-date-primary: #5b5df5;
-	--ttbm-date-primary-hover: #4f46e5;
+	--ttbm-date-primary: #2271b1;
+	--ttbm-date-primary-hover: #135e96;
 	--ttbm-date-primary-soft: #eef0ff;
 	--ttbm-date-panel-bg: #f8f9fc;
 	--ttbm-date-border: #e8eaed;
@@ -4943,10 +4974,10 @@ div.ttbm_global_settings .button-primary {
 	width: 100%;
 	margin-top: 14px;
 	padding: 14px 16px;
-	border: 2px dashed #c7d2fe;
+	border: 2px dashed #9ec2e0;
 	border-radius: 12px;
 	background: #fff;
-	color: #5b5df5;
+	color: #2271b1;
 	font-size: 14px;
 	font-weight: 600;
 	cursor: pointer;
@@ -4955,9 +4986,9 @@ div.ttbm_global_settings .button-primary {
 
 #ttbm_meta_box_panel .ttbm-particular-dates-add-btn:hover,
 #ttbm_meta_box_panel .ttbm-particular-dates-add-btn:focus {
-	background: #eef0ff;
-	border-color: #a5b4fc;
-	color: #5b5df5;
+	background: #f0f6fc;
+	border-color: #72aee6;
+	color: #2271b1;
 	opacity: 1;
 }
 
@@ -5431,7 +5462,7 @@ body.wp-admin.post-type-ttbm_tour #ui-datepicker-div.ui-datepicker,
 body.wp-admin.post-type-ttbm_hotel #ui-datepicker-div.ui-datepicker,
 body.wp-admin.post-type-ttbm_places #ui-datepicker-div.ui-datepicker,
 body.wp-admin.post-type-ttbm_guide #ui-datepicker-div.ui-datepicker {
-	--ttbm-dp-primary: #2563eb;
+	--ttbm-dp-primary: #2271b1;
 	--ttbm-dp-primary-soft: #eff6ff;
 	--ttbm-dp-border: #e2e8f0;
 	--ttbm-dp-text: #0f172a;
@@ -6419,7 +6450,12 @@ body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td
 	cursor: pointer;
 	text-decoration: none;
 	box-sizing: border-box;
-	transition: box-shadow 0.15s ease, transform 0.15s ease;
+	background: #2271b1 !important;
+	background-color: #2271b1 !important;
+	border: 1px solid #2271b1 !important;
+	border-color: #2271b1 !important;
+	color: #fff !important;
+	transition: box-shadow 0.15s ease, transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
 }
 
 .ttbm-tour-list-page .ttbm_travel_taxonomy_add_btn__icon,
@@ -6441,14 +6477,29 @@ body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td
 }
 
 .ttbm-tour-list-page .ttbm_travel_taxonomy_add_btn:hover,
-.ttbm_trvel_lists_content .ttbm_travel_taxonomy_add_btn:hover {
+.ttbm_trvel_lists_content .ttbm_travel_taxonomy_add_btn:hover,
+.ttbm-tour-list-page .ttbm_travel_taxonomy_add_btn:focus,
+.ttbm_trvel_lists_content .ttbm_travel_taxonomy_add_btn:focus {
+	background: #135e96 !important;
+	background-color: #135e96 !important;
+	border-color: #135e96 !important;
+	color: #fff !important;
 	transform: translateY(-1px);
 	box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
 }
 
+.ttbm-tour-list-page .ttbm_travel_taxonomy_add_btn__icon,
+.ttbm_trvel_lists_content .ttbm_travel_taxonomy_add_btn__icon,
+.ttbm-tour-list-page .ttbm_travel_taxonomy_add_btn__text,
+.ttbm_trvel_lists_content .ttbm_travel_taxonomy_add_btn__text,
+.ttbm-tour-list-page .ttbm_travel_taxonomy_add_btn i,
+.ttbm_trvel_lists_content .ttbm_travel_taxonomy_add_btn i {
+	color: #fff !important;
+}
+
 .ttbm-tour-list-page .ttbm_travel_taxonomy_add_link,
 .ttbm_trvel_lists_content .ttbm_travel_taxonomy_add_link {
-	color: inherit;
+	color: #fff !important;
 }
 
 .ttbm-tour-list-page .ttbm_travel_taxonomy_search_wrap,
@@ -6932,4 +6983,61 @@ body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td
 #ttbm-location-popup .ttbm-taxonomy-popup__footer {
 	display: flex;
 	flex-direction: column;
+}
+
+/* ─── Add New buttons — unified WP admin blue (#2271b1) ─── */
+.ttbm-tour-list-page .ttbm-tour-list-header .page-title-action,
+.ttbm_trvel_lists_content .ttbm-tour-list-header .page-title-action,
+.ttbm_style .ttbm-hotel-new-feature,
+.ttbm_style .ttbm-hotel-new-activity,
+.ttbm_style .ttbm-add-area-info,
+.ttbm_add_new_hotel_header,
+#ttbm_meta_box_panel .ttbm_style button._themeButton_xs[data-target-popup],
+#ttbm_content.ttbm_configuration .ttbm_style button._themeButton_xs[data-target-popup],
+div.ttbm_global_settings .ttbm_style .themeButton,
+div.ttbm_global_settings .ttbm_style [class*="_themeButton"],
+.ttbm_settings_panel .ttbm_style .themeButton,
+.ttbm_settings_panel .ttbm_style [class*="_themeButton"] {
+	background: #2271b1 !important;
+	background-color: #2271b1 !important;
+	border-color: #2271b1 !important;
+	color: #fff !important;
+}
+
+.ttbm-tour-list-page .ttbm-tour-list-header .page-title-action:hover,
+.ttbm_trvel_lists_content .ttbm-tour-list-header .page-title-action:hover,
+.ttbm-tour-list-page .ttbm-tour-list-header .page-title-action:focus,
+.ttbm_trvel_lists_content .ttbm-tour-list-header .page-title-action:focus,
+.ttbm_style .ttbm-hotel-new-feature:hover,
+.ttbm_style .ttbm-hotel-new-activity:hover,
+.ttbm_style .ttbm-add-area-info:hover,
+.ttbm_add_new_hotel_header:hover,
+#ttbm_meta_box_panel .ttbm_style button._themeButton_xs[data-target-popup]:hover,
+#ttbm_content.ttbm_configuration .ttbm_style button._themeButton_xs[data-target-popup]:hover,
+div.ttbm_global_settings .ttbm_style .themeButton:hover,
+div.ttbm_global_settings .ttbm_style [class*="_themeButton"]:hover,
+.ttbm_settings_panel .ttbm_style .themeButton:hover,
+.ttbm_settings_panel .ttbm_style [class*="_themeButton"]:hover {
+	background: #135e96 !important;
+	background-color: #135e96 !important;
+	border-color: #135e96 !important;
+	color: #fff !important;
+}
+
+.ttbm_add_new_hotel_text {
+	color: #fff !important;
+}
+
+.ttbm-tour-list-page .ttbm-tour-list-header .page-title-action span,
+.ttbm_trvel_lists_content .ttbm-tour-list-header .page-title-action span,
+.ttbm-tour-list-page .ttbm-tour-list-header .page-title-action i,
+.ttbm_trvel_lists_content .ttbm-tour-list-header .page-title-action i,
+.ttbm_style .ttbm-hotel-new-feature i,
+.ttbm_style .ttbm-hotel-new-activity i,
+.ttbm_style .ttbm-add-area-info i,
+#ttbm_meta_box_panel .ttbm_style button._themeButton_xs[data-target-popup] i,
+#ttbm_meta_box_panel .ttbm_style button._themeButton_xs[data-target-popup] span,
+div.ttbm_global_settings .ttbm_style .themeButton i,
+div.ttbm_global_settings .ttbm_style [class*="_themeButton"] i {
+	color: #fff !important;
 }

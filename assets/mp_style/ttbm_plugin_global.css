@@ -1481,7 +1481,8 @@
 	.topTabs [data-tabs-target]:last-child { border-right: none; }
 	.leftTabs [data-tabs-target] { position: relative; }
 	.ttbm_style .tabsContent { position: relative; overflow: auto; width: 100%; padding: 2% 5%; background-color: #FFF; }
-	.tabsContent [data-tabs] { display: none; }
+	.tabsContent > [data-tabs] { display: none; }
+	.tabsContent > [data-tabs].active { display: block; }
 	/**************/
 	.ttbmTabs.tabBorder { border: 1px solid var(--color_border); }
 	/******Tab next*********/

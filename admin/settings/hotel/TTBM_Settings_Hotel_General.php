@@ -6,21 +6,33 @@
 		class TTBM_Settings_Hotel_General {
 			public function __construct() {
 				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'hotel_general_settings']);
+				add_action('init', [$this, 'remove_default_title_editor']);
                 add_action('ttbm_single_location', [$this, 'show_location_frontend']);
                 add_action('ttbm_single_sidebar', [$this, 'show_breakfast_parking_frontend']);
                 add_action('ttbm_single_review_testimonial', [$this, 'show_review_testimonial_frontend']);
                 add_action('show_sharing_meta', [$this, 'show_sharing_meta']);
             }
+			public function remove_default_title_editor() {
+				remove_post_type_support('ttbm_hotel', 'title');
+				remove_post_type_support('ttbm_hotel', 'editor');
+			}
 			public function hotel_general_settings($hotel_id) {
 				?>
-                <div class="tabsItem ttbm_settings_general" data-tabs="#ttbm_general_info">
+                <div class="tabsItem ttbm_settings_general contentTab" data-tabs="#ttbm_general_info">
                     <h2><?php esc_html_e('General Information Settings', 'tour-booking-manager'); ?></h2>
-                    <p><?php esc_html_e('Here you can configure basic configureateion for hotel.','tour-booking-manager'); ?></p>
+                    <p><?php esc_html_e('Configure the hotel title, description, and core hotel details.', 'tour-booking-manager'); ?></p>
                     <section>
                         <div class="ttbm-header">
-                            <h4><i class="mi mi-settings"></i><?php esc_html_e('General Settings', 'tour-booking-manager'); ?></h4>
+                            <h4><i class="fas fa-edit" aria-hidden="true"></i><?php esc_html_e('Hotel Title & Content', 'tour-booking-manager'); ?></h4>
                         </div>
-                        <table class="layoutFixed">
+						<?php $this->post_title_field($hotel_id); ?>
+						<?php $this->post_content_field($hotel_id); ?>
+                    </section>
+                    <section class="ttbm-general-info-card">
+                        <div class="ttbm-header ttbm-general-info-card__header">
+                            <h4><i class="fas fa-info-circle" aria-hidden="true"></i><?php esc_html_e('Hotel Details', 'tour-booking-manager'); ?></h4>
+                        </div>
+                        <table class="layoutFixed ttbm-hotel-details-table">
                             <tbody>
                             <?php $this->location($hotel_id); ?>
                             <?php $this->distance_description($hotel_id); ?>
@@ -33,11 +45,57 @@
                             <?php $this->testimonial_info($hotel_id); ?>
                             <?php $this->popular_info($hotel_id); ?>
                             <?php $this->make_feature_info($hotel_id); ?>
-
                             </tbody>
                         </table>
                     </section>
                      <?php TTBM_Settings_Location::add_new_location_popup(); ?>
+                </div>
+				<?php
+			}
+			public function post_title_field($hotel_id) {
+				$title = get_the_title($hotel_id);
+				?>
+                <div class="ttbm-tour-title-field">
+                    <label class="ttbm-tour-title-field__label" for="ttbm_post_title">
+						<?php esc_html_e('Hotel Title', 'tour-booking-manager'); ?>
+                        <span class="ttbm-tour-title-field__required" title="<?php esc_attr_e('Required', 'tour-booking-manager'); ?>">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="ttbm_post_title"
+                        name="post_title"
+                        class="ttbm-tour-title-field__input"
+                        value="<?php echo esc_attr($title); ?>"
+                        placeholder="<?php esc_attr_e('Enter hotel title (required)...', 'tour-booking-manager'); ?>"
+                        autocomplete="off"
+                    />
+                    <p class="ttbm-tour-title-field__hint"><?php esc_html_e('Use a clear hotel name that matches your booking listings.', 'tour-booking-manager'); ?></p>
+                    <p class="ttbm-title-error" role="alert">
+                        <span class="ttbm-tour-title-field__error-icon" aria-hidden="true">&#9888;</span>
+						<?php esc_html_e('Hotel title is required before saving.', 'tour-booking-manager'); ?>
+                    </p>
+                </div>
+				<?php
+			}
+			public function post_content_field($hotel_id) {
+				$content = get_post_field('post_content', $hotel_id);
+				?>
+                <div class="ttbm-tour-description-field">
+                    <div class="ttbm-tour-description-field__head">
+                        <p class="ttbm-tour-description-field__label"><?php esc_html_e('Hotel Description', 'tour-booking-manager'); ?></p>
+                    </div>
+                    <div class="ttbm-tour-description-field__editor">
+					<?php
+					wp_editor($content, 'ttbm_hotel_post_content_editor', [
+						'textarea_name' => 'post_content',
+						'textarea_rows'  => 10,
+						'tinymce'        => [
+							'height'           => 200,
+							'wp_autoresize_on' => false,
+						],
+					]);
+					?>
+                    </div>
                 </div>
 				<?php
 			}
@@ -122,7 +180,7 @@
                     <td><?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?></td>
                     <td >
                         <label data-collapse="#<?php echo esc_attr($display_name); ?>" class="<?php echo esc_attr($active); ?>">
-                            <input type="text" class="formControl" placeholder="<?php echo esc_html__('Excellant','tour-booking-manager');  ?>" name="ttbm_hotel_review_title" value="<?php echo esc_attr($review_title);  ?>"/>
+                            <input type="text" class="formControl" placeholder="<?php echo esc_attr__( 'Excellent', 'tour-booking-manager' ); ?>" name="ttbm_hotel_review_title" value="<?php echo esc_attr( $review_title ); ?>"/>
                             <input type="number" class="formControl" placeholder="<?php echo esc_html__('7.8','tour-booking-manager');  ?>" name="ttbm_hotel_review_rating" value="<?php echo esc_attr($review_rating);  ?>"/>
                         </label>
                     </td>
@@ -314,82 +372,77 @@
                 <?php
             }
 
-            public function show_location_frontend(){
-                $distance_des =  get_post_meta(get_the_ID(), 'ttbm_hotel_distance_des', true);
-                $display =  get_post_meta(get_the_ID(), 'ttbm_display_hotel_map', true);
-                $hotel_location =  get_post_meta(get_the_ID(), 'ttbm_hotel_map_location', true);
-                $hotel_location =  !empty($hotel_location) ? $hotel_location : '650 Manchester Road, New York, NY 10007, USA';
-				$checked = $display == 'on' ? $display : 'off';
-                if($checked=='on'):
-                ?>
-                    <p class="location-info">
-                        <i class="mi mi-marker"></i> 
-                        <?php echo esc_html($hotel_location); ?>
-                    </p>
-                <?php
+            public function show_location_frontend() {
+                $display          = get_post_meta( get_the_ID(), 'ttbm_display_hotel_map', true );
+                $hotel_location   = get_post_meta( get_the_ID(), 'ttbm_hotel_map_location', true );
+                $hotel_location   = ! empty( $hotel_location ) ? $hotel_location : '650 Manchester Road, New York, NY 10007, USA';
+                $checked          = 'on' === $display ? $display : 'off';
+                if ( 'on' === $checked ) :
+                    ?>
+                    <div class="ttbm_hotel_location location-info">
+                        <span class="ttbm_hotel_location__icon" aria-hidden="true"><i class="mi mi-marker"></i></span>
+                        <span class="ttbm_hotel_location__text"><?php echo esc_html( $hotel_location ); ?></span>
+                    </div>
+                    <?php
                 endif;
             }
 
-            public function show_review_testimonial_frontend(){
-                $testimonial_status = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_display_hotel_testimonial', 'on');
-                $testimonial_title = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_hotel_testimonial_title');
-				$testimonial_text = TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_hotel_testimonial_text');
-                
-                $display_hotel_review =  get_post_meta(get_the_ID(), 'ttbm_display_hotel_review', true);
-                $review_title =  get_post_meta(get_the_ID(), 'ttbm_hotel_review_title', true);
-                $review_title = $review_title ? $review_title:'Excellant';
-                $review_rating =  get_post_meta(get_the_ID(), 'ttbm_hotel_review_rating', true);
-                $review_rating = $review_rating ? $review_rating:0;
-				$display_hotel_review = $display_hotel_review == 'on' ? $display_hotel_review : 'on';
-                
-                $display_service_review = get_post_meta(get_the_ID(), 'ttbm_display_service_review', true);
-                $display_service_review = $display_service_review = 'on' ? $display_service_review : 'off';
-                $service_review =  get_post_meta(get_the_ID(), 'ttbm_hotel_service_review', true);
-                $service_rating =  get_post_meta(get_the_ID(), 'ttbm_hotel_service_rating', true);
+            public function show_review_testimonial_frontend() {
+                $testimonial_status   = TTBM_Global_Function::get_post_info( get_the_ID(), 'ttbm_display_hotel_testimonial', 'on' );
+                $testimonial_title    = TTBM_Global_Function::get_post_info( get_the_ID(), 'ttbm_hotel_testimonial_title' );
+                $testimonial_text     = TTBM_Global_Function::get_post_info( get_the_ID(), 'ttbm_hotel_testimonial_text' );
+
+                $display_hotel_review = get_post_meta( get_the_ID(), 'ttbm_display_hotel_review', true );
+                $review_title         = get_post_meta( get_the_ID(), 'ttbm_hotel_review_title', true );
+                $review_rating        = get_post_meta( get_the_ID(), 'ttbm_hotel_review_rating', true );
+                $review_title         = $review_title ? $review_title : __( 'Excellent', 'tour-booking-manager' );
+                if ( 'Excellant' === $review_title ) {
+                    $review_title = __( 'Excellent', 'tour-booking-manager' );
+                }
+                $review_rating        = ( '' !== $review_rating && null !== $review_rating ) ? (float) $review_rating : 0;
+                $display_hotel_review = 'on' === $display_hotel_review ? $display_hotel_review : 'on';
+
+                $display_service_review = get_post_meta( get_the_ID(), 'ttbm_display_service_review', true );
+                $display_service_review = ( 'on' === $display_service_review ) ? 'on' : 'off';
+                $service_review         = get_post_meta( get_the_ID(), 'ttbm_hotel_service_review', true );
+                $service_rating         = get_post_meta( get_the_ID(), 'ttbm_hotel_service_rating', true );
                 ?>
-                <?php if($display_hotel_review=='on'): ?>
+                <?php if ( 'on' === $display_hotel_review ) : ?>
                     <div class="review-rating">
                         <div class="review">
-                            <h3><?php echo esc_html($review_title); ?></h3>
-                            <p><?php echo esc_html($review_rating)." ".__('reviews','tour-booking-manager'); ?> </p>
+                            <h3><?php echo esc_html( $review_title ); ?></h3>
+                            <p><?php esc_html_e( 'Guest rating', 'tour-booking-manager' ); ?></p>
                         </div>
                         <div class="review-rate">
-                            <?php echo esc_html(number_format($review_rating / 100, 1)); ?>
+                            <?php echo esc_html( number_format( $review_rating, 1 ) ); ?>
                         </div>
                     </div>
                 <?php endif; ?>
-                <?php if($testimonial_status=='on'): ?>
+                <?php if ( 'on' === $testimonial_status ) : ?>
                     <div class="review-testimonial">
-                        <h2><?php echo esc_html($testimonial_title); ?></h2>
+                        <h2><?php echo esc_html( $testimonial_title ); ?></h2>
                         <div class="testimonial">
-                            <?php echo esc_html($testimonial_text); ?>
+                            <?php echo esc_html( $testimonial_text ); ?>
                         </div>
                     </div>
                 <?php endif; ?>
-                <?php if($display_service_review=='on'): ?>
+                <?php if ( 'on' === $display_service_review ) : ?>
                     <div class="service-rating">
-                        <h3><?php echo esc_html($service_review); ?></h3>
+                        <h3><?php echo esc_html( $service_review ); ?></h3>
                         <div class="service-rate">
-                            <?php echo esc_html($service_rating); ?>
+                            <?php echo esc_html( $service_rating ); ?>
                         </div>
                     </div>
                 <?php
                 endif;
             }
 
-            public function show_sharing_meta(){
+            public function show_sharing_meta() {
                 ?>
-                <div class="sharing-meta">
-                    <div class="sharing-info">
-                        <span>
-                            <!-- <i class="mi mi-heart"></i> -->
-                            <!-- <i class="mi mi-share"></i> -->
-                        </span>
-                        <a class="button" href="#ttbm_hotel_content_area"><?php echo __('Reserve','tour-booking-manager'); ?></a>
-                    </div>
-                    <!-- <div class="price-match">
-                        <button><i class="mi mi-tags"></i> <?php echo __('We Price Match','tour-booking-manager'); ?></button>
-                    </div> -->
+                <div class="sharing-meta ttbm_hotel_hero_header__actions">
+                    <a class="button ttbm_hotel_reserve_btn" href="#ttbm_hotel_content_area">
+                        <?php esc_html_e( 'Reserve', 'tour-booking-manager' ); ?>
+                    </a>
                 </div>
                 <?php
             }

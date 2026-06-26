@@ -1006,7 +1006,7 @@
 
 /* booking section hidden until "Book Now" is clicked */
 #ttbm_content .ttbm_default_theme .ttbm_booking_section { display: none; }
-#ttbm_content .ttbm_default_theme .ttbm_booking_section.ttbm-show { display: block; animation: ttbmBookingReveal .4s ease both; }
+#ttbm_content .ttbm_default_theme .ttbm_booking_section.ttbm-show { display: block; margin-bottom: 20px; animation: ttbmBookingReveal .4s ease both; }
 @keyframes ttbmBookingReveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
 /* =====================================================================
@@ -2067,7 +2067,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	text-align: left;
 }
 #ttbm_content .ttbm_booking_section .ttbm_extra_service_area {
-	padding: 0 0 8px;
+	padding: 20px;
 	border-top: 1px solid var(--ttbm_d_border);
 	text-align: left;
 }
@@ -2625,6 +2625,470 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 }
 
 /* =====================================================
+   Hotel booking section (tour details — hotel type)
+   ===================================================== */
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel {
+	--ttbm_booking-pad-x: 20px;
+	background: #f5f6f8;
+	border: 1px solid var(--ttbm_d_border);
+	border-radius: 16px;
+	padding-bottom: 20px;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_booking_toolbar {
+	padding-top: 20px;
+	padding-bottom: 8px;
+	background: #fff;
+}
+
+#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_booking_title {
+	margin: 0 0 14px;
+	font-size: 22px;
+	font-weight: 700;
+	color: var(--ttbm_d_heading);
+	line-height: 1.3;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_booking_controls {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 0;
+	width: 100%;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_field {
+	flex: 1 1 auto;
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: stretch;
+	gap: 10px;
+	width: 100%;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_input_wrap {
+	flex: 1 1 auto;
+	min-width: 0;
+	width: auto;
+	position: relative;
+	background: #ebe8e8;
+}
+
+/* Hotel date range picker — match booking section (override global purple theme) */
+body .daterangepicker.ttbm-hotel-daterange {
+	margin-top: 8px;
+	border: 1px solid #e0e0e0;
+	border-radius: 12px;
+	background: #fff !important;
+	box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+	font-family: inherit;
+	z-index: 10050;
+}
+
+body .daterangepicker.ttbm-hotel-daterange::before,
+body .daterangepicker.ttbm-hotel-daterange::after {
+	display: none;
+}
+
+body .daterangepicker.ttbm-hotel-daterange .drp-calendar {
+	background: #fff !important;
+	padding: 8px;
+}
+
+body .daterangepicker.ttbm-hotel-daterange .drp-calendar .calendar-table {
+	background: #fff !important;
+	background-color: #fff !important;
+	border: 0 !important;
+	padding: 4px !important;
+}
+
+body .daterangepicker.ttbm-hotel-daterange .calendar-table {
+	background: #fff !important;
+	border: 0;
+}
+
+body .daterangepicker.ttbm-hotel-daterange .calendar-table .table-condensed thead,
+body .daterangepicker.ttbm-hotel-daterange .calendar-table thead {
+	color: #6b7280 !important;
+	background: #fff !important;
+	background-color: #fff !important;
+}
+
+body .daterangepicker.ttbm-hotel-daterange th.month {
+	font-size: 15px;
+	font-weight: 700;
+	color: var(--ttbm_d_heading) !important;
+	background: #fff !important;
+}
+
+body .daterangepicker.ttbm-hotel-daterange .calendar-table th,
+body .daterangepicker.ttbm-hotel-daterange .calendar-table td {
+	font-size: 13px;
+	color: var(--ttbm_d_heading) !important;
+	border-radius: 8px;
+	width: 36px;
+	height: 36px;
+}
+
+body .daterangepicker.ttbm-hotel-daterange .calendar-table .table-condensed thead th,
+body .daterangepicker.ttbm-hotel-daterange .calendar-table thead th {
+	color: #6b7280 !important;
+	font-weight: 600;
+	font-size: 11px;
+	background: #fff !important;
+	background-color: #fff !important;
+	border-color: transparent !important;
+}
+
+body .daterangepicker.ttbm-hotel-daterange td.available:hover,
+body .daterangepicker.ttbm-hotel-daterange th.available:hover {
+	background: #f3f4f6;
+	color: var(--ttbm_d_heading);
+}
+
+body .daterangepicker.ttbm-hotel-daterange td.in-range {
+	background: #f2f0fa;
+	color: var(--ttbm_d_heading);
+}
+
+body .daterangepicker.ttbm-hotel-daterange td.active,
+body .daterangepicker.ttbm-hotel-daterange td.active:hover {
+	background: #5b3cbe !important;
+	color: #fff !important;
+}
+
+body .daterangepicker.ttbm-hotel-daterange .calendar-table .prev span,
+body .daterangepicker.ttbm-hotel-daterange .calendar-table .next span {
+	border-color: var(--ttbm_d_muted);
+}
+
+body .daterangepicker.ttbm-hotel-daterange select.monthselect,
+body .daterangepicker.ttbm-hotel-daterange select.yearselect {
+	font-size: 13px;
+	color: var(--ttbm_d_heading) !important;
+	background: #fff !important;
+	background-color: #fff !important;
+	border: 1px solid #e0e0e0;
+	border-radius: 6px;
+	padding: 2px 6px;
+	display: inline-block !important;
+	-webkit-appearance: auto;
+	appearance: auto;
+}
+
+#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_date_input,
+#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_date_input.formControl,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_input,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_input.formControl {
+	border: 0 !important;
+	background: transparent !important;
+	flex: 1;
+	min-width: 0;
+	padding: 0 !important;
+	padding-left: 20px !important;
+	height: auto !important;
+	box-shadow: none !important;
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 14px;
+	color: #333 !important;
+	text-align: left;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_input::placeholder {
+	color: var(--ttbm_d_muted);
+	font-weight: 500;
+}
+
+#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_check_btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	align-self: stretch;
+	height: 42px;
+	box-sizing: border-box;
+	background: #fff !important;
+	color: var(--ttbm_d_heading) !important;
+	border: 1px solid #e0e0e0 !important;
+	border-radius: 10px;
+	padding: 0 18px;
+	font-weight: 600;
+	font-size: 13px;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_check_btn:hover {
+	border-color: #c9c9d4 !important;
+	box-shadow: 0 0 0 3px rgba(var(--color_theme_rgb), .08);
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_booking_cards {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin: 10px 0;
+	padding: 8px var(--ttbm_booking-pad-x, 20px) 0;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_area .ttbm_registration_area {
+	background: transparent;
+	border: 0;
+	border-radius: 0;
+	overflow: visible;
+	box-shadow: none;
+	margin: 0;
+	padding: 0;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_item .ttbm_hdc_card {
+	border-radius: 12px;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_item .ttbm_booking_panel {
+	margin-top: 12px;
+	padding: 18px 20px;
+	background: #fff;
+	border: 1px solid #e8e8e8;
+	border-radius: 12px;
+	box-shadow: none;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hdc_btn.ttbm_hotel_open_room_list {
+	background: #5b3cbe !important;
+	color: #fff !important;
+	border: none !important;
+	border-radius: 8px;
+	padding: 11px 24px;
+	font-weight: 600;
+	font-size: 14px;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hdc_btn.ttbm_hotel_open_room_list:hover {
+	background: #4a31a0 !important;
+}
+
+/* Hotel room list table */
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_panel {
+	margin-top: 0 !important;
+	padding: 20px;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_panel__title {
+	margin: 0 0 14px;
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--ttbm_d_heading);
+	line-height: 1.3;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	border: 0;
+	box-shadow: none;
+	background: transparent;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_table thead th {
+	padding: 0 12px 10px;
+	border: 0;
+	border-bottom: 1px solid #ececf1;
+	background: transparent;
+	font-size: 10px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: .08em;
+	color: var(--ttbm_d_muted);
+	text-align: left;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_table thead .ttbm_hotel_room_col--price {
+	text-align: center;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_table thead .ttbm_hotel_room_col--qty {
+	text-align: right;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_row td {
+	padding: 14px 12px;
+	border: 0;
+	border-bottom: 1px solid #f0f0f4;
+	vertical-align: middle;
+	background: transparent;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_hidden_inputs {
+	display: none;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_name {
+	font-size: 15px;
+	font-weight: 700;
+	color: var(--ttbm_d_heading);
+	line-height: 1.35;
+	margin: 0 0 6px;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 3px 8px;
+	border-radius: 6px;
+	background: #f3f4f6;
+	color: #6b7280;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1.2;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_badge i {
+	font-size: 10px;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_badge--stock i {
+	color: #22c55e;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_col--price {
+	text-align: center;
+	color: var(--ttbm_d_heading);
+	font-size: 14px;
+	font-weight: 600;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_price .woocommerce-Price-amount {
+	font-weight: 700;
+	color: var(--ttbm_d_heading);
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_price_meta {
+	display: block;
+	margin-top: 2px;
+	font-size: 12px;
+	font-weight: 500;
+	color: var(--ttbm_d_muted);
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty {
+	text-align: right;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .qtyIncDec {
+	margin-left: auto;
+}
+
+#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_item .ttbm_book_now_area {
+	margin-top: 16px;
+	padding: 5px;
+	margin: 0 15px;
+	border-radius: 10px;
+	padding-right: 0;
+	border-top: 1px solid #f0f0f4;
+}
+
+@media (max-width: 767px) {
+	#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_row {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_input_wrap {
+		width: 100%;
+		min-width: 0;
+	}
+
+	#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_check_btn {
+		width: 100%;
+	}
+
+	#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hdc_card {
+		flex-direction: column;
+	}
+
+	#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hdc_img {
+		flex: none;
+		width: 100%;
+		min-height: 200px;
+	}
+
+	#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hdc_footer {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hdc_price_action {
+		align-items: flex-start;
+		width: 100%;
+	}
+
+	#ttbm_content .ttbm_booking_section--hotel,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hdc_btn {
+		width: 100%;
+		justify-content: center;
+	}
+}
+
+/* =====================================================
    Tour details page — initial skeleton loaders
    ===================================================== */
 .placeholderLoader.ttbm_details_page_loader {
@@ -2944,5 +3408,971 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 		background-size: 50% 22px, 60% 48px, 100% 72px, 100% 72px;
 		background-position: 0 0, 0 40px, 0 104px, 0 188px;
 		min-height: 280px;
+	}
+}
+
+/* Single hotel details — hero gallery inside content column */
+.ttbm_default_theme.ttbm-hotel-details-theme {
+	width: 100%;
+	max-width: 1400px;
+	margin: 0 auto;
+	padding: 0;
+	background: #fff;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page {
+	width: 100%;
+	max-width: none;
+	margin: 0 auto 48px;
+	padding: 0;
+	background: #fff;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-details-inner {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 32px 16px 0;
+}
+
+/* Hotel details — hero header */
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_hero_header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 24px;
+	margin: 0 0 20px;
+	padding: 0;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_hero_header__main {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_hero_header .ttbm_default__title {
+	margin: 0 0 12px;
+	padding: 0;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_hero_header .ttbm_default__title h1 {
+	margin: 0;
+	font-size: clamp(26px, 3vw, 34px);
+	font-weight: 700;
+	color: var(--ttbm_d_heading, #1a1a2e);
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_location {
+	display: inline-flex;
+	align-items: flex-start;
+	gap: 10px;
+	margin: 0;
+	max-width: 100%;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_location__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 34px;
+	width: 34px;
+	height: 34px;
+	border-radius: 10px;
+	background: rgba(91, 60, 190, .1);
+	color: var(--color_theme, #5b3cbe);
+	font-size: 16px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_location__text {
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--ttbm_d_muted, #6b7280);
+	line-height: 1.5;
+	padding-top: 6px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_hero_header__actions {
+	display: flex;
+	flex: 0 0 auto;
+	align-items: flex-start;
+	padding-top: 4px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_reserve_btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	padding: 11px 28px;
+	border: 1px solid var(--color_theme, #5b3cbe);
+	border-radius: 10px;
+	background: #e4e0ed !important;
+	color: #2529a9 !important;
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.2;
+	text-decoration: none;
+	white-space: nowrap;
+	box-shadow: 0 2px 8px rgba(91, 60, 190, .12);
+	transition: background .2s ease, color .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_reserve_btn:hover {
+	background: #d8d2e8 !important;
+	color: #1e2190 !important;
+	border-color: var(--color_theme, #5b3cbe) !important;
+	box-shadow: 0 4px 12px rgba(91, 60, 190, .18);
+}
+
+@media (max-width: 767px) {
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_hero_header {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 16px;
+	}
+
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_hero_header__actions {
+		padding-top: 0;
+	}
+
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_reserve_btn {
+		width: 100%;
+	}
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-hero-gallery {
+	width: 100%;
+	max-width: 100%;
+	margin: 0 0 24px;
+	padding: 0;
+	overflow: hidden;
+	border-radius: 14px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-hero-gallery .slider-area {
+	width: 100% !important;
+	max-width: 100% !important;
+	margin: 0;
+	padding: 0;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-hero-gallery .superSlider {
+	width: 100%;
+	max-width: 100%;
+	border-radius: 14px;
+	overflow: hidden;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-hero-gallery .ttbm_slider-wrapper {
+	width: 100% !important;
+	max-width: 100% !important;
+	min-height: 360px;
+	max-height: 520px !important;
+	height: 520px !important;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-hero-gallery .sliderAllItem {
+	flex: 1 1 auto;
+	width: auto !important;
+	max-width: none !important;
+	max-height: 520px !important;
+	min-height: 360px !important;
+	height: 520px !important;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-hero-gallery .sliderAllItem .sliderItem {
+	max-height: 520px !important;
+	min-height: 360px !important;
+	height: 520px !important;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-hero-gallery .sliderShowcase.right.style_1 {
+	width: min(340px, 34%);
+	flex: 0 0 min(340px, 34%);
+	max-height: 520px !important;
+	height: 520px !important;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-hero-gallery .sliderShowcaseItem {
+	border-radius: 0;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-hero-gallery [data-bg-image] {
+	border-radius: 0;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hero-meta,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-map-section {
+	margin-bottom: 0;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-map-section {
+	margin: 0 0 40px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hero-meta .review-map-container,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-map-section .review-map-container {
+	display: block;
+	width: 100% !important;
+	max-width: 100%;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hero-meta .review-map-container--map-only .map-container,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-map-section .review-map-container--map-only .map-container {
+	width: 100%;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-content-right .review-container {
+	margin-bottom: 18px;
+	padding-bottom: 18px;
+	border-bottom: 1px solid rgba(91, 60, 190, .1);
+	border: 1px solid #e8e8ec;
+	border-radius: 12px;
+	overflow: hidden;
+	background: #fff;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-content-right .review-rating {
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-end;
+	gap: 10px;
+	padding: 14px;
+	border-bottom: 1px solid #e8e8ec;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-content-right .review-rating .review {
+	text-align: right;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-content-right .review-rating .review h3 {
+	margin: 0 0 2px;
+	font-size: 15px;
+	font-weight: 700;
+	color: var(--ttbm_d_heading, #1a1a2e);
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-content-right .review-rating .review p {
+	margin: 0;
+	font-size: 11px;
+	color: var(--ttbm_d_muted, #6b7280);
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-content-right .review-rate {
+	min-width: 44px;
+	padding: 6px 10px;
+	border-radius: 8px;
+	background: var(--color_theme, #5b3cbe);
+	color: #fff;
+	font-size: 18px;
+	font-weight: 700;
+	text-align: center;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-content-right .review-testimonial {
+	padding: 14px;
+	border-bottom: 1px solid #e8e8ec;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-content-right .review-testimonial h2 {
+	margin: 0 0 8px;
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--ttbm_d_heading, #1a1a2e);
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-content-right .review-testimonial .testimonial {
+	margin: 0;
+	font-size: 13px;
+	color: var(--ttbm_d_muted, #6b7280);
+	line-height: 1.5;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-content-right .service-rating {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 14px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-content-right .service-rating h3 {
+	margin: 0;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-content-right .service-rate {
+	padding: 4px 10px;
+	border: 1px solid #e8e8ec;
+	border-radius: 6px;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hero-meta .map-container,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-map-section .map-container {
+	border: 1px solid #e8e8ec;
+	border-radius: 14px;
+	overflow: hidden;
+	background: #fff;
+	box-shadow: 0 4px 18px rgba(15, 23, 42, .05);
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-content-right {
+	padding: 20px;
+	border-radius: 12px;
+	background: #f7f5ff;
+	border: 1px solid rgba(91, 60, 190, .12);
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-content-right .widgets {
+	margin-bottom: 18px;
+	padding-bottom: 18px;
+	border-bottom: 1px solid rgba(91, 60, 190, .1);
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm-content-right .widgets:last-of-type {
+	margin-bottom: 0;
+	padding-bottom: 0;
+	border-bottom: 0;
+}
+
+@media (max-width: 1024px) {
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-hero-gallery .ttbm_slider-wrapper {
+		flex-direction: column;
+		min-height: auto;
+		max-height: none !important;
+		height: auto !important;
+	}
+
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-hero-gallery .sliderAllItem,
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-hero-gallery .sliderAllItem .sliderItem {
+		min-height: 280px !important;
+		max-height: 360px !important;
+		height: 360px !important;
+	}
+
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-hero-gallery .sliderShowcase.right.style_1 {
+		width: 100%;
+		flex: 0 0 auto;
+		max-height: none !important;
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hero-meta .review-map-container,
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-map-section .review-map-container {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 640px) {
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm-hotel-hero-gallery .sliderShowcase.right.style_1 {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+/* Hotel details — FAQ section */
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_section {
+	margin: 40px 0 32px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_heading {
+	margin: 0 0 16px;
+	font-size: 22px;
+	font-weight: 700;
+	color: var(--ttbm_d_heading, #1a1a2e);
+	line-height: 1.3;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_section .faq-groups {
+	display: block;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_section .faq-group {
+	width: 100%;
+	padding: 0;
+	border: 1px solid #e8e8ec;
+	border-radius: 14px;
+	background: #fff;
+	overflow: hidden;
+	box-shadow: 0 4px 18px rgba(15, 23, 42, .05);
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_section .faq-item {
+	position: relative;
+	padding: 0;
+	border-bottom: 1px solid #f0f0f4;
+	cursor: pointer;
+	transition: background-color .15s ease;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_section .faq-item:hover {
+	background: #fafafa;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_section .faq-item:last-child {
+	border-bottom: 0;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_section .faq-item::after {
+	display: none;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_section .faq-question {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 16px 20px;
+	margin: 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--ttbm_d_heading, #1a1a2e);
+	line-height: 1.45;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_section .faq-question__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 34px;
+	width: 34px;
+	height: 34px;
+	border-radius: 10px;
+	background: rgba(91, 60, 190, .1);
+	color: var(--color_theme, #5b3cbe);
+	font-size: 16px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_section .faq-question__text {
+	flex: 1 1 auto;
+	min-width: 0;
+	padding-right: 8px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_section .faq-question__arrow {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	width: 24px;
+	height: 24px;
+	color: #9ca3af;
+	font-size: 12px;
+	transition: transform .15s ease, color .15s ease;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_section .faq-item:hover .faq-question__arrow {
+	color: var(--color_theme, #5b3cbe);
+	transform: translateX(2px);
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_modal .ttbm-modal-content {
+	border-radius: 14px;
+	max-width: 560px;
+	padding: 0;
+	overflow: hidden;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_modal .ttbm-modal-content .title {
+	padding: 20px 24px 12px;
+	border-bottom: 1px solid #f0f0f4;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_modal .ttbm-modal-content .title h2 {
+	margin: 0 0 6px;
+	font-size: 18px;
+	font-weight: 700;
+	color: var(--ttbm_d_heading, #1a1a2e);
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_modal .ttbm-modal-content .content {
+	padding: 16px 24px 24px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_modal .ttbm-modal-content .content .faq-question {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 0;
+	margin: 0 0 12px;
+	font-size: 15px;
+	font-weight: 600;
+	color: var(--ttbm_d_heading, #1a1a2e);
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_modal .ttbm-modal-content .content .faq-question i {
+	color: var(--color_theme, #5b3cbe);
+	font-size: 18px;
+	margin-top: 2px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_modal .ttbm-modal-content .faq-anwser {
+	padding: 14px 16px;
+	border-radius: 10px;
+	background: #f8f7fc;
+	color: #444;
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_modal .ttbm-modal-close {
+	top: 14px;
+	right: 14px;
+	width: 32px;
+	height: 32px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 8px;
+	background: #f3f4f6;
+	color: #6b7280;
+	cursor: pointer;
+}
+
+/* Hotel details — area info section */
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_area_section {
+	margin: 0 0 40px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_area_heading {
+	margin: 0 0 16px;
+	font-size: 22px;
+	font-weight: 700;
+	color: var(--ttbm_d_heading, #1a1a2e);
+	line-height: 1.3;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_area_section .ttbm-area-section {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+	align-items: start;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_area_section .ttbm-area-items {
+	width: 100%;
+	padding: 18px 20px;
+	border: 1px solid #e8e8ec;
+	border-radius: 14px;
+	background: #fff;
+	box-shadow: 0 4px 18px rgba(15, 23, 42, .05);
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_area_section .ttbm-area-items__title {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin: 0 0 14px;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #f0f0f4;
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--ttbm_d_heading, #1a1a2e);
+	line-height: 1.3;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_area_section .ttbm-area-items__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 34px;
+	width: 34px;
+	height: 34px;
+	border-radius: 10px;
+	background: rgba(91, 60, 190, .1);
+	color: var(--color_theme, #5b3cbe);
+	font-size: 16px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_area_section .ttbm-area-items__list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_area_section .ttbm-area-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 10px 0;
+	border-bottom: 1px solid #f3f4f6;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_area_section .ttbm-area-item:last-child {
+	border-bottom: 0;
+	padding-bottom: 0;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_area_section .ttbm-area-item__name {
+	flex: 1 1 auto;
+	min-width: 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--ttbm_d_heading, #1a1a2e);
+	line-height: 1.4;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_area_section .ttbm-area-item__meta {
+	display: inline-flex;
+	align-items: center;
+	justify-content: flex-end;
+	flex: 0 0 auto;
+	gap: 6px;
+	white-space: nowrap;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_area_section .ttbm-area-item__distance {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 36px;
+	padding: 3px 8px;
+	border-radius: 999px;
+	background: rgba(91, 60, 190, .1);
+	color: var(--color_theme, #5b3cbe);
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 1.2;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_area_section .ttbm-area-item__type {
+	font-size: 12px;
+	font-weight: 500;
+	color: var(--ttbm_d_muted, #6b7280);
+}
+
+@media (max-width: 900px) {
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_area_section .ttbm-area-section {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Hotel details — booking section (match FAQ / area info cards) */
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_details_booking_section {
+	margin-top: 8px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel.ttbm_hotel_details_booking {
+	background: #fff;
+	border: 1px solid #e8e8ec;
+	border-radius: 14px;
+	box-shadow: 0 4px 18px rgba(15, 23, 42, .05);
+	padding: 0;
+	overflow: hidden;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_booking_toolbar {
+	padding: 16px 20px;
+	background: var(--color_theme, #5b3cbe);
+	border-bottom: none;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_booking_toolbar--inline .ttbm_hotel_booking_toolbar__inner {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	width: 100%;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_booking_toolbar--inline .ttbm_hotel_booking_title,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_booking_title {
+	margin: 0;
+	flex: 0 0 auto;
+	font-size: 18px;
+	font-weight: 700;
+	color: #ffffff;
+	line-height: 1.3;
+	white-space: nowrap;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_booking_toolbar--inline .ttbm_hotel_booking_controls {
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 12px;
+	min-width: 0;
+	margin: 0;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_booking_toolbar--inline .ttbm_hotel_date_label {
+	flex: 0 0 auto;
+	font-size: 13px;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 0.92);
+	white-space: nowrap;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_booking_toolbar--inline .ttbm_hotel_date_input_wrap {
+	flex: 1 1 auto;
+	max-width: 420px;
+	min-width: 200px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_booking_toolbar--inline .ttbm_hotel_check_btn {
+	flex: 0 0 auto;
+	height: 42px;
+	padding: 0 20px;
+	border-radius: 10px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_input_wrap {
+	background: #f7f5ff;
+	border: 1px solid rgba(91, 60, 190, .12);
+	border-radius: 10px;
+	padding: 0 12px;
+	min-height: 42px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_input_wrap .mi-calendar-days {
+	color: var(--color_theme, #5b3cbe);
+	font-size: 16px;
+	flex: 0 0 auto;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_check_btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	height: 42px;
+	padding: 0 20px;
+	border: 1px solid var(--color_theme, #5b3cbe);
+	border-radius: 10px;
+	font-weight: 600;
+	font-size: 13px;
+	white-space: nowrap;
+	cursor: pointer;
+	background: #e4e0ed !important;
+	color: #2529a9 !important;
+	border-color: var(--color_theme, #5b3cbe) !important;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_check_btn:hover {
+	background: #d8d2e8 !important;
+	color: #1e2190 !important;
+	border-color: var(--color_theme, #5b3cbe) !important;
+	box-shadow: 0 2px 8px rgba(91, 60, 190, .15);
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_booking_panel {
+	padding: 0 20px 20px;
+	background: #fff;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_panel {
+	padding: 16px 0 0;
+	margin: 0;
+	border: 0;
+	box-shadow: none;
+	background: transparent;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_panel__title {
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--ttbm_d_heading, #1a1a2e);
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_book_now_area {
+	margin: 16px 0 0;
+	padding: 14px 16px;
+	background: #f7f5ff;
+	border: 1px solid rgba(91, 60, 190, .12);
+	border-radius: 12px;
+	align-items: center;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_book_now_area .fdColumn p {
+	margin: 0 0 4px;
+	font-size: 14px;
+	color: var(--ttbm_d_heading, #1a1a2e);
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_book_now_area .fdColumn p:last-child {
+	margin-bottom: 0;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_book_now {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	background: var(--color_theme, #5b3cbe) !important;
+	color: #fff !important;
+	border: none !important;
+	border-radius: 10px;
+	padding: 11px 22px;
+	font-weight: 600;
+	font-size: 14px;
+	cursor: pointer;
+	transition: background .2s ease, box-shadow .2s ease;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_book_now:hover {
+	background: #4a31a0 !important;
+	box-shadow: 0 4px 12px rgba(91, 60, 190, .25);
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_no_rooms {
+	margin-top: 16px;
+	border-radius: 12px;
+}
+
+@media (max-width: 767px) {
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_booking_toolbar--inline .ttbm_hotel_booking_toolbar__inner {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 12px;
+	}
+
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_booking_toolbar--inline .ttbm_hotel_booking_controls {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_booking_toolbar--inline .ttbm_hotel_date_input_wrap {
+		max-width: none;
+		min-width: 0;
+		width: 100%;
+	}
+
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_booking_toolbar--inline .ttbm_hotel_check_btn {
+		width: 100%;
+	}
+
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_booking_toolbar,
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_booking_panel {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_book_now_area {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 12px;
+	}
+
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_book_now {
+		width: 100%;
+		justify-content: center;
+	}
+}
+
+/* Hotel details — page typography */
+.ttbm_default_theme .ttbm-hotel-details-page {
+	color: var(--ttbm_d_heading, #1a1a2e);
+	font-size: 15px;
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_section_heading,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_faq_heading,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_area_heading,
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_room_panel__title {
+	margin: 0 0 16px;
+	font-size: 22px;
+	font-weight: 700;
+	color: var(--ttbm_d_heading, #1a1a2e);
+	line-height: 1.3;
+	letter-spacing: -0.01em;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .content-details {
+	margin-bottom: 24px;
+	font-size: 15px;
+	line-height: 1.75;
+	color: var(--ttbm_d_muted, #4b5563);
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .content-details p {
+	margin: 0 0 1em;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .content-details p:last-child {
+	margin-bottom: 0;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_feature_list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 0 0 24px;
+	padding: 0;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_feature_list .feature-items {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 14px;
+	border: 1px solid rgba(91, 60, 190, .12);
+	border-radius: 999px;
+	background: #f7f5ff;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--ttbm_d_heading, #1a1a2e);
+	line-height: 1.2;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_feature_list .feature-items i {
+	font-size: 14px;
+	color: var(--color_theme, #5b3cbe);
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_popular_facilities {
+	margin-bottom: 28px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_popular_facilities ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 12px;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_popular_facilities li {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 12px 14px;
+	border: 1px solid #e8e8ec;
+	border-radius: 12px;
+	background: #fff;
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--ttbm_d_heading, #1a1a2e);
+	line-height: 1.3;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_popular_facilities li i {
+	font-size: 18px;
+	color: var(--color_theme, #5b3cbe);
+	flex: 0 0 auto;
+}
+
+.ttbm_default_theme .ttbm-hotel-details-page .ttbm_book_now_area p strong {
+	font-weight: 600;
+	color: var(--ttbm_d_heading, #1a1a2e);
+}
+
+@media (max-width: 900px) {
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_popular_facilities ul {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 640px) {
+	.ttbm_default_theme .ttbm-hotel-details-page .ttbm_hotel_popular_facilities ul {
+		grid-template-columns: 1fr;
 	}
 }

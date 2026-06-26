@@ -78,26 +78,66 @@ function pageScrollTo(target) {
     }, 1000);
 }
 //====================================================Load Date picker==============//
+function ttbm_find_linked_date_hidden(visibleEl) {
+    let $visible = jQuery(visibleEl);
+    let $hidden = $visible.closest('label').find('input[type="hidden"]');
+    if ($hidden.length) {
+        return $hidden.first();
+    }
+    $hidden = $visible.closest('.ttbm-datetime-clear-wrap').find('input[type="hidden"]');
+    if ($hidden.length) {
+        return $hidden.first();
+    }
+    return $visible.siblings('input[type="hidden"]').first();
+}
+function ttbm_format_datepicker_value(date) {
+    if (!date) {
+        return '';
+    }
+    return date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+}
+function ttbm_sync_visible_dates_to_hidden(parent) {
+    parent = parent && parent.jquery ? parent : jQuery(parent || '.ttbm_style');
+    if (!parent.length) {
+        parent = jQuery('.ttbm_style');
+    }
+    parent.find('.date_type, .date_type_without_year').each(function () {
+        let $visible = jQuery(this);
+        let currentValue = ($visible.val() || '').trim();
+        let $hidden = ttbm_find_linked_date_hidden($visible);
+        if (!$hidden.length) {
+            return;
+        }
+        if (!currentValue) {
+            $hidden.val('').trigger('change');
+            return;
+        }
+        if ($visible.hasClass('hasDatepicker')) {
+            try {
+                let selectedDate = $visible.datepicker('getDate');
+                if (selectedDate) {
+                    $hidden.val(ttbm_format_datepicker_value(selectedDate)).trigger('change');
+                }
+            } catch (err) {}
+        }
+    });
+}
 function ttbm_load_date_picker(parent = jQuery('.ttbm_style')) {
     parent.find(".date_type.hasDatepicker").each(function () {
         jQuery(this).removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind();
     }).promise().done(function () {
         parent.find(".date_type").datepicker({
             dateFormat: ttbm_date_format,
-            //showButtonPanel: true,
             autoSize: true,
             changeMonth: true,
             changeYear: true,
             onSelect: function (dateString, data) {
                 let date = data.selectedYear + '-' + ('0' + (parseInt(data.selectedMonth) + 1)).slice(-2) + '-' + ('0' + parseInt(data.selectedDay)).slice(-2);
-                jQuery(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
+                let $hidden = ttbm_find_linked_date_hidden(this);
+                if ($hidden.length) {
+                    $hidden.val(date).trigger('change');
+                }
             },
-            // closeText: 'Clear Date',
-            // onClose: function (dateText, inst) {
-            // 	if (jQuery(this).hasClass('ui-datepicker-close')) {
-            // 		document.getElementById(this.id).reset();
-            // 	}
-            // }
         });
     });
     parent.find(".date_type_without_year.hasDatepicker").each(function () {
@@ -112,7 +152,10 @@ function ttbm_load_date_picker(parent = jQuery('.ttbm_style')) {
             onSelect: function (dateString, data) {
                 //console.log(ttbm_date_format_without_year);
                 let date = ('0' + (parseInt(data.selectedMonth) + 1)).slice(-2) + '-' + ('0' + parseInt(data.selectedDay)).slice(-2);
-                jQuery(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
+                let $hidden = ttbm_find_linked_date_hidden(this);
+                if ($hidden.length) {
+                    $hidden.val(date).trigger('change');
+                }
             }
         });
     });
@@ -122,7 +165,7 @@ function ttbm_load_date_picker(parent = jQuery('.ttbm_style')) {
         let $this = jQuery(this);
         let currentValue = $this.val();
         if (!currentValue || currentValue.trim() === '') {
-            let $hiddenField = $this.closest('label').find('input[type="hidden"]');
+            let $hiddenField = ttbm_find_linked_date_hidden($this);
             if ($hiddenField.length) {
                 $hiddenField.val('').trigger('change');
             }
@@ -135,11 +178,12 @@ function ttbm_load_date_picker(parent = jQuery('.ttbm_style')) {
     }
     if ($form.length > 0) {
         $form.off('submit.ttbm_clear_dates').on('submit.ttbm_clear_dates', function() {
+            ttbm_sync_visible_dates_to_hidden(parent);
             parent.find('.date_type, .date_type_without_year').each(function() {
                 let $this = jQuery(this);
                 let currentValue = $this.val();
                 if (!currentValue || currentValue.trim() === '') {
-                    let $hiddenField = $this.closest('label').find('input[type="hidden"]');
+                    let $hiddenField = ttbm_find_linked_date_hidden($this);
                     if ($hiddenField.length && $hiddenField.val()) {
                         $hiddenField.val('');
                     }
@@ -148,7 +192,6 @@ function ttbm_load_date_picker(parent = jQuery('.ttbm_style')) {
         });
     }
 }
-//========================================================Alert==============//
 function ttbm_alert($this, attr = 'alert') {
     alert($this.data(attr));
 }
@@ -167,7 +210,7 @@ function ttbm_alert($this, attr = 'alert') {
                 let $this = $(this);
                 let currentValue = $this.val();
                 if (!currentValue || currentValue.trim() === '') {
-                    let $hiddenField = $this.closest('label').find('input[type="hidden"]');
+                    let $hiddenField = ttbm_find_linked_date_hidden($this);
                     if ($hiddenField.length && $hiddenField.val()) {
                         $hiddenField.val('');
                     }
@@ -175,8 +218,9 @@ function ttbm_alert($this, attr = 'alert') {
             });
         }
         
-        // Clear dates before WordPress save/update
-        $(document).on('click', '#publish, #save-post, input[name="save"], input[name="publish"]', function() {
+        // Sync visible dates to hidden fields before WordPress save/update
+        $(document).on('click', '#publish, #save-post, input[name="save"], input[name="publish"], .ttbm-header-publish', function() {
+            ttbm_sync_visible_dates_to_hidden();
             clearEmptyDateFields();
         });
     });
@@ -792,10 +836,60 @@ function ttbm_sticky_management() {
         let targetTab = target.children('[data-tabs-target-next]:nth-child(' + num_of_tab + ')').data('tabs-target-next');
         active_next_tab(parent, targetTab);
     });
+    function ttbm_activate_tab($tab, tabsTarget) {
+        let parent = $tab.closest('.ttbmTabs');
+        let tabLists = $tab.closest('.tabLists');
+        let tabsContent = parent.children('.tabsContent:first');
+        if (!tabsContent.length) {
+            tabsContent = parent.find('.tabsContent:first');
+        }
+        let $next = tabsContent.children('[data-tabs="' + tabsTarget + '"]');
+        if (!$next.length) {
+            return;
+        }
+
+        let tabStorageKey = ttbm_get_tab_storage_key(parent);
+        try {
+            if (tabStorageKey) {
+                localStorage.setItem(tabStorageKey, tabsTarget);
+            }
+        } catch (e) {
+            // localStorage may be unavailable in some environments
+        }
+
+        if (parent.hasClass('leftTabs')) {
+            if (history.pushState) {
+                history.pushState(null, null, tabsTarget);
+            } else {
+                window.location.hash = tabsTarget;
+            }
+        }
+
+        tabLists.find('[data-tabs-target].active').each(function () {
+            $(this).removeClass('active');
+            ttbm_all_content_change($(this));
+        });
+        $tab.addClass('active');
+        ttbm_all_content_change($tab);
+
+        tabsContent.children('[data-tabs].active').removeClass('active').hide();
+        $next.addClass('active').show();
+
+        ttbm_loadBgImage();
+        ttbm_init_dynamic_ui($next);
+        parent.height('auto');
+    }
     $(document).ready(function () {
         $('.ttbm_style .ttbmTabs').each(function () {
             let tabsParent = $(this);
             let tabLists = tabsParent.find('.tabLists:first');
+            if (!tabLists.find('[data-tabs-target]').length) {
+                return;
+            }
+            let tabsContent = tabsParent.children('.tabsContent:first');
+            if (!tabsContent.length) {
+                tabsContent = tabsParent.find('.tabsContent:first');
+            }
             let tabStorageKey = ttbm_get_tab_storage_key(tabsParent);
             let savedTab = '';
 
@@ -804,8 +898,8 @@ function ttbm_sticky_management() {
                 if (tabStorageKey) {
                     savedTab = localStorage.getItem(tabStorageKey);
                 }
-                // Backward compatibility with previous single-key storage
-                if (!savedTab) {
+                // Backward compatibility with previous single-key storage (primary sidebar only)
+                if (!savedTab && tabsParent.hasClass('leftTabs')) {
                     let postId = ttbm_get_post_id_for_tabs();
                     if (postId && postId !== 'global') {
                         savedTab = localStorage.getItem('ttbm_active_tab_' + postId);
@@ -816,7 +910,7 @@ function ttbm_sticky_management() {
             }
 
             // Check URL hash second, only if this tab group contains the hash target
-            if (!savedTab && window.location.hash && tabLists.find('[data-tabs-target="' + window.location.hash + '"]').length > 0) {
+            if (!savedTab && tabsParent.hasClass('leftTabs') && window.location.hash && tabLists.find('[data-tabs-target="' + window.location.hash + '"]').length > 0) {
                 savedTab = window.location.hash;
             }
 
@@ -835,7 +929,19 @@ function ttbm_sticky_management() {
                 let activeTab = tabLists.find('[data-tabs-target].active');
                 targetTab = activeTab.length > 0 ? activeTab : tabLists.find('[data-tabs-target]').first();
             }
-            targetTab.trigger('click');
+
+            if (targetTab && targetTab.length) {
+                ttbm_activate_tab(targetTab, targetTab.data('tabs-target'));
+            } else if (!tabsContent.children('[data-tabs].active:visible').length) {
+                let $firstPane = tabsContent.children('[data-tabs]').first();
+                let $firstTab = tabLists.find('[data-tabs-target]').first();
+                if ($firstPane.length && $firstTab.length) {
+                    tabsContent.children('[data-tabs]').removeClass('active').hide();
+                    $firstPane.addClass('active').show();
+                    tabLists.find('[data-tabs-target]').removeClass('active');
+                    $firstTab.addClass('active');
+                }
+            }
         });
         $('.ttbm_style .ttbmTabsNext').each(function () {
             let parent = $(this);
@@ -848,49 +954,10 @@ function ttbm_sticky_management() {
         });
     });
     $(document).on('click', '.ttbm_style [data-tabs-target]', function () {
-        if (!$(this).hasClass('active')) {
-            let tabsTarget = $(this).data('tabs-target');
-            let parent = $(this).closest('.ttbmTabs');
-            parent.height(parent.height());
-            let tabLists = $(this).closest('.tabLists');
-            let tabsContent = parent.find('.tabsContent:first');
-
-            // Save active tab to localStorage per tab container
-            let tabStorageKey = ttbm_get_tab_storage_key(parent);
-            try {
-                if (tabStorageKey) {
-                    localStorage.setItem(tabStorageKey, tabsTarget);
-                }
-            } catch (e) {
-                // localStorage may be unavailable in some environments
-            }
-
-            // Update URL hash only for primary left sidebar tabs
-            if (parent.hasClass('leftTabs')) {
-                if (history.pushState) {
-                    history.pushState(null, null, tabsTarget);
-                } else {
-                    window.location.hash = tabsTarget;
-                }
-            }
-            
-            tabLists.find('[data-tabs-target].active').each(function () {
-                $(this).removeClass('active').promise().done(function () {
-                    ttbm_all_content_change($(this))
-                });
-            });
-            $(this).addClass('active').promise().done(function () {
-                ttbm_all_content_change($(this))
-            });
-            tabsContent.children('[data-tabs="' + tabsTarget + '"]').slideDown(350);
-            tabsContent.children('[data-tabs].active').slideUp(350).removeClass('active').promise().done(function () {
-                tabsContent.children('[data-tabs="' + tabsTarget + '"]').addClass('active').promise().done(function () {
-                    //dLoaderRemove(tabsContent);
-                    ttbm_loadBgImage();
-                    parent.height('auto');
-                });
-            });
+        if ($(this).hasClass('active')) {
+            return;
         }
+        ttbm_activate_tab($(this), $(this).data('tabs-target'));
     });
 }(jQuery));
 //======================================================================Collapse=================//
@@ -1047,6 +1114,9 @@ function ttbm_sticky_management() {
                 }
                 if ($this.hasClass('ttbm-date-type-card')) {
                     parent.attr('data-active-type', value);
+                }
+                if (parent.hasClass('ttbm-radio-group')) {
+                    ttbm_load_date_picker(parent.closest('.ttbm_style'));
                 }
             });
         }

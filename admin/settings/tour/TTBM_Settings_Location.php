@@ -37,7 +37,6 @@
 				$api_key  = (!empty($free_key['ttbm_gmap_api_key'])) ? $free_key['ttbm_gmap_api_key'] : $pro_key;
 
 				if (!empty($api_key)) {
-					// Google Maps JavaScript API (with key) — autocomplete + JS map
 					wp_enqueue_script(
 						'google-maps-api',
 						'https://maps.googleapis.com/maps/api/js?key=' . esc_attr($api_key) . '&libraries=places&callback=initMap',
@@ -45,9 +44,18 @@
 						null,
 						true
 					);
+				} else {
+					wp_enqueue_style('autocomplete_style', TTBM_PLUGIN_URL . '/assets/osmap/autocomplete.min.css', array(), TTBM_PLUGIN_VERSION);
+					wp_enqueue_script('autocomplete_script', TTBM_PLUGIN_URL . '/assets/osmap/autocomplete.min.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
 				}
-				// OSMap assets only needed when no API key AND osmap_canvas is still used
-				// (now the frontend falls back to iframe, so OSMap is only used in admin)
+
+				wp_localize_script(
+					'ttbm_admin_script',
+					'ttbm_map',
+					array(
+						'api_key' => esc_attr($api_key),
+					)
+				);
 			}
 			public function location_tab_content($tour_id) {
 				$display_name = 'ttbm_display_location';
@@ -383,26 +391,12 @@
                             </div>
                             <p style="font-size:12px;color:#6b7280;margin:8px 0 0;line-height:1.6;">
                                 <span style="color:#2271b1;margin-right:4px;">&#9432;</span>
-								<?php esc_html_e('Showing Google Maps for this address.', 'tour-booking-manager'); ?>
+								<?php esc_html_e('Type an address to update the map pointer automatically.', 'tour-booking-manager'); ?>
                                 <a href="<?php echo esc_url($settings_url); ?>" style="color:#2271b1;font-weight:500;">
 									<?php esc_html_e('Add a Google Maps API key', 'tour-booking-manager'); ?>
                                 </a>
-								<?php esc_html_e('to enable address autocomplete and precise coordinates.', 'tour-booking-manager'); ?>
+								<?php esc_html_e('for Google Places autocomplete and draggable markers.', 'tour-booking-manager'); ?>
                             </p>
-                            <script>
-                            (function($){
-                                var ttbmIframeTimer;
-                                $(document).on('input', '#ttbm_iframe_location', function(){
-                                    clearTimeout(ttbmIframeTimer);
-                                    var address = $(this).val().trim();
-                                    ttbmIframeTimer = setTimeout(function(){
-                                        if (!address) return;
-                                        var src = 'https://maps.google.com/maps?q=' + encodeURIComponent(address) + '&z=14&output=embed';
-                                        $('#ttbm_gmap_iframe').attr('src', src);
-                                    }, 900);
-                                });
-                            })(jQuery);
-                            </script>
 						<?php endif; ?>
                     </div>
 

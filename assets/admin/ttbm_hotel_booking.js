@@ -1098,8 +1098,9 @@
                                 </div>
                                 <div class="ttbm_add_icon_image_button_area dNone">
                                     <div class="flexEqual">
-                                        <button class="_mpBtn_xs ttbm_icon_add" type="button" data-target-popup="#ttbm_add_icon_popup">
-                                            <span class="mi mi-plus"></span></button>
+                                        <button class="_mpBtn_xs ttbm_icon_add" type="button" data-target-popup="#ttbm_add_icon_popup" title="Add Icon" aria-label="Add Icon">
+                                            <span class="mi mi-plus" aria-hidden="true"></span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>

@@ -115,13 +115,14 @@
                                         <th class="ttbm-ticket-col--sale">
 											<?php esc_html_e('Sale Price', 'tour-booking-manager'); ?>
                                         </th>
-                                        <th class="ttbm-ticket-col--cap" <?php do_action('ttbm_aq_target_hook', $tour_id); ?>><?php esc_html_e('Cap.', 'tour-booking-manager'); ?><span class="textRequired">&nbsp;*</span></th>
+                                        <th class="ttbm-ticket-col--cap">
+											<span class="ttbm-ticket-th-label"><?php esc_html_e('Capacity', 'tour-booking-manager'); ?><span class="textRequired">&nbsp;*</span><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Total available seats for this ticket type (inventory).', 'tour-booking-manager'); ?></span></i></span>
+                                        </th>
                                         <th class="ttbm-ticket-col--default">
 											<?php esc_html_e('Def. Qty', 'tour-booking-manager'); ?>
                                         </th>
                                         <th class="ttbm-ticket-col--reserve">
-											<?php esc_html_e('Res. Qty', 'tour-booking-manager'); ?>
-                                            <i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Add Reserve quantity', 'tour-booking-manager'); ?></span></i>
+											<span class="ttbm-ticket-th-label"><?php esc_html_e('Res. Qty', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Add Reserve quantity', 'tour-booking-manager'); ?></span></i></span>
                                         </th>
 										<?php do_action('ttbm_ticket_type_headeing_end', $tour_id); ?>
                                         <th class="ttbm-ticket-col--qty-type"><?php esc_html_e('Qty Box Type', 'tour-booking-manager'); ?></th>
@@ -141,6 +142,7 @@
                                     </tbody>
                                 </table>
                                 </div>
+                                <p id="ttbm_ticket_types_error" class="textRequired ttbm-ticket-panel-error" style="display:none;"></p>
                             </div>
 							<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add Ticket Type', 'tour-booking-manager'), 'ttbm_add_item', 'ttbm-ticket-types-add-btn', 'fas fa-plus'); ?>
 							<?php do_action('add_ttbm_hidden_table', 'ttbm_price_item'); ?>
@@ -213,8 +215,8 @@
                             <input type="text" class="formControl ttbm_price_validation" name="ticket_type_sale_price[]" placeholder="0.00" value="<?php echo esc_attr($sale_price); ?>"/>
                         </label>
                     </td>
-                    <td class="ttbm-ticket-col--cap" <?php do_action('ttbm_aq_target_hook', $tour_id); ?>>
-                        <input type="number" pattern="[0-9]*" step="1" class="formControl ttbm_number_validation" data-same-input="ticket_type_qty" name="ticket_type_qty[]" placeholder="500" value="<?php echo esc_attr($qty); ?>"/>
+                    <td class="ttbm-ticket-col--cap">
+                        <input type="number" pattern="[0-9]*" step="1" min="0" class="formControl ttbm_number_validation" data-same-input="ticket_type_qty" name="ticket_type_qty[]" placeholder="500" value="<?php echo esc_attr($qty); ?>"/>
                     </td>
                     <td class="ttbm-ticket-col--default">
                         <input type="number" pattern="[0-9]*" step="1" class="formControl ttbm_number_validation" name="ticket_type_default_qty[]" placeholder="1" value="<?php echo esc_attr($default_qty); ?>"/>
@@ -249,20 +251,27 @@
 				$hotel_class = $ttbm_type == 'hotel' ? 'dBlock' : 'dNone';
 				?>
                 <div class="ttbm_tour_hotel_setting <?php echo esc_attr($hotel_class); ?>">
-                    <label class="label">
-                        <div>
-                            <p><?php esc_html_e('Hotel Configuration', 'tour-booking-manager'); ?> <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_hotel_config') ?></span></i></p>
-                            <span class="text"><?php TTBM_Settings::des_p('hotel_config'); ?><a href="<?php echo esc_url(admin_url('post-new.php?post_type=ttbm_hotel')); ?>"><?php TTBM_Settings::des_p('hotel_config_click') ?></a></span>
+                    <div class="ttbm-hotel-select-wrap">
+                        <label class="ttbm-hotel-select-label" for="ttbm_hotel_select">
+							<?php esc_html_e('Select active hotels for this tour', 'tour-booking-manager'); ?>
+                            <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttip_hotel_config'); ?></span></i>
+                        </label>
+                        <div class="ttbm-hotel-select-field">
+                            <select id="ttbm_hotel_select" name="ttbm_hotels[]" multiple="multiple" class="formControl ttbm_select2 ttbm-hotel-select" data-placeholder="<?php esc_attr_e('Search hotels...', 'tour-booking-manager'); ?>">
+								<?php
+									foreach ($hotel_lists->posts as $hotel) {
+										$hotel_id = $hotel->ID;
+										?>
+                                        <option value="<?php echo esc_attr($hotel_id); ?>" <?php echo esc_attr(in_array($hotel_id, $ttbm_hotels) ? 'selected' : ''); ?>><?php echo esc_html(get_the_title($hotel_id)); ?></option>
+									<?php } ?>
+                            </select>
+                            <span class="ttbm-hotel-select-icon" aria-hidden="true"><i class="fas fa-search"></i></span>
                         </div>
-                    </label>
-                    <select name="ttbm_hotels[]" multiple='multiple' class='formControl ttbm_select2' data-placeholder="<?php esc_html_e('Please Select Hotel', 'tour-booking-manager'); ?>">
-						<?php
-							foreach ($hotel_lists->posts as $hotel) {
-								$hotel_id = $hotel->ID;
-								?>
-                                <option value="<?php echo esc_attr($hotel_id) ?>" <?php echo esc_attr(in_array($hotel_id, $ttbm_hotels) ? 'selected' : ''); ?>><?php echo esc_html(get_the_title($hotel_id)); ?></option>
-							<?php } ?>
-                    </select>
+                        <p class="ttbm-hotel-hint">
+							<?php TTBM_Settings::des_p('hotel_config'); ?>
+                            <a href="<?php echo esc_url(admin_url('post-new.php?post_type=ttbm_hotel')); ?>" class="ttbm-hotel-add-link" target="_blank" rel="noopener noreferrer"><?php TTBM_Settings::des_p('hotel_config_click'); ?></a>
+                        </p>
+                    </div>
                 </div>
 				<?php
 			}

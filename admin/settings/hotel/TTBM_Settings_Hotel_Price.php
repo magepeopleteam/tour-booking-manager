@@ -5,7 +5,7 @@
 	if (!class_exists('TTBM_Settings_Hotel_Price')) {
 		class TTBM_Settings_Hotel_Price {
 			public function __construct() {
-				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'price_content'], 1);
+				add_action('add_ttbm_settings_hotel_tab_content', [$this, 'price_content'], 10);
 				add_action('ttbm_room_item', array($this, 'room_item'));
 			}
 			public function price_content($hotel_id) {

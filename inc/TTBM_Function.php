@@ -596,6 +596,22 @@
 			}
 
 			/**
+			 * Default hotel check-in: next available tour day (or tomorrow).
+			 */
+			public static function get_hotel_default_checkin_date( $tour_id, $all_dates = null ) {
+				$all_dates = ( null === $all_dates ) ? self::get_date( $tour_id ) : $all_dates;
+				$checkin   = self::get_first_booking_date( $all_dates );
+				if ( ! $checkin ) {
+					$checkin = gmdate( 'Y-m-d', strtotime( '+1 day', strtotime( current_time( 'Y-m-d' ) ) ) );
+				}
+				return $checkin;
+			}
+
+			public static function get_hotel_default_checkout_date( $checkin_ymd ) {
+				return gmdate( 'Y-m-d', strtotime( $checkin_ymd . ' +1 day' ) );
+			}
+
+			/**
 			 * Resolve the booking date used for price filters (repeated/particular time slots, fixed date, etc.).
 			 */
 			public static function get_effective_booking_date( $tour_id, $all_dates = null ) {
@@ -674,6 +690,21 @@
 				return TTBM_Global_Function::date_format( $date_time, 'full' );
 			}
 			public static function get_tour_start_price($tour_id, $start_date = ''): string {
+				if ( self::get_tour_type( $tour_id ) === 'hotel' ) {
+					$hotel_prices = array();
+					foreach ( self::get_hotel_list( $tour_id ) as $hotel_id ) {
+						$hotel_min = self::get_hotel_room_min_price( $hotel_id );
+						if ( $hotel_min > 0 ) {
+							$hotel_prices[] = floatval( $hotel_min );
+						}
+					}
+					if ( ! empty( $hotel_prices ) ) {
+						return min( $hotel_prices );
+					}
+					$manual_price = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_travel_start_price' );
+					return $manual_price ? (string) $manual_price : '';
+				}
+
 				$manual_price = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_price');
 				$ticket_list  = self::get_ticket_type($tour_id);
 				$start_price  = '';
@@ -710,6 +741,28 @@
 			 * Regular price for the ticket that provides get_tour_start_price(), when that ticket is on sale.
 			 */
 			public static function get_tour_start_regular_price( $tour_id, $start_date = '' ): string {
+				if ( self::get_tour_type( $tour_id ) === 'hotel' ) {
+					$start_price = self::get_tour_start_price( $tour_id, $start_date );
+					if ( $start_price === '' ) {
+						return '';
+					}
+					$start_price_f = floatval( $start_price );
+					foreach ( self::get_hotel_list( $tour_id ) as $hotel_id ) {
+						$room_lists = TTBM_Global_Function::get_post_info( $hotel_id, 'ttbm_room_details', array() );
+						if ( empty( $room_lists ) || ! is_array( $room_lists ) ) {
+							continue;
+						}
+						foreach ( $room_lists as $room ) {
+							$regular = isset( $room['ttbm_hotel_room_price'] ) ? floatval( $room['ttbm_hotel_room_price'] ) : 0;
+							$sale    = ! empty( $room['sale_price'] ) ? floatval( $room['sale_price'] ) : 0;
+							if ( $sale > 0 && $regular > $sale && $sale === $start_price_f ) {
+								return (string) $regular;
+							}
+						}
+					}
+					return '';
+				}
+
 				$ticket_list = self::get_ticket_type( $tour_id );
 				if ( empty( $ticket_list ) ) {
 					return '';
@@ -748,18 +801,21 @@
 			}
 
 			public static function get_hotel_room_min_price($hotel_id) {
-				$room_lists = TTBM_Global_Function::get_post_info($hotel_id, 'ttbm_room_details', array());
-                $price = 0;
-                if( !empty( $room_lists ) ) {
-                    $price = array();
-                    foreach ($room_lists as $room_list) {
-                        $price[] = $room_list['ttbm_hotel_room_price'];
-                    }
-
-                    return min($price);
-                }
-
-                return $price;
+				$room_lists = TTBM_Global_Function::get_post_info( $hotel_id, 'ttbm_room_details', array() );
+				if ( empty( $room_lists ) || ! is_array( $room_lists ) ) {
+					return 0;
+				}
+				$prices = array();
+				foreach ( $room_lists as $room_list ) {
+					$regular = array_key_exists( 'ttbm_hotel_room_price', $room_list ) ? floatval( $room_list['ttbm_hotel_room_price'] ) : 0;
+					$sale    = ! empty( $room_list['sale_price'] ) ? floatval( $room_list['sale_price'] ) : 0;
+					if ( $sale > 0 && ( $regular <= 0 || $sale < $regular ) ) {
+						$prices[] = $sale;
+					} elseif ( $regular > 0 ) {
+						$prices[] = $regular;
+					}
+				}
+				return ! empty( $prices ) ? min( $prices ) : 0;
 			}
 			public static function get_price_by_name($ticket_name, $tour_id, $hotel_id = '', $qty = '', $start_date = '') {
 				$ttbm_type = self::get_tour_type($tour_id);

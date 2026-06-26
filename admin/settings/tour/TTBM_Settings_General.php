@@ -91,6 +91,7 @@
 							<?php esc_html_e('Tour Duration', 'tour-booking-manager'); ?>
                             <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('duration'); ?></span></i>
                         </p>
+                        <span class="ttbm-gen-field__toggle-spacer" aria-hidden="true"></span>
                         <div class="ttbm-gen-duration-group">
                             <input class="ttbm-gen-duration-group__value formControl" min="0.1" step="0.1" type="number" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
                             <select class="ttbm-gen-duration-group__unit formControl" name="ttbm_travel_duration_type" aria-label="<?php esc_attr_e('Duration unit', 'tour-booking-manager'); ?>">

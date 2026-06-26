@@ -605,9 +605,18 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	padding: 16px 20px 8px;
 }
 
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-general-info-card__grid {
+	margin: 16px 20px 12px;
+	padding: 16px 18px;
+	background: #fafbfc;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	gap: 12px;
+}
+
 #ttbm_meta_box_panel .ttbm-general-info-card__row {
 	display: flex;
-	align-items: flex-start;
+	align-items: stretch;
 	gap: 20px;
 }
 
@@ -665,32 +674,63 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	margin: 0;
 }
 
-/* Inline toggle row: label | switch | input on one line */
-#ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-field--inline .ttbm-gen-field__inline-row {
-	display: flex;
+/* Inline toggle row: label | switch | input on one line (tour general info) */
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__inline-row,
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-field__inline-row {
+	--ttbm-gen-inline-label-w: 136px;
+	--ttbm-gen-inline-toggle-w: 56px;
+	--ttbm-gen-inline-gap: 14px;
+	display: grid;
+	grid-template-columns: var(--ttbm-gen-inline-label-w) var(--ttbm-gen-inline-toggle-w) minmax(0, 1fr);
 	align-items: center;
-	gap: 12px;
+	column-gap: var(--ttbm-gen-inline-gap);
 	width: 100%;
 }
 
-#ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-field--inline .ttbm-gen-field__label {
-	flex: 0 0 auto;
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__label,
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-field__label {
+	grid-column: 1;
+	width: 100%;
+	max-width: 100%;
+	flex: none;
 	margin: 0;
-	min-height: 28px;
+	min-height: var(--ttbm-a-input-h, 40px);
 	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
-#ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-field--inline .roundSwitchLabel {
-	flex: 0 0 auto;
-}
-
-#ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-field--inline .ttbm-gen-field__input,
-#ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-field--inline .ttbm-gen-field__input-wrap,
-#ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-field--duration .ttbm-gen-duration-group {
-	flex: 1 1 auto;
-	min-width: 0;
-	width: auto;
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .roundSwitchLabel {
+	grid-column: 2;
+	flex: none;
+	justify-self: center;
+	align-self: center;
 	margin: 0;
+	width: 50px;
+}
+
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field__toggle-spacer {
+	grid-column: 2;
+	justify-self: center;
+	display: block;
+	width: 50px;
+	height: 1px;
+	margin: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__input,
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__input-wrap,
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-duration-group {
+	grid-column: 3;
+	width: 100%;
+	min-width: 0;
+	margin: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__input,
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-duration-group__value,
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-duration-group__unit {
+	background: #fff;
 }
 
 #ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-field--duration .ttbm-gen-duration-group {
@@ -5108,6 +5148,13 @@ div.ttbm_global_settings .button-primary {
 	#ttbm_meta_box_panel .ttbm-hotel-details-card .ttbm-hotel-details-section__row {
 		flex-direction: column;
 		gap: 12px;
+	}
+
+	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__inline-row,
+	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-field__inline-row {
+		--ttbm-gen-inline-label-w: 112px;
+		--ttbm-gen-inline-toggle-w: 52px;
+		--ttbm-gen-inline-gap: 12px;
 	}
 
 	#ttbm_meta_box_panel .ttbm-hotel-details-card .ttbm-gen-field--inline .ttbm-gen-field__inline-row {

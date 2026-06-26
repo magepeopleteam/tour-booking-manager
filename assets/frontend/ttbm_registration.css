@@ -6445,7 +6445,7 @@ tr.ttbm_attendee_form_row .ttbm-attendee-form {
 .ttbm_filter_area .leftSidebar .ttbm_see-more-button,
 .ttbm-tour-list-shortcode .leftSidebar .ttbm_see-more-button {
 	margin-top: 6px;
-	padding: 0;
+	padding: 10px;
 	border: none;
 	background: transparent;
 	color: var(--color_theme, #5a56e0);

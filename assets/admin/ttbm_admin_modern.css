@@ -144,6 +144,23 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	padding: 28px 32px;
 }
 
+/* Fast tab switching: CSS visibility instead of jQuery hide/show */
+#ttbm_meta_box_panel .tabsContent > .tabsItem[data-tabs],
+#ttbm_content.ttbm_configuration .tabsContent > .tabsItem[data-tabs] {
+	display: none;
+}
+
+#ttbm_meta_box_panel .tabsContent > .tabsItem[data-tabs].active,
+#ttbm_content.ttbm_configuration .tabsContent > .tabsItem[data-tabs].active {
+	display: block;
+}
+
+#ttbm_meta_box_panel .tabsContent > .tabsItem[data-tabs]:not(.active),
+#ttbm_content.ttbm_configuration .tabsContent > .tabsItem[data-tabs]:not(.active) {
+	content-visibility: hidden;
+	contain-intrinsic-size: auto 600px;
+}
+
 #ttbm_meta_box_panel .meta-sidebar {
 	background: var(--ttbm-a-surface);
 	border-right: 1px solid var(--ttbm-a-border);

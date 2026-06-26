@@ -1852,13 +1852,25 @@
         setTimeout(ensureLocationMap, 500);
     });
 
-    $(document).on('click', '.ttbm_settings_location,[data-collapse-target="#ttbm_display_map"],[data-tabs-target="#ttbm_settings_location"]', function () {
-        setTimeout(ensureLocationMap, 400);
+    $(document).on('ttbm_tab_activated', function (e, tabsTarget) {
+        if (tabsTarget === '#ttbm_settings_location' || tabsTarget === '#ttbm_settings_hotel_location') {
+            requestAnimationFrame(function () {
+                ensureLocationMap();
+            });
+        }
+    });
+
+    $(document).on('click', '.ttbm_settings_location,[data-collapse-target="#ttbm_display_map"]', function () {
+        requestAnimationFrame(function () {
+            ensureLocationMap();
+        });
     });
 
     // for hotel trigger
-    $(document).on('click', '.ttbm_hotel_map_location,[data-collapse-target="#ttbm_display_hotel_map"],[data-tabs-target="#ttbm_settings_hotel_location"]', function () {
-        setTimeout(ensureLocationMap, 400);
+    $(document).on('click', '.ttbm_hotel_map_location,[data-collapse-target="#ttbm_display_hotel_map"]', function () {
+        requestAnimationFrame(function () {
+            ensureLocationMap();
+        });
     });
 
     function initGMap() {

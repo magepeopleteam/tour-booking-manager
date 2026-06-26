@@ -1174,9 +1174,8 @@ input.medium{
 	flex: 1;
 	padding: 18px;
 	background: #fff;
-	border: 1px solid #c6d6ff;
+	border: 1px solid #e0e5f3;
 	border-radius: 10px;
-	box-shadow: 0 10px 20px rgba(34, 113, 177, 0.28);
 	margin-top: 0;
 	min-height: 400px;
 }

@@ -122,11 +122,23 @@ function ttbm_sync_visible_dates_to_hidden(parent) {
         }
     });
 }
-function ttbm_load_date_picker(parent = jQuery('.ttbm_style')) {
-    parent.find(".date_type.hasDatepicker").each(function () {
-        jQuery(this).removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind();
-    }).promise().done(function () {
-        parent.find(".date_type").datepicker({
+function ttbm_load_date_picker(parent = jQuery('.ttbm_style'), options = {}) {
+    const incremental = options.incremental === true;
+    const $parent = parent && parent.jquery ? parent : jQuery(parent);
+    const initPicker = function (selector, config) {
+        $parent.find(selector).each(function () {
+            const $field = jQuery(this);
+            if (incremental && $field.hasClass('hasDatepicker')) {
+                return;
+            }
+            if ($field.hasClass('hasDatepicker')) {
+                $field.removeClass('hasDatepicker').removeAttr('id').removeData('datepicker').off();
+            }
+            $field.datepicker(config);
+        });
+    };
+
+    initPicker('.date_type', {
             dateFormat: ttbm_date_format,
             autoSize: true,
             changeMonth: true,
@@ -139,18 +151,12 @@ function ttbm_load_date_picker(parent = jQuery('.ttbm_style')) {
                 }
             },
         });
-    });
-    parent.find(".date_type_without_year.hasDatepicker").each(function () {
-        jQuery(this).removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind();
-    }).promise().done(function () {
-        parent.find(".date_type_without_year").datepicker({
+    initPicker('.date_type_without_year', {
             dateFormat: ttbm_date_format_without_year,
-            //showButtonPanel: true,
             autoSize: true,
             changeMonth: true,
             changeYear: false,
             onSelect: function (dateString, data) {
-                //console.log(ttbm_date_format_without_year);
                 let date = ('0' + (parseInt(data.selectedMonth) + 1)).slice(-2) + '-' + ('0' + parseInt(data.selectedDay)).slice(-2);
                 let $hidden = ttbm_find_linked_date_hidden(this);
                 if ($hidden.length) {
@@ -158,10 +164,9 @@ function ttbm_load_date_picker(parent = jQuery('.ttbm_style')) {
                 }
             }
         });
-    });
     // Clear hidden field when visible date field is cleared - using event delegation for better reliability
-    parent.off('input.ttbm_clear_date change.ttbm_clear_date blur.ttbm_clear_date', '.date_type, .date_type_without_year');
-    parent.on('input.ttbm_clear_date change.ttbm_clear_date blur.ttbm_clear_date', '.date_type, .date_type_without_year', function() {
+    $parent.off('input.ttbm_clear_date change.ttbm_clear_date blur.ttbm_clear_date', '.date_type, .date_type_without_year');
+    $parent.on('input.ttbm_clear_date change.ttbm_clear_date blur.ttbm_clear_date', '.date_type, .date_type_without_year', function() {
         let $this = jQuery(this);
         let currentValue = $this.val();
         if (!currentValue || currentValue.trim() === '') {
@@ -172,14 +177,14 @@ function ttbm_load_date_picker(parent = jQuery('.ttbm_style')) {
         }
     });
     // Ensure cleared dates are saved before form submission
-    let $form = parent.closest('form');
+    let $form = $parent.closest('form');
     if ($form.length === 0) {
         $form = jQuery('#post, #post-form, form[name="post"]');
     }
     if ($form.length > 0) {
         $form.off('submit.ttbm_clear_dates').on('submit.ttbm_clear_dates', function() {
-            ttbm_sync_visible_dates_to_hidden(parent);
-            parent.find('.date_type, .date_type_without_year').each(function() {
+            ttbm_sync_visible_dates_to_hidden($parent);
+            $parent.find('.date_type, .date_type_without_year').each(function() {
                 let $this = jQuery(this);
                 let currentValue = $this.val();
                 if (!currentValue || currentValue.trim() === '') {
@@ -202,7 +207,7 @@ function ttbm_alert($this, attr = 'alert') {
         $(".ttbm_style .date_type,.ttbm_style .date_type_without_year").on("keydown", function(e) {
             e.preventDefault();
         });
-        ttbm_init_dynamic_ui(jQuery(document));
+        ttbm_init_admin_tab_shell();
         
         // Clear hidden date fields when visible fields are cleared - global handler for WordPress admin
         function clearEmptyDateFields() {
@@ -282,30 +287,37 @@ function ttbm_apply_bg_image(target, bg_url) {
 function ttbm_should_skip_details_loader(target) {
     return target.closest('.ttbm_details_page .superSlider').length > 0;
 }
-function ttbm_loadBgImage() {
-    jQuery('body').find('div.ttbm_style [data-bg-image]:visible').each(function () {
-        let target = jQuery(this);
-        if (target.closest('.sliderAllItem').length === 0) {
-            let bg_url = ttbm_normalize_bg_url(target.data('bg-image'));
-            let currentBg = target.css('background-image') || '';
-            if (!bg_url) {
-                dLoaderRemove(target);
-                return;
+function ttbm_loadBgImage(scope) {
+    let $roots = scope && scope.jquery ? scope : (scope ? jQuery(scope) : null);
+    if (!$roots || !$roots.length) {
+        $roots = jQuery('body').find('div.ttbm_style');
+    }
+    $roots.each(function () {
+        let $root = jQuery(this);
+        $root.find('[data-bg-image]:visible').each(function () {
+            let target = jQuery(this);
+            if (target.closest('.sliderAllItem').length === 0) {
+                let bg_url = ttbm_normalize_bg_url(target.data('bg-image'));
+                let currentBg = target.css('background-image') || '';
+                if (!bg_url) {
+                    dLoaderRemove(target);
+                    return;
+                }
+                if (currentBg !== 'none' && currentBg.indexOf(bg_url) !== -1) {
+                    dLoaderRemove(target);
+                    return;
+                }
+                let height = target.outerHeight();
+                if (height === 0) {
+                    ttbm_resize_bg_image_area(target, bg_url);
+                }
+                ttbm_apply_bg_image(target, bg_url);
             }
-            if (currentBg !== 'none' && currentBg.indexOf(bg_url) !== -1) {
-                dLoaderRemove(target);
-                return;
-            }
-            let height = target.outerHeight();
-            if (height === 0) {
-                ttbm_resize_bg_image_area(target, bg_url);
-            }
-            ttbm_apply_bg_image(target, bg_url);
-        }
-    });
-    jQuery('body').find('div.ttbm_style .sliderAllItem').each(function () {
-        let target = jQuery(this);
-        ttbm_slider_resize(target)
+        });
+        $root.find('.sliderAllItem').each(function () {
+            let target = jQuery(this);
+            ttbm_slider_resize(target);
+        });
     });
     return true;
 }
@@ -339,20 +351,25 @@ function ttbm_loadCartBgImage() {
     });
     return true;
 }
-function ttbm_init_dynamic_ui(scope = jQuery(document)) {
+function ttbm_init_dynamic_ui(scope = jQuery(document), options = {}) {
     let $scope = scope && scope.jquery ? scope : jQuery(scope);
     if (!$scope.length) {
         return;
     }
 
-    let $ttbmScope = $scope.filter('.ttbm_style');
-    if (!$ttbmScope.length) {
-        $ttbmScope = $scope.find('.ttbm_style');
+    const light = options.light === true;
+    let $dateScope = $scope.filter('.ttbm_style');
+    if (!$dateScope.length) {
+        $dateScope = $scope.find('.ttbm_style');
+    }
+    if (!$dateScope.length) {
+        $dateScope = $scope.closest('.ttbm_style');
+    }
+    if (!$dateScope.length) {
+        $dateScope = $scope;
     }
 
-    if ($ttbmScope.length) {
-        ttbm_load_date_picker($ttbmScope);
-    }
+    ttbm_load_date_picker($dateScope, { incremental: light });
 
     if (jQuery.fn.select2) {
         $scope.find('.ttbm_select2').each(function () {
@@ -363,8 +380,20 @@ function ttbm_init_dynamic_ui(scope = jQuery(document)) {
         });
     }
 
-    ttbm_loadBgImage();
-    ttbm_loadCartBgImage();
+    if (!light) {
+        ttbm_loadBgImage($scope);
+        ttbm_loadCartBgImage();
+    }
+}
+
+function ttbm_init_admin_tab_shell() {
+    const $shell = jQuery('#ttbm_meta_box_panel, #ttbm_content.ttbm_configuration');
+    if (!$shell.length) {
+        ttbm_init_dynamic_ui(jQuery(document));
+        return;
+    }
+
+    ttbm_init_dynamic_ui($shell.find('.ttbm-right-sidebar, .tabLists'));
 }
 function ttbm_resize_bg_image_area(target, bg_url) {
     let tmpImg = new Image();
@@ -857,7 +886,7 @@ function ttbm_sticky_management() {
             tabsContent = parent.find('.tabsContent:first');
         }
         let $next = tabsContent.children('[data-tabs="' + tabsTarget + '"]');
-        if (!$next.length) {
+        if (!$next.length || $tab.hasClass('active')) {
             return;
         }
 
@@ -878,19 +907,30 @@ function ttbm_sticky_management() {
             }
         }
 
-        tabLists.find('[data-tabs-target].active').each(function () {
-            $(this).removeClass('active');
-            ttbm_all_content_change($(this));
-        });
+        tabLists.find('[data-tabs-target].active').removeClass('active');
         $tab.addClass('active');
-        ttbm_all_content_change($tab);
 
-        tabsContent.children('[data-tabs].active').removeClass('active').hide();
-        $next.addClass('active').show();
+        tabsContent.children('[data-tabs].active').removeClass('active');
+        $next.addClass('active');
 
-        ttbm_loadBgImage();
-        ttbm_init_dynamic_ui($next);
-        parent.height('auto');
+        const runPaneInit = function () {
+            const initialized = $next.data('ttbm-ui-initialized');
+            if (!initialized) {
+                ttbm_init_dynamic_ui($next);
+                $next.data('ttbm-ui-initialized', 1);
+            } else {
+                ttbm_init_dynamic_ui($next, { light: true });
+            }
+            ttbm_loadBgImage($next);
+            parent.height('auto');
+            jQuery(document).trigger('ttbm_tab_activated', [tabsTarget, $next, $tab]);
+        };
+
+        if (window.requestAnimationFrame) {
+            requestAnimationFrame(runPaneInit);
+        } else {
+            setTimeout(runPaneInit, 0);
+        }
     }
     $(document).ready(function () {
         $('.ttbm_style .ttbmTabs').each(function () {
@@ -945,14 +985,15 @@ function ttbm_sticky_management() {
 
             if (targetTab && targetTab.length) {
                 ttbm_activate_tab(targetTab, targetTab.data('tabs-target'));
-            } else if (!tabsContent.children('[data-tabs].active:visible').length) {
+            } else if (!tabsContent.children('[data-tabs].active').length) {
                 let $firstPane = tabsContent.children('[data-tabs]').first();
                 let $firstTab = tabLists.find('[data-tabs-target]').first();
                 if ($firstPane.length && $firstTab.length) {
-                    tabsContent.children('[data-tabs]').removeClass('active').hide();
-                    $firstPane.addClass('active').show();
+                    tabsContent.children('[data-tabs]').removeClass('active');
+                    $firstPane.addClass('active');
                     tabLists.find('[data-tabs-target]').removeClass('active');
                     $firstTab.addClass('active');
+                    $firstPane.data('ttbm-ui-initialized', 1);
                 }
             }
         });

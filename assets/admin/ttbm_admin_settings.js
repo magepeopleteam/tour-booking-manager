@@ -431,7 +431,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
         $controls.each(function () {
             var $control = $(this);
             var $inputs = $control.is('input, select, textarea') ? $control : $control.find('input, select, textarea');
-            $inputs.prop('disabled', !isOn);
+            $inputs.not('[type="checkbox"], [type="hidden"]').prop('disabled', !isOn);
             $control.find('select.ttbm_select2').each(function () {
                 var $select = $(this);
                 if ($select.data('select2')) {
@@ -442,7 +442,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
     }
 
     function ttbmSyncGeneralInfoInlineToggle($checkbox) {
-        var $field = $($checkbox).closest('.ttbm-gen-field--inline');
+        var $field = $($checkbox).closest('.ttbm-gen-field--inline, .ttbm-hotel-review-card, .ttbm-hotel-field--availability');
         if (!$field.length) {
             return false;
         }
@@ -456,6 +456,12 @@ function ttbm_load_sortable_datepicker(parent, item) {
         }
 
         var $cb = $($checkbox);
+        if ($cb.closest('.ttbm-hotel-details-card').length) {
+            var targetId = '#' + $cb.attr('name');
+            $cb.siblings('[data-collapse-target="' + targetId + '"]').toggleClass('mActive', $cb.is(':checked'));
+            return;
+        }
+
         var $card = $cb.closest('.ttbm-general-info-card');
         if (!$card.length) {
             return;
@@ -497,11 +503,22 @@ function ttbm_load_sortable_datepicker(parent, item) {
 
     function ttbmInitGeneralInfoToggles() {
         $('#ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-field--inline').each(function () {
+            if ($(this).closest('.ttbm-hotel-details-card').length) {
+                return;
+            }
+            var $cb = $(this).find('.roundSwitchLabel input[type="checkbox"]').first();
+            ttbmSetInlineToggleFieldState($(this), $cb.is(':checked'));
+        });
+
+        $('#ttbm_meta_box_panel .ttbm-hotel-details-card').find('.ttbm-gen-field--inline, .ttbm-hotel-review-card, .ttbm-hotel-field--availability').each(function () {
             var $cb = $(this).find('.roundSwitchLabel input[type="checkbox"]').first();
             ttbmSetInlineToggleFieldState($(this), $cb.is(':checked'));
         });
 
         $('#ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-short-desc .roundSwitchLabel input[type="checkbox"]').each(function () {
+            if ($(this).closest('.ttbm-hotel-details-card').length) {
+                return;
+            }
             ttbmSyncGeneralInfoToggle(this, false);
         });
     }
@@ -537,7 +554,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
         if (!$input.val().trim()) {
             $input.addClass('is-invalid');
             $err.show();
-            ttbmSetValidationFocus($input, null);
+            ttbmSetValidationFocus($input, '[data-tabs-target="#ttbm_general_info"]');
             return false;
         }
 
@@ -549,6 +566,50 @@ function ttbm_load_sortable_datepicker(parent, item) {
     window.ttbmValidateTitle = ttbmValidateTitle;
     window.ttbmLastValidationFocus = null;
 
+    function ttbmIsHotelEditPage() {
+        return $('body').hasClass('post-type-ttbm_hotel') && $('#ttbm_content').length > 0;
+    }
+
+    function ttbmResolveFieldTabSelector($field) {
+        if (!$field || !$field.length) {
+            return null;
+        }
+        var $tabPanel = $field.closest('.tabsItem[data-tabs]');
+        if ($tabPanel.length) {
+            var tabId = $tabPanel.attr('data-tabs');
+            if (tabId) {
+                return '[data-tabs-target="' + tabId + '"]';
+            }
+        }
+        return null;
+    }
+
+    function ttbmExpandFieldCollapse($field) {
+        var $collapsed = $field.closest('[data-collapse]');
+        if (!$collapsed.length) {
+            return;
+        }
+        if ($collapsed.is(':visible') && $collapsed.hasClass('mActive')) {
+            return;
+        }
+        var collapseId = $collapsed.attr('data-collapse');
+        if (!collapseId) {
+            return;
+        }
+        var $toggle = $('[data-collapse-target="' + collapseId + '"]').first();
+        if ($toggle.length && !$toggle.hasClass('mActive')) {
+            if ($toggle.is('input[type="checkbox"]')) {
+                if (!$toggle.is(':checked')) {
+                    $toggle.prop('checked', true).trigger('change');
+                }
+            } else {
+                $toggle.trigger('click');
+            }
+            return;
+        }
+        $collapsed.slideDown(250).addClass('mActive');
+    }
+
     function ttbmSetValidationFocus($field, tabSelector) {
         if (!$field || !$field.length) {
             return;
@@ -556,7 +617,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
         if (!window.ttbmLastValidationFocus) {
             window.ttbmLastValidationFocus = {
                 $field: $field,
-                tab: tabSelector || null
+                tab: tabSelector || ttbmResolveFieldTabSelector($field) || null
             };
         }
     }
@@ -566,29 +627,210 @@ function ttbm_load_sortable_datepicker(parent, item) {
         if (!target || !target.$field || !target.$field.length) {
             return;
         }
-        var delay = 0;
-        if (target.tab) {
-            $(target.tab).trigger('click');
-            delay = 220;
+        var tabSelector = target.tab || ttbmResolveFieldTabSelector(target.$field);
+        var delay = tabSelector ? 240 : 0;
+        if (tabSelector) {
+            var $tabBtn = $(tabSelector).first();
+            if ($tabBtn.length && !$tabBtn.hasClass('active')) {
+                $tabBtn.trigger('click');
+            }
         }
         window.setTimeout(function () {
-            var $field = target.$field;
-            var $scrollTarget = $field;
-            if (!$field.is(':visible')) {
-                $scrollTarget = $field.closest('tr, .ttbm-particular-date-card, section, .tabsItem, .ttbm-sb-card').first();
-            }
-            if (!$scrollTarget.length) {
-                $scrollTarget = $field;
-            }
-            $('html,body').animate({ scrollTop: Math.max(0, $scrollTarget.offset().top - 120) }, 250);
-            var $focusable = $field.is('input, select, textarea, button') ? $field : $field.find('input, select, textarea').filter(':visible').first();
-            if ($focusable.length) {
-                $focusable.trigger('focus');
-            }
+            ttbmExpandFieldCollapse(target.$field);
+            window.setTimeout(function () {
+                var $field = target.$field;
+                var $scrollTarget = $field;
+                if (!$field.is(':visible')) {
+                    $scrollTarget = $field.closest('tr, .ttbm-particular-date-card, section, .tabsItem, .ttbm-sb-card, label, td').first();
+                }
+                if (!$scrollTarget.length) {
+                    $scrollTarget = $field;
+                }
+                if ($scrollTarget.length && $scrollTarget.offset()) {
+                    $('html,body').animate({ scrollTop: Math.max(0, $scrollTarget.offset().top - 120) }, 250);
+                }
+                var $focusable = $field.is('input, select, textarea, button') ? $field : $field.find('input, select, textarea').filter(':visible').first();
+                if ($focusable.length) {
+                    $focusable.addClass('is-invalid').attr('aria-invalid', 'true').trigger('focus');
+                    if (typeof $focusable[0].reportValidity === 'function') {
+                        $focusable[0].reportValidity();
+                    }
+                }
+            }, tabSelector ? 140 : 0);
         }, delay);
     }
 
     window.ttbmFocusValidationTarget = ttbmFocusValidationTarget;
+    window.ttbmSetValidationFocus = ttbmSetValidationFocus;
+
+    function ttbmValidateFeaturedImage() {
+        var thumbId = parseInt($('#ttbm_thumb_id').val(), 10) || 0;
+        var $card = $('#ttbm_featured_image_card');
+        var $err = $('#ttbm_featured_image_error');
+        if (!$card.length) {
+            return true;
+        }
+        if (thumbId > 0) {
+            $card.css({ 'border-color': '', 'box-shadow': '' });
+            $err.hide();
+            return true;
+        }
+        $card.css({ 'border-color': '#dc2626', 'box-shadow': '0 0 0 2px rgba(220,38,38,.15)' });
+        $err.show();
+        ttbmSetValidationFocus($card, null);
+        return false;
+    }
+
+    function ttbmValidateHotelLocation() {
+        var $toggle = $('#ttbm_meta_box_panel input[name="ttbm_display_hotel_location"]');
+        if ($toggle.length && !$toggle.is(':checked')) {
+            return true;
+        }
+        var $select = $('#ttbm_location_select');
+        var $err = $('#ttbm_hotel_location_error');
+        if (!$select.length) {
+            return true;
+        }
+        if (!$select.val()) {
+            $select.addClass('is-invalid').css({ 'border-color': '#dc2626', 'box-shadow': '0 0 0 2px rgba(220,38,38,.15)' });
+            if ($err.length) {
+                $err.show();
+            }
+            ttbmSetValidationFocus($select, '[data-tabs-target="#ttbm_general_info"]');
+            return false;
+        }
+        $select.removeClass('is-invalid').css({ 'border-color': '', 'box-shadow': '' });
+        if ($err.length) {
+            $err.hide();
+        }
+        return true;
+    }
+
+    function ttbmValidateHotelMapLocation() {
+        var $toggle = $('#ttbm_meta_box_panel input[name="ttbm_display_hotel_map"]');
+        if ($toggle.length && !$toggle.is(':checked')) {
+            return true;
+        }
+        var $input = $('#ttbm_hotel_map_location');
+        var $err = $('#ttbm_hotel_map_location_error');
+        if (!$input.length) {
+            return true;
+        }
+        if (!$input.val().trim()) {
+            $input.addClass('is-invalid').css({ 'border-color': '#dc2626', 'box-shadow': '0 0 0 2px rgba(220,38,38,.15)' });
+            if ($err.length) {
+                $err.show();
+            }
+            ttbmSetValidationFocus($input, '[data-tabs-target="#ttbm_settings_hotel_location"]');
+            return false;
+        }
+        $input.removeClass('is-invalid').css({ 'border-color': '', 'box-shadow': '' });
+        if ($err.length) {
+            $err.hide();
+        }
+        return true;
+    }
+
+    function ttbmMarkHotelFieldError($field) {
+        if ($field && $field.length) {
+            $field.closest('td, label').addClass('ttbm-hotel-field-error');
+            $field.addClass('is-invalid');
+        }
+    }
+
+    function ttbmClearHotelFieldErrors() {
+        $('#ttbm_hotel_rooms_error').hide().text('');
+        $('.ttbm_item_insert .ttbm-hotel-field-error').removeClass('ttbm-hotel-field-error');
+        $('.ttbm_item_insert input.is-invalid').removeClass('is-invalid');
+    }
+
+    function ttbmValidateHotelRooms() {
+        window.ttbmLastValidationFocus = null;
+        ttbmClearHotelFieldErrors();
+
+        var $rows = $('.ttbm_item_insert > tr.ttbm_remove_area');
+        var pricingTab = '[data-tabs-target="#ttbm_settings_pricing"]';
+        var hasComplete = false;
+
+        for (var i = 0; i < $rows.length; i++) {
+            var $row = $($rows[i]);
+            var name = ($row.find('input[name="ttbm_hotel_room_name[]"]').val() || '').trim();
+            var price = ($row.find('input[name="ttbm_hotel_room_price[]"]').val() || '').trim();
+            var qty = ($row.find('input[name="ttbm_hotel_room_qty[]"]').val() || '').trim();
+
+            if (!name && !price && !qty) {
+                continue;
+            }
+
+            var missing = [];
+            var $focusField = null;
+            if (!name) {
+                missing.push('Room Name');
+                $focusField = $row.find('input[name="ttbm_hotel_room_name[]"]');
+                ttbmMarkHotelFieldError($focusField);
+            }
+            if (!price) {
+                missing.push('Regular Price');
+                if (!$focusField) {
+                    $focusField = $row.find('input[name="ttbm_hotel_room_price[]"]');
+                }
+                ttbmMarkHotelFieldError($row.find('input[name="ttbm_hotel_room_price[]"]'));
+            }
+            if (!qty) {
+                missing.push('Available Qty');
+                if (!$focusField) {
+                    $focusField = $row.find('input[name="ttbm_hotel_room_qty[]"]');
+                }
+                ttbmMarkHotelFieldError($row.find('input[name="ttbm_hotel_room_qty[]"]'));
+            }
+
+            if (missing.length) {
+                $('#ttbm_hotel_rooms_error')
+                    .text('Room row ' + (i + 1) + ' is incomplete. Required: ' + missing.join(', ') + '.')
+                    .show();
+                ttbmSetValidationFocus($focusField, pricingTab);
+                return false;
+            }
+
+            hasComplete = true;
+        }
+
+        if (!hasComplete) {
+            $('#ttbm_hotel_rooms_error')
+                .text('At least one room with Room Name, Regular Price, and Available Qty is required.')
+                .show();
+            var $firstField = $rows.first().find('input[name="ttbm_hotel_room_name[]"]');
+            if (!$firstField.length) {
+                $firstField = $('.ttbm_item_insert').closest('section').find('.ttbm_add_item, .add_new_button, button').first();
+            }
+            ttbmSetValidationFocus($firstField.length ? $firstField : $('.ttbm_item_insert'), pricingTab);
+            return false;
+        }
+
+        return true;
+    }
+
+    function ttbmValidateHotelFormBeforeSubmit() {
+        window.ttbmLastValidationFocus = null;
+        if (!ttbmValidateTitle()) {
+            return false;
+        }
+        if (!ttbmValidateFeaturedImage()) {
+            return false;
+        }
+        if (!ttbmValidateHotelLocation()) {
+            return false;
+        }
+        if (!ttbmValidateHotelMapLocation()) {
+            return false;
+        }
+        if (!ttbmValidateHotelRooms()) {
+            return false;
+        }
+        return true;
+    }
+
+    window.ttbmValidateHotelFormBeforeSubmit = ttbmValidateHotelFormBeforeSubmit;
 
     function ttbmHandleServerValidationNotices() {
         var $ticketNotice = $('#ttbm-tickets-required-notice');
@@ -918,7 +1160,11 @@ function ttbm_load_sortable_datepicker(parent, item) {
         if (!$('#ttbm_meta_box_panel').length) {
             return true;
         }
+        window.ttbmLastValidationFocus = null;
         if (typeof ttbmValidateTitle === 'function' && !ttbmValidateTitle()) {
+            return false;
+        }
+        if (!ttbmValidateFeaturedImage()) {
             return false;
         }
         if (typeof ttbmValidateLocation === 'function' && !ttbmValidateLocation()) {
@@ -936,9 +1182,33 @@ function ttbm_load_sortable_datepicker(parent, item) {
         return true;
     }
 
+    function ttbmValidateSettingsFormBeforeSubmit() {
+        if (!$('#ttbm_meta_box_panel').length) {
+            return true;
+        }
+        if (ttbmIsHotelEditPage()) {
+            return ttbmValidateHotelFormBeforeSubmit();
+        }
+        return ttbmValidateTourFormBeforeSubmit();
+    }
+
+    window.ttbmValidateSettingsFormBeforeSubmit = ttbmValidateSettingsFormBeforeSubmit;
+
+    function ttbmEnableToggleFieldsForSubmit() {
+        if (!$('#ttbm_meta_box_panel').length) {
+            return;
+        }
+        $('#ttbm_meta_box_panel .ttbm-hotel-details-card, #ttbm_meta_box_panel .ttbm-general-info-card')
+            .find('input:disabled, select:disabled, textarea:disabled')
+            .not('[type="checkbox"]')
+            .prop('disabled', false);
+    }
+
     $(document).on('submit', 'form#post', function (e) {
-        if (!ttbmValidateTourFormBeforeSubmit()) {
+        ttbmEnableToggleFieldsForSubmit();
+        if (!ttbmValidateSettingsFormBeforeSubmit()) {
             e.preventDefault();
+            ttbmInitGeneralInfoToggles();
             if (typeof window.ttbmFocusValidationTarget === 'function') {
                 window.ttbmFocusValidationTarget();
             }
@@ -962,6 +1232,25 @@ function ttbm_load_sortable_datepicker(parent, item) {
 
     $(document).on('input change', '.ttbm_settings_dates input', function () {
         $(this).closest('.ttbm-date-field-error').removeClass('ttbm-date-field-error');
+    });
+
+    $(document).on('input change', '.ttbm_item_insert input', function () {
+        $(this).removeClass('is-invalid').closest('.ttbm-hotel-field-error').removeClass('ttbm-hotel-field-error');
+        $('#ttbm_hotel_rooms_error').hide();
+    });
+
+    $(document).on('change', '#ttbm_location_select', function () {
+        if ($(this).val()) {
+            $(this).removeClass('is-invalid').css({ 'border-color': '', 'box-shadow': '' });
+            $('#ttbm_hotel_location_error, #ttbm_location_error').hide();
+        }
+    });
+
+    $(document).on('input change', '#ttbm_hotel_map_location', function () {
+        if ($(this).val().trim()) {
+            $(this).removeClass('is-invalid').css({ 'border-color': '', 'box-shadow': '' });
+            $('#ttbm_hotel_map_location_error').hide();
+        }
     });
 
     $(document).on('input change', '.ttbm_settings_pricing .ttbm_insert_ticket_type input', function () {

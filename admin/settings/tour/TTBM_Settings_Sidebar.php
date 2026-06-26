@@ -764,6 +764,9 @@ jQuery(function($){
 		if (!$select.val()) {
 			$select.css({'border-color': '#dc2626', 'box-shadow': '0 0 0 2px rgba(220,38,38,.15)'});
 			$err.show();
+			if (typeof window.ttbmSetValidationFocus === 'function') {
+				window.ttbmSetValidationFocus($select, '[data-tabs-target="#ttbm_settings_location"]');
+			}
 			return false;
 		}
 		$select.css({'border-color': '', 'box-shadow': ''});
@@ -772,27 +775,14 @@ jQuery(function($){
 	}
 
 	window.ttbmSyncLocationRequiredState();
+	window.ttbmValidateLocation = ttbmValidateLocation;
 
 	$(document).on('change', '#ttbm_location_select', function(){
 		if ($(this).val()) {
 			$(this).css({'border-color':'','box-shadow':''});
-			$('#ttbm_location_error').hide();
+			$('#ttbm_location_error, #ttbm_hotel_location_error').hide();
 		}
 	});
-	}
-
-	function ttbmValidateFeaturedImage() {
-		var thumbId = parseInt($('#ttbm_thumb_id').val(), 10) || 0;
-		var $card = $('#ttbm_featured_image_card');
-		var $err  = $('#ttbm_featured_image_error');
-		if (thumbId > 0) {
-			$card.css({'border-color':'','box-shadow':''});
-			$err.hide();
-			return true;
-		}
-		$card.css({'border-color':'#dc2626','box-shadow':'0 0 0 2px rgba(220,38,38,.15)'});
-		$err.show();
-		return false;
 	}
 
 	/* ── Single consolidated submit interceptor ── */
@@ -803,69 +793,15 @@ jQuery(function($){
 		if (typeof window.ttbmPrepareTourSettingsFormForSubmit === 'function') {
 			window.ttbmPrepareTourSettingsFormForSubmit();
 		}
-		var valid = true;
-
-		/* 1. Title required */
-		if (typeof ttbmValidateTitle === 'function' && !ttbmValidateTitle()) {
-			e.preventDefault();
-			if (typeof window.ttbmFocusValidationTarget === 'function') {
-				window.ttbmFocusValidationTarget();
-			}
-			valid = false;
-		}
-
-		if (!isHotelEdit) {
-		/* 2. Location required (only when Location tab is enabled) */
-		if (valid && typeof ttbmValidateLocation === 'function' && !ttbmValidateLocation()) {
-			e.preventDefault();
-			$('[data-tabs-target="#ttbm_settings_location"]').trigger('click');
-			setTimeout(function(){
+		if (typeof window.ttbmValidateSettingsFormBeforeSubmit === 'function') {
+			if (!window.ttbmValidateSettingsFormBeforeSubmit()) {
+				e.preventDefault();
 				if (typeof window.ttbmFocusValidationTarget === 'function') {
-					window.ttbmLastValidationFocus = { $field: $('#ttbm_location_select'), tab: null };
 					window.ttbmFocusValidationTarget();
-				} else {
-					$('html,body').animate({ scrollTop: Math.max(0, ($('#ttbm_location_select').offset().top - 120)) }, 250);
-					$('#ttbm_location_select').focus();
 				}
-			}, 180);
-			valid = false;
-		}
-
-		/* 4. Date fields required by travel type */
-		if (valid && typeof ttbmValidateDates === 'function' && !ttbmValidateDates()) {
-			e.preventDefault();
-			if (typeof window.ttbmFocusValidationTarget === 'function') {
-				window.ttbmFocusValidationTarget();
+				return false;
 			}
-			valid = false;
 		}
-
-		/* 5. Ticket types required when registration is enabled */
-		if (valid && typeof ttbmSyncTicketHiddenText === 'function') {
-			ttbmSyncTicketHiddenText();
-		}
-		if (valid && typeof ttbmValidateTickets === 'function' && !ttbmValidateTickets()) {
-			e.preventDefault();
-			if (typeof window.ttbmFocusValidationTarget === 'function') {
-				window.ttbmFocusValidationTarget();
-			}
-			valid = false;
-		}
-		}
-
-		/* Featured image required */
-		if (valid && !ttbmValidateFeaturedImage()) {
-			e.preventDefault();
-			window.ttbmLastValidationFocus = { $field: $('#ttbm_featured_image_card'), tab: null };
-			if (typeof window.ttbmFocusValidationTarget === 'function') {
-				window.ttbmFocusValidationTarget();
-			} else {
-				$('html,body').animate({ scrollTop: Math.max(0, ($('#ttbm_featured_image_card').offset().top - 120)) }, 250);
-			}
-			valid = false;
-		}
-
-		/* All good — let the form submit normally */
 	});
 });</script>
 			<?php

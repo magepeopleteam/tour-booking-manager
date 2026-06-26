@@ -126,11 +126,11 @@
 			}
 			public static function add_new_location_popup() {
 				?>
-                <div class="ttbm_popup ttbm-location-popup" data-popup="add_new_location_popup">
+                <div class="ttbm_popup ttbm-location-popup ttbm-place-popup" data-popup="add_new_location_popup">
                     <div class="popupMainArea">
                         <div class="popupHeader ttbm-location-popup__header">
 							<div class="ttbm-location-popup__title-wrap">
-								<h4>
+								<h4 id="ttbm-location-popup-title">
 									<i class="fas fa-map-marker-alt" aria-hidden="true"></i>
 									<?php esc_html_e('Add New Location', 'tour-booking-manager'); ?>
 								</h4>
@@ -145,39 +145,14 @@
                         </div>
                         <div class="popupBody ttbm_location_form_area"></div>
                         <div class="popupFooter ttbm-location-popup__footer">
-                            <div class="buttonGroup">
-                                <button class="_themeButton ttbm_new_location_save" type="button"><?php esc_html_e('Save', 'tour-booking-manager'); ?></button>
-                                <button class="_warningButton ttbm_new_location_save_close" type="button"><?php esc_html_e('Save & Close', 'tour-booking-manager'); ?></button>
+                            <p class="ttbm-location-save-error ttbm-location-popup-error" role="alert" style="display:none;"></p>
+                            <div class="buttonGroup ttbm-location-popup__buttons">
+                                <button class="ttbm-location-popup__btn ttbm-location-popup__btn--secondary ttbm_new_location_save_close" type="button"><?php esc_html_e('Cancel', 'tour-booking-manager'); ?></button>
+                                <button class="ttbm-location-popup__btn ttbm-location-popup__btn--primary ttbm_new_location_save" type="button"><?php esc_html_e('Save', 'tour-booking-manager'); ?></button>
                             </div>
                         </div>
                     </div>
                 </div>
-				<?php
-			}
-			private static function location_popup_field( string $label, string $content, array $args = [] ): void {
-				$required = ! empty( $args['required'] );
-				$hint_key = $args['hint_key'] ?? '';
-				$error_key = $args['error_key'] ?? '';
-				$error_msg = $args['error_msg'] ?? '';
-				?>
-				<div class="ttbm-location-popup-field<?php echo $required ? ' ttbm-location-popup-field--required' : ''; ?>">
-					<label class="ttbm-location-popup-label">
-						<?php echo esc_html( $label ); ?>
-						<?php if ( $required ) : ?>
-							<span class="ttbm-location-popup-required" aria-hidden="true">*</span>
-						<?php endif; ?>
-					</label>
-					<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted field markup ?>
-					<?php if ( $hint_key ) : ?>
-						<p class="ttbm-location-popup-hint"><?php TTBM_Settings::des_p( $hint_key ); ?></p>
-					<?php endif; ?>
-					<?php if ( $error_key && $error_msg ) : ?>
-						<p class="textRequired ttbm-location-popup-error" data-required="<?php echo esc_attr( $error_key ); ?>">
-							<span class="fas fa-info-circle" aria-hidden="true"></span>
-							<?php echo esc_html( $error_msg ); ?>
-						</p>
-					<?php endif; ?>
-				</div>
 				<?php
 			}
 			public function load_ttbm_location_form() {
@@ -186,78 +161,63 @@
 				}
 				$all_countries = ttbm_get_coutnry_arr();
 				wp_nonce_field('ttbm_add_new_location_popup', 'ttbm_add_new_location_popup');
-				ob_start();
 				?>
 				<div class="ttbm-location-popup-fields">
-					<?php
-					ob_start();
-					?>
-					<input type="text" name="ttbm_new_location_name" class="formControl" required>
-					<?php
-					self::location_popup_field(
-						esc_html__('Location Name', 'tour-booking-manager'),
-						ob_get_clean(),
-						[
-							'required'   => true,
-							'hint_key'   => 'ttbm_new_location_name',
-							'error_key'  => 'ttbm_new_location_name',
-							'error_msg'  => esc_html__('Location name is required!', 'tour-booking-manager'),
-						]
-					);
-
-					ob_start();
-					?>
-					<textarea name="ttbm_location_description" class="formControl" rows="3"></textarea>
-					<?php
-					self::location_popup_field(
-						esc_html__('Location Description', 'tour-booking-manager'),
-						ob_get_clean(),
-						[ 'hint_key' => 'ttbm_location_description' ]
-					);
-
-					ob_start();
-					?>
-					<textarea name="ttbm_location_address" class="formControl" rows="3"></textarea>
-					<?php
-					self::location_popup_field(
-						esc_html__('Location Address', 'tour-booking-manager'),
-						ob_get_clean(),
-						[ 'hint_key' => 'ttbm_location_address' ]
-					);
-
-					ob_start();
-					?>
-					<select class="formControl" name="ttbm_location_country">
-						<option value=""><?php esc_html_e('Please Select a Country', 'tour-booking-manager'); ?></option>
-						<?php foreach ($all_countries as $key => $country) : ?>
-							<option value="<?php echo esc_attr($key); ?>"><?php echo esc_html($country); ?></option>
-						<?php endforeach; ?>
-					</select>
-					<?php
-					self::location_popup_field(
-						esc_html__('Location Country', 'tour-booking-manager'),
-						ob_get_clean(),
-						[ 'hint_key' => 'ttbm_location_country' ]
-					);
-
-					ob_start();
-					TTBM_Layout::single_image_button('ttbm_location_image');
-					?>
-					<?php
-					self::location_popup_field(
-						esc_html__('Location Image', 'tour-booking-manager'),
-						ob_get_clean(),
-						[
-							'required'  => true,
-							'hint_key'  => 'ttbm_location_image',
-							'error_key' => 'ttbm_location_image',
-							'error_msg' => esc_html__('Location image is required!', 'tour-booking-manager'),
-						]
-					);
-					?>
+					<div class="ttbm-location-popup-field ttbm-location-popup-field--required">
+						<label class="ttbm-location-popup-label" for="ttbm_new_location_name">
+							<?php esc_html_e('Location Name', 'tour-booking-manager'); ?>
+							<span class="ttbm-location-popup-required" aria-hidden="true">*</span>
+						</label>
+						<input type="text" id="ttbm_new_location_name" name="ttbm_new_location_name" class="formControl ttbm-location-popup-input" placeholder="<?php esc_attr_e('e.g. Paris, France', 'tour-booking-manager'); ?>" required>
+						<p class="ttbm-location-popup-hint"><?php TTBM_Settings::des_p('ttbm_new_location_name'); ?></p>
+						<p class="textRequired ttbm-location-popup-error" data-required="ttbm_new_location_name">
+							<span class="fas fa-info-circle" aria-hidden="true"></span>
+							<?php esc_html_e('Location name is required!', 'tour-booking-manager'); ?>
+						</p>
+					</div>
+					<div class="ttbm-location-popup-field">
+						<label class="ttbm-location-popup-label" for="ttbm_location_description">
+							<?php esc_html_e('Location Description', 'tour-booking-manager'); ?>
+						</label>
+						<textarea id="ttbm_location_description" name="ttbm_location_description" class="formControl ttbm-location-popup-input ttbm-location-popup-textarea" rows="3" placeholder="<?php esc_attr_e('Enter a short description...', 'tour-booking-manager'); ?>"></textarea>
+						<p class="ttbm-location-popup-hint"><?php TTBM_Settings::des_p('ttbm_location_description'); ?></p>
+					</div>
+					<div class="ttbm-location-popup-field">
+						<label class="ttbm-location-popup-label" for="ttbm_location_address">
+							<?php esc_html_e('Location Address', 'tour-booking-manager'); ?>
+						</label>
+						<textarea id="ttbm_location_address" name="ttbm_location_address" class="formControl ttbm-location-popup-input ttbm-location-popup-textarea" rows="3" placeholder="<?php esc_attr_e('Enter full address...', 'tour-booking-manager'); ?>"></textarea>
+						<p class="ttbm-location-popup-hint"><?php TTBM_Settings::des_p('ttbm_location_address'); ?></p>
+					</div>
+					<div class="ttbm-location-popup-field">
+						<label class="ttbm-location-popup-label" for="ttbm_location_country">
+							<?php esc_html_e('Location Country', 'tour-booking-manager'); ?>
+						</label>
+						<div class="ttbm-location-popup-select-wrap">
+							<select id="ttbm_location_country" class="formControl ttbm-location-popup-input ttbm-location-popup-select" name="ttbm_location_country">
+								<?php foreach ($all_countries as $key => $country) : ?>
+									<option value="<?php echo esc_attr($key); ?>"><?php echo esc_html($country); ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+						<p class="ttbm-location-popup-hint"><?php TTBM_Settings::des_p('ttbm_location_country'); ?></p>
+					</div>
+					<div class="ttbm-location-popup-field ttbm-location-popup-field--required">
+						<label class="ttbm-location-popup-label">
+							<?php esc_html_e('Location Image', 'tour-booking-manager'); ?>
+							<span class="ttbm-location-popup-required" aria-hidden="true">*</span>
+						</label>
+						<div class="ttbm-location-popup-image">
+							<?php TTBM_Layout::single_image_button('ttbm_location_image'); ?>
+						</div>
+						<p class="ttbm-location-popup-hint"><?php TTBM_Settings::des_p('ttbm_location_image'); ?></p>
+						<p class="textRequired ttbm-location-popup-error" data-required="ttbm_location_image">
+							<span class="fas fa-info-circle" aria-hidden="true"></span>
+							<?php esc_html_e('Location image is required!', 'tour-booking-manager'); ?>
+						</p>
+					</div>
 				</div>
 				<?php
-				echo ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				die();
 			}
 			public function ttbm_reload_location_list() {

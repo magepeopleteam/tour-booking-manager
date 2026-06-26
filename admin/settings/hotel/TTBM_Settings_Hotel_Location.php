@@ -154,6 +154,9 @@
 							>
 						</div>
 					</label>
+					<p id="ttbm_hotel_map_location_error" class="ttbm-field-inline-error" style="display:none;color:#dc2626;font-size:12px;font-weight:500;margin:8px 0 0;">
+						<span style="margin-right:4px;">&#9888;</span><?php esc_html_e('Please enter a map location before saving.', 'tour-booking-manager'); ?>
+					</p>
 
 					<div style="width:100%;margin-top:12px;">
 						<?php if ( $gmap_api_key ) : ?>

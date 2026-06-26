@@ -60,6 +60,9 @@
                                 </tbody>
                             </table>
                         </div>
+						<p id="ttbm_hotel_rooms_error" class="ttbm-field-inline-error" style="display:none;color:#dc2626;font-size:12px;font-weight:500;margin:10px 0 0;">
+							<span style="margin-right:4px;">&#9888;</span>
+						</p>
 						<?php TTBM_Custom_Layout::add_new_button(esc_html__('Add New Room', 'tour-booking-manager')); ?>
 						<?php do_action('add_ttbm_hidden_table', 'ttbm_room_item'); ?>
                     </section>

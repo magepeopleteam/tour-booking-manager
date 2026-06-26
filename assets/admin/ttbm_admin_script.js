@@ -104,79 +104,152 @@
         return false;
     });
     //*****Location****************//
-    $(document).on('click', '.ttbm_settings_general [data-target-popup]', function () {
-        let target = $(this).closest('.ttbm_settings_general').find('.ttbm_location_form_area');
+    function ttbm_get_location_popup() {
+        return $('[data-popup="add_new_location_popup"]').first();
+    }
+
+    function ttbm_get_location_popup_form_area() {
+        return ttbm_get_location_popup().find('.ttbm_location_form_area');
+    }
+
+    function ttbm_show_location_save_error($popup, message) {
+        let $error = $popup.find('.ttbm-location-save-error');
+        if (!$error.length) {
+            return;
+        }
+        if (message) {
+            $error.text(message).show();
+        } else {
+            $error.hide().text('');
+        }
+    }
+
+    function ttbm_load_location_popup_form() {
+        let $popup = ttbm_get_location_popup();
+        let target = $popup.find('.ttbm_location_form_area');
+        if (!target.length) {
+            return;
+        }
+        ttbm_show_location_save_error($popup, '');
         $.ajax({
-            type: 'POST', url: ttbm_ajax_url, data: {
-                "action": "load_ttbm_location_form"
-            }, beforeSend: function () {
+            type: 'POST',
+            url: ttbm_ajax_url,
+            data: {
+                action: 'load_ttbm_location_form'
+            },
+            beforeSend: function () {
                 simpleSpinner(target);
-            }, success: function (data) {
-                target.html(data).slideDown('fast').promise().done(function () {
-                    simpleSpinnerRemove(target);
-                });
+            },
+            success: function (data) {
+                target.html(data).show();
+                simpleSpinnerRemove(target);
+            },
+            error: function (response) {
+                simpleSpinnerRemove(target);
+                ttbm_show_location_save_error($popup, 'Could not load the form. Please try again.');
+                console.log(response);
             }
         });
+    }
+
+    $(document).on('click', '[data-target-popup="add_new_location_popup"]', function (e) {
+        e.preventDefault();
+        ttbm_load_location_popup_form();
     });
-    $(document).on('click', '.ttbm_settings_general  .popupClose', function (e) {
-        if (e.result) {
-            $(this).closest('.ttbm_settings_general').find('.ttbm_location_form_area').html('');
-        }
+
+    $(document).on('click', '.ttbm-location-popup .popupClose', function () {
+        let $popup = $(this).closest('[data-popup="add_new_location_popup"]');
+        ttbm_get_location_popup_form_area().empty();
+        ttbm_show_location_save_error($popup, '');
+        $popup.find('.ttbm_success_info').removeClass('is-visible').hide();
     });
-    $(document).on('click', '.ttbm_new_location_save,.ttbm_new_location_save_close', function () {
+
+    $(document).on('click', '.ttbm-location-popup .ttbm_new_location_save_close', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        ttbm_get_location_popup_form_area().empty();
+        ttbm_show_location_save_error($(this).closest('[data-popup="add_new_location_popup"]'), '');
+        $(this).closest('[data-popup]').find('.popupClose').trigger('click');
+    });
+
+    $(document).on('click', '.ttbm-location-popup .ttbm_new_location_save', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         ttbm_new_location_save($(this));
     });
+
     function ttbm_new_location_save($this) {
+        let $popup = $this.closest('[data-popup="add_new_location_popup"]');
         let parent = $this.closest('.popupMainArea');
-        parent.find('.ttbm_success_info').slideUp('fast');
-        let name = parent.find('[name="ttbm_new_location_name"]').val();
-        let description = parent.find('[name="ttbm_location_description"]').val();
-        let address = parent.find('[name="ttbm_location_address"]').val();
-        let country = parent.find('[name="ttbm_location_country"]').val();
-        let image = parent.find('[name="ttbm_location_image"]').val();
+        ttbm_show_location_save_error($popup, '');
+        parent.find('.ttbm_success_info').removeClass('is-visible').slideUp('fast');
+        parent.find('[data-required]').hide();
+
+        let name = $.trim(parent.find('[name="ttbm_new_location_name"]').val() || '');
+        let description = parent.find('[name="ttbm_location_description"]').val() || '';
+        let address = parent.find('[name="ttbm_location_address"]').val() || '';
+        let country = parent.find('[name="ttbm_location_country"]').val() || '';
+        let image = parent.find('[name="ttbm_location_image"]').val() || '';
+        let isValid = true;
+
         if (!name) {
-            parent.find('[data-required="ttbm_new_location_name"]').slideDown('fast');
-        } else {
-            parent.find('[data-required="ttbm_new_location_name"]').slideUp('fast');
+            parent.find('[data-required="ttbm_new_location_name"]').show();
+            isValid = false;
         }
         if (!image) {
-            parent.find('[data-required="ttbm_location_image"]').slideDown('fast');
-        } else {
-            parent.find('[data-required="ttbm_location_image"]').slideUp('fast');
+            parent.find('[data-required="ttbm_location_image"]').show();
+            isValid = false;
         }
-        if (name && image) {
-            $.ajax({
-                type: 'POST', url: ttbm_ajax_url, data: {
-                    "action": "ttbm_new_location_save", "name": name, "description": description, "address": address, "country": country, "image": image, "_wp_nonce": parent.find('[name="ttbm_add_new_location_popup"]').val(), nonce: ttbm_admin_ajax.nonce
-                }, beforeSend: function () {
-                    dLoader(parent);
-                }, success: function () {
-                    parent.find('[name="ttbm_new_location_name"]').val('');
-                    parent.find('[name="ttbm_location_description"]').val('');
-                    parent.find('[name="ttbm_location_address"]').val('');
-                    parent.find('[name="ttbm_location_country"]').val('');
-                    parent.find('[name="ttbm_location_image"]').val('');
-                    $this.closest('.popupMainArea').find('.ttbm_remove_single_image').trigger('click');
-                    parent.find('.ttbm_success_info').slideDown('fast');
-                    ttbm_reload_location();
-                    dLoaderRemove(parent);
-                    if (($this).hasClass('ttbm_new_location_save_close')) {
-                        $this.closest('.popupMainArea').find('.popupClose').trigger('click');
-                    }
-                    $('select[name="ttbm_location_name"]')
-                        .append('<option value="'+name+'">'+name+'</option>')
-                        .val('test 5');
-                    $('select[name="ttbm_location_name"] option')
-                        .filter(function() {
-                            return $(this).text() === name;
-                        })
-                        .prop('selected', true);
-                    return true;
-                }, error: function (response) {
-                    console.log(response);
+        if (!isValid) {
+            ttbm_show_location_save_error($popup, 'Please fill in all required fields.');
+            parent.find('.popupBody').scrollTop(0);
+            return false;
+        }
+        if (!parent.find('[name="ttbm_add_new_location_popup"]').val()) {
+            ttbm_show_location_save_error($popup, 'Form is not ready. Please close and reopen the popup.');
+            return false;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: ttbm_ajax_url,
+            data: {
+                action: 'ttbm_new_location_save',
+                name: name,
+                description: description,
+                address: address,
+                country: country,
+                image: image,
+                _wp_nonce: parent.find('[name="ttbm_add_new_location_popup"]').val(),
+                nonce: ttbm_admin_ajax.nonce
+            },
+            beforeSend: function () {
+                dLoader(parent);
+            },
+            success: function () {
+                parent.find('[name="ttbm_new_location_name"]').val('');
+                parent.find('[name="ttbm_location_description"]').val('');
+                parent.find('[name="ttbm_location_address"]').val('');
+                parent.find('[name="ttbm_location_country"]').val('');
+                parent.find('[name="ttbm_location_image"]').val('');
+                parent.find('.ttbm_remove_single_image').trigger('click');
+                parent.find('.ttbm_success_info').addClass('is-visible').slideDown('fast');
+                ttbm_reload_location();
+                dLoaderRemove(parent);
+
+                let $locationSelect = $('#ttbm_location_select, select[name="ttbm_location_name"], select[name="ttbm_hotel_location"]');
+                if ($locationSelect.find('option[value="' + name.replace(/"/g, '\\"') + '"]').length === 0) {
+                    $locationSelect.append($('<option></option>').attr('value', name).text(name));
                 }
-            });
-        }
+                $locationSelect.val(name).trigger('change');
+                return true;
+            },
+            error: function (response) {
+                dLoaderRemove(parent);
+                ttbm_show_location_save_error($popup, 'Could not save location. Please try again.');
+                console.log(response);
+            }
+        });
         return false;
     }
     function ttbm_reload_location() {

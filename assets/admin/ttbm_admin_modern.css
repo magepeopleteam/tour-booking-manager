@@ -5568,3 +5568,810 @@ body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td
 	color: #0f172a !important;
 	transform: translateY(-1px);
 }
+
+/* ─── Travel list taxonomy popup (Category, Location, etc.) ─── */
+#ttbm-location-popup.ttbm-popup-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px 16px;
+	background: rgba(15, 23, 42, 0.45);
+	backdrop-filter: blur(2px);
+	pointer-events: auto;
+}
+
+#ttbm-location-popup .ttbm-popup-box.ttbm-taxonomy-popup {
+	position: relative;
+	z-index: 1;
+	pointer-events: auto;
+	width: 100%;
+	max-width: 480px;
+	padding: 0;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	background: #fff;
+	box-shadow: 0 20px 50px rgba(15, 23, 42, 0.18);
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 18px 22px;
+	border-bottom: 1px solid #e2e8f0;
+	background: #fff;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup__title {
+	margin: 0;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.3;
+	color: #0f2d52;
+	letter-spacing: -0.01em;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup__close {
+	flex-shrink: 0;
+	width: 32px;
+	height: 32px;
+	margin: 0;
+	padding: 0;
+	border: none;
+	border-radius: 6px;
+	background: transparent;
+	color: #64748b;
+	font-size: 16px;
+	line-height: 1;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	transition: background 0.15s ease, color 0.15s ease;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup__close:hover {
+	background: #f1f5f9;
+	color: #334155;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup__body {
+	padding: 20px 22px;
+	overflow: auto;
+	max-height: min(70vh, 520px);
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-fields {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-field {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-label {
+	margin: 0;
+	font-size: 13px;
+	font-weight: 500;
+	color: #64748b;
+	line-height: 1.4;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-input {
+	width: 100%;
+	min-height: 42px;
+	padding: 10px 12px;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	background: #fff;
+	color: #1e293b;
+	font-size: 14px;
+	line-height: 1.4;
+	box-sizing: border-box;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-input::placeholder {
+	color: #94a3b8;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-input:focus {
+	outline: none;
+	border-color: #005a87;
+	box-shadow: 0 0 0 3px rgba(0, 90, 135, 0.12);
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-textarea {
+	min-height: 96px;
+	resize: vertical;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-select-wrap {
+	position: relative;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-select-wrap::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	right: 14px;
+	width: 8px;
+	height: 8px;
+	border-right: 2px solid #64748b;
+	border-bottom: 2px solid #64748b;
+	transform: translateY(-65%) rotate(45deg);
+	pointer-events: none;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-select {
+	appearance: none;
+	-webkit-appearance: none;
+	padding-right: 36px;
+	cursor: pointer;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-image {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 10px;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-image-preview img {
+	display: block;
+	max-width: 120px;
+	max-height: 120px;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	object-fit: cover;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-icon-wrap .flexEqual {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup__footer {
+	padding: 16px 22px;
+	border-top: 1px solid #e2e8f0;
+	background: #fff;
+}
+
+#ttbm-location-popup .ttbm-popup-buttons {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 10px;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup__btn {
+	min-width: 88px;
+	min-height: 40px;
+	padding: 9px 18px;
+	border: none;
+	border-radius: 8px;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.2;
+	cursor: pointer;
+	transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup__btn--secondary {
+	background: #f1f5f9;
+	color: #475569;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup__btn--secondary:hover {
+	background: #e2e8f0;
+	color: #1e293b;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup__btn--primary,
+#ttbm-location-popup .ttbm-save-location,
+#ttbm-location-popup .ttbm-save-places_data {
+	background: #005a87;
+	color: #fff;
+	box-shadow: 0 1px 2px rgba(0, 90, 135, 0.2);
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup__btn--primary:hover,
+#ttbm-location-popup .ttbm-save-location:hover,
+#ttbm-location-popup .ttbm-save-places_data:hover {
+	background: #004b7c;
+	color: #fff;
+}
+
+/* ─── Travel list taxonomy toolbar (Add + Search) ─── */
+.ttbm_trvel_lists_content .ttbm-tour-list-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	flex-wrap: wrap;
+	margin-bottom: 4px;
+}
+
+.ttbm-tour-list-page .ttbm-tour-list-header.ttbm_travel_list_page_title_bg {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+
+.ttbm-tour-list-page .ttbm_travel_list_page_title_bg .ttbm_tour_list_text_header {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.ttbm_trvel_lists_content .ttbm_tab_header_shortcode_title {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.ttbm_trvel_lists_content .ttbm_tab_header_shortcode_title .page-title {
+	margin: 0;
+	padding: 0;
+	font-size: 22px;
+	font-weight: 700;
+	color: #1e293b;
+	line-height: 1.3;
+}
+
+.ttbm-tour-list-page .ttbm_tour_search_add_holder.ttbm_travel_taxonomy_toolbar,
+.ttbm_trvel_lists_content .ttbm_tour_search_add_holder.ttbm_travel_taxonomy_toolbar {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 12px;
+	width: auto !important;
+	flex: 0 0 auto;
+	margin-left: auto;
+	margin-right: 0;
+}
+
+.ttbm-tour-list-page .ttbm_travel_taxonomy_add_btn,
+.ttbm_trvel_lists_content .ttbm_travel_taxonomy_add_btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	flex-shrink: 0;
+	height: 42px;
+	margin: 0;
+	padding: 0 18px;
+	border-radius: 8px;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1;
+	white-space: nowrap;
+	cursor: pointer;
+	text-decoration: none;
+	box-sizing: border-box;
+	transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.ttbm-tour-list-page .ttbm_travel_taxonomy_add_btn__icon,
+.ttbm_trvel_lists_content .ttbm_travel_taxonomy_add_btn__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 18px;
+	height: 18px;
+	border: 1.5px solid currentColor;
+	border-radius: 50%;
+	font-size: 9px;
+	line-height: 1;
+}
+
+.ttbm-tour-list-page .ttbm_travel_taxonomy_add_btn__text,
+.ttbm_trvel_lists_content .ttbm_travel_taxonomy_add_btn__text {
+	display: inline-block;
+}
+
+.ttbm-tour-list-page .ttbm_travel_taxonomy_add_btn:hover,
+.ttbm_trvel_lists_content .ttbm_travel_taxonomy_add_btn:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+}
+
+.ttbm-tour-list-page .ttbm_travel_taxonomy_add_link,
+.ttbm_trvel_lists_content .ttbm_travel_taxonomy_add_link {
+	color: inherit;
+}
+
+.ttbm-tour-list-page .ttbm_travel_taxonomy_search_wrap,
+.ttbm_trvel_lists_content .ttbm_travel_taxonomy_search_wrap {
+	position: relative;
+	flex: 0 0 auto;
+	width: min(100%, 320px);
+	min-width: 200px;
+}
+
+.ttbm-tour-list-page .ttbm_travel_taxonomy_search_icon,
+.ttbm_trvel_lists_content .ttbm_travel_taxonomy_search_icon {
+	position: absolute;
+	top: 50%;
+	left: 14px;
+	transform: translateY(-50%);
+	color: #94a3b8;
+	font-size: 14px;
+	line-height: 1;
+	pointer-events: none;
+}
+
+.ttbm-tour-list-page .ttbm_travel_taxonomy_search_input,
+.ttbm_trvel_lists_content .ttbm_travel_taxonomy_search_input {
+	width: 100% !important;
+	height: 42px;
+	margin: 0;
+	padding: 0 14px 0 40px;
+	border: 1px solid #d7dee8;
+	border-radius: 8px;
+	background: #fff;
+	color: #1e293b;
+	font-size: 14px;
+	line-height: 1.4;
+	box-sizing: border-box;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ttbm-tour-list-page .ttbm_travel_taxonomy_search_input::placeholder,
+.ttbm_trvel_lists_content .ttbm_travel_taxonomy_search_input::placeholder {
+	color: #94a3b8;
+}
+
+.ttbm-tour-list-page .ttbm_travel_taxonomy_search_input:hover,
+.ttbm_trvel_lists_content .ttbm_travel_taxonomy_search_input:hover {
+	border-color: #c5ced9;
+}
+
+.ttbm-tour-list-page .ttbm_travel_taxonomy_search_input:focus,
+.ttbm_trvel_lists_content .ttbm_travel_taxonomy_search_input:focus {
+	outline: none;
+	border-color: #94a3b8;
+	box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.18);
+}
+
+@media only screen and (max-width: 768px) {
+	.ttbm-tour-list-page .ttbm_tour_search_add_holder.ttbm_travel_taxonomy_toolbar,
+	.ttbm_trvel_lists_content .ttbm_tour_search_add_holder.ttbm_travel_taxonomy_toolbar {
+		width: 100%;
+		margin-left: 0;
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.ttbm-tour-list-page .ttbm_travel_taxonomy_search_wrap,
+	.ttbm_trvel_lists_content .ttbm_travel_taxonomy_search_wrap {
+		width: 100%;
+		min-width: 0;
+	}
+
+	.ttbm-tour-list-page .ttbm_travel_taxonomy_add_btn,
+	.ttbm_trvel_lists_content .ttbm_travel_taxonomy_add_btn {
+		width: 100%;
+	}
+}
+
+/* ─── Travel list skeleton loaders ─── */
+.ttbm_trvel_lists_content .ttbm_travel_content_loader,
+.ttbm_trvel_lists_content .ttbm_travel_skeleton_loader {
+	width: 100%;
+}
+
+.ttbm_travel_skeleton-loader--grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	gap: 16px;
+	padding: 8px 0 4px;
+}
+
+.ttbm_travel_skeleton_card {
+	display: flex;
+	gap: 14px;
+	padding: 16px;
+	border: 1px solid #e8edf3;
+	border-radius: 10px;
+	background: #fff;
+}
+
+.ttbm_travel_skeleton_thumb {
+	flex-shrink: 0;
+	width: 70px;
+	height: 70px;
+	border-radius: 8px;
+	background: linear-gradient(90deg, #eef2f7 25%, #f8fafc 50%, #eef2f7 75%);
+	background-size: 200% 100%;
+	animation: ttbmSkeletonShimmer 1.2s ease-in-out infinite;
+}
+
+.ttbm_travel_skeleton_body {
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	min-width: 0;
+	padding-top: 4px;
+}
+
+.ttbm_travel_skeleton_line {
+	display: block;
+	height: 12px;
+	border-radius: 999px;
+	background: linear-gradient(90deg, #eef2f7 25%, #f8fafc 50%, #eef2f7 75%);
+	background-size: 200% 100%;
+	animation: ttbmSkeletonShimmer 1.2s ease-in-out infinite;
+}
+
+.ttbm_travel_skeleton-line--title {
+	width: 72%;
+	height: 14px;
+}
+
+.ttbm_travel_skeleton-line--short {
+	width: 42%;
+}
+
+.ttbm-tour-list-page .ttbm-tour-list .ttbm_travel_skeleton_loader,
+.ttbm-tour-list_holder .ttbm_travel_skeleton_loader {
+	width: 100%;
+}
+
+/* Tour Package skeleton — compact row layout (default list design) */
+.ttbm-tour-list-page .ttbm_travel_skeleton-loader--tour-package {
+	display: block;
+	width: 100%;
+	padding: 0;
+}
+
+.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton-loader--tour-package,
+.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton-loader--tour-package {
+	display: block;
+}
+
+.ttbm-tour-list-page .ttbm_travel_skeleton_tour_package_card {
+	position: relative;
+	box-sizing: border-box;
+	width: 100%;
+}
+
+.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton_tour_package_card,
+.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton_tour_package_card {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 14px;
+	padding: 9px 150px 9px 12px;
+	margin: 0 0 12px;
+	border: 1px solid #eef0f3;
+	border-radius: 12px;
+	background: #fff;
+	box-shadow: 0 1px 3px rgba(17, 24, 39, 0.06);
+}
+
+.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton_tour_package_card:last-child,
+.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton_tour_package_card:last-child {
+	margin-bottom: 0;
+}
+
+.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton_tour_package_thumb,
+.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton_tour_package_thumb {
+	flex: 0 0 46px;
+	width: 46px;
+	height: 46px;
+	border-radius: 6px;
+	background: linear-gradient(90deg, #eef2f7 25%, #f8fafc 50%, #eef2f7 75%);
+	background-size: 200% 100%;
+	animation: ttbmSkeletonShimmer 1.2s ease-in-out infinite;
+}
+
+.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton_tour_package_content,
+.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton_tour_package_content {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton_tour_package_main,
+.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton_tour_package_main {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton_tour_package_main .ttbm_travel_skeleton-line--title,
+.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton_tour_package_main .ttbm_travel_skeleton-line--title {
+	width: 58%;
+	max-width: 280px;
+	height: 13px;
+}
+
+.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton_tour_package_main .ttbm_travel_skeleton-line--location,
+.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton_tour_package_main .ttbm_travel_skeleton-line--location {
+	width: 38%;
+	max-width: 180px;
+	height: 10px;
+}
+
+.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton_tour_package_meta,
+.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton_tour_package_meta {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 18px;
+	flex: 0 0 auto;
+}
+
+.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton_tour_package_meta .ttbm_travel_skeleton-line--badge,
+.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton_tour_package_meta .ttbm_travel_skeleton-line--badge {
+	width: 64px;
+	height: 22px;
+	border-radius: 10px;
+}
+
+.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton_stat_pair,
+.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton_stat_pair {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 4px;
+}
+
+.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton-line--stat-val,
+.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton-line--stat-val {
+	width: 18px;
+	height: 12px;
+}
+
+.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton-line--stat-lbl,
+.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton-line--stat-lbl {
+	width: 52px;
+	height: 10px;
+}
+
+.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton-line--date,
+.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton-line--date {
+	width: 72px;
+	height: 11px;
+}
+
+.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton_tour_package_actions,
+.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton_tour_package_actions {
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	display: flex;
+	flex-direction: row;
+	gap: 4px;
+}
+
+.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton_tour_package_actions span,
+.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton_tour_package_actions span {
+	display: block;
+	width: 24px;
+	height: 24px;
+	border-radius: 4px;
+	background: linear-gradient(90deg, #eef2f7 25%, #f8fafc 50%, #eef2f7 75%);
+	background-size: 200% 100%;
+	animation: ttbmSkeletonShimmer 1.2s ease-in-out infinite;
+}
+
+@media screen and (max-width: 960px) {
+	.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton_tour_package_card,
+	.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton_tour_package_card {
+		padding-right: 12px;
+		flex-wrap: wrap;
+	}
+
+	.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton_tour_package_content,
+	.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton_tour_package_content {
+		flex-wrap: wrap;
+	}
+
+	.ttbm-tour-list-page.ttbm-design-compact .ttbm_travel_skeleton_tour_package_actions,
+	.ttbm-tour-list-page:not(.ttbm-design-classic):not(.ttbm-design-modern) .ttbm_travel_skeleton_tour_package_actions {
+		position: static;
+		transform: none;
+		margin-top: 6px;
+	}
+}
+
+/* Classic layout skeleton */
+.ttbm-tour-list-page.ttbm-design-classic .ttbm_travel_skeleton_tour_package_card {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding: 10px;
+	margin: 0 0 6px;
+	border: 1px solid #dfd6d6;
+	border-radius: 10px;
+	background: #fff;
+}
+
+.ttbm-tour-list-page.ttbm-design-classic .ttbm_travel_skeleton_tour_package_thumb {
+	width: 100%;
+	height: 160px;
+	max-height: 200px;
+	border-radius: 5px;
+	background: linear-gradient(90deg, #eef2f7 25%, #f8fafc 50%, #eef2f7 75%);
+	background-size: 200% 100%;
+	animation: ttbmSkeletonShimmer 1.2s ease-in-out infinite;
+}
+
+.ttbm-tour-list-page.ttbm-design-classic .ttbm_travel_skeleton_tour_package_content {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.ttbm-tour-list-page.ttbm-design-classic .ttbm_travel_skeleton_tour_package_meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px;
+}
+
+.ttbm-tour-list-page.ttbm-design-classic .ttbm_travel_skeleton_tour_package_actions {
+	display: none;
+}
+
+/* Modern layout skeleton */
+.ttbm-tour-list-page.ttbm-design-modern .ttbm_travel_skeleton-loader--tour-package {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: 22px;
+}
+
+.ttbm-tour-list-page.ttbm-design-modern .ttbm_travel_skeleton_tour_package_card {
+	display: flex;
+	flex-direction: column;
+	padding: 0;
+	margin: 0;
+	border: 1px solid #eceef2;
+	border-radius: 16px;
+	overflow: hidden;
+	box-shadow: 0 6px 20px rgba(17, 24, 39, 0.07);
+	background: #fff;
+}
+
+.ttbm-tour-list-page.ttbm-design-modern .ttbm_travel_skeleton_tour_package_thumb {
+	width: 100%;
+	height: 188px;
+	border-radius: 0;
+	background: linear-gradient(90deg, #eef2f7 25%, #f8fafc 50%, #eef2f7 75%);
+	background-size: 200% 100%;
+	animation: ttbmSkeletonShimmer 1.2s ease-in-out infinite;
+}
+
+.ttbm-tour-list-page.ttbm-design-modern .ttbm_travel_skeleton_tour_package_content {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding: 16px 18px 18px;
+}
+
+.ttbm-tour-list-page.ttbm-design-modern .ttbm_travel_skeleton_tour_package_meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	padding-top: 12px;
+	border-top: 1px solid #f0f1f4;
+}
+
+.ttbm-tour-list-page.ttbm-design-modern .ttbm_travel_skeleton_tour_package_actions {
+	display: none;
+}
+
+.ttbm_travel_skeleton-loader--tours {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 20px;
+	padding: 8px 0;
+}
+
+.ttbm_travel_skeleton_tour_card {
+	border: 1px solid #e8edf3;
+	border-radius: 12px;
+	overflow: hidden;
+	background: #fff;
+}
+
+.ttbm_travel_skeleton_tour_thumb {
+	height: 160px;
+	background: linear-gradient(90deg, #eef2f7 25%, #f8fafc 50%, #eef2f7 75%);
+	background-size: 200% 100%;
+	animation: ttbmSkeletonShimmer 1.2s ease-in-out infinite;
+}
+
+.ttbm_travel_skeleton_tour_body {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding: 14px 16px 18px;
+}
+
+.ttbm_travel_list_load_error {
+	margin: 12px 0;
+	padding: 12px 14px;
+	border: 1px solid #fecaca;
+	border-radius: 8px;
+	background: #fef2f2;
+	color: #b91c1c;
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+@keyframes ttbmSkeletonShimmer {
+	0% { background-position: 200% 0; }
+	100% { background-position: -200% 0; }
+}
+
+/* ─── Taxonomy popup inline validation ─── */
+#ttbm-location-popup .ttbm-taxonomy-popup-field.is-invalid .ttbm-taxonomy-popup-input,
+#ttbm-location-popup .ttbm-taxonomy-popup-field.is-invalid .ttbm-taxonomy-popup-select,
+#ttbm-location-popup .ttbm-taxonomy-popup-field.is-invalid textarea,
+#ttbm-location-popup .ttbm-taxonomy-popup-input.is-invalid,
+#ttbm-location-popup .ttbm-taxonomy-popup-select.is-invalid {
+	border-color: #dc2626;
+	box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-error {
+	margin: 4px 0 0;
+	font-size: 12px;
+	line-height: 1.45;
+	color: #dc2626;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-error[hidden] {
+	display: none !important;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-form-message {
+	margin: 0 0 12px;
+	padding: 10px 12px;
+	border-radius: 8px;
+	font-size: 13px;
+	line-height: 1.45;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-form-message[hidden] {
+	display: none !important;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-form-message.is-error {
+	border: 1px solid #fecaca;
+	background: #fef2f2;
+	color: #b91c1c;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup-form-message.is-success {
+	border: 1px solid #bbf7d0;
+	background: #f0fdf4;
+	color: #15803d;
+}
+
+#ttbm-location-popup .ttbm-taxonomy-popup__footer {
+	display: flex;
+	flex-direction: column;
+}

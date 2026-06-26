@@ -1074,7 +1074,11 @@
                 nonce: ttbm_admin_ajax.nonce
             },
             beforeSend: function () {
-                $('.ttbm-tour-list').text('Loading...');
+                if (typeof window.ttbmShowTourPackageSkeleton === 'function') {
+                    window.ttbmShowTourPackageSkeleton('.ttbm-tour-list', 4);
+                } else if (typeof window.ttbmTravelTourPackageSkeletonHtml === 'function') {
+                    $('.ttbm-tour-list').html(window.ttbmTravelTourPackageSkeletonHtml(4));
+                }
             },
             success: function (response) {
                 if (response.success && response.data.html) {

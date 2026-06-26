@@ -800,13 +800,17 @@ jQuery(function($){
 		if (typeof ttbm_sync_visible_dates_to_hidden === 'function') {
 			ttbm_sync_visible_dates_to_hidden();
 		}
+		if (typeof window.ttbmPrepareTourSettingsFormForSubmit === 'function') {
+			window.ttbmPrepareTourSettingsFormForSubmit();
+		}
 		var valid = true;
 
 		/* 1. Title required */
 		if (typeof ttbmValidateTitle === 'function' && !ttbmValidateTitle()) {
 			e.preventDefault();
-			$('html,body').animate({ scrollTop: Math.max(0, ($('#ttbm_post_title').offset().top - 120)) }, 250);
-			$('#ttbm_post_title').focus();
+			if (typeof window.ttbmFocusValidationTarget === 'function') {
+				window.ttbmFocusValidationTarget();
+			}
 			valid = false;
 		}
 
@@ -816,8 +820,13 @@ jQuery(function($){
 			e.preventDefault();
 			$('[data-tabs-target="#ttbm_settings_location"]').trigger('click');
 			setTimeout(function(){
-				$('html,body').animate({ scrollTop: Math.max(0, ($('#ttbm_location_select').offset().top - 120)) }, 250);
-				$('#ttbm_location_select').focus();
+				if (typeof window.ttbmFocusValidationTarget === 'function') {
+					window.ttbmLastValidationFocus = { $field: $('#ttbm_location_select'), tab: null };
+					window.ttbmFocusValidationTarget();
+				} else {
+					$('html,body').animate({ scrollTop: Math.max(0, ($('#ttbm_location_select').offset().top - 120)) }, 250);
+					$('#ttbm_location_select').focus();
+				}
 			}, 180);
 			valid = false;
 		}
@@ -825,12 +834,9 @@ jQuery(function($){
 		/* 4. Date fields required by travel type */
 		if (valid && typeof ttbmValidateDates === 'function' && !ttbmValidateDates()) {
 			e.preventDefault();
-			setTimeout(function () {
-				var $target = $('#ttbm_fixed_dates_error:visible, #ttbm_particular_dates_error:visible, #ttbm_repeated_dates_error:visible').first();
-				if ($target.length) {
-					$('html,body').animate({ scrollTop: Math.max(0, ($target.offset().top - 120)) }, 250);
-				}
-			}, 180);
+			if (typeof window.ttbmFocusValidationTarget === 'function') {
+				window.ttbmFocusValidationTarget();
+			}
 			valid = false;
 		}
 
@@ -840,12 +846,9 @@ jQuery(function($){
 		}
 		if (valid && typeof ttbmValidateTickets === 'function' && !ttbmValidateTickets()) {
 			e.preventDefault();
-			setTimeout(function () {
-				var $target = $('#ttbm_ticket_types_error:visible').first();
-				if ($target.length) {
-					$('html,body').animate({ scrollTop: Math.max(0, ($target.offset().top - 120)) }, 250);
-				}
-			}, 180);
+			if (typeof window.ttbmFocusValidationTarget === 'function') {
+				window.ttbmFocusValidationTarget();
+			}
 			valid = false;
 		}
 		}
@@ -853,7 +856,12 @@ jQuery(function($){
 		/* Featured image required */
 		if (valid && !ttbmValidateFeaturedImage()) {
 			e.preventDefault();
-			$('html,body').animate({ scrollTop: Math.max(0, ($('#ttbm_featured_image_card').offset().top - 120)) }, 250);
+			window.ttbmLastValidationFocus = { $field: $('#ttbm_featured_image_card'), tab: null };
+			if (typeof window.ttbmFocusValidationTarget === 'function') {
+				window.ttbmFocusValidationTarget();
+			} else {
+				$('html,body').animate({ scrollTop: Math.max(0, ($('#ttbm_featured_image_card').offset().top - 120)) }, 250);
+			}
 			valid = false;
 		}
 

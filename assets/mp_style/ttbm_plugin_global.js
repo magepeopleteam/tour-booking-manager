@@ -220,8 +220,18 @@ function ttbm_alert($this, attr = 'alert') {
         
         // Sync visible dates to hidden fields before WordPress save/update
         $(document).on('click', '#publish, #save-post, input[name="save"], input[name="publish"], .ttbm-header-publish', function() {
-            ttbm_sync_visible_dates_to_hidden();
-            clearEmptyDateFields();
+            if (typeof window.ttbmPrepareTourSettingsFormForSubmit === 'function') {
+                window.ttbmPrepareTourSettingsFormForSubmit();
+            } else {
+                ttbm_sync_visible_dates_to_hidden();
+                clearEmptyDateFields();
+                if (typeof updateCheckedTopPicksDealsHolder === 'function') {
+                    updateCheckedTopPicksDealsHolder();
+                }
+                if (typeof updateCheckedActivitiesHolder === 'function') {
+                    updateCheckedActivitiesHolder();
+                }
+            }
         });
     });
 }(jQuery));
@@ -1054,7 +1064,7 @@ function ttbm_sticky_management() {
         let separator = ',';
         parent.find(' input[type="checkbox"]').each(function () {
             if ($(this).is(":checked")) {
-                let currentValue = $(this).attr('data-checked');
+                let currentValue = $(this).attr('data-checked') || $(this).val();
                 value = value + (value ? separator : '') + currentValue;
             }
         }).promise().done(function () {

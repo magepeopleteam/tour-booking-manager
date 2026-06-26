@@ -3881,7 +3881,11 @@ div.ttbm_global_settings .button-primary {
 
 #ttbm_meta_box_panel .ttbm_settings_pricing .ttbm-ticket-field-error .formControl {
 	border-color: #dc2626 !important;
-	box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.12);
+	box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.15) !important;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_pricing tr:has(.ttbm-ticket-field-error) {
+	background: rgba(220, 38, 38, 0.04);
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-field-label--sub {

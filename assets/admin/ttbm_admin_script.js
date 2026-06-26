@@ -382,8 +382,47 @@
         });
         $('#ttbm_checked_activities_holder').val(checked.join(','));
     }
+    function updateCheckedTopPicksDealsHolder() {
+        var checked = [];
+        $('.tabsItem[data-tabs="#ttbm_add_promotional_setting"] input[name="ttbm_top_picks_deals[]"]:checked').each(function () {
+            checked.push($(this).val());
+        });
+        $('#ttbm_checked_top_picks_deals_holder').val(checked.join(','));
+    }
+    window.updateCheckedActivitiesHolder = updateCheckedActivitiesHolder;
+    window.updateCheckedTopPicksDealsHolder = updateCheckedTopPicksDealsHolder;
+    window.ttbmPrepareTourSettingsFormForSubmit = function () {
+        var $panel = $('#ttbm_meta_box_panel');
+        if ($panel.length) {
+            $panel.find('input, select, textarea').each(function () {
+                var $field = $(this);
+                if ($field.closest('.ttbm_hidden_content').length) {
+                    return;
+                }
+                var type = ($field.attr('type') || '').toLowerCase();
+                if (type === 'button' || type === 'submit' || $field.is('.ttbm-deleting')) {
+                    return;
+                }
+                $field.prop('disabled', false);
+            });
+        }
+        if (typeof ttbm_sync_visible_dates_to_hidden === 'function') {
+            ttbm_sync_visible_dates_to_hidden();
+        }
+        updateCheckedTopPicksDealsHolder();
+        updateCheckedActivitiesHolder();
+        if (typeof window.ttbmSyncTicketHiddenText === 'function') {
+            window.ttbmSyncTicketHiddenText();
+        }
+    };
+    $(document).on('submit', 'form#post', function () {
+        window.ttbmPrepareTourSettingsFormForSubmit();
+    });
     $(document).on('change', '.ttbm_activities_table input[name="ttbm_tour_activities[]"]', function () {
         updateCheckedActivitiesHolder();
+    });
+    $(document).on('change', '.tabsItem[data-tabs="#ttbm_add_promotional_setting"] input[name="ttbm_top_picks_deals[]"]', function () {
+        updateCheckedTopPicksDealsHolder();
     });
     function ttbm_reload_activity_list() {
         var ttbm_id = $('[name="post_id"]').val();

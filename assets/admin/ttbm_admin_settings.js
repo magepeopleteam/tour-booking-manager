@@ -1,4 +1,7 @@
 function ttbm_load_sortable_datepicker(parent, item) {
+    var enableNewRowFields = function () {
+        parent.find(".ttbm_item_insert > tr").last().find("input, select, textarea").prop("disabled", false);
+    };
     if (parent.find(".ttbm_item_insert_before").length > 0) {
         jQuery(item)
             .insertBefore(parent.find(".ttbm_item_insert_before").first())
@@ -8,6 +11,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
                     handle: jQuery(this).find(".ttbm_sortable_button"),
                 });
                 ttbm_load_date_picker(parent);
+                enableNewRowFields();
             });
     } else {
         parent
@@ -20,6 +24,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
                     handle: jQuery(this).find(".ttbm_sortable_button"),
                 });
                 ttbm_load_date_picker(parent);
+                enableNewRowFields();
             });
     }
     return true;
@@ -532,6 +537,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
         if (!$input.val().trim()) {
             $input.addClass('is-invalid');
             $err.show();
+            ttbmSetValidationFocus($input, null);
             return false;
         }
 
@@ -541,6 +547,81 @@ function ttbm_load_sortable_datepicker(parent, item) {
     }
 
     window.ttbmValidateTitle = ttbmValidateTitle;
+    window.ttbmLastValidationFocus = null;
+
+    function ttbmSetValidationFocus($field, tabSelector) {
+        if (!$field || !$field.length) {
+            return;
+        }
+        if (!window.ttbmLastValidationFocus) {
+            window.ttbmLastValidationFocus = {
+                $field: $field,
+                tab: tabSelector || null
+            };
+        }
+    }
+
+    function ttbmFocusValidationTarget(target) {
+        target = target || window.ttbmLastValidationFocus;
+        if (!target || !target.$field || !target.$field.length) {
+            return;
+        }
+        var delay = 0;
+        if (target.tab) {
+            $(target.tab).trigger('click');
+            delay = 220;
+        }
+        window.setTimeout(function () {
+            var $field = target.$field;
+            var $scrollTarget = $field;
+            if (!$field.is(':visible')) {
+                $scrollTarget = $field.closest('tr, .ttbm-particular-date-card, section, .tabsItem, .ttbm-sb-card').first();
+            }
+            if (!$scrollTarget.length) {
+                $scrollTarget = $field;
+            }
+            $('html,body').animate({ scrollTop: Math.max(0, $scrollTarget.offset().top - 120) }, 250);
+            var $focusable = $field.is('input, select, textarea, button') ? $field : $field.find('input, select, textarea').filter(':visible').first();
+            if ($focusable.length) {
+                $focusable.trigger('focus');
+            }
+        }, delay);
+    }
+
+    window.ttbmFocusValidationTarget = ttbmFocusValidationTarget;
+
+    function ttbmHandleServerValidationNotices() {
+        var $ticketNotice = $('#ttbm-tickets-required-notice');
+        if (!$ticketNotice.length) {
+            return;
+        }
+        var rowNum = parseInt($ticketNotice.data('row'), 10) || 0;
+        var $rows = $('.ttbm_insert_ticket_type > tr.ttbm_remove_area');
+        var $row = rowNum > 0 ? $rows.eq(rowNum - 1) : $rows.first();
+        if (!$row.length) {
+            return;
+        }
+        $row.find('.ttbm-ticket-field-error').removeClass('ttbm-ticket-field-error');
+        var $field = null;
+        $row.find('input[name="ticket_type_name[]"], input[name="ticket_type_price[]"], input[name="ticket_type_qty[]"]').each(function () {
+            var $input = $(this);
+            if (!($input.val() || '').trim()) {
+                $input.closest('.ttbm-ticket-col, .ttbm-ticket-name-field, td').addClass('ttbm-ticket-field-error');
+                if (!$field) {
+                    $field = $input;
+                }
+            }
+        });
+        if (!$field) {
+            $field = $row.find('input[name="ticket_type_name[]"]').first();
+        }
+        $('#ttbm_ticket_types_error').text($ticketNotice.find('[data-message]').text() || '').show();
+        window.ttbmLastValidationFocus = {
+            $field: $field,
+            tab: '[data-tabs-target="#ttbm_settings_pricing"]'
+        };
+        ttbmFocusValidationTarget();
+    }
 
     function ttbmGetTravelType() {
         return $('.ttbm_settings_dates input[name="ttbm_travel_type"]').val() || 'fixed';
@@ -571,11 +652,12 @@ function ttbm_load_sortable_datepicker(parent, item) {
     }
 
     function ttbmValidateDates() {
+        window.ttbmLastValidationFocus = null;
         ttbmClearDateFieldErrors();
         ttbmSyncDateRequiredMarks();
 
         var type = ttbmGetTravelType();
-        var $datesTab = $('[data-tabs-target="#ttbm_settings_dates"]');
+        var datesTab = '[data-tabs-target="#ttbm_settings_dates"]';
 
         if (type === 'fixed') {
             var fixedFields = [
@@ -607,6 +689,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
                 if (!value) {
                     missing.push(field.label);
                     ttbmMarkDateFieldError(field.$field);
+                    ttbmSetValidationFocus($('input[name="' + field.name + '"]'), datesTab);
                 }
             });
 
@@ -614,9 +697,6 @@ function ttbm_load_sortable_datepicker(parent, item) {
                 $('#ttbm_fixed_dates_error')
                     .text('Fixed tour dates require: ' + missing.join(', ') + '.')
                     .show();
-                if ($datesTab.length) {
-                    $datesTab.trigger('click');
-                }
                 return false;
             }
         } else if (type === 'particular') {
@@ -637,7 +717,14 @@ function ttbm_load_sortable_datepicker(parent, item) {
                 if (!startDate || !startTime || !endDate) {
                     hasPartial = true;
                     $card.find('.ttbm-particular-date-card__field').addClass('ttbm-date-field-error');
-                    return;
+                    if (!startDate) {
+                        ttbmSetValidationFocus($card.find('input[name="ttbm_particular_start_date[]"]').first(), datesTab);
+                    } else if (!startTime) {
+                        ttbmSetValidationFocus($card.find('input[name="ttbm_particular_start_time[]"]').first(), datesTab);
+                    } else {
+                        ttbmSetValidationFocus($card.find('input[name="ttbm_particular_end_date[]"]').first(), datesTab);
+                    }
+                    return false;
                 }
 
                 hasComplete = true;
@@ -649,8 +736,8 @@ function ttbm_load_sortable_datepicker(parent, item) {
                         ? 'Each particular date entry must include check-in date, check-in time, and check-out date.'
                         : 'At least one particular date entry with check-in date, check-in time, and check-out date is required.')
                     .show();
-                if ($datesTab.length) {
-                    $datesTab.trigger('click');
+                if (!window.ttbmLastValidationFocus) {
+                    ttbmSetValidationFocus($('.ttbm-particular-dates-list .ttbm-particular-date-card').first().find('input').first(), datesTab);
                 }
                 return false;
             }
@@ -681,6 +768,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
                 if (!value) {
                     repeatedMissing.push(field.label);
                     ttbmMarkDateFieldError(field.$field);
+                    ttbmSetValidationFocus($input.first(), datesTab);
                 }
             });
 
@@ -690,6 +778,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
                 if (!repeatedEndDate) {
                     repeatedMissing.push('End Date');
                     ttbmMarkDateFieldError($('.ttbm-repeat-end'));
+                    ttbmSetValidationFocus($('input[name="ttbm_travel_repeated_end_date"]').first(), datesTab);
                 }
             }
 
@@ -697,9 +786,6 @@ function ttbm_load_sortable_datepicker(parent, item) {
                 $('#ttbm_repeated_dates_error')
                     .text('Repeated tour dates require: ' + repeatedMissing.join(', ') + '.')
                     .show();
-                if ($datesTab.length) {
-                    $datesTab.trigger('click');
-                }
                 return false;
             }
         }
@@ -726,7 +812,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
 
     function ttbmSyncTicketHiddenText() {
         var tourId = $('#ttbm_meta_box_panel input[name="post_ID"]').val() || $('input[name="post_ID"]').val() || '';
-        $('.ttbm_insert_ticket_type tr').each(function () {
+        $('.ttbm_insert_ticket_type > tr.ttbm_remove_area').each(function () {
             var $row = $(this);
             var $name = $row.find('input[name="ticket_type_name[]"]');
             var $hidden = $row.find('input[name="ttbm_hidden_ticket_text[]"]');
@@ -738,6 +824,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
             }
         });
     }
+    window.ttbmSyncTicketHiddenText = ttbmSyncTicketHiddenText;
 
     function ttbmMarkTicketFieldError($field) {
         if ($field && $field.length) {
@@ -745,7 +832,21 @@ function ttbm_load_sortable_datepicker(parent, item) {
         }
     }
 
+    function ttbmFirstMissingTicketField($row, name, price, qty) {
+        if (!name) {
+            return $row.find('input[name="ticket_type_name[]"]');
+        }
+        if (!price) {
+            return $row.find('input[name="ticket_type_price[]"]');
+        }
+        if (!qty) {
+            return $row.find('input[name="ticket_type_qty[]"]');
+        }
+        return $row.find('input[name="ticket_type_name[]"]');
+    }
+
     function ttbmValidateTickets() {
+        window.ttbmLastValidationFocus = null;
         $('#ttbm_ticket_types_error').hide().text('');
         $('.ttbm_settings_pricing .ttbm-ticket-field-error').removeClass('ttbm-ticket-field-error');
 
@@ -755,9 +856,9 @@ function ttbm_load_sortable_datepicker(parent, item) {
 
         ttbmSyncTicketHiddenText();
 
-        var $rows = $('.ttbm_insert_ticket_type tr');
+        var $rows = $('.ttbm_insert_ticket_type > tr.ttbm_remove_area');
         var hasComplete = false;
-        var $pricingTab = $('[data-tabs-target="#ttbm_settings_pricing"]');
+        var pricingTab = '[data-tabs-target="#ttbm_settings_pricing"]';
 
         for (var i = 0; i < $rows.length; i++) {
             var $row = $($rows[i]);
@@ -766,13 +867,13 @@ function ttbm_load_sortable_datepicker(parent, item) {
             var price = ($row.find('input[name="ticket_type_price[]"]').val() || '').trim();
             var qty = ($row.find('input[name="ticket_type_qty[]"]').val() || '').trim();
 
-            if (!name && !hidden && !price && !qty) {
+            if (!name && !price && !qty) {
                 continue;
             }
 
             var missing = [];
-            if (!hidden) {
-                missing.push('Ticket ID');
+            if (!name) {
+                missing.push('Ticket Name');
                 ttbmMarkTicketFieldError($row.find('.ttbm-ticket-name-field__input'));
             }
             if (!price) {
@@ -783,18 +884,16 @@ function ttbm_load_sortable_datepicker(parent, item) {
                 missing.push('Capacity');
                 ttbmMarkTicketFieldError($row.find('.ttbm-ticket-col--cap'));
             }
-            if (!name) {
-                missing.push('Ticket Name');
-                ttbmMarkTicketFieldError($row.find('.ttbm-ticket-name-field__input'));
+            if (!hidden && name) {
+                hidden = ttbmBuildTicketHiddenText(name, $('#ttbm_meta_box_panel input[name="post_ID"]').val() || $('input[name="post_ID"]').val() || '');
+                $row.find('input[name="ttbm_hidden_ticket_text[]"]').val(hidden);
             }
 
             if (missing.length) {
                 $('#ttbm_ticket_types_error')
                     .text('Ticket type row ' + (i + 1) + ' is incomplete. Required: ' + missing.join(', ') + '.')
                     .show();
-                if ($pricingTab.length) {
-                    $pricingTab.trigger('click');
-                }
+                ttbmSetValidationFocus(ttbmFirstMissingTicketField($row, name, price, qty), pricingTab);
                 return false;
             }
 
@@ -805,9 +904,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
             $('#ttbm_ticket_types_error')
                 .text('At least one ticket type with Ticket Name, Reg. Price, and Capacity is required when registration is enabled.')
                 .show();
-            if ($pricingTab.length) {
-                $pricingTab.trigger('click');
-            }
+            ttbmSetValidationFocus($rows.first().find('input[name="ticket_type_name[]"]'), pricingTab);
             return false;
         }
 
@@ -816,6 +913,38 @@ function ttbm_load_sortable_datepicker(parent, item) {
 
     window.ttbmValidateTickets = ttbmValidateTickets;
     window.ttbmSyncTicketHiddenText = ttbmSyncTicketHiddenText;
+
+    function ttbmValidateTourFormBeforeSubmit() {
+        if (!$('#ttbm_meta_box_panel').length) {
+            return true;
+        }
+        if (typeof ttbmValidateTitle === 'function' && !ttbmValidateTitle()) {
+            return false;
+        }
+        if (typeof ttbmValidateLocation === 'function' && !ttbmValidateLocation()) {
+            return false;
+        }
+        if (typeof ttbmValidateDates === 'function' && !ttbmValidateDates()) {
+            return false;
+        }
+        if (typeof ttbmSyncTicketHiddenText === 'function') {
+            ttbmSyncTicketHiddenText();
+        }
+        if (typeof ttbmValidateTickets === 'function' && !ttbmValidateTickets()) {
+            return false;
+        }
+        return true;
+    }
+
+    $(document).on('submit', 'form#post', function (e) {
+        if (!ttbmValidateTourFormBeforeSubmit()) {
+            e.preventDefault();
+            if (typeof window.ttbmFocusValidationTarget === 'function') {
+                window.ttbmFocusValidationTarget();
+            }
+            return false;
+        }
+    });
 
     function ttbmInitRepeatedEndDateRules() {
         $(document).on('click mousedown', '.ttbm_settings_dates .ttbm-radio-btn .date_type, .ttbm_settings_dates .ttbm-repeat-end-date-field .date_type', function (e) {
@@ -839,12 +968,18 @@ function ttbm_load_sortable_datepicker(parent, item) {
         $(this).closest('.ttbm-ticket-field-error').removeClass('ttbm-ticket-field-error');
     });
 
+    function ttbmDisableHiddenTemplateInputs() {
+        $('.ttbm_hidden_content').find('input, select, textarea').prop('disabled', true);
+    }
+
     $(document).ready(function () {
         ttbmInitGeneralInfoToggles();
         ttbmInitTourContentMediaButton();
         ttbmSyncDateRequiredMarks();
+        ttbmDisableHiddenTemplateInputs();
         window.setTimeout(function () {
             ttbmInitRepeatedEndDateRules();
+            ttbmHandleServerValidationNotices();
         }, 300);
     });
 

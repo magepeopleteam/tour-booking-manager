@@ -53,6 +53,20 @@ if (!class_exists('TTBM_Settings_Sidebar')) {
 			return $this->is_tour_edit_screen() || $this->is_hotel_edit_screen();
 		}
 
+		private function is_modern_edit_hook(string $hook): bool {
+			if (!in_array($hook, array('post.php', 'post-new.php'), true)) {
+				return false;
+			}
+			if ($this->is_modern_edit_screen()) {
+				return true;
+			}
+			if ($hook !== 'post-new.php') {
+				return false;
+			}
+			$post_type = isset($_GET['post_type']) ? sanitize_key(wp_unslash($_GET['post_type'])) : 'post'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return in_array($post_type, array(TTBM_Function::get_cpt_name(), 'ttbm_hotel'), true);
+		}
+
 		public function output_styles() {
 			if (!$this->is_modern_edit_screen()) {
 				return;
@@ -73,7 +87,7 @@ if (!class_exists('TTBM_Settings_Sidebar')) {
 <style id="ttbm-sidebar-css">
 /*
  * All rules below are prefixed with body.ttbm-modern-edit-page (or use
- * unique plugin class names) so they ONLY apply on the tour edit/add page
+ * unique plugin class names) so they ONLY apply on the tour/hotel edit/add page
  * and cannot leak to any other WordPress admin page.
  */
 
@@ -345,6 +359,51 @@ body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li span {
 body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li::after {
 	display: none !important;
 	content: none !important;
+}
+
+/* Override global [data-tabs-target] tab skin on tour + hotel sidebar */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm_style .tabLists.meta-sidebar [data-tabs-target],
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li[data-tabs-target] {
+	background: transparent !important;
+	color: #3d4f6f !important;
+	border: none !important;
+	border-bottom: none !important;
+	box-shadow: none !important;
+	transform: none !important;
+}
+
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm_style .tabLists.meta-sidebar [data-tabs-target]:hover,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li[data-tabs-target]:hover {
+	background: #e3ebf7 !important;
+	color: #2c3e5c !important;
+}
+
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm_style .tabLists.meta-sidebar [data-tabs-target].active,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li[data-tabs-target].active {
+	background: #2271b1 !important;
+	color: #fff !important;
+	font-weight: 600 !important;
+}
+
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm_style .tabLists.meta-sidebar [data-tabs-target] i,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm_style .tabLists.meta-sidebar [data-tabs-target] span,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li[data-tabs-target] i,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li[data-tabs-target] span {
+	color: inherit !important;
+	margin: 0 !important;
+}
+
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm_style .tabLists.meta-sidebar [data-tabs-target].active i,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm_style .tabLists.meta-sidebar [data-tabs-target].active span,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li[data-tabs-target].active i,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li[data-tabs-target].active span {
+	color: #fff !important;
+}
+
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm_style.leftTabs > .tabLists.meta-sidebar,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .leftTabs > .tabLists.meta-sidebar {
+	background: #eef3fa !important;
+	border-right: 1px solid #dce4f0 !important;
 }
 
 /* Sidebar toggle button */
@@ -931,7 +990,7 @@ jQuery(function($){
 		}
 
 		public function enqueue_assets($hook) {
-			if (!$this->is_modern_edit_screen()) {
+			if (!$this->is_modern_edit_hook($hook)) {
 				return;
 			}
 

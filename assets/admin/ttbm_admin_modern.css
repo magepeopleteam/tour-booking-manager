@@ -244,6 +244,51 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	content: none !important;
 }
 
+/* Override mp_global left-tab defaults for tour + hotel meta sidebar */
+#ttbm_meta_box_panel .ttbm_style .tabLists.meta-sidebar [data-tabs-target],
+#ttbm_meta_box_panel .tabLists.meta-sidebar li[data-tabs-target] {
+	background: transparent;
+	color: #3d4f6f;
+	border: none;
+	border-bottom: none;
+	box-shadow: none;
+	transform: none;
+}
+
+#ttbm_meta_box_panel .ttbm_style .tabLists.meta-sidebar [data-tabs-target]:hover,
+#ttbm_meta_box_panel .tabLists.meta-sidebar li[data-tabs-target]:hover {
+	background: #e3ebf7;
+	color: #2c3e5c;
+}
+
+#ttbm_meta_box_panel .ttbm_style .tabLists.meta-sidebar [data-tabs-target].active,
+#ttbm_meta_box_panel .tabLists.meta-sidebar li[data-tabs-target].active {
+	background: #2271b1;
+	color: #fff;
+	font-weight: 600;
+}
+
+#ttbm_meta_box_panel .ttbm_style .tabLists.meta-sidebar [data-tabs-target] i,
+#ttbm_meta_box_panel .ttbm_style .tabLists.meta-sidebar [data-tabs-target] span,
+#ttbm_meta_box_panel .tabLists.meta-sidebar li[data-tabs-target] i,
+#ttbm_meta_box_panel .tabLists.meta-sidebar li[data-tabs-target] span {
+	color: inherit;
+	margin: 0;
+}
+
+#ttbm_meta_box_panel .ttbm_style .tabLists.meta-sidebar [data-tabs-target].active i,
+#ttbm_meta_box_panel .ttbm_style .tabLists.meta-sidebar [data-tabs-target].active span,
+#ttbm_meta_box_panel .tabLists.meta-sidebar li[data-tabs-target].active i,
+#ttbm_meta_box_panel .tabLists.meta-sidebar li[data-tabs-target].active span {
+	color: #fff;
+}
+
+#ttbm_meta_box_panel .ttbm_style.leftTabs > .tabLists.meta-sidebar,
+#ttbm_meta_box_panel .leftTabs > .tabLists.meta-sidebar {
+	background: #eef3fa;
+	border-right: 1px solid #dce4f0;
+}
+
 #ttbm_meta_box_panel .meta-sidebar-toggle {
 	border: 1px solid var(--ttbm-a-border);
 	border-left: 0;
@@ -899,7 +944,6 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 }
 
 #ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-short-desc {
-	border-top: 1px solid var(--ttbm-a-border);
 	padding: 14px 20px 18px;
 	background: #fff;
 }

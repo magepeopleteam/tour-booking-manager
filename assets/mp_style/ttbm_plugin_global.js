@@ -479,6 +479,9 @@ function ttbm_resize_bg_image_area(target, bg_url) {
             bg_image_load = true;
             placeholderLoaderRemove($('.ttbm_style.placeholderLoader').not('.ttbm_details_page_loader'));
         }
+        if (typeof window.ttbmInitTopSearchSelects === 'function') {
+            window.ttbmInitTopSearchSelects();
+        }
         ttbm_loadCartBgImage();
     }
     function ttbm_details_placeholder_remove() {

@@ -401,6 +401,35 @@
 				$interval = $datetime1->diff($datetime2);
 				return $interval->format('%h') . "H " . $interval->format('%i') . "M";
 			}
+
+			/**
+			 * Parse a display date-range string into Y-m-d start/end dates.
+			 *
+			 * @param string $date_range e.g. "Jun 25, 2026 – Jul 1, 2026".
+			 * @return array{0: string, 1: string}|false
+			 */
+			public static function parse_date_range_string( $date_range ) {
+				$date_range = trim( (string) $date_range );
+				if ( $date_range === '' ) {
+					return false;
+				}
+
+				$parts = preg_split( '/\s+[-\x{2013}\x{2014}]\s+/u', $date_range, 2 );
+				if ( ! is_array( $parts ) || count( $parts ) !== 2 ) {
+					return false;
+				}
+
+				$start = strtotime( trim( $parts[0] ) );
+				$end   = strtotime( trim( $parts[1] ) );
+				if ( false === $start || false === $end ) {
+					return false;
+				}
+
+				return array(
+					gmdate( 'Y-m-d', $start ),
+					gmdate( 'Y-m-d', $end ),
+				);
+			}
 			//***********************************//
 			public static function get_settings($section, $key, $default = '') {
 				$options = get_option($section);

@@ -15,10 +15,13 @@ if ( $has_valid_nonce ) {
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
 	$date_range   = isset( $_REQUEST['date_range'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_range'] ) ) : '';
 	if ( $hotel_id && $date_range ) {
-		$hotel_date = explode( ' - ', $date_range );
-		$date1      = gmdate( 'Y-m-d', strtotime( $hotel_date[0] ) );
-		$date2      = gmdate( 'Y-m-d', strtotime( $hotel_date[1] ) );
-		$days       = date_diff( date_create( $date1 ), date_create( $date2 ) );
+		$hotel_date = TTBM_Global_Function::parse_date_range_string( $date_range );
+		if ( ! $hotel_date ) {
+			return;
+		}
+		$date1 = $hotel_date[0];
+		$date2 = $hotel_date[1];
+		$days  = date_diff( date_create( $date1 ), date_create( $date2 ) );
 
 		$room_lists_new = TTBM_Global_Function::ttbm_get_full_room_ticket_info( $hotel_id, $date1, $date2 );
 

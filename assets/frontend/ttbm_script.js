@@ -518,4 +518,11 @@
 		}, 260);
 	});
 
+	$(document).ready(function () {
+		if (typeof window.ttbmInitTopSearchSelects === 'function') {
+			window.ttbmInitTopSearchSelects();
+			setTimeout(window.ttbmInitTopSearchSelects, 400);
+		}
+	});
+
 }(jQuery));

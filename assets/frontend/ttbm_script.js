@@ -466,6 +466,12 @@
 		list.find('.ttbm-feature-hidden').removeClass('ttbm-feature-hidden').prop('hidden', false).hide().slideDown();
 		$(this).closest('li').remove();
 	});
+	$(document).on('keydown', '.ttbm-view-more-features-btn', function(e) {
+		if (e.key === 'Enter' || e.key === ' ') {
+			e.preventDefault();
+			$(this).trigger('click');
+		}
+	});
 
 	// Hero "Book Now" reveals the (hidden) booking section, scrolls to it,
 	// auto-selects the next available date and opens the ticket section.

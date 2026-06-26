@@ -6712,7 +6712,7 @@ div.ttbm-tour-list-shortcode .ttbm-gc-duration-badge {
 	list-style: none;
 }
 
-.ttbm-gc-tags ul li:not(.ttbm-feature-view-more) {
+.ttbm-gc-tags ul li {
 	display: inline-flex;
 	flex-direction: row;
 	/* icon + text always horizontal */
@@ -6734,13 +6734,13 @@ div.ttbm-tour-list-shortcode .ttbm-gc-duration-badge {
 	vertical-align: middle;
 }
 
-.ttbm-gc-tags ul li:not(.ttbm-feature-view-more):hover {
+.ttbm-gc-tags ul li:hover {
 	background: rgba(var(--color_theme_rgb, 108, 71, 255), 0.06);
 	border-color: var(--color_theme, #6c47ff);
 	color: var(--color_theme, #6c47ff);
 }
 
-.ttbm-gc-tags ul li:not(.ttbm-feature-view-more) .circleIcon_xs {
+.ttbm-gc-tags ul li .circleIcon_xs {
 	font-size: 13px;
 	width: 16px;
 	min-width: 16px;
@@ -6753,93 +6753,84 @@ div.ttbm-tour-list-shortcode .ttbm-gc-duration-badge {
 	line-height: 1;
 }
 
-.ttbm-gc-tags ul li:not(.ttbm-feature-view-more):hover .circleIcon_xs {
+.ttbm-gc-tags ul li:hover .circleIcon_xs {
 	color: var(--color_theme, #6c47ff) !important;
 }
 
 .ttbm-gc-tags ul li.ttbm-feature-view-more {
-	display: inline-flex;
-	align-items: center;
 	justify-content: center;
-	align-self: center;
-	width: auto;
+	padding: 5px 7px;
 	min-width: 28px;
-	height: 28px;
-	padding: 0;
-	margin: 0;
-	border: 1.5px dashed #d1d5db;
-	border-radius: 999px;
-	background: #fff;
-	flex-shrink: 0;
-	gap: 0;
-	flex-direction: row;
-	font-size: inherit;
-	line-height: 1;
-	white-space: normal;
-	vertical-align: middle;
-	transition: background 0.18s ease, border-color 0.18s ease, border-style 0.18s ease;
+	cursor: pointer;
 }
 
-.ttbm-gc-tags ul li.ttbm-feature-view-more:hover {
-	background: rgba(var(--color_theme_rgb, 108, 71, 255), 0.08);
-	border-color: var(--color_theme, #6c47ff);
-	border-style: solid;
-	color: inherit;
-}
-
-.ttbm-gc-tags button.ttbm-view-more-features-btn,
-.ttbm_style .ttbm-gc-tags button.ttbm-view-more-features-btn {
+/* Neutral trigger — never inherit .ttbm_style button / theme button styles */
+.ttbm-view-more-features-btn {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	width: 100%;
 	height: 100%;
-	min-width: 28px;
+	min-width: 0;
 	min-height: 0;
-	padding: 0 7px;
+	padding: 0;
 	margin: 0;
 	border: none;
-	background: none;
-	color: #6b7280;
-	font-size: 11px;
+	background: transparent;
+	color: inherit;
+	font-family: inherit;
+	font-size: 10px;
 	font-weight: 700;
 	line-height: 1;
 	cursor: pointer;
 	text-decoration: none;
 	text-transform: none;
 	letter-spacing: -0.02em;
-	transition: color 0.18s ease;
-	appearance: none;
-	-webkit-appearance: none;
-	box-sizing: border-box;
 	box-shadow: none;
 	outline: none;
 	opacity: 1;
-	overflow: visible;
-	font-family: inherit;
+	appearance: none;
+	-webkit-appearance: none;
 }
 
-.ttbm-gc-tags button.ttbm-view-more-features-btn:hover,
-.ttbm-gc-tags button.ttbm-view-more-features-btn:focus,
-.ttbm_style .ttbm-gc-tags button.ttbm-view-more-features-btn:hover,
-.ttbm_style .ttbm-gc-tags button.ttbm-view-more-features-btn:focus,
-.ttbm_style .ttbm-gc-tags button.ttbm-view-more-features-btn:focus-visible {
-	background: none;
-	color: var(--color_theme, #6c47ff);
+.ttbm_style .ttbm-view-more-features-btn:hover,
+.ttbm_style .ttbm-view-more-features-btn:focus,
+.ttbm_style .ttbm-view-more-features-btn:focus-visible {
+	background: transparent;
+	color: inherit;
 	opacity: 1;
 	box-shadow: none;
 	outline: none;
 	text-decoration: none;
 }
 
-.ttbm-gc-tags ul li.ttbm-feature-view-more:hover .ttbm-view-more-features-btn {
-	color: var(--color_theme, #6c47ff);
+.ttbm-gc-tags ul li.ttbm-feature-view-more:hover .ttbm-view-more-features-btn,
+div.include_service ul li.ttbm-feature-view-more:hover .ttbm-view-more-features-btn,
+.filter_item_footer .include_service ul li.ttbm-feature-view-more:hover .ttbm-view-more-features-btn {
+	color: inherit;
 }
 
-.ttbm-gc-tags .ttbm-feature-more-icon {
+.ttbm-feature-more-icon {
 	display: block;
 	line-height: 1;
 	color: inherit;
+}
+
+/* Footer icon row (list_bottom.php) — keep +N inside the same 30px feature box */
+div.include_service ul li.ttbm-feature-view-more,
+.filter_item_footer .include_service ul li.ttbm-feature-view-more,
+.lotus .filter_item_footer .include_service ul li.ttbm-feature-view-more {
+	padding: 0 !important;
+	line-height: 1;
+	cursor: pointer;
+	overflow: hidden;
+}
+
+div.include_service ul li.ttbm-feature-view-more .ttbm-view-more-features-btn,
+.filter_item_footer .include_service ul li.ttbm-feature-view-more .ttbm-view-more-features-btn,
+.lotus .filter_item_footer .include_service ul li.ttbm-feature-view-more .ttbm-view-more-features-btn {
+	font-size: 9px;
+	font-weight: 700;
 }
 
 /* --- Divider -------------------------------------------------------------- */

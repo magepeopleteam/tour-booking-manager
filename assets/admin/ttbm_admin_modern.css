@@ -131,7 +131,7 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 /* ─── Shell layout ─── */
 #ttbm_meta_box_panel .ttbm_settings .ttbmTabs.leftTabs,
 #ttbm_content.ttbm_configuration .ttbmTabs.leftTabs {
-	background: var(--ttbm-a-bg);
+	background: #fff;
 	border-radius: var(--ttbm-a-radius-lg);
 	overflow: hidden;
 	box-shadow: var(--ttbm-a-shadow-sm);
@@ -162,12 +162,12 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 }
 
 #ttbm_meta_box_panel .meta-sidebar {
-	background: var(--ttbm-a-surface);
-	border-right: 1px solid var(--ttbm-a-border);
+	background: #eef3fa;
+	border-right: 1px solid #dce4f0;
 }
 
 #ttbm_meta_box_panel .tabLists {
-	padding: 12px;
+	padding: 16px 12px;
 	border-right: 0;
 }
 
@@ -176,36 +176,42 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 #ttbm_meta_box_panel .tabLists.meta-sidebar li {
 	display: flex;
 	align-items: center;
-	gap: 10px;
-	padding: 10px 12px;
-	margin: 2px 0;
-	border-radius: var(--ttbm-a-radius-sm);
-	font-size: 13px;
+	gap: 12px;
+	padding: 11px 14px;
+	margin: 4px 0;
+	border-radius: 8px;
+	font-size: 14px;
 	font-weight: 500;
-	color: var(--ttbm-a-muted);
-	border: 1px solid transparent;
-	transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+	color: #3d4f6f;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	transition: background 0.15s ease, color 0.15s ease;
 	position: relative;
 }
 
 #ttbm_meta_box_panel .tabLists.meta-sidebar li span {
-	font-size: 13px;
-	font-weight: 500;
+	font-size: inherit;
+	font-weight: inherit;
 	color: inherit;
+	white-space: nowrap;
 }
 
 #ttbm_meta_box_panel .ttbm_settings .tabLists li i,
 #ttbm_meta_box_panel .tabLists.meta-sidebar li i {
 	margin: 0;
-	font-size: 15px;
-	color: var(--ttbm-a-help);
+	font-size: 16px;
+	width: 18px;
+	text-align: center;
+	flex-shrink: 0;
+	color: inherit;
 	transition: color 0.15s ease;
 }
 
 #ttbm_meta_box_panel .ttbm_settings .tabLists li:hover,
 #ttbm_meta_box_panel .tabLists.meta-sidebar li:hover {
-	background: var(--ttbm-a-primary-soft);
-	color: var(--ttbm-a-primary);
+	background: #e3ebf7;
+	color: #2c3e5c;
 	border-color: transparent;
 	transform: none;
 	box-shadow: none;
@@ -213,25 +219,29 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 
 #ttbm_meta_box_panel .ttbm_settings .tabLists li:hover i,
 #ttbm_meta_box_panel .tabLists.meta-sidebar li:hover i {
-	color: var(--ttbm-a-primary);
+	color: inherit;
 }
 
 #ttbm_meta_box_panel .ttbm_settings .tabLists li.active,
 #ttbm_meta_box_panel .tabLists.meta-sidebar li.active {
-	background: var(--ttbm-a-primary-soft);
-	color: var(--ttbm-a-primary);
-	border-color: #bfdbfe;
+	background: #2271b1;
+	color: #fff;
+	border: none;
 	font-weight: 600;
+	box-shadow: none;
 }
 
 #ttbm_meta_box_panel .ttbm_settings .tabLists li.active span,
 #ttbm_meta_box_panel .ttbm_settings .tabLists li.active i,
+#ttbm_meta_box_panel .tabLists.meta-sidebar li.active span,
 #ttbm_meta_box_panel .tabLists.meta-sidebar li.active i {
-	color: var(--ttbm-a-primary);
+	color: #fff;
 }
 
+#ttbm_meta_box_panel .tabLists.meta-sidebar li.active::before,
 #ttbm_meta_box_panel .tabLists.meta-sidebar li.active::after {
-	display: none;
+	display: none !important;
+	content: none !important;
 }
 
 #ttbm_meta_box_panel .meta-sidebar-toggle {

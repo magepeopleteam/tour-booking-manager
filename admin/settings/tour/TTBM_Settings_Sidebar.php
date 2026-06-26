@@ -262,99 +262,89 @@ body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs {
 
 /* ── Left tab navigation ── */
 body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar {
-	background: #ffffff !important;
-	border-right: 1px solid #e5e7eb !important;
+	background: #eef3fa !important;
+	border-right: 1px solid #dce4f0 !important;
+	border-radius: 0 0 20px 0 !important;
 	min-height: calc(100vh - 120px) !important;
-	padding: 8px 0 !important;
-	box-shadow: 1px 0 4px rgba(0,0,0,.04) !important;
+	padding: 16px 12px !important;
+	box-shadow: none !important;
 	overflow-y: auto !important;
 	scrollbar-width: thin !important;
-	scrollbar-color: #e5e7eb transparent !important;
+	scrollbar-color: #c5d0e3 transparent !important;
 }
 
 /* Nav items */
 body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li {
 	display: flex !important;
 	align-items: center !important;
-	gap: 9px !important;
-	margin: 2px 8px !important;
-	padding: 9px 12px !important;
+	gap: 12px !important;
+	margin: 4px 0 !important;
+	padding: 11px 14px !important;
 	border-radius: 8px !important;
-	font-size: 13px !important;
+	font-size: 14px !important;
 	font-weight: 500 !important;
-	color: #4b5563 !important;
-	border-left: none !important;
+	color: #3d4f6f !important;
+	background: transparent !important;
+	border: none !important;
 	cursor: pointer !important;
-	transition: background .18s ease, color .18s ease, transform .15s ease, box-shadow .18s ease !important;
+	transition: background .15s ease, color .15s ease !important;
 	position: relative !important;
-	overflow: hidden !important;
 	list-style: none !important;
 }
 
 /* Hover state */
 body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li:hover {
-	background: #f3f4f6 !important;
-	color: #111827 !important;
-	transform: translateX(3px) !important;
+	background: #e3ebf7 !important;
+	color: #2c3e5c !important;
+	transform: none !important;
+	box-shadow: none !important;
 }
 
 /* Active state */
 body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li.active {
-	background: linear-gradient(135deg, #eff6ff 0%, #e0edff 100%) !important;
-	color: #1d4ed8 !important;
+	background: #2271b1 !important;
+	color: #fff !important;
 	font-weight: 600 !important;
-	box-shadow: 0 2px 8px rgba(34,113,177,.13) !important;
-	transform: translateX(3px) !important;
+	box-shadow: none !important;
+	transform: none !important;
 }
 
-/* Active indicator bar */
-body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li.active::before {
-	content: "" !important;
-	position: absolute !important;
-	left: 0 !important;
-	top: 20% !important;
-	height: 60% !important;
-	width: 3px !important;
-	background: #2271b1 !important;
-	border-radius: 0 3px 3px 0 !important;
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li.active::before,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li.active::after {
+	display: none !important;
+	content: none !important;
 }
 
 /* Icons */
 body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li i {
-	font-size: 15px !important;
+	font-size: 16px !important;
 	width: 18px !important;
 	text-align: center !important;
 	flex-shrink: 0 !important;
-	color: #9ca3af !important;
-	transition: color .18s ease !important;
+	color: inherit !important;
+	transition: color .15s ease !important;
+	margin: 0 !important;
 }
-body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li:hover i {
-	color: #374151 !important;
-}
-body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li.active i {
-	color: #2271b1 !important;
+
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li.active i,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li.active span {
+	color: #fff !important;
 }
 
 /* Label */
 body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li span {
-	transition: color .18s ease !important;
+	color: inherit !important;
+	font-size: inherit !important;
+	font-weight: inherit !important;
+	transition: color .15s ease !important;
 	white-space: nowrap !important;
 	overflow: hidden !important;
 	text-overflow: ellipsis !important;
 }
 
-/* Ripple on click */
 body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li::after {
-	content: "" !important;
-	position: absolute !important;
-	inset: 0 !important;
-	background: rgba(34,113,177,.08) !important;
-	opacity: 0 !important;
-	transition: opacity .2s ease !important;
-	border-radius: 8px !important;
-}
-body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li:active::after {
-	opacity: 1 !important;
+	display: none !important;
+	content: none !important;
 }
 
 /* Sidebar toggle button */
@@ -366,7 +356,7 @@ body.ttbm-modern-edit-page #ttbm_meta_box_panel .meta-sidebar-toggle {
 body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsContent {
 	flex: 1 !important;
 	min-width: 0 !important;
-	background: #f4f6f9 !important;
+	background: #fff !important;
 	padding: 20px !important;
 }
 
@@ -399,7 +389,7 @@ body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header {
 
 /* ── Right sidebar column ── */
 body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-right-sidebar {
-	background: #f4f6f9 !important;
+	background: #fff !important;
 	padding: 20px 16px 20px 0 !important;
 }
 
@@ -425,6 +415,7 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 /* Card base */
 .ttbm-sb-card {
 	background: #fff;
+	border: 1px solid #ddd;
 	border-radius: 10px;
 	box-shadow: 0 1px 8px rgba(0,0,0,.09);
 	padding: 16px;

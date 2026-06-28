@@ -246,7 +246,8 @@
 							'label' => esc_html__('Google MAP API', 'tour-booking-manager'),
 							'desc' => esc_html__('Please Enter your workable google map api key', 'tour-booking-manager'),
 							'type' => 'text',
-							'default' => ''
+							'default' => '',
+							'placeholder' => esc_html__('AIzaSyD-9tSrke72...', 'tour-booking-manager'),
 						),
 					)),
 					'ttbm_basic_translation_settings' => apply_filters('ttbm_basic_translation_settings_arr', array(

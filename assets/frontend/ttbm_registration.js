@@ -412,6 +412,18 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         }
         return $('.ttbm_hotel_area').first();
     }
+    function ttbmUpdateHotelCardDateDisplay($dateInput, $hotelArea) {
+        var checkin  = $dateInput.attr('data-checkin');
+        var checkout = $dateInput.attr('data-checkout');
+        if (!checkin || !checkout || typeof moment === 'undefined') { return; }
+        var fmt   = $dateInput.attr('data-display-format') || 'MMMM D, YYYY';
+        var start = moment(checkin, 'YYYY-MM-DD');
+        var end   = moment(checkout, 'YYYY-MM-DD');
+        if (!start.isValid() || !end.isValid()) { return; }
+        var label = start.format(fmt) + ' – ' + end.format(fmt);
+        var $area = ($hotelArea && $hotelArea.length) ? $hotelArea : ttbmResolveHotelArea($dateInput);
+        $area.find('.ttbm_hdc_date_range_display').text(label).show();
+    }
     function ttbmShowHotelAreaForDates($input) {
         const $dateInput = $input && $input.length ? $input : ttbmResolveHotelDateRangeInput();
         const date_range = ttbmHotelDateRangeAjaxValue($dateInput);
@@ -424,6 +436,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         $hotelArea.removeClass('dNone').slideDown('fast');
         $hotelArea.find('.ttbm_booking_panel').slideUp('fast').html('');
         ttbm_loadBgImage();
+        ttbmUpdateHotelCardDateDisplay($dateInput, $hotelArea);
         return true;
     }
     function ttbmInitHotelDateRangePicker(context) {

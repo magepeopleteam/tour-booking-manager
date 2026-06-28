@@ -1547,6 +1547,7 @@
     flex-direction: column;
     gap: 8px;
     min-width: 0;
+    text-align: left;
 }
 
 /* Header: title + rating */
@@ -1569,6 +1570,8 @@
     color: #1a1a2e;
     margin: 0;
     line-height: 1.3;
+    text-align: left;
+    text-transform: capitalize;
 }
 
 .ttbm_hdc_rating {
@@ -1591,6 +1594,7 @@
     font-size: 13px;
     color: #666;
     margin: 0;
+    text-transform: capitalize;
 }
 
 .ttbm_hdc_pin {
@@ -1609,6 +1613,8 @@
     color: #444;
     margin: 0;
     line-height: 1.6;
+    text-align: left;
+    text-transform: capitalize;
 }
 
 /* Feature tag pills */
@@ -1685,6 +1691,22 @@
     font-size: 13px;
     color: #333;
     font-weight: 500;
+}
+
+.ttbm_hdc_date_range_display {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #5B3CBE;
+    background: rgba(91, 60, 190, 0.08);
+    border: 1px solid rgba(91, 60, 190, 0.15);
+    padding: 3px 10px;
+    border-radius: 50px;
+    margin-bottom: 2px;
+    text-transform: none;
+    letter-spacing: 0;
 }
 
 .ttbm_hdc_note {

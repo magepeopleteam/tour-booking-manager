@@ -2230,3 +2230,5 @@ input.medium{
 .ttbm-hotel-listing .ttbm_hotel_list_load_more_btn { background: #2271b1; color: #fff; border: 0; border-radius: 8px; padding: 9px 22px; font-weight: 600; cursor: pointer; transition: background .2s ease; }
 .ttbm_hotel_tab_content .ttbm_hotel_booking_load_more_btn:hover,
 .ttbm-hotel-listing .ttbm_hotel_list_load_more_btn:hover { background: #135e96; }
+
+#wp-ttbm_pdf_gen_settings-ttbm_pdf_tc_text-wrap .mce-container-body { width: 510px; }

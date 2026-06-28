@@ -10,9 +10,16 @@
 				add_action('admin_menu', array($this, 'global_settings_menu'));
 				add_filter('admin_body_class', [$this, 'add_admin_body_class']);
 				add_action('admin_init', array($this, 'admin_init'));
+				add_action('admin_enqueue_scripts', array($this, 'enqueue_assets'));
 				add_filter('ttbm_settings_sec_reg', array($this, 'global_sec_reg'), 90, 1);
 				add_action('wsa_form_bottom_ttbm_license_settings', [$this, 'license_settings'], 5);
 				add_action('ttbm_basic_license_list', [$this, 'licence_area']);
+			}
+			public function enqueue_assets($hook) {
+				if (strpos($hook, 'ttbm_settings_page') === false) {
+					return;
+				}
+				wp_enqueue_style('ttbm-global-settings', TTBM_PLUGIN_URL . '/assets/admin/ttbm-global-settings.css', [], TTBM_PLUGIN_VERSION);
 			}
 			public function global_settings_menu() {
 				$label = TTBM_Function::get_name();
@@ -28,18 +35,43 @@
 			public function settings_page() {
 				?>
                 <div id="ttbm_content" class="ttbm_style ttbm_global_settings ttbm_configuration">
-                    <div class="ttbmPanel">
-                        <div class="ttbmPanelHeader"><?php esc_html_e(' Global Settings', 'tour-booking-manager'); ?></div>
-                        <div class="ttbmPanelBody mp_zero">
-                            <div class="ttbmTabs">
-                                <div class="leftTabs">
-									<?php $this->settings_api->show_navigation(); ?>
-                                </div>
-                                <div class="tabsContent">
-									<?php $this->settings_api->show_forms(); ?>
+                    <div class="ttbm-gs-layout">
+                        <div class="ttbm-gs-main">
+                            <div class="ttbmPanel">
+                                <div class="ttbmPanelHeader"><i class="mi mi-settings"></i> <?php esc_html_e('Global Settings', 'tour-booking-manager'); ?></div>
+                                <div class="ttbmPanelBody mp_zero">
+                                    <div class="ttbmTabs">
+                                        <div class="leftTabs">
+											<?php $this->settings_api->show_navigation(); ?>
+                                        </div>
+                                        <div class="tabsContent">
+											<?php $this->settings_api->show_forms(); ?>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <aside class="ttbm-gs-sidebar">
+                            <div class="ttbm-gs-card ttbm-gs-pro-card">
+                                <div class="ttbm-gs-card-icon"><i class="mi mi-crown"></i></div>
+                                <h4><?php esc_html_e('Upgrade to Pro', 'tour-booking-manager'); ?></h4>
+                                <p><?php esc_html_e('Unlock PDF ticketing, traveler management, custom forms, and priority support.', 'tour-booking-manager'); ?></p>
+                                <a href="https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/" target="_blank" rel="noopener" class="ttbm-gs-btn ttbm-gs-btn-pro"><?php esc_html_e('Get Pro Now', 'tour-booking-manager'); ?></a>
+                            </div>
+                            <div class="ttbm-gs-card">
+                                <h4><i class="mi mi-book"></i> <?php esc_html_e('Documentation', 'tour-booking-manager'); ?></h4>
+                                <ul class="ttbm-gs-links">
+                                    <li><a href="https://docs.mage-people.com/tour-travel-booking-manager/" target="_blank" rel="noopener"><?php esc_html_e('Getting Started', 'tour-booking-manager'); ?></a></li>
+                                    <li><a href="https://docs.mage-people.com/tour-travel-booking-manager/" target="_blank" rel="noopener"><?php esc_html_e('Configuration Guide', 'tour-booking-manager'); ?></a></li>
+                                    <li><a href="https://docs.mage-people.com/tour-travel-booking-manager/" target="_blank" rel="noopener"><?php esc_html_e('View All Docs', 'tour-booking-manager'); ?></a></li>
+                                </ul>
+                            </div>
+                            <div class="ttbm-gs-card">
+                                <h4><i class="mi mi-puzzle"></i> <?php esc_html_e('Addons', 'tour-booking-manager'); ?></h4>
+                                <p><?php esc_html_e('Extend your plugin with our powerful addon collection.', 'tour-booking-manager'); ?></p>
+                                <a href="https://mage-people.com/" target="_blank" rel="noopener" class="ttbm-gs-btn ttbm-gs-btn-outline"><?php esc_html_e('Browse Addons', 'tour-booking-manager'); ?></a>
+                            </div>
+                        </aside>
                     </div>
                 </div>
 				<?php
@@ -54,19 +86,23 @@
 				$sections = array(
 					array(
 						'id' => 'ttbm_global_settings',
-						'title' => esc_html__('Global Settings', 'tour-booking-manager')
+						'title' => esc_html__('Global Settings', 'tour-booking-manager'),
+						'icon' => 'mi mi-settings'
 					),
 					array(
 						'id' => 'ttbm_google_map_settings',
-						'title' => __('Google Map Api', 'tour-booking-manager')
+						'title' => __('Google Map Api', 'tour-booking-manager'),
+						'icon' => 'mi mi-map-marker'
 					),
 					array(
 						'id' => 'ttbm_basic_gen_settings',
-						'title' => $label . ' ' . __('Settings', 'tour-booking-manager')
+						'title' => $label . ' ' . __('Settings', 'tour-booking-manager'),
+						'icon' => 'mi mi-suitcase-alt'
 					),
 					array(
 						'id' => 'ttbm_basic_translation_settings',
-						'title' => $label . ' ' . __('Translation Settings', 'tour-booking-manager')
+						'title' => $label . ' ' . __('Translation Settings', 'tour-booking-manager'),
+						'icon' => 'mi mi-language'
 					)
 				);
 				return apply_filters('ttbm_settings_sec_reg', $sections);
@@ -75,15 +111,18 @@
 				$sections = array(
 					array(
 						'id' => 'ttbm_slider_settings',
-						'title' => __('Slider Settings', 'tour-booking-manager')
+						'title' => __('Slider Settings', 'tour-booking-manager'),
+						'icon' => 'mi mi-images'
 					),
 					array(
 						'id' => 'ttbm_style_settings',
-						'title' => esc_html__('Style Settings', 'tour-booking-manager')
+						'title' => esc_html__('Style Settings', 'tour-booking-manager'),
+						'icon' => 'mi mi-gears'
 					),
 					array(
 						'id' => 'ttbm_license_settings',
-						'title' => esc_html__('Mage-People License', 'tour-booking-manager')
+						'title' => esc_html__('Mage-People License', 'tour-booking-manager'),
+						'icon' => 'mi mi-key'
 					)
 				);
 				return array_merge($default_sec, $sections);

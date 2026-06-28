@@ -198,7 +198,6 @@
 	#ttbm_meta_box_panel  .tabsItem section .ttbm-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 16px; border-bottom: 1px solid var(--mpl-gray);}
 	#ttbm_meta_box_panel  .tabsItem section .ttbm-header h4 { margin: 0; font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 8px;}
 	#ttbm_meta_box_panel  .tabsItem section .label { display: flex; justify-content: space-between; align-items: center; flex-direction: row; cursor: pointer; margin: 10px 0; padding: 10px;background: #f1f1f1;
-    border: 1px solid #e7e9ed;
     border-radius: 5px;
 	min-height: 55px;
 	height: auto;

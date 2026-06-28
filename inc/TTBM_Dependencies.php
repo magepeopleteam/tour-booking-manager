@@ -64,7 +64,7 @@
 				wp_enqueue_style('mp_jquery_ui', TTBM_PLUGIN_URL . '/assets/jquery-ui.min.css', array(), '1.13.2', true);
 				wp_enqueue_style('mp_font_awesome', TTBM_PLUGIN_URL . '/assets/all.min.css', array(), '6.7.2');
 				wp_enqueue_style('mp_select_2', TTBM_PLUGIN_URL . '/assets/select_2/select2.min.css', array(), '4.0.13');
-				wp_enqueue_script('mp_select_2', TTBM_PLUGIN_URL . '/assets/select_2/select2.min.js', array(), '4.0.13', true);
+				wp_enqueue_script('mp_select_2', TTBM_PLUGIN_URL . '/assets/select_2/select2.min.js', array('jquery'), '4.0.13', true);
 				wp_enqueue_style('mp_owl_carousel', TTBM_PLUGIN_URL . '/assets/owl_carousel/owl.carousel.min.css', array(), '2.3.4');
 				wp_enqueue_script('mp_owl_carousel', TTBM_PLUGIN_URL . '/assets/owl_carousel/owl.carousel.min.js', array(), '2.3.4', true);
 				wp_enqueue_style('ttbm_plugin_global', TTBM_PLUGIN_URL . '/assets/mp_style/ttbm_plugin_global.css', array(), TTBM_PLUGIN_VERSION);
@@ -129,8 +129,8 @@
 				wp_enqueue_script('jquery-ui-accordion');
 				wp_enqueue_script('ttbm_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_script.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_shortcode', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_shortcode.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
-                wp_enqueue_style('ttbm_hotel_lists', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_lists.css', array(), TTBM_PLUGIN_VERSION);
-                wp_enqueue_style('ttbm_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_details.css', array(), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_details.css'));
+                wp_enqueue_style('ttbm_hotel_lists', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_lists.css', array('ttbm_registration'), TTBM_PLUGIN_VERSION);
+                wp_enqueue_style('ttbm_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_details.css', array('ttbm_hotel_lists'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_details.css'));
 
 				wp_localize_script('ttbm_script', 'ttbm_ajax', array(
 					'ajax_url' => admin_url('admin-ajax.php'),
@@ -158,13 +158,22 @@
 				//===================//
 				wp_enqueue_script('ttbm_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_settings.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
 				//===================//
-				wp_enqueue_script('ttbm_admin_script', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_script.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_hotel_booking', TTBM_PLUGIN_URL . '/assets/admin/ttbm_hotel_booking.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
+				wp_enqueue_script('ttbm_admin_script', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_script.js', array('jquery', 'ttbm_hotel_booking'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_style('ttbm_admin', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin.css', array(), TTBM_PLUGIN_VERSION);
 				wp_enqueue_style('ttbm_admin_modern', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_modern.css', array('ttbm_admin'), TTBM_PLUGIN_VERSION);
-				wp_localize_script('ttbm_admin_script', 'ttbm_admin_ajax', array(
+				wp_localize_script('ttbm_hotel_booking', 'ttbm_admin_ajax', array(
 					'ajax_url' => admin_url('admin-ajax.php'),
-					'nonce' => wp_create_nonce('ttbm_admin_nonce')
+					'nonce' => wp_create_nonce('ttbm_admin_nonce'),
+					'strings' => array(
+						'name_required' => __( 'Name is required.', 'tour-booking-manager' ),
+						'address_required' => __( 'Full address is required.', 'tour-booking-manager' ),
+						'icon_required' => __( 'Icon is required.', 'tour-booking-manager' ),
+						'saving' => __( 'Saving...', 'tour-booking-manager' ),
+						'save_failed' => __( 'Something went wrong. Please try again.', 'tour-booking-manager' ),
+						'request_failed' => __( 'Request failed. Please check your connection and try again.', 'tour-booking-manager' ),
+						'no_tours_found' => __( 'No tours found.', 'tour-booking-manager' ),
+					),
 				));
 				do_action('ttbm_admin_script');
 			}
@@ -186,16 +195,16 @@
 				wp_enqueue_script('ttbm_attendee_autocomplete', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_attendee_autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_price_calculation', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_price_calculation.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_smart_booking', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_smart_booking.js', array('jquery', 'ttbm_registration', 'ttbm_price_calculation'), TTBM_PLUGIN_VERSION, true);
-			wp_enqueue_script('ttbm_hotel_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_script.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
-			wp_enqueue_script('ttbm_filter_pagination_script', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
-			wp_localize_script('ttbm_registration', 'ttbm_ajax', array(
-				'ajax_url' => admin_url('admin-ajax.php'),
-				'nonce' => wp_create_nonce('ttbm_frontend_nonce')
-			));
-			wp_localize_script('ttbm_price_calculation', 'ttbm_price_calc_vars', array(
-				'ajax_url' => admin_url('admin-ajax.php'),
-				'nonce' => wp_create_nonce('ttbm_frontend_nonce')
-			));
+				wp_enqueue_script('ttbm_hotel_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_script.js', array('jquery', 'moment', 'ttbm_date_range_picker_js'), TTBM_PLUGIN_VERSION, true);
+				wp_enqueue_script('ttbm_filter_pagination_script', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.js', array('jquery', 'mp_select_2', 'moment', 'ttbm_date_range_picker_js'), TTBM_PLUGIN_VERSION, true);
+				wp_localize_script('ttbm_registration', 'ttbm_ajax', array(
+					'ajax_url' => admin_url('admin-ajax.php'),
+					'nonce' => wp_create_nonce('ttbm_frontend_nonce')
+				));
+				wp_localize_script('ttbm_price_calculation', 'ttbm_price_calc_vars', array(
+					'ajax_url' => admin_url('admin-ajax.php'),
+					'nonce' => wp_create_nonce('ttbm_frontend_nonce')
+				));
 				do_action('add_ttbm_registration_enqueue');
 			}
 			public function ttbm_upgrade() {

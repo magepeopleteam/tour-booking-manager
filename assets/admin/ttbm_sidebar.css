@@ -17,6 +17,7 @@
 /* ── Card ── */
 .ttbm-sb-card {
 	background: #ffffff;
+	border: 1px solid #ddd;
 	border-radius: 12px;
 	box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 	padding: 16px 18px;
@@ -310,7 +311,8 @@
 	align-items: center !important;
 }
 .ttbm-sb-submit-term {
-	background: var(--mpl-primary, #2271b1) !important;
+	background: #2271b1 !important;
+	background-color: #2271b1 !important;
 	color: #fff !important;
 	border: none !important;
 	padding: 7px 16px !important;

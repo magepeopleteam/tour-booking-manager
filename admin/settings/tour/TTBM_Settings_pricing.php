@@ -178,7 +178,7 @@
 				$field = $field ?: array();
 				$icon = array_key_exists('ticket_type_icon', $field) ? $field['ticket_type_icon'] : '';
 				$name = array_key_exists('ticket_type_name', $field) ? $field['ticket_type_name'] : '';
-				$name_text = preg_replace("/[{}()<>+ ]/", '_', $name) . '_' . $tour_id;
+				$name_text = $name ? preg_replace("/[{}()<>+ ]/", '_', $name) . '_' . $tour_id : '';
 				$price = array_key_exists('ticket_type_price', $field) ? $field['ticket_type_price'] : '';
 				$sale_price = array_key_exists('sale_price', $field) ? $field['sale_price'] : '';
 				$qty = array_key_exists('ticket_type_qty', $field) ? $field['ticket_type_qty'] : '';

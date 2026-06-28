@@ -671,7 +671,7 @@ input.medium{
 	.ttbm_hotel_search_addHolder { display: flex; justify-content: end; gap: 20px; align-items: center;}
 	.ttbm_hotel_list_header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;}
 	#ttbm_hotel_title_SearchBox:focus { box-shadow: 0 0 0 0;}
-	.ttbm_add_new_hotel_header { padding: 7px 15px; border: 1px solid #5342BB; background-color: #5342BB; border-radius: 5px;}
+	.ttbm_add_new_hotel_header { padding: 7px 15px; border: 1px solid #2271b1 !important; background-color: #2271b1 !important; border-radius: 5px;}
 	.ttbm_add_new_hotel_text { color: #F6F6F6; text-decoration: none;}
 	.ttbm_hotel_titleSearchContainer { display: flex;}
 	#ttbm_hotel_title_SearchBox { background: none; outline: none; font-size: 1em; margin: 2px; padding: 4px 5px; vertical-align: middle; border: 1px solid rgb(224, 224, 224); border-radius: 5px; min-width: 220px;}
@@ -948,7 +948,7 @@ input.medium{
 	.ttbm-tour-list-page .ttbm-tour-list-header { display: flex; gap: 20px; justify-content: space-between; align-items: center; }
 	.ttbm-tour-list-page .ttbm-tour-list-header input { width: 50%; }
 	.ttbm-tour-list-page .ttbm-tour-list-header h1.ttbm_tour_page-title { padding: 0; }
-	.ttbm-tour-list-page .ttbm-tour-list-header .page-title-action { position: inherit; margin: 0; background-color: var(--mpl-primary); color: #FFF; border: var(--mpl-primary) solid 1px; font-weight: bold; }
+	.ttbm-tour-list-page .ttbm-tour-list-header .page-title-action { position: inherit; margin: 0; background-color: #2271b1 !important; color: #FFF !important; border: #2271b1 solid 1px !important; font-weight: bold; }
 	.ttbm-tour-list-page .ttbm-tour-list { display: flex; flex-wrap: wrap; margin-top: 10px; gap: 36px; }
 	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card { padding: 10px; display: flex; flex-direction: column; justify-content: space-between; width: 100%; gap: 10px; border: 1px solid #DFD6D6; margin-bottom: 6px; border-radius: 10px; transition: all 0.5s; position: relative; }
 	.ttbm-tour-list-page .ttbm-tour-list .ttbm-tour-card:hover { cursor: pointer; transform: translateY(-3px); box-shadow: 0 2px 5px #DDD; }
@@ -1035,8 +1035,8 @@ input.medium{
 	.ttbm-avg-review-header { align-items: center !important;}
 	.ttbm_style [data-tabs-target].active { background-color: var(--mpl-white); color: var(--d_color);}
 	.ttbm_style [data-tabs-target]:hover { background-color: var(--mpl-white);}
-	.ttbm_style .themeButton, .ttbm_style [class*=_themeButton] { background-color: var(--mpl-primary); color: var(--mpl-white); padding: 10px; border: 1px solid var(--mpl-primary);}
-	.ttbm_style .themeButton i, .ttbm_style [class*=_themeButton] i { color: #FFF;}
+	.ttbm_style .themeButton, .ttbm_style [class*=_themeButton] { background-color: #2271b1 !important; color: var(--mpl-white) !important; padding: 10px; border: 1px solid #2271b1 !important;}
+	.ttbm_style .themeButton i, .ttbm_style [class*=_themeButton] i { color: #FFF !important;}
 	.leftTabs [data-tabs-target] { border-bottom: 0; }
 	div.ttbm_style [data-tabs-target] { color: var(--mpl-secondary); }
 	code { line-height: 24px; }
@@ -1172,11 +1172,11 @@ input.medium{
 
 .ttbm_hotel_tab_content_holder {
 	flex: 1;
-	padding:10px;
-	background: #f4f4f4;
+	padding: 18px;
+	background: #fff;
+	border: 1px solid #e0e5f3;
+	border-radius: 10px;
 	margin-top: 0;
-	border-radius: 4px;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 	min-height: 400px;
 }
 
@@ -1194,7 +1194,7 @@ input.medium{
 	}
 	.ttbm_hotel_tab_content_holder {
 		padding: 16px;
-		border-radius: 0 0 12px 12px;
+		border-radius: 0 0 10px 10px;
 	}
 }
 /* ========================hotels settings sidebar modal================= */
@@ -1801,19 +1801,227 @@ input.medium{
 @media screen and (max-width: 600px) { .ttbm-tour-list-page .ttbm-design-opt-label { display: none; } }
 
 /* ============================================================
-   Top analytics — beautified (applies to all 3 views)
+   Top analytics — modern KPI board
    ============================================================ */
-.ttbm-tour-list-page .ttbm_travel_analytics-container { background: transparent; box-shadow: none; overflow: visible; margin: 0 0 18px; border-radius: 0; }
-.ttbm-tour-list-page .ttbm_travel_analytics-bar { gap: 14px; }
-.ttbm-tour-list-page .ttbm_travel_metric-card,
-.ttbm-tour-list-page .ttbm_travel_info-card,
-.ttbm-tour-list-page .ttbm_travel_status-card { border: 1px solid #eef0f3; border-radius: 14px; box-shadow: 0 4px 14px rgba(31,41,55,.06); padding: 16px 18px; transition: transform .2s ease, box-shadow .2s ease; }
-.ttbm-tour-list-page .ttbm_travel_metric-card:hover,
-.ttbm-tour-list-page .ttbm_travel_info-card:hover,
-.ttbm-tour-list-page .ttbm_travel_status-card:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(31,41,55,.10); }
-.ttbm-tour-list-page .ttbm_travel_icon-circle { width: 52px; height: 52px; box-shadow: inset 0 0 0 4px rgba(255,255,255,.55); }
-.ttbm-tour-list-page .ttbm_travel_metric-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; font-weight: 700; color: #8a929c; }
-.ttbm-tour-list-page .ttbm_travel_metric-value { font-size: 1.55rem; margin: 4px 0 0; line-height: 1.1; }
+.ttbm-tour-list-page .ttbm_travel_analytics-container {
+	background: transparent;
+	box-shadow: none;
+	overflow: visible;
+	margin: 0 0 20px;
+	border-radius: 0;
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-board {
+	position: relative;
+	padding: 16px;
+	border-radius: 18px;
+	border: 1px solid #e4e9f2;
+	background:
+		radial-gradient(circle at 0% 0%, rgba(34, 113, 177, 0.12), transparent 42%),
+		radial-gradient(circle at 100% 0%, rgba(124, 58, 237, 0.1), transparent 38%),
+		linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+	box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-grid {
+	display: grid;
+	grid-template-columns: repeat(6, minmax(0, 1fr));
+	gap: 10px;
+	align-items: stretch;
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-card {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	gap: 10px;
+	padding: 14px;
+	border-radius: 14px;
+	border: 1px solid #e8edf3;
+	background: rgba(255, 255, 255, 0.92);
+	box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+	transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+	overflow: hidden;
+	min-width: 0;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-card:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 14px 28px rgba(15, 23, 42, 0.1);
+	border-color: #d5deea;
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-card--blue { --ttbm-kpi-accent: #2563eb; }
+.ttbm-tour-list-page .ttbm_travel_kpi-card--violet { --ttbm-kpi-accent: #7c3aed; }
+.ttbm-tour-list-page .ttbm_travel_kpi-card--amber { --ttbm-kpi-accent: #d97706; }
+.ttbm-tour-list-page .ttbm_travel_kpi-card--rose { --ttbm-kpi-accent: #db2777; }
+.ttbm-tour-list-page .ttbm_travel_kpi-card--indigo { --ttbm-kpi-accent: #4f46e5; }
+.ttbm-tour-list-page .ttbm_travel_kpi-card--status { --ttbm-kpi-accent: #059669; }
+
+.ttbm-tour-list-page .ttbm_travel_kpi-card__icon {
+	flex: 0 0 38px;
+	width: 38px;
+	height: 38px;
+	align-self: center;
+	border-radius: 10px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 15px;
+	color: var(--ttbm-kpi-accent, #2271b1);
+	background: color-mix(in srgb, var(--ttbm-kpi-accent, #2271b1) 14%, #fff);
+	box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ttbm-kpi-accent, #2271b1) 18%, #fff);
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-card__content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	align-self: stretch;
+	gap: 4px;
+	min-width: 0;
+	flex: 1 1 auto;
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-card__label {
+	margin: 0;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	color: #64748b;
+	line-height: 1.2;
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-card__value {
+	margin: 0;
+	font-size: 22px;
+	line-height: 1.05;
+	font-weight: 800;
+	color: #0f172a;
+	letter-spacing: -0.02em;
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-card__value--text {
+	font-size: 17px;
+	line-height: 1.25;
+	color: var(--ttbm-kpi-accent, #4f46e5);
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	word-break: break-word;
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-card__hint {
+	margin: 0;
+	font-size: 11px;
+	line-height: 1.3;
+	color: #94a3b8;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-status-bar {
+	display: flex;
+	width: 100%;
+	height: 8px;
+	border-radius: 999px;
+	overflow: hidden;
+	background: #e2e8f0;
+	margin: 0;
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-status-bar__active {
+	display: block;
+	height: 100%;
+	background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-status-bar__expired {
+	display: block;
+	height: 100%;
+	background: linear-gradient(90deg, #f87171, #ef4444);
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-status-legend {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 4px;
+	margin: 0;
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-status-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-status-dot {
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-status-dot--active { background: #10b981; }
+.ttbm-tour-list-page .ttbm_travel_kpi-status-dot--expired { background: #ef4444; }
+
+.ttbm-tour-list-page .ttbm_travel_kpi-status-text {
+	font-size: 11px;
+	color: #475569;
+	line-height: 1.2;
+	white-space: nowrap;
+}
+
+.ttbm-tour-list-page .ttbm_travel_kpi-status-text strong {
+	color: #0f172a;
+	font-size: 13px;
+	font-weight: 800;
+	margin-right: 3px;
+}
+
+@media screen and (max-width: 1400px) {
+	.ttbm-tour-list-page .ttbm_travel_kpi-grid {
+		grid-template-columns: repeat(6, minmax(140px, 1fr));
+		overflow-x: auto;
+		padding-bottom: 2px;
+		scrollbar-width: thin;
+	}
+
+	.ttbm-tour-list-page .ttbm_travel_kpi-card__value {
+		font-size: 20px;
+	}
+}
+
+@media screen and (max-width: 960px) {
+	.ttbm-tour-list-page .ttbm_travel_kpi-grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		overflow-x: visible;
+	}
+
+	.ttbm-tour-list-page .ttbm_travel_kpi-card__value {
+		font-size: 22px;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	.ttbm-tour-list-page .ttbm_travel_kpi-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.ttbm-tour-list-page .ttbm_travel_kpi-card__value {
+		font-size: 20px;
+	}
+}
 
 /* ============================================================
    Left panel tabs — beautified (applies to all 3 views)
@@ -1871,21 +2079,13 @@ input.medium{
 .ttbm-tour-list-page.ttbm-design-modern .ttbm-tour-list .ttbm-tour-card .meta-action .action-links a { background: rgba(255,255,255,.96); box-shadow: 0 2px 7px rgba(0,0,0,.18); }
 
 /* ============================================================
-   Fixes: modern card right-clip + analytics equal-height cards
+   Fixes: modern card right-clip
    ============================================================ */
 /* keep padding inside the card so overflow:hidden doesn't clip content */
 .ttbm-tour-list-page.ttbm-design-modern .ttbm-tour-list .ttbm-tour-card,
 .ttbm-tour-list-page.ttbm-design-modern .ttbm-tour-list .ttbm-tour-card * { box-sizing: border-box; }
 .ttbm-tour-list-page.ttbm-design-modern .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content { max-width: 100%; }
 .ttbm-tour-list-page.ttbm-design-modern .ttbm-tour-list .ttbm-tour-card .ttbm-tour-card-content h3 a { word-break: break-word; }
-
-/* make all five top cards the same height */
-.ttbm-tour-list-page .ttbm_travel_analytics-bar { align-items: stretch; }
-.ttbm-tour-list-page .ttbm_travel_metrics-group { align-items: stretch; }
-.ttbm-tour-list-page .ttbm_travel_metric-card,
-.ttbm-tour-list-page .ttbm_travel_info-card,
-.ttbm-tour-list-page .ttbm_travel_status-card { height: auto; }
-.ttbm-tour-list-page .ttbm_travel_status-card { display: flex; flex-direction: column; justify-content: center; }
 
 /* ============================================================
    HOTEL LIST PAGE — match the tour list look
@@ -1957,7 +2157,6 @@ input.medium{
 
 /* ---- hotel page spacing polish (match tour list breathing room) ---- */
 .ttbm-hotel-tabs { padding: 16px; gap: 16px; }
-.ttbm_hotel_tab_content_holder { padding: 18px; }
 .ttbm-hotel-listing .ttbm_hotel_list_header { margin-bottom: 14px; }
 /* modern card internal spacing */
 .ttbm-hotel-listing.ttbm-hdesign-modern .ttbm-hotel-list-table tbody { margin-top: 2px; padding: 2px; }

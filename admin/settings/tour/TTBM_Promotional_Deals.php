@@ -14,14 +14,18 @@ if (!class_exists('TTBM_Promotional_Deals')) {
             $active = $display == 'off' ? '' : 'mActive';
             $checked = $display == 'off' ? '' : 'checked';
             $activities = array( 'feature', 'popular', 'trending', 'deal-discount' );
-            $tour_activities_array = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_top_picks_deals', []);
+            $tour_activities_array = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_top_picks_deals', array());
+            if (!is_array($tour_activities_array)) {
+                $tour_activities_array = $tour_activities_array ? array($tour_activities_array) : array();
+            }
             ?>
-            <div class="tabsItem ttbm_settings_area ttbm_settings_activities" data-tabs="#ttbm_add_promotional_setting">
+            <div id="ttbm_add_promotional_setting" class="tabsItem ttbm_settings_area ttbm_settings_activities" data-tabs="#ttbm_add_promotional_setting">
                 <h2><?php esc_html_e('Top Picks & Deals', 'tour-booking-manager'); ?></h2>
                 <p><?php TTBM_Settings::des_p('top_picks_and_deals'); ?></p>
                 <section>
                     <div class="ttbm-header">
                         <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Top Picks Deals Setting', 'tour-booking-manager'); ?></h4>
+                        <input type="hidden" name="ttbm_display_top_picks_deals" value="off" />
                         <?php TTBM_Custom_Layout::switch_button('ttbm_display_top_picks_deals', $checked); ?>
                     </div>
                     <div data-collapse="#ttbm_display_top_picks_deals" class="ttbm_activities_area <?php echo esc_attr($active); ?>">
@@ -30,10 +34,11 @@ if (!class_exists('TTBM_Promotional_Deals')) {
                                 <div class="groupCheckBox">
                                     <?php foreach ( $activities as $activity ) { ?>
                                         <label class="customCheckboxLabel">
-                                            <input type="checkbox" name="ttbm_top_picks_deals[]" value="<?php echo esc_attr( $activity ); ?>" <?php echo in_array( $activity, $tour_activities_array ) ? 'checked' : ''; ?> />
+                                            <input type="checkbox" name="ttbm_top_picks_deals[]" data-checked="<?php echo esc_attr( $activity ); ?>" value="<?php echo esc_attr( $activity ); ?>" <?php echo in_array( $activity, $tour_activities_array, true ) ? 'checked' : ''; ?> />
                                             <span class="customCheckbox"><?php echo esc_html( $activity ); ?></span>
                                         </label>
                                     <?php } ?>
+                                    <input type="hidden" id="ttbm_checked_top_picks_deals_holder" name="ttbm_checked_top_picks_deals_holder" value="<?php echo esc_attr(implode(',', $tour_activities_array)); ?>"/>
                                 </div>
                                 <!--<div class="ttbm_promotional_shortcode_holder">
                                     <?php /*foreach ( $activities as $activity ) { */?>
@@ -46,7 +51,6 @@ if (!class_exists('TTBM_Promotional_Deals')) {
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" id="ttbm_checked_top_picks_deals_holder" name="ttbm_checked_top_picks_deals_holder" value="<?php echo esc_attr(implode(',', TTBM_Global_Function::get_post_info($tour_id, 'ttbm_checked_top_picks_deals_holder', []))); ?>"/>
                 </section>
                 <section>
                     <div class="ttbm-header">

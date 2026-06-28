@@ -128,47 +128,58 @@
                 ob_start();
                 ?>
                 <!-- Hotel Search Bar -->
-                <div class="mpContainer">
-                    <form class="rbfw_search_form_new" action="<?php echo get_home_url() . '/hotel-search-result/';  ?>" method="GET">
-                    <div class="ttbm_hotel_search_box">
+                <div class="mpContainer ttbm-hotel-search-modern-wrap">
+                    <form class="rbfw_search_form_new ttbm-hotel-search-form" action="<?php echo esc_url( home_url( '/hotel-search-result/' ) ); ?>" method="get">
+                    <div class="ttbm_hotel_search_box ttbm-hotel-search-modern">
 
-                        <!--<div class="ttbm_hotel_search_field">
-                            <span class="ttbm_hotel_search_icon">🛏️</span>
-                            <input type="text" name="ttbm_hotel_location_search" class="ttbm_hotel_search_input" value="<?php /*echo esc_attr( $location );*/?>" placeholder="Where are you going?">
-                        </div>-->
                         <div class="ttbm_hotel_search_field ttbm_location_wrapper">
-                            <span class="ttbm_hotel_search_icon">🛏️</span>
-                            <input type="text"
-                                   name="ttbm_hotel_location_search"
-                                   id="ttbm_location_input"
-                                   class="ttbm_hotel_search_input"
-                                   value="<?php echo esc_attr($location); ?>"
-                                   placeholder="Where are you going?"
-                                   autocomplete="off">
-
-                            <!-- Dropdown -->
-                            <ul class="ttbm_location_dropdown" style="display:none;">
-                                <?php foreach ($exist_locations as $loc) : ?>
-                                    <li><?php echo esc_html($loc); ?></li>
-                                <?php endforeach; ?>
-                            </ul>
+                            <span class="ttbm_hotel_search_icon" aria-hidden="true"><i class="mi mi-bed"></i></span>
+                            <div class="ttbm_hotel_search_field-inner">
+                                <label class="ttbm_hotel_search_label" for="ttbm_location_input"><?php esc_html_e( 'Destination', 'tour-booking-manager' ); ?></label>
+                                <input type="text"
+                                       name="ttbm_hotel_location_search"
+                                       id="ttbm_location_input"
+                                       class="ttbm_hotel_search_input"
+                                       value="<?php echo esc_attr( $location ); ?>"
+                                       placeholder="<?php esc_attr_e( 'Where are you going?', 'tour-booking-manager' ); ?>"
+                                       autocomplete="off">
+                                <ul class="ttbm_location_dropdown" style="display:none;">
+                                    <?php foreach ( $exist_locations as $loc ) : ?>
+                                        <li><?php echo esc_html( $loc ); ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
                         </div>
 
-
-                        <div class="ttbm_hotel_search_field">
-                            <input type="hidden" name="ttbm_hotel_search_date_format" id="ttbm_hotel_search_date_format" value="<?php echo esc_attr($wp_date_format);?>">
-                            <span class="ttbm_hotel_search_icon">📅</span>
-                            <input type="text" name="search_date_range" id="ttbm_date_range" class="ttbm_date_input" value="<?php echo esc_attr( $date_range );?>" placeholder="Select date range" readonly>
+                        <div class="ttbm_hotel_search_field ttbm_hotel_search_field--dates">
+                            <input type="hidden" name="ttbm_hotel_search_date_format" id="ttbm_hotel_search_date_format" value="<?php echo esc_attr( $wp_date_format ); ?>">
+                            <span class="ttbm_hotel_search_icon" aria-hidden="true"><i class="mi mi-calendar"></i></span>
+                            <div class="ttbm_hotel_search_field-inner">
+                                <label class="ttbm_hotel_search_label" for="ttbm_date_range"><?php esc_html_e( 'Stay Dates', 'tour-booking-manager' ); ?></label>
+                                <input type="text" name="search_date_range" id="ttbm_date_range" class="ttbm_date_input ttbm_hotel_search_input" value="<?php echo esc_attr( $date_range ); ?>" placeholder="<?php esc_attr_e( 'Select date range', 'tour-booking-manager' ); ?>" readonly>
+                            </div>
                         </div>
 
-
-                        <div class="ttbm_hotel_search_field">
-                            <span class="ttbm_hotel_search_icon">👤</span>
-                            <input name="hotel_search_person" type="number" class="ttbm_hotel_search_input" value="<?php echo esc_attr( $search_person );?>" placeholder="Number of 1 room">
+                        <div class="ttbm_hotel_search_field ttbm_hotel_search_field--guests">
+                            <span class="ttbm_hotel_search_icon" aria-hidden="true"><i class="mi mi-users"></i></span>
+                            <div class="ttbm_hotel_search_field-inner">
+                                <label class="ttbm_hotel_search_label" for="ttbm_hotel_search_guests"><?php esc_html_e( 'Guests & Rooms', 'tour-booking-manager' ); ?></label>
+                                <input
+                                    name="hotel_search_person"
+                                    id="ttbm_hotel_search_guests"
+                                    type="number"
+                                    class="ttbm_hotel_search_input"
+                                    value="<?php echo esc_attr( $search_person ); ?>"
+                                    placeholder="<?php esc_attr_e( '2 guests, 1 room', 'tour-booking-manager' ); ?>"
+                                    min="1"
+                                    step="1"
+                                >
+                            </div>
                         </div>
 
-                        <button class="ttbm_hotel_search_btn">Search</button>
-
+                        <button type="submit" class="ttbm_hotel_search_btn">
+                            <?php esc_html_e( 'Search Hotels', 'tour-booking-manager' ); ?>
+                        </button>
 
                     </div>
                     </form>
@@ -420,12 +431,12 @@
 					}*/
 
 					if (isset($_GET['ttbm_date_start_end_input']) && !empty($_GET['ttbm_date_start_end_input'])) {
-						$date_range = sanitize_text_field($_GET['ttbm_date_start_end_input']);
-                        $dates = explode(' - ', $date_range);
-                        if(count($dates) === 2){
-                            $date_filter['start_date'] = $dates[0] ;
-                            $date_filter['end_date']   = $dates[1] ;
-                        }
+						$date_range = sanitize_text_field( wp_unslash( $_GET['ttbm_date_start_end_input'] ) );
+						$parsed_dates = TTBM_Global_Function::parse_date_range_string( $date_range );
+						if ( $parsed_dates ) {
+							$date_filter['start_date'] = $parsed_dates[0];
+							$date_filter['end_date']   = $parsed_dates[1];
+						}
                     }
 
 				}
@@ -737,12 +748,13 @@
                 $search_room_num = !empty($_GET['hotel_search_person']) ? strip_tags($_GET['hotel_search_person']) : 0;
 
                 if( $date_range !== '' ){
-                    list( $start_date, $end_date ) = explode(" - ", $date_range);
-                    $start_date = trim($start_date);
-                    $end_date   = trim($end_date);
-
-                    $start_date  = date('Y-m-d', strtotime($start_date));
-                    $end_date    = date('Y-m-d', strtotime($end_date));
+                    $parsed_dates = TTBM_Global_Function::parse_date_range_string( $date_range );
+                    if ( $parsed_dates ) {
+                        $start_date = $parsed_dates[0];
+                        $end_date   = $parsed_dates[1];
+                    } else {
+                        $start_date = $end_date = date( 'Y-m-d' );
+                    }
                 }else{
                     $start_date = $end_date = date( 'Y-m-d');
                 }

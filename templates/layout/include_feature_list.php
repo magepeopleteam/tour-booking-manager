@@ -45,14 +45,15 @@
 					);
 					?>
                     <li class="ttbm-feature-view-more" data-placeholder>
-                        <button
-							type="button"
+                        <span
 							class="ttbm-view-more-features-btn"
+							role="button"
+							tabindex="0"
 							aria-label="<?php echo esc_attr( $more_label ); ?>"
 							title="<?php echo esc_attr( $more_label ); ?>"
 						>
 							<span class="ttbm-feature-more-icon" aria-hidden="true">+<?php echo esc_html( $hidden_count ); ?></span>
-						</button>
+						</span>
                     </li>
 					<?php
 				}

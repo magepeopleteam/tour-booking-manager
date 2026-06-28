@@ -250,7 +250,7 @@
 				if (!$date_value) {
 					return '';
 				}
-				$formats = array('F j, Y', 'F d, Y', 'Y-m-d');
+				$formats = array('M j, Y', 'F j, Y', 'F d, Y', 'Y-m-d');
 				foreach ($formats as $format) {
 					$date_obj = DateTime::createFromFormat($format, $date_value);
 					if ($date_obj !== false) {

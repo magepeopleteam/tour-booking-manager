@@ -258,40 +258,58 @@ jQuery(document).ready(function ($) {
     let ttbmMaxPrice = $("#ttbm_max_price");
     let ttbmMinGap = 100; // minimum difference allowed
 
-    function updateSlider() {
-        let minVal = parseInt(ttbmMinRange.val());
-        let maxVal = parseInt(ttbmMaxRange.val());
+    function updateSlider(evt) {
+        let minVal = parseInt(ttbmMinRange.val(), 10);
+        let maxVal = parseInt(ttbmMaxRange.val(), 10);
+        const rangeMin = parseInt(ttbmMinRange.attr("min"), 10) || 0;
+        const rangeMax = parseInt(ttbmMinRange.attr("max"), 10) || 5000;
+        const sourceId = evt && evt.target ? evt.target.id : '';
 
-        if (maxVal - minVal <= ttbmMinGap ) {
-            if ($(this).attr("id") === "ttbm_min_range") {
-                ttbmMinRange.val(maxVal - ttbmMinGap);
+        if (maxVal - minVal <= ttbmMinGap) {
+            if (sourceId === "ttbm_min_range") {
                 minVal = maxVal - ttbmMinGap;
-            } else {
-                ttbmMaxRange.val(minVal + ttbmMinGap);
+                ttbmMinRange.val(minVal);
+            } else if (sourceId === "ttbm_max_range") {
                 maxVal = minVal + ttbmMinGap;
+                ttbmMaxRange.val(maxVal);
             }
         }
 
         ttbmMinPrice.text(minVal);
         ttbmMaxPrice.text(maxVal);
 
-        // Update track fill
-        let percent1 = (minVal / ttbmMinRange.attr("max")) * 100;
-        let percent2 = (maxVal / ttbmMaxRange.attr("max")) * 100;
-        $(".ttbm_hotel_slider_track::before").css({
-            left: percent1 + "%",
-            right: (100 - percent2) + "%"
-        });
+        const trackEl = $(".ttbm_hotel_slider_track").get(0);
+        const thumbSize = 18;
+        const trackWidth = trackEl ? trackEl.offsetWidth : 0;
+        const rangeSpan = rangeMax - rangeMin;
+
+        if (trackWidth > 0 && rangeSpan > 0) {
+            const thumbOffset = (thumbSize / trackWidth) * 100;
+            const usable = 100 - thumbOffset;
+            const minPercent = ((minVal - rangeMin) / rangeSpan) * usable + (thumbOffset / 2);
+            const maxPercent = ((maxVal - rangeMin) / rangeSpan) * usable + (thumbOffset / 2);
+            $(".ttbm_hotel_slider_track").css({
+                '--ttbm-range-left': minPercent + '%',
+                '--ttbm-range-right': (100 - maxPercent) + '%'
+            });
+        } else {
+            const percent1 = ((minVal - rangeMin) / rangeSpan) * 100;
+            const percent2 = ((maxVal - rangeMin) / rangeSpan) * 100;
+            $(".ttbm_hotel_slider_track").css({
+                '--ttbm-range-left': percent1 + '%',
+                '--ttbm-range-right': (100 - percent2) + '%'
+            });
+        }
     }
 
-    ttbmMinRange.on("input", updateSlider);
-    ttbmMaxRange.on("input", updateSlider);
-
-    updateSlider();
+    $('#ttbm_min_range, #ttbm_max_range').on('input change', function(e) {
+        updateSlider(e);
+        filterHotels();
+    });
 
     function filterHotels() {
-        let minPrice = parseInt($('#ttbm_min_range').val());
-        let maxPrice = parseInt($('#ttbm_max_range').val());
+        let minPrice = parseInt($('#ttbm_min_range').val(), 10);
+        let maxPrice = parseInt($('#ttbm_max_range').val(), 10);
 
         let selectedLocations = [];
         $('#ttbm_hotelLocationList input:checked').each(function () {
@@ -312,7 +330,7 @@ jQuery(document).ready(function ($) {
 
         $('.ttbm_hotel_lists_card').each(function () {
             let $card = $(this);
-            let price = parseInt($card.data('hotel-price'));
+            let price = parseInt($card.data('hotel-price'), 10);
             let location = $card.data('hotel-location');
             let features = ($card.data('hotel-feature') + '').split(',');
             let activities = ($card.data('hotel-activity') + '').split(',');
@@ -324,8 +342,8 @@ jQuery(document).ready(function ($) {
             if (selectedActivities.length > 0 && !selectedActivities.some(val => activities.includes(val))) show = false;
             if (selectedFeatures.length > 0 && !selectedFeatures.some(val => features.includes(val))) show = false;
 
-            if ( show ) {
-                $matchedHotels = $matchedHotels.add( $card );
+            if (show) {
+                $matchedHotels = $matchedHotels.add($card);
             }
 
             $card.hide();
@@ -334,29 +352,25 @@ jQuery(document).ready(function ($) {
         let itemsToShow = $("#ttbm_number_of_show").val();
         $matchedHotels.slice(0, itemsToShow).fadeIn();
 
-        // Toggle Load More button
         if ($matchedHotels.length > itemsToShow) {
             $('#ttbm_loadMoreHotels').show();
         } else {
             $('#ttbm_loadMoreHotels').hide();
         }
 
-        // Save matched hotels for "Load More" to use
         window.ttbm_totalHotelItems = $matchedHotels;
         window.ttbm_itemsToShow = itemsToShow;
     }
 
+    updateSlider();
 
-    $('#ttbm_min_range, #ttbm_max_range').on('input change', function() {
-        $('#ttbm_min_price').text($('#ttbm_min_range').val());
-        $('#ttbm_max_price').text($('#ttbm_max_range').val());
-        filterHotels();
+    $(window).on('resize.ttbmPriceSlider', function () {
+        updateSlider();
     });
 
     $('#ttbm_hotelLocationList input, #ttbm_hotelActivityList input, #ttbm_hotelFeatureList input').on('change', function() {
         filterHotels();
     });
-    // Initial call to show correct hotels on page load
     filterHotels();
 
     let ttbm_itemsToShow = parseInt($("#ttbm_number_of_show").val(), 10);
@@ -381,15 +395,40 @@ jQuery(document).ready(function ($) {
 
     let startDate, endDate;
 
-    $('#ttbm_date_range').daterangepicker({
-        autoApply: true,
-        minDate: moment(), // 🚫 disables previous dates
-        locale: {
-            // format: 'YYYY-MM-DD',
-            format: 'MMM D, YYYY',
-            separator: ' - '
+    function ttbmInitHotelSearchDateRangePicker() {
+        const $input = $('#ttbm_date_range');
+        if (!$input.length || $input.data('ttbm-hotel-drp-init') || typeof $.fn.daterangepicker !== 'function') {
+            return;
         }
-    });
+        const separator = ' \u2013 ';
+        $input.daterangepicker({
+            autoApply: true,
+            autoUpdateInput: true,
+            minDate: moment().startOf('day'),
+            opens: 'left',
+            drops: 'down',
+            parentEl: 'body',
+            locale: {
+                format: 'MMM D, YYYY',
+                separator: separator
+            }
+        });
+        const drpInstance = $input.data('daterangepicker');
+        if (drpInstance && drpInstance.container) {
+            drpInstance.container.addClass('ttbm-hotel-daterange');
+        }
+        $input
+            .on('show.daterangepicker', function (ev, picker) {
+                picker.container.addClass('ttbm-hotel-daterange');
+            })
+            .on('apply.daterangepicker', function (ev, picker) {
+                const formatted = picker.startDate.format('MMM D, YYYY') + separator + picker.endDate.format('MMM D, YYYY');
+                $(this).val(formatted);
+            });
+        $input.data('ttbm-hotel-drp-init', true);
+    }
+
+    ttbmInitHotelSearchDateRangePicker();
 
     let $input = $("#ttbm_location_input");
     let $dropdown = $(".ttbm_location_dropdown");

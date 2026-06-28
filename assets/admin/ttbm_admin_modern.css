@@ -2620,6 +2620,11 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 	display: none;
 }
 
+/* Show Qty Box Type column on the dedicated Ticket Types post-type page */
+.post-type-ttbm_ticket_types #ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--qty-type {
+	display: table-cell;
+}
+
 #ttbm_meta_box_panel .ttbm-ticket-types-table .formControl,
 #ttbm_meta_box_panel .ttbm-ticket-types-table input[type="text"],
 #ttbm_meta_box_panel .ttbm-ticket-types-table input[type="number"],

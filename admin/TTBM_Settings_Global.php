@@ -38,7 +38,13 @@
                     <div class="ttbm-gs-layout">
                         <div class="ttbm-gs-main">
                             <div class="ttbmPanel">
-                                <div class="ttbmPanelHeader"><i class="mi mi-settings"></i> <?php esc_html_e('Global Settings', 'tour-booking-manager'); ?></div>
+                                <div class="ttbmPanelHeader">
+                            <div class="ttbm-gs-header-icon"><i class="mi mi-settings"></i></div>
+                            <div class="ttbm-gs-header-text">
+                                <h2><?php esc_html_e('Global Settings', 'tour-booking-manager'); ?></h2>
+                                <p><?php esc_html_e('Configure plugin preferences — maps, tour options, styling, PDF, and license settings.', 'tour-booking-manager'); ?></p>
+                            </div>
+                        </div>
                                 <div class="ttbmPanelBody mp_zero">
                                     <div class="ttbmTabs">
                                         <div class="leftTabs">
@@ -85,24 +91,28 @@
 				$label = TTBM_Function::get_name();
 				$sections = array(
 					array(
-						'id' => 'ttbm_global_settings',
+						'id'   => 'ttbm_global_settings',
 						'title' => esc_html__('Global Settings', 'tour-booking-manager'),
-						'icon' => 'mi mi-settings'
+						'icon' => 'mi mi-settings',
+						'desc' => esc_html__('Manage booking flow, currency, pagination, and core plugin behaviour.', 'tour-booking-manager'),
 					),
 					array(
-						'id' => 'ttbm_google_map_settings',
+						'id'   => 'ttbm_google_map_settings',
 						'title' => __('Google Map Api', 'tour-booking-manager'),
-						'icon' => 'mi mi-map-marker'
+						'icon' => 'mi mi-map-marker',
+						'desc' => esc_html__('Enter your Google Maps API key to enable interactive maps and location search on tour pages.', 'tour-booking-manager'),
 					),
 					array(
-						'id' => 'ttbm_basic_gen_settings',
+						'id'   => 'ttbm_basic_gen_settings',
 						'title' => $label . ' ' . __('Settings', 'tour-booking-manager'),
-						'icon' => 'mi mi-suitcase-alt'
+						'icon' => 'mi mi-suitcase-alt',
+						'desc' => esc_html__('Configure seat booking rules, availability display, and tour-specific options.', 'tour-booking-manager'),
 					),
 					array(
-						'id' => 'ttbm_basic_translation_settings',
+						'id'   => 'ttbm_basic_translation_settings',
 						'title' => $label . ' ' . __('Translation Settings', 'tour-booking-manager'),
-						'icon' => 'mi mi-language'
+						'icon' => 'mi mi-language',
+						'desc' => esc_html__('Translate button labels, status messages, and UI text displayed to front-end visitors.', 'tour-booking-manager'),
 					)
 				);
 				return apply_filters('ttbm_settings_sec_reg', $sections);
@@ -110,19 +120,22 @@
 			public function global_sec_reg($default_sec): array {
 				$sections = array(
 					array(
-						'id' => 'ttbm_slider_settings',
+						'id'   => 'ttbm_slider_settings',
 						'title' => __('Slider Settings', 'tour-booking-manager'),
-						'icon' => 'mi mi-images'
+						'icon' => 'mi mi-images',
+						'desc' => esc_html__('Control the tour image slider — autoplay speed, navigation arrows, loop behaviour, and transition effects.', 'tour-booking-manager'),
 					),
 					array(
-						'id' => 'ttbm_style_settings',
+						'id'   => 'ttbm_style_settings',
 						'title' => esc_html__('Style Settings', 'tour-booking-manager'),
-						'icon' => 'mi mi-gears'
+						'icon' => 'mi mi-gears',
+						'desc' => esc_html__('Customise your theme colour, font choices, and the overall visual style of the booking interface.', 'tour-booking-manager'),
 					),
 					array(
-						'id' => 'ttbm_license_settings',
+						'id'   => 'ttbm_license_settings',
 						'title' => esc_html__('Mage-People License', 'tour-booking-manager'),
-						'icon' => 'mi mi-key'
+						'icon' => 'mi mi-key',
+						'desc' => esc_html__('Activate and manage license keys for premium addons to unlock extended functionality.', 'tour-booking-manager'),
 					)
 				);
 				return array_merge($default_sec, $sections);

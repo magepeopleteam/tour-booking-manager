@@ -745,7 +745,7 @@
                     <tr>
                         <th colspan="4"><?php esc_html_e('Plugin Name', 'tour-booking-manager'); ?></th>
                         <th><?php esc_html_e('Type', 'tour-booking-manager'); ?></th>
-                        <th><?php esc_html_e('Order No', 'tour-booking-manager'); ?></th>
+                        <th><?php esc_html_e('Order', 'tour-booking-manager'); ?></th>
                         <th colspan="2"><?php esc_html_e('Expire on', 'tour-booking-manager'); ?></th>
                         <th colspan="3"><?php esc_html_e('License Key', 'tour-booking-manager'); ?></th>
                         <th><?php esc_html_e('Status', 'tour-booking-manager'); ?></th>

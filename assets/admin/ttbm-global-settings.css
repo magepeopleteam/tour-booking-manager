@@ -10,8 +10,10 @@ div.ttbm_global_settings.ttbm_configuration {
     margin-right: 0;
 }
 
+#ttbm_meta_box_panel .tabsItem section .label,
 #ttbm_content.ttbm_configuration .tabsItem section .label {
     border: none;
+    background: none !important;
 }
 
 /* Outer flex layout: main panel + right sidebar */
@@ -373,6 +375,24 @@ div.ttbm_global_settings.ttbm_configuration {
     padding-top: 10px;
 }
 
+/* ── Setting field odd/even striping + hover ── */
+.ttbm_global_settings .tabsItem section .ttbm-setting-field {
+    border-radius: 0 !important;
+    padding: 5px 16px;
+}
+.ttbm_global_settings .tabsItem section .ttbm-setting-field:nth-child(odd) {
+    background-color: #F8FAFC !important;
+}
+.ttbm_global_settings .tabsItem section .ttbm-setting-field:nth-child(even) {
+    background-color: #ffffff !important;
+}
+.ttbm_global_settings .tabsItem section .ttbm-setting-field {
+    transition: background-color 0.18s ease;
+}
+.ttbm_global_settings .tabsItem section .ttbm-setting-field:hover {
+    background-color: #EEF2FF !important;
+}
+
 .ttbm_global_settings .button-primary {
     min-width: 150px;
 }
@@ -380,4 +400,20 @@ div.ttbm_global_settings.ttbm_configuration {
 .ttbm_global_settings .ttbmTabs {
     min-height: 540px;
     align-items: stretch;
+}
+
+/* ── License table — row separator only, no cell borders ── */
+.ttbm_license_settings table {
+    border: 1px solid #ddd !important;
+}
+.ttbm_license_settings table thead th {
+    background: #ebebeb !important;
+}
+.ttbm_global_settings .ttbm_license_settings table th,
+.ttbm_global_settings .ttbm_license_settings table td {
+    border: none !important;
+    border-bottom: 1px solid #ddd !important;
+}
+.ttbm_global_settings .ttbm_license_settings table thead tr th {
+    border-bottom: 2px solid #ddd !important;
 }

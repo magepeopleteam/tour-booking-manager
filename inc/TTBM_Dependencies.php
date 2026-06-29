@@ -48,6 +48,7 @@
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Wishlist.php';
 					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin_Wishlist.php';
+					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Travel_List_CPT_Tabs.php';
 				}
 			}
 			public function appsero_init_tracker_ttbm() {
@@ -103,6 +104,27 @@
 				// Wishlist lives under the WooCommerce My Account page.
 				if (function_exists('is_account_page') && is_account_page()) {
 					return true;
+				}
+				// WooCommerce order-received (thank-you) page. The Pro "Download Ticket"
+				// button is printed here via the woocommerce_thankyou hook and relies on
+				// the global click handler + styles in ttbm_plugin_global.{js,css}.
+				// (My Account "view-order" is already covered by is_account_page() above.)
+				// Only load when the order actually contains a tour, so the tour asset
+				// bundle is not pulled into every unrelated thank-you page.
+				if (function_exists('is_order_received_page') && is_order_received_page()) {
+					global $wp;
+					$order_id = isset($wp->query_vars['order-received']) ? absint($wp->query_vars['order-received']) : 0;
+					if ($order_id && function_exists('wc_get_order')) {
+						$order = wc_get_order($order_id);
+						if ($order) {
+							foreach ($order->get_items() as $item_id => $item) {
+								$tour_id = wc_get_order_item_meta($item_id, '_ttbm_id');
+								if ($tour_id && get_post_type($tour_id) === 'ttbm_tour') {
+									return true;
+								}
+							}
+						}
+					}
 				}
 				// Shortcode or Elementor widget embedded in the current content.
 				$post = get_post();

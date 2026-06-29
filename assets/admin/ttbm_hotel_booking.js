@@ -273,6 +273,12 @@
         }else if( targetId === 'ttbm_trvel_lists_places' ){
             action = 'ttbm_get_places_html_data';
             tabParam = 'places';
+        }else if( targetId === 'ttbm_trvel_lists_guides' ){
+            action = 'ttbm_get_guides_html';
+            tabParam = 'guides';
+        }else if( targetId === 'ttbm_trvel_lists_ticket_types' ){
+            action = 'ttbm_get_ticket_types_html';
+            tabParam = 'ticket_types';
         }else{
             tabParam = 'tour_list';
         }
@@ -355,6 +361,14 @@
                             $("#ttbm_places_load_more_btn").text( 'Load More('+remianing+')' );
                         }
                         $('#ttbm_travel_list_places_content').html(response.data.html);
+                    }
+                }else if( targetId === 'ttbm_trvel_lists_guides' ){
+                    if (response.success) {
+                        $('#ttbm_travel_list_guides_content').html(response.data.html);
+                    }
+                }else if( targetId === 'ttbm_trvel_lists_ticket_types' ){
+                    if (response.success) {
+                        $('#ttbm_travel_list_ticket_types_content').html(response.data.html);
                     }
                 }
             },
@@ -541,6 +555,8 @@
             ttbm_trvel_lists_tag: '#ttbm_travel_list_tag_content',
             ttbm_trvel_lists_activities: '#ttbm_travel_list_activies_content',
             ttbm_trvel_lists_places: '#ttbm_travel_list_places_content',
+            ttbm_trvel_lists_guides: '#ttbm_travel_list_guides_content',
+            ttbm_trvel_lists_ticket_types: '#ttbm_travel_list_ticket_types_content',
         };
         return map[targetId] || null;
     }
@@ -1767,6 +1783,151 @@
             }
         });
     }
+
+    /* ─────────────────────────────────────────────────────────────
+     * Tour List → Guides & Ticket Types tabs (add/edit/delete modal).
+     * Reuses the taxonomy popup shell + helpers defined above.
+     * ───────────────────────────────────────────────────────────── */
+
+    function ttbmOpenCptForm(action, postId) {
+        $('#ttbm_travel_list_popup').html('<div id="ttbm-location-popup" class="ttbm-popup-overlay" style="display:flex;"><div class="ttbm-cpt-form-loading"><span class="fas fa-spinner fa-spin"></span></div></div>');
+        $('body').addClass('noScroll');
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: { action: action, post_id: postId || 0, nonce: ttbm_admin_ajax.nonce },
+            success: function (response) {
+                if (response.success) {
+                    $('#ttbm_travel_list_popup').html(response.data.html);
+                } else {
+                    closeTaxonomyPopup();
+                }
+            },
+            error: function () {
+                closeTaxonomyPopup();
+            }
+        });
+    }
+
+    function ttbmSubmitCptForm($btn, data) {
+        var originalText = $btn.data('original-text') || $btn.text().trim();
+        $btn.data('original-text', originalText).text(ttbm_admin_ajax.strings && ttbm_admin_ajax.strings.saving ? ttbm_admin_ajax.strings.saving : 'Saving...').prop('disabled', true);
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: data,
+            success: function (response) {
+                $btn.text(originalText).prop('disabled', false);
+                if (response.success) {
+                    closeTaxonomyPopup();
+                    location.reload();
+                    return;
+                }
+                showTaxonomyFormMessage((response.data && response.data.message) || (ttbm_admin_ajax.strings && ttbm_admin_ajax.strings.save_failed) || 'Something went wrong. Please try again.', 'error');
+            },
+            error: function () {
+                $btn.text(originalText).prop('disabled', false);
+                showTaxonomyFormMessage((ttbm_admin_ajax.strings && ttbm_admin_ajax.strings.request_failed) || 'Request failed. Please check your connection and try again.', 'error');
+            }
+        });
+    }
+
+    // Open Add modals.
+    $(document).on('click', '.ttbm-add-guide-btn', function (e) {
+        e.preventDefault();
+        ttbmOpenCptForm('ttbm_guide_form_html', 0);
+    });
+    $(document).on('click', '.ttbm-add-ticket-type-btn', function (e) {
+        e.preventDefault();
+        ttbmOpenCptForm('ttbm_ticket_type_form_html', 0);
+    });
+
+    // Open Edit modals (guide + ticket types).
+    $(document).on('click', '.ttbm-cpt-edit-btn', function (e) {
+        e.preventDefault();
+        var cpt = $(this).data('cpt');
+        if (cpt !== 'guide' && cpt !== 'ticket_types') {
+            return;
+        }
+        var action = cpt === 'ticket_types' ? 'ttbm_ticket_type_form_html' : 'ttbm_guide_form_html';
+        ttbmOpenCptForm(action, $(this).data('id'));
+    });
+
+    // Save Guide.
+    $(document).on('click', '.ttbm-save-guide', function (e) {
+        e.preventDefault();
+        var $btn = $(this);
+        clearTaxonomyPopupValidation();
+        var name = ($('#ttbm-guide-name').val() || '').trim();
+        if (!name) {
+            showTaxonomyFieldError('ttbm-guide-name', (ttbm_admin_ajax.strings && ttbm_admin_ajax.strings.name_required) || 'Name is required.');
+            return;
+        }
+        ttbmSubmitCptForm($btn, {
+            action: 'ttbm_save_guide',
+            nonce: ttbm_admin_ajax.nonce,
+            post_id: $('#ttbm-cpt-post-id').val() || 0,
+            name: name,
+            description: $('#ttbm-guide-desc').val() || '',
+            image_id: $('#ttbm-location-image-id').val() || 0
+        });
+    });
+
+    // Save Ticket Type (serializes the whole pricing repeater).
+    $(document).on('click', '.ttbm-save-ticket-type', function (e) {
+        e.preventDefault();
+        var $btn = $(this);
+        clearTaxonomyPopupValidation();
+        var name = ($('#ttbm-ticket-type-name').val() || '').trim();
+        if (!name) {
+            showTaxonomyFieldError('ttbm-ticket-type-name', (ttbm_admin_ajax.strings && ttbm_admin_ajax.strings.name_required) || 'Name is required.');
+            return;
+        }
+        // Exclude the hidden repeater template row (its inputs aren't disabled on
+        // AJAX-injected markup, unlike the normal metabox), then serialize the rest.
+        var $fields = $('#ttbm-ticket-type-form').find('input, select, textarea').filter(function () {
+            return $(this).closest('.ttbm_hidden_content').length === 0;
+        });
+        var formData = $fields.serializeArray();
+        formData.push({ name: 'action', value: 'ttbm_save_ticket_type' });
+        formData.push({ name: 'nonce', value: ttbm_admin_ajax.nonce });
+        formData.push({ name: 'post_id', value: $('#ttbm-cpt-post-id').val() || 0 });
+        formData.push({ name: 'name', value: name });
+        ttbmSubmitCptForm($btn, $.param(formData));
+    });
+
+    // Delete (guide + ticket types).
+    $(document).on('click', '.ttbm-cpt-delete-btn', function (e) {
+        e.preventDefault();
+        var cpt = $(this).data('cpt');
+        if (cpt !== 'guide' && cpt !== 'ticket_types') {
+            return;
+        }
+        var $btn = $(this);
+        if (!window.confirm('Are you sure you want to move this to trash?')) {
+            return;
+        }
+        $.ajax({
+            url: ttbm_admin_ajax.ajax_url,
+            type: 'POST',
+            data: { action: 'ttbm_delete_cpt_item', nonce: ttbm_admin_ajax.nonce, cpt: cpt, post_id: $btn.data('id') },
+            success: function (response) {
+                if (response.success) {
+                    $btn.closest('.ttbm-cpt-card').fadeOut(200, function () { $(this).remove(); });
+                } else {
+                    window.alert((response.data && response.data.message) || 'Failed to delete.');
+                }
+            }
+        });
+    });
+
+    // Live (client-side) search for the new tabs.
+    $(document).on('keyup', '#ttbm_guides_search', function () {
+        ttbm_function_search_title(($(this).val() || '').toLowerCase(), 'ttbm_search_guide_by_title');
+    });
+    $(document).on('keyup', '#ttbm_ticket_types_search', function () {
+        ttbm_function_search_title(($(this).val() || '').toLowerCase(), 'ttbm_search_ticket_type_by_title');
+    });
 
 })(jQuery);
 

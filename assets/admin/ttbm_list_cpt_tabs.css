@@ -1,0 +1,133 @@
+/**
+ * Tour List → Guides / Ticket Types / Reviews tab styling.
+ * Extends the existing taxonomy tab + popup design (ttbm_admin_modern.css).
+ */
+
+/* Empty states for the new CPT lists */
+.ttbm-cpt-empty {
+	margin: 24px 0;
+	padding: 28px;
+	text-align: center;
+	color: #64748b;
+	background: #f8fafc;
+	border: 1px dashed #cbd5e1;
+	border-radius: 10px;
+	font-size: 14px;
+}
+
+/* Make the action buttons on guide cards align like location cards */
+.ttbm-cpt-card .ttbm-card-actions,
+.ttbm-cpt-card .ttbm-taxonomy-card-actions {
+	display: flex;
+	gap: 6px;
+	align-items: center;
+}
+
+/* ─── Ticket Type modal: wide variant to fit the pricing table ─── */
+#ttbm-location-popup .ttbm-popup-box.ttbm-ticket-type-popup {
+	max-width: min(1080px, 96vw);
+}
+
+#ttbm-location-popup .ttbm-ticket-type-popup .ttbm-taxonomy-popup__body {
+	max-height: 70vh;
+}
+
+.ttbm-ticket-type-table-scroll {
+	width: 100%;
+	overflow-x: auto;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+}
+
+.ttbm-ticket-type-repeater .price_config_table {
+	width: 100%;
+	min-width: 880px;
+	border-collapse: collapse;
+	background: #fff;
+}
+
+.ttbm-ticket-type-repeater .price_config_table thead th {
+	position: sticky;
+	top: 0;
+	background: #f1f5f9;
+	color: #0f2d52;
+	font-size: 12px;
+	font-weight: 600;
+	text-align: left;
+	padding: 8px 10px;
+	white-space: nowrap;
+	border-bottom: 1px solid #e2e8f0;
+}
+
+.ttbm-ticket-type-repeater .price_config_table td {
+	padding: 8px 10px;
+	vertical-align: middle;
+	border-bottom: 1px solid #f1f5f9;
+}
+
+.ttbm-ticket-type-repeater .price_config_table input[type="text"],
+.ttbm-ticket-type-repeater .price_config_table input[type="number"],
+.ttbm-ticket-type-repeater .price_config_table select {
+	max-width: 130px;
+}
+
+.ttbm-ticket-type-repeater .ttbm_add_item {
+	margin-top: 12px;
+}
+
+/* The shared icon picker popup must float above the ticket modal overlay */
+.ttbm_add_icon_popup.in {
+	z-index: 100060 !important;
+}
+
+/* Loading spinner shown while a CPT modal is being fetched */
+.ttbm-cpt-form-loading {
+	color: #fff;
+	font-size: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* ─── Reviews tab ─────────────────────────────────────────────── */
+.ttbm-review-card .ttbm-review-stars {
+	color: #f59e0b;
+	letter-spacing: 1px;
+}
+
+.ttbm-review-card .ttbm-review-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 14px;
+	margin-top: 6px;
+	font-size: 12px;
+	color: #64748b;
+}
+
+.ttbm-review-card .ttbm-review-meta strong {
+	color: #334155;
+}
+
+/* Star rating input inside the review modal */
+#ttbm-location-popup .ttbm-review-stars-input {
+	display: inline-flex;
+	flex-direction: row-reverse;
+	gap: 4px;
+	font-size: 26px;
+}
+
+#ttbm-location-popup .ttbm-review-stars-input input {
+	display: none;
+}
+
+#ttbm-location-popup .ttbm-review-stars-input label {
+	color: #cbd5e1;
+	cursor: pointer;
+	transition: color 0.12s ease;
+}
+
+#ttbm-location-popup .ttbm-review-stars-input input:checked ~ label,
+#ttbm-location-popup .ttbm-review-stars-input label:hover,
+#ttbm-location-popup .ttbm-review-stars-input label:hover ~ label {
+	color: #f59e0b;
+}

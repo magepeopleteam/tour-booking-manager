@@ -1,0 +1,341 @@
+/* ===================================================================
+   Enquiry Admin Page — matches plugin sidebar-tab + stat-card design
+   =================================================================== */
+
+/* ── Sidebar tab overrides (nav-tab elements styled as plugin buttons) ── */
+.ttbm-enquiry-page .ttbm_trvel_lists_tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 280px;
+    min-width: 280px;
+}
+
+.ttbm-enquiry-page .ttbm_trvel_lists_tabs .nav-tab {
+    display: block;
+    border-radius: 0;
+    padding: 12px 15px;
+    font-size: 15px;
+    font-weight: normal;
+    background: #f5f5f5;
+    color: #333;
+    cursor: pointer;
+    border: 1px solid #f5f5f5;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: 1px solid #e8e8e8;
+    margin: 0;
+    width: 100%;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    position: relative;
+    outline: none;
+}
+
+.ttbm-enquiry-page .ttbm_trvel_lists_tabs .nav-tab:hover {
+    background-color: #EAF6FF;
+    color: var(--color_theme, #0073aa);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 119, 204, 0.15);
+}
+
+.ttbm-enquiry-page .ttbm_trvel_lists_tabs .nav-tab-active,
+.ttbm-enquiry-page .ttbm_trvel_lists_tabs .nav-tab-active:hover {
+    background-color: var(--color_theme, #0073aa) !important;
+    color: #fff !important;
+    border-color: var(--color_theme, #0073aa) !important;
+    transform: none;
+    box-shadow: none;
+}
+
+.ttbm-enquiry-page .ttbm_trvel_lists_tabs .nav-tab-active::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -8px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 8px solid var(--color_theme, #0073aa);
+}
+
+.ttbm-enquiry-page .ttbm_trvel_lists_tabs .nav-tab .icon-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ttbm-enquiry-page .ttbm_trvel_lists_tabs .nav-tab .icon-wrap i {
+    color: var(--color_theme, #0073aa);
+    font-size: 15px;
+}
+
+.ttbm-enquiry-page .ttbm_trvel_lists_tabs .nav-tab-active .icon-wrap i {
+    color: #fff;
+}
+
+/* ── Stats row ── */
+.ttbm-enq-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 15px 0 20px;
+}
+
+.ttbm-enq-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    flex: 1;
+    min-width: 150px;
+    border: 1px solid #E8E8E8;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.ttbm-enq-stat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 18px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+}
+
+.ttbm-enq-stat-icon.blue   { background: #007CBA; }
+.ttbm-enq-stat-icon.orange { background: #FFB900; }
+.ttbm-enq-stat-icon.purple { background: #826EB4; }
+.ttbm-enq-stat-icon.green  { background: #46B450; }
+
+.ttbm-enq-stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1D2327;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.ttbm-enq-stat-label {
+    font-size: 12px;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+/* ── Table header (search + count) ── */
+.ttbm-enq-table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.ttbm-enq-count {
+    font-size: 13px;
+    color: #6B7280;
+    font-style: italic;
+}
+
+.ttbm-enq-search-form {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.ttbm-enq-search-form input[type="text"] {
+    padding: 6px 12px;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    font-size: 13px;
+    min-width: 220px;
+    line-height: 1.4;
+}
+
+/* ── New enquiry row highlight ── */
+.ttbm-enq-row-new td:first-child {
+    font-weight: 700;
+}
+
+/* ── Status badges ── */
+.ttbm-enq-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+.ttbm-enq-badge.new     { background: #FEF3C7; color: #D97706; }
+.ttbm-enq-badge.viewed  { background: #DBEAFE; color: #1D4ED8; }
+.ttbm-enq-badge.replied { background: #D1FAE5; color: #059669; }
+
+/* ── Icon action buttons ── */
+.ttbm-enq-actions {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.ttbm-enq-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    padding: 0;
+    line-height: 1;
+}
+
+.ttbm-enq-view-btn   { background: #EAE7FF; color: #5342BB; }
+.ttbm-enq-view-btn:hover   { background: #5342BB; color: #fff; }
+.ttbm-enq-reply-btn  { background: #DBF7E8; color: #2DC78A; }
+.ttbm-enq-reply-btn:hover  { background: #2DC78A; color: #fff; }
+.ttbm-enq-delete-btn { background: #FFE1E2; color: #FF383C; }
+.ttbm-enq-delete-btn:hover { background: #FF383C; color: #fff; }
+
+/* ── Settings card ── */
+.ttbm-enq-settings-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    padding: 28px 32px;
+    max-width: 580px;
+    margin-top: 8px;
+}
+
+.ttbm-enq-settings-card h3 {
+    margin: 0 0 22px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #E0E0E0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1D2327;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ttbm-enq-settings-card h3 i {
+    color: var(--mpl-primary, #F12971);
+}
+
+.ttbm-enq-field {
+    margin-bottom: 20px;
+}
+
+.ttbm-enq-field label {
+    display: block;
+    font-weight: 600;
+    font-size: 13px;
+    color: #1D2327;
+    margin-bottom: 6px;
+}
+
+.ttbm-enq-field input {
+    width: 100%;
+    max-width: 420px;
+    padding: 8px 12px;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #1D2327;
+    display: block;
+}
+
+.ttbm-enq-field input:focus {
+    border-color: var(--mpl-primary, #F12971);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(241, 41, 113, 0.1);
+}
+
+.ttbm-enq-field .ttbm-enq-desc {
+    font-size: 12px;
+    color: #646970;
+    margin-top: 5px;
+    display: block;
+    line-height: 1.5;
+}
+
+.ttbm-enq-settings-card .button-primary {
+    margin-top: 4px;
+    min-width: 140px;
+}
+
+/* ── View enquiry popup table ── */
+.ttbm-enq-detail-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ttbm-enq-detail-table th,
+.ttbm-enq-detail-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #F0F0F0;
+    font-size: 14px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.ttbm-enq-detail-table th {
+    width: 110px;
+    color: #6B7280;
+    font-weight: 600;
+    white-space: nowrap;
+    background: #FAFAFA;
+}
+
+.ttbm-enq-detail-table td {
+    color: #1D2327;
+    word-break: break-word;
+}
+
+.ttbm-enq-detail-table tr:last-child th,
+.ttbm-enq-detail-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ── Empty state ── */
+.ttbm-enq-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6B7280;
+}
+
+.ttbm-enq-empty i {
+    font-size: 40px;
+    color: #DDD;
+    display: block;
+    margin-bottom: 12px;
+}
+
+/* ── Settings saved notice ── */
+.ttbm-enq-notice {
+    background: #D1FAE5;
+    border-left: 4px solid #059669;
+    color: #065F46;
+    padding: 10px 16px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    font-weight: 500;
+}

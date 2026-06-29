@@ -37,9 +37,8 @@
 						add_option($section['id']);
 					}
 					if (isset($section['desc']) && !empty($section['desc'])) {
-						$section['desc'] = '<div class="inside">' . $section['desc'] . '</div>';
 						$callback = function () use ($section) {
-							echo esc_html(str_replace('"', '\"', $section['desc']));
+							echo '<p class="ttbm-section-desc">' . wp_kses_post($section['desc']) . '</p>';
 						};
 					} else if (isset($section['callback'])) {
 						$callback = $section['callback'];
@@ -342,10 +341,13 @@
 				$count = count($this->settings_sections);
 				if ($count > 1) {
 					?>
-                    <ul class="tabLists bgLight">
+                    <ul class="tabLists bgLight meta-sidebar">
 						<?php foreach ($this->settings_sections as $tab) { ?>
                             <li data-tabs-target="#<?php echo esc_attr($tab['id']); ?>">
-                                <span class="<?php echo esc_attr(array_key_exists('icon', $tab) ? $tab['icon'] : ''); ?>"></span><?php echo esc_html($tab['title']); ?>
+                                <?php if (!empty($tab['icon'])) : ?>
+                                    <i class="<?php echo esc_attr($tab['icon']); ?>"></i>
+                                <?php endif; ?>
+                                <span><?php echo esc_html($tab['title']); ?></span>
                             </li>
 						<?php } ?>
                     </ul>
@@ -389,11 +391,15 @@
 							echo wp_kses_post($section['before_section']);
 						}
 					}
-					if ($section['title']) {
-						echo "<h3>" . esc_html($section['title']) . "</h3>\n";
-					}
-					if ($section['callback']) {
-						call_user_func($section['callback'], $section);
+					if ($section['title'] || $section['callback']) {
+						echo '<div class="ttbm-section-header">';
+						if ($section['title']) {
+							echo "<h3>" . esc_html($section['title']) . "</h3>\n";
+						}
+						if ($section['callback']) {
+							call_user_func($section['callback'], $section);
+						}
+						echo '</div>';
 					}
 					if (isset($wp_settings_fields[$form_id][$section['id']])) {
 						echo '<section>';

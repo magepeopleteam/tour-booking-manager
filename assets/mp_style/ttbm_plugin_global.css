@@ -2441,7 +2441,7 @@
 	}
 	div.ttbm_style .bgLight,
 	div.ttbm_style [class*="_bgLight"] {
-		background-color: var(--color_light);
+		background-color: #EEF3FA;
 	}
 	div.ttbm_style .textLight_1,
 	div.ttbm_style [class*="_textLight_1"] {

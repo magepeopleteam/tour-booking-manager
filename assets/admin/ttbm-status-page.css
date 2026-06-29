@@ -1,0 +1,192 @@
+/* ===================================================================
+   Environment Status Page
+   =================================================================== */
+
+#ttbm_status_page .ttbm-status-wrap {
+    max-width: 860px;
+    margin: 30px 0;
+}
+
+/* Panel header */
+#ttbm_status_page .ttbm-status-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, var(--color_theme, #2271B1) 0%, #1a5a96 100%) !important;
+}
+
+#ttbm_status_page .ttbm-status-header-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+#ttbm_status_page .ttbm-status-header-icon i {
+    font-size: 22px;
+    color: #fff;
+}
+
+#ttbm_status_page .ttbm-status-header-text h2 {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 3px;
+    padding: 0;
+    border: none;
+    line-height: 1.2;
+}
+
+#ttbm_status_page .ttbm-status-header-text p {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 12.5px;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Body */
+#ttbm_status_page .ttbm-status-body {
+    padding: 24px;
+}
+
+/* Table */
+#ttbm_status_page .ttbm-status-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+/* Data rows */
+#ttbm_status_page .ttbm-status-table tbody tr:not(.ttbm-status-section-row) {
+    border-bottom: 1px solid #F0F0F0;
+    transition: background 0.15s ease;
+}
+
+#ttbm_status_page .ttbm-status-table tbody tr:not(.ttbm-status-section-row):last-child {
+    border-bottom: none;
+}
+
+#ttbm_status_page .ttbm-status-table tbody tr:not(.ttbm-status-section-row):hover {
+    background: #FAFBFC;
+}
+
+#ttbm_status_page .ttbm-status-table td,
+#ttbm_status_page .ttbm-status-table th {
+    padding: 11px 14px;
+    font-size: 13.5px;
+    color: #3D4A5C;
+    font-weight: 400;
+    text-align: left;
+    border: none;
+    background: transparent;
+    width: auto;
+    min-width: auto;
+}
+
+#ttbm_status_page .ttbm-status-table td:first-child,
+#ttbm_status_page .ttbm-status-table th:first-child {
+    width: 55%;
+    color: #50575E;
+}
+
+/* Section separator rows */
+#ttbm_status_page .ttbm-status-section-row td {
+    padding: 18px 14px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #8A929C;
+    border-bottom: 2px solid #E8EDF2 !important;
+}
+
+#ttbm_status_page .ttbm-status-section-row td i {
+    margin-right: 5px;
+    color: var(--color_theme, #2271B1);
+    font-size: 12px;
+}
+
+/* New status badges */
+#ttbm_status_page .ttbm-sbadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+#ttbm_status_page .ttbm-sbadge i {
+    font-size: 12px;
+}
+
+#ttbm_status_page .ttbm-sbadge-ok {
+    background: #D1FAE5;
+    color: #065F46;
+}
+
+#ttbm_status_page .ttbm-sbadge-warn {
+    background: #FEF3C7;
+    color: #92400E;
+}
+
+#ttbm_status_page .ttbm-sbadge-error {
+    background: #FFE4E6;
+    color: #9F1239;
+}
+
+/* Style legacy addon badges (textSuccess / textWarning from pro plugin rows) */
+#ttbm_status_page .textSuccess,
+#ttbm_status_page .mep_success {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 12.5px;
+    font-weight: 600;
+    background: #D1FAE5;
+    color: #065F46 !important;
+}
+
+#ttbm_status_page .textWarning {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 12.5px;
+    font-weight: 600;
+    background: #FEF3C7;
+    color: #92400E !important;
+}
+
+#ttbm_status_page .textSuccess i,
+#ttbm_status_page .textWarning i,
+#ttbm_status_page .mep_success i {
+    font-size: 12px;
+}
+
+/* Page-title-action links inside badges */
+#ttbm_status_page .textWarning .page-title-action {
+    margin-left: 6px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    background: #fff;
+    color: #92400E;
+    border: 1px solid #D97706;
+    text-decoration: none;
+}
+
+#ttbm_status_page .textWarning .page-title-action:hover {
+    background: #D97706;
+    color: #fff;
+}

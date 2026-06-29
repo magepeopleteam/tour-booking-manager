@@ -113,6 +113,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<!-- Row 5: footer -->
 								<div class="ttbm_hdc_footer">
 									<div class="ttbm_hdc_nights">
+										<span class="ttbm_hdc_date_range_display" style="display:none;"></span>
 										<span><?php esc_html_e( '1 nights, 2 adults', 'tour-booking-manager' ); ?></span>
 										<span class="ttbm_hdc_note"><?php esc_html_e( 'Additional charges may apply', 'tour-booking-manager' ); ?></span>
 									</div>

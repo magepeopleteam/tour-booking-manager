@@ -1,0 +1,383 @@
+/* ===================================================================
+   Global Settings Page — styled to match Tour Add/Edit meta box panel
+   =================================================================== */
+
+/* Override core max-width and enforce left alignment */
+div.ttbm_global_settings.ttbm_configuration {
+    max-width: 90% !important;
+    width: 90%;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#ttbm_content.ttbm_configuration .tabsItem section .label {
+    border: none;
+}
+
+/* Outer flex layout: main panel + right sidebar */
+.ttbm_global_settings .ttbm-gs-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.ttbm_global_settings .ttbm-gs-main {
+    flex: 1;
+    min-width: 0;
+}
+
+/* ── Right sidebar ── */
+.ttbm_global_settings .ttbm-gs-sidebar {
+    width: 260px;
+    min-width: 260px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Sidebar card base */
+.ttbm_global_settings .ttbm-gs-card {
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #E8E8E8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    padding: 20px;
+}
+
+/* Pro upgrade card — gradient bg */
+.ttbm_global_settings .ttbm-gs-pro-card {
+    background: linear-gradient(135deg, var(--mpl-primary, #F12971) 0%, #C4185B 100%);
+    border: none;
+    text-align: center;
+}
+
+.ttbm_global_settings .ttbm-gs-card-icon {
+    font-size: 34px;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 10px;
+    line-height: 1;
+}
+
+.ttbm_global_settings .ttbm-gs-pro-card h4 {
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    border: none;
+    padding: 0;
+}
+
+.ttbm_global_settings .ttbm-gs-pro-card p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 12.5px;
+    margin: 0 0 16px;
+    line-height: 1.55;
+}
+
+/* Non-pro card headings */
+.ttbm_global_settings .ttbm-gs-card:not(.ttbm-gs-pro-card) h4 {
+    color: var(--mpl-secondary, #1D2327);
+    font-size: 13.5px;
+    font-weight: 600;
+    margin: 0 0 12px;
+    padding: 0 0 10px;
+    border-bottom: 1px solid #EAEAEA;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.ttbm_global_settings .ttbm-gs-card:not(.ttbm-gs-pro-card) h4 i {
+    color: var(--color_theme, #0073aa);
+    font-size: 15px;
+}
+
+.ttbm_global_settings .ttbm-gs-card:not(.ttbm-gs-pro-card) p {
+    color: #50575e;
+    font-size: 12.5px;
+    margin: 0 0 14px;
+    line-height: 1.55;
+}
+
+/* Link list */
+.ttbm_global_settings .ttbm-gs-links {
+    list-style: none;
+    margin: 0 0 4px;
+    padding: 0;
+}
+
+.ttbm_global_settings .ttbm-gs-links li {
+    margin-bottom: 9px;
+}
+
+.ttbm_global_settings .ttbm-gs-links li a {
+    color: var(--color_theme, #0073aa);
+    font-size: 13px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s ease;
+}
+
+.ttbm_global_settings .ttbm-gs-links li a::before {
+    content: '→';
+    font-size: 11px;
+    opacity: 0.7;
+}
+
+.ttbm_global_settings .ttbm-gs-links li a:hover {
+    color: var(--mpl-primary, #F12971);
+    text-decoration: underline;
+}
+
+/* Sidebar buttons */
+.ttbm_global_settings .ttbm-gs-btn {
+    display: block;
+    text-align: center;
+    padding: 9px 16px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.ttbm_global_settings .ttbm-gs-btn-pro {
+    background: #fff;
+    color: var(--mpl-primary, #F12971) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.ttbm_global_settings .ttbm-gs-btn-pro:hover {
+    background: rgba(255, 255, 255, 0.88);
+}
+
+.ttbm_global_settings .ttbm-gs-btn-outline {
+    background: transparent;
+    border: 1px solid var(--color_theme, #0073aa);
+    color: var(--color_theme, #0073aa) !important;
+}
+
+.ttbm_global_settings .ttbm-gs-btn-outline:hover {
+    background: var(--color_theme, #0073aa);
+    color: #fff !important;
+}
+
+/* ── Panel header ── */
+.ttbm_global_settings .ttbmPanelHeader {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, var(--color_theme, #2271B1) 0%, #1a5a96 100%) !important;
+}
+
+.ttbm_global_settings .ttbm-gs-header-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ttbm_global_settings .ttbm-gs-header-icon i {
+    font-size: 22px;
+    color: #fff;
+}
+
+.ttbm_global_settings .ttbm-gs-header-text h2 {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 3px;
+    padding: 0;
+    line-height: 1.2;
+    border: none;
+}
+
+.ttbm_global_settings .ttbm-gs-header-text p {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 12.5px;
+    margin: 0;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+.ttbm_style.ttbm_global_settings h2 {
+    font-size: 22px !important;
+}
+
+.ttbm_style.ttbm_global_settings .ttbm-gs-header-text {
+    padding: 15px 0;
+}
+
+/* ── Left tab sidebar ── */
+.ttbm_global_settings .leftTabs {
+    width: 240px;
+    min-width: 240px;
+    background: #EDF2F7;
+    flex-shrink: 0;
+}
+
+.ttbm_global_settings .tabLists {
+    padding: 10px 8px;
+    background: #EDF2F7;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ttbm_global_settings .tabLists li {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: #3D4A5C;
+    background: transparent;
+    border: none;
+    border-radius: 7px;
+    margin: 0 0 3px;
+    list-style: none;
+    transition: background 0.18s ease, color 0.18s ease;
+}
+
+/* Items without icons — indent text to align with icon+gap width */
+.ttbm_global_settings .tabLists li:not(:has(i)) span {
+    padding-left: 25px;
+}
+
+.ttbm_global_settings .tabLists li i {
+    color: #6B7C93;
+    font-size: 15px;
+    flex-shrink: 0;
+    width: 18px;
+    text-align: center;
+    transition: color 0.18s ease;
+}
+
+.ttbm_global_settings .tabLists li span {
+    line-height: 1.35;
+    color: inherit;
+}
+
+.ttbm_global_settings .tabLists li:hover {
+    background-color: #D6E4F0 !important;
+    color: #1E3A5F !important;
+    transform: none;
+    box-shadow: none;
+}
+
+.ttbm_global_settings .tabLists li:hover i {
+    color: #2271B1;
+}
+
+.ttbm_global_settings .tabLists li.active {
+    background-color: var(--color_theme, #2271B1) !important;
+    color: #fff !important;
+    font-weight: 500;
+    transform: none !important;
+    box-shadow: 0 2px 8px rgba(34, 113, 177, 0.30) !important;
+}
+
+.ttbm_global_settings .tabLists li.active i {
+    color: #fff;
+}
+
+.ttbm_global_settings .tabLists li.active::after {
+    display: none;
+}
+
+/* ── Content area ── */
+.ttbm_global_settings .tabsContent {
+    background-color: #fff !important;
+    flex: 1;
+    min-width: 0;
+    padding: 20px 24px;
+    box-sizing: border-box;
+}
+
+.ttbm_global_settings .tabsItem {
+    padding: 0;
+}
+
+.ttbm_global_settings .tabsItem > h2 {
+    padding: 0;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--mpl-secondary, #1D2327);
+    margin: 0 0 20px;
+    line-height: 1.3;
+}
+
+/* Section header wrapper */
+.ttbm_global_settings .tabsItem .ttbm-section-header {
+    margin: 0 0 20px;
+    padding: 14px 18px;
+    background: #F8FAFC;
+    border-left: none;
+    border-radius: 0 6px 6px 0;
+}
+
+.ttbm_style.ttbm_global_settings.ttbm_configuration .ttbm-section-header {
+    padding: 15px 0;
+}
+
+.ttbm_global_settings .tabsItem h3 {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--mpl-secondary, #1D2327);
+    margin: 0 0 4px;
+    padding: 0;
+    border: none;
+    line-height: 1.3;
+}
+
+.ttbm_style.ttbm_global_settings.ttbm_configuration .ttbm-section-header h3 {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+}
+
+.ttbm_global_settings .tabsItem .ttbm-section-desc {
+    font-size: 12.5px;
+    color: #6B7280;
+    margin: 0;
+    line-height: 1.55;
+}
+
+.ttbm_global_settings .tabsItem section {
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ttbm_global_settings .tabsItem section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.ttbm_global_settings .justifyBetween._mT {
+    padding-top: 10px;
+}
+
+.ttbm_global_settings .button-primary {
+    min-width: 150px;
+}
+
+.ttbm_global_settings .ttbmTabs {
+    min-height: 540px;
+    align-items: stretch;
+}

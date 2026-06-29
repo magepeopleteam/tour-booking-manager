@@ -117,7 +117,7 @@
                 remove_submenu_page('edit.php?post_type=ttbm_tour', 'edit.php?post_type=ttbm_tour');
                 remove_submenu_page('edit.php?post_type=ttbm_tour', 'post-new.php?post_type=ttbm_tour');
                 $label = TTBM_Function::get_name();
-				add_submenu_page('edit.php?post_type=ttbm_tour', $label . ' ' . esc_html__('List', 'tour-booking-manager'), $label . ' ' . esc_html__('List', 'tour-booking-manager'), 'manage_options', 'ttbm_list', array($this, 'ttbm_list'),0);
+				add_submenu_page('edit.php?post_type=ttbm_tour', esc_html__('All Tours', 'tour-booking-manager'), esc_html__('All Tours', 'tour-booking-manager'), 'manage_options', 'ttbm_list', array($this, 'ttbm_list'),0);
             }
 
             public function search_tours_callback(){
@@ -180,7 +180,7 @@
 
 			public function tour_list_menu() {
 				$label = TTBM_Function::get_name();
-				add_submenu_page('edit.php?post_type=ttbm_tour', $label . ' ' . esc_html__('List', 'tour-booking-manager'), $label . ' ' . esc_html__('List', 'tour-booking-manager'), 'manage_options', 'ttbm_list', array($this, 'ttbm_list'));
+				add_submenu_page('edit.php?post_type=ttbm_tour', esc_html__('All Tours', 'tour-booking-manager'), esc_html__('All Tours', 'tour-booking-manager'), 'manage_options', 'ttbm_list', array($this, 'ttbm_list'));
 			}
 
 			public function ttbm_list() {

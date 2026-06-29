@@ -281,8 +281,14 @@
 			}
 
             public function tour_list($posts_query){
-                
+
                 if ($posts_query->have_posts()) {
+                    /* Batch-load all post meta and terms in one query each,
+                       so the inner loop reads from WP object cache. */
+                    $all_ids = wp_list_pluck( $posts_query->posts, 'ID' );
+                    update_meta_cache( 'post', $all_ids );
+                    update_term_cache( $posts_query->posts );
+
                     while ($posts_query->have_posts()) {
                         $posts_query->the_post();
                         $post_id = get_the_ID();

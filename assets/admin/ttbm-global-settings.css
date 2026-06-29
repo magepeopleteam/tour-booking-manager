@@ -379,6 +379,7 @@ div.ttbm_global_settings.ttbm_configuration {
 .ttbm_global_settings .tabsItem section .ttbm-setting-field {
     border-radius: 0 !important;
     padding: 5px 16px;
+    align-items: flex-start !important; /* top-align label with tall input areas */
 }
 .ttbm_global_settings .tabsItem section .ttbm-setting-field:nth-child(odd) {
     background-color: #F8FAFC !important;
@@ -391,6 +392,51 @@ div.ttbm_global_settings.ttbm_configuration {
 }
 .ttbm_global_settings .tabsItem section .ttbm-setting-field:hover {
     background-color: #EEF2FF !important;
+}
+
+/* ── Consistent left/start alignment for all field content ─── */
+
+/* Label column — top-align text and padding */
+.ttbm_global_settings .ttbm-setting-field > .label,
+.ttbm_global_settings .ttbm-setting-field > label:first-of-type {
+    text-align: left !important;
+    align-self: flex-start !important;
+    padding-top: 8px !important;
+}
+
+/* Input column — force left-start for ALL field types */
+.ttbm_global_settings .ttbm-setting-field > fieldset,
+.ttbm_global_settings .ttbm-setting-field > label:not(:first-of-type) {
+    text-align: left !important;
+    align-self: flex-start !important;
+}
+
+/* Nested field wrappers — override framework centering */
+.ttbm_global_settings .ttbm-setting-field .field-wrapper,
+.ttbm_global_settings .ttbm-setting-field .field-img-select-wrapper,
+.ttbm_global_settings .ttbm-setting-field .field-switch-wrapper,
+.ttbm_global_settings .ttbm-setting-field .field-color-sets-wrapper,
+.ttbm_global_settings .ttbm-setting-field .field-color-palette-wrapper,
+.ttbm_global_settings .ttbm-setting-field .field-image-link-wrapper {
+    text-align: left !important;
+    justify-content: flex-start !important;
+}
+
+/* Checkbox / radio / multicheck labels — start-align */
+.ttbm_global_settings .ttbm-setting-field fieldset label,
+.ttbm_global_settings .ttbm-setting-field fieldset legend {
+    text-align: left !important;
+    justify-content: flex-start !important;
+}
+
+/* Inputs, selects, textareas — left-align text */
+.ttbm_global_settings .ttbm-setting-field input[type="text"],
+.ttbm_global_settings .ttbm-setting-field input[type="number"],
+.ttbm_global_settings .ttbm-setting-field input[type="url"],
+.ttbm_global_settings .ttbm-setting-field input[type="email"],
+.ttbm_global_settings .ttbm-setting-field select,
+.ttbm_global_settings .ttbm-setting-field textarea {
+    text-align: left !important;
 }
 
 .ttbm_global_settings .button-primary {

@@ -6,7 +6,7 @@
 		class TTBM_Status {
 			public function __construct() {
 				add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
-				add_filter( 'ttbm_settings_sec_reg', array( $this, 'add_status_section' ) );
+				add_filter( 'ttbm_settings_sec_reg', array( $this, 'add_status_section' ), 999 );
 				add_action( 'wsa_form_bottom_ttbm_status_settings', array( $this, 'render_status_content' ) );
 			}
 			public function enqueue_assets( $hook ) {

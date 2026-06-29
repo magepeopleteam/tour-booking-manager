@@ -42,6 +42,14 @@
 				$sortable_tours = [];
 				$term_ids = '';
 				$terms_id_array = [];
+
+				/* Warm meta + term caches for all tours in one query each. */
+				if ( ! empty( $loop->posts ) ) {
+					$all_loop_ids = wp_list_pluck( $loop->posts, 'ID' );
+					update_meta_cache( 'post', $all_loop_ids );
+					update_term_cache( $loop->posts );
+				}
+
 				foreach ($loop->posts as $tour) {
 					$ttbm_post_id = $tour->ID;
 					$tour_id = TTBM_Function::post_id_multi_language($ttbm_post_id);
@@ -145,7 +153,7 @@
 									<?php } ?>
 								<?php
 									if ($params['tag-filter'] == 'yes' || $tag_filter) {
-										$tour_tags = wp_get_post_terms($tour_id, 'ttbm_tour_tag', array("fields" => "all"));
+										$tour_tags = get_the_terms( $tour_id, 'ttbm_tour_tag' ) ?: [];
 										?>
                                         data-tag="<?php echo esc_attr(TTBM_Function::get_tag_id($tour_tags)); ?>"
 									<?php } ?>
@@ -213,6 +221,14 @@
 				$sortable_tours = [];
 				$term_ids = '';
 				$terms_id_array = [];
+
+				/* Warm meta + term caches for all tours in one query each. */
+				if ( ! empty( $loop->posts ) ) {
+					$all_loop_ids = wp_list_pluck( $loop->posts, 'ID' );
+					update_meta_cache( 'post', $all_loop_ids );
+					update_term_cache( $loop->posts );
+				}
+
 				foreach ($loop->posts as $tour) {
 					$ttbm_post_id = $tour->ID;
 					$tour_id = TTBM_Function::post_id_multi_language($ttbm_post_id);
@@ -362,7 +378,7 @@
 									<?php } ?>
 								<?php
 									if ($params['tag-filter'] == 'yes' || $tag_filter) {
-										$tour_tags = wp_get_post_terms($tour_id, 'ttbm_tour_tag', array("fields" => "all"));
+										$tour_tags = get_the_terms( $tour_id, 'ttbm_tour_tag' ) ?: [];
 										?>
                                         data-tag="<?php echo esc_attr(TTBM_Function::get_tag_id($tour_tags)); ?>"
 									<?php } ?>

@@ -406,8 +406,8 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 
 #ttbm_meta_box_panel .ttbm-tour-title-field__hint {
 	margin: 6px 0 0;
-	font-size: 12px;
-	font-style: italic;
+	font-size: 11px;
+	font-style: normal;
 	color: #9ca3af;
 	line-height: 1.4;
 }
@@ -635,7 +635,7 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 }
 
 #ttbm_meta_box_panel .ttbm-general-info-card__header {
-	padding: 16px 20px;
+	padding: 16px 0px;
 	margin: 0;
 	border-bottom: 1px solid var(--ttbm-a-border);
 	background: #fff;
@@ -661,7 +661,7 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 }
 
 #ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-general-info-card__grid {
-	margin: 16px 20px 12px;
+	margin: 16px 0px 12px;
 	padding: 16px 18px;
 	background: #fafbfc;
 	border: 1px solid #e2e8f0;
@@ -944,7 +944,7 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 }
 
 #ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-short-desc {
-	padding: 14px 20px 18px;
+	padding: 14px 0px 18px;
 	background: #fff;
 }
 
@@ -969,7 +969,16 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 }
 
 #ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-short-desc__toggle-label i.fa-file-alt {
-	color: var(--ttbm-a-primary);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	margin-right: 10px;
+	background: #eff6ff;
+	border: 1px solid #bfdbfe;
+	border-radius: 8px;
+	color: #2563eb;
 	font-size: 14px;
 }
 
@@ -1440,8 +1449,17 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 }
 
 #ttbm_meta_box_panel .tabsItem section .ttbm-header h4 i {
-	color: var(--ttbm-a-primary);
-	font-size: 16px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	margin-right: 10px;
+	background: #eff6ff;
+	border: 1px solid #bfdbfe;
+	border-radius: 8px;
+	color: #2563eb;
+	font-size: 14px;
 }
 
 /* ─── Form rows (labels) ─── */
@@ -7187,4 +7205,19 @@ div.ttbm_global_settings .ttbm_style [class*="_themeButton"] i {
 #ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo--blue .ttbm-addon-promo__badge {
 	background: #2563eb;
 	color: #fff;
+}
+
+/* ─── Early Bird section icon (different markup than .ttbm-header h4 i) ─── */
+#ttbm_meta_box_panel .tabsItem.ttbm_settings_pricing .gptLayout h5 span.fas:first-child {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	margin-right: 10px;
+	background: #eff6ff;
+	border: 1px solid #bfdbfe;
+	border-radius: 8px;
+	color: #2563eb;
+	font-size: 14px;
 }

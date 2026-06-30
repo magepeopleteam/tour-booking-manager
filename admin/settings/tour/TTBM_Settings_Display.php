@@ -142,6 +142,8 @@ if (!class_exists('TTBM_Settings_Display')) {
                         <?php endforeach; ?>
                     </div>
                 </section>
+
+                <?php do_action('ttbm_display_settings_after', $tour_id); ?>
             </div>
             <?php
         }

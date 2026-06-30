@@ -55,7 +55,6 @@
                                 <li data-tabs-target="#ttbm_settings_related_tour"><i class="mi mi-link"></i> <span><?php esc_html_e('Related Tour', 'tour-booking-manager'); ?></span> </li>
                                 <li data-tabs-target="#ttbm_settings_extras"><i class="mi mi-envelope"></i> <span><?php esc_html_e('Contact info', 'tour-booking-manager'); ?></span> </li>
                                 <li data-tabs-target="#ttbm_settings_why_chose_us"><i class="mi mi-improve-user"></i> <span><?php esc_html_e('Promotional Text', 'tour-booking-manager'); ?></span> </li>
-                                <li data-tabs-target="#ttbm_settings_admin_note"><i class="mi mi-comment-user"></i> <span><?php esc_html_e('Admin Note', 'tour-booking-manager'); ?></span> </li>
                                 <li data-tabs-target="#ttbm_display_settings"><i class="mi mi-dashboard-monitor"></i> <span><?php esc_html_e(' Display settings', 'tour-booking-manager'); ?></span> </li>
                                 <li data-tabs-target="#ttbm_add_promotional_setting"><i class="mi mi-handshake-deal-loan"></i> <span><?php esc_html_e(' Promotional Deals', 'tour-booking-manager'); ?></span> </li>
 								<?php do_action('add_ttbm_settings_tab_name'); ?>

@@ -1,6 +1,6 @@
 function ttbm_load_sortable_datepicker(parent, item) {
     var enableNewRowFields = function () {
-        parent.find(".ttbm_item_insert > tr").last().find("input, select, textarea").prop("disabled", false);
+        parent.find(".ttbm_item_insert > .ttbm_remove_area").last().find("input, select, textarea").prop("disabled", false);
     };
     if (parent.find(".ttbm_item_insert_before").length > 0) {
         jQuery(item)

@@ -5,7 +5,7 @@
 	if (!class_exists('TTBM_Settings_extra_service')) {
 		class TTBM_Settings_extra_service {
 			public function __construct() {
-				add_action('ttbm_tour_pricing_inner', [$this, 'render_extra_service_section'], 10, 1);
+				add_action('ttbm_tour_pricing_after', [$this, 'render_extra_service_section'], 999, 1);
 				add_action('ttbm_extra_service_item', array($this, 'extra_service_item'));
 			}
 			public function render_extra_service_section($tour_id) {

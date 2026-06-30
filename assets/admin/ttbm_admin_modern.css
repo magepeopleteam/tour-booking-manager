@@ -7069,6 +7069,7 @@ div.ttbm_global_settings .ttbm_style [class*="_themeButton"] i {
 	gap: 8px;
 }
 .ttbm-sb-addon-promo-card .ttbm-addon-promo {
+	position: relative;
 	flex-direction: column;
 	align-items: stretch;
 	gap: 0;
@@ -7092,6 +7093,16 @@ div.ttbm_global_settings .ttbm_style [class*="_themeButton"] i {
 	font-size: 13px;
 	border-radius: 6px;
 	margin-bottom: 8px;
+}
+.ttbm-sb-addon-promo-card .ttbm-addon-promo__badge {
+	position: absolute;
+	top: 9px;
+	left: 11px;
+	margin: 0;
+	font-size: 8px;
+	padding: 2px 5px;
+	line-height: 1;
+	z-index: 1;
 }
 .ttbm-sb-addon-promo-card .ttbm-addon-promo__content {
 	margin-bottom: 10px;

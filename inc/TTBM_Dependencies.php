@@ -161,7 +161,52 @@
 				));
 				do_action('ttbm_frontend_script');
 			}
-			public function admin_script() {
+			/**
+			 * Whether the heavy TTBM admin bundle (editor, media, select2, color
+			 * picker, codemirror, FontAwesome, plugin admin CSS/JS, and the
+			 * `ttbm_admin_script` action consumed by the pricing addons) should
+			 * load on the current admin screen.
+			 *
+			 * Without this guard, admin_script() ran unconditionally on every
+			 * wp-admin page via admin_enqueue_scripts, not just tour/hotel
+			 * editing screens.
+			 *
+			 * Override with: add_filter('ttbm_load_admin_assets', '__return_true');
+			 *
+			 * @param string $hook Current admin page hook suffix.
+			 * @return bool
+			 */
+			private function should_load_admin_assets($hook = '') {
+				// Explicit override: a non-null return forces assets on/off.
+				$override = apply_filters('ttbm_load_admin_assets', null, $hook);
+				if (null !== $override) {
+					return (bool) $override;
+				}
+				$screen = function_exists('get_current_screen') ? get_current_screen() : null;
+				$ttbm_post_types = array('ttbm_tour', 'ttbm_hotel', 'ttbm_hotel_booking', 'ttbm_places', 'ttbm_guide', 'ttbm_ticket_types', 'ttbm_enquiry');
+				if ($screen) {
+					if (!empty($screen->post_type) && in_array($screen->post_type, $ttbm_post_types, true)) {
+						return true;
+					}
+					if (!empty($screen->taxonomy) && false !== strpos($screen->taxonomy, 'ttbm')) {
+						return true;
+					}
+					if (!empty($screen->id) && false !== strpos($screen->id, 'ttbm')) {
+						return true;
+					}
+				}
+				if ($hook && false !== strpos($hook, 'ttbm')) {
+					return true;
+				}
+				if (isset($_GET['page']) && false !== strpos(sanitize_text_field(wp_unslash($_GET['page'])), 'ttbm')) {
+					return true;
+				}
+				return false;
+			}
+			public function admin_script($hook = '') {
+				if (!$this->should_load_admin_assets($hook)) {
+					return;
+				}
 				wp_enqueue_editor();
 				wp_enqueue_media();
 				wp_enqueue_script('jquery-ui-sortable');

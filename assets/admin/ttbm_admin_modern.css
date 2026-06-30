@@ -7063,3 +7063,50 @@ div.ttbm_global_settings .ttbm_style [class*="_themeButton"] i {
 #ttbm_meta_box_panel #ttbm_content .ttbm-sb-gallery-card h4 {
 	font-size: 16px;
 }
+
+/* ─── Addon promo: sidebar redesign ─── */
+.ttbm-sb-addon-promo-card .ttbm-addon-promos {
+	gap: 8px;
+}
+.ttbm-sb-addon-promo-card .ttbm-addon-promo {
+	flex-direction: column;
+	align-items: stretch;
+	gap: 0;
+	padding: 12px 12px 12px 14px;
+	border-radius: 8px;
+	border: 1px solid var(--ttbm-a-border);
+	border-left-width: 3px;
+	box-shadow: none;
+}
+.ttbm-sb-addon-promo-card .ttbm-addon-promo--amber {
+	border-left-color: #f59e0b;
+	background: #fffdf5;
+}
+.ttbm-sb-addon-promo-card .ttbm-addon-promo--blue {
+	border-left-color: #3b82f6;
+	background: #f5f9ff;
+}
+.ttbm-sb-addon-promo-card .ttbm-addon-promo__icon {
+	width: 28px;
+	height: 28px;
+	font-size: 13px;
+	border-radius: 6px;
+	margin-bottom: 8px;
+}
+.ttbm-sb-addon-promo-card .ttbm-addon-promo__content {
+	margin-bottom: 10px;
+}
+.ttbm-sb-addon-promo-card .ttbm-addon-promo__title {
+	font-size: 12px;
+	margin-bottom: 3px;
+}
+.ttbm-sb-addon-promo-card .ttbm-addon-promo__desc {
+	font-size: 11px;
+}
+.ttbm-sb-addon-promo-card .ttbm-addon-promo__btn {
+	width: 100%;
+	justify-content: center;
+	font-size: 11px;
+	padding: 6px 10px;
+	border-radius: 6px;
+}

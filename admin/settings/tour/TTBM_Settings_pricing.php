@@ -10,6 +10,7 @@
 				add_action('wp_ajax_get_ttbm_insert_ticket_type', array($this, 'ticket_table'));
 				add_action('wp_ajax_nopriv_get_ttbm_insert_ticket_type', array($this, 'ticket_table'));
 				add_action('ttbm_right_sidebar_content', [$this, 'pricing_shortcode_sidebar'], 16);
+				add_action('ttbm_right_sidebar_content', [$this, 'addon_promo_sidebar'], 17);
 				add_action('admin_enqueue_scripts', [$this, 'enqueue_pricing_sidebar_js']);
 			}
 			private function current_user_can_edit_ticket_context($post_id, $form_id) {
@@ -59,9 +60,6 @@
                         </div>
                     </section>
 					<?php do_action('ttbm_tour_pricing_inner', $tour_id); ?>
-                    <div style="margin-bottom: 20px;">
-						<?php $this->advertise_addon(); ?>
-                    </div>
 					<?php do_action('ttbm_tour_pricing_after', $tour_id); ?>
                 </div>
 				<?php
@@ -93,7 +91,7 @@
 				if ( ! $screen || $screen->base !== 'post' ) {
 					return;
 				}
-				wp_add_inline_script( 'jquery', 'jQuery(function($){function ttbmSyncPricingCard(){var target=$(".tabLists li[data-tabs-target].active").attr("data-tabs-target")||"";$(".ttbm-sb-pricing-shortcode-card").toggle(target==="#ttbm_settings_pricing");}$(document).on("click",".tabLists li[data-tabs-target]",function(){setTimeout(ttbmSyncPricingCard,50);});$(window).on("load",function(){setTimeout(ttbmSyncPricingCard,100);});});' );
+				wp_add_inline_script( 'jquery', 'jQuery(function($){function ttbmSyncPricingCard(){var target=$(".tabLists li[data-tabs-target].active").attr("data-tabs-target")||"";$("[data-tab-card]").each(function(){$(this).toggle($(this).data("tab-card")===target);});}$(document).on("click",".tabLists li[data-tabs-target]",function(){setTimeout(ttbmSyncPricingCard,50);});$(window).on("load",function(){setTimeout(ttbmSyncPricingCard,100);});});' );
 			}
 			public function ttbm_ticket_config($tour_id) {
 				$ticket_type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticket_type', array());
@@ -295,6 +293,18 @@
 				<?php
 			}
 			/*******************************/
+			public function addon_promo_sidebar($tour_id) {
+				$show_seasonal = ! class_exists( 'TTBMA_Seasonal_Pricing' );
+				$show_group = ! class_exists( 'TTBMA_Group_Pricing' );
+				if ( ! $show_seasonal && ! $show_group ) {
+					return;
+				}
+				?>
+                <div class="ttbm-sb-card ttbm-sb-addon-promo-card" data-tab-card="#ttbm_settings_pricing" style="display:none;">
+					<?php $this->advertise_addon(); ?>
+                </div>
+				<?php
+			}
 			public function advertise_addon() {
 				$show_seasonal = ! class_exists( 'TTBMA_Seasonal_Pricing' );
 				$show_group    = ! class_exists( 'TTBMA_Group_Pricing' );

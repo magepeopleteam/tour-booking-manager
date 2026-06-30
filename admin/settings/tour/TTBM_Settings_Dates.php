@@ -230,18 +230,21 @@
                             <span class="ttbm-field-label"><?php esc_html_e('Tour Repeat Pattern', 'tour-booking-manager'); ?></span>
                             <div class="groupRadioBox ttbm-pill-group">
                                 <div class="ttbm-pill-row">
-									<?php foreach ($repeat_array as $key => $value) { ?>
-                                        <button class="ttbm-pill-btn <?php echo esc_attr($key == $repeated_after ? 'active' : ''); ?>" type="button" data-group-radio="<?php echo esc_attr($key); ?>">
-                                            <span class="ttbm-pill-btn__check" aria-hidden="true"><i class="fas fa-check"></i></span>
-                                            <?php echo esc_html($value); ?>
-                                        </button>
-									<?php } ?>
-                                    <span class="ttbm-pill-custom-wrap">
+                                    <div class="ttbm-pill-segment">
+										<?php foreach ($repeat_array as $key => $value) { ?>
+                                            <button class="ttbm-pill-btn <?php echo esc_attr($key == $repeated_after ? 'active' : ''); ?>" type="button" data-group-radio="<?php echo esc_attr($key); ?>">
+                                                <span class="ttbm-pill-btn__check" aria-hidden="true"><i class="fas fa-check"></i></span>
+                                                <?php echo esc_html($value); ?>
+                                            </button>
+										<?php } ?>
                                         <button class="ttbm-pill-btn input_active <?php echo esc_attr((1 == $repeated_after || 7 == $repeated_after || 30 == $repeated_after) ? '' : 'active'); ?>" type="button" data-group-radio="<?php echo esc_attr($repeated_after); ?>" data-pill-custom="1">
                                             <span class="ttbm-pill-btn__check" aria-hidden="true"><i class="fas fa-check"></i></span>
                                             <span class="ttbm-pill-btn__label"><?php esc_html_e('Custom', 'tour-booking-manager'); ?></span>
                                         </button>
+                                    </div>
+                                    <span class="ttbm-pill-custom-wrap <?php echo esc_attr((1 == $repeated_after || 7 == $repeated_after || 30 == $repeated_after) ? 'dNone' : ''); ?>">
                                         <input type="number" min="1" class="formControl xs _w_75 ttbm_number_validation ttbm-pill-custom-input <?php echo esc_attr((1 == $repeated_after || 7 == $repeated_after || 30 == $repeated_after) ? 'dNone' : ''); ?>" value="<?php echo esc_attr($repeated_after); ?>" name="ttbm_travel_repeated_after"/>
+                                        <span class="ttbm-pill-custom-suffix"><?php esc_html_e('Days', 'tour-booking-manager'); ?></span>
                                     </span>
                                 </div>
                             </div>

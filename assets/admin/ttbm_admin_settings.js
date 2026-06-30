@@ -42,13 +42,16 @@ function ttbm_load_sortable_datepicker(parent, item) {
         }
         let $customBtn = $pillGroup.find("[data-pill-custom]");
         let $customInput = $pillGroup.find(".ttbm-pill-custom-input");
+        let $customWrap = $pillGroup.find(".ttbm-pill-custom-wrap");
         if (!$customBtn.length || !$customInput.length) {
             return;
         }
         if ($customBtn.hasClass("active")) {
             $customInput.removeClass("dNone").show().focus();
+            $customWrap.removeClass("dNone");
         } else {
             $customInput.addClass("dNone").hide();
+            $customWrap.addClass("dNone");
         }
     }
     $(document).on("click", ".ttbm_settings_dates .ttbm-pill-group [data-group-radio]", function () {

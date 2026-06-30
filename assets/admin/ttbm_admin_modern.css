@@ -4437,6 +4437,7 @@ div.ttbm_global_settings .button-primary {
 	font-weight: 600;
 	color: var(--ttbm-date-text);
 	margin: 0 0 10px;
+	text-transform: uppercase;
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-panel-error {
@@ -4496,34 +4497,45 @@ div.ttbm_global_settings .button-primary {
 	gap: 10px;
 }
 
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-pill-segment {
+	display: inline-flex;
+	align-items: center;
+	gap: 2px;
+	padding: 4px;
+	background: #f1f0ee;
+	border-radius: 10px;
+}
+
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-pill-btn {
 	display: inline-flex;
 	align-items: center;
-	gap: 8px;
-	min-height: 40px;
-	padding: 8px 18px;
+	gap: 6px;
+	min-height: 36px;
+	padding: 8px 16px;
 	margin: 0;
-	border: 1px solid var(--ttbm-date-border);
-	border-radius: 999px;
-	background: #fff;
-	color: var(--ttbm-date-text);
+	border: none;
+	border-radius: 8px;
+	background: transparent;
+	color: #57534e;
 	font-size: 14px;
 	font-weight: 500;
 	line-height: 1.2;
 	cursor: pointer;
-	transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+	transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-pill-btn:hover {
-	border-color: #c7d2fe;
-	background: var(--ttbm-date-primary-soft);
+	background: rgba(255, 255, 255, 0.6);
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-pill-btn.active {
-	background: var(--ttbm-date-primary);
-	border-color: var(--ttbm-date-primary);
+	background: #2271B1;
 	color: #fff;
-	box-shadow: 0 4px 14px rgba(91, 93, 245, 0.25);
+	box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-pill-btn.active:hover {
+	background: #2271B1;
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-pill-btn__check {
@@ -4538,19 +4550,33 @@ div.ttbm_global_settings .button-primary {
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-pill-custom-wrap {
 	display: inline-flex;
 	align-items: center;
-	gap: 8px;
+	gap: 6px;
+	min-height: 36px;
+	padding: 0px 12px 0px 0px;
+	border: 1px solid var(--ttbm-date-border);
+	border-radius: 10px;
+	background: #fff;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-pill-custom-wrap.dNone {
+	display: none;
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-pill-custom-input {
-	min-height: 40px;
-	width: 72px;
-	min-width: 72px;
-	padding: 8px 10px;
-	border-radius: 10px;
-	border: 1px solid var(--ttbm-date-border);
-	background: #fff;
+	min-height: 34px;
+	width: 44px;
+	min-width: 44px;
+	padding: 0;
+	border: none;
+	background: transparent;
 	font-size: 14px;
 	box-sizing: border-box;
+}
+
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-pill-custom-suffix {
+	font-size: 13px;
+	color: var(--ttbm-date-muted, #6b7280);
+	white-space: nowrap;
 }
 
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-pill-btn__label {

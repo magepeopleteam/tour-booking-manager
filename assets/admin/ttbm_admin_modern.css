@@ -5301,7 +5301,8 @@ div.ttbm_global_settings .button-primary {
 #ttbm_content.ttbm_configuration code {
 	display: inline-block;
 	padding: 6px 12px;
-	font-size: 13px;
+	margin: 10px;
+	font-size: 10px;
 	line-height: 1.5;
 	background: #f1f5f9;
 	border: 1px solid var(--ttbm-a-border);
@@ -7057,4 +7058,8 @@ div.ttbm_global_settings .ttbm_style [class*="_themeButton"] i {
 	display: block !important;
 	width: fit-content !important;
 	margin-left: auto !important;
+}
+
+#ttbm_meta_box_panel #ttbm_content .ttbm-sb-gallery-card h4 {
+	font-size: 16px;
 }

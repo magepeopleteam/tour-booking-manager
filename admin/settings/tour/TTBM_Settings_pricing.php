@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	if (!defined('ABSPATH')) {
 		die;
 	} // Cannot access pages directly.
@@ -63,7 +63,6 @@
 						<?php $this->advertise_addon(); ?>
                     </div>
 					<?php do_action('ttbm_tour_pricing_after', $tour_id); ?>
-					<?php $this->ttbm_add_to_cart_form_shortcode($tour_id); ?>
                 </div>
 				<?php
 			}

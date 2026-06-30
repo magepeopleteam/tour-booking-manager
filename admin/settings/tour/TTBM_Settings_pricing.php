@@ -77,7 +77,7 @@
 			}
 			public function pricing_shortcode_sidebar($tour_id) {
 				?>
-                <div class="ttbm-sb-card ttbm-sb-pricing-shortcode-card" data-tab-card="#ttbm_settings_pricing" style="display:none;">
+                <div class="ttbm-sb-card ttbm-sb-pricing-shortcode-card" data-tab-card="#ttbm_settings_pricing">
                     <div class="ttbm-header">
                         <h4><i class="fas fa-laptop-code"></i><?php esc_html_e('Pricing shortcode', 'tour-booking-manager'); ?></h4>
                         <code>[ttbm-registration ttbm_id="<?php echo esc_html($tour_id); ?>"]</code>
@@ -91,7 +91,7 @@
 				if ( ! $screen || $screen->base !== 'post' ) {
 					return;
 				}
-				wp_add_inline_script( 'jquery', 'jQuery(function($){function ttbmSyncPricingCard(){var target=$(".tabLists li[data-tabs-target].active").attr("data-tabs-target")||"";$("[data-tab-card]").each(function(){$(this).toggle($(this).data("tab-card")===target);});}$(document).on("click",".tabLists li[data-tabs-target]",function(){setTimeout(ttbmSyncPricingCard,50);});$(window).on("load",function(){setTimeout(ttbmSyncPricingCard,100);});});' );
+				wp_add_inline_script( 'jquery', 'jQuery(function($){function ttbmSyncPricingCard(){var target=$(".tabLists.meta-sidebar li[data-tabs-target].active").attr("data-tabs-target")||"";$(".ttbm-right-sidebar").attr("data-active-tab",target);}$(document).on("ttbm_tab_activated",ttbmSyncPricingCard);$(document).on("click",".tabLists li[data-tabs-target]",function(){setTimeout(ttbmSyncPricingCard,50);});$(window).on("load",function(){setTimeout(ttbmSyncPricingCard,100);});});' );
 			}
 			public function ttbm_ticket_config($tour_id) {
 				$ticket_type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticket_type', array());
@@ -300,7 +300,7 @@
 					return;
 				}
 				?>
-                <div class="ttbm-sb-card ttbm-sb-addon-promo-card" data-tab-card="#ttbm_settings_pricing" style="display:none;">
+                <div class="ttbm-sb-card ttbm-sb-addon-promo-card" data-tab-card="#ttbm_settings_pricing">
 					<?php $this->advertise_addon(); ?>
                 </div>
 				<?php

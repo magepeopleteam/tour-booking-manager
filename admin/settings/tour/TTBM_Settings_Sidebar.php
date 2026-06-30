@@ -1344,7 +1344,7 @@ jQuery(function($){
 			if (!$tax_obj) return;
 			$nonce = wp_create_nonce('ttbm_add_term_' . $taxonomy);
 			?>
-			<div class="ttbm-sb-card" data-taxonomy="<?php echo esc_attr($taxonomy); ?>" data-nonce="<?php echo esc_attr($nonce); ?>">
+			<div class="ttbm-sb-card" data-taxonomy="<?php echo esc_attr($taxonomy); ?>" data-nonce="<?php echo esc_attr($nonce); ?>" data-hide-tab="#ttbm_settings_pricing">
 				<p class="ttbm-sb-card-title"><?php echo esc_html($title); ?></p>
 				<div class="ttbm-sb-tax-list">
 					<ul><?php wp_terms_checklist($post->ID, ['taxonomy' => $taxonomy, 'checked_ontop' => false]); ?></ul>

@@ -70,7 +70,7 @@
 									$this->partial_payment_settings($tour_id);
 								?>
                             </div>
-                            <div class="ttbm-right-sidebar">
+                            <div class="ttbm-right-sidebar" data-active-tab="#ttbm_general_info">
 								<?php do_action('ttbm_right_sidebar_content', $tour_id); ?>
                             </div>
                         </div>

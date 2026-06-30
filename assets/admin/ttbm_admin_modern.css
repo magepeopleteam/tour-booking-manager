@@ -5301,7 +5301,7 @@ div.ttbm_global_settings .button-primary {
 #ttbm_content.ttbm_configuration code {
 	display: inline-block;
 	padding: 6px 12px;
-	margin: 10px;
+	margin: 10px 0px;
 	font-size: 10px;
 	line-height: 1.5;
 	background: #f1f5f9;
@@ -7064,60 +7064,127 @@ div.ttbm_global_settings .ttbm_style [class*="_themeButton"] i {
 	font-size: 16px;
 }
 
-/* ─── Addon promo: sidebar redesign ─── */
-.ttbm-sb-addon-promo-card .ttbm-addon-promos {
-	gap: 8px;
+/* ─── Right sidebar: tab-aware card visibility (CSS-driven, avoids JS-timing flash) ─── */
+#ttbm_meta_box_panel .ttbm-right-sidebar [data-tab-card] {
+	display: none;
 }
-.ttbm-sb-addon-promo-card .ttbm-addon-promo {
-	position: relative;
-	flex-direction: column;
-	align-items: stretch;
-	gap: 0;
-	padding: 12px 12px 12px 14px;
-	border-radius: 8px;
+#ttbm_meta_box_panel .ttbm-right-sidebar[data-active-tab="#ttbm_settings_pricing"] [data-tab-card] {
+	display: block;
+}
+#ttbm_meta_box_panel .ttbm-right-sidebar[data-active-tab="#ttbm_settings_pricing"] [data-hide-tab] {
+	display: none;
+}
+
+/* ─── Addon promo: sidebar (minimal, modern) ─── */
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promos {
+	gap: 10px;
+}
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	column-gap: 10px;
+	row-gap: 8px;
+	align-items: start;
+	padding: 14px;
+	border-radius: 10px;
 	border: 1px solid var(--ttbm-a-border);
-	border-left-width: 3px;
+	background: #fff;
 	box-shadow: none;
+	transition: border-color .15s ease;
 }
-.ttbm-sb-addon-promo-card .ttbm-addon-promo--amber {
-	border-left-color: #f59e0b;
-	background: #fffdf5;
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo:hover {
+	border-color: var(--ttbm-a-border-strong);
 }
-.ttbm-sb-addon-promo-card .ttbm-addon-promo--blue {
-	border-left-color: #3b82f6;
-	background: #f5f9ff;
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo--amber,
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo--blue {
+	background: #fff;
 }
-.ttbm-sb-addon-promo-card .ttbm-addon-promo__icon {
-	width: 28px;
-	height: 28px;
-	font-size: 13px;
-	border-radius: 6px;
-	margin-bottom: 8px;
-}
-.ttbm-sb-addon-promo-card .ttbm-addon-promo__badge {
-	position: absolute;
-	top: 9px;
-	left: 11px;
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo__icon {
+	width: 26px;
+	height: 26px;
+	font-size: 11px;
+	border-radius: 7px;
+	background: #f8fafc;
 	margin: 0;
-	font-size: 8px;
+}
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo--amber .ttbm-addon-promo__icon {
+	color: #b45309;
+}
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo--blue .ttbm-addon-promo__icon {
+	color: #2563eb;
+}
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo__content {
+	margin: 0;
+	min-width: 0;
+}
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo__badge {
+	display: inline-block;
+	font-size: 9px;
+	font-weight: 700;
+	letter-spacing: .05em;
+	color: var(--ttbm-a-muted);
+	background: #ddd;
 	padding: 2px 5px;
-	line-height: 1;
-	z-index: 1;
+	margin: 0 0 3px;
 }
-.ttbm-sb-addon-promo-card .ttbm-addon-promo__content {
-	margin-bottom: 10px;
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo__title {
+	font-size: 12.5px;
+	margin: 0 0 4px;
 }
-.ttbm-sb-addon-promo-card .ttbm-addon-promo__title {
-	font-size: 12px;
-	margin-bottom: 3px;
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo__desc {
+	font-size: 11.5px;
+	margin: 0;
 }
-.ttbm-sb-addon-promo-card .ttbm-addon-promo__desc {
-	font-size: 11px;
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo__btn {
+	grid-column: 1 / -1;
+	justify-self: end;
+	width: auto;
+	margin: 0;
+	padding: 0;
+	gap: 5px;
+	background: none !important;
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+	font-size: 11.5px;
+	color: var(--ttbm-a-text) !important;
 }
-.ttbm-sb-addon-promo-card .ttbm-addon-promo__btn {
-	width: 100%;
-	justify-content: center;
-	font-size: 11px;
-	padding: 6px 10px;
-	border-radius: 6px;
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo--amber .ttbm-addon-promo__btn {
+	color: #b45309 !important;
+}
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo--blue .ttbm-addon-promo__btn {
+	color: #2563eb !important;
+}
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo__btn:hover {
+	text-decoration: underline;
+}
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo__btn i {
+	font-size: 9px;
+	transition: transform .15s ease;
+}
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo__btn:hover i {
+	transform: translateX(2px);
+}
+
+/* ─── Pricing shortcode card ─── */
+#ttbm_meta_box_panel .ttbm-sb-pricing-shortcode-card code {
+	font-size: 10px;
+	padding-left: 10px;
+}
+#ttbm_meta_box_panel .ttbm-sb-pricing-shortcode-card h4 {
+	font-size: 16px !important;
+}
+#ttbm_meta_box_panel .ttbm-sb-pricing-shortcode-card i {
+	margin-right: 20px;
+}
+.ttbm-addon-promos i {
+	font-size: 16px;
+}
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo--amber .ttbm-addon-promo__badge {
+	background: #b45309;
+	color: #fff;
+}
+#ttbm_meta_box_panel .ttbm-sb-addon-promo-card .ttbm-addon-promo--blue .ttbm-addon-promo__badge {
+	background: #2563eb;
+	color: #fff;
 }

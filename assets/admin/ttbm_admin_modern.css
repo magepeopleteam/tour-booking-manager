@@ -7046,3 +7046,15 @@ div.ttbm_global_settings .ttbm_style .themeButton i,
 div.ttbm_global_settings .ttbm_style [class*="_themeButton"] i {
 	color: #fff !important;
 }
+
+/* Pricing tab: right-align all Add buttons */
+#ttbm_content .ttbm_settings_area > .ttbm-ticket-types-add-btn,
+#ttbm_content .ttbm_settings_area > .ttbm_add_item,
+#ttbm_content .ttbm_settings_area > .ttbma_gp_add_item,
+#ttbm_content .ttbm_settings_area > .ttbm_eb_gp_add_item,
+#ttbm_content .ttbm_settings_area > .ttbm_sp_gp_add_item,
+#ttbm_content .ttbm_settings_area > [class*="_themeButton"] {
+	display: block !important;
+	width: fit-content !important;
+	margin-left: auto !important;
+}

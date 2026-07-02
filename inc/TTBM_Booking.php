@@ -102,7 +102,9 @@
 			]);
 		}
 		public function booking_panel($tour_id, $tour_date = '', $hotel_id = '') {
-				if (!TTBM_Global_Function::has_woocommerce()) {
+				// Bookable when WooCommerce checkout exists, or when an addon (e.g.
+				// the Pro custom PayPal/Stripe/Offline checkout) filters this true.
+				if (!apply_filters('ttbm_booking_available', TTBM_Global_Function::has_woocommerce(), $tour_id)) {
 					?>
                     <div class="dLayout allCenter bgWarning">
                         <h3 class="textWhite"><?php esc_html_e('Booking is not available yet. Please check back soon.', 'tour-booking-manager'); ?></h3>

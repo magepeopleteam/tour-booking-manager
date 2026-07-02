@@ -5,6 +5,11 @@
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
 	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
 	$ttbm_product_id = TTBM_Global_Function::get_post_info( $tour_id, 'link_wc_product' );
+	if ( empty( $ttbm_product_id ) && ! TTBM_Global_Function::has_woocommerce() && apply_filters( 'ttbm_booking_available', false, $tour_id ) ) {
+		// No hidden WC product (WooCommerce was never active) but a non-WC checkout
+		// (Pro custom payment) is available — it resolves the tour from this value.
+		$ttbm_product_id = $tour_id;
+	}
 	if ( ! empty( $ttbm_product_id ) && TTBM_Payment_Settings::login_required_for_booking() && ! is_user_logged_in() ) {
 		TTBM_Payment_Settings::render_login_prompt();
 		return;

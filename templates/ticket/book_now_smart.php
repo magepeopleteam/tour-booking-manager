@@ -8,6 +8,10 @@ $ttbm_product_id   = TTBM_Global_Function::get_post_info( $tour_id, 'link_wc_pro
 if ( empty( $ttbm_product_id ) ) {
 	return;
 }
+if ( TTBM_Payment_Settings::login_required_for_booking() && ! is_user_logged_in() ) {
+	TTBM_Payment_Settings::render_login_prompt();
+	return;
+}
 $seat_infos        = TTBM_Global_Function::get_post_info( $tour_id, 'ttbma_seat_plan', array() );
 $display           = TTBM_Global_Function::get_post_info( $tour_id, 'ttbma_display_seat_plan', 'off' );
 $display_front_end = TTBM_Global_Function::get_post_info( $tour_id, 'frontend_display_seat_plan', 'on' );

@@ -5,6 +5,10 @@
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
 	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
 	$ttbm_product_id = TTBM_Global_Function::get_post_info( $tour_id, 'link_wc_product' );
+	if ( ! empty( $ttbm_product_id ) && TTBM_Payment_Settings::login_required_for_booking() && ! is_user_logged_in() ) {
+		TTBM_Payment_Settings::render_login_prompt();
+		return;
+	}
 	if ( ! empty( $ttbm_product_id ) ) {
 		$seat_infos = TTBM_Global_Function::get_post_info( $tour_id, 'ttbma_seat_plan', array());
 		$display = TTBM_Global_Function::get_post_info( $tour_id, 'ttbma_display_seat_plan', 'off' );

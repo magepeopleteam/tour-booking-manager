@@ -37,6 +37,7 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Get_Enquiry.php';
 				//**********//
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Settings_Global.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Payment_Settings.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Ticket_Types.php';
 				//**********//
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/tour/TTBM_Settings.php';

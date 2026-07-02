@@ -577,6 +577,14 @@
 					return 0;
 				}
 			}
+			/**
+			 * Whether WooCommerce is active and usable right now. The single gate
+			 * the rest of the plugin should check before loading/using WC-specific
+			 * integration (cart/checkout hooks, hidden product creation, wishlist).
+			 */
+			public static function has_woocommerce(): bool {
+				return class_exists('WooCommerce') || self::check_woocommerce() === 1;
+			}
 			public static function get_order_item_meta( $item_id, $key ): string {
 				$value = wc_get_order_item_meta( $item_id, $key, true );
 				if ( is_array( $value ) ) {
@@ -597,7 +605,7 @@
 				return $value ?? '';
 			}
 			public static function wc_product_sku($product_id) {
-				if ($product_id) {
+				if ($product_id && class_exists('WC_Product')) {
 					return new WC_Product($product_id);
 				}
 				return null;
@@ -613,19 +621,20 @@
 					return $cached;
 				}
 
-				// Use WooCommerce API functions instead of direct DB query
-				$tax_classes = WC_Tax::get_tax_classes();
-				$tax_list = [];
-
 				// Standard tax classes that aren't returned by get_tax_classes()
 				$standard_classes = [
 					'standard' => __('Standard rate', 'tour-booking-manager')
 				];
 
-				// Format the tax classes array
-				foreach ($tax_classes as $tax_class) {
-					$slug = sanitize_title($tax_class);
-					$tax_list[$slug] = $tax_class;
+				$tax_list = [];
+				// Use WooCommerce API functions instead of direct DB query; without
+				// WooCommerce there are no tax classes to list beyond the standard one.
+				if (class_exists('WC_Tax')) {
+					$tax_classes = WC_Tax::get_tax_classes();
+					foreach ($tax_classes as $tax_class) {
+						$slug = sanitize_title($tax_class);
+						$tax_list[$slug] = $tax_class;
+					}
 				}
 
 				// Merge with standard classes

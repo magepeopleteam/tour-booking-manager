@@ -463,3 +463,538 @@ div.ttbm_global_settings.ttbm_configuration {
 .ttbm_global_settings .ttbm_license_settings table thead tr th {
     border-bottom: 2px solid #ddd !important;
 }
+
+/* ── Payments tab — WooCommerce Payment Methods manager ── */
+.ttbm-pm-wrap {
+    margin-top: 10px;
+}
+.ttbm-pm-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+.ttbm-pm-heading {
+    margin: 0;
+    font-size: 15px;
+}
+.ttbm-pm-wc-link .dashicons {
+    font-size: 14px;
+    line-height: 1.4;
+    vertical-align: middle;
+}
+.ttbm-pm-card {
+    border: 1px solid var(--ttbm-a-border, #dcdcde);
+    border-radius: var(--ttbm-a-radius, 10px);
+    background: var(--ttbm-a-surface, #fff);
+    margin-bottom: 14px;
+    overflow: hidden;
+    box-shadow: var(--ttbm-a-shadow-sm, 0 1px 2px rgba(15, 23, 42, 0.05));
+}
+.ttbm-pm-card.is-enabled {
+    border-left: 3px solid var(--ttbm-a-primary, #2271b1);
+}
+.ttbm-pm-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+}
+.ttbm-pm-head-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.ttbm-pm-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ttbm-a-text, #1d2327);
+}
+.ttbm-pm-badge {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+    padding: 2px 8px;
+    border-radius: 9px;
+    background: var(--ttbm-a-bg, #f0f0f1);
+    color: var(--ttbm-a-muted, #646970);
+}
+.ttbm-pm-card.is-enabled .ttbm-pm-badge {
+    background: var(--ttbm-a-success-soft, #e6f4ea);
+    color: var(--ttbm-a-success, #0a7c2f);
+}
+.ttbm-pm-desc {
+    padding: 0 16px 12px;
+    color: var(--ttbm-a-muted, #50575e);
+    font-size: 13px;
+}
+.ttbm-pm-desc p {
+    margin: 0 0 6px;
+}
+.ttbm-pm-body {
+    padding: 6px 16px 16px;
+    border-top: 1px solid var(--ttbm-a-border, #f0f0f1);
+    background: var(--ttbm-a-bg, #fbfbfc);
+}
+.ttbm-pm-form-table {
+    width: 100%;
+    background: transparent;
+}
+.ttbm-pm-form-table th {
+    width: 200px;
+    padding: 14px 10px 14px 0;
+    background: transparent;
+    font-weight: 600;
+    vertical-align: top;
+}
+.ttbm-pm-form-table td {
+    padding: 12px 0;
+    background: transparent;
+}
+.ttbm-pm-form-table input[type="text"],
+.ttbm-pm-form-table input[type="password"],
+.ttbm-pm-form-table input[type="email"],
+.ttbm-pm-form-table input[type="number"],
+.ttbm-pm-form-table textarea,
+.ttbm-pm-form-table select {
+    min-width: 320px;
+    max-width: 100%;
+}
+/* All checkboxes inside a gateway's own native settings form (WooCommerce's
+   raw, unstyled <input type="checkbox"> output) — fully custom-painted red/
+   green rather than relying on WooCommerce's own colors. The tick mark is a
+   background SVG centered via background-position, not a ::before + rotated-
+   border trick — that approach depends on exact transform math and generated
+   content on <input> (a replaced element) is inconsistently supported, which
+   is why earlier attempts kept landing off-center. background-position:
+   center has no such ambiguity. */
+.ttbm-pm-form-table input[type="checkbox"] {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    box-sizing: border-box !important;
+    display: inline-block !important;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    margin: 0 6px 0 0 !important;
+    padding: 0 !important;
+    border: 2px solid var(--ttbm-a-danger, #d63638) !important;
+    border-radius: 4px !important;
+    background-color: var(--ttbm-a-danger-soft, #fef2f2) !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: 13px 13px !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    vertical-align: middle;
+    transition: background-color .15s ease, border-color .15s ease;
+}
+.ttbm-pm-form-table input[type="checkbox"]:checked {
+    border-color: var(--ttbm-a-success, #00a32a) !important;
+    background-color: var(--ttbm-a-success, #00a32a) !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23ffffff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='3 8.5 6.5 12 13 4.5'/%3E%3C/svg%3E") !important;
+}
+.ttbm-pm-form-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--ttbm-a-border, #f0f0f1);
+}
+.ttbm-pm-status {
+    font-size: 13px;
+}
+.ttbm-pm-status.is-success {
+    color: var(--ttbm-a-success, #0a7c2f);
+}
+.ttbm-pm-status.is-error {
+    color: var(--ttbm-a-danger, #d63638);
+}
+/* The WooCommerce Payment Methods enable/disable switch reuses the plugin's
+   own existing, already-styled roundSwitchLabel/roundSwitch component (see
+   TTBM_Setting_API::callback_switch_button() and assets/mp_style/
+   ttbm_plugin_global.css) instead of a bespoke implementation — its CSS is
+   already loaded on this screen and scoped to .ttbm_style, which wraps the
+   whole settings page. ttbm-pm-toggle is kept only as a layout hook. */
+.ttbm-pm-toggle {
+    flex: 0 0 auto;
+}
+
+/* ── Payments tab — Custom Payment gateway cards (PayPal / Stripe / Offline) ── */
+.ttbm-pm-gateways .ttbm-pm-card {
+    padding: 0;
+}
+.ttbm-pm-gateways .ttbm-pm-head {
+    padding: 14px 16px 0;
+}
+.ttbm-pm-gateways .ttbm-pm-desc {
+    padding: 4px 16px 16px;
+}
+.ttbm-pm-inactive-notice {
+    padding: 14px 16px;
+    background: var(--ttbm-a-bg, #f6f7f7);
+    border: 1px solid var(--ttbm-a-border, #dcdcde);
+    border-radius: var(--ttbm-a-radius, 10px);
+    color: var(--ttbm-a-muted, #50575e);
+}
+
+/* Gateway configuration modal */
+.ttbm-gw-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: rgba(15, 23, 42, .55);
+    align-items: center;
+    justify-content: center;
+}
+.ttbm-gw-modal-box {
+    background: var(--ttbm-a-surface, #fff);
+    border-radius: var(--ttbm-a-radius-lg, 14px);
+    width: 480px;
+    max-width: 94vw;
+    max-height: 92vh;
+    overflow-y: auto;
+    box-shadow: var(--ttbm-a-shadow-lg, 0 12px 40px rgba(15, 23, 42, .25));
+}
+.ttbm-gw-modal-header {
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--ttbm-a-border, #e2e8f0);
+    background: var(--ttbm-a-bg, #f8fafc);
+    border-radius: var(--ttbm-a-radius-lg, 14px) var(--ttbm-a-radius-lg, 14px) 0 0;
+}
+.ttbm-gw-modal-header h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ttbm-a-text, #0f172a);
+}
+.ttbm-gw-modal-close {
+    background: none;
+    border: none;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--ttbm-a-muted, #64748b);
+    padding: 0;
+}
+.ttbm-gw-modal-body {
+    padding: 20px 22px 6px;
+}
+.ttbm-gw-modal-footer {
+    padding: 12px 22px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.ttbm-gw-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--ttbm-a-bg, #f8fafc);
+    border-radius: var(--ttbm-a-radius, 10px);
+    border: 1px solid var(--ttbm-a-border, #e2e8f0);
+    margin-bottom: 16px;
+}
+.ttbm-gw-toggle-label {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ttbm-a-text, #0f172a);
+}
+.ttbm-gw-toggle-sub {
+    font-size: 12px;
+    color: var(--ttbm-a-muted, #64748b);
+    margin-top: 2px;
+}
+.ttbm-gw-field {
+    margin-bottom: 16px;
+}
+.ttbm-gw-field label.ttbm-gw-label {
+    display: block;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ttbm-a-text-secondary, #334155);
+    margin-bottom: 6px;
+}
+.ttbm-gw-field input[type="text"],
+.ttbm-gw-field input[type="password"] {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--ttbm-a-border-strong, #cbd5e1);
+    border-radius: var(--ttbm-a-radius-sm, 6px);
+    font-size: 13px;
+    box-sizing: border-box;
+}
+.ttbm-gw-field-desc {
+    margin: 6px 0 0;
+    font-size: 12px;
+    color: var(--ttbm-a-help, #94a3b8);
+}
+.ttbm-gw-save-msg {
+    display: none;
+    font-size: 13px;
+    font-weight: 500;
+}
+/* Toggle switch (modal) */
+.ttbm-gw-switch {
+    position: relative;
+    display: inline-block;
+    width: 42px;
+    height: 24px;
+    flex-shrink: 0;
+}
+.ttbm-gw-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.ttbm-gw-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #cbd5e1;
+    border-radius: 24px;
+    transition: .2s;
+}
+.ttbm-gw-slider::before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: .2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+}
+.ttbm-gw-switch input:checked + .ttbm-gw-slider {
+    background: var(--ttbm-a-primary, #2271b1);
+}
+.ttbm-gw-switch input:checked + .ttbm-gw-slider::before {
+    transform: translateX(18px);
+}
+
+/* ── Payments tab — WooCommerce / Custom Payment sub-tabs ── */
+.ttbm-pay-subtabs.nav-tab-wrapper {
+    border-bottom: none;
+    padding: 0;
+    margin: 0 0 20px;
+    display: flex;
+    gap: 8px;
+}
+.ttbm-pay-subtab-link {
+    background: var(--ttbm-a-surface, #fff);
+    border: 1px solid var(--ttbm-a-border-strong, #cbd5e1);
+    border-radius: var(--ttbm-a-radius-sm, 6px);
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ttbm-a-text-secondary, #334155) !important;
+    text-decoration: none;
+}
+.ttbm-pay-subtab-link:hover {
+    border-color: var(--ttbm-a-primary, #2271b1);
+    color: var(--ttbm-a-primary, #2271b1) !important;
+}
+.ttbm-pay-subtab-link.is-active {
+    background: var(--ttbm-a-primary, #2271b1);
+    border-color: var(--ttbm-a-primary, #2271b1);
+    color: #fff !important;
+}
+
+/* Enable WooCommerce Payment toggle row */
+.ttbm-pay-field-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--ttbm-a-border, #e2e8f0);
+}
+.ttbm-pay-field-row:last-child {
+    border-bottom: none;
+}
+.ttbm-pay-toggle-label,
+.ttbm-pay-field-label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ttbm-a-text, #0f172a);
+    min-width: 220px;
+}
+.ttbm-pay-toggle-sub {
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--ttbm-a-muted, #64748b);
+}
+.ttbm-pay-field-control {
+    flex: 1;
+    max-width: 420px;
+}
+.ttbm-pay-field-control select.formControl {
+    width: 100%;
+}
+.ttbm-pay-field-desc {
+    margin: 6px 0 0;
+    font-size: 12px;
+    color: var(--ttbm-a-help, #94a3b8);
+}
+.ttbm-pay-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ttbm-a-text-secondary, #334155);
+}
+.ttbm-pay-book-status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 18px;
+}
+.ttbm-pay-book-status-msg {
+    font-size: 12px;
+    color: var(--ttbm-a-success, #0a7c2f);
+}
+
+/* WooCommerce not-activated warning */
+.ttbm-pay-wc-warning {
+    background: var(--ttbm-a-warning-soft, #fffbeb);
+    border: 1px solid var(--ttbm-a-warning, #d97706);
+    border-radius: var(--ttbm-a-radius, 10px);
+    padding: 18px 20px;
+}
+.ttbm-pay-wc-warning-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 6px;
+    font-weight: 700;
+    color: var(--ttbm-a-warning, #92400e);
+}
+.ttbm-pay-wc-warning-desc {
+    margin: 0 0 14px;
+    color: var(--ttbm-a-text-secondary, #334155);
+    font-size: 13px;
+}
+#ttbm-pay-activate-woo-progress {
+    margin-top: 14px;
+}
+.ttbm-pay-progress-track {
+    width: 100%;
+    height: 8px;
+    background: var(--ttbm-a-bg, #f0f0f1);
+    border-radius: 100px;
+    overflow: hidden;
+}
+.ttbm-pay-progress-fill {
+    height: 100%;
+    width: 0;
+    background: var(--ttbm-a-primary, #2271b1);
+    border-radius: 100px;
+    transition: width .3s ease;
+}
+#ttbm-pay-activate-woo-status {
+    margin: 8px 0 0;
+    font-size: 12px;
+    color: var(--ttbm-a-muted, #64748b);
+}
+
+/* Accordions (WooCommerce Payment Methods / Additional Settings) */
+.ttbm-pay-accordion {
+    border: 1px solid var(--ttbm-a-border, #dcdcde);
+    border-radius: var(--ttbm-a-radius, 10px);
+    margin-top: 14px;
+    overflow: hidden;
+}
+.ttbm-pay-acc-header {
+    width: 100%;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    text-align: left;
+    padding: 12px 16px;
+    background: var(--ttbm-a-bg, #f6f7f7);
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ttbm-a-text, #1d2327);
+}
+.ttbm-pay-acc-header > span:first-child {
+    flex: 1;
+}
+.ttbm-pay-acc-header .dashicons {
+    transition: transform .2s ease;
+    color: var(--ttbm-a-muted, #50575e);
+}
+.ttbm-pay-acc-header.is-open {
+    background: var(--ttbm-a-primary-soft, #eff6ff);
+    color: var(--ttbm-a-primary, #2271b1);
+}
+.ttbm-pay-acc-header.is-open .dashicons {
+    transform: rotate(180deg);
+    color: var(--ttbm-a-primary, #2271b1);
+}
+.ttbm-pay-acc-body {
+    padding: 16px;
+}
+
+/* Custom Payment gateway cards — PRO badge */
+.ttbm-pm-pro-badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    padding: 3px 10px;
+    border-radius: 9px;
+    background: var(--ttbm-a-warning-soft, #fffbeb);
+    color: var(--ttbm-a-warning, #b45309);
+    border: 1px solid var(--ttbm-a-warning, #d97706);
+}
+.ttbm-pay-confirmation-page {
+    margin-top: 18px;
+}
+
+/* WooCommerce install/activate modal (mirrors the reference plugin's
+   "Set Up WooCommerce" popup, reusing the .ttbm-gw-modal chrome). */
+.ttbm-woo-modal-box {
+    width: 480px;
+}
+.ttbm-gw-modal-header .dashicons {
+    color: var(--ttbm-a-primary, #2271b1);
+    font-size: 20px;
+}
+.ttbm-woo-modal-desc {
+    margin: 0 0 18px;
+    font-size: 14px;
+    color: var(--ttbm-a-text-secondary, #334155);
+    line-height: 1.6;
+}
+#ttbm-woo-modal-status-text {
+    margin: 10px 0 0;
+    font-size: 13px;
+    color: var(--ttbm-a-muted, #50575e);
+    text-align: center;
+    min-height: 20px;
+}
+#ttbm-woo-modal-status-text.is-success {
+    color: var(--ttbm-a-success, #039855);
+    font-weight: 600;
+}
+#ttbm-woo-modal-status-text.is-error {
+    color: var(--ttbm-a-danger, #d92d20);
+    font-weight: 600;
+}

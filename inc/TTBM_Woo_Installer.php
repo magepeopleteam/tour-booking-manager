@@ -79,9 +79,14 @@ if ( ! class_exists( 'TTBM_Woo_Installer' ) ) {
 
 		/**
 		 * Should we show the popup on this page load?
+		 *
+		 * WooCommerce is now an optional integration, not a hard requirement, so
+		 * this installer prompt is permanently disabled. The class stays loaded
+		 * (dormant) rather than removed, in case a future release needs to
+		 * reintroduce an opt-in "connect WooCommerce" prompt.
 		 */
 		private function should_show_popup(): bool {
-			return ! $this->is_woo_active();
+			return false;
 		}
 
 		/**

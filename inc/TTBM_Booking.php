@@ -102,6 +102,14 @@
 			]);
 		}
 		public function booking_panel($tour_id, $tour_date = '', $hotel_id = '') {
+				if (!TTBM_Global_Function::has_woocommerce()) {
+					?>
+                    <div class="dLayout allCenter bgWarning">
+                        <h3 class="textWhite"><?php esc_html_e('Booking is not available yet. Please check back soon.', 'tour-booking-manager'); ?></h3>
+                    </div>
+					<?php
+					return;
+				}
 				$tour_date = $tour_date ?: current(TTBM_Function::get_date($tour_id));
 				$ttbm_type = TTBM_Function::get_tour_type($tour_id);
 				if ($ttbm_type != 'hotel') {

@@ -28,27 +28,32 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/settings/TTBM_Setting_API.php';
 				// Always load WooCommerce Installer (popup shows when Woo is not active)
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woo_Installer.php';
-				if (TTBM_Global_Function::check_woocommerce() == 1) {
-					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Function.php';
-					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Layout.php';
-					require_once TTBM_PLUGIN_DIR . '/support/elementor/elementor-support.php';
-					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin.php';
-					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Frontend.php';
-					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Query.php';
-					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Shortcodes.php';
-					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Theme_Align.php';
-					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Filter_Pagination.php';
-					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Data_Display.php';
-					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Tour_List.php';
-					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Details_Layout.php';
-					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Travel_List_Tab_Details.php';
-					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Details_Layout.php';
-					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Booking.php';
+				// Core plugin: tours/hotels display, admin, shortcodes. Loads regardless
+				// of whether WooCommerce is active, so the plugin is fully usable without it.
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Function.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Layout.php';
+				require_once TTBM_PLUGIN_DIR . '/support/elementor/elementor-support.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Frontend.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Query.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Shortcodes.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Theme_Align.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Filter_Pagination.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Data_Display.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Tour_List.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Details_Layout.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Travel_List_Tab_Details.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Details_Layout.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Booking.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Travel_List_CPT_Tabs.php';
+				// WooCommerce-specific integration: cart/checkout hooks and the WC My
+				// Account wishlist endpoint have no non-WC equivalent yet, so they stay
+				// gated until the native checkout/booking phase lands.
+				if (TTBM_Global_Function::has_woocommerce()) {
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Booking.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Woocommerce.php';
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Wishlist.php';
 					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin_Wishlist.php';
-					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Travel_List_CPT_Tabs.php';
 				}
 			}
 			public function appsero_init_tracker_ttbm() {
@@ -157,7 +162,9 @@
 				wp_localize_script('ttbm_script', 'ttbm_ajax', array(
 					'ajax_url' => admin_url('admin-ajax.php'),
 					'nonce' => wp_create_nonce('ttbm_frontend_nonce'),
-					'wishlist_url' => wc_get_account_endpoint_url('ttbm-wishlist')
+					// Wishlist lives on the WooCommerce My Account page (see TTBM_Wishlist.php),
+					// so there is no destination URL to give without WooCommerce.
+					'wishlist_url' => TTBM_Global_Function::has_woocommerce() ? wc_get_account_endpoint_url('ttbm-wishlist') : ''
 				));
 				do_action('ttbm_frontend_script');
 			}

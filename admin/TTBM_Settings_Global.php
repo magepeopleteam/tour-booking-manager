@@ -19,7 +19,36 @@
 				if (strpos($hook, 'ttbm_settings_page') === false) {
 					return;
 				}
-				wp_enqueue_style('ttbm-global-settings', TTBM_PLUGIN_URL . '/assets/admin/ttbm-global-settings.css', [], TTBM_PLUGIN_VERSION);
+				// filemtime(), not TTBM_PLUGIN_VERSION: this stylesheet (and the
+				// script below) change often during active development of this
+				// tab — a static version string means the browser keeps serving
+				// a stale cached copy across edits until the plugin version is
+				// bumped, matching the same fix already used for ttbm_details.css.
+				wp_enqueue_style('ttbm-global-settings', TTBM_PLUGIN_URL . '/assets/admin/ttbm-global-settings.css', [], filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-global-settings.css'));
+				// The Payments tab embeds each WooCommerce gateway's own native
+				// settings form (generate_settings_html()) inline. That markup is
+				// plain, unstyled HTML with no custom classes — it relies entirely
+				// on WooCommerce's own admin stylesheet to render checkboxes/selects/
+				// tooltips correctly. Without it, checkboxes fall back to raw browser/
+				// OS theme rendering (round in some environments, easily mistaken for
+				// a radio button).
+				if (TTBM_Global_Function::has_woocommerce()) {
+					wp_enqueue_style('woocommerce_admin_styles');
+					wp_enqueue_script('wc-enhanced-select');
+					wp_enqueue_script('wc-jquery-tiptip');
+				}
+				wp_enqueue_script('ttbm-payment-settings', TTBM_PLUGIN_URL . '/assets/admin/ttbm-payment-settings.js', array('jquery', 'ttbm_hotel_booking', 'ttbm-admin-toast'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-payment-settings.js'), true);
+				wp_localize_script('ttbm-payment-settings', 'ttbmPaymentSettings', array(
+					'enabled_label' => esc_html__('Enabled', 'tour-booking-manager'),
+					'disabled_label' => esc_html__('Disabled', 'tour-booking-manager'),
+					'error_label' => esc_html__('An error occurred. Please try again.', 'tour-booking-manager'),
+					'saving_label' => esc_html__('Saving…', 'tour-booking-manager'),
+					/* translators: %s: booking mode name, e.g. "WooCommerce Checkout" */
+					'mode_saved_label' => esc_html__('Booking mode changed to %s.', 'tour-booking-manager'),
+					'wc_mode_label' => esc_html__('WooCommerce Checkout', 'tour-booking-manager'),
+					'custom_mode_label' => esc_html__('Custom Payment', 'tour-booking-manager'),
+					'active_label' => esc_html__('Active', 'tour-booking-manager'),
+				));
 			}
 			public function global_settings_menu() {
 				$label = TTBM_Function::get_name();

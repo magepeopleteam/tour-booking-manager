@@ -14,6 +14,188 @@
 if (!defined('ABSPATH')) {
 	die;
 } // Cannot access pages directly.
+
+// WooCommerce fallback stub functions to prevent fatal errors when WooCommerce is inactive.
+// Hooked to plugins_loaded so that WooCommerce (if active or being activated) has loaded first,
+// preventing any redeclaration conflicts.
+add_action('plugins_loaded', 'ttbm_define_woocommerce_fallbacks', 1);
+function ttbm_define_woocommerce_fallbacks() {
+	if (class_exists('WooCommerce')) {
+		return;
+	}
+
+	// Detect if WooCommerce is being activated during this request to avoid redeclaration conflicts.
+	$is_activating = false;
+	if (isset($GLOBALS['ttbm_activating_woocommerce']) && $GLOBALS['ttbm_activating_woocommerce']) {
+		$is_activating = true;
+	}
+	if (!$is_activating && (is_admin() || (defined('WP_CLI') && WP_CLI) || isset($_SERVER['argv']))) {
+		// Web activation check (single or bulk).
+		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'activate') {
+			if (isset($_REQUEST['plugin']) && strpos(sanitize_text_field(wp_unslash($_REQUEST['plugin'])), 'woocommerce.php') !== false) {
+				$is_activating = true;
+			}
+			if (isset($_REQUEST['checked']) && is_array($_REQUEST['checked'])) {
+				foreach ($_REQUEST['checked'] as $checked_plugin) {
+					if (strpos(sanitize_text_field(wp_unslash($checked_plugin)), 'woocommerce.php') !== false) {
+						$is_activating = true;
+						break;
+					}
+				}
+			}
+		}
+		// TTBM_Woo_Installer's own AJAX-driven install/activate flow
+		// (admin-ajax.php?action=ttbm_woo_step) — same collision risk as the
+		// plugins.php activation URL above, but doesn't match that pattern.
+		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'ttbm_woo_step') {
+			$is_activating = true;
+		}
+		// CLI / script activation check.
+		if (!$is_activating && isset($_SERVER['argv']) && is_array($_SERVER['argv'])) {
+			foreach ($_SERVER['argv'] as $arg) {
+				if (strpos($arg, 'woocommerce') !== false) {
+					$is_activating = true;
+					break;
+				}
+			}
+		}
+	}
+
+	if ($is_activating) {
+		return;
+	}
+
+	if (!class_exists('TTBM_WC_Cart_Fallback')) {
+		class TTBM_WC_Cart_Fallback {
+			public function get_cart() { return array(); }
+			public function empty_cart() {}
+		}
+	}
+	if (!class_exists('TTBM_WC_Customer_Fallback')) {
+		class TTBM_WC_Customer_Fallback {
+			public function get_is_vat_exempt() { return false; }
+		}
+	}
+	if (!class_exists('TTBM_WC_Fallback')) {
+		class TTBM_WC_Fallback {
+			public $cart;
+			public $customer;
+			public $version = '0.0.0';
+			public function __construct() {
+				$this->cart = new TTBM_WC_Cart_Fallback();
+				$this->customer = new TTBM_WC_Customer_Fallback();
+			}
+		}
+	}
+	if (!function_exists('WC')) {
+		function WC() {
+			static $instance = null;
+			if (null === $instance) {
+				$instance = new TTBM_WC_Fallback();
+			}
+			return $instance;
+		}
+	}
+	if (!function_exists('wc_get_orders')) {
+		function wc_get_orders($args = array()) { return array(); }
+	}
+	if (!function_exists('wc_get_order')) {
+		function wc_get_order($order_id) { return false; }
+	}
+	if (!function_exists('wc_get_product')) {
+		function wc_get_product($product_id) { return false; }
+	}
+	if (!function_exists('wc_price')) {
+		function wc_price($price, $args = array()) {
+			$amount   = (float) $price;
+			$settings = wp_parse_args(
+				(array) get_option('ttbm_currency_settings', array()),
+				array(
+					'symbol'       => '$',
+					'position'     => 'left',
+					'decimal_sep'  => '.',
+					'thousand_sep' => ',',
+					'num_decimals' => 2,
+				)
+			);
+			$symbol   = (string) $settings['symbol'];
+			$position = (string) $settings['position'];
+			$dec_sep  = (string) $settings['decimal_sep'];
+			$thou_sep = (string) $settings['thousand_sep'];
+			$decimals = (int) $settings['num_decimals'];
+			$number   = number_format($amount, $decimals, $dec_sep, $thou_sep);
+			switch ($position) {
+				case 'right':       return '<span class="woocommerce-Price-amount amount">' . $number . '<span class="woocommerce-Price-currencySymbol">' . esc_html($symbol) . '</span></span>';
+				case 'left_space':  return '<span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">' . esc_html($symbol) . '</span>&nbsp;' . $number . '</span>';
+				case 'right_space': return '<span class="woocommerce-Price-amount amount">' . $number . '&nbsp;<span class="woocommerce-Price-currencySymbol">' . esc_html($symbol) . '</span></span>';
+				default:            return '<span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">' . esc_html($symbol) . '</span>' . $number . '</span>';
+			}
+		}
+	}
+	if (!function_exists('get_woocommerce_currency')) {
+		function get_woocommerce_currency() { return 'USD'; }
+	}
+	if (!function_exists('get_woocommerce_currency_symbol')) {
+		function get_woocommerce_currency_symbol($currency = 'USD') {
+			$settings = get_option('ttbm_currency_settings', array());
+			return isset($settings['symbol']) ? (string) $settings['symbol'] : '$';
+		}
+	}
+	if (!function_exists('wc_prices_include_tax')) {
+		function wc_prices_include_tax() { return false; }
+	}
+	if (!function_exists('wc_get_price_thousand_separator')) {
+		function wc_get_price_thousand_separator() {
+			$settings = get_option('ttbm_currency_settings', array());
+			return isset($settings['thousand_sep']) ? (string) $settings['thousand_sep'] : ',';
+		}
+	}
+	if (!function_exists('wc_get_price_decimal_separator')) {
+		function wc_get_price_decimal_separator() {
+			$settings = get_option('ttbm_currency_settings', array());
+			return isset($settings['decimal_sep']) ? (string) $settings['decimal_sep'] : '.';
+		}
+	}
+	if (!function_exists('is_woocommerce')) {
+		function is_woocommerce() { return false; }
+	}
+	if (!function_exists('is_product')) {
+		function is_product() { return false; }
+	}
+	if (!function_exists('wc_get_cart_url')) {
+		function wc_get_cart_url() { return ''; }
+	}
+	if (!function_exists('wc_get_checkout_url')) {
+		function wc_get_checkout_url() { return ''; }
+	}
+	if (!function_exists('wc_get_account_endpoint_url')) {
+		function wc_get_account_endpoint_url($endpoint) { return ''; }
+	}
+	if (!function_exists('wc_format_decimal')) {
+		function wc_format_decimal($number, $dp = false, $trim_zeros = false) {
+			$number = (float) str_replace(',', '.', (string) $number);
+			return false === $dp ? $number : round($number, (int) $dp);
+		}
+	}
+	if (!function_exists('wc_get_price_including_tax')) {
+		function wc_get_price_including_tax($product, $args = array()) {
+			$args = wp_parse_args($args, array('qty' => 1, 'price' => ''));
+			return '' !== $args['price'] ? (float) $args['price'] * (float) $args['qty'] : 0.0;
+		}
+	}
+	if (!function_exists('wc_get_price_excluding_tax')) {
+		function wc_get_price_excluding_tax($product, $args = array()) {
+			$args = wp_parse_args($args, array('qty' => 1, 'price' => ''));
+			return '' !== $args['price'] ? (float) $args['price'] * (float) $args['qty'] : 0.0;
+		}
+	}
+	if (!function_exists('wc_get_order_item_meta')) {
+		function wc_get_order_item_meta($item_id, $key, $single = true) {
+			return $single ? '' : array();
+		}
+	}
+}
+
 if (!class_exists('TTBM_Woocommerce_Plugin')) {
 
 

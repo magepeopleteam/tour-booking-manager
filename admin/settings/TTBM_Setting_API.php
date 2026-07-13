@@ -303,9 +303,10 @@
 					'id' => $args['section'] . '[' . $args['id'] . ']',
 					'echo' => 0
 				);
-				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  
-				$dropdown = wp_dropdown_pages($dropdown_args);
-				echo wp_kses_post($dropdown);
+				// wp_dropdown_pages() already escapes its own output; wp_kses_post()
+				// would strip <select>/<option> entirely since they're not in its
+				// allowed-HTML list, leaving just a jumble of page-title text.
+				echo wp_dropdown_pages($dropdown_args); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			function sanitize_options($options) {
 				if (!$options) {

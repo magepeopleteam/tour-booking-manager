@@ -397,6 +397,56 @@
 	/*************************/
 	.ttbm_style [class*="dButton"].mpActive { background-color: var(--color_theme); color: var(--color_theme_alter); }
 }
+/* ── Confirm-booking CTA (Book Now / Book This Trip / login-gate submit) ──
+   Same --color_theme / --button_shadows tokens every other themed button
+   already reads from Style Settings — no new hardcoded brand color. */
+.ttbm_style .ttbm-confirm-btn {
+	position: relative;
+	width: 100%;
+	border-radius: var(--dbr_d);
+	border: none;
+	box-shadow: var(--button_shadows);
+	transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+}
+.ttbm_style .ttbm-confirm-btn:hover {
+	box-shadow: 0 10px 18px rgb(51 65 80 / 12%), 0 18px 50px rgb(51 65 80 / 16%);
+	transform: translateY(-1px);
+}
+.ttbm_style .ttbm-confirm-btn:active {
+	transform: translateY(0);
+	box-shadow: var(--button_shadows);
+}
+.ttbm_style .ttbm-confirm-btn:focus-visible {
+	outline: 2px solid var(--color_theme);
+	outline-offset: 2px;
+}
+.ttbm_style .ttbm-confirm-btn:disabled,
+.ttbm_style .ttbm-confirm-btn.is-loading {
+	cursor: default;
+	pointer-events: none;
+}
+.ttbm_style .ttbm-confirm-btn.is-loading {
+	color: transparent !important;
+}
+.ttbm_style .ttbm-confirm-btn.is-loading span {
+	visibility: hidden;
+}
+.ttbm_style .ttbm-confirm-btn.is-loading::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 18px;
+	height: 18px;
+	margin: -9px 0 0 -9px;
+	border: 2px solid rgba(255, 255, 255, .45);
+	border-top-color: var(--color_button, #fff);
+	border-radius: 50%;
+	animation: ttbm-confirm-btn-spin .7s linear infinite;
+}
+@keyframes ttbm-confirm-btn-spin {
+	to { transform: rotate(360deg); }
+}
 /******************************************************************** Helper Section************************************************/
 @media only screen and (min-width: 10px) {
 	/********Helper Class***********/

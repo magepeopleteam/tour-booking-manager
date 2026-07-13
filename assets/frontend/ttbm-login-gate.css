@@ -1,0 +1,86 @@
+.ttbm-login-gate {
+	width: 100%;
+}
+.ttbm-login-gate-panel {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	max-width: 320px;
+}
+.ttbm-login-gate-fields-login,
+.ttbm-login-gate-fields-register {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+.ttbm-login-gate-title {
+	font-weight: 600;
+	margin: 0 0 4px;
+}
+.ttbm-login-gate-field {
+	width: 100%;
+	padding: 8px 10px;
+	border: 1px solid #d0d5dd;
+	border-radius: 6px;
+	font-size: 14px;
+}
+.ttbm-login-gate-msg {
+	min-height: 18px;
+	font-size: 13px;
+	margin: 2px 0 0;
+}
+.ttbm-login-gate-msg.is-error {
+	color: #d63638;
+}
+.ttbm-login-gate-switch {
+	font-size: 13px;
+	margin: 0;
+}
+
+/* ---- Click-time login modal (book_now/book_now_smart/hotel_book_now) ---- */
+.ttbm-login-required-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 99999;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	background: rgba(15, 23, 42, .55);
+}
+.ttbm-login-required-modal-overlay {
+	position: absolute;
+	inset: 0;
+}
+.ttbm-login-required-modal-dialog {
+	position: relative;
+	width: 100%;
+	max-width: 360px;
+	background: #fff;
+	border-radius: 12px;
+	padding: 32px 24px 24px;
+	box-shadow: 0 20px 60px rgba(15, 23, 42, .25);
+}
+.ttbm-login-required-modal-close {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	z-index: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	border: none;
+	background: none;
+	font-size: 22px;
+	line-height: 1;
+	color: #94a3b8;
+	cursor: pointer;
+	padding: 0;
+}
+.ttbm-login-required-modal-close:hover {
+	color: #1e293b;
+}
+.ttbm-login-required-modal .ttbm-login-gate-panel {
+	max-width: none;
+}

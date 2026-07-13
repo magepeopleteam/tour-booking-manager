@@ -99,6 +99,9 @@
 				update_post_meta($post_id, 'check_if_run_once', true);
 			}
 			public function create_hidden_wc_product_on_publish($post_id, $post) {
+				if (!TTBM_Global_Function::has_woocommerce()) {
+					return;
+				}
 				if ($post->post_type == TTBM_Function::get_cpt_name() && $post->post_status == 'publish' && empty(TTBM_Global_Function::get_post_info($post_id, 'check_if_run_once'))) {
 					$new_post = array(
 						'post_title' => $post->post_title,
@@ -137,6 +140,9 @@
 				return $loop->post_count;
 			}
 			public function run_link_product_on_save($post_id) {
+				if (!TTBM_Global_Function::has_woocommerce()) {
+					return;
+				}
 				if (self::$syncing_hidden_product) {
 					return;
 				}
@@ -205,6 +211,9 @@
 				self::$syncing_hidden_product = false;
 			}
 			public function hide_wc_hidden_product_from_product_list($query) {
+				if (!TTBM_Global_Function::has_woocommerce()) {
+					return;
+				}
 				global $pagenow;
 				$q_vars = &$query->query_vars;
 				if ($pagenow == 'edit.php' && isset($q_vars['post_type']) && $q_vars['post_type'] == 'product') {
@@ -220,6 +229,9 @@
 				}
 			}
 			public function hide_hidden_wc_product_from_frontend() {
+				if (!TTBM_Global_Function::has_woocommerce()) {
+					return;
+				}
 				global $post, $wp_query;
 				if (is_product()) {
 					$post_id = $post->ID;
@@ -239,6 +251,9 @@
 			}
 			//**************Google search url hidden*********************//
 			public function url_exclude_search_engine() {
+				if (!TTBM_Global_Function::has_woocommerce()) {
+					return;
+				}
 				global $post;
 				if (is_single() && is_product()) {
 					$post_id = $post->ID;
@@ -254,6 +269,9 @@
 				}
 			}
 			public function get_all_hidden_product_id() {
+				if (!TTBM_Global_Function::has_woocommerce()) {
+					return [];
+				}
 				$product_id = [];
 				$query = TTBM_Global_Function::query_post_type(TTBM_Function::get_cpt_name());
 				foreach ($query->posts as $result) {

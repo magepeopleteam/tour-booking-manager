@@ -44,6 +44,9 @@ if (!class_exists('TTBM_Hidden_Hotel_Product')) {
             update_post_meta($post_id, 'check_if_run_once', true);
         }
         public function create_hidden_wc_product_on_publish($post_id, $post) {
+            if (!TTBM_Global_Function::has_woocommerce()) {
+                return;
+            }
             if ($post->post_type == 'ttbm_hotel' && $post->post_status == 'publish' && empty(TTBM_Global_Function::get_post_info($post_id, 'check_if_run_once'))) {
                 $new_post = array(
                     'post_title' => $post->post_title,
@@ -82,6 +85,9 @@ if (!class_exists('TTBM_Hidden_Hotel_Product')) {
             return $loop->post_count;
         }
         public function run_link_product_on_save($post_id) {
+            if (!TTBM_Global_Function::has_woocommerce()) {
+                return;
+            }
             if (get_post_type($post_id) == 'ttbm_hotel') {
                 if (!isset($_POST['ttbm_hotel_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_hotel_type_nonce'])), 'ttbm_hotel_type_nonce')) {
                     return;
@@ -120,6 +126,9 @@ if (!class_exists('TTBM_Hidden_Hotel_Product')) {
             }
         }
         public function hide_wc_hidden_product_from_product_list($query) {
+            if (!TTBM_Global_Function::has_woocommerce()) {
+                return;
+            }
             global $pagenow;
             $q_vars = &$query->query_vars;
             if ($pagenow == 'edit.php' && isset($q_vars['post_type']) && $q_vars['post_type'] == 'product') {
@@ -135,6 +144,9 @@ if (!class_exists('TTBM_Hidden_Hotel_Product')) {
             }
         }
         public function hide_hidden_wc_product_from_frontend() {
+            if (!TTBM_Global_Function::has_woocommerce()) {
+                return;
+            }
             global $post, $wp_query;
             if (is_product()) {
                 $post_id = $post->ID;
@@ -154,6 +166,9 @@ if (!class_exists('TTBM_Hidden_Hotel_Product')) {
         }
         //**************Google search url hidden*********************//
         public function url_exclude_search_engine() {
+            if (!TTBM_Global_Function::has_woocommerce()) {
+                return;
+            }
             global $post;
             if (is_single() && is_product()) {
                 $post_id = $post->ID;
@@ -169,6 +184,9 @@ if (!class_exists('TTBM_Hidden_Hotel_Product')) {
             }
         }
         public function get_all_hidden_product_id() {
+            if (!TTBM_Global_Function::has_woocommerce()) {
+                return [];
+            }
             $product_id = [];
             $query = TTBM_Global_Function::query_post_type('ttbm_hotel');
             foreach ($query->posts as $result) {

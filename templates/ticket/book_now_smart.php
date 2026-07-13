@@ -13,17 +13,17 @@ if ( empty( $ttbm_product_id ) && ! TTBM_Global_Function::has_woocommerce() && a
 if ( empty( $ttbm_product_id ) ) {
 	return;
 }
-if ( TTBM_Payment_Settings::login_required_for_booking() && ! is_user_logged_in() ) {
-	TTBM_Payment_Settings::render_login_prompt();
-	return;
-}
+// Booking form is always visible, logged in or not — login (if required) is
+// only enforced when the visitor actually clicks to book, via the modal
+// below. See TTBM_Payment_Settings::render_login_modal()'s docblock.
+$ttbm_require_login = TTBM_Payment_Settings::login_required_for_booking() && ! is_user_logged_in();
 $seat_infos        = TTBM_Global_Function::get_post_info( $tour_id, 'ttbma_seat_plan', array() );
 $display           = TTBM_Global_Function::get_post_info( $tour_id, 'ttbma_display_seat_plan', 'off' );
 $display_front_end = TTBM_Global_Function::get_post_info( $tour_id, 'frontend_display_seat_plan', 'on' );
 $seat_plan         = class_exists( 'TTBMA_Seat_Plan' ) && $display === 'on' && sizeof( $seat_infos ) > 0 && $display_front_end === 'on' ? 'dNone' : '';
 $button_type       = apply_filters( 'ttbm_book_now_button_type', 'button', $tour_id );
 ?>
-<div class="ttbm_book_now_area ttbm_smart_book_now_area" title="<?php esc_attr_e( 'Select Date First', 'tour-booking-manager' ); ?>" data-placeholder>
+<div class="ttbm_book_now_area ttbm_smart_book_now_area" title="<?php esc_attr_e( 'Select Date First', 'tour-booking-manager' ); ?>" data-placeholder data-ttbm-require-login="<?php echo $ttbm_require_login ? '1' : '0'; ?>">
 	<div class="ttbm_order_summary ttbm_smart_order_summary" aria-hidden="true">
 		<div class="ttbm_summary_values">
 			<div class="ttbm_summary_item">
@@ -42,10 +42,10 @@ $button_type       = apply_filters( 'ttbm_book_now_button_type', 'button', $tour
 			<?php esc_html_e( 'Seat Plan', 'tour-booking-manager' ); ?>
 		</button>
 	<?php } ?>
-	<button class="ttbm_smart_book_trip_btn ttbm_book_now <?php echo esc_attr( $seat_plan ); ?>" type="<?php echo esc_attr( $button_type ); ?>">
+	<button class="ttbm_smart_book_trip_btn ttbm_book_now ttbm-confirm-btn <?php echo esc_attr( $seat_plan ); ?>" type="<?php echo esc_attr( $button_type ); ?>">
 		<?php esc_html_e( 'Book This Trip', 'tour-booking-manager' ); ?>
 	</button>
-	<button type="submit" name="add-to-cart" value="<?php echo esc_attr( $ttbm_product_id ); ?>" class="dNone ttbm_add_to_cart">
+	<button type="submit" name="add-to-cart" value="<?php echo esc_attr( $ttbm_product_id ); ?>" class="dNone ttbm_add_to_cart ttbm-confirm-btn">
 		<?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?>
 	</button>
 	<ul class="ttbm_smart_trust_signals">
@@ -64,4 +64,7 @@ $button_type       = apply_filters( 'ttbm_book_now_button_type', 'button', $tour
 			</span>
 		</li>
 	</ul>
+	<?php if ( $ttbm_require_login ) : ?>
+		<?php TTBM_Payment_Settings::render_login_modal( $tour_id, 'book_now_smart' ); ?>
+	<?php endif; ?>
 </div>

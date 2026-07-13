@@ -63,9 +63,140 @@
 				add_action('wp_ajax_ttbm_wc_save_gateway', array($this, 'ajax_save_gateway'));
 				add_action('wp_ajax_ttbm_wc_toggle_gateway', array($this, 'ajax_toggle_gateway'));
 				add_action('wp_ajax_ttbm_save_book_status', array($this, 'ajax_save_book_status'));
+				add_action('wp_ajax_ttbm_save_booking_mode', array($this, 'ajax_save_booking_mode'));
+				add_action('wp_ajax_ttbm_save_misc_fields', array($this, 'ajax_save_misc_fields'));
+				add_action('wp_ajax_ttbm_portal_login', array($this, 'ajax_portal_login'));
+				add_action('wp_ajax_nopriv_ttbm_portal_login', array($this, 'ajax_portal_login'));
+				add_action('wp_ajax_ttbm_portal_register', array($this, 'ajax_portal_register'));
+				add_action('wp_ajax_nopriv_ttbm_portal_register', array($this, 'ajax_portal_register'));
+				// Logged-in only, deliberately no _nopriv sibling — see the
+				// docblock on ajax_render_book_now() for why it also has no nonce.
+				add_action('wp_ajax_ttbm_render_book_now', array($this, 'ajax_render_book_now'));
+				add_action('wp_enqueue_scripts', array($this, 'enqueue_login_gate_assets'));
+				add_action('admin_init', array($this, 'maybe_migrate_booking_mode'));
+				add_action('admin_notices', array($this, 'maybe_render_gateway_notice'));
 				add_filter('woocommerce_add_to_cart_redirect', array($this, 'add_to_cart_redirect'));
-				add_filter('woocommerce_get_checkout_order_received_url', array($this, 'checkout_order_received_url'), 10, 2);
+				// Real WooCommerce orders always use WooCommerce's own order-received/
+				// thank-you page — no filter on woocommerce_get_checkout_order_received_url
+				// here. The "Booking Confirmation" page (TTBM_Custom_Order_Confirmation,
+				// Pro-only) is exclusively for the custom (non-WooCommerce) payment
+				// checkout flow, which redirects itself and never touches WooCommerce's
+				// order-received URL at all.
 				add_filter('woocommerce_checkout_fields', array($this, 'maybe_hide_billing_fields'));
+			}
+			//------------------------------------------------------------------
+			// Booking mode (WooCommerce Checkout vs Custom Payment)
+			//------------------------------------------------------------------
+			// True once Pro is active — Pro hooks this filter itself (see
+			// TTBM_Custom_Checkout::filter_custom_payment_available()). This is
+			// deliberately just "can the custom-payment flow exist at all", NOT
+			// "is a gateway configured" — matching rbfw_booking_and_rental's
+			// has_pro() gate. A missing gateway is a separate warning shown
+			// inside the selector, not a reason to hide the selector itself.
+			public static function custom_payment_available() {
+				return (bool) apply_filters('ttbm_custom_payment_available', false);
+			}
+			// Whether at least one gateway is actually enabled for $mode — used
+			// only for the inline warning, never to hide/block the selector.
+			public static function has_gateway_for_mode($mode) {
+				if ($mode === 'custom') {
+					return (bool) apply_filters('ttbm_custom_payment_has_gateway', false);
+				}
+				if (!TTBM_Global_Function::has_woocommerce() || !function_exists('WC') || !WC()->payment_gateways()) {
+					return false;
+				}
+				return !empty(WC()->payment_gateways()->get_available_payment_gateways());
+			}
+			// The four states the selector can be in — mirrors the reference
+			// plugins' mode_availability(): 'both' is the only state where the
+			// admin has a real choice; the other three auto-resolve.
+			public static function mode_availability() {
+				$wc = TTBM_Global_Function::has_woocommerce();
+				$custom = self::custom_payment_available();
+				if ($wc && $custom) {
+					return 'both';
+				}
+				if ($wc) {
+					return 'woocommerce_only';
+				}
+				if ($custom) {
+					return 'custom_only';
+				}
+				return 'none';
+			}
+			// The effective booking mode: 'woocommerce' or 'custom'. Auto-resolves
+			// to whichever path can actually run when there's no real choice, so a
+			// stored preference never wins over reality (e.g. Pro deactivated after
+			// Custom Payment was selected).
+			public static function get_booking_mode() {
+				if (!TTBM_Global_Function::has_woocommerce()) {
+					return 'custom';
+				}
+				if (!self::custom_payment_available()) {
+					return 'woocommerce';
+				}
+				$opts = (array) get_option('ttbm_payment_settings', array());
+				return (isset($opts['ttbm_booking_mode']) && $opts['ttbm_booking_mode'] === 'custom') ? 'custom' : 'woocommerce';
+			}
+			// One-time migration from the legacy "Enable WooCommerce Payment"
+			// toggle: toggle off already meant Custom Payment was the effective
+			// checkout path (see the pre-migration TTBM_Custom_Checkout::
+			// wc_payment_enabled()), so a site with the toggle off must land in
+			// Custom Payment mode here too, not silently flip back to WooCommerce.
+			public function maybe_migrate_booking_mode() {
+				$opts = (array) get_option('ttbm_payment_settings', array());
+				if (isset($opts['ttbm_booking_mode'])) {
+					return;
+				}
+				$legacy_enabled = !isset($opts['ttbm_wc_payment_enabled']) || $opts['ttbm_wc_payment_enabled'] === 'on';
+				$opts['ttbm_booking_mode'] = $legacy_enabled ? 'woocommerce' : 'custom';
+				update_option('ttbm_payment_settings', $opts);
+			}
+			// Mode-aware "no gateway configured" message — only ever describes the
+			// currently ACTIVE mode, never both possible modes at once.
+			public static function gateway_warning($mode = null) {
+				$mode = $mode ?: self::get_booking_mode();
+				if (self::has_gateway_for_mode($mode)) {
+					return '';
+				}
+				return $mode === 'custom'
+					? esc_html__('No custom payment gateway is configured yet — bookings cannot be paid for.', 'tour-booking-manager')
+					: esc_html__('No WooCommerce payment gateway is enabled yet — bookings cannot be paid for.', 'tour-booking-manager');
+			}
+			public function maybe_render_gateway_notice() {
+				$screen = function_exists('get_current_screen') ? get_current_screen() : null;
+				if (!$screen || strpos((string) $screen->id, 'ttbm_settings_page') === false) {
+					return;
+				}
+				$warning = self::gateway_warning();
+				if (!$warning) {
+					return;
+				}
+				?>
+				<div class="notice notice-warning ttbm-pay-gateway-notice"><p><?php echo esc_html($warning); ?></p></div>
+				<?php
+			}
+			// The choice is only meaningful when both systems are available;
+			// otherwise the mode is auto-resolved and shouldn't be overridden —
+			// matches the reference plugins exactly (they don't block on a
+			// missing gateway either, only warn about it after saving).
+			public function ajax_save_booking_mode() {
+				check_ajax_referer('ttbm_save_booking_mode', 'nonce');
+				if (!current_user_can('manage_options')) {
+					wp_send_json_error(esc_html__('Permission denied.', 'tour-booking-manager'));
+				}
+				$mode = (isset($_POST['mode']) && sanitize_key(wp_unslash($_POST['mode'])) === 'custom') ? 'custom' : 'woocommerce';
+				if (self::mode_availability() !== 'both') {
+					wp_send_json_error(esc_html__('Booking mode can only be changed when both WooCommerce and the Pro custom gateways are available.', 'tour-booking-manager'));
+				}
+				$opts = (array) get_option('ttbm_payment_settings', array());
+				$opts['ttbm_booking_mode'] = $mode;
+				update_option('ttbm_payment_settings', $opts);
+				wp_send_json_success(array(
+					'mode' => $mode,
+					'has_gateway' => self::has_gateway_for_mode($mode),
+					'warning' => self::gateway_warning($mode),
+				));
 			}
 			public function register_section($sections) {
 				$sections[] = array(
@@ -85,22 +216,103 @@
 			 * TTBM_Setting_API::admin_init()) saves them normally on submit.
 			 */
 			public function render_tab_content() {
+				// Default sub-tab follows the active Booking Mode, not always
+				// WooCommerce — an admin running Custom Payment shouldn't land
+				// on the WooCommerce sub-tab on every page load.
+				$custom_is_default = self::get_booking_mode() === 'custom';
 				?>
                 <div class="ttbm-pay-subtabs nav-tab-wrapper">
-                    <a href="#" class="ttbm-pay-subtab-link is-active" data-subtab="woocommerce"><?php esc_html_e('WooCommerce', 'tour-booking-manager'); ?></a>
-                    <a href="#" class="ttbm-pay-subtab-link" data-subtab="custom"><?php esc_html_e('Custom Payment', 'tour-booking-manager'); ?></a>
+                    <a href="#" class="ttbm-pay-subtab-link<?php echo $custom_is_default ? '' : ' is-active'; ?>" data-subtab="woocommerce"><?php esc_html_e('WooCommerce', 'tour-booking-manager'); ?></a>
+                    <a href="#" class="ttbm-pay-subtab-link<?php echo $custom_is_default ? ' is-active' : ''; ?>" data-subtab="custom"><?php esc_html_e('Custom Payment', 'tour-booking-manager'); ?></a>
                 </div>
 
-                <div class="ttbm-pay-subtab-panel" data-subtab-panel="woocommerce">
+				<?php $this->render_booking_mode_selector(); ?>
+
+                <div class="ttbm-pay-subtab-panel" data-subtab-panel="woocommerce" <?php echo $custom_is_default ? 'style="display:none;"' : ''; ?>>
 					<?php $this->render_woocommerce_subtab(); ?>
                 </div>
-                <div class="ttbm-pay-subtab-panel" data-subtab-panel="custom" style="display:none;">
+                <div class="ttbm-pay-subtab-panel" data-subtab-panel="custom" <?php echo $custom_is_default ? '' : 'style="display:none;"'; ?>>
 					<?php $this->render_custom_payment_subtab(); ?>
                 </div>
-
-                <div class="justifyBetween _mT">
-                    <div></div>
-					<?php submit_button(); ?>
+				<?php
+			}
+			// Full-width, sits directly below the WooCommerce/Custom-Payment
+			// sub-tab bar. Always renders as a titled "Booking Mode" section
+			// with both cards — when mode_availability() isn't 'both', the
+			// unavailable card renders disabled (with an explanation) instead
+			// of the whole section collapsing into a single line of text, so
+			// the feature is always visibly present, matching the reference
+			// plugins' card layout in every state.
+			private function render_booking_mode_selector() {
+				$availability = self::mode_availability();
+				$wc_active = TTBM_Global_Function::has_woocommerce();
+				$custom_active = self::custom_payment_available();
+				$mode = self::get_booking_mode();
+				$is_wc = $mode === 'woocommerce';
+				$is_custom = $mode === 'custom';
+				$can_choose = 'both' === $availability;
+				$has_gateway = self::has_gateway_for_mode($mode);
+				?>
+                <div class="ttbm-booking-mode <?php echo $can_choose ? '' : 'is-locked'; ?>" data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_save_booking_mode')); ?>" data-can-choose="<?php echo $can_choose ? '1' : '0'; ?>">
+                    <div class="ttbm-booking-mode-head">
+                        <h3><?php esc_html_e('Booking Mode', 'tour-booking-manager'); ?></h3>
+						<?php if ($can_choose) : ?>
+                            <p><?php esc_html_e('Choose exactly one flow to process bookings. This single switch decides everything below, so WooCommerce and Custom Payment never both try to handle the same booking. Your choice is saved instantly.', 'tour-booking-manager'); ?></p>
+						<?php elseif ('none' === $availability) : ?>
+                            <p class="ttbm-booking-mode-auto"><span class="dashicons dashicons-warning"></span> <?php esc_html_e('No booking flow is available yet: WooCommerce is not active and the Tour Pro addon is not active. Activate one of them to start taking bookings.', 'tour-booking-manager'); ?></p>
+						<?php elseif ('woocommerce_only' === $availability) : ?>
+                            <p class="ttbm-booking-mode-auto"><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e('WooCommerce is the only booking flow available right now — bookings are processed through it automatically. Activate the Tour Pro addon to unlock Custom Payment and a mode switch here.', 'tour-booking-manager'); ?></p>
+						<?php else : ?>
+                            <p class="ttbm-booking-mode-auto"><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e('Custom Payment is the only booking flow available right now — WooCommerce is not active, so bookings are processed through Custom Payment automatically. Activate WooCommerce to unlock a mode switch here.', 'tour-booking-manager'); ?></p>
+						<?php endif; ?>
+                    </div>
+                    <div class="ttbm-booking-mode-cards">
+                        <div class="ttbm-booking-mode-card <?php echo $is_wc ? 'is-active' : ''; ?> <?php echo $wc_active ? '' : 'is-disabled'; ?>" data-mode="woocommerce" data-subtab="woocommerce">
+                            <span class="ttbm-booking-mode-card-icon dashicons dashicons-cart"></span>
+                            <div class="ttbm-booking-mode-card-body">
+                                <div class="ttbm-booking-mode-card-head">
+                                    <span class="ttbm-booking-mode-card-title"><?php esc_html_e('WooCommerce Checkout', 'tour-booking-manager'); ?></span>
+									<?php if ($is_wc) : ?>
+                                        <span class="ttbm-booking-mode-badge"><?php esc_html_e('Active', 'tour-booking-manager'); ?></span>
+									<?php endif; ?>
+                                </div>
+                                <p class="ttbm-booking-mode-card-desc">
+									<?php if ($wc_active) : ?>
+										<?php esc_html_e('Bookings go through the WooCommerce cart and checkout, using WooCommerce\'s own payment gateways.', 'tour-booking-manager'); ?>
+									<?php else : ?>
+										<?php esc_html_e('Requires WooCommerce to be active.', 'tour-booking-manager'); ?>
+									<?php endif; ?>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="ttbm-booking-mode-card <?php echo $is_custom ? 'is-active' : ''; ?> <?php echo $custom_active ? '' : 'is-disabled'; ?>" data-mode="custom" data-subtab="custom">
+                            <span class="ttbm-booking-mode-card-icon dashicons dashicons-money-alt"></span>
+                            <div class="ttbm-booking-mode-card-body">
+                                <div class="ttbm-booking-mode-card-head">
+                                    <span class="ttbm-booking-mode-card-title"><?php esc_html_e('Custom Payment', 'tour-booking-manager'); ?></span>
+									<?php if ($is_custom) : ?>
+                                        <span class="ttbm-booking-mode-badge"><?php esc_html_e('Active', 'tour-booking-manager'); ?></span>
+									<?php endif; ?>
+                                </div>
+                                <p class="ttbm-booking-mode-card-desc">
+									<?php if ($custom_active) : ?>
+										<?php esc_html_e('Bookings skip WooCommerce entirely and pay through PayPal, Stripe, or Offline directly.', 'tour-booking-manager'); ?>
+									<?php else : ?>
+										<?php esc_html_e('Requires the Tour Pro addon to be active.', 'tour-booking-manager'); ?>
+									<?php endif; ?>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="ttbm-booking-mode-msg" aria-live="polite"></p>
+                    <div class="ttbm-booking-mode-warning-slot">
+						<?php if (!$has_gateway) : ?>
+                            <div class="ttbm-booking-mode-warning">
+                                <span class="dashicons dashicons-warning"></span>
+                                <p><?php echo esc_html(self::gateway_warning($mode)); ?></p>
+                            </div>
+						<?php endif; ?>
+                    </div>
                 </div>
 				<?php
 			}
@@ -109,19 +321,7 @@
 					$this->render_wc_inactive_notice();
 					return;
 				}
-				$wc_enabled = $this->opt('ttbm_wc_payment_enabled', 'on') === 'on';
 				?>
-                <div class="ttbm-pay-field-row">
-                    <label class="ttbm-pay-toggle-label">
-                        <span><?php esc_html_e('Enable WooCommerce Payment', 'tour-booking-manager'); ?></span>
-                        <span class="ttbm-pay-toggle-sub"><?php esc_html_e('If enabled, WooCommerce payment gateways are used for checkout.', 'tour-booking-manager'); ?></span>
-                    </label>
-                    <label class="ttbm-gw-switch">
-                        <input type="checkbox" name="ttbm_payment_settings[ttbm_wc_payment_enabled]" value="on" <?php checked($wc_enabled); ?>>
-                        <span class="ttbm-gw-slider"></span>
-                    </label>
-                </div>
-
                 <div class="ttbm-pay-accordion">
                     <button type="button" class="ttbm-pay-acc-header is-open" data-acc="methods">
                         <span><?php esc_html_e('WooCommerce Payment Methods', 'tour-booking-manager'); ?></span>
@@ -186,8 +386,6 @@
 			}
 			private function render_additional_settings() {
 				$cart_redirect = $this->opt('ttbm_payment_cart_redirect', 'checkout');
-				$after_order_redirect = $this->opt('ttbm_payment_after_order_redirect', 'plugin_thankyou');
-				$require_login = $this->opt('ttbm_payment_require_login', 'off') === 'on';
 				$show_billing = $this->opt('ttbm_payment_show_billing_info', 'on') === 'on';
 				$book_status_opts = get_option('ttbm_basic_gen_settings', array());
 				$book_status = isset($book_status_opts['ttbm_set_book_status']) && is_array($book_status_opts['ttbm_set_book_status'])
@@ -211,25 +409,6 @@
                     </div>
                 </div>
                 <div class="ttbm-pay-field-row">
-                    <label class="ttbm-pay-field-label"><?php esc_html_e('After Confirming the Order, Redirect To', 'tour-booking-manager'); ?></label>
-                    <div class="ttbm-pay-field-control">
-                        <select name="ttbm_payment_settings[ttbm_payment_after_order_redirect]" class="formControl">
-                            <option value="plugin_thankyou" <?php selected($after_order_redirect, 'plugin_thankyou'); ?>><?php esc_html_e('Plugin Thank You Page', 'tour-booking-manager'); ?></option>
-                            <option value="default" <?php selected($after_order_redirect, 'default'); ?>><?php esc_html_e('WooCommerce Default', 'tour-booking-manager'); ?></option>
-                        </select>
-                        <p class="ttbm-pay-field-desc"><?php esc_html_e('Select where to redirect after confirming the order. Choose the actual page under Custom Payment → Booking Confirmation Page.', 'tour-booking-manager'); ?></p>
-                    </div>
-                </div>
-                <div class="ttbm-pay-field-row">
-                    <label class="ttbm-pay-field-label"><?php esc_html_e('Require Account Login', 'tour-booking-manager'); ?></label>
-                    <div class="ttbm-pay-field-control">
-                        <label class="ttbm-pay-checkbox">
-                            <input type="checkbox" name="ttbm_payment_settings[ttbm_payment_require_login]" value="on" <?php checked($require_login); ?>>
-							<?php esc_html_e('Require login to book a tour.', 'tour-booking-manager'); ?>
-                        </label>
-                    </div>
-                </div>
-                <div class="ttbm-pay-field-row">
                     <label class="ttbm-pay-field-label"><?php esc_html_e('Show Billing Info', 'tour-booking-manager'); ?></label>
                     <div class="ttbm-pay-field-control">
                         <label class="ttbm-pay-checkbox">
@@ -237,6 +416,10 @@
 							<?php esc_html_e('Show billing info on the WooCommerce checkout page.', 'tour-booking-manager'); ?>
                         </label>
                     </div>
+                </div>
+                <div class="justifyBetween _mT">
+                    <div></div>
+                    <button type="button" class="button button-primary ttbm-pay-misc-save-btn" data-fields="ttbm_payment_cart_redirect,ttbm_payment_show_billing_info" data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_admin_nonce')); ?>"><?php esc_html_e('Save Changes', 'tour-booking-manager'); ?></button>
                 </div>
                 <div class="ttbm-pay-field-row">
                     <label class="ttbm-pay-field-label"><?php esc_html_e('Confirm Ticket Based on Payment Status', 'tour-booking-manager'); ?></label>
@@ -259,6 +442,7 @@
 				$specs = $this->gateway_specs();
 				$opts = (array) get_option('ttbm_payment_settings', array());
 				$is_pro = $this->is_pro_active();
+				$allow_guest_booking = $this->opt('ttbm_payment_allow_guest_booking', 'yes');
 				?>
                 <div class="ttbm-pm-wrap ttbm-pm-gateways">
 					<?php foreach ($specs as $gateway_id => $spec) :
@@ -363,8 +547,22 @@
 							'echo' => 0,
 						));
 						?>
-                        <p class="ttbm-pay-field-desc"><?php esc_html_e('Optional. Redirect customers here instead of the default WooCommerce order-received page after a successful booking.', 'tour-booking-manager'); ?></p>
+                        <p class="ttbm-pay-field-desc"><?php esc_html_e('Used only by the Custom Payment checkout (PayPal/Stripe/Offline via Pro). Regular WooCommerce bookings always use WooCommerce\'s own order-received page.', 'tour-booking-manager'); ?></p>
                     </div>
+                </div>
+                <div class="ttbm-pay-field-row">
+                    <label class="ttbm-pay-field-label"><?php esc_html_e('Allow Guest Booking', 'tour-booking-manager'); ?></label>
+                    <div class="ttbm-pay-field-control">
+                        <select name="ttbm_payment_settings[ttbm_payment_allow_guest_booking]" class="formControl">
+                            <option value="yes" <?php selected($allow_guest_booking, 'yes'); ?>><?php esc_html_e('Yes — anyone can book without an account', 'tour-booking-manager'); ?></option>
+                            <option value="no" <?php selected($allow_guest_booking, 'no'); ?>><?php esc_html_e('No — require login or registration to book', 'tour-booking-manager'); ?></option>
+                        </select>
+                        <p class="ttbm-pay-field-desc"><?php esc_html_e('Custom Payment only (PayPal/Stripe/Offline). When set to No, a logged-out visitor sees an inline log in / register panel when they click to book — never a page reload. WooCommerce checkout has its own separate guest-checkout setting.', 'tour-booking-manager'); ?></p>
+                    </div>
+                </div>
+                <div class="justifyBetween _mT">
+                    <div></div>
+                    <button type="button" class="button button-primary ttbm-pay-misc-save-btn" data-fields="ttbm_payment_confirmation_page,ttbm_payment_allow_guest_booking" data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_admin_nonce')); ?>"><?php esc_html_e('Save Changes', 'tour-booking-manager'); ?></button>
                 </div>
 				<?php
 			}
@@ -596,6 +794,40 @@
 				update_option('ttbm_basic_gen_settings', $existing);
 				wp_send_json_success(array('message' => esc_html__('Saved.', 'tour-booking-manager')));
 			}
+			// Scoped save for the plain (non-gateway, non-auto-saving) fields on
+			// this page's two sub-tabs — each "Save Changes" button only submits
+			// the couple of field keys it's actually next to (via data-fields),
+			// never the whole page/both sub-tabs, matching every other control
+			// here (gateway cards, booking mode, book-status) already being a
+			// small scoped AJAX save instead of one giant form POST.
+			public function ajax_save_misc_fields() {
+				$this->verify_admin_ajax();
+				$allowed = array(
+					'ttbm_payment_confirmation_page',
+					'ttbm_payment_allow_guest_booking',
+					'ttbm_payment_cart_redirect',
+					'ttbm_payment_show_billing_info',
+				);
+				$fields = isset($_POST['fields']) && is_array($_POST['fields']) ? wp_unslash($_POST['fields']) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- sanitized per key below
+				$opts = (array) get_option('ttbm_payment_settings', array());
+				foreach ($fields as $key => $value) {
+					$key = sanitize_key($key);
+					if (!in_array($key, $allowed, true)) {
+						continue;
+					}
+					if ('ttbm_payment_confirmation_page' === $key) {
+						$opts[$key] = absint($value);
+					} elseif ('ttbm_payment_allow_guest_booking' === $key) {
+						$opts[$key] = 'no' === $value ? 'no' : 'yes';
+					} elseif ('ttbm_payment_cart_redirect' === $key) {
+						$opts[$key] = 'cart' === $value ? 'cart' : 'checkout';
+					} elseif ('ttbm_payment_show_billing_info' === $key) {
+						$opts[$key] = 'on' === $value ? 'on' : 'off';
+					}
+				}
+				update_option('ttbm_payment_settings', $opts);
+				wp_send_json_success(array('message' => esc_html__('Settings saved.', 'tour-booking-manager')));
+			}
 			public function add_to_cart_redirect($url) {
 				if (!isset($_POST['ttbm_form_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_form_nonce'])), 'ttbm_form_nonce')) {
 					return $url;
@@ -608,27 +840,6 @@
 					return wc_get_checkout_url();
 				}
 				return $url;
-			}
-			public function checkout_order_received_url($url, $order) {
-				if (!($order instanceof WC_Order)) {
-					return $url;
-				}
-				if ('plugin_thankyou' !== $this->opt('ttbm_payment_after_order_redirect', 'plugin_thankyou')) {
-					return $url;
-				}
-				$page_id = (int) $this->opt('ttbm_payment_confirmation_page', 0);
-				if ($page_id <= 0 || get_post_status($page_id) !== 'publish' || !$this->order_has_ttbm_item($order)) {
-					return $url;
-				}
-				return add_query_arg('order-received', $order->get_id(), get_permalink($page_id));
-			}
-			private function order_has_ttbm_item($order) {
-				foreach ($order->get_items() as $item) {
-					if ($item->get_meta('_ttbm_id')) {
-						return true;
-					}
-				}
-				return false;
 			}
 			/**
 			 * "Show Billing Info" — when turned off, drop WooCommerce's billing
@@ -654,18 +865,209 @@
 				}
 				return false;
 			}
+			// WooCommerce handles its own account/guest checkout, so the setting
+			// only applies in Custom Payment mode. Default "yes" (guest booking
+			// allowed) — login is only required once an admin explicitly opts
+			// into "No" on the Custom Payment tab.
 			public static function login_required_for_booking() {
-				return TTBM_Global_Function::get_settings('ttbm_payment_settings', 'ttbm_payment_require_login', 'off') === 'on';
+				if (self::get_booking_mode() === 'woocommerce') {
+					return false;
+				}
+				return TTBM_Global_Function::get_settings('ttbm_payment_settings', 'ttbm_payment_allow_guest_booking', 'yes') === 'no';
 			}
-			public static function render_login_prompt() {
+			private static function login_gate_templates() {
+				return array('book_now', 'book_now_smart', 'hotel_book_now');
+			}
+			// Shared login/register fields for both render_login_prompt() (legacy
+			// whole-form replacement, kept for any direct callers/integrations)
+			// and render_login_modal() (current flow — see its docblock).
+			private static function render_login_panel_fields($allow_register) {
 				?>
-                <div class="ttbm_book_now_area ttbm_login_required_notice">
-                    <p><?php esc_html_e('Please log in to book this tour.', 'tour-booking-manager'); ?></p>
-                    <a class="dButton ttbm_book_now" href="<?php echo esc_url(wp_login_url(get_permalink())); ?>">
-						<?php esc_html_e('Login to Book', 'tour-booking-manager'); ?>
-                    </a>
+                <div class="ttbm-login-gate-panel" data-mode="login">
+                    <p class="ttbm-login-gate-title"><?php esc_html_e('Log in to book this tour', 'tour-booking-manager'); ?></p>
+                    <div class="ttbm-login-gate-fields-login">
+                        <input type="text" class="ttbm-login-gate-field ttbm-login-gate-user" placeholder="<?php esc_attr_e('Username or email', 'tour-booking-manager'); ?>" autocomplete="username">
+                        <input type="password" class="ttbm-login-gate-field ttbm-login-gate-pass" placeholder="<?php esc_attr_e('Password', 'tour-booking-manager'); ?>" autocomplete="current-password">
+                    </div>
+					<?php if ($allow_register) : ?>
+                        <div class="ttbm-login-gate-fields-register" style="display:none;">
+                            <input type="text" class="ttbm-login-gate-field ttbm-login-gate-name" placeholder="<?php esc_attr_e('Full name', 'tour-booking-manager'); ?>" autocomplete="name">
+                            <input type="email" class="ttbm-login-gate-field ttbm-login-gate-email" placeholder="<?php esc_attr_e('Email address', 'tour-booking-manager'); ?>" autocomplete="email">
+                            <input type="tel" class="ttbm-login-gate-field ttbm-login-gate-phone" placeholder="<?php esc_attr_e('Phone number', 'tour-booking-manager'); ?>" autocomplete="tel">
+                            <input type="password" class="ttbm-login-gate-field ttbm-login-gate-reg-pass" placeholder="<?php esc_attr_e('Password', 'tour-booking-manager'); ?>" autocomplete="new-password">
+                        </div>
+					<?php endif; ?>
+                    <button type="button" class="dButton ttbm-confirm-btn ttbm-login-gate-submit"><?php esc_html_e('Log In to Book', 'tour-booking-manager'); ?></button>
+                    <p class="ttbm-login-gate-msg" aria-live="polite"></p>
+					<?php if ($allow_register) : ?>
+                        <p class="ttbm-login-gate-switch">
+                            <a href="#" class="ttbm-login-gate-toggle" data-to="register"><?php esc_html_e("Don't have an account? Register", 'tour-booking-manager'); ?></a>
+                            <a href="#" class="ttbm-login-gate-toggle" data-to="login" style="display:none;"><?php esc_html_e('Already have an account? Log in', 'tour-booking-manager'); ?></a>
+                        </p>
+					<?php endif; ?>
                 </div>
 				<?php
+			}
+			// Legacy: replaces the whole booking-form area with the login panel
+			// at page-load time. No longer called by the three book_now partials
+			// (see render_login_modal() below for the current click-time flow) —
+			// kept as a public API surface for any direct integration still
+			// calling it, and as the ajax_render_book_now() "what to put back"
+			// fallback is no longer needed either, but removing a public static
+			// method is a bigger compatibility risk than an unused-but-correct one.
+			public static function render_login_prompt($tour_id = 0, $template = 'book_now') {
+				if (!in_array($template, self::login_gate_templates(), true)) {
+					$template = 'book_now';
+				}
+				?>
+                <div class="ttbm_book_now_area ttbm_login_required_notice ttbm-login-gate" data-tour-id="<?php echo esc_attr($tour_id); ?>" data-template="<?php echo esc_attr($template); ?>" data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_login_gate')); ?>">
+					<?php self::render_login_panel_fields(true); ?>
+                </div>
+				<?php
+			}
+			// Current flow: the ticket/date booking form is ALWAYS visible to
+			// everyone, logged in or not (browsing and selecting tickets never
+			// requires an account). Only when a logged-out visitor actually
+			// clicks the submit button does assets/frontend/ttbm-login-gate.js
+			// intercept it and open this modal instead of submitting — login or
+			// register here, then the original click is replayed automatically.
+			// Rendered once per booking area, hidden until JS opens it.
+			public static function render_login_modal($tour_id = 0, $template = 'book_now') {
+				if (!in_array($template, self::login_gate_templates(), true)) {
+					$template = 'book_now';
+				}
+				?>
+                <div class="ttbm-login-gate ttbm-login-required-modal" style="display:none;" data-tour-id="<?php echo esc_attr($tour_id); ?>" data-template="<?php echo esc_attr($template); ?>" data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_login_gate')); ?>">
+                    <div class="ttbm-login-required-modal-overlay" data-ttbm-login-modal-close></div>
+                    <div class="ttbm-login-required-modal-dialog" role="dialog" aria-modal="true">
+                        <button type="button" class="ttbm-login-required-modal-close" data-ttbm-login-modal-close aria-label="<?php esc_attr_e('Close', 'tour-booking-manager'); ?>">&times;</button>
+						<?php
+						// Always offer registration here, independent of WordPress's
+						// site-wide "Anyone can register" setting (Settings → General):
+						// that toggle is for the wp-login.php admin-area registration
+						// form and most sites deliberately leave it off, but a customer
+						// with "Allow Guest Booking" set to No still needs SOME way to
+						// get an account to complete a booking — this creates the same
+						// low-privilege (subscriber-role) account wp_create_user() would
+						// via that other form, just offered in the right place.
+						self::render_login_panel_fields(true);
+						?>
+                    </div>
+                </div>
+				<?php
+			}
+			//------------------------------------------------------------------
+			// Inline login/register (never a page reload — see render_login_prompt)
+			//------------------------------------------------------------------
+			public function ajax_portal_login() {
+				check_ajax_referer('ttbm_login_gate', 'nonce');
+				$login = isset($_POST['user_login']) ? sanitize_text_field(wp_unslash($_POST['user_login'])) : '';
+				$password = isset($_POST['user_password']) ? (string) wp_unslash($_POST['user_password']) : '';
+				if (!$login || !$password) {
+					wp_send_json_error(esc_html__('Please enter your username/email and password.', 'tour-booking-manager'));
+				}
+				$user = wp_signon(array('user_login' => $login, 'user_password' => $password, 'remember' => true), is_ssl());
+				if (is_wp_error($user)) {
+					wp_send_json_error(wp_strip_all_tags($user->get_error_message()));
+				}
+				wp_set_current_user($user->ID);
+				wp_send_json_success();
+			}
+			// Not gated on WordPress's site-wide users_can_register — see the
+			// matching comment in render_login_modal() for why.
+			public function ajax_portal_register() {
+				check_ajax_referer('ttbm_login_gate', 'nonce');
+				$email = isset($_POST['user_email']) ? sanitize_email(wp_unslash($_POST['user_email'])) : '';
+				$full_name = isset($_POST['user_name']) ? sanitize_text_field(wp_unslash($_POST['user_name'])) : '';
+				$phone = isset($_POST['user_phone']) ? sanitize_text_field(wp_unslash($_POST['user_phone'])) : '';
+				$password = isset($_POST['user_password']) ? (string) wp_unslash($_POST['user_password']) : '';
+				if (!is_email($email)) {
+					wp_send_json_error(esc_html__('Please enter a valid email address.', 'tour-booking-manager'));
+				}
+				if (email_exists($email)) {
+					wp_send_json_error(esc_html__('An account with this email already exists — please log in instead.', 'tour-booking-manager'));
+				}
+				if (strlen($password) < 8) {
+					wp_send_json_error(esc_html__('Password must be at least 8 characters.', 'tour-booking-manager'));
+				}
+				$username = sanitize_user(current(explode('@', $email)), true);
+				$base_username = $username ?: 'guest';
+				$suffix = 0;
+				while (username_exists($username) || !validate_username($username)) {
+					$suffix++;
+					$username = $base_username . $suffix;
+				}
+				$name_parts = preg_split('/\s+/', trim($full_name), 2);
+				$first_name = $name_parts[0] ?? '';
+				$last_name = $name_parts[1] ?? '';
+				$user_id = wp_insert_user(array(
+					'user_login' => $username,
+					'user_pass' => $password,
+					'user_email' => $email,
+					'first_name' => $first_name,
+					'last_name' => $last_name,
+					'display_name' => $full_name ?: $username,
+				));
+				if (is_wp_error($user_id)) {
+					wp_send_json_error(wp_strip_all_tags($user_id->get_error_message()));
+				}
+				if ($phone) {
+					update_user_meta($user_id, 'billing_phone', $phone);
+				}
+				wp_new_user_notification($user_id, null, 'both');
+				wp_set_current_user($user_id);
+				wp_set_auth_cookie($user_id, true);
+				wp_send_json_success();
+			}
+			public function enqueue_login_gate_assets() {
+				if (!self::login_required_for_booking()) {
+					return;
+				}
+				wp_enqueue_script('ttbm-login-gate', TTBM_PLUGIN_URL . '/assets/frontend/ttbm-login-gate.js', array('jquery'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm-login-gate.js'), true);
+				wp_enqueue_style('ttbm-login-gate', TTBM_PLUGIN_URL . '/assets/frontend/ttbm-login-gate.css', array(), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm-login-gate.css'));
+				wp_localize_script('ttbm-login-gate', 'ttbmLoginGate', array(
+					'ajax_url' => admin_url('admin-ajax.php'),
+					'error_label' => esc_html__('Something went wrong. Please try again.', 'tour-booking-manager'),
+					'login_label' => esc_html__('Log In to Book', 'tour-booking-manager'),
+					'register_label' => esc_html__('Register to Book', 'tour-booking-manager'),
+				));
+			}
+			// Re-renders the booking-panel button area now that the visitor is
+			// logged in, so the JS above can swap it in for the login panel
+			// without ever reloading the page. Deliberately has NO nonce and NO
+			// wp_ajax_nopriv_ counterpart:
+			//
+			// wp_set_auth_cookie()/wp_signon() only queue a Set-Cookie response
+			// header — they never retroactively populate $_COOKIE within that
+			// same request. A nonce minted anywhere in this same request/
+			// response cycle (even right after wp_set_current_user()) still
+			// hashes against the STALE pre-login auth token, so it fails
+			// verification on this very next call. is_user_logged_in() (with no
+			// nopriv handler registered, so WordPress itself rejects guests
+			// before this method runs) plus a resource-id check is the correct
+			// guard for a read-only endpoint that only ever discloses the
+			// current user's own already-visible booking panel.
+			public function ajax_render_book_now() {
+				if (!is_user_logged_in()) {
+					wp_send_json_error('', 403);
+				}
+				$tour_id = isset($_POST['tour_id']) ? absint($_POST['tour_id']) : 0;
+				$template = isset($_POST['template']) ? sanitize_key(wp_unslash($_POST['template'])) : 'book_now';
+				if (!in_array($template, self::login_gate_templates(), true)) {
+					$template = 'book_now';
+				}
+				if (!$tour_id || get_post_type($tour_id) !== TTBM_Function::get_cpt_name() || get_post_status($tour_id) !== 'publish') {
+					wp_send_json_error('', 404);
+				}
+				$file = TTBM_Function::template_path('ticket/' . $template . '.php');
+				if (!file_exists($file)) {
+					wp_send_json_error('', 404);
+				}
+				ob_start();
+				$ttbm_post_id = $tour_id;
+				include $file;
+				$html = ob_get_clean();
+				wp_send_json_success(array('html' => $html));
 			}
 		}
 		new TTBM_Payment_Settings();

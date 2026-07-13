@@ -31,6 +31,7 @@
 				// Core plugin: tours/hotels display, admin, shortcodes. Loads regardless
 				// of whether WooCommerce is active, so the plugin is fully usable without it.
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Function.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Booking_Normalizer.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Layout.php';
 				require_once TTBM_PLUGIN_DIR . '/support/elementor/elementor-support.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin.php';
@@ -156,6 +157,7 @@
 				wp_enqueue_script('jquery-ui-accordion');
 				wp_enqueue_script('ttbm_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_script.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_shortcode', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_shortcode.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
+				wp_enqueue_script('ttbm-confirm-btn', TTBM_PLUGIN_URL . '/assets/frontend/ttbm-confirm-btn.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
                 wp_enqueue_style('ttbm_hotel_lists', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_lists.css', array('ttbm_registration'), TTBM_PLUGIN_VERSION);
                 wp_enqueue_style('ttbm_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_details.css', array('ttbm_hotel_lists'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_details.css'));
 
@@ -214,6 +216,11 @@
 				if (!$this->should_load_admin_assets($hook)) {
 					return;
 				}
+				// Global toast utility (window.ttbmToast()) — loaded on every
+				// TTBM admin screen so any feature's JS can call it, not just
+				// the one that first needed it.
+				wp_enqueue_script('ttbm-admin-toast', TTBM_PLUGIN_URL . '/assets/admin/ttbm-admin-toast.js', array('jquery'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-admin-toast.js'), true);
+				wp_enqueue_style('ttbm-admin-toast', TTBM_PLUGIN_URL . '/assets/admin/ttbm-admin-toast.css', array(), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-admin-toast.css'));
 				wp_enqueue_editor();
 				wp_enqueue_media();
 				wp_enqueue_script('jquery-ui-sortable');

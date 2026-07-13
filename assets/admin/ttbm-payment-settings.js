@@ -20,6 +20,83 @@ jQuery(function ($) {
 	});
 
 	// ------------------------------------------------------------------
+	// Booking Mode selector (WooCommerce Checkout vs Custom Payment) —
+	// saves instantly via its own endpoint (not the main settings form),
+	// then jumps to the matching sub-tab so the admin lands on what they
+	// just chose.
+	// ------------------------------------------------------------------
+	$(document).on('click', '.ttbm-booking-mode-card', function () {
+		var $card = $(this);
+		var $group = $card.closest('.ttbm-booking-mode');
+		if ($card.hasClass('is-active') || $card.hasClass('is-disabled') || $group.data('can-choose') != 1) {
+			return;
+		}
+		var $warnSlot = $group.find('.ttbm-booking-mode-warning-slot');
+		var mode = $card.data('mode');
+		var subtab = $card.data('subtab');
+		var modeLabel = mode === 'custom' ? ttbmPaymentSettings.custom_mode_label : ttbmPaymentSettings.wc_mode_label;
+
+		$group.find('.ttbm-booking-mode-card').addClass('is-saving');
+
+		$.post(ttbm_admin_ajax.ajax_url, {
+			action: 'ttbm_save_booking_mode',
+			nonce: $group.data('nonce'),
+			mode: mode
+		}).done(function (res) {
+			if (!res || !res.success) {
+				if (window.ttbmToast) { window.ttbmToast((res && res.data) || ttbmPaymentSettings.error_label, 'error'); }
+				return;
+			}
+			$group.find('.ttbm-booking-mode-card').removeClass('is-active');
+			$card.addClass('is-active');
+			// The "Active" badge only ever exists in the DOM for the active
+			// card (see render_booking_mode_selector()) — move it here on
+			// switch instead of toggling a CSS-driven visibility class.
+			$group.find('.ttbm-booking-mode-badge').remove();
+			$card.find('.ttbm-booking-mode-card-head').append(
+				$('<span class="ttbm-booking-mode-badge"></span>').text(ttbmPaymentSettings.active_label || 'Active')
+			);
+
+			if (window.ttbmToast) {
+				window.ttbmToast(ttbmPaymentSettings.mode_saved_label.replace('%s', modeLabel), 'success');
+				if (res.data && res.data.has_gateway === false && res.data.warning) {
+					window.ttbmToast(res.data.warning, 'warning', 5000);
+				}
+			}
+
+			// Jump to the sub-tab that matches the newly active mode.
+			$('.ttbm-pay-subtab-link[data-subtab="' + subtab + '"]').trigger('click');
+
+			// Refresh the inline "no gateway configured" warning for the
+			// newly active mode (never both possible modes at once).
+			$warnSlot.empty();
+			if (res.data && res.data.has_gateway === false && res.data.warning) {
+				$warnSlot.append(
+					$('<div class="ttbm-booking-mode-warning"><span class="dashicons dashicons-warning"></span><p></p></div>')
+						.find('p').text(res.data.warning).end()
+				);
+			}
+
+			// Refresh the mode-aware admin notice at the top of the page too.
+			var $notice = $('.ttbm-pay-gateway-notice');
+			if (res.data.warning) {
+				if (!$notice.length) {
+					$notice = $('<div class="notice notice-warning ttbm-pay-gateway-notice"><p></p></div>');
+					$('.ttbm-pay-subtabs').before($notice);
+				}
+				$notice.find('p').text(res.data.warning);
+				$notice.show();
+			} else {
+				$notice.hide();
+			}
+		}).fail(function () {
+			if (window.ttbmToast) { window.ttbmToast(ttbmPaymentSettings.error_label, 'error'); }
+		}).always(function () {
+			$group.find('.ttbm-booking-mode-card').removeClass('is-saving');
+		});
+	});
+
+	// ------------------------------------------------------------------
 	// WooCommerce Payment Methods / Additional Settings accordions —
 	// only one open at a time.
 	// ------------------------------------------------------------------
@@ -151,6 +228,50 @@ jQuery(function ($) {
 		}).fail(function () {
 			$msg.text(ttbmPaymentSettings.error_label);
 			setTimeout(function () { $msg.text(''); }, 1500);
+		});
+	});
+
+	// ------------------------------------------------------------------
+	// Scoped "Save Changes" buttons — each only submits the field keys
+	// listed in its own data-fields (Booking Confirmation Page + Allow
+	// Guest Booking on the Custom Payment tab; Cart Redirect + Show
+	// Billing Info on the WooCommerce tab), never the whole page.
+	// ------------------------------------------------------------------
+	$(document).on('click', '.ttbm-pay-misc-save-btn', function (e) {
+		e.preventDefault();
+		var $btn = $(this);
+		var $scope = $btn.closest('.ttbm-pay-subtab-panel');
+		var keys = ($btn.data('fields') || '').toString().split(',');
+		var fields = {};
+
+		keys.forEach(function (key) {
+			key = key.trim();
+			if (!key) {
+				return;
+			}
+			var $field = $scope.find('[name="ttbm_payment_settings[' + key + ']"]');
+			if (!$field.length) {
+				return;
+			}
+			fields[key] = $field.attr('type') === 'checkbox' ? ($field.is(':checked') ? 'on' : 'off') : $field.val();
+		});
+
+		$btn.prop('disabled', true);
+
+		$.post(ttbm_admin_ajax.ajax_url, {
+			action: 'ttbm_save_misc_fields',
+			nonce: $btn.data('nonce'),
+			fields: fields
+		}).done(function (res) {
+			if (res && res.success) {
+				if (window.ttbmToast) { window.ttbmToast((res.data && res.data.message) || ttbmPaymentSettings.enabled_label, 'success'); }
+			} else {
+				if (window.ttbmToast) { window.ttbmToast((res && res.data) || ttbmPaymentSettings.error_label, 'error'); }
+			}
+		}).fail(function () {
+			if (window.ttbmToast) { window.ttbmToast(ttbmPaymentSettings.error_label, 'error'); }
+		}).always(function () {
+			$btn.prop('disabled', false);
 		});
 	});
 

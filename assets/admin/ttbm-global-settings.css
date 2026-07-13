@@ -642,6 +642,70 @@ div.ttbm_global_settings.ttbm_configuration {
     color: var(--ttbm-a-muted, #50575e);
 }
 
+/* ── Custom Payment gateway cards — brand-colored gradients ──
+   Scoped to .ttbm-pm-gateways only, so the WooCommerce gateway cards
+   above (which follow each store's own gateway branding, not ours) stay
+   neutral/white. */
+.ttbm-pm-gateways .ttbm-pm-card {
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(16, 24, 40, .12);
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+.ttbm-pm-gateways .ttbm-pm-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(16, 24, 40, .18);
+}
+.ttbm-pm-gateways .ttbm-pm-card-paypal {
+    background: linear-gradient(135deg, #003087 0%, #0079c1 100%);
+}
+.ttbm-pm-gateways .ttbm-pm-card-stripe {
+    background: linear-gradient(135deg, #635bff 0%, #3f36c5 100%);
+}
+.ttbm-pm-gateways .ttbm-pm-card-offline {
+    background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+}
+.ttbm-pm-gateways .ttbm-pm-card .ttbm-pm-title {
+    color: #fff;
+}
+.ttbm-pm-gateways .ttbm-pm-card .ttbm-pm-desc {
+    color: rgba(255, 255, 255, .85);
+}
+.ttbm-pm-gateways .ttbm-pm-card .ttbm-pm-badge {
+    background: rgba(255, 255, 255, .2);
+    color: #fff;
+}
+.ttbm-pm-gateways .ttbm-pm-card.is-enabled .ttbm-pm-badge {
+    background: #fff;
+}
+.ttbm-pm-gateways .ttbm-pm-card-paypal.is-enabled .ttbm-pm-badge { color: #003087; }
+.ttbm-pm-gateways .ttbm-pm-card-stripe.is-enabled .ttbm-pm-badge { color: #635bff; }
+.ttbm-pm-gateways .ttbm-pm-card-offline.is-enabled .ttbm-pm-badge { color: #0f766e; }
+.ttbm-pm-gateways .ttbm-pm-card .ttbm-pm-configure-btn {
+    background: #fff !important;
+    color: #1d2327 !important;
+    border: none !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .18) !important;
+    transition: opacity .15s ease;
+}
+.ttbm-pm-gateways .ttbm-pm-card .ttbm-pm-configure-btn:hover {
+    opacity: .9;
+}
+.ttbm-pm-gateways .ttbm-pm-card .ttbm-pm-pro-badge {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(253, 160, 133, .4);
+}
+/* The gateway's own inline settings form (opened via Configure) still
+   needs to read clearly against the card's colored background. */
+.ttbm-pm-gateways .ttbm-pm-body {
+    background: rgba(255, 255, 255, .96);
+    border-top: none;
+}
+
 /* Gateway configuration modal */
 .ttbm-gw-modal {
     display: none;
@@ -810,6 +874,185 @@ div.ttbm_global_settings.ttbm_configuration {
     background: var(--ttbm-a-primary, #2271b1);
     border-color: var(--ttbm-a-primary, #2271b1);
     color: #fff !important;
+}
+
+/* Booking Mode selector — full width, below the sub-tab bar */
+.ttbm-booking-mode,
+.ttbm-booking-mode * {
+    box-sizing: border-box;
+}
+.ttbm-booking-mode {
+    margin: 2px 0 20px;
+    max-width: 100%;
+}
+/* Beats the page-wide ".ttbm_global_settings .tabsItem h3" rule (higher
+   specificity via ancestry, applies to every <h3> in this settings page)
+   which was otherwise flattening this to near body-text size. */
+.ttbm_global_settings .tabsItem .ttbm-booking-mode-head h3 {
+    margin: 0 0 4px;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--ttbm-a-text, #1d2327);
+}
+.ttbm-booking-mode-head p {
+    margin: 0 0 12px;
+    font-size: 12.5px;
+    color: var(--ttbm-a-text-secondary, #6b7280);
+    max-width: 680px;
+    line-height: 1.55;
+}
+.ttbm-booking-mode-head p.ttbm-booking-mode-auto {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    max-width: none;
+}
+.ttbm-booking-mode-card.is-disabled {
+    cursor: not-allowed;
+    opacity: .55;
+}
+.ttbm-booking-mode-card.is-disabled:hover {
+    border-color: var(--ttbm-a-border-strong, #e5e7eb);
+    box-shadow: none;
+}
+.ttbm-booking-mode-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    max-width: 100%;
+}
+@media (max-width: 680px) {
+    .ttbm-booking-mode-cards { grid-template-columns: 1fr; }
+}
+.ttbm-booking-mode-card {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    background: var(--ttbm-a-surface, #fafafb);
+    border: 1.5px solid var(--ttbm-a-border-strong, #e5e7eb);
+    border-radius: 12px;
+    padding: 14px 16px;
+    min-width: 0;
+    transition: border-color .15s ease, box-shadow .15s ease, opacity .15s ease;
+}
+.ttbm-booking-mode-card:hover {
+    border-color: var(--ttbm-a-primary, #2271b1);
+    box-shadow: 0 4px 14px rgba(16, 24, 40, .06);
+}
+.ttbm-booking-mode-card.is-active {
+    border-color: var(--ttbm-a-primary, #2271b1);
+    background: var(--ttbm-a-surface, #fff);
+    box-shadow: 0 6px 18px rgba(34, 113, 177, .12);
+    cursor: default;
+}
+.ttbm-booking-mode-card.is-saving {
+    opacity: .6;
+    pointer-events: none;
+}
+.ttbm-booking-mode-card-icon {
+    flex: 0 0 auto;
+    align-self: flex-start;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    margin: 0;
+    border-radius: 9px;
+    background: rgba(34, 113, 177, .1);
+    color: var(--ttbm-a-primary, #2271b1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    line-height: 1;
+    font-size: 18px;
+}
+.ttbm-booking-mode-card-icon:before {
+    margin: 0;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    line-height: 1;
+}
+.ttbm-booking-mode-card-body {
+    flex: 1;
+    min-width: 0;
+}
+.ttbm-booking-mode-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 0 0 4px;
+}
+.ttbm-booking-mode-card-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ttbm-a-text, #0f172a);
+}
+/* Only ever rendered into the DOM for the active card in the first place
+   (see TTBM_Payment_Settings::render_booking_mode_selector() and the JS
+   click handler) — visibility isn't gated by a CSS class, so a stylesheet
+   caching/loading issue can never show it on the wrong card. */
+.ttbm-booking-mode-badge {
+    display: inline-block;
+    flex: 0 0 auto;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    color: #166534;
+    background: #dcfce7;
+    border-radius: 999px;
+    padding: 2px 10px;
+}
+.ttbm-booking-mode-card-desc {
+    margin: 0;
+    font-size: 12px;
+    color: var(--ttbm-a-text-secondary, #64748b);
+    line-height: 1.5;
+}
+.ttbm-booking-mode-msg {
+    min-height: 16px;
+    margin: 8px 2px 0;
+    font-size: 12px;
+    font-weight: 600;
+    display: none;
+}
+.ttbm-booking-mode-msg.is-success { color: #0a7c2f; }
+.ttbm-booking-mode-msg.is-error { color: #d63638; }
+.ttbm-booking-mode-warning,
+.ttbm-booking-mode-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    margin-top: 10px;
+}
+.ttbm-booking-mode-warning {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    color: #9a3412;
+}
+.ttbm-booking-mode-warning p,
+.ttbm-booking-mode-note p {
+    margin: 0;
+}
+.ttbm-booking-mode-note {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e3a8a;
+    margin: 0 0 20px;
+}
+.ttbm-booking-mode-note-warn {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #991b1b;
 }
 
 /* Enable WooCommerce Payment toggle row */

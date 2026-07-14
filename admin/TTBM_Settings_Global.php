@@ -75,7 +75,18 @@
                             </div>
                         </div>
                                 <div class="ttbmPanelBody mp_zero">
-                                    <div class="ttbmTabs">
+                                    <?php
+                                    // "leftTabs" must be combined on THIS element (not just the
+                                    // nested nav div below) — assets/mp_style/ttbm_plugin_global.js's
+                                    // tab-init only reads window.location.hash / falls back to the
+                                    // per-page localStorage-saved tab when tabsParent.hasClass('leftTabs')
+                                    // is true, and tabsParent here IS .ttbmTabs. Without it, deep links
+                                    // like #ttbm_payment_settings (used by TTBM_Pro_Onboarding's "Set
+                                    // Booking Mode" button) silently land on the default tab instead.
+                                    // Matches the reference markup in
+                                    // admin/settings/tour/TTBM_Settings.php ("ttbmTabs leftTabs").
+                                    ?>
+                                    <div class="ttbmTabs leftTabs">
                                         <div class="leftTabs">
 											<?php $this->settings_api->show_navigation(); ?>
                                         </div>

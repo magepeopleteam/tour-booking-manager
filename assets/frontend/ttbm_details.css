@@ -529,6 +529,7 @@
 /* bottom-to-top dark scrim — scoped to main slider only (not showcase thumbnails) */
 #ttbm_content .ttbm_default_theme .ttbm_hero .sliderAllItem {
 	position: relative;
+	min-height: 500px;
 }
 #ttbm_content .ttbm_default_theme .ttbm_hero .sliderAllItem .ttbm_hero_overlay {
 	position: absolute;
@@ -2221,8 +2222,8 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 #ttbm_content .ttbm-ticket-section-title {
 	margin: 0;
 	padding: 0;
-	font-size: clamp(22px, 2.4vw, 30px);
-	font-weight: 800;
+	font-size: 24px;
+	font-weight: 700;
 	line-height: 1.18;
 	letter-spacing: -.03em;
 	color: var(--ttbm_d_heading, #0f172a);

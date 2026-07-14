@@ -120,7 +120,11 @@
 							?>
 							<div class="<?php echo esc_attr( $ttbm_booking_section_cls ); ?>" id="ttbm_booking_section">
 								<?php if ( $ttbm_booking_tour_type !== 'hotel' ) : ?>
-									<h3 class="ttbm-ticket-section-title"><?php esc_html_e( 'Choose the Ticket That Fits Your Journey', 'tour-booking-manager' ); ?></h3>
+									<div class="ttbm-ticket-section-heading">
+										<span class="ttbm-ticket-section-heading__eyebrow"><?php esc_html_e( 'Tickets', 'tour-booking-manager' ); ?></span>
+										<h3 class="ttbm-ticket-section-title"><?php esc_html_e( 'Choose the Ticket That Fits Your Journey', 'tour-booking-manager' ); ?></h3>
+										<p class="ttbm-ticket-section-heading__sub"><?php esc_html_e( 'Pick a date, select your tickets, and complete your booking in a few steps.', 'tour-booking-manager' ); ?></p>
+									</div>
 								<?php endif; ?>
 								<?php include( TTBM_Function::template_path( 'ticket/registration.php' ) ); ?>
 								<?php include( TTBM_Function::template_path( 'ticket/particular_item_area.php' ) ); ?>

@@ -2607,6 +2607,18 @@ div.ttbm_smart_theme .ttbm_load_popup_reg {
 	background-repeat: no-repeat;
 }
 
+/* Keep smart showcase + main image hidden as one unit until all are ready */
+#ttbm_content .ttbm_smart_theme .ttbm_smart_gallery .superSlider.ttbm-awaiting-images .sliderAllItem,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_gallery .superSlider.ttbm-awaiting-images .sliderShowcase,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_gallery .superSlider.ttbm-awaiting-images .ttbm_slider-wrapper {
+	opacity: 0 !important;
+}
+#ttbm_content .ttbm_smart_theme .ttbm_smart_gallery .superSlider.is-images-ready .sliderAllItem,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_gallery .superSlider.is-images-ready .sliderShowcase,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_gallery .superSlider.is-images-ready .ttbm_slider-wrapper {
+	opacity: 1 !important;
+}
+
 #ttbm_content .ttbm_smart_theme .ttbm_smart_gallery [class*="dLoader"],
 #ttbm_content .ttbm_smart_theme .ttbm_smart_gallery [class*="simpleSpinner"] {
 	display: none !important;

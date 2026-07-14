@@ -285,10 +285,11 @@ function ttbm_apply_bg_image(target, bg_url) {
     }
 }
 function ttbm_should_skip_details_loader(target) {
-    return target.closest('.ttbm_details_page .superSlider').length > 0;
+    return target.closest('.ttbm_details_page .superSlider, .ttbm_smart_gallery .superSlider, .ttbm_hero .superSlider').length > 0;
 }
 /**
  * Preload one image URL (warm cache before paint).
+ * Uses decode() when available so we wait for real paint readiness, not just network.
  * @return {jQuery.Promise}
  */
 function ttbm_preload_image_url(bg_url) {
@@ -299,15 +300,26 @@ function ttbm_preload_image_url(bg_url) {
         return deferred.promise();
     }
     let img = new Image();
+    function done() {
+        if (deferred.state() === 'pending') {
+            deferred.resolve();
+        }
+    }
+    img.onerror = done;
     img.onload = function () {
-        deferred.resolve();
-    };
-    img.onerror = function () {
-        deferred.resolve();
+        if (typeof img.decode === 'function') {
+            img.decode().then(done).catch(done);
+        } else {
+            done();
+        }
     };
     img.src = bg_url;
     if (img.complete && img.naturalWidth > 0) {
-        deferred.resolve();
+        if (typeof img.decode === 'function') {
+            img.decode().then(done).catch(done);
+        } else {
+            done();
+        }
     }
     return deferred.promise();
 }
@@ -330,7 +342,7 @@ function ttbm_prepare_super_slider($slider) {
 
     let urls = [];
     $slider.find('[data-bg-image]').each(function () {
-        let url = ttbm_normalize_bg_url(jQuery(this).data('bg-image'));
+        let url = ttbm_normalize_bg_url(jQuery(this).attr('data-bg-image') || jQuery(this).data('bg-image'));
         if (url && urls.indexOf(url) === -1) {
             urls.push(url);
         }
@@ -340,13 +352,29 @@ function ttbm_prepare_super_slider($slider) {
     let ready = jQuery.when.apply(jQuery, waits).always(function () {
         $slider.find('[data-bg-image]').each(function () {
             let $el = jQuery(this);
-            ttbm_apply_bg_image($el, ttbm_normalize_bg_url($el.data('bg-image')));
+            let url = ttbm_normalize_bg_url($el.attr('data-bg-image') || $el.data('bg-image'));
+            if (!url) {
+                return;
+            }
+            // Force paint from warm cache — do not early-exit on existing inline styles.
+            $el.css({
+                'background-image': 'url("' + url + '")',
+                'background-size': 'cover',
+                'background-position': 'center',
+                'background-repeat': 'no-repeat'
+            });
+            dLoaderRemove($el);
         });
         let $allItem = $slider.find('.sliderAllItem').first();
         if ($allItem.length) {
             ttbm_slider_resize($allItem);
         }
-        $slider.removeClass('ttbm-awaiting-images').addClass('is-images-ready');
+        // Double rAF so browsers commit background paint before we fade in.
+        window.requestAnimationFrame(function () {
+            window.requestAnimationFrame(function () {
+                $slider.removeClass('ttbm-awaiting-images').addClass('is-images-ready');
+            });
+        });
     });
     $slider.data('ttbmImagesReadyPromise', ready);
     return ready;
@@ -1439,15 +1467,24 @@ function ttbm_pagination_page_management(parent, pagination_page, total_item) {
 }(jQuery));
 //==============================================================Slider=================//
 function ttbm_slider_resize(target) {
+    target = target && target.jquery ? target : jQuery(target);
+    if (!target.length) {
+        return;
+    }
+    let $super = target.closest('.superSlider');
+    // Smart gallery (and similar) use a fixed CSS height — do not overwrite with
+    // natural image ratios (that stretches showcase slots and looks empty/broken).
+    let fixedHeightGallery = $super.closest('.ttbm_smart_gallery, .ttbm_hero').length > 0
+        || $super.hasClass('ttbm-featured-only');
+
     let all_height = [];
     let totalHeight = 0;
     let imgCount = 0;
     let main_div_width = target.innerWidth();
-    //console.log(main_div_width);
     let item_count = target.find('.sliderItem').length;
     target.find('[data-bg-image]').each(function () {
         let $bgTarget = jQuery(this);
-        let bg_url = ttbm_normalize_bg_url($bgTarget.data('bg-image'));
+        let bg_url = ttbm_normalize_bg_url($bgTarget.attr('data-bg-image') || $bgTarget.data('bg-image'));
         let imgWidth = $bgTarget.data('width');
         let imgHeight = $bgTarget.data('height');
         if (imgHeight) {
@@ -1455,8 +1492,8 @@ function ttbm_slider_resize(target) {
             totalHeight = totalHeight + (imgHeight * main_div_width) / (imgWidth || 1);
         }
         imgCount++;
-        if (imgCount === item_count) {
-            let slider_height_type = target.closest('.superSlider').find('input[name="slider_height_type"]').val();
+        if (!fixedHeightGallery && imgCount === item_count) {
+            let slider_height_type = $super.find('input[name="slider_height_type"]').val();
             let height_content = item_count > 0 ? totalHeight / imgCount : 0;
             if (slider_height_type === 'min' && all_height.length) {
                 height_content = Math.min(...all_height);
@@ -1475,8 +1512,38 @@ function ttbm_slider_resize(target) {
                 target.siblings('.sliderShowcase').css({"max-height": height_content});
             }
         }
-        ttbm_apply_bg_image($bgTarget, bg_url);
+        if (bg_url) {
+            $bgTarget.css({
+                'background-image': 'url("' + bg_url + '")',
+                'background-size': 'cover',
+                'background-position': 'center',
+                'background-repeat': 'no-repeat'
+            });
+            dLoaderRemove($bgTarget);
+        }
     });
+
+    // Also warm/apply showcase thumbs (siblings of .sliderAllItem).
+    target.siblings('.sliderShowcase').find('[data-bg-image]').each(function () {
+        let $bgTarget = jQuery(this);
+        let bg_url = ttbm_normalize_bg_url($bgTarget.attr('data-bg-image') || $bgTarget.data('bg-image'));
+        if (!bg_url) {
+            return;
+        }
+        $bgTarget.css({
+            'background-image': 'url("' + bg_url + '")',
+            'background-size': 'cover',
+            'background-position': 'center',
+            'background-repeat': 'no-repeat'
+        });
+        dLoaderRemove($bgTarget);
+    });
+
+    if (fixedHeightGallery) {
+        target.css({"max-height": "", "min-height": ""});
+        target.find('.sliderItem').css({"max-height": "", "min-height": ""});
+        target.siblings('.sliderShowcase').css({"max-height": "", "min-height": ""});
+    }
 }
 (function ($) {
     "use strict";

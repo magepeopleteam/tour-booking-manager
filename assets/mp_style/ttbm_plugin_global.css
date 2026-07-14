@@ -727,15 +727,51 @@
 	.ttbm_style div.superSlider { overflow: hidden; display: -webkit-flex; display: flex; background-color: #FFF; position: relative; }
 	/* SuperSlider: keep main + showcase images hidden until all are preloaded
 	   together, so thumbs never flash empty / broken one-by-one. */
+	.ttbm_style .superSlider.ttbm-awaiting-images {
+		position: relative;
+	}
+	.ttbm_style .superSlider.ttbm-awaiting-images .sliderAllItem,
+	.ttbm_style .superSlider.ttbm-awaiting-images .sliderShowcase {
+		opacity: 0 !important;
+	}
 	.ttbm_style .superSlider.ttbm-awaiting-images .sliderAllItem [data-bg-image],
 	.ttbm_style .superSlider.ttbm-awaiting-images .sliderShowcase [data-bg-image] {
-		opacity: 0;
+		opacity: 0 !important;
+		background-image: none !important;
+	}
+	.ttbm_style .superSlider.ttbm-awaiting-images::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: 6;
+		border-radius: inherit;
+		background:
+			linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 50%, rgba(255,255,255,0) 100%),
+			#e8edf2;
+		background-size: 60% 100%, 100% 100%;
+		background-repeat: no-repeat;
+		animation: ttbmSliderAwaitShimmer 1.2s ease-in-out infinite;
+		pointer-events: none;
+	}
+	@-webkit-keyframes ttbmSliderAwaitShimmer {
+		0% { background-position: -60% 0, 0 0; }
+		100% { background-position: 160% 0, 0 0; }
+	}
+	@keyframes ttbmSliderAwaitShimmer {
+		0% { background-position: -60% 0, 0 0; }
+		100% { background-position: 160% 0, 0 0; }
+	}
+	.ttbm_style .superSlider.is-images-ready .sliderAllItem,
+	.ttbm_style .superSlider.is-images-ready .sliderShowcase {
+		opacity: 1 !important;
+		-webkit-transition: opacity .35s ease;
+		transition: opacity .35s ease;
 	}
 	.ttbm_style .superSlider.is-images-ready .sliderAllItem [data-bg-image],
 	.ttbm_style .superSlider.is-images-ready .sliderShowcase [data-bg-image] {
-		opacity: 1;
-		-webkit-transition: opacity .3s ease;
-		transition: opacity .3s ease;
+		opacity: 1 !important;
+		-webkit-transition: opacity .35s ease;
+		transition: opacity .35s ease;
 	}
 	.ttbm_style .superSlider.ttbm-awaiting-images .sliderShowcaseItem,
 	.ttbm_style .superSlider.ttbm-awaiting-images .sliderItem {

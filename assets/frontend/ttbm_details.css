@@ -1,4 +1,4 @@
-/* =====================================================================
+﻿/* =====================================================================
    Tour Details Page — modern typography & section design
    Scoped to #ttbm_content so it only affects the single tour details page.
    Accent colours reuse the plugin theme vars (--color_theme) so the site's
@@ -2179,17 +2179,71 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 
 /* availability_section: ticket area title */
 
-/* Section heading — matches .ttbm_section_title typography.
-   First child of .ttbm_booking_section, outside the registration area card. */
+/* Section heading — first child of .ttbm_booking_section, outside the card. */
+#ttbm_content .ttbm-ticket-section-heading {
+	--ttbm-title-accent: var(--color_theme, #0f766e);
+	--ttbm-title-accent-rgb: var(--color_theme_rgb, 15, 118, 110);
+	position: relative;
+	display: block;
+	margin: 0 0 22px;
+	padding: 4px 0 0 18px;
+}
+#ttbm_content .ttbm-ticket-section-heading::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 6px;
+	bottom: 6px;
+	width: 4px;
+	border-radius: 999px;
+	background: linear-gradient(
+		180deg,
+		var(--ttbm-title-accent) 0%,
+		rgba(var(--ttbm-title-accent-rgb), .35) 100%
+	);
+}
+#ttbm_content .ttbm-ticket-section-heading__eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin: 0 0 8px;
+	padding: 4px 10px;
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	line-height: 1.2;
+	color: var(--ttbm-title-accent);
+	background: rgba(var(--ttbm-title-accent-rgb), .1);
+	border: 1px solid rgba(var(--ttbm-title-accent-rgb), .16);
+	border-radius: 999px;
+}
 #ttbm_content .ttbm-ticket-section-title {
-	font-size: 18px;
-	font-weight: 500;
-	line-height: 1.25;
-	letter-spacing: -.01em;
-	color: var(--ttbm_d_heading, #1a1a2e);
-	margin: 0 0 16px;
+	margin: 0;
 	padding: 0;
+	font-size: clamp(22px, 2.4vw, 30px);
+	font-weight: 800;
+	line-height: 1.18;
+	letter-spacing: -.03em;
+	color: var(--ttbm_d_heading, #0f172a);
 	text-transform: none;
+}
+#ttbm_content .ttbm-ticket-section-heading__sub {
+	margin: 8px 0 0;
+	max-width: 36em;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 1.5;
+	color: var(--ttbm_d_muted, #64748b);
+}
+@media (max-width: 768px) {
+	#ttbm_content .ttbm-ticket-section-heading {
+		padding-left: 14px;
+		margin-bottom: 16px;
+	}
+	#ttbm_content .ttbm-ticket-section-title {
+		font-size: 22px;
+	}
 }
 
 /* table -> horizontal rows */

@@ -117,13 +117,16 @@
 							if ( $ttbm_booking_tour_type === 'hotel' ) {
 								$ttbm_booking_section_cls .= ' ttbm_booking_section--hotel';
 							}
+							$ttbm_travel_type = TTBM_Function::get_travel_type( $tour_id );
 							?>
 							<div class="<?php echo esc_attr( $ttbm_booking_section_cls ); ?>" id="ttbm_booking_section">
 								<?php if ( $ttbm_booking_tour_type !== 'hotel' ) : ?>
 									<div class="ttbm-ticket-section-heading">
 										<span class="ttbm-ticket-section-heading__eyebrow"><?php esc_html_e( 'Tickets', 'tour-booking-manager' ); ?></span>
 										<h3 class="ttbm-ticket-section-title"><?php esc_html_e( 'Choose the Ticket That Fits Your Journey', 'tour-booking-manager' ); ?></h3>
-										<p class="ttbm-ticket-section-heading__sub"><?php esc_html_e( 'Pick a date, select your tickets, and complete your booking in a few steps.', 'tour-booking-manager' ); ?></p>
+										<?php if ( $ttbm_travel_type !== 'fixed' ) : ?>
+											<p class="ttbm-ticket-section-heading__sub"><?php esc_html_e( 'Pick a date, select your tickets, and complete your booking in a few steps.', 'tour-booking-manager' ); ?></p>
+										<?php endif; ?>
 									</div>
 								<?php endif; ?>
 								<?php include( TTBM_Function::template_path( 'ticket/registration.php' ) ); ?>

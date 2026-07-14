@@ -496,12 +496,30 @@
 }
 #ttbm_content .ttbm_default_theme .ttbm_hero .superSlider .sliderShowcaseItem img { height: auto !important; object-fit: cover; }
 
-/* Gallery disabled: featured image only, full width */
+/* Gallery disabled: featured image only — full width with fixed height
+   so tall uploads don't blow up the hero (JS otherwise sets height from natural ratio). */
 #ttbm_content .ttbm_default_theme .ttbm_hero .superSlider.ttbm-featured-only,
 #ttbm_content .ttbm_default_theme .ttbm_hero .superSlider.ttbm-featured-only .sliderAllItem,
 #ttbm_content .ttbm_default_theme .ttbm_hero .superSlider.ttbm-featured-only .sliderAllItem .sliderItem {
 	width: 100%;
 	max-width: 100%;
+	height: 520px !important;
+	max-height: 520px !important;
+	min-height: 0 !important;
+	overflow: hidden;
+}
+#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider.ttbm-featured-only [data-bg-image] {
+	height: 100%;
+	background-size: cover;
+	background-position: center;
+}
+@media (max-width: 768px) {
+	#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider.ttbm-featured-only,
+	#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider.ttbm-featured-only .sliderAllItem,
+	#ttbm_content .ttbm_default_theme .ttbm_hero .superSlider.ttbm-featured-only .sliderAllItem .sliderItem {
+		height: 280px !important;
+		max-height: 280px !important;
+	}
 }
 
 /* keep nav arrows + dots above the scrim and clickable */

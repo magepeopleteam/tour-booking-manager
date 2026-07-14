@@ -2482,13 +2482,17 @@ div.ttbm_smart_theme .ttbm_load_popup_reg {
 	display: none !important;
 }
 
-/* Gallery disabled: featured image only, full width */
+/* Gallery disabled: featured image only, full width — keep the same height cap as gallery mode */
 #ttbm_content .ttbm_smart_theme .ttbm_smart_gallery .superSlider.ttbm-featured-only,
 #ttbm_content .ttbm_smart_theme .ttbm_smart_gallery .superSlider.ttbm-featured-only .sliderAllItem,
 #ttbm_content .ttbm_smart_theme .ttbm_smart_gallery .superSlider.ttbm-featured-only .sliderAllItem .sliderItem {
 	width: 100%;
 	max-width: 100%;
 	flex: 1 1 100%;
+	height: 520px !important;
+	max-height: 520px !important;
+	min-height: 0 !important;
+	overflow: hidden;
 }
 
 @media (min-width: 960px) {
@@ -2533,6 +2537,13 @@ div.ttbm_smart_theme .ttbm_load_popup_reg {
 	#ttbm_content .ttbm_smart_theme .ttbm_smart_gallery .superSlider .sliderAllItem,
 	#ttbm_content .ttbm_smart_theme .ttbm_smart_gallery .superSlider .sliderAllItem .sliderItem {
 		height: 280px;
+	}
+
+	#ttbm_content .ttbm_smart_theme .ttbm_smart_gallery .superSlider.ttbm-featured-only,
+	#ttbm_content .ttbm_smart_theme .ttbm_smart_gallery .superSlider.ttbm-featured-only .sliderAllItem,
+	#ttbm_content .ttbm_smart_theme .ttbm_smart_gallery .superSlider.ttbm-featured-only .sliderAllItem .sliderItem {
+		height: 280px !important;
+		max-height: 280px !important;
 	}
 
 	#ttbm_content .ttbm_smart_theme .ttbm_smart_hero_overlay {

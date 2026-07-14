@@ -1829,20 +1829,83 @@ div.ttbm_booking_panel table tbody td {
 	border: 0 !important;
 }
 
-div.ttbm_booking_panel .ttbm_book_now_area {
+div.ttbm_booking_panel .ttbm_book_now_area,
+div.ttbm_booking_panel .ttbm_book_now_bar {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px 20px;
+	flex-wrap: nowrap;
 	border: 0;
 	margin-top: 30px;
+	padding: 14px 16px;
 	background-color: #EBEBEB;
+}
+
+div.ttbm_booking_panel .ttbm_book_now_area .ttbm_order_summary {
+	display: flex;
+	align-items: center;
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+div.ttbm_booking_panel .ttbm_book_now_area .ttbm_summary_values {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 0;
+}
+
+div.ttbm_booking_panel .ttbm_book_now_area .ttbm_summary_item {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 8px;
+	padding: 0 16px;
+}
+
+div.ttbm_booking_panel .ttbm_book_now_area .ttbm_summary_item:first-child {
+	padding-left: 0;
+}
+
+div.ttbm_booking_panel .ttbm_book_now_area .ttbm_summary_divider {
+	display: inline-block;
+	width: 1px;
+	height: 26px;
+	background: #cfcfcf;
+}
+
+div.ttbm_booking_panel .ttbm_book_now_area .ttbm_summary_label {
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: .05em;
+	color: #666;
+	white-space: nowrap;
+}
+
+div.ttbm_booking_panel .ttbm_book_now_actions {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 10px;
+	flex: 0 0 auto;
+	margin-left: auto;
 }
 
 div.ttbm_booking_panel .ttbm_book_now_area .ttbm_book_now {
 	margin: 0;
+	white-space: nowrap;
 }
 
 div.ttbm_booking_panel .ttbm_book_now_area .tour_qty,
 div.ttbm_booking_panel .ttbm_book_now_area .tour_price {
 	font-size: 20px;
 	font-weight: bold;
+	line-height: 1;
+	white-space: nowrap;
 }
 
 div.ttbm_booking_panel .ttbm_attendee_form_area {

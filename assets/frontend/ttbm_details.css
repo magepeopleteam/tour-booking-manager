@@ -1802,9 +1802,10 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 #ttbm_content .ttbm_booking_section .ttbm_booking_panel .ttbm_widget_content {
 	padding: 10px !important;
 }
-#ttbm_content .ttbm_booking_section .ttbm_book_now_area.dLayout_xs {
-	padding-top: 18px;
-	padding-bottom: 18px;
+#ttbm_content .ttbm_booking_section .ttbm_book_now_area.dLayout_xs,
+#ttbm_content .ttbm_booking_section .ttbm_book_now_bar {
+	padding-top: 16px;
+	padding-bottom: 16px;
 }
 
 /* ---- date section ---- */
@@ -2469,68 +2470,117 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	text-align: right;
 }
 
-/* ---- summary footer ---- */
-#ttbm_content .ttbm_booking_section .ttbm_book_now_area {
+/* ---- summary footer: Tickets | Total | Book now (one aligned row) ---- */
+#ttbm_content .ttbm_booking_section .ttbm_book_now_area,
+#ttbm_content .ttbm_booking_section .ttbm_book_now_bar {
 	display: flex;
+	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
-	gap: 16px;
-	flex-wrap: wrap;
+	gap: 16px 24px;
+	flex-wrap: nowrap;
 	margin: 0;
-	padding-top: 18px;
-	padding-bottom: 18px;
+	padding-top: 16px;
+	padding-bottom: 16px;
 	background: #f4f5f7;
 	border: 0;
 	border-top: 1px solid var(--ttbm_d_border);
 	border-radius: 0 0 16px 16px;
 }
-#ttbm_content .ttbm_booking_section .ttbm_order_summary { display: block; }
+#ttbm_content .ttbm_booking_section .ttbm_order_summary {
+	display: flex;
+	align-items: center;
+	flex: 1 1 auto;
+	min-width: 0;
+}
 #ttbm_content .ttbm_booking_section .ttbm_summary_heading { display: none; }
 #ttbm_content .ttbm_booking_section .ttbm_summary_values {
 	display: flex;
-	align-items: flex-start;
-	gap: 36px;
+	flex-direction: row;
+	align-items: center;
+	gap: 0;
+	flex-wrap: nowrap;
 }
 #ttbm_content .ttbm_booking_section .ttbm_summary_item {
 	display: flex;
-	flex-direction: column;
-	gap: 2px;
+	flex-direction: row;
+	align-items: center;
+	gap: 8px;
+	padding: 0 18px;
+}
+#ttbm_content .ttbm_booking_section .ttbm_summary_item:first-child {
+	padding-left: 0;
+}
+#ttbm_content .ttbm_booking_section .ttbm_summary_divider {
+	display: inline-block;
+	width: 1px;
+	height: 28px;
+	background: var(--ttbm_d_border, #e2e8f0);
+	flex: 0 0 auto;
 }
 #ttbm_content .ttbm_booking_section .ttbm_summary_label {
-	font-size: 10px;
+	font-size: 11px;
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: .06em;
 	color: var(--ttbm_d_muted);
-	order: 2;
+	order: 0;
+	white-space: nowrap;
 }
 #ttbm_content .ttbm_booking_section .ttbm_summary_item .tour_qty {
-	font-size: 22px;
+	font-size: 20px;
 	font-weight: 800;
 	color: var(--ttbm_d_heading);
-	line-height: 1.1;
-	order: 1;
+	line-height: 1;
+	order: 0;
+	white-space: nowrap;
 }
 #ttbm_content .ttbm_booking_section .ttbm_summary_item .tour_price {
-	font-size: 22px;
-	font-weight: 600;
+	font-size: 20px;
+	font-weight: 700;
 	color: var(--color_theme, #7241ff);
-	line-height: 1.1;
-	order: 1;
+	line-height: 1;
+	order: 0;
+	white-space: nowrap;
+}
+#ttbm_content .ttbm_booking_section .ttbm_book_now_actions {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 10px;
+	flex: 0 0 auto;
+	margin-left: auto;
+}
+/* Keep custom-checkout hidden fields out of the visual flex row. */
+#ttbm_content .ttbm_booking_section .ttbm_book_now_actions .ttbm_custom_checkout_trigger,
+#ttbm_content .ttbm_booking_section .ttbm_book_now_actions input[type="hidden"] {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
 }
 #ttbm_content .ttbm_booking_section .ttbm_book_now {
 	display: inline-flex;
 	align-items: center;
+	justify-content: center;
 	gap: 8px;
 	background: var(--color_theme) !important;
 	color: #fff !important;
 	border: 1px solid #e0e0e0 !important;
 	border-radius: 12px;
 	padding: 12px 22px;
+	min-height: 46px;
 	font-size: 15px;
 	font-weight: 600;
 	cursor: pointer;
 	box-shadow: none;
+	margin: 0;
+	white-space: nowrap;
 	transition: border-color .2s ease, background .2s ease;
 }
 #ttbm_content .ttbm_booking_section .ttbm_book_now:hover {
@@ -2541,6 +2591,25 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	color: #fff !important;
 }
 #ttbm_content .ttbm_booking_section .ttbm_book_now span { color: #fff; font-size: 14px; }
+
+@media (max-width: 640px) {
+	#ttbm_content .ttbm_booking_section .ttbm_book_now_area,
+	#ttbm_content .ttbm_booking_section .ttbm_book_now_bar {
+		flex-wrap: wrap;
+	}
+	#ttbm_content .ttbm_booking_section .ttbm_order_summary {
+		flex: 1 1 100%;
+	}
+	#ttbm_content .ttbm_booking_section .ttbm_book_now_actions {
+		flex: 1 1 100%;
+		margin-left: 0;
+	}
+	#ttbm_content .ttbm_booking_section .ttbm_book_now_actions .ttbm_book_now,
+	#ttbm_content .ttbm_booking_section .ttbm_book_now_actions .ttbm_load_seat_plan {
+		flex: 1 1 auto;
+		width: 100%;
+	}
+}
 
 /* override global registration.css ticket table styles */
 #ttbm_content .ttbm_booking_section .ttbm_ticket_row {

@@ -21,32 +21,35 @@
 		$seat_plan  = class_exists('TTBMA_Seat_Plan') && $display == 'on' && sizeof($seat_infos)>0 && $display_front_end=='on'? 'dNone' : '';
 		$button_type=apply_filters('ttbm_book_now_button_type','button',$tour_id);
 		?>
-		<div class="dLayout_xs justifyBetween ttbm_book_now_area" title="<?php esc_attr_e( 'Select Date First', 'tour-booking-manager' ); ?>" data-placeholder data-ttbm-require-login="<?php echo $ttbm_require_login ? '1' : '0'; ?>">
-			<div class="fdColumn ttbm_order_summary">
+		<div class="ttbm_book_now_area ttbm_book_now_bar" title="<?php esc_attr_e( 'Select Date First', 'tour-booking-manager' ); ?>" data-placeholder data-ttbm-require-login="<?php echo $ttbm_require_login ? '1' : '0'; ?>">
+			<div class="ttbm_order_summary">
 				<div class="ttbm_summary_values">
 					<div class="ttbm_summary_item">
-						<b class="tour_qty">0</b>
 						<span class="ttbm_summary_label"><?php esc_html_e( 'Tickets', 'tour-booking-manager' ); ?></span>
+						<b class="tour_qty">0</b>
 					</div>
+					<span class="ttbm_summary_divider" aria-hidden="true"></span>
 					<div class="ttbm_summary_item">
-						<b class="tour_price"></b>
 						<span class="ttbm_summary_label"><?php esc_html_e( 'Total', 'tour-booking-manager' ); ?></span>
+						<b class="tour_price"></b>
 					</div>
 				</div>
 			</div>
-			<?php do_action('ttbm_before_add_cart_btn', $ttbm_product_id,$tour_id); ?>
-			<?php if(class_exists('TTBMA_Seat_Plan') && $display == 'on' && sizeof($seat_infos)>0 && $display_front_end=='on'){ ?>
-				<button class="dButton ttbm_load_seat_plan" type="submit">
-					<?php esc_html_e( 'Seat Plan', 'tour-booking-manager' ) ; ?>
+			<div class="ttbm_book_now_actions">
+				<?php do_action('ttbm_before_add_cart_btn', $ttbm_product_id,$tour_id); ?>
+				<?php if(class_exists('TTBMA_Seat_Plan') && $display == 'on' && sizeof($seat_infos)>0 && $display_front_end=='on'){ ?>
+					<button class="dButton ttbm_load_seat_plan" type="submit">
+						<?php esc_html_e( 'Seat Plan', 'tour-booking-manager' ) ; ?>
+					</button>
+				<?php } ?>
+				<button class="dButton ttbm_book_now ttbm-confirm-btn <?php echo esc_attr($seat_plan); ?>" type="<?php echo esc_attr($button_type); ?>">
+					<span class="fas fa-shopping-cart"></span>
+					<?php esc_html_e( 'Book now', 'tour-booking-manager' ); ?>
 				</button>
-			<?php } ?>
-			<button class="dButton ttbm_book_now ttbm-confirm-btn <?php echo esc_attr($seat_plan); ?>" type="<?php echo esc_attr($button_type); ?>">
-				<span class="fas fa-shopping-cart"></span>
-				<?php esc_html_e( 'Book now', 'tour-booking-manager' ); ?>
-			</button>
-			<button type="submit" name="add-to-cart" value="<?php echo esc_attr( $ttbm_product_id ); ?>" class="dNone ttbm_add_to_cart ttbm-confirm-btn">
-				<?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?>
-			</button>
+				<button type="submit" name="add-to-cart" value="<?php echo esc_attr( $ttbm_product_id ); ?>" class="dNone ttbm_add_to_cart ttbm-confirm-btn">
+					<?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?>
+				</button>
+			</div>
 			<?php if ( $ttbm_require_login ) : ?>
 				<?php TTBM_Payment_Settings::render_login_modal( $tour_id, 'book_now' ); ?>
 			<?php endif; ?>

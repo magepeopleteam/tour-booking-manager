@@ -56,6 +56,8 @@
 					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Wishlist.php';
 					require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin_Wishlist.php';
 				}
+				// Loaded last so the Pro Features placeholder menu sits at the bottom.
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Pro_Locked_Menus.php';
 			}
 			public function appsero_init_tracker_ttbm() {
 				if (!class_exists('Appsero\Client')) {

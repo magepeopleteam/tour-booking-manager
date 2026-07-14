@@ -1160,6 +1160,73 @@ div.ttbm_wraper .owl-theme .owl-nav {
 	padding: 0;
 }
 
+/* ---------- Modern booking status empty states ---------- */
+.ttbm_booking_panel .ttbm_booking_status {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	text-align: center;
+	padding: 36px 28px;
+	margin: 0;
+	border-radius: 14px;
+	border: 1px dashed #d7dce3;
+	background:
+		radial-gradient(120% 80% at 50% 0%, rgba(var(--color_theme_rgb, 37, 99, 235), 0.08) 0%, transparent 55%),
+		linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+	animation: ttbmBookingStatusIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.ttbm_booking_panel .ttbm_booking_status__icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	color: var(--color_theme, #2563eb);
+	background: rgba(var(--color_theme_rgb, 37, 99, 235), 0.12);
+	box-shadow: inset 0 0 0 1px rgba(var(--color_theme_rgb, 37, 99, 235), 0.16);
+	animation: ttbmBookingStatusIconIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+}
+.ttbm_booking_panel .ttbm_booking_status__title {
+	margin: 4px 0 0;
+	padding: 0;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.35;
+	letter-spacing: -0.015em;
+	color: #111827;
+}
+.ttbm_booking_panel .ttbm_booking_status__desc {
+	margin: 0;
+	max-width: 32ch;
+	font-size: 14px;
+	line-height: 1.55;
+	color: #6b7280;
+}
+.ttbm_booking_panel .ttbm_booking_status--expired .ttbm_booking_status__icon {
+	color: #b45309;
+	background: rgba(180, 83, 9, 0.1);
+	box-shadow: inset 0 0 0 1px rgba(180, 83, 9, 0.16);
+}
+@keyframes ttbmBookingStatusIn {
+	from { opacity: 0; transform: translateY(10px); }
+	to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes ttbmBookingStatusIconIn {
+	from { opacity: 0; transform: scale(0.86); }
+	to   { opacity: 1; transform: scale(1); }
+}
+@media (max-width: 600px) {
+	.ttbm_booking_panel .ttbm_booking_status {
+		padding: 28px 18px;
+	}
+	.ttbm_booking_panel .ttbm_booking_status__title {
+		font-size: 16px;
+	}
+}
+
 /* =====================ttbm_viator_theme overrite========== */
 .ttbm_viator_theme .ttbm_select_date_area {
 	display: flex;

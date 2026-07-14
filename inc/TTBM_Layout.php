@@ -69,8 +69,8 @@
 			}
 			public static function availability_button( $tour_id, $compact = false ) {
 				?>
-                <button class="navy_blueButton ttbm_check_ability" type="button">
-					<span class="fas fa-search" aria-hidden="true"></span>
+                <button class="navy_blueButton ttbm_check_ability ttbm-date-select__action" type="button">
+					<span class="ttbm-date-select__action-icon fas fa-search" aria-hidden="true"></span>
 					<span class="ttbm_check_ability__label">
 						<?php
 						if ( $compact ) {

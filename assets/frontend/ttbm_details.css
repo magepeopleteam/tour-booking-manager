@@ -1808,13 +1808,21 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	padding-bottom: 16px;
 }
 
-/* ---- date section ---- */
+/* ---- date section (modern select bar) ---- */
+#ttbm_content .ttbm_booking_section .ttbm_date_time_select.ttbm-date-select,
 #ttbm_content .ttbm_booking_section .ttbm_date_time_select {
+	--ttbm-date-surface: #f7f8fa;
+	--ttbm-date-surface-hover: #ffffff;
+	--ttbm-date-ink: var(--ttbm_d_heading, #111827);
+	--ttbm-date-muted: var(--ttbm_d_muted, #6b7280);
+	--ttbm-date-line: #e6e8ec;
+	--ttbm-date-accent: var(--color_theme, #0f766e);
+	--ttbm-date-accent-rgb: var(--color_theme_rgb, 15, 118, 110);
 	background: transparent;
 	border: 0;
 	box-shadow: none;
-	padding-top: 16px;
-	padding-bottom: 14px;
+	padding-top: 18px;
+	padding-bottom: 16px;
 	margin: 0;
 	text-align: left;
 }
@@ -1828,72 +1836,119 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	border-radius: 0 !important;
 	justify-content: flex-start !important;
 }
+#ttbm_content .ttbm_booking_section .ttbm-date-select__toolbar,
 #ttbm_content .ttbm_booking_section .booking-button {
-	display: inline-flex;
+	display: flex;
 	align-items: flex-end;
 	justify-content: flex-start;
-	gap: 10px;
-	flex-wrap: nowrap;
-	width: auto;
+	gap: 12px;
+	flex-wrap: wrap;
+	width: 100%;
 	max-width: 100%;
 }
+#ttbm_content .ttbm_booking_section .ttbm-date-select__field,
 #ttbm_content .ttbm_booking_section .date-picker {
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
-	gap: 6px;
-	flex: 0 1 auto;
+	align-items: stretch;
+	gap: 8px;
+	flex: 1 1 240px;
 	width: auto;
 	min-width: 0;
-	max-width: 280px;
+	max-width: 340px;
 }
+#ttbm_content .ttbm_booking_section .ttbm-date-select__label,
 #ttbm_content .ttbm_booking_section .date_time_label,
 #ttbm_content .ttbm_booking_section .ttbm_select_date_area .ttbm-title {
+	display: block;
 	margin: 0;
-	font-size: 10px;
-	font-weight: 700;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: .04em;
 	text-transform: uppercase;
-	letter-spacing: .08em;
-	color: var(--ttbm_d_muted) !important;
+	color: var(--ttbm-date-muted) !important;
 	text-align: left;
+	line-height: 1.2;
 }
+#ttbm_content .ttbm_booking_section .ttbm-date-select__label i,
+#ttbm_content .ttbm_booking_section .date_time_label i {
+	display: none;
+}
+#ttbm_content .ttbm_booking_section .ttbm-date-select__control,
 #ttbm_content .ttbm_booking_section .date-picker-icon {
 	position: relative;
 	display: flex;
 	align-items: center;
-	gap: 10px;
+	gap: 12px;
 	width: 100%;
-	min-width: 220px;
-	height: 42px;
+	min-width: 0;
+	min-height: 52px;
+	height: 52px;
 	box-sizing: border-box;
-	background: #fff;
-	border: 1px solid #e0e0e0;
-	border-radius: 10px;
-	padding: 0 12px;
+	background:
+		linear-gradient(180deg, rgba(255, 255, 255, .92) 0%, rgba(255, 255, 255, .78) 100%),
+		var(--ttbm-date-surface);
+	border: 1px solid var(--ttbm-date-line);
+	border-radius: 14px;
+	padding: 0 14px 0 12px;
 	cursor: pointer;
-	transition: border-color .2s ease, box-shadow .2s ease;
+	box-shadow: 0 1px 0 rgba(17, 24, 39, .02);
+	transition:
+		border-color .2s ease,
+		box-shadow .2s ease,
+		background .2s ease,
+		transform .2s ease;
 }
+#ttbm_content .ttbm_booking_section .ttbm-date-select__control:hover,
 #ttbm_content .ttbm_booking_section .date-picker-icon:hover,
+#ttbm_content .ttbm_booking_section .ttbm-date-select__control:focus-within,
 #ttbm_content .ttbm_booking_section .date-picker-icon:focus-within {
-	border-color: #c9c9d4;
-	box-shadow: 0 0 0 3px rgba(var(--color_theme_rgb), .08);
+	background: var(--ttbm-date-surface-hover);
+	border-color: rgba(var(--ttbm-date-accent-rgb), .45);
+	box-shadow:
+		0 0 0 4px rgba(var(--ttbm-date-accent-rgb), .12),
+		0 8px 20px rgba(17, 24, 39, .06);
+	transform: translateY(-1px);
 }
-#ttbm_content .ttbm_booking_section .date-picker-icon i {
+#ttbm_content .ttbm_booking_section .ttbm-date-select__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 34px;
+	height: 34px;
+	border-radius: 10px;
+	color: var(--ttbm-date-accent);
+	background: rgba(var(--ttbm-date-accent-rgb), .1);
+}
+#ttbm_content .ttbm_booking_section .date-picker-icon > i.far,
+#ttbm_content .ttbm_booking_section .date-picker-icon > i.fas:not(.ttbm_date_chevron) {
 	position: static !important;
 	top: auto !important;
 	left: auto !important;
 	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	border-radius: 10px;
 	font-size: 14px;
-	color: var(--ttbm_d_muted);
-	background: none;
-	width: auto;
-	height: auto;
-	border-radius: 0;
+	color: var(--ttbm-date-accent);
+	background: rgba(var(--ttbm-date-accent-rgb), .1);
 }
 #ttbm_content .ttbm_booking_section .date-picker-icon .ttbm_date_chevron {
 	margin-left: auto;
 	font-size: 11px;
-	color: var(--ttbm_d_muted);
+	color: var(--ttbm-date-muted);
+	opacity: .85;
+	transition: transform .2s ease, color .2s ease;
+}
+#ttbm_content .ttbm_booking_section .ttbm-date-select__control:hover .ttbm_date_chevron,
+#ttbm_content .ttbm_booking_section .date-picker-icon:hover .ttbm_date_chevron,
+#ttbm_content .ttbm_booking_section .ttbm-date-select__control:focus-within .ttbm_date_chevron {
+	color: var(--ttbm-date-accent);
+	transform: translateY(1px);
 }
 #ttbm_content .ttbm_booking_section #ttbm_select_date,
 #ttbm_content .ttbm_booking_section #ttbm_select_date.formControl {
@@ -1906,44 +1961,69 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	box-shadow: none !important;
 	cursor: pointer;
 	font-weight: 600;
-	font-size: 14px;
-	color: var(--ttbm_d_heading);
+	font-size: 15px;
+	letter-spacing: -.01em;
+	color: var(--ttbm-date-ink);
 	text-align: left;
+	line-height: 1.3;
 }
 #ttbm_content .ttbm_booking_section #ttbm_select_date::placeholder {
-	color: var(--ttbm_d_muted);
+	color: var(--ttbm-date-muted);
 	font-weight: 500;
+	opacity: .9;
 }
 #ttbm_content .ttbm_booking_section .ttbm_check_ability,
-#ttbm_content .ttbm_booking_section .navy_blueButton.ttbm_check_ability {
+#ttbm_content .ttbm_booking_section .navy_blueButton.ttbm_check_ability,
+#ttbm_content .ttbm_booking_section .ttbm-date-select__action {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	gap: 6px;
-	height: 42px;
+	gap: 8px;
+	min-height: 52px;
+	height: 52px;
 	box-sizing: border-box;
-	background: #fff !important;
-	color: var(--ttbm_d_heading) !important;
-	border: 1px solid #e0e0e0 !important;
-	border-radius: 10px;
-	padding: 0 14px;
+	background: var(--ttbm-date-accent) !important;
+	color: #fff !important;
+	border: 1px solid transparent !important;
+	border-radius: 14px;
+	padding: 0 18px;
 	font-weight: 600;
-	font-size: 13px;
+	font-size: 14px;
+	letter-spacing: -.01em;
 	white-space: nowrap;
 	cursor: pointer;
-	box-shadow: none;
+	box-shadow: 0 10px 22px rgba(var(--ttbm-date-accent-rgb), .22);
 	flex-shrink: 0;
-	transition: border-color .2s ease, background .2s ease;
+	transition:
+		background .2s ease,
+		box-shadow .2s ease,
+		transform .2s ease,
+		filter .2s ease;
 }
 #ttbm_content .ttbm_booking_section .ttbm_check_ability:hover,
-#ttbm_content .ttbm_booking_section .navy_blueButton.ttbm_check_ability:hover {
-	background: #fafafa !important;
-	color: var(--ttbm_d_heading) !important;
-	border-color: #c9c9d4 !important;
-	transform: none;
-	box-shadow: none;
+#ttbm_content .ttbm_booking_section .navy_blueButton.ttbm_check_ability:hover,
+#ttbm_content .ttbm_booking_section .ttbm-date-select__action:hover {
+	background: var(--ttbm-date-accent) !important;
+	color: #fff !important;
+	border-color: transparent !important;
+	filter: brightness(1.05);
+	transform: translateY(-1px);
+	box-shadow: 0 14px 28px rgba(var(--ttbm-date-accent-rgb), .28);
 }
-#ttbm_content .ttbm_booking_section .ttbm_check_ability span { color: inherit; font-size: 12px; }
+#ttbm_content .ttbm_booking_section .ttbm_check_ability:active,
+#ttbm_content .ttbm_booking_section .ttbm-date-select__action:active {
+	transform: translateY(0);
+	box-shadow: 0 6px 14px rgba(var(--ttbm-date-accent-rgb), .2);
+}
+#ttbm_content .ttbm_booking_section .ttbm_check_ability span,
+#ttbm_content .ttbm_booking_section .ttbm-date-select__action span {
+	color: inherit;
+	font-size: inherit;
+}
+#ttbm_content .ttbm_booking_section .ttbm-date-select__action-icon {
+	font-size: 13px;
+	opacity: .95;
+}
 
 /* ---- booking intro (time slots) ---- */
 #ttbm_content .ttbm_booking_section .ttbm-booking-intro {
@@ -1952,7 +2032,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: .1em;
-	color: var(--color_theme, #6d28d9);
+	color: var(--ttbm-date-accent, var(--color_theme, #0f766e));
 	line-height: 1.3;
 }
 #ttbm_content .ttbm_booking_section .ttbm-booking-intro__brand {
@@ -1968,7 +2048,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	width: 100%;
 	height: 3px;
 	border-radius: 2px;
-	background: var(--color_theme, #6d28d9);
+	background: var(--ttbm-date-accent, var(--color_theme, #0f766e));
 }
 
 /* ---- date toolbar ---- */
@@ -1976,17 +2056,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	margin-top: 0;
 }
 #ttbm_content .ttbm_booking_section .date_time_label {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-}
-#ttbm_content .ttbm_booking_section .date_time_label i {
-	font-size: 12px;
-	color: var(--ttbm_d_muted);
-}
-#ttbm_content .ttbm_booking_section .date-picker-icon {
-	padding: 0 14px;
-	min-width: 240px;
+	display: block;
 }
 
 /* ---- time slots ---- */
@@ -2680,23 +2750,29 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	#ttbm_content .ttbm_booking_section .ttbm_ticket_details:has(.ttbm_ticket_icon) .ttbm_ticket_description {
 		margin-left: 50px;
 	}
-	#ttbm_content .ttbm_booking_section .booking-button {
-		flex-direction: row;
-		flex-wrap: wrap;
-		align-items: flex-end;
+	#ttbm_content .ttbm_booking_section .booking-button,
+	#ttbm_content .ttbm_booking_section .ttbm-date-select__toolbar {
+		flex-direction: column;
+		flex-wrap: nowrap;
+		align-items: stretch;
 		justify-content: flex-start;
 		width: 100%;
+		gap: 10px;
 	}
-	#ttbm_content .ttbm_booking_section .date-picker {
+	#ttbm_content .ttbm_booking_section .date-picker,
+	#ttbm_content .ttbm_booking_section .ttbm-date-select__field {
 		max-width: 100%;
-		flex: 1 1 200px;
+		flex: 1 1 auto;
 	}
-	#ttbm_content .ttbm_booking_section .date-picker-icon {
+	#ttbm_content .ttbm_booking_section .date-picker-icon,
+	#ttbm_content .ttbm_booking_section .ttbm-date-select__control {
 		min-width: 0;
+		width: 100%;
 	}
 	#ttbm_content .ttbm_booking_section .ttbm_check_ability,
-	#ttbm_content .ttbm_booking_section .navy_blueButton.ttbm_check_ability {
-		width: auto;
+	#ttbm_content .ttbm_booking_section .navy_blueButton.ttbm_check_ability,
+	#ttbm_content .ttbm_booking_section .ttbm-date-select__action {
+		width: 100%;
 	}
 	#ttbm_content .ttbm_booking_section .ttbm-time-slots__header {
 		flex-wrap: wrap;

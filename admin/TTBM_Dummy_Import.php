@@ -30,11 +30,8 @@
 					return 0;
 				}
 			}
-			public function is_eligible() {
-				// Only show after WooCommerce is active — prevents popup appearing over the woo-installer screen
-				if ( TTBM_Global_Function::check_woocommerce() != 1 ) {
-					return false;
-				}
+			public static function is_eligible() {
+				// WooCommerce is optional — dummy import should work without it.
 				$dummy_post_inserted = get_option('ttbm_dummy_already_inserted', 'no');
 				if ($dummy_post_inserted == 'yes') {
 					return false;
@@ -49,7 +46,7 @@
 			}
 
 			private function should_auto_show_popup() {
-				if (!$this->is_eligible()) {
+				if (!self::is_eligible()) {
 					return false;
 				}
 				// Force-show after WooCommerce was just activated via the installer popup
@@ -65,7 +62,7 @@
 			}
 
 			public function enqueue_assets() {
-				if (!$this->is_eligible()) {
+				if (!self::is_eligible()) {
 					return;
 				}
 				wp_enqueue_style(
@@ -77,7 +74,7 @@
 			}
 
 			public function render_popup() {
-				if (!$this->is_eligible()) {
+				if (!self::is_eligible()) {
 					return;
 				}
 				$display_style = $this->should_auto_show_popup() ? '' : 'display: none;';
@@ -145,13 +142,26 @@
 						var $actions = $overlay.find('.ttbm-woo-actions');
 						var isWorking = false;
 
-						if (!$overlay.length) return;
+						function openDummyImportPopup() {
+							if (!$overlay.length) return;
+							isWorking = false;
+							$btn.prop('disabled', false);
+							$dismissBtn.prop('disabled', false);
+							$popup.removeClass('ttbm-state-success ttbm-state-error');
+							$progress.hide();
+							$fill.css('width', '0%');
+							$status.text('').removeClass('ttbm-success ttbm-error');
+							$actions.show();
+							$overlay.css({ display: 'flex', opacity: '1' }).hide().fadeIn(300);
+						}
 
-						// Manual trigger from tour list page
+						// Manual trigger from tour list page (bound even if overlay starts hidden)
 						$(document).on('click', '#ttbm-trigger-dummy-import-btn', function(e) {
 							e.preventDefault();
-							$overlay.css('display', 'flex').hide().fadeIn(300);
+							openDummyImportPopup();
 						});
+
+						if (!$overlay.length) return;
 
 						$btn.on('click', function(e) {
 							e.preventDefault();
@@ -202,20 +212,13 @@
 						$dismissBtn.on('click', function(e) {
 							e.preventDefault();
 							if (isWorking) return;
-							isWorking = true;
-							$overlay.css('opacity', '0.5');
+							$overlay.fadeOut(300);
 							$.ajax({
 								url: ajaxurl,
 								type: 'POST',
 								data: {
 									action: 'ttbm_dismiss_dummy_import',
-								nonce: '<?php echo wp_create_nonce("ttbm_dismiss_dummy"); ?>'
-								},
-								success: function() {
-									$overlay.fadeOut(300, function() { $(this).remove(); });
-								},
-								error: function() {
-									$overlay.fadeOut(300, function() { $(this).remove(); });
+									nonce: '<?php echo wp_create_nonce("ttbm_dismiss_dummy"); ?>'
 								}
 							});
 						});

@@ -50,6 +50,20 @@
 					),
 				);
 			}
+			/**
+			 * Compact brand mark for Custom Payment gateway cards.
+			 *
+			 * @param string $gateway_id paypal|stripe|offline
+			 * @return string Safe inline SVG.
+			 */
+			private static function gateway_card_icon($gateway_id) {
+				$icons = array(
+					'paypal' => '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M7.5 20.5H5.2c-.4 0-.7-.3-.6-.7L7.2 3.7c.1-.4.4-.7.8-.7h5.6c3.1 0 5.2 1.6 4.8 4.7-.4 3.4-2.7 5.1-5.9 5.1H9.8l-1 5c-.1.4-.4.7-.8.7H7.5z"/><path opacity=".55" d="M9.2 12.8h2.5c2.5 0 4.3-1.2 4.6-3.7.2-1.7-.8-2.6-2.6-2.6H10.4L9.2 12.8z"/></svg>',
+					'stripe' => '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 10h18"/><path d="M8 15h3"/></svg>',
+					'offline' => '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="6" width="17" height="12" rx="2"/><path d="M3.5 10h17"/><circle cx="8" cy="14" r="1.2"/><path d="M12 14h5"/></svg>',
+				);
+				return isset($icons[$gateway_id]) ? $icons[$gateway_id] : $icons['offline'];
+			}
 			private function is_pro_active() {
 				return class_exists('TTBM_Woocommerce_Plugin_Pro');
 			}
@@ -648,8 +662,7 @@ JS;
                         </label>
                     </div>
                 </div>
-                <div class="justifyBetween _mT">
-                    <div></div>
+                <div class="ttbm-pay-misc-save-row">
                     <button type="button" class="button button-primary ttbm-pay-misc-save-btn" data-fields="ttbm_payment_cart_redirect,ttbm_payment_show_billing_info" data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_admin_nonce')); ?>"><?php esc_html_e('Save Changes', 'tour-booking-manager'); ?></button>
                 </div>
                 <div class="ttbm-pay-field-row">
@@ -680,19 +693,31 @@ JS;
 						$is_enabled = isset($opts[$spec['enable_key']]) && $opts[$spec['enable_key']] === 'on';
 						$locked = !empty($spec['pro']) && !$is_pro;
 						?>
-                        <div class="ttbm-pm-card ttbm-pm-card-<?php echo esc_attr($gateway_id); ?> <?php echo $is_enabled ? 'is-enabled' : 'is-disabled'; ?>" data-gateway-id="<?php echo esc_attr($gateway_id); ?>">
+                        <div class="ttbm-pm-card ttbm-pm-card-<?php echo esc_attr($gateway_id); ?> <?php echo $is_enabled ? 'is-enabled' : 'is-disabled'; ?><?php echo $locked ? ' is-locked' : ''; ?>" data-gateway-id="<?php echo esc_attr($gateway_id); ?>">
                             <div class="ttbm-pm-head">
                                 <div class="ttbm-pm-head-main">
-                                    <span class="ttbm-pm-title"><?php echo esc_html($spec['label']); ?></span>
+									<span class="ttbm-pm-icon" aria-hidden="true">
+										<?php echo self::gateway_card_icon($gateway_id); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG markup ?>
+									</span>
+									<div class="ttbm-pm-head-copy">
+										<div class="ttbm-pm-title-row">
+											<span class="ttbm-pm-title"><?php echo esc_html($spec['label']); ?></span>
+											<?php if ($locked) : ?>
+												<span class="ttbm-pm-pro-badge"><?php esc_html_e('PRO', 'tour-booking-manager'); ?></span>
+											<?php else : ?>
+												<span class="ttbm-pm-badge"><?php echo $is_enabled ? esc_html__('Enabled', 'tour-booking-manager') : esc_html__('Disabled', 'tour-booking-manager'); ?></span>
+											<?php endif; ?>
+										</div>
+										<p class="ttbm-pm-desc"><?php echo esc_html($spec['desc']); ?></p>
+									</div>
                                 </div>
-								<?php if ($locked) : ?>
-                                    <span class="ttbm-pm-pro-badge"><?php esc_html_e('PRO', 'tour-booking-manager'); ?></span>
-								<?php else : ?>
-                                    <span class="ttbm-pm-badge"><?php echo $is_enabled ? esc_html__('Enabled', 'tour-booking-manager') : esc_html__('Disabled', 'tour-booking-manager'); ?></span>
-                                    <button type="button" class="button ttbm-pm-configure-btn" data-modal="ttbm-gw-modal-<?php echo esc_attr($gateway_id); ?>"><?php esc_html_e('Configure', 'tour-booking-manager'); ?></button>
+								<?php if (!$locked) : ?>
+                                    <button type="button" class="button ttbm-pm-configure-btn" data-modal="ttbm-gw-modal-<?php echo esc_attr($gateway_id); ?>">
+										<span class="dashicons dashicons-admin-generic" aria-hidden="true"></span>
+										<?php esc_html_e('Configure', 'tour-booking-manager'); ?>
+									</button>
 								<?php endif; ?>
                             </div>
-                            <div class="ttbm-pm-desc"><?php echo esc_html($spec['desc']); ?></div>
                         </div>
 					<?php endforeach; ?>
                 </div>
@@ -762,38 +787,45 @@ JS;
 				<?php
 				$confirmation_page = (int) $this->opt('ttbm_payment_confirmation_page', 0);
 				?>
-                <div class="ttbm-pay-field-row ttbm-pay-confirmation-page">
-                    <label class="ttbm-pay-field-label"><?php esc_html_e('Booking Confirmation Page', 'tour-booking-manager'); ?></label>
-                    <div class="ttbm-pay-field-control">
-						<?php
-						// wp_dropdown_pages() already escapes its own output; wp_kses_post()
-						// would strip <select>/<option> entirely since they're not in its
-						// allowed-HTML list, leaving just a jumble of page-title text.
-						echo wp_dropdown_pages(array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							'selected' => $confirmation_page,
-							'name' => 'ttbm_payment_settings[ttbm_payment_confirmation_page]',
-							'class' => 'formControl',
-							'show_option_none' => esc_html__('— Select a page —', 'tour-booking-manager'),
-							'option_none_value' => 0,
-							'echo' => 0,
-						));
-						?>
-                        <p class="ttbm-pay-field-desc"><?php esc_html_e('Used only by the Custom Payment checkout (PayPal/Stripe/Offline via Pro). Regular WooCommerce bookings always use WooCommerce\'s own order-received page.', 'tour-booking-manager'); ?></p>
+                <div class="ttbm-pay-accordion">
+                    <button type="button" class="ttbm-pay-acc-header" data-acc="custom-additional">
+                        <span><?php esc_html_e('Additional Settings', 'tour-booking-manager'); ?></span>
+                        <span class="dashicons dashicons-arrow-down-alt2"></span>
+                    </button>
+                    <div class="ttbm-pay-acc-body" data-acc-body="custom-additional" style="display:none;">
+                        <div class="ttbm-pay-field-row ttbm-pay-confirmation-page">
+                            <label class="ttbm-pay-field-label"><?php esc_html_e('Booking Confirmation Page', 'tour-booking-manager'); ?></label>
+                            <div class="ttbm-pay-field-control">
+								<?php
+								// wp_dropdown_pages() already escapes its own output; wp_kses_post()
+								// would strip <select>/<option> entirely since they're not in its
+								// allowed-HTML list, leaving just a jumble of page-title text.
+								echo wp_dropdown_pages(array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									'selected' => $confirmation_page,
+									'name' => 'ttbm_payment_settings[ttbm_payment_confirmation_page]',
+									'class' => 'formControl',
+									'show_option_none' => esc_html__('— Select a page —', 'tour-booking-manager'),
+									'option_none_value' => 0,
+									'echo' => 0,
+								));
+								?>
+                                <p class="ttbm-pay-field-desc"><?php esc_html_e('Used only by the Custom Payment checkout (PayPal/Stripe/Offline via Pro). Regular WooCommerce bookings always use WooCommerce\'s own order-received page.', 'tour-booking-manager'); ?></p>
+                            </div>
+                        </div>
+                        <div class="ttbm-pay-field-row">
+                            <label class="ttbm-pay-field-label"><?php esc_html_e('Allow Guest Booking', 'tour-booking-manager'); ?></label>
+                            <div class="ttbm-pay-field-control">
+                                <select name="ttbm_payment_settings[ttbm_payment_allow_guest_booking]" class="formControl">
+                                    <option value="yes" <?php selected($allow_guest_booking, 'yes'); ?>><?php esc_html_e('Yes — anyone can book without an account', 'tour-booking-manager'); ?></option>
+                                    <option value="no" <?php selected($allow_guest_booking, 'no'); ?>><?php esc_html_e('No — require login or registration to book', 'tour-booking-manager'); ?></option>
+                                </select>
+                                <p class="ttbm-pay-field-desc"><?php esc_html_e('Custom Payment only (PayPal/Stripe/Offline). When set to No, a logged-out visitor sees an inline log in / register panel when they click to book — never a page reload. WooCommerce checkout has its own separate guest-checkout setting.', 'tour-booking-manager'); ?></p>
+                            </div>
+                        </div>
+                        <div class="ttbm-pay-misc-save-row">
+                            <button type="button" class="button button-primary ttbm-pay-misc-save-btn" data-fields="ttbm_payment_confirmation_page,ttbm_payment_allow_guest_booking" data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_admin_nonce')); ?>"><?php esc_html_e('Save Changes', 'tour-booking-manager'); ?></button>
+                        </div>
                     </div>
-                </div>
-                <div class="ttbm-pay-field-row">
-                    <label class="ttbm-pay-field-label"><?php esc_html_e('Allow Guest Booking', 'tour-booking-manager'); ?></label>
-                    <div class="ttbm-pay-field-control">
-                        <select name="ttbm_payment_settings[ttbm_payment_allow_guest_booking]" class="formControl">
-                            <option value="yes" <?php selected($allow_guest_booking, 'yes'); ?>><?php esc_html_e('Yes — anyone can book without an account', 'tour-booking-manager'); ?></option>
-                            <option value="no" <?php selected($allow_guest_booking, 'no'); ?>><?php esc_html_e('No — require login or registration to book', 'tour-booking-manager'); ?></option>
-                        </select>
-                        <p class="ttbm-pay-field-desc"><?php esc_html_e('Custom Payment only (PayPal/Stripe/Offline). When set to No, a logged-out visitor sees an inline log in / register panel when they click to book — never a page reload. WooCommerce checkout has its own separate guest-checkout setting.', 'tour-booking-manager'); ?></p>
-                    </div>
-                </div>
-                <div class="justifyBetween _mT">
-                    <div></div>
-                    <button type="button" class="button button-primary ttbm-pay-misc-save-btn" data-fields="ttbm_payment_confirmation_page,ttbm_payment_allow_guest_booking" data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_admin_nonce')); ?>"><?php esc_html_e('Save Changes', 'tour-booking-manager'); ?></button>
                 </div>
 				<?php
 			}

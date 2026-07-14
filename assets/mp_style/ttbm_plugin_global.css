@@ -725,6 +725,22 @@
 	.ttbm_style div.superSlider .sliderMoreItem { display: -webkit-flex; display: flex; -webkit-justify-content: center; justify-content: center; -webkit-align-items: center; align-items: center; }
 	/***************************/
 	.ttbm_style div.superSlider { overflow: hidden; display: -webkit-flex; display: flex; background-color: #FFF; position: relative; }
+	/* SuperSlider: keep main + showcase images hidden until all are preloaded
+	   together, so thumbs never flash empty / broken one-by-one. */
+	.ttbm_style .superSlider.ttbm-awaiting-images .sliderAllItem [data-bg-image],
+	.ttbm_style .superSlider.ttbm-awaiting-images .sliderShowcase [data-bg-image] {
+		opacity: 0;
+	}
+	.ttbm_style .superSlider.is-images-ready .sliderAllItem [data-bg-image],
+	.ttbm_style .superSlider.is-images-ready .sliderShowcase [data-bg-image] {
+		opacity: 1;
+		-webkit-transition: opacity .3s ease;
+		transition: opacity .3s ease;
+	}
+	.ttbm_style .superSlider.ttbm-awaiting-images .sliderShowcaseItem,
+	.ttbm_style .superSlider.ttbm-awaiting-images .sliderItem {
+		background-color: #e8edf2;
+	}
 	.ttbm_style div.superSlider .area_column { -webkit-flex-direction: column; flex-direction: column; }
 	.ttbm_style div.superSlider .sliderAllItem { width: 100%; position: relative; overflow: hidden; }
 	.ttbm_style div.superSlider .sliderItem img { width: 100%; max-height: 100%; }

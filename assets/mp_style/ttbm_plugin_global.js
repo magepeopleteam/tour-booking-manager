@@ -287,6 +287,78 @@ function ttbm_apply_bg_image(target, bg_url) {
 function ttbm_should_skip_details_loader(target) {
     return target.closest('.ttbm_details_page .superSlider').length > 0;
 }
+/**
+ * Preload one image URL (warm cache before paint).
+ * @return {jQuery.Promise}
+ */
+function ttbm_preload_image_url(bg_url) {
+    let deferred = jQuery.Deferred();
+    bg_url = ttbm_normalize_bg_url(bg_url);
+    if (!bg_url) {
+        deferred.resolve();
+        return deferred.promise();
+    }
+    let img = new Image();
+    img.onload = function () {
+        deferred.resolve();
+    };
+    img.onerror = function () {
+        deferred.resolve();
+    };
+    img.src = bg_url;
+    if (img.complete && img.naturalWidth > 0) {
+        deferred.resolve();
+    }
+    return deferred.promise();
+}
+/**
+ * Preload every gallery + showcase thumb in a superSlider together, then
+ * reveal them as one unit so thumbs never flash empty/broken individually.
+ * Works even while the details-page skeleton has visibility:hidden (:visible false).
+ * @return {jQuery.Promise}
+ */
+function ttbm_prepare_super_slider($slider) {
+    $slider = $slider && $slider.jquery ? $slider : jQuery($slider);
+    if (!$slider.length) {
+        return jQuery.Deferred().resolve().promise();
+    }
+    let existing = $slider.data('ttbmImagesReadyPromise');
+    if (existing) {
+        return existing;
+    }
+    $slider.addClass('ttbm-awaiting-images').removeClass('is-images-ready');
+
+    let urls = [];
+    $slider.find('[data-bg-image]').each(function () {
+        let url = ttbm_normalize_bg_url(jQuery(this).data('bg-image'));
+        if (url && urls.indexOf(url) === -1) {
+            urls.push(url);
+        }
+    });
+
+    let waits = urls.length ? urls.map(ttbm_preload_image_url) : [jQuery.Deferred().resolve().promise()];
+    let ready = jQuery.when.apply(jQuery, waits).always(function () {
+        $slider.find('[data-bg-image]').each(function () {
+            let $el = jQuery(this);
+            ttbm_apply_bg_image($el, ttbm_normalize_bg_url($el.data('bg-image')));
+        });
+        let $allItem = $slider.find('.sliderAllItem').first();
+        if ($allItem.length) {
+            ttbm_slider_resize($allItem);
+        }
+        $slider.removeClass('ttbm-awaiting-images').addClass('is-images-ready');
+    });
+    $slider.data('ttbmImagesReadyPromise', ready);
+    return ready;
+}
+function ttbm_prepare_all_super_sliders(scope) {
+    let $scope = scope && scope.jquery ? scope : (scope ? jQuery(scope) : jQuery('body'));
+    let waits = [];
+    $scope.find('.superSlider').addBack('.superSlider').each(function () {
+        waits.push(ttbm_prepare_super_slider(jQuery(this)));
+    });
+    return waits.length ? jQuery.when.apply(jQuery, waits) : jQuery.Deferred().resolve().promise();
+}
 function ttbm_loadBgImage(scope) {
     let $roots = scope && scope.jquery ? scope : (scope ? jQuery(scope) : null);
     if (!$roots || !$roots.length) {
@@ -294,8 +366,14 @@ function ttbm_loadBgImage(scope) {
     }
     $roots.each(function () {
         let $root = jQuery(this);
-        $root.find('[data-bg-image]:visible').each(function () {
+        // Include .superSlider images even when hidden under the details skeleton
+        // (jQuery :visible is false for visibility:hidden).
+        $root.find('[data-bg-image]').each(function () {
             let target = jQuery(this);
+            let inSlider = target.closest('.superSlider').length > 0;
+            if (!inSlider && !target.is(':visible')) {
+                return;
+            }
             if (target.closest('.sliderAllItem').length === 0) {
                 let bg_url = ttbm_normalize_bg_url(target.data('bg-image'));
                 let currentBg = target.css('background-image') || '';
@@ -308,7 +386,7 @@ function ttbm_loadBgImage(scope) {
                     return;
                 }
                 let height = target.outerHeight();
-                if (height === 0) {
+                if (height === 0 && !inSlider) {
                     ttbm_resize_bg_image_area(target, bg_url);
                 }
                 ttbm_apply_bg_image(target, bg_url);
@@ -316,8 +394,12 @@ function ttbm_loadBgImage(scope) {
         });
         $root.find('.sliderAllItem').each(function () {
             let target = jQuery(this);
+            if (!target.is(':visible') && target.closest('.superSlider').length === 0) {
+                return;
+            }
             ttbm_slider_resize(target);
         });
+        ttbm_prepare_all_super_sliders($root);
     });
     return true;
 }
@@ -430,9 +512,10 @@ function ttbm_resize_bg_image_area(target, bg_url) {
             }
             dLoader(target);
         });
-        $('body').find('div.ttbm_style .superSlider .sliderAllItem:visible').each(function () {
+        $('body').find('div.ttbm_style .superSlider .sliderAllItem').each(function () {
             ttbm_slider_resize(jQuery(this));
         });
+        ttbm_prepare_all_super_sliders('body');
         $(window).on('load', function () {
             load_initial();
             ttbm_details_placeholder_remove();
@@ -514,7 +597,28 @@ function ttbm_resize_bg_image_area(target, bg_url) {
         ttbm_loadCartBgImage();
     }
     function ttbm_details_placeholder_remove() {
-        placeholderLoaderRemove($('.ttbm_style.ttbm_details_page_loader'));
+        let $loader = $('.ttbm_style.ttbm_details_page_loader');
+        if (!$loader.length) {
+            return;
+        }
+        if ($loader.data('ttbmDetailsPlaceholderRemoving')) {
+            return;
+        }
+        $loader.data('ttbmDetailsPlaceholderRemoving', true);
+
+        let finished = false;
+        function finish() {
+            if (finished) {
+                return;
+            }
+            finished = true;
+            placeholderLoaderRemove($loader);
+        }
+
+        // Wait for gallery + showcase thumbs to finish loading together, then
+        // drop the page skeleton so nothing looks broken/missing.
+        ttbm_prepare_all_super_sliders($loader).always(finish);
+        setTimeout(finish, 8000);
     }
     // Load cart images on document ready
     $(document).ready(function () {

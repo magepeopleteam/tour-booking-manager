@@ -492,7 +492,7 @@ div.ttbm_global_settings.ttbm_configuration {
     box-shadow: var(--ttbm-a-shadow-sm, 0 1px 2px rgba(15, 23, 42, 0.05));
 }
 .ttbm-pm-card.is-enabled {
-    border-left: 3px solid var(--ttbm-a-primary, #2271b1);
+    border-left: 1px solid var(--ttbm-a-border, #dcdcde);
 }
 .ttbm-pm-head {
     display: flex;
@@ -624,15 +624,188 @@ div.ttbm_global_settings.ttbm_configuration {
     flex: 0 0 auto;
 }
 
-/* ── Payments tab — Custom Payment gateway cards (PayPal / Stripe / Offline) ── */
+/* ── Payments tab — Custom Payment gateway cards (PayPal / Stripe / Offline) ──
+   Modern white cards with brand icon chips. Scoped to .ttbm-pm-gateways so
+   WooCommerce gateway cards stay on the shared neutral card styles above. */
+.ttbm-pm-gateways {
+    display: flow;
+}
 .ttbm-pm-gateways .ttbm-pm-card {
+    margin: 0;
     padding: 0;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
+    overflow: hidden;
+    transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.ttbm-pm-gateways .ttbm-pm-card:hover {
+    border-color: #d1d5db;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, .08);
+    transform: translateY(-1px);
+}
+.ttbm-pm-gateways .ttbm-pm-card.is-enabled {
+    border-left: 1px solid var(--ttbm-a-border, #dcdcde);
+    border-color: #c7d7ea;
+    box-shadow: 0 1px 2px rgba(34, 113, 177, .06);
+}
+.ttbm-pm-gateways .ttbm-pm-card.is-enabled:hover {
+    border-color: #9bb8d9;
+}
+.ttbm-pm-gateways .ttbm-pm-card.is-locked {
+    opacity: .72;
 }
 .ttbm-pm-gateways .ttbm-pm-head {
-    padding: 14px 16px 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 18px 18px 16px;
+}
+.ttbm-pm-gateways .ttbm-pm-head-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+.ttbm-pm-gateways .ttbm-pm-icon {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #f3f4f6;
+    color: #374151;
+}
+.ttbm-pm-gateways .ttbm-pm-card-paypal .ttbm-pm-icon {
+    background: #e8f1fb;
+    color: #003087;
+}
+.ttbm-pm-gateways .ttbm-pm-card-stripe .ttbm-pm-icon {
+    background: #eeecff;
+    color: #635bff;
+}
+.ttbm-pm-gateways .ttbm-pm-card-offline .ttbm-pm-icon {
+    background: #e6f6f3;
+    color: #0f766e;
+}
+.ttbm-pm-gateways .ttbm-pm-head-copy {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+.ttbm-pm-gateways .ttbm-pm-title-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+.ttbm-pm-gateways .ttbm-pm-title {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    color: #111827;
+    line-height: 1.3;
 }
 .ttbm-pm-gateways .ttbm-pm-desc {
-    padding: 4px 16px 16px;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #6b7280;
+}
+.ttbm-pm-gateways .ttbm-pm-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #f3f4f6;
+    color: #6b7280;
+}
+.ttbm-pm-gateways .ttbm-pm-card.is-enabled .ttbm-pm-badge {
+    background: #e8f5ec;
+    color: #0a7c2f;
+}
+.ttbm-pm-gateways .ttbm-pm-card-paypal.is-enabled {
+    border-color: #b9d4f0;
+    margin-bottom: 5px;
+}
+.ttbm-pm-gateways .ttbm-pm-card-stripe.is-enabled {
+    border-color: #cdc9ff;
+}
+.ttbm-pm-gateways .ttbm-pm-card-offline.is-enabled {
+    border-color: #b7e2da;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.ttbm-pm-gateways .ttbm-pm-configure-btn {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 4px;
+    flex: 0 0 auto;
+    margin: 0 !important;
+    height: auto !important;
+    min-height: 34px;
+    padding: 6px 12px !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 10px !important;
+    background: #fff !important;
+    color: #374151 !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    box-shadow: none !important;
+    transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+button.button.ttbm-pm-configure-btn {
+    border-radius: 10px !important;
+}
+.ttbm-pm-gateways .ttbm-pm-configure-btn .dashicons {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    line-height: 1;
+}
+.ttbm-pm-gateways .ttbm-pm-configure-btn:hover {
+    background: #f9fafb !important;
+    border-color: #cfd4dc !important;
+    color: #111827 !important;
+}
+.ttbm-pm-gateways .ttbm-pm-card-paypal .ttbm-pm-configure-btn:hover {
+    border-color: #90b8e0 !important;
+    color: #003087 !important;
+}
+.ttbm-pm-gateways .ttbm-pm-card-stripe .ttbm-pm-configure-btn:hover {
+    border-color: #b3aeff !important;
+    color: #635bff !important;
+}
+.ttbm-pm-gateways .ttbm-pm-card-offline .ttbm-pm-configure-btn:hover {
+    border-color: #8dcec3 !important;
+    color: #0f766e !important;
+}
+.ttbm-pm-gateways .ttbm-pm-pro-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .05em;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(253, 160, 133, .35);
+}
+.ttbm-pm-gateways .ttbm-pm-body {
+    background: #fafbfc;
+    border-top: 1px solid #f0f0f1;
 }
 .ttbm-pm-inactive-notice {
     padding: 14px 16px;
@@ -641,69 +814,14 @@ div.ttbm_global_settings.ttbm_configuration {
     border-radius: var(--ttbm-a-radius, 10px);
     color: var(--ttbm-a-muted, #50575e);
 }
-
-/* ── Custom Payment gateway cards — brand-colored gradients ──
-   Scoped to .ttbm-pm-gateways only, so the WooCommerce gateway cards
-   above (which follow each store's own gateway branding, not ours) stay
-   neutral/white. */
-.ttbm-pm-gateways .ttbm-pm-card {
-    border: none;
-    border-radius: 14px;
-    box-shadow: 0 6px 18px rgba(16, 24, 40, .12);
-    transition: transform .18s ease, box-shadow .18s ease;
-}
-.ttbm-pm-gateways .ttbm-pm-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgba(16, 24, 40, .18);
-}
-.ttbm-pm-gateways .ttbm-pm-card-paypal {
-    background: linear-gradient(135deg, #003087 0%, #0079c1 100%);
-}
-.ttbm-pm-gateways .ttbm-pm-card-stripe {
-    background: linear-gradient(135deg, #635bff 0%, #3f36c5 100%);
-}
-.ttbm-pm-gateways .ttbm-pm-card-offline {
-    background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
-}
-.ttbm-pm-gateways .ttbm-pm-card .ttbm-pm-title {
-    color: #fff;
-}
-.ttbm-pm-gateways .ttbm-pm-card .ttbm-pm-desc {
-    color: rgba(255, 255, 255, .85);
-}
-.ttbm-pm-gateways .ttbm-pm-card .ttbm-pm-badge {
-    background: rgba(255, 255, 255, .2);
-    color: #fff;
-}
-.ttbm-pm-gateways .ttbm-pm-card.is-enabled .ttbm-pm-badge {
-    background: #fff;
-}
-.ttbm-pm-gateways .ttbm-pm-card-paypal.is-enabled .ttbm-pm-badge { color: #003087; }
-.ttbm-pm-gateways .ttbm-pm-card-stripe.is-enabled .ttbm-pm-badge { color: #635bff; }
-.ttbm-pm-gateways .ttbm-pm-card-offline.is-enabled .ttbm-pm-badge { color: #0f766e; }
-.ttbm-pm-gateways .ttbm-pm-card .ttbm-pm-configure-btn {
-    background: #fff !important;
-    color: #1d2327 !important;
-    border: none !important;
-    font-weight: 600 !important;
-    border-radius: 8px !important;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, .18) !important;
-    transition: opacity .15s ease;
-}
-.ttbm-pm-gateways .ttbm-pm-card .ttbm-pm-configure-btn:hover {
-    opacity: .9;
-}
-.ttbm-pm-gateways .ttbm-pm-card .ttbm-pm-pro-badge {
-    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-    color: #fff;
-    font-weight: 700;
-    box-shadow: 0 2px 6px rgba(253, 160, 133, .4);
-}
-/* The gateway's own inline settings form (opened via Configure) still
-   needs to read clearly against the card's colored background. */
-.ttbm-pm-gateways .ttbm-pm-body {
-    background: rgba(255, 255, 255, .96);
-    border-top: none;
+@media (max-width: 782px) {
+    .ttbm-pm-gateways .ttbm-pm-head {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .ttbm-pm-gateways .ttbm-pm-configure-btn {
+        align-self: flex-start;
+    }
 }
 
 /* Gateway configuration modal */
@@ -1088,6 +1206,20 @@ div.ttbm_global_settings.ttbm_configuration {
 }
 .ttbm-pay-field-control select.formControl {
     width: 100%;
+    border-radius: 10px;
+}
+.ttbm-pay-misc-save-row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    margin-top: 16px;
+    padding-top: 10px;
+}
+.ttbm-pay-misc-save-btn.button,
+.ttbm-pay-misc-save-btn.button-primary {
+    border-radius: 5px !important;
+    margin-left: auto;
 }
 .ttbm-pay-field-desc {
     margin: 6px 0 0;
@@ -1208,7 +1340,7 @@ div.ttbm_global_settings.ttbm_configuration {
     border: 1px solid var(--ttbm-a-warning, #d97706);
 }
 .ttbm-pay-confirmation-page {
-    margin-top: 18px;
+    display: none !important;
 }
 
 /* WooCommerce install/activate modal (mirrors the reference plugin's

@@ -43,7 +43,7 @@
 							);
 							$service_qty = array_key_exists('service_qty', $service) ? $service['service_qty'] : 0;
 							$reserve = apply_filters('ttbm_service_reserve_qty', 0);
-							$input_type = array_key_exists('service_qty_type', $service) ? $service['service_qty_type'] : 'inputbox';
+							$input_type = 'inputbox';
 							$default_qty = apply_filters('ttbm_service_type_default_qty', 0);
 							$min_qty = apply_filters('ttbm_service_type_min_qty', 0);
 							$max_qty = apply_filters('ttbm_service_type_max_qty', 0);

@@ -28,7 +28,6 @@ if ( ! is_array( $extra_services ) || empty( $extra_services ) ) {
 			);
 			$service_qty               = $service['service_qty'] ?? 0;
 			$reserve                   = apply_filters( 'ttbm_service_reserve_qty', 0 );
-			$input_type                = $service['service_qty_type'] ?? 'inputbox';
 			$default_qty               = apply_filters( 'ttbm_service_type_default_qty', 0 );
 			$min_qty                   = apply_filters( 'ttbm_service_type_min_qty', 0 );
 			$max_qty                   = apply_filters( 'ttbm_service_type_max_qty', 0 );
@@ -50,7 +49,7 @@ if ( ! is_array( $extra_services ) || empty( $extra_services ) ) {
 						<span class="ttbm_smart_addon_price">
 							+<?php echo wp_kses_post( $has_sale ? $service_sale_price_format : $service_price ); ?>
 						</span>
-						<?php if ( ! $is_sold_out && $input_type === 'inputbox' ) { ?>
+						<?php if ( ! $is_sold_out ) { ?>
 							<div class="ttbm_smart_addon_qty">
 								<div class="ticket-type-name" data-ticket-type-name="<?php echo esc_attr( $data_ticket_name ); ?>">
 									<div class="groupContent qtyIncDec" data-ticket-type-name="<?php echo esc_attr( $data_ticket_name ); ?>">
@@ -63,8 +62,8 @@ if ( ! is_array( $extra_services ) || empty( $extra_services ) ) {
 												data-price="<?php echo esc_attr( $service_price_raw ); ?>"
 												data-available="<?php echo esc_attr( $effective_max ); ?>"
 												name="service_qty[]"
-												value="0"
-												min="0"
+												value="<?php echo esc_attr( max( 0, (int) $default_qty ) ); ?>"
+												min="<?php echo esc_attr( $min_qty ); ?>"
 												max="<?php echo esc_attr( $effective_max ); ?>"
 											/>
 										</label>
@@ -73,15 +72,6 @@ if ( ! is_array( $extra_services ) || empty( $extra_services ) ) {
 										</div>
 									</div>
 								</div>
-							</div>
-						<?php } elseif ( ! $is_sold_out && $input_type === 'dropdown' ) { ?>
-							<div class="ttbm_smart_addon_qty ttbm_smart_addon_qty--dropdown">
-								<?php
-								ob_start();
-								TTBM_Layout::qty_input( $service_name, $available, $input_type, $default_qty, $min_qty, $max_qty, $service_price_raw, 'service_qty[]', $tour_id );
-								$qty_markup = ob_get_clean();
-								echo $qty_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-								?>
 							</div>
 						<?php } ?>
 					</div>

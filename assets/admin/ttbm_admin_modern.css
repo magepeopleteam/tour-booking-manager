@@ -69,7 +69,6 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	line-height: var(--ttbm-a-lh);
 	color: var(--ttbm-a-muted);
 	margin: 0 0 28px;
-	max-width: 72ch;
 }
 
 #ttbm_meta_box_panel .tabsItem section .ttbm-header h4,

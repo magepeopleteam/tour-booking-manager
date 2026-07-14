@@ -75,6 +75,10 @@
 				add_action('wp_enqueue_scripts', array($this, 'enqueue_login_gate_assets'));
 				add_action('admin_init', array($this, 'maybe_migrate_booking_mode'));
 				add_action('admin_notices', array($this, 'maybe_render_gateway_notice'));
+				add_action('edit_form_top', array($this, 'maybe_render_edit_payment_notice'));
+				add_action('admin_enqueue_scripts', array($this, 'maybe_enqueue_edit_payment_assets'));
+				add_action('ttbm_right_sidebar_content', array($this, 'render_payment_sidebar_card'), 16);
+				add_action('ttbm_hotel_right_sidebar_content', array($this, 'render_payment_sidebar_card'), 16);
 				add_filter('woocommerce_add_to_cart_redirect', array($this, 'add_to_cart_redirect'));
 				// Real WooCommerce orders always use WooCommerce's own order-received/
 				// thank-you page — no filter on woocommerce_get_checkout_order_received_url
@@ -163,6 +167,110 @@
 					? esc_html__('No custom payment gateway is configured yet — bookings cannot be paid for.', 'tour-booking-manager')
 					: esc_html__('No WooCommerce payment gateway is enabled yet — bookings cannot be paid for.', 'tour-booking-manager');
 			}
+
+			/**
+			 * True when the active booking mode has at least one usable gateway
+			 * (mirrors service-booking-manager's has_functional_payment_method()).
+			 */
+			public static function has_functional_payment_method(): bool {
+				return self::has_gateway_for_mode(self::get_booking_mode());
+			}
+
+			/**
+			 * Human-readable label for the active booking mode.
+			 */
+			public static function get_booking_mode_label(): string {
+				$mode = self::get_booking_mode();
+				if ($mode === 'custom') {
+					return __('Custom Payment', 'tour-booking-manager');
+				}
+				if ($mode === 'woocommerce') {
+					return __('WooCommerce', 'tour-booking-manager');
+				}
+				return __('Not set', 'tour-booking-manager');
+			}
+
+			/**
+			 * Names of gateways currently enabled for the active booking mode.
+			 *
+			 * @return string[]
+			 */
+			public static function get_active_gateway_names(): array {
+				$mode = self::get_booking_mode();
+				$names = array();
+				if ($mode === 'woocommerce') {
+					if (!function_exists('WC') || !WC()->payment_gateways()) {
+						return $names;
+					}
+					foreach (WC()->payment_gateways()->payment_gateways() as $gateway) {
+						if (isset($gateway->enabled) && $gateway->enabled === 'yes') {
+							$names[] = $gateway->get_method_title();
+						}
+					}
+					return $names;
+				}
+				$opts = (array) get_option('ttbm_payment_settings', array());
+				$map = array(
+					'ttbm_paypal_enable' => __('PayPal', 'tour-booking-manager'),
+					'ttbm_stripe_enable' => __('Stripe', 'tour-booking-manager'),
+					'ttbm_offline_enable' => __('Offline Payment', 'tour-booking-manager'),
+				);
+				foreach ($map as $key => $label) {
+					if (isset($opts[$key]) && $opts[$key] === 'on') {
+						$names[] = $label;
+					}
+				}
+				return $names;
+			}
+
+			/**
+			 * Compact Payment Method card for the tour edit right sidebar
+			 * (matches service-booking-manager SME rail payment card).
+			 */
+			public function render_payment_sidebar_card($tour_id = 0) {
+				$pm_active = self::has_functional_payment_method();
+				$pm_type_label = self::get_booking_mode_label();
+				$pm_gateway_names = self::get_active_gateway_names();
+				?>
+				<div class="ttbm-sb-card ttbm-sb-payment-card">
+					<p class="ttbm-sb-card-title"><?php esc_html_e('Payment Method', 'tour-booking-manager'); ?></p>
+					<div class="ttbm-sb-payment-info-list">
+						<div class="ttbm-sb-payment-info-row">
+							<span><?php esc_html_e('Active Method', 'tour-booking-manager'); ?></span>
+							<strong><?php echo esc_html($pm_type_label); ?></strong>
+						</div>
+						<div class="ttbm-sb-payment-info-row">
+							<span><?php esc_html_e('Active Gateway', 'tour-booking-manager'); ?></span>
+							<strong><?php echo esc_html($pm_gateway_names ? implode(', ', $pm_gateway_names) : __('None', 'tour-booking-manager')); ?></strong>
+						</div>
+						<?php if ($pm_gateway_names) : ?>
+							<p class="ttbm-sb-payment-link">
+								<a href="#" data-ttbm-payment-modal-open><?php esc_html_e('Payment Settings', 'tour-booking-manager'); ?></a>
+							</p>
+						<?php endif; ?>
+						<?php if (!$pm_active) : ?>
+							<p class="ttbm-sb-payment-warning">
+								<a href="#" data-ttbm-payment-modal-open><?php esc_html_e('Configure payment method', 'tour-booking-manager'); ?></a>
+							</p>
+						<?php endif; ?>
+					</div>
+				</div>
+				<?php
+			}
+
+			private function is_tour_or_hotel_edit_screen(): bool {
+				return self::is_tour_or_hotel_edit_screen_static();
+			}
+
+			private static function is_tour_or_hotel_edit_screen_static(): bool {
+				$screen = function_exists('get_current_screen') ? get_current_screen() : null;
+				if (!$screen || $screen->base !== 'post') {
+					return false;
+				}
+				$cpt = class_exists('TTBM_Function') ? TTBM_Function::get_cpt_name() : 'ttbm_tour';
+				return in_array($screen->post_type, array($cpt, 'ttbm_hotel'), true);
+			}
+
 			public function maybe_render_gateway_notice() {
 				$screen = function_exists('get_current_screen') ? get_current_screen() : null;
 				if (!$screen || strpos((string) $screen->id, 'ttbm_settings_page') === false) {
@@ -176,6 +284,129 @@
 				<div class="notice notice-warning ttbm-pay-gateway-notice"><p><?php echo esc_html($warning); ?></p></div>
 				<?php
 			}
+
+			/**
+			 * Yellow banner (when needed) + payment modal on tour/hotel edit screens.
+			 * Banner markup is moved to the top of #poststuff via JS; the modal is
+			 * always available so the sidebar Payment card can open it too.
+			 */
+			public function maybe_render_edit_payment_notice($post) {
+				if (!$this->is_tour_or_hotel_edit_screen()) {
+					return;
+				}
+				$needs_notice = !self::has_functional_payment_method();
+				if ($needs_notice) {
+					?>
+					<div class="ttbm-edit-payment-notice" id="ttbm-edit-payment-notice">
+						<?php esc_html_e('No payment method is currently configured.', 'tour-booking-manager'); ?>
+						<a href="#" class="ttbm-edit-payment-notice-link" data-ttbm-payment-modal-open>
+							<?php esc_html_e('Please configure a payment method to accept bookings.', 'tour-booking-manager'); ?>
+						</a>
+					</div>
+					<?php
+				}
+				?>
+				<div class="ttbm-edit-payment-modal" id="ttbm-edit-payment-modal" data-ttbm-payment-modal style="display:none;">
+					<div class="ttbm-edit-payment-modal-box">
+						<div class="ttbm-edit-payment-modal-head">
+							<h2><?php esc_html_e('Payment Method', 'tour-booking-manager'); ?></h2>
+							<button type="button" class="ttbm-edit-payment-modal-close" data-ttbm-payment-modal-close aria-label="<?php esc_attr_e('Close', 'tour-booking-manager'); ?>">&times;</button>
+						</div>
+						<div class="ttbm-edit-payment-modal-body" id="ttbm-edit-payment-modal-body">
+							<?php $this->render_tab_content(); ?>
+						</div>
+					</div>
+				</div>
+				<?php
+			}
+
+			public function maybe_enqueue_edit_payment_assets($hook) {
+				if (!in_array($hook, array('post.php', 'post-new.php'), true)) {
+					return;
+				}
+				if (!$this->is_tour_or_hotel_edit_screen()) {
+					return;
+				}
+				wp_enqueue_style(
+					'ttbm-global-settings',
+					TTBM_PLUGIN_URL . '/assets/admin/ttbm-global-settings.css',
+					array(),
+					filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-global-settings.css')
+				);
+				if (TTBM_Global_Function::has_woocommerce()) {
+					wp_enqueue_style('woocommerce_admin_styles');
+					wp_enqueue_script('wc-enhanced-select');
+					wp_enqueue_script('wc-jquery-tiptip');
+				}
+				wp_enqueue_script(
+					'ttbm-payment-settings',
+					TTBM_PLUGIN_URL . '/assets/admin/ttbm-payment-settings.js',
+					array('jquery', 'ttbm_hotel_booking', 'ttbm-admin-toast'),
+					filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-payment-settings.js'),
+					true
+				);
+				wp_localize_script('ttbm-payment-settings', 'ttbmPaymentSettings', array(
+					'enabled_label' => esc_html__('Enabled', 'tour-booking-manager'),
+					'disabled_label' => esc_html__('Disabled', 'tour-booking-manager'),
+					'error_label' => esc_html__('An error occurred. Please try again.', 'tour-booking-manager'),
+					'saving_label' => esc_html__('Saving…', 'tour-booking-manager'),
+					/* translators: %s: booking mode name, e.g. "WooCommerce Checkout" */
+					'mode_saved_label' => esc_html__('Booking mode changed to %s.', 'tour-booking-manager'),
+					'wc_mode_label' => esc_html__('WooCommerce Checkout', 'tour-booking-manager'),
+					'custom_mode_label' => esc_html__('Custom Payment', 'tour-booking-manager'),
+					'active_label' => esc_html__('Active', 'tour-booking-manager'),
+				));
+				wp_add_inline_style('ttbm-global-settings', $this->edit_payment_notice_css());
+				wp_add_inline_script('ttbm-payment-settings', $this->edit_payment_notice_js());
+			}
+
+			private function edit_payment_notice_css(): string {
+				return <<<'CSS'
+.ttbm-edit-payment-notice{text-align:center;background:#fef3c7;color:#b45309;font-size:13px;font-weight:600;padding:10px 26px;margin:0 0 12px;border-radius:0;}
+.ttbm-edit-payment-notice-link{color:#b45309;text-decoration:underline;margin-left:4px;}
+.ttbm-edit-payment-notice-link:hover{color:#92400e;}
+.ttbm-edit-payment-modal{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:100001;align-items:center;justify-content:center;padding:20px;}
+.ttbm-edit-payment-modal-box{background:#fff;border-radius:12px;max-width:860px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 24px 60px rgba(15,23,42,.35);}
+.ttbm-edit-payment-modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid #e5e7eb;position:sticky;top:0;background:#fff;z-index:1;}
+.ttbm-edit-payment-modal-head h2{margin:0;font-size:17px;font-weight:700;color:#111827;}
+.ttbm-edit-payment-modal-close{border:none;background:transparent;font-size:22px;line-height:1;cursor:pointer;color:#6b7280;padding:4px 8px;}
+.ttbm-edit-payment-modal-close:hover{color:#111827;}
+.ttbm-edit-payment-modal-body{padding:20px 24px 28px;}
+body.ttbm-modern-edit-page #poststuff > .ttbm-edit-payment-notice{margin-left:-20px;margin-right:-20px;width:calc(100% + 40px);box-sizing:border-box;}
+CSS;
+			}
+
+			private function edit_payment_notice_js(): string {
+				return <<<'JS'
+jQuery(function ($) {
+	var $notice = $('#ttbm-edit-payment-notice');
+	var $modal = $('#ttbm-edit-payment-modal');
+	if ($notice.length && $('#poststuff').length) {
+		$('#poststuff').prepend($notice);
+	}
+	if ($modal.length) {
+		$modal.appendTo('body');
+	}
+	if (!$modal.length) { return; }
+	$(document).on('click', '[data-ttbm-payment-modal-open]', function (e) {
+		e.preventDefault();
+		$modal.css('display', 'flex');
+	});
+	$(document).on('click', '[data-ttbm-payment-modal-close]', function () {
+		$modal.hide();
+	});
+	$modal.on('click', function (e) {
+		if (e.target === this) { $modal.hide(); }
+	});
+	$(document).on('keydown', function (e) {
+		if ((e.key === 'Escape' || e.keyCode === 27) && $modal.is(':visible')) {
+			$modal.hide();
+		}
+	});
+});
+JS;
+			}
+
 			// The choice is only meaningful when both systems are available;
 			// otherwise the mode is auto-resolved and shouldn't be overridden —
 			// matches the reference plugins exactly (they don't block on a

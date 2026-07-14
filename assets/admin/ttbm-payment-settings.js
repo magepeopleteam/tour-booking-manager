@@ -89,6 +89,11 @@ jQuery(function ($) {
 			} else {
 				$notice.hide();
 			}
+
+			// Tour/hotel edit banner: once a gateway is available, reload so the notice disappears.
+			if (res.data && res.data.has_gateway === true && $('#ttbm-edit-payment-notice').length) {
+				setTimeout(function () { window.location.reload(); }, 600);
+			}
 		}).fail(function () {
 			if (window.ttbmToast) { window.ttbmToast(ttbmPaymentSettings.error_label, 'error'); }
 		}).always(function () {
@@ -363,6 +368,9 @@ jQuery(function ($) {
 			if (res.success && res.data.notice) {
 				window.alert(res.data.notice);
 			}
+			if (isEnabled && $('#ttbm-edit-payment-notice').length) {
+				setTimeout(function () { window.location.reload(); }, 600);
+			}
 		}).fail(function () {
 			$input.prop('checked', !$input.is(':checked'));
 		}).always(function () {
@@ -393,6 +401,9 @@ jQuery(function ($) {
 				$card.toggleClass('is-enabled', isEnabled).toggleClass('is-disabled', !isEnabled);
 				$card.find('.ttbm-pm-toggle-input').prop('checked', isEnabled);
 				$card.find('.ttbm-pm-badge').text(isEnabled ? ttbmPaymentSettings.enabled_label : ttbmPaymentSettings.disabled_label);
+				if (isEnabled && $('#ttbm-edit-payment-notice').length) {
+					setTimeout(function () { window.location.reload(); }, 600);
+				}
 			} else {
 				$status.addClass('is-error').text(res.data || ttbmPaymentSettings.error_label);
 			}

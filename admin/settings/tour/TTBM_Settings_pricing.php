@@ -9,8 +9,8 @@
 				add_action('ttbm_price_item', array($this, 'pricing_item'));
 				add_action('wp_ajax_get_ttbm_insert_ticket_type', array($this, 'ticket_table'));
 				add_action('wp_ajax_nopriv_get_ttbm_insert_ticket_type', array($this, 'ticket_table'));
-				add_action('ttbm_right_sidebar_content', [$this, 'pricing_shortcode_sidebar'], 16);
-				add_action('ttbm_right_sidebar_content', [$this, 'addon_promo_sidebar'], 17);
+				add_action('ttbm_right_sidebar_content', [$this, 'pricing_shortcode_sidebar'], 18);
+				add_action('ttbm_right_sidebar_content', [$this, 'addon_promo_sidebar'], 19);
 				add_action('admin_enqueue_scripts', [$this, 'enqueue_pricing_sidebar_js']);
 			}
 			private function current_user_can_edit_ticket_context($post_id, $form_id) {

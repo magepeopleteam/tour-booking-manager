@@ -335,3 +335,74 @@
 	box-shadow: none !important;
 }
 .ttbm-sb-cancel-term:hover { color: #6b7280 !important; }
+
+/* ── Payment Method card (SME rail parity) ── */
+.ttbm-sb-payment-card .ttbm-sb-payment-info-list {
+	padding: 0;
+}
+.ttbm-sb-payment-card .ttbm-sb-payment-info-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 8px 0;
+	border-bottom: 1px solid #f1f5f9;
+}
+.ttbm-sb-payment-card .ttbm-sb-payment-info-row:last-of-type {
+	border-bottom: 0;
+}
+.ttbm-sb-payment-card .ttbm-sb-payment-info-row > span:first-child {
+	font-size: 12px;
+	color: #6b7280;
+	font-weight: 600;
+}
+.ttbm-sb-payment-card .ttbm-sb-payment-info-row strong {
+	font-size: 13px;
+	color: #0f172a;
+	font-weight: 700;
+	text-align: right;
+}
+.ttbm-sb-payment-card .ttbm-sb-payment-warning {
+	margin: 12px 0 0;
+	padding: 5px 14px !important;
+	border-radius: 10px;
+	border: 1px solid #ddd;
+	background: #fef3c7;
+	color: #b45309;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.5;
+	text-align: right;
+	width: 100%;
+	box-sizing: border-box;
+}
+.ttbm-sb-payment-card .ttbm-sb-payment-warning a {
+	color: #b45309;
+	text-decoration: underline;
+	font-weight: 700;
+}
+.ttbm-sb-payment-card .ttbm-sb-payment-warning a:hover {
+	color: #92400e;
+}
+.ttbm-sb-payment-card .ttbm-sb-payment-link {
+	display: block !important;
+	margin: 12px 0 0 auto !important;
+	padding: 5px 14px !important;
+	border-radius: 10px;
+	border: 1px solid #ddd;
+	background: #f6f7f7;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.5;
+	text-align: right !important;
+	width: 70% !important;
+	box-sizing: border-box;
+}
+.ttbm-sb-payment-card .ttbm-sb-payment-link a {
+	color: #2271b1;
+	text-decoration: underline;
+	font-weight: 700;
+}
+.ttbm-sb-payment-card .ttbm-sb-payment-link a:hover {
+	color: #135e96;
+}

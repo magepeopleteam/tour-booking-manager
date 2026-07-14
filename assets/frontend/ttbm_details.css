@@ -156,6 +156,7 @@
 	line-height: 1.45;
 	color: var(--ttbm_d_heading);
 	margin: 0;
+	text-transform: capitalize;
 }
 #ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title span {
 	font-size: 16px;

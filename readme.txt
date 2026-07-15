@@ -1,7 +1,7 @@
-=== Travelly – Tour & Travel Booking Manager for WooCommerce | Tour & Hotel Booking Solution ===
+=== Travelly – Tour & Travel Booking Manager for WooCommerce | Tour & Hotel Booking Plugin ===
 Contributors: magepeopleteam, aamahin
 Plugin link: https://mage-people.com/
-Tags: tour-booking, tour-operator, travel, travel-booking, travel-agency
+Tags: tour booking, travel agency, travel booking, tour operator, hotel booking
 Requires at least: 4.4.0
 Tested up to: 6.8
 Requires PHP: 7.0
@@ -9,7 +9,7 @@ Stable tag: 2.2.0
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Enhance and manage travel bookings effortlessly with WPTravelly—your complete WordPress booking solution for websites.
+Travelly is a WordPress tour and travel booking plugin for WooCommerce. Sell tours, manage hotel bookings, and accept payments online.
 
 == Description ==
 

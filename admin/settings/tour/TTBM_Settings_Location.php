@@ -22,6 +22,8 @@
 				/************add New location save********************/
 				add_action('wp_ajax_ttbm_new_location_save', [$this, 'ttbm_new_location_save']);
 				add_action('wp_ajax_nopriv_ttbm_new_location_save', [$this, 'ttbm_new_location_save']);
+				add_action('wp_ajax_ttbm_geocode_address', [$this, 'ajax_geocode_address']);
+				add_action('wp_ajax_ttbm_save_map_location', [$this, 'ajax_save_map_location']);
 				add_action('ttbm_hiphop_place_map', [$this, 'show_map_frontend']);
 				add_action('ttbm_common_script', [$this, 'osmap_script']);
 			}
@@ -31,10 +33,249 @@
 			private function current_user_can_edit_location_post($post_id) {
 				return $post_id > 0 && current_user_can('edit_post', $post_id);
 			}
-			public function osmap_script() {
+			private function get_gmap_api_key() {
 				$free_key = get_option('ttbm_google_map_settings');
 				$pro_key  = TTBM_Function::get_general_settings('ttbm_gmap_api_key');
-				$api_key  = (!empty($free_key['ttbm_gmap_api_key'])) ? $free_key['ttbm_gmap_api_key'] : $pro_key;
+				return (!empty($free_key['ttbm_gmap_api_key'])) ? $free_key['ttbm_gmap_api_key'] : $pro_key;
+			}
+			/**
+			 * Normalize common misspellings so geocoders can resolve them.
+			 * Google Maps embed is more forgiving than Nominatim/Photon.
+			 *
+			 * @param string $address Raw address.
+			 * @return string
+			 */
+			public static function normalize_map_search_query($address) {
+				$address = trim((string) $address);
+				if ('' === $address) {
+					return '';
+				}
+				$compact = strtolower(preg_replace('/[^a-z0-9]+/i', '', $address));
+				// Only rewrite short / misspelled Cox's Bazar queries — never overwrite a full street address.
+				if (preg_match('/^(coxes?|coxs)bazar/', $compact) && strlen($compact) <= 28 && !preg_match('/cultural|center|hotel|road|zone|district|museum/', $compact)) {
+					if (false !== strpos($compact, 'sea') || false !== strpos($compact, 'beach')) {
+						return "Cox's Bazar Sea Beach, Bangladesh";
+					}
+					return "Cox's Bazar, Bangladesh";
+				}
+				return $address;
+			}
+			/**
+			 * Build ordered geocode queries (normalized first to avoid bad matches).
+			 *
+			 * @param string $address Raw address.
+			 * @return string[]
+			 */
+			private static function geocode_query_candidates($address) {
+				$address = trim((string) $address);
+				$candidates = array();
+				$normalized = self::normalize_map_search_query($address);
+				if ('' !== $normalized) {
+					$candidates[] = $normalized;
+				}
+				if ('' !== $address && !in_array($address, $candidates, true)) {
+					$candidates[] = $address;
+				}
+				// Soften concatenated "seabeach" → "sea beach".
+				$spaced = preg_replace('/\bseabeach\b/i', 'sea beach', $address);
+				if (is_string($spaced) && '' !== $spaced && !in_array($spaced, $candidates, true)) {
+					$candidates[] = $spaced;
+				}
+				return $candidates;
+			}
+			/**
+			 * Resolve lat/lng for an address via Nominatim.
+			 *
+			 * @param string $address Address string.
+			 * @return array{lat:string,lon:string}|null
+			 */
+			public static function geocode_location_address($address) {
+				$address = trim((string) $address);
+				if (strlen($address) < 2) {
+					return null;
+				}
+				foreach (self::geocode_query_candidates($address) as $query) {
+					$geo = self::geocode_via_nominatim($query);
+					if ($geo) {
+						return $geo;
+					}
+					// Nominatim often fails on concatenated queries like "coxesbazar"; Photon is more forgiving.
+					$geo = self::geocode_via_photon($query);
+					if ($geo) {
+						return $geo;
+					}
+				}
+				return null;
+			}
+			/**
+			 * @param string $address Address string.
+			 * @return array{lat:string,lon:string}|null
+			 */
+			private static function geocode_via_nominatim($address) {
+				$url = add_query_arg(
+					array(
+						'format' => 'json',
+						'limit' => 1,
+						'q' => $address,
+					),
+					'https://nominatim.openstreetmap.org/search'
+				);
+				$response = wp_remote_get(
+					$url,
+					array(
+						'timeout' => 8,
+						'headers' => array(
+							'User-Agent' => 'TourBookingManager/' . TTBM_PLUGIN_VERSION . '; ' . home_url(),
+							'Accept' => 'application/json',
+						),
+					)
+				);
+				if (is_wp_error($response)) {
+					return null;
+				}
+				$code = wp_remote_retrieve_response_code($response);
+				$body = json_decode(wp_remote_retrieve_body($response), true);
+				if (200 !== (int) $code || empty($body[0]['lat']) || empty($body[0]['lon'])) {
+					return null;
+				}
+				return array(
+					'lat' => (string) $body[0]['lat'],
+					'lon' => (string) $body[0]['lon'],
+				);
+			}
+			/**
+			 * @param string $address Address string.
+			 * @return array{lat:string,lon:string}|null
+			 */
+			private static function geocode_via_photon($address) {
+				$url = add_query_arg(
+					array(
+						'q' => $address,
+						'limit' => 1,
+					),
+					'https://photon.komoot.io/api/'
+				);
+				$response = wp_remote_get(
+					$url,
+					array(
+						'timeout' => 8,
+						'headers' => array(
+							'User-Agent' => 'TourBookingManager/' . TTBM_PLUGIN_VERSION . '; ' . home_url(),
+							'Accept' => 'application/json',
+						),
+					)
+				);
+				if (is_wp_error($response)) {
+					return null;
+				}
+				$code = wp_remote_retrieve_response_code($response);
+				$body = json_decode(wp_remote_retrieve_body($response), true);
+				if (200 !== (int) $code || empty($body['features'][0]['geometry']['coordinates'][0]) || empty($body['features'][0]['geometry']['coordinates'][1])) {
+					return null;
+				}
+				$coords = $body['features'][0]['geometry']['coordinates'];
+				return array(
+					'lat' => (string) $coords[1],
+					'lon' => (string) $coords[0],
+				);
+			}
+			/**
+			 * AJAX: geocode an address for the admin map fields.
+			 */
+			public function ajax_geocode_address() {
+				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
+					wp_send_json_error(array('message' => 'Invalid nonce'), 403);
+				}
+				if (!current_user_can('edit_posts')) {
+					wp_send_json_error(array('message' => 'Forbidden'), 403);
+				}
+				$address = isset($_POST['address']) ? sanitize_text_field(wp_unslash($_POST['address'])) : '';
+				$geo = self::geocode_location_address($address);
+				if (!$geo) {
+					wp_send_json_error(array('message' => 'No results'));
+				}
+				wp_send_json_success($geo);
+			}
+			/**
+			 * AJAX: persist map address + coordinates immediately (classic editor form POST can miss them).
+			 */
+			public function ajax_save_map_location() {
+				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
+					wp_send_json_error(array('message' => 'Invalid nonce'), 403);
+				}
+				$post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
+				if (!$post_id || !current_user_can('edit_post', $post_id)) {
+					wp_send_json_error(array('message' => 'Forbidden'), 403);
+				}
+				if (get_post_type($post_id) !== TTBM_Function::get_cpt_name() && get_post_type($post_id) !== 'ttbm_hotel') {
+					wp_send_json_error(array('message' => 'Invalid post type'), 400);
+				}
+				$address = isset($_POST['address']) ? sanitize_textarea_field(wp_unslash($_POST['address'])) : '';
+				$latitude = isset($_POST['latitude']) ? sanitize_text_field(wp_unslash($_POST['latitude'])) : '';
+				$longitude = isset($_POST['longitude']) ? sanitize_text_field(wp_unslash($_POST['longitude'])) : '';
+				list($latitude, $longitude) = self::resolve_map_coordinates(
+					$address,
+					$latitude,
+					$longitude,
+					(string) get_post_meta($post_id, 'ttbm_full_location_name', true)
+				);
+				if (get_post_type($post_id) === 'ttbm_hotel') {
+					update_post_meta($post_id, 'ttbm_hotel_map_location', $address);
+				} else {
+					update_post_meta($post_id, 'ttbm_full_location_name', $address);
+				}
+				update_post_meta($post_id, 'ttbm_map_latitude', $latitude);
+				update_post_meta($post_id, 'ttbm_map_longitude', $longitude);
+				wp_send_json_success(
+					array(
+						'address' => $address,
+						'lat' => $latitude,
+						'lon' => $longitude,
+					)
+				);
+			}
+			/**
+			 * Resolve lat/lng for save.
+			 * Prefer posted UI coordinates; geocode only when coords are missing or stale NYC defaults.
+			 *
+			 * @param string $address Address string.
+			 * @param string $latitude Posted or existing latitude.
+			 * @param string $longitude Posted or existing longitude.
+			 * @param string $previous_address Previously saved address.
+			 * @return array{0:string,1:string} Latitude and longitude.
+			 */
+			public static function resolve_map_coordinates($address, $latitude, $longitude, $previous_address = '') {
+				$address = trim((string) $address);
+				$latitude = trim((string) $latitude);
+				$longitude = trim((string) $longitude);
+				$previous_address = trim((string) $previous_address);
+				$has_coords = is_numeric($latitude) && is_numeric($longitude);
+				// Legacy UI injected NYC defaults; treat them as empty when an address is present.
+				$stale_default_coords = $has_coords
+					&& abs( (float) $latitude - 40.712776 ) < 0.0002
+					&& abs( (float) $longitude - ( -74.005974 ) ) < 0.0002;
+
+				// Prefer posted UI coordinates whenever they are real (not NYC placeholders).
+				// Do not re-geocode over values the editor already resolved (e.g. Cox's Bazar pin).
+				if ( $has_coords && ! $stale_default_coords ) {
+					return array( (string) $latitude, (string) $longitude );
+				}
+
+				if ( '' !== $address ) {
+					$geo = self::geocode_location_address($address);
+					if ( $geo ) {
+						return array( $geo['lat'], $geo['lon'] );
+					}
+				}
+
+				if ( $has_coords ) {
+					return array( (string) $latitude, (string) $longitude );
+				}
+
+				return array( $latitude, $longitude );
+			}
+			public function osmap_script() {
+				$api_key = $this->get_gmap_api_key();
 
 				if (!empty($api_key)) {
 					wp_enqueue_script(
@@ -47,15 +288,28 @@
 				} else {
 					wp_enqueue_style('autocomplete_style', TTBM_PLUGIN_URL . '/assets/osmap/autocomplete.min.css', array(), TTBM_PLUGIN_VERSION);
 					wp_enqueue_script('autocomplete_script', TTBM_PLUGIN_URL . '/assets/osmap/autocomplete.min.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
+					// Ensure admin map script waits for Autocomplete before binding.
+					if (wp_script_is('ttbm_admin_script', 'registered') || wp_script_is('ttbm_admin_script', 'enqueued')) {
+						$deps = wp_scripts()->registered['ttbm_admin_script']->deps;
+						if (!in_array('autocomplete_script', $deps, true)) {
+							$deps[] = 'autocomplete_script';
+							wp_scripts()->registered['ttbm_admin_script']->deps = $deps;
+						}
+					}
 				}
 
-				wp_localize_script(
-					'ttbm_admin_script',
-					'ttbm_map',
-					array(
-						'api_key' => esc_attr($api_key),
-					)
-				);
+				$map_data = array('api_key' => (string) $api_key);
+				// Localize after ttbm_admin_script is enqueued (this runs during earlier
+				// admin_enqueue_scripts via ttbm_common_script). Priority 99 ensures the handle exists.
+				add_action('admin_enqueue_scripts', function () use ($map_data) {
+					if (wp_script_is('ttbm_admin_script', 'enqueued') || wp_script_is('ttbm_admin_script', 'registered')) {
+						wp_localize_script('ttbm_admin_script', 'ttbm_map', $map_data);
+					}
+				}, 99);
+				// Frontend / shared contexts where admin script may already be present.
+				if (wp_script_is('ttbm_admin_script', 'enqueued') || wp_script_is('ttbm_admin_script', 'registered')) {
+					wp_localize_script('ttbm_admin_script', 'ttbm_map', $map_data);
+				}
 			}
 			public function location_tab_content($tour_id) {
 				$display_name = 'ttbm_display_location';
@@ -239,8 +493,7 @@
 				$latitude      = !empty($latitude)  ? $latitude  : '40.712776';
 				$longitude     = get_post_meta($tour_id, 'ttbm_map_longitude', true);
 				$longitude     = !empty($longitude) ? $longitude : '-74.005974';
-				$map_settings  = get_option('ttbm_google_map_settings');
-				$gmap_api_key  = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
+				$gmap_api_key  = $this->get_gmap_api_key();
 				$display_map   = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'on');
 
 				if ($display_map !== 'on') return;
@@ -292,18 +545,16 @@
 				<?php
 			}
 			public function map_display($tour_id) {
-				$location_name = get_post_meta($tour_id, 'ttbm_full_location_name', true);
-				$location_name = !empty($location_name) ? $location_name : '650 Manchester Road, New York, NY 10007, USA';
-				$latitude      = get_post_meta($tour_id, 'ttbm_map_latitude', true);
-				$latitude      = !empty($latitude)  ? $latitude  : '40.712776';
-				$longitude     = get_post_meta($tour_id, 'ttbm_map_longitude', true);
-				$longitude     = !empty($longitude) ? $longitude : '-74.005974';
-				$map_settings  = get_option('ttbm_google_map_settings');
-				$gmap_api_key  = isset($map_settings['ttbm_gmap_api_key']) ? $map_settings['ttbm_gmap_api_key'] : '';
+				$location_name = (string) get_post_meta($tour_id, 'ttbm_full_location_name', true);
+				$latitude      = (string) get_post_meta($tour_id, 'ttbm_map_latitude', true);
+				$longitude     = (string) get_post_meta($tour_id, 'ttbm_map_longitude', true);
+				// Placeholder preview only — do not inject default NY as saved values.
+				$map_query     = $location_name !== '' ? $location_name : 'Cox\'s Bazar, Bangladesh';
+				$gmap_api_key  = $this->get_gmap_api_key();
 				$display_map   = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'on');
 				$active        = $display_map == 'off' ? '' : 'mActive';
 				$settings_url  = admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page');
-				$iframe_src    = 'https://maps.google.com/maps?q=' . rawurlencode($location_name) . '&z=14&output=embed';
+				$iframe_src    = 'https://maps.google.com/maps?q=' . rawurlencode($map_query) . '&z=14&output=embed';
 				?>
                 <div class="<?php echo esc_attr($active); ?>" data-collapse="#ttbm_display_map">
 
@@ -319,9 +570,12 @@
                             <input
                                 style="padding-left:30px"
                                 id="<?php echo esc_attr($gmap_api_key ? 'ttbm_map_location' : 'ttbm_iframe_location'); ?>"
-                                name="ttbm_full_location_name"
+                                class="ttbm-map-location-input"
+                                name="ttbm_full_location_name_ui"
+                                data-ttbm-map-sync="ttbm_full_location_name"
                                 placeholder="<?php esc_attr_e('Please type location...', 'tour-booking-manager'); ?>"
                                 value="<?php echo esc_attr($location_name); ?>"
+                                autocomplete="off"
                             >
                         </div>
                     </label>
@@ -360,10 +614,19 @@
 						<?php endif; ?>
                     </div>
 
-                    <!-- Lat / Lng fields — hidden, values preserved for saving -->
-                    <div style="display:none;">
-                        <input type="text" id="map_latitude" name="ttbm_map_latitude" value="<?php echo esc_attr($latitude); ?>">
-                        <input type="text" id="map_longitude" name="ttbm_map_longitude" value="<?php echo esc_attr($longitude); ?>">
+                    <div class="ttbm-map-latlng-fields" style="display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;">
+                        <label class="label" style="flex:1;min-width:180px;">
+                            <div class="label-inner">
+                                <p><?php esc_html_e('Latitude', 'tour-booking-manager'); ?></p>
+                            </div>
+                            <input type="text" id="map_latitude" class="ttbm-map-coord-input" name="ttbm_map_latitude_ui" data-ttbm-map-sync="ttbm_map_latitude" value="<?php echo esc_attr($latitude); ?>" placeholder="<?php esc_attr_e('Latitude', 'tour-booking-manager'); ?>">
+                        </label>
+                        <label class="label" style="flex:1;min-width:180px;">
+                            <div class="label-inner">
+                                <p><?php esc_html_e('Longitude', 'tour-booking-manager'); ?></p>
+                            </div>
+                            <input type="text" id="map_longitude" class="ttbm-map-coord-input" name="ttbm_map_longitude_ui" data-ttbm-map-sync="ttbm_map_longitude" value="<?php echo esc_attr($longitude); ?>" placeholder="<?php esc_attr_e('Longitude', 'tour-booking-manager'); ?>">
+                        </label>
                     </div>
 
                 </div>

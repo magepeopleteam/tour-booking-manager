@@ -36,7 +36,16 @@
 				$tour_id = get_the_id();
 				$ttbm_label = TTBM_Function::get_name();
 				?>
-				<?php wp_nonce_field('ttbm_ticket_type_nonce', 'ttbm_ticket_type_nonce'); ?>
+				<?php
+				wp_nonce_field('ttbm_ticket_type_nonce', 'ttbm_ticket_type_nonce');
+				// Always-submitted map fields (outside collapsed/inactive tabs). Synced from UI via JS.
+				$map_location = (string) get_post_meta($tour_id, 'ttbm_full_location_name', true);
+				$map_lat = (string) get_post_meta($tour_id, 'ttbm_map_latitude', true);
+				$map_lng = (string) get_post_meta($tour_id, 'ttbm_map_longitude', true);
+				?>
+                <input type="hidden" id="ttbm_full_location_name_submit" name="ttbm_full_location_name" value="<?php echo esc_attr($map_location); ?>">
+                <input type="hidden" id="ttbm_map_latitude_submit" name="ttbm_map_latitude" value="<?php echo esc_attr($map_lat); ?>">
+                <input type="hidden" id="ttbm_map_longitude_submit" name="ttbm_map_longitude" value="<?php echo esc_attr($map_lng); ?>">
                 <div id="ttbm_content" class="ttbm_configuration">
                     <div class="ttbm_style ttbm_settings ">
                         <div class="ttbmTabs leftTabs d-flex justify-content-between">
@@ -1149,12 +1158,44 @@
 					}
 					update_post_meta($tour_id, 'ttbm_country_name', $ttbm_country_name);
 					/***************/
-					$ttbm_full_location_name = isset($_POST['ttbm_full_location_name']) ? sanitize_text_field(wp_unslash($_POST['ttbm_full_location_name'])) : '';
+					$previous_full_location = (string) get_post_meta($tour_id, 'ttbm_full_location_name', true);
+					$previous_map_latitude = (string) get_post_meta($tour_id, 'ttbm_map_latitude', true);
+					$previous_map_longitude = (string) get_post_meta($tour_id, 'ttbm_map_longitude', true);
+					$ttbm_full_location_name = isset($_POST['ttbm_full_location_name'])
+						? sanitize_textarea_field(wp_unslash($_POST['ttbm_full_location_name']))
+						: $previous_full_location;
+					// Visible UI field (backup when hidden submit field was stale/disabled).
+					if (isset($_POST['ttbm_full_location_name_ui'])) {
+						$ui_location = sanitize_textarea_field(wp_unslash($_POST['ttbm_full_location_name_ui']));
+						if ('' !== $ui_location) {
+							$ttbm_full_location_name = $ui_location;
+						}
+					}
+					// Prefer UI lat/lng fields when present (same value as the map inputs above the fold).
+					if (isset($_POST['ttbm_map_latitude_ui']) && '' !== trim((string) wp_unslash($_POST['ttbm_map_latitude_ui']))) {
+						$map_latitude = sanitize_text_field(wp_unslash($_POST['ttbm_map_latitude_ui']));
+					} else {
+						$map_latitude = array_key_exists('ttbm_map_latitude', $_POST)
+							? sanitize_text_field(wp_unslash($_POST['ttbm_map_latitude']))
+							: $previous_map_latitude;
+					}
+					if (isset($_POST['ttbm_map_longitude_ui']) && '' !== trim((string) wp_unslash($_POST['ttbm_map_longitude_ui']))) {
+						$map_longitude = sanitize_text_field(wp_unslash($_POST['ttbm_map_longitude_ui']));
+					} else {
+						$map_longitude = array_key_exists('ttbm_map_longitude', $_POST)
+							? sanitize_text_field(wp_unslash($_POST['ttbm_map_longitude']))
+							: $previous_map_longitude;
+					}
+					if (class_exists('TTBM_Settings_Location')) {
+						list($map_latitude, $map_longitude) = TTBM_Settings_Location::resolve_map_coordinates(
+							$ttbm_full_location_name,
+							$map_latitude,
+							$map_longitude,
+							$previous_full_location
+						);
+					}
 					update_post_meta($tour_id, 'ttbm_display_map', $ttbm_display_map);
 					update_post_meta($tour_id, 'ttbm_full_location_name', $ttbm_full_location_name);
-					/***************/
-					$map_latitude = isset($_POST['ttbm_map_latitude']) ? sanitize_text_field(wp_unslash($_POST['ttbm_map_latitude'])) : '';
-					$map_longitude = isset($_POST['ttbm_map_longitude']) ? sanitize_text_field(wp_unslash($_POST['ttbm_map_longitude'])) : '';
 					update_post_meta($tour_id, 'ttbm_map_latitude', $map_latitude);
 					update_post_meta($tour_id, 'ttbm_map_longitude', $map_longitude);
 				}

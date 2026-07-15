@@ -16,7 +16,15 @@
 			public function hotel_settings() {
 				$hotel_id = get_the_id();
 				?>
-				<?php wp_nonce_field('ttbm_hotel_type_nonce', 'ttbm_hotel_type_nonce'); ?>
+				<?php
+				wp_nonce_field('ttbm_hotel_type_nonce', 'ttbm_hotel_type_nonce');
+				$hotel_map_location = (string) get_post_meta($hotel_id, 'ttbm_hotel_map_location', true);
+				$hotel_map_lat = (string) get_post_meta($hotel_id, 'ttbm_map_latitude', true);
+				$hotel_map_lng = (string) get_post_meta($hotel_id, 'ttbm_map_longitude', true);
+				?>
+                <input type="hidden" id="ttbm_hotel_map_location_submit" name="ttbm_hotel_map_location" value="<?php echo esc_attr($hotel_map_location); ?>">
+                <input type="hidden" id="ttbm_map_latitude_submit" name="ttbm_map_latitude" value="<?php echo esc_attr($hotel_map_lat); ?>">
+                <input type="hidden" id="ttbm_map_longitude_submit" name="ttbm_map_longitude" value="<?php echo esc_attr($hotel_map_lng); ?>">
                 <div id="ttbm_content" class="ttbm_configuration">
                     <div class="ttbm_style ttbm_settings">
                         <div class="ttbmTabs leftTabs d-flex justify-content-between">
@@ -118,10 +126,21 @@
 					$ttbm_hotel_testimonial_text = isset($_POST['ttbm_hotel_testimonial_text']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_testimonial_text'])) : '';
 
 					$ttbm_display_hotel_map 	= isset($_POST['ttbm_display_hotel_map']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hotel_map'])) ? 'on' : 'off';
-					$ttbm_hotel_map_location 	= isset($_POST['ttbm_hotel_map_location']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_map_location'])) : '';
-					$ttbm_map_latitude 	= isset($_POST['ttbm_map_latitude']) ? sanitize_text_field(wp_unslash($_POST['ttbm_map_latitude'])) : '';
-					$ttbm_map_longitude 	= isset($_POST['ttbm_map_longitude']) ? sanitize_text_field(wp_unslash($_POST['ttbm_map_longitude'])) : '';
-					
+					$previous_hotel_location = (string) get_post_meta($post_id, 'ttbm_hotel_map_location', true);
+					$previous_map_latitude = (string) get_post_meta($post_id, 'ttbm_map_latitude', true);
+					$previous_map_longitude = (string) get_post_meta($post_id, 'ttbm_map_longitude', true);
+					$ttbm_hotel_map_location 	= isset($_POST['ttbm_hotel_map_location']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_map_location'])) : $previous_hotel_location;
+					$ttbm_map_latitude 	= array_key_exists('ttbm_map_latitude', $_POST) ? sanitize_text_field(wp_unslash($_POST['ttbm_map_latitude'])) : $previous_map_latitude;
+					$ttbm_map_longitude 	= array_key_exists('ttbm_map_longitude', $_POST) ? sanitize_text_field(wp_unslash($_POST['ttbm_map_longitude'])) : $previous_map_longitude;
+					if (class_exists('TTBM_Settings_Location')) {
+						list($ttbm_map_latitude, $ttbm_map_longitude) = TTBM_Settings_Location::resolve_map_coordinates(
+							$ttbm_hotel_map_location,
+							$ttbm_map_latitude,
+							$ttbm_map_longitude,
+							$previous_hotel_location
+						);
+					}
+
 					update_post_meta($post_id, 'ttbm_display_hotel_testimonial', $ttbm_display_hotel_testimonial);
 
 					update_post_meta($post_id, 'ttbm_display_hotel_feature_text', $ttbm_display_hotel_feature_text);

@@ -123,16 +123,14 @@
 				<?php
 			}
 			public function map_display( $tour_id ) {
-				$location_name = get_post_meta( $tour_id, 'ttbm_hotel_map_location', true );
-				$location_name = ! empty( $location_name ) ? $location_name : '650 Manchester Road, New York, NY 10007, USA';
-				$latitude      = get_post_meta( $tour_id, 'ttbm_map_latitude', true );
-				$latitude      = ! empty( $latitude ) ? $latitude : '40.712776';
-				$longitude     = get_post_meta( $tour_id, 'ttbm_map_longitude', true );
-				$longitude     = ! empty( $longitude ) ? $longitude : '-74.005974';
+				$location_name = (string) get_post_meta( $tour_id, 'ttbm_hotel_map_location', true );
+				$latitude      = (string) get_post_meta( $tour_id, 'ttbm_map_latitude', true );
+				$longitude     = (string) get_post_meta( $tour_id, 'ttbm_map_longitude', true );
+				$map_query     = $location_name !== '' ? $location_name : 'Cox\'s Bazar, Bangladesh';
 				$map_settings  = get_option( 'ttbm_google_map_settings' );
 				$gmap_api_key  = isset( $map_settings['ttbm_gmap_api_key'] ) ? $map_settings['ttbm_gmap_api_key'] : '';
 				$settings_url  = admin_url( 'edit.php?post_type=ttbm_tour&page=ttbm_settings_page' );
-				$iframe_src    = 'https://maps.google.com/maps?q=' . rawurlencode( $location_name ) . '&z=14&output=embed';
+				$iframe_src    = 'https://maps.google.com/maps?q=' . rawurlencode( $map_query ) . '&z=14&output=embed';
 				?>
 				<div>
 					<label class="label">
@@ -146,8 +144,8 @@
 							<input
 								style="padding-left:30px"
 								id="ttbm_hotel_map_location"
-								name="ttbm_hotel_map_location"
-								class="ttbm_hotel_map_location_input"
+								class="ttbm_hotel_map_location_input ttbm-map-location-input"
+								data-ttbm-map-sync="ttbm_hotel_map_location"
 								placeholder="<?php esc_attr_e( 'Please type location...', 'tour-booking-manager' ); ?>"
 								value="<?php echo esc_attr( $location_name ); ?>"
 								autocomplete="off"
@@ -189,8 +187,20 @@
 						<?php endif; ?>
 					</div>
 
-					<input type="hidden" id="map_latitude" name="ttbm_map_latitude" value="<?php echo esc_attr( $latitude ); ?>">
-					<input type="hidden" id="map_longitude" name="ttbm_map_longitude" value="<?php echo esc_attr( $longitude ); ?>">
+					<div class="ttbm-map-latlng-fields" style="display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;">
+						<label class="label" style="flex:1;min-width:180px;">
+							<div class="label-inner">
+								<p><?php esc_html_e( 'Latitude', 'tour-booking-manager' ); ?></p>
+							</div>
+							<input type="text" id="map_latitude" class="ttbm-map-coord-input" data-ttbm-map-sync="ttbm_map_latitude" value="<?php echo esc_attr( $latitude ); ?>" placeholder="<?php esc_attr_e( 'Latitude', 'tour-booking-manager' ); ?>">
+						</label>
+						<label class="label" style="flex:1;min-width:180px;">
+							<div class="label-inner">
+								<p><?php esc_html_e( 'Longitude', 'tour-booking-manager' ); ?></p>
+							</div>
+							<input type="text" id="map_longitude" class="ttbm-map-coord-input" data-ttbm-map-sync="ttbm_map_longitude" value="<?php echo esc_attr( $longitude ); ?>" placeholder="<?php esc_attr_e( 'Longitude', 'tour-booking-manager' ); ?>">
+						</label>
+					</div>
 				</div>
 				<?php
 			}

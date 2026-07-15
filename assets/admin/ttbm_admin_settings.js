@@ -1205,6 +1205,17 @@ function ttbm_load_sortable_datepicker(parent, item) {
             .find('input:disabled, select:disabled, textarea:disabled')
             .not('[type="checkbox"]')
             .prop('disabled', false);
+        $('#ttbm_meta_box_panel')
+            .find('[data-collapse="#ttbm_display_map"], [data-collapse="#ttbm_display_location"], [data-collapse="#ttbm_display_hotel_map"]')
+            .find('input, select, textarea')
+            .prop('disabled', false)
+            .removeAttr('disabled');
+        $('#ttbm_full_location_name_submit, #ttbm_hotel_map_location_submit, #ttbm_map_latitude_submit, #ttbm_map_longitude_submit, #ttbm_iframe_location, #ttbm_map_location, #map_latitude, #map_longitude, [name="ttbm_full_location_name_ui"], [name="ttbm_map_latitude_ui"], [name="ttbm_map_longitude_ui"]')
+            .prop('disabled', false)
+            .removeAttr('disabled');
+        if (typeof window.ttbmSyncMapLocationFieldsForSubmit === 'function') {
+            window.ttbmSyncMapLocationFieldsForSubmit();
+        }
     }
 
     $(document).on('submit', 'form#post', function (e) {

@@ -220,7 +220,7 @@ div.ttbm_global_settings.ttbm_configuration {
 }
 
 /* ── Left tab sidebar ── */
-.ttbm_global_settings .leftTabs {
+.ttbm_global_settings .ttbmTabs > .leftTabs {
     width: 240px;
     min-width: 240px;
     background: #EDF2F7;
@@ -309,6 +309,14 @@ div.ttbm_global_settings.ttbm_configuration {
 
 .ttbm_global_settings .tabsItem {
     padding: 0;
+}
+
+/* Keep the selected settings pane visible even when generic admin tab
+ * styles are loaded later or retain a stale hidden/content-visibility state. */
+#ttbm_content.ttbm_global_settings.ttbm_configuration .tabsContent > .tabsItem[data-tabs].active {
+    display: block !important;
+    visibility: visible !important;
+    content-visibility: visible !important;
 }
 
 .ttbm_global_settings .tabsItem > h2 {
@@ -444,6 +452,7 @@ div.ttbm_global_settings.ttbm_configuration {
 }
 
 .ttbm_global_settings .ttbmTabs {
+    width: 100%;
     min-height: 540px;
     align-items: stretch;
 }

@@ -170,13 +170,16 @@
         $(this).siblings('.ttbm_booking_user_more_info').toggle();
     });
 
-    $('#ttbm_booking_date_filter').datepicker({
-        dateFormat: 'yy-mm-dd',
-        changeMonth: true,
-        changeYear: true,
-        showButtonPanel: true,
-        minDate: 0
-    });
+    const $bookingDateFilter = $('#ttbm_booking_date_filter');
+    if ($bookingDateFilter.length && $.fn.datepicker) {
+        $bookingDateFilter.datepicker({
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            minDate: 0
+        });
+    }
 
 
     $(document).on('click', '.ttbm_hotel_tab_item', function() {
@@ -1930,5 +1933,4 @@
     });
 
 })(jQuery);
-
 

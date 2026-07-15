@@ -343,8 +343,8 @@
 				if ($count > 1) {
 					?>
                     <ul class="tabLists bgLight meta-sidebar">
-						<?php foreach ($this->settings_sections as $tab) { ?>
-                            <li data-tabs-target="#<?php echo esc_attr($tab['id']); ?>">
+						<?php foreach ($this->settings_sections as $index => $tab) { ?>
+                            <li class="<?php echo 0 === $index ? 'active' : ''; ?>" data-tabs-target="#<?php echo esc_attr($tab['id']); ?>">
                                 <?php if (!empty($tab['icon'])) : ?>
                                     <i class="<?php echo esc_attr($tab['icon']); ?>"></i>
                                 <?php endif; ?>
@@ -357,8 +357,8 @@
 			}
 			function show_forms() {
 				?>
-				<?php foreach ($this->settings_sections as $form) { ?>
-                    <div class="tabsItem" data-tabs="#<?php echo esc_attr($form['id']); ?>">
+				<?php foreach ($this->settings_sections as $index => $form) { ?>
+                    <div class="tabsItem<?php echo 0 === $index ? ' active' : ''; ?>" data-tabs="#<?php echo esc_attr($form['id']); ?>">
                         <form method="post" action="options.php">
 							<?php
 								do_action('wsa_form_top_' . $form['id'], $form);

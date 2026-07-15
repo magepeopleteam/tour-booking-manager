@@ -47,7 +47,7 @@
 				if ( ! empty( $loop->posts ) ) {
 					$all_loop_ids = wp_list_pluck( $loop->posts, 'ID' );
 					update_meta_cache( 'post', $all_loop_ids );
-					update_term_cache( $loop->posts );
+					update_object_term_cache( $all_loop_ids, TTBM_Function::get_cpt_name() );
 				}
 
 				foreach ($loop->posts as $tour) {
@@ -226,7 +226,7 @@
 				if ( ! empty( $loop->posts ) ) {
 					$all_loop_ids = wp_list_pluck( $loop->posts, 'ID' );
 					update_meta_cache( 'post', $all_loop_ids );
-					update_term_cache( $loop->posts );
+					update_object_term_cache( $all_loop_ids, TTBM_Function::get_cpt_name() );
 				}
 
 				foreach ($loop->posts as $tour) {

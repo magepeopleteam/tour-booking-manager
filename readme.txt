@@ -139,7 +139,7 @@ Choose from multiple tour details page styles, including a Viator-style template
  
 = 🛠️ Support & Documentation =
  
-* 📘 [Documentation](https://docs.mage-people.com/tour-travel-booking-manager/)
+* 📘 [Documentation](https://docs.mage-people.com/docs/plugins/wptravelly/overview)
 * 📺 [Video Tutorial: How to Install & Create a Tour](https://www.youtube.com/watch?v=ZQ99Z3kOMws)
 * 📩 [Submit a Support Ticket](https://mage-people.com/submit-ticket/)
 * 💬 [WordPress.org Support Forum](https://wordpress.org/support/plugin/tour-booking-manager/)

@@ -1018,7 +1018,7 @@ function ttbm_sticky_management() {
             tabsContent = parent.find('.tabsContent:first');
         }
         let $next = tabsContent.children('[data-tabs="' + tabsTarget + '"]');
-        if (!$next.length || $tab.hasClass('active')) {
+        if (!$next.length || ($tab.hasClass('active') && $next.hasClass('active'))) {
             return;
         }
 
@@ -1666,4 +1666,3 @@ if (searchInputIcon) {
         });
     });
 }
-

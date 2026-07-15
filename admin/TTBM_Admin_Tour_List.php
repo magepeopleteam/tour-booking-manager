@@ -285,7 +285,7 @@
                        so the inner loop reads from WP object cache. */
                     $all_ids = wp_list_pluck( $posts_query->posts, 'ID' );
                     update_meta_cache( 'post', $all_ids );
-                    update_term_cache( $posts_query->posts );
+                    update_object_term_cache( $all_ids, TTBM_Function::get_cpt_name() );
 
                     while ($posts_query->have_posts()) {
                         $posts_query->the_post();

@@ -77,7 +77,7 @@
 				wp_enqueue_style('mp_owl_carousel', TTBM_PLUGIN_URL . '/assets/owl_carousel/owl.carousel.min.css', array(), '2.3.4');
 				wp_enqueue_script('mp_owl_carousel', TTBM_PLUGIN_URL . '/assets/owl_carousel/owl.carousel.min.js', array(), '2.3.4', true);
 				wp_enqueue_style('ttbm_plugin_global', TTBM_PLUGIN_URL . '/assets/mp_style/ttbm_plugin_global.css', array(), TTBM_PLUGIN_VERSION);
-				wp_enqueue_script('ttbm_plugin_global', TTBM_PLUGIN_URL . '/assets/mp_style/ttbm_plugin_global.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
+				wp_enqueue_script('ttbm_plugin_global', TTBM_PLUGIN_URL . '/assets/mp_style/ttbm_plugin_global.js', array('jquery'), filemtime(TTBM_PLUGIN_DIR . '/assets/mp_style/ttbm_plugin_global.js'), true);
 				$this->registration_enqueue();
 				do_action('ttbm_common_script');
 				wp_enqueue_style('mage-icons', TTBM_PLUGIN_URL . '/assets/mage-icon/css/mage-icon.css', array(), TTBM_PLUGIN_VERSION);
@@ -241,7 +241,7 @@
 				//===================//
 				wp_enqueue_script('ttbm_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_settings.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
 				//===================//
-				wp_enqueue_script('ttbm_hotel_booking', TTBM_PLUGIN_URL . '/assets/admin/ttbm_hotel_booking.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
+					wp_enqueue_script('ttbm_hotel_booking', TTBM_PLUGIN_URL . '/assets/admin/ttbm_hotel_booking.js', array('jquery', 'jquery-ui-datepicker'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_hotel_booking.js'), true);
 				wp_enqueue_script('ttbm_admin_script', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_script.js', array('jquery', 'ttbm_hotel_booking'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_style('ttbm_admin', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin.css', array(), TTBM_PLUGIN_VERSION);
 				wp_enqueue_style('ttbm_admin_modern', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_modern.css', array('ttbm_admin'), TTBM_PLUGIN_VERSION);

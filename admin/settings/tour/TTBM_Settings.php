@@ -19,12 +19,43 @@
 				add_action('save_post', [$this, 'capture_date_migration_snapshot'], 5, 1);
 				add_action('save_post', array($this, 'save_settings'), 99, 1);
 				add_action('save_post', [$this, 'sync_bookings_after_date_change'], 120, 1);
+				add_filter('wp_insert_post_data', [$this, 'filter_insert_post_data'], 99, 2);
 				add_action('admin_notices', [$this, 'render_date_migration_notice']);
 				add_action('admin_notices', [$this, 'render_title_required_notice']);
 				add_action('admin_notices', [$this, 'render_location_required_notice']);
 				add_action('admin_notices', [$this, 'render_featured_image_required_notice']);
 				add_action('admin_notices', [$this, 'render_dates_required_notice']);
 				add_action('admin_notices', [$this, 'render_tickets_required_notice']);
+			}
+			/**
+			 * Force tour title from the custom Overview field during core save.
+			 *
+			 * @param array $data    Sanitized post data.
+			 * @param array $postarr Raw post array.
+			 * @return array
+			 */
+			public function filter_insert_post_data($data, $postarr) {
+				if (!is_admin() || (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)) {
+					return $data;
+				}
+				if (!isset($data['post_type']) || $data['post_type'] !== TTBM_Function::get_cpt_name()) {
+					return $data;
+				}
+				$title = '';
+				if (class_exists('TTBM_Settings_Hotel')) {
+					$title = TTBM_Settings_Hotel::resolve_submitted_title_from_request();
+				} else {
+					if (isset($_POST['ttbm_post_title_ui'])) {
+						$title = trim(sanitize_text_field(wp_unslash($_POST['ttbm_post_title_ui'])));
+					}
+					if ($title === '' && isset($_POST['post_title']) && !is_array($_POST['post_title'])) {
+						$title = trim(sanitize_text_field(wp_unslash($_POST['post_title'])));
+					}
+				}
+				if ($title !== '') {
+					$data['post_title'] = $title;
+				}
+				return $data;
 			}
 			//************************//
 			public function settings_meta() {
@@ -38,11 +69,13 @@
 				?>
 				<?php
 				wp_nonce_field('ttbm_ticket_type_nonce', 'ttbm_ticket_type_nonce');
-				// Always-submitted map fields (outside collapsed/inactive tabs). Synced from UI via JS.
+				// Always-submitted fields (outside collapsed/inactive tabs). Synced from UI via JS.
 				$map_location = (string) get_post_meta($tour_id, 'ttbm_full_location_name', true);
 				$map_lat = (string) get_post_meta($tour_id, 'ttbm_map_latitude', true);
 				$map_lng = (string) get_post_meta($tour_id, 'ttbm_map_longitude', true);
+				$tour_title = (string) get_the_title($tour_id);
 				?>
+                <input type="hidden" id="ttbm_post_title_submit" name="post_title" value="<?php echo esc_attr($tour_title); ?>">
                 <input type="hidden" id="ttbm_full_location_name_submit" name="ttbm_full_location_name" value="<?php echo esc_attr($map_location); ?>">
                 <input type="hidden" id="ttbm_map_latitude_submit" name="ttbm_map_latitude" value="<?php echo esc_attr($map_lat); ?>">
                 <input type="hidden" id="ttbm_map_longitude_submit" name="ttbm_map_longitude" value="<?php echo esc_attr($map_lng); ?>">
@@ -992,7 +1025,11 @@
 				$errors = array();
 				$user_id = get_current_user_id();
 
-				$submitted_title = isset($_POST['post_title']) ? trim(sanitize_text_field(wp_unslash($_POST['post_title']))) : '';
+				$submitted_title = class_exists('TTBM_Settings_Hotel')
+					? TTBM_Settings_Hotel::resolve_submitted_title_from_request()
+					: (isset($_POST['ttbm_post_title_ui'])
+						? trim(sanitize_text_field(wp_unslash($_POST['ttbm_post_title_ui'])))
+						: (isset($_POST['post_title']) ? trim(sanitize_text_field(wp_unslash($_POST['post_title']))) : ''));
 				if ($submitted_title === '') {
 					$errors[] = array(
 						'transient' => 'ttbm_title_required_' . $user_id,
@@ -1076,6 +1113,19 @@
 				$validation_errors = $this->collect_save_validation_errors($tour_id);
 				/*******Genarel********/
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
+					$submitted_title = class_exists('TTBM_Settings_Hotel')
+						? TTBM_Settings_Hotel::resolve_submitted_title_from_request()
+						: (isset($_POST['ttbm_post_title_ui'])
+							? trim(sanitize_text_field(wp_unslash($_POST['ttbm_post_title_ui'])))
+							: (isset($_POST['post_title']) ? trim(sanitize_text_field(wp_unslash($_POST['post_title']))) : ''));
+					if ($submitted_title !== '' && (string) get_post_field('post_title', $tour_id) !== $submitted_title) {
+						remove_action('save_post', array($this, 'save_settings'), 99);
+						wp_update_post([
+							'ID' => $tour_id,
+							'post_title' => $submitted_title,
+						]);
+						add_action('save_post', array($this, 'save_settings'), 99, 1);
+					}
 					$ttbm_travel_duration = isset($_POST['ttbm_travel_duration']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_duration'])) : '';
 					$ttbm_travel_duration_type = isset($_POST['ttbm_travel_duration_type']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_duration_type'])) : 'day';
 					update_post_meta($tour_id, 'ttbm_travel_duration', $ttbm_travel_duration);

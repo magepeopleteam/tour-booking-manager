@@ -239,7 +239,7 @@
 				wp_enqueue_style('jquery.timepicker.min', TTBM_PLUGIN_URL . '/assets/timepicker/timepicker.css', array(), '1.3.5');
 				wp_enqueue_script('jquery.timepicker.min', TTBM_PLUGIN_URL . '/assets/timepicker/timepicker.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
 				//===================//
-				wp_enqueue_script('ttbm_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_settings.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
+				wp_enqueue_script('ttbm_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_settings.js', array('jquery'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_admin_settings.js'), true);
 				//===================//
 				wp_enqueue_script('ttbm_hotel_booking', TTBM_PLUGIN_URL . '/assets/admin/ttbm_hotel_booking.js', array('jquery', 'jquery-ui-datepicker'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_hotel_booking.js'), true);
 				wp_enqueue_script('ttbm_admin_script', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_script.js', array('jquery', 'ttbm_hotel_booking'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_admin_script.js'), true);

@@ -484,6 +484,18 @@
         var hotelLocSubmit = document.getElementById('ttbm_hotel_map_location_submit');
         var latSubmit = document.getElementById('ttbm_map_latitude_submit');
         var lngSubmit = document.getElementById('ttbm_map_longitude_submit');
+        var titleInput = document.getElementById('ttbm_post_title');
+        var titleSubmit = document.getElementById('ttbm_post_title_submit');
+        if (titleInput && titleSubmit) {
+            titleSubmit.value = titleInput.value || '';
+            titleSubmit.disabled = false;
+            titleSubmit.removeAttribute('disabled');
+            // Keep POST post_title in sync with the visible UI value.
+            titleSubmit.setAttribute('name', 'post_title');
+            if (titleInput.getAttribute('name') === 'post_title') {
+                titleInput.setAttribute('name', 'ttbm_post_title_ui');
+            }
+        }
         if (loc && locSubmit) {
             locSubmit.value = loc.value || '';
             locSubmit.disabled = false;
@@ -569,6 +581,49 @@
     }
     window.ttbmPersistMapLocationToServer = ttbmPersistMapLocationToServer;
 
+    /**
+     * Persist hotel/tour title via AJAX before classic Update.
+     * @param {boolean} sync Synchronous XHR when unloading.
+     */
+    function ttbmPersistPostTitleToServer(sync) {
+        if (typeof ttbm_admin_ajax === 'undefined' || !ttbm_admin_ajax.ajax_url) {
+            return false;
+        }
+        var postIdInput = document.getElementById('post_ID');
+        var postId = postIdInput ? String(postIdInput.value || '').trim() : '';
+        var titleInput = document.getElementById('ttbm_post_title');
+        var title = titleInput ? String(titleInput.value || '').trim() : '';
+        if (!postId || !title) {
+            return false;
+        }
+        ttbmSyncMapLocationFieldsForSubmit();
+        var body = new URLSearchParams();
+        body.set('action', 'ttbm_save_post_title');
+        body.set('nonce', ttbm_admin_ajax.nonce || '');
+        body.set('post_id', postId);
+        body.set('title', title);
+        if (sync) {
+            try {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', ttbm_admin_ajax.ajax_url, false);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                xhr.send(body.toString());
+                return xhr.status >= 200 && xhr.status < 300;
+            } catch (err) {
+                return false;
+            }
+        }
+        fetch(ttbm_admin_ajax.ajax_url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+            body: body.toString(),
+            credentials: 'same-origin',
+            keepalive: true,
+        }).catch(function () { /* ignore */ });
+        return true;
+    }
+    window.ttbmPersistPostTitleToServer = ttbmPersistPostTitleToServer;
+
     window.ttbmPrepareTourSettingsFormForSubmit = function () {
         var $panel = $('#ttbm_meta_box_panel');
         if ($panel.length) {
@@ -585,10 +640,11 @@
             });
             $panel.find('[data-collapse="#ttbm_display_map"], [data-collapse="#ttbm_display_location"], [data-collapse="#ttbm_display_hotel_map"]').find('input, select, textarea').prop('disabled', false).removeAttr('disabled');
         }
-        $('#ttbm_full_location_name_submit, #ttbm_hotel_map_location_submit, #ttbm_map_latitude_submit, #ttbm_map_longitude_submit')
+        $('#ttbm_full_location_name_submit, #ttbm_hotel_map_location_submit, #ttbm_map_latitude_submit, #ttbm_map_longitude_submit, #ttbm_post_title_submit')
             .prop('disabled', false)
             .removeAttr('disabled');
         ttbmSyncMapLocationFieldsForSubmit();
+        ttbmPersistPostTitleToServer(true);
         ttbmPersistMapLocationToServer(true);
         if (typeof ttbm_sync_visible_dates_to_hidden === 'function') {
             ttbm_sync_visible_dates_to_hidden();
@@ -601,7 +657,7 @@
     };
     $(document).on(
         'input change',
-        '#ttbm_iframe_location, #ttbm_map_location, #ttbm_hotel_map_location, #map_latitude, #map_longitude, .ttbm-map-location-input, .ttbm-map-coord-input',
+        '#ttbm_iframe_location, #ttbm_map_location, #ttbm_hotel_map_location, #map_latitude, #map_longitude, #ttbm_post_title, .ttbm-map-location-input, .ttbm-map-coord-input',
         function () {
             ttbmSyncMapLocationFieldsForSubmit();
         }

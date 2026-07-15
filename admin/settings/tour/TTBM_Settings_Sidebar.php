@@ -940,7 +940,9 @@ jQuery(function($){
 
 	/* Keep header title in sync with the title input */
 	$(document).on('input', '#ttbm_post_title', function(){
-		$('.ttbm-header-tour-title').text($(this).val().trim());
+		var val = $(this).val().trim();
+		$('.ttbm-header-tour-title').text(val);
+		$('#ttbm_post_title_submit').val($(this).val() || '');
 	});
 
 	/* ── Location required validation (tour only) ── */
@@ -1001,6 +1003,11 @@ jQuery(function($){
 
 	/* ── Single consolidated submit interceptor ── */
 	$(document).on('click', '.ttbm-split-publish__main, .ttbm-sb-btn-publish, [name="publish"], [name="save"]', function(e){
+		var $titleInput = $('#ttbm_post_title');
+		var $titleSubmit = $('#ttbm_post_title_submit');
+		if ($titleInput.length && $titleSubmit.length) {
+			$titleSubmit.val($titleInput.val() || '').prop('disabled', false).removeAttr('disabled').attr('name', 'post_title');
+		}
 		if (typeof ttbm_sync_visible_dates_to_hidden === 'function') {
 			ttbm_sync_visible_dates_to_hidden();
 		}

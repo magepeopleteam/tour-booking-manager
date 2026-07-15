@@ -314,7 +314,7 @@
                     <input
                         type="text"
                         id="ttbm_post_title"
-                        name="post_title"
+                        name="ttbm_post_title_ui"
                         class="ttbm-tour-title-field__input"
                         value="<?php echo esc_attr($title); ?>"
                         placeholder="<?php esc_attr_e('Enter tour title (required)...', 'tour-booking-manager'); ?>"

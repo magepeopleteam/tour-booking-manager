@@ -7,8 +7,78 @@
 			public function __construct() {
 				add_action('add_meta_boxes', [$this, 'hotel_settings_meta']);
 				add_action('save_post', array($this, 'save_hotel'), 99, 1);
+				add_filter('wp_insert_post_data', [$this, 'filter_insert_post_data'], 99, 2);
+				add_action('wp_ajax_ttbm_save_post_title', [$this, 'ajax_save_post_title']);
 				add_action('admin_notices', [$this, 'render_title_required_notice']);
 				add_action('admin_notices', [$this, 'render_featured_image_required_notice']);
+			}
+			/**
+			 * Resolve hotel/tour title from custom UI field before the DB write.
+			 * Title support is removed, so a stale hidden post_title must not win.
+			 *
+			 * @param array $data    Sanitized post data.
+			 * @param array $postarr Raw post array.
+			 * @return array
+			 */
+			public function filter_insert_post_data($data, $postarr) {
+				if (!is_admin() || (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)) {
+					return $data;
+				}
+				$post_type = isset($data['post_type']) ? $data['post_type'] : '';
+				$tour_cpt = class_exists('TTBM_Function') ? TTBM_Function::get_cpt_name() : 'ttbm_tour';
+				if ($post_type !== 'ttbm_hotel' && $post_type !== $tour_cpt) {
+					return $data;
+				}
+				$title = self::resolve_submitted_title_from_request();
+				if ($title !== '') {
+					$data['post_title'] = $title;
+				}
+				return $data;
+			}
+			/**
+			 * Prefer visible UI title, then any posted post_title.
+			 *
+			 * @return string
+			 */
+			public static function resolve_submitted_title_from_request() {
+				$title = '';
+				if (isset($_POST['ttbm_post_title_ui'])) {
+					$title = trim(sanitize_text_field(wp_unslash($_POST['ttbm_post_title_ui'])));
+				}
+				if ($title === '' && isset($_POST['post_title']) && !is_array($_POST['post_title'])) {
+					$title = trim(sanitize_text_field(wp_unslash($_POST['post_title'])));
+				}
+				return $title;
+			}
+			/**
+			 * Persist title via AJAX so Update survives classic form POST gaps.
+			 */
+			public function ajax_save_post_title() {
+				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
+					wp_send_json_error(array('message' => 'Invalid nonce'), 403);
+				}
+				$post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
+				if (!$post_id || !current_user_can('edit_post', $post_id)) {
+					wp_send_json_error(array('message' => 'Forbidden'), 403);
+				}
+				$post_type = get_post_type($post_id);
+				$tour_cpt = class_exists('TTBM_Function') ? TTBM_Function::get_cpt_name() : 'ttbm_tour';
+				if ($post_type !== 'ttbm_hotel' && $post_type !== $tour_cpt) {
+					wp_send_json_error(array('message' => 'Invalid post type'), 400);
+				}
+				$title = isset($_POST['title']) ? trim(sanitize_text_field(wp_unslash($_POST['title']))) : '';
+				if ($title === '') {
+					wp_send_json_error(array('message' => 'Title required'), 400);
+				}
+				if ((string) get_post_field('post_title', $post_id) !== $title) {
+					remove_action('save_post', array($this, 'save_hotel'), 99);
+					wp_update_post(array(
+						'ID' => $post_id,
+						'post_title' => $title,
+					));
+					add_action('save_post', array($this, 'save_hotel'), 99, 1);
+				}
+				wp_send_json_success(array('title' => $title));
 			}
 			public function hotel_settings_meta() {
 				add_meta_box('ttbm_meta_box_panel', esc_html__('Hotel Settings', 'tour-booking-manager'), array($this, 'hotel_settings'), 'ttbm_hotel', 'normal', 'high');
@@ -21,7 +91,9 @@
 				$hotel_map_location = (string) get_post_meta($hotel_id, 'ttbm_hotel_map_location', true);
 				$hotel_map_lat = (string) get_post_meta($hotel_id, 'ttbm_map_latitude', true);
 				$hotel_map_lng = (string) get_post_meta($hotel_id, 'ttbm_map_longitude', true);
+				$hotel_title = (string) get_the_title($hotel_id);
 				?>
+                <input type="hidden" id="ttbm_post_title_submit" name="post_title" value="<?php echo esc_attr($hotel_title); ?>">
                 <input type="hidden" id="ttbm_hotel_map_location_submit" name="ttbm_hotel_map_location" value="<?php echo esc_attr($hotel_map_location); ?>">
                 <input type="hidden" id="ttbm_map_latitude_submit" name="ttbm_map_latitude" value="<?php echo esc_attr($hotel_map_lat); ?>">
                 <input type="hidden" id="ttbm_map_longitude_submit" name="ttbm_map_longitude" value="<?php echo esc_attr($hotel_map_lng); ?>">
@@ -86,15 +158,40 @@
 				if (get_post_type($post_id) !== 'ttbm_hotel') {
 					return;
 				}
-				$submitted_title = isset($_POST['post_title']) ? trim(sanitize_text_field(wp_unslash($_POST['post_title']))) : '';
+				$submitted_title = self::resolve_submitted_title_from_request();
 				if ($submitted_title === '') {
+					remove_action('save_post', array($this, 'save_hotel'), 99);
 					wp_update_post(['ID' => $post_id, 'post_status' => 'draft']);
+					add_action('save_post', array($this, 'save_hotel'), 99, 1);
 					set_transient('ttbm_hotel_title_required_' . get_current_user_id(), 1, 60);
 					return;
 				}
+				// Title support is removed for hotels; persist the custom field value explicitly.
+				$current_title = (string) get_post_field('post_title', $post_id);
+				if ($current_title !== $submitted_title) {
+					remove_action('save_post', array($this, 'save_hotel'), 99);
+					$result = wp_update_post([
+						'ID' => $post_id,
+						'post_title' => $submitted_title,
+					], true);
+					if (is_wp_error($result) || (string) get_post_field('post_title', $post_id) !== $submitted_title) {
+						global $wpdb;
+						$wpdb->update(
+							$wpdb->posts,
+							array('post_title' => $submitted_title),
+							array('ID' => $post_id),
+							array('%s'),
+							array('%d')
+						);
+						clean_post_cache($post_id);
+					}
+					add_action('save_post', array($this, 'save_hotel'), 99, 1);
+				}
 				$thumb_id = isset($_POST['_thumbnail_id']) ? (int) $_POST['_thumbnail_id'] : 0;
 				if ($thumb_id <= 0) {
+					remove_action('save_post', array($this, 'save_hotel'), 99);
 					wp_update_post(['ID' => $post_id, 'post_status' => 'draft']);
+					add_action('save_post', array($this, 'save_hotel'), 99, 1);
 					set_transient('ttbm_hotel_featured_image_required_' . get_current_user_id(), 1, 60);
 					return;
 				}

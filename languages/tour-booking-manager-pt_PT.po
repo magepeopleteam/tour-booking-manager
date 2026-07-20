@@ -127,7 +127,7 @@ msgstr "Qtd. Tipo de caixa"
 #: admin/settings/tour/TTBM_Settings_extra_service.php:35
 #: admin/settings/tour/TTBM_Settings_place_you_see.php:53
 #: admin/settings/tour/TTBM_Settings_pricing.php:146
-#: admin/TTBM_Settings_Global.php:792
+#: admin/TTBM_Settings_Global.php:813
 #: admin/TTBM_Ticket_Types.php:40
 #: admin/TTBM_Travel_List_CPT_Tabs.php:410
 msgid "Action"
@@ -200,8 +200,8 @@ msgstr "Guia "
 msgid "Itinerary Builder"
 msgstr "Construtor de itinerários"
 
-#: admin/TTBM_Settings_Global.php:394
-#: admin/TTBM_Settings_Global.php:395
+#: admin/TTBM_Settings_Global.php:415
+#: admin/TTBM_Settings_Global.php:416
 #: templates/layout/faq.php:11
 msgid "F.A.Q"
 msgstr "PERGUNTAS FREQUENTES"
@@ -715,7 +715,7 @@ msgid "Tour type and date time can be easily configured here, providing a crucia
 msgstr "O tipo de passeio e a data e hora podem ser facilmente configurados aqui, fornecendo um recurso crucial para passeios recorrentes, fixos ou com data específica."
 
 #: admin/settings/tour/TTBM_Settings_Dates.php:39
-#: admin/TTBM_Settings_Global.php:787
+#: admin/TTBM_Settings_Global.php:808
 msgid "Type"
 msgstr "Tipo"
 
@@ -871,11 +871,11 @@ msgstr "Por favor, adicione os horários dos ingressos de sexta-feira"
 msgid "Display Settings"
 msgstr "Configurações de exibição"
 
-#: admin/TTBM_Settings_Global.php:503
+#: admin/TTBM_Settings_Global.php:524
 msgid "Style One"
 msgstr "Estilo Um"
 
-#: admin/TTBM_Settings_Global.php:504
+#: admin/TTBM_Settings_Global.php:525
 msgid "Style Two"
 msgstr "Estilo Dois"
 
@@ -922,8 +922,8 @@ msgid "Extra Service"
 msgstr "Serviço Extra"
 
 #: admin/settings/tour/TTBM_Settings_extra_service.php:29
-#: admin/TTBM_Settings_Global.php:338
-#: admin/TTBM_Settings_Global.php:339
+#: admin/TTBM_Settings_Global.php:359
+#: admin/TTBM_Settings_Global.php:360
 msgid "Service Name"
 msgstr "Nome do serviço"
 
@@ -1319,8 +1319,8 @@ msgstr "Adicionar novo tipo de bilhete"
 
 #: admin/settings/tour/TTBM_Settings_Promotional_Text.php:17
 #: admin/settings/tour/TTBM_Settings_Promotional_Text.php:36
-#: admin/TTBM_Settings_Global.php:450
-#: admin/TTBM_Settings_Global.php:451
+#: admin/TTBM_Settings_Global.php:471
+#: admin/TTBM_Settings_Global.php:472
 msgid "Why Book With Us?"
 msgstr "Por que reservar conosco?"
 
@@ -1462,8 +1462,8 @@ msgid "Duplicate Post "
 msgstr "Postagem duplicada"
 
 #: admin/TTBM_Admin_Tour_List.php:412
-#: admin/TTBM_Settings_Global.php:415
-#: admin/TTBM_Settings_Global.php:416
+#: admin/TTBM_Settings_Global.php:436
+#: admin/TTBM_Settings_Global.php:437
 msgid "Total Seats"
 msgstr "Total de assentos"
 
@@ -1892,7 +1892,7 @@ msgstr "Mensagem"
 #: admin/TTBM_Admin_Wishlist.php:200
 #: admin/TTBM_Get_Enquiry.php:107
 #: admin/TTBM_Get_Enquiry.php:643
-#: admin/TTBM_Settings_Global.php:791
+#: admin/TTBM_Settings_Global.php:812
 #: admin/TTBM_Status.php:21
 #: support/elementor/widget/tour-list.php:242
 #: support/elementor/widget/tour-location-list.php:93
@@ -2265,7 +2265,7 @@ msgstr "Se você quiser visualizar os passeios expirados, selecione"
 
 #: admin/TTBM_Settings_Global.php:266
 #: admin/TTBM_Settings_Global.php:270
-#: admin/TTBM_Settings_Global.php:596
+#: admin/TTBM_Settings_Global.php:617
 #: admin/TTBM_Status.php:58
 #: support/elementor/widget/tour-hotel-list.php:68
 #: support/elementor/widget/tour-list.php:166
@@ -2303,7 +2303,7 @@ msgstr "ou para ocultá-lo, selecione"
 
 #: admin/TTBM_Settings_Global.php:266
 #: admin/TTBM_Settings_Global.php:271
-#: admin/TTBM_Settings_Global.php:597
+#: admin/TTBM_Settings_Global.php:618
 #: admin/TTBM_Status.php:60
 #: support/elementor/widget/tour-hotel-list.php:69
 #: support/elementor/widget/tour-list.php:167
@@ -2357,24 +2357,24 @@ msgstr "Por favor, insira sua chave de API do Google Maps funcional"
 
 #: admin/TTBM_Settings_Global.php:296
 #: admin/TTBM_Settings_Global.php:299
-#: inc/TTBM_Layout.php:219
+#: inc/TTBM_Layout.php:218
 msgid "Sorry, Not Available"
 msgstr "Desculpe, não disponível"
 
 #: admin/TTBM_Settings_Global.php:297
 #: admin/TTBM_Settings_Global.php:304
 #: admin/TTBM_Settings_Global.php:311
+#: admin/TTBM_Settings_Global.php:318
 #: admin/TTBM_Settings_Global.php:325
-#: admin/TTBM_Settings_Global.php:339
+#: admin/TTBM_Settings_Global.php:332
 #: admin/TTBM_Settings_Global.php:346
-#: admin/TTBM_Settings_Global.php:353
 #: admin/TTBM_Settings_Global.php:360
 #: admin/TTBM_Settings_Global.php:367
 #: admin/TTBM_Settings_Global.php:374
 #: admin/TTBM_Settings_Global.php:381
+#: admin/TTBM_Settings_Global.php:388
+#: admin/TTBM_Settings_Global.php:395
 #: admin/TTBM_Settings_Global.php:402
-#: admin/TTBM_Settings_Global.php:409
-#: admin/TTBM_Settings_Global.php:416
 #: admin/TTBM_Settings_Global.php:423
 #: admin/TTBM_Settings_Global.php:430
 #: admin/TTBM_Settings_Global.php:437
@@ -2384,6 +2384,9 @@ msgstr "Desculpe, não disponível"
 #: admin/TTBM_Settings_Global.php:465
 #: admin/TTBM_Settings_Global.php:472
 #: admin/TTBM_Settings_Global.php:479
+#: admin/TTBM_Settings_Global.php:486
+#: admin/TTBM_Settings_Global.php:493
+#: admin/TTBM_Settings_Global.php:500
 msgid "Enter the translated text of: "
 msgstr "Digite o texto traduzido de:"
 
@@ -2393,46 +2396,46 @@ msgstr "Desculpe, não disponível."
 
 #: admin/settings/tour/TTBM_Settings.php:987
 #: admin/settings/tour/TTBM_Settings_pricing.php:127
-#: admin/TTBM_Settings_Global.php:317
-#: admin/TTBM_Settings_Global.php:318
+#: admin/TTBM_Settings_Global.php:338
+#: admin/TTBM_Settings_Global.php:339
 #: admin/TTBM_Ticket_Types.php:28
 msgid "Ticket Name"
 msgstr "Nome do bilhete"
 
-#: admin/TTBM_Settings_Global.php:318
-#: admin/TTBM_Settings_Global.php:332
-#: admin/TTBM_Settings_Global.php:388
-#: admin/TTBM_Settings_Global.php:395
+#: admin/TTBM_Settings_Global.php:339
+#: admin/TTBM_Settings_Global.php:353
+#: admin/TTBM_Settings_Global.php:409
+#: admin/TTBM_Settings_Global.php:416
 msgid "Enter the translated text of:"
 msgstr "Digite o texto traduzido de:"
 
-#: admin/TTBM_Settings_Global.php:324
-#: admin/TTBM_Settings_Global.php:325
+#: admin/TTBM_Settings_Global.php:345
+#: admin/TTBM_Settings_Global.php:346
 msgid "Ticket Qty"
 msgstr "Quantidade de ingressos"
 
-#: admin/TTBM_Settings_Global.php:331
-#: admin/TTBM_Settings_Global.php:332
+#: admin/TTBM_Settings_Global.php:352
+#: admin/TTBM_Settings_Global.php:353
 msgid "Ticket Price"
 msgstr "Preço do ingresso"
 
-#: admin/TTBM_Settings_Global.php:345
-#: admin/TTBM_Settings_Global.php:346
+#: admin/TTBM_Settings_Global.php:366
+#: admin/TTBM_Settings_Global.php:367
 msgid "Service Qty"
 msgstr "Qtd. de serviço"
 
-#: admin/TTBM_Settings_Global.php:352
-#: admin/TTBM_Settings_Global.php:353
+#: admin/TTBM_Settings_Global.php:373
+#: admin/TTBM_Settings_Global.php:374
 msgid "Service Price"
 msgstr "Preço do serviço"
 
-#: admin/TTBM_Settings_Global.php:359
-#: admin/TTBM_Settings_Global.php:360
+#: admin/TTBM_Settings_Global.php:380
+#: admin/TTBM_Settings_Global.php:381
 msgid "Sorry, The Tour Already Started or Finished"
 msgstr "Desculpe, o passeio já começou ou terminou"
 
-#: admin/TTBM_Settings_Global.php:366
-#: admin/TTBM_Settings_Global.php:367
+#: admin/TTBM_Settings_Global.php:387
+#: admin/TTBM_Settings_Global.php:388
 #: inc/TTBM_Hotel_Data_Display.php:610
 #: templates/themes/default.php:65
 #: templates/ticket/book_now.php:50
@@ -2442,307 +2445,307 @@ msgstr "Desculpe, o passeio já começou ou terminou"
 msgid "Book Now"
 msgstr "Reserve agora"
 
-#: admin/TTBM_Settings_Global.php:373
-#: admin/TTBM_Settings_Global.php:374
+#: admin/TTBM_Settings_Global.php:394
+#: admin/TTBM_Settings_Global.php:395
 msgid "Schedule Details"
 msgstr "Detalhes da programação"
 
-#: admin/TTBM_Settings_Global.php:380
-#: admin/TTBM_Settings_Global.php:381
+#: admin/TTBM_Settings_Global.php:401
+#: admin/TTBM_Settings_Global.php:402
 msgid "Available Extra Service List"
 msgstr "Lista de serviços extras disponíveis"
 
 #: admin/settings/hotel/TTBM_Settings_Hotel.php:105
 #: admin/settings/tour/TTBM_Settings.php:87
-#: admin/TTBM_Settings_Global.php:387
-#: admin/TTBM_Settings_Global.php:388
+#: admin/TTBM_Settings_Global.php:408
+#: admin/TTBM_Settings_Global.php:409
 #: templates/layout/description.php:8
 msgid "Overview"
 msgstr "Visão geral"
 
-#: admin/TTBM_Settings_Global.php:401
+#: admin/TTBM_Settings_Global.php:422
 #: templates/layout/exclude_service.php:10
 msgid "What's Excluded"
 msgstr "O que está excluído"
 
-#: admin/TTBM_Settings_Global.php:402
+#: admin/TTBM_Settings_Global.php:423
 msgid "Service Exclude"
 msgstr "Exclusão de serviço"
 
-#: admin/TTBM_Settings_Global.php:408
+#: admin/TTBM_Settings_Global.php:429
 #: templates/layout/include_feature.php:12
 msgid "What's Included"
 msgstr "O que está incluído"
 
-#: admin/TTBM_Settings_Global.php:409
+#: admin/TTBM_Settings_Global.php:430
 msgid "Service Included"
 msgstr "Serviço incluído"
 
 #: admin/settings/hotel/TTBM_Settings_Hotel.php:109
 #: admin/TTBM_Admin_Tour_List.php:239
-#: admin/TTBM_Settings_Global.php:422
-#: admin/TTBM_Settings_Global.php:423
+#: admin/TTBM_Settings_Global.php:443
+#: admin/TTBM_Settings_Global.php:444
 msgid "Activities"
 msgstr "Atividades"
 
-#: admin/TTBM_Settings_Global.php:429
-#: admin/TTBM_Settings_Global.php:430
+#: admin/TTBM_Settings_Global.php:450
+#: admin/TTBM_Settings_Global.php:451
 #: templates/layout/location_map.php:10
 msgid "Location Map"
 msgstr "Mapa de localização"
 
-#: admin/TTBM_Settings_Global.php:436
-#: admin/TTBM_Settings_Global.php:437
+#: admin/TTBM_Settings_Global.php:457
+#: admin/TTBM_Settings_Global.php:458
 msgid "You may like Tour"
 msgstr "Você pode gostar do Tour"
 
-#: admin/TTBM_Settings_Global.php:443
-#: admin/TTBM_Settings_Global.php:444
+#: admin/TTBM_Settings_Global.php:464
+#: admin/TTBM_Settings_Global.php:465
 msgid "Choice Your Hotel"
 msgstr "Escolha seu hotel"
 
-#: admin/TTBM_Settings_Global.php:457
-#: admin/TTBM_Settings_Global.php:458
+#: admin/TTBM_Settings_Global.php:478
+#: admin/TTBM_Settings_Global.php:479
 msgid "Get a Question?"
 msgstr "Tem alguma pergunta?"
 
-#: admin/TTBM_Settings_Global.php:464
-#: admin/TTBM_Settings_Global.php:465
+#: admin/TTBM_Settings_Global.php:485
+#: admin/TTBM_Settings_Global.php:486
 msgid "Available Ticket List"
 msgstr "Lista de ingressos disponíveis"
 
-#: admin/TTBM_Settings_Global.php:487
+#: admin/TTBM_Settings_Global.php:508
 msgid "Slider Type"
 msgstr "Tipo de controle deslizante"
 
-#: admin/TTBM_Settings_Global.php:488
+#: admin/TTBM_Settings_Global.php:509
 msgid "Please Select Slider Type Default Slider"
 msgstr "Selecione o tipo de controle deslizante Controle deslizante padrão"
 
-#: admin/TTBM_Settings_Global.php:492
+#: admin/TTBM_Settings_Global.php:513
 msgid "Slider"
 msgstr "Controle deslizante"
 
-#: admin/TTBM_Settings_Global.php:493
+#: admin/TTBM_Settings_Global.php:514
 msgid "Post Thumbnail"
 msgstr "Miniatura da postagem"
 
-#: admin/TTBM_Settings_Global.php:498
+#: admin/TTBM_Settings_Global.php:519
 msgid "Slider Style"
 msgstr "Estilo de controle deslizante"
 
-#: admin/TTBM_Settings_Global.php:499
+#: admin/TTBM_Settings_Global.php:520
 msgid "Please Select Slider Style Default Style One"
 msgstr "Selecione o estilo do controle deslizante Estilo padrão um"
 
-#: admin/TTBM_Settings_Global.php:509
+#: admin/TTBM_Settings_Global.php:530
 msgid "Slider Indicator Visible?"
 msgstr "Indicador deslizante visível?"
 
-#: admin/TTBM_Settings_Global.php:510
+#: admin/TTBM_Settings_Global.php:531
 msgid "Please Select Slider Indicator Visible or Not? Default ON"
 msgstr "Selecione o indicador deslizante visível ou não? Padrão LIGADO"
 
-#: admin/TTBM_Settings_Global.php:514
-#: admin/TTBM_Settings_Global.php:536
-#: admin/TTBM_Settings_Global.php:560
-#: admin/TTBM_Settings_Global.php:571
+#: admin/TTBM_Settings_Global.php:535
+#: admin/TTBM_Settings_Global.php:557
+#: admin/TTBM_Settings_Global.php:581
+#: admin/TTBM_Settings_Global.php:592
 msgid "ON"
 msgstr "SOBRE"
 
-#: admin/TTBM_Settings_Global.php:515
-#: admin/TTBM_Settings_Global.php:537
-#: admin/TTBM_Settings_Global.php:561
-#: admin/TTBM_Settings_Global.php:572
+#: admin/TTBM_Settings_Global.php:536
+#: admin/TTBM_Settings_Global.php:558
+#: admin/TTBM_Settings_Global.php:582
+#: admin/TTBM_Settings_Global.php:593
 #: templates/layout/sidebar_cta.php:98
 msgid "Off"
 msgstr "Desligado"
 
-#: admin/TTBM_Settings_Global.php:520
+#: admin/TTBM_Settings_Global.php:541
 msgid "Slider Indicator Type"
 msgstr "Tipo de indicador deslizante"
 
-#: admin/TTBM_Settings_Global.php:521
+#: admin/TTBM_Settings_Global.php:542
 msgid "Please Select Slider Indicator Type Default Icon"
 msgstr "Selecione o tipo de indicador do controle deslizante Ícone padrão"
 
-#: admin/TTBM_Settings_Global.php:525
+#: admin/TTBM_Settings_Global.php:546
 msgid "Icon Indicator"
 msgstr "Indicador de ícone"
 
-#: admin/TTBM_Settings_Global.php:526
+#: admin/TTBM_Settings_Global.php:547
 msgid "image Indicator"
 msgstr "Indicador de imagem"
 
-#: admin/TTBM_Settings_Global.php:531
+#: admin/TTBM_Settings_Global.php:552
 msgid "Slider Showcase Visible?"
 msgstr "Apresentação do controle deslizante visível?"
 
-#: admin/TTBM_Settings_Global.php:532
+#: admin/TTBM_Settings_Global.php:553
 msgid "Please Select Slider Showcase Visible or Not? Default ON"
 msgstr "Selecione a opção \"Visualizar\" ou \"Não\"? Padrão LIGADO"
 
-#: admin/TTBM_Settings_Global.php:542
+#: admin/TTBM_Settings_Global.php:563
 msgid "Slider Showcase Position"
 msgstr "Posição da vitrine do controle deslizante"
 
-#: admin/TTBM_Settings_Global.php:543
+#: admin/TTBM_Settings_Global.php:564
 msgid "Please Select Slider Showcase Position Default Right"
 msgstr "Selecione a posição padrão da vitrine do controle deslizante à direita"
 
-#: admin/TTBM_Settings_Global.php:547
+#: admin/TTBM_Settings_Global.php:568
 msgid "At Top Position"
 msgstr "Na posição superior"
 
-#: admin/TTBM_Settings_Global.php:548
+#: admin/TTBM_Settings_Global.php:569
 msgid "At Right Position"
 msgstr "Na posição correta"
 
-#: admin/TTBM_Settings_Global.php:549
+#: admin/TTBM_Settings_Global.php:570
 msgid "At Bottom Position"
 msgstr "Na posição inferior"
 
-#: admin/TTBM_Settings_Global.php:550
+#: admin/TTBM_Settings_Global.php:571
 msgid "At Left Position"
 msgstr "Na posição esquerda"
 
-#: admin/TTBM_Settings_Global.php:555
+#: admin/TTBM_Settings_Global.php:576
 msgid "Slider Popup Image Indicator"
 msgstr "Indicador de imagem pop-up do controle deslizante"
 
-#: admin/TTBM_Settings_Global.php:556
+#: admin/TTBM_Settings_Global.php:577
 msgid "Please Select Slider Popup Indicator Image ON or Off? Default ON"
 msgstr "Selecione a imagem do indicador pop-up do controle deslizante LIGADO ou DESLIGADO? Padrão LIGADO"
 
-#: admin/TTBM_Settings_Global.php:566
+#: admin/TTBM_Settings_Global.php:587
 msgid "Slider Popup Icon Indicator"
 msgstr "Indicador de ícone pop-up do controle deslizante"
 
-#: admin/TTBM_Settings_Global.php:567
+#: admin/TTBM_Settings_Global.php:588
 msgid "Please Select Slider Popup Indicator Icon ON or Off? Default ON"
 msgstr "Selecione o ícone indicador pop-up do controle deslizante: LIGADO ou DESLIGADO? Padrão: LIGADO"
 
-#: admin/TTBM_Settings_Global.php:577
+#: admin/TTBM_Settings_Global.php:598
 msgid "Slider height"
 msgstr "Altura do controle deslizante"
 
-#: admin/TTBM_Settings_Global.php:578
+#: admin/TTBM_Settings_Global.php:599
 msgid "Please Select Slider Height"
 msgstr "Selecione a altura do controle deslizante"
 
-#: admin/TTBM_Settings_Global.php:582
+#: admin/TTBM_Settings_Global.php:603
 msgid "Minimum"
 msgstr "Mínimo"
 
-#: admin/TTBM_Settings_Global.php:583
+#: admin/TTBM_Settings_Global.php:604
 msgid "Average"
 msgstr "Média"
 
-#: admin/TTBM_Settings_Global.php:584
+#: admin/TTBM_Settings_Global.php:605
 msgid "Maximum"
 msgstr "Máximo"
 
-#: admin/TTBM_Settings_Global.php:591
+#: admin/TTBM_Settings_Global.php:612
 msgid "Disable Block/Gutenberg Editor"
 msgstr "Desativar editor de bloco/Gutenberg"
 
-#: admin/TTBM_Settings_Global.php:592
+#: admin/TTBM_Settings_Global.php:613
 msgid "If you want to disable WordPress's new Block/Gutenberg editor, please select Yes."
 msgstr "Se você quiser desabilitar o novo editor de blocos/Gutenberg do WordPress, selecione Sim."
 
-#: admin/TTBM_Settings_Global.php:602
+#: admin/TTBM_Settings_Global.php:623
 msgid "Date Picker Format"
 msgstr "Formato do seletor de data"
 
-#: admin/TTBM_Settings_Global.php:603
+#: admin/TTBM_Settings_Global.php:624
 msgid "If you want to change Date Picker Format, please select format. Default  is D d M , yy."
 msgstr "Se desejar alterar o formato do Seletor de Data, selecione o formato. O padrão é D d M , aa."
 
-#: admin/TTBM_Settings_Global.php:623
+#: admin/TTBM_Settings_Global.php:644
 msgid "Short Date  Format"
 msgstr "Formato de data abreviada"
 
-#: admin/TTBM_Settings_Global.php:624
+#: admin/TTBM_Settings_Global.php:645
 msgid "If you want to change Short Date  Format, please select format. Default  is M , Y."
 msgstr "Se desejar alterar o Formato de Data Abreviada, selecione o formato. O padrão é M, Y."
 
-#: admin/TTBM_Settings_Global.php:650
+#: admin/TTBM_Settings_Global.php:671
 msgid "Theme Color"
 msgstr "Cor do tema"
 
-#: admin/TTBM_Settings_Global.php:651
+#: admin/TTBM_Settings_Global.php:672
 msgid "Select Default Theme Color"
 msgstr "Selecione a cor do tema padrão"
 
-#: admin/TTBM_Settings_Global.php:657
+#: admin/TTBM_Settings_Global.php:678
 msgid "Theme Color Secondary"
 msgstr "Cor do tema secundária"
 
-#: admin/TTBM_Settings_Global.php:658
+#: admin/TTBM_Settings_Global.php:679
 msgid "Select Default Secondary Theme Color"
 msgstr "Selecione a cor padrão do tema secundário"
 
-#: admin/TTBM_Settings_Global.php:664
+#: admin/TTBM_Settings_Global.php:685
 msgid "Theme Alternate Color"
 msgstr "Tema Cor Alternativa"
 
-#: admin/TTBM_Settings_Global.php:665
+#: admin/TTBM_Settings_Global.php:686
 msgid "Select Default Theme Alternate  Color that means, if background theme color then it will be text color."
 msgstr "Selecione a cor alternativa do tema padrão, o que significa que, se a cor do tema de fundo for a cor do texto, ela será a cor do tema."
 
-#: admin/TTBM_Settings_Global.php:671
+#: admin/TTBM_Settings_Global.php:692
 msgid "Default Text Color"
 msgstr "Cor de texto padrão"
 
-#: admin/TTBM_Settings_Global.php:672
+#: admin/TTBM_Settings_Global.php:693
 msgid "Select Default Text  Color."
 msgstr "Selecione Cor de texto padrão."
 
-#: admin/TTBM_Settings_Global.php:734
+#: admin/TTBM_Settings_Global.php:755
 msgid "Button Text Color"
 msgstr "Cor do texto do botão"
 
-#: admin/TTBM_Settings_Global.php:735
+#: admin/TTBM_Settings_Global.php:756
 msgid "Select Button Text  Color."
 msgstr "Selecione a cor do texto do botão."
 
-#: admin/TTBM_Settings_Global.php:741
+#: admin/TTBM_Settings_Global.php:762
 msgid "Button Background Color"
 msgstr "Cor de fundo do botão"
 
-#: admin/TTBM_Settings_Global.php:742
+#: admin/TTBM_Settings_Global.php:763
 msgid "Select Button Background  Color."
 msgstr "Selecione a cor de fundo do botão."
 
-#: admin/TTBM_Settings_Global.php:755
+#: admin/TTBM_Settings_Global.php:776
 msgid "Warning Color"
 msgstr "Cor de advertência"
 
-#: admin/TTBM_Settings_Global.php:756
+#: admin/TTBM_Settings_Global.php:777
 msgid "Select Warning  Color."
 msgstr "Selecione a cor do aviso."
 
-#: admin/TTBM_Settings_Global.php:762
+#: admin/TTBM_Settings_Global.php:783
 msgid "Section Background color"
 msgstr "Cor de fundo da seção"
 
-#: admin/TTBM_Settings_Global.php:763
+#: admin/TTBM_Settings_Global.php:784
 msgid "Select Background  Color."
 msgstr "Selecione Cor de fundo."
 
-#: admin/TTBM_Settings_Global.php:775
+#: admin/TTBM_Settings_Global.php:796
 msgid "Thank you for using our plugin. Our some plugin  free and no license is required. We have some Additional addon to enhance feature of this plugin functionality. If you have any addon you need to enter a valid license for that plugin below."
 msgstr "Obrigado por usar nosso plugin. Alguns de nossos plugins são gratuitos e não exigem licença. Temos alguns complementos adicionais para aprimorar a funcionalidade deste plugin. Se você tiver algum complemento, precisará inserir uma licença válida para ele abaixo."
 
-#: admin/TTBM_Settings_Global.php:786
+#: admin/TTBM_Settings_Global.php:807
 msgid "Plugin Name"
 msgstr "Nome do plugin"
 
-#: admin/TTBM_Settings_Global.php:789
+#: admin/TTBM_Settings_Global.php:810
 msgid "Expire on"
 msgstr "Expira em"
 
-#: admin/TTBM_Settings_Global.php:790
+#: admin/TTBM_Settings_Global.php:811
 msgid "License Key"
 msgstr "Chave de licença"
 
@@ -2957,6 +2960,8 @@ msgstr "Imagens"
 msgid "From"
 msgstr "De"
 
+#: admin/TTBM_Settings_Global.php:331
+#: admin/TTBM_Settings_Global.php:332
 #: inc/TTBM_Details_Layout.php:419
 #: templates/hotel_layout/make_hotel_booking.php:41
 #: templates/layout/sidebar_cta.php:131
@@ -2964,14 +2969,14 @@ msgstr "De"
 msgid "Check Availability"
 msgstr "Verificar disponibilidade"
 
-#: admin/TTBM_Settings_Global.php:472
-#: admin/TTBM_Settings_Global.php:474
+#: admin/TTBM_Settings_Global.php:493
+#: admin/TTBM_Settings_Global.php:495
 #: inc/TTBM_Function.php:1618
 msgid "Free cancellation up to 24 hours before the experience starts (local time)"
 msgstr "Cancelamento gratuito até 24 horas antes do início da experiência (horário local)"
 
-#: admin/TTBM_Settings_Global.php:479
-#: admin/TTBM_Settings_Global.php:481
+#: admin/TTBM_Settings_Global.php:500
+#: admin/TTBM_Settings_Global.php:502
 #: inc/TTBM_Function.php:1621
 msgid "Reserve Now and Pay Later - Secure your spot while staying flexible"
 msgstr "Reserve agora e pague depois - Garanta seu lugar mantendo-se flexível"
@@ -3255,8 +3260,8 @@ msgstr "Adicionar imagem"
 msgid "Check  Availability"
 msgstr "Verificar disponibilidade"
 
-#: inc/TTBM_Layout.php:231
-#: inc/TTBM_Layout.php:261
+#: inc/TTBM_Layout.php:230
+#: inc/TTBM_Layout.php:260
 msgid "Select"
 msgstr "Selecione"
 
@@ -9982,15 +9987,15 @@ msgstr ""
 msgid "AIzaSyD-9tSrke72..."
 msgstr ""
 
-#: admin/TTBM_Settings_Global.php:471
+#: admin/TTBM_Settings_Global.php:492
 msgid "Cancellation Policy"
 msgstr ""
 
-#: admin/TTBM_Settings_Global.php:478
+#: admin/TTBM_Settings_Global.php:499
 msgid "Reserve Now Pay Later"
 msgstr ""
 
-#: admin/TTBM_Settings_Global.php:788
+#: admin/TTBM_Settings_Global.php:809
 msgid "Order"
 msgstr ""
 
@@ -10163,14 +10168,14 @@ msgstr ""
 
 #: inc/TTBM_Custom_Layout.php:198
 #: inc/TTBM_Custom_Layout.php:442
-#: inc/TTBM_Layout.php:196
+#: inc/TTBM_Layout.php:195
 #: templates/ticket/extra_service_smart.php:56
 msgid "Decrease quantity"
 msgstr ""
 
 #: inc/TTBM_Custom_Layout.php:211
 #: inc/TTBM_Custom_Layout.php:455
-#: inc/TTBM_Layout.php:209
+#: inc/TTBM_Layout.php:208
 #: templates/ticket/extra_service_smart.php:70
 msgid "Increase quantity"
 msgstr ""
@@ -10207,6 +10212,8 @@ msgstr ""
 msgid "Select dates to see final price and availability in real time."
 msgstr ""
 
+#: admin/TTBM_Settings_Global.php:317
+#: admin/TTBM_Settings_Global.php:318
 #: inc/TTBM_Details_Layout.php:198
 #: inc/TTBM_Details_Layout.php:220
 #: inc/TTBM_Details_Layout.php:224
@@ -10468,20 +10475,20 @@ msgstr ""
 msgid "Quantity"
 msgstr ""
 
-#: inc/TTBM_Layout.php:77
+#: inc/TTBM_Layout.php:72
 msgid "Check"
 msgstr ""
 
-#: inc/TTBM_Layout.php:79
+#: inc/TTBM_Layout.php:73
 msgid "Check availability"
 msgstr ""
 
-#: inc/TTBM_Layout.php:116
-#: inc/TTBM_Layout.php:127
+#: inc/TTBM_Layout.php:115
+#: inc/TTBM_Layout.php:126
 msgid "Select Time"
 msgstr ""
 
-#: inc/TTBM_Layout.php:120
+#: inc/TTBM_Layout.php:119
 #, php-format
 msgid "%d slot available"
 msgid_plural "%d slots available"
@@ -11010,6 +11017,8 @@ msgstr ""
 msgid " your booking"
 msgstr ""
 
+#: admin/TTBM_Settings_Global.php:324
+#: admin/TTBM_Settings_Global.php:325
 #: templates/ticket/tour_default_selection.php:55
 msgid "Select Date & Time"
 msgstr ""

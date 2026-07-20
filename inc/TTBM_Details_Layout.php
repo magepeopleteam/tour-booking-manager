@@ -195,7 +195,7 @@
 							?>
 							<div class="ttbm_date_time_select ttbm_smart_date_time_select _fullWidth_mp_zero">
 								<label class="ttbm_smart_date_field">
-									<span class="ttbm_smart_date_label"><?php esc_html_e('Select Date', 'tour-booking-manager'); ?></span>
+									<span class="ttbm_smart_date_label"><?php echo esc_html(TTBM_Function::get_translation_settings('ttbm_string_select_date', esc_html__('Select Date', 'tour-booking-manager'))); ?></span>
 									<span class="date-picker-icon _fullWidth_mp_zero">
 										<i class="far fa-calendar-alt" aria-hidden="true"></i>
 										<input type="hidden" name="ttbm_date" value="<?php echo esc_attr($hidden_date); ?>" required/>
@@ -217,11 +217,11 @@
 						?>
 						<div class="ttbm_date_time_select ttbm_smart_date_time_select _fullWidth_mp_zero">
 							<label class="ttbm_smart_date_field">
-								<span class="ttbm_smart_date_label"><?php esc_html_e('Select Date', 'tour-booking-manager'); ?></span>
+								<span class="ttbm_smart_date_label"><?php echo esc_html(TTBM_Function::get_translation_settings('ttbm_string_select_date', esc_html__('Select Date', 'tour-booking-manager'))); ?></span>
 								<span class="date-picker-icon _fullWidth_mp_zero">
 									<i class="far fa-calendar-alt" aria-hidden="true"></i>
 									<select class="formControl mb-0" name="ttbm_date" required>
-										<option value="" disabled><?php esc_html_e('Select Date', 'tour-booking-manager'); ?></option>
+										<option value="" disabled><?php echo esc_html(TTBM_Function::get_translation_settings('ttbm_string_select_date', esc_html__('Select Date', 'tour-booking-manager'))); ?></option>
 										<?php
 										$particular_dates = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_particular_dates', array());
 										$default_particular_date = $date;
@@ -380,7 +380,7 @@
                                         <span class="date-picker-icon _fullWidth_mp_zero">
                                             <i class="far fa-calendar-alt"></i>
                                             <select class="formControl mb-0" name="ttbm_date" required>
-                                                <option value="" selected disabled><?php esc_html_e('Select Date', 'tour-booking-manager'); ?></option>
+                                                <option value="" selected disabled><?php echo esc_html(TTBM_Function::get_translation_settings('ttbm_string_select_date', esc_html__('Select Date', 'tour-booking-manager'))); ?></option>
 												<?php
 													$particular_dates = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_particular_dates', array());
 													if (is_array($particular_dates) && !empty($particular_dates)) {
@@ -416,7 +416,7 @@
                         <!-- <button type="button" class="_dButton_bgBlue_fullWidth" data-target-popup="registration-popup"> -->
                         <button type="button" class="_dButton_fullWidth ttbm_load_popup_reg">
                             <span class="fas fa-plus-square"></span>
-							<?php esc_html_e('Check Availability', 'tour-booking-manager'); ?>
+							<?php echo esc_html(TTBM_Function::get_translation_settings('ttbm_string_check_availability', esc_html__('Check Availability', 'tour-booking-manager'))); ?>
                         </button>
                         <ul class="ttbm-registration-info">
                             <li><?php echo TTBM_Function::cancellation_policy_text(); ?></li>

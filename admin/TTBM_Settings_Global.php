@@ -313,6 +313,27 @@
 							'default' => ''
 						),
 						array(
+							'name' => 'ttbm_string_select_date',
+							'label' => esc_html__('Select Date', 'tour-booking-manager'),
+							'desc' => esc_html__('Enter the translated text of: ', 'tour-booking-manager') . '<strong>' . esc_html__('Select Date', 'tour-booking-manager') . '</strong>',
+							'type' => 'text',
+							'default' => '',
+						),
+						array(
+							'name' => 'ttbm_string_select_date_time',
+							'label' => esc_html__('Select Date & Time', 'tour-booking-manager'),
+							'desc' => esc_html__('Enter the translated text of: ', 'tour-booking-manager') . '<strong>' . esc_html__('Select Date & Time', 'tour-booking-manager') . '</strong>',
+							'type' => 'text',
+							'default' => '',
+						),
+						array(
+							'name' => 'ttbm_string_check_availability',
+							'label' => esc_html__('Check Availability', 'tour-booking-manager'),
+							'desc' => esc_html__('Enter the translated text of: ', 'tour-booking-manager') . '<strong>' . esc_html__('Check Availability', 'tour-booking-manager') . '</strong>',
+							'type' => 'text',
+							'default' => '',
+						),
+						array(
 							'name' => 'ttbm_string_ticket_name',
 							'label' => esc_html__('Ticket Name', 'tour-booking-manager'),
 							'desc' => esc_html__('Enter the translated text of:', 'tour-booking-manager') . '<strong>' . esc_html__('Ticket Name', 'tour-booking-manager') . '</stong>',

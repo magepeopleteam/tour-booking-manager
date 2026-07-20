@@ -877,6 +877,7 @@ jQuery(function($){
 	var postStatusSlug  = <?php echo wp_json_encode($post_status_slug); ?>;
 	var postStatusLabel = <?php echo wp_json_encode($post_status_label); ?>;
 	var btnLabel    = isPublished ? <?php echo wp_json_encode(__('Update', 'tour-booking-manager')); ?> : <?php echo wp_json_encode(__('Publish', 'tour-booking-manager')); ?>;
+	var mainAction  = isPublished ? 'update' : 'publish';
 	var saveDraftLabel = <?php echo wp_json_encode(__('Save Draft', 'tour-booking-manager')); ?>;
 	var previewLabel   = <?php echo wp_json_encode(__('Preview', 'tour-booking-manager')); ?>;
 
@@ -914,7 +915,7 @@ jQuery(function($){
 		.addClass('is-status-' + String(postStatusSlug).replace(/[^a-z0-9_-]/gi, ''))
 		.text(postStatusLabel);
 	header.find('.ttbm-header-preview').attr('href', previewUrl).html(eyeSvg + previewLabel);
-	header.find('.ttbm-split-publish__main').text(btnLabel);
+	header.find('.ttbm-split-publish__main').attr('data-ttbm-save-action', mainAction).text(btnLabel);
 	header.find('.ttbm-split-publish__draft').attr('value', saveDraftLabel).html(checkSvg + saveDraftLabel);
 
 	/* Inject inside form#post so the submit button is part of the form */

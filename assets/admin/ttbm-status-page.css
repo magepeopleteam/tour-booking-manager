@@ -1,192 +1,122 @@
-/* ===================================================================
-   Environment Status Page
-   =================================================================== */
+/* Modern environment dashboard — scoped to the TTBM Status settings panel. */
+#ttbm_status_settings .form-table,
+#ttbm_status_settings > h2,
+#ttbm_status_settings > p.submit { display: none; }
 
-#ttbm_status_page .ttbm-status-wrap {
-    max-width: 860px;
-    margin: 30px 0;
+#ttbm_content .tabsItem[data-tabs="#ttbm_status_settings"] > form > .ttbm-section-header {
+	display: none !important;
 }
 
-/* Panel header */
-#ttbm_status_page .ttbm-status-panel-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 18px 24px;
-    background: linear-gradient(135deg, var(--color_theme, #2271B1) 0%, #1a5a96 100%) !important;
+#ttbm_status_settings .ttbm-status-dashboard {
+	--status-blue: #2563eb;
+	--status-ink: #172033;
+	--status-muted: #687386;
+	max-width: 1180px;
+	padding: 4px 4px 28px;
 }
 
-#ttbm_status_page .ttbm-status-header-icon {
-    width: 48px;
-    height: 48px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+#ttbm_status_settings .ttbm-status-hero {
+	display: flex;
+	align-items: center;
+	gap: 18px;
+	padding: 26px 28px;
+	color: #fff;
+	background: linear-gradient(125deg, #172554 0%, #1d4ed8 58%, #3b82f6 100%);
+	border-radius: 18px;
+	box-shadow: 0 16px 38px rgba(30, 64, 175, .2);
 }
 
-#ttbm_status_page .ttbm-status-header-icon i {
-    font-size: 22px;
-    color: #fff;
+#ttbm_status_settings .ttbm-status-hero__icon {
+	display: grid;
+	place-items: center;
+	width: 58px;
+	height: 58px;
+	border: 1px solid rgba(255,255,255,.22);
+	border-radius: 16px;
+	background: rgba(255,255,255,.13);
+	font-size: 27px;
+	flex: 0 0 auto;
 }
 
-#ttbm_status_page .ttbm-status-header-text h2 {
-    color: #fff;
-    font-size: 18px;
-    font-weight: 700;
-    margin: 0 0 3px;
-    padding: 0;
-    border: none;
-    line-height: 1.2;
-}
+#ttbm_status_settings .ttbm-status-hero__copy { flex: 1; min-width: 0; }
+#ttbm_status_settings .ttbm-status-eyebrow { display: block; margin-bottom: 4px; color: #bfdbfe; font-size: 11px; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+#ttbm_status_settings .ttbm-status-hero h2 { margin: 0 0 5px; padding: 0; color: #fff; font-size: 24px; line-height: 1.2; }
+#ttbm_status_settings .ttbm-status-hero p { margin: 0; color: rgba(255,255,255,.76); font-size: 13px; }
 
-#ttbm_status_page .ttbm-status-header-text p {
-    color: rgba(255, 255, 255, 0.78);
-    font-size: 12.5px;
-    margin: 0;
-    line-height: 1.4;
+#ttbm_status_settings .ttbm-status-score {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-width: 118px;
+	padding: 13px 18px;
+	border: 1px solid rgba(255,255,255,.2);
+	border-radius: 14px;
+	background: rgba(255,255,255,.12);
 }
+#ttbm_status_settings .ttbm-status-score strong { color: #fff; font-size: 22px; line-height: 1; }
+#ttbm_status_settings .ttbm-status-score span { margin-top: 6px; color: #dbeafe; font-size: 11px; font-weight: 700; }
+#ttbm_status_settings .ttbm-status-score.has-warnings { background: rgba(245,158,11,.2); }
 
-/* Body */
-#ttbm_status_page .ttbm-status-body {
-    padding: 24px;
+#ttbm_status_settings .ttbm-status-quick-stats {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 12px;
+	margin: 16px 0;
 }
-
-/* Table */
-#ttbm_status_page .ttbm-status-table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: auto;
+#ttbm_status_settings .ttbm-status-quick-stats > div {
+	padding: 16px 18px;
+	border: 1px solid #e6eaf0;
+	border-radius: 13px;
+	background: #fff;
+	box-shadow: 0 4px 16px rgba(15,23,42,.045);
 }
+#ttbm_status_settings .ttbm-status-quick-stats span { display: block; margin-bottom: 5px; color: var(--status-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+#ttbm_status_settings .ttbm-status-quick-stats strong { color: var(--status-ink); font-size: 18px; }
 
-/* Data rows */
-#ttbm_status_page .ttbm-status-table tbody tr:not(.ttbm-status-section-row) {
-    border-bottom: 1px solid #F0F0F0;
-    transition: background 0.15s ease;
+#ttbm_status_settings .ttbm-status-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+#ttbm_status_settings .ttbm-status-card,
+#ttbm_status_settings .ttbm-status-extensions { overflow: hidden; border: 1px solid #e4e9f0; border-radius: 16px; background: #fff; box-shadow: 0 7px 22px rgba(15,23,42,.055); }
+#ttbm_status_settings .ttbm-status-card > header { display: flex; align-items: center; gap: 11px; padding: 17px 20px; border-bottom: 1px solid #edf0f4; background: linear-gradient(180deg, #fff, #fafbfc); }
+#ttbm_status_settings .ttbm-status-card__icon { display: grid; place-items: center; width: 34px; height: 34px; color: var(--status-blue); border-radius: 10px; background: #eaf2ff; font-size: 17px; }
+#ttbm_status_settings .ttbm-status-card h3,
+#ttbm_status_settings .ttbm-status-extensions h3 { margin: 0; color: var(--status-ink); font-size: 14px; font-weight: 750; }
+#ttbm_status_settings .ttbm-status-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; padding: 11px 20px; border-bottom: 1px solid #f0f2f5; }
+#ttbm_status_settings .ttbm-status-row:last-child { border-bottom: 0; }
+#ttbm_status_settings .ttbm-status-row > span { color: var(--status-muted); font-size: 12.5px; }
+#ttbm_status_settings .ttbm-status-row > strong { max-width: 58%; color: #344054; font-size: 12.5px; font-weight: 650; text-align: right; overflow-wrap: anywhere; }
+#ttbm_status_settings .ttbm-status-row > strong.is-ok { color: #087a55; }
+#ttbm_status_settings .ttbm-status-row > strong.is-warn { color: #a15c00; }
+#ttbm_status_settings .ttbm-status-row > strong.is-error { color: #c72c41; }
+
+#ttbm_status_settings .ttbm-status-alert { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; padding: 13px 16px; color: #8a4b00; border: 1px solid #fbd38d; border-radius: 12px; background: #fff8e6; }
+#ttbm_status_settings .ttbm-status-alert i { font-size: 20px; }
+#ttbm_status_settings .ttbm-status-alert strong,
+#ttbm_status_settings .ttbm-status-alert span { display: block; }
+#ttbm_status_settings .ttbm-status-alert span { margin-top: 2px; font-size: 12px; }
+
+#ttbm_status_settings .ttbm-status-extensions { margin-top: 16px; padding: 18px 20px; }
+#ttbm_status_settings .ttbm-status-extensions h3 { margin-bottom: 12px; }
+#ttbm_status_settings .ttbm-status-extensions h3 i { margin-right: 6px; color: var(--status-blue); }
+#ttbm_status_settings .ttbm-status-table { width: 100%; border-collapse: collapse; }
+#ttbm_status_settings .ttbm-status-table:empty,
+#ttbm_status_settings .ttbm-status-table tbody:empty { display: none; }
+#ttbm_status_settings .ttbm-status-table td { padding: 10px 12px; border-bottom: 1px solid #edf0f4; font-size: 12.5px; }
+#ttbm_status_settings .ttbm-sbadge,
+#ttbm_status_settings .textSuccess,
+#ttbm_status_settings .textWarning { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+#ttbm_status_settings .ttbm-sbadge-ok,
+#ttbm_status_settings .textSuccess { color: #067647 !important; background: #ecfdf3; }
+#ttbm_status_settings .ttbm-sbadge-warn,
+#ttbm_status_settings .textWarning { color: #a15c00 !important; background: #fff7df; }
+
+@media (max-width: 960px) {
+	#ttbm_status_settings .ttbm-status-quick-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	#ttbm_status_settings .ttbm-status-grid { grid-template-columns: 1fr; }
 }
-
-#ttbm_status_page .ttbm-status-table tbody tr:not(.ttbm-status-section-row):last-child {
-    border-bottom: none;
-}
-
-#ttbm_status_page .ttbm-status-table tbody tr:not(.ttbm-status-section-row):hover {
-    background: #FAFBFC;
-}
-
-#ttbm_status_page .ttbm-status-table td,
-#ttbm_status_page .ttbm-status-table th {
-    padding: 11px 14px;
-    font-size: 13.5px;
-    color: #3D4A5C;
-    font-weight: 400;
-    text-align: left;
-    border: none;
-    background: transparent;
-    width: auto;
-    min-width: auto;
-}
-
-#ttbm_status_page .ttbm-status-table td:first-child,
-#ttbm_status_page .ttbm-status-table th:first-child {
-    width: 55%;
-    color: #50575E;
-}
-
-/* Section separator rows */
-#ttbm_status_page .ttbm-status-section-row td {
-    padding: 18px 14px 8px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    color: #8A929C;
-    border-bottom: 2px solid #E8EDF2 !important;
-}
-
-#ttbm_status_page .ttbm-status-section-row td i {
-    margin-right: 5px;
-    color: var(--color_theme, #2271B1);
-    font-size: 12px;
-}
-
-/* New status badges */
-#ttbm_status_page .ttbm-sbadge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 12px;
-    border-radius: 50px;
-    font-size: 12.5px;
-    font-weight: 600;
-    line-height: 1.4;
-}
-
-#ttbm_status_page .ttbm-sbadge i {
-    font-size: 12px;
-}
-
-#ttbm_status_page .ttbm-sbadge-ok {
-    background: #D1FAE5;
-    color: #065F46;
-}
-
-#ttbm_status_page .ttbm-sbadge-warn {
-    background: #FEF3C7;
-    color: #92400E;
-}
-
-#ttbm_status_page .ttbm-sbadge-error {
-    background: #FFE4E6;
-    color: #9F1239;
-}
-
-/* Style legacy addon badges (textSuccess / textWarning from pro plugin rows) */
-#ttbm_status_page .textSuccess,
-#ttbm_status_page .mep_success {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 12px;
-    border-radius: 50px;
-    font-size: 12.5px;
-    font-weight: 600;
-    background: #D1FAE5;
-    color: #065F46 !important;
-}
-
-#ttbm_status_page .textWarning {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 12px;
-    border-radius: 50px;
-    font-size: 12.5px;
-    font-weight: 600;
-    background: #FEF3C7;
-    color: #92400E !important;
-}
-
-#ttbm_status_page .textSuccess i,
-#ttbm_status_page .textWarning i,
-#ttbm_status_page .mep_success i {
-    font-size: 12px;
-}
-
-/* Page-title-action links inside badges */
-#ttbm_status_page .textWarning .page-title-action {
-    margin-left: 6px;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    background: #fff;
-    color: #92400E;
-    border: 1px solid #D97706;
-    text-decoration: none;
-}
-
-#ttbm_status_page .textWarning .page-title-action:hover {
-    background: #D97706;
-    color: #fff;
+@media (max-width: 600px) {
+	#ttbm_status_settings .ttbm-status-hero { align-items: flex-start; flex-wrap: wrap; padding: 20px; }
+	#ttbm_status_settings .ttbm-status-score { width: 100%; box-sizing: border-box; }
+	#ttbm_status_settings .ttbm-status-quick-stats { grid-template-columns: 1fr; }
+	#ttbm_status_settings .ttbm-status-row { gap: 12px; padding: 11px 14px; }
 }

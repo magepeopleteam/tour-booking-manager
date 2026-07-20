@@ -624,7 +624,14 @@
     }
     window.ttbmPersistPostTitleToServer = ttbmPersistPostTitleToServer;
 
-    window.ttbmPrepareTourSettingsFormForSubmit = function () {
+    window.ttbmPrepareTourSettingsFormForSubmit = function (options) {
+        options = options || {};
+        // TinyMCE keeps its current value outside the backing textarea until
+        // save() runs. Sync every editor before serialize() so rich-text fields
+        // participate in both manual and background saves.
+        if (typeof window.tinyMCE !== 'undefined') {
+            window.tinyMCE.triggerSave();
+        }
         var $panel = $('#ttbm_meta_box_panel');
         if ($panel.length) {
             $panel.find('input, select, textarea').each(function () {
@@ -644,10 +651,19 @@
             .prop('disabled', false)
             .removeAttr('disabled');
         ttbmSyncMapLocationFieldsForSubmit();
-        ttbmPersistPostTitleToServer(true);
-        ttbmPersistMapLocationToServer(true);
+        // The full form payload already contains title and map fields. The two
+        // legacy helper requests are only needed immediately before a classic
+        // page submit; running them during background auto-save triples server
+        // traffic and synchronous XHR can freeze the editor.
+        if (!options.skipRemotePersistence) {
+            ttbmPersistPostTitleToServer(true);
+            ttbmPersistMapLocationToServer(true);
+        }
         if (typeof ttbm_sync_visible_dates_to_hidden === 'function') {
             ttbm_sync_visible_dates_to_hidden();
+        }
+        if (typeof window.ttbmNormalizeDateFieldsForSubmit === 'function') {
+            window.ttbmNormalizeDateFieldsForSubmit();
         }
         updateCheckedTopPicksDealsHolder();
         updateCheckedActivitiesHolder();

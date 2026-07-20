@@ -83,6 +83,7 @@
 			public static function switch_button($name, $checked = '') {
 				?>
                 <label class="roundSwitchLabel">
+					<input type="hidden" name="_ttbm_toggle_fields[]" value="<?php echo esc_attr($name); ?>">
                     <input type="checkbox" name="<?php echo esc_attr($name); ?>" value="on" <?php echo esc_attr($checked); ?>>
                     <span class="roundSwitch" data-collapse-target="#<?php echo esc_attr($name); ?>"></span>
                 </label>
@@ -327,6 +328,7 @@
 			public static function switch_button($name, $checked = '') {
 				?>
                 <label class="roundSwitchLabel">
+					<input type="hidden" name="_ttbm_toggle_fields[]" value="<?php echo esc_attr($name); ?>">
                     <input type="checkbox" name="<?php echo esc_attr($name); ?>" value="on" <?php echo esc_attr($checked); ?>>
                     <span class="roundSwitch" data-collapse-target="#<?php echo esc_attr($name); ?>"></span>
                 </label>

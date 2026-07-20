@@ -262,6 +262,37 @@
 					'ajax_url' => admin_url('admin-ajax.php'),
 					'nonce' => wp_create_nonce('ttbm_admin_nonce'),
 				));
+				// Background auto-save — only on the single tour add/edit screen.
+				$autosave_screen = function_exists('get_current_screen') ? get_current_screen() : null;
+				if ($autosave_screen && $autosave_screen->base === 'post' && $autosave_screen->post_type === TTBM_Function::get_cpt_name()) {
+					global $post;
+					$autosave_post_id = ($post && isset($post->ID)) ? (int) $post->ID : (isset($_GET['post']) ? (int) $_GET['post'] : 0);
+					wp_enqueue_style('ttbm-autosave', TTBM_PLUGIN_URL . '/assets/admin/ttbm-autosave.css', array('ttbm-admin-toast'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-autosave.css'));
+					wp_enqueue_script('ttbm-autosave', TTBM_PLUGIN_URL . '/assets/admin/ttbm-autosave.js', array('jquery', 'ttbm-admin-toast', 'ttbm_admin_settings', 'ttbm_admin_script'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-autosave.js'), true);
+					wp_localize_script('ttbm-autosave', 'ttbm_autosave_vars', array(
+						'ajax_url'     => admin_url('admin-ajax.php'),
+						'nonce'        => wp_create_nonce('ttbm_autosave'),
+						'post_id'      => $autosave_post_id,
+						'debounce'     => (int) apply_filters('ttbm_autosave_debounce_ms', 1200),
+						'min_interval' => (int) apply_filters('ttbm_autosave_min_interval_ms', 3000),
+						'enabled'      => (bool) apply_filters('ttbm_enable_tour_autosave', true, $autosave_post_id),
+						'i18n'         => array(
+							'ready'        => __('Auto-save on', 'tour-booking-manager'),
+							'unsaved'      => __('Unsaved changes', 'tour-booking-manager'),
+							'saving'       => __('Saving…', 'tour-booking-manager'),
+							'saved'        => __('Saved', 'tour-booking-manager'),
+							'paused'       => __('Auto-save paused — complete required fields', 'tour-booking-manager'),
+							'error'        => __('Auto-save failed — will retry', 'tour-booking-manager'),
+							'just_now'     => __('just now', 'tour-booking-manager'),
+							'one_min'      => __('1 min ago', 'tour-booking-manager'),
+							/* translators: %d: minutes elapsed */
+							'mins_ago'     => __('%d mins ago', 'tour-booking-manager'),
+							'saved_toast'  => __('All changes auto-saved.', 'tour-booking-manager'),
+							'paused_toast' => __('Auto-save paused: some required fields are missing.', 'tour-booking-manager'),
+							'error_toast'  => __('Auto-save failed — your changes are not saved yet.', 'tour-booking-manager'),
+						),
+					));
+				}
 				do_action('ttbm_admin_script');
 			}
 			public function registration_enqueue() {

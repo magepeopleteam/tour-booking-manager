@@ -127,7 +127,7 @@ msgstr "Määrä Laatikko Tyyppi"
 #: admin/settings/tour/TTBM_Settings_extra_service.php:35
 #: admin/settings/tour/TTBM_Settings_place_you_see.php:53
 #: admin/settings/tour/TTBM_Settings_pricing.php:146
-#: admin/TTBM_Settings_Global.php:792
+#: admin/TTBM_Settings_Global.php:813
 #: admin/TTBM_Ticket_Types.php:40
 #: admin/TTBM_Travel_List_CPT_Tabs.php:410
 msgid "Action"
@@ -200,8 +200,8 @@ msgstr "Opas"
 msgid "Itinerary Builder"
 msgstr "Matkasuunnitelman laatija"
 
-#: admin/TTBM_Settings_Global.php:394
-#: admin/TTBM_Settings_Global.php:395
+#: admin/TTBM_Settings_Global.php:415
+#: admin/TTBM_Settings_Global.php:416
 #: templates/layout/faq.php:11
 msgid "F.A.Q"
 msgstr "Usein kysytyt kysymykset"
@@ -715,7 +715,7 @@ msgid "Tour type and date time can be easily configured here, providing a crucia
 msgstr "Kierroksen tyyppi ja päivämäärä ja kellonaika voidaan helposti määrittää täällä, mikä on ratkaisevan tärkeää toistuville, kiinteille tai tiettyyn päivämäärään perustuville kierroksille."
 
 #: admin/settings/tour/TTBM_Settings_Dates.php:39
-#: admin/TTBM_Settings_Global.php:787
+#: admin/TTBM_Settings_Global.php:808
 msgid "Type"
 msgstr "Tyyppi"
 
@@ -871,11 +871,11 @@ msgstr "Lisääthän perjantain lippujen ajat"
 msgid "Display Settings"
 msgstr "Näyttöasetukset"
 
-#: admin/TTBM_Settings_Global.php:503
+#: admin/TTBM_Settings_Global.php:524
 msgid "Style One"
 msgstr "Tyyli yksi"
 
-#: admin/TTBM_Settings_Global.php:504
+#: admin/TTBM_Settings_Global.php:525
 msgid "Style Two"
 msgstr "Tyyli kaksi"
 
@@ -922,8 +922,8 @@ msgid "Extra Service"
 msgstr "Lisäpalvelu"
 
 #: admin/settings/tour/TTBM_Settings_extra_service.php:29
-#: admin/TTBM_Settings_Global.php:338
-#: admin/TTBM_Settings_Global.php:339
+#: admin/TTBM_Settings_Global.php:359
+#: admin/TTBM_Settings_Global.php:360
 msgid "Service Name"
 msgstr "Palvelun nimi"
 
@@ -1319,8 +1319,8 @@ msgstr "Lisää uusi tikettityyppi"
 
 #: admin/settings/tour/TTBM_Settings_Promotional_Text.php:17
 #: admin/settings/tour/TTBM_Settings_Promotional_Text.php:36
-#: admin/TTBM_Settings_Global.php:450
-#: admin/TTBM_Settings_Global.php:451
+#: admin/TTBM_Settings_Global.php:471
+#: admin/TTBM_Settings_Global.php:472
 msgid "Why Book With Us?"
 msgstr "Miksi varata meiltä?"
 
@@ -1462,8 +1462,8 @@ msgid "Duplicate Post "
 msgstr "Kopioi viesti"
 
 #: admin/TTBM_Admin_Tour_List.php:412
-#: admin/TTBM_Settings_Global.php:415
-#: admin/TTBM_Settings_Global.php:416
+#: admin/TTBM_Settings_Global.php:436
+#: admin/TTBM_Settings_Global.php:437
 msgid "Total Seats"
 msgstr "Istumapaikkoja yhteensä"
 
@@ -1892,7 +1892,7 @@ msgstr "Viesti"
 #: admin/TTBM_Admin_Wishlist.php:200
 #: admin/TTBM_Get_Enquiry.php:107
 #: admin/TTBM_Get_Enquiry.php:643
-#: admin/TTBM_Settings_Global.php:791
+#: admin/TTBM_Settings_Global.php:812
 #: admin/TTBM_Status.php:21
 #: support/elementor/widget/tour-list.php:242
 #: support/elementor/widget/tour-location-list.php:93
@@ -2265,7 +2265,7 @@ msgstr "Jos haluat nähdä vanhentuneet matkat, valitse"
 
 #: admin/TTBM_Settings_Global.php:266
 #: admin/TTBM_Settings_Global.php:270
-#: admin/TTBM_Settings_Global.php:596
+#: admin/TTBM_Settings_Global.php:617
 #: admin/TTBM_Status.php:58
 #: support/elementor/widget/tour-hotel-list.php:68
 #: support/elementor/widget/tour-list.php:166
@@ -2303,7 +2303,7 @@ msgstr "tai piilottaaksesi sen, valitse"
 
 #: admin/TTBM_Settings_Global.php:266
 #: admin/TTBM_Settings_Global.php:271
-#: admin/TTBM_Settings_Global.php:597
+#: admin/TTBM_Settings_Global.php:618
 #: admin/TTBM_Status.php:60
 #: support/elementor/widget/tour-hotel-list.php:69
 #: support/elementor/widget/tour-list.php:167
@@ -2357,24 +2357,24 @@ msgstr "Anna toimiva Google Maps API-avaimesi"
 
 #: admin/TTBM_Settings_Global.php:296
 #: admin/TTBM_Settings_Global.php:299
-#: inc/TTBM_Layout.php:219
+#: inc/TTBM_Layout.php:218
 msgid "Sorry, Not Available"
 msgstr "Valitettavasti ei saatavilla"
 
 #: admin/TTBM_Settings_Global.php:297
 #: admin/TTBM_Settings_Global.php:304
 #: admin/TTBM_Settings_Global.php:311
+#: admin/TTBM_Settings_Global.php:318
 #: admin/TTBM_Settings_Global.php:325
-#: admin/TTBM_Settings_Global.php:339
+#: admin/TTBM_Settings_Global.php:332
 #: admin/TTBM_Settings_Global.php:346
-#: admin/TTBM_Settings_Global.php:353
 #: admin/TTBM_Settings_Global.php:360
 #: admin/TTBM_Settings_Global.php:367
 #: admin/TTBM_Settings_Global.php:374
 #: admin/TTBM_Settings_Global.php:381
+#: admin/TTBM_Settings_Global.php:388
+#: admin/TTBM_Settings_Global.php:395
 #: admin/TTBM_Settings_Global.php:402
-#: admin/TTBM_Settings_Global.php:409
-#: admin/TTBM_Settings_Global.php:416
 #: admin/TTBM_Settings_Global.php:423
 #: admin/TTBM_Settings_Global.php:430
 #: admin/TTBM_Settings_Global.php:437
@@ -2384,6 +2384,9 @@ msgstr "Valitettavasti ei saatavilla"
 #: admin/TTBM_Settings_Global.php:465
 #: admin/TTBM_Settings_Global.php:472
 #: admin/TTBM_Settings_Global.php:479
+#: admin/TTBM_Settings_Global.php:486
+#: admin/TTBM_Settings_Global.php:493
+#: admin/TTBM_Settings_Global.php:500
 msgid "Enter the translated text of: "
 msgstr "Syötä käännetty teksti:"
 
@@ -2393,46 +2396,46 @@ msgstr "Ei saatavilla."
 
 #: admin/settings/tour/TTBM_Settings.php:987
 #: admin/settings/tour/TTBM_Settings_pricing.php:127
-#: admin/TTBM_Settings_Global.php:317
-#: admin/TTBM_Settings_Global.php:318
+#: admin/TTBM_Settings_Global.php:338
+#: admin/TTBM_Settings_Global.php:339
 #: admin/TTBM_Ticket_Types.php:28
 msgid "Ticket Name"
 msgstr "Lipun nimi"
 
-#: admin/TTBM_Settings_Global.php:318
-#: admin/TTBM_Settings_Global.php:332
-#: admin/TTBM_Settings_Global.php:388
-#: admin/TTBM_Settings_Global.php:395
+#: admin/TTBM_Settings_Global.php:339
+#: admin/TTBM_Settings_Global.php:353
+#: admin/TTBM_Settings_Global.php:409
+#: admin/TTBM_Settings_Global.php:416
 msgid "Enter the translated text of:"
 msgstr "Syötä käännetty teksti:"
 
-#: admin/TTBM_Settings_Global.php:324
-#: admin/TTBM_Settings_Global.php:325
+#: admin/TTBM_Settings_Global.php:345
+#: admin/TTBM_Settings_Global.php:346
 msgid "Ticket Qty"
 msgstr "Lippumäärä"
 
-#: admin/TTBM_Settings_Global.php:331
-#: admin/TTBM_Settings_Global.php:332
+#: admin/TTBM_Settings_Global.php:352
+#: admin/TTBM_Settings_Global.php:353
 msgid "Ticket Price"
 msgstr "Lipun hinta"
 
-#: admin/TTBM_Settings_Global.php:345
-#: admin/TTBM_Settings_Global.php:346
+#: admin/TTBM_Settings_Global.php:366
+#: admin/TTBM_Settings_Global.php:367
 msgid "Service Qty"
 msgstr "Palvelumäärä"
 
-#: admin/TTBM_Settings_Global.php:352
-#: admin/TTBM_Settings_Global.php:353
+#: admin/TTBM_Settings_Global.php:373
+#: admin/TTBM_Settings_Global.php:374
 msgid "Service Price"
 msgstr "Palvelun hinta"
 
-#: admin/TTBM_Settings_Global.php:359
-#: admin/TTBM_Settings_Global.php:360
+#: admin/TTBM_Settings_Global.php:380
+#: admin/TTBM_Settings_Global.php:381
 msgid "Sorry, The Tour Already Started or Finished"
 msgstr "Anteeksi, kiertue on jo alkanut tai päättynyt"
 
-#: admin/TTBM_Settings_Global.php:366
-#: admin/TTBM_Settings_Global.php:367
+#: admin/TTBM_Settings_Global.php:387
+#: admin/TTBM_Settings_Global.php:388
 #: inc/TTBM_Hotel_Data_Display.php:610
 #: templates/themes/default.php:65
 #: templates/ticket/book_now.php:50
@@ -2442,307 +2445,307 @@ msgstr "Anteeksi, kiertue on jo alkanut tai päättynyt"
 msgid "Book Now"
 msgstr "Varaa nyt"
 
-#: admin/TTBM_Settings_Global.php:373
-#: admin/TTBM_Settings_Global.php:374
+#: admin/TTBM_Settings_Global.php:394
+#: admin/TTBM_Settings_Global.php:395
 msgid "Schedule Details"
 msgstr "Aikataulun tiedot"
 
-#: admin/TTBM_Settings_Global.php:380
-#: admin/TTBM_Settings_Global.php:381
+#: admin/TTBM_Settings_Global.php:401
+#: admin/TTBM_Settings_Global.php:402
 msgid "Available Extra Service List"
 msgstr "Saatavilla olevien lisäpalveluiden luettelo"
 
 #: admin/settings/hotel/TTBM_Settings_Hotel.php:105
 #: admin/settings/tour/TTBM_Settings.php:87
-#: admin/TTBM_Settings_Global.php:387
-#: admin/TTBM_Settings_Global.php:388
+#: admin/TTBM_Settings_Global.php:408
+#: admin/TTBM_Settings_Global.php:409
 #: templates/layout/description.php:8
 msgid "Overview"
 msgstr "Yleiskatsaus"
 
-#: admin/TTBM_Settings_Global.php:401
+#: admin/TTBM_Settings_Global.php:422
 #: templates/layout/exclude_service.php:10
 msgid "What's Excluded"
 msgstr "Mitä ei sallita"
 
-#: admin/TTBM_Settings_Global.php:402
+#: admin/TTBM_Settings_Global.php:423
 msgid "Service Exclude"
 msgstr "Palvelun poissulkeminen"
 
-#: admin/TTBM_Settings_Global.php:408
+#: admin/TTBM_Settings_Global.php:429
 #: templates/layout/include_feature.php:12
 msgid "What's Included"
 msgstr "Sisältö"
 
-#: admin/TTBM_Settings_Global.php:409
+#: admin/TTBM_Settings_Global.php:430
 msgid "Service Included"
 msgstr "Palvelu sisältyy hintaan"
 
 #: admin/settings/hotel/TTBM_Settings_Hotel.php:109
 #: admin/TTBM_Admin_Tour_List.php:239
-#: admin/TTBM_Settings_Global.php:422
-#: admin/TTBM_Settings_Global.php:423
+#: admin/TTBM_Settings_Global.php:443
+#: admin/TTBM_Settings_Global.php:444
 msgid "Activities"
 msgstr "Aktiviteetit"
 
-#: admin/TTBM_Settings_Global.php:429
-#: admin/TTBM_Settings_Global.php:430
+#: admin/TTBM_Settings_Global.php:450
+#: admin/TTBM_Settings_Global.php:451
 #: templates/layout/location_map.php:10
 msgid "Location Map"
 msgstr "Sijaintikartta"
 
-#: admin/TTBM_Settings_Global.php:436
-#: admin/TTBM_Settings_Global.php:437
+#: admin/TTBM_Settings_Global.php:457
+#: admin/TTBM_Settings_Global.php:458
 msgid "You may like Tour"
 msgstr "Saatat pitää kiertueesta"
 
-#: admin/TTBM_Settings_Global.php:443
-#: admin/TTBM_Settings_Global.php:444
+#: admin/TTBM_Settings_Global.php:464
+#: admin/TTBM_Settings_Global.php:465
 msgid "Choice Your Hotel"
 msgstr "Valitse hotellisi"
 
-#: admin/TTBM_Settings_Global.php:457
-#: admin/TTBM_Settings_Global.php:458
+#: admin/TTBM_Settings_Global.php:478
+#: admin/TTBM_Settings_Global.php:479
 msgid "Get a Question?"
 msgstr "Onko sinulla kysymys?"
 
-#: admin/TTBM_Settings_Global.php:464
-#: admin/TTBM_Settings_Global.php:465
+#: admin/TTBM_Settings_Global.php:485
+#: admin/TTBM_Settings_Global.php:486
 msgid "Available Ticket List"
 msgstr "Saatavilla oleva lippulista"
 
-#: admin/TTBM_Settings_Global.php:487
+#: admin/TTBM_Settings_Global.php:508
 msgid "Slider Type"
 msgstr "Liukusäätimen tyyppi"
 
-#: admin/TTBM_Settings_Global.php:488
+#: admin/TTBM_Settings_Global.php:509
 msgid "Please Select Slider Type Default Slider"
 msgstr "Valitse liukusäätimen tyyppi Oletusliukusäädin"
 
-#: admin/TTBM_Settings_Global.php:492
+#: admin/TTBM_Settings_Global.php:513
 msgid "Slider"
 msgstr "Liukusäädin"
 
-#: admin/TTBM_Settings_Global.php:493
+#: admin/TTBM_Settings_Global.php:514
 msgid "Post Thumbnail"
 msgstr "Viestin pikkukuva"
 
-#: admin/TTBM_Settings_Global.php:498
+#: admin/TTBM_Settings_Global.php:519
 msgid "Slider Style"
 msgstr "Liukusäätimen tyyli"
 
-#: admin/TTBM_Settings_Global.php:499
+#: admin/TTBM_Settings_Global.php:520
 msgid "Please Select Slider Style Default Style One"
 msgstr "Valitse liukusäätimen tyyli Oletustyyli Yksi"
 
-#: admin/TTBM_Settings_Global.php:509
+#: admin/TTBM_Settings_Global.php:530
 msgid "Slider Indicator Visible?"
 msgstr "Näkyykö liukusäätimen ilmaisin?"
 
-#: admin/TTBM_Settings_Global.php:510
+#: admin/TTBM_Settings_Global.php:531
 msgid "Please Select Slider Indicator Visible or Not? Default ON"
 msgstr "Valitse, onko liukusäädin näkyvissä vai ei? Oletusarvoisesti käytössä"
 
-#: admin/TTBM_Settings_Global.php:514
-#: admin/TTBM_Settings_Global.php:536
-#: admin/TTBM_Settings_Global.php:560
-#: admin/TTBM_Settings_Global.php:571
+#: admin/TTBM_Settings_Global.php:535
+#: admin/TTBM_Settings_Global.php:557
+#: admin/TTBM_Settings_Global.php:581
+#: admin/TTBM_Settings_Global.php:592
 msgid "ON"
 msgstr "PÄÄLLÄ"
 
-#: admin/TTBM_Settings_Global.php:515
-#: admin/TTBM_Settings_Global.php:537
-#: admin/TTBM_Settings_Global.php:561
-#: admin/TTBM_Settings_Global.php:572
+#: admin/TTBM_Settings_Global.php:536
+#: admin/TTBM_Settings_Global.php:558
+#: admin/TTBM_Settings_Global.php:582
+#: admin/TTBM_Settings_Global.php:593
 #: templates/layout/sidebar_cta.php:98
 msgid "Off"
 msgstr "Pois"
 
-#: admin/TTBM_Settings_Global.php:520
+#: admin/TTBM_Settings_Global.php:541
 msgid "Slider Indicator Type"
 msgstr "Liukusäätimen ilmaisimen tyyppi"
 
-#: admin/TTBM_Settings_Global.php:521
+#: admin/TTBM_Settings_Global.php:542
 msgid "Please Select Slider Indicator Type Default Icon"
 msgstr "Valitse liukusäätimen ilmaisimen tyyppi Oletuskuvake"
 
-#: admin/TTBM_Settings_Global.php:525
+#: admin/TTBM_Settings_Global.php:546
 msgid "Icon Indicator"
 msgstr "Kuvakeilmaisin"
 
-#: admin/TTBM_Settings_Global.php:526
+#: admin/TTBM_Settings_Global.php:547
 msgid "image Indicator"
 msgstr "kuvan ilmaisin"
 
-#: admin/TTBM_Settings_Global.php:531
+#: admin/TTBM_Settings_Global.php:552
 msgid "Slider Showcase Visible?"
 msgstr "Näkyykö liukusäädin?"
 
-#: admin/TTBM_Settings_Global.php:532
+#: admin/TTBM_Settings_Global.php:553
 msgid "Please Select Slider Showcase Visible or Not? Default ON"
 msgstr "Valitse, näkyykö liukusäädin esittelyssä vai ei? Oletusarvoisesti käytössä"
 
-#: admin/TTBM_Settings_Global.php:542
+#: admin/TTBM_Settings_Global.php:563
 msgid "Slider Showcase Position"
 msgstr "Liukusäätimen esittelyn sijainti"
 
-#: admin/TTBM_Settings_Global.php:543
+#: admin/TTBM_Settings_Global.php:564
 msgid "Please Select Slider Showcase Position Default Right"
 msgstr "Valitse liukusäätimen esittelyn sijainti Oletusarvo Oikea"
 
-#: admin/TTBM_Settings_Global.php:547
+#: admin/TTBM_Settings_Global.php:568
 msgid "At Top Position"
 msgstr "Ylimmällä paikalla"
 
-#: admin/TTBM_Settings_Global.php:548
+#: admin/TTBM_Settings_Global.php:569
 msgid "At Right Position"
 msgstr "Oikeassa asennossa"
 
-#: admin/TTBM_Settings_Global.php:549
+#: admin/TTBM_Settings_Global.php:570
 msgid "At Bottom Position"
 msgstr "Alhaisimmassa asennossa"
 
-#: admin/TTBM_Settings_Global.php:550
+#: admin/TTBM_Settings_Global.php:571
 msgid "At Left Position"
 msgstr "Vasemmalla paikalla"
 
-#: admin/TTBM_Settings_Global.php:555
+#: admin/TTBM_Settings_Global.php:576
 msgid "Slider Popup Image Indicator"
 msgstr "Liukusäätimen ponnahduskuvan ilmaisin"
 
-#: admin/TTBM_Settings_Global.php:556
+#: admin/TTBM_Settings_Global.php:577
 msgid "Please Select Slider Popup Indicator Image ON or Off? Default ON"
 msgstr "Valitse liukusäätimen ponnahdusilmaisimen kuva PÄÄLLÄ vai POIS PÄÄLTÄ? Oletusarvo PÄÄLLÄ"
 
-#: admin/TTBM_Settings_Global.php:566
+#: admin/TTBM_Settings_Global.php:587
 msgid "Slider Popup Icon Indicator"
 msgstr "Liukusäätimen ponnahdusikkunan ilmaisin"
 
-#: admin/TTBM_Settings_Global.php:567
+#: admin/TTBM_Settings_Global.php:588
 msgid "Please Select Slider Popup Indicator Icon ON or Off? Default ON"
 msgstr "Valitse liukusäätimen ponnahdusikkunan ilmaisinkuvake, onko se päällä vai pois päältä? Oletusarvoisesti päällä"
 
-#: admin/TTBM_Settings_Global.php:577
+#: admin/TTBM_Settings_Global.php:598
 msgid "Slider height"
 msgstr "Liukusäätimen korkeus"
 
-#: admin/TTBM_Settings_Global.php:578
+#: admin/TTBM_Settings_Global.php:599
 msgid "Please Select Slider Height"
 msgstr "Valitse liukusäätimen korkeus"
 
-#: admin/TTBM_Settings_Global.php:582
+#: admin/TTBM_Settings_Global.php:603
 msgid "Minimum"
 msgstr "Minimi"
 
-#: admin/TTBM_Settings_Global.php:583
+#: admin/TTBM_Settings_Global.php:604
 msgid "Average"
 msgstr "Keskimäärin"
 
-#: admin/TTBM_Settings_Global.php:584
+#: admin/TTBM_Settings_Global.php:605
 msgid "Maximum"
 msgstr "Maksimi"
 
-#: admin/TTBM_Settings_Global.php:591
+#: admin/TTBM_Settings_Global.php:612
 msgid "Disable Block/Gutenberg Editor"
 msgstr "Poista Block/Gutenberg Editor käytöstä"
 
-#: admin/TTBM_Settings_Global.php:592
+#: admin/TTBM_Settings_Global.php:613
 msgid "If you want to disable WordPress's new Block/Gutenberg editor, please select Yes."
 msgstr "Jos haluat poistaa käytöstä WordPressin uuden Block/Gutenberg-editorin, valitse Kyllä."
 
-#: admin/TTBM_Settings_Global.php:602
+#: admin/TTBM_Settings_Global.php:623
 msgid "Date Picker Format"
 msgstr "Päivämäärävalitsimen muoto"
 
-#: admin/TTBM_Settings_Global.php:603
+#: admin/TTBM_Settings_Global.php:624
 msgid "If you want to change Date Picker Format, please select format. Default  is D d M , yy."
 msgstr "Jos haluat muuttaa päivämäärävalitsimen muotoa, valitse muoto. Oletusarvo on pp kk, vv."
 
-#: admin/TTBM_Settings_Global.php:623
+#: admin/TTBM_Settings_Global.php:644
 msgid "Short Date  Format"
 msgstr "Lyhyt päivämäärämuoto"
 
-#: admin/TTBM_Settings_Global.php:624
+#: admin/TTBM_Settings_Global.php:645
 msgid "If you want to change Short Date  Format, please select format. Default  is M , Y."
 msgstr "Jos haluat muuttaa lyhyttä päivämäärämuotoa, valitse muoto. Oletusarvo on kk, v."
 
-#: admin/TTBM_Settings_Global.php:650
+#: admin/TTBM_Settings_Global.php:671
 msgid "Theme Color"
 msgstr "Teeman väri"
 
-#: admin/TTBM_Settings_Global.php:651
+#: admin/TTBM_Settings_Global.php:672
 msgid "Select Default Theme Color"
 msgstr "Valitse teeman oletusväri"
 
-#: admin/TTBM_Settings_Global.php:657
+#: admin/TTBM_Settings_Global.php:678
 msgid "Theme Color Secondary"
 msgstr "Teeman toissijainen väri"
 
-#: admin/TTBM_Settings_Global.php:658
+#: admin/TTBM_Settings_Global.php:679
 msgid "Select Default Secondary Theme Color"
 msgstr "Valitse toissijaisen teeman oletusväri"
 
-#: admin/TTBM_Settings_Global.php:664
+#: admin/TTBM_Settings_Global.php:685
 msgid "Theme Alternate Color"
 msgstr "Teeman vaihtoehtoinen väri"
 
-#: admin/TTBM_Settings_Global.php:665
+#: admin/TTBM_Settings_Global.php:686
 msgid "Select Default Theme Alternate  Color that means, if background theme color then it will be text color."
 msgstr "Valitse Oletusteeman vaihtoehtoinen väri, mikä tarkoittaa, että jos taustateeman väri on valittu, se on tekstin väri."
 
-#: admin/TTBM_Settings_Global.php:671
+#: admin/TTBM_Settings_Global.php:692
 msgid "Default Text Color"
 msgstr "Oletustekstin väri"
 
-#: admin/TTBM_Settings_Global.php:672
+#: admin/TTBM_Settings_Global.php:693
 msgid "Select Default Text  Color."
 msgstr "Valitse Oletustekstin väri."
 
-#: admin/TTBM_Settings_Global.php:734
+#: admin/TTBM_Settings_Global.php:755
 msgid "Button Text Color"
 msgstr "Painikkeen tekstin väri"
 
-#: admin/TTBM_Settings_Global.php:735
+#: admin/TTBM_Settings_Global.php:756
 msgid "Select Button Text  Color."
 msgstr "Valitse Painikkeen tekstin väri."
 
-#: admin/TTBM_Settings_Global.php:741
+#: admin/TTBM_Settings_Global.php:762
 msgid "Button Background Color"
 msgstr "Painikkeen taustaväri"
 
-#: admin/TTBM_Settings_Global.php:742
+#: admin/TTBM_Settings_Global.php:763
 msgid "Select Button Background  Color."
 msgstr "Valitse painikkeen taustaväri."
 
-#: admin/TTBM_Settings_Global.php:755
+#: admin/TTBM_Settings_Global.php:776
 msgid "Warning Color"
 msgstr "Varoitusväri"
 
-#: admin/TTBM_Settings_Global.php:756
+#: admin/TTBM_Settings_Global.php:777
 msgid "Select Warning  Color."
 msgstr "Valitse varoitusväri."
 
-#: admin/TTBM_Settings_Global.php:762
+#: admin/TTBM_Settings_Global.php:783
 msgid "Section Background color"
 msgstr "Osion taustaväri"
 
-#: admin/TTBM_Settings_Global.php:763
+#: admin/TTBM_Settings_Global.php:784
 msgid "Select Background  Color."
 msgstr "Valitse taustaväri."
 
-#: admin/TTBM_Settings_Global.php:775
+#: admin/TTBM_Settings_Global.php:796
 msgid "Thank you for using our plugin. Our some plugin  free and no license is required. We have some Additional addon to enhance feature of this plugin functionality. If you have any addon you need to enter a valid license for that plugin below."
 msgstr "Kiitos, että käytit liitännäistämme. Jotkut liitännäisemme ovat ilmaisia eivätkä vaadi lisenssiä. Meillä on joitakin lisäosia, jotka parantavat tämän liitännäisen toiminnallisuutta. Jos sinulla on lisäosia, sinun on annettava voimassa oleva lisenssi kyseiselle liitännäiselle alla."
 
-#: admin/TTBM_Settings_Global.php:786
+#: admin/TTBM_Settings_Global.php:807
 msgid "Plugin Name"
 msgstr "Laajennuksen nimi"
 
-#: admin/TTBM_Settings_Global.php:789
+#: admin/TTBM_Settings_Global.php:810
 msgid "Expire on"
 msgstr "Vanhenee"
 
-#: admin/TTBM_Settings_Global.php:790
+#: admin/TTBM_Settings_Global.php:811
 msgid "License Key"
 msgstr "Lisenssiavain"
 
@@ -2957,6 +2960,8 @@ msgstr "Kuvat"
 msgid "From"
 msgstr "Alkaen"
 
+#: admin/TTBM_Settings_Global.php:331
+#: admin/TTBM_Settings_Global.php:332
 #: inc/TTBM_Details_Layout.php:419
 #: templates/hotel_layout/make_hotel_booking.php:41
 #: templates/layout/sidebar_cta.php:131
@@ -2964,14 +2969,14 @@ msgstr "Alkaen"
 msgid "Check Availability"
 msgstr "Tarkista saatavuus"
 
-#: admin/TTBM_Settings_Global.php:472
-#: admin/TTBM_Settings_Global.php:474
+#: admin/TTBM_Settings_Global.php:493
+#: admin/TTBM_Settings_Global.php:495
 #: inc/TTBM_Function.php:1618
 msgid "Free cancellation up to 24 hours before the experience starts (local time)"
 msgstr "Ilmainen peruutus viimeistään 24 tuntia ennen kokemuksen alkua (paikallista aikaa)"
 
-#: admin/TTBM_Settings_Global.php:479
-#: admin/TTBM_Settings_Global.php:481
+#: admin/TTBM_Settings_Global.php:500
+#: admin/TTBM_Settings_Global.php:502
 #: inc/TTBM_Function.php:1621
 msgid "Reserve Now and Pay Later - Secure your spot while staying flexible"
 msgstr "Varaa nyt ja maksa myöhemmin - Varmista paikkasi ja pysy joustavana"
@@ -3255,8 +3260,8 @@ msgstr "Lisää kuva"
 msgid "Check  Availability"
 msgstr "Tarkista saatavuus"
 
-#: inc/TTBM_Layout.php:231
-#: inc/TTBM_Layout.php:261
+#: inc/TTBM_Layout.php:230
+#: inc/TTBM_Layout.php:260
 msgid "Select"
 msgstr "Valitse"
 
@@ -9982,15 +9987,15 @@ msgstr ""
 msgid "AIzaSyD-9tSrke72..."
 msgstr ""
 
-#: admin/TTBM_Settings_Global.php:471
+#: admin/TTBM_Settings_Global.php:492
 msgid "Cancellation Policy"
 msgstr ""
 
-#: admin/TTBM_Settings_Global.php:478
+#: admin/TTBM_Settings_Global.php:499
 msgid "Reserve Now Pay Later"
 msgstr ""
 
-#: admin/TTBM_Settings_Global.php:788
+#: admin/TTBM_Settings_Global.php:809
 msgid "Order"
 msgstr ""
 
@@ -10163,14 +10168,14 @@ msgstr ""
 
 #: inc/TTBM_Custom_Layout.php:198
 #: inc/TTBM_Custom_Layout.php:442
-#: inc/TTBM_Layout.php:196
+#: inc/TTBM_Layout.php:195
 #: templates/ticket/extra_service_smart.php:56
 msgid "Decrease quantity"
 msgstr ""
 
 #: inc/TTBM_Custom_Layout.php:211
 #: inc/TTBM_Custom_Layout.php:455
-#: inc/TTBM_Layout.php:209
+#: inc/TTBM_Layout.php:208
 #: templates/ticket/extra_service_smart.php:70
 msgid "Increase quantity"
 msgstr ""
@@ -10207,6 +10212,8 @@ msgstr ""
 msgid "Select dates to see final price and availability in real time."
 msgstr ""
 
+#: admin/TTBM_Settings_Global.php:317
+#: admin/TTBM_Settings_Global.php:318
 #: inc/TTBM_Details_Layout.php:198
 #: inc/TTBM_Details_Layout.php:220
 #: inc/TTBM_Details_Layout.php:224
@@ -10468,20 +10475,20 @@ msgstr ""
 msgid "Quantity"
 msgstr ""
 
-#: inc/TTBM_Layout.php:77
+#: inc/TTBM_Layout.php:72
 msgid "Check"
 msgstr ""
 
-#: inc/TTBM_Layout.php:79
+#: inc/TTBM_Layout.php:73
 msgid "Check availability"
 msgstr ""
 
-#: inc/TTBM_Layout.php:116
-#: inc/TTBM_Layout.php:127
+#: inc/TTBM_Layout.php:115
+#: inc/TTBM_Layout.php:126
 msgid "Select Time"
 msgstr ""
 
-#: inc/TTBM_Layout.php:120
+#: inc/TTBM_Layout.php:119
 #, php-format
 msgid "%d slot available"
 msgid_plural "%d slots available"
@@ -11010,6 +11017,8 @@ msgstr ""
 msgid " your booking"
 msgstr ""
 
+#: admin/TTBM_Settings_Global.php:324
+#: admin/TTBM_Settings_Global.php:325
 #: templates/ticket/tour_default_selection.php:55
 msgid "Select Date & Time"
 msgstr ""

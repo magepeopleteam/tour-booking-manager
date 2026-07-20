@@ -52,7 +52,7 @@ if (!defined('ABSPATH')) {
                             <div class="ttbm-date-time-toolbar booking-button ttbm-date-select__toolbar">
                                 <div class="date-picker ttbm-date-select__field">
                                     <div class="date_time_label ttbm-title ttbm-date-select__label">
-										<span class="ttbm-date-select__label-text"><?php echo $time_slots_enabled ? esc_html__('Select Date & Time', 'tour-booking-manager') : esc_html__('Select Date', 'tour-booking-manager'); ?></span>
+										<span class="ttbm-date-select__label-text"><?php echo esc_html($time_slots_enabled ? TTBM_Function::get_translation_settings('ttbm_string_select_date_time', esc_html__('Select Date & Time', 'tour-booking-manager')) : TTBM_Function::get_translation_settings('ttbm_string_select_date', esc_html__('Select Date', 'tour-booking-manager'))); ?></span>
                                     </div>
 									<label class="date-picker-icon ttbm-date-select__control" for="ttbm_select_date">
 										<span class="ttbm-date-select__icon" aria-hidden="true">

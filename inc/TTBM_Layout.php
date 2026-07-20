@@ -68,16 +68,15 @@
 				<?php
 			}
 			public static function availability_button( $tour_id, $compact = false ) {
+				$label = $compact
+					? TTBM_Function::get_translation_settings( 'ttbm_string_check_availability', esc_html__( 'Check', 'tour-booking-manager' ) )
+					: TTBM_Function::get_translation_settings( 'ttbm_string_check_availability', esc_html__( 'Check availability', 'tour-booking-manager' ) );
 				?>
                 <button class="navy_blueButton ttbm_check_ability ttbm-date-select__action" type="button">
 					<span class="ttbm-date-select__action-icon fas fa-search" aria-hidden="true"></span>
 					<span class="ttbm_check_ability__label">
 						<?php
-						if ( $compact ) {
-							esc_html_e( 'Check', 'tour-booking-manager' );
-						} else {
-							esc_html_e( 'Check availability', 'tour-booking-manager' );
-						}
+						echo esc_html( $label );
 						?>
 					</span>
                 </button>

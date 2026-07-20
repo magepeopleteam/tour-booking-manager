@@ -185,6 +185,12 @@
 				$settings_fields = array(
 					'ttbm_basic_gen_settings' => apply_filters('ttbm_basic_gen_settings_arr', array(
 						array(
+							'name' => 'ttbm_tour_settings_heading',
+							'label' => '',
+							'type' => 'html',
+							'callback' => array($this, 'render_tour_settings_heading'),
+						),
+						array(
 							'name' => 'ttbm_set_book_status',
 							'label' => esc_html__('Seat Booked Status', 'tour-booking-manager'),
 							'desc' => esc_html__('Please Select when and which order status Seat Will be Booked/Reduced.', 'tour-booking-manager'),
@@ -767,6 +773,18 @@
 					)),
 				);
 				return apply_filters('ttbm_settings_sec_fields', $settings_fields);
+			}
+			public function render_tour_settings_heading() {
+				?>
+				<div class="ttbm-settings-modern-hero ttbm-settings-modern-hero--tour">
+					<span class="ttbm-settings-modern-hero__icon dashicons dashicons-palmtree"></span>
+					<div>
+						<span class="ttbm-settings-modern-hero__eyebrow"><?php esc_html_e('Tour configuration', 'tour-booking-manager'); ?></span>
+						<h3><?php esc_html_e('Tour Behaviour & Availability', 'tour-booking-manager'); ?></h3>
+						<p><?php esc_html_e('Control booking statuses, availability, dashboard labels, URLs, and other tour-wide defaults.', 'tour-booking-manager'); ?></p>
+					</div>
+				</div>
+				<?php
 			}
 			public function license_settings() {
 				?>

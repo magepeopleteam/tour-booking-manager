@@ -1,0 +1,96 @@
+/* TTBM tour editor auto-save status pill.
+   Sits in the modern editor header (.ttbm-header-right); falls back to a fixed
+   bottom-left chip when that header is not present. */
+.ttbm-autosave-status {
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1;
+	padding: 6px 12px;
+	border-radius: 999px;
+	background: #f0f0f1;
+	color: #50575e;
+	border: 1px solid #dcdcde;
+	white-space: nowrap;
+	transition: background .2s ease, color .2s ease, border-color .2s ease;
+	user-select: none;
+}
+
+.ttbm-autosave-status--floating {
+	position: fixed;
+	left: 20px;
+	bottom: 20px;
+	z-index: 99998;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, .14);
+}
+
+.ttbm-autosave-status__dot {
+	flex: 0 0 auto;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: currentColor;
+	opacity: .75;
+}
+
+/* Idle / ready */
+.ttbm-autosave-status[data-state="idle"] {
+	background: #f0f0f1;
+	color: #646970;
+	border-color: #dcdcde;
+}
+
+/* Unsaved changes pending */
+.ttbm-autosave-status[data-state="dirty"] {
+	background: #fcf3d6;
+	color: #8a6d1a;
+	border-color: #f2e2a8;
+}
+
+/* Saving in progress */
+.ttbm-autosave-status[data-state="saving"] {
+	background: #e5f0fb;
+	color: #1d5a9c;
+	border-color: #b8d4ef;
+}
+.ttbm-autosave-status[data-state="saving"] .ttbm-autosave-status__dot {
+	animation: ttbm-autosave-pulse 1s ease-in-out infinite;
+}
+
+/* Saved successfully */
+.ttbm-autosave-status[data-state="saved"] {
+	background: #e6f6ea;
+	color: #0a7d2c;
+	border-color: #b6e2c1;
+}
+
+/* Paused because required fields are missing */
+.ttbm-autosave-status[data-state="paused"] {
+	background: #fdf0e3;
+	color: #a15c17;
+	border-color: #f4d5b3;
+}
+
+/* Error */
+.ttbm-autosave-status[data-state="error"] {
+	background: #fcebea;
+	color: #b02a25;
+	border-color: #f2c4c1;
+}
+
+@keyframes ttbm-autosave-pulse {
+	0%   { opacity: .3; transform: scale(.85); }
+	50%  { opacity: 1;  transform: scale(1.1); }
+	100% { opacity: .3; transform: scale(.85); }
+}
+
+@media (max-width: 782px) {
+	.ttbm-autosave-status__text {
+		display: none;
+	}
+	.ttbm-autosave-status {
+		padding: 8px;
+	}
+}

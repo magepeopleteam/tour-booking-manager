@@ -12,6 +12,22 @@
 			 * @var bool
 			 */
 			private static $saving_settings = false;
+			/**
+			 * True while an AJAX background auto-save is running. When set, save_settings()
+			 * still writes every field and runs the date/booking migration exactly like a
+			 * manual Update, but must NOT force the post to draft or queue admin-notice
+			 * transients (the auto-save reports validation state back over JSON instead).
+			 *
+			 * @var bool
+			 */
+			private static $is_autosave = false;
+			/**
+			 * Validation errors collected by the most recent save_settings() run, so the
+			 * auto-save AJAX handler can return them to the browser without re-computing.
+			 *
+			 * @var array
+			 */
+			private static $last_validation_errors = array();
 
 			public function __construct() {
 				add_action('add_meta_boxes', [$this, 'settings_meta']);
@@ -19,6 +35,7 @@
 				add_action('save_post', [$this, 'capture_date_migration_snapshot'], 5, 1);
 				add_action('save_post', array($this, 'save_settings'), 99, 1);
 				add_action('save_post', [$this, 'sync_bookings_after_date_change'], 120, 1);
+				add_action('wp_ajax_ttbm_autosave_tour', [$this, 'ajax_autosave_tour']);
 				add_filter('wp_insert_post_data', [$this, 'filter_insert_post_data'], 99, 2);
 				add_action('admin_notices', [$this, 'render_date_migration_notice']);
 				add_action('admin_notices', [$this, 'render_title_required_notice']);
@@ -300,7 +317,10 @@
 				if (!$tour_id || get_post_type($tour_id) != TTBM_Function::get_cpt_name()) {
 					return false;
 				}
-				if (!isset($_POST['ttbm_ticket_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_ticket_type_nonce'])), 'ttbm_ticket_type_nonce')) {
+				// AJAX auto-save is already protected by its dedicated nonce and the
+				// edit_post capability check in ajax_autosave_tour(). Do not silently
+				// skip the save if the classic metabox nonce was omitted by serialize().
+				if (!self::$is_autosave && (!isset($_POST['ttbm_ticket_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_ticket_type_nonce'])), 'ttbm_ticket_type_nonce'))) {
 					return false;
 				}
 				if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
@@ -824,8 +844,9 @@
 					);
 					$missing = array();
 					foreach ($required_fields as $field_key => $label) {
-						$value = isset($_POST[ $field_key ]) ? trim(sanitize_text_field(wp_unslash($_POST[ $field_key ]))) : '';
-						if ($value === '') {
+						$field_submitted = array_key_exists($field_key, $_POST);
+						$value = $field_submitted ? trim(sanitize_text_field(wp_unslash($_POST[ $field_key ]))) : '';
+						if (!$field_submitted) {
 							$value = trim((string) TTBM_Global_Function::get_post_info($tour_id, $field_key, ''));
 						}
 						if ($value === '') {
@@ -867,19 +888,23 @@
 					}
 				} elseif ($travel_type === 'repeated') {
 					$missing = array();
-					$start_date = isset($_POST['ttbm_travel_repeated_start_date']) ? trim(sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_start_date']))) : '';
-					if ($start_date === '') {
+					$start_date_submitted = array_key_exists('ttbm_travel_repeated_start_date', $_POST);
+					$start_date = $start_date_submitted ? trim(sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_start_date']))) : '';
+					if (!$start_date_submitted) {
 						$start_date = trim((string) TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_date', ''));
 					}
-					$start_time = isset($_POST['ttbm_travel_repeated_start_time']) ? trim(sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_start_time']))) : '';
-					if ($start_time === '' && isset($_POST['ttbm_travel_start_time'])) {
+					$start_time_submitted = array_key_exists('ttbm_travel_repeated_start_time', $_POST);
+					$start_time = $start_time_submitted ? trim(sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_start_time']))) : '';
+					if (!$start_time_submitted && isset($_POST['ttbm_travel_start_time'])) {
 						$start_time = trim(sanitize_text_field(wp_unslash($_POST['ttbm_travel_start_time'])));
+						$start_time_submitted = true;
 					}
-					if ($start_time === '') {
+					if (!$start_time_submitted) {
 						$start_time = trim((string) TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_time', ''));
 					}
-					$repeat_type = isset($_POST['ttbm_repeat_type']) ? trim(sanitize_text_field(wp_unslash($_POST['ttbm_repeat_type']))) : '';
-					if ($repeat_type === '') {
+					$repeat_type_submitted = array_key_exists('ttbm_repeat_type', $_POST);
+					$repeat_type = $repeat_type_submitted ? trim(sanitize_text_field(wp_unslash($_POST['ttbm_repeat_type']))) : '';
+					if (!$repeat_type_submitted) {
 						$repeat_type = trim((string) TTBM_Global_Function::get_post_info($tour_id, 'ttbm_repeat_type', ''));
 					}
 
@@ -892,8 +917,9 @@
 					if ($repeat_type === '') {
 						$missing[] = __('End Repeat Logic', 'tour-booking-manager');
 					} elseif ($repeat_type === 'fixed') {
-						$end_date = isset($_POST['ttbm_travel_repeated_end_date']) ? trim(sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_end_date']))) : '';
-						if ($end_date === '') {
+						$end_date_submitted = array_key_exists('ttbm_travel_repeated_end_date', $_POST);
+						$end_date = $end_date_submitted ? trim(sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_end_date']))) : '';
+						if (!$end_date_submitted) {
 							$end_date = trim((string) TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_end_date', ''));
 						}
 						if ($end_date === '') {
@@ -1101,6 +1127,73 @@
 				add_action('save_post', array($this, 'sync_bookings_after_date_change'), 120, 1);
 			}
 
+			/**
+			 * Persist every switch rendered by the tour editor, including unchecked
+			 * switches (which browsers normally omit from form submissions).
+			 *
+			 * Individual legacy save blocks remain in place for compatibility; this
+			 * final authoritative pass prevents a tab-specific fallback from restoring
+			 * an old "on" value after the user switched it off.
+			 */
+			private function save_rendered_toggle_states(int $tour_id): void {
+				$rendered = isset($_POST['_ttbm_toggle_fields'])
+					? array_map('sanitize_key', wp_unslash((array) $_POST['_ttbm_toggle_fields']))
+					: array();
+				if (empty($rendered)) {
+					return;
+				}
+
+				$allowed = apply_filters('ttbm_tour_toggle_meta_keys', array(
+					'ttbm_display_duration_night',
+					'ttbm_display_price_start',
+					'ttbm_display_max_people',
+					'ttbm_display_min_age',
+					'ttbm_display_start_location',
+					'ttbm_display_location',
+					'ttbm_display_map',
+					'ttbm_display_description',
+					'ttbm_travel_language_status',
+					'ttbm_display_seat_details',
+					'ttbm_display_hotels',
+					'ttbm_display_duration',
+					'ttbm_display_enquiry',
+					'ttbm_auto_related_tour',
+					'ttbm_display_tour_type',
+					'ttbm_display_sidebar',
+					'ttbm_display_order_tour',
+					'ttbm_display_faq',
+					'ttbm_display_activities',
+					'ttbm_display_top_picks_deals',
+					'ttbm_display_schedule',
+					'ttbm_display_admin_note',
+					'ttbm_display_registration',
+					'ttbm_display_slider',
+					'ttbm_display_hiphop',
+					'ttbm_display_get_question',
+					'ttbm_display_tour_guide',
+					'ttbm_display_why_choose_us',
+					'ttbm_display_related',
+					'ttbm_display_include_service',
+					'ttbm_display_exclude_service',
+					'mep_disable_ticket_time',
+					'ttbm_enable_off_schedule',
+				));
+				$allowed = array_fill_keys(array_map('sanitize_key', (array) $allowed), true);
+				$yes_no_keys = array('mep_disable_ticket_time', 'ttbm_enable_off_schedule');
+
+				foreach (array_unique($rendered) as $meta_key) {
+					if (!isset($allowed[$meta_key])) {
+						continue;
+					}
+					$is_on = isset($_POST[$meta_key]) && 'on' === sanitize_text_field(wp_unslash($_POST[$meta_key]));
+					if (in_array($meta_key, $yes_no_keys, true)) {
+						update_post_meta($tour_id, $meta_key, $is_on ? 'yes' : 'no');
+					} else {
+						update_post_meta($tour_id, $meta_key, $is_on ? 'on' : 'off');
+					}
+				}
+			}
+
 			//********************//
 			public function save_settings($tour_id) {
 				if (!$this->is_tour_settings_save_request($tour_id)) {
@@ -1118,7 +1211,7 @@
 						: (isset($_POST['ttbm_post_title_ui'])
 							? trim(sanitize_text_field(wp_unslash($_POST['ttbm_post_title_ui'])))
 							: (isset($_POST['post_title']) ? trim(sanitize_text_field(wp_unslash($_POST['post_title']))) : ''));
-					if ($submitted_title !== '' && (string) get_post_field('post_title', $tour_id) !== $submitted_title) {
+					if (!self::$is_autosave && $submitted_title !== '' && (string) get_post_field('post_title', $tour_id) !== $submitted_title) {
 						remove_action('save_post', array($this, 'save_settings'), 99);
 						wp_update_post([
 							'ID' => $tour_id,
@@ -1289,6 +1382,15 @@
 					update_post_meta($tour_id, 'ttbm_travel_repeated_start_date', $ttbm_travel_repeated_start_date);
 					$ttbm_travel_repeated_start_time = isset($_POST['ttbm_travel_repeated_start_time']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_start_time'])) : '';
 					update_post_meta($tour_id, 'ttbm_travel_repeated_start_time', $ttbm_travel_repeated_start_time);
+					// Repeated tours read their effective start time from ttbm_travel_start_time
+					// (see TTBM_Function::get_time()), while the repeated tab writes to
+					// ttbm_travel_repeated_start_time. Mirror the value so the time the admin
+					// entered on the repeated tab actually applies on the frontend and is not
+					// overwritten by the blank fixed-tab time field.
+					if ($ttbm_travel_type === 'repeated' && $ttbm_travel_repeated_start_time !== '') {
+						$ttbm_travel_start_time = $ttbm_travel_repeated_start_time;
+						update_post_meta($tour_id, 'ttbm_travel_start_time', $ttbm_travel_start_time);
+					}
 					$ttbm_travel_repeated_after = isset($_POST['ttbm_travel_repeated_after']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_repeated_after'])) : 1;
 					update_post_meta($tour_id, 'ttbm_travel_repeated_after', $ttbm_travel_repeated_after);
 					$ttbm_repeat_type = isset($_POST['ttbm_repeat_type']) ? sanitize_text_field(wp_unslash($_POST['ttbm_repeat_type'])) : '';
@@ -1602,11 +1704,147 @@
 				} else {
 					TTBM_Function::update_upcoming_date_month($tour_id);
 				}
-				$this->apply_save_validation_notices($validation_errors);
-				if (!empty($validation_errors)) {
-					$this->set_tour_draft_on_validation_failure($tour_id);
+				$this->save_rendered_toggle_states($tour_id);
+				self::$last_validation_errors = $validation_errors;
+				// During a background auto-save we never unpublish the post or leave a
+				// one-shot admin notice behind — the browser is told about any missing
+				// required fields over JSON and surfaces them inline instead.
+				if (!self::$is_autosave) {
+					$this->apply_save_validation_notices($validation_errors);
+					if (!empty($validation_errors)) {
+						$this->set_tour_draft_on_validation_failure($tour_id);
+					}
 				}
 				self::$saving_settings = false;
+			}
+			/**
+			 * Background auto-save endpoint. Runs the exact same save pipeline a manual
+			 * Update runs (snapshot -> save_settings -> booking/order date migration) so
+			 * live date changes stay in sync, but without a page reload and without the
+			 * force-to-draft behaviour. Guarded by a per-post lock so overlapping saves
+			 * can never pile up and hammer the server.
+			 */
+			public function ajax_autosave_tour() {
+				if (!check_ajax_referer('ttbm_autosave', 'nonce', false)) {
+					wp_send_json_error(array('code' => 'bad_nonce', 'message' => __('Your session expired. Please reload the page.', 'tour-booking-manager')), 403);
+				}
+				$tour_id = isset($_POST['post_ID']) ? absint($_POST['post_ID']) : 0;
+				if (!$tour_id || get_post_type($tour_id) !== TTBM_Function::get_cpt_name()) {
+					wp_send_json_error(array('code' => 'bad_post', 'message' => __('Invalid tour.', 'tour-booking-manager')), 400);
+				}
+				if (!current_user_can('edit_post', $tour_id)) {
+					wp_send_json_error(array('code' => 'forbidden', 'message' => __('You are not allowed to edit this tour.', 'tour-booking-manager')), 403);
+				}
+				if (!isset($_POST['ttbm_travel_type']) || !isset($_POST['post_title'])) {
+					wp_send_json_error(array(
+						'code'    => 'incomplete_payload',
+						'message' => __('The tour form was not included in the auto-save request. Please reload the editor and try again.', 'tour-booking-manager'),
+					), 400);
+				}
+				$lock_key = 'ttbm_autosaving_' . $tour_id;
+				if (get_transient($lock_key)) {
+					wp_send_json_error(array('code' => 'busy', 'message' => __('A save is already in progress.', 'tour-booking-manager')), 409);
+				}
+				set_transient($lock_key, 1, 30);
+				self::$is_autosave = true;
+				self::$last_validation_errors = array();
+				try {
+					// Featured image: mirror how core applies _thumbnail_id on Update.
+					if (isset($_POST['_thumbnail_id'])) {
+						$thumb_id = (int) $_POST['_thumbnail_id'];
+						if ($thumb_id > 0) {
+							set_post_thumbnail($tour_id, $thumb_id);
+						} elseif ($thumb_id === -1) {
+							delete_post_thumbnail($tour_id);
+						}
+					}
+					$this->capture_date_migration_snapshot($tour_id);
+					$this->save_settings($tour_id);
+					// Run one normal WordPress update after Core meta is ready. This saves
+					// post content/title and lets PRO or other add-ons attached to save_post
+					// persist their tab fields too. Detach only this class's three callbacks
+					// so the expensive Core pipeline is not executed twice.
+					$post_update = array('ID' => $tour_id);
+					if (isset($_POST['post_title']) && !is_array($_POST['post_title'])) {
+						$post_update['post_title'] = sanitize_text_field(wp_unslash($_POST['post_title']));
+					}
+					if (isset($_POST['post_content']) && !is_array($_POST['post_content'])) {
+						$post_update['post_content'] = wp_kses_post(wp_unslash($_POST['post_content']));
+					}
+					$requested_status = isset($_POST['requested_post_status']) ? sanitize_key(wp_unslash($_POST['requested_post_status'])) : '';
+					$post_type_object = get_post_type_object(TTBM_Function::get_cpt_name());
+					$publish_capability = $post_type_object && isset($post_type_object->cap->publish_posts)
+						? $post_type_object->cap->publish_posts
+						: 'publish_posts';
+					if (empty(self::$last_validation_errors) && in_array($requested_status, array('draft', 'pending'), true)) {
+						$post_update['post_status'] = $requested_status;
+					} elseif (empty(self::$last_validation_errors) && 'publish' === $requested_status && current_user_can($publish_capability)) {
+						$post_update['post_status'] = 'publish';
+					} elseif (empty(self::$last_validation_errors) && 'publish' === $requested_status) {
+						throw new \RuntimeException(__('You are not allowed to publish this tour.', 'tour-booking-manager'));
+					}
+					remove_action('save_post', array($this, 'capture_date_migration_snapshot'), 5);
+					remove_action('save_post', array($this, 'save_settings'), 99);
+					remove_action('save_post', array($this, 'sync_bookings_after_date_change'), 120);
+					wp_update_post($post_update);
+					add_action('save_post', array($this, 'capture_date_migration_snapshot'), 5, 1);
+					add_action('save_post', array($this, 'save_settings'), 99, 1);
+					add_action('save_post', array($this, 'sync_bookings_after_date_change'), 120, 1);
+					$this->sync_bookings_after_date_change($tour_id);
+				} catch (\Throwable $e) {
+					self::$is_autosave = false;
+					delete_transient($lock_key);
+					$message = $e->getMessage() ?: __('Auto-save failed. Your changes were not saved.', 'tour-booking-manager');
+					wp_send_json_error(array('code' => 'exception', 'message' => $message), 500);
+				}
+				self::$is_autosave = false;
+				delete_transient($lock_key);
+				$warnings = array();
+				foreach (self::$last_validation_errors as $error) {
+					$warnings[] = $this->describe_validation_error($error);
+				}
+				// If the booking/order date migration hit a capacity conflict it reverts
+				// the date and leaves a notice transient meant for the next page load.
+				// Consume it here so the browser hears about it right away instead.
+				$user_id = get_current_user_id();
+				if ($user_id) {
+					$migration_notice = get_transient(self::$date_migration_notice_key . $user_id);
+					if (is_array($migration_notice) && !empty($migration_notice['message'])) {
+						$warnings[] = $migration_notice['message'];
+						delete_transient(self::$date_migration_notice_key . $user_id);
+					}
+				}
+				wp_send_json_success(array(
+					'saved_at'      => current_time('timestamp'),
+					'saved_at_text' => date_i18n(get_option('time_format'), current_time('timestamp')),
+					'post_status'   => get_post_status($tour_id),
+					'warnings'      => array_values(array_filter($warnings)),
+					'persisted'     => array(
+						'travel_type' => (string) get_post_meta($tour_id, 'ttbm_travel_type', true),
+						'start_time'  => (string) get_post_meta($tour_id, 'ttbm_travel_repeated_start_time', true),
+						'repeat_type' => (string) get_post_meta($tour_id, 'ttbm_repeat_type', true),
+					),
+				));
+			}
+			/**
+			 * Turn a stored validation-error record into a human-readable message for the
+			 * auto-save JSON response.
+			 */
+			private function describe_validation_error(array $error): string {
+				$transient = isset($error['transient']) ? (string) $error['transient'] : '';
+				if (is_string($error['message'] ?? null) && $error['message'] !== '' && !is_numeric($error['message'])) {
+					return (string) $error['message'];
+				}
+				if (strpos($transient, 'ttbm_title_required_') === 0) {
+					return __('Tour title is required.', 'tour-booking-manager');
+				}
+				if (strpos($transient, 'ttbm_location_required_') === 0) {
+					return __('Tour location is required.', 'tour-booking-manager');
+				}
+				if (strpos($transient, 'ttbm_featured_image_required_') === 0) {
+					return __('Featured image is required.', 'tour-booking-manager');
+				}
+				return __('Some required fields are incomplete.', 'tour-booking-manager');
 			}
 		}
 		new TTBM_Settings();

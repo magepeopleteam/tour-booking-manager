@@ -526,6 +526,8 @@ function ttbm_load_sortable_datepicker(parent, item) {
         });
     }
 
+    window.ttbmInitGeneralInfoToggles = ttbmInitGeneralInfoToggles;
+
     $(document).on('change', '#ttbm_meta_box_panel .ttbm-general-info-card .roundSwitchLabel input[type="checkbox"]', function () {
         ttbmSyncGeneralInfoToggle(this, true);
     });
@@ -1197,6 +1199,45 @@ function ttbm_load_sortable_datepicker(parent, item) {
 
     window.ttbmValidateSettingsFormBeforeSubmit = ttbmValidateSettingsFormBeforeSubmit;
 
+    /**
+     * Make every date/time field submit deterministically, independent of the
+     * order the admin clicked things in. Runs from ttbmPrepareTourSettingsFormForSubmit()
+     * before both a manual Update and a background auto-save.
+     *   1. Re-assert the name attribute on both start-time inputs (older builds
+     *      stripped one on click, which silently dropped the value on save).
+     *   2. Copy the active radio-card selection into its hidden input in case the
+     *      slide-animation callback that usually writes it has not fired yet
+     *      (covers Tour Type and the repeat End-logic groups).
+     */
+    function ttbmNormalizeDateFieldsForSubmit() {
+        var $panel = $('#ttbm_meta_box_panel');
+        if (!$panel.length) {
+            return;
+        }
+        var $fixedStart = $panel.find('input.ttbm_travel_start_time');
+        if ($fixedStart.length && !$fixedStart.attr('name')) {
+            $fixedStart.attr('name', 'ttbm_travel_start_time');
+        }
+        var $repeatStart = $panel.find('input.ttbm_travel_repeated_start_time');
+        if ($repeatStart.length && !$repeatStart.attr('name')) {
+            $repeatStart.attr('name', 'ttbm_travel_repeated_start_time');
+        }
+        $panel.find('.ttbm_settings_dates .groupRadioBox').each(function () {
+            var $group = $(this);
+            var $active = $group.find('[data-group-radio].active').first();
+            if (!$active.length) {
+                return;
+            }
+            var value = $active.attr('data-group-radio');
+            var $hidden = $group.children('input[type="hidden"]').first();
+            if ($hidden.length && typeof value !== 'undefined' && $hidden.val() !== value) {
+                $hidden.val(value);
+            }
+        });
+    }
+
+    window.ttbmNormalizeDateFieldsForSubmit = ttbmNormalizeDateFieldsForSubmit;
+
     function ttbmEnableToggleFieldsForSubmit() {
         if (!$('#ttbm_meta_box_panel').length) {
             return;
@@ -1235,6 +1276,9 @@ function ttbm_load_sortable_datepicker(parent, item) {
             ttbmInitGeneralInfoToggles();
             if (typeof window.ttbmFocusValidationTarget === 'function') {
                 window.ttbmFocusValidationTarget();
+            }
+            if (typeof window.ttbmToast === 'function') {
+                window.ttbmToast('Please complete the highlighted required fields before saving.', 'error');
             }
             return false;
         }

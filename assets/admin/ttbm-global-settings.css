@@ -383,6 +383,29 @@ div.ttbm_global_settings.ttbm_configuration {
     padding-top: 10px;
 }
 
+/* ── Modern Tour Settings tab ── */
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] > form > .ttbm-section-header { display: none !important; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] > form > section { overflow: hidden; padding: 0 !important; border: 1px solid #e4e9f0; border-radius: 16px; box-shadow: 0 8px 28px rgba(15,23,42,.07); }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field { display: grid; grid-template-columns: minmax(190px, 29%) minmax(0, 1fr); gap: 24px; align-items: center !important; margin: 0; padding: 17px 22px !important; border-bottom: 1px solid #edf0f4; background: #fff !important; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field:last-child { border-bottom: 0; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field:hover { background: #f8fbff !important; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field > .label { width: auto !important; min-width: 0 !important; padding: 0 !important; color: #172033; font-size: 13px; font-weight: 700; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field > label,
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field > fieldset { width: 100%; min-width: 0; margin: 0; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field:has(.ttbm-settings-modern-hero) { display: block !important; padding: 0 !important; border: 0; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field:has(.ttbm-settings-modern-hero) > .label { display: none !important; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-settings-modern-hero { display: flex; align-items: flex-start; gap: 17px; padding: 25px 26px; color: #fff; background: linear-gradient(125deg, #164e63 0%, #0284c7 58%, #38bdf8 100%); }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-settings-modern-hero__icon { display: grid; place-items: center; width: 50px; height: 50px; flex: 0 0 50px; border: 1px solid rgba(255,255,255,.23); border-radius: 14px; background: rgba(255,255,255,.14); font-size: 25px; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-settings-modern-hero__eyebrow { display: block; margin-bottom: 3px; color: #bae6fd; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-settings-modern-hero h3 { margin: 0 0 5px; color: #fff; font-size: 19px; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-settings-modern-hero p { margin: 0; color: rgba(255,255,255,.8); font-size: 12.5px; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] input.formControl,
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] select.formControl { width: 100% !important; max-width: 640px; min-height: 42px; border: 1px solid #d7dce4 !important; border-radius: 9px !important; box-shadow: none !important; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] fieldset { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; border: 0; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] fieldset label._min_200 { display: inline-flex; align-items: center; gap: 6px; width: auto !important; min-width: 0 !important; margin: 0; padding: 8px 11px; border: 1px solid #dfe3ea; border-radius: 9px; background: #f8fafc; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] fieldset label._min_200:has(input:checked) { color: #075985; border-color: #7dd3fc; background: #f0f9ff; }
+@media (max-width: 780px) { #ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field { grid-template-columns: 1fr; gap: 9px; padding: 15px !important; } }
+
 /* ── Setting field odd/even striping + hover ── */
 .ttbm_global_settings .tabsItem section .ttbm-setting-field {
     border-radius: 0 !important;

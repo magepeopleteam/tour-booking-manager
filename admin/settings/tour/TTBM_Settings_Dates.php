@@ -117,7 +117,7 @@
                                 <span class="ttbm-field-label"><?php esc_html_e('Start Time', 'tour-booking-manager'); ?><sup class="textRequired ttbm-date-required-mark" data-ttbm-date-required="fixed">*</sup></span>
 								<?php self::datetime_clear_wrap_open(); ?>
                                 <label class="ttbm-input-icon ttbm-input-icon--time">
-                                    <input type="time" name="ttbm_travel_start_time" class="formControl ttbm_travel_start_time" value="<?php echo esc_attr($start_time); ?>" onclick="document.querySelectorAll('.ttbm_travel_repeated_start_time').forEach(function(input){input.removeAttribute('name');});"/>
+                                    <input type="time" name="ttbm_travel_start_time" class="formControl ttbm_travel_start_time" value="<?php echo esc_attr($start_time); ?>"/>
                                 </label>
 								<?php self::datetime_clear_wrap_close(); ?>
                             </div>
@@ -264,7 +264,7 @@
                                 <span class="ttbm-field-label"><?php esc_html_e('Start Time', 'tour-booking-manager'); ?><sup class="textRequired ttbm-date-required-mark" data-ttbm-date-required="repeated">*</sup></span>
 								<?php self::datetime_clear_wrap_open(); ?>
                                 <label class="ttbm-input-icon ttbm-input-icon--time">
-                                    <input type="time" name="ttbm_travel_repeated_start_time" class="formControl ttbm_travel_repeated_start_time" value="<?php echo esc_attr($start_time); ?>" onclick="document.querySelectorAll('input.ttbm_travel_start_time[name=&quot;ttbm_travel_start_time&quot;]').forEach(function(input){input.removeAttribute('name');});"/>
+                                    <input type="time" name="ttbm_travel_repeated_start_time" class="formControl ttbm_travel_repeated_start_time" value="<?php echo esc_attr($start_time); ?>"/>
                                 </label>
 								<?php self::datetime_clear_wrap_close(); ?>
                             </div>
@@ -576,6 +576,9 @@
 							<?php self::datetime_clear_wrap_close(); ?>
                         </div>
                         <div class="ttbm-time-slot-card__actions">
+							<button class="ttbm-time-slot-card__delete ttbm_item_remove" type="button" title="<?php esc_attr_e('Remove time slot', 'tour-booking-manager'); ?>" aria-label="<?php esc_attr_e('Remove time slot', 'tour-booking-manager'); ?>">
+								<span class="fas fa-trash-alt" aria-hidden="true"></span>
+							</button>
                             <div class="ttbm-time-slot-card__sort ttbm_sortable_button" type="" title="<?php esc_attr_e('Drag to reorder', 'tour-booking-manager'); ?>">
                                 <span class="fas fa-expand-arrows-alt mp_zero" aria-hidden="true"></span>
                             </div>

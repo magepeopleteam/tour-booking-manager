@@ -4,11 +4,19 @@
 	} // Cannot access pages directly.
 	if (!class_exists('TTBM_Dependencies')) {
 		class TTBM_Dependencies {
+			/** @var bool Guards enqueue_frontend_bundle() so it runs at most once per request. */
+			private $frontend_bundle_enqueued = false;
 			public function __construct() {
 				add_action('init', array($this, 'language_load'));
 				$this->load_file();
 				$this->appsero_init_tracker_ttbm();
 				add_action('wp_enqueue_scripts', array($this, 'frontend_script'), 90);
+				// Safety net: if a TTBM shortcode actually renders on a page the gate
+				// above did not predict (page builders that store content outside
+				// post_content — Elementor/Jet, Beaver, Divi, WPBakery, widgets,
+				// reusable blocks), enqueue the bundle at render time so the markup is
+				// never left unstyled. Late enqueues print in the footer.
+				add_filter('do_shortcode_tag', array($this, 'ensure_assets_on_shortcode'), 10, 2);
 				add_action('admin_enqueue_scripts', array($this, 'admin_script'), 90);
 				add_action('ttbm_registration_enqueue', array($this, 'registration_enqueue'), 90);
 				add_action('admin_init', array($this, 'ttbm_upgrade'));
@@ -144,17 +152,57 @@
 					)) {
 						return true;
 					}
+					// Elementor stores builder content in _elementor_data (JSON), not
+					// post_content. Catch both the TTBM Elementor widgets (ttbm-tour-*)
+					// and any TTBM shortcode dropped into a Shortcode/Text-Editor widget
+					// ([ttbm-...], [travel-...], [wptravelly-...]) — otherwise the form
+					// renders on the page but its CSS/JS are never enqueued.
 					$elementor_data = get_post_meta($post->ID, '_elementor_data', true);
-					if (is_string($elementor_data) && false !== strpos($elementor_data, 'ttbm-tour-')) {
+					if (is_string($elementor_data) && (
+						false !== strpos($elementor_data, 'ttbm-tour-') ||
+						false !== strpos($elementor_data, '[ttbm-') ||
+						false !== strpos($elementor_data, '[travel-') ||
+						false !== strpos($elementor_data, '[wptravelly-')
+					)) {
 						return true;
 					}
 				}
 				return false;
 			}
+			/**
+			 * Enqueue the frontend bundle whenever a TTBM/travel/wptravelly shortcode
+			 * is expanded, in case should_load_frontend_assets() could not detect it
+			 * ahead of time (page-builder content lives outside post_content). Runs at
+			 * most once per request via the guard in enqueue_frontend_bundle().
+			 *
+			 * @param string $output Shortcode output (returned unchanged).
+			 * @param string $tag    Shortcode tag being processed.
+			 * @return string
+			 */
+			public function ensure_assets_on_shortcode($output, $tag) {
+				if (is_admin() || !is_string($tag)) {
+					return $output;
+				}
+				if (0 === strpos($tag, 'ttbm-') || 0 === strpos($tag, 'travel-') || 0 === strpos($tag, 'wptravelly-')) {
+					$this->enqueue_frontend_bundle();
+				}
+				return $output;
+			}
 			public function frontend_script() {
 				if (!$this->should_load_frontend_assets()) {
 					return;
 				}
+				$this->enqueue_frontend_bundle();
+			}
+			/**
+			 * The actual frontend asset enqueue, shared by the wp_enqueue_scripts hook
+			 * (page gate) and the shortcode render-time safety net. Idempotent.
+			 */
+			public function enqueue_frontend_bundle() {
+				if ($this->frontend_bundle_enqueued) {
+					return;
+				}
+				$this->frontend_bundle_enqueued = true;
 				$this->global_enqueue();
 				wp_enqueue_script('jquery-ui-accordion');
 				wp_enqueue_script('ttbm_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_script.js', array('jquery'), TTBM_PLUGIN_VERSION, true);

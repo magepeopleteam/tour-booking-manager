@@ -1700,25 +1700,25 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 
 /* =====================================================================
    Booking section — clean row layout (attachment mockup)
-   Scoped to #ttbm_content .ttbm_booking_section.
+   Scoped to :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section.
    ===================================================================== */
 /* fixed travel_type: date_selection.php renders .allCenter.ttbm_date_time_select —
    hide it completely with no leftover blank space. */
-#ttbm_content .ttbm_booking_section .allCenter.ttbm_date_time_select { display: none; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .allCenter.ttbm_date_time_select { display: none; }
 
-#ttbm_content .ttbm_booking_section .ttbm_registration_area:not(.placeholderLoader) .ttbm_booking_panel.placeholder_area:empty {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_registration_area:not(.placeholderLoader) .ttbm_booking_panel.placeholder_area:empty {
 	display: none;
 	min-height: 0;
 	background: none !important;
 	background-image: none !important;
 }
-#ttbm_content .ttbm_booking_section .ttbm_registration_area:not(.placeholderLoader) .ttbm_booking_panel.placeholder_area:empty::after {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_registration_area:not(.placeholderLoader) .ttbm_booking_panel.placeholder_area:empty::after {
 	display: none !important;
 	content: none !important;
 }
 /* Skeleton loader: 3 solid grey bars on white, shimmer sweeps via ::after */
-#ttbm_content .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.placeholder_area,
-#ttbm_content .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.ttbm-ticket-loading {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.placeholder_area,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.ttbm-ticket-loading {
 	display: block !important;
 	min-height: 148px;
 	margin-top: 4px;
@@ -1745,20 +1745,20 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	animation: none !important;
 	border-top: 1px solid var(--ttbm_d_border);
 }
-#ttbm_content .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.placeholder_area .simpleSpinner,
-#ttbm_content .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.placeholder_area [class*="dLoader"],
-#ttbm_content .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.ttbm-ticket-loading .simpleSpinner,
-#ttbm_content .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.ttbm-ticket-loading [class*="dLoader"] {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.placeholder_area .simpleSpinner,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.placeholder_area [class*="dLoader"],
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.ttbm-ticket-loading .simpleSpinner,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.ttbm-ticket-loading [class*="dLoader"] {
 	display: none !important;
 }
 /* suppress global ::before shimmer */
-#ttbm_content .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.placeholder_area::before,
-#ttbm_content .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.ttbm-ticket-loading::before {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.placeholder_area::before,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.ttbm-ticket-loading::before {
 	display: none !important;
 }
 /* sliding white highlight that sweeps across the bars */
-#ttbm_content .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.placeholder_area::after,
-#ttbm_content .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.ttbm-ticket-loading::after {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.placeholder_area::after,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_registration_area.placeholderLoader .ttbm_booking_panel.ttbm-ticket-loading::after {
 	content: '' !important;
 	display: block !important;
 	position: absolute;
@@ -1772,8 +1772,8 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	100% { left: 160%; }
 }
 
-#ttbm_content .ttbm_booking_section { margin-top: 30px; }
-#ttbm_content .ttbm_booking_section .ttbm_registration_area {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section { margin-top: 30px; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_registration_area {
 	background: #fff;
 	border: 1px solid var(--ttbm_d_border);
 	border-radius: 16px;
@@ -1784,34 +1784,34 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 }
 
 /* unified horizontal inset — one padding layer for all sections */
-#ttbm_content .ttbm_booking_section .ttbm_date_time_select,
-#ttbm_content .ttbm_booking_section .ttbm_ticket_area,
-#ttbm_content .ttbm_booking_section .ttbm_book_now_area {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_date_time_select,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_area,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_book_now_area {
 	padding-left: var(--ttbm_booking-pad-x);
 	padding-right: var(--ttbm_booking-pad-x);
 }
-#ttbm_content .ttbm_booking_section .ttbm_booking_panel,
-#ttbm_content .ttbm_booking_section .ttbm_booking_panel .ttbm_widget_content,
-#ttbm_content .ttbm_booking_section .ttbm_ticket_area .ttbm_widget_content,
-#ttbm_content .ttbm_booking_section .ttbm_extra_service_area .ttbm_widget_content,
-#ttbm_content .ttbm_booking_section .ttbm_enhanced_ticket_area {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_booking_panel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_booking_panel .ttbm_widget_content,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_area .ttbm_widget_content,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_extra_service_area .ttbm_widget_content,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_enhanced_ticket_area {
 	padding-left: 0 !important;
 	padding-right: 0 !important;
 	margin-left: 0 !important;
 	margin-right: 0 !important;
 }
-#ttbm_content .ttbm_booking_section .ttbm_booking_panel .ttbm_widget_content {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_booking_panel .ttbm_widget_content {
 	padding: 10px !important;
 }
-#ttbm_content .ttbm_booking_section .ttbm_book_now_area.dLayout_xs,
-#ttbm_content .ttbm_booking_section .ttbm_book_now_bar {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_book_now_area.dLayout_xs,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_book_now_bar {
 	padding-top: 16px;
 	padding-bottom: 16px;
 }
 
 /* ---- date section (modern select bar) ---- */
-#ttbm_content .ttbm_booking_section .ttbm_date_time_select.ttbm-date-select,
-#ttbm_content .ttbm_booking_section .ttbm_date_time_select {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_date_time_select.ttbm-date-select,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_date_time_select {
 	--ttbm-date-surface: #f7f8fa;
 	--ttbm-date-surface-hover: #ffffff;
 	--ttbm-date-ink: var(--ttbm_d_heading, #111827);
@@ -1827,7 +1827,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	margin: 0;
 	text-align: left;
 }
-#ttbm_content .ttbm_booking_section .ttbm_select_date_area {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_select_date_area {
 	display: block;
 	background: transparent !important;
 	color: inherit !important;
@@ -1837,8 +1837,8 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	border-radius: 0 !important;
 	justify-content: flex-start !important;
 }
-#ttbm_content .ttbm_booking_section .ttbm-date-select__toolbar,
-#ttbm_content .ttbm_booking_section .booking-button {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__toolbar,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .booking-button {
 	display: flex;
 	align-items: flex-end;
 	justify-content: flex-start;
@@ -1847,8 +1847,8 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	width: 100%;
 	max-width: 100%;
 }
-#ttbm_content .ttbm_booking_section .ttbm-date-select__field,
-#ttbm_content .ttbm_booking_section .date-picker {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__field,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .date-picker {
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
@@ -1858,9 +1858,9 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	min-width: 0;
 	max-width: 340px;
 }
-#ttbm_content .ttbm_booking_section .ttbm-date-select__label,
-#ttbm_content .ttbm_booking_section .date_time_label,
-#ttbm_content .ttbm_booking_section .ttbm_select_date_area .ttbm-title {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__label,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .date_time_label,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_select_date_area .ttbm-title {
 	display: block;
 	margin: 0;
 	font-size: 11px;
@@ -1871,12 +1871,12 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	text-align: left;
 	line-height: 1.2;
 }
-#ttbm_content .ttbm_booking_section .ttbm-date-select__label i,
-#ttbm_content .ttbm_booking_section .date_time_label i {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__label i,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .date_time_label i {
 	display: none;
 }
-#ttbm_content .ttbm_booking_section .ttbm-date-select__control,
-#ttbm_content .ttbm_booking_section .date-picker-icon {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__control,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .date-picker-icon {
 	position: relative;
 	display: flex;
 	align-items: center;
@@ -1900,10 +1900,10 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 		background .2s ease,
 		transform .2s ease;
 }
-#ttbm_content .ttbm_booking_section .ttbm-date-select__control:hover,
-#ttbm_content .ttbm_booking_section .date-picker-icon:hover,
-#ttbm_content .ttbm_booking_section .ttbm-date-select__control:focus-within,
-#ttbm_content .ttbm_booking_section .date-picker-icon:focus-within {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__control:hover,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .date-picker-icon:hover,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__control:focus-within,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .date-picker-icon:focus-within {
 	background: var(--ttbm-date-surface-hover);
 	border-color: rgba(var(--ttbm-date-accent-rgb), .45);
 	box-shadow:
@@ -1911,7 +1911,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 		0 8px 20px rgba(17, 24, 39, .06);
 	transform: translateY(-1px);
 }
-#ttbm_content .ttbm_booking_section .ttbm-date-select__icon {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__icon {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -1922,8 +1922,8 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	color: var(--ttbm-date-accent);
 	background: rgba(var(--ttbm-date-accent-rgb), .1);
 }
-#ttbm_content .ttbm_booking_section .date-picker-icon > i.far,
-#ttbm_content .ttbm_booking_section .date-picker-icon > i.fas:not(.ttbm_date_chevron) {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .date-picker-icon > i.far,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .date-picker-icon > i.fas:not(.ttbm_date_chevron) {
 	position: static !important;
 	top: auto !important;
 	left: auto !important;
@@ -1938,21 +1938,21 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	color: var(--ttbm-date-accent);
 	background: rgba(var(--ttbm-date-accent-rgb), .1);
 }
-#ttbm_content .ttbm_booking_section .date-picker-icon .ttbm_date_chevron {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .date-picker-icon .ttbm_date_chevron {
 	margin-left: auto;
 	font-size: 11px;
 	color: var(--ttbm-date-muted);
 	opacity: .85;
 	transition: transform .2s ease, color .2s ease;
 }
-#ttbm_content .ttbm_booking_section .ttbm-date-select__control:hover .ttbm_date_chevron,
-#ttbm_content .ttbm_booking_section .date-picker-icon:hover .ttbm_date_chevron,
-#ttbm_content .ttbm_booking_section .ttbm-date-select__control:focus-within .ttbm_date_chevron {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__control:hover .ttbm_date_chevron,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .date-picker-icon:hover .ttbm_date_chevron,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__control:focus-within .ttbm_date_chevron {
 	color: var(--ttbm-date-accent);
 	transform: translateY(1px);
 }
-#ttbm_content .ttbm_booking_section #ttbm_select_date,
-#ttbm_content .ttbm_booking_section #ttbm_select_date.formControl {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section #ttbm_select_date,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section #ttbm_select_date.formControl {
 	border: 0 !important;
 	background: transparent !important;
 	flex: 1;
@@ -1968,14 +1968,14 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	text-align: left;
 	line-height: 1.3;
 }
-#ttbm_content .ttbm_booking_section #ttbm_select_date::placeholder {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section #ttbm_select_date::placeholder {
 	color: var(--ttbm-date-muted);
 	font-weight: 500;
 	opacity: .9;
 }
-#ttbm_content .ttbm_booking_section .ttbm_check_ability,
-#ttbm_content .ttbm_booking_section .navy_blueButton.ttbm_check_ability,
-#ttbm_content .ttbm_booking_section .ttbm-date-select__action {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_check_ability,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .navy_blueButton.ttbm_check_ability,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__action {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -2001,9 +2001,9 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 		transform .2s ease,
 		filter .2s ease;
 }
-#ttbm_content .ttbm_booking_section .ttbm_check_ability:hover,
-#ttbm_content .ttbm_booking_section .navy_blueButton.ttbm_check_ability:hover,
-#ttbm_content .ttbm_booking_section .ttbm-date-select__action:hover {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_check_ability:hover,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .navy_blueButton.ttbm_check_ability:hover,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__action:hover {
 	background: var(--ttbm-date-accent) !important;
 	color: #fff !important;
 	border-color: transparent !important;
@@ -2011,23 +2011,23 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	transform: translateY(-1px);
 	box-shadow: 0 14px 28px rgba(var(--ttbm-date-accent-rgb), .28);
 }
-#ttbm_content .ttbm_booking_section .ttbm_check_ability:active,
-#ttbm_content .ttbm_booking_section .ttbm-date-select__action:active {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_check_ability:active,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__action:active {
 	transform: translateY(0);
 	box-shadow: 0 6px 14px rgba(var(--ttbm-date-accent-rgb), .2);
 }
-#ttbm_content .ttbm_booking_section .ttbm_check_ability span,
-#ttbm_content .ttbm_booking_section .ttbm-date-select__action span {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_check_ability span,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__action span {
 	color: inherit;
 	font-size: inherit;
 }
-#ttbm_content .ttbm_booking_section .ttbm-date-select__action-icon {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__action-icon {
 	font-size: 13px;
 	opacity: .95;
 }
 
 /* ---- booking intro (time slots) ---- */
-#ttbm_content .ttbm_booking_section .ttbm-booking-intro {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-booking-intro {
 	margin: 0 0 14px;
 	font-size: 11px;
 	font-weight: 700;
@@ -2036,12 +2036,12 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	color: var(--ttbm-date-accent, var(--color_theme, #0f766e));
 	line-height: 1.3;
 }
-#ttbm_content .ttbm_booking_section .ttbm-booking-intro__brand {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-booking-intro__brand {
 	position: relative;
 	display: inline-block;
 	padding-bottom: 6px;
 }
-#ttbm_content .ttbm_booking_section .ttbm-booking-intro__brand::after {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-booking-intro__brand::after {
 	content: '';
 	position: absolute;
 	left: 0;
@@ -2053,38 +2053,38 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 }
 
 /* ---- date toolbar ---- */
-#ttbm_content .ttbm_booking_section .ttbm-date-time-toolbar {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-time-toolbar {
 	margin-top: 0;
 }
-#ttbm_content .ttbm_booking_section .date_time_label {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .date_time_label {
 	display: block;
 }
 
 /* ---- time slots ---- */
-#ttbm_content .ttbm_booking_section .ttbm_select_time_area {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_select_time_area {
 	display: block;
 	width: 100%;
 	margin-top: 18px;
 	padding-top: 16px;
 	border-top: 1px solid var(--ttbm_d_border);
 }
-#ttbm_content .ttbm_booking_section .ttbm-time-slots {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slots {
 	width: 100%;
 }
-#ttbm_content .ttbm_booking_section .ttbm-time-slots__header {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slots__header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	gap: 12px;
 	margin-bottom: 12px;
 }
-#ttbm_content .ttbm_booking_section .ttbm-time-slots__title {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slots__title {
 	font-size: 13px;
 	font-weight: 600;
 	color: #334155;
 	line-height: 1.3;
 }
-#ttbm_content .ttbm_booking_section .ttbm-time-slots__count {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slots__count {
 	display: inline-flex;
 	align-items: center;
 	padding: 4px 10px;
@@ -2096,18 +2096,18 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	border-radius: 999px;
 	white-space: nowrap;
 }
-#ttbm_content .ttbm_booking_section .ttbm-time-slots__list {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slots__list {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10px;
 	align-items: center;
 }
-#ttbm_content .ttbm_booking_section .ttbm-time-slots__select {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slots__select {
 	display: block;
 	width: 100%;
 	max-width: 280px;
 }
-#ttbm_content .ttbm_booking_section .ttbm-time-slot.customRadio.button_type {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot.customRadio.button_type {
 	margin: 0;
 	min-width: 0;
 	padding: 10px 20px;
@@ -2122,19 +2122,19 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	cursor: pointer;
 	transition: border-color .2s ease, background .2s ease, color .2s ease, box-shadow .2s ease;
 }
-#ttbm_content .ttbm_booking_section .ttbm-time-slot.customRadio.button_type:hover:not(.active):not(.mage_disabled):not(.is-disabled) {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot.customRadio.button_type:hover:not(.active):not(.mage_disabled):not(.is-disabled) {
 	border-color: #cbd5e1;
 	background: #f8fafc;
 	color: #334155;
 }
-#ttbm_content .ttbm_booking_section .ttbm-time-slot.customRadio.button_type.active {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot.customRadio.button_type.active {
 	border-color: var(--color_theme, #0b74de);
 	background: var(--color_theme, #0b74de);
 	color: #fff;
 	box-shadow: 0 4px 12px rgba(var(--color_theme_rgb, 11, 116, 222), .25);
 }
-#ttbm_content .ttbm_booking_section .ttbm-time-slot.customRadio.button_type.mage_disabled,
-#ttbm_content .ttbm_booking_section .ttbm-time-slot.customRadio.button_type.is-disabled {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot.customRadio.button_type.mage_disabled,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot.customRadio.button_type.is-disabled {
 	border-color: #ececec;
 	background: #f5f5f5;
 	color: #b8b8b8;
@@ -2142,30 +2142,30 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	opacity: 1;
 	pointer-events: none;
 }
-#ttbm_content .ttbm_booking_section .ttbm-time-slot.customRadio.button_type::before,
-#ttbm_content .ttbm_booking_section .ttbm-time-slot.customRadio.button_type::after {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot.customRadio.button_type::before,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot.customRadio.button_type::after {
 	display: none;
 }
 
 /* ---- ticket area ---- */
-#ttbm_content .ttbm_booking_section .ttbm_booking_panel { padding: 0; }
-#ttbm_content .ttbm_booking_section .mp_tour_ticket_form { margin: 0; padding: 0; }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_area {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_booking_panel { padding: 0; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .mp_tour_ticket_form { margin: 0; padding: 0; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_area {
 	padding: 5px 20px !important;
 	padding-bottom: 8px;
 	border-top: 1px solid var(--ttbm_d_border);
 	text-align: left;
 }
-#ttbm_content .ttbm_booking_section .ttbm_extra_service_area {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_extra_service_area {
 	border-top: 1px solid var(--ttbm_d_border);
 	text-align: left;
 }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_area .ttbm_widget_content,
-#ttbm_content .ttbm_booking_section .ttbm_extra_service_area .ttbm_widget_content {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_area .ttbm_widget_content,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_extra_service_area .ttbm_widget_content {
 	text-align: left;
 }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_list_title,
-#ttbm_content .ttbm_booking_section .ttbm_extra_service_area > h2.extra_service_title {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_list_title,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_extra_service_area > h2.extra_service_title {
 	font-size: 11px;
 	font-weight: 700;
 	text-transform: uppercase;
@@ -2248,19 +2248,19 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 }
 
 /* table -> horizontal rows */
-#ttbm_content .ttbm_booking_section .ttbm_enhanced_table,
-#ttbm_content .ttbm_booking_section .ttbm_enhanced_table tbody {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_enhanced_table,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_enhanced_table tbody {
 	display: block;
 	width: 100%;
 }
-#ttbm_content .ttbm_booking_section .ttbm_enhanced_table {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_enhanced_table {
 	border-collapse: collapse;
 	border-spacing: 0;
 	margin: 0;
 	border: 0;
 }
-#ttbm_content .ttbm_booking_section .ttbm_enhanced_table thead { display: none; }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_row {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_enhanced_table thead { display: none; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row {
 	display: flex;
 	flex-wrap: nowrap;
 	align-items: center;
@@ -2273,11 +2273,11 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	background: transparent;
 	transition: background .2s ease;
 }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_row:hover {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row:hover {
 	background: #fafafa;
 	box-shadow: none;
 }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_row td {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td {
 	display: block;
 	flex: 0 0 auto;
 	background: transparent;
@@ -2286,56 +2286,56 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	border-radius: 0;
 	vertical-align: middle;
 }
-#ttbm_content .ttbm_booking_section div.ttbm_booking_panel table td:last-child {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section div.ttbm_booking_panel table td:last-child {
 	text-align: right !important;
 	padding-left: 0 !important;
 	padding-right: 0 !important;
 }
-#ttbm_content .ttbm_booking_section div.ttbm_booking_panel table td:first-child {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section div.ttbm_booking_panel table td:first-child {
 	padding-left: 0 !important;
 }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_row td.ttbm-person-info {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-person-info {
 	flex: 1 1 0;
 	min-width: 0;
 	text-align: left;
 }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_row td.ttbm-ticket-badge-col {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-ticket-badge-col {
 	flex: 0 0 auto;
 	text-align: left;
 	padding-left: 0;
 	padding-right: 8px;
 }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_row td.ttbm-ticket-badge-col:empty {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-ticket-badge-col:empty {
 	display: none;
 }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_row td.ttbm-regular-price {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-regular-price {
 	flex: 0 0 130px;
 	text-align: right;
 }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_row td.ttbm-availability-info {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-availability-info {
 	display: none !important;
 	width: 0 !important;
 	padding: 0 !important;
 	margin: 0 !important;
 	overflow: hidden;
 }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_row td.ttbm-select-quantity {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-select-quantity {
 	flex: 0 0 118px;
 	text-align: right;
 	margin-left: auto;
 }
 
 /* attendee form — full width below ticket row */
-#ttbm_content .ttbm_booking_section .ttbm_enhanced_table tr.ttbm_hidden_inputs {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_enhanced_table tr.ttbm_hidden_inputs {
 	display: none !important;
 }
-#ttbm_content .ttbm_booking_section .ttbm_enhanced_table tr.ttbm_attendee_form_row {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_enhanced_table tr.ttbm_attendee_form_row {
 	display: block;
 	width: 100%;
 	box-sizing: border-box;
 	border-bottom: 1px solid var(--ttbm_d_border);
 }
-#ttbm_content .ttbm_booking_section .ttbm_enhanced_table tr.ttbm_attendee_form_row td {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_enhanced_table tr.ttbm_attendee_form_row td {
 	display: block;
 	width: 100% !important;
 	max-width: 100%;
@@ -2344,21 +2344,21 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	padding: 0 0 16px !important;
 	text-align: left !important;
 }
-#ttbm_content .ttbm_booking_section .ttbm_attendee_form_row .ttbm_attendee_form_item,
-#ttbm_content .ttbm_booking_section .ttbm_attendee_form_row .ttbm-attendee-form {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_attendee_form_row .ttbm_attendee_form_item,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_attendee_form_row .ttbm-attendee-form {
 	width: 100%;
 	max-width: 100%;
 	box-sizing: border-box;
 }
-#ttbm_content .ttbm_booking_section .ttbm-attendee-form .max_200 {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-attendee-form .max_200 {
 	max-width: none;
 	width: 100%;
 }
 
 /* ticket info */
-#ttbm_content .ttbm_booking_section .person-info { display: block; text-align: left; }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_details { text-align: left; }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_name {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .person-info { display: block; text-align: left; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_details { text-align: left; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_name {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -2370,8 +2370,8 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	margin: 0;
 	text-align: left;
 }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_name_text { line-height: 1.3; }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_icon {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_name_text { line-height: 1.3; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_icon {
 	flex-shrink: 0;
 	width: 40px;
 	height: 40px;
@@ -2384,7 +2384,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	align-items: center;
 	justify-content: center;
 }
-#ttbm_content .ttbm_booking_section .ttbm_discount_badge {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_discount_badge {
 	position: static !important;
 	top: auto !important;
 	right: auto !important;
@@ -2402,19 +2402,19 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	white-space: nowrap;
 	z-index: auto;
 }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_description {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_description {
 	font-size: 13px;
 	color: var(--ttbm_d_muted);
 	margin: 0;
 	line-height: 1.5;
 	max-width: 420px;
 }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_details:has(.ttbm_ticket_icon) .ttbm_ticket_description {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_details:has(.ttbm_ticket_icon) .ttbm_ticket_description {
 	margin-left: 50px;
 }
 
 /* price */
-#ttbm_content .ttbm_booking_section .ttbm_price_container {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_price_container {
 	position: static !important;
 	display: flex;
 	flex-direction: column;
@@ -2423,7 +2423,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	text-align: right;
 	width: 100%;
 }
-#ttbm_content .ttbm_booking_section .ttbm_sale_price {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_sale_price {
 	display: block !important;
 	color: var(--color_theme, #7241ff) !important;
 	font-weight: 600 !important;
@@ -2432,7 +2432,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	line-height: 1.2;
 	white-space: nowrap;
 }
-#ttbm_content .ttbm_booking_section .ttbm_price_meta {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_price_meta {
 	display: flex;
 	flex-wrap: nowrap;
 	align-items: center;
@@ -2442,32 +2442,32 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	color: var(--ttbm_d_muted);
 	white-space: nowrap;
 }
-#ttbm_content .ttbm_booking_section .ttbm_regular_price.strikeLine {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_regular_price.strikeLine {
 	color: #9ca3af !important;
 	text-decoration: line-through;
 	font-size: 12px !important;
 	margin: 0;
 	display: inline !important;
 }
-#ttbm_content .ttbm_booking_section .ttbm_regular_price.strikeLine .woocommerce-Price-amount {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_regular_price.strikeLine .woocommerce-Price-amount {
 	font-size: 12px !important;
 	color: #9ca3af !important;
 	text-decoration: line-through;
 	display: inline !important;
 }
-#ttbm_content .ttbm_booking_section .ttbm_stock_left {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_stock_left {
 	font-size: 12px;
 	color: var(--ttbm_d_muted);
 	white-space: nowrap;
 }
-#ttbm_content .ttbm_booking_section .ttbm_progress_bar,
-#ttbm_content .ttbm_booking_section .ttbm_capacity_info,
-#ttbm_content .ttbm_booking_section .ttbm_remaining_count {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_progress_bar,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_capacity_info,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_remaining_count {
 	display: none !important;
 }
 
 /* quantity */
-#ttbm_content .ttbm_booking_section .qtyIncDec {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec {
 	display: inline-flex;
 	align-items: center;
 	justify-content: space-between;
@@ -2481,10 +2481,10 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	box-shadow: none;
 	overflow: hidden;
 }
-#ttbm_content .ttbm_booking_section .qtyIncDec .decQty,
-#ttbm_content .ttbm_booking_section .qtyIncDec .incQty,
-#ttbm_content .ttbm_booking_section .qtyIncDec .decQty.addonGroupContent,
-#ttbm_content .ttbm_booking_section .qtyIncDec .incQty.addonGroupContent {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .decQty,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .incQty,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .decQty.addonGroupContent,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .incQty.addonGroupContent {
 	width: 36px;
 	height: 36px;
 	min-width: 36px;
@@ -2500,11 +2500,11 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	transition: background .15s ease, color .15s ease, opacity .15s ease;
 	flex-shrink: 0;
 }
-#ttbm_content .ttbm_booking_section .qtyIncDec .decQty > span,
-#ttbm_content .ttbm_booking_section .qtyIncDec .incQty > span {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .decQty > span,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .incQty > span {
 	display: none !important;
 }
-#ttbm_content .ttbm_booking_section .qtyIncDec .decQty::before {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .decQty::before {
 	content: "";
 	display: block;
 	width: 10px;
@@ -2512,7 +2512,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	background: currentColor;
 	border-radius: 1px;
 }
-#ttbm_content .ttbm_booking_section .qtyIncDec .incQty::before {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .incQty::before {
 	content: "+";
 	display: block;
 	font-family: inherit;
@@ -2520,23 +2520,23 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	font-weight: 400;
 	line-height: 1;
 }
-#ttbm_content .ttbm_booking_section .qtyIncDec .decQty:hover,
-#ttbm_content .ttbm_booking_section .qtyIncDec .incQty:hover,
-#ttbm_content .ttbm_booking_section .qtyIncDec .decQty.addonGroupContent:hover,
-#ttbm_content .ttbm_booking_section .qtyIncDec .incQty.addonGroupContent:hover {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .decQty:hover,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .incQty:hover,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .decQty.addonGroupContent:hover,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .incQty.addonGroupContent:hover {
 	background: #f3f4f6 !important;
 	color: #111827 !important;
 	border-color: transparent !important;
 }
-#ttbm_content .ttbm_booking_section .qtyIncDec .decQty.mpDisabled,
-#ttbm_content .ttbm_booking_section .qtyIncDec .incQty.mpDisabled,
-#ttbm_content .ttbm_booking_section .qtyIncDec .decQty.mage_disabled,
-#ttbm_content .ttbm_booking_section .qtyIncDec .incQty.mage_disabled {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .decQty.mpDisabled,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .incQty.mpDisabled,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .decQty.mage_disabled,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .incQty.mage_disabled {
 	opacity: .35;
 	cursor: not-allowed;
 	pointer-events: none;
 }
-#ttbm_content .ttbm_booking_section .qtyIncDec label {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec label {
 	margin: 0;
 	padding: 0;
 	display: inline-flex;
@@ -2547,8 +2547,8 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	border: 0;
 	font-weight: inherit;
 }
-#ttbm_content .ttbm_booking_section .qtyIncDec input.inputIncDec,
-#ttbm_content .ttbm_booking_section .qtyIncDec .formControl {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec input.inputIncDec,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .formControl {
 	width: 100%;
 	min-width: 24px;
 	max-width: 44px;
@@ -2566,14 +2566,14 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	color: #111827;
 	-moz-appearance: textfield;
 }
-#ttbm_content .ttbm_booking_section .qtyIncDec input::-webkit-outer-spin-button,
-#ttbm_content .ttbm_booking_section .qtyIncDec input::-webkit-inner-spin-button {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec input::-webkit-outer-spin-button,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec input::-webkit-inner-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }
 
 /* extra services reuse ticket row styles */
-#ttbm_content .ttbm_booking_section p.extra_service_title {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section p.extra_service_title {
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
@@ -2584,20 +2584,20 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	margin: 0;
 	text-align: left;
 }
-#ttbm_content .ttbm_booking_section .ttbm_extra_service_row .ttbm_ticket_details {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_extra_service_row .ttbm_ticket_details {
 	text-align: left;
 }
-#ttbm_content .ttbm_booking_section .ttbm_extra_service_row .ttbm_ticket_details:has(.ttbm_ticket_icon) .ttbm_ticket_description {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_extra_service_row .ttbm_ticket_details:has(.ttbm_ticket_icon) .ttbm_ticket_description {
 	margin-left: 50px;
 }
-#ttbm_content .ttbm_booking_section .ttbm_extra_service_row .ttbm_price_container {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_extra_service_row .ttbm_price_container {
 	align-items: flex-end;
 	text-align: right;
 }
 
 /* ---- summary footer: Tickets | Total | Book now (one aligned row) ---- */
-#ttbm_content .ttbm_booking_section .ttbm_book_now_area,
-#ttbm_content .ttbm_booking_section .ttbm_book_now_bar {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_book_now_area,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_book_now_bar {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -2612,38 +2612,38 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	border-top: 1px solid var(--ttbm_d_border);
 	border-radius: 0 0 16px 16px;
 }
-#ttbm_content .ttbm_booking_section .ttbm_order_summary {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_order_summary {
 	display: flex;
 	align-items: center;
 	flex: 1 1 auto;
 	min-width: 0;
 }
-#ttbm_content .ttbm_booking_section .ttbm_summary_heading { display: none; }
-#ttbm_content .ttbm_booking_section .ttbm_summary_values {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_summary_heading { display: none; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_summary_values {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	gap: 0;
 	flex-wrap: nowrap;
 }
-#ttbm_content .ttbm_booking_section .ttbm_summary_item {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_summary_item {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	gap: 8px;
 	padding: 0 18px;
 }
-#ttbm_content .ttbm_booking_section .ttbm_summary_item:first-child {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_summary_item:first-child {
 	padding-left: 0;
 }
-#ttbm_content .ttbm_booking_section .ttbm_summary_divider {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_summary_divider {
 	display: inline-block;
 	width: 1px;
 	height: 28px;
 	background: var(--ttbm_d_border, #e2e8f0);
 	flex: 0 0 auto;
 }
-#ttbm_content .ttbm_booking_section .ttbm_summary_label {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_summary_label {
 	font-size: 11px;
 	font-weight: 700;
 	text-transform: uppercase;
@@ -2652,7 +2652,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	order: 0;
 	white-space: nowrap;
 }
-#ttbm_content .ttbm_booking_section .ttbm_summary_item .tour_qty {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_summary_item .tour_qty {
 	font-size: 20px;
 	font-weight: 800;
 	color: var(--ttbm_d_heading);
@@ -2660,7 +2660,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	order: 0;
 	white-space: nowrap;
 }
-#ttbm_content .ttbm_booking_section .ttbm_summary_item .tour_price {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_summary_item .tour_price {
 	font-size: 20px;
 	font-weight: 700;
 	color: var(--color_theme, #7241ff);
@@ -2668,7 +2668,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	order: 0;
 	white-space: nowrap;
 }
-#ttbm_content .ttbm_booking_section .ttbm_book_now_actions {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_book_now_actions {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -2678,8 +2678,8 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	margin-left: auto;
 }
 /* Keep custom-checkout hidden fields out of the visual flex row. */
-#ttbm_content .ttbm_booking_section .ttbm_book_now_actions .ttbm_custom_checkout_trigger,
-#ttbm_content .ttbm_booking_section .ttbm_book_now_actions input[type="hidden"] {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_book_now_actions .ttbm_custom_checkout_trigger,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_book_now_actions input[type="hidden"] {
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -2689,7 +2689,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	clip: rect(0, 0, 0, 0);
 	border: 0;
 }
-#ttbm_content .ttbm_booking_section .ttbm_book_now {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_book_now {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -2708,105 +2708,105 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	white-space: nowrap;
 	transition: border-color .2s ease, background .2s ease;
 }
-#ttbm_content .ttbm_booking_section .ttbm_book_now:hover {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_book_now:hover {
 	transform: none;
 	background: #5019cf !important;
 	border-color: #c9c9d4 !important;
 	box-shadow: none;
 	color: #fff !important;
 }
-#ttbm_content .ttbm_booking_section .ttbm_book_now span { color: #fff; font-size: 14px; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_book_now span { color: #fff; font-size: 14px; }
 
 @media (max-width: 640px) {
-	#ttbm_content .ttbm_booking_section .ttbm_book_now_area,
-	#ttbm_content .ttbm_booking_section .ttbm_book_now_bar {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_book_now_area,
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_book_now_bar {
 		flex-wrap: wrap;
 	}
-	#ttbm_content .ttbm_booking_section .ttbm_order_summary {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_order_summary {
 		flex: 1 1 100%;
 	}
-	#ttbm_content .ttbm_booking_section .ttbm_book_now_actions {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_book_now_actions {
 		flex: 1 1 100%;
 		margin-left: 0;
 	}
-	#ttbm_content .ttbm_booking_section .ttbm_book_now_actions .ttbm_book_now,
-	#ttbm_content .ttbm_booking_section .ttbm_book_now_actions .ttbm_load_seat_plan {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_book_now_actions .ttbm_book_now,
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_book_now_actions .ttbm_load_seat_plan {
 		flex: 1 1 auto;
 		width: 100%;
 	}
 }
 
 /* override global registration.css ticket table styles */
-#ttbm_content .ttbm_booking_section .ttbm_ticket_row {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row {
 	box-shadow: none !important;
 	margin-bottom: 0 !important;
 	border-radius: 0 !important;
 	overflow: visible !important;
 }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_row td::before {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td::before {
 	display: none !important;
 	content: none !important;
 }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_row td.ttbm-person-info {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-person-info {
 	background-color: transparent !important;
 	border-left: 0 !important;
 	border-radius: 0 !important;
 }
-#ttbm_content .ttbm_booking_section .ttbm_ticket_row td.ttbm-ticket-badge-col::before {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-ticket-badge-col::before {
 	display: none !important;
 	content: none !important;
 }
-#ttbm_content .ttbm_booking_section .person-info {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .person-info {
 	display: block !important;
 	margin-left: 0 !important;
 }
-#ttbm_content .ttbm_booking_section .ttbm_enhanced_table .ttbm-select-quantity .qtyIncDec {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_enhanced_table .ttbm-select-quantity .qtyIncDec {
 	margin-left: 0;
 	justify-content: center;
 }
 
 @media (max-width: 768px) {
-	#ttbm_content .ttbm_booking_section .ttbm_ticket_row {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row {
 		flex-wrap: wrap;
 		align-items: flex-start;
 		gap: 12px;
 	}
-	#ttbm_content .ttbm_booking_section .ttbm_ticket_row td {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td {
 		width: auto !important;
 		border-bottom: 0 !important;
 		padding: 12px 0 !important;
 		flex-direction: row !important;
 		justify-content: flex-start !important;
 	}
-	#ttbm_content .ttbm_booking_section .ttbm_ticket_row td.ttbm-person-info {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-person-info {
 		flex: 1 1 100%;
 	}
-	#ttbm_content .ttbm_booking_section .ttbm_ticket_row td.ttbm-ticket-badge-col {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-ticket-badge-col {
 		flex: 0 0 auto;
 		order: 2;
 	}
-	#ttbm_content .ttbm_booking_section .ttbm_ticket_row td.ttbm-regular-price {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-regular-price {
 		flex: 1 1 auto;
 		order: 3;
 		text-align: left;
 	}
-	#ttbm_content .ttbm_booking_section .ttbm_ticket_row td.ttbm-select-quantity {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-select-quantity {
 		flex: 0 0 auto;
 		order: 4;
 		margin-left: 0;
 	}
-	#ttbm_content .ttbm_booking_section .ttbm_price_container {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_price_container {
 		align-items: flex-start;
 		text-align: left;
 	}
-	#ttbm_content .ttbm_booking_section .ttbm_price_meta {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_price_meta {
 		justify-content: flex-start;
 	}
-	#ttbm_content .ttbm_booking_section .ttbm_ticket_details:has(.ttbm_ticket_icon) .ttbm_ticket_description {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_details:has(.ttbm_ticket_icon) .ttbm_ticket_description {
 		margin-left: 50px;
 	}
-	#ttbm_content .ttbm_booking_section .booking-button,
-	#ttbm_content .ttbm_booking_section .ttbm-date-select__toolbar {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .booking-button,
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__toolbar {
 		flex-direction: column;
 		flex-wrap: nowrap;
 		align-items: stretch;
@@ -2814,28 +2814,28 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 		width: 100%;
 		gap: 10px;
 	}
-	#ttbm_content .ttbm_booking_section .date-picker,
-	#ttbm_content .ttbm_booking_section .ttbm-date-select__field {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .date-picker,
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__field {
 		max-width: 100%;
 		flex: 1 1 auto;
 	}
-	#ttbm_content .ttbm_booking_section .date-picker-icon,
-	#ttbm_content .ttbm_booking_section .ttbm-date-select__control {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .date-picker-icon,
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__control {
 		min-width: 0;
 		width: 100%;
 	}
-	#ttbm_content .ttbm_booking_section .ttbm_check_ability,
-	#ttbm_content .ttbm_booking_section .navy_blueButton.ttbm_check_ability,
-	#ttbm_content .ttbm_booking_section .ttbm-date-select__action {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_check_ability,
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .navy_blueButton.ttbm_check_ability,
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-date-select__action {
 		width: 100%;
 	}
-	#ttbm_content .ttbm_booking_section .ttbm-time-slots__header {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slots__header {
 		flex-wrap: wrap;
 	}
-	#ttbm_content .ttbm_booking_section .ttbm-time-slots__list {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slots__list {
 		gap: 8px;
 	}
-	#ttbm_content .ttbm_booking_section .ttbm-time-slot.customRadio.button_type {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot.customRadio.button_type {
 		flex: 1 1 calc(50% - 8px);
 		min-width: 0;
 	}
@@ -2844,7 +2844,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 /* =====================================================
    Hotel booking section (tour details — hotel type)
    ===================================================== */
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel {
 	--ttbm_booking-pad-x: 20px;
 	background: #f5f6f8;
@@ -2853,14 +2853,14 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	padding-bottom: 20px;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_booking_toolbar {
 	padding-top: 20px;
 	padding-bottom: 8px;
 	background: #fff;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_booking_title {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_booking_title {
 	margin: 0 0 14px;
 	font-size: 22px;
 	font-weight: 700;
@@ -2868,7 +2868,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	line-height: 1.3;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_booking_controls {
 	display: flex;
 	flex-direction: column;
@@ -2877,7 +2877,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	width: 100%;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_field {
 	flex: 1 1 auto;
 	width: 100%;
@@ -2885,7 +2885,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	min-width: 0;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_row {
 	display: flex;
 	flex-direction: row;
@@ -2895,7 +2895,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	width: 100%;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_input_wrap {
 	flex: 1 1 auto;
 	min-width: 0;
@@ -3006,8 +3006,8 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 	appearance: auto;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_date_input,
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_date_input.formControl,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_date_input,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_date_input.formControl,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_input,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_input.formControl {
 	border: 0 !important;
@@ -3025,13 +3025,13 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 	text-align: left;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_input::placeholder {
 	color: var(--ttbm_d_muted);
 	font-weight: 500;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_check_btn {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_check_btn {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -3051,13 +3051,13 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 	transition: border-color .2s ease, box-shadow .2s ease;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_check_btn:hover {
 	border-color: #c9c9d4 !important;
 	box-shadow: 0 0 0 3px rgba(var(--color_theme_rgb), .08);
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_booking_cards {
 	display: flex;
 	flex-direction: column;
@@ -3066,7 +3066,7 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 	padding: 8px var(--ttbm_booking-pad-x, 20px) 0;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_area .ttbm_registration_area {
 	background: transparent;
 	border: 0;
@@ -3077,12 +3077,12 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 	padding: 0;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_item .ttbm_hdc_card {
 	border-radius: 12px;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_item .ttbm_booking_panel {
 	margin-top: 12px;
 	padding: 18px 20px;
@@ -3092,7 +3092,7 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 	box-shadow: none;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hdc_btn.ttbm_hotel_open_room_list {
 	background: #5b3cbe !important;
 	color: #fff !important;
@@ -3103,19 +3103,19 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 	font-size: 14px;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hdc_btn.ttbm_hotel_open_room_list:hover {
 	background: #4a31a0 !important;
 }
 
 /* Hotel room list table */
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_panel {
 	margin-top: 0 !important;
 	padding: 20px;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_panel__title {
 	margin: 0 0 14px;
 	font-size: 16px;
@@ -3124,7 +3124,7 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 	line-height: 1.3;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_table {
 	width: 100%;
 	border-collapse: separate;
@@ -3134,7 +3134,7 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 	background: transparent;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_table thead th {
 	padding: 0 12px 10px;
 	border: 0;
@@ -3148,17 +3148,17 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 	text-align: left;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_table thead .ttbm_hotel_room_col--price {
 	text-align: center;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_table thead .ttbm_hotel_room_col--qty {
 	text-align: right;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_row td {
 	padding: 14px 12px;
 	border: 0;
@@ -3167,12 +3167,12 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 	background: transparent;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_hidden_inputs {
 	display: none;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_name {
 	font-size: 15px;
 	font-weight: 700;
@@ -3181,7 +3181,7 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 	margin: 0 0 6px;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_meta {
 	display: flex;
 	flex-wrap: wrap;
@@ -3189,7 +3189,7 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 	gap: 6px;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_badge {
 	display: inline-flex;
 	align-items: center;
@@ -3203,17 +3203,17 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 	line-height: 1.2;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_badge i {
 	font-size: 10px;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_badge--stock i {
 	color: #22c55e;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_col--price {
 	text-align: center;
 	color: var(--ttbm_d_heading);
@@ -3221,13 +3221,13 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 	font-weight: 600;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_price .woocommerce-Price-amount {
 	font-weight: 700;
 	color: var(--ttbm_d_heading);
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_price_meta {
 	display: block;
 	margin-top: 2px;
@@ -3236,17 +3236,17 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 	color: var(--ttbm_d_muted);
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty {
 	text-align: right;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .qtyIncDec {
 	margin-left: auto;
 }
 
-#ttbm_content .ttbm_booking_section--hotel,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_item .ttbm_book_now_area {
 	margin-top: 16px;
 	padding: 5px;
@@ -3257,48 +3257,48 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 }
 
 @media (max-width: 767px) {
-	#ttbm_content .ttbm_booking_section--hotel,
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_row {
 		flex-direction: column;
 		align-items: stretch;
 	}
 
-	#ttbm_content .ttbm_booking_section--hotel,
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_date_input_wrap {
 		width: 100%;
 		min-width: 0;
 	}
 
-	#ttbm_content .ttbm_booking_section--hotel,
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hotel_check_btn {
 		width: 100%;
 	}
 
-	#ttbm_content .ttbm_booking_section--hotel,
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hdc_card {
 		flex-direction: column;
 	}
 
-	#ttbm_content .ttbm_booking_section--hotel,
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hdc_img {
 		flex: none;
 		width: 100%;
 		min-height: 200px;
 	}
 
-	#ttbm_content .ttbm_booking_section--hotel,
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hdc_footer {
 		flex-direction: column;
 		align-items: flex-start;
 	}
 
-	#ttbm_content .ttbm_booking_section--hotel,
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hdc_price_action {
 		align-items: flex-start;
 		width: 100%;
 	}
 
-	#ttbm_content .ttbm_booking_section--hotel,
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel,
 .ttbm_default_theme .ttbm-hotel-details-page .ttbm_booking_section--hotel .ttbm_hdc_btn {
 		width: 100%;
 		justify-content: center;
@@ -4600,7 +4600,7 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
    ============================================================ */
 
 /* Container */
-#ttbm_content .ttbm_booking_section--hotel {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel {
     background: #fff !important;
     border: 1px solid #E8E8EC;
     border-radius: 14px;
@@ -4610,20 +4610,20 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 }
 
 /* ---- Toolbar ---- */
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_booking_toolbar {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_booking_toolbar {
     padding: 16px 20px !important;
     background: var(--color_theme, #2271B1) !important;
     border-bottom: none;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_select_date_area {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_select_date_area {
     display: flex;
     align-items: center;
     gap: 16px;
     flex-wrap: wrap;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_booking_title {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_booking_title {
     margin: 0;
     flex: 0 0 auto;
     font-size: 18px;
@@ -4633,7 +4633,7 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     border: none;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_booking_controls {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_booking_controls {
     flex: 1 1 auto;
     display: flex;
     flex-direction: row;
@@ -4642,16 +4642,16 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     min-width: 0;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_date_label {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_date_label {
     display: none;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_date_field {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_date_field {
     flex: 1 1 auto;
     min-width: 0;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_date_row {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_date_row {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -4659,7 +4659,7 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     min-width: 0;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_date_input_wrap {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_date_input_wrap {
     flex: 1 1 auto;
     min-width: 180px;
     display: flex;
@@ -4672,14 +4672,14 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     border-radius: 10px;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_date_input_wrap .mi-calendar-days {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_date_input_wrap .mi-calendar-days {
     color: rgba(255,255,255,0.85);
     font-size: 16px;
     flex-shrink: 0;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_date_input,
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_date_input.formControl {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_date_input,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_date_input.formControl {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
@@ -4693,13 +4693,13 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     width: auto !important;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_date_input::placeholder {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_date_input::placeholder {
     color: rgba(255,255,255,0.6) !important;
     opacity: 1;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_check_btn,
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_check_availability {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_check_btn,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_check_availability {
     flex-shrink: 0;
     display: inline-flex !important;
     align-items: center;
@@ -4717,41 +4717,41 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     transition: background .2s;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_check_btn:hover,
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_check_availability:hover {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_check_btn:hover,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_check_availability:hover {
     background: #fff !important;
     box-shadow: 0 2px 8px rgba(0,0,0,.12);
 }
 
 /* ---- Hotel cards area ---- */
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_area {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_area {
     padding: 16px 20px;
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_registration_area {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_registration_area {
     border: 1px solid #E8E8EC;
     border-radius: 12px;
     overflow: hidden;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_registration_area .ttbm_hdc_card {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_registration_area .ttbm_hdc_card {
     border: none;
     border-radius: 0;
     box-shadow: none;
 }
 
 /* ---- Booking panel (room list) ---- */
-#ttbm_content .ttbm_booking_section--hotel .ttbm_booking_panel {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_booking_panel {
     padding: 20px 20px 20px;
     margin: 15px !important;
     background: #fff;
     border-top: 1px solid #F0F0F0;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_panel {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_panel {
     padding: 0;
     margin: 0 !important;
     border: none !important;
@@ -4759,7 +4759,7 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     background: transparent;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_panel__title {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_panel__title {
     font-size: 15px;
     font-weight: 700;
     color: #1a1a2e;
@@ -4769,31 +4769,31 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 }
 
 /* Room table wrapper */
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_table_wrap {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_table_wrap {
     border: 1px solid #E8E8EC;
     border-radius: 10px;
     overflow: hidden;
 }
 
 /* Override .mp_tour_ticket_type border */
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_table.mp_tour_ticket_type {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_table.mp_tour_ticket_type {
     border: none;
     border-radius: 0;
     margin: 0;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_table {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_table {
     width: 100%;
     border-collapse: collapse;
     table-layout: auto;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_table thead tr {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_table thead tr {
     background: #F8FAFC;
     border-bottom: 2px solid #E8E8EC;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_table thead th {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_table thead th {
     padding: 10px 14px;
     font-size: 11px;
     font-weight: 700;
@@ -4805,13 +4805,13 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     background: transparent;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_table thead .ttbm_hotel_room_col--price,
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_table thead .ttbm_hotel_room_col--qty {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_table thead .ttbm_hotel_room_col--price,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_table thead .ttbm_hotel_room_col--qty {
     text-align: right;
 }
 
 /* Data rows */
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_row td {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_row td {
     padding: 12px 14px;
     vertical-align: middle;
     border: none;
@@ -4819,20 +4819,20 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     background: transparent;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_row:last-of-type td {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_row:last-of-type td {
     border-bottom: none;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_row:hover td {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_row:hover td {
     background: #FAFBFC;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_hidden_inputs {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_hidden_inputs {
     display: none !important;
 }
 
 /* Room name & meta */
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_name {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_name {
     font-size: 14px;
     font-weight: 600;
     color: #1a1a2e;
@@ -4840,14 +4840,14 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     line-height: 1.3;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_meta {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_meta {
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
     margin-top: 4px;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_badge {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_badge {
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -4861,29 +4861,29 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     white-space: nowrap;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_badge i {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_badge i {
     font-size: 10px;
     color: #5B3CBE;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_badge--stock {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_badge--stock {
     background: #D1FAE5;
     border-color: #A7F3D0;
     color: #065F46;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_badge--stock i {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_badge--stock i {
     color: #10B981;
     font-size: 7px;
 }
 
 /* Price column */
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_col--price {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_col--price {
     text-align: right;
     white-space: nowrap;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_price {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_price {
     display: block;
     font-size: 17px;
     font-weight: 700;
@@ -4891,14 +4891,14 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     line-height: 1.2;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_price .woocommerce-Price-amount,
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_price .woocommerce-Price-currencySymbol {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_price .woocommerce-Price-amount,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_price .woocommerce-Price-currencySymbol {
     font-size: inherit;
     font-weight: inherit;
     color: inherit;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_price_meta {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_price_meta {
     display: block;
     font-size: 11.5px;
     color: #6B7280;
@@ -4907,12 +4907,12 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 }
 
 /* Qty column */
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty {
     text-align: right;
     width: 110px;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .qtyIncDec {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .qtyIncDec {
     display: inline-flex !important;
     align-items: center;
     border: 1px solid #E0DAF5 !important;
@@ -4921,8 +4921,8 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     background: #fff;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .decQty,
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .incQty {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .decQty,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .incQty {
     width: 32px;
     height: 32px;
     min-width: 32px;
@@ -4934,16 +4934,16 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     transition: background .15s;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .decQty:hover,
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .incQty:hover {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .decQty:hover,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .incQty:hover {
     background: #ECE6FA;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .qty-btn-icon {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .qty-btn-icon {
     display: none;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .decQty::before {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .decQty::before {
     content: "";
     display: block;
     width: 10px;
@@ -4952,7 +4952,7 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     border-radius: 1px;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .incQty::before {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .incQty::before {
     content: "+";
     display: block;
     font-size: 18px;
@@ -4961,7 +4961,7 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     line-height: 1;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .inputIncDec {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty .inputIncDec {
     width: 38px !important;
     min-width: 38px;
     height: 32px;
@@ -4979,7 +4979,7 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
 }
 
 /* ---- Book now area ---- */
-#ttbm_content .ttbm_booking_section--hotel .ttbm_book_now_area {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_book_now_area {
     margin-top: 16px;
     padding: 14px 16px;
     background: #F7F5FF;
@@ -4992,36 +4992,36 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     flex-wrap: wrap;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_order_summary {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_order_summary {
     flex: 1 1 auto;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_summary_values {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_summary_values {
     display: flex;
     gap: 24px;
     align-items: center;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_summary_item {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_summary_item {
     display: flex;
     flex-direction: column;
     gap: 1px;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_summary_item b {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_summary_item b {
     font-size: 18px;
     font-weight: 700;
     color: #5B3CBE;
     line-height: 1.2;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_summary_item .ttbm_summary_label {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_summary_item .ttbm_summary_label {
     font-size: 11.5px;
     color: #6B7280;
     font-weight: 500;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_book_now {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_book_now {
     display: inline-flex !important;
     align-items: center;
     gap: 8px;
@@ -5039,66 +5039,66 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
     opacity: 1 !important;
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_book_now:hover {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_book_now:hover {
     background: #4a31a0 !important;
     transform: translateY(-1px);
     box-shadow: 0 4px 14px rgba(91,60,190,.25);
 }
 
-#ttbm_content .ttbm_booking_section--hotel .ttbm_book_now span {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_book_now span {
     color: #fff !important;
     font-size: 13px;
 }
 
 /* ---- Responsive ---- */
 @media (max-width: 768px) {
-    #ttbm_content .ttbm_booking_section--hotel .ttbm_select_date_area {
+    :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_select_date_area {
         flex-direction: column;
         align-items: stretch;
     }
 
-    #ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_booking_title {
+    :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_booking_title {
         white-space: normal;
     }
 
-    #ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_booking_controls {
+    :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_booking_controls {
         flex-direction: column;
         align-items: stretch;
     }
 
-    #ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_date_row {
+    :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_date_row {
         flex-direction: column;
         align-items: stretch;
     }
 
-    #ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_date_input_wrap {
+    :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_date_input_wrap {
         min-width: 0;
     }
 
-    #ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_check_btn,
-    #ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_check_availability {
+    :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_check_btn,
+    :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_check_availability {
         height: 44px;
         width: 100%;
         justify-content: center;
     }
 
-    #ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_area {
+    :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_area {
         padding: 12px;
     }
 
-    #ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_table thead .ttbm_hotel_room_col--price,
-    #ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_table thead .ttbm_hotel_room_col--qty,
-    #ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_col--price,
-    #ttbm_content .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty {
+    :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_table thead .ttbm_hotel_room_col--price,
+    :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_table thead .ttbm_hotel_room_col--qty,
+    :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_col--price,
+    :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_hotel_room_col--qty {
         text-align: left;
     }
 
-    #ttbm_content .ttbm_booking_section--hotel .ttbm_book_now_area {
+    :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_book_now_area {
         flex-direction: column;
         align-items: stretch;
     }
 
-    #ttbm_content .ttbm_booking_section--hotel .ttbm_book_now {
+    :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section--hotel .ttbm_book_now {
         width: 100%;
         justify-content: center;
     }

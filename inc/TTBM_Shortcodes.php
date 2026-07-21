@@ -455,15 +455,49 @@
 				ob_start();
 				$tour_id = $params['ttbm_id'] ?? get_the_id();
 				if ($tour_id) {
+					// The single-tour-page theme renders this same form inside
+					// `#ttbm_content .ttbm_booking_section`, and the modern
+					// registration styles (ttbm_details.php/css) are scoped to that
+					// ancestor chain. Standalone the shortcode has neither wrapper,
+					// so it previously fell back to the un-modernised base styles.
+					// `.ttbm_reg_shortcode` + `.ttbm_booking_section` re-supply that
+					// scope for the shortcode; both are plugin-namespaced (ttbm_*),
+					// so they cannot collide with theme or other-plugin CSS, and the
+					// CSS matches them via :is(#ttbm_content, .ttbm_reg_shortcode)
+					// which keeps the single-page selector specificity unchanged.
+					//
+					// The smart-card ticket layout (regular_ticket_smart.php) is a
+					// single-page "smart" theme feature whose CSS only applies under the
+					// .ttbm_smart_theme page wrapper; a standalone shortcode has no such
+					// wrapper, so those cards render unstyled. Force the regular ticket
+					// table here — it is fully styled for the .ttbm_reg_shortcode context
+					// — so the embedded form keeps the modern look regardless of the
+					// tour's chosen page theme.
+					add_filter('ttbm_regular_ticket_file', array($this, 'ttbm_shortcode_force_regular_ticket'), 99, 2);
 					?>
-					<div class="ttbm_style">
+					<div class="ttbm_style ttbm_reg_shortcode">
 						<div class="mpContainer">
-						<?php include(TTBM_Function::template_path('ticket/registration.php')); ?>
+							<div class="ttbm_booking_section">
+								<?php include(TTBM_Function::template_path('ticket/registration.php')); ?>
+							</div>
 						</div>
 					</div>
 					<?php
+					remove_filter('ttbm_regular_ticket_file', array($this, 'ttbm_shortcode_force_regular_ticket'), 99);
 				}
 				return ob_get_clean();
+			}
+			/**
+			 * Inside the [ttbm-registration] shortcode, always use the regular ticket
+			 * table instead of the single-page smart-theme card template, which has no
+			 * styling wrapper in a standalone embed. See registration().
+			 *
+			 * @param string $file    Resolved ticket template path.
+			 * @param int    $tour_id Tour being rendered.
+			 * @return string
+			 */
+			public function ttbm_shortcode_force_regular_ticket($file, $tour_id) {
+				return TTBM_Function::template_path('ticket/regular_ticket.php');
 			}
 			public function related($attribute) {
 				$defaults = array('ttbm_id' => '', 'show' => 4);

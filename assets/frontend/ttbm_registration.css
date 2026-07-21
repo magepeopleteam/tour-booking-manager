@@ -1957,8 +1957,8 @@ div.ttbm_booking_panel .qtyIncDec .incQty {
 	border: 1px solid #ddd;
 }
 
-#ttbm_content .ttbm_booking_section .qtyIncDec .decQty,
-#ttbm_content .ttbm_booking_section .qtyIncDec .incQty {
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .decQty,
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .qtyIncDec .incQty {
 	border: 0 !important;
 	border-radius: 50%;
 }

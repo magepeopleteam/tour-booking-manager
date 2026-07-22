@@ -46,7 +46,7 @@
                                             </div>
                                         </div>
                                         <a href="https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/" target="_blank" class="buttonOutline allCenter_radius_transition customButton">Buy Pro Today</a>
-                                        <a href="https://docs.mage-people.com/tour-travel-booking-manager/" target="_blank" class="buttonOutline allCenter_radius_transition customButton">Find Documentation Here</a>
+                                        <a href="https://docs.mage-people.com/plugins/wptravelly/overview" target="_blank" class="buttonOutline allCenter_radius_transition customButton">Find Documentation Here</a>
                                     </div>
                                 </div>
                                 <div class="col_6 sd_12">

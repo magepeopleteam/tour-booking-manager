@@ -21,7 +21,7 @@ Launch your travel booking site in under five minutes using the most feature-ric
 
 === Explore the Demo: ===  
 🌐 [Live Demo](https://wptravelly.com/)  
-📘 [Online Documentation](https://docs.mage-people.com/docs/plugins/wptravelly/overview)  
+📘 [Online Documentation](https://docs.mage-people.com/plugins/wptravelly/overview)  
 🛍️ [Install Travelly](https://downloads.wordpress.org/plugin/tour-booking-manager.zip)  
 
 = 🏆 Trusted by 1,000+ WordPress Websites =

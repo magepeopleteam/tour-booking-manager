@@ -3,9 +3,9 @@ Contributors: magepeopleteam, aamahin
 Plugin link: https://mage-people.com/
 Tags: tour booking, travel agency, travel booking, tour operator, hotel booking
 Requires at least: 4.4.0
-Tested up to: 6.8
+Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 2.2.0
+Stable tag: 2.1.9
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -139,7 +139,7 @@ Choose from multiple tour details page styles, including a Viator-style template
  
 = 🛠️ Support & Documentation =
  
-* 📘 [Documentation](https://docs.mage-people.com/docs/plugins/wptravelly/overview)
+* 📘 [Documentation](https://docs.mage-people.com/plugins/wptravelly/overview)
 * 📺 [Video Tutorial: How to Install & Create a Tour](https://www.youtube.com/watch?v=ZQ99Z3kOMws)
 * 📩 [Submit a Support Ticket](https://mage-people.com/submit-ticket/)
 * 💬 [WordPress.org Support Forum](https://wordpress.org/support/plugin/tour-booking-manager/)
@@ -423,13 +423,10 @@ Language setting issue fixed.
 - Removed unnecessary code
 - Resolved starting price issue
 - Improved performance and speed optimization
-
-Released on: 21 April 2026
-
-
-= Version 2.2.0 =
 - Tour start date and end date, time added in checkout and order details.
 - Hide other add-on code.
+
+Released on: 21 April 2026
 
 
 

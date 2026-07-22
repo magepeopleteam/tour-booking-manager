@@ -23,6 +23,7 @@ if (!defined('ABSPATH')) {
 			<!-- Hidden elements for JavaScript functionality -->
 			<span class="ttbm_last_updated" data-tour-id="<?php echo esc_attr($tour_id); ?>" data-tour-date="<?php echo esc_attr($tour_date); ?>" style="display: none;"></span>
 			<span id="ttbm_total_available" style="display: none;"><?php echo esc_html($available_seat); ?></span>
+			<h2 class="ttbm_ticket_list_title"><?php esc_html_e( 'Ticket Type', 'tour-booking-manager' ); ?></h2>
 			<div class="">
 				<?php
 					$option_name = 'ttbm_string_availabe_ticket_list';
@@ -97,32 +98,42 @@ if (!defined('ABSPATH')) {
 											
 											<div class="ttbm_ticket_details">
 												<p class="ttbm_ticket_name">
-													<?php if ($ticket_type_icon) { ?>
-														<span class="ttbm_ticket_icon <?php echo esc_attr($ticket_type_icon); ?>"></span>
-													<?php } ?> 
-													<?php echo esc_html($ticket_name); ?>
+													<?php if ( $ticket_type_icon ) { ?>
+														<span class="ttbm_ticket_icon <?php echo esc_attr( $ticket_type_icon ); ?>"></span>
+													<?php } ?>
+													<span class="ttbm_ticket_name_text"><?php echo esc_html( $ticket_name ); ?></span>
 												</p>
-												<?php if ($description) { ?>
-													<div class="ttbm_ticket_description"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
+												<?php if ( $description ) { ?>
+													<div class="ttbm_ticket_description"><?php TTBM_Custom_Layout::load_more_text( $description, 100 ); ?></div>
 												<?php } ?>
 											</div>
 										</div>
 									</td>
+
+									<td class="ttbm-ticket-badge-col">
+										<?php if ( $regular_price ) { ?>
+											<span class="ttbm_discount_badge">
+												<?php
+													$discount_percentage = round( ( ( $regular_price - $price ) / $regular_price ) * 100 );
+													echo esc_html( $discount_percentage . '% off' );
+												?>
+											</span>
+										<?php } ?>
+									</td>
 									
 									<td class="ttbm-regular-price" data-regular-price="<?php echo esc_attr(TTBM_Global_Function::price_convert_raw(TTBM_Global_Function::wc_price($tour_id, $regular_price))); ?>" data-base-price="<?php echo esc_attr($ticket['ticket_type_price']); ?>">
 										<div class="ttbm_price_container">
-											<?php if ($regular_price) { ?>
-												<span class="ttbm_regular_price strikeLine"><?php echo wc_price($regular_price); ?></span>
-											<?php } ?>
 											<span class="ttbm_sale_price"><?php echo mep_esc_html($ticket_price); ?></span>
-											<?php if ($regular_price) { ?>
-												<span class="ttbm_discount_badge">
-													<?php 
-													$discount_percentage = round((($regular_price - $price) / $regular_price) * 100);
-													echo esc_html($discount_percentage . '% OFF');
-													?>
-												</span>
-											<?php } ?>
+											<div class="ttbm_price_meta">
+												<?php if ( $regular_price ) { ?>
+													<span class="ttbm_regular_price strikeLine"><?php echo wc_price( $regular_price ); ?></span>
+												<?php } ?>
+												<?php if ( ! $is_sold_out ) { ?>
+													<span class="ttbm_stock_left">- <?php echo esc_html( $available ); ?> <?php esc_html_e( 'left', 'tour-booking-manager' ); ?></span>
+												<?php } else { ?>
+													<span class="ttbm_stock_left ttbm_stock_sold_out"><?php esc_html_e( 'Sold out', 'tour-booking-manager' ); ?></span>
+												<?php } ?>
+											</div>
 										</div>
 									</td>
 									
@@ -171,7 +182,7 @@ if (!defined('ABSPATH')) {
 								</tr>
 
 								<tr class="ttbm_hidden_inputs">
-									<td colspan="<?php echo $hide_availability_column === 'on' ? '3' : '4'; ?>">
+									<td colspan="<?php echo $hide_availability_column === 'on' ? '4' : '5'; ?>">
 										<?php do_action('ttbm_input_data',$ticket_name,$tour_id); ?>
 										<input type="hidden" name='tour_id[<?php echo $index; ?>]' value='<?php echo esc_html($tour_id); ?>'>
 										<input type="hidden" name='ticket_name[<?php echo $index; ?>]' value='<?php echo esc_html($ticket_name); ?>'>
@@ -180,7 +191,11 @@ if (!defined('ABSPATH')) {
 										<input type="hidden" name='ticket_capacity[<?php echo $index; ?>]' value='<?php echo esc_html($total_capacity); ?>'>
 									</td>
 								</tr>
-								<?php do_action('ttbm_after_ticket_type_item', $tour_id, $ticket); ?>
+								<tr class="ttbm_attendee_form_row">
+									<td colspan="<?php echo $hide_availability_column === 'on' ? '4' : '5'; ?>">
+										<?php do_action('ttbm_after_ticket_type_item', $tour_id, $ticket); ?>
+									</td>
+								</tr>
 							<?php } ?>
 						</tbody>
 					</table>

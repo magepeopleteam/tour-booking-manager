@@ -23,8 +23,17 @@ if ( ! class_exists( 'TTBM_Woo_Installer' ) ) {
 			add_action( 'admin_init', array( $this, 'handle_activation_redirect' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 			add_action( 'admin_footer', array( $this, 'render_popup' ) );
-			add_action( 'wp_ajax_ttbm_install_woocommerce', array( $this, 'ajax_install_woocommerce' ) );
-			add_action( 'wp_ajax_ttbm_activate_woocommerce', array( $this, 'ajax_activate_woocommerce' ) );
+			// Single stepped endpoint: each request does ONE small unit of work
+			// (download → extract → activate → setup) to keep peak memory/time low.
+			add_action( 'wp_ajax_ttbm_woo_step', array( $this, 'ajax_woo_step' ) );
+		}
+
+		/**
+		 * Transient key holding the downloaded package path between the
+		 * "download" and "extract" steps, scoped to the current user.
+		 */
+		private function pkg_transient_key(): string {
+			return 'ttbm_woo_pkg_' . get_current_user_id();
 		}
 
 		/**
@@ -70,9 +79,14 @@ if ( ! class_exists( 'TTBM_Woo_Installer' ) ) {
 
 		/**
 		 * Should we show the popup on this page load?
+		 *
+		 * WooCommerce is now an optional integration, not a hard requirement, so
+		 * this installer prompt is permanently disabled. The class stays loaded
+		 * (dormant) rather than removed, in case a future release needs to
+		 * reintroduce an opt-in "connect WooCommerce" prompt.
 		 */
 		private function should_show_popup(): bool {
-			return ! $this->is_woo_active();
+			return false;
 		}
 
 		/**
@@ -100,13 +114,17 @@ if ( ! class_exists( 'TTBM_Woo_Installer' ) ) {
 
 			wp_localize_script( 'ttbm-woo-installer', 'ttbm_woo_installer', array(
 				'ajax_url'       => admin_url( 'admin-ajax.php' ),
-				'install_nonce'  => wp_create_nonce( 'ttbm_install_woo' ),
-				'activate_nonce' => wp_create_nonce( 'ttbm_activate_woo' ),
+				'step_nonce'     => wp_create_nonce( 'ttbm_woo_step' ),
+				// First step: skip download/extract if the files are already present.
+				'first_step'     => $this->is_woo_installed() ? 'activate' : 'download',
 				'redirect_url'   => admin_url( 'edit.php?post_type=ttbm_tour&page=ttbm_list' ),
 				'woo_installed'  => $this->is_woo_installed() ? 'yes' : 'no',
 				'i18n'           => array(
+					'downloading'    => __( 'Downloading WooCommerce...', 'tour-booking-manager' ),
+					'extracting'     => __( 'Extracting files...', 'tour-booking-manager' ),
 					'installing'     => __( 'Installing WooCommerce...', 'tour-booking-manager' ),
 					'activating'     => __( 'Activating WooCommerce...', 'tour-booking-manager' ),
+					'finishing'      => __( 'Finishing setup...', 'tour-booking-manager' ),
 					'success'        => __( 'WooCommerce activated successfully!', 'tour-booking-manager' ),
 					'redirecting'    => __( 'Redirecting...', 'tour-booking-manager' ),
 					'error'          => __( 'Something went wrong. Please try again.', 'tour-booking-manager' ),
@@ -211,19 +229,62 @@ if ( ! class_exists( 'TTBM_Woo_Installer' ) ) {
 		}
 
 		/**
-		 * AJAX: Install WooCommerce from WordPress.org repository.
+		 * AJAX dispatcher: runs ONE step per request and tells the client
+		 * which step to call next. Splitting the work this way keeps each
+		 * request's peak memory and execution time low on constrained hosts.
 		 */
-		public function ajax_install_woocommerce() {
-			check_ajax_referer( 'ttbm_install_woo', 'nonce' );
+		public function ajax_woo_step() {
+			check_ajax_referer( 'ttbm_woo_step', 'nonce' );
 
+			// Give this single, small unit of work headroom without forcing the
+			// whole install+activate to fit one request.
+			if ( function_exists( 'wp_raise_memory_limit' ) ) {
+				wp_raise_memory_limit( 'admin' );
+			}
+			if ( function_exists( 'set_time_limit' ) ) {
+				@set_time_limit( 120 );
+			}
+
+			$step = isset( $_POST['step'] ) ? sanitize_key( wp_unslash( $_POST['step'] ) ) : '';
+
+			switch ( $step ) {
+				case 'download':
+					$this->step_download();
+					break;
+				case 'extract':
+					$this->step_extract();
+					break;
+				case 'activate':
+					$this->step_activate();
+					break;
+				case 'setup':
+					$this->step_setup();
+					break;
+				default:
+					wp_send_json_error( array( 'message' => __( 'Invalid installation step.', 'tour-booking-manager' ) ) );
+			}
+		}
+
+		/**
+		 * Step 1 — Download the WooCommerce package to a temp file.
+		 * Uses download_url() which streams to disk (no large in-memory buffer).
+		 */
+		private function step_download() {
 			if ( ! current_user_can( 'install_plugins' ) ) {
 				wp_send_json_error( array( 'message' => __( 'You do not have permission to install plugins.', 'tour-booking-manager' ) ) );
 			}
 
+			// Already present? Skip straight to activation.
+			if ( $this->is_woo_installed() ) {
+				wp_send_json_success( array(
+					'next'    => 'activate',
+					'percent' => 60,
+					'message' => __( 'Activating WooCommerce...', 'tour-booking-manager' ),
+				) );
+			}
+
 			include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 			include_once ABSPATH . 'wp-admin/includes/file.php';
-			include_once ABSPATH . 'wp-admin/includes/misc.php';
-			include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 
 			$api = plugins_api( 'plugin_information', array(
 				'slug'   => 'woocommerce',
@@ -247,40 +308,121 @@ if ( ! class_exists( 'TTBM_Woo_Installer' ) ) {
 				wp_send_json_error( array( 'message' => $api->get_error_message() ) );
 			}
 
-			$upgrader = new Plugin_Upgrader( new WP_Ajax_Upgrader_Skin() );
-			$result   = $upgrader->install( $api->download_link );
+			$tmp = download_url( $api->download_link );
+			if ( is_wp_error( $tmp ) ) {
+				wp_send_json_error( array( 'message' => $tmp->get_error_message() ) );
+			}
+
+			// Hand the package path to the extract step (short-lived, user-scoped).
+			set_transient( $this->pkg_transient_key(), $tmp, 15 * MINUTE_IN_SECONDS );
+
+			wp_send_json_success( array(
+				'next'    => 'extract',
+				'percent' => 40,
+				'message' => __( 'Extracting files...', 'tour-booking-manager' ),
+			) );
+		}
+
+		/**
+		 * Step 2 — Extract the downloaded package into the plugins directory.
+		 */
+		private function step_extract() {
+			if ( ! current_user_can( 'install_plugins' ) ) {
+				wp_send_json_error( array( 'message' => __( 'You do not have permission to install plugins.', 'tour-booking-manager' ) ) );
+			}
+
+			$tmp = get_transient( $this->pkg_transient_key() );
+			if ( empty( $tmp ) || ! file_exists( $tmp ) ) {
+				wp_send_json_error( array( 'message' => __( 'Download package not found. Please try again.', 'tour-booking-manager' ) ) );
+			}
+
+			include_once ABSPATH . 'wp-admin/includes/file.php';
+
+			global $wp_filesystem;
+			if ( ! WP_Filesystem() ) {
+				@unlink( $tmp );
+				delete_transient( $this->pkg_transient_key() );
+				wp_send_json_error( array( 'message' => __( 'Unable to access the filesystem.', 'tour-booking-manager' ) ) );
+			}
+
+			$result = unzip_file( $tmp, WP_PLUGIN_DIR );
+
+			// Clean up the temp package regardless of outcome.
+			@unlink( $tmp );
+			delete_transient( $this->pkg_transient_key() );
 
 			if ( is_wp_error( $result ) ) {
 				wp_send_json_error( array( 'message' => $result->get_error_message() ) );
 			}
 
-			if ( $result === false ) {
-				wp_send_json_error( array( 'message' => __( 'Installation failed.', 'tour-booking-manager' ) ) );
+			if ( ! $this->is_woo_installed() ) {
+				wp_send_json_error( array( 'message' => __( 'Installation failed. Please install WooCommerce manually.', 'tour-booking-manager' ) ) );
 			}
 
-			wp_send_json_success( array( 'message' => __( 'WooCommerce installed successfully.', 'tour-booking-manager' ) ) );
+			wp_send_json_success( array(
+				'next'    => 'activate',
+				'percent' => 60,
+				'message' => __( 'Activating WooCommerce...', 'tour-booking-manager' ),
+			) );
 		}
 
 		/**
-		 * AJAX: Activate WooCommerce plugin.
+		 * Step 3 — Activate WooCommerce silently. Silent activation skips firing
+		 * the activation hook in this request, so the heavy WC_Install routine
+		 * (tables, pages, cron) is deferred to the next, isolated step.
 		 */
-		public function ajax_activate_woocommerce() {
-			check_ajax_referer( 'ttbm_activate_woo', 'nonce' );
-
+		private function step_activate() {
 			if ( ! current_user_can( 'activate_plugins' ) ) {
 				wp_send_json_error( array( 'message' => __( 'You do not have permission to activate plugins.', 'tour-booking-manager' ) ) );
 			}
 
-			$result = activate_plugin( 'woocommerce/woocommerce.php' );
-
-			if ( is_wp_error( $result ) ) {
-				wp_send_json_error( array( 'message' => $result->get_error_message() ) );
+			if ( ! $this->is_woo_installed() ) {
+				wp_send_json_error( array( 'message' => __( 'WooCommerce is not installed.', 'tour-booking-manager' ) ) );
 			}
 
-			// Signal the demo import popup to auto-show on the next page load (tour list)
+			if ( ! $this->is_woo_active() ) {
+				// $silent = true → defer WC_Install to the setup step.
+				$result = activate_plugin( 'woocommerce/woocommerce.php', '', false, true );
+				if ( is_wp_error( $result ) ) {
+					wp_send_json_error( array( 'message' => $result->get_error_message() ) );
+				}
+			}
+
+			wp_send_json_success( array(
+				'next'    => 'setup',
+				'percent' => 85,
+				'message' => __( 'Finishing setup...', 'tour-booking-manager' ),
+			) );
+		}
+
+		/**
+		 * Step 4 — Run WooCommerce's own installer in its own request, where WC
+		 * is already loaded as an active plugin. Isolating the DB/page/cron setup
+		 * here keeps it off the activation request's memory budget.
+		 */
+		private function step_setup() {
+			if ( ! current_user_can( 'activate_plugins' ) ) {
+				wp_send_json_error( array( 'message' => __( 'You do not have permission to activate plugins.', 'tour-booking-manager' ) ) );
+			}
+
+			if ( ! $this->is_woo_active() ) {
+				wp_send_json_error( array( 'message' => __( 'WooCommerce is not active.', 'tour-booking-manager' ) ) );
+			}
+
+			// WC is loaded normally on this request; run its idempotent installer
+			// so tables/pages/cron are created deterministically.
+			if ( class_exists( 'WC_Install' ) ) {
+				WC_Install::install();
+			}
+
+			// Signal the demo import popup to auto-show on the next page load (tour list).
 			set_transient( 'ttbm_woo_just_activated', true, 300 );
 
-			wp_send_json_success( array( 'message' => __( 'WooCommerce activated successfully!', 'tour-booking-manager' ) ) );
+			wp_send_json_success( array(
+				'next'    => 'done',
+				'percent' => 100,
+				'message' => __( 'WooCommerce activated successfully!', 'tour-booking-manager' ),
+			) );
 		}
 	}
 

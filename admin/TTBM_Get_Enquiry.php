@@ -23,6 +23,19 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             add_action('wp_ajax_ttbm_delete_enquiry', [$this, 'delete_enquiry']);
 
             add_action('wp_ajax_ttbm_reply_enquiry', [$this, 'reply_enquiry']);
+            add_action('admin_enqueue_scripts', [$this, 'enqueue_assets']);
+        }
+
+        public function enqueue_assets($hook) {
+            if (strpos($hook, 'ttbm_get_enquiry') === false) {
+                return;
+            }
+            wp_enqueue_style(
+                'ttbm-enquiry-admin',
+                TTBM_PLUGIN_URL . '/assets/admin/ttbm-enquiry-admin.css',
+                [],
+                TTBM_PLUGIN_VERSION
+            );
         }
 
         private function user_can_manage_enquiries() {
@@ -73,25 +86,29 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 }
                 ob_start();
                 ?>
-                <table>
+                <table class="ttbm-enq-detail-table">
                     <tr>
-                        <th><?php esc_html_e('Subject:', 'tour-booking-manager'); ?></th>
+                        <th><?php esc_html_e('Subject', 'tour-booking-manager'); ?></th>
                         <td><?php echo esc_html($response['title']); ?></td>
                     </tr>
                     <tr>
-                        <th><?php esc_html_e('Date:', 'tour-booking-manager'); ?></th>
-                        <td><?php echo esc_html($response['date']); ?> <?php echo esc_html($response['time']); ?></td>
-                    </tr>
-                    <tr>
-                        <th><?php esc_html_e('Name:', 'tour-booking-manager'); ?></th>
+                        <th><?php esc_html_e('Name', 'tour-booking-manager'); ?></th>
                         <td><?php echo esc_html($response['name']); ?></td>
                     </tr>
                     <tr>
-                        <th><?php esc_html_e('Email:', 'tour-booking-manager'); ?></th>
-                        <td><?php echo esc_html($response['email']); ?></td>
+                        <th><?php esc_html_e('Email', 'tour-booking-manager'); ?></th>
+                        <td><a href="mailto:<?php echo esc_attr($response['email']); ?>"><?php echo esc_html($response['email']); ?></a></td>
                     </tr>
                     <tr>
-                        <th><?php esc_html_e('Message:', 'tour-booking-manager'); ?></th>
+                        <th><?php esc_html_e('Date', 'tour-booking-manager'); ?></th>
+                        <td><?php echo esc_html($response['date']); ?> <?php echo esc_html($response['time']); ?></td>
+                    </tr>
+                    <tr>
+                        <th><?php esc_html_e('Status', 'tour-booking-manager'); ?></th>
+                        <td><span class="ttbm-enq-badge <?php echo esc_attr($response['status'] ?: 'viewed'); ?>"><?php echo esc_html(ucfirst($response['status'] ?: 'viewed')); ?></span></td>
+                    </tr>
+                    <tr>
+                        <th><?php esc_html_e('Message', 'tour-booking-manager'); ?></th>
                         <td><?php echo wp_kses_post($response['content']); ?></td>
                     </tr>
                 </table>
@@ -161,8 +178,15 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             
             // Format reply message with proper HTML structure
             $email_message = '<html><body>' . wpautop($message) . '</body></html>';
-            
-            if (wp_mail($to, $subject, $email_message, $headers)) {
+
+            // Let an email-builder addon take over (and log) this email.
+            $ttbm_enquiry_ctx = array('type' => 'enquiry_reply', 'to' => $to, 'subject' => $subject, 'message' => $message, 'enquiry_id' => $postId);
+            $sent = true;
+            if (apply_filters('ttbm_enquiry_use_default', true, $ttbm_enquiry_ctx)) {
+                $sent = wp_mail($to, $subject, $email_message, $headers);
+            }
+            do_action('ttbm_enquiry_email', $ttbm_enquiry_ctx);
+            if ($sent) {
                 update_post_meta($postId, 'status', 'replied');
                 wp_send_json_success(['message' => __('Message sent successfully!','tour-booking-manager')]);
             } else {
@@ -250,8 +274,13 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 ],
             ]);
             
-            wp_mail($to, $subject, $email_message, $headers);
-            
+            // Admin notification — let an email-builder addon take over (and log).
+            $ttbm_enquiry_admin_ctx = array('type' => 'enquiry_admin', 'to' => $to, 'name' => $name, 'email' => $email, 'subject' => $subject, 'message' => $message, 'enquiry_id' => $enquiry_id);
+            if (apply_filters('ttbm_enquiry_use_default', true, $ttbm_enquiry_admin_ctx)) {
+                wp_mail($to, $subject, $email_message, $headers);
+            }
+            do_action('ttbm_enquiry_email', $ttbm_enquiry_admin_ctx);
+
             // Send confirmation email to customer
             if ($enquiry_id && !empty($email)) {
                 $customer_subject = sprintf(
@@ -280,8 +309,12 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                 $customer_message .= '<p style="color: #666; font-size: 12px;">' . esc_html__('This is an automated confirmation email. Please do not reply to this email.', 'tour-booking-manager') . '</p>';
                 $customer_message .= '</body></html>';
                 
-                // Send confirmation to customer
-                wp_mail($email, $customer_subject, $customer_message, $customer_headers);
+                // Send confirmation to customer — let an addon take over (and log).
+                $ttbm_enquiry_cust_ctx = array('type' => 'enquiry_customer', 'to' => $email, 'name' => $name, 'email' => $email, 'subject' => $subject, 'message' => $message, 'enquiry_id' => $enquiry_id);
+                if (apply_filters('ttbm_enquiry_use_default', true, $ttbm_enquiry_cust_ctx)) {
+                    wp_mail($email, $customer_subject, $customer_message, $customer_headers);
+                }
+                do_action('ttbm_enquiry_email', $ttbm_enquiry_cust_ctx);
             }
             if ($enquiry_id) {
                 wp_send_json_success(['message' => __('Enquiry submitted successfully.', 'tour-booking-manager')]);
@@ -443,201 +476,295 @@ if (! class_exists('TTBM_Get_Enquiry')) {
 
         public function get_enquiry_page()
         {
-            
-            if (isset($_POST['ttbm_enquiry_submit']) and isset($_POST['ttbm_enquiry_nonce'])) {
-                
+            $settings_saved = false;
+            if (isset($_POST['ttbm_enquiry_submit']) && isset($_POST['ttbm_enquiry_nonce'])) {
                 if (wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_enquiry_nonce'])), 'ttbm_enquiry_nonce')) {
-                    $ttbm_enquiry_from_email=isset($_POST['ttbm_enquiry_from_email'])?sanitize_email(wp_unslash($_POST['ttbm_enquiry_from_email'])):'';
-                    $ttbm_enquiry_from_name=isset($_POST['ttbm_enquiry_from_name'])?sanitize_text_field(wp_unslash($_POST['ttbm_enquiry_from_name'])):'';
+                    $ttbm_enquiry_from_email = isset($_POST['ttbm_enquiry_from_email']) ? sanitize_email(wp_unslash($_POST['ttbm_enquiry_from_email'])) : '';
+                    $ttbm_enquiry_from_name  = isset($_POST['ttbm_enquiry_from_name'])  ? sanitize_text_field(wp_unslash($_POST['ttbm_enquiry_from_name'])) : '';
                     update_option('ttbm_enquiry_from_email', $ttbm_enquiry_from_email);
                     update_option('ttbm_enquiry_from_name', $ttbm_enquiry_from_name);
-                    
+                    $settings_saved = true;
                 } else {
                     wp_die(esc_html__('Nonce verification failed', 'tour-booking-manager'));
                 }
-            } 
+            }
+
             $from_email = get_option('ttbm_enquiry_from_email');
             if (empty($from_email)) {
                 $from_email = get_option('admin_email', 'admin@' . wp_parse_url(get_site_url(), PHP_URL_HOST));
             }
             $from_email = sanitize_email($from_email);
-            
+
             $from_name = get_option('ttbm_enquiry_from_name');
             if (empty($from_name)) {
                 $from_name = get_bloginfo('name');
             }
-            $from_name = sanitize_text_field($from_name);        
-        ?>
+            $from_name = sanitize_text_field($from_name);
+
+            // Stat counts
+            global $wpdb;
+            $stat_results = $wpdb->get_results($wpdb->prepare(
+                "SELECT pm.meta_value as status, COUNT(*) as cnt
+                 FROM {$wpdb->posts} p
+                 LEFT JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id AND pm.meta_key = %s
+                 WHERE p.post_type = %s AND p.post_status = %s
+                 GROUP BY pm.meta_value",
+                'status', 'ttbm_enquiry', 'publish'
+            ), ARRAY_A);
+            $stat_map    = ['new' => 0, 'viewed' => 0, 'replied' => 0];
+            $total_count = 0;
+            foreach ((array) $stat_results as $row) {
+                $key = (string) ($row['status'] ?? '');
+                $total_count += (int) $row['cnt'];
+                if (isset($stat_map[$key])) {
+                    $stat_map[$key] = (int) $row['cnt'];
+                }
+            }
+
+            // Enquiry list query
+            $paged  = isset($_GET['paged']) ? intval(wp_unslash($_GET['paged'])) : 1;
+            $search = isset($_GET['s'])     ? sanitize_text_field(wp_unslash($_GET['s'])) : '';
+            $args   = [
+                'post_type'      => 'ttbm_enquiry',
+                'post_status'    => 'publish',
+                'posts_per_page' => 10,
+                'paged'          => $paged,
+            ];
+            if (!empty($search)) {
+                $args['s'] = $search;
+            }
+            $enquiry       = new WP_Query($args);
+            $total_pages   = $enquiry->max_num_pages;
+            $current_page  = max(1, $paged);
+            ?>
             <div id="ttbm-settings-page">
-            <div class="wrap ">
-                <h1 class="wp-heading-inline"><?php esc_html_e('Enquiry', 'tour-booking-manager'); ?></h1>
+            <div class="wrap ttbm-enquiry-page">
+                <h1 class="wp-heading-inline"><?php esc_html_e('Enquiries', 'tour-booking-manager'); ?></h1>
                 <hr class="wp-header-end">
-                <h2 class="nav-tab-wrapper">
-                    <a href="#mptbm-enquiry-list" class="nav-tab nav-tab-active"><?php esc_html_e('Enquiry List', 'tour-booking-manager'); ?></a>
-                    <a href="#mptbm-enquiry-settings" class="nav-tab"><?php esc_html_e('Enquiry Settings', 'tour-booking-manager'); ?></a>
-                </h2>
-                <div id="mptbm-enquiry-list" class="tab-content" style="display: block;">
-                    <div class="wrap ">
-                        <div class="ttbm_style">
-                            <?php $this->reply_enquery_popup(); ?>
-                            <div class="ttbm_popup ttbm_style" data-popup="view-enquiry-popup">
-                                <div class="popupMainArea">
-                                    <div class="popupHeader allCenter">
-                                        <h2 class="_mR"><?php esc_html_e('View Enquiry', 'tour-booking-manager'); ?></h2>
-                                        <span class="fas fa-times popupClose"></span>
-                                    </div>
-                                    <div class="popupBody">
-                                        <div class="ttbm-view-enquiry-response"></div>
-                                    </div>
-                                </div>
+
+                <?php if ($settings_saved) : ?>
+                    <div class="ttbm-enq-notice"><?php esc_html_e('Settings saved successfully.', 'tour-booking-manager'); ?></div>
+                <?php endif; ?>
+
+                <!-- Popups -->
+                <div class="ttbm_style">
+                    <?php $this->reply_enquery_popup(); ?>
+                    <div class="ttbm_popup ttbm_style" data-popup="view-enquiry-popup">
+                        <div class="popupMainArea">
+                            <div class="popupHeader allCenter">
+                                <h2 class="_mR"><?php esc_html_e('View Enquiry', 'tour-booking-manager'); ?></h2>
+                                <span class="fas fa-times popupClose"></span>
+                            </div>
+                            <div class="popupBody">
+                                <div class="ttbm-view-enquiry-response"></div>
                             </div>
                         </div>
-                        <ul class="subsubsub">
-                            <li class="all">
-                                <a href="<?php echo esc_url(add_query_arg('post_type', 'ttbm_tour')); ?>" class="current" aria-current="page">
-                                    <?php esc_html_e('All', 'tour-booking-manager'); ?>
-                                    <span class="count">
-                                        (<?php echo esc_html(wp_count_posts('ttbm_enquiry')->publish); ?>)
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
+                    </div>
+                </div>
 
-                        <form method="get" style="float:right;">
-                            <input type="hidden" name="post_type" value="ttbm_tour">
-                            <input type="hidden" name="page" value="ttbm_get_enquiry">
-                            <input type="text" name="s" value="<?php echo esc_attr(isset($_GET['s']) ?sanitize_text_field(wp_unslash($_GET['s'])): ''); ?>" placeholder="Search enquiries..." />
-                            <input type="submit" class="button" value="Search" />
-                        </form>
+                <!-- Stats Row -->
+                <div class="ttbm-enq-stats">
+                    <div class="ttbm-enq-stat-card blue">
+                        <div class="ttbm-enq-stat-icon blue"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <div class="ttbm-enq-stat-value"><?php echo esc_html($total_count); ?></div>
+                            <div class="ttbm-enq-stat-label"><?php esc_html_e('Total', 'tour-booking-manager'); ?></div>
+                        </div>
+                    </div>
+                    <div class="ttbm-enq-stat-card orange">
+                        <div class="ttbm-enq-stat-icon orange"><i class="fas fa-envelope-open"></i></div>
+                        <div>
+                            <div class="ttbm-enq-stat-value"><?php echo esc_html($stat_map['new']); ?></div>
+                            <div class="ttbm-enq-stat-label"><?php esc_html_e('New', 'tour-booking-manager'); ?></div>
+                        </div>
+                    </div>
+                    <div class="ttbm-enq-stat-card purple">
+                        <div class="ttbm-enq-stat-icon purple"><i class="fas fa-eye"></i></div>
+                        <div>
+                            <div class="ttbm-enq-stat-value"><?php echo esc_html($stat_map['viewed']); ?></div>
+                            <div class="ttbm-enq-stat-label"><?php esc_html_e('Viewed', 'tour-booking-manager'); ?></div>
+                        </div>
+                    </div>
+                    <div class="ttbm-enq-stat-card green">
+                        <div class="ttbm-enq-stat-icon green"><i class="fas fa-reply"></i></div>
+                        <div>
+                            <div class="ttbm-enq-stat-value"><?php echo esc_html($stat_map['replied']); ?></div>
+                            <div class="ttbm-enq-stat-label"><?php esc_html_e('Replied', 'tour-booking-manager'); ?></div>
+                        </div>
+                    </div>
+                </div>
 
-                        <table class="wp-list-table widefat fixed striped posts ttbm-enquiry-table">
-                            <thead>
-                                <tr>
-                                    <th class="manage-column column-title"><?php esc_html_e('Subject', 'tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php esc_html_e('Name', 'tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php esc_html_e('Email', 'tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php esc_html_e('Message', 'tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php esc_html_e('Status', 'tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php esc_html_e('Date', 'tour-booking-manager'); ?></th>
-                                    <th class="manage-column column-title"><?php esc_html_e('Action', 'tour-booking-manager'); ?></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $paged = isset($_GET['paged']) ? intval(wp_unslash($_GET['paged'])) : 1;
-                                $search = isset($_GET['s']) ? sanitize_text_field(wp_unslash(($_GET['s']))) : '';
-                                $args = [
-                                    'post_type'      => 'ttbm_enquiry',
-                                    'post_status'    => 'publish',
-                                    'posts_per_page' => 10,
-                                    'paged'          => $paged,
-                                ];
-                                if (!empty($search)) {
-                                    $args['s'] = $search;
-                                }
-                                $enquiry = new WP_Query($args);
+                <!-- Dashboard: sidebar tabs + content area -->
+                <div class="ttbm-tour-dashboard">
 
-                                if ($enquiry->have_posts()) :
-                                    while ($enquiry->have_posts()) : $enquiry->the_post();
-                                        $status = get_post_meta(get_the_ID(), 'status', true);
-                                ?>
-                                        <tr class="ttbm-enquiry-list" data-id="<?php echo esc_attr(get_the_ID()); ?>">
-                                            <td class="<?php echo esc_attr($status === 'new' ? 'new' : ''); ?>">
-                                                <?php
-                                                $title = get_the_title();
-                                                echo esc_html(mb_strimwidth($title, 0, 40, '...'));
-                                                ?>
+                    <!-- Sidebar Tabs -->
+                    <div class="ttbm_trvel_lists_tabs">
+                        <a href="#mptbm-enquiry-list" class="nav-tab nav-tab-active">
+                            <span class="icon-wrap"><i class="fas fa-list-ul"></i><?php esc_html_e(' Enquiry List', 'tour-booking-manager'); ?></span>
+                        </a>
+                        <a href="#mptbm-enquiry-settings" class="nav-tab">
+                            <span class="icon-wrap"><i class="fas fa-sliders-h"></i><?php esc_html_e(' Settings', 'tour-booking-manager'); ?></span>
+                        </a>
+                    </div>
+
+                    <!-- Content Area -->
+                    <div class="ttbm-tour-dashboard-content">
+
+                        <!-- Enquiry List Tab -->
+                        <div id="mptbm-enquiry-list" class="tab-content" style="display: block;">
+
+                            <!-- Search bar + count -->
+                            <div class="ttbm-enq-table-header">
+                                <span class="ttbm-enq-count">
+                                    <?php printf(
+                                        esc_html(_n('%d enquiry found', '%d enquiries found', $enquiry->found_posts, 'tour-booking-manager')),
+                                        $enquiry->found_posts
+                                    ); ?>
+                                </span>
+                                <form method="get" class="ttbm-enq-search-form">
+                                    <input type="hidden" name="post_type" value="ttbm_tour">
+                                    <input type="hidden" name="page" value="ttbm_get_enquiry">
+                                    <input type="text" name="s" value="<?php echo esc_attr($search); ?>" placeholder="<?php esc_attr_e('Search enquiries…', 'tour-booking-manager'); ?>">
+                                    <input type="submit" class="button" value="<?php esc_attr_e('Search', 'tour-booking-manager'); ?>">
+                                    <?php if ($search) : ?>
+                                        <a href="<?php echo esc_url(admin_url('edit.php?post_type=ttbm_tour&page=ttbm_get_enquiry')); ?>" class="button"><?php esc_html_e('Reset', 'tour-booking-manager'); ?></a>
+                                    <?php endif; ?>
+                                </form>
+                            </div>
+
+                            <!-- Table -->
+                            <table class="wp-list-table widefat fixed striped posts ttbm-enquiry-table">
+                                <thead>
+                                    <tr>
+                                        <th class="manage-column"><?php esc_html_e('Subject', 'tour-booking-manager'); ?></th>
+                                        <th class="manage-column"><?php esc_html_e('Name', 'tour-booking-manager'); ?></th>
+                                        <th class="manage-column"><?php esc_html_e('Email', 'tour-booking-manager'); ?></th>
+                                        <th class="manage-column"><?php esc_html_e('Message', 'tour-booking-manager'); ?></th>
+                                        <th class="manage-column" style="width:90px"><?php esc_html_e('Status', 'tour-booking-manager'); ?></th>
+                                        <th class="manage-column"><?php esc_html_e('Date', 'tour-booking-manager'); ?></th>
+                                        <th class="manage-column" style="width:100px"><?php esc_html_e('Actions', 'tour-booking-manager'); ?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    if ($enquiry->have_posts()) :
+                                        while ($enquiry->have_posts()) : $enquiry->the_post();
+                                            $status = get_post_meta(get_the_ID(), 'status', true);
+                                            $is_new = ($status === 'new');
+                                    ?>
+                                        <tr class="ttbm-enquiry-list<?php echo $is_new ? ' ttbm-enq-row-new' : ''; ?>" data-id="<?php echo esc_attr(get_the_ID()); ?>">
+                                            <td class="<?php echo esc_attr($is_new ? 'new' : ''); ?>">
+                                                <?php echo esc_html(mb_strimwidth(get_the_title(), 0, 40, '…')); ?>
                                             </td>
                                             <td><?php echo esc_html(get_post_meta(get_the_ID(), 'name', true)); ?></td>
                                             <td><?php echo esc_html(get_post_meta(get_the_ID(), 'email', true)); ?></td>
+                                            <td><?php echo esc_html(mb_strimwidth(get_the_content(), 0, 40, '…')); ?></td>
                                             <td>
-                                                <?php
-                                                $message = get_the_content();
-                                                echo esc_html(mb_strimwidth($message, 0, 40, '...'));
-                                                ?>
+                                                <span class="ttbm-enq-badge <?php echo esc_attr($status ?: 'viewed'); ?>">
+                                                    <?php echo esc_html(ucfirst($status ?: 'viewed')); ?>
+                                                </span>
                                             </td>
-                                            <td class="<?php echo esc_attr($status); ?>"><?php echo esc_html(ucfirst($status)); ?></td>
                                             <td><?php echo esc_html(get_the_date() . ' ' . get_the_time()); ?></td>
                                             <td class="ttbm_style">
-                                                <a href="#" class="ttbm-view-enquiry" data-id="<?php echo esc_html(get_the_ID()); ?>" data-target-popup="view-enquiry-popup"><?php esc_html_e('View |', 'tour-booking-manager'); ?></a>
-                                                <a href="#" class="ttbm-reply-enquiry" data-id="<?php echo esc_html(get_the_ID()); ?>" data-target-popup="reply-enquiry-popup"><?php esc_html_e('Reply |', 'tour-booking-manager'); ?></a>
-                                                <a href="#" class="ttbm-delete-enquiry" data-id="<?php echo esc_html(get_the_ID()); ?>"><?php esc_html_e('Delete', 'tour-booking-manager'); ?></a>
+                                                <div class="ttbm-enq-actions">
+                                                    <button type="button"
+                                                            class="ttbm-enq-btn ttbm-enq-view-btn ttbm-view-enquiry"
+                                                            data-id="<?php echo esc_attr(get_the_ID()); ?>"
+                                                            data-target-popup="view-enquiry-popup"
+                                                            title="<?php esc_attr_e('View', 'tour-booking-manager'); ?>">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button type="button"
+                                                            class="ttbm-enq-btn ttbm-enq-reply-btn ttbm-reply-enquiry"
+                                                            data-id="<?php echo esc_attr(get_the_ID()); ?>"
+                                                            data-target-popup="reply-enquiry-popup"
+                                                            title="<?php esc_attr_e('Reply', 'tour-booking-manager'); ?>">
+                                                        <i class="fas fa-reply"></i>
+                                                    </button>
+                                                    <button type="button"
+                                                            class="ttbm-enq-btn ttbm-enq-delete-btn ttbm-delete-enquiry"
+                                                            data-id="<?php echo esc_attr(get_the_ID()); ?>"
+                                                            title="<?php esc_attr_e('Delete', 'tour-booking-manager'); ?>">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
-                                <?php
-                                    endwhile;
-                                    wp_reset_postdata();
-                                else :
-                                ?>
-                                    <tr>
-                                        <td colspan="7"><?php esc_html_e('No enquiries found.', 'tour-booking-manager'); ?></td>
-                                    </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
+                                    <?php
+                                        endwhile;
+                                        wp_reset_postdata();
+                                    else :
+                                    ?>
+                                        <tr>
+                                            <td colspan="7">
+                                                <div class="ttbm-enq-empty">
+                                                    <i class="fas fa-envelope-open"></i>
+                                                    <?php esc_html_e('No enquiries found.', 'tour-booking-manager'); ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
 
-                        <?php
-                        // Pagination
-                        $total_pages = $enquiry->max_num_pages;
+                            <!-- Pagination -->
+                            <?php if ($total_pages > 1) : ?>
+                            <div class="tablenav">
+                                <div class="tablenav-pages">
+                                    <span class="displaying-num"><?php echo esc_html($enquiry->found_posts) . ' items'; ?></span>
+                                    <span class="pagination-links">
+                                        <?php if ($current_page > 1) : ?>
+                                            <a class="first-page button" href="<?php echo esc_url(add_query_arg('paged', 1)); ?>"><span aria-hidden="true">«</span></a>
+                                            <a class="prev-page button" href="<?php echo esc_url(add_query_arg('paged', $current_page - 1)); ?>"><span aria-hidden="true">‹</span></a>
+                                        <?php else : ?>
+                                            <span class="tablenav-pages-navspan button disabled">«</span>
+                                            <span class="tablenav-pages-navspan button disabled">‹</span>
+                                        <?php endif; ?>
+                                        <span class="paging-input">
+                                            <span class="tablenav-paging-text">
+                                                <?php echo esc_html($current_page); ?> <?php esc_html_e('of', 'tour-booking-manager'); ?> <span class="total-pages"><?php echo esc_html($total_pages); ?></span>
+                                            </span>
+                                        </span>
+                                        <?php if ($current_page < $total_pages) : ?>
+                                            <a class="next-page button" href="<?php echo esc_url(add_query_arg('paged', $current_page + 1)); ?>"><span aria-hidden="true">›</span></a>
+                                            <a class="last-page button" href="<?php echo esc_url(add_query_arg('paged', $total_pages)); ?>"><span aria-hidden="true">»</span></a>
+                                        <?php else : ?>
+                                            <span class="tablenav-pages-navspan button disabled">›</span>
+                                            <span class="tablenav-pages-navspan button disabled">»</span>
+                                        <?php endif; ?>
+                                    </span>
+                                </div>
+                            </div>
+                            <?php endif; ?>
 
-                        if ($total_pages > 1) :
-                            $current_page = max(1, $paged);
-                            echo '<div class="tablenav"><div class="tablenav-pages">';
-                            echo '<span class="displaying-num">' . esc_html($enquiry->found_posts) . ' items</span>';
-                            echo '<span class="pagination-links">';
+                        </div><!-- /#mptbm-enquiry-list -->
 
-                            // First and Previous
-                            if ($current_page > 1) {
-                                echo '<a class="first-page button" href="' . esc_url(add_query_arg('paged', 1)) . '"><span aria-hidden="true">«</span></a>';
-                                echo '<a class="prev-page button" href="' . esc_url(add_query_arg('paged', $current_page - 1)) . '"><span aria-hidden="true">‹</span></a>';
-                            } else {
-                                echo '<span class="tablenav-pages-navspan button disabled">«</span>';
-                                echo '<span class="tablenav-pages-navspan button disabled">‹</span>';
-                            }
-
-                            // Page info
-                            echo '<span class="screen-reader-text">Current Page</span>';
-                            echo '<span class="paging-input"><span class="tablenav-paging-text">' . esc_html($current_page ). ' of <span class="total-pages">' . esc_html($total_pages) . '</span></span></span>';
-
-                            // Next and Last
-                            if ($current_page < $total_pages) {
-                                echo '<a class="next-page button" href="' . esc_url(add_query_arg('paged', $current_page + 1)) . '"><span aria-hidden="true">›</span></a>';
-                                echo '<a class="last-page button" href="' . esc_url(add_query_arg('paged', $total_pages)) . '"><span aria-hidden="true">»</span></a>';
-                            } else {
-                                echo '<span class="tablenav-pages-navspan button disabled">›</span>';
-                                echo '<span class="tablenav-pages-navspan button disabled">»</span>';
-                            }
-
-                            echo '</span></div></div>';
-                        endif;
-                        ?>
-
-                    </div>
-                </div>
-                <div id="mptbm-enquiry-settings" class="tab-content" style="display: none;">
-                    <div id="col-left">
-                        <div class="col-wrap">
-                            <div class="form-wrap">
-                                <h2><?php esc_html_e('Enquiry Settings', 'tour-booking-manager'); ?></h2>
+                        <!-- Settings Tab -->
+                        <div id="mptbm-enquiry-settings" class="tab-content" style="display: none;">
+                            <div class="ttbm-enq-settings-card">
+                                <h3><i class="fas fa-envelope-open-text"></i><?php esc_html_e('Email Configuration', 'tour-booking-manager'); ?></h3>
                                 <form method="post" action="">
                                     <input type="hidden" name="ttbm_enquiry_nonce" value="<?php echo esc_attr(wp_create_nonce('ttbm_enquiry_nonce')); ?>">
-                                    <div class="form-field term-name-wrap">
-                                        <label><?php esc_html_e('From Name', 'tour-booking-manager'); ?></label>
-                                        <input name="ttbm_enquiry_from_name" type="text" value="<?php echo esc_attr($from_name); ?>" size="40" aria-required="true">
-                                        <p class="description"><?php esc_html_e('The sender name that will appear in enquiry emails. Defaults to site name.', 'tour-booking-manager'); ?></p>
+                                    <div class="ttbm-enq-field">
+                                        <label for="ttbm-from-name-field"><?php esc_html_e('From Name', 'tour-booking-manager'); ?></label>
+                                        <input type="text" id="ttbm-from-name-field" name="ttbm_enquiry_from_name" value="<?php echo esc_attr($from_name); ?>">
+                                        <span class="ttbm-enq-desc"><?php esc_html_e('Sender name shown in enquiry emails. Defaults to site name.', 'tour-booking-manager'); ?></span>
                                     </div>
-                                    <div class="form-field term-name-wrap">
-                                        <label><?php esc_html_e('From Email', 'tour-booking-manager'); ?></label>
-                                        <input name="ttbm_enquiry_from_email" type="email" value="<?php echo esc_attr($from_email); ?>" size="40" aria-required="true">
+                                    <div class="ttbm-enq-field">
+                                        <label for="ttbm-from-email-field"><?php esc_html_e('From Email', 'tour-booking-manager'); ?></label>
+                                        <input type="email" id="ttbm-from-email-field" name="ttbm_enquiry_from_email" value="<?php echo esc_attr($from_email); ?>">
+                                        <span class="ttbm-enq-desc"><?php esc_html_e('Enquiries and replies are sent from this address. Defaults to admin email.', 'tour-booking-manager'); ?></span>
                                     </div>
-                                    <input type="submit" name="ttbm_enquiry_submit" class="button button-primary" value="Save">
+                                    <input type="submit" name="ttbm_enquiry_submit" class="button button-primary" value="<?php esc_attr_e('Save Settings', 'tour-booking-manager'); ?>">
                                 </form>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php
+                        </div><!-- /#mptbm-enquiry-settings -->
+
+                    </div><!-- /.ttbm-tour-dashboard-content -->
+                </div><!-- /.ttbm-tour-dashboard -->
+            </div><!-- /.wrap -->
+            </div><!-- /#ttbm-settings-page -->
+            <?php
         }
     }
     new TTBM_Get_Enquiry();

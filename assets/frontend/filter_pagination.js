@@ -1,7 +1,106 @@
 (function ($) {
 	"use strict";
+
+	function ttbmBuildTopSearchOptionMarkup(option, compact) {
+		const $option = option.element ? $(option.element) : null;
+		const title = option.text ? $.trim(option.text) : '';
+		let subtitle = '';
+		if ($option && $option.length) {
+			subtitle = $option.attr('data-subtitle') || $option.data('ttbmSubtitle') || '';
+		}
+		if (!subtitle && option.id !== undefined && option.id !== null && option.id !== '') {
+			const $fallback = $('.ttbm-top-search-modern select[name="location_filter"] option[value="' + option.id + '"], .ttbm-top-search-modern select[name="activity_filter"] option[value="' + option.id + '"]');
+			if ($fallback.length) {
+				subtitle = $fallback.attr('data-subtitle') || $fallback.data('ttbmSubtitle') || '';
+			}
+		}
+		subtitle = subtitle ? String(subtitle).trim() : '';
+		const compactClass = compact ? ' ttbm-search-opt--compact' : '';
+
+		if (!subtitle) {
+			return '<span class="ttbm-search-opt' + compactClass + '"><span class="ttbm-search-opt__title">' + title + '</span></span>';
+		}
+
+		return '<span class="ttbm-search-opt' + compactClass + '">' +
+			'<span class="ttbm-search-opt__title">' + title + '</span>' +
+			'<span class="ttbm-search-opt__subtitle">' + subtitle + '</span>' +
+			'</span>';
+	}
+
+	function ttbmCacheTopSearchOptionSubtitles($select) {
+		$select.find('option').each(function () {
+			const $opt = $(this);
+			const subtitle = ($opt.attr('data-subtitle') || '').trim();
+			if (subtitle) {
+				$opt.data('ttbmSubtitle', subtitle);
+			}
+		});
+	}
+
+	function ttbmInitTopSearchSelects() {
+		if (typeof $.fn.select2 !== 'function') {
+			return;
+		}
+
+		const $selects = $('.ttbm-top-search-modern select[name="location_filter"], .ttbm-top-search-modern select[name="activity_filter"], .ttbm-top-search-modern .ttbm-top-search-select');
+
+		$selects.each(function () {
+			const $select = $(this);
+			if ($select.hasClass('select2-hidden-accessible')) {
+				return;
+			}
+
+			const dropdownModifier = $select.is('[name="location_filter"]') || $select.hasClass('ttbm-top-search-select--location')
+				? ' ttbm-top-search-select2-dropdown--location'
+				: ' ttbm-top-search-select2-dropdown--activity';
+			const dropdownClass = 'ttbm-top-search-select2-dropdown' + dropdownModifier;
+
+			$select.addClass('ttbm-top-search-select');
+			ttbmCacheTopSearchOptionSubtitles($select);
+
+			$select.select2({
+				minimumResultsForSearch: 8,
+				width: '100%',
+				dropdownParent: $('body'),
+				templateResult: function (option) {
+					return $(ttbmBuildTopSearchOptionMarkup(option, false));
+				},
+				templateSelection: function (option) {
+					return $(ttbmBuildTopSearchOptionMarkup(option, true));
+				},
+				escapeMarkup: function (markup) {
+					return markup;
+				}
+			});
+
+			$select.next('.select2-container').addClass('ttbm-top-search-select2');
+
+			$select
+				.on('select2:open', function () {
+					const $field = $(this).closest('.ttbm-top-search-field');
+					$field.addClass('is-open');
+					window.requestAnimationFrame(function () {
+						$('.select2-container--open .select2-dropdown')
+							.removeClass('ttbm-top-search-select2-dropdown ttbm-top-search-select2-dropdown--location ttbm-top-search-select2-dropdown--activity')
+							.addClass(dropdownClass)
+							.css({ width: '', minWidth: '', maxWidth: '' });
+					});
+				})
+				.on('select2:close', function () {
+					$(this).closest('.ttbm-top-search-field').removeClass('is-open');
+				});
+		});
+	}
+
+	window.ttbmInitTopSearchSelects = ttbmInitTopSearchSelects;
+
 	$(document).ready(function () {
 		load_pagination_initial_item();
+
+		ttbmInitTopSearchSelects();
+		$(window).on('load', ttbmInitTopSearchSelects);
+		setTimeout(ttbmInitTopSearchSelects, 250);
+		setTimeout(ttbmInitTopSearchSelects, 1000);
 
 		/*$("#ttbm_date-input_from").datepicker({
 			dateFormat: "MM d, yy", // Custom date format: March 20, 2024
@@ -53,80 +152,125 @@
 		});*/
 
 
-		let ttbm_flatpickr_locale = (typeof ttbm_flatpickr_vars !== 'undefined' && ttbm_flatpickr_vars.locale)
-			? ttbm_flatpickr_vars.locale
-			: 'default';
-		let isMobile = window.innerWidth < 768
-		let rangeDatePicker = $("#ttbm_date_start_end_input").flatpickr({
-			mode: "range",
-			dateFormat: "F j, Y",
-			showMonths: isMobile ? 1 : 2,
-			minDate: "today",
-			disableMobile: true,
-			locale: ttbm_flatpickr_locale,
-			onChange: function (selectedDates, dateStr, instance) {
+		let ttbmInitTourSearchDateRangePicker = function () {
+			const $input = $('#ttbm_date_start_end_input');
+			if (!$input.length || $input.data('ttbm-tour-drp-init') || typeof $.fn.daterangepicker !== 'function' || typeof moment !== 'function') {
+				return;
+			}
 
-				if (selectedDates.length === 2) {
-					let startDate = instance.formatDate(selectedDates[0], "F j, Y");
-					let endDate = instance.formatDate(selectedDates[1], "F j, Y");
-
-					$("#ttbm_date_start_end_input").val(startDate + " - " + endDate);
+			const separator = ' \u2013 ';
+			const pickerOptions = {
+				autoApply: true,
+				autoUpdateInput: false,
+				minDate: moment().startOf('day'),
+				opens: 'left',
+				drops: 'down',
+				parentEl: 'body',
+				locale: {
+					format: 'MMM D, YYYY',
+					separator: separator
 				}
+			};
 
+			const existingValue = ($input.val() || '').trim();
+			if (existingValue) {
+				const parts = existingValue.split(/\s+[-\u2013\u2014]\s+/);
+				if (parts.length === 2) {
+					const start = moment(parts[0].trim(), ['MMM D, YYYY', 'MMMM D, YYYY', 'M/D/YYYY', 'YYYY-MM-DD'], true);
+					const end = moment(parts[1].trim(), ['MMM D, YYYY', 'MMMM D, YYYY', 'M/D/YYYY', 'YYYY-MM-DD'], true);
+					if (start.isValid()) {
+						pickerOptions.startDate = start;
+					}
+					if (end.isValid()) {
+						pickerOptions.endDate = end;
+					}
+				}
+			}
+
+			$input.daterangepicker(pickerOptions);
+			const drpInstance = $input.data('daterangepicker');
+			if (drpInstance && drpInstance.container) {
+				drpInstance.container.addClass('ttbm-tour-daterange');
+			}
+
+			$input
+				.on('show.daterangepicker', function (ev, picker) {
+					picker.container.addClass('ttbm-tour-daterange');
+				})
+				.on('apply.daterangepicker', function (ev, picker) {
+					const formatted = picker.startDate.format('MMM D, YYYY') + separator + picker.endDate.format('MMM D, YYYY');
+					$(this).val(formatted);
+				});
+
+			$input.data('ttbm-tour-drp-init', true);
+		};
+
+		ttbmInitTourSearchDateRangePicker();
+
+		$("#ttbm_date_start_end_input").on("focus click", function () {
+			const drp = $(this).data('daterangepicker');
+			if (drp) {
+				drp.show();
 			}
 		});
-		$("#ttbm_date_start_end_input").on("focus click", function () {
-			rangeDatePicker.open();
-		});
 		$("#ttbm_start_end_calendar_icon").on("click", function () {
-			rangeDatePicker.open();
+			$("#ttbm_date_start_end_input").trigger('click');
 		});
 
 
 		$(document).on('click', '.ttbm_item_filter_by_activity', function () {
-			$(this).toggleClass('ttbm_item_activity_active');
-			let activeIds = [];
-			$('.ttbm_item_activity_active').each(function () {
-				let id = $(this).attr('id'); // Get the ID of the current element
-				if (id) {
-					activeIds.push(id);
-				}
-			});
-			if (activeIds.length === 0) {
-				// Show all items
+			let $clicked = $(this);
+			let clickedId = $clicked.attr('id');
+
+			if (clickedId === 'all') {
+				$('.ttbm_item_filter_by_activity').removeClass('ttbm_item_activity_active');
+				$clicked.addClass('ttbm_item_activity_active');
 				$('.filter_item').each(function () {
 					$(this).fadeIn('fast');
 					$(this).removeClass('search_off').addClass('search_on');
 				});
 			} else {
-				$('.filter_item').each(function () {
-					let activities = $(this).find('input[name="ttbm_item_activities"]').val();
-					if (activities) {
-						let activityArray = activities.split(',');
-						if (activeIds.some(id => activityArray.includes(id))) {
-							$(this).fadeIn('fast');
-							$(this).removeClass('search_off').addClass('search_on');
+				$('.ttbm_item_filter_by_activity#all').removeClass('ttbm_item_activity_active');
+				$clicked.toggleClass('ttbm_item_activity_active');
+				let activeIds = [];
+				$('.ttbm_item_activity_active').each(function () {
+					let id = $(this).attr('id');
+					if (id && id !== 'all') {
+						activeIds.push(id);
+					}
+				});
+				if (activeIds.length === 0) {
+					$('.ttbm_item_filter_by_activity#all').addClass('ttbm_item_activity_active');
+					$('.filter_item').each(function () {
+						$(this).fadeIn('fast');
+						$(this).removeClass('search_off').addClass('search_on');
+					});
+				} else {
+					$('.filter_item').each(function () {
+						let activities = $(this).find('input[name="ttbm_item_activities"]').val();
+						if (activities) {
+							let activityArray = activities.split(',');
+							if (activeIds.some(id => activityArray.includes(id))) {
+								$(this).fadeIn('fast');
+								$(this).removeClass('search_off').addClass('search_on');
+							} else {
+								$(this).fadeOut('fast');
+								$(this).removeClass('search_on').addClass('search_off');
+							}
 						} else {
 							$(this).fadeOut('fast');
 							$(this).removeClass('search_on').addClass('search_off');
 						}
-					} else {
-						$('.filter_item').each(function () {
-							$(this).removeClass('search_off').addClass('search_on');
-						});
-						$(this).fadeOut('fast');
-					}
-				});
+					});
+				}
 			}
 
 			function filter_qty_palace() {
 				let countSearchOn = $('.search_on').length;
-				let show = ' Showing <strong class="qty_count">' + countSearchOn + '</strong> of <strong class="total_filter_qty">' + countSearchOn + '</strong>';
-				$('.filter_short_result').html(show);
+				$('.filter_short_result .qty_count').text(countSearchOn);
+				$('.filter_short_result .total_filter_qty').text(countSearchOn);
 			}
 			filter_qty_palace();
-
-			// $('.filter_short_result').text(`Visible items: ${countSearchOn}`);
 		});
 
 		const holder = $('.ttbm_all_item_activities_holder');
@@ -401,6 +545,7 @@
 				filter_qty_palace(parent, items_class);
 				pagination_management(parent, pagination_page);
 				placeholderLoaderRemove(all_item);
+				parent.find('.filter_item.ttbm-tab-hidden').stop(true, true).hide();
 			});
 		});
 	}
@@ -422,7 +567,10 @@
 		}
 	}
 	function get_item_class(parent, items = '.filter_item') {
-		if (parent.find('.filter_item.search_on').length > 0 || parent.find('.filter_item.search_of').length > 0) {
+		if (parent.find('.filter_item.ttbm-tab-hidden').length > 0) {
+			items = '.filter_item:not(.ttbm-tab-hidden)';
+			parent.find('.filter_item.ttbm-tab-hidden').hide();
+		} else if (parent.find('.filter_item.search_on').length > 0 || parent.find('.filter_item.search_of').length > 0) {
 			items = '.filter_item.search_on';
 			parent.find('.filter_item.search_of').slideUp('fast');
 		}

@@ -1,98 +1,63 @@
 <?php
-	if ( ! defined( 'ABSPATH' ) )die;
-	$ttbm_post_id          = $ttbm_post_id ?? get_the_id();
-	$include_services = TTBM_Function::get_feature_list( $ttbm_post_id, 'ttbm_service_included_in_price' );
-	$exclude_services = TTBM_Function::get_feature_list( $ttbm_post_id, 'ttbm_service_excluded_in_price' );
-	$display_include  = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_include_service', 'on' );
-	$term_name        = $term_name ?? true;
-	if ( $display_include != 'off' ) {
-        $list_view_task=true;
-		?>
-		<div class="ttbm_default_widget ">
-			<?php do_action( 'ttbm_section_title', 'ttbm_string_include_price_list', esc_html__( "What's Included", 'tour-booking-manager' ) ); ?>
-			
+	if ( ! defined( 'ABSPATH' ) ) {
+		die;
+	}
+	$ttbm_post_id       = $ttbm_post_id ?? get_the_id();
+	$include_services   = TTBM_Function::get_feature_list( $ttbm_post_id, 'ttbm_service_included_in_price' );
+	$exclude_services   = TTBM_Function::get_feature_list( $ttbm_post_id, 'ttbm_service_excluded_in_price' );
+	$display_include    = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_include_service', 'on' );
+	$display_exclude    = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_exclude_service', 'on' );
+	$has_include        = sizeof( $include_services ) > 0 && $display_include != 'off';
+	$has_exclude        = sizeof( $exclude_services ) > 0 && $display_exclude != 'off';
+
+	if ( ! $has_include && ! $has_exclude ) {
+		return;
+	}
+	?>
+	<section class="ttbm_include_exclude_section">
+		<h2 class="ttbm_section_title">
+			<?php TTBM_Function::translation_settings( 'ttbm_string_include_exclude', esc_html__( 'Included / Exclude', 'tour-booking-manager' ) ); ?>
+		</h2>
+		<div class="ttbm_include_exclude_box">
 			<div class="ttbm-include-exclude">
-				<div class="include items">
+			<?php if ( $has_include ) : ?>
+				<div class="ttbm_ie_col ttbm_ie_included">
 					<ul>
 						<?php
-							$counter=0;
-							foreach ($include_services as $key => $services) {
-								if ($key < 3):
-									
-									?>
-									<li>
-										<i class="fa fa-check"></i>
-										<?php echo esc_html($services); ?>
-									</li>
+							foreach ( $include_services as $services ) {
+								$term = get_term_by( 'name', $services, 'ttbm_tour_features_list' );
+								$name = $term ? $term->name : $services;
+								?>
+								<li>
+									<span class="ttbm_ie_icon ttbm_ie_check" aria-hidden="true"><i class="fas fa-check"></i></span>
+									<?php echo esc_html( $name ); ?>
+								</li>
 								<?php
-								endif;
-								$counter++;
 							}
-							$counter = $counter - 3;
 						?>
 					</ul>
-				<p data-target-popup="include-exclude-popup"> <?php echo esc_html__( 'See ', 'tour-booking-manager' ) .  esc_html( $counter ) .  esc_html__( ' more', 'tour-booking-manager' ); ?></p></div>
-				<div class="exclude items">
+				</div>
+			<?php endif; ?>
+			<?php if ( $has_exclude ) : ?>
+				<div class="ttbm_ie_col ttbm_ie_excluded">
 					<ul>
 						<?php
-							foreach ($exclude_services as $key => $services) {
-								$term = get_term_by('name', $services, 'ttbm_tour_features_list');
-								if ($term) {
-									$term_name = $term_name ? $term->name : '';
-									if ($key < 3):
-										?>
-										<li>
-											<i class="fas fa-times"></i>
-											<?php echo esc_html($term_name); ?>
-										</li>
-									<?php
-									endif;
+							foreach ( $exclude_services as $services ) {
+								$term = get_term_by( 'name', $services, 'ttbm_tour_features_list' );
+								if ( ! $term ) {
+									continue;
 								}
+								?>
+								<li>
+									<span class="ttbm_ie_icon ttbm_ie_cross" aria-hidden="true"><i class="fas fa-times"></i></span>
+									<?php echo esc_html( $term->name ); ?>
+								</li>
+								<?php
 							}
 						?>
 					</ul>
 				</div>
-			</div>
-			
-		</div>
-		<div data-popup="include-exclude-popup" class="ttbm_popup">
-			<div class="popupMainArea">
-				<div class="popupHeader allCenter">
-					<h2 class="ttbm_description_title _mR"><?php esc_html_e('What\'s Included','tour-booking-manager'); ?></h2>
-					<span class="fas fa-times popupClose"></span>
-				</div>
-				<div class="popupBody">
-					<div class="ttbm-include-exclude">
-						<div class="include items">
-							<ul>
-								<?php
-									foreach ($include_services as $key => $services) {
-										?>
-										<li>
-											<i class="fa fa-check"></i>
-											<?php echo esc_html($services); ?>
-										</li>
-										<?php
-									}
-								?>
-							</ul>
-						</div>		
-						<div class="exclude items">
-							<ul>
-								<?php
-									foreach ($exclude_services as $key => $services) {
-										?>
-										<li>
-											<i class="fas fa-times"></i>
-											<?php echo esc_html($services); ?>
-										</li>
-										<?php
-									}
-								?>
-							</ul>
-						</div>		
-					</div>
-				</div>
+			<?php endif; ?>
 			</div>
 		</div>
-	<?php } ?>
+	</section>

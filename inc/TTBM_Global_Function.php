@@ -234,6 +234,46 @@
 				$date_format = $format == 'M d , yy' ? 'M  j, Y' : $date_format;
 				return $format == 'D M d , yy' ? 'D M  j, Y' : $date_format;
 			}
+			/**
+			 * Convert WordPress Settings > General date format to Moment.js format (daterangepicker).
+			 */
+			public static function wp_date_format_to_moment( $php_format = '' ) {
+				if ( ! $php_format ) {
+					$php_format = get_option( 'date_format' );
+				}
+				$map = array(
+					'd' => 'DD',
+					'D' => 'ddd',
+					'j' => 'D',
+					'l' => 'dddd',
+					'F' => 'MMMM',
+					'm' => 'MM',
+					'M' => 'MMM',
+					'n' => 'M',
+					'Y' => 'YYYY',
+					'y' => 'YY',
+				);
+				$moment  = '';
+				$length  = strlen( $php_format );
+				for ( $i = 0; $i < $length; $i++ ) {
+					$char = $php_format[ $i ];
+					if ( '\\' === $char && ( $i + 1 ) < $length ) {
+						$moment .= '[' . $php_format[ $i + 1 ] . ']';
+						$i++;
+						continue;
+					}
+					if ( array_key_exists( $char, $map ) ) {
+						$moment .= $map[ $char ];
+					} elseif ( ',' === $char ) {
+						$moment .= '[,]';
+					} elseif ( preg_match( '/\s/u', $char ) ) {
+						$moment .= $char;
+					} else {
+						$moment .= '[' . $char . ']';
+					}
+				}
+				return $moment;
+			}
 			public function date_picker_js($selector, $dates) {
 				//echo '<pre>';print_r($dates);echo '</pre>';
 				$start_date = $dates[0];
@@ -251,7 +291,9 @@
 				?>
                 <script>
                     jQuery(document).ready(function () {
-                        jQuery("<?php echo esc_attr($selector); ?>").datepicker({
+                        jQuery("<?php echo esc_attr($selector); ?>")
+                            .attr('data-ttbm-first-date', '<?php echo esc_attr(gmdate('Y-m-d', strtotime($start_date))); ?>')
+                            .datepicker({
                             dateFormat: ttbm_date_format,
                             minDate: new Date(<?php echo esc_attr($start_year); ?>, <?php echo esc_attr($start_month); ?>,  <?php echo esc_attr($start_day); ?>),
                             maxDate: new Date(<?php echo esc_attr($end_year); ?>, <?php echo esc_attr($end_month); ?>, <?php echo esc_attr($end_day); ?>),
@@ -262,15 +304,23 @@
                             onSelect: function (dateString, data) {
                                 let date = data.selectedYear + '-' + ('0' + (parseInt(data.selectedMonth) + 1)).slice(-2) + '-' + ('0' + parseInt(data.selectedDay)).slice(-2);
                                 jQuery(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
+                            },
+                            onClose: function () {
+                                // The date field must not stay empty: keep showing the
+                                // picker until the user actually selects a date.
+                                let inp = jQuery(this);
+                                if (!inp.val()) {
+                                    setTimeout(function () { inp.datepicker('show'); }, 10);
+                                }
                             }
                         });
                         function WorkingDates(date) {
                             let availableDates = [<?php echo implode( ',', $all_date ); ?>];
                             let dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
                             if (jQuery.inArray(dmy, availableDates) !== -1) {
-                                return [true, "", "Available"];
+                                return [true, "ttbm-date-available", "Available"];
                             } else {
-                                return [false, "", "unAvailable"];
+                                return [false, "ttbm-date-unavailable", "Not available"];
                             }
                         }
                     });
@@ -350,6 +400,35 @@
 				$datetime2 = new DateTime($enddate);
 				$interval = $datetime1->diff($datetime2);
 				return $interval->format('%h') . "H " . $interval->format('%i') . "M";
+			}
+
+			/**
+			 * Parse a display date-range string into Y-m-d start/end dates.
+			 *
+			 * @param string $date_range e.g. "Jun 25, 2026 – Jul 1, 2026".
+			 * @return array{0: string, 1: string}|false
+			 */
+			public static function parse_date_range_string( $date_range ) {
+				$date_range = trim( (string) $date_range );
+				if ( $date_range === '' ) {
+					return false;
+				}
+
+				$parts = preg_split( '/\s+[-\x{2013}\x{2014}]\s+/u', $date_range, 2 );
+				if ( ! is_array( $parts ) || count( $parts ) !== 2 ) {
+					return false;
+				}
+
+				$start = strtotime( trim( $parts[0] ) );
+				$end   = strtotime( trim( $parts[1] ) );
+				if ( false === $start || false === $end ) {
+					return false;
+				}
+
+				return array(
+					gmdate( 'Y-m-d', $start ),
+					gmdate( 'Y-m-d', $end ),
+				);
 			}
 			//***********************************//
 			public static function get_settings($section, $key, $default = '') {
@@ -473,14 +552,7 @@
 				return wp_get_attachment_image_url($image_id, $size);
 			}
 			public static function get_page_by_slug($slug) {
-				if ($pages = get_pages()) {
-					foreach ($pages as $page) {
-						if ($slug === $page->post_name) {
-							return $page;
-						}
-					}
-				}
-				return false;
+				return get_page_by_path($slug, OBJECT, 'page');
 			}
 			//***********************************//
 			public static function check_plugin($plugin_dir_name, $plugin_file): int {
@@ -505,6 +577,14 @@
 					return 0;
 				}
 			}
+			/**
+			 * Whether WooCommerce is active and usable right now. The single gate
+			 * the rest of the plugin should check before loading/using WC-specific
+			 * integration (cart/checkout hooks, hidden product creation, wishlist).
+			 */
+			public static function has_woocommerce(): bool {
+				return class_exists('WooCommerce') || self::check_woocommerce() === 1;
+			}
 			public static function get_order_item_meta( $item_id, $key ): string {
 				$value = wc_get_order_item_meta( $item_id, $key, true );
 				if ( is_array( $value ) ) {
@@ -525,7 +605,7 @@
 				return $value ?? '';
 			}
 			public static function wc_product_sku($product_id) {
-				if ($product_id) {
+				if ($product_id && class_exists('WC_Product')) {
 					return new WC_Product($product_id);
 				}
 				return null;
@@ -541,19 +621,20 @@
 					return $cached;
 				}
 
-				// Use WooCommerce API functions instead of direct DB query
-				$tax_classes = WC_Tax::get_tax_classes();
-				$tax_list = [];
-
 				// Standard tax classes that aren't returned by get_tax_classes()
 				$standard_classes = [
 					'standard' => __('Standard rate', 'tour-booking-manager')
 				];
 
-				// Format the tax classes array
-				foreach ($tax_classes as $tax_class) {
-					$slug = sanitize_title($tax_class);
-					$tax_list[$slug] = $tax_class;
+				$tax_list = [];
+				// Use WooCommerce API functions instead of direct DB query; without
+				// WooCommerce there are no tax classes to list beyond the standard one.
+				if (class_exists('WC_Tax')) {
+					$tax_classes = WC_Tax::get_tax_classes();
+					foreach ($tax_classes as $tax_class) {
+						$slug = sanitize_title($tax_class);
+						$tax_list[$slug] = $tax_class;
+					}
 				}
 
 				// Merge with standard classes
@@ -1077,14 +1158,7 @@
 				return wp_get_attachment_image_url($image_id, $size);
 			}
 			public static function get_page_by_slug($slug) {
-				if ($pages = get_pages()) {
-					foreach ($pages as $page) {
-						if ($slug === $page->post_name) {
-							return $page;
-						}
-					}
-				}
-				return false;
+				return get_page_by_path($slug, OBJECT, 'page');
 			}
 			//***********************************//
 			public static function check_plugin($plugin_dir_name, $plugin_file): int {

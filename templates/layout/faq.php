@@ -8,7 +8,7 @@
 	if (!empty($faqs) && $display_faq == 'on') {
 		?>
         <div class='ttbm_wp_editor'>
-			<h2 class="content-title"><?php esc_html_e( "F.A.Q", 'tour-booking-manager' ); ?></h2>
+			<h2 class="content-title ttbm_section_title"><?php esc_html_e( "F.A.Q", 'tour-booking-manager' ); ?></h2>
 
             <div class='ttbm_faq_content'>
                 <?php foreach ($faqs as $key => $faq) { ?>

@@ -102,6 +102,24 @@
 			]);
 		}
 		public function booking_panel($tour_id, $tour_date = '', $hotel_id = '') {
+				// Bookable when WooCommerce checkout exists, or when an addon (e.g.
+				// the Pro custom PayPal/Stripe/Offline checkout) filters this true.
+				if (!apply_filters('ttbm_booking_available', TTBM_Global_Function::has_woocommerce(), $tour_id)) {
+					?>
+					<div class="ttbm_booking_status ttbm_booking_status--unavailable" role="status">
+						<div class="ttbm_booking_status__icon" aria-hidden="true">
+							<svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<rect x="3" y="5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.75"/>
+								<path d="M8 3v4M16 3v4M3 10h18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+								<circle cx="12" cy="15.5" r="1.25" fill="currentColor"/>
+							</svg>
+						</div>
+						<h3 class="ttbm_booking_status__title"><?php esc_html_e("Booking isn't available yet", 'tour-booking-manager'); ?></h3>
+						<p class="ttbm_booking_status__desc"><?php esc_html_e("Tickets aren't open for this tour right now. Please check back soon.", 'tour-booking-manager'); ?></p>
+					</div>
+					<?php
+					return;
+				}
 				$tour_date = $tour_date ?: current(TTBM_Function::get_date($tour_id));
 				$ttbm_type = TTBM_Function::get_tour_type($tour_id);
 				if ($ttbm_type != 'hotel') {
@@ -139,9 +157,16 @@
 					<?php
 				} else {
 					?>
-                    <div class="dLayout allCenter bgWarning">
-                        <h3 class="textWhite"><?php esc_html_e('Expired ! ', 'tour-booking-manager') ?></h3>
-                    </div>
+					<div class="ttbm_booking_status ttbm_booking_status--expired" role="status">
+						<div class="ttbm_booking_status__icon" aria-hidden="true">
+							<svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.75"/>
+								<path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</div>
+						<h3 class="ttbm_booking_status__title"><?php esc_html_e('This tour has expired', 'tour-booking-manager'); ?></h3>
+						<p class="ttbm_booking_status__desc"><?php esc_html_e('Booking dates for this tour are no longer available.', 'tour-booking-manager'); ?></p>
+					</div>
 					<?php
 				}
 			}

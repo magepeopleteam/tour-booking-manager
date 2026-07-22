@@ -7,7 +7,6 @@ $tour_id       = $tour_id ?? TTBM_Function::post_id_multi_language( $ttbm_post_i
 
 // --- Price ---
 $start_price   = TTBM_Function::get_tour_start_price( $ttbm_post_id );
-$regular_price = TTBM_Function::check_discount_price_exit( $tour_id );
 $show_price    = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) !== 'off';
 
 // --- Duration label (e.g. "7 DAYS / 6 NIGHTS") ---
@@ -58,14 +57,6 @@ if ( $show_duration && ( $duration || $night ) && $tour_type === 'general' ) {
 					echo wc_price( $start_price );
 					?>
 				</span>
-				<?php if ( $regular_price ) : ?>
-					<span class="ttbm-gc-price-original">
-						<?php
-						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-						echo wc_price( $regular_price );
-						?>
-					</span>
-				<?php endif; ?>
 			</div>
 		<?php endif; ?>
 	</div>

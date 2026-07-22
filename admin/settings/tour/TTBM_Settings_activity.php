@@ -5,7 +5,7 @@
 	if (!class_exists('TTBM_Settings_activity')) {
 		class TTBM_Settings_activity {
 			public function __construct() {
-				add_action('ttbm_meta_box_tab_content', [$this, 'ttbm_settings_activities'], 10, 1);
+				add_action('ttbm_tour_feature_inner', [$this, 'render_activities_section'], 10, 1);
 				//*********Activity***************//
 				add_action('wp_ajax_load_ttbm_activity_form', [$this, 'load_ttbm_activity_form']);
 				add_action('wp_ajax_nopriv_load_ttbm_activity_form', [$this, 'load_ttbm_activity_form']);
@@ -21,15 +21,12 @@
 			private function current_user_can_edit_tour($tour_id) {
 				return $tour_id > 0 && current_user_can('edit_post', $tour_id);
 			}
-			public function ttbm_settings_activities($tour_id) {
+			public function render_activities_section($tour_id) {
 				$display = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_activities', 'on');
 				$active = $display == 'off' ? '' : 'mActive';
 				$checked = $display == 'off' ? '' : 'checked';
 				?>
-                <div class="tabsItem ttbm_settings_area ttbm_settings_activities" data-tabs="#ttbm_settings_activies">
-                    <h2><?php esc_html_e('Activity Settings', 'tour-booking-manager'); ?></h2>
-                    <p><?php TTBM_Settings::des_p('activity_settings_description'); ?></p>
-                    <section>
+                    <section class="ttbm_settings_area ttbm_settings_activities">
                         <div class="ttbm-header">
                             <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Activities Settings', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_activities', $checked); ?>
@@ -39,7 +36,6 @@
                         </div>
                         <input type="hidden" id="ttbm_checked_activities_holder" name="ttbm_checked_activities_holder" value="<?php echo esc_attr(implode(',', TTBM_Global_Function::get_post_info($tour_id, 'ttbm_tour_activities', []))); ?>"/>
                     </section>
-                </div>
 				<?php
 				$this->add_new_activity_popup();
 			}

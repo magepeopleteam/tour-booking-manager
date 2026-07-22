@@ -83,7 +83,8 @@
 			public static function switch_button($name, $checked = '') {
 				?>
                 <label class="roundSwitchLabel">
-                    <input type="checkbox" name="<?php echo esc_attr($name); ?>" <?php echo esc_attr($checked); ?>>
+					<input type="hidden" name="_ttbm_toggle_fields[]" value="<?php echo esc_attr($name); ?>">
+                    <input type="checkbox" name="<?php echo esc_attr($name); ?>" value="on" <?php echo esc_attr($checked); ?>>
                     <span class="roundSwitch" data-collapse-target="#<?php echo esc_attr($name); ?>"></span>
                 </label>
 				<?php
@@ -195,8 +196,8 @@
 					if ($input_type != 'dropdown') {
 						?>
                         <div class="groupContent qtyIncDec">
-                            <div class="decQty addonGroupContent">
-                                <span class="fas fa-minus"></span>
+                            <div class="decQty addonGroupContent" aria-label="<?php esc_attr_e( 'Decrease quantity', 'tour-booking-manager' ); ?>">
+                                <span class="qty-btn-icon" aria-hidden="true"></span>
                             </div>
                             <label>
                                 <input type="text"
@@ -208,8 +209,8 @@
                                        max="<?php echo esc_attr($max_qty > 0 ? $max_qty : $available_seat); ?>"
                                 />
                             </label>
-                            <div class="incQty addonGroupContent">
-                                <span class="fas fa-plus"></span>
+                            <div class="incQty addonGroupContent" aria-label="<?php esc_attr_e( 'Increase quantity', 'tour-booking-manager' ); ?>">
+                                <span class="qty-btn-icon" aria-hidden="true"></span>
                             </div>
                         </div>
 						<?php
@@ -327,7 +328,8 @@
 			public static function switch_button($name, $checked = '') {
 				?>
                 <label class="roundSwitchLabel">
-                    <input type="checkbox" name="<?php echo esc_attr($name); ?>" <?php echo esc_attr($checked); ?>>
+					<input type="hidden" name="_ttbm_toggle_fields[]" value="<?php echo esc_attr($name); ?>">
+                    <input type="checkbox" name="<?php echo esc_attr($name); ?>" value="on" <?php echo esc_attr($checked); ?>>
                     <span class="roundSwitch" data-collapse-target="#<?php echo esc_attr($name); ?>"></span>
                 </label>
 				<?php
@@ -439,8 +441,8 @@
 					if ($input_type != 'dropdown') {
 						?>
                         <div class="groupContent qtyIncDec">
-                            <div class="decQty addonGroupContent">
-                                <span class="fas fa-minus"></span>
+                            <div class="decQty addonGroupContent" aria-label="<?php esc_attr_e( 'Decrease quantity', 'tour-booking-manager' ); ?>">
+                                <span class="qty-btn-icon" aria-hidden="true"></span>
                             </div>
                             <label>
                                 <input type="text"
@@ -452,8 +454,8 @@
                                        max="<?php echo esc_attr($max_qty > 0 ? $max_qty : $available_seat); ?>"
                                 />
                             </label>
-                            <div class="incQty addonGroupContent">
-                                <span class="fas fa-plus"></span>
+                            <div class="incQty addonGroupContent" aria-label="<?php esc_attr_e( 'Increase quantity', 'tour-booking-manager' ); ?>">
+                                <span class="qty-btn-icon" aria-hidden="true"></span>
                             </div>
                         </div>
 						<?php

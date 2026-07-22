@@ -37,9 +37,8 @@
 						add_option($section['id']);
 					}
 					if (isset($section['desc']) && !empty($section['desc'])) {
-						$section['desc'] = '<div class="inside">' . $section['desc'] . '</div>';
 						$callback = function () use ($section) {
-							echo esc_html(str_replace('"', '\"', $section['desc']));
+							echo '<p class="ttbm-section-desc">' . wp_kses_post($section['desc']) . '</p>';
 						};
 					} else if (isset($section['callback'])) {
 						$callback = $section['callback'];
@@ -304,9 +303,10 @@
 					'id' => $args['section'] . '[' . $args['id'] . ']',
 					'echo' => 0
 				);
-				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  
-				$dropdown = wp_dropdown_pages($dropdown_args);
-				echo wp_kses_post($dropdown);
+				// wp_dropdown_pages() already escapes its own output; wp_kses_post()
+				// would strip <select>/<option> entirely since they're not in its
+				// allowed-HTML list, leaving just a jumble of page-title text.
+				echo wp_dropdown_pages($dropdown_args); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			function sanitize_options($options) {
 				if (!$options) {
@@ -342,10 +342,13 @@
 				$count = count($this->settings_sections);
 				if ($count > 1) {
 					?>
-                    <ul class="tabLists bgLight">
-						<?php foreach ($this->settings_sections as $tab) { ?>
-                            <li data-tabs-target="#<?php echo esc_attr($tab['id']); ?>">
-                                <span class="<?php echo esc_attr(array_key_exists('icon', $tab) ? $tab['icon'] : ''); ?>"></span><?php echo esc_html($tab['title']); ?>
+                    <ul class="tabLists bgLight meta-sidebar">
+						<?php foreach ($this->settings_sections as $index => $tab) { ?>
+                            <li class="<?php echo 0 === $index ? 'active' : ''; ?>" data-tabs-target="#<?php echo esc_attr($tab['id']); ?>">
+                                <?php if (!empty($tab['icon'])) : ?>
+                                    <i class="<?php echo esc_attr($tab['icon']); ?>"></i>
+                                <?php endif; ?>
+                                <span><?php echo esc_html($tab['title']); ?></span>
                             </li>
 						<?php } ?>
                     </ul>
@@ -354,8 +357,8 @@
 			}
 			function show_forms() {
 				?>
-				<?php foreach ($this->settings_sections as $form) { ?>
-                    <div class="tabsItem" data-tabs="#<?php echo esc_attr($form['id']); ?>">
+				<?php foreach ($this->settings_sections as $index => $form) { ?>
+                    <div class="tabsItem<?php echo 0 === $index ? ' active' : ''; ?>" data-tabs="#<?php echo esc_attr($form['id']); ?>">
                         <form method="post" action="options.php">
 							<?php
 								do_action('wsa_form_top_' . $form['id'], $form);
@@ -389,11 +392,15 @@
 							echo wp_kses_post($section['before_section']);
 						}
 					}
-					if ($section['title']) {
-						echo "<h3>" . esc_html($section['title']) . "</h3>\n";
-					}
-					if ($section['callback']) {
-						call_user_func($section['callback'], $section);
+					if ($section['title'] || $section['callback']) {
+						echo '<div class="ttbm-section-header">';
+						if ($section['title']) {
+							echo "<h3>" . esc_html($section['title']) . "</h3>\n";
+						}
+						if ($section['callback']) {
+							call_user_func($section['callback'], $section);
+						}
+						echo '</div>';
 					}
 					if (isset($wp_settings_fields[$form_id][$section['id']])) {
 						echo '<section>';

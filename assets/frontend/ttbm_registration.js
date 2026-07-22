@@ -1,3 +1,31 @@
+function ttbm_sync_time_slot_selection(parent) {
+    parent = parent && parent.jquery ? parent : jQuery(parent);
+    if (!parent || parent.length < 1) {
+        return;
+    }
+    let timeArea = parent.find('.ttbm_select_time_area').first();
+    if (timeArea.length < 1) {
+        return;
+    }
+    let timeInput = timeArea.find('[name="ttbm_select_time"], [data-radio-value]').first();
+    let selectedTime = timeInput.length ? timeInput.val() : '';
+    if (!selectedTime) {
+        selectedTime = parent.data('ttbmSelectedTime') || '';
+        if (selectedTime && timeInput.length) {
+            timeInput.val(selectedTime);
+        }
+    } else {
+        parent.data('ttbmSelectedTime', selectedTime);
+    }
+    if (!selectedTime) {
+        timeArea.find('.customRadio[data-radio].active').removeClass('active');
+        return;
+    }
+    timeArea.find('.customRadio[data-radio]').each(function () {
+        jQuery(this).toggleClass('active', jQuery(this).attr('data-radio') === selectedTime);
+    });
+    timeArea.find('select[name="ttbm_select_time"]').val(selectedTime);
+}
 function get_ttbm_ticket(current, date = '') {
     let parent = current.closest('.ttbm_registration_area');
     let tour_id = parent.find('[name="ttbm_id"]').val();
@@ -25,21 +53,26 @@ function get_ttbm_ticket(current, date = '') {
             nonce: ttbm_ajax.nonce
         },
         beforeSend: function () {
-            if (parent.find('.mp_tour_ticket_form').length > 0) {
-                placeholderLoader(parent);
-            } else {
-                simpleSpinner(parent);
+            simpleSpinnerRemove(parent);
+            let selectedTime = parent.find('.ttbm_select_time_area [name="ttbm_select_time"], .ttbm_select_time_area [data-radio-value]').first().val();
+            if (selectedTime) {
+                parent.data('ttbmSelectedTime', selectedTime);
             }
+            parent.data('ttbmTicketLoading', true);
+            target.empty().show().addClass('ttbm-ticket-loading');
+            placeholderLoader(parent);
         },
         success: function (data) {
             if (parent.data('ttbmTicketRequestToken') !== requestToken) {
                 return;
             }
+            target.removeClass('ttbm-ticket-loading');
             target.html(data).slideDown('fast').promise().done(function () {
                 ttbm_price_calculation(parent);
                 placeholderLoaderRemove(parent);
                 simpleSpinnerRemove(parent);
                 ttbm_sync_available_seat(parent);
+                ttbm_sync_time_slot_selection(parent);
                 parent.trigger('ttbm:ticket-refreshed');
             });
         },
@@ -47,12 +80,15 @@ function get_ttbm_ticket(current, date = '') {
             if (textStatus === 'abort') {
                 return;
             }
+            target.removeClass('ttbm-ticket-loading');
             placeholderLoaderRemove(parent);
             simpleSpinnerRemove(parent);
+            ttbm_sync_time_slot_selection(parent);
         },
         complete: function () {
             if (parent.data('ttbmTicketRequestToken') === requestToken) {
                 parent.removeData('ttbmTicketRequestToken');
+                parent.removeData('ttbmTicketLoading');
             }
             if (parent.data('ttbmTicketRequest') === ajaxRequest) {
                 parent.removeData('ttbmTicketRequest');
@@ -118,6 +154,9 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
     });
     $(document).on('change', '.ttbm_registration_area [name="ttbm_date"]', function () {
         let parent = $(this).closest('.ttbm_registration_area');
+        if (parent.data('ttbmTicketLoading')) {
+            return;
+        }
 
         // Clear Validation Error
         let date_input = parent.find('#ttbm_select_date');
@@ -126,25 +165,57 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
 
         let time_slot = parent.find('.ttbm_select_time_area');
         parent.find('.ttbm_booking_panel').html('');
-        // Show time slots if date is selected
+        // With time slots, wait for a slot (or Check Availability) before loading tickets.
         if (time_slot.length > 0) {
+            placeholderLoaderRemove(parent);
             time_slot.slideDown();
+            parent.find('.ttbm_booking_panel').hide();
             ttbm_toggle_book_now_by_date(parent);
             return true;
-        } else {
-            get_ttbm_ticket($(this));
         }
+        get_ttbm_ticket($(this));
         ttbm_toggle_book_now_by_date(parent);
     });
     $(document).on('ttbm:ticket-refreshed', '.ttbm_registration_area', function () {
         ttbm_toggle_book_now_by_date($(this));
     });
 
-    // Clear time validation error on selection
-    $(document).on('click', '.ttbm_select_time_area .customRadio', function () {
-        let parent = $(this).closest('.ttbm_select_time_area');
-        parent.css('border', '');
-        parent.find('.ttbm-time-error').remove();
+    // Clear time validation error; ensure hidden input syncs when markup has no label wrapper.
+    $(document).on('click', '.ttbm_select_time_area .customRadio[data-radio]', function (e) {
+        e.stopImmediatePropagation();
+        let $slot = $(this);
+        let timeArea = $slot.closest('.ttbm_select_time_area');
+        let regArea = timeArea.closest('.ttbm_registration_area');
+        timeArea.css('border', '');
+        timeArea.find('.ttbm-time-error').remove();
+
+        let value = $slot.attr('data-radio');
+        let timeInput = timeArea.find('[name="ttbm_select_time"], [data-radio-value]').first();
+        if (!timeInput.length) {
+            timeInput = regArea.find('[name="ttbm_select_time"]').first();
+        }
+        timeArea.find('.customRadio[data-radio]').removeClass('active');
+        $slot.addClass('active');
+        if (!timeInput.length || !value) {
+            return;
+        }
+        regArea.data('ttbmSelectedTime', value);
+        if (timeInput.val() !== value) {
+            timeInput.val(value).trigger('change');
+        }
+    });
+    // Load tickets on time selection (Pro handles this when ttbm_ajax_url_pro is present).
+    $(document).on('change', '.ttbm_registration_area [name="ttbm_select_time"]', function () {
+        if (typeof ttbm_ajax_url_pro !== 'undefined') {
+            return;
+        }
+        let parent = $(this).closest('.ttbm_registration_area');
+        if (!parent.find('.ttbm_select_time_area').length) {
+            return;
+        }
+        parent.find('.ttbm_check_ability').slideUp('fast');
+        parent.find('.ttbm_booking_panel').show();
+        get_ttbm_ticket($(this));
     });
 
     $(document).on('click', '.get_particular_ticket', function () {
@@ -211,6 +282,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
 
         if (time_slot.length > 0) {
             if (parent.find('[name="ttbm_select_time"]').val()) {
+                parent.find('.ttbm_booking_panel').show();
                 get_ttbm_ticket($(this));
             } else if (parent.find('[name="ttbm_select_time"]').length > 0) {
                 // alert('Please Select Time');
@@ -238,16 +310,16 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         $('body').removeClass('noScroll').find('[data-active-popup]').removeAttr('data-active-popup');
         return true;
     });
-    $(document).on("click", ".ttbm_registration_area .ttbm_load_popup_reg", function () {
-        let parent = $(this).closest('.ttbm_registration_area');
+    function ttbm_load_popup_or_inline_ticket(trigger) {
+        let parent = trigger.closest('.ttbm_registration_area');
         let date_target = parent.find('[name="ttbm_date"]').first();
         let has_date_field = date_target.length > 0;
         let date_val = has_date_field ? date_target.val() : '';
         let time_slot = parent.find('.ttbm_select_time_area');
         let date_input = parent.find('#ttbm_select_date');
         let date_field = date_input.length > 0 ? date_input : date_target;
+        let inline_panel = parent.hasClass('ttbm_smart_inline_booking');
 
-        // Validation: Date is required
         if (has_date_field && !date_val) {
             date_field.css('border', '1px solid red');
             if (parent.find('.ttbm-date-error').length === 0) {
@@ -262,10 +334,13 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
 
         if (time_slot.length > 0) {
             if (parent.find('[name="ttbm_select_time"]').val()) {
-                parent.find('.registration_popup').trigger('click');
-                get_ttbm_ticket($(this));
+                if (!inline_panel) {
+                    parent.find('.registration_popup').trigger('click');
+                } else {
+                    parent.find('.ttbm_booking_panel').show();
+                }
+                get_ttbm_ticket(trigger);
             } else if (parent.find('[name="ttbm_select_time"]').length > 0) {
-                // alert('Please Select Time');
                 time_slot.css('border', '1px solid red');
                 time_slot.css('padding', '10px');
                 time_slot.css('border-radius', '5px');
@@ -276,12 +351,19 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
                 parent.find('#ttbm_select_date').trigger('focus');
             }
         } else {
-            parent.find('.registration_popup').trigger('click');
+            if (!inline_panel) {
+                parent.find('.registration_popup').trigger('click');
+            } else {
+                parent.find('.ttbm_booking_panel').show();
+            }
             let selected_date = has_date_field ? date_target.val() : '';
             if (!has_date_field || selected_date) {
-                get_ttbm_ticket($(this));
+                get_ttbm_ticket(trigger);
             }
         }
+    }
+    $(document).on("click", ".ttbm_registration_area .ttbm_load_popup_reg", function () {
+        ttbm_load_popup_or_inline_ticket($(this));
     });
     $(document).on('change', '.ttbm_registration_area [name="ttbm_tour_hotel_list"]', function () {
         let parent = $(this).closest('.ttbm_registration_area');
@@ -299,38 +381,165 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
             target.slideDown(250);
         }
     });
-    $('input[name="ttbm_hotel_date_range"]').daterangepicker({
-        autoUpdateInput: false,
-        minDate: moment(),
-        "autoApply": true,
-        "locale": {
-            "format": "YYYY/MM/DD"
+    function ttbmHotelDateRangeAjaxValue(input) {
+        const $input = $(input);
+        const checkin = $input.attr('data-checkin');
+        const checkout = $input.attr('data-checkout');
+        if (checkin && checkout) {
+            return String(checkin).replace(/-/g, '/') + '    -    ' + String(checkout).replace(/-/g, '/');
         }
-    }).on('apply.daterangepicker', function (ev, picker) {
-        $(this).val(picker.startDate.format('YYYY/MM/DD') + '    -    ' + picker.endDate.format('YYYY/MM/DD'));
-        $('.ttbm_hotel_area').slideUp('fast').find('.ttbm_booking_panel').html('');
-    }).on('cancel.daterangepicker', function () {
-        $(this).val('');
+        return $input.val() || '';
+    }
+    function ttbmResolveHotelDateRangeInput($scope) {
+        if ($scope && $scope.is('input.ttbm_hotel_date_input[name="ttbm_hotel_date_range"]')) {
+            return $scope;
+        }
+        if ($scope && $scope.length) {
+            const scoped = $scope.find('input.ttbm_hotel_date_input[name="ttbm_hotel_date_range"]').first();
+            if (scoped.length) {
+                return scoped;
+            }
+        }
+        return $('input.ttbm_hotel_date_input[name="ttbm_hotel_date_range"]').first();
+    }
+    function ttbmResolveHotelArea($input) {
+        const $section = $input.closest('.ttbm_booking_section, .particular_date_area');
+        if ($section.length) {
+            const $scoped = $section.find('.ttbm_hotel_area').first();
+            if ($scoped.length) {
+                return $scoped;
+            }
+        }
+        return $('.ttbm_hotel_area').first();
+    }
+    function ttbmUpdateHotelCardDateDisplay($dateInput, $hotelArea) {
+        var checkin  = $dateInput.attr('data-checkin');
+        var checkout = $dateInput.attr('data-checkout');
+        if (!checkin || !checkout || typeof moment === 'undefined') { return; }
+        var fmt   = $dateInput.attr('data-display-format') || 'MMMM D, YYYY';
+        var start = moment(checkin, 'YYYY-MM-DD');
+        var end   = moment(checkout, 'YYYY-MM-DD');
+        if (!start.isValid() || !end.isValid()) { return; }
+        var label = start.format(fmt) + ' – ' + end.format(fmt);
+        var $area = ($hotelArea && $hotelArea.length) ? $hotelArea : ttbmResolveHotelArea($dateInput);
+        $area.find('.ttbm_hdc_date_range_display').text(label).show();
+    }
+    function ttbmShowHotelAreaForDates($input) {
+        const $dateInput = $input && $input.length ? $input : ttbmResolveHotelDateRangeInput();
+        const date_range = ttbmHotelDateRangeAjaxValue($dateInput);
+        const $hotelArea = ttbmResolveHotelArea($dateInput);
+        if (!date_range) {
+            $hotelArea.slideUp('fast');
+            $dateInput.trigger('focus');
+            return false;
+        }
+        $hotelArea.removeClass('dNone').slideDown('fast');
+        $hotelArea.find('.ttbm_booking_panel').slideUp('fast').html('');
+        ttbm_loadBgImage();
+        ttbmUpdateHotelCardDateDisplay($dateInput, $hotelArea);
+        return true;
+    }
+    function ttbmInitHotelDateRangePicker(context) {
+        if (typeof moment === 'undefined' || typeof $.fn.daterangepicker !== 'function') {
+            return;
+        }
+        const $root = context ? $(context) : $(document);
+        $root.find('input.ttbm_hotel_date_input[name="ttbm_hotel_date_range"]').each(function () {
+            const $input = $(this);
+            if ($input.data('ttbm-hotel-drp-init')) {
+                return;
+            }
+            const displayFormat = $input.attr('data-display-format') || 'YYYY/MM/DD';
+            const pickerFormat = 'YYYY/MM/DD';
+            const separator = '    -    ';
+            const checkin = $input.attr('data-checkin');
+            const checkout = $input.attr('data-checkout');
+            const pickerOptions = {
+                autoUpdateInput: false,
+                minDate: moment().startOf('day'),
+                autoApply: true,
+                opens: 'left',
+                drops: 'down',
+                parentEl: 'body',
+                locale: {
+                    format: pickerFormat,
+                    separator: separator
+                }
+            };
+            if (checkin && moment(checkin, 'YYYY-MM-DD', true).isValid()) {
+                pickerOptions.startDate = moment(checkin, 'YYYY-MM-DD');
+            }
+            if (checkout && moment(checkout, 'YYYY-MM-DD', true).isValid()) {
+                pickerOptions.endDate = moment(checkout, 'YYYY-MM-DD');
+            }
+            $input.daterangepicker(pickerOptions);
+            const drpInstance = $input.data('daterangepicker');
+            if (drpInstance && drpInstance.container) {
+                drpInstance.container.addClass('ttbm-hotel-daterange');
+            }
+            $input
+                .on('show.daterangepicker', function (ev, picker) {
+                    picker.container.addClass('ttbm-hotel-daterange');
+                })
+                .on('apply.daterangepicker', function (ev, picker) {
+                let formattedStart = picker.startDate.format(displayFormat);
+                let formattedEnd = picker.endDate.format(displayFormat);
+                if (formattedStart === 'Invalid date' || formattedEnd === 'Invalid date') {
+                    formattedStart = picker.startDate.format(pickerFormat);
+                    formattedEnd = picker.endDate.format(pickerFormat);
+                }
+                $(this).val(formattedStart + separator + formattedEnd);
+                $(this).attr('data-checkin', picker.startDate.format('YYYY-MM-DD'));
+                $(this).attr('data-checkout', picker.endDate.format('YYYY-MM-DD'));
+                ttbmShowHotelAreaForDates($(this));
+            }).on('cancel.daterangepicker', function () {
+                $(this).val('');
+                $(this).removeAttr('data-checkin data-checkout');
+            });
+            $input.data('ttbm-hotel-drp-init', true);
+        });
+    }
+    $(document).ready(function () {
+        ttbmInitHotelDateRangePicker();
+        $('input.ttbm_hotel_date_input[name="ttbm_hotel_date_range"]').each(function () {
+            if ($(this).attr('data-checkin') && $(this).attr('data-checkout')) {
+                ttbmShowHotelAreaForDates($(this));
+            }
+        });
+    });
+    $(document).on('click', '[data-ttbm-book-now]', function () {
+        setTimeout(function () {
+            ttbmInitHotelDateRangePicker('#ttbm_booking_section');
+            const $input = $('#ttbm_booking_section').find('input.ttbm_hotel_date_input[name="ttbm_hotel_date_range"]').first();
+            if ($input.length && $input.attr('data-checkin') && $input.attr('data-checkout')) {
+                ttbmShowHotelAreaForDates($input);
+            }
+        }, 50);
+    });
+    $(document).on('click', '.ttbm_booking_section--hotel .ttbm_hotel_date_input_wrap', function (e) {
+        const $input = $(this).find('.ttbm_hotel_date_input');
+        if (!$input.length) {
+            return;
+        }
+        if (!$input.data('ttbm-hotel-drp-init')) {
+            ttbmInitHotelDateRangePicker($(this).closest('.ttbm_booking_section'));
+        }
+        const picker = $input.data('daterangepicker');
+        if (picker) {
+            e.preventDefault();
+            $input.trigger('click.daterangepicker');
+        }
     });
     $(document).on('click', '.ttbm_hotel_check_availability', function () {
-        let target = $('[name="ttbm_hotel_date_range"]');
-        let date_range = target.val();
-        if (date_range) {
-            $('.ttbm_hotel_area').slideDown('fast');
-            ttbm_loadBgImage();
-        } else {
-            $('.ttbm_hotel_area').slideUp('fast');
-            target.trigger('focus');
-        }
+        const target = ttbmResolveHotelDateRangeInput($(this).closest('.ttbm_booking_section, .ttbm_hotel_booking_toolbar, .ttbm_date_time_select'));
+        ttbmShowHotelAreaForDates(target);
     });
     $(document).on('click', '.ttbm_hotel_open_room_list', function () {
         let current = $(this).closest('.ttbm_hotel_item');
         let tour_id = current.find('[name="ttbm_id"]').val();
         let hotel_id = current.find('[name="ttbm_hotel_id"]').val();
-        let date_range = $('[name="ttbm_hotel_date_range"]').val();
-        if ($('[name="ttbm_hotel_date_range"]').length > 1) {
-            date_range = $(this).closest('.particular_date_area').find('[name="ttbm_hotel_date_range"]').val();
-        }
+        let $dateInput = ttbmResolveHotelDateRangeInput($(this).closest('.particular_date_area').length ? $(this).closest('.particular_date_area') : null);
+        let date_range = ttbmHotelDateRangeAjaxValue($dateInput);
         let target = current.find('.ttbm_booking_panel');
         let target_form = target.find('.mp_tour_ticket_form');
         if (date_range) {
@@ -472,64 +681,144 @@ $(document).on('change', '.ttbm-sort-select', function () {
         // =========================================================
         // Top Filter Tabs
         // =========================================================
+        // When a tab filter is active, completely take over Load More and
+        // page-number clicks so the legacy filter_pagination.js handler
+        // cannot iterate and slideDown the hidden cards.
+        document.addEventListener('click', function (evt) {
+            let target = evt.target.closest('.pagination_load_more, [data-pagination]');
+            if (!target) return;
+            let area = target.closest('.ttbm_filter_area');
+            if (!area) return;
+            if (!area.querySelector('.filter_item.ttbm-tab-hidden')) return;
+
+            evt.stopImmediatePropagation();
+            evt.preventDefault();
+
+            let $area = $(area);
+            let matched = $area.find('.filter_item').not('.ttbm-tab-hidden');
+            let totalMatched = matched.length;
+            let pp = parseInt($area.find('input[name="pagination_per_page"]').val(), 10);
+            if (isNaN(pp) || pp < 1) pp = totalMatched;
+
+            let page;
+            if (target.classList.contains('pagination_load_more')) {
+                page = parseInt(target.getAttribute('data-load-more'), 10) || 0;
+                let hiddenInMatched = matched.filter(':hidden').length;
+                page = hiddenInMatched > 0 ? page + 1 : 0;
+                target.setAttribute('data-load-more', String(page));
+            } else {
+                page = parseInt(target.getAttribute('data-pagination'), 10) || 0;
+                $area.find('[data-pagination]').removeClass('active_pagination');
+                $(target).addClass('active_pagination');
+            }
+
+            let style = $area.find('input[name="pagination_style"]').val();
+            let startIdx = (style === 'load_more') ? 0 : page * pp;
+            let endIdx = (style === 'load_more') ? (page + 1) * pp : (page + 1) * pp;
+
+            matched.each(function (idx) {
+                if (idx >= startIdx && idx < endIdx) {
+                    $(this).removeClass('dNone').show();
+                } else {
+                    $(this).hide();
+                }
+            });
+            $area.find('.filter_item.ttbm-tab-hidden').hide();
+
+            let visibleNow = matched.filter(':visible').length;
+            $area.find('.qty_count').html(visibleNow);
+            $area.find('.total_filter_qty').html(totalMatched);
+
+            if (style === 'load_more') {
+                if (matched.filter(':hidden').length === 0) {
+                    $area.find('.pagination_load_more').attr('disabled', 'disabled');
+                } else {
+                    $area.find('.pagination_load_more').removeAttr('disabled');
+                }
+            }
+        }, true);
+
         $(document).on('click', '.ttbm-tab-btn', function () {
 
             $('.ttbm-tab-btn').removeClass('ttbm-tab-active');
             $(this).addClass('ttbm-tab-active');
 
             let filter = $(this).data('filter-tab');
+
             let parent = $(this).closest('.ttbm_filter_area');
+            if (!parent.length) parent = $(this).closest('.all_filter_item').parent();
+            if (!parent.find('.filter_item').length) parent = $(document);
+
+            let perPage = parseInt(parent.find('input[name="pagination_per_page"]').val(), 10);
+            if (isNaN(perPage) || perPage < 1) perPage = parent.find('.filter_item').length;
 
             let now = new Date();
             now.setHours(0, 0, 0, 0);
 
-            let weekEnd = new Date(now);
-            weekEnd.setDate(weekEnd.getDate() + 7);
+            // Calendar week: Monday (start) to Sunday (end)
+            let dayOfWeek = now.getDay(); // 0 = Sun, 1 = Mon, ... 6 = Sat
+            let daysSinceMonday = (dayOfWeek + 6) % 7;
+            let weekStart = new Date(now);
+            weekStart.setDate(weekStart.getDate() - daysSinceMonday);
+            let weekEnd = new Date(weekStart);
+            weekEnd.setDate(weekEnd.getDate() + 6);
 
+            // Step 1: classify every card — match vs. not match
             parent.find('.filter_item').each(function () {
 
                 let item = $(this);
                 let itemDate = item.attr('data-date');
+                let matches = false;
 
-                if (!itemDate || filter === 'all') {
-                    item.show();
-                    return;
+                if (filter === 'all' || !itemDate) {
+                    matches = true;
+                } else {
+                    let tourDate = new Date(itemDate + 'T00:00:00');
+                    if (filter === 'week') {
+                        matches = (tourDate >= weekStart && tourDate <= weekEnd);
+                    } else if (filter === 'month') {
+                        matches = (tourDate.getMonth() === now.getMonth() &&
+                                   tourDate.getFullYear() === now.getFullYear());
+                    } else if (filter === 'year') {
+                        matches = (tourDate.getFullYear() === now.getFullYear());
+                    }
                 }
 
-                let tourDate = new Date(itemDate + 'T00:00:00');
+                item.toggleClass('ttbm-tab-hidden', !matches);
+            });
 
-                if (filter === 'week') {
-                    if (tourDate >= now && tourDate <= weekEnd) {
-                        item.show();
-                    } else {
-                        item.hide();
-                    }
-                } else if (filter === 'month') {
-                    if (
-                        tourDate.getMonth() === now.getMonth() &&
-                        tourDate.getFullYear() === now.getFullYear()
-                    ) {
-                        item.show();
-                    } else {
-                        item.hide();
-                    }
-                } else if (filter === 'year') {
-                    if (tourDate.getFullYear() === now.getFullYear()) {
-                        item.show();
-                    } else {
-                        item.hide();
-                    }
+            // Step 2: paginate within the matched set (first perPage visible, rest hidden)
+            let matched = parent.find('.filter_item').not('.ttbm-tab-hidden');
+            let totalMatched = matched.length;
+
+            parent.find('.filter_item.ttbm-tab-hidden').hide();
+            matched.each(function (idx) {
+                let item = $(this);
+                if (idx < perPage) {
+                    item.removeClass('dNone').show();
+                } else {
+                    item.hide();
                 }
             });
 
-            // Update "Showing X of Y" count after tab filter
-            let visibleCount = parent.find('.filter_item:visible').length;
-            let totalCount   = parent.find('.filter_item').length;
-            parent.find('.qty_count').html(visibleCount);
-            parent.find('.total_filter_qty').html(totalCount);
+            // Step 3: reset & toggle Load More / pagination area
+            let loadMoreBtn = parent.find('.pagination_load_more');
+            loadMoreBtn.attr('data-load-more', '0').removeAttr('disabled');
+            parent.find('[data-pagination]').removeClass('active_pagination');
+            parent.find('[data-pagination="0"]').addClass('active_pagination');
 
-            // Show/hide the empty-result notice
-            if (visibleCount === 0) {
+            if (totalMatched <= perPage) {
+                parent.find('.pagination_area').hide();
+            } else {
+                parent.find('.pagination_area').show();
+            }
+
+            // Step 4: update "Showing X of Y" + empty-state notice
+            let visibleCount = Math.min(perPage, totalMatched);
+            parent.find('.qty_count').html(visibleCount);
+            parent.find('.total_filter_qty').html(totalMatched);
+
+            if (totalMatched === 0) {
                 parent.find('.search_result_empty').slideDown('fast');
                 parent.find('.filter_short_result').slideUp('fast');
             } else {
@@ -538,29 +827,7 @@ $(document).on('change', '.ttbm-sort-select', function () {
             }
         });
 
-        // =========================================================
-        // Activity Filter
-        // =========================================================
-        $('.ttbm_item_filter_by_activity').on('click', function () {
-
-            $('.ttbm_item_filter_by_activity').removeClass('active');
-            $(this).addClass('active');
-
-            let activityID = $(this).attr('id');
-
-            $('.filter_item').hide();
-
-            $('.filter_item').each(function () {
-
-                let activities = ($(this).attr('data-activity') || '').split(',');
-
-                if (activities.includes(activityID)) {
-                    $(this).show();
-                }
-            });
-        });
-
-
+        // Activity filter is handled in filter_pagination.js (.ttbm_item_filter_by_activity).
         // =========================================================
         // Mobile Left Filter Toggle
         // =========================================================

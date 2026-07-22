@@ -19,20 +19,18 @@
 				add_action('woocommerce_order_status_changed', [$this, 'custom_function_on_order_status_change'], 10, 4);
 			}
 			private function parse_date_range($date_range) {
-				$date_parts = explode(' - ', (string) $date_range);
-				if (count($date_parts) !== 2) {
+				$parsed = TTBM_Global_Function::parse_date_range_string( $date_range );
+				if ( ! $parsed ) {
 					return false;
 				}
 
-				$check_in_timestamp = strtotime($date_parts[0]);
-				$check_out_timestamp = strtotime($date_parts[1]);
-				if ($check_in_timestamp === false || $check_out_timestamp === false || $check_out_timestamp <= $check_in_timestamp) {
+				$check_in  = $parsed[0];
+				$check_out = $parsed[1];
+				if ( strtotime( $check_out ) <= strtotime( $check_in ) ) {
 					return false;
 				}
-				$check_in = gmdate('Y-m-d', $check_in_timestamp);
-				$check_out = gmdate('Y-m-d', $check_out_timestamp);
 
-				$interval = date_create($check_in)->diff(date_create($check_out));
+				$interval = date_create( $check_in )->diff( date_create( $check_out ) );
 				return [
 					'check_in' => $check_in,
 					'check_out' => $check_out,
@@ -96,7 +94,15 @@
 					$orderPostId = '';
 					foreach ($order->get_items() as $item_id => $item) {
 						$product = $item->get_product();
+						// Skip line items without a backing product (manual lines,
+						// deleted products) to avoid a fatal on get_id() of false.
+						if (!$product) {
+							continue;
+						}
 						$orderPostId = $product->get_id();
+					}
+					if (!$orderPostId) {
+						return;
 					}
 					$ttbm_booking_data = maybe_unserialize(get_post_meta($orderPostId, '_ttbm_hotel_booking_data', true));
 					if (isset($ttbm_booking_data['hotel_booking'])) {
@@ -214,9 +220,13 @@
 				}
 				$hotel_id = isset($_REQUEST['hotel_id']) ? absint(wp_unslash($_REQUEST['hotel_id'])) : 0;
 				$date_range = isset($_REQUEST['date_range']) ? sanitize_text_field(wp_unslash($_REQUEST['date_range'])) : '';
-				$date = explode(" - ", $date_range);
-				$start_date = gmdate('Y-m-d', strtotime($date[0]));
-				$end_date = gmdate('Y-m-d', strtotime($date[1]));
+				$date = TTBM_Global_Function::parse_date_range_string( $date_range );
+				if ( ! $date ) {
+					wp_send_json_error( [ 'message' => __( 'Invalid date range.', 'tour-booking-manager' ) ] );
+					die;
+				}
+				$start_date = $date[0];
+				$end_date   = $date[1];
 				do_action('ttbm_hotel_booking_panel', $start_date, $end_date, $hotel_id);
 				die();
 			}

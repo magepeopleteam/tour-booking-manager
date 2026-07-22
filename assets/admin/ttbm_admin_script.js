@@ -71,7 +71,14 @@
                 }, beforeSend: function () {
                     dLoader(parent);
                 }, success: function (data) {
-                    target.html(data);
+                    if ($.trim(data)) {
+                        target.html(data);
+                    } else {
+                        let fallback = parent.find('>.ttbm_hidden_content .ttbm_hidden_item').html();
+                        if (fallback) {
+                            target.html(fallback);
+                        }
+                    }
                     dLoaderRemove(parent);
                 }
             });
@@ -97,79 +104,152 @@
         return false;
     });
     //*****Location****************//
-    $(document).on('click', '.ttbm_settings_general [data-target-popup]', function () {
-        let target = $(this).closest('.ttbm_settings_general').find('.ttbm_location_form_area');
+    function ttbm_get_location_popup() {
+        return $('[data-popup="add_new_location_popup"]').first();
+    }
+
+    function ttbm_get_location_popup_form_area() {
+        return ttbm_get_location_popup().find('.ttbm_location_form_area');
+    }
+
+    function ttbm_show_location_save_error($popup, message) {
+        let $error = $popup.find('.ttbm-location-save-error');
+        if (!$error.length) {
+            return;
+        }
+        if (message) {
+            $error.text(message).show();
+        } else {
+            $error.hide().text('');
+        }
+    }
+
+    function ttbm_load_location_popup_form() {
+        let $popup = ttbm_get_location_popup();
+        let target = $popup.find('.ttbm_location_form_area');
+        if (!target.length) {
+            return;
+        }
+        ttbm_show_location_save_error($popup, '');
         $.ajax({
-            type: 'POST', url: ttbm_ajax_url, data: {
-                "action": "load_ttbm_location_form"
-            }, beforeSend: function () {
+            type: 'POST',
+            url: ttbm_ajax_url,
+            data: {
+                action: 'load_ttbm_location_form'
+            },
+            beforeSend: function () {
                 simpleSpinner(target);
-            }, success: function (data) {
-                target.html(data).slideDown('fast').promise().done(function () {
-                    simpleSpinnerRemove(target);
-                });
+            },
+            success: function (data) {
+                target.html(data).show();
+                simpleSpinnerRemove(target);
+            },
+            error: function (response) {
+                simpleSpinnerRemove(target);
+                ttbm_show_location_save_error($popup, 'Could not load the form. Please try again.');
+                console.log(response);
             }
         });
+    }
+
+    $(document).on('click', '[data-target-popup="add_new_location_popup"]', function (e) {
+        e.preventDefault();
+        ttbm_load_location_popup_form();
     });
-    $(document).on('click', '.ttbm_settings_general  .popupClose', function (e) {
-        if (e.result) {
-            $(this).closest('.ttbm_settings_general').find('.ttbm_location_form_area').html('');
-        }
+
+    $(document).on('click', '.ttbm-location-popup .popupClose', function () {
+        let $popup = $(this).closest('[data-popup="add_new_location_popup"]');
+        ttbm_get_location_popup_form_area().empty();
+        ttbm_show_location_save_error($popup, '');
+        $popup.find('.ttbm_success_info').removeClass('is-visible').hide();
     });
-    $(document).on('click', '.ttbm_new_location_save,.ttbm_new_location_save_close', function () {
+
+    $(document).on('click', '.ttbm-location-popup .ttbm_new_location_save_close', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        ttbm_get_location_popup_form_area().empty();
+        ttbm_show_location_save_error($(this).closest('[data-popup="add_new_location_popup"]'), '');
+        $(this).closest('[data-popup]').find('.popupClose').trigger('click');
+    });
+
+    $(document).on('click', '.ttbm-location-popup .ttbm_new_location_save', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         ttbm_new_location_save($(this));
     });
+
     function ttbm_new_location_save($this) {
+        let $popup = $this.closest('[data-popup="add_new_location_popup"]');
         let parent = $this.closest('.popupMainArea');
-        parent.find('.ttbm_success_info').slideUp('fast');
-        let name = parent.find('[name="ttbm_new_location_name"]').val();
-        let description = parent.find('[name="ttbm_location_description"]').val();
-        let address = parent.find('[name="ttbm_location_address"]').val();
-        let country = parent.find('[name="ttbm_location_country"]').val();
-        let image = parent.find('[name="ttbm_location_image"]').val();
+        ttbm_show_location_save_error($popup, '');
+        parent.find('.ttbm_success_info').removeClass('is-visible').slideUp('fast');
+        parent.find('[data-required]').hide();
+
+        let name = $.trim(parent.find('[name="ttbm_new_location_name"]').val() || '');
+        let description = parent.find('[name="ttbm_location_description"]').val() || '';
+        let address = parent.find('[name="ttbm_location_address"]').val() || '';
+        let country = parent.find('[name="ttbm_location_country"]').val() || '';
+        let image = parent.find('[name="ttbm_location_image"]').val() || '';
+        let isValid = true;
+
         if (!name) {
-            parent.find('[data-required="ttbm_new_location_name"]').slideDown('fast');
-        } else {
-            parent.find('[data-required="ttbm_new_location_name"]').slideUp('fast');
+            parent.find('[data-required="ttbm_new_location_name"]').show();
+            isValid = false;
         }
         if (!image) {
-            parent.find('[data-required="ttbm_location_image"]').slideDown('fast');
-        } else {
-            parent.find('[data-required="ttbm_location_image"]').slideUp('fast');
+            parent.find('[data-required="ttbm_location_image"]').show();
+            isValid = false;
         }
-        if (name && image) {
-            $.ajax({
-                type: 'POST', url: ttbm_ajax_url, data: {
-                    "action": "ttbm_new_location_save", "name": name, "description": description, "address": address, "country": country, "image": image, "_wp_nonce": parent.find('[name="ttbm_add_new_location_popup"]').val(), nonce: ttbm_admin_ajax.nonce
-                }, beforeSend: function () {
-                    dLoader(parent);
-                }, success: function () {
-                    parent.find('[name="ttbm_new_location_name"]').val('');
-                    parent.find('[name="ttbm_location_description"]').val('');
-                    parent.find('[name="ttbm_location_address"]').val('');
-                    parent.find('[name="ttbm_location_country"]').val('');
-                    parent.find('[name="ttbm_location_image"]').val('');
-                    $this.closest('.popupMainArea').find('.ttbm_remove_single_image').trigger('click');
-                    parent.find('.ttbm_success_info').slideDown('fast');
-                    ttbm_reload_location();
-                    dLoaderRemove(parent);
-                    if (($this).hasClass('ttbm_new_location_save_close')) {
-                        $this.closest('.popupMainArea').find('.popupClose').trigger('click');
-                    }
-                    $('select[name="ttbm_location_name"]')
-                        .append('<option value="'+name+'">'+name+'</option>')
-                        .val('test 5');
-                    $('select[name="ttbm_location_name"] option')
-                        .filter(function() {
-                            return $(this).text() === name;
-                        })
-                        .prop('selected', true);
-                    return true;
-                }, error: function (response) {
-                    console.log(response);
+        if (!isValid) {
+            ttbm_show_location_save_error($popup, 'Please fill in all required fields.');
+            parent.find('.popupBody').scrollTop(0);
+            return false;
+        }
+        if (!parent.find('[name="ttbm_add_new_location_popup"]').val()) {
+            ttbm_show_location_save_error($popup, 'Form is not ready. Please close and reopen the popup.');
+            return false;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: ttbm_ajax_url,
+            data: {
+                action: 'ttbm_new_location_save',
+                name: name,
+                description: description,
+                address: address,
+                country: country,
+                image: image,
+                _wp_nonce: parent.find('[name="ttbm_add_new_location_popup"]').val(),
+                nonce: ttbm_admin_ajax.nonce
+            },
+            beforeSend: function () {
+                dLoader(parent);
+            },
+            success: function () {
+                parent.find('[name="ttbm_new_location_name"]').val('');
+                parent.find('[name="ttbm_location_description"]').val('');
+                parent.find('[name="ttbm_location_address"]').val('');
+                parent.find('[name="ttbm_location_country"]').val('');
+                parent.find('[name="ttbm_location_image"]').val('');
+                parent.find('.ttbm_remove_single_image').trigger('click');
+                parent.find('.ttbm_success_info').addClass('is-visible').slideDown('fast');
+                ttbm_reload_location();
+                dLoaderRemove(parent);
+
+                let $locationSelect = $('#ttbm_location_select, select[name="ttbm_location_name"], select[name="ttbm_hotel_location"]');
+                if ($locationSelect.find('option[value="' + name.replace(/"/g, '\\"') + '"]').length === 0) {
+                    $locationSelect.append($('<option></option>').attr('value', name).text(name));
                 }
-            });
-        }
+                $locationSelect.val(name).trigger('change');
+                return true;
+            },
+            error: function (response) {
+                dLoaderRemove(parent);
+                ttbm_show_location_save_error($popup, 'Could not save location. Please try again.');
+                console.log(response);
+            }
+        });
         return false;
     }
     function ttbm_reload_location() {
@@ -375,8 +455,241 @@
         });
         $('#ttbm_checked_activities_holder').val(checked.join(','));
     }
+    function updateCheckedTopPicksDealsHolder() {
+        var checked = [];
+        $('.tabsItem[data-tabs="#ttbm_add_promotional_setting"] input[name="ttbm_top_picks_deals[]"]:checked').each(function () {
+            checked.push($(this).val());
+        });
+        $('#ttbm_checked_top_picks_deals_holder').val(checked.join(','));
+    }
+    window.updateCheckedActivitiesHolder = updateCheckedActivitiesHolder;
+    window.updateCheckedTopPicksDealsHolder = updateCheckedTopPicksDealsHolder;
+    /**
+     * Copy visible map UI values into the always-submitted hidden fields
+     * (#ttbm_*_submit) so lat/lng/address survive collapsed tabs and disabled inputs.
+     */
+    function ttbmSyncMapLocationFieldsForSubmit() {
+        var loc = document.getElementById('ttbm_iframe_location')
+            || document.getElementById('ttbm_map_location')
+            || document.querySelector('[data-ttbm-map-sync="ttbm_full_location_name"]')
+            || document.querySelector('.ttbm-map-location-input:not(#ttbm_hotel_map_location)')
+            || document.querySelector('.auto-search-wrapper input');
+        var hotelLoc = document.getElementById('ttbm_hotel_map_location')
+            || document.querySelector('[data-ttbm-map-sync="ttbm_hotel_map_location"]');
+        var lat = document.getElementById('map_latitude')
+            || document.querySelector('[data-ttbm-map-sync="ttbm_map_latitude"]');
+        var lng = document.getElementById('map_longitude')
+            || document.querySelector('[data-ttbm-map-sync="ttbm_map_longitude"]');
+        var locSubmit = document.getElementById('ttbm_full_location_name_submit');
+        var hotelLocSubmit = document.getElementById('ttbm_hotel_map_location_submit');
+        var latSubmit = document.getElementById('ttbm_map_latitude_submit');
+        var lngSubmit = document.getElementById('ttbm_map_longitude_submit');
+        var titleInput = document.getElementById('ttbm_post_title');
+        var titleSubmit = document.getElementById('ttbm_post_title_submit');
+        if (titleInput && titleSubmit) {
+            titleSubmit.value = titleInput.value || '';
+            titleSubmit.disabled = false;
+            titleSubmit.removeAttribute('disabled');
+            // Keep POST post_title in sync with the visible UI value.
+            titleSubmit.setAttribute('name', 'post_title');
+            if (titleInput.getAttribute('name') === 'post_title') {
+                titleInput.setAttribute('name', 'ttbm_post_title_ui');
+            }
+        }
+        if (loc && locSubmit) {
+            locSubmit.value = loc.value || '';
+            locSubmit.disabled = false;
+            locSubmit.removeAttribute('disabled');
+        }
+        if (hotelLoc && hotelLocSubmit) {
+            hotelLocSubmit.value = hotelLoc.value || '';
+            hotelLocSubmit.disabled = false;
+            hotelLocSubmit.removeAttribute('disabled');
+        }
+        if (lat && latSubmit) {
+            latSubmit.value = lat.value || '';
+            latSubmit.disabled = false;
+            latSubmit.removeAttribute('disabled');
+        }
+        if (lng && lngSubmit) {
+            lngSubmit.value = lng.value || '';
+            lngSubmit.disabled = false;
+            lngSubmit.removeAttribute('disabled');
+        }
+    }
+    window.ttbmSyncMapLocationFieldsForSubmit = ttbmSyncMapLocationFieldsForSubmit;
+
+    /**
+     * Persist map fields via AJAX so values survive even when classic form POST misses them.
+     * @param {boolean} sync Use synchronous XHR before page unload on Update.
+     */
+    function ttbmPersistMapLocationToServer(sync) {
+        if (typeof ttbm_admin_ajax === 'undefined' || !ttbm_admin_ajax.ajax_url) {
+            return false;
+        }
+        var postIdInput = document.getElementById('post_ID');
+        var postId = postIdInput ? String(postIdInput.value || '').trim() : '';
+        if (!postId) {
+            return false;
+        }
+        ttbmSyncMapLocationFieldsForSubmit();
+        var hotelLoc = document.getElementById('ttbm_hotel_map_location');
+        var loc = hotelLoc
+            || document.getElementById('ttbm_iframe_location')
+            || document.getElementById('ttbm_map_location')
+            || document.getElementById('ttbm_full_location_name_submit');
+        var lat = document.getElementById('map_latitude') || document.getElementById('ttbm_map_latitude_submit');
+        var lng = document.getElementById('map_longitude') || document.getElementById('ttbm_map_longitude_submit');
+        var address = loc ? String(loc.value || '').trim() : '';
+        var latitude = lat ? String(lat.value || '').trim() : '';
+        var longitude = lng ? String(lng.value || '').trim() : '';
+        if (!address && !latitude && !longitude) {
+            return false;
+        }
+        var body = new URLSearchParams();
+        body.set('action', 'ttbm_save_map_location');
+        body.set('nonce', ttbm_admin_ajax.nonce || '');
+        body.set('post_id', postId);
+        body.set('address', address);
+        body.set('latitude', latitude);
+        body.set('longitude', longitude);
+        if (sync) {
+            try {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', ttbm_admin_ajax.ajax_url, false);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                xhr.send(body.toString());
+                return xhr.status >= 200 && xhr.status < 300;
+            } catch (err) {
+                return false;
+            }
+        }
+        if (navigator.sendBeacon) {
+            try {
+                var blob = new Blob([body.toString()], {type: 'application/x-www-form-urlencoded; charset=UTF-8'});
+                navigator.sendBeacon(ttbm_admin_ajax.ajax_url, blob);
+            } catch (err2) { /* fall through */ }
+        }
+        fetch(ttbm_admin_ajax.ajax_url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+            body: body.toString(),
+            credentials: 'same-origin',
+            keepalive: true,
+        }).catch(function () { /* ignore */ });
+        return true;
+    }
+    window.ttbmPersistMapLocationToServer = ttbmPersistMapLocationToServer;
+
+    /**
+     * Persist hotel/tour title via AJAX before classic Update.
+     * @param {boolean} sync Synchronous XHR when unloading.
+     */
+    function ttbmPersistPostTitleToServer(sync) {
+        if (typeof ttbm_admin_ajax === 'undefined' || !ttbm_admin_ajax.ajax_url) {
+            return false;
+        }
+        var postIdInput = document.getElementById('post_ID');
+        var postId = postIdInput ? String(postIdInput.value || '').trim() : '';
+        var titleInput = document.getElementById('ttbm_post_title');
+        var title = titleInput ? String(titleInput.value || '').trim() : '';
+        if (!postId || !title) {
+            return false;
+        }
+        ttbmSyncMapLocationFieldsForSubmit();
+        var body = new URLSearchParams();
+        body.set('action', 'ttbm_save_post_title');
+        body.set('nonce', ttbm_admin_ajax.nonce || '');
+        body.set('post_id', postId);
+        body.set('title', title);
+        if (sync) {
+            try {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', ttbm_admin_ajax.ajax_url, false);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                xhr.send(body.toString());
+                return xhr.status >= 200 && xhr.status < 300;
+            } catch (err) {
+                return false;
+            }
+        }
+        fetch(ttbm_admin_ajax.ajax_url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+            body: body.toString(),
+            credentials: 'same-origin',
+            keepalive: true,
+        }).catch(function () { /* ignore */ });
+        return true;
+    }
+    window.ttbmPersistPostTitleToServer = ttbmPersistPostTitleToServer;
+
+    window.ttbmPrepareTourSettingsFormForSubmit = function (options) {
+        options = options || {};
+        // TinyMCE keeps its current value outside the backing textarea until
+        // save() runs. Sync every editor before serialize() so rich-text fields
+        // participate in both manual and background saves.
+        if (typeof window.tinyMCE !== 'undefined') {
+            window.tinyMCE.triggerSave();
+        }
+        var $panel = $('#ttbm_meta_box_panel');
+        if ($panel.length) {
+            $panel.find('input, select, textarea').each(function () {
+                var $field = $(this);
+                if ($field.closest('.ttbm_hidden_content').length) {
+                    return;
+                }
+                var type = ($field.attr('type') || '').toLowerCase();
+                if (type === 'button' || type === 'submit' || $field.is('.ttbm-deleting')) {
+                    return;
+                }
+                $field.prop('disabled', false).removeAttr('disabled');
+            });
+            $panel.find('[data-collapse="#ttbm_display_map"], [data-collapse="#ttbm_display_location"], [data-collapse="#ttbm_display_hotel_map"]').find('input, select, textarea').prop('disabled', false).removeAttr('disabled');
+        }
+        $('#ttbm_full_location_name_submit, #ttbm_hotel_map_location_submit, #ttbm_map_latitude_submit, #ttbm_map_longitude_submit, #ttbm_post_title_submit')
+            .prop('disabled', false)
+            .removeAttr('disabled');
+        ttbmSyncMapLocationFieldsForSubmit();
+        // The full form payload already contains title and map fields. The two
+        // legacy helper requests are only needed immediately before a classic
+        // page submit; running them during background auto-save triples server
+        // traffic and synchronous XHR can freeze the editor.
+        if (!options.skipRemotePersistence) {
+            ttbmPersistPostTitleToServer(true);
+            ttbmPersistMapLocationToServer(true);
+        }
+        if (typeof ttbm_sync_visible_dates_to_hidden === 'function') {
+            ttbm_sync_visible_dates_to_hidden();
+        }
+        if (typeof window.ttbmNormalizeDateFieldsForSubmit === 'function') {
+            window.ttbmNormalizeDateFieldsForSubmit();
+        }
+        updateCheckedTopPicksDealsHolder();
+        updateCheckedActivitiesHolder();
+        if (typeof window.ttbmSyncTicketHiddenText === 'function') {
+            window.ttbmSyncTicketHiddenText();
+        }
+    };
+    $(document).on(
+        'input change',
+        '#ttbm_iframe_location, #ttbm_map_location, #ttbm_hotel_map_location, #map_latitude, #map_longitude, #ttbm_post_title, .ttbm-map-location-input, .ttbm-map-coord-input',
+        function () {
+            ttbmSyncMapLocationFieldsForSubmit();
+        }
+    );
+    // Sync + AJAX persist before WordPress serializes the form.
+    $(document).on('mousedown click', '#publish, #save-post, .editor-post-publish-button, .editor-post-publish-button__button, .editor-post-save-draft', function () {
+        window.ttbmPrepareTourSettingsFormForSubmit();
+    });
+    $(document).on('submit', 'form#post', function () {
+        window.ttbmPrepareTourSettingsFormForSubmit();
+    });
     $(document).on('change', '.ttbm_activities_table input[name="ttbm_tour_activities[]"]', function () {
         updateCheckedActivitiesHolder();
+    });
+    $(document).on('change', '.tabsItem[data-tabs="#ttbm_add_promotional_setting"] input[name="ttbm_top_picks_deals[]"]', function () {
+        updateCheckedTopPicksDealsHolder();
     });
     function ttbm_reload_activity_list() {
         var ttbm_id = $('[name="post_id"]').val();
@@ -411,24 +724,228 @@
         });
     }
     //*****Place you see****************//
-    $(document).on('click', '.ttbm_settings_place_you_see [data-target-popup]', function () {
-        let target = $(this).closest('.ttbm_settings_place_you_see').find('.ttbm_place_you_see_form_area');
+    function ttbm_get_place_popup() {
+        return $('[data-popup="add_new_place_popup"]');
+    }
+    function ttbm_get_place_popup_form_area() {
+        return ttbm_get_place_popup().find('.ttbm_place_you_see_form_area');
+    }
+    function ttbm_parse_place_save_response(response) {
+        if (response && typeof response === 'object') {
+            return response;
+        }
+        if (typeof response === 'string' && response.trim()) {
+            try {
+                return JSON.parse(response);
+            } catch (error) {
+                return null;
+            }
+        }
+        return null;
+    }
+    function ttbm_reinit_place_select($select) {
+        if (!$select || !$select.length || !$.fn.select2) {
+            return;
+        }
+        if ($select.hasClass('select2-hidden-accessible')) {
+            $select.select2('destroy');
+        }
+        $select.removeClass('add_ttbm_select2').addClass('ttbm_select2');
+        $select.select2({});
+    }
+    function ttbm_refresh_place_dropdowns(selectedPlaceId, placeName) {
+        let $area = $('.ttbm_settings_place_you_see .ttbm_place_you_see_table');
+        let $targetSelect = $('.ttbm_settings_place_you_see').data('ttbm-place-target-select');
+        if (typeof ttbm_admin_ajax === 'undefined') {
+            return;
+        }
         $.ajax({
-            type: 'POST', url: ttbm_ajax_url, data: {
-                "action": "load_ttbm_place_you_see_form"
-            }, beforeSend: function () {
-                dLoader(target);
-            }, success: function (data) {
-                target.html(data).slideDown('fast').promise().done(function () {
-                    dLoaderRemove(target);
+            type: 'POST',
+            url: ttbm_ajax_url,
+            data: {
+                action: 'ttbm_reload_place_dropdown_options',
+                nonce: ttbm_admin_ajax.nonce
+            },
+            beforeSend: function () {
+                if ($area.length) {
+                    dLoader($area);
+                }
+            },
+            success: function (response) {
+                let parsed = ttbm_parse_place_save_response(response);
+                let optionsHtml = parsed && parsed.success && parsed.data ? parsed.data.options : '';
+                if (!optionsHtml) {
+                    dLoaderRemove($area);
+                    return;
+                }
+                let $selects = $('.ttbm_settings_place_you_see').find('select[name="ttbm_city_place_id[]"]');
+                $selects.each(function () {
+                    let $select = $(this);
+                    let preserveVal = '';
+                    if ($targetSelect && $targetSelect.length && $select.is($targetSelect) && selectedPlaceId) {
+                        preserveVal = String(selectedPlaceId);
+                    } else if ($select.val()) {
+                        preserveVal = String($select.val());
+                    }
+                    $select.html(optionsHtml);
+                    if (preserveVal && $select.find('option[value="' + preserveVal + '"]').length) {
+                        $select.val(preserveVal);
+                    }
+                    ttbm_reinit_place_select($select);
+                    if (preserveVal) {
+                        $select.trigger('change');
+                    }
                 });
+                if ($targetSelect && $targetSelect.length && selectedPlaceId) {
+                    let $row = $targetSelect.closest('tr');
+                    if (placeName) {
+                        $row.find('input[name="ttbm_place_label[]"]').val(placeName);
+                    }
+                }
+                dLoaderRemove($area);
+            },
+            error: function (response) {
+                dLoaderRemove($area);
+                console.log(response);
             }
         });
-    });
-    $(document).on('click', '.ttbm_settings_place_you_see  .popupClose', function (e) {
-        if (e.result) {
-            $(this).closest('.ttbm_settings_place_you_see').find('.ttbm_place_you_see_form_area').html('');
+    }
+    function ttbm_show_place_save_error($popup, message) {
+        let $error = $popup.find('.ttbm-place-save-error');
+        if (!$error.length) {
+            return;
         }
+        if (message) {
+            $error.text(message).show();
+        } else {
+            $error.hide().text('');
+        }
+    }
+    function ttbm_load_place_popup_form() {
+        let $popup = ttbm_get_place_popup();
+        let target = $popup.find('.ttbm_place_you_see_form_area');
+        if (!target.length) {
+            return;
+        }
+        ttbm_show_place_save_error($popup, '');
+        $.ajax({
+            type: 'POST',
+            url: ttbm_ajax_url,
+            data: {
+                action: 'load_ttbm_place_you_see_form',
+                nonce: (typeof ttbm_admin_ajax !== 'undefined') ? ttbm_admin_ajax.nonce : ''
+            },
+            beforeSend: function () {
+                dLoader(target);
+            },
+            success: function (data) {
+                target.html(data).show();
+                dLoaderRemove(target);
+            },
+            error: function (response) {
+                dLoaderRemove(target);
+                ttbm_show_place_save_error($popup, 'Could not load the form. Please try again.');
+                console.log(response);
+            }
+        });
+    }
+    $(document).on('click', '.ttbm_settings_place_you_see [data-target-popup="add_new_place_popup"]', function (e) {
+        e.preventDefault();
+        $('.ttbm_settings_place_you_see').data('ttbm-place-target-select', $(this).closest('.ttbm-place-select-wrap').find('select'));
+        ttbm_load_place_popup_form();
+    });
+    $(document).on('click', '.ttbm-place-popup .popupClose', function () {
+        let $popup = $(this).closest('[data-popup="add_new_place_popup"]');
+        ttbm_get_place_popup_form_area().empty();
+        ttbm_show_place_save_error($popup, '');
+        $popup.find('.ttbm_success_info').removeClass('is-visible').hide();
+    });
+    $(document).on('click', '.ttbm-place-popup .ttbm_new_place_save_close', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        ttbm_get_place_popup_form_area().empty();
+        ttbm_show_place_save_error($(this).closest('[data-popup="add_new_place_popup"]'), '');
+        $(this).closest('[data-popup]').find('.popupClose').trigger('click');
+    });
+    $(document).on('click', '.ttbm-place-popup .ttbm_new_place_save', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        ttbm_new_place_save($(this));
+    });
+    function ttbm_new_place_save($this) {
+        let $popup = $this.closest('[data-popup="add_new_place_popup"]');
+        let parent = $this.closest('.popupMainArea');
+        ttbm_show_place_save_error($popup, '');
+        parent.find('.ttbm_success_info').removeClass('is-visible').hide();
+        parent.find('[data-required]').hide();
+        let name = $.trim(parent.find('[name="ttbm_place_name"]').val() || '');
+        let description = parent.find('[name="ttbm_place_description"]').val() || '';
+        let image = parent.find('[name="ttbm_place_image"]').val() || '';
+        let isValid = true;
+        if (!name) {
+            parent.find('[data-required="ttbm_place_name"]').show();
+            isValid = false;
+        }
+        if (!image) {
+            parent.find('[data-required="ttbm_place_image"]').show();
+            isValid = false;
+        }
+        if (!isValid) {
+            ttbm_show_place_save_error($popup, 'Please fill in all required fields.');
+            parent.find('.popupBody').scrollTop(0);
+            return false;
+        }
+        if (!parent.find('[name="ttbm_add_new_place_popup"]').val()) {
+            ttbm_show_place_save_error($popup, 'Form is not ready. Please close and reopen the popup.');
+            return false;
+        }
+        $.ajax({
+            type: 'POST',
+            url: ttbm_ajax_url,
+            data: {
+                action: 'ttbm_new_place_save',
+                name: name,
+                description: description,
+                image: image,
+                _wp_nonce: parent.find('[name="ttbm_add_new_place_popup"]').val()
+            },
+            beforeSend: function () {
+                dLoader(parent);
+            },
+            success: function (response) {
+                dLoaderRemove(parent);
+                let parsed = ttbm_parse_place_save_response(response);
+                if (!parsed || !parsed.success) {
+                    let message = (parsed && parsed.data && parsed.data.message) ? parsed.data.message : 'Could not save place. Please try again.';
+                    ttbm_show_place_save_error($popup, message);
+                    return;
+                }
+                let postId = parsed.data ? parsed.data.post_id : 0;
+                let placeName = parsed.data ? parsed.data.name : name;
+                parent.find('[name="ttbm_place_name"]').val('');
+                parent.find('[name="ttbm_place_description"]').val('');
+                parent.find('[name="ttbm_place_image"]').val('');
+                parent.find('.ttbm_image_remove, .ttbm_remove_single_image').trigger('click');
+                parent.find('.ttbm_success_info').addClass('is-visible').show();
+                ttbm_refresh_place_dropdowns(postId, placeName);
+                return true;
+            },
+            error: function (response) {
+                dLoaderRemove(parent);
+                ttbm_show_place_save_error($popup, 'Could not save place. Please try again.');
+                console.log(response);
+            }
+        });
+        return false;
+    }
+    $(document).on('change', '.ttbm_settings_place_you_see select[name="ttbm_city_place_id[]"]', function () {
+        let $select = $(this);
+        let placeId = $select.val();
+        if (!placeId) {
+            return;
+        }
+        let placeName = $select.find('option:selected').text().trim();
+        $select.closest('tr').find('input[name="ttbm_place_label[]"]').val(placeName);
     });
 }(jQuery));
 //====================//
@@ -824,7 +1341,11 @@
                 nonce: ttbm_admin_ajax.nonce
             },
             beforeSend: function () {
-                $('.ttbm-tour-list').text('Loading...');
+                if (typeof window.ttbmShowTourPackageSkeleton === 'function') {
+                    window.ttbmShowTourPackageSkeleton('.ttbm-tour-list', 4);
+                } else if (typeof window.ttbmTravelTourPackageSkeletonHtml === 'function') {
+                    $('.ttbm-tour-list').html(window.ttbmTravelTourPackageSkeletonHtml(4));
+                }
             },
             success: function (response) {
                 if (response.success && response.data.html) {
@@ -1108,122 +1629,999 @@
 }(jQuery));
 // =================Open Street map location search==================
 (function ($) {
-    // OpenStreetMap setup
-    let osmMap, osmMarker, osmAutocomplete, osmGeocoder;
-    function initOSMMap() {
-        let lati = parseFloat(document.getElementById('map_latitude')?.value) || 23.8103; // Default to Dhaka
-        let longdi = parseFloat(document.getElementById('map_longitude')?.value) || 90.4125; // Default to Dhaka
-        osmMap = L.map("osmap_canvas", {minZoom: 1, maxZoom: 20}).setView([lati, longdi], 12);
-        // Add OSM tile layer
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        }).addTo(osmMap);
-        // Initialize the marker for OpenStreetMap (draggable)
-        osmMarker = L.marker([lati, longdi], {title: "Tour Location", draggable: true}).addTo(osmMap);
-        // When the marker is dragged, update the latitude and longitude values
-        osmMarker.on("dragend", function (e) {
-            let newLatLng = osmMarker.getLatLng(); // Get new latitude and longitude
-            document.getElementById('map_latitude').value = newLatLng.lat;
-            document.getElementById('map_longitude').value = newLatLng.lng;
+    let osmMap, osmMarker, osmGeocodeTimer, lastGeocodedAddress = '';
+    const nominatimHeaders = {'Accept-Language': document.documentElement.lang || 'en'};
+
+    // Autocomplete's own keydown handler on the input fires (and calls
+    // preventDefault + closes its dropdown) before our document-delegated
+    // Enter fallback runs, so aria-expanded is already "false" by then.
+    // This flag lets a real selection short-circuit our raw-text fallback
+    // so a slower manual geocode never overwrites the instant, precise
+    // coordinates a selection already applied.
+    let ttbmMapSelectionHandled = false;
+    function ttbmMarkMapSelectionHandled() {
+        ttbmMapSelectionHandled = true;
+        setTimeout(function () {
+            ttbmMapSelectionHandled = false;
+        }, 400);
+    }
+
+    function updateOSMPosition(lat, lng, zoom) {
+        if (!osmMap || !osmMarker || isNaN(lat) || isNaN(lng)) {
+            return;
+        }
+        osmMarker.setLatLng([lat, lng]);
+        osmMap.setView([lat, lng], zoom || 12);
+        const latEl = document.getElementById('map_latitude');
+        const lngEl = document.getElementById('map_longitude');
+        if (latEl) {
+            latEl.value = lat;
+        }
+        if (lngEl) {
+            lngEl.value = lng;
+        }
+        if (typeof ttbmSyncMapLocationFieldsForSubmit === 'function') {
+            ttbmSyncMapLocationFieldsForSubmit();
+        }
+    }
+
+    function applyOSMGeoFeature(feature) {
+        if (!feature || !feature.geometry || !feature.geometry.coordinates) {
+            return;
+        }
+        ttbmMarkMapSelectionHandled();
+        const [lng, lat] = feature.geometry.coordinates;
+        updateOSMPosition(lat, lng);
+        const displayName = feature.properties && feature.properties.display_name;
+        const input = document.getElementById('ttbm_osmap_location');
+        if (displayName && input) {
+            input.value = displayName;
+            lastGeocodedAddress = displayName;
+        }
+    }
+
+    function normalizeMapSearchQuery(address) {
+        const q = String(address || '').trim();
+        if (!q) {
+            return '';
+        }
+        // Google Maps embed accepts "coxesbazar seabeach"; Nominatim/Photon often do not.
+        const compact = q.toLowerCase().replace(/[^a-z0-9]/g, '');
+        // Only rewrite short misspellings — never overwrite a full street address.
+        if (/^(coxes?|coxs)bazar/.test(compact) && compact.length <= 28 && !/cultural|center|hotel|road|zone|district|museum/.test(compact)) {
+            if (compact.indexOf('sea') !== -1 || compact.indexOf('beach') !== -1) {
+                return "Cox's Bazar Sea Beach, Bangladesh";
+            }
+            return "Cox's Bazar, Bangladesh";
+        }
+        return q.replace(/\bseabeach\b/gi, 'sea beach');
+    }
+
+    function geocodeQueryCandidates(address) {
+        const raw = String(address || '').trim();
+        const list = [];
+        const normalized = normalizeMapSearchQuery(raw);
+        if (normalized) {
+            list.push(normalized);
+        }
+        if (raw && list.indexOf(raw) === -1) {
+            list.push(raw);
+        }
+        const spaced = raw.replace(/\bseabeach\b/gi, 'sea beach');
+        if (spaced && list.indexOf(spaced) === -1) {
+            list.push(spaced);
+        }
+        return list;
+    }
+
+    function photonFeatureToMatch(feature) {
+        if (!feature) {
+            return null;
+        }
+        const props = feature.properties || {};
+        const parts = [props.name, props.city || props.county, props.state, props.country].filter(Boolean);
+        const display_name = parts.length ? parts.join(', ') : (props.name || '');
+        return {
+            type: 'Feature',
+            geometry: feature.geometry,
+            properties: Object.assign({}, props, {display_name: display_name}),
+        };
+    }
+
+    function geocodeViaPhotonBrowser(query) {
+        const api = 'https://photon.komoot.io/api/?q=' + encodeURIComponent(query) + '&limit=1';
+        return fetch(api, {headers: nominatimHeaders})
+            .then((response) => response.json())
+            .then((data) => {
+                const feature = data && data.features && data.features[0];
+                if (!feature || !feature.geometry || !Array.isArray(feature.geometry.coordinates)) {
+                    return null;
+                }
+                const lon = feature.geometry.coordinates[0];
+                const lat = feature.geometry.coordinates[1];
+                if (lat == null || lon == null) {
+                    return null;
+                }
+                const match = photonFeatureToMatch(feature);
+                return {
+                    lat: String(lat),
+                    lon: String(lon),
+                    display_name: (match && match.properties && match.properties.display_name) || query,
+                };
+            })
+            .catch(() => null);
+    }
+
+    function geocodeViaNominatimBrowser(query) {
+        const api = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(query);
+        return fetch(api, {headers: nominatimHeaders})
+            .then((response) => response.json())
+            .then((data) => (data && data.length > 0 ? data[0] : null))
+            .catch(() => null);
+    }
+
+    function searchMapPlaceFeatures(currentValue) {
+        const query = normalizeMapSearchQuery(currentValue) || String(currentValue || '').trim();
+        if (!query) {
+            return Promise.resolve([]);
+        }
+        const nominatimApi = 'https://nominatim.openstreetmap.org/search?format=geojson&limit=5&q=' + encodeURIComponent(query);
+        return fetch(nominatimApi, {headers: nominatimHeaders})
+            .then((response) => response.json())
+            .then((data) => {
+                const features = (data && data.features) || [];
+                if (features.length) {
+                    return features;
+                }
+                // Nominatim often returns nothing for "coxesbazar"; Photon is more forgiving.
+                const photonApi = 'https://photon.komoot.io/api/?q=' + encodeURIComponent(query) + '&limit=5';
+                return fetch(photonApi, {headers: nominatimHeaders})
+                    .then((response) => response.json())
+                    .then((photonData) => ((photonData && photonData.features) || []).map(photonFeatureToMatch).filter(Boolean))
+                    .catch(() => []);
+            })
+            .catch(() => {
+                const photonApi = 'https://photon.komoot.io/api/?q=' + encodeURIComponent(query) + '&limit=5';
+                return fetch(photonApi, {headers: nominatimHeaders})
+                    .then((response) => response.json())
+                    .then((photonData) => ((photonData && photonData.features) || []).map(photonFeatureToMatch).filter(Boolean))
+                    .catch(() => []);
+            });
+    }
+
+    function geocodeOSMAddress(address) {
+        if (!address || address.trim().length < 2) {
+            return Promise.resolve(null);
+        }
+        const candidates = geocodeQueryCandidates(address);
+        const tryBrowserForQuery = function (query) {
+            return geocodeViaNominatimBrowser(query).then((nominatimResult) => {
+                if (nominatimResult) {
+                    return nominatimResult;
+                }
+                return geocodeViaPhotonBrowser(query);
+            });
+        };
+        const tryBrowserFallbacks = function () {
+            let chain = Promise.resolve(null);
+            candidates.forEach(function (query) {
+                chain = chain.then(function (prev) {
+                    if (prev) {
+                        return prev;
+                    }
+                    return tryBrowserForQuery(query);
+                });
+            });
+            return chain;
+        };
+        // Prefer server-side geocode (Photon + Nominatim + spelling normalize).
+        if (typeof ttbm_admin_ajax !== 'undefined' && ttbm_admin_ajax.ajax_url) {
+            const preferred = candidates[0] || address.trim();
+            const body = new URLSearchParams();
+            body.set('action', 'ttbm_geocode_address');
+            body.set('nonce', ttbm_admin_ajax.nonce || '');
+            body.set('address', preferred);
+            return fetch(ttbm_admin_ajax.ajax_url, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+                body: body.toString(),
+                credentials: 'same-origin',
+            })
+                .then((response) => response.json())
+                .then((payload) => {
+                    if (payload && payload.success && payload.data) {
+                        return {
+                            lat: payload.data.lat,
+                            lon: payload.data.lon,
+                            display_name: payload.data.display_name || preferred,
+                        };
+                    }
+                    return null;
+                })
+                .catch(() => null)
+                .then((serverResult) => (serverResult ? serverResult : tryBrowserFallbacks()));
+        }
+        return tryBrowserFallbacks();
+    }
+
+    function applyOSMGeoJsonResult(result) {
+        if (!result) {
+            return;
+        }
+        updateOSMPosition(parseFloat(result.lat), parseFloat(result.lon));
+        if (result.display_name) {
+            const input = document.getElementById('ttbm_osmap_location');
+            if (input) {
+                input.value = result.display_name;
+                lastGeocodedAddress = result.display_name;
+            }
+        }
+    }
+
+    function geocodeOSMInputValue(address) {
+        const query = (address || '').trim();
+        if (!query || query === lastGeocodedAddress) {
+            return;
+        }
+        geocodeOSMAddress(query).then((result) => {
+            if (result) {
+                applyOSMGeoJsonResult(result);
+            }
         });
-        // Initialize Autocomplete for OpenStreetMap search
-        new Autocomplete("ttbm_osmap_location", {
+    }
+
+    function bindOSMLocationInput() {
+        const locationInput = document.getElementById('ttbm_osmap_location');
+        if (!locationInput || locationInput.dataset.osmBound === '1') {
+            return;
+        }
+        locationInput.dataset.osmBound = '1';
+        lastGeocodedAddress = locationInput.value.trim();
+
+        new Autocomplete('ttbm_osmap_location', {
             selectFirst: true,
-            insertToInput: true,
-            cache: true,
+            insertToInput: false,
+            cache: false,
             howManyCharacters: 2,
-            // onSearch
             onSearch: ({currentValue}) => {
-                const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&city=${encodeURI(currentValue)}`;
-                return new Promise((resolve) => {
-                    fetch(api)
-                        .then((response) => response.json())
-                        .then((data) => resolve(data.features))
-                        .catch((error) => console.error(error));
+                return searchMapPlaceFeatures(currentValue).then((features) => {
+                    lastAutocompleteMatches = features || [];
+                    return lastAutocompleteMatches;
                 });
             },
-            // onResults
             onResults: ({currentValue, matches, template}) => {
-                const regex = new RegExp(currentValue, "gi");
+                const regex = new RegExp(currentValue, 'gi');
                 return matches.length === 0
                     ? template(`<li>No results found: "${currentValue}"</li>`)
-                    : matches.map((element) => `
-                        <li>
-                            <p>${element.properties.display_name.replace(regex, (str) => `<b>${str}</b>`)}</p>
-                        </li>`
-                    ).join("");
+                    : matches.map((element, index) => {
+                        const coords = extractLatLngFromGeoObject(element);
+                        const latAttr = coords ? String(coords.lat) : '';
+                        const lngAttr = coords ? String(coords.lng) : '';
+                        const name = element.properties && element.properties.display_name
+                            ? element.properties.display_name
+                            : '';
+                        const safeName = String(name).replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        return `<li data-ttbm-lat="${latAttr}" data-ttbm-lng="${lngAttr}" data-ttbm-index="${index}"><p>${safeName.replace(regex, (str) => `<b>${str}</b>`)}</p></li>`;
+                    }).join('');
             },
-            // onSubmit
-            onSubmit: ({object}) => {
-                const {display_name} = object.properties;
-                const [lng, lat] = object.geometry.coordinates;
-                // Set new marker position
-                osmMarker.setLatLng([lat, lng]);
-                // Update input fields
-                document.getElementById('map_latitude').value = lat;
-                document.getElementById('map_longitude').value = lng;
-                // Move map to new location
-                osmMap.setView([lat, lng], 12);
+            onSelectedItem: ({object}) => {
+                lastHighlightedFeature = object || null;
             },
-            // onSelectedItem
-            onSelectedItem: ({index, element, object}) => {
-                console.log("onSelectedItem:", {index, element, object});
+            onSubmit: (data) => {
+                const feature = resolveFeatureFromAutocompleteData(data);
+                if (feature) {
+                    applyAutocompleteGeoFeature(feature);
+                    return;
+                }
+                const typed = data && data.element ? String(data.element.value || '').trim() : '';
+                if (typed) {
+                    applyConfirmedMapAddress(typed, null, null);
+                }
             },
-            // noResults
             noResults: ({currentValue, template}) => template(`<li>No results found: "${currentValue}"</li>`),
         });
-        // Add fullscreen control
+
+        // Autocomplete only while typing; map updates on Enter or selection.
+        $(locationInput).on('keydown', function (e) {
+            if (e.key !== 'Enter' && e.keyCode !== 13) {
+                return;
+            }
+            if (this.getAttribute('aria-expanded') === 'true' || ttbmMapSelectionHandled) {
+                return;
+            }
+            e.preventDefault();
+            clearTimeout(osmGeocodeTimer);
+            geocodeOSMInputValue(this.value);
+        });
+    }
+
+    function initOSMMap() {
+        const osmapCanvas = document.getElementById('osmap_canvas');
+        if (!osmapCanvas) {
+            return;
+        }
+        if (osmMap) {
+            setTimeout(() => osmMap.invalidateSize(), 350);
+            return;
+        }
+
+        const lati = parseFloat(document.getElementById('map_latitude')?.value) || 40.712776;
+        const longdi = parseFloat(document.getElementById('map_longitude')?.value) || -74.005974;
+
+        osmMap = L.map('osmap_canvas', {minZoom: 1, maxZoom: 20}).setView([lati, longdi], 12);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(osmMap);
+
+        osmMarker = L.marker([lati, longdi], {title: 'Tour Location', draggable: true}).addTo(osmMap);
+        osmMarker.on('dragend', function () {
+            const newLatLng = osmMarker.getLatLng();
+            document.getElementById('map_latitude').value = newLatLng.lat;
+            document.getElementById('map_longitude').value = newLatLng.lng;
+            if (typeof ttbmSyncMapLocationFieldsForSubmit === 'function') {
+                ttbmSyncMapLocationFieldsForSubmit();
+            }
+        });
+
+        osmMap.on('click', function (event) {
+            updateOSMPosition(event.latlng.lat, event.latlng.lng);
+        });
+
+        bindOSMLocationInput();
+
         const fsControl = L.control.fullscreen();
         osmMap.addControl(fsControl);
-        osmMap.on("enterFullscreen", () => console.log("Enter Fullscreen"));
-        osmMap.on("exitFullscreen", () => console.log("Exit Fullscreen"));
+
+        setTimeout(() => osmMap.invalidateSize(), 350);
     }
-    // ===========Google Map setup=============
-    let gmap, gmapMarker, gmapAutocomplete, gmapGeocoder;
-    $(document).on('click', '.ttbm_settings_location,[data-collapse-target="#ttbm_display_map"]', function () {
-        if (gmap) {
-            gmap = null;
-            $('#gmap_canvas').empty();
+
+    let iframeMapTimer = null;
+    let iframeMapListenersBound = false;
+
+    const LOCATION_INPUT_SELECTOR = '#ttbm_hotel_map_location, #ttbm_iframe_location, #ttbm_map_location, .ttbm-map-location-input';
+
+    function resolveIframeLocationInput() {
+        return document.getElementById('ttbm_hotel_map_location')
+            || document.getElementById('ttbm_iframe_location')
+            || document.getElementById('ttbm_map_location')
+            || document.querySelector('.ttbm-map-location-input');
+    }
+
+    function updateIframeMapPointer(address) {
+        const iframe = document.getElementById('ttbm_gmap_iframe');
+        const query = (address || '').trim();
+        if (!query || !iframe) {
+            return;
         }
-        if (osmMap) {
-            osmMap.remove();
-            osmMap = null;
-            $('#osmap_canvas').empty();
+        // Cache-bust so Google Maps embed reloads when the query changes.
+        const url = 'https://maps.google.com/maps?q=' + encodeURIComponent(query) + '&z=14&output=embed&_t=' + Date.now();
+        if (iframe.getAttribute('src') === url) {
+            return;
         }
-        if (ttbm_map.api_key) {
-            initGMap();
+        iframe.setAttribute('src', url);
+    }
+
+    function getMapLatLngInputs() {
+        return {
+            latEl: document.getElementById('map_latitude'),
+            lngEl: document.getElementById('map_longitude'),
+        };
+    }
+
+    function hasNumericMapCoords() {
+        const {latEl, lngEl} = getMapLatLngInputs();
+        if (!latEl || !lngEl) {
+            return false;
+        }
+        const lat = (latEl.value || '').trim();
+        const lng = (lngEl.value || '').trim();
+        return lat !== '' && lng !== '' && !Number.isNaN(Number(lat)) && !Number.isNaN(Number(lng));
+    }
+
+    function hasStaleDefaultMapCoords() {
+        const {latEl, lngEl} = getMapLatLngInputs();
+        if (!latEl || !lngEl) {
+            return false;
+        }
+        const lat = parseFloat(latEl.value);
+        const lng = parseFloat(lngEl.value);
+        if (Number.isNaN(lat) || Number.isNaN(lng)) {
+            return false;
+        }
+        // Legacy UI default: New York City.
+        return Math.abs(lat - 40.712776) < 0.0002 && Math.abs(lng - (-74.005974)) < 0.0002;
+    }
+
+    function applyMapLatLng(lat, lng) {
+        const latVal = lat != null && lat !== '' ? String(lat) : '';
+        const lngVal = lng != null && lng !== '' ? String(lng) : '';
+        if (latVal === '' || lngVal === '' || Number.isNaN(Number(latVal)) || Number.isNaN(Number(lngVal))) {
+            return false;
+        }
+        const targets = [
+            document.getElementById('map_latitude'),
+            document.getElementById('ttbm_map_latitude_submit'),
+            document.querySelector('input[name="ttbm_map_latitude"]'),
+        ];
+        const lngTargets = [
+            document.getElementById('map_longitude'),
+            document.getElementById('ttbm_map_longitude_submit'),
+            document.querySelector('input[name="ttbm_map_longitude"]'),
+        ];
+        targets.forEach(function (el) {
+            if (!el) {
+                return;
+            }
+            el.disabled = false;
+            el.readOnly = false;
+            el.value = latVal;
+            el.setAttribute('value', latVal);
+            try {
+                el.dispatchEvent(new Event('input', {bubbles: true}));
+                el.dispatchEvent(new Event('change', {bubbles: true}));
+            } catch (err) { /* ignore */ }
+        });
+        lngTargets.forEach(function (el) {
+            if (!el) {
+                return;
+            }
+            el.disabled = false;
+            el.readOnly = false;
+            el.value = lngVal;
+            el.setAttribute('value', lngVal);
+            try {
+                el.dispatchEvent(new Event('input', {bubbles: true}));
+                el.dispatchEvent(new Event('change', {bubbles: true}));
+            } catch (err) { /* ignore */ }
+        });
+        if (typeof window.jQuery !== 'undefined') {
+            window.jQuery('#map_latitude, #ttbm_map_latitude_submit, input[name="ttbm_map_latitude"]').val(latVal).trigger('input').trigger('change');
+            window.jQuery('#map_longitude, #ttbm_map_longitude_submit, input[name="ttbm_map_longitude"]').val(lngVal).trigger('input').trigger('change');
+        }
+        if (typeof ttbmSyncMapLocationFieldsForSubmit === 'function') {
+            ttbmSyncMapLocationFieldsForSubmit();
+        }
+        return true;
+    }
+
+    function extractLatLngFromGeoObject(object) {
+        if (!object || typeof object !== 'object') {
+            return null;
+        }
+        let lat = null;
+        let lng = null;
+        if (object.geometry && Array.isArray(object.geometry.coordinates) && object.geometry.coordinates.length >= 2) {
+            // GeoJSON Point: [lng, lat]
+            if (!object.geometry.type || object.geometry.type === 'Point') {
+                lng = object.geometry.coordinates[0];
+                lat = object.geometry.coordinates[1];
+            } else if (Array.isArray(object.geometry.coordinates[0])) {
+                // Polygon / LineString — use first position.
+                const first = object.geometry.coordinates[0];
+                const point = Array.isArray(first[0]) ? first[0] : first;
+                if (Array.isArray(point) && point.length >= 2) {
+                    lng = point[0];
+                    lat = point[1];
+                }
+            }
+        }
+        if ((lat == null || lng == null) && object.properties) {
+            if (object.properties.lat != null && (object.properties.lon != null || object.properties.lng != null)) {
+                lat = object.properties.lat;
+                lng = object.properties.lon != null ? object.properties.lon : object.properties.lng;
+            }
+        }
+        if ((lat == null || lng == null) && object.lat != null && (object.lon != null || object.lng != null)) {
+            lat = object.lat;
+            lng = object.lon != null ? object.lon : object.lng;
+        }
+        if (lat == null || lng == null || Number.isNaN(Number(lat)) || Number.isNaN(Number(lng))) {
+            return null;
+        }
+        return {lat: Number(lat), lng: Number(lng)};
+    }
+
+    let lastAutocompleteMatches = [];
+    let lastHighlightedFeature = null;
+
+    function applyConfirmedMapAddress(address, lat, lng) {
+        const name = (address || '').trim();
+        if (name) {
+            updateIframeMapPointer(name);
+            const locationInput = resolveIframeLocationInput() || document.getElementById('ttbm_hotel_map_location');
+            if (locationInput) {
+                locationInput.value = name;
+            }
+            lastGeocodedAddress = name;
+            const locSubmit = document.getElementById('ttbm_full_location_name_submit');
+            const hotelSubmit = document.getElementById('ttbm_hotel_map_location_submit');
+            if (locSubmit && locationInput && locationInput.id !== 'ttbm_hotel_map_location') {
+                locSubmit.value = name;
+            }
+            if (hotelSubmit && locationInput && locationInput.id === 'ttbm_hotel_map_location') {
+                hotelSubmit.value = name;
+            }
+        }
+        if (lat != null && lng != null && lat !== '' && lng !== '' && !Number.isNaN(Number(lat)) && !Number.isNaN(Number(lng))) {
+            applyMapLatLng(lat, lng);
+            if (osmMap && osmMarker) {
+                updateOSMPosition(Number(lat), Number(lng));
+            }
+            ttbmMarkMapSelectionHandled();
+            if (typeof window.ttbmPersistMapLocationToServer === 'function') {
+                window.ttbmPersistMapLocationToServer(false);
+            }
+            return;
+        }
+        if (name) {
+            // Always geocode confirmed addresses (handles typed "coxesbazar" via Photon fallback).
+            updateIframeMapCoords(name, true, true);
+            ttbmMarkMapSelectionHandled();
+        }
+    }
+
+    function applyMapSuggestionFromElement(el) {
+        if (!el) {
+            return;
+        }
+        const $li = window.jQuery ? window.jQuery(el).closest('li') : null;
+        const node = $li && $li.length ? $li.get(0) : el;
+        const idx = parseInt(node.getAttribute('data-ttbm-index'), 10);
+        let lat = node.getAttribute('data-ttbm-lat');
+        let lng = node.getAttribute('data-ttbm-lng');
+        let name = (node.textContent || '').replace(/\s+/g, ' ').trim();
+        let feature = null;
+        if (!Number.isNaN(idx) && lastAutocompleteMatches[idx]) {
+            feature = lastAutocompleteMatches[idx];
+        } else if (name && lastAutocompleteMatches.length) {
+            feature = lastAutocompleteMatches.find(function (item) {
+                return item && item.properties && item.properties.display_name
+                    && name.indexOf(String(item.properties.display_name).substring(0, 20)) !== -1;
+            }) || null;
+        }
+        if (feature) {
+            const coords = extractLatLngFromGeoObject(feature);
+            if (coords) {
+                lat = String(coords.lat);
+                lng = String(coords.lng);
+            }
+            if (feature.properties && feature.properties.display_name) {
+                name = feature.properties.display_name;
+            }
+        }
+        applyConfirmedMapAddress(name, lat, lng);
+    }
+
+    function applyAutocompleteGeoFeature(feature) {
+        if (!feature) {
+            return;
+        }
+        const coords = extractLatLngFromGeoObject(feature);
+        const name = feature.properties && feature.properties.display_name
+            ? feature.properties.display_name
+            : (feature.display_name || '');
+        applyConfirmedMapAddress(name, coords ? coords.lat : null, coords ? coords.lng : null);
+    }
+
+    function resolveFeatureFromAutocompleteData(data) {
+        if (!data) {
+            return null;
+        }
+        if (data.object) {
+            return data.object;
+        }
+        if (typeof data.index === 'number' && lastAutocompleteMatches[data.index]) {
+            return lastAutocompleteMatches[data.index];
+        }
+        const typed = data.element && data.element.value ? String(data.element.value).trim() : '';
+        if (typed && lastAutocompleteMatches.length) {
+            const exact = lastAutocompleteMatches.find(function (item) {
+                return item && item.properties && item.properties.display_name === typed;
+            });
+            if (exact) {
+                return exact;
+            }
+        }
+        return lastHighlightedFeature;
+    }
+
+    function updateIframeMapCoords(address, force = false, persist = false) {
+        const query = (address || '').trim();
+        if (!query) {
+            return;
+        }
+        // Do not overwrite user/saved lat-lng unless forced (e.g. address autocomplete pick)
+        // or the fields still hold legacy NYC placeholder coords.
+        if (!force && hasNumericMapCoords() && !hasStaleDefaultMapCoords()) {
+            return;
+        }
+        geocodeOSMAddress(query).then((result) => {
+            if (result) {
+                applyMapLatLng(result.lat, result.lon);
+                if (persist && typeof window.ttbmPersistMapLocationToServer === 'function') {
+                    window.ttbmPersistMapLocationToServer(false);
+                }
+            }
+        });
+    }
+
+    function updateIframeMapLocation(address, displayName) {
+        const locationInput = resolveIframeLocationInput();
+        const query = (address || '').trim();
+        if (!query) {
+            return;
+        }
+        updateIframeMapPointer(query);
+        if (displayName && locationInput) {
+            locationInput.value = displayName;
+            lastGeocodedAddress = displayName;
+            if (typeof ttbmSyncMapLocationFieldsForSubmit === 'function') {
+                ttbmSyncMapLocationFieldsForSubmit();
+            }
         } else {
+            lastGeocodedAddress = query;
+            if (typeof ttbmSyncMapLocationFieldsForSubmit === 'function') {
+                ttbmSyncMapLocationFieldsForSubmit();
+            }
+        }
+        // Address confirmed: refresh coordinates from geocoder.
+        updateIframeMapCoords(displayName || query, true);
+    }
+
+    function bindIframeLocationInput() {
+        const locationInput = resolveIframeLocationInput();
+        if (locationInput && !lastGeocodedAddress) {
+            lastGeocodedAddress = locationInput.value.trim();
+        }
+
+        // Bind document listeners once even if the iframe is not in the DOM yet
+        // (location tab / map collapse may mount later).
+        if (!iframeMapListenersBound) {
+            iframeMapListenersBound = true;
+
+            // Direct click on a suggestion LI — do not rely on Autocomplete onSubmit.
+            $(document).on('mousedown.ttbmMapSuggestion click.ttbmMapSuggestion', '[id*="-results"] li, .auto-results-wrapper li, .auto-is-active li', function (e) {
+                if (e.type === 'click') {
+                    // mousedown already handled most cases; still catch click as backup.
+                }
+                if (e.which && e.which !== 1) {
+                    return;
+                }
+                const li = this.closest ? this.closest('li') : this;
+                if (!li || !(li.getAttribute('data-ttbm-lat') || li.getAttribute('data-ttbm-index') || (li.textContent || '').trim())) {
+                    return;
+                }
+                // Ignore "No results" rows.
+                if ((li.textContent || '').indexOf('No results found') !== -1) {
+                    return;
+                }
+                applyMapSuggestionFromElement(li);
+            });
+
+            // Geocode when leaving the address field (paste + click away / tab out).
+            $(document).on('change.ttbmIframeMapGeocode blur.ttbmIframeMapGeocode', LOCATION_INPUT_SELECTOR, function () {
+                const value = (this.value || '').trim();
+                if (value.length < 2) {
+                    return;
+                }
+                if (ttbmMapSelectionHandled) {
+                    return;
+                }
+                if (value === lastGeocodedAddress && hasNumericMapCoords() && !hasStaleDefaultMapCoords()) {
+                    return;
+                }
+                clearTimeout(iframeMapTimer);
+                iframeMapTimer = setTimeout(function () {
+                    if (ttbmMapSelectionHandled) {
+                        return;
+                    }
+                    applyConfirmedMapAddress(value, null, null);
+                }, 200);
+            });
+
+            // Do not update the map while typing — only autocomplete suggestions.
+            // Map + lat/lng update on Enter (dropdown closed) or autocomplete selection.
+            $(document).on('keydown.ttbmHotelIframeMap', LOCATION_INPUT_SELECTOR, function (e) {
+                if (e.key !== 'Enter' && e.keyCode !== 13) {
+                    return;
+                }
+                // Autocomplete handles Enter when its dropdown is open (selection confirm).
+                if (this.getAttribute('aria-expanded') === 'true') {
+                    const selected = document.querySelector('.auto-results-wrapper li.auto-selected, [id*="-results"] li.auto-selected, [id*="-results"] li[aria-selected="true"]');
+                    if (selected) {
+                        applyMapSuggestionFromElement(selected);
+                    } else if (lastHighlightedFeature) {
+                        const coords = extractLatLngFromGeoObject(lastHighlightedFeature);
+                        const name = lastHighlightedFeature.properties && lastHighlightedFeature.properties.display_name
+                            ? lastHighlightedFeature.properties.display_name
+                            : this.value.trim();
+                        applyConfirmedMapAddress(name, coords ? coords.lat : null, coords ? coords.lng : null);
+                    } else if (lastAutocompleteMatches[0]) {
+                        applyMapSuggestionFromElement(document.querySelector('[id*="-results"] li[data-ttbm-index="0"]') || document.querySelector('[id*="-results"] li'));
+                    }
+                    return;
+                }
+                if (ttbmMapSelectionHandled) {
+                    return;
+                }
+                e.preventDefault();
+                clearTimeout(iframeMapTimer);
+                clearTimeout(osmGeocodeTimer);
+                const value = this.value.trim();
+                if (value.length < 2) {
+                    return;
+                }
+                // Typed address (e.g. coxesbazar) — map + server/Photon geocode for lat/lng.
+                applyConfirmedMapAddress(value, null, null);
+            });
+        }
+
+        if (!locationInput || !locationInput.id) {
+            return;
+        }
+        if (typeof Autocomplete === 'undefined') {
+            // Autocomplete script may load just after us — retry briefly.
+            if (!locationInput.dataset.acRetry) {
+                locationInput.dataset.acRetry = '1';
+                let attempts = 0;
+                const retry = setInterval(function () {
+                    attempts += 1;
+                    if (typeof Autocomplete !== 'undefined') {
+                        clearInterval(retry);
+                        bindIframeLocationInput();
+                    } else if (attempts > 25) {
+                        clearInterval(retry);
+                    }
+                }, 200);
+            }
+            return;
+        }
+        if (locationInput.dataset.acBound === '1') {
+            return;
+        }
+
+        locationInput.dataset.acBound = '1';
+        new Autocomplete(locationInput.id, {
+            selectFirst: true,
+            insertToInput: false,
+            cache: false,
+            howManyCharacters: 2,
+            onSearch: ({currentValue}) => {
+                return searchMapPlaceFeatures(currentValue).then((features) => {
+                    lastAutocompleteMatches = features || [];
+                    return lastAutocompleteMatches;
+                });
+            },
+            onResults: ({currentValue, matches, template}) => {
+                const regex = new RegExp(currentValue, 'gi');
+                return matches.length === 0
+                    ? template(`<li>No results found: "${currentValue}"</li>`)
+                    : matches.map((element, index) => {
+                        const coords = extractLatLngFromGeoObject(element);
+                        const latAttr = coords ? String(coords.lat) : '';
+                        const lngAttr = coords ? String(coords.lng) : '';
+                        const name = element.properties && element.properties.display_name
+                            ? element.properties.display_name
+                            : '';
+                        const safeName = String(name).replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        return `<li data-ttbm-lat="${latAttr}" data-ttbm-lng="${lngAttr}" data-ttbm-index="${index}"><p>${safeName.replace(regex, (str) => `<b>${str}</b>`)}</p></li>`;
+                    }).join('');
+            },
+            onSelectedItem: ({object}) => {
+                lastHighlightedFeature = object || null;
+            },
+            onSubmit: (data) => {
+                const feature = resolveFeatureFromAutocompleteData(data);
+                if (feature) {
+                    applyAutocompleteGeoFeature(feature);
+                    return;
+                }
+                const typed = data && data.element ? String(data.element.value || '').trim() : '';
+                if (typed) {
+                    applyConfirmedMapAddress(typed, null, null);
+                }
+            },
+            noResults: ({currentValue, template}) => template(`<li>No results found: "${currentValue}"</li>`),
+        });
+    }
+
+    function ensureLocationMap() {
+        const hasApiKey = typeof ttbm_map !== 'undefined' && !!ttbm_map.api_key;
+        const gmapCanvas = document.getElementById('gmap_canvas');
+        const iframe = document.getElementById('ttbm_gmap_iframe');
+        const osmCanvas = document.getElementById('osmap_canvas');
+
+        // Prefer whichever map UI is actually rendered. Avoid requiring ttbm_map
+        // (localization can race admin script enqueue and leave it undefined).
+        if (hasApiKey && gmapCanvas) {
+            bindGmapLocationInputLive();
+            if (typeof google !== 'undefined' && google.maps) {
+                initGMap();
+            }
+            return;
+        }
+        if (iframe || document.getElementById('ttbm_iframe_location') || document.getElementById('ttbm_map_location') || document.querySelector('.ttbm-map-location-input')) {
+            bindIframeLocationInput();
+            return;
+        }
+        if (osmCanvas) {
             initOSMMap();
+        }
+    }
+
+    window.ensureLocationMap = ensureLocationMap;
+
+    window.initMap = function () {
+        ensureLocationMap();
+    };
+
+    // ===========Google Map setup=============
+    let gmap, gmapMarker, gmapAutocomplete, gmapGeocoder, gmapInputTimer = null;
+    let gmapLiveBound = false;
+    let lastGmapGeocodedQuery = '';
+
+    function resolveGmapLocationInput() {
+        return document.getElementById('ttbm_hotel_map_location')
+            || document.getElementById('ttbm_map_location')
+            || document.getElementById('ttbm_iframe_location')
+            || document.querySelector('.ttbm-map-location-input');
+    }
+
+    function setGmapLocationInputValue(value) {
+        const locationInput = resolveGmapLocationInput();
+        if (locationInput) {
+            locationInput.value = value;
+            if (typeof ttbmSyncMapLocationFieldsForSubmit === 'function') {
+                ttbmSyncMapLocationFieldsForSubmit();
+            }
+        }
+    }
+
+    function geocodeGmapAddress(address) {
+        const query = (address || '').trim();
+        if (!query || !gmapGeocoder || !gmap || !gmapMarker) {
+            return;
+        }
+        if (query === lastGmapGeocodedQuery) {
+            return;
+        }
+        gmapGeocoder.geocode({address: query}, function (results, status) {
+            if (status !== google.maps.GeocoderStatus.OK || !results[0]) {
+                return;
+            }
+            lastGmapGeocodedQuery = query;
+            const location = results[0].geometry.location;
+            gmap.setCenter(location);
+            gmapMarker.setPosition(location);
+            const latEl = document.getElementById('map_latitude');
+            const lngEl = document.getElementById('map_longitude');
+            if (latEl) {
+                latEl.value = location.lat();
+            }
+            if (lngEl) {
+                lngEl.value = location.lng();
+            }
+            if (typeof ttbmSyncMapLocationFieldsForSubmit === 'function') {
+                ttbmSyncMapLocationFieldsForSubmit();
+            }
+        });
+    }
+
+    function bindGmapLocationInputLive() {
+        if (gmapLiveBound) {
+            return;
+        }
+        gmapLiveBound = true;
+
+        // Google Places autocomplete shows suggestions while typing.
+        // Map updates only on Enter or place selection (place_changed).
+        $(document).on('keydown.ttbmGmapLive', LOCATION_INPUT_SELECTOR, function (e) {
+            if (e.key !== 'Enter' && e.keyCode !== 13) {
+                return;
+            }
+            // Let Places dropdown handle Enter when open.
+            if (this.getAttribute('aria-expanded') === 'true' || ttbmMapSelectionHandled || document.querySelector('.pac-container:visible')) {
+                return;
+            }
+            e.preventDefault();
+            clearTimeout(gmapInputTimer);
+            const value = this.value.trim();
+            if (value.length >= 2) {
+                lastGmapGeocodedQuery = '';
+                geocodeGmapAddress(value);
+            }
+        });
+    }
+
+    function initGmapPlacesAutocomplete() {
+        const locationInput = resolveGmapLocationInput();
+        if (!locationInput || locationInput.dataset.gmapAcBound === '1') {
+            return;
+        }
+        if (typeof google === 'undefined' || !google.maps || !google.maps.places) {
+            return;
+        }
+        locationInput.dataset.gmapAcBound = '1';
+        gmapAutocomplete = new google.maps.places.Autocomplete(locationInput);
+        gmapAutocomplete.addListener('place_changed', onPlaceChanged);
+    }
+
+    function syncMapFromCurrentLocationInput() {
+        const locationInput = resolveIframeLocationInput() || resolveGmapLocationInput();
+        if (!locationInput) {
+            return;
+        }
+        const value = (locationInput.value || '').trim();
+        if (value.length < 2) {
+            return;
+        }
+        // Don't move the map for an address the user is still typing.
+        if (lastGeocodedAddress && value !== lastGeocodedAddress.trim()) {
+            return;
+        }
+        if (document.getElementById('ttbm_gmap_iframe')) {
+            updateIframeMapPointer(value);
+            updateIframeMapCoords(value, hasStaleDefaultMapCoords() || !hasNumericMapCoords());
+        }
+        if (document.getElementById('gmap_canvas') && gmapGeocoder && !hasNumericMapCoords()) {
+            lastGmapGeocodedQuery = '';
+            geocodeGmapAddress(value);
+        }
+    }
+
+    $(document).ready(function () {
+        ensureLocationMap();
+        setTimeout(function () {
+            ensureLocationMap();
+            syncMapFromCurrentLocationInput();
+        }, 500);
+    });
+
+    $(document).on('ttbm_tab_activated', function (e, tabsTarget) {
+        if (tabsTarget === '#ttbm_settings_location' || tabsTarget === '#ttbm_settings_hotel_location') {
+            requestAnimationFrame(function () {
+                ensureLocationMap();
+                syncMapFromCurrentLocationInput();
+            });
         }
     });
+
+    $(document).on('click', '.ttbm_settings_location,[data-collapse-target="#ttbm_display_map"]', function () {
+        requestAnimationFrame(function () {
+            ensureLocationMap();
+            syncMapFromCurrentLocationInput();
+        });
+    });
+
     // for hotel trigger
     $(document).on('click', '.ttbm_hotel_map_location,[data-collapse-target="#ttbm_display_hotel_map"]', function () {
-        if (gmap) {
-            gmap = null;
-            $('#gmap_canvas').empty();
-        }
-        if (osmMap) {
-            osmMap.remove();
-            osmMap = null;
-            $('#osmap_canvas').empty();
-        }
-        if (ttbm_map.api_key) {
-            initGMap();
-        } else {
-            initOSMMap();
-        }
+        requestAnimationFrame(function () {
+            ensureLocationMap();
+            syncMapFromCurrentLocationInput();
+        });
     });
 
     function initGMap() {
         const latitudeEl = document.getElementById('map_latitude');
         const longitudeEl = document.getElementById('map_longitude');
         const gmapCanvas = document.getElementById('gmap_canvas');
-        // Check if required elements exist before proceeding
         if (!latitudeEl || !longitudeEl || !gmapCanvas) {
+            return;
+        }
+        if (gmap) {
+            google.maps.event.trigger(gmap, 'resize');
+            gmap.setCenter(gmapMarker.getPosition());
+            initGmapPlacesAutocomplete();
+            setTimeout(() => google.maps.event.trigger(gmap, 'resize'), 350);
+            syncGmapToCurrentInput();
             return;
         }
         let lati = parseFloat(latitudeEl.value);
         let longdi = parseFloat(longitudeEl.value);
+        if (Number.isNaN(lati) || Number.isNaN(longdi)) {
+            lati = 21.4272;
+            longdi = 92.0058;
+        }
         // Initialize Google Map
         gmap = new google.maps.Map(gmapCanvas, {
             center: {lat: lati, lng: longdi},
@@ -1242,35 +2640,50 @@
         });
         // Initialize Google geocoder for reverse geocoding
         gmapGeocoder = new google.maps.Geocoder();
+        const locationInput = resolveGmapLocationInput();
+        if (locationInput) {
+            lastGmapGeocodedQuery = locationInput.value.trim();
+        }
         // Update latitude and longitude when the marker is dragged
         gmapMarker.addListener("dragend", function (event) {
             document.getElementById('map_latitude').value = event.latLng.lat();
             document.getElementById('map_longitude').value = event.latLng.lng();
+            if (typeof ttbmSyncMapLocationFieldsForSubmit === 'function') {
+                ttbmSyncMapLocationFieldsForSubmit();
+            }
             reverseGeocode(event.latLng); // Update location name when dragging the marker
         });
-        // Initialize Autocomplete for Google address input field
-        gmapAutocomplete = new google.maps.places.Autocomplete(document.getElementById("ttbm_map_location"));
-        gmapAutocomplete.addListener("place_changed", onPlaceChanged);
+        initGmapPlacesAutocomplete();
         // Add a click event listener to Google Map
         gmap.addListener("click", function (event) {
             let clickedLatLng = event.latLng;
             gmapMarker.setPosition(clickedLatLng);
             document.getElementById('map_latitude').value = clickedLatLng.lat();
             document.getElementById('map_longitude').value = clickedLatLng.lng();
+            if (typeof ttbmSyncMapLocationFieldsForSubmit === 'function') {
+                ttbmSyncMapLocationFieldsForSubmit();
+            }
             reverseGeocode(clickedLatLng);
         });
     }
+    function syncGmapToCurrentInput() {
+        const locationInput = resolveGmapLocationInput();
+        if (!locationInput || !gmapGeocoder) {
+            return;
+        }
+        const value = locationInput.value.trim();
+        if (value && value !== lastGmapGeocodedQuery) {
+            geocodeGmapAddress(value);
+        }
+    }
+
     // Reverse geocoding for Google Map
     function reverseGeocode(latLng) {
         gmapGeocoder.geocode({'location': latLng}, function (results, status) {
-            if (status === google.maps.GeocoderStatus.OK) {
-                if (results[0]) {
-                    document.getElementById('ttbm_map_location').value = results[0].formatted_address;
-                } else {
-                    console.error("No results found for the given location.");
-                }
-            } else {
-                console.error("Geocoder failed due to: " + status);
+            if (status === google.maps.GeocoderStatus.OK && results[0]) {
+                const addr = results[0].formatted_address;
+                setGmapLocationInputValue(addr);
+                lastGmapGeocodedQuery = addr;
             }
         });
     }
@@ -1278,15 +2691,22 @@
     function onPlaceChanged() {
         let place = gmapAutocomplete.getPlace();
         if (!place.geometry) {
-            console.error("No details available for the selected place.");
             return;
         }
+        ttbmMarkMapSelectionHandled();
         let location = place.geometry.location;
         gmap.setCenter(location);
         gmapMarker.setPosition(location);
         document.getElementById("map_latitude").value = location.lat();
         document.getElementById("map_longitude").value = location.lng();
-        reverseGeocode(location);
+        if (typeof ttbmSyncMapLocationFieldsForSubmit === 'function') {
+            ttbmSyncMapLocationFieldsForSubmit();
+        }
+        const formatted = place.formatted_address || '';
+        if (formatted) {
+            setGmapLocationInputValue(formatted);
+            lastGmapGeocodedQuery = formatted;
+        }
     }
 })(jQuery);
 //=================title style switcher==================
@@ -1390,4 +2810,45 @@
             $parent.empty().append(data);
         });
     };
+
+    // Tour list layout switcher (classic / compact / modern). The design class
+    // lives on .ttbm-tour-list-page, which AJAX never replaces, so load-more /
+    // search cards inherit the active layout automatically. Persisted per user.
+    $(document).on('click', '.ttbm-design-opt', function () {
+        var design = String($(this).data('design'));
+        if (['classic', 'compact', 'modern'].indexOf(design) === -1) {
+            return;
+        }
+        var $page = $('.ttbm-tour-list-page');
+        $page.removeClass('ttbm-design-classic ttbm-design-compact ttbm-design-modern').addClass('ttbm-design-' + design);
+        $(this).addClass('active').siblings('.ttbm-design-opt').removeClass('active');
+        if (typeof ttbm_admin_ajax !== 'undefined') {
+            $.post(ttbm_admin_ajax.ajax_url, {
+                action: 'ttbm_save_list_design',
+                design: design,
+                nonce: ttbm_admin_ajax.nonce
+            });
+        }
+    });
+
+    // Hotel list layout switcher (classic / compact / modern). Mirrors the tour
+    // switcher above. The class lives on .ttbm-hotel-listing, which AJAX never
+    // replaces (it only appends rows into the table body), so load-more / search
+    // / filter results inherit the active layout. Persisted per user.
+    $(document).on('click', '.ttbm-hdesign-opt', function () {
+        var design = String($(this).data('design'));
+        if (['classic', 'compact', 'modern'].indexOf(design) === -1) {
+            return;
+        }
+        var $wrap = $('.ttbm-hotel-listing');
+        $wrap.removeClass('ttbm-hdesign-classic ttbm-hdesign-compact ttbm-hdesign-modern').addClass('ttbm-hdesign-' + design);
+        $(this).addClass('active').siblings('.ttbm-hdesign-opt').removeClass('active');
+        if (typeof ttbm_admin_ajax !== 'undefined') {
+            $.post(ttbm_admin_ajax.ajax_url, {
+                action: 'ttbm_save_hotel_list_design',
+                design: design,
+                nonce: ttbm_admin_ajax.nonce
+            });
+        }
+    });
 })(jQuery);

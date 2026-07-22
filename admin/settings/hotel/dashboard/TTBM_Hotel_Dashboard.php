@@ -11,7 +11,7 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
 
         public function hotel_booking_list_menu() {
 
-            $label = __('Hotel Lists', 'tour-booking-manager');
+            $label = __('Hotels', 'tour-booking-manager');
             add_submenu_page(
                 'edit.php?post_type=ttbm_tour',
                 $label,

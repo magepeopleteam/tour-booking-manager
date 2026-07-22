@@ -11,6 +11,7 @@
 
                 add_action('wp_ajax_ttbm_load_more', array($this, 'load_more_callback') );
                 add_action('wp_ajax_ttbm_search_tours', array($this, 'search_tours_callback'));
+                add_action('wp_ajax_ttbm_save_list_design', array($this, 'save_list_design'));
 
                 add_action('admin_head', [$this,'remove_admin_notice']);
                 add_action('admin_menu', [$this,'remove_default_menu'],0);
@@ -19,6 +20,37 @@
 
             private function user_can_manage_tours() {
                 return current_user_can('manage_options');
+            }
+            /**
+             * The two available layouts for the admin tour list. 'classic' is the
+             * original detailed card view; 'compact' is the minimal dense view.
+             */
+            private function get_available_designs(): array {
+                return array('classic', 'compact', 'modern');
+            }
+            /**
+             * Read the current user's preferred tour list layout (per-user, so it
+             * persists across sessions/devices). Defaults to 'compact'.
+             */
+            private function get_current_list_design(): string {
+                $design = get_user_meta(get_current_user_id(), 'ttbm_tour_list_design', true);
+                return in_array($design, $this->get_available_designs(), true) ? $design : 'compact';
+            }
+            /**
+             * Persist the user's chosen layout. The UI also toggles instantly client
+             * side, so this just records the preference for the next page load.
+             */
+            public function save_list_design() {
+                if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
+                    wp_send_json_error(array('message' => 'Invalid nonce'), 403);
+                }
+                if (!$this->user_can_manage_tours()) {
+                    wp_send_json_error(array('message' => esc_html__('You do not have permission to do this.', 'tour-booking-manager')), 403);
+                }
+                $design = isset($_POST['design']) ? sanitize_key(wp_unslash($_POST['design'])) : 'classic';
+                $design = in_array($design, $this->get_available_designs(), true) ? $design : 'classic';
+                update_user_meta(get_current_user_id(), 'ttbm_tour_list_design', $design);
+                wp_send_json_success(array('design' => $design));
             }
 			private function get_listable_post_statuses(): array {
 				return array('publish', 'draft', 'pending', 'future', 'private');
@@ -85,7 +117,7 @@
                 remove_submenu_page('edit.php?post_type=ttbm_tour', 'edit.php?post_type=ttbm_tour');
                 remove_submenu_page('edit.php?post_type=ttbm_tour', 'post-new.php?post_type=ttbm_tour');
                 $label = TTBM_Function::get_name();
-				add_submenu_page('edit.php?post_type=ttbm_tour', $label . ' ' . esc_html__('List', 'tour-booking-manager'), $label . ' ' . esc_html__('List', 'tour-booking-manager'), 'manage_options', 'ttbm_list', array($this, 'ttbm_list'),0);
+				add_submenu_page('edit.php?post_type=ttbm_tour', esc_html__('All Tours', 'tour-booking-manager'), esc_html__('All Tours', 'tour-booking-manager'), 'manage_options', 'ttbm_list', array($this, 'ttbm_list'),0);
             }
 
             public function search_tours_callback(){
@@ -148,7 +180,7 @@
 
 			public function tour_list_menu() {
 				$label = TTBM_Function::get_name();
-				add_submenu_page('edit.php?post_type=ttbm_tour', $label . ' ' . esc_html__('List', 'tour-booking-manager'), $label . ' ' . esc_html__('List', 'tour-booking-manager'), 'manage_options', 'ttbm_list', array($this, 'ttbm_list'));
+				add_submenu_page('edit.php?post_type=ttbm_tour', esc_html__('All Tours', 'tour-booking-manager'), esc_html__('All Tours', 'tour-booking-manager'), 'manage_options', 'ttbm_list', array($this, 'ttbm_list'));
 			}
 
 			public function ttbm_list() {
@@ -174,15 +206,19 @@
 
                 $analytics_Data = TTBM_Function::get_travel_analytical_data();
 
+                $design = $this->get_current_list_design();
+                $design_options = array(
+                    'classic' => array('label' => esc_html__('Classic', 'tour-booking-manager'), 'icon' => 'dashicons-list-view'),
+                    'compact' => array('label' => esc_html__('Compact', 'tour-booking-manager'), 'icon' => 'dashicons-menu-alt'),
+                    'modern'  => array('label' => esc_html__('Modern', 'tour-booking-manager'),  'icon' => 'dashicons-grid-view'),
+                );
                 ?>
-                <div class="wrap ttbm-tour-list-page ">
+                <div class="wrap ttbm-tour-list-page ttbm-design-<?php echo esc_attr($design); ?>">
                     <!--Here Analytics-->
                     <?php do_action('ttbm_travel_analytics_display', $posts_query->found_posts, $analytics_Data )?>
                     <?php
-                    // Show Import Dummy Data button if eligible
-                    $count_posts = wp_count_posts('ttbm_tour');
-                    $published_count = isset($count_posts->publish) ? $count_posts->publish : 0;
-                    if ( get_option('ttbm_dummy_already_inserted', 'no') !== 'yes' && empty($published_count) && \TTBM_Dummy_Import::check_plugin('tour-booking-manager', 'tour-booking-manager.php') == 1 ) :
+                    // Show Import Dummy Data button when popup/JS will also be available
+                    if ( class_exists( 'TTBM_Dummy_Import' ) && \TTBM_Dummy_Import::is_eligible() ) :
                     ?>
                     <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
                         <button type="button" id="ttbm-trigger-dummy-import-btn" style="background-color: #0071a1; color: #fff; border: none; border-radius: 6px; padding: 8px 18px; cursor: pointer; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
@@ -207,6 +243,19 @@
                         <div class="ttbm-tour-dashboard-content">
                             <?php do_action('ttbm_travel_lists_tab_display', $label, $analytics_Data, $posts_query )?>
                             <div class="ttbm-tour-list_holder">
+                                <div class="ttbm-design-switch-bar">
+                                    <span class="ttbm-design-switch-caption"><?php esc_html_e('View', 'tour-booking-manager'); ?></span>
+                                    <div class="ttbm-design-switch" role="group" aria-label="<?php esc_attr_e('Choose list layout', 'tour-booking-manager'); ?>">
+                                        <?php foreach ($design_options as $design_key => $design_opt) : ?>
+                                            <button type="button" class="ttbm-design-opt<?php echo $design === $design_key ? ' active' : ''; ?>"
+                                                    data-design="<?php echo esc_attr($design_key); ?>"
+                                                    title="<?php echo esc_attr($design_opt['label']); ?>">
+                                                <span class="dashicons <?php echo esc_attr($design_opt['icon']); ?>" aria-hidden="true"></span>
+                                                <span class="ttbm-design-opt-label"><?php echo esc_html($design_opt['label']); ?></span>
+                                            </button>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
                                 <div class="ttbm-tour-list">
                                     <?php
                                     $this->tour_list($posts_query);
@@ -230,8 +279,14 @@
 			}
 
             public function tour_list($posts_query){
-                
+
                 if ($posts_query->have_posts()) {
+                    /* Batch-load all post meta and terms in one query each,
+                       so the inner loop reads from WP object cache. */
+                    $all_ids = wp_list_pluck( $posts_query->posts, 'ID' );
+                    update_meta_cache( 'post', $all_ids );
+                    update_object_term_cache( $all_ids, TTBM_Function::get_cpt_name() );
+
                     while ($posts_query->have_posts()) {
                         $posts_query->the_post();
                         $post_id = get_the_ID();

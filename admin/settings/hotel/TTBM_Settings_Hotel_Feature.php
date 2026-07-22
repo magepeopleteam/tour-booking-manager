@@ -100,7 +100,7 @@
 				$all_features = TTBM_Global_Function::get_taxonomy('ttbm_hotel_features_list');
 				$features_status = get_post_meta($tour_id, 'ttbm_hotel_features_status', true);
 				if (!empty($selected_features) && $features_status === 'on') { ?>
-					<div class="ttbm-feature-list">
+					<div class="ttbm-feature-list ttbm_hotel_feature_list">
 						<?php foreach ($all_features as $feature) : ?>
 							<?php if (in_array($feature->term_id, $selected_features)) : 
 								$icon = get_term_meta($feature->term_id, 'ttbm_hotel_feature_icon', true);
@@ -124,8 +124,8 @@
 				$all_features = TTBM_Global_Function::get_taxonomy('ttbm_hotel_features_list');
 				$features_status = get_post_meta($tour_id, 'ttbm_hotel_popular_feat_status', true);
 				if (!empty($selected_features) && $features_status === 'on') { ?>
-					<div class="popular-facilities">
-						<h2>Popular Facilities</h2>
+					<div class="popular-facilities ttbm_hotel_popular_facilities">
+						<h2 class="ttbm_hotel_section_heading"><?php esc_html_e( 'Popular Facilities', 'tour-booking-manager' ); ?></h2>
 						<ul>
 							<?php foreach ($all_features as $feature) : ?>
 								<?php if (in_array($feature->term_id, $selected_features)) : 

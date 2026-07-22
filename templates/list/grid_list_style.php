@@ -17,11 +17,13 @@ $term_count   = 3;
 		<div class="ttbm-gc-badge-sale" data-placeholder><?php esc_html_e( 'ON SALE!', 'tour-booking-manager' ); ?></div>
 	<?php endif; ?>
 
-	<?php /* Wishlist / favourite button */ ?>
-	<?php $in_wishlist = is_user_logged_in() && TTBM_Wishlist::is_in_wishlist( $tour_id ); ?>
-	<button type="button" class="ttbm-gc-wishlist<?php echo $in_wishlist ? ' active' : ''; ?>" data-tour-id="<?php echo esc_attr( $tour_id ); ?>" aria-label="<?php esc_attr_e( 'Add to wishlist', 'tour-booking-manager' ); ?>">
-		<span class="mi <?php echo $in_wishlist ? 'mi-wishlist-heart' : 'mi-heart'; ?>"></span>
-	</button>
+	<?php /* Wishlist / favourite button — TTBM_Wishlist only loads while WooCommerce is active */ ?>
+	<?php if ( class_exists( 'TTBM_Wishlist' ) ) : ?>
+		<?php $in_wishlist = is_user_logged_in() && TTBM_Wishlist::is_in_wishlist( $tour_id ); ?>
+		<button type="button" class="ttbm-gc-wishlist<?php echo $in_wishlist ? ' active' : ''; ?>" data-tour-id="<?php echo esc_attr( $tour_id ); ?>" aria-label="<?php esc_attr_e( 'Add to wishlist', 'tour-booking-manager' ); ?>">
+			<span class="mi <?php echo $in_wishlist ? 'mi-wishlist-heart' : 'mi-heart'; ?>"></span>
+		</button>
+	<?php endif; ?>
 
 	<?php /* Tour thumbnail */ ?>
 	<div class="ttbm-gc-thumb" data-bg-image="<?php echo esc_attr( $thumbnail ); ?>"></div>
@@ -46,9 +48,11 @@ $term_count   = 3;
 	<?php include( TTBM_Function::template_path( 'layout/description_short.php' ) ); ?>
 
 	<?php /* Feature tags (included services) — set $term_name=true to show labels */ ?>
+	<?php if ( empty( $hide_gc_tags ) ) { ?>
 	<div class="ttbm-gc-tags" >
 		<?php $term_name = true; include( TTBM_Function::template_path( 'layout/include_feature_list.php' ) ); ?>
 	</div>
+	<?php } ?>
 
 	<?php /* Divider */ ?>
 	<hr class="ttbm-gc-divider">

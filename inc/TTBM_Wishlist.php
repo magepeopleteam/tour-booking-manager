@@ -289,7 +289,11 @@ if ( ! class_exists( 'TTBM_Wishlist' ) ) {
 		}
 
 		/**
-		 * Output wishlist CSS in footer.
+		 * FIX: Wishlist mobile toast and account responsive styles
+		 * AUTHOR: shahnur alam
+		 * ISSUE: #TTBM-WISHLIST-001
+		 * SOLVED: 2026-05-14
+		 * CONTEXT: Output wishlist CSS in footer while keeping mobile feedback readable and My Account wishlist cards aligned on small screens.
 		 */
 		public function modal_css() {
 			?>
@@ -311,7 +315,7 @@ if ( ! class_exists( 'TTBM_Wishlist' ) ) {
 			/* ── Wishlist Header & View Toggle ──────────────────── */
 			.ttbm-wishlist-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-wrap:wrap;gap:10px;}
 			.ttbm-wishlist-header h2{margin:0;}
-			.ttbm-wishlist-view-toggle{display:flex;gap:4px;background:#f1f1f5;border-radius:8px;padding:3px;}
+			.ttbm-wishlist-view-toggle{display:flex;gap:4px;background:#f1f1f5;border-radius:8px;padding:3px;flex-shrink:0;}
 			.ttbm-wishlist-view-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border:none;border-radius:6px;background:transparent;color:#9ca3af;cursor:pointer;transition:background .18s ease,color .18s ease;font-size:16px;padding:0;line-height:1;}
 			.ttbm-wishlist-view-btn .mi{font-size:16px;color:inherit;}
 			.ttbm-wishlist-view-btn:hover{background:#e8e8ef;color:#374151;}
@@ -325,7 +329,7 @@ if ( ! class_exists( 'TTBM_Wishlist' ) ) {
 			.ttbm-wishlist-empty{color:#888;font-size:15px;}
 
 			/* ── GRID VIEW (default) ─────────────────────────────── */
-			.ttbm-wishlist-grid.ttbm-wishlist-view-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-top:16px;}
+			.ttbm-wishlist-grid.ttbm-wishlist-view-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:16px;}
 			.ttbm-wishlist-view-grid .ttbm-wishlist-item{background:#fff;border:1px solid #eee;border-radius:12px;overflow:hidden;transition:box-shadow .2s;}
 			.ttbm-wishlist-view-grid .ttbm-wishlist-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);}
 			.ttbm-wishlist-view-grid .ttbm-wishlist-item-thumb{position:relative;}
@@ -365,18 +369,27 @@ if ( ! class_exists( 'TTBM_Wishlist' ) ) {
 			.ttbm-wishlist-view-list .ttbm-wishlist-explore-btn:hover{background:#5a3be0;color:#fff !important;}
 
 			/* ── Toast Notification ─────────────────────────────── */
-			.ttbm-toast-wrap{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);z-index:999999;display:flex;flex-direction:column;gap:10px;align-items:center;pointer-events:none;transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .35s ease;opacity:0;}
-			.ttbm-toast-wrap.ttbm-toast-visible{transform:translateX(-50%) translateY(0);opacity:1;}
-			.ttbm-toast-item{background:#222;color:#fff;padding:14px 22px;border-radius:10px;font-size:14px;font-weight:500;line-height:1.5;box-shadow:0 8px 28px rgba(0,0,0,.25);display:flex;align-items:center;gap:10px;pointer-events:auto;max-width:420px;text-align:center;}
+			.ttbm-toast-wrap{position:fixed;left:16px;right:16px;bottom:max(16px,env(safe-area-inset-bottom,16px));transform:translateY(20px);z-index:999999;display:flex;flex-direction:column;gap:10px;align-items:center;pointer-events:none;transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .35s ease;opacity:0;}
+			.ttbm-toast-wrap.ttbm-toast-visible{transform:translateY(0);opacity:1;}
+			.ttbm-toast-item{background:#222;color:#fff;padding:14px 16px;border-radius:12px;font-size:14px;font-weight:500;line-height:1.5;box-shadow:0 8px 28px rgba(0,0,0,.25);display:flex;align-items:flex-start;gap:12px;pointer-events:auto;width:min(100%,420px);max-width:100%;text-align:left;}
 			.ttbm-toast-item.ttbm-toast-success{background:#1a7a3e;}
 			.ttbm-toast-item.ttbm-toast-info{background:#6c47ff;}
+			.ttbm-toast-content{flex:1;min-width:0;word-break:break-word;}
 			.ttbm-toast-item a{color:#ffd700;text-decoration:underline;font-weight:600;}
 			.ttbm-toast-item a:hover{color:#fff;}
-			.ttbm-toast-item .ttbm-toast-close{background:none;border:none;color:#fff;font-size:16px;line-height:1;cursor:pointer;padding:0 0 0 6px;opacity:.7;}
+			.ttbm-toast-item .ttbm-toast-close{background:none;border:none;color:#fff;font-size:16px;line-height:1;cursor:pointer;padding:2px 0 0 0;opacity:.7;flex-shrink:0;}
 			.ttbm-toast-item .ttbm-toast-close:hover{opacity:1;}
 
 			/* ── List View Responsive ─────────────────────────────── */
 			@media (max-width:767px) {
+			.ttbm-wishlist-header{align-items:flex-start;}
+			.ttbm-wishlist-view-toggle{margin-left:auto;}
+			.ttbm-wishlist-grid.ttbm-wishlist-view-grid{grid-template-columns:1fr;gap:16px;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-item-info{padding:16px;}
+			.ttbm-wishlist-view-grid .ttbm-wishlist-meta,
+			.ttbm-wishlist-view-list .ttbm-wishlist-meta{flex-wrap:wrap;}
+			.ttbm-toast-wrap{left:12px;right:12px;bottom:max(32px,calc(env(safe-area-inset-bottom,0px) + 12px));}
+			.ttbm-toast-item{width:100%;padding:13px 14px;font-size:13px;gap:10px;border-radius:10px;}
 			.ttbm-wishlist-view-list .ttbm-wishlist-item{flex-direction:column !important;}
 			.ttbm-wishlist-view-list .ttbm-wishlist-item-thumb{width:100%;max-width:100%;min-width:100%;height:220px;}
 			.ttbm-wishlist-view-list .ttbm-wishlist-item-thumb img{height:220px;}
@@ -385,6 +398,7 @@ if ( ! class_exists( 'TTBM_Wishlist' ) ) {
 			.ttbm-wishlist-view-list .ttbm-wishlist-explore-btn{width:100%;text-align:center;}
 			}
 			@media (max-width:480px) {
+			.ttbm-wishlist-view-toggle{width:100%;justify-content:flex-end;}
 			.ttbm-wishlist-view-list .ttbm-wishlist-item-thumb{height:200px;}
 			.ttbm-wishlist-view-list .ttbm-wishlist-item-thumb img{height:200px;}
 			.ttbm-wishlist-view-list .ttbm-wishlist-item-info{padding:14px;}

@@ -69,9 +69,7 @@ function placeholderLoader(target) {
     target.addClass('placeholderLoader');
 }
 function placeholderLoaderRemove(target) {
-    target.each(function () {
-        target.removeClass('placeholderLoader');
-    })
+    target.removeClass('placeholderLoader');
 }
 //======================================================Page Scroll==============//
 function pageScrollTo(target) {
@@ -80,68 +78,117 @@ function pageScrollTo(target) {
     }, 1000);
 }
 //====================================================Load Date picker==============//
-function ttbm_load_date_picker(parent = jQuery('.ttbm_style')) {
-    parent.find(".date_type.hasDatepicker").each(function () {
-        jQuery(this).removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind();
-    }).promise().done(function () {
-        parent.find(".date_type").datepicker({
+function ttbm_find_linked_date_hidden(visibleEl) {
+    let $visible = jQuery(visibleEl);
+    let $hidden = $visible.closest('label').find('input[type="hidden"]');
+    if ($hidden.length) {
+        return $hidden.first();
+    }
+    $hidden = $visible.closest('.ttbm-datetime-clear-wrap').find('input[type="hidden"]');
+    if ($hidden.length) {
+        return $hidden.first();
+    }
+    return $visible.siblings('input[type="hidden"]').first();
+}
+function ttbm_format_datepicker_value(date) {
+    if (!date) {
+        return '';
+    }
+    return date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+}
+function ttbm_sync_visible_dates_to_hidden(parent) {
+    parent = parent && parent.jquery ? parent : jQuery(parent || '.ttbm_style');
+    if (!parent.length) {
+        parent = jQuery('.ttbm_style');
+    }
+    parent.find('.date_type, .date_type_without_year').each(function () {
+        let $visible = jQuery(this);
+        let currentValue = ($visible.val() || '').trim();
+        let $hidden = ttbm_find_linked_date_hidden($visible);
+        if (!$hidden.length) {
+            return;
+        }
+        if (!currentValue) {
+            $hidden.val('').trigger('change');
+            return;
+        }
+        if ($visible.hasClass('hasDatepicker')) {
+            try {
+                let selectedDate = $visible.datepicker('getDate');
+                if (selectedDate) {
+                    $hidden.val(ttbm_format_datepicker_value(selectedDate)).trigger('change');
+                }
+            } catch (err) {}
+        }
+    });
+}
+function ttbm_load_date_picker(parent = jQuery('.ttbm_style'), options = {}) {
+    const incremental = options.incremental === true;
+    const $parent = parent && parent.jquery ? parent : jQuery(parent);
+    const initPicker = function (selector, config) {
+        $parent.find(selector).each(function () {
+            const $field = jQuery(this);
+            if (incremental && $field.hasClass('hasDatepicker')) {
+                return;
+            }
+            if ($field.hasClass('hasDatepicker')) {
+                $field.removeClass('hasDatepicker').removeAttr('id').removeData('datepicker').off();
+            }
+            $field.datepicker(config);
+        });
+    };
+
+    initPicker('.date_type', {
             dateFormat: ttbm_date_format,
-            //showButtonPanel: true,
             autoSize: true,
             changeMonth: true,
             changeYear: true,
             onSelect: function (dateString, data) {
                 let date = data.selectedYear + '-' + ('0' + (parseInt(data.selectedMonth) + 1)).slice(-2) + '-' + ('0' + parseInt(data.selectedDay)).slice(-2);
-                jQuery(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
+                let $hidden = ttbm_find_linked_date_hidden(this);
+                if ($hidden.length) {
+                    $hidden.val(date).trigger('change');
+                }
             },
-            // closeText: 'Clear Date',
-            // onClose: function (dateText, inst) {
-            // 	if (jQuery(this).hasClass('ui-datepicker-close')) {
-            // 		document.getElementById(this.id).reset();
-            // 	}
-            // }
         });
-    });
-    parent.find(".date_type_without_year.hasDatepicker").each(function () {
-        jQuery(this).removeClass('hasDatepicker').attr('id', '').removeData('datepicker').unbind();
-    }).promise().done(function () {
-        parent.find(".date_type_without_year").datepicker({
+    initPicker('.date_type_without_year', {
             dateFormat: ttbm_date_format_without_year,
-            //showButtonPanel: true,
             autoSize: true,
             changeMonth: true,
             changeYear: false,
             onSelect: function (dateString, data) {
-                //console.log(ttbm_date_format_without_year);
                 let date = ('0' + (parseInt(data.selectedMonth) + 1)).slice(-2) + '-' + ('0' + parseInt(data.selectedDay)).slice(-2);
-                jQuery(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
+                let $hidden = ttbm_find_linked_date_hidden(this);
+                if ($hidden.length) {
+                    $hidden.val(date).trigger('change');
+                }
             }
         });
-    });
     // Clear hidden field when visible date field is cleared - using event delegation for better reliability
-    parent.off('input.ttbm_clear_date change.ttbm_clear_date blur.ttbm_clear_date', '.date_type, .date_type_without_year');
-    parent.on('input.ttbm_clear_date change.ttbm_clear_date blur.ttbm_clear_date', '.date_type, .date_type_without_year', function() {
+    $parent.off('input.ttbm_clear_date change.ttbm_clear_date blur.ttbm_clear_date', '.date_type, .date_type_without_year');
+    $parent.on('input.ttbm_clear_date change.ttbm_clear_date blur.ttbm_clear_date', '.date_type, .date_type_without_year', function() {
         let $this = jQuery(this);
         let currentValue = $this.val();
         if (!currentValue || currentValue.trim() === '') {
-            let $hiddenField = $this.closest('label').find('input[type="hidden"]');
+            let $hiddenField = ttbm_find_linked_date_hidden($this);
             if ($hiddenField.length) {
                 $hiddenField.val('').trigger('change');
             }
         }
     });
     // Ensure cleared dates are saved before form submission
-    let $form = parent.closest('form');
+    let $form = $parent.closest('form');
     if ($form.length === 0) {
         $form = jQuery('#post, #post-form, form[name="post"]');
     }
     if ($form.length > 0) {
         $form.off('submit.ttbm_clear_dates').on('submit.ttbm_clear_dates', function() {
-            parent.find('.date_type, .date_type_without_year').each(function() {
+            ttbm_sync_visible_dates_to_hidden($parent);
+            $parent.find('.date_type, .date_type_without_year').each(function() {
                 let $this = jQuery(this);
                 let currentValue = $this.val();
                 if (!currentValue || currentValue.trim() === '') {
-                    let $hiddenField = $this.closest('label').find('input[type="hidden"]');
+                    let $hiddenField = ttbm_find_linked_date_hidden($this);
                     if ($hiddenField.length && $hiddenField.val()) {
                         $hiddenField.val('');
                     }
@@ -150,7 +197,6 @@ function ttbm_load_date_picker(parent = jQuery('.ttbm_style')) {
         });
     }
 }
-//========================================================Alert==============//
 function ttbm_alert($this, attr = 'alert') {
     alert($this.data(attr));
 }
@@ -161,7 +207,7 @@ function ttbm_alert($this, attr = 'alert') {
         $(".ttbm_style .date_type,.ttbm_style .date_type_without_year").on("keydown", function(e) {
             e.preventDefault();
         });
-        ttbm_init_dynamic_ui(jQuery(document));
+        ttbm_init_admin_tab_shell();
         
         // Clear hidden date fields when visible fields are cleared - global handler for WordPress admin
         function clearEmptyDateFields() {
@@ -169,7 +215,7 @@ function ttbm_alert($this, attr = 'alert') {
                 let $this = $(this);
                 let currentValue = $this.val();
                 if (!currentValue || currentValue.trim() === '') {
-                    let $hiddenField = $this.closest('label').find('input[type="hidden"]');
+                    let $hiddenField = ttbm_find_linked_date_hidden($this);
                     if ($hiddenField.length && $hiddenField.val()) {
                         $hiddenField.val('');
                     }
@@ -177,35 +223,211 @@ function ttbm_alert($this, attr = 'alert') {
             });
         }
         
-        // Clear dates before WordPress save/update
-        $(document).on('click', '#publish, #save-post, input[name="save"], input[name="publish"]', function() {
-            clearEmptyDateFields();
+        // Sync visible dates to hidden fields before WordPress save/update
+        $(document).on('click', '#publish, #save-post, input[name="save"], input[name="publish"], .ttbm-header-publish', function() {
+            if (typeof window.ttbmPrepareTourSettingsFormForSubmit === 'function') {
+                window.ttbmPrepareTourSettingsFormForSubmit();
+            } else {
+                ttbm_sync_visible_dates_to_hidden();
+                clearEmptyDateFields();
+                if (typeof updateCheckedTopPicksDealsHolder === 'function') {
+                    updateCheckedTopPicksDealsHolder();
+                }
+                if (typeof updateCheckedActivitiesHolder === 'function') {
+                    updateCheckedActivitiesHolder();
+                }
+            }
         });
     });
 }(jQuery));
 //====================================================================Load Bg Image=================//
-function ttbm_loadBgImage() {
-    jQuery('body').find('div.ttbm_style [data-bg-image]:visible').each(function () {
-        let target = jQuery(this);
-        if (target.closest('.sliderAllItem').length === 0) {
-            let width = target.outerWidth();
-            let height = target.outerHeight();
-            if (target.css('background-image') === 'none' || width === 0 || height === 0) {
-                let bg_url = target.data('bg-image');
-                if (!bg_url || bg_url.width === 0 || bg_url.width === 'undefined') {
-                    bg_url = ttbm_empty_image_url;
-                }
-                ttbm_resize_bg_image_area(target, bg_url);
+function ttbm_normalize_bg_url(bg_url) {
+    if (!bg_url || bg_url.width === 0 || bg_url === 'undefined') {
+        return typeof ttbm_empty_image_url !== 'undefined' ? ttbm_empty_image_url : '';
+    }
+    return bg_url;
+}
+function ttbm_apply_bg_image(target, bg_url) {
+    target = target && target.jquery ? target : jQuery(target);
+    if (!target.length) {
+        return;
+    }
+    bg_url = ttbm_normalize_bg_url(bg_url);
+    if (!bg_url) {
+        dLoaderRemove(target);
+        return;
+    }
+    let currentBg = target.css('background-image') || '';
+    if (currentBg !== 'none' && currentBg.indexOf(bg_url) !== -1) {
+        dLoaderRemove(target);
+        return;
+    }
+    let finished = false;
+    function finish() {
+        if (finished) {
+            return;
+        }
+        finished = true;
+        target.css({
+            'background-image': 'url("' + bg_url + '")',
+            'background-size': 'cover',
+            'background-position': 'center',
+            'background-repeat': 'no-repeat'
+        });
+        dLoaderRemove(target);
+    }
+    let img = new Image();
+    img.onload = finish;
+    img.onerror = finish;
+    img.src = bg_url;
+    if (img.complete && img.naturalWidth > 0) {
+        finish();
+    }
+}
+function ttbm_should_skip_details_loader(target) {
+    return target.closest('.ttbm_details_page .superSlider, .ttbm_smart_gallery .superSlider, .ttbm_hero .superSlider').length > 0;
+}
+/**
+ * Preload one image URL (warm cache before paint).
+ * Uses decode() when available so we wait for real paint readiness, not just network.
+ * @return {jQuery.Promise}
+ */
+function ttbm_preload_image_url(bg_url) {
+    let deferred = jQuery.Deferred();
+    bg_url = ttbm_normalize_bg_url(bg_url);
+    if (!bg_url) {
+        deferred.resolve();
+        return deferred.promise();
+    }
+    let img = new Image();
+    function done() {
+        if (deferred.state() === 'pending') {
+            deferred.resolve();
+        }
+    }
+    img.onerror = done;
+    img.onload = function () {
+        if (typeof img.decode === 'function') {
+            img.decode().then(done).catch(done);
+        } else {
+            done();
+        }
+    };
+    img.src = bg_url;
+    if (img.complete && img.naturalWidth > 0) {
+        if (typeof img.decode === 'function') {
+            img.decode().then(done).catch(done);
+        } else {
+            done();
+        }
+    }
+    return deferred.promise();
+}
+/**
+ * Preload every gallery + showcase thumb in a superSlider together, then
+ * reveal them as one unit so thumbs never flash empty/broken individually.
+ * Works even while the details-page skeleton has visibility:hidden (:visible false).
+ * @return {jQuery.Promise}
+ */
+function ttbm_prepare_super_slider($slider) {
+    $slider = $slider && $slider.jquery ? $slider : jQuery($slider);
+    if (!$slider.length) {
+        return jQuery.Deferred().resolve().promise();
+    }
+    let existing = $slider.data('ttbmImagesReadyPromise');
+    if (existing) {
+        return existing;
+    }
+    $slider.addClass('ttbm-awaiting-images').removeClass('is-images-ready');
 
-                target.css('background-image', 'url("' + bg_url + '")').promise().done(function () {
-                    dLoaderRemove(target);
-                });
-            }
+    let urls = [];
+    $slider.find('[data-bg-image]').each(function () {
+        let url = ttbm_normalize_bg_url(jQuery(this).attr('data-bg-image') || jQuery(this).data('bg-image'));
+        if (url && urls.indexOf(url) === -1) {
+            urls.push(url);
         }
     });
-    jQuery('body').find('div.ttbm_style .sliderAllItem').each(function () {
-        let target = jQuery(this);
-        ttbm_slider_resize(target)
+
+    let waits = urls.length ? urls.map(ttbm_preload_image_url) : [jQuery.Deferred().resolve().promise()];
+    let ready = jQuery.when.apply(jQuery, waits).always(function () {
+        $slider.find('[data-bg-image]').each(function () {
+            let $el = jQuery(this);
+            let url = ttbm_normalize_bg_url($el.attr('data-bg-image') || $el.data('bg-image'));
+            if (!url) {
+                return;
+            }
+            // Force paint from warm cache — do not early-exit on existing inline styles.
+            $el.css({
+                'background-image': 'url("' + url + '")',
+                'background-size': 'cover',
+                'background-position': 'center',
+                'background-repeat': 'no-repeat'
+            });
+            dLoaderRemove($el);
+        });
+        let $allItem = $slider.find('.sliderAllItem').first();
+        if ($allItem.length) {
+            ttbm_slider_resize($allItem);
+        }
+        // Double rAF so browsers commit background paint before we fade in.
+        window.requestAnimationFrame(function () {
+            window.requestAnimationFrame(function () {
+                $slider.removeClass('ttbm-awaiting-images').addClass('is-images-ready');
+            });
+        });
+    });
+    $slider.data('ttbmImagesReadyPromise', ready);
+    return ready;
+}
+function ttbm_prepare_all_super_sliders(scope) {
+    let $scope = scope && scope.jquery ? scope : (scope ? jQuery(scope) : jQuery('body'));
+    let waits = [];
+    $scope.find('.superSlider').addBack('.superSlider').each(function () {
+        waits.push(ttbm_prepare_super_slider(jQuery(this)));
+    });
+    return waits.length ? jQuery.when.apply(jQuery, waits) : jQuery.Deferred().resolve().promise();
+}
+function ttbm_loadBgImage(scope) {
+    let $roots = scope && scope.jquery ? scope : (scope ? jQuery(scope) : null);
+    if (!$roots || !$roots.length) {
+        $roots = jQuery('body').find('div.ttbm_style');
+    }
+    $roots.each(function () {
+        let $root = jQuery(this);
+        // Include .superSlider images even when hidden under the details skeleton
+        // (jQuery :visible is false for visibility:hidden).
+        $root.find('[data-bg-image]').each(function () {
+            let target = jQuery(this);
+            let inSlider = target.closest('.superSlider').length > 0;
+            if (!inSlider && !target.is(':visible')) {
+                return;
+            }
+            if (target.closest('.sliderAllItem').length === 0) {
+                let bg_url = ttbm_normalize_bg_url(target.data('bg-image'));
+                let currentBg = target.css('background-image') || '';
+                if (!bg_url) {
+                    dLoaderRemove(target);
+                    return;
+                }
+                if (currentBg !== 'none' && currentBg.indexOf(bg_url) !== -1) {
+                    dLoaderRemove(target);
+                    return;
+                }
+                let height = target.outerHeight();
+                if (height === 0 && !inSlider) {
+                    ttbm_resize_bg_image_area(target, bg_url);
+                }
+                ttbm_apply_bg_image(target, bg_url);
+            }
+        });
+        $root.find('.sliderAllItem').each(function () {
+            let target = jQuery(this);
+            if (!target.is(':visible') && target.closest('.superSlider').length === 0) {
+                return;
+            }
+            ttbm_slider_resize(target);
+        });
+        ttbm_prepare_all_super_sliders($root);
     });
     return true;
 }
@@ -227,30 +449,37 @@ function ttbm_loadCartBgImage() {
                     bg_url = typeof ttbm_empty_image_url !== 'undefined' ? ttbm_empty_image_url : '';
                 }
                 if (bg_url) {
-                    ttbm_resize_bg_image_area(target, bg_url);
-                    target.css('background-image', 'url("' + bg_url + '")').promise().done(function () {
-                        dLoaderRemove(target);
-                    });
+                    if (target.outerHeight() === 0) {
+                        ttbm_resize_bg_image_area(target, bg_url);
+                    }
+                    ttbm_apply_bg_image(target, bg_url);
+                } else {
+                    dLoaderRemove(target);
                 }
             }
         }
     });
     return true;
 }
-function ttbm_init_dynamic_ui(scope = jQuery(document)) {
+function ttbm_init_dynamic_ui(scope = jQuery(document), options = {}) {
     let $scope = scope && scope.jquery ? scope : jQuery(scope);
     if (!$scope.length) {
         return;
     }
 
-    let $ttbmScope = $scope.filter('.ttbm_style');
-    if (!$ttbmScope.length) {
-        $ttbmScope = $scope.find('.ttbm_style');
+    const light = options.light === true;
+    let $dateScope = $scope.filter('.ttbm_style');
+    if (!$dateScope.length) {
+        $dateScope = $scope.find('.ttbm_style');
+    }
+    if (!$dateScope.length) {
+        $dateScope = $scope.closest('.ttbm_style');
+    }
+    if (!$dateScope.length) {
+        $dateScope = $scope;
     }
 
-    if ($ttbmScope.length) {
-        ttbm_load_date_picker($ttbmScope);
-    }
+    ttbm_load_date_picker($dateScope, { incremental: light });
 
     if (jQuery.fn.select2) {
         $scope.find('.ttbm_select2').each(function () {
@@ -261,35 +490,73 @@ function ttbm_init_dynamic_ui(scope = jQuery(document)) {
         });
     }
 
-    ttbm_loadBgImage();
-    ttbm_loadCartBgImage();
+    if (!light) {
+        ttbm_loadBgImage($scope);
+        ttbm_loadCartBgImage();
+    }
+}
+
+function ttbm_init_admin_tab_shell() {
+    const $shell = jQuery('#ttbm_meta_box_panel, #ttbm_content.ttbm_configuration');
+    if (!$shell.length) {
+        ttbm_init_dynamic_ui(jQuery(document));
+        return;
+    }
+
+    ttbm_init_dynamic_ui($shell.find('.ttbm-right-sidebar, .tabLists'));
 }
 function ttbm_resize_bg_image_area(target, bg_url) {
     let tmpImg = new Image();
     tmpImg.src = bg_url;
-    jQuery(tmpImg).one('load', function () {
-        let imgWidth = tmpImg.width;
-        let imgHeight = tmpImg.height;
-        let height = target.outerWidth() * imgHeight / imgWidth;
-        target.css({"min-height": height});
+
+    function applyHeight() {
+        if (tmpImg.naturalWidth > 0) {
+            let height = target.outerWidth() * tmpImg.naturalHeight / tmpImg.naturalWidth;
+            target.attr('data-ttbm-resized', 'true');
+            target.css({"min-height": height});
+        }
         dLoaderRemove(target);
-    });
+    }
+
+    // If the browser already has the image in cache, resolve immediately (no network wait).
+    if (tmpImg.complete && tmpImg.naturalWidth > 0) {
+        applyHeight();
+        return;
+    }
+    jQuery(tmpImg).one('load error', applyHeight);
 }
 (function ($) {
     let bg_image_load = false;
     $(document).ready(function () {
         $('body').find('div.ttbm_style [data-bg-image]').each(function () {
-            dLoader($(this));
+            let target = $(this);
+            if (ttbm_should_skip_details_loader(target)) {
+                return;
+            }
+            let bg_url = ttbm_normalize_bg_url(target.data('bg-image'));
+            let currentBg = target.css('background-image') || '';
+            if (currentBg !== 'none' && bg_url && currentBg.indexOf(bg_url) !== -1) {
+                return;
+            }
+            dLoader(target);
         });
+        $('body').find('div.ttbm_style .superSlider .sliderAllItem').each(function () {
+            ttbm_slider_resize(jQuery(this));
+        });
+        ttbm_prepare_all_super_sliders('body');
         $(window).on('load', function () {
             load_initial();
+            ttbm_details_placeholder_remove();
         });
-        if (!bg_image_load) {
-            load_initial();
-            $(document).scroll(function () {
-                load_initial();
-            });
-        }
+        let loadInitialTimer = null;
+        $(document).on('scroll', function () {
+            if (loadInitialTimer) {
+                clearTimeout(loadInitialTimer);
+            }
+            loadInitialTimer = setTimeout(load_initial, 150);
+        });
+        load_initial();
+        setTimeout(ttbm_details_placeholder_remove, 4500);
     });
     $(document).on('click', 'div.ttbm_style [data-href]', function (e) {
         if ($(e.target).closest('.ttbm-gc-wishlist').length) return;
@@ -298,8 +565,37 @@ function ttbm_resize_bg_image_area(target, bg_url) {
             window.location.href = href;
         }
     });
-    $(window).on('load , resize', function () {
+    $(window).on('load', function () {
         $('body').find('div.ttbm_style [data-bg-image]:visible').each(function () {
+            let target = $(this);
+            if (target.closest('.sliderAllItem').length > 0) {
+                return;
+            }
+            let bg_url = ttbm_normalize_bg_url(target.data('bg-image'));
+            let currentBg = target.css('background-image') || '';
+            if (currentBg !== 'none' && bg_url && currentBg.indexOf(bg_url) !== -1) {
+                dLoaderRemove(target);
+                return;
+            }
+            if (target.outerHeight() === 0 && bg_url) {
+                ttbm_resize_bg_image_area(target, bg_url);
+            } else {
+                ttbm_apply_bg_image(target, bg_url);
+            }
+        });
+        jQuery('body').find('div.ttbm_style .sliderAllItem:visible').each(function () {
+            ttbm_slider_resize(jQuery(this));
+        });
+        ttbm_loadCartBgImage();
+        $('body').find('.ttbm_details_page [data-bg-image]').each(function () {
+            dLoaderRemove($(this));
+        });
+        ttbm_details_placeholder_remove();
+    });
+    $(window).on('resize', function () {
+        // On resize, recalculate only elements that were previously JS-sized (data-ttbm-resized).
+        // Elements with fixed CSS heights are intentionally excluded to avoid layout jank.
+        $('body').find('div.ttbm_style [data-bg-image][data-ttbm-resized]:visible').each(function () {
             let target = $(this);
             if (target.closest('.sliderAllItem').length === 0) {
                 let bg_url = target.data('bg-image');
@@ -310,21 +606,47 @@ function ttbm_resize_bg_image_area(target, bg_url) {
             }
         });
         jQuery('body').find('div.ttbm_style .sliderAllItem:visible').each(function () {
-            let target = jQuery(this);
-            ttbm_slider_resize(target)
+            ttbm_slider_resize(jQuery(this));
         });
-        // Load cart images
         ttbm_loadCartBgImage();
     });
     function load_initial() {
+        ttbm_loadBgImage();
+        jQuery('body').find('div.ttbm_style .sliderAllItem:visible').each(function () {
+            ttbm_slider_resize(jQuery(this));
+        });
         if (!bg_image_load) {
-            if (ttbm_loadBgImage()) {
-                bg_image_load = true;
-                placeholderLoaderRemove($('.ttbm_style.placeholderLoader'))
-            }
+            bg_image_load = true;
+            placeholderLoaderRemove($('.ttbm_style.placeholderLoader').not('.ttbm_details_page_loader'));
         }
-        // Always load cart images
+        if (typeof window.ttbmInitTopSearchSelects === 'function') {
+            window.ttbmInitTopSearchSelects();
+        }
         ttbm_loadCartBgImage();
+    }
+    function ttbm_details_placeholder_remove() {
+        let $loader = $('.ttbm_style.ttbm_details_page_loader');
+        if (!$loader.length) {
+            return;
+        }
+        if ($loader.data('ttbmDetailsPlaceholderRemoving')) {
+            return;
+        }
+        $loader.data('ttbmDetailsPlaceholderRemoving', true);
+
+        let finished = false;
+        function finish() {
+            if (finished) {
+                return;
+            }
+            finished = true;
+            placeholderLoaderRemove($loader);
+        }
+
+        // Wait for gallery + showcase thumbs to finish loading together, then
+        // drop the page skeleton so nothing looks broken/missing.
+        ttbm_prepare_all_super_sliders($loader).always(finish);
+        setTimeout(finish, 8000);
     }
     // Load cart images on document ready
     $(document).ready(function () {
@@ -516,6 +838,9 @@ function ttbm_all_content_change($this) {
     "use strict";
     $(document).on("click", "div.ttbm_style .decQty ,div.ttbm_style .incQty", function () {
         let current = $(this);
+        if (current.closest('.ttbm_smart_addon_qty').length) {
+            return;
+        }
         let target = current.closest('.qtyIncDec').find('input');
         let currentValue = parseInt(target.val());
         let value = current.hasClass('incQty') ? (currentValue + 1) : ((currentValue - 1) > 0 ? (currentValue - 1) : 0);
@@ -526,7 +851,7 @@ function ttbm_all_content_change($this) {
             value = min;
             target.parents('.qtyIncDec').find('.decQty').addClass('mpDisabled');
         }
-        if (value > max) {
+        if (!isNaN(max) && max > 0 && value > max) {
             value = max;
             target.parents('.qtyIncDec').find('.incQty').addClass('mpDisabled');
         }
@@ -685,10 +1010,71 @@ function ttbm_sticky_management() {
         let targetTab = target.children('[data-tabs-target-next]:nth-child(' + num_of_tab + ')').data('tabs-target-next');
         active_next_tab(parent, targetTab);
     });
+    function ttbm_activate_tab($tab, tabsTarget) {
+        let parent = $tab.closest('.ttbmTabs');
+        let tabLists = $tab.closest('.tabLists');
+        let tabsContent = parent.children('.tabsContent:first');
+        if (!tabsContent.length) {
+            tabsContent = parent.find('.tabsContent:first');
+        }
+        let $next = tabsContent.children('[data-tabs="' + tabsTarget + '"]');
+        if (!$next.length || ($tab.hasClass('active') && $next.hasClass('active'))) {
+            return;
+        }
+
+        let tabStorageKey = ttbm_get_tab_storage_key(parent);
+        try {
+            if (tabStorageKey) {
+                localStorage.setItem(tabStorageKey, tabsTarget);
+            }
+        } catch (e) {
+            // localStorage may be unavailable in some environments
+        }
+
+        if (parent.hasClass('leftTabs')) {
+            if (history.pushState) {
+                history.pushState(null, null, tabsTarget);
+            } else {
+                window.location.hash = tabsTarget;
+            }
+        }
+
+        tabLists.find('[data-tabs-target].active').removeClass('active');
+        $tab.addClass('active');
+
+        tabsContent.children('[data-tabs].active').removeClass('active');
+        $next.addClass('active');
+
+        const runPaneInit = function () {
+            const initialized = $next.data('ttbm-ui-initialized');
+            if (!initialized) {
+                ttbm_init_dynamic_ui($next);
+                $next.data('ttbm-ui-initialized', 1);
+            } else {
+                ttbm_init_dynamic_ui($next, { light: true });
+            }
+            ttbm_loadBgImage($next);
+            parent.height('auto');
+            jQuery(document).trigger('ttbm_tab_activated', [tabsTarget, $next, $tab]);
+        };
+
+        if (window.requestAnimationFrame) {
+            requestAnimationFrame(runPaneInit);
+        } else {
+            setTimeout(runPaneInit, 0);
+        }
+    }
     $(document).ready(function () {
         $('.ttbm_style .ttbmTabs').each(function () {
             let tabsParent = $(this);
             let tabLists = tabsParent.find('.tabLists:first');
+            if (!tabLists.find('[data-tabs-target]').length) {
+                return;
+            }
+            let tabsContent = tabsParent.children('.tabsContent:first');
+            if (!tabsContent.length) {
+                tabsContent = tabsParent.find('.tabsContent:first');
+            }
             let tabStorageKey = ttbm_get_tab_storage_key(tabsParent);
             let savedTab = '';
 
@@ -697,8 +1083,8 @@ function ttbm_sticky_management() {
                 if (tabStorageKey) {
                     savedTab = localStorage.getItem(tabStorageKey);
                 }
-                // Backward compatibility with previous single-key storage
-                if (!savedTab) {
+                // Backward compatibility with previous single-key storage (primary sidebar only)
+                if (!savedTab && tabsParent.hasClass('leftTabs')) {
                     let postId = ttbm_get_post_id_for_tabs();
                     if (postId && postId !== 'global') {
                         savedTab = localStorage.getItem('ttbm_active_tab_' + postId);
@@ -709,7 +1095,7 @@ function ttbm_sticky_management() {
             }
 
             // Check URL hash second, only if this tab group contains the hash target
-            if (!savedTab && window.location.hash && tabLists.find('[data-tabs-target="' + window.location.hash + '"]').length > 0) {
+            if (!savedTab && tabsParent.hasClass('leftTabs') && window.location.hash && tabLists.find('[data-tabs-target="' + window.location.hash + '"]').length > 0) {
                 savedTab = window.location.hash;
             }
 
@@ -728,7 +1114,20 @@ function ttbm_sticky_management() {
                 let activeTab = tabLists.find('[data-tabs-target].active');
                 targetTab = activeTab.length > 0 ? activeTab : tabLists.find('[data-tabs-target]').first();
             }
-            targetTab.trigger('click');
+
+            if (targetTab && targetTab.length) {
+                ttbm_activate_tab(targetTab, targetTab.data('tabs-target'));
+            } else if (!tabsContent.children('[data-tabs].active').length) {
+                let $firstPane = tabsContent.children('[data-tabs]').first();
+                let $firstTab = tabLists.find('[data-tabs-target]').first();
+                if ($firstPane.length && $firstTab.length) {
+                    tabsContent.children('[data-tabs]').removeClass('active');
+                    $firstPane.addClass('active');
+                    tabLists.find('[data-tabs-target]').removeClass('active');
+                    $firstTab.addClass('active');
+                    $firstPane.data('ttbm-ui-initialized', 1);
+                }
+            }
         });
         $('.ttbm_style .ttbmTabsNext').each(function () {
             let parent = $(this);
@@ -741,49 +1140,10 @@ function ttbm_sticky_management() {
         });
     });
     $(document).on('click', '.ttbm_style [data-tabs-target]', function () {
-        if (!$(this).hasClass('active')) {
-            let tabsTarget = $(this).data('tabs-target');
-            let parent = $(this).closest('.ttbmTabs');
-            parent.height(parent.height());
-            let tabLists = $(this).closest('.tabLists');
-            let tabsContent = parent.find('.tabsContent:first');
-
-            // Save active tab to localStorage per tab container
-            let tabStorageKey = ttbm_get_tab_storage_key(parent);
-            try {
-                if (tabStorageKey) {
-                    localStorage.setItem(tabStorageKey, tabsTarget);
-                }
-            } catch (e) {
-                // localStorage may be unavailable in some environments
-            }
-
-            // Update URL hash only for primary left sidebar tabs
-            if (parent.hasClass('leftTabs')) {
-                if (history.pushState) {
-                    history.pushState(null, null, tabsTarget);
-                } else {
-                    window.location.hash = tabsTarget;
-                }
-            }
-            
-            tabLists.find('[data-tabs-target].active').each(function () {
-                $(this).removeClass('active').promise().done(function () {
-                    ttbm_all_content_change($(this))
-                });
-            });
-            $(this).addClass('active').promise().done(function () {
-                ttbm_all_content_change($(this))
-            });
-            tabsContent.children('[data-tabs="' + tabsTarget + '"]').slideDown(350);
-            tabsContent.children('[data-tabs].active').slideUp(350).removeClass('active').promise().done(function () {
-                tabsContent.children('[data-tabs="' + tabsTarget + '"]').addClass('active').promise().done(function () {
-                    //dLoaderRemove(tabsContent);
-                    ttbm_loadBgImage();
-                    parent.height('auto');
-                });
-            });
+        if ($(this).hasClass('active')) {
+            return;
         }
+        ttbm_activate_tab($(this), $(this).data('tabs-target'));
     });
 }(jQuery));
 //======================================================================Collapse=================//
@@ -880,7 +1240,7 @@ function ttbm_sticky_management() {
         let separator = ',';
         parent.find(' input[type="checkbox"]').each(function () {
             if ($(this).is(":checked")) {
-                let currentValue = $(this).attr('data-checked');
+                let currentValue = $(this).attr('data-checked') || $(this).val();
                 value = value + (value ? separator : '') + currentValue;
             }
         }).promise().done(function () {
@@ -889,11 +1249,27 @@ function ttbm_sticky_management() {
     });
     // radio
     $(document).on('click', '.ttbm_style [data-radio]', function () {
-        let target = $(this).closest('label');
-        let value = $(this).attr('data-radio');
-        target.find('.customRadio').removeClass('active');
-        $(this).addClass('active');
-        target.find('input').val(value).trigger('change');
+        if ($(this).closest('.ttbm_select_time_area').length) {
+            return;
+        }
+        let $this = $(this);
+        let value = $this.attr('data-radio');
+        let target = $this.closest('label');
+        if (!target.length) {
+            target = $this.closest('.ttbm-time-slots__list, .time_select_box');
+        }
+        if (!target.length) {
+            target = $this.parent();
+        }
+        target.find('.customRadio[data-radio]').removeClass('active');
+        $this.addClass('active');
+        let input = target.find('[data-radio-value], [name="ttbm_select_time"]').first();
+        if (!input.length) {
+            input = target.find('input').first();
+        }
+        if (input.length) {
+            input.val(value).trigger('change');
+        }
     });
     $(document).on('click', '.ttbm_style .groupRadioBox [data-group-radio]', function () {
 
@@ -921,6 +1297,12 @@ function ttbm_sticky_management() {
                     parent.find('>input[type="hidden"]').val(value);
                 } else {
                     parent.find('input').val(value);
+                }
+                if ($this.hasClass('ttbm-date-type-card')) {
+                    parent.attr('data-active-type', value);
+                }
+                if (parent.hasClass('ttbm-radio-group')) {
+                    ttbm_load_date_picker(parent.closest('.ttbm_style'));
                 }
             });
         }
@@ -1085,49 +1467,83 @@ function ttbm_pagination_page_management(parent, pagination_page, total_item) {
 }(jQuery));
 //==============================================================Slider=================//
 function ttbm_slider_resize(target) {
+    target = target && target.jquery ? target : jQuery(target);
+    if (!target.length) {
+        return;
+    }
+    let $super = target.closest('.superSlider');
+    // Smart gallery (and similar) use a fixed CSS height — do not overwrite with
+    // natural image ratios (that stretches showcase slots and looks empty/broken).
+    let fixedHeightGallery = $super.closest('.ttbm_smart_gallery, .ttbm_hero').length > 0
+        || $super.hasClass('ttbm-featured-only');
+
     let all_height = [];
     let totalHeight = 0;
     let imgCount = 0;
     let main_div_width = target.innerWidth();
-    //console.log(main_div_width);
     let item_count = target.find('.sliderItem').length;
     target.find('[data-bg-image]').each(function () {
-        let width = jQuery(this).outerWidth();
-        let height = jQuery(this).outerHeight();
-        // if (jQuery(this).css('background-image') === 'none' || width === 0 || height === 0) {
-        let bg_url = jQuery(this).data('bg-image');
-        if (!bg_url || bg_url.width === 0 || bg_url.width === 'undefined') {
-            bg_url = ttbm_empty_image_url;
+        let $bgTarget = jQuery(this);
+        let bg_url = ttbm_normalize_bg_url($bgTarget.attr('data-bg-image') || $bgTarget.data('bg-image'));
+        let imgWidth = $bgTarget.data('width');
+        let imgHeight = $bgTarget.data('height');
+        if (imgHeight) {
+            all_height.push(imgHeight);
+            totalHeight = totalHeight + (imgHeight * main_div_width) / (imgWidth || 1);
         }
-        let imgWidth = jQuery(this).data('width');
-        let imgHeight = jQuery(this).data('height');
-        all_height.push(imgHeight);
-        totalHeight = totalHeight + (imgHeight * main_div_width) / imgWidth;
         imgCount++;
-        if (imgCount === item_count) {
-            let slider_height_type = target.closest('.superSlider').find('input[name="slider_height_type"]').val();
-            let height_content = totalHeight / imgCount;
-            if (slider_height_type === 'min') {
+        if (!fixedHeightGallery && imgCount === item_count) {
+            let slider_height_type = $super.find('input[name="slider_height_type"]').val();
+            let height_content = item_count > 0 ? totalHeight / imgCount : 0;
+            if (slider_height_type === 'min' && all_height.length) {
                 height_content = Math.min(...all_height);
                 target.find('.sliderItem').css({"min-height": height_content});
                 target.find('.sliderItem').css({"max-height": height_content});
-            } else if (slider_height_type === 'max') {
+            } else if (slider_height_type === 'max' && all_height.length) {
                 height_content = Math.max(...all_height);
                 target.find('.sliderItem').css({"min-height": height_content});
                 target.find('.sliderItem').css({"max-height": height_content});
-            } else {
+            } else if (height_content > 0) {
                 target.find('.sliderItem').css({"min-height": height_content});
                 target.find('.sliderItem').css({"max-height": height_content});
             }
-            target.css({"max-height": height_content});
-            target.siblings('.sliderShowcase').css({"max-height": height_content});
+            if (height_content > 0) {
+                target.css({"max-height": height_content});
+                target.siblings('.sliderShowcase').css({"max-height": height_content});
+            }
         }
-        //dLoaderRemove(jQuery(this));
-        jQuery(this).css('background-image', 'url("' + bg_url + '")').promise().done(function () {
-            dLoaderRemove(jQuery(this));
-        });
-        // }
+        if (bg_url) {
+            $bgTarget.css({
+                'background-image': 'url("' + bg_url + '")',
+                'background-size': 'cover',
+                'background-position': 'center',
+                'background-repeat': 'no-repeat'
+            });
+            dLoaderRemove($bgTarget);
+        }
     });
+
+    // Also warm/apply showcase thumbs (siblings of .sliderAllItem).
+    target.siblings('.sliderShowcase').find('[data-bg-image]').each(function () {
+        let $bgTarget = jQuery(this);
+        let bg_url = ttbm_normalize_bg_url($bgTarget.attr('data-bg-image') || $bgTarget.data('bg-image'));
+        if (!bg_url) {
+            return;
+        }
+        $bgTarget.css({
+            'background-image': 'url("' + bg_url + '")',
+            'background-size': 'cover',
+            'background-position': 'center',
+            'background-repeat': 'no-repeat'
+        });
+        dLoaderRemove($bgTarget);
+    });
+
+    if (fixedHeightGallery) {
+        target.css({"max-height": "", "min-height": ""});
+        target.find('.sliderItem').css({"max-height": "", "min-height": ""});
+        target.siblings('.sliderShowcase').css({"max-height": "", "min-height": ""});
+    }
 }
 (function ($) {
     "use strict";
@@ -1250,4 +1666,3 @@ if (searchInputIcon) {
         });
     });
 }
-

@@ -9,9 +9,9 @@
 	if ( $start_place && $tour_type == 'general' && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_start_location', 'on' ) != 'off' ) {
 ?>
 	
-<div class="item_icon" title="<?php esc_html_e( 'Start Location', 'tour-booking-manager' ); ?>">
+<div class="item_icon<?php echo esc_attr( TTBM_Function::hero_stat_item_class() ); ?>" title="<?php esc_html_e( 'Start Location', 'tour-booking-manager' ); ?>">
 	<i class="mi mi-marker"></i>
-	<?php echo esc_html( $start_place ); ?>
+	<span><?php echo esc_html( $start_place ); ?></span>
 </div>
 
 <?php

@@ -1,0 +1,1299 @@
+/* Smart theme — Instant Booking Summary sidebar */
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_booking_card {
+	background: #ffffff;
+	border: none;
+	border-radius: 14px;
+	box-shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
+	padding: 22px 20px;
+}
+
+/* Reset sidebar chrome once skeleton loader is removed */
+#ttbm_content .ttbm_smart_theme .ttbm_style:not(.placeholderLoader) .ttbm_content__right {
+	border: none;
+	background: transparent;
+	padding: 0;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-sidebar-booking.ttbm_registration_area {
+	border: none;
+	background: transparent;
+	box-shadow: none;
+}
+
+/* Booking block may be moved outside the sidebar on mobile — keep it hidden during page skeleton */
+.placeholderLoader.ttbm_details_page_loader #ttbm_content .ttbm_smart_theme .ttbm-sidebar-booking.ttbm_registration_area {
+	display: none !important;
+	border: none !important;
+	background: transparent !important;
+	box-shadow: none !important;
+}
+
+/* Skeleton while .placeholderLoader is active */
+.placeholderLoader.ttbm_details_page_loader #ttbm_content .ttbm_smart_theme .ttbm_content__right.placeholder_area {
+	position: relative;
+	overflow: hidden;
+	height: 256px;
+	min-height: 0;
+	max-height: 256px;
+	padding: 20px;
+	border-radius: 16px;
+	background-color: var(--ttbm-d-skeleton-card, #fff) !important;
+	border: 1px solid #e2e8f0;
+	box-shadow: 0 8px 28px rgba(17, 24, 39, 0.06);
+	background-image:
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea));
+	background-size: 68% 18px, 100% 14px, 100% 42px, 100% 42px, 100% 48px;
+	background-repeat: no-repeat;
+	background-position: 20px 20px, 20px 48px, 20px 76px, 20px 128px, 20px 188px;
+}
+
+@media (max-width: 959px) {
+	.placeholderLoader.ttbm_details_page_loader #ttbm_content .ttbm_smart_theme .ttbm_content__right.placeholder_area {
+		height: 256px;
+		min-height: 0;
+		max-height: 256px;
+	}
+}
+
+/* Smart template — section-wise skeleton loaders */
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_description_area.placeholder_area {
+	margin-top: 0;
+}
+
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_particular_area.placeholder_area {
+	position: relative;
+	overflow: hidden;
+	min-height: 200px;
+	padding: 20px;
+	border-radius: 16px;
+	background-color: var(--ttbm-d-skeleton-card, #fff) !important;
+	border: 1px solid #e2e8f0;
+	background-image:
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea));
+	background-size: 42% 18px, 100% 44px, 100% 44px, 38% 40px;
+	background-repeat: no-repeat;
+	background-position: 20px 20px, 20px 52px, 20px 104px, 20px 160px;
+}
+
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_smart_inclusions_area.placeholder_area {
+	position: relative;
+	overflow: hidden;
+	min-height: 280px;
+	padding: 8px 0;
+	background-color: transparent !important;
+	background-image:
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea)),
+		linear-gradient(var(--ttbm-d-skeleton-bar, #dce1ea), var(--ttbm-d-skeleton-bar, #dce1ea));
+	background-size: 38% 20px, 100% 12px, 72% 12px, 38% 20px, 100% 12px, 40% 20px, calc(33.33% - 10px) 34px, calc(33.33% - 10px) 34px, calc(33.33% - 10px) 34px;
+	background-repeat: no-repeat;
+	background-position: 0 0, 0 30px, 0 50px, 0 88px, 0 118px, 0 168px, 0 202px, 0 202px, calc(33.33% + 5px) 202px, calc(66.66% + 10px) 202px;
+}
+
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_hiphop_area.placeholder_area,
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_day_wise_area.placeholder_area,
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_faq_area.placeholder_area,
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_review_area.placeholder_area,
+.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_registration_before_area.placeholder_area {
+	margin-top: 0;
+}
+
+@media (max-width: 959px) {
+	.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_smart_inclusions_area.placeholder_area {
+		background-size: 50% 20px, 100% 12px, 72% 12px, 50% 20px, 100% 12px, 50% 20px, calc(50% - 8px) 32px, calc(50% - 8px) 32px;
+		background-position: 0 0, 0 30px, 0 50px, 0 88px, 0 118px, 0 168px, 0 202px, calc(50% + 8px) 202px;
+		min-height: 250px;
+	}
+
+	.placeholderLoader.ttbm_details_page_loader .ttbm_smart_theme .ttbm_particular_area.placeholder_area {
+		min-height: 180px;
+		background-size: 55% 18px, 100% 40px, 100% 40px, 50% 36px;
+		background-position: 16px 16px, 16px 46px, 16px 94px, 16px 144px;
+		padding: 16px;
+	}
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_booking_badges {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 14px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_booking_badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.2;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_booking_badge.is-available {
+	background: #e8f8ef;
+	color: #15803d;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_booking_badge__dot {
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: #22c55e;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_booking_badge.is-bestseller {
+	background: #fde8ec;
+	color: #be123c;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_booking_title {
+	margin: 0 0 6px;
+	font-size: 22px;
+	font-weight: 700;
+	line-height: 1.25;
+	color: #0f172a;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_booking_subtitle {
+	margin: 0 0 18px;
+	font-size: 13px;
+	line-height: 1.5;
+	color: #64748b;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_date_time_select {
+	margin-bottom: 0;
+}
+
+/* Select Time — header + pill slot buttons */
+#ttbm_content .ttbm_smart_theme .ttbm_select_time_area {
+	margin-top: 16px;
+	width: 100%;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slots {
+	width: 100%;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slots__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 12px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slots__title {
+	font-size: 13px;
+	font-weight: 600;
+	color: #334155;
+	line-height: 1.3;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slots__count {
+	display: inline-flex;
+	align-items: center;
+	padding: 4px 10px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.3;
+	color: #0369a1;
+	background: #e0f2fe;
+	border-radius: 999px;
+	white-space: nowrap;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slots__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: center;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slot.customRadio.button_type {
+	margin: 0;
+	min-width: 0;
+	padding: 10px 15px;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.2;
+	text-align: center;
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	color: #475569;
+	background: #fff;
+	cursor: pointer;
+	transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slot.customRadio.button_type:hover:not(.active):not(.mage_disabled):not(.is-disabled) {
+	border-color: #cbd5e1;
+	background: #f8fafc;
+	color: #334155;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slot.customRadio.button_type.active {
+	border-color: #0b74de;
+	background: #0b74de;
+	color: #fff;
+	box-shadow: 0 4px 12px rgba(11, 116, 222, 0.25);
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slot.customRadio.button_type.mage_disabled,
+#ttbm_content .ttbm_smart_theme .ttbm-time-slot.customRadio.button_type.is-disabled {
+	border-color: #e2e8f0;
+	background: #f1f5f9;
+	color: #94a3b8;
+	cursor: not-allowed;
+	pointer-events: none;
+	opacity: 1;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-time-slot.customRadio.button_type::before,
+#ttbm_content .ttbm_smart_theme .ttbm-time-slot.customRadio.button_type::after {
+	display: none;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_date_field {
+	display: block;
+	width: 100%;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_date_label {
+	display: block;
+	margin-bottom: 8px;
+	font-size: 13px;
+	font-weight: 600;
+	color: #334155;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_date_field .date-picker-icon {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	width: 100%;
+	padding: 12px 14px;
+	border: 1px solid #dbe3ee;
+	border-radius: 10px;
+	background: #f8fafc;
+	position: relative;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_date_field .date-picker-icon i {
+	position: static;
+	top: auto;
+	left: auto;
+	flex-shrink: 0;
+	line-height: 1;
+	color: #0b74de;
+	font-size: 16px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_date_field .formControl,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_date_field .date-picker-icon #ttbm_select_date.formControl,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_date_field .date-picker-icon select.formControl {
+	flex: 1;
+	min-width: 0;
+	width: auto;
+	border: 0;
+	background: transparent;
+	padding: 0;
+	margin: 0;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 1.4;
+	color: #0f172a;
+	text-align: left;
+	box-shadow: none;
+}
+
+/* Smart theme date picker — matches sidebar booking card (blue accent, clean card) */
+body:has(.ttbm_smart_theme) #ui-datepicker-div.ui-datepicker {
+	width: 304px;
+	padding: 14px;
+	margin-top: 6px;
+	border: 1px solid #e6e9f0;
+	border-radius: 16px;
+	background: #fff;
+	box-shadow: 0 20px 48px rgba(17, 24, 39, 0.2);
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+	font-size: 13px;
+	z-index: 1000000 !important;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-header {
+	background: transparent;
+	background-image: none;
+	border: 0;
+	border-bottom: 1px solid #eef1f6;
+	border-radius: 0;
+	padding: 2px 0 12px;
+	margin-bottom: 6px;
+	position: relative;
+	display: block;
+	color: #1d2430;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-title {
+	background: transparent;
+	background-image: none;
+	color: #1d2430;
+	font-size: 15px;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+	line-height: 32px;
+	margin: 0;
+	display: block;
+	text-align: center;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-title select,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-title select.ui-datepicker-month,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-title select.ui-datepicker-year {
+	min-width: auto;
+	height: auto;
+	font-size: 13px;
+	font-weight: 600;
+	color: #1d2430;
+	padding: 4px 8px;
+	margin: 0 3px;
+	border: 1px solid #e2e6ee;
+	border-radius: 8px;
+	background: #fff;
+	text-align: left;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-prev,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-next {
+	top: 0;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background: #f1f3f8;
+	border: 0;
+	box-shadow: none;
+	transition: background 0.2s ease;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-prev {
+	left: 0;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-next {
+	right: 0;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-prev:hover,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-prev:focus,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-next:hover,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-next:focus {
+	background: #0b74de;
+	border-color: transparent;
+	box-shadow: none;
+	outline: none;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-header .ui-state-hover {
+	background-color: #0b74de;
+	background-image: none;
+	border-color: transparent;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-header .ui-icon,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-prev span,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-next span {
+	display: none;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-prev::before,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-next::before {
+	display: none;
+	content: none;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-prev::after,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-next::after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	line-height: 32px;
+	text-align: center;
+	font-size: 17px;
+	color: #3a4250;
+	font-family: Arial, sans-serif;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-prev::after {
+	content: "\2039";
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-next::after {
+	content: "\203A";
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-prev:hover::after,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-next:hover::after {
+	color: #fff;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div table.ui-datepicker-calendar {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 0;
+	font-size: 13px;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div table.ui-datepicker-calendar th {
+	padding: 8px 0;
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	color: #98a0ad;
+	background: transparent;
+	border: 0;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div.ui-datepicker td {
+	background-color: transparent;
+	border: 0;
+	padding: 2px;
+	text-align: center;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-calendar td a,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-calendar td span,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-state-default {
+	display: block;
+	width: 34px;
+	height: 34px;
+	line-height: 34px;
+	margin: 0 auto;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: transparent;
+	background-image: none;
+	color: #3a4250;
+	font-weight: 600;
+	text-align: center;
+	text-decoration: none;
+	transition: background 0.15s ease, color 0.15s ease;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default,
+body:has(.ttbm_smart_theme) #ui-datepicker-div a.ui-state-default {
+	background: rgba(11, 116, 222, 0.1);
+	color: #0b74de;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default:hover,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-hover,
+body:has(.ttbm_smart_theme) #ui-datepicker-div a.ui-state-default:hover {
+	background: #0b74de;
+	color: #fff;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-today a {
+	box-shadow: inset 0 0 0 2px #0b74de;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-active,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-highlight,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-state-active {
+	background: #0b74de;
+	color: #fff;
+	box-shadow: 0 4px 10px rgba(11, 116, 222, 0.4);
+	background-image: none;
+}
+
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-unselectable span,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-calendar td.ui-state-disabled span,
+body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-calendar td.ttbm-date-unavailable span,
+body:has(.ttbm_smart_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-unselectable.ui-state-disabled {
+	color: #c4c9d4;
+	background: transparent;
+	border: 0;
+	text-decoration: line-through;
+	opacity: 0.65;
+	cursor: not-allowed;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_registration_panel {
+	margin-top: 18px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_tickets_placeholder {
+	padding: 18px 14px;
+	border: 1px dashed #cbd5e1;
+	border-radius: 10px;
+	background: #f8fafc;
+	text-align: center;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_tickets_placeholder p {
+	margin: 0;
+	font-size: 13px;
+	color: #64748b;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_booking_panel:empty {
+	display: none;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_list {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card {
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	background: #f8fafc;
+	overflow: hidden;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card__main {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 14px;
+	padding: 14px 14px 12px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card__name {
+	margin: 0 0 4px;
+	font-size: 16px;
+	font-weight: 700;
+	color: #0f172a;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card__price_row {
+	display: flex;
+	align-items: baseline;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card__price,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card__price .woocommerce-Price-amount {
+	font-size: 18px;
+	font-weight: 700;
+	color: #0b74de;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card__per {
+	font-size: 13px;
+	color: #64748b;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card__meta {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 4px;
+	font-size: 12px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card__badge {
+	padding: 2px 8px;
+	border-radius: 999px;
+	background: #e0f2fe;
+	color: #0369a1;
+	font-weight: 600;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card__desc {
+	margin-top: 6px;
+	font-size: 12px;
+	color: #64748b;
+	line-height: 1.45;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card__qty .qtyIncDec {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card__qty .qtyIncDec label {
+	margin: 0;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card__qty .qtyIncDec .formControl {
+	width: 28px;
+	min-width: 28px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	text-align: center;
+	font-size: 15px;
+	font-weight: 700;
+	color: #0f172a;
+	box-shadow: none;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card__qty .qtyIncDec .decQty,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card__qty .qtyIncDec .incQty {
+	width: 34px;
+	height: 34px;
+	min-width: 34px;
+	border-radius: 50%;
+	border: 1px solid #cbd5e1;
+	background: #ffffff;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card.has-qty .qtyIncDec .decQty,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card.has-qty .qtyIncDec .incQty {
+	border-color: #0b74de;
+	color: #0b74de;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card__qty .qtyIncDec .decQty.mage_disabled,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card__qty .qtyIncDec .incQty.mage_disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card__sold-out {
+	font-size: 13px;
+	font-weight: 600;
+	color: #dc2626;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card .ttbm_hidden_inputs {
+	display: none;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card .ttbm_attendee_form_row {
+	display: none;
+	padding: 0 14px 14px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card.has-qty .ttbm_attendee_form_row {
+	display: block;
+	border-top: 1px solid #efefef;
+	padding-top: 10px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_ticket_card .ttbm-attendee-form {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm-attendee-form__title,
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart h3.ttbm-attendee-form__title {
+	margin: 0 0 14px;
+	padding: 0;
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #111827;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm_guest_fields_grid {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	grid-template-columns: none;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm_form_item {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	width: 100%;
+	max-width: 100%;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm-field-label,
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm-field-label.max_200 {
+	display: block;
+	margin: 0 0 8px;
+	padding: 0;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1.35;
+	letter-spacing: normal;
+	text-transform: none;
+	color: #6b7280;
+	max-width: none;
+	white-space: normal;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm-field-input-wrap {
+	display: block;
+	width: 100%;
+	position: static;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm-field-input-wrap input.formControl,
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm-field-input-wrap select.formControl,
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm-field-input-wrap textarea.formControl {
+	width: 100%;
+	min-height: 46px;
+	padding: 12px 14px;
+	border: 1px solid #e8e8e9;
+	border-radius: 10px;
+	background: #f0f2f5;
+	font-size: 14px;
+	line-height: 1.4;
+	color: #111827;
+	box-shadow: none;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm-field-input-wrap input.formControl:focus,
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm-field-input-wrap select.formControl:focus,
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm-field-input-wrap textarea.formControl:focus {
+	outline: none;
+	background: #e9edf2;
+	box-shadow: none;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm-field-input-wrap input::placeholder,
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm-field-input-wrap textarea::placeholder {
+	color: #9ca3af;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm-field-icon,
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm-phone-prefix,
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm-field-hint {
+	display: none !important;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm-field--email,
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm-field--full,
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .groupCheckBox,
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .groupRadioBox,
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart .ttbm_form_header {
+	grid-column: auto;
+	width: 100%;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-attendee-form--smart::after {
+	display: none;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_area {
+	margin-top: 20px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_title {
+	margin: 0 0 12px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #94a3b8;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_card {
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	background: #ffffff;
+	overflow: hidden;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 12px 14px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_label {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex: 1;
+	min-width: 0;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_label.is-disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_check {
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_checkmark {
+	width: 18px;
+	height: 18px;
+	border: 2px solid #cbd5e1;
+	border-radius: 4px;
+	flex-shrink: 0;
+	position: relative;
+	background: #fff;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_check:checked + .ttbm_smart_addon_checkmark {
+	background: #0b74de;
+	border-color: #0b74de;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_check:checked + .ttbm_smart_addon_checkmark::after {
+	content: '';
+	position: absolute;
+	left: 5px;
+	top: 1px;
+	width: 5px;
+	height: 10px;
+	border: solid #fff;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_name {
+	flex: 1;
+	min-width: 0;
+	font-size: 14px;
+	font-weight: 600;
+	color: #0f172a;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_end {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 12px;
+	margin-left: auto;
+	flex-shrink: 0;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_price {
+	font-size: 14px;
+	font-weight: 700;
+	color: #0b74de;
+	white-space: nowrap;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_qty {
+	display: none;
+	align-items: center;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_card.is-selected .ttbm_smart_addon_qty {
+	display: flex;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_qty .qtyIncDec {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_qty .qtyIncDec label {
+	margin: 0;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_qty .qtyIncDec .formControl,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_qty .qtyIncDec select.formControl {
+	width: 28px;
+	min-width: 28px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	text-align: center;
+	font-size: 14px;
+	font-weight: 700;
+	color: #0f172a;
+	box-shadow: none;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_qty--dropdown select.formControl {
+	width: auto;
+	min-width: 52px;
+	padding: 4px 8px;
+	border: 1px solid #dbe3ee;
+	border-radius: 8px;
+	background: #fff;
+	text-align: center;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_qty .qtyIncDec .decQty,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_qty .qtyIncDec .incQty {
+	width: 28px;
+	height: 28px;
+	min-width: 28px;
+	border-radius: 50%;
+	border: 1px solid #cbd5e1;
+	background: #ffffff;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_card.is-selected .ttbm_smart_addon_qty .qtyIncDec .decQty,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_card.is-selected .ttbm_smart_addon_qty .qtyIncDec .incQty {
+	border-color: #0b74de;
+	color: #0b74de;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_status {
+	padding: 0 14px 12px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_sold_out {
+	font-size: 12px;
+	font-weight: 600;
+	color: #dc2626;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_addon_card .ttbm_hidden_inputs {
+	display: none;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_book_now_area {
+	margin-top: 20px;
+	padding-top: 4px;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 14px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_order_summary {
+	display: none;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_book_trip_btn {
+	width: 100%;
+	padding: 14px 18px;
+	border: 0;
+	border-radius: 10px;
+	background: #0b74de;
+	color: #ffffff;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.2;
+	cursor: pointer;
+	transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_book_trip_btn:hover {
+	background: #0960b8;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_book_trip_btn.mpDisabled,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_book_trip_btn:disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
+}
+
+#ttbm_content .ttbm_smart_theme div.ttbm_booking_panel .ttbm_book_now_area {
+	background-color: transparent;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm-sidebar-booking {
+	box-shadow: none;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_trust_signals {
+	list-style: none;
+	margin: 20px 0 0 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	column-gap: 20px;
+	row-gap: 14px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_trust_item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	min-width: 0;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_trust_text {
+	font-size: 13px;
+	line-height: 1.35;
+	font-weight: 500;
+	color: #6b7280;
+	white-space: nowrap;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_trust_icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 16px;
+	color: #6b7280;
+	font-size: 15px;
+	line-height: 1;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_select_time_area {
+	margin-top: 12px;
+	padding-top: 4px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_smart_inline_booking .ttbm_ticket_list_title,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_inline_booking .mp_tour_ticket_type,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_inline_booking .ttbm-registration-info {
+	display: none !important;
+}
+
+/* hero stats — card grid (matches default theme) */
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats {
+	padding: 0;
+	margin: 0px 0 22px;
+	background: transparent;
+	border: none;
+	border-radius: 0;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats_grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+	gap: 10px;
+	padding: 16px;
+	background: linear-gradient(145deg, #f8fafc 0%, #f1f5f9 100%);
+	border: 1px solid var(--ttbm_d_border, #e2e8f0);
+	border-radius: 16px;
+	box-shadow: 0 6px 24px rgba(15, 23, 42, 0.06);
+}
+
+@media (min-width: 1100px) {
+	#ttbm_content .ttbm_smart_theme .ttbm_hero_stats_grid {
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+	}
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_section {
+	display: contents;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_icon {
+	display: grid;
+	grid-template-columns: 40px minmax(0, 1fr);
+	grid-template-rows: auto auto;
+	column-gap: 12px;
+	row-gap: 3px;
+	align-items: start;
+	margin: 0;
+	padding: 12px 14px;
+	min-height: 64px;
+	max-width: none;
+	background: #fff;
+	border: 1px solid #e8edf5;
+	border-radius: 12px;
+	box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+	color: var(--ttbm_d_heading, #0f172a);
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1.35;
+	text-align: left;
+	white-space: normal;
+	position: relative;
+	overflow: hidden;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_icon::after {
+	display: none !important;
+	content: none !important;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_icon:hover {
+	border-color: rgba(var(--color_theme_rgb, 90, 86, 224), 0.28);
+	box-shadow: 0 6px 18px rgba(var(--color_theme_rgb, 90, 86, 224), 0.1);
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_icon::before {
+	content: attr(title);
+	grid-column: 2;
+	grid-row: 1;
+	align-self: end;
+	text-align: left;
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.07em;
+	text-transform: uppercase;
+	color: #94a3b8;
+	line-height: 1.2;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_icon i {
+	grid-column: 1;
+	grid-row: 1 / -1;
+	align-self: center;
+	justify-self: start;
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	margin: 0;
+	font-size: 18px;
+	color: var(--color_theme, #5a56e0);
+	background: linear-gradient(135deg, rgba(var(--color_theme_rgb, 90, 86, 224), 0.14) 0%, rgba(var(--color_theme_rgb, 90, 86, 224), 0.05) 100%);
+	border: none;
+	border-radius: 10px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_icon > span,
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_icon > .woocommerce-Price-amount,
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_icon > .ttbm_start_price_display {
+	grid-column: 2;
+	grid-row: 2;
+	align-self: start;
+	justify-self: start;
+	text-align: left;
+	color: var(--ttbm_d_heading, #0f172a);
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1.35;
+	min-width: 0;
+	word-break: break-word;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_icon > .ttbm_start_price_display {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 4px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_icon .ttbm_regular_price.strikeLine .woocommerce-Price-amount {
+	font-size: 11px;
+	font-weight: 600;
+	color: #94a3b8;
+	text-decoration: line-through;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_icon.ttbm_hero_loc {
+	background: #fff;
+	border-color: #e8edf5;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_icon.ttbm_available_seat_area .ttbm_available_seat {
+	color: var(--color_theme, #5a56e0);
+	font-weight: 800;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_icon:has(.mi-coins) {
+	display: none;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats_grid--collapsed .item_icon.ttbm_hero_stat_item--extra {
+	display: none;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats_more {
+	display: none;
+	grid-column: 1 / -1;
+	justify-content: flex-end;
+	align-items: center;
+	padding: 2px 2px 0;
+	margin-top: 2px;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats_more.is-visible {
+	display: flex;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats_load_more {
+	padding: 0;
+	border: none;
+	background: none;
+	color: var(--color_theme, #5a56e0);
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.4;
+	cursor: pointer;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+	transition: color 0.2s ease;
+}
+
+#ttbm_content .ttbm_smart_theme .ttbm_hero_stats_load_more:hover {
+	color: #4338ca;
+}
+
+@media (max-width: 768px) {
+	#ttbm_content .ttbm_smart_theme .ttbm_hero_stats {
+		margin: 14px 0 18px;
+	}
+
+	#ttbm_content .ttbm_smart_theme .ttbm_hero_stats_grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 8px;
+		padding: 12px;
+	}
+
+	#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_icon {
+		min-height: 58px;
+		padding: 10px 12px;
+		font-size: 12px;
+	}
+
+	#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_icon i {
+		width: 36px;
+		height: 36px;
+		font-size: 16px;
+	}
+
+	#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_icon > span,
+	#ttbm_content .ttbm_smart_theme .ttbm_hero_stats .item_icon > .woocommerce-Price-amount {
+		font-size: 12px;
+	}
+}
+
+@media (max-width: 959px) {
+	#ttbm_content .ttbm_smart_theme .ttbm_content__right {
+		position: static;
+		width: 100%;
+	}
+
+	#ttbm_content .ttbm_smart_theme .ttbm-sidebar-booking.ttbm_registration_area {
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+}

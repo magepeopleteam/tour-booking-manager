@@ -397,6 +397,56 @@
 	/*************************/
 	.ttbm_style [class*="dButton"].mpActive { background-color: var(--color_theme); color: var(--color_theme_alter); }
 }
+/* ── Confirm-booking CTA (Book Now / Book This Trip / login-gate submit) ──
+   Same --color_theme / --button_shadows tokens every other themed button
+   already reads from Style Settings — no new hardcoded brand color. */
+.ttbm_style .ttbm-confirm-btn {
+	position: relative;
+	width: 100%;
+	border-radius: var(--dbr_d);
+	border: none;
+	box-shadow: var(--button_shadows);
+	transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+}
+.ttbm_style .ttbm-confirm-btn:hover {
+	box-shadow: 0 10px 18px rgb(51 65 80 / 12%), 0 18px 50px rgb(51 65 80 / 16%);
+	transform: translateY(-1px);
+}
+.ttbm_style .ttbm-confirm-btn:active {
+	transform: translateY(0);
+	box-shadow: var(--button_shadows);
+}
+.ttbm_style .ttbm-confirm-btn:focus-visible {
+	outline: 2px solid var(--color_theme);
+	outline-offset: 2px;
+}
+.ttbm_style .ttbm-confirm-btn:disabled,
+.ttbm_style .ttbm-confirm-btn.is-loading {
+	cursor: default;
+	pointer-events: none;
+}
+.ttbm_style .ttbm-confirm-btn.is-loading {
+	color: transparent !important;
+}
+.ttbm_style .ttbm-confirm-btn.is-loading span {
+	visibility: hidden;
+}
+.ttbm_style .ttbm-confirm-btn.is-loading::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 18px;
+	height: 18px;
+	margin: -9px 0 0 -9px;
+	border: 2px solid rgba(255, 255, 255, .45);
+	border-top-color: var(--color_button, #fff);
+	border-radius: 50%;
+	animation: ttbm-confirm-btn-spin .7s linear infinite;
+}
+@keyframes ttbm-confirm-btn-spin {
+	to { transform: rotate(360deg); }
+}
 /******************************************************************** Helper Section************************************************/
 @media only screen and (min-width: 10px) {
 	/********Helper Class***********/
@@ -675,6 +725,58 @@
 	.ttbm_style div.superSlider .sliderMoreItem { display: -webkit-flex; display: flex; -webkit-justify-content: center; justify-content: center; -webkit-align-items: center; align-items: center; }
 	/***************************/
 	.ttbm_style div.superSlider { overflow: hidden; display: -webkit-flex; display: flex; background-color: #FFF; position: relative; }
+	/* SuperSlider: keep main + showcase images hidden until all are preloaded
+	   together, so thumbs never flash empty / broken one-by-one. */
+	.ttbm_style .superSlider.ttbm-awaiting-images {
+		position: relative;
+	}
+	.ttbm_style .superSlider.ttbm-awaiting-images .sliderAllItem,
+	.ttbm_style .superSlider.ttbm-awaiting-images .sliderShowcase {
+		opacity: 0 !important;
+	}
+	.ttbm_style .superSlider.ttbm-awaiting-images .sliderAllItem [data-bg-image],
+	.ttbm_style .superSlider.ttbm-awaiting-images .sliderShowcase [data-bg-image] {
+		opacity: 0 !important;
+		background-image: none !important;
+	}
+	.ttbm_style .superSlider.ttbm-awaiting-images::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: 6;
+		border-radius: inherit;
+		background:
+			linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 50%, rgba(255,255,255,0) 100%),
+			#e8edf2;
+		background-size: 60% 100%, 100% 100%;
+		background-repeat: no-repeat;
+		animation: ttbmSliderAwaitShimmer 1.2s ease-in-out infinite;
+		pointer-events: none;
+	}
+	@-webkit-keyframes ttbmSliderAwaitShimmer {
+		0% { background-position: -60% 0, 0 0; }
+		100% { background-position: 160% 0, 0 0; }
+	}
+	@keyframes ttbmSliderAwaitShimmer {
+		0% { background-position: -60% 0, 0 0; }
+		100% { background-position: 160% 0, 0 0; }
+	}
+	.ttbm_style .superSlider.is-images-ready .sliderAllItem,
+	.ttbm_style .superSlider.is-images-ready .sliderShowcase {
+		opacity: 1 !important;
+		-webkit-transition: opacity .35s ease;
+		transition: opacity .35s ease;
+	}
+	.ttbm_style .superSlider.is-images-ready .sliderAllItem [data-bg-image],
+	.ttbm_style .superSlider.is-images-ready .sliderShowcase [data-bg-image] {
+		opacity: 1 !important;
+		-webkit-transition: opacity .35s ease;
+		transition: opacity .35s ease;
+	}
+	.ttbm_style .superSlider.ttbm-awaiting-images .sliderShowcaseItem,
+	.ttbm_style .superSlider.ttbm-awaiting-images .sliderItem {
+		background-color: #e8edf2;
+	}
 	.ttbm_style div.superSlider .area_column { -webkit-flex-direction: column; flex-direction: column; }
 	.ttbm_style div.superSlider .sliderAllItem { width: 100%; position: relative; overflow: hidden; }
 	.ttbm_style div.superSlider .sliderItem img { width: 100%; max-height: 100%; }
@@ -765,7 +867,7 @@
 	}
 	/**************Default************************/
 	.ttbm_style .dLayout,
-	.ttbm_style [class*="_dLayout"] { padding: var(--ttbm_mp); background-color: var(--color_white); border: 1px solid var(--color_border); margin-top: -1px; border-radius: 0; }
+	.ttbm_style [class*="_dLayout"] { padding: var(--ttbm_mp); background-color: var(--color_white); border: 1px solid var(--color_border); margin-top: -1px; border-radius: 10px; }
 	.ttbm_style .dLayout:last-child,
 	.ttbm_style [class*="_dLayout"]:last-child { border-bottom: 1px solid var(--color_border); }
 	.ttbm_style .dLayout_xs,
@@ -933,7 +1035,7 @@
 	.ttbm_style input:not([type=submit]),
 	.ttbm_style optgroup,
 	.ttbm_style select,
-	.ttbm_style textarea { line-height: initial; margin: 0; max-width: inherit; border: 1px solid var(--color_border); color: var(--d_color); background-color: #FFF; padding: 10px 10px; font-weight: normal; }
+	.ttbm_style textarea { line-height: initial; margin: 0; max-width: inherit; border: 1px solid var(--color_border); color: var(--d_color); background-color: #FFF; padding: 10px 10px; font-weight: normal; border-radius: 8px; }
 	.ttbm_style .formControl:-webkit-autofill,
 	.ttbm_style .formControl:-webkit-autofill:hover,
 	.ttbm_style .formControl:-webkit-autofill:focus,
@@ -1316,8 +1418,29 @@
 	/************/
 	div.ttbm_style .formControl.xs {height: 30px;}
 	/*****Form Qty inc dec*******/
-	#ttbm_content .qtyIncDec { max-width: 110px; }
+	#ttbm_content .qtyIncDec { max-width: 120px; }
+	#ttbm_content .ttbm_booking_section .qtyIncDec { max-width: none; }
 	#ttbm_content .qtyIncDec .formControl {min-width: 50px;text-align: center;}
+	.ttbm_style .qtyIncDec .decQty > span,
+	.ttbm_style .qtyIncDec .incQty > span {
+		display: none !important;
+	}
+	.ttbm_style .qtyIncDec .decQty::before {
+		content: "";
+		display: block;
+		width: 10px;
+		height: 2px;
+		background: currentColor;
+		border-radius: 1px;
+	}
+	.ttbm_style .qtyIncDec .incQty::before {
+		content: "+";
+		display: block;
+		font-family: inherit;
+		font-size: 18px;
+		font-weight: 400;
+		line-height: 1;
+	}
 	/**********Responsive*********/
 	@media only screen and (max-width: 1250px) {
 		.ttbm_style .inputInline .inputList { max-width: calc(25% - 10px); }
@@ -1412,9 +1535,12 @@
 	.ttbm_style table[class*="_layoutFixed"] {
 		table-layout: fixed;
 	}
-	.ttbm_style table th,
-	.ttbm_style table td {
+	.ttbm_style table th {
 		border: 1px solid var(--color_border);
+		padding: var(--ttbm_mp_xs);
+	}
+	.ttbm_style table td {
+		border: none;
 		padding: var(--ttbm_mp_xs);
 	}
 	.ttbm_style table thead th {
@@ -1437,7 +1563,7 @@
 		line-height: 1.25;
 		color: var(--d_color);
 		vertical-align: middle;
-		border: 1px solid #8080804A !important;
+		border: none;
 	}
 	/**************/
 }
@@ -1457,7 +1583,8 @@
 	.topTabs [data-tabs-target]:last-child { border-right: none; }
 	.leftTabs [data-tabs-target] { position: relative; }
 	.ttbm_style .tabsContent { position: relative; overflow: auto; width: 100%; padding: 2% 5%; background-color: #FFF; }
-	.tabsContent [data-tabs] { display: none; }
+	.tabsContent > [data-tabs] { display: none; }
+	.tabsContent > [data-tabs].active { display: block; }
 	/**************/
 	.ttbmTabs.tabBorder { border: 1px solid var(--color_border); }
 	/******Tab next*********/
@@ -2416,7 +2543,7 @@
 	}
 	div.ttbm_style .bgLight,
 	div.ttbm_style [class*="_bgLight"] {
-		background-color: var(--color_light);
+		background-color: #EEF3FA;
 	}
 	div.ttbm_style .textLight_1,
 	div.ttbm_style [class*="_textLight_1"] {

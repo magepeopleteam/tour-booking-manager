@@ -22,12 +22,14 @@
 						$display_name = $term_name ? $term->name : '';
 						
 						$li_class = '';
+						$li_hidden = '';
 						if (!$list_view_task && $count >= 3) {
 							$li_class = 'ttbm-feature-hidden';
+							$li_hidden = ' hidden';
 							$hidden_count++;
 						}
 						?>
-                        <li class="<?php echo esc_attr($li_class); ?>" title="<?php echo esc_attr($term->name); ?>" data-placeholder>
+                        <li class="<?php echo esc_attr($li_class); ?>"<?php echo $li_hidden; ?> title="<?php echo esc_attr($term->name); ?>" data-placeholder>
                             <span class="circleIcon_xs <?php echo esc_attr($icon); ?>"></span>
 							<?php echo esc_html($display_name); ?>
                         </li>
@@ -36,9 +38,22 @@
 					}
 				}
 				if (!$list_view_task && $hidden_count > 0) {
+					$more_label = sprintf(
+						/* translators: %d: number of hidden tour features */
+						_n( 'Show %d more feature', 'Show %d more features', $hidden_count, 'tour-booking-manager' ),
+						$hidden_count
+					);
 					?>
                     <li class="ttbm-feature-view-more" data-placeholder>
-                        <a href="javascript:void(0);" class="ttbm-view-more-features-btn" style="text-decoration: none; color: inherit;">+<?php echo esc_html($hidden_count); ?></a>
+                        <span
+							class="ttbm-view-more-features-btn"
+							role="button"
+							tabindex="0"
+							aria-label="<?php echo esc_attr( $more_label ); ?>"
+							title="<?php echo esc_attr( $more_label ); ?>"
+						>
+							<span class="ttbm-feature-more-icon" aria-hidden="true">+<?php echo esc_html( $hidden_count ); ?></span>
+						</span>
                     </li>
 					<?php
 				}

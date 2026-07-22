@@ -13,6 +13,7 @@
 				add_action('add_ttbm_custom_slider', array($this, 'super_slider'), 10, 2);
 				add_action('add_ttbm_custom_slider_only', array($this, 'super_slider_only'));
 				add_action('add_ttbm_custom_slider_icon_indicator', array($this, 'icon_indicator'));
+				add_action('add_ttbm_featured_image_slider', array($this, 'featured_image_slider'), 10, 1);
 			}
 			public function super_slider($post_id = '', $meta_key = '') {
 				$type = TTBM_Global_Function::get_slider_settings('slider_type', 'slider');
@@ -36,6 +37,18 @@
                     </div>
 					<?php
 				}
+			}
+			public function featured_image_slider($post_id = '') {
+				$post_id = $post_id > 0 ? $post_id : get_the_id();
+				$thumb_id = get_post_thumbnail_id($post_id);
+				if (!$thumb_id) {
+					return;
+				}
+				?>
+				<div class="superSlider placeholder_area ttbm-featured-only">
+					<?php $this->slider_all_item(array($thumb_id)); ?>
+				</div>
+				<?php
 			}
 			public function slider($post_id, $image_ids) {
 				if (is_array($image_ids) && sizeof($image_ids) > 0) {
@@ -79,13 +92,25 @@
 			}
 			public function post_thumbnail($image_id = '') {
 				$thumbnail = TTBM_Global_Function::get_image_url('', $image_id);
-				if ($thumbnail) {
+				if ($thumbnail && $image_id) {
 					?>
-                    <div class="superSlider">
-                        <div data-bg-image="<?php echo esc_html($thumbnail); ?>"></div>
+                    <div class="superSlider placeholder_area">
+						<?php $this->slider_all_item(array($image_id)); ?>
                     </div>
 					<?php
 				}
+			}
+			private static function render_bg_layer($image_url, $width = 0, $height = 0) {
+				$image_url = esc_url($image_url);
+				if (!$image_url) {
+					return;
+				}
+				?>
+				<div data-bg-image="<?php echo esc_attr($image_url); ?>"
+					<?php if ($width) { ?>data-width="<?php echo esc_attr($width); ?>"<?php } ?>
+					<?php if ($height) { ?>data-height="<?php echo esc_attr($height); ?>"<?php } ?>
+					style="background-image:url('<?php echo esc_url($image_url); ?>');background-size:cover;background-position:center;background-repeat:no-repeat;width:100%;height:100%;"></div>
+				<?php
 			}
 			public function slider_all_item($image_ids, $popup_slider_icon = '') {
 				if (is_array($image_ids) && sizeof($image_ids) > 0) {
@@ -105,7 +130,7 @@
 								}
 								?>
                                 <div class="sliderItem" data-slide-index="<?php echo esc_html($count); ?>" data-target-popup="superSlider" data-placeholder>
-                                    <div data-bg-image="<?php echo esc_html($image_url); ?>" data-width="<?php echo esc_html($width); ?>" data-height="<?php echo esc_html($height); ?>"></div>
+									<?php self::render_bg_layer($image_url, $width, $height); ?>
                                 </div>
 								<?php
 								$count++;
@@ -117,6 +142,7 @@
 								$this->icon_indicator($popup_slider_icon);
 							}
 						?>
+						<?php do_action( 'ttbm_slider_all_item_overlay' ); ?>
                     </div>
 					<?php
 				}
@@ -146,14 +172,14 @@
 					if ($count < 4) {
 						?>
                         <div class="sliderShowcaseItem" data-slide-target="<?php echo esc_html($count); ?>" data-placeholder>
-                            <div data-bg-image="<?php echo esc_html($image_url); ?>"></div>
+							<?php self::render_bg_layer($image_url); ?>
                         </div>
 						<?php
 					}
 					if ($count == 4) {
 						?>
                         <div class="sliderShowcaseItem" data-target-popup="superSlider" data-placeholder>
-                            <div data-bg-image="<?php echo esc_html($image_url); ?>"></div>
+							<?php self::render_bg_layer($image_url); ?>
                             <div class="sliderMoreItem">
                                 <span class="fas fa-plus"></span>
 								<?php echo esc_html(sizeof($image_ids) - 4); ?>
@@ -172,7 +198,7 @@
 					if ($count > 1 && $count < 5) {
 						?>
                         <div class="sliderShowcaseItem" data-target-popup="superSlider" data-slide-index="<?php echo esc_html($count); ?>" data-placeholder>
-                            <div data-bg-image="<?php echo esc_html($image_url); ?>"></div>
+							<?php self::render_bg_layer($image_url); ?>
                         </div>
 						<?php
 					}
@@ -189,7 +215,7 @@
 								$image_url = TTBM_Global_Function::get_image_url('', $id, array(150, 100));
 								?>
                                 <div class="slideIndicatorItem" data-slide-target="<?php echo esc_html($count); ?>">
-                                    <div data-bg-image="<?php echo esc_html($image_url); ?>"></div>
+									<?php self::render_bg_layer($image_url); ?>
                                 </div>
 								<?php
 								$count++;

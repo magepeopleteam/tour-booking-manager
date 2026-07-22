@@ -10,9 +10,45 @@
 				add_action('admin_menu', array($this, 'global_settings_menu'));
 				add_filter('admin_body_class', [$this, 'add_admin_body_class']);
 				add_action('admin_init', array($this, 'admin_init'));
+				add_action('admin_enqueue_scripts', array($this, 'enqueue_assets'));
 				add_filter('ttbm_settings_sec_reg', array($this, 'global_sec_reg'), 90, 1);
 				add_action('wsa_form_bottom_ttbm_license_settings', [$this, 'license_settings'], 5);
 				add_action('ttbm_basic_license_list', [$this, 'licence_area']);
+			}
+			public function enqueue_assets($hook) {
+				if (strpos($hook, 'ttbm_settings_page') === false) {
+					return;
+				}
+				// filemtime(), not TTBM_PLUGIN_VERSION: this stylesheet (and the
+				// script below) change often during active development of this
+				// tab — a static version string means the browser keeps serving
+				// a stale cached copy across edits until the plugin version is
+				// bumped, matching the same fix already used for ttbm_details.css.
+				wp_enqueue_style('ttbm-global-settings', TTBM_PLUGIN_URL . '/assets/admin/ttbm-global-settings.css', [], filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-global-settings.css'));
+				// The Payments tab embeds each WooCommerce gateway's own native
+				// settings form (generate_settings_html()) inline. That markup is
+				// plain, unstyled HTML with no custom classes — it relies entirely
+				// on WooCommerce's own admin stylesheet to render checkboxes/selects/
+				// tooltips correctly. Without it, checkboxes fall back to raw browser/
+				// OS theme rendering (round in some environments, easily mistaken for
+				// a radio button).
+				if (TTBM_Global_Function::has_woocommerce()) {
+					wp_enqueue_style('woocommerce_admin_styles');
+					wp_enqueue_script('wc-enhanced-select');
+					wp_enqueue_script('wc-jquery-tiptip');
+				}
+				wp_enqueue_script('ttbm-payment-settings', TTBM_PLUGIN_URL . '/assets/admin/ttbm-payment-settings.js', array('jquery', 'ttbm_hotel_booking', 'ttbm-admin-toast'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-payment-settings.js'), true);
+				wp_localize_script('ttbm-payment-settings', 'ttbmPaymentSettings', array(
+					'enabled_label' => esc_html__('Enabled', 'tour-booking-manager'),
+					'disabled_label' => esc_html__('Disabled', 'tour-booking-manager'),
+					'error_label' => esc_html__('An error occurred. Please try again.', 'tour-booking-manager'),
+					'saving_label' => esc_html__('Saving…', 'tour-booking-manager'),
+					/* translators: %s: booking mode name, e.g. "WooCommerce Checkout" */
+					'mode_saved_label' => esc_html__('Booking mode changed to %s.', 'tour-booking-manager'),
+					'wc_mode_label' => esc_html__('WooCommerce Checkout', 'tour-booking-manager'),
+					'custom_mode_label' => esc_html__('Custom Payment', 'tour-booking-manager'),
+					'active_label' => esc_html__('Active', 'tour-booking-manager'),
+				));
 			}
 			public function global_settings_menu() {
 				$label = TTBM_Function::get_name();
@@ -28,18 +64,60 @@
 			public function settings_page() {
 				?>
                 <div id="ttbm_content" class="ttbm_style ttbm_global_settings ttbm_configuration">
-                    <div class="ttbmPanel">
-                        <div class="ttbmPanelHeader"><?php esc_html_e(' Global Settings', 'tour-booking-manager'); ?></div>
-                        <div class="ttbmPanelBody mp_zero">
-                            <div class="ttbmTabs">
-                                <div class="leftTabs">
-									<?php $this->settings_api->show_navigation(); ?>
-                                </div>
-                                <div class="tabsContent">
-									<?php $this->settings_api->show_forms(); ?>
+                    <div class="ttbm-gs-layout">
+                        <div class="ttbm-gs-main">
+                            <div class="ttbmPanel">
+                                <div class="ttbmPanelHeader">
+                            <div class="ttbm-gs-header-icon"><i class="mi mi-settings"></i></div>
+                            <div class="ttbm-gs-header-text">
+                                <h2><?php esc_html_e('Global Settings', 'tour-booking-manager'); ?></h2>
+                                <p><?php esc_html_e('Configure plugin preferences — maps, tour options, styling, PDF, and license settings.', 'tour-booking-manager'); ?></p>
+                            </div>
+                        </div>
+                                <div class="ttbmPanelBody mp_zero">
+                                    <?php
+                                    // "leftTabs" must be combined on THIS element (not just the
+                                    // nested nav div below) — assets/mp_style/ttbm_plugin_global.js's
+                                    // tab-init only reads window.location.hash / falls back to the
+                                    // per-page localStorage-saved tab when tabsParent.hasClass('leftTabs')
+                                    // is true, and tabsParent here IS .ttbmTabs. Without it, deep links
+                                    // like #ttbm_payment_settings (used by TTBM_Pro_Onboarding's "Set
+                                    // Booking Mode" button) silently land on the default tab instead.
+                                    // Matches the reference markup in
+                                    // admin/settings/tour/TTBM_Settings.php ("ttbmTabs leftTabs").
+                                    ?>
+                                    <div class="ttbmTabs leftTabs">
+                                        <div class="leftTabs">
+											<?php $this->settings_api->show_navigation(); ?>
+                                        </div>
+                                        <div class="tabsContent">
+											<?php $this->settings_api->show_forms(); ?>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <aside class="ttbm-gs-sidebar">
+                            <div class="ttbm-gs-card ttbm-gs-pro-card">
+                                <div class="ttbm-gs-card-icon"><i class="mi mi-crown"></i></div>
+                                <h4><?php esc_html_e('Upgrade to Pro', 'tour-booking-manager'); ?></h4>
+                                <p><?php esc_html_e('Unlock PDF ticketing, traveler management, custom forms, and priority support.', 'tour-booking-manager'); ?></p>
+                                <a href="https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/" target="_blank" rel="noopener" class="ttbm-gs-btn ttbm-gs-btn-pro"><?php esc_html_e('Get Pro Now', 'tour-booking-manager'); ?></a>
+                            </div>
+                            <div class="ttbm-gs-card">
+                                <h4><i class="mi mi-book"></i> <?php esc_html_e('Documentation', 'tour-booking-manager'); ?></h4>
+                                <ul class="ttbm-gs-links">
+                                    <li><a href="https://docs.mage-people.com/tour-travel-booking-manager/" target="_blank" rel="noopener"><?php esc_html_e('Getting Started', 'tour-booking-manager'); ?></a></li>
+                                    <li><a href="https://docs.mage-people.com/tour-travel-booking-manager/" target="_blank" rel="noopener"><?php esc_html_e('Configuration Guide', 'tour-booking-manager'); ?></a></li>
+                                    <li><a href="https://docs.mage-people.com/tour-travel-booking-manager/" target="_blank" rel="noopener"><?php esc_html_e('View All Docs', 'tour-booking-manager'); ?></a></li>
+                                </ul>
+                            </div>
+                            <div class="ttbm-gs-card">
+                                <h4><i class="mi mi-puzzle"></i> <?php esc_html_e('Addons', 'tour-booking-manager'); ?></h4>
+                                <p><?php esc_html_e('Extend your plugin with our powerful addon collection.', 'tour-booking-manager'); ?></p>
+                                <a href="https://mage-people.com/" target="_blank" rel="noopener" class="ttbm-gs-btn ttbm-gs-btn-outline"><?php esc_html_e('Browse Addons', 'tour-booking-manager'); ?></a>
+                            </div>
+                        </aside>
                     </div>
                 </div>
 				<?php
@@ -53,20 +131,28 @@
 				$label = TTBM_Function::get_name();
 				$sections = array(
 					array(
-						'id' => 'ttbm_global_settings',
-						'title' => esc_html__('Global Settings', 'tour-booking-manager')
+						'id'   => 'ttbm_global_settings',
+						'title' => esc_html__('Global Settings', 'tour-booking-manager'),
+						'icon' => 'mi mi-settings',
+						'desc' => esc_html__('Manage booking flow, currency, pagination, and core plugin behaviour.', 'tour-booking-manager'),
 					),
 					array(
-						'id' => 'ttbm_google_map_settings',
-						'title' => __('Google Map Api', 'tour-booking-manager')
+						'id'   => 'ttbm_google_map_settings',
+						'title' => __('Google Map Api', 'tour-booking-manager'),
+						'icon' => 'mi mi-map-marker',
+						'desc' => esc_html__('Enter your Google Maps API key to enable interactive maps and location search on tour pages.', 'tour-booking-manager'),
 					),
 					array(
-						'id' => 'ttbm_basic_gen_settings',
-						'title' => $label . ' ' . __('Settings', 'tour-booking-manager')
+						'id'   => 'ttbm_basic_gen_settings',
+						'title' => $label . ' ' . __('Settings', 'tour-booking-manager'),
+						'icon' => 'mi mi-suitcase-alt',
+						'desc' => esc_html__('Configure seat booking rules, availability display, and tour-specific options.', 'tour-booking-manager'),
 					),
 					array(
-						'id' => 'ttbm_basic_translation_settings',
-						'title' => $label . ' ' . __('Translation Settings', 'tour-booking-manager')
+						'id'   => 'ttbm_basic_translation_settings',
+						'title' => $label . ' ' . __('Translation Settings', 'tour-booking-manager'),
+						'icon' => 'mi mi-language',
+						'desc' => esc_html__('Translate button labels, status messages, and UI text displayed to front-end visitors.', 'tour-booking-manager'),
 					)
 				);
 				return apply_filters('ttbm_settings_sec_reg', $sections);
@@ -74,16 +160,22 @@
 			public function global_sec_reg($default_sec): array {
 				$sections = array(
 					array(
-						'id' => 'ttbm_slider_settings',
-						'title' => __('Slider Settings', 'tour-booking-manager')
+						'id'   => 'ttbm_slider_settings',
+						'title' => __('Slider Settings', 'tour-booking-manager'),
+						'icon' => 'mi mi-images',
+						'desc' => esc_html__('Control the tour image slider — autoplay speed, navigation arrows, loop behaviour, and transition effects.', 'tour-booking-manager'),
 					),
 					array(
-						'id' => 'ttbm_style_settings',
-						'title' => esc_html__('Style Settings', 'tour-booking-manager')
+						'id'   => 'ttbm_style_settings',
+						'title' => esc_html__('Style Settings', 'tour-booking-manager'),
+						'icon' => 'mi mi-gears',
+						'desc' => esc_html__('Customise your theme colour, font choices, and the overall visual style of the booking interface.', 'tour-booking-manager'),
 					),
 					array(
-						'id' => 'ttbm_license_settings',
-						'title' => esc_html__('Mage-People License', 'tour-booking-manager')
+						'id'   => 'ttbm_license_settings',
+						'title' => esc_html__('Mage-People License', 'tour-booking-manager'),
+						'icon' => 'mi mi-key',
+						'desc' => esc_html__('Activate and manage license keys for premium addons to unlock extended functionality.', 'tour-booking-manager'),
 					)
 				);
 				return array_merge($default_sec, $sections);
@@ -92,6 +184,12 @@
 				$current_date = current_time('Y-m-d');
 				$settings_fields = array(
 					'ttbm_basic_gen_settings' => apply_filters('ttbm_basic_gen_settings_arr', array(
+						array(
+							'name' => 'ttbm_tour_settings_heading',
+							'label' => '',
+							'type' => 'html',
+							'callback' => array($this, 'render_tour_settings_heading'),
+						),
 						array(
 							'name' => 'ttbm_set_book_status',
 							'label' => esc_html__('Seat Booked Status', 'tour-booking-manager'),
@@ -194,7 +292,8 @@
 							'label' => esc_html__('Google MAP API', 'tour-booking-manager'),
 							'desc' => esc_html__('Please Enter your workable google map api key', 'tour-booking-manager'),
 							'type' => 'text',
-							'default' => ''
+							'default' => '',
+							'placeholder' => esc_html__('AIzaSyD-9tSrke72...', 'tour-booking-manager'),
 						),
 					)),
 					'ttbm_basic_translation_settings' => apply_filters('ttbm_basic_translation_settings_arr', array(
@@ -218,6 +317,27 @@
 							'desc' => esc_html__('Enter the translated text of: ', 'tour-booking-manager') . '<strong>' . esc_html__('Date', 'tour-booking-manager') . '</stong>',
 							'type' => 'text',
 							'default' => ''
+						),
+						array(
+							'name' => 'ttbm_string_select_date',
+							'label' => esc_html__('Select Date', 'tour-booking-manager'),
+							'desc' => esc_html__('Enter the translated text of: ', 'tour-booking-manager') . '<strong>' . esc_html__('Select Date', 'tour-booking-manager') . '</strong>',
+							'type' => 'text',
+							'default' => '',
+						),
+						array(
+							'name' => 'ttbm_string_select_date_time',
+							'label' => esc_html__('Select Date & Time', 'tour-booking-manager'),
+							'desc' => esc_html__('Enter the translated text of: ', 'tour-booking-manager') . '<strong>' . esc_html__('Select Date & Time', 'tour-booking-manager') . '</strong>',
+							'type' => 'text',
+							'default' => '',
+						),
+						array(
+							'name' => 'ttbm_string_check_availability',
+							'label' => esc_html__('Check Availability', 'tour-booking-manager'),
+							'desc' => esc_html__('Enter the translated text of: ', 'tour-booking-manager') . '<strong>' . esc_html__('Check Availability', 'tour-booking-manager') . '</strong>',
+							'type' => 'text',
+							'default' => '',
 						),
 						array(
 							'name' => 'ttbm_string_ticket_name',
@@ -675,6 +795,18 @@
 				);
 				return apply_filters('ttbm_settings_sec_fields', $settings_fields);
 			}
+			public function render_tour_settings_heading() {
+				?>
+				<div class="ttbm-settings-modern-hero ttbm-settings-modern-hero--tour">
+					<span class="ttbm-settings-modern-hero__icon dashicons dashicons-palmtree"></span>
+					<div>
+						<span class="ttbm-settings-modern-hero__eyebrow"><?php esc_html_e('Tour configuration', 'tour-booking-manager'); ?></span>
+						<h3><?php esc_html_e('Tour Behaviour & Availability', 'tour-booking-manager'); ?></h3>
+						<p><?php esc_html_e('Control booking statuses, availability, dashboard labels, URLs, and other tour-wide defaults.', 'tour-booking-manager'); ?></p>
+					</div>
+				</div>
+				<?php
+			}
 			public function license_settings() {
 				?>
                 <div class="ttbm_license_settings">
@@ -692,7 +824,7 @@
                     <tr>
                         <th colspan="4"><?php esc_html_e('Plugin Name', 'tour-booking-manager'); ?></th>
                         <th><?php esc_html_e('Type', 'tour-booking-manager'); ?></th>
-                        <th><?php esc_html_e('Order No', 'tour-booking-manager'); ?></th>
+                        <th><?php esc_html_e('Order', 'tour-booking-manager'); ?></th>
                         <th colspan="2"><?php esc_html_e('Expire on', 'tour-booking-manager'); ?></th>
                         <th colspan="3"><?php esc_html_e('License Key', 'tour-booking-manager'); ?></th>
                         <th><?php esc_html_e('Status', 'tour-booking-manager'); ?></th>

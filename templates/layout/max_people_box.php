@@ -9,7 +9,7 @@
 	if ( $max_people && $tour_type == 'general' && TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_max_people', 'on' ) != 'off' ) {
 ?>
 
-<div class="item_icon" title="<?php esc_html_e( 'Max People', 'tour-booking-manager' ); ?>">
+<div class="item_icon<?php echo esc_attr( TTBM_Function::hero_stat_item_class() ); ?>" title="<?php esc_html_e( 'Max People', 'tour-booking-manager' ); ?>">
 	<i class="mi mi-people"></i>
 	<?php echo esc_html( $max_people ); ?>
 </div>

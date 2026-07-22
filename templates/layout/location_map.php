@@ -9,7 +9,18 @@
 		<div class="ttbm_default_widget">
 			<?php $this->section_title( 'ttbm_string_tour_location', esc_html__( 'Location Map', 'tour-booking-manager' ) ); ?>
 			<div class='ttbm_widget_content ttbm_map_area'>
-				<iframe id="gmap_canvas" src="https://maps.google.com/maps?q=<?php echo esc_html( $full_address ); ?>&t=&z=12&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+				<iframe
+					id="gmap_canvas"
+					src="<?php echo esc_url( 'https://maps.google.com/maps?q=' . rawurlencode( $full_address ) . '&t=&z=13&ie=UTF8&iwloc=&output=embed' ); ?>"
+					frameborder="0"
+					scrolling="no"
+					marginheight="0"
+					marginwidth="0"
+					loading="lazy"
+					referrerpolicy="no-referrer-when-downgrade"
+					allowfullscreen
+					style="width:100%;height:100%;border:0;display:block;">
+				</iframe>
 			</div>
 		</div>
 	<?php } ?>

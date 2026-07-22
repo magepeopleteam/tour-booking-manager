@@ -128,47 +128,58 @@
                 ob_start();
                 ?>
                 <!-- Hotel Search Bar -->
-                <div class="mpContainer">
-                    <form class="rbfw_search_form_new" action="<?php echo get_home_url() . '/hotel-search-result/';  ?>" method="GET">
-                    <div class="ttbm_hotel_search_box">
+                <div class="mpContainer ttbm-hotel-search-modern-wrap">
+                    <form class="rbfw_search_form_new ttbm-hotel-search-form" action="<?php echo esc_url( home_url( '/hotel-search-result/' ) ); ?>" method="get">
+                    <div class="ttbm_hotel_search_box ttbm-hotel-search-modern">
 
-                        <!--<div class="ttbm_hotel_search_field">
-                            <span class="ttbm_hotel_search_icon">🛏️</span>
-                            <input type="text" name="ttbm_hotel_location_search" class="ttbm_hotel_search_input" value="<?php /*echo esc_attr( $location );*/?>" placeholder="Where are you going?">
-                        </div>-->
                         <div class="ttbm_hotel_search_field ttbm_location_wrapper">
-                            <span class="ttbm_hotel_search_icon">🛏️</span>
-                            <input type="text"
-                                   name="ttbm_hotel_location_search"
-                                   id="ttbm_location_input"
-                                   class="ttbm_hotel_search_input"
-                                   value="<?php echo esc_attr($location); ?>"
-                                   placeholder="Where are you going?"
-                                   autocomplete="off">
-
-                            <!-- Dropdown -->
-                            <ul class="ttbm_location_dropdown" style="display:none;">
-                                <?php foreach ($exist_locations as $loc) : ?>
-                                    <li><?php echo esc_html($loc); ?></li>
-                                <?php endforeach; ?>
-                            </ul>
+                            <span class="ttbm_hotel_search_icon" aria-hidden="true"><i class="mi mi-bed"></i></span>
+                            <div class="ttbm_hotel_search_field-inner">
+                                <label class="ttbm_hotel_search_label" for="ttbm_location_input"><?php esc_html_e( 'Destination', 'tour-booking-manager' ); ?></label>
+                                <input type="text"
+                                       name="ttbm_hotel_location_search"
+                                       id="ttbm_location_input"
+                                       class="ttbm_hotel_search_input"
+                                       value="<?php echo esc_attr( $location ); ?>"
+                                       placeholder="<?php esc_attr_e( 'Where are you going?', 'tour-booking-manager' ); ?>"
+                                       autocomplete="off">
+                                <ul class="ttbm_location_dropdown" style="display:none;">
+                                    <?php foreach ( $exist_locations as $loc ) : ?>
+                                        <li><?php echo esc_html( $loc ); ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
                         </div>
 
-
-                        <div class="ttbm_hotel_search_field">
-                            <input type="hidden" name="ttbm_hotel_search_date_format" id="ttbm_hotel_search_date_format" value="<?php echo esc_attr($wp_date_format);?>">
-                            <span class="ttbm_hotel_search_icon">📅</span>
-                            <input type="text" name="search_date_range" id="ttbm_date_range" class="ttbm_date_input" value="<?php echo esc_attr( $date_range );?>" placeholder="Select date range" readonly>
+                        <div class="ttbm_hotel_search_field ttbm_hotel_search_field--dates">
+                            <input type="hidden" name="ttbm_hotel_search_date_format" id="ttbm_hotel_search_date_format" value="<?php echo esc_attr( $wp_date_format ); ?>">
+                            <span class="ttbm_hotel_search_icon" aria-hidden="true"><i class="mi mi-calendar"></i></span>
+                            <div class="ttbm_hotel_search_field-inner">
+                                <label class="ttbm_hotel_search_label" for="ttbm_date_range"><?php esc_html_e( 'Stay Dates', 'tour-booking-manager' ); ?></label>
+                                <input type="text" name="search_date_range" id="ttbm_date_range" class="ttbm_date_input ttbm_hotel_search_input" value="<?php echo esc_attr( $date_range ); ?>" placeholder="<?php esc_attr_e( 'Select date range', 'tour-booking-manager' ); ?>" readonly>
+                            </div>
                         </div>
 
-
-                        <div class="ttbm_hotel_search_field">
-                            <span class="ttbm_hotel_search_icon">👤</span>
-                            <input name="hotel_search_person" type="number" class="ttbm_hotel_search_input" value="<?php echo esc_attr( $search_person );?>" placeholder="Number of 1 room">
+                        <div class="ttbm_hotel_search_field ttbm_hotel_search_field--guests">
+                            <span class="ttbm_hotel_search_icon" aria-hidden="true"><i class="mi mi-users"></i></span>
+                            <div class="ttbm_hotel_search_field-inner">
+                                <label class="ttbm_hotel_search_label" for="ttbm_hotel_search_guests"><?php esc_html_e( 'Guests & Rooms', 'tour-booking-manager' ); ?></label>
+                                <input
+                                    name="hotel_search_person"
+                                    id="ttbm_hotel_search_guests"
+                                    type="number"
+                                    class="ttbm_hotel_search_input"
+                                    value="<?php echo esc_attr( $search_person ); ?>"
+                                    placeholder="<?php esc_attr_e( '2 guests, 1 room', 'tour-booking-manager' ); ?>"
+                                    min="1"
+                                    step="1"
+                                >
+                            </div>
                         </div>
 
-                        <button class="ttbm_hotel_search_btn">Search</button>
-
+                        <button type="submit" class="ttbm_hotel_search_btn">
+                            <?php esc_html_e( 'Search Hotels', 'tour-booking-manager' ); ?>
+                        </button>
 
                     </div>
                     </form>
@@ -196,7 +207,7 @@
 				$show = $params['show'];
                 $pagination = $params['pagination'];
 				$search = $params['sidebar-filter'];
-				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
+				$show = ($search == 'yes' || $pagination == 'yes') ? TTBM_Function::get_list_render_cap() : $show;
 				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'],$params['sort_by'], $params['attraction'], $params['feature']);
 				ob_start();
 				?>
@@ -235,7 +246,7 @@
 				$show = $params['show'];
                 $pagination = $params['pagination'];
 				$search = $params['sidebar-filter'];
-				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
+				$show = ($search == 'yes' || $pagination == 'yes') ? TTBM_Function::get_list_render_cap() : $show;
 				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'],$params['sort_by'], $params['attraction'], $params['feature']);
 				ob_start();
 				?>
@@ -288,7 +299,7 @@
 					$people_filter = isset($_GET['people_filter']) ? absint(wp_unslash($_GET['people_filter'])) : 0;
 				}
 				
-				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
+				$show = ($search == 'yes' || $pagination == 'yes') ? TTBM_Function::get_list_render_cap() : $show;
 
 				$loop = TTBM_Query::ttbm_query_for_top_search($show, $params['sort'], $params['sort_by'], $params['status'], $organizer_filter, $location_filter, $activity_filter, $date_filter, $people_filter);
 				?>
@@ -302,7 +313,7 @@
 								<div class="leftSidebar placeholder_area">
 									<?php do_action('ttbm_left_filter', $params); ?>
 								</div>
-								<div class="mainSection">
+								<div class="mainSection ttbm-search-results">
 									<?php do_action('ttbm_filter_top_bar', $loop, $params); ?>
 									<?php do_action('ttbm_all_list_item', $loop, $params); ?>
 									<?php do_action('ttbm_sort_result', $loop, $params); ?>
@@ -329,7 +340,7 @@
 				$pagination = $params['pagination'];
 				$search = $params['search-filter'];
 				$show = $params['show'];
-				$show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
+				$show = ($search == 'yes' || $pagination == 'yes') ? TTBM_Function::get_list_render_cap() : $show;
 				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'], $params['sort_by']);
 				if (isset($params['shuffle']) && $params['shuffle'] == 'yes') {
 					$posts = $loop->posts;
@@ -420,12 +431,12 @@
 					}*/
 
 					if (isset($_GET['ttbm_date_start_end_input']) && !empty($_GET['ttbm_date_start_end_input'])) {
-						$date_range = sanitize_text_field($_GET['ttbm_date_start_end_input']);
-                        $dates = explode(' - ', $date_range);
-                        if(count($dates) === 2){
-                            $date_filter['start_date'] = $dates[0] ;
-                            $date_filter['end_date']   = $dates[1] ;
-                        }
+						$date_range = sanitize_text_field( wp_unslash( $_GET['ttbm_date_start_end_input'] ) );
+						$parsed_dates = TTBM_Global_Function::parse_date_range_string( $date_range );
+						if ( $parsed_dates ) {
+							$date_filter['start_date'] = $parsed_dates[0];
+							$date_filter['end_date']   = $parsed_dates[1];
+						}
                     }
 
 				}
@@ -444,15 +455,49 @@
 				ob_start();
 				$tour_id = $params['ttbm_id'] ?? get_the_id();
 				if ($tour_id) {
+					// The single-tour-page theme renders this same form inside
+					// `#ttbm_content .ttbm_booking_section`, and the modern
+					// registration styles (ttbm_details.php/css) are scoped to that
+					// ancestor chain. Standalone the shortcode has neither wrapper,
+					// so it previously fell back to the un-modernised base styles.
+					// `.ttbm_reg_shortcode` + `.ttbm_booking_section` re-supply that
+					// scope for the shortcode; both are plugin-namespaced (ttbm_*),
+					// so they cannot collide with theme or other-plugin CSS, and the
+					// CSS matches them via :is(#ttbm_content, .ttbm_reg_shortcode)
+					// which keeps the single-page selector specificity unchanged.
+					//
+					// The smart-card ticket layout (regular_ticket_smart.php) is a
+					// single-page "smart" theme feature whose CSS only applies under the
+					// .ttbm_smart_theme page wrapper; a standalone shortcode has no such
+					// wrapper, so those cards render unstyled. Force the regular ticket
+					// table here — it is fully styled for the .ttbm_reg_shortcode context
+					// — so the embedded form keeps the modern look regardless of the
+					// tour's chosen page theme.
+					add_filter('ttbm_regular_ticket_file', array($this, 'ttbm_shortcode_force_regular_ticket'), 99, 2);
 					?>
-					<div class="ttbm_style">
+					<div class="ttbm_style ttbm_reg_shortcode">
 						<div class="mpContainer">
-						<?php include(TTBM_Function::template_path('ticket/registration.php')); ?>
+							<div class="ttbm_booking_section">
+								<?php include(TTBM_Function::template_path('ticket/registration.php')); ?>
+							</div>
 						</div>
 					</div>
 					<?php
+					remove_filter('ttbm_regular_ticket_file', array($this, 'ttbm_shortcode_force_regular_ticket'), 99);
 				}
 				return ob_get_clean();
+			}
+			/**
+			 * Inside the [ttbm-registration] shortcode, always use the regular ticket
+			 * table instead of the single-page smart-theme card template, which has no
+			 * styling wrapper in a standalone embed. See registration().
+			 *
+			 * @param string $file    Resolved ticket template path.
+			 * @param int    $tour_id Tour being rendered.
+			 * @return string
+			 */
+			public function ttbm_shortcode_force_regular_ticket($file, $tour_id) {
+				return TTBM_Function::template_path('ticket/regular_ticket.php');
 			}
 			public function related($attribute) {
 				$defaults = array('ttbm_id' => '', 'show' => 4);
@@ -737,12 +782,13 @@
                 $search_room_num = !empty($_GET['hotel_search_person']) ? strip_tags($_GET['hotel_search_person']) : 0;
 
                 if( $date_range !== '' ){
-                    list( $start_date, $end_date ) = explode(" - ", $date_range);
-                    $start_date = trim($start_date);
-                    $end_date   = trim($end_date);
-
-                    $start_date  = date('Y-m-d', strtotime($start_date));
-                    $end_date    = date('Y-m-d', strtotime($end_date));
+                    $parsed_dates = TTBM_Global_Function::parse_date_range_string( $date_range );
+                    if ( $parsed_dates ) {
+                        $start_date = $parsed_dates[0];
+                        $end_date   = $parsed_dates[1];
+                    } else {
+                        $start_date = $end_date = date( 'Y-m-d' );
+                    }
                 }else{
                     $start_date = $end_date = date( 'Y-m-d');
                 }
@@ -757,7 +803,7 @@
                 $show = $params['show'];
                 $pagination = $params['pagination'];
                 $search = $params['sidebar-filter'];
-                $show = ($search == 'yes' || $pagination == 'yes') ? -1 : $show;
+                $show = ($search == 'yes' || $pagination == 'yes') ? TTBM_Function::get_list_render_cap() : $show;
 
                 ob_start();
                 ?>

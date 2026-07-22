@@ -7,50 +7,142 @@
 			public function __construct() {
 				add_action('add_meta_boxes', [$this, 'hotel_settings_meta']);
 				add_action('save_post', array($this, 'save_hotel'), 99, 1);
+				add_filter('wp_insert_post_data', [$this, 'filter_insert_post_data'], 99, 2);
+				add_action('wp_ajax_ttbm_save_post_title', [$this, 'ajax_save_post_title']);
+				add_action('admin_notices', [$this, 'render_title_required_notice']);
+				add_action('admin_notices', [$this, 'render_featured_image_required_notice']);
+			}
+			/**
+			 * Resolve hotel/tour title from custom UI field before the DB write.
+			 * Title support is removed, so a stale hidden post_title must not win.
+			 *
+			 * @param array $data    Sanitized post data.
+			 * @param array $postarr Raw post array.
+			 * @return array
+			 */
+			public function filter_insert_post_data($data, $postarr) {
+				if (!is_admin() || (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)) {
+					return $data;
+				}
+				$post_type = isset($data['post_type']) ? $data['post_type'] : '';
+				$tour_cpt = class_exists('TTBM_Function') ? TTBM_Function::get_cpt_name() : 'ttbm_tour';
+				if ($post_type !== 'ttbm_hotel' && $post_type !== $tour_cpt) {
+					return $data;
+				}
+				$title = self::resolve_submitted_title_from_request();
+				if ($title !== '') {
+					$data['post_title'] = $title;
+				}
+				return $data;
+			}
+			/**
+			 * Prefer visible UI title, then any posted post_title.
+			 *
+			 * @return string
+			 */
+			public static function resolve_submitted_title_from_request() {
+				$title = '';
+				if (isset($_POST['ttbm_post_title_ui'])) {
+					$title = trim(sanitize_text_field(wp_unslash($_POST['ttbm_post_title_ui'])));
+				}
+				if ($title === '' && isset($_POST['post_title']) && !is_array($_POST['post_title'])) {
+					$title = trim(sanitize_text_field(wp_unslash($_POST['post_title'])));
+				}
+				return $title;
+			}
+			/**
+			 * Persist title via AJAX so Update survives classic form POST gaps.
+			 */
+			public function ajax_save_post_title() {
+				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
+					wp_send_json_error(array('message' => 'Invalid nonce'), 403);
+				}
+				$post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
+				if (!$post_id || !current_user_can('edit_post', $post_id)) {
+					wp_send_json_error(array('message' => 'Forbidden'), 403);
+				}
+				$post_type = get_post_type($post_id);
+				$tour_cpt = class_exists('TTBM_Function') ? TTBM_Function::get_cpt_name() : 'ttbm_tour';
+				if ($post_type !== 'ttbm_hotel' && $post_type !== $tour_cpt) {
+					wp_send_json_error(array('message' => 'Invalid post type'), 400);
+				}
+				$title = isset($_POST['title']) ? trim(sanitize_text_field(wp_unslash($_POST['title']))) : '';
+				if ($title === '') {
+					wp_send_json_error(array('message' => 'Title required'), 400);
+				}
+				if ((string) get_post_field('post_title', $post_id) !== $title) {
+					remove_action('save_post', array($this, 'save_hotel'), 99);
+					wp_update_post(array(
+						'ID' => $post_id,
+						'post_title' => $title,
+					));
+					add_action('save_post', array($this, 'save_hotel'), 99, 1);
+				}
+				wp_send_json_success(array('title' => $title));
 			}
 			public function hotel_settings_meta() {
-				$ttbm_label = TTBM_Function::get_name();
-				add_meta_box('ttbm_meta_box_panel', '<span class="fas fa-hotel"></span>' . $ttbm_label . esc_html__(' Hotel Settings : ', 'tour-booking-manager') . get_the_title(get_the_id()), array($this, 'hotel_settings'), 'ttbm_hotel', 'normal', 'high');
+				add_meta_box('ttbm_meta_box_panel', esc_html__('Hotel Settings', 'tour-booking-manager'), array($this, 'hotel_settings'), 'ttbm_hotel', 'normal', 'high');
 			}
 			public function hotel_settings() {
 				$hotel_id = get_the_id();
 				?>
-                <div id="ttbm_content" class="ttbm_style ttbm_settings">
-                    <div class="ttbmTabs leftTabs">
-                        <ul class="tabLists">
-                            <li data-tabs-target="#ttbm_general_info">
-                                <span class="mi mi-settings"></span><?php esc_html_e('General Info', 'tour-booking-manager'); ?>
-                            </li>
-							<li data-tabs-target="#ttbm_settings_hotel_location" class="ttbm_hotel_map_location">
-                                <span class="mi mi-marker"></span><?php esc_html_e('Map Location', 'tour-booking-manager'); ?>
-                            </li>
-                            <li data-tabs-target="#ttbm_settings_pricing">
-                                <span class="mi mi-coins"></span><?php esc_html_e(' Pricing', 'tour-booking-manager'); ?>
-                            </li>
-                            <li data-tabs-target="#ttbm_settings_hotel_feature">
-                                <span class="mi mi-features"></span><?php esc_html_e(' Features', 'tour-booking-manager'); ?>
-                            </li>
-                            <li data-tabs-target="#ttbm_settings_gallery">
-                                <span class="mi mi-gallery"></span><?php esc_html_e(' Hotel Gallery', 'tour-booking-manager'); ?>
-                            </li>
-                            <li data-tabs-target="#ttbm_settings_hotel_faq">
-                                <span class="mi mi-messages-question"></span><?php esc_html_e(' FAQ Settgins', 'tour-booking-manager'); ?>
-                            </li>
-                            <li data-tabs-target="#ttbm_settings_hotel_area_info">
-                                <span class="mi mi-search-location"></span><?php esc_html_e(' Hotel area info', 'tour-booking-manager'); ?>
-                            </li>
-                            <li data-tabs-target="#ttbm_settings_hotel_activity">
-                                <span class="mi mi-practice"></span><?php esc_html_e(' Activities', 'tour-booking-manager'); ?>
-                            </li>
-                        </ul>
-                        <div class="tabsContent tab-content">
-							<?php
-								wp_nonce_field('ttbm_hotel_type_nonce', 'ttbm_hotel_type_nonce');
-								do_action('add_ttbm_settings_hotel_tab_content', $hotel_id);
-							?>
+				<?php
+				wp_nonce_field('ttbm_hotel_type_nonce', 'ttbm_hotel_type_nonce');
+				$hotel_map_location = (string) get_post_meta($hotel_id, 'ttbm_hotel_map_location', true);
+				$hotel_map_lat = (string) get_post_meta($hotel_id, 'ttbm_map_latitude', true);
+				$hotel_map_lng = (string) get_post_meta($hotel_id, 'ttbm_map_longitude', true);
+				$hotel_title = (string) get_the_title($hotel_id);
+				?>
+                <input type="hidden" id="ttbm_post_title_submit" name="post_title" value="<?php echo esc_attr($hotel_title); ?>">
+                <input type="hidden" id="ttbm_hotel_map_location_submit" name="ttbm_hotel_map_location" value="<?php echo esc_attr($hotel_map_location); ?>">
+                <input type="hidden" id="ttbm_map_latitude_submit" name="ttbm_map_latitude" value="<?php echo esc_attr($hotel_map_lat); ?>">
+                <input type="hidden" id="ttbm_map_longitude_submit" name="ttbm_map_longitude" value="<?php echo esc_attr($hotel_map_lng); ?>">
+                <div id="ttbm_content" class="ttbm_configuration">
+                    <div class="ttbm_style ttbm_settings">
+                        <div class="ttbmTabs leftTabs d-flex justify-content-between">
+                            <ul class="tabLists meta-sidebar _mL">
+								<div class="meta-sidebar-toggle"><i class="mi mi-angle-right"></i></div>
+                                <li data-tabs-target="#ttbm_general_info" title="<?php esc_attr_e('Overview', 'tour-booking-manager'); ?>"><i class="mi mi-settings"></i> <span><?php esc_html_e('Overview', 'tour-booking-manager'); ?></span></li>
+                                <li data-tabs-target="#ttbm_settings_hotel_location" class="ttbm_hotel_map_location" title="<?php esc_attr_e('Map Location', 'tour-booking-manager'); ?>"><i class="mi mi-marker"></i> <span><?php esc_html_e('Map Location', 'tour-booking-manager'); ?></span></li>
+                                <li data-tabs-target="#ttbm_settings_pricing" title="<?php esc_attr_e('Pricing', 'tour-booking-manager'); ?>"><i class="mi mi-coins"></i> <span><?php esc_html_e('Pricing', 'tour-booking-manager'); ?></span></li>
+                                <li data-tabs-target="#ttbm_settings_hotel_feature" title="<?php esc_attr_e('Features', 'tour-booking-manager'); ?>"><i class="mi mi-features"></i> <span><?php esc_html_e('Features', 'tour-booking-manager'); ?></span></li>
+                                <li data-tabs-target="#ttbm_settings_hotel_activity" title="<?php esc_attr_e('Activities', 'tour-booking-manager'); ?>"><i class="mi mi-practice"></i> <span><?php esc_html_e('Activities', 'tour-booking-manager'); ?></span></li>
+                                <li data-tabs-target="#ttbm_settings_hotel_area_info" title="<?php esc_attr_e('Area Info', 'tour-booking-manager'); ?>"><i class="mi mi-search-location"></i> <span><?php esc_html_e('Area Info', 'tour-booking-manager'); ?></span></li>
+                                <li data-tabs-target="#ttbm_settings_hotel_faq" title="<?php esc_attr_e('FAQ', 'tour-booking-manager'); ?>"><i class="mi mi-messages-question"></i> <span><?php esc_html_e('FAQ', 'tour-booking-manager'); ?></span></li>
+                            </ul>
+                            <div class="tabsContent">
+								<?php do_action('add_ttbm_settings_hotel_tab_content', $hotel_id); ?>
+                            </div>
+                            <div class="ttbm-right-sidebar">
+								<?php do_action('ttbm_hotel_right_sidebar_content', $hotel_id); ?>
+                            </div>
                         </div>
                     </div>
                 </div>
+				<?php
+			}
+			public function render_title_required_notice(): void {
+				$user_id = get_current_user_id();
+				if (!get_transient('ttbm_hotel_title_required_' . $user_id)) {
+					return;
+				}
+				delete_transient('ttbm_hotel_title_required_' . $user_id);
+				?>
+				<div class="notice notice-error is-dismissible">
+					<p><strong><?php esc_html_e('Hotel title is required.', 'tour-booking-manager'); ?></strong></p>
+				</div>
+				<?php
+			}
+			public function render_featured_image_required_notice(): void {
+				$user_id = get_current_user_id();
+				if (!get_transient('ttbm_hotel_featured_image_required_' . $user_id)) {
+					return;
+				}
+				delete_transient('ttbm_hotel_featured_image_required_' . $user_id);
+				?>
+				<div class="notice notice-error is-dismissible">
+					<p><strong><?php esc_html_e('Featured image is required before publishing this hotel.', 'tour-booking-manager'); ?></strong></p>
+				</div>
 				<?php
 			}
 			public function save_hotel($post_id) {
@@ -61,6 +153,46 @@
 					return;
 				}
 				if (!current_user_can('edit_post', $post_id)) {
+					return;
+				}
+				if (get_post_type($post_id) !== 'ttbm_hotel') {
+					return;
+				}
+				$submitted_title = self::resolve_submitted_title_from_request();
+				if ($submitted_title === '') {
+					remove_action('save_post', array($this, 'save_hotel'), 99);
+					wp_update_post(['ID' => $post_id, 'post_status' => 'draft']);
+					add_action('save_post', array($this, 'save_hotel'), 99, 1);
+					set_transient('ttbm_hotel_title_required_' . get_current_user_id(), 1, 60);
+					return;
+				}
+				// Title support is removed for hotels; persist the custom field value explicitly.
+				$current_title = (string) get_post_field('post_title', $post_id);
+				if ($current_title !== $submitted_title) {
+					remove_action('save_post', array($this, 'save_hotel'), 99);
+					$result = wp_update_post([
+						'ID' => $post_id,
+						'post_title' => $submitted_title,
+					], true);
+					if (is_wp_error($result) || (string) get_post_field('post_title', $post_id) !== $submitted_title) {
+						global $wpdb;
+						$wpdb->update(
+							$wpdb->posts,
+							array('post_title' => $submitted_title),
+							array('ID' => $post_id),
+							array('%s'),
+							array('%d')
+						);
+						clean_post_cache($post_id);
+					}
+					add_action('save_post', array($this, 'save_hotel'), 99, 1);
+				}
+				$thumb_id = isset($_POST['_thumbnail_id']) ? (int) $_POST['_thumbnail_id'] : 0;
+				if ($thumb_id <= 0) {
+					remove_action('save_post', array($this, 'save_hotel'), 99);
+					wp_update_post(['ID' => $post_id, 'post_status' => 'draft']);
+					add_action('save_post', array($this, 'save_hotel'), 99, 1);
+					set_transient('ttbm_hotel_featured_image_required_' . get_current_user_id(), 1, 60);
 					return;
 				}
 				if (get_post_type($post_id) == 'ttbm_hotel') {
@@ -91,10 +223,21 @@
 					$ttbm_hotel_testimonial_text = isset($_POST['ttbm_hotel_testimonial_text']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_testimonial_text'])) : '';
 
 					$ttbm_display_hotel_map 	= isset($_POST['ttbm_display_hotel_map']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hotel_map'])) ? 'on' : 'off';
-					$ttbm_hotel_map_location 	= isset($_POST['ttbm_hotel_map_location']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_map_location'])) : '';
-					$ttbm_map_latitude 	= isset($_POST['ttbm_map_latitude']) ? sanitize_text_field(wp_unslash($_POST['ttbm_map_latitude'])) : '';
-					$ttbm_map_longitude 	= isset($_POST['ttbm_map_longitude']) ? sanitize_text_field(wp_unslash($_POST['ttbm_map_longitude'])) : '';
-					
+					$previous_hotel_location = (string) get_post_meta($post_id, 'ttbm_hotel_map_location', true);
+					$previous_map_latitude = (string) get_post_meta($post_id, 'ttbm_map_latitude', true);
+					$previous_map_longitude = (string) get_post_meta($post_id, 'ttbm_map_longitude', true);
+					$ttbm_hotel_map_location 	= isset($_POST['ttbm_hotel_map_location']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_map_location'])) : $previous_hotel_location;
+					$ttbm_map_latitude 	= array_key_exists('ttbm_map_latitude', $_POST) ? sanitize_text_field(wp_unslash($_POST['ttbm_map_latitude'])) : $previous_map_latitude;
+					$ttbm_map_longitude 	= array_key_exists('ttbm_map_longitude', $_POST) ? sanitize_text_field(wp_unslash($_POST['ttbm_map_longitude'])) : $previous_map_longitude;
+					if (class_exists('TTBM_Settings_Location')) {
+						list($ttbm_map_latitude, $ttbm_map_longitude) = TTBM_Settings_Location::resolve_map_coordinates(
+							$ttbm_hotel_map_location,
+							$ttbm_map_latitude,
+							$ttbm_map_longitude,
+							$previous_hotel_location
+						);
+					}
+
 					update_post_meta($post_id, 'ttbm_display_hotel_testimonial', $ttbm_display_hotel_testimonial);
 
 					update_post_meta($post_id, 'ttbm_display_hotel_feature_text', $ttbm_display_hotel_feature_text);
@@ -127,9 +270,11 @@
 					$ttbm_hotel_parking = isset($_POST['ttbm_hotel_parking']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_parking'])) : '';
 					$ttbm_hotel_breakfast = isset($_POST['ttbm_hotel_breakfast']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_breakfast'])) : '';
 					$ttbm_display_hotel_breakfast = isset($_POST['ttbm_display_hotel_breakfast']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hotel_breakfast'])) ? 'on' : 'off';
+					$ttbm_display_hotel_rating = isset($_POST['ttbm_display_hotel_rating']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_hotel_rating'])) ? 'on' : 'off';
 					$ttbm_location_name = isset($_POST['ttbm_hotel_location']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_location'])) : '';
 					$ttbm_hotel_rating = isset($_POST['ttbm_hotel_rating']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_rating'])) : '';
 					update_post_meta($post_id, 'ttbm_hotel_rating', $ttbm_hotel_rating);
+					update_post_meta($post_id, 'ttbm_display_hotel_rating', $ttbm_display_hotel_rating);
 					update_post_meta($post_id, 'ttbm_display_property_highlights', $ttbm_display_property_highlights);
 					update_post_meta($post_id, 'ttbm_hotel_property_highlights', $ttbm_hotel_property_highlights);
 					update_post_meta($post_id, 'ttbm_display_hotel_location', $ttbm_display_location);

@@ -1,0 +1,1407 @@
+/* ===================================================================
+   Global Settings Page — styled to match Tour Add/Edit meta box panel
+   =================================================================== */
+
+/* Override core max-width and enforce left alignment */
+div.ttbm_global_settings.ttbm_configuration {
+    max-width: 90% !important;
+    width: 90%;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#ttbm_meta_box_panel .tabsItem section .label,
+#ttbm_content.ttbm_configuration .tabsItem section .label {
+    border: none;
+    background: none !important;
+}
+
+/* Outer flex layout: main panel + right sidebar */
+.ttbm_global_settings .ttbm-gs-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.ttbm_global_settings .ttbm-gs-main {
+    flex: 1;
+    min-width: 0;
+}
+
+/* ── Right sidebar ── */
+.ttbm_global_settings .ttbm-gs-sidebar {
+    width: 260px;
+    min-width: 260px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Sidebar card base */
+.ttbm_global_settings .ttbm-gs-card {
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #E8E8E8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    padding: 20px;
+}
+
+/* Pro upgrade card — gradient bg */
+.ttbm_global_settings .ttbm-gs-pro-card {
+    background: linear-gradient(135deg, var(--mpl-primary, #F12971) 0%, #C4185B 100%);
+    border: none;
+    text-align: center;
+}
+
+.ttbm_global_settings .ttbm-gs-card-icon {
+    font-size: 34px;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 10px;
+    line-height: 1;
+}
+
+.ttbm_global_settings .ttbm-gs-pro-card h4 {
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    border: none;
+    padding: 0;
+}
+
+.ttbm_global_settings .ttbm-gs-pro-card p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 12.5px;
+    margin: 0 0 16px;
+    line-height: 1.55;
+}
+
+/* Non-pro card headings */
+.ttbm_global_settings .ttbm-gs-card:not(.ttbm-gs-pro-card) h4 {
+    color: var(--mpl-secondary, #1D2327);
+    font-size: 13.5px;
+    font-weight: 600;
+    margin: 0 0 12px;
+    padding: 0 0 10px;
+    border-bottom: 1px solid #EAEAEA;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.ttbm_global_settings .ttbm-gs-card:not(.ttbm-gs-pro-card) h4 i {
+    color: var(--color_theme, #0073aa);
+    font-size: 15px;
+}
+
+.ttbm_global_settings .ttbm-gs-card:not(.ttbm-gs-pro-card) p {
+    color: #50575e;
+    font-size: 12.5px;
+    margin: 0 0 14px;
+    line-height: 1.55;
+}
+
+/* Link list */
+.ttbm_global_settings .ttbm-gs-links {
+    list-style: none;
+    margin: 0 0 4px;
+    padding: 0;
+}
+
+.ttbm_global_settings .ttbm-gs-links li {
+    margin-bottom: 9px;
+}
+
+.ttbm_global_settings .ttbm-gs-links li a {
+    color: var(--color_theme, #0073aa);
+    font-size: 13px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s ease;
+}
+
+.ttbm_global_settings .ttbm-gs-links li a::before {
+    content: '→';
+    font-size: 11px;
+    opacity: 0.7;
+}
+
+.ttbm_global_settings .ttbm-gs-links li a:hover {
+    color: var(--mpl-primary, #F12971);
+    text-decoration: underline;
+}
+
+/* Sidebar buttons */
+.ttbm_global_settings .ttbm-gs-btn {
+    display: block;
+    text-align: center;
+    padding: 9px 16px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.ttbm_global_settings .ttbm-gs-btn-pro {
+    background: #fff;
+    color: var(--mpl-primary, #F12971) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.ttbm_global_settings .ttbm-gs-btn-pro:hover {
+    background: rgba(255, 255, 255, 0.88);
+}
+
+.ttbm_global_settings .ttbm-gs-btn-outline {
+    background: transparent;
+    border: 1px solid var(--color_theme, #0073aa);
+    color: var(--color_theme, #0073aa) !important;
+}
+
+.ttbm_global_settings .ttbm-gs-btn-outline:hover {
+    background: var(--color_theme, #0073aa);
+    color: #fff !important;
+}
+
+/* ── Panel header ── */
+.ttbm_global_settings .ttbmPanelHeader {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, var(--color_theme, #2271B1) 0%, #1a5a96 100%) !important;
+}
+
+.ttbm_global_settings .ttbm-gs-header-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ttbm_global_settings .ttbm-gs-header-icon i {
+    font-size: 22px;
+    color: #fff;
+}
+
+.ttbm_global_settings .ttbm-gs-header-text h2 {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 3px;
+    padding: 0;
+    line-height: 1.2;
+    border: none;
+}
+
+.ttbm_global_settings .ttbm-gs-header-text p {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 12.5px;
+    margin: 0;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+.ttbm_style.ttbm_global_settings h2 {
+    font-size: 22px !important;
+}
+
+.ttbm_style.ttbm_global_settings .ttbm-gs-header-text {
+    padding: 15px 0;
+}
+
+/* ── Left tab sidebar ── */
+.ttbm_global_settings .ttbmTabs > .leftTabs {
+    width: 240px;
+    min-width: 240px;
+    background: #EDF2F7;
+    flex-shrink: 0;
+}
+
+.ttbm_global_settings .tabLists {
+    padding: 10px 8px;
+    background: #EDF2F7;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ttbm_global_settings .tabLists li {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: #3D4A5C;
+    background: transparent;
+    border: none;
+    border-radius: 7px;
+    margin: 0 0 3px;
+    list-style: none;
+    transition: background 0.18s ease, color 0.18s ease;
+}
+
+/* Items without icons — indent text to align with icon+gap width */
+.ttbm_global_settings .tabLists li:not(:has(i)) span {
+    padding-left: 25px;
+}
+
+.ttbm_global_settings .tabLists li i {
+    color: #6B7C93;
+    font-size: 15px;
+    flex-shrink: 0;
+    width: 18px;
+    text-align: center;
+    transition: color 0.18s ease;
+}
+
+.ttbm_global_settings .tabLists li span {
+    line-height: 1.35;
+    color: inherit;
+}
+
+.ttbm_global_settings .tabLists li:hover {
+    background-color: #D6E4F0 !important;
+    color: #1E3A5F !important;
+    transform: none;
+    box-shadow: none;
+}
+
+.ttbm_global_settings .tabLists li:hover i {
+    color: #2271B1;
+}
+
+.ttbm_global_settings .tabLists li.active {
+    background-color: var(--color_theme, #2271B1) !important;
+    color: #fff !important;
+    font-weight: 500;
+    transform: none !important;
+    box-shadow: 0 2px 8px rgba(34, 113, 177, 0.30) !important;
+}
+
+.ttbm_global_settings .tabLists li.active i {
+    color: #fff;
+}
+
+.ttbm_global_settings .tabLists li.active::after {
+    display: none;
+}
+
+/* ── Content area ── */
+.ttbm_global_settings .tabsContent {
+    background-color: #fff !important;
+    flex: 1;
+    min-width: 0;
+    padding: 20px 24px;
+    box-sizing: border-box;
+}
+
+.ttbm_global_settings .tabsItem {
+    padding: 0;
+}
+
+/* Keep the selected settings pane visible even when generic admin tab
+ * styles are loaded later or retain a stale hidden/content-visibility state. */
+#ttbm_content.ttbm_global_settings.ttbm_configuration .tabsContent > .tabsItem[data-tabs].active {
+    display: block !important;
+    visibility: visible !important;
+    content-visibility: visible !important;
+}
+
+.ttbm_global_settings .tabsItem > h2 {
+    padding: 0;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--mpl-secondary, #1D2327);
+    margin: 0 0 20px;
+    line-height: 1.3;
+}
+
+/* Section header wrapper */
+.ttbm_global_settings .tabsItem .ttbm-section-header {
+    margin: 0 0 20px;
+    padding: 14px 18px;
+    background: #F8FAFC;
+    border-left: none;
+    border-radius: 0 6px 6px 0;
+}
+
+.ttbm_style.ttbm_global_settings.ttbm_configuration .ttbm-section-header {
+    padding: 15px 0;
+}
+
+.ttbm_global_settings .tabsItem h3 {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--mpl-secondary, #1D2327);
+    margin: 0 0 4px;
+    padding: 0;
+    border: none;
+    line-height: 1.3;
+}
+
+.ttbm_style.ttbm_global_settings.ttbm_configuration .ttbm-section-header h3 {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+}
+
+.ttbm_global_settings .tabsItem .ttbm-section-desc {
+    font-size: 12.5px;
+    color: #6B7280;
+    margin: 0;
+    line-height: 1.55;
+}
+
+.ttbm_global_settings .tabsItem section {
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ttbm_global_settings .tabsItem section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.ttbm_global_settings .justifyBetween._mT {
+    padding-top: 10px;
+}
+
+/* ── Modern Tour Settings tab ── */
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] > form > .ttbm-section-header { display: none !important; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] > form > section { overflow: hidden; padding: 0 !important; border: 1px solid #e4e9f0; border-radius: 16px; box-shadow: 0 8px 28px rgba(15,23,42,.07); }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field { display: grid; grid-template-columns: minmax(190px, 29%) minmax(0, 1fr); gap: 24px; align-items: center !important; margin: 0; padding: 17px 22px !important; border-bottom: 1px solid #edf0f4; background: #fff !important; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field:last-child { border-bottom: 0; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field:hover { background: #f8fbff !important; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field > .label { width: auto !important; min-width: 0 !important; padding: 0 !important; color: #172033; font-size: 13px; font-weight: 700; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field > label,
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field > fieldset { width: 100%; min-width: 0; margin: 0; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field:has(.ttbm-settings-modern-hero) { display: block !important; padding: 0 !important; border: 0; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field:has(.ttbm-settings-modern-hero) > .label { display: none !important; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-settings-modern-hero { display: flex; align-items: flex-start; gap: 17px; padding: 25px 26px; color: #fff; background: linear-gradient(125deg, #164e63 0%, #0284c7 58%, #38bdf8 100%); }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-settings-modern-hero__icon { display: grid; place-items: center; width: 50px; height: 50px; flex: 0 0 50px; border: 1px solid rgba(255,255,255,.23); border-radius: 14px; background: rgba(255,255,255,.14); font-size: 25px; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-settings-modern-hero__eyebrow { display: block; margin-bottom: 3px; color: #bae6fd; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-settings-modern-hero h3 { margin: 0 0 5px; color: #fff; font-size: 19px; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-settings-modern-hero p { margin: 0; color: rgba(255,255,255,.8); font-size: 12.5px; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] input.formControl,
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] select.formControl { width: 100% !important; max-width: 640px; min-height: 42px; border: 1px solid #d7dce4 !important; border-radius: 9px !important; box-shadow: none !important; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] fieldset { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; border: 0; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] fieldset label._min_200 { display: inline-flex; align-items: center; gap: 6px; width: auto !important; min-width: 0 !important; margin: 0; padding: 8px 11px; border: 1px solid #dfe3ea; border-radius: 9px; background: #f8fafc; }
+#ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] fieldset label._min_200:has(input:checked) { color: #075985; border-color: #7dd3fc; background: #f0f9ff; }
+@media (max-width: 780px) { #ttbm_content .tabsItem[data-tabs="#ttbm_basic_gen_settings"] .ttbm-setting-field { grid-template-columns: 1fr; gap: 9px; padding: 15px !important; } }
+
+/* ── Setting field odd/even striping + hover ── */
+.ttbm_global_settings .tabsItem section .ttbm-setting-field {
+    border-radius: 0 !important;
+    padding: 5px 16px;
+    align-items: flex-start !important; /* top-align label with tall input areas */
+}
+.ttbm_global_settings .tabsItem section .ttbm-setting-field:nth-child(odd) {
+    background-color: #F8FAFC !important;
+}
+.ttbm_global_settings .tabsItem section .ttbm-setting-field:nth-child(even) {
+    background-color: #ffffff !important;
+}
+.ttbm_global_settings .tabsItem section .ttbm-setting-field {
+    transition: background-color 0.18s ease;
+}
+.ttbm_global_settings .tabsItem section .ttbm-setting-field:hover {
+    background-color: #EEF2FF !important;
+}
+
+/* ── Consistent left/start alignment for all field content ─── */
+
+/* Label column — top-align text and padding */
+.ttbm_global_settings .ttbm-setting-field > .label,
+.ttbm_global_settings .ttbm-setting-field > label:first-of-type {
+    text-align: left !important;
+    align-self: flex-start !important;
+    padding-top: 8px !important;
+}
+
+/* Input column — force left-start for ALL field types */
+.ttbm_global_settings .ttbm-setting-field > fieldset,
+.ttbm_global_settings .ttbm-setting-field > label:not(:first-of-type) {
+    text-align: left !important;
+    align-self: flex-start !important;
+}
+
+/* Nested field wrappers — override framework centering */
+.ttbm_global_settings .ttbm-setting-field .field-wrapper,
+.ttbm_global_settings .ttbm-setting-field .field-img-select-wrapper,
+.ttbm_global_settings .ttbm-setting-field .field-switch-wrapper,
+.ttbm_global_settings .ttbm-setting-field .field-color-sets-wrapper,
+.ttbm_global_settings .ttbm-setting-field .field-color-palette-wrapper,
+.ttbm_global_settings .ttbm-setting-field .field-image-link-wrapper {
+    text-align: left !important;
+    justify-content: flex-start !important;
+}
+
+/* Checkbox / radio / multicheck labels — start-align */
+.ttbm_global_settings .ttbm-setting-field fieldset label,
+.ttbm_global_settings .ttbm-setting-field fieldset legend {
+    text-align: left !important;
+    justify-content: flex-start !important;
+}
+
+/* Inputs, selects, textareas — left-align text */
+.ttbm_global_settings .ttbm-setting-field input[type="text"],
+.ttbm_global_settings .ttbm-setting-field input[type="number"],
+.ttbm_global_settings .ttbm-setting-field input[type="url"],
+.ttbm_global_settings .ttbm-setting-field input[type="email"],
+.ttbm_global_settings .ttbm-setting-field select,
+.ttbm_global_settings .ttbm-setting-field textarea {
+    text-align: left !important;
+}
+
+.ttbm_global_settings .button-primary {
+    min-width: 150px;
+}
+
+.ttbm_global_settings .ttbmTabs {
+    width: 100%;
+    min-height: 540px;
+    align-items: stretch;
+}
+
+/* ── License table — row separator only, no cell borders ── */
+.ttbm_license_settings table {
+    border: 1px solid #ddd !important;
+}
+.ttbm_license_settings table thead th {
+    background: #ebebeb !important;
+}
+.ttbm_global_settings .ttbm_license_settings table th,
+.ttbm_global_settings .ttbm_license_settings table td {
+    border: none !important;
+    border-bottom: 1px solid #ddd !important;
+}
+.ttbm_global_settings .ttbm_license_settings table thead tr th {
+    border-bottom: 2px solid #ddd !important;
+}
+
+/* ── Payments tab — WooCommerce Payment Methods manager ── */
+.ttbm-pm-wrap {
+    margin-top: 10px;
+}
+.ttbm-pm-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+.ttbm-pm-heading {
+    margin: 0;
+    font-size: 15px;
+}
+.ttbm-pm-wc-link .dashicons {
+    font-size: 14px;
+    line-height: 1.4;
+    vertical-align: middle;
+}
+.ttbm-pm-card {
+    border: 1px solid var(--ttbm-a-border, #dcdcde);
+    border-radius: var(--ttbm-a-radius, 10px);
+    background: var(--ttbm-a-surface, #fff);
+    margin-bottom: 14px;
+    overflow: hidden;
+    box-shadow: var(--ttbm-a-shadow-sm, 0 1px 2px rgba(15, 23, 42, 0.05));
+}
+.ttbm-pm-card.is-enabled {
+    border-left: 1px solid var(--ttbm-a-border, #dcdcde);
+}
+.ttbm-pm-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+}
+.ttbm-pm-head-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.ttbm-pm-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ttbm-a-text, #1d2327);
+}
+.ttbm-pm-badge {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+    padding: 2px 8px;
+    border-radius: 9px;
+    background: var(--ttbm-a-bg, #f0f0f1);
+    color: var(--ttbm-a-muted, #646970);
+}
+.ttbm-pm-card.is-enabled .ttbm-pm-badge {
+    background: var(--ttbm-a-success-soft, #e6f4ea);
+    color: var(--ttbm-a-success, #0a7c2f);
+}
+.ttbm-pm-desc {
+    padding: 0 16px 12px;
+    color: var(--ttbm-a-muted, #50575e);
+    font-size: 13px;
+}
+.ttbm-pm-desc p {
+    margin: 0 0 6px;
+}
+.ttbm-pm-body {
+    padding: 6px 16px 16px;
+    border-top: 1px solid var(--ttbm-a-border, #f0f0f1);
+    background: var(--ttbm-a-bg, #fbfbfc);
+}
+.ttbm-pm-form-table {
+    width: 100%;
+    background: transparent;
+}
+.ttbm-pm-form-table th {
+    width: 200px;
+    padding: 14px 10px 14px 0;
+    background: transparent;
+    font-weight: 600;
+    vertical-align: top;
+}
+.ttbm-pm-form-table td {
+    padding: 12px 0;
+    background: transparent;
+}
+.ttbm-pm-form-table input[type="text"],
+.ttbm-pm-form-table input[type="password"],
+.ttbm-pm-form-table input[type="email"],
+.ttbm-pm-form-table input[type="number"],
+.ttbm-pm-form-table textarea,
+.ttbm-pm-form-table select {
+    min-width: 320px;
+    max-width: 100%;
+}
+/* All checkboxes inside a gateway's own native settings form (WooCommerce's
+   raw, unstyled <input type="checkbox"> output) — fully custom-painted red/
+   green rather than relying on WooCommerce's own colors. The tick mark is a
+   background SVG centered via background-position, not a ::before + rotated-
+   border trick — that approach depends on exact transform math and generated
+   content on <input> (a replaced element) is inconsistently supported, which
+   is why earlier attempts kept landing off-center. background-position:
+   center has no such ambiguity. */
+.ttbm-pm-form-table input[type="checkbox"] {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    box-sizing: border-box !important;
+    display: inline-block !important;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    margin: 0 6px 0 0 !important;
+    padding: 0 !important;
+    border: 2px solid var(--ttbm-a-danger, #d63638) !important;
+    border-radius: 4px !important;
+    background-color: var(--ttbm-a-danger-soft, #fef2f2) !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: 13px 13px !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    vertical-align: middle;
+    transition: background-color .15s ease, border-color .15s ease;
+}
+.ttbm-pm-form-table input[type="checkbox"]:checked {
+    border-color: var(--ttbm-a-success, #00a32a) !important;
+    background-color: var(--ttbm-a-success, #00a32a) !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23ffffff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='3 8.5 6.5 12 13 4.5'/%3E%3C/svg%3E") !important;
+}
+.ttbm-pm-form-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--ttbm-a-border, #f0f0f1);
+}
+.ttbm-pm-status {
+    font-size: 13px;
+}
+.ttbm-pm-status.is-success {
+    color: var(--ttbm-a-success, #0a7c2f);
+}
+.ttbm-pm-status.is-error {
+    color: var(--ttbm-a-danger, #d63638);
+}
+/* The WooCommerce Payment Methods enable/disable switch reuses the plugin's
+   own existing, already-styled roundSwitchLabel/roundSwitch component (see
+   TTBM_Setting_API::callback_switch_button() and assets/mp_style/
+   ttbm_plugin_global.css) instead of a bespoke implementation — its CSS is
+   already loaded on this screen and scoped to .ttbm_style, which wraps the
+   whole settings page. ttbm-pm-toggle is kept only as a layout hook. */
+.ttbm-pm-toggle {
+    flex: 0 0 auto;
+}
+
+/* ── Payments tab — Custom Payment gateway cards (PayPal / Stripe / Offline) ──
+   Modern white cards with brand icon chips. Scoped to .ttbm-pm-gateways so
+   WooCommerce gateway cards stay on the shared neutral card styles above. */
+.ttbm-pm-gateways {
+    display: flow;
+}
+.ttbm-pm-gateways .ttbm-pm-card {
+    margin: 0;
+    padding: 0;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
+    overflow: hidden;
+    transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.ttbm-pm-gateways .ttbm-pm-card:hover {
+    border-color: #d1d5db;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, .08);
+    transform: translateY(-1px);
+}
+.ttbm-pm-gateways .ttbm-pm-card.is-enabled {
+    border-left: 1px solid var(--ttbm-a-border, #dcdcde);
+    border-color: #c7d7ea;
+    box-shadow: 0 1px 2px rgba(34, 113, 177, .06);
+}
+.ttbm-pm-gateways .ttbm-pm-card.is-enabled:hover {
+    border-color: #9bb8d9;
+}
+.ttbm-pm-gateways .ttbm-pm-card.is-locked {
+    opacity: .72;
+}
+.ttbm-pm-gateways .ttbm-pm-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 18px 18px 16px;
+}
+.ttbm-pm-gateways .ttbm-pm-head-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+.ttbm-pm-gateways .ttbm-pm-icon {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #f3f4f6;
+    color: #374151;
+}
+.ttbm-pm-gateways .ttbm-pm-card-paypal .ttbm-pm-icon {
+    background: #e8f1fb;
+    color: #003087;
+}
+.ttbm-pm-gateways .ttbm-pm-card-stripe .ttbm-pm-icon {
+    background: #eeecff;
+    color: #635bff;
+}
+.ttbm-pm-gateways .ttbm-pm-card-offline .ttbm-pm-icon {
+    background: #e6f6f3;
+    color: #0f766e;
+}
+.ttbm-pm-gateways .ttbm-pm-head-copy {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+.ttbm-pm-gateways .ttbm-pm-title-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+.ttbm-pm-gateways .ttbm-pm-title {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    color: #111827;
+    line-height: 1.3;
+}
+.ttbm-pm-gateways .ttbm-pm-desc {
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #6b7280;
+}
+.ttbm-pm-gateways .ttbm-pm-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #f3f4f6;
+    color: #6b7280;
+}
+.ttbm-pm-gateways .ttbm-pm-card.is-enabled .ttbm-pm-badge {
+    background: #e8f5ec;
+    color: #0a7c2f;
+}
+.ttbm-pm-gateways .ttbm-pm-card-paypal.is-enabled {
+    border-color: #b9d4f0;
+    margin-bottom: 5px;
+}
+.ttbm-pm-gateways .ttbm-pm-card-stripe.is-enabled {
+    border-color: #cdc9ff;
+}
+.ttbm-pm-gateways .ttbm-pm-card-offline.is-enabled {
+    border-color: #b7e2da;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.ttbm-pm-gateways .ttbm-pm-configure-btn {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 4px;
+    flex: 0 0 auto;
+    margin: 0 !important;
+    height: auto !important;
+    min-height: 34px;
+    padding: 6px 12px !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 10px !important;
+    background: #fff !important;
+    color: #374151 !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    box-shadow: none !important;
+    transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+button.button.ttbm-pm-configure-btn {
+    border-radius: 10px !important;
+}
+.ttbm-pm-gateways .ttbm-pm-configure-btn .dashicons {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    line-height: 1;
+}
+.ttbm-pm-gateways .ttbm-pm-configure-btn:hover {
+    background: #f9fafb !important;
+    border-color: #cfd4dc !important;
+    color: #111827 !important;
+}
+.ttbm-pm-gateways .ttbm-pm-card-paypal .ttbm-pm-configure-btn:hover {
+    border-color: #90b8e0 !important;
+    color: #003087 !important;
+}
+.ttbm-pm-gateways .ttbm-pm-card-stripe .ttbm-pm-configure-btn:hover {
+    border-color: #b3aeff !important;
+    color: #635bff !important;
+}
+.ttbm-pm-gateways .ttbm-pm-card-offline .ttbm-pm-configure-btn:hover {
+    border-color: #8dcec3 !important;
+    color: #0f766e !important;
+}
+.ttbm-pm-gateways .ttbm-pm-pro-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .05em;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(253, 160, 133, .35);
+}
+.ttbm-pm-gateways .ttbm-pm-body {
+    background: #fafbfc;
+    border-top: 1px solid #f0f0f1;
+}
+.ttbm-pm-inactive-notice {
+    padding: 14px 16px;
+    background: var(--ttbm-a-bg, #f6f7f7);
+    border: 1px solid var(--ttbm-a-border, #dcdcde);
+    border-radius: var(--ttbm-a-radius, 10px);
+    color: var(--ttbm-a-muted, #50575e);
+}
+@media (max-width: 782px) {
+    .ttbm-pm-gateways .ttbm-pm-head {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .ttbm-pm-gateways .ttbm-pm-configure-btn {
+        align-self: flex-start;
+    }
+}
+
+/* Gateway configuration modal */
+.ttbm-gw-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: rgba(15, 23, 42, .55);
+    align-items: center;
+    justify-content: center;
+}
+.ttbm-gw-modal-box {
+    background: var(--ttbm-a-surface, #fff);
+    border-radius: var(--ttbm-a-radius-lg, 14px);
+    width: 480px;
+    max-width: 94vw;
+    max-height: 92vh;
+    overflow-y: auto;
+    box-shadow: var(--ttbm-a-shadow-lg, 0 12px 40px rgba(15, 23, 42, .25));
+}
+.ttbm-gw-modal-header {
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--ttbm-a-border, #e2e8f0);
+    background: var(--ttbm-a-bg, #f8fafc);
+    border-radius: var(--ttbm-a-radius-lg, 14px) var(--ttbm-a-radius-lg, 14px) 0 0;
+}
+.ttbm-gw-modal-header h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ttbm-a-text, #0f172a);
+}
+.ttbm-gw-modal-close {
+    background: none;
+    border: none;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--ttbm-a-muted, #64748b);
+    padding: 0;
+}
+.ttbm-gw-modal-body {
+    padding: 20px 22px 6px;
+}
+.ttbm-gw-modal-footer {
+    padding: 12px 22px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.ttbm-gw-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--ttbm-a-bg, #f8fafc);
+    border-radius: var(--ttbm-a-radius, 10px);
+    border: 1px solid var(--ttbm-a-border, #e2e8f0);
+    margin-bottom: 16px;
+}
+.ttbm-gw-toggle-label {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ttbm-a-text, #0f172a);
+}
+.ttbm-gw-toggle-sub {
+    font-size: 12px;
+    color: var(--ttbm-a-muted, #64748b);
+    margin-top: 2px;
+}
+.ttbm-gw-field {
+    margin-bottom: 16px;
+}
+.ttbm-gw-field label.ttbm-gw-label {
+    display: block;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ttbm-a-text-secondary, #334155);
+    margin-bottom: 6px;
+}
+.ttbm-gw-field input[type="text"],
+.ttbm-gw-field input[type="password"] {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--ttbm-a-border-strong, #cbd5e1);
+    border-radius: var(--ttbm-a-radius-sm, 6px);
+    font-size: 13px;
+    box-sizing: border-box;
+}
+.ttbm-gw-field-desc {
+    margin: 6px 0 0;
+    font-size: 12px;
+    color: var(--ttbm-a-help, #94a3b8);
+}
+.ttbm-gw-save-msg {
+    display: none;
+    font-size: 13px;
+    font-weight: 500;
+}
+/* Toggle switch (modal) */
+.ttbm-gw-switch {
+    position: relative;
+    display: inline-block;
+    width: 42px;
+    height: 24px;
+    flex-shrink: 0;
+}
+.ttbm-gw-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.ttbm-gw-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #cbd5e1;
+    border-radius: 24px;
+    transition: .2s;
+}
+.ttbm-gw-slider::before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: .2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+}
+.ttbm-gw-switch input:checked + .ttbm-gw-slider {
+    background: var(--ttbm-a-primary, #2271b1);
+}
+.ttbm-gw-switch input:checked + .ttbm-gw-slider::before {
+    transform: translateX(18px);
+}
+
+/* ── Payments tab — WooCommerce / Custom Payment sub-tabs ── */
+.ttbm-pay-subtabs.nav-tab-wrapper {
+    border-bottom: none;
+    padding: 0;
+    margin: 0 0 20px;
+    display: flex;
+    gap: 8px;
+}
+.ttbm-pay-subtab-link {
+    background: var(--ttbm-a-surface, #fff);
+    border: 1px solid var(--ttbm-a-border-strong, #cbd5e1);
+    border-radius: var(--ttbm-a-radius-sm, 6px);
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ttbm-a-text-secondary, #334155) !important;
+    text-decoration: none;
+}
+.ttbm-pay-subtab-link:hover {
+    border-color: var(--ttbm-a-primary, #2271b1);
+    color: var(--ttbm-a-primary, #2271b1) !important;
+}
+.ttbm-pay-subtab-link.is-active {
+    background: var(--ttbm-a-primary, #2271b1);
+    border-color: var(--ttbm-a-primary, #2271b1);
+    color: #fff !important;
+}
+
+/* Booking Mode selector — full width, below the sub-tab bar */
+.ttbm-booking-mode,
+.ttbm-booking-mode * {
+    box-sizing: border-box;
+}
+.ttbm-booking-mode {
+    margin: 2px 0 20px;
+    max-width: 100%;
+}
+/* Beats the page-wide ".ttbm_global_settings .tabsItem h3" rule (higher
+   specificity via ancestry, applies to every <h3> in this settings page)
+   which was otherwise flattening this to near body-text size. */
+.ttbm_global_settings .tabsItem .ttbm-booking-mode-head h3 {
+    margin: 0 0 4px;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--ttbm-a-text, #1d2327);
+}
+.ttbm-booking-mode-head p {
+    margin: 0 0 12px;
+    font-size: 12.5px;
+    color: var(--ttbm-a-text-secondary, #6b7280);
+    max-width: 680px;
+    line-height: 1.55;
+}
+.ttbm-booking-mode-head p.ttbm-booking-mode-auto {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    max-width: none;
+}
+.ttbm-booking-mode-card.is-disabled {
+    cursor: not-allowed;
+    opacity: .55;
+}
+.ttbm-booking-mode-card.is-disabled:hover {
+    border-color: var(--ttbm-a-border-strong, #e5e7eb);
+    box-shadow: none;
+}
+.ttbm-booking-mode-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    max-width: 100%;
+}
+@media (max-width: 680px) {
+    .ttbm-booking-mode-cards { grid-template-columns: 1fr; }
+}
+.ttbm-booking-mode-card {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    background: var(--ttbm-a-surface, #fafafb);
+    border: 1.5px solid var(--ttbm-a-border-strong, #e5e7eb);
+    border-radius: 12px;
+    padding: 14px 16px;
+    min-width: 0;
+    transition: border-color .15s ease, box-shadow .15s ease, opacity .15s ease;
+}
+.ttbm-booking-mode-card:hover {
+    border-color: var(--ttbm-a-primary, #2271b1);
+    box-shadow: 0 4px 14px rgba(16, 24, 40, .06);
+}
+.ttbm-booking-mode-card.is-active {
+    border-color: var(--ttbm-a-primary, #2271b1);
+    background: var(--ttbm-a-surface, #fff);
+    box-shadow: 0 6px 18px rgba(34, 113, 177, .12);
+    cursor: default;
+}
+.ttbm-booking-mode-card.is-saving {
+    opacity: .6;
+    pointer-events: none;
+}
+.ttbm-booking-mode-card-icon {
+    flex: 0 0 auto;
+    align-self: flex-start;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    margin: 0;
+    border-radius: 9px;
+    background: rgba(34, 113, 177, .1);
+    color: var(--ttbm-a-primary, #2271b1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    line-height: 1;
+    font-size: 18px;
+}
+.ttbm-booking-mode-card-icon:before {
+    margin: 0;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    line-height: 1;
+}
+.ttbm-booking-mode-card-body {
+    flex: 1;
+    min-width: 0;
+}
+.ttbm-booking-mode-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 0 0 4px;
+}
+.ttbm-booking-mode-card-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ttbm-a-text, #0f172a);
+}
+/* Only ever rendered into the DOM for the active card in the first place
+   (see TTBM_Payment_Settings::render_booking_mode_selector() and the JS
+   click handler) — visibility isn't gated by a CSS class, so a stylesheet
+   caching/loading issue can never show it on the wrong card. */
+.ttbm-booking-mode-badge {
+    display: inline-block;
+    flex: 0 0 auto;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    color: #166534;
+    background: #dcfce7;
+    border-radius: 999px;
+    padding: 2px 10px;
+}
+.ttbm-booking-mode-card-desc {
+    margin: 0;
+    font-size: 12px;
+    color: var(--ttbm-a-text-secondary, #64748b);
+    line-height: 1.5;
+}
+.ttbm-booking-mode-msg {
+    min-height: 16px;
+    margin: 8px 2px 0;
+    font-size: 12px;
+    font-weight: 600;
+    display: none;
+}
+.ttbm-booking-mode-msg.is-success { color: #0a7c2f; }
+.ttbm-booking-mode-msg.is-error { color: #d63638; }
+.ttbm-booking-mode-warning,
+.ttbm-booking-mode-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    margin-top: 10px;
+}
+.ttbm-booking-mode-warning {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    color: #9a3412;
+}
+.ttbm-booking-mode-warning p,
+.ttbm-booking-mode-note p {
+    margin: 0;
+}
+.ttbm-booking-mode-note {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e3a8a;
+    margin: 0 0 20px;
+}
+.ttbm-booking-mode-note-warn {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #991b1b;
+}
+
+/* Enable WooCommerce Payment toggle row */
+.ttbm-pay-field-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--ttbm-a-border, #e2e8f0);
+}
+.ttbm-pay-field-row:last-child {
+    border-bottom: none;
+}
+.ttbm-pay-toggle-label,
+.ttbm-pay-field-label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ttbm-a-text, #0f172a);
+    min-width: 220px;
+}
+.ttbm-pay-toggle-sub {
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--ttbm-a-muted, #64748b);
+}
+.ttbm-pay-field-control {
+    flex: 1;
+    max-width: 420px;
+}
+.ttbm-pay-field-control select.formControl {
+    width: 100%;
+    border-radius: 10px;
+}
+.ttbm-pay-misc-save-row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    margin-top: 16px;
+    padding-top: 10px;
+}
+.ttbm-pay-misc-save-btn.button,
+.ttbm-pay-misc-save-btn.button-primary {
+    border-radius: 5px !important;
+    margin-left: auto;
+}
+.ttbm-pay-field-desc {
+    margin: 6px 0 0;
+    font-size: 12px;
+    color: var(--ttbm-a-help, #94a3b8);
+}
+.ttbm-pay-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ttbm-a-text-secondary, #334155);
+}
+.ttbm-pay-book-status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 18px;
+}
+.ttbm-pay-book-status-msg {
+    font-size: 12px;
+    color: var(--ttbm-a-success, #0a7c2f);
+}
+
+/* WooCommerce not-activated warning */
+.ttbm-pay-wc-warning {
+    background: var(--ttbm-a-warning-soft, #fffbeb);
+    border: 1px solid var(--ttbm-a-warning, #d97706);
+    border-radius: var(--ttbm-a-radius, 10px);
+    padding: 18px 20px;
+}
+.ttbm-pay-wc-warning-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 6px;
+    font-weight: 700;
+    color: var(--ttbm-a-warning, #92400e);
+}
+.ttbm-pay-wc-warning-desc {
+    margin: 0 0 14px;
+    color: var(--ttbm-a-text-secondary, #334155);
+    font-size: 13px;
+}
+#ttbm-pay-activate-woo-progress {
+    margin-top: 14px;
+}
+.ttbm-pay-progress-track {
+    width: 100%;
+    height: 8px;
+    background: var(--ttbm-a-bg, #f0f0f1);
+    border-radius: 100px;
+    overflow: hidden;
+}
+.ttbm-pay-progress-fill {
+    height: 100%;
+    width: 0;
+    background: var(--ttbm-a-primary, #2271b1);
+    border-radius: 100px;
+    transition: width .3s ease;
+}
+#ttbm-pay-activate-woo-status {
+    margin: 8px 0 0;
+    font-size: 12px;
+    color: var(--ttbm-a-muted, #64748b);
+}
+
+/* Accordions (WooCommerce Payment Methods / Additional Settings) */
+.ttbm-pay-accordion {
+    border: 1px solid var(--ttbm-a-border, #dcdcde);
+    border-radius: var(--ttbm-a-radius, 10px);
+    margin-top: 14px;
+    overflow: hidden;
+}
+.ttbm-pay-acc-header {
+    width: 100%;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    text-align: left;
+    padding: 12px 16px;
+    background: var(--ttbm-a-bg, #f6f7f7);
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ttbm-a-text, #1d2327);
+}
+.ttbm-pay-acc-header > span:first-child {
+    flex: 1;
+}
+.ttbm-pay-acc-header .dashicons {
+    transition: transform .2s ease;
+    color: var(--ttbm-a-muted, #50575e);
+}
+.ttbm-pay-acc-header.is-open {
+    background: var(--ttbm-a-primary-soft, #eff6ff);
+    color: var(--ttbm-a-primary, #2271b1);
+}
+.ttbm-pay-acc-header.is-open .dashicons {
+    transform: rotate(180deg);
+    color: var(--ttbm-a-primary, #2271b1);
+}
+.ttbm-pay-acc-body {
+    padding: 16px;
+}
+
+/* Custom Payment gateway cards — PRO badge */
+.ttbm-pm-pro-badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    padding: 3px 10px;
+    border-radius: 9px;
+    background: var(--ttbm-a-warning-soft, #fffbeb);
+    color: var(--ttbm-a-warning, #b45309);
+    border: 1px solid var(--ttbm-a-warning, #d97706);
+}
+.ttbm-pay-confirmation-page {
+    display: none !important;
+}
+
+/* WooCommerce install/activate modal (mirrors the reference plugin's
+   "Set Up WooCommerce" popup, reusing the .ttbm-gw-modal chrome). */
+.ttbm-woo-modal-box {
+    width: 480px;
+}
+.ttbm-gw-modal-header .dashicons {
+    color: var(--ttbm-a-primary, #2271b1);
+    font-size: 20px;
+}
+.ttbm-woo-modal-desc {
+    margin: 0 0 18px;
+    font-size: 14px;
+    color: var(--ttbm-a-text-secondary, #334155);
+    line-height: 1.6;
+}
+#ttbm-woo-modal-status-text {
+    margin: 10px 0 0;
+    font-size: 13px;
+    color: var(--ttbm-a-muted, #50575e);
+    text-align: center;
+    min-height: 20px;
+}
+#ttbm-woo-modal-status-text.is-success {
+    color: var(--ttbm-a-success, #039855);
+    font-weight: 600;
+}
+#ttbm-woo-modal-status-text.is-error {
+    color: var(--ttbm-a-danger, #d92d20);
+    font-weight: 600;
+}

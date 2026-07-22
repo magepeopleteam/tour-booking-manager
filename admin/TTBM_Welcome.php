@@ -8,7 +8,6 @@
 				add_action('admin_menu', array($this, 'welcome_menu'));
 			}
 			public function welcome_menu() {
-				add_submenu_page('edit.php?post_type=ttbm_tour', __('Welcome', 'tour-booking-manager'), __('Welcome', 'tour-booking-manager'), 'manage_options', 'ttbm_welcome_page', array($this, 'welcome_page'));
 			}
 			public function welcome_page() {
 				?>

@@ -423,13 +423,10 @@ Language setting issue fixed.
 - Removed unnecessary code
 - Resolved starting price issue
 - Improved performance and speed optimization
-
-Released on: 21 April 2026
-
-
-= Version 2.2.0 =
 - Tour start date and end date, time added in checkout and order details.
 - Hide other add-on code.
+
+Released on: 21 April 2026
 
 
 

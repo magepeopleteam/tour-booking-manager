@@ -1,4 +1,4 @@
-=== Travelly – Tour & Travel Booking Manager for WooCommerce | Tour & Hotel Booking Plugin ===
+=== Travelly – Tour & Travel Booking Manager for WooCommerce  ===
 Contributors: magepeopleteam, aamahin
 Plugin link: https://mage-people.com/
 Tags: tour booking, travel agency, travel booking, tour operator, hotel booking

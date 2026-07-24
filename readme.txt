@@ -211,222 +211,43 @@ Yes, [Travelly PRO](https://mage-people.com/product/woocommerce-tour-and-travel-
  
 Use the [WordPress.org support forum](https://wordpress.org/support/plugin/tour-booking-manager/) or [submit a support ticket](https://mage-people.com/submit-ticket/) directly to the development team.
 
-== Screenshots ==
-
-
 
 == Changelog ==
-= 1.0.0 =
-*Initial Release - 11 February 2021*
+= 2.1.9 – 15 May 2026 =
+* New: Customer dashboard with booking cancellation requests (`[ttbm-customer-dashboard]`)
+* New: Admin management of cancellation requests with approve/reject and notifications
+* New: Global cancellation window setting in Travel Settings
+* Improved: Performance and speed optimization
+* Fixed: Starting price display issue
+* Removed: Unnecessary legacy code
 
-= 1.0.1 =
-*
-Bug Fixed
-New Hook Added
-Code Optimized
-Elementor Support Added
-Shortcode New Attribute Added 
-- 14 February 2021*
+= 2.1.8 – 11 Mar 2026 =
+* Fixed: Frontend settings issue
+* Fixed: Language setting issue
 
-= 1.0.2 =
-*
-Bug Fixed
-New Hook Added
-Code Optimized
-- 18 February 2021*
+= 1.8.3 – 23 Aug 2024 =
+* Fixed: Style issues and general bugs
 
-= 1.0.3 =
-*
-Hotel Type Added
-HipHop Tour Added
-Bug Fixed
-New Hook Added
-Code Optimized
-- 07 June 2021*
-
-
-= 1.0.7 =
-*
-Bug Fixed
-New Hook Added
-Code Optimized
-- 09 Sep 2021*
-
-= 1.1.3 =
-*
-New UI Added
-Bug Fixed
-New Hook Added
-Code Optimized
-- 27 Jan 2022*
-
-= 1.1.4 =
-*
-New UI Added
-Bug Fixed
-New Hook Added
-Viator theme added
-- 11 feb 2022*
-
-
-= 1.1.5 =
-*
-PHP error fixed
-New UI Added
-Bug Fixed
-New Hook Added
-Viator theme added
-- 11 feb 2022*
-
-
-= 1.1.6 =
-*
-PHP error fixed
-New UI Added
-Bug Fixed
-New Hook Added
-- 01 March 2022*
-
-
-= 1.2.1 =
-*
-PHP error fixed
-New UI Added
-Bug Fixed
-New Hook Added
-- 01 March 2022*
-
-= 1.2.3 =
-*
-PHP error fixed
-- 15 April 2022*
-
-
-= 1.2.8 =
-*
-PHP error fixed
-- 27 Jun 2022*
-
-= 1.3.6 =
-*
-PHP error fixed
-- 13 Sep 2022*
-
-= 1.4.3 =
-*
-PHP error fixed
-- 13 Dec 2022*
-
-= 1.4.5 =
-*
-Bug Fixed
-- 03 Feb 2023*
-
-
-= 1.4.6 =
-*
-Hotel Saving issue fixed
-Review & Ratings issue solved
-Category & Organizer Page Tour List issue fixed.
-Bug Fixed
-- 16 Feb 2023*
-
-
-= 1.4.7 =
-Bug Fixed
-- 10 March 2023*
-
-
-= 1.4.8 =
-Releted Tour Shortcode added
-Repeated Inventory Issue fixed
-Bug Fixed
-- 22 March 2023*
-
-
-= 1.4.9 =
-Email Text Format issue fixed
-- 23 March 2023*
-
-
-= 1.5.0 =
-Bug Fixed
-- 29 March 2023*
-
-
-= 1.5.1 =
-Bug Fixed
-- 11 May 2023*
-
-
-= 1.5.2 =
-Bug Fixed
-- 17 May 2023*
-
-= 1.5.3 =
-Tour List Menu Added
-Qucik Setup Improved
-Available Seat Issue fixed
-Admin Note Feature Added
-Design issue fixed
-Code Optimized
-New Hooks added
-Bug Fixed
-- 12 July 2023*
-
-= 1.5.4 =
-Releted Tour Same Image and URL issue fixed
-Multi Language Support added (WPML & Polylang)
-Code Optimized
-New Hooks added
-Bug Fixed
-- 13 July 2023*
-
-= 1.5.5 =
-Astra Theme issue fixed
-Quick Setup Fixing
-Code Optimized
-New Hooks added
-Bug Fixed
-- 27 July 2023*
-
-= 1.5.6 =
-Astra Theme issue fixed
-Quick Setup Fixing
-Code Optimized
-New Hooks added
-Bug Fixed
-- 09 Aug 2023*
+= 1.8.2 – 20 Aug 2024 =
+* Improved: Styles and code optimization
+* New: Additional developer hooks
 
 = 1.7.8 =
-Security Issue Fixed.
-Code Optimized
+* Security: Security issue fixed
+* Improved: Code optimization
 
-= 1.8.2 =
-Style fixing.
-Code Optimized
-New Hooks added
-Bug Fixed
-- 20 Aug 2024*
+= Earlier versions =
+* 1.5.3–1.5.6 (Jul–Aug 2023): Tour list menu, improved quick setup, WPML & Polylang multilanguage support, Astra theme fixes, admin notes, new hooks
+* 1.4.6–1.5.2 (Feb–May 2023): Hotel saving fix, reviews & ratings fix, related tour shortcode, email format fix, general bug fixes
+* 1.1.3–1.4.5 (2022–2023): New UI, Viator-style template, PHP error fixes, code optimization
+* 1.0.0–1.0.7 (2021): Initial release, Elementor support, hotel type, new hooks and shortcode attributes
 
-= 1.8.3 =
-Style fixing.
-Bug Fixed
-- 23 Aug 2024*
+[View the full changelog](https://plugins.trac.wordpress.org/log/tour-booking-manager/)
 
-= 2.1.8 =
-Forntend settings fixed.
-Language setting issue fixed.
-- 11 Mar 2026*
+== Upgrade Notice ==
 
-= Version 2.1.9 =
-- Removed unnecessary code
-- Resolved starting price issue
-- Improved performance and speed optimization
-- Tour start date and end date, time added in checkout and order details.
-- Hide other add-on code.
-
-Released on: 21 April 2026
+= 2.1.9 =
+Adds the new customer dashboard with self-service cancellation requests, plus performance improvements and a starting-price fix. Recommended for all users.
 
 
 

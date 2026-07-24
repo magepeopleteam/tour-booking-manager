@@ -345,11 +345,16 @@
                                     echo get_the_post_thumbnail($post_id, 'full');
                                 }else{
                                     $image_ids = TTBM_Global_Function::get_post_info($post_id, 'ttbm_gallery_images', array());
-                                    if($image_ids[0]){
+                                    // A brand-new tour has no featured image and no gallery, so this
+                                    // meta is an empty array (or a non-array). Guard the [0] access,
+                                    // otherwise PHP 8 raises "Undefined array key 0" on every such card.
+                                    if( is_array( $image_ids ) && ! empty( $image_ids[0] ) ){
                                         $thumbnail = TTBM_Global_Function::get_image_url('', $image_ids[0]);
+                                        if ( $thumbnail ) {
                                         ?>
-                                        <img width="626" height="418" src="<?php echo $thumbnail; ?>" class="attachment-full size-full wp-post-image" alt="" decoding="async" loading="lazy">
+                                        <img width="626" height="418" src="<?php echo esc_url( $thumbnail ); ?>" class="attachment-full size-full wp-post-image" alt="" decoding="async" loading="lazy">
                                         <?php
+                                        }
                                     }
                                 }
                                 ?>

@@ -3123,7 +3123,7 @@ msgstr "일치하는 결과가 없습니다!"
 #: inc/TTBM_Filter_Pagination.php:919
 #: inc/TTBM_Tour_List.php:305
 msgid "Showing"
-msgstr "전시"
+msgstr "표시"
 
 #: admin/TTBM_Get_Enquiry.php:725
 #: inc/TTBM_Filter_Pagination.php:922
@@ -8848,7 +8848,7 @@ msgstr ""
 #: inc/TTBM_Tour_List.php:93
 #: inc/TTBM_Tour_List.php:269
 msgid "All Tours"
-msgstr ""
+msgstr "모든 투어"
 
 #: admin/TTBM_Admin_Tour_List.php:129
 #: admin/TTBM_Admin_Tour_List.php:160
@@ -10274,7 +10274,7 @@ msgstr ""
 
 #: inc/TTBM_Filter_Pagination.php:81
 msgid "Refine your luxury journey"
-msgstr ""
+msgstr "럭셔리 여행을 세밀하게 찾아보세요"
 
 #: inc/TTBM_Filter_Pagination.php:296
 msgid "ANYWHERE"
@@ -10517,15 +10517,15 @@ msgstr ""
 
 #: inc/TTBM_Tour_List.php:272
 msgid "This Week"
-msgstr ""
+msgstr "이번 주"
 
 #: inc/TTBM_Tour_List.php:275
 msgid "This Month"
-msgstr ""
+msgstr "이번 달"
 
 #: inc/TTBM_Tour_List.php:278
 msgid "This Year"
-msgstr ""
+msgstr "올해"
 
 #: inc/TTBM_Tour_List.php:318
 msgid "Sort tours"
@@ -10533,15 +10533,15 @@ msgstr ""
 
 #: inc/TTBM_Tour_List.php:319
 msgid "Price: Low to High"
-msgstr ""
+msgstr "가격: 낮은순"
 
 #: inc/TTBM_Tour_List.php:320
 msgid "Price: High to Low"
-msgstr ""
+msgstr "가격: 높은순"
 
 #: inc/TTBM_Tour_List.php:321
 msgid "Title: A–Z"
-msgstr ""
+msgstr "이름: 가나다순"
 
 #: inc/TTBM_Tour_List.php:326
 msgid "View mode"
@@ -10549,11 +10549,11 @@ msgstr ""
 
 #: inc/TTBM_Tour_List.php:327
 msgid "Grid View"
-msgstr ""
+msgstr "격자 보기"
 
 #: inc/TTBM_Tour_List.php:330
 msgid "List View"
-msgstr ""
+msgstr "목록 보기"
 
 #: inc/TTBM_Travel_List_Tab_Details.php:164
 msgid "Activity Icon"
@@ -10710,7 +10710,7 @@ msgstr ""
 #: templates/layout/gc_card_footer.php:65
 #: templates/layout/orchid_card_footer.php:30
 msgid "Explore"
-msgstr ""
+msgstr "둘러보기"
 
 #: inc/TTBM_Wishlist.php:283
 msgid "Login Required"

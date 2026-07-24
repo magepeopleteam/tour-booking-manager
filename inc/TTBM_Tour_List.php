@@ -48,6 +48,8 @@
 					$all_loop_ids = wp_list_pluck( $loop->posts, 'ID' );
 					update_meta_cache( 'post', $all_loop_ids );
 					update_object_term_cache( $all_loop_ids, TTBM_Function::get_cpt_name() );
+					/* Booking rows for every card in one query instead of one per ticket type. */
+					TTBM_Function::prime_sold_cache( $all_loop_ids );
 				}
 
 				foreach ($loop->posts as $tour) {
@@ -135,7 +137,8 @@
 								<?php } ?>
 								<?php if ($params['location-filter'] == 'yes' || $location_filter) {
 									$location = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_location_name');
-									$location_id = $location ? get_term_by('name', $location, 'ttbm_tour_location')->term_id : '';
+									$location_term = $location ? TTBM_Function::get_term_by_name_cached($location, 'ttbm_tour_location') : false;
+									$location_id = $location_term ? $location_term->term_id : '';
 									?>
                                     data-location="<?php echo esc_attr($location_id); ?>"
 								<?php } ?>
@@ -227,6 +230,8 @@
 					$all_loop_ids = wp_list_pluck( $loop->posts, 'ID' );
 					update_meta_cache( 'post', $all_loop_ids );
 					update_object_term_cache( $all_loop_ids, TTBM_Function::get_cpt_name() );
+					/* Booking rows for every card in one query instead of one per ticket type. */
+					TTBM_Function::prime_sold_cache( $all_loop_ids );
 				}
 
 				foreach ($loop->posts as $tour) {
@@ -360,7 +365,8 @@
 								<?php } ?>
 								<?php if ($params['location-filter'] == 'yes' || $location_filter) {
 									$location = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_location_name');
-									$location_id = $location ? get_term_by('name', $location, 'ttbm_tour_location')->term_id : '';
+									$location_term = $location ? TTBM_Function::get_term_by_name_cached($location, 'ttbm_tour_location') : false;
+									$location_id = $location_term ? $location_term->term_id : '';
 									?>
                                     data-location="<?php echo esc_attr($location_id); ?>"
 								<?php } ?>

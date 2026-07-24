@@ -354,7 +354,12 @@
 				}
 				return array_values($candidate_dates);
 			}
-			public static function get_all_tour_in_location($location, $status = ''): WP_Query {
+			/**
+			 * @param string $fields Pass 'ids' when only the count is needed, to skip
+			 *                       hydrating full post objects. Defaults to the
+			 *                       original full-object behaviour for existing callers.
+			 */
+			public static function get_all_tour_in_location($location, $status = '', $fields = ''): WP_Query {
 				$compare = '>=';
 				if ($status) {
 					$compare = $status == 'expired' ? '<' : '>=';
@@ -384,9 +389,14 @@
 				);
 				if ($status == 'active') {
 					return TTBM_Function::get_active_tours($args);
-				} else {
-					return new WP_Query($args);
 				}
+				if ($fields === 'ids') {
+					$args['fields'] = 'ids';
+					$args['no_found_rows'] = true;
+					$args['update_post_meta_cache'] = false;
+					$args['update_post_term_cache'] = false;
+				}
+				return new WP_Query($args);
 			}
 		public static function query_all_sold($tour_id, $tour_date, $type = '', $hotel_id = ''): WP_Query {
 			$_seat_booked_status = TTBM_Function::get_general_settings('ttbm_set_book_status', array('processing', 'completed'));

@@ -390,7 +390,8 @@
 								<?php foreach ($locations as $location) { ?>
 									<div class="filter_item <?php echo esc_attr($grid_class); ?>" data-placeholder>
 										<?php
-											$tour_list = TTBM_Query::get_all_tour_in_location($location->name, $status);  
+											/* Only ->post_count is read below, so skip hydrating post objects. */
+											$tour_list = TTBM_Query::get_all_tour_in_location($location->name, $status, 'ids');
 											$thumb_id = get_term_meta($location->term_id, 'ttbm_location_image');
 											$thumbnail_img = wp_get_attachment_url($thumb_id[0]);											
 										?>
@@ -642,6 +643,8 @@
 
                 $bookings = array();
                 if ( $query->have_posts() ) {
+                    /* One meta query for every booking instead of four per booking. */
+                    update_meta_cache( 'post', wp_list_pluck( $query->posts, 'ID' ) );
                     foreach ( $query->posts as $booking ) {
                         $hotel_id       = get_post_meta( $booking->ID, '_ttbm_hotel_id', true );
                         $room_info      = get_post_meta( $booking->ID, '_ttbm_hotel_booking_room_info', true );
@@ -712,6 +715,8 @@
                 $results = array();
 
                 if ( $query->have_posts() ) {
+                    /* Each hotel below reads a dozen meta keys; fetch them all in one query. */
+                    update_meta_cache( 'post', $query->posts );
                     while ($query->have_posts()) {
                         $query->the_post();
                         $hotel_id = get_the_ID();

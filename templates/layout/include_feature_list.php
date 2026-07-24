@@ -15,7 +15,7 @@
 				$hidden_count = 0;
 				foreach ($include_services as $key => $services) {
 					//if ( $count < $term_count && $services ) {
-					$term = get_term_by('name', $services, 'ttbm_tour_features_list');
+					$term = TTBM_Function::get_term_by_name_cached($services, 'ttbm_tour_features_list');
 					if ($term) {
 						$icon = get_term_meta($term->term_id, 'ttbm_feature_icon', true);
 						$icon = $icon ?: 'fas fa-forward';

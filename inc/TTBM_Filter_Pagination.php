@@ -13,7 +13,14 @@
 				add_action('ttbm_pagination', array($this, 'pagination'), 10, 3);
 				add_action('ttbm_filter_top_bar', array($this, 'filter_top_bar'), 10, 2);
 				add_action('ttbm_sort_result', array($this, 'sort_result'), 10, 2);
-				$this->refresh_upcoming_dates();
+				/*
+				 * refresh_upcoming_dates() is deliberately NOT called here. This class is
+				 * instantiated whenever the plugin loads, so priming it in the constructor
+				 * ran a postmeta scan on every single request -- admin screens, AJAX, REST
+				 * and cron included -- even though only the filter renderers read it. Each
+				 * of those renderers (top_filter_static/top_filter/left_filter) refreshes
+				 * for itself before touching $this->upcomming_date.
+				 */
 			}
 			public function refresh_upcoming_dates() {
 				$this->upcomming_date = array_reverse(TTBM_Function::get_meta_values('ttbm_upcoming_date', 'ttbm_tour'));
@@ -347,7 +354,7 @@
                                 <input data-placeholder type="hidden" name="location_filter_multiple" value="<?php echo esc_attr($current_location); ?>"/>
 								<?php foreach ($exist_locations as $location) { ?>
 									<?php
-									$term = get_term_by('name', $location, 'ttbm_tour_location');
+									$term = TTBM_Function::get_term_by_name_cached($location, 'ttbm_tour_location');
 									$term_id = $term ? $term->term_id : 0;
 									$icon = $term_id ? (get_term_meta($term_id, 'ttbm_location_icon', true) ? get_term_meta($term_id, 'ttbm_location_icon', true) : 'mi mi-marker') : 'mi mi-marker';
 									$checked = $current_location == $term_id ? 'checked' : ''; ?>
@@ -520,7 +527,7 @@
                                 <input type="hidden" name="feature_filter_multiple" value="<?php echo esc_attr($url); ?>"/>
 								<?php foreach ($exist_feature as $feature_item) { ?>
 									<?php
-									$term = get_term_by('name', $feature_item, 'ttbm_tour_features_list');
+									$term = TTBM_Function::get_term_by_name_cached($feature_item, 'ttbm_tour_features_list');
 									$term_id = $term ? $term->term_id : 0;
 									$icon = $term_id ? (get_term_meta($term_id, 'ttbm_feature_icon', true) ? get_term_meta($term_id, 'ttbm_feature_icon', true) : 'mi mi-checklist-task-budget') : 'mi mi-checklist-task-budget'; ?>
                                     <label class="customCheckboxLabel ttbm_feature_checkBoxLevel" data-placeholder>

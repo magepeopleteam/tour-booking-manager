@@ -11,6 +11,139 @@
 			private static $hero_stat_render_index = 0;
 			private static $hero_stat_limit_enabled = false;
 
+			/*
+			 * ---------------------------------------------------------------
+			 * Request-scoped memo cache.
+			 * ---------------------------------------------------------------
+			 * The list shortcodes render every matching tour server-side (up to
+			 * get_list_render_cap()) and each card re-derives the same schedule,
+			 * price and availability data from scratch -- the same tour's dates
+			 * can be expanded a dozen times in one request, and every ticket type
+			 * of every card fires its own booking WP_Query.
+			 *
+			 * The getters below are deterministic for the lifetime of a single
+			 * request, so their results are memoised here instead of being
+			 * recomputed per card. Nothing is persisted: the cache dies with the
+			 * request, so there is no stale-data window across page loads.
+			 *
+			 * Invalidation, for the requests that DO mutate state mid-flight
+			 * (checkout creating bookings, admin saving a tour):
+			 *   - booking-derived entries (sold/available) are dropped whenever a
+			 *     ttbm_booking post or any ttbm_* meta on one changes;
+			 *   - tour-derived entries are dropped whenever a tour is saved.
+			 * See register_cache_invalidation() below.
+			 */
+			private static $ttbm_cache = array();
+			/* Booking rows pre-loaded per tour by prime_sold_cache(); null = not primed. */
+			private static $sold_rows = null;
+
+			private static function cache_has($group, $key): bool {
+				return isset(self::$ttbm_cache[$group]) && array_key_exists($key, self::$ttbm_cache[$group]);
+			}
+			private static function cache_set($group, $key, $value) {
+				self::$ttbm_cache[$group][$key] = $value;
+				return $value;
+			}
+			private static function cache_get($group, $key) {
+				return self::$ttbm_cache[$group][$key];
+			}
+			/**
+			 * Stringify an argument for use in a cache key. Keys on the exact value
+			 * rather than its truthiness, so a caller passing a different flavour of
+			 * "truthy" can never be handed another caller's result.
+			 */
+			private static function cache_scalar_key($value): string {
+				if (is_scalar($value) || null === $value) {
+					return gettype($value) . ':' . (string) $value;
+				}
+				return 'other:' . md5((string) wp_json_encode($value));
+			}
+			/**
+			 * Drop memoised tour-schedule/price data (whole cache when $group is empty).
+			 */
+			public static function flush_request_cache($group = ''): void {
+				if ($group === '') {
+					self::$ttbm_cache = array();
+					self::$sold_rows = null;
+					return;
+				}
+				unset(self::$ttbm_cache[$group]);
+			}
+			/**
+			 * Drop everything derived from booking rows. Called whenever a booking
+			 * post/meta changes so an availability re-check later in the same
+			 * request sees the new numbers.
+			 */
+			public static function flush_booking_request_cache(): void {
+				unset(self::$ttbm_cache['sold'], self::$ttbm_cache['available'], self::$ttbm_cache['any_available']);
+				self::$sold_rows = null;
+			}
+			public static function register_cache_invalidation(): void {
+				$booking_flush = array(__CLASS__, 'flush_booking_request_cache');
+				add_action('save_post_ttbm_booking', $booking_flush, 1);
+				add_action('save_post_ttbm_service_booking', $booking_flush, 1);
+				add_action('deleted_post', $booking_flush, 1);
+				add_action('trashed_post', $booking_flush, 1);
+				add_action('untrashed_post', $booking_flush, 1);
+				foreach (array('added_post_meta', 'updated_post_meta', 'deleted_post_meta') as $meta_hook) {
+					add_action($meta_hook, array(__CLASS__, 'maybe_flush_on_meta_change'), 1, 3);
+				}
+				add_action('save_post', array(__CLASS__, 'maybe_flush_on_tour_save'), 1);
+			}
+			/**
+			 * Booking meta is written key-by-key during checkout; flush when one of
+			 * the keys that feeds a sold-seat count moves. The meta_key prefix test
+			 * runs first so unrelated meta writes never pay for a post-type lookup.
+			 */
+			public static function maybe_flush_on_meta_change($meta_id, $object_id, $meta_key): void {
+				if (!is_string($meta_key) || strpos($meta_key, 'ttbm_') !== 0) {
+					return;
+				}
+				$post_type = get_post_type($object_id);
+				if ($post_type === 'ttbm_booking' || $post_type === 'ttbm_service_booking') {
+					self::flush_booking_request_cache();
+				}
+			}
+			public static function maybe_flush_on_tour_save($post_id): void {
+				if (get_post_type($post_id) === self::get_cpt_name()) {
+					self::flush_request_cache();
+				}
+			}
+			/**
+			 * get_term_by( 'name', ... ) resolved from a single get_terms() pass.
+			 *
+			 * List cards look terms up by name for the location chip and for every
+			 * included-feature tag, so a page of 300 cards fires one term query per
+			 * distinct name. Building the taxonomy's name map once per request turns
+			 * all of those into array lookups. Falls back to get_term_by() when a
+			 * name is not in the map, so behaviour is unchanged for edge cases.
+			 *
+			 * @return WP_Term|false
+			 */
+			public static function get_term_by_name_cached($name, $taxonomy) {
+				$name = (string) $name;
+				if ('' === $name || !$taxonomy) {
+					return false;
+				}
+				if (!self::cache_has('term_name_map', $taxonomy)) {
+					$map = array();
+					$terms = get_terms(array('taxonomy' => $taxonomy, 'hide_empty' => false));
+					if (is_array($terms)) {
+						foreach ($terms as $term) {
+							if (!isset($map[$term->name])) {
+								$map[$term->name] = $term;
+							}
+						}
+					}
+					self::cache_set('term_name_map', $taxonomy, $map);
+				}
+				$map = self::cache_get('term_name_map', $taxonomy);
+				if (isset($map[$name])) {
+					return $map[$name];
+				}
+				return get_term_by('name', $name, $taxonomy);
+			}
+
 			public static function enable_hero_stat_limit() {
 				self::$hero_stat_limit_enabled  = true;
 				self::$hero_stat_render_index   = 0;
@@ -48,6 +181,7 @@
 			}
 
 			public function __construct() {
+				self::register_cache_invalidation();
 			}
 			//**************Support multi Language*********************//
 			public static function post_id_multi_language($post_id) {
@@ -129,6 +263,12 @@
 
 			//*********Date and Time**********************//
 			public static function get_tour_off_schedule_data($tour_id) {
+				if (self::cache_has('off_schedule', (int) $tour_id)) {
+					return self::cache_get('off_schedule', (int) $tour_id);
+				}
+				return self::cache_set('off_schedule', (int) $tour_id, self::build_tour_off_schedule_data($tour_id));
+			}
+			private static function build_tour_off_schedule_data($tour_id) {
 				if (TTBM_Global_Function::get_post_info($tour_id, 'ttbm_enable_off_schedule', 'no') !== 'yes') {
 					return array(array(), array());
 				}
@@ -147,6 +287,10 @@
 			}
 
 			public static function get_date($tour_id, $expire = '') {
+				$cache_key = (int) $tour_id . '|' . self::cache_scalar_key($expire);
+				if (self::cache_has('date', $cache_key)) {
+					return self::cache_get('date', $cache_key);
+				}
 				$tour_date = [];
 				$travel_type = TTBM_Function::get_travel_type($tour_id);
 				$now = strtotime(current_time('Y-m-d H:i:s'));
@@ -229,18 +373,44 @@
 						}
 					}
 				}
-				return apply_filters('ttbm_get_date', $tour_date, $tour_id, $expire);
+				return self::cache_set('date', $cache_key, apply_filters('ttbm_get_date', $tour_date, $tour_id, $expire));
+			}
+			/**
+			 * Repeated-tour recurrence dates as a Y-m-d => Y-m-d lookup map.
+			 *
+			 * get_date() walks every recurrence date and asks get_date_by_time_check()
+			 * to validate each one, and that check used to rebuild the whole DatePeriod
+			 * and scan it linearly -- O(n^2) over a range that is 365 days wide for
+			 * "continue" tours, i.e. ~133k iterations for a single card. Building the
+			 * period once per request and testing membership with isset() makes the
+			 * check O(1) while matching the previous date set exactly.
+			 */
+			private static function get_repeat_pattern_dates($start_date, $end_date, $interval): array {
+				$cache_key = $start_date . '|' . $end_date . '|' . $interval;
+				if (self::cache_has('repeat_pattern', $cache_key)) {
+					return self::cache_get('repeat_pattern', $cache_key);
+				}
+				$dates = array();
+				foreach (TTBM_Global_Function::date_separate_period($start_date, $end_date, $interval) as $pattern_date) {
+					$pattern_date_str = $pattern_date->format('Y-m-d');
+					$dates[$pattern_date_str] = $pattern_date_str;
+				}
+				return self::cache_set('repeat_pattern', $cache_key, $dates);
 			}
 			public static function get_date_by_time_check($tour_id, $date, $expire) {
+				$check_cache_key = (int) $tour_id . '|' . (string) $date . '|' . self::cache_scalar_key($expire);
+				if (self::cache_has('date_time_check', $check_cache_key)) {
+					return self::cache_get('date_time_check', $check_cache_key);
+				}
 				$tour_date = '';
 				$now = strtotime(current_time('Y-m-d H:i:s'));
-				
+
 				// Normalize the date format to Y-m-d
 				$date_normalized = $date ? gmdate('Y-m-d', strtotime($date)) : '';
 				if (!$date_normalized) {
-					return $tour_date;
+					return self::cache_set('date_time_check', $check_cache_key, $tour_date);
 				}
-				
+
 				// For repeated dates, validate directly without calling get_date to avoid recursion
 				$travel_type = self::get_travel_type($tour_id);
 				if ($travel_type == 'repeated') {
@@ -272,16 +442,9 @@
 						
 						// Check if date matches interval pattern
 						$interval = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_after', 1);
-						$all_dates = TTBM_Global_Function::date_separate_period($start_date, $end_date, $interval);
-						$date_in_pattern = false;
-						foreach ($all_dates as $pattern_date) {
-							$pattern_date_str = $pattern_date->format('Y-m-d');
-							if ($pattern_date_str === $date_normalized) {
-								$date_in_pattern = true;
-								break;
-							}
-						}
-						
+						$all_dates = self::get_repeat_pattern_dates($start_date, $end_date, $interval);
+						$date_in_pattern = isset($all_dates[$date_normalized]);
+
 						// Validate date is not expired and matches pattern
 						if ($date_in_pattern && ($expire || $now_date <= strtotime($date_normalized))) {
 							if (!in_array($day, (array)$off_days) && !in_array($date_normalized, (array)$off_dates)) {
@@ -343,13 +506,20 @@
 						}
 					}
 				}
-				return $tour_date;
+				return self::cache_set('date_time_check', $check_cache_key, $tour_date);
 			}
 			public static function reduce_stop_sale_hours($date): string {
 				$stop_hours = (int)self::get_general_settings('ttbm_ticket_expire_time') * 60 * 60;
 				return gmdate('Y-m-d H:i:s', strtotime($date) - $stop_hours);
 			}
 			public static function get_time($tour_id, $date = '', $expire = '') {
+				$time_cache_key = (int) $tour_id . '|' . (string) $date . '|' . self::cache_scalar_key($expire);
+				if (self::cache_has('time', $time_cache_key)) {
+					return self::cache_get('time', $time_cache_key);
+				}
+				return self::cache_set('time', $time_cache_key, self::build_time($tour_id, $date, $expire));
+			}
+			private static function build_time($tour_id, $date = '', $expire = '') {
 				$date = $date ? gmdate('Y-m-d', strtotime($date)) : '';
 				if ($date) {
 					$travel_type = self::get_travel_type($tour_id);
@@ -497,6 +667,15 @@
 				}
 				set_transient($lock_key, true, 2 * MINUTE_IN_SECONDS);
 				$tour_ids = TTBM_Global_Function::get_all_post_id(TTBM_Function::get_cpt_name());
+				/*
+				 * Pull every tour's meta in one query up front. update_upcoming_date_month()
+				 * reads several meta keys per tour, and without a warm cache each of those
+				 * is its own SELECT -- the rebuild is inline in ttbm_query(), so one visitor
+				 * a day would otherwise pay for a few thousand round trips.
+				 */
+				if (!empty($tour_ids)) {
+					update_meta_cache('post', $tour_ids);
+				}
 				foreach ($tour_ids as $tour_id) {
 					self::update_upcoming_date_month($tour_id);
 				}
@@ -690,6 +869,14 @@
 				return TTBM_Global_Function::date_format( $date_time, 'full' );
 			}
 			public static function get_tour_start_price($tour_id, $start_date = ''): string {
+				/* Each grid card resolves this twice (data-price attribute + card footer). */
+				$price_cache_key = (int) $tour_id . '|' . (string) $start_date;
+				if (self::cache_has('start_price', $price_cache_key)) {
+					return self::cache_get('start_price', $price_cache_key);
+				}
+				return self::cache_set('start_price', $price_cache_key, self::build_tour_start_price($tour_id, $start_date));
+			}
+			private static function build_tour_start_price($tour_id, $start_date = ''): string {
 				if ( self::get_tour_type( $tour_id ) === 'hotel' ) {
 					$hotel_prices = array();
 					foreach ( self::get_hotel_list( $tour_id ) as $hotel_id ) {
@@ -945,45 +1132,199 @@
 				}
 				return apply_filters('ttbm_get_total_reserve_filter', $reserve, $tour_id);
 			}
+			/**
+			 * Pre-load every booking row for a set of tours in one query.
+			 *
+			 * Without this, get_total_sold() issues its own WP_Query per
+			 * (tour, date, ticket type) -- a list page with 300 cards and three
+			 * ticket types each fires 900 booking queries, and a sold-out tour adds
+			 * one more per departure date via get_any_date_seat_available(). The
+			 * rows are identical no matter which of those combinations asks for
+			 * them, so fetch them once and let get_total_sold() narrow them in PHP.
+			 *
+			 * Falls back silently (leaving the per-call queries in place) when the
+			 * result set would be too large to hold, so a huge booking archive
+			 * degrades to today's behaviour instead of exhausting memory.
+			 *
+			 * @param int[] $tour_ids Tours about to be rendered.
+			 */
+			public static function prime_sold_cache($tour_ids): void {
+				$tour_ids = array_values(array_unique(array_filter(array_map('intval', (array) $tour_ids))));
+				if (empty($tour_ids)) {
+					return;
+				}
+				if (!is_array(self::$sold_rows)) {
+					self::$sold_rows = array();
+				}
+				$pending = array_diff($tour_ids, array_keys(self::$sold_rows));
+				if (empty($pending)) {
+					return;
+				}
+				$_seat_booked_status = self::get_general_settings('ttbm_set_book_status', array('processing', 'completed'));
+				$seat_booked_status = !empty($_seat_booked_status) ? $_seat_booked_status : array();
+				$limit = (int) apply_filters('ttbm_prime_sold_cache_limit', 20000);
+				$booking_ids = get_posts(array(
+					'fields' => 'ids',
+					'post_type' => 'ttbm_booking',
+					'post_status' => 'publish',
+					/* Fetch one past the limit purely to detect truncation. */
+					'posts_per_page' => $limit + 1,
+					'no_found_rows' => true,
+					'ignore_sticky_posts' => true,
+					'meta_query' => array(
+						'relation' => 'AND',
+						array('key' => 'ttbm_id', 'value' => $pending, 'compare' => 'IN'),
+						array('key' => 'ttbm_order_status', 'value' => $seat_booked_status, 'compare' => 'IN'),
+					),
+				));
+				/*
+				 * A truncated result set would silently undercount sold seats and show
+				 * sold-out departures as bookable, so bail out entirely rather than
+				 * cache a partial answer: leaving these tours unprimed just means
+				 * get_total_sold() keeps issuing its own (correct) per-call queries.
+				 */
+				if (count($booking_ids) > $limit) {
+					return;
+				}
+				/* Mark every requested tour primed, so tours with no bookings skip the query too. */
+				foreach ($pending as $pending_id) {
+					self::$sold_rows[$pending_id] = array();
+				}
+				if (empty($booking_ids)) {
+					return;
+				}
+				update_meta_cache('post', $booking_ids);
+				foreach ($booking_ids as $booking_id) {
+					$row_tour_id = (int) TTBM_Global_Function::get_post_info($booking_id, 'ttbm_id');
+					if (!isset(self::$sold_rows[$row_tour_id])) {
+						continue;
+					}
+					self::$sold_rows[$row_tour_id][] = array(
+						'order_id' => TTBM_Global_Function::get_post_info($booking_id, 'ttbm_order_id'),
+						'ticket_name' => TTBM_Global_Function::get_post_info($booking_id, 'ttbm_ticket_name'),
+						'ticket_qty' => TTBM_Global_Function::get_post_info($booking_id, 'ttbm_ticket_qty', 1),
+						'date' => TTBM_Global_Function::get_post_info($booking_id, 'ttbm_date'),
+						'hotel' => TTBM_Global_Function::get_post_info($booking_id, 'ttbm_hotel_id'),
+					);
+				}
+			}
+			/**
+			 * Booking rows for one tour, or null when that tour has not been primed.
+			 */
+			private static function get_primed_sold_rows($tour_id) {
+				$tour_id = (int) $tour_id;
+				return is_array(self::$sold_rows) && isset(self::$sold_rows[$tour_id]) ? self::$sold_rows[$tour_id] : null;
+			}
+			/**
+			 * PHP-side equivalent of the meta_query comparisons in
+			 * TTBM_Query::query_all_sold(). Matches MySQL's default case- and
+			 * trailing-space-insensitive string collation rather than PHP's stricter
+			 * ===, so a primed count can never diverge from a queried one.
+			 */
+			private static function sold_value_matches($row_value, $filter_value): bool {
+				return strcasecmp(rtrim((string) $row_value), rtrim((string) $filter_value)) === 0;
+			}
 			public static function get_total_sold($tour_id, $tour_date = '', $type = '', $hotel_id = ''): int {
 				$tour_date = $tour_date ?: TTBM_Global_Function::get_post_info($tour_id, 'ttbm_upcoming_date');
 				$type = apply_filters('ttbm_type_filter', $type, $tour_id);
-				$sold_query = TTBM_Query::query_all_sold($tour_id, $tour_date, $type, $hotel_id);
+				$sold_cache_key = (int) $tour_id . '|' . (string) $tour_date . '|' . (is_array($type) ? wp_json_encode($type) : (string) $type) . '|' . (string) $hotel_id;
+				if (self::cache_has('sold', $sold_cache_key)) {
+					return self::cache_get('sold', $sold_cache_key);
+				}
+				$primed_rows = self::get_primed_sold_rows($tour_id);
+				$booking_rows = null === $primed_rows
+					? self::query_sold_rows($tour_id, $tour_date, $type, $hotel_id)
+					: self::filter_sold_rows($primed_rows, $tour_date, $type, $hotel_id);
 				// Booking rows can be duplicated per attendee while storing the same line quantity.
 				// Count each order/ticket/date/hotel line once to avoid over-counting.
 				$total_sold = 0;
 				$line_qty_map = array();
-				if ($sold_query->have_posts()) {
-					foreach ($sold_query->posts as $booking_post) {
-						$order_id = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_order_id');
-						$ticket_name = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_ticket_name');
-						$ticket_qty = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_ticket_qty', 1);
-						$ticket_qty = max(1, intval($ticket_qty));
-						// Convert purchased group count to actual seat count when group tickets are enabled.
-						$ticket_qty = apply_filters('ttbm_group_ticket_qty_actual', $ticket_qty, $tour_id, $ticket_name);
-						$ticket_qty = max(1, intval($ticket_qty));
-						$booked_date = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_date');
-						$booked_hotel = TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_hotel_id');
+				foreach ($booking_rows as $booking_row) {
+					$order_id = $booking_row['order_id'];
+					$ticket_name = $booking_row['ticket_name'];
+					$ticket_qty = $booking_row['ticket_qty'];
+					$ticket_qty = max(1, intval($ticket_qty));
+					// Convert purchased group count to actual seat count when group tickets are enabled.
+					$ticket_qty = apply_filters('ttbm_group_ticket_qty_actual', $ticket_qty, $tour_id, $ticket_name);
+					$ticket_qty = max(1, intval($ticket_qty));
+					$booked_date = $booking_row['date'];
+					$booked_hotel = $booking_row['hotel'];
 
-						$key = $order_id ? $order_id . '|' . $ticket_name . '|' . $booked_date . '|' . $booked_hotel : '';
-						if ($key) {
-							if (!array_key_exists($key, $line_qty_map)) {
-								$line_qty_map[$key] = $ticket_qty;
-							} else {
-								$line_qty_map[$key] = max($line_qty_map[$key], $ticket_qty);
-							}
+					$key = $order_id ? $order_id . '|' . $ticket_name . '|' . $booked_date . '|' . $booked_hotel : '';
+					if ($key) {
+						if (!array_key_exists($key, $line_qty_map)) {
+							$line_qty_map[$key] = $ticket_qty;
 						} else {
-							$total_sold += $ticket_qty;
+							$line_qty_map[$key] = max($line_qty_map[$key], $ticket_qty);
 						}
+					} else {
+						$total_sold += $ticket_qty;
 					}
 				}
 				$total_sold += array_sum($line_qty_map);
+				return self::cache_set('sold', $sold_cache_key, $total_sold);
+			}
+			/**
+			 * Booking rows straight from the database -- the original, unprimed path.
+			 */
+			private static function query_sold_rows($tour_id, $tour_date, $type, $hotel_id): array {
+				$sold_query = TTBM_Query::query_all_sold($tour_id, $tour_date, $type, $hotel_id);
+				$rows = array();
+				if ($sold_query->have_posts()) {
+					foreach ($sold_query->posts as $booking_post) {
+						$rows[] = array(
+							'order_id' => TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_order_id'),
+							'ticket_name' => TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_ticket_name'),
+							'ticket_qty' => TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_ticket_qty', 1),
+							'date' => TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_date'),
+							'hotel' => TTBM_Global_Function::get_post_info($booking_post->ID, 'ttbm_hotel_id'),
+						);
+					}
+				}
 				wp_reset_postdata();
-				return $total_sold;
+				return $rows;
+			}
+			/**
+			 * Narrow pre-loaded rows the same way TTBM_Query::query_all_sold() narrows
+			 * them in SQL: exact ticket name / hotel match, and a date match that is
+			 * exact when a time component is present and a substring match otherwise
+			 * (mirroring that query's LIKE fallback for date-only lookups).
+			 */
+			private static function filter_sold_rows($rows, $tour_date, $type, $hotel_id): array {
+				$filter_type = (!empty($type) && !is_array($type)) ? $type : '';
+				$filter_hotel = !empty($hotel_id) ? $hotel_id : '';
+				$date_is_exact = !empty($tour_date) && TTBM_Global_Function::check_time_exit_date($tour_date);
+				$matched = array();
+				foreach ($rows as $row) {
+					if ('' !== $filter_type && !self::sold_value_matches($row['ticket_name'], $filter_type)) {
+						continue;
+					}
+					if ('' !== $filter_hotel && !self::sold_value_matches($row['hotel'], $filter_hotel)) {
+						continue;
+					}
+					if (!empty($tour_date)) {
+						if ($date_is_exact) {
+							if (!self::sold_value_matches($row['date'], $tour_date)) {
+								continue;
+							}
+						} elseif (stripos((string) $row['date'], (string) $tour_date) === false) {
+							continue;
+						}
+					}
+					$matched[] = $row;
+				}
+				return $matched;
 			}
 			public static function get_total_available($tour_id, $tour_date = '') {
+				$available_cache_key = (int) $tour_id . '|' . (string) $tour_date;
+				if (self::cache_has('available', $available_cache_key)) {
+					return self::cache_get('available', $available_cache_key);
+				}
+				return self::cache_set('available', $available_cache_key, self::build_total_available($tour_id, $tour_date));
+			}
+			private static function build_total_available($tour_id, $tour_date = '') {
 				$tour_type = self::get_tour_type($tour_id);
-				
+
 				if ($tour_type == 'general') {
 					$ticket_lists = self::get_ticket_type($tour_id);
 					if (sizeof($ticket_lists) > 0) {
@@ -1012,6 +1353,12 @@
 				return max(0, $available);
 			}
 			public static function get_any_date_seat_available($tour_id) {
+				if (self::cache_has('any_available', (int) $tour_id)) {
+					return self::cache_get('any_available', (int) $tour_id);
+				}
+				return self::cache_set('any_available', (int) $tour_id, self::build_any_date_seat_available($tour_id));
+			}
+			private static function build_any_date_seat_available($tour_id) {
 				$travel_type = TTBM_Function::get_travel_type($tour_id);
 				if ($travel_type != 'fixed') {
 					$total = self::get_total_seat($tour_id);
@@ -1038,13 +1385,23 @@
 			}
 			//*********************************//
 			public static function get_ticket_type($tour_id) {
+				/*
+				 * Reading this meta runs the whole ticket array through
+				 * TTBM_Global_Function::data_sanitize() (recursive sanitize_text_field),
+				 * and every card asks for it from get_total_seat(), get_total_reserve(),
+				 * get_total_available(), get_tour_start_price() and
+				 * check_discount_price_exit(). Resolve it once per tour per request.
+				 */
+				if (self::cache_has('ticket_type', (int) $tour_id)) {
+					return self::cache_get('ticket_type', (int) $tour_id);
+				}
 				$ttbm_type = self::get_tour_type($tour_id);
 				$tickets = array();
 				if ($ttbm_type == 'general') {
 					$tickets = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_ticket_type', array());
 					$tickets = apply_filters('ttbm_ticket_type_filter', $tickets, $tour_id);
 				}
-			return $tickets;
+			return self::cache_set('ticket_type', (int) $tour_id, $tickets);
 		}
 		
 		//******* Enhanced Availability Functions *******//
@@ -1176,16 +1533,22 @@
 				return apply_filters('add_ttbm_tour_type', $type);
 			}
 			public static function get_tour_type($tour_id) {
+				if (self::cache_has('tour_type', (int) $tour_id)) {
+					return self::cache_get('tour_type', (int) $tour_id);
+				}
 				$tour_type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_type', 'general');
 				if ($tour_type == 'hiphop') {
 					update_post_meta($tour_id, 'ttbm_type', 'general');
 					$tour_type = 'general';
 				}
-				return $tour_type;
+				return self::cache_set('tour_type', (int) $tour_id, $tour_type);
 			}
 			public static function get_travel_type($tour_id) {
+				if (self::cache_has('travel_type', (int) $tour_id)) {
+					return self::cache_get('travel_type', (int) $tour_id);
+				}
 				$type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_type', 'fixed');
-				return apply_filters('ttbm_tour_type', $type, $tour_id);
+				return self::cache_set('travel_type', (int) $tour_id, apply_filters('ttbm_tour_type', $type, $tour_id));
 			}
 			public static function travel_type_array(): array {
 				return array('fixed' => __('Fixed Dates', 'tour-booking-manager'), 'particular' => __('Particular Dates', 'tour-booking-manager'), 'repeated' => __('Repeated Dates', 'tour-booking-manager'));
@@ -1226,7 +1589,7 @@
 				$location = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_location_name');
 				$country = '';
 				if ($location) {
-					$term = get_term_by('name', $location, 'ttbm_tour_location');
+					$term = self::get_term_by_name_cached($location, 'ttbm_tour_location');
 					$name = $term && $term->term_id ? get_term_meta($term->term_id, 'ttbm_country_location') : array();
 					if (is_array($name) && sizeof($name) > 0) {
 						$country = $name[0];
@@ -1490,7 +1853,7 @@
 				$ids = '';
 				if (sizeof($features) > 0) {
 					foreach ($features as $feature) {
-						$term = get_term_by('name', $feature, 'ttbm_tour_features_list');
+						$term = self::get_term_by_name_cached($feature, 'ttbm_tour_features_list');
 						if ($term) {
 							$ids = $ids ? $ids . ',' . $term->term_id : $term->term_id;
 						}
@@ -1714,6 +2077,17 @@
 				$tours = array();
 				$query = new WP_Query($args);
 				if ($query->have_posts()) {
+					/*
+					 * This pass asks every candidate tour for its dates and remaining
+					 * seats, so warm both caches in one query each first -- otherwise the
+					 * availability check alone costs a booking query per ticket type per
+					 * tour before a single card has been rendered.
+					 */
+					$candidate_ids = wp_list_pluck($query->posts, 'ID');
+					if (!empty($candidate_ids)) {
+						update_meta_cache('post', $candidate_ids);
+						self::prime_sold_cache($candidate_ids);
+					}
 					while ($query->have_posts()) {
 						$query->the_post();
 						$tour_id = '';
@@ -1772,6 +2146,14 @@
 				if (empty($meta_key) || !is_string($meta_key)) {
 					return false;
 				}
+				/* The sidebar filter builder asks for the same key several times per render. */
+				$meta_cache_key = $meta_key . '|' . $post_type . '|' . $post_status;
+				if (self::cache_has('meta_values', $meta_cache_key)) {
+					return self::cache_get('meta_values', $meta_cache_key);
+				}
+				return self::cache_set('meta_values', $meta_cache_key, self::query_meta_values($meta_key, $post_type, $post_status));
+			}
+			private static function query_meta_values($meta_key, $post_type, $post_status) {
 				global $wpdb;
 				$values = $wpdb->get_col($wpdb->prepare(
 					"SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm

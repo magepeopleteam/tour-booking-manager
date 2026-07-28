@@ -998,35 +998,7 @@ button.button.ttbm-pm-configure-btn {
     transform: translateX(18px);
 }
 
-/* ── Payments tab — WooCommerce / Custom Payment sub-tabs ── */
-.ttbm-pay-subtabs.nav-tab-wrapper {
-    border-bottom: none;
-    padding: 0;
-    margin: 0 0 20px;
-    display: flex;
-    gap: 8px;
-}
-.ttbm-pay-subtab-link {
-    background: var(--ttbm-a-surface, #fff);
-    border: 1px solid var(--ttbm-a-border-strong, #cbd5e1);
-    border-radius: var(--ttbm-a-radius-sm, 6px);
-    padding: 8px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ttbm-a-text-secondary, #334155) !important;
-    text-decoration: none;
-}
-.ttbm-pay-subtab-link:hover {
-    border-color: var(--ttbm-a-primary, #2271b1);
-    color: var(--ttbm-a-primary, #2271b1) !important;
-}
-.ttbm-pay-subtab-link.is-active {
-    background: var(--ttbm-a-primary, #2271b1);
-    border-color: var(--ttbm-a-primary, #2271b1);
-    color: #fff !important;
-}
-
-/* Booking Mode selector — full width, below the sub-tab bar */
+/* Payments tab — Booking Mode is the single WooCommerce/Custom switch. */
 .ttbm-booking-mode,
 .ttbm-booking-mode * {
     box-sizing: border-box;
@@ -1060,11 +1032,17 @@ button.button.ttbm-pm-configure-btn {
 }
 .ttbm-booking-mode-card.is-disabled {
     cursor: not-allowed;
-    opacity: .55;
+    background: var(--ttbm-a-surface-muted, #f8fafc);
+    border-style: dashed;
 }
 .ttbm-booking-mode-card.is-disabled:hover {
     border-color: var(--ttbm-a-border-strong, #e5e7eb);
     box-shadow: none;
+}
+.ttbm-booking-mode-card.is-disabled .ttbm-booking-mode-card-icon,
+.ttbm-booking-mode-card.is-disabled .ttbm-booking-mode-card-title,
+.ttbm-booking-mode-card.is-disabled .ttbm-booking-mode-card-desc {
+    opacity: .58;
 }
 .ttbm-booking-mode-cards {
     display: grid;
@@ -1104,7 +1082,8 @@ button.button.ttbm-pm-configure-btn {
 }
 .ttbm-booking-mode-card-icon {
     flex: 0 0 auto;
-    align-self: flex-start;
+    align-self: center !important;
+    box-sizing: border-box;
     width: 36px;
     height: 36px;
     min-width: 36px;
@@ -1113,19 +1092,24 @@ button.button.ttbm-pm-configure-btn {
     border-radius: 9px;
     background: rgba(34, 113, 177, .1);
     color: var(--ttbm-a-primary, #2271b1);
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     overflow: hidden;
     line-height: 1;
-    font-size: 18px;
 }
-.ttbm-booking-mode-card-icon:before {
+.ttbm-booking-mode-card-icon > svg {
+    display: block;
+    flex: 0 0 20px;
     margin: 0;
     padding: 0;
     width: 20px;
     height: 20px;
-    line-height: 1;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 .ttbm-booking-mode-card-body {
     flex: 1;
@@ -1165,6 +1149,10 @@ button.button.ttbm-pm-configure-btn {
     color: var(--ttbm-a-text-secondary, #64748b);
     line-height: 1.5;
 }
+.ttbm-booking-mode-card-cta {
+    margin-top: 10px !important;
+    white-space: nowrap;
+}
 .ttbm-booking-mode-msg {
     min-height: 16px;
     margin: 8px 2px 0;
@@ -1203,6 +1191,121 @@ button.button.ttbm-pm-configure-btn {
     background: #fef2f2;
     border-color: #fecaca;
     color: #991b1b;
+}
+
+/* Critical payment setup notice shown above the Tour settings shell. */
+.notice.ttbm-pay-gateway-notice-modern {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    max-width: 1518px;
+    margin: 16px 20px 20px 2px;
+    padding: 0;
+    overflow: hidden;
+    background: linear-gradient(135deg, #fff 0%, #fffbf5 100%);
+    border: 1px solid #fed7aa;
+    border-radius: 14px;
+    box-shadow: 0 8px 28px rgba(154, 52, 18, .09);
+}
+.ttbm-pay-gateway-notice-inner {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+    padding: 16px 20px;
+}
+.ttbm-pay-gateway-notice-icon {
+    display: flex;
+    flex: 0 0 46px;
+    width: 46px;
+    height: 46px;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: linear-gradient(135deg, #fb923c, #ea580c);
+    border-radius: 12px;
+    box-shadow: 0 7px 16px rgba(234, 88, 12, .25);
+}
+.ttbm-pay-gateway-notice-icon .dashicons {
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+}
+.ttbm-pay-gateway-notice-copy {
+    flex: 1 1 360px;
+    min-width: 220px;
+}
+.ttbm-pay-gateway-notice-kicker {
+    display: block;
+    margin-bottom: 2px;
+    color: #c2410c;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    line-height: 1.3;
+    text-transform: uppercase;
+}
+.ttbm-pay-gateway-notice-modern h3 {
+    margin: 0 0 3px;
+    color: #1e293b;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+.ttbm-pay-gateway-notice-modern p {
+    margin: 0;
+    color: #64748b;
+    font-size: 12.5px;
+    line-height: 1.5;
+}
+.notice.ttbm-pay-gateway-notice-modern .ttbm-pay-gateway-notice-action,
+.notice.ttbm-pay-gateway-notice-modern .ttbm-pay-gateway-notice-action:visited {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 40px;
+    padding: 0 16px;
+    color: #fff !important;
+    background: linear-gradient(135deg, #f97316, #c2410c);
+    border-radius: 9px;
+    box-shadow: 0 6px 15px rgba(194, 65, 12, .2);
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none !important;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+.notice.ttbm-pay-gateway-notice-modern .ttbm-pay-gateway-notice-action:hover,
+.notice.ttbm-pay-gateway-notice-modern .ttbm-pay-gateway-notice-action:focus,
+.notice.ttbm-pay-gateway-notice-modern .ttbm-pay-gateway-notice-action:active {
+    color: #fff !important;
+    text-decoration: none !important;
+    transform: translateY(-1px);
+    box-shadow: 0 9px 20px rgba(194, 65, 12, .28);
+}
+.ttbm-pay-gateway-notice-action .dashicons {
+    width: 17px;
+    height: 17px;
+    font-size: 17px;
+    color: #fff !important;
+}
+.ttbm-pay-gateway-notice-action-label {
+    color: #fff !important;
+}
+@media (max-width: 782px) {
+    .notice.ttbm-pay-gateway-notice-modern {
+        margin-right: 10px;
+    }
+    .ttbm-pay-gateway-notice-inner {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding: 14px;
+    }
+    .ttbm-pay-gateway-notice-action {
+        flex-basis: 100%;
+    }
 }
 
 /* Enable WooCommerce Payment toggle row */
@@ -1245,13 +1348,33 @@ button.button.ttbm-pm-configure-btn {
     justify-content: flex-end;
     align-items: center;
     width: 100%;
-    margin-top: 16px;
-    padding-top: 10px;
+    margin-top: 0;
+    padding: 16px 0 2px;
+}
+.ttbm-pay-misc-save-footer {
+    margin-top: 2px;
 }
 .ttbm-pay-misc-save-btn.button,
 .ttbm-pay-misc-save-btn.button-primary {
-    border-radius: 5px !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 38px !important;
+    height: 38px !important;
+    padding: 0 18px !important;
+    border-radius: 7px !important;
     margin-left: auto;
+    font-size: 12.5px !important;
+    line-height: 1 !important;
+}
+.ttbm-pay-misc-save-btn .dashicons {
+    width: 17px;
+    height: 17px;
+    font-size: 17px;
+    line-height: 17px;
 }
 .ttbm-pay-field-desc {
     margin: 6px 0 0;

@@ -55,6 +55,17 @@
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Hotel_Details_Layout.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Booking.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Travel_List_CPT_Tabs.php';
+				// Custom Payment is available in Free through Offline Payment.
+				// Tour Pro ships the fuller PayPal/Stripe runtime, so the free
+				// engine stands down whenever that addon is active.
+				if (!$this->is_pro_payment_runtime_active()) {
+					require_once TTBM_PLUGIN_DIR . '/inc/gateways/TTBM_Payment_Gateway_Manager.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Custom_Order_CPT.php';
+					TTBM_Custom_Order_CPT::init();
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Custom_Checkout.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Custom_Order_Confirmation.php';
+					require_once TTBM_PLUGIN_DIR . '/inc/admin/TTBM_Custom_Orders_Page.php';
+				}
 				// WooCommerce-specific integration: cart/checkout hooks and the WC My
 				// Account wishlist endpoint have no non-WC equivalent yet, so they stay
 				// gated until the native checkout/booking phase lands.
@@ -66,6 +77,24 @@
 				}
 				// Loaded last so the Pro Features placeholder menu sits at the bottom.
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Pro_Locked_Menus.php';
+			}
+			/**
+			 * Detect the active Pro addon before its main class has necessarily
+			 * loaded. The free plugin's directory sorts before the Pro directory,
+			 * so a class_exists() check alone is not reliable during bootstrap.
+			 */
+			private function is_pro_payment_runtime_active() {
+				if (class_exists('TTBM_Woocommerce_Plugin_Pro') || class_exists('TTBM_Dependencies_Pro')) {
+					return true;
+				}
+				if (!function_exists('is_plugin_active')) {
+					require_once ABSPATH . 'wp-admin/includes/plugin.php';
+				}
+				$is_active = is_plugin_active('tour-booking-manager-pro/tour-booking-manager-pro.php');
+				if (is_multisite() && function_exists('is_plugin_active_for_network')) {
+					$is_active = $is_active || is_plugin_active_for_network('tour-booking-manager-pro/tour-booking-manager-pro.php');
+				}
+				return $is_active && file_exists(WP_PLUGIN_DIR . '/tour-booking-manager-pro/tour-booking-manager-pro.php');
 			}
 			public function appsero_init_tracker_ttbm() {
 				if (!class_exists('Appsero\Client')) {
@@ -291,7 +320,7 @@
 				//===================//
 				wp_enqueue_script('ttbm_hotel_booking', TTBM_PLUGIN_URL . '/assets/admin/ttbm_hotel_booking.js', array('jquery', 'jquery-ui-datepicker'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_hotel_booking.js'), true);
 				wp_enqueue_script('ttbm_admin_script', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_script.js', array('jquery', 'ttbm_hotel_booking'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_admin_script.js'), true);
-				wp_enqueue_style('ttbm_admin', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin.css', array(), TTBM_PLUGIN_VERSION);
+				wp_enqueue_style('ttbm_admin', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin.css', array(), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_admin.css'));
 				wp_enqueue_style('ttbm_admin_modern', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_modern.css', array('ttbm_admin'), TTBM_PLUGIN_VERSION);
 				wp_localize_script('ttbm_hotel_booking', 'ttbm_admin_ajax', array(
 					'ajax_url' => admin_url('admin-ajax.php'),

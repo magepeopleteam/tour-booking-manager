@@ -14,12 +14,74 @@
 			public function __construct() {
 				add_action('wp_insert_post', array($this, 'create_hidden_wc_product_on_publish'), 10, 3);
 				add_action('save_post', array($this, 'run_link_product_on_save'), 99, 1);
+				add_action('admin_init', array($this, 'maybe_backfill_hidden_products'), 20);
+				add_action('activated_plugin', array($this, 'backfill_after_woocommerce_activation'), 20, 2);
 				add_action('parse_query', array($this, 'hide_wc_hidden_product_from_product_list'));
 				add_action('wp', array($this, 'hide_hidden_wc_product_from_frontend'));
 				//******************//
 				add_action('wp_head', [$this, 'url_exclude_search_engine']);
 				add_action('init', [$this, 'get_all_hidden_product_id']);
 				add_filter('wpseo_exclude_from_sitemap_by_post_ids', [$this, 'get_all_hidden_product_id']);
+			}
+			/**
+			 * Published tours can exist before WooCommerce is activated. Those tours
+			 * never pass through the Woo-aware publish hook, leaving link_wc_product
+			 * empty and causing the frontend Book Now template to return early.
+			 *
+			 * Every admin request checks only published tours whose link is absent,
+			 * so the repair stays automatic without repeatedly scanning healthy
+			 * tours. WooCommerce activation also runs it immediately.
+			 */
+			public function maybe_backfill_hidden_products($force = false): void {
+				if (!TTBM_Global_Function::has_woocommerce()) {
+					return;
+				}
+				if (!$force && !current_user_can('manage_options')) {
+					return;
+				}
+
+				$tour_ids = get_posts(
+					array(
+						'post_type'              => TTBM_Function::get_cpt_name(),
+						'post_status'            => 'publish',
+						'posts_per_page'         => -1,
+						'fields'                 => 'ids',
+						'no_found_rows'          => true,
+						'update_post_meta_cache' => false,
+						'update_post_term_cache' => false,
+						'meta_query'             => array(
+							'relation' => 'OR',
+							array(
+								'key'     => 'link_wc_product',
+								'compare' => 'NOT EXISTS',
+							),
+							array(
+								'key'     => 'link_wc_product',
+								'value'   => '',
+								'compare' => '=',
+							),
+							array(
+								'key'     => 'link_wc_product',
+								'value'   => '0',
+								'compare' => '=',
+							),
+						),
+					)
+				);
+				foreach ($tour_ids as $tour_id) {
+					$tour_id = (int) $tour_id;
+					$product_id = $this->resolve_linked_product_id($tour_id);
+					if ($product_id <= 0) {
+						$this->create_hidden_wc_product($tour_id, get_the_title($tour_id));
+					}
+				}
+			}
+			public function backfill_after_woocommerce_activation($plugin, $network_wide = false): void {
+				unset($network_wide);
+				if ('woocommerce/woocommerce.php' !== $plugin) {
+					return;
+				}
+				$this->maybe_backfill_hidden_products(true);
 			}
 			private function sync_hidden_product_price($product_id) {
 				$current_price = get_post_meta($product_id, '_price', true);
@@ -89,6 +151,9 @@
 					'post_type' => 'product'
 				);
 				$pid = wp_insert_post($new_post);
+				if (is_wp_error($pid) || $pid <= 0) {
+					return 0;
+				}
 				update_post_meta($post_id, 'link_wc_product', $pid);
 				update_post_meta($pid, 'link_ttbm_id', $post_id);
 				$this->sync_hidden_product_price($pid);
@@ -97,6 +162,7 @@
 				$terms = array('exclude-from-catalog', 'exclude-from-search');
 				wp_set_object_terms($pid, $terms, 'product_visibility');
 				update_post_meta($post_id, 'check_if_run_once', true);
+				return (int) $pid;
 			}
 			public function create_hidden_wc_product_on_publish($post_id, $post) {
 				if (!TTBM_Global_Function::has_woocommerce()) {

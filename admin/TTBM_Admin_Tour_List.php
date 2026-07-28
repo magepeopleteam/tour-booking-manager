@@ -426,7 +426,12 @@
                                                 if ($upcoming_date) {
                                                     echo esc_html(TTBM_Global_Function::date_format($upcoming_date));
                                                 } else {
-                                                    echo '<span class="textWarning">' . esc_html__('Expired!', 'tour-booking-manager') . '</span>';
+                                                    ?>
+                                                    <span class="ttbm-tour-expired-badge" title="<?php esc_attr_e('This tour has no upcoming dates.', 'tour-booking-manager'); ?>">
+                                                        <span class="dashicons dashicons-clock" aria-hidden="true"></span>
+                                                        <span><?php esc_html_e('Expired', 'tour-booking-manager'); ?></span>
+                                                    </span>
+                                                    <?php
                                                 }
                                             ?>
                                         </div>

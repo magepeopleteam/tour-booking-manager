@@ -134,6 +134,7 @@ if (!defined('ABSPATH')) {
 													<span class="ttbm_stock_left ttbm_stock_sold_out"><?php esc_html_e( 'Sold out', 'tour-booking-manager' ); ?></span>
 												<?php } ?>
 											</div>
+											<?php do_action( 'ttbm_after_ticket_price', $tour_id, $ticket_name, $tour_date ); ?>
 										</div>
 									</td>
 									

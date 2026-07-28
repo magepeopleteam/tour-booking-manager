@@ -73,6 +73,7 @@ do_action( 'ttbm_before_ticket_type_area', $tour_id, $tour_date );
 								<?php } ?>
 							</div>
 						<?php } ?>
+						<?php do_action( 'ttbm_after_ticket_price', $tour_id, $ticket_name, $tour_date ); ?>
 						<?php if ( $description ) { ?>
 							<div class="ttbm_smart_ticket_card__desc"><?php TTBM_Custom_Layout::load_more_text( $description, 80 ); ?></div>
 						<?php } ?>

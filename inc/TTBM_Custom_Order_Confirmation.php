@@ -238,7 +238,70 @@
 						</li>
 					</ul>
 				</div>
+				<?php $this->ticket_price_breakdown($order_id); ?>
 				<?php $this->maybe_download_button($order_id); ?>
+				<?php
+			}
+			private function ticket_price_breakdown($order_id) {
+				$allocation = TTBM_Booking_Normalizer::ticket_price_allocations($order_id);
+				if (empty($allocation['tickets']) || count($allocation['tickets']) < 2) {
+					return;
+				}
+				$currency = TTBM_Custom_Checkout::currency_code();
+				$format_price = static function ($amount) use ($currency) {
+					return number_format_i18n((float) $amount, 2) . ' ' . $currency;
+				};
+				$format_qty = static function ($qty) {
+					$qty = (float) $qty;
+					return abs($qty - round($qty)) < 0.00001 ? (string) absint($qty) : number_format_i18n($qty, 2);
+				};
+				?>
+				<div class="ttbm_booking_ticket_breakdown">
+					<div class="ttbm_booking_ticket_breakdown_head">
+						<div>
+							<span><?php esc_html_e('Individual tickets', 'tour-booking-manager'); ?></span>
+							<strong><?php esc_html_e('Ticket and extra-service allocation', 'tour-booking-manager'); ?></strong>
+						</div>
+						<div class="ttbm_booking_ticket_order_total">
+							<span><?php esc_html_e('Booking total', 'tour-booking-manager'); ?></span>
+							<strong><?php echo esc_html($format_price($allocation['order_total'])); ?></strong>
+						</div>
+					</div>
+					<div class="ttbm_booking_ticket_breakdown_list">
+						<?php foreach ($allocation['tickets'] as $ticket) : ?>
+							<div class="ttbm_booking_ticket_breakdown_row">
+								<div class="ttbm_booking_ticket_breakdown_main">
+									<div class="ttbm_booking_ticket_identity">
+										<span class="ttbm_booking_ticket_id">#<?php echo esc_html($ticket['booking_id']); ?></span>
+										<strong><?php echo esc_html($ticket['name']); ?></strong>
+									</div>
+									<div class="ttbm_booking_ticket_components">
+										<?php esc_html_e('Ticket', 'tour-booking-manager'); ?>: <?php echo esc_html($format_price($ticket['ticket_amount'])); ?>
+										<span aria-hidden="true">·</span>
+										<?php esc_html_e('Extra services', 'tour-booking-manager'); ?>: <?php echo esc_html($format_price($ticket['service_amount'])); ?>
+										<?php if (abs((float) $ticket['adjustment']) >= 0.005) : ?>
+											<span aria-hidden="true">·</span>
+											<?php esc_html_e('Order adjustment', 'tour-booking-manager'); ?>: <?php echo esc_html($format_price($ticket['adjustment'])); ?>
+										<?php endif; ?>
+									</div>
+									<?php if (!empty($ticket['services'])) : ?>
+										<div class="ttbm_booking_ticket_services">
+											<?php foreach ($ticket['services'] as $index => $service) : ?>
+												<?php if ($index) : ?><span aria-hidden="true">·</span><?php endif; ?>
+												<span><?php echo esc_html(sprintf('%s × %s (%s)', $service['name'], $format_qty($service['qty_share']), $format_price($service['amount_share']))); ?></span>
+											<?php endforeach; ?>
+										</div>
+									<?php endif; ?>
+								</div>
+								<div class="ttbm_booking_ticket_total">
+									<span><?php esc_html_e('Ticket total', 'tour-booking-manager'); ?></span>
+									<strong><?php echo esc_html($format_price($ticket['total'])); ?></strong>
+								</div>
+							</div>
+						<?php endforeach; ?>
+					</div>
+					<p class="ttbm_booking_ticket_breakdown_note"><?php esc_html_e('Order-level extra services are shared across the individual tickets so they are charged once, not repeated on every ticket.', 'tour-booking-manager'); ?></p>
+				</div>
 				<?php
 			}
 			// Same gate as the "Send Email on" statuses that trigger the ticket-

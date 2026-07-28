@@ -163,9 +163,12 @@
 			// per-row get_post_meta() below doesn't hit the DB again.
 			private static function query_woo_index() {
 				global $wpdb;
-				if (!post_type_exists('ttbm_booking')) {
-					return array();
-				}
+				// Do not gate this query with post_type_exists(). Older booking
+				// records remain in wp_posts when the component that registered the
+				// internal ttbm_booking type (for example Tour PRO) is deactivated.
+				// The admin booking list must continue to discover those persisted
+				// WooCommerce orders; the post_type predicate below keeps the query
+				// narrowly scoped and naturally returns no rows on a fresh install.
 				// TTBM_Custom_Checkout (Pro) writes the SAME ttbm_order_id meta key
 				// on ttbm_booking records, but pointing at a ttbm_custom_order post
 				// id rather than a real WC order id — exclude those explicitly so

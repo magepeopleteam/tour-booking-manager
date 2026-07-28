@@ -15,6 +15,7 @@
 			const SOURCE_CUSTOM = 'custom';
 			const SOURCE_WOO = 'woo';
 			private static $wc_order_cache = array();
+			private static $ticket_allocation_cache = array();
 			//----------------------------------------------------------------------
 			// Status
 			//----------------------------------------------------------------------
@@ -65,6 +66,210 @@
 				$ready = is_array($ready) ? $ready : array($ready);
 				$ready = array_map(array(__CLASS__, 'normalize_status'), $ready);
 				return in_array($slug, $ready, true);
+			}
+			//----------------------------------------------------------------------
+			// Per-ticket price and extra-service allocation
+			//----------------------------------------------------------------------
+			/**
+			 * Build one accounting-safe price breakdown for every printable ticket.
+			 *
+			 * Tour extra services are stored at order level, while PDFs are generated
+			 * per ttbm_booking record. Split each service line evenly across the
+			 * printable tickets and put any currency-rounding remainder on the first
+			 * ticket. This mirrors the Bus voucher model and guarantees that the sum
+			 * of all ticket totals is exactly the order total without duplicating an
+			 * order-wide service on every PDF page.
+			 *
+			 * @param int $order_id WooCommerce or ttbm_custom_order ID.
+			 * @return array<string,mixed>
+			 */
+			public static function ticket_price_allocations($order_id) {
+				$order_id = absint($order_id);
+				if (!$order_id) {
+					return self::empty_ticket_allocations();
+				}
+				if (isset(self::$ticket_allocation_cache[$order_id])) {
+					return self::$ticket_allocation_cache[$order_id];
+				}
+
+				$booking_ids = get_posts(array(
+					'post_type' => 'ttbm_booking',
+					'post_status' => 'publish',
+					'posts_per_page' => -1,
+					'fields' => 'ids',
+					'orderby' => 'ID',
+					'order' => 'ASC',
+					'no_found_rows' => true,
+					'meta_query' => array(
+						array(
+							'key' => 'ttbm_order_id',
+							'value' => $order_id,
+							'compare' => '=',
+						),
+					),
+				));
+				$booking_ids = array_values(array_unique(array_filter(array_map('absint', $booking_ids))));
+				if (empty($booking_ids)) {
+					self::$ticket_allocation_cache[$order_id] = self::empty_ticket_allocations($order_id);
+					return self::$ticket_allocation_cache[$order_id];
+				}
+
+				// A group ticket creates child booking records whose group ID points to
+				// the printable head record. Keep those children on the head page.
+				$scopes = array();
+				$children = array();
+				foreach ($booking_ids as $booking_id) {
+					$group_id = (string) get_post_meta($booking_id, 'ttbm_group_id', true);
+					if ('' === $group_id || 'on' === $group_id) {
+						$scopes[$booking_id] = array($booking_id);
+					} else {
+						$children[$booking_id] = absint($group_id);
+					}
+				}
+				foreach ($children as $booking_id => $head_id) {
+					if ($head_id && isset($scopes[$head_id])) {
+						$scopes[$head_id][] = $booking_id;
+					} else {
+						// Preserve malformed legacy records as their own printable ticket.
+						$scopes[$booking_id] = array($booking_id);
+					}
+				}
+				ksort($scopes, SORT_NUMERIC);
+
+				$tickets = array();
+				$ticket_component_total = 0.0;
+				foreach ($scopes as $booking_id => $member_ids) {
+					$names = array();
+					$ticket_amount = 0.0;
+					foreach ($member_ids as $member_id) {
+						$name = (string) get_post_meta($member_id, 'ttbm_ticket_name', true);
+						if ('' !== $name) {
+							$names[] = $name;
+						}
+						$ticket_amount += (float) get_post_meta($member_id, 'ttbm_ticket_price', true);
+					}
+					$names = array_values(array_unique($names));
+					$qty = max(1, count($member_ids));
+					$ticket_component_total += $ticket_amount;
+					$tickets[] = array(
+						'booking_id' => (int) $booking_id,
+						'member_ids' => array_values(array_map('absint', $member_ids)),
+						'name' => !empty($names) ? implode(', ', $names) : __('Tour Ticket', 'tour-booking-manager'),
+						'qty' => $qty,
+						'unit' => $qty > 0 ? $ticket_amount / $qty : $ticket_amount,
+						'ticket_amount' => $ticket_amount,
+						'services' => array(),
+						'service_amount' => 0.0,
+						'adjustment' => 0.0,
+						'total' => $ticket_amount,
+					);
+				}
+
+				$service_ids = get_posts(array(
+					'post_type' => 'ttbm_service_booking',
+					'post_status' => 'publish',
+					'posts_per_page' => -1,
+					'fields' => 'ids',
+					'orderby' => 'ID',
+					'order' => 'ASC',
+					'no_found_rows' => true,
+					'meta_query' => array(
+						array(
+							'key' => 'ttbm_order_id',
+							'value' => $order_id,
+							'compare' => '=',
+						),
+					),
+				));
+				$services = array();
+				$service_component_total = 0.0;
+				$ticket_count = count($tickets);
+				$decimals = function_exists('wc_get_price_decimals') ? absint(wc_get_price_decimals()) : 2;
+				foreach ($service_ids as $service_id) {
+					$service_id = absint($service_id);
+					$qty = absint(get_post_meta($service_id, 'ttbm_service_qty', true));
+					if ($qty <= 0) {
+						continue;
+					}
+					$unit = (float) get_post_meta($service_id, 'ttbm_service_price', true);
+					$amount = metadata_exists('post', $service_id, 'ttbm_service_total_price')
+						? (float) get_post_meta($service_id, 'ttbm_service_total_price', true)
+						: $unit * $qty;
+					$service = array(
+						'service_id' => $service_id,
+						'name' => (string) get_post_meta($service_id, 'ttbm_service_name', true) ?: __('Extra service', 'tour-booking-manager'),
+						'qty' => $qty,
+						'unit' => $unit,
+						'amount' => $amount,
+					);
+					$services[] = $service;
+					$service_component_total += $amount;
+					$amount_shares = self::split_ticket_amount($amount, $ticket_count, $decimals);
+					foreach ($tickets as $index => &$ticket) {
+						$share = isset($amount_shares[$index]) ? $amount_shares[$index] : 0.0;
+						$ticket['services'][] = array_merge($service, array(
+							'qty_share' => $qty / $ticket_count,
+							'amount_share' => $share,
+						));
+						$ticket['service_amount'] += $share;
+						$ticket['total'] += $share;
+					}
+					unset($ticket);
+				}
+
+				$component_total = $ticket_component_total + $service_component_total;
+				$order_total = $component_total;
+				if ('ttbm_custom_order' === get_post_type($order_id) && metadata_exists('post', $order_id, '_ttbm_order_total')) {
+					$order_total = (float) get_post_meta($order_id, '_ttbm_order_total', true);
+				} elseif (function_exists('wc_get_order')) {
+					$order = self::resolve_wc_order($order_id);
+					if ($order) {
+						$order_total = (float) $order->get_total();
+					}
+				}
+				$order_total = (float) apply_filters('ttbm_ticket_allocation_order_total', $order_total, $order_id, $component_total);
+				$adjustment = round($order_total - $component_total, $decimals);
+				if (0.0 !== $adjustment) {
+					$adjustment_shares = self::split_ticket_amount($adjustment, $ticket_count, $decimals);
+					foreach ($tickets as $index => &$ticket) {
+						$ticket['adjustment'] = isset($adjustment_shares[$index]) ? $adjustment_shares[$index] : 0.0;
+						$ticket['total'] += $ticket['adjustment'];
+					}
+					unset($ticket);
+				}
+
+				$result = array(
+					'order_id' => $order_id,
+					'ticket_count' => $ticket_count,
+					'tickets' => array_values($tickets),
+					'services' => $services,
+					'component_total' => $component_total,
+					'adjustment' => $adjustment,
+					'order_total' => $order_total,
+				);
+				$result = apply_filters('ttbm_ticket_price_allocations', $result, $order_id);
+				self::$ticket_allocation_cache[$order_id] = $result;
+				return $result;
+			}
+
+			private static function split_ticket_amount($amount, $parts, $decimals) {
+				$parts = max(1, absint($parts));
+				$share = round((float) $amount / $parts, $decimals);
+				$shares = array_fill(0, $parts, $share);
+				$shares[0] = round((float) $amount - ($share * ($parts - 1)), $decimals);
+				return $shares;
+			}
+
+			private static function empty_ticket_allocations($order_id = 0) {
+				return array(
+					'order_id' => absint($order_id),
+					'ticket_count' => 0,
+					'tickets' => array(),
+					'services' => array(),
+					'component_total' => 0.0,
+					'adjustment' => 0.0,
+					'order_total' => 0.0,
+				);
 			}
 			public static function source_label($source) {
 				return $source === self::SOURCE_WOO

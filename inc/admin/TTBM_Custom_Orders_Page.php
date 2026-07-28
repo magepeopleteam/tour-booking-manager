@@ -918,7 +918,7 @@
 				$tour_date = (string) get_post_meta($order_id, '_ttbm_date', true);
 				$data_format = TTBM_Global_Function::check_time_exit_date($tour_date) ? 'full' : 'date';
 				$gateway_error = (string) get_post_meta($order_id, '_ttbm_gateway_error', true);
-				$booking_ids = (array) get_post_meta($order_id, '_ttbm_booking_ids', true);
+				$ticket_allocations = TTBM_Booking_Normalizer::ticket_price_allocations($order_id);
 				?>
 				<div class="wrap ttbm-co-wrap">
 					<div class="ttbm-co-header ttbm-co-detail-header">
@@ -1011,27 +1011,43 @@
 									</tbody>
 								</table>
 							</div>
-							<?php if (!empty($booking_ids)) : ?>
+							<?php if (!empty($ticket_allocations['tickets'])) : ?>
 								<div class="ttbm-co-card">
-									<h2><?php esc_html_e('Attendee booking records', 'tour-booking-manager'); ?></h2>
+									<h2><?php esc_html_e('Individual ticket records', 'tour-booking-manager'); ?></h2>
 									<table class="widefat striped">
 										<thead>
 											<tr>
 												<th><?php esc_html_e('Booking ID', 'tour-booking-manager'); ?></th>
 												<th><?php echo esc_html(TTBM_Function::ticket_name_text()); ?></th>
+												<th><?php esc_html_e('Extra-service allocation', 'tour-booking-manager'); ?></th>
+												<th><?php esc_html_e('Ticket total', 'tour-booking-manager'); ?></th>
 												<th><?php esc_html_e('Attendee', 'tour-booking-manager'); ?></th>
 												<th><?php esc_html_e('Status', 'tour-booking-manager'); ?></th>
 												<th><?php esc_html_e('PIN', 'tour-booking-manager'); ?></th>
 											</tr>
 										</thead>
 										<tbody>
-											<?php foreach ($booking_ids as $booking_id) :
-												if (get_post_type($booking_id) !== 'ttbm_booking') {
-													continue;
-												} ?>
+											<?php foreach ($ticket_allocations['tickets'] as $ticket) :
+												$booking_id = (int) $ticket['booking_id']; ?>
 												<tr>
 													<td>#<?php echo esc_html($booking_id); ?></td>
-													<td><?php echo esc_html(get_post_meta($booking_id, 'ttbm_ticket_name', true)); ?></td>
+													<td>
+														<strong><?php echo esc_html($ticket['name']); ?></strong><br>
+														<span class="ttbm-co-muted"><?php printf(esc_html__('Base: %s', 'tour-booking-manager'), esc_html(self::format_price($ticket['ticket_amount']))); ?></span>
+													</td>
+													<td>
+														<?php if (!empty($ticket['services'])) : ?>
+															<?php foreach ($ticket['services'] as $service) : ?>
+																<div><?php echo esc_html(sprintf('%s — %s', $service['name'], self::format_price($service['amount_share']))); ?> <span class="ttbm-co-muted"><?php esc_html_e('(order share)', 'tour-booking-manager'); ?></span></div>
+															<?php endforeach; ?>
+													<?php else : ?>
+														<span class="ttbm-co-muted">—</span>
+													<?php endif; ?>
+													<?php if (abs((float) $ticket['adjustment']) >= 0.005) : ?>
+														<div><?php printf(esc_html__('Order adjustment — %s', 'tour-booking-manager'), esc_html(self::format_price($ticket['adjustment']))); ?></div>
+													<?php endif; ?>
+												</td>
+													<td><strong><?php echo esc_html(self::format_price($ticket['total'])); ?></strong></td>
 													<td><?php echo esc_html(get_post_meta($booking_id, 'ttbm_billing_name', true)); ?></td>
 													<td><?php echo esc_html(ucfirst(get_post_meta($booking_id, 'ttbm_order_status', true))); ?></td>
 													<td><?php echo esc_html(get_post_meta($booking_id, 'ttbm_pin', true)); ?></td>

@@ -192,6 +192,116 @@ ul.ttbm_booking_summary_list {
 	font-size: 13px;
 	letter-spacing: 0.02em;
 }
+/* Per-ticket accounting shared by the confirmation page and checkout modal. */
+.ttbm_booking_ticket_breakdown {
+	margin: 16px 0 0;
+	overflow: hidden;
+	border: 1px solid #dbe4ee;
+	border-radius: 14px;
+	background: #fff;
+}
+.ttbm_booking_ticket_breakdown_head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 14px 16px;
+	border-bottom: 1px solid #e2e8f0;
+	background: #f8fafc;
+}
+.ttbm_booking_ticket_breakdown_head > div:first-child,
+.ttbm_booking_ticket_order_total {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+.ttbm_booking_ticket_breakdown_head span,
+.ttbm_booking_ticket_total span,
+.ttbm_booking_ticket_order_total span {
+	color: #64748b;
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+.ttbm_booking_ticket_breakdown_head strong {
+	color: #0f172a;
+	font-size: 14px;
+}
+.ttbm_booking_ticket_order_total {
+	flex: 0 0 auto;
+	text-align: right;
+}
+.ttbm_booking_ticket_order_total strong {
+	color: #0f766e;
+	font-size: 16px;
+}
+.ttbm_booking_ticket_breakdown_row {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 16px;
+	align-items: center;
+	padding: 14px 16px;
+	border-top: 1px solid #edf2f7;
+}
+.ttbm_booking_ticket_breakdown_row:first-child {
+	border-top: 0;
+}
+.ttbm_booking_ticket_breakdown_main {
+	min-width: 0;
+}
+.ttbm_booking_ticket_identity {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: #0f172a;
+}
+.ttbm_booking_ticket_id {
+	display: inline-flex;
+	align-items: center;
+	padding: 3px 7px;
+	border-radius: 6px;
+	background: #e8f7f3;
+	color: #0f766e;
+	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+	font-size: 11px;
+	font-weight: 700;
+}
+.ttbm_booking_ticket_components,
+.ttbm_booking_ticket_services {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 3px 7px;
+	margin-top: 5px;
+	color: #64748b;
+	font-size: 11.5px;
+	line-height: 1.45;
+}
+.ttbm_booking_ticket_services {
+	color: #475569;
+}
+.ttbm_booking_ticket_total {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 104px;
+	text-align: right;
+}
+.ttbm_booking_ticket_total strong {
+	color: #0f172a;
+	font-size: 16px;
+	white-space: nowrap;
+}
+.ttbm_booking_ticket_breakdown_note {
+	margin: 0 !important;
+	padding: 10px 16px;
+	border-top: 1px solid #e2e8f0;
+	background: #f0fdf9;
+	color: #3f625c;
+	font-size: 11px;
+	line-height: 1.45;
+}
+
 
 @media (max-width: 520px) {
 	.ttbm_booking_summary_row {
@@ -200,6 +310,17 @@ ul.ttbm_booking_summary_list {
 	}
 	.ttbm_booking_summary_top {
 		flex-wrap: wrap;
+	}
+	.ttbm_booking_ticket_breakdown_head,
+	.ttbm_booking_ticket_breakdown_row {
+		align-items: flex-start;
+		grid-template-columns: 1fr;
+		flex-direction: column;
+	}
+	.ttbm_booking_ticket_order_total,
+	.ttbm_booking_ticket_total {
+		min-width: 0;
+		text-align: left;
 	}
 }
 

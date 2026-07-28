@@ -834,8 +834,10 @@
 					</td>
 					<td data-label="<?php echo esc_attr(TTBM_Function::get_name()); ?>"><a href="<?php echo esc_url(get_edit_post_link($row['tour_id'])); ?>"><?php echo esc_html(get_the_title($row['tour_id'])); ?></a></td>
 					<td data-label="<?php esc_attr_e('Customer', 'tour-booking-manager'); ?>">
-						<?php echo esc_html($row['customer_name']); ?><br>
-						<span class="ttbm-co-muted"><?php echo esc_html($row['customer_email']); ?></span>
+						<span class="ttbm-co-cell-value">
+							<?php echo esc_html($row['customer_name']); ?><br>
+							<span class="ttbm-co-muted"><?php echo esc_html($row['customer_email']); ?></span>
+						</span>
 					</td>
 					<td data-label="<?php echo esc_attr(TTBM_Function::get_name()); ?> <?php esc_attr_e('Date', 'tour-booking-manager'); ?>" class="ttbm-co-col-date"><?php echo $row['tour_date'] ? esc_html(TTBM_Global_Function::date_format($row['tour_date'], $data_format)) : '—'; ?></td>
 					<td data-label="<?php esc_attr_e('Tickets', 'tour-booking-manager'); ?>"><?php echo esc_html($row['ticket_qty']); ?></td>
@@ -843,7 +845,7 @@
 					<td data-label="<?php esc_attr_e('Payment', 'tour-booking-manager'); ?>"><span class="ttbm-co-gateway-label"><?php echo esc_html(self::gateway_label($row)); ?></span></td>
 					<td data-label="<?php esc_attr_e('Status', 'tour-booking-manager'); ?>"><span class="ttbm-co-pill is-<?php echo esc_attr(TTBM_Booking_Normalizer::status_class($row['status'])); ?>"><?php echo esc_html(TTBM_Booking_Normalizer::status_label($row['status'])); ?></span></td>
 					<td data-label="<?php esc_attr_e('Placed', 'tour-booking-manager'); ?>" class="ttbm-co-col-date"><?php echo esc_html(mysql2date('M j, Y g:i a', $row['placed_at'])); ?></td>
-					<td class="ttbm-co-col-actions">
+					<td class="ttbm-co-col-actions" data-label="<?php esc_attr_e('Actions', 'tour-booking-manager'); ?>">
 						<?php
 						$delete_url = wp_nonce_url(add_query_arg(array(
 							'action' => 'ttbm_order_delete',

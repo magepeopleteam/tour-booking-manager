@@ -1737,6 +1737,43 @@ input.medium{
 .ttbm-tour-list-page .ttbm-design-toggle { display: inline-flex; align-items: center; gap: 6px; height: 32px; }
 .ttbm-tour-list-page .ttbm-design-toggle .dashicons { font-size: 16px; width: 16px; height: 16px; line-height: 1; }
 
+/* Expired tour treatment — prominent in every list layout without competing
+   with the row actions. AJAX search/load-more reuse the same card markup. */
+.ttbm-tour-list-page .ttbm-tour-card[data-expire-tour="expired_tour"] {
+	border-color: #fecaca;
+	background: linear-gradient(90deg, rgba(254, 242, 242, .78) 0, #fff 18%);
+	box-shadow: inset 3px 0 0 #ef4444, 0 1px 3px rgba(127, 29, 29, .06);
+}
+.ttbm-tour-list-page .ttbm-tour-expired-badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+	min-height: 26px;
+	padding: 4px 10px;
+	border: 1px solid #fca5a5;
+	border-radius: 999px;
+	color: #b91c1c;
+	background: linear-gradient(135deg, #fff1f2 0%, #fee2e2 100%);
+	box-shadow: 0 3px 9px rgba(185, 28, 28, .12);
+	font-size: 11px;
+	font-weight: 800;
+	line-height: 1;
+	letter-spacing: .02em;
+	white-space: nowrap;
+}
+.ttbm-tour-list-page .ttbm-tour-expired-badge .dashicons {
+	width: 14px;
+	height: 14px;
+	font-size: 14px;
+	line-height: 14px;
+}
+.ttbm-tour-list-page .ttbm-tour-card[data-expire-tour="expired_tour"]:hover {
+	border-color: #f87171;
+	background: linear-gradient(90deg, #fff1f2 0, #fff 22%);
+	box-shadow: inset 3px 0 0 #dc2626, 0 10px 24px rgba(127, 29, 29, .12);
+}
+
 /* cleaner, dashboard-native canvas */
 .ttbm-tour-list-page.ttbm-design-compact { background: #fff; }
 .ttbm-tour-list-page.ttbm-design-compact .ttbm-tour-dashboard .ttbm-tour-dashboard-content { background: #fff; padding: 0; }
@@ -2232,3 +2269,18 @@ input.medium{
 .ttbm-hotel-listing .ttbm_hotel_list_load_more_btn:hover { background: #135e96; }
 
 #wp-ttbm_pdf_gen_settings-ttbm_pdf_tc_text-wrap .mce-container-body { width: 510px; }
+
+/* Keep the expired-row accent above the stronger Compact/Modern layout
+   backgrounds declared later in this stylesheet. */
+.ttbm-tour-list-page.ttbm-design-compact .ttbm-tour-list .ttbm-tour-card[data-expire-tour="expired_tour"],
+.ttbm-tour-list-page.ttbm-design-modern .ttbm-tour-list .ttbm-tour-card[data-expire-tour="expired_tour"] {
+	border-color: #fecaca;
+	background: linear-gradient(90deg, rgba(254, 242, 242, .78) 0, #fff 20%);
+	box-shadow: inset 3px 0 0 #ef4444, 0 2px 8px rgba(127, 29, 29, .08);
+}
+.ttbm-tour-list-page.ttbm-design-compact .ttbm-tour-list .ttbm-tour-card[data-expire-tour="expired_tour"]:hover,
+.ttbm-tour-list-page.ttbm-design-modern .ttbm-tour-list .ttbm-tour-card[data-expire-tour="expired_tour"]:hover {
+	border-color: #f87171;
+	background: linear-gradient(90deg, #fff1f2 0, #fff 24%);
+	box-shadow: inset 3px 0 0 #dc2626, 0 12px 28px rgba(127, 29, 29, .14);
+}

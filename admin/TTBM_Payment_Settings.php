@@ -6,12 +6,8 @@
 		class TTBM_Payment_Settings {
 			/**
 			 * Gateway spec for the Custom Payment cards (PayPal / Stripe / Offline).
-			 * Mirrors the EventPress "Payment Gateways" cards field-for-field. These
-			 * are stored settings only (saved into the ttbm_payment_settings option)
-			 * — no processing engine is wired up yet, matching this plugin's
-			 * WooCommerce-only checkout flow. All three (PayPal, Stripe, Offline
-			 * Payment) require the Tour Pro addon (TTBM_Woocommerce_Plugin_Pro)
-			 * to configure.
+			 * Offline Payment and its standalone checkout are included in Free.
+			 * PayPal and Stripe are registered by the Tour Pro addon.
 			 */
 			private function gateway_specs() {
 				return array(
@@ -43,7 +39,7 @@
 						'label' => esc_html__('Offline Payment', 'tour-booking-manager'),
 						'desc' => esc_html__('Let customers pay offline (bank transfer, cash, pay at venue).', 'tour-booking-manager'),
 						'enable_key' => 'ttbm_offline_enable',
-						'pro' => true,
+						'pro' => false,
 						'fields' => array(
 							array('key' => 'ttbm_offline_label', 'type' => 'text', 'label' => esc_html__('Payment Label', 'tour-booking-manager'), 'placeholder' => esc_html__('e.g. Pay at Venue / Bank Transfer', 'tour-booking-manager'), 'desc' => esc_html__('Shown to customers on the frontend payment page.', 'tour-booking-manager')),
 						),
@@ -105,14 +101,11 @@
 			//------------------------------------------------------------------
 			// Booking mode (WooCommerce Checkout vs Custom Payment)
 			//------------------------------------------------------------------
-			// True once Pro is active — Pro hooks this filter itself (see
-			// TTBM_Custom_Checkout::filter_custom_payment_available()). This is
-			// deliberately just "can the custom-payment flow exist at all", NOT
-			// "is a gateway configured" — matching rbfw_booking_and_rental's
-			// has_pro() gate. A missing gateway is a separate warning shown
-			// inside the selector, not a reason to hide the selector itself.
+			// Custom Payment exists in Free through Offline Payment. Pro uses the
+			// same filter while its PayPal/Stripe runtime is loaded. This reports
+			// engine availability only; gateway enablement is a separate warning.
 			public static function custom_payment_available() {
-				return (bool) apply_filters('ttbm_custom_payment_available', false);
+				return (bool) apply_filters('ttbm_custom_payment_available', true);
 			}
 			// Whether at least one gateway is actually enabled for $mode — used
 			// only for the inline warning, never to hide/block the selector.
@@ -227,7 +220,7 @@
 				$map = array(
 					'ttbm_paypal_enable' => __('PayPal', 'tour-booking-manager'),
 					'ttbm_stripe_enable' => __('Stripe', 'tour-booking-manager'),
-					'ttbm_offline_enable' => __('Offline Payment', 'tour-booking-manager'),
+					'ttbm_offline_enable' => $opts['ttbm_offline_label'] ?? __('Offline Payment', 'tour-booking-manager'),
 				);
 				foreach ($map as $key => $label) {
 					if (isset($opts[$key]) && $opts[$key] === 'on') {
@@ -294,8 +287,28 @@
 				if (!$warning) {
 					return;
 				}
+				$mode = self::get_booking_mode();
+				$settings_url = admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page#ttbm_payment_settings');
+				$action_label = 'custom' === $mode
+					? esc_html__('Enable Offline Payment', 'tour-booking-manager')
+					: esc_html__('Configure WooCommerce Payments', 'tour-booking-manager');
 				?>
-				<div class="notice notice-warning ttbm-pay-gateway-notice"><p><?php echo esc_html($warning); ?></p></div>
+				<div class="notice ttbm-pay-gateway-notice ttbm-pay-gateway-notice-modern">
+					<div class="ttbm-pay-gateway-notice-inner">
+						<span class="ttbm-pay-gateway-notice-icon" aria-hidden="true">
+							<span class="dashicons dashicons-money-alt"></span>
+						</span>
+						<div class="ttbm-pay-gateway-notice-copy">
+							<span class="ttbm-pay-gateway-notice-kicker"><?php esc_html_e('Payment setup required', 'tour-booking-manager'); ?></span>
+							<h3><?php esc_html_e('Bookings cannot accept payments yet', 'tour-booking-manager'); ?></h3>
+							<p><?php echo esc_html($warning); ?></p>
+						</div>
+						<a class="ttbm-pay-gateway-notice-action" href="<?php echo esc_url($settings_url); ?>">
+							<span class="dashicons dashicons-admin-settings" aria-hidden="true"></span>
+							<?php echo esc_html($action_label); ?>
+						</a>
+					</div>
+				</div>
 				<?php
 			}
 
@@ -369,6 +382,11 @@
 					'wc_mode_label' => esc_html__('WooCommerce Checkout', 'tour-booking-manager'),
 					'custom_mode_label' => esc_html__('Custom Payment', 'tour-booking-manager'),
 					'active_label' => esc_html__('Active', 'tour-booking-manager'),
+					'payment_notice_kicker' => esc_html__('Payment setup required', 'tour-booking-manager'),
+					'payment_notice_title' => esc_html__('Bookings cannot accept payments yet', 'tour-booking-manager'),
+					'enable_offline_label' => esc_html__('Enable Offline Payment', 'tour-booking-manager'),
+					'configure_wc_label' => esc_html__('Configure WooCommerce Payments', 'tour-booking-manager'),
+					'payment_settings_url' => admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page#ttbm_payment_settings'),
 				));
 				wp_add_inline_style('ttbm-global-settings', $this->edit_payment_notice_css());
 				wp_add_inline_script('ttbm-payment-settings', $this->edit_payment_notice_js());
@@ -432,7 +450,7 @@ JS;
 				}
 				$mode = (isset($_POST['mode']) && sanitize_key(wp_unslash($_POST['mode'])) === 'custom') ? 'custom' : 'woocommerce';
 				if (self::mode_availability() !== 'both') {
-					wp_send_json_error(esc_html__('Booking mode can only be changed when both WooCommerce and the Pro custom gateways are available.', 'tour-booking-manager'));
+					wp_send_json_error(esc_html__('Booking mode can only be changed when both WooCommerce and Custom Payment are available.', 'tour-booking-manager'));
 				}
 				$opts = (array) get_option('ttbm_payment_settings', array());
 				$opts['ttbm_booking_mode'] = $mode;
@@ -453,36 +471,23 @@ JS;
 				return $sections;
 			}
 			/**
-			 * Everything below is hand-rendered (instead of declared via
-			 * TTBM_Setting_API's add_field) so the WooCommerce/Custom Payment
-			 * sub-tabs and accordions can be laid out exactly as designed. All
-			 * inputs still use name="ttbm_payment_settings[...]" so WordPress's
-			 * Settings API (already registered for this section by
-			 * TTBM_Setting_API::admin_init()) saves them normally on submit.
+			 * Everything below is hand-rendered. The Booking Mode cards are the
+			 * single flow switch; only the active flow's settings are displayed.
 			 */
 			public function render_tab_content() {
-				// Default sub-tab follows the active Booking Mode, not always
-				// WooCommerce — an admin running Custom Payment shouldn't land
-				// on the WooCommerce sub-tab on every page load.
 				$custom_is_default = self::get_booking_mode() === 'custom';
 				?>
-                <div class="ttbm-pay-subtabs nav-tab-wrapper">
-                    <a href="#" class="ttbm-pay-subtab-link<?php echo $custom_is_default ? '' : ' is-active'; ?>" data-subtab="woocommerce"><?php esc_html_e('WooCommerce', 'tour-booking-manager'); ?></a>
-                    <a href="#" class="ttbm-pay-subtab-link<?php echo $custom_is_default ? ' is-active' : ''; ?>" data-subtab="custom"><?php esc_html_e('Custom Payment', 'tour-booking-manager'); ?></a>
-                </div>
-
 				<?php $this->render_booking_mode_selector(); ?>
 
-                <div class="ttbm-pay-subtab-panel" data-subtab-panel="woocommerce" <?php echo $custom_is_default ? 'style="display:none;"' : ''; ?>>
+                <div class="ttbm-pay-subtab-panel ttbm-pay-mode-panel" data-subtab-panel="woocommerce" <?php echo $custom_is_default ? 'style="display:none;"' : ''; ?>>
 					<?php $this->render_woocommerce_subtab(); ?>
                 </div>
-                <div class="ttbm-pay-subtab-panel" data-subtab-panel="custom" <?php echo $custom_is_default ? '' : 'style="display:none;"'; ?>>
+                <div class="ttbm-pay-subtab-panel ttbm-pay-mode-panel" data-subtab-panel="custom" <?php echo $custom_is_default ? '' : 'style="display:none;"'; ?>>
 					<?php $this->render_custom_payment_subtab(); ?>
                 </div>
 				<?php
 			}
-			// Full-width, sits directly below the WooCommerce/Custom-Payment
-			// sub-tab bar. Always renders as a titled "Booking Mode" section
+			// Full-width Booking Mode section. Always renders
 			// with both cards — when mode_availability() isn't 'both', the
 			// unavailable card renders disabled (with an explanation) instead
 			// of the whole section collapsing into a single line of text, so
@@ -503,17 +508,21 @@ JS;
                         <h3><?php esc_html_e('Booking Mode', 'tour-booking-manager'); ?></h3>
 						<?php if ($can_choose) : ?>
                             <p><?php esc_html_e('Choose exactly one flow to process bookings. This single switch decides everything below, so WooCommerce and Custom Payment never both try to handle the same booking. Your choice is saved instantly.', 'tour-booking-manager'); ?></p>
-						<?php elseif ('none' === $availability) : ?>
-                            <p class="ttbm-booking-mode-auto"><span class="dashicons dashicons-warning"></span> <?php esc_html_e('No booking flow is available yet: WooCommerce is not active and the Tour Pro addon is not active. Activate one of them to start taking bookings.', 'tour-booking-manager'); ?></p>
 						<?php elseif ('woocommerce_only' === $availability) : ?>
-                            <p class="ttbm-booking-mode-auto"><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e('WooCommerce is the only booking flow available right now — bookings are processed through it automatically. Activate the Tour Pro addon to unlock Custom Payment and a mode switch here.', 'tour-booking-manager'); ?></p>
+                            <p class="ttbm-booking-mode-auto"><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e('WooCommerce is the only booking flow available right now, so bookings are processed through it automatically.', 'tour-booking-manager'); ?></p>
 						<?php else : ?>
                             <p class="ttbm-booking-mode-auto"><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e('Custom Payment is the only booking flow available right now — WooCommerce is not active, so bookings are processed through Custom Payment automatically. Activate WooCommerce to unlock a mode switch here.', 'tour-booking-manager'); ?></p>
 						<?php endif; ?>
                     </div>
                     <div class="ttbm-booking-mode-cards">
                         <div class="ttbm-booking-mode-card <?php echo $is_wc ? 'is-active' : ''; ?> <?php echo $wc_active ? '' : 'is-disabled'; ?>" data-mode="woocommerce" data-subtab="woocommerce">
-                            <span class="ttbm-booking-mode-card-icon dashicons dashicons-cart"></span>
+                            <span class="ttbm-booking-mode-card-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" role="img" focusable="false">
+                                    <path d="M3 4h2.2l2.1 9.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 7H6"></path>
+                                    <circle cx="10" cy="19" r="1.4"></circle>
+                                    <circle cx="18" cy="19" r="1.4"></circle>
+                                </svg>
+                            </span>
                             <div class="ttbm-booking-mode-card-body">
                                 <div class="ttbm-booking-mode-card-head">
                                     <span class="ttbm-booking-mode-card-title"><?php esc_html_e('WooCommerce Checkout', 'tour-booking-manager'); ?></span>
@@ -528,10 +537,20 @@ JS;
 										<?php esc_html_e('Requires WooCommerce to be active.', 'tour-booking-manager'); ?>
 									<?php endif; ?>
                                 </p>
+								<?php if (!$wc_active) : ?>
+									<button type="button" class="button button-primary ttbm-woo-install-trigger ttbm-booking-mode-card-cta">
+										<?php echo esc_html($this->wc_install_button_label()); ?>
+									</button>
+								<?php endif; ?>
                             </div>
                         </div>
                         <div class="ttbm-booking-mode-card <?php echo $is_custom ? 'is-active' : ''; ?> <?php echo $custom_active ? '' : 'is-disabled'; ?>" data-mode="custom" data-subtab="custom">
-                            <span class="ttbm-booking-mode-card-icon dashicons dashicons-money-alt"></span>
+                            <span class="ttbm-booking-mode-card-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" role="img" focusable="false">
+                                    <circle cx="12" cy="12" r="8.5"></circle>
+                                    <path d="M14.8 8.7c-.6-.6-1.5-.9-2.5-.9-1.5 0-2.7.8-2.7 2s1 1.8 2.7 2.2c1.7.4 2.7 1 2.7 2.2s-1.2 2-2.8 2c-1.1 0-2.2-.4-2.9-1.1M12.2 6.2v11.6"></path>
+                                </svg>
+                            </span>
                             <div class="ttbm-booking-mode-card-body">
                                 <div class="ttbm-booking-mode-card-head">
                                     <span class="ttbm-booking-mode-card-title"><?php esc_html_e('Custom Payment', 'tour-booking-manager'); ?></span>
@@ -541,9 +560,9 @@ JS;
                                 </div>
                                 <p class="ttbm-booking-mode-card-desc">
 									<?php if ($custom_active) : ?>
-										<?php esc_html_e('Bookings skip WooCommerce entirely and pay through PayPal, Stripe, or Offline directly.', 'tour-booking-manager'); ?>
+										<?php esc_html_e('Offline Payment is included in Free. PayPal and Stripe require PRO — no WooCommerce needed.', 'tour-booking-manager'); ?>
 									<?php else : ?>
-										<?php esc_html_e('Requires the Tour Pro addon to be active.', 'tour-booking-manager'); ?>
+										<?php esc_html_e('Custom Payment is not available.', 'tour-booking-manager'); ?>
 									<?php endif; ?>
                                 </p>
                             </div>
@@ -585,18 +604,22 @@ JS;
 						<?php $this->render_additional_settings(); ?>
                     </div>
                 </div>
+                <div class="ttbm-pay-misc-save-row ttbm-pay-misc-save-footer">
+                    <button type="button" class="button button-primary ttbm-pay-misc-save-btn" data-fields="ttbm_payment_cart_redirect,ttbm_payment_show_billing_info" data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_admin_nonce')); ?>">
+						<span class="dashicons dashicons-saved" aria-hidden="true"></span>
+						<?php esc_html_e('Save Changes', 'tour-booking-manager'); ?>
+					</button>
+                </div>
 				<?php
 			}
 			private function render_wc_inactive_notice() {
 				$is_installed = file_exists(WP_PLUGIN_DIR . '/woocommerce/woocommerce.php');
-				$modal_btn = $is_installed
-					? esc_html__('Activate WooCommerce Now', 'tour-booking-manager')
-					: esc_html__('Install & Activate Now', 'tour-booking-manager');
+				$modal_btn = $this->wc_install_button_label();
 				?>
                 <div class="ttbm-pay-wc-warning">
                     <p class="ttbm-pay-wc-warning-title"><span class="dashicons dashicons-warning"></span> <?php esc_html_e('Notice: WooCommerce is Not Activated', 'tour-booking-manager'); ?></p>
                     <p class="ttbm-pay-wc-warning-desc"><?php esc_html_e('To process payments and manage payment gateways here, you must install and activate WooCommerce.', 'tour-booking-manager'); ?></p>
-                    <button type="button" id="ttbm-woo-install-trigger" class="button button-primary">
+                    <button type="button" id="ttbm-woo-install-trigger" class="button button-primary ttbm-woo-install-trigger">
 						<?php echo esc_html($modal_btn); ?>
                     </button>
                 </div>
@@ -628,6 +651,11 @@ JS;
                     </div>
                 </div>
 				<?php
+			}
+			private function wc_install_button_label() {
+				return file_exists(WP_PLUGIN_DIR . '/woocommerce/woocommerce.php')
+					? esc_html__('Activate WooCommerce Now', 'tour-booking-manager')
+					: esc_html__('Install & Activate Now', 'tour-booking-manager');
 			}
 			private function render_additional_settings() {
 				$cart_redirect = $this->opt('ttbm_payment_cart_redirect', 'checkout');
@@ -661,9 +689,6 @@ JS;
 							<?php esc_html_e('Show billing info on the WooCommerce checkout page.', 'tour-booking-manager'); ?>
                         </label>
                     </div>
-                </div>
-                <div class="ttbm-pay-misc-save-row">
-                    <button type="button" class="button button-primary ttbm-pay-misc-save-btn" data-fields="ttbm_payment_cart_redirect,ttbm_payment_show_billing_info" data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_admin_nonce')); ?>"><?php esc_html_e('Save Changes', 'tour-booking-manager'); ?></button>
                 </div>
                 <div class="ttbm-pay-field-row">
                     <label class="ttbm-pay-field-label"><?php esc_html_e('Confirm Ticket Based on Payment Status', 'tour-booking-manager'); ?></label>
@@ -809,7 +834,7 @@ JS;
 									'echo' => 0,
 								));
 								?>
-                                <p class="ttbm-pay-field-desc"><?php esc_html_e('Used only by the Custom Payment checkout (PayPal/Stripe/Offline via Pro). Regular WooCommerce bookings always use WooCommerce\'s own order-received page.', 'tour-booking-manager'); ?></p>
+                                <p class="ttbm-pay-field-desc"><?php esc_html_e('Used only by the Custom Payment checkout. Regular WooCommerce bookings always use WooCommerce\'s own order-received page.', 'tour-booking-manager'); ?></p>
                             </div>
                         </div>
                         <div class="ttbm-pay-field-row">
@@ -819,13 +844,16 @@ JS;
                                     <option value="yes" <?php selected($allow_guest_booking, 'yes'); ?>><?php esc_html_e('Yes — anyone can book without an account', 'tour-booking-manager'); ?></option>
                                     <option value="no" <?php selected($allow_guest_booking, 'no'); ?>><?php esc_html_e('No — require login or registration to book', 'tour-booking-manager'); ?></option>
                                 </select>
-                                <p class="ttbm-pay-field-desc"><?php esc_html_e('Custom Payment only (PayPal/Stripe/Offline). When set to No, a logged-out visitor sees an inline log in / register panel when they click to book — never a page reload. WooCommerce checkout has its own separate guest-checkout setting.', 'tour-booking-manager'); ?></p>
+                                <p class="ttbm-pay-field-desc"><?php esc_html_e('Custom Payment only. When set to No, a logged-out visitor sees an inline log in / register panel when they click to book. WooCommerce checkout has its own guest-checkout setting.', 'tour-booking-manager'); ?></p>
                             </div>
                         </div>
-                        <div class="ttbm-pay-misc-save-row">
-                            <button type="button" class="button button-primary ttbm-pay-misc-save-btn" data-fields="ttbm_payment_confirmation_page,ttbm_payment_allow_guest_booking" data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_admin_nonce')); ?>"><?php esc_html_e('Save Changes', 'tour-booking-manager'); ?></button>
-                        </div>
                     </div>
+                </div>
+                <div class="ttbm-pay-misc-save-row ttbm-pay-misc-save-footer">
+                    <button type="button" class="button button-primary ttbm-pay-misc-save-btn" data-fields="ttbm_payment_confirmation_page,ttbm_payment_allow_guest_booking" data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_admin_nonce')); ?>">
+						<span class="dashicons dashicons-saved" aria-hidden="true"></span>
+						<?php esc_html_e('Save Changes', 'tour-booking-manager'); ?>
+					</button>
                 </div>
 				<?php
 			}

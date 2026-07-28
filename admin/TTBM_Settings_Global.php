@@ -48,6 +48,11 @@
 					'wc_mode_label' => esc_html__('WooCommerce Checkout', 'tour-booking-manager'),
 					'custom_mode_label' => esc_html__('Custom Payment', 'tour-booking-manager'),
 					'active_label' => esc_html__('Active', 'tour-booking-manager'),
+					'payment_notice_kicker' => esc_html__('Payment setup required', 'tour-booking-manager'),
+					'payment_notice_title' => esc_html__('Bookings cannot accept payments yet', 'tour-booking-manager'),
+					'enable_offline_label' => esc_html__('Enable Offline Payment', 'tour-booking-manager'),
+					'configure_wc_label' => esc_html__('Configure WooCommerce Payments', 'tour-booking-manager'),
+					'payment_settings_url' => admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page#ttbm_payment_settings'),
 				));
 			}
 			public function global_settings_menu() {

@@ -1,29 +1,16 @@
 jQuery(function ($) {
 	'use strict';
 
-	var $root = $('.ttbm-pay-subtabs');
+	var $root = $('.ttbm-booking-mode');
 	if (!$root.length || typeof ttbm_admin_ajax === 'undefined' || typeof ttbmPaymentSettings === 'undefined') {
 		return;
 	}
 	var $wrap = $('.ttbm-pm-wrap');
 
 	// ------------------------------------------------------------------
-	// WooCommerce / Custom Payment sub-tabs.
-	// ------------------------------------------------------------------
-	$(document).on('click', '.ttbm-pay-subtab-link', function (e) {
-		e.preventDefault();
-		var target = $(this).data('subtab');
-		$('.ttbm-pay-subtab-link').removeClass('is-active');
-		$(this).addClass('is-active');
-		$('.ttbm-pay-subtab-panel').hide();
-		$('.ttbm-pay-subtab-panel[data-subtab-panel="' + target + '"]').show();
-	});
-
-	// ------------------------------------------------------------------
 	// Booking Mode selector (WooCommerce Checkout vs Custom Payment) —
 	// saves instantly via its own endpoint (not the main settings form),
-	// then jumps to the matching sub-tab so the admin lands on what they
-	// just chose.
+	// then displays only the matching flow settings.
 	// ------------------------------------------------------------------
 	$(document).on('click', '.ttbm-booking-mode-card', function () {
 		var $card = $(this);
@@ -64,8 +51,8 @@ jQuery(function ($) {
 				}
 			}
 
-			// Jump to the sub-tab that matches the newly active mode.
-			$('.ttbm-pay-subtab-link[data-subtab="' + subtab + '"]').trigger('click');
+			$('.ttbm-pay-mode-panel').hide();
+			$('.ttbm-pay-mode-panel[data-subtab-panel="' + subtab + '"]').show();
 
 			// Refresh the inline "no gateway configured" warning for the
 			// newly active mode (never both possible modes at once).
@@ -81,10 +68,27 @@ jQuery(function ($) {
 			var $notice = $('.ttbm-pay-gateway-notice');
 			if (res.data.warning) {
 				if (!$notice.length) {
-					$notice = $('<div class="notice notice-warning ttbm-pay-gateway-notice"><p></p></div>');
-					$('.ttbm-pay-subtabs').before($notice);
+					$notice = $(
+						'<div class="notice ttbm-pay-gateway-notice ttbm-pay-gateway-notice-modern">' +
+							'<div class="ttbm-pay-gateway-notice-inner">' +
+								'<span class="ttbm-pay-gateway-notice-icon" aria-hidden="true"><span class="dashicons dashicons-money-alt"></span></span>' +
+								'<div class="ttbm-pay-gateway-notice-copy">' +
+									'<span class="ttbm-pay-gateway-notice-kicker"></span>' +
+									'<h3></h3><p></p>' +
+								'</div>' +
+								'<a class="ttbm-pay-gateway-notice-action"><span class="dashicons dashicons-admin-settings" aria-hidden="true"></span><span class="ttbm-pay-gateway-notice-action-label"></span></a>' +
+							'</div>' +
+						'</div>'
+					);
+					$notice.find('.ttbm-pay-gateway-notice-kicker').text(ttbmPaymentSettings.payment_notice_kicker);
+					$notice.find('h3').text(ttbmPaymentSettings.payment_notice_title);
+					$notice.find('.ttbm-pay-gateway-notice-action').attr('href', ttbmPaymentSettings.payment_settings_url);
+					$('.ttbm-booking-mode').first().before($notice);
 				}
 				$notice.find('p').text(res.data.warning);
+				$notice.find('.ttbm-pay-gateway-notice-action-label').text(
+					mode === 'custom' ? ttbmPaymentSettings.enable_offline_label : ttbmPaymentSettings.configure_wc_label
+				);
 				$notice.show();
 			} else {
 				$notice.hide();
@@ -128,8 +132,14 @@ jQuery(function ($) {
 	// ------------------------------------------------------------------
 	var $wooModal = $('#ttbm-woo-install-modal');
 	var wooWorking = false;
+	// The WooCommerce panel is hidden while Custom Payment is the only
+	// available flow. Move the shared installer modal out of that panel so
+	// the CTA inside the disabled WooCommerce card can still open it.
+	if ($wooModal.length) {
+		$wooModal.appendTo('body');
+	}
 
-	$(document).on('click', '#ttbm-woo-install-trigger', function (e) {
+	$(document).on('click', '.ttbm-woo-install-trigger', function (e) {
 		e.preventDefault();
 		$wooModal.css('display', 'flex').hide().fadeIn(200);
 	});

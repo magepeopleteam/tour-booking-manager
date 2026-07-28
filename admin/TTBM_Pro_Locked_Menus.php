@@ -2,8 +2,7 @@
 /*
  * "Pro Features" / "Addon Feature" placeholder menu.
  * - When Pro is inactive: shows as Pro Features and lists Pro + Addon teasers.
- * - When Pro is active: shows as Addon Feature and lists only Addon teasers
- *   (Pro's own menus cover the real Pro pages).
+ * - When Pro is active: shows active Pro capabilities followed by Addon teasers.
  */
 if (!defined('ABSPATH')) {
 	die;
@@ -68,6 +67,52 @@ if (!class_exists('TTBM_Pro_Locked_Menus')) {
 					'label' => esc_html__('Marketing & Promo Email', 'tour-booking-manager'),
 					'desc' => esc_html__('Send promotional and marketing emails to past attendees and tour customers with bulk campaigns and queue controls.', 'tour-booking-manager'),
 				),
+				array(
+					'icon' => 'dashicons-money-alt',
+					'label' => esc_html__('Custom Payment Gateways', 'tour-booking-manager'),
+					'desc' => esc_html__('Accept PayPal, Stripe, and Offline payments directly through the tour checkout without requiring WooCommerce checkout.', 'tour-booking-manager'),
+					'new' => true,
+				),
+				array(
+					'icon' => 'dashicons-clipboard',
+					'label' => esc_html__('Unified Booking Management', 'tour-booking-manager'),
+					'desc' => esc_html__('Manage WooCommerce and Custom Payment bookings together with order details, status updates, notes, and activity history.', 'tour-booking-manager'),
+					'new' => true,
+				),
+				array(
+					'icon' => 'dashicons-chart-bar',
+					'label' => esc_html__('Advanced Reports & Exports', 'tour-booking-manager'),
+					'desc' => esc_html__('Create booking reports filtered by tour, date, status, source, and payment method, then export them as PDF or CSV.', 'tour-booking-manager'),
+					'new' => true,
+				),
+				array(
+					'icon' => 'dashicons-media-document',
+					'label' => esc_html__('PDF & Thermal Tickets', 'tour-booking-manager'),
+					'desc' => esc_html__('Issue QR-enabled A4 PDF tickets and print individual or batch tickets for 58mm and 80mm thermal printers.', 'tour-booking-manager'),
+					'new' => true,
+				),
+				array(
+					'icon' => 'dashicons-admin-users',
+					'label' => esc_html__('Customer Booking Portal', 'tour-booking-manager'),
+					'desc' => esc_html__('Give logged-in and guest customers a My Bookings portal for booking lookup, status tracking, and ticket downloads.', 'tour-booking-manager'),
+					'new' => true,
+				),
+				array(
+					'icon' => 'dashicons-email-alt2',
+					'label' => esc_html__('Smart Booking Emails', 'tour-booking-manager'),
+					'desc' => esc_html__('Send branded, status-driven confirmations for WooCommerce and Custom Payment bookings with optional PDF tickets.', 'tour-booking-manager'),
+					'new' => true,
+				),
+				array(
+					'icon' => 'dashicons-media-spreadsheet',
+					'label' => esc_html__('Google Sheets Sync', 'tour-booking-manager'),
+					'desc' => esc_html__('Synchronize booking and attendee information with Google Sheets for reporting and operational workflows.', 'tour-booking-manager'),
+				),
+				array(
+					'icon' => 'dashicons-star-filled',
+					'label' => esc_html__('Tour Reviews & Ratings', 'tour-booking-manager'),
+					'desc' => esc_html__('Collect customer reviews and ratings, moderate submissions, and display social proof on tour pages.', 'tour-booking-manager'),
+				),
 			);
 			$addons = array(
 				array(
@@ -128,24 +173,36 @@ if (!class_exists('TTBM_Pro_Locked_Menus')) {
 			?>
 			<div class="wrap">
 				<div class="ttbm-pro-lock-wrap">
-					<?php if (!$is_pro) : ?>
-						<header class="ttbm-pro-lock-header">
-							<h1><?php esc_html_e('Pro Features', 'tour-booking-manager'); ?></h1>
-							<p><?php esc_html_e('Requires the tour-booking-manager-pro plugin to be installed and activated.', 'tour-booking-manager'); ?></p>
+					<header class="ttbm-pro-lock-header">
+						<h1><?php echo esc_html($is_pro ? __('Tour Booking Manager PRO Features', 'tour-booking-manager') : __('Pro Features', 'tour-booking-manager')); ?></h1>
+						<p>
+							<?php
+							echo esc_html(
+								$is_pro
+									? __('These premium capabilities are available in your active Tour Booking Manager PRO plugin.', 'tour-booking-manager')
+									: __('Install and activate Tour Booking Manager PRO to unlock these premium capabilities.', 'tour-booking-manager')
+							);
+							?>
+						</p>
+						<?php if (!$is_pro) : ?>
 							<a class="ttbm-pro-get-btn" href="https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Buy Pro Plugin', 'tour-booking-manager'); ?></a>
-						</header>
-						<div class="ttbm-pro-lock-grid">
-							<?php foreach ($features as $feature) : ?>
-								<div class="ttbm-pro-lock-box">
-									<div class="ttbm-pro-lock-icon"><span class="dashicons <?php echo esc_attr($feature['icon']); ?>"></span></div>
-									<h2><?php echo esc_html($feature['label']); ?> <span class="ttbm-pro-badge"><?php esc_html_e('PRO', 'tour-booking-manager'); ?></span></h2>
-									<p><?php echo esc_html($feature['desc']); ?></p>
-								</div>
-							<?php endforeach; ?>
-						</div>
-					<?php endif; ?>
+						<?php endif; ?>
+					</header>
+					<div class="ttbm-pro-lock-grid">
+						<?php foreach ($features as $feature) : ?>
+							<div class="ttbm-pro-lock-box<?php echo !empty($feature['new']) ? ' is-new' : ''; ?>">
+								<?php if (!empty($feature['new'])) : ?><span class="ttbm-feature-new-badge"><?php esc_html_e('NEW', 'tour-booking-manager'); ?></span><?php endif; ?>
+								<div class="ttbm-pro-lock-icon"><span class="dashicons <?php echo esc_attr($feature['icon']); ?>"></span></div>
+								<h2>
+									<?php echo esc_html($feature['label']); ?>
+									<span class="ttbm-pro-badge<?php echo $is_pro ? ' is-active' : ''; ?>"><?php echo esc_html($is_pro ? __('ACTIVE', 'tour-booking-manager') : __('PRO', 'tour-booking-manager')); ?></span>
+								</h2>
+								<p><?php echo esc_html($feature['desc']); ?></p>
+							</div>
+						<?php endforeach; ?>
+					</div>
 
-					<header class="ttbm-pro-lock-header<?php echo $is_pro ? '' : ' ttbm-pro-lock-header--addon'; ?>">
+					<header class="ttbm-pro-lock-header ttbm-pro-lock-header--addon">
 						<h1><?php esc_html_e('Available Addons', 'tour-booking-manager'); ?></h1>
 						<p><?php esc_html_e('Extend Tour Booking Manager with dedicated addons for pricing, check-in, and admin booking tools.', 'tour-booking-manager'); ?></p>
 					</header>
@@ -173,12 +230,15 @@ if (!class_exists('TTBM_Pro_Locked_Menus')) {
 				@media (max-width: 1200px) { .ttbm-pro-lock-grid { grid-template-columns: repeat(3, 1fr); } }
 				@media (max-width: 900px) { .ttbm-pro-lock-grid { grid-template-columns: repeat(2, 1fr); } }
 				@media (max-width: 600px) { .ttbm-pro-lock-grid { grid-template-columns: 1fr; } }
-				.ttbm-pro-lock-box { background: #fff; border: 1px solid #dcdcde; border-radius: 10px; padding: 22px; text-align: center; }
+				.ttbm-pro-lock-box { position: relative; background: #fff; border: 1px solid #dcdcde; border-radius: 10px; padding: 22px; text-align: center; }
+				.ttbm-pro-lock-box.is-new { border-color: #c3c4ff; box-shadow: 0 8px 24px rgba(68, 64, 210, .08); }
 				.ttbm-pro-lock-icon { width: 52px; height: 52px; margin: 0 auto 14px; border-radius: 50%; background: #f0f0f1; display: flex; align-items: center; justify-content: center; }
 				.ttbm-pro-lock-icon .dashicons { font-size: 24px; width: 24px; height: 24px; color: #787c82; }
 				.ttbm-pro-lock-box h2 { font-size: 16px; margin: 0 0 10px; }
 				.ttbm-pro-lock-box p { color: #50575e; font-size: 13.5px; line-height: 1.6; margin: 0; }
 				.ttbm-pro-badge { display: inline-block; background: linear-gradient(135deg,#f7b733,#fc4a1a); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .5px; border-radius: 999px; padding: 2px 8px; margin-left: 4px; vertical-align: middle; }
+				.ttbm-pro-badge.is-active { background: linear-gradient(135deg,#1f9d68,#147a51); }
+				.ttbm-feature-new-badge { position: absolute; top: 12px; right: 12px; display: inline-block; background: #ecebff; color: #5145cd; font-size: 9px; font-weight: 700; letter-spacing: .7px; border-radius: 999px; padding: 3px 8px; }
 				.ttbm-pro-get-btn { display: inline-block; margin-top: 14px; background: linear-gradient(135deg,#f7b733,#fc4a1a); color: #fff !important; text-decoration: none; font-size: 13px; font-weight: 600; border-radius: 6px; padding: 10px 18px; }
 				.ttbm-pro-get-btn:hover { opacity: .9; color: #fff !important; }
 				.ttbm-addon-get-btn { display: inline-block; margin-top: 14px; background: linear-gradient(135deg,#d31a2f,#961331); color: #fff !important; text-decoration: none; font-size: 12px; font-weight: 600; border-radius: 6px; padding: 8px 14px; }

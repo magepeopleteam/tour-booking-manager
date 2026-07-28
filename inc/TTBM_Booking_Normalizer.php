@@ -223,9 +223,13 @@
 					class_exists('Automattic\WooCommerce\Utilities\OrderUtil')
 					&& \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled()
 				) {
-					$table = $wpdb->prefix . 'wc_orders';
+					$orders_table = $wpdb->prefix . 'wc_orders';
+					$operational_table = $wpdb->prefix . 'wc_order_operational_data';
 					$rows = $wpdb->get_results($wpdb->prepare(
-						"SELECT id, total_amount, order_key FROM {$table} WHERE id IN ({$placeholders})", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+						"SELECT orders.id, orders.total_amount, operational.order_key
+						 FROM {$orders_table} orders
+						 LEFT JOIN {$operational_table} operational ON operational.order_id = orders.id
+						 WHERE orders.id IN ({$placeholders})", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 						$order_ids
 					));
 					foreach ($rows as $row) {

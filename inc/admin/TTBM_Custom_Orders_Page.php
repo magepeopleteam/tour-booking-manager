@@ -237,14 +237,10 @@
 				}
 			}
 			public static function add_menu_page() {
-				$menu_title = esc_html__('Bookings & Guests', 'tour-booking-manager')
-					. ' <span style="display:inline-block;margin-left:5px;padding:1px 5px;border-radius:3px;background:#d63638;color:#fff;font-size:9px;font-weight:700;line-height:1.4;vertical-align:1px;">'
-					. esc_html__('PRO', 'tour-booking-manager')
-					. '</span>';
 				add_submenu_page(
 					'edit.php?post_type=' . TTBM_Function::get_cpt_name(),
 					esc_html__('Bookings & Guests', 'tour-booking-manager'),
-					$menu_title,
+					esc_html__('Bookings & Guests', 'tour-booking-manager'),
 					'manage_options',
 					self::SLUG,
 					array(__CLASS__, 'render_page')

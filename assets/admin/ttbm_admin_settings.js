@@ -160,7 +160,29 @@ function ttbm_load_sortable_datepicker(parent, item) {
         }
     });
     //=========Remove Setting Item ==============//
+    // Empty an extra service row in place. Extra services are optional, so unlike
+    // ticket types the last row must stay removable - but PHP always renders one
+    // blank row for a tour with no extra services, so clearing it leaves the exact
+    // state the next page load draws instead of a delete that looks undone.
+    function ttbmResetExtraServiceRow($row) {
+        $row.find('input[type="text"], input[type="number"], textarea').val("");
+        $row.find("select").each(function () {
+            this.selectedIndex = 0;
+        });
+        // Reuse the pickers' own clear handlers so the icon/image preview resets
+        // exactly the way it does when cleared by hand.
+        $row.find(".ttbm_add_icon_image_area .ttbm_icon_remove, .ttbm_add_icon_image_area .ttbm_image_remove").trigger("click");
+        $row.find(".ttbm-ticket-field-error").removeClass("ttbm-ticket-field-error");
+        $row.find("input.is-invalid").removeClass("is-invalid");
+    }
+
     $(document).on("click", ".ttbm_item_remove,.ttbm_remove_icon", function (e) {
+        // The icon/image pickers reuse .ttbm_remove_icon for their own clear buttons.
+        // They have dedicated handlers below and must not drag the whole row out with
+        // them when a row happens to have an icon set.
+        if ($(this).closest(".ttbm_add_icon_image_area").length) {
+            return;
+        }
         e.preventDefault();
         let $row = $(this).closest(".ttbm_remove_area");
         let $ticketRows = $row.closest(".ttbm_insert_ticket_type");
@@ -168,15 +190,15 @@ function ttbm_load_sortable_datepicker(parent, item) {
         if ($ticketRows.length && $ticketRows.find("> tr.ttbm_remove_area").length <= 1) {
             return false;
         }
+        if (!confirm("Are You Sure , Remove this row ? \n\n 1. Ok : To Remove . \n 2. Cancel : To Cancel .")) {
+            return false;
+        }
         if ($extraRows.length && $extraRows.find("> tr.ttbm_remove_area").length <= 1) {
-            return false;
-        }
-        if (confirm("Are You Sure , Remove this row ? \n\n 1. Ok : To Remove . \n 2. Cancel : To Cancel .")) {
-            $row.slideUp(250).remove();
+            ttbmResetExtraServiceRow($row);
             return true;
-        } else {
-            return false;
         }
+        $row.slideUp(250).remove();
+        return true;
     });
     $(document).on("click", ".ttbm_add_item", function (e) {
         e.preventDefault();

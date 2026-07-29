@@ -5,8 +5,8 @@
 	/**
 	 * Admin page listing tour orders from BOTH sources: the ttbm_custom_order
 	 * CPT created by TTBM_Custom_Checkout and real WooCommerce orders, merged
-	 * via the free plugin's TTBM_Booking_Normalizer. Tour Bookings → Tour
-	 * Orders: stats bar, filters (search / tour / status / gateway / date
+	 * via the free plugin's TTBM_Booking_Normalizer. Tours → Bookings & Guests:
+	 * stats bar, filters (search / tour / status / gateway / date
 	 * range), pagination, CSV export, per-order detail view (WC orders render
 	 * fully in-plugin, they are not redirected out) and status management that
 	 * keeps the ttbm_booking records in sync for both sources. In the free
@@ -15,7 +15,8 @@
 	 */
 	if (!class_exists('TTBM_Custom_Orders_Page')) {
 		class TTBM_Custom_Orders_Page {
-			const SLUG = 'ttbm_custom_orders';
+			const SLUG = 'ttbm_order_list';
+			const LEGACY_SLUG = 'ttbm_custom_orders';
 			const PER_PAGE = 20;
 			const PRO_URL = 'https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/';
 			private static $index_cache = null;
@@ -23,7 +24,8 @@
 				return class_exists('TTBM_Woocommerce_Plugin_Pro');
 			}
 			public static function init() {
-				add_action('admin_menu', array(__CLASS__, 'add_menu_page'), 20);
+				add_action('admin_menu', array(__CLASS__, 'add_menu_page'));
+				add_action('admin_init', array(__CLASS__, 'redirect_legacy_page'));
 				add_action('admin_enqueue_scripts', array(__CLASS__, 'enqueue_assets'));
 				add_action('admin_post_ttbm_order_delete', array(__CLASS__, 'handle_delete'));
 				add_action('admin_post_ttbm_orders_export_csv', array(__CLASS__, 'export_csv'));
@@ -235,14 +237,44 @@
 				}
 			}
 			public static function add_menu_page() {
+				$menu_title = esc_html__('Bookings & Guests', 'tour-booking-manager')
+					. ' <span style="display:inline-block;margin-left:5px;padding:1px 5px;border-radius:3px;background:#d63638;color:#fff;font-size:9px;font-weight:700;line-height:1.4;vertical-align:1px;">'
+					. esc_html__('PRO', 'tour-booking-manager')
+					. '</span>';
 				add_submenu_page(
 					'edit.php?post_type=' . TTBM_Function::get_cpt_name(),
-					esc_html__('Tour Booking', 'tour-booking-manager'),
-					esc_html__('Tour Booking', 'tour-booking-manager'),
+					esc_html__('Bookings & Guests', 'tour-booking-manager'),
+					$menu_title,
 					'manage_options',
 					self::SLUG,
 					array(__CLASS__, 'render_page')
 				);
+			}
+			public static function redirect_legacy_page() {
+				$page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
+				if (self::LEGACY_SLUG !== $page) {
+					return;
+				}
+				if (!current_user_can('manage_options')) {
+					wp_die(esc_html__('You do not have permission to access this page.', 'tour-booking-manager'));
+				}
+				$args = array(
+					'post_type' => TTBM_Function::get_cpt_name(),
+					'page' => self::SLUG,
+				);
+				foreach (array('action', 'order', 'paged') as $key) {
+					if (!isset($_GET[$key])) {
+						continue;
+					}
+					$value = 'order' === $key || 'paged' === $key
+						? absint(wp_unslash($_GET[$key]))
+						: sanitize_key(wp_unslash($_GET[$key]));
+					if ('' !== $value && 0 !== $value) {
+						$args[$key] = $value;
+					}
+				}
+				wp_safe_redirect(add_query_arg($args, admin_url('edit.php')));
+				exit;
 			}
 			public static function enqueue_assets($hook) {
 				if (strpos($hook, self::SLUG) === false) {
@@ -253,7 +285,7 @@
 				// CPT-parent submenu pages can leave $GLOBALS['title'] null, which
 				// trips strip_tags(null) deprecations in admin-header.php on PHP 8+.
 				if (empty($GLOBALS['title'])) {
-					$GLOBALS['title'] = esc_html__('Tour Booking', 'tour-booking-manager');
+					$GLOBALS['title'] = esc_html__('Bookings & Guests', 'tour-booking-manager');
 				}
 			}
 			// Native ttbm_custom_order statuses only — the base of status_choices()'s
@@ -656,7 +688,7 @@
 				<div class="wrap ttbm-co-wrap">
 					<div class="ttbm-co-header">
 						<div>
-							<h1 class="ttbm-co-title"><?php esc_html_e('Tour Booking', 'tour-booking-manager'); ?></h1>
+							<h1 class="ttbm-co-title"><?php esc_html_e('Bookings & Guests', 'tour-booking-manager'); ?></h1>
 							<p class="ttbm-co-subtitle"><?php esc_html_e('All tour bookings — placed through WooCommerce or the custom payment gateways (PayPal, Stripe, Offline).', 'tour-booking-manager'); ?></p>
 						</div>
 					</div>
@@ -767,8 +799,8 @@
 						<div class="ttbm-co-pro-overlay">
 							<div class="ttbm-co-pro-card">
 								<span class="ttbm-co-pro-badge"><span class="dashicons dashicons-lock"></span><?php esc_html_e('PRO', 'tour-booking-manager'); ?></span>
-								<h2><?php esc_html_e('Unlock booking analytics and advanced filters', 'tour-booking-manager'); ?></h2>
-								<p><?php esc_html_e('View revenue insights, search and filter every booking, and export your results to CSV with Tour Booking Manager PRO.', 'tour-booking-manager'); ?></p>
+								<h2><?php esc_html_e('Unlock guest management, booking analytics and advanced filters', 'tour-booking-manager'); ?></h2>
+								<p><?php esc_html_e('View and edit guest details, explore revenue insights, search and filter every booking, and export your results with Tour Booking Manager PRO.', 'tour-booking-manager'); ?></p>
 								<a href="<?php echo esc_url(self::PRO_URL); ?>" target="_blank" rel="noopener noreferrer" class="ttbm-co-pro-cta">
 									<span class="dashicons dashicons-star-filled"></span>
 									<?php esc_html_e('Upgrade to PRO', 'tour-booking-manager'); ?>

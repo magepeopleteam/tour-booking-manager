@@ -121,12 +121,12 @@
 							foreach ($image_ids as $id) {
 								$image_url = TTBM_Global_Function::get_image_url('', $id);
 								$image_url = $image_url ?: TTBM_PLUGIN_URL . '/assets/images/no_image.png';
-								$size = wp_getimagesize($image_url);
+								$metadata = wp_get_attachment_metadata($id);
 								$width = 0;
 								$height = 0;
-								if ($size) {
-									$width = $size[0];
-									$height = $size[1];
+								if (is_array($metadata)) {
+									$width = isset($metadata['width']) ? absint($metadata['width']) : 0;
+									$height = isset($metadata['height']) ? absint($metadata['height']) : 0;
 								}
 								?>
                                 <div class="sliderItem" data-slide-index="<?php echo esc_html($count); ?>" data-target-popup="superSlider" data-placeholder>

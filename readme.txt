@@ -5,7 +5,7 @@ Tags: tour booking, travel agency, travel booking, tour operator, hotel booking
 Requires at least: 4.4.0
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -228,6 +228,14 @@ Use the [WordPress.org support forum](https://wordpress.org/support/plugin/tour-
 
 
 == Changelog ==
+= 2.2.1 – 3 August 2026 =
+
+**Bug Fixes**
+
+* Fixed: The "Next Tour" date on the tour details page showed today's date and the current clock time instead of the next available departure. Repeated tours return their schedule dates with the time already attached, and the details page appended the time a second time; the resulting value could not be parsed and fell back to rendering the current time. The date now matches the availability calendar.
+* Fixed: Repeated tours whose start time was entered on the Repeated tab displayed midnight on the tour details page when the tour had not been re-saved since that field was introduced. The details page now falls back to the repeated start time; the booking form is unchanged.
+* Fixed: A "Next Tour" date that cannot be parsed is now hidden instead of rendering as the current date and time.
+
 = 2.2.0 – 28 July 2026 =
 
 **Booking & Payments**
@@ -326,6 +334,9 @@ Use the [WordPress.org support forum](https://wordpress.org/support/plugin/tour-
 [View the full changelog](https://plugins.trac.wordpress.org/log/tour-booking-manager/)
 
 == Upgrade Notice ==
+
+= 2.2.1 =
+Fixes the "Next Tour" date on the tour details page, which could show today's date and the current time instead of the next departure. Recommended for all users.
 
 = 2.2.0 =
 Major update. Travelly can now take bookings without WooCommerce using its own checkout and free Offline Payment method, adds a unified booking manager for both engines, a redesigned admin and tour details page, a customer wishlist, and large performance gains. Back up your site before updating.

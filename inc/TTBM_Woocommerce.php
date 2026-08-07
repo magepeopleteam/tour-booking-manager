@@ -204,8 +204,14 @@
 						}
 					}
 					$item->add_meta_data('_ttbm_id', $ttbm_id);
-					//$item->add_meta_data('_ttbm_date', $date);
-					//$item->add_meta_data('_ttbm_end_date', $end_date);
+					/*
+					 * The raw, unformatted schedule values. The human-readable copies
+					 * added above are localised display strings, so consumers that need
+					 * to parse the date (emails, exports) need these. WooCommerce hides
+					 * underscore-prefixed keys from the order table, so they stay internal.
+					 */
+					$item->add_meta_data('_ttbm_date', $date);
+					$item->add_meta_data('_ttbm_end_date', $end_date);
 					$item->add_meta_data('_ttbm_hotel_info', $hotel_info);
 					$item->add_meta_data('_ttbm_ticket_info', $ticket_type);
 					$item->add_meta_data('_ttbm_user_info', $user_info);

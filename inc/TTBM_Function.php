@@ -285,6 +285,41 @@
 				}
 				return array((array) $off_days, $off_dates);
 			}
+			/**
+			 * Dates that must appear on a repeated tour's calendar even when the
+			 * recurrence pattern, the weekly off days or the blocked dates would
+			 * exclude them.
+			 *
+			 * A repeated tour's calendar is derived purely from its recurrence
+			 * pattern minus those filters, so until now nothing could *add* a
+			 * one-off date to the schedule -- an add-on could only re-time a date
+			 * the pattern had already produced. This is the seam add-ons hook to
+			 * inject genuine exceptions (PRO's "Special Dates Time" tab uses it).
+			 *
+			 * @return array Y-m-d => Y-m-d map, so membership tests stay O(1).
+			 */
+			public static function get_forced_schedule_dates($tour_id) {
+				if (self::cache_has('forced_dates', (int) $tour_id)) {
+					return self::cache_get('forced_dates', (int) $tour_id);
+				}
+				$dates = array();
+				foreach ((array) apply_filters('ttbm_forced_schedule_dates', array(), $tour_id) as $forced_date) {
+					$timestamp = $forced_date ? strtotime((string) $forced_date) : false;
+					if ($timestamp) {
+						$normalized = gmdate('Y-m-d', $timestamp);
+						$dates[$normalized] = $normalized;
+					}
+				}
+				return self::cache_set('forced_dates', (int) $tour_id, $dates);
+			}
+			public static function is_forced_schedule_date($tour_id, $date): bool {
+				$timestamp = $date ? strtotime((string) $date) : false;
+				if (!$timestamp) {
+					return false;
+				}
+				$forced_dates = self::get_forced_schedule_dates($tour_id);
+				return isset($forced_dates[gmdate('Y-m-d', $timestamp)]);
+			}
 
 			public static function get_date($tour_id, $expire = '') {
 				$cache_key = (int) $tour_id . '|' . self::cache_scalar_key($expire);
@@ -354,6 +389,23 @@
 							}
 						}
 					}
+					/*
+					 * Fold in the admin's explicit one-off dates. These sit outside the
+					 * recurrence entirely, so they are merged here rather than filtered
+					 * above, then the list is re-sorted: update_upcoming_date_month()
+					 * takes current()/end() of this array as the tour's first and last
+					 * date, so chronological order is load-bearing.
+					 */
+					foreach (self::get_forced_schedule_dates($tour_id) as $forced_date) {
+						if (!$expire && $now_date > strtotime($forced_date)) {
+							continue;
+						}
+						$current_date = self::get_date_by_time_check($tour_id, $forced_date, $expire);
+						if ($current_date && !in_array($current_date, $tour_date, true)) {
+							$tour_date[] = $current_date;
+						}
+					}
+					sort($tour_date);
 				} else {
 					$date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date');
 					if ($date) {
@@ -434,20 +486,33 @@
 						$end_date = '';
 					}
 					
+					/*
+					 * An admin-entered one-off date is an explicit exception, so it
+					 * overrides all three recurrence gates below: the start/end window,
+					 * the repeat interval, and the off day / off date filters. Without
+					 * this, a date added purely to open an extra departure could never
+					 * pass -- the recurrence would have excluded it by definition.
+					 */
+					$is_forced = self::is_forced_schedule_date($tour_id, $date_normalized);
+
 					// Check if date is within range
-					if ($start_date && $end_date && $date_normalized >= $start_date && $date_normalized <= $end_date) {
+					if ($is_forced || ($start_date && $end_date && $date_normalized >= $start_date && $date_normalized <= $end_date)) {
 						// Check off days and off dates
 						list($off_days, $off_dates) = self::get_tour_off_schedule_data($tour_id);
 						$day = strtolower(gmdate('D', strtotime($date_normalized)));
-						
+
 						// Check if date matches interval pattern
-						$interval = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_after', 1);
-						$all_dates = self::get_repeat_pattern_dates($start_date, $end_date, $interval);
-						$date_in_pattern = isset($all_dates[$date_normalized]);
+						if ($is_forced) {
+							$date_in_pattern = true;
+						} else {
+							$interval = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_after', 1);
+							$all_dates = self::get_repeat_pattern_dates($start_date, $end_date, $interval);
+							$date_in_pattern = isset($all_dates[$date_normalized]);
+						}
 
 						// Validate date is not expired and matches pattern
 						if ($date_in_pattern && ($expire || $now_date <= strtotime($date_normalized))) {
-							if (!in_array($day, (array)$off_days) && !in_array($date_normalized, (array)$off_dates)) {
+							if ($is_forced || (!in_array($day, (array)$off_days) && !in_array($date_normalized, (array)$off_dates))) {
 								// Date is valid, now check time
 								if (TTBM_Global_Function::check_time_exit_date($date)) {
 									$full_date = TTBM_Function::reduce_stop_sale_hours($date);
@@ -836,6 +901,41 @@
 					? __( 'Tour Date', 'tour-booking-manager' )
 					: __( 'Next Tour', 'tour-booking-manager' );
 			}
+			/**
+			 * Split a schedule value into [ Y-m-d, H:i ].
+			 *
+			 * get_date() is not consistent about the shape it returns: repeated tours come
+			 * back as "Y-m-d H:i" because get_date_by_time_check() bakes the matched slot
+			 * time into the value, while fixed/particular tours return a bare "Y-m-d".
+			 * Callers that append a time themselves must split first -- concatenating onto
+			 * a value that already carries one yields "Y-m-d H:i H:i", which strtotime()
+			 * cannot parse.
+			 */
+			private static function split_schedule_value( $value ) {
+				$value = trim( (string) $value );
+				if ( preg_match( '/^(\d{4}-\d{2}-\d{2})[ T](\d{1,2}:\d{2}(?::\d{2})?)$/', $value, $matches ) ) {
+					return array( $matches[1], $matches[2] );
+				}
+				return array( $value, '' );
+			}
+			/**
+			 * Repeated-tour start time for tours saved before the repeated-tab mirror shipped.
+			 *
+			 * get_time() reads a repeated tour's effective time from ttbm_travel_start_time,
+			 * which TTBM_Settings mirrors from ttbm_travel_repeated_start_time -- but only on
+			 * save. Tours last edited before that mirror existed still have a blank
+			 * ttbm_travel_start_time, so the admin's configured time is invisible and the
+			 * date renders as midnight. Read-side fallback only: the booking flow keeps
+			 * using get_time() unchanged.
+			 */
+			private static function get_repeated_start_time_fallback( $tour_id ) {
+				if ( self::get_travel_type( $tour_id ) !== 'repeated' ) {
+					return '';
+				}
+				return self::normalize_time_value(
+					TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_travel_repeated_start_time' )
+				);
+			}
 			public static function get_next_tour_date_display( $tour_id ) {
 				$all_dates = self::get_date( $tour_id );
 				if ( empty( $all_dates ) ) {
@@ -843,8 +943,10 @@
 				}
 
 				if ( ! empty( $all_dates['date'] ) ) {
-					$start_date      = $all_dates['date'];
-					$start_time      = self::normalize_time_value( self::get_time( $tour_id, $start_date ) );
+					list( $start_date, $start_time ) = self::split_schedule_value( $all_dates['date'] );
+					if ( ! $start_time ) {
+						$start_time = self::normalize_time_value( self::get_time( $tour_id, $start_date ) );
+					}
 					$start_date_time = $start_time ? $start_date . ' ' . $start_time : $start_date;
 					$display         = TTBM_Global_Function::date_format( $start_date_time, 'full' );
 					$checkout        = $all_dates['checkout_date'] ?? '';
@@ -863,8 +965,19 @@
 					return '';
 				}
 
-				$start_time = self::normalize_time_value( self::get_time( $tour_id, $next_date ) );
+				list( $next_date, $start_time ) = self::split_schedule_value( $next_date );
+				if ( ! $start_time ) {
+					$start_time = self::normalize_time_value( self::get_time( $tour_id, $next_date ) );
+				}
+				if ( ! $start_time ) {
+					$start_time = self::get_repeated_start_time_fallback( $tour_id );
+				}
 				$date_time = $start_time ? $next_date . ' ' . $start_time : $next_date;
+
+				/* date_format() renders "now" for anything strtotime() rejects -- show nothing instead. */
+				if ( ! strtotime( $date_time ) ) {
+					return '';
+				}
 
 				return TTBM_Global_Function::date_format( $date_time, 'full' );
 			}

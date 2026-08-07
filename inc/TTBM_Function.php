@@ -836,6 +836,41 @@
 					? __( 'Tour Date', 'tour-booking-manager' )
 					: __( 'Next Tour', 'tour-booking-manager' );
 			}
+			/**
+			 * Split a schedule value into [ Y-m-d, H:i ].
+			 *
+			 * get_date() is not consistent about the shape it returns: repeated tours come
+			 * back as "Y-m-d H:i" because get_date_by_time_check() bakes the matched slot
+			 * time into the value, while fixed/particular tours return a bare "Y-m-d".
+			 * Callers that append a time themselves must split first -- concatenating onto
+			 * a value that already carries one yields "Y-m-d H:i H:i", which strtotime()
+			 * cannot parse.
+			 */
+			private static function split_schedule_value( $value ) {
+				$value = trim( (string) $value );
+				if ( preg_match( '/^(\d{4}-\d{2}-\d{2})[ T](\d{1,2}:\d{2}(?::\d{2})?)$/', $value, $matches ) ) {
+					return array( $matches[1], $matches[2] );
+				}
+				return array( $value, '' );
+			}
+			/**
+			 * Repeated-tour start time for tours saved before the repeated-tab mirror shipped.
+			 *
+			 * get_time() reads a repeated tour's effective time from ttbm_travel_start_time,
+			 * which TTBM_Settings mirrors from ttbm_travel_repeated_start_time -- but only on
+			 * save. Tours last edited before that mirror existed still have a blank
+			 * ttbm_travel_start_time, so the admin's configured time is invisible and the
+			 * date renders as midnight. Read-side fallback only: the booking flow keeps
+			 * using get_time() unchanged.
+			 */
+			private static function get_repeated_start_time_fallback( $tour_id ) {
+				if ( self::get_travel_type( $tour_id ) !== 'repeated' ) {
+					return '';
+				}
+				return self::normalize_time_value(
+					TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_travel_repeated_start_time' )
+				);
+			}
 			public static function get_next_tour_date_display( $tour_id ) {
 				$all_dates = self::get_date( $tour_id );
 				if ( empty( $all_dates ) ) {
@@ -843,8 +878,10 @@
 				}
 
 				if ( ! empty( $all_dates['date'] ) ) {
-					$start_date      = $all_dates['date'];
-					$start_time      = self::normalize_time_value( self::get_time( $tour_id, $start_date ) );
+					list( $start_date, $start_time ) = self::split_schedule_value( $all_dates['date'] );
+					if ( ! $start_time ) {
+						$start_time = self::normalize_time_value( self::get_time( $tour_id, $start_date ) );
+					}
 					$start_date_time = $start_time ? $start_date . ' ' . $start_time : $start_date;
 					$display         = TTBM_Global_Function::date_format( $start_date_time, 'full' );
 					$checkout        = $all_dates['checkout_date'] ?? '';
@@ -863,8 +900,19 @@
 					return '';
 				}
 
-				$start_time = self::normalize_time_value( self::get_time( $tour_id, $next_date ) );
+				list( $next_date, $start_time ) = self::split_schedule_value( $next_date );
+				if ( ! $start_time ) {
+					$start_time = self::normalize_time_value( self::get_time( $tour_id, $next_date ) );
+				}
+				if ( ! $start_time ) {
+					$start_time = self::get_repeated_start_time_fallback( $tour_id );
+				}
 				$date_time = $start_time ? $next_date . ' ' . $start_time : $next_date;
+
+				/* date_format() renders "now" for anything strtotime() rejects -- show nothing instead. */
+				if ( ! strtotime( $date_time ) ) {
+					return '';
+				}
 
 				return TTBM_Global_Function::date_format( $date_time, 'full' );
 			}

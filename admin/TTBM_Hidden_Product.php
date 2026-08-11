@@ -131,7 +131,10 @@
 			private function resolve_linked_product_id($post_id): int {
 				$product_id = (int) TTBM_Global_Function::get_post_info($post_id, 'link_wc_product', 0);
 				if ($product_id > 0 && 'product' === get_post_type($product_id)) {
-					return $product_id;
+					$linked_tour_id = (int) TTBM_Global_Function::get_post_info($product_id, 'link_ttbm_id', 0);
+					if ($linked_tour_id === (int) $post_id) {
+						return $product_id;
+					}
 				}
 				$product_id = $this->find_hidden_wc_product_id($post_id);
 				if ($product_id > 0) {

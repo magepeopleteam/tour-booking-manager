@@ -11,10 +11,19 @@
 			 */
 			private static $syncing_hidden_product = false;
 
+			/**
+			 * Bump to re-run the one-time link repair after a release that widens it.
+			 */
+			const LINK_REPAIR_VERSION = 1;
+			const LINK_REPAIR_OPTION = 'ttbm_hidden_product_link_repair';
+			const LINK_REPAIR_REPORT_OPTION = 'ttbm_hidden_product_link_repair_report';
+
 			public function __construct() {
 				add_action('wp_insert_post', array($this, 'create_hidden_wc_product_on_publish'), 10, 3);
 				add_action('save_post', array($this, 'run_link_product_on_save'), 99, 1);
 				add_action('admin_init', array($this, 'maybe_backfill_hidden_products'), 20);
+				add_action('admin_init', array($this, 'maybe_repair_shared_product_links'), 21);
+				add_action('ttbm_repair_hidden_product_links', array($this, 'force_repair_shared_product_links'));
 				add_action('activated_plugin', array($this, 'backfill_after_woocommerce_activation'), 20, 2);
 				add_action('parse_query', array($this, 'hide_wc_hidden_product_from_product_list'));
 				add_action('wp', array($this, 'hide_hidden_wc_product_from_frontend'));
@@ -82,6 +91,138 @@
 					return;
 				}
 				$this->maybe_backfill_hidden_products(true);
+				$this->maybe_repair_shared_product_links(true);
+			}
+			/**
+			 * One-time repair for tours/hotels that share another post's hidden product.
+			 *
+			 * Older builds of the Duplicate action copied link_wc_product and
+			 * check_if_run_once onto the clone, so the copy sold the *original's*
+			 * WooCommerce product. Because that product is _sold_individually, only one
+			 * of the colliding tours can sit in a cart at a time -- the others are
+			 * refused with "You cannot add another ... to your cart" and the customer is
+			 * bounced back to the booking form. Orders, emails and invoices also carry
+			 * the wrong tour name.
+			 *
+			 * Neither existing repair path catches it: maybe_backfill_hidden_products()
+			 * only selects posts whose link is missing/empty/0, and
+			 * create_hidden_wc_product_on_publish() bails while check_if_run_once is set.
+			 * So the damage is permanent until something re-checks the link *target*,
+			 * which is what this pass does.
+			 *
+			 * The flag is stored before the work runs: a fatal part-way through must not
+			 * re-trigger the scan on every subsequent admin request. Bump
+			 * LINK_REPAIR_VERSION (or fire the ttbm_repair_hidden_product_links action)
+			 * to run it again.
+			 */
+			public function maybe_repair_shared_product_links($force = false): void {
+				if (!TTBM_Global_Function::has_woocommerce()) {
+					return;
+				}
+				if (!$force) {
+					if (!current_user_can('manage_options')) {
+						return;
+					}
+					if ((int) get_option(self::LINK_REPAIR_OPTION, 0) >= self::LINK_REPAIR_VERSION) {
+						return;
+					}
+				}
+				update_option(self::LINK_REPAIR_OPTION, self::LINK_REPAIR_VERSION, false);
+				$report = $this->repair_shared_product_links();
+				if ($report['relinked'] || $report['created'] || $report['adopted']) {
+					update_option(self::LINK_REPAIR_REPORT_OPTION, $report, false);
+				}
+			}
+			public function force_repair_shared_product_links(): void {
+				$this->maybe_repair_shared_product_links(true);
+			}
+			/**
+			 * Give every booking post a hidden product that points back at it.
+			 *
+			 * Posts are walked oldest first so that when a product carries no
+			 * link_ttbm_id at all -- the pre-link_ttbm_id installs -- the original owns
+			 * it and the later copies are the ones re-pointed.
+			 *
+			 * @return array{checked:int,adopted:int,relinked:int,created:int}
+			 */
+			private function repair_shared_product_links(): array {
+				$report = array('checked' => 0, 'adopted' => 0, 'relinked' => 0, 'created' => 0);
+				$post_ids = get_posts(
+					array(
+						'post_type'              => array(TTBM_Function::get_cpt_name(), 'ttbm_hotel'),
+						'post_status'            => array('publish', 'draft', 'pending', 'private', 'future'),
+						'posts_per_page'         => -1,
+						'orderby'                => 'ID',
+						'order'                  => 'ASC',
+						'fields'                 => 'ids',
+						'no_found_rows'          => true,
+						'update_post_meta_cache' => false,
+						'update_post_term_cache' => false,
+						'meta_query'             => array(
+							array(
+								'key'     => 'link_wc_product',
+								'compare' => 'EXISTS',
+							),
+						),
+					)
+				);
+				// product id => the post that already owns it in this pass.
+				$claimed = array();
+				foreach ($post_ids as $post_id) {
+					$post_id = (int) $post_id;
+					$product_id = (int) TTBM_Global_Function::get_post_info($post_id, 'link_wc_product', 0);
+					if ($product_id <= 0) {
+						continue; // maybe_backfill_hidden_products() owns the empty-link case.
+					}
+					$report['checked']++;
+					// A trashed product still reports its post type, but nothing can be
+					// bought through it, so treat it the same as a deleted one.
+					if ('product' === get_post_type($product_id) && 'trash' !== get_post_status($product_id)) {
+						$owner = (int) get_post_meta($product_id, 'link_ttbm_id', true);
+						if ($owner === $post_id) {
+							$claimed[$product_id] = $post_id;
+							continue;
+						}
+						if ($owner <= 0 && !isset($claimed[$product_id])) {
+							// Legitimately this post's product, just never stamped.
+							update_post_meta($product_id, 'link_ttbm_id', $post_id);
+							$claimed[$product_id] = $post_id;
+							$report['adopted']++;
+							continue;
+						}
+					}
+					// Either the target is gone, or it belongs to a different post.
+					if ((int) get_post_meta($product_id, 'link_ttbm_id', true) === $post_id) {
+						/*
+						 * An unusable product (trashed) that still claims this post.
+						 * Drop the stale back-reference before looking for a
+						 * replacement, otherwise find_hidden_wc_product_id() hands the
+						 * same dead product straight back and the repair re-runs
+						 * forever instead of settling.
+						 */
+						delete_post_meta($product_id, 'link_ttbm_id');
+					}
+					delete_post_meta($post_id, 'link_wc_product');
+					delete_post_meta($post_id, 'check_if_run_once');
+					$own_product_id = $this->find_hidden_wc_product_id($post_id);
+					if ($own_product_id > 0 && 'trash' === get_post_status($own_product_id)) {
+						$own_product_id = 0;
+					}
+					if ($own_product_id > 0) {
+						update_post_meta($post_id, 'link_wc_product', $own_product_id);
+						update_post_meta($own_product_id, 'link_ttbm_id', $post_id);
+						update_post_meta($post_id, 'check_if_run_once', true);
+						$claimed[$own_product_id] = $post_id;
+						$report['relinked']++;
+						continue;
+					}
+					$new_product_id = $this->create_hidden_wc_product($post_id, get_the_title($post_id));
+					if ($new_product_id > 0) {
+						$claimed[$new_product_id] = $post_id;
+						$report['created']++;
+					}
+				}
+				return $report;
 			}
 			private function sync_hidden_product_price($product_id) {
 				$current_price = get_post_meta($product_id, '_price', true);

@@ -55,6 +55,7 @@
                                 </div>
                             </div>
                         </div>
+						<?php $this->starting_price($tour_id); ?>
 						<?php $this->short_description_section($tour_id); ?>
                     </section>
                 </div>

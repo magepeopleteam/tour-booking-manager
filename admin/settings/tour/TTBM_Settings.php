@@ -1220,7 +1220,14 @@
 						add_action('save_post', array($this, 'save_settings'), 99, 1);
 					}
 					$ttbm_travel_duration = isset($_POST['ttbm_travel_duration']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_duration'])) : '';
+					if ( ! isset( $_POST['ttbm_travel_duration'] ) ) {
+						$ttbm_travel_duration = get_post_meta( $tour_id, 'ttbm_travel_duration', true );
+					}
 					$ttbm_travel_duration_type = isset($_POST['ttbm_travel_duration_type']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_duration_type'])) : 'day';
+					if ( ! isset( $_POST['ttbm_travel_duration_type'] ) ) {
+						$existing_duration_type = get_post_meta( $tour_id, 'ttbm_travel_duration_type', true );
+						$ttbm_travel_duration_type = $existing_duration_type ? $existing_duration_type : 'day';
+					}
 					update_post_meta($tour_id, 'ttbm_travel_duration', $ttbm_travel_duration);
 					update_post_meta($tour_id, 'ttbm_travel_duration_type', $ttbm_travel_duration_type);
 					$ttbm_display_duration = isset($_POST['ttbm_display_duration_night']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_duration_night'])) ? 'on' : 'off';

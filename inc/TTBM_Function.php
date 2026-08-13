@@ -1009,7 +1009,7 @@
 				$ticket_list  = self::get_ticket_type($tour_id);
 				$start_price  = '';
 
-				if ( ! empty( $ticket_list ) && sizeof( $ticket_list ) > 0 ) {
+				if ( ! $manual_price && ! empty( $ticket_list ) && sizeof( $ticket_list ) > 0 ) {
 					if ( ! $start_date ) {
 						$all_dates  = self::get_date( $tour_id );
 						$start_date = self::get_effective_booking_date( $tour_id, $all_dates );
@@ -1146,17 +1146,50 @@
 				$price = '';
 				if ($ttbm_type == 'general') {
 					$ticket_types = self::get_ticket_type($tour_id);
-					foreach ($ticket_types as $ticket_type) {
-						if (!$ticket_name || $ticket_type['ticket_type_name'] == $ticket_name) {
+
+					if ($ticket_name) {
+						foreach ($ticket_types as $ticket_type) {
+							if ($ticket_type['ticket_type_name'] == $ticket_name) {
+								$regular_price = $ticket_type['ticket_type_price'];
+								$sale_price = array_key_exists('sale_price', $ticket_type) && $ticket_type['sale_price'] ? $ticket_type['sale_price'] : '';
+								$price = $regular_price && $sale_price ? $regular_price : '';
+								break;
+							}
+						}
+						return apply_filters('ttbm_filter_ticket_discount_price_check', $price, $tour_id, $start_date, $ticket_name);
+					}
+
+					/* No specific ticket requested: this is the card/list "ON SALE" badge check.
+					 * It must reflect whether the price actually shown to visitors (the "From"
+					 * price, see build_tour_start_price()) is a discounted one — not just whether
+					 * the first ticket type in the list happens to be on sale. A manual Tour Start
+					 * Price always wins over ticket pricing and has no sale-price of its own, so no
+					 * badge applies when it's set. Otherwise, report the sale status of whichever
+					 * ticket type is actually the cheapest (the one build_tour_start_price() picks). */
+					$manual_price = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_price');
+					if (!$manual_price && !empty($ticket_types)) {
+						$cheapest_effective = null;
+						$cheapest_ticket = null;
+						foreach ($ticket_types as $ticket_type) {
 							$regular_price = $ticket_type['ticket_type_price'];
 							$sale_price = array_key_exists('sale_price', $ticket_type) && $ticket_type['sale_price'] ? $ticket_type['sale_price'] : '';
+							$effective = $sale_price !== '' ? $sale_price : $regular_price;
+							if ($effective === '' || $effective === null) {
+								continue;
+							}
+							if ($cheapest_effective === null || floatval($effective) < floatval($cheapest_effective)) {
+								$cheapest_effective = $effective;
+								$cheapest_ticket = $ticket_type;
+							}
+						}
+						if ($cheapest_ticket) {
+							$regular_price = $cheapest_ticket['ticket_type_price'];
+							$sale_price = array_key_exists('sale_price', $cheapest_ticket) && $cheapest_ticket['sale_price'] ? $cheapest_ticket['sale_price'] : '';
 							$price = $regular_price && $sale_price ? $regular_price : '';
-							return apply_filters('ttbm_filter_ticket_discount_price_check', $price, $tour_id, $start_date, $ticket_name);
-							//$price = apply_filters( 'ttbm_price_by_name_filter', $price, $tour_id, $qty );
 						}
 					}
 				}
-				return $price;
+				return apply_filters('ttbm_filter_ticket_discount_price_check', $price, $tour_id, $start_date, $ticket_name);
 			}
 			public static function get_extra_service_price_by_name($tour_id, $service_name) {
 				$extra_services = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_extra_service_data', array());

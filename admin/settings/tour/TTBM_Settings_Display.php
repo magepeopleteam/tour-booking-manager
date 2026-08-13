@@ -17,6 +17,11 @@ if (!class_exists('TTBM_Settings_Display')) {
 
             $enquiry_checked = $display_enquiry == 'off' ? '' : 'checked';
             $auto_related_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_auto_related_tour', 'on') == 'off' ? '' : 'checked';
+
+            $rating_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_rating', 'off') == 'off' ? '' : 'checked';
+            $rating_active = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_rating', 'off') == 'off' ? '' : 'mActive';
+            $rating_average = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_rating_average');
+            $rating_count = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_rating_count');
             ?>
             <div class="tabsItem ttbm_display_settings" data-tabs="#ttbm_display_settings">
                 <h2><?php esc_html_e('Display Settings', 'tour-booking-manager'); ?></h2>
@@ -76,6 +81,32 @@ if (!class_exists('TTBM_Settings_Display')) {
                             </div>
                             <?php $this->rank_tour($tour_id); ?>
                             <?php do_action('add_ttbm_display_settings', $tour_id); ?>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="ttbm-header">
+                        <h4><i class="fas fa-star"></i><?php esc_html_e('Rating & Reviews', 'tour-booking-manager'); ?></h4>
+                        <?php TTBM_Custom_Layout::switch_button('ttbm_display_rating', $rating_checked); ?>
+                    </div>
+                    <p class="info_text"><?php esc_html_e('Off by default. Only turn this on if you have a real average rating and review count for this tour — the star row is hidden on the tour list card unless both fields below are filled in.', 'tour-booking-manager'); ?></p>
+                    <div data-collapse="#ttbm_display_rating" class="dFlex <?php echo esc_attr($rating_active); ?>">
+                        <div class="col-left">
+                            <label class="label">
+                                <div>
+                                    <p><?php esc_html_e('Average Rating (0–5)', 'tour-booking-manager'); ?></p>
+                                </div>
+                                <input type="number" min="0" max="5" step="0.1" class="formControl" name="ttbm_rating_average" value="<?php echo esc_attr($rating_average); ?>" placeholder="<?php esc_attr_e('Ex: 4.9', 'tour-booking-manager'); ?>"/>
+                            </label>
+                        </div>
+                        <div class="col-right">
+                            <label class="label">
+                                <div>
+                                    <p><?php esc_html_e('Review Count', 'tour-booking-manager'); ?></p>
+                                </div>
+                                <input type="number" min="0" step="1" class="formControl" name="ttbm_rating_count" value="<?php echo esc_attr($rating_count); ?>" placeholder="<?php esc_attr_e('Ex: 128', 'tour-booking-manager'); ?>"/>
+                            </label>
                         </div>
                     </div>
                 </section>

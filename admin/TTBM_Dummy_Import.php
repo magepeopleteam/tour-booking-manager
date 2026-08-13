@@ -1005,6 +1005,13 @@
 									'ttbm_contact_text' => 'Do not hesitage to give us a call. We are an expert team and we are happy to talk to you.',
 									//Related tour_settings
 									'ttbm_display_related' => 'on',
+									//Rating & Reviews (Display Settings tab) — real-looking demo values only on dummy tours
+									'ttbm_display_rating' => 'on',
+									'ttbm_rating_average' => 4.9,
+									'ttbm_rating_count' => 128,
+									//Top Picks & Deals — flags this dummy tour as a "Bestseller" on the list card
+									'ttbm_display_top_picks_deals' => 'on',
+									'ttbm_top_picks_deals' => ['popular'],
 									//Display_settings
 									'ttbm_section_title_style' => 'ttbm_title_style_2',
 									'ttbm_ticketing_system' => 'availability_section',
@@ -1148,6 +1155,10 @@
 									'ttbm_contact_text' => 'Do not hesitate to give us a call. We are an expert team and we are happy to talk to you.',
 									//Related tour_settings
 									'ttbm_display_related' => 'on',
+									//Rating & Reviews (Display Settings tab)
+									'ttbm_display_rating' => 'on',
+									'ttbm_rating_average' => 4.8,
+									'ttbm_rating_count' => 94,
 									//Display_settings
 									'ttbm_section_title_style' => 'ttbm_title_style_2',
 									'ttbm_ticketing_system' => 'availability_section',
@@ -1294,6 +1305,13 @@
 									'ttbm_contact_text' => 'Do not hesitate to give us a call. We are an expert team and we are happy to talk to you.',
 									//Related tour_settings
 									'ttbm_display_related' => 'on',
+									//Rating & Reviews (Display Settings tab)
+									'ttbm_display_rating' => 'on',
+									'ttbm_rating_average' => 4.7,
+									'ttbm_rating_count' => 156,
+									//Top Picks & Deals — flags this dummy tour as a "Bestseller" on the list card
+									'ttbm_display_top_picks_deals' => 'on',
+									'ttbm_top_picks_deals' => ['popular'],
 									//Display_settings
 									'ttbm_section_title_style' => 'ttbm_title_style_2',
 									'ttbm_ticketing_system' => 'regular_ticket',
@@ -1440,6 +1458,10 @@
 									'ttbm_contact_text' => 'Do not hesitate to give us a call. We are an expert team and we are happy to talk to you.',
 									//Related tour_settings
 									'ttbm_display_related' => 'on',
+									//Rating & Reviews (Display Settings tab)
+									'ttbm_display_rating' => 'on',
+									'ttbm_rating_average' => 4.6,
+									'ttbm_rating_count' => 62,
 									//Display_settings
 									'ttbm_section_title_style' => 'ttbm_title_style_2',
 									'ttbm_ticketing_system' => 'regular_ticket',
@@ -1585,6 +1607,10 @@
 									'ttbm_contact_text' => 'Do not hesitate to give us a call. We are an expert team and we are happy to talk to you.',
 									//Related tour_settings
 									'ttbm_display_related' => 'on',
+									//Rating & Reviews (Display Settings tab)
+									'ttbm_display_rating' => 'on',
+									'ttbm_rating_average' => 5.0,
+									'ttbm_rating_count' => 23,
 									//Display_settings
 									'ttbm_section_title_style' => 'ttbm_title_style_2',
 									'ttbm_ticketing_system' => 'regular_ticket',

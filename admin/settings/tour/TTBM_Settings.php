@@ -1175,6 +1175,7 @@
 					'ttbm_display_related',
 					'ttbm_display_include_service',
 					'ttbm_display_exclude_service',
+					'ttbm_display_rating',
 					'mep_disable_ticket_time',
 					'ttbm_enable_off_schedule',
 				));
@@ -1480,6 +1481,13 @@
 					update_post_meta($tour_id, 'ttbm_theme_file', $ttbm_template);
 					update_post_meta($tour_id, 'ttbm_display_enquiry', $display_enquiry);
 					update_post_meta($tour_id, 'ttbm_auto_related_tour', $auto_related_tour);
+					//*********Rating & Reviews (off by default, no fabricated data)**************//
+					$display_rating = isset($_POST['ttbm_display_rating']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_rating'])) ? 'on' : 'off';
+					$rating_average = isset($_POST['ttbm_rating_average']) ? sanitize_text_field(wp_unslash($_POST['ttbm_rating_average'])) : '';
+					$rating_count = isset($_POST['ttbm_rating_count']) ? absint(wp_unslash($_POST['ttbm_rating_count'])) : '';
+					update_post_meta($tour_id, 'ttbm_display_rating', $display_rating);
+					update_post_meta($tour_id, 'ttbm_rating_average', $rating_average);
+					update_post_meta($tour_id, 'ttbm_rating_count', $rating_count);
 					//*********FAQ**************//
 					$faq = isset($_POST['ttbm_display_faq']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_faq'])) ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_faq', $faq);

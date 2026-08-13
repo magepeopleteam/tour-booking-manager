@@ -101,39 +101,118 @@
 	max-height: 420px !important;
 }
 
-.ttbm-travello-gallery .sliderShowcase.right,
-.ttbm-travello-gallery .sliderShowcase.left {
-	width: min( 260px, 32% );
-	flex: 0 0 min( 260px, 32% );
+/* The reference gallery is a big photo + exactly 2 stacked photos beside
+   it. This widget's real showcase (TTBM_Custom_Slider::slider_showcase_style_1(),
+   shared by every theme — not something this template can safely rewrite)
+   always renders 4 cells: 3 plain thumbnails plus a 4th carrying a "+N"
+   badge, where N = total images minus those same 4 already shown. Hiding 2
+   of the 4 with CSS would leave that badge lying about how many more
+   photos exist (it'd still say "+1" while actually 3 more were hidden).
+   So instead of hiding anything, all 4 stay — just regrouped from a thin
+   4-row filmstrip into a 2×2 cluster, which reads much closer to the
+   reference's "a few generously-sized photos" feel than 4 slivers stacked
+   105px tall did, without touching the shared PHP or the badge count. */
+#ttbm_travello_gallery .sliderShowcase.right,
+#ttbm_travello_gallery .sliderShowcase.left {
+	width: min( 320px, 36% );
+	flex: 0 0 min( 320px, 36% );
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+	gap: 8px;
 }
 
-.ttbm-travello-gallery .sliderShowcaseItem {
+#ttbm_travello_gallery .sliderShowcaseItem {
+	/* The base rule this overrides (div.superSlider .sliderShowcase.style_1
+	   .sliderShowcaseItem) sets `flex:1;max-height:25%` for the old 4-row
+	   filmstrip. `flex` no longer does anything once the parent is a grid,
+	   but `max-height:25%` would still silently cap each cell at a quarter
+	   of the showcase's height — leaving each 2×2 cell floating in the top
+	   quarter of its own grid row instead of filling it. */
 	border-radius: 0;
+	margin: 0;
+	max-height: none;
 }
 
-.ttbm-travello-gallery .sliderShowcase.right .sliderShowcaseItem:first-child {
+/* Outer corners: in the old single-column stack, the first cell's top
+   touched the gallery's top-right corner and the last cell's bottom
+   touched its bottom-right — which is why the previous version of this
+   rule rounded :first-child/:last-child. In a 2-column grid the cell
+   touching the top-right corner is the 2nd child (top row, right column),
+   and the one touching bottom-right is still the last (4th) child. */
+#ttbm_travello_gallery .sliderShowcase.right .sliderShowcaseItem:nth-child(2) {
 	border-radius: 0 var( --ttlm-radius-lg ) 0 0;
 }
 
-.ttbm-travello-gallery .sliderShowcase.right .sliderShowcaseItem:last-child {
+#ttbm_travello_gallery .sliderShowcase.right .sliderShowcaseItem:last-child {
 	border-radius: 0 0 var( --ttlm-radius-lg ) 0;
 }
 
-.ttbm-travello-gallery .sliderShowcase.left .sliderShowcaseItem:first-child {
+#ttbm_travello_gallery .sliderShowcase.left .sliderShowcaseItem:first-child {
 	border-radius: var( --ttlm-radius-lg ) 0 0 0;
 }
 
-.ttbm-travello-gallery .sliderShowcase.left .sliderShowcaseItem:last-child {
+#ttbm_travello_gallery .sliderShowcase.left .sliderShowcaseItem:nth-child(3) {
 	border-radius: 0 0 0 var( --ttlm-radius-lg );
+}
+
+/* "+N more photos" badge — the base plugin CSS (`.sliderMoreItem`) covers
+   the ENTIRE cell in a flat semi-opaque black box, hiding the photo
+   underneath completely. The reference's equivalent (`.gallery-photos-btn`)
+   is a small frosted pill sitting in the corner, photo still fully visible
+   behind it — restyle to match that instead of blacking out the photo. */
+#ttbm_travello_gallery .sliderMoreItem {
+	inset: auto 10px 10px auto;
+	width: auto;
+	height: auto;
+	background: rgba( 255, 255, 255, .92 );
+	backdrop-filter: blur( 6px );
+	color: var( --ttlm-ink );
+	border-radius: var( --ttlm-radius-sm );
+	padding: 6px 10px;
+	gap: 5px;
+	font-size: 11px;
+	font-weight: 700;
+}
+
+#ttbm_travello_gallery .sliderMoreItem span {
+	margin: 0;
+	font-size: 11px;
+}
+
+/* Prev/next arrows on the inline hero — the reference gallery has none at
+   all (it's a fixed set of static photos, not a carousel). This widget's
+   hero genuinely can cycle through every photo though, which the
+   reference's mockup never needed to account for, so keep the control
+   rather than deleting it — just hide it until hover instead of showing
+   it at rest, which matches the reference's clean default look without
+   losing the ability to browse without opening the full lightbox. Scoped
+   with `>` all the way down so this can't reach the popup lightbox's own
+   copy of the same markup one level deeper (`.sliderPopup .superSlider
+   .popupBody .iconIndicator`), which still needs to stay visible always. */
+#ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper > .iconIndicator {
+	opacity: 0;
+	transition: opacity .2s ease;
+}
+
+#ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper:hover > .iconIndicator {
+	opacity: 1;
 }
 
 @media ( max-width: 768px ) {
 	.ttbm-travello-gallery .ttbm_slider-wrapper,
 	.ttbm-travello-gallery .sliderAllItem,
-	.ttbm-travello-gallery .sliderAllItem .sliderItem,
-	.ttbm-travello-gallery .sliderShowcase {
+	.ttbm-travello-gallery .sliderAllItem .sliderItem {
 		height: 260px !important;
 		max-height: 260px !important;
+	}
+
+	/* Reference drops the small side photos entirely below 768px and lets
+	   the one big photo fill the full width — same behaviour here, and it
+	   sidesteps the 2×2 cluster shrinking into a row of illegibly tiny
+	   ~65px tiles on a phone-width screen. */
+	#ttbm_travello_gallery .sliderShowcase {
+		display: none !important;
 	}
 }
 
@@ -596,14 +675,17 @@
 
 .ttbm-travello-booking-card .ttbm_ticket_row td::before {
 	font-weight: 600;
-	font-size: 13px;
-	color: #495057;
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: .04em;
+	color: var( --ttlm-muted );
 	margin-right: 10px;
 }
 
-.ttbm-travello-booking-card .ttbm_ticket_row td.ttbm-person-info::before {
-	content: 'Ticket Type';
-}
+/* No ::before label on the name cell on purpose — the real "Ticket Type"
+   heading (regular_ticket.php's own <h2>) already prints once above the
+   whole table, so repeating it on every row read as clutter; the ticket
+   name is this row's own headline instead (styled below). */
 
 .ttbm-travello-booking-card .ttbm_ticket_row td.ttbm-regular-price::before {
 	content: 'Price';
@@ -623,29 +705,111 @@
 	border-left: 4px solid var( --ttlm-primary );
 }
 
+/* No more `margin-left:auto` — that was only there to shove the name
+   block to the right, balancing the ::before 'Ticket Type' label that used
+   to sit to its left in this same row. Now that the label is gone (above),
+   the name reads left-to-right like a normal headline — and, just as
+   importantly, keeps it clear of the discount-badge corner ribbon added
+   below, which it collided with while still right-aligned. */
 .ttbm-travello-booking-card .person-info {
 	display: flex;
 	align-items: center;
 	gap: 10px;
-	margin-left: auto;
+}
+
+/* The real markup (regular_ticket.php) is a plain `<p class="ttbm_ticket_name">`
+   — the base plugin CSS only ever styles a `.ttbm_ticket_details h4` this
+   template doesn't use, so the name fell back to totally unstyled browser
+   defaults. Bold it as the row's headline and give the icon a tinted
+   swatch instead of a bare glyph; same treatment for extra-service rows,
+   which use the equivalent `p.extra_service_title`. */
+.ttbm-travello-booking-card .ttbm_ticket_name,
+.ttbm-travello-booking-card p.extra_service_title {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin: 0;
+	font-size: 14px;
+	font-weight: 700;
+	color: var( --ttlm-ink );
 }
 
 .ttbm-travello-booking-card .ttbm_ticket_icon {
-	font-size: 18px;
+	width: 30px;
+	height: 30px;
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 15px;
+	border-radius: var( --ttlm-radius-sm );
+	background: var( --ttlm-tint );
+	color: var( --ttlm-primary );
 }
 
-.ttbm-travello-booking-card .ttbm_ticket_details h4 {
-	font-size: 14px;
-	font-weight: 600;
-	margin: 0;
+/* Discount badge — the base plugin CSS pins this with `position:absolute;
+   top:-20px;right:40px`, floating it as a ribbon 20px above a WIDE desktop
+   table cell. Once every <td> on this card is forced into a full-width
+   stacked flex row (above), that same offset instead dragged the badge up
+   and left into the ticket-name row directly above it, visibly overlapping
+   the name text. Pull it out of the stacked flow and pin it as a small
+   corner ribbon on the ticket row itself (already `position:relative`)
+   instead — same idea, just anchored to a box big enough for it.
+   Anchored on `#ttbm_booking_section` (the real id already on this card's
+   own wrapper div, unique to this template) rather than the
+   `.ttbm-travello-booking-card` class: an id always outranks any number of
+   classes, so this can't lose to the generic `td` rule above no matter how
+   many classes it stacks. That's not theoretical — plain class-for-class
+   this exact rule DID lose to it: `.ttbm-travello-booking-card
+   .ttbm_ticket_row td` (2 classes + the `td` element = higher specificity
+   than 2 classes alone) kept winning `width:100%` over `width:auto` here,
+   so the badge stayed full-row-width; combined with `right:15px` on a
+   100%-wide absolutely positioned box, that pushed its left edge off the
+   card entirely, which is what actually produced the overlap — not the
+   position offset itself, which was already correct. Confirmed by
+   reproducing both the bug and the fix in an isolated static test file
+   before changing this rule. */
+#ttbm_booking_section .ttbm-ticket-badge-col {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	width: auto;
+	padding: 0;
+	border-bottom: none;
+}
+
+.ttbm-travello-booking-card .ttbm_discount_badge {
+	position: static;
+	top: auto;
+	right: auto;
+	display: inline-block;
+	font-size: 10px;
+	padding: 3px 8px;
+	border-radius: var( --ttlm-radius-pill );
+	text-transform: uppercase;
 }
 
 .ttbm-travello-booking-card .ttbm_price_container {
 	display: flex;
-	align-items: center;
-	gap: 8px;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 2px;
 	margin-left: auto;
-	flex-direction: row;
+	text-align: right;
+}
+
+.ttbm-travello-booking-card .ttbm_sale_price {
+	font-size: 16px;
+	font-weight: 700;
+	color: var( --ttlm-primary );
+}
+
+.ttbm-travello-booking-card .ttbm_price_meta {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 12px;
+	color: var( --ttlm-muted );
 }
 
 .ttbm-travello-booking-card .ttbm_capacity_info {
@@ -662,6 +826,79 @@
 	padding: 5px 15px;
 }
 
+/* ── Order-summary + Book Now bar ────────────────────────────────────────
+   Base plugin CSS (ttbm_registration.css) lays this out as ONE flex row —
+   two 20px-bold stat chips plus a shopping-cart button, `justify-content:
+   space-between`, nothing allowed to wrap — sized for the wide desktop
+   booking column it was designed for. This card is only 380px (332px
+   inside the 24px padding), so the two stats + button never fit and
+   visibly collided/overflowed. Stack it into two rows instead — a totals
+   row, then a full-width CTA — the same shape as the reference design's
+   flat `.bc-total` row followed by a full-width `.bc-cta` button.
+   Every selector below is anchored on `#ttbm_booking_section` rather than
+   `.ttbm-travello-booking-card`, same reason as the discount-badge fix
+   above: the base rules this overrides are all written as
+   `div.ttbm_booking_panel .xxx` (an element selector plus classes), which
+   outranks a same-count, class-only selector — a plain
+   `.ttbm-travello-booking-card .ttbm_book_now_area` here silently lost
+   every one of these properties to that base rule (confirmed by screenshot
+   — the bar stayed a single cramped row with its old grey background,
+   this whole block simply never took effect), which is exactly the same
+   mistake as the badge-col one, just spread across more selectors. */
+#ttbm_booking_section .ttbm_book_now_area {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	flex-wrap: nowrap;
+	gap: 14px;
+	background: none;
+	border: 0;
+	border-top: 1px solid var( --ttlm-border );
+	margin-top: 20px;
+	padding: 16px 0 0;
+}
+
+#ttbm_booking_section .ttbm_order_summary {
+	display: flex;
+	flex: 1 1 auto;
+	width: 100%;
+}
+
+#ttbm_booking_section .ttbm_summary_values {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	gap: 16px;
+}
+
+#ttbm_booking_section .ttbm_summary_item {
+	padding: 0;
+}
+
+#ttbm_booking_section .tour_qty,
+#ttbm_booking_section .tour_price {
+	font-size: 16px;
+}
+
+#ttbm_booking_section .ttbm_book_now_actions {
+	width: 100%;
+	margin-left: 0;
+	flex: 1 1 auto;
+}
+
+#ttbm_booking_section .ttbm_book_now_actions .ttbm_book_now,
+#ttbm_booking_section .ttbm_book_now_actions .ttbm_add_to_cart {
+	width: 100%;
+	justify-content: center;
+	gap: 8px;
+	padding: 15px;
+	border-radius: var( --ttlm-radius-md );
+	font-size: 15px;
+	font-weight: 700;
+	box-shadow: none;
+}
+
 .ttbm-travello-organizer {
 	display: flex;
 	align-items: center;
@@ -669,6 +906,7 @@
 	padding: 12px 14px;
 	background: var( --ttlm-tint );
 	border-radius: var( --ttlm-radius-sm );
+	margin-top: 16px;
 }
 
 .ttbm-travello-organizer-avatar {

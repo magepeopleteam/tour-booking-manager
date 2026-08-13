@@ -78,7 +78,7 @@
 <div class="ttbm_style ttbm_travello_theme placeholderLoader">
 	<div class="ttbm-travello-container">
 
-		<div class="ttbm-travello-gallery placeholder_area">
+		<div class="ttbm-travello-gallery placeholder_area" id="ttbm_travello_gallery">
 			<?php do_action( 'ttbm_slider' ); ?>
 		</div>
 
@@ -188,15 +188,15 @@
 				<div class="ttbm-travello-booking-card placeholder_area" id="ttbm_booking_section">
 					<?php include( TTBM_Function::template_path( 'ticket/registration.php' ) ); ?>
 					<?php include( TTBM_Function::template_path( 'ticket/particular_item_area.php' ) ); ?>
-				</div>
 
-				<?php if ( $ttbm_travello_organizer_name ) : ?>
-					<div class="ttbm-travello-organizer">
-						<span class="ttbm-travello-organizer-avatar mi mi-user" aria-hidden="true"></span>
-						<span class="ttbm-travello-organizer-name"><?php echo esc_html( $ttbm_travello_organizer_name ); ?></span>
-					</div>
-				<?php endif; ?>
-				<?php /* why_choose_us / get_a_question / tour_guide / dynamic_sidebar deliberately left out — the reference's sidebar is just the booking card + operator mini-card, nothing else. */ ?>
+					<?php if ( $ttbm_travello_organizer_name ) : ?>
+						<div class="ttbm-travello-organizer">
+							<span class="ttbm-travello-organizer-avatar mi mi-user" aria-hidden="true"></span>
+							<span class="ttbm-travello-organizer-name"><?php echo esc_html( $ttbm_travello_organizer_name ); ?></span>
+						</div>
+					<?php endif; ?>
+				</div>
+				<?php /* why_choose_us / get_a_question / tour_guide / dynamic_sidebar deliberately left out — the reference's sidebar is just the booking card (operator mini-card included as its last element), nothing else. */ ?>
 			</aside>
 
 		</div><!-- .ttbm-travello-layout -->

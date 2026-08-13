@@ -193,7 +193,11 @@
 			}
 			public function category_filter_left($params) {
 				if ($params['category-filter'] == 'yes') {
-					$categories = TTBM_Global_Function::get_taxonomy('ttbm_tour_cat');
+					/* hide_empty => true — only offer a "Tour Type" checkbox for terms at
+					   least one tour is actually assigned to (this taxonomy has 2 unused
+					   terms, "City Tour"/"Day trip", that would otherwise always narrow
+					   results to zero if picked). */
+					$categories = get_terms( array( 'taxonomy' => 'ttbm_tour_cat', 'hide_empty' => true ) );
 					if (sizeof($categories) > 0) {
 						?>
                         <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_category_filter_left" data-placeholder>
@@ -739,7 +743,11 @@
 			   same reliable "list every term" pattern category_filter_left() already
 			   uses rather than the broken upcoming-date cross-reference. */
 			if ($params['activity-filter'] == 'yes') {
-				$activities = TTBM_Global_Function::get_taxonomy('ttbm_tour_activities');
+				/* hide_empty => true (unlike TTBM_Global_Function::get_taxonomy(), which
+				   hard-codes false for its other, broader admin-facing uses) — a sidebar
+				   filter checkbox for a category no tour is actually assigned to would
+				   always narrow the results to zero if clicked, so it shouldn't be offered. */
+				$activities = get_terms( array( 'taxonomy' => 'ttbm_tour_activities', 'hide_empty' => true ) );
 				if (is_array($activities) && sizeof($activities) > 0) {
 					$url_activity = '';
 					if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {

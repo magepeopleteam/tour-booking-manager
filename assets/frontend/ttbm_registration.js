@@ -598,7 +598,15 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         // =========================================================
         // View Switcher (Grid / List)
         // =========================================================
-        $('.ttbm_grid_view').on('click', function () {
+        // Ensure default mode class exists so CSS can distinguish layouts.
+        $('.all_filter_item .flexWrap').each(function () {
+            var $wrap = $(this);
+            if (!$wrap.hasClass('ttbm-list-mode') && !$wrap.hasClass('ttbm-grid-mode')) {
+                $wrap.addClass('ttbm-grid-mode');
+            }
+        });
+
+        $(document).on('click', '.ttbm_grid_view', function () {
 
             $('.ttbm-view-btn').removeClass('ttbm-view-active').attr('aria-pressed', 'false');
             $(this).addClass('ttbm-view-active').attr('aria-pressed', 'true');
@@ -612,7 +620,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
                 .addClass('grid_'.concat(window.ttbm_column || '3'));
         });
 
-        $('.ttbm_list_view').on('click', function () {
+        $(document).on('click', '.ttbm_list_view', function () {
 
             $('.ttbm-view-btn').removeClass('ttbm-view-active').attr('aria-pressed', 'false');
             $(this).addClass('ttbm-view-active').attr('aria-pressed', 'true');

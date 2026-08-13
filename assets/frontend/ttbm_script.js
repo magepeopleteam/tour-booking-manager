@@ -59,21 +59,22 @@
 	// ==========Tour Guide Carousel============
 	$("#ttbm-tour-guide").owlCarousel({
 		loop: true,
-		center: true,
-		margin: 5,
-		nav: true,
-		startPosition:0,
+		center: false,
+		margin: 14,
+		nav: false,
+		dots: false,
+		startPosition: 0,
 		responsive: {
-			0: {
-				items:1
-			}
+			0: { items: 1 },
+			640: { items: 1 },
+			900: { items: 2 }
 		}
 	});
-	$(".ttbm-tour-guide .next").click(function () {
-		$('#ttbm-tour-guide .owl-next').trigger('click');
+	$(".ttbm-tour-guide").on("click", ".next", function () {
+		$("#ttbm-tour-guide").trigger("next.owl.carousel");
 	});
-	$(".ttbm-tour-guide .prev").click(function () {
-		$('#ttbm-tour-guide .owl-prev').trigger('click');
+	$(".ttbm-tour-guide").on("click", ".prev", function () {
+		$("#ttbm-tour-guide").trigger("prev.owl.carousel");
 	});
 	// ==========Tour Guide Carousel End============
 	$(document).on('click', '[data-target-popup="get-enquiry-popup"]', function () {

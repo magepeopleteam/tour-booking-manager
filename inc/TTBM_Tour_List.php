@@ -340,7 +340,7 @@
 						</div>
 					</div>
 					<!-- ═══════════════════════════════════════════════════════════ -->
-                    <div class="flexWrap">
+                    <div class="flexWrap ttbm-grid-mode">
 						<?php foreach ($sortable_tours as $tour_data) {
 							$tour = $tour_data['tour'];
 							$ttbm_post_id = $tour->ID;

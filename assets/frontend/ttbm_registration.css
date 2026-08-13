@@ -7288,25 +7288,27 @@ tr.ttbm_attendee_form_row .ttbm-attendee-form {
 
 /* =====================================================
    TTBM Premium Grid Card  (grid_list_style.php)
+   Modern minimal redesign
    ===================================================== */
 
 /* --- Card wrapper override ------------------------------------------------ */
 div.filter_item.ttbm-grid-card,
 .all_filter_item div.filter_item {
-	border-radius: 16px;
+	border-radius: 14px;
 	overflow: hidden;
 	background: #fff;
-	border: none;
-	box-shadow: 0 4px 20px rgba(30, 30, 60, 0.10);
-	transition: transform 0.28s ease, box-shadow 0.28s ease;
+	border: 1px solid #e2e8f0;
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+	transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 	flex-direction: column;
 	justify-content: flex-start;
 }
 
 div.filter_item.ttbm-grid-card:hover,
 .all_filter_item div.filter_item:hover {
-	transform: translateY(-5px);
-	box-shadow: 0 12px 36px rgba(30, 30, 60, 0.16);
+	transform: translateY(-2px);
+	border-color: #dbe3ee;
+	box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
 }
 
 /* --- Image area ----------------------------------------------------------- */
@@ -7314,53 +7316,41 @@ div.filter_item.ttbm-grid-card:hover,
 	position: relative;
 	width: 100%;
 	overflow: hidden;
-	border-radius: 16px 16px 0 0;
+	border-radius: 14px 14px 0 0;
 	cursor: pointer;
-}
-
-.ttbm-gc-image-wrap {
-	position: relative;
-	width: 100%;
-	overflow: hidden;
-	/* clip the zoom so height stays fixed */
-	border-radius: 16px 16px 0 0;
-	cursor: pointer;
-	height: 220px;
-	/* uniform fixed height across all cards */
+	height: 210px;
 }
 
 .ttbm-gc-thumb {
 	width: 100%;
-	height: 220px;
-	/* must match .ttbm-gc-image-wrap height */
+	height: 210px;
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
-	transition: transform 0.4s ease;
+	transition: transform 0.35s ease;
 	border-radius: 0;
-	/* border-radius handled by the wrapper */
 	display: block;
 }
 
 .ttbm-gc-image-wrap:hover .ttbm-gc-thumb {
-	transform: scale(1.06);
+	transform: scale(1.04);
 }
 
 /* --- Sale badge ----------------------------------------------------------- */
 .ttbm-gc-badge-sale {
 	position: absolute;
-	top: 14px;
-	left: 14px;
+	top: 12px;
+	left: 12px;
 	z-index: 20;
-	background: var(--color_theme, #6c47ff);
+	background: var(--color_theme, #2563eb);
 	color: #fff;
-	font-size: 11px;
+	font-size: 10px;
 	font-weight: 700;
-	letter-spacing: 0.5px;
-	padding: 5px 12px;
-	border-radius: 50px;
+	letter-spacing: 0.04em;
+	padding: 4px 9px;
+	border-radius: 6px;
 	text-transform: uppercase;
-	box-shadow: 0 2px 8px rgba(108, 71, 255, 0.35);
+	box-shadow: none;
 	pointer-events: none;
 }
 
@@ -7370,30 +7360,31 @@ div.filter_item.ttbm-grid-card:hover,
 	top: 12px;
 	right: 12px;
 	z-index: 10;
-	width: 36px;
-	height: 36px;
+	width: 34px;
+	height: 34px;
 	border-radius: 50%;
-	background: rgba(255, 255, 255, 0.92);
-	border: none;
+	background: #fff;
+	border: 1px solid rgba(226, 232, 240, 0.9);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-	transition: background 0.2s ease, transform 0.2s ease;
+	box-shadow: none;
+	transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
 	padding: 0;
 	line-height: 1;
 }
 
 .ttbm-gc-wishlist:hover {
 	background: #fff;
-	transform: scale(1.12);
+	border-color: #e2e8f0;
+	transform: none;
 }
 
 .ttbm-gc-wishlist .mi {
-	font-size: 17px;
-	color: #b0b0c0;
-	transition: color 0.2s ease;
+	font-size: 15px;
+	color: #94a3b8;
+	transition: color 0.18s ease;
 }
 
 .ttbm-gc-wishlist:hover .mi,
@@ -7411,6 +7402,45 @@ div.filter_item.ttbm-grid-card:hover,
 }
 
 /* --- Duration badge on image ---------------------------------------------- */
+.ttbm-gc-duration-badge {
+	position: absolute;
+	left: 12px;
+	bottom: 12px;
+	z-index: 12;
+	display: inline-flex;
+	align-items: center;
+	max-width: calc(100% - 24px);
+	margin: 0;
+	padding: 0;
+	pointer-events: none;
+}
+
+.ttbm-gc-duration-badge .ttbm_list_info {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin: 0;
+	padding: 5px 10px;
+	border-radius: 999px;
+	background: rgba(15, 23, 42, 0.62);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+	color: #fff;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1.2;
+	letter-spacing: 0.01em;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ttbm-gc-duration-badge .ttbm_list_info .mi {
+	font-size: 12px;
+	color: #fff;
+	margin: 0;
+}
+
 div.ttbm-tour-list-shortcode .ttbm-gc-duration-badge {
 	display: none;
 }
@@ -7430,25 +7460,26 @@ div.ttbm-tour-list-shortcode .ttbm-gc-duration-badge {
 	align-items: center;
 	gap: 5px;
 	margin: 0 0 6px 0;
-	font-size: 16px;
+	font-size: 12.5px;
 	font-weight: 500;
-	color: var(--color_theme, #6c47ff);
+	color: #64748b;
 	overflow: visible;
 }
 
 .ttbm-gc-body .ttbm_list_info.location_name .mi {
-	font-size: 14px;
-	color: var(--color_theme, #6c47ff);
+	font-size: 13px;
+	color: var(--color_theme, #2563eb);
 	margin: 0;
 }
 
 /* --- Title ---------------------------------------------------------------- */
 .ttbm-gc-body .ttbm_list_title {
 	margin: 0 0 6px 0;
-	font-size: 20px;
-	font-weight: 700;
-	color: #1a1a2e;
-	line-height: 1.3;
+	font-size: 17px;
+	font-weight: 600;
+	color: #111827;
+	line-height: 1.35;
+	letter-spacing: -0.015em;
 }
 
 .ttbm-gc-body .ttbm_list_title a {
@@ -7461,7 +7492,7 @@ div.ttbm-tour-list-shortcode .ttbm-gc-duration-badge {
 }
 
 .ttbm-gc-body .ttbm_list_title a:hover {
-	color: var(--color_theme, #6c47ff);
+	color: var(--color_theme, #2563eb);
 }
 
 /* --- Short description ---------------------------------------------------- */
@@ -7471,8 +7502,9 @@ div.ttbm-tour-list-shortcode .ttbm-gc-duration-badge {
 
 .ttbm-gc-body .ttbm_description>div {
 	font-size: 13px;
+	font-weight: 400;
 	color: #6b7280;
-	line-height: 1.6;
+	line-height: 1.55;
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
@@ -7481,7 +7513,7 @@ div.ttbm-tour-list-shortcode .ttbm-gc-duration-badge {
 
 /* --- Feature tags --------------------------------------------------------- */
 .ttbm-gc-tags {
-	margin: 6px 0 10px;
+	margin: 2px 0 10px;
 }
 
 .ttbm-gc-tags ul {
@@ -7496,29 +7528,29 @@ div.ttbm-tour-list-shortcode .ttbm-gc-duration-badge {
 .ttbm-gc-tags ul li {
 	display: inline-flex;
 	flex-direction: row;
-	/* icon + text always horizontal */
 	align-items: center;
 	justify-content: flex-start;
 	gap: 5px;
-	border: 1px solid #e5e7eb;
-	border-radius: 5px;
-	padding: 5px;
-	font-size: 10px;
-	color: #374151;
-	background: #f9fafb;
+	border: 1px solid #eef2f7;
+	border-radius: 999px;
+	padding: 4px 9px;
+	font-size: 11px;
+	font-weight: 500;
+	color: #475569;
+	background: #f8fafc;
 	height: auto;
 	width: auto;
-	line-height: 1.5;
-	transition: background 0.18s ease, border-color 0.18s ease;
+	line-height: 1.4;
+	transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
 	white-space: nowrap;
 	margin: 0;
 	vertical-align: middle;
 }
 
 .ttbm-gc-tags ul li:hover {
-	background: rgba(var(--color_theme_rgb, 108, 71, 255), 0.06);
-	border-color: var(--color_theme, #6c47ff);
-	color: var(--color_theme, #6c47ff);
+	background: rgba(var(--color_theme_rgb, 37, 99, 235), 0.06);
+	border-color: rgba(var(--color_theme_rgb, 37, 99, 235), 0.28);
+	color: var(--color_theme, #2563eb);
 }
 
 .ttbm-gc-tags ul li .circleIcon_xs {
@@ -7616,9 +7648,7 @@ div.include_service ul li.ttbm-feature-view-more .ttbm-view-more-features-btn,
 
 /* --- Divider -------------------------------------------------------------- */
 .ttbm-gc-divider {
-	border: none;
-	border-top: 1px solid #e5e7eb;
-	margin: 4px 0 0 0;
+	display: none;
 }
 
 /* --- Footer (list_bottom.php) -------------------------------------------- */
@@ -7628,8 +7658,8 @@ div.include_service ul li.ttbm-feature-view-more .ttbm-view-more-features-btn,
 	justify-content: space-between;
 	flex-wrap: nowrap;
 	gap: 8px;
-	padding: 10px 0 14px;
-	border-top: none;
+	padding: 12px 0 14px;
+	border-top: 1px solid #f1f5f9;
 }
 
 /* Hide the include_service icons in footer (already shown in tags) */
@@ -7650,22 +7680,22 @@ div.include_service ul li.ttbm-feature-view-more .ttbm-view-more-features-btn,
 .ttbm-gc-body .filter_item_footer .ttbm_list_info .ttbm-duration-label {
 	font-size: 10px;
 	font-weight: 600;
-	letter-spacing: 0.5px;
-	color: #6b7280;
+	letter-spacing: 0.04em;
+	color: #94a3b8;
 	text-transform: uppercase;
 	margin-bottom: 2px;
 }
 
 .ttbm-gc-body .filter_item_footer .ttbm_list_info .ttbm-price-current {
-	font-size: 22px;
+	font-size: 18px;
 	font-weight: 700;
-	color: var(--color_theme, #6c47ff);
-	line-height: 1.1;
+	color: #111827;
+	line-height: 1.15;
 }
 
 .ttbm-gc-body .filter_item_footer .ttbm_list_info .ttbm-price-original {
-	font-size: 13px;
-	color: #9ca3af;
+	font-size: 12px;
+	color: #94a3b8;
 	text-decoration: line-through;
 	margin-left: 4px;
 }
@@ -7674,23 +7704,28 @@ div.include_service ul li.ttbm-feature-view-more .ttbm-view-more-features-btn,
 .ttbm-gc-body .ttbm_explore_button,
 .ttbm-gc-body .filter_item_footer .ttbm_explore_button {
 	flex-shrink: 0;
-	background: #1a1a2e;
-	color: #fff;
-	border: none;
+	background: transparent;
+	color: #111827;
+	border: 1px solid #e2e8f0;
 	border-radius: 10px;
-	padding: 10px 20px;
-	font-size: 14px;
+	padding: 9px 16px;
+	font-size: 13px;
 	font-weight: 600;
+	letter-spacing: -0.01em;
 	cursor: pointer;
-	transition: background 0.2s ease, transform 0.15s ease;
+	transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
 	white-space: nowrap;
 	line-height: 1;
+	transform: none;
+	box-shadow: none;
 }
 
 .ttbm-gc-body .ttbm_explore_button:hover,
 .ttbm-gc-body .filter_item_footer .ttbm_explore_button:hover {
-	background: var(--color_theme, #6c47ff);
-	transform: scale(1.03);
+	background: var(--color_theme, #2563eb);
+	border-color: var(--color_theme, #2563eb);
+	color: #fff;
+	transform: none;
 }
 
 /* Price inside the footer – the "From $X,XXX" in list_bottom via start_price */
@@ -7707,12 +7742,13 @@ div.filter_item .ttbm-gc-image-wrap .group_item {
 
 /* ---- Responsive ---------------------------------------------------------- */
 @media (max-width: 600px) {
+	.ttbm-gc-image-wrap,
 	.ttbm-gc-thumb {
 		height: 180px;
 	}
 
 	.ttbm-gc-body .ttbm_list_title {
-		font-size: 17px;
+		font-size: 16px;
 	}
 }
 
@@ -7722,15 +7758,16 @@ div.filter_item .ttbm-gc-image-wrap .group_item {
 	flex-direction: column;
 	align-items: flex-start;
 	gap: 2px;
+	min-width: 0;
 }
 
 .ttbm-gc-duration-label {
-	font-size: 13px;
-	font-weight: 700;
-	letter-spacing: 0.6px;
-	color: #6b7280;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	color: #94a3b8;
 	text-transform: uppercase;
-	line-height: 1.4;
+	line-height: 1.35;
 }
 
 .ttbm-gc-price-row {
@@ -7740,11 +7777,19 @@ div.filter_item .ttbm-gc-image-wrap .group_item {
 	flex-wrap: wrap;
 }
 
+.ttbm-gc-price-from {
+	font-size: 11px;
+	font-weight: 500;
+	color: #94a3b8;
+	letter-spacing: 0.01em;
+}
+
 .ttbm-gc-price-current {
-	font-size: 22px;
+	font-size: 18px;
 	font-weight: 700;
-	color: var(--color_theme, #6c47ff);
-	line-height: 1.1;
+	color: #111827;
+	line-height: 1.15;
+	letter-spacing: -0.02em;
 }
 
 .ttbm-gc-price-current .woocommerce-Price-amount,
@@ -7755,8 +7800,8 @@ div.filter_item .ttbm-gc-image-wrap .group_item {
 }
 
 .ttbm-gc-price-original {
-	font-size: 13px;
-	color: #9ca3af;
+	font-size: 12px;
+	color: #94a3b8;
 	text-decoration: line-through;
 }
 
@@ -7777,30 +7822,37 @@ div.filter_item .ttbm-gc-image-wrap .group_item {
 .ttbm_start_price_display .ttbm_regular_price.strikeLine .woocommerce-Price-amount {
 	font-size: 0.85em;
 	font-weight: 600;
-	color: #9ca3af;
+	color: #94a3b8;
 	text-decoration: line-through;
 }
 
 /* Explore button final override */
 button.ttbm_explore_button {
 	flex-shrink: 0;
-	background: #1a1a2e;
-	color: #fff !important;
-	border: none;
+	background: transparent !important;
+	color: #111827 !important;
+	border: 1px solid #e2e8f0 !important;
 	border-radius: 10px;
-	padding: 10px 22px;
-	font-size: 14px;
+	padding: 9px 16px;
+	font-size: 13px;
 	font-weight: 600;
+	letter-spacing: -0.01em;
 	cursor: pointer;
-	transition: background 0.22s ease, transform 0.15s ease;
+	transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
 	white-space: nowrap;
 	line-height: 1.2;
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	transform: none;
+	box-shadow: none;
 }
 
 button.ttbm_explore_button:hover {
-	background: var(--color_theme, #6c47ff);
-	transform: scale(1.04);
+	background: var(--color_theme, #2563eb) !important;
+	border-color: var(--color_theme, #2563eb) !important;
+	color: #fff !important;
+	transform: none;
 }
 
 .ttbm_style button.ttbm-gc-wishlist {
@@ -8167,91 +8219,144 @@ button.ttbm_explore_button:hover {
 }
 
 /* =====================================================
-   TTBM Premium List Card  (grid_list.php — horizontal)
+   TTBM Premium List Card  (grid_list.php)
+   Toggle-aware: grid mode = vertical cards, list mode = horizontal
    ===================================================== */
 
-/* Override .modern filter_item to be a horizontal row */
-div.modern div.filter_item {
-	flex-direction: row;
+/* Shared shell for lv-template cards (both modes) */
+.all_filter_item div.filter_item:has(> .ttbm-lv-image-col) {
+	display: flex;
 	align-items: stretch;
-	border-radius: 16px;
+	border-radius: 14px;
 	overflow: hidden;
 	background: #fff;
-	border: none !important;
-	box-shadow: 0 4px 20px rgba(30, 30, 60, 0.10);
-	transition: transform 0.28s ease, box-shadow 0.28s ease;
+	border: 1px solid #e2e8f0 !important;
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+	transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 	min-height: auto;
 	padding: 0;
-	margin-bottom: 16px;
+}
+
+.all_filter_item div.filter_item:has(> .ttbm-lv-image-col):hover {
+	transform: translateY(-2px);
+	border-color: #dbe3ee !important;
+	box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+/* GRID MODE — vertical card (image on top) */
+.all_filter_item .ttbm-grid-mode div.filter_item:has(> .ttbm-lv-image-col),
+.all_filter_item div.filter_item[class*="grid_"]:has(> .ttbm-lv-image-col) {
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.all_filter_item .ttbm-grid-mode .ttbm-lv-image-col,
+.all_filter_item div.filter_item[class*="grid_"] > .ttbm-lv-image-col {
 	width: 100%;
+	min-width: 0;
+	border-radius: 14px 14px 0 0;
 }
 
-div.modern div.filter_item:hover {
-	transform: translateY(-3px);
-	box-shadow: 0 10px 32px rgba(30, 30, 60, 0.16);
+.all_filter_item .ttbm-grid-mode .ttbm-lv-thumb,
+.all_filter_item div.filter_item[class*="grid_"] .ttbm-lv-thumb {
+	min-height: 210px;
+	height: 210px;
 }
 
-/* ── Left: Image column ─────────────────────────────── */
+/* LIST MODE — horizontal card (image on left) */
+.all_filter_item .ttbm-list-mode div.filter_item:has(> .ttbm-lv-image-col),
+.all_filter_item div.filter_item.list_1:has(> .ttbm-lv-image-col) {
+	flex-direction: row;
+	width: 100% !important;
+	max-width: 100%;
+	margin-bottom: 0;
+}
+
+.all_filter_item .ttbm-list-mode .ttbm-lv-image-col,
+.all_filter_item div.filter_item.list_1 > .ttbm-lv-image-col {
+	width: 240px;
+	min-width: 200px;
+	border-radius: 14px 0 0 14px;
+}
+
+.all_filter_item .ttbm-list-mode .ttbm-lv-thumb,
+.all_filter_item div.filter_item.list_1 .ttbm-lv-thumb {
+	min-height: 200px;
+	height: 100%;
+}
+
+/* ── Image column base ─────────────────────────────── */
 .ttbm-lv-image-col {
 	position: relative;
 	flex-shrink: 0;
-	width: 260px;
-	min-width: 200px;
 	overflow: hidden;
-	border-radius: 16px 0 0 16px;
 	cursor: pointer;
+	background: #f1f5f9;
 }
 
 .ttbm-lv-thumb {
 	width: 100%;
 	height: 100%;
-	min-height: 200px;
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
-	transition: transform 0.4s ease;
+	transition: transform 0.35s ease;
 	display: block;
 }
 
 .ttbm-lv-image-col:hover .ttbm-lv-thumb {
-	transform: scale(1.06);
+	transform: scale(1.04);
 }
 
-/* ── Right: Content column ──────────────────────────── */
+.ttbm-lv-image-col .ttbm-gc-badge-sale {
+	top: 12px;
+	left: 12px;
+}
+
+.ttbm-lv-image-col .ttbm-gc-wishlist {
+	top: 12px;
+	right: 12px;
+}
+
+.ttbm-lv-image-col .ttbm-gc-duration-badge {
+	left: 12px;
+	bottom: 12px;
+}
+
+/* ── Content column ─────────────────────────────────── */
 .ttbm-lv-content-col {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	padding: 18px 20px 14px;
+	padding: 14px 16px 12px;
 	min-width: 0;
 }
 
-/* Location */
 .ttbm-lv-content-col .ttbm_list_info.location_name {
 	display: flex;
 	align-items: center;
 	gap: 5px;
-	margin: 0 0 5px 0;
-	font-size: 16px;
-	font-style: italic;
+	margin: 0 0 6px 0;
+	font-size: 12.5px;
+	font-style: normal;
 	font-weight: 500;
-	color: var(--color_theme, #6c47ff);
+	color: #64748b;
 	overflow: visible;
 }
 
 .ttbm-lv-content-col .ttbm_list_info.location_name .mi {
-	font-size: 14px;
-	color: var(--color_theme, #6c47ff);
+	font-size: 13px;
+	color: var(--color_theme, #2563eb);
 	margin: 0;
 }
 
-/* Title */
 .ttbm-lv-content-col .ttbm_list_title {
 	margin: 0 0 6px 0;
-	font-size: 22px;
-	font-weight: 700;
-	color: #1a1a2e;
-	line-height: 1.3;
+	font-size: 17px;
+	font-weight: 600;
+	color: #111827;
+	line-height: 1.35;
+	letter-spacing: -0.015em;
 }
 
 .ttbm-lv-content-col .ttbm_list_title a {
@@ -8264,100 +8369,109 @@ div.modern div.filter_item:hover {
 }
 
 .ttbm-lv-content-col .ttbm_list_title a:hover {
-	color: var(--color_theme, #6c47ff);
+	color: var(--color_theme, #2563eb);
 }
 
-/* Description */
 .ttbm-lv-content-col .ttbm_description {
 	margin: 0 0 10px 0;
 }
 
 .ttbm-lv-content-col .ttbm_description>div {
 	font-size: 13px;
+	font-weight: 400;
 	color: #6b7280;
-	line-height: 1.6;
+	line-height: 1.55;
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 }
 
-/* Feature tags — re-use .ttbm-gc-tags rules */
 .ttbm-lv-content-col .ttbm-gc-tags {
-	margin: 4px 0 8px;
+	margin: 2px 0 10px;
 }
 
-/* Divider */
 .ttbm-lv-content-col .ttbm-gc-divider {
-	border: none;
-	border-top: 1px solid #e5e7eb;
-	margin: 4px 0 0;
+	display: none;
 }
 
-/* Footer */
 .ttbm-lv-content-col .ttbm-gc-footer {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	flex-wrap: nowrap;
 	gap: 10px;
-	padding-top: 12px;
+	padding: 12px 0 4px;
 	margin-top: auto;
+	border-top: 1px solid #f1f5f9;
 }
 
-/* ── Shared footer styles for both grid & list ──────── */
+/* Shared footer */
 .ttbm-gc-footer {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	flex-wrap: nowrap;
 	gap: 10px;
-	padding: 10px 0;
+	padding: 12px 0 14px;
 	margin-top: auto;
+	border-top: 1px solid #f1f5f9;
 }
 
-/* Override bg_image_area inside list-view (not needed) */
-div.modern .ttbm-lv-image-col .bg_image_area,
-div.modern .ttbm-lv-image-col [data-bg-image] {
-	height: 100%;
-	min-height: 200px;
-	border-radius: 16px 0 0 16px;
-}
-
-/* Ensure card-level grid/list overrides don't conflict */
-div.modern div.filter_item .ttbm-gc-body,
-div.modern div.filter_item .ttbm-lv-content-col {
+.filter_item .ttbm-lv-content-col {
 	border: none;
 	box-shadow: none;
 }
 
-
-
-/* Also hide old bg_image_area if card uses new template classes */
-div.modern div.filter_item .ttbm-lv-image-col~.ttbm_list_details,
+div.filter_item .ttbm-lv-image-col~.ttbm_list_details,
 div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 	display: none;
 }
 
+/* List-mode image radius */
+.all_filter_item .ttbm-list-mode .ttbm-lv-image-col .bg_image_area,
+.all_filter_item .ttbm-list-mode .ttbm-lv-image-col [data-bg-image],
+.all_filter_item div.filter_item.list_1 .ttbm-lv-image-col .bg_image_area,
+.all_filter_item div.filter_item.list_1 .ttbm-lv-image-col [data-bg-image] {
+	height: 100%;
+	min-height: 200px;
+	border-radius: 14px 0 0 14px;
+}
+
+/* Grid-mode image radius */
+.all_filter_item .ttbm-grid-mode .ttbm-lv-image-col .bg_image_area,
+.all_filter_item .ttbm-grid-mode .ttbm-lv-image-col [data-bg-image],
+.all_filter_item div.filter_item[class*="grid_"] .ttbm-lv-image-col .bg_image_area,
+.all_filter_item div.filter_item[class*="grid_"] .ttbm-lv-image-col [data-bg-image] {
+	height: 210px;
+	min-height: 210px;
+	border-radius: 14px 14px 0 0;
+}
+
 /* ── Responsive ─────────────────────────────────────── */
 @media (max-width: 767px) {
-	div.modern div.filter_item {
+	.all_filter_item .ttbm-list-mode div.filter_item:has(> .ttbm-lv-image-col),
+	.all_filter_item div.filter_item.list_1:has(> .ttbm-lv-image-col) {
 		flex-direction: column;
 	}
 
-	.ttbm-lv-image-col {
+	.all_filter_item .ttbm-list-mode .ttbm-lv-image-col,
+	.all_filter_item div.filter_item.list_1 > .ttbm-lv-image-col {
 		width: 100%;
 		min-width: unset;
-		border-radius: 16px 16px 0 0;
+		border-radius: 14px 14px 0 0;
 	}
 
-	.ttbm-lv-thumb {
+	.all_filter_item .ttbm-list-mode .ttbm-lv-thumb,
+	.all_filter_item div.filter_item.list_1 .ttbm-lv-thumb,
+	.all_filter_item .ttbm-grid-mode .ttbm-lv-thumb,
+	.all_filter_item div.filter_item[class*="grid_"] .ttbm-lv-thumb {
 		min-height: 200px;
 		height: 200px;
 	}
 
 	.ttbm-lv-content-col .ttbm_list_title {
-		font-size: 18px;
+		font-size: 16px;
 	}
 
 	.ttbm-lv-content-col .ttbm-gc-footer {
@@ -8368,10 +8482,13 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 @media (max-width: 500px) {
 	.ttbm-lv-content-col .ttbm-gc-footer {
 		flex-direction: column;
-		align-items: flex-start;
+		align-items: stretch;
 	}
 
-	button.ttbm_explore_button {
+	.ttbm-lv-content-col .ttbm_explore_button,
+	.ttbm-lv-content-col button.ttbm_explore_button {
+		width: 100%;
+		justify-content: center;
 		text-align: center;
 	}
 }
@@ -8673,7 +8790,7 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 .all_filter_item .flexWrap.ttbm-list-mode {
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
+	gap: 14px;
 	width: 100%;
 }
 
@@ -8684,12 +8801,20 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 	align-items: stretch;
 	width: 100% !important;
 	max-width: 100%;
-	border-radius: 18px;
+	border-radius: 14px;
 	overflow: hidden;
 	background: #fff;
-	box-shadow: 0 6px 28px rgba(0, 0, 0, 0.08);
+	border: 1px solid #e2e8f0;
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
 	padding: 0;
 	margin: 0;
+	transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.all_filter_item .flexWrap.ttbm-list-mode .filter_item:hover {
+	transform: translateY(-2px);
+	border-color: #dbe3ee;
+	box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
 }
 
 /* =====================================================
@@ -8698,9 +8823,9 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
    ===================================================== */
 
 .all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-image-wrap {
-	width: 340px;
-	min-width: 340px;
-	max-width: 340px;
+	width: 260px;
+	min-width: 240px;
+	max-width: 280px;
 	height: auto;
 	border-radius: 0;
 	flex-shrink: 0;
@@ -8726,6 +8851,12 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 	display: block;
 }
 
+.all_filter_item .flexWrap.ttbm-list-mode .ttbm-lv-image-col {
+	width: 240px;
+	min-width: 200px;
+	border-radius: 14px 0 0 14px;
+}
+
 /* =====================================================
    CONTENT AREA (RIGHT)
    ===================================================== */
@@ -8734,52 +8865,55 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	padding: 22px;
+	padding: 16px 18px 12px;
 	min-width: 0;
 }
 
 /* Title */
 .all_filter_item .flexWrap.ttbm-list-mode .ttbm_list_title {
-	font-size: 24px;
-	margin-bottom: 10px;
-	line-height: 1.3;
+	font-size: 18px;
+	font-weight: 600;
+	margin-bottom: 6px;
+	line-height: 1.35;
+	letter-spacing: -0.015em;
+	color: #111827;
 }
 
 /* Description */
 .all_filter_item .flexWrap.ttbm-list-mode .ttbm_description>div {
-	-webkit-line-clamp: 3;
-	font-size: 14px;
-	line-height: 1.7;
+	-webkit-line-clamp: 2;
+	font-size: 13px;
+	line-height: 1.55;
+	color: #6b7280;
 }
 
 /* Tags */
 .all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-tags {
-	margin-top: 10px;
-	margin-bottom: 14px;
+	margin-top: 2px;
+	margin-bottom: 10px;
 }
 
 /* Footer */
 .all_filter_item .flexWrap.ttbm-list-mode .filter_item_footer,
 .all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-footer {
 	margin-top: auto;
-	padding-top: 16px;
+	padding: 12px 0 4px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: 16px;
-	flex-wrap: wrap;
+	gap: 12px;
+	flex-wrap: nowrap;
+	border-top: 1px solid #f1f5f9;
 }
 
 /* Price */
 .all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-price-current {
-	font-size: 26px;
+	font-size: 18px;
+	font-weight: 700;
+	color: #111827;
 }
 
-/* Button */
-.all_filter_item .flexWrap.ttbm-list-mode .ttbm_explore_button {
-	padding: 12px 24px;
-	font-size: 15px;
-}
+/* Button inherits modern outline Explore styles */
 
 /* =====================================================
    TABLET RESPONSIVE
@@ -8795,19 +8929,25 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 		width: 100%;
 		max-width: 100%;
 		min-width: 100%;
-		height: 240px;
+		height: 210px;
 	}
 
 	.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-thumb {
-		height: 240px;
+		height: 210px;
+	}
+
+	.all_filter_item .flexWrap.ttbm-list-mode .ttbm-lv-image-col {
+		width: 100%;
+		min-width: unset;
+		border-radius: 14px 14px 0 0;
 	}
 
 	.all_filter_item .flexWrap.ttbm-list-mode .ttbm-gc-body {
-		padding: 18px;
+		padding: 16px;
 	}
 
 	.all_filter_item .flexWrap.ttbm-list-mode .ttbm_list_title {
-		font-size: 22px;
+		font-size: 17px;
 	}
 }
 

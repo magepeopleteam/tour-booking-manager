@@ -51,6 +51,7 @@ if ( $show_duration && ( $duration || $night ) && $tour_type === 'general' ) {
 
 		<?php if ( $start_price && $show_price ) : ?>
 			<div class="ttbm-gc-price-row">
+				<span class="ttbm-gc-price-from"><?php esc_html_e( 'From', 'tour-booking-manager' ); ?></span>
 				<span class="ttbm-gc-price-current">
 					<?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

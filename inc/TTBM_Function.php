@@ -162,7 +162,7 @@
 			}
 
 			/**
-			 * Extra class for hero stat chips beyond the first five visible items.
+			 * Extra class for hero stat chips beyond the first four visible items.
 			 *
 			 * @param bool $counts_toward_limit Pass false for chips hidden in hero (e.g. price).
 			 */
@@ -170,13 +170,15 @@
 				if ( ! self::$hero_stat_limit_enabled ) {
 					return '';
 				}
-				$extra = '';
-				if ( $counts_toward_limit ) {
-					if ( self::$hero_stat_render_index >= 5 ) {
-						$extra = ' ttbm_hero_stat_item--extra';
-					}
-					self::$hero_stat_render_index++;
+				// Price (and similar) stay in markup for other themes but never show in the hero bar.
+				if ( ! $counts_toward_limit ) {
+					return ' ttbm_hero_stat_item--hidden';
 				}
+				$extra = '';
+				if ( self::$hero_stat_render_index >= 4 ) {
+					$extra = ' ttbm_hero_stat_item--extra';
+				}
+				self::$hero_stat_render_index++;
 				return $extra;
 			}
 
@@ -1691,9 +1693,9 @@
 				return $arr;
 			}
 			public static function get_full_location($tour_id): string {
-				$city = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_location_name');
-				$country = self::get_country($tour_id);
-				$full_location = $city && $country ? $city . ' , ' . $country : '';
+				$city = trim( (string) TTBM_Global_Function::get_post_info($tour_id, 'ttbm_location_name') );
+				$country = trim( (string) self::get_country($tour_id) );
+				$full_location = $city && $country ? $city . ', ' . $country : '';
 				$full_location = $city && !$country ? $city : $full_location;
 				$full_location = is_array($full_location) ? '' : $full_location;
 				return !$city && $country ? $country : $full_location;

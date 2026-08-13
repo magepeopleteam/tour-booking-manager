@@ -262,9 +262,9 @@
 			}
 
 			public function dummy_import() {
-				// Demo import downloads ~12 remote images and then generates every WP image
-				// sub-size via Imagick. On default hosting this exceeds the 30s
-				// max_execution_time and fatals in class-wp-image-editor-imagick.php.
+				// Demo import downloads several remote images per tour/hotel and then
+				// generates every WP image sub-size via Imagick. On default hosting this
+				// exceeds the 30s max_execution_time and fatals in class-wp-image-editor-imagick.php.
 				// Lift the time/memory limits for this one-time, admin-triggered operation.
 				if (function_exists('set_time_limit')) {
 					@set_time_limit(0);
@@ -285,7 +285,7 @@
 									foreach ($dummy_taxonomy as $taxonomy_data) {
 										unset($term);
 										$term = wp_insert_term($taxonomy_data['name'], $taxonomy);
-						
+
 										if (array_key_exists('meta_data', $taxonomy_data)) {
 											foreach ($taxonomy_data['meta_data'] as $meta_key => $data) {
 												update_term_meta($term['term_id'], $meta_key, $data);
@@ -297,9 +297,12 @@
 						}
 					}
 					$dummy_cpt = $this->dummy_cpt();
+					// Name -> post ID lookup tables, filled in as 'ttbm_places' and 'ttbm_guide'
+					// posts are created (they are processed before 'ttbm_tour' below), so tours
+					// can reference them by human-readable name in the static dummy data below.
+					$place_name_to_id = array();
+					$guide_name_to_id = array();
 					if (array_key_exists('custom_post', $dummy_cpt)) {
-						$dummy_images = self::dummy_images();
-						$hotel_dummy_images = self::hotel_dummy_images();
 						foreach ($dummy_cpt['custom_post'] as $custom_post => $dummy_post) {
 							unset($args);
 							$args = array(
@@ -318,6 +321,24 @@
 									$args['post_status'] = 'publish';
 									$args['post_type'] = $custom_post;
 									$post_id = wp_insert_post($args);
+									if ($custom_post === 'ttbm_places' && isset($dummy_data['name'])) {
+										$place_name_to_id[$dummy_data['name']] = $post_id;
+										if (!empty($dummy_data['image'])) {
+											$image_ids = self::sideload_gallery_urls(array($dummy_data['image']), $dummy_data['name']);
+											if (!empty($image_ids)) {
+												set_post_thumbnail($post_id, $image_ids[0]);
+											}
+										}
+									}
+									if ($custom_post === 'ttbm_guide' && isset($dummy_data['name'])) {
+										$guide_name_to_id[$dummy_data['name']] = $post_id;
+										if (!empty($dummy_data['image'])) {
+											$image_ids = self::sideload_gallery_urls(array($dummy_data['image']), $dummy_data['name']);
+											if (!empty($image_ids)) {
+												set_post_thumbnail($post_id, $image_ids[0]);
+											}
+										}
+									}
 									if (array_key_exists('taxonomy_terms', $dummy_data) && count($dummy_data['taxonomy_terms'])) {
 										foreach ($dummy_data['taxonomy_terms'] as $taxonomy_term) {
 											wp_set_object_terms($post_id, $taxonomy_term['terms'], $taxonomy_term['taxonomy_name'], true);
@@ -326,35 +347,36 @@
 									if (array_key_exists('post_data', $dummy_data)) {
 										foreach ($dummy_data['post_data'] as $meta_key => $data) {
 											if ($meta_key == 'ttbm_gallery_images') {
-												if (is_array($data)) {
-													$thumnail_ids = array();
-													foreach ($data as $url_index) {
-														if (isset($dummy_images[$url_index])) {
-															$thumnail_ids[] = $dummy_images[$url_index];
-														}
-													}
-													update_post_meta($post_id, 'ttbm_gallery_images', $thumnail_ids);
-													if (count($thumnail_ids)) {
-														set_post_thumbnail($post_id, $thumnail_ids[0]);
-													}
-												} else {
-													update_post_meta($post_id, 'ttbm_gallery_images', array(isset($dummy_images[$data]) ? $dummy_images[$data] : ''));
+												$thumnail_ids = self::sideload_gallery_urls((array) $data, isset($dummy_data['name']) ? $dummy_data['name'] : '');
+												update_post_meta($post_id, 'ttbm_gallery_images', $thumnail_ids);
+												if (count($thumnail_ids)) {
+													set_post_thumbnail($post_id, $thumnail_ids[0]);
 												}
 											} elseif ($meta_key == 'ttbm_gallery_images_hotel') {
-												if (is_array($data)) {
-													$thumnail_ids = array();
-													foreach ($data as $url_index) {
-														if (isset($hotel_dummy_images[$url_index])) {
-															$thumnail_ids[] = $hotel_dummy_images[$url_index];
-														}
-													}
-													update_post_meta($post_id, 'ttbm_gallery_images_hotel', $thumnail_ids);
-													if (count($thumnail_ids)) {
-														set_post_thumbnail($post_id, $thumnail_ids[0]);
-													}
-												} else {
-													update_post_meta($post_id, 'ttbm_gallery_images_hotel', array(isset($hotel_dummy_images[$data]) ? $hotel_dummy_images[$data] : ''));
+												$thumnail_ids = self::sideload_gallery_urls((array) $data, isset($dummy_data['name']) ? $dummy_data['name'] : '');
+												update_post_meta($post_id, 'ttbm_gallery_images_hotel', $thumnail_ids);
+												if (count($thumnail_ids)) {
+													set_post_thumbnail($post_id, $thumnail_ids[0]);
 												}
+											} elseif ($meta_key == 'ttbm_hiphop_places') {
+												$place_rows = array();
+												foreach ((array) $data as $place_name) {
+													if (isset($place_name_to_id[$place_name])) {
+														$place_rows[] = array(
+															'ttbm_city_place_id' => $place_name_to_id[$place_name],
+															'ttbm_place_label' => $place_name,
+														);
+													}
+												}
+												update_post_meta($post_id, 'ttbm_hiphop_places', $place_rows);
+											} elseif ($meta_key == 'ttbm_tour_guide') {
+												$guide_ids = array();
+												foreach ((array) $data as $guide_name) {
+													if (isset($guide_name_to_id[$guide_name])) {
+														$guide_ids[] = (int) $guide_name_to_id[$guide_name];
+													}
+												}
+												update_post_meta($post_id, 'ttbm_tour_guide', $guide_ids);
 											} else {
 												update_post_meta($post_id, $meta_key, $data);
 											}
@@ -406,71 +428,72 @@
 												update_post_meta($post_id, $meta_key, $term_ids);
 											}
 										}
-									}									
+									}
 								}
 							}
 						}
 					}
 					//$this->craete_pages();
-					$this->update_related_products($custom_post);
+					$this->update_related_products();
 					TTBM_Function::update_all_upcoming_date_month();
 					update_option('ttbm_dummy_already_inserted', 'yes');
 				}
 			}
 
-			public function update_related_products($custom_post) {
-				$args = array( 'fields' => 'ids', 'post_type' => $custom_post, 'numberposts' => - 1, 'post_status' => 'publish' );
-				$ids  = get_posts( $args );
-				foreach ( $ids as $id ) {
-					update_post_meta($id, 'ttbm_related_tour', $ids);
+			/**
+			 * Assign each dummy tour 4 other dummy tours as "related tours", picked at random
+			 * (excluding itself). Runs once, after all dummy tour posts already exist.
+			 */
+			public function update_related_products() {
+				$args = array('fields' => 'ids', 'post_type' => 'ttbm_tour', 'numberposts' => -1, 'post_status' => 'publish');
+				$ids = get_posts($args);
+				foreach ($ids as $id) {
+					$others = array_values(array_diff($ids, array($id)));
+					shuffle($others);
+					$related = array_slice($others, 0, min(4, count($others)));
+					update_post_meta($id, 'ttbm_related_tour', $related);
 				}
 			}
-			
 
-			public static function dummy_images() {
-				$urls = array(
-					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/image-1.jpg',
-					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/image-2.jpg',
-					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/image-3.jpg',
-					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/image-4.jpg',
-					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/image-5.jpg',
-				);
-				unset($image_ids);
-				$image_ids = array();
-				foreach ($urls as $url) {
+			/**
+			 * Sideload a list of remote image URLs (e.g. Unsplash photos) as attachments and
+			 * return the resulting attachment IDs. Failed downloads are skipped silently so a
+			 * single dead link never fatals the import — it just yields a smaller gallery.
+			 *
+			 * Note: this deliberately does NOT use media_sideload_image() — that helper
+			 * requires the URL itself to end in a recognized image extension (.jpg/.png/…),
+			 * which hotlinked CDN URLs (e.g. Unsplash's images.unsplash.com/photo-XXXX?params)
+			 * never do, so it always fails with "Invalid image URL" for such sources.
+			 * download_url() + media_handle_sideload() sniffs the actual file content instead.
+			 */
+			public static function sideload_gallery_urls($urls, $title_prefix = '') {
+				$ids = array();
+				$index = 0;
+				foreach ((array) $urls as $url) {
+					$index++;
+					if (!$url) {
+						continue;
+					}
 					if (function_exists('set_time_limit')) {
 						@set_time_limit(60);
 					}
-					$attachment_id = media_sideload_image($url, '0', $url, 'id');
-					if (!is_wp_error($attachment_id) && $attachment_id) {
-						$image_ids[] = $attachment_id;
+					$desc = $title_prefix ? $title_prefix . ' - ' . $index : $url;
+					$tmp_file = download_url($url);
+					if (is_wp_error($tmp_file)) {
+						continue;
 					}
+					$file_array = array(
+						'name' => sanitize_file_name(($title_prefix ? $title_prefix . '-' . $index : 'gallery-' . $index) . '.jpg'),
+						'tmp_name' => $tmp_file,
+					);
+					$attachment_id = media_handle_sideload($file_array, 0, $desc);
+					if (is_wp_error($attachment_id)) {
+						@unlink($tmp_file);
+						continue;
+					}
+					$ids[] = $attachment_id;
 				}
-				return $image_ids;
-			}
-
-			public static function hotel_dummy_images() {
-				$urls = array(
-					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-1.jpg',
-					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-2.jpg',
-					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-3.jpg',
-					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-4.jpg',
-					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-5.jpg',
-					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-6.jpg',
-					'https://raw.githubusercontent.com/magepeopleteam/dummy-images/main/tours/hotel-7.jpg',
-				);
-				unset($image_ids);
-				$image_ids = array();
-				foreach ($urls as $url) {
-					if (function_exists('set_time_limit')) {
-						@set_time_limit(60);
-					}
-					$attachment_id = media_sideload_image($url, '0', $url, 'id');
-					if (!is_wp_error($attachment_id) && $attachment_id) {
-						$image_ids[] = $attachment_id;
-					}
-				}
-				return $image_ids;
+				return $ids;
 			}
 
 			public function dummy_taxonomy(): array {
@@ -486,13 +509,13 @@
 							2 => ['name' => 'Zayman']
 						],
 						'ttbm_tour_location' => [
-							0 => ['name' => 'Bandarban', 'country' => 'Bangladesh'],
-							1 => ['name' => 'Coxbazar', 'country' => 'Bangladesh'],
-							2 => ['name' => 'Las Vegas', 'country' => 'United States'],
-							3 => ['name' => 'Naples Italy', 'country' => 'Italy'],
-							4 => ['name' => 'Rangamati', 'country' => 'Bangladesh'],
-							5 => ['name' => 'Sajek', 'country' => 'Bangladesh'],
-							6 => ['name' => 'Sapuland', 'country' => 'Afghanistan'],
+							0 => ['name' => 'Bandarban', 'meta_data' => array('ttbm_country_location' => 'Bangladesh')],
+							1 => ['name' => 'Coxbazar', 'meta_data' => array('ttbm_country_location' => 'Bangladesh')],
+							2 => ['name' => 'Las Vegas', 'meta_data' => array('ttbm_country_location' => 'United States')],
+							3 => ['name' => 'Naples Italy', 'meta_data' => array('ttbm_country_location' => 'Italy')],
+							4 => ['name' => 'Rangamati', 'meta_data' => array('ttbm_country_location' => 'Bangladesh')],
+							5 => ['name' => 'Sajek', 'meta_data' => array('ttbm_country_location' => 'Bangladesh')],
+							6 => ['name' => 'Sapuland', 'meta_data' => array('ttbm_country_location' => 'Afghanistan')],
 						],
 						'ttbm_tour_features_list' => [
 							0 => [
@@ -754,36 +777,104 @@
 				];
 			}
 			public function dummy_cpt(): array {
+				$faq_items = [
+					0 => [
+						'ttbm_faq_title' => 'What can I expect to see at The Mentalist at Planet Hollywood Resort and Casino?',
+						'ttbm_faq_content' => 'Comedy, magic and mind-reading! The Mentalist has the ability to get inside the minds of audience members, revealing everything from their names, hometowns and anniversaries to their wildest wishes.',
+					],
+					1 => [
+						'ttbm_faq_title' => 'Where is The Mentalist located?',
+						'ttbm_faq_content' => 'The V Theater is located inside the Miracle Mile Shops at the Planet Hollywood Resort & Casino.',
+					],
+					2 => [
+						'ttbm_faq_title' => 'Can I purchase alcohol at the venue during The Mentalist!?',
+						'ttbm_faq_content' => 'Absolutely! Drinks are available for purchase at the Showgirl Bar outside of the theater and may be brought into the showroom, however, no other outside food or drink will be allowed in the theater.',
+					],
+					3 => [
+						'ttbm_faq_title' => 'Is The Mentalist appropriate for children?',
+						'ttbm_faq_content' => 'Due to language, this show is recommended for guests 16 years old and over.',
+					],
+					4 => [
+						'ttbm_faq_title' => 'Do I need to exchange my ticket upon arrival at The Mentalist!?',
+						'ttbm_faq_content' => 'Please pick up your tickets at the V Theater Box Office with a valid photo ID for the lead traveler at least 30 minutes prior to show time (box office opens at 11 am). Seating will begin 15 minutes before showtime.',
+					],
+					5 => [
+						'ttbm_faq_title' => 'What is the cancellation and refund policy?',
+						'ttbm_faq_content' => 'Bookings can be cancelled up to 48 hours before the tour start time for a full refund. Cancellations made after this window are non-refundable.',
+					],
+				];
+				$daywise_details = [
+					0 => ['ttbm_day_title' => 'Day 1: Arrival & Welcome', 'ttbm_day_content' => '<p>Arrive at the destination, meet your guide, and settle into your accommodation. Enjoy a welcome briefing and a relaxed evening to prepare for the days ahead.</p>'],
+					1 => ['ttbm_day_title' => 'Day 2: Guided City Exploration', 'ttbm_day_content' => '<p>Explore the major landmarks and hidden gems of the area with an expert local guide, including stops for photos and local snacks.</p>'],
+					2 => ['ttbm_day_title' => 'Day 3: Adventure & Activities', 'ttbm_day_content' => '<p>A full day dedicated to the tour&#8217;s signature activities, from outdoor adventures to cultural experiences tailored to the destination.</p>'],
+					3 => ['ttbm_day_title' => 'Day 4: Leisure & Local Markets', 'ttbm_day_content' => '<p>A flexible day to relax, shop for souvenirs at local markets, or opt into an optional excursion arranged by your guide.</p>'],
+					4 => ['ttbm_day_title' => 'Day 5: Cultural Immersion', 'ttbm_day_content' => '<p>Visit historical sites and enjoy a traditional meal, learning about the customs and stories that make this destination unique.</p>'],
+					5 => ['ttbm_day_title' => 'Day 6: Farewell & Departure', 'ttbm_day_content' => '<p>Enjoy a final breakfast, wrap up any last-minute shopping, and transfer to the airport or station for your onward journey.</p>'],
+				];
+				$why_choose_us_texts = [
+					0 => 'Enjoy a taste of Las Vegas glitz at the mind-bending magic show',
+					1 => 'Enjoy a taste of Las Vegas glitz at the mind-bending magic show',
+					2 => 'Watch as Gerry McCambridge performs comedy and magic',
+				];
+				$extra_service_data = [
+					0 => [
+						'service_icon' => 'mi mi-graduation-cap',
+						'service_name' => 'Cap',
+						'service_price' => 6,
+						'service_sale_price' => 5,
+						'service_qty' => 500,
+						'service_qty_type' => 'inputbox',
+						'extra_service_description' => 'A branded souvenir cap to keep the sun off during the tour.',
+					],
+					1 => [
+						'service_icon' => 'mi mi-coffee-heart',
+						'service_name' => 'Coffee',
+						'service_price' => 4,
+						'service_sale_price' => 3,
+						'service_qty' => 1500,
+						'service_qty_type' => 'inputbox',
+						'extra_service_description' => 'Freshly brewed coffee to keep you energized throughout the day.',
+					],
+					2 => [
+						'service_icon' => 'mi mi-camera-retro',
+						'service_name' => 'Photo Package',
+						'service_price' => 15,
+						'service_sale_price' => 12,
+						'service_qty' => 50,
+						'service_qty_type' => 'inputbox',
+						'extra_service_description' => 'Professional photos captured during your tour, delivered digitally after the trip.',
+					],
+				];
 				return [
 					'custom_post' => [
 						'ttbm_places' => [
-							0 => ['name' => 'Bogura'],
-							1 => ['name' => 'Dim Pahar'],
-							2 => ['name' => 'Ravello'],
-							3 => ['name' => 'Amalfi'],
-							4 => ['name' => 'Positano'],
-							5 => ['name' => 'Pompeii'],
-							6 => ['name' => 'Capri'],
-							7 => ['name' => 'Sorrento'],
-							8 => ['name' => 'Naples'],
-							9 => ['name' => 'Brandenburger Tor'],
-							10 => ['name' => 'Rotes Rathaus (Neptune Fountain)'],
-							11 => ['name' => 'Alexanderplatz (Alexa)'],
-							12 => ['name' => 'Gendarmenmarkt / Taubenstr'],
-							13 => ['name' => 'Checkpoint Charlie'],
-							14 => ['name' => 'Berliner Mauer / Martin-Gropius-Bau'],
-							15 => ['name' => 'Dolphine Square'],
-							16 => ['name' => 'Moheshkhali'],
-							17 => ['name' => 'Inani Beach'],
-							18 => ['name' => 'Ramu'],
-							19 => ['name' => 'Himchori'],
+							0 => ['name' => 'Bogura', 'image' => 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=800&q=80'],
+							1 => ['name' => 'Dim Pahar', 'image' => 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80'],
+							2 => ['name' => 'Ravello', 'image' => 'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=800&q=80'],
+							3 => ['name' => 'Amalfi', 'image' => 'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=800&q=80'],
+							4 => ['name' => 'Positano', 'image' => 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=800&q=80'],
+							5 => ['name' => 'Pompeii', 'image' => 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=800&q=80'],
+							6 => ['name' => 'Capri', 'image' => 'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=800&q=80'],
+							7 => ['name' => 'Sorrento', 'image' => 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=800&q=80'],
+							8 => ['name' => 'Naples', 'image' => 'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=800&q=80'],
+							9 => ['name' => 'Brandenburger Tor', 'image' => 'https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=800&q=80'],
+							10 => ['name' => 'Rotes Rathaus (Neptune Fountain)', 'image' => 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=80'],
+							11 => ['name' => 'Alexanderplatz (Alexa)', 'image' => 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=800&q=80'],
+							12 => ['name' => 'Gendarmenmarkt / Taubenstr', 'image' => 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80'],
+							13 => ['name' => 'Checkpoint Charlie', 'image' => 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80'],
+							14 => ['name' => 'Berliner Mauer / Martin-Gropius-Bau', 'image' => 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80'],
+							15 => ['name' => 'Dolphine Square', 'image' => 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=800&q=80'],
+							16 => ['name' => 'Moheshkhali', 'image' => 'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=800&q=80'],
+							17 => ['name' => 'Inani Beach', 'image' => 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80'],
+							18 => ['name' => 'Ramu', 'image' => 'https://images.unsplash.com/photo-1500835556837-99ac94a94552?auto=format&fit=crop&w=800&q=80'],
+							19 => ['name' => 'Himchori', 'image' => 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=800&q=80'],
 						],
 						'ttbm_guide' => [
-							0 => ['name' => 'Adam Smith'],
-							1 => ['name' => 'Mahim'],
-							2 => ['name' => 'Shamim'],
-							3 => ['name' => 'Sumon'],
-							4 => ['name' => 'Rabiul'],
+							0 => ['name' => 'Adam Smith', 'image' => 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80'],
+							1 => ['name' => 'Mahim', 'image' => 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80'],
+							2 => ['name' => 'Shamim', 'image' => 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=600&q=80'],
+							3 => ['name' => 'Sumon', 'image' => 'https://images.unsplash.com/photo-1489980557514-251d61e3eeb6?auto=format&fit=crop&w=600&q=80'],
+							4 => ['name' => 'Rabiul', 'image' => 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80'],
 						],
 						'ttbm_tour' => [
 							0 => [
@@ -791,7 +882,7 @@
 								'content' => '
 
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                    
+
                                     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
                                 ',
 								'post_data' => [
@@ -809,13 +900,19 @@
 									'ttbm_travel_start_place' => 'Las Vegas',
 									'ttbm_display_location' => 'on',
 									'ttbm_location_name' => 'Bandarban',
-									'ttbm_display_map' => 'off',
+									'ttbm_full_location_name' => 'Bandarban Sadar, Bandarban Hill District, Chittagong Division, Bangladesh',
+									'ttbm_map_latitude' => '22.1953',
+									'ttbm_map_longitude' => '92.2184',
+									'ttbm_display_map' => 'on',
 									'ttbm_display_description' => 'on',
 									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
 									//date_settings
 									'ttbm_travel_type' => 'fixed',
 									'ttbm_travel_start_date' => gmdate('Y-m-d', strtotime(' +25 day')),
 									'ttbm_travel_reg_end_date' => gmdate('Y-m-d', strtotime(' +30 day')),
+									'ttbm_travel_start_time' => '09:00',
+									'ttbm_travel_end_time' => '17:00',
+									'reg_end_time' => '23:59',
 									//price_settings
 									'ttbm_display_registration' => 'on',
 									'ttbm_display_advance' => 'off',
@@ -845,24 +942,7 @@
 											'ticket_type_description' => '',
 										]
 									],
-									'ttbm_extra_service_data' => [
-										0 => [
-											'service_icon' => 'mi mi-graduation-cap',
-											'service_name' => 'Cap',
-											'service_price' => 6,
-											'service_qty' => 500,
-											'service_qty_type' => 'inputbox',
-											'extra_service_description' => '',
-										],
-										1 => [
-											'service_icon' => 'mi mi-coffee-heart',
-											'service_name' => 'Coffe',
-											'service_price' => 4,
-											'service_qty' => 1500,
-											'service_qty_type' => 'inputbox',
-											'extra_service_description' => '',
-										],
-									],
+									'ttbm_extra_service_data' => $extra_service_data,
 									'ttbm_display_include_service' => 'on',
 									'ttbm_service_included_in_price' => [
 										0 => 'Accommodation',
@@ -870,46 +950,29 @@
 										2 => 'Welcome Drinks',
 										3 => 'Lunch',
 										4 => 'Transport',
+										5 => 'Additional Services',
 									],
+									'ttbm_display_exclude_service' => 'on',
 									'ttbm_service_excluded_in_price' => [
 										0 => 'Airport Transfer',
 										1 => 'BBQ Night',
 										2 => 'Guide',
 										3 => 'Insurance',
 										4 => 'Outing Ticket',
+										5 => 'Newspaper',
 									],
 									//Place_you_see_settings
+									'ttbm_display_hiphop' => 'on',
+									'ttbm_hiphop_places' => ['Bogura', 'Dim Pahar', 'Ravello', 'Amalfi', 'Positano'],
 									//day wise details_settings
+									'ttbm_display_schedule' => 'on',
+									'ttbm_daywise_details' => $daywise_details,
 									//faq_settings
 									'ttbm_display_faq' => 'on',
-									'mep_event_faq' => [
-										0 => [
-											'ttbm_faq_title' => 'What can I expect to see at The Mentalist at Planet Hollywood Resort and Casino?',
-											'ttbm_faq_content' => 'Comedy, magic and mind-reading! The Mentalist has the ability to get inside the minds of audience members, revealing everything from their names, hometowns and anniversaries to their wildest wishes.',
-										],
-										1 => [
-											'ttbm_faq_title' => 'Where is The Mentalist located?',
-											'ttbm_faq_content' => 'The V Theater is located inside the Miracle Mile Shops at the Planet Hollywood Resort & Casino.',
-										],
-										2 => [
-											'ttbm_faq_title' => 'Can I purchase alcohol at the venue during The Mentalist!?',
-											'ttbm_faq_content' => 'Absolutely! Drinks are available for purchase at the Showgirl Bar outside of the theater and may be brought into the showroom, however, no other outside food or drink will be allowed in the theater.',
-										],
-										3 => [
-											'ttbm_faq_title' => 'Is The Mentalist appropriate for children?',
-											'ttbm_faq_content' => 'Due to language, this show is recommended for guests 16 years old and over.',
-										],
-										4 => [
-											'ttbm_faq_title' => 'Do I need to exchange my ticket upon arrival at The Mentalist!?',
-											'ttbm_faq_content' => 'Please pick up your tickets at the V Theater Box Office with a valid photo ID for the lead traveler at least 30 minutes prior to show time (box office opens at 11 am). Seating will begin 15 minutes before showtime.',
-										],
-									],
+									'mep_event_faq' => $faq_items,
 									//why chose us_settings
-									'ttbm_why_choose_us_texts' => [
-										0 => 'Enjoy a taste of Las Vegas glitz at the mind-bending magic show',
-										1 => 'Enjoy a taste of Las Vegas glitz at the mind-bending magic show',
-										2 => 'Watch as Gerry McCambridge performs comedy and magic',
-									],
+									'ttbm_display_why_choose_us' => 'on',
+									'ttbm_why_choose_us_texts' => $why_choose_us_texts,
 									//activities_settings
 									'ttbm_display_activities' => 'on',
 									'ttbm_tour_activities' => [
@@ -918,18 +981,30 @@
 										2 => 'Snow & Ice',
 									],
 									//gallery_settings
-									'ttbm_gallery_images' => array(0, 1, 2, 3, 4),
+									'ttbm_gallery_images' => [
+										'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1200&q=80',
+									],
 									//category
 									'ttbm_category' => ['flexible-tour'],
 									//Organizer_settings
 									'ttbm_organizer' => ['autotour'],
+									//Guide_settings
+									'ttbm_display_tour_guide' => 'on',
+									'ttbm_tour_guide' => ['Adam Smith', 'Mahim'],
+									'ttbm_guide_style' => 'carousel',
+									'ttbm_guide_image_style' => 'squire',
+									'ttbm_guide_description_style' => 'full',
 									//extras_settings
 									'ttbm_display_get_question' => 'on',
-									'ttbm_contact_email' => 'example.gmail.com',
+									'ttbm_contact_email' => 'info@example.com',
 									'ttbm_contact_phone' => '123456789',
 									'ttbm_contact_text' => 'Do not hesitage to give us a call. We are an expert team and we are happy to talk to you.',
-									'ttbm_display_tour_guide' => 'on',
 									//Related tour_settings
+									'ttbm_display_related' => 'on',
 									//Display_settings
 									'ttbm_section_title_style' => 'ttbm_title_style_2',
 									'ttbm_ticketing_system' => 'availability_section',
@@ -951,7 +1026,7 @@
 								'content' => '
 
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                    
+
                                     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
                                 ',
 								'post_data' => [
@@ -968,13 +1043,19 @@
 									'ttbm_travel_start_place' => 'Naple',
 									'ttbm_display_location' => 'on',
 									'ttbm_location_name' => 'Coxbazar',
-									'ttbm_display_map' => 'off',
+									'ttbm_full_location_name' => 'Cox&#8217;s Bazar Sea Beach Road, Cox&#8217;s Bazar, Chattogram Division, Bangladesh',
+									'ttbm_map_latitude' => '21.4272',
+									'ttbm_map_longitude' => '92.0058',
+									'ttbm_display_map' => 'on',
 									'ttbm_display_description' => 'on',
 									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
 									//date_settings
 									'ttbm_travel_type' => 'fixed',
 									'ttbm_travel_start_date' => gmdate('Y-m-d', strtotime(' +35 day')),
 									'ttbm_travel_reg_end_date' => gmdate('Y-m-d', strtotime(' +36 day')),
+									'ttbm_travel_start_time' => '08:30',
+									'ttbm_travel_end_time' => '16:30',
+									'reg_end_time' => '23:59',
 									//price_settings
 									'ttbm_display_registration' => 'on',
 									'ttbm_display_advance' => 'off',
@@ -1004,24 +1085,7 @@
 											'ticket_type_description' => '',
 										]
 									],
-									'ttbm_extra_service_data' => [
-										0 => [
-											'service_icon' => 'mi mi-graduation-cap',
-											'service_name' => 'Cap',
-											'service_price' => 6,
-											'service_qty' => 500,
-											'service_qty_type' => 'inputbox',
-											'extra_service_description' => '',
-										],
-										1 => [
-											'service_icon' => 'mi mi-coffee-heart',
-											'service_name' => 'Coffe',
-											'service_price' => 4,
-											'service_qty' => 1500,
-											'service_qty_type' => 'inputbox',
-											'extra_service_description' => '',
-										],
-									],
+									'ttbm_extra_service_data' => $extra_service_data,
 									'ttbm_display_include_service' => 'on',
 									'ttbm_service_included_in_price' => [
 										0 => 'Accommodation',
@@ -1029,6 +1093,7 @@
 										2 => 'Welcome Drinks',
 										3 => 'Lunch',
 										4 => 'Transport',
+										5 => 'Additional Services',
 									],
 									'ttbm_display_exclude_service' => 'on',
 									'ttbm_service_excluded_in_price' => [
@@ -1037,39 +1102,20 @@
 										2 => 'Guide',
 										3 => 'Insurance',
 										4 => 'Outing Ticket',
+										5 => 'Newspaper',
 									],
 									//Place_you_see_settings
+									'ttbm_display_hiphop' => 'on',
+									'ttbm_hiphop_places' => ['Pompeii', 'Capri', 'Sorrento', 'Naples', 'Brandenburger Tor'],
 									//day wise details_settings
+									'ttbm_display_schedule' => 'on',
+									'ttbm_daywise_details' => $daywise_details,
 									//faq_settings
 									'ttbm_display_faq' => 'on',
-									'mep_event_faq' => [
-										0 => [
-											'ttbm_faq_title' => 'What can I expect to see at The Mentalist at Planet Hollywood Resort and Casino?',
-											'ttbm_faq_content' => 'Comedy, magic and mind-reading! The Mentalist has the ability to get inside the minds of audience members, revealing everything from their names, hometowns and anniversaries to their wildest wishes.',
-										],
-										1 => [
-											'ttbm_faq_title' => 'Where is The Mentalist located?',
-											'ttbm_faq_content' => 'The V Theater is located inside the Miracle Mile Shops at the Planet Hollywood Resort & Casino.',
-										],
-										2 => [
-											'ttbm_faq_title' => 'Can I purchase alcohol at the venue during The Mentalist!?',
-											'ttbm_faq_content' => 'Absolutely! Drinks are available for purchase at the Showgirl Bar outside of the theater and may be brought into the showroom, however, no other outside food or drink will be allowed in the theater.',
-										],
-										3 => [
-											'ttbm_faq_title' => 'Is The Mentalist appropriate for children?',
-											'ttbm_faq_content' => 'Due to language, this show is recommended for guests 16 years old and over.',
-										],
-										4 => [
-											'ttbm_faq_title' => 'Do I need to exchange my ticket upon arrival at The Mentalist!?',
-											'ttbm_faq_content' => 'Please pick up your tickets at the V Theater Box Office with a valid photo ID for the lead traveler at least 30 minutes prior to show time (box office opens at 11 am). Seating will begin 15 minutes before showtime.',
-										],
-									],
+									'mep_event_faq' => $faq_items,
 									//why chose us_settings
-									'ttbm_why_choose_us_texts' => [
-										0 => 'Enjoy a taste of Las Vegas glitz at the mind-bending magic show',
-										1 => 'Enjoy a taste of Las Vegas glitz at the mind-bending magic show',
-										2 => 'Watch as Gerry McCambridge performs comedy and magic',
-									],
+									'ttbm_display_why_choose_us' => 'on',
+									'ttbm_why_choose_us_texts' => $why_choose_us_texts,
 									//activities_settings
 									'ttbm_display_activities' => 'on',
 									'ttbm_tour_activities' => [
@@ -1078,18 +1124,30 @@
 										2 => 'Rural',
 									],
 									//gallery_settings
-									'ttbm_gallery_images' => array(4, 3, 2, 1, 0),
+									'ttbm_gallery_images' => [
+										'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80',
+									],
 									//category
 									'ttbm_category' => ['flexible-tour'],
 									//Organizer_settings
 									'ttbm_organizer' => ['zayman'],
+									//Guide_settings
+									'ttbm_display_tour_guide' => 'on',
+									'ttbm_tour_guide' => ['Shamim', 'Sumon'],
+									'ttbm_guide_style' => 'carousel',
+									'ttbm_guide_image_style' => 'squire',
+									'ttbm_guide_description_style' => 'full',
 									//extras_settings
 									'ttbm_display_get_question' => 'on',
-									'ttbm_contact_email' => 'example.gmail.com',
+									'ttbm_contact_email' => 'info@example.com',
 									'ttbm_contact_phone' => '123456789',
 									'ttbm_contact_text' => 'Do not hesitate to give us a call. We are an expert team and we are happy to talk to you.',
-									'ttbm_display_tour_guide' => 'on',
 									//Related tour_settings
+									'ttbm_display_related' => 'on',
 									//Display_settings
 									'ttbm_section_title_style' => 'ttbm_title_style_2',
 									'ttbm_ticketing_system' => 'availability_section',
@@ -1111,7 +1169,7 @@
 								'content' => '
 
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                    
+
                                     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
                                 ',
 								'post_data' => [
@@ -1129,7 +1187,10 @@
 									'ttbm_travel_start_place' => '',
 									'ttbm_display_location' => 'on',
 									'ttbm_location_name' => 'Las Vegas',
-									'ttbm_display_map' => 'off',
+									'ttbm_full_location_name' => '3667 Las Vegas Blvd S, Las Vegas, NV 89109, USA',
+									'ttbm_map_latitude' => '36.1147',
+									'ttbm_map_longitude' => '-115.1728',
+									'ttbm_display_map' => 'on',
 									'ttbm_display_description' => 'on',
 									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
 									//date_settings
@@ -1137,6 +1198,10 @@
 									'ttbm_travel_repeated_after' => '4',
 									'ttbm_travel_repeated_start_date' => gmdate('Y-m-d', strtotime(' +15 day')),
 									'ttbm_travel_repeated_end_date' => gmdate('Y-m-d', strtotime(' +365 day')),
+									'ttbm_travel_start_time' => '07:00',
+									'ttbm_travel_repeated_start_time' => '07:00',
+									'ttbm_travel_end_time' => '15:00',
+									'reg_end_time' => '23:59',
 									//price_settings
 									'ttbm_display_registration' => 'on',
 									'ttbm_display_advance' => 'off',
@@ -1166,72 +1231,37 @@
 											'ticket_type_description' => '',
 										]
 									],
-									'ttbm_extra_service_data' => [
-										0 => [
-											'service_icon' => 'mi mi-graduation-cap',
-											'service_name' => 'Cap',
-											'service_price' => 6,
-											'service_qty' => 500,
-											'service_qty_type' => 'inputbox',
-											'extra_service_description' => '',
-										],
-										1 => [
-											'service_icon' => 'mi mi-coffee-heart',
-											'service_name' => 'Coffe',
-											'service_price' => 4,
-											'service_qty' => 1500,
-											'service_qty_type' => 'inputbox',
-											'extra_service_description' => '',
-										],
-									],
+									'ttbm_extra_service_data' => $extra_service_data,
 									'ttbm_display_include_service' => 'on',
 									'ttbm_service_included_in_price' => [
 										0 => 'Accommodation',
-										1 => 'Breakfast',
+										1 => 'BBQ Night',
 										2 => 'Welcome Drinks',
 										3 => 'Lunch',
 										4 => 'Transport',
+										5 => 'Additional Services',
 									],
 									'ttbm_display_exclude_service' => 'on',
 									'ttbm_service_excluded_in_price' => [
 										0 => 'Airport Transfer',
-										1 => 'BBQ Night',
+										1 => 'Breakfast',
 										2 => 'Guide',
 										3 => 'Insurance',
 										4 => 'Outing Ticket',
+										5 => 'Newspaper',
 									],
 									//Place_you_see_settings
+									'ttbm_display_hiphop' => 'on',
+									'ttbm_hiphop_places' => ['Rotes Rathaus (Neptune Fountain)', 'Alexanderplatz (Alexa)', 'Gendarmenmarkt / Taubenstr', 'Checkpoint Charlie', 'Berliner Mauer / Martin-Gropius-Bau'],
 									//day wise details_settings
+									'ttbm_display_schedule' => 'on',
+									'ttbm_daywise_details' => $daywise_details,
 									//faq_settings
 									'ttbm_display_faq' => 'on',
-									'mep_event_faq' => [
-										0 => [
-											'ttbm_faq_title' => 'What can I expect to see at The Mentalist at Planet Hollywood Resort and Casino?',
-											'ttbm_faq_content' => 'Comedy, magic and mind-reading! The Mentalist has the ability to get inside the minds of audience members, revealing everything from their names, hometowns and anniversaries to their wildest wishes.',
-										],
-										1 => [
-											'ttbm_faq_title' => 'Where is The Mentalist located?',
-											'ttbm_faq_content' => 'The V Theater is located inside the Miracle Mile Shops at the Planet Hollywood Resort & Casino.',
-										],
-										2 => [
-											'ttbm_faq_title' => 'Can I purchase alcohol at the venue during The Mentalist!?',
-											'ttbm_faq_content' => 'Absolutely! Drinks are available for purchase at the Showgirl Bar outside of the theater and may be brought into the showroom, however, no other outside food or drink will be allowed in the theater.',
-										],
-										3 => [
-											'ttbm_faq_title' => 'Is The Mentalist appropriate for children?',
-											'ttbm_faq_content' => 'Due to language, this show is recommended for guests 16 years old and over.',
-										],
-										4 => [
-											'ttbm_faq_title' => 'Do I need to exchange my ticket upon arrival at The Mentalist!?',
-											'ttbm_faq_content' => 'Please pick up your tickets at the V Theater Box Office with a valid photo ID for the lead traveler at least 30 minutes prior to show time (box office opens at 11 am). Seating will begin 15 minutes before showtime.',
-										],
-									],
+									'mep_event_faq' => $faq_items,
 									//why chose us_settings
-									'ttbm_why_choose_us_texts' => [
-										0 => 'Enjoy a taste of Las Vegas glitz at the mind-bending magic show',
-										1 => 'Enjoy a taste of Las Vegas glitz at the mind-bending magic show',
-										2 => 'Watch as Gerry McCambridge performs comedy and magic',
-									],
+									'ttbm_display_why_choose_us' => 'on',
+									'ttbm_why_choose_us_texts' => $why_choose_us_texts,
 									//activities_settings
 									'ttbm_display_activities' => 'on',
 									'ttbm_tour_activities' => [
@@ -1240,18 +1270,30 @@
 										2 => 'Rural',
 									],
 									//gallery_settings
-									'ttbm_gallery_images' => array(3, 4, 2, 1, 0),
+									'ttbm_gallery_images' => [
+										'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1500835556837-99ac94a94552?auto=format&fit=crop&w=1200&q=80',
+									],
 									//category
 									'ttbm_category' => ['fixed-tour'],
 									//Organizer_settings
 									'ttbm_organizer' => ['zayman'],
+									//Guide_settings
+									'ttbm_display_tour_guide' => 'on',
+									'ttbm_tour_guide' => ['Rabiul', 'Adam Smith'],
+									'ttbm_guide_style' => 'carousel',
+									'ttbm_guide_image_style' => 'squire',
+									'ttbm_guide_description_style' => 'full',
 									//extras_settings
 									'ttbm_display_get_question' => 'on',
-									'ttbm_contact_email' => 'example.gmail.com',
+									'ttbm_contact_email' => 'info@example.com',
 									'ttbm_contact_phone' => '123456789',
 									'ttbm_contact_text' => 'Do not hesitate to give us a call. We are an expert team and we are happy to talk to you.',
-									'ttbm_display_tour_guide' => 'on',
 									//Related tour_settings
+									'ttbm_display_related' => 'on',
 									//Display_settings
 									'ttbm_section_title_style' => 'ttbm_title_style_2',
 									'ttbm_ticketing_system' => 'regular_ticket',
@@ -1273,7 +1315,7 @@
 								'content' => '
 
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                    
+
                                     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
                                 ',
 								'post_data' => [
@@ -1291,7 +1333,10 @@
 									'ttbm_travel_start_place' => '',
 									'ttbm_display_location' => 'on',
 									'ttbm_location_name' => 'Naples Italy',
-									'ttbm_display_map' => 'off',
+									'ttbm_full_location_name' => 'Via Partenope 1, 80121 Napoli NA, Italy',
+									'ttbm_map_latitude' => '40.8384',
+									'ttbm_map_longitude' => '14.2489',
+									'ttbm_display_map' => 'on',
 									'ttbm_display_description' => 'on',
 									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
 									//date_settings
@@ -1299,6 +1344,10 @@
 									'ttbm_travel_repeated_after' => '7',
 									'ttbm_travel_repeated_start_date' => gmdate('Y-m-d', strtotime(' +25 day')),
 									'ttbm_travel_repeated_end_date' => gmdate('Y-m-d', strtotime(' +365 day')),
+									'ttbm_travel_start_time' => '06:30',
+									'ttbm_travel_repeated_start_time' => '06:30',
+									'ttbm_travel_end_time' => '18:00',
+									'reg_end_time' => '23:59',
 									//price_settings
 									'ttbm_display_registration' => 'on',
 									'ttbm_display_advance' => 'off',
@@ -1328,24 +1377,7 @@
 											'ticket_type_description' => '',
 										]
 									],
-									'ttbm_extra_service_data' => [
-										0 => [
-											'service_icon' => 'mi mi-graduation-cap',
-											'service_name' => 'Cap',
-											'service_price' => 6,
-											'service_qty' => 500,
-											'service_qty_type' => 'inputbox',
-											'extra_service_description' => '',
-										],
-										1 => [
-											'service_icon' => 'mi mi-coffee-heart',
-											'service_name' => 'Coffe',
-											'service_price' => 4,
-											'service_qty' => 1500,
-											'service_qty_type' => 'inputbox',
-											'extra_service_description' => '',
-										],
-									],
+									'ttbm_extra_service_data' => $extra_service_data,
 									'ttbm_display_include_service' => 'on',
 									'ttbm_service_included_in_price' => [
 										0 => 'Accommodation',
@@ -1353,6 +1385,7 @@
 										2 => 'Welcome Drinks',
 										3 => 'Lunch',
 										4 => 'Transport',
+										5 => 'Additional Services',
 									],
 									'ttbm_display_exclude_service' => 'on',
 									'ttbm_service_excluded_in_price' => [
@@ -1361,39 +1394,20 @@
 										2 => 'Guide',
 										3 => 'Insurance',
 										4 => 'Outing Ticket',
+										5 => 'Newspaper',
 									],
 									//Place_you_see_settings
+									'ttbm_display_hiphop' => 'on',
+									'ttbm_hiphop_places' => ['Dolphine Square', 'Moheshkhali', 'Inani Beach', 'Ramu', 'Himchori'],
 									//day wise details_settings
+									'ttbm_display_schedule' => 'on',
+									'ttbm_daywise_details' => $daywise_details,
 									//faq_settings
 									'ttbm_display_faq' => 'on',
-									'mep_event_faq' => [
-										0 => [
-											'ttbm_faq_title' => 'What can I expect to see at The Mentalist at Planet Hollywood Resort and Casino?',
-											'ttbm_faq_content' => 'Comedy, magic and mind-reading! The Mentalist has the ability to get inside the minds of audience members, revealing everything from their names, hometowns and anniversaries to their wildest wishes.',
-										],
-										1 => [
-											'ttbm_faq_title' => 'Where is The Mentalist located?',
-											'ttbm_faq_content' => 'The V Theater is located inside the Miracle Mile Shops at the Planet Hollywood Resort & Casino.',
-										],
-										2 => [
-											'ttbm_faq_title' => 'Can I purchase alcohol at the venue during The Mentalist!?',
-											'ttbm_faq_content' => 'Absolutely! Drinks are available for purchase at the Showgirl Bar outside of the theater and may be brought into the showroom, however, no other outside food or drink will be allowed in the theater.',
-										],
-										3 => [
-											'ttbm_faq_title' => 'Is The Mentalist appropriate for children?',
-											'ttbm_faq_content' => 'Due to language, this show is recommended for guests 16 years old and over.',
-										],
-										4 => [
-											'ttbm_faq_title' => 'Do I need to exchange my ticket upon arrival at The Mentalist!?',
-											'ttbm_faq_content' => 'Please pick up your tickets at the V Theater Box Office with a valid photo ID for the lead traveler at least 30 minutes prior to show time (box office opens at 11 am). Seating will begin 15 minutes before showtime.',
-										],
-									],
+									'mep_event_faq' => $faq_items,
 									//why chose us_settings
-									'ttbm_why_choose_us_texts' => [
-										0 => 'Enjoy a taste of Las Vegas glitz at the mind-bending magic show',
-										1 => 'Enjoy a taste of Las Vegas glitz at the mind-bending magic show',
-										2 => 'Watch as Gerry McCambridge performs comedy and magic',
-									],
+									'ttbm_display_why_choose_us' => 'on',
+									'ttbm_why_choose_us_texts' => $why_choose_us_texts,
 									//activities_settings
 									'ttbm_display_activities' => 'on',
 									'ttbm_tour_activities' => [
@@ -1402,18 +1416,30 @@
 										2 => 'Rural',
 									],
 									//gallery_settings
-									'ttbm_gallery_images' => array(1, 2, 3, 4, 0),
+									'ttbm_gallery_images' => [
+										'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1500835556837-99ac94a94552?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=1200&q=80',
+									],
 									//category
 									'ttbm_category' => ['flexible-tour'],
 									//Organizer_settings
 									'ttbm_organizer' => ['holiday-partner'],
+									//Guide_settings
+									'ttbm_display_tour_guide' => 'on',
+									'ttbm_tour_guide' => ['Mahim', 'Shamim'],
+									'ttbm_guide_style' => 'carousel',
+									'ttbm_guide_image_style' => 'squire',
+									'ttbm_guide_description_style' => 'full',
 									//extras_settings
 									'ttbm_display_get_question' => 'on',
-									'ttbm_contact_email' => 'example.gmail.com',
+									'ttbm_contact_email' => 'info@example.com',
 									'ttbm_contact_phone' => '123456789',
 									'ttbm_contact_text' => 'Do not hesitate to give us a call. We are an expert team and we are happy to talk to you.',
-									'ttbm_display_tour_guide' => 'on',
 									//Related tour_settings
+									'ttbm_display_related' => 'on',
 									//Display_settings
 									'ttbm_section_title_style' => 'ttbm_title_style_2',
 									'ttbm_ticketing_system' => 'regular_ticket',
@@ -1435,7 +1461,7 @@
 								'content' => '
 
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                    
+
                                     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
                                 ',
 								'post_data' => [
@@ -1453,7 +1479,10 @@
 									'ttbm_travel_start_place' => '',
 									'ttbm_display_location' => 'on',
 									'ttbm_location_name' => 'Rangamati',
-									'ttbm_display_map' => 'off',
+									'ttbm_full_location_name' => 'Rangamati Sadar, Rangamati Hill District, Chittagong Division, Bangladesh',
+									'ttbm_map_latitude' => '22.6533',
+									'ttbm_map_longitude' => '92.1743',
+									'ttbm_display_map' => 'on',
 									'ttbm_display_description' => 'on',
 									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
 									//date_settings
@@ -1461,6 +1490,10 @@
 									'ttbm_travel_repeated_after' => '15',
 									'ttbm_travel_repeated_start_date' => gmdate('Y-m-d', strtotime(' +35 day')),
 									'ttbm_travel_repeated_end_date' => gmdate('Y-m-d', strtotime(' +365 day')),
+									'ttbm_travel_start_time' => '08:00',
+									'ttbm_travel_repeated_start_time' => '08:00',
+									'ttbm_travel_end_time' => '20:00',
+									'reg_end_time' => '23:59',
 									//price_settings
 									'ttbm_display_registration' => 'on',
 									'ttbm_display_advance' => 'off',
@@ -1490,24 +1523,7 @@
 											'ticket_type_description' => '',
 										]
 									],
-									'ttbm_extra_service_data' => [
-										0 => [
-											'service_icon' => 'mi mi-graduation-cap',
-											'service_name' => 'Cap',
-											'service_price' => 6,
-											'service_qty' => 500,
-											'service_qty_type' => 'inputbox',
-											'extra_service_description' => '',
-										],
-										1 => [
-											'service_icon' => 'mi mi-coffee-heart',
-											'service_name' => 'Coffe',
-											'service_price' => 4,
-											'service_qty' => 1500,
-											'service_qty_type' => 'inputbox',
-											'extra_service_description' => '',
-										],
-									],
+									'ttbm_extra_service_data' => $extra_service_data,
 									'ttbm_display_include_service' => 'on',
 									'ttbm_service_included_in_price' => [
 										0 => 'Accommodation',
@@ -1515,6 +1531,7 @@
 										2 => 'Welcome Drinks',
 										3 => 'Lunch',
 										4 => 'Transport',
+										5 => 'Additional Services',
 									],
 									'ttbm_display_exclude_service' => 'on',
 									'ttbm_service_excluded_in_price' => [
@@ -1523,39 +1540,20 @@
 										2 => 'Guide',
 										3 => 'Insurance',
 										4 => 'Outing Ticket',
+										5 => 'Newspaper',
 									],
 									//Place_you_see_settings
+									'ttbm_display_hiphop' => 'on',
+									'ttbm_hiphop_places' => ['Bogura', 'Dim Pahar', 'Pompeii', 'Capri', 'Naples'],
 									//day wise details_settings
+									'ttbm_display_schedule' => 'on',
+									'ttbm_daywise_details' => $daywise_details,
 									//faq_settings
 									'ttbm_display_faq' => 'on',
-									'mep_event_faq' => [
-										0 => [
-											'ttbm_faq_title' => 'What can I expect to see at The Mentalist at Planet Hollywood Resort and Casino?',
-											'ttbm_faq_content' => 'Comedy, magic and mind-reading! The Mentalist has the ability to get inside the minds of audience members, revealing everything from their names, hometowns and anniversaries to their wildest wishes.',
-										],
-										1 => [
-											'ttbm_faq_title' => 'Where is The Mentalist located?',
-											'ttbm_faq_content' => 'The V Theater is located inside the Miracle Mile Shops at the Planet Hollywood Resort & Casino.',
-										],
-										2 => [
-											'ttbm_faq_title' => 'Can I purchase alcohol at the venue during The Mentalist!?',
-											'ttbm_faq_content' => 'Absolutely! Drinks are available for purchase at the Showgirl Bar outside of the theater and may be brought into the showroom, however, no other outside food or drink will be allowed in the theater.',
-										],
-										3 => [
-											'ttbm_faq_title' => 'Is The Mentalist appropriate for children?',
-											'ttbm_faq_content' => 'Due to language, this show is recommended for guests 16 years old and over.',
-										],
-										4 => [
-											'ttbm_faq_title' => 'Do I need to exchange my ticket upon arrival at The Mentalist!?',
-											'ttbm_faq_content' => 'Please pick up your tickets at the V Theater Box Office with a valid photo ID for the lead traveler at least 30 minutes prior to show time (box office opens at 11 am). Seating will begin 15 minutes before showtime.',
-										],
-									],
+									'mep_event_faq' => $faq_items,
 									//why chose us_settings
-									'ttbm_why_choose_us_texts' => [
-										0 => 'Enjoy a taste of Las Vegas glitz at the mind-bending magic show',
-										1 => 'Enjoy a taste of Las Vegas glitz at the mind-bending magic show',
-										2 => 'Watch as Gerry McCambridge performs comedy and magic',
-									],
+									'ttbm_display_why_choose_us' => 'on',
+									'ttbm_why_choose_us_texts' => $why_choose_us_texts,
 									//activities_settings
 									'ttbm_display_activities' => 'on',
 									'ttbm_tour_activities' => [
@@ -1563,18 +1561,30 @@
 										1 => 'Rural',
 									],
 									//gallery_settings
-									'ttbm_gallery_images' => array(2, 0, 3, 4, 1),
+									'ttbm_gallery_images' => [
+										'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80',
+									],
 									//category
 									'ttbm_category' => ['fixed-tour'],
 									//Organizer_settings
 									'ttbm_organizer' => ['autotour'],
+									//Guide_settings
+									'ttbm_display_tour_guide' => 'on',
+									'ttbm_tour_guide' => ['Sumon', 'Rabiul'],
+									'ttbm_guide_style' => 'carousel',
+									'ttbm_guide_image_style' => 'squire',
+									'ttbm_guide_description_style' => 'full',
 									//extras_settings
 									'ttbm_display_get_question' => 'on',
-									'ttbm_contact_email' => 'example.gmail.com',
+									'ttbm_contact_email' => 'info@example.com',
 									'ttbm_contact_phone' => '123456789',
 									'ttbm_contact_text' => 'Do not hesitate to give us a call. We are an expert team and we are happy to talk to you.',
-									'ttbm_display_tour_guide' => 'on',
 									//Related tour_settings
+									'ttbm_display_related' => 'on',
 									//Display_settings
 									'ttbm_section_title_style' => 'ttbm_title_style_2',
 									'ttbm_ticketing_system' => 'regular_ticket',
@@ -1601,6 +1611,9 @@
                                 ',
 								'post_data' => [
 									'ttbm_hotel_location' => 'Bandarban',
+									'ttbm_hotel_map_location' => 'Bandarban Sadar, Bandarban Hill District, Chittagong Division, Bangladesh',
+									'ttbm_map_latitude' => '22.1953',
+									'ttbm_map_longitude' => '92.2184',
 									'ttbm_hotel_distance_des'=>'0.5 km from center',
 									'ttbm_hotel_property_highlights'=>'Top Location: Highly rated by recent guests (9.0)',
 									'ttbm_display_hotel_parking'=>'on',
@@ -1729,7 +1742,13 @@
 										'Rural',
 									],
 									'ttbm_display_slider_hotel' => 'on',
-									'ttbm_gallery_images_hotel' => array( 0, 1, 2, 3, 4, 5),
+									'ttbm_gallery_images_hotel' => [
+										'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80',
+									],
 								]
 							],
 							[
@@ -1740,6 +1759,9 @@
                                 ',
 								'post_data' => [
 									'ttbm_hotel_location' => 'Coxbazar',
+									'ttbm_hotel_map_location' => 'Cox&#8217;s Bazar Sea Beach Road, Cox&#8217;s Bazar, Chattogram Division, Bangladesh',
+									'ttbm_map_latitude' => '21.4272',
+									'ttbm_map_longitude' => '92.0058',
 									'ttbm_hotel_distance_des'=>'0.5 km from center',
 									'ttbm_hotel_property_highlights'=>'Top Location: Highly rated by recent guests (9.0)',
 									'ttbm_display_hotel_parking'=>'on',
@@ -1868,7 +1890,13 @@
 										'Rural',
 									],
 									'ttbm_display_slider_hotel' => 'on',
-									'ttbm_gallery_images_hotel' => array(1,2,3,4,5,0),
+									'ttbm_gallery_images_hotel' => [
+										'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&w=1200&q=80',
+									],
 								]
 							],
 							[
@@ -1879,6 +1907,9 @@
                                 ',
 								'post_data' => [
 									'ttbm_hotel_location' => 'Las Vegas',
+									'ttbm_hotel_map_location' => '3667 Las Vegas Blvd S, Las Vegas, NV 89109, USA',
+									'ttbm_map_latitude' => '36.1147',
+									'ttbm_map_longitude' => '-115.1728',
 									'ttbm_hotel_distance_des'=>'0.5 km from center',
 									'ttbm_hotel_property_highlights'=>'Top Location: Highly rated by recent guests (9.0)',
 									'ttbm_display_hotel_parking'=>'on',
@@ -2007,7 +2038,13 @@
 										'Rural',
 									],
 									'ttbm_display_slider_hotel' => 'on',
-									'ttbm_gallery_images_hotel' => array( 2,3,4,5,0,1),
+									'ttbm_gallery_images_hotel' => [
+										'https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?auto=format&fit=crop&w=1200&q=80',
+										'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
+									],
 								]
 							],
 						]
@@ -2017,4 +2054,3 @@
 		}
 		new TTBM_Dummy_Import();
 	}
-

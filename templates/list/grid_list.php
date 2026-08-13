@@ -29,6 +29,12 @@ $term_count   = 3;
 	<?php /* Thumbnail */ ?>
 	<div class="ttbm-lv-thumb" data-bg-image="<?php echo esc_attr( $thumbnail ); ?>"></div>
 
+	<?php /* Duration chip overlaid at bottom of image */ ?>
+	<div class="ttbm-gc-duration-badge fdColumn" data-placeholder>
+		<?php include( TTBM_Function::template_path( 'layout/list_duration.php' ) ); ?>
+		<?php include( TTBM_Function::template_path( 'layout/expire_msg.php' ) ); ?>
+	</div>
+
 </div>
 
 <?php /* ── RIGHT: Content column ───────────────────────────── */ ?>
@@ -42,11 +48,6 @@ $term_count   = 3;
 
 	<?php /* Short description */ ?>
 	<?php include( TTBM_Function::template_path( 'layout/description_short.php' ) ); ?>
-
-	<?php /* Feature tags */ ?>
-	<div class="ttbm-gc-tags" data-placeholder>
-		<?php $term_name = true; include( TTBM_Function::template_path( 'layout/include_feature_list.php' ) ); ?>
-	</div>
 
 	<?php /* Divider */ ?>
 	<hr class="ttbm-gc-divider">

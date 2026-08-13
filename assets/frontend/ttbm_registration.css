@@ -8367,8 +8367,9 @@ button.ttbm_explore_button:hover {
 	line-height: 1.2;
 }
 
-.ttbm-lv-content-col .ttbm-gc-rating .mi-star {
+.ttbm-lv-content-col .ttbm-gc-rating-star {
 	font-size: 13px;
+	line-height: 1;
 	color: #f59e0b;
 }
 
@@ -8395,9 +8396,10 @@ button.ttbm_explore_button:hover {
 .ttbm-lv-content-col .ttbm-lv-meta-row {
 	display: flex;
 	align-items: center;
-	flex-wrap: wrap;
+	flex-wrap: nowrap;
 	gap: 5px;
 	margin: 0 0 10px 0;
+	min-width: 0;
 }
 
 .ttbm-lv-content-col .ttbm-lv-meta-row .ttbm_list_info {
@@ -8409,12 +8411,33 @@ button.ttbm_explore_button:hover {
 	font-style: normal;
 	font-weight: 500;
 	color: #64748b;
+	white-space: nowrap;
 }
 
 .ttbm-lv-content-col .ttbm-lv-meta-row .ttbm_list_info .mi {
 	font-size: 13px;
 	color: var(--color_theme, #2563eb);
 	margin: 0;
+	flex-shrink: 0;
+}
+
+/* Location is the one that can run long — let it shrink and truncate so the
+   duration ("· 6 hours") never gets pushed onto a second line. */
+.ttbm-lv-content-col .ttbm-lv-meta-row .ttbm_list_info.location_name {
+	flex: 0 1 auto;
+	min-width: 0;
+	overflow: hidden;
+}
+
+.ttbm-lv-content-col .ttbm-lv-meta-row .ttbm_list_info.location_name .ttbm_list_info_text {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	min-width: 0;
+}
+
+.ttbm-lv-content-col .ttbm-lv-meta-row .ttbm_list_info:not(.location_name) {
+	flex: 0 0 auto;
 }
 
 .ttbm-lv-content-col .ttbm-lv-meta-row .ttbm_list_info.location_name ~ .ttbm_list_info::before {
@@ -8422,6 +8445,13 @@ button.ttbm_explore_button:hover {
 	margin-right: 5px;
 	color: #cbd5e1;
 	font-weight: 700;
+	flex-shrink: 0;
+}
+
+/* The footer's own ALL-CAPS duration label ("2 DAYS / 3 NIGHTS") is redundant
+   with the duration already shown in the meta row above — hide it here. */
+.ttbm-lv-content-col .ttbm-gc-duration-label {
+	display: none;
 }
 
 /* ── Activity tag pills ── */
@@ -8492,6 +8522,17 @@ button.ttbm_explore_button:hover {
    than the site's brand accent, so it stays legible regardless of theme colour. */
 .ttbm-lv-content-col .ttbm-gc-price-current {
 	color: #16a34a;
+}
+
+.ttbm-lv-content-col .ttbm-gc-price-unit {
+	font-size: 12px;
+	font-weight: 500;
+	color: #94a3b8;
+	white-space: nowrap;
+}
+
+.ttbm-lv-content-col .ttbm-gc-price-row {
+	flex-wrap: nowrap;
 }
 
 /* Solid pill "View" button (replaces the outlined button for this card only —

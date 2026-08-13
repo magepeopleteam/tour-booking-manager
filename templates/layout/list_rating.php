@@ -13,7 +13,7 @@
 	if ( $display_rating === 'on' && is_numeric( $rating_average ) && (int) $rating_count > 0 ) {
 		?>
 		<div class="ttbm-gc-rating" data-placeholder>
-			<span class="mi mi-star" aria-hidden="true"></span>
+			<span class="ttbm-gc-rating-star" aria-hidden="true">&#9733;</span>
 			<span class="ttbm-gc-rating-value"><?php echo esc_html( number_format_i18n( (float) $rating_average, 1 ) ); ?></span>
 			<span class="ttbm-gc-rating-count">
 				<?php

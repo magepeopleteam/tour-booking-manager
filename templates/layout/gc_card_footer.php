@@ -9,6 +9,13 @@ $tour_id       = $tour_id ?? TTBM_Function::post_id_multi_language( $ttbm_post_i
 $start_price   = TTBM_Function::get_tour_start_price( $ttbm_post_id );
 $show_price    = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) !== 'off';
 
+// First ticket type's label (e.g. "Adult"), shown as a "/ Adult" unit suffix after the price.
+$price_unit_label = '';
+$ticket_types      = TTBM_Function::get_ticket_type( $ttbm_post_id );
+if ( ! empty( $ticket_types ) && ! empty( $ticket_types[0]['ticket_type_name'] ) ) {
+	$price_unit_label = $ticket_types[0]['ticket_type_name'];
+}
+
 // --- Duration label (e.g. "7 DAYS / 6 NIGHTS") ---
 $duration      = TTBM_Function::get_duration( $ttbm_post_id );
 $night         = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_travel_duration_night' );
@@ -58,6 +65,9 @@ if ( $show_duration && ( $duration || $night ) && $tour_type === 'general' ) {
 					echo wc_price( $start_price );
 					?>
 				</span>
+				<?php if ( $price_unit_label ) : ?>
+					<span class="ttbm-gc-price-unit">/<?php echo esc_html( $price_unit_label ); ?></span>
+				<?php endif; ?>
 			</div>
 		<?php endif; ?>
 	</div>

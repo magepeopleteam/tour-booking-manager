@@ -9,6 +9,6 @@
 		?>
 		<div class="ttbm_list_info location_name <?php echo esc_attr( $class_location ); ?>" data-placeholder>
 			<span class="mi mi-marker"></span>
-			<?php echo esc_html( $location ); ?>
+			<span class="ttbm_list_info_text"><?php echo esc_html( $location ); ?></span>
 		</div>
 	<?php } ?>

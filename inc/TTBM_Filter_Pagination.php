@@ -84,19 +84,23 @@
                             <span class="ttbm-mobile-filter-toggle-text"><?php esc_html_e('Show filters', 'tour-booking-manager'); ?></span>
                             <span class="fas fa-chevron-down" aria-hidden="true"></span>
                         </button>
+                        <button type="button" class="ttbm-filter-reset-all" data-placeholder><?php esc_html_e('Reset all', 'tour-booking-manager'); ?></button>
                     </div>
 					<p class="filter-subtitle" data-placeholder><?php echo esc_html( apply_filters('tbm_filter_top_label_subtitle',__('Refine your luxury journey', 'tour-booking-manager'))); ?></p>
 				</div>
                 <div class="ttbm_filter">
+					<?php /* Order matches the reference design: Category, Price, Duration, Rating, Destination, Tour Type — see TTBM_Function::get_price_range() and the price_filter_left()/rating_filter_left() methods above. Remaining dimensions stay available (harmless no-ops whenever their own -filter flag is "no") for any other shortcode call that still wants them. */ ?>
+					<?php $this->activity_filter_multiple($params); ?>
+					<?php $this->price_filter_left($params); ?>
+					<?php $this->duration_filter_multiple($params); ?>
+					<?php $this->rating_filter_left($params); ?>
 					<?php $this->location_filter_multiple($params); ?>
+					<?php $this->category_filter_left($params); ?>
 					<?php $this->country_filter_left($params); ?>
 					<?php $this->title_filter_left($params); ?>
 					<?php $this->type_filter_left($params); ?>
-					<?php $this->category_filter_left($params); ?>
 					<?php $this->month_filter_left($params); ?>
-					<?php $this->duration_filter_multiple($params); ?>
 					<?php $this->feature_filter_multiple($params); ?>
-					<?php $this->activity_filter_multiple($params); ?>
 					<?php $this->tag_filter_multiple($params); ?>
 					<?php $this->organizer_filter_left($params); ?>
                 </div>
@@ -193,7 +197,7 @@
 					if (sizeof($categories) > 0) {
 						?>
                         <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_category_filter_left" data-placeholder>
-							<?php esc_html_e('Filters By Category', 'tour-booking-manager'); ?>
+							<?php esc_html_e('Tour Type', 'tour-booking-manager'); ?>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
                         <div class="divider"></div>
@@ -345,7 +349,7 @@
 						$current_location = $url_location ? (($term = get_term_by('id', $url_location, 'ttbm_tour_location')) ? $term->term_id : '') : '';
 						?>
                         <h5 class="_alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_location_filter_multiple" data-placeholder>
-							<span><i class="mi mi-marker"></i> <?php esc_html_e('Location', 'tour-booking-manager'); ?></span>
+							<span><i class="mi mi-marker"></i> <?php esc_html_e('Destination', 'tour-booking-manager'); ?></span>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
                         <div class="divider"></div>
@@ -454,7 +458,7 @@
 						}
 						?>
                         <h5 class="mT justifyBetween _alignCenter" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_duration_filter_multiple" data-placeholder>
-							<?php esc_html_e('Filters By Duration', 'tour-booking-manager'); ?>
+							<?php esc_html_e('Duration', 'tour-booking-manager'); ?>
                             <span data-icon class="fas fa-chevron-down"></span>
                         </h5>
                         <div class="divider"></div>
@@ -484,6 +488,86 @@
                         </div>
 						<?php
 					}
+				}
+			}
+			//****************************************/
+			/* "Price per person" sidebar block — client-side range filter (no AJAX,
+			   same convention as every other filter in this file: a hidden input
+			   drives filter_pagination.js's get_item_result(), matched against the
+			   data-price already stamped on every card). Bounds are the real
+			   min/max across this install's tours (TTBM_Function::get_price_range()),
+			   not a fabricated fixed range. */
+			public function price_filter_left($params) {
+				if ($params['price-filter'] == 'yes') {
+					$range = TTBM_Function::get_price_range();
+					$min = $range['min'];
+					$max = $range['max'];
+					if ($max > $min) {
+						$currency_symbol = function_exists('get_woocommerce_currency_symbol') ? get_woocommerce_currency_symbol() : '$';
+						?>
+                        <h5 class="" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_price_filter_left" data-placeholder>
+							<?php esc_html_e('Price per person', 'tour-booking-manager'); ?>
+                            <span data-icon class="fas fa-chevron-down"></span>
+                        </h5>
+                        <div class="divider"></div>
+                        <div class="mActive" data-collapse="#ttbm_price_filter_left">
+                            <div class="ttbm-price-range" data-currency="<?php echo esc_attr($currency_symbol); ?>">
+                                <input type="hidden" name="price_filter_range" value="<?php echo esc_attr($min . ',' . $max); ?>"/>
+                                <?php /* Fixed-height row so the track can be centered on it exactly (top:50%), instead of the track and the two thumbs each guessing a separate top offset that happens to line up. */ ?>
+                                <div class="ttbm-price-slider-row">
+                                    <div class="ttbm-price-track">
+                                        <div class="ttbm-price-fill"></div>
+                                    </div>
+                                    <input type="range" class="ttbm-price-thumb-input ttbm-price-thumb-min" min="<?php echo esc_attr($min); ?>" max="<?php echo esc_attr($max); ?>" step="1" value="<?php echo esc_attr($min); ?>" aria-label="<?php esc_attr_e('Minimum price', 'tour-booking-manager'); ?>"/>
+                                    <input type="range" class="ttbm-price-thumb-input ttbm-price-thumb-max" min="<?php echo esc_attr($min); ?>" max="<?php echo esc_attr($max); ?>" step="1" value="<?php echo esc_attr($max); ?>" aria-label="<?php esc_attr_e('Maximum price', 'tour-booking-manager'); ?>"/>
+                                </div>
+                                <div class="ttbm-price-labels">
+                                    <span class="ttbm-price-label-min"><?php echo esc_html($currency_symbol . (int) $min); ?></span>
+                                    <span class="ttbm-price-label-max"><?php echo esc_html($currency_symbol . (int) $max); ?></span>
+                                </div>
+                            </div>
+                        </div>
+						<?php
+					}
+				}
+			}
+			//****************************************/
+			/* "Minimum rating" sidebar block — same client-side, hidden-input-driven
+			   convention. Sourced from Tour Booking Manager Pro's real, review-based
+			   ttbm_tour_rating postmeta (not the free plugin's manual admin field,
+			   which isn't populated on this install) — an unrated tour (0 or empty)
+			   correctly never matches a "4.0 & up" style threshold. */
+			public function rating_filter_left($params) {
+				if ($params['rating-filter'] == 'yes') {
+					$url_rating = '';
+					if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						$url_rating = isset($_GET['rating_filter']) ? sanitize_text_field(wp_unslash($_GET['rating_filter'])) : '';
+					}
+					$tiers = array(
+						'5' => __('5.0 only', 'tour-booking-manager'),
+						'4' => __('4.0 & up', 'tour-booking-manager'),
+						'3' => __('3.0 & up', 'tour-booking-manager'),
+					);
+					?>
+                    <h5 class="" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#ttbm_rating_filter_left" data-placeholder>
+						<?php esc_html_e('Minimum rating', 'tour-booking-manager'); ?>
+                        <span data-icon class="fas fa-chevron-down"></span>
+                    </h5>
+                    <div class="divider"></div>
+                    <div class="mActive" data-collapse="#ttbm_rating_filter_left">
+                        <div class="ttbm-rating-filter-group" id="ttbm_ratingFilterList">
+                            <input type="hidden" name="rating_filter_threshold" value="<?php echo esc_attr($url_rating); ?>"/>
+							<?php foreach ($tiers as $value => $label) : ?>
+                                <div class="ttbm-rating-option<?php echo $url_rating === (string) $value ? ' active' : ''; ?>" data-rating-tier="<?php echo esc_attr($value); ?>">
+									<?php for ($ttbm_star = 1; $ttbm_star <= 5; $ttbm_star++) : ?>
+                                        <span class="ttbm-rating-option-star<?php echo $ttbm_star <= (int) $value ? ' filled' : ''; ?>">★</span>
+									<?php endfor; ?>
+                                    <span class="ttbm-rating-option-label"><?php echo esc_html($label); ?></span>
+                                </div>
+							<?php endforeach; ?>
+                        </div>
+                    </div>
+					<?php
 				}
 			}
 			//****************************************/
@@ -646,72 +730,48 @@
 				}
 			}
 		public function activity_filter_multiple($params) {
+			/* Reference "Category" sidebar block: this site's real ttbm_tour_activities
+			   terms (Hiking/Culture/Adventure/Beach/Wildlife/etc.) are the actual match
+			   for that concept — ttbm_tour_cat is a tour-TYPE taxonomy (Fixed/Flexible/
+			   Day trip), used separately below as "Tour Type". Previously this method's
+			   term-gathering was dead code ($activities was hardcoded to an empty array
+			   before ever being read), so it always rendered nothing; rebuilt on the
+			   same reliable "list every term" pattern category_filter_left() already
+			   uses rather than the broken upcoming-date cross-reference. */
 			if ($params['activity-filter'] == 'yes') {
-				$raw_activities = TTBM_Function::get_meta_values('ttbm_tour_activities', 'ttbm_tour');
-
-                    $all_activities = [];
-                    $activities = [];
-
-                    foreach ($activities as $activity_group) {
-                        $activities_array = $this->ensure_array($activity_group);
-                        $all_activities = array_merge($all_activities, $activities_array);
-                    }
-
-                    $unique_activities = array_values(array_unique($all_activities));
-
-				$upcomming_date = $this->upcomming_date;
-				$exist_activities = [];
-
-				for ($i = 0; $i < count($activities); $i++) {
-                        if( isset( $upcomming_date[$i] ) ) {
-                            if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $activities[$i]) {
-//						    if ($upcomming_date[$i] && is_array($activities[$i])) {
-                                $activities_i = $this->ensure_array($activities[$i]);
-                                $exist_activities = array_unique(array_merge($exist_activities, $activities_i));
-                            }
-                        }
-				}
-					if (sizeof($unique_activities) > 0) {
-						$url_activity = '';
-						if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
-							$url_activity = isset($_GET['activity_filter']) ? sanitize_text_field(wp_unslash($_GET['activity_filter'])) : '';
-						}
-						$current_activity = $url_activity ? (($term = get_term_by('id', $url_activity, 'ttbm_tour_activities')) ? $term->term_id : '') : '';
-						?>
-                        <h5 class="" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#activity_filter_multiple" data-placeholder>
-							<span><i class="mi mi-hiking"></i> <?php esc_html_e('Activity', 'tour-booking-manager'); ?></span>
-                            <span data-icon class="fas fa-chevron-down"></span>
-                        </h5>
-                        <div class="divider"></div>
-                        <div class="mActive" data-collapse="#activity_filter_multiple" >
-                            <div class="groupCheckBox _dFlex flexColumn" id="ttbm_activityList">
-                                <input type="hidden" name="activity_filter_multiple" value="<?php echo esc_attr($current_activity); ?>"/>
-								<?php foreach ($exist_activities as $activity) {
-                                    if( $activity ){
-//									$term = get_term_by('name', $activity, 'ttbm_tour_activities');
-                                    $term = get_term( $activity, 'ttbm_tour_activities' );
-                                    $term_name =$term? $term->name:'';
-
-									$term_id = $term ? $term->term_id : 0;
-									$checked = $current_activity == $term_id ? 'checked' : '';
-                                    if( $term_id > 0 ){
-									?>
-                                    <label class="customCheckboxLabel ttbm_activity_checkBoxLevel" data-placeholder>
-                                        <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($term_id); ?>" <?php echo esc_attr($checked); ?>/>
-                                        <span class="customCheckbox"><?php 
-                                            $icon = $term_id ? (get_term_meta($term_id, 'ttbm_activities_icon', true) ?: 'mi mi-hiking') : 'mi mi-hiking';
-                                        ?><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php echo esc_html($term_name); ?></span>
-                                    </label>
-								<?php } }
-                                } ?>
-                                <button id="ttbm_show_activity_seeMoreBtn" class="ttbm_see-more-button" data-placeholder><?php esc_html_e('See More+', 'tour-booking-manager'); ?></button>
-                            </div>
-                        </div>
-						<?php
+				$activities = TTBM_Global_Function::get_taxonomy('ttbm_tour_activities');
+				if (is_array($activities) && sizeof($activities) > 0) {
+					$url_activity = '';
+					if (isset($_GET['ttbm_search_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ttbm_search_nonce'])), 'ttbm_search_nonce')) {
+						$url_activity = isset($_GET['activity_filter']) ? sanitize_text_field(wp_unslash($_GET['activity_filter'])) : '';
 					}
+					$current_activity = $url_activity ? (($term = get_term_by('id', $url_activity, 'ttbm_tour_activities')) ? $term->term_id : '') : '';
+					?>
+                    <h5 class="" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-right" data-collapse-target="#activity_filter_multiple" data-placeholder>
+						<?php esc_html_e('Category', 'tour-booking-manager'); ?>
+                        <span data-icon class="fas fa-chevron-down"></span>
+                    </h5>
+                    <div class="divider"></div>
+                    <div class="mActive" data-collapse="#activity_filter_multiple" >
+                        <div class="groupCheckBox _dFlex flexColumn" id="ttbm_activityList">
+                            <input type="hidden" name="activity_filter_multiple" value="<?php echo esc_attr($current_activity); ?>"/>
+							<?php foreach ($activities as $activity_term) {
+								$term_id = $activity_term->term_id;
+								$checked = $current_activity == $term_id ? 'checked' : '';
+								$icon = get_term_meta($term_id, 'ttbm_activities_icon', true) ?: 'mi mi-hiking';
+								?>
+                                <label class="customCheckboxLabel ttbm_activity_checkBoxLevel" data-placeholder>
+                                    <input type="checkbox" class="formControl" data-checked="<?php echo esc_attr($term_id); ?>" <?php echo esc_attr($checked); ?>/>
+                                    <span class="customCheckbox"><span class="mR_xs <?php echo esc_attr($icon); ?>"></span><?php echo esc_html($activity_term->name); ?></span>
+                                </label>
+							<?php } ?>
+                        </div>
+                    </div>
+					<?php
 				}
 			}
-			//****************************************/
+		}
+		//****************************************/
 			public function tag_filter_multiple($params) {
 				if ($params['tag-filter'] == 'yes') {
 					$tags = TTBM_Global_Function::get_taxonomy('ttbm_tour_tag');

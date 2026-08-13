@@ -661,6 +661,12 @@ $(document).on('change', '.ttbm-sort-select', function () {
         let dateA = new Date($(a).data('date')).getTime() || 0;
         let dateB = new Date($(b).data('date')).getTime() || 0;
 
+        let ratingA = parseFloat($(a).data('rating')) || 0;
+        let ratingB = parseFloat($(b).data('rating')) || 0;
+
+        let durationA = parseFloat($(a).data('duration')) || 0;
+        let durationB = parseFloat($(b).data('duration')) || 0;
+
         switch (sortValue) {
 
             case 'price_asc':
@@ -668,6 +674,12 @@ $(document).on('change', '.ttbm-sort-select', function () {
 
             case 'price_desc':
                 return priceB - priceA;
+
+            case 'rating_desc':
+                return ratingB - ratingA;
+
+            case 'duration_asc':
+                return durationA - durationB;
 
             case 'title_asc':
                 return titleA.localeCompare(titleB);

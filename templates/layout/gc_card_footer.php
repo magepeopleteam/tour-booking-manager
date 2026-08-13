@@ -6,8 +6,13 @@ $ttbm_post_id  = $ttbm_post_id ?? get_the_id();
 $tour_id       = $tour_id ?? TTBM_Function::post_id_multi_language( $ttbm_post_id );
 
 // --- Price ---
+// Show whenever there's a real, computed price (ticket type and/or manual
+// starting price) — deliberately not gated by the separate
+// 'ttbm_display_price_start' toggle. That toggle defaults 'off' for several
+// tours on this install (an import artifact, not a deliberate "hide the
+// price" choice) and was hiding a real, valid ticket-type price on cards
+// that have every reason to show one.
 $start_price   = TTBM_Function::get_tour_start_price( $ttbm_post_id );
-$show_price    = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) !== 'off';
 
 // First ticket type's label (e.g. "Adult"), shown as a "/ Adult" unit suffix after the price.
 $price_unit_label = '';
@@ -56,7 +61,7 @@ if ( $show_duration && ( $duration || $night ) && $tour_type === 'general' ) {
 			<span class="ttbm-gc-duration-label"><?php echo wp_kses_post( $duration_label ); ?></span>
 		<?php endif; ?>
 
-		<?php if ( $start_price && $show_price ) : ?>
+		<?php if ( $start_price ) : ?>
 			<div class="ttbm-gc-price-row">
 				<span class="ttbm-gc-price-from"><?php esc_html_e( 'From', 'tour-booking-manager' ); ?></span>
 				<span class="ttbm-gc-price-current">

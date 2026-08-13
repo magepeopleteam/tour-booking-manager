@@ -1,0 +1,1158 @@
+/**
+ * Tour Booking Manager — modern tour-list visual system for [ttbm-tour-list].
+ *
+ * Redesign target: a static reference (tour-list.html) supplied by the site
+ * owner. Unlike a theme-side "restyle" stylesheet (which has to out-cascade
+ * this plugin's own CSS with matched selectors/!important), this file IS the
+ * plugin's own CSS for this one shortcode's markup — it just declares the
+ * design directly, enqueued right after ttbm_registration.css so normal
+ * cascade order already wins.
+ *
+ * Scoping: everything here is scoped under one of two already-unique roots
+ * so it can never affect hotel listings, other [ttbm-tour-list] style
+ * variants (blossom/flora/orchid/lotus), or [travel-list]/[ttbm-top-filter]
+ * elsewhere on a site:
+ *   - .ttbm-tour-list-shortcode  — only ever printed by tour_style_with_filter()
+ *   - .ttbm-top-search-form / .ttbm-top-search-modern — only ever printed by
+ *     the [ttbm-top-search] shortcode's own markup (already uniquely named)
+ *
+ * Tokens are built on this plugin's OWN existing custom properties
+ * (--color_theme*, --color_border, --color_light*, --ttbm_mp*, --ttbm_fs_*,
+ * all defined in inc/TTBM_Global_Style.php) rather than the reference's
+ * literal hex values, so a site's configured Theme Color/Warning Color
+ * keeps flowing through and this looks right on any theme, not just one.
+ * No font-family is set anywhere in this file — inherits the active theme's
+ * body font, same as every other frontend surface this plugin renders.
+ */
+
+/* ══════════════════════════════════════════════════════════════
+   Tokens
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-tour-list-shortcode {
+	--ttlm-primary: var( --color_theme );
+	--ttlm-primary-rgb: var( --color_theme_rgb );
+	--ttlm-secondary: var( --color_theme_secondary );
+	--ttlm-accent: var( --color_warning, #E67C30 );
+	--ttlm-ink: var( --color_black, #1b2021 );
+	--ttlm-muted: var( --color_light_3, #878787 );
+	--ttlm-border: var( --color_border, #DDD );
+	--ttlm-surface: var( --color_white, #fff );
+	--ttlm-tint: var( --color_light, #F2F2F2 );
+	--ttlm-radius-sm: 8px;
+	--ttlm-radius-md: 12px;
+	--ttlm-radius-lg: 16px;
+	--ttlm-radius-pill: 999px;
+	--ttlm-shadow-sm: 0 2px 16px rgba( var( --ttlm-primary-rgb ), .07 );
+	--ttlm-shadow-lg: 0 10px 32px rgba( var( --ttlm-primary-rgb ), .14 );
+	--ttlm-gap: 20px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Top search bar ([ttbm-top-search]) — compact pill row
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-top-search-modern {
+	--ttlm-primary: var( --color_theme );
+	--ttlm-primary-rgb: var( --color_theme_rgb );
+	--ttlm-border: var( --color_border, #DDD );
+	--ttlm-muted: var( --color_light_3, #878787 );
+	--ttlm-radius-pill: 999px;
+	--ttlm-shadow-sm: 0 2px 16px rgba( var( --ttlm-primary-rgb ), .07 );
+}
+
+/* The plugin's own base rule (ttbm_registration.css) adds its own 0 16px
+   horizontal padding here, sized for sitting directly in the page body. Now
+   that this renders inside .travail-archive-header's own .travail-container
+   (which already has its own edge padding), that extra 16px just pushes the
+   search bar out of alignment with the title/breadcrumb above it. */
+.ttbm-top-search-modern.ttbm_top_filter,
+div.ttbm_top_filter.ttbm-top-search-modern {
+	padding: 0;
+}
+
+.ttbm-top-search-form {
+	background: #fff;
+	border: 1.5px solid var( --ttlm-border );
+	border-radius: var( --ttlm-radius-pill );
+	box-shadow: var( --ttlm-shadow-sm );
+	padding: 6px;
+}
+
+.ttbm-top-search-row {
+	display: flex;
+	align-items: stretch;
+	gap: 0;
+	flex-wrap: wrap;
+}
+
+.ttbm_filter_icon_container {
+	position: relative;
+	flex: 1 1 160px;
+	display: flex;
+	align-items: center;
+	border-right: 1px solid var( --ttlm-border );
+	padding: 6px 16px;
+}
+
+.ttbm_filter_icon_container:last-of-type {
+	border-right: none;
+}
+
+.ttbm_filter_icon {
+	color: var( --ttlm-muted );
+	margin-inline-end: 8px;
+	flex-shrink: 0;
+}
+
+.ttbm_filter_icon_container .ttbm_filter_input_with_icon,
+.ttbm_filter_icon_container .formControl {
+	border: none;
+	background: transparent;
+	padding: 6px 0;
+	font-size: 13px;
+	font-weight: 500;
+	color: var( --ttlm-ink, #1b2021 );
+	width: 100%;
+}
+
+.ttbm_filter_icon_container .formControl:focus {
+	outline: none;
+}
+
+.ttbm-top-search-submit {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	flex-shrink: 0;
+	margin: 4px;
+	padding: 12px 22px;
+	background: var( --ttlm-primary );
+	color: #fff;
+	font-size: 13px;
+	font-weight: 700;
+	transition: opacity .2s ease;
+}
+
+.ttbm-top-search-submit:hover {
+	opacity: .88;
+}
+
+.ttbm-top-search-modern button.ttbm-top-search-submit,
+.ttbm_style .ttbm-top-search-modern button.ttbm-top-search-submit {
+	border-radius: 20px !important;
+}
+
+@media ( max-width: 767px ) {
+	.ttbm-top-search-row {
+		flex-direction: column;
+	}
+
+	.ttbm_filter_icon_container {
+		border-right: none;
+		border-bottom: 1px solid var( --ttlm-border );
+	}
+
+	.ttbm_filter_icon_container:last-of-type {
+		border-bottom: none;
+	}
+
+	.ttbm-top-search-submit {
+		justify-content: center;
+		margin: 6px 4px 4px;
+	}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Active-filter chips (full width, above both columns)
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-active-filter-chips {
+	display: none;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 20px;
+}
+
+.ttbm-active-filter-chips.has-chips {
+	display: flex;
+}
+
+.ttbm-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 8px 5px 14px;
+	border-radius: var( --ttlm-radius-pill );
+	background: var( --ttlm-tint );
+	border: 1px solid rgba( var( --ttlm-primary-rgb ), .16 );
+	color: var( --ttlm-primary );
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.ttbm-chip-remove {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: rgba( var( --ttlm-primary-rgb ), .14 );
+	color: var( --ttlm-primary );
+	font-size: 10px;
+	line-height: 1;
+}
+
+.ttbm-chip-clear-all {
+	font-size: 12px;
+	font-weight: 700;
+	color: var( --ttlm-accent );
+	margin-inline-start: 4px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Layout — sidebar + results, two columns
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-tour-list-shortcode .left_filter {
+	display: grid;
+	grid-template-columns: minmax( 240px, 280px ) 1fr;
+	align-items: start;
+	gap: 20px;
+}
+
+.ttbm-tour-list-shortcode .leftSidebar {
+	background: #fff;
+	border: 1px solid var( --ttlm-border );
+	border-radius: var( --ttlm-radius-lg );
+	padding: 20px;
+	box-shadow: var( --ttlm-shadow-sm );
+}
+
+/* The plugin's own base rule (.ttbm_style .mainSection in ttbm_plugin_global.css)
+   caps this at max-width:var(--mainsection) (calc(100% - 300px)) and adds a
+   left margin — both sized for its original non-grid layout. Now that the grid
+   column width/gap above are what actually size and space this column, the cap
+   just leaves unused space on the right; removing it lets .mainSection fill its
+   grid cell exactly. */
+.ttbm-tour-list-shortcode .mainSection {
+	max-width: none;
+	/* Plugin default also adds `margin: 0 0 0 var(--ttbm_mp)` (a left margin)
+	   on top of that max-width — sized for its original non-grid layout.
+	   With the grid's own gap now providing the space between columns, that
+	   margin just adds extra, uneven spacing on top of it. */
+	margin: 0;
+}
+
+@media ( max-width: 900px ) {
+	.ttbm-tour-list-shortcode .left_filter {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Sidebar — header + accordion filter blocks
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-tour-list-shortcode .filter-top-label {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding-bottom: 16px;
+	margin-bottom: 16px;
+	border-bottom: 1px solid var( --ttlm-border );
+}
+
+.ttbm-tour-list-shortcode .ttbm-filter-top-title {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+}
+
+.ttbm-tour-list-shortcode .ttbm-filter-top-title h4 {
+	font-size: 16px;
+	font-weight: 700;
+	color: var( --ttlm-ink );
+	margin: 0;
+}
+
+.ttbm-tour-list-shortcode .ttbm-filter-reset-all {
+	font-size: 12px;
+	font-weight: 700;
+	color: var( --ttlm-accent );
+	white-space: nowrap;
+}
+
+.ttbm-tour-list-shortcode .ttbm-mobile-filter-toggle {
+	display: none;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 12px;
+	border: 1.5px solid var( --ttlm-border );
+	border-radius: var( --ttlm-radius-sm );
+	font-size: 12px;
+	font-weight: 600;
+	color: var( --ttlm-ink );
+	background: var( --ttlm-tint );
+}
+
+.ttbm-tour-list-shortcode .filter-subtitle {
+	font-size: 12px;
+	color: var( --ttlm-muted );
+	margin: 0;
+}
+
+.ttbm-tour-list-shortcode .ttbm_filter {
+	display: flex;
+	flex-direction: column;
+}
+
+.ttbm-tour-list-shortcode .ttbm_filter > h5 {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	margin: 0;
+	padding: 16px 2px;
+	border-top: 1px solid var( --ttlm-border );
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+	color: var( --ttlm-muted );
+	cursor: pointer;
+}
+
+.ttbm-tour-list-shortcode .ttbm_filter > h5:first-child {
+	border-top: none;
+	padding-top: 4px;
+}
+
+/* Plugin default (ttbm_registration.css:7091-7109) already special-cases this
+   exact shortcode with its own rounded-card border+shadow on every h5 —
+   matching its full selector (incl. .leftSidebar) for equal specificity,
+   which also outranks (and replaces) the plain border-top divider above. */
+.ttbm_filter_area .leftSidebar .ttbm_filter > h5,
+.ttbm-tour-list-shortcode .leftSidebar .ttbm_filter > h5 {
+	border: none;
+}
+
+.ttbm-tour-list-shortcode .ttbm_filter > h5 span[data-icon] {
+	font-size: 10px;
+	color: var( --ttlm-muted );
+	transition: transform .2s ease;
+}
+
+.ttbm-tour-list-shortcode .ttbm_filter > h5.mActive span[data-icon] {
+	transform: rotate( 180deg );
+}
+
+.ttbm-tour-list-shortcode .ttbm_filter > .divider {
+	display: none;
+}
+
+.ttbm-tour-list-shortcode .ttbm_filter > [data-collapse] {
+	padding: 2px 2px 14px;
+}
+
+/* Plugin default (ttbm_registration.css:7150-7158) already special-cases this
+   exact shortcode with its own border+box-shadow on the collapsible panel —
+   matching its full selector (incl. .leftSidebar) for equal specificity, so
+   this wins purely by printing later, no !important needed. */
+.ttbm_filter_area .leftSidebar .ttbm_filter > [data-collapse],
+.ttbm-tour-list-shortcode .leftSidebar .ttbm_filter > [data-collapse] {
+	border: none;
+	box-shadow: none;
+}
+
+.ttbm_filter_area .leftSidebar .ttbm_filter > h5 + .divider + [data-collapse].mActive,
+.ttbm-tour-list-shortcode .leftSidebar .ttbm_filter > h5 + .divider + [data-collapse].mActive {
+	padding-top: 8px;
+	border-radius: 0px;
+}
+
+.ttbm-tour-list-shortcode .groupCheckBox {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.ttbm-tour-list-shortcode .customCheckboxLabel {
+	display: flex;
+	align-items: center;
+	margin: 0;
+	padding: 7px 6px;
+	border-radius: var( --ttlm-radius-sm );
+	cursor: pointer;
+	transition: background-color .15s ease;
+}
+
+.ttbm-tour-list-shortcode .customCheckboxLabel:hover {
+	background: var( --ttlm-tint );
+}
+
+.ttbm-tour-list-shortcode .customCheckbox {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 0;
+	flex: 1;
+	font-size: 13px;
+	font-weight: 500;
+	color: var( --ttlm-ink );
+}
+
+.ttbm-tour-list-shortcode .customCheckboxLabel input[type="checkbox"] {
+	appearance: none;
+	-webkit-appearance: none;
+	width: 16px;
+	height: 16px;
+	border: 1.5px solid var( --ttlm-border );
+	border-radius: 4px;
+	position: relative;
+	flex-shrink: 0;
+	cursor: pointer;
+}
+
+.ttbm-tour-list-shortcode .customCheckboxLabel input[type="checkbox"]:checked {
+	background: var( --ttlm-primary );
+	border-color: var( --ttlm-primary );
+}
+
+.ttbm-tour-list-shortcode .customCheckboxLabel input[type="checkbox"]:checked::after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 4px;
+	height: 8px;
+	border: solid #fff;
+	border-width: 0 2px 2px 0;
+	transform: translate( -50%, -60% ) rotate( 45deg );
+}
+
+.ttbm-tour-list-shortcode .customCheckboxLabel input:checked ~ .customCheckbox {
+	color: var( --ttlm-primary );
+	font-weight: 600;
+}
+
+.ttbm-tour-list-shortcode .customCheckbox .mR_xs {
+	font-size: 13px;
+	color: var( --ttlm-muted );
+	flex-shrink: 0;
+}
+
+.ttbm-tour-list-shortcode .ttbm_see-more-button {
+	margin-top: 6px;
+	padding: 6px 10px;
+	font-size: 12px;
+	font-weight: 700;
+	color: var( --ttlm-primary );
+	text-align: left;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Price range slider
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-price-range {
+	/* Positioning context for the absolutely-positioned range inputs below —
+	   without this, they escape to the nearest OTHER positioned ancestor
+	   (the sidebar itself) and render detached near the top of the card. */
+	position: relative;
+	padding: 8px 4px 4px;
+}
+
+/* A fixed-height row reserved just for the track + thumbs — everything in it
+   (track, fill, both thumb inputs) is centered on this row via top:50% +
+   translateY(-50%), rather than the track and each thumb separately guessing
+   a top offset that has to happen to line up with the others. Height matches
+   the thumb's own diameter (16px) so the row hugs the slider with no
+   unrelated extra space. */
+.ttbm-price-slider-row {
+	position: relative;
+	height: 16px;
+	margin: 12px 8px 16px;
+}
+
+.ttbm-price-slider-row .ttbm-price-track {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 50%;
+	transform: translateY( -50% );
+	height: 4px;
+	background: var( --ttlm-border );
+	border-radius: var( --ttlm-radius-pill );
+}
+
+.ttbm-price-fill {
+	position: absolute;
+	/* Full width by default — correct for the initial state (both thumbs at
+	   their extremes, full range selected); the drag handler in
+	   filter_pagination.js overrides left/right inline once a user moves
+	   either thumb. Without an explicit default here the browser treats an
+	   absolutely-positioned, empty, left/right/width:auto div as zero-width
+	   — invisible — until the first drag. */
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 100%;
+	background: var( --ttlm-primary );
+	border-radius: var( --ttlm-radius-pill );
+}
+
+.ttbm-price-thumb-input {
+	/* `appearance:none` alone only strips the native slider WIDGET (groove +
+	   thumb) — Chrome/Windows still boxes a plain <input> with its own
+	   border/background/height underneath, which is exactly the "floating
+	   white pill" that showed up here during QA. Everything below has to be
+	   forced explicitly (and !important, since this exact element is never
+	   reused/targeted anywhere else in the plugin, so there's nothing else
+	   this could clobber) to actually get an invisible click/drag surface. */
+	position: absolute !important;
+	left: 0;
+	right: 0;
+	top: 50% !important;
+	transform: translateY( -50% );
+	width: 100% !important;
+	height: 16px !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	border: none !important;
+	background: transparent !important;
+	box-shadow: none !important;
+	pointer-events: none;
+	appearance: none;
+	-webkit-appearance: none;
+}
+
+.ttbm-price-thumb-input::-webkit-slider-thumb {
+	appearance: none;
+	-webkit-appearance: none;
+	pointer-events: all;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #fff;
+	border: 2.5px solid var( --ttlm-primary );
+	box-shadow: 0 1px 6px rgba( var( --ttlm-primary-rgb ), .3 );
+	cursor: grab;
+	margin-top: 0;
+}
+
+.ttbm-price-thumb-input::-moz-range-thumb {
+	pointer-events: all;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #fff;
+	border: 2.5px solid var( --ttlm-primary );
+	box-shadow: 0 1px 6px rgba( var( --ttlm-primary-rgb ), .3 );
+	cursor: grab;
+}
+
+.ttbm-price-thumb-input::-webkit-slider-runnable-track,
+.ttbm-price-thumb-input::-moz-range-track {
+	background: transparent;
+	border: none;
+}
+
+.ttbm-price-labels {
+	display: flex;
+	justify-content: space-between;
+	font-size: 12px;
+	font-weight: 700;
+	color: var( --ttlm-ink );
+	padding: 0 4px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Minimum-rating filter rows
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-rating-filter-group {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.ttbm-rating-option {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 8px 6px;
+	border-radius: var( --ttlm-radius-sm );
+	cursor: pointer;
+	transition: background-color .15s ease;
+}
+
+.ttbm-rating-option:hover {
+	background: var( --ttlm-tint );
+}
+
+.ttbm-rating-option-star {
+	font-size: 13px;
+	color: var( --ttlm-border );
+}
+
+.ttbm-rating-option-star.filled {
+	color: var( --ttlm-accent );
+}
+
+.ttbm-rating-option-label {
+	font-size: 13px;
+	font-weight: 500;
+	color: var( --ttlm-ink );
+	margin-inline-start: 6px;
+}
+
+.ttbm-rating-option.active {
+	background: var( --ttlm-tint );
+}
+
+.ttbm-rating-option.active .ttbm-rating-option-label {
+	color: var( --ttlm-primary );
+	font-weight: 700;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Results header — "Modern Filter Bar" (tabs / count / sort / view)
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-tour-list-shortcode .ttbm-filter-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 12px 16px;
+	padding-bottom: 20px;
+	margin-bottom: 24px;
+	border-bottom: 1px solid var( --ttlm-border );
+}
+
+.ttbm-tour-list-shortcode .ttbm-filter-tabs {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 4px;
+	border-radius: var( --ttlm-radius-md );
+}
+
+.ttbm-tour-list-shortcode .ttbm-tab-btn {
+	padding: 9px 14px;
+	border-radius: var( --ttlm-radius-sm );
+	font-size: 13px;
+	font-weight: 600;
+	color: var( --ttlm-muted );
+	background: transparent;
+	white-space: nowrap;
+	transition: background-color .2s ease, color .2s ease;
+}
+
+.ttbm-tour-list-shortcode .ttbm-tab-btn:hover {
+	color: var( --ttlm-primary );
+}
+
+.ttbm-tour-list-shortcode .ttbm-tab-btn.ttbm-tab-active {
+	background: var( --ttlm-primary );
+	color: #fff;
+}
+
+.ttbm-tour-list-shortcode .ttbm-filter-bar-count {
+	font-size: 13px;
+	color: var( --ttlm-muted );
+	font-weight: 500;
+	margin-inline-end: auto;
+}
+
+.ttbm-tour-list-shortcode .ttbm-filter-count-highlight,
+.ttbm-tour-list-shortcode .ttbm-filter-count-highlight strong {
+	color: var( --ttlm-primary );
+	font-weight: 700;
+}
+
+.ttbm-tour-list-shortcode .ttbm-filter-controls {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.ttbm-tour-list-shortcode .ttbm-sort-select {
+	padding: 9px 30px 9px 14px;
+	border-radius: var( --ttlm-radius-sm );
+	border: 1.5px solid var( --ttlm-border );
+	font-size: 12px;
+	font-weight: 600;
+	color: var( --ttlm-ink );
+	background: #fff;
+	cursor: pointer;
+}
+
+select.ttbm-sort-select.formControl {
+	background: #fff !important;
+	border: 1px solid #e7e5e5 !important;
+}
+
+.ttbm-tour-list-shortcode .ttbm-view-switcher {
+	display: inline-flex;
+	gap: 2px;
+	border: 1.5px solid var( --ttlm-border );
+	border-radius: var( --ttlm-radius-sm );
+	padding: 3px;
+	background: #fff;
+}
+
+.ttbm-tour-list-shortcode .ttbm-view-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: calc( var( --ttlm-radius-sm ) - 3px );
+	color: var( --ttlm-muted );
+	background: transparent;
+}
+
+.ttbm-tour-list-shortcode .ttbm-view-btn.ttbm-view-active {
+	background: var( --ttlm-primary );
+	color: #fff;
+}
+
+/* Plugin default (ttbm_registration.css:8847-8850) also colors the icon
+   itself on top of the button's own color above — removed so the icon just
+   inherits the white set on the button. */
+.ttbm-view-btn.ttbm-view-active .mi,
+.ttbm-view-btn[aria-pressed="true"] .mi {
+	color: unset;
+}
+
+@media ( max-width: 767px ) {
+	.ttbm-tour-list-shortcode .ttbm-filter-bar {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.ttbm-tour-list-shortcode .ttbm-filter-tabs {
+		overflow-x: auto;
+		scrollbar-width: none;
+	}
+
+	.ttbm-tour-list-shortcode .ttbm-filter-bar-count {
+		margin-inline-end: 0;
+		order: 3;
+		text-align: center;
+	}
+
+	.ttbm-tour-list-shortcode .ttbm-filter-controls {
+		order: 2;
+		justify-content: space-between;
+	}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Tour cards — grid mode (default)
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-tour-list-shortcode .flexWrap.ttbm-grid-mode {
+	display: grid;
+	grid-template-columns: repeat( 3, 1fr );
+}
+
+.ttbm-tour-list-shortcode .flexWrap.ttbm-grid-mode .filter_item {
+	width: auto !important;
+	max-width: none !important;
+}
+
+@media ( max-width: 1100px ) {
+	.ttbm-tour-list-shortcode .flexWrap.ttbm-grid-mode {
+		grid-template-columns: repeat( 2, 1fr );
+	}
+}
+
+@media ( max-width: 600px ) {
+	.ttbm-tour-list-shortcode .flexWrap.ttbm-grid-mode {
+		grid-template-columns: 1fr;
+	}
+}
+
+.ttbm-tour-list-shortcode .filter_item {
+	background: #fff;
+	border-radius: var( --ttlm-radius-lg );
+	overflow: hidden;
+	box-shadow: var( --ttlm-shadow-sm );
+	transition: box-shadow .3s ease, transform .3s ease;
+}
+
+.ttbm-tour-list-shortcode .filter_item:hover {
+	box-shadow: var( --ttlm-shadow-lg );
+	transform: translateY( -2px );
+}
+
+.ttbm-tour-list-shortcode .ttbm-lv-image-col {
+	position: relative;
+	height: 196px;
+	overflow: hidden;
+	background: var( --ttlm-tint );
+}
+
+.ttbm-tour-list-shortcode .ttbm-lv-thumb {
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-position: center;
+	transition: transform .6s ease;
+}
+
+.ttbm-tour-list-shortcode .filter_item:hover .ttbm-lv-thumb {
+	transform: scale( 1.05 );
+}
+
+.ttbm-tour-list-shortcode .ttbm-gc-badge-sale {
+	position: absolute;
+	top: 12px;
+	left: 12px;
+	z-index: 2;
+	padding: 4px 10px;
+	border-radius: var( --ttlm-radius-pill );
+	background: var( --ttlm-accent );
+	color: #fff;
+	font-size: 9px;
+	font-weight: 700;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+}
+
+.ttbm-tour-list-shortcode .ttbm-gc-badge-bestseller {
+	background: var( --ttlm-primary );
+}
+
+.ttbm-tour-list-shortcode .ttbm-gc-wishlist {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	z-index: 2;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba( 255, 255, 255, .88 );
+	color: var( --ttlm-muted );
+	font-size: 15px;
+}
+
+.ttbm-tour-list-shortcode .ttbm-gc-wishlist.active {
+	background: var( --ttlm-accent );
+	color: #fff;
+}
+
+.ttbm-tour-list-shortcode .ttbm-gc-duration-badge:empty {
+	display: none;
+}
+
+.ttbm-tour-list-shortcode .ttbm-lv-content-col {
+	display: flex;
+	flex-direction: column;
+	padding: 16px;
+}
+
+.ttbm-tour-list-shortcode .ttbm-gc-rating {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	margin-bottom: 7px;
+	font-size: 12px;
+}
+
+.ttbm-tour-list-shortcode .ttbm-gc-rating-star,
+.ttbm-tour-list-shortcode .ttbm-gc-rating-value {
+	color: var( --ttlm-accent );
+	font-weight: 700;
+}
+
+.ttbm-tour-list-shortcode .ttbm-gc-rating-count {
+	color: var( --ttlm-muted );
+}
+
+.ttbm-tour-list-shortcode .ttbm_list_title {
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.4;
+	color: var( --ttlm-ink );
+	margin: 0 0 5px;
+	letter-spacing: -.01em;
+}
+
+.ttbm-tour-list-shortcode .ttbm_list_title a {
+	color: inherit;
+}
+
+.ttbm-tour-list-shortcode .ttbm_list_title a:hover {
+	color: var( --ttlm-primary );
+}
+
+.ttbm-tour-list-shortcode .ttbm-lv-meta-row {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 4px 10px;
+	margin-bottom: 12px;
+}
+
+.ttbm-tour-list-shortcode .ttbm-lv-meta-row .ttbm_list_info {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	font-size: 11px;
+	font-weight: 500;
+	color: var( --ttlm-muted );
+	margin: 0;
+}
+
+.ttbm-tour-list-shortcode .ttbm-lv-meta-row .ttbm_list_info .mi {
+	color: var( --ttlm-primary );
+	font-size: 12px;
+}
+
+/* The plugin's own base rule (div.ttbm_list_info span in ttbm_registration.css)
+   forces every span inside — including location.php's .ttbm_list_info_text,
+   which isn't covered by the .mi rule above — up to var(--ttbm_fs_h6) (16-18px),
+   making the location text render much larger than the rest of this meta row.
+   Falling back to inherit lets the 11px/12px set above apply instead. */
+.ttbm-tour-list-shortcode div.ttbm_list_info span {
+	font-size: inherit;
+}
+
+.ttbm-tour-list-shortcode .ttbm-gc-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px;
+	margin-bottom: 12px;
+}
+
+.ttbm-tour-list-shortcode .ttbm-gc-tag {
+	font-size: 10px;
+	font-weight: 600;
+	color: var( --ttlm-primary );
+	background: var( --ttlm-tint );
+	padding: 3px 9px;
+	border-radius: var( --ttlm-radius-pill );
+}
+
+/* Short description — grid view never shows it (list view only, below) */
+.ttbm-tour-list-shortcode .ttbm-grid-mode .ttbm_description {
+	display: none;
+}
+
+.ttbm-tour-list-shortcode .ttbm-gc-divider {
+	display: block;
+	border: none;
+	border-top: 1px solid var( --ttlm-border );
+	margin: 0 0 12px;
+}
+
+.ttbm-tour-list-shortcode .ttbm-gc-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-top: auto;
+}
+
+.ttbm-lv-content-col .ttbm-gc-footer {
+	padding: 0px 0 4px;
+}
+
+.ttbm-tour-list-shortcode .ttbm-gc-duration-label {
+	/* Duration already shows once in the meta row (📍 location · 🕐 duration)
+	   right under the title — the reference footer only ever has price + View,
+	   never a second duration readout, so this repeat of it is hidden. */
+	display: none;
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+	color: var( --ttlm-muted );
+	margin-bottom: 2px;
+}
+
+/* The plugin's own base rule (ttbm_registration.css) makes this a
+   display:flex row (From / price / unit side by side on one line). Forcing
+   just .ttbm-gc-price-from to display:block while it's still a child of that
+   flex row fought the flex layout instead of replacing it — Chrome kept
+   trying to flex-lay-out a blockified item, which is what tore the
+   currency symbol away from the amount onto its own line. Overriding the
+   row's own display to plain block sidesteps the flex context entirely:
+   .ttbm-gc-price-from (below, still block) reliably gets its own line,
+   and the remaining inline content (amount + unit) flows together right
+   after it — matching the reference's stacked "From" / "$X /unit" exactly. */
+.ttbm-tour-list-shortcode .ttbm-gc-price-row {
+	display: block;
+}
+
+.ttbm-tour-list-shortcode .ttbm-gc-price-from {
+	display: block;
+	font-size: 10px;
+	color: var( --ttlm-muted );
+	font-weight: 500;
+	margin-bottom: 2px;
+}
+
+.ttbm-tour-list-shortcode .ttbm-gc-price-current,
+.ttbm-tour-list-shortcode .ttbm-gc-price-current .woocommerce-Price-amount {
+	font-size: 16px;
+	font-weight: 700;
+	color: var( --ttlm-primary );
+	display: inline;
+}
+
+.ttbm-tour-list-shortcode .ttbm-gc-price-unit {
+	font-size: 11px;
+	font-weight: 500;
+	color: var( --ttlm-muted );
+}
+
+.ttbm-tour-list-shortcode button.ttbm_explore_button {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 8px 16px;
+	border-radius: var( --ttlm-radius-pill );
+	background: var( --ttlm-primary );
+	color: #fff;
+	font-size: 11px;
+	font-weight: 700;
+	flex-shrink: 0;
+	transition: opacity .2s ease;
+}
+
+.ttbm-tour-list-shortcode button.ttbm_explore_button:hover {
+	opacity: .9;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Tour cards — list mode (same markup, CSS-reflowed)
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-tour-list-shortcode .flexWrap.ttbm-list-mode {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.ttbm-tour-list-shortcode .ttbm-list-mode .filter_item {
+	display: flex;
+	width: 100% !important;
+	max-width: none !important;
+}
+
+.ttbm-tour-list-shortcode .ttbm-list-mode .ttbm-lv-image-col {
+	width: 240px;
+	height: auto;
+	flex-shrink: 0;
+}
+
+.ttbm-tour-list-shortcode .ttbm-list-mode .ttbm-lv-content-col {
+	flex: 1;
+	padding: 20px 24px;
+	justify-content: center;
+}
+
+.ttbm-tour-list-shortcode .ttbm-list-mode .ttbm_description {
+	display: block;
+	margin: 0 0 12px;
+}
+
+.ttbm-tour-list-shortcode .ttbm-list-mode .ttbm_description > div {
+	font-size: 12px;
+	line-height: 1.6;
+	color: var( --ttlm-muted );
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+@media ( max-width: 600px ) {
+	.ttbm-tour-list-shortcode .ttbm-list-mode .filter_item {
+		flex-direction: column;
+	}
+
+	.ttbm-tour-list-shortcode .ttbm-list-mode .ttbm-lv-image-col {
+		width: 100%;
+		height: 180px;
+	}
+}
+
+/* Duplicate "Showing X of Y" readout (sort_result(), separate from the one
+   already in the results header/filter bar) — plugin default left-aligns it. */
+.ttbm-tour-list-shortcode.ttbm_filter_area .mainSection .ttbm-search-result-count,
+.ttbm-tour-list-shortcode.ttbm_filter_area .mainSection .filter_short_result {
+	text-align: center;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Pagination
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-tour-list-shortcode .pagination_area {
+	padding-top: 32px;
+}
+
+.ttbm-tour-list-shortcode .pagination_load_more {
+	display: block;
+	margin: 0 auto;
+	padding: 12px 28px;
+	border-radius: var( --ttlm-radius-pill );
+	border: 1.5px solid var( --ttlm-border );
+	background: #fff;
+	color: var( --ttlm-ink );
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.ttbm-tour-list-shortcode .pagination_load_more:hover {
+	border-color: var( --ttlm-primary );
+	color: var( --ttlm-primary );
+}
+
+.ttbm-tour-list-shortcode .buttonGroup {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+}
+
+.ttbm-tour-list-shortcode .dButton_xs {
+	width: 38px;
+	height: 38px;
+	border-radius: var( --ttlm-radius-sm );
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 13px;
+	font-weight: 600;
+	color: var( --ttlm-muted );
+	border: 1.5px solid var( --ttlm-border );
+	background: #fff;
+}
+
+.ttbm-tour-list-shortcode .dButton_xs:hover {
+	border-color: var( --ttlm-primary );
+	color: var( --ttlm-primary );
+}
+
+.ttbm-tour-list-shortcode .dButton_xs.active_pagination {
+	background: var( --ttlm-primary );
+	border-color: var( --ttlm-primary );
+	color: #fff;
+}
+
+.ttbm-tour-list-shortcode .dButton_xs:disabled {
+	opacity: .4;
+	cursor: default;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Mobile — sidebar filter body toggle (JS shows/hides inline; this
+   just makes the toggle button itself visible on small screens)
+   ══════════════════════════════════════════════════════════════ */
+@media ( max-width: 767px ) {
+	.ttbm-tour-list-shortcode .ttbm-mobile-filter-toggle {
+		display: inline-flex;
+	}
+}

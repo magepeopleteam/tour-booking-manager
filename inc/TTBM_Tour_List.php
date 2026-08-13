@@ -164,7 +164,20 @@
                                     data-duration="<?php echo esc_attr(TTBM_Function::get_duration($tour_id)); ?>"
 								<?php } ?>
 								<?php if ($params['activity-filter'] == 'yes' || $activity_filter) { ?>
-                                    data-activity="<?php echo esc_attr(TTBM_Function::get_taxonomy_name_to_id_string($tour_id, 'ttbm_tour_activities', 'ttbm_tour_activities')); ?>"
+									<?php
+									/* get_taxonomy_name_to_id_string() reads the legacy
+									   'ttbm_tour_activities' POSTMETA array, which on this
+									   install only exists for a handful of older tours and
+									   uses stale term IDs that no longer match the live
+									   ttbm_tour_activities TAXONOMY (confirmed via DB: e.g.
+									   postmeta IDs in the 46-50 range vs. the real "Adventure"
+									   term at id 86) — so the Category sidebar filter (which
+									   lists real taxonomy terms) would never match anything.
+									   get_taxonomy_id_string() reads the actual taxonomy
+									   relationship instead, which is what's really assigned
+									   to every tour and what the sidebar filter now uses. */
+									?>
+                                    data-activity="<?php echo esc_attr(TTBM_Function::get_taxonomy_id_string($tour_id, 'ttbm_tour_activities')); ?>"
 								<?php } ?>
                             >
                                 <input type="hidden" name="ttbm_item_activities" value="<?php echo esc_attr(TTBM_Function::get_taxonomy_name_to_id_string($tour_id, 'ttbm_tour_activities', 'ttbm_tour_activities')); ?>"/>
@@ -321,8 +334,15 @@
 							<!-- Sort dropdown -->
 							<div class="ttbm-sort-dropdown">
 								<select class="ttbm-sort-select formControl" name="sort_by_filter" aria-label="<?php esc_attr_e( 'Sort tours', 'tour-booking-manager' ); ?>">
+									<option value="recommended"><?php esc_html_e( 'Recommended', 'tour-booking-manager' ); ?></option>
 									<option value="price_asc"><?php esc_html_e( 'Price: Low to High', 'tour-booking-manager' ); ?></option>
 									<option value="price_desc"><?php esc_html_e( 'Price: High to Low', 'tour-booking-manager' ); ?></option>
+									<?php if ( $params['rating-filter'] == 'yes' ) { ?>
+									<option value="rating_desc"><?php esc_html_e( 'Highest Rated', 'tour-booking-manager' ); ?></option>
+									<?php } ?>
+									<?php if ( $params['duration-filter'] == 'yes' ) { ?>
+									<option value="duration_asc"><?php esc_html_e( 'Duration', 'tour-booking-manager' ); ?></option>
+									<?php } ?>
 									<option value="title_asc"><?php esc_html_e( 'Title: A–Z', 'tour-booking-manager' ); ?></option>
 								</select>
 							</div>
@@ -392,7 +412,20 @@
                                     data-duration="<?php echo esc_attr(TTBM_Function::get_duration($tour_id)); ?>"
 								<?php } ?>
 								<?php if ($params['activity-filter'] == 'yes' || $activity_filter) { ?>
-                                    data-activity="<?php echo esc_attr(TTBM_Function::get_taxonomy_name_to_id_string($tour_id, 'ttbm_tour_activities', 'ttbm_tour_activities')); ?>"
+									<?php
+									/* get_taxonomy_name_to_id_string() reads the legacy
+									   'ttbm_tour_activities' POSTMETA array, which on this
+									   install only exists for a handful of older tours and
+									   uses stale term IDs that no longer match the live
+									   ttbm_tour_activities TAXONOMY (confirmed via DB: e.g.
+									   postmeta IDs in the 46-50 range vs. the real "Adventure"
+									   term at id 86) — so the Category sidebar filter (which
+									   lists real taxonomy terms) would never match anything.
+									   get_taxonomy_id_string() reads the actual taxonomy
+									   relationship instead, which is what's really assigned
+									   to every tour and what the sidebar filter now uses. */
+									?>
+                                    data-activity="<?php echo esc_attr(TTBM_Function::get_taxonomy_id_string($tour_id, 'ttbm_tour_activities')); ?>"
 								<?php } ?>
 
 								data-price="<?php echo esc_attr(TTBM_Function::get_tour_start_price( $ttbm_post_id )); ?>"
@@ -400,7 +433,12 @@
 									$upcoming = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_upcoming_date');
 									echo esc_attr($upcoming ? gmdate('Y-m-d', strtotime($upcoming)) : get_the_date('Y-m-d', $tour_id));
 								?>"
-								
+								<?php if ($params['rating-filter'] == 'yes') {
+									$tour_rating = get_post_meta($tour_id, 'ttbm_tour_rating', true);
+									?>
+                                    data-rating="<?php echo esc_attr(is_numeric($tour_rating) && (float) $tour_rating > 0 ? $tour_rating : ''); ?>"
+								<?php } ?>
+
                             >
                                 <input type="hidden" name="ttbm_item_activities" value="<?php echo esc_attr(TTBM_Function::get_taxonomy_name_to_id_string($tour_id, 'ttbm_tour_activities', 'ttbm_tour_activities')); ?>"/>
 								<?php

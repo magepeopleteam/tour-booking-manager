@@ -369,6 +369,15 @@
 		activity_filter_multiple: 'data-activity',
 		month_filter: 'data-month',
 		date_range_filter: 'data-date',
+		/* Only used by filter_value_exit()'s "is any filter active" scan below —
+		   filter_price_range()/filter_rating_min() read their own hidden inputs
+		   directly rather than going through this name->attribute lookup, but
+		   without an entry here filter_value_exit() never notices either one is
+		   set, so list_filter() takes its "show everything" shortcut and
+		   get_item_result() (where the actual price/rating comparison happens)
+		   never runs at all. */
+		price_filter_range: 'data-price',
+		rating_filter_threshold: 'data-rating',
 	};
 	//************Filter*************//
 	$(document).on('change', '.ttbm_filter .formControl:not([type="checkbox"]):not([type="radio"]), .ttbm_filter input[type="hidden"]', function (e) {
@@ -408,6 +417,8 @@
 		active = active > 0 ? Math.min(active, filter_single_in_multi(parent, item, 'activity_filter', active)) : active;
 		active = active > 0 ? Math.min(active, filter_multi_in_multi(parent, item, 'activity_filter_multiple', active)) : active;
 		active = active > 0 ? Math.min(active, filter_single_in_multi(parent, item, 'month_filter', active)) : active;
+		active = active > 0 ? Math.min(active, filter_price_range(parent, item, active)) : active;
+		active = active > 0 ? Math.min(active, filter_rating_min(parent, item, active)) : active;
 		return filter_item_config(item, active);
 	}
 	//*********************//
@@ -466,6 +477,79 @@
 		//console.log(parent + " "+ item + " " + name + " " + active );
 		return active;
 	}
+	/* "Price per person" sidebar filter — hidden input holds "min,max", set by the
+	   drag handler below; compared against the data-price every card already
+	   carries. Same passthrough-when-empty / 2-or-0 contract as the filter_*
+	   helpers above, so it composes into get_item_result()'s Math.min() chain
+	   exactly like every other dimension. */
+	function filter_price_range(parent, item, active) {
+		let raw = parent.find('input[name="price_filter_range"]').val();
+		if (raw) {
+			let parts = raw.split(",");
+			let min = parseFloat(parts[0]);
+			let max = parseFloat(parts[1]);
+			let price = parseFloat(item.attr('data-price'));
+			if (!isNaN(min) && !isNaN(max) && !isNaN(price)) {
+				active = (price >= min && price <= max) ? 2 : 0;
+			}
+		}
+		return active;
+	}
+	/* "Minimum rating" sidebar filter — hidden input holds a single numeric
+	   threshold (5/4/3), set by the tier-click handler below. A tour with no
+	   data-rating (never reviewed) correctly never matches any threshold. */
+	function filter_rating_min(parent, item, active) {
+		let threshold = parent.find('input[name="rating_filter_threshold"]').val();
+		if (threshold) {
+			let rating = parseFloat(item.attr('data-rating'));
+			active = (!isNaN(rating) && rating >= parseFloat(threshold)) ? 2 : 0;
+		}
+		return active;
+	}
+	//************Price range slider (drag)*************//
+	$(document).on('input', '.ttbm-price-thumb-input', function () {
+		let $this = $(this);
+		let wrap = $this.closest('.ttbm-price-range');
+		let minInput = wrap.find('.ttbm-price-thumb-min');
+		let maxInput = wrap.find('.ttbm-price-thumb-max');
+		let min = parseFloat(minInput.attr('min'));
+		let max = parseFloat(maxInput.attr('max'));
+		let minVal = parseFloat(minInput.val());
+		let maxVal = parseFloat(maxInput.val());
+		/* Keep the two thumbs from crossing — whichever one is being dragged wins. */
+		if (minVal > maxVal) {
+			if ($this.hasClass('ttbm-price-thumb-min')) {
+				minVal = maxVal;
+				minInput.val(minVal);
+			} else {
+				maxVal = minVal;
+				maxInput.val(maxVal);
+			}
+		}
+		let span = (max - min) || 1;
+		let leftPct = ((minVal - min) / span) * 100;
+		let rightPct = ((maxVal - min) / span) * 100;
+		wrap.find('.ttbm-price-fill').css({ left: leftPct + '%', right: (100 - rightPct) + '%' });
+		let currency = wrap.attr('data-currency') || '$';
+		wrap.find('.ttbm-price-label-min').text(currency + Math.round(minVal));
+		wrap.find('.ttbm-price-label-max').text(currency + Math.round(maxVal));
+		wrap.find('input[name="price_filter_range"]').val(minVal + ',' + maxVal).trigger('change');
+	});
+	//************Rating tier (single-select)*************//
+	$(document).on('click', '.ttbm-rating-option', function () {
+		let $this = $(this);
+		let group = $this.closest('.ttbm-rating-filter-group');
+		let hidden = group.find('input[name="rating_filter_threshold"]');
+		if ($this.hasClass('active')) {
+			/* Clicking the already-active tier clears the filter back to "any". */
+			group.find('.ttbm-rating-option').removeClass('active');
+			hidden.val('').trigger('change');
+		} else {
+			group.find('.ttbm-rating-option').removeClass('active');
+			$this.addClass('active');
+			hidden.val($this.attr('data-rating-tier')).trigger('change');
+		}
+	});
 	//************Pagination*************//
 	$(document).on('click', '.ttbm_filter_area .pagination_area [data-pagination]', function (e) {
 		e.preventDefault();

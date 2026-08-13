@@ -1218,6 +1218,27 @@
 				set_transient($cache_key, $duration, HOUR_IN_SECONDS);
 				return $duration;
 			}
+			//************Price range (sidebar price-per-person filter)***********************//
+			public static function get_price_range(): array {
+				$cache_key = 'ttbm_price_range';
+				$cached = get_transient($cache_key);
+				if ($cached !== false) {
+					return $cached;
+				}
+				$tour_ids = TTBM_Global_Function::get_all_post_id(TTBM_Function::get_cpt_name());
+				$prices = array();
+				foreach ($tour_ids as $tour_id) {
+					$price = (float) self::get_tour_start_price($tour_id);
+					if ($price > 0) {
+						$prices[] = $price;
+					}
+				}
+				$range = $prices
+					? array('min' => (float) floor(min($prices)), 'max' => (float) ceil(max($prices)))
+					: array('min' => 0, 'max' => 0);
+				set_transient($cache_key, $range, HOUR_IN_SECONDS);
+				return $range;
+			}
 			//************Seat***********************//
 			public static function get_total_seat($tour_id) {
 				$total_seat = 0;

@@ -385,6 +385,11 @@
 				wp_enqueue_script('ttbm_date_range_picker_js', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.js', array('jquery', 'moment'), '1', true);
 				wp_enqueue_style('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.css', array(), TTBM_PLUGIN_VERSION);
 				wp_enqueue_style('ttbm_smart_booking', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_smart_booking.css', array('ttbm_registration'), TTBM_PLUGIN_VERSION);
+				/* [ttbm-tour-list]'s own modern visual system — loads after ttbm_registration
+				   so normal cascade order (not !important) is enough to win. Scoped entirely
+				   under .ttbm-tour-list-shortcode / .ttbm-top-search-form, so it can't affect
+				   hotel listings or any other shortcode's output. */
+				wp_enqueue_style('ttbm_tour_list_modern', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_tour_list_modern.css', array('ttbm_registration'), TTBM_PLUGIN_VERSION);
 				wp_enqueue_script('jquery-ui-autocomplete');
 				wp_enqueue_script('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.js', array('jquery', 'jquery-ui-autocomplete', 'ttbm_date_range_picker_js'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_attendee_autocomplete', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_attendee_autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), TTBM_PLUGIN_VERSION, true);
@@ -392,6 +397,9 @@
 				wp_enqueue_script('ttbm_smart_booking', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_smart_booking.js', array('jquery', 'ttbm_registration', 'ttbm_price_calculation'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_hotel_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_script.js', array('jquery', 'moment', 'ttbm_date_range_picker_js'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_filter_pagination_script', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.js', array('jquery', 'mp_select_2', 'moment', 'ttbm_date_range_picker_js'), TTBM_PLUGIN_VERSION, true);
+				/* Active-filter chip row for [ttbm-tour-list] — reads/resets the same
+				   checkboxes and hidden inputs filter_pagination.js already drives. */
+				wp_enqueue_script('ttbm_active_filter_chips', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_active_filter_chips.js', array('jquery', 'ttbm_filter_pagination_script'), TTBM_PLUGIN_VERSION, true);
 				wp_localize_script('ttbm_registration', 'ttbm_ajax', array(
 					'ajax_url' => admin_url('admin-ajax.php'),
 					'nonce' => wp_create_nonce('ttbm_frontend_nonce')

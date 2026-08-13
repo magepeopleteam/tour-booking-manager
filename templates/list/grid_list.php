@@ -60,6 +60,9 @@ $term_count   = 3;
 	<?php /* Activity tag pills */ ?>
 	<?php include( TTBM_Function::template_path( 'layout/list_tags.php' ) ); ?>
 
+	<?php /* Short description — only visible in list view (hidden via CSS in grid mode); reuses the same partial templates/list/default.php already renders, no duplicate content logic. */ ?>
+	<?php include( TTBM_Function::template_path( 'layout/description_short.php' ) ); ?>
+
 	<?php /* Divider */ ?>
 	<hr class="ttbm-gc-divider">
 

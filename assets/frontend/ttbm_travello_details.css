@@ -49,31 +49,34 @@
 	overflow: hidden;
 }
 
-/* The plugin's own generic slider CSS (ttbm_plugin_global.css) sets
-   `.sliderItem { height: 100% }` with a `div.superSlider` type selector in
-   it, which out-specifies a plain 3-class selector here — and `.sliderAllItem`
-   never gets an explicit height from that generic CSS at all (only
-   `default.php`'s own `#ttbm_content .ttbm_default_theme .ttbm_hero …`
-   override supplies one, scoped to that template). Without an explicit,
-   winning height on every level, the whole gallery collapses to 0px.
-   `!important` here mirrors that same existing precedent
-   (ttbm_details.css's `.ttbm-hotel-hero-gallery` block) rather than relying
-   on specificity alone. Covers all three real render paths: single
-   featured-image only (`.ttbm-featured-only`), single real gallery image
-   (plain `.superSlider`), and the full multi-image showcase
-   (`.ttbm_slider-wrapper` + `.sliderShowcase`). */
-.ttbm-travello-gallery .superSlider {
+/* Reference `.gallery` is `display:grid;grid-template-columns:2fr 1fr;
+   grid-template-rows:260px 260px;gap:10px` — one big photo spanning both
+   rows (`.gallery-main{grid-row:span 2}`) beside exactly 2 stacked small
+   photos. Rebuilding that exactly on the real widget's own outer flex row
+   (`.ttbm_style div.superSlider{display:flex}`) rather than layering
+   flex-basis percentages on top of it — same grid, same track sizes, same
+   10px gap, applied directly to the inline slider (NOT the lightbox
+   popup's own separate nested `.superSlider`, which must keep its own
+   plain layout — hence the `>` child combinators all the way down). */
+#ttbm_travello_gallery > .superSlider {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	grid-template-rows: 260px 260px;
+	gap: 10px;
 	width: 100%;
 	max-width: 100%;
 	border-radius: var( --ttlm-radius-lg );
 	overflow: hidden;
+	background: none;
 }
 
-.ttbm-travello-gallery .ttbm_slider-wrapper {
+#ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper {
+	grid-column: 1;
+	grid-row: 1 / span 2;
 	width: 100% !important;
 	max-width: 100% !important;
-	height: 420px !important;
-	max-height: 420px !important;
+	height: 100% !important;
+	max-height: none !important;
 	min-height: 0 !important;
 }
 
@@ -81,103 +84,91 @@
 	flex: 1 1 auto;
 	width: auto !important;
 	max-width: none !important;
-	height: 420px !important;
-	max-height: 420px !important;
+	height: 100% !important;
+	max-height: none !important;
 	min-height: 0 !important;
 }
 
 .ttbm-travello-gallery .sliderAllItem .sliderItem {
-	height: 420px !important;
-	max-height: 420px !important;
-	border-radius: var( --ttlm-radius-lg );
+	height: 100% !important;
+	max-height: none !important;
 }
 
-.ttbm-travello-gallery .ttbm_slider-wrapper .sliderAllItem .sliderItem {
-	border-radius: var( --ttlm-radius-lg ) 0 0 var( --ttlm-radius-lg );
+/* Reference gallery cells carry NO border-radius of their own at all —
+   only the outer `.gallery` container is rounded+clipped, which is enough
+   to round just the 4 corners that actually touch the outside edge while
+   every inner seam stays square. `.ttbm-travello-gallery`'s own
+   `overflow:hidden;border-radius:20px` (top of this file) already does
+   exactly that here too, so no per-cell radius is needed — removed the
+   previous version's :first-child/:last-child roundings entirely rather
+   than trying to keep recalculating which cell happens to sit in which
+   corner as the layout changes. */
+
+#ttbm_travello_gallery > .superSlider > .sliderShowcase.right,
+#ttbm_travello_gallery > .superSlider > .sliderShowcase.left {
+	grid-column: 2;
+	grid-row: 1 / span 2;
+	width: auto;
+	height: auto;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 }
 
-.ttbm-travello-gallery .sliderShowcase {
-	height: 420px !important;
-	max-height: 420px !important;
-}
-
-/* The reference gallery is a big photo + exactly 2 stacked photos beside
-   it. This widget's real showcase (TTBM_Custom_Slider::slider_showcase_style_1(),
-   shared by every theme — not something this template can safely rewrite)
-   always renders 4 cells: 3 plain thumbnails plus a 4th carrying a "+N"
-   badge, where N = total images minus those same 4 already shown. Hiding 2
-   of the 4 with CSS would leave that badge lying about how many more
-   photos exist (it'd still say "+1" while actually 3 more were hidden).
-   So instead of hiding anything, all 4 stay — just regrouped from a thin
-   4-row filmstrip into a 2×2 cluster, which reads much closer to the
-   reference's "a few generously-sized photos" feel than 4 slivers stacked
-   105px tall did, without touching the shared PHP or the badge count. */
-#ttbm_travello_gallery .sliderShowcase.right,
-#ttbm_travello_gallery .sliderShowcase.left {
-	width: min( 320px, 36% );
-	flex: 0 0 min( 320px, 36% );
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr 1fr;
-	gap: 8px;
+/* The real showcase (TTBM_Custom_Slider::slider_showcase_style_1(), shared
+   by every theme — not something this template can safely rewrite) always
+   renders 4 cells: 3 plain thumbnails then a 4th carrying the "+N" badge.
+   Reference wants exactly 2 stacked photos, so keep only the first cell
+   and the last (badge) cell — `:not(:first-child):not(:last-child)` does
+   that regardless of how many cells a given tour actually has (works out
+   to 0 hidden / no-op if a tour has fewer photos and therefore fewer
+   cells). The badge text itself still needs correcting to match — see
+   ttbm_travello_details.js, since "how many photos aren't shown as a
+   thumbnail" changed the moment 2 of these 4 thumbnails stopped being
+   shown, and that number is baked into server-rendered text, not
+   something CSS can recompute. */
+#ttbm_travello_gallery .sliderShowcaseItem:not( :first-child ):not( :last-child ) {
+	display: none;
 }
 
 #ttbm_travello_gallery .sliderShowcaseItem {
-	/* The base rule this overrides (div.superSlider .sliderShowcase.style_1
-	   .sliderShowcaseItem) sets `flex:1;max-height:25%` for the old 4-row
-	   filmstrip. `flex` no longer does anything once the parent is a grid,
-	   but `max-height:25%` would still silently cap each cell at a quarter
-	   of the showcase's height — leaving each 2×2 cell floating in the top
-	   quarter of its own grid row instead of filling it. */
-	border-radius: 0;
-	margin: 0;
+	flex: 1;
 	max-height: none;
-}
-
-/* Outer corners: in the old single-column stack, the first cell's top
-   touched the gallery's top-right corner and the last cell's bottom
-   touched its bottom-right — which is why the previous version of this
-   rule rounded :first-child/:last-child. In a 2-column grid the cell
-   touching the top-right corner is the 2nd child (top row, right column),
-   and the one touching bottom-right is still the last (4th) child. */
-#ttbm_travello_gallery .sliderShowcase.right .sliderShowcaseItem:nth-child(2) {
-	border-radius: 0 var( --ttlm-radius-lg ) 0 0;
-}
-
-#ttbm_travello_gallery .sliderShowcase.right .sliderShowcaseItem:last-child {
-	border-radius: 0 0 var( --ttlm-radius-lg ) 0;
-}
-
-#ttbm_travello_gallery .sliderShowcase.left .sliderShowcaseItem:first-child {
-	border-radius: var( --ttlm-radius-lg ) 0 0 0;
-}
-
-#ttbm_travello_gallery .sliderShowcase.left .sliderShowcaseItem:nth-child(3) {
-	border-radius: 0 0 0 var( --ttlm-radius-lg );
+	margin: 0;
+	border-radius: 0;
 }
 
 /* "+N more photos" badge — the base plugin CSS (`.sliderMoreItem`) covers
    the ENTIRE cell in a flat semi-opaque black box, hiding the photo
-   underneath completely. The reference's equivalent (`.gallery-photos-btn`)
-   is a small frosted pill sitting in the corner, photo still fully visible
-   behind it — restyle to match that instead of blacking out the photo. */
+   underneath completely, with a "+" icon and bare number. The reference's
+   equivalent (`.gallery-photos-btn`) is a small frosted pill in the
+   corner — photo fully visible behind it — reading "View all N photos".
+   Restyle the box to match the pill; the wording swap happens in JS since
+   the plugin only ever renders a bare number here, no surrounding text. */
 #ttbm_travello_gallery .sliderMoreItem {
-	inset: auto 10px 10px auto;
+	inset: auto 16px 16px auto;
 	width: auto;
 	height: auto;
 	background: rgba( 255, 255, 255, .92 );
 	backdrop-filter: blur( 6px );
 	color: var( --ttlm-ink );
 	border-radius: var( --ttlm-radius-sm );
-	padding: 6px 10px;
-	gap: 5px;
-	font-size: 11px;
+	padding: 9px 16px;
+	gap: 6px;
+	font-size: 12px;
 	font-weight: 700;
+	transition: background-color .2s ease, box-shadow .2s ease;
+}
+
+#ttbm_travello_gallery .sliderMoreItem:hover {
+	background: #fff;
+	box-shadow: var( --ttlm-shadow-sm );
 }
 
 #ttbm_travello_gallery .sliderMoreItem span {
 	margin: 0;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 /* Prev/next arrows on the inline hero — the reference gallery has none at
@@ -200,7 +191,11 @@
 }
 
 @media ( max-width: 768px ) {
-	.ttbm-travello-gallery .ttbm_slider-wrapper,
+	#ttbm_travello_gallery > .superSlider {
+		grid-template-columns: 1fr;
+		grid-template-rows: 260px;
+	}
+
 	.ttbm-travello-gallery .sliderAllItem,
 	.ttbm-travello-gallery .sliderAllItem .sliderItem {
 		height: 260px !important;
@@ -208,10 +203,8 @@
 	}
 
 	/* Reference drops the small side photos entirely below 768px and lets
-	   the one big photo fill the full width — same behaviour here, and it
-	   sidesteps the 2×2 cluster shrinking into a row of illegibly tiny
-	   ~65px tiles on a phone-width screen. */
-	#ttbm_travello_gallery .sliderShowcase {
+	   the one big photo fill the full width. */
+	#ttbm_travello_gallery > .superSlider > .sliderShowcase {
 		display: none !important;
 	}
 }

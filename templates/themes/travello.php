@@ -78,7 +78,27 @@
 <div class="ttbm_style ttbm_travello_theme placeholderLoader">
 	<div class="ttbm-travello-container">
 
-		<div class="ttbm-travello-gallery placeholder_area" id="ttbm_travello_gallery">
+		<?php
+		/* `ttbm_hero` here is not decorative — it's the exact marker class
+		   ttbm_plugin_global.js's ttbm_slider_resize() already checks for
+		   (`$super.closest('.ttbm_smart_gallery, .ttbm_hero')`) to skip
+		   computing a natural-aspect-ratio height from each photo's real
+		   pixel dimensions and writing it inline (`.css({minHeight,
+		   maxHeight})` — beats this file's CSS `height`/`max-height`
+		   overrides outright since inline styles always win over an
+		   external stylesheet unless it's `!important`, and this template
+		   never made its `min-height` override `!important`). Without this,
+		   the hero image's real aspect ratio (e.g. a 4032×3024 photo at this
+		   card's ~860px width computes to ~645px) kept fighting the fixed
+		   260px×2 grid rows below, rendering taller than intended and out of
+		   sync with the showcase column's height. All of `.ttbm_hero`'s own
+		   CSS elsewhere is additionally scoped to `.ttbm_default_theme`
+		   (default.php's root class, not this template's `.ttbm_travello_theme`),
+		   so adding the bare class here can't pull in any of that template's
+		   own hero styling — confirmed by grepping every `.ttbm_hero` rule
+		   in ttbm_details.css before adding this. */
+		?>
+		<div class="ttbm-travello-gallery ttbm_hero placeholder_area" id="ttbm_travello_gallery">
 			<?php do_action( 'ttbm_slider' ); ?>
 		</div>
 

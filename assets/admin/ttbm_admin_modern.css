@@ -6106,9 +6106,16 @@ body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td
 	font-size: 13px;
 }
 
+#ttbm_meta_box_panel .ttbm-modal-optional {
+	color: #9ca3af;
+	font-size: 12px;
+	font-weight: 400;
+}
+
 /* Override old generic modal input styles */
 #ttbm_meta_box_panel .ttbm-modal-content input[type="text"],
 #ttbm_meta_box_panel .ttbm-modal-content input[type="number"],
+#ttbm_meta_box_panel .ttbm-modal-content input[type="time"],
 #ttbm_meta_box_panel .ttbm-modal-content textarea,
 #ttbm_meta_box_panel .ttbm-modal-content select {
 	width: 100%;
@@ -6128,6 +6135,7 @@ body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td
 
 #ttbm_meta_box_panel .ttbm-modal-content input[type="text"]:focus,
 #ttbm_meta_box_panel .ttbm-modal-content input[type="number"]:focus,
+#ttbm_meta_box_panel .ttbm-modal-content input[type="time"]:focus,
 #ttbm_meta_box_panel .ttbm-modal-content textarea:focus,
 #ttbm_meta_box_panel .ttbm-modal-content select:focus {
 	border-color: #6366f1;

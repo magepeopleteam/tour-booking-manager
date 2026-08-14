@@ -429,6 +429,9 @@
 											}
 										}
 									}
+									if ($custom_post === 'ttbm_tour') {
+										$this->seed_dummy_reviews($post_id);
+									}
 								}
 							}
 						}
@@ -453,6 +456,107 @@
 					$related = array_slice($others, 0, min(4, count($others)));
 					update_post_meta($id, 'ttbm_related_tour', $related);
 				}
+			}
+
+			/**
+			 * Seed 5 sample reviews per dummy tour, real 'ttbm_tour_review' posts, not
+			 * just a cosmetic number. Without these, the 'ttbm_rating_average'/
+			 * 'ttbm_rating_count' post_data fields above (used only by the simpler,
+			 * manual archive-card rating in templates/layout/list_rating.php) had no
+			 * real reviews behind them at all: the actual review list widget
+			 * (TTBM_Review_Rating::ttbm_review_list()) and the real DB-aggregate
+			 * average used on the single-tour page both showed 0/empty. Ratings are
+			 * 5,5,5,5,4.5 - sum 24.5 / 5 = exactly 4.9 - rather than 5 flat 5-star
+			 * reviews, so the average and the (Pro's) rating-distribution bar don't
+			 * look suspiciously uniform. Guarded against a tour that already has
+			 * reviews (defensive - dummy_import() itself only ever runs once per site
+			 * via the 0-existing-tours check above, but this method has no reason to
+			 * assume that will always be its only caller).
+			 */
+			public function seed_dummy_reviews($tour_id) {
+				if (!$tour_id || get_post_type($tour_id) !== 'ttbm_tour') {
+					return;
+				}
+				$existing = get_posts(array(
+					'post_type'      => 'ttbm_tour_review',
+					'post_status'    => 'any',
+					'fields'         => 'ids',
+					'posts_per_page' => 1,
+					'meta_key'       => 'ttbm_tour_id',
+					'meta_value'     => $tour_id,
+				));
+				if (!empty($existing)) {
+					return;
+				}
+				$reviews = array(
+					array(
+						'title'    => "Absolutely incredible experience!",
+						'content'  => "This was hands-down one of the best tours we've done. Our guide was knowledgeable, friendly, and made sure everyone felt included. Highly recommend booking this if you're in the area!",
+						'name'     => "Sarah M.",
+						'email'    => "sarah.m@example.com",
+						'rating'   => 5,
+						'days_ago' => 52,
+					),
+					array(
+						'title'    => "Exceeded all expectations",
+						'content'  => "From start to finish everything was well organized. Pickup was on time, the itinerary was paced perfectly, and the views were breathtaking. Would book again in a heartbeat.",
+						'name'     => "James T.",
+						'email'    => "james.t@example.com",
+						'rating'   => 5,
+						'days_ago' => 40,
+					),
+					array(
+						'title'    => "Great value for the price",
+						'content'  => "Really enjoyed this tour, small group size made it feel personal, and the guide answered all our questions. A couple of minor delays but nothing that ruined the experience.",
+						'name'     => "Priya K.",
+						'email'    => "priya.k@example.com",
+						'rating'   => 4.5,
+						'days_ago' => 27,
+					),
+					array(
+						'title'    => "A must-do for any first-time visitor",
+						'content'  => "We booked this on a friend's recommendation and it did not disappoint. Everything ran smoothly and the staff clearly cared about giving guests a memorable time.",
+						'name'     => "Daniel O.",
+						'email'    => "daniel.o@example.com",
+						'rating'   => 5,
+						'days_ago' => 15,
+					),
+					array(
+						'title'    => "Wonderful memories made",
+						'content'  => "Booking was simple, communication beforehand was clear, and the actual experience was even better than the photos. Already telling friends to try this one out.",
+						'name'     => "Emily R.",
+						'email'    => "emily.r@example.com",
+						'rating'   => 5,
+						'days_ago' => 4,
+					),
+				);
+				foreach ($reviews as $review) {
+					$post_date = gmdate('Y-m-d H:i:s', strtotime('-' . $review['days_ago'] . ' days'));
+					$review_id = wp_insert_post(array(
+						'post_title'    => $review['title'],
+						'post_content'  => $review['content'],
+						'post_type'     => 'ttbm_tour_review',
+						'post_status'   => 'publish',
+						'post_author'   => 0,
+						'post_date'     => $post_date,
+						'post_date_gmt' => $post_date,
+					));
+					if (!$review_id || is_wp_error($review_id)) {
+						continue;
+					}
+					update_post_meta($review_id, 'ttbm_tour_id', $tour_id);
+					update_post_meta($review_id, 'ttbm_review_rating_meta', $review['rating']);
+					update_post_meta($review_id, 'ttbm_tour_review_cust_name', $review['name']);
+					update_post_meta($review_id, 'ttbm_tour_review_cust_email', $review['email']);
+					update_post_meta($review_id, 'ttbm_tour_review_cust_ID', 0);
+				}
+				// Sum of the 5 ratings above (5+5+4.5+5+5) is always 24.5 / 5 = 4.9 - kept
+				// as a literal here rather than recomputed via TTBM_Review_Rating so this
+				// still runs correctly even when the Pro plugin (which owns that class)
+				// isn't active at import time.
+				update_post_meta($tour_id, 'ttbm_tour_rating', 4.9);
+				update_post_meta($tour_id, 'ttbm_rating_average', 4.9);
+				update_post_meta($tour_id, 'ttbm_rating_count', 5);
 			}
 
 			/**

@@ -49,20 +49,34 @@
 	overflow: hidden;
 }
 
-/* Reference `.gallery` is `display:grid;grid-template-columns:2fr 1fr;
-   grid-template-rows:260px 260px;gap:10px` — one big photo spanning both
-   rows (`.gallery-main{grid-row:span 2}`) beside exactly 2 stacked small
-   photos. Rebuilding that exactly on the real widget's own outer flex row
-   (`.ttbm_style div.superSlider{display:flex}`) rather than layering
-   flex-basis percentages on top of it — same grid, same track sizes, same
-   10px gap, applied directly to the inline slider (NOT the lightbox
-   popup's own separate nested `.superSlider`, which must keep its own
-   plain layout — hence the `>` child combinators all the way down). */
+/* Real DOM (TTBM_Custom_Slider::slider()) is deeper than it looks:
+     .superSlider.fdColumn
+       .ttbm_slider-wrapper.dFlex   <- display:flex row (base `.dFlex` class)
+         .sliderAllItem             <- the big photo track
+         .sliderShowcase.right...   <- the 2-stacked-thumbnail column
+   `.sliderShowcase` is a flex CHILD of `.ttbm_slider-wrapper`, not a
+   sibling of it under `.superSlider` — every rule below that needs to
+   reach it uses the full 3-level `> .ttbm_slider-wrapper > .sliderShowcase`
+   path for that reason (a shallower `.superSlider > .sliderShowcase`
+   selector silently never matches, leaving the shared plugin-wide
+   `.ttbm_style div.superSlider .sliderShowcase.right{width:18.65%}` as
+   the one actually rendering).
+
+   This outer `.superSlider` grid exists purely to anchor a definite
+   height (`grid-template-rows:260px 260px`, matching the reference
+   `.gallery`'s `260px 260px` rows) that cascades down through the
+   height:100% chain on `.ttbm_slider-wrapper` → `.sliderAllItem` /
+   `.sliderShowcaseItem`. It intentionally has no grid-template-columns:
+   the actual photo/thumbnail column split happens one level down, via
+   flexbox on `.ttbm_slider-wrapper` (`.sliderAllItem{flex:1 1 auto}`
+   growing to fill whatever `.sliderShowcase` doesn't fixed-claim — see
+   below) — so a single implicit grid column here already stretches
+   `.ttbm_slider-wrapper` the full width of .ttbm-travello-container,
+   with no `grid-column` override needed on it. */
 #ttbm_travello_gallery > .superSlider {
 	display: grid;
-	grid-template-columns: 2fr 1fr;
 	grid-template-rows: 260px 260px;
-	gap: 10px;
+	row-gap: 10px;
 	width: 100%;
 	max-width: 100%;
 	border-radius: var( --ttlm-radius-lg );
@@ -70,14 +84,19 @@
 	background: none;
 }
 
+/* `gap:10px` matches the reference `.gallery{grid-template-columns:2fr 1fr;
+   ...gap:10px}` — that grid-gap sits between gallery-main and gallery-sm,
+   i.e. exactly between this flex row's two children (`.sliderAllItem` and
+   `.sliderShowcase.right.style_1`, see DOM note above). Without it the big
+   photo and the thumbnail column sit flush against each other. */
 #ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper {
-	grid-column: 1;
 	grid-row: 1 / span 2;
 	width: 100% !important;
 	max-width: 100% !important;
 	height: 100% !important;
 	max-height: none !important;
 	min-height: 0 !important;
+	gap: 10px;
 }
 
 .ttbm-travello-gallery .sliderAllItem {
@@ -104,11 +123,18 @@
    than trying to keep recalculating which cell happens to sit in which
    corner as the layout changes. */
 
-#ttbm_travello_gallery > .superSlider > .sliderShowcase.right,
-#ttbm_travello_gallery > .superSlider > .sliderShowcase.left {
-	grid-column: 2;
-	grid-row: 1 / span 2;
-	width: auto;
+/* `> .ttbm_slider-wrapper >` is required here — see the DOM note above
+   `#ttbm_travello_gallery > .superSlider` — `.sliderShowcase` is this
+   element's grandchild, not its child. `.style_1` pins it to
+   TTBM_Custom_Slider::slider_showcase_style_1() specifically (the
+   default `slider_style` setting). `flex: 0 0 380px` locks the width at
+   380px explicitly, matching .ttbm-travello-sidebar, and stops it from
+   flex-shrinking — `.sliderAllItem`'s `flex: 1 1 auto` (below) then
+   grows to claim exactly whatever width this doesn't. */
+#ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper > .sliderShowcase.right.style_1,
+#ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper > .sliderShowcase.left.style_1 {
+	flex: 0 0 380px;
+	width: 380px;
 	height: auto;
 	margin: 0;
 	display: flex;
@@ -192,7 +218,6 @@
 
 @media ( max-width: 768px ) {
 	#ttbm_travello_gallery > .superSlider {
-		grid-template-columns: 1fr;
 		grid-template-rows: 260px;
 	}
 
@@ -203,8 +228,10 @@
 	}
 
 	/* Reference drops the small side photos entirely below 768px and lets
-	   the one big photo fill the full width. */
-	#ttbm_travello_gallery > .superSlider > .sliderShowcase {
+	   the one big photo fill the full width. `> .ttbm_slider-wrapper >` —
+	   same grandchild depth as the desktop rule above, see the DOM note
+	   on `#ttbm_travello_gallery > .superSlider`. */
+	#ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper > .sliderShowcase {
 		display: none !important;
 	}
 }
@@ -256,7 +283,16 @@
 	background: transparent;
 	color: var( --ttlm-primary );
 	border: 1.5px solid var( --ttlm-primary );
-	padding: 3.5px 12px;
+	padding: 4px 12px;
+}
+
+/* "Free cancellation" — the one badge here with no real setting behind it
+   (unlike Bestseller/activity terms above, see travello.php), so it's given
+   a visibly softer, non-committal border instead of the full primary-color
+   outline the real-data badges get — same distinction the reference makes
+   (`border-color:var(--soft)` inline override on just this one badge). */
+.ttbm-travello-badge--soft {
+	border-color: var( --ttlm-border );
 }
 
 .ttbm-travello-title {
@@ -266,6 +302,19 @@
 	line-height: 1.15;
 	color: var( --ttlm-ink );
 	margin: 0 0 12px;
+}
+
+/* Reference's `.serif-italic` accent on part of the title — the active theme
+   (travail) already loads 'DM Serif Display' site-wide for this exact
+   pattern (inc/enqueue.php), but this rule doesn't depend on that: the
+   explicit Georgia/serif fallback means the italic-serif contrast still
+   shows up even under a different active theme, just in a generic serif
+   face instead. See travello.php for the real-title split that decides
+   which trailing portion (if any) gets this treatment. */
+.ttbm-travello-title-accent {
+	font-family: 'DM Serif Display', Georgia, serif;
+	font-style: italic;
+	font-weight: 400;
 }
 
 .ttbm-travello-meta-row {
@@ -279,14 +328,57 @@
 	margin-bottom: 16px;
 }
 
+/* Rating row — real data (see travello.php: $ttbm_travello_rating, Pro's own
+   DB-backed average+count, the same instance already used in the booking
+   card; omitted entirely at 0 reviews). Reuses the plugin's existing
+   gradient-fill `.ttbm-rating-stars` widget class directly (Pro's own
+   ttbm_style_pro.css: `--percent` is derived from `--ttbm-rating`, and the
+   actual "★★★★★" glyphs + gradient fill are drawn on its `::before`, not the
+   element itself — reinventing that with plain static star glyphs would
+   round a real fractional average up to a false full 5/5 look), just
+   resized/recolored to this template's tokens instead of the shared
+   widget's defaults. */
+.ttbm-travello-rating-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.ttbm-travello-rating-value {
+	font-size: 22px;
+	font-weight: 800;
+	color: var( --ttlm-ink );
+}
+
+.ttbm-travello-rating-row .ttbm-rating-stars {
+	--ttbm-star-size: 14px;
+	margin: 0;
+}
+
+.ttbm-travello-rating-row .ttbm-rating-stars::before {
+	background: linear-gradient( 90deg, var( --ttlm-accent ) var( --percent ), var( --ttlm-border ) var( --percent ) );
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.ttbm-travello-rating-count {
+	font-size: 13px;
+	color: var( --ttlm-muted );
+}
+
 .ttbm-travello-meta-item {
 	display: inline-flex;
 	align-items: center;
-	gap: 6px;
+	gap: 8px;
+	line-height: 1;
 }
 
 .ttbm-travello-meta-item .mi {
 	color: var( --ttlm-primary );
+	font-size: 14px;
+	line-height: 1;
+	flex-shrink: 0;
 }
 
 .ttbm-travello-meta-item strong {
@@ -514,10 +606,29 @@
 	left: -54px;
 }
 
+.ttbm-travello-section .day_wise_details_meta {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
 .ttbm-travello-section .day_wise_details_label {
 	color: var( --ttlm-accent );
 	font-size: 10px;
 	letter-spacing: .12em;
+}
+
+/* Optional per-item time — same "real data or omit" rule as everywhere else in
+   this file (see layout/day_wise_details.php: $day['ttbm_day_time'], never
+   printed when the admin left it blank). */
+.ttbm-travello-section .day_wise_details_time {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	font-size: 10px;
+	font-weight: 600;
+	color: var( --ttlm-muted );
 }
 
 .ttbm-travello-section .day_wise_details_name {
@@ -619,6 +730,176 @@
 	box-shadow: var( --ttlm-shadow-lg );
 }
 
+/* Fixed-date tour's "Tour Date : …" strip — shared markup from
+   ticket/date_selection.php (every theme includes this same file, so it can't
+   be rewritten here, only restyled). Base plugin CSS
+   (`div.ttbm_select_date_area{background-color:var(--color_theme)}` plus a
+   separate `color:#fff` rule, both in ttbm_registration.css) paints it as a
+   solid theme-color bar — works for the other themes' own chrome, but
+   clashed with this card's plain white background (first pass just dropped
+   it to plain text; redesigned here as a quiet tinted "info pill" instead,
+   the same `--ttlm-tint` treatment `.ttbm-travello-organizer` below already
+   uses, so the two read as one consistent chrome pattern). `.ttbm_travello_theme`
+   + `#ttbm_booking_section` (2 extra selector layers vs. the base rule's
+   single class) is enough to win on specificity alone without `!important`,
+   and scopes the change to this template only — every other theme keeps its
+   original colored bar. */
+.ttbm_travello_theme #ttbm_booking_section div.ttbm_date_time_select {
+	margin: 0 0 16px;
+	border-bottom: 0;
+}
+
+.ttbm_travello_theme #ttbm_booking_section div.ttbm_select_date_area {
+	background: var( --ttlm-tint );
+	padding: 12px 14px;
+	border-radius: var( --ttlm-radius-sm );
+	justify-content: flex-start;
+	color: var( --ttlm-ink );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_select_date_area h5.textWhite {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: var( --ttlm-ink );
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.5;
+	margin: 0;
+}
+
+/* Calendar-clock glyph drawn directly via the icon font's own `content`/
+   `font-family` values (`\f1bd`/`mageicon` — same as the shared `.mi.mi-calendar-clock`
+   class in mage-icon.css) rather than an actual `<span class="mi ...">` — that
+   class isn't in this shared markup, and adding it there would touch every
+   theme, not just this one. */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_select_date_area h5.textWhite::before {
+	font-family: mageicon;
+	content: "\f1bd";
+	font-size: 15px;
+	color: var( --ttlm-primary );
+	flex-shrink: 0;
+}
+
+/* "Ticket Type" / "Extra Services" headings — real markup from
+   ticket/registration.php + ticket/particular_item_area.php, unstyled here on
+   purpose by the base plugin CSS: its own rule
+   (`:is(#ttbm_content,.ttbm_reg_shortcode) .ttbm_booking_section
+   .ttbm_ticket_list_title`, ttbm_details.css) requires an `#ttbm_content` or
+   `.ttbm_reg_shortcode` ancestor that this template's markup never has (its
+   root class is `.ttbm_travello_theme`, wrapped only in `#ttbm_booking_section`)
+   — so these h2s were rendering as bare, oversized browser-default headings.
+   Same small-caps "eyebrow" treatment as that base rule (11px/700/uppercase/
+   muted), just re-scoped to this template's real ancestor and its own color
+   token instead of `--ttbm_d_muted`. */
+.ttbm_travello_theme #ttbm_booking_section h2.ttbm_ticket_list_title,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_extra_service_area > h2.extra_service_title {
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: .08em;
+	color: var( --ttlm-muted );
+	margin: 20px 0 12px;
+	padding: 0;
+	text-align: left;
+	display: block;
+	width: 100%;
+}
+
+/* `div.ttbm_registration_area` (ticket/registration.php's own wrapper, shared by
+   every theme) carries its own base plugin card chrome
+   (`border:1px solid #DDD;border-radius:12px;background-color:#fff`,
+   ttbm_registration.css) — meant to stand alone on themes that don't already
+   wrap it in a card. Here it sits nested inside `.ttbm-travello-booking-card`,
+   which already supplies that same white background + radius + shadow one
+   level up, so the border just doubled up as a second, redundant outline
+   around the inner box. Removed for this template only; background-color and
+   border-radius are left alone (harmless — same white as the parent, and a
+   radius with no border/visible edge to draw doesn't show). */
+.ttbm_travello_theme #ttbm_booking_section div.ttbm_registration_area {
+	border: 0;
+}
+
+/* Price + rating header — real data (see travello.php: $ttbm_travello_start_price,
+   the same helper archive cards + hero price already use; $ttbm_travello_rating,
+   Pro's own DB-backed average+count, omitted entirely when there are 0 reviews).
+   `.ttbm-travello-bc-price` wraps a raw `wc_price()` call same as
+   `.ttbm-travello-mobile-bar-price` below already does — its font/color cascades
+   onto the `.woocommerce-Price-amount` markup inside since WooCommerce core sets
+   neither on that span itself. */
+.ttbm-travello-bc-header {
+	margin-bottom: 16px;
+}
+
+.ttbm-travello-bc-from {
+	font-size: 11px;
+	color: var( --ttlm-muted );
+	font-weight: 500;
+	margin: 0 0 2px;
+}
+
+.ttbm-travello-bc-price-row {
+	display: flex;
+	align-items: flex-end;
+	gap: 6px;
+	margin-bottom: 4px;
+}
+
+.ttbm-travello-bc-price {
+	font-size: 30px;
+	font-weight: 800;
+	color: var( --ttlm-primary );
+	letter-spacing: -.02em;
+	line-height: 1;
+}
+
+.ttbm-travello-bc-per {
+	font-size: 13px;
+	font-weight: 500;
+	color: var( --ttlm-muted );
+}
+
+.ttbm-travello-bc-rating {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	font-size: 12px;
+	color: var( --ttlm-muted );
+}
+
+.ttbm-travello-bc-rating .mi-star {
+	color: var( --ttlm-accent );
+}
+
+.ttbm-travello-bc-rating strong {
+	color: var( --ttlm-ink );
+}
+
+/* Trust-features row — generic, non-numeric reassurance copy (no counts/scarcity
+   claims, see the "real data or omit" note in travello.php next to this block). */
+.ttbm-travello-bc-features {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding-top: 16px;
+	border-top: 1px solid var( --ttlm-border );
+	margin-top: 16px;
+}
+
+.ttbm-travello-bc-feat {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 12px;
+	font-weight: 500;
+	color: var( --ttlm-muted );
+}
+
+.ttbm-travello-bc-feat .mi {
+	color: var( --ttlm-primary );
+	font-size: 14px;
+}
+
 /* The reused ticket table (ticket/regular_ticket.php's real, unmodified
    markup) assumes a wide desktop column layout by default and only
    switches to a stacked "card row" layout under the plugin's own
@@ -641,11 +922,22 @@
 	display: none;
 }
 
+/* Base plugin CSS (`.ttbm_ticket_row{border-bottom:1px solid #e9ecef}`,
+   ttbm_registration.css) is written for a plain table where that line is the
+   only divider BETWEEN rows. This card redesign already separates rows with
+   `margin-bottom` + their own `border-radius`/shadow instead, so that
+   leftover table-style line was cutting a flat edge across the bottom of
+   every rounded card underneath the shadow. `border: 0` (below) removes it;
+   the `border` shorthand set right after fully replaces it with the row's
+   own complete 1px outline on all 4 sides — same specificity fight already
+   documented elsewhere in this file (2 classes beats the base rule's 1), so
+   no `!important` needed. */
 .ttbm-travello-booking-card .ttbm_ticket_row {
 	display: flex;
 	flex-wrap: wrap;
 	margin-bottom: 15px;
 	background: #fff;
+	border: 1px solid var( --ttlm-border );
 	border-radius: 8px;
 	box-shadow: 0 2px 10px rgba( 0, 0, 0, .08 );
 	position: relative;
@@ -902,6 +1194,8 @@
 	margin-top: 16px;
 }
 
+/* Real term-name initials (see $ttbm_travello_organizer_initials in travello.php),
+   not an icon glyph — matches the reference's "BT" avatar. */
 .ttbm-travello-organizer-avatar {
 	width: 36px;
 	height: 36px;
@@ -911,7 +1205,8 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size: 15px;
+	font-size: 11px;
+	font-weight: 700;
 	flex-shrink: 0;
 }
 

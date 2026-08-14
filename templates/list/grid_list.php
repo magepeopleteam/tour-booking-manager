@@ -32,8 +32,9 @@ $term_count   = 3;
 		</button>
 	<?php endif; ?>
 
-	<?php /* Thumbnail */ ?>
-	<div class="ttbm-lv-thumb" data-bg-image="<?php echo esc_attr( $thumbnail ); ?>"></div>
+	<?php /* Thumbnail — background-image set directly inline so it renders immediately instead
+	of waiting on JS to apply it from data-bg-image alone. */ ?>
+	<div class="ttbm-lv-thumb" data-bg-image="<?php echo esc_attr( $thumbnail ); ?>"<?php echo $thumbnail ? ' style="background-image:url(\'' . esc_url( $thumbnail ) . '\');"' : ''; ?>></div>
 
 	<?php /* Booking-status overlay (Expired! / Fully Booked!) only — duration moved into the content meta row below */ ?>
 	<div class="ttbm-gc-duration-badge fdColumn" data-placeholder>

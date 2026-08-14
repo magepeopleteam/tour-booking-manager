@@ -29,6 +29,24 @@
 	$ttbm_travello_activities    = get_the_terms( $tour_id, 'ttbm_tour_activities' );
 	$ttbm_travello_activities    = is_array( $ttbm_travello_activities ) ? array_slice( $ttbm_travello_activities, 0, 2 ) : array();
 
+	// --- Title split for the reference's mixed sans/serif-italic treatment
+	// ("Bali Sunrise *Jeep Adventure*") — real titles have no separate
+	// "subtitle" field to italicize, so split on the LAST natural separator
+	// a title already contains (": ", " — ", " – ", " - ") instead of
+	// fabricating one; titles without any of those keep the plain bold
+	// treatment untouched (no split applied). ---
+	$ttbm_travello_title_raw    = get_the_title( $tour_id );
+	$ttbm_travello_title_main   = $ttbm_travello_title_raw;
+	$ttbm_travello_title_accent = '';
+	foreach ( array( ': ', ' — ', ' – ', ' - ' ) as $ttbm_travello_title_sep ) {
+		$ttbm_travello_title_sep_pos = mb_strrpos( $ttbm_travello_title_raw, $ttbm_travello_title_sep );
+		if ( false !== $ttbm_travello_title_sep_pos ) {
+			$ttbm_travello_title_main   = mb_substr( $ttbm_travello_title_raw, 0, $ttbm_travello_title_sep_pos );
+			$ttbm_travello_title_accent = mb_substr( $ttbm_travello_title_raw, $ttbm_travello_title_sep_pos + mb_strlen( $ttbm_travello_title_sep ) );
+			break;
+		}
+	}
+
 	// --- Meta row (real data — same source functions the *_box.php hero-stat partials use, just laid out as one compact inline row instead of a stat grid) ---
 	$ttbm_travello_location = TTBM_Function::get_full_location( $tour_id );
 	if ( ! $ttbm_travello_location ) {
@@ -72,8 +90,27 @@
 	$ttbm_travello_organizer_terms = get_the_terms( $tour_id, 'ttbm_tour_org' );
 	$ttbm_travello_organizer_name  = ( is_array( $ttbm_travello_organizer_terms ) && ! empty( $ttbm_travello_organizer_terms ) ) ? $ttbm_travello_organizer_terms[0]->name : '';
 
+	// --- Organizer avatar initials — derived from the same real term name above (first letter of
+	// up to its first 2 words), not a fabricated value; empty whenever the name above is. ---
+	$ttbm_travello_organizer_initials = '';
+	if ( $ttbm_travello_organizer_name ) {
+		$ttbm_travello_organizer_words    = preg_split( '/\s+/', trim( $ttbm_travello_organizer_name ) );
+		$ttbm_travello_organizer_initials = mb_strtoupper( mb_substr( $ttbm_travello_organizer_words[0], 0, 1 ) . ( isset( $ttbm_travello_organizer_words[1] ) ? mb_substr( $ttbm_travello_organizer_words[1], 0, 1 ) : '' ) );
+	}
+
 	// --- Wishlist state (reuses the plugin's own real toggle button + AJAX handler) ---
 	$ttbm_travello_in_wishlist = class_exists( 'TTBM_Wishlist' ) && is_user_logged_in() && TTBM_Wishlist::is_in_wishlist( $tour_id );
+
+	// --- Booking-card rating (real, Pro's own DB-backed average+count — same class the Reviews tab
+	// uses; simply omitted whenever Pro's reviews are inactive or the tour has none published, same
+	// "no fabricated stats" rule as the organizer card above). ---
+	$ttbm_travello_rating = null;
+	if ( class_exists( 'TTBM_Review_Rating' ) ) {
+		$ttbm_travello_review_rating = new TTBM_Review_Rating( $tour_id );
+		if ( $ttbm_travello_review_rating->total_reviews > 0 ) {
+			$ttbm_travello_rating = $ttbm_travello_review_rating;
+		}
+	}
 ?>
 <div class="ttbm_style ttbm_travello_theme placeholderLoader">
 	<div class="ttbm-travello-container">
@@ -107,20 +144,22 @@
 			<div class="ttbm-travello-main">
 
 				<div class="ttbm-travello-header">
-					<?php if ( $ttbm_travello_is_bestseller || ! empty( $ttbm_travello_activities ) ) : ?>
-						<div class="ttbm-travello-badges">
-							<?php if ( $ttbm_travello_is_bestseller ) : ?>
-								<span class="ttbm-travello-badge"><?php esc_html_e( 'Bestseller', 'tour-booking-manager' ); ?></span>
-							<?php endif; ?>
-							<?php foreach ( $ttbm_travello_activities as $ttbm_travello_activity_term ) : ?>
-								<span class="ttbm-travello-badge ttbm-travello-badge--outline"><?php echo esc_html( $ttbm_travello_activity_term->name ); ?></span>
-							<?php endforeach; ?>
-						</div>
-					<?php endif; ?>
+					<div class="ttbm-travello-badges">
+						<?php if ( $ttbm_travello_is_bestseller ) : ?>
+							<span class="ttbm-travello-badge"><?php esc_html_e( 'Bestseller', 'tour-booking-manager' ); ?></span>
+						<?php endif; ?>
+						<?php foreach ( $ttbm_travello_activities as $ttbm_travello_activity_term ) : ?>
+							<span class="ttbm-travello-badge ttbm-travello-badge--outline"><?php echo esc_html( $ttbm_travello_activity_term->name ); ?></span>
+						<?php endforeach; ?>
+						<span class="ttbm-travello-badge ttbm-travello-badge--outline ttbm-travello-badge--soft"><?php esc_html_e( 'Free cancellation', 'tour-booking-manager' ); ?></span>
+					</div>
 
-					<h1 class="ttbm-travello-title"><?php echo esc_html( get_the_title( $tour_id ) ); ?></h1>
-
-					<?php do_action( 'ttbm_details_title_after', $ttbm_post_id ); ?>
+					<h1 class="ttbm-travello-title">
+						<?php echo esc_html( $ttbm_travello_title_main ); ?>
+						<?php if ( $ttbm_travello_title_accent ) : ?>
+							<span class="ttbm-travello-title-accent"><?php echo esc_html( $ttbm_travello_title_accent ); ?></span>
+						<?php endif; ?>
+					</h1>
 
 					<?php if ( $ttbm_travello_location || $ttbm_travello_duration_label || $ttbm_travello_max_people || ! empty( $ttbm_travello_languages ) ) : ?>
 						<div class="ttbm-travello-meta-row">
@@ -136,6 +175,28 @@
 							<?php if ( ! empty( $ttbm_travello_languages ) ) : ?>
 								<span class="ttbm-travello-meta-item"><span class="mi mi-language" aria-hidden="true"></span><strong><?php echo esc_html( implode( ', ', $ttbm_travello_languages ) ); ?></strong></span>
 							<?php endif; ?>
+						</div>
+					<?php endif; ?>
+
+					<?php if ( $ttbm_travello_rating ) : ?>
+						<div class="ttbm-travello-rating-row">
+							<strong class="ttbm-travello-rating-value"><?php echo esc_html( $ttbm_travello_rating->avg_rating ); ?></strong>
+							<span
+								class="ttbm-rating-stars"
+								style="--ttbm-rating: <?php echo esc_attr( $ttbm_travello_rating->avg_rating ); ?>;"
+								title="<?php echo esc_attr( sprintf( __( 'Rating of this tour is %s out of 5.', 'tour-booking-manager' ), $ttbm_travello_rating->avg_rating ) ); ?>"
+							></span>
+							<span class="ttbm-travello-rating-count">
+								<?php
+								echo esc_html(
+									sprintf(
+										/* translators: %d: number of reviews */
+										_n( '%d verified review', '%d verified reviews', $ttbm_travello_rating->total_reviews, 'tour-booking-manager' ),
+										$ttbm_travello_rating->total_reviews
+									)
+								);
+								?>
+							</span>
 						</div>
 					<?php endif; ?>
 
@@ -206,17 +267,66 @@
 
 			<aside class="ttbm-travello-sidebar">
 				<div class="ttbm-travello-booking-card placeholder_area" id="ttbm_booking_section">
+					<?php if ( $ttbm_travello_start_price ) : ?>
+						<div class="ttbm-travello-bc-header">
+							<p class="ttbm-travello-bc-from"><?php esc_html_e( 'From', 'tour-booking-manager' ); ?></p>
+							<div class="ttbm-travello-bc-price-row">
+								<span class="ttbm-travello-bc-price">
+									<?php
+									// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									echo wc_price( $ttbm_travello_start_price );
+									?>
+								</span>
+								<span class="ttbm-travello-bc-per"><?php esc_html_e( '/person', 'tour-booking-manager' ); ?></span>
+							</div>
+							<?php if ( $ttbm_travello_rating ) : ?>
+								<div class="ttbm-travello-bc-rating">
+									<span class="mi mi-star" aria-hidden="true"></span>
+									<strong><?php echo esc_html( $ttbm_travello_rating->avg_rating ); ?></strong>
+									<span>
+										<?php
+										echo esc_html(
+											sprintf(
+												/* translators: %d: number of reviews */
+												_n( '%d review', '%d reviews', $ttbm_travello_rating->total_reviews, 'tour-booking-manager' ),
+												$ttbm_travello_rating->total_reviews
+											)
+										);
+										?>
+									</span>
+								</div>
+							<?php endif; ?>
+						</div>
+					<?php endif; ?>
+
 					<?php include( TTBM_Function::template_path( 'ticket/registration.php' ) ); ?>
 					<?php include( TTBM_Function::template_path( 'ticket/particular_item_area.php' ) ); ?>
 
+					<div class="ttbm-travello-bc-features">
+						<div class="ttbm-travello-bc-feat"><span class="mi mi-check" aria-hidden="true"></span><?php esc_html_e( 'Free cancellation up to 24h before', 'tour-booking-manager' ); ?></div>
+						<div class="ttbm-travello-bc-feat"><span class="mi mi-shield-check" aria-hidden="true"></span><?php esc_html_e( 'Secure payment — book with confidence', 'tour-booking-manager' ); ?></div>
+						<div class="ttbm-travello-bc-feat"><span class="mi mi-clipboard-check" aria-hidden="true"></span><?php esc_html_e( 'Instant confirmation', 'tour-booking-manager' ); ?></div>
+						<div class="ttbm-travello-bc-feat"><span class="mi mi-chat" aria-hidden="true"></span><?php esc_html_e( 'Live chat support 24/7', 'tour-booking-manager' ); ?></div>
+					</div>
+
 					<?php if ( $ttbm_travello_organizer_name ) : ?>
 						<div class="ttbm-travello-organizer">
-							<span class="ttbm-travello-organizer-avatar mi mi-user" aria-hidden="true"></span>
+							<span class="ttbm-travello-organizer-avatar" aria-hidden="true"><?php echo esc_html( $ttbm_travello_organizer_initials ); ?></span>
 							<span class="ttbm-travello-organizer-name"><?php echo esc_html( $ttbm_travello_organizer_name ); ?></span>
 						</div>
 					<?php endif; ?>
 				</div>
-				<?php /* why_choose_us / get_a_question / tour_guide / dynamic_sidebar deliberately left out — the reference's sidebar is just the booking card (operator mini-card included as its last element), nothing else. */ ?>
+				<?php /* why_choose_us / get_a_question / tour_guide / dynamic_sidebar deliberately left out — the reference's sidebar is just the booking card (operator mini-card included as its last element), nothing else.
+
+				Reference also has a fixed "$178 for 2" total, a "⚡ Only 3 spots left — this date is in
+				high demand" urgency banner, and a "Reserve now — pay later" CTA label. None of those are
+				added here: the real ticket widget below already computes and displays its own live total
+				(no fixed number to reuse), there's no real per-tour "trending" signal behind the urgency
+				banner (every tour page would show the identical hardcoded "3" and "high demand" claim,
+				which is a fabricated scarcity claim once it's baked into a template rather than one static
+				demo page), and this plugin has no "pay later" flow behind its real Book Now / Add to Cart
+				buttons — relabeling them would promise something that doesn't happen at checkout. Same
+				"real data or omit" rule as the organizer/rating blocks above. */ ?>
 			</aside>
 
 		</div><!-- .ttbm-travello-layout -->

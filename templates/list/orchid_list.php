@@ -12,7 +12,9 @@ $regular_price = TTBM_Function::check_discount_price_exit( $tour_id );
 	<?php if ( $regular_price ) : ?>
 		<div class="ttbm-orchid-badge-sale" data-placeholder><?php esc_html_e( 'ON SALE!', 'tour-booking-manager' ); ?></div>
 	<?php endif; ?>
-	<div class="ttbm-orchid-thumb" data-bg-image="<?php echo esc_attr( $thumbnail ); ?>"></div>
+	<?php /* background-image set directly inline so the thumbnail renders immediately instead
+	of waiting on JS to apply it from data-bg-image alone. */ ?>
+	<div class="ttbm-orchid-thumb" data-bg-image="<?php echo esc_attr( $thumbnail ); ?>"<?php echo $thumbnail ? ' style="background-image:url(\'' . esc_url( $thumbnail ) . '\');"' : ''; ?>></div>
 </div>
 
 <div class="ttbm-orchid-body fdColumn">

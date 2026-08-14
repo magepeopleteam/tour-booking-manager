@@ -114,6 +114,14 @@
                                 </div>
 
                                 <div class="ttbm-modal-field">
+                                    <label class="ttbm-modal-label" for="ttbm_day_time_input">
+                                        <?php esc_html_e('Time', 'tour-booking-manager'); ?>
+                                        <span class="ttbm-modal-optional">(<?php esc_html_e('optional', 'tour-booking-manager'); ?>)</span>
+                                    </label>
+                                    <input type="time" id="ttbm_day_time_input" name="ttbm_day_time">
+                                </div>
+
+                                <div class="ttbm-modal-field">
                                     <label class="ttbm-modal-label">
                                         <?php esc_html_e('Day Description', 'tour-booking-manager'); ?>
                                     </label>
@@ -160,10 +168,18 @@
 				if (!empty($ttbm_daywise)):
 					foreach ($ttbm_daywise as $key => $value) :
 						?>
-                        <div class="ttbm-daywise-item" data-id="<?php echo esc_attr($key); ?>">
+                        <div class="ttbm-daywise-item" data-id="<?php echo esc_attr($key); ?>" data-time="<?php echo esc_attr($value['ttbm_day_time'] ?? ''); ?>">
                             <div class="daywise-header" data-collapse-target="#daywise-content-<?php echo esc_attr($key); ?>">
                                 <div class="dFlex">
+									<?php /* Time kept OUT of the <p> below on purpose — ttbm_admin_script.js's
+									edit handler reads this <p>'s .text() as the title to pre-fill the modal,
+									so anything else inside it would get pulled into the title field too. The
+									real value the JS actually reads for pre-filling is this wrapper's own
+									data-time attribute above, not this badge. */ ?>
                                     <p><?php echo esc_html($value['ttbm_day_title']); ?></p>
+									<?php if (!empty($value['ttbm_day_time'])) : ?>
+										<span class="ttbm-daywise-item-time"><i class="fas fa-clock"></i> <?php echo esc_html($value['ttbm_day_time']); ?></span>
+									<?php endif; ?>
                                     <div class="daywise-action">
                                         <span class=""><i class="fas fa-eye"></i></span>
                                         <span class="ttbm-daywise-item-edit" data-modal="ttbm-daywise-item-new"><i class="fas fa-edit"></i></span>
@@ -185,11 +201,12 @@
 				}
 				$post_id = isset($_POST['ttbm_daywise_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_daywise_postID'])) : '';
 				$ttbm_day_title = isset($_POST['ttbm_day_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_day_title'])) : '';
+				$ttbm_day_time = isset($_POST['ttbm_day_time']) ? sanitize_text_field(wp_unslash($_POST['ttbm_day_time'])) : '';
 				$allowed_tags = wp_kses_allowed_html('post');
 				$ttbm_day_content = isset($_POST['ttbm_day_content']) ? wp_kses(wp_unslash($_POST['ttbm_day_content']), $allowed_tags) : '';
 				$ttbm_daywise = get_post_meta($post_id, 'ttbm_daywise_details', true);
 				$ttbm_daywise = !empty($ttbm_daywise) ? $ttbm_daywise : [];
-				$new_data = ['ttbm_day_title' => $ttbm_day_title, 'ttbm_day_content' => $ttbm_day_content];
+				$new_data = ['ttbm_day_title' => $ttbm_day_title, 'ttbm_day_time' => $ttbm_day_time, 'ttbm_day_content' => $ttbm_day_content];
 				if (!empty($ttbm_daywise)) {
 					if (isset($_POST['ttbm_daywise_itemID'])) {
 						$ttbm_daywise[sanitize_text_field(wp_unslash($_POST['ttbm_daywise_itemID']))] = $new_data;
@@ -212,11 +229,12 @@
 				}
 				$post_id = isset($_POST['ttbm_daywise_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_daywise_postID'])) : '';
 				$ttbm_day_title = isset($_POST['ttbm_day_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_day_title'])) : '';
+				$ttbm_day_time = isset($_POST['ttbm_day_time']) ? sanitize_text_field(wp_unslash($_POST['ttbm_day_time'])) : '';
 				$allowed_tags = wp_kses_allowed_html('post');
 				$ttbm_day_content = isset($_POST['ttbm_day_content']) ? wp_kses(wp_unslash($_POST['ttbm_day_content']), $allowed_tags) : '';
 				$ttbm_daywise = get_post_meta($post_id, 'ttbm_daywise_details', true);
 				$ttbm_daywise = !empty($ttbm_daywise) ? $ttbm_daywise : [];
-				$new_data = ['ttbm_day_title' => $ttbm_day_title, 'ttbm_day_content' => $ttbm_day_content];
+				$new_data = ['ttbm_day_title' => $ttbm_day_title, 'ttbm_day_time' => $ttbm_day_time, 'ttbm_day_content' => $ttbm_day_content];
 				if (isset($post_id)) {
 					array_push($ttbm_daywise, $new_data);
 				}

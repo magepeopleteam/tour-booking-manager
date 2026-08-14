@@ -1142,9 +1142,15 @@
         var itemId = $(this).closest('.ttbm-daywise-item').data('id');
         var parent = $(this).closest('.ttbm-daywise-item');
         var headerText = parent.find('.daywise-header p').text().trim();
+        // Read from the item wrapper's own data-time attribute, not scraped from
+        // the header text — the visible time badge next to the title is a
+        // sibling <span>, kept out of the <p> above on purpose so headerText
+        // stays just the title (see TTBM_Settings_itinery_builder.php).
+        var itemTime = parent.data('time') || '';
         var daywiseContentId = parent.find('.daywise-content').html().trim();
         var editorId = 'ttbm_day_content';
         $('input[name="ttbm_day_title"]').val(headerText);
+        $('input[name="ttbm_day_time"]').val(itemTime);
         $('input[name="ttbm_daywise_item_id"]').val(itemId);
         if (tinymce.get(editorId)) {
             tinymce.get(editorId).setContent(daywiseContentId);
@@ -1165,6 +1171,7 @@
     });
     function empty_daywise_form() {
         $('input[name="ttbm_day_title"]').val('');
+        $('input[name="ttbm_day_time"]').val('');
         tinyMCE.get('ttbm_day_content').setContent('');
         $('input[name="ttbm_daywise_item_id"]').val('');
     }
@@ -1183,6 +1190,7 @@
     });
     function update_daywise() {
         var title = $('input[name="ttbm_day_title"]');
+        var time = $('input[name="ttbm_day_time"]');
         var content = tinyMCE.get('ttbm_day_content').getContent();
         var postID = $('input[name="ttbm_post_id"]');
         var itemId = $('input[name="ttbm_daywise_item_id"]');
@@ -1192,6 +1200,7 @@
             data: {
                 action: 'ttbm_daywise_data_update',
                 ttbm_day_title: title.val(),
+                ttbm_day_time: time.val(),
                 ttbm_day_content: content,
                 ttbm_daywise_postID: postID.val(),
                 ttbm_daywise_itemID: itemId.val(),
@@ -1213,6 +1222,7 @@
     }
     function save_daywise() {
         var title = $('input[name="ttbm_day_title"]');
+        var time = $('input[name="ttbm_day_time"]');
         var content = tinyMCE.get('ttbm_day_content').getContent();
         var postID = $('input[name="ttbm_post_id"]');
         console.log(ttbm_admin_ajax.ajax_url);
@@ -1222,6 +1232,7 @@
             data: {
                 action: 'ttbm_daywise_data_save',
                 ttbm_day_title: title.val(),
+                ttbm_day_time: time.val(),
                 ttbm_day_content: content,
                 ttbm_daywise_postID: postID.val(),
                 nonce: ttbm_admin_ajax.nonce

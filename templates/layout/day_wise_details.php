@@ -45,6 +45,27 @@
 		}
 	}
 
+	if ( ! function_exists( 'ttbm_format_day_time' ) ) {
+		/**
+		 * Optional per-item time (admin's `<input type="time">` stores 24-hour
+		 * "HH:MM"). Displayed as a friendly 12-hour "g:i A" string; falls back to
+		 * the raw stored value if it's ever something DateTime can't parse
+		 * (e.g. imported/legacy data in some other shape) rather than hiding it.
+		 */
+		function ttbm_format_day_time( $time ) {
+			$time = trim( (string) $time );
+			if ( '' === $time ) {
+				return '';
+			}
+			try {
+				$parsed = new DateTime( $time );
+				return $parsed->format( 'g:i A' );
+			} catch ( Exception $e ) {
+				return $time;
+			}
+		}
+	}
+
 	if ( ! function_exists( 'ttbm_day_activity_icon' ) ) {
 		function ttbm_day_activity_icon( $text ) {
 			$text = strtolower( $text );
@@ -156,9 +177,15 @@
 					<div class="<?php echo esc_attr( $item_class ); ?>">
 						<div class="day_wise_details_marker" aria-hidden="true"><?php echo esc_html( $parsed['badge'] ); ?></div>
 						<div class="day_wise_details_card">
+							<?php $day_time = ttbm_format_day_time( $day['ttbm_day_time'] ?? '' ); ?>
 							<h5 class="<?php echo esc_attr( $title_class ); ?>" data-open-icon="fa-chevron-down" data-close-icon="fa-chevron-up" data-collapse-target="<?php echo esc_attr( $collapse_id ); ?>">
 								<span class="day_wise_details_header">
-									<span class="day_wise_details_label"><?php echo esc_html( $category ); ?></span>
+									<span class="day_wise_details_meta">
+										<span class="day_wise_details_label"><?php echo esc_html( $category ); ?></span>
+										<?php if ( $day_time ) : ?>
+											<span class="day_wise_details_time"><i class="fas fa-clock" aria-hidden="true"></i> <?php echo esc_html( $day_time ); ?></span>
+										<?php endif; ?>
+									</span>
 									<span class="day_wise_details_name"><?php echo esc_html( $parsed['title'] ); ?></span>
 								</span>
 								<span data-icon class="fas fa-chevron-<?php echo $is_first ? 'up' : 'down'; ?>"></span>

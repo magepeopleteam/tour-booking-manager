@@ -8,7 +8,9 @@
 ?>
 <?php include( TTBM_Function::template_path( 'layout/sale_price.php' ) ); ?>
 <div class="bg_image_area" data-href="<?php echo esc_url( get_the_permalink( $tour_id ) ); ?>" data-placeholder>
-	<div data-bg-image="<?php echo esc_attr( $thumbnail ); ?>"></div>
+	<?php /* background-image set directly inline so the thumbnail renders immediately instead
+	of waiting on JS to apply it from data-bg-image alone. */ ?>
+	<div data-bg-image="<?php echo esc_attr( $thumbnail ); ?>"<?php echo $thumbnail ? ' style="background-image:url(\'' . esc_url( $thumbnail ) . '\');"' : ''; ?>></div>
 	<div class="fullAbsolute group_item">
 		<div class="flexEqual">
 			<?php include( TTBM_Function::template_path( 'layout/list_price.php' ) ); ?>

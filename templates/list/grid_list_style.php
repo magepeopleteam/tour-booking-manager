@@ -25,8 +25,9 @@ $term_count   = 3;
 		</button>
 	<?php endif; ?>
 
-	<?php /* Tour thumbnail */ ?>
-	<div class="ttbm-gc-thumb" data-bg-image="<?php echo esc_attr( $thumbnail ); ?>"></div>
+	<?php /* Tour thumbnail — background-image set directly inline (not left to JS to apply from
+	data-bg-image alone) so the thumbnail renders immediately instead of waiting on a script. */ ?>
+	<div class="ttbm-gc-thumb" data-bg-image="<?php echo esc_attr( $thumbnail ); ?>"<?php echo $thumbnail ? ' style="background-image:url(\'' . esc_url( $thumbnail ) . '\');"' : ''; ?>></div>
 
 	<?php /* Duration badge overlaid at bottom of image */ ?>
 	<div class="ttbm-gc-duration-badge fdColumn" data-placeholder>

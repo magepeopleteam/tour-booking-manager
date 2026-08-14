@@ -379,6 +379,13 @@
 	flex: 1;
 }
 
+#ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_meta {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_label {
 	font-size: 11px;
 	font-weight: 700;
@@ -386,6 +393,17 @@
 	letter-spacing: .08em;
 	text-transform: uppercase;
 	color: var(--color_theme, #2563eb);
+}
+
+/* Optional per-item time (see layout/day_wise_details.php: $day['ttbm_day_time'],
+   entered via the admin's `<input type="time">` — never shown when unset). */
+#ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_time {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	font-size: 11px;
+	font-weight: 600;
+	color: var(--ttbm_d_muted, #6b7280);
 }
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_name {

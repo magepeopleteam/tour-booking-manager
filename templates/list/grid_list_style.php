@@ -39,11 +39,26 @@ $term_count   = 3;
 
 <div class="ttbm-gc-body fdColumn">
 
-	<?php /* Location */ ?>
-	<?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
-
 	<?php /* Title */ ?>
 	<?php include( TTBM_Function::template_path( 'layout/list_title.php' ) ); ?>
+
+	<?php /* Location + duration on one line — same real partials + combined-row
+	technique as list/grid_list.php's modern card (the main archive uses that
+	template; this one's the "Similar tours"/list-mode card), just under this
+	file's own .ttbm-gc- prefix instead of .ttbm-lv- since the wrapper here is
+	.ttbm-gc-body, not .ttbm-lv-content-col. */ ?>
+	<div class="ttbm-gc-meta-row" data-placeholder>
+		<?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
+		<?php include( TTBM_Function::template_path( 'layout/list_duration.php' ) ); ?>
+	</div>
+
+	<?php /* Activity tag pills — real ttbm_tour_activities taxonomy terms, same
+	partial the modern card uses; $hide_gc_tags lets a caller (e.g. a very
+	narrow card context) opt back out, same flag layout/related_tour.php
+	already sets (now used for real instead of doing nothing). */ ?>
+	<?php if ( empty( $hide_gc_tags ) ) : ?>
+		<?php include( TTBM_Function::template_path( 'layout/list_tags.php' ) ); ?>
+	<?php endif; ?>
 
 	<?php /* Short description */ ?>
 	<?php include( TTBM_Function::template_path( 'layout/description_short.php' ) ); ?>

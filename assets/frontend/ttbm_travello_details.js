@@ -83,6 +83,59 @@
 			.append(document.createTextNode(' View all ' + totalPhotos + ' photos'));
 	});
 
+	// ── Review cards: real-name avatar + reorganized header ──────────────
+	// Pro's real widget (ttbm_review_list(), tour-booking-manager-pro) has no
+	// avatar/initials markup at all — the reviewer's name only ever exists
+	// as plain text inside .ttbm-tour-review-info ("Emily R., <span>August
+	// 2026</span>"), and the bold line up top is the review's own headline
+	// (post_title), not the name. Built the avatar from that same real name
+	// text (not a separate/fabricated data source) and regrouped it next to
+	// the star rating, closer to the reference layout — rather than forking
+	// Pro's shared method for one theme. No avatar-photo, "traveler type", or
+	// review-photo fields exist in the real data at all, so none of those
+	// are invented here.
+	$('#ttbm-travello-reviews .ttbm-tour-review-item').each(function () {
+		var $item = $(this);
+		var $info = $item.find('> .ttbm-tour-review-info');
+		var $title = $item.find('> .ttbm-tour-review-rating-with-title');
+		if (!$info.length || !$title.length) {
+			return;
+		}
+
+		var $dateSpan = $info.find('.ttbm-tour-review-date').detach();
+		var name = $.trim($info.text()).replace(/,\s*$/, '');
+		var $stars = $title.find('.ttbm-tour-rating').detach();
+		var headline = $.trim($title.find('.ttbm-tour-review-name').text());
+
+		if (!name) {
+			return;
+		}
+		var initials = $.map(name.split(/\s+/).slice(0, 2), function (word) {
+			return word.charAt(0).toUpperCase();
+		}).join('');
+
+		var $head = $('<div class="ttbm-travello-review-head"></div>')
+			.append($('<span class="ttbm-travello-review-avatar" aria-hidden="true"></span>').text(initials))
+			.append(
+				$('<div class="ttbm-travello-review-identity"></div>')
+					.append($('<p class="ttbm-travello-review-name"></p>').text(name))
+					.append($('<p class="ttbm-travello-review-meta"></p>').append($dateSpan))
+			)
+			.append($stars);
+
+		$title.replaceWith($head);
+		$info.remove();
+		if (headline) {
+			$head.after($('<p class="ttbm-travello-review-headline"></p>').text(headline));
+		}
+	});
+
+	// ── "See all N reviews" — expand in place, no separate view to link to ──
+	$(document).on('click', '.ttbm-travello-reviews-more', function () {
+		$('#ttbm-travello-reviews').addClass('ttbm-travello-reviews-expanded');
+		$(this).remove();
+	});
+
 	// ── Share button ───────────────────────────────────────────────────
 	$(document).on('click', '#ttbm-travello-share-btn', function () {
 		var title = $(this).data('share-title') || document.title;

@@ -7449,22 +7449,98 @@ div.ttbm-tour-list-shortcode .ttbm-gc-duration-badge {
 	gap: 0;
 }
 
-/* --- Location ------------------------------------------------------------ */
+/* --- Location + duration meta row ------------------------------------------
+   Redesigned to match the archive page's modern card (list/grid_list.php's
+   .ttbm-lv-meta-row) — location + duration combined on one line instead of
+   location standing alone with duration only appearing later in the footer.
+   Same real partials (layout/location.php + layout/list_duration.php), just
+   under this template's own .ttbm-gc- prefix since the wrapper here is
+   .ttbm-gc-body, not .ttbm-lv-content-col. */
+.ttbm-gc-body .ttbm-gc-meta-row {
+	display: flex;
+	align-items: center;
+	flex-wrap: nowrap;
+	gap: 5px;
+	margin: 0 0 6px;
+	min-width: 0;
+}
+
 .ttbm-gc-body .ttbm_list_info.location_name {
 	display: flex;
 	align-items: center;
 	gap: 5px;
-	margin: 0 0 6px 0;
+	margin: 0;
 	font-size: 12.5px;
 	font-weight: 500;
 	color: #64748b;
 	overflow: visible;
 }
 
-.ttbm-gc-body .ttbm_list_info.location_name .mi {
+.ttbm-gc-body .ttbm-gc-meta-row .ttbm_list_info.location_name {
+	flex: 0 1 auto;
+	min-width: 0;
+	overflow: hidden;
+}
+
+.ttbm-gc-body .ttbm-gc-meta-row .ttbm_list_info.location_name .ttbm_list_info_text {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	min-width: 0;
+}
+
+.ttbm-gc-body .ttbm-gc-meta-row .ttbm_list_info:not(.location_name) {
+	flex: 0 0 auto;
+	margin: 0;
+	font-size: 12.5px;
+	font-weight: 500;
+	color: #64748b;
+}
+
+.ttbm-gc-body .ttbm_list_info.location_name .mi,
+.ttbm-gc-body .ttbm-gc-meta-row .ttbm_list_info .mi {
 	font-size: 13px;
 	color: var(--color_theme, #2563eb);
 	margin: 0;
+}
+
+/* Bullet separator between location and duration, same technique as the
+   modern card. */
+.ttbm-gc-body .ttbm-gc-meta-row .ttbm_list_info.location_name ~ .ttbm_list_info::before {
+	content: "\2022";
+	margin-right: 5px;
+	color: #cbd5e1;
+	font-weight: 700;
+	flex-shrink: 0;
+}
+
+/* --- Activity tag pills (layout/list_tags.php; real ttbm_tour_activities
+   taxonomy terms — see list_tags.php's own comment for why it's this
+   taxonomy and not the legacy postmeta of the same name) ------------------ */
+.ttbm-gc-body .ttbm-gc-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 0 0 10px;
+}
+
+.ttbm-gc-body .ttbm-gc-tag {
+	display: inline-flex;
+	align-items: center;
+	background: #eef2f7;
+	color: #475569;
+	font-size: 11.5px;
+	font-weight: 600;
+	letter-spacing: 0.01em;
+	padding: 4px 10px;
+	border-radius: 999px;
+	line-height: 1.3;
+}
+
+/* The footer's own ALL-CAPS duration label ("4 DAYS / 5 NIGHTS") is now
+   redundant with the duration already shown in the meta row above. */
+.ttbm-gc-body .ttbm-gc-duration-label {
+	display: none;
 }
 
 /* --- Title ---------------------------------------------------------------- */
@@ -8367,6 +8443,45 @@ button.ttbm_explore_button:hover {
 }
 
 .ttbm-lv-content-col .ttbm-gc-rating-count {
+	font-weight: 500;
+	color: #94a3b8;
+}
+
+/* ── Automatic review-based rating badge (real avg + review count) ──
+   TTBM_Layout_Pro::global_grid_review_rating(), fires via ttbm_title_before
+   in layout/list_title.php — shared by every card list style (tour list
+   page's modern card, related/similar tours, and the older list-style
+   variants), so it's kept unscoped by container rather than styled only
+   for the two contexts asked about, which would leave the same markup
+   looking broken (raw unstyled numbers after 5 gradient stars) elsewhere.
+   The base .ttbm-rating-stars 5-star gradient widget (tour details hero,
+   per-review stars) is untouched — this only takes over the modifier
+   class PHP now adds alongside it. */
+.ttbm-rating-stars.ttbm-list-rating {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	margin: 0 0 6px 0;
+	font-size: 12.5px;
+	line-height: 1.2;
+}
+
+.ttbm-rating-stars.ttbm-list-rating::before {
+	content: none;
+}
+
+.ttbm-list-rating-star {
+	font-size: 13px;
+	line-height: 1;
+	color: var( --travail-color-accent );
+}
+
+.ttbm-list-rating-value {
+	font-weight: 700;
+	color: #111827;
+}
+
+.ttbm-list-rating-count {
 	font-weight: 500;
 	color: #94a3b8;
 }

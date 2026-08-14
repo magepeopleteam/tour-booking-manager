@@ -112,7 +112,7 @@
 		}
 	}
 ?>
-<div class="ttbm_style ttbm_travello_theme placeholderLoader">
+<div class="ttbm_style ttbm_travello_theme">
 	<div class="ttbm-travello-container">
 
 		<?php
@@ -135,7 +135,7 @@
 		   own hero styling — confirmed by grepping every `.ttbm_hero` rule
 		   in ttbm_details.css before adding this. */
 		?>
-		<div class="ttbm-travello-gallery ttbm_hero placeholder_area" id="ttbm_travello_gallery">
+		<div class="ttbm-travello-gallery ttbm_hero" id="ttbm_travello_gallery">
 			<?php do_action( 'ttbm_slider' ); ?>
 		</div>
 
@@ -144,12 +144,27 @@
 			<div class="ttbm-travello-main">
 
 				<div class="ttbm-travello-header">
+					<?php
+					// Reference always has exactly one solid/filled "lead" badge up front
+					// (Bestseller), everything after it outline. Real tours aren't always
+					// flagged Bestseller though — when that flag is off, promote the
+					// first real activity term into that same lead-badge slot instead of
+					// leaving every badge outline, so the row still reads with the same
+					// visual hierarchy the reference has. Still 100% real data either way,
+					// just deciding which one gets the solid treatment.
+					$ttbm_travello_lead_badge_used = $ttbm_travello_is_bestseller;
+					?>
 					<div class="ttbm-travello-badges">
 						<?php if ( $ttbm_travello_is_bestseller ) : ?>
 							<span class="ttbm-travello-badge"><?php esc_html_e( 'Bestseller', 'tour-booking-manager' ); ?></span>
 						<?php endif; ?>
 						<?php foreach ( $ttbm_travello_activities as $ttbm_travello_activity_term ) : ?>
-							<span class="ttbm-travello-badge ttbm-travello-badge--outline"><?php echo esc_html( $ttbm_travello_activity_term->name ); ?></span>
+							<?php if ( ! $ttbm_travello_lead_badge_used ) : ?>
+								<span class="ttbm-travello-badge"><?php echo esc_html( $ttbm_travello_activity_term->name ); ?></span>
+								<?php $ttbm_travello_lead_badge_used = true; ?>
+							<?php else : ?>
+								<span class="ttbm-travello-badge ttbm-travello-badge--outline"><?php echo esc_html( $ttbm_travello_activity_term->name ); ?></span>
+							<?php endif; ?>
 						<?php endforeach; ?>
 						<span class="ttbm-travello-badge ttbm-travello-badge--outline ttbm-travello-badge--soft"><?php esc_html_e( 'Free cancellation', 'tour-booking-manager' ); ?></span>
 					</div>
@@ -216,38 +231,141 @@
 					<button type="button" class="ttbm-travello-tab is-active" data-target="ttbm-travello-overview"><?php esc_html_e( 'Overview', 'tour-booking-manager' ); ?></button>
 					<button type="button" class="ttbm-travello-tab" data-target="ttbm-travello-itinerary"><?php esc_html_e( 'Itinerary', 'tour-booking-manager' ); ?></button>
 					<button type="button" class="ttbm-travello-tab" data-target="ttbm-travello-includes"><?php esc_html_e( "What's included", 'tour-booking-manager' ); ?></button>
-					<button type="button" class="ttbm-travello-tab" data-target="ttbm-travello-reviews"><?php esc_html_e( 'Reviews', 'tour-booking-manager' ); ?></button>
+					<button type="button" class="ttbm-travello-tab" data-target="ttbm-travello-reviews">
+						<?php
+						// Reference shows "Reviews (128)" — real count when there is
+						// one (same $ttbm_travello_rating used by the header/sidebar),
+						// otherwise just "Reviews" rather than a fabricated "(0)".
+						echo $ttbm_travello_rating
+							? esc_html( sprintf( '%s (%d)', __( 'Reviews', 'tour-booking-manager' ), $ttbm_travello_rating->total_reviews ) )
+							: esc_html__( 'Reviews', 'tour-booking-manager' );
+						?>
+					</button>
 					<button type="button" class="ttbm-travello-tab" data-target="ttbm-travello-location"><?php esc_html_e( 'Location', 'tour-booking-manager' ); ?></button>
 					<button type="button" class="ttbm-travello-tab" data-target="ttbm-travello-faq"><?php esc_html_e( 'FAQ', 'tour-booking-manager' ); ?></button>
 				</nav>
 
-				<div id="ttbm-travello-overview" class="ttbm-travello-section placeholder_area">
+				<div id="ttbm-travello-overview" class="ttbm-travello-section">
 					<?php do_action( 'ttbm_description' ); ?>
 				</div>
 
-				<div id="ttbm-travello-itinerary" class="ttbm-travello-section placeholder_area">
+				<div id="ttbm-travello-itinerary" class="ttbm-travello-section">
 					<?php do_action( 'ttbm_day_wise_details' ); ?>
 				</div>
 
-				<div id="ttbm-travello-includes" class="ttbm-travello-section placeholder_area">
-					<?php do_action( 'ttbm_include_exclude' ); ?>
-					<?php do_action( 'ttbm_activity' ); ?>
-				</div>
-
-				<div id="ttbm-travello-reviews" class="ttbm-travello-section placeholder_area">
-					<?php do_action( 'ttbm_review' ); ?>
-				</div>
-
-				<div id="ttbm-travello-location" class="ttbm-travello-section placeholder_area">
+				<div id="ttbm-travello-includes" class="ttbm-travello-section">
 					<?php
-					/* layout/location_map.php already prints its own "Location Map"
-					   heading before the iframe, so no separate <h2> is added here —
-					   doing so would just duplicate it. */
-					do_action( 'ttbm_location_map', $tour_id );
+					/* Real data — same TTBM_Function::get_feature_list() calls
+					layout/include_exclude.php itself uses — but built inline here
+					rather than firing that shared partial's hook: the reference has
+					ONE "What's included" list mixing check/cross items (included
+					items first, then excluded), auto-flowing through a 2-column grid,
+					not two separate "included"/"excluded" column blocks under an
+					"Included / Exclude" heading. Every other theme keeps that
+					original two-column layout untouched. */
+					$ttbm_travello_ie_include        = TTBM_Function::get_feature_list( $ttbm_post_id, 'ttbm_service_included_in_price' );
+					$ttbm_travello_ie_exclude         = TTBM_Function::get_feature_list( $ttbm_post_id, 'ttbm_service_excluded_in_price' );
+					$ttbm_travello_ie_display_include = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_include_service', 'on' );
+					$ttbm_travello_ie_display_exclude = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_exclude_service', 'on' );
+					$ttbm_travello_ie_items           = array();
+					if ( 'off' !== $ttbm_travello_ie_display_include ) {
+						foreach ( (array) $ttbm_travello_ie_include as $ttbm_travello_ie_service ) {
+							$ttbm_travello_ie_term    = get_term_by( 'name', $ttbm_travello_ie_service, 'ttbm_tour_features_list' );
+							$ttbm_travello_ie_items[] = array(
+								'name'  => $ttbm_travello_ie_term ? $ttbm_travello_ie_term->name : $ttbm_travello_ie_service,
+								'state' => 'yes',
+							);
+						}
+					}
+					if ( 'off' !== $ttbm_travello_ie_display_exclude ) {
+						foreach ( (array) $ttbm_travello_ie_exclude as $ttbm_travello_ie_service ) {
+							$ttbm_travello_ie_term = get_term_by( 'name', $ttbm_travello_ie_service, 'ttbm_tour_features_list' );
+							if ( ! $ttbm_travello_ie_term ) {
+								continue;
+							}
+							$ttbm_travello_ie_items[] = array(
+								'name'  => $ttbm_travello_ie_term->name,
+								'state' => 'no',
+							);
+						}
+					}
 					?>
+					<?php if ( ! empty( $ttbm_travello_ie_items ) ) : ?>
+						<h2 class="ttbm-travello-section-title"><?php esc_html_e( "What's included", 'tour-booking-manager' ); ?></h2>
+						<ul class="ttbm-include-exclude">
+							<?php foreach ( $ttbm_travello_ie_items as $ttbm_travello_ie_item ) : ?>
+								<li>
+									<span class="ttbm_ie_icon ttbm_ie_<?php echo 'yes' === $ttbm_travello_ie_item['state'] ? 'check' : 'cross'; ?>" aria-hidden="true">
+										<i class="fas fa-<?php echo 'yes' === $ttbm_travello_ie_item['state'] ? 'check' : 'times'; ?>"></i>
+									</span>
+									<?php echo esc_html( $ttbm_travello_ie_item['name'] ); ?>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					<?php endif; ?>
 				</div>
 
-				<div id="ttbm-travello-faq" class="ttbm-travello-section placeholder_area">
+				<div id="ttbm-travello-reviews" class="ttbm-travello-section">
+					<?php
+					/* Pro's real review widget (ttbm_review_list()) prints its own
+					"Reviews" <h4> INSIDE the bordered .ttbm-tour-review-list-wrapper
+					card — unlike every other tab here, where the heading floats free
+					above its content (see FAQ). Rather than edit that shared Pro
+					method (touches every theme), print the same heading here, outside
+					the card, and hide the one Pro prints in place (CSS: travello-only,
+					.ttbm-avg-review-header-content .ttbm-review-title) so it isn't
+					duplicated. The real subtitle ("Read reviews of travelers.") and
+					the real Write/Edit-review button stay put inside the card. */
+					?>
+					<h2 class="ttbm-travello-section-title"><?php esc_html_e( 'Traveler reviews', 'tour-booking-manager' ); ?></h2>
+					<?php do_action( 'ttbm_review' ); ?>
+					<?php if ( $ttbm_travello_rating && $ttbm_travello_rating->total_reviews > 2 ) : ?>
+						<?php
+						/* Reference's "See all 128 reviews" button — real count here
+						(never a fixed placeholder number), and only shown when there
+						really are more than the 2 review cards left visible by default.
+						CSS hides everything past the 2nd `.ttbm-tour-review-item` (a
+						chained general-sibling selector — robust regardless of what other
+						real siblings, like the rating-summary box, sit alongside them);
+						this button just adds a class that lifts that hide, then removes
+						itself, rather than linking to a separate "all reviews" view that
+						doesn't exist in this plugin. */
+						?>
+						<button type="button" class="ttbm-travello-reviews-more">
+							<?php
+							echo esc_html(
+								sprintf(
+									/* translators: %d: number of reviews */
+									_n( 'See all %d review', 'See all %d reviews', $ttbm_travello_rating->total_reviews, 'tour-booking-manager' ),
+									$ttbm_travello_rating->total_reviews
+								)
+							);
+							?>
+						</button>
+					<?php endif; ?>
+				</div>
+
+				<div id="ttbm-travello-location" class="ttbm-travello-section">
+					<?php
+					/* layout/location_map.php prints its own "Location Map" heading
+					INSIDE .ttbm_default_widget, as a sibling of the map iframe, same
+					"title glued to its content box" situation as Reviews above.
+					Printed here instead, outside that wrapper; the original is hidden
+					via CSS (travello-only, #ttbm-travello-location .ttbm_title_style_2). */
+					?>
+					<h2 class="ttbm-travello-section-title"><?php esc_html_e( 'Location Map', 'tour-booking-manager' ); ?></h2>
+					<?php do_action( 'ttbm_location_map', $tour_id ); ?>
+				</div>
+
+				<div id="ttbm-travello-faq" class="ttbm-travello-section">
+					<?php
+					/* layout/faq.php prints its own "FAQ" heading (shared by every
+					theme) — reference uses the fuller "Frequently asked questions"
+					wording instead, which isn't something CSS can retext. Printed
+					here instead; the original is hidden via CSS (travello-only,
+					#ttbm-travello-faq .ttbm_faq_section > .ttbm_section_title). */
+					?>
+					<h2 class="ttbm-travello-section-title"><?php esc_html_e( 'Frequently asked questions', 'tour-booking-manager' ); ?></h2>
 					<?php do_action( 'ttbm_faq' ); ?>
 				</div>
 
@@ -266,7 +384,7 @@
 			</div><!-- .ttbm-travello-main -->
 
 			<aside class="ttbm-travello-sidebar">
-				<div class="ttbm-travello-booking-card placeholder_area" id="ttbm_booking_section">
+				<div class="ttbm-travello-booking-card" id="ttbm_booking_section">
 					<?php if ( $ttbm_travello_start_price ) : ?>
 						<div class="ttbm-travello-bc-header">
 							<p class="ttbm-travello-bc-from"><?php esc_html_e( 'From', 'tour-booking-manager' ); ?></p>
@@ -331,7 +449,7 @@
 
 		</div><!-- .ttbm-travello-layout -->
 
-		<div class="ttbm-travello-similar placeholder_area">
+		<div class="ttbm-travello-similar">
 			<?php do_action( 'ttbm_related_tour' ); ?>
 		</div>
 

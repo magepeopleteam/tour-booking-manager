@@ -5547,8 +5547,13 @@ div.bg_image_area {
 }
 
 #ttbm_related_tour .ttbm_list_title {
-	font-weight: 500;
+	font-size: 15px !important;
 	margin-bottom: 10px;
+	margin-top: 5px;
+}
+
+#ttbm_related_tour .ttbm_list_title a {
+	font-weight: 700;
 }
 
 #ttbm_related_tour .owl-carousel {

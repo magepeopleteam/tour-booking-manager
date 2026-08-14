@@ -196,17 +196,28 @@
                     'compare' => 'IN'
                 ) : '';*/
 
-                $activity_filter = !empty($activity) ? array(
-                    'key'     => 'ttbm_tour_activities',
-                    'value'   => '"' . $activity . '"',
-                    'compare' => 'LIKE'
-                ) : '';
+				/* Both the top search's Activity/Destination selects and the sidebar's
+				   own checkbox filters (TTBM_Tour_List.php's data-location/data-activity)
+				   already hand over real ttbm_tour_activities/ttbm_tour_location term
+				   IDs — but this used to re-match them against the ttbm_location_name /
+				   ttbm_tour_activities POSTMETA mirrors instead of the taxonomy terms
+				   themselves. Those mirrors are only ever written by the classic tour
+				   edit screen's own save routine; a tour whose location/activities were
+				   set by direct term assignment (bulk import, Quick Edit, the taxonomy
+				   admin screens) has real terms but empty postmeta, so it silently never
+				   matched here. Querying the taxonomies directly — same as $cat_filter/
+				   $org_filter below already do — matches on the actual real relationship
+				   regardless of whether that postmeta mirror ever got written. */
+				$activity_tax_filter = !empty($activity) ? array(
+					'taxonomy' => 'ttbm_tour_activities',
+					'field'    => 'term_id',
+					'terms'    => $activity,
+				) : '';
 
-				$location = $location ? get_term_by('id', $location, 'ttbm_tour_location')->name : '';
-				$city_filter = !empty($location) ? array(
-					'key' => 'ttbm_location_name',
-					'value' => $location,
-					'compare' => 'LIKE'
+				$location_tax_filter = !empty($location) ? array(
+					'taxonomy' => 'ttbm_tour_location',
+					'field'    => 'term_id',
+					'terms'    => $location,
 				) : '';
 				$country_filter = !empty($country) ? array(
 					'key' => 'ttbm_country_name',
@@ -228,15 +239,15 @@
 					'meta_query' => array(
 						'relation' => 'AND',
 						$expire_filter,
-						$city_filter,
 						$country_filter,
 						$tour_type_filter,
-						$activity_filter,
 						$selected_date_filter
 					),
 					'tax_query' => array(
 						$cat_filter,
-						$org_filter
+						$org_filter,
+						$location_tax_filter,
+						$activity_tax_filter
 					)
 				);
 				$query = $status == 'active' ? TTBM_Function::get_active_tours($args) : new WP_Query($args);

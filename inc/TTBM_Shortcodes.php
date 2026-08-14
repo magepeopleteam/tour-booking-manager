@@ -29,6 +29,23 @@
                 add_shortcode('ttbm-hotel-rooms', array($this, 'ttbm_hotel_rooms_by_id') );
                 add_shortcode('ttbm-hotel-map',  array( $this, 'ttbm_hotel_map_shortcode') );
                 add_shortcode('ttbm-hotel-slider',  array( $this, 'ttbm_hotel_slider_shortcode') );
+
+				// Top search bar ([ttbm-top-search]) — AJAX, same-page results.
+				// The form still posts to /find/ ([ttbm-search-result]) as a
+				// plain-GET fallback for no-JS visitors; this just lets pages
+				// that also render the results grid inline (the tour archive)
+				// swap it in place instead of navigating away.
+				add_action('wp_ajax_ttbm_top_search_ajax', array($this, 'ajax_top_search'));
+				add_action('wp_ajax_nopriv_ttbm_top_search_ajax', array($this, 'ajax_top_search'));
+			}
+			public function ajax_top_search() {
+				check_ajax_referer('ttbm_search_nonce', 'ttbm_search_nonce');
+				// search_result() reads every filter value straight from $_GET —
+				// the request is sent as a GET-type AJAX call (not POST) purely so
+				// this identical, already-battle-tested code path (same one /find/
+				// itself calls) runs completely unmodified.
+				echo $this->search_result(array());
+				wp_die();
 			}
 
             public function ttbm_hotel_slider_shortcode( $atts ){

@@ -94,6 +94,54 @@
 
 	window.ttbmInitTopSearchSelects = ttbmInitTopSearchSelects;
 
+	// ── Top search bar ([ttbm-top-search]) — AJAX submit, same page ──
+	// The form (ttbm_top_filter_static() in TTBM_Filter_Pagination.php) still
+	// plain-GETs to /find/ ([ttbm-search-result]) by default — that stays as
+	// the fallback for no-JS visitors and for any page (e.g. the homepage
+	// hero search widget) that has no results grid of its own to swap. Only
+	// when #ttbm-archive-results is actually present on the current page
+	// (the tour archive — see archive-tour.php) does this intercept the
+	// submit and swap that container's contents in place instead, via the
+	// exact same search_result()/list_with_left_filter_for_search() render
+	// path /find/ itself already uses (TTBM_Shortcode::ajax_top_search()),
+	// just returned over admin-ajax instead of a full page load.
+	$(document).on('submit', '.ttbm-top-search-form', function (e) {
+		var $form = $(this);
+		var $results = $('#ttbm-archive-results');
+
+		if (!$results.length || typeof ttbm_ajax_url === 'undefined') {
+			return; // no same-page grid to swap — let the normal GET submit happen
+		}
+
+		e.preventDefault();
+
+		var $submitBtn = $form.find('.ttbm-top-search-submit').prop('disabled', true);
+		placeholderLoader($results);
+		pageScrollTo($results);
+
+		$.ajax({
+			url: ttbm_ajax_url,
+			type: 'GET',
+			dataType: 'html',
+			data: $form.serialize() + '&action=ttbm_top_search_ajax'
+		}).done(function (html) {
+			$results.html(html);
+			ttbm_loadBgImage();
+			load_pagination_initial_item();
+			if (window.history && window.history.pushState) {
+				window.history.pushState({}, '', window.location.pathname + '?' + $form.serialize());
+			}
+		}).fail(function () {
+			// Same safety net as a real network/nonce failure elsewhere in this
+			// file — fall back to the form's original full-page behavior rather
+			// than leaving the click looking like it did nothing.
+			$form.off('submit').trigger('submit');
+		}).always(function () {
+			$submitBtn.prop('disabled', false);
+			placeholderLoaderRemove($results);
+		});
+	});
+
 	$(document).ready(function () {
 		load_pagination_initial_item();
 

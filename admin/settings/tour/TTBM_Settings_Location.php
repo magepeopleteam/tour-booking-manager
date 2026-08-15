@@ -370,10 +370,10 @@
 				$value = TTBM_Global_Function::get_post_info($tour_id, $location_key, array());
 				$all_location = TTBM_Function::get_all_location();
 				?>
-                <select id="ttbm_location_select" name="<?php echo esc_attr($location_key); ?>">
+                <select id="ttbm_location_select" name="<?php echo esc_attr($location_key); ?>" data-ttbm-previous="<?php echo esc_attr(is_array($value) ? '' : $value); ?>">
 					<option value=""><?php esc_html_e('— Select Location —', 'tour-booking-manager'); ?></option>
 					<?php foreach ($all_location as $key => $location) : ?>
-                        <option value="<?php echo esc_attr($key); ?>" <?php echo esc_attr($key == $value ? 'selected' : ''); ?>><?php echo esc_html($location); ?></option>
+                        <option value="<?php echo esc_attr($key); ?>" data-ttbm-address="<?php echo esc_attr(TTBM_Function::get_location_map_address($key)); ?>" <?php echo esc_attr($key == $value ? 'selected' : ''); ?>><?php echo esc_html($location); ?></option>
 					<?php endforeach; ?>
                 </select>
 				<?php

@@ -146,11 +146,12 @@
 						wp_set_object_terms($new_post_id, $term_slugs, $taxonomy, false);
 					}
 				}
-				// Copy post meta (excluding 'total_booking') - uses get_post_meta which is cached
+				// Copy post meta (minus the keys that must stay unique per post) - uses get_post_meta which is cached
+				$skip_meta_keys = TTBM_Function::get_non_duplicable_meta_keys();
 				$post_meta = get_post_meta($post_id);
 				if (!empty($post_meta)) {
 					foreach ($post_meta as $meta_key => $meta_values) {
-						if ($meta_key === 'total_booking' || $meta_key === '_wp_old_slug') {
+						if (in_array($meta_key, $skip_meta_keys, true)) {
 							continue;
 						}
 						foreach ($meta_values as $meta_value) {

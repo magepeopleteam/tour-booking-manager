@@ -270,6 +270,44 @@
             }
         });
     }
+    /* Keep the Google Map address in step with the Location select.
+       The two fields are independent, so picking another location used to leave
+       the map on the old place — most visibly on a duplicated tour, which starts
+       out holding the source tour's address. Only an address that was generated
+       from the previously selected location gets replaced; an address the admin
+       typed by hand is never touched. The save routine applies the same rule. */
+    $(document).on('change', '#ttbm_location_select', function () {
+        let $select = $(this);
+        let previous = $select.attr('data-ttbm-previous') || '';
+        let current = $select.val() || '';
+        $select.attr('data-ttbm-previous', current);
+        if (!current || current === previous) {
+            return;
+        }
+        let $input = $('#ttbm_map_location, #ttbm_iframe_location, .ttbm-map-location-input').not('#ttbm_hotel_map_location').first();
+        if (!$input.length) {
+            return;
+        }
+        let optionAddress = function (value) {
+            if (!value) {
+                return '';
+            }
+            let $option = $select.find('option').filter(function () {
+                return this.value === value;
+            }).first();
+            return ($option.attr('data-ttbm-address') || value).trim();
+        };
+        let newAddress = optionAddress(current);
+        let previousAddress = optionAddress(previous);
+        let currentValue = ($input.val() || '').trim();
+        let isGenerated = currentValue === ''
+            || currentValue.toLowerCase() === previous.toLowerCase()
+            || (previousAddress !== '' && currentValue.toLowerCase() === previousAddress.toLowerCase());
+        if (!isGenerated || !newAddress) {
+            return;
+        }
+        $input.val(newAddress).trigger('change');
+    });
     //*******Feature**************//
     $(document).on('click', '.ttbm_settings_feature [data-target-popup="add_new_feature_popup"]', function () {
         let target = $(this).closest('.ttbm_settings_feature').find('.ttbm_feature_form_area');

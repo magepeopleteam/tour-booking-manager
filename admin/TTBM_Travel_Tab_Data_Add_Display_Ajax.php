@@ -34,17 +34,23 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             $post_id = (int)sanitize_text_field( wp_unslash( $_GET['post_id'] ) );
             $post = get_post($post_id);
 
-            /*if (!$post || $post->post_type !== 'ttbm_tour') {
-                wp_die('Invalid post or post type.');
-            }*/
+            $allowed_post_types = apply_filters('ttbm_duplicatable_post_types', array(TTBM_Function::get_cpt_name(), 'ttbm_hotel'));
+            if (!$post || !in_array($post->post_type, $allowed_post_types, true)) {
+                wp_die(esc_html__('Invalid post or post type.', 'tour-booking-manager'));
+            }
+            if (!current_user_can('edit_post', $post_id) || !current_user_can('edit_posts')) {
+                wp_die(esc_html__('You do not have permission to duplicate this item.', 'tour-booking-manager'));
+            }
 
             // Create new post array
             $new_post = array(
                 'post_title'   => $post->post_title . ' (Copy)',
-                'post_content' => $post->post_content,
+                'post_content' => wp_slash($post->post_content),
+                'post_excerpt' => wp_slash($post->post_excerpt),
                 'post_status'  => 'draft',
                 'post_type'    => $post->post_type,
                 'post_author'  => get_current_user_id(),
+                'menu_order'   => $post->menu_order,
             );
 
             // Insert new post
@@ -54,13 +60,29 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                 wp_die('Failed to duplicate post.');
             }
 
-            // Copy post meta
-            $meta = get_post_meta($post_id);
-            foreach ($meta as $key => $values) {
-                foreach ($values as $value) {
-                    add_post_meta($new_post_id, $key, maybe_unserialize($value));
+            /* Categories, organizers, tags, features, activities and the location
+               term all live in taxonomies; without this the copy dropped out of
+               every taxonomy-driven list, filter and archive. */
+            foreach (get_object_taxonomies($post->post_type) as $taxonomy) {
+                $post_terms = get_the_terms($post_id, $taxonomy);
+                if (!empty($post_terms) && !is_wp_error($post_terms)) {
+                    wp_set_object_terms($new_post_id, wp_list_pluck($post_terms, 'term_id'), $taxonomy, false);
                 }
             }
+
+            // Copy post meta, minus the keys that must stay unique per post.
+            $skip_meta_keys = TTBM_Function::get_non_duplicable_meta_keys();
+            $meta = get_post_meta($post_id);
+            foreach ($meta as $key => $values) {
+                if (in_array($key, $skip_meta_keys, true)) {
+                    continue;
+                }
+                foreach ($values as $value) {
+                    // wp_slash() because add_post_meta() unslashes what it stores.
+                    add_post_meta($new_post_id, $key, wp_slash(maybe_unserialize($value)));
+                }
+            }
+            update_post_meta($new_post_id, 'total_booking', 0);
 
             // Redirect to the edit page of the new post
             wp_redirect(admin_url('post.php?action=edit&post=' . $new_post_id));

@@ -1704,7 +1704,100 @@
 				}
 				return $status;
 			}
+			/**
+			 * Post meta that must never be carried over to a duplicated tour/hotel.
+			 *
+			 * link_wc_product/check_if_run_once tie the post to its hidden
+			 * WooCommerce product. Copying them makes the duplicate share the
+			 * source's product, so TTBM_Hidden_Product never builds a product for
+			 * the copy and saving the copy renames (and re-thumbnails) the source's
+			 * product instead. Booking counters and editor locks are per-post too.
+			 */
+			public static function get_non_duplicable_meta_keys(): array {
+				return apply_filters('ttbm_non_duplicable_meta_keys', array(
+					'link_wc_product',
+					'check_if_run_once',
+					'total_booking',
+					'_edit_lock',
+					'_edit_last',
+					'_wp_old_slug',
+				));
+			}
 			//***********Location & Place*************************//
+			/**
+			 * Map address of a location term: its own address meta when set,
+			 * otherwise the "City, Country" pair the tour header already shows.
+			 */
+			public static function get_location_map_address($location_name): string {
+				$location_name = trim((string) $location_name);
+				if (!$location_name) {
+					return '';
+				}
+				$term = self::get_term_by_name_cached($location_name, 'ttbm_tour_location');
+				if (!$term || empty($term->term_id)) {
+					return $location_name;
+				}
+				$address = trim((string) get_term_meta($term->term_id, 'ttbm_location_address', true));
+				if ($address) {
+					return $address;
+				}
+				$country = trim((string) get_term_meta($term->term_id, 'ttbm_country_location', true));
+				return $country ? $location_name . ', ' . $country : $location_name;
+			}
+			/**
+			 * True when the saved map address still describes $location_name, i.e.
+			 * the admin never replaced it with an address of their own. Used to
+			 * decide whether the map may follow a changed location select.
+			 */
+			public static function is_derived_map_address($address, $location_name): bool {
+				$address = trim((string) $address);
+				if ($address === '') {
+					return true;
+				}
+				$location_name = trim((string) $location_name);
+				if ($location_name === '') {
+					return false;
+				}
+				$normalize = static function ($value) {
+					$value = trim((string) $value);
+					return function_exists('mb_strtolower') ? mb_strtolower($value) : strtolower($value);
+				};
+				$address_key = $normalize($address);
+				if ($address_key === $normalize($location_name)) {
+					return true;
+				}
+				if ($address_key === $normalize(self::get_location_map_address($location_name))) {
+					return true;
+				}
+				// "Via Roma 1, Roma, Italy" still points at the old city.
+				return false !== strpos($address_key, $normalize($location_name));
+			}
+			/**
+			 * Name of the location term this map address was generated from, matched
+			 * strictly (term name or its derived address, nothing fuzzy) so a hand
+			 * written street address is never mistaken for a generated one. Repairs
+			 * tours - duplicates above all - whose stored map address belongs to a
+			 * location other than the one currently selected.
+			 */
+			public static function find_location_by_map_address($address): string {
+				$address = trim((string) $address);
+				if ($address === '') {
+					return '';
+				}
+				$normalize = static function ($value) {
+					$value = trim((string) $value);
+					return function_exists('mb_strtolower') ? mb_strtolower($value) : strtolower($value);
+				};
+				$address_key = $normalize($address);
+				foreach (self::get_all_location() as $location_name) {
+					if ($address_key === $normalize($location_name)
+						|| $address_key === $normalize(self::get_location_map_address($location_name))
+					) {
+						return (string) $location_name;
+					}
+				}
+				return '';
+			}
 			public static function get_all_location(): array {
 				$locations = TTBM_Global_Function::get_taxonomy('ttbm_tour_location');
 				$arr = array();

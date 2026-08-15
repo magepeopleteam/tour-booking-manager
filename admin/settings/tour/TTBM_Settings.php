@@ -1258,6 +1258,8 @@
 					/***************/
 					$ttbm_display_location = isset($_POST['ttbm_display_location']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_location'])) ? 'on' : 'off';
 					$ttbm_location_name = isset($_POST['ttbm_location_name']) ? sanitize_text_field(wp_unslash($_POST['ttbm_location_name'])) : '';
+					// Captured here because this block writes the meta before the Location block reads it.
+					$previous_location_name = (string) get_post_meta($tour_id, 'ttbm_location_name', true);
 					update_post_meta($tour_id, 'ttbm_display_location', $ttbm_display_location);
 					update_post_meta($tour_id, 'ttbm_location_name', $ttbm_location_name);
 					$location = get_term_by('name', $ttbm_location_name, 'ttbm_tour_location');
@@ -1293,6 +1295,9 @@
 					if ( $ttbm_display_location === 'off' ) {
 						$ttbm_display_map = 'off';
 					}
+					if (!isset($previous_location_name)) {
+						$previous_location_name = (string) get_post_meta($tour_id, 'ttbm_location_name', true);
+					}
 					update_post_meta($tour_id, 'ttbm_display_location', $ttbm_display_location);
 					update_post_meta($tour_id, 'ttbm_location_name', $ttbm_location_name);
 					$location = get_term_by('name', $ttbm_location_name, 'ttbm_tour_location');
@@ -1301,6 +1306,19 @@
 						$ttbm_country_name = get_term_meta($location->term_id, 'ttbm_country_location', true);
 					}
 					update_post_meta($tour_id, 'ttbm_country_name', $ttbm_country_name);
+					/* Keep the ttbm_tour_location term in sync with the select. The taxonomy
+					   has no meta box (meta_box_cb => false), so the term was only ever
+					   written by imports and by duplication - a duplicated tour therefore
+					   stayed filed under the source tour's destination for good. Front-end
+					   destination filters query the taxonomy (see TTBM_Query), so this
+					   mirror has to follow whatever the Location select now says. */
+					if (isset($_POST['ttbm_location_name'])) {
+						if ($location && isset($location->term_id)) {
+							wp_set_object_terms($tour_id, array((int) $location->term_id), 'ttbm_tour_location', false);
+						} elseif ('' === $ttbm_location_name) {
+							wp_set_object_terms($tour_id, array(), 'ttbm_tour_location', false);
+						}
+					}
 					/***************/
 					$previous_full_location = (string) get_post_meta($tour_id, 'ttbm_full_location_name', true);
 					$previous_map_latitude = (string) get_post_meta($tour_id, 'ttbm_map_latitude', true);
@@ -1329,6 +1347,30 @@
 						$map_longitude = array_key_exists('ttbm_map_longitude', $_POST)
 							? sanitize_text_field(wp_unslash($_POST['ttbm_map_longitude']))
 							: $previous_map_longitude;
+					}
+					/* The Google-Map address is a separate field from the Location select, so it
+					   used to keep pointing at the old place after the location changed - most
+					   visibly on a duplicated tour, which inherited the source tour's address and
+					   coordinates and kept showing the source's map whatever the copy's Location
+					   was set to. The map follows the select in two cases only: the location just
+					   changed and the address still describes the old one, or the address is an
+					   exact generated address of some other location (a copy saved before this
+					   fix). An address the admin typed by hand is always left alone. */
+					if (isset($_POST['ttbm_location_name']) && '' !== $ttbm_location_name
+						&& !TTBM_Function::is_derived_map_address($ttbm_full_location_name, $ttbm_location_name)
+					) {
+						$location_changed = $ttbm_location_name !== $previous_location_name
+							&& TTBM_Function::is_derived_map_address($ttbm_full_location_name, $previous_location_name);
+						$address_of_other_location = '' !== TTBM_Function::find_location_by_map_address($ttbm_full_location_name);
+						if ($location_changed || $address_of_other_location) {
+							$derived_location_address = TTBM_Function::get_location_map_address($ttbm_location_name);
+							if ('' !== $derived_location_address) {
+								$ttbm_full_location_name = $derived_location_address;
+								// Blank the stale pin so resolve_map_coordinates() geocodes the new address.
+								$map_latitude = '';
+								$map_longitude = '';
+							}
+						}
 					}
 					if (class_exists('TTBM_Settings_Location')) {
 						list($map_latitude, $map_longitude) = TTBM_Settings_Location::resolve_map_coordinates(

@@ -875,7 +875,7 @@ select.ttbm-sort-select.formControl {
 	align-items: center;
 	gap: 4px;
 	margin: 0 0 7px;
-	padding: 3px 0 6px 16px;
+	padding: 3px 0 6px 0px;
 	font-size: 12px;
 	line-height: 1;
 }
@@ -1085,6 +1085,37 @@ select.ttbm-sort-select.formControl {
 	flex: 1;
 	padding: 20px 24px;
 	justify-content: center;
+}
+
+.ttbm-tour-list-shortcode .ttbm-list-mode .ttbm-lv-title-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	width: 100%;
+	margin: 0 0 6px;
+}
+
+.ttbm-tour-list-shortcode .ttbm-list-mode .ttbm-lv-title-row .ttbm_list_title {
+	order: 1;
+	flex: 1 1 auto;
+	min-width: 0;
+	margin: 0;
+}
+
+.ttbm-tour-list-shortcode .ttbm-list-mode .ttbm-lv-title-row .ttbm_list_title a {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ttbm-tour-list-shortcode .ttbm-list-mode .ttbm-lv-title-row .ttbm-rating-stars.ttbm-list-rating,
+.ttbm-tour-list-shortcode .ttbm-list-mode .ttbm-lv-title-row .ttbm-gc-rating {
+	order: 2;
+	flex: 0 0 auto;
+	margin: 0;
+	padding: 3px 0 6px 0px;
 }
 
 .ttbm-tour-list-shortcode .ttbm-list-mode .ttbm_description {

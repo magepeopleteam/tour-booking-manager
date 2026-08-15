@@ -46,11 +46,10 @@ $term_count   = 3;
 <?php /* ── RIGHT: Content column ───────────────────────────── */ ?>
 <div class="ttbm-lv-content-col">
 
-	<?php /* Rating (optional — only renders when an admin has set it) */ ?>
-	<?php include( TTBM_Function::template_path( 'layout/list_rating.php' ) ); ?>
-
-	<?php /* Title */ ?>
-	<?php include( TTBM_Function::template_path( 'layout/list_title.php' ) ); ?>
+	<div class="ttbm-lv-title-row" data-placeholder>
+		<?php include( TTBM_Function::template_path( 'layout/list_rating.php' ) ); ?>
+		<?php include( TTBM_Function::template_path( 'layout/list_title.php' ) ); ?>
+	</div>
 
 	<?php /* Location + duration on one line */ ?>
 	<div class="ttbm-lv-meta-row" data-placeholder>

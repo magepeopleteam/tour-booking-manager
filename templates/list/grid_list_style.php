@@ -39,8 +39,9 @@ $term_count   = 3;
 
 <div class="ttbm-gc-body fdColumn">
 
-	<?php /* Title */ ?>
-	<?php include( TTBM_Function::template_path( 'layout/list_title.php' ) ); ?>
+	<div class="ttbm-lv-title-row" data-placeholder>
+		<?php include( TTBM_Function::template_path( 'layout/list_title.php' ) ); ?>
+	</div>
 
 	<?php /* Location + duration on one line — same real partials + combined-row
 	technique as list/grid_list.php's modern card (the main archive uses that

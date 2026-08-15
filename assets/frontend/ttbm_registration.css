@@ -4155,6 +4155,148 @@ div.ttbm_list_details {
 	padding: 10px;
 }
 
+/* Default grid card (list/default.php) — same 16px content inset and
+   tight vertical rhythm as the tour-list cards, without forking
+   grid_list_style.php. Direct-child selectors keep lotus/orchid/flora out. */
+.filter_item[class*="grid_"] > .bg_image_area {
+	position: relative;
+	height: 196px;
+	overflow: hidden;
+	border-radius: 0;
+}
+
+.filter_item[class*="grid_"] > .bg_image_area > div[data-bg-image] {
+	width: 100%;
+	height: 100%;
+	min-height: 196px;
+	background-size: cover !important;
+	background-position: center !important;
+}
+
+.filter_item[class*="grid_"] > .bg_image_area .group_item .ttbm_list_info {
+	padding: 6px 10px;
+	margin: 0 0 10px;
+	font-size: 11px;
+	font-weight: 600;
+	border-radius: 8px;
+}
+
+.filter_item[class*="grid_"] > .bg_image_area > .absolute_item {
+	top: auto;
+	right: auto;
+	bottom: 12px;
+	left: 12px;
+	width: auto;
+	max-width: calc(100% - 24px);
+}
+
+.filter_item[class*="grid_"] > .bg_image_area > .absolute_item .ttbm_list_info {
+	padding: 5px 10px;
+	border-radius: 999px;
+	font-size: 11px;
+	font-weight: 600;
+	box-shadow: none;
+	background: rgba(15, 23, 42, 0.72);
+	color: #fff;
+}
+
+.filter_item[class*="grid_"] > .ttbm_list_details {
+	display: flex;
+	flex-direction: column;
+	padding: 12px 16px 14px;
+	gap: 0;
+}
+
+.filter_item[class*="grid_"] > .ttbm_list_details .ttbm-rating-stars.ttbm-list-rating,
+.filter_item[class*="grid_"] > .ttbm_list_details .ttbm-gc-rating {
+	margin: 0 0 6px;
+	padding: 3px 0 6px 0px;
+}
+
+.filter_item[class*="grid_"] > .ttbm_list_details .ttbm_list_title {
+	margin: 0 0 6px;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.4;
+	letter-spacing: -0.01em;
+}
+
+.filter_item[class*="grid_"] > .ttbm_list_details .ttbm_list_title a {
+	font-weight: 700;
+	line-height: inherit;
+}
+
+.filter_item[class*="grid_"] > .ttbm_list_details .ttbm_list_info.location_name {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	margin: 0 0 8px;
+	font-size: 12px;
+	font-weight: 500;
+	font-style: normal;
+	line-height: 1.3;
+	color: var(--ttlm-muted, #64748b);
+}
+
+.filter_item[class*="grid_"] > .ttbm_list_details .ttbm_list_info.location_name .mi {
+	font-size: 12px;
+	color: var(--ttlm-primary, var(--color_theme, #2563eb));
+	margin: 0;
+}
+
+.filter_item[class*="grid_"] > .ttbm_list_details .ttbm_list_info.location_name .ttbm_list_info_text {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.filter_item[class*="grid_"] > .ttbm_list_details > .divider {
+	border: none;
+	border-top: 1px solid var(--ttlm-border, #eef2f7);
+	margin: 0 0 8px;
+	padding: 0;
+	height: 0;
+}
+
+.filter_item[class*="grid_"] > .ttbm_list_details > .divider:first-of-type {
+	display: none;
+}
+
+.filter_item[class*="grid_"] > .ttbm_list_details .ttbm_description {
+	margin: 0 0 10px;
+}
+
+.filter_item[class*="grid_"] > .ttbm_list_details .ttbm_description > div {
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.5;
+	color: var(--ttlm-muted, #64748b);
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	max-height: 3em;
+}
+
+.filter_item[class*="grid_"] > .ttbm_list_details .filter_item_footer {
+	align-items: center;
+	gap: 8px;
+	margin-top: auto;
+	padding-top: 2px;
+}
+
+.filter_item[class*="grid_"] > .ttbm_list_details .filter_item_footer .include_service ul {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 0;
+	padding: 0;
+}
+
+.filter_item[class*="grid_"] > .ttbm_list_details .filter_item_footer .ttbm_explore_button {
+	flex-shrink: 0;
+	margin: 0;
+}
+
 
 .ttbm_list_details .fdColumn .ttbm_list_info:first-child,
 .filter_item .bg_image_area .ttbm_list_info:first-child {
@@ -8191,6 +8333,59 @@ button.ttbm_explore_button:hover {
 	color: #0f172a;
 }
 
+.ttbm-search-results div.modern .ttbm-lv-title-row,
+.ttbm_filter_area .mainSection div.modern .ttbm-lv-title-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	width: 100%;
+	margin: 0 0 8px;
+}
+
+.ttbm-search-results div.modern .ttbm-lv-title-row .ttbm_list_title,
+.ttbm_filter_area .mainSection div.modern .ttbm-lv-title-row .ttbm_list_title {
+	order: 1;
+	flex: 1 1 auto;
+	min-width: 0;
+	margin: 0;
+}
+
+.ttbm-search-results div.modern .ttbm-lv-title-row .ttbm_list_title a,
+.ttbm_filter_area .mainSection div.modern .ttbm-lv-title-row .ttbm_list_title a {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	-webkit-line-clamp: unset;
+	line-clamp: unset;
+}
+
+.ttbm-search-results div.modern .ttbm-lv-title-row .ttbm-rating-stars.ttbm-list-rating,
+.ttbm-search-results div.modern .ttbm-lv-title-row .ttbm-gc-rating,
+.ttbm_filter_area .mainSection div.modern .ttbm-lv-title-row .ttbm-rating-stars.ttbm-list-rating,
+.ttbm_filter_area .mainSection div.modern .ttbm-lv-title-row .ttbm-gc-rating {
+	order: 2;
+	flex: 0 0 auto;
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 4px;
+	margin: 0;
+	padding: 3px 0 6px 0px;
+	white-space: nowrap;
+}
+
+.ttbm-search-results div.modern .ttbm-lv-title-row .ttbm-list-rating-star,
+.ttbm-search-results div.modern .ttbm-lv-title-row .ttbm-list-rating-value,
+.ttbm-search-results div.modern .ttbm-lv-title-row .ttbm-list-rating-count,
+.ttbm_filter_area .mainSection div.modern .ttbm-lv-title-row .ttbm-list-rating-star,
+.ttbm_filter_area .mainSection div.modern .ttbm-lv-title-row .ttbm-list-rating-value,
+.ttbm_filter_area .mainSection div.modern .ttbm-lv-title-row .ttbm-list-rating-count {
+	display: inline-flex;
+	flex-direction: row;
+}
+
 .ttbm-search-results div.modern .ttbm_list_title a,
 .ttbm_filter_area .mainSection div.modern .ttbm_list_title a {
 	color: inherit;
@@ -8500,7 +8695,7 @@ button.ttbm_explore_button:hover {
 	align-items: center;
 	gap: 4px;
 	margin: 0 0 6px 0;
-	padding: 3px 0 6px 16px;
+	padding: 3px 0 6px 0px;
 	font-size: 12.5px;
 	line-height: 1;
 	vertical-align: middle;
@@ -9178,6 +9373,43 @@ div.filter_item .ttbm-gc-image-wrap~div.bg_image_area {
 	flex-direction: column;
 	padding: 16px 18px 12px;
 	min-width: 0;
+}
+
+/* Title + rating on one row: title left, ★ 4.9 (5) right.
+   Grid mode uses display:contents so the wrapper does not change stacking. */
+.ttbm-lv-title-row {
+	display: contents;
+}
+
+.all_filter_item .flexWrap.ttbm-list-mode .ttbm-lv-title-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	width: 100%;
+	margin: 0 0 6px;
+}
+
+.all_filter_item .flexWrap.ttbm-list-mode .ttbm-lv-title-row .ttbm_list_title {
+	order: 1;
+	flex: 1 1 auto;
+	min-width: 0;
+	margin: 0;
+}
+
+.all_filter_item .flexWrap.ttbm-list-mode .ttbm-lv-title-row .ttbm_list_title a {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.all_filter_item .flexWrap.ttbm-list-mode .ttbm-lv-title-row .ttbm-rating-stars.ttbm-list-rating,
+.all_filter_item .flexWrap.ttbm-list-mode .ttbm-lv-title-row .ttbm-gc-rating {
+	order: 2;
+	flex: 0 0 auto;
+	margin: 0;
+	padding: 3px 0 6px 0px;
 }
 
 /* Title */

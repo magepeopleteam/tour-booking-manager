@@ -4,12 +4,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 $ttbm_post_id  = $ttbm_post_id ?? get_the_id();
 $tour_id       = $tour_id ?? TTBM_Function::post_id_multi_language( $ttbm_post_id );
-$start_price   = TTBM_Function::get_tour_start_price( $ttbm_post_id );
-$show_price    = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) !== 'off';
+// List/grid cards always show the computed ticket (or manual) start price.
+// Do not gate on 'ttbm_display_price_start' — that toggle is for the tour
+// details hero and is off on several imported tours that still have prices.
+$start_price   = TTBM_Function::get_tour_start_price( $tour_id );
 ?>
 <div class="ttbm-orchid-footer">
 	<div class="ttbm-orchid-meta-row">
-		<?php if ( $start_price && $show_price ) : ?>
+		<?php if ( $start_price !== '' && (float) $start_price > 0 ) : ?>
 			<div class="ttbm-orchid-price" data-placeholder>
 				<span class="ttbm-orchid-from"><?php esc_html_e( 'From', 'tour-booking-manager' ); ?></span>
 				<span class="ttbm-orchid-price-value">

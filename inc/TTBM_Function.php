@@ -992,6 +992,9 @@
 				return self::cache_set('start_price', $price_cache_key, self::build_tour_start_price($tour_id, $start_date));
 			}
 			private static function build_tour_start_price($tour_id, $start_date = ''): string {
+				$tour_id      = self::post_id_multi_language( $tour_id );
+				$manual_price = self::normalize_positive_price( TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_travel_start_price' ) );
+
 				if ( self::get_tour_type( $tour_id ) === 'hotel' ) {
 					$hotel_prices = array();
 					foreach ( self::get_hotel_list( $tour_id ) as $hotel_id ) {
@@ -1001,42 +1004,64 @@
 						}
 					}
 					if ( ! empty( $hotel_prices ) ) {
-						return min( $hotel_prices );
+						return (string) min( $hotel_prices );
 					}
-					$manual_price = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_travel_start_price' );
-					return $manual_price ? (string) $manual_price : '';
+					return $manual_price;
 				}
 
-				$manual_price = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_price');
-				$ticket_list  = self::get_ticket_type($tour_id);
-				$start_price  = '';
+				$ticket_list = self::get_ticket_type( $tour_id );
+				$start_price = '';
 
-				if ( ! empty( $ticket_list ) && sizeof( $ticket_list ) > 0 ) {
+				if ( ! empty( $ticket_list ) && is_array( $ticket_list ) ) {
 					if ( ! $start_date ) {
 						$all_dates  = self::get_date( $tour_id );
 						$start_date = self::get_effective_booking_date( $tour_id, $all_dates );
 					}
-					$ticket_price = [];
+					$filtered_prices = array();
+					$raw_prices      = array();
 					foreach ( $ticket_list as $ticket ) {
-						$ticket_name = $ticket['ticket_type_name'];
-						$price       = $ticket['ticket_type_price'];
-						$price       = array_key_exists('sale_price', $ticket) && $ticket['sale_price'] ? $ticket['sale_price'] : $price;
-						$price       = apply_filters('ttbm_filter_ticket_price', $price, $tour_id, $start_date, $ticket_name);
-						$price       = apply_filters('ttbm_price_by_name_filter', $price, $tour_id, 1, $start_date, $ticket_name);
-						if ( $price !== '' && $price !== null ) {
-							$ticket_price[] = floatval( $price );
+						if ( ! is_array( $ticket ) ) {
+							continue;
+						}
+						$ticket_name = $ticket['ticket_type_name'] ?? '';
+						$price       = $ticket['ticket_type_price'] ?? '';
+						if ( ! empty( $ticket['sale_price'] ) && is_numeric( $ticket['sale_price'] ) && floatval( $ticket['sale_price'] ) > 0 ) {
+							$price = $ticket['sale_price'];
+						}
+						$raw = self::normalize_positive_price( $price );
+						if ( $raw !== '' ) {
+							$raw_prices[] = floatval( $raw );
+						}
+						$filtered = apply_filters( 'ttbm_filter_ticket_price', $price, $tour_id, $start_date, $ticket_name );
+						$filtered = apply_filters( 'ttbm_price_by_name_filter', $filtered, $tour_id, 1, $start_date, $ticket_name );
+						$filtered = self::normalize_positive_price( $filtered );
+						if ( $filtered !== '' ) {
+							$filtered_prices[] = floatval( $filtered );
 						}
 					}
-					if ( ! empty( $ticket_price ) ) {
-						$start_price = min( $ticket_price );
+					if ( ! empty( $filtered_prices ) ) {
+						$start_price = min( $filtered_prices );
+					} elseif ( ! empty( $raw_prices ) ) {
+						$start_price = min( $raw_prices );
 					}
 				}
 
-				if ( $start_price === '' && $manual_price ) {
+				if ( $start_price === '' || $start_price === null || (float) $start_price <= 0 ) {
 					$start_price = $manual_price;
 				}
 
-				return $start_price;
+				return $start_price === '' || $start_price === null ? '' : (string) $start_price;
+			}
+
+			/**
+			 * Keep a usable numeric price; empty / non-numeric / zero become ''.
+			 */
+			private static function normalize_positive_price( $price ): string {
+				if ( $price === '' || $price === null || ! is_numeric( $price ) ) {
+					return '';
+				}
+				$price = floatval( $price );
+				return $price > 0 ? (string) $price : '';
 			}
 
 			/**

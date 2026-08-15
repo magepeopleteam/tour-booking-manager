@@ -59,16 +59,6 @@
 	--ttlm-shadow-sm: 0 2px 16px rgba( var( --ttlm-primary-rgb ), .07 );
 }
 
-/* The plugin's own base rule (ttbm_registration.css) adds its own 0 16px
-   horizontal padding here, sized for sitting directly in the page body. Now
-   that this renders inside .travail-archive-header's own .travail-container
-   (which already has its own edge padding), that extra 16px just pushes the
-   search bar out of alignment with the title/breadcrumb above it. */
-.ttbm-top-search-modern.ttbm_top_filter,
-div.ttbm_top_filter.ttbm-top-search-modern {
-	padding: 0;
-}
-
 .ttbm-top-search-form {
 	background: #fff;
 	border: 1.5px solid var( --ttlm-border );

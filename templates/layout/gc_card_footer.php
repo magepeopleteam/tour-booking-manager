@@ -12,11 +12,11 @@ $tour_id       = $tour_id ?? TTBM_Function::post_id_multi_language( $ttbm_post_i
 // tours on this install (an import artifact, not a deliberate "hide the
 // price" choice) and was hiding a real, valid ticket-type price on cards
 // that have every reason to show one.
-$start_price   = TTBM_Function::get_tour_start_price( $ttbm_post_id );
+$start_price   = TTBM_Function::get_tour_start_price( $tour_id );
 
 // First ticket type's label (e.g. "Adult"), shown as a "/ Adult" unit suffix after the price.
 $price_unit_label = '';
-$ticket_types      = TTBM_Function::get_ticket_type( $ttbm_post_id );
+$ticket_types      = TTBM_Function::get_ticket_type( $tour_id );
 if ( ! empty( $ticket_types ) && ! empty( $ticket_types[0]['ticket_type_name'] ) ) {
 	$price_unit_label = $ticket_types[0]['ticket_type_name'];
 }
@@ -61,7 +61,7 @@ if ( $show_duration && ( $duration || $night ) && $tour_type === 'general' ) {
 			<span class="ttbm-gc-duration-label"><?php echo wp_kses_post( $duration_label ); ?></span>
 		<?php endif; ?>
 
-		<?php if ( $start_price ) : ?>
+		<?php if ( $start_price !== '' && (float) $start_price > 0 ) : ?>
 			<div class="ttbm-gc-price-row">
 				<span class="ttbm-gc-price-from"><?php esc_html_e( 'From', 'tour-booking-manager' ); ?></span>
 				<span class="ttbm-gc-price-current">

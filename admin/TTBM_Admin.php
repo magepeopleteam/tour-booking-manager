@@ -150,7 +150,7 @@
 				$post_meta = get_post_meta($post_id);
 				if (!empty($post_meta)) {
 					foreach ($post_meta as $meta_key => $meta_values) {
-						if ($meta_key === 'total_booking' || $meta_key === '_wp_old_slug') {
+						if (in_array($meta_key, array('link_wc_product', 'check_if_run_once', 'total_booking', '_wp_old_slug'), true)) {
 							continue;
 						}
 						foreach ($meta_values as $meta_value) {

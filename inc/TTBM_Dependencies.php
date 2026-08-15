@@ -318,7 +318,7 @@
 				//===================//
 				wp_enqueue_script('ttbm_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_settings.js', array('jquery'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_admin_settings.js'), true);
 				//===================//
-				wp_enqueue_script('ttbm_hotel_booking', TTBM_PLUGIN_URL . '/assets/admin/ttbm_hotel_booking.js', array('jquery', 'jquery-ui-datepicker'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_hotel_booking.js'), true);
+				wp_enqueue_script('ttbm_hotel_booking', TTBM_PLUGIN_URL . '/assets/admin/ttbm_hotel_booking.js', array('jquery', 'jquery-ui-datepicker', 'media-editor'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_hotel_booking.js'), true);
 				wp_enqueue_script('ttbm_admin_script', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_script.js', array('jquery', 'ttbm_hotel_booking'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_admin_script.js'), true);
 				wp_enqueue_style('ttbm_admin', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin.css', array(), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_admin.css'));
 				wp_enqueue_style('ttbm_admin_modern', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_modern.css', array('ttbm_admin'), TTBM_PLUGIN_VERSION);
@@ -333,6 +333,7 @@
 						'save_failed' => __( 'Something went wrong. Please try again.', 'tour-booking-manager' ),
 						'request_failed' => __( 'Request failed. Please check your connection and try again.', 'tour-booking-manager' ),
 						'no_tours_found' => __( 'No tours found.', 'tour-booking-manager' ),
+						'choose_image' => __( 'Choose Image', 'tour-booking-manager' ),
 					),
 				));
 				wp_localize_script('ttbm_admin_script', 'ttbm_admin_ajax', array(

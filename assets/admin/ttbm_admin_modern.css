@@ -6229,6 +6229,14 @@ body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td
 	pointer-events: auto;
 }
 
+/* Keep the WP media library above the taxonomy/category edit overlay. */
+body.wp-admin .media-modal-backdrop {
+	z-index: 160000 !important;
+}
+body.wp-admin .media-modal {
+	z-index: 160010 !important;
+}
+
 #ttbm-location-popup .ttbm-popup-box.ttbm-taxonomy-popup {
 	position: relative;
 	z-index: 1;

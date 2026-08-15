@@ -602,6 +602,11 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                 $img_url = wp_get_attachment_image_url( $imageId, 'thumbnail' );
             }
 
+            if ( in_array( $taxonomy_type, array( 'ttbm_tour_cat', 'ttbm_tour_activities' ), true ) ) {
+                update_term_meta( $term_id, 'travail_term_image_id', $imageId );
+                $img_url = $imageId ? wp_get_attachment_image_url( $imageId, 'thumbnail' ) : '';
+            }
+
             if( $taxonomy_type === 'ttbm_tour_activities' ){
                 update_term_meta( $term_id, 'ttbm_activities_icon', $icon_name );
             }

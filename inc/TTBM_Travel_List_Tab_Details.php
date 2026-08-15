@@ -96,9 +96,12 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                         $location_image = isset( $meta['ttbm_location_image'][0] ) ? $meta['ttbm_location_image'][0] : '';
                         $full_address = isset( $meta['ttbm_location_address'][0] ) ? $meta['ttbm_location_address'][0] : '';
                         $country_location = isset( $meta['ttbm_country_location'][0] ) ? $meta['ttbm_country_location'][0] : '';
-                        $img_url = isset( $meta['ttbm_location_image'][0] ) && !empty( $meta['ttbm_location_image'][0] )
-                            ? wp_get_attachment_image_url( $meta['ttbm_location_image'][0], 'thumbnail')
-                            : '';
+                        $img_url = $location_image ? wp_get_attachment_image_url( $location_image, 'thumbnail') : '';
+                    } elseif ( $tab_type === 'Add New Category' || $tab_type === 'Add New Activities' ) {
+                        $location_image = isset( $meta['travail_term_image_id'][0] ) ? $meta['travail_term_image_id'][0] : '';
+                        $full_address = '';
+                        $country_location = '';
+                        $img_url = $location_image ? wp_get_attachment_image_url( $location_image, 'thumbnail') : '';
                     }else{
                         $location_image = '';
                         $full_address = '';
@@ -154,6 +157,15 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
 
                             if ( $tab_type === 'Add New Places' ) {
                                 self::image_add( $location_image, $img_url );
+                            }
+
+                            if ( $tab_type === 'Add New Category' || $tab_type === 'Add New Activities' ) {
+                                self::image_add(
+                                    $location_image,
+                                    $img_url,
+                                    __( 'Card Image', 'tour-booking-manager' ),
+                                    __( 'Choose Image', 'tour-booking-manager' )
+                                );
                             }
 
                             $icon_class = '';
@@ -330,11 +342,13 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
             self::taxonomy_popup_field( __( 'Country', 'tour-booking-manager' ), ob_get_clean(), 'ttbm-location-country' );
         }
 
-        public static function image_add( $location_image, $img_url ) {
+        public static function image_add( $location_image, $img_url, $label = '', $button_text = '' ) {
+            $label       = $label ? $label : __( 'Image', 'tour-booking-manager' );
+            $button_text = $button_text ? $button_text : __( 'Upload Image', 'tour-booking-manager' );
             ob_start();
             ?>
             <div class="ttbm-taxonomy-popup-image">
-                <button type="button" id="ttbm-upload-image" class="ttbm-taxonomy-popup__btn ttbm-taxonomy-popup__btn--secondary"><?php esc_html_e( 'Upload Image', 'tour-booking-manager' ); ?></button>
+                <button type="button" id="ttbm-upload-image" class="ttbm-taxonomy-popup__btn ttbm-taxonomy-popup__btn--secondary"><?php echo esc_html( $button_text ); ?></button>
                 <input type="hidden" id="ttbm-location-image-id" value="<?php echo esc_attr( $location_image ); ?>">
                 <div id="ttbm-image-preview" class="ttbm-taxonomy-popup-image-preview">
                     <?php if ( $img_url ) : ?>
@@ -343,7 +357,7 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                 </div>
             </div>
             <?php
-            self::taxonomy_popup_field( __( 'Image', 'tour-booking-manager' ), ob_get_clean() );
+            self::taxonomy_popup_field( $label, ob_get_clean() );
         }
 
         public static function shortcode_display( $type ){ ?>

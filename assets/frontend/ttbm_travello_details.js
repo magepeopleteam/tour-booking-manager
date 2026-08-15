@@ -136,6 +136,18 @@
 		$(this).remove();
 	});
 
+	// ── Ticket picker: tint the row while qty > 0 ─────────────────────
+	// Qty is a text input whose value attribute stays "0" after JS
+	// increments it, so :has([value="0"]) can't drive this from CSS.
+	function ttbmTravelloSyncTicketSelection() {
+		$('#ttbm_booking_section .ttbm_ticket_row').each(function () {
+			var qty = parseInt($(this).find('.inputIncDec').val(), 10) || 0;
+			$(this).toggleClass('is-selected', qty > 0);
+		});
+	}
+	ttbmTravelloSyncTicketSelection();
+	$(document).on('change input', '#ttbm_booking_section .inputIncDec', ttbmTravelloSyncTicketSelection);
+
 	// ── Share button ───────────────────────────────────────────────────
 	$(document).on('click', '#ttbm-travello-share-btn', function () {
 		var title = $(this).data('share-title') || document.title;
@@ -150,5 +162,76 @@
 			}
 		}
 	});
+
+	// ── Image placeholders: gallery + similar-tour thumbs ─────────────
+	// Boxes already have a CSS shimmer (`:not(.ttbm-img-loaded)::after`)
+	// filling the same size/position as the real photo. Watch the actual
+	// image URL and drop that overlay once it has decoded. Related-tour
+	// thumbs sit below the fold, so IntersectionObserver starts the
+	// decode just before they enter view.
+	function ttbmTravelloMarkImageLoaded($el) {
+		$el.addClass('ttbm-img-loaded');
+	}
+
+	function ttbmTravelloWatchBgImage(el) {
+		var $el = $(el);
+		if ($el.data('ttbmImgWatching') || $el.hasClass('ttbm-img-loaded')) {
+			return;
+		}
+		$el.data('ttbmImgWatching', true);
+
+		var url = $el.attr('data-bg-image') || '';
+		if (!url) {
+			var bg = $el.css('background-image') || '';
+			var match = bg.match(/url\(["']?(.+?)["']?\)/);
+			url = match ? match[1] : '';
+		}
+		if (!url || url === 'none') {
+			ttbmTravelloMarkImageLoaded($el);
+			return;
+		}
+
+		var img = new Image();
+		var done = function () {
+			ttbmTravelloMarkImageLoaded($el);
+		};
+		img.onload = function () {
+			if (typeof img.decode === 'function') {
+				img.decode().then(done).catch(done);
+			} else {
+				done();
+			}
+		};
+		img.onerror = done;
+		img.src = url;
+		if (img.complete && img.naturalWidth > 0) {
+			done();
+		}
+		setTimeout(done, 8000);
+	}
+
+	$('#ttbm_travello_gallery [data-bg-image]').each(function () {
+		ttbmTravelloWatchBgImage(this);
+	});
+
+	var $relatedThumbs = $('.ttbm-travello-similar .ttbm-gc-thumb[data-bg-image], .ttbm-travello-similar .ttbm-gc-thumb[style*="background-image"]');
+	if ($relatedThumbs.length && 'IntersectionObserver' in window) {
+		var relatedIo = new IntersectionObserver(function (entries) {
+			entries.forEach(function (entry) {
+				if (!entry.isIntersecting) {
+					return;
+				}
+				ttbmTravelloWatchBgImage(entry.target);
+				relatedIo.unobserve(entry.target);
+			});
+		}, { rootMargin: '220px 0px' });
+		$relatedThumbs.each(function () {
+			relatedIo.observe(this);
+		});
+	} else {
+		$relatedThumbs.each(function () {
+			ttbmTravelloWatchBgImage(this);
+		});
+	}
 
 }(jQuery));

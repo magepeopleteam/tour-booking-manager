@@ -870,6 +870,40 @@ select.ttbm-sort-select.formControl {
 	color: var( --ttlm-muted );
 }
 
+.ttbm-tour-list-shortcode .ttbm-rating-stars.ttbm-list-rating {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	margin: 0 0 7px;
+	padding: 3px 0 6px 16px;
+	font-size: 12px;
+	line-height: 1;
+}
+
+.ttbm-tour-list-shortcode .ttbm-rating-stars.ttbm-list-rating::before {
+	content: none !important;
+	display: none !important;
+}
+
+.ttbm-tour-list-shortcode .ttbm-list-rating-star {
+	color: var( --ttlm-accent );
+	font-size: 13px;
+	line-height: 1;
+	font-weight: 700;
+}
+
+.ttbm-tour-list-shortcode .ttbm-list-rating-value {
+	color: var( --ttlm-accent );
+	font-weight: 700;
+	line-height: 1;
+}
+
+.ttbm-tour-list-shortcode .ttbm-list-rating-count {
+	color: var( --ttlm-muted );
+	font-weight: 500;
+	line-height: 1;
+}
+
 .ttbm-tour-list-shortcode .ttbm_list_title {
 	font-size: 14px;
 	font-weight: 700;

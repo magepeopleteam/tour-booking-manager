@@ -346,7 +346,7 @@
 .ttbm-travello-rating-value {
 	font-size: 22px;
 	font-weight: 800;
-	color: var( --ttlm-ink );
+	color: var( --ttlm-accent );
 }
 
 .ttbm-travello-rating-row .ttbm-rating-stars {
@@ -1377,7 +1377,7 @@
 }
 
 .ttbm-travello-bc-rating strong {
-	color: var( --ttlm-ink );
+	color: var( --ttlm-accent );
 }
 
 /* Trust-features row — generic, non-numeric reassurance copy (no counts/scarcity
@@ -1405,215 +1405,434 @@
 	font-size: 14px;
 }
 
-/* The reused ticket table (ticket/regular_ticket.php's real, unmodified
-   markup) assumes a wide desktop column layout by default and only
-   switches to a stacked "card row" layout under the plugin's own
-   `@media (max-width: 768px)` rules (ttbm_registration.css). This sticky
-   sidebar is narrower than that at every viewport, so the table overflowed
-   its card. Rather than fork new stacking rules, this reapplies that same
-   existing stacked layout unconditionally within the card — same
-   selectors/values as the plugin's own mobile breakpoint, just not
-   viewport-gated. */
-.ttbm-travello-booking-card .ttbm_enhanced_table {
-	font-size: 14px;
+/* Ticket / extra-service rows — compact guest-picker cards.
+   regular_ticket.php is shared by every theme and is not forked here. The
+   reused table is a 5-column desktop layout (name, badge, price,
+   availability, qty) that overflows this 380px sidebar. Previous pass
+   stacked every <td> as a labelled full-width row (Price / Availability /
+   Quantity) which was readable but bulky: stock was printed twice, and
+   the grey name-bar + corner ribbon fought the qty stepper.
+   This pass lays each ticket out as one compact picker:
+     [icon] Adult                     33% off
+            $10  ~~$15~~ · 143 left   [ −  0  + ]
+   Availability's progress bar is dropped (stock already sits next to the
+   price). Anchored on `#ttbm_booking_section` so these rules beat
+   `div.ttbm_booking_panel table td` without `!important`. */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_enhanced_table,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_enhanced_table tbody {
 	display: block;
 	width: 100%;
-	margin: 0;
-	border-collapse: separate;
-	border-spacing: 0 15px;
 }
 
-.ttbm-travello-booking-card .ttbm_table_header {
-	display: none;
-}
-
-/* Base plugin CSS (`.ttbm_ticket_row{border-bottom:1px solid #e9ecef}`,
-   ttbm_registration.css) is written for a plain table where that line is the
-   only divider BETWEEN rows. This card redesign already separates rows with
-   `margin-bottom` + their own `border-radius`/shadow instead, so that
-   leftover table-style line was cutting a flat edge across the bottom of
-   every rounded card underneath the shadow. `border: 0` (below) removes it;
-   the `border` shorthand set right after fully replaces it with the row's
-   own complete 1px outline on all 4 sides — same specificity fight already
-   documented elsewhere in this file (2 classes beats the base rule's 1), so
-   no `!important` needed. */
-.ttbm-travello-booking-card .ttbm_ticket_row {
-	display: flex;
-	flex-wrap: wrap;
-	margin-bottom: 15px;
-	background: #fff;
-	border: 1px solid var( --ttlm-border );
-	border-radius: 8px;
-	box-shadow: 0 2px 10px rgba( 0, 0, 0, .08 );
-	position: relative;
-	overflow: hidden;
-}
-
-.ttbm-travello-booking-card .ttbm_ticket_row td {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
-	padding: 12px 15px;
-	width: 100%;
-	border-bottom: 1px solid #f0f0f0;
-}
-
-.ttbm-travello-booking-card .ttbm_ticket_row td:last-child {
-	border-bottom: none;
-}
-
-.ttbm-travello-booking-card .ttbm_ticket_row td::before {
-	font-weight: 600;
-	font-size: 11px;
-	text-transform: uppercase;
-	letter-spacing: .04em;
-	color: var( --ttlm-muted );
-	margin-right: 10px;
-}
-
-/* No ::before label on the name cell on purpose — the real "Ticket Type"
-   heading (regular_ticket.php's own <h2>) already prints once above the
-   whole table, so repeating it on every row read as clutter; the ticket
-   name is this row's own headline instead (styled below). */
-
-.ttbm-travello-booking-card .ttbm_ticket_row td.ttbm-regular-price::before {
-	content: 'Price';
-}
-
-.ttbm-travello-booking-card .ttbm_ticket_row td.ttbm-availability-info::before {
-	content: 'Availability';
-}
-
-.ttbm-travello-booking-card .ttbm_ticket_row td.ttbm-select-quantity::before {
-	content: 'Quantity';
-}
-
-.ttbm-travello-booking-card .ttbm_ticket_row td.ttbm-person-info {
-	background-color: #f8f9fa;
-	border-radius: 8px 8px 0 0;
-	border-left: 4px solid var( --ttlm-primary );
-}
-
-/* No more `margin-left:auto` — that was only there to shove the name
-   block to the right, balancing the ::before 'Ticket Type' label that used
-   to sit to its left in this same row. Now that the label is gone (above),
-   the name reads left-to-right like a normal headline — and, just as
-   importantly, keeps it clear of the discount-badge corner ribbon added
-   below, which it collided with while still right-aligned. */
-.ttbm-travello-booking-card .person-info {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-}
-
-/* The real markup (regular_ticket.php) is a plain `<p class="ttbm_ticket_name">`
-   — the base plugin CSS only ever styles a `.ttbm_ticket_details h4` this
-   template doesn't use, so the name fell back to totally unstyled browser
-   defaults. Bold it as the row's headline and give the icon a tinted
-   swatch instead of a bare glyph; same treatment for extra-service rows,
-   which use the equivalent `p.extra_service_title`. */
-.ttbm-travello-booking-card .ttbm_ticket_name,
-.ttbm-travello-booking-card p.extra_service_title {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	margin: 0;
+.ttbm_travello_theme #ttbm_booking_section .ttbm_enhanced_table {
 	font-size: 14px;
-	font-weight: 700;
-	color: var( --ttlm-ink );
+	margin: 0;
+	border: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
-.ttbm-travello-booking-card .ttbm_ticket_icon {
-	width: 30px;
-	height: 30px;
-	flex-shrink: 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 15px;
-	border-radius: var( --ttlm-radius-sm );
-	background: var( --ttlm-tint );
-	color: var( --ttlm-primary );
-}
-
-/* Discount badge — the base plugin CSS pins this with `position:absolute;
-   top:-20px;right:40px`, floating it as a ribbon 20px above a WIDE desktop
-   table cell. Once every <td> on this card is forced into a full-width
-   stacked flex row (above), that same offset instead dragged the badge up
-   and left into the ticket-name row directly above it, visibly overlapping
-   the name text. Pull it out of the stacked flow and pin it as a small
-   corner ribbon on the ticket row itself (already `position:relative`)
-   instead — same idea, just anchored to a box big enough for it.
-   Anchored on `#ttbm_booking_section` (the real id already on this card's
-   own wrapper div, unique to this template) rather than the
-   `.ttbm-travello-booking-card` class: an id always outranks any number of
-   classes, so this can't lose to the generic `td` rule above no matter how
-   many classes it stacks. That's not theoretical — plain class-for-class
-   this exact rule DID lose to it: `.ttbm-travello-booking-card
-   .ttbm_ticket_row td` (2 classes + the `td` element = higher specificity
-   than 2 classes alone) kept winning `width:100%` over `width:auto` here,
-   so the badge stayed full-row-width; combined with `right:15px` on a
-   100%-wide absolutely positioned box, that pushed its left edge off the
-   card entirely, which is what actually produced the overlap — not the
-   position offset itself, which was already correct. Confirmed by
-   reproducing both the bug and the fix in an isolated static test file
-   before changing this rule. */
-#ttbm_booking_section .ttbm-ticket-badge-col {
-	position: absolute;
-	top: 10px;
-	right: 15px;
-	width: auto;
-	padding: 0;
-	border-bottom: none;
-}
-
-.ttbm-travello-booking-card .ttbm_discount_badge {
-	position: static;
-	top: auto;
-	right: auto;
-	display: inline-block;
-	font-size: 10px;
-	padding: 3px 8px;
-	border-radius: var( --ttlm-radius-pill );
-	text-transform: uppercase;
-}
-
-.ttbm-travello-booking-card .ttbm_price_container {
+.ttbm_travello_theme #ttbm_booking_section .ttbm_enhanced_table tbody {
 	display: flex;
 	flex-direction: column;
-	align-items: flex-end;
-	gap: 2px;
-	margin-left: auto;
-	text-align: right;
+	gap: 10px;
 }
 
-.ttbm-travello-booking-card .ttbm_sale_price {
-	font-size: 16px;
-	font-weight: 700;
-	color: var( --ttlm-primary );
-}
-
-.ttbm-travello-booking-card .ttbm_price_meta {
-	display: flex;
-	align-items: center;
-	gap: 6px;
-	font-size: 12px;
-	color: var( --ttlm-muted );
-}
-
-.ttbm-travello-booking-card .ttbm_capacity_info {
+.ttbm_travello_theme #ttbm_booking_section .ttbm_table_header {
 	display: none;
 }
 
-.ttbm-travello-booking-card .ttbm-select-quantity .qtyIncDec {
-	margin-left: auto;
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row {
+	display: grid;
+	grid-template-columns: minmax( 0, 1fr ) auto;
+	grid-template-rows: auto auto;
+	column-gap: 10px;
+	row-gap: 4px;
+	align-items: center;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 12px 14px;
+	background: #fff;
+	border: 1px solid var( --ttlm-border );
+	border-radius: var( --ttlm-radius-md );
+	box-shadow: none;
+	position: relative;
+	overflow: visible;
+	transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row:hover,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row:focus-within,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row.is-selected {
+	border-color: rgba( var( --ttlm-primary-rgb ), .35 );
+	box-shadow: 0 0 0 3px rgba( var( --ttlm-primary-rgb ), .08 );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row.is-selected {
+	background: rgba( var( --ttlm-primary-rgb ), .04 );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row.ttbm_sold_out {
+	opacity: .72;
+	background: var( --ttlm-tint );
+	box-shadow: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row.ttbm_sold_out:hover,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row.ttbm_sold_out:focus-within {
+	border-color: var( --ttlm-border );
+	box-shadow: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row td {
+	display: block;
+	width: auto;
+	max-width: none;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background: transparent;
+	vertical-align: middle;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row td::before {
+	content: none;
+	display: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row td.ttbm-person-info {
+	grid-column: 1;
+	grid-row: 1;
+	min-width: 0;
+	background: transparent;
+	border: 0;
+	border-radius: 0;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row td.ttbm-regular-price {
+	grid-column: 1;
+	grid-row: 2;
+	min-width: 0;
+	align-self: end;
+	padding-bottom: 10px;
+	padding-right: 16px;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row td.ttbm-select-quantity {
+	grid-column: 2;
+	grid-row: 1 / span 2;
+	align-self: center;
+	justify-self: end;
+}
+
+/* Discount sits on the right, directly above the qty stepper. Qty then
+   drops to row 2 so the two share the same right-hand column. Rows with
+   no badge keep qty spanning both rows so it stays vertically centered. */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row:has( .ttbm_discount_badge ) td.ttbm-select-quantity {
+	grid-row: 2;
+	align-self: center;
+}
+
+/* Stock/progress column is redundant here — `.ttbm_stock_left` already
+   prints remaining qty next to the price. Hide it rather than restack it. */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row td.ttbm-availability-info {
+	display: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row td.ttbm-ticket-badge-col {
+	grid-column: 2;
+	grid-row: 1;
+	justify-self: stretch;
+	align-self: end;
+	width: auto;
+	min-width: 104px;
+	margin: 0;
+	padding: 0;
+	position: static;
+	z-index: 1;
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row td.ttbm-ticket-badge-col:empty {
+	display: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .person-info {
+	display: flex;
+	align-items: center;
+	gap: 10px;
 	min-width: 0;
 }
 
-.ttbm-travello-booking-card div.ttbm_booking_panel td.ttbm-availability-info {
-	background-color: #f8f9fa;
-	padding: 5px 15px;
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_details {
+	min-width: 0;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_name,
+.ttbm_travello_theme #ttbm_booking_section p.extra_service_title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.3;
+	color: var( --ttlm-ink );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_name_text {
+	flex: 1 1 auto;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_icon {
+	width: 36px;
+	height: 36px;
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 16px;
+	margin: 0;
+	border-radius: 10px;
+	background: rgba( var( --ttlm-primary-rgb ), .1 );
+	color: var( --ttlm-primary );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_description {
+	font-size: 12px;
+	line-height: 1.4;
+	color: var( --ttlm-muted );
+	margin: 2px 0 0;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_discount_badge {
+	position: static;
+	top: auto;
+	right: auto;
+	display: inline-flex;
+	align-items: center;
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: .02em;
+	line-height: 1;
+	padding: 4px 8px;
+	border-radius: var( --ttlm-radius-pill );
+	text-transform: uppercase;
+	background: rgba( var( --ttlm-primary-rgb ), .12 );
+	color: var( --ttlm-primary );
+	white-space: nowrap;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_price_container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: flex-end;
+	gap: 6px 8px;
+	margin: 0 -35px;
+	padding-left: 44px;
+	text-align: left;
+	white-space: nowrap;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row:not( :has( .ttbm_ticket_icon ) ) .ttbm_price_container {
+	padding-left: 0;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_sale_price,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_sale_price .woocommerce-Price-amount,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_sale_price bdi {
+	display: inline;
+	font-size: 15px;
+	font-weight: 800;
+	letter-spacing: -.02em;
+	line-height: 1;
+	color: var( --ttlm-primary );
+	white-space: nowrap;
+}
+
+/* Unwrap the nested meta div so sale / struck / stock are one flex row. */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_price_meta {
+	display: contents;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_regular_price.strikeLine,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_regular_price.strikeLine .woocommerce-Price-amount,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_regular_price.strikeLine bdi {
+	display: inline;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1;
+	color: var( --ttlm-muted );
+	text-decoration: line-through;
+	white-space: nowrap;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_stock_left {
+	display: inline;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1;
+	color: var( --ttlm-muted );
+	white-space: nowrap;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_stock_left.ttbm_stock_sold_out {
+	color: #c0392b;
+	font-weight: 700;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_capacity_info,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_progress_bar,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_remaining_count {
+	display: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ticket-type-name {
+	display: block;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-select-quantity .qtyIncDec {
+	display: inline-flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0;
+	margin: 0;
+	min-width: 104px;
+	height: 36px;
+	padding: 2px;
+	background: var( --ttlm-tint );
+	border: 1px solid var( --ttlm-border );
+	border-radius: var( --ttlm-radius-pill );
+	box-shadow: none;
+	overflow: hidden;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .decQty,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .incQty,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .decQty.addonGroupContent,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .incQty.addonGroupContent {
+	width: 30px;
+	height: 30px;
+	min-width: 30px;
+	border: 0;
+	border-radius: 50%;
+	background: #fff;
+	color: var( --ttlm-ink );
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 12px;
+	box-shadow: none;
+	transition: background .15s ease, color .15s ease, opacity .15s ease;
+	flex-shrink: 0;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .decQty:hover,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .incQty:hover,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .decQty.addonGroupContent:hover,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .incQty.addonGroupContent:hover {
+	background: var( --ttlm-primary );
+	border-color: var( --ttlm-primary );
+	color: #fff;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .decQty.mpDisabled,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .incQty.mpDisabled,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .decQty.mage_disabled,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .incQty.mage_disabled {
+	opacity: .35;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec label {
+	margin: 0;
+	padding: 0;
+	display: inline-flex;
+	flex: 1;
+	justify-content: center;
+	align-items: center;
+	min-width: 0;
+	border: 0;
+	font-weight: inherit;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec input.inputIncDec,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .formControl {
+	width: 100%;
+	min-width: 22px;
+	max-width: 36px;
+	height: auto;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background: transparent;
+	box-shadow: none;
+	border-radius: 0;
+	text-align: center;
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 1;
+	color: var( --ttlm-ink );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_sold_out_message,
+.ttbm_travello_theme #ttbm_booking_section .ttbm-select-quantity .textWarning {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 6px 10px;
+	border-radius: var( --ttlm-radius-pill );
+	background: #fff;
+	border: 1px dashed var( --ttlm-border );
+	font-size: 11px;
+	font-weight: 700;
+	font-style: normal;
+	color: var( --ttlm-muted );
+	white-space: nowrap;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_not_available {
+	padding: 0;
+	background: none;
+	border: 0;
+	font-size: inherit;
+	font-style: inherit;
+	color: inherit;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_enhanced_table tr.ttbm_hidden_inputs {
+	display: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_enhanced_table tr.ttbm_attendee_form_row {
+	display: block;
+	width: 100%;
+	margin: -4px 0 0;
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+	padding: 0;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_enhanced_table tr.ttbm_attendee_form_row td {
+	display: block;
+	width: 100%;
+	padding: 0 2px 4px;
+	background: transparent;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_enhanced_table tr.ttbm_attendee_form_row td:not( :has( * ) ) {
+	display: none;
+	padding: 0;
 }
 
 /* ── Order-summary + Book Now bar ────────────────────────────────────────
@@ -1774,6 +1993,263 @@
 	}
 }
 
+/* Location + duration meta — same 11px muted row as the tour-list cards.
+   Base plugin CSS (`div.ttbm_list_info span { font-size: var(--ttbm_fs_h6) }`
+   plus `.ttbm_list_info.location_name { font-size: 16px }`) blows the
+   location label up to 16–18px while duration stays small, and the gc-body
+   bullet (::before) sits between two already-iconned items. Re-scope the
+   shortcode's own meta-row treatment onto this similar-tours markup
+   (`.ttbm-gc-meta-row`, not `.ttbm-lv-meta-row`). */
+.ttbm-travello-similar .ttbm-gc-meta-row {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 4px 10px;
+	margin: 0 0 12px;
+	min-width: 0;
+}
+
+.ttbm-travello-similar .ttbm-gc-meta-row .ttbm_list_info,
+.ttbm-travello-similar .ttbm-gc-meta-row .ttbm_list_info.location_name {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	margin: 0;
+	font-size: 11px;
+	font-weight: 500;
+	font-style: normal;
+	color: var( --ttlm-muted );
+	overflow: hidden;
+	min-width: 0;
+}
+
+.ttbm-travello-similar .ttbm-gc-meta-row .ttbm_list_info .mi {
+	color: var( --ttlm-primary );
+	font-size: 12px;
+	margin: 0;
+	flex-shrink: 0;
+}
+
+.ttbm-travello-similar .ttbm-gc-meta-row div.ttbm_list_info span,
+.ttbm-travello-similar .ttbm-gc-meta-row .ttbm_list_info_text {
+	font-size: inherit;
+	margin: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	min-width: 0;
+}
+
+.ttbm-travello-similar .ttbm-gc-meta-row .ttbm_list_info.location_name ~ .ttbm_list_info::before {
+	content: none;
+	display: none;
+	margin: 0;
+}
+
+.ttbm-travello-similar .ttbm-rating-stars.ttbm-list-rating,
+.ttbm-travello-similar .ttbm-gc-rating {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	margin: 0 0 6px;
+	padding: 3px 0 6px 16px;
+	font-size: 12px;
+	line-height: 1;
+	vertical-align: middle;
+}
+
+.ttbm-travello-similar .ttbm-rating-stars.ttbm-list-rating::before {
+	content: none !important;
+	display: none !important;
+	background: none !important;
+	-webkit-text-fill-color: inherit !important;
+}
+
+.ttbm-travello-similar .ttbm-list-rating-star,
+.ttbm-travello-similar .ttbm-gc-rating-star {
+	display: inline-flex;
+	align-items: center;
+	color: var( --ttlm-accent );
+	font-size: 13px;
+	line-height: 1;
+	font-weight: 700;
+}
+
+.ttbm-travello-similar .ttbm-list-rating-value,
+.ttbm-travello-similar .ttbm-gc-rating-value {
+	display: inline-flex;
+	align-items: center;
+	font-weight: 700;
+	line-height: 1;
+	color: var( --ttlm-accent );
+}
+
+.ttbm-travello-similar .ttbm-list-rating-count,
+.ttbm-travello-similar .ttbm-gc-rating-count {
+	display: inline-flex;
+	align-items: center;
+	font-weight: 500;
+	line-height: 1;
+	color: var( --ttlm-muted );
+}
+
+.ttbm-travello-similar .include_service ul,
+.ttbm-tour-list-shortcode .include_service ul {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ttbm-travello-similar .include_service ul li,
+.ttbm-tour-list-shortcode .include_service ul li {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px !important;
+	height: 32px;
+	margin: 0 !important;
+	padding: 0 !important;
+	line-height: 1;
+	border: 1px solid var( --ttlm-border );
+	border-radius: 8px;
+	background: var( --ttlm-tint );
+	color: var( --ttlm-primary ) !important;
+}
+
+.ttbm-travello-similar .include_service ul li .circleIcon_xs,
+.ttbm-tour-list-shortcode .include_service ul li .circleIcon_xs {
+	width: auto;
+	min-width: 0;
+	height: auto;
+	margin: 0;
+	font-size: 14px;
+	line-height: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: inherit;
+}
+
+.ttbm-travello-similar .include_service ul li.ttbm-feature-view-more,
+.ttbm-tour-list-shortcode .include_service ul li.ttbm-feature-view-more {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	font-size: 11px;
+	font-weight: 700;
+	color: var( --ttlm-ink ) !important;
+	text-align: center;
+}
+
+.ttbm-travello-similar .include_service .ttbm-view-more-features-btn,
+.ttbm-travello-similar .include_service .ttbm-feature-more-icon,
+.ttbm-tour-list-shortcode .include_service .ttbm-view-more-features-btn,
+.ttbm-tour-list-shortcode .include_service .ttbm-feature-more-icon {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	margin: 0 !important;
+	padding: 0;
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 1;
+	text-align: center;
+}
+
+/* Footer — same stacked "From / $X /unit" + solid pill View as the
+   [ttbm-tour-list] cards (ttbm_tour_list_modern.css). Similar tours reuse
+   grid_list_style.php, which otherwise keeps the older outlined button and
+   a single-line "From $X /Adult" row from ttbm_registration.css. */
+.ttbm-travello-similar .ttbm-gc-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-top: auto;
+	padding: 0;
+	border-top: 0;
+}
+
+.ttbm-travello-similar .ttbm-gc-divider {
+	display: block;
+	border: none;
+	border-top: 1px solid var( --ttlm-border );
+	margin: 0 0 12px;
+}
+
+.ttbm-travello-similar .ttbm-gc-duration-label {
+	display: none;
+}
+
+.ttbm-travello-similar .ttbm-gc-price-row {
+	display: block;
+}
+
+.ttbm-travello-similar .ttbm-gc-price-from {
+	display: block;
+	font-size: 10px;
+	color: var( --ttlm-muted );
+	font-weight: 500;
+	margin-bottom: 2px;
+}
+
+.ttbm-travello-similar .ttbm-gc-price-current,
+.ttbm-travello-similar .ttbm-gc-price-current .woocommerce-Price-amount,
+.ttbm-travello-similar .ttbm-gc-price-current bdi {
+	font-size: 16px;
+	font-weight: 700;
+	color: var( --ttlm-primary );
+	display: inline;
+	line-height: 1.15;
+}
+
+.ttbm-travello-similar .ttbm-gc-price-unit {
+	font-size: 11px;
+	font-weight: 500;
+	color: var( --ttlm-muted );
+}
+
+.ttbm-travello-similar button.ttbm_explore_button,
+.ttbm-travello-similar .ttbm-gc-body .ttbm_explore_button {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 8px 16px;
+	border-radius: var( --ttlm-radius-pill );
+	background: var( --ttlm-primary ) !important;
+	border: 1px solid var( --ttlm-primary ) !important;
+	color: #fff !important;
+	font-size: 11px;
+	font-weight: 700;
+	flex-shrink: 0;
+	letter-spacing: 0;
+	box-shadow: none;
+	transition: opacity .2s ease;
+}
+
+.ttbm-travello-similar button.ttbm_explore_button:hover,
+.ttbm-travello-similar .ttbm-gc-body .ttbm_explore_button:hover {
+	opacity: .9;
+	background: var( --ttlm-primary ) !important;
+	border-color: var( --ttlm-primary ) !important;
+	color: #fff !important;
+}
+
+.ttbm-travello-similar .ttbm-gc-view-arrow {
+	display: inline-block;
+	transition: transform .18s ease;
+}
+
+.ttbm-travello-similar button.ttbm_explore_button:hover .ttbm-gc-view-arrow {
+	transform: translateX( 2px );
+}
+
 /* ══════════════════════════════════════════════════════════════
    Mobile sticky bottom price bar
    ══════════════════════════════════════════════════════════════ */
@@ -1830,4 +2306,59 @@
 
 .ttbm-travello-mobile-bar-cta:hover {
 	opacity: .9;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Image placeholders — gallery + similar-tour thumbs
+   Shimmer sits in the same box as the real photo (absolute inset 0)
+   until JS marks the element `.ttbm-img-loaded`. Default state is
+   pending so the skeleton paints before JS runs.
+   ══════════════════════════════════════════════════════════════ */
+.ttbm_travello_theme #ttbm_travello_gallery [data-bg-image],
+.ttbm_travello_theme .ttbm-travello-similar .ttbm-gc-thumb {
+	position: relative;
+	background-color: var( --ttlm-tint );
+	overflow: hidden;
+}
+
+.ttbm_travello_theme #ttbm_travello_gallery [data-bg-image]:not( .ttbm-img-loaded )::before,
+.ttbm_travello_theme .ttbm-travello-similar .ttbm-gc-thumb:not( .ttbm-img-loaded )::before {
+	opacity: 0;
+}
+
+.ttbm_travello_theme #ttbm_travello_gallery [data-bg-image]:not( .ttbm-img-loaded )::after,
+.ttbm_travello_theme .ttbm-travello-similar .ttbm-gc-thumb:not( .ttbm-img-loaded )::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	pointer-events: none;
+	border-radius: inherit;
+	background:
+		linear-gradient( 110deg, transparent 0%, rgba( 255, 255, 255, .55 ) 45%, transparent 90% ),
+		var( --ttlm-tint );
+	background-size: 200% 100%, 100% 100%;
+	background-position: 120% 0, 0 0;
+	animation: ttbmTravelloImgShimmer 1.35s ease-in-out infinite;
+}
+
+.ttbm_travello_theme #ttbm_travello_gallery [data-bg-image].ttbm-img-loaded::after,
+.ttbm_travello_theme .ttbm-travello-similar .ttbm-gc-thumb.ttbm-img-loaded::after {
+	opacity: 0;
+	animation: none;
+	transition: opacity .4s ease;
+}
+
+.ttbm_travello_theme #ttbm_travello_gallery .sliderMoreItem {
+	z-index: 4;
+}
+
+.ttbm_travello_theme #ttbm_travello_gallery .dLoader,
+.ttbm_travello_theme .ttbm-travello-similar .dLoader {
+	display: none !important;
+}
+
+@keyframes ttbmTravelloImgShimmer {
+	0% { background-position: 120% 0, 0 0; }
+	100% { background-position: -80% 0, 0 0; }
 }

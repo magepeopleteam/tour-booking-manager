@@ -1041,7 +1041,7 @@ div.ttbm_wraper .owl-theme .owl-nav {
 }
 
 /**************Responsive***********************************/
-@media only screen and (: 1100px) {
+@media only screen and (min-width: 1100px) {
 	.ttbm_content__left {
 		width: calc(100% - 316px);
 	}
@@ -1051,7 +1051,7 @@ div.ttbm_wraper .owl-theme .owl-nav {
 	}
 }
 
-@media only screen and (: 1000px) {
+@media only screen and (min-width: 1000px) {
 	.ttbm_content__left {
 		width: calc(100% - 300px);
 	}
@@ -1069,9 +1069,7 @@ div.ttbm_wraper .owl-theme .owl-nav {
 	}
 }
 
-@media only screen and (: 900px) {}
-
-@media only screen and (: 767px) {
+@media only screen and (max-width: 767px) {
 
 	div.ttbm_viator_theme .ttbm_content__left,
 	div.ttbm_viator_theme .ttbm_content__right,
@@ -1108,7 +1106,7 @@ div.ttbm_wraper .owl-theme .owl-nav {
 	}
 }
 
-@media only screen and (: 600px) {
+@media only screen and (max-width: 600px) {
 	div.small_box {
 		width: calc(100% - var(--ttbm_mp_xs));
 	}
@@ -1127,7 +1125,7 @@ div.ttbm_wraper .owl-theme .owl-nav {
 	}
 }
 
-@media only screen and (: 320px) {
+@media only screen and (max-width: 320px) {
 	div.small_box {
 		width: calc(100% - var(--ttbm_mp));
 	}
@@ -2338,7 +2336,7 @@ span.load_more_text {
 	color: var(--color_theme_cc);
 }
 
-@media only screen and (: 767px) {
+@media only screen and (max-width: 767px) {
 
 	div.ttbm_hotel_details_item,
 	div.ttbm_date_time_select label span {
@@ -2359,7 +2357,7 @@ span.load_more_text {
 	}
 }
 
-@media only screen and (: 600px) {
+@media only screen and (max-width: 600px) {
 	div.ttbm_booking_panel table td:last-child>div {
 		min-width: auto;
 	}
@@ -3676,7 +3674,7 @@ div.left_filter {
 	position: static;
 }
 
-@media(: 767px) {
+@media (max-width: 767px) {
 	div.ttbm_filter.leftSidebar {
 		position: static;
 
@@ -3872,7 +3870,7 @@ div.ttbm_list_title {
 	margin-bottom: 10px;
 }
 
-@media(: 767px) {
+@media (max-width: 767px) {
 	.flora .filter_item.grid_4 .ttbm_list_title a {
 		height: auto;
 		font-size: 22px;
@@ -3900,13 +3898,13 @@ div.ttbm_list_title {
 
 }
 
-@media(: 1400px) {
+@media (min-width: 1400px) {
 	.filter_item.grid_4 .ttbm_list_title a {
 		height: 52px;
 	}
 }
 
-@media(: 767px) {
+@media (max-width: 767px) {
 
 	.filter_item.grid_4 .ttbm_list_title a,
 	.filter_item.grid_3 .ttbm_list_title a {
@@ -3964,7 +3962,7 @@ div.ttbm_list_info>span:first-child {
 	height: auto;
 }
 
-@media(: 767px) {
+@media (max-width: 767px) {
 
 	.filter_item.grid_4 .ttbm_list_info_wrapper,
 	.filter_item.grid_4 .ttbm_list_info_wrapper,
@@ -5745,25 +5743,25 @@ div.bg_image_area {
 /****************************************/
 /****************************************/
 /****************************************/
-@media only screen and (: 600px) {
+@media only screen and (max-width: 600px) {
 	.ttbm_date-picker-input {
 		width: 100%;
 	}
 }
 
-@media only screen and (: 1199px) {
+@media only screen and (max-width: 1199px) {
 	div.filter_item {
 		min-width: calc(50% - var(--ttbm_mp));
 	}
 }
 
-@media only screen and (: 1024px) {
+@media only screen and (max-width: 1024px) {
 	div.ttbm_filter_area .leftSidebar {
-		: 250px;
+		width: 250px;
 	}
 
 	div.ttbm_filter_area .mainSection {
-		: calc(100% - 270px);
+		width: calc(100% - 270px);
 	}
 
 	div.modern .bg_image_area {

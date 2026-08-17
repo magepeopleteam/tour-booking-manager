@@ -29,6 +29,13 @@
 	$ttbm_travello_activities    = get_the_terms( $tour_id, 'ttbm_tour_activities' );
 	$ttbm_travello_activities    = is_array( $ttbm_travello_activities ) ? array_slice( $ttbm_travello_activities, 0, 2 ) : array();
 
+	// --- FAQ visibility (same meta faq.php checks) — hoisted so the nav tab
+	// and the section both use it: when the block is off in the backend (or
+	// the tour has no FAQ items) neither the "FAQ" tab nor the heading shows. ---
+	$ttbm_travello_faqs        = get_post_meta( $ttbm_post_id, 'mep_event_faq', true );
+	$ttbm_travello_display_faq = get_post_meta( $ttbm_post_id, 'ttbm_display_faq', true );
+	$ttbm_travello_faq_visible = ! empty( $ttbm_travello_faqs ) && 'on' === $ttbm_travello_display_faq;
+
 	// --- Title split for the reference's mixed sans/serif-italic treatment
 	// ("Bali Sunrise *Jeep Adventure*") — real titles have no separate
 	// "subtitle" field to italicize, so split on the LAST natural separator
@@ -242,7 +249,9 @@
 						?>
 					</button>
 					<button type="button" class="ttbm-travello-tab" data-target="ttbm-travello-location"><?php esc_html_e( 'Location', 'tour-booking-manager' ); ?></button>
-					<button type="button" class="ttbm-travello-tab" data-target="ttbm-travello-faq"><?php esc_html_e( 'FAQ', 'tour-booking-manager' ); ?></button>
+					<?php if ( $ttbm_travello_faq_visible ) : ?>
+						<button type="button" class="ttbm-travello-tab" data-target="ttbm-travello-faq"><?php esc_html_e( 'FAQ', 'tour-booking-manager' ); ?></button>
+					<?php endif; ?>
 				</nav>
 
 				<div id="ttbm-travello-overview" class="ttbm-travello-section">
@@ -363,10 +372,16 @@
 					theme) — reference uses the fuller "Frequently asked questions"
 					wording instead, which isn't something CSS can retext. Printed
 					here instead; the original is hidden via CSS (travello-only,
-					#ttbm-travello-faq .ttbm_faq_section > .ttbm_section_title). */
-					?>
-					<h2 class="ttbm-travello-section-title"><?php esc_html_e( 'Frequently asked questions', 'tour-booking-manager' ); ?></h2>
-					<?php do_action( 'ttbm_faq' ); ?>
+					#ttbm-travello-faq .ttbm_faq_section > .ttbm_section_title).
+					$ttbm_travello_faq_visible (same check faq.php uses, hoisted to
+					the top of this template) keeps the heading AND the nav's FAQ
+					tab from rendering when the block is turned off in the backend
+					or the tour has no FAQ items. */
+					if ( $ttbm_travello_faq_visible ) {
+						?>
+						<h2 class="ttbm-travello-section-title"><?php esc_html_e( 'Frequently asked questions', 'tour-booking-manager' ); ?></h2>
+						<?php do_action( 'ttbm_faq' ); ?>
+					<?php } ?>
 				</div>
 
 				<?php

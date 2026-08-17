@@ -134,6 +134,7 @@
 					<?php } else { ?>
 						<label class="ttbm-time-slots__select">
 							<select class="formControl" name="ttbm_select_time">
+								<option value="" selected disabled><?php esc_html_e( 'Select Time', 'tour-booking-manager' ); ?></option>
 								<?php foreach ( $slots as $slot ) { ?>
 									<option value="<?php echo esc_attr( $slot['value'] ); ?>"><?php echo esc_html( $slot['label'] ); ?></option>
 								<?php } ?>

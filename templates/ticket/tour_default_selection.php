@@ -65,16 +65,16 @@ if (!defined('ABSPATH')) {
                                 </div>
 								<?php
 									$template_name = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_theme_file', 'default.php');
-									TTBM_Layout::availability_button($tour_id, $time_slots_enabled);
 								?>
+								<?php if ($time_slots_enabled && $check_ability == 'regular_ticket' && $template_name != 'viator.php') {
+                                    $style = $visible_date ? '' : 'display:none;';
+                                    ?>
+                                    <div class="ttbm_select_time_area" style="<?php echo esc_attr($style); ?>">
+										<?php do_action('ttbm_time_select', $tour_id, $current_date ? $current_date : current($all_dates)); ?>
+                                    </div>
+								<?php } ?>
+								<?php TTBM_Layout::availability_button($tour_id, $time_slots_enabled); ?>
                             </div>
-							<?php if ($time_slots_enabled && $check_ability == 'regular_ticket' && $template_name != 'viator.php') {
-                                $style = $visible_date ? '' : 'display:none;';
-                                ?>
-                                <div class="ttbm_select_time_area" style="<?php echo esc_attr($style); ?>">
-									<?php do_action('ttbm_time_select', $tour_id, $current_date ? $current_date : current($all_dates)); ?>
-                                </div>
-							<?php } ?>
                         </div>
 						<?php if ($time_slots_enabled && ($template_name == 'viator.php' || $check_ability == 'availability_section')) {
                             $style = $visible_date ? '' : 'display:none;';

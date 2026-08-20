@@ -232,6 +232,8 @@ Use the [WordPress.org support forum](https://wordpress.org/support/plugin/tour-
 
 **Booking & Availability**
 
+* New (PRO): Schedule Planner — a Schedule Planner tab on the tour editor for single-date and date-range exceptions to a tour's schedule: cancel a date outright, add or remove individual time slots, or reopen a day the off-day/off-date rules had closed, all without editing the recurrence underneath. Bulk rules can be narrowed to chosen weekdays or an explicit date list.
+* New (PRO): Capacity Override — a Capacity Override tab for giving a ticket type a different seat count on one date, a date range, or a single time slot, as an add, a reduce, or a fixed override. Where a shared pool is in play (Shared Quantity or Time-wise Stock), the override adjusts that pool.
 * New: Time-wise Stock — a repeated tour can give every time slot its own seat count, so the 09:30 departure sells out while 13:30 still has seats. Turn it on under Dates → Tour Time Slots and fill in "Slot Stock" per slot; leave a slot empty to keep using the ticket type capacity for it. The slot's seats are one shared pool across all ticket types, shown on the time picker ("N seats left" / "Sold out", with sold-out slots disabled) and enforced on the quantity steppers, at add-to-cart, and again at checkout. Where both are configured, a slot's stock takes precedence over PRO's tour-wide Shared Capacity.
 * Fixed: Bookings taken through Custom (non-WooCommerce) checkout never appeared in Bookings & Guests. The listing filtered on the "which statuses reserve a seat" setting (processing/completed), but custom-checkout bookings are recorded as pending — so the screen was empty no matter how many bookings had been taken. The listing now shows every booking and leaves narrowing to its own Status filter.
 * Fixed: Bookings & Guests rendered a blank page on sites running without WooCommerce, because the WooCommerce compatibility shim was missing methods that the page called.
@@ -252,6 +254,7 @@ Use the [WordPress.org support forum](https://wordpress.org/support/plugin/tour-
 
 **Admin Experience**
 
+* New (PRO): Newly shipped tour editor tabs carry a short-lived "new" marker so they are not missed in a long sidebar. The countdown starts the first time your own site renders the tab — not from a fixed release date — so a shop that updates later still gets the full window, and the marker retires itself after five days with nothing to dismiss. Adjustable via the `ttbm_pro_feature_badge_days` filter (return 0 to switch markers off).
 * New: Per-slot "Slot Stock" field on every time slot row (Default plus each weekday), revealed by the Time-wise Stock toggle. Values entered are kept when the toggle is switched off, so turning it back on restores them.
 * Improved: Bookings admin menu unified, and the Pro badge removed from the bookings submenu.
 * Improved: Dummy-data import reworked.

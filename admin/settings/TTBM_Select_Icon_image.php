@@ -9,7 +9,15 @@
 	if (!class_exists('TTBM_Select_Icon_image')) {
 		$GLOBALS['ttbm_icon_popup_exit'] = false;
 		class TTBM_Select_Icon_image {
+			/**
+			 * True once the lazy-loader bootstrap script has been printed for this request.
+			 *
+			 * @var bool
+			 */
+			private static $lazy_bootstrap_printed = false;
+
 			public function __construct() {
+				add_action('wp_ajax_ttbm_icon_picker', array($this, 'ajax_icon_picker'));
 				add_action('ttbm_input_add_icon', array($this, 'load_icon'), 10, 2);
 				add_action('ttbm_add_single_image', array($this, 'add_single_image'), 10, 2);
 				add_action('ttbm_add_multi_image', array($this, 'add_multi_image'), 10, 2);
@@ -66,7 +74,106 @@
                 <span class="fas fa-times popupClose"></span>
 				<?php
 			}
+			/**
+			 * The icon library is ~4,800 tiles. Rendering it inline added roughly 1.5MB
+			 * to every editor page load -- for a popup most admins never open -- which
+			 * slowed down every later DOM read (serialize, validation, save).
+			 *
+			 * The tiles are now fetched once, on first open. The markup handed back by
+			 * ajax_icon_picker() is byte-for-byte what render_icon_picker_markup()
+			 * always produced, so every delegated click handler and the live search
+			 * keep working untouched.
+			 *
+			 * Return false from 'ttbm_lazy_icon_picker' to restore inline rendering.
+			 */
 			public static function disaply_icon_in_popup() {
+				if (!apply_filters('ttbm_lazy_icon_picker', true)) {
+					self::render_icon_picker_markup();
+					return;
+				}
+				?>
+                <div class="ttbm_icon_picker_lazy" data-ttbm-icon-picker data-ajax-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_icon_picker')); ?>">
+                    <div class="ttbm_icon_picker_loading allCenter" style="gap:10px;min-height:180px;opacity:.7;">
+                        <span class="fas fa-spinner fa-spin"></span>
+                        <span><?php esc_html_e('Loading icons…', 'tour-booking-manager'); ?></span>
+                    </div>
+                </div>
+				<?php
+				self::print_lazy_bootstrap();
+			}
+
+			/**
+			 * Serve the icon tiles for the lazy picker. Output is markup this class
+			 * generated and escaped itself, so it is echoed as-is.
+			 */
+			public function ajax_icon_picker() {
+				if (!check_ajax_referer('ttbm_icon_picker', 'nonce', false) || !current_user_can('edit_posts')) {
+					status_header(403);
+					wp_die('', '', array('response' => 403));
+				}
+				header('Content-Type: text/html; charset=' . get_option('blog_charset'));
+				self::render_icon_picker_markup();
+				wp_die();
+			}
+
+			/**
+			 * Boots the loader once per request. Kept inline because the popup is also
+			 * printed on screens that do not enqueue the tour-editor admin bundle.
+			 */
+			private static function print_lazy_bootstrap() {
+				if (self::$lazy_bootstrap_printed) {
+					return;
+				}
+				self::$lazy_bootstrap_printed = true;
+				?>
+                <script>
+					(function () {
+						if (window.ttbmIconPickerLazyBooted) { return; }
+						window.ttbmIconPickerLazyBooted = true;
+						var loaded = false, loading = false;
+						function host() { return document.querySelector('[data-ttbm-icon-picker]'); }
+						function load() {
+							var el = host();
+							if (loaded || loading || !el) { return; }
+							loading = true;
+							var body = 'action=ttbm_icon_picker&nonce=' + encodeURIComponent(el.getAttribute('data-nonce') || '');
+							fetch(el.getAttribute('data-ajax-url'), {
+								method: 'POST',
+								credentials: 'same-origin',
+								headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+								body: body
+							}).then(function (r) {
+								if (!r.ok) { throw new Error('http ' + r.status); }
+								return r.text();
+							}).then(function (html) {
+								var target = host();
+								loading = false;
+								if (!target || !html) { return; }
+								loaded = true;
+								target.outerHTML = html;
+								document.dispatchEvent(new CustomEvent('ttbm:icon-picker-ready'));
+							}).catch(function () {
+								// Leave the placeholder in place so the next open retries.
+								loading = false;
+							});
+						}
+						function isTrigger(node) {
+							return node && node.closest && node.closest('[data-target-popup="#ttbm_add_icon_popup"], .ttbm_icon_add');
+						}
+						// Capture phase so the tiles are already on their way before the
+						// shared popup opener adds the .in class.
+						document.addEventListener('click', function (e) {
+							if (isTrigger(e.target)) { load(); }
+						}, true);
+						if (window.jQuery) {
+							window.jQuery(document).on('click', '[data-target-popup="#ttbm_add_icon_popup"], .ttbm_icon_add', load);
+						}
+					})();
+                </script>
+				<?php
+			}
+
+			public static function render_icon_picker_markup() {
 				$icons = self::all_icon_array();
 				if (sizeof($icons) > 0) {
 					$total_icon = 0;

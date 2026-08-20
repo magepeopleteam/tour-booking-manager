@@ -259,6 +259,8 @@ Use the [WordPress.org support forum](https://wordpress.org/support/plugin/tour-
 * Fixed: The last Extra Service row could not be deleted. The shared row-remove handler refused to act on a single remaining row, which is right for ticket types but wrong for extra services, where a blank starting row is rendered by default.
 * Fixed: Admin stylesheet changes did not reach browsers. `ttbm_admin_modern.css` was cache-busted by the plugin version rather than its own modification time, so edits stayed invisible until the next release.
 * Fixed: Local tour assets no longer go through URL stream wrappers.
+* Improved: The tour editor saves in a fraction of the time. Clicking Update used to spend about half a second in the browser before the request was even sent: the date fields announced a change event each time they were synced -- 16 events dispatched against every delegated handler on the page, and one of those listeners re-marked the form as unsaved mid-save -- while the save buttons ran their whole preparation pass twice and issued four blocking helper requests along the way. Saving now takes well under a fifth of that, and an Update pressed while a background auto-save is running no longer waits three seconds for its turn.
+* Improved: The tour edit screen loads far lighter. The icon picker wrote all ~4,800 of its tiles into every page load even though the popup is only shown on demand, which was 1.5MB of the 2MB page and left roughly ten thousand extra elements for every later form read to walk. The tiles are now fetched the first time the picker is opened; searching, category tabs, and selection are unchanged.
 
 **Developer**
 
@@ -267,6 +269,9 @@ Use the [WordPress.org support forum](https://wordpress.org/support/plugin/tour-
 * New: `TTBM_Function::is_timewise_stock_enabled()`, `get_timewise_stock()`, `get_timewise_slot_availability()` and `get_timewise_sold()`.
 * Improved: The WooCommerce fallback shim degrades gracefully — an unknown method returns false and an unknown property null — so `function_exists('WC') && WC()->something()` guards short-circuit instead of fataling. Use `TTBM_Global_Function::has_woocommerce()` to branch on WooCommerce actually being active.
 * Improved: Slot meta holding a malformed row no longer takes the tour page down with a fatal on PHP 8.
+* New: `ttbm_lazy_icon_picker` filter — return false to render the icon picker inline again instead of loading it on first open.
+* New: `TTBM_Select_Icon_image::render_icon_picker_markup()` renders the picker body, and the `ttbm_icon_picker` admin-ajax action serves it to the browser (nonce plus `edit_posts`).
+* New: `window.ttbmAutosaveHandlesSave` is set by the tour editor auto-save module when it owns the save. Anything hooking the save buttons should stand down while it is true, rather than preparing or persisting the form a second time.
 
 = 2.2.0 – 28 July 2026 =
 

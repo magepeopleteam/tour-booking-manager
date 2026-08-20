@@ -1419,20 +1419,26 @@
 					update_post_meta($tour_id, 'mep_disable_ticket_time', $display_time);
 					$enable_off_schedule = isset($_POST['ttbm_enable_off_schedule']) && sanitize_text_field(wp_unslash($_POST['ttbm_enable_off_schedule'])) ? 'yes' : 'no';
 					update_post_meta($tour_id, 'ttbm_enable_off_schedule', $enable_off_schedule);
+					$timewise_stock = isset($_POST['ttbm_enable_timewise_stock']) && sanitize_text_field(wp_unslash($_POST['ttbm_enable_timewise_stock'])) ? 'on' : 'off';
+					update_post_meta($tour_id, 'ttbm_enable_timewise_stock', $timewise_stock);
 					$all_time_slot_infos = TTBM_Settings_Dates::time_slot_array();
 					//echo '<pre>';print_r($all_time_slot_infos);echo '</pre>';die();
 					if (sizeof($all_time_slot_infos) > 0) {
 						foreach ($all_time_slot_infos as $meta_key => $value) {
 							$label_key = array_key_exists('label_key', $value) && $value['label_key'] ? $value['label_key'] : '';
 							$time_key = array_key_exists('time_key', $value) && $value['time_key'] ? $value['time_key'] : '';
+							$stock_key = array_key_exists('stock_key', $value) && $value['stock_key'] ? $value['stock_key'] : '';
 							$default_time_info = [];
 							$default_labels = isset($_POST[$label_key]) ? array_map('sanitize_text_field', wp_unslash($_POST[$label_key])) : [];
 							$default_times = isset($_POST[$time_key]) ? array_map('sanitize_text_field', wp_unslash($_POST[$time_key])) : [];
+							/* Kept even while the Time-wise Stock toggle is off, so turning it back on restores the numbers. */
+							$default_stocks = ($stock_key && isset($_POST[$stock_key])) ? array_map('absint', wp_unslash($_POST[$stock_key])) : [];
 							if (sizeof($default_times) > 0) {
 								foreach ($default_times as $key => $default_time) {
 									if ($default_time) {
 										$default_time_info[$key]['mep_ticket_time_name'] = array_key_exists($key, $default_labels) && $default_labels[$key] ? $default_labels[$key] : '';
 										$default_time_info[$key]['mep_ticket_time'] = $default_time;
+										$default_time_info[$key]['mep_ticket_time_stock'] = array_key_exists($key, $default_stocks) ? (int) $default_stocks[$key] : 0;
 									}
 								}
 							}

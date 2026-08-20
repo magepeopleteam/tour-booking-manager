@@ -1513,6 +1513,140 @@
 				$available = $total - ($reserve + $sold);
 				return max(0, $available);
 			}
+			//************Time-wise Stock***********************//
+			/**
+			 * Whether this tour manages its inventory per time slot instead of
+			 * (only) per ticket type.
+			 *
+			 * Restricted to repeated general tours: those are the only ones whose
+			 * schedule is built from the reusable `mep_ticket_times_*` slot rows that
+			 * carry a per-slot stock value. Hotel tours have their own room
+			 * inventory and fixed/particular tours have one departure per date, so
+			 * per-slot stock would have nothing to attach to.
+			 */
+			public static function is_timewise_stock_enabled($tour_id): bool {
+				$tour_id = (int) $tour_id;
+				if (!$tour_id) {
+					return false;
+				}
+				if (self::cache_has('timewise_enabled', $tour_id)) {
+					return self::cache_get('timewise_enabled', $tour_id);
+				}
+				$enabled = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_enable_timewise_stock', 'off') === 'on'
+					&& self::get_travel_type($tour_id) === 'repeated'
+					&& self::get_tour_type($tour_id) === 'general';
+				return self::cache_set('timewise_enabled', $tour_id, (bool) apply_filters('ttbm_is_timewise_stock_enabled', $enabled, $tour_id));
+			}
+			/**
+			 * Capacity configured for one time slot on one date, or 0 when that slot
+			 * has no stock of its own.
+			 *
+			 * Resolution order matches how get_repeated_time_slots() picks the slot
+			 * list itself: the weekday-specific rows win when that weekday defines
+			 * any, otherwise the default ("global") rows apply. Returning 0 is the
+			 * documented "not configured" answer -- callers then fall back to the
+			 * regular per-ticket-type capacity, so switching the feature on without
+			 * filling in stock values changes nothing.
+			 *
+			 * @param int    $tour_id
+			 * @param string $date      Y-m-d (a date-time is accepted and truncated).
+			 * @param string $time_slot H:i as stored on the slot row.
+			 */
+			public static function get_timewise_stock($tour_id, $date, $time_slot): int {
+				$tour_id = (int) $tour_id;
+				$time_slot = self::normalize_time_value($time_slot);
+				if (!$tour_id || !$date || !$time_slot || strtotime($date) === false) {
+					return 0;
+				}
+				$date = gmdate('Y-m-d', strtotime($date));
+				$stock_cache_key = $tour_id . '|' . $date . '|' . $time_slot;
+				if (self::cache_has('timewise_stock', $stock_cache_key)) {
+					return self::cache_get('timewise_stock', $stock_cache_key);
+				}
+				$day_name = strtolower(gmdate('D', strtotime($date)));
+				$day_slots = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_times_' . $day_name, array());
+				$slot_rows = (is_array($day_slots) && count($day_slots) > 0)
+					? $day_slots
+					: TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_times_global', array());
+				$stock = 0;
+				if (is_array($slot_rows)) {
+					foreach ($slot_rows as $slot_row) {
+						if (!is_array($slot_row)) {
+							continue;
+						}
+						$row_time = isset($slot_row['mep_ticket_time']) ? (string) $slot_row['mep_ticket_time'] : '';
+						if ($row_time === '' || !self::same_slot_time($row_time, $time_slot)) {
+							continue;
+						}
+						$stock = isset($slot_row['mep_ticket_time_stock']) ? (int) $slot_row['mep_ticket_time_stock'] : 0;
+						break;
+					}
+				}
+				$stock = max(0, (int) apply_filters('ttbm_timewise_slot_stock', $stock, $tour_id, $date, $time_slot));
+				return self::cache_set('timewise_stock', $stock_cache_key, $stock);
+			}
+			/**
+			 * Compare two slot times tolerantly: rows saved by an <input type="time">
+			 * are "09:30", but older data (and hand-edited meta) can carry "9:30" or
+			 * "09:30:00", and the value coming back from the frontend is re-formatted
+			 * from a full date. Comparing the minute-of-day avoids treating those as
+			 * different slots.
+			 */
+			private static function same_slot_time($left, $right): bool {
+				if ((string) $left === (string) $right) {
+					return true;
+				}
+				$left_ts = strtotime('1970-01-01 ' . $left);
+				$right_ts = strtotime('1970-01-01 ' . $right);
+				return $left_ts !== false && $right_ts !== false && gmdate('H:i', $left_ts) === gmdate('H:i', $right_ts);
+			}
+			/**
+			 * Availability for a single departure (date + time slot) under time-wise
+			 * stock.
+			 *
+			 * This is the single source every consumer resolves to: the availability
+			 * filters in TTBM_Timewise_Stock, the time slot chips, and the cart
+			 * validator all read it, so a slot's number can never drift between the
+			 * chip, the ticket table and checkout. It must therefore stay free of
+			 * calls back into get_total_available() / get_ticket_availability_info(),
+			 * which are themselves filtered through this value.
+			 *
+			 * @return array{enabled:bool,capacity:int,sold:int,available:int,datetime:string}
+			 */
+			public static function get_timewise_slot_availability($tour_id, $date, $time_slot): array {
+				$time_slot = self::normalize_time_value($time_slot);
+				$empty = array('enabled' => false, 'capacity' => 0, 'sold' => 0, 'available' => 0, 'datetime' => '');
+				if (!self::is_timewise_stock_enabled($tour_id) || !$date || !$time_slot || strtotime($date) === false) {
+					return $empty;
+				}
+				$capacity = self::get_timewise_stock($tour_id, $date, $time_slot);
+				if ($capacity < 1) {
+					return $empty;
+				}
+				$slot_timestamp = strtotime(gmdate('Y-m-d', strtotime($date)) . ' ' . $time_slot);
+				if ($slot_timestamp === false) {
+					return $empty;
+				}
+				$datetime = gmdate('Y-m-d H:i', $slot_timestamp);
+				$sold = self::get_timewise_sold($tour_id, $datetime);
+				return array(
+					'enabled' => true,
+					'capacity' => $capacity,
+					'sold' => $sold,
+					'available' => max(0, $capacity - $sold),
+					'datetime' => $datetime,
+				);
+			}
+			/**
+			 * Seats already sold on one departure, across every ticket type.
+			 *
+			 * Per-slot stock is one shared pool, so the whole departure is counted
+			 * once instead of per ticket type -- which also keeps this to a single
+			 * cached lookup no matter how many ticket types the tour sells.
+			 */
+			public static function get_timewise_sold($tour_id, $datetime): int {
+				return (int) self::get_total_sold($tour_id, $datetime, '');
+			}
 			public static function get_any_date_seat_available($tour_id) {
 				if (self::cache_has('any_available', (int) $tour_id)) {
 					return self::cache_get('any_available', (int) $tour_id);

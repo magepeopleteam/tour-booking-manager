@@ -195,12 +195,14 @@
             let timeInput = timeSlot.find('[name="ttbm_select_time"], [data-radio-value]').first();
             if (timeInput.length && !timeInput.val()) {
                 if (timeInput.is('select')) {
-                    let firstTime = timeInput.find('option').first().val();
+                    // Skip sold-out slots so the panel does not open on a departure
+                    // that cannot be booked.
+                    let firstTime = timeInput.find('option[value!=""]:not(:disabled)').first().val();
                     if (firstTime) {
                         timeInput.val(firstTime).trigger('change');
                     }
                 } else {
-                    let firstRadio = timeSlot.find('.customRadio[data-radio]').first();
+                    let firstRadio = timeSlot.find('.customRadio[data-radio]').not('.mage_disabled, .is-disabled').first();
                     if (firstRadio.length) {
                         firstRadio.trigger('click');
                     }

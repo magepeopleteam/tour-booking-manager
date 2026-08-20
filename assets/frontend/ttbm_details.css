@@ -2771,6 +2771,28 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot.customRadio.button_type::after {
 	display: none;
 }
+/* Time-wise stock: per-slot seats-left line under the slot time. */
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot .ttbm-time-slot__label {
+	display: block;
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot .ttbm-time-slot__stock {
+	display: block;
+	margin-top: 2px;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1.3;
+	letter-spacing: .01em;
+	color: #15803d;
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot.active .ttbm-time-slot__stock {
+	color: rgba(255, 255, 255, .85);
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot--sold-out .ttbm-time-slot__stock {
+	color: #b91c1c;
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot--sold-out .ttbm-time-slot__label {
+	text-decoration: line-through;
+}
 
 /* ---- ticket area ---- */
 :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_booking_panel { padding: 0; }

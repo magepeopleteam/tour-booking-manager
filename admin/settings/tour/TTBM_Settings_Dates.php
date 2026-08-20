@@ -298,6 +298,9 @@
 				$display_time = TTBM_Global_Function::get_post_info($tour_id, 'mep_disable_ticket_time', 'no');
 				$active_time = $display_time == 'no' ? '' : 'mActive';
 				$checked_time = $display_time == 'no' ? '' : 'checked';
+				$timewise_stock = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_enable_timewise_stock', 'off');
+				$timewise_checked = $timewise_stock === 'on' ? 'checked' : '';
+				$timewise_active = $timewise_stock === 'on' ? 'ttbm-timewise-stock-on' : '';
 				?>
                 <div data-target-radio="#ttbm_repeated" class="<?php echo esc_attr($date_type == 'repeated' ? 'mActive' : ''); ?>">
                     <section>
@@ -313,7 +316,14 @@
                                     <?php TTBM_Custom_Layout::switch_button('mep_disable_ticket_time', $checked_time); ?>
                                 </div>
                             </div>
-                            <div data-collapse="#mep_disable_ticket_time" class="ttbm-time-slots-body _mT <?php echo esc_attr($active_time); ?>">
+                            <div data-collapse="#mep_disable_ticket_time" class="ttbm-time-slots-body _mT <?php echo esc_attr($active_time . ' ' . $timewise_active); ?>">
+                                <div class="ttbm-timewise-stock-row">
+                                    <div class="ttbm-timewise-stock-row__text">
+                                        <p class="ttbm-timewise-stock-row__title"><?php esc_html_e('Time-wise Stock', 'tour-booking-manager'); ?></p>
+                                        <span class="ttbm-timewise-stock-row__desc"><?php esc_html_e('Give each time slot its own seat count instead of sharing one pool across the whole day. Leave a slot\'s stock empty to keep using the ticket type capacity for that slot.', 'tour-booking-manager'); ?></span>
+                                    </div>
+									<?php TTBM_Custom_Layout::switch_button('ttbm_enable_timewise_stock', $timewise_checked); ?>
+                                </div>
                                 <?php
                                 $all_time_slot_infos = self::time_slot_array();
                                 if (sizeof($all_time_slot_infos) > 0) {
@@ -333,6 +343,7 @@
                                                     $des = array_key_exists('des', $value) && $value['des'] ? $value['des'] : '';
                                                     $label_key = array_key_exists('label_key', $value) && $value['label_key'] ? $value['label_key'] : '';
                                                     $time_key = array_key_exists('time_key', $value) && $value['time_key'] ? $value['time_key'] : '';
+                                                    $stock_key = array_key_exists('stock_key', $value) && $value['stock_key'] ? $value['stock_key'] : '';
                                                     ?>
                                                     <div class="tabsItem ttbm-time-slots-tab-pane _mT" data-tabs="#<?php echo esc_attr($key); ?>">
 
@@ -342,7 +353,7 @@
                                                                     if (sizeof($default_times)) {
                                                                         foreach ($default_times as $default_time) {
                                                                             if (is_array($default_time) && sizeof($default_time) > 0) {
-                                                                                self::time_slot_item($label_key, $time_key, $default_time);
+                                                                                self::time_slot_item($label_key, $time_key, $default_time, $stock_key);
                                                                             }
                                                                         }
                                                                     }
@@ -351,7 +362,7 @@
                                                             <?php TTBM_Custom_Layout::add_new_button(esc_html__('Add Slot', 'tour-booking-manager'), 'ttbm_add_item', 'ttbm-time-slots-add-btn', 'fas fa-plus'); ?>
                                                             <div class="ttbm_hidden_content">
                                                                 <div class="ttbm_hidden_item">
-                                                                    <?php self::time_slot_item($label_key, $time_key); ?>
+                                                                    <?php self::time_slot_item($label_key, $time_key, [], $stock_key); ?>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -551,7 +562,7 @@
                 </div>
 				<?php
 			}
-			public static function time_slot_item($label_key, $time_key, $default_time = []) {
+			public static function time_slot_item($label_key, $time_key, $default_time = [], $stock_key = '') {
 				$label = array_key_exists('mep_ticket_time_name', $default_time) ? $default_time['mep_ticket_time_name'] : '';
 				if ($label === '' && array_key_exists($label_key, $default_time)) {
 					$label = $default_time[$label_key];
@@ -560,6 +571,12 @@
 				if ($time === '' && array_key_exists($time_key, $default_time)) {
 					$time = $default_time[$time_key];
 				}
+				$stock = array_key_exists('mep_ticket_time_stock', $default_time) ? $default_time['mep_ticket_time_stock'] : '';
+				if ($stock === '' && $stock_key && array_key_exists($stock_key, $default_time)) {
+					$stock = $default_time[$stock_key];
+				}
+				/* Blank, not 0: an empty box reads as "this slot has no cap of its own". */
+				$stock = ((int) $stock) > 0 ? (int) $stock : '';
 				?>
                 <div class="ttbm_remove_area ttbm-time-slot-card _mT_xs">
                     <div class="ttbm-time-slot-card__inner">
@@ -575,6 +592,14 @@
                             </label>
 							<?php self::datetime_clear_wrap_close(); ?>
                         </div>
+						<?php if ($stock_key) { ?>
+                        <div class="ttbm-time-slot-card__field ttbm-time-slot-card__field--stock">
+                            <span class="ttbm-time-slot-field-label"><?php esc_html_e('Slot Stock', 'tour-booking-manager'); ?></span>
+                            <label class="ttbm-time-slot-stock-field">
+                                <input type="number" min="0" step="1" name="<?php echo esc_attr($stock_key . '[]'); ?>" class="formControl" value="<?php echo esc_attr($stock); ?>" placeholder="<?php esc_attr_e('No limit', 'tour-booking-manager'); ?>"/>
+                            </label>
+                        </div>
+						<?php } ?>
                         <div class="ttbm-time-slot-card__actions">
 							<button class="ttbm-time-slot-card__delete ttbm_item_remove" type="button" title="<?php esc_attr_e('Remove time slot', 'tour-booking-manager'); ?>" aria-label="<?php esc_attr_e('Remove time slot', 'tour-booking-manager'); ?>">
 								<span class="fas fa-trash-alt" aria-hidden="true"></span>
@@ -614,6 +639,7 @@
 							'des' => __('These tour time slots will apply to all dates unless overridden', 'tour-booking-manager'),
 							'label_key' => 'mep_ticket_time_name',
 							'time_key' => 'mep_ticket_time',
+							'stock_key' => 'mep_ticket_time_stock',
 						],
 						'mep_ticket_times_mon' => [
 						'type' => __('Monday', 'tour-booking-manager'),
@@ -621,42 +647,49 @@
 						'des' => __('Please Add Monday Ticket Times', 'tour-booking-manager'),
 						'label_key' => 'mep_ticket_time_name_mon',
 						'time_key' => 'mep_ticket_time_mon',
+						'stock_key' => 'mep_ticket_time_stock_mon',
 					], 'mep_ticket_times_tue' => [
 						'type' => __('Tuesday', 'tour-booking-manager'),
 						'title' => __('Tuesday Ticket Times', 'tour-booking-manager'),
 						'des' => __('Please Add Tuesday Ticket Times', 'tour-booking-manager'),
 						'label_key' => 'mep_ticket_time_name_tue',
 						'time_key' => 'mep_ticket_time_tue',
+						'stock_key' => 'mep_ticket_time_stock_tue',
 					], 'mep_ticket_times_wed' => [
 						'type' => __('Wednesday', 'tour-booking-manager'),
 						'title' => __('Wednesday Ticket Times', 'tour-booking-manager'),
 						'des' => __('Please Add Wednesday Ticket Times', 'tour-booking-manager'),
 						'label_key' => 'mep_ticket_time_name_wed',
 						'time_key' => 'mep_ticket_time_wed',
+						'stock_key' => 'mep_ticket_time_stock_wed',
 					], 'mep_ticket_times_thu' => [
 						'type' => __('Thursday', 'tour-booking-manager'),
 						'title' => __('Thursday Ticket Times', 'tour-booking-manager'),
 						'des' => __('Please Add Thursday Ticket Times', 'tour-booking-manager'),
 						'label_key' => 'mep_ticket_time_name_thu',
 						'time_key' => 'mep_ticket_time_thu',
+						'stock_key' => 'mep_ticket_time_stock_thu',
 					], 'mep_ticket_times_fri' => [
 						'type' => __('Friday', 'tour-booking-manager'),
 						'title' => __('Friday Ticket Times', 'tour-booking-manager'),
 						'des' => __('Please Add Friday Ticket Times', 'tour-booking-manager'),
 						'label_key' => 'mep_ticket_time_name_fri',
 						'time_key' => 'mep_ticket_time_fri',
+						'stock_key' => 'mep_ticket_time_stock_fri',
 					], 'mep_ticket_times_sat' => [
 						'type' => __('Saturday', 'tour-booking-manager'),
 						'title' => __('Saturday Ticket Times', 'tour-booking-manager'),
 						'des' => __('Please Add Saturday Ticket Times', 'tour-booking-manager'),
 						'label_key' => 'mep_ticket_time_name_sat',
 						'time_key' => 'mep_ticket_time_sat',
+						'stock_key' => 'mep_ticket_time_stock_sat',
 					], 'mep_ticket_times_sun' => [
 						'type' => __('Sunday', 'tour-booking-manager'),
 						'title' => __('Sunday Ticket Times', 'tour-booking-manager'),
 						'des' => __('Please Add Sunday Ticket Times', 'tour-booking-manager'),
 						'label_key' => 'mep_ticket_time_name_sun',
 						'time_key' => 'mep_ticket_time_sun',
+						'stock_key' => 'mep_ticket_time_stock_sun',
 					],
 					];
 			}

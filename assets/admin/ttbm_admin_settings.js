@@ -1555,5 +1555,25 @@ function ttbm_load_sortable_datepicker(parent, item) {
         }, 0);
     });
 
+    /*
+     * Time-wise Stock: reveal the per-slot "Slot Stock" boxes only while the
+     * feature is on. The inputs stay in the DOM (and keep submitting) when
+     * hidden, so switching the toggle off and saving does not wipe the numbers
+     * an admin already entered.
+     */
+    function ttbmSyncTimewiseStockState() {
+        var $panel = $('#ttbm_meta_box_panel');
+        var $toggle = $panel.find('input[name="ttbm_enable_timewise_stock"]').first();
+        if (!$toggle.length) {
+            return;
+        }
+        $panel.find('.ttbm-time-slots-body').toggleClass('ttbm-timewise-stock-on', $toggle.is(':checked'));
+    }
+
+    $(document).on('change', '#ttbm_meta_box_panel input[name="ttbm_enable_timewise_stock"]', ttbmSyncTimewiseStockState);
+    $(function () {
+        ttbmSyncTimewiseStockState();
+    });
+
 })(jQuery);
 

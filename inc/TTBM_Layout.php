@@ -89,6 +89,15 @@
 				$check_ability  = $check_ability ?: TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_ticketing_system', 'availability_section' );
 				$base_timestamp = strtotime( $date );
 				$base_date      = $base_timestamp ? gmdate( 'Y-m-d', $base_timestamp ) : $date;
+				$timewise_stock = TTBM_Function::is_timewise_stock_enabled( $tour_id );
+				if ( $timewise_stock ) {
+					/*
+					 * Each slot needs its own sold count. Pull every booking row for
+					 * this tour once up front so those lookups resolve in PHP instead
+					 * of firing a query per slot.
+					 */
+					TTBM_Function::prime_sold_cache( array( $tour_id ) );
+				}
 				$slots          = array();
 				foreach ( $time_slots as $time_slot ) {
 					$slot_time = TTBM_Function::normalize_time_value( $time_slot );
@@ -100,9 +109,14 @@
 					if ( ! $slot_timestamp ) {
 						continue;
 					}
+					$availability = $timewise_stock
+						? TTBM_Function::get_timewise_slot_availability( $tour_id, $base_date, $slot_time )
+						: array( 'enabled' => false );
 					$slots[] = array(
-						'value' => gmdate( 'Y-m-d H:i', $slot_timestamp ),
-						'label' => $slot_label,
+						'value'     => gmdate( 'Y-m-d H:i', $slot_timestamp ),
+						'label'     => $slot_label,
+						/* false = this slot has no cap of its own; render it exactly as before. */
+						'available' => ! empty( $availability['enabled'] ) ? (int) $availability['available'] : false,
 					);
 				}
 				if ( empty( $slots ) ) {
@@ -125,9 +139,24 @@
 					<?php if ( $check_ability === 'availability_section' ) { ?>
 						<div class="ttbm-time-slots__list" role="group" aria-label="<?php esc_attr_e( 'Select Time', 'tour-booking-manager' ); ?>">
 							<input type="text" data-radio-value name="ttbm_select_time" class="dNone formControl" value=""/>
-							<?php foreach ( $slots as $slot ) { ?>
-								<span class="customRadio button_type ttbm-time-slot" data-radio="<?php echo esc_attr( $slot['value'] ); ?>">
-									<?php echo esc_html( $slot['label'] ); ?>
+							<?php foreach ( $slots as $slot ) {
+								$sold_out = ( false !== $slot['available'] && $slot['available'] < 1 );
+								?>
+								<span class="customRadio button_type ttbm-time-slot<?php echo esc_attr( $sold_out ? ' mage_disabled ttbm-time-slot--sold-out' : '' ); ?>"
+									data-radio="<?php echo esc_attr( $slot['value'] ); ?>"
+									<?php if ( false !== $slot['available'] ) { ?>data-available="<?php echo esc_attr( $slot['available'] ); ?>"<?php } ?>
+									<?php echo $sold_out ? 'aria-disabled="true"' : ''; ?>>
+									<span class="ttbm-time-slot__label"><?php echo esc_html( $slot['label'] ); ?></span>
+									<?php if ( false !== $slot['available'] ) { ?>
+										<small class="ttbm-time-slot__stock">
+											<?php
+											echo $sold_out
+												? esc_html__( 'Sold out', 'tour-booking-manager' )
+												/* translators: %d: seats still available on this time slot */
+												: esc_html( sprintf( _n( '%d seat left', '%d seats left', $slot['available'], 'tour-booking-manager' ), $slot['available'] ) );
+											?>
+										</small>
+									<?php } ?>
 								</span>
 							<?php } ?>
 						</div>
@@ -135,8 +164,18 @@
 						<label class="ttbm-time-slots__select">
 							<select class="formControl" name="ttbm_select_time">
 								<option value="" selected disabled><?php esc_html_e( 'Select Time', 'tour-booking-manager' ); ?></option>
-								<?php foreach ( $slots as $slot ) { ?>
-									<option value="<?php echo esc_attr( $slot['value'] ); ?>"><?php echo esc_html( $slot['label'] ); ?></option>
+								<?php foreach ( $slots as $slot ) {
+									$sold_out = ( false !== $slot['available'] && $slot['available'] < 1 );
+									$option_label = $slot['label'];
+									if ( false !== $slot['available'] ) {
+										/* Escaped once, at output on the option below. */
+										$option_label .= $sold_out
+											? ' - ' . __( 'Sold out', 'tour-booking-manager' )
+											/* translators: %d: seats still available on this time slot */
+											: ' - ' . sprintf( _n( '%d seat left', '%d seats left', $slot['available'], 'tour-booking-manager' ), $slot['available'] );
+									}
+									?>
+									<option value="<?php echo esc_attr( $slot['value'] ); ?>" <?php disabled( $sold_out ); ?>><?php echo esc_html( $option_label ); ?></option>
 								<?php } ?>
 							</select>
 						</label>

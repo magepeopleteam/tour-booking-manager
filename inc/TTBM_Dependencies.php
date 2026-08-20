@@ -40,6 +40,7 @@
 				// of whether WooCommerce is active, so the plugin is fully usable without it.
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Function.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Booking_Normalizer.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Timewise_Stock.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Layout.php';
 				require_once TTBM_PLUGIN_DIR . '/support/elementor/elementor-support.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin.php';
@@ -321,7 +322,10 @@
 				wp_enqueue_script('ttbm_hotel_booking', TTBM_PLUGIN_URL . '/assets/admin/ttbm_hotel_booking.js', array('jquery', 'jquery-ui-datepicker', 'media-editor'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_hotel_booking.js'), true);
 				wp_enqueue_script('ttbm_admin_script', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_script.js', array('jquery', 'ttbm_hotel_booking'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_admin_script.js'), true);
 				wp_enqueue_style('ttbm_admin', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin.css', array(), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_admin.css'));
-				wp_enqueue_style('ttbm_admin_modern', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_modern.css', array('ttbm_admin'), TTBM_PLUGIN_VERSION);
+				// filemtime, not the plugin version: this stylesheet changes far more
+				// often than the version constant does, and pinning it to the constant
+				// left browsers serving a stale copy after every edit.
+				wp_enqueue_style('ttbm_admin_modern', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_modern.css', array('ttbm_admin'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_admin_modern.css'));
 				wp_localize_script('ttbm_hotel_booking', 'ttbm_admin_ajax', array(
 					'ajax_url' => admin_url('admin-ajax.php'),
 					'nonce' => wp_create_nonce('ttbm_admin_nonce'),

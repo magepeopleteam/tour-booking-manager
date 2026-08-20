@@ -184,6 +184,10 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
     $(document).on('click', '.ttbm_select_time_area .customRadio[data-radio]', function (e) {
         e.stopImmediatePropagation();
         let $slot = $(this);
+        // Sold-out slots (time-wise stock) render disabled: keep them visible but inert.
+        if ($slot.hasClass('mage_disabled') || $slot.hasClass('is-disabled')) {
+            return;
+        }
         let timeArea = $slot.closest('.ttbm_select_time_area');
         let regArea = timeArea.closest('.ttbm_registration_area');
         timeArea.css('border', '');

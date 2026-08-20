@@ -1252,6 +1252,12 @@ function ttbm_sticky_management() {
         if ($(this).closest('.ttbm_select_time_area').length) {
             return;
         }
+        // A sold-out time slot stays visible (so the shopper can see it exists)
+        // but must not be selectable; themes without the pointer-events rule
+        // would otherwise let the click through.
+        if ($(this).hasClass('mage_disabled') || $(this).hasClass('is-disabled')) {
+            return;
+        }
         let $this = $(this);
         let value = $this.attr('data-radio');
         let target = $this.closest('label');

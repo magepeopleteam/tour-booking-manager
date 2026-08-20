@@ -678,11 +678,30 @@
             ttbmSyncMapLocationFieldsForSubmit();
         }
     );
-    // Sync + AJAX persist before WordPress serializes the form.
-    $(document).on('mousedown click', '#publish, #save-post, .editor-post-publish-button, .editor-post-publish-button__button, .editor-post-save-draft', function () {
+    /**
+     * True when ttbm-autosave.js owns the save. It calls
+     * ttbmPrepareTourSettingsFormForSubmit() itself and posts the whole form -- title
+     * and map fields included -- so repeating that work here only bought two
+     * SYNCHRONOUS XHRs that froze the browser before the save even started.
+     *
+     * The classic full-page submit (auto-save filtered off, or the hotel editor)
+     * still needs those helper writes, so the old path is preserved for it.
+     */
+    function ttbmAjaxPipelineOwnsSave() {
+        return window.ttbmAutosaveHandlesSave === true;
+    }
+    // Sync + AJAX persist before WordPress serializes the form. Bound on click only:
+    // 'mousedown click' ran the whole preparation pass twice for every save.
+    $(document).on('click', '#publish, #save-post, .editor-post-publish-button, .editor-post-publish-button__button, .editor-post-save-draft', function () {
+        if (ttbmAjaxPipelineOwnsSave()) {
+            return;
+        }
         window.ttbmPrepareTourSettingsFormForSubmit();
     });
     $(document).on('submit', 'form#post', function () {
+        if (ttbmAjaxPipelineOwnsSave()) {
+            return;
+        }
         window.ttbmPrepareTourSettingsFormForSubmit();
     });
     $(document).on('change', '.ttbm_activities_table input[name="ttbm_tour_activities[]"]', function () {

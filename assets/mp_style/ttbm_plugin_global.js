@@ -96,6 +96,24 @@ function ttbm_format_datepicker_value(date) {
     }
     return date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 }
+/**
+ * Write a hidden date field, announcing it only when the value really moved.
+ *
+ * Every synthetic change() is dispatched against ~40 delegated handlers bound on
+ * document, and jQuery re-tests each of their selectors at every ancestor level.
+ * Firing it unconditionally for all 16 date fields cost ~400ms on each save --
+ * and, because one of those listeners is the auto-save dirty tracker, it also
+ * re-flagged the form as unsaved in the middle of the save that was reading it.
+ *
+ * A change event for a value that did not change carries no information, so real
+ * edits still notify every listener exactly as before.
+ */
+function ttbm_set_linked_date_value($hidden, value) {
+    if (($hidden.val() || '') === value) {
+        return;
+    }
+    $hidden.val(value).trigger('change');
+}
 function ttbm_sync_visible_dates_to_hidden(parent) {
     parent = parent && parent.jquery ? parent : jQuery(parent || '.ttbm_style');
     if (!parent.length) {
@@ -109,14 +127,14 @@ function ttbm_sync_visible_dates_to_hidden(parent) {
             return;
         }
         if (!currentValue) {
-            $hidden.val('').trigger('change');
+            ttbm_set_linked_date_value($hidden, '');
             return;
         }
         if ($visible.hasClass('hasDatepicker')) {
             try {
                 let selectedDate = $visible.datepicker('getDate');
                 if (selectedDate) {
-                    $hidden.val(ttbm_format_datepicker_value(selectedDate)).trigger('change');
+                    ttbm_set_linked_date_value($hidden, ttbm_format_datepicker_value(selectedDate));
                 }
             } catch (err) {}
         }
@@ -223,8 +241,13 @@ function ttbm_alert($this, attr = 'alert') {
             });
         }
         
-        // Sync visible dates to hidden fields before WordPress save/update
+        // Sync visible dates to hidden fields before WordPress save/update.
+        // When ttbm-autosave.js owns the save it prepares the form itself, so
+        // preparing again here would only re-run the blocking helper XHRs.
         $(document).on('click', '#publish, #save-post, input[name="save"], input[name="publish"], .ttbm-header-publish', function() {
+            if (window.ttbmAutosaveHandlesSave === true) {
+                return;
+            }
             if (typeof window.ttbmPrepareTourSettingsFormForSubmit === 'function') {
                 window.ttbmPrepareTourSettingsFormForSubmit();
             } else {

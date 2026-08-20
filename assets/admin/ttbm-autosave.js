@@ -39,11 +39,23 @@
 		return; // hotel editor keeps its own flow for now
 	}
 
+	// Tells ttbm_admin_script.js to stand down: this file prepares and posts the
+	// form itself, so the legacy synchronous title/map XHRs must not also fire.
+	window.ttbmAutosaveHandlesSave = true;
+
 	var DEBOUNCE_MS = parseInt(cfg.debounce, 10) || 2500;
 	var MIN_INTERVAL_MS = parseInt(cfg.min_interval, 10) || 8000;
 	var SUCCESS_TOAST_COOLDOWN = 30000;
 	var RETRY_BUSY_MS = 3000;
+	// A click on Update that lands while a background save is in flight used to wait
+	// out RETRY_BUSY_MS, which read as a three-second freeze. Background retries can
+	// still take their time; an explicit save should not.
+	var MANUAL_RETRY_MS = 150;
 	var RETRY_ERROR_MS = 15000;
+
+	function busyRetryDelay() {
+		return state.manual ? MANUAL_RETRY_MS : RETRY_BUSY_MS;
+	}
 
 	var state = {
 		dirty: false,
@@ -179,7 +191,12 @@
 		// WordPress's form#post. Serialize the unique union of both containers so
 		// detached tour fields (dates, toggles, radios, repeaters, add-ons) are not
 		// omitted from the request.
-		var $payloadFields = $('#post :input, #ttbm_meta_box_panel :input');
+		// Native selector rather than jQuery's ':input' pseudo so the browser can use
+		// querySelectorAll. serialize() ignores <button> anyway, so the set is equal.
+		var $payloadFields = $(
+			'#post input, #post select, #post textarea, ' +
+			'#ttbm_meta_box_panel input, #ttbm_meta_box_panel select, #ttbm_meta_box_panel textarea'
+		);
 		var payload = $payloadFields.serialize() +
 			'&action=ttbm_autosave_tour' +
 			'&nonce=' + encodeURIComponent(cfg.nonce || '') +
@@ -246,7 +263,7 @@
 			state.inFlight = false;
 			if (state.queued || state.dirty) {
 				state.queued = false;
-				scheduleAutosave(RETRY_BUSY_MS);
+				scheduleAutosave(busyRetryDelay());
 			} else if (state.lastSuccessAt) {
 				// refreshSavedLabel() intentionally ignores in-flight requests, so it
 				// must run after inFlight is cleared or the pill remains on "Saving…"
@@ -262,7 +279,7 @@
 		if (status === 409) {
 			// Another save is in progress server-side; just retry shortly.
 			setStatus('saving', t('saving', 'Saving…'));
-			scheduleAutosave(RETRY_BUSY_MS);
+			scheduleAutosave(busyRetryDelay());
 			return;
 		}
 		var msg = t('error_toast', 'Auto-save failed — your changes are not saved yet.');
@@ -279,7 +296,9 @@
 	var $panel = $('#ttbm_meta_box_panel');
 
 	// Typed/selected fields inside the settings panel + the tour title.
-	$(document).on('input change', '#ttbm_meta_box_panel :input, #ttbm_post_title, #ttbm_thumb_id', function () {
+	// Native selector, not ':input': jQuery cannot hand a custom pseudo to
+	// Element.matches(), so every delegated dispatch re-queried the whole panel.
+	$(document).on('input change', '#ttbm_meta_box_panel input, #ttbm_meta_box_panel select, #ttbm_meta_box_panel textarea, #ttbm_post_title, #ttbm_thumb_id', function () {
 		var type = ($(this).attr('type') || '').toLowerCase();
 		if (type === 'button' || type === 'submit') {
 			return;

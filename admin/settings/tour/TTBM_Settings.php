@@ -1804,6 +1804,7 @@
 					add_action('save_post', array($this, 'capture_date_migration_snapshot'), 5, 1);
 					add_action('save_post', array($this, 'save_settings'), 99, 1);
 					add_action('save_post', array($this, 'sync_bookings_after_date_change'), 120, 1);
+					$this->apply_tax_input($tour_id);
 					$this->sync_bookings_after_date_change($tour_id);
 				} catch (\Throwable $e) {
 					self::$is_autosave = false;
@@ -1839,6 +1840,50 @@
 						'repeat_type' => (string) get_post_meta($tour_id, 'ttbm_repeat_type', true),
 					),
 				));
+			}
+			/**
+			 * Assign the Category / Organizer checkboxes submitted as tax_input[].
+			 *
+			 * The tour sidebar renders those with wp_terms_checklist(), which posts the
+			 * standard `tax_input[taxonomy][]` fields -- and on a classic full-page
+			 * submit WordPress's own edit_post() is what reads them. This save runs over
+			 * AJAX and finishes with wp_update_post(), which does NOT look at tax_input
+			 * at all, so the checkboxes were serialized, sent, and silently dropped:
+			 * the tour reported "saved", every meta field persisted, and the taxonomy
+			 * came back to its previous value on the next page load.
+			 *
+			 * Mirrors core's handling: taxonomy must be registered for this post type,
+			 * the user must be able to assign its terms, hierarchical taxonomies take
+			 * integer term IDs while flat ones may take names, and a taxonomy absent
+			 * from the payload is left untouched rather than cleared.
+			 */
+			private function apply_tax_input($tour_id): void {
+				if (empty($_POST['tax_input']) || !is_array($_POST['tax_input'])) {
+					return;
+				}
+				$post_type = get_post_type($tour_id);
+				foreach (wp_unslash($_POST['tax_input']) as $taxonomy => $terms) {
+					$taxonomy = sanitize_key($taxonomy);
+					$taxonomy_obj = get_taxonomy($taxonomy);
+					if (!$taxonomy_obj || !is_object_in_taxonomy($post_type, $taxonomy)) {
+						continue;
+					}
+					if (!current_user_can($taxonomy_obj->cap->assign_terms)) {
+						continue;
+					}
+					if (!is_array($terms)) {
+						// Flat taxonomies can arrive as a comma-separated string.
+						$terms = preg_split('/\s*,\s*/', (string) $terms, -1, PREG_SPLIT_NO_EMPTY);
+					}
+					if ($taxonomy_obj->hierarchical) {
+						// The checklist posts term IDs, plus a leading 0 that only exists
+						// so unchecking everything still submits the taxonomy.
+						$terms = array_values(array_filter(array_map('intval', $terms)));
+					} else {
+						$terms = array_values(array_filter(array_map('sanitize_text_field', $terms), 'strlen'));
+					}
+					wp_set_post_terms($tour_id, $terms, $taxonomy);
+				}
 			}
 			/**
 			 * Turn a stored validation-error record into a human-readable message for the

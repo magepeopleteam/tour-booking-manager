@@ -1355,6 +1355,16 @@ jQuery(function($){
 			<div class="ttbm-sb-card" data-taxonomy="<?php echo esc_attr($taxonomy); ?>" data-nonce="<?php echo esc_attr($nonce); ?>" data-hide-tab="#ttbm_settings_pricing">
 				<p class="ttbm-sb-card-title"><?php echo esc_html($title); ?></p>
 				<div class="ttbm-sb-tax-list">
+					<?php
+						/*
+						 * Core's own category box submits this alongside the checkboxes so
+						 * that clearing every one still sends the taxonomy, which is what
+						 * tells the save "remove all terms". Without it an unchecked-all
+						 * taxonomy is simply missing from the payload and is left alone,
+						 * so the last term could never be removed.
+						 */
+					?>
+					<input type="hidden" name="tax_input[<?php echo esc_attr($taxonomy); ?>][]" value="0"/>
 					<ul><?php wp_terms_checklist($post->ID, ['taxonomy' => $taxonomy, 'checked_ontop' => false]); ?></ul>
 				</div>
 				<a class="ttbm-sb-add-link"><?php echo esc_html($add_label); ?></a>

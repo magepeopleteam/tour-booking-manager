@@ -298,7 +298,10 @@
 	// Typed/selected fields inside the settings panel + the tour title.
 	// Native selector, not ':input': jQuery cannot hand a custom pseudo to
 	// Element.matches(), so every delegated dispatch re-queried the whole panel.
-	$(document).on('input change', '#ttbm_meta_box_panel input, #ttbm_meta_box_panel select, #ttbm_meta_box_panel textarea, #ttbm_post_title, #ttbm_thumb_id', function () {
+	// The Category / Organizer checkboxes live in the sidebar, outside the panel:
+	// now that the save actually applies them, an unwatched change there would sit
+	// unsaved until something else happened to mark the form dirty.
+	$(document).on('input change', '#ttbm_meta_box_panel input, #ttbm_meta_box_panel select, #ttbm_meta_box_panel textarea, .ttbm-sb-tax-list input, #ttbm_post_title, #ttbm_thumb_id', function () {
 		var type = ($(this).attr('type') || '').toLowerCase();
 		if (type === 'button' || type === 'submit') {
 			return;

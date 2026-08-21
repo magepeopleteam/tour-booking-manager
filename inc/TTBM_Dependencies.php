@@ -238,8 +238,8 @@
 				wp_enqueue_script('ttbm_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_script.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_shortcode', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_shortcode.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm-confirm-btn', TTBM_PLUGIN_URL . '/assets/frontend/ttbm-confirm-btn.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
-                wp_enqueue_style('ttbm_hotel_lists', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_lists.css', array('ttbm_registration'), TTBM_PLUGIN_VERSION);
-                wp_enqueue_style('ttbm_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_details.css', array('ttbm_hotel_lists'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_details.css'));
+				wp_enqueue_style('ttbm_hotel_lists');
+				wp_enqueue_style('ttbm_details');
 
 				wp_localize_script('ttbm_script', 'ttbm_ajax', array(
 					'ajax_url' => admin_url('admin-ajax.php'),
@@ -389,6 +389,8 @@
 				wp_enqueue_style('ttbm_date_range_picker', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.min.css', array(), '1');
 				wp_enqueue_script('ttbm_date_range_picker_js', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.js', array('jquery', 'moment'), '1', true);
 				wp_enqueue_style('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.css', array(), TTBM_PLUGIN_VERSION);
+				wp_register_style('ttbm_hotel_lists', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_lists.css', array('ttbm_registration'), TTBM_PLUGIN_VERSION);
+				wp_register_style('ttbm_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_details.css', array('ttbm_hotel_lists'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_details.css'));
 				wp_enqueue_style('ttbm_smart_booking', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_smart_booking.css', array('ttbm_registration'), TTBM_PLUGIN_VERSION);
 				/* [ttbm-tour-list]'s own modern visual system — loads after ttbm_registration
 				   so normal cascade order (not !important) is enough to win. Scoped entirely
@@ -398,12 +400,9 @@
 				/* templates/themes/travello.php's own visual system — a brand-new,
 				   fully isolated single-tour template, scoped entirely under
 				   .ttbm_travello_theme so it can't affect default.php/smart.php/
-				   viator.php. Depends on 'ttbm_details' (registered later, in
-				   enqueue_frontend_bundle()) purely for load-order — WP resolves
-				   style dependencies by handle at print time, not by the order
-				   wp_enqueue_style() calls happen to run in, so this is safe even
-				   though that handle isn't registered yet at this exact line. */
-				wp_enqueue_style('ttbm_travello_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_travello_details.css', array('ttbm_registration', 'ttbm_details'), TTBM_PLUGIN_VERSION);
+				   viator.php. Its registered 'ttbm_details' dependency preserves
+				   the intended cascade order on single-tour pages. */
+				wp_enqueue_style('ttbm_travello_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_travello_details.css', array('ttbm_registration', 'ttbm_details'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_travello_details.css'));
 				wp_enqueue_script('jquery-ui-autocomplete');
 				wp_enqueue_script('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.js', array('jquery', 'jquery-ui-autocomplete', 'ttbm_date_range_picker_js'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_attendee_autocomplete', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_attendee_autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), TTBM_PLUGIN_VERSION, true);

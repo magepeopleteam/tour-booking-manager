@@ -5,7 +5,65 @@ jQuery(function ($) {
 	if (!$root.length || typeof ttbm_admin_ajax === 'undefined' || typeof ttbmPaymentSettings === 'undefined') {
 		return;
 	}
-	var $wrap = $('.ttbm-pm-wrap');
+
+	/**
+	 * Keep the editor warning, booking-mode warning and right-sidebar summary
+	 * aligned with the server after an AJAX gateway change.
+	 */
+	function syncPaymentUi(state, closeWhenReady) {
+		if (!state || typeof state.has_gateway === 'undefined') {
+			return;
+		}
+
+		var isReady = state.has_gateway === true;
+		var warning = state.warning || '';
+		var gatewayNames = $.isArray(state.gateway_names) ? state.gateway_names : [];
+		var $warningSlot = $('.ttbm-booking-mode-warning-slot');
+
+		$warningSlot.empty();
+		if (!isReady && warning) {
+			$warningSlot.append(
+				$('<div class="ttbm-booking-mode-warning"><span class="dashicons dashicons-warning"></span><p></p></div>')
+					.find('p').text(warning).end()
+			);
+		}
+
+		if (isReady) {
+			$('#ttbm-edit-payment-notice').stop(true, true).fadeOut(150, function () { $(this).remove(); });
+			$('.ttbm-pay-gateway-notice').stop(true, true).fadeOut(150, function () { $(this).remove(); });
+		} else if ($('#ttbm-edit-payment-modal').length && !$('#ttbm-edit-payment-notice').length && $('#poststuff').length) {
+			var $editNotice = $('<div class="ttbm-edit-payment-notice" id="ttbm-edit-payment-notice"></div>');
+			$editNotice.text(ttbmPaymentSettings.edit_notice_text + ' ');
+			$editNotice.append(
+				$('<a href="#" class="ttbm-edit-payment-notice-link" data-ttbm-payment-modal-open></a>')
+					.text(ttbmPaymentSettings.edit_notice_action)
+			);
+			$('#poststuff').prepend($editNotice);
+		}
+
+		var $sidebar = $('.ttbm-sb-payment-card');
+		if ($sidebar.length) {
+			var $values = $sidebar.find('.ttbm-sb-payment-info-row strong');
+			$values.eq(0).text(state.mode_label || '');
+			$values.eq(1).text(gatewayNames.length ? gatewayNames.join(', ') : ttbmPaymentSettings.none_label);
+
+			var $action = $sidebar.find('.ttbm-sb-payment-link, .ttbm-sb-payment-warning').first();
+			if (!$action.length) {
+				$action = $('<p><a href="#" data-ttbm-payment-modal-open></a></p>').appendTo($sidebar.find('.ttbm-sb-payment-info-list'));
+			}
+			$action
+				.toggleClass('ttbm-sb-payment-link', isReady)
+				.toggleClass('ttbm-sb-payment-warning', !isReady)
+				.find('a')
+				.text(isReady ? ttbmPaymentSettings.payment_settings_label : ttbmPaymentSettings.configure_payment_label);
+		}
+
+		if (isReady && closeWhenReady && $('#ttbm-edit-payment-modal').is(':visible')) {
+			setTimeout(function () {
+				$('#ttbm-edit-payment-modal').fadeOut(150);
+			}, 350);
+		}
+	}
 
 	// ------------------------------------------------------------------
 	// Booking Mode selector (WooCommerce Checkout vs Custom Payment) —
@@ -94,10 +152,7 @@ jQuery(function ($) {
 				$notice.hide();
 			}
 
-			// Tour/hotel edit banner: once a gateway is available, reload so the notice disappears.
-			if (res.data && res.data.has_gateway === true && $('#ttbm-edit-payment-notice').length) {
-				setTimeout(function () { window.location.reload(); }, 600);
-			}
+			syncPaymentUi(res.data, false);
 		}).fail(function () {
 			if (window.ttbmToast) { window.ttbmToast(ttbmPaymentSettings.error_label, 'error'); }
 		}).always(function () {
@@ -196,13 +251,32 @@ jQuery(function ($) {
 		}
 
 		function succeed(message) {
-			wooWorking = false;
 			$fill.css('width', '100%');
 			$status.addClass('is-success').text(message || ttbmPaymentSettings.enabled_label);
 			setTimeout(function () {
-				$wooModal.fadeOut(300);
-				window.location.reload();
-			}, 1200);
+				refreshPaymentSettings(message);
+			}, 400);
+		}
+
+		function refreshPaymentSettings(successMessage) {
+			$.post(ttbm_admin_ajax.ajax_url, {
+				action: 'ttbm_refresh_payment_settings',
+				nonce: ttbm_admin_ajax.nonce
+			}).done(function (res) {
+				var $content = $('.ttbm-payment-settings-content').first();
+				if (!res || !res.success || !res.data || !res.data.html || !$content.length) {
+					fail();
+					return;
+				}
+				$content.replaceWith(res.data.html);
+				$wooModal.remove();
+				$wooModal = $();
+				wooWorking = false;
+				syncPaymentUi(res.data, false);
+				if (window.ttbmToast) {
+					window.ttbmToast(successMessage || ttbmPaymentSettings.enabled_label, 'success');
+				}
+			}).fail(fail);
 		}
 
 		function fail() {
@@ -352,13 +426,13 @@ jQuery(function ($) {
 		});
 	});
 
-	// Toggle a gateway's inline configuration form open/closed.
-	$wrap.on('click', '.ttbm-pm-configure-btn', function () {
+	// Toggle a WooCommerce gateway's inline configuration form open/closed.
+	$(document).on('click', '.ttbm-pay-subtab-panel[data-subtab-panel="woocommerce"] .ttbm-pm-configure-btn', function () {
 		$(this).closest('.ttbm-pm-card').find('.ttbm-pm-body').slideToggle(150);
 	});
 
 	// Quick enable/disable from the card header switch.
-	$wrap.on('change', '.ttbm-pm-toggle-input', function () {
+	$(document).on('change', '.ttbm-pm-toggle-input', function () {
 		var $input = $(this);
 		var $card = $input.closest('.ttbm-pm-card');
 		var gatewayId = $input.data('gateway-id');
@@ -378,8 +452,8 @@ jQuery(function ($) {
 			if (res.success && res.data.notice) {
 				window.alert(res.data.notice);
 			}
-			if (isEnabled && $('#ttbm-edit-payment-notice').length) {
-				setTimeout(function () { window.location.reload(); }, 600);
+			if (res.success) {
+				syncPaymentUi(res.data, true);
 			}
 		}).fail(function () {
 			$input.prop('checked', !$input.is(':checked'));
@@ -390,7 +464,7 @@ jQuery(function ($) {
 
 	// Save one gateway's native settings form via AJAX (WooCommerce's own
 	// process_admin_options(), nothing reimplemented on our side).
-	$wrap.on('submit', '.ttbm-pm-form', function (e) {
+	$(document).on('submit', '.ttbm-pm-form', function (e) {
 		e.preventDefault();
 		var $form = $(this);
 		var $card = $form.closest('.ttbm-pm-card');
@@ -411,9 +485,7 @@ jQuery(function ($) {
 				$card.toggleClass('is-enabled', isEnabled).toggleClass('is-disabled', !isEnabled);
 				$card.find('.ttbm-pm-toggle-input').prop('checked', isEnabled);
 				$card.find('.ttbm-pm-badge').text(isEnabled ? ttbmPaymentSettings.enabled_label : ttbmPaymentSettings.disabled_label);
-				if (isEnabled && $('#ttbm-edit-payment-notice').length) {
-					setTimeout(function () { window.location.reload(); }, 600);
-				}
+				syncPaymentUi(res.data, true);
 			} else {
 				$status.addClass('is-error').text(res.data || ttbmPaymentSettings.error_label);
 			}

@@ -113,6 +113,16 @@
 	max-height: none !important;
 }
 
+/* A tour with only one gallery image omits `.ttbm_slider-wrapper` and places
+   `.sliderAllItem` directly inside `.superSlider`. Make that direct child span
+   both desktop gallery rows as well, otherwise it occupies only the first
+   260px row and leaves the lower half of the hero blank. */
+#ttbm_travello_gallery > .superSlider.ttbm-featured-only > .sliderAllItem {
+	grid-row: 1 / span 2;
+	width: 100% !important;
+	max-width: 100% !important;
+}
+
 /* Cells no longer sit flush against each other — `.ttbm_slider-wrapper` now
    has its own `gap:10px` (see the DOM note above `#ttbm_travello_gallery >
    .superSlider`) splitting the big photo from the showcase column, so each
@@ -224,6 +234,10 @@
 	.ttbm-travello-gallery .sliderAllItem .sliderItem {
 		height: 260px !important;
 		max-height: 260px !important;
+	}
+
+	#ttbm_travello_gallery > .superSlider.ttbm-featured-only > .sliderAllItem {
+		grid-row: 1;
 	}
 
 	/* Reference drops the small side photos entirely below 768px and lets
@@ -1229,6 +1243,7 @@
 }
 
 .ttbm-travello-booking-card {
+	--ttlm-muted: #667085;
 	background: #fff;
 	border-radius: var( --ttlm-radius-lg );
 	padding: 24px;
@@ -1323,6 +1338,185 @@
    radius with no border/visible edge to draw doesn't show). */
 .ttbm_travello_theme #ttbm_booking_section div.ttbm_registration_area {
 	border: 0;
+	color: var( --ttlm-ink );
+}
+
+/* Travello's booking card uses the `ttbm_booking_section` ID without the
+   shared `.ttbm_booking_section` class. Re-scope the modern date toolbar to
+   that real ancestor so the icon, field and action form one readable inline
+   control instead of inheriting the legacy white text and stacked sizing. */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_date_time_select.ttbm-date-select {
+	--ttbm-date-surface: #f7f8fa;
+	--ttbm-date-surface-hover: #fff;
+	--ttbm-date-ink: var( --ttlm-ink );
+	--ttbm-date-muted: #667085;
+	--ttbm-date-line: #e4e7ec;
+	margin: 0 0 18px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: var( --ttbm-date-ink );
+}
+
+.ttbm_travello_theme #ttbm_booking_section div.ttbm_select_date_area {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	padding: 0;
+	border-radius: 0;
+	background: transparent;
+	color: var( --ttbm-date-ink );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__toolbar {
+	display: grid;
+	grid-template-columns: minmax( 0, 1fr ) auto;
+	align-items: end;
+	gap: 10px;
+	width: 100%;
+	color: var( --ttbm-date-ink );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__field {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 7px;
+	min-width: 0;
+	width: auto;
+	max-width: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__label {
+	display: block;
+	margin: 0;
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 1.2;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+	text-align: left;
+	color: var( --ttbm-date-muted );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 9px;
+	width: 100%;
+	min-width: 0;
+	height: 48px;
+	box-sizing: border-box;
+	padding: 0 11px;
+	border: 1px solid var( --ttbm-date-line );
+	border-radius: 12px;
+	background: var( --ttbm-date-surface );
+	color: var( --ttbm-date-ink );
+	cursor: pointer;
+	box-shadow: 0 1px 2px rgba( 16, 24, 40, .04 );
+	transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control:hover,
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control:focus-within {
+	border-color: rgba( var( --ttlm-primary-rgb ), .45 );
+	background: var( --ttbm-date-surface-hover );
+	box-shadow: 0 0 0 3px rgba( var( --ttlm-primary-rgb ), .1 );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	flex: 0 0 30px;
+	border-radius: 9px;
+	background: rgba( var( --ttlm-primary-rgb ), .1 );
+	color: var( --ttlm-primary );
+}
+
+.ttbm_travello_theme #ttbm_booking_section #ttbm_select_date.formControl {
+	flex: 1 1 auto;
+	min-width: 0;
+	height: auto;
+	margin: 0;
+	padding: 0 !important;
+	border: 0 !important;
+	border-radius: 0;
+	background: transparent !important;
+	box-shadow: none !important;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.3;
+	text-align: left;
+	color: var( --ttbm-date-ink );
+	cursor: pointer;
+}
+
+.ttbm_travello_theme #ttbm_booking_section #ttbm_select_date.formControl::placeholder {
+	color: var( --ttbm-date-muted );
+	opacity: 1;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_date_chevron {
+	position: static;
+	margin-left: auto;
+	flex-shrink: 0;
+	font-size: 10px;
+	color: var( --ttbm-date-muted );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_check_ability.ttbm-date-select__action {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 7px;
+	min-width: 132px;
+	height: 48px;
+	margin: 0;
+	padding: 0 13px;
+	box-sizing: border-box;
+	border: 1px solid var( --ttlm-accent ) !important;
+	border-radius: 12px;
+	background: var( --ttlm-accent ) !important;
+	box-shadow: 0 8px 18px rgba( 230, 124, 48, .2 );
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 1.2;
+	white-space: nowrap;
+	color: #fff !important;
+	cursor: pointer;
+	transition: filter .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_check_ability.ttbm-date-select__action:hover,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_check_ability.ttbm-date-select__action:focus-visible {
+	filter: brightness( 1.05 );
+	transform: translateY( -1px );
+	box-shadow: 0 11px 22px rgba( 230, 124, 48, .26 );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_check_ability.ttbm-date-select__action span {
+	font-size: inherit;
+	color: inherit;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_booking_panel,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_widget_content,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_order_summary {
+	color: var( --ttlm-ink );
+}
+
+@media ( max-width: 420px ) {
+	.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__toolbar {
+		grid-template-columns: 1fr;
+	}
+
+	.ttbm_travello_theme #ttbm_booking_section .ttbm_check_ability.ttbm-date-select__action {
+		width: 100%;
+	}
 }
 
 /* Price + rating header — real data (see travello.php: $ttbm_travello_start_price,

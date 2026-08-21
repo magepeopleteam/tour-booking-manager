@@ -415,6 +415,15 @@ if ( ! class_exists( 'TTBM_Woo_Installer' ) ) {
 				WC_Install::install();
 			}
 
+			/*
+			 * WC_Install::install() sets this transient for new stores so the next
+			 * non-AJAX admin request is redirected to WooCommerce onboarding. This
+			 * installation was initiated inside Tour Booking Manager's payment
+			 * modal, so keep the administrator in that workflow. The WooCommerce
+			 * tables, pages, options and cron setup above still run normally.
+			 */
+			delete_transient( '_wc_activation_redirect' );
+
 			// Signal the demo import popup to auto-show on the next page load (tour list).
 			set_transient( 'ttbm_woo_just_activated', true, 300 );
 

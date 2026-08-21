@@ -72,6 +72,7 @@
 				add_action('wp_ajax_ttbm_save_gateway_settings', array($this, 'ajax_save_custom_gateway'));
 				add_action('wp_ajax_ttbm_wc_save_gateway', array($this, 'ajax_save_gateway'));
 				add_action('wp_ajax_ttbm_wc_toggle_gateway', array($this, 'ajax_toggle_gateway'));
+				add_action('wp_ajax_ttbm_refresh_payment_settings', array($this, 'ajax_refresh_payment_settings'));
 				add_action('wp_ajax_ttbm_save_book_status', array($this, 'ajax_save_book_status'));
 				add_action('wp_ajax_ttbm_save_booking_mode', array($this, 'ajax_save_booking_mode'));
 				add_action('wp_ajax_ttbm_save_misc_fields', array($this, 'ajax_save_misc_fields'));
@@ -386,6 +387,11 @@
 					'payment_notice_title' => esc_html__('Bookings cannot accept payments yet', 'tour-booking-manager'),
 					'enable_offline_label' => esc_html__('Enable Offline Payment', 'tour-booking-manager'),
 					'configure_wc_label' => esc_html__('Configure WooCommerce Payments', 'tour-booking-manager'),
+					'none_label' => esc_html__('None', 'tour-booking-manager'),
+					'payment_settings_label' => esc_html__('Payment Settings', 'tour-booking-manager'),
+					'configure_payment_label' => esc_html__('Configure payment method', 'tour-booking-manager'),
+					'edit_notice_text' => esc_html__('No payment method is currently configured.', 'tour-booking-manager'),
+					'edit_notice_action' => esc_html__('Please configure a payment method to accept bookings.', 'tour-booking-manager'),
 					'payment_settings_url' => admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page#ttbm_payment_settings'),
 				));
 				wp_add_inline_style('ttbm-global-settings', $this->edit_payment_notice_css());
@@ -455,11 +461,9 @@ JS;
 				$opts = (array) get_option('ttbm_payment_settings', array());
 				$opts['ttbm_booking_mode'] = $mode;
 				update_option('ttbm_payment_settings', $opts);
-				wp_send_json_success(array(
+				wp_send_json_success(array_merge(array(
 					'mode' => $mode,
-					'has_gateway' => self::has_gateway_for_mode($mode),
-					'warning' => self::gateway_warning($mode),
-				));
+				), $this->payment_state_response()));
 			}
 			public function register_section($sections) {
 				$sections[] = array(
@@ -477,14 +481,16 @@ JS;
 			public function render_tab_content() {
 				$custom_is_default = self::get_booking_mode() === 'custom';
 				?>
-				<?php $this->render_booking_mode_selector(); ?>
+				<div class="ttbm-payment-settings-content">
+					<?php $this->render_booking_mode_selector(); ?>
 
-                <div class="ttbm-pay-subtab-panel ttbm-pay-mode-panel" data-subtab-panel="woocommerce" <?php echo $custom_is_default ? 'style="display:none;"' : ''; ?>>
-					<?php $this->render_woocommerce_subtab(); ?>
-                </div>
-                <div class="ttbm-pay-subtab-panel ttbm-pay-mode-panel" data-subtab-panel="custom" <?php echo $custom_is_default ? '' : 'style="display:none;"'; ?>>
-					<?php $this->render_custom_payment_subtab(); ?>
-                </div>
+					<div class="ttbm-pay-subtab-panel ttbm-pay-mode-panel" data-subtab-panel="woocommerce" <?php echo $custom_is_default ? 'style="display:none;"' : ''; ?>>
+						<?php $this->render_woocommerce_subtab(); ?>
+					</div>
+					<div class="ttbm-pay-subtab-panel ttbm-pay-mode-panel" data-subtab-panel="custom" <?php echo $custom_is_default ? '' : 'style="display:none;"'; ?>>
+						<?php $this->render_custom_payment_subtab(); ?>
+					</div>
+				</div>
 				<?php
 			}
 			// Full-width Booking Mode section. Always renders
@@ -968,6 +974,30 @@ JS;
 					wp_send_json_error(esc_html__('WooCommerce is not active.', 'tour-booking-manager'));
 				}
 			}
+			/**
+			 * State needed to update payment notices and the editor sidebar without
+			 * reloading the current tour/hotel edit request.
+			 */
+			private function payment_state_response(): array {
+				return array(
+					'has_gateway' => self::has_functional_payment_method(),
+					'warning' => self::gateway_warning(),
+					'mode_label' => self::get_booking_mode_label(),
+					'gateway_names' => self::get_active_gateway_names(),
+				);
+			}
+			/**
+			 * Re-render the payment manager after WooCommerce becomes active in a
+			 * previous AJAX request. This fresh request boots WooCommerce normally,
+			 * so its gateway classes and settings forms are available immediately.
+			 */
+			public function ajax_refresh_payment_settings() {
+				$this->verify_admin_ajax_wc();
+				ob_start();
+				$this->render_tab_content();
+				$html = ob_get_clean();
+				wp_send_json_success(array_merge(array('html' => $html), $this->payment_state_response()));
+			}
 			public function ajax_save_gateway() {
 				$this->verify_admin_ajax_wc();
 				$gateway_id = isset($_POST['gateway_id']) ? sanitize_key(wp_unslash($_POST['gateway_id'])) : '';
@@ -987,10 +1017,10 @@ JS;
 				}
 				$refreshed = $this->get_gateways();
 				$enabled = isset($refreshed[$gateway_id]) && $refreshed[$gateway_id]->enabled === 'yes';
-				wp_send_json_success(array(
+				wp_send_json_success(array_merge(array(
 					'message' => esc_html__('Settings saved successfully!', 'tour-booking-manager'),
 					'enabled' => $enabled ? 'yes' : 'no',
-				));
+				), $this->payment_state_response()));
 			}
 			public function ajax_toggle_gateway() {
 				$this->verify_admin_ajax_wc();
@@ -1025,7 +1055,7 @@ JS;
 						$name
 					);
 				}
-				wp_send_json_success($response);
+				wp_send_json_success(array_merge($response, $this->payment_state_response()));
 			}
 			public function ajax_save_custom_gateway() {
 				$this->verify_admin_ajax();

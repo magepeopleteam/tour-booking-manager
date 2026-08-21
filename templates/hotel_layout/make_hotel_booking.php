@@ -37,7 +37,7 @@ $default_date_range = $display_checkin . '    -    ' . $display_checkout;
 						data-display-format="<?php echo esc_attr( $display_format ); ?>"
 					/>
 				</span>
-				<button class="ttbm_hotel_check_btn ttbm_check_ability ttbm_hotel_room_check_availability" type="button">
+				<button class="ttbm_hotel_check_btn ttbm_hotel_room_check_availability" type="button">
 					<?php echo esc_html( TTBM_Function::get_translation_settings( 'ttbm_string_check_availability', esc_html__( 'Check Availability', 'tour-booking-manager' ) ) ); ?>
 				</button>
 			</div>

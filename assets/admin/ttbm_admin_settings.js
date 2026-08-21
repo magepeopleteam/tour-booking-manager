@@ -1221,6 +1221,98 @@ function ttbm_load_sortable_datepicker(parent, item) {
 
     window.ttbmValidateSettingsFormBeforeSubmit = ttbmValidateSettingsFormBeforeSubmit;
 
+    var ttbmHotelSettingsSaving = false;
+
+    function ttbmSaveHotelSettings($button) {
+        if (ttbmHotelSettingsSaving) {
+            return;
+        }
+        ttbmEnableToggleFieldsForSubmit();
+        if (typeof window.ttbmPrepareTourSettingsFormForSubmit === 'function') {
+            window.ttbmPrepareTourSettingsFormForSubmit({ skipRemotePersistence: true });
+        }
+        if (!ttbmValidateHotelFormBeforeSubmit()) {
+            ttbmInitGeneralInfoToggles();
+            if (typeof window.ttbmFocusValidationTarget === 'function') {
+                window.ttbmFocusValidationTarget();
+            }
+            if (typeof window.ttbmToast === 'function') {
+                window.ttbmToast('Please complete the highlighted required fields before saving.', 'error');
+            }
+            return;
+        }
+
+        ttbmDisableHiddenTemplateInputs();
+        // The modern editor can relocate the metabox outside form#post. Serialize
+        // the unique union so the currently visible room values always win.
+        var $payloadFields = $(
+            '#post input, #post select, #post textarea, ' +
+            '#ttbm_meta_box_panel input, #ttbm_meta_box_panel select, #ttbm_meta_box_panel textarea'
+        );
+        var payload = $payloadFields.serializeArray().filter(function (field) {
+            return field.name !== 'action' && field.name !== 'nonce';
+        });
+        payload.push({ name: 'action', value: 'ttbm_save_hotel_settings' });
+        payload.push({ name: 'nonce', value: (window.ttbm_admin_ajax && ttbm_admin_ajax.nonce) || '' });
+        payload.push({
+            name: 'requested_post_status',
+            value: $button.attr('data-ttbm-save-action') === 'publish' ? 'publish' : ''
+        });
+
+        var originalText = $button.text();
+        ttbmHotelSettingsSaving = true;
+        $button.prop('disabled', true).text('Saving…');
+
+        $.ajax({
+            url: (window.ttbm_admin_ajax && ttbm_admin_ajax.ajax_url) || window.ajaxurl,
+            type: 'POST',
+            data: $.param(payload),
+            dataType: 'json'
+        }).done(function (response) {
+            if (!response || !response.success) {
+                var message = response && response.data && response.data.message
+                    ? response.data.message
+                    : 'Hotel could not be saved.';
+                if (typeof window.ttbmToast === 'function') {
+                    window.ttbmToast(message, 'error');
+                }
+                return;
+            }
+            if (typeof window.ttbmToast === 'function') {
+                window.ttbmToast(response.data.message || 'Hotel saved successfully.', 'success');
+            }
+            if (response.data.post_status === 'publish') {
+                $('.ttbm-header-status')
+                    .removeClass(function (index, className) {
+                        return (className.match(/(^|\s)is-status-\S+/g) || []).join(' ');
+                    })
+                    .addClass('is-status-publish')
+                    .text('Published');
+                $button.attr('data-ttbm-save-action', 'update');
+                originalText = 'Update';
+            }
+        }).fail(function (xhr) {
+            var message = xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message
+                ? xhr.responseJSON.data.message
+                : 'Hotel could not be saved. Please try again.';
+            if (typeof window.ttbmToast === 'function') {
+                window.ttbmToast(message, 'error');
+            }
+        }).always(function () {
+            ttbmHotelSettingsSaving = false;
+            $button.prop('disabled', false).text(originalText);
+            ttbmInitGeneralInfoToggles();
+            ttbmDisableHiddenTemplateInputs();
+        });
+    }
+
+    $(document).on('click', 'body.post-type-ttbm_hotel .ttbm-split-publish__main', function (event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        ttbmSaveHotelSettings($(this));
+        return false;
+    });
+
     /**
      * Make every date/time field submit deterministically, independent of the
      * order the admin clicked things in. Runs from ttbmPrepareTourSettingsFormForSubmit()
@@ -1576,4 +1668,3 @@ function ttbm_load_sortable_datepicker(parent, item) {
     });
 
 })(jQuery);
-

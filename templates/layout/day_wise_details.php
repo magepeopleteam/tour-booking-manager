@@ -97,7 +97,7 @@
 
 			libxml_use_internal_errors( true );
 			$doc = new DOMDocument();
-			$doc->loadHTML( mb_convert_encoding( '<div id="ttbm-day-root">' . $html . '</div>', 'HTML-ENTITIES', 'UTF-8' ) );
+			$doc->loadHTML( '<?xml encoding="UTF-8"><div id="ttbm-day-root">' . $html . '</div>' );
 			libxml_clear_errors();
 
 			$root = $doc->getElementById( 'ttbm-day-root' );

@@ -391,7 +391,7 @@
 				wp_enqueue_style('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.css', array(), TTBM_PLUGIN_VERSION);
 				wp_register_style('ttbm_hotel_lists', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_lists.css', array('ttbm_registration'), TTBM_PLUGIN_VERSION);
 				wp_register_style('ttbm_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_details.css', array('ttbm_hotel_lists'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_details.css'));
-				wp_enqueue_style('ttbm_smart_booking', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_smart_booking.css', array('ttbm_registration'), TTBM_PLUGIN_VERSION);
+				wp_enqueue_style('ttbm_smart_booking', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_smart_booking.css', array('ttbm_registration'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_smart_booking.css'));
 				/* [ttbm-tour-list]'s own modern visual system — loads after ttbm_registration
 				   so normal cascade order (not !important) is enough to win. Scoped entirely
 				   under .ttbm-tour-list-shortcode / .ttbm-top-search-form, so it can't affect
@@ -404,7 +404,7 @@
 				   the intended cascade order on single-tour pages. */
 				wp_enqueue_style('ttbm_travello_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_travello_details.css', array('ttbm_registration', 'ttbm_details'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_travello_details.css'));
 				wp_enqueue_script('jquery-ui-autocomplete');
-				wp_enqueue_script('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.js', array('jquery', 'jquery-ui-autocomplete', 'ttbm_date_range_picker_js'), TTBM_PLUGIN_VERSION, true);
+				wp_enqueue_script('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.js', array('jquery', 'jquery-ui-autocomplete', 'ttbm_date_range_picker_js'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_registration.js'), true);
 				wp_enqueue_script('ttbm_attendee_autocomplete', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_attendee_autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_price_calculation', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_price_calculation.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_smart_booking', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_smart_booking.js', array('jquery', 'ttbm_registration', 'ttbm_price_calculation'), TTBM_PLUGIN_VERSION, true);

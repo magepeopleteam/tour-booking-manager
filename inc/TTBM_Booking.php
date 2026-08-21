@@ -66,13 +66,21 @@
 					die;
 				}
 
-				$tour_id = isset($_REQUEST['tour_id']) ? sanitize_text_field(wp_unslash($_REQUEST['tour_id'])) : '';
-				$hotel_id = isset($_REQUEST['hotel_id']) ? sanitize_text_field(wp_unslash($_REQUEST['hotel_id'])) : '';
+				$tour_id = isset($_REQUEST['tour_id']) ? absint(wp_unslash($_REQUEST['tour_id'])) : 0;
+				$hotel_id = isset($_REQUEST['hotel_id']) ? absint(wp_unslash($_REQUEST['hotel_id'])) : 0;
 				$date_range = isset($_REQUEST['date_range']) ? sanitize_text_field(wp_unslash($_REQUEST['date_range'])) : '';
-//				$date = explode("    -    ", $date_range);
-                $date = preg_split('/\s*-\s*/', trim($date_range));
-                $start_date = gmdate('Y-m-d', strtotime($date[0]));
-//				$start_date = gmdate('Y-m-d', strtotime($date[0]));
+				$date = TTBM_Global_Function::parse_date_range_string($date_range);
+				$assigned_hotels = $tour_id ? TTBM_Function::get_hotel_list($tour_id) : array();
+				$assigned_hotels = is_array($assigned_hotels) ? array_map('absint', $assigned_hotels) : array();
+				if (!$tour_id || !$hotel_id || !$date || !in_array($hotel_id, $assigned_hotels, true)) {
+					?>
+					<div class="ttbm_hotel_no_rooms dLayout allCenter _mT_bgWarning" data-placeholder>
+						<h3 class="textWhite"><?php esc_html_e('Please select valid hotel dates.', 'tour-booking-manager'); ?></h3>
+					</div>
+					<?php
+					die;
+				}
+				$start_date = $date[0];
 				do_action('ttbm_booking_panel', $tour_id, $start_date, $hotel_id);
 			die();
 		}

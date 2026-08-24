@@ -423,15 +423,15 @@
 				wp_enqueue_script( 'moment' );
 				wp_enqueue_style('ttbm_date_range_picker', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.min.css', array(), '1');
 				wp_enqueue_script('ttbm_date_range_picker_js', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.js', array('jquery', 'moment'), '1', true);
-				wp_enqueue_style('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.css', array(), TTBM_PLUGIN_VERSION);
-				wp_register_style('ttbm_hotel_lists', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_lists.css', array('ttbm_registration'), TTBM_PLUGIN_VERSION);
+				wp_enqueue_style('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.css', array(), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_registration.css'));
+				wp_register_style('ttbm_hotel_lists', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_lists.css', array('ttbm_registration'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_hotel_lists.css'));
 				wp_register_style('ttbm_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_details.css', array('ttbm_hotel_lists'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_details.css'));
 				wp_enqueue_style('ttbm_smart_booking', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_smart_booking.css', array('ttbm_registration'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_smart_booking.css'));
 				/* [ttbm-tour-list]'s own modern visual system — loads after ttbm_registration
 				   so normal cascade order (not !important) is enough to win. Scoped entirely
 				   under .ttbm-tour-list-shortcode / .ttbm-top-search-form, so it can't affect
 				   hotel listings or any other shortcode's output. */
-				wp_enqueue_style('ttbm_tour_list_modern', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_tour_list_modern.css', array('ttbm_registration'), TTBM_PLUGIN_VERSION);
+				wp_enqueue_style('ttbm_tour_list_modern', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_tour_list_modern.css', array('ttbm_registration'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_tour_list_modern.css'));
 				/* templates/themes/travello.php's own visual system — a brand-new,
 				   fully isolated single-tour template, scoped entirely under
 				   .ttbm_travello_theme so it can't affect default.php/smart.php/

@@ -578,20 +578,33 @@
     gap: 20px;
 }
 
+/* minmax(0, 1fr) rather than 1fr: a bare 1fr floors at the column's min-content
+   width, so one long hotel name or an unshrinkable image pushed the whole grid
+   wider than its container instead of wrapping. */
 .ttbm-grid-columns-2 {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .ttbm-grid-columns-3 {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .ttbm-grid-columns-4 {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .ttbm-grid-columns-1 {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+/* The wrapper already drops to 2 columns at 768px and 1 at 480px. Between
+   those and full desktop a 4-up grid was still 4-up on a ~800px tablet, i.e.
+   ~185px per card. One step in between keeps the cards readable. Specificity
+   (0,3,0) beats the plain column classes above without needing !important. */
+@media (max-width: 991px) {
+    .ttbm_hotel_lists_wrapper.grid-view.ttbm-grid-columns-4 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 }
 
 

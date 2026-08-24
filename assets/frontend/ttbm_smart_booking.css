@@ -1342,3 +1342,13 @@ body:has(.ttbm_smart_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-un
 		margin-bottom: 20px;
 	}
 }
+
+
+/* Trust signals sit two-up inside the booking sidebar. Once that sidebar is
+   full width on a phone the two columns are still ~150px each, which wraps
+   every label mid-phrase — one per row reads correctly at that size. */
+@media (max-width: 480px) {
+	#ttbm_content .ttbm_smart_theme .ttbm_smart_trust_signals {
+		grid-template-columns: 1fr;
+	}
+}

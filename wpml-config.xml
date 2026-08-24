@@ -1,0 +1,63 @@
+<wpml-config>
+	<!--
+		A tour's schedule is one real-world schedule whatever language it is read
+		in, and this plugin has no per-language scheduling concept: get_date()
+		and everything downstream of it (the calendar, availability, and the
+		ttbm_upcoming_date the list shortcodes filter on) derive from the fields
+		below.
+
+		Without this file WPML leaves them out of a new translation, so a
+		translated tour ends up with ttbm_travel_type defaulting to 'fixed' and
+		every date blank. It then has no dates at all, the daily rebuild in
+		TTBM_Function::update_all_upcoming_date_month() writes an empty
+		ttbm_upcoming_date over it, and the tour drops out of every listing.
+
+		"copy" keeps a translation's schedule identical to the original's, so a
+		translated tour is bookable on exactly the days the original is.
+
+		The derived keys (ttbm_upcoming_date, ttbm_reg_end_date, ttbm_month_list)
+		are deliberately NOT listed: the plugin recomputes those per post, so how
+		they are handled stays whatever the site has configured. Prices, ticket
+		types and text fields are deliberately absent too, being translatable
+		content rather than schedule.
+	-->
+	<custom-fields>
+		<!-- Which scheduling mode the tour uses: fixed / repeated / particular. -->
+		<custom-field action="copy">ttbm_travel_type</custom-field>
+
+		<!-- Fixed (one-off) tours. -->
+		<custom-field action="copy">ttbm_travel_start_date</custom-field>
+		<custom-field action="copy">ttbm_travel_start_time</custom-field>
+		<custom-field action="copy">ttbm_travel_start_date_time</custom-field>
+		<custom-field action="copy">ttbm_travel_end_date</custom-field>
+		<custom-field action="copy">ttbm_travel_end_time</custom-field>
+		<custom-field action="copy">ttbm_travel_reg_end_date</custom-field>
+		<custom-field action="copy">reg_end_time</custom-field>
+
+		<!-- Repeated tours: the recurrence pattern. -->
+		<custom-field action="copy">ttbm_travel_repeated_start_date</custom-field>
+		<custom-field action="copy">ttbm_travel_repeated_start_time</custom-field>
+		<custom-field action="copy">ttbm_travel_repeated_end_date</custom-field>
+		<custom-field action="copy">ttbm_travel_repeated_after</custom-field>
+		<custom-field action="copy">ttbm_repeat_type</custom-field>
+		<custom-field action="copy">ttbm_repeat_number</custom-field>
+
+		<!-- Particular (hand-picked) dates, and PRO's special-date overrides. -->
+		<custom-field action="copy">ttbm_particular_dates</custom-field>
+		<custom-field action="copy">ttbm_special_date_info</custom-field>
+
+		<!-- Blocked weekdays / blocked dates, and the per-weekday departure times. -->
+		<custom-field action="copy">ttbm_enable_off_schedule</custom-field>
+		<custom-field action="copy">mep_ticket_offdays</custom-field>
+		<custom-field action="copy">mep_ticket_off_dates</custom-field>
+		<custom-field action="copy">mep_disable_ticket_time</custom-field>
+		<custom-field action="copy">mep_ticket_times_global</custom-field>
+		<custom-field action="copy">mep_ticket_times_mon</custom-field>
+		<custom-field action="copy">mep_ticket_times_tue</custom-field>
+		<custom-field action="copy">mep_ticket_times_wed</custom-field>
+		<custom-field action="copy">mep_ticket_times_thu</custom-field>
+		<custom-field action="copy">mep_ticket_times_fri</custom-field>
+		<custom-field action="copy">mep_ticket_times_sat</custom-field>
+		<custom-field action="copy">mep_ticket_times_sun</custom-field>
+	</custom-fields>
+</wpml-config>

@@ -1,3 +1,9 @@
+/* Localised UI strings (see TTBM_Dependencies::frontend_i18n()). Falls back to
+   the English literal when the handle carrying ttbm_i18n is not on the page. */
+window.ttbmT = window.ttbmT || function (key, fallback) {
+	return (typeof ttbm_i18n !== 'undefined' && ttbm_i18n[key]) ? ttbm_i18n[key] : fallback;
+};
+
 /**
  * Active-filter chip row for [ttbm-tour-list] (the tour archive's "modern"
  * grid). Purely additive UI on top of the existing filter engine in
@@ -76,9 +82,9 @@
 				if (curMin > boundMin && curMax < boundMax) {
 					label = currency + Math.round(curMin) + ' – ' + currency + Math.round(curMax);
 				} else if (curMax < boundMax) {
-					label = 'Under ' + currency + Math.round(curMax);
+					label = ttbmT('chip_under', 'Under %s').replace('%s', currency + Math.round(curMax));
 				} else {
-					label = currency + Math.round(curMin) + ' & up';
+					label = ttbmT('chip_and_up', '%s & up').replace('%s', currency + Math.round(curMin));
 				}
 				chips.push({
 					label: label,
@@ -134,7 +140,7 @@
 		$row.addClass('has-chips');
 		chips.forEach(function (chip) {
 			let $pill = $('<span class="ttbm-chip"></span>').text(chip.label);
-			let $remove = $('<button type="button" class="ttbm-chip-remove" aria-label="Remove filter">✕</button>');
+			let $remove = $('<button type="button" class="ttbm-chip-remove" aria-label="' + ttbmT('chip_remove', 'Remove filter') + '">✕</button>');
 			$remove.on('click', function (e) {
 				e.preventDefault();
 				chip.remove();
@@ -142,7 +148,7 @@
 			$pill.append($remove);
 			$row.append($pill);
 		});
-		let $clearAll = $('<button type="button" class="ttbm-chip-clear-all"></button>').text('Clear all');
+		let $clearAll = $('<button type="button" class="ttbm-chip-clear-all"></button>').text(ttbmT('chip_clear_all', 'Clear all'));
 		$clearAll.on('click', function (e) {
 			e.preventDefault();
 			resetAll($filterArea);

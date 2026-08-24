@@ -3674,15 +3674,13 @@ div.left_filter {
 	position: static;
 }
 
-@media (max-width: 767px) {
-	div.ttbm_filter.leftSidebar {
-		position: static;
-
-	}
-}
-
-.admin-bar div.ttbm_filter.leftSidebar {
-	top: 46px;
+/* Same never-matching selector as the removed mobile rule below — the sticky
+   element is `.ttbm_filter_area .leftSidebar`, not one div carrying both
+   `.ttbm_filter` and `.leftSidebar`. Logged-in users were getting the plain
+   top:30px offset, so the sidebar stuck 32px under the WP admin bar and
+   scrolled beneath it. 30px + the 32px desktop admin bar = 62px. */
+.admin-bar .ttbm_filter_area .leftSidebar {
+	top: 62px;
 }
 
 .ttbm_filter .mActive {
@@ -9617,4 +9615,49 @@ div.ttbm_booking_panel table.mp_tour_ticket_extra tbody tr.ttbm_ticket_row td {
 	padding: 0;
 	text-transform: none;
 	text-align: left;
+}
+
+
+/* =====================================================
+   Shared list-layout responsiveness  (.ttbm_filter_area)
+   -----------------------------------------------------
+   Every list shortcode renders the same
+   .left_filter > .leftSidebar + .mainSection markup:
+   [travel-list], [ttbm-tour-list], [ttbm-top-filter],
+   [ttbm-search-result], [ttbm-hotel-list] and the tour
+   location page. Only [ttbm-tour-list] carries the
+   .ttbm-tour-list-shortcode root that
+   ttbm_tour_list_modern.css stacks at 900px, so every
+   other one stayed two-column down to 767px and small
+   tablets got two cramped columns. These rules set
+   layout only — no colours, type or spacing — so each
+   shortcode keeps its own visual design.
+   ===================================================== */
+@media only screen and (max-width: 900px) {
+	div.ttbm_filter_area .left_filter {
+		-webkit-flex-direction: column;
+		flex-direction: column;
+	}
+
+	div.ttbm_filter_area .leftSidebar,
+	div.ttbm_filter_area .mainSection {
+		width: 100%;
+		max-width: 100%;
+		margin-left: 0;
+	}
+
+	/* .ttbm_filter_area .leftSidebar is sticky so the filters can follow a
+	   long results column on desktop. Once the two columns stack, its
+	   containing block becomes the whole list, so it stayed pinned over the
+	   cards for the entire scroll — and with z-index:2222 it painted on top
+	   of them. The rule that was meant to prevent exactly this targeted
+	   `div.ttbm_filter.leftSidebar` — one element carrying both classes —
+	   but the markup is `<div class="leftSidebar">` with `.ttbm_filter` as
+	   its child, so it never matched anything and the sidebar has been
+	   sticky on mobile ever since. */
+	div.ttbm_filter_area .leftSidebar {
+		position: static;
+		z-index: auto;
+		overflow-y: visible;
+	}
 }

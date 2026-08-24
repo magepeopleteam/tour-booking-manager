@@ -1,3 +1,9 @@
+/* Localised UI strings (see TTBM_Dependencies::frontend_i18n()). Falls back to
+   the English literal when the handle carrying ttbm_i18n is not on the page. */
+window.ttbmT = window.ttbmT || function (key, fallback) {
+	return (typeof ttbm_i18n !== 'undefined' && ttbm_i18n[key]) ? ttbm_i18n[key] : fallback;
+};
+
 /**
  * "Travello" single-tour template — tab-bar scroll-nav + share button.
  *
@@ -158,7 +164,7 @@
 		} else if (navigator.clipboard) {
 			navigator.clipboard.writeText(url);
 			if (typeof ttbmShowToast === 'function') {
-				ttbmShowToast('Link copied to clipboard.', 'info', 3000, false);
+				ttbmShowToast(ttbmT('link_copied', 'Link copied to clipboard.'), 'info', 3000, false);
 			}
 		}
 	});

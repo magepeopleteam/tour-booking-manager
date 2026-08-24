@@ -218,6 +218,40 @@
 				}
 				return $output;
 			}
+			/**
+			 * User-facing strings that the frontend JS bundles render.
+			 *
+			 * They are translated here, in PHP, against the same catalogue every
+			 * other plugin string uses -- so Loco Translate covers them with no
+			 * extra JSON artefacts to regenerate. Each bundle reads them through
+			 * the `ttbm_i18n` object with an English literal as fallback, so a
+			 * missing key can never blank out a label.
+			 */
+			public static function frontend_i18n() {
+				return array(
+					'load_more'        => esc_html__('Load more', 'tour-booking-manager'),
+					'show_less'        => esc_html__('Show less', 'tour-booking-manager'),
+					'tour_location'    => esc_html__('Tour Location', 'tour-booking-manager'),
+					'wishlist_add'     => esc_html__('Add to wishlist', 'tour-booking-manager'),
+					'wishlist_remove'  => esc_html__('Remove from wishlist', 'tour-booking-manager'),
+					'wishlist_added'   => esc_html__('Added to wishlist.', 'tour-booking-manager'),
+					'wishlist_open'    => esc_html__('Open wishlist', 'tour-booking-manager'),
+					'wishlist_removed' => esc_html__('Removed from wishlist.', 'tour-booking-manager'),
+					'select_date'      => esc_html__('Please Select Date', 'tour-booking-manager'),
+					'select_time'      => esc_html__('Please Select Time', 'tour-booking-manager'),
+					'select_ticket'    => esc_html__('Please Select Ticket Type', 'tour-booking-manager'),
+					'show_filters'     => esc_html__('Show filters', 'tour-booking-manager'),
+					'hide_filters'     => esc_html__('Hide filters', 'tour-booking-manager'),
+					'chip_remove'      => esc_html__('Remove filter', 'tour-booking-manager'),
+					'chip_clear_all'   => esc_html__('Clear all', 'tour-booking-manager'),
+					/* translators: %s: formatted maximum price, e.g. "$250". */
+					'chip_under'       => esc_html__('Under %s', 'tour-booking-manager'),
+					/* translators: %s: formatted minimum price, e.g. "$250". */
+					'chip_and_up'      => esc_html__('%s & up', 'tour-booking-manager'),
+					'hotel_error'      => esc_html__('Unable to complete booking for selected dates.', 'tour-booking-manager'),
+					'link_copied'      => esc_html__('Link copied to clipboard.', 'tour-booking-manager'),
+				);
+			}
 			public function frontend_script() {
 				if (!$this->should_load_frontend_assets()) {
 					return;
@@ -241,6 +275,7 @@
 				wp_enqueue_style('ttbm_hotel_lists');
 				wp_enqueue_style('ttbm_details');
 
+				wp_localize_script('ttbm_script', 'ttbm_i18n', self::frontend_i18n());
 				wp_localize_script('ttbm_script', 'ttbm_ajax', array(
 					'ajax_url' => admin_url('admin-ajax.php'),
 					'nonce' => wp_create_nonce('ttbm_frontend_nonce'),
@@ -416,6 +451,7 @@
 				/* Travello single-tour template — tab-bar scroll-nav + share button only;
 				   booking/price/wishlist/FAQ-accordion all reuse existing plugin JS. */
 				wp_enqueue_script('ttbm_travello_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_travello_details.js', array('jquery', 'ttbm_price_calculation'), TTBM_PLUGIN_VERSION, true);
+				wp_localize_script('ttbm_registration', 'ttbm_i18n', self::frontend_i18n());
 				wp_localize_script('ttbm_registration', 'ttbm_ajax', array(
 					'ajax_url' => admin_url('admin-ajax.php'),
 					'nonce' => wp_create_nonce('ttbm_frontend_nonce')

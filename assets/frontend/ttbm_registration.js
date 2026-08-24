@@ -1,3 +1,9 @@
+/* Localised UI strings (see TTBM_Dependencies::frontend_i18n()). Falls back to
+   the English literal when the handle carrying ttbm_i18n is not on the page. */
+window.ttbmT = window.ttbmT || function (key, fallback) {
+	return (typeof ttbm_i18n !== 'undefined' && ttbm_i18n[key]) ? ttbm_i18n[key] : fallback;
+};
+
 function ttbm_sync_time_slot_selection(parent) {
     parent = parent && parent.jquery ? parent : jQuery(parent);
     if (!parent || parent.length < 1) {
@@ -278,7 +284,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
             // alert('Please Select Date');
             date_field.css('border', '1px solid red');
             if (parent.find('.ttbm-date-error').length === 0) {
-                date_field.after('<span class="ttbm-date-error" style="color:red; font-size:12px; display:block; margin-top:5px;">Please Select Date</span>');
+                date_field.after('<span class="ttbm-date-error" style="color:red; font-size:12px; display:block; margin-top:5px;">' + ttbmT('select_date', 'Please Select Date') + '</span>');
             }
             date_field.trigger('focus');
             return;
@@ -297,7 +303,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
                 time_slot.css('padding', '10px');
                 time_slot.css('border-radius', '5px');
                 if (time_slot.find('.ttbm-time-error').length === 0) {
-                    time_slot.append('<span class="ttbm-time-error" style="color:red; font-size:12px; display:block; margin-top:5px; width:100%;">Please Select Time</span>');
+                    time_slot.append('<span class="ttbm-time-error" style="color:red; font-size:12px; display:block; margin-top:5px; width:100%;">' + ttbmT('select_time', 'Please Select Time') + '</span>');
                 }
             } else {
                 // Should not happen if time_slot exists but inputs are missing
@@ -330,7 +336,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         if (has_date_field && !date_val) {
             date_field.css('border', '1px solid red');
             if (parent.find('.ttbm-date-error').length === 0) {
-                date_field.after('<span class="ttbm-date-error" style="color:red; font-size:12px; display:block; margin-top:5px;">Please Select Date</span>');
+                date_field.after('<span class="ttbm-date-error" style="color:red; font-size:12px; display:block; margin-top:5px;">' + ttbmT('select_date', 'Please Select Date') + '</span>');
             }
             date_field.trigger('focus');
             return;
@@ -352,7 +358,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
                 time_slot.css('padding', '10px');
                 time_slot.css('border-radius', '5px');
                 if (time_slot.find('.ttbm-time-error').length === 0) {
-                    time_slot.append('<span class="ttbm-time-error" style="color:red; font-size:12px; display:block; margin-top:5px; width:100%;">Please Select Time</span>');
+                    time_slot.append('<span class="ttbm-time-error" style="color:red; font-size:12px; display:block; margin-top:5px; width:100%;">' + ttbmT('select_time', 'Please Select Time') + '</span>');
                 }
             } else {
                 parent.find('#ttbm_select_date').trigger('focus');
@@ -873,7 +879,7 @@ $(document).on('change', '.ttbm-sort-select', function () {
                 let sidebar = $(this);
                 let filterBody = sidebar.children('.ttbm_filter').first();
                 let toggle = sidebar.find('.ttbm-mobile-filter-toggle').first();
-                let showLabel = toggle.data('show-label') || 'Show filters';
+                let showLabel = toggle.data('show-label') || ttbmT('show_filters', 'Show filters');
 
                 if (filterBody.length < 1 || toggle.length < 1) {
                     return;
@@ -916,8 +922,8 @@ $(document).on('change', '.ttbm-sort-select', function () {
             let sidebar = toggle.closest('.leftSidebar');
             let filterBody = sidebar.children('.ttbm_filter').first();
             let isOpen = toggle.hasClass('is-open');
-            let showLabel = toggle.data('show-label') || 'Show filters';
-            let hideLabel = toggle.data('hide-label') || 'Hide filters';
+            let showLabel = toggle.data('show-label') || ttbmT('show_filters', 'Show filters');
+            let hideLabel = toggle.data('hide-label') || ttbmT('hide_filters', 'Hide filters');
 
             toggle
                 .toggleClass('is-open', !isOpen)

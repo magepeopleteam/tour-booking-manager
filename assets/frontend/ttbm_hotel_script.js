@@ -1,3 +1,9 @@
+/* Localised UI strings (see TTBM_Dependencies::frontend_i18n()). Falls back to
+   the English literal when the handle carrying ttbm_i18n is not on the page. */
+window.ttbmT = window.ttbmT || function (key, fallback) {
+	return (typeof ttbm_i18n !== 'undefined' && ttbm_i18n[key]) ? ttbm_i18n[key] : fallback;
+};
+
 function formatDate(date) {
     let year = date.getFullYear();
     let month = ('0' + (date.getMonth() + 1)).slice(-2);
@@ -152,14 +158,14 @@ jQuery(document).ready(function ($) {
                     }
                 }
                 if (response && typeof response === 'object' && response.success === false) {
-                    const message = response.data && response.data.message ? response.data.message : 'Unable to complete booking for selected dates.';
+                    const message = response.data && response.data.message ? response.data.message : ttbmT('hotel_error', 'Unable to complete booking for selected dates.');
                     alert(message);
                     return;
                 }
                 window.location.href = ttbm_site_url + '/index.php/checkout/';
             },
             error: function (xhr) {
-                let message = 'Unable to complete booking for selected dates.';
+                let message = ttbmT('hotel_error', 'Unable to complete booking for selected dates.');
                 if (xhr && xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message) {
                     message = xhr.responseJSON.data.message;
                 }
@@ -216,14 +222,14 @@ jQuery(document).ready(function ($) {
                     }
                 }
                 if (response && typeof response === 'object' && response.success === false) {
-                    const message = response.data && response.data.message ? response.data.message : 'Unable to complete booking for selected dates.';
+                    const message = response.data && response.data.message ? response.data.message : ttbmT('hotel_error', 'Unable to complete booking for selected dates.');
                     alert(message);
                     return;
                 }
                 window.location.href = ttbm_site_url + '/index.php/checkout/';
             },
             error: function (xhr) {
-                let message = 'Unable to complete booking for selected dates.';
+                let message = ttbmT('hotel_error', 'Unable to complete booking for selected dates.');
                 if (xhr && xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message) {
                     message = xhr.responseJSON.data.message;
                 }

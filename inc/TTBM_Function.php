@@ -323,11 +323,85 @@
 				return isset($forced_dates[gmdate('Y-m-d', $timestamp)]);
 			}
 
+			/**
+			 * The post a tour's schedule is actually stored on.
+			 *
+			 * WPML (and any translation plugin) creates a translation with the tour meta
+			 * empty -- ttbm_travel_type falls back to 'fixed' and every date field is a
+			 * blank string. get_date() then finds no dates, and the daily rebuild in
+			 * update_all_upcoming_date_month() writes an EMPTY ttbm_upcoming_date over
+			 * the translation. Since the list shortcodes filter on that key being >=
+			 * today, the translated tour silently drops out of every listing overnight,
+			 * and comes back only until the next rebuild if someone re-saves it.
+			 *
+			 * Dates are not translatable content, so a translation carrying no schedule
+			 * of its own reads the original's. A translation that HAS been given its own
+			 * dates is left completely alone, and on a single-language site this is a
+			 * no-op. Filterable so Polylang and friends can supply the same mapping.
+			 */
+			public static function schedule_source_id($tour_id) {
+				$tour_id = (int) $tour_id;
+				if ($tour_id < 1) {
+					return $tour_id;
+				}
+				if (self::cache_has('schedule_source', $tour_id)) {
+					return self::cache_get('schedule_source', $tour_id);
+				}
+				$source_id = $tour_id;
+				if (defined('ICL_SITEPRESS_VERSION') && !self::has_own_schedule($tour_id)) {
+					$post_type = get_post_type($tour_id);
+					if ($post_type) {
+						$element_type = 'post_' . $post_type;
+						$trid = apply_filters('wpml_element_trid', null, $tour_id, $element_type);
+						if ($trid) {
+							$translations = apply_filters('wpml_get_element_translations', null, $trid, $element_type);
+							if (is_array($translations)) {
+								foreach ($translations as $translation) {
+									// WPML flags the post the translations were made from as `original`.
+									if (!empty($translation->original) && !empty($translation->element_id)) {
+										$source_id = (int) $translation->element_id;
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+				$source_id = (int) apply_filters('ttbm_schedule_source_id', $source_id, $tour_id);
+				return self::cache_set('schedule_source', $tour_id, $source_id > 0 ? $source_id : $tour_id);
+			}
+			/**
+			 * Whether this post carries a schedule of its own, i.e. anything get_date()
+			 * could actually build dates from. ttbm_travel_type is deliberately not
+			 * consulted: it defaults to 'fixed' on an untouched translation, so it is
+			 * always present and would make every translation look configured.
+			 */
+			private static function has_own_schedule($tour_id): bool {
+				if (TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date')) {
+					return true;
+				}
+				if (TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_date')) {
+					return true;
+				}
+				$particular_dates = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_particular_dates', array());
+				return is_array($particular_dates) && count($particular_dates) > 0;
+			}
 			public static function get_date($tour_id, $expire = '') {
 				$cache_key = (int) $tour_id . '|' . self::cache_scalar_key($expire);
 				if (self::cache_has('date', $cache_key)) {
 					return self::cache_get('date', $cache_key);
 				}
+				/*
+				 * A tour runs on one real-world schedule whatever language the visitor is
+				 * reading it in, and the plugin has no per-language scheduling concept --
+				 * so a translation that was never given dates of its own reads them from
+				 * the post they were entered on. Every $tour_id below is a schedule read
+				 * (travel type, recurrence, off days, one-off dates, time checks); the
+				 * requested id is kept for the filter at the end so anything hooking
+				 * ttbm_get_date still sees the post that was actually asked about.
+				 */
+				$requested_id = $tour_id;
+				$tour_id = self::schedule_source_id($tour_id);
 				$tour_date = [];
 				$travel_type = TTBM_Function::get_travel_type($tour_id);
 				$now = strtotime(current_time('Y-m-d H:i:s'));
@@ -427,7 +501,7 @@
 						}
 					}
 				}
-				return self::cache_set('date', $cache_key, apply_filters('ttbm_get_date', $tour_date, $tour_id, $expire));
+				return self::cache_set('date', $cache_key, apply_filters('ttbm_get_date', $tour_date, $requested_id, $expire));
 			}
 			/**
 			 * Repeated-tour recurrence dates as a Y-m-d => Y-m-d lookup map.
@@ -733,7 +807,24 @@
 					return;
 				}
 				set_transient($lock_key, true, 2 * MINUTE_IN_SECONDS);
-				$tour_ids = TTBM_Global_Function::get_all_post_id(TTBM_Function::get_cpt_name());
+				/*
+				 * Deliberately not get_all_post_id(): that runs get_posts(), which WPML
+				 * scopes to the language of whoever happened to trigger the rebuild --
+				 * while the "done for the day" transient below is site-wide. So on a
+				 * multilingual site the first visitor of the day rebuilt only their own
+				 * language's tours and locked every other language out until tomorrow.
+				 * Reading the ids straight from the posts table is language-agnostic
+				 * (and cheaper than a full get_posts()).
+				 */
+				global $wpdb;
+				$tour_ids = $wpdb->get_col(
+					$wpdb->prepare(
+						"SELECT ID FROM {$wpdb->posts} WHERE post_type = %s AND post_status = %s",
+						TTBM_Function::get_cpt_name(),
+						'publish'
+					)
+				);
+				$tour_ids = array_map('intval', (array) $tour_ids);
 				/*
 				 * Pull every tour's meta in one query up front. update_upcoming_date_month()
 				 * reads several meta keys per tour, and without a warm cache each of those
@@ -1922,7 +2013,7 @@
 				if (self::cache_has('travel_type', (int) $tour_id)) {
 					return self::cache_get('travel_type', (int) $tour_id);
 				}
-				$type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_type', 'fixed');
+				$type = TTBM_Global_Function::get_post_info(self::schedule_source_id($tour_id), 'ttbm_travel_type', 'fixed');
 				return self::cache_set('travel_type', (int) $tour_id, apply_filters('ttbm_tour_type', $type, $tour_id));
 			}
 			public static function travel_type_array(): array {

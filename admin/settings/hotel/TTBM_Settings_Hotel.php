@@ -9,6 +9,7 @@
 				add_action('save_post', array($this, 'save_hotel'), 99, 1);
 				add_filter('wp_insert_post_data', [$this, 'filter_insert_post_data'], 99, 2);
 				add_action('wp_ajax_ttbm_save_post_title', [$this, 'ajax_save_post_title']);
+				add_action('wp_ajax_ttbm_save_hotel_settings', [$this, 'ajax_save_hotel_settings']);
 				add_action('admin_notices', [$this, 'render_title_required_notice']);
 				add_action('admin_notices', [$this, 'render_featured_image_required_notice']);
 			}
@@ -42,7 +43,7 @@
 			 */
 			public static function resolve_submitted_title_from_request() {
 				$title = '';
-				if (isset($_POST['ttbm_post_title_ui'])) {
+				if (isset($_POST['ttbm_post_title_ui']) && !is_array($_POST['ttbm_post_title_ui'])) {
 					$title = trim(sanitize_text_field(wp_unslash($_POST['ttbm_post_title_ui'])));
 				}
 				if ($title === '' && isset($_POST['post_title']) && !is_array($_POST['post_title'])) {
@@ -79,6 +80,62 @@
 					add_action('save_post', array($this, 'save_hotel'), 99, 1);
 				}
 				wp_send_json_success(array('title' => $title));
+			}
+			/**
+			 * Save the modern hotel editor form without relying on the classic submit.
+			 */
+			public function ajax_save_hotel_settings() {
+				if (!check_ajax_referer('ttbm_admin_nonce', 'nonce', false)) {
+					wp_send_json_error(array('message' => __('Security verification failed. Refresh the page and try again.', 'tour-booking-manager')), 403);
+				}
+				$post_id = isset($_POST['post_ID']) && !is_array($_POST['post_ID']) ? absint($_POST['post_ID']) : 0;
+				if (!$post_id || get_post_type($post_id) !== 'ttbm_hotel' || !current_user_can('edit_post', $post_id)) {
+					wp_send_json_error(array('message' => __('You are not allowed to update this hotel.', 'tour-booking-manager')), 403);
+				}
+				if (!isset($_POST['ttbm_hotel_type_nonce']) || is_array($_POST['ttbm_hotel_type_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_hotel_type_nonce'])), 'ttbm_hotel_type_nonce')) {
+					wp_send_json_error(array('message' => __('The hotel form has expired. Refresh the page and try again.', 'tour-booking-manager')), 403);
+				}
+				$title = self::resolve_submitted_title_from_request();
+				if ($title === '') {
+					wp_send_json_error(array('message' => __('Hotel title is required.', 'tour-booking-manager')), 400);
+				}
+				$thumb_id = isset($_POST['_thumbnail_id']) && !is_array($_POST['_thumbnail_id'])
+					? (int) sanitize_text_field(wp_unslash($_POST['_thumbnail_id']))
+					: (int) get_post_thumbnail_id($post_id);
+				if ($thumb_id <= 0) {
+					wp_send_json_error(array('message' => __('Featured image is required before saving this hotel.', 'tour-booking-manager')), 400);
+				}
+				if ((int) get_post_thumbnail_id($post_id) !== $thumb_id) {
+					set_post_thumbnail($post_id, $thumb_id);
+				}
+				$post_update = array(
+					'ID' => $post_id,
+					'post_title' => $title,
+				);
+				$requested_status = isset($_POST['requested_post_status']) && !is_array($_POST['requested_post_status']) ? sanitize_key(wp_unslash($_POST['requested_post_status'])) : '';
+				if ($requested_status === 'publish') {
+					$post_type_object = get_post_type_object('ttbm_hotel');
+					$publish_capability = $post_type_object && isset($post_type_object->cap->publish_posts)
+						? $post_type_object->cap->publish_posts
+						: 'publish_posts';
+					if (!current_user_can($publish_capability)) {
+						wp_send_json_error(array('message' => __('You are not allowed to publish this hotel.', 'tour-booking-manager')), 403);
+					}
+					$post_update['post_status'] = 'publish';
+				}
+
+				$result = wp_update_post($post_update, true);
+				if (is_wp_error($result)) {
+					wp_send_json_error(array('message' => $result->get_error_message()), 500);
+				}
+
+				wp_send_json_success(
+					array(
+						'message' => __('Hotel saved successfully.', 'tour-booking-manager'),
+						'rooms' => get_post_meta($post_id, 'ttbm_room_details', true),
+						'post_status' => get_post_status($post_id),
+					)
+				);
 			}
 			public function hotel_settings_meta() {
 				add_meta_box('ttbm_meta_box_panel', esc_html__('Hotel Settings', 'tour-booking-manager'), array($this, 'hotel_settings'), 'ttbm_hotel', 'normal', 'high');
@@ -187,7 +244,11 @@
 					}
 					add_action('save_post', array($this, 'save_hotel'), 99, 1);
 				}
-				$thumb_id = isset($_POST['_thumbnail_id']) ? (int) $_POST['_thumbnail_id'] : 0;
+				// Some edit flows omit the custom featured-image field from the POST.
+				// An existing valid thumbnail must not block every hotel setting below.
+				$thumb_id = isset($_POST['_thumbnail_id']) && !is_array($_POST['_thumbnail_id'])
+					? (int) sanitize_text_field(wp_unslash($_POST['_thumbnail_id']))
+					: (int) get_post_thumbnail_id($post_id);
 				if ($thumb_id <= 0) {
 					remove_action('save_post', array($this, 'save_hotel'), 99);
 					wp_update_post(['ID' => $post_id, 'post_status' => 'draft']);
@@ -295,29 +356,33 @@
 					/************************/
 					$old_ticket_type = TTBM_Global_Function::get_post_info($post_id, 'ttbm_room_details', array());
 					$new_ticket_type = array();
-					$icon = isset($_POST['room_type_icon']) ? array_map('sanitize_text_field', wp_unslash($_POST['room_type_icon'])) : [];
-					$names = isset($_POST['ttbm_hotel_room_name']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_hotel_room_name'])) : [];
-					$ticket_price = isset($_POST['ttbm_hotel_room_price']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_hotel_room_price'])) : [];
-					$sale_price = isset($_POST['sale_price']) ? array_map('sanitize_text_field', wp_unslash($_POST['sale_price'])) : [];
-					$qty = isset($_POST['ttbm_hotel_room_qty']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_hotel_room_qty'])) : [];
-					$adult_qty = isset($_POST['ttbm_hotel_room_capacity_adult']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_hotel_room_capacity_adult'])) : [];
-					$child_qty = isset($_POST['ttbm_hotel_room_capacity_child']) ? array_map('sanitize_text_field', wp_unslash($_POST['ttbm_hotel_room_capacity_child'])) : [];
-					$rsv = isset($_POST['room_reserve_qty']) ? array_map('sanitize_text_field', wp_unslash($_POST['room_reserve_qty'])) : [];
-					$qty_type = isset($_POST['room_qty_type']) ? array_map('sanitize_text_field', wp_unslash($_POST['room_qty_type'])) : [];
-					$description = isset($_POST['room_description']) ? array_map('sanitize_text_field', wp_unslash($_POST['room_description'])) : [];
+					$icon = isset($_POST['room_type_icon']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['room_type_icon'])) : [];
+					$names = isset($_POST['ttbm_hotel_room_name']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['ttbm_hotel_room_name'])) : [];
+					$ticket_price = isset($_POST['ttbm_hotel_room_price']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['ttbm_hotel_room_price'])) : [];
+					$sale_price = isset($_POST['sale_price']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['sale_price'])) : [];
+					$qty = isset($_POST['ttbm_hotel_room_qty']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['ttbm_hotel_room_qty'])) : [];
+					$adult_qty = isset($_POST['ttbm_hotel_room_capacity_adult']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['ttbm_hotel_room_capacity_adult'])) : [];
+					$child_qty = isset($_POST['ttbm_hotel_room_capacity_child']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['ttbm_hotel_room_capacity_child'])) : [];
+					$rsv = isset($_POST['room_reserve_qty']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['room_reserve_qty'])) : [];
+					$qty_type = isset($_POST['room_qty_type']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['room_qty_type'])) : [];
+					$description = isset($_POST['room_description']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['room_description'])) : [];
 					$count = count($names);
 					for ($i = 0; $i < $count; $i++) {
-						if ($names[$i] && $ticket_price[$i] >= 0 && $qty[$i] > 0) {
-							$new_ticket_type[$i]['room_type_icon'] = $icon[$i] ?? '';
-							$new_ticket_type[$i]['ttbm_hotel_room_name'] = $names[$i];
-							$new_ticket_type[$i]['ttbm_hotel_room_price'] = $ticket_price[$i];
-							$new_ticket_type[$i]['sale_price'] = $sale_price[$i];
-							$new_ticket_type[$i]['ttbm_hotel_room_qty'] = $qty[$i];
-							$new_ticket_type[$i]['ttbm_hotel_room_capacity_adult'] = $adult_qty[$i] ?? 0;
-							$new_ticket_type[$i]['ttbm_hotel_room_capacity_child'] = $child_qty[$i] ?? 0;
-							$new_ticket_type[$i]['room_reserve_qty'] = $rsv[$i] ?? 0;
-							$new_ticket_type[$i]['room_qty_type'] = $qty_type[$i] ?? 'inputbox';
-							$new_ticket_type[$i]['room_description'] = $description[$i] ?? '';
+						$regular_price = $ticket_price[$i] ?? '';
+						$available_qty = $qty[$i] ?? '';
+						if ($names[$i] && is_numeric($regular_price) && (float) $regular_price >= 0 && is_numeric($available_qty) && (int) $available_qty > 0) {
+							$new_ticket_type[] = array(
+								'room_type_icon' => $icon[$i] ?? '',
+								'ttbm_hotel_room_name' => $names[$i],
+								'ttbm_hotel_room_price' => $regular_price,
+								'sale_price' => $sale_price[$i] ?? '',
+								'ttbm_hotel_room_qty' => $available_qty,
+								'ttbm_hotel_room_capacity_adult' => $adult_qty[$i] ?? 0,
+								'ttbm_hotel_room_capacity_child' => $child_qty[$i] ?? 0,
+								'room_reserve_qty' => $rsv[$i] ?? 0,
+								'room_qty_type' => $qty_type[$i] ?? 'inputbox',
+								'room_description' => $description[$i] ?? '',
+							);
 						}
 					}
 					$ticket_type_list = apply_filters('ttbm_hotel_type_arr_save', $new_ticket_type);

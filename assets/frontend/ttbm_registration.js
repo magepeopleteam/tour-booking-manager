@@ -262,6 +262,9 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         }
     });
     $(document).on("click", ".ttbm_registration_area .ttbm_check_ability", function () {
+        if ($(this).is('.ttbm_hotel_check_availability, .ttbm_hotel_room_check_availability')) {
+            return;
+        }
         let parent = $(this).closest('.ttbm_registration_area');
         let date_target = parent.find('[name="ttbm_date"]').first();
         let has_date_field = date_target.length > 0;
@@ -425,8 +428,17 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         var end   = moment(checkout, 'YYYY-MM-DD');
         if (!start.isValid() || !end.isValid()) { return; }
         var label = start.format(fmt) + ' – ' + end.format(fmt);
+        var nightCount = Math.max(1, end.clone().startOf('day').diff(start.clone().startOf('day'), 'days'));
         var $area = ($hotelArea && $hotelArea.length) ? $hotelArea : ttbmResolveHotelArea($dateInput);
         $area.find('.ttbm_hdc_date_range_display').text(label).show();
+        $area.find('.ttbm_hdc_stay_summary').each(function () {
+            var template = nightCount === 1
+                ? $(this).attr('data-summary-singular')
+                : $(this).attr('data-summary-plural');
+            if (template) {
+                $(this).text(template.replace('%d', nightCount));
+            }
+        });
     }
     function ttbmShowHotelAreaForDates($input) {
         const $dateInput = $input && $input.length ? $input : ttbmResolveHotelDateRangeInput();
@@ -542,7 +554,8 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         let current = $(this).closest('.ttbm_hotel_item');
         let tour_id = current.find('[name="ttbm_id"]').val();
         let hotel_id = current.find('[name="ttbm_hotel_id"]').val();
-        let $dateInput = ttbmResolveHotelDateRangeInput($(this).closest('.particular_date_area').length ? $(this).closest('.particular_date_area') : null);
+        let dateScope = current.closest('#ttbm_booking_section, .ttbm_booking_section, .particular_date_area');
+        let $dateInput = ttbmResolveHotelDateRangeInput(dateScope.length ? dateScope : null);
         let date_range = ttbmHotelDateRangeAjaxValue($dateInput);
         let target = current.find('.ttbm_booking_panel');
         let target_form = target.find('.mp_tour_ticket_form');

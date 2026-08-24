@@ -66,9 +66,10 @@
 										<div class="ttbm_ticket_details">
 											<p class="extra_service_title">
 												<?php if ($service_icon) { ?>
-												<span class="<?php echo esc_attr($service_icon); ?> ttbm_ticket_icon"></span>
-											<?php } ?>
-												<?php echo esc_html($service_name); ?></h4>
+													<span class="<?php echo esc_attr($service_icon); ?> ttbm_ticket_icon"></span>
+												<?php } ?>
+												<?php echo esc_html($service_name); ?>
+											</p>
 											<?php if ($description) { ?>
 												<div class="mT_xs ttbm_ticket_description"><?php TTBM_Custom_Layout::load_more_text($description, 100); ?></div>
 											<?php } ?>

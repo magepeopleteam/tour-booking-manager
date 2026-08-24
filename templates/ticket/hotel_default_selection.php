@@ -32,6 +32,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$hotel_min_price = TTBM_Function::get_hotel_room_min_price( $hotel_id );
 					$hotel_feat_ids  = TTBM_Global_Function::get_post_info( $hotel_id, 'ttbm_hotel_feat_selection' );
 					$hotel_feat_ids  = is_array( $hotel_feat_ids ) ? $hotel_feat_ids : array();
+					/* translators: %d: number of nights. */
+					$stay_summary_singular = __( '%d night, 2 adults', 'tour-booking-manager' );
+					/* translators: %d: number of nights. */
+					$stay_summary_plural = __( '%d nights, 2 adults', 'tour-booking-manager' );
 
 					// Location text
 					$loc_parts = array();
@@ -114,7 +118,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<div class="ttbm_hdc_footer">
 									<div class="ttbm_hdc_nights">
 										<span class="ttbm_hdc_date_range_display" style="display:none;"></span>
-										<span><?php esc_html_e( '1 nights, 2 adults', 'tour-booking-manager' ); ?></span>
+										<span
+											class="ttbm_hdc_stay_summary"
+											data-summary-singular="<?php echo esc_attr( $stay_summary_singular ); ?>"
+											data-summary-plural="<?php echo esc_attr( $stay_summary_plural ); ?>"
+										>
+											<?php echo esc_html( sprintf( $stay_summary_singular, 1 ) ); ?>
+										</span>
 										<span class="ttbm_hdc_note"><?php esc_html_e( 'Additional charges may apply', 'tour-booking-manager' ); ?></span>
 									</div>
 									<div class="ttbm_hdc_price_action">

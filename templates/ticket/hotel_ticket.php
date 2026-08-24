@@ -6,20 +6,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
 	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
 	$tour_date  = $tour_date ?? TTBM_Function::get_date( $tour_id )[0];
-	$hotel_id   = $hotel_id ?? current( TTBM_Function::get_hotel_list( $tour_id ) );
+	$hotel_id   = isset( $hotel_id ) ? absint( $hotel_id ) : 0;
+	if ( ! $hotel_id && isset( $_REQUEST['hotel_id'] ) ) {
+		$hotel_id = absint( wp_unslash( $_REQUEST['hotel_id'] ) );
+	}
+	if ( ! $hotel_id ) {
+		$hotel_id = absint( current( TTBM_Function::get_hotel_list( $tour_id ) ) );
+	}
 //	$room_lists = TTBM_Global_Function::get_post_info( $hotel_id, 'ttbm_room_details', array() );
 	$date_range ='';
-	if (isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_frontend_nonce')) {
+	$has_valid_nonce = (
+		isset( $_POST['nonce'] ) &&
+		wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ttbm_frontend_nonce' )
+	) || (
+		isset( $_POST['ttbm_hotel_nonce'] ) &&
+		wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['ttbm_hotel_nonce'] ) ), 'ttbm_hotel_nonce' )
+	);
+	if ( $has_valid_nonce ) {
 		$date_range = isset( $_REQUEST['date_range'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['date_range'] ) ) : '';
 	}
 //    $hotel_booking_data = TTBM_Global_Function::get_hotel_bookings($hotel_id, $check_in, $check_out);
-    $hotel_date = explode( "-", $date_range );
-    $date1      = gmdate( 'Y-m-d', strtotime( $hotel_date[0] ) );
-    $date2      = gmdate( 'Y-m-d', strtotime( $hotel_date[1] ) );
-    $days       = date_diff( date_create( $date1 ), date_create( $date2 ) );
-    $room_lists = TTBM_Global_Function::ttbm_get_full_room_ticket_info( $hotel_id, $date1, $date2 );
+	$hotel_date = TTBM_Global_Function::parse_date_range_string( $date_range );
+	$date1      = $hotel_date ? $hotel_date[0] : '';
+	$date2      = $hotel_date ? $hotel_date[1] : '';
+	$days       = $hotel_date ? date_diff( date_create( $date1 ), date_create( $date2 ) ) : false;
+	$room_lists = ( $hotel_id && $hotel_date )
+		? TTBM_Global_Function::ttbm_get_full_room_ticket_info( $hotel_id, $date1, $date2 )
+		: array();
 
-	if ( sizeof( $room_lists ) > 0 && $hotel_id && $date_range ) {
+	if ( sizeof( $room_lists ) > 0 && $hotel_id && $hotel_date && $days ) {
 
 		?>
 		<input type="hidden" name='ttbm_tour_hotel_list' value='<?php echo esc_attr( $hotel_id ); ?>'>

@@ -5750,3 +5750,785 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
         justify-content: center;
     }
 }
+
+/* ============================================================
+   Hotel-based tour booking — shared component responsiveness
+
+   Hotel booking appears both in wide content and narrow sidebars. These
+   components therefore respond to their own width instead of the viewport.
+   The selectors are based on shared ticket markup so Default, Smart, Viator,
+   Travello, shortcodes and template overrides receive the same fix.
+   ============================================================ */
+
+body .ttbm_hotel_booking_toolbar,
+body .ttbm_hotel_booking_cards {
+	--ttbm-hotel-accent: var( --color_theme, #5b3cbe );
+	--ttbm-hotel-ink: #172033;
+	--ttbm-hotel-muted: #667085;
+	--ttbm-hotel-line: #e4e7ec;
+	box-sizing: border-box;
+	width: 100%;
+	min-width: 0;
+	max-width: 100%;
+	color: var( --ttbm-hotel-ink );
+}
+
+/* Date range: icon, input and action stay aligned until the component is too
+   narrow to preserve a useful tap target. */
+body .ttbm_hotel_booking_toolbar {
+	container: ttbm-hotel-toolbar / inline-size;
+	margin: 0 0 18px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+}
+
+body .ttbm_hotel_booking_toolbar .ttbm_select_date_area,
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_booking_controls,
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_date_field {
+	display: block;
+	width: 100%;
+	min-width: 0;
+	max-width: none;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+}
+
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_booking_title {
+	margin: 0 0 14px;
+	padding: 0;
+	border: 0;
+	font-size: 20px;
+	font-weight: 700;
+	line-height: 1.3;
+	text-align: left;
+	text-transform: none;
+	white-space: normal;
+	color: var( --ttbm-hotel-ink );
+}
+
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_date_label {
+	display: block;
+	margin: 0 0 7px;
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 1.2;
+	letter-spacing: .06em;
+	text-align: left;
+	text-transform: uppercase;
+	color: var( --ttbm-hotel-muted );
+}
+
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_date_row {
+	display: grid;
+	grid-template-columns: minmax( 0, 1fr ) auto;
+	align-items: stretch;
+	gap: 10px;
+	width: 100%;
+	min-width: 0;
+}
+
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_date_input_wrap {
+	display: flex;
+	align-items: center;
+	gap: 9px;
+	width: 100%;
+	min-width: 0;
+	height: 48px;
+	box-sizing: border-box;
+	padding: 0 12px;
+	border: 1px solid var( --ttbm-hotel-line ) !important;
+	border-radius: 12px;
+	background: #f8f9fc !important;
+	overflow: hidden;
+}
+
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_date_input_wrap .mi-calendar-days {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	flex: 0 0 28px;
+	border-radius: 8px;
+	background: #eeebff;
+	font-size: 15px;
+	color: var( --ttbm-hotel-accent );
+}
+
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_date_input,
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_date_input.formControl {
+	flex: 1 1 auto;
+	width: 100% !important;
+	min-width: 0;
+	height: auto !important;
+	min-height: 0 !important;
+	margin: 0;
+	padding: 0 !important;
+	border: 0 !important;
+	background: transparent !important;
+	box-shadow: none !important;
+	font-size: 12px;
+	font-weight: 600;
+	text-align: left;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: var( --ttbm-hotel-ink ) !important;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_check_btn,
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_check_availability {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	min-width: 126px;
+	height: 48px;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0 14px;
+	border: 1px solid var( --ttbm-hotel-accent ) !important;
+	border-radius: 12px;
+	background: var( --ttbm-hotel-accent ) !important;
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: none;
+	white-space: nowrap;
+	color: #fff !important;
+	cursor: pointer;
+}
+
+@container ttbm-hotel-toolbar ( max-width: 300px ) {
+	body .ttbm_hotel_booking_toolbar .ttbm_hotel_date_row {
+		grid-template-columns: 1fr;
+	}
+
+	body .ttbm_hotel_booking_toolbar .ttbm_hotel_check_btn,
+	body .ttbm_hotel_booking_toolbar .ttbm_hotel_check_availability {
+		width: 100%;
+	}
+}
+
+/* Hotel cards use their actual column width. This fixes the 290px fixed image
+   consuming nearly all of a desktop sidebar while retaining the horizontal
+   card in genuinely wide template regions. */
+body .ttbm_hotel_booking_cards .ttbm_registration_area,
+body .ttbm_hotel_booking_cards .ttbm_hotel_item,
+body .ttbm_hotel_booking_cards .ttbm_hdc_card,
+body .ttbm_hotel_booking_cards .ttbm_hdc_body {
+	box-sizing: border-box;
+	width: 100%;
+	min-width: 0;
+	max-width: 100%;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_registration_area {
+	margin: 0 0 16px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	overflow: visible;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_item {
+	container: ttbm-hotel-choice / inline-size;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hdc_card {
+	border-color: var( --ttbm-hotel-line );
+	border-radius: 14px;
+	box-shadow: 0 4px 14px rgba( 16, 24, 40, .07 );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hdc_img img {
+	height: 100% !important;
+	object-fit: cover;
+	object-position: center;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hdc_title,
+body .ttbm_hotel_booking_cards .ttbm_hdc_location,
+body .ttbm_hotel_booking_cards .ttbm_hdc_desc,
+body .ttbm_hotel_booking_cards .ttbm_hdc_note {
+	text-transform: none;
+	overflow-wrap: anywhere;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hdc_location,
+body .ttbm_hotel_booking_cards .ttbm_hdc_desc,
+body .ttbm_hotel_booking_cards .ttbm_hdc_note {
+	color: var( --ttbm-hotel-muted );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hdc_tag i,
+body .ttbm_hotel_booking_cards .ttbm_hdc_price,
+body .ttbm_hotel_booking_cards .ttbm_hdc_price .woocommerce-Price-amount,
+body .ttbm_hotel_booking_cards .ttbm_hdc_date_range_display {
+	color: var( --ttbm-hotel-accent );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hdc_btn,
+body .ttbm_hotel_booking_cards .ttbm_hdc_tag_more,
+body .ttbm_hotel_booking_cards .ttbm_book_now,
+body .ttbm_hotel_booking_cards .ttbm_hotel_book_now {
+	border-color: var( --ttbm-hotel-accent ) !important;
+	background: var( --ttbm-hotel-accent ) !important;
+	color: #fff !important;
+}
+
+@container ttbm-hotel-choice ( max-width: 620px ) {
+	body .ttbm_hotel_booking_cards .ttbm_hdc_card {
+		flex-direction: column;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hdc_img {
+		flex: none;
+		width: 100%;
+		height: clamp( 180px, 55cqw, 260px );
+		min-height: 0;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hdc_body {
+		padding: 15px;
+		gap: 8px;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hdc_footer {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 12px;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hdc_price_action {
+		align-items: stretch;
+		width: 100%;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hdc_btn {
+		width: 100%;
+	}
+}
+
+@container ttbm-hotel-choice ( max-width: 340px ) {
+	body .ttbm_hotel_booking_cards .ttbm_hdc_header {
+		flex-direction: column;
+	}
+}
+
+/* AJAX-loaded room and extra-service tables share the selected hotel's panel. */
+body .ttbm_hotel_booking_cards .ttbm_booking_panel {
+	container: ttbm-hotel-room-panel / inline-size;
+	box-sizing: border-box;
+	width: 100%;
+	min-width: 0;
+	max-width: 100%;
+	margin: 12px 0 0 !important;
+	padding: 16px;
+	border: 1px solid var( --ttbm-hotel-line );
+	border-radius: 12px;
+	background: #fff;
+	overflow: hidden;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_table,
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_table_wrap {
+	width: 100%;
+	max-width: 100%;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_panel {
+	margin: 0;
+	background: transparent;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_panel__title {
+	margin: 0 0 12px;
+	font-size: 15px;
+	font-weight: 700;
+	line-height: 1.35;
+	text-align: left;
+	text-transform: none;
+	color: var( --ttbm-hotel-ink );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_table_wrap {
+	box-sizing: border-box;
+	overflow: hidden;
+	border: 1px solid var( --ttbm-hotel-line );
+	border-radius: 10px;
+	background: #fff;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_table.mp_tour_ticket_type {
+	margin: 0;
+	border: 0;
+	border-radius: 0;
+	border-collapse: collapse;
+	table-layout: auto;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_table thead tr {
+	border-bottom: 1px solid var( --ttbm-hotel-line );
+	background: #f8fafc;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_table thead th {
+	padding: 10px 12px;
+	border: 0;
+	background: transparent;
+	font-size: 10px;
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: .06em;
+	text-align: left;
+	text-transform: uppercase;
+	color: var( --ttbm-hotel-muted );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_row td {
+	box-sizing: border-box;
+	padding: 13px 12px;
+	border: 0;
+	border-bottom: 1px solid #eef0f4;
+	vertical-align: middle;
+	background: transparent;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_name {
+	margin: 0 0 6px;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.35;
+	color: var( --ttbm-hotel-ink );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px;
+	margin: 0;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 3px 7px;
+	border: 1px solid #e0daf5;
+	border-color: color-mix( in srgb, var( --ttbm-hotel-accent ) 18%, #fff );
+	border-radius: 999px;
+	background: #f7f5fc;
+	background: color-mix( in srgb, var( --ttbm-hotel-accent ) 8%, #fff );
+	font-size: 10px;
+	font-weight: 600;
+	line-height: 1.2;
+	white-space: nowrap;
+	color: var( --ttbm-hotel-muted );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_badge i {
+	font-size: 9px;
+	color: var( --ttbm-hotel-accent );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_badge--stock {
+	border-color: #a7f3d0;
+	background: #ecfdf3;
+	color: #067647;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_badge--stock i {
+	font-size: 7px;
+	color: #12b76a;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--price {
+	text-align: right;
+	white-space: nowrap;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_hidden_inputs,
+body .ttbm_hotel_booking_cards .ttbm_enhanced_table tr.ttbm_hidden_inputs {
+	display: none !important;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_price,
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_price .woocommerce-Price-amount {
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.2;
+	color: var( --ttbm-hotel-accent );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_price {
+	display: block;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_price_meta {
+	display: block;
+	margin-top: 3px;
+	font-size: 10px;
+	font-weight: 500;
+	line-height: 1.3;
+	white-space: nowrap;
+	color: var( --ttbm-hotel-muted );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty {
+	width: 106px;
+	text-align: right;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .qtyIncDec {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	width: 104px;
+	max-width: 100%;
+	overflow: hidden;
+	border: 1px solid #e0daf5 !important;
+	border-color: color-mix( in srgb, var( --ttbm-hotel-accent ) 22%, #fff ) !important;
+	border-radius: 8px;
+	background: #fff;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .decQty,
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .incQty {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 32px;
+	width: 32px;
+	height: 32px;
+	min-width: 32px;
+	border: 0 !important;
+	border-radius: 0;
+	background: #f7f5fc;
+	background: color-mix( in srgb, var( --ttbm-hotel-accent ) 7%, #fff );
+	cursor: pointer;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .qty-btn-icon {
+	display: none;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .decQty::before {
+	content: "";
+	display: block;
+	width: 10px;
+	height: 2px;
+	border-radius: 1px;
+	background: var( --ttbm-hotel-accent );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .incQty::before {
+	content: "+";
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 1;
+	color: var( --ttbm-hotel-accent );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty label {
+	flex: 0 0 38px;
+	width: 38px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .inputIncDec {
+	box-sizing: border-box;
+	width: 38px !important;
+	min-width: 38px;
+	height: 32px;
+	margin: 0;
+	padding: 0 !important;
+	border: 0 !important;
+	border-right: 1px solid #ece8f8 !important;
+	border-left: 1px solid #ece8f8 !important;
+	border-radius: 0 !important;
+	background: #fff !important;
+	box-shadow: none !important;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 32px;
+	text-align: center;
+	color: var( --ttbm-hotel-ink );
+}
+
+@container ttbm-hotel-room-panel ( max-width: 520px ) {
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_table,
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_table tbody,
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_enhanced_table,
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_enhanced_table tbody {
+		display: block;
+		width: 100%;
+		margin: 0;
+		border: 0;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_table_wrap {
+		overflow: visible;
+		border: 0;
+		background: transparent;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_table tbody {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_table thead,
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_table_header {
+		display: none;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_row {
+		display: grid;
+		grid-template-columns: minmax( 0, 1fr ) auto;
+		grid-template-areas:
+			"name name"
+			"price quantity";
+		gap: 10px 8px;
+		padding: 13px;
+		border: 1px solid var( --ttbm-hotel-line );
+		border-radius: 10px;
+		background: #fff;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_row td {
+		display: block;
+		width: auto;
+		padding: 0 !important;
+		border: 0;
+		background: transparent !important;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--name {
+		grid-area: name;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--price {
+		grid-area: price;
+		min-width: 0;
+		align-self: center;
+		text-align: left;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty {
+		grid-area: quantity;
+		align-self: center;
+		justify-self: end;
+		width: 104px !important;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area {
+		min-width: 0;
+		margin-top: 18px;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area > .extra_service_title {
+		margin: 0 0 10px;
+		font-size: 15px;
+		font-weight: 700;
+		line-height: 1.35;
+		color: var( --ttbm-hotel-ink );
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_enhanced_table tbody {
+		display: flex;
+		flex-direction: column;
+		gap: 9px;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_ticket_row {
+		display: grid;
+		grid-template-columns: minmax( 0, 1fr ) auto;
+		grid-template-areas:
+			"service badge"
+			"price quantity";
+		gap: 7px 10px;
+		align-items: center;
+		box-sizing: border-box;
+		padding: 12px;
+		border: 1px solid var( --ttbm-hotel-line );
+		border-radius: 10px;
+		background: #fff;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_ticket_row td {
+		display: block;
+		width: auto;
+		max-width: none;
+		margin: 0;
+		padding: 0 !important;
+		border: 0;
+		background: transparent;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_ticket_row td::before,
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area td.ttbm-availability-info {
+		display: none !important;
+		content: none;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-person-info {
+		grid-area: service;
+		min-width: 0;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-regular-price {
+		grid-area: price;
+		min-width: 0;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_ticket_details > .extra_service_title {
+		margin: 0;
+		font-size: 13px;
+		font-weight: 700;
+		line-height: 1.35;
+		color: var( --ttbm-hotel-ink );
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_ticket_description {
+		margin-top: 5px;
+		font-size: 11px;
+		line-height: 1.45;
+		color: var( --ttbm-hotel-muted );
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-ticket-badge-col {
+		grid-area: badge;
+		align-self: start;
+		justify-self: end;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity {
+		grid-area: quantity;
+		justify-self: end;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_discount_badge {
+		position: static;
+		font-size: 9px;
+		white-space: nowrap;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_price_container {
+		margin: 0;
+		text-align: left;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity .qtyIncDec {
+		display: inline-flex !important;
+		align-items: center;
+		justify-content: center;
+		width: 104px;
+		min-width: 0;
+		overflow: hidden;
+		border: 1px solid #e0daf5 !important;
+		border-color: color-mix( in srgb, var( --ttbm-hotel-accent ) 22%, #fff ) !important;
+		border-radius: 8px;
+		background: #fff;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity .decQty,
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity .incQty {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex: 0 0 32px;
+		width: 32px;
+		height: 32px;
+		min-width: 32px;
+		border: 0 !important;
+		border-radius: 0;
+		background: #f7f5fc;
+		background: color-mix( in srgb, var( --ttbm-hotel-accent ) 7%, #fff );
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity .qty-btn-icon {
+		display: none;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity .decQty::before {
+		content: "";
+		display: block;
+		width: 10px;
+		height: 2px;
+		border-radius: 1px;
+		background: var( --ttbm-hotel-accent );
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity .incQty::before {
+		content: "+";
+		font-size: 18px;
+		font-weight: 500;
+		line-height: 1;
+		color: var( --ttbm-hotel-accent );
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity label {
+		flex: 0 0 38px;
+		width: 38px;
+		margin: 0;
+		padding: 0;
+		border: 0;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity .inputIncDec {
+		box-sizing: border-box;
+		width: 38px !important;
+		min-width: 38px;
+		height: 32px;
+		margin: 0;
+		padding: 0 !important;
+		border: 0 !important;
+		border-right: 1px solid #ece8f8 !important;
+		border-left: 1px solid #ece8f8 !important;
+		border-radius: 0 !important;
+		background: #fff !important;
+		box-shadow: none !important;
+		font-size: 12px;
+		font-weight: 700;
+		line-height: 32px;
+		text-align: center;
+		color: var( --ttbm-hotel-ink );
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_book_now_area {
+		display: grid !important;
+		grid-template-columns: 1fr;
+		align-items: stretch;
+		gap: 10px;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_book_now,
+	body .ttbm_hotel_booking_cards .ttbm_hotel_book_now {
+		width: 100%;
+	}
+}
+
+@supports not ( container-type: inline-size ) {
+	.ttbm_smart_theme .ttbm_hotel_booking_cards .ttbm_hdc_card,
+	.ttbm_viator_theme .ttbm_hotel_booking_cards .ttbm_hdc_card,
+	.ttbm_travello_theme .ttbm_hotel_booking_cards .ttbm_hdc_card {
+		flex-direction: column;
+	}
+
+	.ttbm_smart_theme .ttbm_hotel_booking_cards .ttbm_hdc_img,
+	.ttbm_viator_theme .ttbm_hotel_booking_cards .ttbm_hdc_img,
+	.ttbm_travello_theme .ttbm_hotel_booking_cards .ttbm_hdc_img {
+		flex: none;
+		width: 100%;
+		height: 210px;
+		min-height: 0;
+	}
+}

@@ -1094,7 +1094,7 @@ body:has(.ttbm_smart_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-un
 }
 
 #ttbm_content .ttbm_smart_theme .ttbm_smart_inline_booking .ttbm_ticket_list_title,
-#ttbm_content .ttbm_smart_theme .ttbm_smart_inline_booking .mp_tour_ticket_type,
+#ttbm_content .ttbm_smart_theme .ttbm_smart_inline_booking .mp_tour_ticket_type:not(.ttbm_hotel_room_table),
 #ttbm_content .ttbm_smart_theme .ttbm_smart_inline_booking .ttbm-registration-info {
 	display: none !important;
 }

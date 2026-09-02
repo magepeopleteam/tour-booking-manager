@@ -28,6 +28,7 @@
 						</div>
 					</div>
 					<div class="ttbm_content__right">
+						<?php if ( TTBM_Function::show_booking_section( $ttbm_post_id ) ) : ?>
 						<div class="booking-form-area">
 							<?php do_action( 'ttbm_registration_before', $ttbm_post_id ); ?>
 							<h4 class="booking-form-price"><?php include( TTBM_Function::template_path( 'layout/start_price.php' ) ); ?></h4>
@@ -49,6 +50,7 @@
 								} ?>
 							<?php include( TTBM_Function::template_path( 'ticket/registration.php' ) ); ?>
 						</div>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>

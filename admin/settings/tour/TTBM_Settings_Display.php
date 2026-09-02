@@ -12,6 +12,7 @@ if (!class_exists('TTBM_Settings_Display')) {
             $tour_type_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_tour_type', 'on') == 'off' ? '' : 'checked';
             $hotel_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_hotels', 'on') == 'off' ? '' : 'checked';
             $sidebar_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_sidebar', 'off') == 'off' ? '' : 'checked';
+            $booking_section_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_booking_section', 'on') == 'off' ? '' : 'checked';
 
             $display_enquiry = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_enquiry', 'off') == 'off' ? '' : 'checked';
 
@@ -79,6 +80,12 @@ if (!class_exists('TTBM_Settings_Display')) {
                                 </div>
                                 <?php TTBM_Custom_Layout::switch_button('ttbm_display_sidebar', $sidebar_checked); ?>
                             </div>
+                            <div class="label">
+                                <div>
+                                    <p><?php esc_html_e('Display Booking Section', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_booking_section'); ?></span></i></p>
+                                </div>
+                                <?php TTBM_Custom_Layout::switch_button('ttbm_display_booking_section', $booking_section_checked); ?>
+                            </div>
                             <?php $this->rank_tour($tour_id); ?>
                             <?php do_action('add_ttbm_display_settings', $tour_id); ?>
                         </div>
@@ -145,21 +152,22 @@ if (!class_exists('TTBM_Settings_Display')) {
                     </div>
                 </section>
 
-                <section style="display:none;">
+                <section data-collapse="#ttbm_display_booking_section" class="<?php echo esc_attr($booking_section_checked ? 'mActive' : ''); ?>">
                     <div class="ttbm-header">
                         <h4><i class="mi mi-blog-text"></i><?php esc_html_e('Booking Form Style', 'tour-booking-manager'); ?></h4>
                     </div>
+                    <p class="info_text"><?php esc_html_e('Choose how the ticket picker opens on the tour page. Open renders the date field and ticket rows straight away; Collapse shows the date field with a "Check Availability" button and loads the ticket rows only after it is clicked.', 'tour-booking-manager'); ?></p>
                     <?php
                     $booking_form = [
                         [
                             'id'=>'regular_ticket',
                             'img'=>TTBM_PLUGIN_URL.'/assets/images/booking-style-1.png',
-                            'title'=> 'Booking Form Open'
+                            'title'=> esc_html__('Booking Form Open', 'tour-booking-manager')
                         ],
                         [
                             'id'=>'availability_section',
                             'img'=>TTBM_PLUGIN_URL.'/assets/images/booking-style-2.png',
-                            'title'=> 'Booking Form Collapse'
+                            'title'=> esc_html__('Booking Form Collapse', 'tour-booking-manager')
                         ],
                     ];
                     ?>

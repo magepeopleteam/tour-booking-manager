@@ -244,6 +244,9 @@ Use the [WordPress.org support forum](https://wordpress.org/support/plugin/tour-
 
 **Front End**
 
+* Fixed: Booking Form Style had no visible effect on the Default theme. That theme keeps the booking section hidden until the hero "Book Now" button is clicked, so both styles looked identical on arrival and the setting only changed something invisible (whether the ticket rows came pre-rendered or over AJAX). Open now renders the section already expanded; Collapse keeps the click-to-open behaviour.
+* Fixed: Turning booking off left an empty bordered card headed "Choose the Ticket That Fits Your Journey" on the tour page. The templates inside render nothing when booking is off, but the section wrapper and its heading were printed regardless; every theme now asks before printing the wrapper.
+* Fixed: Switching Starting Price off left the price on screen. The tour hero forced it through regardless of the switch, and the list/grid cards ignored the switch entirely, so the only way to hide a price was to remove it. Every start-price display now honours the one switch.
 * New: Travello theme — a complete single-tour page design with its own hero, gallery, itinerary, and booking sidebar, plus a matching grid layout for listings.
 * New: Tour list filtering rebuilt — AJAX top search with same-page results, date range picker, active filter chips above both columns, sortable results (Recommended, Highest Rated, Duration), and price/rating filters. The search form still posts to `/find/` as a plain-GET fallback for visitors without JavaScript.
 * New: Optional per-tour rating display (Display settings → Rating & Reviews). Off by default; the star row stays hidden unless both the average and the review count are filled in.
@@ -254,6 +257,10 @@ Use the [WordPress.org support forum](https://wordpress.org/support/plugin/tour-
 
 **Admin Experience**
 
+* Fixed: The Booking Form Style, Section Title Style and Theme pickers did not survive a save. Clicking a card writes the choice into a hidden input with .val(), which fires no event, so the editor never registered the form as changed and the auto-save skipped it entirely. The three pickers now announce their change.
+* New: Display settings -> Display Booking Section switches the ticket picker block on the tour page on and off. The sidebar "Check Availability" button still works when it is off, so a tour page can be informational without losing booking; to switch booking off everywhere use Pricing & Services -> Registration as before.
+* New: Booking Form Style (Open / Collapse) is now visible in Display settings. The setting and both layouts already shipped, but the picker was hidden, so the only way to change a tour between the pre-rendered ticket rows and the "Check Availability" flow was to edit post meta directly.
+* New: Starting Price is back on the tour editor (Overview -> General Information). Leave the amount empty and the tour keeps advertising its lowest ticket price automatically; type an amount and that is the "from" price shown on the tour page, list cards and grids. It is stored separately from the older start-price value, so nothing an import or an AI tool wrote is turned into an advertised price.
 * New (PRO): Newly shipped tour editor tabs carry a short-lived "new" marker so they are not missed in a long sidebar. The countdown starts the first time your own site renders the tab — not from a fixed release date — so a shop that updates later still gets the full window, and the marker retires itself after five days with nothing to dismiss. Adjustable via the `ttbm_pro_feature_badge_days` filter (return 0 to switch markers off).
 * New: Per-slot "Slot Stock" field on every time slot row (Default plus each weekday), revealed by the Time-wise Stock toggle. Values entered are kept when the toggle is switched off, so turning it back on restores them.
 * Improved: Bookings admin menu unified, and the Pro badge removed from the bookings submenu.

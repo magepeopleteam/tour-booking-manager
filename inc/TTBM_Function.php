@@ -992,7 +992,24 @@
 				return self::cache_set('start_price', $price_cache_key, self::build_tour_start_price($tour_id, $start_date));
 			}
 			private static function build_tour_start_price($tour_id, $start_date = ''): string {
-				$tour_id      = self::post_id_multi_language( $tour_id );
+				$tour_id = self::post_id_multi_language( $tour_id );
+
+				/*
+				 * An admin-entered starting price is an explicit override: it wins over every
+				 * computed ticket / hotel-room price. Leave the field empty and the price stays
+				 * dynamic (lowest available price), which is the default.
+				 */
+				$manual_price = self::get_manual_start_price( $tour_id );
+				if ( $manual_price !== '' ) {
+					return $manual_price;
+				}
+
+				/*
+				 * Legacy last-resort value. Unlike the override above this only surfaces when
+				 * nothing can be computed, which is the behaviour it has always had -- the PRO
+				 * AI tools mirror the lowest ticket price into it, so it must not act as an
+				 * override.
+				 */
 				$manual_price = self::normalize_positive_price( TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_travel_start_price' ) );
 
 				if ( self::get_tour_type( $tour_id ) === 'hotel' ) {
@@ -1054,6 +1071,64 @@
 			}
 
 			/**
+			 * Booking Form Style: true = Open (expanded on arrival), false = Collapse.
+			 *
+			 * 'ttbm_ticketing_system' also decides whether the ticket rows are pre-rendered
+			 * by PHP ('regular_ticket') or fetched over AJAX after "Check Availability"
+			 * ('availability_section'). Reads the same default as the render path in
+			 * templates/ticket/tour_default_selection.php so the editor and the page agree.
+			 */
+			public static function booking_form_opens_expanded( $tour_id ): bool {
+				return TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_ticketing_system', 'regular_ticket' ) !== 'availability_section';
+			}
+
+			/**
+			 * Whether the inline booking / ticket-picker block may be rendered for a tour.
+			 *
+			 * Two switches feed it, deliberately kept separate:
+			 *  - 'ttbm_display_registration' (Pricing & Services) turns the whole booking
+			 *    feature off -- sidebar CTA, hero price and this block with it.
+			 *  - 'ttbm_display_booking_section' (Display settings) hides only this block, so
+			 *    a tour can still be booked from the sidebar "Check Availability" CTA.
+			 *
+			 * Themes must ask this before printing the section wrapper: the templates inside
+			 * return nothing when booking is off, which used to leave an empty bordered card
+			 * with a "Choose the Ticket..." heading and no ticket picker under it.
+			 */
+			public static function show_booking_section( $post_id ): bool {
+				if ( TTBM_Global_Function::get_post_info( $post_id, 'ttbm_display_registration', 'on' ) === 'off' ) {
+					return false;
+				}
+				return TTBM_Global_Function::get_post_info( $post_id, 'ttbm_display_booking_section', 'on' ) !== 'off';
+			}
+
+			/**
+			 * Whether the "starting price" block may be shown for a tour.
+			 *
+			 * Single home for the 'ttbm_display_price_start' switch (tour editor -> Overview
+			 * -> General Information -> Starting Price) so every hero, card and list price
+			 * honours it identically. Takes the id the template is rendering, translated or
+			 * not, matching how the surrounding templates read their other display switches.
+			 */
+			public static function show_start_price( $post_id ): bool {
+				return TTBM_Global_Function::get_post_info( $post_id, 'ttbm_display_price_start', 'on' ) !== 'off';
+			}
+
+			/**
+			 * Admin-entered starting price for a tour, '' when none is set.
+			 *
+			 * Set from the tour editor (Overview -> General Information -> Starting Price).
+			 * Deliberately a key of its own rather than the older 'ttbm_travel_start_price',
+			 * which is a derived fallback other code writes to and would hijack the display.
+			 */
+			public static function get_manual_start_price( $tour_id ): string {
+				$tour_id = self::post_id_multi_language( $tour_id );
+				return self::normalize_positive_price(
+					TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_manual_start_price' )
+				);
+			}
+
+			/**
 			 * Keep a usable numeric price; empty / non-numeric / zero become ''.
 			 */
 			private static function normalize_positive_price( $price ): string {
@@ -1068,6 +1143,11 @@
 			 * Regular price for the ticket that provides get_tour_start_price(), when that ticket is on sale.
 			 */
 			public static function get_tour_start_regular_price( $tour_id, $start_date = '' ): string {
+				/* A manual starting price is a flat advertised amount -- nothing to strike through. */
+				if ( self::get_manual_start_price( $tour_id ) !== '' ) {
+					return '';
+				}
+
 				if ( self::get_tour_type( $tour_id ) === 'hotel' ) {
 					$start_price = self::get_tour_start_price( $tour_id, $start_date );
 					if ( $start_price === '' ) {

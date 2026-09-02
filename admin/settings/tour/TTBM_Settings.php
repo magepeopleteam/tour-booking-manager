@@ -200,7 +200,7 @@
 			public static function des_array($key) {
 				$des = array(
 					'ttip_start_price' => esc_html__('If you would like to hide them, you can do so by switching the option.', 'tour-booking-manager'),
-					'start_price' => esc_html__('Price Starts  are displayed on the tour details and tour list pages.', 'tour-booking-manager'),
+					'start_price' => esc_html__('The "from" price shown on the tour details and tour list pages. Leave the amount empty to use the lowest ticket price automatically, or type an amount to advertise that price instead. Switch the toggle off to hide the start price.', 'tour-booking-manager'),
 					'ttip_max_people' => esc_html__('This number is displayed for informational purposes only and can be hidden by switching the option.', 'tour-booking-manager'),
 					'max_people' => esc_html__('This tour only allows a maximum of X people', 'tour-booking-manager'),
 					'age_range' => esc_html__('The age limit for this tour is X to Y years old. This is for information purposes only.', 'tour-booking-manager'),
@@ -243,6 +243,7 @@
 					'ttbm_display_slider_hotel' => esc_html__('By default slider is ON but you can keep it off by switching this option', 'tour-booking-manager'),
 					'ttbm_section_title_style' => esc_html__('By default Section title is style one', 'tour-booking-manager'),
 					'ttbm_ticketing_system' => esc_html__('Select ticket purchase system type.', 'tour-booking-manager'),
+					'ttbm_display_booking_section' => esc_html__('Show the ticket picker block on the tour page. Turn it off to keep the page informational -- the sidebar "Check Availability" button still opens booking. To switch booking off everywhere instead, use Pricing & Services -> Registration.', 'tour-booking-manager'),
 					'ttip_ticketing_system' => esc_html__('By default, the ticket purchase system is open. Once you check the availability, you can choose the system that best suits your needs.', 'tour-booking-manager'),
 					'ttbm_display_seat_details' => esc_html__('By default Seat Info is ON but you can keep it off by switching this option', 'tour-booking-manager'),
 					'ttbm_display_tour_type' => esc_html__('By default Tour type is ON but you can keep it off by switching this option', 'tour-booking-manager'),
@@ -1167,6 +1168,7 @@
 					'ttbm_display_schedule',
 					'ttbm_display_admin_note',
 					'ttbm_display_registration',
+					'ttbm_display_booking_section',
 					'ttbm_display_slider',
 					'ttbm_display_hiphop',
 					'ttbm_display_get_question',
@@ -1240,6 +1242,15 @@
 					}
 					update_post_meta($tour_id, 'ttbm_display_price_start', $ttbm_display_price_start);
 					update_post_meta($tour_id, 'ttbm_travel_start_price', $ttbm_travel_start_price);
+					// Manual "from" price override. The input is disabled while the Starting Price
+					// switch is off, so an absent field means "keep what is stored", not "cleared".
+					if ( isset( $_POST['ttbm_manual_start_price'] ) ) {
+						$ttbm_manual_start_price = sanitize_text_field( wp_unslash( $_POST['ttbm_manual_start_price'] ) );
+						$ttbm_manual_start_price = is_numeric( $ttbm_manual_start_price ) && floatval( $ttbm_manual_start_price ) > 0
+							? (string) floatval( $ttbm_manual_start_price )
+							: '';
+						update_post_meta( $tour_id, 'ttbm_manual_start_price', $ttbm_manual_start_price );
+					}
 					/***************/
 					$ttbm_display_max_people = isset($_POST['ttbm_display_max_people']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_max_people'])) ? 'on' : 'off';
 					$ttbm_travel_max_people_allow = isset($_POST['ttbm_travel_max_people_allow']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_max_people_allow'])) : '';
@@ -1465,7 +1476,14 @@
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
 					$content_title_style = isset($_POST['ttbm_section_title_style']) ? sanitize_text_field(wp_unslash($_POST['ttbm_section_title_style'])) : 'style_1';
 					$ttbm_travel_rank_tour = isset($_POST['ttbm_travel_rank_tour']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_rank_tour'])) : '';
-					$ticketing_system = isset($_POST['ttbm_ticketing_system']) ? sanitize_text_field(wp_unslash($_POST['ttbm_ticketing_system'])) : 'availability_section';
+					// Keep the stored style when the field is not submitted -- an absent input
+					// must not silently flip a tour to the other booking style.
+					$ticketing_system = isset($_POST['ttbm_ticketing_system'])
+						? sanitize_text_field(wp_unslash($_POST['ttbm_ticketing_system']))
+						: (string) get_post_meta($tour_id, 'ttbm_ticketing_system', true);
+					if (!in_array($ticketing_system, array('regular_ticket', 'availability_section'), true)) {
+						$ticketing_system = 'regular_ticket';
+					}
 					$seat_info = isset($_POST['ttbm_display_seat_details']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_seat_details'])) ? 'on' : 'off';
 					$sidebar = isset($_POST['ttbm_display_sidebar']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_sidebar'])) ? 'on' : 'off';
 					$tour_type = isset($_POST['ttbm_display_tour_type']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_tour_type'])) ? 'on' : 'off';

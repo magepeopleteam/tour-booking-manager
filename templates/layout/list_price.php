@@ -5,7 +5,7 @@
 	$ttbm_post_id     = $ttbm_post_id ?? get_the_id();
 	$tour_id     = $tour_id ?? TTBM_Function::post_id_multi_language( $ttbm_post_id );
 	$class_price = $class_price ?? '';
-	$start_price = TTBM_Function::get_tour_start_price( $tour_id );
+	$start_price = TTBM_Function::show_start_price( $ttbm_post_id ) ? TTBM_Function::get_tour_start_price( $tour_id ) : '';
 	if ( $start_price !== '' && (float) $start_price > 0 ) {
 		?>
 		<div class="ttbm_list_info <?php echo esc_attr( $class_price ); ?>" data-placeholder>

@@ -348,7 +348,9 @@ function ttbm_load_sortable_datepicker(parent, item) {
 
     // ================ Template slection ===============
     $(document).on('click', '.ttbm-template img', function (e) {
-        $('[name="ttbm_theme_file"]').val($(this).data('ttbm-template'));
+        // Announce it: a bare .val() leaves the autosave watcher unaware and the
+        // picked theme is lost on save.
+        $('[name="ttbm_theme_file"]').val($(this).data('ttbm-template')).trigger('change');
         $('.ttbm-template ').removeClass('active')
         $(this).parent('.ttbm-template ').addClass('active');
     });

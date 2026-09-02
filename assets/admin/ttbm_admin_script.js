@@ -2746,7 +2746,9 @@
         $(parent).find('.title-style').removeClass('active');
         $(this).addClass('active');
         var titleStyle = $(this).data('title-style');
-        $('#ttbm-title-style').val(titleStyle);
+        // .val() fires no event, so the autosave watcher would never see this
+        // choice and the picked style was dropped on save.
+        $('#ttbm-title-style').val(titleStyle).trigger('change');
     });
 })(jQuery);
 
@@ -2756,7 +2758,9 @@
         $(parent).find('.booking-style').removeClass('active');
         $(this).addClass('active');
         var titleStyle = $(this).data('booking-style');
-        $('#ttbm-booking-style').val(titleStyle);
+        // Same as the title-style picker above: announce the change so the form
+        // is marked dirty and the Open/Collapse choice actually gets saved.
+        $('#ttbm-booking-style').val(titleStyle).trigger('change');
     });
 })(jQuery);
 

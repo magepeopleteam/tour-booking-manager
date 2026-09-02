@@ -107,7 +107,7 @@ $ttbm_auto_date   = in_array( $travel_type, array( 'repeated', 'particular' ), t
 
 					<aside class="ttbm_content__right placeholder_area" id="ttbm_booking_section" aria-label="<?php esc_attr_e( 'Tour booking', 'tour-booking-manager' ); ?>">
 						<div class="ttbm-smart-booking-origin"></div>
-						<?php if ( $ttbm_display_reg !== 'off' ) : ?>
+						<?php if ( TTBM_Function::show_booking_section( $ttbm_post_id ) ) : ?>
 							<div class="ttbm-sidebar-booking ttbm_registration_area ttbm_smart_inline_booking"<?php echo $ttbm_auto_date ? ' data-ttbm-auto-date="1"' : ''; ?>>
 								<div class="ttbm_smart_booking_card">
 									<?php do_action( 'ttbm_smart_registration_controls', $ttbm_post_id ); ?>

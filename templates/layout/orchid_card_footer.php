@@ -4,10 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 $ttbm_post_id  = $ttbm_post_id ?? get_the_id();
 $tour_id       = $tour_id ?? TTBM_Function::post_id_multi_language( $ttbm_post_id );
-// List/grid cards always show the computed ticket (or manual) start price.
-// Do not gate on 'ttbm_display_price_start' — that toggle is for the tour
-// details hero and is off on several imported tours that still have prices.
-$start_price   = TTBM_Function::get_tour_start_price( $tour_id );
+// Gated on the Starting Price switch, same as every other price display.
+$start_price   = TTBM_Function::show_start_price( $ttbm_post_id ) ? TTBM_Function::get_tour_start_price( $tour_id ) : '';
 ?>
 <div class="ttbm-orchid-footer">
 	<div class="ttbm-orchid-meta-row">

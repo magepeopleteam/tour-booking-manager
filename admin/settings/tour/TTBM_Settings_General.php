@@ -54,6 +54,12 @@
 									<?php $this->tour_language($tour_id); ?>
                                 </div>
                             </div>
+                            <div class="ttbm-general-info-card__row">
+                                <div class="ttbm-general-info-card__col">
+									<?php $this->starting_price($tour_id); ?>
+                                </div>
+                                <div class="ttbm-general-info-card__col"></div>
+                            </div>
                         </div>
 						<?php $this->short_description_section($tour_id); ?>
                     </section>
@@ -124,22 +130,35 @@
                 </div>
 				<?php
 			}
+			/**
+			 * Starting ("from") price shown on the tour hero, list cards and price boxes.
+			 *
+			 * The toggle keeps its existing meaning -- whether the start price block is
+			 * rendered at all. The input is an optional manual override: fill it in and
+			 * that amount is advertised as the starting price; leave it empty and the
+			 * lowest ticket (or hotel room) price is used, exactly as before.
+			 *
+			 * Stored under 'ttbm_manual_start_price', not the older 'ttbm_travel_start_price'
+			 * -- that one is a derived fallback the dummy importer and the PRO AI tools write
+			 * to, so reusing it would silently turn stale values into advertised prices.
+			 */
 			public function starting_price($tour_id) {
 				$display_name = 'ttbm_display_price_start';
 				$display      = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
-				$value_name   = 'ttbm_travel_start_price';
+				$value_name   = 'ttbm_manual_start_price';
 				$value        = TTBM_Global_Function::get_post_info($tour_id, $value_name);
-				$placeholder  = esc_html__('Type Start Price', 'tour-booking-manager');
-				$checked      = $display === 'off' ? '' : 'checked';
-				$active       = $display === 'off' ? '' : 'mActive';
+				$value        = is_numeric($value) && floatval($value) > 0 ? $value : '';
+				$placeholder  = esc_html__('Auto (lowest ticket price)', 'tour-booking-manager');
+				$checked      = ($display == 'off') ? '' : 'checked';
 				?>
-                <div class="label">
-                    <div class="label-inner">
-                        <p><?php esc_html_e('Tour Start Price', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('start_price'); ?></span></i></p>
-                    </div>
-                    <div class="_dFlex_alignCenter_justifyBetween">
+                <div class="ttbm-gen-field ttbm-gen-field--toggle ttbm-gen-field--inline<?php echo ($display == 'off') ? ' is-toggle-off' : ''; ?>">
+                    <div class="ttbm-gen-field__inline-row">
+                        <p class="ttbm-gen-field__label">
+							<?php esc_html_e('Starting Price', 'tour-booking-manager'); ?>
+                            <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('start_price'); ?></span></i>
+                        </p>
 						<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
-                        <input type="number" min="0" step="0.01" data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+                        <input type="number" min="0" step="0.01" data-ttbm-toggle-field="#<?php echo esc_attr($display_name); ?>" class="ttbm-gen-field__input formControl" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>" <?php echo ($display == 'off') ? 'disabled' : ''; ?>/>
                     </div>
                 </div>
 				<?php

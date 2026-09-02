@@ -20,8 +20,7 @@
 		return;
 	}
 
-	$show_price_start = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) !== 'off';
-	if ( ! $show_price_start && empty( $ttbm_force_hero_price ) ) {
+	if ( ! TTBM_Function::show_start_price( $ttbm_post_id ) ) {
 		return;
 	}
 

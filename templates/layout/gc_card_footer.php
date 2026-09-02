@@ -6,13 +6,8 @@ $ttbm_post_id  = $ttbm_post_id ?? get_the_id();
 $tour_id       = $tour_id ?? TTBM_Function::post_id_multi_language( $ttbm_post_id );
 
 // --- Price ---
-// Show whenever there's a real, computed price (ticket type and/or manual
-// starting price) — deliberately not gated by the separate
-// 'ttbm_display_price_start' toggle. That toggle defaults 'off' for several
-// tours on this install (an import artifact, not a deliberate "hide the
-// price" choice) and was hiding a real, valid ticket-type price on cards
-// that have every reason to show one.
-$start_price   = TTBM_Function::get_tour_start_price( $tour_id );
+// Gated on the Starting Price switch, same as every other price display.
+$start_price   = TTBM_Function::show_start_price( $ttbm_post_id ) ? TTBM_Function::get_tour_start_price( $tour_id ) : '';
 
 // First ticket type's label (e.g. "Adult"), shown as a "/ Adult" unit suffix after the price.
 $price_unit_label = '';

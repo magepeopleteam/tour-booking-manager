@@ -91,7 +91,7 @@
 	$ttbm_travello_languages    = is_array( $ttbm_travello_language_raw ) ? array_filter( $ttbm_travello_language_raw ) : ( $ttbm_travello_language_raw ? array( $ttbm_travello_language_raw ) : array() );
 
 	// --- Price (real, same helper the archive cards + hero price use) ---
-	$ttbm_travello_start_price = TTBM_Function::get_tour_start_price( $tour_id );
+	$ttbm_travello_start_price = TTBM_Function::show_start_price( $ttbm_post_id ) ? TTBM_Function::get_tour_start_price( $tour_id ) : '';
 
 	// --- Organizer mini-card: real term name only, no fabricated stats; simply omitted if none assigned ---
 	$ttbm_travello_organizer_terms = get_the_terms( $tour_id, 'ttbm_tour_org' );
@@ -399,6 +399,7 @@
 			</div><!-- .ttbm-travello-main -->
 
 			<aside class="ttbm-travello-sidebar">
+				<?php if ( TTBM_Function::show_booking_section( $ttbm_post_id ) ) : ?>
 				<div class="ttbm-travello-booking-card" id="ttbm_booking_section">
 					<?php if ( $ttbm_travello_start_price ) : ?>
 						<div class="ttbm-travello-bc-header">
@@ -449,6 +450,7 @@
 						</div>
 					<?php endif; ?>
 				</div>
+				<?php endif; ?>
 				<?php /* why_choose_us / get_a_question / tour_guide / dynamic_sidebar deliberately left out — the reference's sidebar is just the booking card (operator mini-card included as its last element), nothing else.
 
 				Reference also has a fixed "$178 for 2" total, a "⚡ Only 3 spots left — this date is in
@@ -481,7 +483,9 @@
 					?>
 				</p>
 			</div>
-			<a href="#ttbm_booking_section" class="ttbm-travello-mobile-bar-cta"><?php esc_html_e( 'Reserve now', 'tour-booking-manager' ); ?></a>
+			<?php if ( TTBM_Function::show_booking_section( $ttbm_post_id ) ) : ?>
+				<a href="#ttbm_booking_section" class="ttbm-travello-mobile-bar-cta"><?php esc_html_e( 'Reserve now', 'tour-booking-manager' ); ?></a>
+			<?php endif; ?>
 		</div>
 	<?php endif; ?>
 </div><!-- .ttbm_travello_theme -->

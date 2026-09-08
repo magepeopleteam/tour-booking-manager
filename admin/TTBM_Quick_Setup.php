@@ -122,6 +122,11 @@ if (!class_exists('TTBM_Quick_Setup')) {
 		 */
 		public function ajax_dismiss_setup_notice() {
 			check_ajax_referer('ttbm_dismiss_notice', 'nonce');
+			// The notice is an administrator's, and so is dismissing it — the other
+			// handlers in this class all gate on a capability too.
+			if (!current_user_can('manage_options')) {
+				wp_send_json_error('', 403);
+			}
 			update_option('ttbm_setup_notice_dismissed', 'yes');
 			wp_send_json_success();
 		}

@@ -25,20 +25,43 @@
 				// daywise sort_daywise
 				add_action('wp_ajax_ttbm_sort_daywise', [$this, 'sort_daywise']);
 			}
+			/**
+			 * Whether the current user may read and write the itinerary of $post_id.
+			 *
+			 * ttbm_admin_nonce is minted for every user who can open a TTBM admin
+			 * screen, so verifying it only proves the request came from our own UI --
+			 * never that the sender is allowed to touch this particular tour. Every
+			 * handler below therefore re-checks the object capability itself before it
+			 * reads or writes ttbm_daywise_details.
+			 *
+			 * @param int $post_id Tour ID taken from the request.
+			 * @return bool
+			 */
+			private function current_user_can_edit_daywise_post($post_id) {
+				return $post_id > 0 && get_post_type($post_id) === TTBM_Function::get_cpt_name() && current_user_can('edit_post', $post_id);
+			}
 			public function sort_daywise() {
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 				}
-				$post_id = isset($_POST['postID']) ? sanitize_text_field(wp_unslash($_POST['postID'])) : '';
-				$sorted_ids = isset($_POST['sortedIDs']) ? array_map('intval', $_POST['sortedIDs']) : [];
-				$ttbm_daywise = get_post_meta($post_id, 'ttbm_daywise_details', true);
-				$new_ordered = [];
-				foreach ($sorted_ids as $id) {
-					if (isset($ttbm_daywise[$id])) {
-						$new_ordered[$id] = $ttbm_daywise[$id];
-					}
+				$post_id = isset($_POST['postID']) ? absint(wp_unslash($_POST['postID'])) : 0;
+				if (!$this->current_user_can_edit_daywise_post($post_id)) {
+					wp_send_json_error('Permission denied!', 403);
 				}
-				update_post_meta($post_id, 'ttbm_daywise_details', $new_ordered);
+				$sorted_ids = isset($_POST['sortedIDs']) ? array_map('absint', (array) wp_unslash($_POST['sortedIDs'])) : [];
+				$ttbm_daywise = get_post_meta($post_id, 'ttbm_daywise_details', true);
+				$ttbm_daywise = is_array($ttbm_daywise) ? $ttbm_daywise : [];
+				// An empty sort order means the browser sent nothing to reorder, not that
+				// the itinerary should be emptied -- leave the stored value untouched.
+				if (!empty($sorted_ids)) {
+					$new_ordered = [];
+					foreach ($sorted_ids as $id) {
+						if (isset($ttbm_daywise[$id])) {
+							$new_ordered[$id] = $ttbm_daywise[$id];
+						}
+					}
+					update_post_meta($post_id, 'ttbm_daywise_details', $new_ordered);
+				}
 				ob_start();
 				$resultMessage = esc_html__('Data Updated Successfully', 'tour-booking-manager');
 				$this->show_daywise_data($post_id);
@@ -199,7 +222,10 @@
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 				}
-				$post_id = isset($_POST['ttbm_daywise_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_daywise_postID'])) : '';
+				$post_id = isset($_POST['ttbm_daywise_postID']) ? absint(wp_unslash($_POST['ttbm_daywise_postID'])) : 0;
+				if (!$this->current_user_can_edit_daywise_post($post_id)) {
+					wp_send_json_error('Permission denied!', 403);
+				}
 				$ttbm_day_title = isset($_POST['ttbm_day_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_day_title'])) : '';
 				$ttbm_day_time = isset($_POST['ttbm_day_time']) ? sanitize_text_field(wp_unslash($_POST['ttbm_day_time'])) : '';
 				$allowed_tags = wp_kses_allowed_html('post');
@@ -227,7 +253,10 @@
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 				}
-				$post_id = isset($_POST['ttbm_daywise_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_daywise_postID'])) : '';
+				$post_id = isset($_POST['ttbm_daywise_postID']) ? absint(wp_unslash($_POST['ttbm_daywise_postID'])) : 0;
+				if (!$this->current_user_can_edit_daywise_post($post_id)) {
+					wp_send_json_error('Permission denied!', 403);
+				}
 				$ttbm_day_title = isset($_POST['ttbm_day_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_day_title'])) : '';
 				$ttbm_day_time = isset($_POST['ttbm_day_time']) ? sanitize_text_field(wp_unslash($_POST['ttbm_day_time'])) : '';
 				$allowed_tags = wp_kses_allowed_html('post');
@@ -260,7 +289,10 @@
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 				}
-				$post_id = isset($_POST['ttbm_daywise_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_daywise_postID'])) : '';
+				$post_id = isset($_POST['ttbm_daywise_postID']) ? absint(wp_unslash($_POST['ttbm_daywise_postID'])) : 0;
+				if (!$this->current_user_can_edit_daywise_post($post_id)) {
+					wp_send_json_error('Permission denied!', 403);
+				}
 				$ttbm_daywise = get_post_meta($post_id, 'ttbm_daywise_details', true);
 				$ttbm_daywise = !empty($ttbm_daywise) ? $ttbm_daywise : [];
 				if (!empty($ttbm_daywise)) {

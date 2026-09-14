@@ -5432,15 +5432,113 @@ div.ttbm_global_settings .button-primary {
 		font-size: 22px;
 	}
 
+	#ttbm_meta_box_panel .ttbm_settings .ttbmTabs.leftTabs,
+	#ttbm_content.ttbm_configuration .ttbmTabs.leftTabs,
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs {
+		display: block !important;
+		flex-direction: column;
+		align-items: stretch !important;
+		justify-content: flex-start !important;
+		gap: 16px !important;
+		min-height: 0 !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm_style.leftTabs > .tabLists.meta-sidebar,
+	#ttbm_meta_box_panel .leftTabs > .tabLists.meta-sidebar,
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar,
+	.ttbm-right-sidebar {
+		width: 100% !important;
+		min-width: 0 !important;
+		max-width: 100% !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm_style.leftTabs > .tabLists.meta-sidebar,
+	#ttbm_meta_box_panel .leftTabs > .tabLists.meta-sidebar,
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar {
+		display: grid !important;
+		grid-template-columns: 1fr;
+		flex-flow: row wrap !important;
+		align-content: flex-start !important;
+		gap: 8px;
+		padding: 12px !important;
+		margin: 0 !important;
+		min-height: 0 !important;
+		max-height: none !important;
+		overflow: visible !important;
+		border-right: 0 !important;
+		border-bottom: 1px solid #dce4f0 !important;
+		border-radius: 16px 16px 0 0 !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm_settings .tabLists.meta-sidebar li,
+	#ttbm_meta_box_panel .tabLists.meta-sidebar li,
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li {
+		display: flex !important;
+		align-items: center !important;
+		min-height: 48px;
+		padding: 10px 12px !important;
+		min-width: 0;
+		margin: 0 !important;
+	}
+
+	#ttbm_meta_box_panel .tabLists.meta-sidebar li span,
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar li span {
+		white-space: normal !important;
+		overflow: visible !important;
+		text-overflow: clip !important;
+	}
+
+	#ttbm_meta_box_panel .tabsContent,
+	#ttbm_content.ttbm_configuration .tabsContent,
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsContent {
+		width: 100%;
+		overflow: visible !important;
+		padding: 18px 14px !important;
+	}
+
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-right-sidebar,
+	.ttbm-right-sidebar {
+		padding: 0 14px 18px !important;
+		order: 3;
+	}
+
+	.ttbm-sb-btn-row {
+		flex-wrap: wrap;
+		gap: 10px;
+	}
+
 	#ttbm_meta_box_panel .tabsItem section .label {
 		flex-direction: column;
 		align-items: stretch;
+		padding: 12px 0;
 	}
 
 	#ttbm_meta_box_panel .tabsItem section .label ._dFlex_alignCenter_justifyBetween,
 	#ttbm_meta_box_panel .tabsItem section .label ._dFlex_alignCenter_justfyBetween {
+		flex-direction: column;
+		align-items: stretch;
 		justify-content: flex-start;
 		flex-wrap: wrap;
+	}
+
+	#ttbm_meta_box_panel .tabsItem section .label .label-inner,
+	#ttbm_meta_box_panel .tabsItem section .label ._dFlex_alignCenter_justifyBetween,
+	#ttbm_meta_box_panel .tabsItem section .label ._dFlex_alignCenter_justfyBetween {
+		flex: 1 1 100%;
+	}
+
+	#ttbm_meta_box_panel .tabsItem section,
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section {
+		padding: 18px 14px !important;
+	}
+
+	#ttbm_meta_box_panel .tabsItem section .ttbm-header,
+	#ttbm_meta_box_panel .tabsItem section .ttbm-header.ttbm-header--with-switch,
+	#ttbm_meta_box_panel .ttbm-tour-description-field__head,
+	#ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-short-desc__toggle-row,
+	#ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-short-desc__meta {
+		flex-direction: column;
+		align-items: stretch;
 	}
 
 	#ttbm_meta_box_panel .ttbm-location-select-wrap {
@@ -5452,6 +5550,14 @@ div.ttbm_global_settings .button-primary {
 		text-align: left;
 		white-space: normal;
 		flex-wrap: wrap;
+	}
+
+	#ttbm_meta_box_panel .ttbm-general-info-card__grid,
+	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-general-info-card__grid,
+	#ttbm_meta_box_panel .ttbm-hotel-details-card .ttbm-hotel-details-section__row {
+		grid-template-columns: 1fr !important;
+		display: grid !important;
+		gap: 12px !important;
 	}
 }
 

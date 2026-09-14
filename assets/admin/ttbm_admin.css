@@ -1617,12 +1617,12 @@ input.medium{
 
 @media (max-width: 1680px) {
 	.meta-sidebar-toggle{
-		display: block;
+		display: none;
 	}
 
 	#ttbm_meta_box_panel .meta-sidebar{
-		min-width: 55px;
-		max-width: 55px;
+		min-width: 250px;
+		max-width: 250px;
 		border-right: 1px solid #ccc;
 	}
 	#ttbm_meta_box_panel .ttbmTabs.leftTabs{
@@ -1659,7 +1659,7 @@ input.medium{
 		margin: 0;
 	}
 	#ttbm_meta_box_panel .meta-sidebar li span{ 
-		display: none;
+		display: block;
 	}
 	#ttbm_meta_box_panel .meta-sidebar-collapsed li span{ 
 		display: block;
@@ -1673,10 +1673,78 @@ input.medium{
 	}
 }
 @media (max-width: 1200px) {
+	#ttbm_meta_box_panel .ttbmTabs.leftTabs {
+		display: block !important;
+		flex-direction: column !important;
+		align-items: stretch !important;
+		justify-content: flex-start !important;
+		gap: 16px !important;
+	}
+
+	#ttbm_meta_box_panel .meta-sidebar,
+	#ttbm_meta_box_panel .meta-sidebar.meta-sidebar-collapsed {
+		min-width: 100% !important;
+		max-width: 100% !important;
+		width: 100% !important;
+		display: grid !important;
+		grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+		flex-flow: row wrap !important;
+		align-content: flex-start !important;
+		gap: 8px !important;
+		padding: 12px !important;
+		margin: 0 !important;
+		border-right: 0 !important;
+		border-bottom: 1px solid #ccc !important;
+	}
+
+	#ttbm_meta_box_panel .meta-sidebar-toggle {
+		display: none !important;
+	}
+
+	#ttbm_meta_box_panel .meta-sidebar li,
+	#ttbm_meta_box_panel .meta-sidebar.meta-sidebar-collapsed li {
+		display: flex !important;
+		align-items: center !important;
+		min-height: 48px;
+		margin: 0 !important;
+		padding: 10px 12px !important;
+		min-width: 0;
+	}
+
+	#ttbm_meta_box_panel .meta-sidebar li span,
+	#ttbm_meta_box_panel .meta-sidebar-collapsed li span {
+		display: block !important;
+		white-space: normal !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm_style .tabsContent {
+		width: 100% !important;
+		overflow: visible !important;
+		padding: 20px 16px !important;
+	}
+
 	#ttbm_meta_box_panel .ttbm-right-sidebar {
 		width: 100%;
 		min-width: 100%;
-		padding: 0 20px 20px;
+		padding: 0 16px 20px;
+		box-sizing: border-box;
+	}
+}
+
+@media (max-width: 767px) {
+	#ttbm_meta_box_panel .meta-sidebar,
+	#ttbm_meta_box_panel .meta-sidebar.meta-sidebar-collapsed {
+		grid-template-columns: 1fr !important;
+		gap: 6px !important;
+		padding: 10px !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm_style .tabsContent {
+		padding: 16px 12px !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm-right-sidebar {
+		padding: 0 12px 16px !important;
 	}
 }
 @media (max-width: 1400px) {

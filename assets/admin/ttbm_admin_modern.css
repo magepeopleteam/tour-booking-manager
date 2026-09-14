@@ -5563,9 +5563,9 @@ div.ttbm_global_settings .button-primary {
 	#ttbm_meta_box_panel .ttbm-ticket-types-table-wrap,
 	#ttbm_meta_box_panel .ttbm-extra-service-table-wrap,
 	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table table {
-		border: 0;
-		overflow: visible;
-		background: transparent;
+		border: 0 !important;
+		overflow: visible !important;
+		background: transparent !important;
 	}
 
 	#ttbm_meta_box_panel .ttbm-ticket-types-table,
@@ -5577,19 +5577,26 @@ div.ttbm_global_settings .button-primary {
 	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody,
 	#ttbm_meta_box_panel .ttbm-extra-service-table tbody,
 	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody {
-		display: block;
+		display: block !important;
+		width: 100% !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table,
+	#ttbm_meta_box_panel .ttbm-extra-service-table,
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table table {
+		table-layout: auto !important;
 	}
 
 	#ttbm_meta_box_panel .ttbm-ticket-types-table thead,
 	#ttbm_meta_box_panel .ttbm-extra-service-table thead,
 	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table thead {
-		display: none;
+		display: none !important;
 	}
 
 	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody,
 	#ttbm_meta_box_panel .ttbm-extra-service-table tbody,
 	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody {
-		display: flex;
+		display: flex !important;
 		flex-direction: column;
 		gap: 12px;
 	}
@@ -5597,18 +5604,19 @@ div.ttbm_global_settings .button-primary {
 	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody tr,
 	#ttbm_meta_box_panel .ttbm-extra-service-table tbody tr,
 	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody tr {
-		display: block;
+		display: block !important;
 		border: 1px solid #e2e8f0;
 		border-radius: 14px;
 		background: #fff;
 		overflow: hidden;
 		box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+		width: 100% !important;
 	}
 
 	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td,
 	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td,
 	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody td {
-		display: flex;
+		display: flex !important;
 		justify-content: space-between;
 		align-items: flex-start;
 		gap: 12px;
@@ -5644,6 +5652,22 @@ div.ttbm_global_settings .button-primary {
 		min-width: 0;
 	}
 
+	#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--name,
+	#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--desc,
+	#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--price,
+	#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--sale,
+	#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--cap,
+	#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--default,
+	#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--reserve,
+	#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--qty-type,
+	#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--actions,
+	#ttbm_meta_box_panel .ttbm-extra-service-table td,
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table td {
+		width: 100% !important;
+		min-width: 0 !important;
+		max-width: 100% !important;
+	}
+
 	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--name::before { content: "Ticket Name"; }
 	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--desc::before { content: "Short Description"; }
 	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--price::before { content: "Reg. Price"; }
@@ -5669,7 +5693,42 @@ div.ttbm_global_settings .button-primary {
 
 	#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--qty-type,
 	#ttbm_meta_box_panel .ttbm-extra-service-table .ttbm-extra-col--qty-type {
-		display: flex;
+		display: flex !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm_settings_pricing .dLayout,
+	#ttbm_meta_box_panel .ttbm_settings_pricing .dFlex,
+	#ttbm_meta_box_panel .ttbm_settings_pricing .col-left,
+	#ttbm_meta_box_panel .ttbm_settings_pricing .col-right,
+	#ttbm_meta_box_panel .ttbm_settings_pricing [data-collapse="#ttbm_display_global_qty"] .label,
+	#ttbm_meta_box_panel .ttbm_settings_pricing [data-collapse="#ttbm_display_global_qty"] label.label {
+		width: 100% !important;
+		min-width: 0 !important;
+		max-width: 100% !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm_settings_pricing [data-collapse="#ttbm_display_global_qty"] .dFlex {
+		flex-direction: column !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table .formControl,
+	#ttbm_meta_box_panel .ttbm-ticket-types-table input[type="text"],
+	#ttbm_meta_box_panel .ttbm-ticket-types-table input[type="number"],
+	#ttbm_meta_box_panel .ttbm-ticket-types-table select,
+	#ttbm_meta_box_panel .ttbm_settings_pricing input[name="ticket_type_description[]"],
+	#ttbm_meta_box_panel .ttbm_settings_pricing input[name="ttbm_global_qty"],
+	#ttbm_meta_box_panel .ttbm_settings_pricing input[name="ttbm_global_reserve_qty"] {
+		width: 100% !important;
+		min-width: 0 !important;
+		max-width: 100% !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-input-prefix,
+	#ttbm_meta_box_panel .ttbm-ticket-name-field,
+	#ttbm_meta_box_panel .ttbm-ticket-name-field__input {
+		width: 100% !important;
+		min-width: 0 !important;
+		max-width: 100% !important;
 	}
 
 	#ttbm_meta_box_panel .ttbm-ticket-row__actions,

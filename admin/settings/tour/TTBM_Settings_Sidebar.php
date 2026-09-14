@@ -648,9 +648,11 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 	background: #fff !important;
 	border-bottom: 1px solid #e5e7eb !important;
 	box-shadow: 0 2px 8px rgba(0,0,0,.06) !important;
-	display: flex !important;
+	display: grid !important;
+	grid-template-columns: minmax(0, 1fr) minmax(260px, 1.4fr) auto !important;
+	grid-template-areas: "back title actions" !important;
 	align-items: center !important;
-	justify-content: space-between !important;
+	gap: 16px !important;
 	padding: 12px 24px !important;
 	margin: 0 !important;
 	width: 100% !important;
@@ -660,8 +662,9 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 .ttbm-header-left {
 	display: flex !important;
 	align-items: center !important;
-	flex: 1 !important;
+	grid-area: back !important;
 	min-width: 0 !important;
+	justify-self: start !important;
 }
 .ttbm-header-back {
 	display: inline-flex !important;
@@ -678,17 +681,20 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 
 /* ── Center title ── */
 .ttbm-header-tour-title {
-	position: absolute !important;
-	left: 50% !important;
-	top: 50% !important;
-	transform: translate(-50%, -50%) !important;
+	grid-area: title !important;
+	position: static !important;
+	left: auto !important;
+	top: auto !important;
+	transform: none !important;
 	font-size: 17px !important;
 	font-weight: 700 !important;
 	color: #111827 !important;
-	white-space: nowrap !important;
+	white-space: normal !important;
 	overflow: hidden !important;
 	text-overflow: ellipsis !important;
-	max-width: 44% !important;
+	max-width: 100% !important;
+	width: 100% !important;
+	display: block !important;
 	text-align: center !important;
 	line-height: 1.3 !important;
 	margin: 0 !important;
@@ -696,6 +702,7 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 	background: none !important;
 	border: none !important;
 	letter-spacing: -.01em !important;
+	justify-self: center !important;
 }
 
 /* ── Header right: status, preview, split publish ── */
@@ -703,9 +710,12 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 	display: flex !important;
 	align-items: center !important;
 	gap: 8px !important;
+	grid-area: actions !important;
 	flex-shrink: 0 !important;
-	flex: 1 !important;
 	justify-content: flex-end !important;
+	justify-self: end !important;
+	flex-wrap: wrap !important;
+	min-width: 0 !important;
 }
 
 .ttbm-header-status {
@@ -748,14 +758,19 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 	}
 
 	body.ttbm-modern-edit-page .ttbm-admin-page-header {
+		grid-template-columns: 1fr !important;
+		grid-template-areas:
+			"title"
+			"back"
+			"actions" !important;
 		padding: 10px 12px !important;
 		gap: 10px !important;
-		flex-wrap: wrap !important;
 	}
 
 	body.ttbm-modern-edit-page .ttbm-header-left,
 	body.ttbm-modern-edit-page .ttbm-header-right {
-		flex: 1 1 100% !important;
+		width: 100% !important;
+		justify-self: stretch !important;
 	}
 
 	body.ttbm-modern-edit-page .ttbm-header-tour-title {
@@ -763,7 +778,6 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 		transform: none !important;
 		left: auto !important;
 		top: auto !important;
-		order: -1 !important;
 		max-width: 100% !important;
 		width: 100% !important;
 		text-align: left !important;

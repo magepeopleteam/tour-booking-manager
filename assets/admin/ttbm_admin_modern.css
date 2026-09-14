@@ -5559,6 +5559,158 @@ div.ttbm_global_settings .button-primary {
 		display: grid !important;
 		gap: 12px !important;
 	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table-wrap,
+	#ttbm_meta_box_panel .ttbm-extra-service-table-wrap,
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table table {
+		border: 0;
+		overflow: visible;
+		background: transparent;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table,
+	#ttbm_meta_box_panel .ttbm-extra-service-table,
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table table,
+	#ttbm_meta_box_panel .ttbm-ticket-types-table thead,
+	#ttbm_meta_box_panel .ttbm-extra-service-table thead,
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table thead,
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody,
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody,
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody {
+		display: block;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table thead,
+	#ttbm_meta_box_panel .ttbm-extra-service-table thead,
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table thead {
+		display: none;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody,
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody,
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody tr,
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody tr,
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody tr {
+		display: block;
+		border: 1px solid #e2e8f0;
+		border-radius: 14px;
+		background: #fff;
+		overflow: hidden;
+		box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td,
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td,
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody td {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 12px;
+		width: 100% !important;
+		padding: 12px 14px;
+		box-sizing: border-box;
+		border-bottom: 1px solid #eef2f7;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td:last-child,
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td:last-child,
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody td:last-child {
+		border-bottom: 0;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td::before,
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td::before,
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody td::before {
+		flex: 0 0 108px;
+		max-width: 108px;
+		font-size: 11px;
+		font-weight: 700;
+		line-height: 1.4;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: #64748b;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td > *,
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td > *,
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody td > * {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--name::before { content: "Ticket Name"; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--desc::before { content: "Short Description"; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--price::before { content: "Reg. Price"; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--sale::before { content: "Sale Price"; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--cap::before { content: "Capacity"; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--default::before { content: "Def. Qty"; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--reserve::before { content: "Res. Qty"; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--qty-type::before { content: "Qty Box Type"; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--actions::before { content: "Actions"; }
+
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td.ttbm-extra-col--icon::before { content: "Icon"; }
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td.ttbm-extra-col--name::before { content: "Service Name"; }
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td.ttbm-extra-col--desc::before { content: "Short Description"; }
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td.ttbm-extra-col--price::before { content: "Price"; }
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td.ttbm-extra-col--sale::before { content: "Sale Price"; }
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td.ttbm-extra-col--qty::before { content: "Available Qty"; }
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td.ttbm-extra-col--qty-type::before { content: "Qty Box Type"; }
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td.ttbm-extra-col--actions::before { content: "Actions"; }
+
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody td:nth-child(1)::before { content: "Place Name"; }
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody td:nth-child(2)::before { content: "Place"; }
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody td:nth-child(3)::before { content: "Actions"; }
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--qty-type,
+	#ttbm_meta_box_panel .ttbm-extra-service-table .ttbm-extra-col--qty-type {
+		display: flex;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-row__actions,
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody td.textRight .buttonGroup {
+		justify-content: flex-start;
+		width: 100%;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-row__actions {
+		display: grid;
+		grid-template-columns: 44px 44px;
+		gap: 8px;
+	}
+
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody td.textRight {
+		justify-content: flex-start;
+	}
+
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody td:first-child > .dFlex,
+	#ttbm_meta_box_panel .ttbm-ticket-name-field {
+		width: 100%;
+	}
+}
+
+@media (max-width: 480px) {
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td,
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td,
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody td {
+		flex-direction: column;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td::before,
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td::before,
+	#ttbm_meta_box_panel .ttbm-places-visit-card .ttbm_place_you_see_table tbody td::before {
+		flex: none;
+		max-width: none;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-row__actions {
+		grid-template-columns: 1fr 1fr;
+	}
 }
 
 /* ─── Misc polish ─── */

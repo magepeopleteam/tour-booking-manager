@@ -2616,6 +2616,30 @@
         }
     });
 
+    // Small screens stack the tab list above the content, so a tap would otherwise
+    // switch panels off-screen. Bring the opened panel into view.
+    $(document).on('click', '#ttbm_meta_box_panel .tabLists [data-tabs-target]', function () {
+        if (!window.matchMedia || !window.matchMedia('(max-width: 782px)').matches) {
+            return;
+        }
+        var content = $(this).closest('.ttbmTabs').find('.tabsContent:first').get(0);
+        if (!content) {
+            return;
+        }
+        requestAnimationFrame(function () {
+            window.scrollTo(0, Math.max(0, window.pageYOffset + content.getBoundingClientRect().top - 8));
+            // Only if the page header is actually stuck on screen does it cover the content top.
+            var header = document.querySelector('.ttbm-admin-page-header');
+            if (header) {
+                var headerRect = header.getBoundingClientRect();
+                var overlap = headerRect.bottom - content.getBoundingClientRect().top;
+                if (headerRect.top >= 0 && overlap > 0) {
+                    window.scrollBy(0, -(overlap + 8));
+                }
+            }
+        });
+    });
+
     $(document).on('click', '.ttbm_settings_location,[data-collapse-target="#ttbm_display_map"]', function () {
         requestAnimationFrame(function () {
             ensureLocationMap();

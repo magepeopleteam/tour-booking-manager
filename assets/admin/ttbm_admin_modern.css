@@ -5396,6 +5396,36 @@ div.ttbm_global_settings .button-primary {
 		flex-direction: column;
 	}
 
+	/* Columns stack at this width (ttbm_admin.css), so they must also go full width. */
+	#ttbm_meta_box_panel .tabsItem .col-left,
+	#ttbm_meta_box_panel .tabsItem .col-right {
+		width: 100%;
+	}
+
+	/* Itinerary and FAQ rows: keep long titles clear of the action icons instead of running underneath them. */
+	#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header > .dFlex,
+	#ttbm_meta_box_panel .ttbm-faq-section .faq-header > .dFlex {
+		flex-direction: row;
+		align-items: center;
+		gap: 8px;
+	}
+
+	#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header > .dFlex > p,
+	#ttbm_meta_box_panel .ttbm-faq-section .faq-header > .dFlex > p {
+		flex: 1 1 auto;
+		min-width: 0;
+		margin: 0;
+	}
+
+	#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action,
+	#ttbm_meta_box_panel .ttbm-faq-section .faq-header .faq-action {
+		position: static;
+		transform: none;
+		flex: 0 0 auto;
+		display: flex;
+		align-items: center;
+	}
+
 	#ttbm_meta_box_panel .ttbm-general-info-card__col {
 		width: 100%;
 	}
@@ -5507,24 +5537,44 @@ div.ttbm_global_settings .button-primary {
 		gap: 10px;
 	}
 
-	#ttbm_meta_box_panel .tabsItem section .label {
+	/* Stack "label | field" rows so the label is readable and the field gets the full width.
+	   Both selectors are required: the base rule's #ttbm_content.ttbm_configuration variant
+	   out-specifies #ttbm_meta_box_panel on its own. Switch-only rows stay side by side. */
+	#ttbm_meta_box_panel .tabsItem section .label:has(select, textarea, input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"])),
+	#ttbm_content.ttbm_configuration .tabsItem section .label:has(select, textarea, input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"])) {
 		flex-direction: column;
 		align-items: stretch;
-		padding: 12px 0;
+		gap: 10px;
+		padding: 12px 14px;
 	}
 
-	#ttbm_meta_box_panel .tabsItem section .label ._dFlex_alignCenter_justifyBetween,
-	#ttbm_meta_box_panel .tabsItem section .label ._dFlex_alignCenter_justfyBetween {
-		flex-direction: column;
-		align-items: stretch;
+	#ttbm_meta_box_panel .tabsItem section .label:has(select, textarea, input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"])) > *:not(.select2-hidden-accessible),
+	#ttbm_content.ttbm_configuration .tabsItem section .label:has(select, textarea, input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"])) > *:not(.select2-hidden-accessible) {
+		flex: 0 0 auto;
+		/* !important: several rows carry inline desktop widths (style="width: 50%", "max-width: 70%"). */
+		width: 100% !important;
+		max-width: 100% !important;
+		min-width: 0;
+		margin-left: 0;
+	}
+
+	#ttbm_meta_box_panel .tabsItem section .label:has(select, textarea, input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"])) > ._dFlex_alignCenter_justifyBetween,
+	#ttbm_meta_box_panel .tabsItem section .label:has(select, textarea, input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"])) > ._dFlex_alignCenter_justfyBetween,
+	#ttbm_content.ttbm_configuration .tabsItem section .label:has(select, textarea, input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"])) > ._dFlex_alignCenter_justifyBetween,
+	#ttbm_content.ttbm_configuration .tabsItem section .label:has(select, textarea, input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"])) > ._dFlex_alignCenter_justfyBetween {
 		justify-content: flex-start;
-		flex-wrap: wrap;
 	}
 
-	#ttbm_meta_box_panel .tabsItem section .label .label-inner,
-	#ttbm_meta_box_panel .tabsItem section .label ._dFlex_alignCenter_justifyBetween,
-	#ttbm_meta_box_panel .tabsItem section .label ._dFlex_alignCenter_justfyBetween {
-		flex: 1 1 100%;
+	#ttbm_meta_box_panel .tabsItem section .label select:not(.select2-hidden-accessible),
+	#ttbm_meta_box_panel .tabsItem section .label input.formControl,
+	#ttbm_meta_box_panel .tabsItem section .label textarea {
+		min-width: 0;
+		max-width: 100%;
+	}
+
+	#ttbm_meta_box_panel .tabsItem section .label .select2-container {
+		width: 100% !important;
+		max-width: 100%;
 	}
 
 	#ttbm_meta_box_panel .tabsItem section,
@@ -5550,6 +5600,68 @@ div.ttbm_global_settings .button-primary {
 		text-align: left;
 		white-space: normal;
 		flex-wrap: wrap;
+	}
+
+	/* Overview inline rows: label + switch on the first line, the field full width underneath. */
+	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__inline-row,
+	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-field__inline-row {
+		grid-template-columns: minmax(0, 1fr) auto;
+		row-gap: 8px;
+	}
+
+	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__label,
+	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-field__label {
+		grid-column: 1;
+		grid-row: 1;
+		white-space: normal;
+		overflow: visible;
+	}
+
+	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .roundSwitchLabel {
+		grid-column: 2;
+		grid-row: 1;
+		justify-self: end;
+	}
+
+	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field__toggle-spacer {
+		display: none;
+	}
+
+	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__input,
+	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__input-wrap,
+	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-duration-group {
+		grid-column: 1 / -1;
+		grid-row: 2;
+	}
+
+	/* Long select2 choices (related tours, guides) wrap inside the field instead of spilling out. */
+	#ttbm_meta_box_panel .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+		white-space: normal;
+	}
+
+	#ttbm_meta_box_panel .select2-container--default .select2-selection--multiple .select2-selection__choice {
+		max-width: 100%;
+		white-space: normal;
+		overflow-wrap: anywhere;
+		box-sizing: border-box;
+	}
+
+	/* Booking form / section title style pickers: two per row instead of three squeezed cards. */
+	#ttbm_meta_box_panel .ttbm-booking-styles,
+	#ttbm_meta_box_panel .ttbm-title-styles {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	#ttbm_meta_box_panel .ttbm-booking-styles .booking-style,
+	#ttbm_meta_box_panel .ttbm-title-styles .title-style {
+		width: auto;
+		min-width: 0;
+	}
+
+	#ttbm_meta_box_panel .ttbm-booking-styles .booking-style p,
+	#ttbm_meta_box_panel .ttbm-title-styles .title-style p {
+		overflow-wrap: anywhere;
 	}
 
 	#ttbm_meta_box_panel .ttbm-general-info-card__grid,
@@ -5696,6 +5808,12 @@ div.ttbm_global_settings .button-primary {
 		display: flex !important;
 	}
 
+	/* The base capacity rules force table-cell with !important at higher specificity. */
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--cap,
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--cap[data-collapse] {
+		display: flex !important;
+	}
+
 	#ttbm_meta_box_panel .ttbm_settings_pricing .dLayout,
 	#ttbm_meta_box_panel .ttbm_settings_pricing .dFlex,
 	#ttbm_meta_box_panel .ttbm_settings_pricing .col-left,
@@ -5769,6 +5887,148 @@ div.ttbm_global_settings .button-primary {
 
 	#ttbm_meta_box_panel .ttbm-ticket-row__actions {
 		grid-template-columns: 1fr 1fr;
+	}
+}
+
+/* Ticket and extra-service tables need ~840px for their columns. On tablets, and on laptops where the
+   tab list and sidebar sit beside the content, the panel is narrower than that and the inputs overlap,
+   so switch to the same stacked cards phones get from the max-width: 782px block above. The icon picker
+   popup is printed in admin_footer, so containment on these panels cannot trap it. */
+#ttbm_meta_box_panel .ttbm-ticket-types-panel,
+#ttbm_meta_box_panel .ttbm-extra-service-panel {
+	container-type: inline-size;
+}
+
+@container (max-width: 840px) {
+	#ttbm_meta_box_panel .ttbm-ticket-types-table-wrap,
+	#ttbm_meta_box_panel .ttbm-extra-service-table-wrap {
+		border: 0 !important;
+		overflow: visible !important;
+		background: transparent !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table,
+	#ttbm_meta_box_panel .ttbm-extra-service-table,
+	#ttbm_meta_box_panel .ttbm-ticket-types-table thead,
+	#ttbm_meta_box_panel .ttbm-extra-service-table thead,
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody,
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody {
+		display: block !important;
+		width: 100% !important;
+		table-layout: auto !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table thead,
+	#ttbm_meta_box_panel .ttbm-extra-service-table thead {
+		display: none !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody,
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody {
+		display: flex !important;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody tr,
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody tr {
+		display: block !important;
+		border: 1px solid #e2e8f0;
+		border-radius: 14px;
+		background: #fff;
+		overflow: hidden;
+		box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+		width: 100% !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td,
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td {
+		display: flex !important;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 12px;
+		width: 100% !important;
+		min-width: 0 !important;
+		max-width: 100% !important;
+		padding: 12px 14px;
+		box-sizing: border-box;
+		border-bottom: 1px solid #eef2f7;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td:last-child,
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td:last-child {
+		border-bottom: 0;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td::before,
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td::before {
+		flex: 0 0 108px;
+		max-width: 108px;
+		font-size: 11px;
+		font-weight: 700;
+		line-height: 1.4;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: #64748b;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td > *,
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td > * {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--name::before { content: "Ticket Name"; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--desc::before { content: "Short Description"; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--price::before { content: "Reg. Price"; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--sale::before { content: "Sale Price"; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--cap::before { content: "Capacity"; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--default::before { content: "Def. Qty"; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--reserve::before { content: "Res. Qty"; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--qty-type::before { content: "Qty Box Type"; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--actions::before { content: "Actions"; }
+
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td.ttbm-extra-col--icon::before { content: "Icon"; }
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td.ttbm-extra-col--name::before { content: "Service Name"; }
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td.ttbm-extra-col--desc::before { content: "Short Description"; }
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td.ttbm-extra-col--price::before { content: "Price"; }
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td.ttbm-extra-col--sale::before { content: "Sale Price"; }
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td.ttbm-extra-col--qty::before { content: "Available Qty"; }
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td.ttbm-extra-col--qty-type::before { content: "Qty Box Type"; }
+	#ttbm_meta_box_panel .ttbm-extra-service-table tbody td.ttbm-extra-col--actions::before { content: "Actions"; }
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-col--qty-type,
+	#ttbm_meta_box_panel .ttbm-extra-service-table .ttbm-extra-col--qty-type {
+		display: flex !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--cap,
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--cap[data-collapse] {
+		display: flex !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-types-table .formControl,
+	#ttbm_meta_box_panel .ttbm-ticket-types-table input[type="text"],
+	#ttbm_meta_box_panel .ttbm-ticket-types-table input[type="number"],
+	#ttbm_meta_box_panel .ttbm-ticket-types-table select,
+	#ttbm_meta_box_panel .ttbm-extra-service-table .formControl,
+	#ttbm_meta_box_panel .ttbm-extra-service-table input[type="text"],
+	#ttbm_meta_box_panel .ttbm-extra-service-table input[type="number"],
+	#ttbm_meta_box_panel .ttbm-extra-service-table select,
+	#ttbm_meta_box_panel .ttbm-ticket-input-prefix,
+	#ttbm_meta_box_panel .ttbm-ticket-name-field,
+	#ttbm_meta_box_panel .ttbm-ticket-name-field__input {
+		width: 100% !important;
+		min-width: 0 !important;
+		max-width: 100% !important;
+	}
+
+	#ttbm_meta_box_panel .ttbm-ticket-row__actions {
+		display: grid;
+		grid-template-columns: 44px 44px;
+		gap: 8px;
+		justify-content: flex-start;
+		width: 100%;
 	}
 }
 

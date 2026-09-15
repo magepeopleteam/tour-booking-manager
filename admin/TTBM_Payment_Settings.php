@@ -411,6 +411,8 @@
 .ttbm-edit-payment-modal-close:hover{color:#111827;}
 .ttbm-edit-payment-modal-body{padding:20px 24px 28px;}
 body.ttbm-modern-edit-page #poststuff > .ttbm-edit-payment-notice{margin-left:-20px;margin-right:-20px;width:calc(100% + 40px);box-sizing:border-box;}
+/* .wrap side padding drops to 10px on small screens (TTBM_Settings_Sidebar); bleed by the same amount so the banner never widens the page. */
+@media (max-width:782px){body.ttbm-modern-edit-page #poststuff > .ttbm-edit-payment-notice{margin-left:-10px;margin-right:-10px;width:calc(100% + 20px);padding:10px 14px;}}
 CSS;
 			}
 

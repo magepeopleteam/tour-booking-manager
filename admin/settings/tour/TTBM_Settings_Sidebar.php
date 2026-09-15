@@ -747,6 +747,18 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 	border-color: #dcdcde !important;
 }
 
+@media (max-width: 1200px) {
+	/* Let the back link keep its own width; a 1fr column collapses under it and the link overlaps the title. */
+	body.ttbm-modern-edit-page .ttbm-admin-page-header {
+		grid-template-columns: auto minmax(0, 1fr) auto !important;
+	}
+
+	/* The tab list sits above the content here, so a viewport-height minimum only leaves an empty band. */
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar {
+		min-height: 0 !important;
+	}
+}
+
 @media (max-width: 782px) {
 	body.ttbm-modern-edit-page .wrap {
 		max-width: 100% !important;

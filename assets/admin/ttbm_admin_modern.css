@@ -424,6 +424,90 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	margin-right: 4px;
 }
 
+/* ─── Permalink / URL slug field ─── */
+#ttbm_meta_box_panel .ttbm-tour-slug-field {
+	margin-bottom: 22px;
+}
+
+#ttbm_meta_box_panel .ttbm-tour-slug-field__label {
+	display: block;
+	margin: 0 0 8px;
+	font-size: 14px;
+	font-weight: 600;
+	color: #374151;
+	line-height: 1.4;
+}
+
+#ttbm_meta_box_panel .ttbm-tour-slug-field__row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	width: 100%;
+}
+
+#ttbm_meta_box_panel .ttbm-tour-slug-field__input {
+	display: block;
+	/* width + shrink, not flex-grow alone: the field must still fill the row if a
+	   legacy rule ever knocks the flex context off the wrapper. */
+	width: 100%;
+	flex: 1 1 auto;
+	min-width: 0;
+	box-sizing: border-box;
+	padding: 10px 14px;
+	border: 1px solid var(--ttbm-a-border);
+	border-radius: 8px;
+	background: #fff;
+	font-size: 14px;
+	color: #1e293b;
+	line-height: 1.5;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#ttbm_meta_box_panel .ttbm-tour-slug-field__input::placeholder {
+	color: #9ca3af;
+}
+
+#ttbm_meta_box_panel .ttbm-tour-slug-field__input:focus {
+	border-color: var(--ttbm-a-primary);
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+	outline: none;
+}
+
+#ttbm_meta_box_panel .ttbm-tour-slug-field__view {
+	flex: 0 0 auto;
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--ttbm-a-primary);
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+#ttbm_meta_box_panel .ttbm-tour-slug-field__view:hover,
+#ttbm_meta_box_panel .ttbm-tour-slug-field__view:focus {
+	text-decoration: underline;
+}
+
+#ttbm_meta_box_panel .ttbm-tour-slug-field__preview {
+	margin: 8px 0 0;
+	font-size: 12px;
+	color: #6b7280;
+	line-height: 1.5;
+	word-break: break-all;
+}
+
+#ttbm_meta_box_panel .ttbm-tour-slug-field__preview-slug {
+	font-weight: 600;
+	color: #374151;
+}
+
+#ttbm_meta_box_panel .ttbm-tour-slug-field__hint {
+	margin: 6px 0 0;
+	font-size: 11px;
+	font-style: normal;
+	color: #9ca3af;
+	line-height: 1.4;
+}
+
 /* ─── Tour Description field ─── */
 #ttbm_meta_box_panel .ttbm-tour-description-field {
 	margin-top: 4px;

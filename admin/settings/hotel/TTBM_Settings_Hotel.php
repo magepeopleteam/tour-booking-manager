@@ -112,6 +112,16 @@
 					'ID' => $post_id,
 					'post_title' => $title,
 				);
+				// Slug. This endpoint stands in for the classic form submit, so
+				// edit_post() -- the only Core code that reads $_POST['post_name'] --
+				// never runs. An emptied field rebuilds the slug from the title,
+				// exactly like Core's own Slug box.
+				if (isset($_POST['post_name']) && !is_array($_POST['post_name'])) {
+					$submitted_slug = sanitize_title(wp_unslash($_POST['post_name']));
+					if ($submitted_slug !== (string) get_post_field('post_name', $post_id)) {
+						$post_update['post_name'] = $submitted_slug;
+					}
+				}
 				$requested_status = isset($_POST['requested_post_status']) && !is_array($_POST['requested_post_status']) ? sanitize_key(wp_unslash($_POST['requested_post_status'])) : '';
 				if ($requested_status === 'publish') {
 					$post_type_object = get_post_type_object('ttbm_hotel');
@@ -134,6 +144,9 @@
 						'message' => __('Hotel saved successfully.', 'tour-booking-manager'),
 						'rooms' => get_post_meta($post_id, 'ttbm_room_details', true),
 						'post_status' => get_post_status($post_id),
+						// WordPress may still adjust the slug (sanitising, or
+						// de-duplicating it), so report what was actually stored.
+						'post_name' => (string) get_post_field('post_name', $post_id),
 					)
 				);
 			}

@@ -1028,6 +1028,86 @@ jQuery(function($){
 		$('#ttbm_post_title_submit').val($(this).val() || '');
 	});
 
+	/* ── Permalink / URL slug field ──
+	 * Only the hidden input is ever submitted. It is written on commit (blur or
+	 * Enter), never on keystroke, so the background auto-save cannot persist a
+	 * half-typed slug and litter the post with _wp_old_slug redirects. */
+	(function(){
+		var $slugField = $('.ttbm-tour-slug-field');
+		if (!$slugField.length) {
+			return;
+		}
+
+		function sanitizeSlug(value) {
+			return String(value === null || typeof value === 'undefined' ? '' : value)
+				.toLowerCase()
+				.replace(/\s+/g, '-')
+				.replace(/[^a-z0-9¡-￿_\-]+/g, '')
+				.replace(/-{2,}/g, '-')
+				.replace(/^-+|-+$/g, '');
+		}
+
+		function syncDisplay($wrap, slug) {
+			var prefix = $wrap.attr('data-ttbm-permalink-prefix') || '';
+			var suffix = $wrap.attr('data-ttbm-permalink-suffix') || '';
+			$wrap.find('.ttbm-tour-slug-field__preview-slug').text(slug);
+			var $view = $wrap.find('.ttbm-tour-slug-field__view');
+			if ($view.length) {
+				$view.toggle(!!slug).attr('href', prefix + slug + suffix);
+			}
+		}
+
+		function commit($input) {
+			var $wrap = $input.closest('.ttbm-tour-slug-field');
+			var slug  = sanitizeSlug($input.val());
+			if ($input.val() !== slug) {
+				$input.val(slug);
+			}
+			var $value = $wrap.find('.ttbm-tour-slug-field__value');
+			if ($value.val() === slug) {
+				return;
+			}
+			$value.val(slug).trigger('change');
+			syncDisplay($wrap, slug);
+		}
+
+		$(document).on('change blur', '.ttbm-tour-slug-field__input', function(){
+			commit($(this));
+		});
+		$(document).on('keydown', '.ttbm-tour-slug-field__input', function(e){
+			if (e.which === 13) {
+				e.preventDefault();
+				commit($(this));
+				$(this).trigger('blur');
+			}
+		});
+		/* Typing must not wake the auto-saver: the posted value has not changed yet. */
+		$slugField.find('.ttbm-tour-slug-field__input').on('input', function(e){
+			e.stopPropagation();
+		});
+
+		/* The server is authoritative: it sanitises, resolves duplicates, and
+		 * rebuilds the slug from the title when the field was emptied. Mirror
+		 * whatever it actually stored. */
+		$(document).ajaxSuccess(function(event, xhr, settings, data){
+			if (!data || !data.success || !data.data || typeof data.data.post_name !== 'string') {
+				return;
+			}
+			var $wrap = $('.ttbm-tour-slug-field').first();
+			if (!$wrap.length) {
+				return;
+			}
+			var $input = $wrap.find('.ttbm-tour-slug-field__input');
+			// Never yank the field out from under someone mid-edit: a save triggered
+			// by another tab can land while they are still typing a new slug.
+			if (!$input.is(':focus')) {
+				$input.val(data.data.post_name);
+			}
+			$wrap.find('.ttbm-tour-slug-field__value').val(data.data.post_name);
+			syncDisplay($wrap, data.data.post_name);
+		});
+	})();
+
 	/* ── Location required validation (tour only) ── */
 	if (!isHotelEdit) {
 	window.ttbmSyncLocationRequiredState = function () {
@@ -1242,6 +1322,96 @@ jQuery(function($){
 			remove_meta_box('submitdiv',             'ttbm_hotel', 'side');
 			remove_meta_box('postimagediv',          'ttbm_hotel', 'side');
 			remove_meta_box('postexcerpt',           'ttbm_hotel', 'normal');
+			// Core's Slug box is hidden by default and Screen Options is hidden on this
+			// screen, so it is unreachable — but it still prints an input named
+			// post_name holding the OLD slug. render_permalink_field() posts the same
+			// name, and PHP keeps the last one, so the stale box has to go or it would
+			// silently win over whatever the admin typed.
+			remove_meta_box('slugdiv',               $cpt, 'normal');
+			remove_meta_box('slugdiv',               'ttbm_hotel', 'normal');
+		}
+
+		/**
+		 * Permalink / URL-slug field for the modern tour and hotel editor.
+		 *
+		 * Core renders its permalink editor inside #titlediv, which
+		 * wp-admin/edit-form-advanced.php only prints when the post type supports
+		 * 'title'. Both editors call remove_post_type_support(..., 'title') because
+		 * they render their own title field, which took the permalink control with
+		 * it — leaving no way at all to change a tour or hotel slug. This renders
+		 * the control inside the settings panel and posts it under Core's own
+		 * `post_name` key.
+		 *
+		 * The visible input is deliberately nameless: only the hidden field is
+		 * submitted, and the JS copies into it once editing is committed, so a
+		 * background auto-save can never persist a half-typed slug.
+		 *
+		 * @param int $post_id Tour or hotel ID.
+		 * @return void
+		 */
+		public static function render_permalink_field($post_id) {
+			$post_id = (int) $post_id;
+			$post    = $post_id ? get_post($post_id) : null;
+			if (!$post || !current_user_can('edit_post', $post_id)) {
+				return;
+			}
+			$post_type_object = get_post_type_object($post->post_type);
+			if (!$post_type_object || empty($post_type_object->public)) {
+				return;
+			}
+			if (!function_exists('get_sample_permalink')) {
+				require_once ABSPATH . 'wp-admin/includes/post.php';
+			}
+			list($permalink, $sample_slug) = get_sample_permalink($post_id);
+			$slug = $post->post_name !== '' ? urldecode($post->post_name) : (string) $sample_slug;
+
+			// Plain permalinks have no %postname%/%pagename% placeholder — the slug is
+			// still stored and still matters, there is just no live URL to preview.
+			$placeholder = false !== strpos($permalink, '%postname%')
+				? '%postname%'
+				: (false !== strpos($permalink, '%pagename%') ? '%pagename%' : '');
+			$prefix = '';
+			$suffix = '';
+			if ($placeholder) {
+				$pieces = explode($placeholder, $permalink, 2);
+				$prefix = urldecode($pieces[0]);
+				$suffix = isset($pieces[1]) ? urldecode($pieces[1]) : '';
+			}
+			$is_viewable = $placeholder && 'publish' === $post->post_status && $slug !== '';
+			?>
+			<div class="ttbm-tour-slug-field"
+				 data-ttbm-permalink-prefix="<?php echo esc_attr($prefix); ?>"
+				 data-ttbm-permalink-suffix="<?php echo esc_attr($suffix); ?>">
+				<label class="ttbm-tour-slug-field__label" for="ttbm_post_slug">
+					<?php esc_html_e('Permalink (URL Slug)', 'tour-booking-manager'); ?>
+				</label>
+				<div class="ttbm-tour-slug-field__row">
+					<input
+						type="text"
+						id="ttbm_post_slug"
+						class="ttbm-tour-slug-field__input"
+						value="<?php echo esc_attr($slug); ?>"
+						placeholder="<?php esc_attr_e('url-slug', 'tour-booking-manager'); ?>"
+						autocomplete="off"
+						spellcheck="false"
+					/>
+					<?php if ($is_viewable) { ?>
+						<a class="ttbm-tour-slug-field__view" href="<?php echo esc_url($prefix . $slug . $suffix); ?>" target="_blank" rel="noopener">
+							<?php esc_html_e('View', 'tour-booking-manager'); ?>
+						</a>
+					<?php } ?>
+				</div>
+				<input type="hidden" name="post_name" class="ttbm-tour-slug-field__value" value="<?php echo esc_attr($slug); ?>" />
+				<?php if ($placeholder) { ?>
+					<p class="ttbm-tour-slug-field__preview">
+						<span class="ttbm-tour-slug-field__preview-prefix"><?php echo esc_html($prefix); ?></span><span class="ttbm-tour-slug-field__preview-slug"><?php echo esc_html($slug); ?></span><span class="ttbm-tour-slug-field__preview-suffix"><?php echo esc_html($suffix); ?></span>
+					</p>
+				<?php } ?>
+				<p class="ttbm-tour-slug-field__hint">
+					<?php esc_html_e('Leave it empty to rebuild the slug from the title. The old address keeps redirecting here after a change.', 'tour-booking-manager'); ?>
+				</p>
+			</div>
+			<?php
 		}
 
 		public function enqueue_assets($hook) {

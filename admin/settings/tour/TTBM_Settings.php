@@ -1803,6 +1803,17 @@
 					if (isset($_POST['post_content']) && !is_array($_POST['post_content'])) {
 						$post_update['post_content'] = wp_kses_post(wp_unslash($_POST['post_content']));
 					}
+					// Slug. This endpoint stands in for the classic form submit, and
+					// edit_post() -- the only Core code that reads $_POST['post_name'] --
+					// never runs, so without this the tour keeps its old permalink no
+					// matter what the admin types. An emptied field rebuilds the slug
+					// from the title, exactly like Core's own Slug box.
+					if (isset($_POST['post_name']) && !is_array($_POST['post_name'])) {
+						$submitted_slug = sanitize_title(wp_unslash($_POST['post_name']));
+						if ($submitted_slug !== (string) get_post_field('post_name', $tour_id)) {
+							$post_update['post_name'] = $submitted_slug;
+						}
+					}
 					$requested_status = isset($_POST['requested_post_status']) ? sanitize_key(wp_unslash($_POST['requested_post_status'])) : '';
 					$post_type_object = get_post_type_object(TTBM_Function::get_cpt_name());
 					$publish_capability = $post_type_object && isset($post_type_object->cap->publish_posts)
@@ -1851,6 +1862,9 @@
 					'saved_at'      => current_time('timestamp'),
 					'saved_at_text' => date_i18n(get_option('time_format'), current_time('timestamp')),
 					'post_status'   => get_post_status($tour_id),
+					// WordPress may still adjust the slug (sanitising, or de-duplicating
+					// it against an existing post), so report what was actually stored.
+					'post_name'     => (string) get_post_field('post_name', $tour_id),
 					'warnings'      => array_values(array_filter($warnings)),
 					'persisted'     => array(
 						'travel_type' => (string) get_post_meta($tour_id, 'ttbm_travel_type', true),

@@ -23,6 +23,11 @@
                             <h4><i class="fas fa-edit" aria-hidden="true"></i><?php esc_html_e('Tour Title & Content', 'tour-booking-manager'); ?></h4>
                         </div>
 						<?php $this->post_title_field($tour_id); ?>
+						<?php
+						if (class_exists('TTBM_Settings_Sidebar')) {
+							TTBM_Settings_Sidebar::render_permalink_field($tour_id);
+						}
+						?>
 						<?php $this->post_content_field($tour_id); ?>
                     </section>
                     <section class="ttbm-general-info-card">

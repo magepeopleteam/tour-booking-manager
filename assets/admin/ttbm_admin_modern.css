@@ -2315,6 +2315,15 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 	text-align: left;
 }
 
+/* Help tooltips in a header cell open upwards, i.e. outside the table box, and the
+   `overflow: hidden` above cut them down to a sliver. Drop the clip on the tables that
+   carry one — they sit in a wrapper that draws the rounded border anyway, so nothing
+   about the table's appearance depends on it. */
+#ttbm_meta_box_panel table:has(thead .tool-tips),
+#ttbm_content.ttbm_configuration table:has(thead .tool-tips) {
+	overflow: visible;
+}
+
 #ttbm_meta_box_panel table tbody td,
 #ttbm_meta_box_panel table tbody th,
 #ttbm_content.ttbm_configuration table tbody td,
@@ -6128,6 +6137,25 @@ div.ttbm_global_settings .button-primary {
 	visibility: visible !important;
 	opacity: 1 !important;
 	transform: translateX(-50%) translateY(0) !important;
+}
+
+/* Res. Qty is the last header cell with a tooltip, so centring one on its icon pushes the
+   right half off the panel — which the shell's `overflow: hidden` then cuts off. Hang it
+   from the icon's right edge instead; longer translations grow leftwards into the table. */
+#ttbm_meta_box_panel .ttbm-ticket-types-table thead th.ttbm-ticket-col--reserve .tool-tips span {
+	left: auto !important;
+	right: -10px !important;
+	transform: translateY(6px) !important;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-table thead th.ttbm-ticket-col--reserve .tool-tips:hover span {
+	transform: translateY(0) !important;
+}
+
+#ttbm_meta_box_panel .ttbm-ticket-types-table thead th.ttbm-ticket-col--reserve .tool-tips span::after {
+	left: auto !important;
+	right: 14px !important;
+	transform: none !important;
 }
 
 /* ─── Plugin settings page (Tour → Settings) ─── */

@@ -345,6 +345,7 @@
 
 /* Smart theme date picker — matches sidebar booking card (blue accent, clean card) */
 body:has(.ttbm_smart_theme) #ui-datepicker-div.ui-datepicker {
+	box-sizing: border-box; /* same 304px on every site theme, so the grid always fits */
 	width: 304px;
 	padding: 14px;
 	margin-top: 6px;
@@ -386,6 +387,7 @@ body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-title {
 body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-title select,
 body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-title select.ui-datepicker-month,
 body:has(.ttbm_smart_theme) #ui-datepicker-div .ui-datepicker-title select.ui-datepicker-year {
+	width: auto; /* themes set select{width:100%}, pushing both under the arrows */
 	min-width: auto;
 	height: auto;
 	font-size: 13px;
@@ -492,7 +494,10 @@ body:has(.ttbm_smart_theme) #ui-datepicker-div table.ui-datepicker-calendar th {
 	border: 0;
 }
 
-body:has(.ttbm_smart_theme) #ui-datepicker-div.ui-datepicker td {
+/* Also match ttbm_registration.css's disabled-day rule (padding: 4px 6px),
+   which otherwise widens every column until Sunday falls outside the popup. */
+body:has(.ttbm_smart_theme) #ui-datepicker-div.ui-datepicker td,
+body:has(.ttbm_smart_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-unselectable.ui-state-disabled {
 	background-color: transparent;
 	border: 0;
 	padding: 2px;

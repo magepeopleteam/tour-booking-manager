@@ -2425,6 +2425,91 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	--ttbm_booking-pad-x: 20px;
 }
 
+/* Particular-dates tours: each date row is also a .ttbm_registration_area, so
+   the padding:0 above left its text on the rounded border, and the base
+   `justify-content: space-between` let the arrow/price drift with text width.
+   Fixed columns keep every row aligned: start | arrow | end | price | button. */
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_area {
+	margin: 0 0 12px;
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr) minmax(96px, max-content) max-content;
+	align-items: center;
+	gap: 12px 24px;
+	padding: 16px var(--ttbm_booking-pad-x);
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > div:nth-of-type(1) { grid-column: 1; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > h4:nth-of-type(1) { grid-column: 2; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > div:nth-of-type(2) { grid-column: 3; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > h4:nth-of-type(2) { grid-column: 4; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > button { grid-column: 5; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item .flexColumn {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+}
+/* the date parts are <h6>s — reset the theme's heading font/case/tracking */
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item h6 {
+	margin: 0;
+	font-family: inherit;
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.35;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var(--ttbm_d_heading);
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item h6:first-child {
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+	color: var(--ttbm_d_muted);
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item h6:nth-child(3) {
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--ttbm_d_muted);
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > h4 {
+	margin: 0;
+	font-family: inherit;
+	line-height: 1.2;
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > h4:nth-of-type(1) {
+	justify-self: center;
+	font-size: 20px;
+	color: var(--color_theme);
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > h4:nth-of-type(2) {
+	justify-self: end;
+	font-size: 18px;
+	font-weight: 700;
+	white-space: nowrap;
+	color: var(--ttbm_d_heading);
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > button {
+	white-space: nowrap;
+}
+/* phones: dates on one line, price + button on the next */
+@media (max-width: 640px) {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item {
+		grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
+		gap: 12px;
+		padding: 14px 16px;
+	}
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > h4:nth-of-type(2) {
+		grid-column: 1;
+		justify-self: start;
+	}
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > button {
+		grid-column: 2 / 4;
+		justify-self: end;
+	}
+}
+
 /* unified horizontal inset — one padding layer for all sections */
 :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_date_time_select,
 :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_area,

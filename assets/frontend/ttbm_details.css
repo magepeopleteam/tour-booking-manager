@@ -3008,6 +3008,14 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	padding: 0 0 16px !important;
 	text-align: left !important;
 }
+/* No attendee form yet (JS appends one per ticket once a qty is chosen):
+   collapse the row so its border doesn't draw a second divider under the ticket. */
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_enhanced_table tr.ttbm_attendee_form_row:not(:has(td *)) {
+	border-bottom: 0;
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_enhanced_table tr.ttbm_attendee_form_row:not(:has(td *)) td {
+	padding: 0 !important;
+}
 :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_attendee_form_row .ttbm_attendee_form_item,
 :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_attendee_form_row .ttbm-attendee-form {
 	width: 100%;
@@ -3430,40 +3438,55 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 }
 
 @media (max-width: 768px) {
+	/* Two compact lines per ticket: name + stepper, then badge + price under
+	   the name. A badge + price + stepper line needs ~330px, more than a phone
+	   card has, so the stepper used to wrap onto a third padded line. */
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row {
-		flex-wrap: wrap;
-		align-items: flex-start;
-		gap: 12px;
+		--ttbm-ticket-indent: 0px;
+		display: grid;
+		grid-template-columns: var(--ttbm-ticket-indent) auto minmax(0, 1fr) auto;
+		grid-template-areas:
+			"info info  info  qty"
+			".    badge price price";
+		align-items: center;
+		gap: 8px 0;
+		padding: 14px 0;
+	}
+	/* line the price up with the ticket name, past the 40px icon + 10px gap */
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row:has(.ttbm_ticket_icon) {
+		--ttbm-ticket-indent: 50px;
 	}
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td {
 		width: auto !important;
+		min-width: 0;
 		border-bottom: 0 !important;
-		padding: 12px 0 !important;
-		flex-direction: row !important;
-		justify-content: flex-start !important;
+		padding: 0 !important;
 	}
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-person-info {
-		flex: 1 1 100%;
+		grid-area: info;
+	}
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row .ttbm_ticket_name_text {
+		overflow-wrap: anywhere;
 	}
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-ticket-badge-col {
-		flex: 0 0 auto;
-		order: 2;
+		grid-area: badge;
+		align-self: start;
+		margin-right: 8px;
 	}
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-regular-price {
-		flex: 1 1 auto;
-		order: 3;
+		grid-area: price;
 		text-align: left;
 	}
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-select-quantity {
-		flex: 0 0 auto;
-		order: 4;
-		margin-left: 0;
+		grid-area: qty;
+		margin-left: 12px;
 	}
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_price_container {
 		align-items: flex-start;
 		text-align: left;
 	}
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_price_meta {
+		flex-wrap: wrap;
 		justify-content: flex-start;
 	}
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_details:has(.ttbm_ticket_icon) .ttbm_ticket_description {

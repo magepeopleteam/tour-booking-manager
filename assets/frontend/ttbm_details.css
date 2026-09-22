@@ -2162,6 +2162,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-title {
 body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-title select,
 body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-title select.ui-datepicker-month,
 body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-title select.ui-datepicker-year {
+	width: auto; /* themes (e.g. Woodmart) set select{width:100%}, stacking both under the arrows */
 	min-width: auto;
 	height: auto;
 	font-size: 13px;
@@ -2258,7 +2259,11 @@ body:has(.ttbm_default_theme) #ui-datepicker-div table.ui-datepicker-calendar th
 	border: 0;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td {
+/* The disabled-day selector outranks ttbm_registration.css's
+   `td.ui-datepicker-unselectable.ui-state-disabled { padding: 4px 6px }`,
+   which otherwise widens every column until the grid overflows the popup. */
+body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td,
+body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-unselectable.ui-state-disabled {
 	background-color: transparent;
 	border: 0;
 	padding: 2px;
@@ -2321,6 +2326,18 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	text-decoration: line-through;
 	opacity: 0.65;
 	cursor: not-allowed;
+}
+
+/* Phones: the date field spans the full booking card, so centre the popup
+   on the screen instead of jQuery UI's input-left anchor, which pushes it
+   against the right edge. !important beats the inline `left` it writes. */
+@media (max-width: 767px) {
+	body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker {
+		left: 0 !important;
+		right: 0;
+		margin-left: auto;
+		margin-right: auto;
+	}
 }
 
 /* =====================================================================

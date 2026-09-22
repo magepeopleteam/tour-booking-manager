@@ -367,6 +367,9 @@
 	cursor: pointer;
 	background: #fff;
 	border: 0;
+	/* it's an <h5>: without this the theme's heading font (often a large serif)
+	   makes day titles outweigh the FAQ questions right below them */
+	font-family: inherit;
 	font-size: inherit;
 	font-weight: inherit;
 }
@@ -406,10 +409,12 @@
 	color: var(--ttbm_d_muted, #6b7280);
 }
 
+/* one step above the FAQ question (15px/600) so both lists read as one scale */
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_name {
-	font-size: 18px;
-	font-weight: 500;
-	line-height: 1.35;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 1.4;
+	letter-spacing: -0.01em;
 	color: var(--ttbm_d_heading, #111827);
 }
 
@@ -507,7 +512,7 @@
 	}
 
 	#ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_name {
-		font-size: 16px;
+		font-size: 15px;
 	}
 
 	#ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_item_details {

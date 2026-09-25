@@ -86,12 +86,15 @@
 			public function add_cart_item_data($cart_item_data, $product_id) {
 				$product_id = self::resolve_booking_tour_id($product_id);
 				if (get_post_type($product_id) == TTBM_Function::get_cpt_name() && (isset($_POST['ttbm_form_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_form_nonce'])), 'ttbm_form_nonce'))) {
-					$total_price = self::get_cart_total_price($product_id);
+					/* Tickets first: the seat filters may trim the request, and the
+					   price must be for the tickets actually kept. */
+					$ticket_info = self::cart_ticket_info($product_id);
+					$total_price = self::get_cart_total_price($product_id, $ticket_info);
 					$hotel_info = self::cart_hotel_info();
 					$cart_item_data['ttbm_hotel_info'] = apply_filters('ttbm_hotel_info_filter', $hotel_info, $product_id);
 					$cart_item_data['ttbm_date'] = isset($_POST['ttbm_start_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_start_date'])) : '';
 					$cart_item_data['ttbm_end_date'] = isset($_POST['ttbm_end_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_end_date'])) : '';
-					$cart_item_data['ttbm_ticket_info'] = self::cart_ticket_info($product_id);
+					$cart_item_data['ttbm_ticket_info'] = $ticket_info;
 					$cart_item_data['ttbm_user_info'] = apply_filters('ttbm_user_info_data', array(), $product_id);
 					$cart_item_data['ttbm_extra_service_info'] = self::cart_extra_service_info($product_id);
 					$cart_item_data['ttbm_tp'] = $total_price;
@@ -739,12 +742,36 @@
 				}
 				return $extra_service;
 			}
-			public static function get_cart_total_price($tour_id) {
+			/**
+			 * Seat filters (Shared Quantity, Time-wise Stock) trim a request down
+			 * to what is still free -- a stale page, a race for the last seats.
+			 * Cap each submitted quantity to what cart_ticket_info() kept, or the
+			 * customer is charged for tickets they will not get.
+			 */
+			private static function cap_qty_to_ticket_info(array $names, array $qty, array $ticket_info): array {
+				$kept = array();
+				foreach ($ticket_info as $ticket) {
+					$name = isset($ticket['ticket_name']) ? (string) $ticket['ticket_name'] : '';
+					$kept[$name] = ($kept[$name] ?? 0) + absint($ticket['ticket_qty'] ?? 0);
+				}
+				foreach ($names as $i => $name) {
+					$allowed = min(absint($qty[$i] ?? 0), $kept[$name] ?? 0);
+					$qty[$i] = $allowed;
+					if (isset($kept[$name])) {
+						$kept[$name] -= $allowed;
+					}
+				}
+				return $qty;
+			}
+			public static function get_cart_total_price($tour_id, $ticket_info = null) {
 				$total_price = 0;
 				$total_qty = 0;
 				if (isset($_POST['ttbm_form_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_form_nonce'])), 'ttbm_form_nonce')) {
 					$names = isset($_POST['ticket_name']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['ticket_name'])) : [];
 					$qty = isset($_POST['ticket_qty']) ? array_map('absint', wp_unslash((array) $_POST['ticket_qty'])) : [];
+					if (is_array($ticket_info)) {
+						$qty = self::cap_qty_to_ticket_info($names, $qty, $ticket_info);
+					}
 					$hotel_id = isset($_POST['ttbm_tour_hotel_list']) ? sanitize_text_field(wp_unslash($_POST['ttbm_tour_hotel_list'])) : 0;
 					$start_date = isset($_POST['ttbm_start_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_start_date'])) : '';
 					$ttbm_hotel_num_of_day = isset($_POST['ttbm_hotel_num_of_day']) ? max(1, absint(wp_unslash($_POST['ttbm_hotel_num_of_day']))) : 1;

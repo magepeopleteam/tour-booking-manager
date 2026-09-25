@@ -45,6 +45,23 @@
 				add_action('admin_notices', [$this, 'render_tickets_required_notice']);
 			}
 			/**
+			 * The tour and hotel editors save through admin-ajax.php, where two things Core's
+			 * edit_post() normally provides are missing, and Yoast silently drops its focus
+			 * keyphrase, SEO title and meta description without them:
+			 * - $_POST['ID'], which edit_post() sets via _wp_translate_postdata() and Yoast
+			 *   checks against the post being saved;
+			 * - Yoast's metabox itself, which it only loads on post.php/post-new.php (and for
+			 *   Quick Edit), so its save_post handler is never registered on these requests.
+			 * Call right before the wp_update_post() that stands in for the form submit. Yoast
+			 * still verifies its own nonce and capabilities before saving anything.
+			 */
+			public static function prepare_seo_plugins_for_ajax_save(int $post_id): void {
+				$_POST['ID'] = $post_id;
+				if (empty($GLOBALS['wpseo_metabox']) && class_exists('WPSEO_Metabox')) {
+					$GLOBALS['wpseo_metabox'] = new WPSEO_Metabox();
+				}
+			}
+			/**
 			 * Force tour title from the custom Overview field during core save.
 			 *
 			 * @param array $data    Sanitized post data.
@@ -1826,6 +1843,7 @@
 					} elseif (empty(self::$last_validation_errors) && 'publish' === $requested_status) {
 						throw new \RuntimeException(__('You are not allowed to publish this tour.', 'tour-booking-manager'));
 					}
+					self::prepare_seo_plugins_for_ajax_save($tour_id);
 					remove_action('save_post', array($this, 'capture_date_migration_snapshot'), 5);
 					remove_action('save_post', array($this, 'save_settings'), 99);
 					remove_action('save_post', array($this, 'sync_bookings_after_date_change'), 120);

@@ -134,6 +134,7 @@
 					$post_update['post_status'] = 'publish';
 				}
 
+				TTBM_Settings::prepare_seo_plugins_for_ajax_save($post_id);
 				$result = wp_update_post($post_update, true);
 				if (is_wp_error($result)) {
 					wp_send_json_error(array('message' => $result->get_error_message()), 500);

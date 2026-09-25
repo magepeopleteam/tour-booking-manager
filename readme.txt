@@ -103,6 +103,7 @@ Display your tours anywhere on your site using flexible shortcodes:
 `[wptravelly-tour-list type='popular' column=2 show=4 carousel='no']`
 `[wptravelly-tour-list type='trending' column=2 show=4 carousel='no']`
 `[wptravelly-tour-list type='deal-discount' column=2 show=2 carousel='no']`
+`[wptravelly-tour-list cat='96' column=3 carousel='yes']` — every published tour in category 96 (comma-separate several IDs), newest first; add `type` to also require that Top Picks & Deals label
  
 **Hotel search form**
 `[wptravelly-hotel-search]`

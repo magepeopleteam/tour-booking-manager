@@ -2713,6 +2713,17 @@
 				$query = new WP_Query($args);
 				return $query->posts;
 			}
+			/* Tour ids for [wptravelly-tour-list cat="..."]. Reuses the [travel-list] query so a
+			   category shows the same tours (same expired-tour rule) in both, newest first;
+			   $type optionally narrows it to one Top Picks & Deals label. */
+			public static function get_category_tour_ids($cat, $type = '') {
+				$loop = TTBM_Query::ttbm_query(-1, 'DESC', $cat);
+				$ids = wp_list_pluck($loop->posts, 'ID');
+				if ($type) {
+					$ids = array_values(array_intersect($ids, self::get_top_deals_post_ids($type)));
+				}
+				return $ids;
+			}
 			public static function get_city_place_ids_with_post_ids($num_of_places = 0) {
 				$args = [
 					'post_type' => 'ttbm_tour',

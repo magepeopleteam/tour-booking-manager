@@ -636,12 +636,24 @@
             }
 
             public function ttbm_tour_list($attribute) {
-				$defaults = array( 'type' => 'feature', 'column' => 3, 'carousel' => 'no', 'show' => '' );
+				$defaults = array( 'type' => 'feature', 'column' => 3, 'carousel' => 'no', 'show' => '', 'cat' => '' );
 				$params = shortcode_atts($defaults, $attribute);
 				ob_start();
 				$tour_id = 164;
 				$num_of_tour = $params['column'];
 				$type_tour = $params['type'];
+				/* cat="96" (or "96,97") lists every published tour in those categories, newest
+				   first, so new tours join the carousel on their own. Without an explicit type=
+				   the Top Picks & Deals label is ignored; with one, both have to match. */
+				$tour_cat = array_filter( array_map( 'absint', explode( ',', (string) $params['cat'] ) ) );
+				$tour_cat_type = ( $tour_cat && ! empty( $attribute['type'] ) ) ? $type_tour : '';
+				if ( $tour_cat ) {
+					static $ttbm_cat_list_count = 0;
+					$ttbm_cat_list_count++;
+					/* Unique per instance: the wrapper/load-more ids are built from this, and a
+					   page can carry several category carousels. */
+					$type_tour = 'cat-' . $ttbm_cat_list_count;
+				}
 				if ($type_tour) {
 					?>
 					<div class="ttbm_style">

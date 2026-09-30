@@ -3,7 +3,7 @@
  * Plugin Name: Tour & Travel Booking Manager for WooCommerce | Tour & Hotel Booking Solution
  * Plugin URI: http://mage-people.com
  * Description: A Complete Tour and Travel Solution for WordPress by MagePeople.
- * Version: 2.3.1
+ * Version: 2.3.2
  * Author: MagePeople Team
  * Author URI: http://www.mage-people.com/
  * Text Domain: tour-booking-manager
@@ -14,6 +14,16 @@
 if (!defined('ABSPATH')) {
 	die;
 } // Cannot access pages directly.
+
+require_once __DIR__ . '/vendor/appneck/wordpress-sdk/appneck-wordpress-sdk/appneck-sdk.php';
+appneck_sdk_load_latest();
+
+$GLOBALS['my_plugin_sdk'] = \Appneck\Sdk\Sdk::bootstrap(
+	'pk_nIsTPODBoD4cPfozCSfFxCjW5LvhJQny',  // your API key
+	'sk_qUMvG1do0EHJO7jCJ7CLcEgMFSxrDrVCJeqkcuXL9dAOUVVw', // your product secret
+	'https://appneck.com',                  // the Appneck server URL
+	__FILE__                                // so the SDK can hook activation/deactivation
+);
 
 // WooCommerce fallback stub functions to prevent fatal errors when WooCommerce is inactive.
 // Hooked to plugins_loaded so that WooCommerce (if active or being activated) has loaded first,

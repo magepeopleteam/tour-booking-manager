@@ -5,7 +5,7 @@ Tags: tour booking, travel agency, travel booking, tour operator, hotel booking
 Requires at least: 4.4.0
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 2.3.0
+Stable tag: 2.3.2
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -156,8 +156,10 @@ Choose from multiple tour details page styles, including a Viator-style template
 * 💬 [WordPress.org Support Forum](https://wordpress.org/support/plugin/tour-booking-manager/)
  
 = 🔒 Privacy Notice =
- 
-Travelly uses the [Appsero](https://appsero.com) SDK to collect basic telemetry data, but only with the user's explicit confirmation via an admin notice. Appsero does not gather any data by default. [Learn more about how Appsero collects and uses data](https://appsero.com/privacy-policy/).
+
+This Plugin uses [Appneck](https://appneck.com) SDK to collect some telemetry data upon the user's confirmation to troubleshoot problems faster & make product improvements.
+Appneck SDK **does not gather any data by default.** The SDK only starts gathering basic telemetry data **when a user allows it via the admin notice**. We collect the data to ensure a great user experience for all our users. Integrating Appneck SDK **DOES NOT IMMEDIATELY** start gathering data, **without confirmation from users in any case.**
+Learn more about how [Appneck collects and uses this data](https://appneck.com/privacy-policy/).
  
 == Installation ==
  
@@ -228,6 +230,9 @@ Use the [WordPress.org support forum](https://wordpress.org/support/plugin/tour-
 
 
 == Changelog ==
+= 2.3.2 – 30 September 2026 =
+* New: Replaced the Appsero telemetry SDK with Appneck. It does not collect any data by default; it only starts after you confirm via the admin notice.
+
 = 2.3.0 – 20 August 2026 =
 
 **Booking & Availability**

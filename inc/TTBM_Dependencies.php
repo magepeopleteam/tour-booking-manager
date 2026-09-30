@@ -9,7 +9,6 @@
 			public function __construct() {
 				add_action('init', array($this, 'language_load'));
 				$this->load_file();
-				$this->appsero_init_tracker_ttbm();
 				add_action('wp_enqueue_scripts', array($this, 'frontend_script'), 90);
 				// Safety net: if a TTBM shortcode actually renders on a page the gate
 				// above did not predict (page builders that store content outside
@@ -96,13 +95,6 @@
 					$is_active = $is_active || is_plugin_active_for_network('tour-booking-manager-pro/tour-booking-manager-pro.php');
 				}
 				return $is_active && file_exists(WP_PLUGIN_DIR . '/tour-booking-manager-pro/tour-booking-manager-pro.php');
-			}
-			public function appsero_init_tracker_ttbm() {
-				if (!class_exists('Appsero\Client')) {
-					require_once TTBM_PLUGIN_DIR . '/lib/appsero/src/Client.php';
-				}
-				$client = new Appsero\Client('5e44d3f4-ddea-4784-8c15-4502ad6e7426', 'Tour Booking Manager For Woocommerce', __FILE__);
-				$client->insights()->init();
 			}
 			public function global_enqueue() {
 				wp_enqueue_script('jquery');

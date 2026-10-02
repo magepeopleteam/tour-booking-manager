@@ -424,7 +424,7 @@
 					$ttbm_repeat_type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_repeat_type');
 					$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_end_date');
 					if ($ttbm_repeat_type == 'continue') {
-						$end_date = $start_date ? gmdate('Y-m-d', strtotime($start_date . ' +365 day')) : '';
+						$end_date = self::get_open_ended_end_date($start_date);
 					}
 					// Format end date to Y-m-d, but validate it first
 					if ($end_date) {
@@ -504,6 +504,28 @@
 				return self::cache_set('date', $cache_key, apply_filters('ttbm_get_date', $tour_date, $requested_id, $expire));
 			}
 			/**
+			 * Last date of the calendar window for a repeated tour whose End Repeat
+			 * Logic is "Never".
+			 *
+			 * "Never" stores no end date, but the date picker and the list queries need
+			 * a finite set of dates. The window used to be start date + 365 days -- a
+			 * fixed span the tour silently outlived: once the start date was more than a
+			 * year old no dates were left at all, and before that the window lost a day
+			 * every day. It is a rolling horizon now: a year ahead of today, or of the
+			 * start date while the tour has not started yet.
+			 *
+			 * @param string $start_date Repeat start date (Y-m-d).
+			 * @return string Y-m-d, or '' when there is no start date.
+			 */
+			public static function get_open_ended_end_date($start_date): string {
+				$start_timestamp = $start_date ? strtotime($start_date) : false;
+				if (!$start_timestamp) {
+					return '';
+				}
+				$horizon_from = gmdate('Y-m-d', max($start_timestamp, strtotime(current_time('Y-m-d'))));
+				return gmdate('Y-m-d', strtotime($horizon_from . ' +365 day'));
+			}
+			/**
 			 * Repeated-tour recurrence dates as a Y-m-d => Y-m-d lookup map.
 			 *
 			 * get_date() walks every recurrence date and asks get_date_by_time_check()
@@ -548,7 +570,7 @@
 					$ttbm_repeat_type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_repeat_type');
 					$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_end_date');
 					if ($ttbm_repeat_type == 'continue') {
-						$end_date = $start_date ? gmdate('Y-m-d', strtotime($start_date . ' +365 day')) : '';
+						$end_date = self::get_open_ended_end_date($start_date);
 					}
 					// Format end date to Y-m-d, but validate it first
 					if ($end_date) {

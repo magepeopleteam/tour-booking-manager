@@ -178,7 +178,12 @@
 		if (typeof window.ttbmValidateSettingsFormBeforeSubmit === 'function') {
 			window.ttbmLastValidationFocus = null;
 			var formIsValid = window.ttbmValidateSettingsFormBeforeSubmit();
-			if (state.manual && !formIsValid) {
+			// Only a click that changes the post status (Publish / Save Draft) is held
+			// back. A plain Update persists like the background save does -- the server
+			// keeps the status and reports the missing fields as a warning -- otherwise
+			// tours saved before a field became required (e.g. a repeated tour with no
+			// Start Time) could never save any change, such as a new featured image.
+			if (state.manual && !formIsValid && state.requestedStatus) {
 				setStatus('paused', t('paused', 'Auto-save paused — complete required fields'));
 				toast(t('paused_toast', 'Please complete the highlighted required fields before saving.'), 'warning', 7000);
 				state.manual = false;

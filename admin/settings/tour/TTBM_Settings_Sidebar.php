@@ -1551,7 +1551,8 @@ jQuery(function($){
 					ttbmFrame.on('select', function(){
 						var att = ttbmFrame.state().get('selection').first().toJSON();
 						var url = att.sizes && att.sizes.large ? att.sizes.large.url : att.url;
-						$('#ttbm_thumb_id').val(att.id);
+						// .val() fires no event; the auto-save listens for this change.
+						$('#ttbm_thumb_id').val(att.id).trigger('change');
 						if ($('#ttbm_thumb_preview').length) {
 							$('#ttbm_thumb_preview').attr('src', url);
 						} else {
@@ -1570,7 +1571,7 @@ jQuery(function($){
 				});
 				$(document).on('click', '#ttbm_remove_thumb', function(e){
 					e.preventDefault();
-					$('#ttbm_thumb_id').val(-1);
+					$('#ttbm_thumb_id').val(-1).trigger('change');
 					$('#ttbm_thumb_preview').remove();
 					$('#ttbm_img_actions_wrap').hide();
 					$('#ttbm_upload_area').show();

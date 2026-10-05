@@ -5,7 +5,7 @@ Tags: tour booking, travel agency, travel booking, tour operator, hotel booking
 Requires at least: 4.4.0
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 2.3.3
+Stable tag: 2.3.4
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -231,7 +231,7 @@ Use the [WordPress.org support forum](https://wordpress.org/support/plugin/tour-
 
 
 == Changelog ==
-= 2.3.3 – 5 October 2026 =
+= 2.3.4 – 5 October 2026 =
 * New: Updated the bundled Appneck SDK to the latest version.
 
 = 2.3.2 – 30 September 2026 =

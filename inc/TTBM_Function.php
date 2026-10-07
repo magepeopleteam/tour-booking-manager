@@ -837,13 +837,19 @@
 				 * language's tours and locked every other language out until tomorrow.
 				 * Reading the ids straight from the posts table is language-agnostic
 				 * (and cheaper than a full get_posts()).
+				 *
+				 * Private tours are rebuilt too. Administrators still see them in the
+				 * list shortcodes, but with "Expired Tour Visibility" set to No those
+				 * lists filter on the meta written here -- so a private tour left out
+				 * of this pass kept an empty or stale ttbm_upcoming_date forever and
+				 * dropped out of the list, while the same tour published was repaired
+				 * on the first list view of every day.
 				 */
 				global $wpdb;
 				$tour_ids = $wpdb->get_col(
 					$wpdb->prepare(
-						"SELECT ID FROM {$wpdb->posts} WHERE post_type = %s AND post_status = %s",
-						TTBM_Function::get_cpt_name(),
-						'publish'
+						"SELECT ID FROM {$wpdb->posts} WHERE post_type = %s AND post_status IN ('publish', 'private')",
+						TTBM_Function::get_cpt_name()
 					)
 				);
 				$tour_ids = array_map('intval', (array) $tour_ids);

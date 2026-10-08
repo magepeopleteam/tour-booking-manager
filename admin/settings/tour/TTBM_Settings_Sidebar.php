@@ -954,13 +954,18 @@ body.ttbm-modern-edit-page .ttbm-page-tour-title { display: none !important; }
 jQuery(function($){
 	var pageTitle   = <?php echo wp_json_encode($page_title); ?>;
 	var isHotelEdit = <?php echo $is_hotel ? 'true' : 'false'; ?>;
-	var isPublished = <?php echo ($post_id && get_post_status($post_id) === 'publish') ? 'true' : 'false'; ?>;
+	/* A private post is live too: its main button must Update in place. Treating
+	   it as unpublished made the button "Publish" and turned it public. */
+	var isPublished = <?php echo ($post_id && in_array(get_post_status($post_id), array('publish', 'private'), true)) ? 'true' : 'false'; ?>;
+	var isPrivate   = <?php echo ($post_id && get_post_status($post_id) === 'private') ? 'true' : 'false'; ?>;
 	var previewUrl  = <?php echo wp_json_encode($post_id ? get_preview_post_link(get_post($post_id)) : '#'); ?>;
 	var postStatusSlug  = <?php echo wp_json_encode($post_status_slug); ?>;
 	var postStatusLabel = <?php echo wp_json_encode($post_status_label); ?>;
 	var btnLabel    = isPublished ? <?php echo wp_json_encode(__('Update', 'tour-booking-manager')); ?> : <?php echo wp_json_encode(__('Publish', 'tour-booking-manager')); ?>;
 	var mainAction  = isPublished ? 'update' : 'publish';
 	var saveDraftLabel = <?php echo wp_json_encode(__('Save Draft', 'tour-booking-manager')); ?>;
+	var makePrivateLabel = <?php echo wp_json_encode(__('Save as Private', 'tour-booking-manager')); ?>;
+	var makePublicLabel  = <?php echo wp_json_encode(__('Make Public', 'tour-booking-manager')); ?>;
 	var previewLabel   = <?php echo wp_json_encode(__('Preview', 'tour-booking-manager')); ?>;
 
 	var backUrl   = <?php echo wp_json_encode($back_url); ?>;
@@ -985,6 +990,9 @@ jQuery(function($){
 					'<button type="button" class="ttbm-split-publish__toggle" aria-expanded="false" aria-haspopup="true" aria-label="' + <?php echo wp_json_encode(__('Toggle publish options', 'tour-booking-manager')); ?> + '">' + chevronSvg + '</button>' +
 					'<div class="ttbm-split-publish__menu" role="menu">' +
 						'<button type="submit" name="save" class="ttbm-split-publish__item ttbm-split-publish__draft" role="menuitem"></button>' +
+						/* Stands in for Core's Visibility control, removed with the Publish box.
+						   Tours only: the hotel save has no private handling. */
+						(isHotelEdit ? '' : '<button type="button" class="ttbm-split-publish__item ttbm-split-publish__visibility" role="menuitem"></button>') +
 					'</div>' +
 				'</div>' +
 			'</div>' +
@@ -999,6 +1007,14 @@ jQuery(function($){
 	header.find('.ttbm-header-preview').attr('href', previewUrl).html(eyeSvg + previewLabel);
 	header.find('.ttbm-split-publish__main').attr('data-ttbm-save-action', mainAction).text(btnLabel);
 	header.find('.ttbm-split-publish__draft').attr('value', saveDraftLabel).html(checkSvg + saveDraftLabel);
+	header.find('.ttbm-split-publish__visibility')
+		.attr({
+			'data-ttbm-status': isPrivate ? 'publish' : 'private',
+			'data-label-private': makePrivateLabel,
+			'data-label-public': makePublicLabel
+		})
+		.html(eyeSvg + '<span class="ttbm-split-publish__label"></span>')
+		.find('.ttbm-split-publish__label').text(isPrivate ? makePublicLabel : makePrivateLabel);
 
 	/* Inject inside form#post so the submit button is part of the form */
 	$('form#post').prepend(header);

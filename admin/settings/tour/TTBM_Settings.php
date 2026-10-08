@@ -1838,9 +1838,11 @@
 						: 'publish_posts';
 					if (empty(self::$last_validation_errors) && in_array($requested_status, array('draft', 'pending'), true)) {
 						$post_update['post_status'] = $requested_status;
-					} elseif (empty(self::$last_validation_errors) && 'publish' === $requested_status && current_user_can($publish_capability)) {
-						$post_update['post_status'] = 'publish';
-					} elseif (empty(self::$last_validation_errors) && 'publish' === $requested_status) {
+					} elseif (empty(self::$last_validation_errors) && in_array($requested_status, array('publish', 'private'), true) && current_user_can($publish_capability)) {
+						// Private needs the same capability as publishing, as in Core's
+						// Publish box (this editor replaces that box, Visibility included).
+						$post_update['post_status'] = $requested_status;
+					} elseif (empty(self::$last_validation_errors) && in_array($requested_status, array('publish', 'private'), true)) {
 						throw new \RuntimeException(__('You are not allowed to publish this tour.', 'tour-booking-manager'));
 					}
 					self::prepare_seo_plugins_for_ajax_save($tour_id);

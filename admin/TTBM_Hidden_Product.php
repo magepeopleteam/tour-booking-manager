@@ -52,7 +52,9 @@
 				$tour_ids = get_posts(
 					array(
 						'post_type'              => TTBM_Function::get_cpt_name(),
-						'post_status'            => 'publish',
+						// Private tours are bookable too (by administrators, or by any
+						// logged-in user under "Private Tours for Logged-in Users").
+						'post_status'            => array('publish', 'private'),
 						'posts_per_page'         => -1,
 						'fields'                 => 'ids',
 						'no_found_rows'          => true,

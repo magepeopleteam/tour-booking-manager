@@ -1379,7 +1379,11 @@ JS;
 				if (!in_array($template, self::login_gate_templates(), true)) {
 					$template = 'book_now';
 				}
-				if (!$tour_id || get_post_type($tour_id) !== TTBM_Function::get_cpt_name() || get_post_status($tour_id) !== 'publish') {
+				$tour_status = $tour_id ? get_post_status($tour_id) : '';
+				// A private tour is bookable by whoever may read it (administrators, or
+				// any logged-in user under "Private Tours for Logged-in Users").
+				$tour_readable = 'publish' === $tour_status || ('private' === $tour_status && current_user_can('read_post', $tour_id));
+				if (!$tour_id || get_post_type($tour_id) !== TTBM_Function::get_cpt_name() || !$tour_readable) {
 					wp_send_json_error('', 404);
 				}
 				$file = TTBM_Function::template_path('ticket/' . $template . '.php');

@@ -2436,6 +2436,25 @@
 				$options = get_option('ttbm_basic_gen_settings');
 				return self::get_ttbm_settings($options, $key, $default);
 			}
+			/**
+			 * Whether "Private Tours for Logged-in Users" is switched on. When it is,
+			 * Private tours act as members-only tours: every logged-in user (customers
+			 * included) sees them in the list shortcodes, can open them and can book
+			 * them. Logged-out visitors never do. Off by default, which leaves the
+			 * WordPress rule in place: only users who can read private posts.
+			 */
+			public static function private_tours_for_logged_in_users(): bool {
+				return 'yes' === self::get_general_settings('ttbm_private_tour_visibility', 'no');
+			}
+			/**
+			 * Whether the given user (default: current user) gets Private tours under
+			 * that setting. Filterable, e.g. to limit it to particular roles.
+			 */
+			public static function private_tours_visible_to_user($user_id = null): bool {
+				$user_id = null === $user_id ? get_current_user_id() : (int) $user_id;
+				$visible = $user_id > 0 && self::private_tours_for_logged_in_users();
+				return (bool) apply_filters('ttbm_private_tours_visible_to_user', $visible, $user_id);
+			}
 			public static function get_translation_settings($key, $default = '') {
 				$options = get_option('ttbm_basic_translation_settings');
 				return self::get_ttbm_settings($options, $key, $default);

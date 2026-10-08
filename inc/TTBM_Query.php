@@ -4,7 +4,46 @@
 	} // Cannot access pages directly.
 	if (!class_exists('TTBM_Query')) {
 		class TTBM_Query {
-			public function __construct() { }
+			public function __construct() {
+				add_filter('map_meta_cap', array($this, 'allow_private_tour_read'), 10, 4);
+				add_filter('private_title_format', array($this, 'private_tour_title_format'), 10, 2);
+			}
+			/**
+			 * With "Private Tours for Logged-in Users" on, a logged-in user may read a
+			 * private tour. WordPress asks read_post before showing a private post on
+			 * its own page; without this a customer saw the tour in the list and got a
+			 * 404 on click.
+			 */
+			public function allow_private_tour_read($caps, $cap, $user_id, $args) {
+				if ('read_post' !== $cap || empty($args[0]) || !$user_id) {
+					return $caps;
+				}
+				$post = get_post($args[0]);
+				if (!$post || 'private' !== $post->post_status || TTBM_Function::get_cpt_name() !== $post->post_type) {
+					return $caps;
+				}
+				return TTBM_Function::private_tours_visible_to_user($user_id) ? array('read') : $caps;
+			}
+			/**
+			 * Members-only tours should not be labelled "Private:" to the customers
+			 * they are meant for. The admin screens keep the label.
+			 */
+			public function private_tour_title_format($format, $post = null) {
+				if (is_admin() || !$post || TTBM_Function::get_cpt_name() !== get_post_type($post) || !TTBM_Function::private_tours_for_logged_in_users()) {
+					return $format;
+				}
+				return '%s';
+			}
+			/**
+			 * Lists include private tours for a logged-in user under that setting.
+			 * Administrators and editors already get them from WP_Query itself.
+			 */
+			private static function with_private_tours(array $args): array {
+				if (TTBM_Function::private_tours_visible_to_user()) {
+					$args['post_status'] = array('publish', 'private');
+				}
+				return $args;
+			}
 			public static function query_post_type($post_type, $show = -1, $page = 1): WP_Query {
 				$args = array(
 					'post_type' => $post_type,
@@ -118,6 +157,7 @@
 						$org_filter
 					)
 				);
+				$args = self::with_private_tours($args);
 				if ($status == 'active') {
 					return TTBM_Function::get_active_tours($args);
 				} else {
@@ -250,6 +290,7 @@
 						$activity_tax_filter
 					)
 				);
+				$args = self::with_private_tours($args);
 				$query = $status == 'active' ? TTBM_Function::get_active_tours($args) : new WP_Query($args);
 				if ((int)$people_filter > 0 || ($start_date && $end_date)) {
 					$query = self::filter_top_search_by_people($query, (int)$people_filter, $start_date, $end_date);

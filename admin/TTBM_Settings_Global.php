@@ -283,6 +283,17 @@
 							)
 						),
 						array(
+							'name' => 'ttbm_private_tour_visibility',
+							'label' => esc_html__('Private Tours for Logged-in Users', 'tour-booking-manager'),
+							'desc' => esc_html__('Select Yes to show Private tours to every logged-in user, customers included: in tour lists, on the tour page and in booking. Visitors who are not logged in never see them. Default is No: only administrators and editors see Private tours.', 'tour-booking-manager'),
+							'type' => 'select',
+							'default' => 'no',
+							'options' => array(
+								'yes' => esc_html__('Yes', 'tour-booking-manager'),
+								'no' => esc_html__('No', 'tour-booking-manager')
+							)
+						),
+						array(
 							'name' => 'ttbm_ticket_expire_time',
 							'label' => esc_html__('Tour Expire before Hours', 'tour-booking-manager'),
 							'desc' => esc_html__('Please enter the Hour that you want attendee can not book/register the ticket before start of the Tour', 'tour-booking-manager'),

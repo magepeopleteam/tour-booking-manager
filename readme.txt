@@ -232,6 +232,12 @@ Use the [WordPress.org support forum](https://wordpress.org/support/plugin/tour-
 
 == Changelog ==
 = 2.3.6 – 12 October 2026 =
+* New: Redesigned the tour editor as a 4-step wizard (Basic Info, Schedule, Pricing & Tickets, Details & Settings) replacing the 14-tab sidebar, with a sticky Back/Next footer and required-field checks before moving on.
+* New: The permalink now shows as editable text under the title (auto-generated, click to edit) instead of the post ID.
+* New: A success popup with "View Tour" appears after Publish and Update; the Preview button now saves before opening the preview.
+* Improvement: Larger Add Location / Add Place buttons; the location map toggle is off by default for new tours (existing tours are unchanged).
+* Improvement: End date can no longer be picked before the start date, and a same-day end time must be after the start time, for Fixed, Particular and Repeated tour types.
+* Improvement: The Payment Method sidebar card now shows live, color-coded (green/red) status for whether a payment gateway is configured.
 * Improvement: Tickets now load as soon as a date (or time slot) is picked on the default booking form, instead of waiting for a "Check" click; the button has been removed.
 * Fix: The step wizard's nested tabs (Repeated Dates time slots, Off Days/Off Dates) were hidden because the pane-hiding rule also matched tab panes nested inside panels.
 

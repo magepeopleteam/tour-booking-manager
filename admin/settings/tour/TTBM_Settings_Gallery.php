@@ -16,7 +16,7 @@
 				?>
 				<div class="ttbm-sb-card ttbm-sb-gallery-card">
 					<div class="ttbm-sb-gallery-toggle-row">
-						<span class="ttbm-sb-gallery-toggle-label"><?php esc_html_e('Enable/Disable Gallery', 'tour-booking-manager'); ?></span>
+						<span class="ttbm-sb-gallery-toggle-label"><?php esc_html_e('Show a photo gallery for this tour?', 'tour-booking-manager'); ?></span>
 						<input type="hidden" name="ttbm_display_slider" value="off" />
 						<?php TTBM_Custom_Layout::switch_button('ttbm_display_slider', $checked); ?>
 					</div>

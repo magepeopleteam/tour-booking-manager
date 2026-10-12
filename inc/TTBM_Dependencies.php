@@ -376,12 +376,16 @@
 				if ($autosave_screen && $autosave_screen->base === 'post' && $autosave_screen->post_type === TTBM_Function::get_cpt_name()) {
 					global $post;
 					$autosave_post_id = ($post && isset($post->ID)) ? (int) $post->ID : (isset($_GET['post']) ? (int) $_GET['post'] : 0);
+					wp_enqueue_style('ttbm-tour-wizard', TTBM_PLUGIN_URL . '/assets/admin/ttbm-tour-wizard.css', array('ttbm_admin_modern'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-tour-wizard.css'));
+					wp_enqueue_script('ttbm-tour-wizard', TTBM_PLUGIN_URL . '/assets/admin/ttbm-tour-wizard.js', array('jquery', 'ttbm_admin_settings', 'ttbm_admin_script'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-tour-wizard.js'), true);
 					wp_enqueue_style('ttbm-autosave', TTBM_PLUGIN_URL . '/assets/admin/ttbm-autosave.css', array('ttbm-admin-toast'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-autosave.css'));
 					wp_enqueue_script('ttbm-autosave', TTBM_PLUGIN_URL . '/assets/admin/ttbm-autosave.js', array('jquery', 'ttbm-admin-toast', 'ttbm_admin_settings', 'ttbm_admin_script'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-autosave.js'), true);
 					wp_localize_script('ttbm-autosave', 'ttbm_autosave_vars', array(
 						'ajax_url'     => admin_url('admin-ajax.php'),
 						'nonce'        => wp_create_nonce('ttbm_autosave'),
 						'post_id'      => $autosave_post_id,
+						'preview_url'  => $autosave_post_id ? (string) get_preview_post_link($autosave_post_id) : '',
+						'view_url'     => $autosave_post_id ? (string) get_permalink($autosave_post_id) : '',
 						'debounce'     => (int) apply_filters('ttbm_autosave_debounce_ms', 1200),
 						'min_interval' => (int) apply_filters('ttbm_autosave_min_interval_ms', 3000),
 						'enabled'      => (bool) apply_filters('ttbm_enable_tour_autosave', true, $autosave_post_id),
@@ -397,6 +401,12 @@
 							/* translators: %d: minutes elapsed */
 							'mins_ago'     => __('%d mins ago', 'tour-booking-manager'),
 							'saved_toast'  => __('All changes auto-saved.', 'tour-booking-manager'),
+							'published_title' => __('Tour published!', 'tour-booking-manager'),
+							'published_text'  => __('Your tour is live and ready for bookings.', 'tour-booking-manager'),
+							'updated_title'   => __('Tour updated!', 'tour-booking-manager'),
+							'updated_text'    => __('Your changes have been saved and are now live on your site.', 'tour-booking-manager'),
+							'view_tour'       => __('View Tour', 'tour-booking-manager'),
+							'keep_editing'    => __('Keep editing', 'tour-booking-manager'),
 							'paused_toast' => __('Auto-save paused: some required fields are missing.', 'tour-booking-manager'),
 							'error_toast'  => __('Auto-save failed — your changes are not saved yet.', 'tour-booking-manager'),
 						),

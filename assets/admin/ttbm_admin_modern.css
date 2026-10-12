@@ -424,88 +424,84 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	margin-right: 4px;
 }
 
-/* ─── Permalink / URL slug field ─── */
+/* ─── Permalink / URL slug: a line of text under the title, click to edit ─── */
 #ttbm_meta_box_panel .ttbm-tour-slug-field {
-	margin-bottom: 22px;
+	margin: -8px 0 22px;
 }
-
+#ttbm_meta_box_panel .ttbm-tour-slug-field__line {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+	margin: 0;
+	font-size: 13px;
+	line-height: 1.5;
+	color: #6b7280;
+}
 #ttbm_meta_box_panel .ttbm-tour-slug-field__label {
-	display: block;
-	margin: 0 0 8px;
-	font-size: 14px;
 	font-weight: 600;
 	color: #374151;
-	line-height: 1.4;
 }
-
-#ttbm_meta_box_panel .ttbm-tour-slug-field__row {
-	display: flex;
+#ttbm_meta_box_panel .ttbm-tour-slug-field__url {
+	word-break: break-all;
+}
+#ttbm_meta_box_panel .ttbm-tour-slug-field__slug,
+#ttbm_meta_box_panel .ttbm-tour-slug-field__edit {
+	display: inline;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background: transparent !important;
+	box-shadow: none;
+	font: inherit;
+	text-transform: none;
+	letter-spacing: normal;
+	cursor: pointer;
+}
+#ttbm_meta_box_panel .ttbm-tour-slug-field__slug {
+	font-weight: 600;
+	color: #1d2b44 !important;
+	border-bottom: 1px dashed #9ca3af;
+}
+#ttbm_meta_box_panel .ttbm-tour-slug-field__slug.is-empty {
+	font-weight: 400;
+	font-style: italic;
+	color: #9ca3af !important;
+}
+#ttbm_meta_box_panel .ttbm-tour-slug-field__slug:hover {
+	border-bottom-color: var(--ttbm-a-primary);
+}
+#ttbm_meta_box_panel .ttbm-tour-slug-field__edit,
+#ttbm_meta_box_panel .ttbm-tour-slug-field__view {
+	font-size: 12px;
+	font-weight: 500;
+	color: var(--ttbm-a-primary) !important;
+	text-decoration: none;
+}
+#ttbm_meta_box_panel .ttbm-tour-slug-field__edit:hover,
+#ttbm_meta_box_panel .ttbm-tour-slug-field__view:hover {
+	text-decoration: underline;
+}
+#ttbm_meta_box_panel .ttbm-tour-slug-field__editor {
 	align-items: center;
-	gap: 10px;
+	gap: 8px;
 	width: 100%;
 }
-
 #ttbm_meta_box_panel .ttbm-tour-slug-field__input {
-	display: block;
-	/* width + shrink, not flex-grow alone: the field must still fill the row if a
-	   legacy rule ever knocks the flex context off the wrapper. */
-	width: 100%;
 	flex: 1 1 auto;
 	min-width: 0;
 	box-sizing: border-box;
-	padding: 10px 14px;
+	padding: 6px 12px;
 	border: 1px solid var(--ttbm-a-border);
 	border-radius: 8px;
 	background: #fff;
-	font-size: 14px;
+	font-size: 13px;
 	color: #1e293b;
-	line-height: 1.5;
-	transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-
-#ttbm_meta_box_panel .ttbm-tour-slug-field__input::placeholder {
-	color: #9ca3af;
-}
-
 #ttbm_meta_box_panel .ttbm-tour-slug-field__input:focus {
 	border-color: var(--ttbm-a-primary);
 	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 	outline: none;
-}
-
-#ttbm_meta_box_panel .ttbm-tour-slug-field__view {
-	flex: 0 0 auto;
-	font-size: 13px;
-	font-weight: 500;
-	color: var(--ttbm-a-primary);
-	text-decoration: none;
-	white-space: nowrap;
-}
-
-#ttbm_meta_box_panel .ttbm-tour-slug-field__view:hover,
-#ttbm_meta_box_panel .ttbm-tour-slug-field__view:focus {
-	text-decoration: underline;
-}
-
-#ttbm_meta_box_panel .ttbm-tour-slug-field__preview {
-	margin: 8px 0 0;
-	font-size: 12px;
-	color: #6b7280;
-	line-height: 1.5;
-	word-break: break-all;
-}
-
-#ttbm_meta_box_panel .ttbm-tour-slug-field__preview-slug {
-	font-weight: 600;
-	color: #374151;
-}
-
-#ttbm_meta_box_panel .ttbm-tour-slug-field__hint {
-	margin: 6px 0 0;
-	font-size: 11px;
-	font-style: normal;
-	color: #9ca3af;
-	line-height: 1.4;
 }
 
 /* ─── Tour Description field ─── */
@@ -1431,16 +1427,16 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 }
 
 #ttbm_meta_box_panel .ttbm-places-visit-card .ttbm-place-hint {
-	margin: 0;
-	font-size: 10px !important;
+	margin: 10px 0 0;
+	font-size: 13px !important;
 	line-height: 1.4;
 	color: #64748b;
-	text-align: right;
+	text-align: left;
 	display: flex;
 	align-items: center;
-	justify-content: flex-end;
-	flex-wrap: nowrap;
-	gap: 4px;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	gap: 10px;
 }
 
 #ttbm_meta_box_panel .ttbm-places-visit-card .ttbm-place-add-link {
@@ -5400,44 +5396,54 @@ div.ttbm_global_settings .button-primary {
 	max-width: 100%;
 }
 #ttbm_meta_box_panel .tabsItem section .label p.ttbm-location-hint,
-#ttbm_meta_box_panel p.ttbm-location-hint {
-	font-size: 10px !important;
+#ttbm_meta_box_panel p.ttbm-location-hint,
+#ttbm_meta_box_panel p.ttbm-place-hint {
+	font-size: 13px !important;
 }
 #ttbm_meta_box_panel .ttbm-location-hint {
-	margin: 0;
+	margin: 10px 0 0;
 	width: 100%;
 	color: #64748b;
-	line-height: 1;
+	line-height: 1.4;
 	display: flex;
 	align-items: center;
-	justify-content: flex-end;
-	flex-wrap: nowrap;
-	gap: 4px;
-	white-space: nowrap;
-	text-align: right;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	gap: 10px;
+	text-align: left;
 }
 #ttbm_meta_box_panel .ttbm-location-add-link {
 	display: inline-flex;
 	align-items: center;
+	gap: 6px;
 	flex-shrink: 0;
-	padding: 2px 8px;
+	padding: 9px 18px;
 	margin: 0;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	background: #f1f5f9;
-	font-size: 10px;
-	font-weight: 500;
+	border: 1px solid var(--ttbm-a-primary, #2563eb);
+	border-radius: 8px;
+	background: #fff;
+	font-size: 14px;
+	font-weight: 600;
 	font-family: inherit;
-	color: var(--mpl-primary, #2271b1);
+	color: var(--ttbm-a-primary, #2563eb);
 	cursor: pointer;
 	text-decoration: none;
-	line-height: 1;
+	line-height: 1.2;
 	height: auto;
+	min-height: 38px;
 	vertical-align: middle;
-	transition: background 0.15s ease;
+	transition: background 0.15s ease, color 0.15s ease;
 }
-#ttbm_meta_box_panel .ttbm-location-add-link:hover {
-	background: #e2e8f0;
+#ttbm_meta_box_panel .ttbm-location-add-link::before {
+	content: "+";
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 1;
+}
+#ttbm_meta_box_panel .ttbm-location-add-link:hover,
+#ttbm_meta_box_panel .ttbm-location-add-link:focus {
+	background: var(--ttbm-a-primary, #2563eb);
+	color: #fff;
 	text-decoration: none;
 }
 #ttbm_meta_box_panel .auto-search-wrapper.loupe input,

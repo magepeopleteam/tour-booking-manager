@@ -73,7 +73,13 @@ if (!defined('ABSPATH')) {
 										<?php do_action('ttbm_time_select', $tour_id, $current_date ? $current_date : current($all_dates)); ?>
                                     </div>
 								<?php } ?>
-								<?php TTBM_Layout::availability_button($tour_id, $time_slots_enabled); ?>
+								<?php
+								// Tickets load as soon as a date (or slot) is picked, so the Check button is only
+								// kept for Pro, which still reloads time slots per date and waits for it.
+								if (class_exists('TTBM_Layout_Pro')) {
+									TTBM_Layout::availability_button($tour_id, $time_slots_enabled);
+								}
+								?>
                             </div>
                         </div>
 						<?php if ($time_slots_enabled && ($template_name == 'viator.php' || $check_ability == 'availability_section')) {

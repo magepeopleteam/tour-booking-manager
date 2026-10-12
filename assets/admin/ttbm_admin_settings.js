@@ -95,11 +95,19 @@ function ttbm_load_sortable_datepicker(parent, item) {
         let current_parent = $(this).closest(".ttbm_multi_image_item");
         let img_id = current_parent.data("image-id");
         current_parent.remove();
-        let all_img_ids = parent.find(".ttbm_multi_image_value").val();
-        all_img_ids = all_img_ids.replace("," + img_id, "");
-        all_img_ids = all_img_ids.replace(img_id + ",", "");
-        all_img_ids = all_img_ids.replace(img_id, "");
-        parent.find(".ttbm_multi_image_value").val(all_img_ids);
+        // Drop exactly one matching id. The old substring replace() also matched
+        // inside longer ids (removing 120 from "7,1203,120" left "73,").
+        let all_img_ids = String(parent.find(".ttbm_multi_image_value").val() || "")
+            .split(",")
+            .filter(function (id) {
+                return id !== "";
+            });
+        let remove_at = all_img_ids.indexOf(String(img_id));
+        if (remove_at > -1) {
+            all_img_ids.splice(remove_at, 1);
+        }
+        // .val() fires no event; the editor auto-save listens for this change.
+        parent.find(".ttbm_multi_image_value").val(all_img_ids.join(",")).trigger("change");
     });
     $(document).on("click", ".ttbm_add_multi_image", function () {
         let parent = $(this).closest(".ttbm_multi_image_area");
@@ -115,7 +123,8 @@ function ttbm_load_sortable_datepicker(parent, item) {
             parent.find(".ttbm_multi_image").append(html);
             let value = parent.find(".ttbm_multi_image_value").val();
             value = value ? value + "," + attachment_id : attachment_id;
-            parent.find(".ttbm_multi_image_value").val(value);
+            // .val() fires no event; the editor auto-save listens for this change.
+            parent.find(".ttbm_multi_image_value").val(value).trigger("change");
         };
         wp.media.editor.open($(this));
         return false;

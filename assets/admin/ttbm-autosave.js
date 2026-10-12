@@ -251,9 +251,17 @@
 					$postStatus.removeClass(function (index, className) {
 						return (className.match(/(^|\s)is-status-\S+/g) || []).join(' ');
 					}).addClass('is-status-' + postStatus)
-						.text(postStatus === 'publish' ? 'Published' : (postStatus === 'pending' ? 'Pending' : 'Draft'));
+						.text(postStatus === 'publish' ? 'Published' : (postStatus === 'private' ? 'Private' : (postStatus === 'pending' ? 'Pending' : 'Draft')));
 					var $mainButton = $('.ttbm-split-publish__main');
-					if (postStatus === 'publish') {
+					var $visibility = $('.ttbm-split-publish__visibility');
+					if ($visibility.length) {
+						var nowPrivate = postStatus === 'private';
+						$visibility.attr('data-ttbm-status', nowPrivate ? 'publish' : 'private')
+							.find('.ttbm-split-publish__label')
+							.text($visibility.attr(nowPrivate ? 'data-label-public' : 'data-label-private'));
+					}
+					// Private is live like publish: Update must keep it, not re-publish it.
+					if (postStatus === 'publish' || postStatus === 'private') {
 						$mainButton.attr('data-ttbm-save-action', 'update').text('Update');
 					} else {
 						$mainButton.text($mainButton.attr('data-ttbm-save-action') === 'publish' ? 'Publish' : 'Update');
@@ -261,7 +269,7 @@
 				}
 				refreshSavedLabel();
 				var warnings = (res.data && res.data.warnings) || [];
-				if (isManualSave && (savedRequest === 'publish' || savedRequest === '') && res.data && res.data.post_status === 'publish' && !warnings.length) {
+				if (isManualSave && (savedRequest === 'publish' || savedRequest === '') && res.data && (res.data.post_status === 'publish' || res.data.post_status === 'private') && !warnings.length) {
 					// Publish (draft -> live) and Update (already live) both confirm with the popup.
 					showPublishedModal(res.data.view_url || cfg.view_url, savedRequest === 'publish');
 				} else if (warnings.length) {
@@ -400,7 +408,7 @@
 	});
 
 	// Update/Publish uses the same verified AJAX pipeline without reloading.
-	$(document).on('click', '#publish, #save-post, .editor-post-publish-button, .editor-post-publish-button__button, .editor-post-save-draft, .ttbm-split-publish__main, .ttbm-split-publish__draft', function (event) {
+	$(document).on('click', '#publish, #save-post, .editor-post-publish-button, .editor-post-publish-button__button, .editor-post-save-draft, .ttbm-split-publish__main, .ttbm-split-publish__draft, .ttbm-split-publish__visibility', function (event) {
 		event.preventDefault();
 		event.stopImmediatePropagation();
 		if (state.timer) {
@@ -409,7 +417,9 @@
 		}
 		state.dirty = true;
 		state.manual = true;
-		if ($(this).is('.ttbm-split-publish__draft, #save-post, .editor-post-save-draft')) {
+		if ($(this).is('.ttbm-split-publish__visibility')) {
+			state.requestedStatus = $(this).attr('data-ttbm-status') === 'private' ? 'private' : 'publish';
+		} else if ($(this).is('.ttbm-split-publish__draft, #save-post, .editor-post-save-draft')) {
 			state.requestedStatus = 'draft';
 		} else if ($(this).is('.ttbm-split-publish__main')) {
 			state.requestedStatus = $(this).attr('data-ttbm-save-action') === 'publish' ? 'publish' : '';

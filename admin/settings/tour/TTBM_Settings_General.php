@@ -115,9 +115,16 @@
                 </div>
 				<?php
 			}
+			/**
+			 * Max Guests, Age Range and Tour Language start switched off on a brand-new tour. Tours
+			 * that already exist keep the old default (on) so nothing disappears from live pages.
+			 */
+			public static function optional_field_default($tour_id) {
+				return in_array(get_post_status($tour_id), array('auto-draft', false), true) ? 'off' : 'on';
+			}
 			public function max_people($tour_id) {
 				$max_people_status_field_name = 'ttbm_display_max_people';
-				$max_people_field_status = TTBM_Global_Function::get_post_info($tour_id, $max_people_status_field_name, 'on');
+				$max_people_field_status = TTBM_Global_Function::get_post_info($tour_id, $max_people_status_field_name, self::optional_field_default($tour_id));
 				$max_people_field_name = 'ttbm_travel_max_people_allow';
 				$max_people_field_value = TTBM_Global_Function::get_post_info($tour_id, $max_people_field_name);
 				$max_people_placeholder = esc_html__('50', 'tour-booking-manager');
@@ -190,7 +197,7 @@
 			}
 			public function age_range($tour_id) {
 				$display_name = 'ttbm_display_min_age';
-				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
+				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, self::optional_field_default($tour_id));
 				$value_name = 'ttbm_travel_min_age';
 				$value = TTBM_Global_Function::get_post_info($tour_id, $value_name);
 				$placeholder = esc_html__('Ex: 5 - 50 Years', 'tour-booking-manager');
@@ -210,7 +217,7 @@
 			}
 			public function tour_language($tour_id) {
 				$display_name = 'ttbm_travel_language_status';
-				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
+				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, self::optional_field_default($tour_id));
 				$language = 'ttbm_travel_language';
 				$language = TTBM_Global_Function::get_post_info($tour_id, $language);
 				$selected_languages = is_array($language) ? $language : (!empty($language) ? array($language) : array());

@@ -43,6 +43,9 @@ jQuery(function ($) {
 
 		var $sidebar = $('.ttbm-sb-payment-card');
 		if ($sidebar.length) {
+			var $status = $sidebar.find('.ttbm-sb-payment-status');
+			$sidebar.toggleClass('is-ready', isReady).toggleClass('is-missing', !isReady);
+			$status.find('.ttbm-sb-payment-status__text').text(isReady ? $status.attr('data-ready-text') : $status.attr('data-missing-text'));
 			var $values = $sidebar.find('.ttbm-sb-payment-info-row strong');
 			$values.eq(0).text(state.mode_label || '');
 			$values.eq(1).text(gatewayNames.length ? gatewayNames.join(', ') : ttbmPaymentSettings.none_label);

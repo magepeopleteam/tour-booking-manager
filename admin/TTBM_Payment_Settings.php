@@ -240,8 +240,12 @@
 				$pm_type_label = self::get_booking_mode_label();
 				$pm_gateway_names = self::get_active_gateway_names();
 				?>
-				<div class="ttbm-sb-card ttbm-sb-payment-card">
+				<div class="ttbm-sb-card ttbm-sb-payment-card <?php echo $pm_active ? 'is-ready' : 'is-missing'; ?>">
 					<p class="ttbm-sb-card-title"><?php esc_html_e('Payment Method', 'tour-booking-manager'); ?></p>
+					<p class="ttbm-sb-payment-status" data-ready-text="<?php esc_attr_e('Ready to accept bookings', 'tour-booking-manager'); ?>" data-missing-text="<?php esc_attr_e('Setup required: no payment method', 'tour-booking-manager'); ?>">
+						<span class="ttbm-sb-payment-status__icon" aria-hidden="true"></span>
+						<span class="ttbm-sb-payment-status__text"><?php echo $pm_active ? esc_html__('Ready to accept bookings', 'tour-booking-manager') : esc_html__('Setup required: no payment method', 'tour-booking-manager'); ?></span>
+					</p>
 					<div class="ttbm-sb-payment-info-list">
 						<div class="ttbm-sb-payment-info-row">
 							<span><?php esc_html_e('Active Method', 'tour-booking-manager'); ?></span>

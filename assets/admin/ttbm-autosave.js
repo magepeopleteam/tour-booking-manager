@@ -208,6 +208,7 @@
 			'&post_ID=' + encodeURIComponent(cfg.post_id || $('#post [name="post_ID"]').val() || '') +
 			'&requested_post_status=' + encodeURIComponent(state.requestedStatus || '');
 		var isManualSave = state.manual;
+		var savedRequest = state.requestedStatus;
 		state.manual = false;
 		state.requestedStatus = '';
 
@@ -237,6 +238,13 @@
 					return;
 				}
 				state.lastSuccessAt = Date.now();
+				if (res.data && res.data.preview_url) {
+					cfg.preview_url = res.data.preview_url;
+					$('.ttbm-header-preview').attr('href', res.data.preview_url);
+				}
+				if (res.data && res.data.view_url) {
+					cfg.view_url = res.data.view_url;
+				}
 				if (res.data && res.data.post_status) {
 					var postStatus = res.data.post_status;
 					var $postStatus = $('.ttbm-header-status');
@@ -253,7 +261,10 @@
 				}
 				refreshSavedLabel();
 				var warnings = (res.data && res.data.warnings) || [];
-				if (warnings.length) {
+				if (isManualSave && (savedRequest === 'publish' || savedRequest === '') && res.data && res.data.post_status === 'publish' && !warnings.length) {
+					// Publish (draft -> live) and Update (already live) both confirm with the popup.
+					showPublishedModal(res.data.view_url || cfg.view_url, savedRequest === 'publish');
+				} else if (warnings.length) {
 					toast(warnings[0], 'warning', isManualSave ? 7000 : undefined);
 				} else if (isManualSave || Date.now() - state.lastSuccessToastAt > SUCCESS_TOAST_COOLDOWN) {
 					state.lastSuccessToastAt = Date.now();
@@ -266,6 +277,9 @@
 			handleFailure(xhr);
 		}).always(function () {
 			state.inFlight = false;
+			var afterSave = state.afterSave || [];
+			state.afterSave = [];
+			afterSave.forEach(function (fn) { fn(); });
 			if (state.queued || state.dirty) {
 				state.queued = false;
 				scheduleAutosave(busyRetryDelay());
@@ -295,6 +309,59 @@
 		toast(msg, 'error');
 		scheduleAutosave(RETRY_ERROR_MS);
 	}
+
+	/* ------------------------------------------------------- publish popup + preview */
+
+	function showPublishedModal(viewUrl, isNew) {
+		$('.ttbm-publish-modal').remove();
+		var $m = $(
+			'<div class="ttbm-publish-modal" role="dialog" aria-modal="true" aria-labelledby="ttbm-publish-modal-title">' +
+			'<div class="ttbm-publish-modal__box">' +
+			'<span class="ttbm-publish-modal__icon" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>' +
+			'<h3 id="ttbm-publish-modal-title"></h3><p></p>' +
+			'<div class="ttbm-publish-modal__actions">' +
+			'<a class="button button-primary ttbm-publish-modal__view" target="_blank" rel="noopener"></a>' +
+			'<button type="button" class="button ttbm-publish-modal__close"></button>' +
+			'</div></div></div>'
+		);
+		$m.find('h3').text(isNew ? t('published_title', 'Tour published!') : t('updated_title', 'Tour updated!'));
+		$m.find('p').text(isNew ? t('published_text', 'Your tour is live and ready for bookings.') : t('updated_text', 'Your changes have been saved and are now live on your site.'));
+		$m.find('.ttbm-publish-modal__view').attr('href', viewUrl || '#').text(t('view_tour', 'View Tour'));
+		$m.find('.ttbm-publish-modal__close').text(t('keep_editing', 'Keep editing'));
+		function close() {
+			$m.remove();
+			$(document).off('keydown.ttbmPublishModal');
+		}
+		$m.on('click', '.ttbm-publish-modal__close', close);
+		$m.on('click', '.ttbm-publish-modal__view', function () { window.setTimeout(close, 0); });
+		$m.on('click', function (e) { if (e.target === $m[0]) { close(); } });
+		$(document).on('keydown.ttbmPublishModal', function (e) { if (e.which === 27) { close(); } });
+		$('body').append($m);
+		$m.find('.ttbm-publish-modal__view').trigger('focus');
+	}
+
+	// Preview shows what is saved, so save first, then open it. The tab is opened straight away
+	// (inside the click) so the browser doesn't treat it as a blocked pop-up.
+	$(document).on('click', '.ttbm-header-preview', function (event) {
+		event.preventDefault();
+		var win = window.open('', '_blank');
+		var fallback = $(this).attr('href');
+		if (state.timer) {
+			window.clearTimeout(state.timer);
+			state.timer = null;
+		}
+		state.afterSave = state.afterSave || [];
+		state.afterSave.push(function () {
+			var url = cfg.preview_url || fallback;
+			if (win && url && url !== '#') {
+				win.location.href = url;
+			} else if (win) {
+				win.close();
+			}
+		});
+		state.dirty = true;
+		runAutosave(true);
+	});
 
 	/* ------------------------------------------------------------- change tracking */
 

@@ -406,3 +406,94 @@
 .ttbm-sb-payment-card .ttbm-sb-payment-link a:hover {
 	color: #135e96;
 }
+
+/* ── Payment Method card: green when a method is configured, red when it is not ── */
+.ttbm-sb-payment-card.is-ready {
+	border: 1.5px solid #4ade80 !important;
+	background: linear-gradient(180deg, #f0fdf4 0%, #fff 70%) !important;
+	box-shadow: 0 2px 12px rgba(34, 197, 94, .14) !important;
+}
+.ttbm-sb-payment-card.is-missing {
+	border: 1.5px solid #f87171 !important;
+	background: linear-gradient(180deg, #fef2f2 0%, #fff 70%) !important;
+	box-shadow: 0 2px 12px rgba(239, 68, 68, .16) !important;
+}
+.ttbm-sb-payment-card .ttbm-sb-payment-status {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 10px;
+	padding: 8px 12px;
+	border-radius: 8px;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1.3;
+}
+.ttbm-sb-payment-card .ttbm-sb-payment-status__icon {
+	flex: 0 0 20px;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 800;
+	line-height: 1;
+}
+.ttbm-sb-payment-card.is-ready .ttbm-sb-payment-status {
+	background: #dcfce7;
+	color: #166534;
+}
+.ttbm-sb-payment-card.is-ready .ttbm-sb-payment-status__icon {
+	background: #16a34a;
+}
+.ttbm-sb-payment-card.is-ready .ttbm-sb-payment-status__icon::before {
+	content: "\2713";
+}
+.ttbm-sb-payment-card.is-missing .ttbm-sb-payment-status {
+	background: #fee2e2;
+	color: #991b1b;
+}
+.ttbm-sb-payment-card.is-missing .ttbm-sb-payment-status__icon {
+	background: #dc2626;
+}
+.ttbm-sb-payment-card.is-missing .ttbm-sb-payment-status__icon::before {
+	content: "!";
+}
+.ttbm-sb-payment-card.is-ready .ttbm-sb-payment-info-row {
+	border-bottom-color: #dcfce7;
+}
+.ttbm-sb-payment-card.is-missing .ttbm-sb-payment-info-row {
+	border-bottom-color: #fee2e2;
+}
+/* The call to action: a solid red button when setup is missing, a quiet green link when ready. */
+.ttbm-sb-payment-card.is-missing .ttbm-sb-payment-warning {
+	padding: 0 !important;
+	border: 0;
+	background: transparent;
+	text-align: center;
+}
+.ttbm-sb-payment-card.is-missing .ttbm-sb-payment-warning a {
+	display: block;
+	padding: 10px 14px;
+	border-radius: 8px;
+	background: #dc2626;
+	color: #fff !important;
+	font-size: 13px;
+	font-weight: 700;
+	text-decoration: none;
+}
+.ttbm-sb-payment-card.is-missing .ttbm-sb-payment-warning a:hover {
+	background: #b91c1c;
+}
+.ttbm-sb-payment-card.is-ready .ttbm-sb-payment-link {
+	width: 100% !important;
+	text-align: center !important;
+	background: #fff;
+	border-color: #86efac;
+}
+.ttbm-sb-payment-card.is-ready .ttbm-sb-payment-link a {
+	color: #15803d;
+}

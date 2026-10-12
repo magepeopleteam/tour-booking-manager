@@ -113,8 +113,20 @@
                 <input type="hidden" id="ttbm_full_location_name_submit" name="ttbm_full_location_name" value="<?php echo esc_attr($map_location); ?>">
                 <input type="hidden" id="ttbm_map_latitude_submit" name="ttbm_map_latitude" value="<?php echo esc_attr($map_lat); ?>">
                 <input type="hidden" id="ttbm_map_longitude_submit" name="ttbm_map_longitude" value="<?php echo esc_attr($map_lng); ?>">
-                <div id="ttbm_content" class="ttbm_configuration">
+				<?php $wizard_steps = self::wizard_steps(); ?>
+                <div id="ttbm_content" class="ttbm_configuration ttbm-tour-wizard" data-wizard="<?php echo esc_attr(wp_json_encode(array_values($wizard_steps))); ?>">
                     <div class="ttbm_style ttbm_settings ">
+                        <nav class="ttbm-wz-steps" aria-label="<?php esc_attr_e('Tour setup steps', 'tour-booking-manager'); ?>">
+							<?php foreach (array_values($wizard_steps) as $i => $step) : ?>
+                                <button type="button" class="ttbm-wz-step" data-step="<?php echo esc_attr($step['key']); ?>" data-num="<?php echo esc_attr($i + 1); ?>">
+                                    <span class="ttbm-wz-step__dot"><i class="<?php echo esc_attr($step['icon']); ?>"></i></span>
+                                    <span class="ttbm-wz-step__text">
+                                        <span class="ttbm-wz-step__label"><?php echo esc_html($step['label']); ?></span>
+                                        <span class="ttbm-wz-step__hint"><?php echo esc_html($step['hint']); ?></span>
+                                    </span>
+                                </button>
+							<?php endforeach; ?>
+                        </nav>
                         <div class="ttbmTabs leftTabs d-flex justify-content-between">
                             <ul class="tabLists meta-sidebar _mL">
 								<div class="meta-sidebar-toggle"><i class="mi mi-angle-right"></i></div>
@@ -144,6 +156,11 @@
 									do_action('ttbm_meta_box_tab_content', $tour_id);
 									$this->partial_payment_settings($tour_id);
 								?>
+                                <div class="ttbm-wz-footer">
+                                    <button type="button" class="button ttbm-wz-prev"><?php esc_html_e('Back', 'tour-booking-manager'); ?></button>
+                                    <span class="ttbm-wz-progress" aria-live="polite"></span>
+                                    <button type="button" class="button button-primary ttbm-wz-next"><?php esc_html_e('Next', 'tour-booking-manager'); ?></button>
+                                </div>
                             </div>
                             <div class="ttbm-right-sidebar" data-active-tab="#ttbm_general_info">
 								<?php do_action('ttbm_right_sidebar_content', $tour_id); ?>
@@ -153,6 +170,41 @@
                 </div>
 				<?php
 			}
+				/**
+				 * Step-based editor layout. 'panes' = legacy tab-panel IDs shown stacked in the step,
+				 * 'acc' = panes rendered as collapsible cards. Add-on tab panes not listed here are
+				 * placed by the JS from their position in the tab list. Filterable.
+				 */
+				public static function wizard_steps(): array {
+					$steps = array(
+						'basic' => array(
+							'key' => 'basic', 'icon' => 'fas fa-info-circle',
+							'label' => __('Basic Info', 'tour-booking-manager'),
+							'hint' => __('Title, description & destination', 'tour-booking-manager'),
+							'panes' => array('#ttbm_general_info', '#ttbm_settings_location'), 'acc' => array(),
+						),
+						'schedule' => array(
+							'key' => 'schedule', 'icon' => 'far fa-calendar-alt',
+							'label' => __('Schedule', 'tour-booking-manager'),
+							'hint' => __('Dates & availability', 'tour-booking-manager'),
+							'panes' => array('#ttbm_settings_dates'), 'acc' => array(),
+						),
+						'pricing' => array(
+							'key' => 'pricing', 'icon' => 'fas fa-ticket-alt',
+							'label' => __('Pricing & Tickets', 'tour-booking-manager'),
+							'hint' => __('Tickets, services & payment', 'tour-booking-manager'),
+							'panes' => array('#ttbm_settings_pricing'), 'acc' => array('#_mep_pp_deposits_type'),
+						),
+						'more' => array(
+							'key' => 'more', 'icon' => 'fas fa-sliders-h',
+							'label' => __('Details & Settings', 'tour-booking-manager'),
+							'hint' => __('Itinerary, features, display & more', 'tour-booking-manager'),
+							'panes' => array(),
+							'acc' => array('#ttbm_daywise_settings', '#ttbm_settings_feature', '#ttbm_settings_guide', '#ttbm_settings_related_tour', '#ttbm_settings_extras', '#ttbm_settings_why_chose_us', '#ttbm_add_promotional_setting', '#ttbm_settings_template', '#ttbm_display_settings'),
+						),
+					);
+					return apply_filters('ttbm_tour_wizard_steps', $steps);
+				}
 			//************************//
 			public function tour_settings_meta_box() {
 				$tour_label = TTBM_Function::get_name();
@@ -1880,6 +1932,8 @@
 					'saved_at'      => current_time('timestamp'),
 					'saved_at_text' => date_i18n(get_option('time_format'), current_time('timestamp')),
 					'post_status'   => get_post_status($tour_id),
+					'view_url'      => (string) get_permalink($tour_id),
+					'preview_url'   => (string) get_preview_post_link($tour_id),
 					// WordPress may still adjust the slug (sanitising, or de-duplicating
 					// it against an existing post), so report what was actually stored.
 					'post_name'     => (string) get_post_field('post_name', $tour_id),

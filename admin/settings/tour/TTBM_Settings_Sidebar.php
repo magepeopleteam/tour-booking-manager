@@ -127,7 +127,7 @@ body.ttbm-modern-edit-page #wpcontent { padding-left: 0 !important; }
 /* No left/right padding on the outer container — header fills 100% width.
    The .wrap inside handles content padding. */
 body.ttbm-modern-edit-page #wpbody-content { padding: 0 !important; }
-body.ttbm-modern-edit-page .wrap { padding: 0 20px 20px !important; margin: 0 auto !important; max-width: 90% !important; background: #fff !important; }
+body.ttbm-modern-edit-page .wrap { padding: 0 20px 20px !important; margin: 0 auto !important; max-width: 80% !important; background: #fff !important; }
 
 /* ══════════════════════════════════════════════
    SKELETON / PAGE LOADER
@@ -259,6 +259,9 @@ body.ttbm-modern-edit-page .wrap { padding: 0 20px 20px !important; margin: 0 au
 .ttbm-sk-cb-label { height: 10px; flex: 1; max-width: 120px; }
 
 /* Loader is a fixed overlay; do not hide page siblings or tab content stays invisible. */
+
+/* ── Hide info notices (plugin setup nags, etc.) on the edit page; errors/warnings stay ── */
+body.ttbm-modern-edit-page .notice.notice-info { display: none !important; }
 
 /* ── Hide original WP page title row (replaced by our header) ── */
 body.ttbm-modern-edit-page .wrap > h1.wp-heading-inline,
@@ -955,7 +958,7 @@ jQuery(function($){
 	var pageTitle   = <?php echo wp_json_encode($page_title); ?>;
 	var isHotelEdit = <?php echo $is_hotel ? 'true' : 'false'; ?>;
 	var isPublished = <?php echo ($post_id && get_post_status($post_id) === 'publish') ? 'true' : 'false'; ?>;
-	var previewUrl  = <?php echo wp_json_encode($post_id ? get_preview_post_link(get_post($post_id)) : '#'); ?>;
+	var previewUrl  = <?php $ttbm_pv_id = $post_id ?: (int) get_the_ID(); echo wp_json_encode($ttbm_pv_id ? get_preview_post_link($ttbm_pv_id) : '#'); ?>;
 	var postStatusSlug  = <?php echo wp_json_encode($post_status_slug); ?>;
 	var postStatusLabel = <?php echo wp_json_encode($post_status_label); ?>;
 	var btnLabel    = isPublished ? <?php echo wp_json_encode(__('Update', 'tour-booking-manager')); ?> : <?php echo wp_json_encode(__('Publish', 'tour-booking-manager')); ?>;
@@ -1028,83 +1031,100 @@ jQuery(function($){
 		$('#ttbm_post_title_submit').val($(this).val() || '');
 	});
 
-	/* ── Permalink / URL slug field ──
-	 * Only the hidden input is ever submitted. It is written on commit (blur or
-	 * Enter), never on keystroke, so the background auto-save cannot persist a
-	 * half-typed slug and litter the post with _wp_old_slug redirects. */
+	/* ── Permalink / URL slug ──
+	 * Shown as text under the title. While the slug is "auto" (new draft) it follows the title
+	 * and nothing is submitted, so the server builds it on save. Clicking it opens an inline
+	 * editor; only a committed edit writes the hidden post_name, never a keystroke, so the
+	 * background auto-save cannot persist a half-typed slug. */
 	(function(){
-		var $slugField = $('.ttbm-tour-slug-field');
-		if (!$slugField.length) {
+		var $wrap = $('.ttbm-tour-slug-field').first();
+		if (!$wrap.length) {
 			return;
 		}
+		var $slugBtn = $wrap.find('.ttbm-tour-slug-field__slug');
+		var $line    = $wrap.find('.ttbm-tour-slug-field__line');
+		var $editor  = $wrap.find('.ttbm-tour-slug-field__editor');
+		var $input   = $wrap.find('.ttbm-tour-slug-field__input');
+		var $value   = $wrap.find('.ttbm-tour-slug-field__value');
+		var $view    = $wrap.find('.ttbm-tour-slug-field__view');
+		var emptyText = $wrap.attr('data-ttbm-empty-text') || '';
+		var auto = $wrap.attr('data-ttbm-auto') === '1';
 
 		function sanitizeSlug(value) {
 			return String(value === null || typeof value === 'undefined' ? '' : value)
 				.toLowerCase()
 				.replace(/\s+/g, '-')
-				.replace(/[^a-z0-9¡-￿_\-]+/g, '')
+				.replace(/[^a-z0-9¡-\uffff_\-]+/g, '')
 				.replace(/-{2,}/g, '-')
 				.replace(/^-+|-+$/g, '');
 		}
 
-		function syncDisplay($wrap, slug) {
-			var prefix = $wrap.attr('data-ttbm-permalink-prefix') || '';
-			var suffix = $wrap.attr('data-ttbm-permalink-suffix') || '';
-			$wrap.find('.ttbm-tour-slug-field__preview-slug').text(slug);
-			var $view = $wrap.find('.ttbm-tour-slug-field__view');
-			if ($view.length) {
-				$view.toggle(!!slug).attr('href', prefix + slug + suffix);
+		function show(slug) {
+			$slugBtn.text(slug || emptyText).toggleClass('is-empty', !slug);
+			$input.val(slug);
+		}
+
+		function syncFromTitle() {
+			if (auto) {
+				show(sanitizeSlug($('#ttbm_post_title').val()));
 			}
 		}
 
-		function commit($input) {
-			var $wrap = $input.closest('.ttbm-tour-slug-field');
-			var slug  = sanitizeSlug($input.val());
-			if ($input.val() !== slug) {
-				$input.val(slug);
+		function openEditor() {
+			$line.hide();
+			$editor.css('display', 'flex');
+			$input.val(auto ? sanitizeSlug($('#ttbm_post_title').val()) : $value.val()).trigger('focus').trigger('select');
+		}
+		function closeEditor() {
+			$editor.hide();
+			$line.show();
+		}
+		function commit() {
+			var slug = sanitizeSlug($input.val());
+			if (slug === '') {
+				// Emptied: hand control back to the server (rebuilt from the title) for new drafts.
+				if (auto || $wrap.attr('data-ttbm-auto') === '1') {
+					auto = true;
+					$value.val('').trigger('change');
+					syncFromTitle();
+				}
+			} else if (slug !== $value.val()) {
+				auto = false;
+				$value.val(slug).trigger('change');
+				show(slug);
+				$view.hide();
 			}
-			var $value = $wrap.find('.ttbm-tour-slug-field__value');
-			if ($value.val() === slug) {
-				return;
-			}
-			$value.val(slug).trigger('change');
-			syncDisplay($wrap, slug);
+			closeEditor();
 		}
 
-		$(document).on('change blur', '.ttbm-tour-slug-field__input', function(){
-			commit($(this));
-		});
-		$(document).on('keydown', '.ttbm-tour-slug-field__input', function(e){
+		$wrap.on('click', '.ttbm-tour-slug-field__slug, .ttbm-tour-slug-field__edit', openEditor);
+		$wrap.on('click', '.ttbm-tour-slug-field__ok', commit);
+		$wrap.on('click', '.ttbm-tour-slug-field__cancel', closeEditor);
+		$input.on('keydown', function(e){
 			if (e.which === 13) {
 				e.preventDefault();
-				commit($(this));
-				$(this).trigger('blur');
+				commit();
+			} else if (e.which === 27) {
+				closeEditor();
 			}
 		});
 		/* Typing must not wake the auto-saver: the posted value has not changed yet. */
-		$slugField.find('.ttbm-tour-slug-field__input').on('input', function(e){
-			e.stopPropagation();
-		});
+		$input.on('input', function(e){ e.stopPropagation(); });
+		$(document).on('input', '#ttbm_post_title', syncFromTitle);
+		syncFromTitle();
 
-		/* The server is authoritative: it sanitises, resolves duplicates, and
-		 * rebuilds the slug from the title when the field was emptied. Mirror
-		 * whatever it actually stored. */
+		/* The server is authoritative (sanitises, de-duplicates). Once it has stored a slug, mirror it —
+		 * unless the user is mid-edit or the slug is still auto for a draft. */
 		$(document).ajaxSuccess(function(event, xhr, settings, data){
 			if (!data || !data.success || !data.data || typeof data.data.post_name !== 'string') {
 				return;
 			}
-			var $wrap = $('.ttbm-tour-slug-field').first();
-			if (!$wrap.length) {
+			var name = data.data.post_name;
+			if (auto || /^\d+$/.test(name) || $editor.is(':visible')) {
 				return;
 			}
-			var $input = $wrap.find('.ttbm-tour-slug-field__input');
-			// Never yank the field out from under someone mid-edit: a save triggered
-			// by another tab can land while they are still typing a new slug.
-			if (!$input.is(':focus')) {
-				$input.val(data.data.post_name);
-			}
-			$wrap.find('.ttbm-tour-slug-field__value').val(data.data.post_name);
-			syncDisplay($wrap, data.data.post_name);
+			$value.val(name);
+			show(name);
 		});
 	})();
 
@@ -1364,6 +1384,14 @@ jQuery(function($){
 			}
 			list($permalink, $sample_slug) = get_sample_permalink($post_id);
 			$slug = $post->post_name !== '' ? urldecode($post->post_name) : (string) $sample_slug;
+			// A new/unsaved tour has no real slug yet (Core's sample slug is just the post ID). Treat it
+			// as "auto": show a slug built from the title as it's typed, submit nothing, and let the
+			// server generate it on save. Only an explicit edit by the user makes it a fixed slug.
+			$is_auto = in_array($post->post_status, array('auto-draft', 'draft', 'pending'), true)
+				&& ($post->post_name === '' || (string) $post->post_name === (string) $post_id);
+			if ($is_auto && (string) $slug === (string) $post_id) {
+				$slug = '';
+			}
 
 			// Plain permalinks have no %postname%/%pagename% placeholder — the slug is
 			// still stored and still matters, there is just no live URL to preview.
@@ -1378,14 +1406,20 @@ jQuery(function($){
 				$suffix = isset($pieces[1]) ? urldecode($pieces[1]) : '';
 			}
 			$is_viewable = $placeholder && 'publish' === $post->post_status && $slug !== '';
+			$empty_text  = __('auto-generated from the title', 'tour-booking-manager');
 			?>
-			<div class="ttbm-tour-slug-field"
+			<div class="ttbm-tour-slug-field<?php echo $is_auto ? ' is-auto' : ''; ?>"
+				 data-ttbm-auto="<?php echo $is_auto ? '1' : '0'; ?>"
+				 data-ttbm-empty-text="<?php echo esc_attr($empty_text); ?>"
 				 data-ttbm-permalink-prefix="<?php echo esc_attr($prefix); ?>"
 				 data-ttbm-permalink-suffix="<?php echo esc_attr($suffix); ?>">
-				<label class="ttbm-tour-slug-field__label" for="ttbm_post_slug">
-					<?php esc_html_e('Permalink (URL Slug)', 'tour-booking-manager'); ?>
-				</label>
-				<div class="ttbm-tour-slug-field__row">
+				<p class="ttbm-tour-slug-field__line">
+					<span class="ttbm-tour-slug-field__label"><?php esc_html_e('Permalink:', 'tour-booking-manager'); ?></span>
+					<span class="ttbm-tour-slug-field__url"><?php if ($placeholder) { ?><span class="ttbm-tour-slug-field__preview-prefix"><?php echo esc_html($prefix); ?></span><?php } ?><button type="button" class="ttbm-tour-slug-field__slug" title="<?php esc_attr_e('Click to edit the URL slug', 'tour-booking-manager'); ?>"><?php echo esc_html($slug !== '' ? $slug : $empty_text); ?></button><?php if ($placeholder) { ?><span class="ttbm-tour-slug-field__preview-suffix"><?php echo esc_html($suffix); ?></span><?php } ?></span>
+					<button type="button" class="ttbm-tour-slug-field__edit"><?php esc_html_e('Edit', 'tour-booking-manager'); ?></button>
+					<a class="ttbm-tour-slug-field__view" href="<?php echo esc_url($prefix . $slug . $suffix); ?>" target="_blank" rel="noopener"<?php echo $is_viewable ? '' : ' style="display:none"'; ?>><?php esc_html_e('View', 'tour-booking-manager'); ?></a>
+				</p>
+				<div class="ttbm-tour-slug-field__editor" style="display:none">
 					<input
 						type="text"
 						id="ttbm_post_slug"
@@ -1395,21 +1429,10 @@ jQuery(function($){
 						autocomplete="off"
 						spellcheck="false"
 					/>
-					<?php if ($is_viewable) { ?>
-						<a class="ttbm-tour-slug-field__view" href="<?php echo esc_url($prefix . $slug . $suffix); ?>" target="_blank" rel="noopener">
-							<?php esc_html_e('View', 'tour-booking-manager'); ?>
-						</a>
-					<?php } ?>
+					<button type="button" class="button button-small ttbm-tour-slug-field__ok"><?php esc_html_e('OK', 'tour-booking-manager'); ?></button>
+					<button type="button" class="button-link ttbm-tour-slug-field__cancel"><?php esc_html_e('Cancel', 'tour-booking-manager'); ?></button>
 				</div>
-				<input type="hidden" name="post_name" class="ttbm-tour-slug-field__value" value="<?php echo esc_attr($slug); ?>" />
-				<?php if ($placeholder) { ?>
-					<p class="ttbm-tour-slug-field__preview">
-						<span class="ttbm-tour-slug-field__preview-prefix"><?php echo esc_html($prefix); ?></span><span class="ttbm-tour-slug-field__preview-slug"><?php echo esc_html($slug); ?></span><span class="ttbm-tour-slug-field__preview-suffix"><?php echo esc_html($suffix); ?></span>
-					</p>
-				<?php } ?>
-				<p class="ttbm-tour-slug-field__hint">
-					<?php esc_html_e('Leave it empty to rebuild the slug from the title. The old address keeps redirecting here after a change.', 'tour-booking-manager'); ?>
-				</p>
+				<input type="hidden" name="post_name" class="ttbm-tour-slug-field__value" value="<?php echo esc_attr($is_auto ? '' : $slug); ?>" />
 			</div>
 			<?php
 		}

@@ -120,10 +120,10 @@
 .ttbm-tour-wizard.ttbm-wz-enabled .tabLists.meta-sidebar {
 	display: none !important;
 }
-body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-tour-wizard.ttbm-wz-enabled .tabsContent > .tabsItem[data-tabs] {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-tour-wizard.ttbm-wz-enabled .ttbmTabs.leftTabs > .tabsContent > .tabsItem[data-tabs] {
 	display: none !important;
 }
-body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-tour-wizard.ttbm-wz-enabled .tabsContent > .tabsItem[data-tabs].ttbm-wz-show {
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-tour-wizard.ttbm-wz-enabled .ttbmTabs.leftTabs > .tabsContent > .tabsItem[data-tabs].ttbm-wz-show {
 	display: block !important;
 	content-visibility: visible !important;
 }
@@ -133,7 +133,7 @@ body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-tour-wizard.ttbm-wz-enable
 	padding-top: 24px;
 	border-top: 1px solid #e5e9f0;
 }
-.ttbm-tour-wizard.ttbm-wz-enabled .tabsContent {
+.ttbm-tour-wizard.ttbm-wz-enabled .ttbmTabs.leftTabs > .tabsContent {
 	min-width: 0;
 	overflow: visible; /* legacy overflow:auto would stop the footer sticking */
 }

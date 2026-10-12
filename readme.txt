@@ -5,7 +5,7 @@ Tags: tour booking, travel agency, travel booking, tour operator, hotel booking
 Requires at least: 4.4.0
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 2.3.5
+Stable tag: 2.3.6
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -231,6 +231,10 @@ Use the [WordPress.org support forum](https://wordpress.org/support/plugin/tour-
 
 
 == Changelog ==
+= 2.3.6 – 12 October 2026 =
+* Improvement: Tickets now load as soon as a date (or time slot) is picked on the default booking form, instead of waiting for a "Check" click; the button has been removed.
+* Fix: The step wizard's nested tabs (Repeated Dates time slots, Off Days/Off Dates) were hidden because the pane-hiding rule also matched tab panes nested inside panels.
+
 = 2.3.5 – 6 October 2026 =
 * Fix: Updated the bundled Appneck SDK to the latest version.
 

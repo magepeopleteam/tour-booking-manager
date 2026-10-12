@@ -171,7 +171,39 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
 
         let time_slot = parent.find('.ttbm_select_time_area');
         parent.find('.ttbm_booking_panel').html('');
-        // With time slots, wait for a slot (or Check Availability) before loading tickets.
+        // The slot area can exist yet be empty (time slots switched on but none defined for the
+        // day). There is nothing to wait for then, so load the tickets right away.
+        let slot_controls = time_slot.find('[name="ttbm_select_time"], .customRadio[data-radio], [data-radio-value]');
+        let free_slots = typeof ttbm_ajax_url_pro === 'undefined';
+        if (time_slot.length > 0 && free_slots && slot_controls.length < 1) {
+            time_slot.hide();
+            parent.find('.ttbm_booking_panel').show();
+            get_ttbm_ticket($(this));
+            ttbm_toggle_book_now_by_date(parent);
+            return true;
+        }
+        // With time slots, pick the first bookable slot for the visitor (they can change it) so the
+        // tickets appear straight away, without a click on Check Availability.
+        if (time_slot.length > 0 && free_slots && slot_controls.length > 0) {
+            placeholderLoaderRemove(parent);
+            time_slot.slideDown();
+            parent.find('.ttbm_booking_panel').show();
+            let time_input = time_slot.find('[name="ttbm_select_time"]').first();
+            if (time_input.is('select')) {
+                let first_time = time_input.find('option[value!=""]:not(:disabled)').first().val();
+                if (first_time) {
+                    time_input.val(first_time).trigger('change');
+                }
+            } else {
+                let first_slot = time_slot.find('.customRadio[data-radio]').not('.mage_disabled, .is-disabled').first();
+                if (first_slot.length) {
+                    first_slot.trigger('click');
+                }
+            }
+            ttbm_toggle_book_now_by_date(parent);
+            return true;
+        }
+        // Pro (slots reloaded per date): wait for a slot (or Check Availability) before loading tickets.
         if (time_slot.length > 0) {
             placeholderLoaderRemove(parent);
             time_slot.slideDown();

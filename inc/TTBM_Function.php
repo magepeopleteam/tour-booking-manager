@@ -2482,7 +2482,7 @@
 					$term_ids = array_keys($term_map);
 					$term_ids_placeholders = implode(',', array_fill(0, count($term_ids), '%d'));
 					$posts = $wpdb->get_results($wpdb->prepare(
-						"SELECT p.ID as post_id, t.term_id FROM {$wpdb->posts} p
+						"SELECT p.ID as post_id, tt.term_id FROM {$wpdb->posts} p
 						INNER JOIN {$wpdb->term_relationships} tr ON tr.object_id = p.ID
 						INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
 						WHERE p.post_type = 'ttbm_tour'

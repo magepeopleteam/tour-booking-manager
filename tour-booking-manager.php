@@ -218,17 +218,12 @@ if (!class_exists('TTBM_Woocommerce_Plugin')) {
 					define('TTBM_PLUGIN_VERSION', '2.2.0');
 				}
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Dependencies.php';
-				add_action('admin_init', array($this, 'activation_redirect_setup'), 90);
 			}
 			public function plugin_activation() {
 				// Set transient to trigger WooCommerce check / redirect
 				set_transient('ttbm_plugin_activated', true, 60);
-			}
-			public function activation_redirect_setup($plugin) {
-				// Create pages if WooCommerce is active
-				if (TTBM_Global_Function::check_woocommerce() == 1) {
-					self::on_activation_page_create();
-				}
+				// Demo shortcode pages (tour search, grid views, etc.) — independent of WooCommerce.
+				self::on_activation_page_create();
 			}
 			public static function on_activation_page_create() {
 				$pages_to_create = [

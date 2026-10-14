@@ -11,7 +11,7 @@
 	--ttbm_d_muted: #6b7280;
 	--ttbm_d_border: #e5e7eb;
 	--ttbm_d_section-gap: 32px;
-	font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	font-family: inherit;
 	color: var(--ttbm_d_text);
 	-webkit-font-smoothing: antialiased;
 }
@@ -118,93 +118,163 @@
 	margin-bottom: 0;
 }
 
-/* ---------- accordions: FAQ ---------- */
-#ttbm_content .ttbm_details_page .ttbm_faq_item {
-	margin: 0 0 12px;
-	border: 1px solid var(--ttbm_d_border);
-	border-radius: 12px;
-	background: #fff;
-	overflow: hidden;
-	transition: box-shadow .2s ease, border-color .2s ease;
+/* ---------- accordions: FAQ (modern minimal) ---------- */
+#ttbm_content .ttbm_details_page .ttbm_faq_section {
+	margin: 0;
+	padding: var(--ttbm_d_section-gap, 32px) 0;
 }
-#ttbm_content .ttbm_details_page .ttbm_faq_item:hover {
-	box-shadow: 0 8px 22px rgba(17, 24, 39, .07);
-	border-color: #dfe3ec;
+
+#ttbm_content .ttbm_details_page .ttbm_faq_section > .ttbm_section_title {
+	margin: 0 0 18px;
 }
-/* the FAQ list container should not add its own box */
-#ttbm_content .ttbm_details_page .ttbm_wp_editor > .ttbm_faq_content {
-	background: transparent;
+
+/* Single stacked panel instead of separate floating cards */
+#ttbm_content .ttbm_details_page .ttbm_wp_editor > .ttbm_faq_content,
+#ttbm_content .ttbm_details_page .ttbm_faq_list {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+	margin: 0;
 	padding: 0;
+	background: #fff;
+	border: 1px solid #e2e8f0;
+	border-radius: 14px;
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+	overflow: hidden;
+}
+
+#ttbm_content .ttbm_details_page .ttbm_faq_item {
+	margin: 0;
+	border: 0;
+	border-bottom: 1px solid #f1f5f9;
 	border-radius: 0;
+	background: transparent;
+	overflow: hidden;
+	transition: background-color 0.18s ease;
+}
+
+#ttbm_content .ttbm_details_page .ttbm_faq_item:last-child {
+	border-bottom: 0;
+}
+
+#ttbm_content .ttbm_details_page .ttbm_faq_item:hover {
+	box-shadow: none;
+	border-color: #f1f5f9;
+	background: #fafbfc;
 }
 
 /* question row */
 #ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title {
-	background: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	margin: 0;
+	padding: 16px 18px;
+	background: transparent;
 	border: 0;
 	border-radius: 0;
-	margin: 0;
-	padding: 15px 18px;
 	cursor: pointer;
-	align-items: center;
-	gap: 14px;
-	transition: background .2s ease, color .2s ease;
+	transition: color 0.18s ease;
 }
+
 #ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title h5 {
-	font-size: 16px;
+	flex: 1 1 auto;
+	min-width: 0;
+	margin: 0;
+	font-size: 15px;
 	font-weight: 600;
 	line-height: 1.45;
-	color: var(--ttbm_d_heading);
-	margin: 0;
-	text-transform: capitalize;
+	letter-spacing: -0.01em;
+	color: var(--ttbm_d_heading, #111827);
+	text-transform: none;
 }
+
 #ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title span {
-	font-size: 16px;
+	font-size: 12px;
 	font-weight: 600;
 	padding: 0;
 }
-/* active question highlight */
+
+/* active question */
 #ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title.active {
-	background: rgba(var(--color_theme_rgb), .06);
+	background: transparent;
 	border-radius: 0;
-	color: var(--color_theme);
-}
-#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title.active h5,
-#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title.active span {
-	color: var(--color_theme);
+	color: var(--color_theme, #2563eb);
 }
 
-/* the +/- icon as a round chip */
+#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title.active h5 {
+	color: var(--color_theme, #2563eb);
+}
+
+#ttbm_content .ttbm_details_page .ttbm_faq_item:has(.ttbm_faq_title.active) {
+	background: #fafbfc;
+}
+
+/* +/- icon chip */
 #ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title span[data-icon] {
 	flex-shrink: 0;
-	width: 28px;
-	height: 28px;
+	width: 30px;
+	height: 30px;
 	border-radius: 50%;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	background: #eef1f6;
-	color: var(--ttbm_d_heading);
+	background: #f1f5f9;
+	border: 1px solid #e2e8f0;
+	color: #475569;
 	font-size: 11px;
-	transition: background .2s ease, color .2s ease;
+	line-height: 1;
+	transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
 }
+
+#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title:hover span[data-icon] {
+	border-color: #dbe3ee;
+	color: var(--ttbm_d_heading, #111827);
+}
+
 #ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title.active span[data-icon] {
-	background: var(--color_theme);
+	background: var(--color_theme, #2563eb);
+	border-color: var(--color_theme, #2563eb);
 	color: #fff;
 }
 
 /* answer content */
 #ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_content {
-	background: #fff;
-	padding: 2px 18px 18px;
+	background: transparent;
+	padding: 0 18px 16px;
 	border-radius: 0;
-	font-size: 15px;
-	line-height: 1.75;
-	color: var(--ttbm_d_text);
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.65;
+	color: var(--ttbm_d_muted, #6b7280);
 }
+
 #ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_content p {
-	font-size: 15px;
-	line-height: 1.75;
+	margin: 0 0 0.6em;
+	font-size: 14px;
+	line-height: 1.65;
+	color: inherit;
+}
+
+#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_content p:last-child {
+	margin-bottom: 0;
+}
+
+@media (max-width: 640px) {
+	#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title {
+		padding: 14px 14px;
+		gap: 12px;
+	}
+
+	#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title h5 {
+		font-size: 14px;
+	}
+
+	#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_content {
+		padding: 0 14px 14px;
+		font-size: 13.5px;
+	}
 }
 
 /* ---------- Daily Schedule timeline ---------- */
@@ -297,6 +367,9 @@
 	cursor: pointer;
 	background: #fff;
 	border: 0;
+	/* it's an <h5>: without this the theme's heading font (often a large serif)
+	   makes day titles outweigh the FAQ questions right below them */
+	font-family: inherit;
 	font-size: inherit;
 	font-weight: inherit;
 }
@@ -309,6 +382,13 @@
 	flex: 1;
 }
 
+#ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_meta {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_label {
 	font-size: 11px;
 	font-weight: 700;
@@ -318,10 +398,23 @@
 	color: var(--color_theme, #2563eb);
 }
 
+/* Optional per-item time (see layout/day_wise_details.php: $day['ttbm_day_time'],
+   entered via the admin's `<input type="time">` — never shown when unset). */
+#ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_time {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	font-size: 11px;
+	font-weight: 600;
+	color: var(--ttbm_d_muted, #6b7280);
+}
+
+/* one step above the FAQ question (15px/600) so both lists read as one scale */
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_name {
-	font-size: 18px;
-	font-weight: 500;
-	line-height: 1.35;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 1.4;
+	letter-spacing: -0.01em;
 	color: var(--ttbm_d_heading, #111827);
 }
 
@@ -419,7 +512,7 @@
 	}
 
 	#ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_name {
-		font-size: 16px;
+		font-size: 15px;
 	}
 
 	#ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_item_details {
@@ -758,10 +851,10 @@
 }
 #ttbm_content .ttbm_default_theme .ttbm_hero_meta .location_name span { color: var(--color_theme); }
 
-/* hero stats — modern chip grid below slider */
+/* hero stats — professional tour facts bar */
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats {
 	padding: 0;
-	margin: 18px 0 22px;
+	margin: 18px 0 28px;
 	background: transparent;
 	border: none;
 	border-radius: 0;
@@ -769,18 +862,19 @@
 
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats_grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-	gap: 10px;
-	padding: 16px;
-	background: linear-gradient(145deg, #f8fafc 0%, #f1f5f9 100%);
-	border: 1px solid var(--ttbm_d_border, #e2e8f0);
-	border-radius: 16px;
-	box-shadow: 0 6px 24px rgba(15, 23, 42, 0.06);
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1px;
+	padding: 0;
+	background: #e8ebf0;
+	border: 1px solid var(--ttbm_d_border, #e5e7eb);
+	border-radius: 14px;
+	overflow: hidden;
+	box-shadow: none;
 }
 
-@media (min-width: 1100px) {
+@media (min-width: 900px) {
 	#ttbm_content .ttbm_default_theme .ttbm_hero_stats_grid {
-		grid-template-columns: repeat(5, minmax(0, 1fr));
+		grid-template-columns: repeat(4, minmax(0, 1fr));
 	}
 }
 
@@ -790,28 +884,33 @@
 
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon {
 	display: grid;
-	grid-template-columns: 40px minmax(0, 1fr);
+	grid-template-columns: 36px minmax(0, 1fr);
 	grid-template-rows: auto auto;
 	column-gap: 12px;
-	row-gap: 3px;
-	align-items: start;
+	row-gap: 2px;
+	align-content: center;
+	align-items: center;
 	margin: 0;
-	padding: 12px 14px;
-	min-height: 64px;
+	padding: 14px 16px;
+	min-width: 0;
 	max-width: none;
-	background: #fff;
-	border: 1px solid #e8edf5;
-	border-radius: 12px;
-	box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
-	color: var(--ttbm_d_heading, #0f172a);
-	font-size: 13px;
-	font-weight: 700;
-	line-height: 1.35;
+	background: #f8f9fb;
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+	color: var(--ttbm_d_heading, #111827);
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.3;
 	text-align: left;
 	white-space: normal;
 	position: relative;
 	overflow: hidden;
-	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	transition: background-color 0.2s ease;
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon:hover {
+	background: #fff;
 }
 
 /* kill global divider pseudo from ttbm_registration.css */
@@ -820,47 +919,44 @@
 	content: none !important;
 }
 
-#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon:hover {
-	border-color: rgba(var(--color_theme_rgb, 90, 86, 224), 0.28);
-	box-shadow: 0 6px 18px rgba(var(--color_theme_rgb, 90, 86, 224), 0.1);
-}
-
-/* title — right of icon, top row */
+/* label */
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon::before {
 	content: attr(title);
 	grid-column: 2;
 	grid-row: 1;
 	align-self: end;
-	text-align: left;
-	font-size: 10px;
-	font-weight: 700;
-	letter-spacing: 0.07em;
+	margin: 0;
+	padding: 0;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.06em;
 	text-transform: uppercase;
-	color: #94a3b8;
+	color: var(--ttbm_d_muted, #6b7280);
 	line-height: 1.2;
 }
 
-/* icon — left, vertically centered */
+/* icon badge */
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon i {
 	grid-column: 1;
 	grid-row: 1 / -1;
 	align-self: center;
-	justify-self: start;
-	flex-shrink: 0;
+	justify-self: center;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 40px;
-	height: 40px;
+	width: 36px;
+	height: 36px;
 	margin: 0;
-	font-size: 18px;
-	color: var(--color_theme, #5a56e0);
-	background: linear-gradient(135deg, rgba(var(--color_theme_rgb, 90, 86, 224), 0.14) 0%, rgba(var(--color_theme_rgb, 90, 86, 224), 0.05) 100%);
-	border: none;
+	font-size: 16px;
+	line-height: 1;
+	color: var(--color_theme, #2563eb);
+	background: #fff;
+	border: 1px solid #e8ebf0;
 	border-radius: 10px;
+	box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04);
 }
 
-/* value — right of icon, under title */
+/* value */
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon > span,
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon > .woocommerce-Price-amount,
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon > .ttbm_start_price_display {
@@ -868,77 +964,99 @@
 	grid-row: 2;
 	align-self: start;
 	justify-self: start;
-	text-align: left;
-	color: var(--ttbm_d_heading, #0f172a);
-	font-size: 13px;
-	font-weight: 700;
+	margin: 0;
+	padding: 0;
+	color: var(--ttbm_d_heading, #111827);
+	font-size: 14px;
+	font-weight: 600;
 	line-height: 1.35;
 	min-width: 0;
-	word-break: break-word;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	word-break: normal;
+	overflow-wrap: anywhere;
+	white-space: normal;
 }
 
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon > .ttbm_start_price_display {
 	display: inline-flex;
 	flex-wrap: wrap;
 	align-items: baseline;
-	gap: 4px;
+	gap: 6px;
+	-webkit-line-clamp: unset;
+	line-clamp: unset;
 }
 
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon .ttbm_regular_price.strikeLine .woocommerce-Price-amount {
-	font-size: 11px;
-	font-weight: 600;
-	color: #94a3b8;
+	font-size: 12px;
+	font-weight: 500;
+	color: #9ca3af;
 	text-decoration: line-through;
 }
 
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon.ttbm_hero_loc {
-	background: #fff;
-	border-color: #e8edf5;
+	background: transparent;
 }
 
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon.ttbm_available_seat_area .ttbm_available_seat {
-	color: var(--color_theme, #5a56e0);
-	font-weight: 800;
+	color: var(--color_theme, #2563eb);
+	font-weight: 700;
 }
 
-/* price is shown in the CTA block, so hide the price chip here */
-#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon:has(.mi-coins) {
-	display: none;
+/* price is shown in the CTA block, so hide it in the hero facts bar */
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon:has(.mi-coins),
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon.ttbm_hero_stat_item--hidden {
+	display: none !important;
 }
 
+/* only first 4 stats; rest appear after Load more */
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats_grid--collapsed .item_icon.ttbm_hero_stat_item--extra {
-	display: none;
-}
-
-#ttbm_content .ttbm_default_theme .ttbm_hero_stats_more {
-	display: none;
-	grid-column: 1 / -1;
-	justify-content: flex-end;
-	align-items: center;
-	padding: 2px 2px 0;
-	margin-top: 2px;
-}
-
-#ttbm_content .ttbm_default_theme .ttbm_hero_stats_more.is-visible {
-	display: flex;
+	display: none !important;
 }
 
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats_load_more {
-	padding: 0;
-	border: none;
-	background: none;
-	color: var(--color_theme, #5a56e0);
+	grid-column: 1 / -1;
+	justify-self: end;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin: 8px 12px 10px;
+	padding: 6px 12px;
+	border: 1px solid #e4e7ec;
+	border-radius: 999px;
+	background: #fff;
+	color: var(--ttbm_d_heading, #111827);
 	font-size: 12px;
 	font-weight: 600;
 	line-height: 1.4;
 	cursor: pointer;
-	text-decoration: underline;
-	text-underline-offset: 2px;
-	transition: color 0.2s ease;
+	text-decoration: none;
+	transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats_load_more::after {
+	content: "";
+	width: 6px;
+	height: 6px;
+	margin-top: -2px;
+	border-right: 1.5px solid currentColor;
+	border-bottom: 1.5px solid currentColor;
+	transform: rotate(45deg);
+	transition: transform 0.2s ease;
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats_grid:not(.ttbm_hero_stats_grid--collapsed) .ttbm_hero_stats_load_more::after {
+	margin-top: 2px;
+	transform: rotate(-135deg);
 }
 
 #ttbm_content .ttbm_default_theme .ttbm_hero_stats_load_more:hover {
-	color: #4338ca;
+	color: var(--color_theme, #2563eb);
+	border-color: rgba(var(--color_theme_rgb, 37, 99, 235), 0.35);
+	background: #fff;
 }
 
 /* mobile: bottom overlay on shorter hero */
@@ -966,30 +1084,25 @@
 		gap: 12px;
 	}
 	#ttbm_content .ttbm_default_theme .ttbm_hero_stats {
-		margin: 14px 0 18px;
+		margin: 14px 0 20px;
 	}
 	#ttbm_content .ttbm_default_theme .ttbm_hero_stats_grid {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 8px;
-		padding: 12px;
-		border-radius: 14px;
+		border-radius: 12px;
 	}
 	#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon {
-		min-height: 58px;
-		padding: 10px 12px;
-		font-size: 12px;
-		grid-template-columns: 36px minmax(0, 1fr);
+		padding: 12px 14px;
+		grid-template-columns: 32px minmax(0, 1fr);
 		column-gap: 10px;
 	}
 	#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon i {
-		width: 36px;
-		height: 36px;
-		font-size: 16px;
-		border-radius: 8px;
+		width: 32px;
+		height: 32px;
+		font-size: 15px;
+		border-radius: 9px;
 	}
 	#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon > span,
 	#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon > .woocommerce-Price-amount {
-		font-size: 12px;
+		font-size: 13px;
 	}
 	#ttbm_content .ttbm_default_theme .ttbm_hero_cta {
 		flex-direction: column;
@@ -1376,18 +1489,535 @@
 	background: rgba(var(--color_theme_rgb), .1); color: var(--color_theme); font-size: 16px; transition: background .2s ease, color .2s ease;
 }
 #ttbm_content .ttbm_content__right .ttbm_default_widget .ttbm_widget_content ul li a:hover .circleIcon_xs { background: var(--color_theme); color: #fff; }
+
+/* Why Book With Us — modern checklist card */
+#ttbm_content .ttbm_why_choose_us {
+	padding: 22px 20px 18px;
+	border: 1px solid #e2e8f0;
+	border-radius: 14px;
+	background: #fff;
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+#ttbm_content .ttbm_why_choose_us .ttbm_title_style_2 {
+	padding: 0 0 14px;
+	margin: 0 0 4px;
+	border-bottom: 1px solid #eef2f7;
+}
+
+#ttbm_content .ttbm_why_choose_us .ttbm_title_style_2 h5 {
+	margin: 0;
+	font-size: 17px;
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: -0.01em;
+	color: var(--ttbm_d_heading, #111827);
+}
+
+#ttbm_content .ttbm_why_choose_us .ttbm_widget_content {
+	padding: 0;
+	margin: 0;
+	background: transparent;
+	border: none;
+}
+
+#ttbm_content .ttbm_why_choose_us .ttbm_why_choose_us_list,
+#ttbm_content .ttbm_content__right .ttbm_why_choose_us .ttbm_widget_content ul.ttbm_why_choose_us_list {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin: 14px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+#ttbm_content .ttbm_why_choose_us .ttbm_why_choose_us_list li,
+#ttbm_content .ttbm_content__right .ttbm_why_choose_us .ttbm_widget_content ul.ttbm_why_choose_us_list li {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	margin: 0;
+	padding: 12px 12px;
+	border: 1px solid #eef2f7;
+	border-radius: 10px;
+	background: #f8fafc;
+	font-size: 14px;
+	line-height: 1.45;
+	color: var(--ttbm_d_text, #3a4250);
+	transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+#ttbm_content .ttbm_why_choose_us .ttbm_why_choose_us_list li:hover {
+	background: #fff;
+	border-color: #e2e8f0;
+}
+
+#ttbm_content .ttbm_why_choose_us .ttbm_why_choose_us_icon {
+	flex-shrink: 0;
+	display: inline-grid;
+	place-items: center;
+	width: 28px;
+	height: 28px;
+	margin: 0;
+	padding: 0;
+	border-radius: 50%;
+	background: rgba(var(--color_theme_rgb, 37, 99, 235), 0.12);
+	color: var(--color_theme, #2563eb);
+	font-size: 13px;
+	line-height: 1;
+	text-align: center;
+}
+
+#ttbm_content .ttbm_why_choose_us .ttbm_why_choose_us_icon .mi {
+	display: block;
+	width: 1em;
+	height: 1em;
+	margin: 0;
+	padding: 0;
+	font-size: 13px;
+	line-height: 1;
+	color: inherit;
+	text-align: center;
+}
+
+#ttbm_content .ttbm_why_choose_us .ttbm_why_choose_us_icon .mi::before {
+	display: block;
+	width: 1em;
+	height: 1em;
+	margin: 0;
+	line-height: 1;
+	text-align: center;
+}
+
+#ttbm_content .ttbm_why_choose_us .ttbm_why_choose_us_text {
+	flex: 1 1 auto;
+	min-width: 0;
+	font-weight: 500;
+	color: var(--ttbm_d_heading, #111827);
+}
+
+/* Got a Question — modern minimal contact block */
+#ttbm_content .ttbm_get_question,
+#ttbm_content .ttbm_details_page .ttbm_content__right .ttbm_default_widget.ttbm_get_question {
+	padding: 24px 22px 20px;
+	border: 1px solid var(--ttbm_d_border, #e5e7eb);
+	border-radius: 12px;
+	background: #fff;
+	box-shadow: none;
+}
+
+#ttbm_content .ttbm_get_question .ttbm_title_style_2 {
+	padding: 0 0 14px;
+	margin: 0 0 4px;
+	border-bottom: 1px solid #eef2f7;
+}
+
+#ttbm_content .ttbm_get_question .ttbm_title_style_2 h5 {
+	margin: 0;
+	font-size: 17px;
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: -0.01em;
+	color: var(--ttbm_d_heading, #111827);
+}
+
+#ttbm_content .ttbm_get_question .ttbm_widget_content {
+	padding: 0;
+	margin: 0;
+	background: transparent;
+	border: none;
+}
+
+#ttbm_content .ttbm_get_question .ttbm_get_question_text {
+	margin: 10px 0 0;
+	padding: 0;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.6;
+	color: var(--ttbm_d_muted, #6b7280);
+	text-align: left;
+}
+
+#ttbm_content .ttbm_get_question .ttbm_get_question_contacts,
+#ttbm_content .ttbm_content__right .ttbm_get_question .ttbm_widget_content ul.ttbm_get_question_contacts {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+	margin: 18px 0 0;
+	padding: 0;
+	list-style: none;
+	border-top: 1px solid #f1f5f9;
+}
+
+#ttbm_content .ttbm_get_question .ttbm_get_question_contacts li,
+#ttbm_content .ttbm_content__right .ttbm_get_question .ttbm_widget_content ul.ttbm_get_question_contacts li {
+	margin: 0;
+	padding: 0;
+	font-size: 14px;
+	line-height: 1.4;
+	border-bottom: 1px solid #f1f5f9;
+}
+
+#ttbm_content .ttbm_get_question .ttbm_get_question_contacts li a,
+#ttbm_content .ttbm_content__right .ttbm_get_question .ttbm_widget_content ul.ttbm_get_question_contacts li a {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 7px 2px;
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+	color: var(--ttbm_d_heading, #111827);
+	font-weight: 500;
+	text-decoration: none;
+	transition: color 0.18s ease, padding-left 0.18s ease;
+}
+
+#ttbm_content .ttbm_get_question .ttbm_get_question_contacts li a:hover,
+#ttbm_content .ttbm_content__right .ttbm_get_question .ttbm_widget_content ul.ttbm_get_question_contacts li a:hover {
+	background: transparent;
+	border-color: transparent;
+	color: var(--color_theme, #2563eb);
+	padding-left: 4px;
+}
+
+#ttbm_content .ttbm_get_question .ttbm_get_question_icon {
+	flex-shrink: 0;
+	display: inline-grid;
+	place-items: center;
+	width: 28px;
+	height: 28px;
+	margin: 0;
+	padding: 0;
+	border-radius: 50%;
+	background: rgba(var(--color_theme_rgb, 37, 99, 235), 0.08);
+	border: 0;
+	color: var(--color_theme, #2563eb);
+	font-size: 13px;
+	line-height: 1;
+	transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+#ttbm_content .ttbm_get_question .ttbm_get_question_contacts li a:hover .ttbm_get_question_icon {
+	background: var(--color_theme, #2563eb);
+	color: #fff;
+}
+
+#ttbm_content .ttbm_get_question .ttbm_get_question_icon .mi {
+	display: block;
+	width: 1em;
+	height: 1em;
+	margin: 0;
+	padding: 0;
+	font-size: 13px;
+	line-height: 1;
+	color: inherit;
+	text-align: center;
+}
+
+#ttbm_content .ttbm_get_question .ttbm_get_question_icon .mi::before {
+	display: block;
+	width: 1em;
+	height: 1em;
+	margin: 0;
+	line-height: 1;
+	text-align: center;
+}
+
+#ttbm_content .ttbm_get_question .ttbm_get_question_label {
+	flex: 1 1 auto;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 13.5px;
+	letter-spacing: -0.01em;
+}
+
 /* enquiry trigger button */
 #ttbm_content .get-enquiry-popup { margin-top: 16px; }
 #ttbm_content .get-enquiry-popup button {
-	width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-	background: #fafafa !important;
-	color: var(--ttbm_d_heading) !important;
-	border: 1px solid #c9c9d4 !important;
-	border-radius: 11px; padding: 13px 18px; font-size: 15px; font-weight: 700; cursor: pointer;
-	transform: none; box-shadow: none; transition: transform .2s ease, box-shadow .2s ease;
+	width: 100%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	background: transparent !important;
+	color: var(--ttbm_d_heading, #111827) !important;
+	border: 1px solid var(--ttbm_d_border, #e5e7eb) !important;
+	border-radius: 10px;
+	padding: 11px 16px;
+	font-size: 13.5px;
+	font-weight: 600;
+	letter-spacing: -0.01em;
+	cursor: pointer;
+	transform: none;
+	box-shadow: none;
+	transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
 }
-#ttbm_content .get-enquiry-popup button:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(var(--color_theme_rgb), .38); }
-#ttbm_content .get-enquiry-popup button span { color: var(--ttbm_d_heading) !important; }
+#ttbm_content .get-enquiry-popup button:hover {
+	transform: none;
+	box-shadow: none;
+	background: var(--color_theme, #2563eb) !important;
+	border-color: var(--color_theme, #2563eb) !important;
+	color: #fff !important;
+}
+#ttbm_content .get-enquiry-popup button span { color: inherit !important; }
+
+#ttbm_content .ttbm_get_question .get-enquiry-popup {
+	margin-top: 16px;
+	padding-top: 0;
+	border-top: 0;
+}
+
+/* =====================================================================
+   Meet our guide — modern guide carousel / grid
+   ===================================================================== */
+#ttbm_content .ttbm-tour-guide {
+	margin: 0 0 var(--ttbm_d_section-gap, 32px);
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_default_widget {
+	position: relative;
+	padding: 22px 20px 18px;
+	margin: 0;
+	border: 1px solid #e2e8f0;
+	border-radius: 14px;
+	background: #fff;
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_tour_guide_header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 0 0 14px;
+	margin: 0 0 4px;
+	border-bottom: 1px solid #eef2f7;
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_tour_guide_header .ttbm_title_style_2 {
+	flex: 1 1 auto;
+	min-width: 0;
+	padding: 0;
+	margin: 0;
+	border-bottom: 0;
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_title_style_2 h5 {
+	margin: 0;
+	font-size: 17px;
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: -0.01em;
+	color: var(--ttbm_d_heading, #111827);
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_tour_guide_nav {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	position: static;
+	width: auto;
+	margin: 0;
+	padding: 0;
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_tour_guide_nav_btn {
+	display: inline-grid;
+	place-items: center;
+	width: 34px;
+	height: 34px;
+	margin: 0;
+	padding: 0;
+	border: 1px solid #e2e8f0;
+	border-radius: 50%;
+	background: #fff;
+	color: var(--ttbm_d_heading, #111827);
+	font-size: 12px;
+	line-height: 1;
+	cursor: pointer;
+	box-shadow: none;
+	transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_tour_guide_nav_btn:hover {
+	background: var(--color_theme, #2563eb);
+	border-color: var(--color_theme, #2563eb);
+	color: #fff;
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_widget_content {
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	border: none;
+}
+
+#ttbm_content .ttbm-tour-guide .tour-guide-lists {
+	margin: 14px 0 0;
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_tour_guide_item {
+	margin: 0;
+	overflow: hidden;
+	border: 1px solid #eef2f7;
+	border-radius: 12px;
+	background: #f8fafc;
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_tour_guide_item .bg_image_area {
+	position: relative;
+	width: 100%;
+	height: 0;
+	padding-bottom: 72%;
+	margin: 0;
+	overflow: hidden;
+	border-radius: 12px 12px 0 0;
+}
+
+#ttbm_content .ttbm-tour-guide .tour-guide-lists.circle .ttbm_tour_guide_item .bg_image_area,
+#ttbm_content .ttbm-tour-guide #ttbm-tour-guide.circle .ttbm_tour_guide_item .bg_image_area {
+	width: 148px;
+	height: 148px;
+	padding-bottom: 0;
+	margin: 18px auto 0;
+	border-radius: 50%;
+	border: 3px solid #fff;
+	box-shadow: 0 0 0 1px #e2e8f0;
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_tour_guide_item .bg_image_area > div[data-bg-image] {
+	position: absolute;
+	inset: 0;
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+	transition: transform 0.35s ease;
+}
+
+#ttbm_content .ttbm-tour-guide .tour-guide-lists.circle .ttbm_tour_guide_item .bg_image_area > div[data-bg-image] {
+	border-radius: 50%;
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_tour_guide_item .bg_image_area > div[data-bg-image]::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, transparent 42%, rgba(15, 23, 42, 0.72) 100%);
+	pointer-events: none;
+}
+
+#ttbm_content .ttbm-tour-guide .tour-guide-lists.circle .ttbm_tour_guide_item .bg_image_area > div[data-bg-image]::after {
+	background: linear-gradient(180deg, transparent 35%, rgba(15, 23, 42, 0.55) 100%);
+	border-radius: 50%;
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_tour_guide_item:hover .bg_image_area > div[data-bg-image] {
+	transform: scale(1.04);
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_tour_guide_item .ttbm_list_title.absolute_item.bottom {
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: auto;
+	padding: 14px 16px;
+	background: transparent;
+	background-color: transparent;
+	border-radius: 0;
+	text-align: left;
+}
+
+#ttbm_content .ttbm-tour-guide .tour-guide-lists.circle .ttbm_tour_guide_item .ttbm_list_title.absolute_item.bottom {
+	padding: 10px 12px;
+	text-align: center;
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_tour_guide_item .ttbm_list_title h5 {
+	margin: 0;
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.3;
+	letter-spacing: -0.01em;
+	color: #fff;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_tour_guide_item .ttbm_description {
+	margin: 0;
+	padding: 14px 16px 16px;
+	font-size: 13.5px;
+	font-weight: 400;
+	line-height: 1.6;
+	color: var(--ttbm_d_muted, #6b7280);
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_tour_guide_item .ttbm_description p {
+	margin: 0 0 0.6em;
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_tour_guide_item .ttbm_description p:last-child {
+	margin-bottom: 0;
+}
+
+#ttbm_content .ttbm-tour-guide .ttbm_tour_guide_item .load_more_text {
+	color: var(--color_theme, #2563eb);
+	font-weight: 600;
+	cursor: pointer;
+}
+
+/* Non-carousel grid */
+#ttbm_content .ttbm-tour-guide .tour-guide-lists:not(.owl-carousel) {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	gap: 14px;
+}
+
+#ttbm_content .ttbm-tour-guide .tour-guide-lists.circle:not(.owl-carousel) {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+	gap: 14px;
+	justify-items: center;
+}
+
+#ttbm_content .ttbm-tour-guide .tour-guide-lists.circle:not(.owl-carousel) .ttbm_tour_guide_item {
+	width: 100%;
+	max-width: 220px;
+	text-align: center;
+	background: #fff;
+}
+
+/* Owl chrome — use custom header nav */
+#ttbm_content .ttbm-tour-guide .owl-nav,
+#ttbm_content .ttbm-tour-guide .owl-dots {
+	display: none !important;
+}
+
+#ttbm_content .ttbm-tour-guide .owl-carousel .owl-stage {
+	display: flex;
+	align-items: stretch;
+}
+
+#ttbm_content .ttbm-tour-guide .owl-carousel .owl-item {
+	display: flex;
+}
+
+#ttbm_content .ttbm-tour-guide .owl-carousel .ttbm_tour_guide_item {
+	width: 100%;
+	height: 100%;
+}
+
+@media (max-width: 640px) {
+	#ttbm_content .ttbm-tour-guide .ttbm_default_widget {
+		padding: 18px 16px 14px;
+	}
+
+	#ttbm_content .ttbm-tour-guide .ttbm_tour_guide_item .bg_image_area {
+		padding-bottom: 78%;
+	}
+}
 
 /* =====================================================================
    Enquiry popup — beautiful animated modal
@@ -1442,7 +2072,7 @@
 	width: 304px; padding: 14px; margin-top: 6px;
 	border: 1px solid #e6e9f0; border-radius: 16px; background: #fff;
 	box-shadow: 0 20px 48px rgba(17, 24, 39, .2);
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+	font-family: inherit;
 	font-size: 13px; z-index: 1000000 !important;
 }
 /* header */
@@ -1463,7 +2093,7 @@
 .ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span { display: none; } /* hide sprite arrows */
 .ui-datepicker .ui-datepicker-prev::after, .ui-datepicker .ui-datepicker-next::after {
 	position: absolute; top: 0; left: 0; right: 0; bottom: 0; line-height: 32px; text-align: center;
-	font-size: 17px; color: #3a4250; font-family: Arial, sans-serif;
+	font-size: 17px; color: #3a4250; font-family: inherit;
 }
 .ui-datepicker .ui-datepicker-prev::after { content: "\2039"; }
 .ui-datepicker .ui-datepicker-next::after { content: "\203A"; }
@@ -1494,8 +2124,12 @@
 	color: #c4c9d4; background: transparent; text-decoration: line-through; opacity: .65; cursor: not-allowed;
 }
 
-/* Default template — override global #ui-datepicker-div purple skin */
-body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker {
+/* Default + Travello templates — override global #ui-datepicker-div purple skin
+   (Travello has no picker skin of its own and fell back to the bordered grid).
+   border-box keeps the 304px popup the same size whatever the site theme's
+   box-sizing, so the 7 x 38px grid always fits inside it. */
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div.ui-datepicker {
+	box-sizing: border-box;
 	width: 304px;
 	padding: 14px;
 	margin-top: 6px;
@@ -1503,12 +2137,12 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker {
 	border-radius: 16px;
 	background: #fff;
 	box-shadow: 0 20px 48px rgba(17, 24, 39, 0.2);
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+	font-family: inherit;
 	font-size: 13px;
 	z-index: 1000000 !important;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-header {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-header {
 	background: transparent;
 	background-image: none;
 	border: 0;
@@ -1521,7 +2155,7 @@ body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-header {
 	color: #1d2430;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-title {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-title {
 	background: transparent;
 	background-image: none;
 	color: #1d2430;
@@ -1534,9 +2168,10 @@ body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-title {
 	text-align: center;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-title select,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-title select.ui-datepicker-month,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-title select.ui-datepicker-year {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-title select,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-title select.ui-datepicker-month,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-title select.ui-datepicker-year {
+	width: auto; /* themes (e.g. Woodmart) set select{width:100%}, stacking both under the arrows */
 	min-width: auto;
 	height: auto;
 	font-size: 13px;
@@ -1550,8 +2185,8 @@ body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-title select.ui-
 	text-align: left;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-prev,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-next {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-prev,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-next {
 	top: 0;
 	width: 32px;
 	height: 32px;
@@ -1562,39 +2197,39 @@ body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-next {
 	transition: background 0.2s ease;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-prev { left: 0; }
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-next { right: 0; }
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-prev { left: 0; }
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-next { right: 0; }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-prev:hover,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-prev:focus,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-next:hover,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-next:focus {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-prev:hover,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-prev:focus,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-next:hover,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-next:focus {
 	background: var(--color_theme);
 	border-color: transparent;
 	box-shadow: none;
 	outline: none;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-header .ui-state-hover {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-header .ui-state-hover {
 	background-color: var(--color_theme);
 	background-image: none;
 	border-color: transparent;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-header .ui-icon,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-prev span,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-next span {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-header .ui-icon,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-prev span,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-next span {
 	display: none;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-prev::before,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-next::before {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-prev::before,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-header a.ui-datepicker-next::before {
 	display: none;
 	content: none;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-prev::after,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-next::after {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-prev::after,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-next::after {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -1604,25 +2239,25 @@ body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-next::after {
 	text-align: center;
 	font-size: 17px;
 	color: #3a4250;
-	font-family: Arial, sans-serif;
+	font-family: inherit;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-prev::after { content: "\2039"; }
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-next::after { content: "\203A"; }
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-prev::after { content: "\2039"; }
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-next::after { content: "\203A"; }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-prev:hover::after,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-next:hover::after {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-prev:hover::after,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-next:hover::after {
 	color: #fff;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div table.ui-datepicker-calendar {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div table.ui-datepicker-calendar {
 	width: 100%;
 	border-collapse: collapse;
 	margin: 0;
 	font-size: 13px;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div table.ui-datepicker-calendar th {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div table.ui-datepicker-calendar th {
 	padding: 8px 0;
 	font-size: 11px;
 	font-weight: 700;
@@ -1633,16 +2268,20 @@ body:has(.ttbm_default_theme) #ui-datepicker-div table.ui-datepicker-calendar th
 	border: 0;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td {
+/* The disabled-day selector outranks ttbm_registration.css's
+   `td.ui-datepicker-unselectable.ui-state-disabled { padding: 4px 6px }`,
+   which otherwise widens every column until the grid overflows the popup. */
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div.ui-datepicker td,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div.ui-datepicker td.ui-datepicker-unselectable.ui-state-disabled {
 	background-color: transparent;
 	border: 0;
 	padding: 2px;
 	text-align: center;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-calendar td a,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-calendar td span,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-state-default {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-calendar td a,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-calendar td span,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-state-default {
 	display: block;
 	width: 34px;
 	height: 34px;
@@ -1660,42 +2299,54 @@ body:has(.ttbm_default_theme) #ui-datepicker-div .ui-state-default {
 	transition: background 0.15s ease, color 0.15s ease;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default,
-body:has(.ttbm_default_theme) #ui-datepicker-div a.ui-state-default {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div a.ui-state-default {
 	background: rgba(var(--color_theme_rgb), 0.1);
 	color: var(--color_theme);
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default:hover,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-hover,
-body:has(.ttbm_default_theme) #ui-datepicker-div a.ui-state-default:hover {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default:hover,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-hover,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div a.ui-state-default:hover {
 	background: var(--color_theme);
 	color: #fff;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-today a {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-today a {
 	box-shadow: inset 0 0 0 2px var(--color_theme);
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-active,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-highlight,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-state-active {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-active,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-highlight,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-state-active {
 	background: var(--color_theme);
 	color: #fff;
 	box-shadow: 0 4px 10px rgba(var(--color_theme_rgb), 0.4);
 	background-image: none;
 }
 
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-unselectable span,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-calendar td.ui-state-disabled span,
-body:has(.ttbm_default_theme) #ui-datepicker-div .ui-datepicker-calendar td.ttbm-date-unavailable span,
-body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-unselectable.ui-state-disabled {
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-unselectable span,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-calendar td.ui-state-disabled span,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div .ui-datepicker-calendar td.ttbm-date-unavailable span,
+body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div.ui-datepicker td.ui-datepicker-unselectable.ui-state-disabled {
 	color: #c4c9d4;
 	background: transparent;
 	border: 0;
 	text-decoration: line-through;
 	opacity: 0.65;
 	cursor: not-allowed;
+}
+
+/* Phones: the date field spans the full booking card, so centre the popup
+   on the screen instead of jQuery UI's input-left anchor, which pushes it
+   against the right edge. !important beats the inline `left` it writes. */
+@media (max-width: 767px) {
+	body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div.ui-datepicker {
+		left: 0 !important;
+		right: 0;
+		margin-left: auto;
+		margin-right: auto;
+	}
 }
 
 /* =====================================================================
@@ -1781,6 +2432,91 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	padding: 0;
 	box-shadow: none;
 	--ttbm_booking-pad-x: 20px;
+}
+
+/* Particular-dates tours: each date row is also a .ttbm_registration_area, so
+   the padding:0 above left its text on the rounded border, and the base
+   `justify-content: space-between` let the arrow/price drift with text width.
+   Fixed columns keep every row aligned: start | arrow | end | price | button. */
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_area {
+	margin: 0 0 12px;
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr) minmax(96px, max-content) max-content;
+	align-items: center;
+	gap: 12px 24px;
+	padding: 16px var(--ttbm_booking-pad-x);
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > div:nth-of-type(1) { grid-column: 1; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > h4:nth-of-type(1) { grid-column: 2; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > div:nth-of-type(2) { grid-column: 3; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > h4:nth-of-type(2) { grid-column: 4; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > button { grid-column: 5; }
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item .flexColumn {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+}
+/* the date parts are <h6>s — reset the theme's heading font/case/tracking */
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item h6 {
+	margin: 0;
+	font-family: inherit;
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.35;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var(--ttbm_d_heading);
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item h6:first-child {
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+	color: var(--ttbm_d_muted);
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item h6:nth-child(3) {
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--ttbm_d_muted);
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > h4 {
+	margin: 0;
+	font-family: inherit;
+	line-height: 1.2;
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > h4:nth-of-type(1) {
+	justify-self: center;
+	font-size: 20px;
+	color: var(--color_theme);
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > h4:nth-of-type(2) {
+	justify-self: end;
+	font-size: 18px;
+	font-weight: 700;
+	white-space: nowrap;
+	color: var(--ttbm_d_heading);
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > button {
+	white-space: nowrap;
+}
+/* phones: dates on one line, price + button on the next */
+@media (max-width: 640px) {
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item {
+		grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
+		gap: 12px;
+		padding: 14px 16px;
+	}
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > h4:nth-of-type(2) {
+		grid-column: 1;
+		justify-self: start;
+	}
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .particular_date_item > button {
+		grid-column: 2 / 4;
+		justify-self: end;
+	}
 }
 
 /* unified horizontal inset — one padding layer for all sections */
@@ -2146,6 +2882,28 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot.customRadio.button_type::after {
 	display: none;
 }
+/* Time-wise stock: per-slot seats-left line under the slot time. */
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot .ttbm-time-slot__label {
+	display: block;
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot .ttbm-time-slot__stock {
+	display: block;
+	margin-top: 2px;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1.3;
+	letter-spacing: .01em;
+	color: #15803d;
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot.active .ttbm-time-slot__stock {
+	color: rgba(255, 255, 255, .85);
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot--sold-out .ttbm-time-slot__stock {
+	color: #b91c1c;
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm-time-slot--sold-out .ttbm-time-slot__label {
+	text-decoration: line-through;
+}
 
 /* ---- ticket area ---- */
 :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_booking_panel { padding: 0; }
@@ -2343,6 +3101,14 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 	box-sizing: border-box;
 	padding: 0 0 16px !important;
 	text-align: left !important;
+}
+/* No attendee form yet (JS appends one per ticket once a qty is chosen):
+   collapse the row so its border doesn't draw a second divider under the ticket. */
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_enhanced_table tr.ttbm_attendee_form_row:not(:has(td *)) {
+	border-bottom: 0;
+}
+:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_enhanced_table tr.ttbm_attendee_form_row:not(:has(td *)) td {
+	padding: 0 !important;
 }
 :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_attendee_form_row .ttbm_attendee_form_item,
 :is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_attendee_form_row .ttbm-attendee-form {
@@ -2766,40 +3532,55 @@ body:has(.ttbm_default_theme) #ui-datepicker-div.ui-datepicker td.ui-datepicker-
 }
 
 @media (max-width: 768px) {
+	/* Two compact lines per ticket: name + stepper, then badge + price under
+	   the name. A badge + price + stepper line needs ~330px, more than a phone
+	   card has, so the stepper used to wrap onto a third padded line. */
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row {
-		flex-wrap: wrap;
-		align-items: flex-start;
-		gap: 12px;
+		--ttbm-ticket-indent: 0px;
+		display: grid;
+		grid-template-columns: var(--ttbm-ticket-indent) auto minmax(0, 1fr) auto;
+		grid-template-areas:
+			"info info  info  qty"
+			".    badge price price";
+		align-items: center;
+		gap: 8px 0;
+		padding: 14px 0;
+	}
+	/* line the price up with the ticket name, past the 40px icon + 10px gap */
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row:has(.ttbm_ticket_icon) {
+		--ttbm-ticket-indent: 50px;
 	}
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td {
 		width: auto !important;
+		min-width: 0;
 		border-bottom: 0 !important;
-		padding: 12px 0 !important;
-		flex-direction: row !important;
-		justify-content: flex-start !important;
+		padding: 0 !important;
 	}
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-person-info {
-		flex: 1 1 100%;
+		grid-area: info;
+	}
+	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row .ttbm_ticket_name_text {
+		overflow-wrap: anywhere;
 	}
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-ticket-badge-col {
-		flex: 0 0 auto;
-		order: 2;
+		grid-area: badge;
+		align-self: start;
+		margin-right: 8px;
 	}
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-regular-price {
-		flex: 1 1 auto;
-		order: 3;
+		grid-area: price;
 		text-align: left;
 	}
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_row td.ttbm-select-quantity {
-		flex: 0 0 auto;
-		order: 4;
-		margin-left: 0;
+		grid-area: qty;
+		margin-left: 12px;
 	}
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_price_container {
 		align-items: flex-start;
 		text-align: left;
 	}
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_price_meta {
+		flex-wrap: wrap;
 		justify-content: flex-start;
 	}
 	:is(#ttbm_content, .ttbm_reg_shortcode) .ttbm_booking_section .ttbm_ticket_details:has(.ttbm_ticket_icon) .ttbm_ticket_description {
@@ -5102,4 +5883,786 @@ body .daterangepicker.ttbm-hotel-daterange select.yearselect {
         width: 100%;
         justify-content: center;
     }
+}
+
+/* ============================================================
+   Hotel-based tour booking — shared component responsiveness
+
+   Hotel booking appears both in wide content and narrow sidebars. These
+   components therefore respond to their own width instead of the viewport.
+   The selectors are based on shared ticket markup so Default, Smart, Viator,
+   Travello, shortcodes and template overrides receive the same fix.
+   ============================================================ */
+
+body .ttbm_hotel_booking_toolbar,
+body .ttbm_hotel_booking_cards {
+	--ttbm-hotel-accent: var( --color_theme, #5b3cbe );
+	--ttbm-hotel-ink: #172033;
+	--ttbm-hotel-muted: #667085;
+	--ttbm-hotel-line: #e4e7ec;
+	box-sizing: border-box;
+	width: 100%;
+	min-width: 0;
+	max-width: 100%;
+	color: var( --ttbm-hotel-ink );
+}
+
+/* Date range: icon, input and action stay aligned until the component is too
+   narrow to preserve a useful tap target. */
+body .ttbm_hotel_booking_toolbar {
+	container: ttbm-hotel-toolbar / inline-size;
+	margin: 0 0 18px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+}
+
+body .ttbm_hotel_booking_toolbar .ttbm_select_date_area,
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_booking_controls,
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_date_field {
+	display: block;
+	width: 100%;
+	min-width: 0;
+	max-width: none;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+}
+
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_booking_title {
+	margin: 0 0 14px;
+	padding: 0;
+	border: 0;
+	font-size: 20px;
+	font-weight: 700;
+	line-height: 1.3;
+	text-align: left;
+	text-transform: none;
+	white-space: normal;
+	color: var( --ttbm-hotel-ink );
+}
+
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_date_label {
+	display: block;
+	margin: 0 0 7px;
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 1.2;
+	letter-spacing: .06em;
+	text-align: left;
+	text-transform: uppercase;
+	color: var( --ttbm-hotel-muted );
+}
+
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_date_row {
+	display: grid;
+	grid-template-columns: minmax( 0, 1fr ) auto;
+	align-items: stretch;
+	gap: 10px;
+	width: 100%;
+	min-width: 0;
+}
+
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_date_input_wrap {
+	display: flex;
+	align-items: center;
+	gap: 9px;
+	width: 100%;
+	min-width: 0;
+	height: 48px;
+	box-sizing: border-box;
+	padding: 0 12px;
+	border: 1px solid var( --ttbm-hotel-line ) !important;
+	border-radius: 12px;
+	background: #f8f9fc !important;
+	overflow: hidden;
+}
+
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_date_input_wrap .mi-calendar-days {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	flex: 0 0 28px;
+	border-radius: 8px;
+	background: #eeebff;
+	font-size: 15px;
+	color: var( --ttbm-hotel-accent );
+}
+
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_date_input,
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_date_input.formControl {
+	flex: 1 1 auto;
+	width: 100% !important;
+	min-width: 0;
+	height: auto !important;
+	min-height: 0 !important;
+	margin: 0;
+	padding: 0 !important;
+	border: 0 !important;
+	background: transparent !important;
+	box-shadow: none !important;
+	font-size: 12px;
+	font-weight: 600;
+	text-align: left;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: var( --ttbm-hotel-ink ) !important;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_check_btn,
+body .ttbm_hotel_booking_toolbar .ttbm_hotel_check_availability {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	min-width: 126px;
+	height: 48px;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0 14px;
+	border: 1px solid var( --ttbm-hotel-accent ) !important;
+	border-radius: 12px;
+	background: var( --ttbm-hotel-accent ) !important;
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: none;
+	white-space: nowrap;
+	color: #fff !important;
+	cursor: pointer;
+}
+
+@container ttbm-hotel-toolbar ( max-width: 300px ) {
+	body .ttbm_hotel_booking_toolbar .ttbm_hotel_date_row {
+		grid-template-columns: 1fr;
+	}
+
+	body .ttbm_hotel_booking_toolbar .ttbm_hotel_check_btn,
+	body .ttbm_hotel_booking_toolbar .ttbm_hotel_check_availability {
+		width: 100%;
+	}
+}
+
+/* Hotel cards use their actual column width. This fixes the 290px fixed image
+   consuming nearly all of a desktop sidebar while retaining the horizontal
+   card in genuinely wide template regions. */
+body .ttbm_hotel_booking_cards .ttbm_registration_area,
+body .ttbm_hotel_booking_cards .ttbm_hotel_item,
+body .ttbm_hotel_booking_cards .ttbm_hdc_card,
+body .ttbm_hotel_booking_cards .ttbm_hdc_body {
+	box-sizing: border-box;
+	width: 100%;
+	min-width: 0;
+	max-width: 100%;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_registration_area {
+	margin: 0 0 16px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	overflow: visible;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_item {
+	container: ttbm-hotel-choice / inline-size;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hdc_card {
+	border-color: var( --ttbm-hotel-line );
+	border-radius: 14px;
+	box-shadow: 0 4px 14px rgba( 16, 24, 40, .07 );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hdc_img img {
+	height: 100% !important;
+	object-fit: cover;
+	object-position: center;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hdc_title,
+body .ttbm_hotel_booking_cards .ttbm_hdc_location,
+body .ttbm_hotel_booking_cards .ttbm_hdc_desc,
+body .ttbm_hotel_booking_cards .ttbm_hdc_note {
+	text-transform: none;
+	overflow-wrap: anywhere;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hdc_location,
+body .ttbm_hotel_booking_cards .ttbm_hdc_desc,
+body .ttbm_hotel_booking_cards .ttbm_hdc_note {
+	color: var( --ttbm-hotel-muted );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hdc_tag i,
+body .ttbm_hotel_booking_cards .ttbm_hdc_price,
+body .ttbm_hotel_booking_cards .ttbm_hdc_price .woocommerce-Price-amount,
+body .ttbm_hotel_booking_cards .ttbm_hdc_date_range_display {
+	color: var( --ttbm-hotel-accent );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hdc_btn,
+body .ttbm_hotel_booking_cards .ttbm_hdc_tag_more,
+body .ttbm_hotel_booking_cards .ttbm_book_now,
+body .ttbm_hotel_booking_cards .ttbm_hotel_book_now {
+	border-color: var( --ttbm-hotel-accent ) !important;
+	background: var( --ttbm-hotel-accent ) !important;
+	color: #fff !important;
+}
+
+@container ttbm-hotel-choice ( max-width: 620px ) {
+	body .ttbm_hotel_booking_cards .ttbm_hdc_card {
+		flex-direction: column;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hdc_img {
+		flex: none;
+		width: 100%;
+		height: clamp( 180px, 55cqw, 260px );
+		min-height: 0;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hdc_body {
+		padding: 15px;
+		gap: 8px;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hdc_footer {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 12px;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hdc_price_action {
+		align-items: stretch;
+		width: 100%;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hdc_btn {
+		width: 100%;
+	}
+}
+
+@container ttbm-hotel-choice ( max-width: 340px ) {
+	body .ttbm_hotel_booking_cards .ttbm_hdc_header {
+		flex-direction: column;
+	}
+}
+
+/* AJAX-loaded room and extra-service tables share the selected hotel's panel. */
+body .ttbm_hotel_booking_cards .ttbm_booking_panel {
+	container: ttbm-hotel-room-panel / inline-size;
+	box-sizing: border-box;
+	width: 100%;
+	min-width: 0;
+	max-width: 100%;
+	margin: 12px 0 0 !important;
+	padding: 16px;
+	border: 1px solid var( --ttbm-hotel-line );
+	border-radius: 12px;
+	background: #fff;
+	overflow: hidden;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_table,
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_table_wrap {
+	width: 100%;
+	max-width: 100%;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_panel {
+	margin: 0;
+	background: transparent;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_panel__title {
+	margin: 0 0 12px;
+	font-size: 15px;
+	font-weight: 700;
+	line-height: 1.35;
+	text-align: left;
+	text-transform: none;
+	color: var( --ttbm-hotel-ink );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_table_wrap {
+	box-sizing: border-box;
+	overflow: hidden;
+	border: 1px solid var( --ttbm-hotel-line );
+	border-radius: 10px;
+	background: #fff;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_table.mp_tour_ticket_type {
+	margin: 0;
+	border: 0;
+	border-radius: 0;
+	border-collapse: collapse;
+	table-layout: auto;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_table thead tr {
+	border-bottom: 1px solid var( --ttbm-hotel-line );
+	background: #f8fafc;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_table thead th {
+	padding: 10px 12px;
+	border: 0;
+	background: transparent;
+	font-size: 10px;
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: .06em;
+	text-align: left;
+	text-transform: uppercase;
+	color: var( --ttbm-hotel-muted );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_row td {
+	box-sizing: border-box;
+	padding: 13px 12px;
+	border: 0;
+	border-bottom: 1px solid #eef0f4;
+	vertical-align: middle;
+	background: transparent;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_name {
+	margin: 0 0 6px;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.35;
+	color: var( --ttbm-hotel-ink );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px;
+	margin: 0;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 3px 7px;
+	border: 1px solid #e0daf5;
+	border-color: color-mix( in srgb, var( --ttbm-hotel-accent ) 18%, #fff );
+	border-radius: 999px;
+	background: #f7f5fc;
+	background: color-mix( in srgb, var( --ttbm-hotel-accent ) 8%, #fff );
+	font-size: 10px;
+	font-weight: 600;
+	line-height: 1.2;
+	white-space: nowrap;
+	color: var( --ttbm-hotel-muted );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_badge i {
+	font-size: 9px;
+	color: var( --ttbm-hotel-accent );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_badge--stock {
+	border-color: #a7f3d0;
+	background: #ecfdf3;
+	color: #067647;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_badge--stock i {
+	font-size: 7px;
+	color: #12b76a;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--price {
+	text-align: right;
+	white-space: nowrap;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_hidden_inputs,
+body .ttbm_hotel_booking_cards .ttbm_enhanced_table tr.ttbm_hidden_inputs {
+	display: none !important;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_price,
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_price .woocommerce-Price-amount {
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.2;
+	color: var( --ttbm-hotel-accent );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_price {
+	display: block;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_price_meta {
+	display: block;
+	margin-top: 3px;
+	font-size: 10px;
+	font-weight: 500;
+	line-height: 1.3;
+	white-space: nowrap;
+	color: var( --ttbm-hotel-muted );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty {
+	width: 106px;
+	text-align: right;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .qtyIncDec {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	width: 104px;
+	max-width: 100%;
+	overflow: hidden;
+	border: 1px solid #e0daf5 !important;
+	border-color: color-mix( in srgb, var( --ttbm-hotel-accent ) 22%, #fff ) !important;
+	border-radius: 8px;
+	background: #fff;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .decQty,
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .incQty {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 32px;
+	width: 32px;
+	height: 32px;
+	min-width: 32px;
+	border: 0 !important;
+	border-radius: 0;
+	background: #f7f5fc;
+	background: color-mix( in srgb, var( --ttbm-hotel-accent ) 7%, #fff );
+	cursor: pointer;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .qty-btn-icon {
+	display: none;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .decQty::before {
+	content: "";
+	display: block;
+	width: 10px;
+	height: 2px;
+	border-radius: 1px;
+	background: var( --ttbm-hotel-accent );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .incQty::before {
+	content: "+";
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 1;
+	color: var( --ttbm-hotel-accent );
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty label {
+	flex: 0 0 38px;
+	width: 38px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .inputIncDec {
+	box-sizing: border-box;
+	width: 38px !important;
+	min-width: 38px;
+	height: 32px;
+	margin: 0;
+	padding: 0 !important;
+	border: 0 !important;
+	border-right: 1px solid #ece8f8 !important;
+	border-left: 1px solid #ece8f8 !important;
+	border-radius: 0 !important;
+	background: #fff !important;
+	box-shadow: none !important;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 32px;
+	text-align: center;
+	color: var( --ttbm-hotel-ink );
+}
+
+@container ttbm-hotel-room-panel ( max-width: 520px ) {
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_table,
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_table tbody,
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_enhanced_table,
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_enhanced_table tbody {
+		display: block;
+		width: 100%;
+		margin: 0;
+		border: 0;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_table_wrap {
+		overflow: visible;
+		border: 0;
+		background: transparent;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_table tbody {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_table thead,
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_table_header {
+		display: none;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_row {
+		display: grid;
+		grid-template-columns: minmax( 0, 1fr ) auto;
+		grid-template-areas:
+			"name name"
+			"price quantity";
+		gap: 10px 8px;
+		padding: 13px;
+		border: 1px solid var( --ttbm-hotel-line );
+		border-radius: 10px;
+		background: #fff;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_row td {
+		display: block;
+		width: auto;
+		padding: 0 !important;
+		border: 0;
+		background: transparent !important;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--name {
+		grid-area: name;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--price {
+		grid-area: price;
+		min-width: 0;
+		align-self: center;
+		text-align: left;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty {
+		grid-area: quantity;
+		align-self: center;
+		justify-self: end;
+		width: 104px !important;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area {
+		min-width: 0;
+		margin-top: 18px;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area > .extra_service_title {
+		margin: 0 0 10px;
+		font-size: 15px;
+		font-weight: 700;
+		line-height: 1.35;
+		color: var( --ttbm-hotel-ink );
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_enhanced_table tbody {
+		display: flex;
+		flex-direction: column;
+		gap: 9px;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_ticket_row {
+		display: grid;
+		grid-template-columns: minmax( 0, 1fr ) auto;
+		grid-template-areas:
+			"service badge"
+			"price quantity";
+		gap: 7px 10px;
+		align-items: center;
+		box-sizing: border-box;
+		padding: 12px;
+		border: 1px solid var( --ttbm-hotel-line );
+		border-radius: 10px;
+		background: #fff;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_ticket_row td {
+		display: block;
+		width: auto;
+		max-width: none;
+		margin: 0;
+		padding: 0 !important;
+		border: 0;
+		background: transparent;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_ticket_row td::before,
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area td.ttbm-availability-info {
+		display: none !important;
+		content: none;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-person-info {
+		grid-area: service;
+		min-width: 0;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-regular-price {
+		grid-area: price;
+		min-width: 0;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_ticket_details > .extra_service_title {
+		margin: 0;
+		font-size: 13px;
+		font-weight: 700;
+		line-height: 1.35;
+		color: var( --ttbm-hotel-ink );
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_ticket_description {
+		margin-top: 5px;
+		font-size: 11px;
+		line-height: 1.45;
+		color: var( --ttbm-hotel-muted );
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-ticket-badge-col {
+		grid-area: badge;
+		align-self: start;
+		justify-self: end;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity {
+		grid-area: quantity;
+		justify-self: end;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_discount_badge {
+		position: static;
+		font-size: 9px;
+		white-space: nowrap;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm_price_container {
+		margin: 0;
+		text-align: left;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity .qtyIncDec {
+		display: inline-flex !important;
+		align-items: center;
+		justify-content: center;
+		width: 104px;
+		min-width: 0;
+		overflow: hidden;
+		border: 1px solid #e0daf5 !important;
+		border-color: color-mix( in srgb, var( --ttbm-hotel-accent ) 22%, #fff ) !important;
+		border-radius: 8px;
+		background: #fff;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity .decQty,
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity .incQty {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex: 0 0 32px;
+		width: 32px;
+		height: 32px;
+		min-width: 32px;
+		border: 0 !important;
+		border-radius: 0;
+		background: #f7f5fc;
+		background: color-mix( in srgb, var( --ttbm-hotel-accent ) 7%, #fff );
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity .qty-btn-icon {
+		display: none;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity .decQty::before {
+		content: "";
+		display: block;
+		width: 10px;
+		height: 2px;
+		border-radius: 1px;
+		background: var( --ttbm-hotel-accent );
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity .incQty::before {
+		content: "+";
+		font-size: 18px;
+		font-weight: 500;
+		line-height: 1;
+		color: var( --ttbm-hotel-accent );
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity label {
+		flex: 0 0 38px;
+		width: 38px;
+		margin: 0;
+		padding: 0;
+		border: 0;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_extra_service_area .ttbm-select-quantity .inputIncDec {
+		box-sizing: border-box;
+		width: 38px !important;
+		min-width: 38px;
+		height: 32px;
+		margin: 0;
+		padding: 0 !important;
+		border: 0 !important;
+		border-right: 1px solid #ece8f8 !important;
+		border-left: 1px solid #ece8f8 !important;
+		border-radius: 0 !important;
+		background: #fff !important;
+		box-shadow: none !important;
+		font-size: 12px;
+		font-weight: 700;
+		line-height: 32px;
+		text-align: center;
+		color: var( --ttbm-hotel-ink );
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_book_now_area {
+		display: grid !important;
+		grid-template-columns: 1fr;
+		align-items: stretch;
+		gap: 10px;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	body .ttbm_hotel_booking_cards .ttbm_book_now,
+	body .ttbm_hotel_booking_cards .ttbm_hotel_book_now {
+		width: 100%;
+	}
+}
+
+@supports not ( container-type: inline-size ) {
+	.ttbm_smart_theme .ttbm_hotel_booking_cards .ttbm_hdc_card,
+	.ttbm_viator_theme .ttbm_hotel_booking_cards .ttbm_hdc_card,
+	.ttbm_travello_theme .ttbm_hotel_booking_cards .ttbm_hdc_card {
+		flex-direction: column;
+	}
+
+	.ttbm_smart_theme .ttbm_hotel_booking_cards .ttbm_hdc_img,
+	.ttbm_viator_theme .ttbm_hotel_booking_cards .ttbm_hdc_img,
+	.ttbm_travello_theme .ttbm_hotel_booking_cards .ttbm_hdc_img {
+		flex: none;
+		width: 100%;
+		height: 210px;
+		min-height: 0;
+	}
 }

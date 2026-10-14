@@ -29,6 +29,23 @@
                 add_shortcode('ttbm-hotel-rooms', array($this, 'ttbm_hotel_rooms_by_id') );
                 add_shortcode('ttbm-hotel-map',  array( $this, 'ttbm_hotel_map_shortcode') );
                 add_shortcode('ttbm-hotel-slider',  array( $this, 'ttbm_hotel_slider_shortcode') );
+
+				// Top search bar ([ttbm-top-search]) — AJAX, same-page results.
+				// The form still posts to /find/ ([ttbm-search-result]) as a
+				// plain-GET fallback for no-JS visitors; this just lets pages
+				// that also render the results grid inline (the tour archive)
+				// swap it in place instead of navigating away.
+				add_action('wp_ajax_ttbm_top_search_ajax', array($this, 'ajax_top_search'));
+				add_action('wp_ajax_nopriv_ttbm_top_search_ajax', array($this, 'ajax_top_search'));
+			}
+			public function ajax_top_search() {
+				check_ajax_referer('ttbm_search_nonce', 'ttbm_search_nonce');
+				// search_result() reads every filter value straight from $_GET —
+				// the request is sent as a GET-type AJAX call (not POST) purely so
+				// this identical, already-battle-tested code path (same one /find/
+				// itself calls) runs completely unmodified.
+				echo $this->search_result(array());
+				wp_die();
 			}
 
             public function ttbm_hotel_slider_shortcode( $atts ){
@@ -211,7 +228,14 @@
 				$loop = TTBM_Query::ttbm_query($show, $params['sort'], $params['cat'], $params['org'], $params['city'], $params['country'], $params['status'], $params['tour-type'], $params['activity'],$params['sort_by'], $params['attraction'], $params['feature']);
 				ob_start();
 				?>
-				<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
+				<?php /* [travel-list] and [ttbm-hotel-list] both land here and render the exact
+					   same cards as [ttbm-tour-list] — $tour_type only narrows the query, never the
+					   markup — so they take the same .ttbm-tour-list-shortcode scope root that
+					   ttbm_tour_list_modern.css hangs its responsive layout off. The separate
+					   hotel system (hotel_search_list_with_left_filter() and friends, rendered by
+					   TTBM_Hotel_Data_Display with its own ttbm_hotel_lists.css) has its own
+					   wrapper and is untouched by this. */ ?>
+				<div class="ttbm_style ttbm-tour-list-shortcode ttbm_wraper placeholderLoader ttbm_filter_area">
 					<div class="mpContainer">
 					<?php
 						if ($params['sidebar-filter'] == 'yes') {
@@ -255,6 +279,8 @@
 					<?php
 						if ($params['sidebar-filter'] == 'yes') {
 							?>
+							<?php /* Populated client-side by assets/frontend/ttbm_active_filter_chips.js from whatever's currently active in .leftSidebar below — full-width, above both columns, so it never has to live inside just one of them. */ ?>
+							<div class="ttbm-active-filter-chips" data-placeholder></div>
 							<div class="left_filter">
 								<div class="leftSidebar placeholder_area">
 									<?php do_action('ttbm_left_filter', $params); ?>
@@ -303,7 +329,16 @@
 
 				$loop = TTBM_Query::ttbm_query_for_top_search($show, $params['sort'], $params['sort_by'], $params['status'], $organizer_filter, $location_filter, $activity_filter, $date_filter, $people_filter);
 				?>
-				<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
+				<?php /* Same left-filter list markup tour_style_with_filter() renders, so it needs the
+					   same .ttbm-tour-list-shortcode scope root: every layout rule in
+					   assets/frontend/ttbm_tour_list_modern.css is scoped under it. Without the class
+					   this output falls back to the legacy div.left_filter{display:flex} + sticky
+					   #f0f4ff sidebar and loses the one-column mobile layout — visible both on an
+					   [ttbm-search-result] page and, more sharply, when ajax_top_search() swaps this
+					   very markup into #ttbm-archive-results on a page that already rendered
+					   [ttbm-tour-list] (see the submit handler in assets/frontend/filter_pagination.js),
+					   where the list would otherwise change layout mid-session. */ ?>
+				<div class="ttbm_style ttbm-tour-list-shortcode ttbm_wraper placeholderLoader ttbm_filter_area">
 					<div class="mpContainer">
 					<?php
 						include( TTBM_Function::template_path( 'layout/filter_hidden.php' ) );
@@ -350,7 +385,9 @@
 				}
 				ob_start();
 				?>
-				<div class="ttbm_style ttbm_wraper placeholderLoader ttbm_filter_area">
+				<?php /* Same card markup as [ttbm-tour-list], just a top filter row instead of a
+					   left sidebar, so it takes the same scope root for the responsive grid. */ ?>
+				<div class="ttbm_style ttbm-tour-list-shortcode ttbm_wraper placeholderLoader ttbm_filter_area">
 					<div class="mpContainer">
 					<?php
 						if ($search == 'yes') {
@@ -599,12 +636,24 @@
             }
 
             public function ttbm_tour_list($attribute) {
-				$defaults = array( 'type' => 'feature', 'column' => 3, 'carousel' => 'no', 'show' => '' );
+				$defaults = array( 'type' => 'feature', 'column' => 3, 'carousel' => 'no', 'show' => '', 'cat' => '' );
 				$params = shortcode_atts($defaults, $attribute);
 				ob_start();
 				$tour_id = 164;
 				$num_of_tour = $params['column'];
 				$type_tour = $params['type'];
+				/* cat="96" (or "96,97") lists every published tour in those categories, newest
+				   first, so new tours join the carousel on their own. Without an explicit type=
+				   the Top Picks & Deals label is ignored; with one, both have to match. */
+				$tour_cat = array_filter( array_map( 'absint', explode( ',', (string) $params['cat'] ) ) );
+				$tour_cat_type = ( $tour_cat && ! empty( $attribute['type'] ) ) ? $type_tour : '';
+				if ( $tour_cat ) {
+					static $ttbm_cat_list_count = 0;
+					$ttbm_cat_list_count++;
+					/* Unique per instance: the wrapper/load-more ids are built from this, and a
+					   page can carry several category carousels. */
+					$type_tour = 'cat-' . $ttbm_cat_list_count;
+				}
 				if ($type_tour) {
 					?>
 					<div class="ttbm_style">
@@ -1027,7 +1076,11 @@
             }
 
 			//***************************//
-			public function default_attribute( $style = 'grid', $show = 9, $search_filter = 'yes', $sidebar_filter = 'no', $feature_filter = 'no', $tag_filter = 'no', $month_filter = 'yes', $tour_type = '', $sort_by = '', $shuffle = 'no', $top_bar = 'yes' ): array {
+			/* Static so templates rendered outside this class (single_page/ttbm_tour_location.php)
+			   can build the same params array the shortcodes pass to ttbm_left_filter instead of
+			   hand-rolling a partial one. Uses no $this, so the existing $this->default_attribute()
+			   call sites keep working unchanged. */
+			public static function default_attribute( $style = 'grid', $show = 9, $search_filter = 'yes', $sidebar_filter = 'no', $feature_filter = 'no', $tag_filter = 'no', $month_filter = 'yes', $tour_type = '', $sort_by = '', $shuffle = 'no', $top_bar = 'yes' ): array {
 			return array(
 				"style" => $style,
 				"show" => $show,
@@ -1062,7 +1115,15 @@
 				'type-filter' => 'no',
 				'shuffle' => $shuffle,
 				'filter_by_activity' => 'yes',
-				'price-filter' => 'yes',
+				/* Both off by default everywhere; the tour archive shortcode call
+				   (travail/templates/tours/archive-tour.php) explicitly turns them
+				   on so no other existing [ttbm-tour-list]/[travel-list]/[ttbm-top-filter]
+				   usage on a site is affected. 'price-filter' previously defaulted
+				   'yes' here but was never actually read by any render method — now
+				   that price_filter_left() consumes it, defaulting to 'no' keeps
+				   every other current usage's rendered output unchanged. */
+				'price-filter' => 'no',
+				'rating-filter' => 'no',
 				'limit' => $show,
 				'list_grid' => 'list',
 				'top-bar' => $top_bar,

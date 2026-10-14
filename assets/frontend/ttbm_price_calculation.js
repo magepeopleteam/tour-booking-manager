@@ -1,3 +1,9 @@
+/* Localised UI strings (see TTBM_Dependencies::frontend_i18n()). Falls back to
+   the English literal when the handle carrying ttbm_i18n is not on the page. */
+window.ttbmT = window.ttbmT || function (key, fallback) {
+	return (typeof ttbm_i18n !== 'undefined' && ttbm_i18n[key]) ? ttbm_i18n[key] : fallback;
+};
+
 function ttbm_price_calculation(parent) {
     let total = mpTourTotalPrice(parent);
     let qty = mp_tour_ticket_qty(parent);
@@ -422,7 +428,7 @@ function ttbmSyncSharedCapacityInputs(parent) {
                 }
             }
         } else {
-            alert('Please Select Ticket Type');
+            alert(ttbmT('select_ticket', 'Please Select Ticket Type'));
             let currentTarget = $(this).closest('.ttbm_registration_area').find('.mp_tour_ticket_type .formControl[data-price]');
             currentTarget.addClass('error');
             return false;

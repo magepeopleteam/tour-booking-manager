@@ -11,10 +11,16 @@ $term_count   = 3;
 <?php /* ── LEFT: Image column ─────────────────────────────── */ ?>
 <div class="ttbm-lv-image-col" data-href="<?php echo esc_url( get_the_permalink( $tour_id ) ); ?>" data-placeholder>
 
-	<?php /* Sale badge */ ?>
 	<?php
+	/* Top-left badge: an admin-flagged "Bestseller"/"Popular" tag takes priority
+	   over the automatic sale badge so a tour isn't shown wearing two badges. */
+	$top_picks_on  = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_display_top_picks_deals', 'on' ) !== 'off';
+	$top_picks     = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_top_picks_deals', array() );
+	$is_bestseller = $top_picks_on && is_array( $top_picks ) && in_array( 'popular', $top_picks, true );
 	$regular_price = TTBM_Function::check_discount_price_exit( $tour_id );
-	if ( $regular_price ) : ?>
+	if ( $is_bestseller ) : ?>
+		<div class="ttbm-gc-badge-sale ttbm-gc-badge-bestseller" data-placeholder><?php esc_html_e( 'Bestseller', 'tour-booking-manager' ); ?></div>
+	<?php elseif ( $regular_price ) : ?>
 		<div class="ttbm-gc-badge-sale" data-placeholder><?php esc_html_e( 'ON SALE!', 'tour-booking-manager' ); ?></div>
 	<?php endif; ?>
 
@@ -26,32 +32,41 @@ $term_count   = 3;
 		</button>
 	<?php endif; ?>
 
-	<?php /* Thumbnail */ ?>
-	<div class="ttbm-lv-thumb" data-bg-image="<?php echo esc_attr( $thumbnail ); ?>"></div>
+	<?php /* Thumbnail — background-image set directly inline so it renders immediately instead
+	of waiting on JS to apply it from data-bg-image alone. */ ?>
+	<div class="ttbm-lv-thumb" data-bg-image="<?php echo esc_attr( $thumbnail ); ?>"<?php echo $thumbnail ? ' style="background-image:url(\'' . esc_url( $thumbnail ) . '\');"' : ''; ?>></div>
+
+	<?php /* Booking-status overlay (Expired! / Fully Booked!) only — duration moved into the content meta row below */ ?>
+	<div class="ttbm-gc-duration-badge fdColumn" data-placeholder>
+		<?php include( TTBM_Function::template_path( 'layout/expire_msg.php' ) ); ?>
+	</div>
 
 </div>
 
 <?php /* ── RIGHT: Content column ───────────────────────────── */ ?>
 <div class="ttbm-lv-content-col">
 
-	<?php /* Location */ ?>
-	<?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
-
-	<?php /* Title */ ?>
-	<?php include( TTBM_Function::template_path( 'layout/list_title.php' ) ); ?>
-
-	<?php /* Short description */ ?>
-	<?php include( TTBM_Function::template_path( 'layout/description_short.php' ) ); ?>
-
-	<?php /* Feature tags */ ?>
-	<div class="ttbm-gc-tags" data-placeholder>
-		<?php $term_name = true; include( TTBM_Function::template_path( 'layout/include_feature_list.php' ) ); ?>
+	<div class="ttbm-lv-title-row" data-placeholder>
+		<?php include( TTBM_Function::template_path( 'layout/list_rating.php' ) ); ?>
+		<?php include( TTBM_Function::template_path( 'layout/list_title.php' ) ); ?>
 	</div>
+
+	<?php /* Location + duration on one line */ ?>
+	<div class="ttbm-lv-meta-row" data-placeholder>
+		<?php include( TTBM_Function::template_path( 'layout/location.php' ) ); ?>
+		<?php include( TTBM_Function::template_path( 'layout/list_duration.php' ) ); ?>
+	</div>
+
+	<?php /* Activity tag pills */ ?>
+	<?php include( TTBM_Function::template_path( 'layout/list_tags.php' ) ); ?>
+
+	<?php /* Short description — only visible in list view (hidden via CSS in grid mode); reuses the same partial templates/list/default.php already renders, no duplicate content logic. */ ?>
+	<?php include( TTBM_Function::template_path( 'layout/description_short.php' ) ); ?>
 
 	<?php /* Divider */ ?>
 	<hr class="ttbm-gc-divider">
 
-	<?php /* Footer: price + explore */ ?>
+	<?php /* Footer: price + view */ ?>
 	<?php include( TTBM_Function::template_path( 'layout/gc_card_footer.php' ) ); ?>
 
 </div>

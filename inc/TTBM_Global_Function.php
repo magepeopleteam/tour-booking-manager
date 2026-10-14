@@ -304,14 +304,6 @@
                             onSelect: function (dateString, data) {
                                 let date = data.selectedYear + '-' + ('0' + (parseInt(data.selectedMonth) + 1)).slice(-2) + '-' + ('0' + parseInt(data.selectedDay)).slice(-2);
                                 jQuery(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
-                            },
-                            onClose: function () {
-                                // The date field must not stay empty: keep showing the
-                                // picker until the user actually selects a date.
-                                let inp = jQuery(this);
-                                if (!inp.val()) {
-                                    setTimeout(function () { inp.datepicker('show'); }, 10);
-                                }
                             }
                         });
                         function WorkingDates(date) {

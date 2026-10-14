@@ -127,7 +127,7 @@ body.ttbm-modern-edit-page #wpcontent { padding-left: 0 !important; }
 /* No left/right padding on the outer container — header fills 100% width.
    The .wrap inside handles content padding. */
 body.ttbm-modern-edit-page #wpbody-content { padding: 0 !important; }
-body.ttbm-modern-edit-page .wrap { padding: 0 20px 20px !important; margin: 0 auto !important; max-width: 90% !important; background: #fff !important; }
+body.ttbm-modern-edit-page .wrap { padding: 0 20px 20px !important; margin: 0 auto !important; max-width: 80% !important; background: #fff !important; }
 
 /* ══════════════════════════════════════════════
    SKELETON / PAGE LOADER
@@ -259,6 +259,9 @@ body.ttbm-modern-edit-page .wrap { padding: 0 20px 20px !important; margin: 0 au
 .ttbm-sk-cb-label { height: 10px; flex: 1; max-width: 120px; }
 
 /* Loader is a fixed overlay; do not hide page siblings or tab content stays invisible. */
+
+/* ── Hide info notices (plugin setup nags, etc.) on the edit page; errors/warnings stay ── */
+body.ttbm-modern-edit-page .notice.notice-info { display: none !important; }
 
 /* ── Hide original WP page title row (replaced by our header) ── */
 body.ttbm-modern-edit-page .wrap > h1.wp-heading-inline,
@@ -648,9 +651,11 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 	background: #fff !important;
 	border-bottom: 1px solid #e5e7eb !important;
 	box-shadow: 0 2px 8px rgba(0,0,0,.06) !important;
-	display: flex !important;
+	display: grid !important;
+	grid-template-columns: minmax(0, 1fr) minmax(260px, 1.4fr) auto !important;
+	grid-template-areas: "back title actions" !important;
 	align-items: center !important;
-	justify-content: space-between !important;
+	gap: 16px !important;
 	padding: 12px 24px !important;
 	margin: 0 !important;
 	width: 100% !important;
@@ -660,8 +665,9 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 .ttbm-header-left {
 	display: flex !important;
 	align-items: center !important;
-	flex: 1 !important;
+	grid-area: back !important;
 	min-width: 0 !important;
+	justify-self: start !important;
 }
 .ttbm-header-back {
 	display: inline-flex !important;
@@ -678,17 +684,20 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 
 /* ── Center title ── */
 .ttbm-header-tour-title {
-	position: absolute !important;
-	left: 50% !important;
-	top: 50% !important;
-	transform: translate(-50%, -50%) !important;
+	grid-area: title !important;
+	position: static !important;
+	left: auto !important;
+	top: auto !important;
+	transform: none !important;
 	font-size: 17px !important;
 	font-weight: 700 !important;
 	color: #111827 !important;
-	white-space: nowrap !important;
+	white-space: normal !important;
 	overflow: hidden !important;
 	text-overflow: ellipsis !important;
-	max-width: 44% !important;
+	max-width: 100% !important;
+	width: 100% !important;
+	display: block !important;
 	text-align: center !important;
 	line-height: 1.3 !important;
 	margin: 0 !important;
@@ -696,6 +705,7 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 	background: none !important;
 	border: none !important;
 	letter-spacing: -.01em !important;
+	justify-self: center !important;
 }
 
 /* ── Header right: status, preview, split publish ── */
@@ -703,9 +713,12 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 	display: flex !important;
 	align-items: center !important;
 	gap: 8px !important;
+	grid-area: actions !important;
 	flex-shrink: 0 !important;
-	flex: 1 !important;
 	justify-content: flex-end !important;
+	justify-self: end !important;
+	flex-wrap: wrap !important;
+	min-width: 0 !important;
 }
 
 .ttbm-header-status {
@@ -735,6 +748,78 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 	color: #646970 !important;
 	background: #f6f7f7 !important;
 	border-color: #dcdcde !important;
+}
+
+@media (max-width: 1200px) {
+	/* Let the back link keep its own width; a 1fr column collapses under it and the link overlaps the title. */
+	body.ttbm-modern-edit-page .ttbm-admin-page-header {
+		grid-template-columns: auto minmax(0, 1fr) auto !important;
+	}
+
+	/* The tab list sits above the content here, so a viewport-height minimum only leaves an empty band. */
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabLists.meta-sidebar {
+		min-height: 0 !important;
+	}
+}
+
+@media (max-width: 782px) {
+	body.ttbm-modern-edit-page .wrap {
+		max-width: 100% !important;
+		padding: 0 10px 16px !important;
+	}
+
+	body.ttbm-modern-edit-page #wpcontent {
+		padding-left: 0 !important;
+	}
+
+	body.ttbm-modern-edit-page .ttbm-admin-page-header {
+		grid-template-columns: 1fr !important;
+		grid-template-areas:
+			"title"
+			"back"
+			"actions" !important;
+		padding: 10px 12px !important;
+		gap: 10px !important;
+	}
+
+	body.ttbm-modern-edit-page .ttbm-header-left,
+	body.ttbm-modern-edit-page .ttbm-header-right {
+		width: 100% !important;
+		justify-self: stretch !important;
+	}
+
+	body.ttbm-modern-edit-page .ttbm-header-tour-title {
+		position: static !important;
+		transform: none !important;
+		left: auto !important;
+		top: auto !important;
+		max-width: 100% !important;
+		width: 100% !important;
+		text-align: left !important;
+		white-space: normal !important;
+	}
+
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-right-sidebar,
+	body.ttbm-modern-edit-page .ttbm-right-sidebar,
+	.ttbm-right-sidebar {
+		width: 100% !important;
+		min-width: 0 !important;
+		max-width: 100% !important;
+		padding: 0 0 16px 0 !important;
+		margin: 0 !important;
+	}
+
+	body.ttbm-modern-edit-page .ttbm-sb-card {
+		width: 100% !important;
+		max-width: 100% !important;
+		margin: 0 !important;
+	}
+
+	body.ttbm-modern-edit-page .ttbm-sb-btn-row,
+	body.ttbm-modern-edit-page .ttbm-sb-img-actions,
+	body.ttbm-modern-edit-page .ttbm-sb-form-actions {
+		flex-wrap: wrap !important;
+	}
 }
 
 .ttbm-header-status.is-status-private {
@@ -872,13 +957,18 @@ body.ttbm-modern-edit-page .ttbm-page-tour-title { display: none !important; }
 jQuery(function($){
 	var pageTitle   = <?php echo wp_json_encode($page_title); ?>;
 	var isHotelEdit = <?php echo $is_hotel ? 'true' : 'false'; ?>;
-	var isPublished = <?php echo ($post_id && get_post_status($post_id) === 'publish') ? 'true' : 'false'; ?>;
-	var previewUrl  = <?php echo wp_json_encode($post_id ? get_preview_post_link(get_post($post_id)) : '#'); ?>;
+	/* A private post is live too: its main button must Update in place. Treating
+	   it as unpublished made the button "Publish" and turned it public. */
+	var isPublished = <?php echo ($post_id && in_array(get_post_status($post_id), array('publish', 'private'), true)) ? 'true' : 'false'; ?>;
+	var isPrivate   = <?php echo ($post_id && get_post_status($post_id) === 'private') ? 'true' : 'false'; ?>;
+	var previewUrl  = <?php $ttbm_pv_id = $post_id ?: (int) get_the_ID(); echo wp_json_encode($ttbm_pv_id ? get_preview_post_link($ttbm_pv_id) : '#'); ?>;
 	var postStatusSlug  = <?php echo wp_json_encode($post_status_slug); ?>;
 	var postStatusLabel = <?php echo wp_json_encode($post_status_label); ?>;
 	var btnLabel    = isPublished ? <?php echo wp_json_encode(__('Update', 'tour-booking-manager')); ?> : <?php echo wp_json_encode(__('Publish', 'tour-booking-manager')); ?>;
 	var mainAction  = isPublished ? 'update' : 'publish';
 	var saveDraftLabel = <?php echo wp_json_encode(__('Save Draft', 'tour-booking-manager')); ?>;
+	var makePrivateLabel = <?php echo wp_json_encode(__('Save as Private', 'tour-booking-manager')); ?>;
+	var makePublicLabel  = <?php echo wp_json_encode(__('Make Public', 'tour-booking-manager')); ?>;
 	var previewLabel   = <?php echo wp_json_encode(__('Preview', 'tour-booking-manager')); ?>;
 
 	var backUrl   = <?php echo wp_json_encode($back_url); ?>;
@@ -903,6 +993,9 @@ jQuery(function($){
 					'<button type="button" class="ttbm-split-publish__toggle" aria-expanded="false" aria-haspopup="true" aria-label="' + <?php echo wp_json_encode(__('Toggle publish options', 'tour-booking-manager')); ?> + '">' + chevronSvg + '</button>' +
 					'<div class="ttbm-split-publish__menu" role="menu">' +
 						'<button type="submit" name="save" class="ttbm-split-publish__item ttbm-split-publish__draft" role="menuitem"></button>' +
+						/* Stands in for Core's Visibility control, removed with the Publish box.
+						   Tours only: the hotel save has no private handling. */
+						(isHotelEdit ? '' : '<button type="button" class="ttbm-split-publish__item ttbm-split-publish__visibility" role="menuitem"></button>') +
 					'</div>' +
 				'</div>' +
 			'</div>' +
@@ -917,6 +1010,14 @@ jQuery(function($){
 	header.find('.ttbm-header-preview').attr('href', previewUrl).html(eyeSvg + previewLabel);
 	header.find('.ttbm-split-publish__main').attr('data-ttbm-save-action', mainAction).text(btnLabel);
 	header.find('.ttbm-split-publish__draft').attr('value', saveDraftLabel).html(checkSvg + saveDraftLabel);
+	header.find('.ttbm-split-publish__visibility')
+		.attr({
+			'data-ttbm-status': isPrivate ? 'publish' : 'private',
+			'data-label-private': makePrivateLabel,
+			'data-label-public': makePublicLabel
+		})
+		.html(eyeSvg + '<span class="ttbm-split-publish__label"></span>')
+		.find('.ttbm-split-publish__label').text(isPrivate ? makePublicLabel : makePrivateLabel);
 
 	/* Inject inside form#post so the submit button is part of the form */
 	$('form#post').prepend(header);
@@ -945,6 +1046,103 @@ jQuery(function($){
 		$('.ttbm-header-tour-title').text(val);
 		$('#ttbm_post_title_submit').val($(this).val() || '');
 	});
+
+	/* ── Permalink / URL slug ──
+	 * Shown as text under the title. While the slug is "auto" (new draft) it follows the title
+	 * and nothing is submitted, so the server builds it on save. Clicking it opens an inline
+	 * editor; only a committed edit writes the hidden post_name, never a keystroke, so the
+	 * background auto-save cannot persist a half-typed slug. */
+	(function(){
+		var $wrap = $('.ttbm-tour-slug-field').first();
+		if (!$wrap.length) {
+			return;
+		}
+		var $slugBtn = $wrap.find('.ttbm-tour-slug-field__slug');
+		var $line    = $wrap.find('.ttbm-tour-slug-field__line');
+		var $editor  = $wrap.find('.ttbm-tour-slug-field__editor');
+		var $input   = $wrap.find('.ttbm-tour-slug-field__input');
+		var $value   = $wrap.find('.ttbm-tour-slug-field__value');
+		var $view    = $wrap.find('.ttbm-tour-slug-field__view');
+		var emptyText = $wrap.attr('data-ttbm-empty-text') || '';
+		var auto = $wrap.attr('data-ttbm-auto') === '1';
+
+		function sanitizeSlug(value) {
+			return String(value === null || typeof value === 'undefined' ? '' : value)
+				.toLowerCase()
+				.replace(/\s+/g, '-')
+				.replace(/[^a-z0-9¡-\uffff_\-]+/g, '')
+				.replace(/-{2,}/g, '-')
+				.replace(/^-+|-+$/g, '');
+		}
+
+		function show(slug) {
+			$slugBtn.text(slug || emptyText).toggleClass('is-empty', !slug);
+			$input.val(slug);
+		}
+
+		function syncFromTitle() {
+			if (auto) {
+				show(sanitizeSlug($('#ttbm_post_title').val()));
+			}
+		}
+
+		function openEditor() {
+			$line.hide();
+			$editor.css('display', 'flex');
+			$input.val(auto ? sanitizeSlug($('#ttbm_post_title').val()) : $value.val()).trigger('focus').trigger('select');
+		}
+		function closeEditor() {
+			$editor.hide();
+			$line.show();
+		}
+		function commit() {
+			var slug = sanitizeSlug($input.val());
+			if (slug === '') {
+				// Emptied: hand control back to the server (rebuilt from the title) for new drafts.
+				if (auto || $wrap.attr('data-ttbm-auto') === '1') {
+					auto = true;
+					$value.val('').trigger('change');
+					syncFromTitle();
+				}
+			} else if (slug !== $value.val()) {
+				auto = false;
+				$value.val(slug).trigger('change');
+				show(slug);
+				$view.hide();
+			}
+			closeEditor();
+		}
+
+		$wrap.on('click', '.ttbm-tour-slug-field__slug, .ttbm-tour-slug-field__edit', openEditor);
+		$wrap.on('click', '.ttbm-tour-slug-field__ok', commit);
+		$wrap.on('click', '.ttbm-tour-slug-field__cancel', closeEditor);
+		$input.on('keydown', function(e){
+			if (e.which === 13) {
+				e.preventDefault();
+				commit();
+			} else if (e.which === 27) {
+				closeEditor();
+			}
+		});
+		/* Typing must not wake the auto-saver: the posted value has not changed yet. */
+		$input.on('input', function(e){ e.stopPropagation(); });
+		$(document).on('input', '#ttbm_post_title', syncFromTitle);
+		syncFromTitle();
+
+		/* The server is authoritative (sanitises, de-duplicates). Once it has stored a slug, mirror it —
+		 * unless the user is mid-edit or the slug is still auto for a draft. */
+		$(document).ajaxSuccess(function(event, xhr, settings, data){
+			if (!data || !data.success || !data.data || typeof data.data.post_name !== 'string') {
+				return;
+			}
+			var name = data.data.post_name;
+			if (auto || /^\d+$/.test(name) || $editor.is(':visible')) {
+				return;
+			}
+			$value.val(name);
+			show(name);
+		});
+	})();
 
 	/* ── Location required validation (tour only) ── */
 	if (!isHotelEdit) {
@@ -1160,6 +1358,99 @@ jQuery(function($){
 			remove_meta_box('submitdiv',             'ttbm_hotel', 'side');
 			remove_meta_box('postimagediv',          'ttbm_hotel', 'side');
 			remove_meta_box('postexcerpt',           'ttbm_hotel', 'normal');
+			// Core's Slug box is hidden by default and Screen Options is hidden on this
+			// screen, so it is unreachable — but it still prints an input named
+			// post_name holding the OLD slug. render_permalink_field() posts the same
+			// name, and PHP keeps the last one, so the stale box has to go or it would
+			// silently win over whatever the admin typed.
+			remove_meta_box('slugdiv',               $cpt, 'normal');
+			remove_meta_box('slugdiv',               'ttbm_hotel', 'normal');
+		}
+
+		/**
+		 * Permalink / URL-slug field for the modern tour and hotel editor.
+		 *
+		 * Core renders its permalink editor inside #titlediv, which
+		 * wp-admin/edit-form-advanced.php only prints when the post type supports
+		 * 'title'. Both editors call remove_post_type_support(..., 'title') because
+		 * they render their own title field, which took the permalink control with
+		 * it — leaving no way at all to change a tour or hotel slug. This renders
+		 * the control inside the settings panel and posts it under Core's own
+		 * `post_name` key.
+		 *
+		 * The visible input is deliberately nameless: only the hidden field is
+		 * submitted, and the JS copies into it once editing is committed, so a
+		 * background auto-save can never persist a half-typed slug.
+		 *
+		 * @param int $post_id Tour or hotel ID.
+		 * @return void
+		 */
+		public static function render_permalink_field($post_id) {
+			$post_id = (int) $post_id;
+			$post    = $post_id ? get_post($post_id) : null;
+			if (!$post || !current_user_can('edit_post', $post_id)) {
+				return;
+			}
+			$post_type_object = get_post_type_object($post->post_type);
+			if (!$post_type_object || empty($post_type_object->public)) {
+				return;
+			}
+			if (!function_exists('get_sample_permalink')) {
+				require_once ABSPATH . 'wp-admin/includes/post.php';
+			}
+			list($permalink, $sample_slug) = get_sample_permalink($post_id);
+			$slug = $post->post_name !== '' ? urldecode($post->post_name) : (string) $sample_slug;
+			// A new/unsaved tour has no real slug yet (Core's sample slug is just the post ID). Treat it
+			// as "auto": show a slug built from the title as it's typed, submit nothing, and let the
+			// server generate it on save. Only an explicit edit by the user makes it a fixed slug.
+			$is_auto = in_array($post->post_status, array('auto-draft', 'draft', 'pending'), true)
+				&& ($post->post_name === '' || (string) $post->post_name === (string) $post_id);
+			if ($is_auto && (string) $slug === (string) $post_id) {
+				$slug = '';
+			}
+
+			// Plain permalinks have no %postname%/%pagename% placeholder — the slug is
+			// still stored and still matters, there is just no live URL to preview.
+			$placeholder = false !== strpos($permalink, '%postname%')
+				? '%postname%'
+				: (false !== strpos($permalink, '%pagename%') ? '%pagename%' : '');
+			$prefix = '';
+			$suffix = '';
+			if ($placeholder) {
+				$pieces = explode($placeholder, $permalink, 2);
+				$prefix = urldecode($pieces[0]);
+				$suffix = isset($pieces[1]) ? urldecode($pieces[1]) : '';
+			}
+			$is_viewable = $placeholder && 'publish' === $post->post_status && $slug !== '';
+			$empty_text  = __('auto-generated from the title', 'tour-booking-manager');
+			?>
+			<div class="ttbm-tour-slug-field<?php echo $is_auto ? ' is-auto' : ''; ?>"
+				 data-ttbm-auto="<?php echo $is_auto ? '1' : '0'; ?>"
+				 data-ttbm-empty-text="<?php echo esc_attr($empty_text); ?>"
+				 data-ttbm-permalink-prefix="<?php echo esc_attr($prefix); ?>"
+				 data-ttbm-permalink-suffix="<?php echo esc_attr($suffix); ?>">
+				<p class="ttbm-tour-slug-field__line">
+					<span class="ttbm-tour-slug-field__label"><?php esc_html_e('Permalink:', 'tour-booking-manager'); ?></span>
+					<span class="ttbm-tour-slug-field__url"><?php if ($placeholder) { ?><span class="ttbm-tour-slug-field__preview-prefix"><?php echo esc_html($prefix); ?></span><?php } ?><button type="button" class="ttbm-tour-slug-field__slug" title="<?php esc_attr_e('Click to edit the URL slug', 'tour-booking-manager'); ?>"><?php echo esc_html($slug !== '' ? $slug : $empty_text); ?></button><?php if ($placeholder) { ?><span class="ttbm-tour-slug-field__preview-suffix"><?php echo esc_html($suffix); ?></span><?php } ?></span>
+					<button type="button" class="ttbm-tour-slug-field__edit"><?php esc_html_e('Edit', 'tour-booking-manager'); ?></button>
+					<a class="ttbm-tour-slug-field__view" href="<?php echo esc_url($prefix . $slug . $suffix); ?>" target="_blank" rel="noopener"<?php echo $is_viewable ? '' : ' style="display:none"'; ?>><?php esc_html_e('View', 'tour-booking-manager'); ?></a>
+				</p>
+				<div class="ttbm-tour-slug-field__editor" style="display:none">
+					<input
+						type="text"
+						id="ttbm_post_slug"
+						class="ttbm-tour-slug-field__input"
+						value="<?php echo esc_attr($slug); ?>"
+						placeholder="<?php esc_attr_e('url-slug', 'tour-booking-manager'); ?>"
+						autocomplete="off"
+						spellcheck="false"
+					/>
+					<button type="button" class="button button-small ttbm-tour-slug-field__ok"><?php esc_html_e('OK', 'tour-booking-manager'); ?></button>
+					<button type="button" class="button-link ttbm-tour-slug-field__cancel"><?php esc_html_e('Cancel', 'tour-booking-manager'); ?></button>
+				</div>
+				<input type="hidden" name="post_name" class="ttbm-tour-slug-field__value" value="<?php echo esc_attr($is_auto ? '' : $slug); ?>" />
+			</div>
+			<?php
 		}
 
 		public function enqueue_assets($hook) {
@@ -1299,7 +1590,8 @@ jQuery(function($){
 					ttbmFrame.on('select', function(){
 						var att = ttbmFrame.state().get('selection').first().toJSON();
 						var url = att.sizes && att.sizes.large ? att.sizes.large.url : att.url;
-						$('#ttbm_thumb_id').val(att.id);
+						// .val() fires no event; the auto-save listens for this change.
+						$('#ttbm_thumb_id').val(att.id).trigger('change');
 						if ($('#ttbm_thumb_preview').length) {
 							$('#ttbm_thumb_preview').attr('src', url);
 						} else {
@@ -1318,7 +1610,7 @@ jQuery(function($){
 				});
 				$(document).on('click', '#ttbm_remove_thumb', function(e){
 					e.preventDefault();
-					$('#ttbm_thumb_id').val(-1);
+					$('#ttbm_thumb_id').val(-1).trigger('change');
 					$('#ttbm_thumb_preview').remove();
 					$('#ttbm_img_actions_wrap').hide();
 					$('#ttbm_upload_area').show();
@@ -1355,6 +1647,16 @@ jQuery(function($){
 			<div class="ttbm-sb-card" data-taxonomy="<?php echo esc_attr($taxonomy); ?>" data-nonce="<?php echo esc_attr($nonce); ?>" data-hide-tab="#ttbm_settings_pricing">
 				<p class="ttbm-sb-card-title"><?php echo esc_html($title); ?></p>
 				<div class="ttbm-sb-tax-list">
+					<?php
+						/*
+						 * Core's own category box submits this alongside the checkboxes so
+						 * that clearing every one still sends the taxonomy, which is what
+						 * tells the save "remove all terms". Without it an unchecked-all
+						 * taxonomy is simply missing from the payload and is left alone,
+						 * so the last term could never be removed.
+						 */
+					?>
+					<input type="hidden" name="tax_input[<?php echo esc_attr($taxonomy); ?>][]" value="0"/>
 					<ul><?php wp_terms_checklist($post->ID, ['taxonomy' => $taxonomy, 'checked_ontop' => false]); ?></ul>
 				</div>
 				<a class="ttbm-sb-add-link"><?php echo esc_html($add_label); ?></a>

@@ -57,10 +57,14 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             // Copy post meta
             $meta = get_post_meta($post_id);
             foreach ($meta as $key => $values) {
+                if (in_array($key, array('link_wc_product', 'check_if_run_once', 'total_booking', '_wp_old_slug'), true)) {
+                    continue;
+                }
                 foreach ($values as $value) {
                     add_post_meta($new_post_id, $key, maybe_unserialize($value));
                 }
             }
+            update_post_meta($new_post_id, 'total_booking', 0);
 
             // Redirect to the edit page of the new post
             wp_redirect(admin_url('post.php?action=edit&post=' . $new_post_id));
@@ -596,6 +600,11 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
                 update_term_meta($term_id, 'ttbm_country_location', $country );
                 update_term_meta($term_id, 'ttbm_location_image', $imageId );
                 $img_url = wp_get_attachment_image_url( $imageId, 'thumbnail' );
+            }
+
+            if ( in_array( $taxonomy_type, array( 'ttbm_tour_cat', 'ttbm_tour_activities' ), true ) ) {
+                update_term_meta( $term_id, 'travail_term_image_id', $imageId );
+                $img_url = $imageId ? wp_get_attachment_image_url( $imageId, 'thumbnail' ) : '';
             }
 
             if( $taxonomy_type === 'ttbm_tour_activities' ){

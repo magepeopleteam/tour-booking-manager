@@ -45,6 +45,23 @@
 				add_action('admin_notices', [$this, 'render_tickets_required_notice']);
 			}
 			/**
+			 * The tour and hotel editors save through admin-ajax.php, where two things Core's
+			 * edit_post() normally provides are missing, and Yoast silently drops its focus
+			 * keyphrase, SEO title and meta description without them:
+			 * - $_POST['ID'], which edit_post() sets via _wp_translate_postdata() and Yoast
+			 *   checks against the post being saved;
+			 * - Yoast's metabox itself, which it only loads on post.php/post-new.php (and for
+			 *   Quick Edit), so its save_post handler is never registered on these requests.
+			 * Call right before the wp_update_post() that stands in for the form submit. Yoast
+			 * still verifies its own nonce and capabilities before saving anything.
+			 */
+			public static function prepare_seo_plugins_for_ajax_save(int $post_id): void {
+				$_POST['ID'] = $post_id;
+				if (empty($GLOBALS['wpseo_metabox']) && class_exists('WPSEO_Metabox')) {
+					$GLOBALS['wpseo_metabox'] = new WPSEO_Metabox();
+				}
+			}
+			/**
 			 * Force tour title from the custom Overview field during core save.
 			 *
 			 * @param array $data    Sanitized post data.
@@ -96,8 +113,20 @@
                 <input type="hidden" id="ttbm_full_location_name_submit" name="ttbm_full_location_name" value="<?php echo esc_attr($map_location); ?>">
                 <input type="hidden" id="ttbm_map_latitude_submit" name="ttbm_map_latitude" value="<?php echo esc_attr($map_lat); ?>">
                 <input type="hidden" id="ttbm_map_longitude_submit" name="ttbm_map_longitude" value="<?php echo esc_attr($map_lng); ?>">
-                <div id="ttbm_content" class="ttbm_configuration">
+				<?php $wizard_steps = self::wizard_steps(); ?>
+                <div id="ttbm_content" class="ttbm_configuration ttbm-tour-wizard" data-wizard="<?php echo esc_attr(wp_json_encode(array_values($wizard_steps))); ?>">
                     <div class="ttbm_style ttbm_settings ">
+                        <nav class="ttbm-wz-steps" aria-label="<?php esc_attr_e('Tour setup steps', 'tour-booking-manager'); ?>">
+							<?php foreach (array_values($wizard_steps) as $i => $step) : ?>
+                                <button type="button" class="ttbm-wz-step" data-step="<?php echo esc_attr($step['key']); ?>" data-num="<?php echo esc_attr($i + 1); ?>">
+                                    <span class="ttbm-wz-step__dot"><i class="<?php echo esc_attr($step['icon']); ?>"></i></span>
+                                    <span class="ttbm-wz-step__text">
+                                        <span class="ttbm-wz-step__label"><?php echo esc_html($step['label']); ?></span>
+                                        <span class="ttbm-wz-step__hint"><?php echo esc_html($step['hint']); ?></span>
+                                    </span>
+                                </button>
+							<?php endforeach; ?>
+                        </nav>
                         <div class="ttbmTabs leftTabs d-flex justify-content-between">
                             <ul class="tabLists meta-sidebar _mL">
 								<div class="meta-sidebar-toggle"><i class="mi mi-angle-right"></i></div>
@@ -127,6 +156,11 @@
 									do_action('ttbm_meta_box_tab_content', $tour_id);
 									$this->partial_payment_settings($tour_id);
 								?>
+                                <div class="ttbm-wz-footer">
+                                    <button type="button" class="button ttbm-wz-prev"><?php esc_html_e('Back', 'tour-booking-manager'); ?></button>
+                                    <span class="ttbm-wz-progress" aria-live="polite"></span>
+                                    <button type="button" class="button button-primary ttbm-wz-next"><?php esc_html_e('Next', 'tour-booking-manager'); ?></button>
+                                </div>
                             </div>
                             <div class="ttbm-right-sidebar" data-active-tab="#ttbm_general_info">
 								<?php do_action('ttbm_right_sidebar_content', $tour_id); ?>
@@ -136,6 +170,41 @@
                 </div>
 				<?php
 			}
+				/**
+				 * Step-based editor layout. 'panes' = legacy tab-panel IDs shown stacked in the step,
+				 * 'acc' = panes rendered as collapsible cards. Add-on tab panes not listed here are
+				 * placed by the JS from their position in the tab list. Filterable.
+				 */
+				public static function wizard_steps(): array {
+					$steps = array(
+						'basic' => array(
+							'key' => 'basic', 'icon' => 'fas fa-info-circle',
+							'label' => __('Basic Info', 'tour-booking-manager'),
+							'hint' => __('Title, description & destination', 'tour-booking-manager'),
+							'panes' => array('#ttbm_general_info', '#ttbm_settings_location'), 'acc' => array(),
+						),
+						'schedule' => array(
+							'key' => 'schedule', 'icon' => 'far fa-calendar-alt',
+							'label' => __('Schedule', 'tour-booking-manager'),
+							'hint' => __('Dates & availability', 'tour-booking-manager'),
+							'panes' => array('#ttbm_settings_dates'), 'acc' => array(),
+						),
+						'pricing' => array(
+							'key' => 'pricing', 'icon' => 'fas fa-ticket-alt',
+							'label' => __('Pricing & Tickets', 'tour-booking-manager'),
+							'hint' => __('Tickets, services & payment', 'tour-booking-manager'),
+							'panes' => array('#ttbm_settings_pricing'), 'acc' => array('#_mep_pp_deposits_type'),
+						),
+						'more' => array(
+							'key' => 'more', 'icon' => 'fas fa-sliders-h',
+							'label' => __('Details & Settings', 'tour-booking-manager'),
+							'hint' => __('Itinerary, features, display & more', 'tour-booking-manager'),
+							'panes' => array(),
+							'acc' => array('#ttbm_daywise_settings', '#ttbm_settings_feature', '#ttbm_settings_guide', '#ttbm_settings_related_tour', '#ttbm_settings_extras', '#ttbm_settings_why_chose_us', '#ttbm_add_promotional_setting', '#ttbm_settings_template', '#ttbm_display_settings'),
+						),
+					);
+					return apply_filters('ttbm_tour_wizard_steps', $steps);
+				}
 			//************************//
 			public function tour_settings_meta_box() {
 				$tour_label = TTBM_Function::get_name();
@@ -200,7 +269,7 @@
 			public static function des_array($key) {
 				$des = array(
 					'ttip_start_price' => esc_html__('If you would like to hide them, you can do so by switching the option.', 'tour-booking-manager'),
-					'start_price' => esc_html__('Price Starts  are displayed on the tour details and tour list pages.', 'tour-booking-manager'),
+					'start_price' => esc_html__('The "from" price shown on the tour details and tour list pages. Leave the amount empty to use the lowest ticket price automatically, or type an amount to advertise that price instead. Switch the toggle off to hide the start price.', 'tour-booking-manager'),
 					'ttip_max_people' => esc_html__('This number is displayed for informational purposes only and can be hidden by switching the option.', 'tour-booking-manager'),
 					'max_people' => esc_html__('This tour only allows a maximum of X people', 'tour-booking-manager'),
 					'age_range' => esc_html__('The age limit for this tour is X to Y years old. This is for information purposes only.', 'tour-booking-manager'),
@@ -243,6 +312,7 @@
 					'ttbm_display_slider_hotel' => esc_html__('By default slider is ON but you can keep it off by switching this option', 'tour-booking-manager'),
 					'ttbm_section_title_style' => esc_html__('By default Section title is style one', 'tour-booking-manager'),
 					'ttbm_ticketing_system' => esc_html__('Select ticket purchase system type.', 'tour-booking-manager'),
+					'ttbm_display_booking_section' => esc_html__('Show the ticket picker block on the tour page. Turn it off to keep the page informational -- the sidebar "Check Availability" button still opens booking. To switch booking off everywhere instead, use Pricing & Services -> Registration.', 'tour-booking-manager'),
 					'ttip_ticketing_system' => esc_html__('By default, the ticket purchase system is open. Once you check the availability, you can choose the system that best suits your needs.', 'tour-booking-manager'),
 					'ttbm_display_seat_details' => esc_html__('By default Seat Info is ON but you can keep it off by switching this option', 'tour-booking-manager'),
 					'ttbm_display_tour_type' => esc_html__('By default Tour type is ON but you can keep it off by switching this option', 'tour-booking-manager'),
@@ -1167,6 +1237,7 @@
 					'ttbm_display_schedule',
 					'ttbm_display_admin_note',
 					'ttbm_display_registration',
+					'ttbm_display_booking_section',
 					'ttbm_display_slider',
 					'ttbm_display_hiphop',
 					'ttbm_display_get_question',
@@ -1175,6 +1246,7 @@
 					'ttbm_display_related',
 					'ttbm_display_include_service',
 					'ttbm_display_exclude_service',
+					'ttbm_display_rating',
 					'mep_disable_ticket_time',
 					'ttbm_enable_off_schedule',
 				));
@@ -1246,6 +1318,15 @@
 					}
 					update_post_meta($tour_id, 'ttbm_display_price_start', $ttbm_display_price_start);
 					update_post_meta($tour_id, 'ttbm_travel_start_price', $ttbm_travel_start_price);
+					// Manual "from" price override. The input is disabled while the Starting Price
+					// switch is off, so an absent field means "keep what is stored", not "cleared".
+					if ( isset( $_POST['ttbm_manual_start_price'] ) ) {
+						$ttbm_manual_start_price = sanitize_text_field( wp_unslash( $_POST['ttbm_manual_start_price'] ) );
+						$ttbm_manual_start_price = is_numeric( $ttbm_manual_start_price ) && floatval( $ttbm_manual_start_price ) > 0
+							? (string) floatval( $ttbm_manual_start_price )
+							: '';
+						update_post_meta( $tour_id, 'ttbm_manual_start_price', $ttbm_manual_start_price );
+					}
 					/***************/
 					$ttbm_display_max_people = isset($_POST['ttbm_display_max_people']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_max_people'])) ? 'on' : 'off';
 					$ttbm_travel_max_people_allow = isset($_POST['ttbm_travel_max_people_allow']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_max_people_allow'])) : '';
@@ -1425,20 +1506,26 @@
 					update_post_meta($tour_id, 'mep_disable_ticket_time', $display_time);
 					$enable_off_schedule = isset($_POST['ttbm_enable_off_schedule']) && sanitize_text_field(wp_unslash($_POST['ttbm_enable_off_schedule'])) ? 'yes' : 'no';
 					update_post_meta($tour_id, 'ttbm_enable_off_schedule', $enable_off_schedule);
+					$timewise_stock = isset($_POST['ttbm_enable_timewise_stock']) && sanitize_text_field(wp_unslash($_POST['ttbm_enable_timewise_stock'])) ? 'on' : 'off';
+					update_post_meta($tour_id, 'ttbm_enable_timewise_stock', $timewise_stock);
 					$all_time_slot_infos = TTBM_Settings_Dates::time_slot_array();
 					//echo '<pre>';print_r($all_time_slot_infos);echo '</pre>';die();
 					if (sizeof($all_time_slot_infos) > 0) {
 						foreach ($all_time_slot_infos as $meta_key => $value) {
 							$label_key = array_key_exists('label_key', $value) && $value['label_key'] ? $value['label_key'] : '';
 							$time_key = array_key_exists('time_key', $value) && $value['time_key'] ? $value['time_key'] : '';
+							$stock_key = array_key_exists('stock_key', $value) && $value['stock_key'] ? $value['stock_key'] : '';
 							$default_time_info = [];
 							$default_labels = isset($_POST[$label_key]) ? array_map('sanitize_text_field', wp_unslash($_POST[$label_key])) : [];
 							$default_times = isset($_POST[$time_key]) ? array_map('sanitize_text_field', wp_unslash($_POST[$time_key])) : [];
+							/* Kept even while the Time-wise Stock toggle is off, so turning it back on restores the numbers. */
+							$default_stocks = ($stock_key && isset($_POST[$stock_key])) ? array_map('absint', wp_unslash($_POST[$stock_key])) : [];
 							if (sizeof($default_times) > 0) {
 								foreach ($default_times as $key => $default_time) {
 									if ($default_time) {
 										$default_time_info[$key]['mep_ticket_time_name'] = array_key_exists($key, $default_labels) && $default_labels[$key] ? $default_labels[$key] : '';
 										$default_time_info[$key]['mep_ticket_time'] = $default_time;
+										$default_time_info[$key]['mep_ticket_time_stock'] = array_key_exists($key, $default_stocks) ? (int) $default_stocks[$key] : 0;
 									}
 								}
 							}
@@ -1465,7 +1552,14 @@
 				if (get_post_type($tour_id) == TTBM_Function::get_cpt_name()) {
 					$content_title_style = isset($_POST['ttbm_section_title_style']) ? sanitize_text_field(wp_unslash($_POST['ttbm_section_title_style'])) : 'style_1';
 					$ttbm_travel_rank_tour = isset($_POST['ttbm_travel_rank_tour']) ? sanitize_text_field(wp_unslash($_POST['ttbm_travel_rank_tour'])) : '';
-					$ticketing_system = isset($_POST['ttbm_ticketing_system']) ? sanitize_text_field(wp_unslash($_POST['ttbm_ticketing_system'])) : 'availability_section';
+					// Keep the stored style when the field is not submitted -- an absent input
+					// must not silently flip a tour to the other booking style.
+					$ticketing_system = isset($_POST['ttbm_ticketing_system'])
+						? sanitize_text_field(wp_unslash($_POST['ttbm_ticketing_system']))
+						: (string) get_post_meta($tour_id, 'ttbm_ticketing_system', true);
+					if (!in_array($ticketing_system, array('regular_ticket', 'availability_section'), true)) {
+						$ticketing_system = 'regular_ticket';
+					}
 					$seat_info = isset($_POST['ttbm_display_seat_details']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_seat_details'])) ? 'on' : 'off';
 					$sidebar = isset($_POST['ttbm_display_sidebar']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_sidebar'])) ? 'on' : 'off';
 					$tour_type = isset($_POST['ttbm_display_tour_type']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_tour_type'])) ? 'on' : 'off';
@@ -1487,6 +1581,13 @@
 					update_post_meta($tour_id, 'ttbm_theme_file', $ttbm_template);
 					update_post_meta($tour_id, 'ttbm_display_enquiry', $display_enquiry);
 					update_post_meta($tour_id, 'ttbm_auto_related_tour', $auto_related_tour);
+					//*********Rating & Reviews (off by default, no fabricated data)**************//
+					$display_rating = isset($_POST['ttbm_display_rating']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_rating'])) ? 'on' : 'off';
+					$rating_average = isset($_POST['ttbm_rating_average']) ? sanitize_text_field(wp_unslash($_POST['ttbm_rating_average'])) : '';
+					$rating_count = isset($_POST['ttbm_rating_count']) ? absint(wp_unslash($_POST['ttbm_rating_count'])) : '';
+					update_post_meta($tour_id, 'ttbm_display_rating', $display_rating);
+					update_post_meta($tour_id, 'ttbm_rating_average', $rating_average);
+					update_post_meta($tour_id, 'ttbm_rating_count', $rating_count);
 					//*********FAQ**************//
 					$faq = isset($_POST['ttbm_display_faq']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_faq'])) ? 'on' : 'off';
 					update_post_meta($tour_id, 'ttbm_display_faq', $faq);
@@ -1778,6 +1879,17 @@
 					if (isset($_POST['post_content']) && !is_array($_POST['post_content'])) {
 						$post_update['post_content'] = wp_kses_post(wp_unslash($_POST['post_content']));
 					}
+					// Slug. This endpoint stands in for the classic form submit, and
+					// edit_post() -- the only Core code that reads $_POST['post_name'] --
+					// never runs, so without this the tour keeps its old permalink no
+					// matter what the admin types. An emptied field rebuilds the slug
+					// from the title, exactly like Core's own Slug box.
+					if (isset($_POST['post_name']) && !is_array($_POST['post_name'])) {
+						$submitted_slug = sanitize_title(wp_unslash($_POST['post_name']));
+						if ($submitted_slug !== (string) get_post_field('post_name', $tour_id)) {
+							$post_update['post_name'] = $submitted_slug;
+						}
+					}
 					$requested_status = isset($_POST['requested_post_status']) ? sanitize_key(wp_unslash($_POST['requested_post_status'])) : '';
 					$post_type_object = get_post_type_object(TTBM_Function::get_cpt_name());
 					$publish_capability = $post_type_object && isset($post_type_object->cap->publish_posts)
@@ -1785,11 +1897,14 @@
 						: 'publish_posts';
 					if (empty(self::$last_validation_errors) && in_array($requested_status, array('draft', 'pending'), true)) {
 						$post_update['post_status'] = $requested_status;
-					} elseif (empty(self::$last_validation_errors) && 'publish' === $requested_status && current_user_can($publish_capability)) {
-						$post_update['post_status'] = 'publish';
-					} elseif (empty(self::$last_validation_errors) && 'publish' === $requested_status) {
+					} elseif (empty(self::$last_validation_errors) && in_array($requested_status, array('publish', 'private'), true) && current_user_can($publish_capability)) {
+						// Private needs the same capability as publishing, as in Core's
+						// Publish box (this editor replaces that box, Visibility included).
+						$post_update['post_status'] = $requested_status;
+					} elseif (empty(self::$last_validation_errors) && in_array($requested_status, array('publish', 'private'), true)) {
 						throw new \RuntimeException(__('You are not allowed to publish this tour.', 'tour-booking-manager'));
 					}
+					self::prepare_seo_plugins_for_ajax_save($tour_id);
 					remove_action('save_post', array($this, 'capture_date_migration_snapshot'), 5);
 					remove_action('save_post', array($this, 'save_settings'), 99);
 					remove_action('save_post', array($this, 'sync_bookings_after_date_change'), 120);
@@ -1797,6 +1912,7 @@
 					add_action('save_post', array($this, 'capture_date_migration_snapshot'), 5, 1);
 					add_action('save_post', array($this, 'save_settings'), 99, 1);
 					add_action('save_post', array($this, 'sync_bookings_after_date_change'), 120, 1);
+					$this->apply_tax_input($tour_id);
 					$this->sync_bookings_after_date_change($tour_id);
 				} catch (\Throwable $e) {
 					self::$is_autosave = false;
@@ -1825,6 +1941,11 @@
 					'saved_at'      => current_time('timestamp'),
 					'saved_at_text' => date_i18n(get_option('time_format'), current_time('timestamp')),
 					'post_status'   => get_post_status($tour_id),
+					'view_url'      => (string) get_permalink($tour_id),
+					'preview_url'   => (string) get_preview_post_link($tour_id),
+					// WordPress may still adjust the slug (sanitising, or de-duplicating
+					// it against an existing post), so report what was actually stored.
+					'post_name'     => (string) get_post_field('post_name', $tour_id),
 					'warnings'      => array_values(array_filter($warnings)),
 					'persisted'     => array(
 						'travel_type' => (string) get_post_meta($tour_id, 'ttbm_travel_type', true),
@@ -1832,6 +1953,50 @@
 						'repeat_type' => (string) get_post_meta($tour_id, 'ttbm_repeat_type', true),
 					),
 				));
+			}
+			/**
+			 * Assign the Category / Organizer checkboxes submitted as tax_input[].
+			 *
+			 * The tour sidebar renders those with wp_terms_checklist(), which posts the
+			 * standard `tax_input[taxonomy][]` fields -- and on a classic full-page
+			 * submit WordPress's own edit_post() is what reads them. This save runs over
+			 * AJAX and finishes with wp_update_post(), which does NOT look at tax_input
+			 * at all, so the checkboxes were serialized, sent, and silently dropped:
+			 * the tour reported "saved", every meta field persisted, and the taxonomy
+			 * came back to its previous value on the next page load.
+			 *
+			 * Mirrors core's handling: taxonomy must be registered for this post type,
+			 * the user must be able to assign its terms, hierarchical taxonomies take
+			 * integer term IDs while flat ones may take names, and a taxonomy absent
+			 * from the payload is left untouched rather than cleared.
+			 */
+			private function apply_tax_input($tour_id): void {
+				if (empty($_POST['tax_input']) || !is_array($_POST['tax_input'])) {
+					return;
+				}
+				$post_type = get_post_type($tour_id);
+				foreach (wp_unslash($_POST['tax_input']) as $taxonomy => $terms) {
+					$taxonomy = sanitize_key($taxonomy);
+					$taxonomy_obj = get_taxonomy($taxonomy);
+					if (!$taxonomy_obj || !is_object_in_taxonomy($post_type, $taxonomy)) {
+						continue;
+					}
+					if (!current_user_can($taxonomy_obj->cap->assign_terms)) {
+						continue;
+					}
+					if (!is_array($terms)) {
+						// Flat taxonomies can arrive as a comma-separated string.
+						$terms = preg_split('/\s*,\s*/', (string) $terms, -1, PREG_SPLIT_NO_EMPTY);
+					}
+					if ($taxonomy_obj->hierarchical) {
+						// The checklist posts term IDs, plus a leading 0 that only exists
+						// so unchecking everything still submits the taxonomy.
+						$terms = array_values(array_filter(array_map('intval', $terms)));
+					} else {
+						$terms = array_values(array_filter(array_map('sanitize_text_field', $terms), 'strlen'));
+					}
+					wp_set_post_terms($tour_id, $terms, $taxonomy);
+				}
 			}
 			/**
 			 * Turn a stored validation-error record into a human-readable message for the

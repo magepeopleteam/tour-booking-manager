@@ -95,11 +95,19 @@ function ttbm_load_sortable_datepicker(parent, item) {
         let current_parent = $(this).closest(".ttbm_multi_image_item");
         let img_id = current_parent.data("image-id");
         current_parent.remove();
-        let all_img_ids = parent.find(".ttbm_multi_image_value").val();
-        all_img_ids = all_img_ids.replace("," + img_id, "");
-        all_img_ids = all_img_ids.replace(img_id + ",", "");
-        all_img_ids = all_img_ids.replace(img_id, "");
-        parent.find(".ttbm_multi_image_value").val(all_img_ids);
+        // Drop exactly one matching id. The old substring replace() also matched
+        // inside longer ids (removing 120 from "7,1203,120" left "73,").
+        let all_img_ids = String(parent.find(".ttbm_multi_image_value").val() || "")
+            .split(",")
+            .filter(function (id) {
+                return id !== "";
+            });
+        let remove_at = all_img_ids.indexOf(String(img_id));
+        if (remove_at > -1) {
+            all_img_ids.splice(remove_at, 1);
+        }
+        // .val() fires no event; the editor auto-save listens for this change.
+        parent.find(".ttbm_multi_image_value").val(all_img_ids.join(",")).trigger("change");
     });
     $(document).on("click", ".ttbm_add_multi_image", function () {
         let parent = $(this).closest(".ttbm_multi_image_area");
@@ -115,7 +123,8 @@ function ttbm_load_sortable_datepicker(parent, item) {
             parent.find(".ttbm_multi_image").append(html);
             let value = parent.find(".ttbm_multi_image_value").val();
             value = value ? value + "," + attachment_id : attachment_id;
-            parent.find(".ttbm_multi_image_value").val(value);
+            // .val() fires no event; the editor auto-save listens for this change.
+            parent.find(".ttbm_multi_image_value").val(value).trigger("change");
         };
         wp.media.editor.open($(this));
         return false;
@@ -348,7 +357,9 @@ function ttbm_load_sortable_datepicker(parent, item) {
 
     // ================ Template slection ===============
     $(document).on('click', '.ttbm-template img', function (e) {
-        $('[name="ttbm_theme_file"]').val($(this).data('ttbm-template'));
+        // Announce it: a bare .val() leaves the autosave watcher unaware and the
+        // picked theme is lost on save.
+        $('[name="ttbm_theme_file"]').val($(this).data('ttbm-template')).trigger('change');
         $('.ttbm-template ').removeClass('active')
         $(this).parent('.ttbm-template ').addClass('active');
     });
@@ -1221,6 +1232,98 @@ function ttbm_load_sortable_datepicker(parent, item) {
 
     window.ttbmValidateSettingsFormBeforeSubmit = ttbmValidateSettingsFormBeforeSubmit;
 
+    var ttbmHotelSettingsSaving = false;
+
+    function ttbmSaveHotelSettings($button) {
+        if (ttbmHotelSettingsSaving) {
+            return;
+        }
+        ttbmEnableToggleFieldsForSubmit();
+        if (typeof window.ttbmPrepareTourSettingsFormForSubmit === 'function') {
+            window.ttbmPrepareTourSettingsFormForSubmit({ skipRemotePersistence: true });
+        }
+        if (!ttbmValidateHotelFormBeforeSubmit()) {
+            ttbmInitGeneralInfoToggles();
+            if (typeof window.ttbmFocusValidationTarget === 'function') {
+                window.ttbmFocusValidationTarget();
+            }
+            if (typeof window.ttbmToast === 'function') {
+                window.ttbmToast('Please complete the highlighted required fields before saving.', 'error');
+            }
+            return;
+        }
+
+        ttbmDisableHiddenTemplateInputs();
+        // The modern editor can relocate the metabox outside form#post. Serialize
+        // the unique union so the currently visible room values always win.
+        var $payloadFields = $(
+            '#post input, #post select, #post textarea, ' +
+            '#ttbm_meta_box_panel input, #ttbm_meta_box_panel select, #ttbm_meta_box_panel textarea'
+        );
+        var payload = $payloadFields.serializeArray().filter(function (field) {
+            return field.name !== 'action' && field.name !== 'nonce';
+        });
+        payload.push({ name: 'action', value: 'ttbm_save_hotel_settings' });
+        payload.push({ name: 'nonce', value: (window.ttbm_admin_ajax && ttbm_admin_ajax.nonce) || '' });
+        payload.push({
+            name: 'requested_post_status',
+            value: $button.attr('data-ttbm-save-action') === 'publish' ? 'publish' : ''
+        });
+
+        var originalText = $button.text();
+        ttbmHotelSettingsSaving = true;
+        $button.prop('disabled', true).text('Saving…');
+
+        $.ajax({
+            url: (window.ttbm_admin_ajax && ttbm_admin_ajax.ajax_url) || window.ajaxurl,
+            type: 'POST',
+            data: $.param(payload),
+            dataType: 'json'
+        }).done(function (response) {
+            if (!response || !response.success) {
+                var message = response && response.data && response.data.message
+                    ? response.data.message
+                    : 'Hotel could not be saved.';
+                if (typeof window.ttbmToast === 'function') {
+                    window.ttbmToast(message, 'error');
+                }
+                return;
+            }
+            if (typeof window.ttbmToast === 'function') {
+                window.ttbmToast(response.data.message || 'Hotel saved successfully.', 'success');
+            }
+            if (response.data.post_status === 'publish') {
+                $('.ttbm-header-status')
+                    .removeClass(function (index, className) {
+                        return (className.match(/(^|\s)is-status-\S+/g) || []).join(' ');
+                    })
+                    .addClass('is-status-publish')
+                    .text('Published');
+                $button.attr('data-ttbm-save-action', 'update');
+                originalText = 'Update';
+            }
+        }).fail(function (xhr) {
+            var message = xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message
+                ? xhr.responseJSON.data.message
+                : 'Hotel could not be saved. Please try again.';
+            if (typeof window.ttbmToast === 'function') {
+                window.ttbmToast(message, 'error');
+            }
+        }).always(function () {
+            ttbmHotelSettingsSaving = false;
+            $button.prop('disabled', false).text(originalText);
+            ttbmInitGeneralInfoToggles();
+            ttbmDisableHiddenTemplateInputs();
+        });
+    }
+
+    $(document).on('click', 'body.post-type-ttbm_hotel .ttbm-split-publish__main', function (event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        ttbmSaveHotelSettings($(this));
+        return false;
+    });
+
     /**
      * Make every date/time field submit deterministically, independent of the
      * order the admin clicked things in. Runs from ttbmPrepareTourSettingsFormForSubmit()
@@ -1555,5 +1658,167 @@ function ttbm_load_sortable_datepicker(parent, item) {
         }, 0);
     });
 
+    /*
+     * Time-wise Stock: reveal the per-slot "Slot Stock" boxes only while the
+     * feature is on. The inputs stay in the DOM (and keep submitting) when
+     * hidden, so switching the toggle off and saving does not wipe the numbers
+     * an admin already entered.
+     */
+    function ttbmSyncTimewiseStockState() {
+        var $panel = $('#ttbm_meta_box_panel');
+        var $toggle = $panel.find('input[name="ttbm_enable_timewise_stock"]').first();
+        if (!$toggle.length) {
+            return;
+        }
+        $panel.find('.ttbm-time-slots-body').toggleClass('ttbm-timewise-stock-on', $toggle.is(':checked'));
+    }
+
+    $(document).on('change', '#ttbm_meta_box_panel input[name="ttbm_enable_timewise_stock"]', ttbmSyncTimewiseStockState);
+    $(function () {
+        ttbmSyncTimewiseStockState();
+    });
+
 })(jQuery);
 
+/* ── Date/time order: an end date can't be before its start date, and on the same day an end time
+ * must be after the start time. Applied to Fixed, Particular (each row) and Repeated tours. ── */
+(function ($) {
+    "use strict";
+
+    var DATE_PAIRS = {
+        'ttbm_travel_end_date': 'ttbm_travel_start_date',
+        'ttbm_travel_repeated_end_date': 'ttbm_travel_repeated_start_date',
+        'ttbm_particular_end_date[]': 'ttbm_particular_start_date[]'
+    };
+
+    function ttbmToastError(msg) {
+        if (typeof window.ttbmToast === 'function') {
+            window.ttbmToast(msg, 'error');
+        }
+    }
+
+    // Nearest ancestor of $el that also holds the sibling field: the row for repeated rows, the pane otherwise.
+    function pairScope($el, otherName) {
+        var $scope = $el.parent();
+        while ($scope.length && $scope.find('input[name="' + otherName + '"]').length === 0) {
+            $scope = $scope.parent();
+        }
+        return $scope;
+    }
+
+    function startHiddenFor($endVisible) {
+        var $endHidden = ttbm_find_linked_date_hidden($endVisible);
+        if (!DATE_PAIRS[$endHidden.attr('name')] && $endVisible.hasClass('ttbm-repeated-end-date')) {
+            // The repeated end date shares its label with the "repeat" radio's hidden fields.
+            $endHidden = pairScope($endVisible, 'ttbm_travel_repeated_end_date').find('input[name="ttbm_travel_repeated_end_date"]').first();
+        }
+        var startName = DATE_PAIRS[$endHidden.attr('name')];
+        if (!startName) {
+            return {$endHidden: $endHidden, $startHidden: $()};
+        }
+        var $scope = pairScope($endHidden, startName);
+        return {$endHidden: $endHidden, $startHidden: $scope.find('input[name="' + startName + '"]').first()};
+    }
+
+    function parseYmd(v) {
+        var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || '');
+        return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null;
+    }
+
+    // Before the end picker opens, only offer days on/after the start date.
+    $(document).on('focusin click', '.ttbm_settings_dates .date_type', function () {
+        var $vis = $(this);
+        var pair = startHiddenFor($vis);
+        if (!pair.$startHidden.length || !$vis.hasClass('hasDatepicker')) {
+            return;
+        }
+        var min = parseYmd(pair.$startHidden.val());
+        if (String($vis.datepicker('option', 'minDate') || '') !== String(min || '')) {
+            $vis.datepicker('option', 'minDate', min);
+        }
+    });
+
+    // Start date moved past the end date: the end date is no longer valid, clear it.
+    function onStartDateChange($startHidden) {
+        var startName = $startHidden.attr('name');
+        var endName = null;
+        $.each(DATE_PAIRS, function (end, start) {
+            if (start === startName) {
+                endName = end;
+            }
+        });
+        if (!endName) {
+            return;
+        }
+        var $endHidden = pairScope($startHidden, endName).find('input[name="' + endName + '"]').first();
+        var s = parseYmd($startHidden.val());
+        var e = parseYmd($endHidden.val());
+        if (s && e && e < s) {
+            $endHidden.val('').trigger('change');
+            var $v = $endHidden.closest('label').find('.date_type');
+            $v.val('');
+            ttbmToastError('End date was cleared because it is before the new start date.');
+        }
+        syncEndTimeMin();
+    }
+
+    $(document).on('change', '.ttbm_settings_dates input[type="hidden"]', function () {
+        var name = this.name;
+        if (name === 'ttbm_travel_start_date' || name === 'ttbm_travel_repeated_start_date' || name === 'ttbm_particular_start_date[]') {
+            onStartDateChange($(this));
+        } else if (name === 'ttbm_travel_end_date') {
+            syncEndTimeMin();
+        }
+    });
+
+    // ---- Times: same-day fixed tours need end time after start time ----
+    function fixedTimes() {
+        return {
+            $sd: $('input[name="ttbm_travel_start_date"]').first(),
+            $ed: $('input[name="ttbm_travel_end_date"]').first(),
+            $st: $('input[name="ttbm_travel_start_time"]').first(),
+            $et: $('input[name="ttbm_travel_end_time"]').first()
+        };
+    }
+    function sameDay(t) {
+        return !!t.$sd.val() && t.$sd.val() === t.$ed.val();
+    }
+    function syncEndTimeMin() {
+        var t = fixedTimes();
+        if (!t.$et.length) {
+            return;
+        }
+        if (sameDay(t) && t.$st.val()) {
+            t.$et.attr('min', t.$st.val());
+        } else {
+            t.$et.removeAttr('min');
+        }
+    }
+    function checkTimeOrder(changed) {
+        var t = fixedTimes();
+        if (!sameDay(t) || !t.$st.val() || !t.$et.val()) {
+            return;
+        }
+        if (t.$et.val() <= t.$st.val()) {
+            if (changed === 'start') {
+                t.$et.val('');
+                ttbmToastError('End time was cleared because it must be after the start time.');
+            } else {
+                t.$et.val('');
+                ttbmToastError('End time must be after the start time on the same day.');
+            }
+        }
+    }
+    $(document).on('change input', 'input[name="ttbm_travel_start_time"]', function () {
+        syncEndTimeMin();
+        if (this.value) {
+            checkTimeOrder('start');
+        }
+    });
+    $(document).on('change', 'input[name="ttbm_travel_end_time"]', function () {
+        checkTimeOrder('end');
+    });
+    $(function () {
+        syncEndTimeMin();
+    });
+})(jQuery);

@@ -12,11 +12,17 @@ if (!class_exists('TTBM_Settings_Display')) {
             $tour_type_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_tour_type', 'on') == 'off' ? '' : 'checked';
             $hotel_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_hotels', 'on') == 'off' ? '' : 'checked';
             $sidebar_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_sidebar', 'off') == 'off' ? '' : 'checked';
+            $booking_section_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_booking_section', 'on') == 'off' ? '' : 'checked';
 
             $display_enquiry = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_enquiry', 'off') == 'off' ? '' : 'checked';
 
             $enquiry_checked = $display_enquiry == 'off' ? '' : 'checked';
             $auto_related_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_auto_related_tour', 'on') == 'off' ? '' : 'checked';
+
+            $rating_checked = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_rating', 'off') == 'off' ? '' : 'checked';
+            $rating_active = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_rating', 'off') == 'off' ? '' : 'mActive';
+            $rating_average = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_rating_average');
+            $rating_count = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_rating_count');
             ?>
             <div class="tabsItem ttbm_display_settings" data-tabs="#ttbm_display_settings">
                 <h2><?php esc_html_e('Display Settings', 'tour-booking-manager'); ?></h2>
@@ -74,8 +80,40 @@ if (!class_exists('TTBM_Settings_Display')) {
                                 </div>
                                 <?php TTBM_Custom_Layout::switch_button('ttbm_display_sidebar', $sidebar_checked); ?>
                             </div>
+                            <div class="label">
+                                <div>
+                                    <p><?php esc_html_e('Display Booking Section', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('ttbm_display_booking_section'); ?></span></i></p>
+                                </div>
+                                <?php TTBM_Custom_Layout::switch_button('ttbm_display_booking_section', $booking_section_checked); ?>
+                            </div>
                             <?php $this->rank_tour($tour_id); ?>
                             <?php do_action('add_ttbm_display_settings', $tour_id); ?>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="ttbm-header">
+                        <h4><i class="fas fa-star"></i><?php esc_html_e('Rating & Reviews', 'tour-booking-manager'); ?></h4>
+                        <?php TTBM_Custom_Layout::switch_button('ttbm_display_rating', $rating_checked); ?>
+                    </div>
+                    <p class="info_text"><?php esc_html_e('Off by default. Only turn this on if you have a real average rating and review count for this tour — the star row is hidden on the tour list card unless both fields below are filled in.', 'tour-booking-manager'); ?></p>
+                    <div data-collapse="#ttbm_display_rating" class="dFlex <?php echo esc_attr($rating_active); ?>">
+                        <div class="col-left">
+                            <label class="label">
+                                <div>
+                                    <p><?php esc_html_e('Average Rating (0–5)', 'tour-booking-manager'); ?></p>
+                                </div>
+                                <input type="number" min="0" max="5" step="0.1" class="formControl" name="ttbm_rating_average" value="<?php echo esc_attr($rating_average); ?>" placeholder="<?php esc_attr_e('Ex: 4.9', 'tour-booking-manager'); ?>"/>
+                            </label>
+                        </div>
+                        <div class="col-right">
+                            <label class="label">
+                                <div>
+                                    <p><?php esc_html_e('Review Count', 'tour-booking-manager'); ?></p>
+                                </div>
+                                <input type="number" min="0" step="1" class="formControl" name="ttbm_rating_count" value="<?php echo esc_attr($rating_count); ?>" placeholder="<?php esc_attr_e('Ex: 128', 'tour-booking-manager'); ?>"/>
+                            </label>
                         </div>
                     </div>
                 </section>
@@ -114,21 +152,22 @@ if (!class_exists('TTBM_Settings_Display')) {
                     </div>
                 </section>
 
-                <section style="display:none;">
+                <section data-collapse="#ttbm_display_booking_section" class="<?php echo esc_attr($booking_section_checked ? 'mActive' : ''); ?>">
                     <div class="ttbm-header">
                         <h4><i class="mi mi-blog-text"></i><?php esc_html_e('Booking Form Style', 'tour-booking-manager'); ?></h4>
                     </div>
+                    <p class="info_text"><?php esc_html_e('Choose how the ticket picker opens on the tour page. Open renders the date field and ticket rows straight away; Collapse shows the date field with a "Check Availability" button and loads the ticket rows only after it is clicked.', 'tour-booking-manager'); ?></p>
                     <?php
                     $booking_form = [
                         [
                             'id'=>'regular_ticket',
                             'img'=>TTBM_PLUGIN_URL.'/assets/images/booking-style-1.png',
-                            'title'=> 'Booking Form Open'
+                            'title'=> esc_html__('Booking Form Open', 'tour-booking-manager')
                         ],
                         [
                             'id'=>'availability_section',
                             'img'=>TTBM_PLUGIN_URL.'/assets/images/booking-style-2.png',
-                            'title'=> 'Booking Form Collapse'
+                            'title'=> esc_html__('Booking Form Collapse', 'tour-booking-manager')
                         ],
                     ];
                     ?>

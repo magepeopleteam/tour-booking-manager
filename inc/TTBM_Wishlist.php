@@ -214,7 +214,6 @@ if ( ! class_exists( 'TTBM_Wishlist' ) ) {
 							$duration_type  = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_travel_duration_type', 'day' );
 							$start_price    = TTBM_Function::get_tour_start_price( $tour_id );
 							$regular_price  = TTBM_Function::check_discount_price_exit( $tour_id );
-							$show_price     = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_display_price_start', 'on' ) !== 'off';
 
 							$duration_label = '';
 							if ( $duration ) {
@@ -249,7 +248,7 @@ if ( ! class_exists( 'TTBM_Wishlist' ) ) {
 									<?php if ( $duration_label ) : ?>
 										<div class="ttbm-wishlist-meta"><span class="mi mi-clock"></span> <?php echo esc_html( $duration_label ); ?></div>
 									<?php endif; ?>
-									<?php if ( $start_price && $show_price ) : ?>
+									<?php if ( $start_price !== '' && (float) $start_price > 0 ) : ?>
 										<div class="ttbm-wishlist-price"><?php echo wc_price( $start_price ); ?></div>
 									<?php endif; ?>
 									<a href="<?php echo esc_url( get_permalink( $tour_id ) ); ?>" class="ttbm-wishlist-explore-btn"><?php esc_html_e( 'Explore', 'tour-booking-manager' ); ?></a>

@@ -252,6 +252,8 @@
 							</label>
 						</div>
 						<?php
+					} elseif (sizeof($all_dates) > 0 && $tour_type == 'hotel' && $travel_type != 'particular') {
+						include TTBM_Function::template_path('ticket/date_selection.php');
 					}
 					?>
 				</div>
@@ -278,9 +280,11 @@
 					&& !$time_slots_enabled;
 				?>
 				<div class="ttbm_smart_registration_panel">
-					<div class="ttbm_smart_tickets_placeholder">
-						<p><?php esc_html_e('Select a date to view tickets and pricing.', 'tour-booking-manager'); ?></p>
-					</div>
+					<?php if ($tour_type == 'general') { ?>
+						<div class="ttbm_smart_tickets_placeholder">
+							<p><?php esc_html_e('Select a date to view tickets and pricing.', 'tour-booking-manager'); ?></p>
+						</div>
+					<?php } ?>
 					<?php if (sizeof($all_dates) > 0) {
 						if ($tour_type == 'general') { ?>
 							<div class="ttbm_booking_panel placeholder_area">

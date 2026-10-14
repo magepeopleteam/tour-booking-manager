@@ -3,7 +3,7 @@
  * Plugin Name: Tour & Travel Booking Manager for WooCommerce | Tour & Hotel Booking Solution
  * Plugin URI: http://mage-people.com
  * Description: A Complete Tour and Travel Solution for WordPress by MagePeople.
- * Version: 2.2.0
+ * Version: 2.3.6
  * Author: MagePeople Team
  * Author URI: http://www.mage-people.com/
  * Text Domain: tour-booking-manager
@@ -14,6 +14,16 @@
 if (!defined('ABSPATH')) {
 	die;
 } // Cannot access pages directly.
+
+require_once __DIR__ . '/vendor/appneck/wordpress-sdk/appneck-wordpress-sdk/appneck-sdk.php';
+appneck_sdk_load_latest();
+
+$GLOBALS['my_plugin_sdk'] = \Appneck\Sdk\Sdk::bootstrap(
+	'pk_nIsTPODBoD4cPfozCSfFxCjW5LvhJQny',  // your API key
+	'sk_qUMvG1do0EHJO7jCJ7CLcEgMFSxrDrVCJeqkcuXL9dAOUVVw', // your product secret
+	'https://appneck.com',                  // the Appneck server URL
+	__FILE__                                // so the SDK can hook activation/deactivation
+);
 
 // WooCommerce fallback stub functions to prevent fatal errors when WooCommerce is inactive.
 // Hooked to plugins_loaded so that WooCommerce (if active or being activated) has loaded first,
@@ -77,6 +87,19 @@ function ttbm_define_woocommerce_fallbacks() {
 		}
 	}
 	if (!class_exists('TTBM_WC_Fallback')) {
+		/**
+		 * Stand-in for WC() on sites running without WooCommerce.
+		 *
+		 * Because this shim also declares the WC() function, every
+		 * `function_exists('WC')` guard in the codebase passes even when
+		 * WooCommerce is absent -- so those guards are really testing the call
+		 * that follows, e.g. `function_exists('WC') && WC()->payment_gateways()`.
+		 * The catch-alls below make that idiom work: an unknown method returns
+		 * false and an unknown property returns null, so the guard short-circuits
+		 * instead of taking the whole admin screen down with a fatal. Use
+		 * TTBM_Global_Function::has_woocommerce() when you need to branch on
+		 * WooCommerce actually being active.
+		 */
 		class TTBM_WC_Fallback {
 			public $cart;
 			public $customer;
@@ -84,6 +107,15 @@ function ttbm_define_woocommerce_fallbacks() {
 			public function __construct() {
 				$this->cart = new TTBM_WC_Cart_Fallback();
 				$this->customer = new TTBM_WC_Customer_Fallback();
+			}
+			public function __call($name, $arguments) {
+				return false;
+			}
+			public function __get($name) {
+				return null;
+			}
+			public function __isset($name) {
+				return false;
 			}
 		}
 	}
@@ -215,7 +247,7 @@ if (!class_exists('TTBM_Woocommerce_Plugin')) {
 					define('TTBM_PLUGIN_URL', plugins_url() . '/' . plugin_basename(dirname(__FILE__)));
 				}
 				if (!defined('TTBM_PLUGIN_VERSION')) {
-					define('TTBM_PLUGIN_VERSION', '2.2.0');
+					define('TTBM_PLUGIN_VERSION', '2.3.6');
 				}
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Dependencies.php';
 			}

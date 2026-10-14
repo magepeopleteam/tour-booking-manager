@@ -88,6 +88,13 @@
     ttbm_taxonomy_list_load_more( 'ttbm_tag_load_more_text', 'ttbm_load_more_tag_number', 'ttbm_load_tag');
     ttbm_taxonomy_list_load_more( 'ttbm_feature_load_more_text', 'ttbm_load_more_feature_number', 'ttbm_load_feature');
 
+    // [wptravelly-tour-list cat="..."]: one instance per data-list-key (cat-1, cat-2, ...).
+    $('.ttbm_cat_tour_list').each(function () {
+        let key = $(this).data('list-key');
+        ttbm_promotional_tour_carousal( 'ttbm_' + key + '_tour' );
+        ttbm_taxonomy_list_load_more( 'ttbm_' + key + '_load_more_text', 'ttbm_' + key + '_load_more_tour_shortcode', 'ttbm_' + key + '_shortcode_load_tour' );
+    });
+
 
 
 

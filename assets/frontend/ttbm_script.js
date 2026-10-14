@@ -1,3 +1,9 @@
+/* Localised UI strings (see TTBM_Dependencies::frontend_i18n()). Falls back to
+   the English literal when the handle carrying ttbm_i18n is not on the page. */
+window.ttbmT = window.ttbmT || function (key, fallback) {
+	return (typeof ttbm_i18n !== 'undefined' && ttbm_i18n[key]) ? ttbm_i18n[key] : fallback;
+};
+
 //*******owlCarousel***********//
 (function ($) {
 	"use strict";
@@ -59,21 +65,22 @@
 	// ==========Tour Guide Carousel============
 	$("#ttbm-tour-guide").owlCarousel({
 		loop: true,
-		center: true,
-		margin: 5,
-		nav: true,
-		startPosition:0,
+		center: false,
+		margin: 14,
+		nav: false,
+		dots: false,
+		startPosition: 0,
 		responsive: {
-			0: {
-				items:1
-			}
+			0: { items: 1 },
+			640: { items: 1 },
+			900: { items: 2 }
 		}
 	});
-	$(".ttbm-tour-guide .next").click(function () {
-		$('#ttbm-tour-guide .owl-next').trigger('click');
+	$(".ttbm-tour-guide").on("click", ".next", function () {
+		$("#ttbm-tour-guide").trigger("next.owl.carousel");
 	});
-	$(".ttbm-tour-guide .prev").click(function () {
-		$('#ttbm-tour-guide .owl-prev').trigger('click');
+	$(".ttbm-tour-guide").on("click", ".prev", function () {
+		$("#ttbm-tour-guide").trigger("prev.owl.carousel");
 	});
 	// ==========Tour Guide Carousel End============
 	$(document).on('click', '[data-target-popup="get-enquiry-popup"]', function () {
@@ -234,8 +241,8 @@
 			if (!$grid.length) {
 				return;
 			}
-			var labelMore = $btn.attr('data-label-more') || 'Load more';
-			var labelLess = $btn.attr('data-label-less') || 'Show less';
+			var labelMore = $btn.attr('data-label-more') || ttbmT('load_more', 'Load more');
+			var labelLess = $btn.attr('data-label-less') || ttbmT('show_less', 'Show less');
 			var collapsed = $grid.toggleClass('ttbm_hero_stats_grid--collapsed').hasClass('ttbm_hero_stats_grid--collapsed');
 			$btn.attr('aria-expanded', collapsed ? 'false' : 'true').text(collapsed ? labelMore : labelLess);
 		});
@@ -260,7 +267,7 @@
 		// Ensure the data-lati and data-longdi attributes exist
 		var lati = parseFloat(map_canvas.getAttribute("data-lati")) || 0;
 		var longdi = parseFloat(map_canvas.getAttribute("data-longdi")) || 0;
-		var location = map_canvas.getAttribute("data-location") || 'Tour Location';
+		var location = map_canvas.getAttribute("data-location") || ttbmT('tour_location', 'Tour Location');
 	
 		// Initialize the map with Leaflet (OpenStreetMap)
 		var osmMap = L.map(map_canvas, { minZoom: 4, maxZoom: 18, scrollWheelZoom: false }).setView([lati, longdi], 12);
@@ -349,7 +356,7 @@
 
 	function ttbmSetWishlistButtonState(btn, inWishlist) {
 		var icon = btn.find('.mi');
-		var label = inWishlist ? 'Remove from wishlist' : 'Add to wishlist';
+		var label = inWishlist ? ttbmT('wishlist_remove', 'Remove from wishlist') : ttbmT('wishlist_add', 'Add to wishlist');
 
 		btn.toggleClass('active', !!inWishlist);
 		btn.attr('aria-label', label);
@@ -388,13 +395,13 @@
 					ttbmSetWishlistButtonState(btn, response.data.in_wishlist);
 					ttbmSyncWishlistButtons(tourId, response.data.in_wishlist);
 					if (response.data.in_wishlist) {
-						var toastMsg = 'Added to wishlist.';
+						var toastMsg = ttbmT('wishlist_added', 'Added to wishlist.');
 						if (ttbm_ajax.wishlist_url) {
-							toastMsg = 'Added to wishlist. <a href="' + ttbm_ajax.wishlist_url + '">Open wishlist</a>';
+							toastMsg = ttbmT('wishlist_added', 'Added to wishlist.') + ' <a href="' + ttbm_ajax.wishlist_url + '">' + ttbmT('wishlist_open', 'Open wishlist') + '</a>';
 						}
 						ttbmShowToast(toastMsg, 'success', 4000, true);
 					} else {
-						ttbmShowToast('Removed from wishlist.', 'info', 3000, false);
+						ttbmShowToast(ttbmT('wishlist_removed', 'Removed from wishlist.'), 'info', 3000, false);
 					}
 				} else if (response.data && response.data.need_login) {
 					// Show login modal
@@ -434,7 +441,7 @@
 				if (response.success && !response.data.in_wishlist) {
 					ttbmSyncWishlistButtons(tourId, false);
 					btn.closest('.ttbm-wishlist-item').fadeOut(300, function() { $(this).remove(); });
-					ttbmShowToast('Removed from wishlist.', 'info', 3000, false);
+					ttbmShowToast(ttbmT('wishlist_removed', 'Removed from wishlist.'), 'info', 3000, false);
 				}
 			}
 		});

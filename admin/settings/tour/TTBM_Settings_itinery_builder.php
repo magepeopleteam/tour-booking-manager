@@ -25,20 +25,43 @@
 				// daywise sort_daywise
 				add_action('wp_ajax_ttbm_sort_daywise', [$this, 'sort_daywise']);
 			}
+			/**
+			 * Whether the current user may read and write the itinerary of $post_id.
+			 *
+			 * ttbm_admin_nonce is minted for every user who can open a TTBM admin
+			 * screen, so verifying it only proves the request came from our own UI --
+			 * never that the sender is allowed to touch this particular tour. Every
+			 * handler below therefore re-checks the object capability itself before it
+			 * reads or writes ttbm_daywise_details.
+			 *
+			 * @param int $post_id Tour ID taken from the request.
+			 * @return bool
+			 */
+			private function current_user_can_edit_daywise_post($post_id) {
+				return $post_id > 0 && get_post_type($post_id) === TTBM_Function::get_cpt_name() && current_user_can('edit_post', $post_id);
+			}
 			public function sort_daywise() {
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 				}
-				$post_id = isset($_POST['postID']) ? sanitize_text_field(wp_unslash($_POST['postID'])) : '';
-				$sorted_ids = isset($_POST['sortedIDs']) ? array_map('intval', $_POST['sortedIDs']) : [];
-				$ttbm_daywise = get_post_meta($post_id, 'ttbm_daywise_details', true);
-				$new_ordered = [];
-				foreach ($sorted_ids as $id) {
-					if (isset($ttbm_daywise[$id])) {
-						$new_ordered[$id] = $ttbm_daywise[$id];
-					}
+				$post_id = isset($_POST['postID']) ? absint(wp_unslash($_POST['postID'])) : 0;
+				if (!$this->current_user_can_edit_daywise_post($post_id)) {
+					wp_send_json_error('Permission denied!', 403);
 				}
-				update_post_meta($post_id, 'ttbm_daywise_details', $new_ordered);
+				$sorted_ids = isset($_POST['sortedIDs']) ? array_map('absint', (array) wp_unslash($_POST['sortedIDs'])) : [];
+				$ttbm_daywise = get_post_meta($post_id, 'ttbm_daywise_details', true);
+				$ttbm_daywise = is_array($ttbm_daywise) ? $ttbm_daywise : [];
+				// An empty sort order means the browser sent nothing to reorder, not that
+				// the itinerary should be emptied -- leave the stored value untouched.
+				if (!empty($sorted_ids)) {
+					$new_ordered = [];
+					foreach ($sorted_ids as $id) {
+						if (isset($ttbm_daywise[$id])) {
+							$new_ordered[$id] = $ttbm_daywise[$id];
+						}
+					}
+					update_post_meta($post_id, 'ttbm_daywise_details', $new_ordered);
+				}
 				ob_start();
 				$resultMessage = esc_html__('Data Updated Successfully', 'tour-booking-manager');
 				$this->show_daywise_data($post_id);
@@ -114,6 +137,14 @@
                                 </div>
 
                                 <div class="ttbm-modal-field">
+                                    <label class="ttbm-modal-label" for="ttbm_day_time_input">
+                                        <?php esc_html_e('Time', 'tour-booking-manager'); ?>
+                                        <span class="ttbm-modal-optional">(<?php esc_html_e('optional', 'tour-booking-manager'); ?>)</span>
+                                    </label>
+                                    <input type="time" id="ttbm_day_time_input" name="ttbm_day_time">
+                                </div>
+
+                                <div class="ttbm-modal-field">
                                     <label class="ttbm-modal-label">
                                         <?php esc_html_e('Day Description', 'tour-booking-manager'); ?>
                                     </label>
@@ -160,10 +191,18 @@
 				if (!empty($ttbm_daywise)):
 					foreach ($ttbm_daywise as $key => $value) :
 						?>
-                        <div class="ttbm-daywise-item" data-id="<?php echo esc_attr($key); ?>">
+                        <div class="ttbm-daywise-item" data-id="<?php echo esc_attr($key); ?>" data-time="<?php echo esc_attr($value['ttbm_day_time'] ?? ''); ?>">
                             <div class="daywise-header" data-collapse-target="#daywise-content-<?php echo esc_attr($key); ?>">
                                 <div class="dFlex">
+									<?php /* Time kept OUT of the <p> below on purpose — ttbm_admin_script.js's
+									edit handler reads this <p>'s .text() as the title to pre-fill the modal,
+									so anything else inside it would get pulled into the title field too. The
+									real value the JS actually reads for pre-filling is this wrapper's own
+									data-time attribute above, not this badge. */ ?>
                                     <p><?php echo esc_html($value['ttbm_day_title']); ?></p>
+									<?php if (!empty($value['ttbm_day_time'])) : ?>
+										<span class="ttbm-daywise-item-time"><i class="fas fa-clock"></i> <?php echo esc_html($value['ttbm_day_time']); ?></span>
+									<?php endif; ?>
                                     <div class="daywise-action">
                                         <span class=""><i class="fas fa-eye"></i></span>
                                         <span class="ttbm-daywise-item-edit" data-modal="ttbm-daywise-item-new"><i class="fas fa-edit"></i></span>
@@ -183,13 +222,17 @@
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 				}
-				$post_id = isset($_POST['ttbm_daywise_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_daywise_postID'])) : '';
+				$post_id = isset($_POST['ttbm_daywise_postID']) ? absint(wp_unslash($_POST['ttbm_daywise_postID'])) : 0;
+				if (!$this->current_user_can_edit_daywise_post($post_id)) {
+					wp_send_json_error('Permission denied!', 403);
+				}
 				$ttbm_day_title = isset($_POST['ttbm_day_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_day_title'])) : '';
+				$ttbm_day_time = isset($_POST['ttbm_day_time']) ? sanitize_text_field(wp_unslash($_POST['ttbm_day_time'])) : '';
 				$allowed_tags = wp_kses_allowed_html('post');
 				$ttbm_day_content = isset($_POST['ttbm_day_content']) ? wp_kses(wp_unslash($_POST['ttbm_day_content']), $allowed_tags) : '';
 				$ttbm_daywise = get_post_meta($post_id, 'ttbm_daywise_details', true);
 				$ttbm_daywise = !empty($ttbm_daywise) ? $ttbm_daywise : [];
-				$new_data = ['ttbm_day_title' => $ttbm_day_title, 'ttbm_day_content' => $ttbm_day_content];
+				$new_data = ['ttbm_day_title' => $ttbm_day_title, 'ttbm_day_time' => $ttbm_day_time, 'ttbm_day_content' => $ttbm_day_content];
 				if (!empty($ttbm_daywise)) {
 					if (isset($_POST['ttbm_daywise_itemID'])) {
 						$ttbm_daywise[sanitize_text_field(wp_unslash($_POST['ttbm_daywise_itemID']))] = $new_data;
@@ -210,13 +253,17 @@
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 				}
-				$post_id = isset($_POST['ttbm_daywise_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_daywise_postID'])) : '';
+				$post_id = isset($_POST['ttbm_daywise_postID']) ? absint(wp_unslash($_POST['ttbm_daywise_postID'])) : 0;
+				if (!$this->current_user_can_edit_daywise_post($post_id)) {
+					wp_send_json_error('Permission denied!', 403);
+				}
 				$ttbm_day_title = isset($_POST['ttbm_day_title']) ? sanitize_text_field(wp_unslash($_POST['ttbm_day_title'])) : '';
+				$ttbm_day_time = isset($_POST['ttbm_day_time']) ? sanitize_text_field(wp_unslash($_POST['ttbm_day_time'])) : '';
 				$allowed_tags = wp_kses_allowed_html('post');
 				$ttbm_day_content = isset($_POST['ttbm_day_content']) ? wp_kses(wp_unslash($_POST['ttbm_day_content']), $allowed_tags) : '';
 				$ttbm_daywise = get_post_meta($post_id, 'ttbm_daywise_details', true);
 				$ttbm_daywise = !empty($ttbm_daywise) ? $ttbm_daywise : [];
-				$new_data = ['ttbm_day_title' => $ttbm_day_title, 'ttbm_day_content' => $ttbm_day_content];
+				$new_data = ['ttbm_day_title' => $ttbm_day_title, 'ttbm_day_time' => $ttbm_day_time, 'ttbm_day_content' => $ttbm_day_content];
 				if (isset($post_id)) {
 					array_push($ttbm_daywise, $new_data);
 				}
@@ -242,7 +289,10 @@
 				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_admin_nonce')) {
 					wp_send_json_error('Invalid nonce!'); // Prevent unauthorized access
 				}
-				$post_id = isset($_POST['ttbm_daywise_postID']) ? sanitize_text_field(wp_unslash($_POST['ttbm_daywise_postID'])) : '';
+				$post_id = isset($_POST['ttbm_daywise_postID']) ? absint(wp_unslash($_POST['ttbm_daywise_postID'])) : 0;
+				if (!$this->current_user_can_edit_daywise_post($post_id)) {
+					wp_send_json_error('Permission denied!', 403);
+				}
 				$ttbm_daywise = get_post_meta($post_id, 'ttbm_daywise_details', true);
 				$ttbm_daywise = !empty($ttbm_daywise) ? $ttbm_daywise : [];
 				if (!empty($ttbm_daywise)) {

@@ -18,7 +18,7 @@
 							<div class="ttbm_hero placeholder_area">
 								<?php
 									$ttbm_hero_display_reg = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_registration', 'on' );
-									$ttbm_hero_price       = TTBM_Function::get_tour_start_price( $tour_id );
+									$ttbm_hero_price       = TTBM_Function::show_start_price( $ttbm_post_id ) ? TTBM_Function::get_tour_start_price( $tour_id ) : '';
 									$ttbm_hero_next_date   = TTBM_Function::get_next_tour_date_display( $tour_id );
 									$ttbm_hero_overlay_cb  = function () use ( $ttbm_post_id, $tour_id, $ttbm_hero_display_reg, $ttbm_hero_price, $ttbm_hero_next_date ) {
 										?>
@@ -40,12 +40,10 @@
 																			<?php
 																			$start_price                 = $ttbm_hero_price;
 																			$regular_price               = TTBM_Function::get_tour_start_regular_price( $tour_id );
-																			$ttbm_force_hero_price       = true;
 																			$wrapper_class               = 'ttbm_hero_price_values';
 																			$original_class              = 'ttbm_hero_price_regular ttbm_regular_price strikeLine';
 																			$current_class               = 'ttbm_hero_price_sale';
 																			include TTBM_Function::template_path( 'layout/start_price_display.php' );
-																			unset( $ttbm_force_hero_price );
 																			?>
 																		</span>
 																	</span>
@@ -61,9 +59,11 @@
 																</div>
 															<?php endif; ?>
 														</div>
-														<button type="button" class="ttbm_hero_book_now" data-ttbm-book-now>
-															<span class="ttbm_hero_book_now_text"><?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?></span>
-														</button>
+														<?php if ( TTBM_Function::show_booking_section( $ttbm_post_id ) ) : ?>
+															<button type="button" class="ttbm_hero_book_now" data-ttbm-book-now>
+																<span class="ttbm_hero_book_now_text"><?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?></span>
+															</button>
+														<?php endif; ?>
 													</div>
 												<?php endif; ?>
 											</div>
@@ -91,15 +91,9 @@
 									$ttbm_hero_stat_count  = TTBM_Function::get_hero_stat_render_count();
 									TTBM_Function::disable_hero_stat_limit();
 								?>
-								<?php if ( $ttbm_hero_stat_count > 5 ) : ?>
-								<style>
-									.ttbm_default_theme .ttbm_hero_stats_grid--collapsed .item_icon.ttbm_hero_stat_item--extra { display: none !important; }
-								</style>
-								<?php endif; ?>
 								<div class="ttbm_hero_stats_grid ttbm_hero_stats_grid--collapsed">
 								<?php echo $ttbm_hero_stats_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-								<?php if ( $ttbm_hero_stat_count > 5 ) : ?>
-								<div class="ttbm_hero_stats_more is-visible">
+								<?php if ( $ttbm_hero_stat_count > 4 ) : ?>
 									<button
 										type="button"
 										class="ttbm_hero_stats_load_more"
@@ -107,15 +101,23 @@
 										data-label-more="<?php esc_attr_e( 'Load more', 'tour-booking-manager' ); ?>"
 										data-label-less="<?php esc_attr_e( 'Show less', 'tour-booking-manager' ); ?>"
 									><?php esc_html_e( 'Load more', 'tour-booking-manager' ); ?></button>
-								</div>
 								<?php endif; ?>
 								</div>
 							</div>
 							<?php endif; ?>
-							<?php
+							<?php if ( TTBM_Function::show_booking_section( $ttbm_post_id ) ) :
 							$ttbm_booking_section_cls = 'ttbm_booking_section placeholder_area';
 							if ( $ttbm_booking_tour_type === 'hotel' ) {
 								$ttbm_booking_section_cls .= ' ttbm_booking_section--hotel';
+							}
+							/*
+							 * This theme keeps the section display:none until 'ttbm-show' is on it
+							 * (the hero Book Now button adds it). Booking Form Style = Open means
+							 * open on arrival, so add the class up front; Collapse keeps the
+							 * click-to-open behaviour.
+							 */
+							if ( TTBM_Function::booking_form_opens_expanded( $tour_id ) ) {
+								$ttbm_booking_section_cls .= ' ttbm-show';
 							}
 							$ttbm_travel_type = TTBM_Function::get_travel_type( $tour_id );
 							?>
@@ -132,6 +134,7 @@
 								<?php include( TTBM_Function::template_path( 'ticket/registration.php' ) ); ?>
 								<?php include( TTBM_Function::template_path( 'ticket/particular_item_area.php' ) ); ?>
 							</div>
+							<?php endif; ?>
 							<div class="ttbm_description_area placeholder_area">
 								<?php do_action( 'ttbm_description' ); ?>
 							</div>

@@ -494,7 +494,7 @@
 				$longitude     = get_post_meta($tour_id, 'ttbm_map_longitude', true);
 				$longitude     = !empty($longitude) ? $longitude : '-74.005974';
 				$gmap_api_key  = $this->get_gmap_api_key();
-				$display_map   = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'on');
+				$display_map   = self::map_default_state($tour_id);
 
 				if ($display_map !== 'on') return;
 				?>
@@ -528,9 +528,17 @@
 				</div>
 				<?php
 			}
+			/**
+			 * A brand-new tour starts with the map off; tours that already exist (including ones that
+			 * never saved the setting and have always shown the map) keep their previous default of on.
+			 */
+			public static function map_default_state($tour_id) {
+				$is_new = in_array(get_post_status($tour_id), array('auto-draft', false), true);
+				return (string) TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', $is_new ? 'off' : 'on');
+			}
 			public function map_enable($tour_id) {
 				$display_location = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_location', 'on');
-				$display_map      = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'on');
+				$display_map      = self::map_default_state($tour_id);
 				$checked          = ( $display_map === 'off' ) ? '' : 'checked';
 				$hidden_style     = ( $display_location === 'off' ) ? ' style="display:none;"' : '';
 				?>
@@ -551,7 +559,7 @@
 				// Placeholder preview only — do not inject default NY as saved values.
 				$map_query     = $location_name !== '' ? $location_name : 'Cox\'s Bazar, Bangladesh';
 				$gmap_api_key  = $this->get_gmap_api_key();
-				$display_map   = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_display_map', 'on');
+				$display_map   = self::map_default_state($tour_id);
 				$active        = $display_map == 'off' ? '' : 'mActive';
 				$settings_url  = admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page');
 				$iframe_src    = 'https://maps.google.com/maps?q=' . rawurlencode($map_query) . '&z=14&output=embed';

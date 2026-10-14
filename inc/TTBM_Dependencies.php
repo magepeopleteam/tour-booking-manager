@@ -9,7 +9,6 @@
 			public function __construct() {
 				add_action('init', array($this, 'language_load'));
 				$this->load_file();
-				$this->appsero_init_tracker_ttbm();
 				add_action('wp_enqueue_scripts', array($this, 'frontend_script'), 90);
 				// Safety net: if a TTBM shortcode actually renders on a page the gate
 				// above did not predict (page builders that store content outside
@@ -40,6 +39,7 @@
 				// of whether WooCommerce is active, so the plugin is fully usable without it.
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Function.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Booking_Normalizer.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Timewise_Stock.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Layout.php';
 				require_once TTBM_PLUGIN_DIR . '/support/elementor/elementor-support.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin.php';
@@ -95,13 +95,6 @@
 					$is_active = $is_active || is_plugin_active_for_network('tour-booking-manager-pro/tour-booking-manager-pro.php');
 				}
 				return $is_active && file_exists(WP_PLUGIN_DIR . '/tour-booking-manager-pro/tour-booking-manager-pro.php');
-			}
-			public function appsero_init_tracker_ttbm() {
-				if (!class_exists('Appsero\Client')) {
-					require_once TTBM_PLUGIN_DIR . '/lib/appsero/src/Client.php';
-				}
-				$client = new Appsero\Client('5e44d3f4-ddea-4784-8c15-4502ad6e7426', 'Tour Booking Manager For Woocommerce', __FILE__);
-				$client->insights()->init();
 			}
 			public function global_enqueue() {
 				wp_enqueue_script('jquery');
@@ -217,6 +210,40 @@
 				}
 				return $output;
 			}
+			/**
+			 * User-facing strings that the frontend JS bundles render.
+			 *
+			 * They are translated here, in PHP, against the same catalogue every
+			 * other plugin string uses -- so Loco Translate covers them with no
+			 * extra JSON artefacts to regenerate. Each bundle reads them through
+			 * the `ttbm_i18n` object with an English literal as fallback, so a
+			 * missing key can never blank out a label.
+			 */
+			public static function frontend_i18n() {
+				return array(
+					'load_more'        => esc_html__('Load more', 'tour-booking-manager'),
+					'show_less'        => esc_html__('Show less', 'tour-booking-manager'),
+					'tour_location'    => esc_html__('Tour Location', 'tour-booking-manager'),
+					'wishlist_add'     => esc_html__('Add to wishlist', 'tour-booking-manager'),
+					'wishlist_remove'  => esc_html__('Remove from wishlist', 'tour-booking-manager'),
+					'wishlist_added'   => esc_html__('Added to wishlist.', 'tour-booking-manager'),
+					'wishlist_open'    => esc_html__('Open wishlist', 'tour-booking-manager'),
+					'wishlist_removed' => esc_html__('Removed from wishlist.', 'tour-booking-manager'),
+					'select_date'      => esc_html__('Please Select Date', 'tour-booking-manager'),
+					'select_time'      => esc_html__('Please Select Time', 'tour-booking-manager'),
+					'select_ticket'    => esc_html__('Please Select Ticket Type', 'tour-booking-manager'),
+					'show_filters'     => esc_html__('Show filters', 'tour-booking-manager'),
+					'hide_filters'     => esc_html__('Hide filters', 'tour-booking-manager'),
+					'chip_remove'      => esc_html__('Remove filter', 'tour-booking-manager'),
+					'chip_clear_all'   => esc_html__('Clear all', 'tour-booking-manager'),
+					/* translators: %s: formatted maximum price, e.g. "$250". */
+					'chip_under'       => esc_html__('Under %s', 'tour-booking-manager'),
+					/* translators: %s: formatted minimum price, e.g. "$250". */
+					'chip_and_up'      => esc_html__('%s & up', 'tour-booking-manager'),
+					'hotel_error'      => esc_html__('Unable to complete booking for selected dates.', 'tour-booking-manager'),
+					'link_copied'      => esc_html__('Link copied to clipboard.', 'tour-booking-manager'),
+				);
+			}
 			public function frontend_script() {
 				if (!$this->should_load_frontend_assets()) {
 					return;
@@ -237,9 +264,10 @@
 				wp_enqueue_script('ttbm_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_script.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_shortcode', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_shortcode.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm-confirm-btn', TTBM_PLUGIN_URL . '/assets/frontend/ttbm-confirm-btn.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
-                wp_enqueue_style('ttbm_hotel_lists', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_lists.css', array('ttbm_registration'), TTBM_PLUGIN_VERSION);
-                wp_enqueue_style('ttbm_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_details.css', array('ttbm_hotel_lists'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_details.css'));
+				wp_enqueue_style('ttbm_hotel_lists');
+				wp_enqueue_style('ttbm_details');
 
+				wp_localize_script('ttbm_script', 'ttbm_i18n', self::frontend_i18n());
 				wp_localize_script('ttbm_script', 'ttbm_ajax', array(
 					'ajax_url' => admin_url('admin-ajax.php'),
 					'nonce' => wp_create_nonce('ttbm_frontend_nonce'),
@@ -318,10 +346,13 @@
 				//===================//
 				wp_enqueue_script('ttbm_admin_settings', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_settings.js', array('jquery'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_admin_settings.js'), true);
 				//===================//
-				wp_enqueue_script('ttbm_hotel_booking', TTBM_PLUGIN_URL . '/assets/admin/ttbm_hotel_booking.js', array('jquery', 'jquery-ui-datepicker'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_hotel_booking.js'), true);
+				wp_enqueue_script('ttbm_hotel_booking', TTBM_PLUGIN_URL . '/assets/admin/ttbm_hotel_booking.js', array('jquery', 'jquery-ui-datepicker', 'media-editor'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_hotel_booking.js'), true);
 				wp_enqueue_script('ttbm_admin_script', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_script.js', array('jquery', 'ttbm_hotel_booking'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_admin_script.js'), true);
 				wp_enqueue_style('ttbm_admin', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin.css', array(), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_admin.css'));
-				wp_enqueue_style('ttbm_admin_modern', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_modern.css', array('ttbm_admin'), TTBM_PLUGIN_VERSION);
+				// filemtime, not the plugin version: this stylesheet changes far more
+				// often than the version constant does, and pinning it to the constant
+				// left browsers serving a stale copy after every edit.
+				wp_enqueue_style('ttbm_admin_modern', TTBM_PLUGIN_URL . '/assets/admin/ttbm_admin_modern.css', array('ttbm_admin'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_admin_modern.css'));
 				wp_localize_script('ttbm_hotel_booking', 'ttbm_admin_ajax', array(
 					'ajax_url' => admin_url('admin-ajax.php'),
 					'nonce' => wp_create_nonce('ttbm_admin_nonce'),
@@ -333,6 +364,7 @@
 						'save_failed' => __( 'Something went wrong. Please try again.', 'tour-booking-manager' ),
 						'request_failed' => __( 'Request failed. Please check your connection and try again.', 'tour-booking-manager' ),
 						'no_tours_found' => __( 'No tours found.', 'tour-booking-manager' ),
+						'choose_image' => __( 'Choose Image', 'tour-booking-manager' ),
 					),
 				));
 				wp_localize_script('ttbm_admin_script', 'ttbm_admin_ajax', array(
@@ -344,12 +376,16 @@
 				if ($autosave_screen && $autosave_screen->base === 'post' && $autosave_screen->post_type === TTBM_Function::get_cpt_name()) {
 					global $post;
 					$autosave_post_id = ($post && isset($post->ID)) ? (int) $post->ID : (isset($_GET['post']) ? (int) $_GET['post'] : 0);
+					wp_enqueue_style('ttbm-tour-wizard', TTBM_PLUGIN_URL . '/assets/admin/ttbm-tour-wizard.css', array('ttbm_admin_modern'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-tour-wizard.css'));
+					wp_enqueue_script('ttbm-tour-wizard', TTBM_PLUGIN_URL . '/assets/admin/ttbm-tour-wizard.js', array('jquery', 'ttbm_admin_settings', 'ttbm_admin_script'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-tour-wizard.js'), true);
 					wp_enqueue_style('ttbm-autosave', TTBM_PLUGIN_URL . '/assets/admin/ttbm-autosave.css', array('ttbm-admin-toast'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-autosave.css'));
 					wp_enqueue_script('ttbm-autosave', TTBM_PLUGIN_URL . '/assets/admin/ttbm-autosave.js', array('jquery', 'ttbm-admin-toast', 'ttbm_admin_settings', 'ttbm_admin_script'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-autosave.js'), true);
 					wp_localize_script('ttbm-autosave', 'ttbm_autosave_vars', array(
 						'ajax_url'     => admin_url('admin-ajax.php'),
 						'nonce'        => wp_create_nonce('ttbm_autosave'),
 						'post_id'      => $autosave_post_id,
+						'preview_url'  => $autosave_post_id ? (string) get_preview_post_link($autosave_post_id) : '',
+						'view_url'     => $autosave_post_id ? (string) get_permalink($autosave_post_id) : '',
 						'debounce'     => (int) apply_filters('ttbm_autosave_debounce_ms', 1200),
 						'min_interval' => (int) apply_filters('ttbm_autosave_min_interval_ms', 3000),
 						'enabled'      => (bool) apply_filters('ttbm_enable_tour_autosave', true, $autosave_post_id),
@@ -365,6 +401,12 @@
 							/* translators: %d: minutes elapsed */
 							'mins_ago'     => __('%d mins ago', 'tour-booking-manager'),
 							'saved_toast'  => __('All changes auto-saved.', 'tour-booking-manager'),
+							'published_title' => __('Tour published!', 'tour-booking-manager'),
+							'published_text'  => __('Your tour is live and ready for bookings.', 'tour-booking-manager'),
+							'updated_title'   => __('Tour updated!', 'tour-booking-manager'),
+							'updated_text'    => __('Your changes have been saved and are now live on your site.', 'tour-booking-manager'),
+							'view_tour'       => __('View Tour', 'tour-booking-manager'),
+							'keep_editing'    => __('Keep editing', 'tour-booking-manager'),
 							'paused_toast' => __('Auto-save paused: some required fields are missing.', 'tour-booking-manager'),
 							'error_toast'  => __('Auto-save failed — your changes are not saved yet.', 'tour-booking-manager'),
 						),
@@ -383,15 +425,35 @@
 				wp_enqueue_script( 'moment' );
 				wp_enqueue_style('ttbm_date_range_picker', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.min.css', array(), '1');
 				wp_enqueue_script('ttbm_date_range_picker_js', TTBM_PLUGIN_URL . '/assets/date_range_picker/date_range_picker.js', array('jquery', 'moment'), '1', true);
-				wp_enqueue_style('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.css', array(), TTBM_PLUGIN_VERSION);
-				wp_enqueue_style('ttbm_smart_booking', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_smart_booking.css', array('ttbm_registration'), TTBM_PLUGIN_VERSION);
+				wp_enqueue_style('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.css', array(), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_registration.css'));
+				wp_register_style('ttbm_hotel_lists', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_lists.css', array('ttbm_registration'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_hotel_lists.css'));
+				wp_register_style('ttbm_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_details.css', array('ttbm_hotel_lists'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_details.css'));
+				wp_enqueue_style('ttbm_smart_booking', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_smart_booking.css', array('ttbm_registration'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_smart_booking.css'));
+				/* [ttbm-tour-list]'s own modern visual system — loads after ttbm_registration
+				   so normal cascade order (not !important) is enough to win. Scoped entirely
+				   under .ttbm-tour-list-shortcode / .ttbm-top-search-form, so it can't affect
+				   hotel listings or any other shortcode's output. */
+				wp_enqueue_style('ttbm_tour_list_modern', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_tour_list_modern.css', array('ttbm_registration'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_tour_list_modern.css'));
+				/* templates/themes/travello.php's own visual system — a brand-new,
+				   fully isolated single-tour template, scoped entirely under
+				   .ttbm_travello_theme so it can't affect default.php/smart.php/
+				   viator.php. Its registered 'ttbm_details' dependency preserves
+				   the intended cascade order on single-tour pages. */
+				wp_enqueue_style('ttbm_travello_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_travello_details.css', array('ttbm_registration', 'ttbm_details'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_travello_details.css'));
 				wp_enqueue_script('jquery-ui-autocomplete');
-				wp_enqueue_script('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.js', array('jquery', 'jquery-ui-autocomplete', 'ttbm_date_range_picker_js'), TTBM_PLUGIN_VERSION, true);
+				wp_enqueue_script('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.js', array('jquery', 'jquery-ui-autocomplete', 'ttbm_date_range_picker_js'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_registration.js'), true);
 				wp_enqueue_script('ttbm_attendee_autocomplete', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_attendee_autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_price_calculation', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_price_calculation.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_smart_booking', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_smart_booking.js', array('jquery', 'ttbm_registration', 'ttbm_price_calculation'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_hotel_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_script.js', array('jquery', 'moment', 'ttbm_date_range_picker_js'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_filter_pagination_script', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.js', array('jquery', 'mp_select_2', 'moment', 'ttbm_date_range_picker_js'), TTBM_PLUGIN_VERSION, true);
+				/* Active-filter chip row for [ttbm-tour-list] — reads/resets the same
+				   checkboxes and hidden inputs filter_pagination.js already drives. */
+				wp_enqueue_script('ttbm_active_filter_chips', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_active_filter_chips.js', array('jquery', 'ttbm_filter_pagination_script'), TTBM_PLUGIN_VERSION, true);
+				/* Travello single-tour template — tab-bar scroll-nav + share button only;
+				   booking/price/wishlist/FAQ-accordion all reuse existing plugin JS. */
+				wp_enqueue_script('ttbm_travello_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_travello_details.js', array('jquery', 'ttbm_price_calculation'), TTBM_PLUGIN_VERSION, true);
+				wp_localize_script('ttbm_registration', 'ttbm_i18n', self::frontend_i18n());
 				wp_localize_script('ttbm_registration', 'ttbm_ajax', array(
 					'ajax_url' => admin_url('admin-ajax.php'),
 					'nonce' => wp_create_nonce('ttbm_frontend_nonce')

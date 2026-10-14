@@ -162,7 +162,7 @@
 			}
 
 			/**
-			 * Extra class for hero stat chips beyond the first five visible items.
+			 * Extra class for hero stat chips beyond the first four visible items.
 			 *
 			 * @param bool $counts_toward_limit Pass false for chips hidden in hero (e.g. price).
 			 */
@@ -170,13 +170,15 @@
 				if ( ! self::$hero_stat_limit_enabled ) {
 					return '';
 				}
-				$extra = '';
-				if ( $counts_toward_limit ) {
-					if ( self::$hero_stat_render_index >= 5 ) {
-						$extra = ' ttbm_hero_stat_item--extra';
-					}
-					self::$hero_stat_render_index++;
+				// Price (and similar) stay in markup for other themes but never show in the hero bar.
+				if ( ! $counts_toward_limit ) {
+					return ' ttbm_hero_stat_item--hidden';
 				}
+				$extra = '';
+				if ( self::$hero_stat_render_index >= 4 ) {
+					$extra = ' ttbm_hero_stat_item--extra';
+				}
+				self::$hero_stat_render_index++;
 				return $extra;
 			}
 
@@ -321,11 +323,85 @@
 				return isset($forced_dates[gmdate('Y-m-d', $timestamp)]);
 			}
 
+			/**
+			 * The post a tour's schedule is actually stored on.
+			 *
+			 * WPML (and any translation plugin) creates a translation with the tour meta
+			 * empty -- ttbm_travel_type falls back to 'fixed' and every date field is a
+			 * blank string. get_date() then finds no dates, and the daily rebuild in
+			 * update_all_upcoming_date_month() writes an EMPTY ttbm_upcoming_date over
+			 * the translation. Since the list shortcodes filter on that key being >=
+			 * today, the translated tour silently drops out of every listing overnight,
+			 * and comes back only until the next rebuild if someone re-saves it.
+			 *
+			 * Dates are not translatable content, so a translation carrying no schedule
+			 * of its own reads the original's. A translation that HAS been given its own
+			 * dates is left completely alone, and on a single-language site this is a
+			 * no-op. Filterable so Polylang and friends can supply the same mapping.
+			 */
+			public static function schedule_source_id($tour_id) {
+				$tour_id = (int) $tour_id;
+				if ($tour_id < 1) {
+					return $tour_id;
+				}
+				if (self::cache_has('schedule_source', $tour_id)) {
+					return self::cache_get('schedule_source', $tour_id);
+				}
+				$source_id = $tour_id;
+				if (defined('ICL_SITEPRESS_VERSION') && !self::has_own_schedule($tour_id)) {
+					$post_type = get_post_type($tour_id);
+					if ($post_type) {
+						$element_type = 'post_' . $post_type;
+						$trid = apply_filters('wpml_element_trid', null, $tour_id, $element_type);
+						if ($trid) {
+							$translations = apply_filters('wpml_get_element_translations', null, $trid, $element_type);
+							if (is_array($translations)) {
+								foreach ($translations as $translation) {
+									// WPML flags the post the translations were made from as `original`.
+									if (!empty($translation->original) && !empty($translation->element_id)) {
+										$source_id = (int) $translation->element_id;
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+				$source_id = (int) apply_filters('ttbm_schedule_source_id', $source_id, $tour_id);
+				return self::cache_set('schedule_source', $tour_id, $source_id > 0 ? $source_id : $tour_id);
+			}
+			/**
+			 * Whether this post carries a schedule of its own, i.e. anything get_date()
+			 * could actually build dates from. ttbm_travel_type is deliberately not
+			 * consulted: it defaults to 'fixed' on an untouched translation, so it is
+			 * always present and would make every translation look configured.
+			 */
+			private static function has_own_schedule($tour_id): bool {
+				if (TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_date')) {
+					return true;
+				}
+				if (TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_start_date')) {
+					return true;
+				}
+				$particular_dates = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_particular_dates', array());
+				return is_array($particular_dates) && count($particular_dates) > 0;
+			}
 			public static function get_date($tour_id, $expire = '') {
 				$cache_key = (int) $tour_id . '|' . self::cache_scalar_key($expire);
 				if (self::cache_has('date', $cache_key)) {
 					return self::cache_get('date', $cache_key);
 				}
+				/*
+				 * A tour runs on one real-world schedule whatever language the visitor is
+				 * reading it in, and the plugin has no per-language scheduling concept --
+				 * so a translation that was never given dates of its own reads them from
+				 * the post they were entered on. Every $tour_id below is a schedule read
+				 * (travel type, recurrence, off days, one-off dates, time checks); the
+				 * requested id is kept for the filter at the end so anything hooking
+				 * ttbm_get_date still sees the post that was actually asked about.
+				 */
+				$requested_id = $tour_id;
+				$tour_id = self::schedule_source_id($tour_id);
 				$tour_date = [];
 				$travel_type = TTBM_Function::get_travel_type($tour_id);
 				$now = strtotime(current_time('Y-m-d H:i:s'));
@@ -348,7 +424,7 @@
 					$ttbm_repeat_type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_repeat_type');
 					$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_end_date');
 					if ($ttbm_repeat_type == 'continue') {
-						$end_date = $start_date ? gmdate('Y-m-d', strtotime($start_date . ' +365 day')) : '';
+						$end_date = self::get_open_ended_end_date($start_date);
 					}
 					// Format end date to Y-m-d, but validate it first
 					if ($end_date) {
@@ -425,7 +501,29 @@
 						}
 					}
 				}
-				return self::cache_set('date', $cache_key, apply_filters('ttbm_get_date', $tour_date, $tour_id, $expire));
+				return self::cache_set('date', $cache_key, apply_filters('ttbm_get_date', $tour_date, $requested_id, $expire));
+			}
+			/**
+			 * Last date of the calendar window for a repeated tour whose End Repeat
+			 * Logic is "Never".
+			 *
+			 * "Never" stores no end date, but the date picker and the list queries need
+			 * a finite set of dates. The window used to be start date + 365 days -- a
+			 * fixed span the tour silently outlived: once the start date was more than a
+			 * year old no dates were left at all, and before that the window lost a day
+			 * every day. It is a rolling horizon now: a year ahead of today, or of the
+			 * start date while the tour has not started yet.
+			 *
+			 * @param string $start_date Repeat start date (Y-m-d).
+			 * @return string Y-m-d, or '' when there is no start date.
+			 */
+			public static function get_open_ended_end_date($start_date): string {
+				$start_timestamp = $start_date ? strtotime($start_date) : false;
+				if (!$start_timestamp) {
+					return '';
+				}
+				$horizon_from = gmdate('Y-m-d', max($start_timestamp, strtotime(current_time('Y-m-d'))));
+				return gmdate('Y-m-d', strtotime($horizon_from . ' +365 day'));
 			}
 			/**
 			 * Repeated-tour recurrence dates as a Y-m-d => Y-m-d lookup map.
@@ -472,7 +570,7 @@
 					$ttbm_repeat_type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_repeat_type');
 					$end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_repeated_end_date');
 					if ($ttbm_repeat_type == 'continue') {
-						$end_date = $start_date ? gmdate('Y-m-d', strtotime($start_date . ' +365 day')) : '';
+						$end_date = self::get_open_ended_end_date($start_date);
 					}
 					// Format end date to Y-m-d, but validate it first
 					if ($end_date) {
@@ -731,7 +829,30 @@
 					return;
 				}
 				set_transient($lock_key, true, 2 * MINUTE_IN_SECONDS);
-				$tour_ids = TTBM_Global_Function::get_all_post_id(TTBM_Function::get_cpt_name());
+				/*
+				 * Deliberately not get_all_post_id(): that runs get_posts(), which WPML
+				 * scopes to the language of whoever happened to trigger the rebuild --
+				 * while the "done for the day" transient below is site-wide. So on a
+				 * multilingual site the first visitor of the day rebuilt only their own
+				 * language's tours and locked every other language out until tomorrow.
+				 * Reading the ids straight from the posts table is language-agnostic
+				 * (and cheaper than a full get_posts()).
+				 *
+				 * Private tours are rebuilt too. Administrators still see them in the
+				 * list shortcodes, but with "Expired Tour Visibility" set to No those
+				 * lists filter on the meta written here -- so a private tour left out
+				 * of this pass kept an empty or stale ttbm_upcoming_date forever and
+				 * dropped out of the list, while the same tour published was repaired
+				 * on the first list view of every day.
+				 */
+				global $wpdb;
+				$tour_ids = $wpdb->get_col(
+					$wpdb->prepare(
+						"SELECT ID FROM {$wpdb->posts} WHERE post_type = %s AND post_status IN ('publish', 'private')",
+						TTBM_Function::get_cpt_name()
+					)
+				);
+				$tour_ids = array_map('intval', (array) $tour_ids);
 				/*
 				 * Pull every tour's meta in one query up front. update_upcoming_date_month()
 				 * reads several meta keys per tour, and without a warm cache each of those
@@ -990,6 +1111,26 @@
 				return self::cache_set('start_price', $price_cache_key, self::build_tour_start_price($tour_id, $start_date));
 			}
 			private static function build_tour_start_price($tour_id, $start_date = ''): string {
+				$tour_id = self::post_id_multi_language( $tour_id );
+
+				/*
+				 * An admin-entered starting price is an explicit override: it wins over every
+				 * computed ticket / hotel-room price. Leave the field empty and the price stays
+				 * dynamic (lowest available price), which is the default.
+				 */
+				$manual_price = self::get_manual_start_price( $tour_id );
+				if ( $manual_price !== '' ) {
+					return $manual_price;
+				}
+
+				/*
+				 * Legacy last-resort value. Unlike the override above this only surfaces when
+				 * nothing can be computed, which is the behaviour it has always had -- the PRO
+				 * AI tools mirror the lowest ticket price into it, so it must not act as an
+				 * override.
+				 */
+				$manual_price = self::normalize_positive_price( TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_travel_start_price' ) );
+
 				if ( self::get_tour_type( $tour_id ) === 'hotel' ) {
 					$hotel_prices = array();
 					foreach ( self::get_hotel_list( $tour_id ) as $hotel_id ) {
@@ -999,48 +1140,133 @@
 						}
 					}
 					if ( ! empty( $hotel_prices ) ) {
-						return min( $hotel_prices );
+						return (string) min( $hotel_prices );
 					}
-					$manual_price = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_travel_start_price' );
-					return $manual_price ? (string) $manual_price : '';
+					return $manual_price;
 				}
 
-				$manual_price = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_price');
-				$ticket_list  = self::get_ticket_type($tour_id);
-				$start_price  = '';
+				$ticket_list = self::get_ticket_type( $tour_id );
+				$start_price = '';
 
-				if ( ! $manual_price && ! empty( $ticket_list ) && sizeof( $ticket_list ) > 0 ) {
+				if ( ! empty( $ticket_list ) && is_array( $ticket_list ) ) {
 					if ( ! $start_date ) {
 						$all_dates  = self::get_date( $tour_id );
 						$start_date = self::get_effective_booking_date( $tour_id, $all_dates );
 					}
-					$ticket_price = [];
+					$filtered_prices = array();
+					$raw_prices      = array();
 					foreach ( $ticket_list as $ticket ) {
-						$ticket_name = $ticket['ticket_type_name'];
-						$price       = $ticket['ticket_type_price'];
-						$price       = array_key_exists('sale_price', $ticket) && $ticket['sale_price'] ? $ticket['sale_price'] : $price;
-						$price       = apply_filters('ttbm_filter_ticket_price', $price, $tour_id, $start_date, $ticket_name);
-						$price       = apply_filters('ttbm_price_by_name_filter', $price, $tour_id, 1, $start_date, $ticket_name);
-						if ( $price !== '' && $price !== null ) {
-							$ticket_price[] = floatval( $price );
+						if ( ! is_array( $ticket ) ) {
+							continue;
+						}
+						$ticket_name = $ticket['ticket_type_name'] ?? '';
+						$price       = $ticket['ticket_type_price'] ?? '';
+						if ( ! empty( $ticket['sale_price'] ) && is_numeric( $ticket['sale_price'] ) && floatval( $ticket['sale_price'] ) > 0 ) {
+							$price = $ticket['sale_price'];
+						}
+						$raw = self::normalize_positive_price( $price );
+						if ( $raw !== '' ) {
+							$raw_prices[] = floatval( $raw );
+						}
+						$filtered = apply_filters( 'ttbm_filter_ticket_price', $price, $tour_id, $start_date, $ticket_name );
+						$filtered = apply_filters( 'ttbm_price_by_name_filter', $filtered, $tour_id, 1, $start_date, $ticket_name );
+						$filtered = self::normalize_positive_price( $filtered );
+						if ( $filtered !== '' ) {
+							$filtered_prices[] = floatval( $filtered );
 						}
 					}
-					if ( ! empty( $ticket_price ) ) {
-						$start_price = min( $ticket_price );
+					if ( ! empty( $filtered_prices ) ) {
+						$start_price = min( $filtered_prices );
+					} elseif ( ! empty( $raw_prices ) ) {
+						$start_price = min( $raw_prices );
 					}
 				}
 
-				if ( $start_price === '' && $manual_price ) {
+				if ( $start_price === '' || $start_price === null || (float) $start_price <= 0 ) {
 					$start_price = $manual_price;
 				}
 
-				return $start_price;
+				return $start_price === '' || $start_price === null ? '' : (string) $start_price;
+			}
+
+			/**
+			 * Booking Form Style: true = Open (expanded on arrival), false = Collapse.
+			 *
+			 * 'ttbm_ticketing_system' also decides whether the ticket rows are pre-rendered
+			 * by PHP ('regular_ticket') or fetched over AJAX after "Check Availability"
+			 * ('availability_section'). Reads the same default as the render path in
+			 * templates/ticket/tour_default_selection.php so the editor and the page agree.
+			 */
+			public static function booking_form_opens_expanded( $tour_id ): bool {
+				return TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_ticketing_system', 'regular_ticket' ) !== 'availability_section';
+			}
+
+			/**
+			 * Whether the inline booking / ticket-picker block may be rendered for a tour.
+			 *
+			 * Two switches feed it, deliberately kept separate:
+			 *  - 'ttbm_display_registration' (Pricing & Services) turns the whole booking
+			 *    feature off -- sidebar CTA, hero price and this block with it.
+			 *  - 'ttbm_display_booking_section' (Display settings) hides only this block, so
+			 *    a tour can still be booked from the sidebar "Check Availability" CTA.
+			 *
+			 * Themes must ask this before printing the section wrapper: the templates inside
+			 * return nothing when booking is off, which used to leave an empty bordered card
+			 * with a "Choose the Ticket..." heading and no ticket picker under it.
+			 */
+			public static function show_booking_section( $post_id ): bool {
+				if ( TTBM_Global_Function::get_post_info( $post_id, 'ttbm_display_registration', 'on' ) === 'off' ) {
+					return false;
+				}
+				return TTBM_Global_Function::get_post_info( $post_id, 'ttbm_display_booking_section', 'on' ) !== 'off';
+			}
+
+			/**
+			 * Whether the "starting price" block may be shown for a tour.
+			 *
+			 * Single home for the 'ttbm_display_price_start' switch (tour editor -> Overview
+			 * -> General Information -> Starting Price) so every hero, card and list price
+			 * honours it identically. Takes the id the template is rendering, translated or
+			 * not, matching how the surrounding templates read their other display switches.
+			 */
+			public static function show_start_price( $post_id ): bool {
+				return TTBM_Global_Function::get_post_info( $post_id, 'ttbm_display_price_start', 'on' ) !== 'off';
+			}
+
+			/**
+			 * Admin-entered starting price for a tour, '' when none is set.
+			 *
+			 * Set from the tour editor (Overview -> General Information -> Starting Price).
+			 * Deliberately a key of its own rather than the older 'ttbm_travel_start_price',
+			 * which is a derived fallback other code writes to and would hijack the display.
+			 */
+			public static function get_manual_start_price( $tour_id ): string {
+				$tour_id = self::post_id_multi_language( $tour_id );
+				return self::normalize_positive_price(
+					TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_manual_start_price' )
+				);
+			}
+
+			/**
+			 * Keep a usable numeric price; empty / non-numeric / zero become ''.
+			 */
+			private static function normalize_positive_price( $price ): string {
+				if ( $price === '' || $price === null || ! is_numeric( $price ) ) {
+					return '';
+				}
+				$price = floatval( $price );
+				return $price > 0 ? (string) $price : '';
 			}
 
 			/**
 			 * Regular price for the ticket that provides get_tour_start_price(), when that ticket is on sale.
 			 */
 			public static function get_tour_start_regular_price( $tour_id, $start_date = '' ): string {
+				/* A manual starting price is a flat advertised amount -- nothing to strike through. */
+				if ( self::get_manual_start_price( $tour_id ) !== '' ) {
+					return '';
+				}
+
 				if ( self::get_tour_type( $tour_id ) === 'hotel' ) {
 					$start_price = self::get_tour_start_price( $tour_id, $start_date );
 					if ( $start_price === '' ) {
@@ -1162,12 +1388,11 @@
 					/* No specific ticket requested: this is the card/list "ON SALE" badge check.
 					 * It must reflect whether the price actually shown to visitors (the "From"
 					 * price, see build_tour_start_price()) is a discounted one — not just whether
-					 * the first ticket type in the list happens to be on sale. A manual Tour Start
-					 * Price always wins over ticket pricing and has no sale-price of its own, so no
+					 * the first ticket type in the list happens to be on sale. A manual starting
+					 * price always wins over ticket pricing and has no sale-price of its own, so no
 					 * badge applies when it's set. Otherwise, report the sale status of whichever
 					 * ticket type is actually the cheapest (the one build_tour_start_price() picks). */
-					$manual_price = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_start_price');
-					if (!$manual_price && !empty($ticket_types)) {
+					if (self::get_manual_start_price($tour_id) === '' && !empty($ticket_types)) {
 						$cheapest_effective = null;
 						$cheapest_ticket = null;
 						foreach ($ticket_types as $ticket_type) {
@@ -1248,6 +1473,27 @@
 				natsort($duration);
 				set_transient($cache_key, $duration, HOUR_IN_SECONDS);
 				return $duration;
+			}
+			//************Price range (sidebar price-per-person filter)***********************//
+			public static function get_price_range(): array {
+				$cache_key = 'ttbm_price_range';
+				$cached = get_transient($cache_key);
+				if ($cached !== false) {
+					return $cached;
+				}
+				$tour_ids = TTBM_Global_Function::get_all_post_id(TTBM_Function::get_cpt_name());
+				$prices = array();
+				foreach ($tour_ids as $tour_id) {
+					$price = (float) self::get_tour_start_price($tour_id);
+					if ($price > 0) {
+						$prices[] = $price;
+					}
+				}
+				$range = $prices
+					? array('min' => (float) floor(min($prices)), 'max' => (float) ceil(max($prices)))
+					: array('min' => 0, 'max' => 0);
+				set_transient($cache_key, $range, HOUR_IN_SECONDS);
+				return $range;
 			}
 			//************Seat***********************//
 			public static function get_total_seat($tour_id) {
@@ -1498,6 +1744,140 @@
 				$available = $total - ($reserve + $sold);
 				return max(0, $available);
 			}
+			//************Time-wise Stock***********************//
+			/**
+			 * Whether this tour manages its inventory per time slot instead of
+			 * (only) per ticket type.
+			 *
+			 * Restricted to repeated general tours: those are the only ones whose
+			 * schedule is built from the reusable `mep_ticket_times_*` slot rows that
+			 * carry a per-slot stock value. Hotel tours have their own room
+			 * inventory and fixed/particular tours have one departure per date, so
+			 * per-slot stock would have nothing to attach to.
+			 */
+			public static function is_timewise_stock_enabled($tour_id): bool {
+				$tour_id = (int) $tour_id;
+				if (!$tour_id) {
+					return false;
+				}
+				if (self::cache_has('timewise_enabled', $tour_id)) {
+					return self::cache_get('timewise_enabled', $tour_id);
+				}
+				$enabled = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_enable_timewise_stock', 'off') === 'on'
+					&& self::get_travel_type($tour_id) === 'repeated'
+					&& self::get_tour_type($tour_id) === 'general';
+				return self::cache_set('timewise_enabled', $tour_id, (bool) apply_filters('ttbm_is_timewise_stock_enabled', $enabled, $tour_id));
+			}
+			/**
+			 * Capacity configured for one time slot on one date, or 0 when that slot
+			 * has no stock of its own.
+			 *
+			 * Resolution order matches how get_repeated_time_slots() picks the slot
+			 * list itself: the weekday-specific rows win when that weekday defines
+			 * any, otherwise the default ("global") rows apply. Returning 0 is the
+			 * documented "not configured" answer -- callers then fall back to the
+			 * regular per-ticket-type capacity, so switching the feature on without
+			 * filling in stock values changes nothing.
+			 *
+			 * @param int    $tour_id
+			 * @param string $date      Y-m-d (a date-time is accepted and truncated).
+			 * @param string $time_slot H:i as stored on the slot row.
+			 */
+			public static function get_timewise_stock($tour_id, $date, $time_slot): int {
+				$tour_id = (int) $tour_id;
+				$time_slot = self::normalize_time_value($time_slot);
+				if (!$tour_id || !$date || !$time_slot || strtotime($date) === false) {
+					return 0;
+				}
+				$date = gmdate('Y-m-d', strtotime($date));
+				$stock_cache_key = $tour_id . '|' . $date . '|' . $time_slot;
+				if (self::cache_has('timewise_stock', $stock_cache_key)) {
+					return self::cache_get('timewise_stock', $stock_cache_key);
+				}
+				$day_name = strtolower(gmdate('D', strtotime($date)));
+				$day_slots = TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_times_' . $day_name, array());
+				$slot_rows = (is_array($day_slots) && count($day_slots) > 0)
+					? $day_slots
+					: TTBM_Global_Function::get_post_info($tour_id, 'mep_ticket_times_global', array());
+				$stock = 0;
+				if (is_array($slot_rows)) {
+					foreach ($slot_rows as $slot_row) {
+						if (!is_array($slot_row)) {
+							continue;
+						}
+						$row_time = isset($slot_row['mep_ticket_time']) ? (string) $slot_row['mep_ticket_time'] : '';
+						if ($row_time === '' || !self::same_slot_time($row_time, $time_slot)) {
+							continue;
+						}
+						$stock = isset($slot_row['mep_ticket_time_stock']) ? (int) $slot_row['mep_ticket_time_stock'] : 0;
+						break;
+					}
+				}
+				$stock = max(0, (int) apply_filters('ttbm_timewise_slot_stock', $stock, $tour_id, $date, $time_slot));
+				return self::cache_set('timewise_stock', $stock_cache_key, $stock);
+			}
+			/**
+			 * Compare two slot times tolerantly: rows saved by an <input type="time">
+			 * are "09:30", but older data (and hand-edited meta) can carry "9:30" or
+			 * "09:30:00", and the value coming back from the frontend is re-formatted
+			 * from a full date. Comparing the minute-of-day avoids treating those as
+			 * different slots.
+			 */
+			private static function same_slot_time($left, $right): bool {
+				if ((string) $left === (string) $right) {
+					return true;
+				}
+				$left_ts = strtotime('1970-01-01 ' . $left);
+				$right_ts = strtotime('1970-01-01 ' . $right);
+				return $left_ts !== false && $right_ts !== false && gmdate('H:i', $left_ts) === gmdate('H:i', $right_ts);
+			}
+			/**
+			 * Availability for a single departure (date + time slot) under time-wise
+			 * stock.
+			 *
+			 * This is the single source every consumer resolves to: the availability
+			 * filters in TTBM_Timewise_Stock, the time slot chips, and the cart
+			 * validator all read it, so a slot's number can never drift between the
+			 * chip, the ticket table and checkout. It must therefore stay free of
+			 * calls back into get_total_available() / get_ticket_availability_info(),
+			 * which are themselves filtered through this value.
+			 *
+			 * @return array{enabled:bool,capacity:int,sold:int,available:int,datetime:string}
+			 */
+			public static function get_timewise_slot_availability($tour_id, $date, $time_slot): array {
+				$time_slot = self::normalize_time_value($time_slot);
+				$empty = array('enabled' => false, 'capacity' => 0, 'sold' => 0, 'available' => 0, 'datetime' => '');
+				if (!self::is_timewise_stock_enabled($tour_id) || !$date || !$time_slot || strtotime($date) === false) {
+					return $empty;
+				}
+				$capacity = self::get_timewise_stock($tour_id, $date, $time_slot);
+				if ($capacity < 1) {
+					return $empty;
+				}
+				$slot_timestamp = strtotime(gmdate('Y-m-d', strtotime($date)) . ' ' . $time_slot);
+				if ($slot_timestamp === false) {
+					return $empty;
+				}
+				$datetime = gmdate('Y-m-d H:i', $slot_timestamp);
+				$sold = self::get_timewise_sold($tour_id, $datetime);
+				return array(
+					'enabled' => true,
+					'capacity' => $capacity,
+					'sold' => $sold,
+					'available' => max(0, $capacity - $sold),
+					'datetime' => $datetime,
+				);
+			}
+			/**
+			 * Seats already sold on one departure, across every ticket type.
+			 *
+			 * Per-slot stock is one shared pool, so the whole departure is counted
+			 * once instead of per ticket type -- which also keeps this to a single
+			 * cached lookup no matter how many ticket types the tour sells.
+			 */
+			public static function get_timewise_sold($tour_id, $datetime): int {
+				return (int) self::get_total_sold($tour_id, $datetime, '');
+			}
 			public static function get_any_date_seat_available($tour_id) {
 				if (self::cache_has('any_available', (int) $tour_id)) {
 					return self::cache_get('any_available', (int) $tour_id);
@@ -1693,7 +2073,7 @@
 				if (self::cache_has('travel_type', (int) $tour_id)) {
 					return self::cache_get('travel_type', (int) $tour_id);
 				}
-				$type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_type', 'fixed');
+				$type = TTBM_Global_Function::get_post_info(self::schedule_source_id($tour_id), 'ttbm_travel_type', 'fixed');
 				return self::cache_set('travel_type', (int) $tour_id, apply_filters('ttbm_tour_type', $type, $tour_id));
 			}
 			public static function travel_type_array(): array {
@@ -1724,9 +2104,9 @@
 				return $arr;
 			}
 			public static function get_full_location($tour_id): string {
-				$city = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_location_name');
-				$country = self::get_country($tour_id);
-				$full_location = $city && $country ? $city . ' , ' . $country : '';
+				$city = trim( (string) TTBM_Global_Function::get_post_info($tour_id, 'ttbm_location_name') );
+				$country = trim( (string) self::get_country($tour_id) );
+				$full_location = $city && $country ? $city . ', ' . $country : '';
 				$full_location = $city && !$country ? $city : $full_location;
 				$full_location = is_array($full_location) ? '' : $full_location;
 				return !$city && $country ? $country : $full_location;
@@ -2088,6 +2468,25 @@
 				$options = get_option('ttbm_basic_gen_settings');
 				return self::get_ttbm_settings($options, $key, $default);
 			}
+			/**
+			 * Whether "Private Tours for Logged-in Users" is switched on. When it is,
+			 * Private tours act as members-only tours: every logged-in user (customers
+			 * included) sees them in the list shortcodes, can open them and can book
+			 * them. Logged-out visitors never do. Off by default, which leaves the
+			 * WordPress rule in place: only users who can read private posts.
+			 */
+			public static function private_tours_for_logged_in_users(): bool {
+				return 'yes' === self::get_general_settings('ttbm_private_tour_visibility', 'no');
+			}
+			/**
+			 * Whether the given user (default: current user) gets Private tours under
+			 * that setting. Filterable, e.g. to limit it to particular roles.
+			 */
+			public static function private_tours_visible_to_user($user_id = null): bool {
+				$user_id = null === $user_id ? get_current_user_id() : (int) $user_id;
+				$visible = $user_id > 0 && self::private_tours_for_logged_in_users();
+				return (bool) apply_filters('ttbm_private_tours_visible_to_user', $visible, $user_id);
+			}
 			public static function get_translation_settings($key, $default = '') {
 				$options = get_option('ttbm_basic_translation_settings');
 				return self::get_ttbm_settings($options, $key, $default);
@@ -2392,6 +2791,17 @@
 				);
 				$query = new WP_Query($args);
 				return $query->posts;
+			}
+			/* Tour ids for [wptravelly-tour-list cat="..."]. Reuses the [travel-list] query so a
+			   category shows the same tours (same expired-tour rule) in both, newest first;
+			   $type optionally narrows it to one Top Picks & Deals label. */
+			public static function get_category_tour_ids($cat, $type = '') {
+				$loop = TTBM_Query::ttbm_query(-1, 'DESC', $cat);
+				$ids = wp_list_pluck($loop->posts, 'ID');
+				if ($type) {
+					$ids = array_values(array_intersect($ids, self::get_top_deals_post_ids($type)));
+				}
+				return $ids;
 			}
 			public static function get_city_place_ids_with_post_ids($num_of_places = 0) {
 				$args = [

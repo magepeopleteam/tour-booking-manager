@@ -10,35 +10,37 @@
 		$contact_phone = TTBM_Global_Function::get_post_info($ttbm_post_id, 'ttbm_contact_phone');
 		$contact_email = TTBM_Global_Function::get_post_info($ttbm_post_id, 'ttbm_contact_email');
 		?>
-		<div class='ttbm_default_widget'>
+		<div class="ttbm_default_widget ttbm_get_question">
 			<?php do_action( 'ttbm_section_title', 'ttbm_string_get_question', esc_html__( 'Got a Question? ', 'tour-booking-manager' ) ); ?>
 			<div class="ttbm_widget_content">
 				<?php if ( $get_question != 'off' ) : ?>
-				<ul>
 					<?php if ( $contact_text ) { ?>
-						<li><?php echo esc_html( $contact_text ); ?></li>
+						<p class="ttbm_get_question_text"><?php echo esc_html( $contact_text ); ?></p>
 					<?php } ?>
 
-					<?php if ( $contact_phone ) { ?>
-						<li>
-							<a href='tel:<?php echo esc_html( $contact_phone ); ?>'>
-								<span class="circleIcon_xs mi mi-phone-call"></span>
-								<?php echo esc_html( $contact_phone ); ?>
-							</a>
-						</li>
-					<?php } ?>
+					<?php if ( $contact_phone || $contact_email ) { ?>
+						<ul class="ttbm_get_question_contacts">
+							<?php if ( $contact_phone ) { ?>
+								<li>
+									<a href="tel:<?php echo esc_attr( $contact_phone ); ?>">
+										<span class="ttbm_get_question_icon" aria-hidden="true"><i class="mi mi-phone-call"></i></span>
+										<span class="ttbm_get_question_label"><?php echo esc_html( $contact_phone ); ?></span>
+									</a>
+								</li>
+							<?php } ?>
 
-					<?php if ( $contact_email ) { ?>
-						<li>
-							<a href='mailto:<?php echo esc_html( $contact_email ); ?>'>
-								<span class="circleIcon_xs mi mi-envelope"></span>
-								<?php echo esc_html( $contact_email ); ?>
-							</a>
-						</li>
+							<?php if ( $contact_email ) { ?>
+								<li>
+									<a href="mailto:<?php echo esc_attr( $contact_email ); ?>">
+										<span class="ttbm_get_question_icon" aria-hidden="true"><i class="mi mi-envelope"></i></span>
+										<span class="ttbm_get_question_label"><?php echo esc_html( $contact_email ); ?></span>
+									</a>
+								</li>
+							<?php } ?>
+						</ul>
 					<?php } ?>
-				</ul>
-				<?php endif;?>
-				<?php do_action( 'ttbm_enquery_popup_button');?>
+				<?php endif; ?>
+				<?php do_action( 'ttbm_enquery_popup_button' ); ?>
 			</div>
 		</div>
 		<?php

@@ -1,3 +1,9 @@
+/* Localised UI strings (see TTBM_Dependencies::frontend_i18n()). Falls back to
+   the English literal when the handle carrying ttbm_i18n is not on the page. */
+window.ttbmT = window.ttbmT || function (key, fallback) {
+	return (typeof ttbm_i18n !== 'undefined' && ttbm_i18n[key]) ? ttbm_i18n[key] : fallback;
+};
+
 function ttbm_sync_time_slot_selection(parent) {
     parent = parent && parent.jquery ? parent : jQuery(parent);
     if (!parent || parent.length < 1) {
@@ -165,7 +171,39 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
 
         let time_slot = parent.find('.ttbm_select_time_area');
         parent.find('.ttbm_booking_panel').html('');
-        // With time slots, wait for a slot (or Check Availability) before loading tickets.
+        // The slot area can exist yet be empty (time slots switched on but none defined for the
+        // day). There is nothing to wait for then, so load the tickets right away.
+        let slot_controls = time_slot.find('[name="ttbm_select_time"], .customRadio[data-radio], [data-radio-value]');
+        let free_slots = typeof ttbm_ajax_url_pro === 'undefined';
+        if (time_slot.length > 0 && free_slots && slot_controls.length < 1) {
+            time_slot.hide();
+            parent.find('.ttbm_booking_panel').show();
+            get_ttbm_ticket($(this));
+            ttbm_toggle_book_now_by_date(parent);
+            return true;
+        }
+        // With time slots, pick the first bookable slot for the visitor (they can change it) so the
+        // tickets appear straight away, without a click on Check Availability.
+        if (time_slot.length > 0 && free_slots && slot_controls.length > 0) {
+            placeholderLoaderRemove(parent);
+            time_slot.slideDown();
+            parent.find('.ttbm_booking_panel').show();
+            let time_input = time_slot.find('[name="ttbm_select_time"]').first();
+            if (time_input.is('select')) {
+                let first_time = time_input.find('option[value!=""]:not(:disabled)').first().val();
+                if (first_time) {
+                    time_input.val(first_time).trigger('change');
+                }
+            } else {
+                let first_slot = time_slot.find('.customRadio[data-radio]').not('.mage_disabled, .is-disabled').first();
+                if (first_slot.length) {
+                    first_slot.trigger('click');
+                }
+            }
+            ttbm_toggle_book_now_by_date(parent);
+            return true;
+        }
+        // Pro (slots reloaded per date): wait for a slot (or Check Availability) before loading tickets.
         if (time_slot.length > 0) {
             placeholderLoaderRemove(parent);
             time_slot.slideDown();
@@ -184,6 +222,10 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
     $(document).on('click', '.ttbm_select_time_area .customRadio[data-radio]', function (e) {
         e.stopImmediatePropagation();
         let $slot = $(this);
+        // Sold-out slots (time-wise stock) render disabled: keep them visible but inert.
+        if ($slot.hasClass('mage_disabled') || $slot.hasClass('is-disabled')) {
+            return;
+        }
         let timeArea = $slot.closest('.ttbm_select_time_area');
         let regArea = timeArea.closest('.ttbm_registration_area');
         timeArea.css('border', '');
@@ -258,6 +300,9 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         }
     });
     $(document).on("click", ".ttbm_registration_area .ttbm_check_ability", function () {
+        if ($(this).is('.ttbm_hotel_check_availability, .ttbm_hotel_room_check_availability')) {
+            return;
+        }
         let parent = $(this).closest('.ttbm_registration_area');
         let date_target = parent.find('[name="ttbm_date"]').first();
         let has_date_field = date_target.length > 0;
@@ -271,7 +316,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
             // alert('Please Select Date');
             date_field.css('border', '1px solid red');
             if (parent.find('.ttbm-date-error').length === 0) {
-                date_field.after('<span class="ttbm-date-error" style="color:red; font-size:12px; display:block; margin-top:5px;">Please Select Date</span>');
+                date_field.after('<span class="ttbm-date-error" style="color:red; font-size:12px; display:block; margin-top:5px;">' + ttbmT('select_date', 'Please Select Date') + '</span>');
             }
             date_field.trigger('focus');
             return;
@@ -290,7 +335,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
                 time_slot.css('padding', '10px');
                 time_slot.css('border-radius', '5px');
                 if (time_slot.find('.ttbm-time-error').length === 0) {
-                    time_slot.append('<span class="ttbm-time-error" style="color:red; font-size:12px; display:block; margin-top:5px; width:100%;">Please Select Time</span>');
+                    time_slot.append('<span class="ttbm-time-error" style="color:red; font-size:12px; display:block; margin-top:5px; width:100%;">' + ttbmT('select_time', 'Please Select Time') + '</span>');
                 }
             } else {
                 // Should not happen if time_slot exists but inputs are missing
@@ -323,7 +368,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         if (has_date_field && !date_val) {
             date_field.css('border', '1px solid red');
             if (parent.find('.ttbm-date-error').length === 0) {
-                date_field.after('<span class="ttbm-date-error" style="color:red; font-size:12px; display:block; margin-top:5px;">Please Select Date</span>');
+                date_field.after('<span class="ttbm-date-error" style="color:red; font-size:12px; display:block; margin-top:5px;">' + ttbmT('select_date', 'Please Select Date') + '</span>');
             }
             date_field.trigger('focus');
             return;
@@ -345,7 +390,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
                 time_slot.css('padding', '10px');
                 time_slot.css('border-radius', '5px');
                 if (time_slot.find('.ttbm-time-error').length === 0) {
-                    time_slot.append('<span class="ttbm-time-error" style="color:red; font-size:12px; display:block; margin-top:5px; width:100%;">Please Select Time</span>');
+                    time_slot.append('<span class="ttbm-time-error" style="color:red; font-size:12px; display:block; margin-top:5px; width:100%;">' + ttbmT('select_time', 'Please Select Time') + '</span>');
                 }
             } else {
                 parent.find('#ttbm_select_date').trigger('focus');
@@ -421,8 +466,17 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         var end   = moment(checkout, 'YYYY-MM-DD');
         if (!start.isValid() || !end.isValid()) { return; }
         var label = start.format(fmt) + ' – ' + end.format(fmt);
+        var nightCount = Math.max(1, end.clone().startOf('day').diff(start.clone().startOf('day'), 'days'));
         var $area = ($hotelArea && $hotelArea.length) ? $hotelArea : ttbmResolveHotelArea($dateInput);
         $area.find('.ttbm_hdc_date_range_display').text(label).show();
+        $area.find('.ttbm_hdc_stay_summary').each(function () {
+            var template = nightCount === 1
+                ? $(this).attr('data-summary-singular')
+                : $(this).attr('data-summary-plural');
+            if (template) {
+                $(this).text(template.replace('%d', nightCount));
+            }
+        });
     }
     function ttbmShowHotelAreaForDates($input) {
         const $dateInput = $input && $input.length ? $input : ttbmResolveHotelDateRangeInput();
@@ -538,7 +592,8 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         let current = $(this).closest('.ttbm_hotel_item');
         let tour_id = current.find('[name="ttbm_id"]').val();
         let hotel_id = current.find('[name="ttbm_hotel_id"]').val();
-        let $dateInput = ttbmResolveHotelDateRangeInput($(this).closest('.particular_date_area').length ? $(this).closest('.particular_date_area') : null);
+        let dateScope = current.closest('#ttbm_booking_section, .ttbm_booking_section, .particular_date_area');
+        let $dateInput = ttbmResolveHotelDateRangeInput(dateScope.length ? dateScope : null);
         let date_range = ttbmHotelDateRangeAjaxValue($dateInput);
         let target = current.find('.ttbm_booking_panel');
         let target_form = target.find('.mp_tour_ticket_form');
@@ -598,7 +653,15 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         // =========================================================
         // View Switcher (Grid / List)
         // =========================================================
-        $('.ttbm_grid_view').on('click', function () {
+        // Ensure default mode class exists so CSS can distinguish layouts.
+        $('.all_filter_item .flexWrap').each(function () {
+            var $wrap = $(this);
+            if (!$wrap.hasClass('ttbm-list-mode') && !$wrap.hasClass('ttbm-grid-mode')) {
+                $wrap.addClass('ttbm-grid-mode');
+            }
+        });
+
+        $(document).on('click', '.ttbm_grid_view', function () {
 
             $('.ttbm-view-btn').removeClass('ttbm-view-active').attr('aria-pressed', 'false');
             $(this).addClass('ttbm-view-active').attr('aria-pressed', 'true');
@@ -612,7 +675,7 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
                 .addClass('grid_'.concat(window.ttbm_column || '3'));
         });
 
-        $('.ttbm_list_view').on('click', function () {
+        $(document).on('click', '.ttbm_list_view', function () {
 
             $('.ttbm-view-btn').removeClass('ttbm-view-active').attr('aria-pressed', 'false');
             $(this).addClass('ttbm-view-active').attr('aria-pressed', 'true');
@@ -653,6 +716,12 @@ $(document).on('change', '.ttbm-sort-select', function () {
         let dateA = new Date($(a).data('date')).getTime() || 0;
         let dateB = new Date($(b).data('date')).getTime() || 0;
 
+        let ratingA = parseFloat($(a).data('rating')) || 0;
+        let ratingB = parseFloat($(b).data('rating')) || 0;
+
+        let durationA = parseFloat($(a).data('duration')) || 0;
+        let durationB = parseFloat($(b).data('duration')) || 0;
+
         switch (sortValue) {
 
             case 'price_asc':
@@ -660,6 +729,12 @@ $(document).on('change', '.ttbm-sort-select', function () {
 
             case 'price_desc':
                 return priceB - priceA;
+
+            case 'rating_desc':
+                return ratingB - ratingA;
+
+            case 'duration_asc':
+                return durationA - durationB;
 
             case 'title_asc':
                 return titleA.localeCompare(titleB);
@@ -836,7 +911,7 @@ $(document).on('change', '.ttbm-sort-select', function () {
                 let sidebar = $(this);
                 let filterBody = sidebar.children('.ttbm_filter').first();
                 let toggle = sidebar.find('.ttbm-mobile-filter-toggle').first();
-                let showLabel = toggle.data('show-label') || 'Show filters';
+                let showLabel = toggle.data('show-label') || ttbmT('show_filters', 'Show filters');
 
                 if (filterBody.length < 1 || toggle.length < 1) {
                     return;
@@ -879,8 +954,8 @@ $(document).on('change', '.ttbm-sort-select', function () {
             let sidebar = toggle.closest('.leftSidebar');
             let filterBody = sidebar.children('.ttbm_filter').first();
             let isOpen = toggle.hasClass('is-open');
-            let showLabel = toggle.data('show-label') || 'Show filters';
-            let hideLabel = toggle.data('hide-label') || 'Hide filters';
+            let showLabel = toggle.data('show-label') || ttbmT('show_filters', 'Show filters');
+            let hideLabel = toggle.data('hide-label') || ttbmT('hide_filters', 'Hide filters');
 
             toggle
                 .toggleClass('is-open', !isOpen)

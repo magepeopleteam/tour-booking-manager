@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $ttbm_post_id       = $ttbm_post_id ?? get_the_id();
 //$related_tours = array( 163, 164, 165, 94, 96, 100, 102 );
-$related_tours = TTBM_Function::get_top_deals_post_ids($type_tour);
+$related_tours = ! empty( $tour_cat ) ? TTBM_Function::get_category_tour_ids( $tour_cat, $tour_cat_type ?? '' ) : TTBM_Function::get_top_deals_post_ids($type_tour);
 $related_tour_count=sizeof( $related_tours );
 $num_of_tour=$num_of_tour??'';
 
@@ -28,7 +28,7 @@ if ( $related_tour_count > 0 && (TTBM_Global_Function::get_post_info( $ttbm_post
 //    $div_class=$related_tour_count==1?'flexWrap modern':'flexWrap grid';
     $div_class='flexWrap grid';
     ?>
-    <div class='ttbm_style ttbm_wraper' id="ttbm_<?php echo esc_attr( $type_tour );?>_tour">
+    <div class='ttbm_style ttbm_wraper<?php echo ! empty( $tour_cat ) ? ' ttbm_cat_tour_list' : ''; ?>' id="ttbm_<?php echo esc_attr( $type_tour );?>_tour" data-list-key="<?php echo esc_attr( $type_tour ); ?>">
         <?php if( $carousel == 'no' ){ ?>
             <input type="hidden" id="ttbm_<?php echo esc_attr( $type_tour );?>_load_more_tour_shortcode" value="<?php echo esc_attr( $show )?>">
         <?php }?>

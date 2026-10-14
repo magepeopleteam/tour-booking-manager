@@ -57,15 +57,9 @@ $ttbm_auto_date   = in_array( $travel_type, array( 'repeated', 'particular' ), t
 							$ttbm_hero_stat_count = TTBM_Function::get_hero_stat_render_count();
 							TTBM_Function::disable_hero_stat_limit();
 							?>
-							<?php if ( $ttbm_hero_stat_count > 5 ) : ?>
-							<style>
-								.ttbm_smart_theme .ttbm_hero_stats_grid--collapsed .item_icon.ttbm_hero_stat_item--extra { display: none !important; }
-							</style>
-							<?php endif; ?>
 							<div class="ttbm_hero_stats_grid ttbm_hero_stats_grid--collapsed">
 								<?php echo $ttbm_hero_stats_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-								<?php if ( $ttbm_hero_stat_count > 5 ) : ?>
-								<div class="ttbm_hero_stats_more is-visible">
+								<?php if ( $ttbm_hero_stat_count > 4 ) : ?>
 									<button
 										type="button"
 										class="ttbm_hero_stats_load_more"
@@ -73,7 +67,6 @@ $ttbm_auto_date   = in_array( $travel_type, array( 'repeated', 'particular' ), t
 										data-label-more="<?php esc_attr_e( 'Load more', 'tour-booking-manager' ); ?>"
 										data-label-less="<?php esc_attr_e( 'Show less', 'tour-booking-manager' ); ?>"
 									><?php esc_html_e( 'Load more', 'tour-booking-manager' ); ?></button>
-								</div>
 								<?php endif; ?>
 							</div>
 						</div>
@@ -114,7 +107,7 @@ $ttbm_auto_date   = in_array( $travel_type, array( 'repeated', 'particular' ), t
 
 					<aside class="ttbm_content__right placeholder_area" id="ttbm_booking_section" aria-label="<?php esc_attr_e( 'Tour booking', 'tour-booking-manager' ); ?>">
 						<div class="ttbm-smart-booking-origin"></div>
-						<?php if ( $ttbm_display_reg !== 'off' ) : ?>
+						<?php if ( TTBM_Function::show_booking_section( $ttbm_post_id ) ) : ?>
 							<div class="ttbm-sidebar-booking ttbm_registration_area ttbm_smart_inline_booking"<?php echo $ttbm_auto_date ? ' data-ttbm-auto-date="1"' : ''; ?>>
 								<div class="ttbm_smart_booking_card">
 									<?php do_action( 'ttbm_smart_registration_controls', $ttbm_post_id ); ?>

@@ -23,6 +23,11 @@
                             <h4><i class="fas fa-edit" aria-hidden="true"></i><?php esc_html_e('Tour Title & Content', 'tour-booking-manager'); ?></h4>
                         </div>
 						<?php $this->post_title_field($tour_id); ?>
+						<?php
+						if (class_exists('TTBM_Settings_Sidebar')) {
+							TTBM_Settings_Sidebar::render_permalink_field($tour_id);
+						}
+						?>
 						<?php $this->post_content_field($tour_id); ?>
                     </section>
                     <section class="ttbm-general-info-card">
@@ -54,8 +59,13 @@
 									<?php $this->tour_language($tour_id); ?>
                                 </div>
                             </div>
+                            <div class="ttbm-general-info-card__row">
+                                <div class="ttbm-general-info-card__col">
+									<?php $this->starting_price($tour_id); ?>
+                                </div>
+                                <div class="ttbm-general-info-card__col"></div>
+                            </div>
                         </div>
-						<?php $this->starting_price($tour_id); ?>
 						<?php $this->short_description_section($tour_id); ?>
                     </section>
                 </div>
@@ -105,9 +115,16 @@
                 </div>
 				<?php
 			}
+			/**
+			 * Max Guests, Age Range and Tour Language start switched off on a brand-new tour. Tours
+			 * that already exist keep the old default (on) so nothing disappears from live pages.
+			 */
+			public static function optional_field_default($tour_id) {
+				return in_array(get_post_status($tour_id), array('auto-draft', false), true) ? 'off' : 'on';
+			}
 			public function max_people($tour_id) {
 				$max_people_status_field_name = 'ttbm_display_max_people';
-				$max_people_field_status = TTBM_Global_Function::get_post_info($tour_id, $max_people_status_field_name, 'on');
+				$max_people_field_status = TTBM_Global_Function::get_post_info($tour_id, $max_people_status_field_name, self::optional_field_default($tour_id));
 				$max_people_field_name = 'ttbm_travel_max_people_allow';
 				$max_people_field_value = TTBM_Global_Function::get_post_info($tour_id, $max_people_field_name);
 				$max_people_placeholder = esc_html__('50', 'tour-booking-manager');
@@ -125,22 +142,35 @@
                 </div>
 				<?php
 			}
+			/**
+			 * Starting ("from") price shown on the tour hero, list cards and price boxes.
+			 *
+			 * The toggle keeps its existing meaning -- whether the start price block is
+			 * rendered at all. The input is an optional manual override: fill it in and
+			 * that amount is advertised as the starting price; leave it empty and the
+			 * lowest ticket (or hotel room) price is used, exactly as before.
+			 *
+			 * Stored under 'ttbm_manual_start_price', not the older 'ttbm_travel_start_price'
+			 * -- that one is a derived fallback the dummy importer and the PRO AI tools write
+			 * to, so reusing it would silently turn stale values into advertised prices.
+			 */
 			public function starting_price($tour_id) {
 				$display_name = 'ttbm_display_price_start';
 				$display      = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
-				$value_name   = 'ttbm_travel_start_price';
+				$value_name   = 'ttbm_manual_start_price';
 				$value        = TTBM_Global_Function::get_post_info($tour_id, $value_name);
-				$placeholder  = esc_html__('Type Start Price', 'tour-booking-manager');
-				$checked      = $display === 'off' ? '' : 'checked';
-				$active       = $display === 'off' ? '' : 'mActive';
+				$value        = is_numeric($value) && floatval($value) > 0 ? $value : '';
+				$placeholder  = esc_html__('Auto (lowest ticket price)', 'tour-booking-manager');
+				$checked      = ($display == 'off') ? '' : 'checked';
 				?>
-                <div class="label">
-                    <div class="label-inner">
-                        <p><?php esc_html_e('Tour Start Price', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('start_price'); ?></span></i></p>
-                    </div>
-                    <div class="_dFlex_alignCenter_justifyBetween">
+                <div class="ttbm-gen-field ttbm-gen-field--toggle ttbm-gen-field--inline<?php echo ($display == 'off') ? ' is-toggle-off' : ''; ?>">
+                    <div class="ttbm-gen-field__inline-row">
+                        <p class="ttbm-gen-field__label">
+							<?php esc_html_e('Starting Price', 'tour-booking-manager'); ?>
+                            <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('start_price'); ?></span></i>
+                        </p>
 						<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
-                        <input type="number" min="0" step="0.01" data-collapse="#<?php echo esc_attr($display_name); ?>" class="ms-2 rounded <?php echo esc_attr($active); ?>" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>"/>
+                        <input type="number" min="0" step="0.01" data-ttbm-toggle-field="#<?php echo esc_attr($display_name); ?>" class="ttbm-gen-field__input formControl" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>" <?php echo ($display == 'off') ? 'disabled' : ''; ?>/>
                     </div>
                 </div>
 				<?php
@@ -167,7 +197,7 @@
 			}
 			public function age_range($tour_id) {
 				$display_name = 'ttbm_display_min_age';
-				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
+				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, self::optional_field_default($tour_id));
 				$value_name = 'ttbm_travel_min_age';
 				$value = TTBM_Global_Function::get_post_info($tour_id, $value_name);
 				$placeholder = esc_html__('Ex: 5 - 50 Years', 'tour-booking-manager');
@@ -187,7 +217,7 @@
 			}
 			public function tour_language($tour_id) {
 				$display_name = 'ttbm_travel_language_status';
-				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, 'on');
+				$display = TTBM_Global_Function::get_post_info($tour_id, $display_name, self::optional_field_default($tour_id));
 				$language = 'ttbm_travel_language';
 				$language = TTBM_Global_Function::get_post_info($tour_id, $language);
 				$selected_languages = is_array($language) ? $language : (!empty($language) ? array($language) : array());

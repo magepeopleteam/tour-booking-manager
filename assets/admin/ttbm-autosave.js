@@ -39,11 +39,23 @@
 		return; // hotel editor keeps its own flow for now
 	}
 
+	// Tells ttbm_admin_script.js to stand down: this file prepares and posts the
+	// form itself, so the legacy synchronous title/map XHRs must not also fire.
+	window.ttbmAutosaveHandlesSave = true;
+
 	var DEBOUNCE_MS = parseInt(cfg.debounce, 10) || 2500;
 	var MIN_INTERVAL_MS = parseInt(cfg.min_interval, 10) || 8000;
 	var SUCCESS_TOAST_COOLDOWN = 30000;
 	var RETRY_BUSY_MS = 3000;
+	// A click on Update that lands while a background save is in flight used to wait
+	// out RETRY_BUSY_MS, which read as a three-second freeze. Background retries can
+	// still take their time; an explicit save should not.
+	var MANUAL_RETRY_MS = 150;
 	var RETRY_ERROR_MS = 15000;
+
+	function busyRetryDelay() {
+		return state.manual ? MANUAL_RETRY_MS : RETRY_BUSY_MS;
+	}
 
 	var state = {
 		dirty: false,
@@ -166,7 +178,12 @@
 		if (typeof window.ttbmValidateSettingsFormBeforeSubmit === 'function') {
 			window.ttbmLastValidationFocus = null;
 			var formIsValid = window.ttbmValidateSettingsFormBeforeSubmit();
-			if (state.manual && !formIsValid) {
+			// Only a click that changes the post status (Publish / Save Draft) is held
+			// back. A plain Update persists like the background save does -- the server
+			// keeps the status and reports the missing fields as a warning -- otherwise
+			// tours saved before a field became required (e.g. a repeated tour with no
+			// Start Time) could never save any change, such as a new featured image.
+			if (state.manual && !formIsValid && state.requestedStatus) {
 				setStatus('paused', t('paused', 'Auto-save paused — complete required fields'));
 				toast(t('paused_toast', 'Please complete the highlighted required fields before saving.'), 'warning', 7000);
 				state.manual = false;
@@ -179,13 +196,19 @@
 		// WordPress's form#post. Serialize the unique union of both containers so
 		// detached tour fields (dates, toggles, radios, repeaters, add-ons) are not
 		// omitted from the request.
-		var $payloadFields = $('#post :input, #ttbm_meta_box_panel :input');
+		// Native selector rather than jQuery's ':input' pseudo so the browser can use
+		// querySelectorAll. serialize() ignores <button> anyway, so the set is equal.
+		var $payloadFields = $(
+			'#post input, #post select, #post textarea, ' +
+			'#ttbm_meta_box_panel input, #ttbm_meta_box_panel select, #ttbm_meta_box_panel textarea'
+		);
 		var payload = $payloadFields.serialize() +
 			'&action=ttbm_autosave_tour' +
 			'&nonce=' + encodeURIComponent(cfg.nonce || '') +
 			'&post_ID=' + encodeURIComponent(cfg.post_id || $('#post [name="post_ID"]').val() || '') +
 			'&requested_post_status=' + encodeURIComponent(state.requestedStatus || '');
 		var isManualSave = state.manual;
+		var savedRequest = state.requestedStatus;
 		state.manual = false;
 		state.requestedStatus = '';
 
@@ -215,15 +238,30 @@
 					return;
 				}
 				state.lastSuccessAt = Date.now();
+				if (res.data && res.data.preview_url) {
+					cfg.preview_url = res.data.preview_url;
+					$('.ttbm-header-preview').attr('href', res.data.preview_url);
+				}
+				if (res.data && res.data.view_url) {
+					cfg.view_url = res.data.view_url;
+				}
 				if (res.data && res.data.post_status) {
 					var postStatus = res.data.post_status;
 					var $postStatus = $('.ttbm-header-status');
 					$postStatus.removeClass(function (index, className) {
 						return (className.match(/(^|\s)is-status-\S+/g) || []).join(' ');
 					}).addClass('is-status-' + postStatus)
-						.text(postStatus === 'publish' ? 'Published' : (postStatus === 'pending' ? 'Pending' : 'Draft'));
+						.text(postStatus === 'publish' ? 'Published' : (postStatus === 'private' ? 'Private' : (postStatus === 'pending' ? 'Pending' : 'Draft')));
 					var $mainButton = $('.ttbm-split-publish__main');
-					if (postStatus === 'publish') {
+					var $visibility = $('.ttbm-split-publish__visibility');
+					if ($visibility.length) {
+						var nowPrivate = postStatus === 'private';
+						$visibility.attr('data-ttbm-status', nowPrivate ? 'publish' : 'private')
+							.find('.ttbm-split-publish__label')
+							.text($visibility.attr(nowPrivate ? 'data-label-public' : 'data-label-private'));
+					}
+					// Private is live like publish: Update must keep it, not re-publish it.
+					if (postStatus === 'publish' || postStatus === 'private') {
 						$mainButton.attr('data-ttbm-save-action', 'update').text('Update');
 					} else {
 						$mainButton.text($mainButton.attr('data-ttbm-save-action') === 'publish' ? 'Publish' : 'Update');
@@ -231,7 +269,10 @@
 				}
 				refreshSavedLabel();
 				var warnings = (res.data && res.data.warnings) || [];
-				if (warnings.length) {
+				if (isManualSave && (savedRequest === 'publish' || savedRequest === '') && res.data && (res.data.post_status === 'publish' || res.data.post_status === 'private') && !warnings.length) {
+					// Publish (draft -> live) and Update (already live) both confirm with the popup.
+					showPublishedModal(res.data.view_url || cfg.view_url, savedRequest === 'publish');
+				} else if (warnings.length) {
 					toast(warnings[0], 'warning', isManualSave ? 7000 : undefined);
 				} else if (isManualSave || Date.now() - state.lastSuccessToastAt > SUCCESS_TOAST_COOLDOWN) {
 					state.lastSuccessToastAt = Date.now();
@@ -244,9 +285,12 @@
 			handleFailure(xhr);
 		}).always(function () {
 			state.inFlight = false;
+			var afterSave = state.afterSave || [];
+			state.afterSave = [];
+			afterSave.forEach(function (fn) { fn(); });
 			if (state.queued || state.dirty) {
 				state.queued = false;
-				scheduleAutosave(RETRY_BUSY_MS);
+				scheduleAutosave(busyRetryDelay());
 			} else if (state.lastSuccessAt) {
 				// refreshSavedLabel() intentionally ignores in-flight requests, so it
 				// must run after inFlight is cleared or the pill remains on "Saving…"
@@ -262,7 +306,7 @@
 		if (status === 409) {
 			// Another save is in progress server-side; just retry shortly.
 			setStatus('saving', t('saving', 'Saving…'));
-			scheduleAutosave(RETRY_BUSY_MS);
+			scheduleAutosave(busyRetryDelay());
 			return;
 		}
 		var msg = t('error_toast', 'Auto-save failed — your changes are not saved yet.');
@@ -274,12 +318,70 @@
 		scheduleAutosave(RETRY_ERROR_MS);
 	}
 
+	/* ------------------------------------------------------- publish popup + preview */
+
+	function showPublishedModal(viewUrl, isNew) {
+		$('.ttbm-publish-modal').remove();
+		var $m = $(
+			'<div class="ttbm-publish-modal" role="dialog" aria-modal="true" aria-labelledby="ttbm-publish-modal-title">' +
+			'<div class="ttbm-publish-modal__box">' +
+			'<span class="ttbm-publish-modal__icon" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>' +
+			'<h3 id="ttbm-publish-modal-title"></h3><p></p>' +
+			'<div class="ttbm-publish-modal__actions">' +
+			'<a class="button button-primary ttbm-publish-modal__view" target="_blank" rel="noopener"></a>' +
+			'<button type="button" class="button ttbm-publish-modal__close"></button>' +
+			'</div></div></div>'
+		);
+		$m.find('h3').text(isNew ? t('published_title', 'Tour published!') : t('updated_title', 'Tour updated!'));
+		$m.find('p').text(isNew ? t('published_text', 'Your tour is live and ready for bookings.') : t('updated_text', 'Your changes have been saved and are now live on your site.'));
+		$m.find('.ttbm-publish-modal__view').attr('href', viewUrl || '#').text(t('view_tour', 'View Tour'));
+		$m.find('.ttbm-publish-modal__close').text(t('keep_editing', 'Keep editing'));
+		function close() {
+			$m.remove();
+			$(document).off('keydown.ttbmPublishModal');
+		}
+		$m.on('click', '.ttbm-publish-modal__close', close);
+		$m.on('click', '.ttbm-publish-modal__view', function () { window.setTimeout(close, 0); });
+		$m.on('click', function (e) { if (e.target === $m[0]) { close(); } });
+		$(document).on('keydown.ttbmPublishModal', function (e) { if (e.which === 27) { close(); } });
+		$('body').append($m);
+		$m.find('.ttbm-publish-modal__view').trigger('focus');
+	}
+
+	// Preview shows what is saved, so save first, then open it. The tab is opened straight away
+	// (inside the click) so the browser doesn't treat it as a blocked pop-up.
+	$(document).on('click', '.ttbm-header-preview', function (event) {
+		event.preventDefault();
+		var win = window.open('', '_blank');
+		var fallback = $(this).attr('href');
+		if (state.timer) {
+			window.clearTimeout(state.timer);
+			state.timer = null;
+		}
+		state.afterSave = state.afterSave || [];
+		state.afterSave.push(function () {
+			var url = cfg.preview_url || fallback;
+			if (win && url && url !== '#') {
+				win.location.href = url;
+			} else if (win) {
+				win.close();
+			}
+		});
+		state.dirty = true;
+		runAutosave(true);
+	});
+
 	/* ------------------------------------------------------------- change tracking */
 
 	var $panel = $('#ttbm_meta_box_panel');
 
 	// Typed/selected fields inside the settings panel + the tour title.
-	$(document).on('input change', '#ttbm_meta_box_panel :input, #ttbm_post_title, #ttbm_thumb_id', function () {
+	// Native selector, not ':input': jQuery cannot hand a custom pseudo to
+	// Element.matches(), so every delegated dispatch re-queried the whole panel.
+	// The Category / Organizer checkboxes live in the sidebar, outside the panel:
+	// now that the save actually applies them, an unwatched change there would sit
+	// unsaved until something else happened to mark the form dirty.
+	$(document).on('input change', '#ttbm_meta_box_panel input, #ttbm_meta_box_panel select, #ttbm_meta_box_panel textarea, .ttbm-sb-tax-list input, #ttbm_post_title, #ttbm_thumb_id', function () {
 		var type = ($(this).attr('type') || '').toLowerCase();
 		if (type === 'button' || type === 'submit') {
 			return;
@@ -306,7 +408,7 @@
 	});
 
 	// Update/Publish uses the same verified AJAX pipeline without reloading.
-	$(document).on('click', '#publish, #save-post, .editor-post-publish-button, .editor-post-publish-button__button, .editor-post-save-draft, .ttbm-split-publish__main, .ttbm-split-publish__draft', function (event) {
+	$(document).on('click', '#publish, #save-post, .editor-post-publish-button, .editor-post-publish-button__button, .editor-post-save-draft, .ttbm-split-publish__main, .ttbm-split-publish__draft, .ttbm-split-publish__visibility', function (event) {
 		event.preventDefault();
 		event.stopImmediatePropagation();
 		if (state.timer) {
@@ -315,7 +417,9 @@
 		}
 		state.dirty = true;
 		state.manual = true;
-		if ($(this).is('.ttbm-split-publish__draft, #save-post, .editor-post-save-draft')) {
+		if ($(this).is('.ttbm-split-publish__visibility')) {
+			state.requestedStatus = $(this).attr('data-ttbm-status') === 'private' ? 'private' : 'publish';
+		} else if ($(this).is('.ttbm-split-publish__draft, #save-post, .editor-post-save-draft')) {
 			state.requestedStatus = 'draft';
 		} else if ($(this).is('.ttbm-split-publish__main')) {
 			state.requestedStatus = $(this).attr('data-ttbm-save-action') === 'publish' ? 'publish' : '';

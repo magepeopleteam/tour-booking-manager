@@ -678,11 +678,30 @@
             ttbmSyncMapLocationFieldsForSubmit();
         }
     );
-    // Sync + AJAX persist before WordPress serializes the form.
-    $(document).on('mousedown click', '#publish, #save-post, .editor-post-publish-button, .editor-post-publish-button__button, .editor-post-save-draft', function () {
+    /**
+     * True when ttbm-autosave.js owns the save. It calls
+     * ttbmPrepareTourSettingsFormForSubmit() itself and posts the whole form -- title
+     * and map fields included -- so repeating that work here only bought two
+     * SYNCHRONOUS XHRs that froze the browser before the save even started.
+     *
+     * The classic full-page submit (auto-save filtered off, or the hotel editor)
+     * still needs those helper writes, so the old path is preserved for it.
+     */
+    function ttbmAjaxPipelineOwnsSave() {
+        return window.ttbmAutosaveHandlesSave === true;
+    }
+    // Sync + AJAX persist before WordPress serializes the form. Bound on click only:
+    // 'mousedown click' ran the whole preparation pass twice for every save.
+    $(document).on('click', '#publish, #save-post, .editor-post-publish-button, .editor-post-publish-button__button, .editor-post-save-draft', function () {
+        if (ttbmAjaxPipelineOwnsSave()) {
+            return;
+        }
         window.ttbmPrepareTourSettingsFormForSubmit();
     });
     $(document).on('submit', 'form#post', function () {
+        if (ttbmAjaxPipelineOwnsSave()) {
+            return;
+        }
         window.ttbmPrepareTourSettingsFormForSubmit();
     });
     $(document).on('change', '.ttbm_activities_table input[name="ttbm_tour_activities[]"]', function () {
@@ -1142,9 +1161,15 @@
         var itemId = $(this).closest('.ttbm-daywise-item').data('id');
         var parent = $(this).closest('.ttbm-daywise-item');
         var headerText = parent.find('.daywise-header p').text().trim();
+        // Read from the item wrapper's own data-time attribute, not scraped from
+        // the header text — the visible time badge next to the title is a
+        // sibling <span>, kept out of the <p> above on purpose so headerText
+        // stays just the title (see TTBM_Settings_itinery_builder.php).
+        var itemTime = parent.data('time') || '';
         var daywiseContentId = parent.find('.daywise-content').html().trim();
         var editorId = 'ttbm_day_content';
         $('input[name="ttbm_day_title"]').val(headerText);
+        $('input[name="ttbm_day_time"]').val(itemTime);
         $('input[name="ttbm_daywise_item_id"]').val(itemId);
         if (tinymce.get(editorId)) {
             tinymce.get(editorId).setContent(daywiseContentId);
@@ -1165,6 +1190,7 @@
     });
     function empty_daywise_form() {
         $('input[name="ttbm_day_title"]').val('');
+        $('input[name="ttbm_day_time"]').val('');
         tinyMCE.get('ttbm_day_content').setContent('');
         $('input[name="ttbm_daywise_item_id"]').val('');
     }
@@ -1183,6 +1209,7 @@
     });
     function update_daywise() {
         var title = $('input[name="ttbm_day_title"]');
+        var time = $('input[name="ttbm_day_time"]');
         var content = tinyMCE.get('ttbm_day_content').getContent();
         var postID = $('input[name="ttbm_post_id"]');
         var itemId = $('input[name="ttbm_daywise_item_id"]');
@@ -1192,6 +1219,7 @@
             data: {
                 action: 'ttbm_daywise_data_update',
                 ttbm_day_title: title.val(),
+                ttbm_day_time: time.val(),
                 ttbm_day_content: content,
                 ttbm_daywise_postID: postID.val(),
                 ttbm_daywise_itemID: itemId.val(),
@@ -1213,6 +1241,7 @@
     }
     function save_daywise() {
         var title = $('input[name="ttbm_day_title"]');
+        var time = $('input[name="ttbm_day_time"]');
         var content = tinyMCE.get('ttbm_day_content').getContent();
         var postID = $('input[name="ttbm_post_id"]');
         console.log(ttbm_admin_ajax.ajax_url);
@@ -1222,6 +1251,7 @@
             data: {
                 action: 'ttbm_daywise_data_save',
                 ttbm_day_title: title.val(),
+                ttbm_day_time: time.val(),
                 ttbm_day_content: content,
                 ttbm_daywise_postID: postID.val(),
                 nonce: ttbm_admin_ajax.nonce
@@ -2586,6 +2616,30 @@
         }
     });
 
+    // Small screens stack the tab list above the content, so a tap would otherwise
+    // switch panels off-screen. Bring the opened panel into view.
+    $(document).on('click', '#ttbm_meta_box_panel .tabLists [data-tabs-target]', function () {
+        if (!window.matchMedia || !window.matchMedia('(max-width: 782px)').matches) {
+            return;
+        }
+        var content = $(this).closest('.ttbmTabs').find('.tabsContent:first').get(0);
+        if (!content) {
+            return;
+        }
+        requestAnimationFrame(function () {
+            window.scrollTo(0, Math.max(0, window.pageYOffset + content.getBoundingClientRect().top - 8));
+            // Only if the page header is actually stuck on screen does it cover the content top.
+            var header = document.querySelector('.ttbm-admin-page-header');
+            if (header) {
+                var headerRect = header.getBoundingClientRect();
+                var overlap = headerRect.bottom - content.getBoundingClientRect().top;
+                if (headerRect.top >= 0 && overlap > 0) {
+                    window.scrollBy(0, -(overlap + 8));
+                }
+            }
+        });
+    });
+
     $(document).on('click', '.ttbm_settings_location,[data-collapse-target="#ttbm_display_map"]', function () {
         requestAnimationFrame(function () {
             ensureLocationMap();
@@ -2716,7 +2770,9 @@
         $(parent).find('.title-style').removeClass('active');
         $(this).addClass('active');
         var titleStyle = $(this).data('title-style');
-        $('#ttbm-title-style').val(titleStyle);
+        // .val() fires no event, so the autosave watcher would never see this
+        // choice and the picked style was dropped on save.
+        $('#ttbm-title-style').val(titleStyle).trigger('change');
     });
 })(jQuery);
 
@@ -2726,7 +2782,9 @@
         $(parent).find('.booking-style').removeClass('active');
         $(this).addClass('active');
         var titleStyle = $(this).data('booking-style');
-        $('#ttbm-booking-style').val(titleStyle);
+        // Same as the title-style picker above: announce the change so the form
+        // is marked dirty and the Open/Collapse choice actually gets saved.
+        $('#ttbm-booking-style').val(titleStyle).trigger('change');
     });
 })(jQuery);
 

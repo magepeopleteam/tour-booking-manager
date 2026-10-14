@@ -26,6 +26,11 @@
                             <h4><i class="fas fa-edit" aria-hidden="true"></i><?php esc_html_e('Hotel Title & Content', 'tour-booking-manager'); ?></h4>
                         </div>
 						<?php $this->post_title_field($hotel_id); ?>
+						<?php
+						if (class_exists('TTBM_Settings_Sidebar')) {
+							TTBM_Settings_Sidebar::render_permalink_field($hotel_id);
+						}
+						?>
 						<?php $this->post_content_field($hotel_id); ?>
                     </section>
                     <section class="ttbm-general-info-card ttbm-hotel-details-card">

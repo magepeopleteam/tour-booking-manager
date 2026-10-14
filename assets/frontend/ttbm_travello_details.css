@@ -1,0 +1,2557 @@
+/**
+ * "Travello" single-tour template — matches the reference design in
+ * travail/tour-details.html. Entirely new template (templates/themes/
+ * travello.php), so this file only ever needs to coexist with the SAME
+ * plugin CSS every other template already loads unconditionally
+ * (ttbm_registration.css, ttbm_details.css, ttbm_smart_booking.css) —
+ * everything here is scoped under .ttbm_travello_theme (this template's own
+ * unique root class, parallel to .ttbm_default_theme/.ttbm_smart_theme) so
+ * it cannot affect default.php/smart.php/viator.php or any other page.
+ *
+ * Built on the plugin's own existing design tokens (--color_theme,
+ * --color_theme_secondary, --ttbm_fs_*, --dbr*, all defined in
+ * inc/TTBM_Global_Style.php) rather than hardcoded hex values, same
+ * approach already proven by ttbm_tour_list_modern.css. No font-family
+ * override — inherits the active theme's body font.
+ */
+
+.ttbm_travello_theme {
+	--ttlm-primary: var( --color_theme );
+	--ttlm-primary-rgb: var( --color_theme_rgb );
+	--ttlm-secondary: var( --color_theme_secondary );
+	--ttlm-accent: var( --color_warning, #E67C30 );
+	--ttlm-ink: var( --color_black, #1b2021 );
+	--ttlm-muted: var( --color_light_3, #878787 );
+	--ttlm-border: var( --color_border, #DDD );
+	--ttlm-tint: var( --color_light, #F2F2F2 );
+	--ttlm-radius-sm: 10px;
+	--ttlm-radius-md: 14px;
+	--ttlm-radius-lg: 20px;
+	--ttlm-radius-pill: 999px;
+	--ttlm-shadow-sm: 0 2px 16px rgba( var( --ttlm-primary-rgb ), .07 );
+	--ttlm-shadow: 0 8px 40px rgba( var( --ttlm-primary-rgb ), .12 );
+	--ttlm-shadow-lg: 0 16px 60px rgba( var( --ttlm-primary-rgb ), .16 );
+	color: var( --ttlm-ink );
+}
+
+.ttbm-travello-container {
+	max-width: 1280px;
+	margin-inline: auto;
+	padding-inline: clamp( 20px, 5vw, 80px );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Gallery
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-travello-gallery {
+	margin-bottom: 36px;
+	border-radius: var( --ttlm-radius-lg );
+	overflow: hidden;
+}
+
+/* Real DOM (TTBM_Custom_Slider::slider()) is deeper than it looks:
+     .superSlider.fdColumn
+       .ttbm_slider-wrapper.dFlex   <- display:flex row (base `.dFlex` class)
+         .sliderAllItem             <- the big photo track
+         .sliderShowcase.right...   <- the 2-stacked-thumbnail column
+   `.sliderShowcase` is a flex CHILD of `.ttbm_slider-wrapper`, not a
+   sibling of it under `.superSlider` — every rule below that needs to
+   reach it uses the full 3-level `> .ttbm_slider-wrapper > .sliderShowcase`
+   path for that reason (a shallower `.superSlider > .sliderShowcase`
+   selector silently never matches, leaving the shared plugin-wide
+   `.ttbm_style div.superSlider .sliderShowcase.right{width:18.65%}` as
+   the one actually rendering).
+
+   This outer `.superSlider` grid exists purely to anchor a definite
+   height (`grid-template-rows:260px 260px`, matching the reference
+   `.gallery`'s `260px 260px` rows) that cascades down through the
+   height:100% chain on `.ttbm_slider-wrapper` → `.sliderAllItem` /
+   `.sliderShowcaseItem`. It intentionally has no grid-template-columns:
+   the actual photo/thumbnail column split happens one level down, via
+   flexbox on `.ttbm_slider-wrapper` (`.sliderAllItem{flex:1 1 auto}`
+   growing to fill whatever `.sliderShowcase` doesn't fixed-claim — see
+   below) — so a single implicit grid column here already stretches
+   `.ttbm_slider-wrapper` the full width of .ttbm-travello-container,
+   with no `grid-column` override needed on it. */
+#ttbm_travello_gallery > .superSlider {
+	display: grid;
+	grid-template-rows: 260px 260px;
+	row-gap: 10px;
+	width: 100%;
+	max-width: 100%;
+	border-radius: var( --ttlm-radius-lg );
+	overflow: hidden;
+	background: none;
+}
+
+/* `gap:10px` matches the reference `.gallery{grid-template-columns:2fr 1fr;
+   ...gap:10px}` — that grid-gap sits between gallery-main and gallery-sm,
+   i.e. exactly between this flex row's two children (`.sliderAllItem` and
+   `.sliderShowcase.right.style_1`, see DOM note above). Without it the big
+   photo and the thumbnail column sit flush against each other. */
+#ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper {
+	grid-row: 1 / span 2;
+	width: 100% !important;
+	max-width: 100% !important;
+	height: 100% !important;
+	max-height: none !important;
+	min-height: 0 !important;
+	gap: 10px;
+}
+
+.ttbm-travello-gallery .sliderAllItem {
+	flex: 1 1 auto;
+	width: auto !important;
+	max-width: none !important;
+	height: 100% !important;
+	max-height: none !important;
+	min-height: 0 !important;
+}
+
+.ttbm-travello-gallery .sliderAllItem .sliderItem {
+	height: 100% !important;
+	max-height: none !important;
+}
+
+/* A tour with only one gallery image omits `.ttbm_slider-wrapper` and places
+   `.sliderAllItem` directly inside `.superSlider`. Make that direct child span
+   both desktop gallery rows as well, otherwise it occupies only the first
+   260px row and leaves the lower half of the hero blank. */
+#ttbm_travello_gallery > .superSlider.ttbm-featured-only > .sliderAllItem {
+	grid-row: 1 / span 2;
+	width: 100% !important;
+	max-width: 100% !important;
+}
+
+/* Cells no longer sit flush against each other — `.ttbm_slider-wrapper` now
+   has its own `gap:10px` (see the DOM note above `#ttbm_travello_gallery >
+   .superSlider`) splitting the big photo from the showcase column, so each
+   tile reads as its own separated block rather than one seamless surface.
+   Per-cell rounding (`.sliderShowcaseItem`'s `border-radius:10px` below)
+   suits that gapped layout; `.ttbm-travello-gallery`'s own
+   `overflow:hidden;border-radius:20px` still additionally clips the 4 outer
+   corners of the whole gallery block. */
+
+/* `> .ttbm_slider-wrapper >` is required here — see the DOM note above
+   `#ttbm_travello_gallery > .superSlider` — `.sliderShowcase` is this
+   element's grandchild, not its child. `.style_1` pins it to
+   TTBM_Custom_Slider::slider_showcase_style_1() specifically (the
+   default `slider_style` setting). `flex: 0 0 380px` locks the width at
+   380px explicitly, matching .ttbm-travello-sidebar, and stops it from
+   flex-shrinking — `.sliderAllItem`'s `flex: 1 1 auto` (below) then
+   grows to claim exactly whatever width this doesn't. */
+#ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper > .sliderShowcase.right.style_1,
+#ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper > .sliderShowcase.left.style_1 {
+	flex: 0 0 380px;
+	width: 380px;
+	height: auto;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+/* The real showcase (TTBM_Custom_Slider::slider_showcase_style_1(), shared
+   by every theme — not something this template can safely rewrite) always
+   renders 4 cells: 3 plain thumbnails then a 4th carrying the "+N" badge.
+   Reference wants exactly 2 stacked photos, so keep only the first cell
+   and the last (badge) cell — `:not(:first-child):not(:last-child)` does
+   that regardless of how many cells a given tour actually has (works out
+   to 0 hidden / no-op if a tour has fewer photos and therefore fewer
+   cells). The badge text itself still needs correcting to match — see
+   ttbm_travello_details.js, since "how many photos aren't shown as a
+   thumbnail" changed the moment 2 of these 4 thumbnails stopped being
+   shown, and that number is baked into server-rendered text, not
+   something CSS can recompute. */
+#ttbm_travello_gallery .sliderShowcaseItem:not( :first-child ):not( :last-child ) {
+	display: none;
+}
+
+#ttbm_travello_gallery .sliderShowcaseItem {
+	flex: 1;
+	max-height: none;
+	margin: 0;
+	border-radius: 10px;
+}
+
+/* "+N more photos" badge — the base plugin CSS (`.sliderMoreItem`) covers
+   the ENTIRE cell in a flat semi-opaque black box, hiding the photo
+   underneath completely, with a "+" icon and bare number. The reference's
+   equivalent (`.gallery-photos-btn`) is a small frosted pill in the
+   corner — photo fully visible behind it — reading "View all N photos".
+   Restyle the box to match the pill; the wording swap happens in JS since
+   the plugin only ever renders a bare number here, no surrounding text. */
+#ttbm_travello_gallery .sliderMoreItem {
+	inset: auto 16px 16px auto;
+	width: auto;
+	height: auto;
+	background: rgba( 255, 255, 255, .92 );
+	backdrop-filter: blur( 6px );
+	color: var( --ttlm-ink );
+	border-radius: var( --ttlm-radius-sm );
+	padding: 9px 16px;
+	gap: 6px;
+	font-size: 12px;
+	font-weight: 700;
+	transition: background-color .2s ease, box-shadow .2s ease;
+}
+
+#ttbm_travello_gallery .sliderMoreItem:hover {
+	background: #fff;
+	box-shadow: var( --ttlm-shadow-sm );
+}
+
+#ttbm_travello_gallery .sliderMoreItem span {
+	margin: 0;
+	font-size: 12px;
+}
+
+/* Prev/next arrows on the inline hero — the reference gallery has none at
+   all (it's a fixed set of static photos, not a carousel). This widget's
+   hero genuinely can cycle through every photo though, which the
+   reference's mockup never needed to account for, so keep the control
+   rather than deleting it — just hide it until hover instead of showing
+   it at rest, which matches the reference's clean default look without
+   losing the ability to browse without opening the full lightbox. Scoped
+   with `>` all the way down so this can't reach the popup lightbox's own
+   copy of the same markup one level deeper (`.sliderPopup .superSlider
+   .popupBody .iconIndicator`), which still needs to stay visible always. */
+#ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper > .iconIndicator {
+	opacity: 0;
+	transition: opacity .2s ease;
+}
+
+#ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper:hover > .iconIndicator {
+	opacity: 1;
+}
+
+@media ( max-width: 768px ) {
+	#ttbm_travello_gallery > .superSlider {
+		grid-template-rows: 260px;
+	}
+
+	.ttbm-travello-gallery .sliderAllItem,
+	.ttbm-travello-gallery .sliderAllItem .sliderItem {
+		height: 260px !important;
+		max-height: 260px !important;
+	}
+
+	#ttbm_travello_gallery > .superSlider.ttbm-featured-only > .sliderAllItem {
+		grid-row: 1;
+	}
+
+	/* Reference drops the small side photos entirely below 768px and lets
+	   the one big photo fill the full width. `> .ttbm_slider-wrapper >` —
+	   same grandchild depth as the desktop rule above, see the DOM note
+	   on `#ttbm_travello_gallery > .superSlider`. */
+	#ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper > .sliderShowcase {
+		display: none !important;
+	}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Layout — main column + sticky sidebar
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-travello-layout {
+	display: grid;
+	grid-template-columns: 1fr 380px;
+	gap: 40px;
+	align-items: start;
+	padding-bottom: 60px;
+}
+
+@media ( max-width: 1000px ) {
+	.ttbm-travello-layout {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Tour header — badges / title / meta / actions
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-travello-header {
+	margin-bottom: 24px;
+}
+
+.ttbm-travello-badges {
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap;
+	margin-bottom: 14px;
+}
+
+.ttbm-travello-badge {
+	display: inline-block;
+	padding: 5px 12px;
+	border-radius: var( --ttlm-radius-pill );
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+	color: #fff;
+	background: var( --ttlm-accent );
+}
+
+.ttbm-travello-badge--outline {
+	background: transparent;
+	color: var( --ttlm-primary );
+	border: 1.5px solid var( --ttlm-primary );
+	padding: 4px 12px;
+}
+
+/* "Free cancellation" — the one badge here with no real setting behind it
+   (unlike Bestseller/activity terms above, see travello.php), so it's given
+   a visibly softer, non-committal border instead of the full primary-color
+   outline the real-data badges get — same distinction the reference makes
+   (`border-color:var(--soft)` inline override on just this one badge). */
+.ttbm-travello-badge--soft {
+	border-color: var( --ttlm-border );
+}
+
+.ttbm-travello-title {
+	font-size: clamp( 24px, 3.5vw, 38px );
+	font-weight: 700;
+	letter-spacing: -.02em;
+	line-height: 1.15;
+	color: var( --ttlm-ink );
+	margin: 0 0 12px;
+}
+
+/* Reference's `.serif-italic` accent on part of the title — the active theme
+   (travail) already loads 'DM Serif Display' site-wide for this exact
+   pattern (inc/enqueue.php), but this rule doesn't depend on that: the
+   explicit Georgia/serif fallback means the italic-serif contrast still
+   shows up even under a different active theme, just in a generic serif
+   face instead. See travello.php for the real-title split that decides
+   which trailing portion (if any) gets this treatment. */
+.ttbm-travello-title-accent {
+	font-family: 'DM Serif Display', Georgia, serif;
+	font-style: italic;
+	font-weight: 400;
+}
+
+.ttbm-travello-meta-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 16px;
+	font-size: 13px;
+	color: var( --ttlm-muted );
+	font-weight: 500;
+	margin-bottom: 16px;
+}
+
+/* Rating row — real data (see travello.php: $ttbm_travello_rating, Pro's own
+   DB-backed average+count, the same instance already used in the booking
+   card; omitted entirely at 0 reviews). Reuses the plugin's existing
+   gradient-fill `.ttbm-rating-stars` widget class directly (Pro's own
+   ttbm_style_pro.css: `--percent` is derived from `--ttbm-rating`, and the
+   actual "★★★★★" glyphs + gradient fill are drawn on its `::before`, not the
+   element itself — reinventing that with plain static star glyphs would
+   round a real fractional average up to a false full 5/5 look), just
+   resized/recolored to this template's tokens instead of the shared
+   widget's defaults. */
+.ttbm-travello-rating-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.ttbm-travello-rating-value {
+	font-size: 22px;
+	font-weight: 800;
+	color: var( --ttlm-accent );
+}
+
+.ttbm-travello-rating-row .ttbm-rating-stars {
+	--ttbm-star-size: 14px;
+	margin: 0;
+}
+
+.ttbm-travello-rating-row .ttbm-rating-stars::before {
+	background: linear-gradient( 90deg, var( --ttlm-accent ) var( --percent ), var( --ttlm-border ) var( --percent ) );
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.ttbm-travello-rating-count {
+	font-size: 13px;
+	color: var( --ttlm-muted );
+}
+
+.ttbm-travello-meta-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	line-height: 1;
+}
+
+.ttbm-travello-meta-item .mi {
+	color: var( --ttlm-primary );
+	font-size: 14px;
+	line-height: 1;
+	flex-shrink: 0;
+}
+
+.ttbm-travello-meta-item strong {
+	color: var( --ttlm-ink );
+	font-weight: 700;
+}
+
+.ttbm-travello-actions {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+	margin-top: 16px;
+}
+
+/* .ttbm-gc-wishlist is reused here purely for its existing, already-working
+   JS (ttbm_script.js binds click + AJAX toggle to this exact class) — but
+   its base plugin CSS (ttbm_registration.css) is written for a small round
+   icon-only button absolutely positioned over a card thumbnail
+   (`.ttbm-gc-wishlist{position:absolute;top:12px;right:12px;width:34px;
+   height:34px;border-radius:50%}`, reinforced by `.ttbm_style
+   button.ttbm-gc-wishlist{position:absolute}`), which made it disappear
+   here (positioned relative to a distant ancestor, off in the corner of
+   some far larger box) instead of sitting inline as a labeled pill button
+   next to Share. Same specificity as those two rules (class + element +
+   class), so this wins by printing later — no !important needed. */
+.ttbm-travello-actions button.ttbm-gc-wishlist,
+.ttbm-travello-actions .ttbm-gc-wishlist {
+	position: static;
+	width: auto;
+	height: auto;
+	border-radius: var( --ttlm-radius-pill );
+}
+
+.ttbm-travello-action-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 9px 18px;
+	border-radius: var( --ttlm-radius-pill );
+	border: 1.5px solid var( --ttlm-border );
+	font-size: 12px;
+	font-weight: 600;
+	color: var( --ttlm-ink );
+	background: #fff;
+	transition: border-color .2s ease, color .2s ease, background-color .2s ease;
+}
+
+.ttbm-travello-action-btn:hover {
+	border-color: var( --ttlm-primary );
+	color: var( --ttlm-primary );
+}
+
+.ttbm-travello-action-btn.active {
+	background: color-mix( in srgb, var( --ttlm-accent ) 10%, #fff );
+	border-color: var( --ttlm-accent );
+	color: var( --ttlm-accent );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Tabs (scroll-nav — every section stays rendered; JS just scrolls
+   and toggles the active underline, nothing is hidden/shown)
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-travello-tabs {
+	display: flex;
+	gap: 0;
+	border-bottom: 2px solid var( --ttlm-border );
+	margin-bottom: 32px;
+	overflow-x: auto;
+	scrollbar-width: none;
+}
+
+.ttbm-travello-tabs::-webkit-scrollbar {
+	display: none;
+}
+
+/* These are real `<button>` elements (same as the reference's own `.dtab`),
+   and the theme's global reset (base.css) only sets `font-family:inherit`
+   on `button` — no `border:none;background:none;appearance:none`, unlike
+   the reference's own global `button{border:none;background:none;
+   cursor:pointer}`. Without it every tab showed the browser's native button
+   face/border instead of a flat text tab. */
+.ttbm-travello-tab {
+	appearance: none;
+	-webkit-appearance: none;
+	background: none;
+	border: 0;
+	margin: 0;
+	outline: none;
+	padding: 12px 20px;
+	font-size: 13px;
+	font-weight: 600;
+	color: var( --ttlm-muted );
+	white-space: nowrap;
+	position: relative;
+	cursor: pointer;
+	transition: color .2s ease;
+}
+
+.ttbm-travello-tab:hover {
+	color: var( --ttlm-ink );
+}
+
+.ttbm-travello-tab.is-active {
+	color: var( --ttlm-primary );
+}
+
+.ttbm-travello-tab.is-active::after {
+	content: '';
+	position: absolute;
+	bottom: -2px;
+	left: 0;
+	right: 0;
+	height: 2.5px;
+	background: var( --ttlm-primary );
+	border-radius: var( --ttlm-radius-pill );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Generic sections
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-travello-section {
+	margin-bottom: 36px;
+	scroll-margin-top: 96px;
+}
+
+/* `!important` on every property here: something else on this install (an
+   Elementor Kit default heading style is the prime suspect — this site uses
+   Elementor's theme builder for its page templates, and its default H2 size
+   lands right around this same ~30px/400-weight combination) sets every
+   bare `<h2>` on the page to ~30px/400 regardless of class, beating this
+   otherwise-plenty-specific 1-class selector. Cheaper to force it here than
+   keep excavating Elementor's generated CSS to find the exact rule. */
+.ttbm-travello-section-title {
+	font-size: 18px !important;
+	font-weight: 700 !important;
+	color: var( --ttlm-ink ) !important;
+	margin: 0 0 16px !important;
+	letter-spacing: -.01em !important;
+}
+
+.ttbm-travello-section .ttbm_wp_editor,
+.ttbm-travello-section .ttbm_description {
+	font-size: 14px;
+	color: var( --ttlm-muted );
+	line-height: 1.8;
+}
+
+/* Every reused partial fired into a `.ttbm-travello-section` (Overview's
+   "Overview", Includes' "What's Included"/"What's Excluded", Itinerary's
+   "Daily Schedule", FAQ's "FAQ") prints its own real `.ttbm_section_title`
+   heading rather than a second one from this template (avoids the
+   duplicate-heading bug that hit the Overview/Location sections) — style
+   all of them the same as `.ttbm-travello-section-title` so they read as
+   one consistent heading style throughout the tabs.
+
+   Two separate things were beating this rule before `!important` was added:
+   1) the theme's `.content-title.ttbm_section_title{font-size:28px;
+      font-weight:400;margin-bottom:20px;…}` (tbm-restyle.css) is completely
+      unscoped, and day_wise_details.php + faq.php both print
+      `class="content-title ttbm_section_title"` (both classes together) —
+      that rule's 2-class specificity tied this one's and won on source
+      order (tbm-restyle.css is enqueued last on this install).
+   2) Overview's heading (bare `ttbm_section_title`, no `content-title`)
+      wasn't affected by #1 but still wasn't landing at 18px/700 — same
+      likely Elementor-default-heading-style culprit noted on
+      `.ttbm-travello-section-title` above. */
+.ttbm-travello-section .ttbm_section_title,
+.ttbm-travello-section .content-title.ttbm_section_title {
+	font-size: 18px !important;
+	font-weight: 700 !important;
+	color: var( --ttlm-ink ) !important;
+	margin: 0 0 16px !important;
+	letter-spacing: -.01em !important;
+}
+
+/* Location's heading is structurally different from the others — a real
+   `<h5>` inside a `.ttbm_title_style_2` wrapper (layout/title_section.php),
+   not a `<h2 class="ttbm_section_title">` — so none of the rules above ever
+   reached it. The only rule that does, `#ttbm_content .ttbm_title_style_2
+   h5{font-weight:bold}` (ttbm_registration.css, unscoped), gives it bold
+   text but leaves the size/color/margin at plain h5 browser defaults. */
+.ttbm-travello-section .ttbm_title_style_2 h5 {
+	font-size: 18px !important;
+	font-weight: 700 !important;
+	color: var( --ttlm-ink ) !important;
+	margin: 0 0 16px !important;
+	letter-spacing: -.01em !important;
+}
+
+/* One flat `<ul>` is now both the list AND the grid (see travello.php: real
+   included items first, then real excluded ones, in a single array) —
+   auto-flowing through 2 columns row-by-row is what actually produces the
+   reference's interleaved look (item 1 → col 1, item 2 → col 2, item 3 →
+   col 1, …), not two separate all-included/all-excluded column blocks. */
+.ttbm-travello-section .ttbm-include-exclude {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 8px;
+}
+
+@media ( max-width: 560px ) {
+	.ttbm-travello-section .ttbm-include-exclude {
+		grid-template-columns: 1fr;
+	}
+}
+
+.ttbm-travello-section .ttbm-include-exclude li {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 13px;
+	font-weight: 500;
+	color: var( --ttlm-ink );
+}
+
+.ttbm-travello-section .ttbm_ie_icon {
+	width: 20px;
+	height: 20px;
+	border-radius: var( --ttlm-radius-pill );
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 10px;
+	flex-shrink: 0;
+}
+
+.ttbm-travello-section .ttbm_ie_check {
+	background: color-mix( in srgb, var( --ttlm-primary ) 12%, #fff );
+	color: var( --ttlm-primary );
+}
+
+.ttbm-travello-section .ttbm_ie_cross {
+	background: color-mix( in srgb, var( --ttlm-accent ) 12%, #fff );
+	color: var( --ttlm-accent );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Itinerary — reuses layout/day_wise_details.php's real markup+data
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-travello-section .ttbm_day_wise_timeline {
+	position: relative;
+	padding-left: 54px;
+	/* Item-to-item spacing is controlled from here (flex `gap`) instead of
+	   each item's own margin-bottom — see the note on `.day_wise_details_item`
+	   below for why — currently 0 so days sit flush with no gap. */
+	display: flex;
+	flex-direction: column;
+	gap: 0px;
+}
+
+.ttbm-travello-section .ttbm_day_wise_timeline::before {
+	content: '';
+	position: absolute;
+	top: 18px;
+	bottom: 18px;
+	left: 17px;
+	width: 1.5px;
+	background: var( --ttlm-border );
+}
+
+/* `div.ttbm_day_wise_timeline .day_wise_details_item,
+   #ttbm_content .ttbm_day_wise_timeline .day_wise_details_item { margin:0 0
+   18px; }` in ttbm_registration.css is unscoped to any theme, and its ID-based
+   second selector beats this rule's plain 2-class specificity — so this
+   template's own `margin` value was never actually the one winning.
+   `!important` forces it to 0 outright rather than trying to out-specificity
+   an ID selector; `.ttbm_day_wise_timeline`'s own `gap:24px` above (not this
+   item's margin) is what now supplies the space between days. */
+.ttbm-travello-section .day_wise_details_item {
+	position: relative;
+	margin: 0 !important;
+}
+
+/* Base plugin CSS's `.day_wise_details_marker` rule (the one that actually
+   sets `position:absolute`, centers the number, and gives `left` something
+   to be relative to) is scoped to `#ttbm_content .ttbm_details_page`, which
+   this template never has — so none of that ever reached travello, only the
+   sizing/color declared below. Without `position:absolute` here, `left:-54px`
+   was a no-op and the "01" circle just sat in normal flow instead of in the
+   gutter, with its number unable to center via a plain block box either. */
+.ttbm-travello-section .day_wise_details_marker {
+	position: absolute;
+	top: 0;
+	left: -54px;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	width: 38px;
+	height: 38px;
+	border-radius: var( --ttlm-radius-pill );
+	background: var( --ttlm-tint );
+	border: 2px solid var( --ttlm-primary );
+	color: var( --ttlm-primary );
+	font-size: 12px;
+	font-weight: 700;
+}
+
+/* Reference's itinerary is a flat, always-expanded list (no card chrome, no
+   accordion) — base plugin CSS for `.day_wise_details_card` /
+   `.day_wise_details_item_title` only exists scoped to
+   `#ttbm_content .ttbm_details_page` (default.php's own root), which this
+   template never has, so there's no card/accordion styling to override here
+   in the first place — these rules just make that explicit rather than
+   leaving it to accident. */
+.ttbm-travello-section .day_wise_details_card {
+	background: none;
+	border: 0;
+	box-shadow: none;
+	border-radius: 0;
+}
+
+/* Was missing entirely for this template (only the shared, non-scoped base
+   rule set this flex-column layout) — without it `.day_wise_details_meta`
+   and `.day_wise_details_name` below just ran inline instead of stacking. */
+.ttbm-travello-section .day_wise_details_header {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+/* Every other theme keeps the click-to-expand/collapse accordion (still
+   useful on a long default.php page) — the reference's itinerary has no such
+   interaction at all, every day's content is simply always visible. Disabled
+   here rather than in the shared PHP/JS: `pointer-events:none` stops the
+   generic `[data-collapse-target]` click handler (ttbm_script.js) from ever
+   firing on this template, and `!important` below beats the inline
+   `style="display:none"` day_wise_details.php still writes for every day
+   after the first (that inline style is what every OTHER theme's accordion
+   relies on to start collapsed). */
+.ttbm-travello-section .day_wise_details_item_title {
+	/* Resets the h5's UA default margin — nothing else in this template
+	   touches it (same unscoped-base-CSS gap as everywhere else here), so
+	   left alone it added a large uneven gap around every day's title row. */
+	margin: 0;
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 16px;
+	pointer-events: none;
+	cursor: default;
+	/* `div.ttbm_day_wise_timeline .day_wise_details_item_title` (padding:20px 22px)
+	   and the later `#ttbm_content .ttbm_day_wise_timeline .day_wise_details_item_title`
+	   (padding-bottom:20px) in ttbm_registration.css are both unscoped to any
+	   theme, so they reach travello too. The reference has no boxed padding
+	   around the title row at all (flat text against the timeline), and the
+	   second rule's ID beats this 2-class selector on specificity for the
+	   bottom edge specifically, so `!important` is needed to fully zero it
+	   out rather than ending up 0 on 3 sides and 20px on the 4th. */
+	padding: 0 !important;
+}
+
+.ttbm-travello-section .day_wise_details_item_title span[data-icon] {
+	display: none;
+}
+
+/* Scoped to `.ttbm_day_wise_timeline` specifically, NOT the broader
+   `.ttbm-travello-section` — the FAQ tab (layout/faq.php) also renders inside
+   a `.ttbm-travello-section` and uses this exact same `[data-collapse]`
+   attribute for its own (intentionally still-collapsible) answer panels;
+   the wider selector would have forced every FAQ answer permanently open. */
+.ttbm-travello-section .ttbm_day_wise_timeline [data-collapse] {
+	display: block !important;
+	padding-top: 6px;
+}
+
+.ttbm-travello-section .day_wise_details_meta {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-bottom: 4px;
+}
+
+/* Auto-derived category ("Arrival Day", "Daily Itinerary", …) doesn't exist
+   in the reference at all — it's a keyword guess (see
+   ttbm_day_category_label() in day_wise_details.php), not real per-day data,
+   so it's hidden here rather than given a matching visual treatment. */
+.ttbm-travello-section .day_wise_details_label {
+	display: none;
+}
+
+/* Optional per-item time — same "real data or omit" rule as everywhere else in
+   this file (see layout/day_wise_details.php: $day['ttbm_day_time'], never
+   printed when the admin left it blank). Styled to match the reference's
+   `.it-time` eyebrow exactly (uppercase/accent/700-weight) now that it's the
+   only thing left in this row; the clock icon is shared markup used by every
+   theme, hidden here rather than removed from day_wise_details.php. */
+.ttbm-travello-section .day_wise_details_time {
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	color: var( --ttlm-accent );
+}
+
+.ttbm-travello-section .day_wise_details_time i {
+	display: none;
+}
+
+.ttbm-travello-section .day_wise_details_name {
+	font-size: 14px;
+	font-weight: 700;
+	color: var( --ttlm-ink );
+	margin-bottom: 5px;
+}
+
+.ttbm-travello-section .day_wise_details_item_details,
+.ttbm-travello-section .day_wise_activity_desc {
+	font-size: 13px;
+	color: var( --ttlm-muted );
+	line-height: 1.65;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Reviews — reuses Pro's real review-average + distribution-bar +
+   review-card markup/data (renders nothing if Pro/reviews inactive)
+   ══════════════════════════════════════════════════════════════ */
+/* Pro's real widget (ttbm_review_list()) prints its own "Reviews" <h4>
+   glued inside the bordered .ttbm-tour-review-list-wrapper card — travello.php
+   now prints its own heading OUTSIDE that card instead (matching every other
+   tab's "floating title" look), so the original is hidden here rather than
+   styled to match, which is what this rule used to do. */
+.ttbm-travello-section .ttbm-avg-review-header-content .ttbm-review-title {
+	display: none;
+}
+
+/* Reference doesn't box the WHOLE reviews tab in one outer card — the
+   rating summary is its own tinted box, and each review is its own separate
+   white card below it, both sitting directly on the page background. Card
+   chrome moved down onto `.ttbm-review-rating-container` and
+   `.ttbm-tour-review-item` themselves (below) instead of living here. */
+.ttbm-travello-section .ttbm-tour-review-list-wrapper {
+	background: none;
+	border: 0;
+	box-shadow: none;
+	padding: 0;
+}
+
+.ttbm-travello-section .ttbm-avg-review-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	flex-wrap: wrap;
+	margin-bottom: 16px;
+}
+
+.ttbm-travello-section .ttbm-avg-review-header-content p {
+	font-size: 13px;
+	color: var( --ttlm-muted );
+	margin: 0;
+}
+
+.ttbm-travello-section #give-review-btn {
+	background: var( --ttlm-primary );
+	color: #fff;
+	border: 0;
+	padding: 10px 20px;
+	border-radius: var( --ttlm-radius-pill );
+	font-size: 13px;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.ttbm-travello-section .ttbm-tour-review-list {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+/* Show only the first 2 review cards by default — `.ttbm-tour-review-item ~
+   .ttbm-tour-review-item ~ .ttbm-tour-review-item` is a chained
+   general-sibling selector: it matches any `.ttbm-tour-review-item` that has
+   at least 2 *other* `.ttbm-tour-review-item` siblings before it (3rd or
+   later), regardless of what other real elements (the rating-summary box)
+   sit alongside them — safer than nth-of-type, which would miscount past
+   that unrelated sibling. Pure CSS on purpose: no JS-timing flash of every
+   review before the button's own script (ttbm_travello_details.js) runs. */
+#ttbm-travello-reviews .ttbm-tour-review-item ~ .ttbm-tour-review-item ~ .ttbm-tour-review-item {
+	display: none;
+}
+
+#ttbm-travello-reviews.ttbm-travello-reviews-expanded .ttbm-tour-review-item ~ .ttbm-tour-review-item ~ .ttbm-tour-review-item {
+	display: block;
+}
+
+.ttbm-travello-section .ttbm-travello-reviews-more {
+	display: block;
+	width: 100%;
+	margin-top: 8px;
+	padding: 13px;
+	border-radius: var( --ttlm-radius-md );
+	border: 1.5px solid var( --ttlm-border );
+	background: #fff;
+	font-size: 13px;
+	font-weight: 700;
+	color: var( --ttlm-ink );
+	cursor: pointer;
+	transition: border-color .2s ease, color .2s ease;
+}
+
+.ttbm-travello-section .ttbm-travello-reviews-more:hover {
+	border-color: var( --ttlm-primary );
+	color: var( --ttlm-primary );
+}
+
+/* Rating summary — real average + real per-star counts (get_review_rating_data()),
+   never fabricated; the whole `.ttbm-review-rating-container` block only
+   renders at all when $res (real DB rows) exists, per ttbm_review_list(). */
+.ttbm-travello-section .ttbm-review-rating-container {
+	display: flex;
+	align-items: center;
+	gap: 32px;
+	background: var( --ttlm-tint );
+	border-radius: var( --ttlm-radius-lg );
+	padding: 24px 28px;
+	flex-wrap: wrap;
+}
+
+.ttbm-travello-section .ttbm-tour-review-rating-info {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	flex-shrink: 0;
+	gap: 6px;
+}
+
+.ttbm-travello-section .ttbm-tour-review-rating-info strong {
+	font-size: 48px;
+	font-weight: 800;
+	line-height: 1;
+	color: var( --ttlm-ink );
+}
+
+.ttbm-travello-section .ttbm-tour-review-rating-info .ttbm-rating-stars {
+	--ttbm-star-size: 14px;
+}
+
+.ttbm-travello-section .ttbm-tour-review-rating-info .ttbm-rating-stars::before {
+	background: linear-gradient( 90deg, var( --ttlm-accent ) var( --percent ), var( --ttlm-border ) var( --percent ) );
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.ttbm-travello-section .ttbm-tour-review-rating-info span {
+	font-size: 13px;
+	color: var( --ttlm-muted );
+}
+
+.ttbm-travello-section .ttbm-tour-review-avg {
+	flex: 1;
+	min-width: 220px;
+}
+
+.ttbm-travello-section .ttbm-avg-review-content {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.ttbm-travello-section .ttbm-avg-review-item {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 12px;
+	color: var( --ttlm-muted );
+}
+
+.ttbm-travello-section .ttbm-avg-review-item .rating-text {
+	flex: 0 0 62px;
+}
+
+.ttbm-travello-section .ttbm-avg-review-item .rating-bar {
+	flex: 1;
+	height: 7px;
+	border-radius: var( --ttlm-radius-pill );
+	background: var( --ttlm-border );
+	overflow: hidden;
+}
+
+.ttbm-travello-section .ttbm-avg-review-item .rating-bar span {
+	display: block;
+	height: 100%;
+	border-radius: var( --ttlm-radius-pill );
+	background: var( --ttlm-accent );
+}
+
+.ttbm-travello-section .ttbm-avg-review-item .rating-percent {
+	flex: 0 0 32px;
+	text-align: right;
+}
+
+/* Individual reviews — each its own card instead of one shared list, per
+   the reference. ttbm_travello_details.js rebuilds each card's header from
+   these same real fields (real reviewer name + real month/year, split into
+   an avatar-with-initials + identity block, regrouped next to the star
+   rating) — the rules below this comment are the no-JS fallback (in case
+   the script fails/is disabled), styling Pro's original markup shape;
+   `.ttbm-travello-review-*` further down is what actually renders normally. */
+/* `!important` on margin/padding/border/border-radius: both Pro's own base
+   rule (`.ttbm-tour-review-list .ttbm-tour-review-item{margin-bottom:20px;
+   padding:22px 0 10px;border-radius:3px}`, ttbm_style_pro.css) and the
+   theme's (`{margin:0;padding:20px 0;border-bottom:1px solid border;
+   border-radius:0}`, tbm-restyle.css) share this exact 2-class specificity
+   with this rule — ties are broken by load order, and tbm-restyle.css is
+   enqueued last on this install, so its values (including an unwanted
+   border-bottom line and zero radius) were the ones actually winning
+   despite this rule loading first. */
+.ttbm-travello-section .ttbm-tour-review-item {
+	background: #fff;
+	margin: 0 !important;
+	border: 0 !important;
+	border-radius: 10px !important;
+	padding: 20px 20px !important;
+	box-shadow: var( --ttlm-shadow-sm );
+}
+
+.ttbm-travello-section .ttbm-tour-review-rating-with-title {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.ttbm-travello-section .ttbm-tour-review-name {
+	font-size: 15px;
+	font-weight: 700;
+	color: var( --ttlm-ink );
+	order: -1;
+}
+
+.ttbm-travello-section .ttbm-tour-rating .ttbm-rating-stars,
+.ttbm-travello-section .ttbm-travello-review-head .ttbm-rating-stars {
+	--ttbm-star-size: 13px;
+}
+
+.ttbm-travello-section .ttbm-tour-rating .ttbm-rating-stars::before,
+.ttbm-travello-section .ttbm-travello-review-head .ttbm-rating-stars::before {
+	background: linear-gradient( 90deg, var( --ttlm-accent ) var( --percent ), var( --ttlm-border ) var( --percent ) );
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.ttbm-travello-section .ttbm-tour-review-info {
+	font-size: 12px;
+	color: var( --ttlm-muted );
+	margin: 4px 0 12px;
+}
+
+/* Actual rendered structure (ttbm_travello_details.js): avatar (real name
+   initials) + real name/date identity block, regrouped beside the real star
+   rating; the review's own real headline (post_title) becomes its own line
+   above the quote instead of sitting where the reviewer's name reads in the
+   reference — there's no separate "headline" concept in the reference to
+   map it to, so it's kept rather than dropped. No avatar photo, location, or
+   "traveler type" — none of those exist in the real review data. */
+.ttbm-travello-section .ttbm-travello-review-head {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+}
+
+.ttbm-travello-section .ttbm-travello-review-avatar {
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	border-radius: var( --ttlm-radius-pill );
+	background: var( --ttlm-primary );
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.ttbm-travello-section .ttbm-travello-review-identity {
+	flex: 1;
+	min-width: 0;
+}
+
+.ttbm-travello-section .ttbm-travello-review-name {
+	font-size: 15px;
+	font-weight: 700;
+	color: var( --ttlm-ink );
+	margin: 0;
+}
+
+.ttbm-travello-section .ttbm-travello-review-meta {
+	font-size: 12px;
+	color: var( --ttlm-muted );
+	margin: 2px 0 0;
+}
+
+.ttbm-travello-section .ttbm-travello-review-headline {
+	font-size: 13px;
+	font-weight: 700;
+	color: var( --ttlm-ink );
+	margin: 14px 0 4px !important;
+}
+
+.ttbm-travello-section .ttbm-tour-review-content {
+	font-size: 14px;
+	font-style: italic;
+	line-height: 1.7;
+	color: var( --ttlm-ink );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FAQ — reuses layout/faq.php's real markup+data
+   ══════════════════════════════════════════════════════════════ */
+/* faq.php's own "FAQ" heading — travello.php now prints "Frequently asked
+   questions" outside it instead (see travello.php), so the original text
+   is hidden here rather than restyled. */
+#ttbm-travello-faq .ttbm_faq_section > .ttbm_section_title {
+	display: none;
+}
+
+.ttbm-travello-section .ttbm_faq_list {
+	display: flex;
+	flex-direction: column;
+}
+
+/* `div.ttbm_faq_content{background-color:#fff;padding:var(--ttbm_mp) 0;
+   border-radius:10px;overflow:hidden}` (ttbm_registration.css) is unscoped —
+   applies to both places faq.php reuses this same class (the outer
+   `.ttbm_faq_content.ttbm_faq_list` wrapper above and each individual
+   answer's `.ttbm_faq_content.ttbm_wp_editor`). Reference's FAQ list is flat
+   with no boxed background anywhere, so removed for this template only. */
+.ttbm-travello-section .ttbm_faq_content {
+	background-color: transparent;
+}
+
+/* Reference has a hairline between every question (each `.faq-item` gets
+   `border-top`, and the last one gets `border-bottom` too) — restored here
+   to match the attachment; `background-color`/box-chrome removal from
+   `div.ttbm_faq_item .ttbm_faq_title` (ttbm_registration.css, unscoped)
+   still stands, this is a plain 1px line, not a boxed background. */
+.ttbm-travello-section .ttbm_faq_item {
+	border-top: 1px solid var( --ttlm-border );
+}
+
+.ttbm-travello-section .ttbm_faq_item:last-child {
+	border-bottom: 1px solid var( --ttlm-border );
+}
+
+/* `div.ttbm_faq_item .ttbm_faq_title{background-color:#fff;
+   border-bottom:1px solid #ddd;...}` (ttbm_registration.css) is unscoped;
+   this rule already overrides cursor but left background-color/border-bottom
+   in play — removed both (the hairline between rows now comes from
+   `.ttbm_faq_item`'s own border-top above, not a border baked into the
+   title itself, so two rows never end up with a doubled-up line). Padding
+   matches the reference's button exactly (16px 0). */
+.ttbm-travello-section .ttbm_faq_title {
+	padding: 16px 0 !important;
+	gap: 12px;
+	cursor: pointer;
+	background-color: transparent !important;
+	border-bottom: 0 !important;
+}
+
+.ttbm-travello-section .ttbm_faq_title h5 {
+	font-size: 14px;
+	font-weight: 700;
+	color: var( --ttlm-ink );
+	margin: 0;
+}
+
+.ttbm-travello-section .ttbm_faq_title.active h5 {
+	color: var( --ttlm-ink );
+}
+
+/* Reference's icon is a single chevron that rotates 180° open/closed, not a
+   plus/minus glyph swap — faq.php's shared markup (every theme) still
+   toggles between real `.fa-plus`/`.fa-minus` classes via
+   data-open-icon/data-close-icon, so both are redrawn as the same
+   chevron-down glyph here (Font Awesome 6's own `\f078`, same technique as
+   the calendar-clock icon elsewhere in this file) and rotated on `.active`
+   instead of swapping shape. */
+.ttbm-travello-section .ttbm_faq_title [data-icon] {
+	flex-shrink: 0;
+	color: var( --ttlm-muted );
+	transition: transform .2s ease;
+}
+
+.ttbm-travello-section .ttbm_faq_title [data-icon]::before {
+	font-family: "Font Awesome 6 Free";
+	font-weight: 900;
+	content: "\f078";
+}
+
+.ttbm-travello-section .ttbm_faq_title.active [data-icon] {
+	color: var( --ttlm-ink );
+	transform: rotate(180deg);
+}
+
+.ttbm-travello-section .ttbm_faq_content.ttbm_wp_editor {
+	padding-bottom: 16px;
+	font-size: 13px;
+	color: var( --ttlm-muted );
+	line-height: 1.7;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Location map — reuses layout/location_map.php's real iframe embed
+   ══════════════════════════════════════════════════════════════ */
+/* Same "title glued to its content box" situation as Reviews above —
+   location_map.php prints "Location Map" inside .ttbm_default_widget, as a
+   sibling of the iframe; travello.php now prints its own copy outside that
+   wrapper, so the original is hidden here instead of styled to match. */
+#ttbm-travello-location .ttbm_title_style_2 {
+	display: none;
+}
+
+/* !important on height is load-bearing here: location_map.php prints this
+   iframe with an inline style="...height:100%..." (sized for a theme that
+   gives .ttbm_map_area an explicit height), which beats a plain height
+   declaration regardless of selector specificity. Travello's wrapper never
+   sets that height, so the unbeaten inline 100% was resolving against the
+   nearest ancestor that DOES have one — rendering a very tall, mostly-empty
+   map box. min-height:320px from ttbm_registration.css's div.ttbm_map_area
+   #gmap_canvas rule still applies on top of this (no conflict, so the used
+   height is effectively max(300, 320) = 320px). */
+.ttbm-travello-section iframe[src*="maps.google.com"] {
+	width: 100%;
+	height: 300px !important;
+	border: 0;
+	border-radius: var( --ttlm-radius-md );
+	box-shadow: var( --ttlm-shadow-sm );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Sticky booking sidebar — reuses ticket/registration.php's real,
+   unmodified interactive booking widget inside new card chrome
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-travello-sidebar {
+	position: sticky;
+	top: 88px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.ttbm-travello-booking-card {
+	--ttlm-muted: #667085;
+	background: #fff;
+	border-radius: var( --ttlm-radius-lg );
+	padding: 24px;
+	box-shadow: var( --ttlm-shadow-lg );
+}
+
+/* Fixed-date tour's "Tour Date : …" strip — shared markup from
+   ticket/date_selection.php (every theme includes this same file, so it can't
+   be rewritten here, only restyled). Base plugin CSS
+   (`div.ttbm_select_date_area{background-color:var(--color_theme)}` plus a
+   separate `color:#fff` rule, both in ttbm_registration.css) paints it as a
+   solid theme-color bar — works for the other themes' own chrome, but
+   clashed with this card's plain white background (first pass just dropped
+   it to plain text; redesigned here as a quiet tinted "info pill" instead,
+   the same `--ttlm-tint` treatment `.ttbm-travello-organizer` below already
+   uses, so the two read as one consistent chrome pattern). `.ttbm_travello_theme`
+   + `#ttbm_booking_section` (2 extra selector layers vs. the base rule's
+   single class) is enough to win on specificity alone without `!important`,
+   and scopes the change to this template only — every other theme keeps its
+   original colored bar. */
+.ttbm_travello_theme #ttbm_booking_section div.ttbm_date_time_select {
+	margin: 0 0 16px;
+	border-bottom: 0;
+}
+
+.ttbm_travello_theme #ttbm_booking_section div.ttbm_select_date_area {
+	background: var( --ttlm-tint );
+	padding: 12px 14px;
+	border-radius: var( --ttlm-radius-sm );
+	justify-content: flex-start;
+	color: var( --ttlm-ink );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_select_date_area h5.textWhite {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: var( --ttlm-ink );
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.5;
+	margin: 0;
+}
+
+/* Calendar-clock glyph drawn directly via the icon font's own `content`/
+   `font-family` values (`\f1bd`/`mageicon` — same as the shared `.mi.mi-calendar-clock`
+   class in mage-icon.css) rather than an actual `<span class="mi ...">` — that
+   class isn't in this shared markup, and adding it there would touch every
+   theme, not just this one. */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_select_date_area h5.textWhite::before {
+	font-family: mageicon;
+	content: "\f1bd";
+	font-size: 15px;
+	color: var( --ttlm-primary );
+	flex-shrink: 0;
+}
+
+/* "Ticket Type" / "Extra Services" headings — real markup from
+   ticket/registration.php + ticket/particular_item_area.php, unstyled here on
+   purpose by the base plugin CSS: its own rule
+   (`:is(#ttbm_content,.ttbm_reg_shortcode) .ttbm_booking_section
+   .ttbm_ticket_list_title`, ttbm_details.css) requires an `#ttbm_content` or
+   `.ttbm_reg_shortcode` ancestor that this template's markup never has (its
+   root class is `.ttbm_travello_theme`, wrapped only in `#ttbm_booking_section`)
+   — so these h2s were rendering as bare, oversized browser-default headings.
+   Same small-caps "eyebrow" treatment as that base rule (11px/700/uppercase/
+   muted), just re-scoped to this template's real ancestor and its own color
+   token instead of `--ttbm_d_muted`. */
+.ttbm_travello_theme #ttbm_booking_section h2.ttbm_ticket_list_title,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_extra_service_area > h2.extra_service_title {
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: .08em;
+	color: var( --ttlm-muted );
+	margin: 20px 0 12px;
+	padding: 0;
+	text-align: left;
+	display: block;
+	width: 100%;
+}
+
+/* `div.ttbm_registration_area` (ticket/registration.php's own wrapper, shared by
+   every theme) carries its own base plugin card chrome
+   (`border:1px solid #DDD;border-radius:12px;background-color:#fff`,
+   ttbm_registration.css) — meant to stand alone on themes that don't already
+   wrap it in a card. Here it sits nested inside `.ttbm-travello-booking-card`,
+   which already supplies that same white background + radius + shadow one
+   level up, so the border just doubled up as a second, redundant outline
+   around the inner box. Removed for this template only; background-color and
+   border-radius are left alone (harmless — same white as the parent, and a
+   radius with no border/visible edge to draw doesn't show). */
+.ttbm_travello_theme #ttbm_booking_section div.ttbm_registration_area {
+	border: 0;
+	color: var( --ttlm-ink );
+}
+
+/* Travello's booking card uses the `ttbm_booking_section` ID without the
+   shared `.ttbm_booking_section` class. Re-scope the modern date toolbar to
+   that real ancestor so the icon, field and action form one readable inline
+   control instead of inheriting the legacy white text and stacked sizing. */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_date_time_select.ttbm-date-select {
+	--ttbm-date-surface: #f7f8fa;
+	--ttbm-date-surface-hover: #fff;
+	--ttbm-date-ink: var( --ttlm-ink );
+	--ttbm-date-muted: #667085;
+	--ttbm-date-line: #e4e7ec;
+	margin: 0 0 18px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: var( --ttbm-date-ink );
+}
+
+.ttbm_travello_theme #ttbm_booking_section div.ttbm_select_date_area {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	padding: 0;
+	border-radius: 0;
+	background: transparent;
+	color: var( --ttbm-date-ink );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__toolbar {
+	display: grid;
+	grid-template-columns: minmax( 0, 1fr ) auto;
+	align-items: end;
+	gap: 10px;
+	width: 100%;
+	color: var( --ttbm-date-ink );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__field {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 7px;
+	min-width: 0;
+	width: auto;
+	max-width: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__label {
+	display: block;
+	margin: 0;
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 1.2;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+	text-align: left;
+	color: var( --ttbm-date-muted );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 9px;
+	width: 100%;
+	min-width: 0;
+	height: 48px;
+	box-sizing: border-box;
+	padding: 0 11px;
+	border: 1px solid var( --ttbm-date-line );
+	border-radius: 12px;
+	background: var( --ttbm-date-surface );
+	color: var( --ttbm-date-ink );
+	cursor: pointer;
+	box-shadow: 0 1px 2px rgba( 16, 24, 40, .04 );
+	transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control:hover,
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control:focus-within {
+	border-color: rgba( var( --ttlm-primary-rgb ), .45 );
+	background: var( --ttbm-date-surface-hover );
+	box-shadow: 0 0 0 3px rgba( var( --ttlm-primary-rgb ), .1 );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	flex: 0 0 30px;
+	border-radius: 9px;
+	background: rgba( var( --ttlm-primary-rgb ), .1 );
+	color: var( --ttlm-primary );
+}
+
+.ttbm_travello_theme #ttbm_booking_section #ttbm_select_date.formControl {
+	flex: 1 1 auto;
+	min-width: 0;
+	height: auto;
+	margin: 0;
+	padding: 0 !important;
+	border: 0 !important;
+	border-radius: 0;
+	background: transparent !important;
+	box-shadow: none !important;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.3;
+	text-align: left;
+	color: var( --ttbm-date-ink );
+	cursor: pointer;
+}
+
+.ttbm_travello_theme #ttbm_booking_section #ttbm_select_date.formControl::placeholder {
+	color: var( --ttbm-date-muted );
+	opacity: 1;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_date_chevron {
+	position: static;
+	margin-left: auto;
+	flex-shrink: 0;
+	font-size: 10px;
+	color: var( --ttbm-date-muted );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_check_ability.ttbm-date-select__action {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 7px;
+	min-width: 132px;
+	height: 48px;
+	margin: 0;
+	padding: 0 13px;
+	box-sizing: border-box;
+	border: 1px solid var( --ttlm-accent ) !important;
+	border-radius: 12px;
+	background: var( --ttlm-accent ) !important;
+	box-shadow: 0 8px 18px rgba( 230, 124, 48, .2 );
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 1.2;
+	white-space: nowrap;
+	color: #fff !important;
+	cursor: pointer;
+	transition: filter .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_check_ability.ttbm-date-select__action:hover,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_check_ability.ttbm-date-select__action:focus-visible {
+	filter: brightness( 1.05 );
+	transform: translateY( -1px );
+	box-shadow: 0 11px 22px rgba( 230, 124, 48, .26 );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_check_ability.ttbm-date-select__action span {
+	font-size: inherit;
+	color: inherit;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_booking_panel,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_widget_content,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_order_summary {
+	color: var( --ttlm-ink );
+}
+
+@media ( max-width: 420px ) {
+	.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__toolbar {
+		grid-template-columns: 1fr;
+	}
+
+	.ttbm_travello_theme #ttbm_booking_section .ttbm_check_ability.ttbm-date-select__action {
+		width: 100%;
+	}
+}
+
+/* Price + rating header — real data (see travello.php: $ttbm_travello_start_price,
+   the same helper archive cards + hero price already use; $ttbm_travello_rating,
+   Pro's own DB-backed average+count, omitted entirely when there are 0 reviews).
+   `.ttbm-travello-bc-price` wraps a raw `wc_price()` call same as
+   `.ttbm-travello-mobile-bar-price` below already does — its font/color cascades
+   onto the `.woocommerce-Price-amount` markup inside since WooCommerce core sets
+   neither on that span itself. */
+.ttbm-travello-bc-header {
+	margin-bottom: 16px;
+}
+
+.ttbm-travello-bc-from {
+	font-size: 11px;
+	color: var( --ttlm-muted );
+	font-weight: 500;
+	margin: 0 0 2px;
+}
+
+.ttbm-travello-bc-price-row {
+	display: flex;
+	align-items: flex-end;
+	gap: 6px;
+	margin-bottom: 4px;
+}
+
+.ttbm-travello-bc-price {
+	font-size: 30px;
+	font-weight: 800;
+	color: var( --ttlm-primary );
+	letter-spacing: -.02em;
+	line-height: 1;
+}
+
+.ttbm-travello-bc-per {
+	font-size: 13px;
+	font-weight: 500;
+	color: var( --ttlm-muted );
+}
+
+.ttbm-travello-bc-rating {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	font-size: 12px;
+	color: var( --ttlm-muted );
+}
+
+.ttbm-travello-bc-rating .mi-star {
+	color: var( --ttlm-accent );
+}
+
+.ttbm-travello-bc-rating strong {
+	color: var( --ttlm-accent );
+}
+
+/* Trust-features row — generic, non-numeric reassurance copy (no counts/scarcity
+   claims, see the "real data or omit" note in travello.php next to this block). */
+.ttbm-travello-bc-features {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding-top: 16px;
+	border-top: 1px solid var( --ttlm-border );
+	margin-top: 16px;
+}
+
+.ttbm-travello-bc-feat {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 12px;
+	font-weight: 500;
+	color: var( --ttlm-muted );
+}
+
+.ttbm-travello-bc-feat .mi {
+	color: var( --ttlm-primary );
+	font-size: 14px;
+}
+
+/* Ticket / extra-service rows — compact guest-picker cards.
+   regular_ticket.php is shared by every theme and is not forked here. The
+   reused table is a 5-column desktop layout (name, badge, price,
+   availability, qty) that overflows this 380px sidebar. Previous pass
+   stacked every <td> as a labelled full-width row (Price / Availability /
+   Quantity) which was readable but bulky: stock was printed twice, and
+   the grey name-bar + corner ribbon fought the qty stepper.
+   This pass lays each ticket out as one compact picker:
+     [icon] Adult                     33% off
+            $10  ~~$15~~ · 143 left   [ −  0  + ]
+   Availability's progress bar is dropped (stock already sits next to the
+   price). Anchored on `#ttbm_booking_section` so these rules beat
+   `div.ttbm_booking_panel table td` without `!important`. */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_enhanced_table,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_enhanced_table tbody {
+	display: block;
+	width: 100%;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_enhanced_table {
+	font-size: 14px;
+	margin: 0;
+	border: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_enhanced_table tbody {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_table_header {
+	display: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row {
+	display: grid;
+	grid-template-columns: minmax( 0, 1fr ) auto;
+	grid-template-rows: auto auto;
+	column-gap: 10px;
+	row-gap: 4px;
+	align-items: center;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 12px 14px;
+	background: #fff;
+	border: 1px solid var( --ttlm-border );
+	border-radius: var( --ttlm-radius-md );
+	box-shadow: none;
+	position: relative;
+	overflow: visible;
+	transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row:hover,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row:focus-within,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row.is-selected {
+	border-color: rgba( var( --ttlm-primary-rgb ), .35 );
+	box-shadow: 0 0 0 3px rgba( var( --ttlm-primary-rgb ), .08 );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row.is-selected {
+	background: rgba( var( --ttlm-primary-rgb ), .04 );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row.ttbm_sold_out {
+	opacity: .72;
+	background: var( --ttlm-tint );
+	box-shadow: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row.ttbm_sold_out:hover,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row.ttbm_sold_out:focus-within {
+	border-color: var( --ttlm-border );
+	box-shadow: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row td {
+	display: block;
+	width: auto;
+	max-width: none;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background: transparent;
+	vertical-align: middle;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row td::before {
+	content: none;
+	display: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row td.ttbm-person-info {
+	grid-column: 1;
+	grid-row: 1;
+	min-width: 0;
+	background: transparent;
+	border: 0;
+	border-radius: 0;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row td.ttbm-regular-price {
+	grid-column: 1;
+	grid-row: 2;
+	min-width: 0;
+	align-self: end;
+	padding-bottom: 10px;
+	padding-right: 16px;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row td.ttbm-select-quantity {
+	grid-column: 2;
+	grid-row: 1 / span 2;
+	align-self: center;
+	justify-self: end;
+}
+
+/* Discount sits on the right, directly above the qty stepper. Qty then
+   drops to row 2 so the two share the same right-hand column. Rows with
+   no badge keep qty spanning both rows so it stays vertically centered. */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row:has( .ttbm_discount_badge ) td.ttbm-select-quantity {
+	grid-row: 2;
+	align-self: center;
+}
+
+/* Stock/progress column is redundant here — `.ttbm_stock_left` already
+   prints remaining qty next to the price. Hide it rather than restack it. */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row td.ttbm-availability-info {
+	display: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row td.ttbm-ticket-badge-col {
+	grid-column: 2;
+	grid-row: 1;
+	justify-self: stretch;
+	align-self: end;
+	width: auto;
+	min-width: 104px;
+	margin: 0;
+	padding: 0;
+	position: static;
+	z-index: 1;
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row td.ttbm-ticket-badge-col:empty {
+	display: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .person-info {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-width: 0;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_details {
+	min-width: 0;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_name,
+.ttbm_travello_theme #ttbm_booking_section p.extra_service_title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.3;
+	color: var( --ttlm-ink );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_name_text {
+	flex: 1 1 auto;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_icon {
+	width: 36px;
+	height: 36px;
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 16px;
+	margin: 0;
+	border-radius: 10px;
+	background: rgba( var( --ttlm-primary-rgb ), .1 );
+	color: var( --ttlm-primary );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_description {
+	font-size: 12px;
+	line-height: 1.4;
+	color: var( --ttlm-muted );
+	margin: 2px 0 0;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_discount_badge {
+	position: static;
+	top: auto;
+	right: auto;
+	display: inline-flex;
+	align-items: center;
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: .02em;
+	line-height: 1;
+	padding: 4px 8px;
+	border-radius: var( --ttlm-radius-pill );
+	text-transform: uppercase;
+	background: rgba( var( --ttlm-primary-rgb ), .12 );
+	color: var( --ttlm-primary );
+	white-space: nowrap;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_price_container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: flex-end;
+	gap: 6px 8px;
+	margin: 0 -35px;
+	padding-left: 44px;
+	text-align: left;
+	white-space: nowrap;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row:not( :has( .ttbm_ticket_icon ) ) .ttbm_price_container {
+	padding-left: 0;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_sale_price,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_sale_price .woocommerce-Price-amount,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_sale_price bdi {
+	display: inline;
+	font-size: 15px;
+	font-weight: 800;
+	letter-spacing: -.02em;
+	line-height: 1;
+	color: var( --ttlm-primary );
+	white-space: nowrap;
+}
+
+/* Unwrap the nested meta div so sale / struck / stock are one flex row. */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_price_meta {
+	display: contents;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_regular_price.strikeLine,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_regular_price.strikeLine .woocommerce-Price-amount,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_regular_price.strikeLine bdi {
+	display: inline;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1;
+	color: var( --ttlm-muted );
+	text-decoration: line-through;
+	white-space: nowrap;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_stock_left {
+	display: inline;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1;
+	color: var( --ttlm-muted );
+	white-space: nowrap;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_stock_left.ttbm_stock_sold_out {
+	color: #c0392b;
+	font-weight: 700;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_capacity_info,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_progress_bar,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_remaining_count {
+	display: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ticket-type-name {
+	display: block;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-select-quantity .qtyIncDec {
+	display: inline-flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0;
+	margin: 0;
+	min-width: 104px;
+	height: 36px;
+	padding: 2px;
+	background: var( --ttlm-tint );
+	border: 1px solid var( --ttlm-border );
+	border-radius: var( --ttlm-radius-pill );
+	box-shadow: none;
+	overflow: hidden;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .decQty,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .incQty,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .decQty.addonGroupContent,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .incQty.addonGroupContent {
+	width: 30px;
+	height: 30px;
+	min-width: 30px;
+	border: 0;
+	border-radius: 50%;
+	background: #fff;
+	color: var( --ttlm-ink );
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 12px;
+	box-shadow: none;
+	transition: background .15s ease, color .15s ease, opacity .15s ease;
+	flex-shrink: 0;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .decQty:hover,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .incQty:hover,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .decQty.addonGroupContent:hover,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .incQty.addonGroupContent:hover {
+	background: var( --ttlm-primary );
+	border-color: var( --ttlm-primary );
+	color: #fff;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .decQty.mpDisabled,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .incQty.mpDisabled,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .decQty.mage_disabled,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .incQty.mage_disabled {
+	opacity: .35;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec label {
+	margin: 0;
+	padding: 0;
+	display: inline-flex;
+	flex: 1;
+	justify-content: center;
+	align-items: center;
+	min-width: 0;
+	border: 0;
+	font-weight: inherit;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec input.inputIncDec,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .formControl {
+	width: 100%;
+	min-width: 22px;
+	max-width: 36px;
+	height: auto;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background: transparent;
+	box-shadow: none;
+	border-radius: 0;
+	text-align: center;
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 1;
+	color: var( --ttlm-ink );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_sold_out_message,
+.ttbm_travello_theme #ttbm_booking_section .ttbm-select-quantity .textWarning {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 6px 10px;
+	border-radius: var( --ttlm-radius-pill );
+	background: #fff;
+	border: 1px dashed var( --ttlm-border );
+	font-size: 11px;
+	font-weight: 700;
+	font-style: normal;
+	color: var( --ttlm-muted );
+	white-space: nowrap;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_not_available {
+	padding: 0;
+	background: none;
+	border: 0;
+	font-size: inherit;
+	font-style: inherit;
+	color: inherit;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_enhanced_table tr.ttbm_hidden_inputs {
+	display: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_enhanced_table tr.ttbm_attendee_form_row {
+	display: block;
+	width: 100%;
+	margin: -4px 0 0;
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+	padding: 0;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_enhanced_table tr.ttbm_attendee_form_row td {
+	display: block;
+	width: 100%;
+	padding: 0 2px 4px;
+	background: transparent;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_enhanced_table tr.ttbm_attendee_form_row td:not( :has( * ) ) {
+	display: none;
+	padding: 0;
+}
+
+/* ── Order-summary + Book Now bar ────────────────────────────────────────
+   Base plugin CSS (ttbm_registration.css) lays this out as ONE flex row —
+   two 20px-bold stat chips plus a shopping-cart button, `justify-content:
+   space-between`, nothing allowed to wrap — sized for the wide desktop
+   booking column it was designed for. This card is only 380px (332px
+   inside the 24px padding), so the two stats + button never fit and
+   visibly collided/overflowed. Stack it into two rows instead — a totals
+   row, then a full-width CTA — the same shape as the reference design's
+   flat `.bc-total` row followed by a full-width `.bc-cta` button.
+   Every selector below is anchored on `#ttbm_booking_section` rather than
+   `.ttbm-travello-booking-card`, same reason as the discount-badge fix
+   above: the base rules this overrides are all written as
+   `div.ttbm_booking_panel .xxx` (an element selector plus classes), which
+   outranks a same-count, class-only selector — a plain
+   `.ttbm-travello-booking-card .ttbm_book_now_area` here silently lost
+   every one of these properties to that base rule (confirmed by screenshot
+   — the bar stayed a single cramped row with its old grey background,
+   this whole block simply never took effect), which is exactly the same
+   mistake as the badge-col one, just spread across more selectors. */
+#ttbm_booking_section .ttbm_book_now_area {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	flex-wrap: nowrap;
+	gap: 14px;
+	background: none;
+	border: 0;
+	border-top: 1px solid var( --ttlm-border );
+	margin-top: 20px;
+	padding: 16px 0 0;
+}
+
+#ttbm_booking_section .ttbm_order_summary {
+	display: flex;
+	flex: 1 1 auto;
+	width: 100%;
+}
+
+#ttbm_booking_section .ttbm_summary_values {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	gap: 16px;
+}
+
+#ttbm_booking_section .ttbm_summary_item {
+	padding: 0;
+}
+
+#ttbm_booking_section .tour_qty,
+#ttbm_booking_section .tour_price {
+	font-size: 16px;
+}
+
+#ttbm_booking_section .ttbm_book_now_actions {
+	margin-left: 0;
+	flex: 1 1 auto;
+}
+
+#ttbm_booking_section .ttbm_book_now_actions .ttbm_book_now,
+#ttbm_booking_section .ttbm_book_now_actions .ttbm_add_to_cart {
+	width: 100%;
+	justify-content: center;
+	gap: 8px;
+	padding: 15px;
+	border-radius: var( --ttlm-radius-md );
+	font-size: 15px;
+	font-weight: 700;
+	box-shadow: none;
+}
+
+.ttbm-travello-organizer {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 12px 14px;
+	background: var( --ttlm-tint );
+	border-radius: var( --ttlm-radius-sm );
+	margin-top: 16px;
+}
+
+/* Real term-name initials (see $ttbm_travello_organizer_initials in travello.php),
+   not an icon glyph — matches the reference's "BT" avatar. */
+.ttbm-travello-organizer-avatar {
+	width: 36px;
+	height: 36px;
+	border-radius: var( --ttlm-radius-pill );
+	background: var( --ttlm-primary );
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 11px;
+	font-weight: 700;
+	flex-shrink: 0;
+}
+
+.ttbm-travello-organizer-name {
+	font-size: 12px;
+	font-weight: 700;
+	color: var( --ttlm-ink );
+}
+
+@media ( max-width: 1000px ) {
+	.ttbm-travello-sidebar {
+		position: static;
+	}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Similar tours — reuses layout/related_tour.php's real,
+   data-driven markup (manual picks, falls back to location/taxonomy
+   match) and list/grid_list_style.php's card partial
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-travello-similar {
+	padding: 20px 0 40px;
+	border-top: 1px solid var( --ttlm-border );
+	margin-top: 20px;
+}
+
+.ttbm-travello-similar #ttbm_related_tour .content-title {
+	font-size: clamp( 22px, 3vw, 32px );
+	font-weight: 700;
+	letter-spacing: -.02em;
+	color: var( --ttlm-ink );
+	margin-bottom: 6px;
+}
+
+/* The plugin's own `.grid_4 { width: calc(25% - var(--ttbm_mp)) }` (assumes
+   a plain flex-wrap row) still applies to each card and, layered on top of
+   this CSS-Grid track, would shrink every card to ~25% of its own already
+   quartered column — neutralize it so the grid's own column tracks are the
+   only thing sizing the cards. */
+.ttbm-travello-similar .flexWrap:not(.owl-carousel) {
+	display: grid;
+	grid-template-columns: repeat( 4, 1fr );
+	gap: 20px;
+}
+
+.ttbm-travello-similar .flexWrap:not(.owl-carousel) > .filter_item {
+	width: auto !important;
+	max-width: none !important;
+}
+
+@media ( max-width: 1024px ) {
+	.ttbm-travello-similar .flexWrap:not(.owl-carousel) {
+		grid-template-columns: repeat( 2, 1fr );
+	}
+}
+
+@media ( max-width: 560px ) {
+	.ttbm-travello-similar .flexWrap:not(.owl-carousel) {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Location + duration meta — same 11px muted row as the tour-list cards.
+   Base plugin CSS (`div.ttbm_list_info span { font-size: var(--ttbm_fs_h6) }`
+   plus `.ttbm_list_info.location_name { font-size: 16px }`) blows the
+   location label up to 16–18px while duration stays small, and the gc-body
+   bullet (::before) sits between two already-iconned items. Re-scope the
+   shortcode's own meta-row treatment onto this similar-tours markup
+   (`.ttbm-gc-meta-row`, not `.ttbm-lv-meta-row`). */
+.ttbm-travello-similar .ttbm-gc-meta-row {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 4px 10px;
+	margin: 0 0 12px;
+	min-width: 0;
+}
+
+.ttbm-travello-similar .ttbm-gc-meta-row .ttbm_list_info,
+.ttbm-travello-similar .ttbm-gc-meta-row .ttbm_list_info.location_name {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	margin: 0;
+	font-size: 11px;
+	font-weight: 500;
+	font-style: normal;
+	color: var( --ttlm-muted );
+	overflow: hidden;
+	min-width: 0;
+}
+
+.ttbm-travello-similar .ttbm-gc-meta-row .ttbm_list_info .mi {
+	color: var( --ttlm-primary );
+	font-size: 12px;
+	margin: 0;
+	flex-shrink: 0;
+}
+
+.ttbm-travello-similar .ttbm-gc-meta-row div.ttbm_list_info span,
+.ttbm-travello-similar .ttbm-gc-meta-row .ttbm_list_info_text {
+	font-size: inherit;
+	margin: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	min-width: 0;
+}
+
+.ttbm-travello-similar .ttbm-gc-meta-row .ttbm_list_info.location_name ~ .ttbm_list_info::before {
+	content: none;
+	display: none;
+	margin: 0;
+}
+
+.ttbm-travello-similar .ttbm-rating-stars.ttbm-list-rating,
+.ttbm-travello-similar .ttbm-gc-rating {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	margin: 0 0 6px;
+	padding: 3px 0 6px 0px;
+	font-size: 12px;
+	line-height: 1;
+	vertical-align: middle;
+}
+
+.ttbm-travello-similar .ttbm-rating-stars.ttbm-list-rating::before {
+	content: none !important;
+	display: none !important;
+	background: none !important;
+	-webkit-text-fill-color: inherit !important;
+}
+
+.ttbm-travello-similar .ttbm-list-rating-star,
+.ttbm-travello-similar .ttbm-gc-rating-star {
+	display: inline-flex;
+	align-items: center;
+	color: var( --ttlm-accent );
+	font-size: 13px;
+	line-height: 1;
+	font-weight: 700;
+}
+
+.ttbm-travello-similar .ttbm-list-rating-value,
+.ttbm-travello-similar .ttbm-gc-rating-value {
+	display: inline-flex;
+	align-items: center;
+	font-weight: 700;
+	line-height: 1;
+	color: var( --ttlm-accent );
+}
+
+.ttbm-travello-similar .ttbm-list-rating-count,
+.ttbm-travello-similar .ttbm-gc-rating-count {
+	display: inline-flex;
+	align-items: center;
+	font-weight: 500;
+	line-height: 1;
+	color: var( --ttlm-muted );
+}
+
+.ttbm-travello-similar .include_service ul,
+.ttbm-tour-list-shortcode .include_service ul {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ttbm-travello-similar .include_service ul li,
+.ttbm-tour-list-shortcode .include_service ul li {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px !important;
+	height: 32px;
+	margin: 0 !important;
+	padding: 0 !important;
+	line-height: 1;
+	border: 1px solid var( --ttlm-border );
+	border-radius: 8px;
+	background: var( --ttlm-tint );
+	color: var( --ttlm-primary ) !important;
+}
+
+.ttbm-travello-similar .include_service ul li .circleIcon_xs,
+.ttbm-tour-list-shortcode .include_service ul li .circleIcon_xs {
+	width: auto;
+	min-width: 0;
+	height: auto;
+	margin: 0;
+	font-size: 14px;
+	line-height: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: inherit;
+}
+
+.ttbm-travello-similar .include_service ul li.ttbm-feature-view-more,
+.ttbm-tour-list-shortcode .include_service ul li.ttbm-feature-view-more {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	font-size: 11px;
+	font-weight: 700;
+	color: var( --ttlm-ink ) !important;
+	text-align: center;
+}
+
+.ttbm-travello-similar .include_service .ttbm-view-more-features-btn,
+.ttbm-travello-similar .include_service .ttbm-feature-more-icon,
+.ttbm-tour-list-shortcode .include_service .ttbm-view-more-features-btn,
+.ttbm-tour-list-shortcode .include_service .ttbm-feature-more-icon {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	margin: 0 !important;
+	padding: 0;
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 1;
+	text-align: center;
+}
+
+/* Footer — same stacked "From / $X /unit" + solid pill View as the
+   [ttbm-tour-list] cards (ttbm_tour_list_modern.css). Similar tours reuse
+   grid_list_style.php, which otherwise keeps the older outlined button and
+   a single-line "From $X /Adult" row from ttbm_registration.css. */
+.ttbm-travello-similar .ttbm-gc-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-top: auto;
+	padding: 0;
+	border-top: 0;
+}
+
+.ttbm-travello-similar .ttbm-gc-divider {
+	display: block;
+	border: none;
+	border-top: 1px solid var( --ttlm-border );
+	margin: 0 0 12px;
+}
+
+.ttbm-travello-similar .ttbm-gc-duration-label {
+	display: none;
+}
+
+.ttbm-travello-similar .ttbm-gc-price-row {
+	display: block;
+}
+
+.ttbm-travello-similar .ttbm-gc-price-from {
+	display: block;
+	font-size: 10px;
+	color: var( --ttlm-muted );
+	font-weight: 500;
+	margin-bottom: 2px;
+}
+
+.ttbm-travello-similar .ttbm-gc-price-current,
+.ttbm-travello-similar .ttbm-gc-price-current .woocommerce-Price-amount,
+.ttbm-travello-similar .ttbm-gc-price-current bdi {
+	font-size: 16px;
+	font-weight: 700;
+	color: var( --ttlm-primary );
+	display: inline;
+	line-height: 1.15;
+}
+
+.ttbm-travello-similar .ttbm-gc-price-unit {
+	font-size: 11px;
+	font-weight: 500;
+	color: var( --ttlm-muted );
+}
+
+.ttbm-travello-similar button.ttbm_explore_button,
+.ttbm-travello-similar .ttbm-gc-body .ttbm_explore_button {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 8px 16px;
+	border-radius: var( --ttlm-radius-pill );
+	background: var( --ttlm-primary ) !important;
+	border: 1px solid var( --ttlm-primary ) !important;
+	color: #fff !important;
+	font-size: 11px;
+	font-weight: 700;
+	flex-shrink: 0;
+	letter-spacing: 0;
+	box-shadow: none;
+	transition: opacity .2s ease;
+}
+
+.ttbm-travello-similar button.ttbm_explore_button:hover,
+.ttbm-travello-similar .ttbm-gc-body .ttbm_explore_button:hover {
+	opacity: .9;
+	background: var( --ttlm-primary ) !important;
+	border-color: var( --ttlm-primary ) !important;
+	color: #fff !important;
+}
+
+.ttbm-travello-similar .ttbm-gc-view-arrow {
+	display: inline-block;
+	transition: transform .18s ease;
+}
+
+.ttbm-travello-similar button.ttbm_explore_button:hover .ttbm-gc-view-arrow {
+	transform: translateX( 2px );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Mobile sticky bottom price bar
+   ══════════════════════════════════════════════════════════════ */
+.ttbm-travello-mobile-bar {
+	display: none;
+}
+
+@media ( max-width: 1000px ) {
+	.ttbm-travello-mobile-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: #fff;
+		border-top: 1px solid var( --ttlm-border );
+		padding: 12px clamp( 20px, 5vw, 80px );
+		z-index: 100;
+		box-shadow: 0 -4px 24px rgba( var( --ttlm-primary-rgb ), .1 );
+	}
+
+	.ttbm_travello_theme {
+		padding-bottom: 76px;
+		display: block;
+	}
+}
+
+.ttbm-travello-mobile-bar-label {
+	font-size: 11px;
+	color: var( --ttlm-muted );
+	margin: 0;
+}
+
+.ttbm-travello-mobile-bar-price {
+	font-size: 20px;
+	font-weight: 800;
+	color: var( --ttlm-primary );
+	margin: 0;
+}
+
+.ttbm-travello-mobile-bar-cta {
+	padding: 12px 28px;
+	border-radius: var( --ttlm-radius-pill );
+	font-size: 14px;
+	font-weight: 700;
+	color: #fff;
+	background: var( --ttlm-primary );
+	flex-shrink: 0;
+	transition: opacity .2s ease;
+}
+
+.ttbm-travello-mobile-bar-cta:hover {
+	opacity: .9;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Image placeholders — gallery + similar-tour thumbs
+   Shimmer sits in the same box as the real photo (absolute inset 0)
+   until JS marks the element `.ttbm-img-loaded`. Default state is
+   pending so the skeleton paints before JS runs.
+   ══════════════════════════════════════════════════════════════ */
+.ttbm_travello_theme #ttbm_travello_gallery [data-bg-image],
+.ttbm_travello_theme .ttbm-travello-similar .ttbm-gc-thumb {
+	position: relative;
+	background-color: var( --ttlm-tint );
+	overflow: hidden;
+}
+
+.ttbm_travello_theme #ttbm_travello_gallery [data-bg-image]:not( .ttbm-img-loaded )::before,
+.ttbm_travello_theme .ttbm-travello-similar .ttbm-gc-thumb:not( .ttbm-img-loaded )::before {
+	opacity: 0;
+}
+
+.ttbm_travello_theme #ttbm_travello_gallery [data-bg-image]:not( .ttbm-img-loaded )::after,
+.ttbm_travello_theme .ttbm-travello-similar .ttbm-gc-thumb:not( .ttbm-img-loaded )::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	pointer-events: none;
+	border-radius: inherit;
+	background:
+		linear-gradient( 110deg, transparent 0%, rgba( 255, 255, 255, .55 ) 45%, transparent 90% ),
+		var( --ttlm-tint );
+	background-size: 200% 100%, 100% 100%;
+	background-position: 120% 0, 0 0;
+	animation: ttbmTravelloImgShimmer 1.35s ease-in-out infinite;
+}
+
+.ttbm_travello_theme #ttbm_travello_gallery [data-bg-image].ttbm-img-loaded::after,
+.ttbm_travello_theme .ttbm-travello-similar .ttbm-gc-thumb.ttbm-img-loaded::after {
+	opacity: 0;
+	animation: none;
+	transition: opacity .4s ease;
+}
+
+.ttbm_travello_theme #ttbm_travello_gallery .sliderMoreItem {
+	z-index: 4;
+}
+
+.ttbm_travello_theme #ttbm_travello_gallery .dLoader,
+.ttbm_travello_theme .ttbm-travello-similar .dLoader {
+	display: none !important;
+}
+
+@keyframes ttbmTravelloImgShimmer {
+	0% { background-position: 120% 0, 0 0; }
+	100% { background-position: -80% 0, 0 0; }
+}

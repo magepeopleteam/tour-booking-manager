@@ -6,8 +6,15 @@ $ttbm_post_id  = $ttbm_post_id ?? get_the_id();
 $tour_id       = $tour_id ?? TTBM_Function::post_id_multi_language( $ttbm_post_id );
 
 // --- Price ---
-$start_price   = TTBM_Function::get_tour_start_price( $ttbm_post_id );
-$show_price    = TTBM_Global_Function::get_post_info( $ttbm_post_id, 'ttbm_display_price_start', 'on' ) !== 'off';
+// Gated on the Starting Price switch, same as every other price display.
+$start_price   = TTBM_Function::show_start_price( $ttbm_post_id ) ? TTBM_Function::get_tour_start_price( $tour_id ) : '';
+
+// First ticket type's label (e.g. "Adult"), shown as a "/ Adult" unit suffix after the price.
+$price_unit_label = '';
+$ticket_types      = TTBM_Function::get_ticket_type( $tour_id );
+if ( ! empty( $ticket_types ) && ! empty( $ticket_types[0]['ticket_type_name'] ) ) {
+	$price_unit_label = $ticket_types[0]['ticket_type_name'];
+}
 
 // --- Duration label (e.g. "7 DAYS / 6 NIGHTS") ---
 $duration      = TTBM_Function::get_duration( $ttbm_post_id );
@@ -49,20 +56,25 @@ if ( $show_duration && ( $duration || $night ) && $tour_type === 'general' ) {
 			<span class="ttbm-gc-duration-label"><?php echo wp_kses_post( $duration_label ); ?></span>
 		<?php endif; ?>
 
-		<?php if ( $start_price && $show_price ) : ?>
+		<?php if ( $start_price !== '' && (float) $start_price > 0 ) : ?>
 			<div class="ttbm-gc-price-row">
+				<span class="ttbm-gc-price-from"><?php esc_html_e( 'From', 'tour-booking-manager' ); ?></span>
 				<span class="ttbm-gc-price-current">
 					<?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo wc_price( $start_price );
 					?>
 				</span>
+				<?php if ( $price_unit_label ) : ?>
+					<span class="ttbm-gc-price-unit">/<?php echo esc_html( $price_unit_label ); ?></span>
+				<?php endif; ?>
 			</div>
 		<?php endif; ?>
 	</div>
 
 	<button type="button" class="ttbm_explore_button" data-href="<?php echo esc_url( get_the_permalink( $ttbm_post_id ) ); ?>" data-placeholder>
-		<?php esc_html_e( 'Explore', 'tour-booking-manager' ); ?>
+		<?php esc_html_e( 'View', 'tour-booking-manager' ); ?>
+		<span class="ttbm-gc-view-arrow" aria-hidden="true">&rarr;</span>
 	</button>
 
 </div>

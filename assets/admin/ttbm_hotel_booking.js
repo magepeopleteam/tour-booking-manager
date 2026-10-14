@@ -649,20 +649,25 @@
     });
     $(document).on('click', '#ttbm-upload-image',function(e) {
         e.preventDefault();
+        e.stopPropagation();
+        if (typeof wp === 'undefined' || !wp.media) {
+            return;
+        }
         if (ttbm_image_frame) {
             ttbm_image_frame.open();
             return;
         }
         ttbm_image_frame = wp.media({
-            title: 'Select Location Image',
+            title: (window.ttbm_admin_ajax && ttbm_admin_ajax.strings && ttbm_admin_ajax.strings.choose_image) ? ttbm_admin_ajax.strings.choose_image : 'Choose Image',
+            library: { type: 'image' },
             button: { text: 'Use this image' },
             multiple: false
         });
         ttbm_image_frame.on('select', function() {
             const attachment = ttbm_image_frame.state().get('selection').first().toJSON();
-            console.log( attachment );
+            const previewUrl = (attachment.sizes && attachment.sizes.thumbnail) ? attachment.sizes.thumbnail.url : attachment.url;
             $('#ttbm-location-image-id').val(attachment.id);
-            $('#ttbm-image-preview').html('<img src="' + attachment.url + '" style="max-width:100px;">');
+            $('#ttbm-image-preview').html('<img src="' + previewUrl + '" style="max-width:100px;">');
         });
 
         ttbm_image_frame.open();
@@ -785,6 +790,10 @@
         if (tab_type === 'Add New Locations') {
             address = $('#ttbm-location-address').val().trim();
             country = $('#ttbm-location-country').val();
+            imageId = $('#ttbm-location-image-id').val();
+        }
+
+        if (tab_type === 'Add New Category' || tab_type === 'Add New Activities') {
             imageId = $('#ttbm-location-image-id').val();
         }
 

@@ -7,6 +7,8 @@
 			public function __construct() {
 				add_action('wp_ajax_get_ttbm_ticket', array($this, 'get_ttbm_ticket'));
 				add_action('wp_ajax_nopriv_get_ttbm_ticket', array($this, 'get_ttbm_ticket'));
+				add_action('wp_ajax_ttbm_get_time_slots', array($this, 'get_time_slots'));
+				add_action('wp_ajax_nopriv_ttbm_get_time_slots', array($this, 'get_time_slots'));
 				add_action('wp_ajax_get_ttbm_sold_ticket', array($this, 'get_ttbm_sold_ticket'));
 				add_action('wp_ajax_nopriv_get_ttbm_sold_ticket', array($this, 'get_ttbm_sold_ticket'));
 			    add_action('wp_ajax_get_ttbm_hotel_room_list', array($this, 'get_ttbm_hotel_room_list'));
@@ -47,6 +49,25 @@
 				$date = isset($_REQUEST['tour_date']) ? sanitize_text_field(wp_unslash($_REQUEST['tour_date'])) : '';
 				$date = $this->normalize_tour_date($tour_id, $date);
 				do_action('ttbm_booking_panel', $tour_id, $date, $hotel_id);
+				die();
+			}
+			/**
+			 * Slot list for the date the visitor picked. The page only renders slots for
+			 * the first available date, so every later pick has to fetch its own day's
+			 * slots (weekday-specific, else Default). Pro has its own endpoint for this.
+			 */
+			public function get_time_slots() {
+				if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ttbm_frontend_nonce')) {
+					wp_send_json_error(['message' => 'Invalid nonce']);
+				}
+				$tour_id = isset($_POST['tour_id']) ? absint($_POST['tour_id']) : 0;
+				$date = isset($_POST['tour_date']) ? sanitize_text_field(wp_unslash($_POST['tour_date'])) : '';
+				$timestamp = $date ? strtotime(str_replace('/', '-', $date)) : false;
+				if (!$tour_id || !$timestamp || get_post_type($tour_id) !== TTBM_Function::get_cpt_name()) {
+					die();
+				}
+				$date = gmdate('Y-m-d', $timestamp);
+				TTBM_Layout::render_time_slots($tour_id, $date, TTBM_Function::get_time($tour_id, $date));
 				die();
 			}
 			public function get_ttbm_sold_ticket() {

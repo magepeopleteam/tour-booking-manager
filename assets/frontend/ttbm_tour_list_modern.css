@@ -1050,6 +1050,15 @@ select.ttbm-sort-select.formControl {
 	opacity: .9;
 }
 
+/* ttbm_registration.css's global "Explore button final override" forces a
+   transparent/dark ghost button with !important, which leaves the list-mode pill
+   colourless; grid cards style their button separately and are left alone. */
+.ttbm-tour-list-shortcode .ttbm-list-mode button.ttbm_explore_button {
+	background: var( --ttlm-primary ) !important;
+	border-color: transparent !important;
+	color: #fff !important;
+}
+
 /* ══════════════════════════════════════════════════════════════
    Tour cards — list mode (same markup, CSS-reflowed)
    ══════════════════════════════════════════════════════════════ */
@@ -1172,7 +1181,9 @@ select.ttbm-sort-select.formControl {
 	gap: 6px;
 }
 
-.ttbm-tour-list-shortcode .dButton_xs {
+/* Scoped to the pager: card "Explore" buttons also carry .dButton_xs and were
+   being squeezed into these 38px page-number squares. */
+.ttbm-tour-list-shortcode .pagination_area .dButton_xs {
 	width: 38px;
 	height: 38px;
 	border-radius: var( --ttlm-radius-sm );
@@ -1186,18 +1197,18 @@ select.ttbm-sort-select.formControl {
 	background: #fff;
 }
 
-.ttbm-tour-list-shortcode .dButton_xs:hover {
+.ttbm-tour-list-shortcode .pagination_area .dButton_xs:hover {
 	border-color: var( --ttlm-primary );
 	color: var( --ttlm-primary );
 }
 
-.ttbm-tour-list-shortcode .dButton_xs.active_pagination {
+.ttbm-tour-list-shortcode .pagination_area .dButton_xs.active_pagination {
 	background: var( --ttlm-primary );
 	border-color: var( --ttlm-primary );
 	color: #fff;
 }
 
-.ttbm-tour-list-shortcode .dButton_xs:disabled {
+.ttbm-tour-list-shortcode .pagination_area .dButton_xs:disabled {
 	opacity: .4;
 	cursor: default;
 }

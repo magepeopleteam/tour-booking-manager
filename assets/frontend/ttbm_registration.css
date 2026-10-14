@@ -8290,6 +8290,8 @@ button.ttbm_explore_button:hover {
 	width: 280px;
 	min-width: 280px;
 	max-width: 280px;
+	height: auto;
+	align-self: stretch;
 	margin: 0;
 	overflow: hidden;
 	cursor: pointer;

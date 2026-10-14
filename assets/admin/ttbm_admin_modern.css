@@ -1644,17 +1644,24 @@ div.ttbm_global_settings.ttbm_configuration .roundSwitchLabel {
 	transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* Hide native browser clear icons — custom clear button is used instead */
-#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-datetime-clear-wrap input[type="time"]::-webkit-calendar-picker-indicator,
+/* Hide native browser clear icons — custom clear button is used instead.
+   The native time-picker button stays visible as the field's only clock toggle
+   (Firefox can't hide it anyway); field padding keeps it clear of the custom X.
+   ::-ms-* live in their own rule: an unrecognized vendor pseudo-element in a
+   comma-separated selector list makes the browser drop the whole rule. */
 #ttbm_meta_box_panel .ttbm_settings_dates .ttbm-datetime-clear-wrap input[type="time"]::-webkit-clear-button,
-#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-datetime-clear-wrap input[type="time"]::-webkit-inner-spin-button,
-#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-datetime-clear-wrap input::-ms-clear,
-#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-datetime-clear-wrap input::-ms-reveal {
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-datetime-clear-wrap input[type="time"]::-webkit-inner-spin-button {
 	display: none;
 	width: 0;
 	height: 0;
 	-webkit-appearance: none;
 	appearance: none;
+}
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-datetime-clear-wrap input::-ms-clear,
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-datetime-clear-wrap input::-ms-reveal {
+	display: none;
+	width: 0;
+	height: 0;
 }
 
 #ttbm_meta_box_panel textarea,
@@ -5150,7 +5157,9 @@ div.ttbm_global_settings .button-primary {
 #ttbm_meta_box_panel .ttbm-particular-date-card__field .ttbm-input-icon .formControl {
 	min-height: 44px;
 	height: 44px;
-	padding: 10px 14px 10px 44px;
+	/* 40px right keeps the native time-picker button clear of .ttbm-field-clear,
+	   same as the Fixed Dates fields; 14px let them overlap. */
+	padding: 10px 40px 10px 44px;
 	border-radius: 10px;
 }
 

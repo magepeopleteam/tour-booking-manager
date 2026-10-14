@@ -654,10 +654,12 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         // View Switcher (Grid / List)
         // =========================================================
         // Ensure default mode class exists so CSS can distinguish layouts.
+        // A "modern" wrapper is the server-rendered list layout ([travel-list], search
+        // results); tagging it grid let the grid-only rules hide its descriptions.
         $('.all_filter_item .flexWrap').each(function () {
             var $wrap = $(this);
             if (!$wrap.hasClass('ttbm-list-mode') && !$wrap.hasClass('ttbm-grid-mode')) {
-                $wrap.addClass('ttbm-grid-mode');
+                $wrap.addClass($wrap.hasClass('modern') ? 'ttbm-list-mode' : 'ttbm-grid-mode');
             }
         });
 

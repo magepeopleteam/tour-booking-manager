@@ -5259,11 +5259,11 @@ div.ttbm_global_settings .button-primary {
 @media (max-width: 1100px) {
 	#ttbm_meta_box_panel .ttbm-particular-date-card__inner {
 		grid-template-columns: 24px 1fr 1fr;
-		grid-template-rows: auto 48px auto 48px auto 48px;
+		grid-template-rows: auto 48px auto 48px auto 48px auto;
 	}
 
 	#ttbm_meta_box_panel .ttbm-particular-date-card__drag {
-		grid-row: 1 / 7;
+		grid-row: 1 / 8;
 	}
 
 	#ttbm_meta_box_panel .ttbm-particular-date-card__field--checkin-date .ttbm-particular-date-field-label {
@@ -5299,12 +5299,16 @@ div.ttbm_global_settings .button-primary {
 		grid-row: 6;
 	}
 
+	/* Own row under the stacked fields: in column 3 beside them the buttons sat
+	   behind (or, with two buttons, on top of) the inputs, which span 2 / 4. */
 	#ttbm_meta_box_panel .ttbm-particular-date-card__actions {
-		grid-column: 3;
-		grid-row: 2 / 7;
-		flex-direction: column;
+		grid-column: 2 / 4;
+		grid-row: 7;
+		flex-direction: row;
+		justify-content: flex-end;
 		height: auto;
 		align-self: center;
+		margin-top: 8px;
 	}
 }
 

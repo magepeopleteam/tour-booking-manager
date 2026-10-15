@@ -503,6 +503,9 @@
                         </label>
 						<?php self::datetime_clear_wrap_close(); ?>
                         <div class="ttbm-off-date-card__actions">
+							<button class="ttbm-off-date-card__delete ttbm_item_remove" type="button" title="<?php esc_attr_e('Remove off date', 'tour-booking-manager'); ?>" aria-label="<?php esc_attr_e('Remove off date', 'tour-booking-manager'); ?>">
+								<span class="fas fa-trash-alt" aria-hidden="true"></span>
+							</button>
                             <div class="ttbm-off-date-card__sort ttbm_sortable_button" type="" title="<?php esc_attr_e('Drag to reorder', 'tour-booking-manager'); ?>">
                                 <span class="fas fa-expand-arrows-alt mp_zero" aria-hidden="true"></span>
                             </div>
@@ -554,6 +557,9 @@
 							<?php self::datetime_clear_wrap_close(); ?>
                         </div>
                         <div class="ttbm-particular-date-card__actions">
+							<button class="ttbm-particular-date-card__delete ttbm_item_remove" type="button" title="<?php esc_attr_e('Remove particular date', 'tour-booking-manager'); ?>" aria-label="<?php esc_attr_e('Remove particular date', 'tour-booking-manager'); ?>">
+								<span class="fas fa-trash-alt" aria-hidden="true"></span>
+							</button>
                             <div class="ttbm-particular-date-card__sort ttbm_sortable_button" type="" title="<?php esc_attr_e('Drag to reorder', 'tour-booking-manager'); ?>">
                                 <span class="fas fa-expand-arrows-alt mp_zero" aria-hidden="true"></span>
                             </div>

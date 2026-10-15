@@ -429,8 +429,8 @@
 										<?php
 											/* Only ->post_count is read below, so skip hydrating post objects. */
 											$tour_list = TTBM_Query::get_all_tour_in_location($location->name, $status, 'ids');
-											$thumb_id = get_term_meta($location->term_id, 'ttbm_location_image');
-											$thumbnail_img = wp_get_attachment_url($thumb_id[0]);											
+											$thumb_id = get_term_meta($location->term_id, 'ttbm_location_image', true);
+											$thumbnail_img = $thumb_id ? wp_get_attachment_url($thumb_id) : '';											
 										?>
 										<div class="ttbm_location_image">
 											<div data-bg-image="<?php echo esc_html($thumbnail_img); ?>" data-href="<?php echo esc_url(get_term_link($location->term_id)) . '?location_filter=' . esc_attr($location->term_id) . '&location_status=' . esc_attr($status); ?>">

@@ -436,7 +436,7 @@
 							}
 						}
 					}
-					//$this->craete_pages();
+					TTBM_Woocommerce_Plugin::on_activation_page_create();
 					$this->update_related_products();
 					TTBM_Function::update_all_upcoming_date_month();
 					update_option('ttbm_dummy_already_inserted', 'yes');

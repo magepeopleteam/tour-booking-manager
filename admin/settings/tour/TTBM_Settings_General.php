@@ -315,16 +315,12 @@
                     <div class="ttbm-gen-short-desc__toggle-row">
                         <p class="ttbm-gen-short-desc__toggle-label">
                             <i class="fas fa-file-alt" aria-hidden="true"></i>
-							<?php esc_html_e('Short Description Enable/Disable', 'tour-booking-manager'); ?>
+							<?php esc_html_e('Short Description', 'tour-booking-manager'); ?>
                             <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('short_des'); ?></span></i>
                         </p>
 						<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
                     </div>
                     <div class="ttbm-gen-short-desc__body <?php echo esc_attr($active); ?>" data-collapse="#<?php echo esc_attr($display_name); ?>">
-                        <p class="ttbm-gen-field__label">
-							<?php esc_html_e('Short Description', 'tour-booking-manager'); ?>
-                            <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('short_des'); ?></span></i>
-                        </p>
                         <textarea class="ttbm-gen-short-desc__textarea formControl" cols="50" rows="5" name="<?php echo esc_attr($value_name); ?>" maxlength="500" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_textarea($value); ?></textarea>
                         <div class="ttbm-gen-short-desc__meta">
                             <span class="ttbm-gen-short-desc__hint"><?php esc_html_e('Recommended: 150-300 characters', 'tour-booking-manager'); ?></span>

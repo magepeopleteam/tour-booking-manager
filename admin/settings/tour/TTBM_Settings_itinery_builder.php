@@ -116,14 +116,14 @@
                                         <p><?php esc_html_e('Describe what happens on this day of the tour.', 'tour-booking-manager'); ?></p>
                                     </div>
                                 </div>
-                                <span class="ttbm-modal-close" title="<?php esc_attr_e('Close', 'tour-booking-manager'); ?>">
-                                    <i class="fas fa-times"></i>
-                                </span>
+                                <button type="button" class="ttbm-modal-close" title="<?php esc_attr_e('Close', 'tour-booking-manager'); ?>" aria-label="<?php esc_attr_e('Close', 'tour-booking-manager'); ?>">
+                                    <i class="fas fa-times" aria-hidden="true"></i>
+                                </button>
                             </div>
 
                             <!-- Body -->
                             <div class="ttbm-modal-body">
-                                <div id="ttbm-service-msg"></div>
+                                <div id="ttbm-daywise-msg"></div>
 
                                 <div class="ttbm-modal-field">
                                     <label class="ttbm-modal-label" for="ttbm_day_title_input">
@@ -199,10 +199,10 @@
 									so anything else inside it would get pulled into the title field too. The
 									real value the JS actually reads for pre-filling is this wrapper's own
 									data-time attribute above, not this badge. */ ?>
-                                    <p><?php echo esc_html($value['ttbm_day_title']); ?></p>
 									<?php if (!empty($value['ttbm_day_time'])) : ?>
 										<span class="ttbm-daywise-item-time"><i class="fas fa-clock"></i> <?php echo esc_html($value['ttbm_day_time']); ?></span>
 									<?php endif; ?>
+                                    <p><?php echo esc_html($value['ttbm_day_title']); ?></p>
                                     <div class="daywise-action">
                                         <span class=""><i class="fas fa-eye"></i></span>
                                         <span class="ttbm-daywise-item-edit" data-modal="ttbm-daywise-item-new"><i class="fas fa-edit"></i></span>

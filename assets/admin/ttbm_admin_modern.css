@@ -727,11 +727,6 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	color: var(--ttbm-a-text, #1e293b);
 }
 
-#ttbm_meta_box_panel .ttbm-general-info-card__header h4 i {
-	color: var(--ttbm-a-primary);
-	margin-right: 8px;
-}
-
 #ttbm_meta_box_panel .ttbm-general-info-card__grid {
 	display: flex;
 	flex-direction: column;
@@ -740,12 +735,13 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 }
 
 #ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-general-info-card__grid {
-	margin: 16px 0px 12px;
-	padding: 16px 18px;
-	background: #fafbfc;
-	border: 1px solid #e2e8f0;
-	border-radius: 8px;
-	gap: 12px;
+	margin: 0 0 24px;
+	padding: 0;
+	gap: 22px;
+}
+
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-general-info-card__row {
+	gap: 22px 24px;
 }
 
 #ttbm_meta_box_panel .ttbm-general-info-card__row {
@@ -808,54 +804,56 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	margin: 0;
 }
 
-/* Inline toggle row: label | switch | input on one line (tour general info) */
+/* Field: label + switch on the first line, the control full width underneath. */
 #ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__inline-row,
 #ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-field__inline-row {
-	--ttbm-gen-inline-label-w: 136px;
-	--ttbm-gen-inline-toggle-w: 56px;
-	--ttbm-gen-inline-gap: 14px;
 	display: grid;
-	grid-template-columns: var(--ttbm-gen-inline-label-w) var(--ttbm-gen-inline-toggle-w) minmax(0, 1fr);
+	grid-template-columns: minmax(0, 1fr) auto;
 	align-items: center;
-	column-gap: var(--ttbm-gen-inline-gap);
+	column-gap: 12px;
+	row-gap: 8px;
 	width: 100%;
 }
 
+/* No overflow clipping here: the help tooltip is positioned inside the label. */
 #ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__label,
 #ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-field__label {
 	grid-column: 1;
+	grid-row: 1;
 	width: 100%;
 	max-width: 100%;
 	flex: none;
 	margin: 0;
-	min-height: var(--ttbm-a-input-h, 40px);
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+	font-size: 12.5px;
+	color: var(--ttbm-a-text-secondary);
 }
 
 #ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .roundSwitchLabel {
 	grid-column: 2;
+	grid-row: 1;
 	flex: none;
-	justify-self: center;
+	justify-self: end;
 	align-self: center;
 	margin: 0;
 	width: 50px;
 }
 
+/* Duration has no switch; the spacer keeps its label line as tall as the
+   switch lines beside it, so inputs in both columns start level. */
 #ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field__toggle-spacer {
 	grid-column: 2;
-	justify-self: center;
+	grid-row: 1;
 	display: block;
 	width: 50px;
-	height: 1px;
+	height: 25px;
 	margin: 0;
 }
 
 #ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__input,
 #ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__input-wrap,
 #ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-duration-group {
-	grid-column: 3;
+	grid-column: 1 / -1;
+	grid-row: 2;
 	width: 100%;
 	min-width: 0;
 	margin: 0;
@@ -864,17 +862,18 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 #ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__input,
 #ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-duration-group__value,
 #ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-duration-group__unit {
-	background: #fff;
+	background-color: #fff;
 }
 
 #ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-field--duration .ttbm-gen-duration-group {
 	display: flex;
 	align-items: center;
-	gap: 12px;
+	gap: 0;
 }
 
 #ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-field--inline.is-toggle-off .ttbm-gen-field__input:disabled {
 	background: #f8fafc;
+	border-color: var(--ttbm-a-border);
 	color: #94a3b8;
 	cursor: not-allowed;
 }
@@ -998,7 +997,9 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	max-width: 100%;
 }
 
-#ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-duration-group__value {
+/* :not() lifts these to (1,3,0): the generic "#ttbm_content.ttbm_configuration .formControl"
+   input rule is (1,2,0) and comes later, so at equal weight it would reset them. */
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-duration-group__value {
 	flex: 1 1 auto;
 	min-width: 0;
 	height: var(--ttbm-a-input-h, 40px);
@@ -1006,13 +1007,22 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	padding: 0 12px;
 	line-height: calc(var(--ttbm-a-input-h, 40px) - 2px);
 	box-sizing: border-box;
+	border-right: 0;
+	border-radius: var(--ttbm-a-radius-sm) 0 0 var(--ttbm-a-radius-sm);
+	position: relative;
+	z-index: 1;
 }
 
-#ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-duration-group__unit {
-	flex: 0 0 auto;
-	width: auto;
-	min-width: 88px;
-	background: #f1f5f9;
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-duration-group__unit {
+	flex: 0 0 112px;
+	width: 112px;
+	min-width: 0;
+	-webkit-appearance: none;
+	appearance: none;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 10px center;
+	background-size: 16px 16px;
 	color: #475569;
 	font-weight: 500;
 	padding: 0 28px 0 12px;
@@ -1020,10 +1030,12 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	min-height: var(--ttbm-a-input-h, 40px);
 	line-height: calc(var(--ttbm-a-input-h, 40px) - 2px);
 	box-sizing: border-box;
+	border-radius: 0 var(--ttbm-a-radius-sm) var(--ttbm-a-radius-sm) 0;
 }
 
 #ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-short-desc {
-	padding: 14px 0px 18px;
+	padding: 20px 0 0;
+	border-top: 1px solid var(--ttbm-a-border);
 	background: #fff;
 }
 
@@ -1032,9 +1044,9 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	align-items: center;
 	justify-content: space-between;
 	gap: 12px;
-	margin: 0 0 14px;
-	padding-bottom: 14px;
-	border-bottom: 1px solid #eef2f7;
+	margin: 0 0 12px;
+	padding-bottom: 0;
+	border-bottom: 0;
 }
 
 #ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-short-desc__toggle-label {
@@ -1044,26 +1056,30 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	margin: 0;
 	font-size: 13px;
 	font-weight: 600;
-	color: var(--ttbm-a-text, #1e293b);
+	color: var(--ttbm-a-text-secondary);
 }
 
+/* A sub-heading inside the card, so a plain icon rather than the card-level badge. */
 #ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-short-desc__toggle-label i.fa-file-alt {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 32px;
-	height: 32px;
-	margin-right: 10px;
-	background: #eff6ff;
-	border: 1px solid #bfdbfe;
-	border-radius: 8px;
-	color: #2563eb;
-	font-size: 14px;
+	width: auto;
+	height: auto;
+	margin: 0;
+	background: none;
+	border: 0;
+	border-radius: 0;
+	color: var(--ttbm-a-muted);
+	font-size: 13px;
 }
 
-#ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-short-desc__textarea {
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-short-desc__textarea {
 	width: 100%;
 	min-height: 120px;
+	padding: 12px 14px;
+	font-size: 13.5px;
+	line-height: 1.6;
 	resize: vertical;
 	box-sizing: border-box;
 }
@@ -1074,14 +1090,17 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	justify-content: space-between;
 	gap: 12px;
 	margin-top: 8px;
-	font-size: 11px;
+	font-size: 11.5px;
 	line-height: 1.4;
 	color: #94a3b8;
 }
 
 #ttbm_meta_box_panel .ttbm-general-info-card .ttbm-gen-char-count {
-	color: #64748b;
-	font-weight: 500;
+	padding: 3px 8px;
+	border-radius: 999px;
+	background: #f1f5f9;
+	color: var(--ttbm-a-muted);
+	font-weight: 600;
 	white-space: nowrap;
 }
 
@@ -1534,10 +1553,10 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	width: 32px;
 	height: 32px;
 	margin-right: 10px;
-	background: #eff6ff;
+	background: var(--ttbm-a-primary-soft);
 	border: 1px solid #bfdbfe;
 	border-radius: 8px;
-	color: #2563eb;
+	color: var(--ttbm-a-primary);
 	font-size: 14px;
 }
 
@@ -2960,14 +2979,107 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 
 #ttbm_meta_box_panel .ttbm-ticket-row__sort:hover,
 #ttbm_meta_box_panel .ttbm-ticket-row__sort:focus {
-	color: #2563eb;
-	background: #eff6ff;
+	color: var(--ttbm-a-primary);
+	background: var(--ttbm-a-primary-soft);
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-row__delete span,
 #ttbm_meta_box_panel .ttbm-ticket-row__sort span {
 	font-size: 14px;
 	line-height: 1;
+}
+
+/* ─── Drag to reorder (every .ttbm_sortable_area; options in ttbm_sortable_options()) ─── */
+#ttbm_meta_box_panel .ttbm_sortable_button {
+	cursor: grab;
+}
+
+#ttbm_meta_box_panel .ttbm_sortable_area > .ui-sortable-helper {
+	background: #fff;
+	border-radius: var(--ttbm-a-radius);
+	box-shadow: 0 14px 32px rgba(15, 23, 42, 0.16), 0 2px 6px rgba(15, 23, 42, 0.08);
+	cursor: grabbing;
+	z-index: 100;
+}
+
+#ttbm_meta_box_panel .ttbm_sortable_area > .ui-sortable-helper .ttbm_sortable_button {
+	cursor: grabbing;
+}
+
+/* The drop slot keeps the moving row's height, so nothing below it jumps. */
+#ttbm_meta_box_panel .ttbm_sortable_area > .ttbm-sortable-placeholder {
+	visibility: visible !important;
+	background: var(--ttbm-a-primary-soft) !important;
+	border: 0 !important;
+	border-radius: var(--ttbm-a-radius);
+	outline: 2px dashed #93c5fd;
+	outline-offset: -2px;
+	box-shadow: none !important;
+}
+
+#ttbm_meta_box_panel .ttbm_sortable_area > .ttbm-sortable-placeholder > * {
+	visibility: hidden;
+	border-color: transparent !important;
+	background: transparent !important;
+}
+
+/* ─── FAQ & itinerary lists: admin accent instead of the legacy pink (--mpl-primary) and WP's theme blue ─── */
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header .faq-action span,
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action span {
+	color: var(--ttbm-a-primary);
+	background-color: var(--ttbm-a-primary-soft);
+	transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header .faq-action span:hover,
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action span:hover {
+	color: #fff;
+	background-color: var(--ttbm-a-primary);
+}
+
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header .faq-action span.ttbm-faq-item-delete:hover,
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action span.ttbm-daywise-item-delete:hover {
+	background-color: var(--ttbm-a-danger);
+}
+
+/* Itinerary rows read time first, then the title. */
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header > .dFlex {
+	align-items: center;
+	gap: 10px;
+}
+
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header > .dFlex > p {
+	margin: 0;
+	min-width: 0;
+}
+
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .ttbm-daywise-item-time {
+	flex: 0 0 auto;
+	margin: 0;
+	color: var(--ttbm-a-primary);
+	background-color: var(--ttbm-a-primary-soft);
+}
+
+#ttbm_meta_box_panel .ttbm-faq-item-new,
+#ttbm_meta_box_panel .ttbm-daywise-item-new {
+	color: var(--ttbm-a-primary);
+	border-color: var(--ttbm-a-primary);
+	background: transparent;
+}
+
+#ttbm_meta_box_panel .ttbm-faq-item-new:hover,
+#ttbm_meta_box_panel .ttbm-faq-item-new:focus,
+#ttbm_meta_box_panel .ttbm-daywise-item-new:hover,
+#ttbm_meta_box_panel .ttbm-daywise-item-new:focus {
+	color: #fff;
+	border-color: var(--ttbm-a-primary);
+	background: var(--ttbm-a-primary);
+}
+
+#ttbm_meta_box_panel .ttbm-faq-item-new:focus-visible,
+#ttbm_meta_box_panel .ttbm-daywise-item-new:focus-visible {
+	box-shadow: 0 0 0 3px rgba(34, 113, 177, 0.25);
+	outline: none;
 }
 
 #ttbm_meta_box_panel .ttbm-ticket-types-add-btn {
@@ -5479,6 +5591,213 @@ div.ttbm_global_settings .button-primary {
 	margin-left: 6px;
 }
 
+/* ─── Tour Location Settings card ───
+   Stacked fields (label above, control full width) instead of the generic boxed
+   ".label" rows; the map settings sit under their "Show map" switch. */
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-field {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	min-width: 0;
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-field__label {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin: 0;
+	font-size: 12.5px;
+	font-weight: 600;
+	line-height: 1.4;
+	color: var(--ttbm-a-text-secondary);
+}
+
+/* "div.ttbm_style label" and ".ttbm_style button" capitalize every word; these are sentences. */
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-field__label label {
+	margin: 0;
+	font: inherit;
+	color: inherit;
+	text-transform: none;
+	cursor: pointer;
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-field__label .tool-tips {
+	margin-left: 0;
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-location-select-wrap {
+	flex: none;
+	width: 100%;
+	align-items: stretch;
+}
+
+/* The shared select rule's "background" shorthand drops WordPress's arrow, so draw one. */
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card #ttbm_location_select {
+	height: 40px;
+	min-height: 40px;
+	padding: 0 36px 0 12px;
+	-webkit-appearance: none;
+	appearance: none;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 12px center;
+	background-size: 16px 16px;
+	cursor: pointer;
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-field__foot {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 4px 12px;
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-field__help {
+	font-size: 12px;
+	line-height: 1.4;
+	color: var(--ttbm-a-muted);
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-location-add-link {
+	min-height: 30px;
+	height: 30px;
+	padding: 0 10px;
+	gap: 6px;
+	border: 0;
+	border-radius: 6px;
+	background: transparent;
+	font-size: 12.5px;
+	color: var(--ttbm-a-primary);
+	text-transform: none;
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-location-add-link::before {
+	font-size: 16px;
+	font-weight: 600;
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-location-add-link:hover,
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-location-add-link:focus {
+	background: var(--ttbm-a-primary-soft);
+	color: var(--ttbm-a-primary);
+}
+
+/* JS slides this wrapper in and out, so it only gets spacing here, never display. */
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-map-enable-wrap {
+	margin-top: 20px;
+	padding-top: 20px;
+	border-top: 1px solid var(--ttbm-a-border);
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-toggle-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	margin: 0;
+	text-transform: none;
+	cursor: pointer;
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-toggle-row__text {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	min-width: 0;
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-toggle-row__title {
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.4;
+	color: var(--ttbm-a-text-secondary);
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-toggle-row__help {
+	font-size: 12px;
+	line-height: 1.4;
+	color: var(--ttbm-a-muted);
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-map {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin-top: 20px;
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-map .auto-search-wrapper {
+	width: 100%;
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-map .ttbm-map-location-input {
+	width: 100%;
+	height: 40px;
+	min-height: 40px;
+	padding: 0 12px 0 36px;
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-map__preview {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-map__frame,
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-map__canvas {
+	border: 1px solid var(--ttbm-a-border);
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-map__canvas {
+	width: 100%;
+	height: 260px;
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-map__note {
+	display: flex;
+	align-items: flex-start;
+	gap: 6px;
+	margin: 0;
+	font-size: 12px;
+	line-height: 1.5;
+	color: var(--ttbm-a-muted);
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-map__note .fa-info-circle {
+	flex: 0 0 auto;
+	margin-top: 2px;
+	color: var(--ttbm-a-primary);
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-loc-map__note a {
+	color: var(--ttbm-a-primary);
+	font-weight: 500;
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-map-latlng-fields {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+}
+
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card #map_latitude,
+#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card #map_longitude {
+	width: 100%;
+	height: 40px;
+	min-height: 40px;
+	margin: 0;
+	padding: 0 12px;
+}
+
+@media (max-width: 782px) {
+	#ttbm_meta_box_panel .tabsItem section.ttbm-location-settings-card .ttbm-map-latlng-fields {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
 /* ─── Shortcode boxes ─── */
 #ttbm_meta_box_panel .ttbm_promotional_shortcode {
 	background: var(--ttbm-a-surface);
@@ -5545,13 +5864,6 @@ div.ttbm_global_settings .button-primary {
 	#ttbm_meta_box_panel .ttbm-hotel-details-card .ttbm-hotel-details-section__row {
 		flex-direction: column;
 		gap: 12px;
-	}
-
-	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__inline-row,
-	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-field__inline-row {
-		--ttbm-gen-inline-label-w: 112px;
-		--ttbm-gen-inline-toggle-w: 52px;
-		--ttbm-gen-inline-gap: 12px;
 	}
 
 	#ttbm_meta_box_panel .ttbm-hotel-details-card .ttbm-gen-field--inline .ttbm-gen-field__inline-row {
@@ -5712,38 +6024,6 @@ div.ttbm_global_settings .button-primary {
 		text-align: left;
 		white-space: normal;
 		flex-wrap: wrap;
-	}
-
-	/* Overview inline rows: label + switch on the first line, the field full width underneath. */
-	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__inline-row,
-	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-field__inline-row {
-		grid-template-columns: minmax(0, 1fr) auto;
-		row-gap: 8px;
-	}
-
-	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__label,
-	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-field__label {
-		grid-column: 1;
-		grid-row: 1;
-		white-space: normal;
-		overflow: visible;
-	}
-
-	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .roundSwitchLabel {
-		grid-column: 2;
-		grid-row: 1;
-		justify-self: end;
-	}
-
-	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field__toggle-spacer {
-		display: none;
-	}
-
-	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__input,
-	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__input-wrap,
-	#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-duration-group {
-		grid-column: 1 / -1;
-		grid-row: 2;
 	}
 
 	/* Long select2 choices (related tours, guides) wrap inside the field instead of spilling out. */
@@ -6814,6 +7094,15 @@ body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td
 	-webkit-backdrop-filter: blur(2px);
 }
 
+/* The drawer lives inside #postbox-container-2, which ttbm_admin.css gives z-index 10, so the
+   editor's sticky header (#ttbm-admin-page-header, z-index 999) painted over the drawer's
+   header and close button no matter how high the drawer's own z-index was. Lift the
+   container above the header (and the WP admin bar) only while a drawer is open. */
+body:has(#ttbm_meta_box_panel .ttbm-modal-container.open) #postbox-container-2 {
+	position: relative;
+	z-index: 100000;
+}
+
 /* Panel */
 #ttbm_meta_box_panel .ttbm-modal-content {
 	position: absolute;
@@ -6860,8 +7149,8 @@ body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td
 	width: 44px;
 	height: 44px;
 	border-radius: 12px;
-	background: #eef2ff;
-	color: #6366f1;
+	background: var(--ttbm-a-primary-soft);
+	color: var(--ttbm-a-primary);
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -6898,6 +7187,8 @@ body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td
 	color: #64748b;
 	cursor: pointer;
 	font-size: 13px;
+	border: 0;
+	padding: 0;
 	position: static;
 	top: auto;
 	right: auto;
@@ -6907,6 +7198,11 @@ body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td
 #ttbm_meta_box_panel .ttbm-modal-close:hover {
 	background: #fee2e2;
 	color: #dc2626;
+}
+
+#ttbm_meta_box_panel .ttbm-modal-close:focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(34, 113, 177, 0.25);
 }
 
 /* ── Body ── */
@@ -6920,8 +7216,13 @@ body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td
 	margin-bottom: 22px;
 }
 
-#ttbm_meta_box_panel .ttbm-modal-label {
-	display: inline-flex;
+/* .ttbm-modal-content in the selector: the generic ".ttbm-modal-content label" reset below
+   is otherwise more specific and flattens these labels to regular weight. flex-direction
+   too: ttbm_admin.css stacks every modal label as a column, which the reset only hid. */
+#ttbm_meta_box_panel .ttbm-modal-content .ttbm-modal-label {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
 	align-items: center;
 	gap: 4px;
 	font-size: 13px;
@@ -6968,8 +7269,8 @@ body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td
 #ttbm_meta_box_panel .ttbm-modal-content input[type="time"]:focus,
 #ttbm_meta_box_panel .ttbm-modal-content textarea:focus,
 #ttbm_meta_box_panel .ttbm-modal-content select:focus {
-	border-color: #6366f1;
-	box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+	border-color: var(--ttbm-a-primary);
+	box-shadow: 0 0 0 3px rgba(34, 113, 177, 0.15);
 	outline: none;
 }
 
@@ -6982,11 +7283,19 @@ body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td
 	gap: 0;
 }
 
-/* Service message */
-#ttbm_meta_box_panel #ttbm-service-msg {
+/* Save / update message (the JS writes to #ttbm-faq-msg and #ttbm-daywise-msg) */
+#ttbm_meta_box_panel #ttbm-service-msg,
+#ttbm_meta_box_panel #ttbm-faq-msg,
+#ttbm_meta_box_panel #ttbm-daywise-msg {
 	margin-bottom: 16px;
 	font-size: 13px;
 	font-family: var(--ttbm-a-font);
+}
+
+#ttbm_meta_box_panel #ttbm-service-msg:empty,
+#ttbm_meta_box_panel #ttbm-faq-msg:empty,
+#ttbm_meta_box_panel #ttbm-daywise-msg:empty {
+	margin-bottom: 0;
 }
 
 /* ── Footer ── */
@@ -7021,15 +7330,15 @@ body.wp-admin.post-type-ttbm_guide #ui-datepicker-div .ui-datepicker-calendar td
 }
 
 #ttbm_meta_box_panel .ttbm-modal-btn--primary {
-	background: #6366f1;
+	background: var(--ttbm-a-primary);
 	color: #fff !important;
-	box-shadow: 0 1px 3px rgba(99, 102, 241, 0.25), 0 4px 12px rgba(99, 102, 241, 0.15);
+	box-shadow: 0 1px 3px rgba(34, 113, 177, 0.25), 0 4px 12px rgba(34, 113, 177, 0.15);
 }
 
 #ttbm_meta_box_panel .ttbm-modal-btn--primary:hover {
-	background: #4f46e5;
+	background: var(--ttbm-a-primary-hover);
 	transform: translateY(-1px);
-	box-shadow: 0 2px 6px rgba(99, 102, 241, 0.3), 0 6px 18px rgba(99, 102, 241, 0.2);
+	box-shadow: 0 2px 6px rgba(34, 113, 177, 0.3), 0 6px 18px rgba(34, 113, 177, 0.2);
 	color: #fff !important;
 }
 

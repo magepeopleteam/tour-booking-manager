@@ -1,3 +1,84 @@
+/**
+ * Shared options for every .ttbm_sortable_area (table rows and div lists alike).
+ * jQuery UI drags the real element with position:absolute. Out of the table, a row's cells
+ * get re-sized by the browser (Firefox widens some and shrinks others, so they no longer line
+ * up with the header), the stacked card layout's "width: 100% !important" resolves against a
+ * wider ancestor, and with axis:"y" jQuery UI never sets "left", leaving the browser to guess.
+ * So: freeze every part at its measured border-box width, keep a dragged table row laid out as
+ * a fixed table, pin it over its slot, and give the slot the item's full height.
+ */
+function ttbm_sortable_options() {
+    var sizedParts = function ($item) {
+        return $item.is("tr") ? $item.add($item.children()) : $item;
+    };
+    return {
+        handle: ".ttbm_sortable_button",
+        axis: "y",
+        tolerance: "pointer",
+        cursor: "grabbing",
+        revert: 150,
+        scrollSensitivity: 80,
+        forcePlaceholderSize: true,
+        placeholder: "ttbm-sortable-placeholder",
+        helper: function (event, $item) {
+            var $parts = sizedParts($item);
+            // Measure before changing anything: resizing one cell reflows the others.
+            var widths = $parts.map(function () {
+                return this.getBoundingClientRect().width;
+            }).get();
+            $item.data("ttbmSortTableRow", window.getComputedStyle($item[0]).display === "table-row");
+            $parts.each(function (i) {
+                jQuery(this).data("ttbmSortStyle", this.getAttribute("style"));
+                this.style.setProperty("box-sizing", "border-box", "important");
+                // min/max too: a table ignores e.g. "min-width: 120px" on a cell, but the
+                // detached row honours it, so the dragged cells would no longer line up.
+                ["width", "min-width", "max-width"].forEach(function (prop) {
+                    this.style.setProperty(prop, widths[i] + "px", "important");
+                }, this);
+            });
+            return $item;
+        },
+        start: function (event, ui) {
+            if (ui.item.is("tr")) {
+                // jQuery UI gives the slot one cell per cell of the row, hidden ones included
+                // (e.g. "Qty Box Type"); a visible extra cell adds a column to the whole table
+                // and squeezes every other row's last column for the length of the drag.
+                var $source = ui.item.children();
+                ui.placeholder.children().each(function (i) {
+                    if ($source.eq(i).css("display") === "none") {
+                        this.style.display = "none";
+                    }
+                });
+            }
+            var table = ui.item.data("ttbmSortTableRow") ? ui.item.closest("table")[0] : null;
+            if (table) {
+                var tableStyle = window.getComputedStyle(table);
+                var row = ui.helper[0];
+                row.style.setProperty("display", "table", "important");
+                row.style.setProperty("table-layout", "fixed", "important");
+                row.style.setProperty("border-collapse", tableStyle.borderCollapse, "important");
+                row.style.setProperty("border-spacing", tableStyle.borderSpacing, "important");
+            }
+            // jQuery UI sizes a <div> slot to the item's content height only (the slot lacks the
+            // item's padding), so match the full outer height or the list below still jumps.
+            ui.placeholder.css({ height: ui.item.outerHeight() + "px", boxSizing: "border-box" });
+            ui.helper.offset({ left: ui.placeholder.offset().left });
+        },
+        stop: function (event, ui) {
+            sizedParts(ui.item).each(function () {
+                var $part = jQuery(this);
+                var saved = $part.data("ttbmSortStyle");
+                if (saved) {
+                    this.setAttribute("style", saved);
+                } else {
+                    this.removeAttribute("style");
+                }
+                $part.removeData("ttbmSortStyle");
+            });
+            ui.item.removeData("ttbmSortTableRow");
+        },
+    };
+}
 function ttbm_load_sortable_datepicker(parent, item) {
     var enableNewRowFields = function () {
         parent.find(".ttbm_item_insert > .ttbm_remove_area").last().find("input, select, textarea").prop("disabled", false);
@@ -7,9 +88,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
             .insertBefore(parent.find(".ttbm_item_insert_before").first())
             .promise()
             .done(function () {
-                parent.find(".ttbm_sortable_area").sortable({
-                    handle: jQuery(this).find(".ttbm_sortable_button"),
-                });
+                parent.find(".ttbm_sortable_area").sortable(ttbm_sortable_options());
                 ttbm_load_date_picker(parent);
                 enableNewRowFields();
             });
@@ -20,9 +99,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
             .append(item)
             .promise()
             .done(function () {
-                parent.find(".ttbm_sortable_area").sortable({
-                    handle: jQuery(this).find(".ttbm_sortable_button"),
-                });
+                parent.find(".ttbm_sortable_area").sortable(ttbm_sortable_options());
                 ttbm_load_date_picker(parent);
                 enableNewRowFields();
             });
@@ -33,7 +110,7 @@ function ttbm_load_sortable_datepicker(parent, item) {
     "use strict";
     $(document).ready(function () {
         //=========Short able==============//
-        $(document).find(".ttbm_sortable_area").sortable({handle: $(this).find(".ttbm_sortable_button"),});
+        $(document).find(".ttbm_sortable_area").sortable(ttbm_sortable_options());
         ttbmSyncPillCustomInput($(".ttbm_settings_dates .ttbm-pill-group"));
     });
     function ttbmSyncPillCustomInput($pillGroup) {

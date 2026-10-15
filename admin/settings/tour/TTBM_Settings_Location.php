@@ -319,7 +319,7 @@
                 <div class="tabsItem ttbm_settings_general contentTab" data-tabs="#ttbm_settings_location">
                     <h2><?php esc_html_e('Location Settings', 'tour-booking-manager'); ?></h2>
                     <p><?php esc_html_e('Here you can set your tour locatoin Settings', 'tour-booking-manager'); ?></p>
-                    <section>
+                    <section class="ttbm-location-settings-card">
                         <div class="ttbm-header ttbm-header--with-switch">
                             <h4><i class="fas fa-map-marker-alt"></i><?php esc_html_e('Location Settings', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
@@ -342,18 +342,19 @@
 				$active = ($display == 'off') ? '' : 'mActive';
 				?>
                 <div class="<?php echo esc_attr($active); ?>" data-collapse="#ttbm_display_location">
-                    <div class="label">
-                        <div class="label-inner">
-                            <p>
-								<?php esc_html_e('Select Location', 'tour-booking-manager'); ?>
-								<span class="ttbm-location-required-mark" style="color:#dc2626;font-weight:700;margin-left:3px;<?php echo $active ? '' : 'display:none;'; ?>" title="<?php esc_attr_e('Required', 'tour-booking-manager'); ?>">*</span>
-								<i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Select Tour Location from this list', 'tour-booking-manager'); ?></span></i>
-							</p>
-                        </div>
-						<div class="ttbm-location-select-wrap">
+                    <div class="ttbm-loc-field">
+                        <p class="ttbm-loc-field__label">
+                            <label for="ttbm_location_select"><?php esc_html_e('Location', 'tour-booking-manager'); ?></label>
+                            <span class="ttbm-location-required-mark" style="color:#dc2626;font-weight:700;<?php echo $active ? '' : 'display:none;'; ?>" title="<?php esc_attr_e('Required', 'tour-booking-manager'); ?>">*</span>
+                            <i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Select Tour Location from this list', 'tour-booking-manager'); ?></span></i>
+                        </p>
+                        <div class="ttbm-location-select-wrap">
 							<?php self::location_select($tour_id); ?>
-							<p class="ttbm-location-hint"><?php esc_html_e("If your location isn't listed,", 'tour-booking-manager'); ?> <button type="button" class="ttbm-location-add-link" data-target-popup="add_new_location_popup"><?php esc_html_e('Add location', 'tour-booking-manager'); ?></button></p>
-						</div>
+                        </div>
+                        <div class="ttbm-loc-field__foot">
+                            <span class="ttbm-loc-field__help"><?php esc_html_e('Shown on tour cards and in the Destination filter.', 'tour-booking-manager'); ?></span>
+                            <button type="button" class="ttbm-location-add-link" data-target-popup="add_new_location_popup"><?php esc_html_e('Add location', 'tour-booking-manager'); ?></button>
+                        </div>
                     </div>
 					<p id="ttbm_location_error" style="display:none;color:#dc2626;font-size:12px;font-weight:500;margin:6px 0 0;">
 						<span style="margin-right:4px;">&#9888;</span><?php esc_html_e('Please select a location before saving.', 'tour-booking-manager'); ?>
@@ -543,10 +544,11 @@
 				$hidden_style     = ( $display_location === 'off' ) ? ' style="display:none;"' : '';
 				?>
                 <div class="ttbm-map-enable-wrap"<?php echo $hidden_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-                    <label class="label">
-                        <div class="label-inner">
-                            <p><?php esc_html_e('Enable/Disable Map Location', 'tour-booking-manager'); ?><i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('To show Tour Location on Map enable It.', 'tour-booking-manager'); ?></span></i></p>
-                        </div>
+                    <label class="ttbm-loc-toggle-row">
+                        <span class="ttbm-loc-toggle-row__text">
+                            <span class="ttbm-loc-toggle-row__title"><?php esc_html_e('Show map on tour page', 'tour-booking-manager'); ?></span>
+                            <span class="ttbm-loc-toggle-row__help"><?php esc_html_e("Adds a map of the tour's address to the tour page.", 'tour-booking-manager'); ?></span>
+                        </span>
 						<?php TTBM_Custom_Layout::switch_button('ttbm_display_map', $checked); ?>
                     </label>
                 </div>
@@ -563,43 +565,42 @@
 				$active        = $display_map == 'off' ? '' : 'mActive';
 				$settings_url  = admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page');
 				$iframe_src    = 'https://maps.google.com/maps?q=' . rawurlencode($map_query) . '&z=14&output=embed';
+				$address_input_id = $gmap_api_key ? 'ttbm_map_location' : 'ttbm_iframe_location';
 				?>
                 <div class="<?php echo esc_attr($active); ?>" data-collapse="#ttbm_display_map">
 
+                  <div class="ttbm-loc-map">
                     <!-- Address input -->
-                    <label class="label">
-                        <div class="label-inner">
-                            <p>
-								<?php esc_html_e('Google Map Location', 'tour-booking-manager'); ?>
-								<i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i>
-							</p>
-                        </div>
-                        <div style="width:80%;" class="auto-search-wrapper loupe">
+                    <div class="ttbm-loc-field">
+                        <p class="ttbm-loc-field__label">
+                            <label for="<?php echo esc_attr($address_input_id); ?>"><?php esc_html_e('Map address', 'tour-booking-manager'); ?></label>
+                            <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('full_location'); ?></span></i>
+                        </p>
+                        <div class="auto-search-wrapper loupe">
                             <input
-                                style="padding-left:30px"
-                                id="<?php echo esc_attr($gmap_api_key ? 'ttbm_map_location' : 'ttbm_iframe_location'); ?>"
+                                id="<?php echo esc_attr($address_input_id); ?>"
                                 class="ttbm-map-location-input"
                                 name="ttbm_full_location_name_ui"
                                 data-ttbm-map-sync="ttbm_full_location_name"
-                                placeholder="<?php esc_attr_e('Please type location...', 'tour-booking-manager'); ?>"
+                                placeholder="<?php esc_attr_e('Type an address or place…', 'tour-booking-manager'); ?>"
                                 value="<?php echo esc_attr($location_name); ?>"
                                 autocomplete="off"
                             >
                         </div>
-                    </label>
+                    </div>
 
                     <!-- Map display -->
-                    <div style="width:100%;margin-top:12px;">
+                    <div class="ttbm-loc-map__preview">
 						<?php if ($gmap_api_key) : ?>
                             <!-- Google Maps JavaScript API -->
-                            <div id="gmap_canvas" style="width:100%;height:400px;border-radius:8px;overflow:hidden;"></div>
+                            <div id="gmap_canvas" class="ttbm-loc-map__canvas"></div>
 						<?php else : ?>
                             <!-- Google Maps iframe fallback (no API key) -->
-                            <div style="border-radius:8px;overflow:hidden;border:1px solid #e5e7eb;">
+                            <div class="ttbm-loc-map__frame">
                                 <iframe
                                     id="ttbm_gmap_iframe"
                                     width="100%"
-                                    height="400"
+                                    height="260"
                                     frameborder="0"
                                     scrolling="no"
                                     marginheight="0"
@@ -611,31 +612,28 @@
                                     allowfullscreen>
                                 </iframe>
                             </div>
-                            <p style="font-size:12px;color:#6b7280;margin:8px 0 0;line-height:1.6;">
-                                <span style="color:#2271b1;margin-right:4px;">&#9432;</span>
-								<?php esc_html_e('Type an address to update the map pointer automatically.', 'tour-booking-manager'); ?>
-                                <a href="<?php echo esc_url($settings_url); ?>" style="color:#2271b1;font-weight:500;">
-									<?php esc_html_e('Add a Google Maps API key', 'tour-booking-manager'); ?>
-                                </a>
-								<?php esc_html_e('for Google Places autocomplete and draggable markers.', 'tour-booking-manager'); ?>
+                            <p class="ttbm-loc-map__note">
+                                <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                <span>
+									<?php esc_html_e('Type an address to move the pin.', 'tour-booking-manager'); ?>
+                                    <a href="<?php echo esc_url($settings_url); ?>"><?php esc_html_e('Add a Google Maps API key', 'tour-booking-manager'); ?></a>
+									<?php esc_html_e('for address suggestions and a draggable pin.', 'tour-booking-manager'); ?>
+                                </span>
                             </p>
 						<?php endif; ?>
                     </div>
 
-                    <div class="ttbm-map-latlng-fields" style="display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;">
-                        <label class="label" style="flex:1;min-width:180px;">
-                            <div class="label-inner">
-                                <p><?php esc_html_e('Latitude', 'tour-booking-manager'); ?></p>
-                            </div>
+                    <div class="ttbm-map-latlng-fields">
+                        <div class="ttbm-loc-field">
+                            <p class="ttbm-loc-field__label"><label for="map_latitude"><?php esc_html_e('Latitude', 'tour-booking-manager'); ?></label></p>
                             <input type="text" id="map_latitude" class="ttbm-map-coord-input" name="ttbm_map_latitude_ui" data-ttbm-map-sync="ttbm_map_latitude" value="<?php echo esc_attr($latitude); ?>" placeholder="<?php esc_attr_e('Latitude', 'tour-booking-manager'); ?>">
-                        </label>
-                        <label class="label" style="flex:1;min-width:180px;">
-                            <div class="label-inner">
-                                <p><?php esc_html_e('Longitude', 'tour-booking-manager'); ?></p>
-                            </div>
+                        </div>
+                        <div class="ttbm-loc-field">
+                            <p class="ttbm-loc-field__label"><label for="map_longitude"><?php esc_html_e('Longitude', 'tour-booking-manager'); ?></label></p>
                             <input type="text" id="map_longitude" class="ttbm-map-coord-input" name="ttbm_map_longitude_ui" data-ttbm-map-sync="ttbm_map_longitude" value="<?php echo esc_attr($longitude); ?>" placeholder="<?php esc_attr_e('Longitude', 'tour-booking-manager'); ?>">
-                        </label>
+                        </div>
                     </div>
+                  </div>
 
                 </div>
 				<?php

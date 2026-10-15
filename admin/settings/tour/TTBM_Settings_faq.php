@@ -80,44 +80,70 @@
                             <button class="button ttbm-faq-item-new" data-modal="ttbm-faq-item-new" type="button"><?php esc_html_e('Add FAQ', 'tour-booking-manager'); ?></button>
                         </div>
                     </section>
+                    <!-- FAQ slide-in modal (same layout as the itinerary one) -->
                     <div class="ttbm-modal-container" data-modal-target="ttbm-faq-item-new">
                         <div class="ttbm-modal-content">
-                            <span class="ttbm-modal-close"><i class="fas fa-times"></i></span>
-                            <div class="title">
-                                <h3><?php esc_html_e('Add F.A.Q.', 'tour-booking-manager'); ?></h3>
-                                <div id="ttbm-service-msg"></div>
-                            </div>
-                            <div class="content">
-                                <label>
-									<?php esc_html_e('Add Title', 'tour-booking-manager'); ?>
-                                    <input type="hidden" name="ttbm_post_id" value="<?php echo esc_attr($post_id); ?>">
-                                    <input type="text" name="ttbm_faq_title">
-                                    <input type="hidden" name="ttbm_faq_item_id">
-                                </label>
-                                <label>
-									<?php esc_html_e('Add Content', 'tour-booking-manager'); ?>
-                                </label>
-								<?php
-									$content = '';
-									$editor_id = 'ttbm_faq_content';
-									$settings = array(
-										'textarea_name' => 'ttbm_faq_content',
-										'media_buttons' => true,
-										'textarea_rows' => 100,
-									);
-									wp_editor($content, $editor_id, $settings);
-								?>
-                                <div class="mT"></div>
-                                <div class="ttbm_faq_save_buttons">
-                                    <p>
-                                        <button id="ttbm_faq_save" class="button button-primary button-large"><?php esc_html_e('Save', 'tour-booking-manager'); ?></button>
-                                        <button id="ttbm_faq_save_close" class="button button-primary button-large">save close</button>
-                                    <p>
+                            <!-- Header -->
+                            <div class="ttbm-modal-header">
+                                <div class="ttbm-modal-header__inner">
+                                    <div class="ttbm-modal-header__icon">
+                                        <i class="fas fa-question-circle"></i>
+                                    </div>
+                                    <div>
+                                        <h3><?php esc_html_e('Add FAQ', 'tour-booking-manager'); ?></h3>
+                                        <p><?php esc_html_e('Answer a question travellers often ask about this tour.', 'tour-booking-manager'); ?></p>
+                                    </div>
                                 </div>
-                                <div class="ttbm_faq_update_buttons" style="display: none;">
-                                    <p>
-                                        <button id="ttbm_faq_update" class="button button-primary button-large"><?php esc_html_e('Update and Close', 'tour-booking-manager'); ?></button>
-                                    <p>
+                                <button type="button" class="ttbm-modal-close" title="<?php esc_attr_e('Close', 'tour-booking-manager'); ?>" aria-label="<?php esc_attr_e('Close', 'tour-booking-manager'); ?>">
+                                    <i class="fas fa-times" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <!-- Body -->
+                            <div class="ttbm-modal-body">
+                                <div id="ttbm-faq-msg"></div>
+                                <div class="ttbm-modal-field">
+                                    <label class="ttbm-modal-label" for="ttbm_faq_title_input">
+										<?php esc_html_e('Question', 'tour-booking-manager'); ?>
+                                        <span class="ttbm-modal-required">*</span>
+                                    </label>
+                                    <input type="hidden" name="ttbm_post_id" value="<?php echo esc_attr($post_id); ?>">
+                                    <input type="hidden" name="ttbm_faq_item_id">
+                                    <input type="text" id="ttbm_faq_title_input" name="ttbm_faq_title"
+                                           placeholder="<?php esc_attr_e('e.g. Is hotel pickup included?', 'tour-booking-manager'); ?>">
+                                </div>
+                                <div class="ttbm-modal-field">
+                                    <label class="ttbm-modal-label">
+										<?php esc_html_e('Answer', 'tour-booking-manager'); ?>
+                                    </label>
+									<?php
+										$content = '';
+										$editor_id = 'ttbm_faq_content';
+										$settings = array(
+											'textarea_name' => 'ttbm_faq_content',
+											'media_buttons' => true,
+											'textarea_rows' => 10,
+										);
+										wp_editor($content, $editor_id, $settings);
+									?>
+                                </div>
+                            </div>
+                            <!-- Footer -->
+                            <div class="ttbm-modal-footer">
+                                <div class="ttbm_faq_save_buttons ttbm-modal-footer__group">
+                                    <button id="ttbm_faq_save" class="ttbm-modal-btn ttbm-modal-btn--secondary" type="button">
+                                        <i class="fas fa-save"></i>
+										<?php esc_html_e('Save & Continue', 'tour-booking-manager'); ?>
+                                    </button>
+                                    <button id="ttbm_faq_save_close" class="ttbm-modal-btn ttbm-modal-btn--primary" type="button">
+                                        <i class="fas fa-check"></i>
+										<?php esc_html_e('Save & Close', 'tour-booking-manager'); ?>
+                                    </button>
+                                </div>
+                                <div class="ttbm_faq_update_buttons ttbm-modal-footer__group" style="display:none;">
+                                    <button id="ttbm_faq_update" class="ttbm-modal-btn ttbm-modal-btn--primary" type="button">
+                                        <i class="fas fa-sync-alt"></i>
+										<?php esc_html_e('Update & Close', 'tour-booking-manager'); ?>
+                                    </button>
                                 </div>
                             </div>
                         </div>

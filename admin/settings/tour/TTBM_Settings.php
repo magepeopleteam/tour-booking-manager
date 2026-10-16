@@ -1895,13 +1895,22 @@
 					$publish_capability = $post_type_object && isset($post_type_object->cap->publish_posts)
 						? $post_type_object->cap->publish_posts
 						: 'publish_posts';
-					if (empty(self::$last_validation_errors) && in_array($requested_status, array('draft', 'pending'), true)) {
+					// Required fields gate putting a tour live, not taking it down. A draft may
+					// be incomplete (that is what drafts are for), and a tour that is already
+					// live may switch to Private, which only narrows who can see it. Without
+					// this, a published tour missing a field that became required later could
+					// neither be saved as a draft nor made private. Mirrored in ttbm-autosave.js.
+					$is_live = in_array(get_post_status($tour_id), array('publish', 'private'), true);
+					$status_change_allowed = empty(self::$last_validation_errors)
+						|| $requested_status === 'draft'
+						|| ($requested_status === 'private' && $is_live);
+					if ($status_change_allowed && in_array($requested_status, array('draft', 'pending'), true)) {
 						$post_update['post_status'] = $requested_status;
-					} elseif (empty(self::$last_validation_errors) && in_array($requested_status, array('publish', 'private'), true) && current_user_can($publish_capability)) {
+					} elseif ($status_change_allowed && in_array($requested_status, array('publish', 'private'), true) && current_user_can($publish_capability)) {
 						// Private needs the same capability as publishing, as in Core's
 						// Publish box (this editor replaces that box, Visibility included).
 						$post_update['post_status'] = $requested_status;
-					} elseif (empty(self::$last_validation_errors) && in_array($requested_status, array('publish', 'private'), true)) {
+					} elseif ($status_change_allowed && in_array($requested_status, array('publish', 'private'), true)) {
 						throw new \RuntimeException(__('You are not allowed to publish this tour.', 'tour-booking-manager'));
 					}
 					self::prepare_seo_plugins_for_ajax_save($tour_id);

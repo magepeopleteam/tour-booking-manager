@@ -157,6 +157,16 @@
 
 	/* --------------------------------------------------------------------- saving */
 
+	function isTourLive() {
+		var $status = $('.ttbm-header-status').first();
+		return $status.hasClass('is-status-publish') || $status.hasClass('is-status-private');
+	}
+
+	// Mirrors the server rule in TTBM_Settings::ajax_autosave_tour().
+	function canChangeStatusWhileIncomplete(requested) {
+		return requested === 'draft' || (requested === 'private' && isTourLive());
+	}
+
 	function runAutosave(force) {
 		if (!state.dirty && force !== true) {
 			return;
@@ -178,14 +188,20 @@
 		if (typeof window.ttbmValidateSettingsFormBeforeSubmit === 'function') {
 			window.ttbmLastValidationFocus = null;
 			var formIsValid = window.ttbmValidateSettingsFormBeforeSubmit();
-			// Only a click that changes the post status (Publish / Save Draft) is held
-			// back. A plain Update persists like the background save does -- the server
+			// Only a click that puts the tour live (Publish / Make Public) is held back.
+			// A plain Update persists like the background save does -- the server
 			// keeps the status and reports the missing fields as a warning -- otherwise
 			// tours saved before a field became required (e.g. a repeated tour with no
 			// Start Time) could never save any change, such as a new featured image.
-			if (state.manual && !formIsValid && state.requestedStatus) {
+			// Save Draft and, on a live tour, Save as Private take the tour down or
+			// narrow who sees it, so they go through too (same rule on the server).
+			if (state.manual && !formIsValid && state.requestedStatus && !canChangeStatusWhileIncomplete(state.requestedStatus)) {
 				setStatus('paused', t('paused', 'Auto-save paused — complete required fields'));
 				toast(t('paused_toast', 'Please complete the highlighted required fields before saving.'), 'warning', 7000);
+				// The field may sit on another wizard step; take the admin to it.
+				if (typeof window.ttbmFocusValidationTarget === 'function') {
+					window.ttbmFocusValidationTarget();
+				}
 				state.manual = false;
 				state.requestedStatus = '';
 				return;
@@ -264,7 +280,9 @@
 					if (postStatus === 'publish' || postStatus === 'private') {
 						$mainButton.attr('data-ttbm-save-action', 'update').text('Update');
 					} else {
-						$mainButton.text($mainButton.attr('data-ttbm-save-action') === 'publish' ? 'Publish' : 'Update');
+						// Back to draft: the main button must publish again, or "Update"
+						// would keep re-saving the draft until the page is reloaded.
+						$mainButton.attr('data-ttbm-save-action', 'publish').text('Publish');
 					}
 				}
 				refreshSavedLabel();

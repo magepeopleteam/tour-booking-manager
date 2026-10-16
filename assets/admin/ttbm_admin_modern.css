@@ -580,8 +580,9 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	resize: vertical;
 }
 
+/* No fixed height here: TinyMCE sets the starting 200px (wp_editor 'height') and its
+   resize handle writes the new height inline, which an !important height overrode. */
 #wp-ttbm_post_content_editor-wrap .mce-edit-area iframe {
-	height: 200px !important;
 	min-height: 200px;
 }
 

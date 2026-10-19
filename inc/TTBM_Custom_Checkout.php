@@ -525,11 +525,18 @@
 				if (isset($_GET['ttbm_payment_return'], $_GET['order_id'])) {
 					$order_id = absint($_GET['order_id']);
 					$gateway_id = isset($_GET['gateway']) ? sanitize_key(wp_unslash($_GET['gateway'])) : '';
+					$key = isset($_GET['key']) ? sanitize_text_field(wp_unslash($_GET['key'])) : '';
 					if (get_post_type($order_id) !== 'ttbm_custom_order') {
 						return;
 					}
 					$tour_id = (int) get_post_meta($order_id, '_ttbm_tour_id', true);
 					$order_key = (string) get_post_meta($order_id, '_ttbm_order_key', true);
+					// Every real return URL carries the order's own key (payment_args()).
+					// Without it the caller has not shown they own this order, so never
+					// confirm it or redirect with its key: the key unlocks the booking summary.
+					if (!$order_key || !$key || !hash_equals($order_key, $key)) {
+						wp_die(esc_html__('Payment verification failed. Please contact us if you believe this is an error.', 'tour-booking-manager'), '', array('response' => 403));
+					}
 					// Refresh / replay of the return URL for an already-paid order:
 					// don't re-verify, just show the confirmation again.
 					$paid_statuses = array('processing', 'publish');

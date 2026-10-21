@@ -96,11 +96,15 @@
 				if (!(isset($_GET['post']) || isset($_POST['post']) || (isset($_REQUEST['action']) && 'ttbm_duplicate' == $_REQUEST['action']))) {
 					wp_die(esc_html__('No post to duplicate has been supplied!', 'tour-booking-manager'));
 				}
-				// Verify nonce
-				if (!isset($_GET['duplicate_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['duplicate_nonce'])), basename(__FILE__))) {
+				$post_id = isset($_GET['post']) ? absint($_GET['post']) : (isset($_POST['post']) ? absint($_POST['post']) : 0);
+				// Verify nonce (bound to the post being duplicated)
+				if (!$post_id || !isset($_GET['duplicate_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['duplicate_nonce'])), 'ttbm_duplicate_' . $post_id)) {
 					wp_die(esc_html__('Security check failed!', 'tour-booking-manager'));
 				}
-				$post_id = isset($_GET['post']) ? absint($_GET['post']) : absint($_POST['post']);
+				// A nonce is not authorization: the copy discloses the source post's content and meta
+				if (!current_user_can('edit_post', $post_id)) {
+					wp_die(esc_html__('Sorry, you are not allowed to duplicate this post.', 'tour-booking-manager'), 403);
+				}
 				// Try to get post from cache first
 				$post = wp_cache_get('ttbm_post_' . $post_id, 'ttbm');
 				if (false === $post) {
@@ -174,8 +178,8 @@
 				exit;
 			}
 			public function post_duplicator($actions, $post) {
-				if (current_user_can('edit_posts')) {
-					$actions['duplicate'] = '<a href="' . wp_nonce_url('admin.php?action=ttbm_duplicate&post=' . $post->ID, basename(__FILE__), 'duplicate_nonce') . '" title="' . esc_html__('Duplicate Post', 'tour-booking-manager') . '" rel="permalink">' . esc_html__('Duplicate', 'tour-booking-manager') . '</a>';
+				if (current_user_can('edit_post', $post->ID)) {
+					$actions['duplicate'] = '<a href="' . wp_nonce_url('admin.php?action=ttbm_duplicate&post=' . $post->ID, 'ttbm_duplicate_' . $post->ID, 'duplicate_nonce') . '" title="' . esc_html__('Duplicate Post', 'tour-booking-manager') . '" rel="permalink">' . esc_html__('Duplicate', 'tour-booking-manager') . '</a>';
 				}
 				return $actions;
 			}

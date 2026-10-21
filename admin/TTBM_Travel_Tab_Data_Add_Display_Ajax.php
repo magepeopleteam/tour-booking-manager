@@ -34,6 +34,11 @@ if (!class_exists('TTBM_Travel_Tab_Data_Add_Display_Ajax')) {
             $post_id = (int)sanitize_text_field( wp_unslash( $_GET['post_id'] ) );
             $post = get_post($post_id);
 
+            // A nonce is not authorization: the copy discloses the source post's content and meta
+            if ( ! $post || ! current_user_can( 'edit_post', $post_id ) ) {
+                wp_die( esc_html__( 'Sorry, you are not allowed to duplicate this post.', 'tour-booking-manager' ), 403 );
+            }
+
             /*if (!$post || $post->post_type !== 'ttbm_tour') {
                 wp_die('Invalid post or post type.');
             }*/

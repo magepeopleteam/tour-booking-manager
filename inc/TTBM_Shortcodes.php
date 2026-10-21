@@ -84,21 +84,31 @@
                     return '<p style="color:red;">City name not provided.</p>';
                 }
 
-                $city = urlencode($atts['city']);
+                // Shortcode attributes are author-controlled (Contributor+): accept only plain
+                // CSS lengths and a valid map zoom, then escape on output.
+                $width  = self::ttbm_map_dimension( $atts['width'], '100%' );
+                $height = self::ttbm_map_dimension( $atts['height'], '400px' );
+                $zoom   = absint( $atts['zoom'] );
+                $zoom   = $zoom ? min( 21, $zoom ) : 12;
+                $src    = 'https://www.google.com/maps?q=' . urlencode( sanitize_text_field( $atts['city'] ) ) . '&z=' . $zoom . '&output=embed';
 
                 $map = '<div class="mp-hotel-map">
                             <iframe 
-                                width="'.$atts['width'].'" 
-                                height="'.$atts['height'].'" 
+                                width="'.esc_attr($width).'" 
+                                height="'.esc_attr($height).'" 
                                 frameborder="0" 
                                 style="border:0"
                                 loading="lazy"
                                 allowfullscreen
-                                src="https://www.google.com/maps?q='.$city.'&z='.$atts['zoom'].'&output=embed">
+                                src="'.esc_url($src).'">
                             </iframe>
                         </div>';
 
                 return $map;
+            }
+            private static function ttbm_map_dimension( $value, $default ) {
+                $value = trim( (string) $value );
+                return preg_match( '/^\d+(\.\d+)?(px|%|em|rem|vh|vw)?$/', $value ) ? $value : $default;
             }
             public function ttbm_hotel_rooms_by_id( $attribute ){
                 $defaults = array(

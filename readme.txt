@@ -5,7 +5,7 @@ Tags: tour booking, travel agency, travel booking, tour operator, hotel booking
 Requires at least: 4.4.0
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 2.3.6
+Stable tag: 2.3.7
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -231,6 +231,26 @@ Use the [WordPress.org support forum](https://wordpress.org/support/plugin/tour-
 
 
 == Changelog ==
+= 2.3.7 – 21 October 2026 =
+* Security: Fixed a stored cross-site scripting issue in the [ttbm-hotel-map] shortcode. The width and height attributes now accept only plain CSS sizes, zoom must be a whole number from 1 to 21, and every attribute is escaped (CVE-2026-109590, reported by Wordfence).
+* Security: Duplicating a post now requires permission to edit that post. The Duplicate link is tied to the post it belongs to and only appears on posts you can edit; the Duplicate button on the tour and hotel lists has the same check (CVE-2026-111213, reported by Wordfence).
+* Security: The payment return page now requires the order key, so a booking summary can no longer be opened by guessing an order ID (reported by Patchstack).
+* New: Off dates and particular dates now have a delete button in the tour editor; before, they could be added but not removed.
+* Improvement: Redesigned the Location card in the tour editor (location picker, map toggle, map address and coordinates).
+* Improvement: The Add FAQ window now uses the same slide-in layout as the itinerary builder, with Save & Continue and Save & Close buttons.
+* Improvement: Dragging rows to reorder them in the tour editor keeps their columns aligned and no longer makes the list jump.
+* Improvement: Admin notices now appear at the bottom-right instead of covering the editor header.
+* Improvement: The Tour Description editor can be resized again.
+* Improvement: The demo shortcode pages (tour search, hotel search, grid views) are created on activation and on Dummy Data Import even when WooCommerce is not active.
+* Improvement: Updated the bundled Appneck SDK to 0.5.0.
+* Fix: Picking a date on the booking form now loads that date's own time slots (weekday-specific, else Default) instead of keeping the first available date's slots.
+* Fix: Save Draft and Save as Private now work on a published tour that is missing a required field. Required fields only block Publish / Make Public, and the editor jumps to the missing field, even on another wizard step.
+* Fix: Background autosave no longer clears the Tour Duration.
+* Fix: The "On Sale" badge now follows the cheapest ticket type (the one shown as the "From" price) and is hidden when a manual starting price is set.
+* Fix: Tour list layout ([travel-list] and search results): descriptions were hidden, the Explore button was squeezed and lost its colour, and a gap appeared under card images.
+* Fix: Location images in the tour list shortcode did not load, and locations without an image raised errors.
+* Fix: The browser's time-picker button overlapped the clear button on particular-date time fields.
+
 = 2.3.6 – 12 October 2026 =
 * New: Redesigned the tour editor as a 4-step wizard (Basic Info, Schedule, Pricing & Tickets, Details & Settings) replacing the 14-tab sidebar, with a sticky Back/Next footer and required-field checks before moving on.
 * New: The permalink now shows as editable text under the title (auto-generated, click to edit) instead of the post ID.

@@ -9,6 +9,7 @@
 				add_action('ttbm_price_item', array($this, 'pricing_item'));
 				add_action('wp_ajax_get_ttbm_insert_ticket_type', array($this, 'ticket_table'));
 				add_action('wp_ajax_nopriv_get_ttbm_insert_ticket_type', array($this, 'ticket_table'));
+				add_action('ttbm_right_sidebar_content', [$this, 'ticket_preview_sidebar'], 5);
 				add_action('ttbm_right_sidebar_content', [$this, 'pricing_shortcode_sidebar'], 18);
 				add_action('ttbm_right_sidebar_content', [$this, 'addon_promo_sidebar'], 19);
 				add_action('admin_enqueue_scripts', [$this, 'enqueue_pricing_sidebar_js']);
@@ -75,6 +76,35 @@
                 </section>
 				<?php
 			}
+			/**
+			 * "Frontend Ticket Preview" card for the right sidebar (shown on the Pricing and Details steps).
+			 * Rendered empty: assets/admin/ttbm-ticket-preview.js fills it from the live ticket rows.
+			 */
+			public function ticket_preview_sidebar($tour_id) {
+				$symbol = function_exists('get_woocommerce_currency_symbol') ? get_woocommerce_currency_symbol() : '$';
+				?>
+                <div class="ttbm-sb-card ttbm-tp" id="ttbm-ticket-preview" data-currency="<?php echo esc_attr(html_entity_decode($symbol)); ?>"
+                     data-empty-text="<?php esc_attr_e('Add a ticket type to see how it will look.', 'tour-booking-manager'); ?>"
+                     data-left-text="<?php esc_attr_e('left', 'tour-booking-manager'); ?>"
+                     data-available-text="<?php esc_attr_e('Available', 'tour-booking-manager'); ?>"
+                     data-total-text="<?php esc_attr_e('Total', 'tour-booking-manager'); ?>"
+                     data-ticket-text="<?php esc_attr_e('Ticket', 'tour-booking-manager'); ?>"
+                     data-qty-text="<?php esc_attr_e('Qty', 'tour-booking-manager'); ?>"
+                     data-price-text="<?php esc_attr_e('Price', 'tour-booking-manager'); ?>"
+                     data-count-one="<?php esc_attr_e('1 ticket', 'tour-booking-manager'); ?>"
+                     data-count-many="<?php esc_attr_e('%d tickets', 'tour-booking-manager'); ?>"
+                     data-extra-text="<?php esc_attr_e('Extra services', 'tour-booking-manager'); ?>"
+                     data-book-text="<?php esc_attr_e('Book now', 'tour-booking-manager'); ?>">
+                    <div class="ttbm-tp__head">
+                        <h4><?php esc_html_e('Ticket preview', 'tour-booking-manager'); ?></h4>
+                        <span class="ttbm-tp__live"><span class="ttbm-tp__dot" aria-hidden="true"></span><?php esc_html_e('Live', 'tour-booking-manager'); ?></span>
+                    </div>
+                    <p class="ttbm-tp__hint"><?php esc_html_e('How guests see your tickets. Updates as you edit.', 'tour-booking-manager'); ?></p>
+                    <div class="ttbm-tp__body"></div>
+                    <div class="ttbm-tp__footer"></div>
+                </div>
+				<?php
+			}
 			public function pricing_shortcode_sidebar($tour_id) {
 				?>
                 <div class="ttbm-sb-card ttbm-sb-pricing-shortcode-card" data-tab-card="#ttbm_settings_pricing">
@@ -91,6 +121,7 @@
 				if ( ! $screen || $screen->base !== 'post' ) {
 					return;
 				}
+				wp_enqueue_script('ttbm-ticket-preview', TTBM_PLUGIN_URL . '/assets/admin/ttbm-ticket-preview.js', array('jquery'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-ticket-preview.js'), true);
 				wp_add_inline_script( 'jquery', 'jQuery(function($){function ttbmSyncPricingCard(){var target=$(".tabLists.meta-sidebar li[data-tabs-target].active").attr("data-tabs-target")||"";$(".ttbm-right-sidebar").attr("data-active-tab",target);}$(document).on("ttbm_tab_activated",ttbmSyncPricingCard);$(document).on("click",".tabLists li[data-tabs-target]",function(){setTimeout(ttbmSyncPricingCard,50);});$(window).on("load",function(){setTimeout(ttbmSyncPricingCard,100);});});' );
 			}
 			public function ttbm_ticket_config($tour_id) {
@@ -120,7 +151,12 @@
                         <div class="ttbm_settings_area _mT_xs ttbm-ticket-types-area">
                             <div class="ttbm-ticket-types-panel">
                                 <div class="ttbm-ticket-types-table-wrap">
-                                <table class="price_config_table ttbm-ticket-types-table">
+                                <table class="price_config_table ttbm-ticket-types-table" data-groups="<?php echo esc_attr(wp_json_encode(array(
+                                    'ticket' => __('Ticket', 'tour-booking-manager'),
+                                    'pricing' => __('Pricing', 'tour-booking-manager'),
+                                    'inventory' => __('Inventory', 'tour-booking-manager'),
+                                    'display' => __('Display', 'tour-booking-manager'),
+                                ))); ?>">
                                     <thead>
                                     <tr>
 										<?php do_action('ttbm_ticket_type_headeing_start', $tour_id); ?>

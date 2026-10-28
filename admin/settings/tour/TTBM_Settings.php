@@ -157,9 +157,18 @@
 									$this->partial_payment_settings($tour_id);
 								?>
                                 <div class="ttbm-wz-footer">
-                                    <button type="button" class="button ttbm-wz-prev"><?php esc_html_e('Back', 'tour-booking-manager'); ?></button>
-                                    <span class="ttbm-wz-progress" aria-live="polite"></span>
-                                    <button type="button" class="button button-primary ttbm-wz-next"><?php esc_html_e('Next', 'tour-booking-manager'); ?></button>
+                                    <div class="ttbm-wz-footer__bar" aria-hidden="true"><span></span></div>
+                                    <div class="ttbm-wz-footer__inner">
+                                        <button type="button" class="button ttbm-wz-prev"><?php esc_html_e('Back', 'tour-booking-manager'); ?></button>
+                                        <div class="ttbm-wz-footer__center">
+                                            <span class="ttbm-wz-step-num" aria-hidden="true">1</span>
+                                            <div class="ttbm-wz-step-text">
+                                                <strong class="ttbm-wz-step-name"></strong>
+                                                <span class="ttbm-wz-progress" aria-live="polite"></span>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="button button-primary ttbm-wz-next"><?php esc_html_e('Next', 'tour-booking-manager'); ?></button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="ttbm-right-sidebar" data-active-tab="#ttbm_general_info">

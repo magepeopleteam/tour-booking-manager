@@ -430,7 +430,7 @@
                                             <span class="ttbm-off-schedule-tip__icon" aria-hidden="true"><i class="fas fa-info-circle"></i></span>
                                             <div class="ttbm-off-schedule-tip__content">
                                                 <strong class="ttbm-off-schedule-tip__title"><?php esc_html_e('Pro Tip: Recurring Blocks', 'tour-booking-manager'); ?></strong>
-                                                <p class="ttbm-off-schedule-tip__text"><?php esc_html_e('Selecting recurring off-days automatically blocks booking slots for those days across all future tours. This ensures consistent downtime for your team without manual day-by-day intervention.', 'tour-booking-manager'); ?></p>
+                                                <p class="ttbm-off-schedule-tip__text"><?php esc_html_e('Recurring off days block booking on those days of the week for all future tours.', 'tour-booking-manager'); ?></p>
                                             </div>
                                         </div>
                                         <div class="groupCheckBox ttbm-off-days-grid">
@@ -451,7 +451,7 @@
                                             <span class="ttbm-off-schedule-tip__icon" aria-hidden="true"><i class="fas fa-info-circle"></i></span>
                                             <div class="ttbm-off-schedule-tip__content">
                                                 <strong class="ttbm-off-schedule-tip__title"><?php esc_html_e('Pro Tip: Specific Date Blocks', 'tour-booking-manager'); ?></strong>
-                                                <p class="ttbm-off-schedule-tip__text"><?php esc_html_e('Use off dates for holidays, maintenance windows, or one-time closures. These dates override your regular schedule without affecting recurring off-days.', 'tour-booking-manager'); ?></p>
+                                                <p class="ttbm-off-schedule-tip__text"><?php esc_html_e('Use off dates for holidays or one-time closures. They override your regular schedule without affecting recurring off days.', 'tour-booking-manager'); ?></p>
                                             </div>
                                         </div>
                                         <div class="ttbm_settings_area ttbm-off-dates-area">

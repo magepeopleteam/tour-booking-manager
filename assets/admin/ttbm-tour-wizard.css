@@ -231,19 +231,75 @@ body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-tour-wizard.ttbm-wz-enable
 	overflow: visible; /* overflow:hidden would stop the footer sticking */
 }
 .ttbm-tour-wizard .ttbm-wz-footer {
-	position: sticky;
+	position: fixed;
 	bottom: 0;
-	z-index: 20;
+	left: 160px; /* admin menu */
+	right: 0;
+	z-index: 300;
+	background: #fff;
+	border-top: 1px solid #e2e8f0;
+	padding: 16px 0 calc(16px + env(safe-area-inset-bottom, 0px));
+	box-shadow: 0 -2px 10px rgba(0, 0, 0, .05);
+}
+body.folded .ttbm-tour-wizard .ttbm-wz-footer { left: 36px; }
+@media (max-width: 960px) { body.auto-fold .ttbm-tour-wizard .ttbm-wz-footer { left: 36px; } }
+@media (max-width: 782px) { .ttbm-tour-wizard .ttbm-wz-footer { left: 0; } }
+.ttbm-tour-wizard .ttbm-wz-footer__bar {
+	position: absolute;
+	top: -1px;
+	left: 0;
+	right: 0;
+	height: 3px;
+	background: #e2e8f0;
+}
+.ttbm-tour-wizard .ttbm-wz-footer__bar span {
+	display: block;
+	height: 100%;
+	width: 25%;
+	background: #2563eb;
+	transition: width .25s ease;
+}
+.ttbm-tour-wizard .ttbm-wz-footer__inner {
+	max-width: 1400px;
+	margin: 0 auto;
+	padding: 0 16px;
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	align-items: center;
+	gap: 12px;
+}
+.ttbm-tour-wizard .ttbm-wz-footer__center {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: center;
 	gap: 12px;
-	margin: 28px 0 -28px;
-	padding: 14px 20px;
-	border-radius: 10px 10px 0 0;
-	background: #fff;
-	border-top: 1px solid #e5e9f0;
-	box-shadow: 0 -4px 14px rgba(15, 23, 42, .06);
+	min-width: 0;
+}
+.ttbm-tour-wizard .ttbm-wz-step-num {
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background: #2563eb;
+	color: #fff;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1;
+}
+.ttbm-tour-wizard .ttbm-wz-step-text {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+}
+.ttbm-tour-wizard .ttbm-wz-step-name {
+	font-size: 14px;
+	font-weight: 600;
+	color: #1e293b;
+	line-height: 1.2;
 }
 .ttbm-tour-wizard .ttbm-wz-footer .button {
 	min-width: 96px;
@@ -255,10 +311,14 @@ body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-tour-wizard.ttbm-wz-enable
 	visibility: hidden;
 }
 .ttbm-tour-wizard .ttbm-wz-progress {
-	font-size: 13px;
+	display: block;
+	font-size: 12px;
 	color: #94a3b8;
-	font-weight: 600;
+	font-weight: 400;
+	line-height: 1.2;
 }
+/* Leave room so the fixed footer never covers the last fields. */
+.ttbm-tour-wizard.ttbm-wz-enabled { padding-bottom: 90px; }
 
 /* ---- Small screens: compact dots, label only for the active step ---- */
 @media (max-width: 900px) {
@@ -286,4 +346,128 @@ body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-tour-wizard.ttbm-wz-enable
 body.ttbm-tour-edit-page div#post-body.metabox-holder {
 	overflow-x: clip;
 	overflow-y: visible;
+}
+
+/* ---- Step nav inside the page header (centre column, like the event editor) ---- */
+/* Connected stepper: numbered dots joined by lines; done steps show a check. The dot's icon
+   and the hint line are hidden here; the number comes from a CSS counter. */
+#ttbm-admin-page-header .ttbm-wz-steps {
+	grid-area: steps;
+	justify-self: center;
+	display: flex;
+	align-items: center;
+	gap: 32px;
+	min-width: 0;
+	max-width: 100%;
+	padding: 0;
+	margin: 0;
+	background: none;
+	border: 0;
+	border-radius: 0;
+	overflow-x: auto;
+	scrollbar-width: none;
+	counter-reset: ttbm-wz;
+}
+#ttbm-admin-page-header .ttbm-wz-steps::-webkit-scrollbar { display: none; }
+#ttbm-admin-page-header .ttbm-wz-step {
+	position: relative;
+	flex: 0 0 auto;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin: 0;
+	padding: 6px 10px;
+	border: 0;
+	border-radius: 8px;
+	background: transparent;
+	box-shadow: none;
+	cursor: pointer;
+	text-align: left;
+	font: inherit;
+	min-width: 0;
+	color: #475569;
+	counter-increment: ttbm-wz;
+}
+#ttbm-admin-page-header .ttbm-wz-step::after { display: none; }
+/* Connector from the previous step: blue once this step is reached. */
+#ttbm-admin-page-header .ttbm-wz-step + .ttbm-wz-step::before {
+	content: "";
+	position: absolute;
+	left: -32px;
+	top: 50%;
+	width: 32px;
+	height: 2px;
+	margin-top: -1px;
+	background: #cbd5e1;
+}
+#ttbm-admin-page-header .ttbm-wz-step.is-active::before,
+#ttbm-admin-page-header .ttbm-wz-step.is-complete::before { background: #2563eb; }
+#ttbm-admin-page-header .ttbm-wz-step:hover,
+#ttbm-admin-page-header .ttbm-wz-step:focus { background: #f1f5f9; box-shadow: none; }
+#ttbm-admin-page-header .ttbm-wz-step:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
+#ttbm-admin-page-header .ttbm-wz-step__dot {
+	flex: 0 0 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	box-sizing: border-box;
+	border: 2px solid #cbd5e1;
+	background: #fff;
+	color: #475569;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1;
+}
+#ttbm-admin-page-header .ttbm-wz-step__dot i { display: none; }
+#ttbm-admin-page-header .ttbm-wz-step__dot::before { content: counter(ttbm-wz); }
+#ttbm-admin-page-header .ttbm-wz-step:hover .ttbm-wz-step__dot {
+	background: #fff;
+	color: #2563eb;
+	border-color: #2563eb;
+}
+#ttbm-admin-page-header .ttbm-wz-step.is-active .ttbm-wz-step__dot {
+	background: #fff;
+	border-color: #2563eb;
+	color: #2563eb;
+}
+#ttbm-admin-page-header .ttbm-wz-step.is-complete .ttbm-wz-step__dot {
+	background: #2563eb;
+	border-color: #2563eb;
+	color: #fff;
+	font-size: 12px;
+}
+#ttbm-admin-page-header .ttbm-wz-step.is-complete .ttbm-wz-step__dot::before {
+	content: "\f00c";
+	font-family: "Font Awesome 5 Free", "Font Awesome 6 Free", sans-serif;
+	font-weight: 900;
+}
+#ttbm-admin-page-header .ttbm-wz-step__text {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	background: none;
+	padding: 0;
+}
+#ttbm-admin-page-header .ttbm-wz-step__label {
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.3;
+	white-space: nowrap;
+	color: #475569 !important;
+}
+#ttbm-admin-page-header .ttbm-wz-step__hint { display: none; }
+#ttbm-admin-page-header .ttbm-wz-step.is-active .ttbm-wz-step__label,
+#ttbm-admin-page-header .ttbm-wz-step.is-complete .ttbm-wz-step__label {
+	color: #1e293b !important;
+}
+@media (max-width: 1200px) {
+	#ttbm-admin-page-header .ttbm-wz-steps { justify-self: stretch; justify-content: flex-start; }
+}
+@media (max-width: 600px) {
+	#ttbm-admin-page-header .ttbm-wz-steps { gap: 16px; }
+	#ttbm-admin-page-header .ttbm-wz-step + .ttbm-wz-step::before { left: -16px; width: 16px; }
+	#ttbm-admin-page-header .ttbm-wz-step:not(.is-active) .ttbm-wz-step__text { display: none; }
 }

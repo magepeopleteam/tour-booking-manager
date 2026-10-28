@@ -32,11 +32,12 @@ jQuery(function ($) {
 			$('#ttbm-edit-payment-notice').stop(true, true).fadeOut(150, function () { $(this).remove(); });
 			$('.ttbm-pay-gateway-notice').stop(true, true).fadeOut(150, function () { $(this).remove(); });
 		} else if ($('#ttbm-edit-payment-modal').length && !$('#ttbm-edit-payment-notice').length && $('#poststuff').length) {
-			var $editNotice = $('<div class="ttbm-edit-payment-notice" id="ttbm-edit-payment-notice"></div>');
-			$editNotice.text(ttbmPaymentSettings.edit_notice_text + ' ');
+			var $editNotice = $('<div class="ttbm-edit-payment-notice" id="ttbm-edit-payment-notice"><div class="ttbm-edit-payment-notice-main"><span class="ttbm-edit-payment-notice-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20"></path></svg></span><div class="ttbm-edit-payment-notice-text"><strong></strong><span></span></div></div></div>');
+			$editNotice.find('strong').text(ttbmPaymentSettings.edit_notice_text);
+			$editNotice.find('.ttbm-edit-payment-notice-text span').text(ttbmPaymentSettings.edit_notice_action);
 			$editNotice.append(
 				$('<a href="#" class="ttbm-edit-payment-notice-link" data-ttbm-payment-modal-open></a>')
-					.text(ttbmPaymentSettings.edit_notice_action)
+					.text(ttbmPaymentSettings.edit_notice_button || ttbmPaymentSettings.edit_notice_action)
 			);
 			$('#poststuff').prepend($editNotice);
 		}

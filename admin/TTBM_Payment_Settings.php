@@ -330,9 +330,17 @@
 				if ($needs_notice) {
 					?>
 					<div class="ttbm-edit-payment-notice" id="ttbm-edit-payment-notice">
-						<?php esc_html_e('No payment method is currently configured.', 'tour-booking-manager'); ?>
+						<div class="ttbm-edit-payment-notice-main">
+							<span class="ttbm-edit-payment-notice-icon" aria-hidden="true">
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20"></path></svg>
+							</span>
+							<div class="ttbm-edit-payment-notice-text">
+								<strong><?php esc_html_e('No payment method is currently configured.', 'tour-booking-manager'); ?></strong>
+								<span><?php esc_html_e('Please configure a payment method to accept bookings.', 'tour-booking-manager'); ?></span>
+							</div>
+						</div>
 						<a href="#" class="ttbm-edit-payment-notice-link" data-ttbm-payment-modal-open>
-							<?php esc_html_e('Please configure a payment method to accept bookings.', 'tour-booking-manager'); ?>
+							<?php esc_html_e('Configure payment', 'tour-booking-manager'); ?>
 						</a>
 					</div>
 					<?php
@@ -396,6 +404,7 @@
 					'configure_payment_label' => esc_html__('Configure payment method', 'tour-booking-manager'),
 					'edit_notice_text' => esc_html__('No payment method is currently configured.', 'tour-booking-manager'),
 					'edit_notice_action' => esc_html__('Please configure a payment method to accept bookings.', 'tour-booking-manager'),
+					'edit_notice_button' => esc_html__('Configure payment', 'tour-booking-manager'),
 					'payment_settings_url' => admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page#ttbm_payment_settings'),
 				));
 				wp_add_inline_style('ttbm-global-settings', $this->edit_payment_notice_css());
@@ -404,9 +413,15 @@
 
 			private function edit_payment_notice_css(): string {
 				return <<<'CSS'
-.ttbm-edit-payment-notice{text-align:center;background:#fef3c7;color:#b45309;font-size:13px;font-weight:600;padding:10px 26px;margin:0 0 12px;border-radius:0;}
-.ttbm-edit-payment-notice-link{color:#b45309;text-decoration:underline;margin-left:4px;}
-.ttbm-edit-payment-notice-link:hover{color:#92400e;}
+.ttbm-edit-payment-notice{display:flex;align-items:center;justify-content:space-between;gap:20px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 20px;margin:0 0 12px;color:#1e293b;}
+.ttbm-edit-payment-notice-main{display:flex;align-items:center;gap:12px;min-width:0;}
+.ttbm-edit-payment-notice-icon{flex-shrink:0;width:36px;height:36px;border-radius:10px;background:#fef3c7;color:#b45309;display:flex;align-items:center;justify-content:center;}
+.ttbm-edit-payment-notice-text{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.ttbm-edit-payment-notice-text strong{font-size:14px;font-weight:600;line-height:1.4;}
+.ttbm-edit-payment-notice-text span{font-size:13px;line-height:1.4;color:#475569;}
+.ttbm-edit-payment-notice-link,.ttbm-edit-payment-notice-link:visited{flex-shrink:0;display:inline-flex;align-items:center;height:38px;padding:0 18px;border-radius:8px;background:#2563eb;color:#fff;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;}
+.ttbm-edit-payment-notice-link:hover,.ttbm-edit-payment-notice-link:focus{background:#1d4ed8;color:#fff;}
+.ttbm-edit-payment-notice-link:focus-visible{outline:2px solid #2563eb;outline-offset:2px;}
 .ttbm-edit-payment-modal{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:100001;align-items:center;justify-content:center;padding:20px;}
 .ttbm-edit-payment-modal-box{background:#fff;border-radius:12px;max-width:860px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 24px 60px rgba(15,23,42,.35);}
 .ttbm-edit-payment-modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid #e5e7eb;position:sticky;top:0;background:#fff;z-index:1;}
@@ -414,9 +429,75 @@
 .ttbm-edit-payment-modal-close{border:none;background:transparent;font-size:22px;line-height:1;cursor:pointer;color:#6b7280;padding:4px 8px;}
 .ttbm-edit-payment-modal-close:hover{color:#111827;}
 .ttbm-edit-payment-modal-body{padding:20px 24px 28px;}
-body.ttbm-modern-edit-page #poststuff > .ttbm-edit-payment-notice{margin-left:-20px;margin-right:-20px;width:calc(100% + 40px);box-sizing:border-box;}
-/* .wrap side padding drops to 10px on small screens (TTBM_Settings_Sidebar); bleed by the same amount so the banner never widens the page. */
-@media (max-width:782px){body.ttbm-modern-edit-page #poststuff > .ttbm-edit-payment-notice{margin-left:-10px;margin-right:-10px;width:calc(100% + 20px);padding:10px 14px;}}
+body.ttbm-modern-edit-page #poststuff > .ttbm-edit-payment-notice{box-sizing:border-box;}
+@media (max-width:782px){body.ttbm-modern-edit-page #poststuff > .ttbm-edit-payment-notice{flex-direction:column;align-items:stretch;padding:12px 14px;}.ttbm-edit-payment-notice-link{justify-content:center;}}
+/* Payment Method modal: gateway cards in a row, compact booking mode, open additional settings. */
+#ttbm-edit-payment-modal .ttbm-edit-payment-modal-box{max-width:800px;border-radius:14px;}
+#ttbm-edit-payment-modal .ttbm-edit-payment-modal-head{padding:20px 28px;}
+#ttbm-edit-payment-modal .ttbm-edit-payment-modal-head h2{font-size:18px;color:#1e293b;}
+#ttbm-edit-payment-modal .ttbm-edit-payment-modal-close{width:36px;height:36px;padding:0;border-radius:8px;background:#f1f5f9;color:#334155;font-size:20px;display:flex;align-items:center;justify-content:center;}
+#ttbm-edit-payment-modal .ttbm-edit-payment-modal-close:hover{background:#e2e8f0;color:#0f172a;}
+#ttbm-edit-payment-modal .ttbm-edit-payment-modal-body{padding:24px 28px 0;}
+#ttbm-edit-payment-modal .ttbm-booking-mode{margin:0 0 20px;}
+#ttbm-edit-payment-modal .ttbm-booking-mode-head h3{margin:0 0 8px;font-size:14px;font-weight:700;color:#1e293b;}
+#ttbm-edit-payment-modal .ttbm-booking-mode-head p{margin:0 0 12px;font-size:13px;line-height:1.5;color:#475569;max-width:none;}
+#ttbm-edit-payment-modal .ttbm-booking-mode-cards{gap:16px;}
+#ttbm-edit-payment-modal .ttbm-booking-mode-card{padding:16px;border:1px solid #e2e8f0;border-radius:12px;background:#fff;box-shadow:none;}
+#ttbm-edit-payment-modal .ttbm-booking-mode-card.is-disabled{background:#f8fafc;border-style:solid;}
+#ttbm-edit-payment-modal .ttbm-booking-mode-card.is-active{border:2px solid #2563eb;background:#eff6ff;box-shadow:none;padding:15px;}
+#ttbm-edit-payment-modal .ttbm-booking-mode-card-icon{background:#e2e8f0;color:#475569;}
+#ttbm-edit-payment-modal .ttbm-booking-mode-card.is-active .ttbm-booking-mode-card-icon{background:#2563eb;color:#fff;}
+#ttbm-edit-payment-modal .ttbm-booking-mode-card-title{font-size:14px;color:#1e293b;}
+#ttbm-edit-payment-modal .ttbm-booking-mode-card-desc{font-size:13px;color:#475569;}
+#ttbm-edit-payment-modal .ttbm-booking-mode-badge{font-size:12px;text-transform:none;letter-spacing:0;padding:3px 10px;}
+#ttbm-edit-payment-modal .ttbm-booking-mode-warning{background:#fffbeb;border:1px solid #fde68a;color:#78350f;border-radius:10px;padding:12px 16px;font-size:13px;}
+#ttbm-edit-payment-modal .ttbm-pm-gateways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0 0 24px;}
+#ttbm-edit-payment-modal .ttbm-pm-gateways .ttbm-pm-card{display:flex;flex-direction:column;margin:0;border:1px solid #e2e8f0;border-radius:12px;background:#fff;box-shadow:none;transform:none;overflow:visible;opacity:1;}
+#ttbm-edit-payment-modal .ttbm-pm-gateways .ttbm-pm-card:hover{transform:none;box-shadow:none;border-color:#cbd5e1;}
+#ttbm-edit-payment-modal .ttbm-pm-gateways .ttbm-pm-card.is-locked{background:#f8fafc;}
+#ttbm-edit-payment-modal .ttbm-pm-gateways .ttbm-pm-card.is-enabled{border-color:#2563eb;}
+#ttbm-edit-payment-modal .ttbm-pm-gateways .ttbm-pm-head{flex:1;flex-direction:column;align-items:stretch;gap:14px;padding:18px;}
+#ttbm-edit-payment-modal .ttbm-pm-gateways .ttbm-pm-head-main{flex:1;flex-direction:column;gap:12px;}
+#ttbm-edit-payment-modal .ttbm-pm-gateways .ttbm-pm-icon{width:40px;height:40px;border-radius:10px;background:#fff;border:1px solid #e2e8f0;color:#334155;}
+#ttbm-edit-payment-modal .ttbm-pm-gateways .ttbm-pm-card-paypal .ttbm-pm-icon,#ttbm-edit-payment-modal .ttbm-pm-gateways .ttbm-pm-card-stripe .ttbm-pm-icon,#ttbm-edit-payment-modal .ttbm-pm-gateways .ttbm-pm-card-offline .ttbm-pm-icon{background:#fff;color:#334155;}
+#ttbm-edit-payment-modal .ttbm-pm-gateways .ttbm-pm-title{font-size:15px;font-weight:700;color:#1e293b;}
+#ttbm-edit-payment-modal .ttbm-pm-gateways .ttbm-pm-desc{font-size:13px;color:#475569;}
+#ttbm-edit-payment-modal .ttbm-pm-gateways .ttbm-pm-badge{font-size:11px;letter-spacing:0;text-transform:none;background:#f1f5f9;color:#475569;}
+#ttbm-edit-payment-modal .ttbm-pm-gateways .ttbm-pm-card.is-enabled .ttbm-pm-badge{background:#dcfce7;color:#166534;}
+#ttbm-edit-payment-modal .ttbm-pm-gateways .ttbm-pm-pro-badge{font-size:11px;letter-spacing:0;background:#ede9fe;color:#5b21b6;border:0;box-shadow:none;padding:3px 9px;}
+#ttbm-edit-payment-modal .ttbm-pm-gateways .ttbm-pm-configure-btn{width:100%;justify-content:center;min-height:36px;border-radius:8px !important;background:#2563eb !important;border-color:#2563eb !important;color:#fff !important;font-size:13px !important;}
+#ttbm-edit-payment-modal .ttbm-pm-gateways .ttbm-pm-configure-btn:hover{background:#1d4ed8 !important;border-color:#1d4ed8 !important;color:#fff !important;}
+#ttbm-edit-payment-modal .ttbm-pay-accordion{margin-top:0;border-color:#e2e8f0;border-radius:12px;}
+#ttbm-edit-payment-modal .ttbm-pay-acc-header{padding:14px 18px;background:#f8fafc;color:#1e293b;font-size:14px;font-weight:700;}
+#ttbm-edit-payment-modal .ttbm-pay-acc-header.is-open{background:#f8fafc;color:#1e293b;border-bottom:1px solid #e2e8f0;}
+#ttbm-edit-payment-modal .ttbm-pay-acc-header.is-open .dashicons{color:#475569;}
+#ttbm-edit-payment-modal .ttbm-pay-acc-body{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding:18px;}
+#ttbm-edit-payment-modal .ttbm-pay-acc-body .ttbm-pay-field-row{flex-direction:column;gap:6px;padding:0;border:0;}
+#ttbm-edit-payment-modal .ttbm-pay-acc-body .ttbm-pay-field-label{min-width:0;font-size:13px;color:#1e293b;}
+#ttbm-edit-payment-modal .ttbm-pay-acc-body .ttbm-pay-field-control{max-width:none;width:100%;}
+#ttbm-edit-payment-modal .ttbm-pay-acc-body select.formControl{height:42px;border:1px solid #cbd5e1;border-radius:8px;}
+#ttbm-edit-payment-modal .ttbm-pay-field-desc{font-size:12px;line-height:1.4;color:#475569;}
+#ttbm-edit-payment-modal .ttbm-pay-misc-save-footer{position:sticky;bottom:0;margin:24px -28px 0;padding:16px 28px;background:#f8fafc;border-top:1px solid #e2e8f0;z-index:1;}
+#ttbm-edit-payment-modal .ttbm-pay-misc-save-btn.button.button-primary{height:40px !important;min-height:40px !important;padding:0 20px !important;border-radius:8px !important;background:#2563eb !important;border-color:#2563eb !important;font-size:14px !important;font-weight:600;}
+#ttbm-edit-payment-modal .ttbm-pay-misc-save-btn.button.button-primary:hover{background:#1d4ed8 !important;border-color:#1d4ed8 !important;}
+#ttbm-edit-payment-modal .ttbm-pm-section-title{display:block;margin:0 0 12px;font-size:14px;font-weight:700;color:#1e293b;}
+#ttbm-edit-payment-modal .ttbm-pm-locked-btn.button{display:inline-flex;align-items:center;justify-content:center;width:100%;min-height:36px;border:1px solid #e2e8f0;border-radius:8px;background:#f1f5f9;color:#475569;font-size:13px;font-weight:600;box-shadow:none;opacity:1;cursor:not-allowed;}
+#ttbm-edit-payment-modal .ttbm-pm-gateways{margin-top:0;}
+#ttbm-edit-payment-modal .ttbm-booking-mode-head h3{margin:0 0 10px;font-size:14px;font-weight:700;}
+#ttbm-edit-payment-modal .ttbm-booking-mode.is-locked .ttbm-booking-mode-head p{display:none;}
+#ttbm-edit-payment-modal .ttbm-booking-mode.is-locked .ttbm-booking-mode-cards{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px;background:#eff6ff;border-radius:12px;}
+#ttbm-edit-payment-modal .ttbm-booking-mode.is-locked .ttbm-booking-mode-card{padding:0;border:0;background:transparent;border-radius:0;}
+#ttbm-edit-payment-modal .ttbm-booking-mode.is-locked .ttbm-booking-mode-card.is-active{order:1;flex:1;padding:0;border:0;background:transparent;align-items:center;}
+#ttbm-edit-payment-modal .ttbm-booking-mode.is-locked .ttbm-booking-mode-card.is-active .ttbm-booking-mode-card-desc{display:none;}
+#ttbm-edit-payment-modal .ttbm-booking-mode.is-locked .ttbm-booking-mode-card.is-active .ttbm-booking-mode-card-head{justify-content:flex-start;gap:10px;margin:0;}
+#ttbm-edit-payment-modal .ttbm-booking-mode.is-locked .ttbm-booking-mode-card.is-active .ttbm-booking-mode-card-title{font-size:15px;font-weight:700;}
+#ttbm-edit-payment-modal .ttbm-booking-mode.is-locked .ttbm-booking-mode-card.is-disabled{order:2;flex:0 1 auto;cursor:default;}
+#ttbm-edit-payment-modal .ttbm-booking-mode.is-locked .ttbm-booking-mode-card.is-disabled .ttbm-booking-mode-card-icon,#ttbm-edit-payment-modal .ttbm-booking-mode.is-locked .ttbm-booking-mode-card.is-disabled .ttbm-booking-mode-card-head{display:none !important;}
+#ttbm-edit-payment-modal .ttbm-booking-mode.is-locked .ttbm-booking-mode-card.is-disabled .ttbm-booking-mode-card-body{display:flex;align-items:center;gap:14px;}
+#ttbm-edit-payment-modal .ttbm-booking-mode.is-locked .ttbm-booking-mode-card.is-disabled .ttbm-booking-mode-card-desc{opacity:1;max-width:260px;color:#1e3a8a;}
+#ttbm-edit-payment-modal .ttbm-booking-mode-card-cta.button{margin:0 !important;min-height:34px;padding:0 14px !important;border:1px solid #2563eb !important;border-radius:8px !important;background:#fff !important;color:#1d4ed8 !important;font-size:13px !important;font-weight:600;box-shadow:none !important;}
+#ttbm-edit-payment-modal .ttbm-booking-mode-card-cta.button:hover{background:#eff6ff !important;}
+@media (max-width:782px){#ttbm-edit-payment-modal .ttbm-pm-gateways{grid-template-columns:1fr;}#ttbm-edit-payment-modal .ttbm-pay-acc-body{grid-template-columns:1fr;}}
 CSS;
 			}
 
@@ -435,6 +516,8 @@ jQuery(function ($) {
 	$(document).on('click', '[data-ttbm-payment-modal-open]', function (e) {
 		e.preventDefault();
 		$modal.css('display', 'flex');
+		$modal.find('.ttbm-pay-acc-body').show();
+		$modal.find('.ttbm-pay-acc-header').addClass('is-open');
 	});
 	$(document).on('click', '[data-ttbm-payment-modal-close]', function () {
 		$modal.hide();
@@ -725,6 +808,7 @@ JS;
 				$is_pro = $this->is_pro_active();
 				$allow_guest_booking = $this->opt('ttbm_payment_allow_guest_booking', 'yes');
 				?>
+                <h4 class="ttbm-pm-section-title"><?php esc_html_e('Payment gateways', 'tour-booking-manager'); ?></h4>
                 <div class="ttbm-pm-wrap ttbm-pm-gateways">
 					<?php foreach ($specs as $gateway_id => $spec) :
 						$is_enabled = isset($opts[$spec['enable_key']]) && $opts[$spec['enable_key']] === 'on';
@@ -753,6 +837,8 @@ JS;
 										<span class="dashicons dashicons-admin-generic" aria-hidden="true"></span>
 										<?php esc_html_e('Configure', 'tour-booking-manager'); ?>
 									</button>
+								<?php else : ?>
+                                    <button type="button" class="button ttbm-pm-locked-btn" disabled><?php esc_html_e('Requires PRO', 'tour-booking-manager'); ?></button>
 								<?php endif; ?>
                             </div>
                         </div>

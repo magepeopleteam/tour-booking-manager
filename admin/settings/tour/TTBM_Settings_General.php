@@ -19,8 +19,14 @@
                     <h2><?php esc_html_e('General Information Settings', 'tour-booking-manager'); ?></h2>
                     <p><?php TTBM_Settings::des_p('general_settings_description'); ?></p>
                     <section>
-                        <div class="ttbm-header">
-                            <h4><i class="fas fa-edit" aria-hidden="true"></i><?php esc_html_e('Tour Title & Content', 'tour-booking-manager'); ?></h4>
+                        <div class="ttbm-header ttbm-header--lead">
+                            <div class="ttbm-header__titles">
+                                <span class="ttbm-header__icon" aria-hidden="true"><i class="fas fa-edit"></i></span>
+                                <div class="ttbm-header__text">
+                                    <h4><?php esc_html_e('Tour Title & Content', 'tour-booking-manager'); ?></h4>
+                                    <p class="ttbm-header__sub"><?php esc_html_e('Set up the essentials: the title guests see, its web address and the full description.', 'tour-booking-manager'); ?></p>
+                                </div>
+                            </div>
                         </div>
 						<?php $this->post_title_field($tour_id); ?>
 						<?php
@@ -33,8 +39,10 @@
                     <section class="ttbm-general-info-card">
                         <div class="ttbm-header ttbm-general-info-card__header">
                             <h4><i class="fas fa-info-circle" aria-hidden="true"></i><?php esc_html_e('General Information', 'tour-booking-manager'); ?></h4>
+                            <p class="ttbm-general-info-card__sub"><?php esc_html_e('The basics travellers look for first. Use a switch to show or hide an item on the tour page.', 'tour-booking-manager'); ?></p>
                         </div>
                         <div class="ttbm-general-info-card__grid">
+                            <span class="ttbm-general-info-card__group"><?php esc_html_e('Trip basics', 'tour-booking-manager'); ?></span>
                             <div class="ttbm-general-info-card__row">
                                 <div class="ttbm-general-info-card__col">
 									<?php $this->tour_duration($tour_id); ?>
@@ -51,6 +59,7 @@
 									<?php $this->max_people($tour_id); ?>
                                 </div>
                             </div>
+                            <span class="ttbm-general-info-card__group"><?php esc_html_e('Where and how', 'tour-booking-manager'); ?></span>
                             <div class="ttbm-general-info-card__row">
                                 <div class="ttbm-general-info-card__col">
 									<?php $this->starting_place($tour_id); ?>
@@ -81,8 +90,8 @@
                 <div class="ttbm-gen-field ttbm-gen-field--toggle ttbm-gen-field--inline<?php echo ($display == 'off') ? ' is-toggle-off' : ''; ?>">
                     <div class="ttbm-gen-field__inline-row">
                         <p class="ttbm-gen-field__label">
-							<?php esc_html_e('Stay Night', 'tour-booking-manager'); ?>
-                            <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('stay_night'); ?></span></i>
+							<?php esc_html_e('Overnight stays', 'tour-booking-manager'); ?>
+                            <span class="ttbm-gen-field__hint"><?php esc_html_e('Number of nights included.', 'tour-booking-manager'); ?></span>
                         </p>
 						<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
                         <input type="number" data-ttbm-toggle-field="#<?php echo esc_attr($display_name); ?>" min="0" class="ttbm-gen-field__input formControl" name="ttbm_travel_duration_night" value="<?php echo esc_attr(TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_night')); ?>" placeholder="<?php echo esc_attr($placeholder); ?>" <?php echo esc_attr($disabled); ?>/>
@@ -99,8 +108,8 @@
                 <div class="ttbm-gen-field ttbm-gen-field--inline ttbm-gen-field--duration">
                     <div class="ttbm-gen-field__inline-row">
                         <p class="ttbm-gen-field__label">
-							<?php esc_html_e('Tour Duration', 'tour-booking-manager'); ?>
-                            <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('duration'); ?></span></i>
+							<?php esc_html_e('Tour duration', 'tour-booking-manager'); ?>
+                            <span class="ttbm-gen-field__hint"><?php esc_html_e('How long the tour lasts.', 'tour-booking-manager'); ?></span>
                         </p>
                         <span class="ttbm-gen-field__toggle-spacer" aria-hidden="true"></span>
                         <div class="ttbm-gen-duration-group">
@@ -133,8 +142,8 @@
                 <div class="ttbm-gen-field ttbm-gen-field--toggle ttbm-gen-field--inline<?php echo ($max_people_field_status == 'off') ? ' is-toggle-off' : ''; ?>">
                     <div class="ttbm-gen-field__inline-row">
                         <p class="ttbm-gen-field__label">
-							<?php esc_html_e('Max Guests', 'tour-booking-manager'); ?>
-                            <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('max_people'); ?></span></i>
+							<?php esc_html_e('Max guests', 'tour-booking-manager'); ?>
+                            <span class="ttbm-gen-field__hint"><?php esc_html_e('Largest group this tour accepts.', 'tour-booking-manager'); ?></span>
                         </p>
 						<?php TTBM_Custom_Layout::switch_button($max_people_status_field_name, $max_people_status_checked); ?>
                         <input type="number" min="0" data-ttbm-toggle-field="#<?php echo esc_attr($max_people_status_field_name); ?>" class="ttbm-gen-field__input formControl" name="<?php echo esc_attr($max_people_field_name); ?>" value="<?php echo esc_attr($max_people_field_value); ?>" placeholder="<?php echo esc_attr($max_people_placeholder); ?>" <?php echo ($max_people_field_status == 'off') ? 'disabled' : ''; ?>/>
@@ -166,8 +175,8 @@
                 <div class="ttbm-gen-field ttbm-gen-field--toggle ttbm-gen-field--inline<?php echo ($display == 'off') ? ' is-toggle-off' : ''; ?>">
                     <div class="ttbm-gen-field__inline-row">
                         <p class="ttbm-gen-field__label">
-							<?php esc_html_e('Starting Price', 'tour-booking-manager'); ?>
-                            <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('start_price'); ?></span></i>
+							<?php esc_html_e('Starting price', 'tour-booking-manager'); ?>
+                            <span class="ttbm-gen-field__hint"><?php esc_html_e('Shown as the "from" price. Leave empty to use the lowest ticket price.', 'tour-booking-manager'); ?></span>
                         </p>
 						<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
                         <input type="number" min="0" step="0.01" data-ttbm-toggle-field="#<?php echo esc_attr($display_name); ?>" class="ttbm-gen-field__input formControl" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>" <?php echo ($display == 'off') ? 'disabled' : ''; ?>/>
@@ -186,8 +195,8 @@
                 <div class="ttbm-gen-field ttbm-gen-field--toggle ttbm-gen-field--inline<?php echo ($status == 'off') ? ' is-toggle-off' : ''; ?>">
                     <div class="ttbm-gen-field__inline-row">
                         <p class="ttbm-gen-field__label">
-							<?php esc_html_e('Start Point', 'tour-booking-manager'); ?>
-                            <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('start_place'); ?></span></i>
+							<?php esc_html_e('Start point', 'tour-booking-manager'); ?>
+                            <span class="ttbm-gen-field__hint"><?php esc_html_e('Where the group meets and the tour begins.', 'tour-booking-manager'); ?></span>
                         </p>
 						<?php TTBM_Custom_Layout::switch_button($status_field_name, $status_checked); ?>
                         <input type="text" data-ttbm-toggle-field="#<?php echo esc_attr($status_field_name); ?>" class="ttbm-gen-field__input formControl" name="<?php echo esc_attr($location_field_name); ?>" value="<?php echo esc_attr($location_field_value); ?>" placeholder="<?php echo esc_attr($location_placeholder); ?>" <?php echo ($status == 'off') ? 'disabled' : ''; ?>/>
@@ -206,8 +215,8 @@
                 <div class="ttbm-gen-field ttbm-gen-field--toggle ttbm-gen-field--inline<?php echo ($display == 'off') ? ' is-toggle-off' : ''; ?>">
                     <div class="ttbm-gen-field__inline-row">
                         <p class="ttbm-gen-field__label">
-							<?php esc_html_e('Age Range', 'tour-booking-manager'); ?>
-                            <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('age_range'); ?></span></i>
+							<?php esc_html_e('Age range', 'tour-booking-manager'); ?>
+                            <span class="ttbm-gen-field__hint"><?php esc_html_e('For information only.', 'tour-booking-manager'); ?></span>
                         </p>
 						<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
                         <input type="text" data-ttbm-toggle-field="#<?php echo esc_attr($display_name); ?>" class="ttbm-gen-field__input formControl" name="<?php echo esc_attr($value_name); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($placeholder); ?>" <?php echo ($display == 'off') ? 'disabled' : ''; ?>/>
@@ -286,8 +295,8 @@
                 <div class="ttbm-gen-field ttbm-gen-field--toggle ttbm-gen-field--inline<?php echo ($display == 'off') ? ' is-toggle-off' : ''; ?>">
                     <div class="ttbm-gen-field__inline-row">
                         <p class="ttbm-gen-field__label">
-							<?php esc_html_e('Tour Language', 'tour-booking-manager'); ?>
-                            <i class="fas fa-question-circle tool-tips"><span><?php esc_html_e('Easily select your preferred language to enhance your travel experience.', 'tour-booking-manager'); ?></span></i>
+							<?php esc_html_e('Tour language', 'tour-booking-manager'); ?>
+                            <span class="ttbm-gen-field__hint"><?php esc_html_e('Languages the guide speaks.', 'tour-booking-manager'); ?></span>
                         </p>
 						<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
                         <div data-ttbm-toggle-field="#<?php echo esc_attr($display_name); ?>" class="ttbm-gen-field__input-wrap">
@@ -314,16 +323,14 @@
                 <div class="ttbm-gen-short-desc">
                     <div class="ttbm-gen-short-desc__toggle-row">
                         <p class="ttbm-gen-short-desc__toggle-label">
-                            <i class="fas fa-file-alt" aria-hidden="true"></i>
-							<?php esc_html_e('Short Description', 'tour-booking-manager'); ?>
-                            <i class="fas fa-question-circle tool-tips"><span><?php TTBM_Settings::des_p('short_des'); ?></span></i>
+							<?php esc_html_e('Short description', 'tour-booking-manager'); ?>
                         </p>
 						<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
                     </div>
                     <div class="ttbm-gen-short-desc__body <?php echo esc_attr($active); ?>" data-collapse="#<?php echo esc_attr($display_name); ?>">
                         <textarea class="ttbm-gen-short-desc__textarea formControl" cols="50" rows="5" name="<?php echo esc_attr($value_name); ?>" maxlength="500" placeholder="<?php echo esc_attr($placeholder); ?>"><?php echo esc_textarea($value); ?></textarea>
                         <div class="ttbm-gen-short-desc__meta">
-                            <span class="ttbm-gen-short-desc__hint"><?php esc_html_e('Recommended: 150-300 characters', 'tour-booking-manager'); ?></span>
+                            <span class="ttbm-gen-short-desc__hint"><?php esc_html_e('Recommended: 150 to 300 characters', 'tour-booking-manager'); ?></span>
                             <span class="ttbm-gen-char-count" data-max="500"><?php echo esc_html($char_count); ?> / 500</span>
                         </div>
                     </div>

@@ -1105,6 +1105,104 @@ div.ttbm_global_settings.ttbm_configuration .tabsItem > p {
 	white-space: nowrap;
 }
 
+/* ─── Tour General Information: simple layout ───
+   Two titled groups, label + switch on one line, a visible hint instead of a hover tooltip,
+   42px controls. Scoped away from the hotel card, which shares the base classes. */
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) {
+	--ttbm-a-input-h: 42px;
+}
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-general-info-card__header {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 4px;
+}
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-general-info-card__sub {
+	margin: 0;
+	font-size: 13px;
+	line-height: 1.5;
+	color: #475569;
+}
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-general-info-card__grid {
+	gap: 20px;
+}
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-general-info-card__group {
+	display: block;
+	margin: 8px 0 -4px;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+	color: #475569;
+}
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-general-info-card__group:first-child {
+	margin-top: 0;
+}
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__label,
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-field__label {
+	flex-wrap: wrap;
+	align-items: flex-start;
+	align-content: center;
+	gap: 2px 6px;
+	font-size: 14px;
+	font-weight: 600;
+	color: #1e293b;
+}
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field__hint {
+	flex: 0 0 100%;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 1.4;
+	color: #475569;
+}
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .roundSwitchLabel {
+	align-self: start;
+}
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__input.formControl,
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-duration-group__value,
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-duration-group__unit {
+	border-color: #cbd5e1;
+	border-radius: 8px;
+}
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-duration-group__value {
+	border-radius: 8px 0 0 8px;
+}
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-duration-group__unit {
+	border-radius: 0 8px 8px 0;
+}
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline.is-toggle-off .ttbm-gen-field__input:disabled {
+	background: #f1f5f9;
+	opacity: .7;
+}
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-short-desc__toggle-label {
+	font-size: 14px;
+	color: #1e293b;
+}
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-short-desc__hint {
+	color: #475569;
+}
+
+/* Equal-height columns: hints can wrap differently, so the label block stretches and every
+   control sits on the same baseline across a row. */
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-general-info-card__col > .ttbm-gen-field {
+	height: 100%;
+}
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__inline-row,
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-field__inline-row {
+	height: 100%;
+	grid-template-rows: 1fr auto;
+	align-items: start;
+}
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__label,
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-field__label {
+	align-self: start;
+}
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__input,
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--inline .ttbm-gen-field__input-wrap,
+#ttbm_meta_box_panel .ttbm-general-info-card:not(.ttbm-hotel-details-card) .ttbm-gen-field--duration .ttbm-gen-duration-group {
+	align-self: end;
+}
+
 /* ─── Hotel Details card (admin) ─── */
 #ttbm_meta_box_panel .ttbm-hotel-details-card .ttbm-hotel-details-card__body {
 	display: flex;
@@ -2264,6 +2362,486 @@ div.ttbm_global_settings.ttbm_configuration .groupCheckBox {
 		flex: 1 1 50%;
 	}
 }
+
+/* ─── Off schedule: pill tabs, plain tips, simple day buttons (Option A) ─── */
+#ttbm_meta_box_panel .ttbm-off-schedule-header__title {
+	font-size: 16px;
+	font-weight: 700;
+	color: #1e293b;
+}
+#ttbm_meta_box_panel .ttbm-off-schedule-header__title i { color: #2563eb; font-size: 16px; }
+#ttbm_meta_box_panel .ttbm-off-schedule-header__toggle-label { color: #475569; }
+#ttbm_meta_box_panel .ttbm-off-schedule-header .roundSwitchLabel input:checked + .roundSwitch { background: #2563eb; }
+#ttbm_meta_box_panel .ttbm-off-schedule-tablists {
+	gap: 4px;
+	margin: 0 0 16px;
+	padding: 4px;
+	background: #e2e8f0;
+	border-radius: 10px;
+}
+#ttbm_meta_box_panel .ttbm-off-schedule-tablists li {
+	height: 36px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 22px !important;
+	font-size: 14px;
+	color: #475569;
+	border-radius: 8px !important;
+	border: 0 !important;
+}
+#ttbm_meta_box_panel .ttbm-off-schedule-tablists li:hover { color: #1d4ed8; background: rgba(255, 255, 255, 0.6); }
+#ttbm_meta_box_panel .ttbm-off-schedule-tablists li.active,
+#ttbm_meta_box_panel .ttbm-off-schedule-tablists li.active:hover {
+	color: #1d4ed8;
+	background: #fff;
+	box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
+}
+/* The tip becomes a one-line description. */
+#ttbm_meta_box_panel .ttbm-off-schedule-tip {
+	margin-bottom: 16px;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	background: none;
+}
+#ttbm_meta_box_panel .ttbm-off-schedule-tip__icon,
+#ttbm_meta_box_panel .ttbm-off-schedule-tip__title { display: none; }
+#ttbm_meta_box_panel .ttbm-off-schedule-tip__text { font-size: 13px; line-height: 1.5; color: #475569; }
+/* Day buttons */
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid { gap: 10px; }
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card {
+	min-height: 52px;
+	padding: 0 8px !important;
+	border: 2px solid #e2e8f0;
+	border-radius: 10px;
+	background: #fff;
+}
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card:hover { border-color: #93c5fd; }
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card__mark { display: none; }
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card__label,
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card .customCheckbox { font-size: 14px; font-weight: 600; color: #334155; }
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card:has(input:checked) {
+	border-color: #2563eb;
+	background: #eff6ff;
+	box-shadow: none;
+}
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card:has(input:checked) .ttbm-off-day-card__label { color: #1d4ed8; }
+#ttbm_meta_box_panel .groupCheckBox.ttbm-off-days-grid .ttbm-off-day-card:has(input:focus-visible) { outline: 2px solid #2563eb; outline-offset: 2px; }
+/* Date rows */
+#ttbm_meta_box_panel .ttbm-off-date-card__inner { padding: 0; background: none; border: 0; border-radius: 0; }
+#ttbm_meta_box_panel .ttbm-off-date-card__field .formControl.date_type { min-height: 42px; height: 42px; border-radius: 8px; }
+#ttbm_meta_box_panel .ttbm-off-date-card__sort { display: none; }
+#ttbm_meta_box_panel .ttbm-off-date-card__delete {
+	width: 42px;
+	height: 42px;
+	min-width: 42px;
+	min-height: 42px;
+	border: 0;
+	border-radius: 8px;
+	background: #fef2f2;
+	color: #b91c1c;
+}
+#ttbm_meta_box_panel .ttbm-off-date-card__delete:hover { background: #fee2e2; }
+#ttbm_meta_box_panel .ttbm-off-dates-add-btn {
+	min-height: 44px;
+	padding: 0 16px;
+	border: 2px dashed #93c5fd;
+	border-radius: 10px;
+	color: #1d4ed8;
+}
+#ttbm_meta_box_panel .ttbm-off-dates-add-btn:hover,
+#ttbm_meta_box_panel .ttbm-off-dates-add-btn:focus { background: #eff6ff; border-color: #60a5fa; color: #1d4ed8; }
+
+/* ─── Itinerary builder: accordion days (Option A) ───
+   Day numbers come from a CSS counter, so the title <p> the edit handler scrapes is untouched. */
+#ttbm_meta_box_panel .ttbm-daywise-section .ttbm-daywise-items { counter-reset: ttbm-day; }
+#ttbm_meta_box_panel .ttbm-daywise-section .ttbm-daywise-item {
+	counter-increment: ttbm-day;
+	margin: 0 0 10px;
+	background: #fff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	overflow: hidden;
+	cursor: default;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .ttbm-daywise-item:has(.daywise-header.mActive) { border-color: #2563eb; }
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header,
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header.mActive {
+	position: relative;
+	margin: 0;
+	padding: 12px 14px;
+	background: #fff;
+	border: 0;
+	border-radius: 0;
+	cursor: pointer;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header.mActive { background: #eff6ff; }
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header > .dFlex {
+	align-items: center;
+	gap: 12px;
+	min-height: 34px;
+	padding: 0 190px 0 24px;
+	background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='18' viewBox='0 0 12 18'%3E%3Cg fill='%2394a3b8'%3E%3Ccircle cx='3' cy='3' r='1.5'/%3E%3Ccircle cx='9' cy='3' r='1.5'/%3E%3Ccircle cx='3' cy='9' r='1.5'/%3E%3Ccircle cx='9' cy='9' r='1.5'/%3E%3Ccircle cx='3' cy='15' r='1.5'/%3E%3Ccircle cx='9' cy='15' r='1.5'/%3E%3C/g%3E%3C/svg%3E") no-repeat left center;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header > .dFlex::before {
+	content: "Day " counter(ttbm-day);
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	height: 28px;
+	padding: 0 10px;
+	border-radius: 8px;
+	background: #f1f5f9;
+	color: #475569;
+	font-size: 12px;
+	font-weight: 700;
+	white-space: nowrap;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header.mActive > .dFlex::before { background: #2563eb; color: #fff; }
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header > .dFlex > p {
+	font-size: 15px;
+	font-weight: 600;
+	color: #1e293b;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action {
+	right: 48px;
+	display: flex;
+	align-items: center;
+	gap: 2px;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action span {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	padding: 0;
+	border-radius: 8px;
+	background: transparent;
+	color: #475569;
+	cursor: pointer;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action span:hover { background: #e2e8f0; color: #1e293b; }
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action span.ttbm-daywise-item-delete { color: #b91c1c; }
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action span.ttbm-daywise-item-delete:hover { background: #fee2e2; color: #b91c1c; }
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header::after {
+	content: "\f078";
+	font-family: "Font Awesome 5 Free", "Font Awesome 6 Free", sans-serif;
+	font-weight: 900;
+	font-size: 13px;
+	position: absolute;
+	right: 18px;
+	top: 50%;
+	margin-top: -8px;
+	line-height: 16px;
+	color: #475569;
+	transition: transform 0.2s ease;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header.mActive::after { transform: rotate(180deg); }
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-content,
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-content.mActive {
+	margin: 0;
+	padding: 4px 18px 18px 74px;
+	border: 0;
+	border-radius: 0;
+	font-size: 14px;
+	line-height: 1.65;
+	color: #334155;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-content p { margin: 0 0 8px; }
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-content p:last-child { margin-bottom: 0; }
+#ttbm_meta_box_panel .ttbm-daywise-item-new.button {
+	width: 100%;
+	min-height: 46px;
+	margin-top: 4px;
+	border: 2px dashed #93c5fd;
+	border-radius: 10px;
+	background: #fff;
+	color: #1d4ed8;
+	font-size: 14px;
+	font-weight: 600;
+	box-shadow: none;
+}
+#ttbm_meta_box_panel .ttbm-daywise-item-new.button::before { content: "+ "; }
+#ttbm_meta_box_panel .ttbm-daywise-item-new.button:hover,
+#ttbm_meta_box_panel .ttbm-daywise-item-new.button:focus {
+	background: #eff6ff;
+	border-color: #60a5fa;
+	color: #1d4ed8;
+}
+@media (max-width: 782px) {
+	#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header > .dFlex { padding-right: 0; flex-wrap: wrap; }
+	#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action { position: static; transform: none; }
+	#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header::after { display: none; }
+	#ttbm_meta_box_panel .ttbm-daywise-section .daywise-content, #ttbm_meta_box_panel .ttbm-daywise-section .daywise-content.mActive { padding-left: 18px; }
+}
+
+/* ─── Itinerary modal: centered dialog (Option B) ───
+   Scoped by data-modal-target so the FAQ and other modals keep their slide-in drawer. */
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	box-sizing: border-box;
+}
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-content {
+	position: relative;
+	top: auto;
+	right: auto;
+	width: 720px;
+	max-width: 100%;
+	height: auto;
+	max-height: calc(100vh - 40px);
+	background: #fff;
+	border-radius: 14px;
+	box-shadow: 0 24px 60px rgba(15, 23, 42, 0.4);
+	opacity: 0;
+	transform: translateY(12px) scale(0.98);
+	transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"].open .ttbm-modal-content {
+	opacity: 1;
+	transform: none;
+}
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-header { padding: 20px 28px; }
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-header__icon { display: none; }
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-header h3 { font-size: 18px; margin: 0 0 2px; color: #1e293b; }
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-header p { font-size: 13px; color: #475569; }
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-close:not(.ttbm-modal-cancel) { width: 36px; height: 36px; color: #334155; font-size: 14px; }
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-body {
+	display: grid;
+	grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+	gap: 20px 16px;
+	align-content: start;
+	padding: 24px 28px;
+}
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] #ttbm-daywise-msg { grid-column: 1 / -1; margin: 0; }
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-field { margin: 0; min-width: 0; }
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-field:last-child { grid-column: 1 / -1; }
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-content .ttbm-modal-label { font-size: 14px; color: #1e293b; margin: 0 0 6px; }
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-optional { color: #475569; }
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-content input[type="text"],
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-content input[type="time"] {
+	height: 44px;
+	padding: 0 14px;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	font-size: 15px;
+	color: #1e293b;
+	box-sizing: border-box;
+}
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-content input[type="text"]:focus,
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-content input[type="time"]:focus {
+	border-color: #2563eb;
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 16px 28px;
+	background: #f8fafc;
+}
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-cancel {
+	width: auto;
+	height: 40px;
+	padding: 0 12px;
+	border: 0;
+	border-radius: 8px;
+	background: transparent;
+	color: #475569;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+}
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-cancel:hover { background: #e2e8f0; color: #1e293b; }
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-btn { height: 40px; padding: 0 20px; font-size: 14px; }
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-btn i { display: none; }
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-btn--primary {
+	background: #2563eb;
+	box-shadow: none;
+}
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-btn--primary:hover { background: #1d4ed8; transform: none; box-shadow: none; }
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-btn--secondary {
+	background: #fff;
+	border: 1px solid #2563eb;
+	color: #1d4ed8 !important;
+}
+#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-btn--secondary:hover { background: #eff6ff; color: #1d4ed8 !important; transform: none; }
+@media (max-width: 640px) {
+	#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-body { grid-template-columns: 1fr; padding: 20px; }
+	#ttbm_meta_box_panel .ttbm-modal-container[data-modal-target="ttbm-daywise-item-new"] .ttbm-modal-footer { flex-wrap: wrap; padding: 14px 20px; }
+}
+
+/* Itinerary active day: one tinted card with a single border (no inner header/content boxes). */
+#ttbm_meta_box_panel .ttbm-daywise-section .ttbm-daywise-item {
+	border: 1px solid #e2e8f0 !important;
+	border-radius: 12px !important;
+	box-shadow: none !important;
+	background: #fff;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .ttbm-daywise-item:has(.daywise-header.mActive) {
+	border-color: #2563eb !important;
+	background: #eff6ff;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header,
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header.mActive,
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-content,
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-content.mActive {
+	border: 0 !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	background: transparent !important;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action span {
+	background: transparent !important;
+	box-shadow: none !important;
+}
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action span:hover { background: #e2e8f0 !important; }
+#ttbm_meta_box_panel .ttbm-daywise-section .daywise-header .daywise-action span.ttbm-daywise-item-delete:hover { background: #fee2e2 !important; }
+
+/* ─── FAQ list: same accordion look as the itinerary builder ───
+   No badge: FAQs are not numbered. */
+#ttbm_meta_box_panel .ttbm-faq-section .ttbm-faq-item {
+	margin: 0 0 10px;
+	background: #fff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	overflow: hidden;
+	cursor: default;
+}
+#ttbm_meta_box_panel .ttbm-faq-section .ttbm-faq-item:has(.faq-header.mActive) { border-color: #2563eb; }
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header,
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header.mActive {
+	position: relative;
+	margin: 0;
+	padding: 12px 14px;
+	background: #fff;
+	border: 0;
+	border-radius: 0;
+	cursor: pointer;
+}
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header.mActive { background: #eff6ff; }
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header > .dFlex {
+	align-items: center;
+	gap: 12px;
+	min-height: 34px;
+	padding: 0 190px 0 24px;
+	background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='18' viewBox='0 0 12 18'%3E%3Cg fill='%2394a3b8'%3E%3Ccircle cx='3' cy='3' r='1.5'/%3E%3Ccircle cx='9' cy='3' r='1.5'/%3E%3Ccircle cx='3' cy='9' r='1.5'/%3E%3Ccircle cx='9' cy='9' r='1.5'/%3E%3Ccircle cx='3' cy='15' r='1.5'/%3E%3Ccircle cx='9' cy='15' r='1.5'/%3E%3C/g%3E%3C/svg%3E") no-repeat left center;
+}
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header > .dFlex > p {
+	font-size: 15px;
+	font-weight: 600;
+	color: #1e293b;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header .faq-action {
+	right: 48px;
+	display: flex;
+	align-items: center;
+	gap: 2px;
+}
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header .faq-action span {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	padding: 0;
+	border-radius: 8px;
+	background: transparent;
+	color: #475569;
+	cursor: pointer;
+}
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header .faq-action span:hover { background: #e2e8f0; color: #1e293b; }
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header .faq-action span.ttbm-faq-item-delete { color: #b91c1c; }
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header .faq-action span.ttbm-faq-item-delete:hover { background: #fee2e2; color: #b91c1c; }
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header::after {
+	content: "\f078";
+	font-family: "Font Awesome 5 Free", "Font Awesome 6 Free", sans-serif;
+	font-weight: 900;
+	font-size: 13px;
+	position: absolute;
+	right: 18px;
+	top: 50%;
+	margin-top: -8px;
+	line-height: 16px;
+	color: #475569;
+	transition: transform 0.2s ease;
+}
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header.mActive::after { transform: rotate(180deg); }
+#ttbm_meta_box_panel .ttbm-faq-section .faq-content,
+#ttbm_meta_box_panel .ttbm-faq-section .faq-content.mActive {
+	margin: 0;
+	padding: 4px 18px 18px 38px;
+	border: 0;
+	border-radius: 0;
+	font-size: 14px;
+	line-height: 1.65;
+	color: #334155;
+}
+#ttbm_meta_box_panel .ttbm-faq-section .faq-content p { margin: 0 0 8px; }
+#ttbm_meta_box_panel .ttbm-faq-section .faq-content p:last-child { margin-bottom: 0; }
+#ttbm_meta_box_panel .ttbm-faq-item-new.button {
+	width: 100%;
+	min-height: 46px;
+	margin-top: 4px;
+	border: 2px dashed #93c5fd;
+	border-radius: 10px;
+	background: #fff;
+	color: #1d4ed8;
+	font-size: 14px;
+	font-weight: 600;
+	box-shadow: none;
+}
+#ttbm_meta_box_panel .ttbm-faq-item-new.button::before { content: "+ "; }
+#ttbm_meta_box_panel .ttbm-faq-item-new.button:hover,
+#ttbm_meta_box_panel .ttbm-faq-item-new.button:focus {
+	background: #eff6ff;
+	border-color: #60a5fa;
+	color: #1d4ed8;
+}
+@media (max-width: 782px) {
+	#ttbm_meta_box_panel .ttbm-faq-section .faq-header > .dFlex { padding-right: 0; flex-wrap: wrap; }
+	#ttbm_meta_box_panel .ttbm-faq-section .faq-header .faq-action { position: static; transform: none; }
+	#ttbm_meta_box_panel .ttbm-faq-section .faq-header::after { display: none; }
+	#ttbm_meta_box_panel .ttbm-faq-section .faq-content, #ttbm_meta_box_panel .ttbm-faq-section .faq-content.mActive { padding-left: 18px; }
+}
+
+/* FAQ active item: one tinted card with a single border (no inner header/content boxes). */
+#ttbm_meta_box_panel .ttbm-faq-section .ttbm-faq-item {
+	border: 1px solid #e2e8f0 !important;
+	border-radius: 12px !important;
+	box-shadow: none !important;
+	background: #fff;
+}
+#ttbm_meta_box_panel .ttbm-faq-section .ttbm-faq-item:has(.faq-header.mActive) {
+	border-color: #2563eb !important;
+	background: #eff6ff;
+}
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header,
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header.mActive,
+#ttbm_meta_box_panel .ttbm-faq-section .faq-content,
+#ttbm_meta_box_panel .ttbm-faq-section .faq-content.mActive {
+	border: 0 !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	background: transparent !important;
+}
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header .faq-action span {
+	background: transparent !important;
+	box-shadow: none !important;
+}
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header .faq-action span:hover { background: #e2e8f0 !important; }
+#ttbm_meta_box_panel .ttbm-faq-section .faq-header .faq-action span.ttbm-faq-item-delete:hover { background: #fee2e2 !important; }
 
 /* ─── Buttons ─── */
 #ttbm_meta_box_panel .ttbm_style .themeButton,
@@ -5508,6 +6086,88 @@ div.ttbm_global_settings .button-primary {
 	}
 }
 
+/* ─── Tour date type: "Option A" card selector refinement ───
+   Plain-case labels, pill/radio buttons and panel styling. The Tour Type cards are left as before.
+   Placed after the base rules above so it wins at equal specificity. */
+#ttbm_meta_box_panel .ttbm_settings_dates {
+	--ttbm-date-primary: #2563eb;
+	--ttbm-date-primary-hover: #1d4ed8;
+	--ttbm-date-primary-soft: #eff6ff;
+	--ttbm-date-panel-bg: #fff;
+	--ttbm-date-border: #e2e8f0;
+	--ttbm-date-muted: #475569;
+}
+/* The Tour Type selector keeps its original look (solid fill + pointer), so pin the tokens it reads. */
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-tour-type-selector {
+	--ttbm-date-primary: #2271b1;
+	--ttbm-date-border: #e8eaed;
+	--ttbm-date-muted: #64748b;
+}
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-date-config-panel {
+	padding: 24px;
+	border-radius: 12px;
+}
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-field-label {
+	font-size: 12px;
+	font-weight: 600;
+	color: #475569;
+	text-transform: none;
+	margin-bottom: 6px;
+}
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-fixed-date-field .ttbm-input-icon .formControl {
+	min-height: 42px;
+	padding-top: 9px;
+	padding-bottom: 9px;
+}
+/* Repeat pattern: separate pill buttons instead of one grey track */
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-pill-segment {
+	gap: 8px;
+	padding: 0;
+	background: transparent;
+	border-radius: 0;
+}
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-pill-btn {
+	min-height: 38px;
+	padding: 0 18px;
+	border: 1px solid #cbd5e1;
+	border-radius: 999px;
+	background: #fff;
+	color: #334155;
+	font-weight: 600;
+}
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-pill-btn:hover { background: #f1f5f9; }
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-pill-btn.active,
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-pill-btn.active:hover {
+	background: var(--ttbm-date-primary);
+	border-color: var(--ttbm-date-primary);
+	color: #fff;
+	box-shadow: none;
+}
+/* End repeat logic: bordered option buttons, active one tinted */
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-radio-btn {
+	min-height: 42px;
+	padding: 0 18px;
+	border: 2px solid var(--ttbm-date-border);
+	border-radius: 8px;
+	background: #fff;
+	font-weight: 600;
+}
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-radio-btn::before { display: none; }
+#ttbm_meta_box_panel .ttbm_settings_dates .ttbm-radio-btn.active {
+	border-color: var(--ttbm-date-primary);
+	background: var(--ttbm-date-primary-soft);
+}
+#ttbm_meta_box_panel .ttbm-particular-date-card__inner {
+	background: #f8fafc;
+	border-radius: 10px;
+	box-shadow: none;
+}
+#ttbm_meta_box_panel .ttbm-particular-dates-add-btn {
+	border-color: #93c5fd;
+	border-radius: 10px;
+	color: #1d4ed8;
+}
+
 /* ─── Map / OSM area ─── */
 #ttbm_meta_box_panel .ttbm-location-select-wrap {
 	flex: 1 1 55%;
@@ -8401,4 +9061,514 @@ div.ttbm_global_settings .ttbm_style [class*="_themeButton"] i {
 	border-radius: 8px;
 	color: #2563eb;
 	font-size: 14px;
+}
+/* ─── Frontend Ticket Preview (right sidebar): clean cards. Shown on the Pricing and Details steps only. ─── */
+#ttbm_meta_box_panel .ttbm-tp { display: none; }
+#ttbm_content[data-wz-step="pricing"] .ttbm-right-sidebar .ttbm-tp,
+#ttbm_content[data-wz-step="more"] .ttbm-right-sidebar .ttbm-tp { display: block; }
+#ttbm_meta_box_panel .ttbm-tp__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	margin-bottom: 6px;
+}
+#ttbm_meta_box_panel .ttbm-tp__head h4 { margin: 0; padding: 0; font-size: 15px; font-weight: 700; color: #1e293b; }
+#ttbm_meta_box_panel .ttbm-tp__live {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 3px 10px;
+	border-radius: 999px;
+	background: #dcfce7;
+	color: #166534;
+	font-size: 12px;
+	font-weight: 600;
+}
+#ttbm_meta_box_panel .ttbm-tp__dot { width: 7px; height: 7px; border-radius: 50%; background: #16a34a; }
+#ttbm_meta_box_panel .ttbm-tp__hint { margin: 0 0 16px; font-size: 12px; line-height: 1.5; color: #475569; }
+#ttbm_meta_box_panel .ttbm-tp__body { display: flex; flex-direction: column; gap: 10px; }
+#ttbm_meta_box_panel .ttbm-tp__empty {
+	margin: 0;
+	padding: 18px 14px;
+	border: 1px dashed #cbd5e1;
+	border-radius: 10px;
+	text-align: center;
+	font-size: 13px;
+	color: #475569;
+}
+#ttbm_meta_box_panel .ttbm-tp__item {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 14px;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	background: #fff;
+}
+#ttbm_meta_box_panel .ttbm-tp__info { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+#ttbm_meta_box_panel .ttbm-tp__name { font-size: 15px; font-weight: 700; color: #1e293b; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#ttbm_meta_box_panel .ttbm-tp__price { display: flex; align-items: baseline; gap: 6px; }
+#ttbm_meta_box_panel .ttbm-tp__price-now { font-size: 16px; font-weight: 700; color: #1d4ed8; }
+#ttbm_meta_box_panel .ttbm-tp__price-was { font-size: 12px; color: #64748b; }
+#ttbm_meta_box_panel .ttbm-tp__avail { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #475569; }
+#ttbm_meta_box_panel .ttbm-tp__avail-dot { width: 7px; height: 7px; border-radius: 50%; background: #16a34a; }
+#ttbm_meta_box_panel .ttbm-tp__qty {
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	border: 1px solid #cbd5e1;
+	border-radius: 10px;
+	overflow: hidden;
+}
+#ttbm_meta_box_panel .ttbm-tp__qty-btn {
+	width: 36px;
+	height: 36px;
+	padding: 0;
+	border: 0;
+	background: #f1f5f9;
+	color: #1e293b;
+	font-size: 18px;
+	line-height: 1;
+	cursor: pointer;
+}
+#ttbm_meta_box_panel .ttbm-tp__qty-btn:hover:not(:disabled) { background: #e2e8f0; }
+#ttbm_meta_box_panel .ttbm-tp__qty-btn:disabled { color: #94a3b8; cursor: not-allowed; }
+#ttbm_meta_box_panel .ttbm-tp__qty-val { min-width: 36px; text-align: center; font-size: 15px; font-weight: 600; color: #1e293b; }
+#ttbm_meta_box_panel .ttbm-tp__footer { display: flex; flex-direction: column; gap: 14px; }
+#ttbm_meta_box_panel .ttbm-tp__footer:empty { display: none; }
+#ttbm_meta_box_panel .ttbm-tp__total {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 16px;
+	padding-top: 14px;
+	border-top: 1px solid #e2e8f0;
+	font-size: 13px;
+	color: #475569;
+}
+#ttbm_meta_box_panel .ttbm-tp__total strong { font-size: 20px; color: #1e293b; }
+#ttbm_meta_box_panel .ttbm-tp__book {
+	display: block;
+	width: 100%;
+	height: 44px;
+	border: 0;
+	border-radius: 10px;
+	background: #2563eb;
+	color: #fff;
+	font-size: 15px;
+	font-weight: 600;
+	cursor: default;
+}
+
+/* ─── Editor layout: content box + boxed sidebar cards (Option B) ───
+   The old shell was one white bordered box around the tab list, the content and the sidebar.
+   Now the content is its own box and the sidebar is a column of separate cards on the grey page. */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm_settings .ttbmTabs.leftTabs,
+body.ttbm-modern-edit-page #ttbm_content.ttbm_configuration .ttbmTabs.leftTabs {
+	background: transparent !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	overflow: visible !important;
+	gap: 24px;
+	align-items: flex-start;
+	padding-top: 24px;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .tabsContent,
+body.ttbm-modern-edit-page #ttbm_content.ttbm_configuration .ttbmTabs.leftTabs > .tabsContent {
+	background: #fff !important;
+	border: 1px solid #e2e8f0;
+	border-radius: 14px;
+	box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+	padding: 28px 32px;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-right-sidebar .ttbm-sb-card {
+	border: 1px solid #e2e8f0;
+	border-radius: 14px;
+	box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+	padding: 20px;
+}
+@media (max-width: 782px) {
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm_settings .ttbmTabs.leftTabs,
+	body.ttbm-modern-edit-page #ttbm_content.ttbm_configuration .ttbmTabs.leftTabs {
+		padding-top: 12px;
+	}
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .tabsContent,
+	body.ttbm-modern-edit-page #ttbm_content.ttbm_configuration .ttbmTabs.leftTabs > .tabsContent {
+		border-radius: 12px;
+		padding: 18px 14px !important;
+	}
+}
+
+/* ─── Editor layout fixes: no panel behind the sidebar, no boxes inside the content box ─── */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .ttbm-right-sidebar {
+	background: transparent !important;
+	border: 0 !important;
+	box-shadow: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	align-self: flex-start;
+}
+/* Sections inside the content box become flat blocks split by a hairline, not cards in a card. */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .tabsContent .tabsItem > section {
+	background: transparent !important;
+	border: 0 !important;
+	border-bottom: 1px solid #eef2f6 !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	transform: none !important;
+	padding: 0 0 28px !important;
+	margin: 0 0 28px !important;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .tabsContent .tabsItem > section:last-of-type {
+	border-bottom: 0 !important;
+	padding-bottom: 0 !important;
+	margin-bottom: 0 !important;
+}
+
+/* Space between the content box and the sidebar. A margin is used because the flex gap on the shell
+   was not applied here; the shell stacks below 1200px, where the sidebar goes full width instead. */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .ttbm-right-sidebar {
+	margin-left: 24px !important;
+}
+@media (max-width: 1200px) {
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .ttbm-right-sidebar {
+		margin: 24px 0 0 !important;
+	}
+}
+
+/* Section spacing inside the content box: every top-level section, whatever its wrapper, gets a clear
+   gap and a visible divider. Nested sections (a section inside a section) are left alone. */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .tabsContent .tabsItem section:not(section section) {
+	background: transparent !important;
+	border: 0 !important;
+	border-bottom: 1px solid #e2e8f0 !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	transform: none !important;
+	padding: 0 0 32px !important;
+	margin: 0 0 32px !important;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .tabsContent .tabsItem section:not(section section):last-of-type {
+	border-bottom: 0 !important;
+	padding-bottom: 0 !important;
+	margin-bottom: 0 !important;
+}
+
+/* ─── Content area: each section is its own card on the grey page ───
+   Replaces the single white content box + hairline dividers. The pane heading and intro text sit on the
+   grey page above the first card, and the cards are spaced like the sidebar cards. */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .tabsContent,
+body.ttbm-modern-edit-page #ttbm_content.ttbm_configuration .ttbmTabs.leftTabs > .tabsContent {
+	background: transparent !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	padding: 0 0 24px !important;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .tabsContent .tabsItem section:not(section section) {
+	background: #fff !important;
+	border: 1px solid #e2e8f0 !important;
+	border-radius: 14px !important;
+	box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06) !important;
+	transform: none !important;
+	padding: 24px !important;
+	margin: 0 0 24px !important;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .tabsContent .tabsItem section:not(section section):last-of-type {
+	margin-bottom: 0 !important;
+}
+/* Several panes shown in one step: space them instead of drawing a rule between them. */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-tour-wizard.ttbm-wz-enabled .tabsContent > .tabsItem.ttbm-wz-show + .tabsItem.ttbm-wz-show:not(.ttbm-wz-acc-pane) {
+	margin-top: 32px;
+	padding-top: 0;
+	border-top: 0;
+}
+/* Pane title and intro, on the grey page */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .tabsContent .tabsItem > h2 {
+	margin: 0 0 6px;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .tabsContent .tabsItem > h2 + p {
+	margin: 0 0 20px;
+	color: #475569;
+}
+@media (max-width: 782px) {
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .tabsContent .tabsItem section:not(section section) {
+		padding: 18px 14px !important;
+		margin-bottom: 16px !important;
+	}
+}
+
+/* Pane title + intro, moved inside the first section card by ttbm-tour-wizard.js */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-pane-intro {
+	margin: 0 0 20px;
+	padding: 0 0 18px;
+	border-bottom: 1px solid #eef2f6;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-pane-intro > h2 {
+	margin: 0 0 4px;
+	padding: 0;
+	font-size: 18px;
+	font-weight: 700;
+	color: #1e293b;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-pane-intro > p {
+	margin: 0;
+	font-size: 13px;
+	line-height: 1.5;
+	color: #475569;
+}
+
+/* One heading per card: the pane title is hidden when the first card has its own header. */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem.ttbm-wz-no-intro > h2,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem.ttbm-wz-no-intro > h2 + p {
+	display: none !important;
+}
+/* Lead header: icon chip beside a two-line text block (title + description), vertically centred. */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header--lead {
+	display: block;
+	padding-bottom: 20px;
+	margin-bottom: 24px !important;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-header--lead .ttbm-header__titles {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-header--lead .ttbm-header__icon {
+	flex-shrink: 0;
+	width: 48px;
+	height: 48px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 12px;
+	background: #eff6ff;
+	border: 1px solid #bfdbfe;
+	color: #2563eb;
+	font-size: 20px;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-header--lead .ttbm-header__text {
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header--lead h4 {
+	margin: 0;
+	padding: 0;
+	font-size: 19px;
+	font-weight: 700;
+	line-height: 1.25;
+	letter-spacing: -0.01em;
+	color: #0f172a;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-header--lead .ttbm-header__sub {
+	margin: 0;
+	font-size: 13px;
+	line-height: 1.5;
+	color: #64748b;
+}
+
+/* ─── Section headers everywhere: icon chip and title centred on one line, subtitle under the title ───
+   The icon lives inside the <h4>, so the h4 is a flex row with a fixed-size chip. The lead header on the
+   Basic Info card has its own layout and is left out. */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header:not(.ttbm-header--lead) h4 {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 0;
+	padding: 0;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: -0.01em;
+	color: #0f172a;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header:not(.ttbm-header--lead) h4 i {
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	margin: 0;
+	border-radius: 10px;
+	font-size: 17px;
+}
+/* A subtitle inside a header starts exactly where the title text starts: chip 40px + gap 12px. */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header:not(.ttbm-header--lead) > p,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-general-info-card__sub {
+	margin: 2px 0 0 52px;
+	font-size: 13px;
+	line-height: 1.5;
+	color: #64748b;
+}
+/* Switch / code on the right of a header stays vertically centred with the title. */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header {
+	align-items: center;
+}
+
+/* ─── Last card in a pane: restore its border and bottom padding ───
+   An older divider rule used :last-of-type to remove them, and it is more specific than the card rule,
+   so the last card was drawn clipped (no bottom padding, no bottom border). */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .tabsContent .tabsItem section:not(section section):last-of-type {
+	border: 1px solid #e2e8f0 !important;
+	padding: 24px !important;
+	margin-bottom: 0 !important;
+}
+
+/* ─── Schedule cards (Time Slots, Off Days and Dates): same header as every other card ─── */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-time-slots-header,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-off-schedule-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	min-height: 40px;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-time-slots-header__title,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-off-schedule-header__title {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 0;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: -0.01em;
+	color: #0f172a;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-time-slots-header__title i,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-off-schedule-header__title i {
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 10px;
+	background: #eff6ff;
+	border: 1px solid #bfdbfe;
+	color: #2563eb;
+	font-size: 17px;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-time-slots-header__toggle,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-off-schedule-header__toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+}
+
+/* General Information header is a vertical stack (title row, then subtitle): keep it left-aligned.
+   The generic "align-items: center" for headers is only meant for rows with a switch on the right. */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header.ttbm-general-info-card__header {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	text-align: left;
+	gap: 2px;
+}
+
+/* Spacing between cards: some cards sit in their own wrapper (Schedule: dates, time slots, off days), so each is
+   its own :last-of-type and lost its bottom margin. Every card now keeps the 24px gap; the content area drops
+   its own bottom padding so the end of a pane is not doubled. */
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .tabsContent .tabsItem section:not(section section),
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .tabsContent .tabsItem section:not(section section):last-of-type {
+	margin-bottom: 24px !important;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .tabsContent,
+body.ttbm-modern-edit-page #ttbm_content.ttbm_configuration .ttbmTabs.leftTabs > .tabsContent {
+	padding-bottom: 0 !important;
+}
+
+/* ─── Ticket types table: grouped columns ─── */
+#ttbm_meta_box_panel .ttbm-ticket-types-table-wrap {
+	border-radius: 12px;
+}
+#ttbm_meta_box_panel .ttbm-ticket-types-table thead .ttbm-ticket-group-row th {
+	padding: 12px 8px 6px;
+	background: #fff;
+	border-bottom: 2px solid #2563eb;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: #1d4ed8;
+	text-align: left;
+}
+#ttbm_meta_box_panel .ttbm-ticket-types-table thead .ttbm-ticket-group-row th:first-child {
+	border-top-left-radius: 11px;
+}
+#ttbm_meta_box_panel .ttbm-ticket-types-table thead .ttbm-ticket-group-row th:last-child {
+	border-top-right-radius: 11px;
+}
+#ttbm_meta_box_panel .ttbm-ticket-types-table thead tr:not(.ttbm-ticket-group-row) th {
+	padding: 9px 8px;
+	background: #f8fafc;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0;
+	text-transform: none;
+	color: #475569;
+}
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td {
+	padding: 12px 8px;
+	border-bottom: 1px solid #f1f5f9;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-ticket-types-add-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	width: 100%;
+	min-height: 46px;
+	margin-top: 16px;
+	padding: 0 16px;
+	border: 2px dashed #93c5fd;
+	border-radius: 10px;
+	background: #fff;
+	box-shadow: none;
+	color: #1d4ed8;
+	font-size: 14px;
+	font-weight: 600;
+}
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-ticket-types-add-btn:hover,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-ticket-types-add-btn:focus {
+	background: #eff6ff;
+	border-color: #60a5fa;
+	color: #1d4ed8;
+}
+
+/* Ticket preview: extra services heading and the breakdown of what has a quantity */
+#ttbm_meta_box_panel .ttbm-tp__group {
+	margin-top: 6px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: #475569;
+}
+#ttbm_meta_box_panel .ttbm-tp__lines {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-top: 16px;
+	padding-top: 14px;
+	border-top: 1px solid #e2e8f0;
+}
+#ttbm_meta_box_panel .ttbm-tp__line {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	font-size: 13px;
+	color: #334155;
+}
+#ttbm_meta_box_panel .ttbm-tp__line span:last-child {
+	font-weight: 600;
+	color: #1e293b;
+}
+#ttbm_meta_box_panel .ttbm-tp__lines + .ttbm-tp__total {
+	margin-top: 10px;
+	padding-top: 10px;
+	border-top: 1px dashed #cbd5e1;
 }

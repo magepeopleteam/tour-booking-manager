@@ -122,12 +122,14 @@ body.ttbm-modern-edit-page #post-body-content { margin-bottom: 0 !important; }
 
 /* ── Page background ── */
 body.ttbm-modern-edit-page #wpcontent,
-body.ttbm-modern-edit-page #wpbody-content { background: #f4f6f9 !important; }
+body.ttbm-modern-edit-page #wpbody-content { background: #F4F5F7 !important; }
 body.ttbm-modern-edit-page #wpcontent { padding-left: 0 !important; }
 /* No left/right padding on the outer container — header fills 100% width.
    The .wrap inside handles content padding. */
 body.ttbm-modern-edit-page #wpbody-content { padding: 0 !important; }
-body.ttbm-modern-edit-page .wrap { padding: 0 20px 20px !important; margin: 0 auto !important; max-width: 80% !important; background: #fff !important; }
+body.ttbm-modern-edit-page .wrap { padding: 0 0 20px !important; margin: 0 !important; max-width: 100% !important; background: #F4F5F7 !important; }
+/* Header spans the full width; the content below keeps its centred 1400px column (same as the event editor). */
+body.ttbm-modern-edit-page .wrap > form#post > *:not(.ttbm-admin-page-header):not(input):not(#ttbm-page-loader) { max-width: 1400px !important; margin-left: auto !important; margin-right: auto !important; padding-left: 20px !important; padding-right: 20px !important; box-sizing: border-box !important; }
 
 /* ══════════════════════════════════════════════
    SKELETON / PAGE LOADER
@@ -457,7 +459,10 @@ body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header h
 	color: #111827 !important;
 }
 body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header h4 i { color: #2271b1 !important; }
-body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header { border-bottom-color: #f3f4f6 !important; }
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsItem section .ttbm-header {
+	border-bottom-color: #f3f4f6 !important;
+	margin-bottom: 20px !important;
+}
 
 /* ── Right sidebar column ── */
 body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-right-sidebar {
@@ -474,14 +479,14 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 
 /* Sidebar column */
 .ttbm-right-sidebar {
-	width: 272px !important;
+	width: 320px !important;
 	min-width: 272px !important;
 	flex-shrink: 0 !important;
-	padding: 20px 0 20px 16px !important;
+	padding: 0 !important;
 	box-sizing: border-box !important;
 	display: flex !important;
 	flex-direction: column !important;
-	gap: 12px !important;
+	gap: 16px !important;
 }
 
 /* Card base */
@@ -652,8 +657,8 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 	border-bottom: 1px solid #e5e7eb !important;
 	box-shadow: 0 2px 8px rgba(0,0,0,.06) !important;
 	display: grid !important;
-	grid-template-columns: minmax(0, 1fr) minmax(260px, 1.4fr) auto !important;
-	grid-template-areas: "back title actions" !important;
+	grid-template-columns: auto minmax(0, 1fr) auto minmax(0, 1fr) !important;
+	grid-template-areas: "back title steps actions" !important;
 	align-items: center !important;
 	gap: 16px !important;
 	padding: 12px 24px !important;
@@ -692,20 +697,20 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 	font-size: 17px !important;
 	font-weight: 700 !important;
 	color: #111827 !important;
-	white-space: normal !important;
+	white-space: nowrap !important;
 	overflow: hidden !important;
 	text-overflow: ellipsis !important;
 	max-width: 100% !important;
 	width: 100% !important;
 	display: block !important;
-	text-align: center !important;
+	text-align: left !important;
 	line-height: 1.3 !important;
 	margin: 0 !important;
 	padding: 0 !important;
 	background: none !important;
 	border: none !important;
 	letter-spacing: -.01em !important;
-	justify-self: center !important;
+	justify-self: start !important;
 }
 
 /* ── Header right: status, preview, split publish ── */
@@ -754,6 +759,9 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 	/* Let the back link keep its own width; a 1fr column collapses under it and the link overlaps the title. */
 	body.ttbm-modern-edit-page .ttbm-admin-page-header {
 		grid-template-columns: auto minmax(0, 1fr) auto !important;
+		grid-template-areas:
+			"back title actions"
+			"steps steps steps" !important;
 	}
 
 	/* The tab list sits above the content here, so a viewport-height minimum only leaves an empty band. */
@@ -777,6 +785,7 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 		grid-template-areas:
 			"title"
 			"back"
+			"steps"
 			"actions" !important;
 		padding: 10px 12px !important;
 		gap: 10px !important;
@@ -972,7 +981,8 @@ jQuery(function($){
 	var previewLabel   = <?php echo wp_json_encode(__('Preview', 'tour-booking-manager')); ?>;
 
 	var backUrl   = <?php echo wp_json_encode($back_url); ?>;
-	var backLabel = <?php echo wp_json_encode($back_label); ?>;
+	// The header draws its own arrow icon, so drop the arrow baked into the translated label.
+	var backLabel = <?php echo wp_json_encode($back_label); ?>.replace(/^\u2190\s*/, '');
 
 	var arrowSvg = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 	var eyeSvg   = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -1001,6 +1011,12 @@ jQuery(function($){
 			'</div>' +
 		'</div>'
 	);
+
+	/* Step navigation lives in the header, centred between the title and the actions. */
+	var $wzSteps = $('.ttbm-wz-steps').first();
+	if ($wzSteps.length) {
+		header.find('.ttbm-header-tour-title').after($wzSteps);
+	}
 
 	header.find('.ttbm-header-back').attr('href', backUrl).html(arrowSvg + backLabel);
 	header.find('.ttbm-header-tour-title').text(pageTitle || '');

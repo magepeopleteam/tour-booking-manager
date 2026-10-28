@@ -15,7 +15,8 @@
 	}
 	var $content = $root.find('.tabsContent:first');
 	var $footer = $content.children('.ttbm-wz-footer');
-	var $nav = $root.find('.ttbm-wz-steps');
+	// The step nav is moved into the page header (outside #ttbm_content) once that is built.
+	var $nav = $('.ttbm-wz-steps').first();
 	var config = [];
 	try {
 		config = JSON.parse($root.attr('data-wizard') || '[]');
@@ -173,6 +174,9 @@
 		var finalLabel = $.trim(mainSaveButton().text()) || $.trim(mainSaveButton().val()) || 'Save';
 		$footer.find('.ttbm-wz-next').text(last ? finalLabel : $footer.data('next-label'));
 		$footer.find('.ttbm-wz-progress').text((idx + 1) + ' / ' + config.length);
+		$footer.find('.ttbm-wz-step-num').text(idx + 1);
+		$footer.find('.ttbm-wz-step-name').text(config[idx].label || '');
+		$footer.find('.ttbm-wz-footer__bar span').css('width', ((idx + 1) / config.length * 100) + '%');
 		$root.attr('data-wz-step', current);
 	}
 
@@ -326,5 +330,27 @@
 	// The header save button is injected after this script runs; refresh the last-step label then.
 	$(window).on('load', function () {
 		updateChrome();
+	});
+
+	// Each plain pane's title and intro text moves inside its first section card, so the card carries
+	// its own heading. Done last: the accordion heads above read these <h2> texts first.
+	$content.children('.tabsItem').not('.ttbm-wz-acc-pane').each(function () {
+		var $p = $(this);
+		var $h = $p.children('h2').first();
+		var $s = $p.children('section').first();
+		if (!$h.length || !$s.length) {
+			return;
+		}
+		// A first card that already has its own heading is enough: hide the pane title instead of repeating it.
+		if ($s.children('.ttbm-header').length) {
+			$p.addClass('ttbm-wz-no-intro');
+			return;
+		}
+		var $intro = $h.next('p');
+		var $wrap = $('<div class="ttbm-pane-intro"></div>').append($h);
+		if ($intro.length) {
+			$wrap.append($intro);
+		}
+		$s.prepend($wrap);
 	});
 }(jQuery));

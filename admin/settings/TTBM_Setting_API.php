@@ -338,6 +338,27 @@
 				}
 				return false;
 			}
+			/**
+			 * One-line hint shown under each settings menu item. A section can supply its own 'hint';
+			 * otherwise it is looked up by section id.
+			 */
+			private function get_tab_hint($tab) {
+				if (!empty($tab['hint'])) {
+					return $tab['hint'];
+				}
+				$hints = array(
+					'ttbm_global_settings'            => __('Booking, dates and core options', 'tour-booking-manager'),
+					'ttbm_google_map_settings'        => __('Maps on tour pages', 'tour-booking-manager'),
+					'ttbm_basic_gen_settings'         => __('Booking rules and labels', 'tour-booking-manager'),
+					'ttbm_basic_translation_settings' => __('Words shown to visitors', 'tour-booking-manager'),
+					'ttbm_slider_settings'            => __('The tour image slider', 'tour-booking-manager'),
+					'ttbm_style_settings'             => __('Colours and fonts', 'tour-booking-manager'),
+					'ttbm_license_settings'           => __('Activate your plugin', 'tour-booking-manager'),
+					'ttbm_payment_settings'           => __('How guests pay', 'tour-booking-manager'),
+					'ttbm_status_settings'            => __('A check on your site', 'tour-booking-manager'),
+				);
+				return isset($hints[$tab['id']]) ? $hints[$tab['id']] : '';
+			}
 			function show_navigation() {
 				$count = count($this->settings_sections);
 				if ($count > 1) {
@@ -348,7 +369,10 @@
                                 <?php if (!empty($tab['icon'])) : ?>
                                     <i class="<?php echo esc_attr($tab['icon']); ?>"></i>
                                 <?php endif; ?>
-                                <span><?php echo esc_html($tab['title']); ?></span>
+                                <span class="ttbm-tab-text">
+                                    <span class="ttbm-tab-label"><?php echo esc_html($tab['title']); ?></span>
+                                    <?php $hint = $this->get_tab_hint($tab); if ($hint) : ?><span class="ttbm-tab-hint"><?php echo esc_html($hint); ?></span><?php endif; ?>
+                                </span>
                             </li>
 						<?php } ?>
                     </ul>
@@ -421,8 +445,18 @@
 					?>
                     <div class="ttbm-setting-field">
                         <div class="label">
-							<?php echo esc_html($data['title']); ?>
-                            <span class="tooltips" data-tooltip="<?php echo esc_attr($data['args']['desc']); ?>"><i class="fa fa-info-circle"></i></span>
+                            <span class="ttbm-setting-name"><?php echo esc_html($data['title']); ?></span>
+							<?php if (!empty($data['args']['desc'])) : ?>
+                                <span class="ttbm-setting-help"><?php
+                                    // Some descriptions contain broken tags such as "</stong>". kses drops the bad end tag and
+                                    // leaves the opening tag unclosed, which would swallow the panels that follow. Balance them.
+                                    $help = force_balance_tags(wp_kses($data['args']['desc'], array('strong' => array(), 'b' => array(), 'em' => array(), 'br' => array(), 'code' => array(), 'a' => array('href' => array(), 'target' => array(), 'rel' => array()))));
+                                    // Descriptions were written for tooltips and often have no space around bold or link text ("go to<strong>Settings</strong>or").
+                                    $help = preg_replace('/([^\s>])(<(?:strong|b|em|a)[\s>])/i', '$1 $2', $help);
+                                    $help = preg_replace('/(<\/(?:strong|b|em|a)>)([A-Za-z0-9])/i', '$1 $2', $help);
+                                    echo $help; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                                    ?></span>
+							<?php endif; ?>
                         </div>
 						<?php call_user_func($data['callback'], $data['args']); ?>
                     </div>

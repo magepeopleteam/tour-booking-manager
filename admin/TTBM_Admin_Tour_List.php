@@ -208,12 +208,16 @@
 
                 $design = $this->get_current_list_design();
                 $design_options = array(
-                    'classic' => array('label' => esc_html__('Classic', 'tour-booking-manager'), 'icon' => 'dashicons-list-view'),
-                    'compact' => array('label' => esc_html__('Compact', 'tour-booking-manager'), 'icon' => 'dashicons-menu-alt'),
-                    'modern'  => array('label' => esc_html__('Modern', 'tour-booking-manager'),  'icon' => 'dashicons-grid-view'),
+                    'classic' => array('label' => esc_html__('Detailed', 'tour-booking-manager'), 'icon' => 'dashicons-list-view'),
+                    'compact' => array('label' => esc_html__('List', 'tour-booking-manager'), 'icon' => 'dashicons-menu-alt'),
+                    'modern'  => array('label' => esc_html__('Grid', 'tour-booking-manager'),  'icon' => 'dashicons-grid-view'),
                 );
                 ?>
                 <div class="wrap ttbm-tour-list-page ttbm-design-<?php echo esc_attr($design); ?>">
+                    <div class="ttbm-page-heading">
+                        <h1><?php esc_html_e('Tour Manager', 'tour-booking-manager'); ?></h1>
+                        <p><?php esc_html_e('Create tours and manage everything that goes with them.', 'tour-booking-manager'); ?></p>
+                    </div>
                     <!--Here Analytics-->
                     <?php do_action('ttbm_travel_analytics_display', $posts_query->found_posts, $analytics_Data )?>
                     <?php
@@ -229,14 +233,19 @@
                     <?php endif; ?>
                     <div class="ttbm-tour-dashboard">
                         <div class="ttbm_trvel_lists_tabs">
-                            <button class="active" data-target="ttbm_trvel_lists_tour" data-tab-type="Add New Tour"><span class="icon-wrap"><i class="mi mi-box"></i><?php  esc_html_e(' Tour Package','tour-booking-manager'); ?></span></button>
-                            <button data-target="ttbm_trvel_lists_tour_category" data-tab-type="Add New Category"><span class="icon-wrap"><i class="mi mi-category"></i><?php  esc_html_e('Tour Category','tour-booking-manager'); ?></span></button>
-                            <button data-target="ttbm_trvel_lists_places" data-tab-type="Add New Places"><span class="icon-wrap"><i class="mi mi-magnet"></i><?php  esc_html_e('Tourist Attraction','tour-booking-manager'); ?></span></button>
-                            <button data-target="ttbm_trvel_lists_organiser" data-tab-type="Add New Organiser"><span class="icon-wrap"><i class="mi mi-introduction-handshake"></i><?php  esc_html_e('Trip Organiser','tour-booking-manager'); ?></span></button>
-                            <button data-target="ttbm_trvel_lists_location" data-tab-type="Add New Locations"><span class="icon-wrap"><i class="mi mi-land-layer-location"></i><?php  esc_html_e('Trip Location','tour-booking-manager'); ?></span></button>
-                            <button data-target="ttbm_trvel_lists_features" data-tab-type="Add New Feature"><span class="icon-wrap"><i class="mi mi-list"></i><?php  esc_html_e('Features','tour-booking-manager'); ?></span></button>
-                            <button data-target="ttbm_trvel_lists_tag" data-tab-type="Add New Tag"><span class="icon-wrap"><i class="mi mi-tags"></i> <?php  esc_html_e('Tags','tour-booking-manager'); ?></span></button>
-                            <button data-target="ttbm_trvel_lists_activities" data-tab-type="Add New Activities"><span class="icon-wrap"><i class="mi mi-practice"></i><?php  esc_html_e('Activities','tour-booking-manager'); ?></span></button>
+                            <div class="ttbm-tab-group ttbm-tab-group--main" role="presentation"><?php esc_html_e('Main','tour-booking-manager'); ?></div>
+                            <div class="ttbm-tab-group ttbm-tab-group--organize" role="presentation"><?php esc_html_e('Organize tours','tour-booking-manager'); ?></div>
+                            <div class="ttbm-tab-group ttbm-tab-group--where" role="presentation"><?php esc_html_e('Where','tour-booking-manager'); ?></div>
+                            <div class="ttbm-tab-group ttbm-tab-group--people" role="presentation"><?php esc_html_e('People','tour-booking-manager'); ?></div>
+                            <div class="ttbm-tab-group ttbm-tab-group--details" role="presentation"><?php esc_html_e('Tour details','tour-booking-manager'); ?></div>
+                            <button class="active" data-target="ttbm_trvel_lists_tour" data-tab-type="Add New Tour"><span class="icon-wrap"><i class="mi mi-box"></i><span class="ttbm-tab-text"><span class="ttbm-tab-label"><?php esc_html_e('Tours','tour-booking-manager'); ?></span><span class="ttbm-tab-hint"><?php esc_html_e('Your trips and packages','tour-booking-manager'); ?></span></span></span></button>
+                            <button data-target="ttbm_trvel_lists_tour_category" data-tab-type="Add New Category"><span class="icon-wrap"><i class="mi mi-category"></i><span class="ttbm-tab-text"><span class="ttbm-tab-label"><?php esc_html_e('Tour types','tour-booking-manager'); ?></span><span class="ttbm-tab-hint"><?php esc_html_e('Group tours, like Adventure or Family','tour-booking-manager'); ?></span></span></span></button>
+                            <button data-target="ttbm_trvel_lists_places" data-tab-type="Add New Places"><span class="icon-wrap"><i class="mi mi-magnet"></i><span class="ttbm-tab-text"><span class="ttbm-tab-label"><?php esc_html_e('Places to visit','tour-booking-manager'); ?></span><span class="ttbm-tab-hint"><?php esc_html_e('Sights and stops along the way','tour-booking-manager'); ?></span></span></span></button>
+                            <button data-target="ttbm_trvel_lists_organiser" data-tab-type="Add New Organiser"><span class="icon-wrap"><i class="mi mi-introduction-handshake"></i><span class="ttbm-tab-text"><span class="ttbm-tab-label"><?php esc_html_e('Tour hosts','tour-booking-manager'); ?></span><span class="ttbm-tab-hint"><?php esc_html_e('Companies or people running trips','tour-booking-manager'); ?></span></span></span></button>
+                            <button data-target="ttbm_trvel_lists_location" data-tab-type="Add New Locations"><span class="icon-wrap"><i class="mi mi-land-layer-location"></i><span class="ttbm-tab-text"><span class="ttbm-tab-label"><?php esc_html_e('Destinations','tour-booking-manager'); ?></span><span class="ttbm-tab-hint"><?php esc_html_e('Cities and areas you travel to','tour-booking-manager'); ?></span></span></span></button>
+                            <button data-target="ttbm_trvel_lists_features" data-tab-type="Add New Feature"><span class="icon-wrap"><i class="mi mi-list"></i><span class="ttbm-tab-text"><span class="ttbm-tab-label"><?php esc_html_e('What is included','tour-booking-manager'); ?></span><span class="ttbm-tab-hint"><?php esc_html_e('Meals, transport, hotel and more','tour-booking-manager'); ?></span></span></span></button>
+                            <button data-target="ttbm_trvel_lists_tag" data-tab-type="Add New Tag"><span class="icon-wrap"><i class="mi mi-tags"></i><span class="ttbm-tab-text"><span class="ttbm-tab-label"><?php esc_html_e('Tags','tour-booking-manager'); ?></span><span class="ttbm-tab-hint"><?php esc_html_e('Short labels, like Beach or Weekend','tour-booking-manager'); ?></span></span></span></button>
+                            <button data-target="ttbm_trvel_lists_activities" data-tab-type="Add New Activities"><span class="icon-wrap"><i class="mi mi-practice"></i><span class="ttbm-tab-text"><span class="ttbm-tab-label"><?php esc_html_e('Activities','tour-booking-manager'); ?></span><span class="ttbm-tab-hint"><?php esc_html_e('Things to do, like hiking or boating','tour-booking-manager'); ?></span></span></span></button>
                             <?php do_action('ttbm_travel_lists_tab_button', $label); ?>
                         </div>
                         
@@ -302,6 +311,13 @@
 
                         $post_status = get_post_status();
                         $publish_status = '';
+                        $status_labels = array(
+                            'publish'   => __('Open for booking', 'tour-booking-manager'),
+                            'draft'     => __('Draft', 'tour-booking-manager'),
+                            'pending'   => __('Pending review', 'tour-booking-manager'),
+                            'scheduled' => __('Scheduled', 'tour-booking-manager'),
+                            'trash'     => __('In trash', 'tour-booking-manager'),
+                        );
                         
                         switch ($post_status) {
                             case 'publish':
@@ -371,20 +387,20 @@
                                             // FIXED: Proper nonce for delete functionality - 2025-01-27 by Shahnur Alam
                                             $delete_nonce = wp_create_nonce('ttbm_delete_post_' . $post_id);
                                             ?>
-                                            <a title="<?php echo esc_attr__('View ', 'tour-booking-manager') . ' : ' . esc_attr(get_the_title($post_id)); ?>" class="ttbm_view_post" href="<?php  the_permalink($post_id); ?>" target="_blank"><i class="fa fa-eye"></i></a>
-                                            <a title="<?php echo esc_attr__('Edit ', 'tour-booking-manager') . ' : ' . esc_attr(get_the_title($post_id)); ?>" class="ttbm_edit_post" href="<?php echo esc_url(get_edit_post_link($post_id)); ?>"><i class="fa fa-edit"></i></a>
+                                            <a title="<?php echo esc_attr__('View ', 'tour-booking-manager') . ' : ' . esc_attr(get_the_title($post_id)); ?>" class="ttbm_view_post" href="<?php  the_permalink($post_id); ?>" target="_blank"><i class="fa fa-eye"></i><span class="ttbm-action-text"><?php esc_html_e('View', 'tour-booking-manager'); ?></span></a>
+                                            <a title="<?php echo esc_attr__('Edit ', 'tour-booking-manager') . ' : ' . esc_attr(get_the_title($post_id)); ?>" class="ttbm_edit_post" href="<?php echo esc_url(get_edit_post_link($post_id)); ?>"><i class="fa fa-edit"></i><span class="ttbm-action-text"><?php esc_html_e('Edit', 'tour-booking-manager'); ?></span></a>
                                             <a title="<?php echo esc_attr__('Duplicate Post ', 'tour-booking-manager') . ' : ' . esc_url(get_the_title($post_id)); ?>" class="ttbm_duplicate_post" href="<?php echo esc_url(wp_nonce_url(
                                                 admin_url('admin.php?action=ttbm_duplicate_post&post_id=' . $post_id),
                                                 'ttbm_duplicate_post_' . $post_id
                                             )); ?>">
-                                                <i class="fa fa-clone"></i>
+                                                <i class="fa fa-clone"></i><span class="ttbm-action-text"><?php esc_html_e('Copy', 'tour-booking-manager'); ?></span>
                                             </a>
                                             <a class="ttbm_trash_post" 
                                                data-alert="<?php echo esc_attr__('Are you sure you want to move this to trash: ', 'tour-booking-manager') . ' ' . esc_attr(get_the_title($post_id)); ?>" 
                                                data-post-id="<?php echo esc_attr($post_id); ?>" 
                                                data-nonce="<?php echo esc_attr($delete_nonce); ?>"
                                                title="<?php echo esc_attr__('Move to Trash: ', 'tour-booking-manager') . ' ' . esc_attr(get_the_title($post_id)); ?>">
-                                                <i class="fa fa-trash"></i> 
+                                                <i class="fa fa-trash"></i><span class="ttbm-action-text"><?php esc_html_e('Delete', 'tour-booking-manager'); ?></span>
                                             </a>
                                         </div>
                                     </div>
@@ -409,16 +425,16 @@
                                     </div>
                                     <div class="ttbm-tour-meta">
                                         <div class="ttbm_travel_status <?php echo esc_attr($publish_status?$publish_status:''); ?>">
-                                            <?php echo esc_attr( $publish_status )?>
+                                            <?php echo esc_html( $status_labels[ $publish_status ] ?? $publish_status ); ?>
                                         </div>
                                         <div class="tour-stats">
                                             <div class="stat">
                                                 <span class="value"><?php echo esc_html($total); ?></span> 
-                                                <span class="label"><?php echo esc_html__('Total Seats','tour-booking-manager'); ?></span>
+                                                <span class="label"><?php echo esc_html__('seats','tour-booking-manager'); ?></span>
                                             </div>
                                             <div class="stat">
                                                 <span class="value"><?php echo esc_html($sold); ?></span> 
-                                                <span class="label"><?php echo esc_html__('Sold Seats','tour-booking-manager'); ?></span> 
+                                                <span class="label"><?php echo esc_html__('sold','tour-booking-manager'); ?></span> 
                                             </div>
                                         </div>
                                         <div class="meta-date">

@@ -27,6 +27,7 @@
 					<section>
                         <div class="ttbm-header">
                             <h4><i class="mi mi-table-layout"></i><?php esc_html_e('Template Settings', 'tour-booking-manager'); ?></h4>
+                            <p class="ttbm-header__sub"><?php esc_html_e('Pick the layout guests see on this tour page.', 'tour-booking-manager'); ?></p>
                         </div>
 						<div class="ttbm-template-section">
 							<input type="hidden" name="ttbm_theme_file" value="<?php echo esc_attr( $current_template ); ?>"/>

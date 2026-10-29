@@ -49,6 +49,7 @@
                         <div class="ttbm-header">
                             <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Included Features', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_hotel_features_status', $features_checked); ?>
+                            <p class="ttbm-header__sub"><?php esc_html_e('List what guests get with this stay.', 'tour-booking-manager'); ?></p>
                         </div>
                         <div data-collapse="#ttbm_hotel_features_status" class="includedd-features-section <?php echo esc_attr($features_active); ?>">
 							<?php $this->feature_lists($tour_id,'ttbm_hotel_feat_selection'); ?>
@@ -59,6 +60,7 @@
                         <div class="ttbm-header">
                             <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Popular Features', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_hotel_popular_feat_status', $popu_feat_checked); ?>
+                            <p class="ttbm-header__sub"><?php esc_html_e('Highlight the features guests look for most.', 'tour-booking-manager'); ?></p>
                         </div>
                         <div data-collapse="#ttbm_hotel_popular_feat_status" class="includedd-features-section <?php echo esc_attr($popu_feat_active); ?>">
 							<?php $this->feature_lists($tour_id,'ttbm_hotel_popu_feat_selection'); ?>

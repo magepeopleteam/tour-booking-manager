@@ -96,12 +96,13 @@
 			'<div class="ttbm-wz-acc" data-pane="' + item.id + '">' +
 			'<button type="button" class="ttbm-wz-acc__head" aria-expanded="false">' +
 			'<span class="ttbm-wz-acc__icon"><i></i></span>' +
-			'<span class="ttbm-wz-acc__title"></span>' +
+			'<span class="ttbm-wz-acc__text"><span class="ttbm-wz-acc__title"></span><span class="ttbm-wz-acc__sub"></span></span>' +
 			'<span class="ttbm-wz-acc__chev"><i class="fas fa-chevron-down"></i></span>' +
 			'</button></div>'
 		);
 		$head.find('.ttbm-wz-acc__icon i').attr('class', icon);
 		$head.find('.ttbm-wz-acc__title').text(title);
+		$head.find('.ttbm-wz-acc__sub').text($btn.attr('data-sub') || '');
 		return $head;
 	}
 	config.forEach(function (s) {

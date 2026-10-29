@@ -261,7 +261,7 @@
 				$this->frontend_bundle_enqueued = true;
 				$this->global_enqueue();
 				wp_enqueue_script('jquery-ui-accordion');
-				wp_enqueue_script('ttbm_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_script.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
+				wp_enqueue_script('ttbm_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_script.js', array('jquery'), TTBM_PLUGIN_VERSION . '.' . (int) @filemtime(dirname(__DIR__) . '/assets/frontend/ttbm_script.js'), true);
 				wp_enqueue_script('ttbm_shortcode', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_shortcode.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm-confirm-btn', TTBM_PLUGIN_URL . '/assets/frontend/ttbm-confirm-btn.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_style('ttbm_hotel_lists');
@@ -429,6 +429,8 @@
 				wp_register_style('ttbm_hotel_lists', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_lists.css', array('ttbm_registration'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_hotel_lists.css'));
 				wp_register_style('ttbm_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_details.css', array('ttbm_hotel_lists'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_details.css'));
 				wp_enqueue_style('ttbm_smart_booking', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_smart_booking.css', array('ttbm_registration'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_smart_booking.css'));
+				wp_enqueue_style('ttbm_book_button', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_book_button.css', array('ttbm_registration'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_book_button.css'));
+				wp_enqueue_style('ttbm_date_calendar', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_date_calendar.css', array('ttbm_registration'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_date_calendar.css'));
 				/* [ttbm-tour-list]'s own modern visual system — loads after ttbm_registration
 				   so normal cascade order (not !important) is enough to win. Scoped entirely
 				   under .ttbm-tour-list-shortcode / .ttbm-top-search-form, so it can't affect
@@ -578,6 +580,22 @@
                         ttbm_currency_decimal = "<?php echo esc_html(wc_get_price_decimal_separator()); ?>";
                         ttbm_currency_thousands_separator = "<?php echo esc_html(wc_get_price_thousand_separator()); ?>";
                         ttbm_num_of_decimal = "<?php echo esc_html(get_option('woocommerce_price_num_decimals', 2)); ?>";
+                    </script>
+					<?php
+				} else {
+					// Without WooCommerce the totals have no currency source, so they printed as a bare number ("90").
+					// Use the plugin's own currency settings (the same ones the ticket prices already use).
+					$ttbm_cur = wp_parse_args(
+						(array) get_option('ttbm_currency_settings', array()),
+						array('symbol' => '$', 'position' => 'left', 'decimal_sep' => '.', 'thousand_sep' => ',', 'num_decimals' => 2)
+					);
+					?>
+                    <script type="text/javascript">
+                        ttbm_currency_symbol = <?php echo wp_json_encode((string) $ttbm_cur['symbol']); ?>;
+                        ttbm_currency_position = <?php echo wp_json_encode((string) $ttbm_cur['position']); ?>;
+                        ttbm_currency_decimal = <?php echo wp_json_encode((string) $ttbm_cur['decimal_sep']); ?>;
+                        ttbm_currency_thousands_separator = <?php echo wp_json_encode((string) $ttbm_cur['thousand_sep']); ?>;
+                        ttbm_num_of_decimal = <?php echo wp_json_encode((string) (int) $ttbm_cur['num_decimals']); ?>;
                     </script>
 					<?php
 				}

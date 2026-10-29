@@ -33,6 +33,7 @@
                         <div class="ttbm-header">
                             <h4><i class="mi mi-coins"></i><?php esc_html_e('Tour Ticket Price Settings', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_registration', $checked); ?>
+                            <p class="ttbm-header__sub"><?php esc_html_e('Set the ticket types, prices and seats guests can book.', 'tour-booking-manager'); ?></p>
                         </div>
                         <div data-collapse="#ttbm_display_registration" class="<?php echo esc_attr($active); ?>">
                             <div class="ttbm-pricing-types">
@@ -106,14 +107,42 @@
 				<?php
 			}
 			public function pricing_shortcode_sidebar($tour_id) {
+				$shortcode = '[ttbm-registration ttbm_id="' . (int) $tour_id . '"]';
 				?>
                 <div class="ttbm-sb-card ttbm-sb-pricing-shortcode-card" data-tab-card="#ttbm_settings_pricing">
-                    <div class="ttbm-header">
-                        <h4><i class="fas fa-laptop-code"></i><?php esc_html_e('Pricing shortcode', 'tour-booking-manager'); ?></h4>
-                        <code>[ttbm-registration ttbm_id="<?php echo esc_html($tour_id); ?>"]</code>
+                    <div class="ttbm-sb-sc__head">
+                        <span class="ttbm-sb-sc__icon" aria-hidden="true"><i class="fas fa-laptop-code"></i></span>
+                        <div class="ttbm-sb-sc__text">
+                            <h4 class="ttbm-sb-sc__title"><?php esc_html_e('Pricing shortcode', 'tour-booking-manager'); ?></h4>
+                            <p class="ttbm-sb-sc__desc"><?php esc_html_e('Shows the registration form with pricing for this tour.', 'tour-booking-manager'); ?></p>
+                        </div>
                     </div>
-                    <p><?php esc_html_e('Displays a registration form with pricing details for a specific tour.', 'tour-booking-manager'); ?></p>
+                    <div class="ttbm-sb-sc__row">
+                        <code class="ttbm-sb-sc__code"><?php echo esc_html($shortcode); ?></code>
+                        <button type="button" class="ttbm-sb-sc__copy" data-copy="<?php echo esc_attr($shortcode); ?>" data-copied="<?php esc_attr_e('Copied', 'tour-booking-manager'); ?>"><?php esc_html_e('Copy', 'tour-booking-manager'); ?></button>
+                    </div>
                 </div>
+                <script>
+                (function($){
+                    $(document).on('click', '.ttbm-sb-sc__copy', function(){
+                        var $btn = $(this), text = $btn.attr('data-copy'), label = $btn.data('label') || $btn.text();
+                        $btn.data('label', label);
+                        function done(){
+                            $btn.text($btn.attr('data-copied'));
+                            setTimeout(function(){ $btn.text(label); }, 1500);
+                        }
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            navigator.clipboard.writeText(text).then(done, function(){ fallback(); });
+                        } else { fallback(); }
+                        function fallback(){
+                            var $t = $('<input>').val(text).appendTo('body').select();
+                            try { document.execCommand('copy'); } catch (e) {}
+                            $t.remove();
+                            done();
+                        }
+                    });
+                })(jQuery);
+                </script>
 				<?php
 			}
 			public function enqueue_pricing_sidebar_js() {

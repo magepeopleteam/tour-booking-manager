@@ -18,6 +18,7 @@
                     <div class="ttbm-header">
                         <h4><i class="fas fa-edit"></i><?php esc_html_e('Admin Note Settings', 'tour-booking-manager'); ?></h4>
 						<?php TTBM_Custom_Layout::switch_button('ttbm_display_admin_note', $checked); ?>
+                        <p class="ttbm-header__sub"><?php esc_html_e('Write private notes for your team. Guests never see these.', 'tour-booking-manager'); ?></p>
                     </div>
                     <div data-collapse="#ttbm_display_admin_note" class="<?php echo esc_attr($active); ?>">
                         <label class="label">

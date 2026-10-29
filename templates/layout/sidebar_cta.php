@@ -94,33 +94,40 @@
 	$display_enquiry = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_display_enquiry', 'on' );
 	?>
 	<div class="ttbm_sidebar_cta">
-		<?php if ( $discount_badge > 0 ) : ?>
-			<span class="ttbm_sidebar_cta_badge"><?php echo esc_html( $discount_badge . '% ' . __( 'Off', 'tour-booking-manager' ) ); ?></span>
-		<?php endif; ?>
+		<div class="ttbm_sidebar_cta_head">
+			<span class="ttbm_sidebar_cta_title"><?php esc_html_e( 'Prices per person', 'tour-booking-manager' ); ?></span>
+			<?php if ( $discount_badge > 0 ) : ?>
+				<span class="ttbm_sidebar_cta_badge"><?php echo esc_html( $discount_badge . '% ' . __( 'Off', 'tour-booking-manager' ) ); ?></span>
+			<?php endif; ?>
+		</div>
 
 		<div class="ttbm_sidebar_cta_pricing<?php echo $discount_badge > 0 ? ' has-badge' : ''; ?>">
 			<?php if ( $adult_ticket ) : ?>
 				<div class="ttbm_sidebar_cta_price_col">
-					<span class="ttbm_sidebar_cta_from"><?php esc_html_e( 'From', 'tour-booking-manager' ); ?></span>
+					<div class="ttbm_sidebar_cta_label">
+						<span class="ttbm_sidebar_cta_per"><?php echo esc_html( $adult_ticket['label'] ); ?></span>
+						<span class="ttbm_sidebar_cta_from"><?php esc_html_e( 'Starting from', 'tour-booking-manager' ); ?></span>
+					</div>
 					<div class="ttbm_sidebar_cta_amount">
 						<?php if ( ! empty( $adult_ticket['regular'] ) && floatval( $adult_ticket['regular'] ) > floatval( $adult_ticket['price'] ) ) : ?>
 							<span class="ttbm_sidebar_cta_regular ttbm_regular_price strikeLine"><?php echo wp_kses_post( wc_price( $adult_ticket['regular'] ) ); ?></span>
 						<?php endif; ?>
 						<strong><?php echo wp_kses_post( wc_price( $adult_ticket['price'] ) ); ?></strong>
-						<span class="ttbm_sidebar_cta_per">/ <?php echo esc_html( $adult_ticket['label'] ); ?></span>
 					</div>
 				</div>
 			<?php endif; ?>
 
 			<?php if ( $child_ticket ) : ?>
 				<div class="ttbm_sidebar_cta_price_col">
-					<span class="ttbm_sidebar_cta_from"><?php esc_html_e( 'From', 'tour-booking-manager' ); ?></span>
+					<div class="ttbm_sidebar_cta_label">
+						<span class="ttbm_sidebar_cta_per"><?php echo esc_html( $child_ticket['label'] ); ?></span>
+						<span class="ttbm_sidebar_cta_from"><?php esc_html_e( 'Starting from', 'tour-booking-manager' ); ?></span>
+					</div>
 					<div class="ttbm_sidebar_cta_amount">
 						<?php if ( ! empty( $child_ticket['regular'] ) && floatval( $child_ticket['regular'] ) > floatval( $child_ticket['price'] ) ) : ?>
 							<span class="ttbm_sidebar_cta_regular ttbm_regular_price strikeLine"><?php echo wp_kses_post( wc_price( $child_ticket['regular'] ) ); ?></span>
 						<?php endif; ?>
 						<strong><?php echo wp_kses_post( wc_price( $child_ticket['price'] ) ); ?></strong>
-						<span class="ttbm_sidebar_cta_per">/ <?php echo esc_html( $child_ticket['label'] ); ?></span>
 					</div>
 				</div>
 			<?php endif; ?>

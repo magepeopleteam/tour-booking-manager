@@ -56,6 +56,7 @@
                         <div class="ttbm-header">
                             <h4><i class="fas fa-map-marker-alt"></i><?php esc_html_e('Location Settings', 'tour-booking-manager'); ?></h4>
 							<?php $this->map_enable($tour_id); ?>
+                            <p class="ttbm-header__sub"><?php esc_html_e('Set where the hotel is and show it on a map.', 'tour-booking-manager'); ?></p>
 						</div>
                         <div class="<?php echo esc_attr($active); ?>" data-collapse="#<?php echo esc_attr('ttbm_display_hotel_map'); ?>">
 							<?php $this->map_display($tour_id); ?>

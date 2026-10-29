@@ -136,18 +136,18 @@
 								<?php do_action('ttbm_meta_box_tab_name', $tour_id); ?>
                                 <li data-tabs-target="#ttbm_settings_pricing"><i class="mi mi-coins"></i> <span><?php esc_html_e(' Pricing & Services', 'tour-booking-manager'); ?></span>  </li>
 								<?php do_action('ttbm_meta_box_tab_after_pricing'); ?>
-                                <li data-tabs-target="#ttbm_settings_feature"><i class="mi mi-features"></i> <span><?php esc_html_e(' Features & Activities', 'tour-booking-manager'); ?></span> </li>
-                                <li data-tabs-target="#ttbm_settings_template"><i class="mi mi-table-layout"></i> <span><?php esc_html_e('Layout', 'tour-booking-manager'); ?></span> </li>
-								<li data-tabs-target="#ttbm_settings_guide"><i class="mi mi-hiking"></i> <span><?php echo esc_html($ttbm_label) . '  ' . esc_html__('Guide ', 'tour-booking-manager'); ?></span> </li>
-                                <li data-tabs-target="#ttbm_daywise_settings"><i class="fas fa-list-ul"></i> <span><?php esc_html_e('Itinerary & F.A.Q', 'tour-booking-manager'); ?></span> </li>
-                                <li data-tabs-target="#ttbm_settings_related_tour"><i class="mi mi-link"></i> <span><?php esc_html_e('Related Tour', 'tour-booking-manager'); ?></span> </li>
-                                <li data-tabs-target="#ttbm_settings_extras"><i class="mi mi-envelope"></i> <span><?php esc_html_e('Contact info', 'tour-booking-manager'); ?></span> </li>
-                                <li data-tabs-target="#ttbm_settings_why_chose_us"><i class="mi mi-improve-user"></i> <span><?php esc_html_e('Promotional Text', 'tour-booking-manager'); ?></span> </li>
-                                <li data-tabs-target="#ttbm_display_settings"><i class="mi mi-dashboard-monitor"></i> <span><?php esc_html_e(' Display settings', 'tour-booking-manager'); ?></span> </li>
-                                <li data-tabs-target="#ttbm_add_promotional_setting"><i class="mi mi-handshake-deal-loan"></i> <span><?php esc_html_e(' Promotional Deals', 'tour-booking-manager'); ?></span> </li>
+                                <li data-tabs-target="#ttbm_settings_feature" data-sub="<?php echo esc_attr__('Say what is included, what is not, and what guests can do.', 'tour-booking-manager'); ?>"><i class="mi mi-features"></i> <span><?php esc_html_e(' Features & Activities', 'tour-booking-manager'); ?></span> </li>
+                                <li data-tabs-target="#ttbm_settings_template" data-sub="<?php echo esc_attr__('Pick the layout guests see on this tour page.', 'tour-booking-manager'); ?>"><i class="mi mi-table-layout"></i> <span><?php esc_html_e('Layout', 'tour-booking-manager'); ?></span> </li>
+								<li data-tabs-target="#ttbm_settings_guide" data-sub="<?php echo esc_attr__('Choose the guides who will lead this tour.', 'tour-booking-manager'); ?>"><i class="mi mi-hiking"></i> <span><?php echo esc_html($ttbm_label) . '  ' . esc_html__('Guide ', 'tour-booking-manager'); ?></span> </li>
+                                <li data-tabs-target="#ttbm_daywise_settings" data-sub="<?php echo esc_attr__('Plan the trip day by day and answer common questions.', 'tour-booking-manager'); ?>"><i class="fas fa-list-ul"></i> <span><?php esc_html_e('Itinerary & F.A.Q', 'tour-booking-manager'); ?></span> </li>
+                                <li data-tabs-target="#ttbm_settings_related_tour" data-sub="<?php echo esc_attr__('Suggest other tours guests may like.', 'tour-booking-manager'); ?>"><i class="mi mi-link"></i> <span><?php esc_html_e('Related Tour', 'tour-booking-manager'); ?></span> </li>
+                                <li data-tabs-target="#ttbm_settings_extras" data-sub="<?php echo esc_attr__('Add the contact details guests can use to reach you.', 'tour-booking-manager'); ?>"><i class="mi mi-envelope"></i> <span><?php esc_html_e('Contact info', 'tour-booking-manager'); ?></span> </li>
+                                <li data-tabs-target="#ttbm_settings_why_chose_us" data-sub="<?php echo esc_attr__('Add a short highlight message shown on the tour page.', 'tour-booking-manager'); ?>"><i class="mi mi-improve-user"></i> <span><?php esc_html_e('Promotional Text', 'tour-booking-manager'); ?></span> </li>
+                                <li data-tabs-target="#ttbm_display_settings" data-sub="<?php echo esc_attr__('Choose which parts of the tour page are shown or hidden.', 'tour-booking-manager'); ?>"><i class="mi mi-dashboard-monitor"></i> <span><?php esc_html_e(' Display settings', 'tour-booking-manager'); ?></span> </li>
+                                <li data-tabs-target="#ttbm_add_promotional_setting" data-sub="<?php echo esc_attr__('Choose how this tour shows up in your promotional deals.', 'tour-booking-manager'); ?>"><i class="mi mi-handshake-deal-loan"></i> <span><?php esc_html_e(' Promotional Deals', 'tour-booking-manager'); ?></span> </li>
 								<?php do_action('add_ttbm_settings_tab_name'); ?>
 								<?php if (is_plugin_active('mage-partial-payment-pro/mage_partial_pro.php')) : ?>
-                                    <li data-tabs-target="#_mep_pp_deposits_type"><i class="far fa-money-bill-alt"></i>&nbsp;&nbsp;
+                                    <li data-tabs-target="#_mep_pp_deposits_type" data-sub="<?php echo esc_attr__('Let guests pay a deposit now and the rest later.', 'tour-booking-manager'); ?>"><i class="far fa-money-bill-alt"></i>&nbsp;&nbsp;
 									<span><?php esc_html_e('Partial Payment', 'tour-booking-manager'); ?> </span>                                  </li>
 								<?php endif; ?>
                             </ul>

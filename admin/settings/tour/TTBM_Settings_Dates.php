@@ -16,6 +16,10 @@
                     <h2><?php esc_html_e('Date Configuration', 'tour-booking-manager'); ?></h2>
                     <p class="info_text"><?php esc_html_e('Tour type and date time can be easily configured here, providing a crucial feature for recurring, fixed, or specific date tours.', 'tour-booking-manager') ?></p>
                     <section>
+                        <div class="ttbm-header ttbm-general-info-card__header">
+                            <h4><i class="fas fa-calendar-alt" aria-hidden="true"></i><?php esc_html_e('Date Configuration', 'tour-booking-manager'); ?></h4>
+                            <p class="ttbm-general-info-card__sub"><?php esc_html_e('Tour type and date time can be easily configured here, providing a crucial feature for recurring, fixed, or specific date tours.', 'tour-booking-manager'); ?></p>
+                        </div>
                         <?php
                         $travel_type_cards = array(
                             'fixed' => array(
@@ -83,6 +87,7 @@
                                 <i class="fas fa-sliders-h" aria-hidden="true"></i>
                                 <?php esc_html_e('Date Management', 'tour-booking-manager'); ?>
                             </h6>
+                            <p class="ttbm-header__sub"><?php esc_html_e('Set the start date, how often the tour runs, and when it ends.', 'tour-booking-manager'); ?></p>
                         </div>
                         <p id="ttbm_fixed_dates_error" class="textRequired ttbm-date-panel-error" style="display:none;"></p>
                         <div class="ttbm-fixed-date-grid">
@@ -180,6 +185,7 @@
 								);
 								?>
                             </span>
+                            <p class="ttbm-header__sub"><?php esc_html_e('Add each date this tour runs on, one by one.', 'tour-booking-manager'); ?></p>
                         </div>
                         <p id="ttbm_particular_dates_error" class="textRequired ttbm-date-panel-error" style="display:none;"></p>
                         <div class="ttbm_item_insert ttbm_sortable_area ttbm-particular-dates-list">
@@ -315,6 +321,7 @@
                                     <span class="ttbm-time-slots-header__toggle-label"><?php esc_html_e('Enabled', 'tour-booking-manager'); ?></span>
                                     <?php TTBM_Custom_Layout::switch_button('mep_disable_ticket_time', $checked_time); ?>
                                 </div>
+                                <p class="ttbm-header__sub"><?php esc_html_e('Offer set start times, like 9:00 and 14:00, on each date.', 'tour-booking-manager'); ?></p>
                             </div>
                             <div data-collapse="#mep_disable_ticket_time" class="ttbm-time-slots-body _mT <?php echo esc_attr($active_time . ' ' . $timewise_active); ?>">
                                 <div class="ttbm-timewise-stock-row">
@@ -395,6 +402,7 @@
                                     <span class="ttbm-off-schedule-header__toggle-label"><?php esc_html_e('Enabled', 'tour-booking-manager'); ?></span>
 									<?php TTBM_Custom_Layout::switch_button('ttbm_enable_off_schedule', $checked_off_schedule); ?>
                                 </div>
+                                <p class="ttbm-header__sub"><?php esc_html_e('Block days or dates when guests cannot book this tour.', 'tour-booking-manager'); ?></p>
                             </div>
                             <div data-collapse="#ttbm_enable_off_schedule" class="ttbm-off-schedule-body _mT <?php echo esc_attr($active_off_schedule); ?>">
                             <div class="ttbmTabs ttbm-off-schedule-tabs">

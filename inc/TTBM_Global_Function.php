@@ -288,6 +288,10 @@
 				foreach ($dates as $date) {
 					$all_date[] = '"' . gmdate('j-n-Y', strtotime($date)) . '"';
 				}
+				$ttbm_ymd = [];
+				foreach ($dates as $date) {
+					$ttbm_ymd[] = '"' . gmdate('Y-m-d', strtotime($date)) . '"';
+				}
 				?>
                 <script>
                     jQuery(document).ready(function () {
@@ -306,6 +310,47 @@
                                 jQuery(this).closest('label').find('input[type="hidden"]').val(date).trigger('change');
                             }
                         });
+                        // Date tiles (only where the template prints #ttbm_date_tiles). Picking a tile fills the same fields
+                        // the popup picker fills, so booking works exactly as before.
+                        var $ttbmTiles = jQuery('#ttbm_date_tiles');
+                        if ($ttbmTiles.length) {
+                            var ttbmYmd = [<?php echo implode( ',', $ttbm_ymd ); ?>];
+                            var ttbmInput = jQuery("<?php echo esc_attr($selector); ?>");
+                            var ttbmHidden = ttbmInput.closest('label').find('input[type="hidden"]');
+                            var ttbmLang = document.documentElement.lang || undefined;
+                            var ttbmVisible = 6;
+                            var ttbmAll = false;
+                            ttbmInput.attr('placeholder', '<?php echo esc_js( __( 'Choose a date', 'tour-booking-manager' ) ); ?>');
+                            function ttbmMarkTiles() {
+                                var chosen = ttbmHidden.val();
+                                $ttbmTiles.find('.ttbm-date-tile').attr('aria-pressed', 'false').filter(function () { return jQuery(this).data('date') === chosen; }).attr('aria-pressed', 'true');
+                            }
+                            function ttbmBuildTiles() {
+                                $ttbmTiles.empty();
+                                jQuery.each(ttbmYmd, function (i, ymd) {
+                                    if (!ttbmAll && i >= ttbmVisible) { return false; }
+                                    var d = new Date(ymd + 'T00:00:00');
+                                    var $b = jQuery('<button type="button" class="ttbm-date-tile" aria-pressed="false"></button>').data('date', ymd);
+                                    $b.append(jQuery('<span class="ttbm-date-tile__dow"></span>').text(d.toLocaleDateString(ttbmLang, { weekday: 'short' })));
+                                    $b.append(jQuery('<span class="ttbm-date-tile__day"></span>').text(d.getDate()));
+                                    $b.append(jQuery('<span class="ttbm-date-tile__month"></span>').text(d.toLocaleDateString(ttbmLang, { month: 'short', year: 'numeric' })));
+                                    $ttbmTiles.append($b);
+                                });
+                                if (ttbmYmd.length > ttbmVisible) {
+                                    $ttbmTiles.append(jQuery('<button type="button" class="ttbm-date-tiles__more"></button>').text(ttbmAll ? '<?php echo esc_js( __( 'Show fewer dates', 'tour-booking-manager' ) ); ?>' : '<?php echo esc_js( __( 'See all available dates', 'tour-booking-manager' ) ); ?> (' + ttbmYmd.length + ')'));
+                                }
+                                ttbmMarkTiles();
+                            }
+                            $ttbmTiles.on('click', '.ttbm-date-tile', function () {
+                                var ymd = jQuery(this).data('date');
+                                ttbmInput.val(jQuery.datepicker.formatDate(ttbm_date_format, new Date(ymd + 'T00:00:00')));
+                                ttbmHidden.val(ymd).trigger('change');
+                                ttbmMarkTiles();
+                            });
+                            $ttbmTiles.on('click', '.ttbm-date-tiles__more', function () { ttbmAll = !ttbmAll; ttbmBuildTiles(); });
+                            ttbmHidden.on('change', ttbmMarkTiles);
+                            ttbmBuildTiles();
+                        }
                         function WorkingDates(date) {
                             let availableDates = [<?php echo implode( ',', $all_date ); ?>];
                             let dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();

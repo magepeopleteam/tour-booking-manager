@@ -92,6 +92,7 @@
                         <div class="ttbm-header">
                             <h4><i class="fas fa-list-ul"></i><?php esc_html_e('Itinerary Builder', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
+                            <p class="ttbm-header__sub"><?php esc_html_e('Plan the trip day by day so guests know what to expect.', 'tour-booking-manager'); ?></p>
                         </div>
                         <div data-collapse="#ttbm_display_schedule" class="ttbm-daywise-section <?php echo esc_attr($active); ?>">
                             <div class="ttbm-daywise-items mB">

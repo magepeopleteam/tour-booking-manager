@@ -51,6 +51,7 @@
                         <div class="ttbm-header">
                             <h4><i class="fas fa-question-circle"></i><?php esc_html_e('Enable FAQ Section', 'tour-booking-manager'); ?></h4>
                             <?php TTBM_Custom_Layout::switch_button('ttbm_hotel_faq_status', $ttbm_faq_active_checked); ?>
+                            <p class="ttbm-header__sub"><?php esc_html_e('Show common questions and answers on the page.', 'tour-booking-manager'); ?></p>
                         </div>
 						<div class="ttbm-faq-section <?php echo esc_attr($active_class); ?>" data-collapse="#ttbm_hotel_faq_status">
 							<div class="ttbm-hotel-faq-items mB">

@@ -30,6 +30,7 @@
                         <div class="ttbm-header">
                             <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Activities Settings', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_activities', $checked); ?>
+                            <p class="ttbm-header__sub"><?php esc_html_e('Choose the activities guests can enjoy on this tour.', 'tour-booking-manager'); ?></p>
                         </div>
                         <div data-collapse="#ttbm_display_activities" class="ttbm_activities_area <?php echo esc_attr($active); ?>">
 							<?php $this->activities($tour_id); ?>

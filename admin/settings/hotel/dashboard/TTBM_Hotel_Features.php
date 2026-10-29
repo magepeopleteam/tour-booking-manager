@@ -23,7 +23,7 @@ if (!class_exists('TTBM_Hotel_Features')) {
 
         public function dashbaord_features(){
             ?>
-            <div class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_features_tab"><i class="mi mi-features"></i>  <?php echo esc_attr__( 'Hotel Features', 'tour-booking-manager' )?></div>
+            <div class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_features_tab"><i class="mi mi-features"></i><span class="ttbm-tab-text"><span class="ttbm-tab-label"><?php esc_html_e('Hotel features', 'tour-booking-manager'); ?></span><span class="ttbm-tab-hint"><?php esc_html_e('What hotels offer, like Wi-Fi or a pool', 'tour-booking-manager'); ?></span></span></div>
             <?php
         }
 
@@ -33,9 +33,8 @@ if (!class_exists('TTBM_Hotel_Features')) {
             <div id="ttbm_hotel_features_tab" class="ttbm_hotel_tab_content">
                 <div>
                     <div class="ttbm_style features_header">
-                        <h2 class="ttbm_total_booking_title">
-                            <?php echo esc_attr__( 'Hotel Features List', 'tour-booking-manager' )?>
-                        </h2>
+                        <h2 class="ttbm_total_booking_title"><?php esc_html_e('Hotel features', 'tour-booking-manager'); ?></h2>
+                        <p class="ttbm_tour_page-subtitle"><?php esc_html_e('What hotels offer, like Wi-Fi, parking or a pool.', 'tour-booking-manager'); ?></p>
                         <button class="_themeButton_xs ttbm-hotel-new-feature" data-ttbm-modal="ttbm-hotel-feature-modal"> <?php echo esc_attr__( 'Add new feature', 'tour-booking-manager' )?></button>
                     </div>
                     <div class="ttbm-hotel-feature-items">

@@ -1,0 +1,89 @@
+/* ==========================================================================
+   Date step — date tiles
+   Heading, then a grid of tiles for the available dates, then the date field
+   (it shows the choice and carries the "Please select date" error).
+   Applies only where the template prints #ttbm_date_tiles.
+   ========================================================================== */
+.ttbm_date_time_select.ttbm-date-select:has(#ttbm_date_tiles) {
+	display: flex !important;
+	flex-direction: column;
+	gap: 16px;
+	padding: 24px !important;
+	background: #fff !important;
+	border: 1px solid #DDE2E8 !important;
+	border-radius: 20px !important;
+	box-shadow: none !important;
+	box-sizing: border-box;
+}
+/* flatten the wrappers so heading, tiles, field and note can be ordered */
+.ttbm-date-select:has(#ttbm_date_tiles) > .ttbm_select_date_area,
+.ttbm-date-select:has(#ttbm_date_tiles) .ttbm-date-time-toolbar,
+.ttbm-date-select:has(#ttbm_date_tiles) .date-picker { display: contents !important; }
+.ttbm-date-select:has(#ttbm_date_tiles) .ttbm-date-select__label { order: 1; margin: 0 !important; padding: 0 !important; width: auto !important; }
+.ttbm-date-select:has(#ttbm_date_tiles) .ttbm-date-select__label-text { display: block; margin: 0; font-size: 20px !important; font-weight: 700 !important; letter-spacing: 0 !important; text-transform: none !important; color: #1B2430 !important; }
+.ttbm-date-select:has(#ttbm_date_tiles) > #ttbm_date_tiles { order: 2; }
+.ttbm-date-select:has(#ttbm_date_tiles) .ttbm-date-select__control { order: 3; display: flex !important; align-items: center; gap: 12px; min-height: 52px; padding: 0 16px !important; background: #F4F6F8 !important; border: 1px solid #DDE2E8 !important; border-radius: 12px !important; box-sizing: border-box; width: 100% !important; max-width: 420px; }
+.ttbm-date-select:has(#ttbm_date_tiles) .ttbm-date-select__control input#ttbm_select_date { flex: 1 1 auto; min-width: 0; min-height: 48px; padding: 0 !important; border: 0 !important; background: transparent !important; box-shadow: none !important; font-size: 16px !important; font-weight: 600; color: #1B2430 !important; pointer-events: none; }
+.ttbm-date-select:has(#ttbm_date_tiles) .ttbm-date-select__icon { color: #0B4F4A !important; background: #E3EEEC !important; border-radius: 10px; }
+.ttbm-date-select:has(#ttbm_date_tiles) .ttbm_date_chevron { display: none; }
+.ttbm-date-select:has(#ttbm_date_tiles) .ttbm-date-tiles-note { order: 4; margin: 0; font-size: 14px; line-height: 1.5; color: #4A5565; }
+.ttbm-date-select:has(#ttbm_date_tiles) .ttbm_select_time_area,
+.ttbm-date-select:has(#ttbm_date_tiles) .ttbm-date-error { order: 5; }
+
+/* ---- Tiles ---- */
+#ttbm_date_tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+#ttbm_date_tiles .ttbm-date-tile {
+	display: block;
+	min-height: 104px;
+	padding: 8px;
+	margin: 0;
+	border: 2px solid #DDE2E8;
+	border-radius: 14px;
+	background: #fff;
+	color: #1B2430;
+	text-align: center;
+	font-family: inherit;
+	cursor: pointer;
+	box-shadow: none;
+	transition: border-color .15s ease, background .15s ease;
+}
+#ttbm_date_tiles .ttbm-date-tile:hover { border-color: #0F766E; }
+#ttbm_date_tiles .ttbm-date-tile[aria-pressed="true"] { background: #0F766E; border-color: #0F766E; color: #fff; }
+#ttbm_date_tiles .ttbm-date-tile:focus-visible,
+#ttbm_date_tiles .ttbm-date-tiles__more:focus-visible { outline: 3px solid #0F766E; outline-offset: 2px; }
+#ttbm_date_tiles .ttbm-date-tile__dow { display: block; font-size: 13px; font-weight: 600; }
+#ttbm_date_tiles .ttbm-date-tile__day { display: block; font-size: 26px; font-weight: 700; line-height: 1.2; }
+#ttbm_date_tiles .ttbm-date-tile__month { display: block; font-size: 13px; }
+#ttbm_date_tiles .ttbm-date-tiles__more {
+	grid-column: 1 / -1;
+	justify-self: start;
+	min-height: 44px;
+	padding: 0 4px;
+	border: 0;
+	background: none;
+	color: #0B4F4A;
+	font-size: 15px;
+	font-weight: 600;
+	font-family: inherit;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+@media (max-width: 640px) {
+	.ttbm_date_time_select.ttbm-date-select:has(#ttbm_date_tiles) { padding: 16px !important; }
+	#ttbm_date_tiles { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); }
+}
+
+/* The booking form is already one card (date step + tickets + total), so the date step is a flat section
+   inside it — not a second bordered card — and lines up with the "Ticket type" content below. */
+.ttbm_date_time_select.ttbm-date-select:has(#ttbm_date_tiles) {
+	padding: 24px 18px !important;
+	background: transparent !important;
+	border: 0 !important;
+	border-bottom: 1px solid #EEF1F4 !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+}
+@media (max-width: 640px) {
+	.ttbm_date_time_select.ttbm-date-select:has(#ttbm_date_tiles) { padding: 16px 12px !important; }
+}

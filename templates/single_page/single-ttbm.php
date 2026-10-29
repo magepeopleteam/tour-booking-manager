@@ -76,9 +76,22 @@ do_action( 'ttbm_single_page_after_wrapper' );
 // FOOTER
 // ==============================
 if ( function_exists( 'block_footer_area' ) && wp_is_block_theme() ) {
+    // Same wrapper as the header above, so the theme's own footer layout and
+    // root padding apply exactly as they do on the rest of the site.
+    echo '<div class="wp-site-blocks">';
     echo '<footer class="wp-block-template-part mep-site-footer">';
         block_footer_area();
     echo '</footer>';
+    echo '</div>';
+    // The footer blocks are rendered after wp_head(), so the layout CSS WordPress
+    // generates for them (flex / space-between etc.) was never printed. Print it
+    // here so the theme's footer renders exactly as it does on other pages.
+    if ( function_exists( 'wp_style_engine_get_stylesheet_from_context' ) ) {
+        $ttbm_footer_css = wp_style_engine_get_stylesheet_from_context( 'block-supports', array( 'prettify' => false ) );
+        if ( $ttbm_footer_css ) {
+            echo '<style id="ttbm-footer-block-supports">' . $ttbm_footer_css . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        }
+    }
     wp_footer();
 } else {
     get_footer();

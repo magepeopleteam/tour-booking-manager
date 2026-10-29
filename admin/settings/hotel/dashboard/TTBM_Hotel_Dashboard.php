@@ -98,6 +98,10 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
             ?>
 
             <div class="ttbm_hotel_tab_holder">
+                <div class="ttbm-page-heading ttbm-hotel-page-heading">
+                    <h1><?php esc_html_e('Hotel Manager', 'tour-booking-manager'); ?></h1>
+                    <p><?php esc_html_e('Add hotels and manage everything that goes with them.', 'tour-booking-manager'); ?></p>
+                </div>
 
                 <?php
                 $hotel_data = self::ttbm_get_all_hotel_analysis_data();
@@ -109,7 +113,7 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                             <i class="fas fa-hotel"></i>
                         </div>
                         <div class="ttbm_hotel_list_header_stat-info">
-                            <div class="ttbm_hotel_list_header_stat-label"><?php echo esc_attr__( 'Total Hotels', 'tour-booking-manager' )?></div>
+                            <div class="ttbm_hotel_list_header_stat-label"><?php echo esc_attr__( 'Hotels', 'tour-booking-manager' )?></div>
                             <div class="ttbm_hotel_list_header_stat-value ttbm_hotel_list_header_blue-value"><?php echo esc_attr( $hotel_data['total_hotel']);?></div>
                         </div>
                     </div>
@@ -119,7 +123,7 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                             <i class="fas fa-bed"></i>
                         </div>
                         <div class="ttbm_hotel_list_header_stat-info">
-                            <div class="ttbm_hotel_list_header_stat-label"><?php echo esc_attr__( 'Available Rooms', 'tour-booking-manager' )?></div>
+                            <div class="ttbm_hotel_list_header_stat-label"><?php echo esc_attr__( 'Rooms available', 'tour-booking-manager' )?></div>
                             <div class="ttbm_hotel_list_header_stat-value ttbm_hotel_list_header_green-value"><?php echo esc_attr( $hotel_data['totalRooms']);?></div>
                         </div>
                     </div>
@@ -129,7 +133,7 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                             <i class="fas fa-calendar-check"></i>
                         </div>
                         <div class="ttbm_hotel_list_header_stat-info">
-                            <div class="ttbm_hotel_list_header_stat-label"><?php echo esc_attr__( 'Bookings Today', 'tour-booking-manager' )?></div>
+                            <div class="ttbm_hotel_list_header_stat-label"><?php echo esc_attr__( 'Bookings today', 'tour-booking-manager' )?></div>
                             <div class="ttbm_hotel_list_header_stat-value ttbm_hotel_list_header_purple-value"><?php echo esc_attr( $hotel_data['today_booked_rooms']);?></div>
                         </div>
                     </div>
@@ -139,7 +143,7 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                             <i class="fas fa-star"></i>
                         </div>
                         <div class="ttbm_hotel_list_header_stat-info">
-                            <div class="ttbm_hotel_list_header_stat-label"><?php echo esc_attr__( 'Avg Rating', 'tour-booking-manager' )?></div>
+                            <div class="ttbm_hotel_list_header_stat-label"><?php echo esc_attr__( 'Average rating', 'tour-booking-manager' )?></div>
                             <div class="ttbm_hotel_list_header_stat-value ttbm_hotel_list_header_orange-value">4.7</div>
                         </div>
                     </div>
@@ -155,10 +159,11 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                         
                         <div id="ttbm_hotel_booking_tab" class="ttbm_hotel_tab_content">
                             <div class="ttbm_total_booking_wrapper" style="display: block">
-                                <h2 class="ttbm_total_booking_title"><?php echo esc_attr__( 'Hotel Booking List', 'tour-booking-manager' )?></h2>
+                                <h2 class="ttbm_total_booking_title"><?php esc_html_e('Bookings', 'tour-booking-manager'); ?></h2>
+                        <p class="ttbm_tour_page-subtitle"><?php esc_html_e('Guests who booked a room, with their dates and payment.', 'tour-booking-manager'); ?></p>
 
                                 <div class="ttbm_total_booking_filter_section">
-                                    <span class="ttbm_total_booking_filter_label"><?php echo esc_attr__( 'Filter List By:', 'tour-booking-manager' )?></span>
+                                    <span class="ttbm_total_booking_filter_label"><?php echo esc_attr__( 'Find a booking', 'tour-booking-manager' )?></span>
                                     <div class="ttbm_total_booking_filter_options">
                                         <label class="ttbm_total_booking_radio_container">
                                             <input type="radio" name="filter_type" value="travel" checked>
@@ -171,17 +176,17 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
                                             <?php TTBM_Layout::hotel_list_in_select( 'all_hotel_list' ); ?>
                                         </div>
 
-                                        <input type="text" name="ttbm_booking_date_filter" id="ttbm_booking_date_filter" class="ttbm_booking_date_filter" placeholder="Select date">
+                                        <input type="text" name="ttbm_booking_date_filter" id="ttbm_booking_date_filter" class="ttbm_booking_date_filter" placeholder="<?php echo esc_attr__( 'Pick a date', 'tour-booking-manager' ); ?>">
                                         <button class="ttbm_total_booking_filter_btn"><?php  esc_html_e( 'Filter', 'tour-booking-manager' )?></button>
                                         <button class="ttbm_total_booking_reset_btn"><?php  esc_html_e( 'Reset', 'tour-booking-manager' )?></button>
                                     </div>
                                 </div>
 
                                 <div class="ttbm_total_booking_summary">
-                                    <div class="ttbm_total_booking_found"><?php echo esc_attr__( 'Total ', 'tour-booking-manager' )?> <span class="ttbm_total_posts"><?php echo esc_attr( $query->found_posts ); ?></span><?php echo esc_attr__( ' Order Found', 'tour-booking-manager' )?></div>
-                                    <div class="ttbm_total_booking_showing"><?php echo esc_attr__( 'Showing ', 'tour-booking-manager' )?>  <span class="ttbm_showing_items"><?php echo esc_attr( $query->post_count ) ; ?></span><?php echo esc_attr__( ' Order', 'tour-booking-manager' )?> </div>
+                                    <div class="ttbm_total_booking_found"><span class="ttbm_total_posts"><?php echo esc_attr( $query->found_posts ); ?></span><?php echo esc_attr__( ' bookings found', 'tour-booking-manager' )?></div>
+                                    <div class="ttbm_total_booking_showing"><?php echo esc_attr__( 'Showing ', 'tour-booking-manager' )?> <span class="ttbm_showing_items"><?php echo esc_attr( $query->post_count ) ; ?></span><?php echo esc_attr__( ' bookings', 'tour-booking-manager' )?> </div>
                                     <div class="ttbm_total_booking_per_page">
-                                        <span><?php echo esc_attr__( 'Guest Per Page', 'tour-booking-manager' )?></span>
+                                        <span><?php echo esc_attr__( 'Per page', 'tour-booking-manager' )?></span>
                                         <input type="number" value="<?php echo esc_attr( $posts_per_page )?>" class="ttbm_total_booking_page_input" readonly>
                                     </div>
                                 </div>
@@ -342,7 +347,7 @@ if (!class_exists('TTBM_Hotel_Booking_Lists')) {
             else :
                 if( $load_more === '' ){
                 ?>
-                <tr><td colspan="14"><?php echo esc_attr__('No bookings found.', 'tour-booking-manager'); ?></td></tr>
+                <tr><td colspan="14"><?php echo esc_attr__('No bookings yet. When a guest books a room, it will show up here.', 'tour-booking-manager'); ?></td></tr>
             <?php } endif; ?>
             <?php
 

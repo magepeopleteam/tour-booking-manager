@@ -323,6 +323,7 @@
                         <div class="ttbm-header ttbm-header--with-switch">
                             <h4><i class="fas fa-map-marker-alt"></i><?php esc_html_e('Location Settings', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button($display_name, $checked); ?>
+                            <p class="ttbm-header__sub"><?php esc_html_e('Set where this tour starts and which places it covers.', 'tour-booking-manager'); ?></p>
                         </div>
                         <div class="ttbm-location-settings-body">
 							<?php $this->location($tour_id); ?>

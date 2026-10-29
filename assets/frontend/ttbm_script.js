@@ -43,7 +43,7 @@ window.ttbmT = window.ttbmT || function (key, fallback) {
 		loop: true,
 		margin: 20,
 		nav: true,
-		rtl: true,
+		rtl: $('html').attr('dir') === 'rtl' || $('body').hasClass('rtl'),
 		responsive: {
 			0: {
 				items: 1
@@ -237,7 +237,10 @@ window.ttbmT = window.ttbmT || function (key, fallback) {
 		$(document).off('click.ttbmHeroStats', '.ttbm_hero_stats_load_more').on('click.ttbmHeroStats', '.ttbm_hero_stats_load_more', function (e) {
 			e.preventDefault();
 			var $btn = $(this);
-			var $grid = $btn.closest('.ttbm_hero_stats_grid');
+			var $grid = $btn.prev('.ttbm_hero_stats_grid');
+			if (!$grid.length) {
+				$grid = $btn.closest('.ttbm_hero_stats_grid');
+			}
 			if (!$grid.length) {
 				return;
 			}

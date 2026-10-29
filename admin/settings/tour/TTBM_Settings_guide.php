@@ -25,6 +25,7 @@
                         <div class="ttbm-header">
                             <h4><i class="fas fa-hiking"></i><?php esc_html_e('Guide Settings', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_tour_guide', $checked_guide); ?>
+                            <p class="ttbm-header__sub"><?php esc_html_e('Choose the guides who will lead this tour.', 'tour-booking-manager'); ?></p>
                         </div>
                         <div data-collapse="#ttbm_display_tour_guide" class="<?php echo esc_attr($active_guide); ?>">
                             <label class="label">

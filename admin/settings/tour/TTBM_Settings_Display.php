@@ -32,6 +32,7 @@ if (!class_exists('TTBM_Settings_Display')) {
                 <section>
                     <div class="ttbm-header">
                         <h4><i class="fas fa-chalkboard"></i><?php esc_html_e('Display Settings', 'tour-booking-manager'); ?></h4>
+                        <p class="ttbm-header__sub"><?php esc_html_e('Choose which parts of the tour page are shown or hidden.', 'tour-booking-manager'); ?></p>
                     </div>
                     <div class="dFlex">
                         <div class="col-left">
@@ -121,6 +122,7 @@ if (!class_exists('TTBM_Settings_Display')) {
                 <section style="display:none;">
                     <div class="ttbm-header">
                         <h4><i class="mi mi-blog-text"></i><?php esc_html_e('Section Title Settings', 'tour-booking-manager'); ?></h4>
+                        <p class="ttbm-header__sub"><?php esc_html_e('Rename the section headings on the tour page.', 'tour-booking-manager'); ?></p>
                     </div>
                     <?php
                     $styles = [

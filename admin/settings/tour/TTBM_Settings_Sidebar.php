@@ -7,6 +7,7 @@ if (!class_exists('TTBM_Settings_Sidebar')) {
 		public function __construct() {
 			add_action('ttbm_right_sidebar_content', [$this, 'render_featured_sidebar'], 10);
 			add_action('ttbm_right_sidebar_content', [$this, 'render_taxonomy_sidebar'], 20);
+			add_action('ttbm_right_sidebar_content', [$this, 'render_summary_sidebar'], 25);
 			add_action('ttbm_hotel_right_sidebar_content', [$this, 'render_featured_sidebar'], 10);
 			add_action('admin_enqueue_scripts', [$this, 'enqueue_assets']);
 			add_action('admin_head', [$this, 'output_styles']);
@@ -1540,6 +1541,153 @@ jQuery(function($){
 			$this->render_organizer_section($post);
 		}
 
+		/**
+		 * "Tour summary" card — shown on every tab. It lists what was entered on the steps BEFORE the
+		 * current one (Basic Info on Schedule, plus Schedule on Pricing, plus Pricing on the rest), and on
+		 * Basic Info itself it shows the basics live. Values are read from the live form fields, so edits
+		 * appear without saving first.
+		 */
+		public function render_summary_sidebar($tour_id) {
+			$groups = array(
+				'basic' => array(
+					'label' => esc_html__('Basic info', 'tour-booking-manager'),
+					'goto'  => '#ttbm_general_info',
+					'rows'  => array(
+						'title'    => esc_html__('Tour title', 'tour-booking-manager'),
+						'duration' => esc_html__('Duration', 'tour-booking-manager'),
+						'location' => esc_html__('Destination', 'tour-booking-manager'),
+						'start'    => esc_html__('Starting point', 'tour-booking-manager'),
+						'people'   => esc_html__('Max guests', 'tour-booking-manager'),
+						'age'      => esc_html__('Minimum age', 'tour-booking-manager'),
+					),
+				),
+				'schedule' => array(
+					'label' => esc_html__('Schedule', 'tour-booking-manager'),
+					'goto'  => '#ttbm_settings_dates',
+					'rows'  => array(
+						'datetype' => esc_html__('Tour type', 'tour-booking-manager'),
+						'dates'    => esc_html__('Dates', 'tour-booking-manager'),
+					),
+				),
+				'pricing' => array(
+					'label' => esc_html__('Pricing & tickets', 'tour-booking-manager'),
+					'goto'  => '#ttbm_settings_pricing',
+					'rows'  => array(
+						'tickets' => esc_html__('Ticket types', 'tour-booking-manager'),
+						'price'   => esc_html__('Lowest price', 'tour-booking-manager'),
+					),
+				),
+			);
+			?>
+			<div class="ttbm-sb-card ttbm-sb-summary-card" data-sum-card data-not-set="<?php esc_attr_e('Not set', 'tour-booking-manager'); ?>" data-nights="<?php esc_attr_e('night(s)', 'tour-booking-manager'); ?>" data-dates-word="<?php esc_attr_e('dates', 'tour-booking-manager'); ?>" data-every="<?php esc_attr_e('repeats every', 'tour-booking-manager'); ?>" data-tickets-word="<?php esc_attr_e('ticket types', 'tour-booking-manager'); ?>">
+				<p class="ttbm-sb-card-title"><?php esc_html_e('Tour summary', 'tour-booking-manager'); ?></p>
+				<p class="ttbm-sb-summary-note"><?php esc_html_e('What you have set so far.', 'tour-booking-manager'); ?></p>
+				<?php foreach ($groups as $gkey => $group) : ?>
+					<div class="ttbm-sb-summary-group" data-sum-group="<?php echo esc_attr($gkey); ?>">
+						<div class="ttbm-sb-summary-grouphead">
+							<span><?php echo esc_html($group['label']); ?></span>
+							<a href="#" class="ttbm-sb-summary-edit" data-ttbm-goto="<?php echo esc_attr($group['goto']); ?>"><?php esc_html_e('Edit', 'tour-booking-manager'); ?></a>
+						</div>
+						<dl class="ttbm-sb-summary-list">
+							<?php foreach ($group['rows'] as $key => $label) : ?>
+								<div class="ttbm-sb-summary-row">
+									<dt><?php echo esc_html($label); ?></dt>
+									<dd data-ttbm-sum="<?php echo esc_attr($key); ?>"></dd>
+								</div>
+							<?php endforeach; ?>
+						</dl>
+					</div>
+				<?php endforeach; ?>
+			</div>
+			<script>
+			(function($){
+				var STEP_OF = { '#ttbm_general_info': 0, '#ttbm_settings_location': 0, '#ttbm_settings_dates': 1, '#ttbm_settings_pricing': 2 };
+				var ORDER = ['basic', 'schedule', 'pricing'];
+				function field(sel){
+					var $e = $(sel).first();
+					if (!$e.length) { return ''; }
+					return $e.is('select') ? $.trim($e.find('option:selected').text()) : $.trim($e.val() || '');
+				}
+				function values(sel){
+					return $(sel).map(function(){ return $.trim($(this).val() || ''); }).get().filter(function(v){ return v !== ''; });
+				}
+				function duration($card){
+					var n = field('[name="ttbm_travel_duration"]');
+					if (!n) { return ''; }
+					var out = n + ' ' + (field('select[name="ttbm_travel_duration_type"]') || '');
+					var nights = field('[name="ttbm_travel_duration_night"]');
+					if (nights) { out += ' / ' + nights + ' ' + $card.attr('data-nights'); }
+					return $.trim(out);
+				}
+				function dates($card){
+					var type = field('[name="ttbm_travel_type"]');
+					if (type === 'particular') {
+						var d = values('[name="ttbm_particular_start_date[]"]').sort();
+						if (!d.length) { return ''; }
+						return d.length + ' ' + $card.attr('data-dates-word') + ' (' + d[0] + (d.length > 1 ? ' – ' + d[d.length - 1] : '') + ')';
+					}
+					if (type === 'repeated') {
+						var s = field('[name="ttbm_travel_repeated_start_date"]'), e = field('[name="ttbm_travel_repeated_end_date"]'), r = field('[name="ttbm_travel_repeated_after"]');
+						var out = s ? s + (e ? ' – ' + e : '') : '';
+						if (out && r) { out += ', ' + $card.attr('data-every') + ' ' + r; }
+						return out;
+					}
+					var s2 = field('[name="ttbm_travel_start_date"]'), e2 = field('[name="ttbm_travel_end_date"]');
+					return s2 ? s2 + (e2 ? ' – ' + e2 : '') : '';
+				}
+				function tickets($card){
+					var names = values('[name="ticket_type_name[]"]');
+					if (!names.length) { return { count: '', price: '' }; }
+					var prices = values('[name="ticket_type_price[]"]').map(parseFloat).filter(function(n){ return !isNaN(n); });
+					return { count: names.length + ' ' + $card.attr('data-tickets-word') + ' (' + names.join(', ') + ')', price: prices.length ? String(Math.min.apply(null, prices)) : '' };
+				}
+				function currentStep(){
+					var tab = $('.ttbm-right-sidebar').attr('data-active-tab') || '#ttbm_general_info';
+					return STEP_OF.hasOwnProperty(tab) ? STEP_OF[tab] : 3;
+				}
+				function refresh(){
+					var $card = $('.ttbm-sb-summary-card');
+					if (!$card.length) { return; }
+					var none = $card.attr('data-not-set');
+					var t = tickets($card);
+					var vals = {
+						title: field('#title') || field('[name="post_title"]'),
+						duration: duration($card),
+						location: field('[name="ttbm_location_name"]'),
+						start: field('[name="ttbm_travel_start_place"]'),
+						people: field('[name="ttbm_travel_max_people_allow"]'),
+						age: field('[name="ttbm_travel_min_age"]'),
+						datetype: $.trim($('.ttbm-date-type-card.active .ttbm-date-type-card__title').first().text()),
+						dates: dates($card),
+						tickets: t.count,
+						price: t.price
+					};
+					$.each(vals, function(k, v){
+						$card.find('[data-ttbm-sum="' + k + '"]').text(v || none).toggleClass('is-empty', !v);
+					});
+					var last = Math.max(currentStep() - 1, 0);
+					$.each(ORDER, function(i, g){
+						$card.find('[data-sum-group="' + g + '"]').toggle(i <= last);
+					});
+				}
+				var watch = '#title, [name="ttbm_travel_duration"], [name="ttbm_travel_duration_type"], [name="ttbm_travel_duration_night"], [name="ttbm_location_name"], [name="ttbm_travel_start_place"], [name="ttbm_travel_max_people_allow"], [name="ttbm_travel_min_age"], [name="ttbm_travel_type"], [name="ttbm_travel_start_date"], [name="ttbm_travel_end_date"], [name^="ttbm_particular_"], [name^="ttbm_travel_repeated_"], [name^="ticket_type_"]';
+				$(document).on('input change', watch, refresh);
+				$(document).on('click', '.ttbm-date-type-card, .tabLists li[data-tabs-target], .ttbm-wz-step, .ttbm-wz-next, .ttbm-wz-prev', function(){ setTimeout(refresh, 80); });
+				$(document).on('ttbm_tab_activated', function(){ setTimeout(refresh, 60); });
+				$(document).on('click', '.ttbm-sb-summary-edit', function(e){
+					e.preventDefault();
+					$('.tabLists li[data-tabs-target="' + $(this).attr('data-ttbm-goto') + '"]').first().trigger('click');
+				});
+				$(function(){
+					refresh(); setTimeout(refresh, 400);
+					var sb = document.querySelector('.ttbm-right-sidebar');
+					if (sb && window.MutationObserver) { new MutationObserver(refresh).observe(sb, { attributes: true, attributeFilter: ['data-active-tab'] }); }
+				});
+			})(jQuery);
+			</script>
+			<?php
+		}
+
 		/* ── Publish ── */
 		private function render_publish_section($post) {
 			$is_published = get_post_status($post->ID) === 'publish';
@@ -1661,7 +1809,10 @@ jQuery(function($){
 			$nonce = wp_create_nonce('ttbm_add_term_' . $taxonomy);
 			?>
 			<div class="ttbm-sb-card" data-taxonomy="<?php echo esc_attr($taxonomy); ?>" data-nonce="<?php echo esc_attr($nonce); ?>" data-hide-tab="#ttbm_settings_pricing">
-				<p class="ttbm-sb-card-title"><?php echo esc_html($title); ?></p>
+				<div class="ttbm-sb-tax-head">
+					<span class="ttbm-sb-tax-icon" aria-hidden="true"><i class="<?php echo esc_attr($icon); ?>"></i></span>
+					<p class="ttbm-sb-card-title"><?php echo esc_html($title); ?></p>
+				</div>
 				<div class="ttbm-sb-tax-list">
 					<?php
 						/*

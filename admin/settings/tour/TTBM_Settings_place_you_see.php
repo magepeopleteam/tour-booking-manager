@@ -29,6 +29,7 @@
                     <div class="ttbm-header ttbm-header--with-switch">
                         <h4><i class="fas fa-map-marker-alt"></i><?php esc_html_e('Places You\'ll Visit', 'tour-booking-manager'); ?></h4>
 						<?php TTBM_Custom_Layout::switch_button('ttbm_display_hiphop', $checked); ?>
+                        <p class="ttbm-header__sub"><?php esc_html_e('Show the stops and sights guests will see on this tour.', 'tour-booking-manager'); ?></p>
                     </div>
                     <div data-collapse="#ttbm_display_hiphop" class="ttbm_settings_area ttbm_settings_place_you_see ttbm_place_you_see_area <?php echo esc_attr($active); ?>">
 						<?php $this->place_you_see($tour_id); ?>

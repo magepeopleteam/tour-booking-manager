@@ -48,6 +48,7 @@
                         <div class="ttbm-header">
                             <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Included Feature', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_include_service', $in_checked); ?>
+                            <p class="ttbm-header__sub"><?php esc_html_e('List what guests get with this tour.', 'tour-booking-manager'); ?></p>
                         </div>
                         <div data-collapse="#ttbm_display_include_service" class="includedd-features-section <?php echo esc_attr($include_active); ?>">
 							<?php $this->feature_list($tour_id, 'ttbm_service_included_in_price'); ?>
@@ -58,6 +59,7 @@
                         <div class="ttbm-header">
                             <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Excluded Feature', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_exclude_service', $ex_checked); ?>
+                            <p class="ttbm-header__sub"><?php esc_html_e('List what is not covered, so guests are not surprised.', 'tour-booking-manager'); ?></p>
                         </div>
                         <div data-collapse="#ttbm_display_exclude_service" class="includedd-features-section <?php echo esc_attr($include_active); ?>">
 							<?php $this->feature_list($tour_id, 'ttbm_service_excluded_in_price'); ?>

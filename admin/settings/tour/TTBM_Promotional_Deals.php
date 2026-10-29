@@ -27,6 +27,7 @@ if (!class_exists('TTBM_Promotional_Deals')) {
                         <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Top Picks Deals Setting', 'tour-booking-manager'); ?></h4>
                         <input type="hidden" name="ttbm_display_top_picks_deals" value="off" />
                         <?php TTBM_Custom_Layout::switch_button('ttbm_display_top_picks_deals', $checked); ?>
+                        <p class="ttbm-header__sub"><?php esc_html_e('Choose how this tour shows up in your Top Picks deals.', 'tour-booking-manager'); ?></p>
                     </div>
                     <div data-collapse="#ttbm_display_top_picks_deals" class="ttbm_activities_area <?php echo esc_attr($active); ?>">
                         <div class="ttbm_activities_table">
@@ -55,6 +56,7 @@ if (!class_exists('TTBM_Promotional_Deals')) {
                 <section>
                     <div class="ttbm-header">
                         <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Promotional Shortcodes', 'tour-booking-manager'); ?></h4>
+                        <p class="ttbm-header__sub"><?php esc_html_e('Copy a code and paste it into any page to show deals on your site.', 'tour-booking-manager'); ?></p>
                     </div>
                     
                     <div class="ttbm_promotional_shortcode">

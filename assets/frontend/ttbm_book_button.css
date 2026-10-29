@@ -1,0 +1,64 @@
+/* ==========================================================================
+   Book now button
+   Solid teal, rounded, with the cart in a soft circle and a gentle lift on hover.
+   Disabled (no date / no tickets) is a calm grey, not a faded copy of the active button.
+   ========================================================================== */
+.ttbm_book_now_actions .ttbm_book_now {
+	position: relative;
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	min-height: 54px;
+	padding: 0 30px 0 14px !important;
+	border: 0 !important;
+	border-radius: 14px !important;
+	background: #0F766E !important;
+	color: #fff !important;
+	font-size: 17px !important;
+	font-weight: 700 !important;
+	letter-spacing: .01em;
+	line-height: 1;
+	text-transform: none !important;
+	box-shadow: 0 8px 20px rgba(15, 118, 110, .28) !important;
+	opacity: 1 !important;
+	cursor: pointer;
+	transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.ttbm_book_now_actions .ttbm_book_now > .fas,
+.ttbm_book_now_actions .ttbm_book_now > span:first-child {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: none;
+	width: 34px;
+	height: 34px;
+	border-radius: 10px;
+	background: rgba(255, 255, 255, .18);
+	color: #fff !important;
+	font-size: 15px;
+}
+.ttbm_book_now_actions .ttbm_book_now:hover {
+	background: #0B4F4A !important;
+	transform: translateY(-2px);
+	box-shadow: 0 12px 26px rgba(11, 79, 74, .32) !important;
+}
+.ttbm_book_now_actions .ttbm_book_now:active { transform: translateY(0); box-shadow: 0 4px 10px rgba(11, 79, 74, .25) !important; }
+.ttbm_book_now_actions .ttbm_book_now:focus-visible { outline: 3px solid #0F766E; outline-offset: 3px; }
+
+/* Disabled */
+.ttbm_book_now_actions .ttbm_book_now.mpDisabled,
+.ttbm_book_now_actions .ttbm_book_now[disabled] {
+	background: #E3E8EC !important;
+	color: #4A5565 !important;
+	box-shadow: none !important;
+	transform: none;
+	cursor: not-allowed;
+}
+.ttbm_book_now_actions .ttbm_book_now.mpDisabled > .fas,
+.ttbm_book_now_actions .ttbm_book_now[disabled] > .fas { background: rgba(74, 85, 101, .12); color: #4A5565 !important; }
+
+@media (max-width: 640px) {
+	.ttbm_book_now_actions,
+	.ttbm_book_now_actions .ttbm_book_now { width: 100%; }
+}

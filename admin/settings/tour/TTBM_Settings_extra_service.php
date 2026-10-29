@@ -19,6 +19,7 @@
                 <section class="ttbm_settings_area ttbm-extra-service-area">
                         <div class="ttbm-header">
                             <h4><i class="fas fa-parachute-box" aria-hidden="true"></i><?php esc_html_e('Extra Service', 'tour-booking-manager'); ?></h4>
+                            <p class="ttbm-header__sub"><?php esc_html_e('Offer optional add-ons guests can book with the tour.', 'tour-booking-manager'); ?></p>
                         </div>
                         <div class="ttbm-extra-service-panel">
                             <div class="ttbm-extra-service-table-wrap">

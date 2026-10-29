@@ -23,6 +23,7 @@
                         <div class="ttbm-header">
                             <h4><i class="fas fa-link"></i><?php esc_html_e('Related Settings', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_related', $checked); ?>
+                            <p class="ttbm-header__sub"><?php esc_html_e('Choose which other tours to suggest on this tour page.', 'tour-booking-manager'); ?></p>
                         </div>
                         <div data-collapse="#ttbm_display_related" class="ttbm_display_related <?php echo esc_attr($active); ?>">
                             <label class="label">

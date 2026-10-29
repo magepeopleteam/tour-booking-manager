@@ -59,6 +59,7 @@ $ttbm_auto_date   = in_array( $travel_type, array( 'repeated', 'particular' ), t
 							?>
 							<div class="ttbm_hero_stats_grid ttbm_hero_stats_grid--collapsed">
 								<?php echo $ttbm_hero_stats_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							</div>
 								<?php if ( $ttbm_hero_stat_count > 4 ) : ?>
 									<button
 										type="button"
@@ -68,7 +69,6 @@ $ttbm_auto_date   = in_array( $travel_type, array( 'repeated', 'particular' ), t
 										data-label-less="<?php esc_attr_e( 'Show less', 'tour-booking-manager' ); ?>"
 									><?php esc_html_e( 'Load more', 'tour-booking-manager' ); ?></button>
 								<?php endif; ?>
-							</div>
 						</div>
 						<div class="ttbm_particular_area placeholder_area">
 							<?php do_action( 'ttbm_details_particular_area' ); ?>

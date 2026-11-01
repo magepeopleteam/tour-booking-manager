@@ -580,6 +580,18 @@
                         ttbm_num_of_decimal = "<?php echo esc_html(get_option('woocommerce_price_num_decimals', 2)); ?>";
                     </script>
 					<?php
+				} elseif (class_exists('TTBM_Currency_Fallback')) {
+					// Custom Payment without WooCommerce: same currency the PHP price shims use.
+					$ttbm_currency = TTBM_Currency_Fallback::settings();
+					?>
+                    <script type="text/javascript">
+                        ttbm_currency_symbol = "<?php echo esc_js($ttbm_currency['symbol']); ?>";
+                        ttbm_currency_position = "<?php echo esc_js($ttbm_currency['position']); ?>";
+                        ttbm_currency_decimal = "<?php echo esc_js($ttbm_currency['decimal_sep']); ?>";
+                        ttbm_currency_thousands_separator = "<?php echo esc_js($ttbm_currency['thousand_sep']); ?>";
+                        ttbm_num_of_decimal = "<?php echo esc_js($ttbm_currency['num_decimals']); ?>";
+                    </script>
+					<?php
 				}
 			}
 		}

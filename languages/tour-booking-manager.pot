@@ -13680,3 +13680,111 @@ msgstr ""
 #: templates/themes/travello.php:450
 msgid "Organized by"
 msgstr ""
+
+#: admin/TTBM_Theme_Page.php:27
+msgid "Travail Theme"
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:45
+msgid "Tour pages built for booking: header with info tiles, date tiles, ticket cards and a live total."
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:46
+msgid "Photo gallery, itinerary, included / excluded items, FAQ and reviews, laid out for easy reading."
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:47
+msgid "Homepage search with Tours, Destinations, Activities and Hotels tabs."
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:48
+msgid "Tour grids, destination cards and activity filters that match your Theme Color."
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:49
+msgid "Elementor-ready homepages and widgets, with a Setup Wizard."
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:50
+msgid "One-click demo import with sample tours, hotels, guides and places."
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:51
+msgid "Works with WooCommerce checkout and Tour Booking Manager."
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:52
+msgid "Fast, responsive and translation-ready."
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:59
+msgid "Travail theme preview"
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:67
+msgid "Installed"
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:72
+msgid "A free travel and tour theme made for Tour Booking Manager. Show your tours, take bookings and look professional from day one."
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:82
+msgid "Installed version"
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:84
+msgid "Requires"
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:84
+msgid "WordPress 6.0+ and PHP 7.4+"
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:85
+msgid "Works with"
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:85
+msgid "Tour Booking Manager, WooCommerce, Elementor"
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:86
+msgid "License"
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:86
+msgid "Free, GPL v2 or later"
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:93
+msgid "Release notes and download"
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:95
+msgid "GitHub"
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:128
+msgid "Travail is active on this site ✓"
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:129
+msgid "Open Setup Wizard"
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:130
+msgid "Customize"
+msgstr ""
+
+#: admin/TTBM_Theme_Promo.php:82
+msgid "See details"
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:64
+msgid "View live demo"
+msgstr ""
+
+#: admin/TTBM_Theme_Page.php:100
+msgid "Live demo"
+msgstr ""

@@ -76,7 +76,12 @@ if ( ! class_exists( 'TTBM_Theme_Promo' ) ) {
 				<button type="button" class="ttbm-theme-card__close" aria-label="<?php esc_attr_e( 'Hide this suggestion', 'tour-booking-manager' ); ?>" data-nonce="<?php echo esc_attr( wp_create_nonce( 'ttbm_theme_card' ) ); ?>">&times;</button>
 				<span class="ttbm-theme-card__badge"><?php esc_html_e( 'Free theme', 'tour-booking-manager' ); ?></span>
 				<h3><?php esc_html_e( 'Make your tour site look great with Travail', 'tour-booking-manager' ); ?></h3>
-				<p><?php esc_html_e( 'Travail is a free theme built for this plugin: tour grids, a booking-ready tour page, search and an Elementor homepage.', 'tour-booking-manager' ); ?></p>
+				<p>
+					<?php esc_html_e( 'Travail is a free theme built for this plugin: tour grids, a booking-ready tour page, search and an Elementor homepage.', 'tour-booking-manager' ); ?>
+					<?php if ( class_exists( 'TTBM_Theme_Page' ) ) : ?>
+						<a href="<?php echo esc_url( TTBM_Theme_Page::page_url() ); ?>"><?php esc_html_e( 'See details', 'tour-booking-manager' ); ?></a>
+					<?php endif; ?>
+				</p>
 
 				<?php if ( $has_installer ) : ?>
 					<div class="ttbm-theme-card__actions">

@@ -138,6 +138,11 @@
 								<?php if ($params['location-filter'] == 'yes' || $location_filter) {
 									$location = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_location_name');
 									$location_term = $location ? TTBM_Function::get_term_by_name_cached($location, 'ttbm_tour_location') : false;
+									if (!$location_term) {
+										// Tours with no location-name meta (demo/imported tours) still carry the location taxonomy term.
+										$location_terms = get_the_terms($tour_id, 'ttbm_tour_location');
+										$location_term  = (is_array($location_terms) && !empty($location_terms)) ? reset($location_terms) : false;
+									}
 									$location_id = $location_term ? $location_term->term_id : '';
 									?>
                                     data-location="<?php echo esc_attr($location_id); ?>"
@@ -386,6 +391,11 @@
 								<?php if ($params['location-filter'] == 'yes' || $location_filter) {
 									$location = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_location_name');
 									$location_term = $location ? TTBM_Function::get_term_by_name_cached($location, 'ttbm_tour_location') : false;
+									if (!$location_term) {
+										// Tours with no location-name meta (demo/imported tours) still carry the location taxonomy term.
+										$location_terms = get_the_terms($tour_id, 'ttbm_tour_location');
+										$location_term  = (is_array($location_terms) && !empty($location_terms)) ? reset($location_terms) : false;
+									}
 									$location_id = $location_term ? $location_term->term_id : '';
 									?>
                                     data-location="<?php echo esc_attr($location_id); ?>"

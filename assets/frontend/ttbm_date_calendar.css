@@ -24,7 +24,7 @@
 .ttbm-date-select:has(#ttbm_date_tiles) > #ttbm_date_tiles { order: 2; }
 .ttbm-date-select:has(#ttbm_date_tiles) .ttbm-date-select__control { order: 3; display: flex !important; align-items: center; gap: 12px; min-height: 52px; padding: 0 16px !important; background: #F4F6F8 !important; border: 1px solid #DDE2E8 !important; border-radius: 12px !important; box-sizing: border-box; width: 100% !important; max-width: 420px; }
 .ttbm-date-select:has(#ttbm_date_tiles) .ttbm-date-select__control input#ttbm_select_date { flex: 1 1 auto; min-width: 0; min-height: 48px; padding: 0 !important; border: 0 !important; background: transparent !important; box-shadow: none !important; font-size: 16px !important; font-weight: 600; color: #1B2430 !important; pointer-events: none; }
-.ttbm-date-select:has(#ttbm_date_tiles) .ttbm-date-select__icon { color: #0B4F4A !important; background: #E3EEEC !important; border-radius: 10px; }
+.ttbm-date-select:has(#ttbm_date_tiles) .ttbm-date-select__icon { color: color-mix(in srgb, var(--color_theme, #0F766E) 72%, #000) !important; background: color-mix(in srgb, var(--color_theme, #0F766E) 12%, #fff) !important; border-radius: 10px; }
 .ttbm-date-select:has(#ttbm_date_tiles) .ttbm_date_chevron { display: none; }
 .ttbm-date-select:has(#ttbm_date_tiles) .ttbm-date-tiles-note { order: 4; margin: 0; font-size: 14px; line-height: 1.5; color: #4A5565; }
 .ttbm-date-select:has(#ttbm_date_tiles) .ttbm_select_time_area,
@@ -47,10 +47,10 @@
 	box-shadow: none;
 	transition: border-color .15s ease, background .15s ease;
 }
-#ttbm_date_tiles .ttbm-date-tile:hover { border-color: #0F766E; }
-#ttbm_date_tiles .ttbm-date-tile[aria-pressed="true"] { background: #0F766E; border-color: #0F766E; color: #fff; }
+#ttbm_date_tiles .ttbm-date-tile:hover { border-color: var(--color_theme, #0F766E); }
+#ttbm_date_tiles .ttbm-date-tile[aria-pressed="true"] { background: var(--color_theme, #0F766E); border-color: var(--color_theme, #0F766E); color: #fff; }
 #ttbm_date_tiles .ttbm-date-tile:focus-visible,
-#ttbm_date_tiles .ttbm-date-tiles__more:focus-visible { outline: 3px solid #0F766E; outline-offset: 2px; }
+#ttbm_date_tiles .ttbm-date-tiles__more:focus-visible { outline: 3px solid var(--color_theme, #0F766E); outline-offset: 2px; }
 #ttbm_date_tiles .ttbm-date-tile__dow { display: block; font-size: 13px; font-weight: 600; }
 #ttbm_date_tiles .ttbm-date-tile__day { display: block; font-size: 26px; font-weight: 700; line-height: 1.2; }
 #ttbm_date_tiles .ttbm-date-tile__month { display: block; font-size: 13px; }
@@ -61,7 +61,7 @@
 	padding: 0 4px;
 	border: 0;
 	background: none;
-	color: #0B4F4A;
+	color: color-mix(in srgb, var(--color_theme, #0F766E) 72%, #000);
 	font-size: 15px;
 	font-weight: 600;
 	font-family: inherit;

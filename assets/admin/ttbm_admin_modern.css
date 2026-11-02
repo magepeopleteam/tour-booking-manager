@@ -10996,3 +10996,110 @@ body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-right-sidebar .ttbm-sb-car
 #ttbm_content[data-wz-step="pricing"] .ttbm-right-sidebar .ttbm-sb-payment-card,
 #ttbm_content[data-wz-step="more"] .ttbm-right-sidebar .ttbm-sb-card[data-taxonomy="ttbm_tour_cat"],
 #ttbm_content[data-wz-step="more"] .ttbm-right-sidebar .ttbm-sb-card[data-taxonomy="ttbm_tour_org"] { display: none !important; }
+
+/* ─── Editor container: centered, 1250px wide; content fills the left, 360px sidebar on the right ─── */
+@media (min-width: 1201px) {
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm_settings .ttbmTabs.leftTabs,
+	body.ttbm-modern-edit-page #ttbm_content.ttbm_configuration .ttbmTabs.leftTabs {
+		width: 100%;
+		max-width: 1250px;
+		margin-left: auto !important;
+		margin-right: auto !important;
+		box-sizing: border-box;
+		padding-left: 0;
+		padding-right: 0;
+	}
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .tabsContent {
+		flex: 1 1 0;
+		min-width: 0;
+		width: auto;
+	}
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbmTabs.leftTabs > .ttbm-right-sidebar {
+		flex: 0 0 360px !important;
+		width: 360px !important;
+		min-width: 360px !important;
+		max-width: 360px !important;
+		margin-left: 22px !important;
+	}
+}
+@media (max-width: 1200px) {
+	body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm_settings .ttbmTabs.leftTabs { padding-left: 16px; padding-right: 16px; box-sizing: border-box; }
+}
+
+/* Space below the editor so the last cards never sit against the footer / the wizard's fixed Back-Next bar */
+body.ttbm-modern-edit-page #post-body { padding-bottom: 180px; }
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm_settings .ttbmTabs.leftTabs,
+body.ttbm-modern-edit-page #ttbm_content.ttbm_configuration .ttbmTabs.leftTabs { padding-bottom: 48px; }
+@media (max-width: 782px) {
+	body.ttbm-modern-edit-page #post-body { padding-bottom: 200px; }
+}
+
+/* ─── Ticket types: single column. Each ticket is a card; every field sits on its own labelled row. ─── */
+#ttbm_meta_box_panel .ttbm-ticket-types-table-wrap { border: 0 !important; overflow: visible !important; background: transparent !important; }
+#ttbm_meta_box_panel .ttbm-ticket-types-table,
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody { display: block !important; width: 100% !important; table-layout: auto !important; }
+#ttbm_meta_box_panel .ttbm-ticket-types-table thead { display: none !important; }
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody { display: flex !important; flex-direction: column; gap: 14px; }
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody tr.ttbm-ticket-type-row {
+	position: relative;
+	display: flex !important;
+	flex-direction: column;
+	width: 100% !important;
+	border: 1px solid #e2e8f0;
+	border-radius: 14px;
+	background: #fff;
+	overflow: hidden;
+	box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+}
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td {
+	display: flex !important;
+	align-items: center;
+	gap: 16px;
+	width: 100% !important;
+	min-width: 0 !important;
+	max-width: 100% !important;
+	box-sizing: border-box;
+	padding: 12px 18px;
+	border: 0;
+	border-bottom: 1px solid #eef2f7;
+}
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td::before {
+	flex: 0 0 150px;
+	max-width: 150px;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+	color: #64748b;
+}
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td > * { flex: 1 1 auto; min-width: 0; }
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td .formControl,
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td input[type="text"],
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td input[type="number"],
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td select { width: 100% !important; max-width: 100% !important; }
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--name::before { content: "Ticket Name *"; }
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--desc::before { content: "Short Description"; }
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--price::before { content: "Reg. Price *"; }
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--sale::before { content: "Sale Price"; }
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--cap::before { content: "Capacity *"; }
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--default::before { content: "Def. Qty"; }
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--reserve::before { content: "Res. Qty"; }
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--qty-type::before { content: "Qty Box Type"; }
+/* Delete + drag handle: a header strip at the top of the card */
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--actions {
+	order: -1;
+	justify-content: flex-end;
+	padding: 10px 14px;
+	background: #f8fafc;
+}
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--actions::before { content: "Ticket"; margin-right: auto; }
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--actions > .ttbm-ticket-row__actions { flex: 0 0 auto; }
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td:last-child:not(.ttbm-ticket-col--actions),
+#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--qty-type { border-bottom: 0; }
+/* The Ticket / Pricing / Inventory / Display heading row has no meaning once fields stack */
+#ttbm_meta_box_panel .ttbm-ticket-types-table .ttbm-ticket-group-row { display: none !important; }
+@media (max-width: 600px) {
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td { flex-direction: column; align-items: stretch; gap: 6px; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td::before { flex: none; max-width: none; }
+	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--actions { flex-direction: row; align-items: center; }
+}

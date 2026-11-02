@@ -993,7 +993,7 @@
                 <div class="filter_short_result ttbm-search-result-count" data-placeholder>
 					<?php esc_html_e('Showing', 'tour-booking-manager'); ?>
                     <span class="ttbm-search-count-highlight">
-                        <strong class="qty_count"><?php echo esc_html($params['show']); ?></strong>
+                        <strong class="qty_count"><?php echo esc_html(min((int) $params['show'], (int) $loop->post_count)); ?></strong>
                         <?php esc_html_e('of', 'tour-booking-manager'); ?>
                         <strong class="total_filter_qty"><?php echo esc_html($loop->post_count); ?></strong>
                     </span>

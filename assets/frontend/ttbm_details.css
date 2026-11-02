@@ -2827,8 +2827,8 @@ body:has(:is(.ttbm_default_theme, .ttbm_travello_theme)) #ui-datepicker-div.ui-d
 	font-size: 12px;
 	font-weight: 600;
 	line-height: 1.3;
-	color: #0369a1;
-	background: #e0f2fe;
+	color: color-mix(in srgb, var(--color_theme, #0b74de) 80%, #000);
+	background: color-mix(in srgb, var(--color_theme, #0b74de) 12%, #fff);
 	border-radius: 999px;
 	white-space: nowrap;
 }
@@ -6831,7 +6831,7 @@ body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .inputIncDec {
 #ttbm_content .ttbm_why_choose_us .ttbm_title_style_2 h5 {
 	font-size: 19px;
 	font-weight: 700;
-	color: var(--ttbm_d_heading, #0b4f4a);
+	color: var(--ttbm_d_heading, color-mix(in srgb, var(--color_theme, #0F766E) 72%, #000));
 }
 #ttbm_content .ttbm_why_choose_us .ttbm_why_choose_us_list,
 #ttbm_content .ttbm_content__right .ttbm_why_choose_us .ttbm_widget_content ul.ttbm_why_choose_us_list {

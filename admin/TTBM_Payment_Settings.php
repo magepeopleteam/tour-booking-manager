@@ -319,7 +319,7 @@
 
 			/**
 			 * Yellow banner (when needed) + payment modal on tour/hotel edit screens.
-			 * Banner markup is moved to the top of #poststuff via JS; the modal is
+			 * Banner markup is moved to the top of #post-body via JS; the modal is
 			 * always available so the sidebar Payment card can open it too.
 			 */
 			public function maybe_render_edit_payment_notice($post) {
@@ -429,8 +429,10 @@
 .ttbm-edit-payment-modal-close{border:none;background:transparent;font-size:22px;line-height:1;cursor:pointer;color:#6b7280;padding:4px 8px;}
 .ttbm-edit-payment-modal-close:hover{color:#111827;}
 .ttbm-edit-payment-modal-body{padding:20px 24px 28px;}
-body.ttbm-modern-edit-page #poststuff > .ttbm-edit-payment-notice{box-sizing:border-box;}
-@media (max-width:782px){body.ttbm-modern-edit-page #poststuff > .ttbm-edit-payment-notice{flex-direction:column;align-items:stretch;padding:12px 14px;}.ttbm-edit-payment-notice-link{justify-content:center;}}
+body.ttbm-modern-edit-page #poststuff > .ttbm-edit-payment-notice,body.ttbm-modern-edit-page #post-body > .ttbm-edit-payment-notice{box-sizing:border-box;}
+body.ttbm-modern-edit-page #post-body > .ttbm-edit-payment-notice{width:100%;max-width:1250px;margin:16px auto 0;clear:both;}
+@media (max-width:1200px){body.ttbm-modern-edit-page #post-body > .ttbm-edit-payment-notice{max-width:none;margin:12px 16px 0;width:auto;}}
+@media (max-width:782px){body.ttbm-modern-edit-page #poststuff > .ttbm-edit-payment-notice,body.ttbm-modern-edit-page #post-body > .ttbm-edit-payment-notice{flex-direction:column;align-items:stretch;padding:12px 14px;}.ttbm-edit-payment-notice-link{justify-content:center;}}
 /* Payment Method modal: gateway cards in a row, compact booking mode, open additional settings. */
 #ttbm-edit-payment-modal .ttbm-edit-payment-modal-box{max-width:800px;border-radius:14px;}
 #ttbm-edit-payment-modal .ttbm-edit-payment-modal-head{padding:20px 28px;}
@@ -506,8 +508,9 @@ CSS;
 jQuery(function ($) {
 	var $notice = $('#ttbm-edit-payment-notice');
 	var $modal = $('#ttbm-edit-payment-modal');
-	if ($notice.length && $('#poststuff').length) {
-		$('#poststuff').prepend($notice);
+	var $host = $('#post-body').length ? $('#post-body') : $('#poststuff');
+	if ($notice.length && $host.length) {
+		$host.prepend($notice);
 	}
 	if ($modal.length) {
 		$modal.appendTo('body');

@@ -10290,7 +10290,7 @@ div.ttbm_booking_panel table.mp_tour_ticket_extra tbody tr.ttbm_ticket_row td {
 	font-weight: 700;
 }
 .ttbm-grid-mode .ttbm-gc-body .ttbm_list_title a:hover {
-	color: #0f766e;
+	color: var(--color_theme, #0F766E);
 }
 .ttbm-grid-mode .ttbm-gc-meta-row {
 	margin: 0;
@@ -10304,7 +10304,7 @@ div.ttbm_booking_panel table.mp_tour_ticket_extra tbody tr.ttbm_ticket_row td {
 	font-size: 13px;
 }
 .ttbm-grid-mode .ttbm-gc-meta-row .ttbm_list_info.location_name .mi {
-	color: #0f766e;
+	color: var(--color_theme, #0F766E);
 }
 .ttbm-grid-mode .ttbm-gc-body .ttbm-gc-tag {
 	background: #e3f4f1 !important;
@@ -10350,9 +10350,9 @@ div.ttbm_booking_panel table.mp_tour_ticket_extra tbody tr.ttbm_ticket_row td {
 	min-height: 40px;
 	padding: 0 16px !important;
 	background: transparent !important;
-	border: 1.5px solid #0f766e !important;
+	border: 1.5px solid var(--color_theme, #0F766E) !important;
 	border-radius: 10px !important;
-	color: #0f766e !important;
+	color: var(--color_theme, #0F766E) !important;
 	font-size: 14px;
 	font-weight: 700;
 	box-shadow: none !important;
@@ -10360,7 +10360,7 @@ div.ttbm_booking_panel table.mp_tour_ticket_extra tbody tr.ttbm_ticket_row td {
 }
 .ttbm-grid-mode .ttbm-gc-body .ttbm_explore_button:hover,
 .ttbm-grid-mode .ttbm-gc-body .filter_item_footer .ttbm_explore_button:hover {
-	background: #0f766e !important;
+	background: var(--color_theme, #0F766E) !important;
 	color: #fff !important;
 }
 

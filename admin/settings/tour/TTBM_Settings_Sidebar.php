@@ -480,7 +480,7 @@ body.ttbm-modern-edit-page .ttbm-sb-publish-card { display: none !important; }
 
 /* Sidebar column */
 .ttbm-right-sidebar {
-	width: 320px !important;
+	width: 360px !important;
 	min-width: 272px !important;
 	flex-shrink: 0 !important;
 	padding: 0 !important;

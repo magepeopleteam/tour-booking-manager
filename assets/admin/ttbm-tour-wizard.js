@@ -277,9 +277,6 @@
 			if (typeof window.ttbmFocusValidationTarget === 'function') {
 				window.ttbmFocusValidationTarget();
 			}
-			if (typeof window.ttbmToast === 'function') {
-				window.ttbmToast('Please complete the highlighted required fields to continue.', 'error');
-			}
 		}
 		return ok;
 	}

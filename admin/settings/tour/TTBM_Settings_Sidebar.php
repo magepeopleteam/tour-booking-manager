@@ -1580,8 +1580,14 @@ jQuery(function($){
 			);
 			?>
 			<div class="ttbm-sb-card ttbm-sb-summary-card" data-sum-card data-not-set="<?php esc_attr_e('Not set', 'tour-booking-manager'); ?>" data-nights="<?php esc_attr_e('night(s)', 'tour-booking-manager'); ?>" data-dates-word="<?php esc_attr_e('dates', 'tour-booking-manager'); ?>" data-every="<?php esc_attr_e('repeats every', 'tour-booking-manager'); ?>" data-tickets-word="<?php esc_attr_e('ticket types', 'tour-booking-manager'); ?>">
-				<p class="ttbm-sb-card-title"><?php esc_html_e('Tour summary', 'tour-booking-manager'); ?></p>
-				<p class="ttbm-sb-summary-note"><?php esc_html_e('What you have set so far.', 'tour-booking-manager'); ?></p>
+				<button type="button" class="ttbm-sb-summary-toggle" aria-expanded="false" aria-controls="ttbm-sb-summary-body">
+					<span class="ttbm-sb-summary-toggle__text">
+						<span class="ttbm-sb-card-title"><?php esc_html_e('Tour summary', 'tour-booking-manager'); ?></span>
+						<span class="ttbm-sb-summary-note"><?php esc_html_e('What you have set so far.', 'tour-booking-manager'); ?></span>
+					</span>
+					<span class="ttbm-sb-summary-toggle__chev" aria-hidden="true"></span>
+				</button>
+				<div class="ttbm-sb-summary-body" id="ttbm-sb-summary-body" hidden>
 				<?php foreach ($groups as $gkey => $group) : ?>
 					<div class="ttbm-sb-summary-group" data-sum-group="<?php echo esc_attr($gkey); ?>">
 						<div class="ttbm-sb-summary-grouphead">
@@ -1598,9 +1604,15 @@ jQuery(function($){
 						</dl>
 					</div>
 				<?php endforeach; ?>
+				</div>
 			</div>
 			<script>
 			(function($){
+				$(document).on('click', '.ttbm-sb-summary-toggle', function(){
+					var $b = $(this), open = $b.attr('aria-expanded') !== 'true';
+					$b.attr('aria-expanded', open ? 'true' : 'false');
+					$b.closest('.ttbm-sb-summary-card').toggleClass('is-open', open).find('.ttbm-sb-summary-body').prop('hidden', !open);
+				});
 				var STEP_OF = { '#ttbm_general_info': 0, '#ttbm_settings_location': 0, '#ttbm_settings_dates': 1, '#ttbm_settings_pricing': 2 };
 				var ORDER = ['basic', 'schedule', 'pricing'];
 				function field(sel){

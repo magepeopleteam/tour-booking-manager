@@ -144,24 +144,39 @@
 			});
 		}
 
-		if (lines.length) {
-			var $lines = $('<div class="ttbm-tp__lines"></div>');
-			$.each(lines, function (k, l) {
-				$lines.append(
-					$('<div class="ttbm-tp__line"></div>')
-						.append($('<span></span>').text(l.name + ' \u00d7 ' + l.qty))
-						.append($('<span></span>').text(money(l.amount)))
-				);
-			});
-			$footer.append($lines);
+		var shield = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6l8-3z"/></svg>';
+		var cal = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>';
+		var $trust = $('<div class="ttbm-tp__trust" aria-hidden="true"></div>')
+			.append($('<span></span>').append(shield).append(document.createTextNode(' ' + $card.attr('data-secure-text'))))
+			.append($('<span></span>').append(cal).append(document.createTextNode(' ' + $card.attr('data-resched-text'))));
+		if (!lines.length) {
+			$footer
+				.append($('<p class="ttbm-tp__nothing"></p>').text($card.attr('data-nothing-text')))
+				.append(
+					$('<button type="button" class="ttbm-tp__book is-disabled" tabindex="-1" disabled></button>')
+						.append('<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>')
+						.append(document.createTextNode(' ' + $card.attr('data-continue-text')))
+				)
+				.append($trust);
+			return;
 		}
+		var $lines = $('<div class="ttbm-tp__lines"></div>');
+		$.each(lines, function (k, l) {
+			$lines.append(
+				$('<div class="ttbm-tp__line"></div>')
+					.append($('<span></span>').text(l.name + ' \u00d7 ' + l.qty))
+					.append($('<span></span>').text(money(l.amount)))
+			);
+		});
 		$footer
+			.append($lines)
 			.append(
 				$('<div class="ttbm-tp__total"></div>')
 					.append($('<span></span>').text($card.attr('data-total-text')))
 					.append($('<strong></strong>').text(money(total)))
 			)
-			.append($('<button type="button" class="ttbm-tp__book" tabindex="-1"></button>').text($card.attr('data-book-text')));
+			.append($('<button type="button" class="ttbm-tp__book" tabindex="-1"></button>').text($card.attr('data-book-text')))
+			.append($trust);
 	}
 
 	function schedule() {

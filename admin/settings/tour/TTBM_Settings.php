@@ -1588,6 +1588,10 @@
 					update_post_meta($tour_id, 'ttbm_display_hotels', $hotels);
 					update_post_meta($tour_id, 'ttbm_display_duration', $duration);
 					update_post_meta($tour_id, 'ttbm_theme_file', $ttbm_template);
+					if (isset($_POST['ttbm_theme_color'])) {
+						$ttbm_theme_color = sanitize_hex_color(wp_unslash($_POST['ttbm_theme_color']));
+						update_post_meta($tour_id, 'ttbm_theme_color', $ttbm_theme_color ? $ttbm_theme_color : '');
+					}
 					update_post_meta($tour_id, 'ttbm_display_enquiry', $display_enquiry);
 					update_post_meta($tour_id, 'ttbm_auto_related_tour', $auto_related_tour);
 					//*********Rating & Reviews (off by default, no fabricated data)**************//

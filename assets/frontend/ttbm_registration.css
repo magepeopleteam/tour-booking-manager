@@ -9667,6 +9667,7 @@ div.ttbm_booking_panel table.mp_tour_ticket_extra tbody tr.ttbm_ticket_row td {
 /* ===== Related tours: clean cards ===== */
 #ttbm_related_tour .content-title {
 	font-size: 30px;
+	color: #0f172a;
 	line-height: 1.2;
 	font-weight: 700;
 	margin: 0 0 24px;
@@ -9683,7 +9684,8 @@ div.ttbm_booking_panel table.mp_tour_ticket_extra tbody tr.ttbm_ticket_row td {
 }
 #ttbm_related_tour div.filter_item:hover {
 	transform: translateY(-4px);
-	box-shadow: 0 14px 32px rgba(15, 23, 42, .12) !important;
+	border-color: color-mix(in srgb, var(--color_theme, #0f766e) 45%, #e5e9ee) !important;
+	box-shadow: 0 14px 32px color-mix(in srgb, var(--color_theme, #0f766e) 18%, transparent) !important;
 }
 #ttbm_related_tour .ttbm-gc-image-wrap {
 	position: relative;
@@ -9699,7 +9701,7 @@ div.ttbm_booking_panel table.mp_tour_ticket_extra tbody tr.ttbm_ticket_row td {
 	top: 12px !important;
 	left: 12px !important;
 	right: auto !important;
-	background: #dc2626 !important;
+	background: var(--color_theme, #0f766e) !important;
 	color: #fff !important;
 	font-size: 11px !important;
 	font-weight: 700;
@@ -9739,7 +9741,7 @@ div.ttbm_booking_panel table.mp_tour_ticket_extra tbody tr.ttbm_ticket_row td {
 	font-weight: 700;
 }
 #ttbm_related_tour .ttbm-gc-body .ttbm_list_title a:hover {
-	color: #0f766e;
+	color: var(--color_theme, #0f766e);
 }
 #ttbm_related_tour .ttbm-gc-meta-row {
 	margin: 0;
@@ -9753,11 +9755,11 @@ div.ttbm_booking_panel table.mp_tour_ticket_extra tbody tr.ttbm_ticket_row td {
 	font-size: 13px;
 }
 #ttbm_related_tour .ttbm-gc-meta-row .ttbm_list_info.location_name .mi {
-	color: #0f766e;
+	color: var(--color_theme, #0f766e);
 }
 #ttbm_related_tour .ttbm-gc-body .ttbm-gc-tag {
-	background: #e3f4f1 !important;
-	color: #0f5f58 !important;
+	background: color-mix(in srgb, var(--color_theme, #0f766e) 14%, #fff) !important;
+	color: color-mix(in srgb, var(--color_theme, #0f766e) 75%, #000) !important;
 	border: none !important;
 	border-radius: 999px !important;
 	font-size: 12px;
@@ -9799,9 +9801,9 @@ div.ttbm_booking_panel table.mp_tour_ticket_extra tbody tr.ttbm_ticket_row td {
 	min-height: 40px;
 	padding: 0 16px !important;
 	background: transparent !important;
-	border: 1.5px solid #0f766e !important;
+	border: 1.5px solid var(--color_theme, #0f766e) !important;
 	border-radius: 10px !important;
-	color: #0f766e !important;
+	color: var(--color_theme, #0f766e) !important;
 	font-size: 14px;
 	font-weight: 700;
 	box-shadow: none !important;
@@ -9809,7 +9811,7 @@ div.ttbm_booking_panel table.mp_tour_ticket_extra tbody tr.ttbm_ticket_row td {
 }
 #ttbm_related_tour .ttbm-gc-body .ttbm_explore_button:hover,
 #ttbm_related_tour .ttbm-gc-body .filter_item_footer .ttbm_explore_button:hover {
-	background: #0f766e !important;
+	background: var(--color_theme, #0f766e) !important;
 	color: #fff !important;
 }
 

@@ -11,7 +11,7 @@
 				add_action('wp_ajax_nopriv_get_ttbm_insert_ticket_type', array($this, 'ticket_table'));
 				add_action('ttbm_right_sidebar_content', [$this, 'ticket_preview_sidebar'], 5);
 				add_action('ttbm_right_sidebar_content', [$this, 'pricing_shortcode_sidebar'], 18);
-				add_action('ttbm_right_sidebar_content', [$this, 'addon_promo_sidebar'], 19);
+				add_action('ttbm_tour_exs_pricing_after', [$this, 'addon_promo_section'], 10, 1);
 				add_action('admin_enqueue_scripts', [$this, 'enqueue_pricing_sidebar_js']);
 			}
 			private function current_user_can_edit_ticket_context($post_id, $form_id) {
@@ -95,14 +95,32 @@
                      data-count-one="<?php esc_attr_e('1 ticket', 'tour-booking-manager'); ?>"
                      data-count-many="<?php esc_attr_e('%d tickets', 'tour-booking-manager'); ?>"
                      data-extra-text="<?php esc_attr_e('Extra services', 'tour-booking-manager'); ?>"
-                     data-book-text="<?php esc_attr_e('Book now', 'tour-booking-manager'); ?>">
+                     data-book-text="<?php esc_attr_e('Book now', 'tour-booking-manager'); ?>"
+                     data-add-text="<?php esc_attr_e('Add', 'tour-booking-manager'); ?>"
+                     data-tickets-title="<?php esc_attr_e('Tickets', 'tour-booking-manager'); ?>"
+                     data-nothing-text="<?php esc_attr_e('Nothing selected yet', 'tour-booking-manager'); ?>"
+                     data-continue-text="<?php esc_attr_e('Select a ticket to continue', 'tour-booking-manager'); ?>"
+                     data-secure-text="<?php esc_attr_e('Secure payment', 'tour-booking-manager'); ?>"
+                     data-resched-text="<?php esc_attr_e('Free rescheduling up to 24h', 'tour-booking-manager'); ?>">
                     <div class="ttbm-tp__head">
-                        <h4><?php esc_html_e('Ticket preview', 'tour-booking-manager'); ?></h4>
+                        <span class="ttbm-tp__eye" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </span>
+                        <div class="ttbm-tp__head-text">
+                            <h4><?php esc_html_e('Preview mode', 'tour-booking-manager'); ?></h4>
+                            <p><?php esc_html_e('Customer view · nothing here is editable', 'tour-booking-manager'); ?></p>
+                        </div>
                         <span class="ttbm-tp__live"><span class="ttbm-tp__dot" aria-hidden="true"></span><?php esc_html_e('Live', 'tour-booking-manager'); ?></span>
                     </div>
-                    <p class="ttbm-tp__hint"><?php esc_html_e('How guests see your tickets. Updates as you edit.', 'tour-booking-manager'); ?></p>
-                    <div class="ttbm-tp__body"></div>
-                    <div class="ttbm-tp__footer"></div>
+                    <div class="ttbm-tp__screen">
+                        <p class="ttbm-tp__hint"><?php esc_html_e('How guests see your tickets. Updates as you edit.', 'tour-booking-manager'); ?></p>
+                        <div class="ttbm-tp__body"></div>
+                        <div class="ttbm-tp__footer"></div>
+                    </div>
+                    <div class="ttbm-tp__note">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+                        <?php esc_html_e('Preview only. Nothing is booked.', 'tour-booking-manager'); ?>
+                    </div>
                 </div>
 				<?php
 			}
@@ -358,6 +376,47 @@
 				<?php
 			}
 			/*******************************/
+			public function addon_promo_section($tour_id) {
+				$promos = array();
+				if ( ! class_exists( 'TTBMA_Seasonal_Pricing' ) ) {
+					$promos[] = array(
+						'class' => 'amber',
+						'icon'  => 'fas fa-calendar-alt',
+						'title' => __( 'Seasonal Pricing', 'tour-booking-manager' ),
+						'desc'  => __( 'Set different prices based on date ranges, time slots, and seasons — perfect for peak & off-peak management.', 'tour-booking-manager' ),
+						'url'   => 'https://mage-people.com/product/seasonal-pricing-addon-for-woocommerce-tour-plugin/',
+					);
+				}
+				if ( ! class_exists( 'TTBMA_Group_Pricing' ) ) {
+					$promos[] = array(
+						'class' => 'blue',
+						'icon'  => 'fas fa-users',
+						'title' => __( 'Group Pricing', 'tour-booking-manager' ),
+						'desc'  => __( 'Offer quantity-based pricing for group bookings — ideal for bulk discounts and party rates.', 'tour-booking-manager' ),
+						'url'   => 'https://mage-people.com/product/group-pricing-or-bulk-qty-discount-addon-for-tour-plugin/',
+					);
+				}
+				if ( empty( $promos ) ) {
+					return;
+				}
+				?>
+                <div class="ttbm-apx" data-tab-card="#ttbm_settings_pricing">
+					<?php foreach ( $promos as $promo ) { ?>
+                        <div class="ttbm-apx__card ttbm-apx__card--<?php echo esc_attr( $promo['class'] ); ?>">
+                            <div class="ttbm-apx__top">
+                                <span class="ttbm-apx__icon" aria-hidden="true"><i class="<?php echo esc_attr( $promo['icon'] ); ?>"></i></span>
+                                <span class="ttbm-apx__badge"><?php esc_html_e( 'Addon', 'tour-booking-manager' ); ?></span>
+                            </div>
+                            <strong class="ttbm-apx__title"><?php echo esc_html( $promo['title'] ); ?></strong>
+                            <p class="ttbm-apx__desc"><?php echo esc_html( $promo['desc'] ); ?></p>
+                            <a class="ttbm-apx__btn" href="<?php echo esc_url( $promo['url'] ); ?>" target="_blank" rel="noopener">
+								<?php esc_html_e( 'Get Addon', 'tour-booking-manager' ); ?> <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+					<?php } ?>
+                </div>
+				<?php
+			}
 			public function addon_promo_sidebar($tour_id) {
 				$show_seasonal = ! class_exists( 'TTBMA_Seasonal_Pricing' );
 				$show_group = ! class_exists( 'TTBMA_Group_Pricing' );

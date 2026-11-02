@@ -445,8 +445,8 @@
 				wp_enqueue_script('jquery-ui-autocomplete');
 				wp_enqueue_script('ttbm_registration', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_registration.js', array('jquery', 'jquery-ui-autocomplete', 'ttbm_date_range_picker_js'), filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_registration.js'), true);
 				wp_enqueue_script('ttbm_attendee_autocomplete', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_attendee_autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), TTBM_PLUGIN_VERSION, true);
-				wp_enqueue_script('ttbm_price_calculation', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_price_calculation.js', array('jquery'), TTBM_PLUGIN_VERSION, true);
-				wp_enqueue_script('ttbm_smart_booking', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_smart_booking.js', array('jquery', 'ttbm_registration', 'ttbm_price_calculation'), TTBM_PLUGIN_VERSION, true);
+				wp_enqueue_script('ttbm_price_calculation', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_price_calculation.js', array('jquery'), TTBM_PLUGIN_VERSION . '.' . (int) @filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_price_calculation.js'), true);
+				wp_enqueue_script('ttbm_smart_booking', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_smart_booking.js', array('jquery', 'ttbm_registration', 'ttbm_price_calculation'), TTBM_PLUGIN_VERSION . '.' . (int) @filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_smart_booking.js'), true);
 				wp_enqueue_script('ttbm_hotel_script', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_hotel_script.js', array('jquery', 'moment', 'ttbm_date_range_picker_js'), TTBM_PLUGIN_VERSION, true);
 				wp_enqueue_script('ttbm_filter_pagination_script', TTBM_PLUGIN_URL . '/assets/frontend/filter_pagination.js', array('jquery', 'mp_select_2', 'moment', 'ttbm_date_range_picker_js'), TTBM_PLUGIN_VERSION, true);
 				/* Active-filter chip row for [ttbm-tour-list] — reads/resets the same
@@ -454,7 +454,7 @@
 				wp_enqueue_script('ttbm_active_filter_chips', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_active_filter_chips.js', array('jquery', 'ttbm_filter_pagination_script'), TTBM_PLUGIN_VERSION, true);
 				/* Travello single-tour template — tab-bar scroll-nav + share button only;
 				   booking/price/wishlist/FAQ-accordion all reuse existing plugin JS. */
-				wp_enqueue_script('ttbm_travello_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_travello_details.js', array('jquery', 'ttbm_price_calculation'), TTBM_PLUGIN_VERSION, true);
+				wp_enqueue_script('ttbm_travello_details', TTBM_PLUGIN_URL . '/assets/frontend/ttbm_travello_details.js', array('jquery', 'ttbm_price_calculation'), TTBM_PLUGIN_VERSION . '.' . (int) @filemtime(TTBM_PLUGIN_DIR . '/assets/frontend/ttbm_travello_details.js'), true);
 				wp_localize_script('ttbm_registration', 'ttbm_i18n', self::frontend_i18n());
 				wp_localize_script('ttbm_registration', 'ttbm_ajax', array(
 					'ajax_url' => admin_url('admin-ajax.php'),

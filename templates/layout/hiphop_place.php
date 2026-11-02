@@ -45,7 +45,7 @@
 											</div>
 										<?php } ?>
 								</div>
-								<h6 class="_dFlex_mT"><?php echo esc_html($count.'.  '. $place_name ); ?></h6>
+								<h6 class="_dFlex_mT ttbm_place_caption"><span class="ttbm_place_num"><?php echo esc_html( $count ); ?></span><span class="ttbm_place_name"><?php echo esc_html( $place_name ); ?></span></h6>
 							</div>
 							<?php
 							$count ++;

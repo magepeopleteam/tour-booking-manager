@@ -92,6 +92,7 @@
                         <div class="ttbm-header">
                             <h4><i class="fas fa-list-ul"></i><?php esc_html_e('Itinerary Builder', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_schedule', $checked); ?>
+                            <p class="ttbm-header__sub"><?php esc_html_e('Plan the trip day by day so guests know what to expect.', 'tour-booking-manager'); ?></p>
                         </div>
                         <div data-collapse="#ttbm_display_schedule" class="ttbm-daywise-section <?php echo esc_attr($active); ?>">
                             <div class="ttbm-daywise-items mB">
@@ -101,7 +102,7 @@
                         </div>
                     </section>
 					<?php do_action('ttbm_tour_itinerary_inner', $post_id); ?>
-                    <!-- Itinerary slide-in modal -->
+                    <!-- Itinerary dialog -->
                     <div class="ttbm-modal-container" data-modal-target="ttbm-daywise-item-new">
                         <div class="ttbm-modal-content">
 
@@ -163,10 +164,11 @@
 
                             <!-- Footer -->
                             <div class="ttbm-modal-footer">
+                                <button type="button" class="ttbm-modal-close ttbm-modal-cancel"><?php esc_html_e('Cancel', 'tour-booking-manager'); ?></button>
                                 <div class="ttbm_daywise_save_buttons ttbm-modal-footer__group">
                                     <button id="ttbm_daywise_save" class="ttbm-modal-btn ttbm-modal-btn--secondary" type="button">
                                         <i class="fas fa-save"></i>
-                                        <?php esc_html_e('Save & Continue', 'tour-booking-manager'); ?>
+                                        <?php esc_html_e('Save & add another', 'tour-booking-manager'); ?>
                                     </button>
                                     <button id="ttbm_daywise_save_close" class="ttbm-modal-btn ttbm-modal-btn--primary" type="button">
                                         <i class="fas fa-check"></i>

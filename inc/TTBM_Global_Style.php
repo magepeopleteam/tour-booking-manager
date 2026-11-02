@@ -10,6 +10,7 @@
 		class TTBM_Global_Style {
 			public function __construct() {
 				add_action('wp_head', array($this, 'add_global_style'), 100);
+				add_action('wp_head', array($this, 'add_tour_theme_color'), 101);
 				add_action('admin_head', array($this, 'add_global_style'), 100);
 			}
 			public function add_global_style() {
@@ -136,6 +137,31 @@
 							--ttbm_mp_xs_negative: -5px;
 							--ttbm_buttton_fs: 14px;
 						}
+					}
+                </style>
+				<?php
+			}
+			/** Per-tour Theme color (Theme layout card) overrides the site-wide color on that tour's page only. */
+			public function add_tour_theme_color() {
+				if (!is_singular(TTBM_Function::get_cpt_name())) {
+					return;
+				}
+				$color = sanitize_hex_color((string) TTBM_Global_Function::get_post_info(get_the_ID(), 'ttbm_theme_color', ''));
+				if (!$color) {
+					return;
+				}
+				$rgb = $this->hexToRgb($color);
+				?>
+                <style id="ttbm-tour-theme-color">
+					:root {
+						--color_theme: <?php echo esc_attr($color); ?>;
+						--color_theme_rgb: <?php echo esc_attr($rgb); ?>;
+						--color_theme_rbg: <?php echo esc_attr($rgb); ?>;
+						--color_theme_ee: <?php echo esc_attr($color); ?>ee;
+						--color_theme_cc: <?php echo esc_attr($color); ?>cc;
+						--color_theme_aa: <?php echo esc_attr($color); ?>aa;
+						--color_theme_88: <?php echo esc_attr($color); ?>88;
+						--color_theme_77: <?php echo esc_attr($color); ?>77;
 					}
                 </style>
 				<?php

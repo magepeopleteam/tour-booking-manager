@@ -22,6 +22,7 @@
                         <div class="ttbm-header">
                             <h4><i class="fab fa-telegram-plane"></i><?php esc_html_e('Contact Settings', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_get_question', $checked_gaq); ?>
+                            <p class="ttbm-header__sub"><?php esc_html_e('Add the contact details guests can use to reach you about this tour.', 'tour-booking-manager'); ?></p>
                         </div>
                         <div data-collapse="#ttbm_display_get_question" class=" <?php echo esc_attr($active_gaq); ?>">
                             <label class="label">

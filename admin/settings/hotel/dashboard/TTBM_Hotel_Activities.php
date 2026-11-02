@@ -20,7 +20,7 @@ if (!class_exists('TTBM_Hotel_Activities')) {
         }
         public function dashbaord_activity(){
             ?>
-            <div class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_activities_tab"><i class="mi mi-practice"></i> <?php echo esc_attr__( 'Hotel Activities', 'tour-booking-manager' )?></div>
+            <div class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_activities_tab"><i class="mi mi-practice"></i><span class="ttbm-tab-text"><span class="ttbm-tab-label"><?php esc_html_e('Hotel activities', 'tour-booking-manager'); ?></span><span class="ttbm-tab-hint"><?php esc_html_e('Things guests can do during a stay', 'tour-booking-manager'); ?></span></span></div>
             <?php
         }
 
@@ -30,9 +30,8 @@ if (!class_exists('TTBM_Hotel_Activities')) {
             <div id="ttbm_hotel_activities_tab" class="ttbm_hotel_tab_content">
                 <div>
                     <div class="ttbm_style features_header">
-                        <h2 class="ttbm_total_booking_title">
-                            <?php echo esc_attr__( 'Hotel Activities List', 'tour-booking-manager' )?>
-                        </h2>
+                        <h2 class="ttbm_total_booking_title"><?php esc_html_e('Hotel activities', 'tour-booking-manager'); ?></h2>
+                        <p class="ttbm_tour_page-subtitle"><?php esc_html_e('Things guests can do during their stay.', 'tour-booking-manager'); ?></p>
                         <button class="_themeButton_xs ttbm-hotel-new-activity" data-ttbm-modal="ttbm-hotel-activity-modal"> <?php echo esc_attr__( 'Add new activity', 'tour-booking-manager' )?></button>
                     </div>
                     <div class="ttbm-hotel-activity-items">

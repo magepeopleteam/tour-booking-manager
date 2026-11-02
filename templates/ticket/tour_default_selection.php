@@ -81,7 +81,9 @@ if (!defined('ABSPATH')) {
 								}
 								?>
                             </div>
+                            <p class="ttbm-date-tiles-note"><?php esc_html_e('Only dates with seats are shown.', 'tour-booking-manager'); ?></p>
                         </div>
+						<div class="ttbm-date-tiles" id="ttbm_date_tiles" role="group" aria-label="<?php esc_attr_e('Available dates', 'tour-booking-manager'); ?>"></div>
 						<?php if ($time_slots_enabled && ($template_name == 'viator.php' || $check_ability == 'availability_section')) {
                             $style = $visible_date ? '' : 'display:none;';
                             ?>

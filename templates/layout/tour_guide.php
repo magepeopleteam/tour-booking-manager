@@ -30,11 +30,10 @@
 						<?php foreach ($guides as $guide_id) { ?>
 							<div class="ttbm_tour_guide_item<?php echo $is_carousel ? ' item' : ''; ?>" id="<?php echo esc_attr($guide_id); ?>">
 								<div class="bg_image_area" data-placeholder>
-									<div class="" data-bg-image="<?php echo esc_url(TTBM_Global_Function::get_image_url($guide_id)); ?>">
-										<div class="ttbm_list_title absolute_item bottom" data-placeholder="">
-											<h5><?php echo esc_html(get_the_title($guide_id)); ?></h5>
-										</div>
-									</div>
+									<div class="" data-bg-image="<?php echo esc_url(TTBM_Global_Function::get_image_url($guide_id)); ?>"></div>
+								</div>
+								<div class="ttbm_guide_name" data-placeholder="">
+									<h5><?php echo esc_html(get_the_title($guide_id)); ?></h5>
 								</div>
 								<?php
 									$des = get_post_field('post_content', $guide_id);

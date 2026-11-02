@@ -93,6 +93,7 @@
 								?>
 								<div class="ttbm_hero_stats_grid ttbm_hero_stats_grid--collapsed">
 								<?php echo $ttbm_hero_stats_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								</div>
 								<?php if ( $ttbm_hero_stat_count > 4 ) : ?>
 									<button
 										type="button"
@@ -102,7 +103,6 @@
 										data-label-less="<?php esc_attr_e( 'Show less', 'tour-booking-manager' ); ?>"
 									><?php esc_html_e( 'Load more', 'tour-booking-manager' ); ?></button>
 								<?php endif; ?>
-								</div>
 							</div>
 							<?php endif; ?>
 							<?php if ( TTBM_Function::show_booking_section( $ttbm_post_id ) ) :

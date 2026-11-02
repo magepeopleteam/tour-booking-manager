@@ -105,6 +105,7 @@
                         <aside class="ttbm-gs-sidebar">
                             <div class="ttbm-gs-card ttbm-gs-pro-card">
                                 <div class="ttbm-gs-card-icon"><i class="mi mi-crown"></i></div>
+                                <span class="ttbm-gs-pro-tag"><?php esc_html_e('Pro', 'tour-booking-manager'); ?></span>
                                 <h4><?php esc_html_e('Upgrade to Pro', 'tour-booking-manager'); ?></h4>
                                 <p><?php esc_html_e('Unlock PDF ticketing, traveler management, custom forms, and priority support.', 'tour-booking-manager'); ?></p>
                                 <a href="https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/" target="_blank" rel="noopener" class="ttbm-gs-btn ttbm-gs-btn-pro"><?php esc_html_e('Get Pro Now', 'tour-booking-manager'); ?></a>

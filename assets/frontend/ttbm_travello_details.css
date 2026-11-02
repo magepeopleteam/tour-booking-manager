@@ -758,7 +758,6 @@
    attribute for its own (intentionally still-collapsible) answer panels;
    the wider selector would have forced every FAQ answer permanently open. */
 .ttbm-travello-section .ttbm_day_wise_timeline [data-collapse] {
-	display: block !important;
 	padding-top: 6px;
 }
 
@@ -2554,4 +2553,699 @@
 @keyframes ttbmTravelloImgShimmer {
 	0% { background-position: 120% 0, 0 0; }
 	100% { background-position: -80% 0, 0 0; }
+}
+
+
+/* ============================================================
+   Booking card, "Clean list" design (Option A).
+   Override layer on top of the rules above: markup and booking JS are unchanged.
+   Everything follows the tour's Theme color through --ttlm-primary.
+   ============================================================ */
+.ttbm_travello_theme .ttbm-travello-booking-card {
+	padding: 0;
+	overflow: hidden;
+	border: 1px solid #e2e8f0;
+	border-radius: 20px;
+	box-shadow: 0 8px 30px rgba( 15, 23, 42, .08 );
+}
+.ttbm_travello_theme .ttbm-travello-bc-header {
+	margin: 0;
+	padding: 22px 22px 18px;
+	background: linear-gradient( 180deg, color-mix( in srgb, var( --ttlm-primary ) 9%, #fff ), #fff );
+}
+.ttbm_travello_theme .ttbm-travello-bc-from {
+	margin: 0 0 2px;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+	color: #64748b;
+}
+.ttbm_travello_theme .ttbm-travello-bc-price-row { align-items: baseline; margin: 0; }
+.ttbm_travello_theme .ttbm-travello-bc-price { font-size: 34px; color: #0f172a; }
+.ttbm_travello_theme .ttbm-travello-bc-per { font-size: 14px; color: #64748b; }
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_registration_area { padding: 0 22px; }
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_list_title,
+.ttbm_travello_theme #ttbm_booking_section h2.extra_service_title,
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__label-text {
+	margin: 0 0 12px !important;
+	font-size: 15px !important;
+	font-weight: 700 !important;
+	letter-spacing: 0 !important;
+	text-transform: none !important;
+	color: #0f172a !important;
+}
+
+/* Date tiles: 3 across, accent when picked */
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select:has( #ttbm_date_tiles ) { display: flex; flex-direction: column; gap: 12px; padding-bottom: 18px; }
+.ttbm_travello_theme #ttbm_booking_section #ttbm_date_tiles { grid-template-columns: repeat( 3, minmax( 0, 1fr ) ); gap: 8px; }
+.ttbm_travello_theme #ttbm_booking_section #ttbm_date_tiles .ttbm-date-tile {
+	min-height: 0;
+	padding: 10px 0;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+}
+.ttbm_travello_theme #ttbm_booking_section #ttbm_date_tiles .ttbm-date-tile:hover { border-color: var( --ttlm-primary ); }
+.ttbm_travello_theme #ttbm_booking_section #ttbm_date_tiles .ttbm-date-tile[aria-pressed="true"] {
+	border: 1.5px solid var( --ttlm-primary );
+	background: color-mix( in srgb, var( --ttlm-primary ) 10%, #fff );
+	color: #0f172a;
+}
+.ttbm_travello_theme #ttbm_booking_section #ttbm_date_tiles .ttbm-date-tile__dow,
+.ttbm_travello_theme #ttbm_booking_section #ttbm_date_tiles .ttbm-date-tile__month { font-size: 11px; color: #475569; }
+.ttbm_travello_theme #ttbm_booking_section #ttbm_date_tiles .ttbm-date-tile__day { font-size: 20px; font-weight: 800; line-height: 1.2; }
+.ttbm_travello_theme #ttbm_booking_section #ttbm_date_tiles .ttbm-date-tiles__more {
+	grid-column: auto;
+	justify-self: stretch;
+	min-height: 0;
+	padding: 10px 6px;
+	border: 1px dashed var( --ttlm-primary );
+	border-radius: 12px;
+	background: #fff;
+	color: var( --ttlm-primary );
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 1.3;
+	text-decoration: none;
+}
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select:has( #ttbm_date_tiles ) .ttbm-date-select__control {
+	min-height: 46px;
+	border-radius: 12px !important;
+	background: #f8fafc !important;
+	border: 1px solid #e2e8f0 !important;
+}
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select:has( #ttbm_date_tiles ) .ttbm-date-select__icon {
+	background: transparent !important;
+	color: #475569 !important;
+}
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select:has( #ttbm_date_tiles ) .ttbm-date-tiles-note { font-size: 12px; color: #64748b; }
+
+/* Ticket cards: name, price, stepper, then a progress bar with the stock text */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_area { padding-top: 18px; border-top: 1px solid #e2e8f0; }
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row { padding: 14px; border-color: #e2e8f0; border-radius: 14px; }
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row {
+	grid-template-rows: auto auto auto;
+}
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_name,
+.ttbm_travello_theme #ttbm_booking_section p.extra_service_title { font-size: 16px; color: #0f172a; }
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_icon { width: 30px; height: 30px; font-size: 14px; border-radius: 9px; }
+.ttbm_travello_theme #ttbm_booking_section .ttbm_sale_price,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_sale_price .woocommerce-Price-amount,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_sale_price bdi { font-size: 17px; }
+.ttbm_travello_theme #ttbm_booking_section .ttbm_regular_price.strikeLine,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_regular_price.strikeLine .woocommerce-Price-amount,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_regular_price.strikeLine bdi { font-size: 13px; color: #94a3b8; }
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row:not( .ttbm_extra_service_row ) .ttbm_stock_left { display: none; }
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row:not( .ttbm_extra_service_row ) td.ttbm-availability-info {
+	display: block;
+	grid-column: 1 / -1;
+	grid-row: 3;
+	padding-top: 6px;
+}
+.ttbm_travello_theme #ttbm_booking_section .ttbm_availability_container,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_stock_info { display: block; }
+.ttbm_travello_theme #ttbm_booking_section .ttbm_availability_details { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row:not( .ttbm_extra_service_row ) .ttbm_capacity_info { display: contents; }
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row:not( .ttbm_extra_service_row ) .ttbm_progress_bar {
+	display: block;
+	order: 0;
+	flex: 0 0 100%;
+	height: 5px;
+	overflow: hidden;
+	border-radius: 5px;
+	background: #e2e8f0;
+}
+.ttbm_travello_theme #ttbm_booking_section .ttbm_progress_fill {
+	min-width: 4px;
+	height: 5px;
+	border-radius: 5px;
+	background: var( --ttlm-primary );
+}
+.ttbm_travello_theme #ttbm_booking_section .ttbm_ticket_row:not( .ttbm_extra_service_row ) .ttbm_remaining_count { display: inline; order: 1; font-size: 12px; color: #64748b; }
+.ttbm_travello_theme #ttbm_booking_section .ttbm_remaining_count .ttbm_available_number { font-weight: 700; color: #475569; }
+.ttbm_travello_theme #ttbm_booking_section .ttbm_capacity_text { order: 2; font-size: 12px; color: #64748b; }
+.ttbm_travello_theme #ttbm_booking_section .ttbm_capacity_text::before { content: "\00b7"; margin-right: 6px; }
+
+/* Stepper: outlined accent pill */
+.ttbm_travello_theme #ttbm_booking_section .ttbm-select-quantity .qtyIncDec {
+	border: 1.5px solid var( --ttlm-primary );
+	border-radius: 999px;
+	overflow: hidden;
+	background: #fff;
+}
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .decQty,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .incQty,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .decQty.addonGroupContent,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .incQty.addonGroupContent {
+	width: 34px;
+	height: 36px;
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+	color: var( --ttlm-primary );
+}
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .decQty:hover,
+.ttbm_travello_theme #ttbm_booking_section .qtyIncDec .incQty:hover { background: color-mix( in srgb, var( --ttlm-primary ) 10%, #fff ); }
+
+/* Extra services: one joined list */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_extra_service_area { padding: 18px 0; }
+.ttbm_travello_theme #ttbm_booking_section .mp_tour_ticket_extra { border: 1px solid #e2e8f0; border-radius: 14px; overflow: hidden; }
+.ttbm_travello_theme #ttbm_booking_section .mp_tour_ticket_extra tbody { gap: 0; }
+.ttbm_travello_theme #ttbm_booking_section .mp_tour_ticket_extra .ttbm_ticket_row {
+	border: 0;
+	border-top: 1px solid #e2e8f0;
+	border-radius: 0;
+	box-shadow: none;
+}
+.ttbm_travello_theme #ttbm_booking_section .mp_tour_ticket_extra tbody > tr:first-child.ttbm_ticket_row { border-top: 0; }
+.ttbm_travello_theme #ttbm_booking_section .mp_tour_ticket_extra .ttbm_ticket_row td.ttbm-availability-info { display: none; }
+
+/* Summary band + CTA */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_book_now_area {
+	margin: 0 -22px;
+	padding: 16px 22px 18px;
+	border-top: 1px solid #e2e8f0;
+	background: #f8fafc;
+}
+.ttbm_travello_theme #ttbm_booking_section .ttbm_summary_label { font-size: 12px; color: #64748b; }
+.ttbm_travello_theme #ttbm_booking_section .tour_qty { font-size: 16px; color: #0f172a; }
+.ttbm_travello_theme #ttbm_booking_section .tour_price { font-size: 24px; letter-spacing: -.01em; color: #0f172a; }
+.ttbm_travello_theme #ttbm_booking_section .ttbm_summary_divider { display: none; }
+.ttbm_travello_theme #ttbm_booking_section .ttbm_book_now_actions .ttbm_book_now,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_book_now_actions .ttbm_add_to_cart {
+	min-height: 50px;
+	padding: 0 15px;
+	border: 0;
+	border-radius: 14px;
+	background: var( --ttlm-primary );
+	color: #fff;
+}
+.ttbm_travello_theme #ttbm_booking_section .ttbm_book_now_actions .ttbm_book_now,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_book_now_actions .ttbm_add_to_cart {
+	background: var( --color_theme ) !important;
+	color: #fff !important;
+}
+.ttbm_travello_theme #ttbm_booking_section .ttbm_book_now_actions .ttbm_book_now:hover:not( .mpDisabled ),
+.ttbm_travello_theme #ttbm_booking_section .ttbm_book_now_actions .ttbm_add_to_cart:hover {
+	background: color-mix( in srgb, var( --color_theme ) 85%, #000 ) !important;
+}
+/* Not ready yet (no date or ticket picked): same Theme color, softened */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_book_now_actions .ttbm_book_now.mpDisabled,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_book_now_actions .ttbm_book_now[disabled] {
+	opacity: .55;
+	cursor: not-allowed;
+}
+
+/* Features in two columns, organizer as a footer row */
+.ttbm_travello_theme .ttbm-travello-bc-features {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px 16px;
+	margin: 0;
+	padding: 18px 22px;
+	border-top: 0;
+}
+.ttbm_travello_theme .ttbm-travello-bc-feat { align-items: flex-start; font-size: 12px; line-height: 1.4; color: #475569; }
+.ttbm_travello_theme .ttbm-travello-bc-feat .mi { margin-top: 1px; }
+.ttbm_travello_theme .ttbm-travello-organizer {
+	margin: 0;
+	padding: 14px 22px;
+	border-top: 1px solid #e2e8f0;
+	border-radius: 0;
+	background: #fff;
+}
+.ttbm_travello_theme .ttbm-travello-organizer-avatar {
+	width: 34px;
+	height: 34px;
+	background: color-mix( in srgb, var( --ttlm-primary ) 14%, #fff );
+	color: var( --ttlm-primary );
+	font-size: 14px;
+	font-weight: 800;
+}
+.ttbm_travello_theme .ttbm-travello-organizer-text { display: flex; flex-direction: column; }
+.ttbm_travello_theme .ttbm-travello-organizer-label { font-size: 11px; color: #64748b; }
+.ttbm_travello_theme .ttbm-travello-organizer-name { font-size: 14px; }
+
+/* Book now: cart icon plain white (no tinted box) */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_book_now_actions .ttbm_book_now > .fas,
+.ttbm_travello_theme #ttbm_booking_section .ttbm_book_now_actions .ttbm_book_now > span:first-child {
+	width: auto;
+	height: auto;
+	background: transparent !important;
+	color: #fff !important;
+	font-size: 16px;
+}
+
+
+/* ============================================================
+   Tour header, "Info tiles" design (Option B).
+   A white card: badges + title on the left, round icon actions on the right,
+   then Location / Duration / Language (/ Max guests) as labelled tiles.
+   Colors follow the tour's Theme color through --ttlm-primary.
+   ============================================================ */
+.ttbm_travello_theme .ttbm-travello-header {
+	display: grid;
+	grid-template-columns: minmax( 0, 1fr ) auto;
+	column-gap: 20px;
+	align-items: start;
+	padding: 26px 0px;
+	background: #fff;
+	border: 0;
+	border-radius: 22px;
+	box-shadow: none;
+}
+.ttbm_travello_theme .ttbm-travello-badges { grid-column: 1; grid-row: 1; margin: 0 0 12px; gap: 8px; }
+.ttbm_travello_theme .ttbm-travello-title { grid-column: 1; grid-row: 2; margin: 0 0 18px; font-size: clamp( 26px, 3.4vw, 40px ); font-weight: 800; letter-spacing: -.025em; line-height: 1.1; color: #0f172a; }
+.ttbm_travello_theme .ttbm-travello-title-accent {
+	display: inline;
+	font-family: inherit;
+	font-style: normal;
+	font-weight: 800;
+	color: var( --ttlm-primary );
+}
+.ttbm_travello_theme .ttbm-travello-title-accent::before { content: ": "; color: #0f172a; }
+.ttbm_travello_theme .ttbm-travello-badge {
+	padding: 5px 12px;
+	border: 0;
+	border-radius: 8px;
+	background: color-mix( in srgb, var( --ttlm-primary ) 14%, #fff );
+	color: color-mix( in srgb, var( --ttlm-primary ) 80%, #000 );
+	font-size: 12px;
+	font-weight: 800;
+	letter-spacing: .05em;
+}
+.ttbm_travello_theme .ttbm-travello-badge--outline { background: #f1f5f9; color: #475569; border: 0; padding: 5px 12px; }
+.ttbm_travello_theme .ttbm-travello-badge--soft { background: #ecfdf5; color: #047857; border: 0; }
+
+/* Wishlist + Share: round icon buttons (label stays for screen readers) */
+.ttbm_travello_theme .ttbm-travello-actions { grid-column: 2; grid-row: 1 / span 2; margin: 0; gap: 8px; flex-wrap: nowrap; }
+.ttbm_travello_theme .ttbm-travello-actions button.ttbm-gc-wishlist,
+.ttbm_travello_theme .ttbm-travello-actions .ttbm-gc-wishlist,
+.ttbm_travello_theme .ttbm-travello-action-btn {
+	width: 46px;
+	height: 46px;
+	padding: 0;
+	justify-content: center;
+	border: 1.5px solid #e2e8f0;
+	border-radius: 50%;
+	font-size: 18px;
+}
+.ttbm_travello_theme .ttbm-travello-action-btn .mi { font-size: 18px; }
+.ttbm_travello_theme .ttbm-travello-action-label {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect( 0, 0, 0, 0 );
+	white-space: nowrap;
+}
+
+/* Info tiles */
+.ttbm_travello_theme .ttbm-travello-meta-row {
+	grid-column: 1 / -1;
+	display: grid;
+	grid-template-columns: repeat( auto-fit, minmax( 190px, 1fr ) );
+	gap: 12px;
+	margin: 0;
+}
+.ttbm_travello_theme .ttbm-travello-meta-item {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	min-width: 0;
+	padding: 12px 14px;
+	border: 1px solid #e2e8f0;
+	border-radius: 14px;
+	background: #f8fafc;
+	line-height: 1.2;
+}
+.ttbm_travello_theme .ttbm-travello-meta-item > .mi {
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	border-radius: 12px;
+	background: color-mix( in srgb, var( --ttlm-primary ) 14%, #fff );
+	color: var( --ttlm-primary );
+	font-size: 18px;
+}
+.ttbm_travello_theme .ttbm-travello-meta-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ttbm_travello_theme .ttbm-travello-meta-label { font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: #64748b; }
+.ttbm_travello_theme .ttbm-travello-meta-item strong { font-size: 14px; color: #0f172a; overflow-wrap: anywhere; }
+.ttbm_travello_theme .ttbm-travello-rating-row { grid-column: 1 / -1; margin-top: 16px; }
+
+@media ( max-width: 640px ) {
+	.ttbm_travello_theme .ttbm-travello-header { grid-template-columns: 1fr; padding: 20px 0; }
+	.ttbm_travello_theme .ttbm-travello-actions { grid-column: 1; grid-row: auto; margin: 0 0 16px; order: -1; }
+	.ttbm_travello_theme .ttbm-travello-badges,
+	.ttbm_travello_theme .ttbm-travello-title { grid-column: 1; grid-row: auto; }
+}
+
+/* ============================================================
+   Page content, "Compact accordion" design (Option B).
+   Underline tabs, plain section headings, a bordered day-by-day accordion,
+   included/excluded items as chips, and a bordered FAQ list.
+   Colors follow the tour's Theme color through --ttlm-primary.
+   ============================================================ */
+.ttbm_travello_theme .ttbm-travello-tabs {
+	gap: 28px;
+	border-bottom: 1px solid #e2e8f0;
+	margin-bottom: 32px;
+}
+.ttbm_travello_theme .ttbm-travello-tab {
+	padding: 0 2px 14px;
+	font-size: 15px;
+	color: #64748b;
+}
+.ttbm_travello_theme .ttbm-travello-tab:hover { color: #0f172a; }
+.ttbm_travello_theme .ttbm-travello-tab.is-active { color: #0f172a; font-weight: 700; }
+.ttbm_travello_theme .ttbm-travello-tab.is-active::after { bottom: -1px; height: 3px; background: var( --ttlm-primary ); }
+
+.ttbm_travello_theme .ttbm-travello-section { margin-bottom: 40px; }
+.ttbm_travello_theme .ttbm-travello-section-title,
+.ttbm_travello_theme .ttbm-travello-section .ttbm_section_title,
+.ttbm_travello_theme .ttbm-travello-section .content-title.ttbm_section_title {
+	margin: 0 0 16px !important;
+	font-size: 24px !important;
+	font-weight: 800 !important;
+	letter-spacing: -.015em !important;
+	color: #0f172a !important;
+}
+.ttbm_travello_theme .ttbm-travello-section .ttbm_wp_editor,
+.ttbm_travello_theme .ttbm-travello-section .ttbm_description { font-size: 16px; line-height: 1.8; color: #475569; }
+
+/* Itinerary: one bordered accordion, "DAY 01" chip + title + label */
+.ttbm_travello_theme .ttbm-travello-section .ttbm_day_wise_timeline {
+	padding-left: 0;
+	gap: 0;
+	border: 1px solid #e2e8f0;
+	border-radius: 16px;
+	overflow: hidden;
+}
+.ttbm_travello_theme .ttbm-travello-section .ttbm_day_wise_timeline::before { display: none; }
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_item {
+	display: flex;
+	align-items: flex-start;
+	gap: 14px;
+	padding: 16px 20px;
+	background: #fff;
+	border-top: 1px solid #e2e8f0;
+}
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_item:first-child { border-top: 0; }
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_marker {
+	position: static;
+	flex: 0 0 auto;
+	width: auto;
+	height: auto;
+	margin-top: 1px;
+	padding: 5px 10px;
+	border: 0;
+	border-radius: 8px;
+	background: color-mix( in srgb, var( --ttlm-primary ) 12%, #fff );
+	color: color-mix( in srgb, var( --ttlm-primary ) 80%, #000 );
+	font-size: 12px;
+	font-weight: 800;
+	letter-spacing: .04em;
+}
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_marker::before { content: "DAY "; }
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_card { flex: 1; min-width: 0; }
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_item_title {
+	align-items: center;
+	pointer-events: auto;
+	cursor: pointer;
+}
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_header {
+	flex: 1;
+	flex-direction: row;
+	align-items: center;
+	gap: 12px;
+	min-width: 0;
+}
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_name { order: 1; flex: 1; margin: 0; font-size: 16px; color: #0f172a; }
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_meta { order: 2; margin: 0; }
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_label {
+	display: inline;
+	font-size: 12px;
+	font-weight: 600;
+	color: #64748b;
+}
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_item_title span[data-icon] {
+	display: inline-flex;
+	color: #475569;
+	font-size: 14px;
+}
+/* Collapsible again (the flat layout forced every day open) */
+.ttbm_travello_theme .ttbm-travello-section .ttbm_day_wise_timeline [data-collapse] { padding-top: 8px; }
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_item_details,
+.ttbm_travello_theme .ttbm-travello-section .day_wise_activity_desc { font-size: 14px; line-height: 1.7; color: #475569; }
+
+/* Included / excluded as chips */
+.ttbm_travello_theme .ttbm-travello-section .ttbm-include-exclude {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+.ttbm_travello_theme .ttbm-travello-section .ttbm-include-exclude li {
+	height: 40px;
+	gap: 8px;
+	padding: 0 16px 0 10px;
+	border-radius: 999px;
+	background: color-mix( in srgb, var( --ttlm-primary ) 9%, #fff );
+	border: 1px solid color-mix( in srgb, var( --ttlm-primary ) 25%, #fff );
+	font-size: 14px;
+	font-weight: 600;
+	color: #0f172a;
+}
+.ttbm_travello_theme .ttbm-travello-section .ttbm-include-exclude li:has( .ttbm_ie_cross ) {
+	background: #f8fafc;
+	border-color: #e2e8f0;
+	color: #64748b;
+}
+.ttbm_travello_theme .ttbm-travello-section .ttbm_ie_icon { width: 18px; height: 18px; background: transparent !important; font-size: 13px; }
+.ttbm_travello_theme .ttbm-travello-section .ttbm_ie_check { color: var( --ttlm-primary ); }
+.ttbm_travello_theme .ttbm-travello-section .ttbm_ie_cross { color: #94a3b8; }
+
+/* FAQ: bordered list, "+" / "-" in the Theme color */
+.ttbm_travello_theme .ttbm-travello-section .ttbm_faq_list {
+	border: 1px solid #e2e8f0;
+	border-radius: 16px;
+	overflow: hidden;
+}
+.ttbm_travello_theme .ttbm-travello-section .ttbm_faq_item { padding: 0 20px; background: #fff; border-top: 1px solid #e2e8f0; }
+.ttbm_travello_theme .ttbm-travello-section .ttbm_faq_item:first-child { border-top: 0; }
+.ttbm_travello_theme .ttbm-travello-section .ttbm_faq_item:last-child { border-bottom: 0; }
+.ttbm_travello_theme .ttbm-travello-section .ttbm_faq_title { padding: 16px 0 !important; }
+.ttbm_travello_theme .ttbm-travello-section .ttbm_faq_title h5 { font-size: 15px; line-height: 1.4; }
+.ttbm_travello_theme .ttbm-travello-section .ttbm_faq_title [data-icon] { color: var( --ttlm-primary ); }
+.ttbm_travello_theme .ttbm-travello-section .ttbm_faq_title [data-icon]::before { content: "\f067"; }
+.ttbm_travello_theme .ttbm-travello-section .ttbm_faq_title.active [data-icon] { color: var( --ttlm-primary ); transform: none; }
+.ttbm_travello_theme .ttbm-travello-section .ttbm_faq_title.active [data-icon]::before { content: "\f068"; }
+.ttbm_travello_theme .ttbm-travello-section .ttbm_faq_content.ttbm_wp_editor { padding-bottom: 16px; font-size: 14px; color: #475569; }
+
+@media ( max-width: 640px ) {
+	.ttbm_travello_theme .ttbm-travello-tabs { gap: 20px; }
+	.ttbm_travello_theme .ttbm-travello-section .day_wise_details_header { flex-wrap: wrap; }
+	.ttbm_travello_theme .ttbm-travello-section .day_wise_details_item { padding: 14px 16px; }
+}
+
+/* Itinerary accordion: fixes (spacing, chip, open state) */
+.ttbm_travello_theme .ttbm-travello-section .ttbm_day_wise_timeline .day_wise_details_item,
+#ttbm_content.ttbm_travello_theme .ttbm_day_wise_timeline .day_wise_details_item,
+.ttbm_travello_theme #ttbm_content .ttbm_day_wise_timeline .day_wise_details_item {
+	display: flex !important;
+	align-items: flex-start;
+	gap: 16px;
+	margin: 0 !important;
+	padding: 18px 22px !important;
+	border-left: 0;
+	border-top: 1px solid #e2e8f0;
+}
+.ttbm_travello_theme .ttbm-travello-section .ttbm_day_wise_timeline .day_wise_details_item:first-child { border-top: 0; }
+.ttbm_travello_theme .ttbm-travello-section .ttbm_day_wise_timeline .day_wise_details_item:hover { background: #f8fafc; }
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_marker {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+	box-sizing: border-box;
+	flex: 0 0 74px;
+	width: 74px;
+	height: 30px;
+	margin: 0;
+	padding: 0;
+	line-height: 1;
+	white-space: nowrap;
+}
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_marker::before { content: "DAY"; margin: 0; }
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_card { align-self: stretch; }
+.ttbm_travello_theme #ttbm_content .ttbm_day_wise_timeline .day_wise_details_item_title,
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_item_title {
+	min-height: 30px;
+	padding: 0 !important;
+	line-height: 1.3;
+}
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_name { font-size: 16px; line-height: 1.3; }
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_label { white-space: nowrap; }
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_item_title span[data-icon] { transition: transform .2s ease; }
+.ttbm_travello_theme .ttbm-travello-section .day_wise_details_item_title.mActive span[data-icon] { transform: rotate( 180deg ); }
+/* The open day always shows its text, whatever the collapse script did */
+.ttbm_travello_theme .ttbm-travello-section .ttbm_day_wise_timeline .day_wise_details_item.is-active [data-collapse] { display: block; }
+.ttbm_travello_theme .ttbm-travello-section .ttbm_day_wise_timeline [data-collapse] { padding-top: 10px; }
+@media ( max-width: 640px ) {
+	.ttbm_travello_theme .ttbm-travello-section .ttbm_day_wise_timeline .day_wise_details_item { gap: 12px; padding: 14px 16px !important; }
+	.ttbm_travello_theme .ttbm-travello-section .day_wise_details_marker { flex-basis: 66px; width: 66px; }
+}
+
+/* Tabs: hover / focus / active states (the global button fill must not leak in) */
+.ttbm_travello_theme .ttbm-travello-tabs .ttbm-travello-tab,
+.ttbm_travello_theme .ttbm-travello-tabs .ttbm-travello-tab:hover,
+.ttbm_travello_theme .ttbm-travello-tabs .ttbm-travello-tab:focus,
+.ttbm_travello_theme .ttbm-travello-tabs .ttbm-travello-tab:active {
+	background: transparent !important;
+	box-shadow: none !important;
+	border-radius: 0 !important;
+	opacity: 1 !important;
+	transform: none !important;
+	text-decoration: none;
+}
+.ttbm_travello_theme .ttbm-travello-tabs .ttbm-travello-tab { color: #64748b !important; }
+.ttbm_travello_theme .ttbm-travello-tabs .ttbm-travello-tab::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: -1px;
+	height: 3px;
+	border-radius: 3px;
+	background: var( --ttlm-primary );
+	transform: scaleX( 0 );
+	transform-origin: center;
+	transition: transform .2s ease;
+}
+.ttbm_travello_theme .ttbm-travello-tabs .ttbm-travello-tab:hover { color: #0f172a !important; }
+.ttbm_travello_theme .ttbm-travello-tabs .ttbm-travello-tab:hover::after {
+	transform: scaleX( 1 );
+	background: color-mix( in srgb, var( --ttlm-primary ) 40%, #fff );
+}
+.ttbm_travello_theme .ttbm-travello-tabs .ttbm-travello-tab.is-active { color: var( --ttlm-primary ) !important; font-weight: 700; }
+.ttbm_travello_theme .ttbm-travello-tabs .ttbm-travello-tab.is-active::after { transform: scaleX( 1 ); background: var( --ttlm-primary ); }
+/* Keyboard focus: a visible ring around the tab, not a fill */
+.ttbm_travello_theme .ttbm-travello-tabs .ttbm-travello-tab:focus { outline: none; }
+.ttbm_travello_theme .ttbm-travello-tabs .ttbm-travello-tab:focus-visible {
+	outline: 2px solid var( --ttlm-primary );
+	outline-offset: 4px;
+	border-radius: 6px !important;
+	color: #0f172a !important;
+}
+
+/* Book now: cart icon white in every state, on any Travello booking button */
+.ttbm_travello_theme .ttbm_book_now_actions .ttbm_book_now > .fas,
+.ttbm_travello_theme .ttbm_book_now_actions .ttbm_book_now > span:first-child,
+.ttbm_travello_theme .ttbm_book_now_actions .ttbm_book_now.mpDisabled > .fas,
+.ttbm_travello_theme .ttbm_book_now_actions .ttbm_book_now[disabled] > .fas,
+.ttbm_travello_theme .ttbm_book_now_actions .ttbm_book_now:hover > .fas {
+	width: auto !important;
+	height: auto !important;
+	background: transparent !important;
+	color: #fff !important;
+	font-size: 16px;
+}
+.ttbm_travello_theme .ttbm_book_now_actions .ttbm_book_now.mpDisabled,
+.ttbm_travello_theme .ttbm_book_now_actions .ttbm_book_now[disabled] {
+	background: var( --color_theme ) !important;
+	color: #fff !important;
+	opacity: .55;
+}
+
+/* Gallery / slider: full viewport width (breaks out of the centered container) */
+.ttbm_travello_theme { overflow-x: clip; }
+.ttbm_travello_theme .ttbm-travello-gallery {
+	width: 100vw;
+	max-width: 100vw;
+	margin-left: calc( 50% - 50vw );
+	margin-right: calc( 50% - 50vw );
+	border-radius: 0;
+}
+.ttbm_travello_theme #ttbm_travello_gallery > .superSlider {
+	grid-template-rows: repeat( 2, clamp( 240px, 21vw, 380px ) );
+	border-radius: 0;
+}
+@media ( max-width: 768px ) {
+	.ttbm_travello_theme #ttbm_travello_gallery > .superSlider { grid-template-rows: 260px; }
+}
+
+/* Gallery, "Full-bleed mosaic" (Option A): one big photo (left half) + a 2x2 grid of photos (right half),
+   edge to edge with thin gaps, square corners, and a "View all N photos" pill on the last tile. */
+.ttbm_travello_theme #ttbm_travello_gallery > .superSlider { row-gap: 0; }
+.ttbm_travello_theme #ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper { gap: 6px; }
+.ttbm_travello_theme #ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper > .sliderShowcase.right.style_1,
+.ttbm_travello_theme #ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper > .sliderShowcase.left.style_1 {
+	flex: 0 0 calc( 50% - 3px );
+	width: calc( 50% - 3px );
+	height: 100%;
+	display: grid;
+	grid-template-columns: repeat( 2, minmax( 0, 1fr ) );
+	grid-template-rows: repeat( 2, minmax( 0, 1fr ) );
+	gap: 6px;
+}
+.ttbm_travello_theme #ttbm_travello_gallery .sliderShowcaseItem,
+.ttbm_travello_theme #ttbm_travello_gallery .sliderShowcaseItem:not( :first-child ):not( :last-child ) {
+	display: block;
+	position: relative;
+	min-height: 0;
+	border-radius: 0;
+	overflow: hidden;
+}
+.ttbm_travello_theme #ttbm_travello_gallery .sliderShowcaseItem > div:first-child { width: 100%; height: 100%; }
+.ttbm_travello_theme #ttbm_travello_gallery .sliderAllItem,
+.ttbm_travello_theme #ttbm_travello_gallery .sliderAllItem .sliderItem { border-radius: 0; }
+.ttbm_travello_theme #ttbm_travello_gallery .sliderMoreItem {
+	inset: auto 16px 16px auto;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	height: 44px;
+	padding: 0 18px;
+	border-radius: 999px;
+	background: #fff;
+	color: #0f172a;
+	font-size: 14px;
+	font-weight: 700;
+	box-shadow: 0 6px 18px rgba( 15, 23, 42, .25 );
+}
+.ttbm_travello_theme #ttbm_travello_gallery .sliderMoreItem span { font-size: 16px; color: var( --ttlm-primary ); }
+
+/* Gallery sized to the page body: same width as the content column, moderate height */
+.ttbm_travello_theme .ttbm-travello-gallery {
+	width: 100%;
+	max-width: 100%;
+	margin-left: 0;
+	margin-right: 0;
+	margin-bottom: 28px;
+	border-radius: 18px;
+}
+.ttbm_travello_theme #ttbm_travello_gallery > .superSlider {
+	grid-template-rows: repeat( 2, clamp( 150px, 15vw, 220px ) );
+	border-radius: 18px;
+}
+.ttbm_travello_theme #ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper { gap: 8px; }
+.ttbm_travello_theme #ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper > .sliderShowcase.right.style_1,
+.ttbm_travello_theme #ttbm_travello_gallery > .superSlider > .ttbm_slider-wrapper > .sliderShowcase.left.style_1 {
+	flex-basis: calc( 50% - 4px );
+	width: calc( 50% - 4px );
+	gap: 8px;
+}
+.ttbm_travello_theme #ttbm_travello_gallery .sliderMoreItem {
+	inset: auto 12px 12px auto;
+	height: 38px;
+	padding: 0 14px;
+	font-size: 13px;
+}
+@media ( max-width: 768px ) {
+	.ttbm_travello_theme .ttbm-travello-gallery { border-radius: 14px; }
+	.ttbm_travello_theme #ttbm_travello_gallery > .superSlider { grid-template-rows: 240px; border-radius: 14px; }
 }

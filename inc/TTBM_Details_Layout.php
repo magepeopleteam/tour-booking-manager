@@ -571,87 +571,39 @@
                 <div class="ttbm_travel_analytics-container">
                     <div class="ttbm_travel_kpi-board">
                         <div class="ttbm_travel_kpi-grid">
-                            <article class="ttbm_travel_kpi-card ttbm_travel_kpi-card--blue">
-                                <div class="ttbm_travel_kpi-card__icon" aria-hidden="true">
-                                    <i class="fas fa-umbrella-beach"></i>
-                                </div>
+                            <article class="ttbm_travel_kpi-card">
                                 <div class="ttbm_travel_kpi-card__content">
-                                    <span class="ttbm_travel_kpi-card__label"><?php esc_html_e('Total Tours', 'tour-booking-manager'); ?></span>
+                                    <span class="ttbm_travel_kpi-card__label"><?php esc_html_e('Tours', 'tour-booking-manager'); ?></span>
                                     <strong class="ttbm_travel_kpi-card__value" id="total-tours"><?php echo esc_html($total_tours); ?></strong>
-                                    <span class="ttbm_travel_kpi-card__hint"><?php esc_html_e('Published packages', 'tour-booking-manager'); ?></span>
+                                    <span class="ttbm_travel_kpi-card__hint"><?php
+                                        /* translators: %d: number of tours open for booking */
+                                        echo esc_html(sprintf(__('%d open for booking', 'tour-booking-manager'), $active_tour)); ?></span>
                                 </div>
                             </article>
 
-                            <article class="ttbm_travel_kpi-card ttbm_travel_kpi-card--violet">
-                                <div class="ttbm_travel_kpi-card__icon" aria-hidden="true">
-                                    <i class="fas fa-calendar-check"></i>
-                                </div>
+                            <article class="ttbm_travel_kpi-card">
                                 <div class="ttbm_travel_kpi-card__content">
-                                    <span class="ttbm_travel_kpi-card__label"><?php esc_html_e('Active Tours', 'tour-booking-manager'); ?></span>
-                                    <strong class="ttbm_travel_kpi-card__value" id="active-tours"><?php echo esc_html($active_tour); ?></strong>
-                                    <span class="ttbm_travel_kpi-card__hint"><?php esc_html_e('Currently bookable', 'tour-booking-manager'); ?></span>
-                                </div>
-                            </article>
-
-                            <article class="ttbm_travel_kpi-card ttbm_travel_kpi-card--amber">
-                                <div class="ttbm_travel_kpi-card__icon" aria-hidden="true">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                                <div class="ttbm_travel_kpi-card__content">
-                                    <span class="ttbm_travel_kpi-card__label"><?php esc_html_e('Locations', 'tour-booking-manager'); ?></span>
+                                    <span class="ttbm_travel_kpi-card__label"><?php esc_html_e('Destinations', 'tour-booking-manager'); ?></span>
                                     <strong class="ttbm_travel_kpi-card__value" id="ttbm_travel_total-locations"><?php echo esc_html($location_count); ?></strong>
-                                    <span class="ttbm_travel_kpi-card__hint"><?php esc_html_e('Trip destinations', 'tour-booking-manager'); ?></span>
+                                    <span class="ttbm_travel_kpi-card__hint" id="top-destination"><?php
+                                        /* translators: %s: most popular destination name */
+                                        echo esc_html(sprintf(__('Most popular: %s', 'tour-booking-manager'), $top_destination)); ?></span>
                                 </div>
                             </article>
 
-                            <article class="ttbm_travel_kpi-card ttbm_travel_kpi-card--rose">
-                                <div class="ttbm_travel_kpi-card__icon" aria-hidden="true">
-                                    <i class="fas fa-tags"></i>
-                                </div>
+                            <article class="ttbm_travel_kpi-card">
                                 <div class="ttbm_travel_kpi-card__content">
-                                    <span class="ttbm_travel_kpi-card__label"><?php esc_html_e('Average Price', 'tour-booking-manager'); ?></span>
+                                    <span class="ttbm_travel_kpi-card__label"><?php esc_html_e('Average starting price', 'tour-booking-manager'); ?></span>
                                     <strong class="ttbm_travel_kpi-card__value" id="avg-price"><?php echo esc_html($formatted_avg_price); ?></strong>
-                                    <span class="ttbm_travel_kpi-card__hint"><?php esc_html_e('Per tour starting price', 'tour-booking-manager'); ?></span>
+                                    <span class="ttbm_travel_kpi-card__hint"><?php esc_html_e('Per person, across all tours', 'tour-booking-manager'); ?></span>
                                 </div>
                             </article>
 
-                            <article class="ttbm_travel_kpi-card ttbm_travel_kpi-card--indigo">
-                                <div class="ttbm_travel_kpi-card__icon" aria-hidden="true">
-                                    <i class="fas fa-route"></i>
-                                </div>
+                            <article class="ttbm_travel_kpi-card">
                                 <div class="ttbm_travel_kpi-card__content">
-                                    <span class="ttbm_travel_kpi-card__label"><?php esc_html_e('Top Destination', 'tour-booking-manager'); ?></span>
-                                    <strong class="ttbm_travel_kpi-card__value ttbm_travel_kpi-card__value--text" id="top-destination"><?php echo esc_html($top_destination); ?></strong>
-                                    <span class="ttbm_travel_kpi-card__hint"><?php esc_html_e('Most popular location', 'tour-booking-manager'); ?></span>
-                                </div>
-                            </article>
-
-                            <article class="ttbm_travel_kpi-card ttbm_travel_kpi-card--status">
-                                <div class="ttbm_travel_kpi-card__icon" aria-hidden="true">
-                                    <i class="fas fa-chart-pie"></i>
-                                </div>
-                                <div class="ttbm_travel_kpi-card__content">
-                                    <span class="ttbm_travel_kpi-card__label"><?php esc_html_e('Tour Health', 'tour-booking-manager'); ?></span>
-                                    <div class="ttbm_travel_kpi-status-bar" role="presentation">
-                                        <span class="ttbm_travel_kpi-status-bar__active" style="width: <?php echo esc_attr($active_percent); ?>%;"></span>
-                                        <span class="ttbm_travel_kpi-status-bar__expired" style="width: <?php echo esc_attr($expired_percent); ?>%;"></span>
-                                    </div>
-                                    <div class="ttbm_travel_kpi-status-legend">
-                                        <div class="ttbm_travel_kpi-status-item">
-                                            <span class="ttbm_travel_kpi-status-dot ttbm_travel_kpi-status-dot--active" aria-hidden="true"></span>
-                                            <span class="ttbm_travel_kpi-status-text" id="ttbm_travel_active-count">
-                                                <strong><?php echo esc_html($active_tour); ?></strong>
-                                                <?php esc_html_e('Active', 'tour-booking-manager'); ?>
-                                            </span>
-                                        </div>
-                                        <div class="ttbm_travel_kpi-status-item">
-                                            <span class="ttbm_travel_kpi-status-dot ttbm_travel_kpi-status-dot--expired" aria-hidden="true"></span>
-                                            <span class="ttbm_travel_kpi-status-text" id="ttbm_travel_expired-count">
-                                                <strong><?php echo esc_html($expired_tour); ?></strong>
-                                                <?php esc_html_e('Expired', 'tour-booking-manager'); ?>
-                                            </span>
-                                        </div>
-                                    </div>
+                                    <span class="ttbm_travel_kpi-card__label"><?php esc_html_e('Needs attention', 'tour-booking-manager'); ?></span>
+                                    <strong class="ttbm_travel_kpi-card__value" id="ttbm_travel_expired-count"><?php echo esc_html($expired_tour); ?></strong>
+                                    <span class="ttbm_travel_kpi-card__hint"><?php echo $expired_tour > 0 ? esc_html__('Expired tours', 'tour-booking-manager') : esc_html__('No expired tours', 'tour-booking-manager'); ?></span>
                                 </div>
                             </article>
                         </div>

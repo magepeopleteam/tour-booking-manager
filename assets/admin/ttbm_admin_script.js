@@ -8,8 +8,10 @@
         tempInput.val(shortcodeText).select();
         document.execCommand('copy');
         tempInput.remove();
+        var originalLabel = $(this).data('label') || $(this).text();
+        $(this).data('label', originalLabel);
         $(this).text('Copied!').delay(1500).queue(function (next) {
-            $(this).text('Copy');
+            $(this).text(originalLabel);
             next();
         });
     });
@@ -1593,9 +1595,9 @@
         e.preventDefault();
         let enquiryId = $(this).data('id');
         var row = $(this).closest('.ttbm-enquiry-list');
-        var subject = row.find('td:eq(0)').text().trim();
-        var name = row.find('td:eq(1)').text().trim();
-        var email = row.find('td:eq(2)').text().trim();
+        var subject = (row.find('.ttbm-enq-subject').first().text() || row.find('td:eq(0)').text()).trim();
+        var name = (row.find('.ttbm-enq-name').first().text() || row.find('td:eq(1)').text()).trim();
+        var email = (row.find('.ttbm-enq-email').first().text() || row.find('td:eq(2)').text()).trim();
         $('#ttbm-post-id').val(enquiryId);
         $('#ttbm-reply-to').val(email);
         $('#ttbm-reply-subject').val(subject);

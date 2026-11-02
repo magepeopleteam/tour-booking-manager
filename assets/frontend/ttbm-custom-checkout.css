@@ -233,7 +233,7 @@ ul.ttbm_booking_summary_list {
 	text-align: right;
 }
 .ttbm_booking_ticket_order_total strong {
-	color: #0f766e;
+	color: var(--color_theme, #0F766E);
 	font-size: 16px;
 }
 .ttbm_booking_ticket_breakdown_row {
@@ -262,7 +262,7 @@ ul.ttbm_booking_summary_list {
 	padding: 3px 7px;
 	border-radius: 6px;
 	background: #e8f7f3;
-	color: #0f766e;
+	color: var(--color_theme, #0F766E);
 	font-family: inherit;
 	font-size: 11px;
 	font-weight: 700;
@@ -815,7 +815,7 @@ body.ttbm-cc-modal-open {
 	padding: 12px 22px;
 	border: none;
 	border-radius: 12px;
-	background: linear-gradient(135deg, #14b8a6 0%, #0d9488 55%, #0f766e 100%);
+	background: linear-gradient(135deg, #14b8a6 0%, #0d9488 55%, var(--color_theme, #0F766E) 100%);
 	color: #fff;
 	font-size: 14px;
 	font-weight: 700;
@@ -926,7 +926,7 @@ body.ttbm-cc-modal-open {
 #ttbm-custom-checkout-modal #ttbm-cc-done-btn.ttbm-cc-primary-btn,
 #ttbm-custom-checkout-modal #ttbm-cc-done-btn.ttbm-cc-done-btn {
 	color: #fff !important;
-	background: linear-gradient(135deg, #14b8a6 0%, #0d9488 55%, #0f766e 100%) !important;
+	background: linear-gradient(135deg, #14b8a6 0%, #0d9488 55%, var(--color_theme, #0F766E) 100%) !important;
 	border: none !important;
 }
 #ttbm-custom-checkout-modal #ttbm-cc-done-btn .ttbm-cc-btn-text,

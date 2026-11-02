@@ -24,6 +24,7 @@
                     <section>
                         <div class="ttbm-header">
                             <h4><i class="fas fa-edit" aria-hidden="true"></i><?php esc_html_e('Hotel Title & Content', 'tour-booking-manager'); ?></h4>
+                            <p class="ttbm-header__sub"><?php esc_html_e('Set up the essentials: the title guests see and the full description.', 'tour-booking-manager'); ?></p>
                         </div>
 						<?php $this->post_title_field($hotel_id); ?>
 						<?php

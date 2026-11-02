@@ -1,0 +1,64 @@
+/* ==========================================================================
+   Book now button
+   Solid teal, rounded, with the cart in a soft circle and a gentle lift on hover.
+   Disabled (no date / no tickets) is a calm grey, not a faded copy of the active button.
+   ========================================================================== */
+.ttbm_book_now_actions .ttbm_book_now {
+	position: relative;
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	min-height: 54px;
+	padding: 0 30px 0 14px !important;
+	border: 0 !important;
+	border-radius: 14px !important;
+	background: var(--color_theme, #0F766E) !important;
+	color: #fff !important;
+	font-size: 17px !important;
+	font-weight: 700 !important;
+	letter-spacing: .01em;
+	line-height: 1;
+	text-transform: none !important;
+	box-shadow: 0 8px 20px color-mix(in srgb, var(--color_theme, #0F766E) 28%, transparent) !important;
+	opacity: 1 !important;
+	cursor: pointer;
+	transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.ttbm_book_now_actions .ttbm_book_now > .fas,
+.ttbm_book_now_actions .ttbm_book_now > span:first-child {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: none;
+	width: auto;
+	height: auto;
+	background: transparent;
+	color: #fff !important;
+	font-size: 17px;
+}
+.ttbm_book_now_actions .ttbm_book_now:hover {
+	background: color-mix(in srgb, var(--color_theme, #0F766E) 82%, #000) !important;
+	transform: translateY(-2px);
+	box-shadow: 0 12px 26px color-mix(in srgb, var(--color_theme, #0F766E) 32%, transparent) !important;
+}
+.ttbm_book_now_actions .ttbm_book_now:active { transform: translateY(0); box-shadow: 0 4px 10px color-mix(in srgb, var(--color_theme, #0F766E) 25%, transparent) !important; }
+.ttbm_book_now_actions .ttbm_book_now:focus-visible { outline: 3px solid var(--color_theme, #0F766E); outline-offset: 3px; }
+
+/* Disabled (no date / no tickets): same Theme color, softened; cart stays white */
+.ttbm_book_now_actions .ttbm_book_now.mpDisabled,
+.ttbm_book_now_actions .ttbm_book_now[disabled] {
+	background: var(--color_theme, #0F766E) !important;
+	color: #fff !important;
+	opacity: .55 !important;
+	box-shadow: none !important;
+	transform: none;
+	cursor: not-allowed;
+}
+.ttbm_book_now_actions .ttbm_book_now.mpDisabled > .fas,
+.ttbm_book_now_actions .ttbm_book_now[disabled] > .fas { background: transparent; color: #fff !important; }
+
+@media (max-width: 640px) {
+	.ttbm_book_now_actions,
+	.ttbm_book_now_actions .ttbm_book_now { width: 100%; }
+}

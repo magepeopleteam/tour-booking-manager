@@ -11,7 +11,7 @@ if (!class_exists('TTBM_Hotel_Booking_Dashbaord')) {
         public function dashbaord_hotel_lists(){
             ?>
             
-            <div class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_booking_tab"><i class="mi mi-calendar-days"></i> <?php echo esc_attr__( 'Hotel Booking Lists', 'tour-booking-manager' )?></div>
+            <div class="ttbm_hotel_tab_item" data-tab="ttbm_hotel_booking_tab"><i class="mi mi-calendar-days"></i><span class="ttbm-tab-text"><span class="ttbm-tab-label"><?php esc_html_e('Bookings', 'tour-booking-manager'); ?></span><span class="ttbm-tab-hint"><?php esc_html_e('Guests who booked a room', 'tour-booking-manager'); ?></span></span></div>
             <?php
         }
         public function dashbaord_hotel_lists_content(){
@@ -23,10 +23,11 @@ if (!class_exists('TTBM_Hotel_Booking_Dashbaord')) {
             ?>
             <div id="ttbm_hotel_booking_tab" class="ttbm_hotel_tab_content">
                 <div class="ttbm_total_booking_wrapper" style="display: block">
-                    <h2 class="ttbm_total_booking_title"><?php echo esc_attr__( 'Hotel Booking List', 'tour-booking-manager' )?></h2>
+                    <h2 class="ttbm_total_booking_title"><?php esc_html_e('Bookings', 'tour-booking-manager'); ?></h2>
+                    <p class="ttbm_tour_page-subtitle"><?php esc_html_e('Guests who booked a room, with their dates and payment.', 'tour-booking-manager'); ?></p>
 
                     <div class="ttbm_total_booking_filter_section">
-                        <span class="ttbm_total_booking_filter_label"><?php echo esc_attr__( 'Filter List By:', 'tour-booking-manager' )?></span>
+                        <span class="ttbm_total_booking_filter_label"><?php echo esc_attr__( 'Find a booking', 'tour-booking-manager' )?></span>
                         <div class="ttbm_total_booking_filter_options">
                             <label class="ttbm_total_booking_radio_container">
                                 <input type="radio" name="filter_type" value="travel" checked>
@@ -39,17 +40,17 @@ if (!class_exists('TTBM_Hotel_Booking_Dashbaord')) {
                                 <?php TTBM_Layout::hotel_list_in_select( 'all_hotel_list' ); ?>
                             </div>
 
-                            <input type="text" name="ttbm_booking_date_filter" id="ttbm_booking_date_filter" class="ttbm_booking_date_filter" placeholder="Select date">
+                            <input type="text" name="ttbm_booking_date_filter" id="ttbm_booking_date_filter" class="ttbm_booking_date_filter" placeholder="<?php echo esc_attr__( 'Pick a date', 'tour-booking-manager' ); ?>">
                             <button class="ttbm_total_booking_filter_btn"><?php  esc_html_e( 'Filter', 'tour-booking-manager' )?></button>
                             <button class="ttbm_total_booking_reset_btn"><?php  esc_html_e( 'Reset', 'tour-booking-manager' )?></button>
                         </div>
                     </div>
 
                     <div class="ttbm_total_booking_summary">
-                        <div class="ttbm_total_booking_found"><?php echo esc_attr__( 'Total ', 'tour-booking-manager' )?> <span class="ttbm_total_posts"><?php echo esc_attr( $query->found_posts ); ?></span><?php echo esc_attr__( ' Order Found', 'tour-booking-manager' )?></div>
-                        <div class="ttbm_total_booking_showing"><?php echo esc_attr__( 'Showing ', 'tour-booking-manager' )?>  <span class="ttbm_showing_items"><?php echo esc_attr( $query->post_count ) ; ?></span><?php echo esc_attr__( ' Order', 'tour-booking-manager' )?> </div>
+                        <div class="ttbm_total_booking_found"><span class="ttbm_total_posts"><?php echo esc_attr( $query->found_posts ); ?></span><?php echo esc_attr__( ' bookings found', 'tour-booking-manager' )?></div>
+                        <div class="ttbm_total_booking_showing"><?php echo esc_attr__( 'Showing ', 'tour-booking-manager' )?> <span class="ttbm_showing_items"><?php echo esc_attr( $query->post_count ) ; ?></span><?php echo esc_attr__( ' bookings', 'tour-booking-manager' )?> </div>
                         <div class="ttbm_total_booking_per_page">
-                            <span><?php echo esc_attr__( 'Guest Per Page', 'tour-booking-manager' )?></span>
+                            <span><?php echo esc_attr__( 'Per page', 'tour-booking-manager' )?></span>
                             <input type="number" value="<?php echo esc_attr( $posts_per_page )?>" class="ttbm_total_booking_page_input" readonly>
                         </div>
                     </div>
@@ -206,7 +207,7 @@ if (!class_exists('TTBM_Hotel_Booking_Dashbaord')) {
             else :
                 if( $load_more === '' ){
                 ?>
-                <tr><td colspan="14"><?php echo esc_attr__('No bookings found.', 'tour-booking-manager'); ?></td></tr>
+                <tr><td colspan="14"><?php echo esc_attr__('No bookings yet. When a guest books a room, it will show up here.', 'tour-booking-manager'); ?></td></tr>
             <?php } endif; ?>
             <?php
 

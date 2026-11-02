@@ -165,12 +165,28 @@ function ttbm_toggle_book_now_by_date(parent) {
     if (dateTarget.length < 1) {
         return;
     }
-    let hasDate = !!dateTarget.val();
+    // The picked date, or the start date the ticket form was already loaded for
+    // (tickets can be shown for the first available date before anything is clicked).
+    let hasDate = !!dateTarget.val() || parent.find('input[name="ttbm_start_date"]').filter(function () {
+        return !!jQuery(this).val();
+    }).length > 0;
+    // Ticket-based forms also need at least one ticket picked; forms without ticket
+    // quantity inputs (hotel, particular items) keep the date-only rule.
+    let ticketInputs = parent.find('input[name^="ticket_qty"]');
+    let hasQty = true;
+    if (ticketInputs.length > 0) {
+        let qty = 0;
+        ticketInputs.each(function () {
+            qty += parseInt(jQuery(this).val(), 10) || 0;
+        });
+        hasQty = qty > 0;
+    }
+    let ready = hasDate && hasQty;
     parent.find('.ttbm_book_now').each(function () {
         jQuery(this)
-            .prop('disabled', !hasDate)
-            .toggleClass('mpDisabled', !hasDate)
-            .attr('aria-disabled', !hasDate ? 'true' : 'false');
+            .prop('disabled', !ready)
+            .toggleClass('mpDisabled', !ready)
+            .attr('aria-disabled', !ready ? 'true' : 'false');
     });
 }
 function ttbm_sync_available_seat(parent) {
@@ -243,6 +259,13 @@ function get_ttbm_sold_ticket(parent, tour_id, tour_date) {
         }
         get_ttbm_ticket($(this));
         ttbm_toggle_book_now_by_date(parent);
+    });
+    // Re-check Book now whenever a ticket quantity changes (typing, +/- buttons). Done here, after the
+    // quantity scripts have run, so it works without depending on the price script being up to date.
+    $(document).on('input change keyup click', '.ttbm_registration_area .qtyIncDec, .ttbm_registration_area input[name^="ticket_qty"]', function () {
+        let area = $(this).closest('.ttbm_registration_area');
+        setTimeout(function () { ttbm_toggle_book_now_by_date(area); }, 0);
+        setTimeout(function () { ttbm_toggle_book_now_by_date(area); }, 150);
     });
     $(document).on('ttbm:ticket-refreshed', '.ttbm_registration_area', function () {
         ttbm_toggle_book_now_by_date($(this));

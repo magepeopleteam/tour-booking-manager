@@ -339,3 +339,110 @@
     font-size: 13px;
     font-weight: 500;
 }
+
+/* ===================================================================
+   Enquiries page — sidebar + list (same look as the Tour Manager)
+   =================================================================== */
+.ttbm-enquiry-page {
+    --ttbm-ink: #1B2430; --ttbm-muted: #4A5565; --ttbm-line: #DDE2E8; --ttbm-accent: #0F766E; --ttbm-accent-soft: #E3EEEC; --ttbm-accent-ink: #0B4F4A;
+    padding: 30px; background: #F4F6F8; color: var(--ttbm-ink);
+}
+.ttbm-enquiry-page .ttbm-enq-heading { margin: 0 0 20px; }
+.ttbm-enquiry-page .ttbm-enq-heading h1 { margin: 0; padding: 0; font-size: 30px; line-height: 1.2; font-weight: 700; color: var(--ttbm-ink); }
+.ttbm-enquiry-page .ttbm-enq-heading p { margin: 6px 0 0; font-size: 16px; color: var(--ttbm-muted); }
+
+/* Summary cards */
+.ttbm-enquiry-page .ttbm-enq-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 0 0 24px; }
+.ttbm-enquiry-page .ttbm-enq-stat-card { display: flex; flex-direction: column-reverse; align-items: flex-start; justify-content: flex-end; gap: 0; padding: 20px; background: #fff; border: 1px solid var(--ttbm-line); border-radius: 12px; box-shadow: none; }
+.ttbm-enquiry-page .ttbm-enq-stat-card > div:not(.ttbm-enq-stat-icon) { display: flex; flex-direction: column-reverse; }
+.ttbm-enquiry-page .ttbm-enq-stat-icon { display: none; }
+.ttbm-enquiry-page .ttbm-enq-stat-label { font-size: 14px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--ttbm-muted); }
+.ttbm-enquiry-page .ttbm-enq-stat-value { margin-top: 4px; font-size: 34px; line-height: 1.2; font-weight: 700; color: var(--ttbm-ink); }
+.ttbm-enquiry-page .ttbm-enq-stat-hint { order: 3; margin-top: 2px; font-size: 14px; color: var(--ttbm-muted); }
+.ttbm-enquiry-page .ttbm-enq-stat-card > div:not(.ttbm-enq-stat-icon) { flex-direction: column; }
+.ttbm-enquiry-page .ttbm-enq-stat-card .ttbm-enq-stat-label { order: 1; }
+.ttbm-enquiry-page .ttbm-enq-stat-card .ttbm-enq-stat-value { order: 2; }
+
+/* Layout + left menu */
+.ttbm-enquiry-page .ttbm-tour-dashboard { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px; background: transparent; padding: 0; }
+.ttbm-enquiry-page .ttbm_trvel_lists_tabs { flex: 1 1 260px; max-width: 320px; width: auto; min-width: 0; gap: 2px; padding: 12px; background: #fff; border: 1px solid var(--ttbm-line); border-radius: 12px; box-sizing: border-box; }
+.ttbm-enquiry-page .ttbm_trvel_lists_tabs .nav-tab {
+    display: block; width: 100%; min-height: 44px; padding: 10px 12px; margin: 0; box-sizing: border-box;
+    border: 0; border-radius: 8px; background: transparent; color: var(--ttbm-ink); box-shadow: none; transform: none;
+    font-size: 16px; font-weight: 600; text-decoration: none;
+}
+.ttbm-enquiry-page .ttbm_trvel_lists_tabs .nav-tab:hover { background: #F0F4F6; color: var(--ttbm-ink); transform: none; box-shadow: none; }
+.ttbm-enquiry-page .ttbm_trvel_lists_tabs .nav-tab:focus-visible { outline: 3px solid var(--ttbm-accent); outline-offset: 2px; }
+.ttbm-enquiry-page .ttbm_trvel_lists_tabs .nav-tab-active,
+.ttbm-enquiry-page .ttbm_trvel_lists_tabs .nav-tab-active:hover { background: var(--ttbm-accent-soft) !important; color: var(--ttbm-accent-ink) !important; border: 0 !important; }
+.ttbm-enquiry-page .ttbm_trvel_lists_tabs .nav-tab-active::after { display: none; }
+.ttbm-enquiry-page .ttbm-tab-text { display: block; }
+.ttbm-enquiry-page .ttbm-tab-label { display: block; font-size: 16px; font-weight: 600; }
+.ttbm-enquiry-page .ttbm-tab-hint { display: block; margin-top: 2px; font-size: 13px; font-weight: 400; color: var(--ttbm-muted); }
+.ttbm-enquiry-page .nav-tab-active .ttbm-tab-hint { color: var(--ttbm-accent-ink); }
+
+/* Content panel */
+.ttbm-enquiry-page .ttbm-tour-dashboard-content { flex: 999 1 560px; min-width: 0; padding: 24px; background: #fff; border: 1px solid var(--ttbm-line); border-radius: 12px; box-sizing: border-box; }
+.ttbm-enquiry-page .ttbm-enq-panel-head { margin: 0 0 20px; }
+.ttbm-enquiry-page .ttbm-enq-panel-head h2 { margin: 0; padding: 0; font-size: 24px; line-height: 1.25; font-weight: 700; color: var(--ttbm-ink); }
+.ttbm-enquiry-page .ttbm-enq-panel-head p { margin: 4px 0 0; font-size: 15px; color: var(--ttbm-muted); }
+
+/* Filters + search */
+.ttbm-enquiry-page .ttbm-enq-table-header { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 0 0 16px; padding: 0; background: transparent; border: 0; }
+.ttbm-enquiry-page .ttbm-enq-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.ttbm-enquiry-page .ttbm-enq-filter { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; box-sizing: border-box; border: 1px solid #AEB6C1; border-radius: 999px; background: #fff; color: var(--ttbm-ink); font-size: 15px; font-weight: 600; text-decoration: none; }
+.ttbm-enquiry-page .ttbm-enq-filter:hover { background: #F0F4F6; color: var(--ttbm-ink); }
+.ttbm-enquiry-page .ttbm-enq-filter.is-active { background: var(--ttbm-ink); border-color: var(--ttbm-ink); color: #fff; }
+.ttbm-enquiry-page .ttbm-enq-filter:focus-visible { outline: 3px solid var(--ttbm-accent); outline-offset: 2px; }
+.ttbm-enquiry-page .ttbm-enq-search-form { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.ttbm-enquiry-page .ttbm-enq-search-form input[type="search"],
+.ttbm-enquiry-page .ttbm-enq-search-form input[type="text"] { min-height: 44px; min-width: 240px; padding: 0 14px; border: 1px solid #AEB6C1; border-radius: 10px; font-size: 16px; }
+.ttbm-enquiry-page .ttbm-enq-search-form input[type="search"]:focus { border-color: var(--ttbm-accent); box-shadow: 0 0 0 2px var(--ttbm-accent); outline: none; }
+.ttbm-enquiry-page .ttbm-enq-search-form .button { min-height: 44px; padding: 0 18px; border-radius: 10px; font-size: 15px; font-weight: 600; }
+
+/* List table */
+.ttbm-enquiry-page .ttbm-enquiry-table { border: 1px solid var(--ttbm-line); border-radius: 10px; overflow: hidden; box-shadow: none; }
+.ttbm-enquiry-page .ttbm-enquiry-table thead th { padding: 12px 14px; background: #F4F6F8; font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--ttbm-muted); border-bottom: 1px solid var(--ttbm-line); }
+.ttbm-enquiry-page .ttbm-enquiry-table tbody td { padding: 16px 14px; vertical-align: middle; font-size: 15px; border-bottom: 1px solid #EEF1F4; }
+.ttbm-enquiry-page .ttbm-enquiry-table.striped > tbody > :nth-child(odd) { background: #fff; }
+.ttbm-enquiry-page .ttbm-enquiry-table tbody tr:hover td { background: #F8FAFB; }
+.ttbm-enquiry-page .ttbm-enq-col-main { width: 38%; }
+.ttbm-enquiry-page .ttbm-enq-subject, .ttbm-enquiry-page .ttbm-enq-name { display: block; font-size: 16px; font-weight: 600; color: var(--ttbm-ink); }
+.ttbm-enquiry-page .ttbm-enq-name { font-size: 15px; }
+.ttbm-enquiry-page .ttbm-enq-preview, .ttbm-enquiry-page .ttbm-enq-email { display: block; margin-top: 2px; font-size: 14px; color: var(--ttbm-muted); overflow-wrap: anywhere; }
+.ttbm-enquiry-page .ttbm-enq-col-date { white-space: nowrap; color: var(--ttbm-muted); font-size: 14px; }
+.ttbm-enquiry-page .ttbm-enq-row-new td:first-child { box-shadow: none; }
+.ttbm-enquiry-page .ttbm-enq-badge { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; }
+.ttbm-enquiry-page .ttbm-enq-badge.new { background: #FFF1D6; color: #7A4B00; }
+.ttbm-enquiry-page .ttbm-enq-badge.viewed { background: #E6ECF5; color: #2B3A55; }
+.ttbm-enquiry-page .ttbm-enq-badge.replied { background: #DCF5E5; color: #14532D; }
+
+/* Row buttons: View (grey), Reply (teal), Delete (soft red) */
+.ttbm-enquiry-page .ttbm-enq-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.ttbm-enquiry-page .ttbm-enq-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: auto; height: auto; min-height: 44px; padding: 0 16px; border: 0; border-radius: 10px; font-size: 15px; font-weight: 600; line-height: 1; cursor: pointer; box-shadow: none; }
+.ttbm-enquiry-page .ttbm-enq-btn i { font-size: 14px; color: inherit; }
+.ttbm-enquiry-page .ttbm-enq-view-btn { background: #F1F4F6; color: var(--ttbm-ink); }
+.ttbm-enquiry-page .ttbm-enq-view-btn:hover { background: #E3E8EC; color: var(--ttbm-ink); }
+.ttbm-enquiry-page .ttbm-enq-reply-btn { background: #0F766E; color: #fff; }
+.ttbm-enquiry-page .ttbm-enq-reply-btn:hover { background: #0B4F4A; color: #fff; }
+.ttbm-enquiry-page .ttbm-enq-delete-btn { background: #FDECEA; color: #B42318; }
+.ttbm-enquiry-page .ttbm-enq-delete-btn:hover { background: #F9D5D1; color: #B42318; }
+.ttbm-enquiry-page .ttbm-enq-btn:focus-visible { outline: 3px solid var(--ttbm-accent); outline-offset: 2px; }
+.ttbm-enquiry-page .ttbm-enq-empty { padding: 40px 16px; text-align: center; font-size: 16px; color: var(--ttbm-muted); }
+
+/* Settings */
+.ttbm-enquiry-page .ttbm-enq-settings-card { max-width: 560px; padding: 0; background: transparent; border: 0; box-shadow: none; }
+.ttbm-enquiry-page .ttbm-enq-field { display: flex; flex-direction: column; gap: 6px; margin: 0 0 20px; }
+.ttbm-enquiry-page .ttbm-enq-field label { font-size: 15px; font-weight: 600; color: var(--ttbm-ink); }
+.ttbm-enquiry-page .ttbm-enq-field input { min-height: 44px; padding: 0 14px; border: 1px solid #AEB6C1; border-radius: 10px; font-size: 16px; }
+.ttbm-enquiry-page .ttbm-enq-field input:focus { border-color: var(--ttbm-accent); box-shadow: 0 0 0 2px var(--ttbm-accent); outline: none; }
+.ttbm-enquiry-page .ttbm-enq-field .ttbm-enq-desc { font-size: 14px; color: var(--ttbm-muted); }
+.ttbm-enquiry-page .ttbm-enq-settings-card .button-primary { min-height: 44px; padding: 0 24px; border: 0; border-radius: 10px; background: #0F766E; font-size: 16px; font-weight: 600; box-shadow: none; text-shadow: none; }
+.ttbm-enquiry-page .ttbm-enq-settings-card .button-primary:hover { background: #0B4F4A; }
+
+@media (max-width: 782px) {
+    .ttbm-enquiry-page { padding: 16px; }
+    .ttbm-enquiry-page .ttbm_trvel_lists_tabs { max-width: none; flex-basis: 100%; }
+    .ttbm-enquiry-page .ttbm-tour-dashboard-content { padding: 16px; }
+    .ttbm-enquiry-page .ttbm-enq-search-form { margin-left: 0; width: 100%; }
+}

@@ -69,7 +69,7 @@
 	font-size: 13px !important;
 	font-weight: 600 !important;
 	color: #fff !important;
-	background: var(--mpl-primary, #2271b1) !important;
+	background: var(--mpl-primary, var(--ttbm-ed-accent, #2271b1)) !important;
 	border: none !important;
 	padding: 9px 22px !important;
 	border-radius: 8px !important;
@@ -93,12 +93,12 @@
 	box-sizing: border-box !important;
 }
 .ttbm-sb-upload-area:hover {
-	border-color: var(--mpl-primary, #2271b1) !important;
+	border-color: var(--mpl-primary, var(--ttbm-ed-accent, #2271b1)) !important;
 	background: #eff6ff !important;
 }
 .ttbm-sb-upload-icon {
 	font-size: 26px !important;
-	color: var(--mpl-primary, #2271b1) !important;
+	color: var(--mpl-primary, var(--ttbm-ed-accent, #2271b1)) !important;
 	display: block !important;
 	margin-bottom: 8px !important;
 }
@@ -129,7 +129,7 @@
 .ttbm-sb-img-actions a {
 	font-size: 12px !important;
 	font-weight: 500 !important;
-	color: var(--mpl-primary, #2271b1) !important;
+	color: var(--mpl-primary, var(--ttbm-ed-accent, #2271b1)) !important;
 	cursor: pointer !important;
 	text-decoration: none !important;
 }
@@ -258,8 +258,8 @@
 	outline: none !important;
 }
 .ttbm-sb-tax-list li input[type="checkbox"]:checked {
-	background-color: var(--mpl-primary, #2271b1) !important;
-	border-color: var(--mpl-primary, #2271b1) !important;
+	background-color: var(--mpl-primary, var(--ttbm-ed-accent, #2271b1)) !important;
+	border-color: var(--mpl-primary, var(--ttbm-ed-accent, #2271b1)) !important;
 	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3E%3Cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3E%3C/svg%3E") !important;
 	background-size: 12px !important;
 	background-repeat: no-repeat !important;
@@ -271,7 +271,7 @@
 	display: inline-block !important;
 	font-size: 12px !important;
 	font-weight: 500 !important;
-	color: var(--mpl-primary, #2271b1) !important;
+	color: var(--mpl-primary, var(--ttbm-ed-accent, #2271b1)) !important;
 	cursor: pointer !important;
 	text-decoration: none !important;
 }
@@ -302,8 +302,8 @@
 	display: block !important;
 }
 .ttbm-sb-add-new-form input[type="text"]:focus {
-	border-color: var(--mpl-primary, #2271b1) !important;
-	box-shadow: 0 0 0 3px rgba(34,113,177,.12) !important;
+	border-color: var(--mpl-primary, var(--ttbm-ed-accent, #2271b1)) !important;
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--ttbm-ed-accent, rgb(34,113,177)) 12%, transparent) !important;
 }
 .ttbm-sb-form-actions {
 	display: flex !important;
@@ -311,8 +311,8 @@
 	align-items: center !important;
 }
 .ttbm-sb-submit-term {
-	background: #2271b1 !important;
-	background-color: #2271b1 !important;
+	background: var(--ttbm-ed-accent, #2271b1) !important;
+	background-color: var(--ttbm-ed-accent, #2271b1) !important;
 	color: #fff !important;
 	border: none !important;
 	padding: 7px 16px !important;
@@ -399,12 +399,12 @@
 	box-sizing: border-box;
 }
 .ttbm-sb-payment-card .ttbm-sb-payment-link a {
-	color: #2271b1;
+	color: var(--ttbm-ed-accent, #2271b1);
 	text-decoration: underline;
 	font-weight: 700;
 }
 .ttbm-sb-payment-card .ttbm-sb-payment-link a:hover {
-	color: #135e96;
+	color: color-mix(in srgb, var(--ttbm-ed-accent, #2563eb) 82%, #000);
 }
 
 /* ── Payment Method card: green when a method is configured, red when it is not ── */

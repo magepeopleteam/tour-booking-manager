@@ -10,6 +10,11 @@ function ttbm_price_calculation(parent) {
     parent.find(' #ttbm_total_price').val(total);
     parent.find(' .tour_price').html(ttbm_price_format(total));
     parent.find('.tour_qty').html(qty);
+    // Book now stays disabled until a date and at least one ticket are chosen.
+    let regArea = parent.closest('.ttbm_registration_area');
+    if (regArea.length > 0 && typeof ttbm_toggle_book_now_by_date === 'function') {
+        ttbm_toggle_book_now_by_date(regArea);
+    }
     // Partial Payment Job
     ttbm_partial_payment_job(parent, total);
 }

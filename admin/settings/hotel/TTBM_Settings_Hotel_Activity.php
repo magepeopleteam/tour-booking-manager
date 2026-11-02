@@ -44,6 +44,7 @@
                         <div class="ttbm-header">
                             <h4><i class="fas fa-clipboard-list"></i><?php esc_html_e('Included Features', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_hotel_activity_status', $features_checked); ?>
+                            <p class="ttbm-header__sub"><?php esc_html_e('List what guests get with this stay.', 'tour-booking-manager'); ?></p>
                         </div>
                         <div data-collapse="#ttbm_hotel_activity_status" class="includedd-features-section <?php echo esc_attr($features_active); ?>">
 							<?php $this->activity_lists($tour_id,'ttbm_hotel_activity_selection'); ?>

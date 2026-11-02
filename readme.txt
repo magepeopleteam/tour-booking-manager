@@ -5,7 +5,7 @@ Tags: tour booking, travel agency, travel booking, tour operator, hotel booking
 Requires at least: 4.4.0
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 2.3.8
+Stable tag: 2.3.9
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -231,6 +231,16 @@ Use the [WordPress.org support forum](https://wordpress.org/support/plugin/tour-
 
 
 == Changelog ==
+= 2.3.9 – 2 November 2026 =
+* New: A dismissible "Travail" free-theme suggestion on the Tour Manager screen, with a link to download the theme. Tour Booking Manager PRO adds one-click install and activation.
+* Fix: Searching by destination or activity no longer ends in "Showing 0 of 0" for tours that only have a destination tag; the list reads the tour's location tag when its location-name field is empty.
+* Fix: The "Showing X of Y" line now shows the number of tours actually listed instead of the page size.
+* Fix: "Book now" stays disabled until a date and at least one ticket are chosen, and turns on again as soon as a quantity is picked.
+* Improvement: Ticket types in the tour editor now stack in a single column, with each ticket as its own card.
+* Improvement: The tour editor uses a centered 1250px container with a 360px sidebar, extra space below the editor, and the payment notice now sits inside the editor area.
+* Improvement: Booking card, buttons, tags and date tiles on the default and Smart themes follow the Theme Color setting; the editor accents follow it too.
+* Improvement: Ticket preview, theme layout card and editor sections redesigned.
+
 = 2.3.7 – 21 October 2026 =
 * Security: Fixed a stored cross-site scripting issue in the [ttbm-hotel-map] shortcode. The width and height attributes now accept only plain CSS sizes, zoom must be a whole number from 1 to 21, and every attribute is escaped (CVE-2026-109590, reported by Wordfence).
 * Security: Duplicating a post now requires permission to edit that post. The Duplicate link is tied to the post it belongs to and only appears on posts you can edit; the Duplicate button on the tour and hotel lists has the same check (CVE-2026-111213, reported by Wordfence).

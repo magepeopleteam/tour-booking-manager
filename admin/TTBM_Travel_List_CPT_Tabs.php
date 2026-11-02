@@ -59,10 +59,10 @@
 			public function add_tab_buttons( $label ) {
 				?>
 				<button data-target="ttbm_trvel_lists_guides" data-tab-type="Guides">
-					<span class="icon-wrap"><i class="mi mi-guide"></i><?php esc_html_e( ' Guides', 'tour-booking-manager' ); ?></span>
+					<span class="icon-wrap"><i class="mi mi-guide"></i><span class="ttbm-tab-text"><span class="ttbm-tab-label"><?php esc_html_e( 'Guides', 'tour-booking-manager' ); ?></span><span class="ttbm-tab-hint"><?php esc_html_e( 'People who lead the tours', 'tour-booking-manager' ); ?></span></span></span>
 				</button>
 				<button data-target="ttbm_trvel_lists_ticket_types" data-tab-type="Ticket Types">
-					<span class="icon-wrap"><i class="mi mi-ticket"></i><?php esc_html_e( ' Ticket Types', 'tour-booking-manager' ); ?></span>
+					<span class="icon-wrap"><i class="mi mi-ticket"></i><span class="ttbm-tab-text"><span class="ttbm-tab-label"><?php esc_html_e( 'Ticket options', 'tour-booking-manager' ); ?></span><span class="ttbm-tab-hint"><?php esc_html_e( 'Adult, child, group and so on', 'tour-booking-manager' ); ?></span></span></span>
 				</button>
 				<?php
 			}
@@ -75,10 +75,11 @@
 					<?php
 					$this->tab_header(
 						esc_html__( 'Guides', 'tour-booking-manager' ),
-						esc_html__( 'Add New Guide', 'tour-booking-manager' ),
+						esc_html__( 'Add a guide', 'tour-booking-manager' ),
 						'ttbm-add-guide-btn',
 						'ttbm_guides_search',
-						esc_html__( 'Search Guides', 'tour-booking-manager' )
+						esc_html__( 'Search guides', 'tour-booking-manager' ),
+						esc_html__( 'The guides who lead your tours.', 'tour-booking-manager' )
 					);
 					?>
 					<div class="ttbm_travel_list_guides_content" id="ttbm_travel_list_guides_content">
@@ -89,11 +90,12 @@
 				<div id="ttbm_trvel_lists_ticket_types" class="ttbm_trvel_lists_content">
 					<?php
 					$this->tab_header(
-						esc_html__( 'Ticket Types', 'tour-booking-manager' ),
-						esc_html__( 'Add New Ticket Type', 'tour-booking-manager' ),
+						esc_html__( 'Ticket options', 'tour-booking-manager' ),
+						esc_html__( 'Add a ticket option', 'tour-booking-manager' ),
 						'ttbm-add-ticket-type-btn',
 						'ttbm_ticket_types_search',
-						esc_html__( 'Search Ticket Types', 'tour-booking-manager' )
+						esc_html__( 'Search ticket options', 'tour-booking-manager' ),
+						esc_html__( 'The kinds of tickets customers can buy, like Adult, Child or Group.', 'tour-booking-manager' )
 					);
 					?>
 					<div class="ttbm_travel_list_ticket_types_content" id="ttbm_travel_list_ticket_types_content">
@@ -107,11 +109,14 @@
 			 * Compact tab header (title + add button + live search), styled to match
 			 * the taxonomy tab toolbar but with dedicated, non-colliding classes.
 			 */
-			private function tab_header( $title, $add_btn_text, $add_btn_class, $search_id, $search_placeholder ) {
+			private function tab_header( $title, $add_btn_text, $add_btn_class, $search_id, $search_placeholder, $description = '' ) {
 				?>
 				<div class="ttbm-tour-list-header">
 					<div class="ttbm_tab_header_shortcode_title">
 						<h1 class="page-title"><?php echo esc_html( $title ); ?></h1>
+						<?php if ( $description ) { ?>
+							<p class="ttbm_tour_page-subtitle"><?php echo esc_html( $description ); ?></p>
+						<?php } ?>
 					</div>
 					<div class="ttbm_tour_search_add_holder ttbm_travel_taxonomy_toolbar">
 						<button type="button" class="page-title-action ttbm_travel_taxonomy_add_btn <?php echo esc_attr( $add_btn_class ); ?>">
@@ -201,7 +206,7 @@
 					}
 				}
 				$is_edit     = $post_id > 0;
-				$title       = $is_edit ? esc_html__( 'Edit Guide', 'tour-booking-manager' ) : esc_html__( 'Add New Guide', 'tour-booking-manager' );
+				$title       = $is_edit ? esc_html__( 'Edit Guide', 'tour-booking-manager' ) : esc_html__( 'Add a guide', 'tour-booking-manager' );
 				$button_name = $is_edit ? esc_html__( 'Update', 'tour-booking-manager' ) : esc_html__( 'Save', 'tour-booking-manager' );
 				ob_start();
 				?>

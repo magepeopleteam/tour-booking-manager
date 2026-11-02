@@ -181,11 +181,12 @@
 			window.ttbmPrepareTourSettingsFormForSubmit({ skipRemotePersistence: true });
 		}
 
-		// Run validation to highlight incomplete required fields, but do not block
+		// Validation messages show only on an explicit save (not on background
+		// auto-save, e.g. when a Tour Type is selected). Highlight required fields, but do not block
 		// background persistence. The server's auto-save mode never forces a post
 		// to draft and returns validation warnings in JSON, so valid changes from
 		// other tabs must not be lost merely because one required field is missing.
-		if (typeof window.ttbmValidateSettingsFormBeforeSubmit === 'function') {
+		if (state.manual && typeof window.ttbmValidateSettingsFormBeforeSubmit === 'function') {
 			window.ttbmLastValidationFocus = null;
 			var formIsValid = window.ttbmValidateSettingsFormBeforeSubmit();
 			// Only a click that puts the tour live (Publish / Make Public) is held back.
@@ -290,8 +291,10 @@
 				if (isManualSave && (savedRequest === 'publish' || savedRequest === '') && res.data && (res.data.post_status === 'publish' || res.data.post_status === 'private') && !warnings.length) {
 					// Publish (draft -> live) and Update (already live) both confirm with the popup.
 					showPublishedModal(res.data.view_url || cfg.view_url, savedRequest === 'publish');
+				} else if (!isManualSave) {
+					// Background auto-save is silent: no toast.
 				} else if (warnings.length) {
-					toast(warnings[0], 'warning', isManualSave ? 7000 : undefined);
+					toast(warnings[0], 'warning', 7000);
 				} else if (isManualSave || Date.now() - state.lastSuccessToastAt > SUCCESS_TOAST_COOLDOWN) {
 					state.lastSuccessToastAt = Date.now();
 					toast(isManualSave ? 'Tour saved successfully.' : t('saved_toast', 'All changes auto-saved.'), 'success', isManualSave ? 7000 : 2000);

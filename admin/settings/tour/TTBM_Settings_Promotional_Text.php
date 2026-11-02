@@ -20,6 +20,7 @@
                         <div class="ttbm-header">
                             <h4><i class="fas fa-info-circle"></i><?php esc_html_e('Promotional Text', 'tour-booking-manager'); ?></h4>
 							<?php TTBM_Custom_Layout::switch_button('ttbm_display_why_choose_us', $checked); ?>
+                            <p class="ttbm-header__sub"><?php esc_html_e('Add a short highlight message shown on the tour page.', 'tour-booking-manager'); ?></p>
                         </div>
                         <div data-collapse="#ttbm_display_why_choose_us" class="ttbm_settings_area <?php echo esc_attr($active); ?>">
 							<?php $this->why_chose_us($tour_id); ?>

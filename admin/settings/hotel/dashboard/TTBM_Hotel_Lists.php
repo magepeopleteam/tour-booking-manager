@@ -34,7 +34,7 @@ if (!class_exists('TTBM_Hotel_Lists')) {
 
         public function dashbaord_hotel_lists(){
             ?>
-            <div class="ttbm_hotel_tab_item active" data-tab="ttbm_hotel_list_tab"><i class="mi mi-hotel"></i> <?php echo esc_attr__( 'Hotel Lists', 'tour-booking-manager' )?></div>
+            <div class="ttbm_hotel_tab_item active" data-tab="ttbm_hotel_list_tab"><i class="mi mi-hotel"></i><span class="ttbm-tab-text"><span class="ttbm-tab-label"><?php esc_html_e('Hotels', 'tour-booking-manager'); ?></span><span class="ttbm-tab-hint"><?php esc_html_e('Your hotels and their rooms', 'tour-booking-manager'); ?></span></span></div>
             <?php
         }
         
@@ -54,9 +54,9 @@ if (!class_exists('TTBM_Hotel_Lists')) {
             ], admin_url('edit.php'));
             $design = self::get_current_hotel_list_design();
             $design_options = array(
-                'classic' => array('label' => esc_html__('Classic', 'tour-booking-manager'), 'icon' => 'dashicons-list-view'),
-                'compact' => array('label' => esc_html__('Compact', 'tour-booking-manager'), 'icon' => 'dashicons-menu-alt'),
-                'modern'  => array('label' => esc_html__('Modern', 'tour-booking-manager'),  'icon' => 'dashicons-grid-view'),
+                'classic' => array('label' => esc_html__('Detailed', 'tour-booking-manager'), 'icon' => 'dashicons-list-view'),
+                'compact' => array('label' => esc_html__('List', 'tour-booking-manager'), 'icon' => 'dashicons-menu-alt'),
+                'modern'  => array('label' => esc_html__('Grid', 'tour-booking-manager'),  'icon' => 'dashicons-grid-view'),
             );
             ?>
             <!--Hotel List Tab-->
@@ -69,16 +69,17 @@ if (!class_exists('TTBM_Hotel_Lists')) {
                         <div class="ttbm_tour_list_text_header">
 
                             <div class="ttbm_travel_list_header_text">
-                                <h2 class="ttbm_total_booking_title"><?php echo esc_attr__( 'Hotel List', 'tour-booking-manager' )?></h2>
+                                <h2 class="ttbm_total_booking_title"><?php esc_html_e('Hotels', 'tour-booking-manager'); ?></h2>
+                        <p class="ttbm_tour_page-subtitle"><?php esc_html_e('All the hotels guests can book.', 'tour-booking-manager'); ?></p>
                             </div>
 
                             <div class="ttbm_hotel_count_holder">
                                 <div class="ttbm_travel_filter_item ttbm_filter_btn_active_bg_color" data-filter-item="all">All (<?php echo esc_attr( $total_count )?>)</div>
-                                <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="publish">Publish (<?php echo esc_attr( $published_count )?>)</div>
-                                <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="draft">Draft (<?php echo esc_attr( $draft_count )?>)</div>
+                                <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="publish">Published (<?php echo esc_attr( $published_count )?>)</div>
+                                <div class="ttbm_travel_filter_item ttbm_filter_btn_bg_color" data-filter-item="draft">Drafts (<?php echo esc_attr( $draft_count )?>)</div>
 
                                 <a class="ttbm_trash_link" href="<?php echo esc_url( $trash_link )?>" target="_blank">
-                                    <div class="ttbm_total_trash_display">Trash Tour (<?php echo esc_attr( $trash_count )?>) </div>
+                                    <div class="ttbm_total_trash_display">Trash (<?php echo esc_attr( $trash_count )?>)</div>
                                 </a>
                             </div>
                         </div>
@@ -86,10 +87,10 @@ if (!class_exists('TTBM_Hotel_Lists')) {
                         <div class="ttbm_hotel_search_addHolder">
                             <div class="ttbm_add_new_hotel_header">
                                 <a href="<?php echo esc_url(admin_url('post-new.php?post_type=ttbm_hotel')); ?>" class="ttbm_add_new_hotel_text">
-                                    <i class="fas fa-plus"></i> <?php echo esc_attr__( 'Add New', 'tour-booking-manager' )?></a>
+                                    <i class="fas fa-plus"></i> <?php echo esc_attr__( 'Add a hotel', 'tour-booking-manager' )?></a>
                             </div>
                             <div class="ttbm_hotel_titleSearchContainer">
-                                <input type="text" class="ttbm_hotel_title_SearchBox" id="ttbm_hotel_title_SearchBox" placeholder="Hotel Name Search...">
+                                <input type="text" class="ttbm_hotel_title_SearchBox" id="ttbm_hotel_title_SearchBox" placeholder="<?php esc_attr_e( 'Search hotels', 'tour-booking-manager' ); ?>">
                             </div>
                         </div>
                     </div>
@@ -219,7 +220,7 @@ if (!class_exists('TTBM_Hotel_Lists')) {
                         <td class="ttbm-hotel-list-column-actions">
                             <div class="ttbm-hotel-lists-status">
                                 <div class="ttbm_hotel_status_items" >
-                                    <div class="ttbm_travel_status"><?php echo esc_attr( $post_status )?></div>
+                                    <div class="ttbm_travel_status <?php echo esc_attr( $post_status ); ?>"><?php echo esc_html( $post_status === 'publish' ? __( 'Open for booking', 'tour-booking-manager' ) : ( $post_status === 'draft' ? __( 'Draft', 'tour-booking-manager' ) : $post_status ) ); ?></div>
                                 </div>
                             </div>
                         </td>
@@ -228,27 +229,27 @@ if (!class_exists('TTBM_Hotel_Lists')) {
                                 <a href="<?php echo esc_url(get_permalink( $post_id )); ?>"
                                    class="ttbm-hotel-list-action-btn ttbm-hotel-list-view-btn"
                                    title="View" target="_blank">
-                                    <i class="fas fa-eye"></i>
+                                    <i class="fas fa-eye"></i><span class="ttbm-action-text"><?php esc_html_e('View', 'tour-booking-manager'); ?></span>
                                 </a>
 
                                 <a href="<?php echo esc_url( get_edit_post_link( $post_id )); ?>"
                                    class="ttbm-hotel-list-action-btn ttbm-hotel-list-edit-btn"
                                    title="Edit" target="_blank">
-                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-edit"></i><span class="ttbm-action-text"><?php esc_html_e('Edit', 'tour-booking-manager'); ?></span>
                                 </a>
 
                                 <a title="<?php echo esc_attr__('Duplicate Hotel ', 'tour-booking-manager') . ' : ' . esc_attr(get_the_title($post_id)); ?>"  class="ttbm-hotel-list-action-btn ttbm_hotel_duplicate_post" href="<?php echo esc_attr(wp_nonce_url(
                                     admin_url('admin.php?action=ttbm_duplicate_post&post_id=' . $post_id),
                                     'ttbm_duplicate_post_' . $post_id
                                 )); ?>">
-                                    <i class="fa fa-clone"></i>
+                                    <i class="fa fa-clone"></i><span class="ttbm-action-text"><?php esc_html_e('Copy', 'tour-booking-manager'); ?></span>
                                 </a>
 
                                 <a href="<?php echo get_delete_post_link( $post_id ); ?>"
                                    class="ttbm-hotel-list-action-btn ttbm-hotel-list-delete-btn"
                                    data-confirm="Are you sure you want to delete this hotel?"
                                    title="Delete">
-                                    <i class="fas fa-trash-alt"></i>
+                                    <i class="fas fa-trash-alt"></i><span class="ttbm-action-text"><?php esc_html_e('Delete', 'tour-booking-manager'); ?></span>
                                 </a>
                             </div>
 

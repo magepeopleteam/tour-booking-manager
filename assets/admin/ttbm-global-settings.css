@@ -1528,3 +1528,9 @@ button.button.ttbm-pm-configure-btn {
     color: var(--ttbm-a-danger, #d92d20);
     font-weight: 600;
 }
+
+/* Modal-only extras (shown by the Payment Method modal styles in TTBM_Payment_Settings). */
+.ttbm-pm-section-title,
+.ttbm-pm-locked-btn {
+    display: none;
+}

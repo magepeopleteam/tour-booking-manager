@@ -1,0 +1,9 @@
+# Files left out of the package uploaded to WordPress.org (used by 10up's deploy action, wp dist-archive and similar).
+.git
+.github
+.gitignore
+.distignore
+CLAUDE.md
+node_modules
+support/blocks/node_modules
+*.zip

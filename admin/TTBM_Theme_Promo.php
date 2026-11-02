@@ -22,7 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'TTBM_Theme_Promo' ) ) {
 	class TTBM_Theme_Promo {
 		const THEME_SLUG   = 'travail';
-		const RELEASE_URL  = 'https://github.com/magepeopleteam/travail/releases/latest';
 		const PRO_URL      = 'https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/';
 		const DISMISS_META = 'ttbm_theme_card_dismissed';
 
@@ -38,6 +37,52 @@ if ( ! class_exists( 'TTBM_Theme_Promo' ) ) {
 			}
 			$theme = wp_get_theme( self::THEME_SLUG );
 			return $theme->exists() ? 'installed' : 'missing';
+		}
+
+		/** 'active' | 'installed' (files present, not active) | 'missing' */
+		public static function pro_state(): string {
+			if ( ! function_exists( 'is_plugin_active' ) ) {
+				include_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}
+			$file = 'tour-booking-manager-pro/tour-booking-manager-pro.php';
+			if ( is_plugin_active( $file ) ) {
+				return 'active';
+			}
+			return file_exists( WP_PLUGIN_DIR . '/' . $file ) ? 'installed' : 'missing';
+		}
+
+		/**
+		 * The buttons shown when no installer is available (the one-click install is a PRO feature):
+		 *  - theme already installed       -> link to Appearance → Themes (activation is a core WordPress action)
+		 *  - PRO active but installs locked -> short note (file changes are disabled on the site)
+		 *  - PRO installed, not active      -> "Activate PRO"
+		 *  - PRO not installed              -> "Get PRO"
+		 * The free plugin never links to GitHub or downloads anything.
+		 */
+		public static function render_no_installer_actions( string $state ) {
+			if ( 'installed' === $state ) {
+				?>
+				<a class="button button-primary" href="<?php echo esc_url( admin_url( 'themes.php?theme=' . self::THEME_SLUG ) ); ?>"><?php esc_html_e( 'Open Travail in Appearance → Themes', 'tour-booking-manager' ); ?></a>
+				<p class="ttbm-theme-card__hint ttbm-theme-page__note"><?php esc_html_e( 'Travail is already installed. Click Activate on the theme screen.', 'tour-booking-manager' ); ?></p>
+				<?php
+				return;
+			}
+			$pro = self::pro_state();
+			if ( 'active' === $pro ) {
+				?>
+				<p class="ttbm-theme-card__hint ttbm-theme-page__note"><?php esc_html_e( 'Installing themes is turned off on this site (file changes are locked), so Travail cannot be installed from here.', 'tour-booking-manager' ); ?></p>
+				<?php
+			} elseif ( 'installed' === $pro ) {
+				?>
+				<a class="button button-primary" href="<?php echo esc_url( admin_url( 'plugins.php' ) ); ?>"><?php esc_html_e( 'Activate PRO to install Travail', 'tour-booking-manager' ); ?></a>
+				<p class="ttbm-theme-card__hint ttbm-theme-page__note"><?php esc_html_e( 'Tour Booking Manager PRO is installed but not active. Activate it to install and activate Travail with one click.', 'tour-booking-manager' ); ?></p>
+				<?php
+			} else {
+				?>
+				<a class="button button-primary" href="<?php echo esc_url( self::PRO_URL ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Get PRO to install Travail', 'tour-booking-manager' ); ?></a>
+				<p class="ttbm-theme-card__hint ttbm-theme-page__note"><?php esc_html_e( 'Travail is a free theme. Tour Booking Manager PRO installs and activates it in one click.', 'tour-booking-manager' ); ?></p>
+				<?php
+			}
 		}
 
 		private function should_show(): bool {
@@ -87,19 +132,10 @@ if ( ! class_exists( 'TTBM_Theme_Promo' ) ) {
 					<div class="ttbm-theme-card__actions">
 						<?php do_action( 'ttbm_theme_card_installer', $state ); ?>
 					</div>
-				<?php elseif ( 'installed' === $state ) : ?>
-					<div class="ttbm-theme-card__actions">
-						<a class="button button-primary" href="<?php echo esc_url( admin_url( 'themes.php?theme=' . self::THEME_SLUG ) ); ?>"><?php esc_html_e( 'Open Travail in Appearance → Themes', 'tour-booking-manager' ); ?></a>
-					</div>
-					<p class="ttbm-theme-card__hint"><?php esc_html_e( 'Travail is already installed. Click Activate on the theme screen.', 'tour-booking-manager' ); ?></p>
 				<?php else : ?>
 					<div class="ttbm-theme-card__actions">
-						<a class="button button-primary" href="<?php echo esc_url( self::RELEASE_URL ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Download Travail (free)', 'tour-booking-manager' ); ?></a>
+						<?php self::render_no_installer_actions( $state ); ?>
 					</div>
-					<p class="ttbm-theme-card__hint">
-						<?php esc_html_e( 'Then go to Appearance → Themes → Add New → Upload Theme and activate it.', 'tour-booking-manager' ); ?>
-						<a href="<?php echo esc_url( self::PRO_URL ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'With Tour Booking Manager PRO you can install and activate it in one click.', 'tour-booking-manager' ); ?></a>
-					</p>
 				<?php endif; ?>
 			</div>
 			<style>

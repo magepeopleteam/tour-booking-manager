@@ -24,7 +24,7 @@ if ( ! class_exists( 'TTBM_Admin_Wishlist' ) ) {
 		public function add_tab_button( $label ) {
 			?>
 			<button data-target="ttbm_trvel_lists_wishlist" data-tab-type="Wishlist">
-				<span class="icon-wrap"><i class="mi mi-heart"></i><?php esc_html_e( ' Wishlist', 'tour-booking-manager' ); ?></span>
+				<span class="icon-wrap"><i class="mi mi-heart"></i><span class="ttbm-tab-text"><span class="ttbm-tab-label"><?php esc_html_e( 'Wishlist', 'tour-booking-manager' ); ?></span><span class="ttbm-tab-hint"><?php esc_html_e( 'Tours your guests have saved', 'tour-booking-manager' ); ?></span></span></span>
 			</button>
 			<?php
 		}

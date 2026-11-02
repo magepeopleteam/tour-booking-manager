@@ -32,6 +32,7 @@
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Admin_Tour_List.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Travel_Tab_Data_Add_Display_Ajax.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Welcome.php';
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Theme_Promo.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Status.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_License.php';
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Get_Enquiry.php';

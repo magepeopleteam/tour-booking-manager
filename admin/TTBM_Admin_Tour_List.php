@@ -231,6 +231,7 @@
                         </button>
                     </div>
                     <?php endif; ?>
+                    <?php do_action('ttbm_tour_manager_notices'); ?>
                     <div class="ttbm-tour-dashboard">
                         <div class="ttbm_trvel_lists_tabs">
                             <div class="ttbm-tab-group ttbm-tab-group--main" role="presentation"><?php esc_html_e('Main','tour-booking-manager'); ?></div>

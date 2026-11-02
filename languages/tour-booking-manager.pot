@@ -12476,3 +12476,1207 @@ msgstr ""
 #: support/blocks/src/index.js:431
 msgid "Related Tours Display"
 msgstr ""
+
+#: inc/TTBM_Dependencies.php:404
+msgid "Tour published!"
+msgstr ""
+
+#: inc/TTBM_Dependencies.php:405
+msgid "Your tour is live and ready for bookings."
+msgstr ""
+
+#: inc/TTBM_Dependencies.php:406
+msgid "Tour updated!"
+msgstr ""
+
+#: inc/TTBM_Dependencies.php:407
+msgid "Your changes have been saved and are now live on your site."
+msgstr ""
+
+#: inc/TTBM_Dependencies.php:408
+msgid "View Tour"
+msgstr ""
+
+#: inc/TTBM_Dependencies.php:409
+msgid "Keep editing"
+msgstr ""
+
+#: inc/TTBM_Details_Layout.php:576
+msgid "Tours"
+msgstr ""
+
+#: inc/TTBM_Details_Layout.php:580
+msgid "%d open for booking"
+msgstr ""
+
+#: inc/TTBM_Details_Layout.php:586
+msgid "Destinations"
+msgstr ""
+
+#: inc/TTBM_Details_Layout.php:590
+msgid "Most popular: %s"
+msgstr ""
+
+#: inc/TTBM_Details_Layout.php:596
+msgid "Average starting price"
+msgstr ""
+
+#: inc/TTBM_Details_Layout.php:598
+msgid "Per person, across all tours"
+msgstr ""
+
+#: inc/TTBM_Details_Layout.php:604
+msgid "Needs attention"
+msgstr ""
+
+#: inc/TTBM_Details_Layout.php:606
+msgid "Expired tours"
+msgstr ""
+
+#: inc/TTBM_Details_Layout.php:606
+msgid "No expired tours"
+msgstr ""
+
+#: inc/TTBM_Global_Function.php:323
+msgid "Choose a date"
+msgstr ""
+
+#: inc/TTBM_Global_Function.php:340
+msgid "Show fewer dates"
+msgstr ""
+
+#: inc/TTBM_Global_Function.php:340
+msgid "See all available dates"
+msgstr ""
+
+#: inc/TTBM_Layout.php:300
+msgid "All hotels"
+msgstr ""
+
+#: inc/TTBM_Travel_List_Tab_Details.php:367
+msgid "Show this on your website"
+msgstr ""
+
+#: inc/TTBM_Travel_List_Tab_Details.php:367
+msgid "Copy this code and paste it into any page or post."
+msgstr ""
+
+#: inc/TTBM_Travel_List_Tab_Details.php:377
+msgid "Copy code"
+msgstr ""
+
+#: inc/TTBM_Travel_List_Tab_Details.php:390
+msgid "Group your tours so customers can browse by type, like Adventure or Family."
+msgstr ""
+
+#: inc/TTBM_Travel_List_Tab_Details.php:391
+msgid "Add short labels, like Beach or Weekend, to help customers find tours."
+msgstr ""
+
+#: inc/TTBM_Travel_List_Tab_Details.php:392
+msgid "The cities and areas your tours start from or go to."
+msgstr ""
+
+#: inc/TTBM_Travel_List_Tab_Details.php:393
+msgid "Sights and stops customers will see on a tour."
+msgstr ""
+
+#: inc/TTBM_Travel_List_Tab_Details.php:394
+msgid "The companies or people who run your tours."
+msgstr ""
+
+#: inc/TTBM_Travel_List_Tab_Details.php:395
+msgid "Things customers get with a tour, like meals, transport or a hotel."
+msgstr ""
+
+#: inc/TTBM_Travel_List_Tab_Details.php:396
+msgid "Things customers can do on a tour, like hiking or boating."
+msgstr ""
+
+#: inc/TTBM_Travel_List_Tab_Details.php:571
+msgid "All the trips customers can book."
+msgstr ""
+
+#: inc/TTBM_Travel_List_Tab_Details.php:576
+msgid "Add a tour"
+msgstr ""
+
+#: inc/TTBM_Travel_List_Tab_Details.php:600
+msgid "Search tours"
+msgstr ""
+
+#: admin/TTBM_Admin.php:108
+msgid "Sorry, you are not allowed to duplicate this post."
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:211
+msgid "Detailed"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:218
+msgid "Tour Manager"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:219
+msgid "Create tours and manage everything that goes with them."
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:237
+msgid "Main"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:238
+msgid "Organize tours"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:239
+msgid "Where"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:241
+msgid "Tour details"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:242
+msgid "Your trips and packages"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:243
+msgid "Tour types"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:243
+msgid "Group tours, like Adventure or Family"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:244
+msgid "Places to visit"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:244
+msgid "Sights and stops along the way"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:245
+msgid "Tour hosts"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:245
+msgid "Companies or people running trips"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:246
+msgid "Cities and areas you travel to"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:247
+msgid "What is included"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:247
+msgid "Meals, transport, hotel and more"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:248
+msgid "Short labels, like Beach or Weekend"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:249
+msgid "Things to do, like hiking or boating"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:316
+msgid "Open for booking"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:318
+msgid "Pending review"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:319
+msgid "Scheduled"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:320
+msgid "In trash"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:392
+msgid "Edit"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:434
+msgid "seats"
+msgstr ""
+
+#: admin/TTBM_Admin_Tour_List.php:438
+msgid "sold"
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:552
+msgid "Questions guests send from your tour pages. Read them and reply in one place."
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:583
+msgid "All enquiries received"
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:591
+msgid "Waiting for you to read"
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:599
+msgid "Read, not answered yet"
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:607
+msgid "Answered"
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:618
+msgid "Messages from guests"
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:621
+msgid "Who emails are sent from"
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:632
+msgid "Enquiry list"
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:633
+msgid "Every message guests have sent, newest first."
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:638
+msgid "Filter by status"
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:656
+msgid "Search enquiries"
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:735
+msgid "No enquiries here yet. When a guest sends a question, it will show up in this list."
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:779
+msgid "Email settings"
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:780
+msgid "Choose who your enquiry emails and replies come from."
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:785
+msgid "From name"
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:787
+msgid "The sender name guests see. Uses your site name if left empty."
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:790
+msgid "From email"
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:792
+msgid "Enquiries and replies are sent from this address. Uses your admin email if left empty."
+msgstr ""
+
+#: admin/TTBM_Get_Enquiry.php:794
+msgid "Save settings"
+msgstr ""
+
+#: admin/TTBM_Payment_Settings.php:245
+msgid "Ready to accept bookings"
+msgstr ""
+
+#: admin/TTBM_Payment_Settings.php:245
+msgid "Setup required: no payment method"
+msgstr ""
+
+#: admin/TTBM_Payment_Settings.php:343
+msgid "Configure payment"
+msgstr ""
+
+#: admin/TTBM_Payment_Settings.php:814
+msgid "Payment gateways"
+msgstr ""
+
+#: admin/TTBM_Payment_Settings.php:844
+msgid "Requires PRO"
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:108
+msgid "Pro"
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:288
+msgid "Private Tours for Logged-in Users"
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:289
+msgid "Select Yes to show Private tours to every logged-in user, customers included: in tour lists, on the tour page and in booking. Visitors who are not logged in never see them. Default is No: only administrators and editors see Private tours."
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:722
+msgid "Default Font Size"
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:723
+msgid "Type Default Font Size(in PX Unit)."
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:729
+msgid "Font Size h1 Title"
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:730
+msgid "Type Font Size Main Title(in PX Unit)."
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:736
+msgid "Font Size h2 Title"
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:737
+msgid "Type Font Size h2 Title(in PX Unit)."
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:743
+msgid "Font Size h3 Title"
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:744
+msgid "Type Font Size h3 Title(in PX Unit)."
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:750
+msgid "Font Size h4 Title"
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:751
+msgid "Type Font Size h4 Title(in PX Unit)."
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:757
+msgid "Font Size h5 Title"
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:758
+msgid "Type Font Size h5 Title(in PX Unit)."
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:764
+msgid "Font Size h6 Title"
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:765
+msgid "Type Font Size h6 Title(in PX Unit)."
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:771
+msgid "Button Font Size "
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:772
+msgid "Type Font Size Button(in PX Unit)."
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:792
+msgid "Label Font Size "
+msgstr ""
+
+#: admin/TTBM_Settings_Global.php:793
+msgid "Type Font Size Label(in PX Unit)."
+msgstr ""
+
+#: admin/TTBM_Theme_Promo.php:76
+msgid "Hide this suggestion"
+msgstr ""
+
+#: admin/TTBM_Theme_Promo.php:77
+msgid "Free theme"
+msgstr ""
+
+#: admin/TTBM_Theme_Promo.php:78
+msgid "Make your tour site look great with Travail"
+msgstr ""
+
+#: admin/TTBM_Theme_Promo.php:79
+msgid "Travail is a free theme built for this plugin: tour grids, a booking-ready tour page, search and an Elementor homepage."
+msgstr ""
+
+#: admin/TTBM_Theme_Promo.php:87
+msgid "Open Travail in Appearance → Themes"
+msgstr ""
+
+#: admin/TTBM_Theme_Promo.php:89
+msgid "Travail is already installed. Click Activate on the theme screen."
+msgstr ""
+
+#: admin/TTBM_Theme_Promo.php:92
+msgid "Download Travail (free)"
+msgstr ""
+
+#: admin/TTBM_Theme_Promo.php:95
+msgid "Then go to Appearance → Themes → Add New → Upload Theme and activate it."
+msgstr ""
+
+#: admin/TTBM_Theme_Promo.php:96
+msgid "With Tour Booking Manager PRO you can install and activate it in one click."
+msgstr ""
+
+#: admin/TTBM_Travel_List_CPT_Tabs.php:62
+msgid "People who lead the tours"
+msgstr ""
+
+#: admin/TTBM_Travel_List_CPT_Tabs.php:65
+msgid "Ticket options"
+msgstr ""
+
+#: admin/TTBM_Travel_List_CPT_Tabs.php:65
+msgid "Adult, child, group and so on"
+msgstr ""
+
+#: admin/TTBM_Travel_List_CPT_Tabs.php:78
+msgid "Add a guide"
+msgstr ""
+
+#: admin/TTBM_Travel_List_CPT_Tabs.php:81
+msgid "Search guides"
+msgstr ""
+
+#: admin/TTBM_Travel_List_CPT_Tabs.php:82
+msgid "The guides who lead your tours."
+msgstr ""
+
+#: admin/TTBM_Travel_List_CPT_Tabs.php:94
+msgid "Add a ticket option"
+msgstr ""
+
+#: admin/TTBM_Travel_List_CPT_Tabs.php:97
+msgid "Search ticket options"
+msgstr ""
+
+#: admin/TTBM_Travel_List_CPT_Tabs.php:98
+msgid "The kinds of tickets customers can buy, like Adult, Child or Group."
+msgstr ""
+
+#: admin/settings/TTBM_Setting_API.php:350
+msgid "Booking, dates and core options"
+msgstr ""
+
+#: admin/settings/TTBM_Setting_API.php:351
+msgid "Maps on tour pages"
+msgstr ""
+
+#: admin/settings/TTBM_Setting_API.php:352
+msgid "Booking rules and labels"
+msgstr ""
+
+#: admin/settings/TTBM_Setting_API.php:353
+msgid "Words shown to visitors"
+msgstr ""
+
+#: admin/settings/TTBM_Setting_API.php:354
+msgid "The tour image slider"
+msgstr ""
+
+#: admin/settings/TTBM_Setting_API.php:355
+msgid "Colours and fonts"
+msgstr ""
+
+#: admin/settings/TTBM_Setting_API.php:356
+msgid "Activate your plugin"
+msgstr ""
+
+#: admin/settings/TTBM_Setting_API.php:357
+msgid "How guests pay"
+msgstr ""
+
+#: admin/settings/TTBM_Setting_API.php:358
+msgid "A check on your site"
+msgstr ""
+
+#: admin/settings/hotel/TTBM_Settings_Hotel_Activity.php:47
+msgid "List what guests get with this stay."
+msgstr ""
+
+#: admin/settings/hotel/TTBM_Settings_Hotel_Area_Info.php:51
+msgid "Tell guests about what is nearby."
+msgstr ""
+
+#: admin/settings/hotel/TTBM_Settings_Hotel_FAQ.php:54
+msgid "Show common questions and answers on the page."
+msgstr ""
+
+#: admin/settings/hotel/TTBM_Settings_Hotel_Feature.php:63
+msgid "Highlight the features guests look for most."
+msgstr ""
+
+#: admin/settings/hotel/TTBM_Settings_Hotel_General.php:27
+msgid "Set up the essentials: the title guests see and the full description."
+msgstr ""
+
+#: admin/settings/hotel/TTBM_Settings_Hotel_Location.php:59
+msgid "Set where the hotel is and show it on a map."
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Activities.php:23
+msgid "Hotel activities"
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Activities.php:23
+msgid "Things guests can do during a stay"
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Activities.php:34
+msgid "Things guests can do during their stay."
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Booking.php:14
+msgid "Bookings"
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Booking.php:14
+msgid "Guests who booked a room"
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Booking.php:27
+msgid "Guests who booked a room, with their dates and payment."
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Booking.php:30
+msgid "Find a booking"
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Booking.php:43
+msgid "Pick a date"
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Booking.php:50
+msgid " bookings found"
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Booking.php:51
+msgid " bookings"
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Booking.php:53
+msgid "Per page"
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Booking.php:210
+msgid "No bookings yet. When a guest books a room, it will show up here."
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Dashboard.php:102
+msgid "Hotel Manager"
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Dashboard.php:103
+msgid "Add hotels and manage everything that goes with them."
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Dashboard.php:126
+msgid "Rooms available"
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Dashboard.php:136
+msgid "Bookings today"
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Dashboard.php:146
+msgid "Average rating"
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Features.php:26
+msgid "Hotel features"
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Features.php:26
+msgid "What hotels offer, like Wi-Fi or a pool"
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Features.php:37
+msgid "What hotels offer, like Wi-Fi, parking or a pool."
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Lists.php:37
+msgid "Your hotels and their rooms"
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Lists.php:73
+msgid "All the hotels guests can book."
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Lists.php:90
+msgid "Add a hotel"
+msgstr ""
+
+#: admin/settings/hotel/dashboard/TTBM_Hotel_Lists.php:93
+msgid "Search hotels"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Promotional_Deals.php:30
+msgid "Choose how this tour shows up in your Top Picks deals."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Promotional_Deals.php:59
+msgid "Copy a code and paste it into any page to show deals on your site."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:119
+msgid "Tour setup steps"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:139
+msgid "Say what is included, what is not, and what guests can do."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:140
+msgid "Pick the layout guests see on this tour page."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:141
+msgid "Choose the guides who will lead this tour."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:142
+msgid "Plan the trip day by day and answer common questions."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:143
+msgid "Suggest other tours guests may like."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:144
+msgid "Add the contact details guests can use to reach you."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:145
+msgid "Add a short highlight message shown on the tour page."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:146
+msgid "Choose which parts of the tour page are shown or hidden."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:147
+msgid "Choose how this tour shows up in your promotional deals."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:150
+msgid "Let guests pay a deposit now and the rest later."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:162
+msgid "Back"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:191
+msgid "Basic Info"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:192
+msgid "Title, description & destination"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:198
+msgid "Dates & availability"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:203
+msgid "Pricing & Tickets"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:204
+msgid "Tickets, services & payment"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:209
+msgid "Details & Settings"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:210
+msgid "Itinerary, features, display & more"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:281
+msgid "The \"from\" price shown on the tour details and tour list pages. Leave the amount empty to use the lowest ticket price automatically, or type an amount to advertise that price instead. Switch the toggle off to hide the start price."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings.php:324
+msgid "Show the ticket picker block on the tour page. Turn it off to keep the page informational -- the sidebar \"Check Availability\" button still opens booking. To switch booking off everywhere instead, use Pricing & Services -> Registration."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Admin_Note.php:21
+msgid "Write private notes for your team. Guests never see these."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Contact.php:25
+msgid "Add the contact details guests can use to reach you about this tour."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Dates.php:90
+msgid "Set the start date, how often the tour runs, and when it ends."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Dates.php:188
+msgid "Add each date this tour runs on, one by one."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Dates.php:324
+msgid "Offer set start times, like 9:00 and 14:00, on each date."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Dates.php:405
+msgid "Block days or dates when guests cannot book this tour."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Dates.php:441
+msgid "Recurring off days block booking on those days of the week for all future tours."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Dates.php:462
+msgid "Use off dates for holidays or one-time closures. They override your regular schedule without affecting recurring off days."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Dates.php:514
+msgid "Remove off date"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Dates.php:568
+msgid "Remove particular date"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Display.php:86
+msgid "Display Booking Section"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Display.php:125
+msgid "Rename the section headings on the tour page."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Display.php:161
+msgid "Choose how the ticket picker opens on the tour page. Open renders the date field and ticket rows straight away; Collapse shows the date field with a \"Check Availability\" button and loads the ticket rows only after it is clicked."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Display.php:167
+msgid "Booking Form Open"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Display.php:172
+msgid "Booking Form Collapse"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Feature.php:51
+msgid "List what guests get with this tour."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Feature.php:62
+msgid "List what is not covered, so guests are not surprised."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Gallery.php:19
+msgid "Show a photo gallery for this tour?"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:27
+msgid "Set up the essentials: the title guests see, its web address and the full description."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:42
+msgid "The basics travellers look for first. Use a switch to show or hide an item on the tour page."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:45
+msgid "Trip basics"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:62
+msgid "Where and how"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:93
+msgid "Overnight stays"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:94
+msgid "Number of nights included."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:111
+msgid "Tour duration"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:112
+msgid "How long the tour lasts."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:145
+msgid "Max guests"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:146
+msgid "Largest group this tour accepts."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:172
+msgid "Auto (lowest ticket price)"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:178
+msgid "Starting price"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:179
+msgid "Shown as the \"from\" price. Leave empty to use the lowest ticket price."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:198
+msgid "Start point"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:199
+msgid "Where the group meets and the tour begins."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:218
+msgid "Age range"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:219
+msgid "For information only."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:298
+msgid "Tour language"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:299
+msgid "Languages the guide speaks."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_General.php:333
+msgid "Recommended: 150 to 300 characters"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Location.php:326
+msgid "Set where this tour starts and which places it covers."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Location.php:356
+msgid "Shown on tour cards and in the Destination filter."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Location.php:550
+msgid "Show map on tour page"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Location.php:551
+msgid "Adds a map of the tour's address to the tour page."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Location.php:577
+msgid "Map address"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Location.php:586
+msgid "Type an address or place…"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Location.php:619
+msgid "Type an address to move the pin."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Location.php:621
+msgid "for address suggestions and a draggable pin."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Related.php:26
+msgid "Choose which other tours to suggest on this tour page."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:980
+msgid "Save as Private"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:981
+msgid "Make Public"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1442
+msgid "auto-generated from the title"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1450
+msgid "Permalink:"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1451
+msgid "Click to edit the URL slug"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1461
+msgid "url-slug"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1465
+msgid "OK"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1553
+msgid "Basic info"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1556
+msgid "Tour title"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1559
+msgid "Starting point"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1561
+msgid "Minimum age"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1568
+msgid "Tour type"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1569
+msgid "Dates"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1573
+msgid "Pricing & tickets"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1576
+msgid "Ticket types"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1577
+msgid "Lowest price"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1582
+msgid "night(s)"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1582
+msgid "dates"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1582
+msgid "repeats every"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1582
+msgid "ticket types"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1585
+msgid "Tour summary"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Sidebar.php:1586
+msgid "What you have set so far."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Theme_Layout.php:47
+msgid "Theme layout"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Theme_Layout.php:48
+msgid "Template and colour of this tour page. Changes apply live."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Theme_Layout.php:50
+msgid "Template"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Theme_Layout.php:67
+msgid "Theme color"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Theme_Layout.php:68
+msgid "The first color is your site default (Theme Settings). Saved right away."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Theme_Layout.php:71
+msgid "Site default"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_Theme_Layout.php:75
+msgid "Custom color"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_activity.php:33
+msgid "Choose the activities guests can enjoy on this tour."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_extra_service.php:22
+msgid "Offer optional add-ons guests can book with the tour."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_faq.php:75
+msgid "Answer common questions guests ask before booking."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_faq.php:95
+msgid "Answer a question travellers often ask about this tour."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_faq.php:107
+msgid "Question"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_faq.php:113
+msgid "e.g. Is hotel pickup included?"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_faq.php:117
+msgid "Answer"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_itinery_builder.php:95
+msgid "Plan the trip day by day so guests know what to expect."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_itinery_builder.php:171
+msgid "Save & add another"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_place_you_see.php:32
+msgid "Show the stops and sights guests will see on this tour."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_pricing.php:36
+msgid "Set the ticket types, prices and seats guests can book."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_pricing.php:88
+msgid "Add a ticket type to see how it will look."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_pricing.php:95
+msgid "1 ticket"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_pricing.php:96
+msgid "%d tickets"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_pricing.php:101
+msgid "Nothing selected yet"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_pricing.php:102
+msgid "Select a ticket to continue"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_pricing.php:104
+msgid "Free rescheduling up to 24h"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_pricing.php:110
+msgid "Preview mode"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_pricing.php:111
+msgid "Customer view · nothing here is editable"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_pricing.php:113
+msgid "Live"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_pricing.php:116
+msgid "How guests see your tickets. Updates as you edit."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_pricing.php:122
+msgid "Preview only. Nothing is booked."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_pricing.php:135
+msgid "Shows the registration form with pricing for this tour."
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_pricing.php:140
+msgid "Copied"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_pricing.php:204
+msgid "Inventory"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_pricing.php:205
+msgid "Display"
+msgstr ""
+
+#: support/elementor/widget/tour-list.php:109
+msgid "Column"
+msgstr ""
+
+#: support/elementor/widget/tour-list.php:175
+msgid "Carousal Unique ID"
+msgstr ""
+
+#: support/elementor/widget/tour-list.php:177
+msgid "102448"
+msgstr ""
+
+#: support/elementor/widget/tour-list.php:183
+msgid "Carousal Navigation"
+msgstr ""
+
+#: support/elementor/widget/tour-list.php:197
+msgid "Carousal Dot"
+msgstr ""
+
+#: support/elementor/widget/tour-list.php:212
+msgid "Timeline Style"
+msgstr ""
+
+#: support/elementor/widget/tour-list.php:216
+msgid "Vertical"
+msgstr ""
+
+#: support/elementor/widget/tour-list.php:217
+msgid "Horizontal"
+msgstr ""
+
+#: templates/layout/attraction_display.php:44
+msgid "Top Attraction "
+msgstr ""
+
+#: templates/layout/browse_activity.php:41
+msgid "Activity Browse "
+msgstr ""
+
+#: templates/layout/sidebar_cta.php:98
+msgid "Prices per person"
+msgstr ""
+
+#: templates/layout/sidebar_cta.php:109
+msgid "Starting from"
+msgstr ""
+
+#: templates/ticket/tour_default_selection.php:84
+msgid "Only dates with seats are shown."
+msgstr ""
+
+#: templates/ticket/tour_default_selection.php:86
+msgid "Available dates"
+msgstr ""
+
+#: templates/themes/travello.php:450
+msgid "Organized by"
+msgstr ""

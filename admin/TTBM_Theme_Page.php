@@ -145,20 +145,7 @@ if ( ! class_exists( 'TTBM_Theme_Page' ) ) {
 				do_action( 'ttbm_theme_card_installer', $state );
 				return;
 			}
-			if ( 'installed' === $state ) {
-				?>
-				<a class="button button-primary" href="<?php echo esc_url( admin_url( 'themes.php?theme=' . TTBM_Theme_Promo::THEME_SLUG ) ); ?>"><?php esc_html_e( 'Open Travail in Appearance → Themes', 'tour-booking-manager' ); ?></a>
-				<p class="ttbm-theme-page__note"><?php esc_html_e( 'Travail is already installed. Click Activate on the theme screen.', 'tour-booking-manager' ); ?></p>
-				<?php
-				return;
-			}
-			?>
-			<a class="button button-primary" href="<?php echo esc_url( TTBM_Theme_Promo::RELEASE_URL ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Download Travail (free)', 'tour-booking-manager' ); ?></a>
-			<p class="ttbm-theme-page__note">
-				<?php esc_html_e( 'Then go to Appearance → Themes → Add New → Upload Theme and activate it.', 'tour-booking-manager' ); ?>
-				<a href="<?php echo esc_url( TTBM_Theme_Promo::PRO_URL ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'With Tour Booking Manager PRO you can install and activate it in one click.', 'tour-booking-manager' ); ?></a>
-			</p>
-			<?php
+			TTBM_Theme_Promo::render_no_installer_actions( $state );
 		}
 	}
 	new TTBM_Theme_Page();

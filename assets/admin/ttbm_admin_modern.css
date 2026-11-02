@@ -9704,6 +9704,8 @@ body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-ticket-types-add-btn:focus
 .wrap.ttbm-tour-list-page .ttbm_trvel_lists_tabs button[data-target="ttbm_trvel_lists_features"] { order: 41; }
 .wrap.ttbm-tour-list-page .ttbm_trvel_lists_tabs button[data-target="ttbm_trvel_lists_activities"] { order: 42; }
 .wrap.ttbm-tour-list-page .ttbm_trvel_lists_tabs button[data-target="ttbm_trvel_lists_ticket_types"] { order: 43; }
+.wrap.ttbm-tour-list-page .ttbm_trvel_lists_tabs button[data-target="ttbm_trvel_lists_wishlist"] { order: 50; }
+.wrap.ttbm-tour-list-page .ttbm_trvel_lists_tabs button[data-target="ttbm_trvel_lists_reviews"] { order: 51; }
 
 /* "Add a …" buttons — teal, same as the design (beats the unified blue rule above) */
 .wrap.ttbm-tour-list-page .ttbm-tour-list-header .page-title-action,

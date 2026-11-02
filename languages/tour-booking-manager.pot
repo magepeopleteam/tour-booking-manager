@@ -13782,3 +13782,45 @@ msgstr ""
 #: admin/TTBM_Theme_Page.php:100
 msgid "Live demo"
 msgstr ""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#: admin/TTBM_Theme_Promo.php:73
+msgid "Installing themes is turned off on this site (file changes are locked), so Travail cannot be installed from here."
+msgstr ""
+
+#: admin/TTBM_Theme_Promo.php:77
+msgid "Activate PRO to install Travail"
+msgstr ""
+
+#: admin/TTBM_Theme_Promo.php:78
+msgid "Tour Booking Manager PRO is installed but not active. Activate it to install and activate Travail with one click."
+msgstr ""
+
+#: admin/TTBM_Theme_Promo.php:82
+msgid "Get PRO to install Travail"
+msgstr ""
+
+#: admin/TTBM_Theme_Promo.php:83
+msgid "Travail is a free theme. Tour Booking Manager PRO installs and activates it in one click."
+msgstr ""
+
+#: admin/TTBM_Admin_Wishlist.php:27
+msgid "Tours your guests have saved"
+msgstr ""

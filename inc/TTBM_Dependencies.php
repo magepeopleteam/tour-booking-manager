@@ -582,20 +582,16 @@
                         ttbm_num_of_decimal = "<?php echo esc_html(get_option('woocommerce_price_num_decimals', 2)); ?>";
                     </script>
 					<?php
-				} else {
-					// Without WooCommerce the totals have no currency source, so they printed as a bare number ("90").
-					// Use the plugin's own currency settings (the same ones the ticket prices already use).
-					$ttbm_cur = wp_parse_args(
-						(array) get_option('ttbm_currency_settings', array()),
-						array('symbol' => '$', 'position' => 'left', 'decimal_sep' => '.', 'thousand_sep' => ',', 'num_decimals' => 2)
-					);
+				} elseif (class_exists('TTBM_Currency_Fallback')) {
+					// Custom Payment without WooCommerce: same currency the PHP price shims use.
+					$ttbm_currency = TTBM_Currency_Fallback::settings();
 					?>
                     <script type="text/javascript">
-                        ttbm_currency_symbol = <?php echo wp_json_encode((string) $ttbm_cur['symbol']); ?>;
-                        ttbm_currency_position = <?php echo wp_json_encode((string) $ttbm_cur['position']); ?>;
-                        ttbm_currency_decimal = <?php echo wp_json_encode((string) $ttbm_cur['decimal_sep']); ?>;
-                        ttbm_currency_thousands_separator = <?php echo wp_json_encode((string) $ttbm_cur['thousand_sep']); ?>;
-                        ttbm_num_of_decimal = <?php echo wp_json_encode((string) (int) $ttbm_cur['num_decimals']); ?>;
+                        ttbm_currency_symbol = "<?php echo esc_js($ttbm_currency['symbol']); ?>";
+                        ttbm_currency_position = "<?php echo esc_js($ttbm_currency['position']); ?>";
+                        ttbm_currency_decimal = "<?php echo esc_js($ttbm_currency['decimal_sep']); ?>";
+                        ttbm_currency_thousands_separator = "<?php echo esc_js($ttbm_currency['thousand_sep']); ?>";
+                        ttbm_num_of_decimal = "<?php echo esc_js($ttbm_currency['num_decimals']); ?>";
                     </script>
 					<?php
 				}

@@ -75,6 +75,9 @@ function ttbm_define_woocommerce_fallbacks() {
 		return;
 	}
 
+	// Currency the price shims below format with (WooCommerce's saved settings).
+	require_once __DIR__ . '/inc/TTBM_Currency_Fallback.php';
+
 	if (!class_exists('TTBM_WC_Cart_Fallback')) {
 		class TTBM_WC_Cart_Fallback {
 			public function get_cart() { return array(); }
@@ -140,16 +143,7 @@ function ttbm_define_woocommerce_fallbacks() {
 	if (!function_exists('wc_price')) {
 		function wc_price($price, $args = array()) {
 			$amount   = (float) $price;
-			$settings = wp_parse_args(
-				(array) get_option('ttbm_currency_settings', array()),
-				array(
-					'symbol'       => '$',
-					'position'     => 'left',
-					'decimal_sep'  => '.',
-					'thousand_sep' => ',',
-					'num_decimals' => 2,
-				)
-			);
+			$settings = TTBM_Currency_Fallback::settings();
 			$symbol   = (string) $settings['symbol'];
 			$position = (string) $settings['position'];
 			$dec_sep  = (string) $settings['decimal_sep'];
@@ -165,12 +159,14 @@ function ttbm_define_woocommerce_fallbacks() {
 		}
 	}
 	if (!function_exists('get_woocommerce_currency')) {
-		function get_woocommerce_currency() { return 'USD'; }
+		function get_woocommerce_currency() { return TTBM_Currency_Fallback::currency(); }
 	}
 	if (!function_exists('get_woocommerce_currency_symbol')) {
-		function get_woocommerce_currency_symbol($currency = 'USD') {
-			$settings = get_option('ttbm_currency_settings', array());
-			return isset($settings['symbol']) ? (string) $settings['symbol'] : '$';
+		function get_woocommerce_currency_symbol($currency = '') {
+			if (!$currency || TTBM_Currency_Fallback::currency() === $currency) {
+				return (string) TTBM_Currency_Fallback::settings()['symbol'];
+			}
+			return TTBM_Currency_Fallback::symbol($currency);
 		}
 	}
 	if (!function_exists('wc_prices_include_tax')) {
@@ -178,14 +174,12 @@ function ttbm_define_woocommerce_fallbacks() {
 	}
 	if (!function_exists('wc_get_price_thousand_separator')) {
 		function wc_get_price_thousand_separator() {
-			$settings = get_option('ttbm_currency_settings', array());
-			return isset($settings['thousand_sep']) ? (string) $settings['thousand_sep'] : ',';
+			return (string) TTBM_Currency_Fallback::settings()['thousand_sep'];
 		}
 	}
 	if (!function_exists('wc_get_price_decimal_separator')) {
 		function wc_get_price_decimal_separator() {
-			$settings = get_option('ttbm_currency_settings', array());
-			return isset($settings['decimal_sep']) ? (string) $settings['decimal_sep'] : '.';
+			return (string) TTBM_Currency_Fallback::settings()['decimal_sep'];
 		}
 	}
 	if (!function_exists('is_woocommerce')) {

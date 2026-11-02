@@ -13757,13 +13757,7 @@ msgstr ""
 msgid "Free, GPL v2 or later"
 msgstr ""
 
-#: admin/TTBM_Theme_Page.php:93
-msgid "Release notes and download"
-msgstr ""
 
-#: admin/TTBM_Theme_Page.php:95
-msgid "GitHub"
-msgstr ""
 
 #: admin/TTBM_Theme_Page.php:128
 msgid "Travail is active on this site ✓"

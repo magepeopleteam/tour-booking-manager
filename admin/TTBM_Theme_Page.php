@@ -95,15 +95,11 @@ if ( ! class_exists( 'TTBM_Theme_Page' ) ) {
 						<div class="ttbm-theme-card__actions ttbm-theme-page__actions">
 							<?php $this->render_actions( $state, $has_installer ); ?>
 						</div>
-						<p class="ttbm-theme-page__links">
-							<?php if ( $demo_url ) : ?>
+						<?php if ( $demo_url ) : ?>
+							<p class="ttbm-theme-page__links">
 								<a href="<?php echo esc_url( $demo_url ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Live demo', 'tour-booking-manager' ); ?></a>
-								&middot;
-							<?php endif; ?>
-							<a href="<?php echo esc_url( TTBM_Theme_Promo::RELEASE_URL ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Release notes and download', 'tour-booking-manager' ); ?></a>
-							&middot;
-							<a href="https://github.com/magepeopleteam/travail" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'GitHub', 'tour-booking-manager' ); ?></a>
-						</p>
+							</p>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>

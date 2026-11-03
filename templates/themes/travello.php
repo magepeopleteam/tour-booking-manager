@@ -87,8 +87,8 @@
 	$ttbm_travello_max_people = $ttbm_booking_tour_type === 'general' && TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_display_max_people', 'on' ) !== 'off'
 		? TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_travel_max_people_allow' )
 		: '';
-	$ttbm_travello_language_raw = TTBM_Global_Function::get_post_info( $tour_id, 'ttbm_travel_language' );
-	$ttbm_travello_languages    = is_array( $ttbm_travello_language_raw ) ? array_filter( $ttbm_travello_language_raw ) : ( $ttbm_travello_language_raw ? array( $ttbm_travello_language_raw ) : array() );
+	// Readable names ("English, Japanese"), not the saved locale codes; empty when the Language switch is off.
+	$ttbm_travello_languages = TTBM_Function::get_language_labels( $tour_id );
 
 	// --- Price (real, same helper the archive cards + hero price use) ---
 	$ttbm_travello_start_price = TTBM_Function::show_start_price( $ttbm_post_id ) ? TTBM_Function::get_tour_start_price( $tour_id ) : '';

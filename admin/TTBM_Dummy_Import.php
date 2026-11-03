@@ -430,6 +430,7 @@
 										}
 									}
 									if ($custom_post === 'ttbm_tour') {
+										$this->complete_dummy_tour($post_id);
 										$this->seed_dummy_reviews($post_id);
 									}
 								}
@@ -440,6 +441,31 @@
 					$this->update_related_products();
 					TTBM_Function::update_all_upcoming_date_month();
 					update_option('ttbm_dummy_already_inserted', 'yes');
+				}
+			}
+
+			/**
+			 * Fill the tour fields the dummy data above leaves empty, so every section of a dummy tour
+			 * page shows: the photo slider (a missing switch counts as OFF on the tour page, so the
+			 * 5-photo galleries never showed), the max-people value (its display switch is on but no
+			 * number was set), the language, and the end date of a fixed-date tour. Only empty values
+			 * are written.
+			 */
+			public function complete_dummy_tour($tour_id) {
+				$fill = function ($key, $value) use ($tour_id) {
+					$current = get_post_meta($tour_id, $key, true);
+					if ('' === $current || array() === $current || null === $current) {
+						update_post_meta($tour_id, $key, $value);
+					}
+				};
+				$fill('ttbm_display_slider', 'on');
+				$fill('ttbm_travel_max_people_allow', 30);
+				$fill('ttbm_travel_language_status', 'on');
+				$fill('ttbm_travel_language', array('en_US'));
+				$start = get_post_meta($tour_id, 'ttbm_travel_start_date', true);
+				if ($start && 'fixed' === get_post_meta($tour_id, 'ttbm_travel_type', true)) {
+					$days = 'day' === get_post_meta($tour_id, 'ttbm_travel_duration_type', true) ? max(0, (int) get_post_meta($tour_id, 'ttbm_travel_duration', true) - 1) : 0;
+					$fill('ttbm_travel_end_date', gmdate('Y-m-d', strtotime($start . ' +' . $days . ' days')));
 				}
 			}
 
@@ -1161,10 +1187,16 @@
 									'ttbm_display_description' => 'on',
 									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
 									//date_settings
-									'ttbm_travel_type' => 'fixed',
-									'ttbm_travel_start_date' => gmdate('Y-m-d', strtotime(' +35 day')),
-									'ttbm_travel_reg_end_date' => gmdate('Y-m-d', strtotime(' +36 day')),
+									// Repeated daily from today, never ending, closed Sundays and Mondays.
+									'ttbm_travel_type' => 'repeated',
+									'ttbm_travel_repeated_after' => '1',
+									'ttbm_repeat_type' => 'continue',
+									'ttbm_travel_repeated_start_date' => current_time('Y-m-d'),
+									'ttbm_travel_repeated_end_date' => '',
+									'ttbm_enable_off_schedule' => 'yes',
+									'mep_ticket_offdays' => array('sun', 'mon'),
 									'ttbm_travel_start_time' => '08:30',
+									'ttbm_travel_repeated_start_time' => '08:30',
 									'ttbm_travel_end_time' => '16:30',
 									'reg_end_time' => '23:59',
 									//price_settings
@@ -1309,10 +1341,14 @@
 									'ttbm_display_description' => 'on',
 									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
 									//date_settings
+									// Repeated daily from today, never ending, closed Tuesdays and Wednesdays.
 									'ttbm_travel_type' => 'repeated',
-									'ttbm_travel_repeated_after' => '4',
-									'ttbm_travel_repeated_start_date' => gmdate('Y-m-d', strtotime(' +15 day')),
-									'ttbm_travel_repeated_end_date' => gmdate('Y-m-d', strtotime(' +365 day')),
+									'ttbm_travel_repeated_after' => '1',
+									'ttbm_repeat_type' => 'continue',
+									'ttbm_travel_repeated_start_date' => current_time('Y-m-d'),
+									'ttbm_travel_repeated_end_date' => '',
+									'ttbm_enable_off_schedule' => 'yes',
+									'mep_ticket_offdays' => array('tue', 'wed'),
 									'ttbm_travel_start_time' => '07:00',
 									'ttbm_travel_repeated_start_time' => '07:00',
 									'ttbm_travel_end_time' => '15:00',
@@ -1462,10 +1498,14 @@
 									'ttbm_display_description' => 'on',
 									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
 									//date_settings
+									// Repeated daily from today, never ending, closed Wednesdays and Thursdays.
 									'ttbm_travel_type' => 'repeated',
-									'ttbm_travel_repeated_after' => '7',
-									'ttbm_travel_repeated_start_date' => gmdate('Y-m-d', strtotime(' +25 day')),
-									'ttbm_travel_repeated_end_date' => gmdate('Y-m-d', strtotime(' +365 day')),
+									'ttbm_travel_repeated_after' => '1',
+									'ttbm_repeat_type' => 'continue',
+									'ttbm_travel_repeated_start_date' => current_time('Y-m-d'),
+									'ttbm_travel_repeated_end_date' => '',
+									'ttbm_enable_off_schedule' => 'yes',
+									'mep_ticket_offdays' => array('wed', 'thu'),
 									'ttbm_travel_start_time' => '06:30',
 									'ttbm_travel_repeated_start_time' => '06:30',
 									'ttbm_travel_end_time' => '18:00',
@@ -1612,10 +1652,14 @@
 									'ttbm_display_description' => 'on',
 									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
 									//date_settings
+									// Repeated daily from today, never ending, closed Mondays and Tuesdays.
 									'ttbm_travel_type' => 'repeated',
-									'ttbm_travel_repeated_after' => '15',
-									'ttbm_travel_repeated_start_date' => gmdate('Y-m-d', strtotime(' +35 day')),
-									'ttbm_travel_repeated_end_date' => gmdate('Y-m-d', strtotime(' +365 day')),
+									'ttbm_travel_repeated_after' => '1',
+									'ttbm_repeat_type' => 'continue',
+									'ttbm_travel_repeated_start_date' => current_time('Y-m-d'),
+									'ttbm_travel_repeated_end_date' => '',
+									'ttbm_enable_off_schedule' => 'yes',
+									'mep_ticket_offdays' => array('mon', 'tue'),
 									'ttbm_travel_start_time' => '08:00',
 									'ttbm_travel_repeated_start_time' => '08:00',
 									'ttbm_travel_end_time' => '20:00',

@@ -2117,6 +2117,42 @@
 				}
 				return $arr;
 			}
+			/**
+			 * Readable names of a tour's languages ("English, Japanese"), from the locale codes the
+			 * tour editor saves (en_US, ja, fr_FR...). Empty when the Language switch is off.
+			 *
+			 * @param int $tour_id Tour post ID.
+			 * @return array
+			 */
+			public static function get_language_labels($tour_id): array {
+				if (TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_language_status') === 'off') {
+					return array();
+				}
+				$language = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_language');
+				$languages = is_array($language) ? array_filter($language) : ($language ? array($language) : array());
+				if (!$languages) {
+					return array();
+				}
+				static $translations = null;
+				if (null === $translations) {
+					if (!function_exists('wp_get_available_translations')) {
+						require_once ABSPATH . 'wp-admin/includes/translation-install.php';
+					}
+					$translations = function_exists('wp_get_available_translations') ? wp_get_available_translations() : array();
+				}
+				$labels = array();
+				foreach ($languages as $locale) {
+					$locale = (string) $locale;
+					$label = $locale;
+					if (!empty($translations[$locale])) {
+						$label = !empty($translations[$locale]['english_name']) ? $translations[$locale]['english_name'] : (!empty($translations[$locale]['native_name']) ? $translations[$locale]['native_name'] : $locale);
+					} elseif (class_exists('Locale') && preg_match('/^[a-z]{2,3}(_[A-Z]{2})?$/', $locale)) {
+						$label = \Locale::getDisplayLanguage($locale, 'en') ?: $locale;
+					}
+					$labels[] = $label;
+				}
+				return array_values(array_unique($labels));
+			}
 			public static function get_full_location($tour_id): string {
 				$city = trim( (string) TTBM_Global_Function::get_post_info($tour_id, 'ttbm_location_name') );
 				$country = trim( (string) self::get_country($tour_id) );

@@ -74,9 +74,11 @@ if (!defined('ABSPATH')) {
                                     </div>
 								<?php } ?>
 								<?php
-								// Tickets load as soon as a date (or slot) is picked, so the Check button is only
-								// kept for Pro, which still reloads time slots per date and waits for it.
-								if (class_exists('TTBM_Layout_Pro')) {
+								// Tickets load as soon as a date (or, with Pro's time slots, a slot) is picked, so
+								// the "Check availability" button adds nothing and is hidden. Pro's scripts check
+								// that the button exists before showing it. A site can bring it back with
+								// add_filter( 'ttbm_show_availability_button', '__return_true' ).
+								if (apply_filters('ttbm_show_availability_button', false, $tour_id)) {
 									TTBM_Layout::availability_button($tour_id, $time_slots_enabled);
 								}
 								?>

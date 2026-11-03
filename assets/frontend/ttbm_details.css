@@ -2023,6 +2023,9 @@
    Enquiry popup (TTBM_Get_Enquiry::get_enquiry_pop_up): tour card, field
    errors, sending state, success panel; bottom sheet on phones.
    Accent = the tour's Theme Color (--color_theme).
+   The popup is printed in wp_footer, outside #ttbm_content, so tour-page
+   rules (#ttbm_content h2 ...) cannot reach it; only the shared
+   .ttbm_style element rules can, and they are reset below.
    ===================================================================== */
 div.ttbm_popup.ttbm-enq { background: rgba(15, 23, 42, .55); padding: 24px; box-sizing: border-box; }
 div.ttbm_popup.ttbm-enq.in { animation: ttbmEnqFade .2s ease both; }
@@ -2036,98 +2039,106 @@ div.ttbm_popup.ttbm-enq.in .popupMainArea { animation: ttbmEnqIn .3s cubic-bezie
 @keyframes ttbmEnqIn { from { opacity: 0; transform: translateY(20px) scale(.97); } to { opacity: 1; transform: none; } }
 @keyframes ttbmEnqSpin { to { transform: rotate(360deg); } }
 
-.ttbm-enq .ttbm-enq__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 24px 24px 0 28px; }
-.ttbm-enq .ttbm-enq__heading { display: flex; flex-direction: column; gap: 4px; }
-.ttbm-enq .ttbm-enq__eyebrow { margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--color_theme); }
-.ttbm-enq .ttbm-enq__title { margin: 0; padding: 0; font-size: 24px; line-height: 1.25; font-weight: 700; color: #0f172a; text-align: left; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 24px 24px 0 28px; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__heading { display: flex; flex-direction: column; gap: 4px; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__eyebrow { margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--color_theme); }
+div.ttbm_popup.ttbm-enq h2.ttbm-enq__title { margin: 0; padding: 0; font-family: inherit; font-size: 24px; line-height: 1.25; font-weight: 700; letter-spacing: normal; text-transform: none; color: #0f172a; text-align: left; }
+/* The shared .ttbm_style button / :hover / :focus / [disabled] rules (ttbm_plugin_global.css) restyle
+   every button: capitalize, line-height 1, normal weight, theme background at 80% opacity on hover and
+   focus, grey when disabled. Every button below resets what it needs. */
+div.ttbm_popup.ttbm-enq button { text-transform: none; letter-spacing: normal; line-height: 1.2; opacity: 1; }
 div.ttbm_popup.ttbm-enq .popupClose.ttbm-enq__close {
 	position: static; flex-shrink: 0; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 10px;
 	background: #f1f5f9; color: #334155; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: background .15s ease;
 }
-div.ttbm_popup.ttbm-enq .popupClose.ttbm-enq__close:hover { background: #e2e8f0; color: #0f172a; }
-.ttbm-enq .ttbm-enq__close:focus-visible,
-.ttbm-enq .ttbm-enq__submit:focus-visible,
-.ttbm-enq .ttbm-enq__secondary:focus-visible { outline: 2px solid var(--color_theme); outline-offset: 2px; }
+div.ttbm_popup.ttbm-enq .popupClose.ttbm-enq__close:hover,
+div.ttbm_popup.ttbm-enq .popupClose.ttbm-enq__close:focus { background: #e2e8f0; color: #0f172a; opacity: 1; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__close:focus-visible,
+div.ttbm_popup.ttbm-enq .ttbm-enq__submit:focus-visible,
+div.ttbm_popup.ttbm-enq .ttbm-enq__secondary:focus-visible { outline: 2px solid var(--color_theme); outline-offset: 2px; }
 
-.ttbm-enq .ttbm-enq__body { padding: 0; overflow-y: auto; }
-.ttbm-enq .ttbm-enq__tour { margin: 20px 28px 0; padding: 12px; border-radius: 12px; background: #f8fafc; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 14px; }
-.ttbm-enq .ttbm-enq__tour-img { width: 76px; height: 56px; border-radius: 8px; object-fit: cover; flex-shrink: 0; }
-.ttbm-enq .ttbm-enq__tour-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.ttbm-enq .ttbm-enq__tour-text strong { font-size: 15px; font-weight: 600; line-height: 1.3; color: #0f172a; }
-.ttbm-enq .ttbm-enq__tour-text span { font-size: 13px; color: #475569; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__body { flex: 1 1 auto; min-height: 0; padding: 0; overflow-y: auto; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__tour { margin: 20px 28px 0; padding: 12px; border-radius: 12px; background: #f8fafc; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 14px; }
+/* Beats the shared ".ttbm_style img:not(.ttbm_wp_editor img) { width: 100% }", which blew the thumbnail up to card width. */
+div.ttbm_popup.ttbm-enq img.ttbm-enq__tour-img { display: block; width: 76px; height: 56px; max-width: none; margin: 0; border-radius: 8px; object-fit: cover; flex: 0 0 auto; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__tour-text { flex: 1 1 auto; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__tour-text strong { font-size: 15px; font-weight: 600; line-height: 1.3; color: #0f172a; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__tour-text span { font-size: 13px; color: #475569; }
 
-.ttbm-enq .ttbm-enq__panel[hidden] { display: none; }
-.ttbm-enq .ttbm-enq__alert { margin: 16px 28px 0; padding: 10px 12px; border-radius: 8px; background: #fef3f2; border: 1px solid #fecdca; color: #b42318; font-size: 14px; }
-.ttbm-enq .ttbm-enq__alert[hidden] { display: none; }
-.ttbm-enq .ttbm-enq__form { display: flex; flex-direction: column; gap: 16px; padding: 20px 28px 28px; margin: 0; }
-.ttbm-enq .ttbm-enq__row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.ttbm-enq .ttbm-enq__field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.ttbm-enq .ttbm-enq__field label { margin: 0; font-size: 14px; font-weight: 600; color: #0f172a; }
-.ttbm-enq .ttbm-enq__label-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-.ttbm-enq .ttbm-enq__count { font-size: 13px; color: #475569; }
-.ttbm-enq .ttbm-enq__field input,
-.ttbm-enq .ttbm-enq__field textarea {
+div.ttbm_popup.ttbm-enq .ttbm-enq__panel[hidden] { display: none; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__alert { margin: 16px 28px 0; padding: 10px 12px; border-radius: 8px; background: #fef3f2; border: 1px solid #fecdca; color: #b42318; font-size: 14px; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__alert[hidden] { display: none; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__form { display: flex; flex-direction: column; gap: 16px; padding: 20px 28px 28px; margin: 0; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__field label { margin: 0; font-size: 14px; font-weight: 600; text-transform: none; color: #0f172a; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__label-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__count { font-size: 13px; color: #475569; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__field input,
+div.ttbm_popup.ttbm-enq .ttbm-enq__field textarea {
 	width: 100%; box-sizing: border-box; min-height: 44px; margin: 0; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px;
 	background: #fff; color: #0f172a; font: inherit; font-size: 15px; line-height: 1.5; box-shadow: none;
 	transition: border-color .15s ease, box-shadow .15s ease;
 }
-.ttbm-enq .ttbm-enq__field textarea { resize: vertical; min-height: 120px; }
-.ttbm-enq .ttbm-enq__field input::placeholder,
-.ttbm-enq .ttbm-enq__field textarea::placeholder { color: #64748b; opacity: 1; }
-.ttbm-enq .ttbm-enq__field input:focus,
-.ttbm-enq .ttbm-enq__field textarea:focus { outline: 0; border-color: var(--color_theme); box-shadow: 0 0 0 3px rgba(var(--color_theme_rgb), .18); }
-.ttbm-enq .ttbm-enq__field .is-invalid { border-color: #b42318; }
-.ttbm-enq .ttbm-enq__field .is-invalid:focus { border-color: #b42318; box-shadow: 0 0 0 3px rgba(180, 35, 24, .15); }
-.ttbm-enq .ttbm-enq__error { font-size: 13px; color: #b42318; }
-.ttbm-enq .ttbm-enq__error:empty { display: none; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__field textarea { resize: vertical; min-height: 120px; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__field input::placeholder,
+div.ttbm_popup.ttbm-enq .ttbm-enq__field textarea::placeholder { color: #64748b; opacity: 1; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__field input:focus,
+div.ttbm_popup.ttbm-enq .ttbm-enq__field textarea:focus { outline: 0; border-color: var(--color_theme); box-shadow: 0 0 0 3px rgba(var(--color_theme_rgb), .18); }
+div.ttbm_popup.ttbm-enq .ttbm-enq__field .is-invalid { border-color: #b42318; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__field .is-invalid:focus { border-color: #b42318; box-shadow: 0 0 0 3px rgba(180, 35, 24, .15); }
+div.ttbm_popup.ttbm-enq .ttbm-enq__error { font-size: 13px; color: #b42318; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__error:empty { display: none; }
 
-.ttbm-enq .ttbm-enq__submit {
+div.ttbm_popup.ttbm-enq .ttbm-enq__submit {
 	display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 48px; margin: 0; padding: 0 20px;
 	border: 0; border-radius: 10px; background: var(--color_theme); color: #fff; font: inherit; font-size: 16px; font-weight: 600; cursor: pointer;
 	transition: filter .15s ease, opacity .15s ease;
 }
-.ttbm-enq .ttbm-enq__submit:hover { filter: brightness(.94); color: #fff; }
-.ttbm-enq .ttbm-enq__submit[disabled] { opacity: .8; cursor: progress; }
-.ttbm-enq .ttbm-enq__spinner { display: none; width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .45); border-top-color: #fff; animation: ttbmEnqSpin .8s linear infinite; }
-.ttbm-enq .ttbm-enq__submit.is-sending .ttbm-enq__spinner { display: inline-block; }
-.ttbm-enq .ttbm-enq__submit.is-sending .ttbm-enq__send-icon { display: none; }
-.ttbm-enq .ttbm-enq__foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 13px; color: #475569; }
-.ttbm-enq .ttbm-enq__foot a { color: var(--color_theme); font-weight: 600; text-decoration: none; }
-.ttbm-enq .ttbm-enq__foot a:hover { text-decoration: underline; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__submit:hover,
+div.ttbm_popup.ttbm-enq .ttbm-enq__submit:focus { background: var(--color_theme); filter: brightness(.94); color: #fff; opacity: 1; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__submit[disabled] { opacity: .8; cursor: progress; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__spinner { display: none; width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .45); border-top-color: #fff; animation: ttbmEnqSpin .8s linear infinite; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__submit.is-sending .ttbm-enq__spinner { display: inline-block; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__submit.is-sending .ttbm-enq__send-icon { display: none; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 13px; color: #475569; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__foot a { color: var(--color_theme); font-weight: 600; text-decoration: none; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__foot a:hover { text-decoration: underline; }
 
-.ttbm-enq .ttbm-enq__success { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 36px 28px 32px; }
-.ttbm-enq .ttbm-enq__success-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(var(--color_theme_rgb), .12); color: var(--color_theme); display: inline-flex; align-items: center; justify-content: center; }
-.ttbm-enq .ttbm-enq__success h3 { margin: 4px 0 0; font-size: 22px; font-weight: 700; color: #0f172a; }
-.ttbm-enq .ttbm-enq__success p { margin: 0; font-size: 15px; line-height: 1.6; color: #334155; max-width: 38ch; }
-.ttbm-enq .ttbm-enq__success-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 12px; }
-.ttbm-enq .ttbm-enq__success-actions .ttbm-enq__submit { width: auto; min-height: 44px; font-size: 15px; }
-.ttbm-enq .ttbm-enq__secondary {
+div.ttbm_popup.ttbm-enq .ttbm-enq__success { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 36px 28px 32px; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__success-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(var(--color_theme_rgb), .12); color: var(--color_theme); display: inline-flex; align-items: center; justify-content: center; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__success h3 { margin: 4px 0 0; font-size: 22px; font-weight: 700; color: #0f172a; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__success p { margin: 0; font-size: 15px; line-height: 1.6; color: #334155; max-width: 38ch; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__success-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 12px; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__success-actions .ttbm-enq__submit { width: auto; min-height: 44px; font-size: 15px; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__secondary {
 	min-height: 44px; margin: 0; padding: 0 18px; border-radius: 10px; border: 1px solid #cbd5e1; background: #fff; color: #0f172a;
 	font: inherit; font-size: 15px; font-weight: 500; cursor: pointer;
 }
-.ttbm-enq .ttbm-enq__secondary:hover { background: #f8fafc; }
+div.ttbm_popup.ttbm-enq .ttbm-enq__secondary:hover,
+div.ttbm_popup.ttbm-enq .ttbm-enq__secondary:focus { background: #f8fafc; color: #0f172a; opacity: 1; }
 
 /* Phones: bottom sheet, one column. */
 @media (max-width: 600px) {
 	div.ttbm_popup.ttbm-enq.in { align-items: flex-end; padding: 0; }
 	div.ttbm_popup.ttbm-enq .popupMainArea { max-width: none; max-height: 94vh; border-radius: 20px 20px 0 0; }
 	div.ttbm_popup.ttbm-enq.in .popupMainArea { animation-name: ttbmEnqSheet; }
-	.ttbm-enq .ttbm-enq__header { padding: 18px 16px 0 20px; }
-	.ttbm-enq .ttbm-enq__title { font-size: 22px; }
-	.ttbm-enq .ttbm-enq__tour { margin: 14px 20px 0; padding: 10px; }
-	.ttbm-enq .ttbm-enq__tour-img { width: 60px; height: 46px; }
-	.ttbm-enq .ttbm-enq__alert { margin: 14px 20px 0; }
-	.ttbm-enq .ttbm-enq__form { padding: 16px 20px 20px; gap: 14px; }
-	.ttbm-enq .ttbm-enq__row { grid-template-columns: minmax(0, 1fr); gap: 14px; }
-	.ttbm-enq .ttbm-enq__field input,
-	.ttbm-enq .ttbm-enq__field textarea { font-size: 16px; } /* stops iOS zooming into the field */
-	.ttbm-enq .ttbm-enq__foot { flex-direction: column; align-items: center; text-align: center; }
+	div.ttbm_popup.ttbm-enq .ttbm-enq__header { padding: 18px 16px 0 20px; }
+	div.ttbm_popup.ttbm-enq h2.ttbm-enq__title { font-size: 22px; }
+	div.ttbm_popup.ttbm-enq .ttbm-enq__tour { margin: 14px 20px 0; padding: 10px; }
+	div.ttbm_popup.ttbm-enq img.ttbm-enq__tour-img { width: 60px; height: 46px; }
+	div.ttbm_popup.ttbm-enq .ttbm-enq__alert { margin: 14px 20px 0; }
+	div.ttbm_popup.ttbm-enq .ttbm-enq__form { padding: 16px 20px 20px; gap: 14px; }
+	div.ttbm_popup.ttbm-enq .ttbm-enq__row { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+	div.ttbm_popup.ttbm-enq .ttbm-enq__field input,
+	div.ttbm_popup.ttbm-enq .ttbm-enq__field textarea { font-size: 16px; } /* stops iOS zooming into the field */
+	div.ttbm_popup.ttbm-enq .ttbm-enq__foot { flex-direction: column; align-items: center; text-align: center; }
 }
 @keyframes ttbmEnqSheet { from { transform: translateY(100%); } to { transform: none; } }
 @media (prefers-reduced-motion: reduce) {
 	div.ttbm_popup.ttbm-enq.in,
 	div.ttbm_popup.ttbm-enq.in .popupMainArea { animation: none; }
-	.ttbm-enq .ttbm-enq__spinner { animation-duration: 2s; }
+	div.ttbm_popup.ttbm-enq .ttbm-enq__spinner { animation-duration: 2s; }
 }
 
 /* =====================================================================

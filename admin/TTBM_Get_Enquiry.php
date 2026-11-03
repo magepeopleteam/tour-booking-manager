@@ -500,7 +500,34 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             ];
         }
 
+        /** Popup markup waiting for wp_footer. */
+        private $footer_popup = '';
+
+        /**
+         * ttbm_enquery_popup action. The popup is built here (where the current tour is known) but printed
+         * in wp_footer, outside #ttbm_content: tour-page rules such as "#ttbm_content h2" (ID selectors)
+         * otherwise override the popup's own type and colours.
+         */
         public function get_enquiry_pop_up($tour_id = 0) {
+            if ($this->footer_popup !== '') {
+                return; // one popup per page
+            }
+            ob_start();
+            $this->render_enquiry_pop_up($tour_id);
+            $html = ob_get_clean();
+            if (did_action('wp_footer') || doing_action('wp_footer')) {
+                echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in render_enquiry_pop_up().
+                return;
+            }
+            $this->footer_popup = $html;
+            add_action('wp_footer', [$this, 'print_footer_popup'], 5);
+        }
+
+        public function print_footer_popup() {
+            echo $this->footer_popup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in render_enquiry_pop_up().
+        }
+
+        private function render_enquiry_pop_up($tour_id = 0) {
             // The ttbm_enquery_popup action is fired without arguments from the tour templates.
             $tour_id = absint($tour_id) ?: get_the_ID();
             $tour    = $this->get_enquiry_tour_context($tour_id);

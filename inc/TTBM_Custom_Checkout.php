@@ -350,6 +350,11 @@
 			 * }
 			 */
 			private function process_booking($tour_id) {
+				$tour_status = get_post_status($tour_id);
+				$readable = 'publish' === $tour_status || ('private' === $tour_status && current_user_can('read_post', $tour_id));
+				if (get_post_type($tour_id) !== TTBM_Function::get_cpt_name() || !$readable || post_password_required($tour_id)) {
+					return new WP_Error('ttbm_invalid_tour', esc_html__('This tour is not available for booking.', 'tour-booking-manager'));
+				}
 				$ticket_info = $this->collect_ticket_info($tour_id);
 				if (empty($ticket_info)) {
 					return new WP_Error('ttbm_no_ticket', esc_html__('Please select at least one ticket.', 'tour-booking-manager'));
@@ -357,7 +362,24 @@
 				$hotel_info = apply_filters('ttbm_hotel_info_filter', $this->collect_hotel_info(), $tour_id);
 				$service_info = $this->collect_extra_service_info($tour_id);
 				$user_info = apply_filters('ttbm_user_info_data', array(), $tour_id);
-				$total = $this->calculate_total($tour_id);
+				$hotel_id = !empty($hotel_info['hotel_id']) ? absint($hotel_info['hotel_id']) : 0;
+				if ($hotel_id) {
+					$assigned = array_map('absint', (array) TTBM_Function::get_hotel_list($tour_id));
+					$check_in = $hotel_info['ttbm_checkin_date'] ?? '';
+					$check_out = $hotel_info['ttbm_checkout_date'] ?? '';
+					$dates = TTBM_Global_Function::parse_date_range_string($check_in . ' - ' . $check_out);
+					if (!in_array($hotel_id, $assigned, true) || !$dates || strtotime($dates[1]) <= strtotime($dates[0])) {
+						return new WP_Error('ttbm_invalid_hotel', esc_html__('Please select a valid hotel and date range.', 'tour-booking-manager'));
+					}
+					$hotel_info['ttbm_checkin_date'] = $dates[0];
+					$hotel_info['ttbm_checkout_date'] = $dates[1];
+					$hotel_info['ttbm_hotel_num_of_day'] = (int) date_create($dates[0])->diff(date_create($dates[1]))->days;
+				}
+				$total = $this->calculate_total($tour_id, $ticket_info, $hotel_info, $service_info);
+				if (is_wp_error($total)) {
+					return $total;
+				}
+
 				$start_date = isset($_POST['ttbm_start_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_start_date'])) : '';
 				$end_date = isset($_POST['ttbm_end_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_end_date'])) : '';
 				$gateway_id = isset($_POST['ttbm_payment_method']) ? sanitize_key(wp_unslash($_POST['ttbm_payment_method'])) : '';
@@ -395,6 +417,7 @@
 				update_post_meta($order_id, '_ttbm_order_key', $order_key);
 				update_post_meta($order_id, '_ttbm_tour_id', $tour_id);
 				update_post_meta($order_id, '_ttbm_order_total', $total);
+				update_post_meta($order_id, '_ttbm_order_currency', self::currency_code());
 				update_post_meta($order_id, '_ttbm_customer_id', get_current_user_id());
 				update_post_meta($order_id, '_ttbm_customer_name', $customer['name']);
 				update_post_meta($order_id, '_ttbm_customer_email', $customer['email']);
@@ -542,6 +565,10 @@
 					$paid_statuses = array('processing', 'publish');
 					if (in_array(get_post_status($order_id), $paid_statuses, true)) {
 						$this->redirect_with_notice($this->confirmation_base_url($tour_id), 'success', $order_id, $order_key);
+					}
+					$stored_gateway = (string) get_post_meta($order_id, '_ttbm_payment_gateway', true);
+					if (!$gateway_id || $gateway_id !== $stored_gateway || !in_array(get_post_status($order_id), array('pending', 'on-hold'), true)) {
+						wp_die(esc_html__('Payment verification failed. Please contact us if you believe this is an error.', 'tour-booking-manager'), '', array('response' => 403));
 					}
 					$gateway = TTBM_Payment_Gateway_Manager::get_instance()->get_gateway($gateway_id);
 					if ($gateway && $gateway->verify_payment($order_id)) {
@@ -824,9 +851,9 @@
 				$ticket_info = array();
 				$start_date = isset($_POST['ttbm_start_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_start_date'])) : '';
 				$hotel_id = isset($_POST['ttbm_tour_hotel_list']) ? sanitize_text_field(wp_unslash($_POST['ttbm_tour_hotel_list'])) : 0;
-				$names = isset($_POST['ticket_name']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_name'])) : array();
-				$qty = isset($_POST['ticket_qty']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_qty'])) : array();
-				$max_qty = isset($_POST['ticket_max_qty']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_max_qty'])) : array();
+				$names = isset($_POST['ticket_name']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['ticket_name'])) : array();
+				$qty = isset($_POST['ticket_qty']) ? array_map('absint', wp_unslash((array) $_POST['ticket_qty'])) : array();
+				$max_qty = isset($_POST['ticket_max_qty']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['ticket_max_qty'])) : array();
 				for ($i = 0; $i < count($names); $i++) {
 					if (isset($qty[$i]) && $qty[$i] > 0) {
 						$name = $names[$i] ?? '';
@@ -854,8 +881,8 @@
 			private function collect_extra_service_info($tour_id) {
 				$extra_service = array();
 				$start_date = isset($_POST['ttbm_start_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_start_date'])) : '';
-				$service_name = isset($_POST['service_name']) ? array_map('sanitize_text_field', wp_unslash($_POST['service_name'])) : array();
-				$service_qty = isset($_POST['service_qty']) ? array_map('sanitize_text_field', wp_unslash($_POST['service_qty'])) : array();
+				$service_name = isset($_POST['service_name']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['service_name'])) : array();
+				$service_qty = isset($_POST['service_qty']) ? array_map('absint', wp_unslash((array) $_POST['service_qty'])) : array();
 				for ($i = 0; $i < count($service_name); $i++) {
 					$requested_qty = isset($service_qty[$i]) ? absint($service_qty[$i]) : 0;
 					if ($requested_qty > 0) {
@@ -875,29 +902,33 @@
 				}
 				return $extra_service;
 			}
-			private function calculate_total($tour_id) {
-				$total_price = 0;
+			private function calculate_total($tour_id, $ticket_info, $hotel_info, $service_info) {
+				$total_price = 0.0;
 				$total_qty = 0;
-				$names = isset($_POST['ticket_name']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_name'])) : array();
-				$qty = isset($_POST['ticket_qty']) ? array_map('sanitize_text_field', wp_unslash($_POST['ticket_qty'])) : array();
-				$hotel_id = isset($_POST['ttbm_tour_hotel_list']) ? sanitize_text_field(wp_unslash($_POST['ttbm_tour_hotel_list'])) : 0;
-				$start_date = isset($_POST['ttbm_start_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_start_date'])) : '';
-				$num_of_day = isset($_POST['ttbm_hotel_num_of_day']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_num_of_day'])) : 0;
-				foreach ($names as $i => $name) {
-					if (isset($qty[$i]) && $qty[$i] > 0) {
-						$total_qty += $qty[$i];
-						$price = TTBM_Function::get_price_by_name($name, $tour_id, $hotel_id, $qty[$i], $start_date) * $qty[$i];
-						if ($hotel_id > 0) {
-							$price = $price * $num_of_day;
-						}
-						$total_price += $price;
+				$days = !empty($hotel_info['hotel_id']) ? (int) $hotel_info['ttbm_hotel_num_of_day'] : 1;
+				foreach ($ticket_info as $ticket) {
+					$raw_price = $ticket['ticket_price'] ?? '';
+					$price = is_scalar($raw_price) && '' !== trim((string) $raw_price) ? wc_format_decimal((string) $raw_price) : '';
+					$qty = isset($ticket['ticket_qty']) ? absint($ticket['ticket_qty']) : 0;
+					if (!is_numeric($price) || !is_finite((float) $price) || (float) $price < 0 || !$qty || $days < 1) {
+						return new WP_Error('ttbm_invalid_price', esc_html__('A selected ticket is no longer available. Please refresh and try again.', 'tour-booking-manager'));
 					}
+					$total_qty += $qty;
+					$total_price += (float) $price * $qty * $days;
 				}
 				if ($total_qty > 0) {
 					$total_price = apply_filters('ttbm_total_price_filter', $total_price, $tour_id, $total_qty);
 				}
-				foreach ($this->collect_extra_service_info($tour_id) as $service) {
-					$total_price += $service['service_price'] * $service['service_qty'];
+				foreach ($service_info as $service) {
+					$raw_price = $service['service_price'] ?? '';
+					$price = is_scalar($raw_price) && '' !== trim((string) $raw_price) ? wc_format_decimal((string) $raw_price) : '';
+					if (!is_numeric($price) || !is_finite((float) $price) || (float) $price < 0) {
+						return new WP_Error('ttbm_invalid_price', esc_html__('A selected service is no longer available. Please refresh and try again.', 'tour-booking-manager'));
+					}
+					$total_price += (float) $price * absint($service['service_qty']);
+				}
+				if (!is_numeric($total_price) || !is_finite((float) $total_price) || $total_price < 0) {
+					return new WP_Error('ttbm_invalid_total', esc_html__('Invalid booking total. Please refresh and try again.', 'tour-booking-manager'));
 				}
 				return (float) $total_price;
 			}

@@ -1417,6 +1417,7 @@ JS;
 				$first_name = $name_parts[0] ?? '';
 				$last_name = $name_parts[1] ?? '';
 				$user_id = wp_insert_user(array(
+					'role' => get_role('customer') ? 'customer' : 'subscriber',
 					'user_login' => $username,
 					'user_pass' => $password,
 					'user_email' => $email,

@@ -99,6 +99,13 @@ if (! class_exists('TTBM_Get_Enquiry')) {
                         <th><?php esc_html_e('Email', 'tour-booking-manager'); ?></th>
                         <td><a href="mailto:<?php echo esc_attr($response['email']); ?>"><?php echo esc_html($response['email']); ?></a></td>
                     </tr>
+                    <?php $enquiry_tour_id = absint(get_post_meta($enquiry_id, 'tour_id', true)); ?>
+                    <?php if ($enquiry_tour_id && get_post($enquiry_tour_id)) : ?>
+                    <tr>
+                        <th><?php esc_html_e('Tour', 'tour-booking-manager'); ?></th>
+                        <td><a href="<?php echo esc_url(get_permalink($enquiry_tour_id)); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html(get_the_title($enquiry_tour_id)); ?></a></td>
+                    </tr>
+                    <?php endif; ?>
                     <tr>
                         <th><?php esc_html_e('Date', 'tour-booking-manager'); ?></th>
                         <td><?php echo esc_html($response['date']); ?> <?php echo esc_html($response['time']); ?></td>
@@ -230,7 +237,13 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             if (empty($name) || empty($subject) || empty($message) || !is_email($email)) {
                 wp_send_json_error(['message' => __('Please complete all required fields with valid information.', 'tour-booking-manager')]);
             }
-            
+
+            // The tour the popup was opened on (optional; ignored unless it is a published tour).
+            $tour_id = isset($form_data['ttbm_enquiry_tour_id']) ? absint($form_data['ttbm_enquiry_tour_id']) : 0;
+            if ($tour_id && (get_post_type($tour_id) !== TTBM_Function::get_cpt_name() || get_post_status($tour_id) !== 'publish')) {
+                $tour_id = 0;
+            }
+
             // Get configured recipient email (where enquiries should be sent)
             $to = get_option('ttbm_enquiry_from_email');
             if (empty($to)) {
@@ -257,21 +270,28 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             $email_message .= '<h3>' . esc_html__('New Enquiry Received', 'tour-booking-manager') . '</h3>';
             $email_message .= '<p><strong>' . esc_html__('Name:', 'tour-booking-manager') . '</strong> ' . esc_html($name) . '</p>';
             $email_message .= '<p><strong>' . esc_html__('Email:', 'tour-booking-manager') . '</strong> ' . esc_html($email) . '</p>';
+            if ($tour_id) {
+                $email_message .= '<p><strong>' . esc_html__('Tour:', 'tour-booking-manager') . '</strong> <a href="' . esc_url(get_permalink($tour_id)) . '">' . esc_html(get_the_title($tour_id)) . '</a></p>';
+            }
             $email_message .= '<p><strong>' . esc_html__('Subject:', 'tour-booking-manager') . '</strong> ' . esc_html($subject) . '</p>';
             $email_message .= '<p><strong>' . esc_html__('Message:', 'tour-booking-manager') . '</strong></p>';
             $email_message .= '<div>' . wpautop($message) . '</div>';
             $email_message .= '</body></html>';
-            
+
+            $enquiry_meta = [
+                'name'   => $name,
+                'email'   => $email,
+                'status' => 'new',
+            ];
+            if ($tour_id) {
+                $enquiry_meta['tour_id'] = $tour_id;
+            }
             $enquiry_id = wp_insert_post([
                 'post_title'   => $subject,
                 'post_content' => $message,
                 'post_type'    => 'ttbm_enquiry',
                 'post_status'  => 'publish',
-                'meta_input'   => [
-                    'name'   => $name,
-                    'email'   => $email,
-                    'status' => 'new',
-                ],
+                'meta_input'   => $enquiry_meta,
             ]);
             
             // Admin notification — let an email-builder addon take over (and log).
@@ -435,39 +455,158 @@ if (! class_exists('TTBM_Get_Enquiry')) {
             </div>
             <?php
         }
-        public function get_enquiry_pop_up($tour_id) {
+        /**
+         * The tour the enquiry popup is about: title, photo, "Place · 6 hours · From $89" line and the
+         * tour's contact phone. Empty when the popup is shown outside a tour.
+         */
+        private function get_enquiry_tour_context($tour_id) {
+            if (!$tour_id || get_post_type($tour_id) !== TTBM_Function::get_cpt_name()) {
+                return [];
+            }
+            $meta = [];
+            $location = TTBM_Function::get_full_location($tour_id);
+            if (!$location) {
+                $location = (string) TTBM_Global_Function::get_post_info($tour_id, 'ttbm_full_location_name');
+            }
+            if ($location) {
+                $meta[] = $location;
+            }
+            $duration = (int) TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration');
+            if ($duration > 0) {
+                $type = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_duration_type', 'day');
+                if ($type === 'hour') {
+                    /* translators: %d: number of hours */
+                    $meta[] = sprintf(_n('%d hour', '%d hours', $duration, 'tour-booking-manager'), $duration);
+                } elseif ($type === 'min') {
+                    /* translators: %d: number of minutes */
+                    $meta[] = sprintf(_n('%d minute', '%d minutes', $duration, 'tour-booking-manager'), $duration);
+                } else {
+                    /* translators: %d: number of days */
+                    $meta[] = sprintf(_n('%d day', '%d days', $duration, 'tour-booking-manager'), $duration);
+                }
+            }
+            $price = TTBM_Function::get_tour_start_price($tour_id);
+            if ($price && function_exists('wc_price')) {
+                /* translators: %s: formatted start price */
+                // Plain text (the line is escaped on output): decode wc_price()'s entities (&#2547; &nbsp;).
+                $meta[] = sprintf(__('From %s', 'tour-booking-manager'), trim(preg_replace('/\x{00A0}+/u', ' ', html_entity_decode(wp_strip_all_tags(wc_price($price)), ENT_QUOTES, 'UTF-8'))));
+            }
+            return [
+                'id'    => $tour_id,
+                'title' => get_the_title($tour_id),
+                'image' => get_the_post_thumbnail_url($tour_id, 'thumbnail'),
+                'meta'  => implode(' · ', $meta),
+                'phone' => (string) TTBM_Global_Function::get_post_info($tour_id, 'ttbm_contact_phone'),
+            ];
+        }
+
+        public function get_enquiry_pop_up($tour_id = 0) {
+            // The ttbm_enquery_popup action is fired without arguments from the tour templates.
+            $tour_id = absint($tour_id) ?: get_the_ID();
+            $tour    = $this->get_enquiry_tour_context($tour_id);
+            /* translators: %s: tour name */
+            $subject = $tour ? sprintf(__('Question about %s', 'tour-booking-manager'), $tour['title']) : '';
             ?>
-                <div class="ttbm_popup ttbm_style" data-popup="get-enquiry-popup">
-                    <div class="popupMainArea">
-                        <div class="popupHeader allCenter">
-                            <h2 class="_mR"><?php esc_html_e('Get Enquiry', 'tour-booking-manager'); ?></h2>
-                            <span class="fas fa-times popupClose"></span>
+                <div class="ttbm_popup ttbm_style ttbm-enq" data-popup="get-enquiry-popup">
+                    <div class="popupMainArea" role="dialog" aria-modal="true" aria-labelledby="ttbm-enq-title">
+                        <div class="ttbm-enq__header">
+                            <div class="ttbm-enq__heading">
+                                <p class="ttbm-enq__eyebrow"><?php echo $tour ? esc_html__('Ask about this tour', 'tour-booking-manager') : esc_html__('Ask us anything', 'tour-booking-manager'); ?></p>
+                                <h2 class="ttbm-enq__title" id="ttbm-enq-title"><?php esc_html_e('Send an enquiry', 'tour-booking-manager'); ?></h2>
+                            </div>
+                            <button type="button" class="popupClose ttbm-enq__close" aria-label="<?php esc_attr_e('Close', 'tour-booking-manager'); ?>">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                            </button>
                         </div>
-                        <div class="popupBody">
-                            <div class="ajax-response"></div>
-                            <form method="post" id="ttbm-enquiry-form">
-                                <div class="get-enquiry-form">
+                        <div class="popupBody ttbm-enq__body">
+                            <?php if ($tour) : ?>
+                                <div class="ttbm-enq__tour">
+                                    <?php if ($tour['image']) : ?>
+                                        <img src="<?php echo esc_url($tour['image']); ?>" alt="" class="ttbm-enq__tour-img" width="76" height="56" loading="lazy">
+                                    <?php endif; ?>
+                                    <div class="ttbm-enq__tour-text">
+                                        <strong><?php echo esc_html($tour['title']); ?></strong>
+                                        <?php if ($tour['meta']) : ?>
+                                            <span><?php echo esc_html($tour['meta']); ?></span>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
+                            <div class="ttbm-enq__panel" data-enq-panel="form">
+                                <div class="ajax-response ttbm-enq__alert" role="alert" hidden></div>
+                                <form method="post" id="ttbm-enquiry-form" class="ttbm-enq__form" novalidate
+                                      data-msg-name="<?php esc_attr_e('Enter your name.', 'tour-booking-manager'); ?>"
+                                      data-msg-email="<?php esc_attr_e('Enter your email address.', 'tour-booking-manager'); ?>"
+                                      data-msg-email-invalid="<?php esc_attr_e('Enter an email address like name@example.com.', 'tour-booking-manager'); ?>"
+                                      data-msg-subject="<?php esc_attr_e('Add a subject.', 'tour-booking-manager'); ?>"
+                                      data-msg-message="<?php esc_attr_e('Write at least 10 characters so we can help.', 'tour-booking-manager'); ?>"
+                                      data-msg-failed="<?php esc_attr_e('Your message could not be sent. Please try again.', 'tour-booking-manager'); ?>"
+                                      data-default-subject="<?php echo esc_attr($subject); ?>">
                                     <div class="ttbm-honeypot-field" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
                                         <label for="ttbm_website"><?php esc_html_e('Website', 'tour-booking-manager'); ?></label>
                                         <input type="text" name="ttbm_website" id="ttbm_website" tabindex="-1" autocomplete="off">
                                     </div>
                                     <input type="hidden" name="ttbm_enquiry_time" id="ttbm-enquiry-time" value="<?php echo esc_attr(current_time('timestamp')); ?>">
+                                    <?php if ($tour) : ?>
+                                        <input type="hidden" name="ttbm_enquiry_tour_id" value="<?php echo esc_attr($tour['id']); ?>">
+                                    <?php endif; ?>
 
-                                    <label for="name"><?php esc_html_e('Name:', 'tour-booking-manager'); ?></label>
-                                    <input type="text" name="name" id="name" placeholder="<?php esc_attr_e('Your Name', 'tour-booking-manager'); ?>" required>
+                                    <div class="ttbm-enq__row">
+                                        <div class="ttbm-enq__field">
+                                            <label for="ttbm-enq-name"><?php esc_html_e('Name', 'tour-booking-manager'); ?></label>
+                                            <input type="text" name="name" id="ttbm-enq-name" autocomplete="name" placeholder="<?php esc_attr_e('Your full name', 'tour-booking-manager'); ?>" required aria-describedby="ttbm-enq-name-error">
+                                            <span class="ttbm-enq__error" id="ttbm-enq-name-error" data-error-for="name"></span>
+                                        </div>
+                                        <div class="ttbm-enq__field">
+                                            <label for="ttbm-enq-email"><?php esc_html_e('Email', 'tour-booking-manager'); ?></label>
+                                            <input type="email" name="email" id="ttbm-enq-email" autocomplete="email" placeholder="<?php esc_attr_e('you@example.com', 'tour-booking-manager'); ?>" required aria-describedby="ttbm-enq-email-error">
+                                            <span class="ttbm-enq__error" id="ttbm-enq-email-error" data-error-for="email"></span>
+                                        </div>
+                                    </div>
 
-                                    <label for="email"><?php esc_html_e('Email:', 'tour-booking-manager'); ?></label>
-                                    <input type="email" name="email" id="email" placeholder="<?php esc_attr_e('Your Email', 'tour-booking-manager'); ?>" required>
+                                    <div class="ttbm-enq__field">
+                                        <label for="ttbm-enq-subject"><?php esc_html_e('Subject', 'tour-booking-manager'); ?></label>
+                                        <input type="text" name="subject" id="ttbm-enq-subject" value="<?php echo esc_attr($subject); ?>" placeholder="<?php esc_attr_e('What is your question about?', 'tour-booking-manager'); ?>" required aria-describedby="ttbm-enq-subject-error">
+                                        <span class="ttbm-enq__error" id="ttbm-enq-subject-error" data-error-for="subject"></span>
+                                    </div>
 
-                                    <label for="subject"><?php esc_html_e('Subject:', 'tour-booking-manager'); ?></label>
-                                    <input type="text" name="subject" id="subject" placeholder="<?php esc_attr_e('Subject', 'tour-booking-manager'); ?>" required>
+                                    <div class="ttbm-enq__field">
+                                        <div class="ttbm-enq__label-row">
+                                            <label for="ttbm-enq-message"><?php esc_html_e('Message', 'tour-booking-manager'); ?></label>
+                                            <span class="ttbm-enq__count" aria-live="polite"><span data-enq-count>0</span> / 1000</span>
+                                        </div>
+                                        <textarea name="message" id="ttbm-enq-message" rows="5" maxlength="1000" placeholder="<?php esc_attr_e('Travel date, group size, pickup point, anything you would like to know', 'tour-booking-manager'); ?>" required aria-describedby="ttbm-enq-message-error"></textarea>
+                                        <span class="ttbm-enq__error" id="ttbm-enq-message-error" data-error-for="message"></span>
+                                    </div>
 
-                                    <label for="message"><?php esc_html_e('Message:', 'tour-booking-manager'); ?></label>
-                                    <textarea name="message" id="message" placeholder="<?php esc_attr_e('Your Message', 'tour-booking-manager'); ?>" rows="5" required></textarea>
+                                    <button type="submit" class="ttbm-enq__submit" id="ttbm-enquiry-form-submit">
+                                        <span class="ttbm-enq__spinner" aria-hidden="true"></span>
+                                        <svg class="ttbm-enq__send-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
+                                        <span class="ttbm-enq__submit-label" data-sending="<?php esc_attr_e('Sending…', 'tour-booking-manager'); ?>"><?php esc_html_e('Send message', 'tour-booking-manager'); ?></span>
+                                    </button>
 
-                                    <button class="_dButton_fullWidth" id="ttbm-enquiry-form-submit"><?php esc_html_e('Send Message', 'tour-booking-manager'); ?></button>
+                                    <div class="ttbm-enq__foot">
+                                        <span><?php esc_html_e('We only use your details to reply to this enquiry.', 'tour-booking-manager'); ?></span>
+                                        <?php if (!empty($tour['phone'])) : ?>
+                                            <span><?php esc_html_e('Prefer to talk?', 'tour-booking-manager'); ?> <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9+]/', '', $tour['phone'])); ?>"><?php echo esc_html($tour['phone']); ?></a></span>
+                                        <?php endif; ?>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="ttbm-enq__panel ttbm-enq__success" data-enq-panel="success" role="status" hidden>
+                                <span class="ttbm-enq__success-icon" aria-hidden="true">
+                                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>
+                                </span>
+                                <h3><?php esc_html_e('Message sent', 'tour-booking-manager'); ?></h3>
+                                <p data-enq-thanks
+                                   data-template="<?php /* translators: 1: first name, 2: email address (placeholders filled in by script) */ esc_attr_e('Thanks, %1$s. We have received your question and will reply to %2$s.', 'tour-booking-manager'); ?>"></p>
+                                <div class="ttbm-enq__success-actions">
+                                    <button type="button" class="ttbm-enq__secondary" data-enq-again><?php esc_html_e('Send another', 'tour-booking-manager'); ?></button>
+                                    <button type="button" class="ttbm-enq__submit ttbm-enq__done" data-enq-close><?php echo $tour ? esc_html__('Back to tour', 'tour-booking-manager') : esc_html__('Close', 'tour-booking-manager'); ?></button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>

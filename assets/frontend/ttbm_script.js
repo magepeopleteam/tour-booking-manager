@@ -83,35 +83,134 @@ window.ttbmT = window.ttbmT || function (key, fallback) {
 		$("#ttbm-tour-guide").trigger("prev.owl.carousel");
 	});
 	// ==========Tour Guide Carousel End============
-	$(document).on('click', '[data-target-popup="get-enquiry-popup"]', function () {
-		const form = $('#ttbm-enquiry-form');
+	// ==========Get enquiry popup============
+	// Markup: TTBM_Get_Enquiry::get_enquiry_pop_up(). Opening/closing is the shared
+	// [data-target-popup] / .popupClose handler in ttbm_plugin_global.js.
+	function ttbm_enq_popup() {
+		return $('.ttbm_popup[data-popup="get-enquiry-popup"]');
+	}
+	function ttbm_enq_set_error(form, field, message) {
+		const input = form.find('[name="' + field + '"]');
+		const error = form.find('[data-error-for="' + field + '"]');
+		input.attr('aria-invalid', message ? 'true' : 'false').toggleClass('is-invalid', !!message);
+		error.text(message || '');
+	}
+	function ttbm_enq_validate(form) {
+		const errors = {};
+		const name = $.trim(form.find('[name="name"]').val());
+		const email = $.trim(form.find('[name="email"]').val());
+		const subject = $.trim(form.find('[name="subject"]').val());
+		const message = $.trim(form.find('[name="message"]').val());
+		if (!name) { errors.name = form.data('msg-name'); }
+		if (!email) { errors.email = form.data('msg-email'); }
+		else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errors.email = form.data('msg-email-invalid'); }
+		if (!subject) { errors.subject = form.data('msg-subject'); }
+		if (message.length < 10) { errors.message = form.data('msg-message'); }
+		$.each(['name', 'email', 'subject', 'message'], function (i, field) {
+			ttbm_enq_set_error(form, field, errors[field]);
+		});
+		return errors;
+	}
+	function ttbm_enq_sending(form, on) {
+		const button = form.find('#ttbm-enquiry-form-submit');
+		const label = button.find('.ttbm-enq__submit-label');
+		if (!label.data('idle')) { label.data('idle', label.text()); }
+		button.prop('disabled', on).toggleClass('is-sending', on).attr('aria-busy', on ? 'true' : 'false');
+		label.text(on ? label.data('sending') : label.data('idle'));
+	}
+	function ttbm_enq_show(popup, panel) {
+		popup.find('[data-enq-panel]').attr('hidden', true);
+		popup.find('[data-enq-panel="' + panel + '"]').removeAttr('hidden');
+	}
+	function ttbm_enq_reset(keepContact) {
+		const popup = ttbm_enq_popup();
+		const form = popup.find('#ttbm-enquiry-form');
+		if (!form.length) { return; }
+		const name = form.find('[name="name"]').val();
+		const email = form.find('[name="email"]').val();
 		form[0].reset();
+		if (keepContact) {
+			form.find('[name="name"]').val(name);
+			form.find('[name="email"]').val(email);
+		}
+		form.find('[name="subject"]').val(form.data('default-subject') || '');
 		form.find('#ttbm_website').val('');
 		form.find('#ttbm-enquiry-time').val(Math.floor(Date.now() / 1000));
-		$('.ajax-response').html('');
+		form.find('[data-enq-count]').text('0');
+		form.find('[data-error-for]').text('');
+		form.find('.is-invalid').removeClass('is-invalid').attr('aria-invalid', 'false');
+		popup.find('.ajax-response').attr('hidden', true).text('');
+		ttbm_enq_sending(form, false);
+		ttbm_enq_show(popup, 'form');
+	}
+
+	$(document).on('click', '[data-target-popup="get-enquiry-popup"]', function () {
+		ttbm_enq_reset(false);
+		setTimeout(function () { ttbm_enq_popup().find('#ttbm-enq-name').trigger('focus'); }, 300);
+	});
+	$(document).on('input', '#ttbm-enquiry-form textarea[name="message"]', function () {
+		$(this).closest('form').find('[data-enq-count]').text($(this).val().length);
+	});
+	$(document).on('input', '#ttbm-enquiry-form .is-invalid', function () {
+		ttbm_enq_set_error($(this).closest('form'), $(this).attr('name'), '');
+	});
+	$(document).on('click', '.ttbm_popup [data-enq-again]', function () {
+		ttbm_enq_reset(true);
+		ttbm_enq_popup().find('#ttbm-enq-message').trigger('focus');
+	});
+	$(document).on('click', '.ttbm_popup [data-enq-close]', function () {
+		$(this).closest('.ttbm_popup').find('.popupClose').first().trigger('click');
+	});
+	$(document).on('keydown', function (e) {
+		if (e.key === 'Escape' && ttbm_enq_popup().hasClass('in')) {
+			ttbm_enq_popup().find('.popupClose').first().trigger('click');
+		}
 	});
 
 	// ==========get enquiry form submit============
-	$(document).on('click', '#ttbm-enquiry-form-submit', function(e){	
+	$(document).on('submit', '#ttbm-enquiry-form', function (e) {
 		e.preventDefault();
-		let form = $(this).closest('form');
-		let data = form.serialize();
-		jQuery.ajax({
+		const form = $(this);
+		const popup = form.closest('.ttbm_popup');
+		const alert = popup.find('.ajax-response');
+		const button = form.find('#ttbm-enquiry-form-submit');
+		if (button.prop('disabled')) { return; }
+		alert.attr('hidden', true).text('');
+		const errors = ttbm_enq_validate(form);
+		if (!$.isEmptyObject(errors)) {
+			form.find('.is-invalid').first().trigger('focus');
+			return;
+		}
+		ttbm_enq_sending(form, true);
+		$.ajax({
 			type: 'POST',
 			url: ttbm_ajax.ajax_url,
-			data:{
+			data: {
 				action: 'ttbm_enquiry_form_submit',
 				nonce: ttbm_ajax.nonce,
-				data: data
-			},
-			success: function(response){
-				if (response.success) {
-					$('.ajax-response').html(response.data.message).css('color', 'green');
-					form[0].reset();
-				} else {
-					$('.ajax-response').html(response.data.message).css('color', 'red');
-				}
+				data: form.serialize()
 			}
+		}).done(function (response) {
+			if (response && response.success) {
+				const name = $.trim(form.find('[name="name"]').val()).split(/\s+/)[0];
+				const email = $.trim(form.find('[name="email"]').val());
+				// "Thanks, %1$s ... %2$s." filled as text nodes (placeholders may come in any order in a translation).
+				const thanks = popup.find('[data-enq-thanks]').empty();
+				$.each(String(thanks.data('template')).split(/(%1\$s|%2\$s)/), function (i, part) {
+					if (part === '%1$s') { thanks.append(document.createTextNode(name)); }
+					else if (part === '%2$s') { thanks.append($('<strong>').text(email)); }
+					else if (part) { thanks.append(document.createTextNode(part)); }
+				});
+				ttbm_enq_sending(form, false);
+				ttbm_enq_show(popup, 'success');
+				popup.find('[data-enq-close]').trigger('focus');
+			} else {
+				ttbm_enq_sending(form, false);
+				alert.text(response && response.data && response.data.message ? response.data.message : form.data('msg-failed')).removeAttr('hidden');
+			}
+		}).fail(function () {
+			ttbm_enq_sending(form, false);
+			alert.text(form.data('msg-failed')).removeAttr('hidden');
 		});
 	});
 

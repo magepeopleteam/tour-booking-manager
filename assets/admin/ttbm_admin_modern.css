@@ -9944,7 +9944,7 @@ body.ttbm-modern-edit-page #ttbm_meta_box_panel .tabsContent .tabsItem section .
 	gap: 2px;
 }
 #ttbm_meta_box_panel .ttbm-tour-wizard .ttbm-wz-acc__title {
-	font-size: 22px;
+	font-size: 18px;
 	font-weight: 700;
 	line-height: 1.25;
 	color: #1B2430 !important;
@@ -10890,7 +10890,7 @@ body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-right-sidebar .ttbm-sb-car
 
 
 /* ─── Addon promo cards (left column, after Extra Service) ─── */
-#ttbm_meta_box_panel .ttbm-apx { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 20px; }
+#ttbm_meta_box_panel .ttbm-apx { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 20px; margin-bottom: 20px; }
 #ttbm_meta_box_panel .ttbm-apx__card {
 	--apx: #d97706;
 	position: relative;
@@ -11104,4 +11104,101 @@ body.ttbm-modern-edit-page #ttbm_content.ttbm_configuration .ttbmTabs.leftTabs {
 	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td { flex-direction: column; align-items: stretch; gap: 6px; }
 	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td::before { flex: none; max-width: none; }
 	#ttbm_meta_box_panel .ttbm-ticket-types-table tbody td.ttbm-ticket-col--actions { flex-direction: row; align-items: center; }
+}
+
+/* ==========================================================================
+   Ticket types: card list + popup editor (assets/admin/ttbm-ticket-modal.js).
+   The ticket table stays in the page (hidden): it is what gets saved.
+   ========================================================================== */
+.ttbm-tk,
+.ttbm-tkm {
+	--tk-accent: var(--ttbm-ed-accent, var(--color_theme, #6b35e8));
+	--tk-ink: #0f172a;
+	--tk-muted: #475569;
+	--tk-line: #e2e8f0;
+}
+.ttbm-tk-on .ttbm-ticket-types-table-wrap,
+.ttbm-tk-on .ttbm-extra-service-table-wrap,
+#ttbm_meta_box_panel .ttbm-tk-on .ttbm-extra-service-table-wrap,
+.ttbm-tk-on .ttbm-ticket-types-add-btn,
+#ttbm_meta_box_panel .ttbm-tk-on .ttbm-ticket-types-table-wrap,
+#ttbm_meta_box_panel .ttbm-tk-on .ttbm-ticket-types-add-btn,
+#ttbm_content .ttbm_settings_area.ttbm-tk-on > .ttbm-ticket-types-add-btn,
+body.ttbm-modern-edit-page #ttbm_meta_box_panel .ttbm-tk-on .ttbm-ticket-types-add-btn { display: none !important; }
+
+.ttbm-tk { display: flex; flex-direction: column; gap: 12px; }
+.ttbm-tk__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.ttbm-tk__title { margin: 0; font-size: 15px; font-weight: 800; color: var(--tk-ink); }
+.ttbm-tk__count { margin-left: 6px; padding: 2px 9px; border-radius: 999px; background: #f1f5f9; color: var(--tk-muted); font-size: 12px; font-weight: 700; }
+.ttbm-tk__add { display: inline-flex; align-items: center; gap: 8px; height: 44px; margin: 0; padding: 0 20px; border: 0; border-radius: 10px; background: var(--tk-accent); color: #fff; font-size: 13.5px; font-weight: 700; cursor: pointer; }
+.ttbm-tk__add:hover, .ttbm-tk__add:focus { filter: brightness(.94); color: #fff; }
+.ttbm-tk__foot { display: flex; justify-content: flex-end; }
+.ttbm-tk__list { display: flex; flex-direction: column; gap: 10px; }
+.ttbm-tk__empty { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 32px 16px; border: 1.5px dashed #cbd5e1; border-radius: 14px; background: #f8fafc; text-align: center; font-size: 13px; color: var(--tk-muted); }
+.ttbm-tk__empty[hidden] { display: none; }
+.ttbm-tk__empty strong { font-size: 15px; color: var(--tk-ink); }
+
+.ttbm-tk-card { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 14px 16px; border: 1px solid var(--tk-line); border-radius: 14px; background: #fff; }
+.ttbm-tk-card__sort { width: 24px; height: 36px; display: flex; align-items: center; justify-content: center; color: #94a3b8; cursor: grab; }
+.ttbm-tk-card__icon { flex: 0 0 44px; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; background: color-mix(in srgb, var(--tk-accent) 12%, #fff); color: var(--tk-accent); }
+.ttbm-tk-card__main { flex: 1 1 200px; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.ttbm-tk-card__name { font-size: 15px; color: var(--tk-ink); }
+.ttbm-tk-card__meta { font-size: 12.5px; color: var(--tk-muted); }
+.ttbm-tk-card__price { display: flex; align-items: baseline; gap: 8px; }
+.ttbm-tk-card__now { font-size: 17px; color: var(--tk-accent); }
+.ttbm-tk-card__was { font-size: 13px; color: #64748b; }
+.ttbm-tk-card__was[hidden], .ttbm-tk-card__off[hidden] { display: none; }
+.ttbm-tk-card__off { padding: 4px 10px; border-radius: 999px; background: #fff1f2; color: #be123c; font-size: 12px; font-weight: 700; }
+.ttbm-tk-card__actions { display: flex; gap: 8px; }
+.ttbm-tk-card__btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 40px; min-width: 40px; margin: 0; padding: 0 14px; border: 1px solid #cbd5e1; border-radius: 10px; background: #fff; color: var(--tk-ink); font-size: 13px; font-weight: 700; cursor: pointer; }
+.ttbm-tk-card__btn:hover, .ttbm-tk-card__btn:focus { border-color: var(--tk-accent); color: var(--tk-accent); }
+.ttbm-tk-card__btn--del { padding: 0; border-color: #fecaca; color: #dc2626; }
+.ttbm-tk-card__btn--del:hover, .ttbm-tk-card__btn--del:focus { border-color: #dc2626; color: #b91c1c; background: #fef2f2; }
+.ttbm-tk-card.ui-sortable-helper { box-shadow: 0 10px 28px rgba(15, 23, 42, .18); }
+
+/* modal */
+body.ttbm-tkm-open { overflow: hidden; }
+.ttbm-tkm { position: fixed; inset: 0; z-index: 100000; display: flex; align-items: flex-start; justify-content: center; padding: 40px 16px; box-sizing: border-box; }
+.ttbm-tkm[hidden], .ttbm-tkm.is-yielding { display: none; }
+.ttbm-tkm__backdrop { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; padding: 0; border: 0; background: rgba(15, 23, 42, .55); cursor: default; }
+.ttbm-tkm__dialog { position: relative; width: 100%; max-width: 640px; max-height: 100%; display: flex; flex-direction: column; background: #fff; border-radius: 16px; box-shadow: 0 24px 60px rgba(15, 23, 42, .35); overflow: hidden; font-family: inherit; }
+.ttbm-tkm__head { display: flex; align-items: center; gap: 14px; padding: 20px 24px; border-bottom: 1px solid var(--tk-line); }
+.ttbm-tkm__head-icon { flex: 0 0 44px; width: 44px; height: 44px; border-radius: 12px; background: var(--tk-accent); color: #fff; display: flex; align-items: center; justify-content: center; }
+.ttbm-tkm__head-text { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.ttbm-tkm__head-text h3 { margin: 0; font-size: 18px; font-weight: 800; color: var(--tk-ink); }
+.ttbm-tkm__head-text span { font-size: 13px; color: var(--tk-muted); }
+.ttbm-tkm__x { width: 40px; height: 40px; margin: 0; padding: 0; border: 0; border-radius: 10px; background: #f1f5f9; color: #334155; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.ttbm-tkm__body { padding: 22px 24px; display: flex; flex-direction: column; gap: 18px; overflow: auto; }
+.ttbm-tkm__field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.ttbm-tkm__field label, .ttbm-tkm__label { font-size: 13px; font-weight: 700; color: #334155; }
+.ttbm-tkm__field label b { color: #b91c1c; }
+.ttbm-tkm__field input[type="text"], .ttbm-tkm__field input[type="number"] { width: 100%; height: 46px; box-sizing: border-box; margin: 0; padding: 0 14px; border: 1px solid #94a3b8; border-radius: 10px; font-size: 14px; color: var(--tk-ink); background: #fff; box-shadow: none; }
+.ttbm-tkm__field input:focus { outline: 2px solid var(--tk-accent); outline-offset: 0; border-color: var(--tk-accent); box-shadow: none; }
+.ttbm-tkm__name-row { display: flex; gap: 10px; }
+.ttbm-tkm__icon-wrap { position: relative; flex: 0 0 46px; }
+.ttbm-tkm__icon-btn { width: 46px; height: 46px; margin: 0; padding: 0; border: 1.5px dashed #94a3b8; border-radius: 10px; background: #f8fafc; color: #475569; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; }
+.ttbm-tkm__icon-btn.has-icon { border-style: solid; border-color: var(--tk-accent); color: var(--tk-accent); background: color-mix(in srgb, var(--tk-accent) 10%, #fff); }
+.ttbm-tkm__icon-clear { position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; margin: 0; padding: 0; border: 0; border-radius: 50%; background: #334155; color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.ttbm-tkm__icon-clear[hidden] { display: none; }
+.ttbm-tkm__grid { display: grid; gap: 16px; }
+.ttbm-tkm__grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ttbm-tkm__grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ttbm-tkm__money { display: flex; align-items: center; height: 46px; box-sizing: border-box; border: 1px solid #94a3b8; border-radius: 10px; overflow: hidden; background: #fff; }
+.ttbm-tkm__money:focus-within { outline: 2px solid var(--tk-accent); border-color: var(--tk-accent); }
+.ttbm-tkm__sym { padding: 0 14px; height: 100%; display: flex; align-items: center; background: #f1f5f9; border-right: 1px solid #cbd5e1; color: #334155; font-size: 14px; font-weight: 700; }
+.ttbm-tkm__money input[type="text"] { flex: 1; min-width: 0; height: 100%; border: 0; border-radius: 0; padding: 0 14px; outline: 0 !important; }
+.ttbm-tkm__hint { margin: -8px 0 0; font-size: 12.5px; color: var(--tk-muted); }
+.ttbm-tkm__seg { display: inline-flex; align-self: flex-start; padding: 4px; border-radius: 12px; background: #f1f5f9; gap: 4px; }
+.ttbm-tkm__seg button { height: 40px; margin: 0; padding: 0 18px; border: 0; border-radius: 9px; background: transparent; color: var(--tk-muted); font-size: 13.5px; font-weight: 600; cursor: pointer; }
+.ttbm-tkm__seg button.is-on { background: #fff; color: var(--tk-accent); font-weight: 700; box-shadow: 0 1px 3px rgba(15, 23, 42, .12); }
+.ttbm-tkm__error { padding: 10px 14px; border-radius: 10px; background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; font-size: 13px; font-weight: 600; }
+.ttbm-tkm__error[hidden] { display: none; }
+.ttbm-tkm__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px; padding: 16px 24px; border-top: 1px solid var(--tk-line); background: #f8fafc; }
+.ttbm-tkm__btn { display: inline-flex; align-items: center; gap: 8px; height: 46px; margin: 0; padding: 0 20px; border: 1px solid #cbd5e1; border-radius: 10px; background: #fff; color: var(--tk-ink); font-size: 14px; font-weight: 700; cursor: pointer; }
+.ttbm-tkm__btn--primary { border: 0; background: var(--tk-accent); color: #fff; padding: 0 22px; }
+.ttbm-tkm__btn--primary:hover, .ttbm-tkm__btn--primary:focus { filter: brightness(.94); color: #fff; }
+.ttbm-tkm button:focus-visible { outline: 2px solid var(--tk-accent); outline-offset: 2px; }
+@media (max-width: 600px) {
+	.ttbm-tkm__grid--2, .ttbm-tkm__grid--3 { grid-template-columns: 1fr; }
+	.ttbm-tkm { padding: 16px 8px; }
 }

@@ -28,6 +28,7 @@
 			}
 			private function load_file() {
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Global_Function.php';
+				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Security.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Global_Style.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Custom_Layout.php';
 				require_once TTBM_PLUGIN_DIR . '/inc/TTBM_Custom_Slider.php';

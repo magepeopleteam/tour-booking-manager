@@ -201,14 +201,20 @@
 			}
 			//***********Template********************//
 			public static function all_details_template() {
-				$template_path = get_stylesheet_directory() . '/ttbm_templates/themes/';
-				$default_path = TTBM_PLUGIN_DIR . '/templates/themes/';
-				// Get the list of template files
-				$dir = is_dir($template_path) ? glob($template_path . "*") : glob($default_path . "*");
 				$templates = [];
-				foreach ($dir as $filename) {
-					if (is_file($filename) && is_readable($filename)) {
+				$directories = array_unique(array(
+					TTBM_PLUGIN_DIR . '/templates/',
+					get_template_directory() . '/ttbm_templates/',
+					get_stylesheet_directory() . '/ttbm_templates/',
+				));
+				foreach ($directories as $directory) {
+					foreach ((array) glob($directory . 'themes/*.php') as $filename) {
 						$file = basename($filename);
+						$root = realpath($directory);
+						$path = realpath($filename);
+						if (!$root || !$path || !is_file($path) || !is_readable($path) || 0 !== strpos($path, $root . DIRECTORY_SEPARATOR)) {
+							continue;
+						}
 						$file_contents = file_get_contents($filename);
 						preg_match('/Template Name:\s*(.+)/i', $file_contents, $matches);
 						$template_name = !empty($matches[1]) ? trim($matches[1]) : $file;
@@ -219,37 +225,45 @@
 			}
 			public static function details_template_path(): string {
 				$tour_id = get_the_id();
-				// Getting the saved template name
 				$template_name  = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_theme_file', 'default.php');
-				$file_name      = 'themes/' . $template_name;
-				// Getting the Folder name of Theme and Plugin
-				$theme_folder_template_dir     = get_stylesheet_directory() . '/ttbm_templates/themes/';
-				$plugin_folder_template_dir    = TTBM_PLUGIN_DIR . '/templates/themes/';
-				// Now checking the theme folder first then plugin folder for template file which is existis
-				$dir        = is_dir( $theme_folder_template_dir ) ? $theme_folder_template_dir : $plugin_folder_template_dir;
-				// Checking the file exists or not
-				if (!file_exists($dir)) {
-					$file_name = 'themes/default.php';
-				}
-				// return the template path
-				return self::template_path($file_name);
+				return self::details_template_name_path($template_name, 'default.php');
 			}
 			public static function details_template_file_path($post_id = ''): string {
-				$post_id = $post_id ?? get_the_id();
+				$post_id = $post_id ? absint($post_id) : get_the_id();
 				$template_name = TTBM_Global_Function::get_post_info($post_id, 'ttbm_hotel_template', 'hotel_default.php');
-				$file_name = 'themes/' . $template_name;
-				$dir = TTBM_PLUGIN_DIR . '/templates/' . $file_name;
-				if (!file_exists($dir)) {
-					$file_name = 'themes/hotel_default.php';
+				return self::details_template_name_path($template_name, 'hotel_default.php');
+			}
+			private static function details_template_name_path($template_name, $fallback): string {
+				$templates = self::all_details_template();
+				if (is_string($template_name) && basename($template_name) === $template_name && isset($templates[$template_name])) {
+					$path = self::template_path('themes/' . $template_name);
+					if ($path) {
+						return $path;
+					}
 				}
-				return self::template_path($file_name);
+				return self::template_path('themes/' . $fallback);
+			}
+			/** Resolve PHP templates only inside trusted plugin or theme directories. */
+			public static function resolve_template_path($file_name, $default_dir): string {
+				if (!is_string($file_name) || '' === $file_name || preg_match('~[\\\\:\x00]|^/|(?:^|/)\.{1,2}(?:/|$)~', $file_name) || 'php' !== pathinfo($file_name, PATHINFO_EXTENSION)) {
+					return '';
+				}
+				$directories = array_unique(array(
+					get_stylesheet_directory() . '/ttbm_templates/',
+					get_template_directory() . '/ttbm_templates/',
+					$default_dir,
+				));
+				foreach ($directories as $directory) {
+					$root = realpath($directory);
+					$path = $root ? realpath($root . '/' . $file_name) : false;
+					if ($path && is_file($path) && is_readable($path) && 0 === strpos($path, $root . DIRECTORY_SEPARATOR)) {
+						return $path;
+					}
+				}
+				return '';
 			}
 			public static function template_path($file_name): string {
-				$template_path = get_stylesheet_directory() . '/ttbm_templates/';
-				$default_dir = TTBM_PLUGIN_DIR . '/templates/';
-				$dir = is_dir($template_path) ? $template_path : $default_dir;
-				$file_path = $dir . $file_name;
-				return locate_template(array('ttbm_templates/' . $file_name)) ? $file_path : $default_dir . $file_name;
+				return self::resolve_template_path($file_name, TTBM_PLUGIN_DIR . '/templates/');
 			}
 
 			public static function template_screenshot_url() {

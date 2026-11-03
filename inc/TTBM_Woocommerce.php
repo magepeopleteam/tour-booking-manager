@@ -41,11 +41,11 @@
 				return TTBM_Function::post_id_multi_language($linked_ttbm_id);
 			}
 			private static function normalize_price($price) {
-				if (!is_scalar($price)) {
+				if (!is_scalar($price) || '' === trim((string) $price)) {
 					return null;
 				}
 				$price = wc_format_decimal((string) $price);
-				return is_numeric($price) ? (float) $price : null;
+				return is_numeric($price) && is_finite((float) $price) && (float) $price >= 0 ? (float) $price : null;
 			}
 			public function validate_add_to_cart($passed, $product_id) {
 				if (!$passed || !isset($_POST['ttbm_form_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_form_nonce'])), 'ttbm_form_nonce')) {
@@ -59,6 +59,14 @@
 				$qty = isset($_POST['ticket_qty']) ? array_map('absint', wp_unslash((array) $_POST['ticket_qty'])) : array();
 				$hotel_id = isset($_POST['ttbm_tour_hotel_list']) ? absint(wp_unslash($_POST['ttbm_tour_hotel_list'])) : 0;
 				$start_date = isset($_POST['ttbm_start_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_start_date'])) : '';
+				if ($hotel_id) {
+					$hotel_info = self::cart_hotel_info();
+					$assigned = array_map('absint', (array) TTBM_Function::get_hotel_list($tour_id));
+					if (!in_array($hotel_id, $assigned, true) || empty($hotel_info['ttbm_hotel_num_of_day'])) {
+						wc_add_notice(esc_html__('Please select a valid hotel and date range.', 'tour-booking-manager'), 'error');
+						return false;
+					}
+				}
 				foreach ($names as $i => $name) {
 					if (empty($qty[$i])) {
 						continue;
@@ -704,7 +712,13 @@
 						$hotel_info['hotel_id'] = $hotel_id;
 						$hotel_info['ttbm_checkin_date'] = isset($_POST['ttbm_checkin_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_checkin_date'])) : '';
 						$hotel_info['ttbm_checkout_date'] = isset($_POST['ttbm_checkout_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_checkout_date'])) : '';
-						$hotel_info['ttbm_hotel_num_of_day'] = isset($_POST['ttbm_hotel_num_of_day']) ? sanitize_text_field(wp_unslash($_POST['ttbm_hotel_num_of_day'])) : '';
+						$dates = TTBM_Global_Function::parse_date_range_string($hotel_info['ttbm_checkin_date'] . ' - ' . $hotel_info['ttbm_checkout_date']);
+						if (!$dates || strtotime($dates[1]) <= strtotime($dates[0])) {
+							return array();
+						}
+						$hotel_info['ttbm_checkin_date'] = $dates[0];
+						$hotel_info['ttbm_checkout_date'] = $dates[1];
+						$hotel_info['ttbm_hotel_num_of_day'] = (int) date_create($dates[0])->diff(date_create($dates[1]))->days;
 					}
 				}
 				return $hotel_info;
@@ -774,7 +788,8 @@
 					}
 					$hotel_id = isset($_POST['ttbm_tour_hotel_list']) ? sanitize_text_field(wp_unslash($_POST['ttbm_tour_hotel_list'])) : 0;
 					$start_date = isset($_POST['ttbm_start_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_start_date'])) : '';
-					$ttbm_hotel_num_of_day = isset($_POST['ttbm_hotel_num_of_day']) ? max(1, absint(wp_unslash($_POST['ttbm_hotel_num_of_day']))) : 1;
+					$hotel_info = self::cart_hotel_info();
+					$ttbm_hotel_num_of_day = !empty($hotel_info['ttbm_hotel_num_of_day']) ? $hotel_info['ttbm_hotel_num_of_day'] : 1;
 					if (sizeof($names) > 0) {
 						foreach ($names as $i => $name) {
 							if (isset($qty[$i]) && $qty[$i] > 0) {

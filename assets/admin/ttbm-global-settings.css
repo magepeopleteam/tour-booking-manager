@@ -1534,3 +1534,182 @@ button.button.ttbm-pm-configure-btn {
 .ttbm-pm-locked-btn {
     display: none;
 }
+
+/* ==========================================================================
+   Payment settings: setup checklist + gateway grid.
+   Layout: a status rail on the left, the booking mode / gateways / rules on the right.
+   The existing markup and scripts are untouched; this only restyles them.
+   ========================================================================== */
+.ttbm-payment-settings-content {
+    --pay-accent: var(--ttbm-ed-accent, var(--color_theme, #6b35e8));
+    --pay-ink: #0f172a;
+    --pay-muted: #475569;
+    --pay-line: #e2e8f0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+}
+.ttbm-payment-settings-content * { box-sizing: border-box; }
+
+/* rail */
+.ttbm-pay-rail {
+    flex: 1 1 260px;
+    max-width: 300px;
+    min-width: 240px;
+    background: #fff;
+    border: 1px solid var(--pay-line);
+    border-radius: 14px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.ttbm-pay-rail__head h3 { margin: 0 0 3px; font-size: 18px; font-weight: 800; color: var(--pay-ink); }
+.ttbm-pay-rail__head p { margin: 0; font-size: 13px; line-height: 1.5; color: var(--pay-muted); }
+.ttbm-pay-rail__steps { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.ttbm-pay-rail__steps li { display: flex; gap: 12px; align-items: flex-start; margin: 0; }
+.ttbm-pay-rail__mark { flex: 0 0 28px; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; background: #e2e8f0; color: #334155; }
+.ttbm-pay-rail__steps li.is-done .ttbm-pay-rail__mark { background: var(--pay-accent); color: #fff; }
+.ttbm-pay-rail__steps li.is-todo .ttbm-pay-rail__mark { background: #fef3c7; color: #78350f; }
+.ttbm-pay-rail__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ttbm-pay-rail__text b { font-size: 13.5px; color: var(--pay-ink); }
+.ttbm-pay-rail__text span { font-size: 12.5px; color: var(--pay-muted); overflow-wrap: anywhere; }
+.ttbm-pay-rail__note { padding: 12px 14px; border-radius: 12px; font-size: 12.5px; line-height: 1.5; }
+.ttbm-pay-rail__note.is-warn { background: #fffbeb; border: 1px solid #fcd34d; color: #78350f; }
+.ttbm-pay-rail__note.is-ready { background: #f0fdf4; border: 1px solid #86efac; color: #14532d; }
+
+.ttbm-pay-main { flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+.ttbm-pay-main > .ttbm-pay-subtab-panel { display: flex; flex-direction: column; gap: 20px; }
+.ttbm-pay-main > .ttbm-pay-subtab-panel[style*="display: none"] { display: none !important; }
+
+/* step 1: booking mode as a compact switch (not shown for the locked, single-option state) */
+.ttbm-pay-main .ttbm-booking-mode:not(.is-locked) {
+    margin: 0;
+    background: #fff;
+    border: 1px solid var(--pay-line);
+    border-radius: 14px;
+    padding: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+.ttbm-pay-main .ttbm-booking-mode:not(.is-locked) .ttbm-booking-mode-head { flex: 1 1 260px; }
+.ttbm-pay-main .ttbm-booking-mode:not(.is-locked) .ttbm-booking-mode-head h3 { margin: 0 0 3px; font-size: 15px; font-weight: 800; color: var(--pay-ink); }
+.ttbm-pay-main .ttbm-booking-mode:not(.is-locked) .ttbm-booking-mode-head p { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--pay-muted); max-width: none; }
+.ttbm-pay-main .ttbm-booking-mode:not(.is-locked) .ttbm-booking-mode-cards { display: inline-flex; gap: 4px; padding: 4px; border-radius: 12px; background: #f1f5f9; }
+.ttbm-pay-main .ttbm-booking-mode:not(.is-locked) .ttbm-booking-mode-card { align-items: center; height: 40px; padding: 0 16px; border: 0; border-radius: 9px; background: transparent; box-shadow: none; }
+.ttbm-pay-main .ttbm-booking-mode:not(.is-locked) .ttbm-booking-mode-card:hover { box-shadow: none; }
+.ttbm-pay-main .ttbm-booking-mode:not(.is-locked) .ttbm-booking-mode-card.is-active { background: #fff; box-shadow: 0 1px 3px rgba(15, 23, 42, .12); }
+.ttbm-pay-main .ttbm-booking-mode:not(.is-locked) .ttbm-booking-mode-card-icon,
+.ttbm-pay-main .ttbm-booking-mode:not(.is-locked) .ttbm-booking-mode-card-desc,
+.ttbm-pay-main .ttbm-booking-mode:not(.is-locked) .ttbm-booking-mode-badge { display: none !important; }
+.ttbm-pay-main .ttbm-booking-mode:not(.is-locked) .ttbm-booking-mode-card-title { font-size: 13.5px; font-weight: 600; color: var(--pay-muted); }
+.ttbm-pay-main .ttbm-booking-mode:not(.is-locked) .ttbm-booking-mode-card.is-active .ttbm-booking-mode-card-title { font-weight: 700; color: var(--pay-accent); }
+.ttbm-pay-main .ttbm-booking-mode-msg,
+.ttbm-pay-main .ttbm-booking-mode-warning-slot { flex-basis: 100%; margin: 0; }
+.ttbm-pay-main .ttbm-booking-mode-msg:empty,
+.ttbm-pay-main .ttbm-booking-mode-warning-slot:empty { display: none; }
+
+/* step 2: payment methods as a grid of tiles */
+.ttbm-pay-main .ttbm-pay-accordion { margin: 0; background: #fff; border: 1px solid var(--pay-line); border-radius: 14px; padding: 22px; overflow: visible; }
+.ttbm-pay-main .ttbm-pay-acc-header { width: auto; padding: 0 0 16px; background: transparent !important; border: 0; font-size: 15px; font-weight: 800; color: var(--pay-ink) !important; cursor: default; pointer-events: none; }
+.ttbm-pay-main .ttbm-pay-acc-header .dashicons { display: none; }
+.ttbm-pay-main .ttbm-pay-acc-body { display: block !important; }
+.ttbm-pay-main .ttbm-pay-subtab-panel > .ttbm-pm-section-title { margin: 0; font-size: 15px; font-weight: 800; color: var(--pay-ink); }
+.ttbm-pay-main .ttbm-pm-wrap { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 0; }
+.ttbm-pay-main .ttbm-pm-bar { grid-column: 1 / -1; display: flex; justify-content: flex-end; margin: 0; padding: 0; }
+.ttbm-pay-main .ttbm-pm-card { display: flex; flex-direction: column; gap: 12px; margin: 0; padding: 18px; min-height: 180px; border: 1px solid var(--pay-line); border-radius: 14px; background: #fff; box-shadow: none; transform: none; overflow: visible; }
+.ttbm-pay-main .ttbm-pm-card:hover { transform: none; box-shadow: none; border-color: #cbd5e1; }
+.ttbm-pay-main .ttbm-pm-card.is-enabled { border-color: var(--pay-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--pay-accent) 12%, transparent); }
+.ttbm-pay-main .ttbm-pm-card.is-open { grid-column: 1 / -1; }
+.ttbm-pay-main .ttbm-pm-card > .ttbm-pm-head { display: contents; }
+.ttbm-pay-main .ttbm-pm-card .ttbm-pm-head-main { order: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.ttbm-pay-main .ttbm-pm-card .ttbm-pm-title { order: 1; font-size: 14.5px; font-weight: 700; color: var(--pay-ink); }
+.ttbm-pay-main .ttbm-pm-card .ttbm-pm-badge { order: 2; text-transform: none; letter-spacing: 0; font-size: 11.5px; font-weight: 700; padding: 3px 10px; }
+.ttbm-pay-main .ttbm-pm-card .ttbm-pm-toggle { order: 3; margin-left: auto; }
+.ttbm-pay-main .ttbm-pm-card > .ttbm-pm-desc { order: 2; flex: 1; padding: 0; margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--pay-muted); }
+.ttbm-pay-main .ttbm-pm-card > .ttbm-pm-desc p { margin: 0; }
+.ttbm-pay-main .ttbm-pm-card .ttbm-pm-configure-btn { order: 3; align-self: flex-start; height: 38px; min-height: 38px; padding: 0 14px !important; border: 1px solid #cbd5e1 !important; border-radius: 10px !important; background: #fff !important; color: var(--pay-ink) !important; font-size: 13px !important; font-weight: 700; }
+.ttbm-pay-main .ttbm-pm-card .ttbm-pm-configure-btn:hover { border-color: var(--pay-accent) !important; color: var(--pay-accent) !important; }
+.ttbm-pay-main .ttbm-pm-card > .ttbm-pm-body { order: 4; }
+.ttbm-pay-main .ttbm-pm-card .ttbm-pm-form-footer .button-primary { background: var(--pay-accent); border-color: var(--pay-accent); border-radius: 10px; }
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-card > .ttbm-pm-head { display: flex; flex-direction: column; align-items: stretch; gap: 14px; padding: 0; }
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-card { padding: 18px; }
+
+/* step 3: booking rules */
+.ttbm-pay-main .ttbm-pay-acc-body > .ttbm-pay-field-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 20px; padding: 14px 0; border-bottom: 1px solid #eef2f7; }
+.ttbm-pay-main .ttbm-pay-acc-body > .ttbm-pay-field-row:last-of-type { border-bottom: 0; }
+.ttbm-pay-main .ttbm-pay-field-control { max-width: none; }
+.ttbm-pay-main .ttbm-pay-field-control select.formControl { max-width: 320px; height: 44px; border: 1px solid #94a3b8; border-radius: 10px; }
+.ttbm-pay-main .ttbm-pay-book-status { gap: 8px; }
+.ttbm-pay-main .ttbm-pay-book-status .ttbm-pay-checkbox { position: relative; height: 40px; padding: 0 16px; border: 1px solid #cbd5e1; border-radius: 999px; background: #fff; font-size: 13.5px; font-weight: 700; color: #334155; cursor: pointer; }
+.ttbm-pay-main .ttbm-pay-book-status .ttbm-pay-checkbox input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.ttbm-pay-main .ttbm-pay-book-status .ttbm-pay-checkbox:has(input:checked) { border-color: var(--pay-accent); background: color-mix(in srgb, var(--pay-accent) 10%, #fff); color: var(--pay-accent); }
+.ttbm-pay-main .ttbm-pay-book-status .ttbm-pay-checkbox:has(input:focus-visible) { outline: 2px solid var(--pay-accent); outline-offset: 2px; }
+.ttbm-pay-main .ttbm-pay-misc-save-btn.button-primary { background: var(--pay-accent); border-color: var(--pay-accent); border-radius: 10px; }
+
+@media (max-width: 782px) {
+    .ttbm-pay-rail { max-width: none; }
+    .ttbm-pay-main .ttbm-pm-wrap { grid-template-columns: 1fr; }
+    .ttbm-pay-main .ttbm-pay-acc-body > .ttbm-pay-field-row { grid-template-columns: 1fr; gap: 8px; }
+}
+
+/* Payment settings polish: tight tile grid, inline WooCommerce link, compact checklist in the popup. */
+.ttbm-pay-main .ttbm-pay-accordion { position: relative; }
+.ttbm-pay-main .ttbm-pay-acc-body { padding: 0 !important; margin: 0; }
+.ttbm-pay-main .ttbm-pm-bar { position: absolute; top: 20px; right: 22px; display: block; margin: 0; padding: 0; }
+.ttbm-pay-main .ttbm-pm-bar .ttbm-pm-wc-link.button { display: inline-flex; align-items: center; gap: 4px; min-height: 0; height: auto; padding: 0 !important; border: 0 !important; background: transparent !important; box-shadow: none !important; color: var(--pay-accent) !important; font-size: 13px; font-weight: 700; }
+.ttbm-pay-main .ttbm-pm-bar .ttbm-pm-wc-link .dashicons { font-size: 14px; width: 14px; height: 14px; }
+.ttbm-pay-main .ttbm-pm-wrap { margin: 0; padding: 0; }
+.ttbm-pay-main .ttbm-pay-acc-header { padding-bottom: 14px; }
+
+#ttbm-edit-payment-modal .ttbm-pay-rail { flex: 1 1 100%; max-width: none; min-width: 0; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 12px 28px; padding: 16px 20px; }
+#ttbm-edit-payment-modal .ttbm-pay-rail__head { flex: 0 0 auto; }
+#ttbm-edit-payment-modal .ttbm-pay-rail__head p { display: none; }
+#ttbm-edit-payment-modal .ttbm-pay-rail__steps { flex-direction: row; flex-wrap: wrap; gap: 8px 28px; flex: 1 1 auto; }
+#ttbm-edit-payment-modal .ttbm-pay-rail__note { flex: 1 1 100%; padding: 8px 12px; }
+#ttbm-edit-payment-modal .ttbm-pay-main { flex-basis: 100%; }
+#ttbm-edit-payment-modal .ttbm-payment-settings-content { gap: 14px; }
+
+/* Custom payment: gateway tiles (3 across) and the setup dialog, matching the checklist layout. */
+.ttbm-pay-main > .ttbm-pay-subtab-panel[data-subtab-panel="custom"] { gap: 0; }
+.ttbm-pay-main > .ttbm-pay-subtab-panel[data-subtab-panel="custom"] > .ttbm-pay-accordion { margin-top: 20px; }
+.ttbm-pay-main > .ttbm-pay-subtab-panel[data-subtab-panel="custom"] > .ttbm-pay-misc-save-row { margin-top: 20px; }
+.ttbm-pay-main .ttbm-pay-subtab-panel[data-subtab-panel="custom"] .ttbm-pm-section-title { display: block; font-size: 15px; font-weight: 800; color: var(--pay-ink); margin: 0; padding: 22px 22px 0; background: #fff; border: 1px solid var(--pay-line); border-bottom: 0; border-radius: 14px 14px 0 0; }
+.ttbm-pay-main .ttbm-pm-gateways { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; padding: 16px 22px 22px; margin: 0; background: #fff; border: 1px solid var(--pay-line); border-top: 0; border-radius: 0 0 14px 14px; }
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-card { min-height: 190px; padding: 18px; }
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-card > .ttbm-pm-head { display: flex; flex: 1; flex-direction: column; align-items: stretch; gap: 14px; padding: 0; }
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-head-main { order: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; flex: 1; }
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-icon { width: 44px; height: 44px; border-radius: 12px; border: 0; background: color-mix(in srgb, var(--pay-accent) 12%, #fff); color: var(--pay-accent); display: flex; align-items: center; justify-content: center; }
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-card-paypal .ttbm-pm-icon,
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-card-stripe .ttbm-pm-icon,
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-card-offline .ttbm-pm-icon { background: color-mix(in srgb, var(--pay-accent) 12%, #fff); color: var(--pay-accent); }
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-head-copy { display: flex; flex-direction: column; gap: 6px; }
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-title-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-desc { font-size: 12.5px; line-height: 1.5; color: var(--pay-muted); margin: 0; }
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-pro-badge { padding: 3px 10px; border-radius: 999px; background: #ede9fe; color: #5b21b6; font-size: 11.5px; font-weight: 700; border: 0; box-shadow: none; }
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-card.is-locked { opacity: 1; background: #fff; }
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-locked-btn.button { align-self: flex-start; height: 38px; padding: 0 14px; border: 1px solid #cbd5e1; border-radius: 10px; background: #f1f5f9; color: var(--pay-muted); font-size: 13px; font-weight: 700; }
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-configure-btn .dashicons { display: none; }
+
+.ttbm-gw-modal-box { border-radius: 16px; max-width: 560px; overflow: hidden; box-shadow: 0 24px 60px rgba(15, 23, 42, .35); }
+.ttbm-gw-modal-header { padding: 20px 24px; border-bottom: 1px solid #e2e8f0; background: #fff; }
+.ttbm-gw-modal-header h2 { font-size: 18px; font-weight: 800; color: #0f172a; }
+.ttbm-gw-modal-close { width: 40px; height: 40px; border-radius: 10px; background: #f1f5f9; color: #334155; display: flex; align-items: center; justify-content: center; }
+.ttbm-gw-modal-body { padding: 22px 24px; display: flex; flex-direction: column; gap: 16px; }
+.ttbm-gw-toggle-row { padding: 12px 14px; border-radius: 12px; background: #f8fafc; border: 1px solid #e2e8f0; margin: 0; }
+.ttbm-gw-field { margin: 0; }
+.ttbm-gw-field label.ttbm-gw-label { font-size: 13px; font-weight: 700; color: #334155; }
+.ttbm-gw-field input[type="text"], .ttbm-gw-field input[type="password"] { height: 46px; border: 1px solid #94a3b8; border-radius: 10px; font-size: 14px; }
+.ttbm-gw-field input:focus { outline: 2px solid var(--ttbm-ed-accent, var(--color_theme, #6b35e8)); outline-offset: 0; border-color: var(--ttbm-ed-accent, var(--color_theme, #6b35e8)); box-shadow: none; }
+.ttbm-gw-switch input:checked + .ttbm-gw-slider { background: var(--ttbm-ed-accent, var(--color_theme, #6b35e8)); }
+.ttbm-gw-modal-footer { display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding: 16px 24px; border-top: 1px solid #e2e8f0; background: #f8fafc; }
+.ttbm-gw-modal-footer .button-primary { height: 46px; padding: 0 22px; border-radius: 10px; border: 0; background: var(--ttbm-ed-accent, var(--color_theme, #6b35e8)); font-size: 14px; font-weight: 700; }
+@media (max-width: 782px) { .ttbm-pay-main .ttbm-pm-gateways { grid-template-columns: 1fr; } }
+
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-card { justify-content: flex-start; }
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-card > .ttbm-pm-head { justify-content: space-between; }
+.ttbm-pay-main .ttbm-pm-gateways .ttbm-pm-head-main { justify-content: flex-start; }

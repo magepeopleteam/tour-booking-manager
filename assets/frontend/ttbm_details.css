@@ -2020,48 +2020,115 @@
 }
 
 /* =====================================================================
-   Enquiry popup — beautiful animated modal
+   Enquiry popup (TTBM_Get_Enquiry::get_enquiry_pop_up): tour card, field
+   errors, sending state, success panel; bottom sheet on phones.
+   Accent = the tour's Theme Color (--color_theme).
    ===================================================================== */
-.ttbm_popup[data-popup="get-enquiry-popup"] { background: rgba(15,20,30,.6); -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); }
-.ttbm_popup[data-popup="get-enquiry-popup"].in { animation: ttbmEnqFade .25s ease both; }
-.ttbm_popup[data-popup="get-enquiry-popup"] .popupMainArea {
-	min-width: 0; width: 92%; max-width: 480px; min-height: 0; max-height: 88vh;
-	border: 0; border-radius: 18px; overflow: hidden; box-shadow: 0 30px 70px rgba(0,0,0,.45);
+div.ttbm_popup.ttbm-enq { background: rgba(15, 23, 42, .55); padding: 24px; box-sizing: border-box; }
+div.ttbm_popup.ttbm-enq.in { animation: ttbmEnqFade .2s ease both; }
+div.ttbm_popup.ttbm-enq .popupMainArea {
+	display: flex; flex-direction: column; min-width: 0; width: 100%; max-width: 540px; min-height: 0; max-height: calc(100vh - 48px);
+	border: 0; border-radius: 16px; overflow: hidden; background: #fff; color: #0f172a;
+	box-shadow: 0 24px 64px rgba(15, 23, 42, .28); text-align: left;
 }
-.ttbm_popup[data-popup="get-enquiry-popup"].in .popupMainArea { animation: ttbmEnqIn .38s cubic-bezier(.2,.9,.3,1.25) both; }
+div.ttbm_popup.ttbm-enq.in .popupMainArea { animation: ttbmEnqIn .3s cubic-bezier(.2, .9, .3, 1.1) both; }
 @keyframes ttbmEnqFade { from { opacity: 0; } to { opacity: 1; } }
-@keyframes ttbmEnqIn { from { opacity: 0; transform: translateY(26px) scale(.95); } to { opacity: 1; transform: none; } }
+@keyframes ttbmEnqIn { from { opacity: 0; transform: translateY(20px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes ttbmEnqSpin { to { transform: rotate(360deg); } }
 
-.ttbm_popup[data-popup="get-enquiry-popup"] .popupHeader {
-	border: 0; padding: 20px 22px; position: relative; justify-content: flex-start;
-	background: linear-gradient(135deg, var(--color_theme), var(--color_theme_secondary));
+.ttbm-enq .ttbm-enq__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 24px 24px 0 28px; }
+.ttbm-enq .ttbm-enq__heading { display: flex; flex-direction: column; gap: 4px; }
+.ttbm-enq .ttbm-enq__eyebrow { margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--color_theme); }
+.ttbm-enq .ttbm-enq__title { margin: 0; padding: 0; font-size: 24px; line-height: 1.25; font-weight: 700; color: #0f172a; text-align: left; }
+div.ttbm_popup.ttbm-enq .popupClose.ttbm-enq__close {
+	position: static; flex-shrink: 0; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 10px;
+	background: #f1f5f9; color: #334155; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: background .15s ease;
 }
-.ttbm_popup[data-popup="get-enquiry-popup"] .popupHeader h2 { color: #fff; font-size: 20px; font-weight: 700; margin: 0; text-align: left; }
-.ttbm_popup[data-popup="get-enquiry-popup"] .popupClose {
-	top: 15px; right: 15px; width: 34px; height: 34px; border-radius: 50%;
-	background: rgba(255,255,255,.22); color: #fff; font-size: 15px; transition: background .2s ease;
+div.ttbm_popup.ttbm-enq .popupClose.ttbm-enq__close:hover { background: #e2e8f0; color: #0f172a; }
+.ttbm-enq .ttbm-enq__close:focus-visible,
+.ttbm-enq .ttbm-enq__submit:focus-visible,
+.ttbm-enq .ttbm-enq__secondary:focus-visible { outline: 2px solid var(--color_theme); outline-offset: 2px; }
+
+.ttbm-enq .ttbm-enq__body { padding: 0; overflow-y: auto; }
+.ttbm-enq .ttbm-enq__tour { margin: 20px 28px 0; padding: 12px; border-radius: 12px; background: #f8fafc; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 14px; }
+.ttbm-enq .ttbm-enq__tour-img { width: 76px; height: 56px; border-radius: 8px; object-fit: cover; flex-shrink: 0; }
+.ttbm-enq .ttbm-enq__tour-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ttbm-enq .ttbm-enq__tour-text strong { font-size: 15px; font-weight: 600; line-height: 1.3; color: #0f172a; }
+.ttbm-enq .ttbm-enq__tour-text span { font-size: 13px; color: #475569; }
+
+.ttbm-enq .ttbm-enq__panel[hidden] { display: none; }
+.ttbm-enq .ttbm-enq__alert { margin: 16px 28px 0; padding: 10px 12px; border-radius: 8px; background: #fef3f2; border: 1px solid #fecdca; color: #b42318; font-size: 14px; }
+.ttbm-enq .ttbm-enq__alert[hidden] { display: none; }
+.ttbm-enq .ttbm-enq__form { display: flex; flex-direction: column; gap: 16px; padding: 20px 28px 28px; margin: 0; }
+.ttbm-enq .ttbm-enq__row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.ttbm-enq .ttbm-enq__field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.ttbm-enq .ttbm-enq__field label { margin: 0; font-size: 14px; font-weight: 600; color: #0f172a; }
+.ttbm-enq .ttbm-enq__label-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ttbm-enq .ttbm-enq__count { font-size: 13px; color: #475569; }
+.ttbm-enq .ttbm-enq__field input,
+.ttbm-enq .ttbm-enq__field textarea {
+	width: 100%; box-sizing: border-box; min-height: 44px; margin: 0; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px;
+	background: #fff; color: #0f172a; font: inherit; font-size: 15px; line-height: 1.5; box-shadow: none;
+	transition: border-color .15s ease, box-shadow .15s ease;
 }
-.ttbm_popup[data-popup="get-enquiry-popup"] .popupClose:hover { background: rgba(255,255,255,.4); color: #fff; }
-.ttbm_popup[data-popup="get-enquiry-popup"] .popupBody { padding: 22px; }
-.ttbm_popup[data-popup="get-enquiry-popup"] .get-enquiry-form label {
-	display: block; font-size: 13px; font-weight: 600; color: #3a4250; margin: 14px 0 6px;
+.ttbm-enq .ttbm-enq__field textarea { resize: vertical; min-height: 120px; }
+.ttbm-enq .ttbm-enq__field input::placeholder,
+.ttbm-enq .ttbm-enq__field textarea::placeholder { color: #64748b; opacity: 1; }
+.ttbm-enq .ttbm-enq__field input:focus,
+.ttbm-enq .ttbm-enq__field textarea:focus { outline: 0; border-color: var(--color_theme); box-shadow: 0 0 0 3px rgba(var(--color_theme_rgb), .18); }
+.ttbm-enq .ttbm-enq__field .is-invalid { border-color: #b42318; }
+.ttbm-enq .ttbm-enq__field .is-invalid:focus { border-color: #b42318; box-shadow: 0 0 0 3px rgba(180, 35, 24, .15); }
+.ttbm-enq .ttbm-enq__error { font-size: 13px; color: #b42318; }
+.ttbm-enq .ttbm-enq__error:empty { display: none; }
+
+.ttbm-enq .ttbm-enq__submit {
+	display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 48px; margin: 0; padding: 0 20px;
+	border: 0; border-radius: 10px; background: var(--color_theme); color: #fff; font: inherit; font-size: 16px; font-weight: 600; cursor: pointer;
+	transition: filter .15s ease, opacity .15s ease;
 }
-.ttbm_popup[data-popup="get-enquiry-popup"] .get-enquiry-form label:first-of-type { margin-top: 0; }
-.ttbm_popup[data-popup="get-enquiry-popup"] .get-enquiry-form input,
-.ttbm_popup[data-popup="get-enquiry-popup"] .get-enquiry-form textarea {
-	width: 100%; box-sizing: border-box; padding: 11px 14px; border: 1px solid #dfe3ea; border-radius: 10px;
-	font-size: 14px; background: #f8fafc; color: #1d2430; transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+.ttbm-enq .ttbm-enq__submit:hover { filter: brightness(.94); color: #fff; }
+.ttbm-enq .ttbm-enq__submit[disabled] { opacity: .8; cursor: progress; }
+.ttbm-enq .ttbm-enq__spinner { display: none; width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .45); border-top-color: #fff; animation: ttbmEnqSpin .8s linear infinite; }
+.ttbm-enq .ttbm-enq__submit.is-sending .ttbm-enq__spinner { display: inline-block; }
+.ttbm-enq .ttbm-enq__submit.is-sending .ttbm-enq__send-icon { display: none; }
+.ttbm-enq .ttbm-enq__foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 13px; color: #475569; }
+.ttbm-enq .ttbm-enq__foot a { color: var(--color_theme); font-weight: 600; text-decoration: none; }
+.ttbm-enq .ttbm-enq__foot a:hover { text-decoration: underline; }
+
+.ttbm-enq .ttbm-enq__success { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 36px 28px 32px; }
+.ttbm-enq .ttbm-enq__success-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(var(--color_theme_rgb), .12); color: var(--color_theme); display: inline-flex; align-items: center; justify-content: center; }
+.ttbm-enq .ttbm-enq__success h3 { margin: 4px 0 0; font-size: 22px; font-weight: 700; color: #0f172a; }
+.ttbm-enq .ttbm-enq__success p { margin: 0; font-size: 15px; line-height: 1.6; color: #334155; max-width: 38ch; }
+.ttbm-enq .ttbm-enq__success-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 12px; }
+.ttbm-enq .ttbm-enq__success-actions .ttbm-enq__submit { width: auto; min-height: 44px; font-size: 15px; }
+.ttbm-enq .ttbm-enq__secondary {
+	min-height: 44px; margin: 0; padding: 0 18px; border-radius: 10px; border: 1px solid #cbd5e1; background: #fff; color: #0f172a;
+	font: inherit; font-size: 15px; font-weight: 500; cursor: pointer;
 }
-.ttbm_popup[data-popup="get-enquiry-popup"] .get-enquiry-form input:focus,
-.ttbm_popup[data-popup="get-enquiry-popup"] .get-enquiry-form textarea:focus {
-	outline: 0; border-color: var(--color_theme); background: #fff; box-shadow: 0 0 0 3px rgba(var(--color_theme_rgb), .15);
+.ttbm-enq .ttbm-enq__secondary:hover { background: #f8fafc; }
+
+/* Phones: bottom sheet, one column. */
+@media (max-width: 600px) {
+	div.ttbm_popup.ttbm-enq.in { align-items: flex-end; padding: 0; }
+	div.ttbm_popup.ttbm-enq .popupMainArea { max-width: none; max-height: 94vh; border-radius: 20px 20px 0 0; }
+	div.ttbm_popup.ttbm-enq.in .popupMainArea { animation-name: ttbmEnqSheet; }
+	.ttbm-enq .ttbm-enq__header { padding: 18px 16px 0 20px; }
+	.ttbm-enq .ttbm-enq__title { font-size: 22px; }
+	.ttbm-enq .ttbm-enq__tour { margin: 14px 20px 0; padding: 10px; }
+	.ttbm-enq .ttbm-enq__tour-img { width: 60px; height: 46px; }
+	.ttbm-enq .ttbm-enq__alert { margin: 14px 20px 0; }
+	.ttbm-enq .ttbm-enq__form { padding: 16px 20px 20px; gap: 14px; }
+	.ttbm-enq .ttbm-enq__row { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+	.ttbm-enq .ttbm-enq__field input,
+	.ttbm-enq .ttbm-enq__field textarea { font-size: 16px; } /* stops iOS zooming into the field */
+	.ttbm-enq .ttbm-enq__foot { flex-direction: column; align-items: center; text-align: center; }
 }
-.ttbm_popup[data-popup="get-enquiry-popup"] #ttbm-enquiry-form-submit {
-	width: 100%; margin-top: 20px; background: linear-gradient(135deg, var(--color_theme), var(--color_theme_secondary));
-	color: #fff; border: 0; border-radius: 11px; padding: 13px; font-size: 15px; font-weight: 700; cursor: pointer;
-	transition: transform .2s ease, box-shadow .2s ease;
+@keyframes ttbmEnqSheet { from { transform: translateY(100%); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+	div.ttbm_popup.ttbm-enq.in,
+	div.ttbm_popup.ttbm-enq.in .popupMainArea { animation: none; }
+	.ttbm-enq .ttbm-enq__spinner { animation-duration: 2s; }
 }
-.ttbm_popup[data-popup="get-enquiry-popup"] #ttbm-enquiry-form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(var(--color_theme_rgb), .32); }
 
 /* =====================================================================
    Tour booking date picker (jQuery UI) — modern restyle.

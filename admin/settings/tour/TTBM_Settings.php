@@ -1577,7 +1577,10 @@
 					$ttbm_display_rank = isset($_POST['ttbm_display_order_tour']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_order_tour'])) ? 'on' : 'off';
 					$display_enquiry = isset($_POST['ttbm_display_enquiry']) && sanitize_text_field(wp_unslash($_POST['ttbm_display_enquiry'])) ? 'on' : 'off';
 					$auto_related_tour = isset($_POST['ttbm_auto_related_tour']) && sanitize_text_field(wp_unslash($_POST['ttbm_auto_related_tour'])) ? 'on' : 'off';
-					$ttbm_template = isset($_POST['ttbm_theme_file']) ? sanitize_file_name(wp_unslash($_POST['ttbm_theme_file'])) : 'default.php';
+					$ttbm_template = isset($_POST['ttbm_theme_file']) && is_string($_POST['ttbm_theme_file']) ? wp_unslash($_POST['ttbm_theme_file']) : 'default.php';
+					if (basename($ttbm_template) !== $ttbm_template || !isset(TTBM_Function::all_details_template()[$ttbm_template]) || !TTBM_Function::template_path('themes/' . $ttbm_template)) {
+						$ttbm_template = 'default.php';
+					}
 					update_post_meta($tour_id, 'ttbm_travel_rank_tour', $ttbm_travel_rank_tour);
 					update_post_meta($tour_id, 'ttbm_display_order_tour', $ttbm_display_rank);
 					update_post_meta($tour_id, 'ttbm_section_title_style', $content_title_style);

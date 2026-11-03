@@ -13825,6 +13825,70 @@ msgstr ""
 msgid "Tours your guests have saved"
 msgstr ""
 
+#: inc/TTBM_Custom_Checkout.php:356
+msgid "This tour is not available for booking."
+msgstr ""
+
+#: inc/TTBM_Custom_Checkout.php:372
+msgid "Please select a valid hotel and date range."
+msgstr ""
+
+#: inc/TTBM_Custom_Checkout.php:914
+msgid "A selected ticket is no longer available. Please refresh and try again."
+msgstr ""
+
+#: inc/TTBM_Custom_Checkout.php:926
+msgid "A selected service is no longer available. Please refresh and try again."
+msgstr ""
+
+#: inc/TTBM_Custom_Checkout.php:931
+msgid "Invalid booking total. Please refresh and try again."
+msgstr ""
+
+#: inc/TTBM_Security.php:51
+msgid "You do not have permission to access booking records."
+msgstr ""
+
+#: admin/TTBM_Payment_Settings.php:403
+msgid "Nothing turned on yet"
+msgstr ""
+
+#: admin/TTBM_Payment_Settings.php:404
+msgid "Ready for bookings."
+msgstr ""
+
+#: admin/TTBM_Payment_Settings.php:405
+msgid "Guests can pay with your enabled methods."
+msgstr ""
+
+#: admin/TTBM_Payment_Settings.php:406
+msgid "Guests cannot pay yet."
+msgstr ""
+
+#: admin/TTBM_Payment_Settings.php:407
+msgid "Turn on at least one payment method."
+msgstr ""
+
+#: admin/TTBM_Payment_Settings.php:568
+msgid "Payment setup"
+msgstr ""
+
+#: admin/TTBM_Payment_Settings.php:571
+msgid "Three quick steps to start taking bookings."
+msgstr ""
+
+#: admin/TTBM_Payment_Settings.php:576
+msgid "Booking mode"
+msgstr ""
+
+#: admin/TTBM_Payment_Settings.php:584
+msgid "Booking rules"
+msgstr ""
+
+#: admin/TTBM_Payment_Settings.php:584
+msgid "Cart redirect and confirmation"
+msgstr ""
+
 #: admin/settings/tour/TTBM_Settings_pricing.php:174
 msgid "Add ticket type"
 msgstr ""
@@ -13881,48 +13945,48 @@ msgstr ""
 msgid "dropdown list"
 msgstr ""
 
-#: admin/settings/tour/TTBM_Settings_pricing.php:196
+#: admin/settings/tour/TTBM_Settings_pricing.php:193
+msgid "Save & close"
+msgstr ""
+
+#: admin/settings/tour/TTBM_Settings_pricing.php:195
 msgid "Choose icon"
 msgstr ""
 
-#: admin/settings/tour/TTBM_Settings_pricing.php:197
+#: admin/settings/tour/TTBM_Settings_pricing.php:196
 msgid "Remove icon"
 msgstr ""
 
-#: admin/settings/tour/TTBM_Settings_pricing.php:202
+#: admin/settings/tour/TTBM_Settings_pricing.php:201
 msgid "default"
 msgstr ""
 
-#: admin/settings/tour/TTBM_Settings_pricing.php:203
+#: admin/settings/tour/TTBM_Settings_pricing.php:202
 msgid "off"
 msgstr ""
 
-#: admin/settings/tour/TTBM_Settings_pricing.php:204
+#: admin/settings/tour/TTBM_Settings_pricing.php:203
 msgid "No ticket types yet"
 msgstr ""
 
-#: admin/settings/tour/TTBM_Settings_pricing.php:205
+#: admin/settings/tour/TTBM_Settings_pricing.php:204
 msgid "Add your first ticket, like Adult or Child."
 msgstr ""
 
-#: admin/settings/tour/TTBM_Settings_pricing.php:206
+#: admin/settings/tour/TTBM_Settings_pricing.php:205
 msgid "Enter a ticket name."
 msgstr ""
 
-#: admin/settings/tour/TTBM_Settings_pricing.php:207
+#: admin/settings/tour/TTBM_Settings_pricing.php:206
 msgid "Enter a regular price."
 msgstr ""
 
-#: admin/settings/tour/TTBM_Settings_pricing.php:208
+#: admin/settings/tour/TTBM_Settings_pricing.php:207
 msgid "Enter how many seats this ticket has."
 msgstr ""
 
-#: admin/settings/tour/TTBM_Settings_pricing.php:209
+#: admin/settings/tour/TTBM_Settings_pricing.php:208
 msgid "The sale price must be lower than the regular price."
-msgstr ""
-
-#: admin/settings/tour/TTBM_Settings_pricing.php:193
-msgid "Save & close"
 msgstr ""
 
 #: admin/settings/tour/TTBM_Settings_pricing.php:211
@@ -13959,44 +14023,4 @@ msgstr ""
 
 #: admin/settings/tour/TTBM_Settings_pricing.php:223
 msgid "Enter a service name."
-msgstr ""
-
-#: admin/TTBM_Payment_Settings.php:403
-msgid "Nothing turned on yet"
-msgstr ""
-
-#: admin/TTBM_Payment_Settings.php:404
-msgid "Ready for bookings."
-msgstr ""
-
-#: admin/TTBM_Payment_Settings.php:405
-msgid "Guests can pay with your enabled methods."
-msgstr ""
-
-#: admin/TTBM_Payment_Settings.php:406
-msgid "Guests cannot pay yet."
-msgstr ""
-
-#: admin/TTBM_Payment_Settings.php:407
-msgid "Turn on at least one payment method."
-msgstr ""
-
-#: admin/TTBM_Payment_Settings.php:568
-msgid "Payment setup"
-msgstr ""
-
-#: admin/TTBM_Payment_Settings.php:571
-msgid "Three quick steps to start taking bookings."
-msgstr ""
-
-#: admin/TTBM_Payment_Settings.php:576
-msgid "Booking mode"
-msgstr ""
-
-#: admin/TTBM_Payment_Settings.php:584
-msgid "Booking rules"
-msgstr ""
-
-#: admin/TTBM_Payment_Settings.php:584
-msgid "Cart redirect and confirmation"
 msgstr ""

@@ -66,6 +66,12 @@
 			private function opt($key, $default = '') {
 				return TTBM_Global_Function::get_settings('ttbm_payment_settings', $key, $default);
 			}
+			// The payment manager echoes stored gateway credentials (WooCommerce
+			// gateway forms, TTBM PayPal/Stripe secrets), so every render path
+			// needs the same capability as ttbm_settings_page and its AJAX handlers.
+			private function can_manage_payments(): bool {
+				return current_user_can('manage_options');
+			}
 			public function __construct() {
 				add_filter('ttbm_settings_sec_reg', array($this, 'register_section'), 95, 1);
 				add_action('wsa_form_bottom_ttbm_payment_settings', array($this, 'render_tab_content'));
@@ -239,6 +245,7 @@
 				$pm_active = self::has_functional_payment_method();
 				$pm_type_label = self::get_booking_mode_label();
 				$pm_gateway_names = self::get_active_gateway_names();
+				$can_manage = $this->can_manage_payments();
 				?>
 				<div class="ttbm-sb-card ttbm-sb-payment-card <?php echo $pm_active ? 'is-ready' : 'is-missing'; ?>">
 					<p class="ttbm-sb-card-title"><?php esc_html_e('Payment Method', 'tour-booking-manager'); ?></p>
@@ -255,12 +262,12 @@
 							<span><?php esc_html_e('Active Gateway', 'tour-booking-manager'); ?></span>
 							<strong><?php echo esc_html($pm_gateway_names ? implode(', ', $pm_gateway_names) : __('None', 'tour-booking-manager')); ?></strong>
 						</div>
-						<?php if ($pm_gateway_names) : ?>
+						<?php if ($can_manage && $pm_gateway_names) : ?>
 							<p class="ttbm-sb-payment-link">
 								<a href="#" data-ttbm-payment-modal-open><?php esc_html_e('Payment Settings', 'tour-booking-manager'); ?></a>
 							</p>
 						<?php endif; ?>
-						<?php if (!$pm_active) : ?>
+						<?php if ($can_manage && !$pm_active) : ?>
 							<p class="ttbm-sb-payment-warning">
 								<a href="#" data-ttbm-payment-modal-open><?php esc_html_e('Configure payment method', 'tour-booking-manager'); ?></a>
 							</p>
@@ -319,13 +326,16 @@
 
 			/**
 			 * Yellow banner (when needed) + payment modal on tour/hotel edit screens.
-			 * Banner markup is moved to the top of #post-body via JS; the modal is
-			 * always available so the sidebar Payment card can open it too.
+			 * Banner markup is moved to the top of #post-body via JS; for users who
+			 * can manage payments the modal is always available so the sidebar
+			 * Payment card can open it too. Other editors (e.g. Contributors) only
+			 * see the informational banner.
 			 */
 			public function maybe_render_edit_payment_notice($post) {
 				if (!$this->is_tour_or_hotel_edit_screen()) {
 					return;
 				}
+				$can_manage = $this->can_manage_payments();
 				$needs_notice = !self::has_functional_payment_method();
 				if ($needs_notice) {
 					?>
@@ -339,11 +349,16 @@
 								<span><?php esc_html_e('Please configure a payment method to accept bookings.', 'tour-booking-manager'); ?></span>
 							</div>
 						</div>
-						<a href="#" class="ttbm-edit-payment-notice-link" data-ttbm-payment-modal-open>
-							<?php esc_html_e('Configure payment', 'tour-booking-manager'); ?>
-						</a>
+						<?php if ($can_manage) : ?>
+							<a href="#" class="ttbm-edit-payment-notice-link" data-ttbm-payment-modal-open>
+								<?php esc_html_e('Configure payment', 'tour-booking-manager'); ?>
+							</a>
+						<?php endif; ?>
 					</div>
 					<?php
+				}
+				if (!$can_manage) {
+					return;
 				}
 				?>
 				<div class="ttbm-edit-payment-modal" id="ttbm-edit-payment-modal" data-ttbm-payment-modal style="display:none;">
@@ -540,6 +555,9 @@ JS;
 			 * single flow switch; only the active flow's settings are displayed.
 			 */
 			public function render_tab_content() {
+				if (!$this->can_manage_payments()) {
+					return;
+				}
 				$custom_is_default = self::get_booking_mode() === 'custom';
 				?>
 				<div class="ttbm-payment-settings-content">
@@ -1016,6 +1034,9 @@ JS;
 				return $gateways;
 			}
 			public function render_wc_payment_methods() {
+				if (!$this->can_manage_payments()) {
+					return;
+				}
 				$gateways = $this->get_gateways();
 				if (empty($gateways)) {
 					?>

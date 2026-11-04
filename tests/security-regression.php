@@ -260,6 +260,27 @@ try {
 	$signup = get_user_by('email', $signup_email);
 	$ttbm_test_assert(!empty($signup_response['success']) && $signup && !user_can($signup, 'manage_options'), 'Public signup inherited an administrator default role.');
 	$ttbm_test_user('administrator');
+	require_once ABSPATH . 'wp-admin/includes/class-wp-screen.php';
+	require_once ABSPATH . 'wp-admin/includes/screen.php';
+	// WooCommerce is skipped in this run but still listed as active, so render the Custom Payment manager.
+	$ttbm_test_no_wc = static function ($plugins) { return array_values(array_diff((array) $plugins, array('woocommerce/woocommerce.php'))); };
+	add_filter('option_active_plugins', $ttbm_test_no_wc);
+	$GLOBALS['current_screen'] = WP_Screen::get('ttbm_tour');
+	$payment_settings = new TTBM_Payment_Settings();
+	$render_edit_payment = static function () use ($payment_settings) {
+		ob_start();
+		$payment_settings->maybe_render_edit_payment_notice(null);
+		return ob_get_clean();
+	};
+	$ttbm_test_assert(false !== strpos($render_edit_payment(), 'ttbm-payment-settings-content'), 'The tour editor payment manager was hidden from administrators.');
+	$ttbm_test_user('subscriber');
+	$ttbm_test_assert(false === strpos($render_edit_payment(), 'ttbm-payment-settings-content'), 'The tour editor exposed payment gateway settings to a non-administrator.');
+	ob_start();
+	$payment_settings->render_tab_content();
+	$ttbm_test_assert('' === trim(ob_get_clean()), 'Payment gateway settings rendered for a non-administrator.');
+	$ttbm_test_user('administrator');
+	$GLOBALS['current_screen'] = null;
+	remove_filter('option_active_plugins', $ttbm_test_no_wc);
 
 
 	update_post_meta($order_id, '_ttbm_order_total', 20);

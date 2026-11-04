@@ -5,7 +5,7 @@ Tags: tour booking, travel agency, travel booking, tour operator, hotel booking
 Requires at least: 4.4.0
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 2.3.9
+Stable tag: 2.3.11
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -231,6 +231,21 @@ Use the [WordPress.org support forum](https://wordpress.org/support/plugin/tour-
 
 
 == Changelog ==
+= 2.3.11 – 4 November 2026 =
+* Security: Payment gateway settings, including saved WooCommerce gateway credentials and PayPal/Stripe keys, are no longer included in the tour and hotel edit screens for users who cannot manage the store's settings (CVE-2026-121794).
+* Fix: Get Enquiry popup styling no longer inherits theme heading, image and label rules.
+* Tweak: The Check availability button is hidden by default; the ttbm_show_availability_button filter restores it.
+
+= 2.3.10 – 3 November 2026 =
+* Security: Improved security hardening.
+* Improvement: UI modernisation.
+* Improvement: Theme promo: point free users to PRO; Wishlist/Reviews menu order.
+* Improvement: Ticket and extra-service popup editor; payments checklist and gateway tiles.
+* Improvement: Redesign the Travail Theme admin page.
+* Improvement: Dummy import: repeated daily dates, all tour sections; readable tour languages.
+* Improvement: Redesign the Get Enquiry popup.
+* Fix: Use the WooCommerce currency when WooCommerce is not loaded.
+
 = 2.3.9 – 2 November 2026 =
 * New: A dismissible "Travail" free-theme suggestion on the Tour Manager screen, with a link to download the theme. Tour Booking Manager PRO adds one-click install and activation.
 * Fix: Searching by destination or activity no longer ends in "Showing 0 of 0" for tours that only have a destination tag; the list reads the tour's location tag when its location-name field is empty.

@@ -302,6 +302,7 @@
 					// can reference them by human-readable name in the static dummy data below.
 					$place_name_to_id = array();
 					$guide_name_to_id = array();
+					$dummy_tour_ids = array();
 					if (array_key_exists('custom_post', $dummy_cpt)) {
 						foreach ($dummy_cpt['custom_post'] as $custom_post => $dummy_post) {
 							unset($args);
@@ -432,6 +433,7 @@
 									if ($custom_post === 'ttbm_tour') {
 										$this->complete_dummy_tour($post_id);
 										$this->seed_dummy_reviews($post_id);
+										$dummy_tour_ids[] = (int) $post_id;
 									}
 								}
 							}
@@ -439,7 +441,7 @@
 					}
 					TTBM_Woocommerce_Plugin::on_activation_page_create();
 					$this->update_related_products();
-					TTBM_Function::update_all_upcoming_date_month();
+					$this->refresh_dummy_tour_dates($dummy_tour_ids);
 					update_option('ttbm_dummy_already_inserted', 'yes');
 				}
 			}
@@ -467,6 +469,54 @@
 					$days = 'day' === get_post_meta($tour_id, 'ttbm_travel_duration_type', true) ? max(0, (int) get_post_meta($tour_id, 'ttbm_travel_duration', true) - 1) : 0;
 					$fill('ttbm_travel_end_date', gmdate('Y-m-d', strtotime($start . ' +' . $days . ' days')));
 				}
+			}
+
+			/**
+			 * Write each dummy tour's next departure (ttbm_upcoming_date), its last date
+			 * and its month list, as saving a tour in the editor does.
+			 *
+			 * update_all_upcoming_date_month() cannot be used for this: it runs at most once
+			 * a day, and on a fresh site the first wp-admin page load (admin_init) has
+			 * already run it with no tours yet, so it skipped the new tours and every
+			 * dummy tour showed as expired until the next day. The request cache is
+			 * flushed first because the meta above was written after wp_insert_post().
+			 */
+			public function refresh_dummy_tour_dates($tour_ids) {
+				TTBM_Function::flush_request_cache();
+				foreach ((array) $tour_ids as $tour_id) {
+					TTBM_Function::update_upcoming_date_month((int) $tour_id, true);
+				}
+			}
+
+			/**
+			 * First departure date of a dummy tour, relative to the import day, so the
+			 * demo tours spread over the This Week / This Month / This Year tabs of the
+			 * tour list and are all upcoming.
+			 *
+			 * 'week' is today. 'month' is the first open day after this week that is
+			 * still in this month, 'year' the first open day after this month that is
+			 * still in this year. Weeks run Monday to Sunday, as in the tabs. In the last
+			 * days of a month or year the window is empty, so the first open day after
+			 * it is used: the date stays upcoming.
+			 *
+			 * @param string $window   'week', 'month' or 'year'.
+			 * @param array  $off_days Weekly off days of the tour ('sun', 'mon', ...).
+			 * @return string Y-m-d
+			 */
+			public static function dummy_departure_date($window, $off_days = array()): string {
+				$today = strtotime(current_time('Y-m-d'));
+				if ('week' === $window) {
+					return gmdate('Y-m-d', $today);
+				}
+				$week_end = strtotime('+' . (7 - (int) gmdate('N', $today)) . ' days', $today);
+				$from = 'month' === $window ? strtotime('+1 day', $week_end) : strtotime(gmdate('Y-m-t', $today) . ' +1 day');
+				for ($i = 0; $i < 7; $i++) {
+					$day = strtotime('+' . $i . ' days', $from);
+					if (!in_array(strtolower(gmdate('D', $day)), (array) $off_days, true)) {
+						return gmdate('Y-m-d', $day);
+					}
+				}
+				return gmdate('Y-m-d', $from);
 			}
 
 			/**
@@ -1037,9 +1087,10 @@
 									'ttbm_display_description' => 'on',
 									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
 									//date_settings
+									// Fixed date later this month (see dummy_departure_date()); booking closes that day.
 									'ttbm_travel_type' => 'fixed',
-									'ttbm_travel_start_date' => gmdate('Y-m-d', strtotime(' +25 day')),
-									'ttbm_travel_reg_end_date' => gmdate('Y-m-d', strtotime(' +30 day')),
+									'ttbm_travel_start_date' => self::dummy_departure_date('month'),
+									'ttbm_travel_reg_end_date' => self::dummy_departure_date('month'),
 									'ttbm_travel_start_time' => '09:00',
 									'ttbm_travel_end_time' => '17:00',
 									'reg_end_time' => '23:59',
@@ -1187,11 +1238,11 @@
 									'ttbm_display_description' => 'on',
 									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
 									//date_settings
-									// Repeated daily from today, never ending, closed Sundays and Mondays.
+									// Repeated daily from today (this week), never ending, closed Sundays and Mondays.
 									'ttbm_travel_type' => 'repeated',
 									'ttbm_travel_repeated_after' => '1',
 									'ttbm_repeat_type' => 'continue',
-									'ttbm_travel_repeated_start_date' => current_time('Y-m-d'),
+									'ttbm_travel_repeated_start_date' => self::dummy_departure_date('week'),
 									'ttbm_travel_repeated_end_date' => '',
 									'ttbm_enable_off_schedule' => 'yes',
 									'mep_ticket_offdays' => array('sun', 'mon'),
@@ -1341,11 +1392,11 @@
 									'ttbm_display_description' => 'on',
 									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
 									//date_settings
-									// Repeated daily from today, never ending, closed Tuesdays and Wednesdays.
+									// Repeated daily from today (this week), never ending, closed Tuesdays and Wednesdays.
 									'ttbm_travel_type' => 'repeated',
 									'ttbm_travel_repeated_after' => '1',
 									'ttbm_repeat_type' => 'continue',
-									'ttbm_travel_repeated_start_date' => current_time('Y-m-d'),
+									'ttbm_travel_repeated_start_date' => self::dummy_departure_date('week'),
 									'ttbm_travel_repeated_end_date' => '',
 									'ttbm_enable_off_schedule' => 'yes',
 									'mep_ticket_offdays' => array('tue', 'wed'),
@@ -1498,11 +1549,11 @@
 									'ttbm_display_description' => 'on',
 									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
 									//date_settings
-									// Repeated daily from today, never ending, closed Wednesdays and Thursdays.
+									// Repeated daily from later this month, never ending, closed Wednesdays and Thursdays.
 									'ttbm_travel_type' => 'repeated',
 									'ttbm_travel_repeated_after' => '1',
 									'ttbm_repeat_type' => 'continue',
-									'ttbm_travel_repeated_start_date' => current_time('Y-m-d'),
+									'ttbm_travel_repeated_start_date' => self::dummy_departure_date('month', array('wed', 'thu')),
 									'ttbm_travel_repeated_end_date' => '',
 									'ttbm_enable_off_schedule' => 'yes',
 									'mep_ticket_offdays' => array('wed', 'thu'),
@@ -1652,11 +1703,11 @@
 									'ttbm_display_description' => 'on',
 									'ttbm_short_description' => 'Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.',
 									//date_settings
-									// Repeated daily from today, never ending, closed Mondays and Tuesdays.
+									// Repeated daily from later this year, never ending, closed Mondays and Tuesdays.
 									'ttbm_travel_type' => 'repeated',
 									'ttbm_travel_repeated_after' => '1',
 									'ttbm_repeat_type' => 'continue',
-									'ttbm_travel_repeated_start_date' => current_time('Y-m-d'),
+									'ttbm_travel_repeated_start_date' => self::dummy_departure_date('year', array('mon', 'tue')),
 									'ttbm_travel_repeated_end_date' => '',
 									'ttbm_enable_off_schedule' => 'yes',
 									'mep_ticket_offdays' => array('mon', 'tue'),

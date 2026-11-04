@@ -803,6 +803,9 @@
 						} else {
 							$reg_end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_reg_end_date');
 							$end_date = $reg_end_date ?: $date;
+							// A fixed tour's get_date() is a details array (date, now, fulldate...);
+							// only 'date' is a departure, the rest put January in the month list.
+							$all_date = array($date);
 						}
 					}
 					update_post_meta($tour_id, 'ttbm_upcoming_date', $date);
@@ -2763,6 +2766,39 @@
 					$post_status
 				));
 				return $values ? $values : [];
+			}
+			/**
+			 * Distinct values of a tour meta key, read only from published tours that
+			 * still have an upcoming date (non-empty ttbm_upcoming_date).
+			 *
+			 * The sidebar filters used to pair get_meta_values($key) with
+			 * get_meta_values('ttbm_upcoming_date') by array index, but both lists are
+			 * DISTINCT, so their rows never belonged to the same tour: tours sharing a
+			 * next departure collapsed into one date row and the options of the others
+			 * were dropped.
+			 */
+			public static function get_upcoming_tour_meta_values($meta_key): array {
+				if (empty($meta_key) || !is_string($meta_key)) {
+					return [];
+				}
+				if (self::cache_has('upcoming_meta_values', $meta_key)) {
+					return self::cache_get('upcoming_meta_values', $meta_key);
+				}
+				global $wpdb;
+				$values = $wpdb->get_col($wpdb->prepare(
+					"SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm
+					INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+					INNER JOIN {$wpdb->postmeta} up ON up.post_id = p.ID AND up.meta_key = 'ttbm_upcoming_date'
+					WHERE pm.meta_key = %s
+					AND p.post_type = %s
+					AND p.post_status = 'publish'
+					AND pm.meta_value IS NOT NULL
+					AND pm.meta_value != ''
+					AND up.meta_value != ''",
+					$meta_key,
+					self::get_cpt_name()
+				));
+				return self::cache_set('upcoming_meta_values', $meta_key, $values ? $values : []);
 			}
 			public static function get_travel_analytical_data() {
 				$result_date = array();

@@ -378,14 +378,25 @@
 		}).promise().done(function () {
 			load_pagination(parent, 0);
 		});
-		parent.find('.search_result_empty').slideUp('fast');
+		toggle_empty_result(parent, true);
 	}
 	function search_filter_exit(parent, result) {
 		if (result > 0) {
 			parent.find('.all_filter_item').slideDown('fast');
-			parent.find('.search_result_empty').slideUp('fast');
 		} else {
 			parent.find('.all_filter_item').slideUp('fast');
+		}
+		toggle_empty_result(parent, result > 0);
+	}
+	/* "No result" notice. has_result is the sidebar filters' verdict; an active
+	   date tab (.ttbm-tab-hidden) can still leave nothing to show. */
+	function toggle_empty_result(parent, has_result) {
+		if (has_result && parent.find('.filter_item.ttbm-tab-hidden').length > 0) {
+			has_result = parent.find('.all_filter_item .filter_item').not('.ttbm-tab-hidden, .search_of').length > 0;
+		}
+		if (has_result) {
+			parent.find('.search_result_empty').slideUp('fast');
+		} else {
 			parent.find('.search_result_empty').slideDown('fast');
 		}
 	}
@@ -698,12 +709,15 @@
 			}
 		}
 	}
+	/* Cards left after both the date tab (ttbm_registration.js, .ttbm-tab-hidden)
+	   and the sidebar filters (.search_on/.search_of) — each narrows the other. */
 	function get_item_class(parent, items = '.filter_item') {
 		if (parent.find('.filter_item.ttbm-tab-hidden').length > 0) {
-			items = '.filter_item:not(.ttbm-tab-hidden)';
+			items += ':not(.ttbm-tab-hidden)';
 			parent.find('.filter_item.ttbm-tab-hidden').hide();
-		} else if (parent.find('.filter_item.search_on').length > 0 || parent.find('.filter_item.search_of').length > 0) {
-			items = '.filter_item.search_on';
+		}
+		if (parent.find('.filter_item.search_on').length > 0 || parent.find('.filter_item.search_of').length > 0) {
+			items += '.search_on';
 			parent.find('.filter_item.search_of').slideUp('fast');
 		}
 		return items;

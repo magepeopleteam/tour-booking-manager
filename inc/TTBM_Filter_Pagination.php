@@ -577,27 +577,16 @@
 			//****************************************/
 			public function feature_filter_multiple($params) {
 				if ($params['feature-filter'] == 'yes') {
-					$raw_features = TTBM_Function::get_meta_values('ttbm_service_included_in_price', 'ttbm_tour');
-                    // get_meta_values() returns raw rows; array-typed meta is stored
-                    // serialized, so unserialize each one. Skipping non-array rows keeps
-                    // array_merge() below from receiving a string and fataling.
-                    $features = [];
-                    foreach ($raw_features as $feature_group) {
-                        $unserialized = maybe_unserialize($feature_group);
-                        if (is_array($unserialized)) {
-                            $features[] = $unserialized;
-                        }
-                    }
-					$upcomming_date = $this->upcomming_date;
+					// Features of the tours that still have an upcoming date. Raw rows: array-typed
+					// meta is stored serialized, so unserialize each one. Skipping non-array rows
+					// keeps array_merge() below from receiving a string and fataling.
+					$raw_features = TTBM_Function::get_upcoming_tour_meta_values('ttbm_service_included_in_price');
 					$exist_feature = [];
-					for ($i = 0; $i < count($features); $i++) {
-                        if( isset( $upcomming_date[$i] ) ){
-                            if (is_array($upcomming_date) && !empty($upcomming_date) && $upcomming_date[$i] && $features[$i]) {
-                                $features_i = $this->ensure_array($features[$i]);
-                                $exist_feature = array_unique(array_merge($exist_feature, $features_i));
-                            }
-                        }
-
+					foreach ($raw_features as $feature_group) {
+						$unserialized = maybe_unserialize($feature_group);
+						if (is_array($unserialized) && $unserialized) {
+							$exist_feature = array_unique(array_merge($exist_feature, $unserialized));
+						}
 					}
 					if (sizeof($exist_feature) > 0) {
 						$url = '';

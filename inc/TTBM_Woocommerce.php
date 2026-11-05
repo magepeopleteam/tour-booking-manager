@@ -563,7 +563,8 @@
             public static function ttbm_hotel_booking_info_with_travel( $ticket_info, $hotel_info, $order_id ){
                 $order = wc_get_order($order_id);
                 $order_status = $order->get_status();
-                $payment_method = $order->get_payment_method();
+                // The title, as the hotel-only checkout stores it (TTBM_Hotel_Booking).
+                $payment_method = $order->get_payment_method_title();
                 $user_id = $order->get_user_id() ?? '';
                 $billing_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
                 $billing_email = $order->get_billing_email();
@@ -584,8 +585,11 @@
                     'post_status' => 'publish',
                     'post_author' => 1,
                 ));
-//                $price = ($_ticket['ticket_price'] * $qty) * $num_of_day;
-                $price = 100;
+                // Rooms x nights, as charged per ticket row in add_billing_data().
+                $price = 0;
+                foreach ((array) $ticket_info as $room) {
+                    $price += (float) ($room['price'] ?? 0) * (int) ($room['quantity'] ?? 0) * (int) $num_of_day;
+                }
 
                 if ($custom_order_id) {
                     // Store meta data in the custom post
@@ -669,11 +673,16 @@
                         $room_name_key = preg_replace('/[^A-Za-z0-9]/', '', $_ticket['ticket_name'] );
                         $order_description[$room_name_key] = [
                             'quantity' => (int) $_ticket['ticket_qty'],
-                            'price'    => (int) $_ticket['ticket_price'],
+                            'price'    => (float) $_ticket['ticket_price'],
                         ];
 					}
 
-                    self::ttbm_hotel_booking_info_with_travel( $order_description, $hotel_info, $order_id );
+                    // Only a tour booked with a hotel is a hotel booking. Every other tour
+                    // order used to be logged too, with no hotel and no dates, and showed
+                    // in Hotel Manager > Bookings as "January 1, 1970".
+                    if ($hotel_id > 0) {
+                        self::ttbm_hotel_booking_info_with_travel( $order_description, $hotel_info, $order_id );
+                    }
 				}
 			}
 			public static function cart_ticket_info($tour_id) {

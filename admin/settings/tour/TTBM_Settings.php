@@ -116,17 +116,7 @@
 				<?php $wizard_steps = self::wizard_steps(); ?>
                 <div id="ttbm_content" class="ttbm_configuration ttbm-tour-wizard" data-wizard="<?php echo esc_attr(wp_json_encode(array_values($wizard_steps))); ?>">
                     <div class="ttbm_style ttbm_settings ">
-                        <nav class="ttbm-wz-steps" aria-label="<?php esc_attr_e('Tour setup steps', 'tour-booking-manager'); ?>">
-							<?php foreach (array_values($wizard_steps) as $i => $step) : ?>
-                                <button type="button" class="ttbm-wz-step" data-step="<?php echo esc_attr($step['key']); ?>" data-num="<?php echo esc_attr($i + 1); ?>">
-                                    <span class="ttbm-wz-step__dot"><i class="<?php echo esc_attr($step['icon']); ?>"></i></span>
-                                    <span class="ttbm-wz-step__text">
-                                        <span class="ttbm-wz-step__label"><?php echo esc_html($step['label']); ?></span>
-                                        <span class="ttbm-wz-step__hint"><?php echo esc_html($step['hint']); ?></span>
-                                    </span>
-                                </button>
-							<?php endforeach; ?>
-                        </nav>
+						<?php self::render_wizard_nav($wizard_steps, __('Tour setup steps', 'tour-booking-manager')); ?>
                         <div class="ttbmTabs leftTabs d-flex justify-content-between">
                             <ul class="tabLists meta-sidebar _mL">
 								<div class="meta-sidebar-toggle"><i class="mi mi-angle-right"></i></div>
@@ -156,20 +146,7 @@
 									do_action('ttbm_meta_box_tab_content', $tour_id);
 									$this->partial_payment_settings($tour_id);
 								?>
-                                <div class="ttbm-wz-footer">
-                                    <div class="ttbm-wz-footer__bar" aria-hidden="true"><span></span></div>
-                                    <div class="ttbm-wz-footer__inner">
-                                        <button type="button" class="button ttbm-wz-prev"><?php esc_html_e('Back', 'tour-booking-manager'); ?></button>
-                                        <div class="ttbm-wz-footer__center">
-                                            <span class="ttbm-wz-step-num" aria-hidden="true">1</span>
-                                            <div class="ttbm-wz-step-text">
-                                                <strong class="ttbm-wz-step-name"></strong>
-                                                <span class="ttbm-wz-progress" aria-live="polite"></span>
-                                            </div>
-                                        </div>
-                                        <button type="button" class="button button-primary ttbm-wz-next"><?php esc_html_e('Next', 'tour-booking-manager'); ?></button>
-                                    </div>
-                                </div>
+								<?php self::render_wizard_footer(); ?>
                             </div>
                             <div class="ttbm-right-sidebar" data-active-tab="#ttbm_general_info">
 								<?php do_action('ttbm_right_sidebar_content', $tour_id); ?>
@@ -213,6 +190,49 @@
 						),
 					);
 					return apply_filters('ttbm_tour_wizard_steps', $steps);
+				}
+				/**
+				 * Step bar of the step-based editor, shared by the tour and hotel editors.
+				 * ttbm-tour-wizard.js drives it and the sidebar script moves it into the page header.
+				 *
+				 * @param array  $steps Steps from wizard_steps() or TTBM_Settings_Hotel::wizard_steps().
+				 * @param string $label Accessible name of the step navigation.
+				 */
+				public static function render_wizard_nav(array $steps, string $label): void {
+					?>
+                        <nav class="ttbm-wz-steps" aria-label="<?php echo esc_attr($label); ?>">
+							<?php foreach (array_values($steps) as $i => $step) : ?>
+                                <button type="button" class="ttbm-wz-step" data-step="<?php echo esc_attr($step['key']); ?>" data-num="<?php echo esc_attr($i + 1); ?>">
+                                    <span class="ttbm-wz-step__dot"><i class="<?php echo esc_attr($step['icon']); ?>"></i></span>
+                                    <span class="ttbm-wz-step__text">
+                                        <span class="ttbm-wz-step__label"><?php echo esc_html($step['label']); ?></span>
+                                        <span class="ttbm-wz-step__hint"><?php echo esc_html($step['hint']); ?></span>
+                                    </span>
+                                </button>
+							<?php endforeach; ?>
+                        </nav>
+					<?php
+				}
+				/**
+				 * Back / Next bar of the step-based editor, shared by the tour and hotel editors.
+				 */
+				public static function render_wizard_footer(): void {
+					?>
+                                <div class="ttbm-wz-footer">
+                                    <div class="ttbm-wz-footer__bar" aria-hidden="true"><span></span></div>
+                                    <div class="ttbm-wz-footer__inner">
+                                        <button type="button" class="button ttbm-wz-prev"><?php esc_html_e('Back', 'tour-booking-manager'); ?></button>
+                                        <div class="ttbm-wz-footer__center">
+                                            <span class="ttbm-wz-step-num" aria-hidden="true">1</span>
+                                            <div class="ttbm-wz-step-text">
+                                                <strong class="ttbm-wz-step-name"></strong>
+                                                <span class="ttbm-wz-progress" aria-live="polite"></span>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="button button-primary ttbm-wz-next"><?php esc_html_e('Next', 'tour-booking-manager'); ?></button>
+                                    </div>
+                                </div>
+					<?php
 				}
 			//************************//
 			public function tour_settings_meta_box() {

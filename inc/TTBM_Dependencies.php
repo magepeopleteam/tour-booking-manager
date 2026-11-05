@@ -374,6 +374,11 @@
 				));
 				// Background auto-save — only on the single tour add/edit screen.
 				$autosave_screen = function_exists('get_current_screen') ? get_current_screen() : null;
+				// The hotel add/edit screen shares the tour editor's step-based layout (not its auto-save).
+				if ($autosave_screen && $autosave_screen->base === 'post' && $autosave_screen->post_type === 'ttbm_hotel') {
+					wp_enqueue_style('ttbm-tour-wizard', TTBM_PLUGIN_URL . '/assets/admin/ttbm-tour-wizard.css', array('ttbm_admin_modern'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-tour-wizard.css'));
+					wp_enqueue_script('ttbm-tour-wizard', TTBM_PLUGIN_URL . '/assets/admin/ttbm-tour-wizard.js', array('jquery', 'ttbm_admin_settings', 'ttbm_admin_script'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-tour-wizard.js'), true);
+				}
 				if ($autosave_screen && $autosave_screen->base === 'post' && $autosave_screen->post_type === TTBM_Function::get_cpt_name()) {
 					global $post;
 					$autosave_post_id = ($post && isset($post->ID)) ? (int) $post->ID : (isset($_GET['post']) ? (int) $_GET['post'] : 0);

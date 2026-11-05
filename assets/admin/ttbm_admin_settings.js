@@ -792,7 +792,8 @@ function ttbm_load_sortable_datepicker(parent, item) {
         }
         $card.css({ 'border-color': '#dc2626', 'box-shadow': '0 0 0 2px rgba(220,38,38,.15)' });
         $err.show();
-        ttbmSetValidationFocus($card, null);
+        // The card only shows on the Overview tab (Basic Info step), so go there first.
+        ttbmSetValidationFocus($card, '[data-tabs-target="#ttbm_general_info"]');
         return false;
     }
 
@@ -946,6 +947,10 @@ function ttbm_load_sortable_datepicker(parent, item) {
     }
 
     window.ttbmValidateHotelFormBeforeSubmit = ttbmValidateHotelFormBeforeSubmit;
+    // Per-step checks of the hotel editor's Next button (ttbm-tour-wizard.js).
+    window.ttbmValidateHotelLocation = ttbmValidateHotelLocation;
+    window.ttbmValidateHotelMapLocation = ttbmValidateHotelMapLocation;
+    window.ttbmValidateHotelRooms = ttbmValidateHotelRooms;
 
     function ttbmHandleServerValidationNotices() {
         var $ticketNotice = $('#ttbm-tickets-required-notice');

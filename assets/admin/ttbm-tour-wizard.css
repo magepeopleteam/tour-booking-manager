@@ -1,4 +1,4 @@
-/* Tour editor: 4-step layout. Scoped to .ttbm-tour-wizard.ttbm-wz-enabled (set by JS), so without JS the classic tabs still work. */
+/* Tour and hotel editors: 4-step layout. Scoped to .ttbm-tour-wizard.ttbm-wz-enabled (set by JS), so without JS the classic tabs still work. */
 #ttbm_content.ttbm-tour-wizard:not(.ttbm-wz-enabled) .ttbm-wz-steps,
 #ttbm_content.ttbm-tour-wizard:not(.ttbm-wz-enabled) .ttbm-wz-footer {
 	display: none;
@@ -343,7 +343,8 @@ body.folded .ttbm-tour-wizard .ttbm-wz-footer { left: 36px; }
 }
 
 /* On small screens core sets overflow-x:hidden on #post-body, which makes it a scroll container and breaks the sticky footer. clip hides overflow without that. */
-body.ttbm-tour-edit-page div#post-body.metabox-holder {
+body.ttbm-tour-edit-page div#post-body.metabox-holder,
+body.ttbm-hotel-edit-page div#post-body.metabox-holder {
 	overflow-x: clip;
 	overflow-y: visible;
 }
@@ -470,4 +471,20 @@ body.ttbm-tour-edit-page div#post-body.metabox-holder {
 	#ttbm-admin-page-header .ttbm-wz-steps { gap: 16px; }
 	#ttbm-admin-page-header .ttbm-wz-step + .ttbm-wz-step::before { left: -16px; width: 16px; }
 	#ttbm-admin-page-header .ttbm-wz-step:not(.is-active) .ttbm-wz-step__text { display: none; }
+}
+
+/* ---- Hotel editor ---- */
+/* The steps replace the tab list at every width; below 1200px legacy ID rules force the list back on. */
+body.ttbm-hotel-edit-page #ttbm_meta_box_panel .ttbm-tour-wizard.ttbm-wz-enabled .ttbmTabs.leftTabs > .tabLists.meta-sidebar {
+	display: none !important;
+}
+/* Pricing steps hide the payment card and hotels have no other card there: give the room table the width instead of an empty column. */
+body.ttbm-hotel-edit-page #ttbm_meta_box_panel #ttbm_content[data-wz-step="pricing"] .ttbmTabs.leftTabs > .ttbm-right-sidebar {
+	display: none !important;
+}
+/* Features and Activities keep their intro (it holds the "Add new" link) above the cards: line it up with the card content. */
+body.ttbm-hotel-edit-page #ttbm_meta_box_panel .ttbm-tour-wizard.ttbm-wz-enabled .tabsContent > .tabsItem:not(.ttbm-wz-no-intro) > h2,
+body.ttbm-hotel-edit-page #ttbm_meta_box_panel .ttbm-tour-wizard.ttbm-wz-enabled .tabsContent > .tabsItem:not(.ttbm-wz-no-intro) > h2 + p {
+	padding-left: 24px;
+	padding-right: 24px;
 }

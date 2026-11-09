@@ -359,6 +359,10 @@
 				if (empty($ticket_info)) {
 					return new WP_Error('ttbm_no_ticket', esc_html__('Please select at least one ticket.', 'tour-booking-manager'));
 				}
+				$availability = TTBM_Function::validate_ticket_availability($tour_id, $ticket_info);
+				if (is_wp_error($availability)) {
+					return $availability;
+				}
 				$hotel_info = apply_filters('ttbm_hotel_info_filter', $this->collect_hotel_info(), $tour_id);
 				$service_info = $this->collect_extra_service_info($tour_id);
 				$user_info = apply_filters('ttbm_user_info_data', array(), $tour_id);
@@ -634,10 +638,14 @@
 			 */
 			private function create_booking_records($order_id, $booking_status, $gateway_id) {
 				$tour_id = (int) get_post_meta($order_id, '_ttbm_tour_id', true);
-				$ticket_info = (array) get_post_meta($order_id, '_ttbm_ticket_info', true);
-				$hotel_info = (array) get_post_meta($order_id, '_ttbm_hotel_info', true);
-				$service_info = (array) get_post_meta($order_id, '_ttbm_service_info', true);
-				$user_info = (array) get_post_meta($order_id, '_ttbm_user_info', true);
+				$ticket_info = get_post_meta($order_id, '_ttbm_ticket_info', true);
+				$ticket_info = is_array($ticket_info) ? $ticket_info : array();
+				$hotel_info = get_post_meta($order_id, '_ttbm_hotel_info', true);
+				$hotel_info = is_array($hotel_info) ? $hotel_info : array();
+				$service_info = get_post_meta($order_id, '_ttbm_service_info', true);
+				$service_info = is_array($service_info) ? $service_info : array();
+				$user_info = get_post_meta($order_id, '_ttbm_user_info', true);
+				$user_info = is_array($user_info) ? $user_info : array();
 				$user_id = (int) get_post_meta($order_id, '_ttbm_customer_id', true);
 				$billing_name = (string) get_post_meta($order_id, '_ttbm_customer_name', true);
 				$billing_email = (string) get_post_meta($order_id, '_ttbm_customer_email', true);
@@ -649,6 +657,10 @@
 				$booking_ids = array();
 				$count = 0;
 				foreach ($ticket_info as $_ticket) {
+					if (!is_array($_ticket) || !isset($_ticket['ticket_name'], $_ticket['ticket_price'], $_ticket['ticket_qty'])
+						|| !is_scalar($_ticket['ticket_name']) || !is_numeric($_ticket['ticket_price']) || !is_numeric($_ticket['ticket_qty'])) {
+						continue;
+					}
 					$qty = isset($_ticket['ticket_qty']) ? absint($_ticket['ticket_qty']) : 0;
 					for ($key = 0; $key < $qty; $key++) {
 						$group_attendee_id = '';
@@ -690,6 +702,12 @@
 					}
 				}
 				foreach ($service_info as $_service) {
+					// Missing legacy meta is '', and casting it to an array creates an invalid row.
+					if (!is_array($_service) || !isset($_service['service_name'], $_service['service_price'], $_service['service_qty'])
+						|| !is_scalar($_service['service_name']) || !is_numeric($_service['service_price']) || !is_numeric($_service['service_qty'])
+						|| (int) $_service['service_qty'] < 1) {
+						continue;
+					}
 					self::add_cpt_data('ttbm_service_booking', '#' . $order_id . $_service['service_name'], array(
 						'ttbm_service_name' => $_service['service_name'],
 						'ttbm_service_price' => $_service['service_price'],

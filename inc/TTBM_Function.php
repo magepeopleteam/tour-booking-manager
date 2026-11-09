@@ -803,6 +803,9 @@
 						} else {
 							$reg_end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_reg_end_date');
 							$end_date = $reg_end_date ?: $date;
+							// A fixed tour's get_date() is a details array (date, now, fulldate...);
+							// only 'date' is a departure, the rest put January in the month list.
+							$all_date = array($date);
 						}
 					}
 					update_post_meta($tour_id, 'ttbm_upcoming_date', $date);
@@ -1510,6 +1513,12 @@
 				return $range;
 			}
 			//************Seat***********************//
+			/** Inventory holds are independent of the statuses that release a ticket. */
+			public static function get_inventory_order_statuses(): array {
+				$configured = self::get_general_settings('ttbm_set_book_status', array('processing', 'completed'));
+				$statuses = array_merge((array) $configured, array('pending', 'on-hold', 'processing', 'completed'));
+				return (array) apply_filters('ttbm_inventory_order_statuses', array_values(array_unique($statuses)));
+			}
 			public static function get_total_seat($tour_id) {
 				$total_seat = 0;
 				$tour_type = self::get_tour_type($tour_id);
@@ -1566,8 +1575,7 @@
 				if (empty($pending)) {
 					return;
 				}
-				$_seat_booked_status = self::get_general_settings('ttbm_set_book_status', array('processing', 'completed'));
-				$seat_booked_status = !empty($_seat_booked_status) ? $_seat_booked_status : array();
+				$seat_booked_status = self::get_inventory_order_statuses();
 				$limit = (int) apply_filters('ttbm_prime_sold_cache_limit', 20000);
 				$booking_ids = get_posts(array(
 					'fields' => 'ids',
@@ -1700,6 +1708,7 @@
 				$filter_type = (!empty($type) && !is_array($type)) ? $type : '';
 				$filter_hotel = !empty($hotel_id) ? $hotel_id : '';
 				$date_is_exact = !empty($tour_date) && TTBM_Global_Function::check_time_exit_date($tour_date);
+				$exact_timestamp = $date_is_exact ? strtotime($tour_date) : false;
 				$matched = array();
 				foreach ($rows as $row) {
 					if ('' !== $filter_type && !self::sold_value_matches($row['ticket_name'], $filter_type)) {
@@ -1710,7 +1719,8 @@
 					}
 					if (!empty($tour_date)) {
 						if ($date_is_exact) {
-							if (!self::sold_value_matches($row['date'], $tour_date)) {
+							$row_timestamp = strtotime($row['date']);
+							if (false === $row_timestamp || false === $exact_timestamp || $row_timestamp !== $exact_timestamp) {
 								continue;
 							}
 						} elseif (stripos((string) $row['date'], (string) $tour_date) === false) {
@@ -1995,6 +2005,54 @@
 			}
 			
 			return apply_filters('ttbm_ticket_availability_info', $availability_info, $tour_id, $tour_date, $ticket_type_name);
+		}
+		/**
+		 * Recheck requested tickets against live inventory, including duplicate rows
+		 * and shared pools. Used by WooCommerce and both standalone checkouts.
+		 * Hotel room inventory is handled by the hotel booking flow.
+		 *
+		 * @return true|WP_Error
+		 */
+		public static function validate_ticket_availability($tour_id, $ticket_info) {
+			if (self::get_tour_type($tour_id) !== 'general') {
+				return true;
+			}
+			self::flush_booking_request_cache();
+			$requested = array();
+			foreach ((array) $ticket_info as $ticket) {
+				$qty = max(0, (int) ($ticket['ticket_qty'] ?? 0));
+				if ($qty < 1) {
+					continue;
+				}
+				$date = (string) ($ticket['ttbm_date'] ?? '');
+				$timestamp = strtotime($date);
+				if (false === $timestamp) {
+					return new WP_Error('ttbm_invalid_date', esc_html__('Please select a valid departure date.', 'tour-booking-manager'));
+				}
+				$date = gmdate(TTBM_Global_Function::check_time_exit_date($date) ? 'Y-m-d H:i:s' : 'Y-m-d', $timestamp);
+				$name = (string) ($ticket['ticket_name'] ?? '');
+				$requested[$date][$name] = ($requested[$date][$name] ?? 0) + max(0, (int) apply_filters('ttbm_group_ticket_qty_actual', $qty, $tour_id, $name));
+			}
+			foreach ($requested as $date => $types) {
+				$availability = self::get_ticket_availability_info($tour_id, $date);
+				$shared_available = null;
+				$shared_requested = 0;
+				foreach ($types as $name => $qty) {
+					$info = $availability[$name] ?? array();
+					$available = max(0, (int) ($info['available_qty'] ?? 0));
+					if ($qty > $available) {
+						return new WP_Error('ttbm_insufficient_stock', esc_html__('The selected tickets are no longer available. Please choose another date, time or quantity.', 'tour-booking-manager'));
+					}
+					if (!empty($info['shared_capacity_enabled'])) {
+						$shared_available = null === $shared_available ? $available : min($shared_available, $available);
+						$shared_requested += $qty;
+					}
+				}
+				if (null !== $shared_available && $shared_requested > $shared_available) {
+					return new WP_Error('ttbm_insufficient_stock', esc_html__('The selected tickets are no longer available. Please choose another date, time or quantity.', 'tour-booking-manager'));
+				}
+			}
+			return true;
 		}
 		
 		public static function get_stock_status($available_qty, $total_capacity) {
@@ -2763,6 +2821,39 @@
 					$post_status
 				));
 				return $values ? $values : [];
+			}
+			/**
+			 * Distinct values of a tour meta key, read only from published tours that
+			 * still have an upcoming date (non-empty ttbm_upcoming_date).
+			 *
+			 * The sidebar filters used to pair get_meta_values($key) with
+			 * get_meta_values('ttbm_upcoming_date') by array index, but both lists are
+			 * DISTINCT, so their rows never belonged to the same tour: tours sharing a
+			 * next departure collapsed into one date row and the options of the others
+			 * were dropped.
+			 */
+			public static function get_upcoming_tour_meta_values($meta_key): array {
+				if (empty($meta_key) || !is_string($meta_key)) {
+					return [];
+				}
+				if (self::cache_has('upcoming_meta_values', $meta_key)) {
+					return self::cache_get('upcoming_meta_values', $meta_key);
+				}
+				global $wpdb;
+				$values = $wpdb->get_col($wpdb->prepare(
+					"SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm
+					INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+					INNER JOIN {$wpdb->postmeta} up ON up.post_id = p.ID AND up.meta_key = 'ttbm_upcoming_date'
+					WHERE pm.meta_key = %s
+					AND p.post_type = %s
+					AND p.post_status = 'publish'
+					AND pm.meta_value IS NOT NULL
+					AND pm.meta_value != ''
+					AND up.meta_value != ''",
+					$meta_key,
+					self::get_cpt_name()
+				));
+				return self::cache_set('upcoming_meta_values', $meta_key, $values ? $values : []);
 			}
 			public static function get_travel_analytical_data() {
 				$result_date = array();

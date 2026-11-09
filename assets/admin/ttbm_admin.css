@@ -1339,11 +1339,27 @@ input.medium{
 		flex-direction: column;
 	}
 
+	/* Inputs have a wide natural width and flex items won't shrink below it without
+	   min-width:0; the row used to push past its card and scroll the whole tab sideways. */
 	.ttbm-htl-area-item {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		gap: 12px;
 		margin-bottom: 12px;
+	}
+	.ttbm-htl-area-item > input {
+		flex: 1 1 110px;
+		min-width: 0;
+	}
+	.ttbm-htl-area-item > input.ttbm-htl-area-item-title {
+		flex: 3 1 180px;
+	}
+	.ttbm-htl-area-item > .action-buttons {
+		flex: 0 0 auto;
+	}
+	.ttbm-htl-area-title {
+		min-width: 0;
 	}
 
 	.ttbm-htl-area-section .icon {
@@ -1378,6 +1394,11 @@ input.medium{
 		gap: 8px;
 	}
 
+}
+@media only screen and (max-width:600px) {
+	.ttbm-htl-area-items{
+		margin-left:0;
+	}
 }
 .auto-search-wrapper input{
 	border-radius: 5px;

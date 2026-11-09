@@ -85,6 +85,19 @@
 					'show_in_rest' => true,
 				);
 				register_post_type( 'ttbm_ticket_types', $args );
+				// Internal records are written by both WooCommerce and custom checkout.
+				register_post_type('ttbm_service_booking', array(
+					'label' => esc_html__('Service Bookings', 'tour-booking-manager'),
+					'public' => false,
+					'publicly_queryable' => false,
+					'show_ui' => false,
+					'show_in_menu' => false,
+					'show_in_rest' => false,
+					'exclude_from_search' => true,
+					'has_archive' => false,
+					'rewrite' => false,
+					'supports' => array('title'),
+				));
 			
 				$args = [
     'public'            => true,

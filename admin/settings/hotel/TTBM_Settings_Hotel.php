@@ -168,8 +168,10 @@
                 <input type="hidden" id="ttbm_hotel_map_location_submit" name="ttbm_hotel_map_location" value="<?php echo esc_attr($hotel_map_location); ?>">
                 <input type="hidden" id="ttbm_map_latitude_submit" name="ttbm_map_latitude" value="<?php echo esc_attr($hotel_map_lat); ?>">
                 <input type="hidden" id="ttbm_map_longitude_submit" name="ttbm_map_longitude" value="<?php echo esc_attr($hotel_map_lng); ?>">
-                <div id="ttbm_content" class="ttbm_configuration">
+				<?php $wizard_steps = self::wizard_steps(); ?>
+                <div id="ttbm_content" class="ttbm_configuration ttbm-tour-wizard" data-wizard="<?php echo esc_attr(wp_json_encode(array_values($wizard_steps))); ?>">
                     <div class="ttbm_style ttbm_settings">
+						<?php TTBM_Settings::render_wizard_nav($wizard_steps, __('Hotel setup steps', 'tour-booking-manager')); ?>
                         <div class="ttbmTabs leftTabs d-flex justify-content-between">
                             <ul class="tabLists meta-sidebar _mL">
 								<div class="meta-sidebar-toggle"><i class="mi mi-angle-right"></i></div>
@@ -183,6 +185,7 @@
                             </ul>
                             <div class="tabsContent">
 								<?php do_action('add_ttbm_settings_hotel_tab_content', $hotel_id); ?>
+								<?php TTBM_Settings::render_wizard_footer(); ?>
                             </div>
                             <div class="ttbm-right-sidebar">
 								<?php do_action('ttbm_hotel_right_sidebar_content', $hotel_id); ?>
@@ -191,6 +194,45 @@
                     </div>
                 </div>
 				<?php
+			}
+			/**
+			 * Step-based layout of the hotel editor, same engine as TTBM_Settings::wizard_steps().
+			 * 'panes' = tab panels shown stacked in the step, 'acc' = panels shown as collapsible
+			 * cards, 'validate' = window.* validators that must pass before Next. Tab panels added
+			 * by add-ons and not listed here are placed in the last step by the JS. Filterable.
+			 */
+			public static function wizard_steps(): array {
+				$steps = array(
+					'basic' => array(
+						'key' => 'basic', 'icon' => 'fas fa-info-circle',
+						'label' => __('Basic Info', 'tour-booking-manager'),
+						'hint' => __('Title, description & map location', 'tour-booking-manager'),
+						'panes' => array('#ttbm_general_info', '#ttbm_settings_hotel_location'), 'acc' => array(),
+						'validate' => array('ttbmValidateTitle', 'ttbmValidateHotelLocation', 'ttbmValidateHotelMapLocation'),
+					),
+					'pricing' => array(
+						'key' => 'pricing', 'icon' => 'fas fa-bed',
+						'label' => __('Rooms & Pricing', 'tour-booking-manager'),
+						'hint' => __('Room types, prices & availability', 'tour-booking-manager'),
+						'panes' => array('#ttbm_settings_pricing'), 'acc' => array(),
+						'validate' => array('ttbmValidateHotelRooms'),
+					),
+					'features' => array(
+						'key' => 'features', 'icon' => 'fas fa-concierge-bell',
+						'label' => __('Features & Activities', 'tour-booking-manager'),
+						'hint' => __('What the hotel offers', 'tour-booking-manager'),
+						'panes' => array('#ttbm_settings_hotel_feature', '#ttbm_settings_hotel_activity'), 'acc' => array(),
+						'validate' => array(),
+					),
+					'more' => array(
+						'key' => 'more', 'icon' => 'fas fa-sliders-h',
+						'label' => __('Area & FAQ', 'tour-booking-manager'),
+						'hint' => __('What is nearby & common questions', 'tour-booking-manager'),
+						'panes' => array('#ttbm_settings_hotel_area_info', '#ttbm_settings_hotel_faq'), 'acc' => array(),
+						'validate' => array(),
+					),
+				);
+				return apply_filters('ttbm_hotel_wizard_steps', $steps);
 			}
 			public function render_title_required_notice(): void {
 				$user_id = get_current_user_id();

@@ -10223,7 +10223,9 @@ div.ttbm_booking_panel table.mp_tour_ticket_extra tbody tr.ttbm_ticket_row td {
 	margin: 0 0 24px;
 }
 .ttbm-grid-mode div.filter_item {
-	display: flex !important;
+	/* No !important: the list filters, date tabs and pagination hide cards with an
+	   inline display:none (jQuery hide/slideUp), which an !important here overrode. */
+	display: flex;
 	flex-direction: column;
 	background: #fff;
 	border: 1px solid #e5e9ee !important;

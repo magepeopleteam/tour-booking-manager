@@ -825,7 +825,7 @@ $(document).on('change', '.ttbm-sort-select', function () {
             evt.preventDefault();
 
             let $area = $(area);
-            let matched = $area.find('.filter_item').not('.ttbm-tab-hidden');
+            let matched = $area.find('.filter_item').not('.ttbm-tab-hidden, .search_of');
             let totalMatched = matched.length;
             let pp = parseInt($area.find('input[name="pagination_per_page"]').val(), 10);
             if (isNaN(pp) || pp < 1) pp = totalMatched;
@@ -853,7 +853,7 @@ $(document).on('change', '.ttbm-sort-select', function () {
                     $(this).hide();
                 }
             });
-            $area.find('.filter_item.ttbm-tab-hidden').hide();
+            $area.find('.filter_item.ttbm-tab-hidden, .filter_item.search_of').hide();
 
             let visibleNow = matched.filter(':visible').length;
             $area.find('.qty_count').html(visibleNow);
@@ -870,7 +870,7 @@ $(document).on('change', '.ttbm-sort-select', function () {
 
         $(document).on('click', '.ttbm-tab-btn', function () {
 
-            $('.ttbm-tab-btn').removeClass('ttbm-tab-active');
+            $(this).closest('.ttbm-filter-tabs').find('.ttbm-tab-btn').removeClass('ttbm-tab-active');
             $(this).addClass('ttbm-tab-active');
 
             let filter = $(this).data('filter-tab');
@@ -893,16 +893,19 @@ $(document).on('change', '.ttbm-sort-select', function () {
             let weekEnd = new Date(weekStart);
             weekEnd.setDate(weekEnd.getDate() + 6);
 
-            // Step 1: classify every card — match vs. not match
+            // Step 1: classify every card — match vs. not match. data-upcoming is the
+            // next departure; it is empty for a tour without one, which then only
+            // shows under "All Tours" (data-date falls back to the publish date).
             parent.find('.filter_item').each(function () {
 
                 let item = $(this);
-                let itemDate = item.attr('data-date');
+                let itemDate = item.attr('data-upcoming');
+                if (typeof itemDate === 'undefined') itemDate = item.attr('data-date');
                 let matches = false;
 
-                if (filter === 'all' || !itemDate) {
+                if (filter === 'all') {
                     matches = true;
-                } else {
+                } else if (itemDate) {
                     let tourDate = new Date(itemDate + 'T00:00:00');
                     if (filter === 'week') {
                         matches = (tourDate >= weekStart && tourDate <= weekEnd);
@@ -917,11 +920,12 @@ $(document).on('change', '.ttbm-sort-select', function () {
                 item.toggleClass('ttbm-tab-hidden', !matches);
             });
 
-            // Step 2: paginate within the matched set (first perPage visible, rest hidden)
-            let matched = parent.find('.filter_item').not('.ttbm-tab-hidden');
+            // Step 2: paginate within the matched set (first perPage visible, rest hidden).
+            // Cards the left sidebar filters rejected (.search_of) stay out of it.
+            let matched = parent.find('.filter_item').not('.ttbm-tab-hidden, .search_of');
             let totalMatched = matched.length;
 
-            parent.find('.filter_item.ttbm-tab-hidden').hide();
+            parent.find('.filter_item.ttbm-tab-hidden, .filter_item.search_of').hide();
             matched.each(function (idx) {
                 let item = $(this);
                 if (idx < perPage) {

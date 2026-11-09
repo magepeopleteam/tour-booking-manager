@@ -18,6 +18,7 @@
 				add_filter('woocommerce_get_item_data', array($this, 'get_item_data'), 90, 2);
 				//************//
 				add_action('woocommerce_after_checkout_validation', array($this, 'after_checkout_validation'));
+				add_action('woocommerce_check_cart_items', array($this, 'validate_cart_inventory'));
 				add_action('woocommerce_checkout_create_order_line_item', array($this, 'checkout_create_order_line_item'), 90, 4);
 				add_action('woocommerce_checkout_order_processed', array($this, 'woocommerce_before_thankyou'), 90);
 				add_action('woocommerce_store_api_checkout_order_processed', array($this, 'woocommerce_before_thankyou'), 90);
@@ -59,6 +60,7 @@
 				$qty = isset($_POST['ticket_qty']) ? array_map('absint', wp_unslash((array) $_POST['ticket_qty'])) : array();
 				$hotel_id = isset($_POST['ttbm_tour_hotel_list']) ? absint(wp_unslash($_POST['ttbm_tour_hotel_list'])) : 0;
 				$start_date = isset($_POST['ttbm_start_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_start_date'])) : '';
+				$requested_tickets = array();
 				if ($hotel_id) {
 					$hotel_info = self::cart_hotel_info();
 					$assigned = array_map('absint', (array) TTBM_Function::get_hotel_list($tour_id));
@@ -76,6 +78,12 @@
 						wc_add_notice(esc_html__('The selected ticket price is unavailable. Please refresh the tour page and try again.', 'tour-booking-manager'), 'error');
 						return false;
 					}
+					$requested_tickets[] = array('ticket_name' => $name, 'ticket_qty' => $qty[$i], 'ttbm_date' => $start_date);
+				}
+				$result = TTBM_Function::validate_ticket_availability($tour_id, $requested_tickets);
+				if (is_wp_error($result)) {
+					wc_add_notice($result->get_error_message(), 'error');
+					return false;
 				}
 				$service_names = isset($_POST['service_name']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['service_name'])) : array();
 				$service_qty = isset($_POST['service_qty']) ? array_map('absint', wp_unslash((array) $_POST['service_qty'])) : array();
@@ -207,12 +215,38 @@
 			//**************//
 			public function after_checkout_validation() {
 				global $woocommerce;
+				if (!$woocommerce || !$woocommerce->cart) {
+					return;
+				}
 				$items = $woocommerce->cart->get_cart();
 				foreach ($items as $values) {
 					$ttbm_id = array_key_exists('ttbm_id', $values) ? $values['ttbm_id'] : 0;
 					$ttbm_id = TTBM_Function::post_id_multi_language($ttbm_id);
 					if (get_post_type($ttbm_id) == TTBM_Function::get_cpt_name()) {
 						do_action('ttbm_validate_cart_item', $values, $ttbm_id);
+					}
+				}
+				$this->validate_cart_inventory();
+			}
+			public function validate_cart_inventory() {
+				if (!WC()->cart) {
+					return;
+				}
+				$requested = array();
+				foreach (WC()->cart->get_cart() as $values) {
+					$ttbm_id = TTBM_Function::post_id_multi_language($values['ttbm_id'] ?? 0);
+					if (get_post_type($ttbm_id) != TTBM_Function::get_cpt_name()) {
+						continue;
+					}
+					foreach ((array) ($values['ttbm_ticket_info'] ?? array()) as $ticket) {
+						$ticket['ttbm_date'] = $ticket['ttbm_date'] ?? ($values['ttbm_date'] ?? '');
+						$requested[$ttbm_id][] = $ticket;
+					}
+				}
+				foreach ($requested as $ttbm_id => $tickets) {
+					$result = TTBM_Function::validate_ticket_availability($ttbm_id, $tickets);
+					if (is_wp_error($result)) {
+						wc_add_notice($result->get_error_message(), 'error');
 					}
 				}
 			}
@@ -563,7 +597,8 @@
             public static function ttbm_hotel_booking_info_with_travel( $ticket_info, $hotel_info, $order_id ){
                 $order = wc_get_order($order_id);
                 $order_status = $order->get_status();
-                $payment_method = $order->get_payment_method();
+                // The title, as the hotel-only checkout stores it (TTBM_Hotel_Booking).
+                $payment_method = $order->get_payment_method_title();
                 $user_id = $order->get_user_id() ?? '';
                 $billing_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
                 $billing_email = $order->get_billing_email();
@@ -584,8 +619,11 @@
                     'post_status' => 'publish',
                     'post_author' => 1,
                 ));
-//                $price = ($_ticket['ticket_price'] * $qty) * $num_of_day;
-                $price = 100;
+                // Rooms x nights, as charged per ticket row in add_billing_data().
+                $price = 0;
+                foreach ((array) $ticket_info as $room) {
+                    $price += (float) ($room['price'] ?? 0) * (int) ($room['quantity'] ?? 0) * (int) $num_of_day;
+                }
 
                 if ($custom_order_id) {
                     // Store meta data in the custom post
@@ -669,11 +707,16 @@
                         $room_name_key = preg_replace('/[^A-Za-z0-9]/', '', $_ticket['ticket_name'] );
                         $order_description[$room_name_key] = [
                             'quantity' => (int) $_ticket['ticket_qty'],
-                            'price'    => (int) $_ticket['ticket_price'],
+                            'price'    => (float) $_ticket['ticket_price'],
                         ];
 					}
 
-                    self::ttbm_hotel_booking_info_with_travel( $order_description, $hotel_info, $order_id );
+                    // Only a tour booked with a hotel is a hotel booking. Every other tour
+                    // order used to be logged too, with no hotel and no dates, and showed
+                    // in Hotel Manager > Bookings as "January 1, 1970".
+                    if ($hotel_id > 0) {
+                        self::ttbm_hotel_booking_info_with_travel( $order_description, $hotel_info, $order_id );
+                    }
 				}
 			}
 			public static function cart_ticket_info($tour_id) {

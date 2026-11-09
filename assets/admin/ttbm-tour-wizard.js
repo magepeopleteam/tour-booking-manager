@@ -1,5 +1,5 @@
 /**
- * Tour editor: step-based layout.
+ * Tour and hotel editors: step-based layout.
  *
  * The legacy tab panels (#ttbm_general_info, #ttbm_settings_dates, ...) stay in the DOM and keep
  * their ids, so validation, auto-save, the map and add-ons keep working. This script only groups
@@ -258,21 +258,14 @@
 	});
 
 	// Block "Next" on the steps that have required fields, reusing the editor's own validators.
+	// A step can name its own validators (the hotel steps do); otherwise the tour's rules apply.
 	function validateStep(key) {
 		window.ttbmLastValidationFocus = null;
-		var ok = true;
-		if (key === 'basic') {
-			if (typeof window.ttbmValidateTitle === 'function' && !window.ttbmValidateTitle()) {
-				ok = false;
-			}
-			if (ok && typeof window.ttbmValidateLocation === 'function' && !window.ttbmValidateLocation()) {
-				ok = false;
-			}
-		} else if (key === 'schedule') {
-			if (typeof window.ttbmValidateDates === 'function' && !window.ttbmValidateDates()) {
-				ok = false;
-			}
-		}
+		var step = config[stepIndex(key)] || {};
+		var checks = step.validate || (key === 'basic' ? ['ttbmValidateTitle', 'ttbmValidateLocation'] : (key === 'schedule' ? ['ttbmValidateDates'] : []));
+		var ok = checks.every(function (name) {
+			return typeof window[name] !== 'function' || window[name]();
+		});
 		if (!ok) {
 			if (typeof window.ttbmFocusValidationTarget === 'function') {
 				window.ttbmFocusValidationTarget();

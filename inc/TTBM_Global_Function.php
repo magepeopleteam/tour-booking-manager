@@ -396,7 +396,8 @@
 			public static function check_time_exit_date($date) {
 				if ($date) {
 					$parse_date = date_parse($date);
-					if (($parse_date['hour'] && $parse_date['hour'] > 0) || ($parse_date['minute'] && $parse_date['minute'] > 0) || ($parse_date['second'] && $parse_date['second'] > 0)) {
+					// Midnight is a time too; only date-only input has hour === false.
+					if (0 === $parse_date['error_count'] && false !== $parse_date['hour']) {
 						return true;
 					}
 				}

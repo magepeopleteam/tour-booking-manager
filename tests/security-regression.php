@@ -26,7 +26,9 @@ require_once ABSPATH . 'wp-admin/includes/plugin.php';
 require_once dirname($ttbm_test_root) . '/woocommerce/includes/wc-formatting-functions.php';
 require_once $ttbm_test_root . '/inc/TTBM_Global_Function.php';
 require_once $ttbm_test_root . '/inc/TTBM_Function.php';
+require_once $ttbm_test_root . '/inc/TTBM_Query.php';
 require_once $ttbm_test_root . '/inc/TTBM_Security.php';
+require_once $ttbm_test_root . '/admin/TTBM_CPT.php';
 require_once $ttbm_test_root . '/inc/TTBM_Custom_Order_CPT.php';
 require_once $ttbm_test_root . '/inc/TTBM_Woocommerce.php';
 require_once $ttbm_test_root . '/admin/TTBM_Payment_Settings.php';
@@ -80,8 +82,10 @@ $ttbm_test_parent = static function () use ($ttbm_test_temp) { return $ttbm_test
 add_filter('stylesheet_directory', $ttbm_test_child);
 add_filter('template_directory', $ttbm_test_parent);
 try {
-	register_post_type('ttbm_tour', array('public' => true));
-	register_post_type('ttbm_hotel', array('public' => true));
+	(new ReflectionClass('TTBM_CPT'))->newInstanceWithoutConstructor()->ttbm_cpt();
+	$service_type = get_post_type_object('ttbm_service_booking');
+	$ttbm_test_assert($service_type && !$service_type->public && !$service_type->show_in_rest && !$service_type->show_ui, 'Service booking records are not registered privately.');
+	$ttbm_test_assert('manage_options' === $service_type->cap->edit_post, 'Service booking records lack the booking-screen permission.');
 	TTBM_Custom_Order_CPT::register_cpt();
 	$tour_id = wp_insert_post(array('post_type' => 'ttbm_tour', 'post_status' => 'publish', 'post_title' => 'Security fixture'));
 	$order_id = wp_insert_post(array('post_type' => 'ttbm_custom_order', 'post_status' => 'pending', 'post_title' => 'Security fixture order'));
@@ -224,6 +228,41 @@ try {
 	$booking = $process->invoke($checkout, $tour_id);
 	$ttbm_test_assert(is_array($booking) && 'pending' === $booking['state'], 'Valid offline checkout failed.');
 	$ttbm_test_assert(20.0 === (float) get_post_meta($booking['order_id'], '_ttbm_order_total', true), 'Offline checkout total changed.');
+	// Legacy/imported orders may omit optional collections or contain broken rows.
+	$valid_ticket = array('ticket_name' => 'Adult', 'ticket_price' => 10, 'ticket_qty' => 2, 'ttbm_date' => '2027-01-02 10:00');
+	$valid_service = array('service_name' => 'Bike', 'service_price' => 5, 'service_qty' => 1, 'ttbm_date' => '2027-01-02 10:00');
+	foreach (array('missing', 'empty', 'string', 'mixed') as $case) {
+		$legacy_order = wp_insert_post(array('post_type' => 'ttbm_custom_order', 'post_status' => 'pending', 'post_title' => 'Legacy collection fixture'));
+		update_post_meta($legacy_order, '_ttbm_tour_id', $tour_id);
+		update_post_meta($legacy_order, '_ttbm_ticket_info', array($valid_ticket, '', array('ticket_qty' => 1), array('ticket_name' => 'Bad', 'ticket_price' => array(), 'ticket_qty' => 1)));
+		update_post_meta($legacy_order, '_ttbm_customer_name', 'Fixture Guest');
+		if ('missing' !== $case) {
+			$value = 'empty' === $case ? '' : ('string' === $case ? 'invalid legacy value' : array());
+			foreach (array('_ttbm_hotel_info', '_ttbm_service_info', '_ttbm_user_info') as $meta_key) {
+				update_post_meta($legacy_order, $meta_key, $value);
+			}
+		}
+		if ('mixed' === $case) {
+			update_post_meta($legacy_order, '_ttbm_service_info', array('', array(), array('service_name' => 'Bad'), array('service_name' => 'Bad', 'service_price' => array(), 'service_qty' => 1), $valid_service));
+		}
+		$checkout->finalize_order($legacy_order, 'pending', 'offline');
+		$guest_ids = (array) get_post_meta($legacy_order, '_ttbm_booking_ids', true);
+		$ttbm_test_assert(2 === count($guest_ids), "$case optional meta: valid guests were not retained.");
+		$service_ids = get_posts(array('post_type' => 'ttbm_service_booking', 'fields' => 'ids', 'numberposts' => -1, 'meta_key' => 'ttbm_order_id', 'meta_value' => $legacy_order));
+		$ttbm_test_assert(('mixed' === $case ? 1 : 0) === count($service_ids), "$case optional meta: invalid service rows created records.");
+		$ttbm_test_user('administrator');
+		foreach ($service_ids as $service_id) {
+			$ttbm_test_assert(current_user_can('edit_post', $service_id), 'Administrator cannot manage a service booking.');
+		}
+		$ttbm_test_user('subscriber');
+		foreach ($service_ids as $service_id) {
+			$ttbm_test_assert(!current_user_can('edit_post', $service_id), 'A customer can edit another service booking.');
+		}
+		$ttbm_test_user('');
+		$checkout->finalize_order($legacy_order, 'processing', 'offline');
+		$ttbm_test_assert($guest_ids === get_post_meta($legacy_order, '_ttbm_booking_ids', true), "$case optional meta: a replay duplicated guests.");
+		$ttbm_test_assert('processing' === get_post_meta($guest_ids[0], 'ttbm_order_status', true), "$case optional meta: status propagation failed.");
+	}
 	$_POST['ticket_name'] = array('Does not exist');
 	$ttbm_test_assert(is_wp_error($process->invoke($checkout, $tour_id)), 'Unknown ticket type became a free order.');
 	wp_update_post(array('ID' => $tour_id, 'post_status' => 'draft'));
@@ -260,6 +299,27 @@ try {
 	$signup = get_user_by('email', $signup_email);
 	$ttbm_test_assert(!empty($signup_response['success']) && $signup && !user_can($signup, 'manage_options'), 'Public signup inherited an administrator default role.');
 	$ttbm_test_user('administrator');
+	require_once ABSPATH . 'wp-admin/includes/class-wp-screen.php';
+	require_once ABSPATH . 'wp-admin/includes/screen.php';
+	// WooCommerce is skipped in this run but still listed as active, so render the Custom Payment manager.
+	$ttbm_test_no_wc = static function ($plugins) { return array_values(array_diff((array) $plugins, array('woocommerce/woocommerce.php'))); };
+	add_filter('option_active_plugins', $ttbm_test_no_wc);
+	$GLOBALS['current_screen'] = WP_Screen::get('ttbm_tour');
+	$payment_settings = new TTBM_Payment_Settings();
+	$render_edit_payment = static function () use ($payment_settings) {
+		ob_start();
+		$payment_settings->maybe_render_edit_payment_notice(null);
+		return ob_get_clean();
+	};
+	$ttbm_test_assert(false !== strpos($render_edit_payment(), 'ttbm-payment-settings-content'), 'The tour editor payment manager was hidden from administrators.');
+	$ttbm_test_user('subscriber');
+	$ttbm_test_assert(false === strpos($render_edit_payment(), 'ttbm-payment-settings-content'), 'The tour editor exposed payment gateway settings to a non-administrator.');
+	ob_start();
+	$payment_settings->render_tab_content();
+	$ttbm_test_assert('' === trim(ob_get_clean()), 'Payment gateway settings rendered for a non-administrator.');
+	$ttbm_test_user('administrator');
+	$GLOBALS['current_screen'] = null;
+	remove_filter('option_active_plugins', $ttbm_test_no_wc);
 
 
 	update_post_meta($order_id, '_ttbm_order_total', 20);

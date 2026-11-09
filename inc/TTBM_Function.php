@@ -1513,6 +1513,12 @@
 				return $range;
 			}
 			//************Seat***********************//
+			/** Inventory holds are independent of the statuses that release a ticket. */
+			public static function get_inventory_order_statuses(): array {
+				$configured = self::get_general_settings('ttbm_set_book_status', array('processing', 'completed'));
+				$statuses = array_merge((array) $configured, array('pending', 'on-hold', 'processing', 'completed'));
+				return (array) apply_filters('ttbm_inventory_order_statuses', array_values(array_unique($statuses)));
+			}
 			public static function get_total_seat($tour_id) {
 				$total_seat = 0;
 				$tour_type = self::get_tour_type($tour_id);
@@ -1569,8 +1575,7 @@
 				if (empty($pending)) {
 					return;
 				}
-				$_seat_booked_status = self::get_general_settings('ttbm_set_book_status', array('processing', 'completed'));
-				$seat_booked_status = !empty($_seat_booked_status) ? $_seat_booked_status : array();
+				$seat_booked_status = self::get_inventory_order_statuses();
 				$limit = (int) apply_filters('ttbm_prime_sold_cache_limit', 20000);
 				$booking_ids = get_posts(array(
 					'fields' => 'ids',
@@ -1703,6 +1708,7 @@
 				$filter_type = (!empty($type) && !is_array($type)) ? $type : '';
 				$filter_hotel = !empty($hotel_id) ? $hotel_id : '';
 				$date_is_exact = !empty($tour_date) && TTBM_Global_Function::check_time_exit_date($tour_date);
+				$exact_timestamp = $date_is_exact ? strtotime($tour_date) : false;
 				$matched = array();
 				foreach ($rows as $row) {
 					if ('' !== $filter_type && !self::sold_value_matches($row['ticket_name'], $filter_type)) {
@@ -1713,7 +1719,8 @@
 					}
 					if (!empty($tour_date)) {
 						if ($date_is_exact) {
-							if (!self::sold_value_matches($row['date'], $tour_date)) {
+							$row_timestamp = strtotime($row['date']);
+							if (false === $row_timestamp || false === $exact_timestamp || $row_timestamp !== $exact_timestamp) {
 								continue;
 							}
 						} elseif (stripos((string) $row['date'], (string) $tour_date) === false) {
@@ -1998,6 +2005,54 @@
 			}
 			
 			return apply_filters('ttbm_ticket_availability_info', $availability_info, $tour_id, $tour_date, $ticket_type_name);
+		}
+		/**
+		 * Recheck requested tickets against live inventory, including duplicate rows
+		 * and shared pools. Used by WooCommerce and both standalone checkouts.
+		 * Hotel room inventory is handled by the hotel booking flow.
+		 *
+		 * @return true|WP_Error
+		 */
+		public static function validate_ticket_availability($tour_id, $ticket_info) {
+			if (self::get_tour_type($tour_id) !== 'general') {
+				return true;
+			}
+			self::flush_booking_request_cache();
+			$requested = array();
+			foreach ((array) $ticket_info as $ticket) {
+				$qty = max(0, (int) ($ticket['ticket_qty'] ?? 0));
+				if ($qty < 1) {
+					continue;
+				}
+				$date = (string) ($ticket['ttbm_date'] ?? '');
+				$timestamp = strtotime($date);
+				if (false === $timestamp) {
+					return new WP_Error('ttbm_invalid_date', esc_html__('Please select a valid departure date.', 'tour-booking-manager'));
+				}
+				$date = gmdate(TTBM_Global_Function::check_time_exit_date($date) ? 'Y-m-d H:i:s' : 'Y-m-d', $timestamp);
+				$name = (string) ($ticket['ticket_name'] ?? '');
+				$requested[$date][$name] = ($requested[$date][$name] ?? 0) + max(0, (int) apply_filters('ttbm_group_ticket_qty_actual', $qty, $tour_id, $name));
+			}
+			foreach ($requested as $date => $types) {
+				$availability = self::get_ticket_availability_info($tour_id, $date);
+				$shared_available = null;
+				$shared_requested = 0;
+				foreach ($types as $name => $qty) {
+					$info = $availability[$name] ?? array();
+					$available = max(0, (int) ($info['available_qty'] ?? 0));
+					if ($qty > $available) {
+						return new WP_Error('ttbm_insufficient_stock', esc_html__('The selected tickets are no longer available. Please choose another date, time or quantity.', 'tour-booking-manager'));
+					}
+					if (!empty($info['shared_capacity_enabled'])) {
+						$shared_available = null === $shared_available ? $available : min($shared_available, $available);
+						$shared_requested += $qty;
+					}
+				}
+				if (null !== $shared_available && $shared_requested > $shared_available) {
+					return new WP_Error('ttbm_insufficient_stock', esc_html__('The selected tickets are no longer available. Please choose another date, time or quantity.', 'tour-booking-manager'));
+				}
+			}
+			return true;
 		}
 		
 		public static function get_stock_status($available_qty, $total_capacity) {

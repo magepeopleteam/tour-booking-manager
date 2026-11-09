@@ -59,7 +59,8 @@
 			// Single source of truth for "is this booking confirmed enough to
 			// release the ticket" — reads the same ttbm_set_book_status option the
 			// Payments tab's "Confirm Ticket Based on Payment Status" already
-			// writes, so seat availability and ticket-readiness never disagree.
+			// writes. Inventory holds are independent: unpaid orders reserve seats
+			// without releasing tickets before the configured confirmation status.
 			public static function is_ticket_ready($status) {
 				$slug = self::normalize_status($status);
 				$ready = TTBM_Function::get_general_settings('ttbm_set_book_status', array('processing', 'completed'));

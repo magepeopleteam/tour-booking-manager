@@ -199,7 +199,7 @@
 						array(
 							'name' => 'ttbm_set_book_status',
 							'label' => esc_html__('Seat Booked Status', 'tour-booking-manager'),
-							'desc' => esc_html__('Please Select when and which order status Seat Will be Booked/Reduced.', 'tour-booking-manager'),
+							'desc' => esc_html__('Select the order statuses that confirm tickets. Pending, On Hold, Processing and Completed orders reserve seats to prevent duplicate bookings.', 'tour-booking-manager'),
 							'type' => 'multicheck',
 							'default' => array(
 								'processing' => 'processing',

@@ -451,8 +451,7 @@
 				return new WP_Query($args);
 			}
 		public static function query_all_sold($tour_id, $tour_date, $type = '', $hotel_id = ''): WP_Query {
-			$_seat_booked_status = TTBM_Function::get_general_settings('ttbm_set_book_status', array('processing', 'completed'));
-			$seat_booked_status = !empty($_seat_booked_status) ? $_seat_booked_status : [];
+			$seat_booked_status = TTBM_Function::get_inventory_order_statuses();
 			$type_filter = !empty($type) && !is_array($type) ? array(
 				'key' => 'ttbm_ticket_name',
 				'value' => $type,
@@ -471,7 +470,8 @@
 					$date_filter = array(
 						'key' => 'ttbm_date',
 						'value' => $tour_date,
-						'compare' => '='
+						'compare' => '=',
+						'type' => 'DATETIME'
 					);
 				} else {
 					// For date-only queries, match the date portion only
@@ -513,8 +513,7 @@
 			return new WP_Query($args);
 		}
 			public static function query_all_service_sold($tour_id, $tour_date, $type = '') {
-				$_seat_booked_status = TTBM_Function::get_general_settings('ttbm_set_book_status', array('processing', 'completed'));
-				$seat_booked_status = !empty($_seat_booked_status) ? $_seat_booked_status : [];
+				$seat_booked_status = TTBM_Function::get_inventory_order_statuses();
 				$type_filter = !empty($type) ? array(
 					'key' => 'ttbm_service_name',
 					'value' => $type,
@@ -529,7 +528,8 @@
 						$date_filter = array(
 							'key' => 'ttbm_date',
 							'value' => $tour_date,
-							'compare' => '='
+							'compare' => '=',
+							'type' => 'DATETIME'
 						);
 					} else {
 						$date_filter = array(

@@ -472,6 +472,16 @@
 	flex: 1;
 }
 
+/* Centre each icon in its tile and line single-line text up with it. */
+#ttbm_content .ttbm_day_wise_timeline .day_wise_activity_icon i {
+	margin: 0;
+}
+#ttbm_content .ttbm_day_wise_timeline .day_wise_activity_body {
+	align-self: center;
+}
+#ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_item_details p.day_wise_activity_title {
+	margin: 0;
+}
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_activity_title {
 	margin: 0;
 	font-size: 15px;

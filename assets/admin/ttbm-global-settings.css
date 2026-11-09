@@ -38,6 +38,35 @@ div.ttbm_global_settings.ttbm_configuration {
     gap: 16px;
 }
 
+/* Narrow screens: the fixed-width sidebar would leave the settings almost no room */
+@media (max-width: 960px) {
+    div.ttbm_global_settings.ttbm_configuration {
+        max-width: 100% !important;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .ttbm_global_settings .ttbm-gs-layout {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .ttbm_global_settings .ttbm-gs-main {
+        flex: none;
+    }
+    .ttbm_global_settings .ttbm-gs-sidebar {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 782px) {
+    #ttbm_content.ttbm_global_settings .tabLists {
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+    }
+}
+
 /* Sidebar card base */
 .ttbm_global_settings .ttbm-gs-card {
     background: #fff;

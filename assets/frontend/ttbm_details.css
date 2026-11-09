@@ -6792,7 +6792,7 @@ body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .inputIncDec {
 	align-items: center;
 	justify-content: space-between;
 	gap: 12px;
-	padding: 16px 0 !important;
+	padding: 16px 14px !important;
 	margin: 0 !important;
 	border: 0 !important;
 	border-bottom: 1px solid #edf0f3 !important;

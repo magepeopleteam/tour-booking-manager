@@ -7105,7 +7105,7 @@ body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .inputIncDec {
 #ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title {
 	justify-content: flex-start;
 	gap: 16px;
-	padding: 20px 4px;
+	padding: 20px;
 }
 #ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_title::before {
 	counter-increment: ttbm-faq;
@@ -7159,14 +7159,14 @@ body .ttbm_hotel_booking_cards .ttbm_hotel_room_col--qty .inputIncDec {
 	transform: rotate(-135deg);
 }
 #ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_content {
-	padding: 0 48px 22px;
+	padding: 0 64px 22px;
 	font-size: 15px;
 	line-height: 1.7;
 	color: #475569;
 }
 @media (max-width: 640px) {
 	#ttbm_content .ttbm_details_page .ttbm_faq_item .ttbm_faq_content {
-		padding: 0 4px 18px;
+		padding: 0 20px 18px;
 	}
 }
 

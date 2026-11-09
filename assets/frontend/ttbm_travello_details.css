@@ -2809,7 +2809,7 @@
 	grid-template-columns: minmax( 0, 1fr ) auto;
 	column-gap: 20px;
 	align-items: start;
-	padding: 26px 0px;
+	padding: 26px;
 	background: #fff;
 	border: 0;
 	border-radius: 22px;
@@ -2899,7 +2899,7 @@
 .ttbm_travello_theme .ttbm-travello-rating-row { grid-column: 1 / -1; margin-top: 16px; }
 
 @media ( max-width: 640px ) {
-	.ttbm_travello_theme .ttbm-travello-header { grid-template-columns: 1fr; padding: 20px 0; }
+	.ttbm_travello_theme .ttbm-travello-header { grid-template-columns: 1fr; padding: 20px 16px; }
 	.ttbm_travello_theme .ttbm-travello-actions { grid-column: 1; grid-row: auto; margin: 0 0 16px; order: -1; }
 	.ttbm_travello_theme .ttbm-travello-badges,
 	.ttbm_travello_theme .ttbm-travello-title { grid-column: 1; grid-row: auto; }

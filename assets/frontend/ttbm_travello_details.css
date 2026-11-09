@@ -2573,6 +2573,10 @@
 	padding: 22px 22px 18px;
 	background: linear-gradient( 180deg, color-mix( in srgb, var( --ttlm-primary ) 9%, #fff ), #fff );
 }
+/* The card has no padding of its own, so the fixed-date strip needs the same inset as its neighbours. */
+.ttbm_travello_theme #ttbm_booking_section div.ttbm_date_time_select:not(.ttbm-date-select) {
+	padding: 0 22px;
+}
 .ttbm_travello_theme .ttbm-travello-bc-from {
 	margin: 0 0 2px;
 	font-size: 12px;

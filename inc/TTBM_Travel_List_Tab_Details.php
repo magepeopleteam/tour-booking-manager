@@ -575,6 +575,12 @@ if (!class_exists('TTBM_Travel_List_Tab_Details')) {
                             <span class="ttbm_travel_taxonomy_add_btn__icon" aria-hidden="true"><i class="fas fa-plus"></i></span>
                             <span class="ttbm_travel_taxonomy_add_btn__text"><?php esc_html_e( 'Add a tour', 'tour-booking-manager' ); ?></span>
                         </a>
+                        <?php if ( class_exists( 'TTBM_Dummy_Import' ) && TTBM_Dummy_Import::is_eligible() ) : ?>
+                            <button type="button" id="ttbm-trigger-dummy-import-btn" class="page-title-action ttbm_travel_taxonomy_add_btn">
+                                <span class="ttbm_travel_taxonomy_add_btn__icon" aria-hidden="true"><i class="fas fa-download"></i></span>
+                                <span class="ttbm_travel_taxonomy_add_btn__text"><?php esc_html_e( 'Import dummy tours', 'tour-booking-manager' ); ?></span>
+                            </button>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="ttbm-tour-filter-row">

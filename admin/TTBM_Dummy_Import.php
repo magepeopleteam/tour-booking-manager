@@ -39,7 +39,7 @@
 						return false;
 					}
 				}
-				return self::check_plugin('tour-booking-manager', 'tour-booking-manager.php') == 1;
+				return true;
 			}
 
 			private function should_auto_show_popup() {
@@ -267,8 +267,13 @@
 				if (!current_user_can('manage_options')) {
 					wp_send_json_error(array('message' => 'Permission denied.'));
 				}
+				$imported = (int) $this->dummy_import();
+				// Nothing added while the tour list is still empty means the import failed, not that it was already done.
+				if (0 === $imported && self::is_eligible()) {
+					wp_send_json_error(array('message' => __('No tours could be added. Please check that the site can save posts and download images.', 'tour-booking-manager')));
+				}
 				// The popup shows "Nothing new to import" when this is 0.
-				wp_send_json_success(array('imported' => (int) $this->dummy_import()));
+				wp_send_json_success(array('imported' => $imported));
 			}
 
 			public function ajax_dismiss_dummy_import() {
@@ -292,7 +297,10 @@
 					wp_raise_memory_limit('admin');
 				}
 				$dummy_tour_ids = array();
-				if (self::check_plugin('tour-booking-manager', 'tour-booking-manager.php') == 1) {
+				// This code only runs while the plugin is active, so no plugin check is needed: the old check
+				// matched the folder name 'tour-booking-manager' and silently skipped the import on any site
+				// where the plugin sits in another folder (a GitHub download, a renamed zip).
+				if (post_type_exists('ttbm_tour')) {
 					$dummy_taxonomies = $this->dummy_taxonomy();
 					if (array_key_exists('taxonomy', $dummy_taxonomies)) {
 						foreach ($dummy_taxonomies['taxonomy'] as $taxonomy => $dummy_taxonomy) {

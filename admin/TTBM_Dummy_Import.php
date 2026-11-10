@@ -43,14 +43,19 @@
 			}
 
 			private function should_auto_show_popup() {
-				// The popup opens by itself only until the first import; after that the button opens it.
-				if (!self::is_eligible() || get_option('ttbm_dummy_already_inserted', 'no') == 'yes') {
+				// The import is offered only while the tour list is empty.
+				if (!self::is_eligible()) {
 					return false;
 				}
-				// Force-show after WooCommerce was just activated via the installer popup
-				if ( get_transient( 'ttbm_woo_just_activated' ) ) {
-					delete_transient( 'ttbm_woo_just_activated' );
+				// Right after the plugin (or WooCommerce through the installer) is activated, the
+				// administrator lands on the tour list: open the popup there once.
+				if (get_transient('ttbm_woo_just_activated')) {
+					delete_transient('ttbm_woo_just_activated');
 					return true;
+				}
+				// Otherwise it opens by itself only before the first import.
+				if (get_option('ttbm_dummy_already_inserted', 'no') == 'yes') {
+					return false;
 				}
 				$dismissed = get_option('ttbm_dummy_import_dismissed', 'no');
 				if ($dismissed == 'yes') {
@@ -59,9 +64,9 @@
 				return true;
 			}
 
-			// The tour list always has the import button, so it always needs the popup.
+			// The popup and its button exist only while the tour list is empty.
 			private static function should_load_popup() {
-				return self::is_eligible() || (isset($_GET['page']) && 'ttbm_list' === sanitize_key(wp_unslash($_GET['page'])));
+				return self::is_eligible();
 			}
 
 			public function enqueue_assets() {
